@@ -263,7 +263,7 @@ theorem Gen.sep (hw : G.Good w) : (G.P.map (deh w 0)).Separable := by
       G.V.map (deh w 0) * Polynomial.derivative (G.P.map (deh w 0)) =
       Polynomial.C (deh w 0 G.cc) := by
     rw [Polynomial.derivative_map, ← sub_eq_zero, ← h0]
-    simp only [Polynomial.map_sub, Polynomial.map_add, Polynomial.map_mul, Polynomial.map_C]
+    simp only [Polynomial.map_sub, Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_C]
   rw [Polynomial.separable_def]
   refine ⟨Polynomial.C (deh w 0 G.cc)⁻¹ * G.U.map (deh w 0),
     Polynomial.C (deh w 0 G.cc)⁻¹ * G.V.map (deh w 0), ?_⟩

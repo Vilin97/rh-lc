@@ -370,7 +370,7 @@ private theorem hasSum_latticeFourier_complex {A : E → ℂ} (hA : ∀ x ∈ L,
       obtain ⟨n, hn⟩ := (AddCircle.coe_eq_zero_iff _).1 h3
       rw [Pi.sub_apply, ← hn, smul_assoc, one_smul]
       exact L.smul_mem n (by simp [b₀])
-    rw [← hA _ h2 (b₀.equivFun.symm x), ← map_add, add_sub_cancel]
+    rw [← hA _ h2 (b₀.equivFun.symm x), ← map_add (f := _), add_sub_cancel]
   let f : C(UnitAddTorus (Free.ChooseBasisIndex ℤ L), ℂ) := ⟨f₀,
     hq.isQuotientMap.continuous_iff.2 <| by
       rw [show f₀ ∘ p = A ∘ b₀.equivFunL.symm from funext hfp]; fun_prop⟩

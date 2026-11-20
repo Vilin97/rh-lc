@@ -14,7 +14,7 @@ theorem fsv_mul_fsv (a b t : ℂ) : P5.fsv a t * P5.fsv b t = P5.fsv (a + b) t :
   unfold P5.fsv
   rw [← Complex.exp_add]
   congr 1
-  simp only [map_add]
+  simp only [map_add (f := _)]
   ring
 
 section wave
@@ -56,7 +56,7 @@ theorem uInv_comp (s σ : ℂ) : ∀ (w : List C.Letter) (x : Wd.Ix (Fin w.lengt
     · rfl
     · simp only [Pi.add_apply, Pi.smul_apply]
       rw [add_assoc, ← add_smul, add_comm σ s]
-    · simp only [Pi.add_apply, Pi.smul_apply, map_add]
+    · simp only [Pi.add_apply, Pi.smul_apply, map_add (f := _)]
       rw [add_assoc, ← add_smul, add_comm (conj σ) (conj s)]
 
 theorem uInv_smulFun (s : ℂ) (φ : B.Mat k ρ → ℂ) : ∀ (w : List C.Letter)
@@ -180,7 +180,7 @@ theorem form_wave_mDiff (P : M.Par) (p : KB.Pl P Wp Wq) (j : ℕ) (hj : j ≤ P.
       _ = waveL (p.T.bs j) s w (KB.waveG (p.T.bs j) (3 * σ) w x) -
             (3 : ℂ) • waveL (p.T.bs j) s w (KB.waveG (p.T.bs j) (2 * σ) w x) +
             (3 : ℂ) • waveL (p.T.bs j) s w (KB.waveG (p.T.bs j) σ w x) - waveL (p.T.bs j) s w x := by
-          simp only [map_sub, map_add, map_smul]
+          simp only [map_sub, map_add (f := _), map_smul]
       _ = _ := by
           simp only [hV, waveG_comp]
           module

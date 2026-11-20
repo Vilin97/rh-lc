@@ -13,7 +13,7 @@ variable {R M κ : Type} [CommRing R] [AddCommGroup M] [Module R M]
 def topNil (I : Ideal R) (T : κ → Module.End R M) : Submodule R M where
   carrier := {m | ∀ i (j : ℕ), ∀ᶠ r : ℕ in atTop, (T i ^ r) m ∈ (I ^ j • ⊤ : Submodule R M)}
   add_mem' ha hb i j := ((ha i j).and (hb i j)).mono fun _ h => by
-    rw [map_add]; exact add_mem h.1 h.2
+    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h.1 h.2
   zero_mem' _ _ := Eventually.of_forall fun _ => by rw [map_zero]; exact zero_mem _
   smul_mem' c _ h i j := (h i j).mono fun _ h => by
     rw [map_smul]; exact Submodule.smul_mem _ c h

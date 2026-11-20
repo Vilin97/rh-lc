@@ -176,7 +176,7 @@ theorem zg_formula_let : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (
         ⟨(c : ↥W.GKs → T.V) g, GlobalTheory.HerrClassMaps.mem_T c g⟩ +
           ⟨T.ρ (g : ↥(GK K)) ((c : ↥W.GKs → T.V) g'), T.L.stable _ _ (GlobalTheory.HerrClassMaps.mem_T c g')⟩ :=
       Subtype.ext (c.2.1.2 g g')
-    simp only [Zf, map_add, map_sub, ha1t, hamul, e, TensorProduct.tmul_add]
+    simp only [Zf, map_add (f := _), map_sub, ha1t, hamul, e, TensorProduct.tmul_add]
     abel
   have hfit : ∀ b, TWmap (φRW LL) T b - b = E.jD T y → ∃ c : ↥(latticeCocycles (resLat T W.GKs)),
       Submodule.Quotient.mk c = W.cl T ⟨(y, z), hyz⟩ ∧ (∀ h' : ↥W.GKs, lam h' = 1 → Zf b c h' = 0) ∧

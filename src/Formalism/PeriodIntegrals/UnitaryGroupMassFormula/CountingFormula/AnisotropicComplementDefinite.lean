@@ -75,7 +75,7 @@ theorem wbDef_pos (D : D7) (u : D.what₂.Word) (F0 : FlagG (VS D) D.R.rS (Tn u)
       obtain ⟨x, hx, w, hw, hxw⟩ := Submodule.mem_sup.1 (hle' ha)
       obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hw
       have h1 : (VS D).hT F0.z a.1 = c * (-(Tn u)) := by
-        rw [← hxw, map_add, map_smul, hzX x hx, F0.z_norm, smul_eq_mul, zero_add]
+        rw [← hxw, map_add (f := _), map_smul, hzX x hx, F0.z_norm, smul_eq_mul, zero_add]
       rw [hya] at h1
       have hc : c = 0 := by
         rcases mul_eq_zero.1 h1.symm with h | h

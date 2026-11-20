@@ -91,7 +91,7 @@ theorem exists_siegData_finite_unramified : Out.Laws → Out.Laws2 → (∀ (S :
     mul_of_isGrpPullback ν.cart _ _ _ (lev x) (lev y) (hlevT x) (hlevT y) (by rw [← hadd]; exact hlevT _)
   have key : (fun x => c.lev (bas'.symm x) ≫ χ.hom ≫ e.hom) = levT := by
     refine eq_of_basis bas _ _ (fun x y => ?_) haddT fun j => ?_
-    · rw [map_add, c.lev_add, MonObj.mul_comp]
+    · rw [map_add (f := _), c.lev_add, MonObj.mul_comp]
     · refine Over.OverMorphism.ext (hcart.1.hom_ext ?_ (by rw [Over.w, Over.w]))
       have q₁ : (levT (bas (Pi.single j 1))).left ≫ ν.φ ≫ φ₀.hom.left = f ≫ (t.pt j).left :=
         (Category.assoc _ _ _).symm.trans ((congrArg (· ≫ φ₀.hom.left) (hlevT _)).trans

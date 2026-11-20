@@ -64,7 +64,7 @@ theorem polyOK_star {N a : ℕ} {P : Matrix (Fin N) (Fin N) ℂ → ℂ} (h : Is
       intro p y
       induction p using MvPolynomial.induction_on with
       | C c => rw [MvPolynomial.eval_C, MvPolynomial.eval₂_C, Complex.star_def]
-      | add p p' hp hp' => rw [map_add, star_add, hp, hp', MvPolynomial.eval₂_add]
+      | add p p' hp hp' => rw [map_add (f := _), star_add, hp, hp', MvPolynomial.eval₂_add]
       | mul_X p i hp =>
         rw [map_mul, star_mul', hp, MvPolynomial.eval_X, MvPolynomial.eval₂_mul, MvPolynomial.eval₂_X]
     show star (P g) = _

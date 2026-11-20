@@ -28,7 +28,7 @@ theorem continuous_sigR_AF (σ : E →ₐ[F] E) : Continuous (sigR (AF F) σ) :=
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => rfl
-    | add a b ha hb => rw [map_add, LinearMap.map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), LinearMap.map_add (f := _), ha, hb]
   rw [e]
   exact IsModuleTopology.continuous_of_linearMap _
 
@@ -46,14 +46,14 @@ theorem map_trace_tens {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [A
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul r x => rw [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, h1, h1, map_mul, AlgHom.commutes]
-  | add y y' hy hy' => simp only [map_add, hy, hy']
+  | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
 
 theorem finPartF_sigR (σ : E →ₐ[F] E) (z : AEF F E) :
     finPartF F E (sigR (AF F) σ z) = sigR (Af F) σ (finPartF F E z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 variable (σ : E →ₐ[F] E) {nS nT : ℕ} (JS : Matrix (Fin nS) (Fin nS) E) (JT : Matrix (Fin nT) (Fin nT) E)
 
@@ -76,7 +76,7 @@ theorem sndA_symplOHF (ξ₀ : E) (w y : WOF F E nS nT) (hy : y.map (finPartF F 
 theorem symplOHF_add_right (ξ₀ : E) (x y y' : WOF F E nS nT) :
     symplOHF σ JS JT ξ₀ x (y + y') = symplOHF σ JS JT ξ₀ x y + symplOHF σ JS JT ξ₀ x y' := by
   unfold symplOHF symplOF hOF
-  simp only [Matrix.add_apply, map_add, mul_add, add_mul, Finset.sum_add_distrib]
+  simp only [Matrix.add_apply, map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib]
 
 theorem symplOHF_zero_right (ξ₀ : E) (x : WOF F E nS nT) : symplOHF σ JS JT ξ₀ x 0 = 0 := by
   have := symplOHF_add_right σ JS JT ξ₀ x 0 0
@@ -100,7 +100,7 @@ theorem exists_log {Tau : Type} [Fintype Tau] {tauE : Tau → (E →+* ℂ)} {ψ
   let lam : AF F →+ ℂ :=
     { toFun := fun a => 2 * Real.pi * Complex.I * ((-1 : ℤ) : ℂ) * ∑ ρ, θ ρ (fstA F a ⊗ₜ[F] (1 : E))
       map_zero' := by simp only [map_zero, TensorProduct.zero_tmul, Finset.sum_const_zero, mul_zero]
-      map_add' := fun a b => by simp only [map_add, TensorProduct.add_tmul, Finset.sum_add_distrib, mul_add] }
+      map_add' := fun a b => by simp only [map_add (f := _), TensorProduct.add_tmul, Finset.sum_add_distrib, mul_add] }
   refine ⟨lam, ?_, fun a ha => ?_⟩
   · exact continuous_const.mul (continuous_finset_sum _ fun ρ _ => (hθ ρ).2.comp continuous_fst)
   · have hc := hψ.2.2 θ hθ (fstA F a)
@@ -123,7 +123,7 @@ theorem GlobalTheory.HeisLineDiffF.differentiableAt_heisOF_line : ∀ (F E : Typ
   let φ : ℝ →+ ℂ :=
     { toFun := fun t => lam (symplOHF σ JS JT ξ₀ w (L t))
       map_zero' := by rw [map_zero L, GlobalTheory.HeisLineDiffF.symplOHF_zero_right, map_zero]
-      map_add' := fun x y => by rw [map_add L, GlobalTheory.HeisLineDiffF.symplOHF_add_right, map_add] }
+      map_add' := fun x y => by rw [map_add L, GlobalTheory.HeisLineDiffF.symplOHF_add_right, map_add (f := _)] }
   have hφ : Continuous φ := hl.comp (GlobalTheory.HeisLineDiffF.continuous_symplOHF σ JS JT ξ₀ w hL)
   let L' : (Fin 1 → ℝ) →+ WOF F E nS nT := L.comp (Pi.evalAddMonoidHom (fun _ : Fin 1 => ℝ) 0)
   have hL' : Continuous L' := hL.comp (continuous_apply 0)

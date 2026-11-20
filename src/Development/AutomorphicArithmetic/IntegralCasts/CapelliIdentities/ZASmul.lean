@@ -34,5 +34,5 @@ theorem UpperTheory.Reformulated.B.Qi53.zA_smul.{u_1} :
   have hz' : z = (((PadicInt.toZModPow n z).val : ℕ) : ℤ_[l]) + (l : ℤ_[l]) ^ n * w := by
     rw [← hw]; ring
   generalize (PadicInt.toZModPow n z).val = m at hz' ⊢
-  rw [hz', map_add, map_mul, map_pow, map_natCast, map_natCast, add_smul, mul_smul, h, add_zero,
+  rw [hz', map_add (f := _), map_mul, map_pow, map_natCast, map_natCast, add_smul, mul_smul, h, add_zero,
     Nat.cast_smul_eq_nsmul]

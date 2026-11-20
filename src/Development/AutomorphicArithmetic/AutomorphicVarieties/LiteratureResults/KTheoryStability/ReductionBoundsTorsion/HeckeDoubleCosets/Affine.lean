@@ -126,7 +126,7 @@ theorem aff_gamma (π : 𝓞 L) (hπ : Prime π) (n r : ℕ) (hn : 1 ≤ n) (c :
     rw [hvL, Matrix.mulVec_single_one]; rfl
   have hyp : y p = (alg π)⁻¹ := by
     have h := congrArg alg hu
-    simp only [map_add, map_mul, map_one] at h
+    simp only [map_add (f := _), map_mul, map_one] at h
     rw [hy, Pi.add_apply, Pi.smul_apply, Pi.smul_apply, hvp, he, Pi.single_eq_same, smul_eq_mul, smul_eq_mul]
     field_simp
     try linear_combination h
@@ -172,7 +172,7 @@ theorem aff_gamma (π : 𝓞 L) (hπ : Prime π) (n r : ℕ) (hn : 1 ≤ n) (c :
       rw [RingHom.map_mulVec, hQ]
       congr 1
       try exact he'
-    rw [hzO, Pi.add_apply, Pi.smul_apply, map_add, smul_eq_mul, map_mul, h5, map_sub, map_one]
+    rw [hzO, Pi.add_apply, Pi.smul_apply, map_add (f := _), smul_eq_mul, map_mul, h5, map_sub, map_one]
     simp only [Pi.add_apply, Pi.smul_apply, Pi.sub_apply, smul_eq_mul, Pi.single_apply]
     split_ifs
     · field_simp

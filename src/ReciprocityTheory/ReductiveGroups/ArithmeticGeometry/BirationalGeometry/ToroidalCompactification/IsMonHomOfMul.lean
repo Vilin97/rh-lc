@@ -445,7 +445,7 @@ theorem polOActPull : PolOActPullSt := by
   · rw [← Category.id_comp (act 1), pa, o.map_one, Category.comp_id]
   · rw [← Category.id_comp (act (a * b)), pa, pa, ← Category.id_comp (act b), pa, o.map_mul, Category.assoc]
   · refine Eq.trans ?_ (pm (act a) (act b)).symm
-    rw [← Category.id_comp (act (a + b)), ← Category.id_comp (act a), ← Category.id_comp (act b), pa, pa, pa, o.map_add]
+    rw [← Category.id_comp (act (a + b)), ← Category.id_comp (act a), ← Category.id_comp (act b), pa, pa, pa, o.map_add (f := _)]
     exact MonObj.comp_mul _ _ _
   · obtain ⟨U, hU, t, ht⟩ := o.rosati a (f s)
     let V : (P'.A ⊗ P'.A).left.Opens := (P'.A ⊗ P'.A).hom ⁻¹ᵁ (f ⁻¹ᵁ U)
@@ -597,7 +597,7 @@ theorem qkPullExists (hG : GlobalFnsSt) : QkPullExistsSt := by
         have e : vS (g'.s (χ + χ')) y J' * thS D' y J' (cP D' _ χ) (cP D' _ χ') g'.b = vS (g'.s χ) y J' * vS (g'.s χ') y J' := e₀
         show vS (t (hD.xe.symm (hD.xe χ + hD.xe χ'))) y J * thS D y J (cP D _ (hD.xe χ)) (cP D _ (hD.xe χ')) (β g'.b) =
           vS (t (hD.xe.symm (hD.xe χ))) y J * vS (t (hD.xe.symm (hD.xe χ'))) y J
-        rw [← map_add, AddEquiv.symm_apply_apply, AddEquiv.symm_apply_apply, AddEquiv.symm_apply_apply, ← βc, ← βc,
+        rw [← map_add (f := _), AddEquiv.symm_apply_apply, AddEquiv.symm_apply_apply, AddEquiv.symm_apply_apply, ← βc, ← βc,
           cub y J J' hJ hJ', vt _ y J J' hJ hJ', vt _ y J J' hJ hJ', vt _ y J J' hJ hJ', cPoint_add]
         apply Additive.ofMul.injective
         have e' := congrArg Additive.ofMul e
@@ -670,7 +670,7 @@ theorem qkPullExists (hG : GlobalFnsSt) : QkPullExistsSt := by
     obtain ⟨χ, rfl⟩ := hD.xe.surjective χ
     have ι₁ : vS (h.s χ) y J' = vK (D'.tau p'.y χ) y J' := ιv _ y J' hJ'
     show vS ((up h).s (hD.xe χ)) y J = vK (D.tau (hD.xe p'.y) (hD.xe χ)) y J
-    rw [hv _ _ y J J' hJ hJ', ι₁, ιb, vτ D _ _ y J hJ, vτ D' _ _ y J' hJ', ← map_add, vψ _ y J J' hJ hJ',
+    rw [hv _ _ y J J' hJ hJ', ι₁, ιb, vτ D _ _ y J hJ, vτ D' _ _ y J' hJ', ← map_add (f := _), vψ _ y J J' hJ hJ',
       vψ _ y J J' hJ hJ', vψ _ y J J' hJ hJ', vρ y J J' hJ hJ', cPoint_add, mul_comm (cP D' _ χ)]
     apply Additive.ofMul.injective
     simp only [ofMul_mul, ofMul_inv]

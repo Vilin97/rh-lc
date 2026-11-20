@@ -27,7 +27,7 @@ theorem symMat_map {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) (m : �
   ext a i
   simp only [symMat, Matrix.map_apply, Matrix.of_apply]
   rw [← Polynomial.coeff_map]
-  simp [Polynomial.map_mul, Polynomial.map_pow, Polynomial.map_add]
+  simp [Polynomial.map_mul, Polynomial.map_pow, Polynomial.map_add (f := _)]
 
 def twistAt {k F : Type} [Field k] [Field F] [Algebra k F] {n : ℕ} (v₀ : Place k F) (c : F)
     (h : Place k F → Matrix (Fin n) (Fin n) F) : Place k F → Matrix (Fin n) (Fin n) F := by

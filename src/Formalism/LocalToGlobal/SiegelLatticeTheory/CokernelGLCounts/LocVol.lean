@@ -397,7 +397,7 @@ theorem T_sub_one_dvd (D : D7) (u : D.what₂.Word) :
   set y : D.host.E := (c : D.host.E) + D.host.conj (c : D.host.E) + (m : D.host.E) * (c : D.host.E) * D.host.conj (c : D.host.E)
     with hy
   have hTy : (((D.mem u).A.T : ℕ) : D.host.E) - 1 = (m : D.host.E) * y := by
-    rw [← hT, hπ, map_add, map_one, map_mul, map_natCast]
+    rw [← hT, hπ, map_add (f := _), map_one, map_mul, map_natCast]
     ring
   have hint : IsIntegral ℤ y := by
     have h1 : IsIntegral ℤ (c : D.host.E) := c.2

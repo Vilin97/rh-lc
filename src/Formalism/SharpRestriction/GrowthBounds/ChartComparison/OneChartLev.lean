@@ -61,7 +61,7 @@ theorem locW_intAtI (V : ValTied u eV i hi K) (w : D.what₂.places.Pl) (x : ((D
     obtain ⟨P, hP, hPy⟩ := h1 B hB
     obtain ⟨Q, hQ, hQz⟩ := h2 B hB
     refine ⟨P + Q, AddSubgroup.add_mem _ hP hQ, fun t => ?_⟩
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     show (D.fm u).emb i y c t + (D.fm u).emb i z c t = _
     rw [hPy t, hQz t]
     rfl

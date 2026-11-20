@@ -57,7 +57,7 @@ theorem rTensor_mem_filV {LL LL' V W : Type} [Field LL] [Algebra Qp LL] [Field L
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem rTensor_mem_DdR {LL LL' V W : Type} [Field LL] [Algebra Qp LL] [Field LL'] [Algebra Qp LL']
     [AddCommGroup V] [Module LL V] [Module Qp V] [IsScalarTower Qp LL V]
@@ -70,7 +70,7 @@ theorem rTensor_mem_DdR {LL LL' V W : Type} [Field LL] [Algebra Qp LL] [Field LL
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v c => simp [actVdR, hf]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   simp only [DdR, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.id_apply,
     sub_eq_zero] at hx ⊢
   intro g
@@ -103,7 +103,7 @@ theorem sum_rTensor {Qp V ι BdR : Type} [Field Qp] [AddCommGroup V] [Module Qp 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v c => simp only [LinearMap.rTensor_tmul]; rw [← TensorProduct.sum_tmul, h]
-  | add x y hx hy => simp only [map_add, Finset.sum_add_distrib, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finset.sum_add_distrib, hx, hy]
 
 end GlobalTheory.LayerJumps
 

@@ -150,7 +150,7 @@ def pairRowL (S : GridChoice W U) (t : T) (y : ∀ i, FinPt G (.grid i D.R.m)) (
     (LinearMap.applyₗ v)).compMultilinearMap (rowML S t y)
   map_add' A B := by
     ext rr
-    simp only [LinearMap.add_apply, map_add, LinearMap.add_comp, MultilinearMap.add_apply]
+    simp only [LinearMap.add_apply, map_add (f := _), LinearMap.add_comp, MultilinearMap.add_apply]
     rfl
   map_smul' c A := by
     ext rr

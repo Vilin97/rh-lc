@@ -68,7 +68,7 @@ theorem mCoordIdeal_ringHom {K : Type} [Fintype K] {J : K → Type} [∀ k, Fint
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp [mConeMap]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p n hp => simp only [map_mul, hp]; simp [mConeMap]
   ext f
   show mConeMap _ f = 0 ↔ mConeMap _ f = 0
@@ -117,7 +117,7 @@ theorem isPullHerm_xLine (σ : Equiv.Perm Ψ) (p : Ψ × Fin N) :
 theorem degree_mapDomain {J J' : Type} (f : J → J') (m : J →₀ ℕ) : (m.mapDomain f).degree = m.degree := by
   induction m using Finsupp.induction_linear with
   | zero => simp
-  | add a b ha hb => rw [Finsupp.mapDomain_add, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [Finsupp.mapDomain_add, map_add (f := _), map_add (f := _), ha, hb]
   | single a n => simp [Finsupp.mapDomain_single, Finsupp.degree_single]
 
 end GlobalTheory.CompanionTheory.Ar.Top.HhLabel
@@ -143,7 +143,7 @@ theorem hhFl_labelInv : ∀ II : IntersectionSystem, IsFullIntersectionSystem II
     rw [blockFnField_coordMap, IntermediateField.relfinrank_self, Nat.cast_one, one_mul] at hPF
     exact hPF.trans (congrArg (fun P => II (FlBlock Ψ N) (FlIdx Ψ N) P (dimFl Ψ N + 1) fun k => xLine Ψ N (w k)) himg)
   induction F using MvPolynomial.induction_on' with
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | monomial m c =>
     rw [rename_monomial]
     by_cases hm : m.degree = dimFl Ψ N + 1

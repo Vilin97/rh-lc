@@ -75,7 +75,7 @@ theorem appLE_one_add_eps {ν' : Y' ⟶ Y'} {ν : Y ⟶ Y} (h₁ : ν' ≫ π = 
     intro Z f f' hf V e e'
     subst hf
     rfl
-  rw [map_add, map_mul, map_one]
+  rw [map_add (f := _), map_mul, map_one]
   congr 2
   · exact congrArg (fun f => CommRingCat.Hom.hom f
       ((Scheme.ΓSpecIso (CommRingCat.of (DualNumber ℂ))).inv.hom DualNumber.eps))
@@ -110,12 +110,12 @@ theorem cocycle_val (hp : IsPullback ρ π q (spMap (algebraMap ℂ (DualNumber 
       resG Y' (le_inf (inf_le_left.trans inf_le_left) inf_le_right) (Q.g i i'').val :=
     congrArg Units.val (hQ.cocycle i i' i'')
   rw [hg _ _ (le _), hg _ _ (le _), hg _ _ (le _)] at E
-  simp only [map_add, map_mul, map_one, res_constFn'] at E
+  simp only [map_add (f := _), map_mul, map_one, res_constFn'] at E
   rw [res_appLE ρ _ l₁ _ (le _), res_appLE ρ _ l₂ _ (le _), res_appLE ρ _ l₃ _ (le _)] at E
   have := (uniq (ρ.appLE _ _ (le (Q.U i ⊓ Q.U i' ⊓ Q.U i''))).hom _
     (fun F => decomp π ρ _ (hD _) _ (hO _) (le _) F) (a := 1) (a' := 1)
     (b := resG Y l₁ (k i i') + resG Y l₂ (k i' i'')) (b' := resG Y l₃ (k i i'')) (by
-      rw [map_one, map_add]
+      rw [map_one, map_add (f := _)]
       linear_combination E - ((ρ.appLE _ _ (le _)).hom (resG Y l₁ (k i i')) *
         (ρ.appLE _ _ (le _)).hom (resG Y l₂ (k i' i''))) * eps_sq π (Q.U i ⊓ Q.U i' ⊓ Q.U i''))).2
   rw [← valAt'_res x l₁ _ hx, ← valAt'_res x l₂ _ hx, ← valAt'_res x l₃ _ hx, ← valAt'_add, this]

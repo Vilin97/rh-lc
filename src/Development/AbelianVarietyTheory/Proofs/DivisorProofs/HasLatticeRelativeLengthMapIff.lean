@@ -43,7 +43,7 @@ theorem exists_basis_sum {R : Type*} [CommRing R] {M M' : Type*} [AddCommGroup M
     have h2 : ∑ j, g (Sum.inr j) • (e j : M') = 0 := by
       have := congrArg f hg'
       set_option synthInstance.maxHeartbeats 100000 in
-        simpa [map_add, map_sum, map_smul, hdf, hσf] using this
+        simpa [map_add (f := _), map_sum, map_smul, hdf, hσf] using this
     have hr : ∀ j, g (Sum.inr j) = 0 := Fintype.linearIndependent_iff.1 heli _ h2
     have h1 : ∑ i, g (Sum.inl i) • (d i : M) = 0 := by simpa [hr] using hg'
     have hl : ∀ i, g (Sum.inl i) = 0 := Fintype.linearIndependent_iff.1 hdli _ h1

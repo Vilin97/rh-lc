@@ -56,7 +56,7 @@ theorem functional_integral {n : ℕ} (L : Set (Fin n → E)) (φ : (Fin n → E
       rw [ext_tmul]
       exact mul_mem ((integral_iff _).2 (hφ x hx) v) (ha v)
     | zero => intro v; rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => intro v; rw [map_add]; exact add_mem (hx v) (hy v)
+    | add x y _ _ hx hy => intro v; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx v) (hy v)
     | neg x _ hx => intro v; rw [map_neg]; exact neg_mem (hx v)
   have h := key _ hw
   unfold fv at h
@@ -145,7 +145,7 @@ theorem _root_.GlobalTheory.AdLat.Model.hermA_symm (c : E ≃ₐ[F] E) (hc : ∀
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [_root_.GlobalTheory.AdLat.sg, hc]
-    | add u w hu hw => rw [map_add, map_add, hu, hw]
+    | add u w hu hw => rw [map_add (f := _), map_add (f := _), hu, hw]
   have hG' : ∀ a b, _root_.GlobalTheory.AdLat.sg (FiniteAdeleRing (𝓞 F) F) c
       ((1 : FiniteAdeleRing (𝓞 F) F) ⊗ₜ[F] G a b) = 1 ⊗ₜ[F] G b a := by
     intro a b

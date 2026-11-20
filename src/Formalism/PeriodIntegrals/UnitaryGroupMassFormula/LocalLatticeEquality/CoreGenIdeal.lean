@@ -73,7 +73,7 @@ theorem core_gen (hA : AvoidP) (p : HeightOneSpectrum (𝓞 F)) (I : Submodule (
     | add x z _ _ hx hz =>
       obtain ⟨y1, h1⟩ := hx
       obtain ⟨y2, h2⟩ := hz
-      exact ⟨y1 + y2, by rw [map_add, h1, h2, smul_add]⟩
+      exact ⟨y1 + y2, by rw [map_add (f := _), h1, h2, smul_add]⟩
     | smul r x _ hx =>
       obtain ⟨y, h⟩ := hx
       refine ⟨r * y, ?_⟩

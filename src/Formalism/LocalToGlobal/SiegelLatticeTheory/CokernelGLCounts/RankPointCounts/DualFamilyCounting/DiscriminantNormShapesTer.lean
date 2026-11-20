@@ -28,7 +28,7 @@ theorem exists_inv_unit {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {b : �
   obtain ⟨u, hu⟩ := hnil.isUnit_one_sub
   refine ⟨↑u⁻¹ * Ideal.Quotient.mk (extP K 𝔭 ^ k) (ι y), ?_⟩
   have h : Ideal.Quotient.mk (extP K 𝔭 ^ k) (ι y) * Ideal.Quotient.mk (extP K 𝔭 ^ k) (ι b) = 1 - Ideal.Quotient.mk (extP K 𝔭 ^ k) (ι i) := by
-    rw [← map_mul, ← map_mul, eq_sub_iff_add_eq, ← map_add, ← map_add, hyi, map_one, map_one]
+    rw [← map_mul, ← map_mul, eq_sub_iff_add_eq, ← map_add (f := _), ← map_add (f := _), hyi, map_one, map_one]
   rw [mul_assoc, h, ← hu, Units.inv_mul]
 
 open Classical in
@@ -159,7 +159,7 @@ theorem norm_shape_holds : NormShape := by
   obtain ⟨t, ht⟩ := exists_trace_one hK hF h𝔭 k
   set θ := Ideal.Quotient.mk (extP K 𝔭 ^ k) t with hθ
   have hθ1 : θ + star θ = 1 := by
-    rw [hθ, star_mk, ← map_add, ← map_one (Ideal.Quotient.mk (extP K 𝔭 ^ k)), Ideal.Quotient.eq]
+    rw [hθ, star_mk, ← map_add (f := _), ← map_one (Ideal.Quotient.mk (extP K 𝔭 ^ k)), Ideal.Quotient.eq]
     exact ht
   set A := E * W2 * E with hAdef
   clear_value A

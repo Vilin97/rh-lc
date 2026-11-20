@@ -130,7 +130,7 @@ theorem lat_act (M : LieModel G ξ E) (f : G ⟶ G) [IsMonHom f] (T : E →ₗ[�
     exact Submodule.subset_span ⟨v ≫ f, key _ _ hv⟩
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hx hy
   | smul a x _ hx =>
     rw [LinearMap.map_smul_of_tower]
@@ -450,7 +450,7 @@ theorem fibSandwich : FibSandwich := by
           simpa [RingHom.comp_apply, algebraMap_smul] using h5
         | zero => simp
         | add w1 w2 _ _ h1 h2 =>
-          simp only [map_add, smul_add, Finset.sum_add_distrib]
+          simp only [map_add (f := _), smul_add, Finset.sum_add_distrib]
           exact add_mem h1 h2
         | smul a w _ h1 =>
           have h3 : ∀ k, ((algebraMap V L).comp σ) (zz k) • ρC (bb k) (a • w) =

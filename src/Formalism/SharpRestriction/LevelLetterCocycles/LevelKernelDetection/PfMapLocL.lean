@@ -82,10 +82,10 @@ theorem mapLocL_cmp_d (hR : Ring9 W) (T : LocLat G Qp LL O) (a : PowerSeries O) 
         algebraMap O (PowerSeries O) (PowerSeries.constantCoeff a) := by
       rw [PowerSeries.algebraMap_apply, Algebra.algebraMap_self, RingHom.id_apply]
     rw [BaseId.d_apply]
-    conv_lhs => rw [ha, hC0, map_add, map_mul, AlgHom.commutes, (baseIdOf hR).ι_X, hπ]
+    conv_lhs => rw [ha, hC0, map_add (f := _), map_mul, AlgHom.commutes, (baseIdOf hR).ι_X, hπ]
     simp only [Pi.add_apply, Pi.mul_apply, BaseId.d_apply, letπ, Pi.algebraMap_apply]
     ring
-  rw [hd, add_smul, map_add, mul_smul, W.cmp_π, zero_add, algebraMap_smul, W.cmp_smul]
+  rw [hd, add_smul, map_add (f := _), mul_smul, W.cmp_π, zero_add, algebraMap_smul, W.cmp_smul]
 
 theorem mapLocL_t_sum {T : LocLat G Qp LL O} (C : Coord W (baseIdOf hR) T) (i : ZMod n) {ι : Type}
     (s : Finset ι) (f : ι → C.V) : C.t i (∑ l ∈ s, f l) = ∑ l ∈ s, C.t i (f l) := by
@@ -100,7 +100,7 @@ theorem mapLocL_map_φVB {T₁ T₂ : LocLat G Qp LL O} (f : T₁.V →ₗ[LL] T
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [φVB]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem mapLocL_map_φVB_pow {T₁ T₂ : LocLat G Qp LL O} (f : T₁.V →ₗ[LL] T₂.V) (e : ℕ)
     (z : T₁.V ⊗[Qp] B) :

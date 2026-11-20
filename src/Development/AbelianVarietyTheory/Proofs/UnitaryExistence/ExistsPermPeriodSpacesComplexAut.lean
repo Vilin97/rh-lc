@@ -44,7 +44,7 @@ theorem ringHom_ext {l : Level H} (hA : l.A = 1) {f f' : KA l →+* ℂ} (h : f 
     rw [eq_ratCast (algebraMap ℚ (KA l)) r, map_ratCast, map_ratCast]
   | add x y hx hy ihx ihy =>
     show f (⟨x, hx⟩ + ⟨y, hy⟩) = f' (⟨x, hx⟩ + ⟨y, hy⟩)
-    rw [map_add, map_add, ihx, ihy]
+    rw [map_add (f := _), map_add (f := _), ihx, ihy]
   | inv x hx ih =>
     show f (⟨x, hx⟩⁻¹) = f' (⟨x, hx⟩⁻¹)
     rw [map_inv₀, map_inv₀, ih]

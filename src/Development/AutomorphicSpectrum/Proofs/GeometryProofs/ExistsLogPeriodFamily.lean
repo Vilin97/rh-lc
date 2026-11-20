@@ -212,7 +212,7 @@ theorem exists_additive_sections {n g : ℕ} (Γ₀ : Submodule ℤ (Fin g → �
     refine Finset.sum_congr rfl fun j _ => ?_
     exact Int.cast_smul_eq_zsmul ℂ _ _
   · intro x y b
-    simp only [map_add, Finsupp.add_apply, Int.cast_add, add_smul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), Finsupp.add_apply, Int.cast_add, add_smul, Finset.sum_add_distrib]
   · intro x b hb
     refine sum_mem fun j _ => ?_
     rw [Int.cast_smul_eq_zsmul]

@@ -170,8 +170,8 @@ theorem exists_phi_eq_shift (k : ℕ) [NeZero k] (la : d.A.La)
   have f₁ := fr_period d la.l (z + d.A.ct (α + la.y))
   have f₂ := fr_period d la.l (d.A.ct (α + la.y))
   rw [add_comm z, d.A.ah_add, add_comm _ z] at f₁
-  have a₁ : d.A.ct α + (d.A.ct la.y + la.l) + z = z + d.A.ct (α + la.y) + la.l := by rw [map_add]; abel
-  have a₂ : d.A.ct α + (d.A.ct la.y + la.l) = d.A.ct (α + la.y) + la.l := by rw [map_add]; abel
+  have a₁ : d.A.ct α + (d.A.ct la.y + la.l) + z = z + d.A.ct (α + la.y) + la.l := by rw [map_add (f := _)]; abel
+  have a₂ : d.A.ct α + (d.A.ct la.y + la.l) = d.A.ct (α + la.y) + la.l := by rw [map_add (f := _)]; abel
   have a₃ : z + v.2 + d.A.ct α = d.A.ct α + z + v.2 := by abel
   rw [hb, a₁, a₂, a₃, f₁, f₂, add_comm v.2 z] at e₅
   have a₄ : v.1 α = (d.A.P0 la).1 α / k := by rw [hvdef, div_eq_inv_mul]; rfl

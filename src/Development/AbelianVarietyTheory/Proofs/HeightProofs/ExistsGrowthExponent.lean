@@ -77,7 +77,7 @@ theorem exists_growth_exponent : ∀ {D : D7} (θ : D.what₂.Tau → (Ainf D.ho
       obtain ⟨C1, h1⟩ := (hPr a).1 ha2 l hl
       obtain ⟨C2, h2⟩ := (hPr b).1 hb2 l hl
       refine ⟨C1 + C2, fun y hy => ?_⟩
-      rw [Dw_add hstd.1 hl (hSm _ ha1) (hSm _ hb1), map_add, Pi.add_apply, add_mul]
+      rw [Dw_add hstd.1 hl (hSm _ ha1) (hSm _ hb1), map_add (f := _), Pi.add_apply, add_mul]
       exact (norm_add_le _ _).trans (add_le_add (h1 y hy) (h2 y hy))
     · have h0 : IsKFin ε σ (0 : H) := mem_kfin.1 (kfin ε σ).zero_mem
       refine ⟨h0, (hPr _).2 fun l hl => ⟨0, fun y hy => ?_⟩⟩

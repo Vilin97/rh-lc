@@ -95,7 +95,7 @@ private def dl (s : R →+* T) (e : T) (he : e * e = 0) : DualNumber R →+* T w
   toFun a := s a.fst + e * s a.snd
   map_one' := by simp
   map_mul' a b := by
-    simp only [TrivSqZeroExt.fst_mul, DualNumber.snd_mul, map_mul, map_add]
+    simp only [TrivSqZeroExt.fst_mul, DualNumber.snd_mul, map_mul, map_add (f := _)]
     linear_combination (-(s a.snd * s b.snd)) * he
   map_zero' := by simp
   map_add' a b := by simp; ring
@@ -296,7 +296,7 @@ private theorem jetVal_eq {G : Over (Sp R)} [GrpObj G] {y : epsR R ⟶ G} {U : G
         (epsIn_left z) (ih n).1
       rw [List.map_cons, List.prod_cons]
       refine ⟨k1, k2.trans ?_⟩
-      rw [(ih n).2, (ih (n + 1)).2, jp_cons, map_add, map_mul]
+      rw [(ih n).2, (ih (n + 1)).2, jp_cons, map_add (f := _), map_mul]
       rfl
   have e : SecJet.epsPt y k = ((List.finRange k).map fun x => epsIn R x ≫ y).prod := by
     rw [SecJet.epsPt, List.ofFn_eq_map]

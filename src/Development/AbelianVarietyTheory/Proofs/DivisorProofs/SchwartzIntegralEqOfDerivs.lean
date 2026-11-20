@@ -41,7 +41,7 @@ noncomputable def toWeighted (s : Finset (ℕ × ℕ)) : SchwartzMap V ℂ →L[
     (fun f g => by
       funext i
       ext1 x
-      simp only [weightedDeriv_apply, map_add, smul_add, Pi.add_apply,
+      simp only [weightedDeriv_apply, map_add (f := _), smul_add, Pi.add_apply,
         BoundedContinuousFunction.coe_add])
     (fun a f => by
       funext i

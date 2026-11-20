@@ -34,7 +34,7 @@ def e0 (σ : B.KO →+* ℂ) : B.Cusp j ka →ₛₗ[σ] EuclideanSpace ℂ (Σ 
   toFun F := WithLp.toLp 2 (fun p => if p.1 = σ then ((Nt.cf p.1 : ℝ) : ℂ) * Nt.ev p.1 p.2 F else 0)
   map_add' F G := by
     ext p
-    simp only [map_add, PiLp.add_apply]
+    simp only [map_add (f := _), PiLp.add_apply]
     split_ifs <;> ring
   map_smul' a F := by
     ext ⟨τ, y⟩
@@ -98,7 +98,7 @@ theorem netN_smul (σ : B.KO →+* ℂ) (a : B.KO) (F : B.Cusp j ka) : Nt.netN �
   rw [← Nt.norm_euclideanEmbedding_eq_netNorm, ← Nt.norm_euclideanEmbedding_eq_netNorm, map_smulₛₗ, norm_smul]
 
 theorem netN_add (σ : B.KO →+* ℂ) (F G : B.Cusp j ka) : Nt.netN σ (F + G) ≤ Nt.netN σ F + Nt.netN σ G := by
-  rw [← Nt.norm_euclideanEmbedding_eq_netNorm, ← Nt.norm_euclideanEmbedding_eq_netNorm, ← Nt.norm_euclideanEmbedding_eq_netNorm, map_add]
+  rw [← Nt.norm_euclideanEmbedding_eq_netNorm, ← Nt.norm_euclideanEmbedding_eq_netNorm, ← Nt.norm_euclideanEmbedding_eq_netNorm, map_add (f := _)]
   exact norm_add_le _ _
 
 theorem netN_eq_zero (hM : NetMax Nt) (σ : B.KO →+* ℂ) (F : B.Cusp j ka) : Nt.netN σ F = 0 ↔ F = 0 := by

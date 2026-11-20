@@ -55,7 +55,7 @@ theorem exists_intertwining_le (hπ : π.IsIrreducible) (h : IsIsotypicAlg π ρ
   have hPi : ∀ g x, P (ρ g x) = ρ g (P x) := fun g x => by
     have hx : x ∈ C.toSubmodule ⊔ C1.toSubmodule := by rw [hc'.sup_eq_top]; trivial
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hx
-    rw [map_add, map_add, map_add, hPl a ha, hPr b hb, hPl _ (C.apply_mem_toSubmodule g ha),
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), hPl a ha, hPr b hb, hPl _ (C.apply_mem_toSubmodule g ha),
       hPr _ (C1.apply_mem_toSubmodule g hb), add_zero, add_zero]
   have hPm : ∀ x, P x ∈ C.toSubmodule := fun x => by simp [P]
   obtain ⟨c, hc0, hcne⟩ : ∃ c ∈ C.toSubmodule, c ≠ 0 := by

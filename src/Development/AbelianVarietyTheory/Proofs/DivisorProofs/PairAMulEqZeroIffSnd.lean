@@ -44,15 +44,15 @@ theorem pairA_mul_eq_zero_iff_fst' (a : AF F) : pairA F 1 0 * a = 0 ↔ fstA F a
 
 def incFin : Af F →ₗ[F] AF F where
   toFun y := pairA F 0 y
-  map_add' y y' := af_ext' (by rw [map_add, fstA_pairA', fstA_pairA', fstA_pairA', add_zero])
-    (by rw [map_add, sndA_pairA', sndA_pairA', sndA_pairA'])
+  map_add' y y' := af_ext' (by rw [map_add (f := _), fstA_pairA', fstA_pairA', fstA_pairA', add_zero])
+    (by rw [map_add (f := _), sndA_pairA', sndA_pairA', sndA_pairA'])
   map_smul' c y := af_ext' (by rw [map_smul, fstA_pairA', fstA_pairA', RingHom.id_apply, smul_zero])
     (by rw [map_smul, sndA_pairA', sndA_pairA', RingHom.id_apply])
 
 def incInf : Ainf F →ₗ[F] AF F where
   toFun y := pairA F y 0
-  map_add' y y' := af_ext' (by rw [map_add, fstA_pairA', fstA_pairA', fstA_pairA'])
-    (by rw [map_add, sndA_pairA', sndA_pairA', sndA_pairA', add_zero])
+  map_add' y y' := af_ext' (by rw [map_add (f := _), fstA_pairA', fstA_pairA', fstA_pairA'])
+    (by rw [map_add (f := _), sndA_pairA', sndA_pairA', sndA_pairA', add_zero])
   map_smul' c y := af_ext' (by rw [map_smul, fstA_pairA', fstA_pairA', RingHom.id_apply])
     (by rw [map_smul, sndA_pairA', sndA_pairA', RingHom.id_apply, smul_zero])
 
@@ -80,7 +80,7 @@ theorem secFin_finPartF (z : AF F ⊗[F] E) : secFin F E (finPartF F E z) = pair
   | tmul a b =>
     have h1 : finPartF F E (a ⊗ₜ b) = sndA F a ⊗ₜ b := rfl
     rw [h1, secFin, TensorProduct.map_tmul, LinearMap.id_apply, incFin_sndA, TensorProduct.smul_tmul', smul_eq_mul]
-  | add x y hx hy => rw [(finPartF F E).map_add, (secFin F E).map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [(finPartF F E).map_add (f := _), (secFin F E).map_add (f := _), hx, hy, smul_add]
 
 theorem secInf_infPartF (z : AF F ⊗[F] E) : secInf F E (infPartF F E z) = pairA F 1 0 • z := by
   induction z using TensorProduct.induction_on with
@@ -88,7 +88,7 @@ theorem secInf_infPartF (z : AF F ⊗[F] E) : secInf F E (infPartF F E z) = pair
   | tmul a b =>
     have h1 : infPartF F E (a ⊗ₜ b) = fstA F a ⊗ₜ b := rfl
     rw [h1, secInf, TensorProduct.map_tmul, LinearMap.id_apply, incInf_fstA, TensorProduct.smul_tmul', smul_eq_mul]
-  | add x y hx hy => rw [(infPartF F E).map_add, (secInf F E).map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [(infPartF F E).map_add (f := _), (secInf F E).map_add (f := _), hx, hy, smul_add]
 
 theorem finPartF_smul (z : AF F ⊗[F] E) : finPartF F E (pairA F 0 1 • z) = finPartF F E z := by
   rw [Algebra.smul_def, (finPartF F E).map_mul]

@@ -215,7 +215,7 @@ theorem orth_pieces (M : Model σ X W) (M₁ : Model σ X₁ W₁) (hH : H.IsAda
   have cb := sCB (W := W) (H' := H') hH z z₂
   rw [hD] at ba ca cb
   refine ⟨?_, ?_, fun hz hz' => ?_⟩
-  · simp only [map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+  · simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
     linear_combination -ba - ca
   · linear_combination -cb
   · have aa := sAA (X := X) hH' y y'
@@ -231,7 +231,7 @@ theorem orth_pieces (M : Model σ X W) (M₁ : Model σ X₁ W₁) (hH : H.IsAda
       rw [sy, M₁.co.form, hz, hz', zero_dotProduct, zero_dotProduct, sub_zero]
     rw [cc'] at cc
     rw [hD] at aa ba' ca' ba₂ bb cb' ca₂ cb₂ cc
-    simp only [map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+    simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
     linear_combination aa - ba' - ca' + ba₂ + bb - cb' + ca₂ + cb₂ + cc
 
 end Main
@@ -313,9 +313,9 @@ theorem exists_ratLagr : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     set Bm := Matrix.vecMulVec (incV F H.x) (incM F H'.ι *ᵥ (t • incV F p.2.1))
     set Cm := incM F H.ι * (t • incM F (p.2.2 : Matrix (Fin n₁) (Fin d₁) E)) * (incM F H'.ι)ᵀ
     have k1 := GlobalTheory.MixedLagr.schr_comp B.ψ (M.co.e Bm) (M.co.e Cm) φ
-    rw [o2, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add] at k1
+    rw [o2, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add (f := _)] at k1
     have k2 := GlobalTheory.MixedLagr.schr_comp B.ψ (M.co.e Am) (M.co.e (Bm + Cm)) φ
-    rw [o1, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add, ← add_assoc] at k2
+    rw [o1, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add (f := _), ← add_assoc] at k2
     rw [k1, k2]
 
 end GlobalTheory.MixedLagrXW

@@ -6,7 +6,7 @@ open IsLocalRing Matrix UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.AlgebraT
 private noncomputable def UpperTheory.V.Pa.phDecD {l : ℕ} [Fact l.Prime] (S : Ctx l) (Φ : S.U.N →+ S.F) (y : S.U.N) : S.Bh →+ S.F where
   toFun b := Φ (b • y) - S.rF b * Φ y
   map_zero' := by simp
-  map_add' b b' := by rw [add_smul, map_add, map_add]; ring
+  map_add' b b' := by rw [add_smul, map_add (f := _), map_add (f := _)]; ring
 
 private theorem UpperTheory.V.Pa.phDecD_apply {l : ℕ} [Fact l.Prime] (S : Ctx l) (Φ : S.U.N →+ S.F) (y : S.U.N) (b : S.Bh) :
     phDecD S Φ y b = Φ (b • y) - S.rF b * Φ y := rfl
@@ -37,7 +37,7 @@ private theorem UpperTheory.V.Pa.phDecD_mem {l : ℕ} [Fact l.Prime] (S : Ctx l)
       ring
     simp only [phDecD_apply]
     rw [e]
-    simp only [add_smul, map_add, map_mul, h1, h2 _ hqq, hm q hq, hm q' hq']
+    simp only [add_smul, map_add (f := _), map_mul, h1, h2 _ hqq, hm q hq, hm q' hq']
     ring
   · rw [phDecD_apply, h1, sub_self]
   · rw [phDecD_apply, h2 b (Ideal.mem_sup_right hb), hm b ((prAdd l S).2.2.2.2.2.1 hb)]
@@ -68,7 +68,7 @@ theorem UpperTheory.V.Pa.phDec :
         simp [phDecD_apply]
       map_add' := fun y y' => by
         refine Subtype.ext (AddMonoidHom.ext fun b => ?_)
-        simp only [Submodule.coe_add, AddMonoidHom.add_apply, phDecD_apply, smul_add, map_add]
+        simp only [Submodule.coe_add, AddMonoidHom.add_apply, phDecD_apply, smul_add, map_add (f := _)]
         ring }
   have hD : ∀ y b, (D y : S.Bh →+ S.F) b = Φ (b • y) - S.rF b * Φ y := fun _ _ => rfl
   have hs : ∀ (c : S.Bh) y, D (c • y) = S.rF c • D y := by

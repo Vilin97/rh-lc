@@ -72,7 +72,7 @@ theorem exists_mult_pow_eq_one {c : X → A} (hc : ∀ χ χ', c (χ + χ') = c 
         show n • p (f (e i)) = Additive.ofMul (c (e i))
         rw [show f (e i) = Additive.ofMul ⟨c' (e i), 1⟩ from e.constr_basis ℤ _ i, ← hc', ofMul_pow]; rfl) χ
     exact Additive.ofMul.injective (by rw [ofMul_pow]; exact this)
-  have fadd : ∀ χ χ', (f (χ + χ')).toMul = (f χ).toMul * (f χ').toMul := fun χ χ' => by rw [map_add]; rfl
+  have fadd : ∀ χ χ', (f (χ + χ')).toMul = (f χ).toMul * (f χ').toMul := fun χ χ' => by rw [map_add (f := _)]; rfl
   let g : X → Ex h b := fun χ => (f χ).toMul ^ n
   have gadd : ∀ χ χ', g (χ + χ') = g χ * g χ' := fun χ χ' => by simp only [g, fadd, mul_pow]
   have gb : ∀ χ, (g χ).b = c χ := fun χ => (Ex.pow_b _ _).trans (fb χ)
@@ -113,7 +113,7 @@ theorem exists_mult_pow_eq_one {c : X → A} (hc : ∀ χ χ', c (χ + χ') = c 
     apply Additive.ofMul.injective
     rw [ofMul_mul, ofMul_pow, ofMul_one]
     exact eq_neg_iff_add_eq_zero.1 this
-  have roadd : ∀ χ χ', (ro (χ + χ')).toMul = (ro χ).toMul * (ro χ').toMul := fun χ χ' => by rw [map_add]; rfl
+  have roadd : ∀ χ χ', (ro (χ + χ')).toMul = (ro χ).toMul * (ro χ').toMul := fun χ χ' => by rw [map_add (f := _)]; rfl
   refine ⟨fun χ => (g χ).u * (ro χ).toMul, ⟨?_, fun χ χ' => ?_⟩, fun χ => ?_⟩
   · show (g 0).u * (ro 0).toMul = 1
     rw [show (g 0).u = 1 from m.1, map_zero, toMul_zero, _root_.mul_one]

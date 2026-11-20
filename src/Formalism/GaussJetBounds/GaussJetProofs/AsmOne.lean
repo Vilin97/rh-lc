@@ -133,7 +133,7 @@ theorem oneLetterR_of (hS : LemmaS.{u}) (hG : GenLogWeight.{u, 0}) (hB : LogBrid
       have h1 := hf a (Finset.mem_insert_self a s) n
       have h2 := ih (fun x hx => hf x (Finset.mem_insert_of_mem hx)) n
       unfold MonoWtGe at h1 h2 ⊢
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le h1 h2)
 
   have cc_subst : ∀ (a : ZMod 2 → MvPowerSeries ι K), (∀ s, MvPowerSeries.constantCoeff (a s) = 0) →

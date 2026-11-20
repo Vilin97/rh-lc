@@ -52,7 +52,7 @@ theorem pluriharmonic_dz_differentiable : ∀ {V : Type} [NormedAddCommGroup V] 
         have hc : c • w = c.re • w + c.im • (Complex.I • w) := by
           conv_lhs => rw [← Complex.re_add_im c]
           rw [add_smul, mul_smul, Complex.coe_smul, Complex.coe_smul]
-        rw [hc, D.map_add, D.map_smul, D.map_smul, hDI, Complex.real_smul, Complex.real_smul]
+        rw [hc, D.map_add (f := _), D.map_smul, D.map_smul, hDI, Complex.real_smul, Complex.real_smul]
         conv_rhs => rw [← Complex.re_add_im c]
         ring
       cont := D.continuous }

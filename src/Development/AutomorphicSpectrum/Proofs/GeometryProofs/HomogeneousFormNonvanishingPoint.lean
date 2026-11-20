@@ -112,7 +112,7 @@ theorem rename_inl_mem {Ω : Type} [Field Ω] (y₁ : (Σ k, ι k) → Ω) (y₂
     intro g
     induction g using MvPolynomial.induction_on with
     | C a => simp
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p n hp =>
       simp only [map_mul, hp, rename_X]
       congr 1
@@ -134,7 +134,7 @@ theorem aeval_mem_int {Ω : Type} [Field Ω] [Algebra ℚ Ω] {σ : Type} (A : S
     (hv : ∀ p, v p ∈ A) (g : MvPolynomial σ ℤ) : aeval v g ∈ A := by
   induction g using MvPolynomial.induction_on with
   | C n => simpa using intCast_mem A n
-  | add p q hp hq => rw [map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | mul_X p i hp => rw [map_mul, aeval_X]; exact mul_mem hp (hv i)
 
 omit [∀ k, Fintype (ι k)] in

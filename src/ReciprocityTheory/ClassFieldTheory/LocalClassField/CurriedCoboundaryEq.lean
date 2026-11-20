@@ -153,7 +153,7 @@ theorem norm_all [N.Normal] (hN : IsOpen (N : Set G)) (h1 : Subsingleton ((M.res
   obtain ⟨w2, hB⟩ := normB M N hN h1 _ (d_sub_d M _ (d_sub_d M x hx w0) w1) hA
   refine ⟨w0 + w1 + w2, ?_⟩
   have : x - M.coch.d 1 (w0 + w1 + w2) = x - M.coch.d 1 w0 - M.coch.d 1 w1 - M.coch.d 1 w2 := by
-    rw [map_add, map_add]; abel
+    rw [map_add (f := _), map_add (f := _)]; abel
   rw [this]
   exact hB
 

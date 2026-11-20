@@ -19,7 +19,7 @@ theorem degFl_pderiv_pow (u : ι → Fin N → ℝ) (τ : ι) (i : Fin N) :
   have h : pderiv (τ, i) (linRoot u ^ (dimFl ι N + 1)) =
       C (-((dimFl ι N : ℝ) + 1) * u τ i) * linRoot u ^ dimFl ι N := by
     rw [pderiv_pow, pderiv_linRoot]
-    simp only [Nat.add_sub_cancel, map_mul, map_neg, map_add, map_natCast, map_one, Nat.cast_add,
+    simp only [Nat.add_sub_cancel, map_mul, map_neg, map_add (f := _), map_natCast, map_one, Nat.cast_add,
       Nat.cast_one]
     ring
   rw [h, PPowSum.degFl_C_mul, flagDeg]

@@ -37,7 +37,7 @@ theorem ACo.hom {W' : Type 1} [AddCommGroup W'] [Module B' W'] {θ : B →+* E} 
       rw [h'.same a (ha'.trans hr), h.same a ha', ← hθ, ho]; rfl
     · rw [h'.diff a a' e, h.diff a a' e]; simp
   | zero => simp
-  | add x y _ _ hx hy => simp only [map_add, Pi.add_apply, AddMonoidHom.add_apply, hx, hy, mul_add]
+  | add x y _ _ hx hy => simp only [map_add (f := _), Pi.add_apply, AddMonoidHom.add_apply, hx, hy, mul_add]
   | smul b x _ hx => rw [map_smulₛₗ, h'.smul, h.smul, hx, hθ, map_mul]; ring
 
 theorem ACo.cup {W' W'' : Type 1} [AddCommGroup W'] [Module B W'] [AddCommGroup W''] [Module B W''] {θ : B →+* E}
@@ -57,7 +57,7 @@ theorem ACo.cup {W' W'' : Type 1} [AddCommGroup W'] [Module B W'] [AddCommGroup 
   induction hw using Submodule.span_induction with
   | zero => simp
   | add x y _ _ hx hy =>
-    simp only [map_add, LinearMap.add_apply, Pi.add_apply, AddMonoidHom.add_apply, hx, hy, add_mul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), LinearMap.add_apply, Pi.add_apply, AddMonoidHom.add_apply, hx, hy, add_mul, Finset.sum_add_distrib]
   | smul d x _ hx =>
     rw [map_smul, LinearMap.smul_apply, h''.smul, hx]
     simp only [h.smul, Finset.mul_sum, mul_assoc]
@@ -67,7 +67,7 @@ theorem ACo.cup {W' W'' : Type 1} [AddCommGroup W'] [Module B W'] [AddCommGroup 
   induction hw' using Submodule.span_induction with
   | zero => simp
   | add x y _ _ hx hy =>
-    simp only [map_add, Pi.add_apply, AddMonoidHom.add_apply, hx, hy, add_mul, mul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), Pi.add_apply, AddMonoidHom.add_apply, hx, hy, add_mul, mul_add, Finset.sum_add_distrib]
   | smul d x _ hx =>
     rw [map_smul, h''.smul, hx]
     simp only [h'.smul, Finset.mul_sum]

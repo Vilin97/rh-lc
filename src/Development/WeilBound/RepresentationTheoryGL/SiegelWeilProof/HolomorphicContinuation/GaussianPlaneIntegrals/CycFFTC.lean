@@ -30,7 +30,7 @@ theorem th_embT (c : PV (Rw ε true) (Fin n) (Fin n)) : Th ε (emb ε true c) = 
   induction c using MvPolynomial.induction_on with
   | C a =>
     simp [emb, Th]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     have e : eqv ε (jv ε true v) = Sum.inr v := (eqv ε).apply_symm_apply (Sum.inr v)
     have hx : Th ε (emb ε true (X v)) = C (X v) := by
@@ -44,7 +44,7 @@ theorem th_embF (t : PV (Rw ε false) (Fin n) (Fin n)) :
   induction t using MvPolynomial.induction_on with
   | C a =>
     simp [emb, Th]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     have e : eqv ε (jv ε false v) = Sum.inl v := (eqv ε).apply_symm_apply (Sum.inl v)
     have hx : Th ε (emb ε false (X v)) = X v := by

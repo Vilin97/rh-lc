@@ -155,7 +155,7 @@ theorem exists_separable_normalisation_reduced_fibres : ∀ (k A : Type) [Field 
     by_cases hD : D k (FractionRing A) (algebraMap A (FractionRing A) t) = 0
     · obtain ⟨M, hM⟩ := GlobalTheory.T.noether_normalization_finite_aeval_pow_add k A t a ht
       refine ⟨t ^ M + a, hM, ?_⟩
-      rw [map_add, map_pow, map_add, Derivation.leibniz_pow, hD, smul_zero, smul_zero, zero_add]
+      rw [map_add (f := _), map_pow, map_add (f := _), Derivation.leibniz_pow, hD, smul_zero, smul_zero, zero_add]
       exact ha
     · exact ⟨t, ht, hD⟩
   obtain ⟨y, hy, hDy⟩ := key

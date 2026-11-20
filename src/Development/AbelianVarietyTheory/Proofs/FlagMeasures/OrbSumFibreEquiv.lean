@@ -288,7 +288,7 @@ include hT hz hU in
 theorem decomp (v : V) : ∃ (u : U) (t : K), v = u + t • z := by
   have T0 : (T : K) ≠ 0 := Nat.cast_ne_zero.2 hT.ne_zero
   refine ⟨⟨v + (h z v / T) • z, (hU _).2 ?_⟩, -(h z v / T), by simp⟩
-  rw [map_add, map_smul, hz, smul_eq_mul]
+  rw [map_add (f := _), map_smul, hz, smul_eq_mul]
   field_simp
   ring
 
@@ -299,7 +299,7 @@ theorem pair (u u' : U) (t t' : K) :
   have h1 : ∀ u : U, h z u = 0 := fun u => (hU _).1 u.2
   have h2 : ∀ u : U, h u z = 0 := fun u => by rw [← hs.eq, h1, map_zero]
   have h3 : hRes h U u u' = h u u' := rfl
-  simp only [map_add, LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, h1, h2, hz, h3,
+  simp only [map_add (f := _), LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, h1, h2, hz, h3,
     smul_eq_mul, starRingEnd_apply, RingHom.id_apply]
   ring
 
@@ -309,7 +309,7 @@ theorem decomp_unique {u u' : U} {t t' : K} (e : (u : V) + t • z = u' + t' •
   have T0 : (T : K) ≠ 0 := Nat.cast_ne_zero.2 hT.ne_zero
   have h1 : ∀ u : U, h z u = 0 := fun u => (hU _).1 u.2
   have := congrArg (h z) e
-  simp only [map_add, map_smul, h1, hz, smul_eq_mul, zero_add] at this
+  simp only [map_add (f := _), map_smul, h1, hz, smul_eq_mul, zero_add] at this
   have ht : t = t' := mul_right_cancel₀ (neg_ne_zero.2 T0) this
   rw [ht] at e
   exact ⟨Subtype.ext (add_right_cancel e), ht⟩
@@ -367,12 +367,12 @@ theorem glue_spec (b : 𝓞 K) (hb : b * cj b - c ∈ Ideal.span {(T : 𝓞 K)})
     have hγ' : hRes h U x m' = algebraMap (𝓞 K) K (cj γ) := by
       rw [← sp, hγ]; exact (hsU.eq _ _).symm
     rw [pair h hs hz hU]
-    simp only [map_add, LinearMap.add_apply, genusBasic_hsmul_right,
+    simp only [map_add (f := _), LinearMap.add_apply, genusBasic_hsmul_right,
       genusBasic_hsmul_left genusCovol_hinj star_algebraMap_ringOfIntegers_mem_range]
     rw [← hα, ← hβ, hγ', hxx, hkk]
     refine Submodule.mem_one.2 ⟨α + r' * β + cj r * cj γ - cj r * r' * k - cj r * cj b * s' -
       cj s * r' * b - T * cj s * s', ?_⟩
-    simp only [map_add, map_sub, map_mul, map_natCast, star_add, star_mul', star_div₀, star_natCast, sp]
+    simp only [map_add (f := _), map_sub, map_mul, map_natCast, star_add, star_mul', star_div₀, star_natCast, sp]
     field_simp
     ring
   refine ⟨⟨?_, ?_⟩, ?_, fun t => ⟨fun ht => ?_, ?_⟩, ?_⟩
@@ -403,7 +403,7 @@ theorem glue_spec (b : 𝓞 K) (hb : b * cj b - c ∈ Ideal.span {(T : 𝓞 K)})
     have ht : t = -(algebraMap (𝓞 K) K s) / T := by rw [hs']; field_simp
     have : (s + r * b) * cj b ∈ Ideal.span {(T : 𝓞 K)} := by
       refine Ideal.mem_span_singleton'.2 ⟨p, genusCovol_hinj (K := K) ?_⟩
-      simp only [map_add, map_mul, map_natCast]
+      simp only [map_add (f := _), map_mul, map_natCast]
       rw [hp, ht]
       simp only [star_div₀, star_natCast, sp, map_zero]
       field_simp
@@ -413,7 +413,7 @@ theorem glue_spec (b : 𝓞 K) (hb : b * cj b - c ∈ Ideal.span {(T : 𝓞 K)})
     rw [sub_add_cancel]
     congr 2
     have := congrArg (algebraMap (𝓞 K) K) hq
-    simp only [map_add, map_mul, map_natCast] at this
+    simp only [map_add (f := _), map_mul, map_natCast] at this
     rw [ht, map_neg]
     field_simp
     linear_combination this
@@ -425,7 +425,7 @@ theorem glue_spec (b : 𝓞 K) (hb : b * cj b - c ∈ Ideal.span {(T : 𝓞 K)})
       exact M.neg_mem hm
     obtain ⟨q, rfl⟩ := Ideal.mem_span_singleton'.1 ((g2 r).1 this)
     refine Submodule.mem_one.2 ⟨q * b + s, ?_⟩
-    simp only [map_add, map_mul, map_natCast]
+    simp only [map_add (f := _), map_mul, map_natCast]
     field_simp
   · intro ht
     obtain ⟨s, rfl⟩ := Submodule.mem_one.1 ht
@@ -548,7 +548,7 @@ theorem fibre_card (hK : IsCMUnram K) (hn : (hRes h U).Nondegenerate)
     rw [← g2, ← (dualLattice (𝓞 K) K U _ hsU hn star_algebraMap_ringOfIntegers_mem_range M hM.1).2.1, dualBasic_mem_dual]
     intro y hy
     obtain ⟨a, ha⟩ := g1 y hy
-    rw [← sub_add_cancel y (a • x), map_add, LinearMap.add_apply]
+    rw [← sub_add_cancel y (a • x), map_add (f := _), LinearMap.add_apply]
     refine Submodule.add_mem _ ?_ ?_
     · rw [genusBasic_hsmul_right]
       exact genusBasic_mem_one_mul _ (hx' _ ha) _
@@ -581,7 +581,7 @@ theorem fibre_card (hK : IsCMUnram K) (hn : (hRes h U).Nondegenerate)
       congr 2
       have := congrArg (algebraMap (𝓞 K) K) hq
       simp only [map_sub, map_mul, map_natCast] at this
-      simp only [map_add, map_mul]
+      simp only [map_add (f := _), map_mul]
       field_simp
       linear_combination (-algebraMap (𝓞 K) K r) * this
   haveI : Finite (𝓞 K ⧸ Ideal.span {(T : 𝓞 K)}) := Ideal.finiteQuotientOfFreeOfNeBot _ (by
@@ -637,7 +637,7 @@ theorem resZ_bijective : Function.Bijective (resZ h hU) := by
     have k1 : γ.1.1 u = δ.1.1 u := congrArg (fun t : isom (hRes h U) => ((t.1 u : U) : V)) e
     have k2 : γ.1.1 z = z := γ.2
     have k3 : δ.1.1 z = z := δ.2
-    rw [map_add, map_add, map_smul, map_smul, k1, k2, k3]
+    rw [map_add (f := _), map_add (f := _), map_smul, map_smul, k1, k2, k3]
   · intro a
     have hc : IsCompl U (Submodule.span K {z}) := by
       constructor

@@ -18,7 +18,7 @@ theorem topBasis_c_mem_map {S A ι : Type} [CommRing S] [CommRing A] {s : S →+
       exact Ideal.mul_mem_right _ _ hj
     · intro r; simp
     · intro y z _ _ hy hz r
-      rw [mul_add, map_add]; exact Ideal.add_mem _ (hy r) (hz r)
+      rw [mul_add, map_add (f := _)]; exact Ideal.add_mem _ (hy r) (hz r)
     · intro a y _ hy r
       rw [smul_eq_mul, ← mul_assoc]; exact hy _
   simpa using key 1

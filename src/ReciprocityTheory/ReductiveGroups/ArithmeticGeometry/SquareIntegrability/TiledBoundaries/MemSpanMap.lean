@@ -108,7 +108,7 @@ theorem stepP : StepP := by
     exact setAverage_preimage_linearEquiv_comp X (piR X hq hπ) g hg _ (ZSpan.fundamentalDomain_measurableSet X.b)
   · intro β hβ x
     have h1 := (mem_P X hq hπ β).mp hβ
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hper _ h1 _
 
 section Q
@@ -154,7 +154,7 @@ theorem P_le_Q (X : PT E) {q : ℕ} {π : Vsp X.dim →ₗ[ℂ] Vsp X.dim} (hq :
   have hadd : ∀ y1 y2 : Vsp X.dim,
       (Hf (π x) (π (y1 + y2))).im = (Hf (π x) (π y1)).im + (Hf (π x) (π y2)).im := by
     intro y1 y2
-    rw [hH, hH, hH, map_add, inner_add_left, Complex.add_im]
+    rw [hH, hH, hH, map_add (f := _), inner_add_left, Complex.add_im]
   let φ : X.L →+ ℤ :=
     { toFun := fun y => round (Hf (π x) (π y)).im
       map_zero' := by simp [hH]

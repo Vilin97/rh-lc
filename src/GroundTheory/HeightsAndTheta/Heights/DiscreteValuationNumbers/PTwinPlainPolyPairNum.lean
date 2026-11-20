@@ -23,7 +23,7 @@ theorem rename_divDiff_add {r : ℕ} (l : Fin r) (A B : MvPolynomial (Fin r) ℤ
     rename_divDiff_eq_sum l A Finset.subset_union_left,
     rename_divDiff_eq_sum l B Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun μ _ => ?_
-  rw [MvPolynomial.coeff_add, map_add, add_mul]
+  rw [MvPolynomial.coeff_add, map_add (f := _), add_mul]
 
 theorem term_tail {N q : ℕ} (i : Fin N) (μ : Fin N →₀ ℕ) (t : Fin q →₀ ℕ) (ν : Fin (N + q) →₀ ℕ)
     (hc : ∀ j, ν (Fin.castAdd q j) = μ j) (hn : ∀ j, ν (Fin.natAdd N j) = t j) :
@@ -125,7 +125,7 @@ theorem rename_divDiff_castAdd_mul {N q : ℕ} (i : Fin N) (G : MvPolynomial (Fi
         rename (fun j : Fin q => (Sum.inl (Fin.natAdd N j) : Fin (N + q) ⊕ Fin (N + q))) Q := by
   induction Q using MvPolynomial.induction_on' with
   | monomial t c => exact rename_divDiff_castAdd_monomial i G t c
-  | add A B hA hB => rw [map_add, mul_add, rename_divDiff_add, hA, hB, map_add, mul_add]
+  | add A B hA hB => rw [map_add (f := _), mul_add, rename_divDiff_add, hA, hB, map_add (f := _), mul_add]
 
 variable {K : Type} [DecidableEq K] {ι : K → Type}
 variable {O : Type*} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O]

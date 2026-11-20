@@ -97,11 +97,11 @@ theorem cong_factor (s : SplitPlace L) (N : ℕ) (κ : GAf L n) (hκ : NG.Cong L
       map_add' := fun q q' => by simp only [Prod.fst_add, Prod.snd_add]; ring }
   have hθ : ∀ q, θ q = e * q.1 + (1 - e) * q.2 := fun _ => rfl
   have hθc : ∀ a b, conjAL L (θ (a, b)) = θ (conjAL L a, conjAL L b) := by
-    intro a b; rw [hθ, hθ, map_add, map_mul, map_mul, map_sub, map_one, hce]
+    intro a b; rw [hθ, hθ, map_add (f := _), map_mul, map_mul, map_sub, map_one, hce]
   have hθv : ∀ q, compAt L s.v (θ q) = compAt L s.v q.1 := by
-    intro q; rw [hθ, map_add, map_mul, map_mul, map_sub, map_one, hcv]; ring
+    intro q; rw [hθ, map_add (f := _), map_mul, map_mul, map_sub, map_one, hcv]; ring
   have hθw : ∀ w, w ≠ s.v → ∀ q, compAt L w (θ q) = compAt L w q.2 := by
-    intro w hw q; rw [hθ, map_add, map_mul, map_mul, map_sub, map_one, hcw w hw]; ring
+    intro w hw q; rw [hθ, map_add (f := _), map_mul, map_mul, map_sub, map_one, hcw w hw]; ring
   let pr : Matrix (Fin n) (Fin n) (AL L) → Matrix (Fin n) (Fin n) (AL L) → Matrix (Fin n) (Fin n) (AL L × AL L) :=
     fun A B i j => (A i j, B i j)
   have pr_mul : ∀ A B C D, pr A B * pr C D = pr (A * C) (B * D) := by
@@ -196,7 +196,7 @@ theorem GlobalTheory.exists_irreducible_sub_trivOutside_split : ∀ (L : Type) [
 
   let Fix : (GAf L n → Prop) → Submodule ℂ (GAf L n → ℂ) := fun P =>
     { carrier := {f | f ∈ π.S ∧ ∀ κ, P κ → NG.rt L n κ f = f}
-      add_mem' := fun {a b} ha hb => ⟨π.S.add_mem ha.1 hb.1, fun κ hκ => by rw [map_add, ha.2 κ hκ, hb.2 κ hκ]⟩
+      add_mem' := fun {a b} ha hb => ⟨π.S.add_mem ha.1 hb.1, fun κ hκ => by rw [map_add (f := _), ha.2 κ hκ, hb.2 κ hκ]⟩
       zero_mem' := ⟨π.S.zero_mem, fun κ _ => map_zero _⟩
       smul_mem' := fun c f hf => ⟨π.S.smul_mem c hf.1, fun κ hκ => by rw [map_smul, hf.2 κ hκ]⟩ }
   have finFix : ∀ M, 0 < M → FiniteDimensional ℂ (Fix (NG.Cong L n M)) := by
@@ -259,7 +259,7 @@ theorem GlobalTheory.exists_irreducible_sub_trivOutside_split : ∀ (L : Type) [
 
   let Bf : π.S →ₗ[ℂ] π.S →ₗ⋆[ℂ] ℂ := LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ) (fun u v => B v u)
     (fun u₁ u₂ v => Badd v u₁ u₂) (fun c u v => Bsmul v c u)
-    (fun u v₁ v₂ => by rw [hherm, Badd, map_add, ← hherm, ← hherm])
+    (fun u v₁ v₂ => by rw [hherm, Badd, map_add (f := _), ← hherm, ← hherm])
     (fun c u v => by rw [hherm, Bsmul, map_mul, ← hherm]; rfl)
   have hBf : ∀ u v, Bf u v = B v u := fun _ _ => rfl
   have hBfpos : ∀ v, v ≠ 0 → 0 < (Bf v v).re := fun v hv => by rw [hBf]; exact hpos v hv

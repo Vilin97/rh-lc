@@ -176,7 +176,7 @@ theorem isRoot_of_eig (B : LocBase0 H what₂) (j : ℕ) (w : what₂.places.Pl)
       Polynomial.aeval (B.hK j w v k) (q.map (B.ec j w)) (B.iV j w y) = B.iV j w (Polynomial.aeval (B.hL j w v k) q y) := by
     intro q y
     induction q using Polynomial.induction_on' with
-    | add p q hp hq => simp only [Polynomial.map_add, map_add, LinearMap.add_apply, hp, hq]
+    | add p q hp hq => simp only [Polynomial.map_add (f := _), map_add (f := _), LinearMap.add_apply, hp, hq]
     | monomial n a =>
       simp only [Polynomial.map_monomial, Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply]
       rw [hpow, LinearMap.map_smulₛₗ]
@@ -233,7 +233,7 @@ theorem root_int (M : MtFam D) (C : NChoice D) (hR : HeckeLift0 (mt0 M) C.Q) (hP
       map_add' := fun z z' => by
         have := hlin _ (hin z) _ (hin z') 1
         rw [one_smul] at this
-        rw [map_add, this, one_smul]
+        rw [map_add (f := _), this, one_smul]
       map_smul' := fun c z => by
         have := hlin _ (hin z) _ (Submodule.zero_mem _) c
         rw [add_zero, h0, add_zero] at this

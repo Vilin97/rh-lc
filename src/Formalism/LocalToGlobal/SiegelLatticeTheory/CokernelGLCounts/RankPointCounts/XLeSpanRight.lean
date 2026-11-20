@@ -53,7 +53,7 @@ theorem surj_MMsharp (M : Model F E) (hM : M.OK) {V : Type} [AddCommGroup V] [Mo
   obtain ⟨a, ha, b, hb, hab⟩ := Submodule.mem_sup.1 hx'
   have hpa : ((Submodule.linearProjOfIsCompl _ _ hU' x :
       ↥(Submodule.span E (Set.range (Sum.elim t.f t.f')))) : V) = a := by
-    rw [← hab, map_add]
+    rw [← hab, map_add (f := _)]
     have e1 := Submodule.projectionOnto_apply_left hU' ⟨a, ha⟩
     have e2 := Submodule.projectionOnto_apply_right hU' ⟨b, hb⟩
     simp only [Submodule.linearProjOfIsCompl] at *

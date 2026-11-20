@@ -57,7 +57,7 @@ theorem image_span {R V A : Type} [CommRing R] [AddCommGroup V] [Module R V] [Ad
     induction hx using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul r x _ hx => rw [hf]; exact Submodule.smul_mem _ (⟨φ r, r, rfl⟩ : φ.range) hx
   · induction hy using Submodule.span_induction with
     | mem x hx => exact Set.image_mono Submodule.subset_span hx
@@ -180,13 +180,13 @@ theorem rdF_thPe (T : CellTie hρ D.nexp rd) {ε : KE c w →+* ℂ} (hε : Exte
       (D.nexp.Fm (c.twI w) (j.1 + 1) (c.sd w)) m) = rdK rd hρ (c.k' w) m := fun m => by
     induction m using TensorProduct.induction_on with
     | zero => rw [map_zero, map_zero, map_zero]
-    | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
     | tmul a f =>
       rw [LinearMap.rTensor_tmul, rdF_tmul, rdK_tmul, ← hε.apply]
       rfl
   induction y using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero, map_zero, map_zero]
-  | add x y hx hy => rw [map_add, map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
   | tmul a f =>
     have e : (a ⊗ₜ f : Tgt c w (j.1 + 1)) = a • ((1 : KE c w) ⊗ₜ f) := by rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
     rw [rdE_tmul, map_smul, e, map_smul, LinearMap.map_smulₛₗ, NChoice.thPe_one, key, T.thP_eq _ _ _ hok f (hr f)]
@@ -275,7 +275,7 @@ noncomputable def semiComp {L V M A : Type} [Field L] [AddCommGroup V] [Module L
     [Module ℂ A] (τ : ℂ ≃+* ℂ) {σ : L →+* ℂ} (J : V →ₛₗ[σ] M) (Φ : M →ₗ[ℂ] A) (C : A →ₛₗ[(τ : ℂ →+* ℂ)] A) (σ' : L →+* ℂ)
     (h : ∀ r, τ (σ r) = σ' r) : V →ₛₗ[σ'] A where
   toFun x := C (Φ (J x))
-  map_add' x y := by rw [map_add, map_add, map_add]
+  map_add' x y := by rw [map_add (f := _), map_add (f := _), map_add (f := _)]
   map_smul' r x := by
     rw [LinearMap.map_smulₛₗ, map_smul, LinearMap.map_smulₛₗ]
     exact congrArg (· • _) (h r)
@@ -400,12 +400,12 @@ theorem exists_lift {L K V W A : Type} [Field L] [Field K] [AddCommGroup V] [Mod
     | add x y _ _ hx hy =>
       obtain ⟨x', hx⟩ := hx
       obtain ⟨y', hy⟩ := hy
-      exact ⟨x' + y', by rw [map_add, map_add, hx, hy]⟩
+      exact ⟨x' + y', by rw [map_add (f := _), map_add (f := _), hx, hy]⟩
     | smul a x _ hx =>
       obtain ⟨x', hx⟩ := hx
       exact ⟨φ a • x', by rw [LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ, hx]; rfl⟩
   choose e he using key
-  exact ⟨⟨⟨e, fun x y => hr (by rw [map_add, he, he, he, map_add])⟩,
+  exact ⟨⟨⟨e, fun x y => hr (by rw [map_add (f := _), he, he, he, map_add (f := _)])⟩,
     fun a x => hr (by
       change r (e (a • x)) = r (φ a • e x)
       rw [LinearMap.map_smulₛₗ, he, he, LinearMap.map_smulₛₗ]; rfl)⟩, he⟩
@@ -427,7 +427,7 @@ theorem mem_span_basis {L K V W I : Type} [Field L] [Field K] [AddCommGroup V] [
     obtain ⟨i, rfl⟩ := hx
     exact Submodule.subset_span ⟨i, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
 
 theorem place_of_at (hCo : GlobalTheory.Published.DiscreteSeriesCover) (hCW : GlobalTheory.Published.CasselmanWallach) (hHM : GlobalTheory.Published.HarishChandraModules) (hP : PrN) (H : AtPlace Y Z c w j) :

@@ -33,7 +33,7 @@ def charModule : Module A (A →+ ZMod n) where
   add_smul a a' φ := by
     ext b
     show φ ((a + a') * b) = φ (a * b) + φ (a' * b)
-    rw [add_mul, map_add]
+    rw [add_mul, map_add (f := _)]
   zero_smul φ := by
     ext b
     show φ (0 * b) = 0

@@ -112,7 +112,7 @@ theorem range_ofDual (τ : R →+* O) : LinearMap.range (ofDual α τ) = omegaEi
       obtain ⟨y, rfl⟩ := (subEquiv α τ).surjective y
       obtain ⟨z, rfl⟩ := (subEquiv α τ).surjective z
       have : z = x + y := Subtype.ext (lie_ext (h.trans (lieEquiv_add x.1 y.1).symm))
-      rw [ofDual_apply, ofDual_apply, ofDual_apply, this, map_add]
+      rw [ofDual_apply, ofDual_apply, ofDual_apply, this, map_add (f := _)]
     · obtain ⟨x, rfl⟩ := (subEquiv α τ).surjective x
       obtain ⟨z, rfl⟩ := (subEquiv α τ).surjective z
       have : z = c • x := Subtype.ext (lie_ext (h.trans (lieEquiv_smul c x.1).symm))
@@ -242,7 +242,7 @@ theorem exists_approx (n : ℕ) (x : PadicOrder p E) :
   | add x y hx hy =>
     obtain ⟨a, u, rfl⟩ := hx
     obtain ⟨b, w, rfl⟩ := hy
-    exact ⟨a + b, u + w, by rw [map_add]; ring⟩
+    exact ⟨a + b, u + w, by rw [map_add (f := _)]; ring⟩
 
 abbrev plId (p : ℕ) [Fact p.Prime] (w : HeightOneSpectrum (𝓞 E)) : Ideal (PadicOrder p E) :=
   w.asIdeal.map (toPadic p E)
@@ -425,7 +425,7 @@ theorem mul_eq_zero_of_toCompletion (hw : IsOver p w) {e : PadicOrder p E}
   | succ n =>
   obtain ⟨a, y, rfl⟩ := exists_approx (n + 1) x
   have ha : a ∈ w.asIdeal ^ (n + 1) := by
-    rw [map_add, map_mul, map_pow, map_natCast, tauExt_toPadic, add_eq_zero_iff_eq_neg] at hx
+    rw [map_add (f := _), map_mul, map_pow, map_natCast, tauExt_toPadic, add_eq_zero_iff_eq_neg] at hx
     rw [← HeightOneSpectrum.intValuation_le_pow_iff_mem, ← valued_algebraMap]
     refine le_trans ((integers_Ow w).le_of_dvd
       (x := algebraMap (𝓞 E) (Ow w) ((p : 𝓞 E) ^ (n + 1))) ?_) ?_

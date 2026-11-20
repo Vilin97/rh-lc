@@ -83,7 +83,7 @@ theorem star_lift_isTypeAt (θ : InfFam D) (hHC : GlobalTheory.Published.HarishC
     have e : (fun g => star (PiTensorProduct.lift T (a + b) (x * atTau θ V τ g))) =
         fun g => star (PiTensorProduct.lift T a (x * atTau θ V τ g)) + star (PiTensorProduct.lift T b (x * atTau θ V τ g)) := by
       funext g
-      rw [map_add, Pi.add_apply, star_add]
+      rw [map_add (f := _), Pi.add_apply, star_add]
     rw [e]
     exact (ha x).add (hb x)
 
@@ -102,7 +102,7 @@ theorem isCuspFun_lift {θ : InfFam D} {V : HSp D} {S : D.what₂.Tau → SPar} 
     rw [map_smul, PiTensorProduct.lift.tprod]
     exact GlobalTheory.MultMem.isCuspFun_smul r (hT.cusp f)
   | add a b ha hb =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact GlobalTheory.MultMem.isCuspFun_add (GlobalTheory.EndCusp.isAutFunSm_lift hT a).toIsAutFun
       (GlobalTheory.EndCusp.isAutFunSm_lift hT b).toIsAutFun ha hb
 

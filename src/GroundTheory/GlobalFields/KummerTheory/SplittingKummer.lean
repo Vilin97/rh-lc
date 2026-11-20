@@ -57,7 +57,7 @@ theorem algHom_kummerExtension_mem_fieldRange (ι : kummerExtension K n Ω Δ �
     exact (ι.commutes x).symm
   | add x y hx hy ihx ihy =>
     show ι (⟨x, hx⟩ + ⟨y, hy⟩) ∈ _
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem ihx ihy
   | inv x hx ih =>
     show ι (⟨x, hx⟩⁻¹) ∈ _
@@ -84,7 +84,7 @@ theorem finrank_eq_one_of_tensor_surjective {A : Type*} [CommRing A] [Algebra K 
       rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
     rw [this, map_smul]
     exact Subalgebra.smul_mem _ (Algebra.mem_bot.2 (hA m)) c
-  | add x y hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 theorem finrank_eq_one_iff_of_kummerExtension [IsSepClosed Ω]
     (g : F ⊗[K] kummerExtension K n Ω Δ →ₐ[F] E) (hg : Function.Surjective g) :

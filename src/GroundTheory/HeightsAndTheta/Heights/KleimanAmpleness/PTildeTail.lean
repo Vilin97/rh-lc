@@ -163,7 +163,7 @@ theorem TildeTail.proof (h : SerreTail.Statement.{u, w}) : TildeTail.Statement.{
   let G : Submodule S (Cech.Cochain (locSys S N M.coneSub) 0) :=
     { carrier := {z | ∀ d, coeffAt S x d (Ψ z) ∈ (M.tildeSys d).secs ∧ (d < c₁ → coeffAt S x d (Ψ z) = 0)}
       add_mem' := fun {a b} ha hb d => by
-        rw [map_add, map_add]
+        rw [map_add (f := _), map_add (f := _)]
         exact ⟨add_mem (ha d).1 (hb d).1, fun hd => by rw [(ha d).2 hd, (hb d).2 hd, add_zero]⟩
       zero_mem' := fun d => by rw [map_zero, map_zero]; exact ⟨zero_mem _, fun _ => rfl⟩
       smul_mem' := fun s z hz d => by
@@ -222,7 +222,7 @@ theorem TildeTail.proof (h : SerreTail.Statement.{u, w}) : TildeTail.Statement.{
         · simp
         · simp
     · intro d; rw [map_zero, map_zero]; exact zero_mem _
-    · intro a b _ _ ha hb d; rw [map_add, map_add]; exact add_mem (ha d) (hb d)
+    · intro a b _ _ ha hb d; rw [map_add (f := _), map_add (f := _)]; exact add_mem (ha d) (hb d)
     · intro p a _ ha d
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_smul, ← sum_homogeneousComponent p, Finset.sum_smul, map_sum]

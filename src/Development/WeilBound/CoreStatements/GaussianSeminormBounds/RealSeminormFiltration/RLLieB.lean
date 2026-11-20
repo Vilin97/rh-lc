@@ -252,7 +252,7 @@ theorem core (M : Meta l) {G0 : Type} [Group G0] [TopologicalSpace G0] (s : G0 �
       · have := hz.smul (hd f)
         simp only [a0, d0, map_one, one_smul] at this
         refine (this.congr_deriv ?_).congr_of_eventuallyEq (.of_forall fun t => ?_)
-        · simp only [← toLpCLM_apply (𝕜 := ℂ), ← map_smul, ← map_add]
+        · simp only [← toLpCLM_apply (𝕜 := ℂ), ← map_smul, ← map_add (f := _)]
           rfl
         · simp only [ha]
           exact map_smul (toLpCLM ℂ ℂ 2 volume) (a t) (M.om (δ t) f)

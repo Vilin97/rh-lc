@@ -31,8 +31,8 @@ theorem famProj_of : EvLem → SumRep → FamProj := by
   have key : ∀ φ ∈ S, ∑ U ∈ t, p U φ = φ ∧ ∀ U ∈ t, ∀ x, p U (RU E a x φ) = RU E a x (p U φ) := by
     let P : Submodule ℂ (UA E a → ℂ) :=
       { carrier := {φ | ∑ U ∈ t, p U φ = φ ∧ ∀ U ∈ t, ∀ x, p U (RU E a x φ) = RU E a x (p U φ)}
-        add_mem' := fun h1 h2 => ⟨by simp only [map_add, Finset.sum_add_distrib, h1.1, h2.1], fun U hU x => by
-          simp only [map_add, h1.2 U hU x, h2.2 U hU x]⟩
+        add_mem' := fun h1 h2 => ⟨by simp only [map_add (f := _), Finset.sum_add_distrib, h1.1, h2.1], fun U hU x => by
+          simp only [map_add (f := _), h1.2 U hU x, h2.2 U hU x]⟩
         zero_mem' := ⟨by simp, fun U _ x => by simp⟩
         smul_mem' := fun c φ h => ⟨by simp only [map_smul, ← Finset.smul_sum, h.1], fun U hU x => by
           simp only [map_smul, h.2 U hU x]⟩ }

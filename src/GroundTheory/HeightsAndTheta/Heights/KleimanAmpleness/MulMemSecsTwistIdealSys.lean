@@ -192,7 +192,7 @@ theorem length_eq_of_killed {Q : Type*} [AddCommGroup Q] [Module O Q] [Module S 
     obtain ⟨⟨a, ⟨t, ht⟩⟩, h⟩ := IsLocalization.surj 𝔪.primeCompl o
     obtain ⟨y, i, hi, hyi⟩ := Ideal.IsMaximal.exists_inv (inferInstance : 𝔪.IsMaximal) ht
     have h' : algebraMap S O y * algebraMap S O t + algebraMap S O i = 1 := by
-      rw [← map_mul, ← map_add, hyi, map_one]
+      rw [← map_mul, ← map_add (f := _), hyi, map_one]
     have ho : o = algebraMap S O (y * a) + o * algebraMap S O i := by
       simp only at h
       rw [map_mul]

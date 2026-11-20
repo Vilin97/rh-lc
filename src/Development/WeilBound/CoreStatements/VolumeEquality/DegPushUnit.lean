@@ -21,7 +21,7 @@ def locSub {S L : Type} [CommRing S] [Field L] (φ : S →+* L) (W : Ideal S) [h
   add_mem' := by
     rintro x y ⟨a, s, hs, h⟩ ⟨b, t, ht, h'⟩
     exact ⟨a * t + b * s, s * t, fun e => (hW.mem_or_mem e).elim hs ht, by
-      rw [map_add, map_mul, map_mul, map_mul, ← h, ← h']; ring⟩
+      rw [map_add (f := _), map_mul, map_mul, map_mul, ← h, ← h']; ring⟩
   zero_mem' := ⟨0, 1, (Ideal.ne_top_iff_one W).1 hW.ne_top, by simp⟩
   neg_mem' := by
     rintro x ⟨a, s, hs, h⟩
@@ -71,7 +71,7 @@ theorem exists_rel {S L : Type} [CommRing S] [Field L] (φ : S →+* L) (W : Ide
     have hq := Polynomial.modByMonic_add_div q p
     have hev : x ^ m = Polynomial.aeval x (q %ₘ p) := by
       have := congrArg (Polynomial.aeval x) hq
-      simp only [map_add, map_mul, hpx', zero_mul, add_zero] at this
+      simp only [map_add (f := _), map_mul, hpx', zero_mul, add_zero] at this
       rw [this]
       simp [q]
     have hdeg : (q %ₘ p).natDegree < n := Polynomial.natDegree_modByMonic_lt _ hpm hp1
@@ -184,7 +184,7 @@ theorem rep_of_mem (y : (Σ b, ι b) → Ω) {t : Ω} (ht : t ∈ fnField k y) :
       by simpa using mul_ne_zero hG1ne hG2ne, ?_⟩
     · rw [add_comm d1 d2]
       exact IsWeightedHomogeneous.mul hF2 hG1
-    · simp only [map_add, map_mul]
+    · simp only [map_add (f := _), map_mul]
       linear_combination aeval y G2 * h1 + aeval y G1 * h2
   · rintro a - ⟨d, F, G, hF, hG, hGne, h⟩
     by_cases ha : a = 0

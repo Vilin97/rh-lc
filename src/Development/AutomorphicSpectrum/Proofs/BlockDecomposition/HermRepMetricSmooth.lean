@@ -38,7 +38,7 @@ theorem closure_ratio (N : ℕ) (i : Fin (N + 1)) : Subring.closure (Set.range (
   | C r =>
     rw [aeval_C]
     simpa using intCast_mem (Subring.closure (Set.range (ratio ℤ N i))) r
-  | add p q hp hq => rw [map_add]; exact add_mem (hp trivial) (hq trivial)
+  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hp trivial) (hq trivial)
   | mul_X p j hp =>
     rw [map_mul, aeval_X]
     exact mul_mem (hp trivial) (Subring.subset_closure ⟨j, rfl⟩)

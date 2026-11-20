@@ -168,7 +168,7 @@ theorem UpperTheory.Gal.Join.subQuot :
       have hm := Submodule.mem_map_of_mem (f := l0) (hNS t (Module.finrank ℂ X) s hs)
       rw [hmap] at hm
       exact (Submodule.mem_bot ℂ).mp hm
-    simp only [LinearMap.comp_apply, map_add, hw', map_zero, zero_add, LinearMap.zero_apply]
+    simp only [LinearMap.comp_apply, map_add (f := _), hw', map_zero, zero_add, LinearMap.zero_apply]
     exact hs')
   refine ⟨l, hl0, fun t y => ?_⟩
   have := congrArg (fun φ : Module.Dual ℂ X => φ y) (hl t)

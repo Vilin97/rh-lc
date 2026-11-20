@@ -60,7 +60,7 @@ theorem exists_eq_nsmul_of_dvd (D : Datum H) {n : ℕ} (hn : 0 < n) (a : D.La) (
     ∃ e, a = n • e := by
   choose c hc using h
   have hn' : (n : ℤ) ≠ 0 := by exact_mod_cast hn.ne'
-  let ψ : D.La →+ ℤ := AddMonoidHom.mk' c fun x y => mul_left_cancel₀ hn' (by rw [mul_add, ← hc, ← hc, ← hc, map_add])
+  let ψ : D.La →+ ℤ := AddMonoidHom.mk' c fun x y => mul_left_cancel₀ hn' (by rw [mul_add, ← hc, ← hc, ← hc, map_add (f := _)])
   obtain ⟨e, he⟩ := D.unimod.2 ψ.toIntLinearMap
   refine ⟨e, D.unimod.1 (LinearMap.ext fun b => ?_)⟩
   rw [map_nsmul, he, hc, LinearMap.smul_apply, nsmul_eq_mul]
@@ -107,7 +107,7 @@ theorem exists_system (D D' : Datum H) (hp : D'.p = D.p) (hq : D'.q = D.q) :
     obtain ⟨e, he⟩ := hg n p hp a
     obtain ⟨e', he'⟩ := hg n p hp b
     have h3 := congrArg₂ (fun x y => D'.EF x y) he he'
-    simp only [map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, (hf p hp).2, nsmul_eq_mul] at h3
+    simp only [map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, (hf p hp).2, nsmul_eq_mul] at h3
     refine ⟨D'.EF e (f p b) + D'.EF (f p a) e' + (p ^ n.factorization p : ℕ) * D'.EF e e', ?_⟩
     have h4 : ((p ^ n.factorization p : ℕ) : ℤ) * (ordCompl[p] n : ℕ) = n := by
       exact_mod_cast Nat.ordProj_mul_ordCompl_eq_self n p
@@ -199,7 +199,7 @@ theorem IsTower.exists_inv {D D' : Datum H} {g : ℕ → D.La →ₗ[𝓞 E] D'.
     obtain ⟨e₂, he₂⟩ := hh n hn b
     obtain ⟨c, hc⟩ := hg.isom n hn (h n a) (h n b)
     rw [he₁, he₂] at hc
-    simp only [map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul] at hc
+    simp only [map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul] at hc
     exact ⟨D'.EF e₁ b + D'.EF a e₂ + n * D'.EF e₁ e₂ - c, by linear_combination -hc⟩
   · obtain ⟨e, he⟩ := h2 n hn a
     exact ⟨g n a, -e, by rw [he, smul_neg, add_neg_cancel_right]⟩
@@ -210,7 +210,7 @@ def tateComp {D D' : Datum H} {g : ℕ → D.La →ₗ[𝓞 E] D'.La} (hg : IsTo
   ζ_prim := I.ζ_prim
   ζ_pow := I.ζ_pow
   ev n a := I.ev n (g n a)
-  add n a b := by rw [map_add, I.add]
+  add n a b := by rw [map_add (f := _), I.add]
   lin n c a := by rw [map_smul, I.lin]
   ker n hn a := by
     rw [I.ker n hn]
@@ -247,10 +247,10 @@ def objComp {D D' : Datum H} (hp : D'.p = D.p) (hq : D'.q = D.q) {g : ℕ → D.
   ample := o.ample
   ktriv := o.ktriv
   eta a := o.eta (g l.M a)
-  eta_add a c := by rw [map_add, o.eta_add]
+  eta_add a c := by rw [map_add (f := _), o.eta_add]
   eta_ker a ha := o.eta_ker _ (map_mem_smul_top _ _ a ha)
   etaA a := o.etaA (g l.A a)
-  etaA_add a c := by rw [map_add, o.etaA_add]
+  etaA_add a c := by rw [map_add (f := _), o.etaA_add]
   etaA_ker a := by rw [map_nsmul, o.etaA_ker]
   geom k _ _ x β hx := by
     obtain ⟨h1, I, h2, h3, h4⟩ := o.geom k x β hx

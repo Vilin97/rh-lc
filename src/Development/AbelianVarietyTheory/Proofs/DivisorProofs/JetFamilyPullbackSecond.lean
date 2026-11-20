@@ -59,7 +59,7 @@ theorem ext_of_isBC (hm : m.IsBC) {d d' : Crys κ' t' A'} (h : ∀ c, d (m.pull 
   obtain ⟨z, rfl⟩ := hm.2 c
   induction z with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x c => rw [liftSemi_tmul, map_smul, map_smul, h c]
 
 end Crys
@@ -84,7 +84,7 @@ theorem eq_jet_of_isJetElt {x : HdR X.A} {d : Crys J.κ (spMap J.π) X.A} (h : I
   ext_of_isBC hm fun c ↦ (h c).trans (isJetElt_jet J hm N x c).symm
 
 theorem jet_add (x y : HdR X.A) : jet J hm N (x + y) = jet J hm N x + jet J hm N y := by
-  simp only [jet, map_add, smul_add, Finset.sum_add_distrib]
+  simp only [jet, map_add (f := _), smul_add, Finset.sum_add_distrib]
   abel
 
 theorem jet_smul (r : R) (x : HdR X.A) : jet J hm N (r • x) = algebraMap R J.B r • jet J hm N x := by
@@ -160,17 +160,17 @@ theorem detGen_baseChange : GlobalTheory.Published.AbelianDeRham → ∀ {F : Ty
     obtain ⟨z, rfl⟩ := hBC0.2 c
     induction z with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul b c₀ =>
       rw [liftSemi_tmul, LinearMap.map_smulₛₗ, map_smul, map_smul, smul_eq_mul, smul_eq_mul, map_mul, key,
         isJetElt_jet J' hBC' N₁ y (m.pull c₀), isJetElt_jet J hBC0 N x₀ c₀]
       have e : ∀ i, N₁ i y (m.pull c₀) = σ (N i x₀ c₀) := fun i ↦ hN i x₀ y hy c₀
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [e, hy c₀, map_add, map_sum, map_mul, hτa, hτt]
+        simp only [e, hy c₀, map_add (f := _), map_sum, map_mul, hτa, hτt]
 
   let Λ : HdR X₁.A → Z'.Lie := fun y ↦ LZ.toLie Z'.rm (crysToDR J'.κ hi'.grp (jet J' hBC' N₁ y))
   have hΛadd : ∀ a b, Λ (a + b) = Λ a + Λ b := fun a b ↦ by
-    simp only [Λ, jet_add, map_add]
+    simp only [Λ, jet_add, map_add (f := _)]
   have hΛsmul : ∀ (r : R') a, Λ (r • a) = algebraMap R' J'.B r • Λ a := fun r a ↦ by
     simp only [Λ, jet_smul, map_smul]
   let Φ₁ := compMulti δ'.1 Λ hΛadd hΛsmul

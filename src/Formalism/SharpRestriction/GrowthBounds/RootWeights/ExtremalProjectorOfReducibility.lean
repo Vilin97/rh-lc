@@ -55,7 +55,7 @@ theorem extremal_projector_of_reducibility (D : Formalism.BasicNotions.D7) (h : 
   obtain ⟨_, h2, h3⟩ := h K V n E hE mu hmu ord hord T hT
   obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 (weightSpace_le_hwv_sup_nMinus D E hE mu hx)
   obtain ⟨hy1, hy2⟩ := mem_highestWeightSpace_iff.1 hy
-  rw [map_add, h3 y hy1 hy2, h2 z hz.2 hz.1, add_zero]
+  rw [map_add (f := _), h3 y hy1 hy2, h2 z hz.2 hz.1, add_zero]
   exact hy2 a b (by
     have : (a : ℕ) < (b : ℕ) := by omega
     exact this)

@@ -105,7 +105,7 @@ theorem rowLeft (hLS : LtSob) (hLC : LtComm) : RowLeft := by
   have hbSec : IsSec E b := hrowb.2.1
   have hψs : IsSec E ψ := by
     intro g hg k'
-    simp only [hψd, Pi.add_apply, Pi.smul_apply, map_add, map_smul]
+    simp only [hψd, Pi.add_apply, Pi.smul_apply, map_add (f := _), map_smul]
     rw [hbSec g hg k', haSec g hg k']
   have hcψ : cls μ ψ = cls μ a - cls μ b := by
     rw [hψd, hCF.2.1 (-1) b a (hL2 hbS) (hL2 haS)]

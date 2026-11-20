@@ -21,10 +21,10 @@ theorem exists_quot_equiv_of_section {A F L : Type} [CommRing A] [AddCommGroup F
       Submodule.mem_smul_pointwise_iff_exists]
     constructor
     · rintro ⟨z, rfl⟩
-      exact ⟨φ z, trivial, by rw [hR, map_add, map_sub, map_smul, h, sub_self, zero_add]⟩
+      exact ⟨φ z, trivial, by rw [hR, map_add (f := _), map_sub, map_smul, h, sub_self, zero_add]⟩
     · rintro ⟨l, -, hl⟩
       refine ⟨x - σ (φ x) + σ l, ?_⟩
-      rw [hR, map_add, map_sub, h, h, sub_self, zero_add, ← map_smul, hl]
+      rw [hR, map_add (f := _), map_sub, h, h, sub_self, zero_add, ← map_smul, hl]
       abel
   exact ⟨(Submodule.quotEquivOfEq _ _ hk).trans (LinearMap.quotKerEquivOfSurjective _ hs), fun _ => rfl⟩
 
@@ -58,7 +58,7 @@ theorem exists_presentation_baseChange : ∀ (A : Type) [CommRing A] (c : A) (Li
     obtain ⟨t, rfl⟩ := eL.surjective l
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul a l =>
       rw [show a ⊗ₜ[A] l = a • ((1 : A') ⊗ₜ[A] l) by rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one],
         map_smul, map_smul, map_smul, h1]

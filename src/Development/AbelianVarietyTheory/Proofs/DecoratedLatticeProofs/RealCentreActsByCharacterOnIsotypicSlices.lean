@@ -176,7 +176,7 @@ theorem mt_central {V : HSp D} {x : DefSp V} (hx : x.Is) {b : GA D V} (hb : b �
     have e : (fun k => incA D ((Pi.single i 1 + Pi.single j 1 : Fin V.rank → ℚ) k : ℚ)) =
         Pi.single i 1 + Pi.single j 1 := by
       funext k
-      simp only [Pi.add_apply, Rat.cast_add, map_add, Pi.single_apply, apply_ite (Rat.cast : ℚ → D.host.E), Rat.cast_one,
+      simp only [Pi.add_apply, Rat.cast_add, map_add (f := _), Pi.single_apply, apply_ite (Rat.cast : ℚ → D.host.E), Rat.cast_one,
         Rat.cast_zero, apply_ite (incA D), map_one, map_zero]
     rwa [e] at this
 

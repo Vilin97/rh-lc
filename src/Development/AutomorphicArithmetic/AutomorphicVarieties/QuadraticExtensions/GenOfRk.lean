@@ -63,7 +63,7 @@ theorem UpperTheory.V.Two.genOfRk :
       refine ⟨by exact hφ.1.comp (Function.invFun κ), ?_, ?_, ?_⟩
       · intro a b
         apply hκ
-        rw [map_add, hκr _ (hval φ _), hκr _ (hval φ _), hκr _ (hval φ _), hφ.2.1]
+        rw [map_add (f := _), hκr _ (hval φ _), hκr _ (hval φ _), hκr _ (hval φ _), hφ.2.1]
       · intro A u hu
         apply hκ
         rw [hκr _ (hval φ _), hφ.2.2.1 A u hu, map_zero]

@@ -68,7 +68,7 @@ theorem isThetaFunO_placeModel_apply : ∀ {D : D7} {ψ : AddChar (AF D.host.F) 
     { carrier := {g | IsThetaFunO ψ S T (Tm g)}
       add_mem' := fun {g g'} hg hg' => by
         show IsThetaFunO ψ S T (Tm (g + g'))
-        rw [map_add]; exact GlobalTheory.OrientedHeis.theta_add hg hg'
+        rw [map_add (f := _)]; exact GlobalTheory.OrientedHeis.theta_add hg hg'
       zero_mem' := by
         show IsThetaFunO ψ S T (Tm 0)
         rw [map_zero]; exact GlobalTheory.OrientedHeis.theta_zero

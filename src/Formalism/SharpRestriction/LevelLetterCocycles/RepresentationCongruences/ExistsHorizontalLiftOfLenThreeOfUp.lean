@@ -36,7 +36,7 @@ theorem mem_span_of_coeff {R : Type*} [CommRing R] (F : PowerSeries R) (t : R) (
   refine ⟨PowerSeries.mk fun j => if hj : j < B' then (h j hj).choose else 0,
     PowerSeries.mk fun j => coeff (j + B') F, ?_⟩
   ext m
-  rw [map_add, coeff_mul_C, coeff_mul_X_pow', coeff_mk]
+  rw [map_add (f := _), coeff_mul_C, coeff_mul_X_pow', coeff_mk]
   by_cases hm : m < B'
   · rw [dif_pos hm, if_neg (by omega), add_zero, mul_comm]
     exact ((h m hm).choose_spec).symm
@@ -366,7 +366,7 @@ theorem exists_horizontal_lift_of_len_three_of_up [NeZero n] [Fintype (K →ₐ[
       rw [this, map_mul, map_mul]
       ring
     have hq : algebraMap (LetA O n) W.EE (qA W) = algebraMap (LetA O n) W.EE W.π₀ + ((PD.p : ℕ) : W.EE) := by
-      simp only [qA, lA, map_add, map_natCast]
+      simp only [qA, lA, map_add (f := _), map_natCast]
     simp only [Br.cst_mul, Br.cst_pow, ArcLengthFourSecond.cst_sub, ArcLengthFourSecond.cst_sum, apply_ite Br.cst, ArcLengthFourSecond.cst_zero]
     rw [← Br.lA_eq, ← Br.qA_eq, hΦc]
     simp only [Br.cst_C]

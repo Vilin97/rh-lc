@@ -70,7 +70,7 @@ theorem inAt_of_lat {𝔞 : FI E} (h0 : 𝔞 ≠ 0) {v : Pl F} {z : AE F E} (hz 
     have h1 : Valued.v (complMap (rfl : w.under (𝓞 F) = _) (evFin F _ a)) ≤ 1 := complMap_mem rfl ha
     exact (mul_le_of_le_one_left' h1).trans ((mem_iff_valuation_le h0 s).1 hs w)
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact (Valuation.map_add _ _ _).trans (max_le hx hy)
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact (Valuation.map_add _ _ _).trans (max_le hx hy)
   | neg x _ hx => rwa [map_neg, Valuation.map_neg]
 
 theorem lat_of_inAt {𝔞 : FI E} (h0 : 𝔞 ≠ 0) {v : Pl F} {x : AE F E} (hx : InAt 𝔞 v x) : idem F v • x ∈ Lat 𝔞 v := by
@@ -102,7 +102,7 @@ theorem lat_of_inAt {𝔞 : FI E} (h0 : 𝔞 ≠ 0) {v : Pl F} {x : AE F E} (hx 
           · change idem F v • (((1 : AF F) ⊗ₜ[F] s) * (pairA F 0 a ⊗ₜ[F] (o : E))) = _
             rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, TensorProduct.smul_tmul', smul_eq_mul]
         | zero => rw [map_zero, mul_zero, smul_zero]; exact zero_mem _
-        | add x y _ _ hx hy => rw [map_add, mul_add, smul_add]; exact add_mem hx hy
+        | add x y _ _ hx hy => rw [map_add (f := _), mul_add, smul_add]; exact add_mem hx hy
         | neg x _ hx => rw [map_neg, mul_neg, smul_neg]; exact neg_mem hx
       have h3 := h2 _ hint
       rw [e1, hy, mul_smul_comm, smul_smul, ← mul_assoc, Algebra.TensorProduct.tmul_mul_tmul, one_mul] at h3
@@ -121,7 +121,7 @@ def cj (hσ : ∀ x, σ (σ x) = x) (𝔞 : FI E) : FI E :=
   ⟨{ carrier := {t | σ t ∈ 𝔞}
      add_mem' := fun {a b} ha hb => by
        change σ (a + b) ∈ 𝔞
-       rw [map_add]; exact 𝔞.val.add_mem ha hb
+       rw [map_add (f := _)]; exact 𝔞.val.add_mem ha hb
      zero_mem' := by
        change σ 0 ∈ 𝔞
        rw [map_zero]; exact 𝔞.zero_mem
@@ -170,7 +170,7 @@ theorem lat_cj {𝔞 : FI E} {v : Pl F} {z : AE F E} (hz : z ∈ Lat 𝔞 v) : c
     obtain ⟨a, h1, h2, s, hs, rfl⟩ := hz
     exact AddSubgroup.subset_closure ⟨a, h1, h2, σ s, (mem_cj hσ).2 (by rwa [hσ]), rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem inAt_cj {𝔞 : FI E} (h0 : 𝔞 ≠ 0) {v : Pl F} {x : AE F E} (h : InAt 𝔞 v x) : InAt (cj hσ 𝔞) v (cA σ x) := by
@@ -286,7 +286,7 @@ theorem Gen.conj {P T : Finset (Pl F)} {𝔞 : FI E} (h0 : 𝔞 ≠ 0) {l : (AE 
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul a e => rfl
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     change infTens F E (cA σ l) = 1
     rw [this, h.inf, map_one]
   · have := congrArg (cA σ) (h.off v hv)

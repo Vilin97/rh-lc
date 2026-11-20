@@ -56,7 +56,7 @@ lemma snd_eq_zero {p k : ℕ} (hk : k ≠ 0) (hkp : k.Coprime p) (hp : p.Prime) 
   | one => change (f 1).snd = 0; simp
   | add x y hx hy ihx ihy =>
     change (f (⟨x, hx⟩ + ⟨y, hy⟩)).snd = 0
-    simp only [map_add, TrivSqZeroExt.snd_add, ihx, ihy, add_zero]
+    simp only [map_add (f := _), TrivSqZeroExt.snd_add, ihx, ihy, add_zero]
   | neg x hx ihx =>
     change (f (-⟨x, hx⟩)).snd = 0
     simp only [map_neg, TrivSqZeroExt.snd_neg, ihx, neg_zero]
@@ -199,7 +199,7 @@ private lemma ringHom_ZP_pow_dualNumber_snd_eq_zero {K : Type} [Field K] {p n e 
   | zero => rw [show (⟨0, _⟩ : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.ZP p (n ^ e)) = 0 from rfl, map_zero]; rfl
   | one => rw [show (⟨1, _⟩ : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.ZP p (n ^ e)) = 1 from rfl, map_one]; rfl
   | add y z hy hz ihy ihz =>
-    rw [show (⟨y + z, add_mem hy hz⟩ : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.ZP p (n ^ e)) = ⟨y, hy⟩ + ⟨z, hz⟩ from rfl, map_add,
+    rw [show (⟨y + z, add_mem hy hz⟩ : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.ZP p (n ^ e)) = ⟨y, hy⟩ + ⟨z, hz⟩ from rfl, map_add (f := _),
       TrivSqZeroExt.snd_add, ihy, ihz, add_zero]
   | neg y hy ihy =>
     rw [show (⟨-y, neg_mem hy⟩ : _root_.ReciprocityTheory.ChartRestriction.G.Geo.Tor.ZP p (n ^ e)) = -⟨y, hy⟩ from rfl, map_neg,

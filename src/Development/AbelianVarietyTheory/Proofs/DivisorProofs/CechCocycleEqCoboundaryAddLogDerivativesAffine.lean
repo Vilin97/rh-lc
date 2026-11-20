@@ -35,7 +35,7 @@ theorem exists_dlog_add_coboundary : ∀ (E : Type) [Field E] [NumberField E] [I
             (x (i, i''))}
       add_mem' := by
         intro a b ha hb i i' i''
-        simp only [Pi.add_apply, map_add]
+        simp only [Pi.add_apply, map_add (f := _)]
         rw [← ha i i' i'', ← hb i i' i'']
         abel
       zero_mem' := by
@@ -53,7 +53,7 @@ theorem exists_dlog_add_coboundary : ∀ (E : Type) [Field E] [NumberField E] [I
       add_mem' := by
         rintro a b ⟨h1, e1⟩ ⟨h2, e2⟩
         refine ⟨h1 + h2, fun i i' => ?_⟩
-        simp only [Pi.add_apply, map_add, e1, e2]
+        simp only [Pi.add_apply, map_add (f := _), e1, e2]
         ring
       zero_mem' := ⟨0, fun i i' => by simp⟩
       smul_mem' := by

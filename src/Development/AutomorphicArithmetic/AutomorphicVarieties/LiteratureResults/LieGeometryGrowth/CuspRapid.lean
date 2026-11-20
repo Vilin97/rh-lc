@@ -41,14 +41,14 @@ private theorem ev_cmp {d : ℕ} (m : Sm E a ⊗[ℂ] (Fin d → ℂ)) (g : GA E
     ev m g i = (cmp i m).1 g := by
   induction m using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy, Submodule.coe_add]
+  | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy, Submodule.coe_add]
   | tmul φ v => simp [ev, mul_comm]
 
 private theorem cmp_rTensor {d : ℕ} (T : Module.End ℂ (Sm E a)) (m : Sm E a ⊗[ℂ] (Fin d → ℂ)) (i : Fin d) :
     cmp i (T.rTensor _ m) = T (cmp i m) := by
   induction m using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul φ v => simp
 
 private theorem prodA_mem (π : CuspSub E a) (Ξ : AlgRep E a) (l : List (Lie E a)) (m : Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ))

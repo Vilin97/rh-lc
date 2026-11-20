@@ -19,7 +19,7 @@ lemma w_sq {d k : ℕ} (hk : 4 * k = d + 1) : wK d ^ 2 = wK d - k := by
 
 lemma conj_w (d : ℕ) : conj (wK d) = 1 - wK d := by
   unfold wK
-  simp only [map_div₀, map_add, map_one, map_mul, Complex.conj_I, Complex.conj_ofReal, map_ofNat]
+  simp only [map_div₀, map_add (f := _), map_one, map_mul, Complex.conj_I, Complex.conj_ofReal, map_ofNat]
   ring
 
 lemma conj_el (d : ℕ) (u v : ℤ) : conj ((u : ℂ) + (v : ℂ) * wK d) = u + v * (1 - wK d) := by
@@ -137,7 +137,7 @@ lemma exists_r {d k : ℕ} (hk : 4 * k = d + 1) (hs : Split d q) (ι : ℂ ≃+*
     exact (isUnit_pow_iff two_ne_zero).1 h2
   have h1 := congrArg ι (w_sq hk)
   have h2 := congrArg (zcHom q) hz
-  simp only [map_pow, map_sub, map_add, map_natCast, map_zero] at h1 h2
+  simp only [map_pow, map_sub, map_add (f := _), map_natCast, map_zero] at h1 h2
   have : (ι (wK d) - zcHom q z) * (ι (wK d) - (1 - zcHom q z)) = 0 := by
     linear_combination h1 - h2
   rcases mul_eq_zero.1 this with h | h

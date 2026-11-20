@@ -98,10 +98,10 @@ theorem exists_isometry (hCM : IsCMExt F E σ) {n₁ : ℕ} {J : Matrix (Fin (n�
   have hd : ∀ (s t : E) (u : Fin n₁ → E), d (s • x + ι *ᵥ u + t • y) = s • x' + q u + t • y' := by
     intro s t u
     have e1 : formLin σ J y (s • x + ι *ᵥ u + t • y) = s := by
-      rw [map_add, map_add, map_smul, map_smul]
+      rw [map_add (f := _), map_add (f := _), map_smul, map_smul]
       simp [formLin, hxy, hyy, (horth u).2]
     have e2 : formLin σ J x (s • x + ι *ᵥ u + t • y) = -t := by
-      rw [map_add, map_add, map_smul, map_smul]
+      rw [map_add (f := _), map_add (f := _), map_smul, map_smul]
       simp [formLin, hxx, hyx, (horth u).1]
     have e3 : p (s • x + ι *ᵥ u + t • y) = ι *ᵥ u := by
       simp only [p, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.id_apply, LinearMap.smulRight_apply, e1, e2]

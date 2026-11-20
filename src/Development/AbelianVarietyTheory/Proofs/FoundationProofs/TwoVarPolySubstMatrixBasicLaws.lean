@@ -18,7 +18,7 @@ theorem polySlash_mul (m m' : Matrix (Fin 2) (Fin 2) ℤ) (p : MvPolynomial (Fin
   have h : (slP (R := R) (m * m')) = (slP m').comp (slP m) := by
     apply MvPolynomial.algHom_ext
     intro i
-    simp only [AlgHom.comp_apply, slP_X, map_add, map_smul, Matrix.mul_apply, Fin.sum_univ_two]
+    simp only [AlgHom.comp_apply, slP_X, map_add (f := _), map_smul, Matrix.mul_apply, Fin.sum_univ_two]
     push_cast
     simp only [smul_add, add_smul, smul_smul, mul_comm]
     abel
@@ -55,7 +55,7 @@ theorem map_slP {S : Type} [CommRing S] (f : R →+* S) (m : Matrix (Fin 2) (Fin
   | C a => simp [slP]
   | add p q hp hq => simp [hp, hq]
   | mul_X p i hp =>
-    simp only [map_mul, hp, slP_X, map_X, map_add]
+    simp only [map_mul, hp, slP_X, map_X, map_add (f := _)]
     simp [MvPolynomial.smul_eq_C_mul]
 
 theorem polySlash_congr (m m' : Matrix (Fin 2) (Fin 2) ℤ) (p : MvPolynomial (Fin 2) R)

@@ -47,7 +47,7 @@ theorem rowAct_weyl_mem_span_integral {O Kf : Type} [CommRing O] [Field Kf] [Alg
     show _ = a • rowAct Kf g (map (algebraMap O Kf) (map (Int.castRingHom O) f0))
     rw [MvPolynomial.map_map, int_comp]
   | zero => rw [map_zero, map_zero, smul_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add, map_add, smul_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), smul_add]; exact add_mem hx hy
   | smul c x _ hx =>
     have e1 : map (algebraMap O Kf) (c • x) = algebraMap O Kf c • map (algebraMap O Kf) x := by
       rw [smul_eq_C_mul, map_mul, map_C, ← smul_eq_C_mul]
@@ -217,7 +217,7 @@ theorem mem_htupW_iff (hD : DescVal) (hfr : IsFractionRing O Kf) (e : LL →+* K
     induction hQ using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul r x _ hx =>
       obtain ⟨o, ho⟩ := (hR0 r.1).1 r.2
       have e1 : map e (r • x) = o • map e x := by

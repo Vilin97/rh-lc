@@ -85,7 +85,7 @@ private theorem indSys_twist [IsTotallyComplex K] [IsTotallyComplex M] (h2 : Mod
     obtain ⟨u2, v2⟩ := hξ w' 1 (hw' ▸ hu) (normV_split h2 hne.symm hw'.symm)
     refine ⟨_, _, hB.twist (unr_pow u1 k), hB'.twist (unr_pow u2 k), ?_⟩
     have hP := hBP.twist (unr_pow hu k)
-    rw [Multiset.map_add] at hP
+    rw [Multiset.map_add (f := _)] at hP
     rw [val_pow, val_pow, v1, v2, hw', pow_one]
     rwa [val_pow] at hP
   · obtain ⟨B, B', hB, rfl, hBP⟩ := h3 hq
@@ -99,7 +99,7 @@ private theorem indSys_twist [IsTotallyComplex K] [IsTotallyComplex M] (h2 : Mod
       convert h using 2
       simp [mul_pow]
     · have h := hBP.twist (unr_pow hu k)
-      simpa [Multiset.map_add, Multiset.map_map, Function.comp_def] using h
+      simpa [Multiset.map_add (f := _), Multiset.map_map, Function.comp_def] using h
 
 private theorem over_two (h2 : Module.finrank K M = 2) {τ τ' σ : M →+* ℂ} (hne : τ ≠ τ')
     (h1 : τ'.comp (algebraMap K M) = τ.comp (algebraMap K M)) (h3 : σ.comp (algebraMap K M) = τ.comp (algebraMap K M)) :

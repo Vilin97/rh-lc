@@ -106,7 +106,7 @@ variable {s}
 
 theorem bf_add_left (S : Matrix ι ι A) (x x' y : ι → A) :
     bf s S (x + x') y = bf s S x y + bf s S x' y := by
-  simp only [bf, Pi.add_apply, map_add]
+  simp only [bf, Pi.add_apply, map_add (f := _)]
   exact add_dotProduct _ _ _
 
 theorem bf_add_right (S : Matrix ι ι A) (x y y' : ι → A) :
@@ -232,7 +232,7 @@ theorem exists_value_notMem [Nonempty ι] {S : Matrix ι ι A} (hS : cT s S = S)
     refine Submodule.smul_induction_on hz (fun r hr n _ => ?_) (fun a b ha hb => ?_)
     · rw [map_smul, smul_eq_mul]
       exact Ideal.mul_mem_right _ _ hr
-    · rw [map_add]
+    · rw [map_add (f := _)]
       exact Ideal.add_mem _ ha hb
   have h4 := h3 1 h1
   rw [← map_one (algebraMap R A), ht] at h4
@@ -436,7 +436,7 @@ theorem exists_diagonal_congr : ∀ (F E : Type) [Field F] [NumberField F] [Fiel
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [sigR, hσ]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hR : ∀ r : R, sigR R σ (algebraMap R (R ⊗[F] E) r) = algebraMap R (R ⊗[F] E) r := fun r => by
     simp [sigR, Algebra.TensorProduct.algebraMap_apply]
   have hhalf : algebraMap F R (1 / 2) * 2 = 1 := by

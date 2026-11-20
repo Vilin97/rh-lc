@@ -142,7 +142,7 @@ theorem frobenius_difference_identity (N s₁ σ : ℕ) (yv : W.DD T) (ms t μ :
         ((PD.p : ℕ) : O) ^ (s₁ + σ) • (((PD.p : ℕ) : O) ^ N • ((letE c : LetA O n) • yv) +
           W.φD T (μ (c - 1)) - μ c) := by
   unfold frobeniusShiftDefectOfLiftCorrection
-  simp only [map_sub, map_add, map_smul, smul_add, smul_sub, smul_smul, ← pow_add]
+  simp only [map_sub, map_add (f := _), map_smul, smul_add, smul_sub, smul_smul, ← pow_add]
   simp only [add_comm, add_left_comm, add_assoc]
   abel
 

@@ -39,7 +39,7 @@ theorem norm_le_one : ∀ (D : D7) (p : ℕ) [Fact p.Prime], p = D.host.d → �
   let Q : Ideal (𝓞 D.host.E) :=
     { carrier := {y | ‖φ (y : D.host.E)‖ < 1}
       add_mem' := fun {x y} hx hy => by
-        simp only [Set.mem_setOf_eq, map_add] at *
+        simp only [Set.mem_setOf_eq, map_add (f := _)] at *
         exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt hx hy)
       zero_mem' := by simp
       smul_mem' := fun c x hx => by

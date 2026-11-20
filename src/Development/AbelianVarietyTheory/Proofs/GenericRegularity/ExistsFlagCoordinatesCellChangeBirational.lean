@@ -22,7 +22,7 @@ theorem exists_algEquiv_of_generates {κ ι : Type} [Field κ] [Finite ι] (y : 
       | C a =>
         rw [← MvPolynomial.algebraMap_eq, ← IsScalarTower.algebraMap_apply]
         exact IntermediateField.algebraMap_mem _ a
-      | add p q hp hq => rw [map_add]; exact add_mem hp hq
+      | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
       | mul_X p v hp => rw [map_mul]; exact mul_mem hp (hy v)
     rw [eq_top_iff]
     intro x _

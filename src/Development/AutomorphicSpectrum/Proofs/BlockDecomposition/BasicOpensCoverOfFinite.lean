@@ -34,7 +34,7 @@ theorem X_mem_of_finite {K : Type} [Field K] {n m : ℕ}
     | add a b _ _ ha hb =>
       obtain ⟨c, hc⟩ := ha
       obtain ⟨d, hd⟩ := hb
-      exact ⟨c + d, by rw [map_add, hc, hd, map_add, map_add]⟩
+      exact ⟨c + d, by rw [map_add (f := _), hc, hd, map_add (f := _), map_add (f := _)]⟩
     | mul a b _ _ ha hb =>
       obtain ⟨c, hc⟩ := ha
       obtain ⟨d, hd⟩ := hb
@@ -73,7 +73,7 @@ theorem X_mem_of_finite {K : Type} [Field K] {n m : ℕ}
   obtain ⟨g, rfl⟩ := Ideal.Quotient.mk_surjective a
   have h2 : Ideal.Quotient.mk P (g * MvPolynomial.X j - 1) = 0 := by
     have := congrArg φ hab
-    rw [map_add, map_mul, hφ, hφ, show φ b = 0 from hb, add_zero, map_one] at this
+    rw [map_add (f := _), map_mul, hφ, hφ, show φ b = 0 from hb, add_zero, map_one] at this
     rw [map_sub, map_mul, this, map_one, sub_self]
   have h3 : MvPolynomial.homogeneousComponent 0 (g * MvPolynomial.X j - 1) ∈ P := by
     rw [← MvPolynomial.decomposition.decompose'_apply]

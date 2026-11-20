@@ -34,7 +34,7 @@ theorem summable_tsum_norm_le_of_le_shortest (E : Type) [Field E] [NumberField E
   let T : (Fin a → E) →+ (Fin a → Ad E) :=
     { toFun := fun ξ => (fun j => algebraMap E (Ad E) (ξ j)) ᵥ* g.val
       map_zero' := by simp only [Pi.zero_apply, map_zero]; exact zero_vecMul _
-      map_add' := fun x y => by simp only [Pi.add_apply, map_add]; exact add_vecMul _ _ _ }
+      map_add' := fun x y => by simp only [Pi.add_apply, map_add (f := _)]; exact add_vecMul _ _ _ }
   let TI : (Fin a → E) →+ (Fin a → Cinf E) := ((pInf E).toAddMonoidHom.compLeft (Fin a)).comp T
   let TF : (Fin a → E) →+ (Fin a → Af E) := ((pFin E).toAddMonoidHom.compLeft (Fin a)).comp T
   let P : AddSubgroup (Fin a → E) := (AddSubgroup.pi Set.univ fun _ => idealFiniteAdeles J).comap TF

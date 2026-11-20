@@ -86,7 +86,7 @@ theorem famF_hasDerivAt : ∀ {n : ℕ} (ε : Fin n → Bool) (G : ℝ → ℝ) 
     intro j
     have := congrArg (ev g) (hrec j)
     set_option synthInstance.maxHeartbeats 100000 in
-      simpa only [map_sum, map_add, map_mul, ev_rP, map_natCast, map_one] using this
+      simpa only [map_sum, map_add (f := _), map_mul, ev_rP, map_natCast, map_one] using this
   rw [sum_shift (nMode ε) a (fun k => ev g (p k)) (rM ε g : ℂ) (by simp [hp (nMode ε + 1) (Nat.lt_succ_self _)])]
   simp only [hA, hR, Finset.mul_sum]
   rw [Finset.sum_comm]

@@ -213,7 +213,7 @@ theorem coordA_eq_of_sub_eq (a : W.toAffine.CoordinateRing) (b : InfChart W) (r 
       simp only [Fin.sum_univ_three, eval₂_add]
       simp [Algebra.smul_def]
       ring
-    rw [hsplit, map_add, ← hy, map_mul, map_pow, h', mul_add]
+    rw [hsplit, map_add (f := _), ← hy, map_mul, map_pow, h', mul_add]
     congr 1
     simp only [Algebra.smul_def, map_mul, map_pow, ← IsScalarTower.algebraMap_apply]
     have hyu := yC_mul_yInv W

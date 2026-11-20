@@ -23,7 +23,7 @@ theorem diagonal_phase_first_vector : (0 : Fv F v ⊗[F] E) ∈ D1 (E := E) v ψ
 theorem conductor_add_mem {y y' : Fv F v ⊗[F] E} (hy : y ∈ D1 (E := E) v ψ) (hy' : y' ∈ D1 (E := E) v ψ) :
     y + y' ∈ D1 (E := E) v ψ := by
   intro x hx
-  rw [mul_add, map_add, psiV_add', hy x hx, hy' x hx, mul_one]
+  rw [mul_add, map_add (f := _), psiV_add', hy x hx, hy' x hx, mul_one]
 
 theorem conductor_neg_mem {y : Fv F v ⊗[F] E} (hy : y ∈ D1 (E := E) v ψ) : -y ∈ D1 (E := E) v ψ := by
   intro x hx

@@ -54,7 +54,7 @@ theorem exists_lift {S A B : Type} [CommRing S] [Algebra K S] [CommRing A] [Alge
 theorem poly_mem {R L : Type} [CommRing R] [CommRing L] [Algebra K L] (ψ : Polynomial R →+* L) (Sb : Subalgebra K L)
     (hC : ∀ a, ψ (Polynomial.C a) ∈ Sb) (hX : ψ Polynomial.X ∈ Sb) (P : Polynomial R) : ψ P ∈ Sb := by
   refine Polynomial.induction_on P hC (fun p q hp hq => ?_) (fun n a h => ?_)
-  · rw [map_add]; exact add_mem hp hq
+  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   · rw [pow_succ, ← mul_assoc, map_mul]; exact mul_mem h hX
 
 end TestRings
@@ -82,7 +82,7 @@ theorem isReduced_laurent [IsReduced R] : IsReduced (LaurentPolynomial R) := by
 theorem trunc_T_mul_aeval (m : ℤ) (hm : 0 < m) (P : Polynomial R) :
     trunc (T (-m) * Polynomial.aeval (T (-1) : LaurentPolynomial R) P) = 0 := by
   induction P using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, mul_add, map_add, hp, hq, add_zero]
+  | add p q hp hq => rw [map_add (f := _), mul_add, map_add (f := _), hp, hq, add_zero]
   | monomial k a =>
     rw [Polynomial.aeval_monomial, T_pow, ← C_eq_algebraMap, mul_left_comm, ← T_add, trunc_C_mul_T]
     rw [if_neg (by push_cast; omega)]

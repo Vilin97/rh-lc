@@ -508,7 +508,7 @@ theorem IsAdj.mul {T T' S S' : Module.End ℂ (Pol p q r s)} (h : IsAdj ι T T')
 
 theorem IsAdj.add {T T' S S' : Module.End ℂ (Pol p q r s)} (h : IsAdj ι T T') (k : IsAdj ι S S') :
     IsAdj ι (T + S) (T' + S') := fun P Q => by
-  simp only [LinearMap.add_apply, map_add, inner_add_left, inner_add_right, h P Q, k P Q]
+  simp only [LinearMap.add_apply, map_add (f := _), inner_add_left, inner_add_right, h P Q, k P Q]
 
 theorem IsAdj.smul {T T' : Module.End ℂ (Pol p q r s)} (c : ℂ) (h : IsAdj ι T T') :
     IsAdj ι (c • T) (star c • T') := fun P Q => by
@@ -538,10 +538,10 @@ theorem adj_XD (hIP : FockIP ι) (l : Ln p q r s) : IsAdj ι (Xm l) (Dm l) := by
   intro P Q
   show inner ℂ (ι (X l * P)) (ι Q) = inner ℂ (ι P) (ι (pderiv l Q))
   induction P using MvPolynomial.induction_on' with
-  | add P₁ P₂ h₁ h₂ => simp only [mul_add, map_add, inner_add_left, h₁, h₂]
+  | add P₁ P₂ h₁ h₂ => simp only [mul_add, map_add (f := _), inner_add_left, h₁, h₂]
   | monomial α a =>
     induction Q using MvPolynomial.induction_on' with
-    | add Q₁ Q₂ h₁ h₂ => simp only [map_add, inner_add_right, h₁, h₂]
+    | add Q₁ Q₂ h₁ h₂ => simp only [map_add (f := _), inner_add_right, h₁, h₂]
     | monomial β b =>
       have e1 : (X l * monomial α a : Pol p q r s) = a • monomial (Finsupp.single l 1 + α) 1 := by
         rw [X, monomial_mul, one_mul, mono_eq]

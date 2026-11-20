@@ -34,7 +34,7 @@ theorem smul_extH_extH_sub_one {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {R R' R'
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add, smul_add, hx, hy, add_zero]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), smul_add, hx, hy, add_zero]
     | tmul b e =>
       rw [GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.tensNU_tmul, GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.tensNU_tmul, TensorProduct.smul_tmul', smul_eq_mul, hu,
         TensorProduct.zero_tmul]
@@ -45,7 +45,7 @@ theorem smul_extH_extH_sub_one {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {R R' R'
   rw [Matrix.sub_apply, GlobalTheory.AutFunCompare.mat_extH, GlobalTheory.AutFunCompare.mat_extH]
   by_cases h : r = s
   · subst h
-    simp only [Matrix.one_apply_eq, mul_one, map_add, map_sub]
+    simp only [Matrix.one_apply_eq, mul_one, map_add (f := _), map_sub]
     ring
   · simp only [Matrix.one_apply_ne h, mul_zero, zero_add, sub_zero]
 

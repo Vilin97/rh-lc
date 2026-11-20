@@ -41,7 +41,7 @@ theorem liftPoly_one (teich : Formalism.CyclotomicNorms.Fbar g → ℂ) : liftPo
 theorem liftPoly_mul (teich : Formalism.CyclotomicNorms.Fbar g → ℂ) {f f' : (ZMod g)[X]} (hf : f ≠ 0) (hf' : f' ≠ 0) :
     liftPoly teich (f * f') = liftPoly teich f * liftPoly teich f' := by
   unfold liftPoly Formalism.CyclotomicNorms.rootsBar
-  rw [Polynomial.map_mul, roots_mul (mul_ne_zero (map_ne_zero hf) (map_ne_zero hf')), Multiset.map_add,
+  rw [Polynomial.map_mul, roots_mul (mul_ne_zero (map_ne_zero hf) (map_ne_zero hf')), Multiset.map_add (f := _),
     Multiset.prod_add]
 
 theorem Has.monic {S : Sys g} {n : ℕ} {V : Type} [AddCommGroup V] [Module ℂ V]
@@ -247,7 +247,7 @@ theorem principalCongruenceFixedVectors_le_smoothVectors {n : ℕ} {V : Type} [A
       rw [PadicInt.ker_toZMod, IsLocalRing.mem_maximalIdeal, PadicInt.mem_nonunits]
       exact hx i j
     exact this
-  have hM : (PadicInt.toZMod (p := g)).mapMatrix (N + 1) = 1 := by rw [map_add, hN, map_one, zero_add]
+  have hM : (PadicInt.toZMod (p := g)).mapMatrix (N + 1) = 1 := by rw [map_add (f := _), hN, map_one, zero_add]
   have hd : IsUnit (N + 1).det := by
     by_contra h
     have h1 : (N + 1).det ∈ RingHom.ker (PadicInt.toZMod (p := g)) := by
@@ -259,7 +259,7 @@ theorem principalCongruenceFixedVectors_le_smoothVectors {n : ℕ} {V : Type} [A
   have e2 : inc g n k = x := by
     refine Units.ext ?_
     change (algebraMap ℤ_[g] ℚ_[g]).mapMatrix (N + 1) = x.val
-    rw [map_add, map_one]
+    rw [map_add (f := _), map_one]
     exact (congrArg (· + 1) (show (algebraMap ℤ_[g] ℚ_[g]).mapMatrix N = x.val - 1 from rfl)).trans
       (sub_add_cancel _ _)
   exact e2 ▸ (Model.mem_principalCongruenceFixedVectors_iff π v).1 hv k e1

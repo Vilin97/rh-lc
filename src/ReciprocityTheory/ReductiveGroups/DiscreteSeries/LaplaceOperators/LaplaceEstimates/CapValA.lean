@@ -104,7 +104,7 @@ variable (σ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)) (ι : V ≃ₗ[�
 
 lemma opC_add (h : Matrix (Fin n) (Fin n) ℂ) (B₁ B₂ : Module.End ℂ D) :
     opC σ ι h (B₁ + B₂) = opC σ ι h B₁ + opC σ ι h B₂ := by
-  simp only [opC, LinearMap.add_apply, Submodule.coe_add, map_add, inner_add_right, add_smul,
+  simp only [opC, LinearMap.add_apply, Submodule.coe_add, map_add (f := _), inner_add_right, add_smul,
     Finset.sum_add_distrib]
 
 lemma opC_smul (h : Matrix (Fin n) (Fin n) ℂ) (c : ℂ) (B : Module.End ℂ D) :

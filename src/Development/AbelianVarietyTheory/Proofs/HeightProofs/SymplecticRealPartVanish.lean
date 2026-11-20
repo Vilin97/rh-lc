@@ -24,7 +24,7 @@ theorem map_trace_tensor {F E A B : Type} [Field F] [Field E] [Algebra F E] [Fin
     simp
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul a e => rw [Algebra.TensorProduct.map_tmul, key, key, map_mul, AlgHom.commutes]; rfl
 
 theorem map_sesq_sum_eq_zero {A B : Type} [CommRing A] [CommRing B] {m n : ℕ} (q : A →+* B) (σ : A →+* A)
@@ -54,7 +54,7 @@ theorem map_trace_sesq_eq_zero {F E A B : Type} [Field F] [Field E] [Algebra F E
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp only [RingHom.map_zero]
-    | add a b ha hb => simp only [RingHom.map_add, ha, hb]
+    | add a b ha hb => simp only [RingHom.map_add (f := _), ha, hb]
     | tmul a e => rfl
   have hh := map_sesq_sum_eq_zero (Algebra.TensorProduct.map p (AlgHom.id F E)).toRingHom (sigR A s)
     (fun z hz => by rw [hc, hz, map_zero]) a b x y h

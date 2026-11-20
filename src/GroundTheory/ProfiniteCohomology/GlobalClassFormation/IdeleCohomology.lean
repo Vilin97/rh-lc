@@ -77,7 +77,7 @@ theorem placeProj_idelesCohomologySum (n : ℕ) (ξ : ⨁ v : Place K, cohomolog
     · rw [placeEmbed_comp_placeProj_of_ne h, cohomologyMap_zero]
       simp only [DirectSum.of_apply, dif_neg h]
       rfl
-  | add ξ η hξ hη => rw [map_add, map_add, hξ, hη, DirectSum.add_apply]
+  | add ξ η hξ hη => rw [map_add (f := _), map_add (f := _), hξ, hη, DirectSum.add_apply]
 
 theorem idelesCohomologySum_injective (n : ℕ) :
     Function.Injective (idelesCohomologySum (K := K) L n) := by
@@ -154,7 +154,7 @@ theorem idelesCohomologySum_surjective {n : ℕ} (hn : 1 ≤ n) :
       ((cohomologyMap (sProj (L := L) S (Sum.inr (Sum.inl v))) n).hom y :
         cohomology (Rep.of (finiteUnitsAboveRep L v.1)) n), ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum, map_sum]
+    rw [map_add (f := _), map_sum, map_sum]
   set_option synthInstance.maxHeartbeats 100000 in
     conv_rhs => rw [hy, map_sum, Finset.sum_map, Fintype.sum_sum_type]
   congr 1

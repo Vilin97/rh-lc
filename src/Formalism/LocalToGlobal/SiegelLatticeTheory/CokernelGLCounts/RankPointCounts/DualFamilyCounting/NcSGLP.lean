@@ -32,7 +32,7 @@ theorem surj_equiv {C W : Type*} [AddCommGroup C] [Module K C] [FiniteDimensiona
     intro c
     have h1' : L1 (s (L2 c)) = L2 c := by simpa using LinearMap.congr_fun hs (L2 c)
     have h2' : L1 ((e (p c) : LinearMap.ker L1) : C) = 0 := LinearMap.mem_ker.mp (e (p c)).2
-    rw [hδ, map_add, h1', h2', add_zero]
+    rw [hδ, map_add (f := _), h1', h2', add_zero]
   have hinj : Function.Injective δ := by
     refine (injective_iff_map_eq_zero δ).mpr fun c hc => ?_
     have hc2 : L2 c = 0 := by rw [← hL1 c, hc, map_zero]
@@ -266,7 +266,7 @@ theorem fix_tuple {V : Type*} [AddCommGroup V] [Module K V] [FiniteDimensional K
     | simp [B]
   have hΨB : ∀ v, Ψ (B v) = Φ v := by
     intro v
-    rw [hBv, map_add, hs]
+    rw [hBv, map_add (f := _), hs]
     abel
   have hBx : ∀ j, B (x j) = x j := by
     intro j

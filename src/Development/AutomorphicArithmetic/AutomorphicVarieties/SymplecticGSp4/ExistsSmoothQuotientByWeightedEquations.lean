@@ -38,7 +38,7 @@ private theorem der_sq {O A : Type} [CommRing O] [CommRing A] [Algebra O A] (x :
   · rw [RingHom.mem_ker] at ha hb
     rw [hD a b, ha, hb, zero_smul, zero_smul, add_zero]
   · intro a b ha hb
-    rw [map_add, ha, hb, add_zero]
+    rw [map_add (f := _), ha, hb, add_zero]
 
 private theorem indep {O A κ : Type} [CommRing O] [IsDomain O] [CommRing A] [Algebra O A] [Fintype κ] (x : A →ₐ[O] O)
     (g : κ → A) (hd : ∀ k, ∃ δ ∈ PtDer x O, δ (g k) ≠ 0 ∧ ∀ k', k' ≠ k → δ (g k') = 0) :

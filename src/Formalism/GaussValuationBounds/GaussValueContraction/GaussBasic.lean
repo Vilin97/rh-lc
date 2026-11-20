@@ -15,7 +15,7 @@ theorem minLeGaussValAdd : GaussAdd := by
         ((((addVal O (PowerSeries.coeff n g) : ℕ∞)) : ℝ≥0∞) + ENNReal.ofReal (x * n)) :=
     min_le_min (iInf_le _ n) (iInf_le _ n)
   refine h1.trans ?_
-  rw [min_add_add_right, map_add]
+  rw [min_add_add_right, map_add (f := _)]
   gcongr ?_ + _
   have h2 := addVal_add (R := O) (a := PowerSeries.coeff n f) (b := PowerSeries.coeff n g)
   rcases le_total (addVal O (PowerSeries.coeff n f)) (addVal O (PowerSeries.coeff n g)) with h | h

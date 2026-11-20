@@ -42,7 +42,7 @@ def conjMap {U U' : Submodule ℂ (Formalism.AUTREP.GAf L n → ℂ)} (T : U →
     apply Subtype.ext
     show cj ((T (toU (f + f')) : U') : Formalism.AUTREP.GAf L n → ℂ) =
       cj ((T (toU f) : U') : Formalism.AUTREP.GAf L n → ℂ) + cj ((T (toU f') : U') : Formalism.AUTREP.GAf L n → ℂ)
-    rw [this, map_add, Submodule.coe_add, cj_add]
+    rw [this, map_add (f := _), Submodule.coe_add, cj_add]
   map_smul' a f := by
     have : toU (a • f) = star a • toU f := Subtype.ext (cj_smul a f.1)
     apply Subtype.ext

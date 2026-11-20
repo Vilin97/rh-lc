@@ -60,7 +60,7 @@ theorem det_sumElim [DecidableEq ι] [DecidableEq κ] (hfg : ∀ x, g (f x) = 0)
     have : g y = ∑ k, b.repr y (.inr k) • c k := by
       conv_lhs => rw [← b.sum_repr y]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [Fintype.sum_sum_type, hb, hc, hfg, map_sum, map_smul, map_add, smul_zero,
+        simp only [Fintype.sum_sum_type, hb, hc, hfg, map_sum, map_smul, map_add (f := _), smul_zero,
         Finset.sum_const_zero, zero_add]
     rw [this, c.repr_sum_self]
   rw [Module.Basis.det_apply, Module.Basis.det_apply, Module.Basis.det_apply,

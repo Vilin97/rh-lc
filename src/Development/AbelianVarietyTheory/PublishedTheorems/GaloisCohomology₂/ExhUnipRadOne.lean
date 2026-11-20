@@ -44,7 +44,7 @@ theorem exh_equiv_zero {m : Fin 0 → Type} [∀ a, Fintype (m a)] [∀ a, Decid
     { toFun := fun φ => E (φ.1.1 1) • v
       map_add' := fun φ ψ => by
         show E (φ.1.1 1 + ψ.1.1 1) • v = _
-        rw [map_add, add_smul]
+        rw [map_add (f := _), add_smul]
       map_smul' := fun a φ => by
         show E (a • φ.1.1 1) • v = a • (E (φ.1.1 1) • v)
         rw [map_smul, smul_eq_mul, mul_smul]

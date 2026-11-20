@@ -69,7 +69,7 @@ theorem subst_eq_of_equation {K : Type} [Field K] [CharZero K] {a b : K}
         intro f
         have hf := eq_X_mul_shift_add_const f
         conv_lhs => rw [hf]
-        rw [← coe_substAlgHom se, map_add, map_mul, substAlgHom_X, map_add, map_mul, he0,
+        rw [← coe_substAlgHom se, map_add (f := _), map_mul, substAlgHom_X, map_add (f := _), map_mul, he0,
           C_eq_algebraMap, AlgHom.commutes]
         simp
       rw [hQ, h2]; simp [hm, hq]
@@ -123,7 +123,7 @@ theorem wp_flog : ∀ (p : ℕ) [Fact p.Prime] (W : WeierstrassCurve ℂ_[p]) (w
   set r := W.b₂ / 12 with hr
   have hq : lineSer e (-r) = e + C r * X ^ 2 := by simp [lineSer]
   have hdq : derivative ℂ_[p] (e + C r * X ^ 2) = derivative ℂ_[p] e + C r * (2 * X) := by
-    rw [map_add, Derivation.leibniz, Derivation.leibniz_pow]; simp
+    rw [map_add (f := _), Derivation.leibniz, Derivation.leibniz_pow]; simp
   have hW : wq = 1 + C W.a₁ * X * wq + C W.a₂ * X ^ 2 * wq + C W.a₃ * X ^ 3 * wq ^ 2 +
     C W.a₄ * X ^ 4 * wq ^ 2 + C W.a₆ * X ^ 6 * wq ^ 3 := hwq
   have hW' : e ^ 2 = e ^ 3 + C W.a₁ * X * e ^ 2 + C W.a₂ * X ^ 2 * e ^ 2 + C W.a₃ * X ^ 3 * e +
@@ -135,17 +135,17 @@ theorem wp_flog : ∀ (p : ℕ) [Fact p.Prime] (W : WeierstrassCurve ℂ_[p]) (w
     rw [hN]; linear_combination C W.a₃ * X ^ 3 * he
   have c2 : (12 : PowerSeries ℂ_[p]) * C r = C W.a₁ ^ 2 + 4 * C W.a₂ := by
     have : 12 * r = W.a₁ ^ 2 + 4 * W.a₂ := by rw [hr, WeierstrassCurve.b₂]; ring
-    simpa only [map_mul, map_add, map_pow, map_ofNat] using congrArg (C (R := ℂ_[p])) this
+    simpa only [map_mul, map_add (f := _), map_pow, map_ofNat] using congrArg (C (R := ℂ_[p])) this
   have c4 : (C (W.c₄ / 12) : PowerSeries ℂ_[p]) =
       12 * C r ^ 2 - 2 * (2 * C W.a₄ + C W.a₁ * C W.a₃) := by
     have : W.c₄ / 12 = 12 * r ^ 2 - 2 * (2 * W.a₄ + W.a₁ * W.a₃) := by
       rw [hr, WeierstrassCurve.c₄, WeierstrassCurve.b₄]; ring
-    rw [this]; simp only [map_mul, map_add, map_sub, map_pow, map_ofNat]
+    rw [this]; simp only [map_mul, map_add (f := _), map_sub, map_pow, map_ofNat]
   have c6 : (C (W.c₆ / 216) : PowerSeries ℂ_[p]) =
       2 * C r * (2 * C W.a₄ + C W.a₁ * C W.a₃) - 8 * C r ^ 3 - (C W.a₃ ^ 2 + 4 * C W.a₆) := by
     have : W.c₆ / 216 = 2 * r * (2 * W.a₄ + W.a₁ * W.a₃) - 8 * r ^ 3 - (W.a₃ ^ 2 + 4 * W.a₆) := by
       rw [hr, WeierstrassCurve.c₆, WeierstrassCurve.b₄, WeierstrassCurve.b₆]; ring
-    rw [this]; simp only [map_mul, map_add, map_sub, map_pow, map_ofNat]
+    rw [this]; simp only [map_mul, map_add (f := _), map_sub, map_pow, map_ofNat]
   have main := subst_eq_of_equation (m := m) (q := e + C r * X ^ 2) (M := N * e) hP hm1
     (by simp [he1])
     (by

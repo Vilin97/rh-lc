@@ -8,7 +8,7 @@ namespace GlobalTheory.WhitBump.FinBump
 variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {n : ℕ}
 
 theorem psiFin_add (a b : Af E) : psiFin (a + b) = psiFin a * psiFin b := by
-  simp only [psiFin, map_add, AddChar.map_add_eq_mul, Circle.coe_mul]
+  simp only [psiFin, map_add (f := _), AddChar.map_add_eq_mul, Circle.coe_mul]
 
 theorem bumpFin_eq (hK : ∀ u ∈ GlobalTheory.SmGL.unipB (Af E) (Fin n),
       u ∈ GroundTheory.Automorphic.AdelicGLn.integralFiniteGL E n → psiFin (GlobalTheory.Whittaker.superDiag u) = 1)

@@ -86,10 +86,10 @@ private theorem torus_eig {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {n q : ℕ} 
     (i : Fin q) (hi : t i ≠ 0) :
     ∃ u : (AE F E)ˣ, (HA.mat (AF F) σ J a).1 *ᵥ incV F (fun k => Xf k i) = u.1 • incV F (fun k => Xf k i) := by
   have hf : ∀ s : ℝ, finPart F E (1 + realAd F (s - 1) • (1 : AE F E)) = 1 := fun s => by
-    rw [map_add, finPart_realAd_smul, map_one, add_zero]
+    rw [map_add (f := _), finPart_realAd_smul, map_one, add_zero]
   have hi' : ∀ (w : InfinitePlace F) (τ : EmbOver E w) (s : ℝ),
       infEmb τ (compInf F E w (1 + realAd F (s - 1) • (1 : AE F E))) = s := fun w τ s => by
-    rw [map_add, map_add, infEmb_realAd_smul h]
+    rw [map_add (f := _), map_add (f := _), infEmb_realAd_smul h]
     simp
   have hu : (1 + realAd F (t i - 1) • (1 : AE F E)) * (1 + realAd F ((t i)⁻¹ - 1) • (1 : AE F E)) = 1 := by
     refine ae_ext h ?_ fun w τ => ?_

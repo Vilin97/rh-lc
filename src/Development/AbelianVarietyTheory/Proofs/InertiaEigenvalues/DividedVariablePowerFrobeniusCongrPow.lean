@@ -127,7 +127,7 @@ theorem add_mem {x y : ZMod a → K⟦X⟧⟦X⟧} (hx : x ∈ QSet t K e) (hy :
   obtain ⟨w, rfl⟩ := hy
   refine ⟨v + w, funext fun τ => ?_⟩
   ext j m
-  simp only [Pi.add_apply, map_add, coeff_ofW, add_div]
+  simp only [Pi.add_apply, map_add (f := _), coeff_ofW, add_div]
 
 theorem neg_mem {x : ZMod a → K⟦X⟧⟦X⟧} (hx : x ∈ QSet t K e) : -x ∈ QSet t K e := by
   obtain ⟨v, rfl⟩ := hx

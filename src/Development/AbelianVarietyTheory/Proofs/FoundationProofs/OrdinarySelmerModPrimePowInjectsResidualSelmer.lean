@@ -39,7 +39,7 @@ theorem rv_add {c : Coef l} {n : ℕ} {a b : Fin 2 → Qbar l} (ha : ∀ i, a i 
   funext i
   rw [rv_apply (addV ha hb)]
   show _ = rv c n a i + rv c n b i
-  rw [rv_apply ha, rv_apply hb, ← map_add]
+  rw [rv_apply ha, rv_apply hb, ← map_add (f := _)]
   rfl
 
 theorem rv_sub {c : Coef l} {n : ℕ} {a b : Fin 2 → Qbar l} (ha : ∀ i, a i ∈ c.O) (hb : ∀ i, b i ∈ c.O) :
@@ -75,7 +75,7 @@ theorem rv_mulVec (c : Coef l) (n : ℕ) (W : R2 Ω l) (hint : ∀ s i j, mat W 
       ⟨mat W s i 0, hint s i 0⟩ * ⟨x 0, hx 0⟩ + ⟨mat W s i 1, hint s i 1⟩ * ⟨x 1, hx 1⟩ := by
     apply Subtype.ext
     simp [Matrix.mulVec, dotProduct, Fin.sum_univ_two]
-  rw [e, map_add, map_mul, map_mul]
+  rw [e, map_add (f := _), map_mul, map_mul]
   simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_two, matQ_apply, rv_apply hx]
 
 theorem continuous_rv (c : Coef l) (n : ℕ) {y : G ℚ Ω → Fin 2 → Qbar l} (hyc : Continuous y)

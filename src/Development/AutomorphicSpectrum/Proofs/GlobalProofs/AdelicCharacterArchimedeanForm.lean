@@ -117,7 +117,7 @@ theorem exists_dual {F : Type} [Field F] [NumberField F] (ρ : InfinitePlace F �
           push_cast
           rw [← hq, ← hq, ← hq, ← Finset.sum_add_distrib]
           refine Finset.sum_congr rfl fun w _ => ?_
-          rw [map_add]
+          rw [map_add (f := _)]
           ring
         exact_mod_cast this
       map_smul' := fun t x => by
@@ -156,7 +156,7 @@ theorem exists_char_data : ∀ (F : Type) [Field F] [NumberField F], IsTotallyRe
         rw [map_zero]
         rfl
       map_add' := fun x y => by
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Prod.ext rfl (add_zero _).symm }
   have hφ : Continuous φ := (hes.prodMk continuous_const : Continuous fun x => (e.symm x, (0 : Af F)))
   obtain ⟨α, hα⟩ := pi_char (ψ.compAddMonoidHom φ) (hψ.1.comp hφ) (fun x => hψ.2.1 _)

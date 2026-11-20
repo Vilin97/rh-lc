@@ -124,7 +124,7 @@ theorem bl_of_lead {S K : Type} [CommRing S] [Field K] (ι : S →+* K) (hι : F
     have e : ∀ k, M.mulVec (fun b => A b i + A b c) k = M.mulVec (fun b => A b i) k + (M * A) k c := fun k =>
       congrFun (Matrix.mulVec_add M (fun b => A b i) fun b => A b c) k
     rcases hk.eq_or_lt with rfl | hk
-    · rw [e, map_add, k2] at g2
+    · rw [e, map_add (f := _), k2] at g2
       exact hι ((add_eq_left.1 g2).trans (map_zero ι).symm)
     · have := g1 k hk
       rwa [e, k1 k hk, zero_add] at this
@@ -352,7 +352,7 @@ theorem lnStep_core {Bs Bg Y₀ G : Scheme.{0}} [IsIntegral G] {jB : Bg ⟶ Bs} 
   have e₁ : FlagCov.genPt G ≫ jG ≫ πB ≫ genι Z = spMap ι ≫ x := by
     rw [← a₂, show x = _ from (d₀ _).symm]; simp only [Category.assoc]
   simp only [e₁, nat ι _ a₂,
-    evalPt_eq ι (s ≫ j) (x' := FlagCov.genPt G ≫ j) (by rw [← a₂, Category.assoc]) W hsW, map_add] at h h'
+    evalPt_eq ι (s ≫ j) (x' := FlagCov.genPt G ≫ j) (by rw [← a₂, Category.assoc]) W hsW, map_add (f := _)] at h h'
   have hMM : Matrix.of (fun a b => Mc b a) * Matrix.of (fun a b => Mc' b a) = 1 := by
     ext a b
     have := congrFun (indep_of_eig hfb _ _ _ (tanLinG _ (fun k => (hfb.1 k).1) uS (Matrix.of fun a b => Mc b a) _ _ hM
@@ -372,7 +372,7 @@ theorem lnStep_core {Bs Bg Y₀ G : Scheme.{0}} [IsIntegral G] {jB : Bg ⟶ Bs} 
       simp only [dual_comp, x] at g₄ ⊢
       rw [sp_comp', b₂, ← sp_comp', reassoc_of% a₄]
       exact g₄) (A.map (TangentOrigin.evalPt (s ≫ j) W hsW)) i r h
-    (fun a ha => by simpa only [map_add, Matrix.map_apply] using h' a ha)
+    (fun a ha => by simpa only [map_add (f := _), Matrix.map_apply] using h' a ha)
   have hun := isUnit_bl hN hdet
   refine ⟨hun.unit, hd, ?_⟩
   let ψ := io.comp χ
@@ -680,7 +680,7 @@ theorem lg_whole_eq : GlobalTheory.CovTop.Hypotheses2 → GlobalTheory.CovHt.Hyp
     (hr (fun _ => ck i) V f hf W (hW i) hWV (s i) (hs i) hgW hgV)
     (fun a ha => by
       obtain ⟨s', g₁, g₂⟩ := exists_lower F W ha (s a)
-      have g := hr (fun _ => ck i) V f hf W (hW i) hWV (s i + s') (by rw [map_add, g₁, add_zero]; exact hs i) hgW hgV
+      have g := hr (fun _ => ck i) V f hf W (hW i) hWV (s i + s') (by rw [map_add (f := _), g₁, add_zero]; exact hs i) hgW hgV
       simp only [map_add ((F.ι i.succ).app W).hom, g₂, map_add (Module.Basis.repr _), Finsupp.add_apply] at g
       exact g)
     hl φs hp e z hy yt hyt hyW k hk (ArIn.ind ∅) (by simp [ArIn.ind])

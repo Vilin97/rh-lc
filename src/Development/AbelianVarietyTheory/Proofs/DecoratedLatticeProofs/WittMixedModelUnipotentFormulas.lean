@@ -30,7 +30,7 @@ theorem symplO_zero_left' {S T : HSp D} (y : WO S T) : symplO S T 0 y = 0 := by
   simp [symplO, hO]
 
 theorem symplO_eq_two {S T : HSp D} (x y : WO S T) : symplO S T x y = symplOH S T x y + symplOH S T x y := by
-  rw [symplOH, ← add_mul, ← map_add, add_halves, map_one, one_mul]
+  rw [symplOH, ← add_mul, ← map_add (f := _), add_halves, map_one, one_mul]
 
 theorem heisO_smul (ψ : AddChar (AF D.host.F) ℂ) {S T : HSp D} (w : WO S T) (c : ℂ) (f : WO S T → ℂ) :
     heisO ψ S T w (c • f) = c • heisO ψ S T w f := by
@@ -77,7 +77,7 @@ theorem mixS_unip : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S S₀ T : HS
       rw [HypDec.symplOH_extX_extY, e, trHalf_half, ← symplOH_eq, GlobalTheory.OrientedHeis.symplOH_self, add_zero]
     have hXY' : symplOH S T X (d.extY T (-a)) = 0 := by
       have h := GlobalTheory.OrientedHeis.symplOH_add_right (S := S) (T := T) X (d.extY T a) (d.extY T (-a))
-      rw [← map_add, add_neg_cancel, map_zero, symplOH_zero_right, hXY, zero_add] at h
+      rw [← map_add (f := _), add_neg_cancel, map_zero, symplOH_zero_right, hXY, zero_add] at h
       exact h.symm
     have hkey : heisO ψ S T (X ⬝ mt S (d.nB b)) f =
         heisO ψ S T (d.extY T (-a)) (heisO ψ S T X (heisO ψ S T Z f)) := by

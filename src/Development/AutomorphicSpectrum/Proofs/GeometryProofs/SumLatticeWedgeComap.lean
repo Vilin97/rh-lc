@@ -60,7 +60,7 @@ theorem frame_of_sum_frame : ∀ (X : Scheme.{0}) (Ω : Type) [Field Ω] (ξ : S
       obtain ⟨t, ht, hxt⟩ := hx
       obtain ⟨t', ht', hyt⟩ := hy
       refine ⟨t + t', add_mem ht ht', ?_⟩
-      have h : i (x + y) - (t + t') = (i x - t) + (i y - t') := by rw [map_add]; abel
+      have h : i (x + y) - (t + t') = (i x - t) + (i y - t') := by rw [map_add (f := _)]; abel
       rw [h]
       exact Va.add_mem hxt hyt
     | smul r x _ hx =>

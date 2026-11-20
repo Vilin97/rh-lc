@@ -122,7 +122,7 @@ theorem exists_pairing {μ : Measure (UA σ J)} {D : Set (UA σ J)} (hfin : μ D
     simp only [Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, mul_assoc]
   · intro f Φ Ψ
     rw [← integral_add (integrableOn_mul_conj hfin f.2 (hK Φ)) (integrableOn_mul_conj hfin f.2 (hK Ψ))]
-    simp only [map_add, Pi.add_apply, mul_add]
+    simp only [map_add (f := _), Pi.add_apply, mul_add]
   · intro c f Φ
     rw [← integral_smul]
     simp only [map_smul, Pi.smul_apply, smul_eq_mul, map_mul, mul_left_comm]
@@ -192,7 +192,7 @@ theorem exists_local_form : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [
   let K : schA F (Fin a × Fin (a + a')) →ₗ[ℂ] (UA σ G.W.J → ℂ) :=
     { toFun := fun Φ h => thetaSum F (e (om (1, h) Φ.1))
       map_add' := fun Φ Φ' => funext fun h => by
-        simp only [Submodule.coe_add, map_add, Pi.add_apply]
+        simp only [Submodule.coe_add, map_add (f := _), Pi.add_apply]
         exact thetaSum_add F (hev.maps _ (hpres _ _ Φ.2)) (hev.maps _ (hpres _ _ Φ'.2))
       map_smul' := fun t Φ => funext fun h => by
         simp only [Submodule.coe_smul, map_smul, Pi.smul_apply, RingHom.id_apply, smul_eq_mul]

@@ -189,7 +189,7 @@ theorem IsInt.add {n : ℤ} {a b : T.B} (ha : IsInt U n a) (hb : IsInt U n b) :
     IsInt U n (a + b) := by
   obtain ⟨x, rfl⟩ := ha
   obtain ⟨y, rfl⟩ := hb
-  exact ⟨x + y, by rw [map_add, mul_add]⟩
+  exact ⟨x + y, by rw [map_add (f := _), mul_add]⟩
 
 theorem IsInt.neg {n : ℤ} {a : T.B} (ha : IsInt U n a) : IsInt U n (-a) := by
   obtain ⟨x, rfl⟩ := ha
@@ -393,7 +393,7 @@ theorem res_add {a b : T.B} (ha : IsInt U 0 a) (hb : IsInt U 0 b) :
     res U (a + b) = res U a + res U b := by
   obtain ⟨x, rfl⟩ := ha.exists_eq
   obtain ⟨y, rfl⟩ := hb.exists_eq
-  rw [← map_add, res_algebraMap, res_algebraMap, res_algebraMap, map_add]
+  rw [← map_add (f := _), res_algebraMap, res_algebraMap, res_algebraMap, map_add (f := _)]
 
 theorem res_mul {a b : T.B} (ha : IsInt U 0 a) (hb : IsInt U 0 b) :
     res U (a * b) = res U a * res U b := by
@@ -458,7 +458,7 @@ theorem surjective_of_mod (G : (ι → Γ) →+ (ι → Γ))
       have h' : zs n - G (X (zs n)) = U.ϖ0 • Y (zs n) := by
         rw [sub_eq_iff_eq_add']
         exact hXY (zs n)
-      rw [e1, map_add, hGpow, ← sub_sub, ih, ← smul_sub, h', smul_smul, ← pow_succ, e2]
+      rw [e1, map_add (f := _), hGpow, ← sub_sub, ih, ← smul_sub, h', smul_smul, ← pow_succ, e2]
   have hstep : ∀ i n, s (n + 1) i - s n i ∈ Ideal.span {U.ϖ0 ^ n} := by
     intro i n
     have e1 : s (n + 1) = s n + U.ϖ0 ^ n • X (zs n) := Finset.sum_range_succ _ _
@@ -477,7 +477,7 @@ theorem surjective_of_mod (G : (ι → Γ) →+ (ι → Γ))
   apply eq_zero_of_forall_mem U
   intro n
   have : z - G y = U.ϖ0 ^ n • (zs n - G (fun i => u n i)) := by
-    rw [show y = s n + (y - s n) by abel, map_add, ← sub_sub, hA, hys, hGpow, smul_sub]
+    rw [show y = s n + (y - s n) by abel, map_add (f := _), ← sub_sub, hA, hys, hGpow, smul_sub]
   rw [← Pi.sub_apply, this, Pi.smul_apply, smul_eq_mul]
   exact Ideal.mem_span_singleton.mpr (dvd_mul_right _ _)
 

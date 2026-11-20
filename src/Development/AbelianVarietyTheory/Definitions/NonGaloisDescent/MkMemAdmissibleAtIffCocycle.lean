@@ -352,7 +352,7 @@ theorem Ea_equiv_of_class_eq {z z' : ↥(Z1 (twCoef W χ X) ⊤)}
   congr 1
   change (twCoef W χ X g m + y • (z : G → M ⊗[O] X) g + y • b, Ideal.Quotient.mk _ y) =
     (twCoef W χ X g (m + y • b) + y • (z' : G → M ⊗[O] X) g, Ideal.Quotient.mk _ y)
-  rw [map_add, map_smul, eq_add_of_sub_eq (hb' g)]
+  rw [map_add (f := _), map_smul, eq_add_of_sub_eq (hb' g)]
   congr 1
   simp only [smul_add, smul_sub]
   abel
@@ -367,7 +367,7 @@ def mapH1 {π : Representation O G M} {π' : Representation O G M'} (f : M →�
         funext x
         have h1 : π x.1 (z x.2) - z (x.1 * x.2) + z x.1 = 0 := congrFun hz.2 x
         change π' x.1 (f (z x.2)) - f (z (x.1 * x.2)) + f (z x.1) = 0
-        rw [← hf, ← map_sub, ← map_add, h1, map_zero]⟩))
+        rw [← hf, ← map_sub, ← map_add (f := _), h1, map_zero]⟩))
     (by
       rintro z ⟨b, -, hb⟩
       refine ⟨f b, Submodule.mem_top, ?_⟩
@@ -382,7 +382,7 @@ def coefH1 (W : Representation O G M) (χ : G →* Oˣ) {X X' : Type} [AddCommGr
     induction m using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => simp [coefRep_tmul]
-    | add a b ha hb => simp only [map_add, ha, hb])
+    | add a b ha hb => simp only [map_add (f := _), ha, hb])
 
 def unr (π : Representation O G M) (I : Subgroup G) : Submodule O (H1 π ⊤) :=
   Submodule.map (Submodule.mkQ _)
@@ -391,7 +391,7 @@ def unr (π : Representation O G M) (I : Subgroup G) : Submodule O (H1 π ⊤) :
       add_mem' := by
         rintro a a' ⟨x, hx⟩ ⟨y, hy⟩
         refine ⟨x + y, fun g hg => ?_⟩
-        simp only [Submodule.coe_add, Pi.add_apply, hx g hg, hy g hg, map_add]
+        simp only [Submodule.coe_add, Pi.add_apply, hx g hg, hy g hg, map_add (f := _)]
         abel
       smul_mem' := by
         rintro c a ⟨x, hx⟩

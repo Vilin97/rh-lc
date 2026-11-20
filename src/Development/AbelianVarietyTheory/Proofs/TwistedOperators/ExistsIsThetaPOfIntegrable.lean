@@ -19,7 +19,7 @@ theorem exists_isThetaP_of_integrable {G' H' S' Sinf TK Tau : Type} [MeasurableS
     ?_ ?_ ?_ ?_, hint, ?_⟩
   · intro f₁ f₂ e
     funext g
-    simp only [Submodule.coe_add, Pi.add_apply, map_add]
+    simp only [Submodule.coe_add, Pi.add_apply, map_add (f := _)]
     exact integral_add (hint f₁ e g) (hint f₂ e g)
   · intro c f e
     funext g
@@ -27,7 +27,7 @@ theorem exists_isThetaP_of_integrable {G' H' S' Sinf TK Tau : Type} [MeasurableS
     exact integral_const_mul c _
   · intro f e₁ e₂
     funext g
-    simp only [map_add, LinearMap.add_apply, Pi.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply, Pi.add_apply]
     exact integral_add (hint f e₁ g) (hint f e₂ g)
   · intro c f e
     funext g

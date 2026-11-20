@@ -56,7 +56,7 @@ theorem cube_par_subst (F : MvPowerSeries (Fin 2) K) (hF : MvPowerSeries.constan
   have h1 : MvPowerSeries.constantCoeff (at1 (1 : Fin 2) i) = 0 := constantCoeff_subst_one_variable i hi _ (by simp)
   have hFI : MvPowerSeries.constantCoeff (FI F i) = 0 := constantCoeff_subst_two_variables F hF _ _ (by simp) h1
   unfold par
-  rw [← MvPowerSeries.coe_substAlgHom hb, map_sub, map_sub, map_add, map_mul, map_mul, map_ofNat,
+  rw [← MvPowerSeries.coe_substAlgHom hb, map_sub, map_sub, map_add (f := _), map_mul, map_mul, map_ofNat,
     MvPowerSeries.coe_substAlgHom hb, psubst_subst f hF hb, psubst_subst f hFI hb,
     subst_at_variable_one_eq f 0 hb, subst_at_variable_one_eq f 1 hb]
   unfold FI

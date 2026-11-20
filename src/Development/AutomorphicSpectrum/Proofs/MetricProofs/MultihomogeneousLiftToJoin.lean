@@ -139,7 +139,7 @@ theorem exists_homog_poly {σ : Type} (c₀ : σ) (P : MvPolynomial σ ℚ) :
       · have := ((isHomogeneous_C σ m₁).mul ((isHomogeneous_X ℤ c₀).pow n₁)).mul hG₂
         convert this using 1
         ring
-    · simp only [map_add, map_mul, map_pow, aeval_X, hv, one_pow, mul_one, eq_intCast, map_intCast, e₁ R v hv,
+    · simp only [map_add (f := _), map_mul, map_pow, aeval_X, hv, one_pow, mul_one, eq_intCast, map_intCast, e₁ R v hv,
         e₂ R v hv]
       push_cast
       ring

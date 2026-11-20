@@ -207,7 +207,7 @@ theorem map_coordM {S : Type} [CommRing S] [Algebra F S] (f : R →ₐ[F] S) (l 
       simp [tm]
     rw [this, coordM_tm, coordM_tm, map_smul]
   | h2 a b ha hb =>
-    rw [coordM_add, map_add, ha, hb, Matrix.map_add _ (map_add _), coordM_add]
+    rw [coordM_add, map_add (f := _), ha, hb, Matrix.map_add _ (map_add _), coordM_add]
 
 end coord
 

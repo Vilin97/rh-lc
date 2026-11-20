@@ -390,7 +390,7 @@ theorem T_notMem_of_typePlaces {pb : Fin 2 → 𝓞 D.host.E} {Pg : Finset (Pl D
         NumberField.RingOfIntegers.mapRingHom D.conjF.toRingHom y *
           ((D.host.QS * D.host.q * D.host.d * (D.host.g 0 * D.host.g 1) ^ 2 : ℕ) : 𝓞 D.host.E) := by
     apply IsFractionRing.injective (𝓞 D.host.E) D.host.E
-    rw [map_sub, map_one, map_natCast, map_add, map_mul, map_mul, map_sub, map_one, map_natCast]
+    rw [map_sub, map_one, map_natCast, map_add (f := _), map_mul, map_mul, map_sub, map_one, map_natCast]
     exact hmain
   have h1 : ((D.sp.T : ℕ) : 𝓞 D.host.E) - 1 ∈ PP.asIdeal := by
     rw [hmem]

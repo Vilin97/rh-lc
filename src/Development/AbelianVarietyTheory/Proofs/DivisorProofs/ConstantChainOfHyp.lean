@@ -62,7 +62,7 @@ theorem consW_of (j : ℕ) (chern : MvPolynomial (Rt D.what₂.Tau N) ℝ →ₗ
   rw [evC_mul, ← lieW_pow_divP M rt hc j e V he 1] at key
   have e3 : collapse D N (toR (∑ τ, (liePow (N := N) j 1 (Sum.inl τ) + liePow j 1 (Sum.inr τ)))) = chLieA D N j 1 := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [chLieA, chLie_eq, toR, map_sum, map_add, Nat.factorial_one, Nat.cast_one, inv_one, map_one, one_mul]
+      simp only [chLieA, chLie_eq, toR, map_sum, map_add (f := _), Nat.factorial_one, Nat.cast_one, inv_one, map_one, one_mul]
   rw [chDiv, Nat.factorial_one, Nat.cast_one, div_one, key, ← e3, ← map_mul, toR, toR, toR, map_mul]
 
 theorem consWSt_of (hC : AtAll fun _ O _ _ _ _ jc z => Cons (mdlOf z jc) (rootOf z jc) O.Y.chern) : ConsWSt := by

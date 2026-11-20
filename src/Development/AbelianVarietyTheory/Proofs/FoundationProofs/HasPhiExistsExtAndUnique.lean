@@ -59,7 +59,7 @@ theorem HasPhi.unique {T : CDVR} {io : c.F →+* T.Fr} {y : IntFr Xo c T io} {φ
     have h1 := hdiag (a + b)
     have s1 := β₁.2.1 a b
     have s2 := β.2.1 a b
-    simp only [map_add, LinearMap.add_apply] at h1
+    simp only [map_add (f := _), LinearMap.add_apply] at h1
     linarith [hdiag a, hdiag b]
   rw [← e, hφ, _root_.one_mul]
 

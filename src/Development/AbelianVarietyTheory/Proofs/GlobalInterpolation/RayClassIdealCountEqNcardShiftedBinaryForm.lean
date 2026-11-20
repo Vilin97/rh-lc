@@ -138,7 +138,7 @@ theorem exists_basis_im {d : ℕ} (hp : d.Prime) (hd : d % 4 = 3) {x : K} (hx : 
   have hφx : φ x ^ 2 = -(d : ℂ) := by rw [← map_pow, hx]; simp
   have hφw : φ (w : K) = (1 + φ x) / 2 := by
     have := congrArg φ hw
-    simp only [map_mul, map_add, map_one, map_ofNat] at this
+    simp only [map_mul, map_add (f := _), map_one, map_ofNat] at this
     linear_combination this / 2
   have hsd : (0 : ℝ) < √(d : ℝ) := Real.sqrt_pos.mpr (by exact_mod_cast hp.pos)
   have him : (φ (w : K)).im = √(d : ℝ) / 2 ∨ (φ (w : K)).im = -(√(d : ℝ) / 2) := by

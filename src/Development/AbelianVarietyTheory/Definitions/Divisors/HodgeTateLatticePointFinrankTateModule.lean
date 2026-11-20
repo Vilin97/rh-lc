@@ -156,21 +156,21 @@ theorem pairV_act (a : Λ) (x y : P.V) :
     P.pairV (P.actV a x) y = P.pairV x (P.actV (star a) y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
   | tmul c s =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp only [map_add, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
     | tmul d t => exact congrArg (· • (c * d)) (pairT_act P.oA P.eps a s t)
 
 theorem pairV_swap (x y : P.V) : P.pairV x y = -P.pairV y x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx', neg_add]
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx', neg_add]
   | tmul c s =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp only [map_add, LinearMap.add_apply, hy, hy', neg_add]
+    | add y y' hy hy' => simp only [map_add (f := _), LinearMap.add_apply, hy, hy', neg_add]
     | tmul d t => rw [pairV_tmul, pairV_tmul, ← (isAlt_pairT P.A P.eps).neg_eq t s, neg_smul, mul_comm]
 
 theorem isAlt_pairV : P.pairV.IsAlt := fun x => by
@@ -258,7 +258,7 @@ theorem mem_latT_iff (w : P.V) :
     | add x y hx hy =>
       obtain ⟨c, hc⟩ := hx
       obtain ⟨d, hd⟩ := hy
-      exact ⟨c + d, by rw [map_add, map_add, map_add, LinearMap.add_apply, hc, hd]⟩
+      exact ⟨c + d, by rw [map_add (f := _), map_add (f := _), map_add (f := _), LinearMap.add_apply, hc, hd]⟩
     | tmul c s =>
       refine ⟨pairT P.A P.eps s t • c, ?_⟩
       rw [inclT_tmul, pairV_tmul, _root_.mul_one, Algebra.smul_def, Algebra.smul_def, map_mul,
@@ -282,7 +282,7 @@ theorem alC_tmul (c : C) (t : P.T) : P.alC (c ⊗ₜ t) = c ⊗ₜ P.al₀ t := 
 theorem alC_inclT (x : O ⊗[ℤ_[p]] P.T) : P.alC (P.inclT x) = P.inclOm (P.al x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul c t =>
     rw [inclT_tmul, alC_tmul, al_tmul, inclOm, TensorProduct.mk_apply, TensorProduct.tmul_smul,
       TensorProduct.smul_tmul', Algebra.algebraMap_eq_smul_one]
@@ -291,7 +291,7 @@ theorem isEquivariant_alC : IsEquivariant P.actV P.actOm P.alC := by
   intro a x
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul c t =>
     change P.alC (c ⊗ₜ P.actT a t) = P.actOm a (P.alC (c ⊗ₜ t))
     rw [alC_tmul, alC_tmul, al₀_act]
@@ -348,7 +348,7 @@ theorem pairV_bLie (x : LieG P.Gt) (t : P.T) :
 
 theorem bLie_add (x y : LieG P.Gt) : P.bLie (lieAdd x y) = P.bLie x + P.bLie y :=
   P.eq_of_pairV fun t => by
-    rw [map_add, LinearMap.add_apply, pairV_bLie, pairV_bLie, pairV_bLie, omega_lieAdd, map_add]
+    rw [map_add (f := _), LinearMap.add_apply, pairV_bLie, pairV_bLie, pairV_bLie, omega_lieAdd, map_add (f := _)]
 
 theorem bLie_zero : P.bLie (lieZero P.Gt) = 0 :=
   P.eq_of_pairV fun t => by

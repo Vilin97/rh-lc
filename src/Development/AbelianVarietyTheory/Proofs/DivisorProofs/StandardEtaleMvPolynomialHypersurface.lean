@@ -68,7 +68,7 @@ theorem standardEtale_mvPolynomial_hypersurface :
     rw [pderiv_map, key, optionEquivLeft_pderiv_none, ← he, e.apply_symm_apply]
     intro hd
     have := congrArg Φ hc
-    simp only [map_add, map_mul, map_pow] at this
+    simp only [map_add (f := _), map_mul, map_pow] at this
     change Φ (Polynomial.derivative P.f) * _ + _ = _ at this
     rw [hd, hf] at this
     simp only [zero_mul, add_zero] at this

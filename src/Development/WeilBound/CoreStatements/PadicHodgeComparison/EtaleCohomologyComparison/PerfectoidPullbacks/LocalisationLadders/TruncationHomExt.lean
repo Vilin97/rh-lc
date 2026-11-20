@@ -167,8 +167,8 @@ theorem val_comp {X Y Z : Pt E} (f : X.T ⟶ Y.T) (g : Y.T ⟶ Z.T) :
   have h1 : (Φ.A.map (Pmap Q g)).hom ((Φ.A.map (Q.j Y.T)).hom (E.τ 0 (X.s ≫ f) Y.s)) =
       (Φ.A.map (Q.j Z.T)).hom ((Φ.A.map g).hom (E.τ 0 (X.s ≫ f) Y.s)) := by
     rw [← mapA_comp, ← mapA_comp, Pmap_j]
-  simp only [val, map_add, Pmap_X, h1]
-  rw [τ_comp 0 X.s Y.s Z.s f g, map_add]
+  simp only [val, map_add (f := _), Pmap_X, h1]
+  rw [τ_comp 0 X.s Y.s Z.s f g, map_add (f := _)]
   abel
 
 theorem Pmap_cut {X Y : Pt E} (φ : X.T ⟶ Y.T) : E.τ 0 (sec Q X ≫ Pmap Q φ) (sec Q Y) = 0 := by

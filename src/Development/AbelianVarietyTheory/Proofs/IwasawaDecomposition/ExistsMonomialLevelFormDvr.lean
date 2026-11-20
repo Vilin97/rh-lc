@@ -47,9 +47,9 @@ theorem exists_isMonomial_levelOne : ∀ {E : Type} [Field E] [NumberField E] [I
     linarith
   let be : LinearMap.BilinForm ℤ P.D.toPre.X :=
     LinearMap.mk₂ ℤ (fun a b => QForm.bHom hϖ P.D hQ' a b)
-      (fun a a' b => by simp only [map_add, AddMonoidHom.add_apply])
+      (fun a a' b => by simp only [map_add (f := _), AddMonoidHom.add_apply])
       (fun c a b => by simp only [map_zsmul, AddMonoidHom.smul_apply, smul_eq_mul])
-      (fun a b b' => by simp only [map_add])
+      (fun a b b' => by simp only [map_add (f := _)])
       (fun c a b => by simp only [map_zsmul, smul_eq_mul])
   have hbe : ∀ a b, be a b = QForm.bOf P.D.toPre Q a b := fun _ _ => rfl
   refine ⟨be, ⟨fun y z => ?_, fun a y z => ?_, fun y z => by simp⟩, fun y => ?_⟩

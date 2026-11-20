@@ -105,7 +105,7 @@ theorem quadratic_intCoeffs : IntCoeffs := by
     compute_degree!
   have haeval : aeval ((x : K) + (y : K) * θ) p = 0 := by
     rw [hp]
-    simp only [map_add, map_sub, map_mul, aeval_X, aeval_C, map_pow, eq_ratCast]
+    simp only [map_add (f := _), map_sub, map_mul, aeval_X, aeval_C, map_pow, eq_ratCast]
     push_cast
     linear_combination ((y : K)) ^ 2 * hθ
   have hirr : Irreducible p := by

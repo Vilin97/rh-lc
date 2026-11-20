@@ -27,7 +27,7 @@ theorem aeval_sub_mem (T : Module.End ℂ V) (A : Submodule ℂ V) (hA : ∀ x �
   | add p q hp hq =>
     have e : Polynomial.aeval T (p + q) w - (p + q).eval a • w =
         (Polynomial.aeval T p w - p.eval a • w) + (Polynomial.aeval T q w - q.eval a • w) := by
-      rw [map_add, LinearMap.add_apply, Polynomial.eval_add, add_smul]
+      rw [map_add (f := _), LinearMap.add_apply, Polynomial.eval_add, add_smul]
       abel
     rw [e]
     exact A.add_mem hp hq
@@ -39,7 +39,7 @@ theorem aeval_sub_mem (T : Module.End ℂ V) (A : Submodule ℂ V) (hA : ∀ x �
 theorem aeval_apply_comm (T U : Module.End ℂ V) (h : U * T = T * U) (f : Polynomial ℂ) (v : V) :
     Polynomial.aeval T f (U v) = U (Polynomial.aeval T f v) := by
   induction f using Polynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, LinearMap.add_apply, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), LinearMap.add_apply, hp, hq]
   | monomial n c =>
     have hc : Commute U (T ^ n) := (Commute.pow_right h n)
     rw [Polynomial.aeval_monomial, Module.End.mul_apply, Module.End.mul_apply,

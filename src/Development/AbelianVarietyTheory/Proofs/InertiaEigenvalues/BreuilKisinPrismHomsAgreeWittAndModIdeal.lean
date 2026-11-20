@@ -18,7 +18,7 @@ theorem padicInt_ringHom_ext {l : ℕ} [Fact l.Prime] {A : Type} [CommRing A] {J
   have h1 : c = ((c.appr n : ℕ) : ℤ_[l]) + (l : ℤ_[l]) ^ n * d := by rw [← hd]; ring
   have e : φ c - ψ c = (l : A) ^ n * (φ d - ψ d) := by
     rw [h1]
-    simp only [map_add, map_mul, map_pow, map_natCast]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast]
     ring
   rw [e]
   exact Ideal.mul_mem_right _ _ (Ideal.pow_mem_pow hlJ n)
@@ -83,7 +83,7 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (B : Obj 
     induction hw using Submodule.span_induction with
     | mem x hx => obtain ⟨z, rfl⟩ := hx; exact ht z
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
     | smul c x _ hx =>
       rw [Algebra.smul_def, map_mul, map_mul, hx]
       exact congrArg (· * φ2 x) (RingHom.congr_fun hz c)

@@ -17,7 +17,7 @@ theorem differentiable_conj_conj {n : ℕ} {f : (Fin n → ℂ) → ℂ} (hf : D
   set L := fderiv ℂ f (star x) with hLdef
   let D : (Fin n → ℂ) →L[ℂ] ℂ :=
     { toFun := fun v => star (L (star v))
-      map_add' := fun v w => by simp only [star_add, map_add]
+      map_add' := fun v w => by simp only [star_add, map_add (f := _)]
       map_smul' := fun c v => by
         simp only [star_smul, map_smul, smul_eq_mul, star_mul', star_star, RingHom.id_apply]
       cont := continuous_star.comp (L.continuous.comp continuous_star) }
@@ -137,12 +137,12 @@ theorem sT_mem (hx : (U.X k).IsOrtho x.1) (Wu : UnitAt W) (hθ : Differentiable 
       rw [← heps]
       simp
     show star (Wu.θ (star (Linv hU hσ W A ((v + gm) 0)))) = _ * _ * star (Wu.θ (star (Linv hU hσ W A (v 0))))
-    rw [Pi.add_apply, map_add, hLinv, star_add, star_star, ← hz, theta_add W Wu a z, hHC1, hHC2,
+    rw [Pi.add_apply, map_add (f := _), hLinv, star_add, star_star, ← hz, theta_add W Wu a z, hHC1, hHC2,
       Fin.prod_univ_one, pow_one, heps, star_mul', star_mul', hreal]
     congr 2
     rw [Complex.star_def, ← Complex.exp_conj]
     congr 1
-    simp only [map_add, map_mul, map_div₀, Complex.conj_ofReal, Complex.star_def, Nat.cast_one, _root_.one_mul,
+    simp only [map_add (f := _), map_mul, map_div₀, Complex.conj_ofReal, Complex.star_def, Nat.cast_one, _root_.one_mul,
       map_ofNat]
     ring
 

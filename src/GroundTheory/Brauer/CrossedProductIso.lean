@@ -198,7 +198,7 @@ theorem exists_isBrauerEquivalent_finrank_eq_of_mem_relBrauer (A : CSA.{u, u} K)
         (1 ⊗ₜ lm l) * (a ⊗ₜ[K] lm l')
       rw [Algebra.TensorProduct.tmul_mul_tmul, Algebra.TensorProduct.tmul_mul_tmul, mul_one,
         one_mul, ← map_mul, ← map_mul, mul_comm l' l]
-    | add x y hx hy => rw [map_add, add_mul, mul_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), add_mul, mul_add, hx, hy]
 
   let eK : L ⊗[K] A ≃ₐ[K] Matrix (Fin s) (Fin s) L := e.restrictScalars K
   let ψ : Matrix (Fin s) (Fin s) K →ₐ[K] R :=

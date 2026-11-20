@@ -80,7 +80,7 @@ theorem map_embGL (f : Fin b ↪ Fin a) (φ : R →+* S) (y : GL (Fin b) R) :
     GeneralLinearGroup.map φ (embGL f y) = embGL f (GeneralLinearGroup.map φ y) := by
   apply Units.ext
   change φ.mapMatrix (1 - extN R f 1 + extN R f y) = 1 - extN S f 1 + extN S f ((y : Matrix _ _ R).map φ)
-  rw [map_add, map_sub, map_one, RingHom.mapMatrix_apply, RingHom.mapMatrix_apply, map_extN, map_extN,
+  rw [map_add (f := _), map_sub, map_one, RingHom.mapMatrix_apply, RingHom.mapMatrix_apply, map_extN, map_extN,
     Matrix.map_one _ (map_zero φ) (map_one φ)]
 
 theorem continuous_embGL [TopologicalSpace R] [IsTopologicalRing R] (f : Fin b ↪ Fin a) :

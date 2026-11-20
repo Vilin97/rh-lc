@@ -348,7 +348,7 @@ private theorem tri_lift {O R R' D : Type} [CommRing O] [IsLocalRing O] [CommRin
       have hb0 : (1 + b).map (p : R →+* R') = 1 := by
         ext a c
         change p ((1 + b) a c) = (1 : Matrix (Fin 3) (Fin 3) R') a c
-        rw [Matrix.add_apply, map_add, RingHom.mem_ker.1 (hbK a c), add_zero, Matrix.one_apply, Matrix.one_apply]
+        rw [Matrix.add_apply, map_add (f := _), RingHom.mem_ker.1 (hbK a c), add_zero, Matrix.one_apply, Matrix.one_apply]
         split_ifs <;> simp
       rw [hb0, one_mul]
       rfl

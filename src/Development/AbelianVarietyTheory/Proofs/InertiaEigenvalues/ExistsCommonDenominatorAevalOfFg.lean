@@ -38,7 +38,7 @@ theorem exists_common_denominator_aeval_of_fg (O E A : Type) [CommRing O] [IsDom
   | add x y _ _ hx hy =>
     obtain ⟨p, hp⟩ := hx
     obtain ⟨q, hq⟩ := hy
-    exact ⟨p + q, by rw [map_add, hp, hq, smul_add]⟩
+    exact ⟨p + q, by rw [map_add (f := _), hp, hq, smul_add]⟩
   | smul a x _ hx =>
     obtain ⟨p, hp⟩ := hx
     exact ⟨a • p, by rw [map_smul, hp, smul_comm]⟩

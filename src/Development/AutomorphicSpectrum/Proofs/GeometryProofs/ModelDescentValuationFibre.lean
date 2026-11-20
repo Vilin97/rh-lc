@@ -139,7 +139,7 @@ theorem map_mem_chartRing (y : (Σ k, J k) → Ω) (c : ∀ k, J k) {a : Ω}
   | algebraMap r =>
     rw [← IsScalarTower.algebraMap_apply O Ω Ω', IsScalarTower.algebraMap_apply O O' Ω']
     exact Subalgebra.algebraMap_mem _ _
-  | add s t _ _ hs ht => rw [map_add]; exact Subalgebra.add_mem _ hs ht
+  | add s t _ _ hs ht => rw [map_add (f := _)]; exact Subalgebra.add_mem _ hs ht
   | mul s t _ _ hs ht => rw [map_mul]; exact Subalgebra.mul_mem _ hs ht
 
 variable {r : ℕ}
@@ -314,7 +314,7 @@ theorem pointConeMap_map (y : (Σ k, J k) → Ω) (f : MRing J O) :
   | C a =>
     simp [pointConeMap, MvPolynomial.algebraMap_apply,
       ← IsScalarTower.algebraMap_apply O O' Ω', ← IsScalarTower.algebraMap_apply O Ω Ω']
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp, MvPolynomial.map_X]
     simp [pointConeMap]
@@ -330,7 +330,7 @@ theorem aeval_map (y : (Σ k, J k) → Ω) (f : GroundTheory.Heights₂.Heights.
   induction f using MvPolynomial.induction_on with
   | C a =>
     simp [← IsScalarTower.algebraMap_apply O O' Ω', ← IsScalarTower.algebraMap_apply O Ω Ω']
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp => simp only [map_mul, hp, MvPolynomial.map_X, aeval_X]
 
 variable [DecidableEq K]

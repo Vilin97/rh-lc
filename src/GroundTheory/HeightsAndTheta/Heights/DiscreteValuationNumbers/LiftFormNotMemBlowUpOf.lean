@@ -26,7 +26,7 @@ theorem isMultiHomog_liftForm {J : Type} {p : MRing ι R} {c : K → ℕ} (h : I
     induction a using Finsupp.induction_linear with
     | zero => funext o; cases o <;> simp [liftMDeg]
     | add x y hx hy =>
-      rw [Finsupp.mapDomain_add, map_add, map_add, hx, hy]
+      rw [Finsupp.mapDomain_add, map_add (f := _), map_add (f := _), hx, hy]
       funext o; cases o <;> simp [liftMDeg]
     | single v n =>
       rw [Finsupp.mapDomain_single, Finsupp.weight_single, Finsupp.weight_single]

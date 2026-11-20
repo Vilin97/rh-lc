@@ -68,7 +68,7 @@ private def transl (e : G → ℂ) : Subrepresentation (lreg G) :=
       simp only [map_mul, Module.End.mul_apply]
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hx hy
     | smul c x _ hx =>
       rw [map_smul]
@@ -112,7 +112,7 @@ private theorem transl_smooth {e : G → ℂ} (K : Subgroup G) (hK : IsOpen (K :
     | add x y _ _ hx hy =>
       refine Filter.mem_of_superset (Filter.inter_mem hx hy) fun g hg => ?_
       show lreg G g (x + y) = x + y
-      rw [map_add, hg.1, hg.2]
+      rw [map_add (f := _), hg.1, hg.2]
     | smul c x _ hx =>
       refine Filter.mem_of_superset hx fun g hg => ?_
       show lreg G g (c • x) = c • x

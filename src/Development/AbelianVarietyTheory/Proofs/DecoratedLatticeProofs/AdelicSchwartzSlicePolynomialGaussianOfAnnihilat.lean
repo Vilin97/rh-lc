@@ -22,13 +22,13 @@ theorem compAt_add' (θ : InfFam D) (τ : D.what₂.Tau) {m n : ℕ} (x y : Mx D
     compAt θ τ (x + y) = compAt θ τ x + compAt θ τ y :=
   Matrix.ext fun i j => by
     show θ τ (infPart D (x i j + y i j)) = θ τ (infPart D (x i j)) + θ τ (infPart D (y i j))
-    rw [RingHom.map_add, RingHom.map_add]
+    rw [RingHom.map_add (f := _), RingHom.map_add (f := _)]
 
 theorem finMap_add {m n : ℕ} (x y : Mx D m n) :
     (x + y).map (finPart D) = x.map (finPart D) + y.map (finPart D) :=
   Matrix.ext fun i j => by
     show finPart D (x i j + y i j) = finPart D (x i j) + finPart D (y i j)
-    rw [RingHom.map_add]
+    rw [RingHom.map_add (f := _)]
 
 theorem slice_polyGauss : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (V : HSp D) (n : ℕ) (l : D.what₂.Tau → ℝ) (s : RealMat V), (∀ τ, IsCartanInv (gramAt D V τ) (s τ)) → ∀ (N : ℕ), ∀ φ ∈ schwartzA θ V.rank n, (∀ L : List (D.what₂.Tau × Matrix (Fin V.rank) (Fin n) ℂ), L.length = N → L.foldr (fun q g => annS V l s θ q.1 q.2 g) φ = 0) → ∀ x₀ : Mx D V.rank n, ∃ p : MvPolynomial (D.what₂.Tau × Fin V.rank × Fin n × Bool) ℂ, ∀ x : Mx D V.rank n, x.map (finPart D) = x₀.map (finPart D) → φ x = evalPoly p (fun τ => compAt θ τ x) * gauss V l s (fun τ => compAt θ τ x) := by
   intro D θ hθ V n l s hs N φ hφ hL x₀

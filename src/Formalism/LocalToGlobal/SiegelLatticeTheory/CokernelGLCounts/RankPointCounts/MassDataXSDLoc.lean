@@ -35,7 +35,7 @@ theorem sig_swap (σ : E →ₐ[F] E) (t : E ⊗[F] Fv F v) :
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul x a => simp [sigR, PI.SelfDualLoc.sigR, swp, Algebra.TensorProduct.comm_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem incl_swap (e : E) : swp v (PI.SelfDualLoc.inclE (F := F) (Fv F v) e) = inclR (F := F) (Fv F v) e := by
   simp [swp, PI.SelfDualLoc.inclE, inclR, Algebra.TensorProduct.comm_tmul]
@@ -77,7 +77,7 @@ theorem swp_mem_oev {s : E ⊗[F] Fv F v} (hs : s ∈ Sv (E := E) v) : swp v s �
     · exact oev_alg v ⟨c, hc⟩
   | zero => rw [map_zero]; exact zero_mem (Submodule.span _ _)
   | one => rw [map_one]; simpa using oev_gen v (E := E) 1
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem (S := Submodule _ _) hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (S := Submodule _ _) hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem (S := Submodule _ _) hx
   | mul x y _ _ hx hy => rw [map_mul]; exact oev_mul v hx hy
 

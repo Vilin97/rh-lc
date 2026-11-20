@@ -83,7 +83,7 @@ theorem realAd_mul' (a b : ℝ) : realAd F a * realAd F b = realAd F (a * b) := 
   · exact mul_zero _
 
 theorem realAd_add' (s t : ℝ) : realAd F (s + t) = realAd F s + realAd F t := by
-  simp only [realAd, map_add]
+  simp only [realAd, map_add (f := _)]
   rfl
 
 theorem realAd_zero' : realAd F 0 = 0 := by
@@ -159,7 +159,7 @@ theorem exists_isTorusU : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
   set al : (Fin q → ℝ) → Fin q → AE F E := fun t i => algebraMap (AF F) (AE F E) (realAd F (t i - 1)) with hal
   have key : ∀ u : Fin q → ℝ, (∀ i, u i ≠ 0) → ∀ i, al u i + al (fun i => (u i)⁻¹) i + al u i * al (fun i => (u i)⁻¹) i = 0 := by
     intro u hu i
-    simp only [hal, ← map_add, ← map_mul, realAd_key (hu i), map_zero]
+    simp only [hal, ← map_add (f := _), ← map_mul, realAd_key (hu i), map_zero]
   set M : (Fin q → ℝ) → Matrix (Fin n) (Fin n) (AE F E) := fun u =>
     1 + Xe.map ι * diagonal (al u) * RYe.map ι + Ye.map ι * diagonal (al (fun i => (u i)⁻¹)) * RXe.map ι with hM
   have ht0 : ∀ i, t i ≠ 0 := fun i => (ht i).ne'

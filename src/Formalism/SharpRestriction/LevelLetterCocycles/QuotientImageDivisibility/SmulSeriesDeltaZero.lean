@@ -53,7 +53,7 @@ theorem trunc_s_Δ [IsDomain O] {j M X σ y : ℕ} {r s : LetA O n} (hr : Formal
   have hπ₁ : W.γ₀ δ W.π₀₁ = W.π₀₁ := by
     unfold Formalism.BasicNotions.LocWach.π₀₁
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sub, map_one, map_natCast, map_sum]
+      rw [map_add (f := _), map_sub, map_one, map_natCast, map_sum]
     congr 1
     refine Finset.sum_nbij' (δ * ·) (δ⁻¹ * ·) ?_ ?_ ?_ ?_ ?_
     · intro a ha
@@ -205,7 +205,7 @@ theorem pullJ_LB (T : LocLat G Qp LL O) {c : ZMod n} {Bn : ℕ} (ζ : LL)
       have hy' := pullJ_Q W T hM hy
       have e : (⟨_, h⟩ : ↥(W.N T)) = ⟨_, hx'⟩ + ⟨_, hy'⟩ :=
         Subtype.ext (by simp only [Submodule.coe_add]; exact smul_add _ _ _)
-      rw [e, map_add]
+      rw [e, map_add (f := _)]
       exact LB_add (ihx hx') (ihy hy')
     | smul a x hx ihx =>
       intro h
@@ -235,7 +235,7 @@ theorem map_pullJ {T₁ T₂ : LocLat G Qp LL O} (F : LatHom T₁.L T₂.L) (hT�
     · simp only [pow_one]
       rw [W.map_φ]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx => rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ a hx
 
 end L41b

@@ -25,7 +25,7 @@ theorem NE_add (E : Fin n → Fin n → Module.End ℂ D) (j : ℕ) (x y : D) :
     NE E j (x + y) ≤ NE E j x + NE E j y := by
   simp only [NE, ← sum_add_distrib]
   refine sum_le_sum fun l _ => sum_le_sum fun w _ => ?_
-  rw [map_add, Submodule.coe_add]
+  rw [map_add (f := _), Submodule.coe_add]
   exact norm_add_le _ _
 
 theorem NE_smul (E : Fin n → Fin n → Module.End ℂ D) (j : ℕ) (c : ℂ) (x : D) :

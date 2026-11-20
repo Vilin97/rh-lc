@@ -63,7 +63,7 @@ theorem rescale_congr {p : ℕ} (hp : 0 < p) (b : ℕ) (f : PowerSeries ℤ) :
     exact mul_mem (neg_mem (sum_mem fun i _ => pow_mem (Subring.subset_closure (Set.mem_singleton _)) _))
       (intCast_mem _ _)
   · ext n
-    simp only [map_add, PowerSeries.coeff_rescale, PowerSeries.coeff_map, PowerSeries.coeff_C_mul,
+    simp only [map_add (f := _), PowerSeries.coeff_rescale, PowerSeries.coeff_map, PowerSeries.coeff_C_mul,
       PowerSeries.coeff_mk, eq_intCast]
     have hg := geom_sum_mul (zetaC p) (b * n)
     linear_combination (-((PowerSeries.coeff n f : ℤ) : ℂ)) * hg

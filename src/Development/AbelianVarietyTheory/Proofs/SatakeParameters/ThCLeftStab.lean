@@ -27,7 +27,7 @@ theorem semi_iff {V : Type} [AddCommGroup V] [Module ℂ V] {H : Sesq V} (hH : I
   have him : ∀ x y, altE H y x = -altE H x y := GlobalTheory.ThetaInter.altE_swap hH
   have hadd : ∀ x y, alphaQ (s / 2) H (x + y) = alphaQ (s / 2) H x * alphaQ (s / 2) H y *
       Complex.exp (Real.pi * Complex.I * ((s * (H x y).re : ℝ) : ℂ)) := fun x y => by
-    simp only [alphaQ, Formalism.L2.Th1.H.qOf, ← Complex.exp_add, map_add, LinearMap.add_apply, Complex.add_re, hre x y]
+    simp only [alphaQ, Formalism.L2.Th1.H.qOf, ← Complex.exp_add, map_add (f := _), LinearMap.add_apply, Complex.add_re, hre x y]
     congr 1
     push_cast
     ring
@@ -315,7 +315,7 @@ theorem core (hconj : ∀ τ x, X.embC A.σ₀ τ (star x) = starRingEnd ℂ (X.
   · rintro _ ⟨⟨x, hx, rfl⟩, -⟩
     exact ⟨_, nsmul_mem_tw hc (fun Q => (expS_bound SS Q).2) hx, map_nsmul _ _ _⟩
   · rintro _ ⟨x, -, rfl⟩ _ - ⟨y, hy, rfl⟩
-    rw [← map_add]
+    rw [← map_add (f := _)]
     refine (onV_emb A hδ Ξ _).trans ((hΞ x y ⟨(c : X.E)⁻¹ • y, fun P hP => per_loc A (hAA P hP) ?_, ?_⟩).trans (onV_emb A hδ Ξ x).symm)
     · have := (mem_tw _ _ _ _).1 hy P
       rwa [expS, if_pos hP, zpow_one] at this

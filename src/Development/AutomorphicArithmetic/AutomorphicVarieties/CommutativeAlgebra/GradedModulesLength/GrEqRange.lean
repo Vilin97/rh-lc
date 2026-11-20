@@ -10,7 +10,7 @@ private noncomputable def monoL (m : Fin k →₀ ℕ) : lat N m →ₗ[B] rees 
   toFun f := mono N m f.1 f.2
   map_add' f g := Subtype.ext (by
     show MvPolynomial.monomial m (f.1 + g.1) = MvPolynomial.monomial m f.1 + MvPolynomial.monomial m g.1
-    rw [map_add])
+    rw [map_add (f := _)])
   map_smul' c f := Subtype.ext (by
     show MvPolynomial.monomial m (c • f.1) = c • MvPolynomial.monomial m f.1
     rw [MvPolynomial.smul_monomial])
@@ -57,7 +57,7 @@ private theorem gr_add (m m' : Fin k →₀ ℕ) :
         rw [MvPolynomial.monomial_mul]
       · rintro x y ⟨q₁, h₁, e₁⟩ ⟨q₂, h₂, e₂⟩
         refine ⟨q₁ + q₂, add_mem h₁ h₂, ?_⟩
-        rw [map_add, ← e₁, ← e₂]
+        rw [map_add (f := _), ← e₁, ← e₂]
         rfl
     have hpq : p = q := by
       apply Subtype.ext

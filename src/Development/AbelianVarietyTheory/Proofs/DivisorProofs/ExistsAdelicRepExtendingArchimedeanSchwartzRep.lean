@@ -77,7 +77,7 @@ theorem _root_.GlobalTheory.SliceExt.exists_rep_pure (F : Type) [Field F] [Numbe
         intro Φ Ψ
         funext x
         have : slice (Φ + Ψ) (s x).2 = slice Φ (s x).2 + slice Ψ (s x).2 := rfl
-        simp only [this, map_add, Pi.add_apply]
+        simp only [this, map_add (f := _), Pi.add_apply]
       map_smul' := by
         intro c Φ
         funext x

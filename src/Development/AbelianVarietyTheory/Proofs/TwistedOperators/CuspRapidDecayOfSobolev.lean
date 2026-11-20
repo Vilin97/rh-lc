@@ -201,7 +201,7 @@ theorem lift_add_smul (hG : ThetaGrowth D) (hθ : IsInfFam θ) (hω : IsWeilDatu
     ((integrableOn_of_rapidDec hG hθ hω hf' hν h𝓕 hF g).const_mul c)
   rw [integral_const_mul] at this
   refine Eq.trans ?_ this
-  simp only [lift, Lift.liftInt, thetaKO, map_add, map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul, add_mul, mul_assoc]
+  simp only [lift, Lift.liftInt, thetaKO, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul, add_mul, mul_assoc]
 
 theorem growthSob_lift_le (hG : ThetaGrowth D) (H : KernelBound V W A d) (hθ : IsInfFam θ)
     (hω : IsWeilDatumO ψ V W χS χT ω) (hν : ν.IsHaarMeasure) (h𝓕 : IsFundamentalDomain (GQ W) 𝓕 ν) (k : ℕ)

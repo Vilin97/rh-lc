@@ -214,7 +214,7 @@ theorem continuous_map [LocallyCompactSpace G] [SecondCountableTopology G]
     exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds ht3 (fun _ => zero_le)
       fun g => edist_indicator_le hD hDm hr hR c hs hμs.ne g g₀
   · intro f g hf hg _ h1 h2
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact h1.add h2
   · refine isClosed_of_closure_subset fun F hF => ?_
     refine TendstoUniformly.continuous (F := fun F' g => R g F') (p := 𝓝 F) ?_

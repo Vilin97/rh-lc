@@ -160,7 +160,7 @@ theorem existsUnique_bialgHom_of_levels : ∀ (R K : Type) [CommRing R] [IsDomai
       map_one' := eq_of_pts (K := K) hθ fun z => by rw [hg, map_one, map_one]
       map_mul' := fun x y => eq_of_pts (K := K) hθ fun z => by rw [hg, map_mul, map_mul, hg, hg]
       map_zero' := eq_of_pts (K := K) hθ fun z => by rw [hg, map_zero, map_zero]
-      map_add' := fun x y => eq_of_pts (K := K) hθ fun z => by rw [hg, map_add, map_add, hg, hg]
+      map_add' := fun x y => eq_of_pts (K := K) hθ fun z => by rw [hg, map_add (f := _), map_add (f := _), hg, hg]
       commutes' := fun r => eq_of_pts (K := K) hθ fun z => by rw [hg, AlgHom.commutes, AlgHom.commutes] }
   have hgA : ∀ (a' : A') (z : Tors G N K), θ.pt K z (gA a') = θ'.pt K (torsPush h f z) a' := hg
   have hB : ∀ (B : Type) [CommRing B] [Algebra R B] (z : Tors G N B) (a' : A'),

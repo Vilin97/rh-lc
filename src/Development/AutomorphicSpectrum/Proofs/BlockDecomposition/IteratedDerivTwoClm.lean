@@ -60,7 +60,7 @@ theorem waveA : WaveA := by
   · intro t g hg
     rw [iteratedDeriv_two_clm (A g) (hline g hg), heq t g hg]
     have hG := fun s => hGF n E.V W₁ W₂ hW A (u t) hA.1 (hce t).1 hQ (hN t) s 2 g hg
-    simp only [Om, Pi.smul_apply, Pi.add_apply, hG, map_smul, map_add]
+    simp only [Om, Pi.smul_apply, Pi.add_apply, hG, map_smul, map_add (f := _)]
   · intro g hg
     rw [deriv_clm (A g) ((hline g hg).differentiable (by simp)), hd0 g hg, map_zero]
 

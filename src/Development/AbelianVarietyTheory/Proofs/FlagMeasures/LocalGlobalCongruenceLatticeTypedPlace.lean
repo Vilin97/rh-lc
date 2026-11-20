@@ -58,7 +58,7 @@ theorem locglob : ∀ (D : D7) (Z : LocDat D) (p : PlF D), (Z.M p).split ≠ non
     obtain ⟨μ, hμ, ξ, hξ, ξ', hξ', e⟩ := IotaBP.NgX_dec h
     obtain ⟨w, hw, w', -, hgq, -⟩ := IotaBP.gS_typed Z p g hs
     have h2 : baseChange₂ D p (a • y) = (D.s.atP p).ιE ((gS D : ℕ) : D.host.E) • baseChange₂ D p μ + baseChange₂ D p ξ + baseChange₂ D p ξ' := by
-      rw [e, map_add, map_add, Formalism.L2.SG.Pf.LocalDenominators.baseChange_smul₂]
+      rw [e, map_add (f := _), map_add (f := _), Formalism.L2.SG.Pf.LocalDenominators.baseChange_smul₂]
     have key : baseChange₂ D p y = algebraMap (D.s.atP p).Fp (D.s.atP p).Ep (g.q : (D.s.atP p).Fp) •
         (w • (baseChange₂ D p μ - o • baseChange₂ D p y)) + baseChange₂ D p ξ + baseChange₂ D p ξ' := by
       calc baseChange₂ D p y = (D.s.atP p).ιE (a : D.host.E) • baseChange₂ D p y - ((D.s.atP p).ιE (a : D.host.E) - 1) • baseChange₂ D p y := by

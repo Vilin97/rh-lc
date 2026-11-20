@@ -82,7 +82,7 @@ theorem norm_aPre_le (hl : 0 < l) (hρ : ρ ≤ 1) (y : PreDisc l (X : W⟦X⟧)
         _ ≤ r := by rw [div_mul_eq_mul_div, div_le_iff₀ (by positivity)]; exact h1
     · rw [norm_zero, zero_mul]; exact hr.le
   | zero => intro n; rw [map_zero, norm_zero, zero_mul]; exact hr.le
-  | add x y _ _ hx hy => intro n; rw [map_add]; exact hadd r n _ _ (hx n) (hy n)
+  | add x y _ _ hx hy => intro n; rw [map_add (f := _)]; exact hadd r n _ _ (hx n) (hy n)
   | smul s x _ hx =>
     intro n
     rw [aPre_apply, Algebra.smul_def, map_mul, phi_alg, coeff_mul]
@@ -124,7 +124,7 @@ theorem norm_le_of_aPre [Fact l.Prime] (hρ0 : 0 < ρ) (hρ : ρ < 1) (y : PreDi
       algebraMap _ (PreDisc l (X : W⟦X⟧) ρ) (X ^ N * s') *
         IsLocalization.Away.invSelf (S := PreDisc l (X : W⟦X⟧) ρ) (l : W⟦X⟧) ^ c := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hy, ← Finset.sum_mul, ← map_sum, ← add_mul, ← map_add, ← hs', ← hhd, add_sub_cancel]
+      rw [hy, ← Finset.sum_mul, ← map_sum, ← add_mul, ← map_add (f := _), ← hs', ← hhd, add_sub_cancel]
   rw [hsplit]
   refine (gauge_add_le_max l _ ρ _ _).trans (max_le ?_ ?_)
   · refine Finset.sum_induction _ (fun z => ‖z‖ ≤ t)
@@ -219,7 +219,7 @@ theorem exists_coeff_disc : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK
     have hρn : (ρ : ℝ) ^ n ≤ (ρ : ℝ) ^ N := pow_le_pow_of_le_one (by positivity) (by exact_mod_cast hρ1.le) hn
     rw [lt_div_iff₀ (by linarith)] at hN
     have e : A n y = A n (y - ofPre l (X : bk.S) ρ z) + ofPre l (0 : Wq l bk.a) 1 (aPre l ρ n z) := by
-      rw [← hA, ← map_add, sub_add_cancel]
+      rw [← hA, ← map_add (f := _), sub_add_cancel]
     rw [e]
     calc ‖A n (y - ofPre l (X : bk.S) ρ z) + ofPre l (0 : Wq l bk.a) 1 (aPre l ρ n z)‖ * (ρ : ℝ) ^ n
         ≤ (‖A n (y - ofPre l (X : bk.S) ρ z)‖ + ‖aPre l ρ n z‖) * (ρ : ℝ) ^ n := by

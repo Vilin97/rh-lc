@@ -36,7 +36,7 @@ private theorem exists_finite_subalgebra_pi_of_ringHom_lemma_2 {O V S : Type} [C
       rw [← Algebra.smul_def]
       exact Submodule.smul_mem _ v (Submodule.subset_span ⟨a, rfl⟩)
     | add t₁ t₂ h₁ h₂ =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ h₁ h₂
 
 theorem sep_poly (E : Type) [Field E] [NumberField E] (P : Ideal (𝓞 E)) (hP : P.IsPrime)
@@ -216,7 +216,7 @@ theorem adjoin_top {O V R : Type} [CommRing O] [CommRing V] [IsLocalRing V] [Com
       refine ⟨v₁ + v₂, z₁ + z₂, ?_⟩
       have h₁₂ := Ideal.add_mem _ h₁ h₂
       convert h₁₂ using 1
-      rw [map_add]
+      rw [map_add (f := _)]
       ring
     | smul r x _ hx =>
       obtain ⟨v, z, h⟩ := hx

@@ -119,7 +119,7 @@ theorem map_injective {f : A →ₐ[F] A'} (hf : Function.Injective f) :
       (fun c a => ?_) (fun x y hx hy => ?_)
     · rw [map_smul, map_of, complex_smul_of_eq, complex_smul_of_eq, LinearMap.lTensor_tmul]
       rfl
-    · rw [map_add, hx, hy]
+    · rw [map_add (f := _), hx, hy]
       exact (map_add (LinearMap.lTensor ℂ f.toLinearMap : ℂ ⊗[F] A →ₗ[F] ℂ ⊗[F] A') x y).symm
   have hinj := Module.Flat.lTensor_preserves_injective_linearMap (M := ℂ) f.toLinearMap hf
   intro x y hxy
@@ -151,10 +151,10 @@ theorem exists_components (f : A →ₐ[F] A') (x : CxExt σ A) :
       | exact (map_smul f _ _).symm
       | simp
     · have e1 : TensorProduct.equivFinsuppOfBasisLeft (N := A') b (map σ f (y + z)) = TensorProduct.equivFinsuppOfBasisLeft (N := A') b (map σ f y) + TensorProduct.equivFinsuppOfBasisLeft (N := A') b (map σ f z) := by
-        rw [map_add]
+        rw [map_add (f := _)]
         exact map_add _ _ _
       have e2 : TensorProduct.equivFinsuppOfBasisLeft (N := A) b (y + z) = TensorProduct.equivFinsuppOfBasisLeft (N := A) b y + TensorProduct.equivFinsuppOfBasisLeft (N := A) b z := map_add _ _ _
-      rw [e1, e2, Finsupp.add_apply, Finsupp.add_apply, hy, hz, map_add]
+      rw [e1, e2, Finsupp.add_apply, Finsupp.add_apply, hy, hz, map_add (f := _)]
   · intro i y a
     refine CxExt.induction (P := fun y => TensorProduct.equivFinsuppOfBasisLeft (N := A') b (y * of σ a : CxExt σ A') i =
       TensorProduct.equivFinsuppOfBasisLeft (N := A') b y i * a) y (fun c a' => ?_) (fun y z hy hz => ?_)
@@ -286,9 +286,9 @@ theorem HasVal.add (h : HasVal y f c) (h' : HasVal y f' c') : HasVal y (f + f') 
   obtain ⟨a, b, hb, hf, ha⟩ := h
   obtain ⟨a', b', hb', hf', ha'⟩ := h'
   refine ⟨a * b' + a' * b, b * b', by rw [map_mul]; exact mul_ne_zero hb hb', ?_, ?_⟩
-  · simp only [map_mul, map_add]
+  · simp only [map_mul, map_add (f := _)]
     linear_combination (germIncl y b') * hf + (germIncl y b) * hf'
-  · simp only [map_mul, map_add]
+  · simp only [map_mul, map_add (f := _)]
     linear_combination (germEv y b') * ha + (germEv y b) * ha'
 
 theorem HasVal.mul (h : HasVal y f c) (h' : HasVal y f' c') : HasVal y (f * f') (c * c') := by
@@ -440,7 +440,7 @@ theorem exists_spread {x : Y.X} (a : CxExt σ (Y.X.presheaf.stalk x)) :
       exact ((hA₁.mono s₁) i).add ((hA₂.mono s₂) i)
     · obtain ⟨b₁, f₁, g₁⟩ := e₁ z (s₁ hz)
       obtain ⟨b₂, f₂, g₂⟩ := e₂ z (s₂ hz)
-      exact ⟨b₁ + b₂, by rw [map_add, map_add, f₁, f₂], by rw [map_add, g₁, g₂]⟩
+      exact ⟨b₁ + b₂, by rw [map_add (f := _), map_add (f := _), f₁, f₂], by rw [map_add (f := _), g₁, g₂]⟩
 
 def regSet (f : Y.FnC σ) : Set (Y.pts σ) := {y | RegC y f}
 

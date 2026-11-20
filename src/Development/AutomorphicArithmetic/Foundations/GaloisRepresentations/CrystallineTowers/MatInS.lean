@@ -45,13 +45,13 @@ private theorem core {Q L : Type*} [Field Q] [Field L] [Algebra Q L] {V : ℤ �
         rw [DirectSum.lof_eq_of, DirectSum.of_eq_of_ne _ _ _ (Ne.symm hi), DirectSum.of_eq_of_ne _ _ _ (Ne.symm hi),
           TensorProduct.tmul_zero]
     | add x₁ x₂ h₁ h₂ =>
-      rw [TensorProduct.tmul_add, map_add, h₁, h₂, DirectSum.add_apply, TensorProduct.tmul_add]
+      rw [TensorProduct.tmul_add, map_add (f := _), h₁, h₂, DirectSum.add_apply, TensorProduct.tmul_add]
   have hnat : ∀ σ n w, π n ((DirectSum.lmap (g σ)).baseChange L w) = (g σ n).baseChange L (π n w) := fun σ n w => by
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul t x =>
       rw [LinearMap.baseChange_tmul, hπt, hπt, LinearMap.baseChange_tmul, DirectSum.lmap_apply]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hsupp : ∀ w, ∃ N : ℕ, ∀ n : ℤ, (N : ℤ) ≤ n → π n w = 0 := fun w => by
     refine ⟨(DFinsupp.support (e w)).sup Int.toNat + 1, fun n hn => ?_⟩
     by_contra h

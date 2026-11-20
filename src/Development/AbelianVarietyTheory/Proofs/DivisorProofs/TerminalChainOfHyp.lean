@@ -38,7 +38,7 @@ theorem exists_monomial_eq_prod_X {σ : Type} (n : ℕ) : ∀ d : σ →₀ ℕ,
       exact Nat.one_le_iff_ne_zero.mpr hi
     obtain ⟨d', rfl⟩ := exists_add_of_le hle
     have hd' : d'.degree = n := by
-      rw [map_add, Finsupp.degree_single] at hd
+      rw [map_add (f := _), Finsupp.degree_single] at hd
       omega
     obtain ⟨a, ha⟩ := ih d' hd'
     refine ⟨Fin.cons i a, ?_⟩
@@ -94,7 +94,7 @@ theorem pair_ext (num : Cp → Multiset A → ℝ) (sym : Bool × L → A) (d : 
       lg * ∑ la, w la * ((((Z la).capDeg (Dv la) (aeval (cl la) P) : ℚ) : ℝ) / cv la)) ?_ ?_ ?_ P hP
   · simp [toR]
   · intro a b ha hb
-    simp only [toR, mul_add, map_add, Finset.sum_add_distrib, Rat.cast_add, add_div] at ha hb ⊢
+    simp only [toR, mul_add, map_add (f := _), Finset.sum_add_distrib, Rat.cast_add, add_div] at ha hb ⊢
     rw [ha, hb]
   · intro a ν
     have e (b : Bool) (c : Cp) : numL (num c) (d + 1) (rename sym (toR (X (b, l) * ∏ i, X (ν i)))) =
@@ -166,7 +166,7 @@ theorem arMix_dCh (I : ArIn Tau N g Cp) (Sx : Finset ℕ) (R : ℝ) (q : ℕ) (s
     induction G using MvPolynomial.induction_on with
     | C a => simp [toR, evL, ArIn.mixEv]
     | add P Q hP hQ =>
-      simp only [toR, map_add] at hP hQ ⊢
+      simp only [toR, map_add (f := _)] at hP hQ ⊢
       rw [hP, hQ]
     | mul_X P v hP =>
       simp only [toR, map_mul, map_X] at hP ⊢

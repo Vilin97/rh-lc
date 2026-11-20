@@ -118,14 +118,14 @@ theorem bihom_le_Sc : ∀ c, c ≤ d → Bihom K k c ≤ Sc K k d c
       abel
     have hw1' : weight (wx k) m' = c := by
       have := hw1
-      rw [← wtXSum, map_add, map_add, weight_single, weight_single] at this
+      rw [← wtXSum, map_add (f := _), map_add (f := _), weight_single, weight_single] at this
       have e1 : wx k (Sum.inl a) = 1 := rfl
       have e2 : wx k (Sum.inr b) = 0 := rfl
       rw [e1, e2, smul_eq_mul, smul_eq_mul] at this
       omega
     have hw2' : weight (wxi k) m' = c := by
       have := hw2
-      rw [← wtXiSum, map_add, map_add, weight_single, weight_single] at this
+      rw [← wtXiSum, map_add (f := _), map_add (f := _), weight_single, weight_single] at this
       have e1 : wxi k (Sum.inl a) = 0 := rfl
       have e2 : wxi k (Sum.inr b) = 1 := rfl
       rw [e1, e2, smul_eq_mul, smul_eq_mul] at this

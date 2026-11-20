@@ -18,7 +18,7 @@ theorem map_unip {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) {a r : �
   ext i j
   change f ((1 + nilM x : Matrix (Fin a) (Fin a) R) i j) =
     (1 + nilM (fun p => f (x p)) : Matrix (Fin a) (Fin a) S) i j
-  simp only [nilM, Matrix.add_apply, Matrix.of_apply, Matrix.one_apply, map_add]
+  simp only [nilM, Matrix.add_apply, Matrix.of_apply, Matrix.one_apply, map_add (f := _)]
   split_ifs <;> simp
 
 theorem map_lev {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) (r s : ℕ)
@@ -61,10 +61,10 @@ theorem iwasawa_finite_cosets : ∀ (E : Type) [Field E] [NumberField E] [IsTota
   obtain ⟨xf, mf, c, hc, hf⟩ := IwaFin.exists_unip_lev_integral E r s (GeneralLinearGroup.map (pFin E) g)
   obtain ⟨t, ht, l, hl, rfl⟩ := hT c hc
   have e1 : ∀ p, pInf E (sInf E (xi p) + sFin E (xf p)) = xi p := fun p => by
-    rw [map_add, show pInf E (sInf E (xi p)) = xi p from (infEq E).symm_apply_apply _,
+    rw [map_add (f := _), show pInf E (sInf E (xi p)) = xi p from (infEq E).symm_apply_apply _,
       show pInf E (sFin E (xf p)) = 0 from map_zero (infEq E).symm, add_zero]
   have e2 : ∀ p, pFin E (sInf E (xi p) + sFin E (xf p)) = xf p := fun p => by
-    rw [map_add, show pFin E (sInf E (xi p)) = 0 from rfl, show pFin E (sFin E (xf p)) = xf p from rfl, zero_add]
+    rw [map_add (f := _), show pFin E (sInf E (xi p)) = 0 from rfl, show pFin E (sFin E (xf p)) = xf p from rfl, zero_add]
   refine ⟨fun p => sInf E (xi p) + sFin E (xf p),
     (infGL E r mi.1 * finGL E r mf.1, infGL E s mi.2 * finGL E s mf.2), t, k, l, ht, hl, ga_ext ?_ ?_⟩
   · simp only [map_mul, map_unip, map_lev, e1, pInf_infGL, pInf_finGL, mul_one, one_mul]

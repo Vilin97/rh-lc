@@ -461,7 +461,7 @@ theorem heckeD_lin {ρ : Representation ℂ (GQ L n) W} {J : Subgroup (GAf L n)}
   obtain ⟨α, R, -, -, h1, h2⟩ := exists_data (n := n) s ϖ k hϖ
   rw [heckeD_type hB hv h1 h2 hf, heckeD_type hB hv h1 h2 hf',
     heckeD_type hB hv h1 h2 (add_mem (Submodule.smul_mem _ c hf) hf')]
-  simp only [map_add, map_smul, Finset.sum_add_distrib, Finset.smul_sum]
+  simp only [map_add (f := _), map_smul, Finset.sum_add_distrib, Finset.smul_sum]
 
 theorem heckeD_smul {ρ : Representation ℂ (GQ L n) W} {J : Subgroup (GAf L n)} {χ : J →* ℂˣ}
     {B : Set (HeightOneSpectrum (𝓞 L⁺))} (hB : NG.HypOutside J χ B) {s : SplitPlace L} (hv : s.v ∉ B)
@@ -480,7 +480,7 @@ theorem exists_fg_eval {σ : Type} (A : Subring ℂ) (D : ℂ) (hD : D ≠ 0) (P
     obtain ⟨M, hM, h⟩ := hP
     obtain ⟨M', hM', h'⟩ := hQ
     exact ⟨M ⊔ M', hM.sup hM', fun y hy => by
-      rw [map_add]; exact Submodule.add_mem_sup (h y hy) (h' y hy)⟩
+      rw [map_add (f := _)]; exact Submodule.add_mem_sup (h y hy) (h' y hy)⟩
   | mul_X P p hP =>
     obtain ⟨M, hM, h⟩ := hP
     refine ⟨M.map (LinearMap.mulLeft A D⁻¹), hM.map _, fun y hy => ⟨_, M.smul_mem ⟨_, hy p⟩ (h y hy), ?_⟩⟩

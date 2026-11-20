@@ -30,9 +30,9 @@ theorem lastLoc : ∀ (D : D7), LastLoc D := by
   let κ : WO S L'' → WO B.L S := fun w => GlobalTheory.IndefiniteRowSideFullHecke.SkewGramHalfModule.ofAdj B.L S ((rat τ : Mx D B.L.rank L''.rank) * w)
   let Bl : SB (Matrix Z n k) →ₗ[ℂ] SB (Matrix n (n' ⊕ Unit) k) →ₗ[ℂ] (WO B.A S → WO S X → ℂ) :=
     LinearMap.mk₂ ℂ (fun Ψ₂ Ψ₁ u => o''.boxT S (T₂ Ψ₂) fun w => T₁ Ψ₁ ((B.o.resS S).symm (u, κ w)))
-      (by intros; funext u v; simp only [OrthDec.boxT, map_add, Pi.add_apply, add_mul])
+      (by intros; funext u v; simp only [OrthDec.boxT, map_add (f := _), Pi.add_apply, add_mul])
       (by intros; funext u v; simp only [OrthDec.boxT, map_smul, Pi.smul_apply, smul_eq_mul, mul_assoc])
-      (by intros; funext u v; simp only [OrthDec.boxT, map_add, Pi.add_apply, mul_add])
+      (by intros; funext u v; simp only [OrthDec.boxT, map_add (f := _), Pi.add_apply, mul_add])
       (by intros; funext u v; simp only [OrthDec.boxT, map_smul, Pi.smul_apply, smul_eq_mul]; ring)
   obtain ⟨Λ, hΛ1, hΛ2⟩ := GlobalTheory.T.exists_pair_space_linear_map_via_partial_fourier k ν hν ψk hψc hψ1 n n' Z _ Bl
   obtain ⟨hXi, hPsi⟩ := GlobalTheory.T.last_column_datum_tensor_mem_schwartzBruhat k ν hν ψk hψc hψ1 n n' Z

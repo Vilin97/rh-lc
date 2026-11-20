@@ -589,7 +589,7 @@ theorem step_estimate {x : T.RobbaExt ρ0} (hx : x ≠ 0) (hε0 : T.ptEval hξ h
       T.ptSharp hη ((D j).z) * T.ptE hη (D j).V := fun j => T.ptEval_liftExt hη hrη _ _
   have hexp := congrArg θ (T.taylor_eq hξ hr.le x J)
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum] at hexp
+    rw [map_add (f := _), map_sum] at hexp
   simp only [map_mul, map_pow, hθξ, hlift] at hexp
 
   set a : ℕ → L := fun j => s ^ j * b j

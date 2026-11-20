@@ -102,7 +102,7 @@ theorem UpperTheory.RealTr.weylEv :
       ring
     rw [e1, e2]
     exact h
-  · simp only [map_prod, map_add, map_one, evT_ex']
+  · simp only [map_prod, map_add (f := _), map_one, evT_ex']
     refine Finset.prod_congr rfl fun a _ => Finset.prod_congr rfl fun b _ => ?_
     congr 1
     rw [hz a, hz b, ← Complex.exp_sub]

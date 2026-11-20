@@ -94,7 +94,7 @@ theorem eigenvalue_avoidance : EigAvoid := by
   obtain ⟨_, ⟨t, rfl⟩, ht⟩ := Set.not_subset.mp hrange
   refine ⟨f t, ?_, ?_⟩
   · show σ (((t : E) + θ) / ((t : E) + σ θ)) * (((t : E) + θ) / ((t : E) + σ θ)) = 1
-    rw [map_div₀, map_add, map_add, map_natCast, hσ]
+    rw [map_div₀, map_add (f := _), map_add (f := _), map_natCast, hσ]
     have h1 := hnz1 t
     have h2 := hnz2 t
     field_simp

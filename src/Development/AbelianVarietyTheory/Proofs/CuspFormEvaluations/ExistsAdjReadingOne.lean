@@ -273,7 +273,7 @@ theorem reading_one (f f' : A ⟶ A) [IsMonHom f] [IsMonHom f']
     intro gm hgm
     have hg : (C gm).1 ∈ Φ.lat ∧ (C gm).2 ∈ Φ.lat := AddSubgroup.mem_prod.mp (AddSubgroup.mem_comap.mp hgm)
     refine ⟨fun z => ?_, fun k => ?_⟩
-    · simp only [q, map_add, Prod.fst_add, Prod.snd_add, Φ.e_add, (Φ.e_ker _).mpr hg.1, (Φ.e_ker _).mpr hg.2]
+    · simp only [q, map_add (f := _), Prod.fst_add, Prod.snd_add, Φ.e_add, (Φ.e_ker _).mpr hg.1, (Φ.e_ker _).mpr hg.2]
       rw [_root_.mul_one, _root_.mul_one]
     · rcases k with I | I
       · show psumL 2 g I (M1 (C gm)) ∈ Φ.lat

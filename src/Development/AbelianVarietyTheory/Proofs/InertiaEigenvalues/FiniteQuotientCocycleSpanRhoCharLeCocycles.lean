@@ -98,7 +98,7 @@ theorem cocW_le (hr : GoodR D.nd i r) (Xs : Set (D.nd.X i)) {k : ℕ}
   rintro _ ⟨φ, hφ, -, rfl⟩
   refine ⟨(lin_cont (D.nd.O_adic i) φ).comp (yg_cont i r S hr), fun g h => ?_⟩
   show φ _ = φ _ + WKG M g (φ _)
-  rw [yg_mul, map_add, hφ _ (tw_mem i r S g) _ (yg_mem i r S h), hψ]
+  rw [yg_mul, map_add (f := _), hφ _ (tw_mem i r S g) _ (yg_mem i r S h), hψ]
   rfl
 
 theorem blocks (ρ : D.nd.X i → (GE D.nd →* GL (Fin D.R.r) (D.nd.O i))) (π : D.nd.X i)

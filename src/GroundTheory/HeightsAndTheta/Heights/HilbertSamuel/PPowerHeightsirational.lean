@@ -169,7 +169,7 @@ def blockFrac (Y : (Σ k, ι k) → Ω) (k₀ : K) : Subfield Ω where
     rintro s s' ⟨t, g, h, hg, hh, hh0, he⟩ ⟨t', g', h', hg', hh', hh0', he'⟩
     refine ⟨t + t', g * h' + h * g', h * h', homog_add (homog_mul_block hg hh') (homog_mul_block hh hg'),
       homog_mul_block hh hh', by rw [map_mul]; exact mul_ne_zero hh0 hh0', ?_⟩
-    rw [map_add, map_mul, map_mul, map_mul, he, he']
+    rw [map_add (f := _), map_mul, map_mul, map_mul, he, he']
     ring
   neg_mem' := by
     rintro s ⟨t, g, h, hg, hh, hh0, he⟩
@@ -269,7 +269,7 @@ theorem PowerHeightsirational.proof (hN : GeneratedNefGeneric.Statement) (hK : K
       | C r =>
         rw [aeval_C, algebraMap_int_eq, eq_intCast]
         exact intCast_mem _ r
-      | add f1 f2 h1 h2 => rw [map_add]; exact add_mem h1 h2
+      | add f1 f2 h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
       | mul_X f p h1 => rw [map_mul, aeval_X]; exact mul_mem h1 (hrat p)
     have hy : (fun p : Σ κ, ι κ => y ⟨p.1, c0 p.1⟩ * (y p / y ⟨p.1, c0 p.1⟩)) = y := by
       funext p

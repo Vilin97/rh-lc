@@ -73,7 +73,7 @@ private theorem exists_fnl_apply_eq_one_of_ne_zero (c : Ω) (hc : c ≠ 0) : ∃
     by_contra h
     push_neg at h
     exact hc ((Module.forall_dual_apply_eq_zero_iff K c).1 h)
-  refine ⟨⟨fun x => (φ c)⁻¹ * φ x, fun x y => by simp only [map_add, mul_add], fun a x => ?_⟩, ?_⟩
+  refine ⟨⟨fun x => (φ c)⁻¹ * φ x, fun x y => by simp only [map_add (f := _), mul_add], fun a x => ?_⟩, ?_⟩
   · show (φ c)⁻¹ * φ (j a * x) = a * ((φ c)⁻¹ * φ x)
     rw [show j a * x = a • x from (Algebra.smul_def a x).symm, map_smul, smul_eq_mul]
     ring

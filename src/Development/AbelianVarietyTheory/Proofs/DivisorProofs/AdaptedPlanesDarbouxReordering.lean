@@ -41,7 +41,7 @@ theorem at_of_mem {n d : ℕ} {X : Spc F E n} {W : Spc F E d}
     exact ⟨GlobalTheory.VacAny.at_zero, GlobalTheory.VacAny.at_zero⟩
   | add x y _ _ hx hy =>
     intro k
-    rw [map_add]
+    rw [map_add (f := _)]
     exact ⟨GlobalTheory.VacAny.at_add (hx k).1 (hy k).1, GlobalTheory.VacAny.at_add (hx k).2 (hy k).2⟩
   | neg x _ hx =>
     intro k
@@ -151,7 +151,7 @@ theorem phase {σ : E →ₐ[F] E} (B : Base F E) (hB : B.IsGood σ) {n d n₁ d
       symp (R := AF F) (cA σ) (inclR (F := F) (AF F) (θ : E)) (incM F X₁.J) (incM F W₁.J) g g := by
     unfold symp; rw [GlobalTheory.AdaptGram.hTens_adapted σ B X W X₁ W₁ H H' i₀ i₁ j₀ j₁ hH hH']
   have e4 : symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J) (p + q) (incM F H.ι * g * (incM F H'.ι)ᵀ) = 0 := by
-    rw [co.form, hι, map_add, Prod.fst_add, Prod.snd_add, hp.1, hq.1, zero_add, add_zero]
+    rw [co.form, hι, map_add (f := _), Prod.fst_add, Prod.snd_add, hp.1, hq.1, zero_add, add_zero]
     dsimp only
     rw [dotProduct_comm, ext0_dotProduct_of eq _ _ hq.2, ext0_dotProduct_of eq _ _ hp.2, sub_zero]
   have e5 : symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J) p q = -((co.e q).1 ⬝ᵥ (co.e p).2) := by
@@ -197,13 +197,13 @@ theorem local_vac {σ : E →ₐ[F] E} (B : Base F E) {n d n₁ d₁ : ℕ} (r s
     obtain ⟨y, z, rfl⟩ := hpA
     have h1 := hA _ (Or.inl ⟨y, rfl⟩)
     have h2 := hA _ (Or.inr ⟨z, rfl⟩)
-    rw [map_add]
+    rw [map_add (f := _)]
     exact ⟨by rw [Prod.fst_add, h1.1, h2.1, add_zero], fun j => by rw [Prod.snd_add, Pi.add_apply, h1.2, h2.2, add_zero]⟩
   have hq : (co.e q).2 = 0 ∧ ∀ j, (co.e q).1 (eq.symm (Sum.inr j)) = 0 := by
     obtain ⟨y, z, rfl⟩ := hqA
     have h1 := hAd _ (Or.inl ⟨y, rfl⟩)
     have h2 := hAd _ (Or.inr ⟨z, rfl⟩)
-    rw [map_add]
+    rw [map_add (f := _)]
     exact ⟨by rw [Prod.snd_add, h1.1, h2.1, add_zero], fun j => by rw [Prod.fst_add, Pi.add_apply, h1.2, h2.2, add_zero]⟩
   have hAtγ := at_of_mem co v _ hγ
   have hAtp := at_of_mem co v _ hpΓ
@@ -219,8 +219,8 @@ theorem local_vac {σ : E →ₐ[F] E} (B : Base F E) {n d n₁ d₁ : ℕ} (r s
   have hw : ((fun i => evFin F v ((co.e (p + q + incM F H.ι * g * (incM F H'.ι)ᵀ)).1 i)),
       (fun i => evFin F v ((co.e (p + q + incM F H.ι * g * (incM F H'.ι)ᵀ)).2 i))) = (α + ext0 eq a, β + ext0 eq b) := by
     refine Prod.ext (funext fun k => ?_) (funext fun k => ?_)
-    · simp only [map_add, hι, Prod.fst_add, Pi.add_apply, hp.1, Pi.zero_apply, zero_add, finite_evaluation_extend_by_zero, hα, ha]
-    · simp only [map_add, hι, Prod.snd_add, Pi.add_apply, hq.1, Pi.zero_apply, add_zero, finite_evaluation_extend_by_zero, hβ, hb]
+    · simp only [map_add (f := _), hι, Prod.fst_add, Pi.add_apply, hp.1, Pi.zero_apply, zero_add, finite_evaluation_extend_by_zero, hα, ha]
+    · simp only [map_add (f := _), hι, Prod.snd_add, Pi.add_apply, hq.1, Pi.zero_apply, add_zero, finite_evaluation_extend_by_zero, hβ, hb]
 
   have hαP : (fun i => α (eq.symm (Sum.inl i))) ∈ P := mem_latPos.2 ⟨q, hqΓ, fun i => rfl⟩
   have hβP : ∀ y ∈ P, GlobalTheory.VacAny.psiV B.ψ v (y ⬝ᵥ fun i => β (eq.symm (Sum.inl i))) = 1 := by

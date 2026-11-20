@@ -70,7 +70,7 @@ theorem exists_comp_frobeniusIsogeny_eq (φ : Isogeny E E') (hφ : ¬ φ.IsSepar
     obtain ⟨R₁, e₁⟩ := exists_frobeniusPoint_eq (E := E) p (Point.map σ P₁)
     obtain ⟨R₂, e₂⟩ := exists_frobeniusPoint_eq (E := E) p (Point.map σ P₂)
     have e₃ : frobeniusPoint E p _ (R₁ + R₂) = Point.map σ (P₁ + P₂) := by
-      rw [frobeniusPoint_add, e₁, e₂, map_add]
+      rw [frobeniusPoint_add, e₁, e₂, map_add (f := _)]
     have gen : ∀ {R P} (hP : IsGenPt (frobeniusTwist E p) P)
         (e : frobeniusPoint E p (AlgebraicClosure L) R = Point.map σ P), IsGenPt E R :=
       fun hP e => (isGenPt_frobeniusPoint_iff E p _).mp (e ▸ isGenPt_map _ σ hP)
@@ -83,7 +83,7 @@ theorem exists_comp_frobeniusIsogeny_eq (φ : Isogeny E E') (hφ : ¬ φ.IsSepar
         ((isGenPt_frobeniusPoint_iff E p R).mpr (gen hP e))]
       exact key R _ _
     apply Point.map_injective (W' := E') σ
-    rw [map_add, step _ h₁ R₁ e₁, step _ h₂ R₂ e₂, step _ h₃ _ e₃]
+    rw [map_add (f := _), step _ h₁ R₁ e₁, step _ h₂ R₂ e₂, step _ h₃ _ e₃]
     exact φ.app_add (gen h₁ e₁) (gen h₂ e₂) (gen h₃ e₃)
   refine ⟨⟨Q, (isIsogeny_iff _).mpr ⟨ht, hresp⟩⟩, Isogeny.ext' ?_⟩
   exact (Isogeny.comp_val _ _).trans hQ

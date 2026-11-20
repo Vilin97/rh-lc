@@ -131,7 +131,7 @@ theorem lc_adX_cons (E : Fin n → Fin n → Module.End ℂ M) (φ : M) (X : Mat
   show _ = C _ + _
   rw [h3]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [adX, adLW, map_sum, map_smul, map_add, smul_add, sum_add_distrib, h1, h2, lc_adL]
+    simp only [adX, adLW, map_sum, map_smul, map_add (f := _), smul_add, sum_add_distrib, h1, h2, lc_adL]
 
 theorem deriv_word (E : Fin n → Fin n → Module.End ℂ M) (φ : M) (X : Matrix (Fin n) (Fin n) ℂ) (s : ℝ)
     (w : List (Fin n × Fin n)) : ∀ l : M →ₗ[ℂ] ℂ, HasDerivAt (fun s => l (wB E φ X s w))
@@ -150,7 +150,7 @@ theorem deriv_word (E : Fin n → Fin n → Module.End ℂ M) (φ : M) (X : Matr
       ((deriv_entries X (Matrix.single p.1 p.2 1) s a b).2.mul (ih (l ∘ₗ E a b)))).congr_deriv ?_
     rw [lc_adX_cons]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [actM, LinearMap.sum_apply, LinearMap.smul_apply, map_add, map_sum, map_smul,
+      simp only [actM, LinearMap.sum_apply, LinearMap.smul_apply, map_add (f := _), map_sum, map_smul,
       smul_eq_mul, LinearMap.comp_apply, neg_add, ← sum_neg_distrib, ← sum_add_distrib]
     refine sum_congr rfl fun a _ => sum_congr rfl fun b _ => by ring
 

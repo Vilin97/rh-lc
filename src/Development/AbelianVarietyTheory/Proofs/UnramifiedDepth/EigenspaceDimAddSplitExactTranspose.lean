@@ -87,7 +87,7 @@ theorem eigDim_add_transpose : ∀ (C : Type) [Field C] [IsAlgClosed C] [CharZer
           Matrix.mul_one]
       rw [← e1, ← e2, ← Matrix.trace_add, ← Matrix.mul_add, h3, Matrix.mul_one]
     simp only [Nat.cast_add, add_mul, Finset.sum_add_distrib]
-    rw [← trace_mat, ← trace_mat, ← trace_mat, ht, map_add]
+    rw [← trace_mat, ← trace_mat, ← trace_mat, ht, map_add (f := _)]
   · refine coeff_eq C OE (fun τ => eigDim C (trHom ρ) τ) (fun τ => eigDim C ρ τ) (fun a => ?_) τ
     rw [← trace_mat, ← trace_mat]
     exact congrArg _ (Matrix.trace_transpose _)

@@ -48,7 +48,7 @@ theorem mem_localization_dual_iff (Q : HeightOneSpectrum (𝓞 E)) (L : Submodul
           mul_smul]
         exact Submodule.smul_mem _ _ (hfx z hz)
       | zero => simp
-      | add a b _ _ ha hb => rw [map_add, LinearMap.add_apply]; exact add_mem ha hb
+      | add a b _ _ ha hb => rw [map_add (f := _), LinearMap.add_apply]; exact add_mem ha hb
       | smul r a _ ha =>
         rw [hStd_osmul_left, hStd_osmul_right]
         exact Submodule.smul_mem _ _ ha

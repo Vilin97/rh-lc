@@ -26,7 +26,7 @@ theorem UpperTheory.functional_qdet_eq_aeval_shifted_polynomial :
     · rfl
     · congr 1
       funext i k
-      rw [map_add, apply_ite (Polynomial.eval₂AlgHom B.val b hb), map_zero]
+      rw [map_add (f := _), apply_ite (Polynomial.eval₂AlgHom B.val b hb), map_zero]
       congr 1
       · exact Polynomial.eval₂_C _ _
       · congr 1

@@ -227,7 +227,7 @@ theorem weight_space_anisotropic : WAniso := by
     obtain ⟨x, hx, y, hy, hxy⟩ := Submodule.mem_sup.1 (hle h)
     obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hy
     have h0 : (hS D).hT F'.fl.z (x + c • F'.fl.z) = 0 := by rw [hxy]; exact hzw
-    rw [map_add, hzX x hx, map_smul, hzz, zero_add, smul_eq_mul] at h0
+    rw [map_add (f := _), hzX x hx, map_smul, hzz, zero_add, smul_eq_mul] at h0
     have hc : c = 0 := by
       rcases mul_eq_zero.1 h0 with h' | h'
       · exact h'

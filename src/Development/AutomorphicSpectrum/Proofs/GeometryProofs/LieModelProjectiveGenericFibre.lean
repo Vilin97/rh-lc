@@ -72,7 +72,7 @@ theorem exists_smul_mem (j : V →ₗ[A] T) (S : Submodule A V) (B : Set T)
     obtain ⟨a, ha, y, hy, e⟩ := hu
     obtain ⟨b, hb, y', hy', e'⟩ := hv
     refine ⟨a * b, mul_ne_zero ha hb, b • y + a • y', S.add_mem (S.smul_mem _ hy) (S.smul_mem _ hy'), ?_⟩
-    rw [map_add, map_smul, map_smul, ← e, ← e', smul_add, smul_smul, smul_smul, mul_comm a b, mul_comm b a,
+    rw [map_add (f := _), map_smul, map_smul, ← e, ← e', smul_add, smul_smul, smul_smul, mul_comm a b, mul_comm b a,
       mul_comm a b]
   | smul c u _ hu =>
     obtain ⟨a, ha, y, hy, e⟩ := hu
@@ -151,7 +151,7 @@ theorem finrank_subFib : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] (Ω : Type
       have hv' := eq_pt_of_lifts hl hlift
       exact Submodule.subset_span ⟨e, he, hv' ▸ hv⟩
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | smul c a _ ha =>
       rw [map_smul, ← algebraMap_smul L c (j a)]
       exact Submodule.smul_mem _ _ ha

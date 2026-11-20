@@ -40,7 +40,7 @@ theorem UpperTheory.exists_free_lattice_spanning_ordinary_part :
   let T₀ : Module.End O (ι → O) :=
     { toFun := f0
       map_add' := fun v w => funext fun i => hinj (by
-        simp only [Pi.add_apply, map_add, hf0])
+        simp only [Pi.add_apply, map_add (f := _), hf0])
       map_smul' := fun c v => funext fun i => hinj (by
         simp only [Pi.smul_apply, smul_eq_mul, map_mul, hf0, RingHom.id_apply]
         rw [map_smul, ← algebraMap_smul Ω c (jL v), map_smul, Pi.smul_apply, smul_eq_mul]) }

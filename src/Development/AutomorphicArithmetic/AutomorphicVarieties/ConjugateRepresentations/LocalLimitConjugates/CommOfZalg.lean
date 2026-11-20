@@ -22,7 +22,7 @@ private theorem comm_of_zalg {z o : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E 
   exact ho τ u
 
 private theorem uC_sh (r : ℝ) (X : Lie E a) : Cm.uC E a (shift (Cm.ιC E a) r X) = shift (lie E a) r X := by
-  rw [shift_apply, shift_apply, map_add, Cm.uC_ιC, ← algebraMap_smul ℂ (r * ell E a X) (1 : Cm.UC E a), map_smul,
+  rw [shift_apply, shift_apply, map_add (f := _), Cm.uC_ιC, ← algebraMap_smul ℂ (r * ell E a X) (1 : Cm.UC E a), map_smul,
     map_one, algebraMap_smul]
 
 private theorem cas_mem {n : ℕ} {e : Fin n → Herm E a} (he : IsFrame e) (r : ℝ) :
@@ -69,7 +69,7 @@ theorem UpperTheory.V.Cj.H.casOp :
       Module.End.one_apply]
     exact N.sub_mem (N.sum_mem fun j _ => N.sub_mem (hs _ _ (hs _ _ hφ)) (hs _ _ (hs _ _ hφ))) (N.smul_mem _ hφ)
   · have ht : ∀ X, ∀ φ ∈ N, shift (lie E a) r X (T φ) = T (shift (lie E a) r X φ) := fun X φ hφ => by
-      rw [sh_apply, sh_apply, hT.lie X φ hφ, map_add, map_smul]
+      rw [sh_apply, sh_apply, hT.lie X φ hφ, map_add (f := _), map_smul]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [casA, cas, LinearMap.sub_apply, LinearMap.sum_apply, Module.End.mul_apply, LinearMap.smul_apply,
       Module.End.one_apply, map_sub, map_sum, map_smul]

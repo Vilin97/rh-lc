@@ -33,7 +33,7 @@ theorem thetaD_psiA (C : Core l) (K : FinExt l) (x : AK K) :
     rw [map_mul, map_mul, map_mul, psiA_inA, psiA_inO, thetaK_inA, thetaK_inO, (thetaD_props l).2.2.2.1,
       C.o_sec.th]
     rfl)
-    fun x y hx hy => by rw [map_add, map_add, map_add, hx, hy]; rfl
+    fun x y hx hy => by rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]; rfl
 
 theorem mem_sq_of_psiA (C : Core l) (K : FinExt l) (x : AK K) (hx : thetaK K x = 0)
     (h2 : psiA C K x ∈ Per.FilP l 2) : x ∈ RingHom.ker (thetaK K) ^ 2 := by
@@ -95,7 +95,7 @@ theorem exists_map : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf
       congr 1
       · exact congrArg _ (j_aC_pt C a)
       · exact hC.o _)
-      fun x y hx hy => by simp only [map_add, hx, hy]
+      fun x y hx hy => by simp only [map_add (f := _), hx, hy]
   have hfil : ∀ (n : ℕ) (x : AK K), Ψ (toB K (ofA K x)) ∈ (P.PD K).Fil n ↔ psiA C K x ∈ Per.FilP l n := fun n x => by
     rw [T.fil, hA, GlobalTheory.BKGal.TaylorFil.alg_mem_FilD_iff]
   have hsm : ∀ (c : ↥K.1) (b : BK K), Ψ (inK K c * b) = c • Ψ b := fun c b => by
@@ -114,7 +114,7 @@ theorem exists_map : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf
       refine Submodule.smul_mem _ _ ?_
       rw [T.fil, hD]
       exact GlobalTheory.MemLoc.TiedUnif.alg_mem_FilD_zero _)
-      fun x y hx hy => by rw [map_add, map_add]; exact add_mem hx hy
+      fun x y hx hy => by rw [map_add (f := _), map_add (f := _)]; exact add_mem hx hy
     have hl : ((l : ↥K.1) ^ D) ≠ 0 := pow_ne_zero _ (Nat.cast_ne_zero.2 (Fact.out : l.Prime).ne_zero)
     rw [← hz, ← map_natCast (inK K), ← map_pow, hsm] at hz0
     exact (Submodule.smul_mem_iff _ hl).1 hz0

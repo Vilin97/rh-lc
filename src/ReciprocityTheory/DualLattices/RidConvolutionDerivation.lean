@@ -24,11 +24,11 @@ private lemma rid_convolution_derivation (δ : A →ₗ[R] R) (hδ : IsPtDer δ)
           (TensorProduct.rid R A) ((Coalgebra.counit (R := R) (A := A)).lTensor A v) := by
   induction u using TensorProduct.induction_on with
   | zero => simp
-  | add u u' hu hu' => simp only [add_mul, map_add, hu, hu']; ring
+  | add u u' hu hu' => simp only [add_mul, map_add (f := _), hu, hu']; ring
   | tmul a b =>
     induction v using TensorProduct.induction_on with
     | zero => simp
-    | add v v' hv hv' => simp only [mul_add, map_add, hv, hv']; ring
+    | add v v' hv hv' => simp only [mul_add, map_add (f := _), hv, hv']; ring
     | tmul c e =>
       simp only [Algebra.TensorProduct.tmul_mul_tmul, LinearMap.lTensor_tmul,
         TensorProduct.rid_tmul, hδ b e, Algebra.smul_def, map_add, map_mul]
@@ -50,7 +50,7 @@ lemma counit_convD (δ : A →ₗ[R] R) (f : A) :
     intro u
     induction u using TensorProduct.induction_on with
     | zero => simp
-    | add u v hu hv => simp only [map_add, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), hu, hv]
     | tmul a b => simp [mul_comm]
   simp only [convD, LinearMap.coe_comp, LinearEquiv.coe_coe, Function.comp_apply, key,
     Coalgebra.rTensor_counit_comul]
@@ -72,7 +72,7 @@ lemma IsPtDer.map_sq {δ : A →ₗ[R] R} (hδ : IsPtDer δ) {f : A}
   · intro a ha b hb
     rw [RingHom.mem_ker, Bialgebra.counitAlgHom_apply] at ha hb
     rw [hδ, ha, hb]; ring
-  · intro a b ha hb; rw [map_add, ha, hb, add_zero]
+  · intro a b ha hb; rw [map_add (f := _), ha, hb, add_zero]
 
 end Bialg
 
@@ -90,14 +90,14 @@ lemma map_aeval_of_leibniz {d : ℕ} (D : A →ₗ[R] A) (hD : ∀ f g, D (f * g
     linear_combination -h
   induction P using MvPolynomial.induction_on with
   | C a => simp [Algebra.algebraMap_eq_smul_one, h1]
-  | add P Q hP hQ => simp only [map_add, hP, hQ, add_mul, Finset.sum_add_distrib]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ, add_mul, Finset.sum_add_distrib]
   | mul_X P n hP =>
     have hs : ∑ j, aeval x (pderiv j (P * X n)) * D (x j) =
         x n * ∑ j, aeval x (pderiv j P) * D (x j) + aeval x P * D (x n) := by
       have : ∀ j, aeval x (pderiv j (P * X n)) * D (x j) =
           x n * (aeval x (pderiv j P) * D (x j)) + aeval x P * (aeval x (pderiv j (X n : MvPolynomial (Fin d) R)) * D (x j)) := by
         intro j
-        rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul, aeval_X]
+        rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul, aeval_X]
         ring
       rw [Finset.sum_congr rfl (fun j _ => this j), Finset.sum_add_distrib, ← Finset.mul_sum,
         ← Finset.mul_sum]
@@ -129,7 +129,7 @@ lemma lowRed_mul {m : ℕ} {F G : MvPolynomial (Fin d) R} (hF : LowRed p m F)
   · have hle : ∀ j, y.1 j ≤ β j := fun j => by rw [← hy]; simp
     have h2' : y.2.degree ≠ 0 := fun h => h2 ((Finsupp.degree_eq_zero_iff _).1 h)
     have hdeg1 : y.1.degree < β.degree := by
-      rw [← hy, map_add]; omega
+      rw [← hy, map_add (f := _)]; omega
     rw [hF y.1 (fun j => lt_of_le_of_lt (hle j) (hβ j)) (by omega), zero_mul]
 
 lemma lowRed_pderiv {m : ℕ} (hp0 : (p : R) = 0) {P : MvPolynomial (Fin d) R}
@@ -143,7 +143,7 @@ lemma lowRed_pderiv {m : ℕ} (hp0 : (p : R) = 0) {P : MvPolynomial (Fin d) R}
       by_cases hij : i = j
       · subst hij; simpa using hlt
       · simpa [Finsupp.single_apply, Ne.symm hij] using hγ i
-    · rw [map_add, Finsupp.degree_single]; omega
+    · rw [map_add (f := _), Finsupp.degree_single]; omega
   · have h : γ j + 1 = p := by have := hγ j; omega
     have hc : ((γ j : R) + 1) = 0 := by
       have : ((γ j + 1 : ℕ) : R) = 0 := by rw [h, hp0]
@@ -168,7 +168,7 @@ lemma isPtDer_of {δ : A →ₗ[R] R} (h1 : δ 1 = 0)
   have hfg := h2 _ (by rw [pow_two]; exact Ideal.mul_mem_mul hf hg)
   have e : f * g = (f - algebraMap R A a) * (g - algebraMap R A b) + a • g + b • f - (a * b) • 1 := by
     simp only [Algebra.smul_def, map_mul, mul_one]; ring
-  rw [e, map_sub, map_add, map_add, hfg, map_smul, map_smul, map_smul, h1, smul_eq_mul,
+  rw [e, map_sub, map_add (f := _), map_add (f := _), hfg, map_smul, map_smul, map_smul, h1, smul_eq_mul,
     smul_eq_mul, smul_eq_mul]
   ring
 
@@ -278,7 +278,7 @@ theorem coeff_eq_zero_of_stable (ε : A →ₐ[R] R) (x : Fin d → A) (hx : ∀
         lt_of_le_of_lt (by rw [hβdef]; exact tsub_le_self) (hα j)
       have hβd : β.degree = m := by
         have := congrArg Finsupp.degree hαβ
-        rw [map_add, Finsupp.degree_single] at this
+        rw [map_add (f := _), Finsupp.degree_single] at this
         omega
       have h0 := ih Q' hQ' hlow' β hβr hβd
       rw [hQ'def, coeff_sum, Finset.sum_eq_single i] at h0

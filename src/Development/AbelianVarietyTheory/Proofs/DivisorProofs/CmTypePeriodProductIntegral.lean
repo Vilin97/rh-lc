@@ -45,7 +45,7 @@ theorem lower_apply {ρ : orderC c →+* Module.End O H} {τ : E →+* K} {e f :
       exact ⟨a, by rw [map_smul, hN.1]⟩
     · exact ⟨0, by rw [hN.2 σ hσ y hy, zero_smul]⟩
   · rintro x y ⟨a, ha⟩ ⟨b, hb⟩
-    exact ⟨a + b, by rw [map_add, ha, hb, add_smul]⟩
+    exact ⟨a + b, by rw [map_add (f := _), ha, hb, add_smul]⟩
 
 theorem bilin_zero_of_eig {ρ : orderC c →+* Module.End O H}
     (hdir : DirectSum.IsInternal (fun σ : E →+* K => eigK ρ σ)) (S : LinearMap.BilinForm K (K ⊗[O] H))
@@ -58,9 +58,9 @@ theorem bilin_zero_of_eig {ρ : orderC c →+* Module.End O H}
     refine Submodule.iSup_induction (fun σ : E →+* K => eigK ρ σ) (motive := fun y => S x y = 0) (hmem y)
       (fun σ' y hy => h σ σ' x hx y hy) (by simp) ?_
     intro y y' h1 h2
-    rw [map_add, h1, h2, add_zero]
+    rw [map_add (f := _), h1, h2, add_zero]
   · intro x x' h1 h2 y
-    rw [map_add, LinearMap.add_apply, h1, h2, add_zero]
+    rw [map_add (f := _), LinearMap.add_apply, h1, h2, add_zero]
 
 end SlopeTestRemainingChoices
 

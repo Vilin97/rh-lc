@@ -49,7 +49,7 @@ theorem crd_map {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Algebra 
   | tmul r e =>
     rw [Algebra.TensorProduct.map_tmul, crd_tmul, crd_tmul, map_mul, AlgHom.commutes]
     rfl
-  | add x y hx hy => rw [map_add, crd_add, crd_add, hx, hy, map_add]
+  | add x y hx hy => rw [map_add (f := _), crd_add, crd_add, hx, hy, map_add (f := _)]
 
 theorem crd_ext (R : Type) [CommRing R] [Algebra F R] {x y : R ⊗[F] E}
     (h : ∀ k, crd R x k = crd R y k) : x = y :=
@@ -87,13 +87,13 @@ theorem cv_cA {D : D7} (v : Pl D) (x : AE D) : cv D v (cA D x) = sigR (Fv D.host
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem infPart_cA {D : D7} (x : AE D) : infPart D (cA D x) = sigR (Ainf D.host.F) D.sp.cm.sig (infPart D x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem crd_int_ev (k : Fin (Module.finrank D.host.F D.host.E)) :
     ∀ᶠ v in Filter.cofinite, ∀ y ∈ intLoc D.host.F D.host.E (v : Pl D),
@@ -166,8 +166,8 @@ theorem isUnit_of_comp (D : D7) (y : AE D) (hf : ∀ v, ∃ z ∈ intLoc D.host.
   have hei : infPart D e = 1 := rfl
   have h1 : y * (s + e) = 1 := by
     refine ext_comp (fun v => ?_) ?_
-    · rw [map_mul, map_add, hs, hev, add_zero, hzy, map_one]
-    · rw [map_mul, map_add, hs0, hei, zero_add, hi, mul_one, map_one]
+    · rw [map_mul, map_add (f := _), hs, hev, add_zero, hzy, map_one]
+    · rw [map_mul, map_add (f := _), hs0, hei, zero_add, hi, mul_one, map_one]
   exact ⟨⟨y, s + e, h1, by rw [mul_comm]; exact h1⟩, rfl⟩
 
 end PositivityTheory.Rg.Rsw.L.LGenK

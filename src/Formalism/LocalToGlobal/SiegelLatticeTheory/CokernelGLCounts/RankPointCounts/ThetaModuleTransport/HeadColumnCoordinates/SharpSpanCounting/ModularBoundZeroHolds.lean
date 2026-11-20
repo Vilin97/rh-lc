@@ -179,7 +179,7 @@ theorem mem_range_Phi (Z : M.Mat (r + 1)) (p : M.Cok Z × E) :
     obtain ⟨s, hs⟩ := h
     have hs' : (s : E) = x - ell Z m := hs
     refine ⟨m + s • bCls Z.Z, ?_⟩
-    rw [Phi_apply, map_add, map_smul, piC_b, smul_zero, add_zero, map_add, ell_smul, ell_b,
+    rw [Phi_apply, map_add (f := _), map_smul, piC_b, smul_zero, add_zero, map_add (f := _), ell_smul, ell_b,
       mul_one, hs']
     congr 1
     abel

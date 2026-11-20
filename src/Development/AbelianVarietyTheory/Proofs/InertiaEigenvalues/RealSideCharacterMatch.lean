@@ -72,9 +72,9 @@ def rhoE (c : S.Cl) (g : S.Gam c) : Module.End K S.V where
   toFun x := cinv P (rhoF P χ' c g x)
   map_add' x x' := by
     apply coef_injective P
-    rw [map_add, coef_cinv P (rhoF_rg P χ' hχ' hρ _ _ _), coef_cinv P (rhoF_rg P χ' hχ' hρ _ _ _),
+    rw [map_add (f := _), coef_cinv P (rhoF_rg P χ' hχ' hρ _ _ _), coef_cinv P (rhoF_rg P χ' hχ' hρ _ _ _),
       coef_cinv P (rhoF_rg P χ' hχ' hρ _ _ _)]
-    simp only [rhoF, map_add, smul_add]
+    simp only [rhoF, map_add (f := _), smul_add]
   map_smul' b x := by
     apply coef_injective P
     rw [map_smulₛₗ, coef_cinv P (rhoF_rg P χ' hχ' hρ _ _ _), coef_cinv P (rhoF_rg P χ' hχ' hρ _ _ _)]
@@ -162,7 +162,7 @@ theorem ext_trForm (f : S.Forms) :
 
 def trE : Module.End K S.Forms where
   toFun := trForm P hχ hρ hT
-  map_add' f f' := ext_inj P (by rw [ext_add, ext_trForm, ext_trForm, ext_trForm, ext_add, map_add])
+  map_add' f f' := ext_inj P (by rw [ext_add, ext_trForm, ext_trForm, ext_trForm, ext_add, map_add (f := _)])
   map_smul' b f := ext_inj P (by
     rw [ext_smul, ext_trForm, ext_trForm, ext_smul, RingHom.id_apply, map_smul])
 

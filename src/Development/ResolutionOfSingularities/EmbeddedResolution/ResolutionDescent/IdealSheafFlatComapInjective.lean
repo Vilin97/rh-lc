@@ -60,7 +60,7 @@ private theorem one_mem_map_colon_of_mem_map {R S : Type u} [CommRing R] [CommRi
         rw [LinearMap.lTensor_tmul, TensorProduct.rid_tmul, Algebra.smul_def, halg]
         exact Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem φ c.2)
     | add u₁ u₂ h₁ h₂ =>
-        rw [map_add, map_add]
+        rw [map_add (f := _), map_add (f := _)]
         exact Submodule.add_mem _ h₁ h₂
   have hfin := hrange v
   rw [hv, TensorProduct.rid_tmul, one_smul] at hfin

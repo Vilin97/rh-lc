@@ -314,7 +314,7 @@ theorem exists_twoTorsionPointUnkilled_of_crv {D : D7} {cc : Ideal (𝓞 D.host.
       rw [← e]; ring
     refine half x hx ?_
     rw [e']
-    simp only [map_mul, map_div₀, map_add, map_one, Complex.conj_I, Complex.conj_ofReal, map_natCast, map_ofNat]
+    simp only [map_mul, map_div₀, map_add (f := _), map_one, Complex.conj_I, Complex.conj_ofReal, map_natCast, map_ofNat]
     ring
   · intro h
     obtain ⟨x, hx, e⟩ := hint _ h
@@ -437,7 +437,7 @@ theorem hecke_eq_one {D : D7} {N : ℕ} (χ : HeckeU D N) (x : (AE D)ˣ) (hx : x
   have e : x = y * sgU D y := by
     ext
     change (x : AE D) = ((1 - ε) + ε * x) * sgA D ((1 - ε) + ε * x)
-    rw [map_add, map_mul, map_sub, map_one, hx']
+    rw [map_add (f := _), map_mul, map_sub, map_one, hx']
     linear_combination hz - (1 - x) ^ 2 * h2
   rw [e, χ.norm]
 

@@ -98,7 +98,7 @@ theorem liftV_one_smul_eq_zero (v : Pl F) (a : AE F E) (ha : compFin F E v a = 0
     | tmul x e =>
       rw [TensorProduct.smul_tmul', smul_eq_mul, liftV_one_mul]
       simp [compFin]
-    | add x y hx hy => rw [smul_add, hx, hy, map_add, map_add]
+    | add x y hx hy => rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]
   rw [key, ha, map_zero]
 
 theorem exists_map_compFin (v : Pl F) {α β : Type} (A : Matrix α β (Fv F v ⊗[F] E)) :
@@ -109,7 +109,7 @@ theorem exists_map_compFin (v : Pl F) {α β : Type} (A : Matrix α β (Fv F v �
   induction A i j using TensorProduct.induction_on with
   | zero => simp
   | tmul x e => simp [compFin, evFin_liftV]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem mul_eq_self {n d : ℕ} (v : Pl F) (u : Matrix (Fin n) (Fin d) (AE F E)) (hu : At (evFin F v) u)
     (N : Matrix (Fin d) (Fin d) (AE F E)) (hN : N.map (compFin F E v) = 1) : u * N = u := by
@@ -197,7 +197,7 @@ theorem finrank_lagCo (M : Model σ X W) (v : Pl F) {m : ℕ} (C : Matrix (Fin d
   intro p _
   obtain ⟨u, hu, rfl⟩ := exists_at_locCo M.co v p
   obtain ⟨x, hx, y, hy, rfl⟩ := hdec u hu
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Submodule.add_mem_sup ⟨x, hx, rfl⟩ ⟨y, hy, rfl⟩
 
 theorem exists_test : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (n d : ℕ)

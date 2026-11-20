@@ -185,7 +185,7 @@ theorem exists_proj_aut {H : HermSpace K V} (hK : IsCMUnram K) (hP : PD H.B.flip
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     have a1 := congrArg p hx
-    rw [f1, map_add, map_smul, (p2 _).2 (p4 x), p1, smul_zero, add_zero, map_zero] at a1
+    rw [f1, map_add (f := _), map_smul, (p2 _).2 (p4 x), p1, smul_zero, add_zero, map_zero] at a1
     rw [f1, a1, Submodule.coe_zero, zero_add, smul_eq_zero, sub_eq_zero] at hx
     have a2 : x ∈ fixSp η := (mem_fixSp η x).2 (hx.resolve_left (inv_ne_zero hg0)).symm
     have a3 := p1 ⟨x, a2⟩
@@ -291,7 +291,7 @@ theorem exists_same_index {U : Submodule K V} (p : V →ₗ[K] U) (p1 : ∀ t : 
       refine ⟨?_, z, hz, rfl⟩
       obtain ⟨m, hm, y, hy, e⟩ := hBm _ hb
       have := congrArg p e
-      rw [hPx, map_add, map_sub, p1, p1, p1, sub_self, add_zero] at this
+      rw [hPx, map_add (f := _), map_sub, p1, p1, p1, sub_self, add_zero] at this
       rw [SetLike.mem_coe, hPx, this]
       exact hm
     · rintro b ⟨hb, z, hz, rfl⟩
@@ -322,7 +322,7 @@ theorem core {H : HermSpace K V} (hK : IsCMUnram K) (hP : PD H.B.flip) {η : V �
     obtain ⟨m, hm, y, hy, rfl⟩ := hBm b hb
     refine ⟨m, hm, y, hy, ?_⟩
     change F _ = _
-    rw [hF, map_add, map_sub, p1, p1, sub_self, add_zero, map_add, map_sub, (mem_fixSp η m).1 m.2,
+    rw [hF, map_add (f := _), map_sub, p1, p1, sub_self, add_zero, map_add (f := _), map_sub, (mem_fixSp η m).1 m.2,
       (mem_fixSp η (p y)).1 (p y).2]
     congr 2
     abel
@@ -334,7 +334,7 @@ theorem core {H : HermSpace K V} (hK : IsCMUnram K) (hP : PD H.B.flip) {η : V �
     intro b hb
     obtain ⟨m, hm, y, hy, rfl⟩ := key b hb
     change ((p _ : fixSp η) : V) ∈ A
-    rw [map_add, map_smul, p3, smul_zero, add_zero, p1]
+    rw [map_add (f := _), map_smul, p3, smul_zero, add_zero, p1]
     exact hfix m m.2 hm
   have hFB : Submodule.IsLattice K (gmap F B) := lattice_map hB (F : V →ₗ[K] V) F.surjective
   have h3 : idxN (Formalism.HermitianLatticesTheory.dual H.B.flip A) ((latIn (fixSp η) A).comap (p.restrictScalars (𝓞 K))) ≤

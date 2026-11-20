@@ -113,7 +113,7 @@ theorem coefA_int (hN : IsSelfDualC S N) (hN' : IsSelfDualC T N') {b : D.host.E}
     rw [h2]
     rfl
   | zero => rw [map_zero, map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add, RingHom.map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), RingHom.map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg, RingHom.map_neg]; exact neg_mem hx
 
 theorem coefA_rat (e : AE D) (b : D.host.E) (s : Fin S.rank → D.host.E) (t : Fin T.rank → D.host.E)

@@ -24,7 +24,7 @@ private theorem fst_extZero (y : Formalism.MainNotions.GlobalTheoryTheory.GenusM
     erw [GlobalTheory.UnitaryHeckeBaseChange.toAdele_tmul]
     show GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.infiniteAdeleMap F E 0 * _ = 0
     rw [map_zero, zero_mul]
-  | add y z hy hz => simp [map_add, hy, hz]
+  | add y z hy hz => simp [map_add (f := _), hy, hz]
 
 private theorem snd_extZero (y : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F ⊗[F] E) :
     (GlobalTheory.UnitaryHeckeBaseChange.toAdele F E (extZero F E y)).2 = finAdEquiv F E y := by
@@ -43,13 +43,13 @@ private theorem snd_extZero (y : Formalism.MainNotions.GlobalTheoryTheory.GenusM
     refine Eq.trans ?_ (finAdEquiv_tmul a x w).symm
     simp only [complMap_rfl, GlobalTheory.CharTransport.locMap_eq]
     rfl
-  | add y z hy hz => simp [map_add, hy, hz]
+  | add y z hy hz => simp [map_add (f := _), hy, hz]
 
 private theorem toAdele_locIdele (w : HeightOneSpectrum (𝓞 E)) (x : (w.adicCompletion E)ˣ) :
     GlobalTheory.UnitaryHeckeBaseChange.toAdele F E (locIdele F w x : AF F ⊗[F] E) =
       (GlobalTheory.Mem.Chr.localIdele E w x : AdeleRing (𝓞 E) E) := by
   rw [coe_locIdele]
-  simp only [map_add, map_sub, map_one]
+  simp only [map_add (f := _), map_sub, map_one]
   refine Prod.ext ?_ ?_
   · erw [Prod.fst_add, Prod.fst_sub, fst_extZero, fst_extZero]
     simp

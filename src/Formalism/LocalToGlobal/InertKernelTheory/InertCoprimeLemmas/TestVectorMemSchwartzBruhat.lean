@@ -60,7 +60,7 @@ theorem good_mul (hmul : ∀ j F G, δ j (F * G) = δ j F * G + F * δ j G)
       rw [map_mul]
       exact Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.RestC.isPadicIntegral_mul (hF []) (hG [])
     | zero => rw [map_zero]; exact isPadicIntegral_zero
-    | add x y _ _ hx hy => rw [map_add]; exact Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.RestC.isPadicIntegral_add hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.RestC.isPadicIntegral_add hx hy
     | neg x _ hx => rw [map_neg]; exact isPadicIntegral_neg hx
   · intro H hH j
     induction hH using AddSubgroup.closure_induction with
@@ -70,7 +70,7 @@ theorem good_mul (hmul : ∀ j F G, δ j (F * G) = δ j F * G + F * δ j G)
       exact S.add_mem (AddSubgroup.subset_closure ⟨_, _, good_der δ hF j, hG, rfl⟩)
         (AddSubgroup.subset_closure ⟨_, _, hF, good_der δ hG j, rfl⟩)
     | zero => rw [map_zero]; exact S.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact S.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact S.add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact S.neg_mem hx
 
 theorem good_one (h1 : ∀ j, δ j 1 = 0) : Good δ (1 : MvPowerSeries σ ℂ_[p]) := by
@@ -219,7 +219,7 @@ def dl (c : ℂ_[p]) (w : PowerSeries ℂ_[p]) (j : Fin r) :
   toFun G := algebraMap ℂ_[p] (MvPowerSeries (Fin r) ℂ_[p]) c *
     PowerSeries.subst (MvPowerSeries.X j : MvPowerSeries (Fin r) ℂ_[p]) w * MvPowerSeries.pderiv (R := ℂ_[p]) j G
   map_zero' := by simp
-  map_add' F G := by simp only [map_add]; ring
+  map_add' F G := by simp only [map_add (f := _)]; ring
 
 theorem dl_apply (c : ℂ_[p]) (w : PowerSeries ℂ_[p]) (j : Fin r) (G : MvPowerSeries (Fin r) ℂ_[p]) :
     dl c w j G = algebraMap ℂ_[p] (MvPowerSeries (Fin r) ℂ_[p]) c *
@@ -461,7 +461,7 @@ theorem goodB_sum {ι : Type*} (s : Finset ι) (a : ι → ℂ_[p]) (ha : ∀ i,
     (G : ι → MvPowerSeries (D.what₂.Tau × Fin N' × Fin N) ℂ_[p]) (hG : ∀ i, GoodB lam b (G i)) :
     GoodB lam b (∑ i ∈ s, algebraMap ℂ_[p] _ (a i) * G i) := by
   refine Finset.sum_induction _ (GoodB lam b) (fun F G hF hG l => ?_) (fun l => ?_) (fun i _ l => ?_)
-  · rw [DlB_add, map_add]; exact RestC.isPadicIntegral_add (hF l) (hG l)
+  · rw [DlB_add, map_add (f := _)]; exact RestC.isPadicIntegral_add (hF l) (hG l)
   · rw [DlB_zero, map_zero]; exact isPadicIntegral_zero
   · rw [DlB_Cmul, map_mul]
     have e : MvPowerSeries.constantCoeff (algebraMap ℂ_[p] (MvPowerSeries (D.what₂.Tau × Fin N' × Fin N) ℂ_[p]) (a i))
@@ -618,7 +618,7 @@ theorem wq_int (W : WeierstrassCurve ℂ_[p]) (wq : PowerSeries ℂ_[p])
           rw [pow_succ]
           exact coeff_mul_int (fun k hk => h2' k (by omega)) (fun k hk => ih k (by omega))
         rw [e]
-        simp only [map_add]
+        simp only [map_add (f := _)]
         refine RestC.isPadicIntegral_add (RestC.isPadicIntegral_add (RestC.isPadicIntegral_add (RestC.isPadicIntegral_add (RestC.isPadicIntegral_add ?_
           (term_int h1 le_rfl ih)) (term_int h2 (by norm_num) ih)) (term_int h3 (by norm_num) h2'))
           (term_int h4 (by norm_num) h2')) (term_int h6 (by norm_num) h3')
@@ -628,7 +628,7 @@ theorem wq_int (W : WeierstrassCurve ℂ_[p]) (wq : PowerSeries ℂ_[p])
         · exact isPadicIntegral_zero
   refine ⟨fun n => hall (n + 1) n (by omega), ?_⟩
   rw [← PowerSeries.coeff_zero_eq_constantCoeff_apply, e]
-  simp only [map_add, term_zero _ le_rfl, term_zero _ (show 1 ≤ 2 by norm_num), term_zero _ (show 1 ≤ 3 by norm_num),
+  simp only [map_add (f := _), term_zero _ le_rfl, term_zero _ (show 1 ≤ 2 by norm_num), term_zero _ (show 1 ≤ 3 by norm_num),
     term_zero _ (show 1 ≤ 4 by norm_num), term_zero _ (show 1 ≤ 6 by norm_num), add_zero]
   simp
 
@@ -645,7 +645,7 @@ theorem int_of_mul {f g : PowerSeries ℂ_[p]} (hf : ∀ n, IsIntP (PowerSeries.
 
 theorem int_of_add {f g : PowerSeries ℂ_[p]} (hf : ∀ n, IsIntP (PowerSeries.coeff n f))
     (hg : ∀ n, IsIntP (PowerSeries.coeff n g)) : ∀ n, IsIntP (PowerSeries.coeff n (f + g)) := fun n => by
-  rw [map_add]; exact RestC.isPadicIntegral_add (hf n) (hg n)
+  rw [map_add (f := _)]; exact RestC.isPadicIntegral_add (hf n) (hg n)
 
 theorem int_of_neg {f : PowerSeries ℂ_[p]} (hf : ∀ n, IsIntP (PowerSeries.coeff n f)) :
     ∀ n, IsIntP (PowerSeries.coeff n (-f)) := fun n => by

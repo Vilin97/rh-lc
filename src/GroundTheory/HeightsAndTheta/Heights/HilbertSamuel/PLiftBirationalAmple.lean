@@ -125,7 +125,7 @@ theorem IsRatio.add {w w' : Ω} (hw : IsRatio z w) (hw' : IsRatio z w') : IsRati
   obtain ⟨d', g', h', hg', hh', h0', e'⟩ := hw'
   refine ⟨d + d', g * h' + h * g', h * h', GenOnFibres.homog_add (GenOnFibres.homog_mul hg hh')
     (GenOnFibres.homog_mul hh hg'), GenOnFibres.homog_mul hh hh', by simp [h0, h0'], ?_⟩
-  simp only [map_add, map_mul, e, e']
+  simp only [map_add (f := _), map_mul, e, e']
   ring
 
 theorem IsRatio.mul {w w' : Ω} (hw : IsRatio z w) (hw' : IsRatio z w') : IsRatio z (w * w') := by

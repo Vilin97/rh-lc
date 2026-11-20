@@ -172,7 +172,7 @@ theorem exists_rep (n : ℕ) : ∀ y : A.W, A.phiW y - y ∈ Ideal.span {(l : A.
     obtain ⟨d, hd⟩ := Ideal.mem_span_singleton'.1 hy
     have e1 : y = T + y1 * l := by rw [hy1]; ring
     have e3 : A.phiW y = T + A.phiW y1 * l := by
-      rw [e1, map_add, map_mul, map_natCast, hTφ]
+      rw [e1, map_add (f := _), map_mul, map_natCast, hTφ]
     have e2 : (l : A.W) * (A.phiW y1 - y1 - d * (l : A.W) ^ n) = 0 := by
       linear_combination -hd - e3 + e1
     have hφ : A.phiW y1 - y1 ∈ Ideal.span {(l : A.W) ^ n} :=

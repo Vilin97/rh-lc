@@ -38,7 +38,7 @@ theorem csSpan_approx (hA : Formalism.UG.CS.IntAdApprox) (D : 𝓞 F) (hD : D �
   · exact ⟨0, isIntegral_zero, 0, zero_mem _, by simp⟩
   · exact ⟨1, isIntegral_one, 0, zero_mem _, by simp⟩
   · rintro a b _ _ ⟨x, hx, w, hw, rfl⟩ ⟨y, hy, w', hw', rfl⟩
-    exact ⟨x + y, hx.add hy, w + w', add_mem hw hw', by rw [map_add]; ring⟩
+    exact ⟨x + y, hx.add hy, w + w', add_mem hw hw', by rw [map_add (f := _)]; ring⟩
   · rintro a _ ⟨x, hx, w, hw, rfl⟩
     exact ⟨-x, hx.neg, -w, neg_mem hw, by rw [map_neg]; ring⟩
   · rintro a b _ _ ⟨x, hx, w, hw, rfl⟩ ⟨y, hy, w', hw', rfl⟩

@@ -83,8 +83,8 @@ theorem exists_avg_top (ρ : G →* Module.End ℂ V) (hfin : ∀ x, (Set.range 
   let P : Module.End ℂ V :=
     { toFun := p
       map_add' := fun x y => by
-        rw [hp, hp, hp, (h2 x y).1, (h2 x y).2, ← map_add]
-        exact avgN_indep ρ _ _ (hN3 _) (fun s hs => by rw [map_add, hN3 x s hs.1, hN3 y s hs.2])
+        rw [hp, hp, hp, (h2 x y).1, (h2 x y).2, ← map_add (f := _)]
+        exact avgN_indep ρ _ _ (hN3 _) (fun s hs => by rw [map_add (f := _), hN3 x s hs.1, hN3 y s hs.2])
       map_smul' := fun c x => by
         rw [hp, hp, RingHom.id_apply, ← map_smul]
         exact avgN_indep ρ _ _ (hN3 _) (fun s hs => by rw [map_smul, hN3 x s hs]) }
@@ -269,7 +269,7 @@ def fixAlg : Subalgebra ℂ (Module.End ℂ V) where
 
 def fixIn (S : Submodule ℂ V) : Submodule ℂ V where
   carrier := {x | x ∈ S ∧ ∀ k ∈ J, ρ k x = x}
-  add_mem' := fun {x y} hx hy => ⟨S.add_mem hx.1 hy.1, fun k hk => by rw [map_add, hx.2 k hk, hy.2 k hk]⟩
+  add_mem' := fun {x y} hx hy => ⟨S.add_mem hx.1 hy.1, fun k hk => by rw [map_add (f := _), hx.2 k hk, hy.2 k hk]⟩
   zero_mem' := ⟨S.zero_mem, fun k _ => map_zero _⟩
   smul_mem' := fun c x hx => ⟨S.smul_mem c hx.1, fun k hk => by rw [map_smul, hx.2 k hk]⟩
 
@@ -387,7 +387,7 @@ theorem fixIn_simple (H : PlaceSys Gv Gc J) (horb : ∀ x, ((fun k => ρ k x) ''
     { carrier := {s | s ∈ S ∧ ∀ g, P (ρ g s) ∈ Y}
       zero_mem' := ⟨S.zero_mem, fun x => by simp⟩
       add_mem' := fun ha hb => ⟨S.add_mem ha.1 hb.1, fun x => by
-        rw [map_add, map_add]; exact Y.add_mem (ha.2 x) (hb.2 x)⟩
+        rw [map_add (f := _), map_add (f := _)]; exact Y.add_mem (ha.2 x) (hb.2 x)⟩
       smul_mem' := fun c a ha => ⟨S.smul_mem c ha.1, fun x => by
         rw [map_smul, map_smul]; exact Y.smul_mem c (ha.2 x)⟩ }
   have hYZ : Y ≤ Z := fun y hy => ⟨(hY hy).1, fun g => (hall g (y, y) ⟨hy, hy⟩).1⟩
@@ -495,7 +495,7 @@ theorem IsGraph.of_res {H : Subgroup G} {S₁ S₂ : Submodule ℂ V} {X : Submo
 theorem sup_stab {S₁ S₂ : Submodule ℂ V} (h₁ : Irr ρ S₁) (h₂ : Irr ρ S₂) : ∀ g, ∀ x ∈ S₁ ⊔ S₂, ρ g x ∈ S₁ ⊔ S₂ := by
   intro g x hx
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hx
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Submodule.add_mem_sup (h₁.stab g a ha) (h₂.stab g b hb)
 
 theorem orbit_res {K : Subgroup G} (horb : ∀ x ∈ C, ((fun k => ρ k x) '' (K : Set G)).Finite) (x : C) :

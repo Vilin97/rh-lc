@@ -125,7 +125,7 @@ theorem omB_top_coeff_iff_pole : ∀ (k F K : Type) [Field k] [CharZero k] [Fiel
         obtain ⟨c1, ρ1, h1, e1⟩ := hx
         obtain ⟨c2, ρ2, h2, e2⟩ := hw
         refine ⟨ρ2 * c1 + ρ1 * c2, ρ1 * ρ2, fun h => (hQ.mem_or_mem h).elim h1 h2, ?_⟩
-        rw [map_add]; push_cast
+        rw [map_add (f := _)]; push_cast
         linear_combination (ρ2 : K) * e1 + (ρ1 : K) * e2
       | smul a x _ hx =>
         obtain ⟨c, ρ, h1, e1⟩ := hx

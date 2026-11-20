@@ -122,7 +122,7 @@ theorem mqFrob_of (hG : MQGalois) : MQFrob := by
     · have hσW : σ • W = W := by
         apply RingOfIntegers.coe_injective
         show σ (W : E) = (W : E)
-        rw [hWcoe, hωdef, map_div₀, map_add, map_one, hσ, hs, map_ofNat]
+        rw [hWcoe, hωdef, map_div₀, map_add (f := _), map_one, hσ, hs, map_ofNat]
         simp
       rw [hσW, hW2, show W - (W + (c : 𝓞 E)) = ((-c : ℤ) : 𝓞 E) by push_cast; ring, hmem] at hFW
       push_cast at hFW
@@ -133,7 +133,7 @@ theorem mqFrob_of (hG : MQGalois) : MQFrob := by
         show σ (W : E) = ((1 - W : 𝓞 E) : E)
         have hc1 : ((1 - W : 𝓞 E) : E) = 1 - (W : E) := by simp
         rw [hc1]
-        rw [hWcoe, hωdef, map_div₀, map_add, map_one, hσ, hs, map_ofNat]
+        rw [hWcoe, hωdef, map_div₀, map_add (f := _), map_one, hσ, hs, map_ofNat]
         push_cast
         ring
       rw [hσW, hW2, show 1 - W - (W + (c : 𝓞 E)) = ((1 - c : ℤ) : 𝓞 E) - 2 * W by push_cast; ring]

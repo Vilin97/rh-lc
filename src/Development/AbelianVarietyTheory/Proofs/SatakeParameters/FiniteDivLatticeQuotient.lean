@@ -88,7 +88,7 @@ theorem finite_divLat_quot_mulLat_homAt :
       induction hw using Submodule.span_induction with
       | mem g hg => exact (memZ x).1 hx ⟨g, hg⟩
       | zero => simp
-      | add u v _ _ hu hv => rw [map_add, smul_add]; exact N'.add_mem hu hv
+      | add u v _ _ hu hv => rw [map_add (f := _), smul_add]; exact N'.add_mem hu hv
       | smul r u _ hu => rw [LinearMap.map_smul_of_tower, smul_comm]; exact N'.smul_mem r hu
     refine (mem_locP P N' _).2 ⟨s, hs, ?_⟩
     have h := this _ hsy

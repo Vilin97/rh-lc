@@ -70,14 +70,14 @@ theorem afsplitC_prV (M : Matrix n n Rv) (N : Matrix n n R) :
     (afsplitC v M N).map (prV (E := E) v) = M := by
   unfold afsplitC
   ext i j
-  simp only [Matrix.add_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul]
+  simp only [Matrix.add_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul]
   rw [afsplit_prV_IE, map_sub, map_one, afsplit_prV_eps, sub_self, zero_mul, add_zero]
 
 theorem afsplitC_prV_ne (w : HeightOneSpectrum (𝓞 F)) (h : w ≠ v) (M : Matrix n n Rv)
     (N : Matrix n n R) : (afsplitC v M N).map (prV (E := E) w) = N.map (prV (E := E) w) := by
   unfold afsplitC
   ext i j
-  simp only [Matrix.add_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, map_sub,
+  simp only [Matrix.add_apply, Matrix.map_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul, map_sub,
     map_one, afsplit_prV_IE_ne v w h, afsplit_prV_eps_ne v w h, sub_zero, one_mul, zero_add]
 
 theorem afsplitC_C (M M' : Matrix n n Rv) (N : Matrix n n R) :

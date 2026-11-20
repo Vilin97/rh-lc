@@ -86,7 +86,7 @@ private theorem rs_cg {l : ℕ} [Fact l.Prime] {c : Coef l} (β : Bas c) (he : �
           rw [map_mul, map_natCast]
           ring
       _ = _ := by
-          simp only [hw, map_add, map_mul, map_pow, map_natCast, mul_add, Finset.sum_add_distrib, Finset.mul_sum]
+          simp only [hw, map_add (f := _), map_mul, map_pow, map_natCast, mul_add, Finset.sum_add_distrib, Finset.mul_sum]
           congr 1
           refine Finset.sum_congr rfl fun i _ => ?_
           ring
@@ -211,7 +211,7 @@ theorem UpperTheory.Kd.C7.pRepSmul :
       have e : PowerSeries.C (algebraMap ℤ_[l] Φ.R (β.mat b i k)) - ((a i k : ℕ) : PowerSeries Φ.R)
           = (l : PowerSeries Φ.R) ^ n * PowerSeries.C (algebraMap ℤ_[l] Φ.R (t i k)) := by
         rw [ht i k]
-        simp only [map_add, map_mul, map_pow, map_natCast]
+        simp only [map_add (f := _), map_mul, map_pow, map_natCast]
         ring
       rw [← map_sub, e, map_mul, map_pow, map_natCast]
       exact Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self _)

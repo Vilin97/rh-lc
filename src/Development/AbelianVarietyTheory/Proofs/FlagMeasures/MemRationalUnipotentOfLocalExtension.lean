@@ -85,7 +85,7 @@ theorem mem_nrat_of_ext : ∀ (D : D7) (Z : LocDat D) (p : PlF D) {T : D.host.E}
       exact GlobalTheory.FlagChange.Xa_mono F.fl (Nat.lt_succ_iff.1 ha') h3
     | zero => simp
     | add x y _ _ ihx ihy =>
-      have e : γ (x + y) - (x + y) = (γ x - x) + (γ y - y) := by rw [map_add]; abel
+      have e : γ (x + y) - (x + y) = (γ x - x) + (γ y - y) := by rw [map_add (f := _)]; abel
       rw [e]; exact Submodule.add_mem _ ihx ihy
     | smul c x _ ih =>
       rw [map_smul, ← smul_sub]; exact Submodule.smul_mem _ _ ih
@@ -106,7 +106,7 @@ theorem mem_nrat_of_ext : ∀ (D : D7) (Z : LocDat D) (p : PlF D) {T : D.host.E}
       | zero =>
         rw [(locH Z p).h_herm, (locH Z p).h_zero_left, map_zero]
       | add u v _ _ ihu ihv =>
-        rw [(locH Z p).h_herm, (locH Z p).h_add_left, map_add, ← (locH Z p).h_herm, ← (locH Z p).h_herm, ihu, ihv,
+        rw [(locH Z p).h_herm, (locH Z p).h_add_left, map_add (f := _), ← (locH Z p).h_herm, ← (locH Z p).h_herm, ihu, ihv,
           add_zero]
       | smul c u _ ih =>
         rw [(locH Z p).h_herm, (locH Z p).h_smul_left, map_mul, ← (locH Z p).h_herm, ih, mul_zero]

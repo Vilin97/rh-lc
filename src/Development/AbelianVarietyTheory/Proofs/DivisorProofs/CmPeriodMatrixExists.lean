@@ -97,7 +97,7 @@ theorem surj_lattice : ∀ (K : Type) [Field K] [NumberField K] (d : ℕ) (δ : 
       have hio' : φ (e i) (algebraMap K E δ) = io δ := by rw [← hio (e i)]; rfl
       show A.mulVec z i = φ (e i) _
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [Matrix.mulVec, dotProduct, A, map_sum, map_add, map_mul, map_intCast, hio', ha]
+        simp only [Matrix.mulVec, dotProduct, A, map_sum, map_add (f := _), map_mul, map_intCast, hio', ha]
       refine Finset.sum_congr rfl fun j _ => by ring
 
 end GlobalTheory.LatModel

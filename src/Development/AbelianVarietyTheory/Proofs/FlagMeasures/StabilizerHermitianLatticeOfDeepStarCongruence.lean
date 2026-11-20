@@ -103,8 +103,8 @@ theorem GlobalTheory.DegCnt.stab_of_deep_congruence : ∀ (K V : Type) [Field K]
         have e1 : H.B w i = 0 := by
           rw [← H.herm, (mem_perp_iff H N.Wt i).1 (hIP hi) w hw, star_zero]
         have e2 := hint _ hx θ hθ.1
-        rw [map_add, LinearMap.add_apply, hpw θ hθ.2, add_zero] at e2
-        rw [map_add, e1, add_zero]
+        rw [map_add (f := _), LinearMap.add_apply, hpw θ hθ.2, add_zero] at e2
+        rw [map_add (f := _), e1, add_zero]
         exact e2
     have hap : ∀ a ∈ 𝔠 ^ 3, a • p ∈ Λ ⊓ rs (𝓞 K) N.Pi := by
       intro a ha
@@ -133,7 +133,7 @@ theorem GlobalTheory.DegCnt.stab_of_deep_congruence : ∀ (K V : Type) [Field K]
       rw [smul_eq, map_smul, ← smul_sub, ← smul_eq] at this
       rw [← Submodule.mul_smul, ← pow_add]
       exact Submodule.smul_mono (Ideal.pow_le_pow_right (by omega)) le_rfl this
-    have : s (w + p) = (w + p) + (s p - p) := by rw [map_add, hfix w hw]; abel
+    have : s (w + p) = (w + p) + (s p - p) := by rw [map_add (f := _), hfix w hw]; abel
     rw [this]
     exact Λ.add_mem hx (hn.1 hsp').1
   apply le_antisymm

@@ -118,7 +118,7 @@ theorem affine_zero {G : Type} [AddCommGroup G] {M : ℕ} (hM : Odd M) (S : Set 
   · simpa using hz x hx
   · exact map_zero h
   · have : (⟨x + y, add_mem hx hy⟩ : AddSubgroup.closure S) = ⟨x, hx⟩ + ⟨y, hy⟩ := rfl
-    rw [this, map_add, h1, h2, add_zero]
+    rw [this, map_add (f := _), h1, h2, add_zero]
   · have : (⟨-x, neg_mem hx⟩ : AddSubgroup.closure S) = -⟨x, hx⟩ := rfl
     rw [this, map_neg, h1, neg_zero]
 

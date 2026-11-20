@@ -98,7 +98,7 @@ theorem eM_ex {D : D7} (X : HidaSetting D) : ∃ (μ' : Type) (_ : Fintype μ') 
   show (EuclideanSpace.equiv (Fin N) ℝ).symm (eM (x + y)) =
     (EuclideanSpace.equiv (Fin N) ℝ).symm (eM x) + (EuclideanSpace.equiv (Fin N) ℝ).symm (eM y)
   have h2 : eM ((x + y : MfI X)) = eM x + eM y := hM x y
-  rw [h2, map_add]
+  rw [h2, map_add (f := _)]
 
 theorem psiC_eq {D : D7} (X : HidaSetting D) (u' : D.what₂.Word) (a : HmI X → MfI X) {ι η μ' : Type} [Fintype ι]
     [Fintype η] (κ : EuclideanSpace ℝ ι → HA (Ainf X.B.I.F) X.B.I.cm.sig X.B.I.J)

@@ -111,7 +111,7 @@ theorem mem_intLoc_iff (hv : IsGood F E v) (z : Fv F v ⊗[F] E) :
   constructor
   · intro hz
     refine intLoc_induction (p := fun z => ∀ k, (bV v).repr z k ∈ v.adicCompletionIntegers F) (fun a ha x k => ?_)
-      (fun k => by simp) (fun y z hy hz k => by rw [map_add, Finsupp.add_apply]; exact add_mem (hy k) (hz k))
+      (fun k => by simp) (fun y z hy hz k => by rw [map_add (f := _), Finsupp.add_apply]; exact add_mem (hy k) (hz k))
       (fun y hy k => by rw [map_neg, Finsupp.neg_apply]; exact neg_mem (hy k)) hz
     rw [crd_tmul]
     refine mul_mem ha ?_

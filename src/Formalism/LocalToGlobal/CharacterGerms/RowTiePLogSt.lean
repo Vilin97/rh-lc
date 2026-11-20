@@ -372,7 +372,7 @@ theorem logSt_of (hP : PoincSt) : LogSt := by
         rw [Finsupp.single_le_iff]; omega
       have hrest : μ - Finsupp.single p 1 = 0 := by
         have e := congrArg Finsupp.degree (tsub_add_cancel_of_le hle)
-        rw [map_add, Finsupp.degree_single] at e
+        rw [map_add (f := _), Finsupp.degree_single] at e
         exact (Finsupp.degree_eq_zero_iff _).mp (by omega)
       have hμ' : μ = Finsupp.single p 1 := by
         rw [← tsub_add_cancel_of_le hle, hrest, zero_add]
@@ -398,13 +398,13 @@ theorem logSt_of (hP : PoincSt) : LogSt := by
     have hx : ∀ q, pderiv C ((0 : Fin 2), q) (ev (n := 2) ![G.F] (lg i)) =
         pderiv C ((0 : Fin 2), q) (ev (n := 2) ![pt C d 0] (lg i) + ev (n := 2) ![pt C d 1] (lg i)) := by
       intro q
-      rw [map_add, pderiv_eval_single G.F G.const, pderiv_eval_single (pt C d 0) (coordinate_point_constantCoeff 0), pderiv_eval_single (pt C d 1) (coordinate_point_constantCoeff 1)]
+      rw [map_add (f := _), pderiv_eval_single G.F G.const, pderiv_eval_single (pt C d 0) (coordinate_point_constantCoeff 0), pderiv_eval_single (pt C d 1) (coordinate_point_constantCoeff 1)]
       simp only [hd]
       rw [I2 G i q, sum_d_pt_self, sum_d_pt_other (1 : Fin 2) 0 (by decide), add_zero]
     have hy : ∀ q, pderiv C ((1 : Fin 2), q) (ev (n := 2) ![G.F] (lg i)) =
         pderiv C ((1 : Fin 2), q) (ev (n := 2) ![pt C d 0] (lg i) + ev (n := 2) ![pt C d 1] (lg i)) := by
       intro q
-      rw [map_add, pderiv_eval_single G.F G.const, pderiv_eval_single (pt C d 0) (coordinate_point_constantCoeff 0), pderiv_eval_single (pt C d 1) (coordinate_point_constantCoeff 1)]
+      rw [map_add (f := _), pderiv_eval_single G.F G.const, pderiv_eval_single (pt C d 0) (coordinate_point_constantCoeff 0), pderiv_eval_single (pt C d 1) (coordinate_point_constantCoeff 1)]
       simp only [hd]
       rw [I1 G i q, sum_d_pt_self, sum_d_pt_other (0 : Fin 2) 1 (by decide), zero_add]
     apply MvPowerSeries.pderiv.ext
@@ -413,7 +413,7 @@ theorem logSt_of (hP : PoincSt) : LogSt := by
       fin_cases q1
       · exact hx q2
       · exact hy q2
-    · rw [map_add, constantCoeff_ev (z0_1 G.F G.const), constantCoeff_ev (z0_1 (pt C d 0) (coordinate_point_constantCoeff 0)),
+    · rw [map_add (f := _), constantCoeff_ev (z0_1 G.F G.const), constantCoeff_ev (z0_1 (pt C d 0) (coordinate_point_constantCoeff 0)),
         constantCoeff_ev (z0_1 (pt C d 1) (coordinate_point_constantCoeff 1)), hlg0, add_zero]
 
 theorem poincSt : PoincSt := fun ω h => poinc ω h

@@ -28,7 +28,7 @@ theorem vi_mem_hat {Λ : Submodule (𝓞 E) (n → E)} {x : n → E} (hx : x ∈
 
 theorem vi_add_smul (x w : n → E) (M : ℕ) : vi F (x + (M : E) • w) = vi F x + (M : 𝒜) • vi F w := by
   funext i
-  simp [vi, map_add, map_mul, map_natCast]
+  simp [vi, map_add (f := _), map_mul, map_natCast]
 
 theorem vi_smul_int (r : 𝓞 E) (x : n → E) : vi F (r • x) = ιA (algebraMap (𝓞 E) E r) • vi F x := by
   funext i
@@ -73,7 +73,7 @@ theorem approx_hat (M : ℕ) (hM : M ≠ 0) (Λ : Submodule (𝓞 E) (n → E)) 
     obtain ⟨x', hx', z', hz', rfl⟩ := hw
     refine ⟨x + x', add_mem hx hx', z + z', add_mem hz hz', ?_⟩
     funext i
-    simp only [vi, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add]
+    simp only [vi, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _)]
     ring
   | smul s u _ hu =>
     obtain ⟨x, hx, z, hz, rfl⟩ := hu

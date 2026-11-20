@@ -23,7 +23,7 @@ variable {S : Scheme.{0}} {G G' T : Over S} [GrpObj G] [GrpObj G']
 def lamC (x y : T ⟶ G) : Pic G.left →+ Pic T.left where
   toFun c := lam c x y
   map_zero' := by simp only [lam, map_zero]; abel
-  map_add' c d := by simp only [lam, map_add]; abel
+  map_add' c d := by simp only [lam, map_add (f := _)]; abel
 
 theorem lamC_apply (c : Pic G.left) (x y : T ⟶ G) : lamC x y c = lam c x y := rfl
 

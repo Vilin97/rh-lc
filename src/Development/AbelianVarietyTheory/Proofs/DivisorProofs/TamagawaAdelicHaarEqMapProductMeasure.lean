@@ -44,7 +44,7 @@ theorem GlobalTheory.SWLit.tamagawa_eq_map_pi : ∀ (F : Type) [Field F] [Number
   have hD' : IsAddFundamentalDomain L (Tm.symm ⁻¹' D) (Measure.map Tm (muV N ν)) := by
     refine hD.preimage_of_equiv hmp.quasiMeasurePreserving hφ fun g x => ?_
     show T.symm (T g.1 + x) = g.1 + T.symm x
-    rw [map_add, T.symm_apply_apply]
+    rw [map_add (f := _), T.symm_apply_apply]
   have hD'1 : Measure.map Tm (muV N ν) (Tm.symm ⁻¹' D) = 1 := by
     rw [hmp.measure_preimage hDm.nullMeasurableSet, hD1]
   have hac : μ ≪ Measure.map Tm (muV N ν) := by

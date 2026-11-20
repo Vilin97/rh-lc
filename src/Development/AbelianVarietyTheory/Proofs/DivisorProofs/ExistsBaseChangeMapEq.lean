@@ -26,7 +26,7 @@ theorem two_injective [Module.Flat R A] (hK : Function.Injective (algebraMap R K
   have e : ∀ c : A ⊗[R] A, (toBaseChange R K A).two c =
       TensorProduct.AlgebraTensorModule.distribBaseChange R K A A ((1 : K) ⊗ₜ[R] c) := fun c => by
     induction c with
-    | add x y hx hy => simp only [TensorProduct.tmul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [TensorProduct.tmul_add, map_add (f := _), hx, hy]
     | tmul a b => simp
   intro x y h
   rw [e, e] at h
@@ -52,7 +52,7 @@ theorem exists_bialgHom [Module.Flat R A] (hK : Function.Injective (algebraMap R
         exact h)
       map_zero' := by simpa using hs 0 0
       map_add' := fun a b => one_tmul_injective hK (by
-        rw [← hg, TensorProduct.tmul_add, TensorProduct.tmul_add, map_add, hg, hg]) }
+        rw [← hg, TensorProduct.tmul_add, TensorProduct.tmul_add, map_add (f := _), hg, hg]) }
   let F := (SemiBialgHom.ofBialgHom f).comp (toBaseChange R K B)
   have hF : ∀ b, F b = toBaseChange R K A (g b) := hg
   let g₂ : SemiBialgHom (RingHom.id R) B A :=
@@ -67,7 +67,7 @@ theorem exists_bialgHom [Module.Flat R A] (hK : Function.Injective (algebraMap R
         refine ((congrArg _ (hF b).symm).trans (F.two_comul b).symm).trans ?_
         generalize comul (R := R) b = c
         induction c with
-        | add x y hx hy => simp only [map_add, hx, hy]
+        | add x y hx hy => simp only [map_add (f := _), hx, hy]
         | tmul a b =>
           simp only [TensorProduct.map_tmul, SemiBialgHom.lin_apply, hF]
           rfl) }

@@ -170,7 +170,7 @@ theorem good_add {r s : RZs X la N Ω gF w} (hr : Good X la N w gF r) (hs : Good
   obtain ⟨a, p, hp, he⟩ := hr
   obtain ⟨a', p', hp', he'⟩ := hs
   refine ⟨p' * a + p * a', p * p', den_mul X la N w gF hp hp', ?_⟩
-  rw [map_mul, map_add, map_mul, map_mul, ← he, ← he']
+  rw [map_mul, map_add (f := _), map_mul, map_mul, ← he, ← he']
   ring
 
 theorem good_mul {r s : RZs X la N Ω gF w} (hr : Good X la N w gF r) (hs : Good X la N w gF s) :
@@ -233,8 +233,8 @@ theorem loc_of_bir (hB : BirAt X N w gF) (hC : CountQAt X la N w gF) (r : RZs X 
         | tmul l ω =>
           rw [tmul_eq, Algebra.smul_def, map_mul, ← IsScalarTower.algebraMap_apply, ← Algebra.smul_def]
           exact good_smul X la N w gF _ (good_psi X la N w gF hB hC ω)
-        | add v₁ v₂ h₁ h₂ => rw [TensorProduct.tmul_add, map_add]; exact good_add X la N w gF h₁ h₂
-      | add x y hx hy => rw [map_add]; exact good_add X la N w gF hx hy
+        | add v₁ v₂ h₁ h₂ => rw [TensorProduct.tmul_add, map_add (f := _)]; exact good_add X la N w gF h₁ h₂
+      | add x y hx hy => rw [map_add (f := _)]; exact good_add X la N w gF hx hy
     obtain ⟨⟨x, y⟩, hr⟩ :=
       IsLocalization.mk'_surjective (Submonoid.powers (rzMap X la N Ω gF (Formalism.MainNotions.Gaps.EtaleWeightGaps.sec X la w 0))) r
     obtain ⟨n, hn⟩ := (Submonoid.mem_powers_iff _ _).mp y.2

@@ -85,7 +85,7 @@ theorem norm_chiInf (χ : HChar E) (h : ∀ z, star z = z → dchi χ z = 0) (y 
         (z w).re • (Pi.single w 1 : Cinf E) + (z w).im • (Pi.single w Complex.I : Cinf E) := by
       rw [← Pi.single_smul, ← Pi.single_smul, ← Pi.single_add]
       simp
-    rw [e, map_add, map_smul, map_smul, h1, smul_zero, zero_add, Complex.smul_re, h2, smul_zero]
+    rw [e, map_add (f := _), map_smul, map_smul, h1, smul_zero, zero_add, Complex.smul_re, h2, smul_zero]
   rw [← expU_log y, chiInf_expU, Complex.norm_exp, h3, Real.exp_zero]
 
 theorem lie_scL {π : CuspSub E a} {ω : HChar E} (h : π.HasCentral ω) (z : Cinf E) {ψ : Sm E a} (hψ : ψ ∈ π.V) :

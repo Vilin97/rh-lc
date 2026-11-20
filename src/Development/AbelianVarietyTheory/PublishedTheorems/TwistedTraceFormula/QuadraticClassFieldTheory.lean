@@ -128,7 +128,7 @@ private theorem norm_smul_add_smul_basis_eq_sq_sub_mul_sq {A S : Type} [CommRing
     rw [add_mul, smul_mul_assoc, smul_mul_assoc, h1, h0, one_mul, Algebra.algebraMap_eq_smul_one,
       smul_smul, add_comm]
   rw [Algebra.norm_eq_matrix_det f, Matrix.det_fin_two]
-  simp only [Algebra.leftMulMatrix_eq_repr_mul, hm0, hm1, map_add, map_smul,
+  simp only [Algebra.leftMulMatrix_eq_repr_mul, hm0, hm1, map_add (f := _), map_smul,
     Module.Basis.repr_self, Finsupp.add_apply, Finsupp.smul_apply, Finsupp.single_apply]
   simp
   ring

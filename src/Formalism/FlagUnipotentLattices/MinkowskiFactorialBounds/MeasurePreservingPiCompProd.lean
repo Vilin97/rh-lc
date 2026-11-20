@@ -327,7 +327,7 @@ theorem s5b7_step (hO : ¬ IsField O) (M X : Type) [AddCommGroup M] [Module O M]
         exact sub_add_cancel _ _
       simp only [LinearMap.lcomp_apply, Submodule.subtype_apply, LinearMap.add_apply,
         LinearMap.comp_apply]
-      rw [h1, ← map_add, h2]
+      rw [h1, ← map_add (f := _), h2]
     · rintro ⟨Φ, rfl⟩
       refine ⟨LinearMap.toSpanSingleton O X (Φ x), ?_⟩
       ext a
@@ -349,7 +349,7 @@ theorem s5b7_step (hO : ¬ IsField O) (M X : Type) [AddCommGroup M] [Module O M]
       ring
     simp only [LinearMap.lcomp_apply, Submodule.subtype_apply, LinearMap.toSpanSingleton_apply,
       LinearMap.sub_apply, LinearMap.comp_apply]
-    rw [h3, map_add, map_smul]
+    rw [h3, map_add (f := _), map_smul]
     abel
   rw [← hker, Nat.card_congr (LinearMap.quotKerEquivOfSurjective Θ hsurj).toEquiv,
     s5b7_ideal p hp0 X, Nat.card_congr e.toEquiv]

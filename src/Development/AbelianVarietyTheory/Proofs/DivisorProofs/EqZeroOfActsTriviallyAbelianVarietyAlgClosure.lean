@@ -42,7 +42,7 @@ theorem exists_nat_eq_mul {F : Type} [Field F] [NumberField F] {O : Type} [CommR
     rw [← Polynomial.aeval_algebraMap_apply, map_zero]
     exact hq
   have key := congrArg (Polynomial.aeval x) (Polynomial.X_mul_divX_add q)
-  rw [hO, map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C, ← hcdef, algebraMap_int_eq, eq_intCast] at key
+  rw [hO, map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C, ← hcdef, algebraMap_int_eq, eq_intCast] at key
   have hc' : (c : O) = x * -(Polynomial.aeval x q.divX) := by linear_combination key
   refine ⟨c.natAbs, Int.natAbs_ne_zero.2 hc, ?_⟩
   have hn : ((c.natAbs : ℕ) : O) = ((|c| : ℤ) : O) := by rw [← Int.natCast_natAbs, Int.cast_natCast]

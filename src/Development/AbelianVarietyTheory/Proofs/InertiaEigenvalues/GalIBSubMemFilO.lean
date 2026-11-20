@@ -63,10 +63,10 @@ variable (O K) in
 theorem iS_E_mem (ϖ : PiSys l e) (C : GlobalTheory.MemLoc.Core l) :
     toOB l O (ϖ.iS O K (EIn l e _)) ∈ filO O C 1 := by
   have hE : Per.θ l (ϖ.teich ^ e + l) = 0 := by
-    rw [map_add, map_pow, ϖ.theta_teich, ϖ.seqO_zero, map_natCast, neg_add_cancel]
+    rw [map_add (f := _), map_pow, ϖ.theta_teich, ϖ.seqO_zero, map_natCast, neg_add_cancel]
   have h1 : ϖ.iS O K (EIn l e _) = (1 : O) ⊗ₜ[ℤ_[l]] ainfToAcris l (ϖ.teich ^ e + l) := by
     have : EIn l e (S O K e) = uIn _ ^ e + (l : S O K e) := Subtype.ext (by simp [E])
-    rw [this, map_add, map_pow, ϖ.iS_u O K, map_natCast, PiSys.teichR, toOCr_tmul, map_add, map_pow,
+    rw [this, map_add (f := _), map_pow, ϖ.iS_u O K, map_natCast, PiSys.teichR, toOCr_tmul, map_add (f := _), map_pow,
       map_natCast, tmul_add, Algebra.TensorProduct.tmul_pow, one_pow]
     congr 1
     exact (map_natCast (Algebra.TensorProduct.includeRight : Per.Acris l →ₐ[ℤ_[l]] OCr l O) l).symm

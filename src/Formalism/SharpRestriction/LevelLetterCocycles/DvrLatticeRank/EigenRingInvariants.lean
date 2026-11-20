@@ -38,7 +38,7 @@ theorem ev_exists {a : O} (ha : a ∈ IsLocalRing.maximalIdeal O) (f : PowerSeri
   have hr : r = Polynomial.C (r.coeff 0) :=
     Polynomial.eq_C_of_degree_le_zero (Nat.WithBot.lt_one_iff_le_zero.mp (by exact_mod_cast hdeg))
   refine ⟨r.coeff 0, ?_⟩
-  rw [heq, map_add, Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.mem_span_singleton.mpr (dvd_mul_right _ _)),
+  rw [heq, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.mpr (Ideal.mem_span_singleton.mpr (dvd_mul_right _ _)),
     zero_add]
   congr 1
   conv_lhs => rw [hr]
@@ -195,7 +195,7 @@ theorem bin_mod (ω : ℤ_[l]) : ∃ k : PowerSeries ℤ_[l],
   have e1 : binomialSeries ℤ_[l] t = 1 + X * m := by rw [← hm]; ring
   have e2 : subst (brk l (l : ℤ_[l])) (1 + X * m : PowerSeries ℤ_[l]) =
       1 + brk l (l : ℤ_[l]) * subst (brk l (l : ℤ_[l])) m := by
-    rw [← coe_substAlgHom hs, map_add, map_one, map_mul, coe_substAlgHom, subst_X hs]
+    rw [← coe_substAlgHom hs, map_add (f := _), map_one, map_mul, coe_substAlgHom, subst_X hs]
   rw [e1, e2]; ring
 
 theorem brk_l : brk l (l : ℤ_[l]) = (1 + X) ^ l - 1 := by
@@ -209,7 +209,7 @@ variable {O : Type*} [CommRing O] [Algebra ℤ_[l] O] {a ζ : O}
 local notation "toO" => PowerSeries.map (algebraMap ℤ_[l] O)
 
 theorem mk_onX (haζ : 1 + a = ζ) : Ideal.Quotient.mk (Ia a) (1 + X) = Ideal.Quotient.mk (Ia a) (C ζ) := by
-  simp only [← haζ, map_add, map_one, mk_X]
+  simp only [← haζ, map_add (f := _), map_one, mk_X]
 
 theorem mk_powX (haζ : 1 + a = ζ) (n : ℕ) :
     Ideal.Quotient.mk (Ia a) ((1 + X) ^ n) = Ideal.Quotient.mk (Ia a) (C (ζ ^ n)) := by
@@ -230,7 +230,7 @@ theorem mk_bin (haζ : 1 + a = ζ) (hζ : IsPrimitiveRoot ζ l) (ω : ℤ_[l]) :
   obtain ⟨k, hk⟩ := bin_mod (l := l) ω
   have h1 : toO ((1 + X : PowerSeries ℤ_[l]) ^ (PadicInt.toZMod ω).val) = (1 + X) ^ (PadicInt.toZMod ω).val := by
     simp
-  rw [hk, map_add, map_mul, h1, map_add, map_mul, mk_N haζ hζ, zero_mul, add_zero]
+  rw [hk, map_add (f := _), map_mul, h1, map_add (f := _), map_mul, mk_N haζ hζ, zero_mul, add_zero]
   exact mk_powX haζ _
 
 theorem mk_brk (haζ : 1 + a = ζ) (hζ : IsPrimitiveRoot ζ l) (ω : ℤ_[l]) :
@@ -638,7 +638,7 @@ theorem geom_eq_prod {ζ0 : O} (hζ0 : IsPrimitiveRoot ζ0 l) :
     rw [mem_primitiveRoots hl.out.pos, mem_PRt]
   rw [hPR]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_pow, map_add, map_one, map_X]
+    simp only [map_sum, map_pow, map_add (f := _), map_one, map_X]
   rw [h2]
   refine Finset.prod_congr rfl fun μ _ => ?_
   rw [map_sub C, map_one]

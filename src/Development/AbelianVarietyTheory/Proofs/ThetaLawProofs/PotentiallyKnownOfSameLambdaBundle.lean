@@ -94,7 +94,7 @@ theorem exists_finset_point {K Ω : Type} [Field K] [Field Ω] [Algebra K Ω] {X
     | algebraMap q =>
       rw [show φ.hom (algebraMap K A q) = algebraMap K Ω q from congrArg (fun z => z.hom q) hc]
       exact F.algebraMap_mem q
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   refine ⟨Spec.map (CommRingCat.ofHom (φ.hom.codRestrict F hm)) ≫ i, ?_⟩
   rw [← hφa, ← Spec.map_comp_assoc]

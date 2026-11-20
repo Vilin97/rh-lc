@@ -27,7 +27,7 @@ theorem analyticAt_eval_polynomial {σ : Type} [Fintype σ] (w : σ → ℂ) (q 
   induction q using MvPolynomial.induction_on with
   | C a => simpa using (analyticAt_const : AnalyticAt ℂ (fun _ : σ → ℂ => a) w)
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p i hp =>
     have hi : AnalyticAt ℂ (fun z : σ → ℂ => z i) w :=

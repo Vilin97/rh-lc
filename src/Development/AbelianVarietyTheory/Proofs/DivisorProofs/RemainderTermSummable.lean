@@ -193,7 +193,7 @@ theorem torsion_points_free : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Ty
   have hψ : ∀ y : D.La, ψ (Submodule.Quotient.mk y) = Additive.ofMul (I.ev (ℓ ^ j) y) := fun y => rfl
   refine ⟨fun a => Additive.toMul (ψ (e a)), ?_, ?_, ?_, ?_⟩
   · intro a a'
-    simp only [map_add, toMul_add]
+    simp only [map_add (f := _), toMul_add]
   · intro c a
     dsimp only
     obtain ⟨y, hy⟩ := Submodule.Quotient.mk_surjective Sub (e a)

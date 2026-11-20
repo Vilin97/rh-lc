@@ -128,21 +128,21 @@ theorem lin_of_add (f : MvPowerSeries (Fin dd) C) (h0 : MvPowerSeries.constantCo
     f = ∑ j, lin1 f j • (MvPowerSeries.X j : MvPowerSeries (Fin dd) C) := by
   have cS : ∀ m : Fin dd, MvPowerSeries.constantCoeff
       (MvPowerSeries.X ((0 : Fin 2), m) + MvPowerSeries.X ((1 : Fin 2), m) : PS C 2 dd) = 0 := fun m => by
-    rw [map_add, cc_X, cc_X, add_zero]
+    rw [map_add (f := _), cc_X, cc_X, add_zero]
   set K : Fin 2 × Fin dd → MvPowerSeries (Fin dd) C := P2 MvPowerSeries.X (fun _ => 0) with hK
   have cK : ∀ q, MvPowerSeries.constantCoeff (K q) = 0 := constantCoeff_pair_substitution (fun _ => cc_X _) (fun _ => map_zero _)
   have hder : ∀ i, MvPowerSeries.pderiv (R := C) i f = MvPowerSeries.C (lin1 f i) := by
     intro i
     have h := congrArg (fun G => MvPowerSeries.subst K (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i) G)) hadd
     beta_reduce at h
-    rw [map_add, pderiv_subst (og cS), pderiv_subst (og fun _ => cc_X _), pderiv_subst (og fun _ => cc_X _),
+    rw [map_add (f := _), pderiv_subst (og cS), pderiv_subst (og fun _ => cc_X _), pderiv_subst (og fun _ => cc_X _),
       subst_add' cK, subst_sum cK, subst_sum cK, subst_sum cK] at h
     have h1 : ∀ m, MvPowerSeries.subst K (MvPowerSeries.pderiv (R := C) ((1 : Fin 2), i)
         (MvPowerSeries.X ((0 : Fin 2), m) + MvPowerSeries.X ((1 : Fin 2), m) : PS C 2 dd) *
         MvPowerSeries.subst (fun m : Fin dd => (MvPowerSeries.X ((0 : Fin 2), m) + MvPowerSeries.X ((1 : Fin 2), m) : PS C 2 dd))
           (MvPowerSeries.pderiv (R := C) m f)) = if m = i then MvPowerSeries.pderiv (R := C) i f else 0 := by
       intro m
-      rw [map_add, MvPowerSeries.pderiv_X_of_ne (fun hh => by simpa using (Prod.ext_iff.1 hh).1), zero_add]
+      rw [map_add (f := _), MvPowerSeries.pderiv_X_of_ne (fun hh => by simpa using (Prod.ext_iff.1 hh).1), zero_add]
       by_cases hm : m = i
       · subst hm
         rw [MvPowerSeries.pderiv_X_self, one_mul, subst_subst cS cK, if_pos rfl]
@@ -212,7 +212,7 @@ theorem lin_of_add (f : MvPowerSeries (Fin dd) C) (h0 : MvPowerSeries.constantCo
       rw [if_neg, mul_zero]
       intro h
       have hd := congrArg Finsupp.degree h
-      rw [map_add, Finsupp.degree_single, Finsupp.degree_single] at hd
+      rw [map_add (f := _), Finsupp.degree_single, Finsupp.degree_single] at hd
       exact hν ((Finsupp.degree_eq_zero_iff _).1 (by omega))
 
 end VP

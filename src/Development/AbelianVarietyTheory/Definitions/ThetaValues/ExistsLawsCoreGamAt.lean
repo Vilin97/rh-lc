@@ -36,7 +36,7 @@ theorem l1At_add_le (P Q : MvPolynomial ι K) : l1At σ (P + Q) ≤ l1At σ P + 
     l1At_eq_sum σ P (P.support ∪ Q.support) Finset.subset_union_left,
     l1At_eq_sum σ Q (P.support ∪ Q.support) Finset.subset_union_right, ← Finset.sum_add_distrib]
   refine Finset.sum_le_sum fun m _ => ?_
-  rw [MvPolynomial.coeff_add, map_add]
+  rw [MvPolynomial.coeff_add, map_add (f := _)]
   exact norm_add_le _ _
 
 theorem l1At_monomial (m : ι →₀ ℕ) (a : K) : l1At σ (MvPolynomial.monomial m a) = ‖σ a‖ := by

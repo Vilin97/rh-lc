@@ -44,7 +44,7 @@ theorem exists_derivation_ext {K A B : Type} [CommRing K] [CommRing A] [CommRing
     rw [map_mul, TrivSqZeroExt.snd_mul, hfst, smul_eq_mul]
     simp [hfst, mul_comm]
   have hadd : ∀ b c, (ψ (b + c)).snd = (ψ b).snd + (ψ c).snd := fun b c => by
-    rw [map_add, TrivSqZeroExt.snd_add]
+    rw [map_add (f := _), TrivSqZeroExt.snd_add]
   have hsm : ∀ (k : K) b, (ψ (k • b)).snd = k • (ψ b).snd := fun k b => by
     have e : algebraMap K B k = f (algebraMap K A k) := (congrArg (· k) (congrArg DFunLike.coe hf)).symm
     rw [Algebra.smul_def, Algebra.smul_def, hmul, e, hψ]

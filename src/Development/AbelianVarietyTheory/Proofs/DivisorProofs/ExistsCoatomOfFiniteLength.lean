@@ -54,7 +54,7 @@ theorem sup_ne_SB_of_howeDuality : ∀ {Y G H : Type} [Group G] [Group H] [Topol
     induction p φ using TensorProduct.induction_on with
     | zero => simp
     | tmul a t => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hkerq : ∀ x : SB Y, q x = 0 → (x : Y → ℂ) ∈ locAug om := by
     intro x hx
     have hp : p x = 0 := by simpa [q] using hx
@@ -106,7 +106,7 @@ theorem sup_ne_SB_of_howeDuality : ∀ {Y G H : Type} [Group G] [Group H] [Topol
   have hφ : (φ : Y → ℂ) ∈ N ⊔ N' := by rw [hsup]; exact φ.2
   obtain ⟨a, ha, b, hb, e⟩ := Submodule.mem_sup.1 hφ
   have h3 : φ = ⟨a, hN.2.1 ha⟩ + ⟨b, hN'.2.1 hb⟩ := Subtype.ext (by simp [e])
-  rw [h3, map_add]
+  rw [h3, map_add (f := _)]
   exact C.toSubmodule.add_mem (hCN _ ha) (hCN' _ hb)
 
 end GlobalTheory.HoweAdelic

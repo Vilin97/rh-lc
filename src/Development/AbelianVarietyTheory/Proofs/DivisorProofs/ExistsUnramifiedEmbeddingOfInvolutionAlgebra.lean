@@ -167,7 +167,7 @@ theorem exists_unr_embedding_any : ∀ (K : UQ) (B : InvAlg K), B.g * B.σ B.g =
     | algebraMap e =>
       change B.σ (ψ (φ e)) = ψ (K'.c (φ e))
       rw [← hU.2.1, hψ, hψ, B.σ_alg]
-    | add x y _ _ hx hy => simp only [map_add, hx, hy]
+    | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy]
     | mul x y _ _ hx hy => simp only [map_mul, hx, hy]
 
   have hO : ∀ y : K'.O, ψ (algebraMap K'.O K'.E y) ∈ R := by
@@ -180,7 +180,7 @@ theorem exists_unr_embedding_any : ∀ (K : UQ) (B : InvAlg K), B.g * B.σ B.g =
       change ψ (φ (algebraMap K.O K.E a)) ∈ R
       rw [hψ, ← IsScalarTower.algebraMap_apply]
       exact Subalgebra.algebraMap_mem _ _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   refine ⟨ψ, hψ, hσ, hO, ?_⟩
   haveI : NeZero N := ⟨hN⟩

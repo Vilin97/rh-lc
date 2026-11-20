@@ -74,7 +74,7 @@ theorem isField_iff_no_root {K A : Type*} [Field K] [CommRing A] [Algebra K A] (
         algebraMap K A (a ^ 2 + t * a * b + n * b ^ 2) = 1 := by
       rw [← map_mul, inv_mul_cancel₀ hN, map_one]
     rw [← h1]
-    simp only [map_add, map_mul, map_pow]
+    simp only [map_add (f := _), map_mul, map_pow]
     linear_combination (- algebraMap K A (a ^ 2 + t * a * b + n * b ^ 2)⁻¹ *
       algebraMap K A b ^ 2) * hw
 

@@ -29,7 +29,7 @@ variable {c : K →+* K} {h : V → V → K} {O : Subring K} {L : AddSubgroup V}
 theorem Herm4.zero_left (H : Herm4 c h) (y : V) : h 0 y = 0 := (H.hl y).map_zero
 
 theorem Herm4.add_right (H : Herm4 c h) (x y z : V) : h x (y + z) = h x y + h x z := by
-  rw [H.symm (y + z) x, H.add_left, map_add, ← H.symm, ← H.symm]
+  rw [H.symm (y + z) x, H.add_left, map_add (f := _), ← H.symm, ← H.symm]
 
 theorem Herm4.norm_add (H : Herm4 c h) (y z : V) :
     h (y + z) (y + z) = h y y + h y z + c (h y z) + h z z := by

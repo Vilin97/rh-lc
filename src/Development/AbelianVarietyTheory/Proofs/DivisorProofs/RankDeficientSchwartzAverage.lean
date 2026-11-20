@@ -33,7 +33,7 @@ theorem isCharAvg_mul {ψ : AddChar K ℂ} {G : V →+ (Ω → K)} {h₁ h₂ : 
     rw [finProdFinEquiv.symm.sum_comp (fun p => a₁ p.1 * a₂ p.2 * ψ (G (w₁ p.1 + w₂ p.2) Y)),
       Fintype.sum_prod_type, Pi.mul_apply, ← hv₁, ← hv₂, Finset.sum_mul_sum]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
-    rw [map_add, Pi.add_apply, AddChar.map_add_eq_mul]
+    rw [map_add (f := _), Pi.add_apply, AddChar.map_add_eq_mul]
     ring
 
 theorem isCharAvg_prod {ψ : AddChar K ℂ} {G : V →+ (Ω → K)} {ι : Type} (s : Finset ι) (h : ι → Ω → ℂ)

@@ -62,6 +62,6 @@ theorem bc_appLE_comp_psi : ∀ (A B C : Type) [CommRing A] [CommRing B] [Algebr
     rw [RingHom.comp_apply, hpsi, map_mul, hF, hS, RingHom.comp_apply]
     rw [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, Algebra.TensorProduct.map_tmul, AlgHom.id_apply,
       theta_tmul, hc, secAlg, RingHom.comp_apply, mul_comm]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end GlobalTheory.HilbAff

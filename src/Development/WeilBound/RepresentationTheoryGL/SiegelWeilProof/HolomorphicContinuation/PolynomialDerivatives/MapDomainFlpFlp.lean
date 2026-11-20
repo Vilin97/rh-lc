@@ -90,7 +90,7 @@ theorem fock_eq (c : ℝ) (p : PX m n) : fock c p = ((phi c p : CrAlg m n c) : M
   rw [this, map_smul, Subalgebra.coe_smul, LinearMap.smul_apply, fockMono_eq]
 
 theorem fock_add (c : ℝ) (p q : PX m n) : fock c (p + q) = fock c p + fock c q := by
-  simp only [fock_eq, map_add, Subalgebra.coe_add, LinearMap.add_apply]
+  simp only [fock_eq, map_add (f := _), Subalgebra.coe_add, LinearMap.add_apply]
 
 theorem fock_smul (c : ℝ) (a : ℂ) (p : PX m n) : fock c (a • p) = a • fock c p := by
   simp only [fock_eq, map_smul, Subalgebra.coe_smul, LinearMap.smul_apply]

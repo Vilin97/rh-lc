@@ -134,7 +134,7 @@ theorem isCovolOne_colJoin : ∀ (D : D7) (m r s : ℕ) (μr : Measure (Mx D m r
         rw [this, Measure.map_id]
       exact this.absolutelyContinuous
     · change e (e.symm γ + x) = γ + e x
-      rw [map_add, e.apply_symm_apply]
+      rw [map_add (f := _), e.apply_symm_apply]
   · rw [hemb.map_apply, Set.preimage_image_eq _ e.injective, Measure.prod_prod, h1r, h1s, one_mul]
 
 end GlobalTheory.CompanionTheory.EisUnfold.ProdCovol

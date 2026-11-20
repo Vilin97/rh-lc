@@ -103,7 +103,7 @@ theorem two_letter_lattice_gauss_inverse : TwoLetterLatticeGaussInverse := by
         rw [ta_Psi_gl g hg g' hg' Q a b hb, ← ea, ← eb, Fintype.prod_bool]
       · exact ⟨0, ⟨0, map_zero _⟩, by simp⟩
       · rintro x y _ _ ⟨f1, h1, rfl⟩ ⟨f2, h2, rfl⟩
-        exact ⟨f1 + f2, ta_Int_add h1 h2, by rw [map_add, map_add]⟩
+        exact ⟨f1 + f2, ta_Int_add h1 h2, by rw [map_add (f := _), map_add (f := _)]⟩
       · rintro c x _ ⟨f1, h1, rfl⟩
         exact ⟨algebraMap R.O R.Kf c • f1, ta_Int_smul c h1, by rw [map_smul, map_smul, algebraMap_smul]⟩
     obtain ⟨f₀, hI, he⟩ := key _ hx

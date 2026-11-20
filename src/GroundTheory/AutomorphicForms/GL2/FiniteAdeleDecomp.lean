@@ -34,7 +34,7 @@ def adeleSingleS : ((v : S) → v.1.adicCompletion K) →+ FiniteAdeleRing (𝓞
   toFun a := ∑ v : S, finiteAdeleSingleAdd v.1 (a v)
   map_zero' := by simp
   map_add' a a' := by
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
     exact Finset.sum_add_distrib
 
 theorem adeleSingleS_apply_of_mem (a : (v : S) → v.1.adicCompletion K) (w : S) :
@@ -65,7 +65,7 @@ theorem adeleSingleS_apply_of_notMem (a : (v : S) → v.1.adicCompletion K)
 theorem adeleAtS_adeleSingleS_add (a : (v : S) → v.1.adicCompletion K)
     (x : FiniteAdeleRing (𝓞 K) K) : adeleAtS S (adeleSingleS S a + x) = a + adeleAtS S x := by
   funext w
-  rw [map_add, Pi.add_apply, Pi.add_apply]
+  rw [map_add (f := _), Pi.add_apply, Pi.add_apply]
   simp only [adeleAtS_apply, adeleSingleS_apply_of_mem]
 
 theorem apply_adeleSingleS_add {E : Type*} {G : FiniteAdeleRing (𝓞 K) K → E}

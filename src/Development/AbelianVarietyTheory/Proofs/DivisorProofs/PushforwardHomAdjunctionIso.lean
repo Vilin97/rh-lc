@@ -40,7 +40,7 @@ variable {P N : Y.Modules} {T : Y.Opens}
 def toCutN (l : Γ(homMod P N, T)) : P ⟶ cutN N T :=
   homOfLinear (fun S =>
     { toFun s := (cutNEquiv N T S).symm (homApp l (cutO_le' T S) (resM P (cutO_le T S) s))
-      map_add' s t := by simp only [map_add]
+      map_add' s t := by simp only [map_add (f := _)]
       map_smul' a s := (cutNEquiv N T S).injective (by
         rw [RingHom.id_apply, cutNEquiv_smul, AddEquiv.apply_symm_apply, AddEquiv.apply_symm_apply,
           resM_smul, map_smul]) })
@@ -60,7 +60,7 @@ theorem toCutN_injective {l l' : Γ(homMod P N, T)} (h : toCutN l = toCutN l') :
 def ofCutN (φ : P ⟶ cutN N T) : Γ(homMod P N, T) :=
   homMk (fun S h =>
     { toFun s := resM N (le_cutO h le_rfl) (cutNEquiv N T S (φ.app S s))
-      map_add' s t := by simp only [map_add]
+      map_add' s t := by simp only [map_add (f := _)]
       map_smul' a s := by
         rw [Scheme.Modules.Hom.app_smul, cutNEquiv_smul, resM_smul, resG_resG, resG_self]; rfl })
     fun S S' h h' s => by
@@ -173,7 +173,7 @@ def backPush {V : X.Opens} (ψ : Γ(homMod F ((Scheme.Modules.pushforward ρ).ob
   homOfLinear (fun W =>
     { toFun s := (cutNEquiv N (ρ ⁻¹ᵁ V) (ρ ⁻¹ᵁ W)).symm
         (resM N (cutO_le_inf ρ V W) (pushVal ρ ψ inf_le_right (resM F inf_le_left s)))
-      map_add' s t := by rw [map_add, pushVal_add, map_add, map_add] <;> rfl
+      map_add' s t := by rw [map_add (f := _), pushVal_add, map_add (f := _), map_add (f := _)] <;> rfl
       map_smul' a s := (cutNEquiv N (ρ ⁻¹ᵁ V) (ρ ⁻¹ᵁ W)).injective (by
         refine Eq.trans ?_ (cutNEquiv_smul _ _ _ (ρ.app W a) _).symm
         rw [AddEquiv.apply_symm_apply, AddEquiv.apply_symm_apply, resM_smul, pushVal_smul,

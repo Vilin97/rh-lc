@@ -187,7 +187,7 @@ theorem trivial_or_twist (R : DSRep T) :
     rw [ext_of (hy.trans hx.symm) (e'.trans e.symm)]
     ext w
     have := central_scalar R hc (c := 1) (v := R.U.π x v + v) (fun h0 => hv (eq_neg_of_add_eq_zero_left h0))
-      (by rw [map_add, ← ContinuousLinearMap.mul_apply, ← map_mul, h2, map_one]; simp [add_comm]) w
+      (by rw [map_add (f := _), ← ContinuousLinearMap.mul_apply, ← map_mul, h2, map_one]; simp [add_comm]) w
     simpa using this
   change ((T.sq x : ℂˣ) : ℂ)⁻¹ • R.U.π x = 1
   ext v

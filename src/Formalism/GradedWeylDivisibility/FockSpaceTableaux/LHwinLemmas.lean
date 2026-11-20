@@ -116,7 +116,7 @@ theorem lhwin_weight_ht {r n : ℕ} (d : Fin r × Fin n →₀ ℕ) :
   induction d using Finsupp.induction_linear with
   | zero => simp
   | add f g hf hg =>
-    simp only [map_add, Pi.add_apply, Nat.cast_add, mul_add, Finset.sum_add_distrib, hf, hg]
+    simp only [map_add (f := _), Pi.add_apply, Nat.cast_add, mul_add, Finset.sum_add_distrib, hf, hg]
   | single v c =>
     simp [Finsupp.weight_apply, lhwinHt, rowW, Pi.single_apply, Finsupp.sum_single_index, mul_comm]
 

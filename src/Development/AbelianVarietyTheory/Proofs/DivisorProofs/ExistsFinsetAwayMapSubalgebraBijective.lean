@@ -39,7 +39,7 @@ theorem exists_finset_awayMap_subalgebra_bijective :
         obtain ⟨n, d, hd, e'⟩ := hy
         refine ⟨m + n, c * b ^ n + d * b ^ m,
           add_mem (mul_mem hc (pow_mem hbC _)) (mul_mem hd (pow_mem hbC _)), ?_⟩
-        rw [map_add, map_mul, map_mul, map_pow, map_pow, ← e, ← e']
+        rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, ← e, ← e']
         ring
       | mul x y _ _ hx hy =>
         obtain ⟨m, c, hc, e⟩ := hx

@@ -78,7 +78,7 @@ theorem map_eq_of_fundamentalDomain (L : AddSubgroup G) [Countable L] (ν : Meas
         rw [this, Measure.map_id]
       exact this.absolutelyContinuous
     · change T (T.symm γ + x) = γ + T x
-      rw [map_add, T.apply_symm_apply]
+      rw [map_add (f := _), T.apply_symm_apply]
   have h3 : ν.map T F = ν.map T (T '' F) := hF2.measure_eq hF3
   have h4 : ν.map T (T '' F) = ν F := by
     rw [hemb.map_apply, Set.preimage_image_eq _ T.injective]

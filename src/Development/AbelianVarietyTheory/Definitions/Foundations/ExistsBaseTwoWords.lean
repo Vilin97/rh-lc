@@ -24,7 +24,7 @@ theorem span_image_span (s : Set K) :
   induction hx using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx =>
     have : f (a • x) = RingOfIntegers.mapRingHom f a • f x := by
       rw [Algebra.smul_def, Algebra.smul_def, map_mul]; rfl

@@ -68,7 +68,7 @@ theorem fix_ringHom {l : ℕ} [Fact l.Prime] (K : FinExt l) (π : ↥(OL K)) (f 
       (by rw [map_zero, sh_zero, sub_self, norm_zero]; exact norm_nonneg _)
   · intro a b
     refine huniq _ _ (by rw [add_pow_char_pow, hF1, hF1]) ?_
-    rw [map_add]
+    rw [map_add (f := _)]
     exact near_add hl (hF2 a) (hF2 b)
 
 theorem tch_eq {l : ℕ} [Fact l.Prime] (f : ℕ) (hf : 0 < f) (x : Tl l) (hx : x ^ l ^ f = x) (y : Om l)
@@ -165,7 +165,7 @@ theorem GlobalTheory.CompanionTheory.LTPer.Tilt.tilt_period : ∀ {l : ℕ} [Fac
   have hZ : ∀ n, ‖omC (z (n + 1)) ^ l ^ f - omC (z n)‖ ≤ ‖oc K π‖ := by
     intro n
     have e : omC (z (n + 1)) ^ l ^ f - omC (z n) = -(oc K π * omC (z (n + 1))) := by
-      rw [← hrec' n, map_add, map_mul, map_pow, oc_eq]
+      rw [← hrec' n, map_add (f := _), map_mul, map_pow, oc_eq]
       ring
     rw [e, norm_neg, norm_mul]
     exact mul_le_of_le_one_right (norm_nonneg _) (hzlt _).le

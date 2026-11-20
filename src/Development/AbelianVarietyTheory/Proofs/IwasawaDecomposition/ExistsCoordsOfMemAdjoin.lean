@@ -33,13 +33,13 @@ theorem exists_coords_of_mem_adjoin {F : Type*} [Field F] [Algebra ℚ F] {s : F
     obtain ⟨a, b, rfl⟩ := hy
     obtain ⟨a', b', rfl⟩ := hz
     refine ⟨a + a', b + b', ?_⟩
-    simp only [map_add]
+    simp only [map_add (f := _)]
     ring
   | mul y z _ _ hy hz =>
     obtain ⟨a, b, rfl⟩ := hy
     obtain ⟨a', b', rfl⟩ := hz
     refine ⟨a * a' + b * b' * c, a * b' + b * a', ?_⟩
-    simp only [map_add, map_mul, ← hs]
+    simp only [map_add (f := _), map_mul, ← hs]
     ring
 
 theorem exists_rat_coords {R : Formalism.BasicNotions.Ranks} (H : Formalism.BasicNotions.Host R) {x : H.E} (hx : x ∈ H.K) :

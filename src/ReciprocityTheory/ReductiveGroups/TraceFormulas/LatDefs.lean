@@ -114,7 +114,7 @@ def transportCocycles (e : Γ ≃* Γ') (u : M ≃ₗ[O] M') (ρ : Representatio
     (hu : ∀ g m, u (ρ g m) = ρ' (e g) (u m)) : coZ1s ρ' →ₗ[O] coZ1s ρ where
   toFun c := ⟨fun g => u.symm (c.1 (e g)), fun g h => by
     show u.symm (c.1 (e (g * h))) = u.symm (c.1 (e g)) + ρ g (u.symm (c.1 (e h)))
-    rw [map_mul, c.2, map_add, trCompat_symm e u ρ ρ' hu]⟩
+    rw [map_mul, c.2, map_add (f := _), trCompat_symm e u ρ ρ' hu]⟩
   map_add' a b := Subtype.ext (funext fun g => map_add u.symm _ _)
   map_smul' r a := Subtype.ext (funext fun g => map_smul u.symm _ _)
 

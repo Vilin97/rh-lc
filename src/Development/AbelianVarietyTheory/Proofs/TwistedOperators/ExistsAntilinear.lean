@@ -66,7 +66,7 @@ theorem evEx_conj {K C H H' Y : Type} [Field K] [AddCommGroup C] [Module K C] [A
   choose x hx using hx
   refine ⟨⟨⟨fun f => x (j f), fun f f' => hinj (funext fun g => ?_)⟩, fun a f => hinj (funext fun g => ?_)⟩,
     fun f => funext fun g => ?_⟩
-  · rw [ha', hx, hx, hx, map_add, ha, map_add]
+  · rw [ha', hx, hx, hx, map_add (f := _), ha, map_add (f := _)]
   · refine (hx _ g).trans ?_
     rw [j.map_smulₛₗ, hs, hs', hx, map_mul, RingHom.comp_apply, Complex.conj_conj]
   · exact (hx (j f) g).trans (congrArg (starRingEnd ℂ) (congrFun (hj f) g))

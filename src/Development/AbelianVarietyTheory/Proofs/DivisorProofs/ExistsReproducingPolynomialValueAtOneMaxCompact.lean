@@ -53,7 +53,7 @@ theorem star_evL (P : Poly n) : ∃ Q : Poly n, Q.totalDegree ≤ P.totalDegree 
     rw [eval_rename, eval_map, ← coe_eval₂Hom]
     induction P using MvPolynomial.induction_on with
     | C a => simp
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p v hp =>
       simp only [map_mul, hp, eval_X, coe_eval₂Hom, eval₂_X]
       rcases v with x | x <;> simp [pt]

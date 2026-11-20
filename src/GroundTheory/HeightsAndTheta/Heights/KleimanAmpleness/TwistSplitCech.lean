@@ -49,7 +49,7 @@ def cf (I : Finset (Fin (N + 1))) (hI : I ⊆ support x) :
   toFun w := (UT.toL (locEmb η M₀ I hI w)).coeff ((n : ℤ), c)
   map_zero' := by rw [map_zero, UT.toL_zero, AddMonoidAlgebra.coeff_zero]; rfl
   map_add' w w' := by
-    rw [map_add, UT.toL_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply]
+    rw [map_add (f := _), UT.toL_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply]
 
 theorem cf_locResS (I J : StdCell N) (hI : I.1 ⊆ support x) (hJ : J.1 ⊆ support x) (h : I.1 ⊆ J.1)
     (w : LocMod (MvPolynomial (Fin (r + 1)) S) N (TwM η M₀) I.1) :
@@ -84,7 +84,7 @@ theorem ιfun_add (K : Chart x) (z z' : ((G.twist (B.pow n)).twist (twistSys S x
     ιfun η M₀ n c hG hB K (z + z') = ιfun η M₀ n c hG hB K z + ιfun η M₀ n c hG hB K z' := by
   apply locEmb_injective η M₀ K.2.2
   change UT.toL _ = UT.toL _
-  rw [map_add, UT.toL_add, ιfun_emb, ιfun_emb, ιfun_emb, Submodule.coe_add, single_add]
+  rw [map_add (f := _), UT.toL_add, ιfun_emb, ιfun_emb, ιfun_emb, Submodule.coe_add, single_add]
 
 theorem ιfun_zero (K : Chart x) : ιfun η M₀ n c hG hB K 0 = 0 := by
   apply locEmb_injective η M₀ K.2.2

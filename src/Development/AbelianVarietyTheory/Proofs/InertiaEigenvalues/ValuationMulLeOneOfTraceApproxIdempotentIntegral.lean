@@ -152,7 +152,7 @@ theorem valuation_mul_different_le_one : ∀ (K L : Type) [Field K] [NumberField
     | zero => simp
     | add b c _ _ hb hc =>
       have : ((b + c : 𝓞 L) : L) * x = (b : L) * x + (c : L) * x := by push_cast; ring
-      rw [this, map_add, mul_add]
+      rw [this, map_add (f := _), mul_add]
       exact add_mem hb hc
     | smul n b _ hb =>
       have : ((n • b : 𝓞 L) : L) * x = n • ((b : L) * x) := by

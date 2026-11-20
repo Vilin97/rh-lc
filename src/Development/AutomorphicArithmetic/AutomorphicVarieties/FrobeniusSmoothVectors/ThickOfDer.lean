@@ -60,7 +60,7 @@ private theorem D_pow {I : Ideal R} (N : ℕ) : ∀ x ∈ I ^ (N + 1), D x ∈ I
   | succ N ih =>
     intro x hx
     rw [pow_succ] at hx
-    refine Submodule.mul_induction_on hx (fun a ha b hb => ?_) fun a b ha hb => by rw [map_add]; exact add_mem ha hb
+    refine Submodule.mul_induction_on hx (fun a ha b hb => ?_) fun a b ha hb => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     rw [hD]
     refine add_mem (Ideal.mul_mem_right _ _ ?_) ?_
     · rw [← Ideal.map_pow]; exact Ideal.mem_map_of_mem _ ha
@@ -162,7 +162,7 @@ private theorem pderiv_even {O : Type} [CommRing O] {a g : ℕ} (I : Ideal (MvPo
   refine span_X I (Finset.univ.map ⟨Sum.inr, Sum.inr_injective⟩) (by simpa using hI) _ fun n hn => ?_
   have h : ∀ j, n (.inr j) = 0 := by simpa using hn
   rw [MvPowerSeries.coeff_pderiv, hf, zero_mul]
-  rw [map_add, Finsupp.weight_single, Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp)]
+  rw [map_add (f := _), Finsupp.weight_single, Finsupp.weight_apply, Finsupp.sum_fintype _ _ (by simp)]
   simp [Space.Loc.par, h]
 
 private theorem der_ex {O R Q : Type} [CommRing O] [CommRing R] [CommRing Q] [IsDomain Q] [Algebra O R] {a b g : ℕ}
@@ -201,7 +201,7 @@ private theorem der_ex {O R Q : Type} [CommRing O] [CommRing R] [CommRing Q] [Is
       · have := congrFun hMν i
         simpa [mulVec, dotProduct, l0, hm, x0] using this
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
     | smul c x hx h =>
       have : p x = 0 := hk.ge hx
       rw [smul_eq_mul, l0, h, ← hφ x, this]
@@ -212,7 +212,7 @@ private theorem der_ex {O R Q : Type} [CommRing O] [CommRing R] [CommRing Q] [Is
   refine ⟨AddMonoidHom.mk' (fun x => D0 (Function.surjInv hp x)) fun x y => ?_, fun x y => ?_, fun f hf => ?_, ?_⟩
   · obtain ⟨x, rfl⟩ := hp x
     obtain ⟨y, rfl⟩ := hp y
-    rw [← map_add p, k1, k1, k1, map_add]
+    rw [← map_add p, k1, k1, k1, map_add (f := _)]
   · obtain ⟨x, rfl⟩ := hp x
     obtain ⟨y, rfl⟩ := hp y
     simp only [AddMonoidHom.mk'_apply]
@@ -250,6 +250,6 @@ theorem UpperTheory.V.Fr.thick :
       induction hy using Submodule.span_induction with
       | mem y hy => obtain ⟨g, a, b, -, rfl⟩ := hy; exact h g a b
       | zero => simp
-      | add y z _ _ hy hz => rw [map_add, hy, hz, add_zero]
+      | add y z _ _ hy hz => rw [map_add (f := _), hy, hz, add_zero]
       | smul c y hy h' => rw [smul_eq_mul, hD, h', Ideal.Quotient.eq_zero_iff_mem.2 (hT.2.2 hy)]; simp
     exact key _ (hm j)

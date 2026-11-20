@@ -137,11 +137,11 @@ private theorem main_abs [IsDomain O] (θ : Γ →* Oˣ) (hc : ∀ m : W, Contin
   let Z : LocSel (Formalism.GaloisCohomology.scalRep W θ) ⊤ 𝒟 →+ (Γ → O ⧸ Ideal.span {a}) := AddMonoidHom.mk' (fun x g => j (N x g))
     fun x y => funext fun g => hι (by
       show ι (j (N (x + y).1 g)) = ι (j (N x.1 g) + j (N y.1 g))
-      rw [ι.map_add, haN, haN, haN, Submodule.coe_add, N.map_add, Pi.add_apply])
+      rw [ι.map_add (f := _), haN, haN, haN, Submodule.coe_add, N.map_add (f := _), Pi.add_apply])
   have hZ : ∀ x g, ι (Z x g) = N x g := haN
   refine ⟨a, ha, Z, fun x y h => Subtype.ext (hi (funext fun g => by rw [← hZ, ← hZ, h])), fun x =>
     ⟨(hl x).comp j, fun g h => hι ?_, fun D hD g hg h1 => hι ?_, hι ?_, fun v hv => ?_⟩⟩
-  · rw [map_add, hmul, hZ, hZ, hZ, hco]
+  · rw [map_add (f := _), hmul, hZ, hZ, hZ, hco]
   · obtain ⟨m, hm⟩ := hloc 𝒟 x x.2 D hD
     rw [hZ, hm g hg, h1, map_zero, Units.val_one, one_smul, sub_self]
   · rw [hZ, h0, map_zero]

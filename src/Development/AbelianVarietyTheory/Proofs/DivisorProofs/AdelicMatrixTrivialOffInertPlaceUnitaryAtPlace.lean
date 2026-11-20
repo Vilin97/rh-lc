@@ -111,7 +111,7 @@ theorem invOf_two_smul_add_iotaW (hw : Formalism.UG.IsInertAt F E v w) (t : AE F
     rw [← map_ofNat (algebraMap E (w.adicCompletion E)) 2]
     exact (map_ne_zero _).2 two_ne_zero
   have hx : iotaW hw x = iotaW hw (2⁻¹ * x) + iotaW hw (2⁻¹ * x) := by
-    rw [← map_add, ← add_mul, ← two_mul, mul_inv_cancel₀ h2, one_mul]
+    rw [← map_add (f := _), ← add_mul, ← two_mul, mul_inv_cancel₀ h2, one_mul]
   rw [hx, show t + t + (iotaW hw (2⁻¹ * x) + iotaW hw (2⁻¹ * x)) =
       (2 : AF F) • (t + iotaW hw (2⁻¹ * x)) by rw [two_smul]; abel, smul_smul, invOf_mul_self, one_smul]
 
@@ -122,7 +122,7 @@ theorem glueW_transpose (hw : Formalism.UG.IsInertAt F E v w) {ι : Type} [Finty
 theorem glueW_map_cA (σ : E →ₐ[F] E) (hw : Formalism.UG.IsInertAt F E v w) {ι : Type} [Fintype ι] [DecidableEq ι]
     (P : Matrix ι ι (w.adicCompletion E)) : (glueW hw P).map (cA σ) = glueW hw (P.map (conjW σ hw)) := by
   ext i j
-  simp only [glueW, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, map_sub,
+  simp only [glueW, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul, map_sub,
     map_one, AlgHom.commutes, iotaW_conjW]
   congr 2
   rw [Matrix.one_apply]
@@ -150,7 +150,7 @@ theorem glueW_read_at_place (σ : E →ₐ[F] E) (hw : Formalism.UG.IsInertAt F 
     simp only [glueW, Matrix.smul_apply, Matrix.add_apply, Matrix.toBlocks₁₁, Matrix.toBlocks₁₂, Matrix.toBlocks₂₁,
       Matrix.toBlocks₂₂, Matrix.of_apply, Matrix.map_apply, smul_eq_mul, Matrix.one_apply, Sum.inl.injEq,
       Sum.inr.injEq, reduceCtorEq, if_false, mul_zero, add_zero]
-    rw [← invOf_two_smul_add_iotaW hw, map_add, map_add, map_add]
+    rw [← invOf_two_smul_add_iotaW hw, map_add (f := _), map_add (f := _), map_add (f := _)]
     congr 1
     abel
 

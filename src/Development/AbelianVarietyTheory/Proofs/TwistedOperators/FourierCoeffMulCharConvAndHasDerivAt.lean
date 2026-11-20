@@ -85,7 +85,7 @@ theorem _root_.GlobalTheory.fourierCoeff_mul_char_conv_and_hasDerivAt :
         have e : (fun s : ℝ => Φ (x + L s + y)) = fun s : ℝ => Φ (x + L t + y + L (s - t)) := by
           funext s
           congr 1
-          rw [show L s = L t + L (s - t) by rw [← map_add]; congr 1; ring]
+          rw [show L s = L t + L (s - t) by rw [← map_add (f := _)]; congr 1; ring]
           abel
         rw [e]
         exact h

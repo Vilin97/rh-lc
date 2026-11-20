@@ -12,7 +12,7 @@ variable {k : Type} [CommRing k] {d n : ℕ}
 
 theorem div_Lin_add (b : Fin n) (v : Fin d → k) (f g : PS k n d) :
     Lin b v (f + g) = Lin b v f + Lin b v g := by
-  simp only [Lin, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [Lin, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem div_Lin_mul (b : Fin n) (v : Fin d → k) (f g : PS k n d) :
     Lin b v (f * g) = Lin b v f * g + f * Lin b v g := by
@@ -81,7 +81,7 @@ theorem div_Lin_aeval {ι : Type} [DecidableEq ι] (cp : ι → Fin n) (u : ι �
   | C a =>
     rw [MvPolynomial.aeval_C, MvPolynomial.pderiv_C, map_zero, MvPowerSeries.algebraMap_apply]
     simpa using div_Lin_C (cp l) (u l) a
-  | add p q hp hq => rw [map_add, div_Lin_add, hp, hq, map_add, map_add]
+  | add p q hp hq => rw [map_add (f := _), div_Lin_add, hp, hq, map_add (f := _), map_add (f := _)]
   | mul_X p i hp =>
     rw [map_mul, div_Lin_mul, hp, MvPolynomial.aeval_X, hl, Derivation.leibniz, MvPolynomial.pderiv_X]
     by_cases h : l = i
@@ -121,7 +121,7 @@ theorem div_constCoeff_aeval {ι : Type} (φ : ι → PS k n d) (hφ0 : ∀ i, c
     (Q : MvPolynomial ι k) : constantCoeff (MvPolynomial.aeval φ Q) = MvPolynomial.constantCoeff Q := by
   induction Q using MvPolynomial.induction_on with
   | C a => simp [MvPowerSeries.algebraMap_apply]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp [hp, hφ0]
 
 theorem div_iter_pderiv_monomial {ι : Type} [DecidableEq ι] (i : ι) (t : ℕ) (s : ι →₀ ℕ) (c : k) :

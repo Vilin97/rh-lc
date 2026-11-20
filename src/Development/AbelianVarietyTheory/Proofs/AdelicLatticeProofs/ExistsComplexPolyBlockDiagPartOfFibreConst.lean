@@ -31,7 +31,7 @@ omit [DecidableEq ι] in
 lemma evC_rtr (g y : Matrix ι ι ℂ) (f : MvPolynomial (ι × ι) ℂ) : evC (rtr g f) y = evC f (y * g) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [evC, rtr]
-  | add p q hp hq => rw [map_add, evC_add, evC_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), evC_add, evC_add, hp, hq]
   | mul_X p ij hp =>
     rw [map_mul, evC_mul, evC_mul, hp]
     congr 1
@@ -41,7 +41,7 @@ omit [DecidableEq ι] in
 lemma evC_ltr (g y : Matrix ι ι ℂ) (f : MvPolynomial (ι × ι) ℂ) : evC (ltr g f) y = evC f (g * y) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [evC, ltr]
-  | add p q hp hq => rw [map_add, evC_add, evC_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), evC_add, evC_add, hp, hq]
   | mul_X p ij hp =>
     rw [map_mul, evC_mul, evC_mul, hp]
     congr 1
@@ -65,7 +65,7 @@ lemma exists_fg_rtr (f : MvPolynomial (ι × ι) ℂ) :
     obtain ⟨V, hV, h⟩ := hp
     obtain ⟨V', hV', h'⟩ := hq
     refine ⟨V ⊔ V', hV.sup hV', fun g => ?_⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (h g) (h' g)
   | mul_X p ij hp =>
     obtain ⟨V, hV, h⟩ := hp

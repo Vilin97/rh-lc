@@ -175,7 +175,7 @@ theorem step {P : PhiMod O K l e a ι} {W : Submodule K (Vec K a ι)} (hM : ModH
   have h2 : P.conn z - i • z ∈ part W (MMHigh P) :=
     sub_mem (hM.conn_high z hz) (Submodule.smul_of_tower_mem _ i hz)
   have : P.conn (y + z) - i • (y + z) = (P.conn y - i • y) + (P.conn z - i • z) := by
-    rw [map_add, smul_add]
+    rw [map_add (f := _), smul_add]
     abel
   rw [this]
   exact add_mem h1 (Submodule.mem_sup_right h2)

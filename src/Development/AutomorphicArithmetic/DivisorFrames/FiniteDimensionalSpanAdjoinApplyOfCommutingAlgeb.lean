@@ -110,7 +110,7 @@ theorem UpperTheory.finiteDimensional_span_adjoin_apply_of_commuting_algebraic :
           exact hpow _ w hw
         · simp
         · show a (x + y) ∈ U'
-          rw [map_add]
+          rw [map_add (f := _)]
           exact U'.add_mem hx hy
       have hU'b : ∀ b ∈ (↑t : Set (Module.End ℂ V)), ∀ u ∈ U', b u ∈ U' := by
         intro b hb u hu
@@ -123,7 +123,7 @@ theorem UpperTheory.finiteDimensional_span_adjoin_apply_of_commuting_algebraic :
           exact hpow _ _ (hUinv _ b hb w hw)
         · simp
         · show b (x + y) ∈ U'
-          rw [map_add]
+          rw [map_add (f := _)]
           exact U'.add_mem hx hy
       have hle : U ↑(insert a t) ≤ U' := by
         rw [Submodule.span_le]

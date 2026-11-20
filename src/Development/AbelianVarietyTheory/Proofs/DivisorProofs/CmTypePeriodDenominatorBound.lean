@@ -102,7 +102,7 @@ theorem pairing_val_bounds : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
   obtain ⟨u, rfl⟩ := Submodule.mem_span_singleton.1 hy
   have hdiv : B (e i) (f i) ∣ D := by
     have h1 := congrArg (B (e i)) hky
-    rw [map_add, LinearMap.mem_ker.1 hk, zero_add, map_smul, map_smul, hBeh, smul_eq_mul, smul_eq_mul] at h1
+    rw [map_add (f := _), LinearMap.mem_ker.1 hk, zero_add, map_smul, map_smul, hBeh, smul_eq_mul, smul_eq_mul] at h1
     exact ⟨-u, by linear_combination h1⟩
   exact ⟨val_nonneg O l hl.ne_zero hlm _, val_le_of_dvd O l hl.ne_zero hlm hD hdiv⟩
 

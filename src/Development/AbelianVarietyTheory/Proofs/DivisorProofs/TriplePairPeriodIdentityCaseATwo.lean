@@ -72,7 +72,7 @@ theorem coord_eq_zero (hS : W.IsSkew σ B r' s') (hA : H'.IsAdapted σ B W W₁ 
     congr 1
   have h1 := h (fun i => (u' * incM F Sc) i ())
   rw [← e, omega_coordI] at h1
-  rw [omega_coordI, hd u', sympM_add_right M, sympM_add_right M, map_add, map_add, map_add, map_add, h1,
+  rw [omega_coordI, hd u', sympM_add_right M, sympM_add_right M, map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), h1,
     vecMulVec_eq_mul, sympM_eq_zero _ _ (gram_yy hA), sympM_anti M, sympM_eq_zero _ _ (gram_ιy hA)]
   simp
 

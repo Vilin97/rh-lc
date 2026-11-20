@@ -39,7 +39,7 @@ theorem blockPoly_bc (x : X) :
     rw [h1, h3, hs]
     ext i j
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [Matrix.mul_apply, Matrix.add_apply, map_sum, map_mul, map_add]
+      simp [Matrix.mul_apply, Matrix.add_apply, map_sum, map_mul, map_add (f := _)]
   rw [h2, h1, blockPoly_map_lemma, blockPoly_map_lemma]
 
 theorem exists_sigma (hj : Function.Injective (algebraMap O O')) (hX : DistinctEigenvalueCornerPerturbation O T r π t g₀ eB s)

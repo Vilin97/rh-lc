@@ -30,7 +30,7 @@ theorem inner_eq_integral {D : D7} {V : HSp D} {S : D.what₂.Tau → SPar} (M :
   obtain ⟨b, hb⟩ := hd y
   obtain ⟨s, hs⟩ := hd (x + y)
   obtain ⟨t, ht⟩ := hd (x + Complex.I • y)
-  rw [map_add] at hs ht
+  rw [map_add (f := _)] at hs ht
   rw [map_smul] at ht
   have h1 := (ipM_spec M μ 𝓕 _ _ ⟨_, GlobalTheory.SchurPolar.exists_of_diag M μ 𝓕 _ _ ha hb hs ht⟩ v v).2
   rw [h, h1, Finset.prod_eq_one, mul_one]
@@ -59,11 +59,11 @@ theorem inner_conj_of_span {L W H H' : Type} [Field L] [AddCommGroup W] [Module 
     induction hy using Submodule.span_induction with
     | mem y hy => exact h x hx y hy
     | zero => simp
-    | add y z _ _ h1 h2 => rw [map_add, map_add, inner_add_right, inner_add_right, map_add, h1, h2]
+    | add y z _ _ h1 h2 => rw [map_add (f := _), map_add (f := _), inner_add_right, inner_add_right, map_add (f := _), h1, h2]
     | smul a y _ h1 =>
       rw [map_smulₛₗ, map_smulₛₗ, inner_smul_right, inner_smul_right, map_mul, h1, RingHom.comp_apply, Complex.conj_conj]
   | zero => simp
-  | add x z _ _ h1 h2 => rw [map_add, map_add, inner_add_left, inner_add_left, map_add, h1, h2]
+  | add x z _ _ h1 h2 => rw [map_add (f := _), map_add (f := _), inner_add_left, inner_add_left, map_add (f := _), h1, h2]
   | smul a x _ h1 =>
     rw [map_smulₛₗ, map_smulₛₗ, inner_smul_left, inner_smul_left, map_mul, h1, RingHom.comp_apply, Complex.conj_conj]
 

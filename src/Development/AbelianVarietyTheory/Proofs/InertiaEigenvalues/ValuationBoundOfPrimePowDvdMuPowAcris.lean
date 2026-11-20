@@ -80,7 +80,7 @@ theorem mem_of_l_mul {ϖ : OCb l} (hϖ : ϖ ≠ 0) (k : ℕ) {y : Ainf l}
   obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.1 hv
   have hc : WittVector.constantCoeff c = 0 := by
     have := congrArg WittVector.constantCoeff huv
-    rw [map_add, map_mul, map_mul, map_mul, map_pow, map_pow, cc_natCast_l, cc_teich] at this
+    rw [map_add (f := _), map_mul, map_mul, map_mul, map_pow, map_pow, cc_natCast_l, cc_teich] at this
     simp only [zero_mul, zero_add] at this
     exact (mul_eq_zero.1 this).resolve_right (pow_ne_zero _ (pow_ne_zero _ hϖ))
   obtain ⟨c', rfl⟩ := l_dvd_of_cc hc
@@ -140,7 +140,7 @@ def Qs (ϖ : OCb l) : Subalgebra (Per.Ainf l) (Per.AinfP l) where
     · rw [pow_add]
       exact Ideal.add_mem _ (Ideal.mul_mem_mul ha (Ideal.pow_mem_pow (l_mem_Iw ϖ) k))
         (Ideal.mul_mem_mul (Ideal.pow_mem_pow (l_mem_Iw ϖ) m) hb)
-    · rw [map_add, map_mul, map_mul, map_pow, map_pow, map_natCast, ← hz, ← hw]; ring
+    · rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, map_natCast, ← hz, ← hw]; ring
   algebraMap_mem' r := ⟨0, r, by simp, by simp⟩
 
 theorem dividedPower_mem_pt {ϖ : OCb l} (hϖ : ϖ.untilt = (l : Per.OC l)) (x : Per.Ainf l) (k : ℕ)

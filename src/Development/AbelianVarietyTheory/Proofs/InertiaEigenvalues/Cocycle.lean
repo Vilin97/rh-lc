@@ -20,7 +20,7 @@ theorem cocycle (Y Yt : LocLat G Qp LL O) (ι : LatHom Y.L Yt.L) (hι : Function
   apply Subtype.ext
   apply hι
   have e : ((f g + actT Y.L g (f h) : ↥Y.L.T) : Y.V) = (f g : Y.V) + Y.ρ g (f h : Y.V) := rfl
-  rw [e, map_add, ι.equiv, hf, hf, hf, map_sub, map_mul, Module.End.mul_apply]
+  rw [e, map_add (f := _), ι.equiv, hf, hf, hf, map_sub, map_mul, Module.End.mul_apply]
   abel
 
 theorem continuous (Y Yt : LocLat G Qp LL O) (ι : LatHom Y.L Yt.L) (hι : Function.Injective ι.f)

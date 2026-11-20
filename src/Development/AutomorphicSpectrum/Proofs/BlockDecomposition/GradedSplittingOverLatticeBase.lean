@@ -83,7 +83,7 @@ theorem exists_ext (c : O) (W : Submodule O M) (ρ₀ : W →ₗ[O] M')
       simp only [Submodule.coe_add, Submodule.coe_smul]
       linear_combination (norm := module) e)
     refine ⟨a • p + p' + b, ?_⟩
-    rw [map_add, map_smul] at hb
+    rw [map_add (f := _), map_smul] at hb
     rw [smul_add, smul_add, ← hb, smul_comm, ← hp, ← hp', smul_sub]
     abel
   choose ρ hρ using hE

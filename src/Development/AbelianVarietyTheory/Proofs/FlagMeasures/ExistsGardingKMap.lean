@@ -47,7 +47,7 @@ theorem exists_garding_kMap (n : ℕ) (ε : Fin n → Bool) (μ : Fin n → ℝ)
       map_add' := by
         intro s t
         rw [← integral_add (hint s) (hint t)]
-        simp only [Submodule.coe_add, map_add, smul_add]
+        simp only [Submodule.coe_add, map_add (f := _), smul_add]
       map_smul' := by
         intro c s
         rw [RingHom.id_apply, ← integral_smul]
@@ -133,7 +133,7 @@ theorem exists_isDer_kType : ∀ (n : ℕ) (ε : Fin n → Bool) (μ : Fin n →
       obtain ⟨a', ha', hda⟩ := ha
       obtain ⟨b', hb', hdb⟩ := hb
       refine ⟨a' + b', add_mem ha' hb', ?_⟩
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact hda.add hdb
     | smul c a _ ha =>
       obtain ⟨a', ha', hda⟩ := ha

@@ -112,7 +112,7 @@ theorem barK_wK : EllConj.barK H (wK H) = EllipticFibrePrincipalData.wSide H fal
 
 theorem barK_kForm (D : Datum H) (ε : ℤˣ) (x y : D.La) :
     EllConj.barK H (EllipticFibrePrincipalData.kForm D ε true x y) = EllipticFibrePrincipalData.kForm D ε false x y := by
-  rw [EllipticFibrePrincipalData.kForm, EllipticFibrePrincipalData.kForm, map_add, map_mul, map_intCast, map_intCast, ← barK_wK]
+  rw [EllipticFibrePrincipalData.kForm, EllipticFibrePrincipalData.kForm, map_add (f := _), map_mul, map_intCast, map_intCast, ← barK_wK]
   rfl
 
 theorem isKForm_iff {D : Datum H} {ε : ℤˣ} (h : D.La → D.La → OK H) : IsKForm D ε h ↔ h = EllipticFibrePrincipalData.kForm D ε true :=
@@ -394,24 +394,24 @@ theorem exists_complexStructure {V : Type} [AddCommGroup V] [Module ℝ V] (B : 
   have ho' : ∀ x ∈ W₂, ∀ y ∈ W₁, B x y = 0 := fun x hx y hy => by rw [halt, ho y hy x hx, neg_zero]
   have hc : IsCompl W₁ W₂ := ⟨Submodule.disjoint_def.2 fun x h₁ h₂ => hnd x fun y => by
     obtain ⟨a, ha, b, hb, rfl⟩ := dec y
-    rw [map_add, ho' x h₂ a ha, ho x h₁ b hb, add_zero], codisjoint_iff.2 hs⟩
+    rw [map_add (f := _), ho' x h₂ a ha, ho x h₁ b hb, add_zero], codisjoint_iff.2 hs⟩
   let J := LinearMap.ofIsCompl hc (t⁻¹ • R ∘ₗ W₁.subtype) (-t⁻¹ • R ∘ₗ W₂.subtype)
   have j₁ : ∀ x ∈ W₁, J x = t⁻¹ • R x := fun x hx => LinearMap.ofIsCompl_apply_left hc (⟨x, hx⟩ : W₁)
   have j₂ : ∀ x ∈ W₂, J x = -t⁻¹ • R x := fun x hx => LinearMap.ofIsCompl_apply_right hc (⟨x, hx⟩ : W₂)
   have hJ : ∀ x, J (J x) = -x := fun x => by
     obtain ⟨a, ha, b, hb, rfl⟩ := dec x
-    rw [map_add, j₁ a ha, j₂ b hb, map_add, map_smul, map_smul, j₁ _ (s₁ a ha), j₂ _ (s₂ b hb), hR, hR]
+    rw [map_add (f := _), j₁ a ha, j₂ b hb, map_add (f := _), map_smul, map_smul, j₁ _ (s₁ a ha), j₂ _ (s₂ b hb), hR, hR]
     match_scalars <;> field_simp
   have hsk : ∀ x y, B (J x) y = -B x (J y) := fun x y => by
     obtain ⟨a, ha, b, hb, rfl⟩ := dec x
     obtain ⟨c, hc, d, hd, rfl⟩ := dec y
-    simp only [map_add, j₁ a ha, j₂ b hb, j₁ c hc, j₂ d hd, map_smul, LinearMap.add_apply, LinearMap.smul_apply,
+    simp only [map_add (f := _), j₁ a ha, j₂ b hb, j₁ c hc, j₂ d hd, map_smul, LinearMap.add_apply, LinearMap.smul_apply,
       smul_eq_mul, hB, ho a ha _ (s₂ d hd), ho' b hb _ (s₁ c hc)]
     ring
   have hnn : ∀ x, 0 ≤ B (J x) x := fun x => by
     obtain ⟨a, ha, b, hb, rfl⟩ := dec x
     have e : B (J (a + b)) (a + b) = (t * B (R a) a + -t * B (R b) b) / t ^ 2 := by
-      simp only [map_add, j₁ a ha, j₂ b hb, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul,
+      simp only [map_add (f := _), j₁ a ha, j₂ b hb, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul,
         ho _ (s₁ a ha) b hb, ho' _ (s₂ b hb) a ha]
       field_simp
       ring
@@ -430,25 +430,25 @@ theorem baseChange_skew {M : Type} [AddCommGroup M] (B : LinearMap.BilinForm ℤ
     B.baseChange ℝ (f.baseChange ℝ x) y = -B.baseChange ℝ x (g.baseChange ℝ y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' k k' => simp only [map_add, LinearMap.add_apply, k, k', neg_add]
+  | add x x' k k' => simp only [map_add (f := _), LinearMap.add_apply, k, k', neg_add]
   | tmul r x =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' k k' => simp only [map_add, k, k', neg_add]
+    | add y y' k k' => simp only [map_add (f := _), k, k', neg_add]
     | tmul r' y => simp [h]
 
 theorem baseChange_alt (D : Datum H) (x y : ℝ ⊗[ℤ] D.La) : D.EF.baseChange ℝ x y = -D.EF.baseChange ℝ y x := by
   have h : ∀ x y, D.EF x y = -D.EF y x := fun x y => by
     have := D.alt (x + y)
-    simp only [map_add, LinearMap.add_apply, D.alt] at this
+    simp only [map_add (f := _), LinearMap.add_apply, D.alt] at this
     linarith
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' k k' => simp only [map_add, LinearMap.add_apply, k, k', neg_add]
+  | add x x' k k' => simp only [map_add (f := _), LinearMap.add_apply, k, k', neg_add]
   | tmul r x =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' k k' => simp only [map_add, LinearMap.add_apply, k, k', neg_add]
+    | add y y' k k' => simp only [map_add (f := _), LinearMap.add_apply, k, k', neg_add]
     | tmul r' y => simp [h x y, mul_comm]
 
 open PeriodMapPresentation in
@@ -476,11 +476,11 @@ theorem exists_period (D : Datum H) (N₁ N₂ : Submodule (𝓞 E) D.La) (hs : 
   have mul : ∀ (a b : 𝓞 E) x, actR D a (actR D b x) = actR D (a * b) x := fun a b x => by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x x' k k' => simp only [map_add, k, k']
+    | add x x' k k' => simp only [map_add (f := _), k, k']
     | tmul r m => rw [act, act, act, mul_smul]
   have two : ∀ m, D.EF (H.rt • m) m = 2 * D.EF (H.w0 • m) m := fun m => by
     have : D.EF ((2 * H.w0) • m) m = D.EF ((1 + H.rt) • m) m := by rw [H.two_weight_eq_one_add_root]
-    rw [two_mul, add_smul, add_smul, one_smul, map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, D.alt] at this
+    rw [two_mul, add_smul, add_smul, one_smul, map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, D.alt] at this
     linarith
   have nn : ∀ (N : Submodule (𝓞 E) D.La) (t : ℝ), (∀ m ∈ N, 0 ≤ t * D.EF (H.w0 • m) m) →
       ∀ x ∈ W N, 0 ≤ t * D.EF.baseChange ℝ (actR D H.rt x) x := fun N t h x hx => by
@@ -518,7 +518,7 @@ theorem exists_period (D : Datum H) (N₁ N₂ : Submodule (𝓞 E) D.La) (hs : 
       rw [mul, ← sq, H.rt_sq, hsq]
       induction x using TensorProduct.induction_on with
       | zero => simp
-      | add x x' k k' => simp only [map_add, k, k', smul_add]
+      | add x x' k k' => simp only [map_add (f := _), k, k', smul_add]
       | tmul r m =>
         rw [act, neg_smul, Nat.cast_smul_eq_nsmul, TensorProduct.tmul_neg, neg_smul, Nat.cast_smul_eq_nsmul,
           TensorProduct.tmul_smul])
@@ -535,7 +535,7 @@ theorem exists_period (D : Datum H) (N₁ N₂ : Submodule (𝓞 E) D.La) (hs : 
     (st N₁ _) (st N₂ _) (nn N₁ _ p₁) (nn N₂ _ fun m hm => by linarith [p₂ m hm])
   have hcomm : ∀ a, J ∘ₗ actR D a = actR D a ∘ₗ J := fun a => LinearMap.ext fun x => by
     obtain ⟨u, hu, v, hv, rfl⟩ := Submodule.mem_sup.1 (htop ▸ Submodule.mem_top : x ∈ W N₁ ⊔ W N₂)
-    simp only [LinearMap.comp_apply, map_add, j₁ u hu, j₂ v hv, j₁ _ (st N₁ a u hu), j₂ _ (st N₂ a v hv), map_smul, mul,
+    simp only [LinearMap.comp_apply, map_add (f := _), j₁ u hu, j₂ v hv, j₁ _ (st N₁ a u hu), j₂ _ (st N₂ a v hv), map_smul, mul,
       mul_comm]
   have hdom := PeriodCompare.mem_domain D hJ hcomm hinv hpos
   let ρ : 𝓞 E →+* Module.End ℝ (ℝ ⊗[ℤ] D.La) :=
@@ -550,7 +550,7 @@ theorem exists_period (D : Datum H) (N₁ N₂ : Submodule (𝓞 E) D.La) (hs : 
     exact ⟨hcomm a, show LinearMap.trace ℝ _ (actR D a) = _ by linarith,
       show LinearMap.trace ℝ _ (J ∘ₗ actR D a) = _ by linarith⟩
   let Pe : D.La →+ (Fin g → ℂ) := AddMonoidHom.mk' (fun x => e (1 ⊗ₜ x)) fun x y => by
-    rw [TensorProduct.tmul_add, map_add]
+    rw [TensorProduct.tmul_add, map_add (f := _)]
   have hP : IsPeriod D ty Pe :=
     PeriodCompare.isPeriod_of_presents hdom ⟨e, fun _ => rfl, heJ, fun a v => funext (heρ a v)⟩
   have pure : ∀ (t : ℝ) (r : ℂ), t ≠ 0 → r = t * Complex.I → ∀ m, J (1 ⊗ₜ m) = t⁻¹ • actR D H.rt (1 ⊗ₜ m) →

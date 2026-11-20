@@ -114,7 +114,7 @@ theorem hasSum_lDiag_schr_rat : ∀ (F : Type) [Field F] [NumberField F] (ψ : A
       funext uη
       simp only [Function.comp_apply]
       congr 1
-      funext i; cases i <;> simp [e, rv, map_add]
+      funext i; cases i <;> simp [e, rv, map_add (f := _)]
     rw [hfe]
     exact h
   have h4 : HasSum (fun u : κ → F => (c₀ : ℂ) * ∑' η : κ → F, φ (Sum.elim (rv η + rv u) (rv η)))

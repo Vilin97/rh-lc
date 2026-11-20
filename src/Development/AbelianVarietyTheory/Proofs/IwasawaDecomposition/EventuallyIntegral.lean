@@ -54,7 +54,7 @@ theorem exists_root (P : LocPrime l) (μ : ℕ → Om l) (d : GQ l → ℤ_[l])
         rw [e]
         linear_combination this
       have h2 := congrArg (PadicInt.toZModPow k) h1
-      rw [map_add, map_add, map_mul, map_mul, map_mul, hA, hB, hS, hxa] at h2
+      rw [map_add (f := _), map_add (f := _), map_mul, map_mul, map_mul, hA, hB, hS, hxa] at h2
       have h3 : P.ζQ k ^ ((PadicInt.toZModPow k (kummer P g)).val * A +
           (PadicInt.toZModPow k (d g)).val * B + a * S) = P.ζQ k ^ S := by
         rw [zeta_pow_eq_iff]

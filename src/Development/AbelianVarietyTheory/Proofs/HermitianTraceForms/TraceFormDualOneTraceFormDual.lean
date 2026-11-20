@@ -231,11 +231,11 @@ theorem hermDual_smul {a : FractionalIdeal (𝓞 E)⁰ E} (ha : a ≠ 0) :
 
 def traceFormBilin (ξ : E) (G : Matrix (Fin r) (Fin r) E) : LinearMap.BilinForm ℚ (Fin r → E) :=
   LinearMap.mk₂ ℚ (EFf ξ G)
-    (fun x x' y => by simp only [EFf, herm_add_left, mul_add, map_add])
+    (fun x x' y => by simp only [EFf, herm_add_left, mul_add, map_add (f := _)])
     (fun c x y => by
       rw [EFf, EFf, ← algebraMap_smul E c x, herm_smul_left, mul_left_comm, ← Algebra.smul_def,
         map_smul])
-    (fun x y y' => by simp only [EFf, herm_add_right, mul_add, map_add])
+    (fun x y y' => by simp only [EFf, herm_add_right, mul_add, map_add (f := _)])
     (fun c x y => by
       have hc : cc (algebraMap ℚ E c) = algebraMap ℚ E c := by simp [cc]
       rw [EFf, EFf, ← algebraMap_smul E c y, herm_smul_right, hc, mul_left_comm,
@@ -264,7 +264,7 @@ def traceFormDual (ξ : E) (G : Matrix (Fin r) (Fin r) E) (Λ : Submodule (𝓞 
     obtain ⟨k, hk⟩ := hx y hy
     obtain ⟨k', hk'⟩ := hx' y hy
     refine ⟨k + k', ?_⟩
-    rw [← traceFormBilin_apply, map_add, LinearMap.add_apply, traceFormBilin_apply,
+    rw [← traceFormBilin_apply, map_add (f := _), LinearMap.add_apply, traceFormBilin_apply,
       traceFormBilin_apply, hk, hk', Int.cast_add]
   zero_mem' y _ := ⟨0, by simp [EFf, herm]⟩
   smul_mem' c x hx y hy := by

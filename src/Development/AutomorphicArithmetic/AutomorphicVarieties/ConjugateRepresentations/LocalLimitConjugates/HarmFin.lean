@@ -11,7 +11,7 @@ private theorem cmp_rT {W : Type} [AddCommGroup W] [Module ℂ W] {d : ℕ} (T :
     (x : W ⊗[ℂ] (Fin d → ℂ)) : cmp i (T.rTensor _ x) = T (cmp i x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul φ v => simp
 
 private noncomputable def coords {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ} (Ξ : AlgRep E a) (q : ℕ)
@@ -46,7 +46,7 @@ theorem UpperTheory.V.Cj.H.harmFin :
     intro ω hω p
     induction hω using Submodule.span_induction with
     | zero => rw [map_zero]; exact F.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact F.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact F.add_mem hx hy
     | smul c x _ hx => rw [map_smul]; exact F.smul_mem c hx
     | mem ω hω =>
       obtain ⟨h, hu⟩ := hω

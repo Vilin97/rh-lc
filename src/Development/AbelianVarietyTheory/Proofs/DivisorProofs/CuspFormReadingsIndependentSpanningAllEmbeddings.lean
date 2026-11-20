@@ -75,7 +75,7 @@ theorem unif_all : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Mem.Vo
   obtain ⟨v, -, hv⟩ := jTop_bar T R κ v₀ hσ hV (hbar i σ hσ hV)
   have ind : ∀ (m : ℕ) (b : Fin m → Cu T κ i), LinearIndependent T.Q.c.F b →
       LinearIndependent ℂ fun k => jTop T R κ v₀ i σ (b k) := fun m b hb =>
-    indep_of_conj (evAt R i σ v) (fun x y => by simp only [evAt, map_add]; rfl)
+    indep_of_conj (evAt R i σ v) (fun x y => by simp only [evAt, map_add (f := _)]; rfl)
       (fun a x => by simp only [evAt, map_smul]; rfl) _ _
       (GlobalTheory.PhiIndep.phiC_indep D T κ hT.laws i _ hg hV m b hb) fun k g => congrFun (hv (b k)) g
   refine ⟨ind, ?_⟩

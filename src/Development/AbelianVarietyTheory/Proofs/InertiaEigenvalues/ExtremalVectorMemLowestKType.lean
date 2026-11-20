@@ -49,7 +49,7 @@ variable {n : ℕ} {K : Type} [Field K] (σ : K →+* ℂ) (lam : D.what₂.Tau 
 
 theorem coefFn_add (F G : Formalism.L2.DIV.Pol K D.what₂.Tau n) (x : GLR D n) :
     coefFn σ lam (F + G) x = coefFn σ lam F x + coefFn σ lam G x := by
-  simp only [coefFn, map_add, mul_add]
+  simp only [coefFn, map_add (f := _), mul_add]
 
 theorem coefFn_zero (x : GLR D n) : coefFn σ lam (0 : Formalism.L2.DIV.Pol K D.what₂.Tau n) x = 0 := by
   simp only [coefFn, map_zero, mul_zero]
@@ -170,7 +170,7 @@ theorem scale_fwd (h : CopyTw D D' ι e) {X : RealSide D} {X' : RealSide D'} (m 
       intro hxy
       have hx' := hG hx
       have hy' := hG hy
-      rw [show (⟨x + y, hxy⟩ : ↥(VV D'.what₂.LL (FWT.lamV D' (h.cm j)))) = ⟨x, hx'⟩ + ⟨y, hy'⟩ from rfl, map_add, map_add,
+      rw [show (⟨x + y, hxy⟩ : ↥(VV D'.what₂.LL (FWT.lamV D' (h.cm j)))) = ⟨x, hx'⟩ + ⟨y, hy'⟩ from rfl, map_add (f := _), map_add (f := _),
         map_add, ihx hx', ihy hy']
       funext x'
       simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, coefFn_add, mul_add]

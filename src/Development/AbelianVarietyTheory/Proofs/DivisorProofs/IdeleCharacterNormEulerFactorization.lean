@@ -133,7 +133,7 @@ theorem cutIdele_eq (S : Finset (Pl F)) (l : (AE F E)ˣ) :
       refine Units.ext ?_
       change compInf F E w l = compInf F E w (eInf F • (l : AE F E) + (1 - eInf F) • 1)
       have h : evInf F w (eInf F) = 1 := congrFun h1 w
-      rw [map_add, compInf_smul, compInf_smul, map_sub, map_one, h, sub_self, zero_smul, one_smul, add_zero]
+      rw [map_add (f := _), compInf_smul, compInf_smul, map_sub, map_one, h, sub_self, zero_smul, one_smul, add_zero]
     · rw [GlobalTheory.Doubling.unitFin_cutIdele_of_notMem _ (Finset.notMem_empty v)]
       have := at_evI_iff.1 (unitArch_mem l) v
       rw [map_sub, map_one, sub_eq_zero] at this

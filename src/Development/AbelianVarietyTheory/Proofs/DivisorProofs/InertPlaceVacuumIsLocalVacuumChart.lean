@@ -23,7 +23,7 @@ theorem acts_eq {F : Type} [Field F] [NumberField F] (v : Pl F) {κ : Type} [Fin
   have hrx : r (x₀ + z) = r x₀ := hr.1 x₀ z hza
   have hy : (fun i => evFin F v ((x₀ + z) i)) = y := by
     funext i
-    simp only [hz, Pi.add_apply, map_add, GlobalTheory.LatVac.evFin_liftV, add_sub_cancel]
+    simp only [hz, Pi.add_apply, map_add (f := _), GlobalTheory.LatVac.evFin_liftV, add_sub_cancel]
   have e := congrFun ((h1 r hr).symm.trans (h2 r hr)) (x₀ + z)
   simp only [tens] at e
   rw [hrx, hy] at e

@@ -56,7 +56,7 @@ theorem mem_span_image (Y : Set A) : ∀ y ∈ Submodule.span F Y, ι y ∈ Subm
   induction hy using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
 
 end Inter
@@ -140,7 +140,7 @@ theorem GlobalTheory.HSShort.deepStep_finrank : ∀ (F A : Type) [Field F] [Numb
           rw [← hcomm]
           exact Submodule.mem_iSup_of_mem α (Submodule.mem_map_of_mem (Submodule.subset_span ⟨x, hx, rfl⟩)))
         (by simp only [map_zero]; exact zero_mem _)
-        (fun y z hy hz => by simp only [map_add]; exact add_mem hy hz)
+        (fun y z hy hz => by simp only [map_add (f := _)]; exact add_mem hy hz)
   refine ⟨?_, ?_, ?_⟩
   · rw [hU]; exact FiniteDimensional.span_of_finite E (Set.finite_range _)
   · rw [hU, finrank_span_eq_card hli, Fintype.card_fin, hdeep]

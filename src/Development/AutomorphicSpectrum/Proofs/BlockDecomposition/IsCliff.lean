@@ -42,7 +42,7 @@ def yF {V : Type} [AddCommGroup V] [Module ℂ V] {ι : Type} [Fintype ι] [Deci
   toFun x := fun i => Kf a b (x i) + ∑ j, spinM c a b i j • x j
   map_add' x y := by
     funext i
-    simp only [Pi.add_apply, map_add, smul_add, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), smul_add, Finset.sum_add_distrib]
     abel
   map_smul' s x := by
     funext i

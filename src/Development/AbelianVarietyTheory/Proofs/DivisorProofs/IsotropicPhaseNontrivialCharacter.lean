@@ -133,7 +133,7 @@ theorem eq_zero_of_vecMul_gram {σ : E →ₐ[F] E} {B : Base F E} {n n₁ r s i
   have hlin : ∀ a b : Fin n → E, form σ X.J (H.ι *ᵥ w) (a + b) =
       form σ X.J (H.ι *ᵥ w) a + form σ X.J (H.ι *ᵥ w) b := by
     intro a b
-    simp only [form, Pi.add_apply, map_add]
+    simp only [form, Pi.add_apply, map_add (f := _)]
     rw [show (fun i => σ (a i) + σ (b i)) = (fun i => σ (a i)) + fun i => σ (b i) from rfl, Matrix.mulVec_add,
       dotProduct_add]
   have hsm : ∀ (c : E) (a : Fin n → E), form σ X.J (H.ι *ᵥ w) (c • a) = σ c * form σ X.J (H.ι *ᵥ w) a := by

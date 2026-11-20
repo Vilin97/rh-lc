@@ -35,7 +35,7 @@ theorem resFunctor_map_comp_id (ψ : H →* G) {A B C : Rep.{u} k G} (μ : A ⊗
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a b => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Eval
 

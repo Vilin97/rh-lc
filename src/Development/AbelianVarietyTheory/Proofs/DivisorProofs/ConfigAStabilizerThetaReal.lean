@@ -78,7 +78,7 @@ theorem trace_mul_dual (i : Fin (Module.finrank F E)) : ∃ c : E, ∀ x : AE F 
   refine ⟨(Module.finBasis F E).traceDual i, fun x => ?_⟩
   induction x using TensorProduct.induction_on with
   | zero => simp [GlobalTheory.XTermMaj.crd]
-  | add x y hx hy => simp only [add_mul, map_add, hx, hy, GlobalTheory.XTermMaj.crd, Pi.add_apply]
+  | add x y hx hy => simp only [add_mul, map_add (f := _), hx, hy, GlobalTheory.XTermMaj.crd, Pi.add_apply]
   | tmul r x =>
     have h1 := Module.Basis.traceDual_repr_apply (Module.finBasis F E).traceDual x i
     rw [Module.Basis.traceDual_traceDual, Algebra.traceForm_apply] at h1

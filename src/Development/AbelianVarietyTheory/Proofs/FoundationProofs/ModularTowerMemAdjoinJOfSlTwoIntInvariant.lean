@@ -117,7 +117,7 @@ theorem germ_differentiableOn (G : Mero) (a b : ℂ → ℂ) (ha : Differentiabl
       ext w
       simp [Finset.sum_apply]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [e1, map_add, map_pow, map_sum]
+      rw [e1, map_add (f := _), map_pow, map_sum]
     simp_rw [map_mul, map_pow]
     change (g : Mero) ^ n + ∑ i ∈ Finset.range n, (c i : Mero) * (g : Mero) ^ i = 0
     rw [← hG]
@@ -147,7 +147,7 @@ theorem holRep (X : Tower Ω ε) (hj : ∃ φ : ℂ → ℂ, DifferentiableOn �
   | add x y _ _ hx hy =>
     obtain ⟨φ, h1, h2⟩ := hx
     obtain ⟨ψ, h3, h4⟩ := hy
-    exact ⟨φ + ψ, h1.add h3, by rw [map_add, h2, h4, Filter.Germ.coe_add]⟩
+    exact ⟨φ + ψ, h1.add h3, by rw [map_add (f := _), h2, h4, Filter.Germ.coe_add]⟩
   | mul x y _ _ hx hy =>
     obtain ⟨φ, h1, h2⟩ := hx
     obtain ⟨ψ, h3, h4⟩ := hy
@@ -158,7 +158,7 @@ theorem sl_eq_of_mem (X : Tower Ω ε) {r : X.K} (hr : r ∈ Algebra.adjoin Ω {
   induction hr using Algebra.adjoin_induction with
   | mem x hx => rw [Set.mem_singleton_iff.1 hx]; exact X.j_inv γ
   | algebraMap c => exact (X.sl (ofSL γ)).commutes c
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | mul x y _ _ hx hy => rw [map_mul, hx, hy]
 
 theorem exists_denom (X : Tower Ω ε) {c : X.K} (hc : c ∈ IntermediateField.adjoin Ω {X.jK}) :

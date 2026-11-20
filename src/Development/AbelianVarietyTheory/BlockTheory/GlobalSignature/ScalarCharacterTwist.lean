@@ -83,7 +83,7 @@ def vpLat (P : HeightOneSpectrum (𝓞 E)) : Submodule (𝓞 E) (Sp E 1) where
     obtain ⟨z, hz, e⟩ := ha y hy
     obtain ⟨z', hz', e'⟩ := hb y hy
     refine ⟨z + z', P.asIdeal.add_mem hz hz', ?_⟩
-    rw [map_add, e, e', Pi.add_apply, mul_add]
+    rw [map_add (f := _), e, e', Pi.add_apply, mul_add]
   smul_mem' := by
     intro c a ha y hy
     obtain ⟨z, hz, e⟩ := ha y hy

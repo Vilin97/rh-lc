@@ -185,7 +185,7 @@ def toHilb : VV ℂ lam ≃ₗ[ℂ] Hilb lam hG := LinearEquiv.refl ℂ (VV ℂ 
     by_cases hx : (toHilb lam hG).symm x = 0
     · simp [hx]
     · exact (Complex.le_def.1 (pairK_pos lam hG _ hx).le).1
-  add_left x y z := by rw [map_add, map_add, LinearMap.add_apply]
+  add_left x y z := by rw [map_add (f := _), map_add (f := _), LinearMap.add_apply]
   smul_left x y r := by rw [map_smul, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul]
   definite x hx := by
     by_contra h
@@ -219,7 +219,7 @@ theorem continuous_coeff_blockAct {X : Type} [TopologicalSpace X] (M : X → ι 
   classical
   induction F using MvPolynomial.induction_on with
   | C a => intro m; simp only [algHom_C]; exact continuous_const
-  | add p q hp hq => intro m; simp only [map_add, MvPolynomial.coeff_add]; exact (hp m).add (hq m)
+  | add p q hp hq => intro m; simp only [map_add (f := _), MvPolynomial.coeff_add]; exact (hp m).add (hq m)
   | mul_X p v hp =>
     intro m
     simp only [map_mul, coeff_mul]

@@ -106,7 +106,7 @@ theorem evZero_stdB : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fie
     obtain ⟨φ, hφ, rfl⟩ := hbij.surjOn hf
     obtain ⟨χ, hχ, rfl⟩ := hbij.surjOn hg
     have hm : z • φ + χ ∈ SB (Fin a' × Fin (b + 2 + a') → Fv F v.1) := add_mem (Submodule.smul_mem _ z hφ) hχ
-    rw [← map_smul, ← map_add, hS _ hm, hS _ hφ, hS _ hχ, map_add, map_smul, map_add, map_smul]
+    rw [← map_smul, ← map_add (f := _), hS _ hm, hS _ hφ, hS _ hχ, map_add (f := _), map_smul, map_add (f := _), map_smul]
   have hT3 : ∀ f ∈ SB (Matrix (Fin a') (Fin (b + 2 + a')) (Fv F v.1)), ∀ r : Fin a' → Fv F v.1,
       S (fun Z => f (Z + Matrix.vecMulVec r (Pi.single ⟨b + 1, by omega⟩ 1))) = S f := by
     intro f hf r

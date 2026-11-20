@@ -34,7 +34,7 @@ theorem map_defect {R S : Type*} [CommRing R] [CommRing S] (h : R →+* S)
     rw [hs _ (by simp) _]
     simp
   · rw [hs _ (by simp), hs _ (by simp), hs _ (by simp), hs _ (by simp)]
-    simp [map_add, map_sub]
+    simp [map_add (f := _), map_sub]
 
 end GlobalTheory.FrobStickMap
 

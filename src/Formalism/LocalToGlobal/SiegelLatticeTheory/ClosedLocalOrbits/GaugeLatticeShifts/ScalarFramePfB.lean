@@ -123,7 +123,7 @@ theorem betaP_lat (β : (VS D).V ≃ₗ[D.host.E] (VS D).V) (Λ : Submodule (�
     rw [betaP_bc]
     exact Submodule.subset_span ⟨β v, hβ v hv, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul c y _ hy =>
     have e : betaP p β (c • y) = c • betaP p β y := LinearMapClass.map_smul_of_tower _ c y
     rw [e]
@@ -139,7 +139,7 @@ theorem betaP_symm_lat (β : (VS D).V ≃ₗ[D.host.E] (VS D).V) (Λ : Submodule
     rw [betaP_symm_bc]
     exact Submodule.subset_span ⟨β.symm v, hβ v hv, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul c y _ hy =>
     have e : (betaP p β).symm (c • y) = c • (betaP p β).symm y := LinearMapClass.map_smul_of_tower _ c y
     rw [e]
@@ -161,7 +161,7 @@ theorem bcP_mem_X (u : Fin (D.R.rS + 1) → (VS D).V) (c : Fin (D.R.rS + 1) → 
     rw [h1]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul e y _ hy => rw [baseChange_smul₂]; exact Submodule.smul_mem _ _ hy
 
 theorem betaP_mem_X (β : (VS D).V ≃ₗ[D.host.E] (VS D).V) (u v : Fin (D.R.rS + 1) → (VS D).V)
@@ -181,7 +181,7 @@ theorem betaP_mem_X (β : (VS D).V ≃ₗ[D.host.E] (VS D).V) (u v : Fin (D.R.rS
     rw [map_smul, betaP_bc]
     exact Submodule.smul_mem _ _ (bcP_mem_X Z p v c hc (hmap a))
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul e y _ hy => rw [map_smul]; exact Submodule.smul_mem _ _ hy
 
 theorem betaP_symm_mem_X (β : (VS D).V ≃ₗ[D.host.E] (VS D).V) (u v : Fin (D.R.rS + 1) → (VS D).V)
@@ -201,7 +201,7 @@ theorem betaP_symm_mem_X (β : (VS D).V ≃ₗ[D.host.E] (VS D).V) (u v : Fin (D
     rw [map_smul, betaP_symm_bc]
     exact Submodule.smul_mem _ _ (bcP_mem_X Z p u c hc (hmap a))
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul e y _ hy => rw [map_smul]; exact Submodule.smul_mem _ _ hy
 
 end Beta

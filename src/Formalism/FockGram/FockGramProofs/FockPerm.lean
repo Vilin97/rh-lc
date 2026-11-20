@@ -73,7 +73,7 @@ lemma pderiv_lin (z : MvPolynomial τ R) (hz : z.IsHomogeneous 1) (k : τ) :
   by_cases hm : m = 0
   · subst hm; simp
   · rw [if_neg (Ne.symm hm), hz.coeff_eq_zero, zero_mul]
-    rw [map_add, Finsupp.degree_single]
+    rw [map_add (f := _), Finsupp.degree_single]
     intro h; apply hm
     rw [← Finsupp.degree_eq_zero_iff]; omega
 

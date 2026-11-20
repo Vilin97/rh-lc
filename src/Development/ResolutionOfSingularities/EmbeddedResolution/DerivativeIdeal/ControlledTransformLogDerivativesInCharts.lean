@@ -25,7 +25,7 @@ theorem partialDerivIdeal_iSup_le {κ : Sort*} (h : ι) (F : κ → Ideal S) :
   · simp only [map_zero]
     exact Submodule.zero_mem _
   · intro x y hx hy
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
 
 theorem partialDerivIdeal_biSup_le (h : ι) (n : ℕ) (F : ℕ → Ideal S) :

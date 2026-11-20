@@ -70,7 +70,7 @@ theorem cw_mem_integers {D : D7} {q : GlobalTheory.IndefiniteRowSideFullHecke.Sp
     induction a using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [e]
   exact toCompl_map_mem h _ ha
 

@@ -23,7 +23,7 @@ def EEl (i : ZMod n) : AddSubgroup W.EE where
   zero_mem' := ⟨smul_zero _, fun δ _ => map_zero _⟩
   add_mem' := by
     rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
-    exact ⟨by rw [smul_add, ha, hb], fun δ hδ => by rw [map_add, ha' δ hδ, hb' δ hδ]⟩
+    exact ⟨by rw [smul_add, ha, hb], fun δ hδ => by rw [map_add (f := _), ha' δ hδ, hb' δ hδ]⟩
   neg_mem' := by
     rintro a ⟨ha, ha'⟩
     exact ⟨by rw [smul_neg, ha], fun δ hδ => by rw [map_neg, ha' δ hδ]⟩

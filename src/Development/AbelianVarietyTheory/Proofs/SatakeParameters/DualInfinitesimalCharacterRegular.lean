@@ -279,7 +279,7 @@ theorem hasDerivAt_expDiag (δ : Fin a → Cinf E) :
 def expChar (p : ℤ × ℤ) : Multiplicative ℂ →* ℂ where
   toFun z := Complex.exp (p.1 * z.toAdd + p.2 * starRingEnd ℂ z.toAdd)
   map_one' := by simp
-  map_mul' x y := by rw [← Complex.exp_add]; congr 1; simp only [toAdd_mul, map_add]; ring
+  map_mul' x y := by rw [← Complex.exp_add]; congr 1; simp only [toAdd_mul, map_add (f := _)]; ring
 
 def laurent : Submodule ℂ (Multiplicative ℂ → ℂ) :=
   Submodule.span ℂ ((fun f : Multiplicative ℂ →* ℂ => (f : Multiplicative ℂ → ℂ)) '' Set.range expChar)
@@ -436,7 +436,7 @@ def dualL (Ξ : AlgRep E a) (i j : Fin a) : Cinf E →ₗ[ℝ] Matrix (Fin Ξ.d)
   map_add' x y := by
     have h : toL (Matrix.single i j (x + y)) = toL (Matrix.single i j x) + toL (Matrix.single i j y) :=
       congrArg toL (Matrix.single_add i j x y)
-    simp only [dualS, h, map_add, Matrix.transpose_add, neg_add]
+    simp only [dualS, h, map_add (f := _), Matrix.transpose_add, neg_add]
   map_smul' c x := by
     have h : toL (Matrix.single i j (c • x)) = c • toL (Matrix.single i j x) :=
       congrArg toL (Matrix.smul_single c i j x).symm
@@ -527,7 +527,7 @@ theorem commute_dmat (Ξ : AlgRep E a) (Z : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ)
       match_scalars
       · linear_combination Complex.I_mul_I
       · ring
-    rw [atEmb_eq, map_add, map_smul, map_smul, e1, e2]
+    rw [atEmb_eq, map_add (f := _), map_smul, map_smul, e1, e2]
     exact (((h _ _ _).add_right (h _ _ _)).smul_right _).add_right
       ((((h _ _ _).sub_right (h _ _ _)).smul_right _).smul_right _)
   have h2 : ∀ i j x, Commute Z (dualL Ξ i j x) := by

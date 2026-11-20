@@ -21,10 +21,10 @@ theorem isDer_tensor {R A M : Type*} [CommRing R] [CommRing A] [Algebra R A] [Co
       simp only [Algebra.TensorProduct.tmul_mul_tmul, TensorProduct.map_tmul, LinearMap.id_apply]
       rw [hd.mul, TensorProduct.add_tmul, mul_comm n m]
     | add y z hy hz =>
-      rw [mul_add, map_add, hy, hz, map_add, mul_add]
+      rw [mul_add, map_add (f := _), hy, hz, map_add (f := _), mul_add]
       ring
   | add x z hx hz =>
-    rw [add_mul, map_add, hx, hz, map_add, add_mul]
+    rw [add_mul, map_add (f := _), hx, hz, map_add (f := _), add_mul]
     ring
 
 theorem der_div_eq_zero {L : Type*} [Field L] {δ : L → L} (h : IsDer δ) {x y : L} (hx : δ x = 0) (hy : δ y = 0) :
@@ -44,11 +44,11 @@ theorem exists_derKp (p : Idx D j N) : ∃ δ : Kp X la N → Kp X la N, IsDer �
     ∀ c : X.Kl la, δ (algebraMap (X.Kl la) (Kp X la N) c) = 0 := by
   obtain ⟨δ, hδ, hf⟩ := IsDer.ofLoc (gI X la N).primeCompl
     (fun f => algebraMap (Pol X la N) (Op X la N) (MvPolynomial.pderiv p f))
-    (fun x y => by simp only [map_add])
-    (fun x y => by simp only [Derivation.leibniz, smul_eq_mul, map_add, map_mul])
+    (fun x y => by simp only [map_add (f := _)])
+    (fun x y => by simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul])
   obtain ⟨δ', hδ', h'⟩ := IsDer.ofLoc (nonZeroDivisors (Op X la N))
     (fun z => algebraMap (Op X la N) (Kp X la N) (δ z))
-    (fun x y => by simp only [hδ.add, map_add]) (fun x y => by simp only [hδ.mul, map_add, map_mul])
+    (fun x y => by simp only [hδ.add, map_add (f := _)]) (fun x y => by simp only [hδ.mul, map_add (f := _), map_mul])
   have hval : ∀ f : Pol X la N, δ' (algebraMap (Op X la N) (Kp X la N) (algebraMap (Pol X la N) (Op X la N) f)) =
       algebraMap (Op X la N) (Kp X la N) (algebraMap (Pol X la N) (Op X la N) (MvPolynomial.pderiv p f)) := by
     intro f
@@ -151,8 +151,8 @@ variable {N} {wL : WeightFamilies.Wt D j} (w : Fin N → B.Cusp j wL) (l : Fin N
 theorem exists_derLw : ∃ δ : Lw X la w → Lw X la w, IsDer δ ∧
     ∀ r, δ (algebraMap (Rp X la N) (Lw X la w) r) = algebraMap (Rp X la N) (Lw X la w) (dR X la N (0, l) r) :=
   IsDer.ofLoc (Submonoid.powers (sec X la w 0)) (fun r => algebraMap (Rp X la N) (Lw X la w) (dR X la N (0, l) r))
-    (fun x y => by simp only [(dR_isDer X la N (0, l)).add, map_add])
-    (fun x y => by simp only [(dR_isDer X la N (0, l)).mul, map_add, map_mul])
+    (fun x y => by simp only [(dR_isDer X la N (0, l)).add, map_add (f := _)])
+    (fun x y => by simp only [(dR_isDer X la N (0, l)).mul, map_add (f := _), map_mul])
 
 def dL : Lw X la w → Lw X la w := Classical.choose (exists_derLw X la w l)
 

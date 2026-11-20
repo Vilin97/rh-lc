@@ -255,7 +255,7 @@ theorem nlam_map (w : D.what₂.places.Pl) (hT : Y.A.T = X.A.T) (hemb : ∀ x, Y
     induction hz using Submodule.span_induction with
     | mem z hz => exact Submodule.subset_span (hlat z hz)
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
     | smul r a _ ha =>
       rw [Subring.smul_def, map_smul]
       exact Submodule.smul_mem _ r ha

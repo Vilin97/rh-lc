@@ -43,7 +43,7 @@ private theorem swapAE_map_sndA_eq_tauF (D : D7)
   | tmul a x =>
     exact (Formalism.L2.SG.AdBridge.tauF_tmul (Formalism.IndefR.RationalEmbedding.inst D) a x).symm
   | add a b ha hb =>
-    rw [map_add, map_add, ha, hb]
+    rw [map_add (f := _), map_add (f := _), ha, hb]
     exact (map_add _ a b).symm
 
 private theorem finE_Yc_zero_iota_symm (y : (Formalism.L2.SG.InstExistsPf.instOf D).GA) :

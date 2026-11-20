@@ -25,7 +25,7 @@ variable {K v}
 theorem isInt_zero : IsInt K v 0 := fun i => by simp
 
 theorem isInt_add {x y : Av K v} (hx : IsInt K v x) (hy : IsInt K v y) : IsInt K v (x + y) :=
-  fun i => by simpa only [map_add, Finsupp.add_apply] using add_mem (hx i) (hy i)
+  fun i => by simpa only [map_add (f := _), Finsupp.add_apply] using add_mem (hx i) (hy i)
 
 theorem isInt_neg {x : Av K v} (hx : IsInt K v x) : IsInt K v (-x) :=
   fun i => by simpa only [map_neg, Finsupp.neg_apply] using neg_mem (hx i)

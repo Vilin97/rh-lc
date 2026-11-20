@@ -199,7 +199,7 @@ theorem normFin_first_column_finite_pos : ∀ {F E : Type} [Field F] [NumberFiel
       { carrier := {z | hE σ J z x = 0}
         add_mem' := fun {z z'} (h : hE σ J z x = 0) (h' : hE σ J z' x = 0) => by
           change hE σ J (z + z') x = 0
-          simp only [hE, Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib] at h h' ⊢
+          simp only [hE, Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib] at h h' ⊢
           rw [h, h', add_zero]
         zero_mem' := by change hE σ J 0 x = 0; simp [hE, Formalism.UG.hform]
         smul_mem' := fun c z (h : hE σ J z x = 0) => by

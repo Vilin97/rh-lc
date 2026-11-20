@@ -51,7 +51,7 @@ theorem h_sum_right {ι : Type} (s : Finset ι) (x : n → A) (y : ι → n → 
     simpa only [hL_apply] using map_sum (D.hL x) y s
 
 theorem h_add_left (x x' y : n → A) : D.h (x + x') y = D.h x y + D.h x' y := by
-  simp only [h, hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [h, hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem h_smul_left (x y : n → A) (c : A) : D.h (c • x) y = D.σA c * D.h x y := by
   simp only [h, hform, Pi.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum]

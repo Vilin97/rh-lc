@@ -100,7 +100,7 @@ theorem schr_line {κ : Type} [Fintype κ] [Invertible (2 : AF F)] (ψ : AddChar
       t * Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (y ⬝ᵥ fun i => evI F (b i)) +
         t ^ 2 * Algebra.trace ℝ (mixedEmbedding.mixedSpace F)
           (evI F ⅟(2 : AF F) * ((fun i => evI F (a i)) ⬝ᵥ fun i => evI F (b i))) := by
-    rw [he, map_smul, map_add, map_smul, smul_eq_mul, smul_eq_mul]
+    rw [he, map_smul, map_add (f := _), map_smul, smul_eq_mul, smul_eq_mul]
     ring
   have hg : (fun i => evI F (((fun i => ofInf F (y i)) + realAd F t • a) i)) = y + t • fun i => evI F (a i) := by
     funext i

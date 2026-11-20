@@ -56,7 +56,7 @@ theorem one_add_pow_mem (j : ℕ) : (1 + vv k) ^ j ∈ Dp k 0 :=
 
 theorem mem_of_one_add_mul {s : ℤ} {x : k⸨X⸩} (h : (1 + vv k) * x ∈ Dp k s) : x ∈ Dp k s := by
   have h0 := congrArg (fun a : k⟦X⟧ => (a : k⸨X⸩)) (powerSeries_oneAddConstMulX_mul_inv (1 : k))
-  simp only [map_one, one_mul, map_mul, map_add, ← vv_eq_coe_X] at h0
+  simp only [map_one, one_mul, map_mul, map_add (f := _), ← vv_eq_coe_X] at h0
   have := Dp_mul (coe_mem (inv1 (1 : k))) h (u := s) (by simp)
   rwa [← mul_assoc, mul_comm _ (1 + vv k), h0, one_mul] at this
 
@@ -208,7 +208,7 @@ variable [CharP k l]
 
 theorem phi_one_add : phiPi k l (1 + vv k) = (1 + vv k) ^ l := by
   haveI : CharP k⸨X⸩ l := charP_of_injective_algebraMap (algebraMap k k⸨X⸩).injective l
-  rw [map_add, map_one, phiPi_vv, add_pow_char, one_pow]
+  rw [map_add (f := _), map_one, phiPi_vv, add_pow_char, one_pow]
 
 theorem mem_of_assemble_mem {s : ℤ} {y : Fin l → k⸨X⸩} (h : assemble k l y ∈ Dp k (l * s)) (j : Fin l) :
     y j ∈ Dp k s := by
@@ -255,7 +255,7 @@ theorem hom_opp (σ : k⟦X⟧ →+* k⟦X⟧) (m : ℕ) (h : σ (1 + PowerSerie
     σ (onePlusPow k l z) = onePlusPow k l z ^ m := by
   haveI : CharP k⟦X⟧ l := charP_of_injective_algebraMap (algebraMap k k⟦X⟧).injective l
   have hX : PowerSeries.X ∣ σ PowerSeries.X := by
-    rw [map_add, map_one, ← eq_sub_iff_add_eq'] at h
+    rw [map_add (f := _), map_one, ← eq_sub_iff_add_eq'] at h
     rw [h, PowerSeries.X_dvd_iff]; simp
   have key : ∀ N : ℕ, PowerSeries.X ^ N ∣ σ (onePlusPow k l z) - onePlusPow k l z ^ m := by
     intro N
@@ -294,7 +294,7 @@ theorem delPi_comm (t : ℤ_[l]ˣ) (m : ℕ) (h0 : PowerSeries.constantCoeff ((1
       PowerSeries.subst ((1 + PowerSeries.X : k⟦X⟧) ^ m - 1) (onePlusPow k l t - 1) := by
     have := hom_opp (PowerSeries.substAlgHom ha : k⟦X⟧ →ₐ[k] k⟦X⟧).toRingHom m
       (by simp [PowerSeries.substAlgHom_X]) t
-    rw [← PowerSeries.coe_substAlgHom ha, ← PowerSeries.coe_substAlgHom hb, map_sub, map_sub, map_pow, map_add,
+    rw [← PowerSeries.coe_substAlgHom ha, ← PowerSeries.coe_substAlgHom hb, map_sub, map_sub, map_pow, map_add (f := _),
       PowerSeries.substAlgHom_X, map_one, map_one]
     rw [show (PowerSeries.substAlgHom ha : k⟦X⟧ →ₐ[k] k⟦X⟧) (onePlusPow k l t) = _ from this]
     simp
@@ -328,7 +328,7 @@ theorem phi_opp (w : ℤ_[l]) :
   rfl
 
 theorem del_one_add (t : ℤ_[l]ˣ) : delPi k t (1 + vv k) = ((onePlusPow k l t : k⟦X⟧) : k⸨X⸩) := by
-  rw [map_add, map_one, vv_eq, delPi_coe,
+  rw [map_add (f := _), map_one, vv_eq, delPi_coe,
     PowerSeries.subst_X (PowerSeries.HasSubst.of_constantCoeff_zero'
       (show PowerSeries.constantCoeff (onePlusPow k l t - 1) = 0 from binom_const _))]
   simp
@@ -368,7 +368,7 @@ theorem del_gam (t : ℤ_[l]ˣ) (x : k⸨X⸩) : delPi k t (gamPi k l x) = gamPi
 theorem gam_int (a : k⟦X⟧) : ∃ b : k⟦X⟧, gamPi k l (a : k⸨X⸩) = b := ⟨_, extend_coe _ _ a⟩
 
 theorem gam_one_add : gamPi k l (1 + vv k) = (1 + vv k) ^ (1 + l) := by
-  rw [map_add, map_one, vv_eq, gamPi, extend_coe, PowerSeries.substAlgHom_X]
+  rw [map_add (f := _), map_one, vv_eq, gamPi, extend_coe, PowerSeries.substAlgHom_X]
   simp
 
 theorem gam_phi (x : k⸨X⸩) : gamPi k l (phiPi k l x) = phiPi k l (gamPi k l x) := by
@@ -381,7 +381,7 @@ theorem gam_phi (x : k⸨X⸩) : gamPi k l (phiPi k l x) = phiPi k l (gamPi k l 
     rw [PowerSeries.subst_comp_subst_apply ha hb, PowerSeries.subst_comp_subst_apply hb ha]
     congr 2
     rw [← PowerSeries.coe_substAlgHom ha, ← PowerSeries.coe_substAlgHom hb]
-    simp only [map_sub, map_pow, map_add, map_one, PowerSeries.substAlgHom_X, add_sub_cancel, ← pow_mul, mul_comm]
+    simp only [map_sub, map_pow, map_add (f := _), map_one, PowerSeries.substAlgHom_X, add_sub_cancel, ← pow_mul, mul_comm]
   exact RingHom.congr_fun this x
 
 theorem gam_pow (j : ℕ) : gamPi k l ((1 + vv k) ^ j) = (1 + vv k) ^ j * phiPi k l ((1 + vv k) ^ j) := by
@@ -393,11 +393,11 @@ theorem psi_gam (x : k⸨X⸩) : psiPi k l (gamPi k l x) = gamPi k l (psiPi k l 
 theorem gam_vv (h5 : 5 ≤ l) : ∃ c : k⟦X⟧, gamPi k l (vv k) = vv k * (1 + (c : k⸨X⸩) * vv k ^ 2) := by
   haveI : CharP k⸨X⸩ l := charP_of_injective_algebraMap (algebraMap k k⸨X⸩).injective l
   have h := gam_one_add (k := k) (l := l)
-  rw [map_add, map_one, pow_add, pow_one, add_pow_char, one_pow] at h
+  rw [map_add (f := _), map_one, pow_add, pow_one, add_pow_char, one_pow] at h
   obtain ⟨e, he⟩ : ∃ e, l = e + 3 := ⟨l - 3, by omega⟩
   rw [show vv k ^ l = vv k ^ (e + 3) by rw [← he]] at h
   refine ⟨PowerSeries.X ^ e * (1 + PowerSeries.X), ?_⟩
-  simp only [map_mul, map_pow, map_add, map_one, ← vv_eq]
+  simp only [map_mul, map_pow, map_add (f := _), map_one, ← vv_eq]
   linear_combination h
 
 theorem gam_sub_mem (h5 : 5 ≤ l) {x : k⸨X⸩} (hx : x ∈ Dp k 0) : gamPi k l x - x ∈ Dp k 2 := by
@@ -407,7 +407,7 @@ theorem gam_sub_mem (h5 : 5 ≤ l) {x : k⸨X⸩} (hx : x ∈ Dp k 0) : gamPi k 
     intro s hs h a
     set b : k⟦X⟧ := PowerSeries.mk fun n => PowerSeries.coeff (n + 1) a
     have ha : (a : k⸨X⸩) = vv k * (b : k⸨X⸩) + algebraMap k k⸨X⸩ (PowerSeries.constantCoeff a) := by
-      conv_lhs => rw [PowerSeries.eq_X_mul_shift_add_const a, map_add, map_mul, ← vv_eq_coe_X]
+      conv_lhs => rw [PowerSeries.eq_X_mul_shift_add_const a, map_add (f := _), map_mul, ← vv_eq_coe_X]
       rfl
     obtain ⟨t, ht⟩ := gam_int (l := l) b
     have : gamPi k l a - a = vv k ^ 1 * (gamPi k l b - b) + vv k ^ 3 * ((c * t : k⟦X⟧) : k⸨X⸩) := by

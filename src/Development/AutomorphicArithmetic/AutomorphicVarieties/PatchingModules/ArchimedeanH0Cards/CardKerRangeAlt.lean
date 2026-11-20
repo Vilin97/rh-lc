@@ -54,7 +54,7 @@ private theorem comp_mem_Zu_of_equivariant {A G : Type} [CommRing A] [Group G] [
   refine ⟨(mem_Z1_iff_cocycle _ _).2 ⟨?_, ?_⟩, ?_⟩
   · exact (continuous_of_discreteTopology (f := u)).comp hzc.1
   · intro g h
-    simp only [hzc.2 g h, map_add, hu]
+    simp only [hzc.2 g h, map_add (f := _), hu]
   · intro g hg
     simp only [hz'.2 g hg, map_zero]
 

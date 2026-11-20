@@ -27,7 +27,7 @@ private theorem gt_prj (c : Fin 4 → R) (Y : M4 R) (i : Fin 4) :
   have h : ∀ p : R[X], aeval (f.mapMatrix Y) (p.map f) = f.mapMatrix (aeval Y p) := by
     intro p
     induction p using Polynomial.induction_on' with
-    | add p q hp hq => rw [Polynomial.map_add, map_add, map_add, map_add, hp, hq]
+    | add p q hp hq => rw [Polynomial.map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
     | monomial n a =>
       rw [Polynomial.map_monomial, aeval_monomial, aeval_monomial, map_mul, map_pow,
         Algebra.algebraMap_eq_smul_one, Algebra.algebraMap_eq_smul_one, gt_smul, map_one]

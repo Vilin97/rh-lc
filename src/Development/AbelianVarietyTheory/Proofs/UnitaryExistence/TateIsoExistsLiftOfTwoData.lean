@@ -146,7 +146,7 @@ noncomputable def familyUnifTateIso (hP : IsPeriod (U.Di i) ty P) :
   ζ_prim _ hn := expNegUnit_isPrimitiveRoot hn
   ζ_pow _ _ hn hm := expNegUnit_mul_pow hn hm
   ev n a := U.ex i P ((n : ℂ)⁻¹ • P a)
-  add n a b := by rw [map_add, smul_add, U.ex_add i P hP]
+  add n a b := by rw [map_add (f := _), smul_add, U.ex_add i P hP]
   lin n c a := by
     rw [← U.ex_lin i P hP]
     congr 1

@@ -19,7 +19,7 @@ private theorem mm_base (D : Dat ℚ E) (u : ℚ) : mm D u 0 = algebraMap ℚ E 
 private theorem σ_alg (D : Dat ℚ E) (u : ℚ) : D.σ (algebraMap ℚ E u) = algebraMap ℚ E u := D.σ.commutes u
 
 private theorem σ_mm (D : Dat ℚ E) (u t : ℚ) : D.σ (mm D u t) = mm D u (-t) := by
-  simp only [mm, map_add, map_mul, σ_alg, D.conj, map_neg]; ring
+  simp only [mm, map_add (f := _), map_mul, σ_alg, D.conj, map_neg]; ring
 
 private theorem mm_mul (D : Dat ℚ E) (u t : ℚ) :
     mm D u t * mm D u (-t) = algebraMap ℚ E (u ^ 2 - D.δ * t ^ 2) := by

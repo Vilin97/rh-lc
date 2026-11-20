@@ -132,8 +132,8 @@ theorem UpperTheory.Gal.G3.pTransOrbit :
       refine ⟨m₁ - m₂ + ((L.actG w₀) m - (L.actG w) m), ?_, ?_⟩
       · exact add_mem (sub_mem hm₁ hm₂) (sub_mem (UpperTheory.Gal.Int.Geo.integ_of_mem (kn1 hw₀) _ hm)
           (UpperTheory.Gal.Int.Geo.integ_of_mem (kn1 hw) _ hm))
-      · rw [map_mul, Module.End.mul_apply, hz, map_add, map_nsmul, e₁]
-        rw [hz, map_add, map_nsmul, e₂] at hback
+      · rw [map_mul, Module.End.mul_apply, hz, map_add (f := _), map_nsmul, e₁]
+        rw [hz, map_add (f := _), map_nsmul, e₂] at hback
         rw [← hback]
         simp only [smul_add, smul_sub]
         abel

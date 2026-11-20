@@ -322,7 +322,7 @@ theorem inPN_add {k : ℕ} {x x' : W.DD T} (h : Formalism.MainNotions.Crystallin
     (h' : Formalism.MainNotions.CrystallineLiftingInputs.InPN W T k x') : Formalism.MainNotions.CrystallineLiftingInputs.InPN W T k (x + x') := by
   obtain ⟨y, hy, hΔ, rfl⟩ := h
   obtain ⟨y', hy', hΔ', rfl⟩ := h'
-  exact ⟨y + y', (W.N T).add_mem hy hy', fun δ hδ => by rw [map_add, hΔ δ hδ, hΔ' δ hδ],
+  exact ⟨y + y', (W.N T).add_mem hy hy', fun δ hδ => by rw [map_add (f := _), hΔ δ hδ, hΔ' δ hδ],
     (smul_add _ _ _).symm⟩
 
 theorem dl_smul {i : ZMod n} {x : W.DD T} (a : O) (h : Formalism.MainNotions.CrystallineLiftingInputs.DL W T i x) :
@@ -331,7 +331,7 @@ theorem dl_smul {i : ZMod n} {x : W.DD T} (a : O) (h : Formalism.MainNotions.Cry
 
 theorem dl_add {i : ZMod n} {x x' : W.DD T} (h : Formalism.MainNotions.CrystallineLiftingInputs.DL W T i x)
     (h' : Formalism.MainNotions.CrystallineLiftingInputs.DL W T i x') : Formalism.MainNotions.CrystallineLiftingInputs.DL W T i (x + x') :=
-  ⟨by rw [smul_add, h.1, h'.1], fun δ hδ => by rw [map_add, h.2 δ hδ, h'.2 δ hδ]⟩
+  ⟨by rw [smul_add, h.1, h'.1], fun δ hδ => by rw [map_add (f := _), h.2 δ hδ, h'.2 δ hδ]⟩
 
 theorem pow_smul_mem_mul {M : Type} [AddCommGroup M] [Module (LetA O n) M]
     (N : Submodule (LetA O n) M) {a r : LetA O n} {x : M} {k K : ℕ} (hK : k ≤ K)
@@ -374,7 +374,7 @@ theorem inI_add {i : ZMod n} {x x' : W.DD T} (h : Formalism.MainNotions.Crystall
   obtain ⟨h1', h2', h3'⟩ := h'
   refine ⟨dl_add W T h1 h1', polesFin_add W T h2 h2', ?_⟩
   have e : W.γ T (x + x') - (x + x') = (W.γ T x - x) + (W.γ T x' - x') := by
-    rw [map_add]; abel
+    rw [map_add (f := _)]; abel
   rw [e]
   exact inPN_add W T h3 h3'
 
@@ -440,7 +440,7 @@ theorem lattice_bound_three_six_of [NeZero n] (W : LocWach PD LL O v n) (h345 : 
     have key : ((PD.p : O) ^ (j + (e₆ + e₂))) • w (Submodule.inclusion (h₂.trans h₁) f) -
         W.map F (((PD.p : O) ^ j) • (((PD.p : O) ^ e₆) • y (Submodule.inclusion h₂ f) + x)) =
         ((PD.p : O) ^ j) • (((PD.p : O) ^ e₆) • w' (Submodule.inclusion h₂ f) - W.map F x) := by
-      rw [hw', hinc, LinearMap.map_smul_of_tower, map_add, LinearMap.map_smul_of_tower]
+      rw [hw', hinc, LinearMap.map_smul_of_tower, map_add (f := _), LinearMap.map_smul_of_tower]
       module
     rw [key]
     exact inPN_smul W T₂ _ hxP
@@ -455,7 +455,7 @@ theorem lattice_bound_three_six_of [NeZero n] (W : LocWach PD LL O v n) (h345 : 
     have key : ((PD.p : O) ^ (j + (e₆ + e₂) + 3 * S)) • w f -
         W.map F (((PD.p : O) ^ j) • (((PD.p : O) ^ (e₆ + 2 * S)) • y0 f + x)) =
         ((PD.p : O) ^ j) • (((PD.p : O) ^ (e₆ + 2 * S)) • w'' f - W.map F x) := by
-      rw [hw'', LinearMap.map_smul_of_tower, map_add, LinearMap.map_smul_of_tower]
+      rw [hw'', LinearMap.map_smul_of_tower, map_add (f := _), LinearMap.map_smul_of_tower]
       module
     rw [key]
     exact inPN_smul W T₂ _ hxP

@@ -21,7 +21,7 @@ variable {p : ℕ} [Fact p.Prime]
 def intAf (p : ℕ) : AddSubgroup (AfP p) where
   carrier := {a | IsIntAf a}
   zero_mem' := fun v => by simp
-  add_mem' := fun ha hb v => by rw [map_add]; exact add_mem (ha v) (hb v)
+  add_mem' := fun ha hb v => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha v) (hb v)
   neg_mem' := fun ha v => by rw [map_neg]; exact neg_mem (ha v)
 
 def extF (D : Datum p) (f : D.La →ₗ[ℤ] ℤ) : AfP p ⊗[ℚ] VQ D →ₗ[AfP p] AfP p :=
@@ -41,7 +41,7 @@ theorem extF_mem (D : Datum p) (f : D.La →ₗ[ℤ] ℤ) {w : AfP p ⊗[ℚ] VQ
     rw [extF_tmul, map_mul, map_intCast]
     exact mul_mem (ha v) (intCast_mem _ _)
   | zero => simpa using (intAf p).zero_mem
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem int_dvd (D : Datum p) (f : D.La →ₗ[ℤ] ℤ) (x : D.La) (n : ℕ) (hn : 0 < n) (hnp : n.Coprime p)

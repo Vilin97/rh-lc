@@ -967,7 +967,7 @@ theorem IsWt.mul {u v : Γ(G.left, V)} {χ χ' : X} (hu : IsWt i V u χ) (hv : I
 
 theorem IsWt.add {u v : Γ(G.left, V)} {χ : X} (hu : IsWt i V u χ) (hv : IsWt i V v χ) : IsWt i V (u + v) χ := by
   intro Z t g h₁ h₂
-  simp only [map_add]
+  simp only [map_add (f := _)]
   rw [hu Z t g h₁ h₂, hv Z t g h₁ h₂]
   ring
 

@@ -459,7 +459,7 @@ theorem harmonicMaps_of (hn : 1 ≤ n) (F : FockData T0 T1 T2) (D : DSRep T1) (W
   · induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul e v => rw [hio, hI.1, hWk e e.2 a b, TensorProduct.zero_tmul, map_zero]
-    | add y z hy hz => rw [map_add, map_add, hy, hz, add_zero]
+    | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz, add_zero]
   · have h1 := hip (x - x') (x - x') v v
     have h2 : I ((x - x') ⊗ₜ v) = 0 := by
       rw [TensorProduct.sub_tmul, map_sub]

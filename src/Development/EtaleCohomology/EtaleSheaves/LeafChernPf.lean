@@ -89,7 +89,7 @@ theorem LeafChern_of : LeafChern := by
       (∀ j, N < j → c j = 0) ∧ Phi V (ac c) = -cpow q (c1 q (PB.line V)) N) := by
     intro c h0
     unfold IsChern
-    rw [sum_eq P h V c h0, ← P.ι_cpow, ← map_add, map_eq_zero_iff _ (hι _ _), add_eq_zero_iff_neg_eq, eq_comm]
+    rw [sum_eq P h V c h0, ← P.ι_cpow, ← map_add (f := _), map_eq_zero_iff _ (hι _ _), add_eq_zero_iff_neg_eq, eq_comm]
     simp only [h0, true_and]
     exact and_congr_right fun _ => eq_comm
   have uniq : ∀ c c', IsChern P h V c → IsChern P h V c' → c = c' := by

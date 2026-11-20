@@ -528,7 +528,7 @@ def formsFl (KO : Type) [Field KO] [NumberField KO] (eO : 𝓞 KO ≃+* D.what�
     rw [map_mul, norm_mul]
   supN_add := fun _ _ σ F G => by
     show ‖σ (F + G)‖ ≤ ‖σ F‖ + ‖σ G‖
-    rw [map_add]; exact norm_add_le _ _
+    rw [map_add (f := _)]; exact norm_add_le _ _
   l2NormAlt := fun _ _ σ F => ‖σ F‖
   l2Norm_nonneg_bis := fun _ _ _ _ => norm_nonneg _
   l2Norm_eq_zero_iff := fun _ _ σ F => by rw [norm_eq_zero, map_eq_zero_iff σ σ.injective]
@@ -537,7 +537,7 @@ def formsFl (KO : Type) [Field KO] [NumberField KO] (eO : 𝓞 KO ≃+* D.what�
     rw [map_mul, norm_mul]
   l2Norm_add_le' := fun _ _ σ F G => by
     show ‖σ (F + G)‖ ≤ ‖σ F‖ + ‖σ G‖
-    rw [map_add]; exact norm_add_le _ _
+    rw [map_add (f := _)]; exact norm_add_le _ _
   l2Norm_le_supNorm_alt := fun _ _ _ _ => le_rfl
   Cu := fun _ => PUnit.{1}
   Xc := fun j _ => Submodule.span (𝓞 D.host.E) (Set.range (Pi.basisFun D.host.E (Fin (WeightFamilies.rho D j))))

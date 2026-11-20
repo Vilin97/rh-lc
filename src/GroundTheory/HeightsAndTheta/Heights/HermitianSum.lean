@@ -25,7 +25,7 @@ def coreComap (h : InnerProductSpace.Core ℂ W) (f : V →ₗ[ℂ] W) (hf : Fun
   inner x y := h.inner (f x) (f y)
   conj_inner_symm x y := h.conj_inner_symm (f x) (f y)
   re_inner_nonneg x := h.re_inner_nonneg (f x)
-  add_left x y z := by simp only [map_add, h.add_left]
+  add_left x y z := by simp only [map_add (f := _), h.add_left]
   smul_left x y r := by simp only [map_smul, h.smul_left]
   definite x hx := hf (by rw [map_zero]; exact h.definite _ hx)
 
@@ -38,9 +38,9 @@ def coreProd (hV : InnerProductSpace.Core ℂ V) (hW : InnerProductSpace.Core �
     InnerProductSpace.Core ℂ (V × W) where
   inner x y := hV.inner x.1 y.1 + hW.inner x.2 y.2
   conj_inner_symm x y := by
-    rw [map_add, hV.conj_inner_symm, hW.conj_inner_symm]
+    rw [map_add (f := _), hV.conj_inner_symm, hW.conj_inner_symm]
   re_inner_nonneg x := by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_nonneg (hV.re_inner_nonneg _) (hW.re_inner_nonneg _)
   add_left x y z := by
     simp only [Prod.fst_add, Prod.snd_add, hV.add_left, hW.add_left]
@@ -91,7 +91,7 @@ theorem fibreProd_conjMap (x : Fibre σ (E × F)) :
   | zero => simp only [map_zero, Prod.fst_zero, Prod.snd_zero, Prod.mk_zero_zero]
   | tmul z v => rfl
   | add x y hx hy =>
-    rw [map_add, map_add, hx, hy, map_add, Prod.fst_add, Prod.snd_add, map_add, map_add,
+    rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), Prod.fst_add, Prod.snd_add, map_add (f := _), map_add (f := _),
       Prod.mk_add_mk]
 
 end Split

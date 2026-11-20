@@ -328,14 +328,14 @@ theorem seminormOfForm : SeminormOfForm := by
     have hx := hC v
     have hy := hC w
     have hcy : CCS a mmB S ((t : ℂ) • M.ev w) := by rw [← map_smul]; exact hC _
-    have hs : CCS a mmB S (M.ev v + (t : ℂ) • M.ev w) := by rw [← map_smul, ← map_add]; exact hC _
+    have hs : CCS a mmB S (M.ev v + (t : ℂ) • M.ev w) := by rw [← map_smul, ← map_add (f := _)]; exact hC _
     have e1 : bet (M.ev v + (t : ℂ) • M.ev w) (M.ev v + (t : ℂ) • M.ev w) =
         bet (M.ev v) (M.ev v) + (t : ℂ) * bet (M.ev v) (M.ev w) + (t : ℂ) * bet (M.ev w) (M.ev v) +
           (t : ℂ) * ((t : ℂ) * bet (M.ev w) (M.ev w)) := by
       rw [hadd1 _ _ _ hx hcy hs, hadd2 _ _ _ hx hx hcy, hadd2 _ _ _ hcy hx hcy,
         hsm2 _ _ _ hx hy, hsm1 _ _ _ hy hx, hsm1 _ _ _ hy hcy, hsm2 _ _ _ hy hy, Complex.conj_ofReal]
       ring
-    rw [map_add, map_smul, e1]
+    rw [map_add (f := _), map_smul, e1]
     simp only [Complex.add_re, Complex.re_ofReal_mul]
     ring
   have disc : ∀ v w : V, ∀ t : ℝ, 0 ≤ (bet (M.ev w) (M.ev w)).re * (t * t) +

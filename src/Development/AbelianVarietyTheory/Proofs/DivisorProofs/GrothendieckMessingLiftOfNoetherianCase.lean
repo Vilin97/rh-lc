@@ -59,7 +59,7 @@ theorem frame_bc {σ : S →+* R} {n : ℕ} {p : Fin n → P} {l : Fin n → Dua
       conv_rhs => rw [← hp c, map_sum]
     simp [hl, LinearMap.map_smulₛₗ]
   | zero => simp
-  | add a b _ _ ha hb => simp only [map_add, add_smul, Finset.sum_add_distrib, ha, hb]
+  | add a b _ _ ha hb => simp only [map_add (f := _), add_smul, Finset.sum_add_distrib, ha, hb]
   | smul r a _ ha => simp only [map_smul, smul_eq_mul, mul_smul, ← Finset.smul_sum, ha]
 
 theorem dual_frame {n : ℕ} {p : Fin n → P} {l : Fin n → Dual S P}
@@ -167,7 +167,7 @@ theorem ann_bc {Q Q' : Type*} [AddCommGroup Q] [Module S Q] [AddCommGroup Q'] [M
       exact (Submodule.mem_dualAnnihilator _).1 hu _
         (hW ▸ Submodule.subset_span ⟨_, Submodule.projection_apply_mem hN c, rfl⟩)
     have : v (f (θ c)) = v (f (q (θ c))) := by
-      conv_lhs => rw [← Submodule.projection_add_projection_eq_self hN c, map_add, map_add, map_add, z,
+      conv_lhs => rw [← Submodule.projection_add_projection_eq_self hN c, map_add (f := _), map_add (f := _), map_add (f := _), z,
         zero_add]
       simp [q]
     rw [this, ← hp (q (θ c))]
@@ -213,7 +213,7 @@ theorem bc_facts (P : AbelianDeRham) {S R : Type} [CommRing S] [CommRing R] {σ 
   obtain ⟨z, rfl⟩ := h₁.2 c
   induction z with
   | zero => simp
-  | add x y hx hy => rw [map_add]; exact add_mem (hx trivial) (hy trivial)
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hx trivial) (hy trivial)
   | tmul x c => rw [liftSemi_tmul]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨c, rfl⟩)
 
 theorem exists_noeth_model (P : AbelianDeRham) {R : Type} [CommRing R] {g : ℕ} (A : Over (Sp R)) [GrpObj A]

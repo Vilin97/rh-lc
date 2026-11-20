@@ -40,14 +40,14 @@ theorem dual_weyl_type : ∀ (k n : ℕ) (h : k = n) (lam : DomWeight n) (H : Ty
 
   let j : H →ₗ[ℂ] MvPolynomial (Fin n × Fin n) ℂ :=
     { toFun := fun ξ => jE (J ξ)
-      map_add' := fun x y => by rw [map_add, map_add]
+      map_add' := fun x y => by rw [map_add (f := _), map_add (f := _)]
       map_smul' := fun c x => by
         rw [map_smulₛₗ, map_smulₛₗ, RingHom.id_apply, Complex.conj_conj] }
   have hj : ∀ ξ, j ξ = jE (J ξ) := fun _ => rfl
 
   let Φ : H →ₗ[ℂ] ConjSp E :=
     { toFun := fun ξ => ConjSp.mk (J ξ)
-      map_add' := fun x y => by rw [map_add]; rfl
+      map_add' := fun x y => by rw [map_add (f := _)]; rfl
       map_smul' := fun c x => by
         show ConjSp.mk (J (c • x)) = c • ConjSp.mk (J x)
         have e := (ConjSp.mkL E).map_smulₛₗ (starRingEnd ℂ c) (J x)

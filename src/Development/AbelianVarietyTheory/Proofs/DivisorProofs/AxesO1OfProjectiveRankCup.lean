@@ -103,10 +103,10 @@ theorem axesO1_of_cohomology_structure : (∀ (R : Type) [CommRing R] (A : Over 
   have hNP : N ∘ₗ P = LinearMap.id := by
     refine LinearMap.ext fun x ↦ Prod.ext ?_ ?_
     · show pb (lift (𝟙 A) 1) (pb (fst A A) x.1 + pb (snd A A) x.2) = x.1
-      rw [map_add, ← pb_comp, ← pb_comp, lift_fst, lift_snd, pb_id]
+      rw [map_add (f := _), ← pb_comp, ← pb_comp, lift_fst, lift_snd, pb_id]
       rw [show (1 : A ⟶ A) = toUnit A ≫ η[A] from rfl, pb_one, add_zero]
     · show pb (lift 1 (𝟙 A)) (pb (fst A A) x.1 + pb (snd A A) x.2) = x.2
-      rw [map_add, ← pb_comp, ← pb_comp, lift_fst, lift_snd, pb_id]
+      rw [map_add (f := _), ← pb_comp, ← pb_comp, lift_fst, lift_snd, pb_id]
       rw [show (1 : A ⟶ A) = toUnit A ≫ η[A] from rfl, pb_one, zero_add]
   have hinj := injective_of_section N P hNP (fun p ↦ by
     rw [Module.rankAtStalk_prod, Pi.add_apply, r1, r2])

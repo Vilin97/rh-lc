@@ -92,7 +92,7 @@ theorem padCond_k {ε : ℤˣ} (hε : d.b.1ᵀ * dbl d.Y.J * d.b.1.map σ = Matr
     have := congrFun (congrFun hc (L.em k)) (L.em l)
     simpa [_root_.PositivityTheory.SiegelWeilFormula.Act.C5.Meas.padZ_k, _root_.PositivityTheory.SiegelWeilFormula.Act.ComplexParameterFamilyContinuity.em_ne_k, _root_.PositivityTheory.SiegelWeilFormula.Act.C5.Meas.pre_em_k, Matrix.transpose_apply, smul_eq_mul] using this
   | zero => intro k l; simp
-  | add β β' _ _ h h' => intro k l; rw [Matrix.add_apply, Matrix.add_apply, h, h', map_add, mul_add, neg_add]
+  | add β β' _ _ h h' => intro k l; rw [Matrix.add_apply, Matrix.add_apply, h, h', map_add (f := _), mul_add, neg_add]
   | neg β _ h => intro k l; rw [Matrix.neg_apply, Matrix.neg_apply, h, map_neg, mul_neg]
 theorem sig_delta_k (hB : _root_.UpperTheory.TP.W.GoodK σ d.B) {ε : ℤˣ}
     (hε : d.b.1ᵀ * dbl d.Y.J * d.b.1.map σ = Matrix.fromBlocks 0 1 (((ε : ℤ) : E) • 1) 0) {δ : E}
@@ -120,7 +120,7 @@ theorem sig_delta_k (hB : _root_.UpperTheory.TP.W.GoodK σ d.B) {ε : ℤˣ}
   have e2 : ((ε : ℤ) : E) * ((ε : ℤ) : E) = 1 := eps_sq ε
   have h5 : ((ε : ℤ) : E) * σ δ + δ = 0 := by
     apply kfour.inclR_injective (F := F)
-    rw [map_add, map_mul, map_intCast, he, map_zero]
+    rw [map_add (f := _), map_mul, map_intCast, he, map_zero]
   push_cast
   linear_combination ((ε : ℤ) : E) * h5 - σ δ * e2
 def ins_k (e : AE F E) (δ : E) (x : ((Fin L.n → AE F E) × AF F) × Matrix (Fin L.n) (Fin L.n) (AE F E)) :
@@ -222,7 +222,7 @@ theorem pEquiv0_k {δ : E} (hδ0 : δ ≠ 0)
         · funext j
           rfl
         · show linearFormAdelic (F := F) δ ((β + β').1 L.i₀ L.i₀) = linearFormAdelic (F := F) δ (β.1 L.i₀ L.i₀) + linearFormAdelic (F := F) δ (β'.1 L.i₀ L.i₀)
-          rw [← map_add]
+          rw [← map_add (f := _)]
           rfl
       continuous_toFun := by
         refine Continuous.prodMk (Continuous.prodMk ?_ ?_) ?_

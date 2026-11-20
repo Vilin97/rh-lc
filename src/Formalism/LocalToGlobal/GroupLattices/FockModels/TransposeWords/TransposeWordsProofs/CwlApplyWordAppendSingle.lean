@@ -217,7 +217,7 @@ theorem cw_eval_coeffT (d : Fin r × Fin n →₀ ℕ) (y : Fin r × Fin n → R
         C (u.prod fun v k => y v ^ k) := by
       simp [Finsupp.prod, map_prod]
     rw [h, mul_comm c, coeff_C_mul, mul_comm]
-  | add p q hp hq => rw [cwl_coeffT_add, map_add, map_add, MvPolynomial.coeff_add, hp, hq]
+  | add p q hp hq => rw [cwl_coeffT_add, map_add (f := _), map_add (f := _), MvPolynomial.coeff_add, hp, hq]
 
 def cwUpd (l : Fin r × Fin r × (Fin r × Fin n)) (y : Fin r × Fin n → MvPolynomial (Fin r × Fin n) R) :
     Fin r × Fin n → MvPolynomial (Fin r × Fin n) R :=

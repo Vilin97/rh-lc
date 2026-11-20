@@ -63,7 +63,7 @@ theorem genAt_polMod : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (L
     rw [e, trace_coe_mul] at h
     have e2 : (a : maximalRealSubfield E) * (2 * c1 * Q x x') =
         c1 * (a * Q x x') + c1 * (a * Q x x') := by ring
-    rw [mul_sub, map_sub, h, e2, map_add]; ring
+    rw [mul_sub, map_sub, h, e2, map_add (f := _)]; ring
   have key2 : ∀ (k : maximalRealSubfield E), ∀ x ∈ L, ∀ x' ∈ L,
       Algebra.trace ℚ E ((k : E) * mu * x * IsCMField.complexConj E x') =
         Algebra.trace ℚ (maximalRealSubfield E) (k * (2 * c1 * Q x x')) := by
@@ -126,7 +126,7 @@ theorem genAt_polMod : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (L
         | zero => intro a; simp
         | add t u _ _ ht hu =>
           intro a
-          rw [mul_add, mul_add, map_add]
+          rw [mul_add, mul_add, map_add (f := _)]
           exact add_mem (ht a) (hu a)
         | smul b t _ ht =>
           intro a

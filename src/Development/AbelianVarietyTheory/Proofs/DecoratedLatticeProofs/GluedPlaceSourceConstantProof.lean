@@ -156,7 +156,7 @@ theorem exists_theta_exact {D : D7} (hLin : LinExact D) (k : Type) [Field k] [Va
     LinearMap.mk₂ ℂ (fun v Φ => liftA o om vA v (G Φ))
       (fun v v' Φ => liftA_add_left o hA vA hW v.2 v'.2 (hGt Φ))
       (fun c v Φ => liftA_smul_left o vA c v (G Φ))
-      (fun v Φ Φ' => by rw [map_add]; exact liftA_add_right o hA vA hW v.2 (hGt Φ) (hGt Φ'))
+      (fun v Φ Φ' => by rw [map_add (f := _)]; exact liftA_add_right o hA vA hW v.2 (hGt Φ) (hGt Φ'))
       (fun c v Φ => by rw [map_smul]; exact liftA_smul_right o vA c v (G Φ))
   have hθ : ∀ (v : CA A) Φ, θ v Φ = liftA o om vA v (G Φ) := fun _ _ => rfl
   refine ⟨θ, fun v Φ f h => by rw [hθ, hGf Φ f h], fun g v Φ hΦ => ?_⟩
@@ -265,7 +265,7 @@ theorem GlobalTheory.FinPl.sourceExact : ∀ D : D7, GlobalTheory.FinPl.SourceEx
       funext x₀
       rw [← hg, phiOne_smul_left, Matrix.mul_assoc, ← Units.val_mul, inv_mul_cancel, Units.val_one, Matrix.mul_one]
     rw [b1, b2, hθv _ _ _ (hΞ' Q hQ), coe_FFStar] at a2
-    rw [tensCol_add, map_add, a0, zero_add, a1, a2, map_inv, map_inv, Units.val_inv_eq_inv_val, inv_inv]
+    rw [tensCol_add, map_add (f := _), a0, zero_add, a1, a2, map_inv, map_inv, Units.val_inv_eq_inv_val, inv_inv]
     rfl
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_smul, map_add, map_sum, e0, zero_add, Finset.sum_congr rfl e1, ← Finset.smul_sum, smul_smul]
+    rw [map_smul, map_add (f := _), map_sum, e0, zero_add, Finset.sum_congr rfl e1, ← Finset.smul_sum, smul_smul]

@@ -52,7 +52,7 @@ theorem der_eqn {D : Derivation R A A} {W : WeierstrassCurve A} (hD : Const D W)
     (h : eqn W u w = 0) : fu W u w * D w = fw W u w * D u := by
   obtain ⟨h1, h2, h3, h4, h6⟩ := hD
   have := congrArg D h
-  simp only [eqn, map_add, map_sub, Derivation.leibniz, Derivation.leibniz_pow, h1, h2, h3, h4, h6,
+  simp only [eqn, map_add (f := _), map_sub, Derivation.leibniz, Derivation.leibniz_pow, h1, h2, h3, h4, h6,
     smul_eq_mul, nsmul_eq_mul, map_zero] at this
   simp only [fu, fw]
   push_cast at this
@@ -86,7 +86,7 @@ theorem third_flow [IsDomain A] {D : Derivation R A A} {W : WeierstrassCurve A} 
   have e₁ : D (l * u₁ + n) = 0 := by
     apply mul_left_cancel₀ j₁
     rw [der_eqn hD h₁, d₁, mul_zero, mul_zero]
-  simp only [map_add, Derivation.leibniz, smul_eq_mul, d₀, d₁] at e₀ e₁
+  simp only [map_add (f := _), Derivation.leibniz, smul_eq_mul, d₀, d₁] at e₀ e₁
   have hl : D l = k3 W l * (u₀ - u₃) := by
     apply mul_left_cancel₀ (sub_ne_zero.2 hne)
     linear_combination e₀ - e₁ + (third_eqn h₀ h₁ hne h₃).2
@@ -94,18 +94,18 @@ theorem third_flow [IsDomain A] {D : Derivation R A A} {W : WeierstrassCurve A} 
     rw [← hl]; linear_combination e₁
   obtain ⟨h1, h2, h3, h4, h6⟩ := hD
   have hk3 : D (k3 W l) = (W.a₂ + 2 * W.a₄ * l + 3 * W.a₆ * l ^ 2) * D l := by
-    simp only [k3, map_add, Derivation.leibniz, Derivation.leibniz_pow, h2, h4, h6,
+    simp only [k3, map_add (f := _), Derivation.leibniz, Derivation.leibniz_pow, h2, h4, h6,
       smul_eq_mul, nsmul_eq_mul, Derivation.map_one_eq_zero]
     push_cast
     ring
   have hk2 : D (k2 W l n) = (W.a₁ + 2 * W.a₃ * l + 2 * W.a₄ * n + 6 * W.a₆ * l * n) * D l +
       (W.a₂ + 2 * W.a₄ * l + 3 * W.a₆ * l ^ 2) * D n := by
-    simp only [k2, map_add, Derivation.leibniz, Derivation.leibniz_pow, h1, h2, h3, h4, h6,
+    simp only [k2, map_add (f := _), Derivation.leibniz, Derivation.leibniz_pow, h1, h2, h3, h4, h6,
       smul_eq_mul, nsmul_eq_mul, der_two, der_three]
     push_cast
     ring
   have := congrArg D h₃
-  simp only [map_add, map_sub, map_neg, Derivation.leibniz, smul_eq_mul, d₀, d₁, hk3, hk2, hl, hn] at this
+  simp only [map_add (f := _), map_sub, map_neg, Derivation.leibniz, smul_eq_mul, d₀, d₁, hk3, hk2, hl, hn] at this
   apply mul_left_cancel₀ hk
   generalize k3 W l = κ at *
   simp only [fu] at *
@@ -238,7 +238,7 @@ theorem exists_law [IsDomain R] (W : WeierstrassCurve R) :
     (a := 1 - V.a₁ * X 1 - V.a₂ * X 1 ^ 2 - V.a₃ * (w 0 + w 1) - V.a₄ * X 1 * (w 0 + w 1)
       - V.a₆ * (w 0 ^ 2 + w 0 * w 1 + w 1 ^ 2))
     (b := X 0 ^ 2 + X 0 * X 1 + X 1 ^ 2 + V.a₁ * w 0 + V.a₂ * (X 0 + X 1) * w 0 + V.a₄ * w 0 ^ 2)
-    (by simp [hw0]) (by simp only [map_add, map_mul, map_pow, hw0, constantCoeff_X]; ring)
+    (by simp [hw0]) (by simp only [map_add (f := _), map_mul, map_pow, hw0, constantCoeff_X]; ring)
   have hsl : w 0 - w 1 = l * (X 0 - X 1) := by
     have := eqn_sub (hwe 0) (hwe 1)
     rw [← hl] at this
@@ -396,7 +396,7 @@ theorem log_law [IsAddTorsionFree k] {W : WeierstrassCurve k} {U V ℓ : PowerSe
     have a4 : pderiv (R := k) i (PowerSeries.subst (X 0 : MvPowerSeries (Fin 2) k) ℓ +
       PowerSeries.subst (X 1 : MvPowerSeries (Fin 2) k) ℓ) =
         PowerSeries.subst (X i : MvPowerSeries (Fin 2) k) (PowerSeries.derivative (R := k) ℓ) := by
-      rw [map_add, GlobalTheory.FormalCalc.pderiv_powerSeries_subst (HX 0),
+      rw [map_add (f := _), GlobalTheory.FormalCalc.pderiv_powerSeries_subst (HX 0),
         GlobalTheory.FormalCalc.pderiv_powerSeries_subst (HX 1)]
       fin_cases i <;> simp [pderiv_X_of_ne]
     rw [id, a4, GlobalTheory.FormalCalc.pderiv_powerSeries_subst (PowerSeries.HasSubst.of_constantCoeff_zero hF)]
@@ -405,7 +405,7 @@ theorem log_law [IsAddTorsionFree k] {W : WeierstrassCurve k} {U V ℓ : PowerSe
     linear_combination r * a1 - p * pderiv (R := k) i F * a2 + p * r * C c * a3
   · have : α = 0 := Finsupp.ext hα
     subst this
-    simp only [coeff_zero_eq_constantCoeff_apply, map_add]
+    simp only [coeff_zero_eq_constantCoeff_apply, map_add (f := _)]
     rw [PowerSeries.constantCoeff_subst_eq_zero hF _ hℓ,
       PowerSeries.constantCoeff_subst_eq_zero (constantCoeff_X 0) _ hℓ,
       PowerSeries.constantCoeff_subst_eq_zero (constantCoeff_X 1) _ hℓ, add_zero]

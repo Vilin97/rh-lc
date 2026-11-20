@@ -607,7 +607,7 @@ theorem test_locId_same {F E : Type} [Field F] [NumberField F] [Field E] [Number
     Formalism.UG.prV (E := E) v ((locId E v a : (AfE F E)ˣ) : AfE F E) = (a : E) ⊗ₜ[F] (1 : v.adicCompletion F) := by
   show (Algebra.TensorProduct.map (AlgHom.id F E) (Formalism.UG.evalV F v))
     ((a : E) ⊗ₜ[F] Formalism.L2.G.sgl F v 1 + (1 : E) ⊗ₜ[F] (1 - Formalism.L2.G.sgl F v 1)) = _
-  rw [map_add, Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul, map_sub, Formalism.L2.G.sgl_apply_same, map_one (Formalism.UG.evalV F v), sub_self,
+  rw [map_add (f := _), Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul, map_sub, Formalism.L2.G.sgl_apply_same, map_one (Formalism.UG.evalV F v), sub_self,
     TensorProduct.tmul_zero, add_zero]
   rfl
 
@@ -615,7 +615,7 @@ theorem test_locId_ne {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
     Formalism.UG.prV (E := E) v' ((locId E v a : (AfE F E)ˣ) : AfE F E) = 1 := by
   show (Algebra.TensorProduct.map (AlgHom.id F E) (Formalism.UG.evalV F v'))
     ((a : E) ⊗ₜ[F] Formalism.L2.G.sgl F v 1 + (1 : E) ⊗ₜ[F] (1 - Formalism.L2.G.sgl F v 1)) = _
-  rw [map_add, Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul, map_sub, Formalism.L2.G.sgl_apply_ne F v 1 h, map_one (Formalism.UG.evalV F v'), sub_zero,
+  rw [map_add (f := _), Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul, map_sub, Formalism.L2.G.sgl_apply_ne F v 1 h, map_one (Formalism.UG.evalV F v'), sub_zero,
     TensorProduct.tmul_zero, zero_add]
   rfl
 

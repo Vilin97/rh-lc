@@ -72,7 +72,7 @@ theorem sigR_invol (h : IsCMExt F E σ) (x : AF F ⊗[F] E) : sigR (AF F) σ (si
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [sigR, invol σ h]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem cT_cT (h : IsCMExt F E σ) {p q : Type} (M : Matrix p q (AF F ⊗[F] E)) :
     cT (sigR (AF F) σ) (cT (sigR (AF F) σ) M) = M := by

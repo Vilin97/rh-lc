@@ -31,7 +31,7 @@ theorem pPart_of_coord {R R' : RiemLat E g Λ} (k : (Fin g → ℂ) ≃ₗ[ℂ] 
 
 theorem pBar_of_coord {R R' : RiemLat E g Λ} (k : (Fin g → ℂ) ≃ₗ[ℂ] (Fin g → ℂ)) (hk : ∀ x, R'.P x = k (R.P x))
     (τ : Ψ) (y : Fin (j + j') → ℂ) : C.pBar R' τ y = k (C.pBar R τ y) := by
-  simp only [pBar, C.perExt_of_coord k hk, map_smul, map_add]
+  simp only [pBar, C.perExt_of_coord k hk, map_smul, map_add (f := _)]
 
 end LatEmb
 

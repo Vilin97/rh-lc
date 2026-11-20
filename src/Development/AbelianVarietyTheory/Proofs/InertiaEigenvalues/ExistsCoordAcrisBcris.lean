@@ -33,14 +33,14 @@ theorem inner_add (t t' : ↥T.L.T) (w : O ⊗[ℤ_[l]] R) :
     inner T φ hφ R (t + t') w = inner T φ hφ R t w + inner T φ hφ R t' w := by
   induction w using TensorProduct.induction_on with
   | zero => simp
-  | tmul o r => simp only [inner_tmul, smul_add, map_add, add_mul]
-  | add x y hx hy => simp only [map_add, hx, hy]; ring
+  | tmul o r => simp only [inner_tmul, smul_add, map_add (f := _), add_mul]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]; ring
 
 theorem inner_zero (w : O ⊗[ℤ_[l]] R) : inner T φ hφ R 0 w = 0 := by
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul o r => simp [inner_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy, add_zero]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
 
 theorem inner_smul (o : O) (t : ↥T.L.T) (w : O ⊗[ℤ_[l]] R) :
     inner T φ hφ R t (o • w) = inner T φ hφ R (o • t) w := by
@@ -48,7 +48,7 @@ theorem inner_smul (o : O) (t : ↥T.L.T) (w : O ⊗[ℤ_[l]] R) :
   | zero => simp
   | tmul o' r =>
     rw [TensorProduct.smul_tmul', inner_tmul, inner_tmul, smul_eq_mul, mul_smul, smul_comm o o' t]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 def coord : TW (O ⊗[ℤ_[l]] R) T →+ R :=
   TensorProduct.liftAddHom
@@ -74,8 +74,8 @@ theorem coord_mul (a : R) (w : TW (O ⊗[ℤ_[l]] R) T) :
     | zero => simp
     | tmul o r =>
       rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, inner_tmul, inner_tmul]; ring
-    | add x y hx hy => simp only [mul_add, map_add, hx, hy]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy, mul_add]
+    | add x y hx hy => simp only [mul_add, map_add (f := _), hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy, mul_add]
 
 theorem coord_one_tmul (t : ↥T.L.T) :
     coord T φ hφ R ((1 : O ⊗[ℤ_[l]] R) ⊗ₜ[O] t) = algebraMap ℤ_[l] R (φ t) := by
@@ -91,8 +91,8 @@ theorem coord_algebraMap_smul (z : ℤ_[l]) (w : TW (O ⊗[ℤ_[l]] R) T) :
     | zero => simp
     | tmul o r =>
       rw [inner_tmul, inner_tmul, smul_comm o (algebraMap ℤ_[l] O z) t, hφ, map_mul]; ring
-    | add x y hx hy => simp only [mul_add, map_add, hx, hy]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy, mul_add]
+    | add x y hx hy => simp only [mul_add, map_add (f := _), hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy, mul_add]
 
 theorem coord_toOB (w : TW (OCr l O) T) :
     coord T φ hφ (Per.Bcris l) (TWincl (toOB l O) T w) = acrisToBcris l (coord T φ hφ (Per.Acris l) w) := by
@@ -106,8 +106,8 @@ theorem coord_toOB (w : TW (OCr l O) T) :
     | tmul o r =>
       simp only [toOB, Algebra.TensorProduct.map_tmul, AlgHom.id_apply, inner_tmul, map_mul,
         AlgHom.commutes]
-    | add x y hx hy => simp only [map_add, hx, hy]
-  | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end GlobalTheory.CoordTW
 

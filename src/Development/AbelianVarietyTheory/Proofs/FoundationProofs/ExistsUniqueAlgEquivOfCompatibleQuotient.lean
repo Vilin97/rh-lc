@@ -190,7 +190,7 @@ theorem comul_one_tmul_eq_distribBaseChange (S : Type*) [CommRing S] [Algebra R 
   rw [TensorProduct.comul_tmul]
   induction (Coalgebra.comul a : A ⊗[R] A) with
   | tmul x y => simp
-  | add x y hx hy => simp only [tmul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [tmul_add, map_add (f := _), hx, hy]
 
 section
 
@@ -217,7 +217,7 @@ theorem existsUnique_bialgHom_of_compatible_tensor [Module.Finite R B]
     rw [← this]
     induction (Coalgebra.comul a : A ⊗[R] A) with
     | tmul x y => simp [hg]
-    | add x y hx hy => simp only [tmul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [tmul_add, map_add (f := _), hx, hy]
 
 theorem existsUnique_bialgEquiv_of_compatible_tensor [Module.Finite R A] [Module.Finite R B]
     (f : ∀ n : ℕ, (R ⧸ I ^ n) ⊗[R] A ≃ₐc[R ⧸ I ^ n] (R ⧸ I ^ n) ⊗[R] B)

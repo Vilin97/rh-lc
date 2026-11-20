@@ -411,7 +411,7 @@ theorem eMu0_symm_loc (T : TwForms D) (u : D.what₂.Word) (j : ℕ) (hj : j ≤
     refine Submodule.subset_span ?_
     exact (T.eMu0_lat u j hj _).2 (by rw [LinearEquiv.apply_symm_apply]; exact hx)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul r x _ hx =>
     rw [Subring.smul_def, map_smul, ← Subring.smul_def]
     exact Submodule.smul_mem _ r hx

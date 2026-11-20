@@ -38,7 +38,7 @@ theorem conv_add {f : ℤ → M} {m₀ : ℤ} (hf : ∀ k < m₀, f k = 0) (e e'
     conv (e + e') f = conv e f + conv e' f := by
   funext k
   obtain ⟨N, hN⟩ := exists_bound hf k
-  simp only [Pi.add_apply, conv_eq_sum _ f k N hN, map_add, add_smul, Finset.sum_add_distrib]
+  simp only [Pi.add_apply, conv_eq_sum _ f k N hN, map_add (f := _), add_smul, Finset.sum_add_distrib]
 
 theorem conv_smul {f : ℤ → M} {m₀ : ℤ} (hf : ∀ k < m₀, f k = 0) (c : L) (e : PowerSeries L) :
     conv (c • e) f = c • conv e f := by

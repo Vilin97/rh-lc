@@ -37,12 +37,12 @@ theorem exists_orthonormal_perp : ∀ (K V : Type) [Field K] [CharZero K] [AddCo
     have hzs : ∀ i : Fin n, h z (e i.succ) = σ (h (e i.succ) z) := fun i => hh _ _
     refine ⟨fun i => e i.succ + (h (e i.succ) z / (h (e 0) z - 1)) • (z - e 0),
       fun i => W.add_mem (he _) (W.smul_mem _ (W.sub_mem hz (he 0))), fun i j => ?_, fun i => ?_⟩
-    · simp only [map_add, map_smul, map_sub, LinearMap.add_apply, LinearMap.smul_apply,
+    · simp only [map_add (f := _), map_smul, map_sub, LinearMap.add_apply, LinearMap.smul_apply,
         LinearMap.sub_apply, LinearMap.map_smulₛₗ, smul_eq_mul, hss, hs0, h0s, hzs, hzz, h00, hz0,
         map_div₀, map_one]
       field_simp
       ring
-    · simp only [map_add, map_smul, map_sub, LinearMap.add_apply, LinearMap.smul_apply,
+    · simp only [map_add (f := _), map_smul, map_sub, LinearMap.add_apply, LinearMap.smul_apply,
         LinearMap.sub_apply, smul_eq_mul, hzz]
       field_simp
       ring
@@ -241,7 +241,7 @@ theorem local_dual : ∀ (D : D7) (p : ℕ) (x : D.host.E), (∀ y ∈ D.host.AA
     rw [ht, mul_assoc, ← nsmul_eq_mul, map_nsmul, nsmul_eq_mul, Nat.cast_mul, mul_comm _ (t : D.host.K), mul_assoc]
     exact h1
   | zero => simpa using isIntegral_zero
-  | add y z _ _ hy hz => rw [map_add, mul_add, map_add]; exact hy.add hz
+  | add y z _ _ hy hz => rw [map_add (f := _), mul_add, map_add (f := _)]; exact hy.add hz
   | smul c y _ hy =>
     rw [map_zsmul, mul_smul_comm, map_zsmul]; exact hy.zsmul c
 
@@ -284,11 +284,11 @@ theorem exists_form (D : D7) (σ : D.host.K →+* D.host.K)
       ∀ x y, h x y = hYY D x y := by
   refine ⟨LinearMap.mk₂'ₛₗ (RingHom.id _) σ (hYY D) ?_ ?_ ?_ ?_, fun _ _ => rfl⟩
   · intro x x' y
-    simp only [hYY, Matrix.add_apply, add_mul, Finset.sum_add_distrib, map_add]
+    simp only [hYY, Matrix.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _)]
   · intro c x y
     simp only [hYY, Matrix.smul_apply, RingHom.id_apply, ← map_smul, Finset.smul_sum, smul_mul_assoc]
   · intro x y y'
-    simp only [hYY, Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+    simp only [hYY, Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
   · intro c x y
     simp only [hYY, Matrix.smul_apply, ← map_smul, Finset.smul_sum]
     congr 1

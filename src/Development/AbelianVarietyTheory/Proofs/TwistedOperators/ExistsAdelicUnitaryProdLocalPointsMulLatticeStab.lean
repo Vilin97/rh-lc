@@ -121,7 +121,7 @@ theorem phi_unitary {σ : E →ₐ[F] E} {e : AF F} (he : e * e = e) {J M : Matr
   have h3 : e * (1 - e) = 0 := by rw [mul_sub, mul_one, he, sub_self]
   have hm : (phi e M).map (cA σ) = (1 - e) • 1 + e • M.map (cA σ) := by
     ext i j
-    simp only [phi, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add, map_smul, Matrix.one_apply]
+    simp only [phi, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add (f := _), map_smul, Matrix.one_apply]
     split_ifs <;> simp
   have ht : (phi e M)ᵀ = (1 - e) • 1 + e • Mᵀ := by simp [phi, Matrix.transpose_add, Matrix.transpose_smul]
   rw [hm, ht]

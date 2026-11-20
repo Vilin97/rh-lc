@@ -30,7 +30,7 @@ theorem period_minimum_phi_pos : _root_.GlobalTheory.CovTop.PublishedHodgeBundle
     refine ⟨Q (a + c) - Q a - Q c, ?_⟩
     have h1 := hβ (a + c)
     have hs := β.2.1 c a
-    simp only [map_add, LinearMap.add_apply] at h1
+    simp only [map_add (f := _), LinearMap.add_apply] at h1
     rw [hβ a, hβ c] at h1
     push_cast
     linarith

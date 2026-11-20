@@ -41,8 +41,8 @@ theorem pos_factor {K' Fr R L : Type} [Field K'] [CommRing Fr] [CommRing R] [Fie
     simp
   · intro r s
     rw [hχ (r + s) (a r * p s + a s * p r) (p r * p s) (by rw [map_mul]; exact mul_ne_zero (hp r) (hp s))
-      (by simp only [map_add, map_mul]; rw [← hr r, ← hr s]; ring)]
-    simp only [χf, map_add, map_mul]
+      (by simp only [map_add (f := _), map_mul]; rw [← hr r, ← hr s]; ring)]
+    simp only [χf, map_add (f := _), map_mul]
     rw [div_add_div _ _ (hp r) (hp s)]
     ring
   · intro k

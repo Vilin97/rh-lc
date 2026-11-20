@@ -18,13 +18,13 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem finT_ofFinT (a : Af F ⊗[F] E) : finT F E (ofFinT F E a) = a := by
   induction a using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | tmul a e => rfl
 
 theorem infT_ofFinT (a : Af F ⊗[F] E) : infT F E (ofFinT F E a) = 0 := by
   induction a using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
   | tmul a e => exact TensorProduct.zero_tmul _ _
 
 theorem ofFinT_mem_latHat {n : ℕ} (X : Spc F E n) {y : Fin n → Af F ⊗[F] E}

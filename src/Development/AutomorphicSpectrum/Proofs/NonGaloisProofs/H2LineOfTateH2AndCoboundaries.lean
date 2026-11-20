@@ -49,7 +49,7 @@ theorem exists_mul_of_linear (T : Submodule O LL) (hT : T = LinearMap.range (Alg
     | zero => simp [hy0]
     | succ n ih =>
       have h2 : p ^ (n + 1) * u (n + 1) = p ^ n * u n + p ^ n * (p * u (n + 1) - u n) := by ring
-      rw [h2, ih, ← ho n, hys, map_add, map_mul, map_pow, ← hp]
+      rw [h2, ih, ← ho n, hys, map_add (f := _), map_mul, map_pow, ← hp]
       ring
   have hI : ∀ m, ((Ideal.span {ϖ}) ^ m • ⊤ : Submodule O O) = Ideal.span {ϖ ^ m} := by
     intro m

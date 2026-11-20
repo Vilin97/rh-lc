@@ -350,14 +350,14 @@ theorem UpperTheory.V.Loc.triLift :
       T'.Coord (p h) β' (fun g => p (γ g)) ((GG.map (p : B →+* B')).comp u) := fun γ u c =>
     ⟨fun g => c.right g, fun g => by
       rw [MonoidHom.comp_apply, GG.map_mat, c.mat, triM_map (p : B →+* B') _ _ (hTp g)]
-      simp only [RingHom.coe_coe, map_add, map_mul, (hβp g).1, (hβp g).2]⟩
+      simp only [RingHom.coe_coe, map_add (f := _), map_mul, (hβp g).1, (hβp g).2]⟩
   have hq : ∀ g i j, p ((T.t g i / T.t g j : Bˣ) : B) = ((T'.t g i / T'.t g j : B'ˣ) : B') := fun g i j => by
     have : ∀ i, Units.map (p : B →* B') (T.t g i) = T'.t g i := fun i => Units.ext (hTp g i)
     rw [← this, ← this, ← _root_.map_div]
     rfl
   have gp : T'.IsGam (p h) β' (fun g => p (γ g)) := fun g g' => by
     simp only [gγ g g', omg, Tor.adjointSuperdiagRep_apply, Tor.χ2_apply]
-    split_ifs <;> simp only [map_add, map_mul, map_sub, map_neg, map_intCast, hq, (hβp _).1, (hβp _).2]
+    split_ifs <;> simp only [map_add (f := _), map_mul, map_sub, map_neg, map_intCast, hq, (hβp _).1, (hβp _).2]
   have cmat : ∀ (γ : GQ l → B) (u : GQ l →* GG 3 B), Continuous γ → T.Coord h β γ u →
       Continuous fun g => (u g).mat := fun γ u cγ c => by
     simp only [c.mat]

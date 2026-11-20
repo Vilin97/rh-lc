@@ -20,7 +20,7 @@ private theorem biprod_iso {C : Type u₁} [Category.{v₁} C] [Preadditive C] {
   · simp only [Preadditive.add_comp, Preadditive.comp_add, Category.assoc,
       reassoc_of% h₁, reassoc_of% h₂, reassoc_of% h₁₂, reassoc_of% h₂₁,
       zero_comp, comp_zero, add_zero, zero_add]
-    rw [← F.map_comp, ← F.map_comp, ← F.map_add, biprod.total, F.map_id]
+    rw [← F.map_comp, ← F.map_comp, ← F.map_add (f := _), biprod.total, F.map_id]
   · simp only [Preadditive.add_comp, Preadditive.comp_add, Category.assoc]
     rw [← F.map_comp_assoc, ← F.map_comp_assoc, ← F.map_comp_assoc, ← F.map_comp_assoc]
     simp only [biprod.inl_fst, biprod.inl_snd, biprod.inr_fst, biprod.inr_snd,

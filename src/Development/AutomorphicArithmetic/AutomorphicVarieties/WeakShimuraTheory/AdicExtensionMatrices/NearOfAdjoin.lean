@@ -49,7 +49,7 @@ private theorem bound_fin {R : Type} [CommRing R] (S : Subalgebra (PowerSeries R
   | add a b _ _ ha hb =>
     obtain ⟨p, hp⟩ := ha
     obtain ⟨q, hq⟩ := hb
-    exact ⟨p + q, by rw [map_add, hp, hq, smul_add]⟩
+    exact ⟨p + q, by rw [map_add (f := _), hp, hq, smul_add]⟩
   | smul r a _ ha =>
     obtain ⟨p, hp⟩ := ha
     exact ⟨r * p, by rw [map_mul, hp, ← Algebra.smul_def, smul_comm]⟩

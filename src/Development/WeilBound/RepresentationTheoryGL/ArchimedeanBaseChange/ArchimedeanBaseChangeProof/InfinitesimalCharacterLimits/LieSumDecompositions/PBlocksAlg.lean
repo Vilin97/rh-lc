@@ -257,7 +257,7 @@ theorem piece [Nontrivial M] (r s : ℕ) (a b : ℕ → Module.End ℂ M) (haa :
   have hmστ : m = σ + τ := (add_tsub_cancel_of_le hσm).symm
   have hDr : pD.roots = τ.map Neg.neg := by
     have h1 : pC.roots + pD.roots = pC.roots + τ.map Neg.neg := by
-      rw [hroots, hCr, ← Multiset.map_add, ← hmστ]
+      rw [hroots, hCr, ← Multiset.map_add (f := _), ← hmστ]
     exact add_left_cancel h1
   have hτn : τ.Nodup := Multiset.nodup_of_le tsub_le_self hm
   have hmc : Multiset.card m = r + s := by

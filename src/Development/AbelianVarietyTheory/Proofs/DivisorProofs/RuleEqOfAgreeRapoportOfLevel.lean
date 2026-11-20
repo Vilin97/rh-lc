@@ -95,7 +95,7 @@ theorem agreeAt_on_model : ∀ (F : Type) [Field F] [NumberField F] (𝔠 : Frac
       induction h using TensorProduct.induction_on with
       | zero => simp
       | tmul a g => rfl
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     rw [hcomm, e, map_zero]
   exact (TensorProduct.comm ℤ R₀ Γ(M, W)).map_eq_zero_iff.1 key
 

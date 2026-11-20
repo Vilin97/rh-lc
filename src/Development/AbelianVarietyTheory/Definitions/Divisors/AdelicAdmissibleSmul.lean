@@ -407,7 +407,7 @@ theorem om_split_real {ι : Type} [Fintype ι] [DecidableEq ι] [Invertible (2 :
     · rintro _ ⟨f, rfl⟩
       exact Submodule.subset_span ⟨T f, (hT f).symm⟩
     · simp
-    · intro a b _ _ ha hb; rw [map_add]; exact Submodule.add_mem _ ha hb
+    · intro a b _ _ ha hb; rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
     · intro a b _ hb; rw [map_smul]; exact Submodule.smul_mem _ _ hb
   · obtain ⟨T, hT⟩ := key g
     obtain ⟨S, hS⟩ := hl

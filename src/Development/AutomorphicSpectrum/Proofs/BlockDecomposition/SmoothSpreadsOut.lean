@@ -149,7 +149,7 @@ theorem exists_finite_smooth [Algebra.FinitePresentation R₀ B] [Algebra.Smooth
       have hMa (q : MvPolynomial _ A) : M (aeval h' q) = aeval h (M q) := by
         induction q using MvPolynomial.induction_on with
         | C a => simp [M, MvPolynomial.algebraMap_apply]
-        | add p q hp hq => simp only [map_add, hp, hq]
+        | add p q hp hq => simp only [map_add (f := _), hp, hq]
         | mul_X p i hp =>
           simp only [map_mul, aeval_X, hp, hh', hMX]
       set_option synthInstance.maxHeartbeats 100000 in

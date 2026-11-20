@@ -64,9 +64,9 @@ theorem integral_prod_eq {V U : Type} [NormedAddCommGroup V] [MeasurableSpace V]
     simp
   have e2 : ∀ t, ∫⁻ s in F', G (e s + t) ∂μ = ∫⁻ s in F', G (e s) ∂μ := fun t => by
     obtain ⟨t, rfl⟩ := hs t
-    simp only [add_comm _ (e t), ← map_add]
+    simp only [add_comm _ (e t), ← map_add (f := _)]
     refine lintegral_translate hF' (φ := fun s => G (e s)) (fun p h z => ?_) t
-    simp only [G, map_add, Pi.add_apply, hp _ (hΓ p h _)]
+    simp only [G, map_add (f := _), Pi.add_apply, hp _ (hΓ p h _)]
   simp only [e1, e2, lintegral_const, Measure.restrict_apply_univ, Measure.pi_univ, Finset.prod_const,
     Finset.card_univ, Fintype.card_fin] at hsw
   rw [mul_comm] at hsw

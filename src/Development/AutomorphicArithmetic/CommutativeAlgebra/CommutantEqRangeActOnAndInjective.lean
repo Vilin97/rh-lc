@@ -42,7 +42,7 @@ private theorem actOn_inj {C V R : Type} [Ring C] [Algebra ℚ C] [AddCommGroup 
       induction w using TensorProduct.induction_on with
       | zero => simp
       | tmul r c => simp [Φ, Ψ, actOn_tmul]
-      | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb]
     have hΨ : ∀ f, Ψ f z = 0 := by
       intro f
       apply hrep
@@ -55,7 +55,7 @@ private theorem actOn_inj {C V R : Type} [Ring C] [Algebra ℚ C] [AddCommGroup 
       induction w using TensorProduct.induction_on with
       | zero => simp
       | tmul r c => simp [Ψ, Module.Basis.tensorProduct_repr_tmul_apply, mul_comm]
-      | add a b ha hb => simp only [map_add, Finsupp.add_apply, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), Finsupp.add_apply, ha, hb]
     apply (bR.tensorProduct bC).repr.injective
     ext ⟨i, j⟩
     rw [hrepr, hΨ]

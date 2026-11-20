@@ -57,7 +57,7 @@ theorem extMap_component (m : Option ι → ℕ) (f : MvPolynomial (Coord D.extS
         rfl
       rw [if_neg h, if_neg h', map_zero, monomial_zero]
   | add p q hp hq =>
-    rw [map_add, map_add, hp, hq, map_add, MvPolynomial.coeff_add, map_add]
+    rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), MvPolynomial.coeff_add, map_add (f := _)]
 
 end AddBlockData
 

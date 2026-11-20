@@ -126,7 +126,7 @@ theorem harish_chandra_third_clause (hD : ∀ (p q : ℕ) (T : GrpData p q) (πU
     have key : ∀ Y ∈ upq p q, M.act Y y ∈ S.comap io := fun Y hY =>
       deriv_memC hS (hd Y hY y) fun t => hinv _ _ hy
     obtain ⟨Y₁, h₁, Y₂, h₂, e, -⟩ := upq_decC Z
-    rw [e, map_add, map_smul]
+    rw [e, map_add (f := _), map_smul]
     exact add_mem (key Y₁ h₁) (Submodule.smul_mem _ _ (key Y₂ h₂))
   rcases hirr _ hN with h | h
   · refine Or.inl (eq_bot_iff.2 fun v hv => ?_)

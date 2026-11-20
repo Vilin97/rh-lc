@@ -49,13 +49,13 @@ theorem Iso.tprod {V' W' : Type} [AddCommGroup V'] [Module ℂ V'] [AddCommGroup
   refine ⟨TensorProduct.congr e e', fun g x => ?_⟩
   induction x with
   | tmul a b => simp [he, he']
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem Iso.tprod_comm (ρ : Representation ℂ G V) (σ : Representation ℂ G W) : Iso (ρ.tprod σ) (σ.tprod ρ) := by
   refine ⟨TensorProduct.comm ℂ V W, fun g x => ?_⟩
   induction x with
   | tmul a b => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem Iso.dual {G : Type} [Group G] {ρ : Representation ℂ G V} {σ : Representation ℂ G W} (h : Iso ρ σ) :
     Iso ρ.dual σ.dual := by
@@ -146,7 +146,7 @@ theorem Iso.outer {ρ : ∀ τ, Representation ℂ G (V τ)} {σ : ∀ τ, Repre
   refine ⟨PiTensorProduct.congr e, fun g x => ?_⟩
   induction x using PiTensorProduct.induction_on with
   | smul_tprod c v => simp [outer_apply, he]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 end Outer
 

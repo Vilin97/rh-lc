@@ -27,7 +27,7 @@ theorem mem_emb_of_congr_pow (A : Type) [CommRing A] (p : ℕ) [Fact p.Prime] (O
       IsLocalRing.residue O (tauExt ρ e) = IsLocalRing.residue O (ρ x) := by
     intro ρ
     have h1 : tauExt (p := p) ρ ((1 : ℤ_[p]) ⊗ₜ[ℤ] x) = ρ x := by simp [tauExt]
-    rw [hx, map_add, map_mul, map_natCast, h1, map_add, map_mul, hp0, zero_mul, zero_add]
+    rw [hx, map_add (f := _), map_mul, map_natCast, h1, map_add (f := _), map_mul, hp0, zero_mul, zero_add]
   have h1 : IsLocalRing.residue O (σ x) = 1 := by
     have : tauExt σ e = 1 := hσ
     rw [← key, this, map_one]

@@ -121,7 +121,7 @@ theorem length_quotient_le_of_order_bound :
         · simp only [Pi.single_eq_same]
         · simp only [Pi.single_eq_of_ne hc, TensorProduct.tmul_zero]
     | zero => simp
-    | add x y _ _ hx hy => rw [Pi.single_add, map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [Pi.single_add, map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul r x _ hx => rw [Pi.single_smul, map_smul]; exact Submodule.smul_mem _ _ hx
   · rw [hspan, Submodule.map_span, ← Set.range_comp, ← Set.range_comp,
       ← e.surjective.range_comp]

@@ -125,7 +125,7 @@ theorem goal1 :
       obtain ⟨t, ht⟩ : ∃ t, t = f v / f x1 := ⟨_, rfl⟩
       have hφt : φ t = algebraMap O Kf o := by
         have e := hg v
-        rw [hvz, map_add, hgz, add_zero, ← algebraMap_smul Kf o (cmp x1), map_smul, hg,
+        rw [hvz, map_add (f := _), hgz, add_zero, ← algebraMap_smul Kf o (cmp x1), map_smul, hg,
           smul_eq_mul] at e
         rw [ht, map_div₀, ← e, mul_div_assoc, div_self ((map_ne_zero φ).2 hf0), mul_one]
       have htv : w.valuation K t ≤ 1 := (h1 t).2 ⟨o, hφt.symm⟩
@@ -158,7 +158,7 @@ theorem goal1 :
     induction hy' using Submodule.span_induction with
     | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul a x _ hx =>
       rw [← algebraMap_smul K a x, h2]
       exact hsm _ (w.valuation_le_one (K := K) a) _ _ hx

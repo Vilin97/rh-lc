@@ -40,7 +40,7 @@ theorem exists_smul_eq_enl {D : D7} {V : HSp D} (c : CoefA V) (hc : c.Is) {K' : 
   let c1 : VV D.what₂.LL lam →ₛₗ[D.what₂.embLL] c.W :=
     { toFun := fun v => c0' (mapVVι ι lam v)
       map_add' := fun a b => by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         exact Subtype.ext (map_add _ _ _)
       map_smul' := fun a v => by

@@ -108,7 +108,7 @@ theorem linearIndependent_of_span (hS : SecBaseChangeAnySt) {R : Type} [CommRing
       obtain ⟨i, rfl⟩ := hy
       exact Submodule.subset_span ⟨i, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
     | smul d y _ hy => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ hy
   have hspanW : ⊤ ≤ Submodule.span Γ((overRes W).left, ⊤)
       (Set.range fun i => pullM P.A P.L N (overResι W) (t i)) := by
@@ -143,7 +143,7 @@ theorem exists_monomial_matrices_of_indep : ∀ (o A M : Type) [CommRing o] [Com
   let x : (Fin g ⊕ Fin g → ZMod m) → (Fin g ⊕ Fin g → ZMod (r * m ^ 2)) :=
     fun j i => (((j i).val : ℕ) : ZMod (r * m ^ 2))
   have hπadd : ∀ a b, π (a + b) = π a + π b := by
-    intro a b; funext i; simp only [π, Pi.add_apply, map_add]
+    intro a b; funext i; simp only [π, Pi.add_apply, map_add (f := _)]
   have hπsub : ∀ a b, π (a - b) = π a - π b := by
     intro a b; funext i; simp only [π, Pi.sub_apply, map_sub]
   have hπx : ∀ j, π (x j) = j := by

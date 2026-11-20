@@ -25,7 +25,7 @@ theorem tensor_eq_zero_of_forall {K : Type} [Field K] {V W : Type} [AddCommGroup
     induction s using TensorProduct.induction_on with
     | zero => simp
     | tmul m n => simp [TensorProduct.equivFinsuppOfBasisRight_apply_tmul_apply]
-    | add u v hu hv => simp only [map_add, Finsupp.add_apply, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), Finsupp.add_apply, hu, hv]
   apply (TensorProduct.equivFinsuppOfBasisRight b).injective
   ext j
   rw [key, h, map_zero, Finsupp.zero_apply]
@@ -74,7 +74,7 @@ theorem contr_natural (M N : Type) [AddCommGroup M] [Module K M] [AddCommGroup N
   induction c T T' φ using TensorProduct.induction_on with
   | zero => simp
   | tmul m n => simp
-  | add u v hu hv => simp only [map_add, hu, hv]
+  | add u v hu hv => simp only [map_add (f := _), hu, hv]
 
 theorem kunneth_contraction_d0_vanishes (M : Type) [AddCommGroup M] [Module K M] (Λ : C1 G →ₗ[K] K)
     (hΛ : ∀ g : C0 G, Λ (d0 G g) = 0) (w : ∀ T : Q, M ⊗[K] G.obj T) :
@@ -102,7 +102,7 @@ theorem kunneth_contraction_d0_vanishes (M : Type) [AddCommGroup M] [Module K M]
       have c := contr_tmul G M Λ z (-d0 G (Pi.single T₀ u : C0 G))
       simp only [Pi.neg_apply] at c
       rw [LinearMap.comp_apply, e, c, map_neg, hΛ, neg_zero, zero_smul, LinearMap.zero_apply]
-    | add u v hu hv => simp only [Pi.single_add, map_add, hu, hv]
+    | add u v hu hv => simp only [Pi.single_add, map_add (f := _), hu, hv]
   exact LinearMap.congr_fun hD w
 
 end Contr
@@ -141,7 +141,7 @@ theorem sum_tmul_eq_zero_of_cup : ∀ (K : Type) [Field K] (P Q : Type) [Categor
     | tmul z u =>
       rw [LinearMap.rTensor_tmul, hβ, hβ, map_mul, ← h₁ (p, T) (p', T), ← h₂ (p, T) (p', T)]
       simp [mp_id]
-    | add u v hu hv => simp only [map_add, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), hu, hv]
   have natR : ∀ (p : P) (T T' : Q) (b : T ⟶ T') (t : F.obj p ⊗[K] G.obj T),
       β (p, T') (LinearMap.lTensor (F.obj p) (mp G b).toLinearMap t) =
         mp E ((𝟙 p, b) : (p, T) ⟶ (p, T')) (β (p, T) t) := by
@@ -151,7 +151,7 @@ theorem sum_tmul_eq_zero_of_cup : ∀ (K : Type) [Field K] (P Q : Type) [Categor
     | tmul z u =>
       rw [LinearMap.lTensor_tmul, hβ, hβ, map_mul, ← h₁ (p, T) (p, T'), ← h₂ (p, T) (p, T')]
       simp [mp_id]
-    | add u v hu hv => simp only [map_add, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), hu, hv]
   refine ⟨fun p => contr G (F.obj p) Λ
     (fun T T' φ => (β (p, T')).symm (f (p, T) (p, T') ((𝟙 p, φ) : (p, T) ⟶ (p, T')))), ?_⟩
   funext p p' a

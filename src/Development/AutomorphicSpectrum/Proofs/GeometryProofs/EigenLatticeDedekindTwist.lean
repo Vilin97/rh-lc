@@ -87,7 +87,7 @@ theorem lat_stable (M : LieModel G ξ Li) (a : G ⟶ G) [IsMonHom a] (A : Li →
     · rw [h x, Over.comp_left, hv.2, Over.comp_left]
       exact Category.assoc _ _ _
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx =>
     have : A (c • x) = c • A x := by
       show A ((c : Ω) • x) = (c : Ω) • A x

@@ -31,7 +31,7 @@ theorem rho_rho {R : Type} [CommRing R] [Invertible (2 : R)] {V : Type} [AddComm
     {Bf : V → V → R} {κ : Type} [Fintype κ] (d : Darboux Bf κ) (ψ : AddChar R ℂ) (w w' : V) (h : Bf w w' = 0)
     (φ : (κ → R) → ℂ) : d.rho ψ w (d.rho ψ w' φ) = d.rho ψ (w + w') φ := by
   simp only [Darboux.rho]
-  rw [schr_schr, map_add]
+  rw [schr_schr, map_add (f := _)]
   have := d.form w w'
   rw [h] at this
   exact sub_eq_zero.mp this.symm
@@ -97,7 +97,7 @@ theorem decompA {B : Base F E} {d d₁ r' s' i₀ i₁ : ℕ} {W : Spc F E d} {W
     intro i
     funext k
     have h := congrArg (inclR (F := F) (AF F)) (congrFun (hu i) k)
-    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul] at h
+    simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul] at h
     have h1 : inclR (F := F) (AF F) ((Pi.single i (1 : E) : Fin d → E) k) =
         (Pi.single i (1 : AE F E) : Fin d → AE F E) k := by
       by_cases hk : k = i

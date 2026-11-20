@@ -390,7 +390,7 @@ theorem isInternal_grQuot (ℳ : ℤ → Submodule R M) [Decomposition ℳ]
       induction m using Decomposition.inductionOn ℳ with
       | zero => rw [map_zero]; exact zero_mem _
       | @homogeneous n m => exact Submodule.mem_iSup_of_mem n ⟨m, m.2, rfl⟩
-      | add a b ha hb => rw [map_add]; exact add_mem ha hb
+      | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
 
 @[instance_reducible]
 def grSubDecomposition (ℳ : ℤ → Submodule R M) [Decomposition ℳ]
@@ -651,7 +651,7 @@ def lift (φ : ∀ n, A n →ₗ[R] N)
     rw [RingHom.id_apply]
     induction p using MvPolynomial.induction_on generalizing m with
     | C a => rw [← MvPolynomial.algebraMap_eq, algebraMap_smul, algebraMap_smul, map_smul]
-    | add p q hp hq => rw [add_smul, add_smul, map_add, hp, hq]
+    | add p q hp hq => rw [add_smul, add_smul, map_add (f := _), hp, hq]
     | mul_X p i hp =>
       rw [mul_smul, mul_smul, hp]
       exact congrArg _ congr($(hX i) m)

@@ -161,7 +161,7 @@ theorem valComp : ValComp := by
       exact hu rfl
     by_cases hm : ∀ i, multideg m i = δ i
     · rw [if_pos hm]
-      conv_rhs => rw [hF, map_add, MvPolynomial.coeff_add]
+      conv_rhs => rw [hF, map_add (f := _), MvPolynomial.coeff_add]
       have h0 : (twistSub LL S j (F - homComp δ F)).coeff m = 0 := by
         by_contra hne
         obtain ⟨u, hu, hmu⟩ := twistSub_support LL S j _ m (MvPolynomial.mem_support_iff.mpr hne)

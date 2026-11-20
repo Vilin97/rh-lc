@@ -102,7 +102,7 @@ theorem relIndex_preLat_inv_ne_zero {ϖ : kˣ} (hϖ : valuation k (ϖ : k) = uni
         intro v w
         funext i
         simp only [Pi.add_apply]
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         exact Subtype.ext (by simp [mul_add]) }
   have hle : r.ker ≤ (preLat (g⁻¹).1).addSubgroupOf (mLat k D) := by

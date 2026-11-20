@@ -42,7 +42,7 @@ set_option maxHeartbeats 1000000 in
 def augCl (A : Subalgebra R (T → R)) : augSub A →ₗ[R] omega A where
   toFun f := (augIdeal A).toCotangent (toAug f)
   map_add' f g := by
-    rw [← LinearMap.map_add]
+    rw [← LinearMap.map_add (f := _)]
     rfl
   map_smul' c f := by
     have h : toAug (c • f) = algebraMap R A c • toAug f := rfl
@@ -171,7 +171,7 @@ theorem lat_eq_span [Smooth 𝔐.t.G.hom] (P : ChartPack G O c') (q : Cpt 𝔐.�
         rw [h5]
         exact Submodule.smul_mem _ (⟨genMap 𝔐.ξ q s, s, rfl⟩ : regAt 𝔐.ξ q) h)
       (fun a b ha hb => by
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_mem ha hb)
   refine le_antisymm (fun e he => ?_) (Submodule.span_le.2 ?_)
   · obtain ⟨v, hv⟩ := (𝔐.M.mem_lat_iff q e).1 he
@@ -268,7 +268,7 @@ theorem mem_range_toLi_iff [Smooth 𝔐.t.G.hom] (P : ChartPack G O c') (hpt : D
         exact Fam.chartRing_le_regAt O y c' q hq.1 hq.2 (h v i).2
       | zero => simp [(regAt 𝔐.ξ q).zero_mem]
       | add x x' _ _ hx hx' =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact (regAt 𝔐.ξ q).add_mem hx hx'
       | smul s x _ hx =>
         have : Fi i (s • x) = (s : Ω) * Fi i x := by
@@ -291,7 +291,7 @@ theorem mem_range_toLi_iff [Smooth 𝔐.t.G.hom] (P : ChartPack G O c') (hpt : D
         simp only [map_smul, Finset.smul_sum, smul_eq_mul, mul_smul]
       · intro a b ha hb
         conv_lhs => rw [ha, hb]
-        simp only [map_add, add_smul, Finset.sum_add_distrib]
+        simp only [map_add (f := _), add_smul, Finset.sum_add_distrib]
     refine ⟨∑ i, (⟨Fi i e, hmem i⟩ : CR O y c') • f (Pi.single i 1), ?_⟩
     conv_rhs => rw [hsum e]
     set_option synthInstance.maxHeartbeats 100000 in
@@ -416,7 +416,7 @@ theorem exists_form [CharZero Ω] (P : ChartPack G O c')
     · rw [P.j_apply]
       rfl
     · rw [map_smul, map_smul, hn]
-    · rw [map_add, map_add, ha, ha']
+    · rw [map_add (f := _), map_add (f := _), ha, ha']
   refine ⟨u, fun k => ?_, fun a v => ?_⟩
   · rw [hju]
     change ψ (HT.eigProj 𝔐.ρ τ (b k)) = _
@@ -589,7 +589,7 @@ theorem chartD_fun_clauses : ∀ (E : Type) [Field E] [NumberField E] [IsCMField
         exact f₀.2.2⟩
       have h3 : θ (u ∘ₗ P.ρ ε) = augCl (P.Γ₁.btOrder ⊤) f₁ := (hder (toAug f₁) _).2 d₁
       have h4 : θ (u ∘ₗ P.ρ ε) = θ u := by
-        rw [hw, map_add, (hker _).2 ⟨_, rfl⟩, add_zero]
+        rw [hw, map_add (f := _), (hker _).2 ⟨_, rfl⟩, add_zero]
       refine ⟨u, funext hu1, f₁, fun t => ?_, h4.symm.trans h3⟩
       change f₀.1 (idem pq sc (idem pq sc t)) = f₀.1 (idem pq sc t)
       have hi : idem pq sc (idem pq sc t) = idem pq sc t := by

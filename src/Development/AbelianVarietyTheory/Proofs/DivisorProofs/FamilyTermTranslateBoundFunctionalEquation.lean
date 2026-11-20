@@ -260,7 +260,7 @@ theorem main : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing
     exact hϖ.ne_zero (IsFractionRing.injective V (FractionRing V)
       ((algebraMap (FractionRing V) C).injective (by simpa [toF] using h)))
   have hκ : ‖algebraMap (FractionRing V) C c₀‖ = Real.exp (-((k : ℝ) * q mu + QuadraticMap.polar q mu α)) := by
-    rw [norm_hasVal hC.1 hc₀, bOf, ← map_add, zpow_add₀ ht, zpow_sub₀ ht, zpow_sub₀ ht, mul_comm (k : ℤ), zpow_mul,
+    rw [norm_hasVal hC.1 hc₀, bOf, ← map_add (f := _), zpow_add₀ ht, zpow_sub₀ ht, zpow_sub₀ ht, mul_comm (k : ℤ), zpow_mul,
       ← hψ, ← hψ, ← hψ, zpow_natCast, ← Real.exp_nat_mul, ← Real.exp_sub, ← Real.exp_sub, ← Real.exp_add,
       QuadraticMap.polar]
     congr 1; ring
@@ -303,7 +303,7 @@ theorem main : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing
     rw [r₂, e₂] at e₁
     apply toStkA_injective
     unfold jc trVal
-    rw [map_add, map_nsmul, map_mul, map_mul, map_mul, map_mul, toStk_sE ν.good, toStk_sE ν.good, toStk_vE ν.good,
+    rw [map_add (f := _), map_nsmul, map_mul, map_mul, map_mul, map_mul, toStk_sE ν.good, toStk_sE ν.good, toStk_vE ν.good,
       toStk_vE ν.good, toStk_vE ν.good]
     refine (congrArg₂ (· * ·) e₁ (congrArg Units.val e₃)).trans ?_
     ring

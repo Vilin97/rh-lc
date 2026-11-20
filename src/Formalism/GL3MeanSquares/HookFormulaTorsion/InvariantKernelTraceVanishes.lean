@@ -361,7 +361,7 @@ theorem card_fiber_eq {V W : Type} [AddCommGroup V] [Module F V] [AddCommGroup W
     Nat.card {x : V // L x = L x0} = Nat.card {x : V // L x = 0} :=
   Nat.card_congr
     { toFun := fun x => ⟨x.1 - x0, by rw [map_sub, x.2, sub_self]⟩
-      invFun := fun y => ⟨y.1 + x0, by rw [map_add, y.2, zero_add]⟩
+      invFun := fun y => ⟨y.1 + x0, by rw [map_add (f := _), y.2, zero_add]⟩
       left_inv := fun x => Subtype.ext (by simp)
       right_inv := fun y => Subtype.ext (by simp) }
 
@@ -517,8 +517,8 @@ theorem affine_fibre_count_comparison : Formalism.HermitianLattices.RamifiedLatt
     obtain ⟨s, hs, hψs⟩ := hu
     have hψs' : ψ s ≠ 0 := hψs
     rw [card_fiber_prod T ψ (w0 + ((1 - ψ w0) / ψ s) • s) f 1
-      (by rw [map_add, map_smul, hs, smul_zero, add_zero, hw0])
-      (by rw [map_add, map_smul, smul_eq_mul, div_mul_cancel₀ _ hψs']; ring),
+      (by rw [map_add (f := _), map_smul, hs, smul_zero, add_zero, hw0])
+      (by rw [map_add (f := _), map_smul, smul_eq_mul, div_mul_cancel₀ _ hψs']; ring),
       card_slice T ψ s hs hψs' 0, hkerT]
   have halfB : uW ∈ LinearMap.range xb → ¬ (∀ l ∈ LinearMap.ker xb, f ⬝ᵥ l = 0) →
       q * Nat.card {u // xb u = uW ∧ χ u = 1} = q ^ (n - rk) := by
@@ -528,8 +528,8 @@ theorem affine_fibre_count_comparison : Formalism.HermitianLattices.RamifiedLatt
     rw [LinearMap.mem_ker] at hs
     have hχs' : χ s ≠ 0 := hχs
     rw [card_fiber_prod xb χ (u0 + ((1 - χ u0) / χ s) • s) uW 1
-      (by rw [map_add, map_smul, hs, smul_zero, add_zero, hu0])
-      (by rw [map_add, map_smul, smul_eq_mul, div_mul_cancel₀ _ hχs']; ring),
+      (by rw [map_add (f := _), map_smul, hs, smul_zero, add_zero, hu0])
+      (by rw [map_add (f := _), map_smul, smul_eq_mul, div_mul_cancel₀ _ hχs']; ring),
       card_slice xb χ s hs hχs' 0, hkerx]
   have fullA : ∀ u0, xb u0 = uW → f ∈ LinearMap.range T →
       Nat.card {w // T w = f ∧ ψ w = 1} = if f ⬝ᵥ u0 = 1 then q ^ (n + g - rk) else 0 := by

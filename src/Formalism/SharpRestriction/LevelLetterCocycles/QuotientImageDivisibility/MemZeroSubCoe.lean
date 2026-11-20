@@ -94,7 +94,7 @@ def zeroSubA {LL : Type} [Field LL] [Algebra O LL] {U : Type} [AddCommGroup U] [
     Submodule O ↥A where
   carrier := {x | φ x = 0}
   zero_mem' := by simp
-  add_mem' := fun {a b} ha hb => by simp only [Set.mem_setOf_eq] at *; rw [map_add, ha, hb, add_zero]
+  add_mem' := fun {a b} ha hb => by simp only [Set.mem_setOf_eq] at *; rw [map_add (f := _), ha, hb, add_zero]
   smul_mem' := fun c x hx => by simp only [Set.mem_setOf_eq] at *; rw [hφ, hx, smul_zero]
 
 def zeroSub {LL : Type} [Field LL] [Algebra O LL] {U : Type} [AddCommGroup U] [Module LL U]
@@ -200,7 +200,7 @@ theorem pstep_rank [IsDomain O] [IsPrincipalIdealRing O] {LL : Type} [Field LL] 
     induction hx using Submodule.span_induction with
     | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
     | smul r y _ hy => rw [hφ]; exact Submodule.smul_mem _ _ hy
   haveI : FiniteDimensional LL ↥(Submodule.span LL (φ '' (gA : Set ↥A))) :=
     FiniteDimensional.span_of_finite LL (gA.finite_toSet.image φ)

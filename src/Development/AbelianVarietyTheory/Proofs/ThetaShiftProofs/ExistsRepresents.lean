@@ -72,7 +72,7 @@ theorem holAt_of_coord {x : V → (Sp ℂ ⟶ (thickObj R I e G).left)} {z : V}
       mul_mem' := fun {f f'} h h' => (h.mul h').congr_of_eventuallyEq (ev.mono fun t ht => by
         simp only [valAt'_eq_valR, valR_eq _ _ ht, map_mul, Pi.mul_apply])
       add_mem' := fun {f f'} h h' => (h.add h').congr_of_eventuallyEq (ev.mono fun t ht => by
-        simp only [valAt'_eq_valR, valR_eq _ _ ht, map_add, Pi.add_apply])
+        simp only [valAt'_eq_valR, valR_eq _ _ ht, map_add (f := _), Pi.add_apply])
       neg_mem' := fun {f} h => h.neg.congr_of_eventuallyEq (ev.mono fun t ht => by
         simp only [valAt'_eq_valR, valR_eq _ _ ht, map_neg, Pi.neg_apply])
       one_mem' := (differentiableAt_const (1 : ℂ)).congr_of_eventuallyEq (ev.mono fun t ht => by
@@ -94,14 +94,14 @@ theorem holAt_of_coord {x : V → (Sp ℂ ⟶ (thickObj R I e G).left)} {z : V}
   change _ ∈ S
   induction f using AddMonoidAlgebra.induction_linear with
   | zero => rw [map_zero]; exact zero_mem _
-  | add f f' h h' => rw [map_add]; exact add_mem h h'
+  | add f f' h h' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
   | single χ r =>
     have hχ : ∀ χ : D.X, ((b.constr ℤ (fun k => Additive.ofMul (u k)) χ).toMul).val ∈ S := fun χ => by
       have : χ ∈ Submodule.span ℤ (Set.range b) := b.mem_span χ
       induction this using Submodule.span_induction with
       | mem _ h => obtain ⟨k, rfl⟩ := h; rw [b.constr_basis]; exact hu k
       | zero => rw [map_zero]; exact one_mem _
-      | add _ _ _ _ h h' => rw [map_add]; exact mul_mem h h'
+      | add _ _ _ _ h h' => rw [map_add (f := _)]; exact mul_mem h h'
       | smul n w _ h =>
         rw [map_smul, toMul_zsmul]
         cases n with

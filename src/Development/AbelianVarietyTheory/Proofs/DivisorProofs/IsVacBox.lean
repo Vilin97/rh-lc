@@ -72,7 +72,7 @@ theorem isVac_box {B : Base F E} {r s r' s' : ℕ} (hX : X.IsHerm σ B r s) (hW 
   simp only [Darboux.rho, schr, tens, hco, glue_dot, glue_add, glue_map ε (evFin F v), Pi.smul_apply, box_glue]
   by_cases ha : (fun k => evFin F v (a k)) ∈ Λ
   · have ha' : (fun k => evFin F v ((a + p γ) k)) ∈ Λ := by
-      simp only [Pi.add_apply, map_add]
+      simp only [Pi.add_apply, map_add (f := _)]
       exact Λ.add_mem ha hp
     have hR₁ : Rest (evFin F v) φ fun b => R (glue ε a b) := by
       refine ⟨fun x z hz => ?_, ?_⟩

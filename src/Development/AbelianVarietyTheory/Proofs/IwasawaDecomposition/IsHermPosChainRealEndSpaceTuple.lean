@@ -169,7 +169,7 @@ theorem isHermPos_ipVia {H N : Type} [NormedAddCommGroup H] [InnerProductSpace �
   add := by
     rintro ⟨_, a, rfl⟩ ⟨_, a', rfl⟩ ⟨_, c, rfl⟩
     simp only
-    rw [← map_add, ipVia_apply e he, ipVia_apply e he, ipVia_apply e he, inner_add_left]
+    rw [← map_add (f := _), ipVia_apply e he, ipVia_apply e he, ipVia_apply e he, inner_add_left]
   smul := by
     rintro s ⟨_, a, rfl⟩ ⟨_, c, rfl⟩
     simp only

@@ -92,8 +92,8 @@ theorem exists_glue {T : Scheme.{0}} {ι : Type} {T' S : ι → Scheme.{0}} {a :
           rw [hρ', mm, Functor.map_comp, Category.assoc, hρ', reassoc_of% hρ' y i]
       map_zero' := show ρ 0 = (0 : D ⟶ D) from ext (by rw [hρ, m0]; simp) fun i => by rw [hρ', m0]; simp
       map_add' := fun x y => show ρ (x + y) = (ρ x + ρ y : D ⟶ D) from
-        ext (by rw [hρ, ma, Functor.map_add, Preadditive.add_comp, hρ, hρ, Preadditive.comp_add]) fun i => by
-          rw [hρ', ma, Functor.map_add, Preadditive.add_comp, hρ', hρ', Preadditive.comp_add] }
+        ext (by rw [hρ, ma, Functor.map_add (f := _), Preadditive.add_comp, hρ, hρ, Preadditive.comp_add]) fun i => by
+          rw [hρ', ma, Functor.map_add (f := _), Preadditive.add_comp, hρ', hρ', Preadditive.comp_add] }
   have ein : ∀ {F : X.Modules} {σ : O →+* End F} {g : F ⟶ D}, IsEquivariant (pullAct σ a) d₀.ρ ((pb a).map g ≫ e.hom) →
       (∀ i, IsEquivariant (pullAct σ (a' i)) (d' i).ρ ((pb (a' i)).map g ≫ (e' i).hom)) → IsEquivariant σ ρ₀ g :=
     fun {F σ g} h h' x => show act σ x ≫ g = g ≫ ρ x from

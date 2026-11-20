@@ -52,7 +52,7 @@ theorem exists_form_triv (hθ : IsInfFam θ) (hp : AllPlus M) (hc : c.Is) (hpr :
       rw [Pi.one_apply, one_mul] at this
       rw [map_smul, Pi.smul_apply, Pi.smul_apply]
       exact congrArg (r • ·) this
-    | add x y hx hy => rw [map_add, Pi.add_apply, Pi.add_apply, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), Pi.add_apply, Pi.add_apply, hx, hy]
   let U : Submonoid (GA D V) :=
     { carrier := {a | ∀ h, Ψ (h * a) = c.ρ a⁻¹ (Ψ h)}
       one_mem' := fun h => by rw [mul_one, inv_one, map_one]; rfl

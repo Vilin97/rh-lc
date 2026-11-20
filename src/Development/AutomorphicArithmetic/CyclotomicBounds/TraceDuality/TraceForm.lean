@@ -31,7 +31,7 @@ theorem UpperTheory.WildB.traceForm :
   choose f hf using hx
   refine ⟨AddMonoidHom.mk' f (fun x y => ?_), fun x => hf x⟩
   apply Int.cast_injective (α := ℚ)
-  rw [Int.cast_add, hf, hf, hf, ← map_add]
+  rw [Int.cast_add, hf, hf, hf, ← map_add (f := _)]
   congr 1
   push_cast
   ring

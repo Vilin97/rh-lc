@@ -41,7 +41,7 @@ theorem ucoord_prod_fundSystem_smul (f : Fin (rank E) → ℤ) (x : mixedSpace E
     (hx : mixedEmbedding.norm x ≠ 0) (i : Fin (rank E)) :
     ucoord ((∏ i, (fundSystem E i) ^ (f i)) • x) i = ucoord x i + f i := by
   unfold ucoord
-  rw [logMap_unit_smul _ hx, logEmbedding_prod_fundSystem, map_add]
+  rw [logMap_unit_smul _ hx, logEmbedding_prod_fundSystem, map_add (f := _)]
   have : ∀ j, ((basisUnitLattice E j : unitLattice E) : logSpace E) =
       (basisUnitLattice E).ofZLatticeBasis ℝ (unitLattice E) j := fun j =>
     (Module.Basis.ofZLatticeBasis_apply ℝ (unitLattice E) (basisUnitLattice E) j).symm

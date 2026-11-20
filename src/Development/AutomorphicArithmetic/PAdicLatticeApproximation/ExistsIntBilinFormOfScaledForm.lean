@@ -14,7 +14,7 @@ theorem UpperTheory.exists_int_bilinForm_of_scaled_form :
     ?_ ?_ ?_ ?_, ?_⟩
   · intro u u' w
     apply Int.cast_injective (α := ℚ)
-    rw [Int.cast_add, h, h, h, AddSubgroup.coe_add, map_add, LinearMap.add_apply, mul_add]
+    rw [Int.cast_add, h, h, h, AddSubgroup.coe_add, map_add (f := _), LinearMap.add_apply, mul_add]
   · intro c u w
     apply Int.cast_injective (α := ℚ)
     rw [smul_eq_mul, Int.cast_mul, h, h, AddSubgroup.coe_zsmul,
@@ -22,7 +22,7 @@ theorem UpperTheory.exists_int_bilinForm_of_scaled_form :
     ring
   · intro u w w'
     apply Int.cast_injective (α := ℚ)
-    rw [Int.cast_add, h, h, h, AddSubgroup.coe_add, map_add, mul_add]
+    rw [Int.cast_add, h, h, h, AddSubgroup.coe_add, map_add (f := _), mul_add]
   · intro c u w
     apply Int.cast_injective (α := ℚ)
     rw [smul_eq_mul, Int.cast_mul, h, h, AddSubgroup.coe_zsmul,

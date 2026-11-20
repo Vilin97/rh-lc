@@ -61,7 +61,7 @@ def cmp {d : ℕ} (i : Fin d) : W ⊗[ℂ] (Fin d → ℂ) →ₗ[ℂ] W :=
 theorem sum_cmp {d : ℕ} (m : W ⊗[ℂ] (Fin d → ℂ)) : ∑ i, cmp i m ⊗ₜ[ℂ] (Pi.single i 1 : Fin d → ℂ) = m := by
   induction m using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, TensorProduct.add_tmul, Finset.sum_add_distrib, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), TensorProduct.add_tmul, Finset.sum_add_distrib, hx, hy]
   | tmul φ v =>
     simp only [cmp_tmul, TensorProduct.smul_tmul, ← TensorProduct.tmul_sum]
     congr 1
@@ -138,7 +138,7 @@ variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 def smA (Ξ : AlgRep E a) : Lie E a →ₗ[ℝ] Module.End ℂ (Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ)) where
   toFun X := (lie E a X).rTensor _
-  map_add' X Y := by simp only [map_add, LinearMap.rTensor_add]
+  map_add' X Y := by simp only [map_add (f := _), LinearMap.rTensor_add]
   map_smul' c X := by
     rw [map_smul, RingHom.id_apply, ← algebraMap_smul ℂ c (lie E a X),
       ← algebraMap_smul ℂ c (LinearMap.rTensor _ _ : Module.End ℂ (Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ))), LinearMap.rTensor_smul]

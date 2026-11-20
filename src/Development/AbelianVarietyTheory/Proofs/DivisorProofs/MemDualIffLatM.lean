@@ -161,7 +161,7 @@ theorem latPt_moeb {a b c d : F} (h : a * d - b * c = 1) {z : Emb F → ℂ} (hz
   have hne := den_ne h hz τ
   simp only [den] at hne
   have hne' : z τ * (τ c : ℂ) + (τ d : ℂ) ≠ 0 := by rw [mul_comm]; exact hne
-  simp only [latPt, moeb, pairAct, den, map_add, map_mul, Complex.ofReal_add, Complex.ofReal_mul]
+  simp only [latPt, moeb, pairAct, den, map_add (f := _), map_mul, Complex.ofReal_add, Complex.ofReal_mul]
   rw [eq_div_iff hne]
   field_simp
   ring

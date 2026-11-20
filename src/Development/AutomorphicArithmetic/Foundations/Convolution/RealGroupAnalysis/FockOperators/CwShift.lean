@@ -14,7 +14,7 @@ private lemma cw_shift {F : Type} [Field F] [NumberField F] [IsTotallyReal F]
     have h1 : (v + Pi.single i (at1 w t) : V4 F) i = v i + at1 w t := by simp
     rw [h1]
     unfold cw
-    rw [map_add, Pi.add_apply, hp]
+    rw [map_add (f := _), Pi.add_apply, hp]
     by_cases hw : w = w'
     · subst hw; simp
     · have : w' ≠ w := fun h => hw h.symm

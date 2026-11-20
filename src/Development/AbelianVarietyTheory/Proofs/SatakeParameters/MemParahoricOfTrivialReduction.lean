@@ -48,7 +48,7 @@ theorem extL_apply (a : (Fin n → k) →ₗ[k] (Fin n → k)) (v : Fin (n + c) 
 theorem extL_extL (a b : (Fin n → k) →ₗ[k] (Fin n → k)) (hab : ∀ x, a (b x) = x) (v : Fin (n + c) → k) :
     extL c a (extL c b v) = v := by
   have h : resX c (extL c b v) = b (resX c v) := by
-    rw [extL_apply, map_add, resX_inX]; abel
+    rw [extL_apply, map_add (f := _), resX_inX]; abel
   rw [extL_apply c a, h, hab, extL_apply, map_sub, map_sub]
   abel
 

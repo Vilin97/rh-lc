@@ -1479,7 +1479,7 @@ variable {Wp Wq : Type} [NormedAddCommGroup Wp] [InnerProductSpace ℂ Wp] [Fini
 
 theorem adjHS_add (T₁ T₂ : (Wq →L[ℂ] Wp) →L[ℂ] (Wq →L[ℂ] Wp)) : adjHS (T₁ + T₂) = adjHS T₁ + adjHS T₂ := by
   apply ContinuousLinearMap.coe_injective
-  simp [adjHS, LinearMap.comp_add, LinearMap.add_comp, map_add]
+  simp [adjHS, LinearMap.comp_add, LinearMap.add_comp, map_add (f := _)]
 
 theorem adjHS_smul (c : ℂ) (T : (Wq →L[ℂ] Wp) →L[ℂ] (Wq →L[ℂ] Wp)) : adjHS (c • T) = (starRingEnd ℂ c) • adjHS T := by
   apply ContinuousLinearMap.coe_injective

@@ -40,7 +40,7 @@ private theorem trace_add_of_short_exact {k A M C : Type*} [Field k]
     simp only [LinearMap.comp_apply, h2, hs']
   calc LinearMap.trace k M φ
       = LinearMap.trace k M ((φ ∘ₗ f) ∘ₗ r) + LinearMap.trace k M ((φ ∘ₗ s) ∘ₗ g) := by
-        rw [← map_add, ← hφ]
+        rw [← map_add (f := _), ← hφ]
     _ = _ := by
         rw [LinearMap.trace_comp_comm' r (φ ∘ₗ f), LinearMap.trace_comp_comm' g (φ ∘ₗ s), e1, e2]
 
@@ -139,7 +139,7 @@ theorem trace_quotient_pow {k B : Type*} [Field k] [CommRing B] [IsDedekindDomai
       obtain ⟨u, hu, w, hw, rfl⟩ := Submodule.mem_sup.1 hm
       obtain ⟨y, rfl⟩ := Ideal.mem_span_singleton'.1 hw
       refine ⟨Ideal.Quotient.mk _ y, ?_⟩
-      rw [hf, map_add, Ideal.Quotient.eq_zero_iff_mem.2 hu, zero_add, mul_comm]
+      rw [hf, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 hu, zero_add, mul_comm]
     · intro y
       obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective y
       change Ideal.Quotient.mk _ x * f (Ideal.Quotient.mk _ y) =
@@ -211,7 +211,7 @@ theorem not_pow_dvd_differentIdeal [Algebra.IsSeparable (FractionRing A) (Fracti
   have h1 : x ∈ P ⊔ Q := by
     rw [Ideal.isCoprime_iff_sup_eq.mp hPQ]; trivial
   obtain ⟨u, hu, y, hy, rfl⟩ := Submodule.mem_sup.mp h1
-  rw [map_add, Ideal.Quotient.eq_zero_iff_mem.mpr hu, zero_add] at hx
+  rw [map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.mpr hu, zero_add] at hx
   refine not_dvd_differentIdeal_of_intTrace_not_mem A _ Q hP y hy ?_ h
   rw [← Ideal.Quotient.eq_zero_iff_mem, intTrace_mk_eq P Q hP0 n hPQ hP y hy]
   exact mul_ne_zero hn hx

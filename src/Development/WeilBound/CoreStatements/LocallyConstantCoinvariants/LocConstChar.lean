@@ -124,7 +124,7 @@ theorem exists_fun (hκ : κ = Fintype.card a) {ξ : GL a k →* ℂˣ} (hξ : I
     | add x y _ _ hx hy =>
       obtain ⟨s, hs, e⟩ := hx
       obtain ⟨u, hu, e'⟩ := hy
-      exact ⟨s + u, by convert add_mem hs hu using 1; rw [add_smul]; abel, by rw [map_add, e, e', add_mul]⟩
+      exact ⟨s + u, by convert add_mem hs hu using 1; rw [add_smul]; abel, by rw [map_add (f := _), e, e', add_mul]⟩
     | smul c x _ hx =>
       obtain ⟨s, hs, e⟩ := hx
       exact ⟨c * s, by convert Submodule.smul_mem _ c hs using 1; rw [smul_sub, smul_smul],

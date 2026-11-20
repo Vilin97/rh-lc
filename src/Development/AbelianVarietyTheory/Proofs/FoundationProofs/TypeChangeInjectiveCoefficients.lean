@@ -291,7 +291,7 @@ variable {Γ : Type} [Group Γ] [TopologicalSpace Γ] {ρ : Representation O Γ 
 def mapZ : Z1 ρ →+ Z1 ρ' where
   toFun z := ⟨φ ∘ z.1, (continuous_of_discreteTopology (f := φ)).comp z.2.1, fun g h => by
     simp only [Function.comp_apply]
-    rw [z.2.2, map_add, hφ]⟩
+    rw [z.2.2, map_add (f := _), hφ]⟩
   map_zero' := Subtype.ext (funext fun _ => map_zero φ)
   map_add' _ _ := Subtype.ext (funext fun _ => map_add φ _ _)
 
@@ -513,7 +513,7 @@ theorem exists_comp_kog {ι : Type} {b : ι → O'} (hb : Gen O b) (hb' : Ind O 
       simp only [Algebra.smul_def]
       refine mul_left_cancel₀ h0 ?_
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [mul_sub, hc, map_add, map_mul, map_sum, Finset.mul_sum, eq_sub_iff_add_eq, add_comm]
+        rw [mul_sub, hc, map_add (f := _), map_mul, map_sum, Finset.mul_sum, eq_sub_iff_add_eq, add_comm]
       congr 1
       refine Finset.sum_congr rfl fun a _ => ?_
       rw [map_mul]

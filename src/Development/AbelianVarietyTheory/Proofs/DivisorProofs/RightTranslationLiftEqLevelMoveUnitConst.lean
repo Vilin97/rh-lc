@@ -181,17 +181,17 @@ theorem carries_unique (hσ : GoodEmb c σ) (hU : IsUnf U) (hr : 1 ≤ Dw.p + Dw
           obtain ⟨e₁, he₁⟩ := hM (v • c) (Submodule.smul_mem_smul hv Submodule.mem_top)
           obtain ⟨r, hr⟩ : l.M ∣ l.M' := Nat.dvd_lcm_left _ _
           refine ⟨e₁ + r • (gam (v • e) - v • e), ?_⟩
-          rw [smul_add, ← map_smul, smul_comm v, map_add, he₁, map_nsmul, hr, smul_add, smul_smul, smul_sub]
+          rw [smul_add, ← map_smul, smul_comm v, map_add (f := _), he₁, map_nsmul, hr, smul_add, smul_smul, smul_sub]
           abel
         · rintro x y ⟨e, he⟩ ⟨e', he'⟩
-          exact ⟨e + e', by rw [map_add, he, he', smul_add]; abel⟩)
+          exact ⟨e + e', by rw [map_add (f := _), he, he', smul_add]; abel⟩)
     obtain ⟨a, ha⟩ := (φ k₁).surjective ⟨v, hv⟩
     obtain ⟨b, rfl⟩ := g₁.surjective a
     obtain ⟨w, hw⟩ := hM' (g₁ b)
     have hv' : v = (φ k₁ (g₁ b) : Fin r → E) := by rw [ha]
     refine ⟨φ k₁ w, (φ k₁ w).2, ?_⟩
     rw [LinearEquiv.trans_apply, g₁.symm_apply_apply] at hw
-    rw [hmul, hv', m₁, hli, ← m₂, hw, map_add, map_nsmul, ← m₁]
+    rw [hmul, hv', m₁, hli, ← m₂, hw, map_add (f := _), map_nsmul, ← m₁]
     rfl
 
 variable {w : (E →+* ℂ) × ℕ → ℕ} {n : ℕ}

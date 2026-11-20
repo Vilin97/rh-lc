@@ -210,7 +210,7 @@ theorem h_vec (c c' : F) : (stdH M m).h (vec m c) (vec m c') = algebraMap F E (1
   change ∑ i, vec m c i * M.L.cj (vec m c' i) = _
   rw [Finset.sum_eq_add (0 : Fin (m + 2)) 1 h01]
   · rw [vec_zero, vec_zero, vec_one, vec_one]
-    simp [map_add, map_mul]
+    simp [map_add (f := _), map_mul]
   · intro i _ hi
     simp [vec, Pi.single_apply, hi.1, hi.2]
   · intro h
@@ -300,7 +300,7 @@ theorem relG [CharZero F] : (pair M m).RelG (theta M) := by
   · have hG : (pair M m).Gv = -algebraMap F E (theta M * theta M) := by
       simp only [FPair.Dm] at hd1 hd0
       simp only [FPair.Gv, HermSp.Gdet, HermSp.normE, zero_add, hd1, hd0, map_one, mul_one]
-      simp only [pair, frame, map_mul, map_neg, map_add, map_one, mul_zero, add_zero]
+      simp only [pair, frame, map_mul, map_neg, map_add (f := _), map_one, mul_zero, add_zero]
       ring
     rw [hG, neg_ne_zero]
     exact (map_ne_zero _).mpr (mul_ne_zero hθ hθ)

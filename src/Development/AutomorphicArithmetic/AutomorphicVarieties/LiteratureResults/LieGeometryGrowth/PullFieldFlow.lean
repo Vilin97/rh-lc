@@ -41,7 +41,7 @@ private theorem flow_eq {U : Subgroup (GL (Fin a) (Af E))} {Y : GA E a → Herm 
     {W : (GL (Fin a) (Af E) ⧸ U) → HV E a → HV E a} (hW : FCorr U Y W) (g h : GL (Fin a) (Cinf E))
     (x : GL (Fin a) (Af E)) (t : ℝ) (hh : h.val * star h.val = 1 + t • (Y (infGL E a g * finGL E a x)).1) :
     flow (W (x : GL (Fin a) (Af E) ⧸ U)) t (sand g (hOne E a)) = sand (g * h) (hOne E a) := by
-  rw [flow, hW, ← map_smul, ← map_add, map_mul, ContinuousLinearMap.mul_apply]
+  rw [flow, hW, ← map_smul, ← map_add (f := _), map_mul, ContinuousLinearMap.mul_apply]
   congr 1
   refine Subtype.ext ?_
   change (1 : Matrix (Fin a) (Fin a) (Cinf E)) + t • (Y (infGL E a g * finGL E a x)).1 = h.val * 1 * star h.val

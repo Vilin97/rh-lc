@@ -34,10 +34,10 @@ theorem coords_at_origin : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing
     exact GlobalTheory.T.invariantVectorField_eval_origin_eq_tangentDerivative R G (v a) (dd a) (hinv a) O hx g
   have hadd : ∀ a x y, tanDer G (v a) (x + y) = tanDer G (v a) x + tanDer G (v a) y := by
     intro a x y
-    rw [← key, ← key, ← key, map_add, map_add]
+    rw [← key, ← key, ← key, map_add (f := _), map_add (f := _)]
   have hmul : ∀ a x y, tanDer G (v a) (x * y) = evO G x * tanDer G (v a) y + evO G y * tanDer G (v a) x := by
     intro a x y
-    rw [← key, ← key, ← key, Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul]
+    rw [← key, ← key, ← key, Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul]
   have hc : ∀ a r, tanDer G (v a) (algebraMap R _ r) = 0 := by
     intro a r
     rw [← key]

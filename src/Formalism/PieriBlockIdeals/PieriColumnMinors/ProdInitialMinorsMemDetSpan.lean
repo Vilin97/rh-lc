@@ -1015,7 +1015,7 @@ private theorem la_rowGen_map_lemma (R : Type) [CommRing R] {r n : ℕ} (a b : F
       Polynomial.map (map (Int.castRingHom R)) (rowGen ℤ a b g) := by
   induction g using MvPolynomial.induction_on
   next z => simp [rowGen]
-  next p q hp hq => rw [map_add, map_add, hp, hq, map_add, Polynomial.map_add]
+  next p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), Polynomial.map_add (f := _)]
   next p v hp =>
     simp only [map_mul, MvPolynomial.map_X, hp, Polynomial.map_mul, la_rowGen_X]
     congr 1
@@ -1059,7 +1059,7 @@ theorem la_map_weyl (R : Type) [CommRing R] {r n : ℕ} (hn : n ≤ r) (ν : Fin
     rw [map_zero]
     exact Submodule.zero_mem _
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
   | smul z x _ hx =>
     rw [map_zsmul]
@@ -1120,7 +1120,7 @@ theorem la_clear (R : Type) [CommRing R] (l : ℕ) (hl : l.Prime)
     refine ⟨m1 * m2, fun h => ((Nat.Prime.dvd_mul hl).mp h).elim hm1 hm2,
       (m2 : ℤ) • f1 + (m1 : ℤ) • f2,
       Submodule.add_mem _ (Submodule.smul_mem _ _ hf1) (Submodule.smul_mem _ _ hf2), ?_⟩
-    rw [map_add, map_zsmul, map_zsmul, ← e1, ← e2, ← Int.cast_smul_eq_zsmul R,
+    rw [map_add (f := _), map_zsmul, map_zsmul, ← e1, ← e2, ← Int.cast_smul_eq_zsmul R,
       ← Int.cast_smul_eq_zsmul R, smul_smul, smul_smul, smul_add, Nat.cast_mul, Int.cast_natCast,
       Int.cast_natCast, mul_comm (m2 : R) (m1 : R)]
   | smul a x _ hx =>

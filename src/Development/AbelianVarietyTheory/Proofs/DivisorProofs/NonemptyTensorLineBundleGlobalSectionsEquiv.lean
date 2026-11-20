@@ -82,12 +82,12 @@ def mulBil (A B : LB T) :
     LB.Sec A →ₗ[Γ(T, ⊤)] LB.Sec B →ₗ[Γ(T, ⊤)] LB.Sec (CechPic.tens A B) :=
   LinearMap.mk₂ Γ(T, ⊤) (mulSec A B)
     (fun s s' t => f_injective (show mulFun A B (s + s') t = mulFun A B s t + mulFun A B s' t from
-      funext fun p => by simp only [mulFun, add_f, map_add, add_mul, Pi.add_apply]))
+      funext fun p => by simp only [mulFun, add_f, map_add (f := _), add_mul, Pi.add_apply]))
     (fun a s t => f_injective (show mulFun A B (a • s) t =
       fun (p : A.ι × B.ι) => resG T (le_top : A.U p.1 ⊓ B.U p.2 ≤ ⊤) a * mulFun A B s t p
       from funext fun p => by simp only [mulFun, smul_f, map_mul, resG_resG]; ring))
     (fun s t t' => f_injective (show mulFun A B s (t + t') = mulFun A B s t + mulFun A B s t' from
-      funext fun p => by simp only [mulFun, add_f, map_add, mul_add, Pi.add_apply]))
+      funext fun p => by simp only [mulFun, add_f, map_add (f := _), mul_add, Pi.add_apply]))
     (fun a s t => f_injective (show mulFun A B s (a • t) =
       fun (p : A.ι × B.ι) => resG T (le_top : A.U p.1 ⊓ B.U p.2 ≤ ⊤) a * mulFun A B s t p
       from funext fun p => by simp only [mulFun, smul_f, map_mul, resG_resG]; ring))
@@ -95,7 +95,7 @@ def mulBil (A B : LB T) :
 def chartLoc (L : LB T) (r : Γ(T, ⊤)) (i : L.ι) (h : T.basicOpen r ≤ L.U i) :
     LB.Sec L →ₗ[Γ(T, ⊤)] Γ(T, T.basicOpen r) where
   toFun s := resG T h (s.f i)
-  map_add' s t := by simp only [add_f, map_add]
+  map_add' s t := by simp only [add_f, map_add (f := _)]
   map_smul' a s := by
     simp only [smul_f, map_mul, resG_resG, RingHom.id_apply, Algebra.smul_def]
     rfl

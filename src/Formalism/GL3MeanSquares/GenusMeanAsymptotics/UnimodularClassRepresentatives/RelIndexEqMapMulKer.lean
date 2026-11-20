@@ -109,7 +109,7 @@ theorem map_symF_sesqL (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF 
     obtain ⟨θ, hθ⟩ := exists_add_conj_eq hK hF (1 : 𝓞 F)
     have hθK : (θ : K) + star (θ : K) = 1 := by
       have := congrArg (algebraMap (𝓞 K) K) hθ
-      rw [map_add, map_one, map_one] at this
+      rw [map_add (f := _), map_one, map_one] at this
       exact this
     refine ⟨(θ : K) • t, fun x hx y hy => ?_, ?_⟩
     · have := (pK K 𝔭 k).smul_mem θ (ht' x hx y hy)

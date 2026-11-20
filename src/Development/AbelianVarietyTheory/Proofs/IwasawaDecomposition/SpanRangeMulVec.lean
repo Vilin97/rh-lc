@@ -298,7 +298,7 @@ theorem exists_coord (j : B.S.Forms →ₛₗ[σ] H) (hj : Function.Injective j)
   have hi : ∀ a b, eV (jM a) = eV (jM b) → a = b := fun a b hab => hjM (heV hab)
   let g' : (Fin (B.S.lvlDim B.r ℓ.P ℓ.ψ) → K) →ₗ[K] ML :=
     { toFun := g
-      map_add' := fun x y => hi _ _ (by simp only [map_add, hg])
+      map_add' := fun x y => hi _ _ (by simp only [map_add (f := _), hg])
       map_smul' := fun a x => hi _ _ (by simp only [map_smulₛₗ, hg, RingHom.id_apply]) }
   refine ⟨LinearEquiv.ofBijective g' ⟨fun x y hxy => ?_, fun y => ?_⟩, hg⟩
   · have hxy' : g x = g y := hxy

@@ -365,7 +365,7 @@ theorem mem_dual_sup (L M : Submodule (𝓞 E) (Sp E n)) (y : Sp E n) :
     exact ⟨fun x hx => h x (Submodule.mem_sup_left hx), fun x hx => h x (Submodule.mem_sup_right hx)⟩
   · rintro ⟨h1, h2⟩ x hx
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.mp hx
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact Submodule.add_mem _ (h1 a ha) (h2 b hb)
 
 theorem mem_dual_smul (I : Ideal (𝓞 E)) (D : Submodule (𝓞 E) (Sp E n)) (y : Sp E n) :
@@ -383,7 +383,7 @@ theorem mem_dual_smul (I : Ideal (𝓞 E)) (D : Submodule (𝓞 E) (Sp E n)) (y 
       rw [hStd_osmul_left]
       exact (mem_dual_lemma_2 D _).mp (h p hp) x hx
     · intro a b ha hb
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       exact Submodule.add_mem _ ha hb
 
 theorem lattice_between {B M D : Submodule (𝓞 E) (Sp E n)} (hB : Submodule.IsLattice E B)
@@ -991,7 +991,7 @@ theorem Deco.Ok.til {d : Deco E n ∅ SG} (hd : d.Ok) {pi : 𝓞 E}
     replace hx : x ∈ localization₂ P.1.asIdeal (tilN d.N) := hx
     replace hy : y ∈ localization₂ P.1.asIdeal (tilN d.N) := hy
     simp only [Deco.til]
-    rw [if_pos hx, if_pos hy, if_pos (Submodule.add_mem _ hx hy), map_add]
+    rw [if_pos hx, if_pos hy, if_pos (Submodule.add_mem _ hx hy), map_add (f := _)]
     rw [hermStd_lastVector_apply, hermStd_lastVector_apply]
     exact reduction_add ((IntAt.coe _ _).mul ((mem_localization_tilN _ _ _).1 hx).2)
       ((IntAt.coe _ _).mul ((mem_localization_tilN _ _ _).1 hy).2)
@@ -1021,7 +1021,7 @@ theorem Deco.Ok.til {d : Deco E n ∅ SG} (hd : d.Ok) {pi : 𝓞 E}
     refine Fin.lastCases ?_ (fun j => ?_) i
     · simp only [Fin.snoc_last, Pi.add_apply, add_div]
       exact reduction_add (hx2.div_of_notMem (hG w)) (hy2.div_of_notMem (hG w))
-    · simp only [Fin.snoc_castSucc, Pi.add_apply, map_add]
+    · simp only [Fin.snoc_castSucc, Pi.add_apply, map_add (f := _)]
       rw [hd.be_add w _ hx1 _ hy1]
       rfl
   be_smul w a x hx := by
@@ -1049,7 +1049,7 @@ theorem Deco.Ok.til {d : Deco E n ∅ SG} (hd : d.Ok) {pi : 𝓞 E}
       rintro rfl
       exact hG w (Ideal.zero_mem _)
     have h1 : incl E n y + (r * pi) • eLast E n ∈ tilN d.N :=
-      (mem_tilN _ _).2 ⟨by rw [map_add, initL_osmul]; simpa using hy, r * pi, by
+      (mem_tilN _ _).2 ⟨by rw [map_add (f := _), initL_osmul]; simpa using hy, r * pi, by
         simp [Algebra.smul_def]⟩
     refine ⟨_, h1, ?_⟩
     simp only [Deco.til]
@@ -1063,7 +1063,7 @@ theorem Deco.Ok.til {d : Deco E n ∅ SG} (hd : d.Ok) {pi : 𝓞 E}
       rw [e, reduction_coe, hr]
     · simp only [Fin.snoc_castSucc]
       have e : initL E n (incl E n y + (r * pi) • eLast E n) = y := by
-        rw [map_add, initL_osmul]; simp
+        rw [map_add (f := _), initL_osmul]; simp
       rw [e, hc]
   be_ker w x hx h0 := by
     replace hx : x ∈ tilN d.N := hx
@@ -1468,8 +1468,8 @@ theorem inv_integral (P : HeightOneSpectrum (𝓞 E)) {q : 𝓞 E} (hq : q ∈ P
   obtain ⟨c2, hc2⟩ := neighbourConstruct_mem_inv.1 ha β hβ
   refine ⟨t * c2 + c1, ?_⟩
   have e' : algebraMap (𝓞 E) E t * algebraMap (𝓞 E) E r + algebraMap (𝓞 E) E p = 1 := by
-    rw [← map_mul, ← map_add, e, map_one]
-  rw [map_add, map_mul, hc1, hc2, ← h]
+    rw [← map_mul, ← map_add (f := _), e, map_one]
+  rw [map_add (f := _), map_mul, hc1, hc2, ← h]
   calc algebraMap (𝓞 E) E t * (algebraMap (𝓞 E) E q * b * a) + algebraMap (𝓞 E) E p * b
       = (algebraMap (𝓞 E) E t * (algebraMap (𝓞 E) E q * a) + algebraMap (𝓞 E) E p) * b := by ring
     _ = b := by rw [har, e', one_mul]
@@ -1823,7 +1823,7 @@ theorem Deco.Ok.til_L {d : Deco E n ∅ SG} (hd : d.Ok) {pi : 𝓞 E}
         tilN d.N := by
       rw [mem_tilN]
       refine ⟨?_, c * pi, hlast⟩
-      rw [map_add, initL_osmul]
+      rw [map_add (f := _), initL_osmul]
       simpa [z0] using hy0
     refine ⟨hmem, fun P => ?_⟩
     rw [hf P _ _ hmem hlast, Ideal.Quotient.eq_zero_iff_mem]
@@ -2239,7 +2239,7 @@ theorem Deco.Ok.Lsh_quot_L {d : Deco E n ST SG} (hd : d.Ok) (hc : ∀ P Q : ST, 
         obtain ⟨r, hr⟩ := hint P y.1 y.2
         obtain ⟨r', hr'⟩ := hint P z.1 z.2
         change redP _ (_ * hStd E n (e P) (y.1 + z.1)) = redP _ _ + redP _ _
-        rw [map_add, mul_add, ← hr, ← hr']
+        rw [map_add (f := _), mul_add, ← hr, ← hr']
         exact reduction_add (IntAt.coe _ _) (IntAt.coe _ _)
       map_smul' := by
         intro a y
@@ -2271,7 +2271,7 @@ theorem Deco.Ok.Lsh_quot_L {d : Deco E n ST SG} (hd : d.Ok) (hc : ∀ P Q : ST, 
     obtain ⟨c, hcx⟩ := hdec x hx
     have e1 : x = (x - ∑ P, c P • e P) + ∑ P, c P • e P := by abel
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [e1, map_add, LinearMap.add_apply, map_sum, LinearMap.sum_apply]
+      rw [e1, map_add (f := _), LinearMap.add_apply, map_sum, LinearMap.sum_apply]
     refine Submodule.add_mem _ ((mem_dual _ y).1 hy _ hcx) (Submodule.sum_mem _ fun P _ => ?_)
     rw [hStd_osmul_left, LinearMap.map_smul_of_tower]
     exact Submodule.smul_mem _ _ (H P)
@@ -2374,10 +2374,10 @@ theorem Deco.Ok.Lsh_quot_L {d : Deco E n ST SG} (hd : d.Ok) (hc : ∀ P Q : ST, 
     refine ⟨y1 + y2, Prod.ext ?_ ?_⟩
     · funext Q
       change φ (y1 + y2) Q = c Q
-      rw [map_add, Pi.add_apply, hφ2, hr]
+      rw [map_add (f := _), Pi.add_apply, hφ2, hr]
       abel
     · change ψ (y1 + y2) = c'
-      rw [map_add, hψ2, add_zero, hy1]
+      rw [map_add (f := _), hψ2, add_zero, hy1]
   exact ⟨(Submodule.quotEquivOfEq _ _ hΘker.symm).trans (Θ.quotKerEquivOfSurjective hΘsurj)⟩
 
 theorem Deco.Ok.card_Lsh_quot_L {d : Deco E n ST SG} (hd : d.Ok)
@@ -2572,7 +2572,7 @@ theorem til_fix_eLast (hconj : ∀ (τ : E →+* ℂ) (a : E), τ (star a) = sta
     intro σ
     have h1 := congrArg σ hnorm
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_mul, map_one, hStd_apply, map_sum,
+      rw [map_add (f := _), map_mul, map_one, hStd_apply, map_sum,
       show σ (star (algebraMap (𝓞 E) E c)) = starRingEnd ℂ (σ (algebraMap (𝓞 E) E c)) from
         hconj σ.toRingHom _, mul_comm (starRingEnd ℂ _), Complex.mul_conj] at h1
     have h2 : ∀ i, σ (star (initL E n (γ (eLast E n)) i) * initL E n (γ (eLast E n)) i) =
@@ -2649,9 +2649,9 @@ theorem exists_extU_of_fix (γ : UF E (n + 1)) (h : γ.1 (eLast E n) = eLast E n
   apply LinearEquiv.ext
   intro x
   change γ.1 x = extE g' x
-  conv_lhs => rw [sp_decomp x, map_add, map_smul, h, hincl γ h]
+  conv_lhs => rw [sp_decomp x, map_add (f := _), map_smul, h, hincl γ h]
   apply sp_ext
-  · rw [initL_extE, hg', map_add, map_smul]
+  · rw [initL_extE, hg', map_add (f := _), map_smul]
     simp
   · rw [extE_last]
     simp
@@ -2786,7 +2786,7 @@ theorem DecoSet.dnSet_nonempty (d : DecoSet E n ST SG) (P : ST) (hP : MoveHyp ST
   have f_add : ∀ x ∈ localization₂ P.1.asIdeal (d.1.dnN P), ∀ y ∈ localization₂ P.1.asIdeal (d.1.dnN P),
       f' (x + y) = f' x + f' y := by
     intro x hx y hy
-    rw [hf' _ hx, hf' _ hy, hf' _ (Submodule.add_mem _ hx hy), map_add]
+    rw [hf' _ hx, hf' _ hy, hf' _ (Submodule.add_mem _ hx hy), map_add (f := _)]
     exact reduction_add (hint x hx) (hint y hy)
   have f_smul : ∀ (a : 𝓞 E), ∀ x ∈ localization₂ P.1.asIdeal (d.1.dnN P),
       f' (a • x) = Ideal.Quotient.mk P.1.asIdeal a * f' x := by

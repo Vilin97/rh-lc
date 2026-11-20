@@ -403,7 +403,7 @@ theorem map_finPart_conj {n : ℕ} (m : Matrix (Fin n) (Fin n) (AE D))
   have h4 := GlobalTheory.ConjInfExp.finPart_eq_one _ h1
   have h5 : cA D ((1 : Matrix (Fin n) (Fin n) (AE D)) i j) = (1 : Matrix (Fin n) (Fin n) (AE D)) i j :=
     congrFun (congrFun (Matrix.map_one (cA D) (RingHom.map_zero _) (RingHom.map_one _)) i) j
-  rw [RingHom.map_add, RingHom.map_one, add_eq_left, Matrix.sub_apply, RingHom.map_sub, h5, RingHom.map_sub,
+  rw [RingHom.map_add (f := _), RingHom.map_one, add_eq_left, Matrix.sub_apply, RingHom.map_sub, h5, RingHom.map_sub,
     sub_eq_zero] at h4
   exact h4
 

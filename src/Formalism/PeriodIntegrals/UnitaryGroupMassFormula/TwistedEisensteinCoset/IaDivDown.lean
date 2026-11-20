@@ -37,7 +37,7 @@ theorem ia_add {a b : E} (ha : IntAt P a) (hb : IntAt P b) : IntAt P (a + b) := 
   obtain ⟨r, s, hs, h1⟩ := ha
   obtain ⟨r', s', hs', h2⟩ := hb
   refine ⟨r * s' + r' * s, s * s', fun hm => (P.isPrime.mem_or_mem hm).elim hs hs', ?_⟩
-  rw [map_add, map_mul, map_mul, map_mul, ← h1, ← h2]
+  rw [map_add (f := _), map_mul, map_mul, map_mul, ← h1, ← h2]
   ring
 
 theorem ia_sub {a b : E} (ha : IntAt P a) (hb : IntAt P b) : IntAt P (a - b) := by

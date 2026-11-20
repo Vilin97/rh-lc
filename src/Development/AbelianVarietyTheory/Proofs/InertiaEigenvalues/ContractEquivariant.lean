@@ -29,7 +29,7 @@ theorem contract_equivariant {R Y Q : Type} [CommRing R] [AddCommGroup Y] [Modul
     obtain ⟨q, hq⟩ := hx
     obtain ⟨q', hq'⟩ := hx'
     refine ⟨q + q', ?_⟩
-    simp only [map_add, hq, hq', smul_add]
+    simp only [map_add (f := _), hq, hq', smul_add]
     abel
 
 theorem actQab_mk {O G WC : Type} [CommRing O] [Group G] [CommRing WC] [Algebra O WC]
@@ -65,7 +65,7 @@ def scaled {Y : Type} [AddCommGroup Y] [Module ℤ_[l] Y] (ψ : Y →ₗ[ℤ_[l]
   map_add' y y' := by
     apply Subtype.ext
     change _ = (l : ℚ_[l]) ^ r * ψ y + (l : ℚ_[l]) ^ r * ψ y'
-    rw [← mul_add, ← map_add]
+    rw [← mul_add, ← map_add (f := _)]
   map_smul' z y := by
     apply Subtype.ext
     change (l : ℚ_[l]) ^ r * ψ (z • y) = (z : ℚ_[l]) * ((l : ℚ_[l]) ^ r * ψ y)
@@ -121,13 +121,13 @@ theorem push_coboundary : ∀ (D : Formalism.BasicNotions.D7) (l : ℕ) [Fact l.
     rw [← ha']
     have h4 : inclW l ((D.locA l).actW σ a0) = (D.locA l).actWCbHom σ (m0 : WCb l) := by
       rw [ha0, inclW_act]; rfl
-    rw [map_sub, map_sub, map_add, inclW_zl, map_mul (inclW l), map_mul (inclW l), inclW_zl,
+    rw [map_sub, map_sub, map_add (f := _), inclW_zl, map_mul (inclW l), map_mul (inclW l), inclW_zl,
       inclW_zl, h4, ← ha0, ← ha]
     change _ = (l : ℤ_[l]) ^ N • scaled ψ r hψ (f ⟨σ, hσ⟩) • (one : WCb l) -
       (u • (D.locA l).actWCbHom σ (m0 : WCb l) + (l : ℤ_[l]) ^ r • (m : WCb l) - (m0 : WCb l))
     rw [hone, smul_smul, ← Algebra.algebraMap_eq_smul_one, Algebra.smul_def, Algebra.smul_def]
   have h5 := congrArg (io (D.locA l)) h3
-  rw [map_sub, map_sub, map_add, io_zl _ (D.locT l), map_mul (io _), map_mul (io _),
+  rw [map_sub, map_sub, map_add (f := _), io_zl _ (D.locT l), map_mul (io _), map_mul (io _),
     map_mul (io _), map_pow (io _), io_zl _ (D.locT l), io_zl _ (D.locT l), io_act] at h5
   have h6 : io (D.locA l) (D.locA l).ξ ^ (e + 1) * io (D.locA l) a' ∈
       FilB (D.loc l) ((e : ℤ) + 1) := by

@@ -118,7 +118,7 @@ theorem exists_represents [ν.IsAddHaarMeasure] (h1 : 1 ≤ ρ) (h2 : ρ < c) (h
       · simp
       · intro y hy
         change σ _ _ = _
-        rw [map_add, show σ _ v = v from hy.1, show σ _ w = w from hy.2])
+        rw [map_add (f := _), show σ _ v = v from hy.1, show σ _ w = w from hy.2])
     (by
       intro z φ v
       obtain ⟨Φ, -, -, h⟩ := key _ (stab_nhds (ρ := ρ) hσ v)
@@ -196,7 +196,7 @@ theorem uniqueBessel : UniqueBessel k := by
       (Exchange.exchange_isPos k n c ρ h1 h2 ψ hψ hψ1 ν A σ hσ).2.1 (b φ) (hb.1 φ)
     refine ⟨⟨⟨L, fun φ φ' => ?_⟩, fun z φ => ?_⟩, hL', fun φ v => ⟨sb_int ((hS _ v).1 (hL' φ)).1, ?_⟩⟩
     · ext v
-      simp only [hL, exDown, map_add, LinearMap.add_apply]
+      simp only [hL, exDown, map_add (f := _), LinearMap.add_apply]
       exact integral_add (sb_int ((hS _ v).2 (hb.1 φ)).1) (sb_int ((hS _ v).2 (hb.1 φ')).1)
     · ext v
       simp only [hL, exDown, map_smul, LinearMap.smul_apply, smul_eq_mul, RingHom.id_apply, integral_const_mul]

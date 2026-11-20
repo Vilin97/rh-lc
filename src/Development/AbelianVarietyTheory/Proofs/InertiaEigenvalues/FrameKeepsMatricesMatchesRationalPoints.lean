@@ -86,7 +86,7 @@ theorem ratMatch_fwd {V : HSp D} (hF : D.host.F = maximalRealSubfield D.host.E) 
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [sigR, Algebra.TensorProduct.map_tmul]
-      | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+      | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
   have hUA := (P.ψ γ.1).2
   change Formalism.UG.cT (sigR (AF D.host.F) D.sp.cm.sig) ((P.ψ γ.1).1.1) * JR (AF D.host.F) V.gram * (P.ψ γ.1).1.1 =
     JR (AF D.host.F) V.gram at hUA

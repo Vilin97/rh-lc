@@ -133,7 +133,7 @@ theorem exists_small_coprime_norm :
         · exact absurd (by exact_mod_cast h' : (q : F) = 0) hq0
         · exact h'
       · have : τ (zz - ((t + 1 : 𝓞 F) : F)) = τ (zz - (t : F)) - 1 := by
-          push_cast; simp only [map_sub, map_add, map_one]; ring
+          push_cast; simp only [map_sub, map_add (f := _), map_one]; ring
         rw [this]
         calc |τ (zz - (t : F)) - 1| ≤ |τ (zz - (t : F))| + |(1 : ℝ)| := abs_sub _ _
           _ ≤ C₂ + 1 := by rw [abs_one]; linarith [hfr τ]

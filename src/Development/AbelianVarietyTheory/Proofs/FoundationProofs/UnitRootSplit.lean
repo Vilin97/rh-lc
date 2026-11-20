@@ -27,7 +27,7 @@ theorem unitRoot_split : ∀ (l : ℕ) [Fact l.Prime] (ι : PadicAlgCl l ≃+* �
       have : 1 ≤ ‖ι.symm a‖ * ‖ι.symm b‖ := by nlinarith
       linarith
     have hta : ι.symm a = ι.symm t + (-ι.symm b) := by
-      rw [← hab, map_add]; ring
+      rw [← hab, map_add (f := _)]; ring
     have hne : ‖ι.symm t‖ ≠ ‖-ι.symm b‖ := by rw [norm_neg, ht]; exact (ne_of_lt hb).symm
     have ha1 : ‖ι.symm a‖ = 1 := by
       rw [hta, IsUltrametricDist.norm_add_eq_max_of_norm_ne_norm hne, norm_neg, ht]
@@ -36,7 +36,7 @@ theorem unitRoot_split : ∀ (l : ℕ) [Fact l.Prime] (ι : PadicAlgCl l ≃+* �
     rw [← hmulN, ha1, one_mul]
   have hmax : 1 ≤ max ‖ι.symm ((t + s) / 2)‖ ‖ι.symm ((t - s) / 2)‖ := by
     have := IsUltrametricDist.norm_add_le_max (ι.symm ((t + s) / 2)) (ι.symm ((t - s) / 2))
-    rw [← map_add, hsum, ht] at this
+    rw [← map_add (f := _), hsum, ht] at this
     exact this
   rcases le_max_iff.mp hmax with h | h
   · obtain ⟨h1, h2⟩ := key _ _ hsum hprod h

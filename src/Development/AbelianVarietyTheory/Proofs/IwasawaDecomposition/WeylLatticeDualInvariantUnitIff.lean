@@ -25,7 +25,7 @@ theorem eval_rowAct {R : Type} [CommRing R] {N : ℕ} (G Y : Matrix (Fin N) (Fin
       MvPolynomial.eval (fun k => (G * Y) k.1 k.2) P := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [Formalism.GradedWeylDivisibility.rowAct]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [map_mul, MvPolynomial.eval_mul, MvPolynomial.eval_mul, hp]
     simp [Formalism.GradedWeylDivisibility.rowAct, Matrix.mul_apply]

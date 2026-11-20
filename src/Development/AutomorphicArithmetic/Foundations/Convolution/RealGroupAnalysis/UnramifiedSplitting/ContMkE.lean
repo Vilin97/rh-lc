@@ -54,12 +54,12 @@ private theorem ψ_neg_mul (x : A F) : ψ (-x) * ψ x = 1 := by
 private theorem cont_ψ : Continuous (ψ (F := F)) := continuous_subtype_val.comp continuous_adelicChar
 
 private theorem mkE_add (D : Dat F E) (a b c d : A F) : D.mkE (a + c) (b + d) = D.mkE a b + D.mkE c d := by
-  simp only [Dat.mkE, map_add, add_mul]
+  simp only [Dat.mkE, map_add (f := _), add_mul]
   abel
 
 private theorem mkE_rat (D : Dat F E) (x y : F) :
     D.mkE (rt x) (rt y) = rt (algebraMap F E x + algebraMap F E y * D.θ) := by
-  simp only [Dat.mkE, rt, AdeleBaseChange.adeleMap_algebraMap, map_add, map_mul]
+  simp only [Dat.mkE, rt, AdeleBaseChange.adeleMap_algebraMap, map_add (f := _), map_mul]
 
 private theorem cont_mkE (D : Dat F E) : Continuous fun x : Fin 2 → A F => D.mkE (x 0) (x 1) :=
   (AdeleBaseChange.continuous_adeleMap.comp (continuous_apply 0)).add

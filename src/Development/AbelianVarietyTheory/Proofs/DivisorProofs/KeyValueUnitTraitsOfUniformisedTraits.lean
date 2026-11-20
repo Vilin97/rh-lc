@@ -33,7 +33,7 @@ theorem dualMapR_eq_of_map {R R' : Type} [CommRing R] [CommRing R'] (f : R →+*
   have hF : F a = algebraMap R' (DualNumber R') (f (TrivSqZeroExt.fst a)) +
       algebraMap R' (DualNumber R') (f (TrivSqZeroExt.snd a)) * DualNumber.eps := by
     conv_lhs => rw [hx R a]
-    rw [map_add, map_mul, h1, h1, h2]
+    rw [map_add (f := _), map_mul, h1, h1, h2]
   rw [hF, ← Algebra.smul_def, ← DualNumber.inr_eq_smul_eps, TrivSqZeroExt.algebraMap_eq_inl]
   rfl
 

@@ -142,7 +142,7 @@ theorem dualBC_eq {O : Type} [CommRing O] (I : Ideal O) :
     (dualBC (Algebra.ofId O (O ⧸ I))).toRingHom = dualMap (Ideal.Quotient.mk I) := by
   refine RingHom.ext fun z => ?_
   conv_lhs => rw [← TrivSqZeroExt.inl_fst_add_inr_snd_eq z]
-  simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_add, dualBC, TrivSqZeroExt.lift_apply_inl,
+  simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_add (f := _), dualBC, TrivSqZeroExt.lift_apply_inl,
     TrivSqZeroExt.lift_apply_inr]
   refine TrivSqZeroExt.ext ?_ ?_ <;> simp [dualMap] <;> rfl
 

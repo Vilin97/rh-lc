@@ -234,7 +234,7 @@ theorem _root_.GlobalTheory.eigenMult_of_dense : ∀ (E : Type) [Field E] [Numbe
         ((p + q) * f₁ r * ((Algebra.intTrace ℤ (𝓞 E) a : ℤ) : K₁) +
           (p - q) * ((Algebra.intTrace ℤ (𝓞 E) (H.rt * a) : ℤ) : K₁)) := by
     intro K₁ _ f₁ M₁ h₁ a
-    simp only [X, map_sub, map_add, map_mul, map_natCast, map_intCast, map_ofNat]
+    simp only [X, map_sub, map_add (f := _), map_mul, map_natCast, map_intCast, map_ofNat]
     rw [_root_.GlobalTheory.TraceSpread.map_trace f₁ (M a) (M₁ a) (h₁ a)]
   have hX : ∀ a, X a = 0 := by
     intro a

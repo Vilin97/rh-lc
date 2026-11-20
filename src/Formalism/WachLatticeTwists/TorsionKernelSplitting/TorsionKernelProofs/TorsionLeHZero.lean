@@ -26,7 +26,7 @@ theorem torsion_le_h_zero : TorsionLeHZero := by
         intro p p' hp hp' g
         have h1 := hp g
         have h2 := hp' g
-        simp only [Prod.fst_add, Prod.snd_add, Submodule.coe_add, Pi.add_apply, map_add, h1, h2]
+        simp only [Prod.fst_add, Prod.snd_add, Submodule.coe_add, Pi.add_apply, map_add (f := _), h1, h2]
         abel
       zero_mem' := by
         intro g

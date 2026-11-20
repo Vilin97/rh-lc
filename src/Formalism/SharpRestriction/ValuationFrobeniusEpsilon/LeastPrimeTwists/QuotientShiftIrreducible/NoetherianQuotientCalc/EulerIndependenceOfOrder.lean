@@ -257,7 +257,7 @@ theorem cmp_map (hG : DirectSum.IsInternal G.gr) (φ : F.M →ₗ[R] G.M) (hφ :
     · rw [cmp_ne h hx hi, cmp_ne hG (hφ _ _ hx) hi, map_zero]
   · rw [map_zero, cmp_zero, cmp_zero, map_zero]
   · intro x y hx hy
-    rw [map_add, cmp_add, cmp_add, map_add, hx, hy]
+    rw [map_add (f := _), cmp_add, cmp_add, map_add (f := _), hx, hy]
 
 theorem comap_of_inj (hG : DirectSum.IsInternal G.gr) (φ : F.M →ₗ[R] G.M) (hφ : IsGrMap φ)
     (inj : Function.Injective φ) (m : Deg k) :

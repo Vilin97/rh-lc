@@ -81,7 +81,7 @@ theorem exists_gsLocalRes_eq_single (v : HeightOneSpectrum (𝓞 K.1)) (hv : v �
       T = DirectSum.of (fun u : Place K.1 => localGaloisCohomology K 2 u) (.inr v) t +
         DirectSum.of (fun u : Place K.1 => localGaloisCohomology K 2 u) (.inr w) t').elim fun T hTdef => ?_
   have hT : sumPlaceInv K T = 0 := by
-    rw [hTdef, map_add, sumPlaceInv_of, sumPlaceInv_of, ht', add_neg_cancel]
+    rw [hTdef, map_add (f := _), sumPlaceInv_of, sumPlaceInv_of, ht', add_neg_cancel]
   refine ((sumPlaceInv_eq_zero_iff ιs T).1 hT).elim fun y hy => ?_
   have ht'k : ℓ ^ k • t' = 0 := by
     apply (placeInv_bijective_inr (K := K) w).1

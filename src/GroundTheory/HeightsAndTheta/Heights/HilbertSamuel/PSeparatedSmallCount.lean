@@ -100,11 +100,11 @@ theorem isSectionValue_add {y : (Σ k, ι k) → Ω} {a : K → ℤ} {τ : ℕ} 
     LocalRep.isMultiHomog_mul hh hh', fun k => ?_, ?_, ?_, ?_⟩
   · simp only [Pi.add_apply, Nat.cast_add]
     linarith [hd k]
-  · rw [map_add, map_mul, map_mul, map_mul, he, he']
+  · rw [map_add (f := _), map_mul, map_mul, map_mul, he, he']
     ring
   · rw [map_mul, map_mul]
     exact mul_ne_zero hz0 hz0'
-  · simp only [map_add, map_mul]
+  · simp only [map_add (f := _), map_mul]
     rw [div_add_div _ _ hz0 hz0']
     ring
 
@@ -189,7 +189,7 @@ theorem SeparatedSmallCount.proof (hfin : SectionLatticeFinite.Statement) : Sepa
         exact zero_memℓp
       add_mem' := fun {s t} hs ht => by
         show Memℓp (ψ (s + t)) ∞
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Memℓp.add hs ht
       neg_mem' := fun {s} hs => by
         show Memℓp (ψ (-s)) ∞
@@ -200,7 +200,7 @@ theorem SeparatedSmallCount.proof (hfin : SectionLatticeFinite.Statement) : Sepa
   let φ : W →+ lp (fun _ : mcPts (mCoordIdeal y) => ℂ) ∞ :=
     AddMonoidHom.mk' (fun w => ⟨ψ w, w.2⟩) (fun v w => lp.ext (by
       show ψ ((v + w : W) : chartLat y A.a τ) = ψ v + ψ w
-      rw [AddSubgroup.coe_add, map_add]))
+      rw [AddSubgroup.coe_add, map_add (f := _)]))
   let F : chartLat y A.a τ → lp (fun _ : mcPts (mCoordIdeal y) => ℂ) ∞ := fun s =>
     if h : s ∈ W then φ ⟨s, h⟩ else 0
   have hF : ∀ s (h : s ∈ W), F s = φ ⟨s, h⟩ := fun s h => dif_pos h

@@ -40,7 +40,7 @@ theorem span_map_mem {τ : Type} (T : MvPolynomial σ ℚ_[p] →ₗ[ℚ_[p]] Mv
   induction hv using Submodule.span_induction with
   | mem v hv => exact h v hv
   | zero => rw [map_zero]; exact Λ.zero_mem
-  | add a b _ _ ha hb => rw [map_add]; exact Λ.add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact Λ.add_mem ha hb
   | smul c a _ ha =>
     rw [← algebraMap_smul ℚ_[p] c a, map_smul, algebraMap_smul]
     exact Λ.smul_mem c ha
@@ -62,7 +62,7 @@ theorem free_ehP {r : ℕ} {w e : Fin r → σ} {zv sv v : σ} (h1 : zv ≠ v) (
     (h4 : ∀ c, e c ≠ v) : pderiv v (ehP w e zv sv : MvPolynomial σ ℚ_[p]) = 0 := by
   unfold ehP
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum, free_mul (free_X h1) (free_X h2), zero_add]
+    rw [map_add (f := _), map_sum, free_mul (free_X h1) (free_X h2), zero_add]
   exact Finset.sum_eq_zero fun c _ => free_mul (free_X (h3 c)) (free_X (h4 c))
 
 end intpol

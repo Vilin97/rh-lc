@@ -12,7 +12,7 @@ variable {E : Type} [Field E] [NumberField E] [IsTotallyComplex E] {a : ℕ}
 
 def kgA (π : CuspSub E a) (Ξ : AlgRep E a) (σ : ℝ) : Lie E a →ₗ[ℝ] Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ)) where
   toFun X := (lieOp π X).rTensor _ + (-(σ / 2 : ℂ) * kgT X) • 1
-  map_add' X Y := by rw [map_add, LinearMap.rTensor_add, map_add, mul_add, add_smul]; abel
+  map_add' X Y := by rw [map_add (f := _), LinearMap.rTensor_add, map_add (f := _), mul_add, add_smul]; abel
   map_smul' c X := by
     have e1 : lieOp π (c • X) = (c : ℂ) • lieOp π X := by rw [map_smul, ← algebraMap_smul ℂ c]; rfl
     have e2 : kgT (c • X) = (c : ℂ) * kgT X := by rw [map_smul, Complex.real_smul]
@@ -23,7 +23,7 @@ def kgA (π : CuspSub E a) (Ξ : AlgRep E a) (σ : ℝ) : Lie E a →ₗ[ℝ] Mo
 
 def kgR (π : CuspSub E a) (Ξ : AlgRep E a) (σ : ℝ) : Lie E a →ₗ[ℝ] Module.End ℂ (π.V ⊗[ℂ] (Fin Ξ.d → ℂ)) where
   toFun X := (Matrix.toLin' (Ξ.dmat X)).lTensor _ + ((σ / 2 : ℂ) * kgT X) • 1
-  map_add' X Y := by rw [map_add, map_add, LinearMap.lTensor_add, map_add, mul_add, add_smul]; abel
+  map_add' X Y := by rw [map_add (f := _), map_add (f := _), LinearMap.lTensor_add, map_add (f := _), mul_add, add_smul]; abel
   map_smul' c X := by
     have e1 : Ξ.dmat (c • X) = (c : ℂ) • Ξ.dmat X := by rw [map_smul, ← algebraMap_smul ℂ c]; rfl
     have e2 : kgT (c • X) = (c : ℂ) * kgT X := by rw [map_smul, Complex.real_smul]

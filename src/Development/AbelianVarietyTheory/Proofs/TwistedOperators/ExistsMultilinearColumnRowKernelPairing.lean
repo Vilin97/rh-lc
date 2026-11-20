@@ -76,7 +76,7 @@ variable {ι : Type} [Fintype ι] {a b : ℕ}
 theorem jetLin_add (J J' : (Formalism.L2.Ker.DVar ι a b →₀ ℕ) → ℂ) :
     Formalism.L2.Ker.jetLin (J + J') = Formalism.L2.Ker.jetLin J + Formalism.L2.Ker.jetLin J' := by
   refine (MvPolynomial.basisMonomials _ ℂ).ext fun m => ?_
-  simp only [Formalism.L2.Ker.jetLin, LinearMap.add_apply, Module.Basis.constr_basis, Pi.add_apply, map_add]
+  simp only [Formalism.L2.Ker.jetLin, LinearMap.add_apply, Module.Basis.constr_basis, Pi.add_apply, map_add (f := _)]
 
 theorem jetLin_smul (c : ℂ) (J : (Formalism.L2.Ker.DVar ι a b →₀ ℕ) → ℂ) :
     Formalism.L2.Ker.jetLin (c • J) = c • Formalism.L2.Ker.jetLin J := by
@@ -92,7 +92,7 @@ theorem jetTab_add (W : G.Weil) (B : VertexFrames G) (p : Pair T) {f f' : WO (G.
     jetTab W B p (f + f') x y = jetTab W B p f x y + jetTab W B p f' x y := by
   funext k
   simp only [jetTab, kerFin, fockIn, GridData.Weil.ker, thetaKO, Pi.add_apply]
-  rw [GlobalTheory.SpecFac.pureTensorO_add W.ψ_std W.θ_is _ _ _ _ hf hf', map_add, Pi.add_apply]
+  rw [GlobalTheory.SpecFac.pureTensorO_add W.ψ_std W.θ_is _ _ _ _ hf hf', map_add (f := _), Pi.add_apply]
 
 theorem jetTab_smul (W : G.Weil) (B : VertexFrames G) (p : Pair T) (c : ℂ) (f : WO (G.pS p) (G.pT p) → ℂ)
     (x : FinPt G p.small) (y : FinPt G p.big) :
@@ -108,7 +108,7 @@ def fockLin (W : G.Weil) (B : VertexFrames G) (p : Pair T) (x : FinPt G p.small)
     ext1 v
     simp only [fockComp, Submodule.coe_add]
     rw [jetTab_add W B p f.2 f'.2]
-    simp only [Formalism.L2.Ker.jetOp, Formalism.L2.Ker.jetMap, jetLin_add, LinearMap.comp_apply, LinearMap.add_apply, map_add]
+    simp only [Formalism.L2.Ker.jetOp, Formalism.L2.Ker.jetMap, jetLin_add, LinearMap.comp_apply, LinearMap.add_apply, map_add (f := _)]
   map_smul' c f := by
     ext1 v
     simp only [fockComp, Submodule.coe_smul]

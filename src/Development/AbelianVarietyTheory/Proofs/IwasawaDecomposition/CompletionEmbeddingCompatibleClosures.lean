@@ -36,7 +36,7 @@ theorem normGroup_adjoin_eq_norm_range_completion : ∀ (E K : Type) [Field E] [
         exact IntermediateField.subset_adjoin _ _ ⟨_, rfl⟩
       | zero => simp
       | add x y _ _ hx hy =>
-        simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_add] at hx hy ⊢
+        simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_add (f := _)] at hx hy ⊢
         exact add_mem hx hy
       | smul a x _ hx =>
         simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_smul] at hx ⊢

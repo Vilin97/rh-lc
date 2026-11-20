@@ -55,7 +55,7 @@ private theorem commutator_eq_of_glRel {M : Type*} [AddCommGroup M] [Module ℂ 
       rw [show (p + q) * Matrix.single c d 1 - Matrix.single c d 1 * (p + q) =
           (p * Matrix.single c d 1 - Matrix.single c d 1 * p) +
             (q * Matrix.single c d 1 - Matrix.single c d 1 * q) by noncomm_ring]
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [← hp, ← hq]
       noncomm_ring
     · intro i j x
@@ -65,7 +65,7 @@ private theorem commutator_eq_of_glRel {M : Type*} [AddCommGroup M] [Module ℂ 
   · simp
   · intro p q hp hq
     rw [show Z * (p + q) - (p + q) * Z = (Z * p - p * Z) + (Z * q - q * Z) by noncomm_ring]
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [← hp, ← hq]
     noncomm_ring
   · intro i j x

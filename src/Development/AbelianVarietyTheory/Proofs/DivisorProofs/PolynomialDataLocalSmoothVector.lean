@@ -46,7 +46,7 @@ theorem polData_smooth : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Num
     obtain ⟨U, hU, hx⟩ := hx
     obtain ⟨U', hU', hy⟩ := hy
     refine ⟨U ∩ U', Filter.inter_mem hU hU', fun h hh hhv => ?_⟩
-    rw [map_add, hx h hh.1 hhv, hy h hh.2 hhv]
+    rw [map_add (f := _), hx h hh.1 hhv, hy h hh.2 hhv]
   | smul c x _ hx =>
     obtain ⟨U, hU, hx⟩ := hx
     exact ⟨U, hU, fun h hh hhv => by rw [map_smul, hx h hh hhv]⟩

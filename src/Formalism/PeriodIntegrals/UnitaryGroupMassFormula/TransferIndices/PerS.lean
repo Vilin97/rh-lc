@@ -69,7 +69,7 @@ theorem perS (T : GoodSet K G) (P0 P : Pair K G) (hM1 : M1 T P0) (s : T.S) :
       induction hw using Submodule.span_induction with
       | mem y hy => obtain ⟨x, rfl⟩ := hy; exact hu x
       | zero => simp
-      | add y z _ _ hy hz => rw [map_add, map_add, hy, hz, add_zero]
+      | add y z _ _ hy hz => rw [map_add (f := _), map_add (f := _), hy, hz, add_zero]
       | smul c y _ hy => rw [map_smul, map_smul, hy, smul_zero]
     have := hall v0
     rw [hpv0, hf0] at this
@@ -215,7 +215,7 @@ theorem perS (T : GoodSet K G) (P0 P : Pair K G) (hM1 : M1 T P0) (s : T.S) :
       induction hsp using Submodule.span_induction with
       | mem y hy => obtain ⟨k, rfl⟩ := hy; exact hZk k
       | zero => simp
-      | add y z _ _ hy hz => rw [map_add, hy, hz]
+      | add y z _ _ hy hz => rw [map_add (f := _), hy, hz]
       | smul c y _ hy => rw [map_smul, hy]
     have hZu : ∀ u ∈ LinearMap.range p, Z' u = u := fun u hu => hZsp u (hrange u hu)
     have hZ : τ.asAlgebraHom (∑ i, a i * b' i * eps P) = p := by

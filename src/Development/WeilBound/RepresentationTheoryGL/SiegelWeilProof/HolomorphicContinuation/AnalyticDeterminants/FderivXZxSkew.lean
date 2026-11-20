@@ -133,7 +133,7 @@ theorem ptId : PtId := by
   have hdK : ∀ e, dK Θ x e = fderiv ℂ Θ x (e * x) := fun e => by
     rw [dK, hR, hR]
     conv_rhs => rw [← reK_add_imK e]
-    rw [Matrix.add_mul, Matrix.smul_mul, map_add, map_smul, smul_eq_mul]
+    rw [Matrix.add_mul, Matrix.smul_mul, map_add (f := _), map_smul, smul_eq_mul]
   have hLeib : ∀ c : M2 n → ℂ, DifferentiableAt ℝ c x → ∀ e,
       dK (fun y => c y * Θ y) x e = dK c x e * Θ x + c x * dK Θ x e := fun c hc e => by
     have hΘr : DifferentiableAt ℝ Θ x := hΘd.restrictScalars ℝ
@@ -164,9 +164,9 @@ theorem ptId : PtId := by
       ∑ a, ∑ b, (cA Z a b x * dK Θ x (eA a b) + cB Z a b x * dK Θ x (eB a b)) := by
     rw [hxZ]
     conv_lhs => rw [decomp M]
-    rw [Matrix.add_mul, map_add, hlaw _ (by simp)]
+    rw [Matrix.add_mul, map_add (f := _), hlaw _ (by simp)]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Matrix.sum_mul, map_sum, Matrix.add_mul, Matrix.smul_mul, map_add, map_smul, smul_eq_mul, hdK]
+      simp only [Matrix.sum_mul, map_sum, Matrix.add_mul, Matrix.smul_mul, map_add (f := _), map_smul, smul_eq_mul, hdK]
     congr 1
     · simp [Matrix.trace_sub]
   rw [hL]

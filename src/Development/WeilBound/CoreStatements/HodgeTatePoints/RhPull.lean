@@ -24,7 +24,7 @@ theorem sub_pull : ∀ (p : ℕ) (C : Type) [Field C] (R : Type) [CommRing R] [A
     · rw [← hM]
       exact ⟨f, hf.1.1, rfl⟩
     · have := hf.2 (j x) (j y)
-      simpa only [map_add] using this
+      simpa only [map_add (f := _)] using this
   | algebraMap r => exact Subalgebra.algebraMap_mem _ r
   | add f f' _ _ h h' => exact Subalgebra.add_mem _ h h'
   | mul f f' _ _ h h' => exact Subalgebra.mul_mem _ h h'

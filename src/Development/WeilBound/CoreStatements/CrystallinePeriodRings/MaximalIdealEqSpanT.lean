@@ -77,7 +77,7 @@ theorem tie_o (x : Om l) : T.eD (algebraMap (Om l) P.R.BdR x) = oD l x := by
       map_one' := hj (by rw [← hy, map_one, map_one, map_one])
       map_mul' := fun a b => hj (by rw [← hy, map_mul, map_mul, map_mul, hy, hy])
       map_zero' := hj (by rw [← hy, map_zero, map_zero, map_zero])
-      map_add' := fun a b => hj (by rw [← hy, map_add, map_add, map_add, hy, hy])
+      map_add' := fun a b => hj (by rw [← hy, map_add (f := _), map_add (f := _), map_add (f := _), hy, hy])
       commutes' := fun q => hj (by
         rw [← hy, ← IsScalarTower.algebraMap_apply, tie_qD, frob_oD_apply, AlgHom.commutes]) }
   have hf : f = algClToBdR l := eq_algClToBdR l f hθ

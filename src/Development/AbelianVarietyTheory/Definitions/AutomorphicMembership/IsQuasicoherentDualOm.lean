@@ -130,7 +130,7 @@ theorem splitMap_embV_injective : Function.Injective (EigenSplit.splitMap (embV 
   have e (x : c.V W ⊗[ℤ] 𝓞 E) : EigenSplit.splitMap (embK c) ((c.V W).subtype.toIntAlgHom.toLinearMap.rTensor _ x) =
       fun σ => (EigenSplit.splitMap (embV c W) x σ : c.F) := by
     induction x with
-    | add y z hy hz => simp only [map_add, hy, hz]; rfl
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]; rfl
     | tmul r a =>
       funext σ
       rw [LinearMap.rTensor_tmul, EigenSplit.splitMap_tmul, EigenSplit.splitMap_tmul]

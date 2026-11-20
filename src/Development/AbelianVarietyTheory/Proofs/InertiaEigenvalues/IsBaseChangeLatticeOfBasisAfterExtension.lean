@@ -114,7 +114,7 @@ theorem isBaseChange_subtype_of_basis_after_extension : ∀ (S A EE O W RW D Y :
         add_mem' := by
           rintro _ _ ⟨e₁, h₁, rfl⟩ ⟨e₂, h₂, rfl⟩
           refine ⟨e₁ + e₂, fun i => ?_, ?_⟩
-          · rw [Pi.add_apply, map_add]
+          · rw [Pi.add_apply, map_add (f := _)]
             exact add_mem (h₁ i) (h₂ i)
           · simp [TensorProduct.add_tmul, Finset.sum_add_distrib] }
     have hP : ∀ (e : EE) (n : N), ι e ∈ c.range → e ⊗ₜ[A] n ∈ P := by

@@ -109,7 +109,7 @@ private lemma dualPair_exists_lhom_mu_pair {R : LAlg R₀} (Dp : DualPair R) (c 
   · exact Subtype.ext (AlgHom.ext fun d => rfl)
   · refine Subtype.ext (AlgHom.ext fun d => ?_)
     show Dp.fμ c d + Dp.fμ c' d - Dp.σ.1 (Dp.π.1 (Dp.fμ c d)) = Dp.fμ (c + c') d
-    simp only [DualPair.fμ, map_add, map_mul, map_sub, Dp.sect]
+    simp only [DualPair.fμ, map_add (f := _), map_mul, map_sub, Dp.sect]
     ring
   · intro r
     show (Dp.fμ c (Dp.σ.1 r), Dp.fμ c' (Dp.σ.1 r)) = (Dp.σ.1 r, Dp.σ.1 r)
@@ -286,13 +286,13 @@ private lemma cf_add (h1 : PairingPropertiesStatement B) {R : LAlg R₀} (Dp : D
   obtain ⟨z, hz, ez⟩ := cf_spec h1 Dp N hN y hy v
   obtain ⟨z', hz', ez'⟩ := cf_spec h1 Dp N hN y hy v'
   obtain ⟨w, hw, ew⟩ := cf_spec h1 Dp N hN y hy (v + v')
-  rw [TensorProduct.add_tmul, map_add] at hw
+  rw [TensorProduct.add_tmul, map_add (f := _)] at hw
   have hwz := h1.2.2.1 Dp.D N _ _ _ z z' w hz hz' hw
   have h : (w : (Dp.D : Type u)) = z * z' := by rw [hwz, Units.val_mul]
   rw [ew, ez, ez'] at h
   apply sub_eq_zero.mp
   apply Dp.free
-  rw [map_sub, map_add]
+  rw [map_sub, map_add (f := _)]
   linear_combination h + (Dp.σ.1 (cf h1 Dp N hN y hy v) * Dp.σ.1 (cf h1 Dp N hN y hy v')) * Dp.η_sq
 
 private lemma cf_smul (h1 : PairingPropertiesStatement B) {R : LAlg R₀} (Dp : DualPair R) (N : ℕ)
@@ -358,8 +358,8 @@ private lemma part_c (h1 : PairingPropertiesStatement B) {R : LAlg R₀} (Dp : D
   obtain ⟨w, hw⟩ := h1.1 Dp.D N _ (B.map Dp.σ y + B.map Dp.σ y') hx
     (by rw [nsmul_add, hy1, hy2, add_zero])
   have hwz := h1.2.2.2.1 Dp.D N _ _ _ z z' w hz hz' hw
-  refine ⟨w, by rw [map_add]; exact hw, ?_⟩
-  rw [hwz, Units.val_mul, ez, ez', LinearMap.add_apply, map_add]
+  refine ⟨w, by rw [map_add (f := _)]; exact hw, ?_⟩
+  rw [hwz, Units.val_mul, ez, ez', LinearMap.add_apply, map_add (f := _)]
   linear_combination (Dp.σ.1 (h v) * Dp.σ.1 (h' v)) * Dp.η_sq
 
 end BX

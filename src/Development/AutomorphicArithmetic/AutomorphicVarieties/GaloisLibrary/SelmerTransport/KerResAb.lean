@@ -137,7 +137,7 @@ theorem UpperTheory.V.Base.kerResAb :
       exact hkill u z
     · simp
     · intro x y _ _ hx hy
-      rw [add_smul, map_add, hx, hy, add_zero]
+      rw [add_smul, map_add (f := _), hx, hy, add_zero]
     · intro r x _ hx
       rw [smul_assoc, map_smul, hx, smul_zero]
   · intro u

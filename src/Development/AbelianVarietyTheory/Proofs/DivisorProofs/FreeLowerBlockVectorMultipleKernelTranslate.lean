@@ -193,7 +193,7 @@ theorem conj_entry {A R : Type} [CommRing A] [CommRing R] (f : A →+* R) {n : �
   have h2 : (β⁻¹).1 * K.map f * β.1 = 1 + f b • ((β⁻¹).1 * (K.map f - 1) * β.1) := by
     rw [← Matrix.smul_mul, ← Matrix.mul_smul, h3, Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one, Units.inv_mul,
       add_sub_cancel]
-  rw [h2, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, hφ, zero_mul, add_zero, Matrix.one_apply]
+  rw [h2, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul, hφ, zero_mul, add_zero, Matrix.one_apply]
   split_ifs
   · rwa [map_one]
   · rwa [map_zero]
@@ -475,7 +475,7 @@ theorem exists_diag_unitary {A R : Type} [CommRing A] [CommRing R] {n : ℕ} (hn
   · have e1 : f e • g.1.map f = (f e - f a) • (1 : Matrix (Fin n) (Fin n) R) + f a • M.map f := by
       ext x y
       have := congrArg f (congrFun (congrFun he x) y)
-      simp only [Matrix.smul_apply, Matrix.add_apply, smul_eq_mul, map_mul, map_add, map_sub, Matrix.one_apply,
+      simp only [Matrix.smul_apply, Matrix.add_apply, smul_eq_mul, map_mul, map_add (f := _), map_sub, Matrix.one_apply,
         Matrix.map_apply, apply_ite f, map_one, map_zero] at this ⊢
       exact this
     have e2 : (β⁻¹).1 * g.1.map f * β.1 * u = (f e - f a) • u + f a • ((Matrix.diagonal d).map f * u) := by
@@ -775,13 +775,13 @@ theorem vecFree_base_translate : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (
   obtain ⟨c, ⟨hc0, m₁, hc1, hc2⟩, hc⟩ := scalar_good hL i hK.chr hK.fin hK.pl hμ hp hξ hV ha hN hNv hodd
     (x := GlobalTheory.VecInv.detAt e hee _ g) hdet
   obtain ⟨m₂, hm₂⟩ := inCoefLat_pow R i (hL.βV i) hk (p := p) fun PP hPP => by
-    rw [RingHom.map_add, RingHom.map_add, (cpt_sum ha PP).2 fun h => hPP (hp PP h), zero_add, GlobalTheory.StdFrames.toEAf_cA]
+    rw [RingHom.map_add (f := _), RingHom.map_add (f := _), (cpt_sum ha PP).2 fun h => hPP (hp PP h), zero_add, GlobalTheory.StdFrames.toEAf_cA]
     exact GlobalTheory.StdFrames.cpt_sg_eq_zero ((cpt_sum ha _).2 fun h => hPP ((GlobalTheory.StdFrames.natCast_mem_cP PP p).1 (hp _ h)))
   have hν : ∀ PP, GlobalTheory.StdFrames.cpt (D := D) PP (toEAf D (a * (N : AE D) + (1 - a))) =
       GlobalTheory.StdFrames.cpt (D := D) PP (toEAf D a) * N + (1 - GlobalTheory.StdFrames.cpt (D := D) PP (toEAf D a)) := fun PP => by
     change ((GlobalTheory.StdFrames.cpt (D := D) PP).comp (toEAf D)) _ = ((GlobalTheory.StdFrames.cpt (D := D) PP).comp (toEAf D)) a * N +
       (1 - ((GlobalTheory.StdFrames.cpt (D := D) PP).comp (toEAf D)) a)
-    rw [map_add, map_mul, map_sub, map_one, map_natCast]
+    rw [map_add (f := _), map_mul, map_sub, map_one, map_natCast]
   have hν1 : ∀ PP ∈ Q, Valued.v (GlobalTheory.StdFrames.cpt (D := D) PP (toEAf D (a * (N : AE D) + (1 - a)))) = WithZero.exp (-1 : ℤ) :=
     fun PP h => by
       rw [hν, (cpt_sum ha PP).1 h, one_mul, sub_self, add_zero, ← hNv PP h,
@@ -799,7 +799,7 @@ theorem vecFree_base_translate : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (
     ring
   refine ⟨D.what₂.embLL c⁻¹ • ω (g⁻¹, 1) φ, ⟨hvac, e, he, hex, fun Tm hTm => ?_⟩, g⁻¹,
     GlobalTheory.IdemSupport.mem_GfC_of_suppF _ (f := a + cA D a)
-      (by rw [RingHom.map_add, hinf, GlobalTheory.PlaceVec.infPart_cA hinf, add_zero]) hk, c⁻¹, m₁ + m₂, rfl,
+      (by rw [RingHom.map_add (f := _), hinf, GlobalTheory.PlaceVec.infPart_cA hinf, add_zero]) hk, c⁻¹, m₁ + m₂, rfl,
     int_congr (isIntegral_pow_mul (p := p) m₂ hc2) (by ring), int_congr (isIntegral_pow_mul (p := p) m₂ hc1)
       (by rw [inv_inv]; ring), inv_ne_zero hc0, fun h _ => hm₂ _ (Nat.le_add_left _ _) h⟩
   have law := GlobalTheory.SplitLinear.splitLinearModelConj D R.ψ _ _ _ _ ω hK.weil _ _ hS hT _ e he _ hvac.2.theta hvac.2.lat 1

@@ -159,7 +159,7 @@ theorem cHalf_spec (I : Ideal (𝓞 E)) (hI : I ⊔ I.map (H.bar : 𝓞 E →+* 
 
 theorem ef_swap (x y : Dw.La) : Dw.EF y x = -Dw.EF x y := by
   have h := Dw.alt (x + y)
-  simp only [map_add, LinearMap.add_apply, Dw.alt] at h
+  simp only [map_add (f := _), LinearMap.add_apply, Dw.alt] at h
   linarith
 
 theorem qRep_mk {K : Submodule (𝓞 E) Dw.La} (q : Dw.La ⧸ K) : Submodule.Quotient.mk (qRep q) = q := by
@@ -255,7 +255,7 @@ theorem exists_adjoint_halves (N : ℕ) (hN : N ≠ 0) (I : Ideal (𝓞 E))
     obtain ⟨a, rfl⟩ := Submodule.Quotient.mk_surjective _ p
     obtain ⟨b, rfl⟩ := Submodule.Quotient.mk_surjective _ q
     obtain ⟨b', rfl⟩ := Submodule.Quotient.mk_surjective _ q'
-    rw [← Submodule.Quotient.mk_add, hB, hB, hB, smul_add, map_add, Int.cast_add]
+    rw [← Submodule.Quotient.mk_add, hB, hB, hB, smul_add, map_add (f := _), Int.cast_add]
   have hbal : ∀ (r : 𝓞 E) p q, B p (r • q) = B (H.bar r • p) q := by
     intro r p q
     obtain ⟨a, rfl⟩ := Submodule.Quotient.mk_surjective _ p

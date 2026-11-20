@@ -15,7 +15,7 @@ theorem UpperTheory.V.Ws.isClosed_zeroLocus_mvPolynomial_eval_adicContinuous :
   let L : (f.support → A) →ₗ[A] κ :=
     { toFun := fun v => ∑ d : f.support, f.coeff d.1 * j (v d)
       map_add' := fun x y => by
-        simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+        simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
       map_smul' := fun c x => by
         change ∑ d : f.support, f.coeff d.1 * j (c * x d) = j c * ∑ d : f.support, f.coeff d.1 * j (x d)
         rw [Finset.mul_sum]

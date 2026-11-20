@@ -19,7 +19,7 @@ theorem herm {V : Type} [AddCommGroup V] [Module ℂ V] (I : V →ₗ⋆[ℂ] V 
   have h2 := him (x + Complex.I • y)
   have hx := him x
   have hy := him y
-  simp only [map_add, LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
+  simp only [map_add (f := _), LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
     smul_eq_mul, RingHom.id_apply, Complex.conj_I, Complex.add_im, Complex.add_re, Complex.mul_im,
     Complex.mul_re, Complex.I_re, Complex.I_im, Complex.neg_re, Complex.neg_im] at h1 h2
   apply Complex.ext

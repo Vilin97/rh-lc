@@ -29,7 +29,7 @@ theorem idem_comm (T : Module.End ℂ V) (hT : ∀ g, T * ρ g = ρ g * T) (v : 
     exact congrArg (· - _) (LinearMap.congr_fun (hT n) w)
   have h3 : T (GlobalTheory.LocGL.idem hρ hH v) ∈ GlobalTheory.PRep.fixed ρ H := GlobalTheory.LGrp.mem_fixed.2 fun k hk => by
     rw [← Module.End.mul_apply, ← hT, Module.End.mul_apply, GlobalTheory.LGrp.mem_fixed.1 (GlobalTheory.LocGL.idem_mem hρ hH v) k hk]
-  rw [show T v = T (GlobalTheory.LocGL.idem hρ hH v) + T (v - GlobalTheory.LocGL.idem hρ hH v) by rw [← map_add, add_sub_cancel],
+  rw [show T v = T (GlobalTheory.LocGL.idem hρ hH v) + T (v - GlobalTheory.LocGL.idem hρ hH v) by rw [← map_add (f := _), add_sub_cancel],
     map_add, GlobalTheory.LocGL.idem_of_mem hρ hH h3, (GlobalTheory.LocGL.idem_eq_zero_iff hρ hH).2 h2, add_zero]
 
 end Gen
@@ -190,7 +190,7 @@ theorem no_eigvec (p : CuspSub E a) (ha : 1 ≤ a) (η : HChar E) (v : HeightOne
 
   let W : Submodule ℂ p.V :=
     { carrier := {φ | ∀ g, P (p.finPart g φ) = 0}
-      add_mem' := fun {φ ψ} hφ hψ g => by rw [map_add, map_add, hφ g, hψ g, add_zero]
+      add_mem' := fun {φ ψ} hφ hψ g => by rw [map_add (f := _), map_add (f := _), hφ g, hψ g, add_zero]
       zero_mem' := fun g => by rw [map_zero, map_zero]
       smul_mem' := fun c φ hφ g => by
         change P (p.finPart g (c • φ)) = 0

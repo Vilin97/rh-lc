@@ -101,7 +101,7 @@ theorem StepData.form_mem_J {f : Poly k N} {e : ℕ} (hf : f ∈ T.J) (he : f.Is
     rwa [show (c : ℤ) + d' = e by omega] at this
   · exact ⟨0, Submodule.zero_mem _, by rw [map_zero, zero_mul, mul_zero]⟩
   · rintro _ _ _ _ ⟨o, ho, h1⟩ ⟨o', ho', h2⟩
-    exact ⟨o + o', Submodule.add_mem _ ho ho', by rw [map_add, add_mul, h1, h2, mul_add]⟩
+    exact ⟨o + o', Submodule.add_mem _ ho ho', by rw [map_add (f := _), add_mul, h1, h2, mul_add]⟩
   · rintro a _ _ ⟨o, ho, h1⟩
     refine ⟨a • o, (twistMod k x e I).smul_of_tower_mem a ho, ?_⟩
     rw [map_smul, smul_mul_assoc, h1, mul_smul_comm]
@@ -141,7 +141,7 @@ def StepData.Jg : FinGradedSub (S := k) (x := x) Ω where
         · simp only [gj, Equiv.symm_apply_apply]; omega
         · simp only [gj, Equiv.symm_apply_apply, map_mul, smul_eq_mul]
       · rw [map_zero]; exact Submodule.zero_mem _
-      · intro a b _ _ ha hb; rw [map_add]; exact Submodule.add_mem _ ha hb
+      · intro a b _ _ ha hb; rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
       · intro a z _ hz; rw [map_smul]; exact Submodule.smul_mem _ a hz
 
 theorem StepData.Jg_tilde (I : Chart x) : (T.Jg.tildeSys 0).sub I = idealMod T.J I := by

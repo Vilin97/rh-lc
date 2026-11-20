@@ -72,7 +72,7 @@ theorem schur (ρ : G →* GL (Fin N) ℂ) (hN : 0 < N) (hI : Irr ρ)
       add_mem' := by
         intro a b ha hb
         simp only [Set.mem_ofPred_eq] at *
-        rw [map_add, ha, hb, smul_add]
+        rw [map_add (f := _), ha, hb, smul_add]
       zero_mem' := by simp
       smul_mem' := by
         intro a x hx

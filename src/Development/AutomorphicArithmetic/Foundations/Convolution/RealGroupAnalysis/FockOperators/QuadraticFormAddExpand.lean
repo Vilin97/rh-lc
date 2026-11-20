@@ -32,7 +32,7 @@ private theorem psi_curve (w : InfinitePlace F) (b : A F) (δ : F) (i : Fin 4) (
       rw [hm]
       congr 2
       have : TR.pInf F (at1 w t) w = t := by rw [hp]; simp
-      simp only [map_mul, map_add, Pi.mul_apply, Pi.add_apply, this, hβ, hκ]
+      simp only [map_mul, map_add (f := _), Pi.mul_apply, Pi.add_apply, this, hβ, hκ]
       ring
     have h1 : b * q4 δ (v + Pi.single i (at1 w t)) = b * q4 δ v + at1 w (t * (β + t * κ)) := by
       rw [quadraticForm_add_expand, ← h0]

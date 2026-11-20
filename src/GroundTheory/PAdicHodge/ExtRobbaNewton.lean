@@ -217,7 +217,7 @@ theorem lowIndex_coeffB_add_of_lt {b c : T.B} (hρ0 : 0 < ρ) (hρ1 : ρ < 1)
       lowIndex (T.coeffB (b + c)) ρ = lowIndex (T.coeffB b) ρ := by
   obtain ⟨x, y, N, hx, hy⟩ := T.exists_common b c
   have hxy : (b + c) * algebraMap Γ T.B T.π ^ N = algebraMap Γ T.B (x + y) := by
-    rw [add_mul, hx, hy, map_add]
+    rw [add_mul, hx, hy, map_add (f := _)]
   have hx0 : x ≠ 0 := by rintro rfl; exact hb0 (T.eq_zero_of_mul_pow (by rw [hx, map_zero]))
   have hx0' : T.zcoeff x ≠ 0 := fun h => hx0 ((T.zcoeff_eq_zero_iff x).1 h)
   rw [T.coeffB_eq hx, convergesAt_shift_iff hρ0] at hb

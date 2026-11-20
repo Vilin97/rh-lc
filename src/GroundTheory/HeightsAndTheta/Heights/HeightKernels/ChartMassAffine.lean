@@ -24,12 +24,12 @@ section Sesq
 variable (H : (Fin D → ℂ) →L[ℝ] (Fin D → ℂ) →L[ℝ] ℝ)
 
 theorem sesq_add_left (u u' v : Fin D → ℂ) : sesq H (u + u') v = sesq H u v + sesq H u' v := by
-  simp only [sesq, smul_add, map_add, _root_.add_apply]
+  simp only [sesq, smul_add, map_add (f := _), _root_.add_apply]
   push_cast
   ring
 
 theorem sesq_add_right (u v v' : Fin D → ℂ) : sesq H u (v + v') = sesq H u v + sesq H u v' := by
-  simp only [sesq, smul_add, map_add]
+  simp only [sesq, smul_add, map_add (f := _)]
   push_cast
   ring
 

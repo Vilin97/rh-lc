@@ -101,7 +101,7 @@ theorem good {V : X.Opens} {d : ℕ} (c : Chart γ p q κ V d) : c.Good := by
         (CommRingCat.ofHom (Ideal.quotientMap T.J σ.φ σ.hle)) c.D.y = T.y := σ.pt
     have hs : ∀ k, Ideal.Quotient.mk T.J (σ.φ (c.t k) + y k) =
         Ideal.quotientMap T.J σ.φ σ.hle (Ideal.Quotient.mk _ (c.t k)) := fun k => by
-      rw [Ideal.quotientMap_mk, map_add, Ideal.Quotient.eq_zero_iff_mem.2 (hy k), add_zero]
+      rw [Ideal.quotientMap_mk, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 (hy k), add_zero]
     obtain ⟨f, ⟨h1, h2, h3⟩, hu⟩ := exists_unique_lift c T (Ideal.quotientMap T.J σ.φ σ.hle)
       (quot_comm c T _ hg) (fun k => σ.φ (c.t k) + y k) hs
     refine ⟨homOf c T f h1 _ h3 hg, fun i => ?_, fun τ hτ => hom_ext ?_⟩

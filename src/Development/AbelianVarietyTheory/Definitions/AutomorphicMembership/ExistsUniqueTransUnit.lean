@@ -364,7 +364,7 @@ theorem existsUnique_coef (s : SecGK U) (χ : D.toPre.X) :
 def coef : SecGK U →ₗ[FractionRing R] (D.toPre.X → FractionRing R) where
   toFun s χ := (existsUnique_coef U hR s χ).choose
   map_add' s t := funext fun χ => ((existsUnique_coef U hR (s + t) χ).choose_spec.2 _ (by
-    rw [map_add, map_add, (existsUnique_coef U hR s χ).choose_spec.1, (existsUnique_coef U hR t χ).choose_spec.1,
+    rw [map_add (f := _), map_add (f := _), (existsUnique_coef U hR s χ).choose_spec.1, (existsUnique_coef U hR t χ).choose_spec.1,
       Pi.add_apply]
     exact (add_smul _ _ _).symm)).symm
   map_smul' c s := funext fun χ => ((existsUnique_coef U hR (c • s) χ).choose_spec.2 _ (by

@@ -74,7 +74,7 @@ theorem mConeMap_rename {Ω : Type} [Field Ω] {κ : K → K'} {v : (Σ k, ι k)
     (y : (Σ k, ι' k) → Ω) (g : MRing ι) : mConeMap y (rename v g) = rename κ (mConeMap (y ∘ v) g) := by
   induction g using MvPolynomial.induction_on with
   | C a => simp [mConeMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n hp =>
     simp only [map_mul, hp, rename_X]
     congr 1
@@ -84,7 +84,7 @@ theorem mConeMap_comp {Ω Ω' : Type} [Field Ω] [Field Ω'] (φ : Ω →+* Ω')
     mConeMap (φ ∘ x) g = map φ (mConeMap x g) := by
   induction g using MvPolynomial.induction_on with
   | C a => simp [mConeMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n hp =>
     simp only [map_mul, hp]
     congr 1
@@ -94,7 +94,7 @@ theorem aeval_comp_ringHom {Ω Ω' : Type} [Field Ω] [Field Ω'] (φ : Ω →+*
     aeval (φ ∘ x) g = φ (aeval x g) := by
   induction g using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n hp => simp only [map_mul, hp, aeval_X, Function.comp]
 
 theorem eval_rename_block (v : (Σ k, ι k) → Σ k, ι' k) (z : (Σ k, ι' k) → ℂ) (f : MRing ι) :
@@ -210,7 +210,7 @@ theorem mem_mcPts_of_ringHom {L R : Type} [Field L] [CommRing R] (i : R →+* L)
       intro R' R'' _ _ φ w f
       induction f using MvPolynomial.induction_on with
       | C a => simp
-      | add p q hp hq => simp only [map_add, hp, hq]
+      | add p q hp hq => simp only [map_add (f := _), hp, hq]
       | mul_X p n hp => simp only [map_mul, hp, aeval_X]
     have h2 : aeval s g = 0 := hi (by rw [← comp, h1, map_zero])
     have h3 : eval (fun p => t p.1 * zt p) (map (Int.castRingHom ℂ) g) = 0 := by
@@ -221,7 +221,7 @@ theorem mem_mcPts_of_ringHom {L R : Type} [Field L] [CommRing R] (i : R →+* L)
     have hne : (∏ k, t k ^ d k) ≠ 0 := Finset.prod_ne_zero_iff.2 fun k _ => pow_ne_zero _ (ht k)
     exact (mul_eq_zero.1 h3).resolve_left hne
   | zero => simp
-  | add x y _ _ hx hy => simp [map_add, hx, hy]
+  | add x y _ _ hx hy => simp [map_add (f := _), hx, hy]
   | smul r x _ hx => simp [smul_eq_mul, map_mul, hx]
 
 end Reg
@@ -410,7 +410,7 @@ theorem flag_back {F : FrameData ι Ψ N M.Ω M.blk} (hF : M.IsFrame F) {z : (Σ
     intro r
     induction r using MvPolynomial.induction_on with
     | C a => simp [iS]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p n hp => simp only [map_mul, hp, map_X, aeval_X]; simp [iS]
   have hiS : Function.Injective iS := fun a b e => by
     refine MvPolynomial.map_injective A.subtype Subtype.val_injective

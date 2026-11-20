@@ -170,7 +170,7 @@ private theorem approx (τ : J → F →+* PadicAlgCl p)
     refine ⟨x1 + x2, fun i => ?_⟩
     have hcalc : τ i (x1 + x2) - ((w1 + w2) i : PadicAlgCl p) =
         (τ i x1 - (w1 i : PadicAlgCl p)) + (τ i x2 - (w2 i : PadicAlgCl p)) := by
-      rw [map_add]
+      rw [map_add (f := _)]
       show τ i x1 + τ i x2 - ((w1 i : PadicAlgCl p) + (w2 i : PadicAlgCl p)) = _
       ring
     rw [hcalc]

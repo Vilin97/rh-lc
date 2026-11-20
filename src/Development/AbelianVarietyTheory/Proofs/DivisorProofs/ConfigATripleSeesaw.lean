@@ -48,7 +48,7 @@ def lagrA (M : Model σ X W) (M₁ : Model σ X₁ W₁) (H : Plane E n n₁) (H
     Submodule F ((Fin n × Fin d → F) × (Fin n × Fin d → F)) where
   carrier := {w | IsMixedA M₁ H H' (M.co.e.symm (GlobalTheory.MixedLagr.hat w))}
   zero_mem' := by simpa [GlobalTheory.MixedLagr.hat_zero] using isMixedA_zero M₁ H H'
-  add_mem' := fun ha hb => by simpa [Set.mem_setOf_eq, GlobalTheory.MixedLagr.hat_add, map_add] using ha.add hb
+  add_mem' := fun ha hb => by simpa [Set.mem_setOf_eq, GlobalTheory.MixedLagr.hat_add, map_add (f := _)] using ha.add hb
   smul_mem' := fun c a ha => by
     show IsMixedA M₁ H H' (M.co.e.symm (GlobalTheory.MixedLagr.hat (c • a)))
     rw [GlobalTheory.MixedLagr.hat_smul, LinearEquiv.map_smul]
@@ -103,7 +103,7 @@ theorem symp_mixedA {B : Base F E} {j₀ j₁ i₀ i₁ : ℕ} {H : Plane E n n�
   rw [← piece_c_left_identity] at h_ca' h_c'a
   rw [← piece_c_right_identity] at h_cb' h_c'b
   rw [← hQ] at h_aa h_ba' h_b'a h_ca' h_c'a h_bb' h_cb' h_c'b h_cc
-  simp only [map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+  simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
   linear_combination h_aa + h_ba' - h_b'a + h_ca' - h_c'a + h_bb' + h_cb' - h_c'b + h_cc
 
 end GlobalTheory.MixedLagrA

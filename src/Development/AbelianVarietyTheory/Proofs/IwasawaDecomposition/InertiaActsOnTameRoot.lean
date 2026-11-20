@@ -62,7 +62,7 @@ theorem val_int_le {L : Type} [Field L] [NumberField L] [Algebra L Ω] (A : Valu
 def primeOf {L : Type} [Field L] [NumberField L] [Algebra L Ω] (A : ValuationSubring Ω) : Ideal (𝓞 L) where
   carrier := {x | A.valuation (algebraMap L Ω (x : L)) < 1}
   add_mem' {a b} ha hb := by
-    simp only [Set.mem_setOf_eq, map_add] at ha hb ⊢
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at ha hb ⊢
     exact Valuation.map_add_lt _ ha hb
   zero_mem' := by simp
   smul_mem' c b hb := by
@@ -267,7 +267,7 @@ theorem main : ∀ {E Ω : Type} [Field E] [NumberField E] [Field Ω] [Algebra E
       exact congrArg Subtype.val this
     | add y z hy hz ihy ihz =>
       change ((τ ((⟨y, hy⟩ : M) + ⟨z, hz⟩) : M) : Ω) = y + z
-      rw [map_add, IntermediateField.coe_add, ihy, ihz]
+      rw [map_add (f := _), IntermediateField.coe_add, ihy, ihz]
     | inv y hy ih =>
       change ((τ ((⟨y, hy⟩ : M)⁻¹) : M) : Ω) = y⁻¹
       rw [map_inv₀, IntermediateField.coe_inv, ih]

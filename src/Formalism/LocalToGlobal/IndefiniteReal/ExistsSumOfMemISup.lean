@@ -77,7 +77,7 @@ theorem sum_proj {x : E} (hx : x ∈ ⨆ p, U p) : ∑ p, (U p).starProjection x
     simp
   · simp
   · intro x y hx hy
-    simp only [map_add, Finset.sum_add_distrib, hx, hy]
+    simp only [map_add (f := _), Finset.sum_add_distrib, hx, hy]
 
 omit hU in
 

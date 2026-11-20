@@ -27,19 +27,19 @@ theorem theta_pull {ψ : AddChar (AF D.host.F) ℂ} {A B C E : HSp D} (e : WO A 
     obtain ⟨γ', hγ'⟩ := hrat (ratW B A γ) ⟨γ, rfl⟩
     have e1 : e (ratW B A γ) = ratW E C γ' := hγ'.symm
     show f (e (ratW B A γ + w)) = _
-    rw [map_add, e1, hf.quasi, ← e1, symplOH_of (⇑e) hs]
+    rw [map_add (f := _), e1, hf.quasi, ← e1, symplOH_of (⇑e) hs]
   level := by
     obtain ⟨U, hU, k⟩ := hf.level
     refine ⟨U.comap (e : WO A B →+ WO C E), hU.preimage hc, fun u hu h0 => ?_⟩
     funext w
     have := congrFun (k (e u) hu (hinf u h0)) (e w)
     simp only [heisO] at this ⊢
-    rw [map_add, ← symplOH_of (⇑e) hs]
+    rw [map_add (f := _), ← symplOH_of (⇑e) hs]
     exact this
   cont := hf.cont.comp hc
   smooth k L hL h0 w := by
     have := hf.smooth k ((e : WO A B →+ WO C E).comp L) (hc.comp hL) (fun t => hfin _ (h0 t)) (e w)
-    simpa only [AddMonoidHom.comp_apply, AddMonoidHom.coe_coe, map_add] using this
+    simpa only [AddMonoidHom.comp_apply, AddMonoidHom.coe_coe, map_add (f := _)] using this
 
 theorem isDetAt_inv {e : AE D} (he : e * e = e) {V V₂ : HSp D} {g : GA D V} {k : GA D V₂} {x : (AE D)ˣ}
     (hx : IsDetAt e V g x) (hk : (mt V₂ k).det = (mt V g⁻¹).det) : IsDetAt e V₂ k x⁻¹ := by
@@ -61,7 +61,7 @@ def swapOm {S T S' T' : HSp D} (L : WO S' T' ≃ₗ[AE D] WO S T) (φ : GA D S' 
         funext w
         have e : (fun x => (F + G) (L.symm x)) = (fun x => F (L.symm x)) + fun x => G (L.symm x) := rfl
         show om _ (fun x => (F + G) _) _ = om _ (fun x => F _) _ + om _ (fun x => G _) _
-        rw [e, map_add]; rfl
+        rw [e, map_add (f := _)]; rfl
       map_smul' := fun c F => by
         funext w
         have e : (fun x => (c • F) (L.symm x)) = c • fun x => F (L.symm x) := rfl
@@ -120,12 +120,12 @@ theorem GlobalTheory.SwapWeil.isWeilDatumO_swap : ∀ (D : D7) (ψ : AddChar (AF
   · have e1 : (fun x => heisO ψ S' T' w₀ F (L.symm x)) = heisO ψ S T (L w₀) (fun x => F (L.symm x)) := by
       funext x
       simp only [heisO]
-      rw [← symplOH_of (⇑L) hs (L.symm x) w₀, LinearEquiv.apply_symm_apply, map_add, LinearEquiv.symm_apply_apply]
+      rw [← symplOH_of (⇑L) hs (L.symm x) w₀, LinearEquiv.apply_symm_apply, map_add (f := _), LinearEquiv.symm_apply_apply]
     funext w
     show om (φ' h, φ g) (fun x => heisO ψ S' T' w₀ F (L.symm x)) (L w) =
       heisO ψ S' T' (actO S' T' g h w₀) (swapOm L φ φ' om (g, h) F) w
     rw [e1, H.om_heis _ _ _ _ (thLs F hF), ← hact]
-    simp only [heisO, swapOm_apply, map_add, symplOH_of (⇑L) hs]
+    simp only [heisO, swapOm_apply, map_add (f := _), symplOH_of (⇑L) hs]
   · show om (φ' γ', φ γ) (fun x => F (L.symm x)) (L 0) = F 0
     rw [L.map_zero, H.om_aut _ (hGQ' γ' hγ') _ (hGQ γ hγ) _ (thLs F hF)]
     exact congrArg F L.symm.map_zero
@@ -153,7 +153,7 @@ theorem GlobalTheory.SwapWeil.isWeilDatumO_swap : ∀ (D : D7) (ψ : AddChar (AF
       have e1 : (fun w => heisO ψ S T u G (L w)) = heisO ψ S' T' (L.symm u) (fun w => G (L w)) := by
         funext w
         simp only [heisO]
-        rw [← symplOH_of (⇑L) hs w (L.symm u), map_add, LinearEquiv.apply_symm_apply]
+        rw [← symplOH_of (⇑L) hs w (L.symm u), map_add (f := _), LinearEquiv.apply_symm_apply]
       rw [e1]
       refine hℓ _ ?_ _ (thL G hG)
       have hu' : cA D e • u = u := by

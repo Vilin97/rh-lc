@@ -23,7 +23,7 @@ theorem cc_expS {n : ℕ} (F : PS k n d) (hF : constantCoeff F = 0) : constantCo
   have h1 : PowerSeries.exp k = 1 + (PowerSeries.exp k - 1) := by ring
   have h2 : PowerSeries.constantCoeff (PowerSeries.exp k - 1) = 0 := by simp
   unfold FB.expS
-  rw [h1, ← PowerSeries.coe_substAlgHom ha, map_add, map_one, map_add, PowerSeries.coe_substAlgHom ha,
+  rw [h1, ← PowerSeries.coe_substAlgHom ha, map_add (f := _), map_one, map_add (f := _), PowerSeries.coe_substAlgHom ha,
     PowerSeries.constantCoeff_subst_eq_zero hF _ h2, map_one, add_zero]
 
 def embX (d : ℕ) : Fin 1 × Fin d ↪ Fin d ⊕ Fin d :=

@@ -78,8 +78,8 @@ theorem Lj_inl_inr (Th : MvPowerSeries (Lt × Fin N0 × Fin N1) ℂ_[l])
       simp only [smul_monomial, zsmul_eq_mul, smul_eq_mul, eq_intCast, Int.cast_mul]
       congr 1
       ring
-    | add q1 q2 h1 h2 => rw [map_add, mul_add, map_add, h1, h2, map_add, add_smul]
-  | add a1 a2 h1 h2 => rw [map_add, add_mul, map_add, h1, h2, map_add, smul_add]
+    | add q1 q2 h1 h2 => rw [map_add (f := _), mul_add, map_add (f := _), h1, h2, map_add (f := _), add_smul]
+  | add a1 a2 h1 h2 => rw [map_add (f := _), add_mul, map_add (f := _), h1, h2, map_add (f := _), smul_add]
 
 def Xm (s : Lt) (p : ℕ) : Matrix (Fin p) (Fin N0) (MvPolynomial (Lt × ℕ × Fin N0) ℤ) :=
   Matrix.of fun i a => X (s, (i : ℕ), a)

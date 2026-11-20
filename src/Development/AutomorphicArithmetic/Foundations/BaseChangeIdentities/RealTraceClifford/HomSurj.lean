@@ -29,7 +29,7 @@ private theorem proj_comm {n : ℕ} {N : Type} [NormedAddCommGroup N] [InnerProd
     exact Submodule.inner_right_of_mem_orthogonal (hS b a w hw)
       (Submodule.sub_starProjection_mem_orthogonal y)
   refine Submodule.eq_starProjection_of_mem_orthogonal' (hS a b _ (S.starProjection_apply_mem y)) hz ?_
-  rw [← map_add, add_sub_cancel]
+  rw [← map_add (f := _), add_sub_cancel]
 
 theorem UpperTheory.RealTr.homSurj :
     ∀ (n : ℕ) (N V : Type) [NormedAddCommGroup N] [InnerProductSpace ℂ N] [FiniteDimensional ℂ N] [NormedAddCommGroup V] [InnerProductSpace ℂ V]
@@ -79,7 +79,7 @@ theorem UpperTheory.RealTr.homSurj :
         (fun h => absurd (Finset.mem_univ j) h), hPself j z hz]
     · simp
     · intro a b ha hb
-      simp only [map_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), Finset.sum_add_distrib]
       rw [← ha, ← hb]
   have hg : ∀ i, ∃ g : N →ₗ[ℂ] V, (∀ a b (y : N), g (F a b y) = K a b (g y)) ∧
       (μ i = ν → ∀ h : x i ∈ hw F ν, g (x i) = (φ ⟨x i, h⟩ : V)) ∧ (μ i ≠ ν → g = 0) := by

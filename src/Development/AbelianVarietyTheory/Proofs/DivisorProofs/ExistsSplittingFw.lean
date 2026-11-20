@@ -57,7 +57,7 @@ def Datum.actOF : D.O →+* Module.End D.F D.VF where
   map_one' := by ext v; show D.actQ 1 v = v; rw [map_one]; rfl
   map_mul' a b := by ext v; show D.actQ (a * b) v = D.actQ a (D.actQ b v); rw [map_mul]; rfl
   map_zero' := by ext v; show D.actQ 0 v = 0; rw [map_zero]; rfl
-  map_add' a b := by ext v; show D.actQ (a + b) v = D.actQ a v + D.actQ b v; rw [map_add]; rfl
+  map_add' a b := by ext v; show D.actQ (a + b) v = D.actQ a v + D.actQ b v; rw [map_add (f := _)]; rfl
 
 instance Datum.algFw (τ : D.F →+* PadicAlgCl p) : Algebra D.F (GlobalTheory.LKTrip.FwOf τ) := (GlobalTheory.LKTrip.embOf τ).toAlgebra
 

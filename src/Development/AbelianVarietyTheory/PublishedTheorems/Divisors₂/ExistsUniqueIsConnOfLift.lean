@@ -292,7 +292,7 @@ theorem inrPull_tmul (m : M) (c : prim κ t A) :
     inrPull κ t A (m ⊗ₜ c) = (inr m : TrivSqZeroExt R M) • (inlMor M κ t A).pull c := rfl
 
 theorem inrPull_add (ω ω' : M ⊗[R] prim κ t A) : inrPull κ t A (ω + ω') = inrPull κ t A ω + inrPull κ t A ω' := by
-  simp only [inrPull, map_add]
+  simp only [inrPull, map_add (f := _)]
 
 theorem inrPull_zero : inrPull κ t A (0 : M ⊗[R] prim κ t A) = 0 := by
   simp only [inrPull, map_zero]
@@ -307,7 +307,7 @@ theorem smul_inrPull (x : TrivSqZeroExt R M) (ω : M ⊗[R] prim κ t A) :
     ext <;> simp
 
 theorem IsConn.add (h : IsConn t A hD c ω) (h' : IsConn t A hD c' ω') : IsConn t A hD (c + c') (ω + ω') := by
-  rw [IsConn, map_add, map_add, inrPull_add, h, h']
+  rw [IsConn, map_add (f := _), map_add (f := _), inrPull_add, h, h']
   abel
 
 theorem IsConn.smul (h : IsConn t A hD c ω) (r : R) : IsConn t A hD (r • c) (D r ⊗ₜ c + r • ω) := by
@@ -333,12 +333,12 @@ theorem IsConn.pull (h : IsConn t A hD c ω) {κ' : DividedPowers I'} {t' : S' �
       (fun r ↦ by ext <;> simp [extMap, e]) (by simp) c).trans (GrpMor.pull_pull _ _ _ (fun _ ↦ rfl) rfl c).symm
   have k₂ : ∀ ω, k.pull (inrPull κ t A ω) = inrPull κ' t' A' (TensorProduct.map u m.pull ω) := fun ω ↦ by
     induction ω with
-    | add a b ha hb => simp only [map_add, inrPull_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), inrPull_add, ha, hb]
     | tmul x c =>
       rw [map_tmul, inrPull_tmul, inrPull_tmul, LinearMap.map_smulₛₗ, k₀]
       congr 1
       ext <;> simp [extMap]
-  rw [IsConn, ← k₁, h, map_add, k₀, k₂]
+  rw [IsConn, ← k₁, h, map_add (f := _), k₀, k₂]
 
 theorem isConn_const {J : Ideal T} {δ : DividedPowers J} {S₀ : Scheme.{0}} {s : S₀ ⟶ Sp T} {B : Over S₀} [GrpObj B]
     {b : S ⟶ S₀} {φ : A.left ⟶ B.left} (m : GrpMor δ s B κ t A (algebraMap T R) b φ) (hD : IsDPDer κ D)
@@ -369,7 +369,7 @@ theorem existsUnique_isConn (H : (inlMor M κ t A).IsBC) (hD : IsDPDer κ D) (c 
         inrPull κ t A ((sndHom R M).rTensor _ z) := fun z ↦ by
     induction z with
     | add a b ha hb =>
-      simp only [map_add, inrPull_add]
+      simp only [map_add (f := _), inrPull_add]
       rw [add_add_add_comm, ← ha, ← hb]
     | tmul x c =>
       rw [liftSemi_tmul, LinearMap.map_smulₛₗ, p₀, LinearMap.map_smulₛₗ, LinearMap.rTensor_tmul, inrPull_tmul,
@@ -413,7 +413,7 @@ theorem isBC_of_lift [Algebra R R'] (H : AbelianDeRham) (hA : IsAbelianScheme A)
   have sq : ∀ z, liftSemi m.pull ((liftMor κ h).pull.lTensor R' z) =
       (liftMor κ' h').pull (liftSemi (AbelianDeRham.bcMor hψ).pull z) := fun z ↦ by
     induction z with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul x c =>
       rw [LinearMap.lTensor_tmul, liftSemi_tmul, liftSemi_tmul, map_smul]
       exact congrArg (x • ·) ((GrpMor.pull_pull _ m ((liftMor κ h).comp m) (fun _ ↦ rfl) rfl c).trans

@@ -30,7 +30,7 @@ theorem jetLin_mul_monomial (J : (DVar ι a b →₀ ℕ) → K) (P : Pol K ι b
       rw [Finsupp.comapDomain_apply, Finsupp.add_apply, Finsupp.mapDomain_apply Sum.inr_injective,
         Finsupp.mapDomain_notin_range _ _ (by simp), zero_add]
     rw [h1, h2, smul_monomial, smul_monomial, smul_eq_mul, smul_eq_mul, mul_comm]
-  | add p q hp hq => rw [map_add, add_mul, map_add, hp, hq, smul_add]
+  | add p q hp hq => rw [map_add (f := _), add_mul, map_add (f := _), hp, hq, smul_add]
 
 def joinExp (α : ι → (Fin b × Fin a →₀ ℕ)) : DVar ι a b →₀ ℕ :=
   Finsupp.equivFunOnFinite.symm fun k => α k.1 k.2

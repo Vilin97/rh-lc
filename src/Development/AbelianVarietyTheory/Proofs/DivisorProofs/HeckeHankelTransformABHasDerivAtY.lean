@@ -27,7 +27,7 @@ theorem wt_ne {t y : ℝ} (hy : y ≠ 0) : wt t y ≠ 0 := by
   intro h; have := congrArg Complex.im h; simp [wt] at this; exact hy this
 
 theorem conj_wt (t y : ℝ) : (starRingEnd ℂ) (wt t y) = (t : ℂ) + (y : ℂ) * (-I) := by
-  simp [wt, map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
+  simp [wt, map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I]
 
 theorem conj_wt_ne {t y : ℝ} (hy : y ≠ 0) : (starRingEnd ℂ) (wt t y) ≠ 0 := by
   rw [map_ne_zero]; exact wt_ne hy

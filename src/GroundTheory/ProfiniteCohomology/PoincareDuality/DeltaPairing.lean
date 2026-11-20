@@ -82,13 +82,13 @@ theorem cupPairing_δ_add_cupPairing_δ (h₁₂ : (S.f ⊗ₘ 𝟙 T.X₂) ≫ 
     have hcomm := ConcreteCategory.congr_hom ((cochainsMap μ₂).comm (p + q) (p + q + 1))
       (cupLocallyConstant rfl x₂ y₂)
     rw [ConcreteCategory.comp_apply, ConcreteCategory.comp_apply] at hcomm
-    rw [map_add, map_smul, cochainOf_add, cochainOf_smul, cochainOf_cocycleι_cyclesMap,
+    rw [map_add (f := _), map_smul, cochainOf_add, cochainOf_smul, cochainOf_cocycleι_cyclesMap,
       cochainOf_cocycleι_cyclesMap, cocycleι_cupCocycles, cocycleι_cupCocycles,
       cochainOf_cocycleι_toCycles, ← cochainOf_d, hcomm, cochainOf_cochainsMap_f, cochainOf_d]
     simp only [cochainOf_cupLocallyConstant]
     rw [d_cupCochain, ← hx₁', ← hy₁']
     funext σ
-    rw [Pi.add_apply, Pi.smul_apply, Pi.add_apply, Pi.smul_apply, map_add, map_smul,
+    rw [Pi.add_apply, Pi.smul_apply, Pi.add_apply, Pi.smul_apply, map_add (f := _), map_smul,
       cupCochain_pairing_left μ₁ μ₂ h₁₂, cupCochain_pairing_right μ₂ μ₃ h₂₃, hx₂', hy₂']
   rw [key, cohomologyπ_toCycles]
 

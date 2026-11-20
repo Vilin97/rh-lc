@@ -28,4 +28,4 @@ theorem UpperTheory.V.Lit.Bor.smForm :
     simp only [LinearMap.sub_apply, LinearMap.neg_apply, LinearMap.smul_apply, LinearMap.id_apply]
     rw [show algebraMap ℝ ℂ (2 * r * ell E a (toL X.1)) = c from rfl]
     abel
-  rw [e3, e4, map_add, map_add, LinearMap.add_apply, smA_apply, smB_apply, e1, e2, add_comm]
+  rw [e3, e4, map_add (f := _), map_add (f := _), LinearMap.add_apply, smA_apply, smB_apply, e1, e2, add_comm]

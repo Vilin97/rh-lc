@@ -831,7 +831,7 @@ theorem IsPoly.const (b : B) : IsPoly fun _ => b := ⟨C b, fun y => (ev_C y b).
 
 theorem IsPoly.add {f g : ℂ → B} (hf : IsPoly f) (hg : IsPoly g) : IsPoly fun y => f y + g y := by
   obtain ⟨p, hp⟩ := hf; obtain ⟨q, hq⟩ := hg
-  exact ⟨p + q, fun y => by show f y + g y = _; rw [hp, hq, map_add]⟩
+  exact ⟨p + q, fun y => by show f y + g y = _; rw [hp, hq, map_add (f := _)]⟩
 
 theorem IsPoly.sub {f g : ℂ → B} (hf : IsPoly f) (hg : IsPoly g) : IsPoly fun y => f y - g y := by
   obtain ⟨p, hp⟩ := hf; obtain ⟨q, hq⟩ := hg
@@ -1647,7 +1647,7 @@ theorem relD4core (hN : SSNorm) (hM : SSMixed) (hS : NabSS) (hK : Curvature) (hP
   have e2 : ∀ z : ℂ, z • (ggiA P * ggiA P) = kap P (fun _ => z) * (ggiA P * ggiA P) := fun z => by
     have : kap P (fun _ => z) = algebraMap ℂ (A P) z := (kap P).commutes z
     rw [this, Algebra.smul_def]
-  rw [e1, e2, ← add_mul, ← add_mul, ← map_add, ← map_add, ← smul_mul_assoc, ← map_smul]
+  rw [e1, e2, ← add_mul, ← add_mul, ← map_add (f := _), ← map_add (f := _), ← smul_mul_assoc, ← map_smul]
   congr 2
   funext π
   have hs := WB.scalar_partial_fraction_identity P hP π u v hu hv
@@ -1778,7 +1778,7 @@ theorem nf11 (hN : SSNorm) (hP : P.OK) {u : ℂ} (hu : Good P u) :
     L4.upper_sum_mul_lambda P hP hu hN, t11, mul_add]
   have e : ggiA P * (kap P fun π => wC P π u) = dA P u + ggiA P * kap P fun π =>
       ∑ l ∈ Icc 1 (P.k - 1), ((Nrm P l π : ℝ) : ℂ) * xEx P {l} π u / (u + (rho P π l : ℂ) + 1) := by
-    rw [dA, ← mul_smul_comm, ← map_smul, ← mul_add, ← map_add]
+    rw [dA, ← mul_smul_comm, ← map_smul, ← mul_add, ← map_add (f := _)]
     congr 2
     funext π
     rw [WB.wC_eq P hP π u hu]

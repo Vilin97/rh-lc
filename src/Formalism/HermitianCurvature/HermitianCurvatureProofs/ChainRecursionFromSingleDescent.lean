@@ -601,7 +601,7 @@ variable {X : Type*} [AddCommGroup X] [Module ℂ X] (H : HatData X)
 def V : Submodule ℂ X where
   carrier := {x | x ∈ H.G ∧ H.N x = x}
   zero_mem' := ⟨H.G.zero_mem, map_zero _⟩
-  add_mem' := fun ha hb => ⟨H.G.add_mem ha.1 hb.1, by rw [map_add, ha.2, hb.2]⟩
+  add_mem' := fun ha hb => ⟨H.G.add_mem ha.1 hb.1, by rw [map_add (f := _), ha.2, hb.2]⟩
   smul_mem' := fun s _ ha => ⟨H.G.smul_mem s ha.1, by rw [map_smul, ha.2]⟩
 
 structure Good (T : X → X) : Prop where
@@ -658,7 +658,7 @@ theorem Good.comp {T S : X → X} (hT : H.Good T) (hS : H.Good S) : H.Good (fun 
   congr := fun x hx y hy h => hT.congr _ (hS.mem x hx) _ (hS.mem y hy) (hS.congr x hx y hy h)
   lin := fun x hx y hy s => by
     have h1 : H.N (S (x + s • y)) = H.N (S x + s • S y) := by
-      rw [hS.lin x hx y hy s, _root_.map_add, _root_.map_smul]
+      rw [hS.lin x hx y hy s, _root_.map_add (f := _), _root_.map_smul]
     rw [hT.congr _ (hS.mem _ (H.G.add_mem hx (H.G.smul_mem s hy))) _
       (H.G.add_mem (hS.mem x hx) (H.G.smul_mem s (hS.mem y hy))) h1]
     exact hT.lin _ (hS.mem x hx) _ (hS.mem y hy) s
@@ -666,9 +666,9 @@ theorem Good.comp {T S : X → X} (hT : H.Good T) (hS : H.Good S) : H.Good (fun 
 theorem Good.add {T S : X → X} (hT : H.Good T) (hS : H.Good S) : H.Good (fun x => T x + S x) where
   mem := fun x hx => H.G.add_mem (hT.mem x hx) (hS.mem x hx)
   congr := fun x hx y hy h => by
-    rw [_root_.map_add, _root_.map_add, hT.congr x hx y hy h, hS.congr x hx y hy h]
+    rw [_root_.map_add (f := _), _root_.map_add (f := _), hT.congr x hx y hy h, hS.congr x hx y hy h]
   lin := fun x hx y hy s => by
-    rw [_root_.map_add, _root_.map_add, _root_.map_add, hT.lin x hx y hy s, hS.lin x hx y hy s, smul_add]
+    rw [_root_.map_add (f := _), _root_.map_add (f := _), _root_.map_add (f := _), hT.lin x hx y hy s, hS.lin x hx y hy s, smul_add]
     abel
 
 theorem Good.smul {T : X → X} (hT : H.Good T) (a : ℂ) : H.Good (fun x => a • T x) where
@@ -695,7 +695,7 @@ theorem Good.sub {T S : X → X} (hT : H.Good T) (hS : H.Good S) : H.Good (fun x
 theorem good_id : H.Good (fun x => x) where
   mem := fun _ hx => hx
   congr := fun _ _ _ _ h => h
-  lin := fun x _ y _ s => by rw [_root_.map_add, _root_.map_smul]
+  lin := fun x _ y _ s => by rw [_root_.map_add (f := _), _root_.map_smul]
 
 theorem good_zero : H.Good (fun _ => (0 : X)) where
   mem := fun _ _ => H.G.zero_mem
@@ -1743,7 +1743,7 @@ theorem good_of (hS : SData z z' L Dc Dc (OmX r)) {T : Fn k r (Wq →L[ℂ] Wp) 
   congr := fun Φ h Ψ h' he => (cutP_eq_iff _ _).2 (hP Φ Ψ ⟨h, h', (cutP_eq_iff _ _).1 he⟩).2.2
   lin := fun Φ h Ψ h' s => by
     show cutP L Dc _ = cutP L Dc _ + s • cutP L Dc _
-    rw [← map_smul, ← map_add]
+    rw [← map_smul, ← map_add (f := _)]
     exact (cutP_eq_iff _ _).2 (hl Φ Ψ h h' s)
 
 theorem good_op (hFO : FamOps) (hz : inWb k r z) (hz' : inWb k r z') (hS : SData z z' L Dc Dc (OmX r))

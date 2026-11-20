@@ -86,7 +86,7 @@ theorem isFockVacAt_heisO (hθ : IsInfFam θ) {τ : D.what₂.Tau} {w : WO S T} 
     (hf : IsFockVacAt (heisO ψ S T) θ τ J f) : IsFockVacAt (heisO ψ S T) θ τ J (heisO ψ S T w f) := by
   intro z
   have h := congrArg (GlobalTheory.SplitScalar.heisL ψ S T w) (hf z)
-  rw [annih, map_add, map_smul, map_zero] at h
+  rw [annih, map_add (f := _), map_smul, map_zero] at h
   rw [annih, dRho_heisO hθ hw, dRho_heisO hθ hw]
   exact h
 
@@ -105,7 +105,7 @@ theorem heis_stable : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam
     exact (GlobalTheory.T.weilMatrixComponentAtPlace_mem_completedLattice D S T ΛS ΛT _ u hu p).2.2 fun _ h => h
   · exact isFockVacAt_heisO hθ (wAt_wAt_ne hτ w) (hp.2.2 τ hτ)
   · have key : ∀ u, heisO ψ S T u f = f → heisO ψ S T u g = g → heisO ψ S T u (c • f + g) = c • f + g := fun u h1 h2 => by
-      rw [← GlobalTheory.SplitScalar.heisL_apply, map_add, map_smul, GlobalTheory.SplitScalar.heisL_apply, GlobalTheory.SplitScalar.heisL_apply, h1, h2]
+      rw [← GlobalTheory.SplitScalar.heisL_apply, map_add (f := _), map_smul, GlobalTheory.SplitScalar.heisL_apply, GlobalTheory.SplitScalar.heisL_apply, h1, h2]
     exact ⟨fun u hu => key _ (hp.2.1.1 u hu) (hg.2.1.1 u hu),
       fun e he u hu hh => key _ (hp.2.1.2 e he u hu hh) (hg.2.1.2 e he u hu hh)⟩
   · have h1 := hp.2.2 τ hτ z

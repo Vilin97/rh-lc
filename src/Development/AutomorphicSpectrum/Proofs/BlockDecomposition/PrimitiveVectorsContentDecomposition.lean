@@ -214,7 +214,7 @@ theorem eventually_primV_decomposition : ∀ (F E : Type) [Field F] [NumberField
     | tmul a e =>
       show a ⊗ₜ[F] σ (σ e) = a ⊗ₜ[F] e
       rw [hinv]
-    | add p q hp hq => rw [map_add, map_add, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq]
   have hint : ∀ x, x ∈ intK b v ↔ x ∈ O := fun x => (hO x).symm
   set Hi : Matrix (Fin (M + 2)) (Fin (M + 2)) (Fv F v ⊗[F] E) := JR (Fv F v) (hypOne J)⁻¹ with hHidef
   have hHO : ∀ i j, JR (Fv F v) (hypOne J) i j ∈ O := fun i j => (hO _).2 (hH i j)

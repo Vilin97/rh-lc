@@ -44,7 +44,7 @@ theorem crys_pull_add (A₀ : Over (Sp k)) [GrpObj A₀]
     (a b : primDR A₀) :
     e ((GlobalTheory.FODef.constMorV k (Fin d → k) A₀).pull (a + b)) =
       e ((GlobalTheory.FODef.constMorV k (Fin d → k) A₀).pull a) + e ((GlobalTheory.FODef.constMorV k (Fin d → k) A₀).pull b) := by
-  rw [LinearMap.map_add]
+  rw [LinearMap.map_add (f := _)]
   exact e.map_add _ _
 
 def fstVal (A₀ : Over (Sp k)) [GrpObj A₀]

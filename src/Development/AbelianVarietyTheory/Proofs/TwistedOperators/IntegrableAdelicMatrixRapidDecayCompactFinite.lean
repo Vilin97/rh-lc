@@ -27,11 +27,11 @@ theorem integrable_of_rapid_decay : ∀ (D : D7) (a b : ℕ) (μ : Measure (Mx D
   have hπs : ∀ c y, π (s c + y) = c + π y := by
     intro c y; funext i j τ
     show θ τ (infPart D (σ (c i j) + y i j)) = c i j τ + θ τ (infPart D (y i j))
-    rw [RingHom.map_add, RingHom.map_add, hσ.comp]
+    rw [RingHom.map_add (f := _), RingHom.map_add (f := _), hσ.comp]
   have hfs : ∀ c (y : Mx D a b), (s c + y).map (finPart D) = y.map (finPart D) := by
     intro c y; ext i j
     show finPart D (σ (c i j) + y i j) = finPart D (y i j)
-    rw [RingHom.map_add, hσ.fin, zero_add]
+    rw [RingHom.map_add (f := _), hσ.fin, zero_add]
   let S : Set (Mx D a b) := {y | y.map (finPart D) ∈ K}
   let ν : Measure (Fin a → Fin b → D.what₂.Tau → ℂ) := (μ.restrict S).map π
   have hνA : ∀ A, MeasurableSet A → ν A = μ (π ⁻¹' A ∩ S) := fun A hA => by

@@ -78,7 +78,7 @@ theorem ker_reduceLoc_eq_span_X : ∀ (T O : Type) [CommRing T] [CommRing O] [Is
         obtain ⟨c, hc⟩ := hmem
         rw [Ideal.Quotient.eq, ← map_sub, ← hc, map_mul, hlocX]
         exact Ideal.mul_mem_left _ _ (Ideal.subset_span rfl)
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   apply le_antisymm
   · intro x hx
     rw [RingHom.mem_ker] at hx

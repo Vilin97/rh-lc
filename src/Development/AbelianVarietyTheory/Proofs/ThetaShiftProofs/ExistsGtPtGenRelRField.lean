@@ -81,7 +81,7 @@ theorem exists_gtPt_through (hG : GlobalFnsSt) (gp : IsGrpPullback D'.P.A D.P.A 
     linear_combination (norm := abel) -e'
   · obtain ⟨J, hJ⟩ := ConstFam.exists_good' D.P.isLB z
     have e₁ := FormalPoint.val_s_add g₀ ρ (z := z) hJ (e y) (e y')
-    rw [← hb, ← hcP, ← hcP, th_pushPt hG gp ((isGen_iff w).1 hw) hJ hJ', ← map_add] at e₁
+    rw [← hb, ← hcP, ← hcP, th_pushPt hG gp ((isGen_iff w).1 hw) hJ hJ', ← map_add (f := _)] at e₁
     have v₁ := vt' y z J J' hJ hJ'
     have v₂ := vt' y' z J J' hJ hJ'
     have v₃ := vt' (y + y') z J J' hJ hJ'

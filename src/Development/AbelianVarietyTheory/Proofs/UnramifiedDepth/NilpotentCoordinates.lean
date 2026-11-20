@@ -169,7 +169,7 @@ theorem nilpotent_coordinates :
     refine uniq S' _ _ (fun i => (ha i).map φ) (fun b => ?_) (fun j => ?_)
     · have := ((hF S a ha).1 b).map φ
       rwa [map_sub, AlgHom.commutes] at this
-    · rw [AlgHom.comp_apply, (hF S a ha).2, map_add, AlgHom.commutes]
+    · rw [AlgHom.comp_apply, (hF S a ha).2, map_add (f := _), AlgHom.commutes]
   · intro S _ _ a b ha hb h
     have h1 : F S a = F S b := pt_injective C h
     funext j

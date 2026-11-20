@@ -343,7 +343,7 @@ theorem hasGrowth_uAction {N : ℕ} (u : UEnv K n) :
     exact ha (hφ.uAction b) (hb hφ hN)
   | hadd a b ha hb =>
     intro φ hφ hN
-    rw [map_add, LinearMap.add_apply, Submodule.coe_add]
+    rw [map_add (f := _), LinearMap.add_apply, Submodule.coe_add]
     exact (ha hφ hN).add (hb hφ hN)
 
 theorem exists_norm_diffSum_le {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ : IsAutomorphicForm φ) :

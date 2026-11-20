@@ -108,7 +108,7 @@ theorem deg_of_cls_eq_add (hH : IsAmpleLB H) (hN : N.IsLB) (hL : L.IsLB) (hM : M
     (e : cls N hN = cls L hL + cls M hM) : c.deg N = c.deg L + c.deg M :=
   c.isCompleteCurve_top.interNumRed_of_cls_eq_add (hH.pull_of_isClosedImmersion c.ι) (LB.isLB_pull hN _)
     (LB.isLB_pull hL _) (LB.isLB_pull hM _)
-    (by rw [CechPic.cls_pull hN, CechPic.cls_pull hL, CechPic.cls_pull hM, e, map_add])
+    (by rw [CechPic.cls_pull hN, CechPic.cls_pull hL, CechPic.cls_pull hM, e, map_add (f := _)])
 
 theorem deg_pos (hH : IsAmpleLB H) : 0 < c.deg H :=
   (hH.pull_of_isClosedImmersion c.ι).interNumRed_pos c.isCompleteCurve_top

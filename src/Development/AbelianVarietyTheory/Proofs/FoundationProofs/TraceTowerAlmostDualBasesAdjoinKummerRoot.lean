@@ -93,7 +93,7 @@ theorem GlobalTheory.traceTower_dualData : ∀ (p : ℕ) [Fact p.Prime] (Ω : Ty
           (fun ρ hρ => (kk f⁻¹ ((Hinf T).inv_mem hf) ρ hρ x hx).2) (fun ρ _ => f.symm_apply_apply ρ)
           (fun ρ _ => f.apply_symm_apply ρ) (fun ρ _ => rfl)
   · intro x _ y _
-    simp only [map_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), Finset.sum_add_distrib]
   · intro b hb x _
     simp only [Finset.mul_sum]
     refine Finset.sum_congr rfl fun ρ hρ => ?_

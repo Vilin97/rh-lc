@@ -77,7 +77,7 @@ theorem saturated_omegaMap_and_surjective_vecExtMap
       key.2 ▸ Submodule.mem_top
     obtain ⟨_, ⟨z, rfl⟩, b, hb, rfl⟩ := Submodule.mem_sup.1 hy
     refine ⟨H.rigToExt z, ?_⟩
-    rw [map_add, rigToExt_rigExtMap, (G.exact_rigOfOmega_rigToExt b).2 hb, add_zero]
+    rw [map_add (f := _), rigToExt_rigExtMap, (G.exact_rigOfOmega_rigToExt b).2 hb, add_zero]
 
 end PDivGroup
 

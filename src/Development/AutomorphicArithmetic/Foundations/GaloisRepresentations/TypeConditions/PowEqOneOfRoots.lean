@@ -46,7 +46,7 @@ theorem pow_eq_one_of_roots {n : ℕ} {f : End ℂ (Fin n → ℂ)} (hf : f.IsSe
       rw [he.pow_apply, k z ((End.hasEigenvalue_iff_isRoot_charpoly _ _).1 (End.hasEigenvalue_of_hasEigenvector he))]
       simp
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem tor_of_ncW {y : WD h} (ht : thr w y.lpDim = 1) (k : NcW y) : UpperTheory.GalStar.Tor y := by
   obtain ⟨n, a, rfl⟩ := y.exists_rep

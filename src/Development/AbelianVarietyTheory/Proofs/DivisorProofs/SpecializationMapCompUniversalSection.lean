@@ -169,7 +169,7 @@ def sab : SABMap Z.t (GlobalTheory.FiniteStable.twist T.σ T.w0 Z.t) T.ρ.hom :=
 
 theorem s_rt : T.s (H.rt : E) = H.rt := by
   have h := congrArg T.σ H.two_weight_eq_one_add_root
-  rw [map_mul, map_ofNat, T.w0, H.two_weight_eq_one_add_root, map_add, map_one] at h
+  rw [map_mul, map_ofNat, T.w0, H.two_weight_eq_one_add_root, map_add (f := _), map_one] at h
   rw [← T.coe_σ, ← add_left_cancel h]
 
 abbrev emb (τ : E →+* ℂ) : E →+* ℂ := τ.comp (T.s : E →+* E)

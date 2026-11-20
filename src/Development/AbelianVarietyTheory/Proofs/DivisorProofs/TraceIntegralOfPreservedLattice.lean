@@ -20,7 +20,7 @@ theorem aeval_mulVec_of_eigen {R S : Type*} [CommRing R] [CommRing S] [Algebra R
     | succ k ih =>
       rw [pow_succ', ← Matrix.mulVec_mulVec, ih, Matrix.mulVec_smul, hv, smul_smul, pow_succ]
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, map_add, Matrix.add_mulVec, hp, hq, add_smul]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), Matrix.add_mulVec, hp, hq, add_smul]
   | monomial k a =>
     rw [aeval_monomial, aeval_monomial, ← Matrix.mulVec_mulVec, hpow,
       Algebra.algebraMap_eq_smul_one, Algebra.algebraMap_eq_smul_one, Matrix.smul_mulVec,
@@ -41,7 +41,7 @@ theorem aeval_restrict_coe {S : Type*} [CommRing S] {n : Type*} [Fintype n] [Dec
         ← Matrix.mulVec_mulVec, ← ih]
       rfl
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, map_add, LinearMap.add_apply, Submodule.coe_add, hp, hq,
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, Submodule.coe_add, hp, hq,
       Matrix.add_mulVec]
   | monomial k a =>
     rw [aeval_monomial, aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply,

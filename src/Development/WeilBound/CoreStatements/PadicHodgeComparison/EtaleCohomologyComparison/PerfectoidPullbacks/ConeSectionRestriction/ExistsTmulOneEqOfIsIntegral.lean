@@ -32,7 +32,7 @@ theorem exists_tmul_one_eq_of_isIntegral {P A : Type} [CommRing P] [IsDomain P] 
     | add x y hx hy =>
       obtain ⟨a, ha⟩ := hx
       obtain ⟨b, hb⟩ := hy
-      exact ⟨a + b, by rw [TensorProduct.add_tmul, ha, hb, map_add, Subalgebra.coe_add]⟩
+      exact ⟨a + b, by rw [TensorProduct.add_tmul, ha, hb, map_add (f := _), Subalgebra.coe_add]⟩
   obtain ⟨a, ha⟩ := key u
   exact ⟨a, by rw [ha, hu]⟩
 

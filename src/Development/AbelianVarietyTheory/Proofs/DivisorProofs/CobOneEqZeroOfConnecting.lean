@@ -50,7 +50,7 @@ theorem vecExtMap_add (f g : G ⟶ H) : vecExtMap (f + g) = vecExtMap f + vecExt
     rw [← (c.2 n).2]
     generalize c.1 (n + 1) = t
     induction t with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul x y => simp [res_app]⟩
   change Submodule.Quotient.mk (cocyclesMap (f + g) c) =
     Submodule.Quotient.mk (cocyclesMap f c + cocyclesMap g c)
@@ -144,7 +144,7 @@ def extChar (hp : (p : R) = 0) : G.VecExt →ₗ[R] LinearMap.ker (cobOne R (G.A
   map_add' x y := Subtype.ext (connecting_unique hp (G.exists_connecting hp _).choose_spec (by
     obtain ⟨c, B, h0, h1, h2, h3⟩ := (G.exists_connecting hp x).choose_spec
     obtain ⟨c', B', h0', h1', h2', h3'⟩ := (G.exists_connecting hp y).choose_spec
-    refine ⟨c + c', B + B', by rw [← h0, ← h0']; rfl, by rw [map_add, map_add, h1, h1'], ?_,
+    refine ⟨c + c', B + B', by rw [← h0, ← h0']; rfl, by rw [map_add (f := _), map_add (f := _), h1, h1'], ?_,
       congrArg₂ (· + ·) h3 h3'⟩
     exact (map_add _ _ _).trans (by rw [h2, h2', add_zero])))
   map_smul' r x := Subtype.ext (connecting_unique hp (G.exists_connecting hp _).choose_spec (by
@@ -183,7 +183,7 @@ theorem SemiHom.connecting {σ : R →+* R'} {G' : PDivGroup p R'} (s : SemiHom 
   rw [SemiHom.cocycles_val, cocyclesMap_natCast_val, cocyclesMap_natCast_val, SemiHom.cocycles_val]
   generalize c.1 n = t
   induction t with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul x y => simp [SemiBialgHom.map_mulBy]
 
 theorem SemiHom.extChar_vecExt {σ : R →+* R'} {G' : PDivGroup p R'} (s : SemiHom σ G' G)
@@ -286,7 +286,7 @@ theorem liftSemi_vecExt_bijective (hp : (p : R) = 0)
       liftSemi ((G.toBase R').app 1).prim ∘ (G.extCharEquiv hp).baseChange R R' _ _ :=
     funext fun x => by
       induction x with
-      | add x y hx hy => simpa only [Function.comp_apply, map_add] using congrArg₂ (· + ·) hx hy
+      | add x y hx hy => simpa only [Function.comp_apply, map_add (f := _)] using congrArg₂ (· + ·) hx hy
       | tmul r x =>
         simp only [Function.comp_apply, liftSemi_tmul, map_smul, LinearEquiv.baseChange_tmul,
           SemiHom.extChar_vecExt _ hp]
@@ -303,12 +303,12 @@ theorem liftSemi_rig_bijective (hp : (p : R) = 0)
   have s1 : ∀ y, liftSemi (G.toBase R').rig (G.rigOfOmega.lTensor R' y) =
       (G.baseChange R').rigOfOmega (liftSemi (G.toBase R').omega y) := fun y => by
     induction y with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul r x => simp [SemiHom.rig_rigOfOmega]
   have s2 : ∀ y, (G.baseChange R').rigToExt (liftSemi (G.toBase R').rig y) =
       liftSemi (G.toBase R').vecExt (G.rigToExt.lTensor R' y) := fun y => by
     induction y with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul r x => simp [SemiHom.rigToExt_rig]
   refine ⟨(injective_iff_map_eq_zero _).2 fun x hx => ?_, fun z => ?_⟩
   · have k := s2 x

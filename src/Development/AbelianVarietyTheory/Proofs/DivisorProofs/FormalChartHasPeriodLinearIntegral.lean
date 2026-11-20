@@ -43,7 +43,7 @@ theorem val_integral {p : ℕ} {σ B Q : Type} [Fintype σ] [DecidableEq σ] [Co
     rfl
   refine ⟨MvPolynomial.eval z (trunc' B (Finsupp.equivFunOnFinite.symm fun _ => N) s) + b, ?_⟩
   rw [hE, pow_zero, one_mul, sub_eq_iff_eq_add'] at hb
-  rw [hb, map_add]
+  rw [hb, map_add (f := _)]
 
 end GlobalTheory.QLog
 
@@ -63,7 +63,7 @@ theorem hasPeriod_add_smul {p : ℕ} [Fact p.Prime] {O B Q : Type} [CommRing O] 
   refine ⟨_, h2, b1 + b * b2, ?_⟩
   have e : (p : Q) ^ n * (q + algebraMap B Q b * r) =
       (p : Q) ^ n * q + algebraMap B Q b * ((p : Q) ^ n * r) := by ring
-  rw [e, hb1, hb2, ← map_mul, ← map_add]
+  rw [e, hb1, hb2, ← map_mul, ← map_add (f := _)]
   congr 1
   ring
 
@@ -121,7 +121,7 @@ theorem _root_.GlobalTheory.QLog.hasPeriod_linear : ∀ (p : ℕ) [Fact p.Prime]
     refine ⟨q + algebraMap _ _ b * r,
       (_root_.GlobalTheory.QLog.ValLin.hasVal_add_smul_map p _ O _ F.θ hF (Fin d) z f _ q _
         hq).1 hbr, b₁ + b * b₂, ?_⟩
-    simp only [map_add, map_mul, map_pow, map_natCast] at hb₁ hb₂ ⊢
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast] at hb₁ hb₂ ⊢
     linear_combination hb₁ + algebraMap _ _ b * hb₂
   · intro s _
     rw [c.hasPeriod_iff hF]
@@ -145,7 +145,7 @@ theorem _root_.GlobalTheory.QLog.hasPeriod_linear : ∀ (p : ℕ) [Fact p.Prime]
     rw [eval_algebraMap_trunc'_map_eq_algebraMap_eval, pow_zero, one_mul] at he
     have hq2 : q = algebraMap _ F.Q (MvPolynomial.eval z
         (trunc' F.B (Finsupp.equivFunOnFinite.symm fun _ ↦ N) s) + e) := by
-      rw [map_add, ← he]
+      rw [map_add (f := _), ← he]
       ring
     rw [hq2, zero_add, map_mul, map_pow, map_natCast]
 

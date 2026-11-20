@@ -56,7 +56,7 @@ def sLat (h : ℕ) (s : D.host.E) (_hs : D.conjF s = s) : AddSubgroup D.host.E w
   add_mem' := by
     rintro a b ⟨ha1, ha2⟩ ⟨hb1, hb2⟩
     refine ⟨(ddPow D h : Submodule (𝓞 D.host.E) D.host.E).add_mem ha1 hb1, ?_⟩
-    rw [map_add, show a + b + s * (D.conjF a + D.conjF b) = (a + s * D.conjF a) + (b + s * D.conjF b) by ring]
+    rw [map_add (f := _), show a + b + s * (D.conjF a + D.conjF b) = (a + s * D.conjF a) + (b + s * D.conjF b) by ring]
     exact (qdPow D h : Submodule (𝓞 D.host.E) D.host.E).add_mem ha2 hb2
   neg_mem' := by
     rintro a ⟨ha1, ha2⟩

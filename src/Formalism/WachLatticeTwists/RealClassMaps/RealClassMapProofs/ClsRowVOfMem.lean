@@ -26,7 +26,7 @@ theorem kRowRange : StatKRowRange := by
     have h3 : (fun g : G => u ((c : G → M) g)) ∈ Z1 D.ρA := by
       refine ⟨(hc'.comp u).continuous, fun a b => ?_⟩
       beta_reduce
-      rw [c.2, map_add, hu]
+      rw [c.2, map_add (f := _), hu]
     refine ⟨Submodule.Quotient.mk ⟨_, h3⟩, ?_⟩
     refine congrArg (Submodule.mkQ _) (Subtype.ext (funext fun g => ?_))
     change u.symm (u ((c : G → M) g)) = _

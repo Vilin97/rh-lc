@@ -23,7 +23,7 @@ private theorem coeff_scale {A : Type} [CommRing A] {m : ℕ} (P : MvPolynomial 
     · exact absurd (congrArg Finsupp.degree h2) h1
     · rw [MvPolynomial.coeff_zero]
   | add p q hp hq =>
-    rw [map_add, Polynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
+    rw [map_add (f := _), Polynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add]
 
 theorem UpperTheory.V.AlgebraTools.Det.genHomog :
     ∀ {n : ℕ} {A G : Type} [CommRing A] [Group G] (D : GDet n A G) (m : ℕ) (y : Fin m → MonoidAlgebra A G),

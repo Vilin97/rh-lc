@@ -76,7 +76,7 @@ theorem _root_.UpperTheory.KN.exists_admissible_extension_latticeTensor :
   have hq0a : ∀ g u, q0 (actA g u) = tableLineDegreeTwo.actExt L X χ z g (q0 u) := by
     intro g u
     rw [hq0, hq0]
-    simp only [actA, tableLineDegreeTwo.actExt, map_add, map_smul, hφ, ← hz, tableLineDegreeTwo.actTw, LinearMap.smul_apply, smul_smul,
+    simp only [actA, tableLineDegreeTwo.actExt, map_add (f := _), map_smul, hφ, ← hz, tableLineDegreeTwo.actTw, LinearMap.smul_apply, smul_smul,
       Units.mul_inv, one_smul, LinearMap.rTensor_tmul]
     refine Prod.ext ?_ rfl
     simp only

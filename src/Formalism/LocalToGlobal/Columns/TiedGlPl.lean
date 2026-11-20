@@ -153,7 +153,7 @@ theorem GSplit.res_one (S : GSplit (Pr := Pr) hc) (i : Fin 2) (v : HeightOneSpec
     have h1 : (Pr.g i : 𝓞 X.F) ∈ (gwOf hc hPr i v h).1.asIdeal.comap (algebraMap (𝓞 X.F) (𝓞 X.E)) := (gwOf_over hc hPr i v h) ▸ h
     rwa [Ideal.mem_comap, map_natCast] at h1
   have h2 : ϖ = 1 + (Pr.g i : 𝓞 X.E) * s := by rw [← hs]; ring
-  rw [h2, map_add, map_add, map_one, map_one, S.ker hPr i v h _ (Ideal.mul_mem_right _ _ hg), add_zero]
+  rw [h2, map_add (f := _), map_add (f := _), map_one, map_one, S.ker hPr i v h _ (Ideal.mul_mem_right _ _ hg), add_zero]
 
 def GSplit.unitOf (S : GSplit (Pr := Pr) hc) (i : Fin 2) (v : HeightOneSpectrum (𝓞 X.F)) (h : (Pr.g i : 𝓞 X.F) ∈ v.asIdeal)
     (ϖ : 𝓞 X.E) (hϖ : (Pr.g i : 𝓞 X.E) ∣ ϖ - 1) : (v.adicCompletionIntegers X.F)ˣ :=

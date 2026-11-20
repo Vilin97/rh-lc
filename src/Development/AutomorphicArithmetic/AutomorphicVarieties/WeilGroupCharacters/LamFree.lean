@@ -179,7 +179,7 @@ theorem UpperTheory.V.W.lam_ex_free :
   have hu : ∀ s : σ, IsUnit (1 + MvPowerSeries.X s : P) := fun s => by
     rw [MvPowerSeries.isUnit_iff_constantCoeff]; simp
   have hu1 : ∀ s : σ, res O P ((hu s).unit : Pˣ) = 1 := fun s => by
-    rw [IsUnit.unit_spec, map_add, map_one, (res_eq_zero_iff O P _).2 (hX s), add_zero]
+    rw [IsUnit.unit_spec, map_add (f := _), map_one, (res_eq_zero_iff O P _).2 (hX s), add_zero]
   choose χ hχ using fun v i => (lam_zl l O P (Fin (d v)) (fun j => (hu ⟨v, i, j⟩).unit) fun j => hu1 _).exists
   have hχ1 : ∀ v i j, ((χ v i (Multiplicative.ofAdd (Pi.single j 1)) : Pˣ) : P) = 1 + MvPowerSeries.X ⟨v, i, j⟩ :=
     fun v i j => congrArg Units.val ((hχ v i).2 j)
@@ -209,7 +209,7 @@ theorem UpperTheory.V.W.lam_ex_free :
             (lam_zl l O R (Fin (d v)) (fun j => χ' v i (Multiplicative.ofAdd (Pi.single j 1)))
               fun j => h2 v i _).unique ⟨lam_cont G _ (hχ v i).1, fun j => Units.ext (by
                 show G ((χ v i _ : Pˣ) : P) = _
-                rw [hχ1, map_add, map_one, hG]
+                rw [hχ1, map_add (f := _), map_one, hG]
                 simp)⟩ ⟨h1 v i, fun j => rfl⟩
           rw [key, this, ← h3]
         · rintro ⟨v, i, j⟩
@@ -220,7 +220,7 @@ theorem UpperTheory.V.W.lam_ex_free :
           have h6 : H ((χ v i (lam_fst l _ ((A v).a g)) : Pˣ) : P) = χ' v i (lam_fst l _ ((A v).a g)) :=
             congrArg Units.val h5
           have h7 : lam_fst l _ ((A v).a g) = Multiplicative.ofAdd (Pi.single j 1) := by rw [hg]; rfl
-          rw [h7, hχ1, map_add, map_one] at h6
+          rw [h7, hχ1, map_add (f := _), map_one] at h6
           rw [← h6]
           simp }
   refine ⟨⟨L⟩, fun Λ => ?_⟩
@@ -230,4 +230,4 @@ theorem UpperTheory.V.W.lam_ex_free :
   have h7 : lam_fst l _ ((A v).a g) = Multiplicative.ofAdd (Pi.single j 1) := by rw [hg]; rfl
   rw [← he]
   show e' (algebraMap O P (ψ₀ v i g) * ((χ v i (lam_fst l _ ((A v).a g)) : Pˣ) : P)) = _
-  rw [h7, hχ1, map_mul, map_add, map_one, AlgEquiv.commutes]
+  rw [h7, hχ1, map_mul, map_add (f := _), map_one, AlgEquiv.commutes]

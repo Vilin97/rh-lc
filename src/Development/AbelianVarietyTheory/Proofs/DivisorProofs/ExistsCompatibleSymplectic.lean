@@ -72,7 +72,7 @@ theorem exists_pairs {n : ℕ} [NeZero n] {g : ℕ}
   have hsk : ∀ x y, ω x y = - ω y x := by
     intro x y
     have := halt (x + y)
-    simp only [map_add, LinearMap.add_apply, halt] at this
+    simp only [map_add (f := _), LinearMap.add_apply, halt] at this
     linear_combination this
   induction k with
   | zero => exact ⟨Fin.elim0, Fin.elim0, fun i => i.elim0, fun i => i.elim0, fun i => i.elim0⟩
@@ -170,9 +170,9 @@ theorem exists_level {F : Type} [Field F] {ζ : Fˣ} {n : ℕ} (hn : 0 < n)
     exact ⟨i, by rw [χint]; exact hi⟩
   choose b hb using hex
   have b1 : ∀ x y z, b (x + y) z = b x z + b y z := fun x y z =>
-    χinj (by rw [χadd, hb, hb, hb, map_add, h1])
+    χinj (by rw [χadd, hb, hb, hb, map_add (f := _), h1])
   have b2 : ∀ x y z, b x (y + z) = b x y + b x z := fun x y z =>
-    χinj (by rw [χadd, hb, hb, hb, map_add, h2])
+    χinj (by rw [χadd, hb, hb, hb, map_add (f := _), h2])
   let ω : (Fin (2 * g) → ZMod n) →ₗ[ZMod n] (Fin (2 * g) → ZMod n) →ₗ[ZMod n] ZMod n :=
     LinearMap.mk₂ (ZMod n) b b1
       (fun c x y => ZMod.map_smul (AddMonoidHom.mk' (fun x => b x y) (fun x z => b1 x z y)) c x)
@@ -183,7 +183,7 @@ theorem exists_level {F : Type} [Field F] {ζ : Fˣ} {n : ℕ} (hn : 0 < n)
   have hsk : ∀ x y, ω x y = - ω y x := by
     intro x y
     have := halt (x + y)
-    simp only [map_add, LinearMap.add_apply, halt] at this
+    simp only [map_add (f := _), LinearMap.add_apply, halt] at this
     linear_combination this
   obtain ⟨v, w, hv, hw, hvw⟩ := exists_pairs ω halt (by
     intro x hx
@@ -247,7 +247,7 @@ theorem ker_and_surj {F : Type} [Field F] {ζ : Fˣ} {n : ℕ} (hn : 0 < n)
       simp at this ⊢
       linarith
   · rintro ⟨c, rfl⟩
-    rw [map_add, map_nsmul, hnx, add_zero]
+    rw [map_add (f := _), map_nsmul, hnx, add_zero]
   · let f : (Fin g → ZMod n) × (Fin g → ZMod n) → G :=
       fun a => ev (fun i => ((a.1 i).val : ℤ), fun i => ((a.2 i).val : ℤ))
     have hf : Function.Injective f := by
@@ -303,7 +303,7 @@ theorem exists_compatible_symplectic : ∀ (F : Type) [Field F] (ζ : ℕ → F�
       choose f hf using this
       refine ⟨AddMonoidHom.mk' f fun a b => ?_, fun _ => hf⟩
       obtain ⟨k, hk1, hk2, hk3⟩ := ((hf a).and ((hf b).and (hf (a + b)))).exists
-      rw [← hk1, ← hk2, ← hk3, map_add, map_add]
+      rw [← hk1, ← hk2, ← hk3, map_add (f := _), map_add (f := _)]
     · exact ⟨0, fun h => absurd h hn⟩
   choose ev hev using hlim
   have hpair : ∀ n, 0 < n → ∀ a b, e n (ev n a) (ev n b) = ζ n ^ (a.1 ⬝ᵥ b.2 - a.2 ⬝ᵥ b.1) := by

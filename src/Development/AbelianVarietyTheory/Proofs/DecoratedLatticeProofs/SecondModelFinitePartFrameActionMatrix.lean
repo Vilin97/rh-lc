@@ -22,7 +22,7 @@ theorem eq_self_of_rat_of_int (F E : Type) [Field F] [NumberField F] [Field E] [
     refine hzero _ fun m hm => ?_
     obtain ⟨x, t, ht, rfl⟩ := hden b hb m hm
     refine ⟨ι t - t, (IntAf F E).sub_mem (hO _ ht) ht, ?_⟩
-    simp only [map_add, map_mul, map_natCast, hι]
+    simp only [map_add (f := _), map_mul, map_natCast, hι]
     ring
   obtain ⟨m, hm, hma⟩ := hdenom a
   have h := key _ hma

@@ -44,12 +44,12 @@ theorem exists_rep_and_shift : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field 
     refine ⟨l1 + l0, fun q' hq' => ?_⟩
     obtain rfl := huniq q' hq'
     refine ⟨by rw [AnArc.La.add_y, hl1, zero_add, hl0], ?_⟩
-    rw [map_add, ← hl1', sub_add_cancel, hkk, hz]
+    rw [map_add (f := _), ← hl1', sub_add_cancel, hkk, hz]
   · refine ⟨qkMk hB (Λ.ε (la + k • e).y) (Λ.ex0 ((k : ℂ)⁻¹ • Λ.A.P0 (la + k • e)))
       (by rw [hex, ← map_nsmul, hkk', hio']), rfl, rfl, fun q' hq' => ?_⟩
     obtain ⟨hy, hg⟩ := hrep q' hq'
     refine equiv_symm hB ((equiv_iff hB _ _).2 ⟨Λ.ε e.y, ?_, ?_⟩)
-    · rw [qkMk_y, hy, AnArc.La.add_y, AnArc.La.nsmul_y, map_add, map_nsmul]
-    · rw [qkMk_g, hg, hex, hex, map_add, map_nsmul, smul_add, hkk, map_add, hio']
+    · rw [qkMk_y, hy, AnArc.La.add_y, AnArc.La.nsmul_y, map_add (f := _), map_nsmul]
+    · rw [qkMk_g, hg, hex, hex, map_add (f := _), map_nsmul, smul_add, hkk, map_add (f := _), hio']
 
 end GlobalTheory.GtRep

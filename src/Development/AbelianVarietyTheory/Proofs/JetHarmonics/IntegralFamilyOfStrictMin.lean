@@ -71,7 +71,7 @@ def ordVal (hϖ : Irreducible ϖ) : AddValuation (FractionRing V) (WithTop ℚ) 
         (by rw [ordFn_of_hasVal hϖ hn]; exact_mod_cast min_le_left n m)
       obtain ⟨b, hb⟩ := (le_ordFn_iff hϖ y (min n m)).1
         (by rw [ordFn_of_hasVal hϖ hm]; exact_mod_cast min_le_right n m)
-      refine le_trans ?_ ((le_ordFn_iff hϖ (x + y) (min n m)).2 ⟨a + b, by rw [map_add, mul_add, ← ha, ← hb]⟩)
+      refine le_trans ?_ ((le_ordFn_iff hϖ (x + y) (min n m)).2 ⟨a + b, by rw [map_add (f := _), mul_add, ← ha, ← hb]⟩)
       rw [ordFn_of_hasVal hϖ hn, ordFn_of_hasVal hϖ hm]
       exact_mod_cast le_rfl)
     (fun x y => by

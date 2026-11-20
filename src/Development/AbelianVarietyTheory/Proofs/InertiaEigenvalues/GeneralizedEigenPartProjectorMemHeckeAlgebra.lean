@@ -96,7 +96,7 @@ theorem part_projector_mem_adjoin :
         rw [hy, map_zero]
       have hψA : ψ ∈ FA := Finset.mem_filter.2 ⟨hF ψ hW, hψ⟩
       have e1 := congrArg (fun P => aeval (f : End K V) P y) hpq
-      simp only [map_add, map_mul, LinearMap.add_apply, Module.End.mul_apply, map_one,
+      simp only [map_add (f := _), map_mul, LinearMap.add_apply, Module.End.mul_apply, map_one,
         Module.End.one_apply] at e1
       rw [hkill FA ψ hψA y hy, map_zero, zero_add] at e1
       simpa [map_mul, Module.End.mul_apply] using e1

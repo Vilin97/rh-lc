@@ -27,7 +27,7 @@ theorem latV_int {S : HSp D} {L : Lat S} (hL : ∀ z ∈ L, z ∈ intVec D S.ran
     rw [finPart_pair_zero, one_mul]
     exact AddSubgroup.subset_closure ⟨α, hα, ⟨x i, hL x hx i⟩, rfl⟩
   | zero => rw [Pi.zero_apply, RingHom.map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [Pi.add_apply, RingHom.map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [Pi.add_apply, RingHom.map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx => rw [Pi.neg_apply, RingHom.map_neg]; exact neg_mem hx
 
 theorem lat_iff : ∀ {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k] {p : SplitPt D k}

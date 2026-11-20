@@ -82,7 +82,7 @@ theorem mI_X {ι : Type} [Finite ι] (i : ι) : mI (X i : MvPowerSeries ι (Form
 
 theorem mI_add {ι : Type} [Finite ι] (f g : MvPowerSeries ι (FormalGroupSystem.K0 p)) : mI (f + g) = mI f + mI g := by
   unfold mI
-  rw [inParam_eq, inParam_eq, inParam_eq, subst_add hasSubst_lK, map_add]
+  rw [inParam_eq, inParam_eq, inParam_eq, subst_add hasSubst_lK, map_add (f := _)]
 
 theorem mI_sub {ι : Type} [Finite ι] (f g : MvPowerSeries ι (FormalGroupSystem.K0 p)) : mI (f - g) = mI f - mI g := by
   unfold mI

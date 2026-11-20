@@ -73,7 +73,7 @@ theorem toMat_injective {δ : K} (hδ : star δ = -δ) (hδ0 : δ ≠ 0) :
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro t ht
   obtain ⟨B, C, rfl⟩ := exists_tensor_decomp hF hδ hδ0 t
-  rw [map_add, toMat_tmul, toMat_tmul, one_smul] at ht
+  rw [map_add (f := _), toMat_tmul, toMat_tmul, one_smul] at ht
   have ht' := congrArg Matrix.conjTranspose ht
   rw [Matrix.conjTranspose_add, Matrix.conjTranspose_smul, (mem_hermSub hF _).1 B.2,
     (mem_hermSub hF _).1 C.2, hδ, Matrix.conjTranspose_zero, neg_smul] at ht'
@@ -101,7 +101,7 @@ theorem toMat_surjective {δ : K} (hδ : star δ = -δ) (hδ0 : δ ≠ 0) :
       Matrix.conjTranspose_conjTranspose, star_inv₀, star_mul', star_ofNat, hδ, mul_neg, inv_neg,
       neg_smul, ← smul_neg, neg_sub]
   refine ⟨(1 : K) ⊗ₜ ⟨_, h1⟩ + δ ⊗ₜ ⟨_, h2⟩, ?_⟩
-  rw [map_add, toMat_tmul, toMat_tmul, one_smul, smul_smul]
+  rw [map_add (f := _), toMat_tmul, toMat_tmul, one_smul, smul_smul]
   have : δ * (2 * δ)⁻¹ = (2 : K)⁻¹ := by field_simp
   rw [this, ← smul_add]
   have : X + Xᴴ + (X - Xᴴ) = (2 : K) • X := by rw [two_smul]; abel

@@ -31,7 +31,7 @@ theorem hf_sub_right (x y y' : Fin n → L) : hf σ x (y - y') = hf σ x y - hf 
 
 omit [Valued L (WithZero (Multiplicative ℤ))] in
 theorem hf_add_left (x x' y : Fin n → L) : hf σ (x + x') y = hf σ x y + hf σ x' y := by
-  simp only [hf, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hf, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 omit [Valued L (WithZero (Multiplicative ℤ))] in
 theorem hf_smul (c c' : L) (x y : Fin n → L) : hf σ (c • x) (c' • y) = σ c * c' * hf σ x y := by

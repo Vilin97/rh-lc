@@ -64,7 +64,7 @@ private theorem over_iff (X : Tower Ω ε) (H : Subgroup SL(2, ℤ)) (W : Valuat
     show ((jPoly X H p : lev X H) : X.K) ∈ W
     rw [coe_jPoly]
     induction p using Polynomial.induction_on' with
-    | add p q hp hq => rw [map_add]; exact W.add_mem _ _ hp hq
+    | add p q hp hq => rw [map_add (f := _)]; exact W.add_mem _ _ hp hq
     | monomial n c =>
       rw [Polynomial.aeval_monomial]
       exact W.mul_mem _ _ (h1 c) (pow_mem h2 n)

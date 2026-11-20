@@ -25,7 +25,7 @@ private theorem aeval_cuspVecL {K : Type} [Field K] [NumberField K] {n : ℕ} (�
       cuspVecL μ (aeval ((gkModuleCusp K n).σ k) q φ) := by
   induction q using Polynomial.induction_on' with
   | add a b ha hb =>
-    simp only [map_add, ContinuousLinearMap.add_apply, LinearMap.add_apply, ha, hb]
+    simp only [map_add (f := _), ContinuousLinearMap.add_apply, LinearMap.add_apply, ha, hb]
   | monomial m c =>
     rw [aeval_monomial, aeval_monomial, Module.End.mul_apply, ContinuousLinearMap.mul_apply,
       pow_cuspVecL μ k m φ hφ]

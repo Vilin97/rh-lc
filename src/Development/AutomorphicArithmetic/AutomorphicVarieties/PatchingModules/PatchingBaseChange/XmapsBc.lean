@@ -38,7 +38,7 @@ theorem UpperTheory.V.Pa.BC.xmaps_bc :
     | tmul a m =>
       rw [LinearMap.baseChange_tmul, hg, ← Til.algebraMap_eq, ← TensorProduct.smul_tmul,
         TensorProduct.smul_tmul', smul_eq_mul, Algebra.smul_def]
-    | add x y hx hy => rw [map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
   have heinv : ∀ (t : A) (z : Til O O' P ⊗[P] X0), e.symm (Til.map O' θ t • z) = t • e.symm z := by
     intro t z
     apply e.injective

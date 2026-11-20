@@ -28,8 +28,8 @@ theorem parts_eInf_smul (a : AE D) :
   induction a using TensorProduct.induction_on with
   | zero => simp only [smul_zero, sub_zero, map_zero, and_self]
   | add a b ha hb =>
-    refine ⟨by rw [smul_add, RingHom.map_add, ha.1, hb.1, add_zero], ?_⟩
-    rw [smul_add, add_sub_add_comm, RingHom.map_add, ha.2, hb.2, add_zero]
+    refine ⟨by rw [smul_add, RingHom.map_add (f := _), ha.1, hb.1, add_zero], ?_⟩
+    rw [smul_add, add_sub_add_comm, RingHom.map_add (f := _), ha.2, hb.2, add_zero]
   | tmul a x =>
     rw [TensorProduct.smul_tmul', ← TensorProduct.sub_tmul]
     constructor

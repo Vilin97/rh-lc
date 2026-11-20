@@ -17,7 +17,7 @@ theorem isoStab (h : IsoSum ρ Y σ) (g : H) : ∀ y ∈ Y, ρ g y ∈ Y := by
     rw [← f.2.1]
     exact f.2.2 ⟨_, rfl⟩
   · intro a b ha hb
-    rw [map_add]; exact add_mem ha hb
+    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
 
 private theorem step (Z W : Submodule ℂ M) (hZ : ∀ g, ∀ z ∈ Z, ρ g z ∈ Z) (hW : ∀ g, ∀ z ∈ W, ρ g z ∈ W)
     (hd : Z ⊓ W = ⊥) (f : σ.V →ₗ[ℂ] M) (hf : ∀ g v, f (σ.ρ g v) = ρ g (f v))
@@ -37,7 +37,7 @@ private theorem step (Z W : Submodule ℂ M) (hZ : ∀ g, ∀ z ∈ Z, ρ g z �
     refine (((isIrreducible_iff σ.ρ).1 σ.irred).2 _ fun g v hv => ?_).resolve_left fun hb => ?_
     · rw [Submodule.mem_comap] at hv ⊢
       obtain ⟨a, ha, b, hb, e⟩ := Submodule.mem_sup.1 hv
-      rw [hf, ← e, map_add]
+      rw [hf, ← e, map_add (f := _)]
       exact Submodule.add_mem_sup (hZ g a ha) (hW g b hb)
     · have : u ∈ (Z ⊔ W).comap f := Submodule.mem_sup.2 ⟨_, hz, -w, neg_mem hw, by simp⟩
       rw [hb] at this
@@ -53,7 +53,7 @@ private theorem step (Z W : Submodule ℂ M) (hZ : ∀ g, ∀ z ∈ Z, ρ g z �
   refine ⟨{ toFun := p
             map_add' := fun a b => uniq _ (hp1 _) _ (add_mem (hp1 a) (hp1 b)) _ (hp2 _) (by
               have := add_mem (hp2 a) (hp2 b)
-              rw [map_add]; convert this using 1; abel)
+              rw [map_add (f := _)]; convert this using 1; abel)
             map_smul' := fun c a => uniq _ (hp1 _) _ (Z.smul_mem c (hp1 a)) _ (hp2 _) (by
               have := W.smul_mem c (hp2 a)
               rw [map_smul]; rwa [smul_sub] at this) }, fun g v => ?_, ?_, fun h0 => hz0 ?_⟩
@@ -79,7 +79,7 @@ theorem isoSub (h : IsoSum ρ Y σ) (Z : Submodule ℂ M) (hZY : Z ≤ Y) (hne :
       rw [Finset.iSup_insert]
       refine ⟨fun g z hz => ?_, fun hn => ?_⟩
       · obtain ⟨_, ⟨u, rfl⟩, w, hw, rfl⟩ := Submodule.mem_sup.1 hz
-        rw [map_add, ← f.2.1]
+        rw [map_add (f := _), ← f.2.1]
         exact Submodule.add_mem_sup ⟨_, rfl⟩ (ih.1 g w hw)
       · by_cases hd : Z ⊓ (⨆ f ∈ S, LinearMap.range f.1) = ⊥
         · exact step Z _ hZ ih.1 hd f.1 f.2.1 hn

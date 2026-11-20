@@ -91,10 +91,10 @@ theorem hasSat_iff {P : CuspSub E a} {σ : LocIrr w a} (h : P.IsLocComp w σ) (B
         · exact (hB.2 _ (LocGL.idem_mem _ _ u) hu).2.2.2 ϖ hϖ j hj
       · simp [heckeVec]
       · intro y z hy hz
-        rw [map_add, smul_add, ← hy, ← hz]
+        rw [map_add (f := _), smul_add, ← hy, ← hz]
         refine Eq.trans (finsum_congr fun _ => ?_)
           (finsum_add_distrib (finite_heckeVec hc hT _ (e y)) (finite_heckeVec hc hT _ (e z)))
-        simp only [map_add, smul_add]
+        simp only [map_add (f := _), smul_add]
     have h2 := key x (htop ▸ Submodule.mem_top)
     rwa [show e x = x from LocGL.idem_of_mem _ _ hx] at h2
 

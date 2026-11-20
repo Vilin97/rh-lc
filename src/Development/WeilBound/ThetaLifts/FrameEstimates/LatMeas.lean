@@ -77,7 +77,7 @@ theorem continuous_piInf {w : InfinitePlace F} (τ : EmbOver E w) : Continuous (
           show φ a * φ b * τ.1 e = φ a * (φ b * τ.1 e)
           ring
         | add x y hx hy =>
-          rw [smul_add, map_add, hx, hy, map_add, smul_add] }
+          rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), smul_add] }
   exact IsModuleTopology.continuous_of_linearMap Lm
 
 variable {n d : ℕ}

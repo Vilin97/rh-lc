@@ -25,7 +25,7 @@ theorem coeff_psiV (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (z : I.E ⊗
   | tmul x a =>
     rw [psiV_tmul, TensorProduct.equivFinsuppOfBasisRight_apply_tmul_apply,
       TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply, map_smul]
-  | add z w hz hw => simp only [map_add, Finsupp.add_apply, hz, hw]
+  | add z w hz hw => simp only [map_add (f := _), Finsupp.add_apply, hz, hw]
 
 theorem local_vector_injective : InjV := by
   classical

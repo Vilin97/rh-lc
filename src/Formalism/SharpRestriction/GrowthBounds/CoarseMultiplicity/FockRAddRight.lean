@@ -41,7 +41,7 @@ theorem Lin_coeff_zero (N : S → Matrix (Fin k) (Fin k) R) (h : MvPolynomial (S
     AddMonoidAlgebra.coeff (Lin N h) 0 = AddMonoidAlgebra.coeff h 0 := by
   induction h using MvPolynomial.induction_on with
   | C a => simp [Lin]
-  | add p q hp hq => simp only [map_add, MvPolynomial.coeff_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), MvPolynomial.coeff_add, hp, hq]
   | mul_X p v hp =>
     have e1 : AddMonoidAlgebra.coeff (p * X v) 0 = 0 := by
       rw [← constantCoeff_eq]; simp
@@ -54,7 +54,7 @@ theorem Lin_chain (N : S → Matrix (Fin k) (Fin k) R) (s : S) (b : Fin k) (h : 
   classical
   induction h using MvPolynomial.induction_on with
   | C a => simp [Lin]
-  | add p q hp hq => simp only [map_add, hp, hq, smul_add, Finset.sum_add_distrib]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, smul_add, Finset.sum_add_distrib]
   | mul_X p v hp =>
     obtain ⟨t, c⟩ := v
     have hL : pderiv (s, b) (∑ d : Fin k, C (N t c d) * X (t, d) : MvPolynomial (S × Fin k) R)
@@ -75,7 +75,7 @@ theorem Lin_chain (N : S → Matrix (Fin k) (Fin k) R) (s : S) (b : Fin k) (h : 
         simp [apply_ite, Finset.sum_ite_eq, smul_eq_C_mul, mul_comm]
       · have hts' : ¬ s = t := fun h => hts h.symm
         simp [hts, hts']
-    simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add, Lin_X, hL, hp]
+    simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add (f := _), Lin_X, hL, hp]
     simp only [smul_add, Finset.sum_add_distrib]
     rw [hR]
     simp only [Finset.mul_sum, Finset.sum_mul, mul_smul_comm]
@@ -89,7 +89,7 @@ theorem fockR_Lin (N : S → Matrix (Fin k) (Fin k) R) (P : MvPolynomial (S × F
     rw [h1, C_apply, tsact_monomial_left, tsact_monomial_left, Lin_coeff_zero]
   | add p q hp hq =>
     intro Q
-    rw [map_add, tsact_add_left, tsact_add_left, hp, hq]
+    rw [map_add (f := _), tsact_add_left, tsact_add_left, hp, hq]
   | mul_X p v hp =>
     intro Q
     rw [map_mul, Lin_X, Finset.mul_sum, tsact_sum_left, tsact_X_mul, Lin_chain, tsact_sum_right]

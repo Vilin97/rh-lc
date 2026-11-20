@@ -51,7 +51,7 @@ theorem isIntegral_sigma (K : UQ) (B : InvAlg K) (y : B.A) (hy : IsIntegral K.O 
       map_one' := hinj (by rw [← hcO, map_one, map_one])
       map_mul' := fun x y => hinj (by rw [← hcO, map_mul, map_mul, map_mul, hcO, hcO])
       map_zero' := hinj (by rw [← hcO, map_zero, map_zero])
-      map_add' := fun x y => hinj (by rw [← hcO, map_add, map_add, map_add, hcO, hcO]) }
+      map_add' := fun x y => hinj (by rw [← hcO, map_add (f := _), map_add (f := _), map_add (f := _), hcO, hcO]) }
   have hcomp : (algebraMap K.O B.A).comp ψ = (B.σ : B.A →+* B.A).comp (algebraMap K.O B.A) := by
     ext x
     simp only [RingHom.coe_comp, Function.comp_apply, RingHom.coe_coe]

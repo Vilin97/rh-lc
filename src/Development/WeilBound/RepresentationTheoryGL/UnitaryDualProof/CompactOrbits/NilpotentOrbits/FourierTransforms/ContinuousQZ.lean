@@ -71,7 +71,7 @@ theorem locQ_pf : LocQ (k := k) := by
           funext x
           simp only [Pi.add_apply]
           ring
-        rw [e, map_add, ha V hV, hb V hV, add_zero]
+        rw [e, map_add (f := _), ha V hV, hb V hV, add_zero]
       zero_mem' := by
         intro V hV
         simp only [Pi.zero_apply, mul_zero]

@@ -114,8 +114,8 @@ theorem equivariant_of_wave {V : Type} [AddCommGroup V] [Module ℂ V] (h : IsBi
     · rw [map_zero, map_zero, ← map_zero T]; congr 1; funext t; simp
   | add f g _ _ hf hg =>
     refine ⟨fun x hx => ?_, fun y hy => ?_⟩
-    · rw [map_add, map_add, ← hf.1 x hx, ← hg.1 x hx, ← map_add]; rfl
-    · rw [map_add, map_add, ← hf.2 y hy, ← hg.2 y hy, ← map_add]; congr 1; funext t; simp [mul_add]
+    · rw [map_add (f := _), map_add (f := _), ← hf.1 x hx, ← hg.1 x hx, ← map_add (f := _)]; rfl
+    · rw [map_add (f := _), map_add (f := _), ← hf.2 y hy, ← hg.2 y hy, ← map_add (f := _)]; congr 1; funext t; simp [mul_add]
   | smul c f _ hf =>
     refine ⟨fun x hx => ?_, fun y hy => ?_⟩
     · rw [map_smul, map_smul, ← hf.1 x hx, ← map_smul]; rfl
@@ -243,7 +243,7 @@ theorem placeModel_span_ne {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D �
     refine Submodule.smul_mem _ _ (Submodule.subset_span ⟨⟨x + y, ?_⟩, rfl⟩)
     ext i j
     change infPart D (x i j + y i j) = 0
-    rw [RingHom.map_add, show infPart D (x i j) = 0 from congrFun (congrFun (fX x hx) i) j,
+    rw [RingHom.map_add (f := _), show infPart D (x i j) = 0 from congrFun (congrFun (fX x hx) i) j,
       show infPart D (y i j) = 0 from congrFun (congrFun (fY y hy) i) j, add_zero]
   · have c1 : cA D e * e = 0 := by rw [mul_comm, hec]
     have c2 : cA D (cA D e) * cA D e = 0 := by rw [cA_cA, hec]

@@ -46,7 +46,7 @@ theorem LeafKumSeq_of (hM : LeafKumMu) (hH : KummerUnitsSurjectH0) : LateralTheo
   let φ : Bˣ →* Multiplicative (Ht q (sp B) 1 1) :=
     { toFun := fun u => Multiplicative.ofAdd (g (Additive.ofMul u))
       map_one' := by simp
-      map_mul' := fun x y => by simp only [ofMul_mul, map_add, ofAdd_add] }
+      map_mul' := fun x y => by simp only [ofMul_mul, map_add (f := _), ofAdd_add] }
   have hφ : (powMonoidHom q : Bˣ →* Bˣ).range ≤ φ.ker := by
     rintro _ ⟨u, rfl⟩
     rw [MonoidHom.mem_ker]

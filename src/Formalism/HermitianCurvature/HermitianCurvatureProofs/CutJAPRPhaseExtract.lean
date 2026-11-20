@@ -26,7 +26,7 @@ theorem evenPart_poly (c : ℂ) (p : MvPolynomial (Fin 3) ℂ) :
     obtain ⟨q₁, hq₁⟩ := h₁
     obtain ⟨q₂, hq₂⟩ := h₂
     refine ⟨q₁ + q₂, fun t s h => ?_⟩
-    rw [map_add, map_add, Polynomial.eval_add, ← hq₁ t s h, ← hq₂ t s h]
+    rw [map_add (f := _), map_add (f := _), Polynomial.eval_add, ← hq₁ t s h, ← hq₂ t s h]
     ring
 
 theorem phase_extraction_holds : PhaseExtract := by

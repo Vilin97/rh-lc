@@ -32,7 +32,7 @@ theorem I_lin : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
     fun x Φ hΦ => (GlobalTheory.WeilM.IsUWeilPair.isUSplitting hT.weil).pres x Φ hΦ
   funext h
   have e : ∀ g, theta om (r • Φ + Ψ) g h = r * theta om Φ g h + theta om Ψ g h := fun g => by
-    simp only [theta, map_add, map_smul]
+    simp only [theta, map_add (f := _), map_smul]
     have hs : r • om (g, h) Φ ∈ GlobalTheory.WeilM.schA F (Fin a × Fin (a + a')) := Submodule.smul_mem _ r (pres _ _ hΦs)
     rw [GlobalTheory.WeilM.thetaSum_add F hs (pres _ _ hΨs), GlobalTheory.WeilM.thetaSum_smul]
   simp only [Model.I, e, Pi.add_apply, Pi.smul_apply, smul_eq_mul]

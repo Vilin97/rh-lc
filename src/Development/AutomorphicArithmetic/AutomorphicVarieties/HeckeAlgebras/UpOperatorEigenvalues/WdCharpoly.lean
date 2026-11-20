@@ -86,7 +86,7 @@ theorem chi_comap {n : ℕ} {A G H : Type} [CommRing A] [Group G] [Group H] (D :
   · simp
   · induction y using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => simp
 
 section Pt

@@ -60,7 +60,7 @@ theorem constantCoeff_iterate_invDer_X_sub_mem : ∀ (p : ℕ) [Fact p.Prime] (B
   have hG : ∀ α : Fin d →₀ ℕ, α.degree ≤ p → coeff α l = coeff α G := by
     intro α hα
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [G, map_add, coeff_map, hH, map_sum, map_smul, coeff_monomial, smul_eq_mul, mul_ite,
+      simp only [G, map_add (f := _), coeff_map, hH, map_sum, map_smul, coeff_monomial, smul_eq_mul, mul_ite,
       mul_one, mul_zero]
     by_cases hP : ∀ i, α ≠ Finsupp.single i p
     · rw [hh α ⟨hα, hP⟩, Finset.sum_eq_zero (fun i _ => if_neg (hP i)), add_zero]
@@ -89,7 +89,7 @@ theorem constantCoeff_iterate_invDer_X_sub_mem : ∀ (p : ℕ) [Fact p.Prime] (B
         ∑ i, q i * algebraMap B Q ((p.factorial : B) * u i ^ p) := by
     rw [← iterLin_apply hμQ]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [G, map_add, map_sum, map_smul, iterLin_apply, hmon, hnat]
+      simp only [G, map_add (f := _), map_sum, map_smul, iterLin_apply, hmon, hnat]
     congr 1
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [smul_eq_C_mul, map_mul, constantCoeff_C, hnat, hmono]
@@ -113,7 +113,7 @@ theorem constantCoeff_iterate_invDer_X_sub_mem : ∀ (p : ℕ) [Fact p.Prime] (B
     apply hF.inj
     rw [← hb, e1, e2]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_mul, map_sum, map_pow, map_natCast]
+      simp only [map_add (f := _), map_mul, map_sum, map_pow, map_natCast]
     congr 1
     rw [Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_

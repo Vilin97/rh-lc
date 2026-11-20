@@ -149,7 +149,7 @@ private theorem core (a₀ : A) (x : B) {ρ : ℝ} (ha : p a₀ = 1) (hρ : 0 < 
   have hdχ : ∀ χ, (Φ (d : B) χ).re = (Φ (c : B) χ).re + ‖Φ (b : B) χ‖ ^ 2 := fun χ => by
     have e : Φ (d : B) χ = Φ (c : B) χ + Φ ((star b * b : A) : B) χ := by
       have e₀ : ((c + star b * b : A) : B) = (c : B) + ((star b * b : A) : B) := rfl
-      rw [hddef, e₀, map_add, ContinuousMap.add_apply]
+      rw [hddef, e₀, map_add (f := _), ContinuousMap.add_apply]
     rw [e, Complex.add_re, sq_apply, Complex.ofReal_re]
   obtain ⟨ε, hεdef⟩ : ∃ ε : ℝ, ε = (ρ - ρ') / ρ' := ⟨_, rfl⟩
   have hε : 0 < ε := by rw [hεdef]; exact div_pos (sub_pos.2 h1) h0

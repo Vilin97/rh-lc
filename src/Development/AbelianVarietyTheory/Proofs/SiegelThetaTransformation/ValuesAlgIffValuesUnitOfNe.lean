@@ -116,7 +116,7 @@ private theorem ringHom_KA_ext_of_A_eq_one (hA : l.A = 1) {R : Type} [CommRing R
     exact DFunLike.congr_fun (RingHom.ext_rat (β.comp (algebraMap ℚ (KA l))) (β'.comp (algebraMap ℚ (KA l)))) q
   | add x y hx hy ihx ihy =>
     show β (⟨x, hx⟩ + ⟨y, hy⟩) = β' (⟨x, hx⟩ + ⟨y, hy⟩)
-    rw [map_add, map_add, ihx, ihy]
+    rw [map_add (f := _), map_add (f := _), ihx, ihy]
   | mul x y hx hy ihx ihy =>
     show β (⟨x, hx⟩ * ⟨y, hy⟩) = β' (⟨x, hx⟩ * ⟨y, hy⟩)
     rw [map_mul, map_mul, ihx, ihy]

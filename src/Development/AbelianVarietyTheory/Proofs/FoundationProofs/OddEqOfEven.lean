@@ -36,7 +36,7 @@ theorem exists_root (D : D7) (u : D.host.E) (hu : u * D.host.conj u = 1) :
     rw [Units.val_mk0, D.host.conj_sqrtMinusD]
     linear_combination D.host.sqrtMinusD * h
   · refine ⟨Units.mk0 _ h, ?_⟩
-    rw [Units.val_mk0, map_add, map_one]
+    rw [Units.val_mk0, map_add (f := _), map_one]
     linear_combination -hu
 
 theorem char_value {D : D7} {N : ℕ} (χ : HeckeU D N) (ep : ℤ) (u : D.host.E) (b : D.host.Eˣ)

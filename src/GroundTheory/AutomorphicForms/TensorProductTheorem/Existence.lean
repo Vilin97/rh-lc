@@ -260,7 +260,7 @@ theorem exists_equiv_restrictedTensorRep (hρ : IsAdmissible ρ) (hirr : ρ.IsIr
     intro v u hu
     have hle : (genSubrep (ρ.comp (singleHom K v)) (NV v)).toSubmodule ≤
         { carrier := {u | ∀ h ∈ H, h v = 1 → ρ h u = u}
-          add_mem' := fun ha hb h hh hv => by rw [map_add, ha h hh hv, hb h hh hv]
+          add_mem' := fun ha hb h hh hv => by rw [map_add (f := _), ha h hh hv, hb h hh hv]
           zero_mem' := fun h _ _ => map_zero _
           smul_mem' := fun c u hu h hh hv => by rw [map_smul, hu h hh hv] } := by
       refine iSup_le fun g => ?_
@@ -388,7 +388,7 @@ theorem exists_equiv_restrictedTensorRep (hρ : IsAdmissible ρ) (hirr : ρ.IsIr
       obtain ⟨x, hx0, hx⟩ := ih
       let Y : Submodule ℂ M :=
         { carrier := {y | ∀ w ∈ s, p w y = y}
-          add_mem' := fun ha hb w hw => by rw [map_add, ha w hw, hb w hw]
+          add_mem' := fun ha hb w hw => by rw [map_add (f := _), ha w hw, hb w hw]
           zero_mem' := fun w _ => map_zero _
           smul_mem' := fun c y hy w hw => by rw [map_smul, hy w hw] }
       have hxY : x ∈ Y := hx

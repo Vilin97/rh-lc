@@ -62,7 +62,7 @@ private theorem coeff_lin_of_mem_sq {f : MvPowerSeries σ E} (hf : f ∈ maximal
   rw [pow_two] at hf
   refine Submodule.mul_induction_on hf (fun a ha b hb => ?_) fun a b ha hb => ?_
   · rw [coeff_lin_mul, (mem_max_iff a).1 ha, (mem_max_iff b).1 hb, zero_mul, mul_zero, add_zero]
-  · rw [map_add, ha, hb, add_zero]
+  · rw [map_add (f := _), ha, hb, add_zero]
 
 private theorem mem_sq_of_coeff [Fintype σ] {f : MvPowerSeries σ E} (h0 : MvPowerSeries.constantCoeff f = 0)
     (h1 : ∀ i, MvPowerSeries.coeff (Finsupp.single i 1) f = 0) : f ∈ maximalIdeal (MvPowerSeries σ E) ^ 2 := by

@@ -78,7 +78,7 @@ theorem onto_tors_iff : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [C
   let B := Module.Free.chooseBasis ℤ D.La
   let ev' : (Module.Free.ChooseBasisIndex ℤ D.La → ℤ) → (Over.mk y ⟶ o.A) := fun a => I.ev M (B.equivFun.symm a)
   have hadd' : ∀ a c, ev' (a + c) = ev' a * ev' c := fun a c => by
-    simp only [ev', map_add]
+    simp only [ev', map_add (f := _)]
     exact I.add M _ _
   have hpow' : ∀ a, ev' a ^ M = 1 := fun a => (I.onto M hM hcop _).2 ⟨_, rfl⟩
   have hker' : ∀ a, ev' a = 1 ↔ ∃ c, a = M • c := fun a => by

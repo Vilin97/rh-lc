@@ -40,7 +40,7 @@ theorem hasFrame_of_isBaseChange : ∀ (R : Type) [CommRing R] (C : Type) [Categ
     · intro s ω hω
       rw [oneFormsMapOfFunctorMorphism_smul, LinearMap.map_smul, LinearMap.map_smul, hω, smul_eq_mul, smul_eq_mul, map_mul]
     · intro a b ha hb'
-      rw [map_add, map_add, map_add, ha, hb', map_add]
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb', map_add (f := _)]
   · intro T ω
     refine (hb T).inductionOn ω (fun ω ↦ ω = ∑ i, δ i T ω • (j (v (Pi.single i 1))).1 T) ?_ ?_ ?_ ?_
     · simp
@@ -54,6 +54,6 @@ theorem hasFrame_of_isBaseChange : ∀ (R : Type) [CommRing R] (C : Type) [Categ
       simp_rw [LinearMap.map_smul, Finset.smul_sum, smul_eq_mul, mul_smul]
     · intro a b ha hb'
       conv_lhs => rw [ha, hb']
-      simp_rw [map_add, add_smul, Finset.sum_add_distrib]
+      simp_rw [map_add (f := _), add_smul, Finset.sum_add_distrib]
 
 end GlobalTheory.AbCoh

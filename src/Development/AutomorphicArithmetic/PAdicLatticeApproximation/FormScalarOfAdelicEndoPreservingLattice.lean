@@ -23,7 +23,7 @@ private theorem formIntegral {p : ℕ} [Fact p.Prime] {D : Datum p}
       rw [ez, map_smul, map_smul, LinearMap.smul_apply, hF, smul_eq_mul, smul_eq_mul]
       exact isInt_mul ha' (isInt_mul ha (isInt_intCast _))
     | zero => rw [map_zero]; exact isIntAf_zero
-    | add w₁ w₂ _ _ h₁ h₂ => rw [map_add]; exact isIntAf_add h₁ h₂
+    | add w₁ w₂ _ _ h₁ h₂ => rw [map_add (f := _)]; exact isIntAf_add h₁ h₂
     | neg w _ h => rw [map_neg]; exact isIntAf_neg h
   induction hv using AddSubgroup.closure_induction with
   | mem z hz =>
@@ -31,7 +31,7 @@ private theorem formIntegral {p : ℕ} [Fact p.Prime] {D : Datum p}
     rw [ez]
     exact hgen a x ha w hw
   | zero => rw [map_zero, LinearMap.zero_apply]; exact isIntAf_zero
-  | add v₁ v₂ _ _ h₁ h₂ => rw [map_add, LinearMap.add_apply]; exact isIntAf_add h₁ h₂
+  | add v₁ v₂ _ _ h₁ h₂ => rw [map_add (f := _), LinearMap.add_apply]; exact isIntAf_add h₁ h₂
   | neg v _ h => rw [map_neg, LinearMap.neg_apply]; exact isIntAf_neg h
 
 theorem UpperTheory.form_scalar_of_adelic_endo_preserving_lattice :
@@ -60,7 +60,7 @@ theorem UpperTheory.form_scalar_of_adelic_endo_preserving_lattice :
       · have hk' := congrArg (Int.cast : ℤ → AfP p) hk
         push_cast at hk'
         rw [e₁, e₂, eβ]
-        simp only [map_add, LinearMap.add_apply, map_nsmul, LinearMap.smul_apply, form_inAf, hF, nsmul_eq_mul]
+        simp only [map_add (f := _), LinearMap.add_apply, map_nsmul, LinearMap.smul_apply, form_inAf, hF, nsmul_eq_mul]
         push_cast
         linear_combination hk'
     exact sub_eq_zero.1 this

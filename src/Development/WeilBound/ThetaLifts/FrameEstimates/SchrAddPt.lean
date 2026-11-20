@@ -130,7 +130,7 @@ theorem coef_near {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (M : Model σ X W)
   have e : z * (mat u)ᵀ = z + c * (mat u - 1)ᵀ := by
     rw [← hu', Matrix.mul_smul, ← Matrix.smul_mul, ← hz, Matrix.smul_mul, ← Matrix.mul_smul, hu', Matrix.transpose_sub,
       Matrix.transpose_one, Matrix.mul_sub, Matrix.mul_one, add_sub_cancel]
-  rw [e, map_add]
+  rw [e, map_add (f := _)]
   exact h1 c hc (by rw [← map_smul, ← Matrix.mul_smul, hu']) _ ⟨c, hc, rfl⟩ _ (by rw [← map_smul, ← map_smul, hz]) f
 
 end levelStructure

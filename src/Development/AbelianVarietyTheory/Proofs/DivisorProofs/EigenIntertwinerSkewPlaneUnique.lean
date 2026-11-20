@@ -43,5 +43,5 @@ theorem GlobalTheory.ThK.EvUniq.evZero_unique : GlobalTheory.FunPr.Hypotheses₂
     funext x
     simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure, Pi.smul_apply, smul_eq_mul, ContinuousLinearMap.smul_apply, SchwartzMap.smul_apply, mul_assoc]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, map_add, hx, hy, smul_add]
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, smul_add]
   | smul a x _ hx => rw [map_smul, map_smul, hx, smul_comm]

@@ -97,7 +97,7 @@ theorem NU_eq_NSet {H : HermSp M V} (Fr : FrameD H r) : NU H Fr.f = Fr.NSet := b
     | zero => simp
     | add x y _ _ hx hy =>
       have := add_mem hx hy
-      convert this using 1; rw [map_add]; abel
+      convert this using 1; rw [map_add (f := _)]; abel
     | smul c x _ hx =>
       have := Submodule.smul_mem _ c hx
       convert this using 1; rw [map_smul, smul_sub]
@@ -149,7 +149,7 @@ theorem NU_nontrivial {H : HermSp M V} (Fr : FrameD H (r + 1)) : ∃ n ∈ NU H 
   have hn : ∀ v, n v = v + (c * H.h v e) • e := fun _ => rfl
   refine ⟨n, ⟨fun x y => ?_, fun a => ?_, fun v hv => ?_⟩, fun h => hc0 ?_⟩
   · have r1 : ∀ z, H.h z (n y) = H.h z y - c * H.h e y * H.h z e := fun z => by
-      rw [H.h_herm (n y) z, hn, H.h_add_left, H.h_smul_left, map_add, map_mul, map_mul, hc,
+      rw [H.h_herm (n y) z, hn, H.h_add_left, H.h_smul_left, map_add (f := _), map_mul, map_mul, hc,
         ← H.h_herm, ← H.h_herm, ← H.h_herm]
       ring
     rw [r1, hn, H.h_add_left, H.h_add_left, H.h_smul_left, H.h_smul_left, hee]

@@ -22,7 +22,7 @@ variable {D : D7}
 
 theorem symplO_add_right' (S T : HSp D) (x y y' : WO S T) :
     symplO S T x (y + y') = symplO S T x y + symplO S T x y' := by
-  simp only [symplO, hO, Matrix.add_apply, map_add, mul_add, add_mul, Finset.sum_add_distrib]
+  simp only [symplO, hO, Matrix.add_apply, map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib]
 
 theorem symplO_zero_right' (S T : HSp D) (x : WO S T) : symplO S T x 0 = 0 := by
   simp [symplO, hO]
@@ -40,7 +40,7 @@ theorem ann_of_mem {V V₀ W W₀ : HSp D} {ρ σ : ℕ} (dV : HypDec V V₀ ρ)
   induction ha' using AddSubgroup.closure_induction with
   | mem b hb => exact hb.2 a ha
   | zero => rw [map_zero, symplO_zero_right', AddChar.map_zero_eq_one]
-  | add b c _ _ hb hc => rw [map_add, symplO_add_right', AddChar.map_add_eq_mul, hb, hc, one_mul]
+  | add b c _ _ hb hc => rw [map_add (f := _), symplO_add_right', AddChar.map_add_eq_mul, hb, hc, one_mul]
   | neg b _ hb => rw [map_neg, symplO_neg_right', AddChar.map_neg_eq_inv, hb, inv_one]
 
 end GlobalTheory.PcBF

@@ -126,9 +126,9 @@ variable (μ : Mult F)
 def cupC {m n k : ℕ} (h : m + n = k) : Cn F m →ₗ[R] Cn F n →ₗ[R] Cn F k :=
   LinearMap.mk₂ R (fun f g s => μ.mul _ (ev s (fr m k (by omega)) (fr_mono _ _ _) (Fin.last k) (Fin.le_last _) f)
       (ev s (bk m n k h.le) (bk_mono _ _ _ _) (Fin.last k) (Fin.le_last _) g))
-    (fun f f' g => funext fun s => by simp only [map_add, LinearMap.add_apply, Pi.add_apply])
+    (fun f f' g => funext fun s => by simp only [map_add (f := _), LinearMap.add_apply, Pi.add_apply])
     (fun r f g => funext fun s => by simp only [map_smul, LinearMap.smul_apply, Pi.smul_apply])
-    (fun f g g' => funext fun s => by simp only [map_add, Pi.add_apply])
+    (fun f g g' => funext fun s => by simp only [map_add (f := _), Pi.add_apply])
     (fun r f g => funext fun s => by simp only [map_smul, Pi.smul_apply])
 
 theorem cupC_apply {m n k : ℕ} (h : m + n = k) (f : Cn F m) (g : Cn F n) (s : ComposableArrows C k) :
@@ -232,9 +232,9 @@ def cupZ {m n k : ℕ} (h : m + n = k) :
     LinearMap.ker (d F m) →ₗ[R] LinearMap.ker (d F n) →ₗ[R] LinearMap.ker (d F k) :=
   LinearMap.mk₂ R (fun f g => ⟨cupC μ h f g, LinearMap.mem_ker.2
       (cupC_mem_ker μ h (LinearMap.mem_ker.1 f.2) (LinearMap.mem_ker.1 g.2))⟩)
-    (fun f f' g => Subtype.ext (by simp only [Submodule.coe_add, map_add, LinearMap.add_apply]))
+    (fun f f' g => Subtype.ext (by simp only [Submodule.coe_add, map_add (f := _), LinearMap.add_apply]))
     (fun r f g => Subtype.ext (by simp only [Submodule.coe_smul, map_smul, LinearMap.smul_apply]))
-    (fun f g g' => Subtype.ext (by simp only [Submodule.coe_add, map_add]))
+    (fun f g g' => Subtype.ext (by simp only [Submodule.coe_add, map_add (f := _)]))
     (fun r f g => Subtype.ext (by simp only [Submodule.coe_smul, map_smul]))
 
 @[simp] theorem cupZ_val {m n k : ℕ} (h : m + n = k) (f : LinearMap.ker (d F m)) (g : LinearMap.ker (d F n)) :
@@ -249,7 +249,7 @@ def cup {m n k : ℕ} (h : m + n = k) : H F m →ₗ[R] H F n →ₗ[R] H F k :=
   Submodule.liftQ _
     { toFun := cupProductCocycleClass μ h
       map_add' := fun f f' => Submodule.linearMap_qext _ (LinearMap.ext fun g => by
-        simp only [cupProductCocycleClass, LinearMap.comp_apply, Submodule.mkQ_apply, Submodule.liftQ_apply, map_add,
+        simp only [cupProductCocycleClass, LinearMap.comp_apply, Submodule.mkQ_apply, Submodule.liftQ_apply, map_add (f := _),
           LinearMap.add_apply, Submodule.Quotient.mk_add])
       map_smul' := fun r f => Submodule.linearMap_qext _ (LinearMap.ext fun g => by
         simp only [cupProductCocycleClass, LinearMap.comp_apply, Submodule.mkQ_apply, Submodule.liftQ_apply, map_smul,

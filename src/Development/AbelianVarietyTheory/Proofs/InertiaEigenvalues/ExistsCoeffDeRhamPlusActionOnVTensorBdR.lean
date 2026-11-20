@@ -28,7 +28,7 @@ theorem exists_odAction : ∀ (l : ℕ) [Fact l.Prime] (Pl : LocPrime l) (AI : L
   have hb : ∀ o b b', F o (b + b') = F o b + F o b' := fun o b b' => by
     apply TensorProduct.ext'
     intro v c
-    rw [LinearMap.add_apply, hF, hF, hF, map_add, add_mul, tmul_add]
+    rw [LinearMap.add_apply, hF, hF, hF, map_add (f := _), add_mul, tmul_add]
   have ho : ∀ o o' b, F (o + o') b = F o b + F o' b := fun o o' b => by
     apply TensorProduct.ext'
     intro v c

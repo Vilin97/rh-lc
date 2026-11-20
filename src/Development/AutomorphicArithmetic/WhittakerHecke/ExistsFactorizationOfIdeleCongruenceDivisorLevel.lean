@@ -12,7 +12,7 @@ open scoped ComplexOrder
 private theorem cp_pv (v w : H.P ℚ) :
     H.cp v ((pv w : (A ℚ)ˣ) : A ℚ) = if w = v then ((atFin v (unif v) : (H.Kv v)ˣ) : H.Kv v) else 1 := by
   obtain ⟨-, -, h3, h4, -, -, -, h8, -⟩ := UpperTheory.ConvolutionTheory.R2.H.sgLaws ℚ w
-  rw [pv, h4, map_add, map_one]
+  rw [pv, h4, map_add (f := _), map_one]
   split_ifs with h
   · subst h
     rw [h3, add_sub_cancel]
@@ -54,7 +54,7 @@ private theorem iy_val {r : ℝ} (hr : r ≠ 0) :
   refine ⟨?_, fun v => ?_⟩
   · change 1 - TR.infEq ℚ 1 + TR.infEq ℚ _ = _
     rw [map_one, sub_self, zero_add]
-  · rw [map_add, map_sub, map_one]
+  · rw [map_add (f := _), map_sub, map_one]
     change 1 - 0 + 0 = _
     simp
 

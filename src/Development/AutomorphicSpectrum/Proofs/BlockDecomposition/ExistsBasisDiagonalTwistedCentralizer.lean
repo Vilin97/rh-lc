@@ -96,7 +96,7 @@ theorem aeval_eig (A : Matrix (Fin n) (Fin n) ℂ) (v : Fin n → ℂ) (c : ℂ)
     | succ m ih =>
       rw [pow_succ, ← Matrix.mulVec_mulVec, h, Matrix.mulVec_smul, ih, smul_smul, pow_succ, mul_comm]
   induction q using Polynomial.induction_on' with
-  | add p q hp' hq' => simp only [map_add, Matrix.add_mulVec, hp', hq', Polynomial.eval_add, add_smul]
+  | add p q hp' hq' => simp only [map_add (f := _), Matrix.add_mulVec, hp', hq', Polynomial.eval_add, add_smul]
   | monomial m a =>
     rw [Polynomial.aeval_monomial, Polynomial.eval_monomial, Algebra.algebraMap_eq_smul_one,
       smul_mul_assoc, one_mul, Matrix.smul_mulVec, hp, smul_smul]
@@ -114,7 +114,7 @@ theorem aeval_stable (A : Matrix (Fin n) (Fin n) ℂ) (W : Submodule ℂ (Fin n 
   induction q using Polynomial.induction_on' with
   | add p q hp' hq' =>
     intro x hx
-    rw [map_add, Matrix.add_mulVec]
+    rw [map_add (f := _), Matrix.add_mulVec]
     exact W.add_mem (hp' x hx) (hq' x hx)
   | monomial m a =>
     intro x hx

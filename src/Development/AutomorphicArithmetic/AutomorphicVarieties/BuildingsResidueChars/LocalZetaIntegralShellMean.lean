@@ -27,7 +27,7 @@ private def shellForm (ν : Measure (GL (Fin m) F)) (σ : Representation ℂ (GL
       {g : GL (Fin m) F | ordDet g = k} ν) : Module.Dual ℂ W where
   toFun w := ∫ g in {g : GL (Fin m) F | ordDet g = k}, ℓ (σ (g, 1) w) ∂ν
   map_add' a b := by
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact integral_add (hint a) (hint b)
   map_smul' c w := by
     simp only [map_smul, smul_eq_mul, RingHom.id_apply]
@@ -285,7 +285,7 @@ theorem UpperTheory.local_zeta_integral_shell_mean :
   let Λ2 : Module.Dual ℂ W :=
     { toFun := fun w => ∫ g in {g : GL (Fin m) F | ordDet g = k}, ℓ (σ (g⁻¹, 1) w) ∂μ
       map_add' := fun a b => by
-        simp only [map_add]
+        simp only [map_add (f := _)]
         exact integral_add (hint2 a) (hint2 b)
       map_smul' := fun c w => by
         simp only [map_smul, smul_eq_mul, RingHom.id_apply]

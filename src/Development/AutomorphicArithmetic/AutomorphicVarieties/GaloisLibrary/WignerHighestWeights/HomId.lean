@@ -27,7 +27,7 @@ theorem UpperTheory.V.AlgRepEndIrreducible.homId :
     module
   have h1 := dCo_cons (L := L) ω (hp (toL X)) Y
   rw [hd, AlternatingMap.zero_apply, eq_comm, sub_eq_zero, dCo_apply] at h1
-  rw [congrArg L hX, map_add, LinearMap.add_apply, h1, hinf Z hZ Y, ← Finset.sum_add_distrib]
+  rw [congrArg L hX, map_add (f := _), LinearMap.add_apply, h1, hinf Z hZ Y, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   have h2 : ω (Matrix.vecCons (-brH Z hZ (Y i)) (i.removeNth Y)) =
       -ω (Matrix.vecCons (brH Z hZ (Y i)) (i.removeNth Y)) := by

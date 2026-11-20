@@ -18,7 +18,7 @@ theorem vorFun_value_le : ∀ (O : Type) [CommRing O] [IsDedekindDomain O] [Char
   intro O _ _ _ _ bar g X _ _ _ n r a hr ha
   have hfin : Module.Finite ℤ X := Module.Finite.of_surjective r hr
   have hs : ∀ c d : Fin n → ℤ, r (c + (((1 : ℕ) : ℤ) + 1) • d) = r c + (r d + r d) := fun c d => by
-    rw [map_add, map_smul, show (((1 : ℕ) : ℤ) + 1) = 2 by norm_num, two_smul]
+    rw [map_add (f := _), map_smul, show (((1 : ℕ) : ℤ) + 1) = 2 by norm_num, two_smul]
   refine ⟨fun x => ?_, fun B hB => ?_⟩
   · obtain ⟨b, rfl⟩ := hr x
     obtain ⟨d, hd⟩ := exists_eq_add_of_redV_eq (M := 1) (a := b) (a' := a (redV 1 b)) (ha _).symm

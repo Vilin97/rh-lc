@@ -174,7 +174,7 @@ theorem genMod_fg (M : ℕ) (hM : M ≠ 0) : ∀ (r : ℕ) (Λ : Submodule (𝓞
         rw [hyy, hy]; abel
       rw [hx', hz0e, Fin.sum_univ_castSucc]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [Fin.lastCases_castSucc, Fin.lastCases_last, map_add, map_sum, smul_add]
+        simp only [Fin.lastCases_castSucc, Fin.lastCases_last, map_add (f := _), map_sum, smul_add]
       have hs : ∀ j, snoc0 r (c' j • b0 j) = c' j • snoc0 r (b0 j) := by
         intro j
         rw [← algebraMap_smul E (c' j) (b0 j), map_smul, algebraMap_smul]

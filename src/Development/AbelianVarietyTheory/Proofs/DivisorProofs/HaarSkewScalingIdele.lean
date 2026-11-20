@@ -68,7 +68,7 @@ theorem exists_skewAt_equiv (h : IsCMExt F E σ) (hσ : ∀ e, σ (σ e) = e) (v
     ((GlobalTheory.Doubling.continuous_norm_tens.comp (continuous_const.add (continuous_id.mul continuous_const))).sub
       continuous_const).sub (GlobalTheory.Doubling.continuous_norm_tens.comp (continuous_id.mul continuous_const))
   have hℓ : ∀ c, cA σ c = -c → algebraMap (AF F) (AE F E) (ℓ c) = 2 * (c * d') := fun c hc => by
-    simp only [ℓ, map_sub, map_one, algebraMap_norm_cA h, map_add, map_mul (cA σ), hc, hcd']
+    simp only [ℓ, map_sub, map_one, algebraMap_norm_cA h, map_add (f := _), map_mul (cA σ), hc, hcd']
     ring
   have hinj : Function.Injective (algebraMap (AF F) (AE F E)) :=
     Algebra.TensorProduct.includeLeft_injective (R := F) (S := F) (algebraMap F E).injective
@@ -98,7 +98,7 @@ theorem exists_skewAt_equiv (h : IsCMExt F E σ) (hσ : ∀ e, σ (σ e) = e) (v
     rw [← mul_one (evFin F v (ℓ c.1)), ← mul_liftV, mul_comm, mul_smul, hdℓ _ c.2.2]
     exact partFin_of_at c.2.1
   · show GlobalTheory.LatVac.liftV v (a + b) • d = GlobalTheory.LatVac.liftV v a • d + GlobalTheory.LatVac.liftV v b • d
-    rw [map_add, add_smul]
+    rw [map_add (f := _), add_smul]
   · show GlobalTheory.LatVac.liftV v (evFin F v u * a) • d = u • GlobalTheory.LatVac.liftV v a • d
     rw [← mul_liftV, mul_smul]
 

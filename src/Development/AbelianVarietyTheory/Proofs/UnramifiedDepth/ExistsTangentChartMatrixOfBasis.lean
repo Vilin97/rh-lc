@@ -38,11 +38,11 @@ private def liftAlg {R₀ : Type} [CommRing R₀] {O R : Type} [CommRing O] [Com
   toFun x := s x.fst + s x.snd * i
   map_one' := by simp
   map_mul' x y := by
-    simp only [TrivSqZeroExt.fst_mul, DualNumber.snd_mul, map_mul, map_add]
+    simp only [TrivSqZeroExt.fst_mul, DualNumber.snd_mul, map_mul, map_add (f := _)]
     linear_combination (-(s x.snd * s y.snd)) * hi
   map_zero' := by simp
   map_add' x y := by
-    simp only [TrivSqZeroExt.fst_add, TrivSqZeroExt.snd_add, map_add]; ring
+    simp only [TrivSqZeroExt.fst_add, TrivSqZeroExt.snd_add, map_add (f := _)]; ring
   commutes' r := by simp [TrivSqZeroExt.algebraMap_eq_inl']
 
 open GlobalTheory.IndefiniteRowSideFullHecke.EtaDualPairing in
@@ -149,12 +149,12 @@ theorem exists_tanMat : ∀ (R₀ : Type) [CommRing R₀] (B : BX R₀) (O : LAl
       rintro _ _ ⟨c, rfl⟩ ⟨c', rfl⟩
       refine ⟨c + c', ?_⟩
       rw [chart_add h _ _ _ hee]
-      simp only [Matrix.mulVec_add, Pi.add_apply, map_add]
+      simp only [Matrix.mulVec_add, Pi.add_apply, map_add (f := _)]
     intro w
     change P _
     induction w using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact P0
-    | add x y hx hy => rw [map_add]; exact Padd _ _ hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact Padd _ _ hx hy
     | tmul m i =>
       set_option synthInstance.maxHeartbeats 100000 in
         rw [← gb.sum_repr m, TensorProduct.sum_tmul, map_sum]

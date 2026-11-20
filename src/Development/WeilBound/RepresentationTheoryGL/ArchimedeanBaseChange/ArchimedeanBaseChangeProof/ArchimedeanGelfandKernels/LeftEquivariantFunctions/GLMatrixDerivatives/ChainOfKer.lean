@@ -145,7 +145,7 @@ theorem kapR_int (hI : IBPAct) (hU : Unimod) (hR : RCalc) (hL : LgFacts) {E : KM
       (k y.val * ε (hb p) * (fderiv ℝ Fr 1) (hb p)) (f y.val)) := by
     intro y
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [DC, map_sum, map_add]
+      simp [DC, map_sum, map_add (f := _)]
   have eR : ∀ y : G n, kapR ε Fr k y.val (f y.val) = ∑ p, (-((Rd (hb p) k y.val * ε (hb p)) (f y.val)) +
       (k y.val * ε (hb p) * (fderiv ℝ Fr 1) (hb p)) (f y.val)) := by
     intro y

@@ -90,7 +90,7 @@ theorem comm_sigR (D : D7) (w : Af D.host.F ⊗[D.host.F] D.host.E) :
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add v w hv hw => rw [RingHom.map_add, map_add, hv, hw, map_add, RingHom.map_add]
+  | add v w hv hw => rw [RingHom.map_add (f := _), map_add (f := _), hv, hw, map_add (f := _), RingHom.map_add (f := _)]
 
 end GlobalTheory.DetRootRead
 
@@ -173,7 +173,7 @@ theorem chr_at_detRoot : ∀ (D : D7) (c : (AE D)ˣ →* Circle) (χ : Formalism
     intro x
     apply (D.sp.cm.fixed _).1
     change D.sp.cm.sig _ = _
-    rw [map_add, hσ, add_comm]
+    rw [map_add (f := _), hσ, add_comm]
   obtain ⟨t, htq⟩ := GlobalTheory.Member.exists_unit_of_sigR_fixed (AF D.host.F) D.sp.cm.sig htr q (congrArg Units.val hq)
   have hcq : c q = 1 := by
     rw [← htq]

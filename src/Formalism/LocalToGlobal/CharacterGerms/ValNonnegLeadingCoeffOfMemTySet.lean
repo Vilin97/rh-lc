@@ -172,7 +172,7 @@ theorem val_nonneg_leading_coeff_of_mem_tySet (V : VF C) (g : Fin 2)
   | inr q =>
     have e2 := congrArg (PowerSeries.coeff (V.l ^ s)) (h2 q)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [coeff_tyS_pow hl2, map_add, map_sub, coeff_alongCv_low hpos hord' (X.constantCoeff_sg hh _), map_sum] at e2
+      rw [coeff_tyS_pow hl2, map_add (f := _), map_sub, coeff_alongCv_low hpos hord' (X.constantCoeff_sg hh _), map_sum] at e2
     have e3 : ∑ i, MvPowerSeries.coeff (Finsupp.single i 1) (X.sg (X.u (1 - g) q)) * PowerSeries.coeff (V.l ^ s) (γ i) =
         ∑ c : I g, X.sg1 (X.u g c) (X.u (1 - g) q) * x s (Sum.inl c) := by
       simp only [hlead, sg1, Finset.mul_sum, Finset.sum_mul]

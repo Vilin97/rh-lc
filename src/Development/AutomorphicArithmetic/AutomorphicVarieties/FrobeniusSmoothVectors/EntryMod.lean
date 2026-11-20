@@ -60,8 +60,8 @@ theorem trace_cont [TopologicalSpace G] [ContinuousMul G] (I : Ideal C) (t : G �
   | add x y _ _ hx hy =>
     obtain ⟨c, h1, h2⟩ := hx
     obtain ⟨d, h3, h4⟩ := hy
-    refine ⟨fun g => c g + d g, fun N => ?_, fun g => by rw [map_add, h2, h4, add_mul, trace_add]⟩
-    simp only [map_add]
+    refine ⟨fun g => c g + d g, fun N => ?_, fun g => by rw [map_add (f := _), h2, h4, add_mul, trace_add]⟩
+    simp only [map_add (f := _)]
     exact (h1 N).add (h3 N)
   | smul a x _ hx =>
     obtain ⟨c, h1, h2⟩ := hx

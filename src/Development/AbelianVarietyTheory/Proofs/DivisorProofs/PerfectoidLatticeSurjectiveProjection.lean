@@ -88,7 +88,7 @@ theorem exists_smul_dual {B Y : Type} [CommRing B] [AddCommGroup Y] [Module B Y]
   choose g hg using hf
   refine ⟨{ toFun := g, map_add' := fun x y => ha ?_, map_smul' := fun r x => ha ?_ }, hg⟩
   · change a * g (x + y) = a * (g x + g y)
-    rw [hg, mul_add, hg, hg, map_add]
+    rw [hg, mul_add, hg, hg, map_add (f := _)]
   · change a * g (r • x) = a * (r * g x)
     rw [hg, map_smul, ← hg, smul_eq_mul]
     ring
@@ -100,12 +100,12 @@ theorem exists_smul_dual₂ {B X Y : Type} [CommRing B] [AddCommGroup X] [Module
   refine ⟨LinearMap.mk₂ B g (fun x₁ x₂ y => ha ?_) (fun r x y => ha ?_) (fun x y₁ y₂ => ha ?_)
     (fun r x y => ha ?_), hg⟩
   · change a * g (x₁ + x₂) y = a * (g x₁ y + g x₂ y)
-    rw [hg, mul_add, hg, hg, map_add, LinearMap.add_apply]
+    rw [hg, mul_add, hg, hg, map_add (f := _), LinearMap.add_apply]
   · change a * g (r • x) y = a * (r * g x y)
     rw [hg, map_smul, LinearMap.smul_apply, ← hg, smul_eq_mul]
     ring
   · change a * g x (y₁ + y₂) = a * (g x y₁ + g x y₂)
-    rw [hg, mul_add, hg, hg, map_add]
+    rw [hg, mul_add, hg, hg, map_add (f := _)]
   · change a * g x (r • y) = a * (r * g x y)
     rw [hg, map_smul, ← hg, smul_eq_mul]
     ring
@@ -312,7 +312,7 @@ theorem GlobalTheory.PerfdLat.OmegaProj.exists_projection (p : ℕ) [Fact p.Prim
         exact hπ.right_eq_zero_of_smul h1.symm
       let l1 : Module.Dual (Ainf p S.R) (D.Cov G.dual) :=
         { toFun := fun m' => phiInv p S.R (D.du S G.dual (D.φ S G.dual.dual m') m)
-          map_add' := fun a b => by simp only [map_add, LinearMap.add_apply]
+          map_add' := fun a b => by simp only [map_add (f := _), LinearMap.add_apply]
           map_smul' := fun a b => by
             simp only [map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, map_mul, Dieudonne.phiInv_frobenius,
               RingHom.id_apply] }

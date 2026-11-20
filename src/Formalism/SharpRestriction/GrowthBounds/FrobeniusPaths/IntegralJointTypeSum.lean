@@ -84,7 +84,7 @@ lemma inter_iso (E : GLOps n K V) (E' : GLOps n K W) (T : V →ₗ[K] W) (hT : �
       · intro a b hab
         rw [← hT, hv.2.2 a b hab, map_zero]
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ h1 h2 => rw [map_add]; exact Submodule.add_mem _ h1 h2
+  | add x y _ _ h1 h2 => rw [map_add (f := _)]; exact Submodule.add_mem _ h1 h2
   | smul c x _ h => rw [map_smul]; exact Submodule.smul_mem _ _ h
 
 end Inter
@@ -335,16 +335,16 @@ lemma Tev_inter (hd1 : ∀ a, dcd (e a) = some a) (hd2 : ∀ c a, dcd c = some a
     Tev dcd y (glOpsE F LL S e a b f) = glOpsE F LL S (id : Fin m → Fin m) a b (Tev dcd y f) := by
   induction f using MvPolynomial.induction_on with
   | C c => rw [glOpsE_C, map_zero, Tev_C, glOpsE_C]
-  | add p q hp hq => rw [map_add, map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p v ih =>
-    rw [glOpsE_mul, map_add, map_mul, map_mul, map_mul, glOpsE_mul, ih, Tev_gen LL e dcd hd1 hd2]
+    rw [glOpsE_mul, map_add (f := _), map_mul, map_mul, map_mul, glOpsE_mul, ih, Tev_gen LL e dcd hd1 hd2]
 
 lemma eval_Tev (hd2 : ∀ c a, dcd c = some a → c = e a) (z : Fin N × Fin k → F)
     (f : MvPolynomial (Fin N × Fin k) F) :
     eval (fun v' : Fin N × Fin m => z (v'.1, e v'.2)) (Tev dcd z f) = eval z f := by
   induction f using MvPolynomial.induction_on with
   | C c => rw [Tev_C, eval_C, eval_C]
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p v ih =>
     rw [map_mul, map_mul, map_mul, ih, Tev_X, eval_X]
     congr 1

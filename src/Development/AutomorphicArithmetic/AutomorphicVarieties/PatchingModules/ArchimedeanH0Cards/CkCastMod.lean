@@ -63,7 +63,7 @@ private theorem ck_castMod (l : ℕ) [Fact l.Prime] (x : ℤ_[l]) :
     ext y
     obtain ⟨c, hc⟩ := Ideal.mem_span_singleton'.1 (PadicInt.appr_spec 1 y)
     rw [sub_add_cancel y (PadicInt.appr y 1 : ℤ_[l]) |>.symm, ← hc]
-    simp only [map_add, map_mul, map_pow, map_natCast]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast]
     rw [ZMod.natCast_self]; simp
   exact RingHom.congr_fun h x
 

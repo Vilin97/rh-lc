@@ -37,7 +37,7 @@ theorem UpperTheory.irreducible_hermitian_form_unique :
   let S : V → V → ℂ := fun y w => ∫ g, B (ρ g a) y * star (B (ρ g c) w) ∂μ
   have hS1 : ∀ w w' y, S y (w + w') = S y w + S y w' := by
     intro w w' y
-    simp only [S, map_add, star_add, mul_add]
+    simp only [S, map_add (f := _), star_add, mul_add]
     exact integral_add (hint _ _ _ _) (hint _ _ _ _)
   have hS2 : ∀ (r : ℂ) w y, S y (r • w) = r * S y w := by
     intro r w y
@@ -49,7 +49,7 @@ theorem UpperTheory.irreducible_hermitian_form_unique :
     exact integral_const_mul _ _
   have hS3 : ∀ w y y', S (y + y') w = S y w + S y' w := by
     intro w y y'
-    simp only [S, map_add, add_mul]
+    simp only [S, map_add (f := _), add_mul]
     exact integral_add (hint _ _ _ _) (hint _ _ _ _)
   have hS4 : ∀ (r : ℂ) w y, S (r • y) w = star r * S y w := by
     intro r w y

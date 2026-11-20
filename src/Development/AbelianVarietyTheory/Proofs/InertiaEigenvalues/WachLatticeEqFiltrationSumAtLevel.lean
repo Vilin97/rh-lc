@@ -95,7 +95,7 @@ theorem Rep.add (anti : Antitone Fil) {a : ℕ} {f f' : ℤ → M} {y y' : R}
   have h1 := anti (show (N : ℤ) - max c c' ≤ (N : ℤ) - c by omega) (hc N)
   have h2 := anti (show (N : ℤ) - max c c' ≤ (N : ℤ) - c' by omega) (hc' N)
   convert add_mem h1 h2 using 1
-  simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
   ring
 
 theorem Rep.sum (anti : Antitone Fil) {a : ℕ} {J : Type} (S : Finset J) {f : J → ℤ → M} {y : J → R}
@@ -336,14 +336,14 @@ theorem crd_smul (lam : T.V →ₗ[LL] LL) (c : LL) (z : T.V ⊗[Qp] BdR) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul x b => rw [TensorProduct.smul_tmul', crd_tmul, crd_tmul, map_smul, smul_eq_mul, map_mul, mul_assoc]
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, mul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, mul_add]
 
 theorem crd_mulVR (lam : T.V →ₗ[LL] LL) (c : BdR) (z : T.V ⊗[Qp] BdR) :
     crd T ι lam (mulVR T c z) = c * crd T ι lam z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul x b => rw [mulVR_tmul, crd_tmul, crd_tmul]; ring
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy, mul_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy, mul_add]
 
 theorem crd_compKer (lam : T.V →ₗ[LL] LL) {z : T.V ⊗[Qp] BdR} (hz : z ∈ compKer T ι) : crd T ι lam z = 0 := by
   induction hz using Submodule.span_induction with
@@ -351,7 +351,7 @@ theorem crd_compKer (lam : T.V →ₗ[LL] LL) {z : T.V ⊗[Qp] BdR} (hz : z ∈ 
     obtain ⟨c, y, rfl⟩ := hz
     rw [map_sub, crd_smul, crd_mulVR, sub_self]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
   | smul c x _ hx => rw [crd_smul, hx, mul_zero]
 
 theorem crd_filV (hι : ∀ c, ι c ∈ PD.Fil 0) (lam : T.V →ₗ[LL] LL) (a : ℤ) {z : T.V ⊗[Qp] BdR}
@@ -362,12 +362,12 @@ theorem crd_filV (hι : ∀ c, ι c ∈ PD.Fil 0) (lam : T.V →ₗ[LL] LL) (a :
   | tmul x b =>
     simp only [AlgebraTensorModule.map_tmul, crd_tmul]
     simpa using PD.Fil_mul _ _ _ _ (hι _) b.2
-  | add x y hx hy => rw [map_add, map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
 
 theorem crd_sup (hι : ∀ c, ι c ∈ PD.Fil 0) (lam : T.V →ₗ[LL] LL) (a : ℤ) {z : T.V ⊗[Qp] BdR}
     (hz : z ∈ compKer T ι ⊔ FilV PD (LL := LL) (V := T.V) a) : crd T ι lam z ∈ PD.Fil a := by
   obtain ⟨x, hx, y, hy, rfl⟩ := Submodule.mem_sup.1 hz
-  rw [map_add, crd_compKer T ι lam hx, zero_add]
+  rw [map_add (f := _), crd_compKer T ι lam hx, zero_add]
   exact crd_filV PD T ι hι lam a hy
 
 variable {n : ℕ} (bV : Module.Basis (Fin n) LL T.V)
@@ -400,7 +400,7 @@ theorem sub_sum_mem_compKer (z : T.V ⊗[Qp] BdR) :
     rfl
   | add x y hx hy =>
     convert add_mem hx hy using 1
-    simp only [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib]
     abel
 
 theorem mem_sup_iff (hι : ∀ c, ι c ∈ PD.Fil 0) (a : ℤ) (z : T.V ⊗[Qp] BdR) :

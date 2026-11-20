@@ -161,7 +161,7 @@ theorem birational : (projSys k M).Birational := by
       refine Subfield.subset_closure (Or.inl ⟨a, ?_⟩)
       rw [algHom_C, ← resG_algebraMap le_top, ← algebraΓ_eq]
       exact ((valR_res _ le_top hx' _).trans ((projSys k M).valR_algebraMap _ a)).symm
-    | add p q hp hq => rw [map_add, valR_add _ _ hx']; exact add_mem hp hq
+    | add p q hp hq => rw [map_add (f := _), valR_add _ _ hx']; exact add_mem hp hq
     | mul_X p j hp =>
       rw [map_mul, valR_mul _ _ hx', aeval_X]
       refine mul_mem hp (Subfield.subset_closure (Or.inr ⟨j, (0 : Fin (M + 1)), ?_⟩))

@@ -38,7 +38,7 @@ theorem wtNonneg_rename (v : AddValuation C (WithTop ℝ)) {σ τ : Type} [Finit
 theorem wtNonneg_add (v : AddValuation C (WithTop ℝ)) {τ : Type} (ρ : τ → ℝ) {F G : MvPowerSeries τ C}
     (hF : WtNonneg v ρ F) (hG : WtNonneg v ρ G) : WtNonneg v ρ (F + G) := by
   intro α
-  rw [map_add]
+  rw [map_add (f := _)]
   exact v.map_le_add (hF α) (hG α)
 
 theorem wtNonneg_sum (v : AddValuation C (WithTop ℝ)) {τ ι : Type} (ρ : τ → ℝ) (s : Finset ι)

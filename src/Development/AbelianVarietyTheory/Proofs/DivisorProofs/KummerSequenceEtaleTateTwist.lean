@@ -110,7 +110,7 @@ theorem kapA_nat {A B : CommRingCat.{0}} (f : A ⟶ B) (x : (Prim q A →₀ ULi
     rw [Submodule.mapQ_apply, kapA_mk, kapA_mk]
     induction x using Finsupp.induction_linear with
     | zero => simp
-    | add a b ha hb => rw [map_add, map_add, map_add, ha, hb, map_add]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb, map_add (f := _)]
     | single ζ c =>
       rw [Finsupp.lmapDomain_apply, Finsupp.mapDomain_single, gHom_single, gHom_single, coefHom_apply,
         coefHom_apply, pu_map, map_nsmul]

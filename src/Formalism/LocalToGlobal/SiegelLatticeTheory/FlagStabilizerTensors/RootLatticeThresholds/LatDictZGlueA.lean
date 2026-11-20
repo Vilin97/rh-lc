@@ -311,7 +311,7 @@ theorem glue (T : Set (HeightOneSpectrum (𝓞 I.F))) (w : Fin I.n → I.E)
     { carrier := {a | algebraMap (𝓞 I.F) (𝓞 I.E) a • w ∈ I.L}
       add_mem' := fun {a b} ha hb => by
         show algebraMap (𝓞 I.F) (𝓞 I.E) (a + b) • w ∈ I.L
-        rw [map_add, add_smul]; exact I.L.add_mem ha hb
+        rw [map_add (f := _), add_smul]; exact I.L.add_mem ha hb
       zero_mem' := by
         show algebraMap (𝓞 I.F) (𝓞 I.E) 0 • w ∈ I.L
         rw [map_zero, zero_smul]; exact I.L.zero_mem
@@ -349,7 +349,7 @@ theorem glue (T : Set (HeightOneSpectrum (𝓞 I.F))) (w : Fin I.n → I.E)
           inv_mul_cancel₀ (ne0 (hav' v hvT hvm))]
       · rw [if_pos ⟨hvT, hvm⟩, if_neg (fun h => hvm h.2), zero_mul, add_zero, inv_mul_cancel₀ (ne0 hvm)]
     · rw [eT_of_not hvT, if_neg (fun h => hvT h.1), if_neg (fun h => hvT h.1), zero_mul, zero_mul, add_zero]
-  rw [hid, map_add, map_mul, map_mul, add_smul, mul_smul, mul_smul, ← iv_OF, ← iv_OF]
+  rw [hid, map_add (f := _), map_mul, map_mul, add_smul, mul_smul, mul_smul, ← iv_OF, ← iv_OF]
   exact add_mem (DictLat.Lf_smul I (iA_mem I hu0) (DictLat.iv_mem I hmw))
     (DictLat.Lf_smul I (iA_mem I hu1) (DictLat.iv_mem I haw))
 

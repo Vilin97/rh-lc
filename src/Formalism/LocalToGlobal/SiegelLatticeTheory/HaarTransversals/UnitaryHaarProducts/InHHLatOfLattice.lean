@@ -39,7 +39,7 @@ def crdO : (VS D).V →ₛₗ[sO X] (Fin X.B.I.n → X.B.I.E) where
   map_add' y z := by
     funext i
     show X.ιE.symm (X.bas.repr (y + z) i) = X.ιE.symm (X.bas.repr y i) + X.ιE.symm (X.bas.repr z i)
-    rw [map_add, Finsupp.add_apply, map_add]
+    rw [map_add (f := _), Finsupp.add_apply, map_add (f := _)]
   map_smul' a y := by
     funext i
     show X.ιE.symm (X.bas.repr (a • y) i) = (sO X a) • X.ιE.symm (X.bas.repr y i)
@@ -52,10 +52,10 @@ def gvO : (Fin X.B.I.n → X.B.I.E) →ₛₗ[sO' X] (VS D).V where
   map_add' v w := by
     show X.bas.equivFun.symm (fun i => X.ιE ((v + w) i)) =
       X.bas.equivFun.symm (fun i => X.ιE (v i)) + X.bas.equivFun.symm (fun i => X.ιE (w i))
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     funext i
-    simp [map_add]
+    simp [map_add (f := _)]
   map_smul' c v := by
     show X.bas.equivFun.symm (fun i => X.ιE ((c • v) i)) = (sO' X c) • X.bas.equivFun.symm (fun i => X.ιE (v i))
     have hc : (sO' X c) • X.bas.equivFun.symm (fun i => X.ιE (v i)) =
@@ -71,10 +71,10 @@ def gvE : (Fin X.B.I.n → X.B.I.E) →ₛₗ[sE X] (VS D).V where
   map_add' v w := by
     show X.bas.equivFun.symm (fun i => X.ιE ((v + w) i)) =
       X.bas.equivFun.symm (fun i => X.ιE (v i)) + X.bas.equivFun.symm (fun i => X.ιE (w i))
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     funext i
-    simp [map_add]
+    simp [map_add (f := _)]
   map_smul' c v := by
     show X.bas.equivFun.symm (fun i => X.ιE ((c • v) i)) = (sE X c) • X.bas.equivFun.symm (fun i => X.ιE (v i))
     rw [← map_smul]

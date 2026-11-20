@@ -35,7 +35,7 @@ theorem mk_mem_range (N : ℕ) (hN : 0 < N) (z : RInt F E) :
       refine ⟨embO F E (algebraMap (𝓞 F) (𝓞 E) x) + (N : RInt F E) * ⟨_, one_tmul_mem F E (a := a) ha⟩,
         ⟨algebraMap (𝓞 F) (𝓞 E) x, ?_⟩, ?_⟩
       · show redO F E N _ = Ideal.Quotient.mk _ _
-        rw [map_add, map_mul, hN0, zero_mul, add_zero]
+        rw [map_add (f := _), map_mul, hN0, zero_mul, add_zero]
         rfl
       · show ((algebraMap F E (x : F)) ⊗ₜ[F] (1 : FiniteAdeleRing (𝓞 F) F)) + (N : AfE F E) * ((1 : E) ⊗ₜ[F] a) = (1 : E) ⊗ₜ[F] y
         rw [e, TensorProduct.tmul_add, Algebra.algebraMap_eq_smul_one (A := FiniteAdeleRing (𝓞 F) F),

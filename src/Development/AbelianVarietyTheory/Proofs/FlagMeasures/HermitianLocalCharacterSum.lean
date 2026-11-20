@@ -311,7 +311,7 @@ theorem share_and_gauss_sum : ∀ {F : Type} [Field F] [ValuativeRel F] [Topolog
     obtain ⟨b, hb⟩ := not_forall.1 fun h' => h1 (hdual _ h')
     obtain ⟨hb, hb'⟩ := Classical.not_imp.1 hb
     obtain ⟨s, hs⟩ := (L.cj_fix (z * L.cj b + L.cj (z * L.cj b))).1
-      (by rw [map_add, L.cj_cj, add_comm])
+      (by rw [map_add (f := _), L.cj_cj, add_comm])
     have hs' : s ∉ 𝒪[F] := fun h' => hb' ⟨⟨s, h'⟩, hs.symm⟩
     obtain ⟨y, hy⟩ := not_forall.1 fun h' => hs' ((hψ s).1 h')
     have hyb : algebraMap F E y * b ∈ L.O := L.O.mul_mem (hO y) hb

@@ -145,7 +145,7 @@ theorem factAt_of {D : Formalism.BasicNotions.D7} (h52 : Formalism.MainNotions.C
   have hW : (algebraMap O (KK O) (w ^ X.c)) ^ 2 = (X.p : KK O) ^ X.c := by
     rw [← map_pow, ← pow_mul, mul_comm, pow_mul, h2, map_pow, map_natCast]
   have hk := hκ μ hμ
-  rw [expFact_ioExp, hg, hmu, map_add, map_one, map_mul, map_mul, Nat.cast_mul, Nat.cast_prod]
+  rw [expFact_ioExp, hg, hmu, map_add (f := _), map_one, map_mul, map_mul, Nat.cast_mul, Nat.cast_prod]
   rw [hsplit] at heqK
   linear_combination (zSeg (KK O) X j * (X.p : KK O) ^ padicValNat X.p (Nblk C0 CE1 CE2 X j b) *
       (Rblk C0 CE1 CE2 X j b : KK O)) * heqK +

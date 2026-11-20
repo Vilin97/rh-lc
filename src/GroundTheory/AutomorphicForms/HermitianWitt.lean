@@ -244,7 +244,7 @@ theorem isometric_of_prod_isometric_prod [Algebra.IsSeparable F E] [FiniteDimens
 
 def orthogonal (h : HermitianForm F E V) (U : Submodule E V) : Submodule E V where
   carrier := {y | ∀ x ∈ U, h.toSesq x y = 0}
-  add_mem' {a b} ha hb x hx := by rw [map_add, ha x hx, hb x hx, add_zero]
+  add_mem' {a b} ha hb x hx := by rw [map_add (f := _), ha x hx, hb x hx, add_zero]
   zero_mem' x _ := map_zero _
   smul_mem' c y hy x hx := by rw [h.toSesq_smul_right, hy x hx, mul_zero]
 
@@ -286,7 +286,7 @@ theorem toSesq_prodEquivOfIsCompl (h : HermitianForm F E V) {W W' : Submodule E 
     h.toSesq (Submodule.prodEquivOfIsCompl W W' hW.1 p)
       (Submodule.prodEquivOfIsCompl W W' hW.1 q) =
       h.toSesq p.1 q.1 + h.toSesq p.2 q.2 := by
-  rw [Submodule.coe_prodEquivOfIsCompl', Submodule.coe_prodEquivOfIsCompl', map_add, map_add,
+  rw [Submodule.coe_prodEquivOfIsCompl', Submodule.coe_prodEquivOfIsCompl', map_add (f := _), map_add (f := _),
     LinearMap.add_apply, LinearMap.add_apply, hW.2 _ p.1.2 _ q.2.2,
     h.toSesq_eq_zero_comm.1 (hW.2 _ q.1.2 _ p.2.2)]
   ring

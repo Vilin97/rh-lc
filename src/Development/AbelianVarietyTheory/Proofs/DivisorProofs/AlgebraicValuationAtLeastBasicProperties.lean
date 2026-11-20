@@ -60,7 +60,7 @@ theorem sz_add {r : ℝ} {x y : ℂ} (hx : Sz l lam r x) (hy : Sz l lam r y) : S
   obtain ⟨hy, hy'⟩ := hy
   refine ⟨add_mem hx hy, ?_⟩
   have : (⟨x + y, add_mem hx hy⟩ : algebraicClosure ℚ ℂ) = ⟨x, hx⟩ + ⟨y, hy⟩ := rfl
-  rw [this, map_add]
+  rw [this, map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx' hy')
 
 theorem sz_mul {r₁ r₂ : ℝ} {x y : ℂ} (hx : Sz l lam r₁ x) (hy : Sz l lam r₂ y) :

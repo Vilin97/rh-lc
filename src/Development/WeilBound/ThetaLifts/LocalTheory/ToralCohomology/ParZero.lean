@@ -186,7 +186,7 @@ theorem par_line {m : Emb R S R₁ S₁} {act : (ι → Mat R S) →ₗ[ℂ] Mod
   have hc : ∀ w, c w = Λ w (.inl m.i) + Λ w (.inr m.j) := fun w => by
     have e := congrArg D (hM.centre w x)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [m.sum, m.sum, map_add, ← LinearMap.add_apply, ← map_add act, hD.cpt, map_sum, map_smul] at e
+      rw [m.sum, m.sum, map_add (f := _), ← LinearMap.add_apply, ← map_add act, hD.cpt, map_sum, map_smul] at e
     simp only [hD.levi, hM₁.centre, hΛ] at e
     rw [← add_smul] at e
     exact add_right_cancel (smul_left_injective ℂ hx e)

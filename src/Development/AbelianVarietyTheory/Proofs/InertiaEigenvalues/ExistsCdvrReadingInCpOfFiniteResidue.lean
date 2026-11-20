@@ -34,7 +34,7 @@ theorem exists_factor_algCl {p : ℕ} [Fact p.Prime] {F : Type} [Field F] [Numbe
   · apply hinj; rw [hf]; simp
   · intro x y; apply hinj; rw [map_mul, hf, hf, hf]; exact map_mul φ x y
   · apply hinj; rw [hf]; simp
-  · intro x y; apply hinj; rw [map_add, hf, hf, hf]; exact map_add φ x y
+  · intro x y; apply hinj; rw [map_add (f := _), hf, hf, hf]; exact map_add φ x y
 
 section Val
 

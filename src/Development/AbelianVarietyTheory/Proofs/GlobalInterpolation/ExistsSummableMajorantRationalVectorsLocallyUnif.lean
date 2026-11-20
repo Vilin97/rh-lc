@@ -11,7 +11,7 @@ variable {F : Type} [Field F] [NumberField F] {N : ℕ}
 
 theorem re_add (x y : Ainf F) (w : InfinitePlace F) : re (x + y) w = re x w + re y w := by
   show (InfinitePlace.Completion.extensionEmbedding w (x w + y w)).re = _
-  rw [map_add, Complex.add_re]; rfl
+  rw [map_add (f := _), Complex.add_re]; rfl
 
 theorem abs_re_algebraMap (hF : IsTotallyReal F) (x : F) (w : InfinitePlace F) :
     |re (algebraMap F (Ainf F) x) w| = w x := by
@@ -56,7 +56,7 @@ theorem continuous_fin : Continuous (fin : (Fin N → AF F) → Fin N → Af F) 
   exact continuous_snd.comp (continuous_apply l)
 
 theorem fin_add (u y : Fin N → AF F) : fin (u + y) = fin u + fin y := by
-  funext l; simp [fin, map_add]
+  funext l; simp [fin, map_add (f := _)]
 
 theorem inf_rat (ξ : Fin N → F) (l : Fin N) : inf (rat ξ) l = algebraMap F (Ainf F) (ξ l) := by
   simp [inf, rat]

@@ -66,7 +66,7 @@ theorem exists_form_of_mem_chart (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hs
       have h2 := isMultiHomog_mul_const hG (isMultiHomog_pow_const hMh a)
       rw [add_comm b a] at h2
       exact IsWeightedHomogeneous.add h1 h2
-    · simp only [map_add, map_mul, map_pow, hFc, hGc, hMc]
+    · simp only [map_add (f := _), map_mul, map_pow, hFc, hGc, hMc]
       ring
   | mul u v _ _ hu hv =>
     obtain ⟨a, F, hF, hFc⟩ := hu
@@ -79,7 +79,7 @@ theorem pointConeMap_map_int (A : Type) [CommRing A] [Algebra A Ω] (y : (Σ k, 
     pointConeMap A y (MvPolynomial.map (Int.castRingHom A) G) = pointConeMap ℤ y G := by
   induction G using MvPolynomial.induction_on with
   | C z => simp [pointConeMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp only [map_mul, hp, MvPolynomial.map_X]; simp [pointConeMap]
 
 end ChartForms

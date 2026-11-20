@@ -152,9 +152,9 @@ lemma exists_dual {n : ℕ} (f : Fin n → (κ → k) × (κ → k)) (hf : Linea
   obtain ⟨c, hc⟩ : ∃ c : Fin n → Fin n → k,
       c = fun i a => if i < a then form (e0 i) (e0 a) else 0 := ⟨_, rfl⟩
   have hA : ∀ i w, form (e0 i + ∑ a, c i a • f a) w = form (e0 i) w + ∑ a, c i a * form (f a) w :=
-    fun i w => by simp [map_add, map_sum, map_smul, LinearMap.sum_apply]
+    fun i w => by simp [map_add (f := _), map_sum, map_smul, LinearMap.sum_apply]
   have hB : ∀ j w, form w (e0 j + ∑ b, c j b • f b) = form w (e0 j) + ∑ b, c j b * form w (f b) :=
-    fun j w => by simp [map_add, map_sum, map_smul]
+    fun j w => by simp [map_add (f := _), map_sum, map_smul]
   refine ⟨fun i => e0 i + ∑ a, c i a • f a, ?_, ?_⟩
   · intro i j
     have h1 : ∀ a, form (f a) (e0 j) = - if j = a then 1 else 0 := fun a => by rw [form_swap, h0]
@@ -212,11 +212,11 @@ theorem exists_frame : ∀ {k : Type} [Field k] {κ : Type} [Fintype κ] (U : Su
       rw [LinearMap.coprod_apply] at h0
       have hY : ∀ j, Y j = 0 := fun j => by
         have := congrArg (fun w => form w (Fintype.linearCombination k f (Pi.single j 1))) h0
-        simpa only [map_add, LinearMap.add_apply, hTM, hM, map_zero, LinearMap.zero_apply,
+        simpa only [map_add (f := _), LinearMap.add_apply, hTM, hM, map_zero, LinearMap.zero_apply,
           add_zero, dotProduct_single, mul_one] using this
       have hz : ∀ j, z j = 0 := fun j => by
         have := congrArg (fun w => form (Fintype.linearCombination k e (Pi.single j 1)) w) h0
-        simpa only [map_add, hTM, hT, map_zero, zero_add, single_dotProduct, one_mul] using this
+        simpa only [map_add (f := _), hTM, hT, map_zero, zero_add, single_dotProduct, one_mul] using this
       ext j <;> simp [hY, hz]
     have hsurj := (LinearMap.injective_iff_surjective_of_finrank_eq_finrank
       (by simp [Module.finrank_prod, Module.finrank_fintype_fun_eq_card])).1 hinj

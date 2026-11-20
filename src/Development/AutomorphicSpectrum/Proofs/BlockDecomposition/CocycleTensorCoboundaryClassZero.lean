@@ -23,7 +23,7 @@ theorem piLeft_apply_eq [Fintype J] [DecidableEq J] (u : (∀ i, M i) ⊗[R] N) 
   induction u using TensorProduct.induction_on with
   | zero => simp
   | tmul m n => simp
-  | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb]
 
 theorem pi_rTensor_eq_zero (w : (∀ i, M i) ⊗[R] N)
     (h : ∀ i, (LinearMap.proj i : (∀ i, M i) →ₗ[R] M i).rTensor N w = 0) : w = 0 := by

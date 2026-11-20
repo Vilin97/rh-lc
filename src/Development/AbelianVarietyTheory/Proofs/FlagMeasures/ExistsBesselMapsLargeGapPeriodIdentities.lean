@@ -54,7 +54,7 @@ theorem side_bessel (hH : GlobalTheory.GapIn.Hyp) (L : LocBessel k r) (h : ℝ) 
   refine ⟨fun v => l₁ ((GlobalTheory.AmpTK.rep L).σ t⁻¹ v), fun x hx v hv => hbe l₁ hl₁ x hx v hv, ?_, ?_, ?_⟩
   · intro v hv w hw
     show l₁ ((GlobalTheory.AmpTK.rep L).σ t⁻¹ (v + w)) = _
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hl₁.1.1 _ (GlobalTheory.BesselMove.sig_sm hR hti hv) _ (GlobalTheory.BesselMove.sig_sm hR hti hw)
   · intro a v hv
     show l₁ ((GlobalTheory.AmpTK.rep L).σ t⁻¹ (a • v)) = _

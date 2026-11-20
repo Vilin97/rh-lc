@@ -448,7 +448,7 @@ theorem baseIdeal_span {ι : Type} (v : ι → B.Sec) :
       obtain ⟨i, rfl⟩ := hx
       exact Ideal.subset_span ⟨i, (germ_ofSec j y (memTop y) hj (v i)).symm⟩
     | zero => rw [map_zero]; exact Ideal.zero_mem _
-    | add a b _ _ ha hb => rw [map_add]; exact Ideal.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact Ideal.add_mem _ ha hb
     | smul c a _ ha => rw [germ_smul]; exact Ideal.mul_mem_left _ _ ha
   · rw [Ideal.span_le]
     rintro _ ⟨i, rfl⟩
@@ -584,7 +584,7 @@ theorem iSup_nonzeroLocus {ι : Type} {v : ι → W} (hv : Submodule.span k (Set
       obtain ⟨i, rfl⟩ := hx
       exact Ideal.subset_span ⟨i, rfl⟩
     | zero => rw [map_zero, map_zero]; exact J.zero_mem
-    | add a b _ _ ha hb => rw [map_add, map_add]; exact J.add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _)]; exact J.add_mem ha hb
     | smul c a _ ha => rw [map_smul, germ_smul]; exact J.mul_mem_left _ ha
   have hT : ger z hj.2 (Δ.t.f j.2) ∈
       Ideal.span (Set.range fun s : W => germ j.1 z (memTop z) hj.1 (H0.pull r le_top s.1)) := by

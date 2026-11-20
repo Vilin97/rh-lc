@@ -53,6 +53,6 @@ theorem hom_ext_of_twoπ_of_basicOpen : ∀ (O : Type) [CommRing O] (T : Scheme.
   obtain ⟨a, b⟩ := x
   have hx : ((a, b) : O × O) = algebraMap O (O × O) a * (1, 0) + algebraMap O (O × O) b * (1 - (1, 0)) := by
     ext <;> simp
-  rw [hx, map_add, map_mul, map_mul, map_sub, map_one, map_add, map_mul, map_mul, map_sub, map_one, h1 a, h1 b, h2]
+  rw [hx, map_add (f := _), map_mul, map_mul, map_sub, map_one, map_add (f := _), map_mul, map_mul, map_sub, map_one, h1 a, h1 b, h2]
 
 end GlobalTheory.AlgConn

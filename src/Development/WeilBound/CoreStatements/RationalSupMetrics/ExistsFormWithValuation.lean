@@ -19,7 +19,7 @@ theorem MultiProjectiveCoordinates.exists_form_with_valuation : ∀ (K : Type) [
     intro f
     induction f using MvPolynomial.induction_on with
     | C c => simp [mConeMap]
-    | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
     | mul_X p n hp => rw [map_mul, map_mul, map_mul, hp]; simp [mConeMap]
   have hy : ∀ k, y ⟨k, i k⟩ ≠ 0 := by
     intro k hk

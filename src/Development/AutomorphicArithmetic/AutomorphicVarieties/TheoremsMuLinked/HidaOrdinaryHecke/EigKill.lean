@@ -42,5 +42,5 @@ theorem UpperTheory.V.Th.AnnihilatorQuotientFinite.eigKill :
   | succ k =>
     have hyk : (φ ^ (k + 1)) y = 0 := by
       rw [pow_succ, Module.End.mul_apply, hy', map_zero]
-    rw [map_add, hyk, zero_add] at hk
-    rw [map_add, hy', hpow _ z hz hk, map_zero, add_zero]
+    rw [map_add (f := _), hyk, zero_add] at hk
+    rw [map_add (f := _), hy', hpow _ z hz hk, map_zero, add_zero]

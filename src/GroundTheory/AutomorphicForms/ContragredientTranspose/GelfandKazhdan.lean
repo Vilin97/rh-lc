@@ -766,7 +766,7 @@ theorem distribution_transpose_invariant
       let f' : locallyConstantCompactSupport (GL (Fin n) F) ℂ ℂ := ⟨f, hf.1⟩
       refine ⟨f' + compHomeoL transposeHomeo f', ?_, ?_⟩
       · show E _ = 0
-        rw [map_add, hE, LinearMap.sub_apply, LinearMap.sub_apply, LinearMap.comp_apply,
+        rw [map_add (f := _), hE, LinearMap.sub_apply, LinearMap.sub_apply, LinearMap.comp_apply,
           LinearMap.comp_apply, hττ]
         abel
       · rfl

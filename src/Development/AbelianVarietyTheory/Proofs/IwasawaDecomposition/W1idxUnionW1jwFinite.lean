@@ -36,7 +36,7 @@ theorem dual_fg {K : Type} [Field K] [NumberField K] [StarRing K] {d : ℕ} (H :
   let φ : Formalism.HermitianLatticesTheory.dual (Formalism.DivisionValues.hform H) A →ₗ[𝓞 K] (S → 𝓞 K) :=
     { toFun := g
       map_add' := fun x y => funext fun a => inj (by
-        rw [hg, Submodule.coe_add, map_add, Pi.add_apply, map_add, hg, hg])
+        rw [hg, Submodule.coe_add, map_add (f := _), Pi.add_apply, map_add (f := _), hg, hg])
       map_smul' := fun s x => funext fun a => inj (by
         rw [hg, Submodule.coe_smul, ← algebraMap_smul K s (x : Fin d → K), map_smul]
         simp only [RingHom.id_apply, Pi.smul_apply, smul_eq_mul, map_mul, hg]) }
@@ -52,7 +52,7 @@ theorem dual_fg {K : Type} [Field K] [NumberField K] [StarRing K] {d : ℕ} (H :
       induction ha using Submodule.span_induction with
       | mem a ha => exact h0 a ha
       | zero => simp
-      | add a b _ _ ha hb => rw [map_add, LinearMap.add_apply, ha, hb, add_zero]
+      | add a b _ _ ha hb => rw [map_add (f := _), LinearMap.add_apply, ha, hb, add_zero]
       | smul s a _ ha => rw [← algebraMap_smul K s a, LinearMap.map_smulₛₗ, LinearMap.smul_apply, ha, smul_zero]
     have hV : ∀ a, Formalism.DivisionValues.hform H a x = 0 := by
       intro a
@@ -60,7 +60,7 @@ theorem dual_fg {K : Type} [Field K] [NumberField K] [StarRing K] {d : ℕ} (H :
       induction ha using Submodule.span_induction with
       | mem a ha => exact hL a ha
       | zero => simp
-      | add a b _ _ ha hb => rw [map_add, LinearMap.add_apply, ha, hb, add_zero]
+      | add a b _ _ ha hb => rw [map_add (f := _), LinearMap.add_apply, ha, hb, add_zero]
       | smul s a _ ha => rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, ha, smul_zero]
     have hM : Matrix.mulVec H (x : Fin d → K) = 0 := by
       funext i

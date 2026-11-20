@@ -32,7 +32,7 @@ theorem exists_fixed_of_mem_iSup {G V U ι : Type} [Group G] [AddCommGroup V] [M
         refine ⟨v, fun h => hv (by rw [h, map_zero]; exact zero_mem _), fun k hk => ?_⟩
         have h4 : σ k v - v ∈ W.comap (f i) := by
           have h5 := hK k hk
-          rw [← e, map_add] at h5
+          rw [← e, map_add (f := _)] at h5
           have h6 : f i (σ k v - v) = x - ρ k x := by
             rw [map_sub, hf]; linear_combination (norm := module) h5
           rw [Submodule.mem_comap, h6]
@@ -41,7 +41,7 @@ theorem exists_fixed_of_mem_iSup {G V U ι : Type} [Group G] [AddCommGroup V] [M
         exact sub_eq_zero.1 h4
       · refine ih _ (fun g y hy => ?_) h3 h2
         obtain ⟨x, hx, _, ⟨v, rfl⟩, rfl⟩ := Submodule.mem_sup.1 hy
-        rw [map_add, ← hf]
+        rw [map_add (f := _), ← hf]
         exact Submodule.add_mem_sup (hW g x hx) ⟨_, rfl⟩
   exact key s ⊥ (fun g x hx => by simp_all) (by simpa using h0) (by simpa using hs)
 

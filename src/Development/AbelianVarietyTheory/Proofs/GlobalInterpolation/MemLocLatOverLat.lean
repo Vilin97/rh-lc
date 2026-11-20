@@ -190,8 +190,8 @@ theorem map_smul_vec (p : E ⊗[F] v.adicCompletion F →+* v.adicCompletion F) 
 
 theorem e₁_add_e₂ (hs : IsSplitting σ v s) (x : Fin k → E ⊗[F] v.adicCompletion F) :
     e₁ hs • x + e₂ hs • x = x :=
-  vec_ext s (fun i => by rw [Pi.add_apply, map_add, map_smul_vec, map_smul_vec, prP_e₁, prP_e₂]; ring)
-    (fun i => by rw [Pi.add_apply, map_add, map_smul_vec, map_smul_vec, prPbar_e₁, prPbar_e₂]; ring)
+  vec_ext s (fun i => by rw [Pi.add_apply, map_add (f := _), map_smul_vec, map_smul_vec, prP_e₁, prP_e₂]; ring)
+    (fun i => by rw [Pi.add_apply, map_add (f := _), map_smul_vec, map_smul_vec, prPbar_e₁, prPbar_e₂]; ring)
 
 theorem e₂_e₁ (hs : IsSplitting σ v s) (x : Fin k → E ⊗[F] v.adicCompletion F) :
     e₂ hs • e₁ hs • x = 0 :=
@@ -326,7 +326,7 @@ theorem localAtT (L : ColLevel R F E sp gp C A clsLat) (N : Submodule (𝓞 E) (
         refine Eq.trans (congrArg ε ?_) (ε.map_add _ _)
         refine (hcong _ (⟨lift y, hlift y⟩ + ⟨lift z, hlift z⟩) fun i => ?_).trans ((L.fT v hv).map_add _ _)
         show prP s (lift (y + z) i) = prP s (lift y i + lift z i)
-        rw [map_add, congrFun (hlift' (y + z)) i, congrFun (hlift' y) i, congrFun (hlift' z) i]
+        rw [map_add (f := _), congrFun (hlift' (y + z)) i, congrFun (hlift' y) i, congrFun (hlift' z) i]
         rfl
       map_smul' := fun a y => by
         obtain ⟨d, hd, hda⟩ := sur_prP hs a a.2
@@ -417,7 +417,7 @@ theorem dual_loc (L : ColLevel R F E sp gp C A clsLat) (v : HeightOneSpectrum (�
     | tmul a b =>
       show (star (star a)) ⊗ₜ[F] b = _
       rw [star_star]
-    | add a b ha hb => rw [map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   · ext i j
     exact congrArg (inclE (F := F) (v.adicCompletion F)) (congrFun (congrFun sp.baseGram_isHermitian i) j)
 
@@ -700,7 +700,7 @@ theorem T_ne_g (D : D7) (u : D.what₂.Word) (i : Fin 2) : (D.mem u).A.T ≠ D.h
     rw [hm] at ha; push_cast at ha; linear_combination -ha
   have h2 : c π = 1 + (D.host.g i : 𝓞 D.host.E) * c (a * m) := by
     conv_lhs => rw [h1]
-    rw [map_add, map_one, map_mul c (D.host.g i : 𝓞 D.host.E), map_natCast]
+    rw [map_add (f := _), map_one, map_mul c (D.host.g i : 𝓞 D.host.E), map_natCast]
   have h3 : π * c π = (D.host.g i : 𝓞 D.host.E) := by
     apply RingOfIntegers.ext
     rw [← h]

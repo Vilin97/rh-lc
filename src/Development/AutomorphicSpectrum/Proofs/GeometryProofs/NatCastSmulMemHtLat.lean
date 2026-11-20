@@ -443,7 +443,7 @@ theorem core_le (hfull : FullTorsion G ξ N) (w : Module.Dual Ω E)
     rw [hval, hv3] at e3
     obtain ⟨r', e5⟩ := snd_of_mod N _ _ e3
     refine ⟨r', ?_⟩
-    rw [← hje, hwj, e5, map_add, map_mul, map_natCast]
+    rw [← hje, hwj, e5, map_add (f := _), map_mul, map_natCast]
 
 include hkx in
 theorem exists_data {w : Module.Dual Ω E}
@@ -478,7 +478,7 @@ theorem exists_data {w : Module.Dual Ω E}
     rw [M.smul, hjl, hjl, M₀.smul, ← Category.assoc, ← Category.assoc, ← spec_comp, ← spec_comp, dual_eps]))
   let w₀ : Module.Dual R L₀ :=
     { toFun := c
-      map_add' := fun a b => hg (by rw [map_add, hc, hc, hc, jadd, map_add])
+      map_add' := fun a b => hg (by rw [map_add (f := _), hc, hc, hc, jadd, map_add (f := _)])
       map_smul' := fun r a => hg (by
         rw [hc, jsmul, map_smul, smul_eq_mul, RingHom.id_apply, smul_eq_mul, map_mul, hc]) }
   exact ⟨L₀, _, _, M₀, j, w₀, hjl, fun l => (hc l).symm⟩
@@ -574,7 +574,7 @@ theorem core_ge [IsDomain R] [IsIntegrallyClosed R] [IsNoetherianRing R] (hN : N
     exact fun z _ => hl (by trivial)
   obtain ⟨r, hr⟩ := hb (j l) _ (M₀.tan l) (hjl l) hl
   have e5 : w₀ l = (BT.valAt (M₀.pt l).left W hl f).snd + N * r := hg (by
-    rw [← hwj, hr, map_add, map_mul, map_natCast])
+    rw [← hwj, hr, map_add (f := _), map_mul, map_natCast])
   have e6 : BT.valAt v' ⊤ le_top s = BT.valAt (v' ≫ i) W h2 f := by
     rw [valAt_comp, agree]
     exact (valAt_res v' (i ⁻¹ᵁ W) ⊤ le_top h2 le_top s).symm

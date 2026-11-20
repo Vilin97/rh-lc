@@ -123,7 +123,7 @@ def homOfFrames (hL : L.IsLB) {F : X.Modules} {σ : ∀ i, Γ(F, L.U i)}
     { toFun := frameFun hL hσ
       map_add' := fun s t => modSec_ext_of_cover (fun i => V ⊓ L.U i) (fun _ => inf_le_left)
         (le_iSup_inf hL.cover V) fun i => by
-          rw [map_add, modRes_frameFun hL hσ _ i _ inf_le_right,
+          rw [map_add (f := _), modRes_frameFun hL hσ _ i _ inf_le_right,
             modRes_frameFun hL hσ _ i _ inf_le_right, modRes_frameFun hL hσ _ i _ inf_le_right,
             coord_add, map_add, add_smul]
       map_smul' := fun a s => modSec_ext_of_cover (fun i => V ⊓ L.U i) (fun _ => inf_le_left)

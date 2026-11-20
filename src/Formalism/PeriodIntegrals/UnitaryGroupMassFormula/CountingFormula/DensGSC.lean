@@ -69,7 +69,7 @@ theorem tau_sig (e : E ≃ₐ[F] F × F) {n : ℕ} (β : Module.Basis (Fin n) E 
 
 theorem sig_add (e : E ≃ₐ[F] F × F) {n : ℕ} (β : Module.Basis (Fin n) E V) (x y : V) :
     sig e β (x + y) = sig e β x + sig e β y := by
-  refine Prod.ext ?_ ?_ <;> funext k <;> simp [sig, map_add]
+  refine Prod.ext ?_ ?_ <;> funext k <;> simp [sig, map_add (f := _)]
 
 theorem sig_smul (e : E ≃ₐ[F] F × F) {n : ℕ} (β : Module.Basis (Fin n) E V) (a : E) (x : V) :
     sig e β (a • x) = ((e a).1 • (sig e β x).1, (e a).2 • (sig e β x).2) := by
@@ -80,7 +80,7 @@ theorem tau_add (e : E ≃ₐ[F] F × F) {n : ℕ} (β : Module.Basis (Fin n) E 
   unfold tau
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl (fun k _ => ?_)
-  rw [← add_smul, ← map_add]
+  rw [← add_smul, ← map_add (f := _)]
   rfl
 
 theorem tau_smul (e : E ≃ₐ[F] F × F) {n : ℕ} (β : Module.Basis (Fin n) E V) (a : E)

@@ -24,7 +24,7 @@ theorem herm_sub_right (H : IsHerm c h) (x y z : V) : h x (y - z) = h x y - h x 
   rw [sub_eq_add_neg, H.add_right, herm_neg_right H, sub_eq_add_neg]
 
 theorem herm_add_left (H : IsHerm c h) (x y z : V) : h (x + y) z = h x z + h y z := by
-  rw [H.symm z (x + y), H.add_right, map_add, ← H.symm, ← H.symm]
+  rw [H.symm z (x + y), H.add_right, map_add (f := _), ← H.symm, ← H.symm]
 
 theorem herm_smul_left (H : IsHerm c h) (a : R) (x y : V) : h (a • x) y = c a * h x y := by
   rw [H.symm y (a • x), H.smul_right, map_mul, ← H.symm]
@@ -221,7 +221,7 @@ theorem exists_partner (hR : IsHermRing c 𝔬) (H : IsHerm c h) {L : Submodule 
       refine ⟨b + c a * h w l, 𝔬.add_mem hb (𝔬.mul_mem (hR.conj_mem _ ha) (hwl l hl)), ?_⟩
       simp only [herm_add_left H, H.add_right, herm_smul_left H, H.smul_right, hww, mul_zero,
         add_zero]
-      rw [e1, map_add, map_mul, hinv, ← H.symm]
+      rw [e1, map_add (f := _), map_mul, hinv, ← H.symm]
       ring
   have hwL : w ∈ L := hL.2.2 _ key le_sup_left
     (Submodule.mem_sup_right (Submodule.mem_span_singleton_self w))
@@ -326,7 +326,7 @@ theorem isMaxEven_resLat (hR : IsHermRing c 𝔬) (H : IsHerm c h) {x y : V} (hy
           refine ⟨?_, ?_, ?_⟩
           · rw [H.add_right]; exact 𝔬.add_mem hs.1 ht.1
           · rw [H.add_right]; exact 𝔬.add_mem hs.2.1 ht.2.1
-          · rw [map_add]; exact M.add_mem hs.2.2 ht.2.2
+          · rw [map_add (f := _)]; exact M.add_mem hs.2.2 ht.2.2
         zero_mem' := by
           refine ⟨?_, ?_, ?_⟩
           · rw [herm_zero_right H]; exact 𝔬.zero_mem
@@ -351,7 +351,7 @@ theorem isMaxEven_resLat (hR : IsHermRing c 𝔬) (H : IsHerm c h) {x y : V} (hy
       · obtain ⟨a, ha, e⟩ := hM.2 _ hz.2.2
         have e' : h (projV H x y z) (projV H x y z) = a + c a := e
         refine ⟨a + c (h y z) * h x z, 𝔬.add_mem ha (𝔬.mul_mem (hR.conj_mem _ hz.1) hz.2.1), ?_⟩
-        rw [hform, e', map_add, map_mul, hR.invol]
+        rw [hform, e', map_add (f := _), map_mul, hR.invol]
         ring
     have hLL' : L ≤ L' := fun z hz =>
       ⟨hL.2.1.1 y hyL z hz, hL.2.1.1 x hx z hz, hLM (hprojL z hz)⟩
@@ -534,7 +534,7 @@ theorem flag_step (hR : IsHermRing c 𝔬) [Module.Finite R V] (H : IsHerm c h) 
       exact Submodule.smul_mem _ _ (a'F _)
     | succ j =>
       have e := decomp H a b (x j.succ)
-      rw [e, map_add, map_add, map_smul, map_smul, hTa, hTb, hax, zero_smul, add_zero]
+      rw [e, map_add (f := _), map_add (f := _), map_smul, map_smul, hTa, hTb, hax, zero_smul, add_zero]
       obtain ⟨m, hm⟩ : ∃ m : perp H a b, (m : V) = projV H a b (x j.succ) :=
         ⟨⟨_, projV_mem H hyp _⟩, rfl⟩
       have hmF : (m : V) ∈ Submodule.span R (x '' {k | k ≤ j.succ}) := by
@@ -552,7 +552,7 @@ theorem flag_step (hR : IsHermRing c 𝔬) [Module.Finite R V] (H : IsHerm c h) 
       exact Submodule.smul_mem _ _ (aF _)
     | succ j =>
       have e := decomp H a b (x j.succ)
-      rw [e, map_add, map_add, map_smul, map_smul, hqa, hqb, hax, zero_smul, add_zero]
+      rw [e, map_add (f := _), map_add (f := _), map_smul, map_smul, hqa, hqb, hax, zero_smul, add_zero]
       have := hqz ⟨_, projV_mem H hyp (x j.succ)⟩
       refine Submodule.add_mem _ (Submodule.smul_mem _ _ (aF _)) ?_
       rw [this]

@@ -898,7 +898,7 @@ theorem Cube.d_termBaseChange [LinearOrder ι] (A : Cube.{v} ι R) (p : ℕ)
       Cube.termBaseChange S A (p + 1) ((Cube.d A p).baseChange S x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul c x =>
     funext t
     rw [LinearMap.baseChange_tmul, Cube.termBaseChange_tmul, Cube.d_apply, Cube.d_apply,
@@ -910,7 +910,7 @@ theorem Cube.aug_baseChange (A : Cube.{v} ι R) (x : S ⊗[R] A.obj ∅) :
     Cube.aug (Cube.baseChange S A) x = Cube.termBaseChange S A 1 ((Cube.aug A).baseChange S x) := by
   induction x using TensorProduct.induction_on with
   | zero => exact (map_zero _).trans (by simp only [map_zero])
-  | add x y hx hy => exact (map_add _ _ _).trans (by simp only [map_add, hx, hy])
+  | add x y hx hy => exact (map_add _ _ _).trans (by simp only [map_add (f := _), hx, hy])
   | tmul c x => rfl
 
 theorem Cube.finite_term {R : Type u} [Ring R] [Finite ι] (A : Cube.{v} ι R) (p : ℕ)

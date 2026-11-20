@@ -75,7 +75,7 @@ theorem omMap_incl_injective : ∀ {K : Type} [Field K] {n d : ℕ} (S : Finset 
       obtain ⟨v, rfl⟩ := hx
       rw [omMap_ιMulti, exteriorPowerMapOver_ιMulti]
     | zero => simp
-    | add x y _ _ hx hy => simp only [map_add, hx, hy]
+    | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy]
     | smul c x _ hx =>
       rw [omMap_smul, hx, map_smul]
       exact algebraMap_smul (Lr K n d) c _

@@ -51,7 +51,7 @@ theorem rename_weightedHomogeneousComponent [DecidableEq K] [DecidableEq K'] {R 
         fun e => hb (funext fun k => congrFun e (Sum.inl k))
       rw [IsWeightedHomogeneous.weightedHomogeneousComponent_ne b hm hb,
         IsWeightedHomogeneous.weightedHomogeneousComponent_ne _ hj hb', map_zero]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 theorem comap_isMultiProjPrime {R : Type} [CommRing R]
     {Q : Ideal (MvPolynomial (Σ k : K ⊕ K', Sum.elim ι ι' k) R)}

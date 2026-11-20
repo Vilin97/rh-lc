@@ -524,7 +524,7 @@ theorem globStep_holds (hK : X.LevelSubgroupCharacter) : GlobalCondition X u hK 
     intro v
     obtain ⟨s, hs, hws⟩ := Formalism.L2.SG.PoincareInHH.Cut.decomp X u v
     have e : v = (v - s) + s := by abel
-    rw [e, map_add, hWfix _ hws, hUfix s hs]
+    rw [e, map_add (f := _), hWfix _ hws, hUfix s hs]
   have h2 : (γ : X.B.I.GA).2 = 1 := by
     apply fmat_eq_one_of_fix X
     intro y

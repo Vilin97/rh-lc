@@ -35,7 +35,7 @@ theorem compFin_smul (v : HeightOneSpectrum (𝓞 F)) (a : AF F) (z : AE F E) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul b e => simp [compFin, TensorProduct.smul_tmul', Algebra.TensorProduct.map_tmul, map_mul]
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem compFin_inclR (v : HeightOneSpectrum (𝓞 F)) (e : E) :
     compFin F E v (inclR (F := F) (AF F) e) = inclR (F := F) (v.adicCompletion F) e := by
@@ -45,14 +45,14 @@ theorem compFin_cA (v : HeightOneSpectrum (𝓞 F)) (z : AE F E) : compFin F E v
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul b e => simp [compFin, cA, HeckeCharacterZeroLocus.SiegelWeilU.sigR, Algebra.TensorProduct.map_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem compFin_sigR (v : HeightOneSpectrum (𝓞 F)) (z : AF F ⊗[F] E) :
     compFin F E v (HeckeCharacterZeroLocus.SiegelWeilU.sigR (AF F) σ z) = sgv σ v (compFin F E v z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul b e => simp [compFin, HeckeCharacterZeroLocus.SiegelWeilU.sigR, Algebra.TensorProduct.map_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem evFin_finOne (v : HeightOneSpectrum (𝓞 F)) : evFin F v (finOne F) = 1 := by
   simp only [evFin, finOne, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sndA, LinearMap.inr_apply]
@@ -89,7 +89,7 @@ theorem compInf_cA (w : InfinitePlace F) (z : AE F E) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul b e => simp [compInf, cA, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR, Algebra.TensorProduct.map_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem piInf_cA (d : SD σ) (w : InfinitePlace F) (z : AE F E) :
     piInf (d.B.emb w) (cA σ z) = star (piInf (d.B.emb w) z) := by
@@ -100,7 +100,7 @@ theorem sigR_eq_cA' (z : AF F ⊗[F] E) : HeckeCharacterZeroLocus.SiegelWeilU.si
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [HeckeCharacterZeroLocus.SiegelWeilU.sigR, cA, Algebra.TensorProduct.map_tmul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem piInf_inclR (d : SD σ) (w : InfinitePlace F) (e : E) :
     piInf (d.B.emb w) (inclR (F := F) (AF F) e) = (d.B.emb w).1 e := by

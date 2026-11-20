@@ -44,7 +44,7 @@ theorem exists_spl {K : Type} [Field K] [Algebra F K] (sig : E →ₐ[F] E) (hsi
   refine ⟨φ, fun x => ?_, fun a => ?_, fun x => ?_⟩
   · induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add, map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
     | tmul x c =>
       have : sigR sig K (x ⊗ₜ[F] c) = sig x ⊗ₜ[F] c := rfl
       rw [this, hφ, hφ, hsig]; rfl

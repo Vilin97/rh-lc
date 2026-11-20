@@ -97,15 +97,15 @@ private theorem bc_skew {La : Type} [AddCommGroup La] (E : LinearMap.BilinForm â
   have hs : âˆ€ x y, E x y = - E y x := by
     intro x y
     have h := halt (x + y)
-    simp only [map_add, LinearMap.add_apply, halt, zero_add, add_zero] at h
+    simp only [map_add (f := _), LinearMap.add_apply, halt, zero_add, add_zero] at h
     exact eq_neg_of_add_eq_zero_right h
   induction u using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb, neg_add]
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb, neg_add]
   | tmul a x =>
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add c d hc hd => simp only [map_add, LinearMap.add_apply, hc, hd, neg_add]
+    | add c d hc hd => simp only [map_add (f := _), LinearMap.add_apply, hc, hd, neg_add]
     | tmul b y =>
       simp only [LinearMap.BilinForm.baseChange_tmul]
       rw [hs x y]

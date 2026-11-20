@@ -255,7 +255,7 @@ theorem orth_proj_commute_compact (ε : Fin n → Bool) (σ : Matrix (Fin n) (Fi
   have hsplit : σ k x = σ k (E x) + σ k (x - E x) := by
     rw [map_sub]
     abel
-  rw [hsplit, map_add, fixS _ (hst k hk _ (memS x)), kill _ (horth x), add_zero]
+  rw [hsplit, map_add (f := _), fixS _ (hst k hk _ (memS x)), kill _ (horth x), add_zero]
 
 def oneBasedParam (lam : Fin n → ℝ) (i : ℕ) : ℝ := if h : i - 1 < n then lam ⟨i - 1, h⟩ else 0
 

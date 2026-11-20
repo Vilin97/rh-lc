@@ -21,7 +21,7 @@ theorem analytic_eval {G : (Fin n → ℂ) → (Σ k, J k) → ℂ} {T : Set (Fi
   induction f using MvPolynomial.induction_on with
   | C a => simpa using analyticOnNhd_const
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p i hp =>
     simp only [map_mul, map_X, eval_X]

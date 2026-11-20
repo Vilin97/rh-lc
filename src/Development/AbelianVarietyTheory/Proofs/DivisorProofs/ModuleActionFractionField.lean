@@ -63,7 +63,7 @@ theorem GlobalTheory.exists_fibre_generator_basis : ∀ (R O : Type) [CommRing R
     intro c
     induction c using Finsupp.induction_linear with
     | zero => simp
-    | add c d hc hd => rw [map_add, map_add, hc, hd, map_add, add_smul]
+    | add c d hc hd => rw [map_add (f := _), map_add (f := _), hc, hd, map_add (f := _), add_smul]
     | single i a =>
       rw [Finsupp.linearCombination_single, map_smul, he, B.repr_symm_single,
         Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one,

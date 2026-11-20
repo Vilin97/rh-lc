@@ -101,7 +101,7 @@ theorem box_adm (κ κ' : Type) [Fintype κ] [Fintype κ'] : ∀ φ₂ ∈ schA 
     obtain ⟨T', hT'⟩ := hy
     refine ⟨T + T', fun f => ?_⟩
     show l (boxFun _ (x + y)) = T f + T' f
-    rw [GlobalTheory.SchwartzBox.boxFun_add_right, map_add, ← hT, ← hT']
+    rw [GlobalTheory.SchwartzBox.boxFun_add_right, map_add (f := _), ← hT, ← hT']
     rfl
   | smul c x _ hx =>
     obtain ⟨T, hT⟩ := hx

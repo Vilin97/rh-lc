@@ -29,7 +29,7 @@ theorem comm_smul (b : B) (w : B ⊗[Qp] V) :
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul c v => simp [TensorProduct.smul_tmul']
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 theorem comm_smul₀ (c : K₀) (w : B ⊗[Qp] V) :
     TensorProduct.comm Qp B V (c • w) =

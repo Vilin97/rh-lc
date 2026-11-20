@@ -154,7 +154,7 @@ theorem poly_eq_zero_of_toLaurent_eq {R : Type} [CommRing R] (φ ψ : Polynomial
       LaurentPolynomial.trunc (LaurentPolynomial.T m * LaurentPolynomial.invert (Polynomial.toLaurent ψ)) = 0 := by
     intro ψ
     induction ψ using Polynomial.induction_on' with
-    | add p q hp hq => rw [map_add, map_add, mul_add, map_add, hp, hq, add_zero]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), mul_add, map_add (f := _), hp, hq, add_zero]
     | monomial k a =>
       rw [← Polynomial.C_mul_X_pow_eq_monomial, Polynomial.toLaurent_C_mul_X_pow,
         map_mul (LaurentPolynomial.invert (R := R)), LaurentPolynomial.invert_C, LaurentPolynomial.invert_T,

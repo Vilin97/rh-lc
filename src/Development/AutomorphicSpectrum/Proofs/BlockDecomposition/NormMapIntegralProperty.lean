@@ -56,7 +56,7 @@ theorem evalT_poly (j : O' →ₐ[O] E) (P : O[X]) (M : Matrix (Fin n) (Fin n) E
   | add a b ha hb =>
     obtain ⟨p, hp, hp'⟩ := ha
     obtain ⟨q, hq, hq'⟩ := hb
-    refine ⟨p + q, by rw [map_add, hp, hq, map_add], fun i => ?_⟩
+    refine ⟨p + q, by rw [map_add (f := _), hp, hq, map_add (f := _)], fun i => ?_⟩
     rw [coeff_add]; exact S.add_mem (hp' i) (hq' i)
 
 theorem evalT_map (j : O' →ₐ[O] E) (P : O[X]) (M : Matrix (Fin n) (Fin n) E)
@@ -76,7 +76,7 @@ theorem evalT_map (j : O' →ₐ[O] E) (P : O[X]) (M : Matrix (Fin n) (Fin n) E)
     simp [Matrix.algebraMap_matrix_apply]
     split_ifs <;> simp
   | add a b ha hb =>
-    rw [map_add, map_add, map_add, ← ha, ← hb]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), ← ha, ← hb]
     ext a b
     simp
 
@@ -162,7 +162,7 @@ theorem isUnit_root (P : O[X]) (h0 : IsUnit (P.coeff 0)) : IsUnit (AdjoinRoot.ro
   obtain ⟨u, hu⟩ := h0
   have h1 : AdjoinRoot.mk P (P.divX * X + C (P.coeff 0)) = 0 := by
     rw [Polynomial.divX_mul_X_add]; exact AdjoinRoot.mk_self
-  rw [map_add, map_mul, ← hu] at h1
+  rw [map_add (f := _), map_mul, ← hu] at h1
   have h2 : AdjoinRoot.root P * (-(AdjoinRoot.of P (u⁻¹ : Oˣ).val * AdjoinRoot.mk P P.divX)) = 1 := by
     have h3 : AdjoinRoot.mk P (C (u : O)) * AdjoinRoot.of P (u⁻¹ : Oˣ).val = 1 := by
       show AdjoinRoot.of P (u : O) * AdjoinRoot.of P (u⁻¹ : Oˣ).val = 1

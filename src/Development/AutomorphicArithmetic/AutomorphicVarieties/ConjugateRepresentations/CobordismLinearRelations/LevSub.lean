@@ -20,7 +20,7 @@ private theorem lev_comb {U : Subgroup (GL (Fin a) (Af E))} {q : ℕ} (s : ℂ) 
     (hα : Geo.IsLev U Ξ α) (hβ : Geo.IsLev U Ξ β) : Geo.IsLev U Ξ (s • α + β) := by
   have ap : ∀ X, (s • α + β) X = s • α X + β X := fun X => rfl
   refine ⟨fun k X => ?_, fun X i hi => ?_, fun X => ?_⟩
-  · rw [ap, ap, hα.equiv k X, hβ.equiv k X, map_add, map_smul]
+  · rw [ap, ap, hα.equiv k X, hβ.equiv k X, map_add (f := _), map_smul]
   · rw [ap, hα.basic X i hi, hβ.basic X i hi, smul_zero, add_zero]
   · rw [ap]
     exact Submodule.add_mem _ (Submodule.smul_mem _ _ (hα.val X)) (hβ.val X)

@@ -41,7 +41,7 @@ def img (B : Type) {Q : Type} [CommRing B] [CommRing Q] [Algebra B Q] (p m : ℕ
   zero_mem' := ⟨0, by simp⟩
   add_mem' := by
     rintro _ _ ⟨a, rfl⟩ ⟨b, rfl⟩
-    exact ⟨a + b, by rw [mul_add, map_add]⟩
+    exact ⟨a + b, by rw [mul_add, map_add (f := _)]⟩
   neg_mem' := by
     rintro _ ⟨a, rfl⟩
     exact ⟨-a, by rw [mul_neg, map_neg]⟩

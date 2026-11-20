@@ -17,7 +17,7 @@ theorem UpperTheory.ConvolutionTheory.D.tBase :
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a r => simp [e, τ, UpperTheory.ConvolutionTheory.D.io]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have h1 : ((g⁻¹ : (R ⊗[k] A)ˣ) : R ⊗[k] A) *
       UpperTheory.ConvolutionTheory.D.io c A ((g⁻¹ : (R ⊗[k] A)ˣ) : R ⊗[k] A) = 1 := by
     have h2 : UpperTheory.ConvolutionTheory.D.io c A (g : R ⊗[k] A) *

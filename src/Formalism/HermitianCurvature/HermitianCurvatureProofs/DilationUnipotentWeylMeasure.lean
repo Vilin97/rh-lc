@@ -417,7 +417,7 @@ lemma op_letter_add {f : Mat k r → E} {X Y g : Mat k r} (b : Bool) (hX : inLie
     cases b
     · rw [vf_false, vf_false, vf_false, Matrix.mul_add]
     · rw [vf_true, vf_true, vf_true, Matrix.add_mul, neg_add]
-  rw [hv, map_add]
+  rw [hv, map_add (f := _)]
 
 def W (w : List (Bool × Mat k r)) (f : Mat k r → E) : Mat k r → E :=
   w.foldr (fun x h => op x.1 x.2 h) f

@@ -67,7 +67,7 @@ theorem Spans.tensor {ρ : Representation LL G V} {ρ' : Representation LL G V'}
     obtain ⟨t, rfl⟩ := E.surjective u
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simpa only [map_add, add_tmul] using Submodule.add_mem _ hx hy
+    | add x y hx hy => simpa only [map_add (f := _), add_tmul] using Submodule.add_mem _ hx hy
     | tmul v w =>
       obtain ⟨m, c, d, hd, h1⟩ := h (v ⊗ₜ[Qp] (1 : F))
       obtain ⟨m', c', d', hd', h2⟩ := h' (w ⊗ₜ[Qp] (1 : F))
@@ -95,7 +95,7 @@ theorem twist_mem_DdR {x : V ⊗[Qp] F} (hx : x ∈ DdR PD ρ) :
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul v b => simp [hw, ← hf, TensorProduct.smul_tmul]
   rw [this, hx]
 
@@ -140,13 +140,13 @@ theorem exists_twist_equiv (ρ : Representation LL G V) (ρ' : Representation LL
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul v b => simp [Φ, Ψ, ← mul_assoc, (mul_comm u _).trans hu]
   have h2 : ∀ x, Ψ (Φ x) = x := by
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul v b => simp [Φ, Ψ, ← mul_assoc, hu]
   refine ⟨LinearEquiv.ofLinear Φ Ψ (LinearMap.ext h1) (LinearMap.ext h2), le_antisymm ?_ fun y hy => ?_,
     fun τ a => le_antisymm ?_ fun y hy => ?_⟩
@@ -294,11 +294,11 @@ theorem tensor {ρ' : Representation LL G V'} {ι' : Type} [Fintype ι'] {d' : �
         intro x y
         induction x using TensorProduct.induction_on with
         | zero => simp
-        | add r s hr hs => simp only [map_add, LinearMap.add_apply, hr, hs]
+        | add r s hr hs => simp only [map_add (f := _), LinearMap.add_apply, hr, hs]
         | tmul v b' =>
           induction y using TensorProduct.induction_on with
           | zero => simp
-          | add r s hr hs => simp only [map_add, LinearMap.add_apply, hr, hs]
+          | add r s hr hs => simp only [map_add (f := _), LinearMap.add_apply, hr, hs]
           | tmul w b'' => simp [C, mul_comm]
       have h1 := congrArg (ext Qp F C) hr
       set_option synthInstance.maxHeartbeats 100000 in
@@ -319,12 +319,12 @@ theorem tensor {ρ' : Representation LL G V'} {ι' : Type} [Fintype ι'] {d' : �
     have qa : ∀ x y, q x → q y → q (x + y) := by
       rintro x y ⟨r, hr, hx⟩ ⟨s, hs, hy⟩
       exact ⟨r + s, fun p => Submodule.add_mem _ (hr p) (hs p), by
-        simp only [map_add, hx, hy, Pi.add_apply, LinearMap.add_apply, Finset.sum_add_distrib]⟩
+        simp only [map_add (f := _), hx, hy, Pi.add_apply, LinearMap.add_apply, Finset.sum_add_distrib]⟩
     refine FilV_induction PD (p := q) q0 (fun u b hb => ?_) qa hy
     obtain ⟨t, rfl⟩ := E.surjective u
     induction t using TensorProduct.induction_on with
     | zero => simpa using q0
-    | add x y hx hy => simpa only [map_add, add_tmul] using qa _ _ hx hy
+    | add x y hx hy => simpa only [map_add (f := _), add_tmul] using qa _ _ hx hy
     | tmul v w =>
       obtain ⟨r, hr, h1⟩ := h.span 0 (v ⊗ₜ[Qp] (1 : F)) (tmul_mem_FilV PD _ PD.one_mem)
       obtain ⟨s, hs, h2⟩ := h'.span 0 (w ⊗ₜ[Qp] (1 : F)) (tmul_mem_FilV PD _ PD.one_mem)

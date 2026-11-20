@@ -51,7 +51,7 @@ theorem decompose_left (B : Base F E) {n d n₁ r s i₀ i₁ : ℕ} {X : Spc F 
           Matrix.vecMulVec (incV F H.y) (incV F t) := by
       ext i j
       set_option synthInstance.maxHeartbeats 100000 in
-        simp [incM, incV, Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum, map_add, map_mul]
+        simp [incM, incV, Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum, map_add (f := _), map_mul]
     rw [e1, e2] at hI'
     conv_lhs => rw [← Matrix.one_mul w, hI']
     have hv : ∀ p q : Fin n → AE F E, Matrix.vecMulVec p q * w = Matrix.vecMulVec p (q ᵥ* w) := by
@@ -220,7 +220,7 @@ theorem lagSetA_coisotropic : ∀ {F E : Type} [Field F] [NumberField F] [Field 
     rw [← hι, ← hι] at e₂
     rw [← e₂]
     unfold symp at e₁ ⊢
-    rw [TensForm.hTens_add_left, mul_add, map_add, e₁, zero_add]
+    rw [TensForm.hTens_add_left, mul_add, map_add (f := _), e₁, zero_add]
   have hp : arch F (M₁.co.e C).1 = 0 := by
     funext i
     refine GlobalTheory.mixedSpace_traceForm_nondegenerate F _ fun η => ?_

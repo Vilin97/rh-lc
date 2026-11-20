@@ -30,7 +30,7 @@ theorem isRelTraceOneIdempotentModTwo_hostElement {E : Type} [Field E] [NumberFi
   obtain ⟨k, hk⟩ : ∃ k, H.d = 16 * k + 7 := ⟨H.d / 16, by have := H.d_mod; omega⟩
   have h1 : (H.w0 : E) + cc (H.w0 : E) = 1 := by
     have := congrArg (algebraMap (𝓞 E) E) (PullbackSections.CVA.cmHostUnit_add_conj_eq_one H)
-    rw [map_add, map_one] at this
+    rw [map_add (f := _), map_one] at this
     exact (congrArg _ (H.bar_eq _).symm).trans this
   have h2 : 2 * (H.w0 : E) = 1 + (H.rt : E) := by
     have := congrArg (algebraMap (𝓞 E) E) H.two_weight_eq_one_add_root

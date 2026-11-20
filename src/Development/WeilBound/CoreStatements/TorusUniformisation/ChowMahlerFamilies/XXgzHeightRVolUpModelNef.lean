@@ -78,12 +78,12 @@ theorem exists_coord {σ : K →+* ℂ} {y : Sp ℂ ⟶ M.Z} (hy : y ≫ M.s = s
     induction hv using Submodule.span_induction with
     | mem _ h => exact hc _ h
     | zero => rw [map_zero, zero_div]; exact zero_mem _
-    | add a b _ _ ha hb => rw [map_add, add_div]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _), add_div]; exact add_mem ha hb
     | smul a v _ hv => rw [hsm]; exact mul_mem (const_val hy a).1 hv
   let ℓ : V →+ ℂ :=
     { toFun := fun v => M.val y (ev v / c)
       map_zero' := by rw [map_zero, zero_div]; exact val_zero y
-      map_add' := fun a b => by rw [map_add, add_div]; exact val_add hr (hall a) (hall b) }
+      map_add' := fun a b => by rw [map_add (f := _), add_div]; exact val_add hr (hall a) (hall b) }
   refine ⟨fun j => ℓ (b j), fun v => ?_⟩
   change ℓ v = _
   set_option synthInstance.maxHeartbeats 100000 in
@@ -100,7 +100,7 @@ theorem mem_O_of_span [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V] (ev : V �
   induction hv using Submodule.span_induction with
   | mem _ h => exact hc _ h
   | zero => rw [map_zero, zero_div]; exact zero_mem _
-  | add a b _ _ ha hb => rw [map_add, add_div]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _), add_div]; exact add_mem ha hb
   | smul a v _ hv =>
     rw [← algebraMap_smul K a v, map_smul, Algebra.smul_def, mul_div_assoc, ← IsScalarTower.algebraMap_apply]
     exact mul_mem (Subalgebra.algebraMap_mem _ a) hv
@@ -119,7 +119,7 @@ theorem exists_isUnit (ev : V →ₗ[K] Ω) (c : Ω) {z : M.Z} {ι : Type} (w : 
     | add a b _ _ ha hb =>
       obtain ⟨a', ha, ea⟩ := ha
       obtain ⟨b', hb, eb⟩ := hb
-      exact ⟨a' + b', add_mem ha hb, by rw [map_add, add_div, ← ea, ← eb]; rfl⟩
+      exact ⟨a' + b', add_mem ha hb, by rw [map_add (f := _), add_div, ← ea, ← eb]; rfl⟩
     | smul n a _ ha =>
       obtain ⟨a', ha, ea⟩ := ha
       refine ⟨n • a', zsmul_mem ha n, ?_⟩

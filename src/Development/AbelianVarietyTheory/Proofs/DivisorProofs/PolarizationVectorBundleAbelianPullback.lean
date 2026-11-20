@@ -175,18 +175,18 @@ theorem reads_of_frames [DecidableEq I] (hs : (ShortComplex.mk a b z).ShortExact
       refine ⟨fun i => ofFn K (ξ.appLE V ⊤ hξ ((fε.basis le_rfl).repr u i)), fun i => ofFn K (ξ.appLE V ⊤ hξ (d i)), ?_⟩
       conv_lhs => rw [eq_add_of_sub_eq hu.symm, ← (fε.basis le_rfl).sum_repr u]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, IsFrame.basis_apply, Twist.resM_self, Scheme.Modules.Hom.app_smul,
+        simp only [map_add (f := _), map_sum, IsFrame.basis_apply, Twist.resM_self, Scheme.Modules.Hom.app_smul,
         QCoh.pullbackSections_smul, cst_ofFn, Xs, Zs]
     · rintro c _ ⟨k, d, rfl⟩
       exact ⟨fun i => c * k i, fun i => c * d i, by simp only [smul_add, Finset.smul_sum, map_mul, mul_smul]⟩
     · rintro _ _ ⟨k, d, rfl⟩ ⟨k', d', rfl⟩
       exact ⟨fun i => k i + k' i, fun i => d i + d' i, by
-        simp only [map_add, add_smul, Finset.sum_add_distrib]; abel⟩
+        simp only [map_add (f := _), add_smul, Finset.sum_add_distrib]; abel⟩
   have ab (t) : b.app V (a.app V t) = 0 := ex.apply_apply_eq_zero t
   have hb (k d : I → K) : b' (∑ i, cst K (k i) • Xs i + ∑ i, cst K (d i) • Zs i) =
       ∑ i, cst K (d i) • pullbackSections ξ _ hξ (pullbackSections f₀ B hVU (θ i)) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [b', Xs, Zs, map_add, map_sum, Scheme.Modules.Hom.app_smul, QCoh.pullback_map_app_pullbackSections, ab,
+      simp only [b', Xs, Zs, map_add (f := _), map_sum, Scheme.Modules.Hom.app_smul, QCoh.pullback_map_app_pullbackSections, ab,
       hsb, map_zero, smul_zero, Finset.sum_const_zero, zero_add]
   have ha (k : I → K) : a' (∑ i, cst K (k i) • pullbackSections ξ _ hξ (pullbackSections f₀ A hVU (ε i))) =
       ∑ i, cst K (k i) • Xs i := by
@@ -196,7 +196,7 @@ theorem reads_of_frames [DecidableEq I] (hs : (ShortComplex.mk a b z).ShortExact
     congr(dualApp (($hp).app V t) le_rfl u).symm
   have hE₂ (k d : I → K) : E (∑ i, cst K (k i) • Xs i + ∑ i, cst K (d i) • Zs i) =
       ∑ i, k i • x i + ∑ i, d i • E (Zs i) := by
-    rw [map_add, hE', hE']; simp only [hx, Xs]
+    rw [map_add (f := _), hE', hE']; simp only [hx, Xs]
   have hβ' (k d : I → K) (j : I) : β (∑ i, k i • x i + ∑ i, d i • E (Zs i)) (x j) = d j := by
     simp [hx, Zs, hβ, hp', ab, hsb, hδ, apply_ite (ξ.appLE V ⊤ hξ), apply_ite (ofFn K), LinearMap.sum_apply]
   refine ⟨⟨fun m => ?_, fun m => ?_, fun m => ?_, fun t => ?_⟩, s, hsb, fun i j => ?_, fun c => ?_⟩
@@ -473,19 +473,19 @@ theorem exists_pairing {R K : Type} [CommRing R] [CommRing K] [Algebra R K] {B :
   refine ⟨β, fun s y => ?_, hβ⟩
   obtain ⟨z, rfl⟩ := hm.2 s
   induction z with
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
   | tmul x c =>
     rw [liftSemi_tmul, map_smul, map_smul, map_smul, LinearMap.smul_apply]
     congr 1
     refine HodgeSub.Nat.mem_of_corr hφ hm (fun y => ψ (β ((bcMor hφ).pull c)) y = y ((bcMor hφ).pull c)) (by simp)
-      (fun a b ha hb => by rw [map_add, ha, hb, LinearMap.add_apply])
+      (fun a b ha hb => by rw [map_add (f := _), ha, hb, LinearMap.add_apply])
       (fun r a ha => by rw [map_smul, ha, LinearMap.smul_apply]) (fun l l' hl => ?_) y
     rw [hψ _ _ _ _ (hβ c) hl, h, hl]
 
 def secForm {T : Scheme.{0}} {D : T.Modules} (β₀ : D ⟶ dual D) {V : T.Opens} {M : Type*} [AddCommGroup M]
     [Module Γ(T, V) M] (e : Γ(D, V) ≃ₗ[Γ(T, V)] M) : M →ₗ[Γ(T, V)] Module.Dual Γ(T, V) M where
   toFun c := dualApp (β₀.app V (e.symm c)) le_rfl ∘ₗ e.symm.toLinearMap
-  map_add' a b := by rw [map_add, map_add, dualApp_add, LinearMap.add_comp]
+  map_add' a b := by rw [map_add (f := _), map_add (f := _), dualApp_add, LinearMap.add_comp]
   map_smul' r a := by
     rw [map_smul, Scheme.Modules.Hom.app_smul, dualApp_smul, LB.resG_self, LinearMap.smul_comp, RingHom.id_apply]
 
@@ -649,6 +649,6 @@ theorem main : GlobalTheory.Published.AbelianDeRham → ∀ (O : Type) [CommRing
     · rw [Category.assoc, Category.assoc, Over.w, e₂, ← Category.assoc, Over.w]
   · rw [Scheme.Modules.Hom.app_smul]
     exact (hE _ _).trans ((congrArg _ ht).trans ((map_smul _ _ _).symm.trans (congrArg _ (hE _ _).symm)))
-  · rw [map_add, map_add, ha, hb, map_add, map_add]
+  · rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
 
 end GlobalTheory.BadPt.Fibre

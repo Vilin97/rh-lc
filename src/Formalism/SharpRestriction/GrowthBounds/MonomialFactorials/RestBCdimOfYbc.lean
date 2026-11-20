@@ -83,7 +83,7 @@ private theorem finrank_span_blockData_gens {p : ℕ} [Fact (Nat.Prime p)] {O : 
         exact hbase y0 hy0 g0 hg0
       | zero => simp
       | add x y _ _ hx hy =>
-        rw [map_add, mul_add, add_mul]
+        rw [map_add (f := _), mul_add, add_mul]
         exact T.add_mem hx hy
       | smul k x _ hx =>
         rw [map_smul, mul_smul_comm, smul_mul_assoc]

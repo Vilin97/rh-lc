@@ -187,7 +187,7 @@ theorem isHaarMeasure_projMeasure (hCo : ∀ i, IsOpen (C i : Set (G i)))
     have hset : (box C T : Set (Πʳ i, [G i, (C i : Set (G i))])) ∩ proj C T ⁻¹' ((a + ·) ⁻¹' E) =
         (sec C T a + ·) ⁻¹' ((box C T : Set (Πʳ i, [G i, (C i : Set (G i))])) ∩ proj C T ⁻¹' E) := by
       ext x
-      simp only [mem_inter_iff, mem_preimage, SetLike.mem_coe, map_add, proj_sec]
+      simp only [mem_inter_iff, mem_preimage, SetLike.mem_coe, map_add (f := _), proj_sec]
       constructor
       · rintro ⟨hx, hxE⟩
         exact ⟨(box C T).add_mem (sec_mem_box C T a) hx, hxE⟩

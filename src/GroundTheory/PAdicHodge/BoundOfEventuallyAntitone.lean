@@ -266,7 +266,7 @@ theorem one_mem_span_of_coprime {x y : T.RobbaExt ρ0} (hx : x ≠ 0)
   rw [Ideal.mem_span_pair]
   refine ⟨T.ofRad ρ0 Al * u, T.ofRad ρ0 Bl, ?_⟩
   have e := congrArg (T.ofRad ρ0) hrel
-  rw [map_add, map_mul, map_mul, map_one] at e
+  rw [map_add (f := _), map_mul, map_mul, map_one] at e
   rw [hxw, map_mul, ← e]
   linear_combination T.ofRad ρ0 Al * T.ofRad ρ0 D.prod * hu
 

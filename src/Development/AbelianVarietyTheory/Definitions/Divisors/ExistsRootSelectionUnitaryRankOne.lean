@@ -325,7 +325,7 @@ def a21 : QIˣ := Units.mk0 (2 + gi) two_add_gi_ne_zero
 
 theorem norm_gaussian_element_eq_five : ((a21 : QI)) * IsCMField.complexConj QI a21 = algebraMap ℚ QI ((Units.mk0 (5 : ℚ) (by norm_num) : ℚˣ) : ℚ) := by
   show (2 + gi) * IsCMField.complexConj QI (2 + gi) = algebraMap ℚ QI 5
-  rw [map_add, conj_gi, map_ofNat, map_ofNat]
+  rw [map_add (f := _), conj_gi, map_ofNat, map_ofNat]
   linear_combination (-1 : QI) * zeta_sq
 
 def exPair : Pair (ex 1 one_ne_zero) :=

@@ -15,7 +15,7 @@ private lemma loc_ker {W A C L : Type*} [CommRing W] [CommRing A] [CommRing C] [
       LinearMap.rTensor L (IsScalarTower.toAlgHom W A C).toLinearMap p := by
     intro p
     induction p with
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | tmul a y => simp [Algebra.algebraMap_eq_smul_one]
   have h0 : (TensorProduct.mk A C (A ⊗[W] L) 1) x = 0 := by
     apply (AlgebraTensorModule.cancelBaseChange W A C C L).injective
@@ -81,7 +81,7 @@ private lemma aux {W : Type u₁} {K : Type u₂} {A : Type u₅} {C : Type u₃
     intro g x i
     induction x with
     | add p q hp hq =>
-      rw [map_add, hΦadd, hΦadd, Finsupp.add_apply, Finsupp.add_apply, hp, hq, map_add]
+      rw [map_add (f := _), hΦadd, hΦadd, Finsupp.add_apply, Finsupp.add_apply, hp, hq, map_add (f := _)]
     | tmul a y => rw [hT, hΦt, hΦt, map_mul, hσ, hσK]
   have hct : IsUnit (algebraMap A C t) :=
     IsLocalization.map_units C (⟨t, Submonoid.mem_powers t⟩ : Submonoid.powers t)

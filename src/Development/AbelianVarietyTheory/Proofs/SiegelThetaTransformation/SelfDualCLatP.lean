@@ -40,8 +40,8 @@ theorem exists_ideal (D : D7) : ∃ 𝔪 : Ideal (𝓞 D.host.E), 𝔪 ≠ ⊤ �
   let s : 𝓞 D.host.E := ⟨_, hi⟩
   have hb : bar (2 + s) = 2 - s := by
     apply RingOfIntegers.ext
-    rw [map_add, map_ofNat, sub_eq_add_neg]
-    simp only [map_add, map_neg]
+    rw [map_add (f := _), map_ofNat, sub_eq_add_neg]
+    simp only [map_add (f := _), map_neg]
     congr 1
     exact (coe_bar s).trans (cc_sqrt D)
   have hs2 : s ^ 2 = -(D.host.d : 𝓞 D.host.E) := by

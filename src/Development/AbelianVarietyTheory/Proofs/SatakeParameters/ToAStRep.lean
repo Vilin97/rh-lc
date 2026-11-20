@@ -45,8 +45,8 @@ theorem toA_mulB (y' y : (Fin 1 → ↥L.1) ⊗[ℚ_[l]] Bst P) :
     | tmul v b =>
       rw [GlobalTheory.Pst.TwistLetters.mulB_tmul, toA_tmul, toA_tmul, toA_tmul, Algebra.TensorProduct.tmul_mul_tmul]
       simp
-    | add x x' hx hx' => simp only [map_add, mul_add, hx, hx']
-  | add y y' hy hy' => simp only [map_add, LinearMap.add_apply, add_mul, hy, hy']
+    | add x x' hx hx' => simp only [map_add (f := _), mul_add, hx, hx']
+  | add y y' hy hy' => simp only [map_add (f := _), LinearMap.add_apply, add_mul, hy, hy']
 
 theorem toA_mulV (c : ↥(MaximalUnramifiedExtension l)) (y : (Fin 1 → ↥L.1) ⊗[ℚ_[l]] Bst P) :
     toA P L (mulV P ↥L.1 (Fin 1 → ↥L.1) c y) = algebraMap ↥(MaximalUnramifiedExtension l) (Bst P) c • toA P L y := by
@@ -54,7 +54,7 @@ theorem toA_mulV (c : ↥(MaximalUnramifiedExtension l)) (y : (Fin 1 → ↥L.1)
   | zero => simp
   | tmul v b =>
     rw [mulV_tmul, toA_tmul, toA_tmul, TensorProduct.smul_tmul', smul_eq_mul]
-  | add x x' hx hx' => simp only [map_add, smul_add, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), smul_add, hx, hx']
 
 theorem toA_stRep {K : FinExt l} (ρm : Representation ↥L.1 ↥(GK K) (Fin 1 → ↥L.1)) (χ : ↥(GK K) → ↥L.1)
     (hm : ∀ g v, ρm g v = χ g • v) (g : ↥(GK K)) (y : (Fin 1 → ↥L.1) ⊗[ℚ_[l]] Bst P) :
@@ -66,6 +66,6 @@ theorem toA_stRep {K : FinExt l} (ρm : Representation ↥L.1 ↥(GK K) (Fin 1 �
   | tmul v b =>
     rw [stRep_tmul, toA_tmul, toA_tmul, hm, Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.tmul_mul_tmul]
     simp [mul_comm]
-  | add x x' hx hx' => simp only [map_add, add_mul, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), add_mul, hx, hx']
 
 end GlobalTheory.Pst.UnitLetter

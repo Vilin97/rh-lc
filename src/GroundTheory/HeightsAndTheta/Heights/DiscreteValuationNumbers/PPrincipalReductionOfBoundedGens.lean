@@ -144,7 +144,7 @@ theorem cls_mul {m n : ℕ} {x y : A} (hx : x ∈ I ^ m) (hy : y ∈ I ^ n) :
 
 theorem cls_add {n : ℕ} {x y : A} (hx : x ∈ I ^ n) (hy : y ∈ I ^ n) :
     cls I n (x + y) = cls I n x + cls I n y := by
-  rw [cls_of_mem hx, cls_of_mem hy, cls_of_mem (Ideal.add_mem _ hx hy), ← map_add]
+  rw [cls_of_mem hx, cls_of_mem hy, cls_of_mem (Ideal.add_mem _ hx hy), ← map_add (f := _)]
   congr 1
   apply Subtype.ext
   simp

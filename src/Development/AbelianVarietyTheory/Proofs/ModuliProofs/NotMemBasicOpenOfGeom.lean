@@ -191,7 +191,7 @@ def toTh (t : TObj g k J b s) : ThObj g k J b.ζ s where
   P := t.pol
   dim := rfl
   lev a := t.lab (labEquiv g k a)
-  lev_add a c := by rw [map_add]; exact lab_add t _ _
+  lev_add a c := by rw [map_add (f := _)]; exact lab_add t _ _
   geom K _ _ x β hβ := by
     have e : ∀ a, toUnit (Over.mk x) ≫ t.lab a = Out.linComb
         (fun i => (Over.homMk x (by simp) : Over.mk x ⟶ Out.baseOver S) ≫ t.pt i) (fun i => (a i).val) := fun a => by
@@ -349,9 +349,9 @@ theorem coset_iff (h : n ∣ N') (hN : N' ≠ 0) (v : Ix g (N' ^ 2) → R) (q : 
   simp only [sameCoset_iff h hN]
   refine ⟨fun H c => ?_, fun H a => ?_⟩
   · obtain ⟨d, hd⟩ := H (labEquiv g _ c)
-    exact ⟨_, ⟨(labEquiv g _).symm d, rfl⟩, by simpa only [map_add, map_nsmul, AddEquiv.apply_symm_apply] using hd⟩
+    exact ⟨_, ⟨(labEquiv g _).symm d, rfl⟩, by simpa only [map_add (f := _), map_nsmul, AddEquiv.apply_symm_apply] using hd⟩
   · obtain ⟨_, ⟨d, rfl⟩, hd⟩ := H ((labEquiv g _).symm a)
-    exact ⟨labEquiv g _ d, by simpa only [map_add, map_nsmul, AddEquiv.apply_symm_apply] using hd⟩
+    exact ⟨labEquiv g _ d, by simpa only [map_add (f := _), map_nsmul, AddEquiv.apply_symm_apply] using hd⟩
 
 end Cosets
 

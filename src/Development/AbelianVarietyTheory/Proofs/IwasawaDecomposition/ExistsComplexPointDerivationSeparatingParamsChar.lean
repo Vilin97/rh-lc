@@ -85,7 +85,7 @@ theorem exists_der_of_rsp {k R : Type} [Field k] [CommRing R] [IsLocalRing R] [I
     have h1 : (maximalIdeal R).toCotangent ⟨e (x + y), he (x + y)⟩ =
         (maximalIdeal R).toCotangent ⟨e x + e y, add_mem (he x) (he y)⟩ := by
       refine hcot _ _ _ _ (hmk _ ?_)
-      simp only [e, map_sub, map_add, ht]
+      simp only [e, map_sub, map_add (f := _), ht]
       ring
     have h2 := map_add (maximalIdeal R).toCotangent ⟨e x, he x⟩ ⟨e y, he y⟩
     simp only [D0, h1]
@@ -106,7 +106,7 @@ theorem exists_der_of_rsp {k R : Type} [Field k] [CommRing R] [IsLocalRing R] [I
       rw [q]
       refine add_mem (hm2 _ _ (he x) (he y)) (hmk _ ?_)
       rw [map_sub, map_mul, ht, ht, ht, map_mul, map_mul, sub_self]
-    simp only [D0, h1, map_add, map_smul]
+    simp only [D0, h1, map_add (f := _), map_smul]
     rw [← algebraMap_smul (ResidueField R) (t (residue R x)),
       ← algebraMap_smul (ResidueField R) (t (residue R y)), map_smul, map_smul,
       Finsupp.add_apply, Finsupp.smul_apply, Finsupp.smul_apply, smul_eq_mul, smul_eq_mul,

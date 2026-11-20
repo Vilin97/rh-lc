@@ -48,7 +48,7 @@ theorem tr_mem_span (g : S.G) {f : E.Y → ℂ} (hf : f ∈ Submodule.span ℂ (
     rw [E.tr_ev]
     exact Submodule.subset_span ⟨_, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem ip_tr_ev (h : S.Ok) (g : S.G) {f : E.Y → ℂ} (hf : f ∈ Submodule.span ℂ (Set.range E.ev)) (x : S.V) :
@@ -58,7 +58,7 @@ theorem ip_tr_ev (h : S.Ok) (g : S.G) {f : E.Y → ℂ} (hf : f ∈ Submodule.sp
     obtain ⟨v, rfl⟩ := hy
     rw [E.tr_ev, E.ip_ev, E.ip_ev, h.inv]
   | zero => simp only [map_zero, LinearMap.zero_apply]
-  | add y y' _ _ hy hy' => rw [map_add, map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, hy, hy']
+  | add y y' _ _ hy hy' => rw [map_add (f := _), map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, hy, hy']
   | smul a y _ hy => rw [map_smul, LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ, LinearMap.smul_apply, LinearMap.smul_apply, hy]
 
 theorem tr_sharp (h : S.Ok) (hG : IsUnit E.gram.det) (g : S.G) (ℓ : S.V →ₛₗ[σ] ℂ) (hℓ : ∀ x, ℓ (S.ρ g x) = ℓ x) :
@@ -93,7 +93,7 @@ variable {S S' : GSD K} (P : Dua S S') (σ : K →+* ℂ)
 
 def semi (y : S'.V) : S.V →ₛₗ[σ] ℂ where
   toFun x := σ (P.B x y)
-  map_add' x x' := by rw [map_add, LinearMap.add_apply, map_add]
+  map_add' x x' := by rw [map_add (f := _), LinearMap.add_apply, map_add (f := _)]
   map_smul' a x := by rw [map_smul, LinearMap.smul_apply, smul_eq_mul, map_mul, smul_eq_mul]
 
 theorem semi_apply (y : S'.V) (x : S.V) : P.semi σ y x = σ (P.B x y) := rfl
@@ -168,7 +168,7 @@ theorem jOf_partner (h : S.Ok) (hG : IsUnit E.gram.det) (b : Basis ι K S'.EqFun
 
 theorem jOf_add (b : ι → S'.EqFun) (z z' : ι → ℂ) : P.jOf E b (z + z') = P.jOf E b z + P.jOf E b z' := by
   funext c
-  simp only [jOf, Pi.add_apply, map_add, add_smul, Finset.sum_add_distrib]
+  simp only [jOf, Pi.add_apply, map_add (f := _), add_smul, Finset.sum_add_distrib]
 
 theorem jOf_smul (b : ι → S'.EqFun) (t : ℂ) (z : ι → ℂ) : P.jOf E b (t • z) = starRingEnd ℂ t • P.jOf E b z := by
   funext c

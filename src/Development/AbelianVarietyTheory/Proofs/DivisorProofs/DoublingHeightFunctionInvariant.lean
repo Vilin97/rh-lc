@@ -35,7 +35,7 @@ theorem det_idem {A : Type} [CommRing A] [Algebra (AF F) A] {n : ℕ} {ε : AF F
     (M := ε • G + (1 - ε) • (1 : Matrix (Fin n) (Fin n) A)) (N := 1)
     (by simp only [algebraMap_smul, smul_add, smul_smul, mul_comm (1 - ε) ε, h2, h1, zero_smul, zero_add])
   rw [Matrix.det_one] at e2
-  rw [Algebra.smul_def ε G.det, Algebra.smul_def (1 - ε) (1 : A), ← e1, ← e2, ← add_mul, ← map_add, add_sub_cancel,
+  rw [Algebra.smul_def ε G.det, Algebra.smul_def (1 - ε) (1 : A), ← e1, ← e2, ← add_mul, ← map_add (f := _), add_sub_cancel,
     map_one, one_mul]
 
 theorem blkMat_idem {A : Type} [CommRing A] [Algebra (AF F) A] {n : ℕ} (ε : AF F) (G : Matrix (Fin n) (Fin n) A) :

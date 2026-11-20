@@ -111,14 +111,14 @@ theorem exists_of_ref (hS : IsHermSemilocal S) (hs : h.IsSymm) (hM : IsSelfDualM
   · rw [LinearMap.smul_apply, LinearMap.smul_apply, smul_eq_mul] at hcd
     exact ((inv_mul_eq_one₀ (inv_ne_zero hu0 |> fun _ => hu0)).1 hcd).symm
   · intro i
-    simp [map_add, map_smul, hwx i, hrx i]
+    simp [map_add (f := _), map_smul, hwx i, hrx i]
 
 theorem exists_quasi (hs : h.IsSymm) (w : V) {a : K} (ha : a + star a = a * star a * h w w) :
     ∃ τ ∈ Formalism.HermitianLatticesTheory.isom h, ∀ v, τ v = v - (a * h w v) • w := by
   let f : K → V →ₗ[K] V := fun b =>
     { toFun := fun v => v - (b * h w v) • w
       map_add' := fun x y => by
-        simp only [map_add, mul_add, add_smul]
+        simp only [map_add (f := _), mul_add, add_smul]
         abel
       map_smul' := fun c x => by
         simp only [map_smul, smul_eq_mul, RingHom.id_apply, smul_sub, smul_smul]

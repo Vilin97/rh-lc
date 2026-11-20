@@ -82,7 +82,7 @@ theorem tens_inj {F E A B : Type} [Field F] [Field E] [Algebra F E] [CommRing A]
     induction z with
     | tmul x y => simp [← TensorProduct.add_tmul]
     | add x y hx hy =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [add_add_add_comm, ← hx, ← hy]
   ext i j
   have a' := congr_fun (congr_fun a i) j

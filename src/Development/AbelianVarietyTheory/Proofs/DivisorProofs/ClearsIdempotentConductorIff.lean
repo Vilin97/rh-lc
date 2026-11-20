@@ -49,7 +49,7 @@ theorem coordAt_rTensor (O : Type) [CommRing O] {K : Type} [Field K] [Algebra O 
     rw [LinearMap.rTensor_tmul]
     show σ (g a) * algebraMap O K x = σ s * (σ a * algebraMap O K x)
     rw [hg, map_mul, mul_assoc]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, mul_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), mul_add]
 
 theorem clearsIdem_condQ_iff : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (𝔣 : Ideal (OF E))
     (Q : Finset (HeightOneSpectrum (OF E))) (l : ℕ), l.Prime → (∀ q ∈ Q, (l : OF E) ∉ q.asIdeal) →

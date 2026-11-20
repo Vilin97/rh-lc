@@ -241,10 +241,10 @@ theorem dt_infGL_prod (x : GL (Fin k) (Cinf E)) :
   set u := GeneralLinearGroup.det x
   have hI : pInf E ((infId E u : (Ad E)ˣ) : Ad E) = u := by
     change pInf E (1 - sInf E 1 + sInf E u) = u
-    rw [map_add, map_sub, map_one, h1, h1]; simp
+    rw [map_add (f := _), map_sub, map_one, h1, h1]; simp
   have hF : pFin E ((infId E u : (Ad E)ˣ) : Ad E) = 1 := by
     change pFin E (1 - sInf E 1 + sInf E u) = 1
-    rw [map_add, map_sub, map_one, h2, h2]; simp
+    rw [map_add (f := _), map_sub, map_one, h2, h2]; simp
   have e2 : ∀ v : HeightOneSpectrum (𝓞 E), ‖((infId E u : (Ad E)ˣ) : Ad E).2 v‖ = 1 := fun v => by
     change ‖(pFin E ((infId E u : (Ad E)ˣ) : Ad E)) v‖ = 1
     rw [hF]; simp

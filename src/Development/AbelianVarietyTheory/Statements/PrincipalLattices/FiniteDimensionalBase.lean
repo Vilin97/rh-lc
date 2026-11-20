@@ -102,7 +102,7 @@ theorem period_w0_smul {ρ : ℂ} {a : D.La} (ha : a ∈ lat hP ρ) : Pe (H.w0 �
   have h : (2 : ℂ) • Pe (H.w0 • a) = (1 + ρ) • Pe a := by
     have e : H.w0 • a + H.w0 • a = a + H.rt • a := by
       rw [← two_smul (𝓞 E), ← mul_smul, H.two_weight_eq_one_add_root, add_smul, one_smul]
-    rw [two_smul, ← map_add, e, map_add, period_rt_smul hP ha, add_smul, one_smul]
+    rw [two_smul, ← map_add (f := _), e, map_add (f := _), period_rt_smul hP ha, add_smul, one_smul]
   rw [div_eq_inv_mul, mul_smul, ← h, smul_smul]
   norm_num
 

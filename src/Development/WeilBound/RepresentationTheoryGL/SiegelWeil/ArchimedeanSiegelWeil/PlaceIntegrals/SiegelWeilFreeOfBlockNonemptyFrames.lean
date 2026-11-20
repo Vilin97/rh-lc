@@ -108,7 +108,7 @@ theorem split_herm (σ : E →ₐ[F] E) (hσ : ∀ e, σ (σ e) = e) {n : ℕ}
     have hv00 : v 0 = 0 := by
       have h1 := congrArg (hLin σ T x) hsum
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_smul, map_sum, map_zero, hLin_apply, hx, smul_eq_mul] at h1
+        rw [map_add (f := _), map_smul, map_sum, map_zero, hLin_apply, hx, smul_eq_mul] at h1
       have h2 : ∀ k : Fin n, hLin σ T x (v k.succ • (b k : Fin (n + 1) → E)) = 0 := by
         intro k
         rw [map_smul, hLin_apply, hb, smul_zero]

@@ -29,9 +29,9 @@ theorem ee_add (L : PeriodPair) (z x y : ℂ) :
   rw [← Complex.exp_add, ← Complex.exp_add]
   congr 1
   have e1 : F.herm L (z + x) y = F.herm L z y + F.herm L x y := by unfold F.herm; ring
-  have e2 : F.herm L z (x + y) = F.herm L z x + F.herm L z y := by unfold F.herm; rw [map_add]; ring
+  have e2 : F.herm L z (x + y) = F.herm L z x + F.herm L z y := by unfold F.herm; rw [map_add (f := _)]; ring
   have e3 : F.herm L (x + y) (x + y) = F.herm L x x + F.herm L x y + F.herm L y x + F.herm L y y := by
-    unfold F.herm; rw [map_add]; ring
+    unfold F.herm; rw [map_add (f := _)]; ring
   rw [e1, e2, e3]
   linear_combination ((Real.pi : ℂ) / 2) * herm_sub L x y
 
@@ -147,7 +147,7 @@ theorem altE_swap (L : PeriodPair) (x y : ℂ) : F.altE L y x = -F.altE L x y :=
 theorem altE_right (L : PeriodPair) (w x y : ℂ) (m n : ℤ) :
     F.altE L w ((m : ℂ) * x + (n : ℂ) * y) = m * F.altE L w x + n * F.altE L w y := by
   unfold F.altE F.herm
-  simp only [map_add, map_mul, map_intCast, Complex.div_ofReal_im, Complex.mul_im, Complex.mul_re, Complex.add_im, Complex.add_re,
+  simp only [map_add (f := _), map_mul, map_intCast, Complex.div_ofReal_im, Complex.mul_im, Complex.mul_re, Complex.add_im, Complex.add_re,
     Complex.intCast_re, Complex.intCast_im, Complex.conj_re, Complex.conj_im]
   ring
 

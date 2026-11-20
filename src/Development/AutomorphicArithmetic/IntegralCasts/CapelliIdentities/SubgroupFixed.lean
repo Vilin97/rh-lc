@@ -62,7 +62,7 @@ theorem UpperTheory.Reformulated.B.SubgroupFixed.sub_fixed :
     { carrier := {x | τ.asModuleEquiv x ∈ W}
       add_mem' := fun {a b} ha hb => by
         show τ.asModuleEquiv (a + b) ∈ W
-        rw [map_add]
+        rw [map_add (f := _)]
         exact W.add_mem ha hb
       zero_mem' := by
         show τ.asModuleEquiv 0 ∈ W

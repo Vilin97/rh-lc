@@ -14,7 +14,7 @@ variable {V : Type*} [AddCommGroup V] [Module ℂ V]
 def orthIn (U : Submodule ℂ V) : Submodule ℂ V where
   carrier := {v | ∀ u ∈ U, inner ℂ (ι u) (ι v) = 0}
   zero_mem' u _ := by rw [map_zero, inner_zero_right]
-  add_mem' {v w} hv hw u hu := by rw [map_add, inner_add_right, hv u hu, hw u hu, add_zero]
+  add_mem' {v w} hv hw u hu := by rw [map_add (f := _), inner_add_right, hv u hu, hw u hu, add_zero]
   smul_mem' c v hv u hu := by rw [map_smul, inner_smul_right, hv u hu, mul_zero]
 
 variable {ι}
@@ -64,7 +64,7 @@ theorem inner_aeval_map_left {T : Module.End ℂ V}
       inner_smul_right, Complex.coe_algebraMap, Complex.conj_ofReal]
   | add p q hp hq =>
     intro x y
-    simp only [Polynomial.map_add, map_add, LinearMap.add_apply, inner_add_left, inner_add_right, hp, hq]
+    simp only [Polynomial.map_add (f := _), map_add (f := _), LinearMap.add_apply, inner_add_left, inner_add_right, hp, hq]
   | monomial k a ih =>
     intro x y
     have e : ((C a * X ^ (k + 1) : ℝ[X]).map (algebraMap ℝ ℂ)) =
@@ -81,7 +81,7 @@ theorem aeval_mem {T : Module.End ℂ V} {Z : Submodule ℂ V} (hZ : ∀ z ∈ Z
     exact Z.smul_mem a hz
   | add p q hp hq =>
     intro z hz
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact Z.add_mem (hp z hz) (hq z hz)
   | monomial k a ih =>
     intro z hz
@@ -113,7 +113,7 @@ theorem exists_apply_eq_zero_inner_eq (hι : Function.Injective ι) {T : Module.
     Submodule.mem_sup.1 (hcompl.sup_eq_top ▸ Submodule.mem_top : (⟨x, hx⟩ : Z) ∈ _)
   refine ⟨m, m.2, congrArg Subtype.val (LinearMap.mem_ker.1 hm), fun w hw => ?_⟩
   have hxe : x = (m : V) + S z := congrArg Subtype.val hmr.symm
-  rw [hxe, map_add, inner_add_left, hSym, hw, map_zero, inner_zero_right, add_zero]
+  rw [hxe, map_add (f := _), inner_add_left, hSym, hw, map_zero, inner_zero_right, add_zero]
 
 theorem apply_aeval_comm (T : Module.End ℂ V) (q : ℂ[X]) (z : V) : T (aeval T q z) = aeval T q (T z) := by
   have h := (Commute.all (X : ℂ[X]) q).map (aeval T)

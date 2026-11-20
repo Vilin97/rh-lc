@@ -46,7 +46,7 @@ theorem isPd_xs : IsPd k (xs k d) where
         rw [e]
         exact IntermediateField.algebraMap_mem _ a
       | add p q hp hq =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_mem hp hq
       | mul_X p n hp =>
         rw [map_mul]

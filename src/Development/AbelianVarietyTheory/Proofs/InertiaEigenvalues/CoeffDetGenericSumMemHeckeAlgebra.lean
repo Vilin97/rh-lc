@@ -132,7 +132,7 @@ theorem coeff_det_generic_sum_mem_of_inRing :
           Matrix.of (fun i j => MvPolynomial.C (fun y => b y i j)) +
             Matrix.of (fun i j => MvPolynomial.C (fun y => c y i j)) := by
         refine Matrix.ext fun i j => ?_
-        simp only [Matrix.of_apply, Matrix.add_apply, ← map_add]
+        simp only [Matrix.of_apply, Matrix.add_apply, ← map_add (f := _)]
         rfl
       rw [e]
       exact Submodule.add_mem _ hb hc

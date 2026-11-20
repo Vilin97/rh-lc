@@ -27,7 +27,7 @@ theorem trace_mem (D : D7) (y : AE D) :
     obtain ⟨u, hu⟩ := ha
     obtain ⟨v, hv⟩ := hb
     refine ⟨u + v, ?_⟩
-    rw [map_add, hu, hv, map_add]; abel
+    rw [map_add (f := _), hu, hv, map_add (f := _)]; abel
   | tmul a e =>
     have hfix : star (e + star e) = e + star e := by
       rw [star_add, star_star, add_comm]

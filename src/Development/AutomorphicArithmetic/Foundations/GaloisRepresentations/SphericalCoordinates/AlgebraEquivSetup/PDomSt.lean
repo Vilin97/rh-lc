@@ -25,7 +25,7 @@ private theorem UpperTheory.Gal.W2.Seed.pDomSt_theta_mul {E : Type} [Field E] [N
       hΘ, hΘ, Complex.real_smul, Complex.real_smul]
     simp [Pi.smul_apply, smul_eq_mul, map_mul]
     ring
-  | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb, mul_add]
+  | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb, mul_add]
 
 private theorem UpperTheory.Gal.W2.Seed.pDomSt_term (D H z : ℂ) (e : ℝ) (hD : D.re = 0) (hH : H.im = 0) :
     (D * H * ((e : ℂ) * Complex.I * z) * (starRingEnd ℂ) z).re = -D.im * H.re * e * Complex.normSq z := by

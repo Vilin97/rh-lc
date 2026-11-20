@@ -80,7 +80,7 @@ theorem good_of_isCuspForm : ∀ (E : Type) [Field E] [NumberField E] [IsTotally
     have hper := per_blk (E := E) (r := r) (m := a - 1) hcont (fun c g => h.1.left _ g) g
     have hper2 : Per (ratN E a r) (fun x => φ.1 (blkU (blkIxHomeo r x) * g)) :=
       ⟨hper.1.comp (blkIxHomeo r).continuous, fun γ hγ x => by
-        simp only [map_add]
+        simp only [map_add (f := _)]
         exact hper.2 _ ((blkIxHomeo_mem r γ).2 hγ) _⟩
     have key := GlobalTheory.T.quotientAverage_map_lattice_equiv _ _ (ratN E a r) (ratV E _) (isCoLat_ratV E (BlockIx a r))
       (isCoLat_ratV E _) (blkIxHomeo r) (blkIxHomeo_mem r) _ hper

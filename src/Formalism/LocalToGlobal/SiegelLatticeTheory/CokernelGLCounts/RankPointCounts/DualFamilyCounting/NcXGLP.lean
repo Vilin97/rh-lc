@@ -35,9 +35,9 @@ theorem surj_equiv {C W : Type*} [AddCommGroup C] [Module K C] [FiniteDimensiona
     simp only [δ, LinearEquiv.trans_apply, ← hp]
     rw [Submodule.coe_prodEquivOfIsCompl']
     rfl
-  rw [hδ, map_add, LinearMap.mem_ker.1 (k p.1).2, zero_add, ← he1, LinearEquiv.apply_symm_apply, he2]
+  rw [hδ, map_add (f := _), LinearMap.mem_ker.1 (k p.1).2, zero_add, ← he1, LinearEquiv.apply_symm_apply, he2]
   conv_rhs => rw [hc]
-  rw [map_add, LinearMap.mem_ker.1 p.1.2, zero_add]
+  rw [map_add (f := _), LinearMap.mem_ker.1 p.1.2, zero_add]
 
 theorem pi_surj {V : Type*} [AddCommGroup V] [Module K V] {a : ℕ} (ψ : Fin a → Module.Dual K V)
     (hψ : LinearIndependent K ψ) : Function.Surjective (LinearMap.pi ψ) := by
@@ -115,7 +115,7 @@ theorem fix_tuple {V : Type*} [AddCommGroup V] [Module K V] [FiniteDimensional K
     have h0 : R.mkQ (Θ u) = 0 := by
       rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]
       exact ⟨⟨u, hu⟩, (hΘU ⟨u, hu⟩).symm⟩
-    simp only [LinearMap.comp_apply, Submodule.subtype_apply, map_add, h0, zero_add]
+    simp only [LinearMap.comp_apply, Submodule.subtype_apply, map_add (f := _), h0, zero_add]
   obtain ⟨δ, hδ⟩ := surj_equiv (R.mkQ ∘ₗ Ψ ∘ₗ C.subtype) (R.mkQ ∘ₗ Φ ∘ₗ C.subtype)
     (hsurj Ψ (pi_surj ψ hψ) fun _ => rfl) (hsurj Φ (pi_surj φ hφ) hUv)
   set D : C →ₗ[K] (Fin a → K) := Φ ∘ₗ C.subtype - Ψ ∘ₗ C.subtype ∘ₗ δ.toLinearMap
@@ -170,7 +170,7 @@ theorem fix_tuple {V : Type*} [AddCommGroup V] [Module K V] [FiniteDimensional K
   · obtain ⟨u, hu, c, hc, rfl⟩ := hsplit v
     have hv : Ψ (B0 (u + c)) = Φ (u + c) := by
       rw [show u + c = ((⟨u, hu⟩ : U) : V) + ((⟨c, hc⟩ : C) : V) from rfl, hB0]
-      simp only [map_add, hβ, hUv ⟨u, hu⟩, D, LinearMap.sub_apply, LinearMap.comp_apply,
+      simp only [map_add (f := _), hβ, hUv ⟨u, hu⟩, D, LinearMap.sub_apply, LinearMap.comp_apply,
         Submodule.subtype_apply, LinearEquiv.coe_coe]
       abel
     exact congrFun hv i

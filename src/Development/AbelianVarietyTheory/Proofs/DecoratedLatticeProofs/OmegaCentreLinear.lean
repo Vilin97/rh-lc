@@ -67,7 +67,7 @@ theorem isCarried_add {L₁ L₂ : (GA D T → ℂ) → (GA D T → ℂ)} (h₁ 
   · beta_reduce
     rw [e₁ f hf g w, e₂ f hf g w]
     funext h
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
 
 theorem isCarried_smul (c : ℂ) {L : (GA D T → ℂ) → (GA D T → ℂ)} (hL : IsCarried ψ om L) :
     IsCarried ψ om fun φ => c • L φ := by

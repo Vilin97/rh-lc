@@ -23,7 +23,7 @@ private theorem cutPres_gen {G O O' LL Q X : Type} [Group G] [CommRing O] [IsDom
     (hθe : ∀ g q, θ (act0 g q) = actQ g (θ q))
     (hφ0 : ∀ g (y : ↥Y), φ0 ⟨_, hst g y.1 y.2⟩ = act0 g (φ0 y)) :
     HasPres LL N (Q := Q) (fun g => actQ g) (fun g => θ (φ0 ⟨_, hE g⟩)) := by
-  let ψ : ↥Y →+ Q := AddMonoidHom.mk' (fun y => θ (φ0 y)) (fun u v => by rw [map_add, hθa])
+  let ψ : ↥Y →+ Q := AddMonoidHom.mk' (fun y => θ (φ0 y)) (fun u v => by rw [map_add (f := _), hθa])
   have hψ : ∀ (c : O) (y : ↥Y), ψ (c • y) = f c • ψ y := fun c y => by
     change θ (φ0 (c • y)) = f c • θ (φ0 y)
     rw [map_smul, hθs]

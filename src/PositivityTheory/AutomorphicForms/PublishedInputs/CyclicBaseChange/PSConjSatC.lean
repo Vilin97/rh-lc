@@ -46,7 +46,7 @@ theorem pInf_s_sFin (s : Ad M ≃+* Ad M) (hs : Continuous s) (y : Af M) : pInf 
   let f : Af M →+ Cinf M :=
     { toFun := fun y => pInf M (s (sFin M y))
       map_zero' := by simp
-      map_add' := fun a b => by simp [map_add] }
+      map_add' := fun a b => by simp [map_add (f := _)] }
   have hf : Continuous f := by
     have h1 : Continuous fun y : Af M => (sFin M y : Ad M) :=
       (continuous_const.prodMk continuous_id : Continuous fun y : Af M => ((0 : InfiniteAdeleRing M), y))
@@ -93,7 +93,7 @@ theorem map_finGL (σ : M ≃+* M) (s : Ad M ≃+* Ad M) (hs : IsGalAd σ s) {n 
     by_cases h : i = j <;> simp [Matrix.one_apply, h]
   have e2 : conjFin σ ((1 : Matrix (Fin n) (Fin n) (Af M)) i j) = (1 : Matrix (Fin n) (Fin n) (Af M)) i j := by
     by_cases h : i = j <;> simp [Matrix.one_apply, h]
-  rw [map_add, map_sub, e1, s_sFin σ s hs, s_sFin σ s hs, e2]
+  rw [map_add (f := _), map_sub, e1, s_sFin σ s hs, s_sFin σ s hs, e2]
 
 theorem main (σ : M ≃+* M) (s : Ad M ≃+* Ad M) (hs : IsGalAd σ s) {n : ℕ} (P P' : CuspSub M n)
     (hsp : (Cusp.cx P').space =

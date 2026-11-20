@@ -186,7 +186,7 @@ theorem theta_iff (f : WO S T → ℂ) : IsThetaFunO ψ S₀ T (fun w => f (d.ex
 theorem heisO_eqv (v : WO S₀ T) (K : WO S T → ℂ) :
     (fun w => heisO ψ S T (eqv d T v) K (eqv d T w)) = heisO ψ S₀ T v fun w => K (eqv d T w) := by
   funext w
-  simp only [heisO, sympl_eqv, map_add]
+  simp only [heisO, sympl_eqv, map_add (f := _)]
 
 def pull (om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)) : GA D S₀ × GA D T →* Module.End ℂ (WO S₀ T → ℂ) where
   toFun p :=
@@ -196,7 +196,7 @@ def pull (om : GA D S × GA D T →* Module.End ℂ (WO S T → ℂ)) : GA D S�
         have e : (fun x => (F + G) ((eqv d T).symm x)) = (fun x => F ((eqv d T).symm x)) + fun x => G ((eqv d T).symm x) :=
           rfl
         show om _ (fun x => (F + G) _) _ = om _ (fun x => F _) _ + om _ (fun x => G _) _
-        rw [e, map_add]; rfl
+        rw [e, map_add (f := _)]; rfl
       map_smul' := fun c F => by
         funext w
         have e : (fun x => (c • F) ((eqv d T).symm x)) = c • fun x => F ((eqv d T).symm x) := rfl
@@ -246,7 +246,7 @@ theorem isWeilDatumO_pull {χS χT : (AE D)ˣ →* Circle} {om : GA D S × GA D 
         heisO ψ S T (eqv d T w₀) (fun x => F ((eqv d T).symm x)) := by
       funext x
       simp only [heisO]
-      rw [← sympl_eqv_symm d T x (eqv d T w₀), map_add, AddEquiv.symm_apply_apply]
+      rw [← sympl_eqv_symm d T x (eqv d T w₀), map_add (f := _), AddEquiv.symm_apply_apply]
     rw [e1, H.om_heis _ _ _ _ (hT F hF)]
     rw [show actO S T (d.emb0 g) h (eqv d T w₀) = eqv d T (actO S₀ T g h w₀) from d.wittDecomp_homAction_extAnisotropic_equivariant T g h w₀]
     exact heisO_eqv d _ _

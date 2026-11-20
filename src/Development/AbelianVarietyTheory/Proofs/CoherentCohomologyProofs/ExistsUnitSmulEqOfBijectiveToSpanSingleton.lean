@@ -312,7 +312,7 @@ theorem isInvariant_of_isBaseChange [Finite G] [Module.Flat R S] [Algebra.IsInva
     | add a b ha hb =>
       obtain ⟨t, ht⟩ := ha
       obtain ⟨u, hu⟩ := hb
-      exact ⟨t + u, by rw [map_add, ht, hu]; rfl⟩
+      exact ⟨t + u, by rw [map_add (f := _), ht, hu]; rfl⟩
   exact key ⟨y, hy⟩
 
 omit [MulSemiringAction G A] [SMulCommClass G R A] [MulSemiringAction G A']
@@ -343,13 +343,13 @@ noncomputable def tensorMulSemiringAction : MulSemiringAction G (S ⊗[R] A) whe
     change Algebra.TensorProduct.map _ _ x = x
     induction x with
     | tmul s a => simp
-    | add x y hx hy => rw [map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), hx, hy]
   mul_smul g h x := by
     change Algebra.TensorProduct.map _ _ x =
       Algebra.TensorProduct.map _ _ (Algebra.TensorProduct.map _ _ x)
     induction x with
     | tmul s a => simp [mul_smul]
-    | add x y hx hy => rw [map_add, hx, hy, map_add, map_add]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
   smul_zero g := map_zero (Algebra.TensorProduct.map _ _)
   smul_add g := map_add (Algebra.TensorProduct.map _ _)
   smul_one g := map_one (Algebra.TensorProduct.map _ _)
@@ -681,7 +681,7 @@ noncomputable def piTensorMapₛₗ {A A' : Type*} [CommRing A] [CommRing A'] (�
       rw [MultilinearMap.map_coord_zero _ i (by simp [hx]), smul_zero])
     (fun x ↦ by simp)
     (fun r x i m₁ m₂ ↦ by
-      simp only [Function.apply_update (fun i ↦ (f i : M i → N i)), map_add,
+      simp only [Function.apply_update (fun i ↦ (f i : M i → N i)), map_add (f := _),
         MultilinearMap.map_update_add, smul_add])
     (fun r r' x ↦ by simp [add_smul])
     (fun r x i r' ↦ by
@@ -696,7 +696,7 @@ noncomputable def piTensorMapₛₗ {A A' : Type*} [CommRing A] [CommRing A'] (�
       rw [map_mul, mul_smul]
     | add x y hx hy =>
       simp only [ZeroHom.toFun_eq_coe, AddMonoidHom.toZeroHom_coe] at hx hy ⊢
-      rw [smul_add, map_add, map_add, hx, hy, smul_add]
+      rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 @[simp] theorem piTensorMapₛₗ_tprod {A A' : Type*} [CommRing A] [CommRing A'] (σ : A →+* A')
     {ι : Type*} {M N : ι → Type*} [∀ i, AddCommGroup (M i)] [∀ i, Module A (M i)]
@@ -789,12 +789,12 @@ noncomputable def piTensorDistribMulAction : DistribMulAction G (⨂[A] i, M i) 
     change piTensorMapₛₗ _ _ y = y
     induction y using PiTensorProduct.induction_on with
     | smul_tprod r x => simp [map_smulₛₗ]
-    | add x y hx hy => rw [map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), hx, hy]
   mul_smul g h y := by
     change piTensorMapₛₗ _ _ y = piTensorMapₛₗ _ _ (piTensorMapₛₗ _ _ y)
     induction y using PiTensorProduct.induction_on with
     | smul_tprod r x => simp [map_smulₛₗ, mul_smul]
-    | add x y hx hy => rw [map_add, hx, hy, map_add, map_add]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
   smul_zero g := map_zero (piTensorMapₛₗ _ _)
   smul_add g := map_add (piTensorMapₛₗ _ _)
 

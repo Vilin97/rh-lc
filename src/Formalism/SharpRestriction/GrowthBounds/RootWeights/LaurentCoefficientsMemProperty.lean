@@ -44,7 +44,7 @@ def weightEntryPropertySubmodule : Submodule R (MvPolynomial (ι × Fin n) R) wh
   add_mem' := by
     classical
     intro x y hx hy k1 _ φ g0 g0inv h m hm
-    rw [map_add] at hm
+    rw [map_add (f := _)] at hm
     rcases Finset.mem_union.1 (MvPolynomial.support_add hm) with h1 | h1
     · exact hx k1 φ g0 g0inv h m h1
     · exact hy k1 φ g0 g0inv h m h1

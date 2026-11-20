@@ -78,7 +78,7 @@ private theorem fock_of {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {ε : Bool} {M
   have hg₀ : ∀ t z, Dr (dir ε M X θ t z) g₀ +
       Complex.I • Dr (dir ε M X θ t (cplxO ((frSgn ε A).cart t) (B.cart t) z)) g₀ = 0 := fun t z => hi (by
     have h : annih (heisO ψ (sgn ε M) X) θ t (cplxO ((frSgn ε A).cart t) (B.cart t)) z (Θ g₀) = 0 := hv.2 t z
-    rw [annih, hd, hd, ← map_smul, ← map_add] at h
+    rw [annih, hd, hd, ← map_smul, ← map_add (f := _)] at h
     rw [h, map_zero])
   let um : FVar D X.rank M.rank → Matrix (Fin X.rank) (Fin M.rank) ℂ := fun k =>
     Formalism.IndefR.Datum.unitMap ((frSgn ε A).onb k.1) (B.onb k.1) k.2.1 k.2.2

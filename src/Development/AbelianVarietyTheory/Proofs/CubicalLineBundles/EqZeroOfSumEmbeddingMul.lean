@@ -99,7 +99,7 @@ theorem hermForm_eigen :
   have hconj : ∀ (σ : E →+* ℂ) a b, σ (h b a) = starRingEnd ℂ (σ (h a b)) := fun σ a b => by
     rw [hsymm a b, IsCMField.complexEmbedding_complexConj]
   have haddr : ∀ (σ : E →+* ℂ) e a b, σ (h e (a + b)) = σ (h e a) + σ (h e b) := fun σ e a b => by
-    rw [hconj σ (a + b) e, hconj σ a e, hconj σ b e, hadd, map_add, map_add]
+    rw [hconj σ (a + b) e, hconj σ a e, hconj σ b e, hadd, map_add (f := _), map_add (f := _)]
   have hsmulr : ∀ (σ : E →+* ℂ) (s : 𝓞 E) e a, σ (h e (s • a)) = starRingEnd ℂ (σ s) * σ (h e a) :=
     fun σ s e a => by rw [hconj σ (s • a) e, hconj σ a e, hsmul, map_mul, map_mul]
   set Ψ := Finset.univ.filter (fun τ : E →+* ℂ => τ (H.rt : E) = ρ) with hΨ
@@ -111,9 +111,9 @@ theorem hermForm_eigen :
       simp only [D, map_sub, map_mul, map_sum, Complex.conj_ofReal, ← hconj]
     rw [hermForm_conj Hm hH]
   have hDl : ∀ a b e, D (a + b) e = D a e + D b e := fun a b e => by
-    simp only [D, map_add, hadd, Finset.sum_add_distrib, hermForm_add_left]; ring
+    simp only [D, map_add (f := _), hadd, Finset.sum_add_distrib, hermForm_add_left]; ring
   have hDr : ∀ e a b, D e (a + b) = D e a + D e b := fun e a b => by
-    simp only [D, map_add, haddr, Finset.sum_add_distrib, hermForm_add_right]; ring
+    simp only [D, map_add (f := _), haddr, Finset.sum_add_distrib, hermForm_add_right]; ring
   have hDpol : ∀ a b, D a b + starRingEnd ℂ (D a b) = 0 := fun a b => by
     have := hD0 (a + b)
     rw [hDl, hDr, hDr, hD0, hD0, hDc a b] at this

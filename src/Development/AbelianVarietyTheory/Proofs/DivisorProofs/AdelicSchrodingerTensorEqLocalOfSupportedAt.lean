@@ -46,7 +46,7 @@ theorem schr_tens_of_at : ∀ {F : Type} [Field F] [NumberField F] (ψ : AddChar
   simp only [GlobalTheory.WeilM.schr, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens]
   rw [hr', eq_atPlace_of_at hz, ← psiV_apply]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [dotProduct, map_add, map_mul, map_sum, evFin_invOf_two, Pi.add_apply]
+    simp only [dotProduct, map_add (f := _), map_mul, map_sum, evFin_invOf_two, Pi.add_apply]
   rw [show (fun i => GlobalTheory.AdelicU.evFin F v (x i) + GlobalTheory.AdelicU.evFin F v (w.1 i)) =
     (fun i => GlobalTheory.AdelicU.evFin F v (x i)) + (fun i => GlobalTheory.AdelicU.evFin F v (w.1 i)) from rfl]
   ring

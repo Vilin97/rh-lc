@@ -154,7 +154,7 @@ theorem eval_aeval' {ι : Type*} (x : ι → ℂ) (ℓ : ι → MvPolynomial ι 
     eval x (aeval ℓ P) = eval (fun s => eval x (ℓ s)) P := by
   induction P using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p i hp => rw [map_mul, map_mul, map_mul, hp, aeval_X, eval_X]
 
 theorem RP_comp (H : VC D N N' → ℂ) (hH : AnalyticOnNhd ℂ H Set.univ)

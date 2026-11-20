@@ -42,9 +42,9 @@ theorem rel_add {A B : Pr V} {A' B' : Pr V'} (hA : Rel T A A') (hB : Rel T B B')
   intro v
   constructor
   · show A'.1 (T v) + B'.1 (T v) = T (A.1 v + B.1 v)
-    rw [map_add, (hA v).1, (hB v).1]
+    rw [map_add (f := _), (hA v).1, (hB v).1]
   · show A'.2.unop (T v) + B'.2.unop (T v) = T (A.2.unop v + B.2.unop v)
-    rw [map_add, (hA v).2, (hB v).2]
+    rw [map_add (f := _), (hA v).2, (hB v).2]
 
 theorem rel_neg {A : Pr V} {A' : Pr V'} (hA : Rel T A A') : Rel T (-A) (-A') := by
   rw [rel_iff_forall_apply] at *

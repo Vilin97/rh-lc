@@ -81,9 +81,9 @@ private theorem cocycles_finitely_generated (l : ℕ) [Fact l.Prime] {R G M : Ty
       add_mem' := by
         rintro a b ⟨ha1, ha2⟩ ⟨hb1, hb2⟩
         refine ⟨fun N => ?_, fun g h => ?_⟩
-        · simp only [Pi.add_apply, map_add]
+        · simp only [Pi.add_apply, map_add (f := _)]
           exact (ha1 N).add (hb1 N)
-        · simp only [Pi.add_apply, ha2, hb2, map_add]
+        · simp only [Pi.add_apply, ha2, hb2, map_add (f := _)]
           abel
       zero_mem' := ⟨fun N => by
           simp only [Pi.zero_apply, map_zero]

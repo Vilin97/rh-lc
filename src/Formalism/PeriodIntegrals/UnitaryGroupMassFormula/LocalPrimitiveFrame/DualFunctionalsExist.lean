@@ -192,7 +192,7 @@ theorem dualFunctionalsExist : Dual := by
         have hx' : x ∈ Lb := hS ▸ hx
         have hy' : y ∈ Lb := hS ▸ hy
         have h0 : (⟨x + y, hl⟩ : Lb) = ⟨x, hx'⟩ + ⟨y, hy'⟩ := rfl
-        rw [map_add, ihx hx', ihy hy', h0, map_add]
+        rw [map_add (f := _), ihx hx', ihy hy', h0, map_add (f := _)]
         exact (map_add (algebraMap (𝓞 E) E) _ _).symm
       | smul a x hx ihx =>
         intro hl

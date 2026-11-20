@@ -43,7 +43,7 @@ theorem contract_piTensor {Γ : α → Type} [∀ a, Group (Γ a)] (ρ : ∀ a, 
     (φ : ∀ a, X a →ₗ[ℂ] ℂ) (a : α) (g : Γ a) (w : ⨂[ℂ] b, X b) :
     contract φ a (piTensor ρ (Pi.mulSingle a g) w) = ρ a g (contract φ a w) := by
   induction w using PiTensorProduct.induction_on with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | smul_tprod c x =>
     simp only [map_smul, piTensor_tprod, contract_tprod, Pi.mulSingle_eq_same]
     congr 2

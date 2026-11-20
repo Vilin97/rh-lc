@@ -205,7 +205,7 @@ theorem thInd_index : ∀ (X : Fields) (A : Amb X) (a b : ℕ) (S : Finset (Heig
       · rfl
       · rintro _ ⟨y, hy, rfl⟩ _ ⟨l, hl, rfl⟩ ⟨l', hl', e⟩
         obtain rfl := hinj e
-        rw [← map_add]
+        rw [← map_add (f := _)]
         exact congrFun (hinv y hy l' hl hl') z
     rw [e1, Finset.mul_sum, xiS, sumU]
     refine Finset.sum_congr rfl fun v hv => ?_

@@ -49,7 +49,7 @@ theorem cF_cF (z : EAf D) : cF D (cF D z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul e α => rw [cF_tmul, cF_tmul, star_star]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem cF_eToEAf (x : D.host.E) : cF D (eToEAf D x) = eToEAf D (star x) := rfl
 

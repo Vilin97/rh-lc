@@ -97,7 +97,7 @@ private theorem val_gam (x : ℝ) (Λ : (K →+* ℂ) → Multiset ℂ) (t : Pl 
   unfold val
   induction γ using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp only [map_mul, hp]; simp
 
 private theorem evK_congr (hT : TruncSpec) (S : Set (Pl K)) (Φ : KF (Ix K n) (Pl K × Fin n)) (hΦ : admitted S Φ) (L L' : Ix K n → ℂ)

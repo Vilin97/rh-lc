@@ -164,7 +164,7 @@ theorem lift_form [∀ k, Fintype (ι k)] {n : ℕ} (h : ∀ c a, Good (F := F) 
   · rintro q₁ q₂ ⟨p₁, h₁, k₁⟩ ⟨p₂, h₂, k₂⟩
     refine ⟨p₁ + p₂, IsWeightedHomogeneous.add h₁ h₂, ?_⟩
     convert V'.add_mem k₁ k₂ using 1
-    rw [map_add]
+    rw [map_add (f := _)]
     ring
   · exact ⟨0, isWeightedHomogeneous_zero _ _ _, by simp⟩
   · intro d hd
@@ -176,7 +176,7 @@ theorem lift_form [∀ k, Fintype (ι k)] {n : ℕ} (h : ∀ c a, Good (F := F) 
     · have h1 := IsWeightedHomogeneous.mul hG
         (isWeightedHomogeneous_monomial (R := F) (blockWeight ι) d' 1 rfl)
       have h2 : (fun _ => n) + Finsupp.weight (blockWeight ι) d' = m := by
-        rw [← hw, hd', map_add, weight_ex]
+        rw [← hw, hd', map_add (f := _), weight_ex]
       rw [h2] at h1
       exact h1
     · have h1 := V'.mul_mem_right (monomial d' 1) hV

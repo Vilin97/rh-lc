@@ -198,7 +198,7 @@ theorem eq_of_near {K : Type} (Ξ : HomE E a b → K) {c d : E} (hc0 : c ≠ 0) 
       congr 2
       · exact LinearMap.toMatrix'_toLin' _
       · exact LinearMap.toMatrix'_toLin' _
-    rw [map_add, e1, LinearMap.toMatrix'_toLin', Matrix.mul_sub, ← Matrix.mul_assoc t' u', ht2', Matrix.one_mul]
+    rw [map_add (f := _), e1, LinearMap.toMatrix'_toLin', Matrix.mul_sub, ← Matrix.mul_assoc t' u', ht2', Matrix.one_mul]
     abel
   refine (congrArg Ξ e).trans ((hinv _ _ fun s l => intAt_inv_mul hd0 ?_).trans (hcong _ _ (hk ht1 ht2 n1) (hk ht1' ht2' n2) x))
   have e2 : Matrix.toLin' (t' * (u' * X' - X * u)) (Pi.single s 1) l = (t' * (u' * X' - X * u)) l s := by

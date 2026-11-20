@@ -128,7 +128,7 @@ theorem evX_DM (ε : Fin m → Bool) (c : ℝ) (H : Matrix (Fin n) (Fin n) ℂ) 
   have h : DM ε c H R = C ((m : ℂ) * H.trace) * R + DMp ε c H R := by
     simp only [DM, DMp]
     ring
-  rw [h, evX_eq, evX_eq, evX_eq, map_add, map_mul, eval_C]
+  rw [h, evX_eq, evX_eq, evX_eq, map_add (f := _), map_mul, eval_C]
 
 end PositivityTheory.Rg.Sw.AbsSt.SDM
 

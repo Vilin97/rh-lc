@@ -77,7 +77,7 @@ theorem exists_linear (d : ℕ) (c : MvPolynomial (Fin 2) ℤ) : ∃ a b : ℤ[X
   | add p q hp hq =>
     obtain ⟨a, b, h⟩ := hp
     obtain ⟨a', b', h'⟩ := hq
-    exact ⟨a + a', b + b', fun K _ ζ ρ e => by rw [map_add, h K ζ ρ e, h' K ζ ρ e, map_add, map_add]; ring⟩
+    exact ⟨a + a', b + b', fun K _ ζ ρ e => by rw [map_add (f := _), h K ζ ρ e, h' K ζ ρ e, map_add (f := _), map_add (f := _)]; ring⟩
   | mul_X p i hp =>
     obtain ⟨a, b, h⟩ := hp
     fin_cases i

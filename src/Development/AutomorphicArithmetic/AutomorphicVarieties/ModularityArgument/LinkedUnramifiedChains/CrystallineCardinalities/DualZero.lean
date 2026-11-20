@@ -19,9 +19,9 @@ private theorem exists_nat_sub_mem_span_pow_and_toZModPow_eq_and_toZMod_eq (l : 
   refine ⟨n, ?_, h1, ?_⟩
   · rw [Ideal.mem_span_singleton]
     refine ⟨algebraMap ℤ_[l] O t, ?_⟩
-    rw [ha, map_add, map_mul, map_pow, map_natCast, map_natCast]
+    rw [ha, map_add (f := _), map_mul, map_pow, map_natCast, map_natCast]
     ring
-  · rw [ha, map_add, map_mul, map_pow, map_natCast, map_natCast, ZMod.natCast_self,
+  · rw [ha, map_add (f := _), map_mul, map_pow, map_natCast, map_natCast, ZMod.natCast_self,
       zero_pow hk.ne', zero_mul, add_zero]
 
 theorem UpperTheory.V.Z.J.dualZero :
@@ -66,7 +66,7 @@ theorem UpperTheory.V.Z.J.dualZero :
     rw [Ideal.mem_jacobson_bot]
     intro y
     apply hunit
-    rw [map_add, map_mul, hIφ x hx, zero_mul, zero_add, map_one]
+    rw [map_add (f := _), map_mul, hIφ x hx, zero_mul, zero_add, map_one]
     exact one_ne_zero
   ext f
   rw [Set.mem_singleton_iff]
@@ -94,7 +94,7 @@ theorem UpperTheory.V.Z.J.dualZero :
     { carrier := {x | ∀ c : Ok l O k, f (c • x) = 0}
       add_mem' := by
         intro x y hx hy c
-        rw [smul_add, map_add, hx c, hy c, add_zero]
+        rw [smul_add, map_add (f := _), hx c, hy c, add_zero]
       zero_mem' := by
         intro c
         rw [smul_zero, map_zero]

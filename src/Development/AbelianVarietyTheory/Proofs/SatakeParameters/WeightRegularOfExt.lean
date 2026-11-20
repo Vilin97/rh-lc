@@ -227,7 +227,7 @@ theorem eig_mem (eig : Eig N A) (h1 : EigAway N A eig) (h2 : EigAbove N A eig) (
 theorem galPol_sum {w : PlE H} (a b : A.LP w) (ha : A.unr a) (hb : A.unr b) :
     galPol A (A.lpSum a b) = galPol A a * galPol A b := by
   unfold galPol
-  rw [A.frobEig_sum a b ha hb, Multiset.map_add, Multiset.prod_add]
+  rw [A.frobEig_sum a b ha hb, Multiset.map_add (f := _), Multiset.prod_add]
 
 theorem galPol_tw_sum {w : PlE H} (a b : A.LP w) (ha : A.unr a) (hb : A.unr b) (s : ℝ) :
     galPol A (A.lpTw (A.lpSum a b) s) = galPol A (A.lpTw a s) * galPol A (A.lpTw b s) := by

@@ -80,7 +80,7 @@ theorem Good.add {F G : GA E a → ℂ} (hF : Good F) (hG : Good G) : Good (F + 
   obtain ⟨hG1, hG2⟩ := hG
   refine ⟨add_mem hF1 hG1, fun l => ?_⟩
   have e : (⟨F + G, add_mem hF1 hG1⟩ : Sm E a) = ⟨F, hF1⟩ + ⟨G, hG1⟩ := rfl
-  rw [e, map_add, Submodule.coe_add]
+  rw [e, map_add (f := _), Submodule.coe_add]
   exact ⟨(hF2 l).1.add (hG2 l).1, (hF2 l).2.add (hG2 l).2⟩
 
 theorem Good.smul {F : GA E a → ℂ} (hF : Good F) (z : ℂ) : Good (z • F) := by

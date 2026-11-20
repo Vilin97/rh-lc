@@ -246,7 +246,7 @@ theorem unit_of (p : HeightOneSpectrum (𝓞 F)) (ϖ : (A p).Fp) (hϖ0 : ϖ ≠ 
     rw [Valuation.mem_integer_iff]; exact hϖ.le
   have hwO : w ∈ (A p).O := (A p).O.add_mem (A p).O.one_mem ((A p).O.mul_mem (alg_mem_O _ _ hϖO) ho)
   have hcw : (A p).cj w = 1 + algebraMap _ _ ϖ * (A p).cj o := by
-    rw [hw, map_add, map_one, map_mul, AlgEquiv.commutes]
+    rw [hw, map_add (f := _), map_one, map_mul, AlgEquiv.commutes]
   obtain ⟨n, hn⟩ := H.cjfix p (w * (A p).cj w) (by rw [map_mul, H.cjcj]; ring)
   have hco := cj_mem (A p) o ho
   have h1 : algebraMap (A p).Fp (A p).Ep ((n - 1) * ϖ⁻¹) =

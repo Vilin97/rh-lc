@@ -42,7 +42,7 @@ theorem psi_mem_U_all (S : HSpace E) (M : Model S) (L : Submodule (𝓞 E) S.V) 
         exact zero_mem _
     | add x y _ _ hx hy =>
         intro c
-        rw [smul_add, map_add]
+        rw [smul_add, map_add (f := _)]
         exact add_mem (hx c) (hy c)
     | smul a x _ hx =>
         intro c

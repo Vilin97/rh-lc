@@ -42,7 +42,7 @@ private theorem comap_tr {n : ℕ} {R G H : Type} [CommRing R] [Group G] [Group 
     · simp
     · induction z using MonoidAlgebra.induction_linear with
       | zero => simp
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
       | single g r => simp
   simp only [GDet.tr, GDet.lam, hc]
 

@@ -145,7 +145,7 @@ theorem exists_ptDer {y : Sp ℂ ⟶ X} {v : Sp (DualNumber ℂ) ⟶ X} (hv : pt
   have H : ∀ W, ⊤ ≤ y ⁻¹ᵁ W → ⊤ ≤ v ⁻¹ᵁ W := fun W h => (le_preimage_iff v _).2 (hv ▸ h)
   refine ⟨fun W f => if h : ⊤ ≤ v ⁻¹ᵁ W then (ev v W h f).snd else 0, ⟨?_, ?_, ?_⟩, fun W h f => ?_⟩
   · intro W h f f'
-    simp only [dif_pos (H W h), map_add, TrivSqZeroExt.snd_add]
+    simp only [dif_pos (H W h), map_add (f := _), TrivSqZeroExt.snd_add]
   · intro W h f f'
     simp only [dif_pos (H W h), map_mul, DualNumber.snd_mul, fst_ev hv]
     ring

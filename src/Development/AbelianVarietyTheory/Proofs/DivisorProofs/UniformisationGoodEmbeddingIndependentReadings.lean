@@ -41,7 +41,7 @@ noncomputable def evLin {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T0 : Type
   toFun := evAt R i σ v
   map_add' x y := by
     unfold evAt
-    rw [map_add]
+    rw [map_add (f := _)]
     rfl
   map_smul' a x := by
     unfold evAt

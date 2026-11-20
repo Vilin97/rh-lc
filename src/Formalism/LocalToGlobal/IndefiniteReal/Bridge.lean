@@ -19,7 +19,7 @@ def AdForms (ρ : Γ →* Module.End ℂ W) (J : Subgroup G) (χ : J →* ℂˣ)
   carrier := {F | ∀ (γ : Γ) (h : G) (k : J), F (ι γ * h * k) = (χ k : ℂ) • ρ γ (F h)}
   add_mem' := by
     intro F F' hF hF' γ h k
-    simp only [Pi.add_apply, hF γ h k, hF' γ h k, map_add, smul_add]
+    simp only [Pi.add_apply, hF γ h k, hF' γ h k, map_add (f := _), smul_add]
   zero_mem' := by
     intro γ h k
     simp
@@ -101,7 +101,7 @@ def extL : S.Forms →ₛₗ[σ] (G → W) where
   map_add' := by
     intro f f'
     funext h
-    simp only [ext, Submodule.coe_add, Pi.add_apply, map_add, smul_add]
+    simp only [ext, Submodule.coe_add, Pi.add_apply, map_add (f := _), smul_add]
   map_smul' := by
     intro a f
     funext h

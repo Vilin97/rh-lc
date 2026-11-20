@@ -170,7 +170,7 @@ theorem dual_eq_zpow : ∀ (F E : Type) [NontriviallyNormedField F] [Nontriviall
     have h1 := h 1 (one_mem O)
     have htr : Algebra.trace A.K A.L (star (algebraMap A.K A.L c) * 1) = 2 * c := by
       apply hinj
-      rw [mul_one, A.star_K, (GlobalTheory.JR.EtFacts.main F E A).2.1, A.star_K, two_mul, map_add]
+      rw [mul_one, A.star_K, (GlobalTheory.JR.EtFacts.main F E A).2.1, A.star_K, two_mul, map_add (f := _)]
     have hac : (a : A.K) * (2 * c) = algebraMap F A.K (2 * t) := by
       rw [hc, map_mul, map_ofNat, ← mul_assoc, mul_comm (a : A.K) 2, mul_assoc 2, ← mul_assoc (a : A.K),
         Units.mul_inv, one_mul]

@@ -184,7 +184,7 @@ def smSub (ρ : Representation ℂ G V) : Submodule ℂ V where
   add_mem' := by
     rintro a b ⟨U, hU, ha⟩ ⟨U', hU', hb⟩
     refine ⟨U ⊓ U', hU.inter hU', GlobalTheory.LGrp.mem_fixed.2 fun u hu => ?_⟩
-    rw [map_add, GlobalTheory.LGrp.mem_fixed.1 ha u hu.1, GlobalTheory.LGrp.mem_fixed.1 hb u hu.2]
+    rw [map_add (f := _), GlobalTheory.LGrp.mem_fixed.1 ha u hu.1, GlobalTheory.LGrp.mem_fixed.1 hb u hu.2]
   zero_mem' := ⟨⊤, isOpen_univ, GlobalTheory.LGrp.mem_fixed.2 fun u _ => map_zero _⟩
   smul_mem' := by
     rintro c a ⟨U, hU, ha⟩
@@ -270,7 +270,7 @@ theorem node_tens {φ : Sm E (r + s)} (hφ : φ ∈ (Tr.node t₁ t₂).space) (
   induction hφ using Submodule.span_induction with
   | mem φ h => exact tw_tens (h.1.2 k y)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
 
 theorem node_fin {φ : Sm E (r + s)} (hφ : φ ∈ (Tr.node t₁ t₂).space) (g : GL (Fin (r + s)) (Af E)) :
@@ -291,7 +291,7 @@ theorem node_fin {φ : Sm E (r + s)} (hφ : φ ∈ (Tr.node t₁ t₂).space) (g
       rw [e] at this
       exact this
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
 
 end Node
@@ -421,7 +421,7 @@ theorem exists_ind (h₁ : ∀ g, ∀ x ∈ t₁.space, ((finRep E r).comp (locG
     { toFun := fun φ => ⟨⟨F φ, hlaw φ⟩, hop φ⟩
       map_add' := fun a b => Subtype.ext (Subtype.ext (funext fun g => by
         change T _ = T _ + T _
-        simp only [Submodule.coe_add, map_add]))
+        simp only [Submodule.coe_add, map_add (f := _)]))
       map_smul' := fun c a => Subtype.ext (Subtype.ext (funext fun g => by
         change T _ = c • T _
         simp only [Submodule.coe_smul, map_smul])) }

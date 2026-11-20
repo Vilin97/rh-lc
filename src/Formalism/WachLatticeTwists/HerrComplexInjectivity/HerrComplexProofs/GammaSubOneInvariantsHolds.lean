@@ -75,7 +75,7 @@ theorem invariants_exist_holds : StatInvExists := by
     { carrier := {x | ∀ i d, ρ i d (x i) = x i}
       add_mem' := by
         intro a b ha hb i d
-        rw [Pi.add_apply, map_add, ha, hb]
+        rw [Pi.add_apply, map_add (f := _), ha, hb]
       zero_mem' := by
         intro i d
         rw [Pi.zero_apply, map_zero]
@@ -102,7 +102,7 @@ theorem invariants_exist_holds : StatInvExists := by
         rw [smul_add])
       add_smul := fun a b x => Subtype.ext (funext fun i => by
         show IB.j (a + b) • x.1 i = IB.j a • x.1 i + IB.j b • x.1 i
-        rw [map_add, add_smul])
+        rw [map_add (f := _), add_smul])
       zero_smul := fun x => Subtype.ext (funext fun i => by
         show IB.j 0 • x.1 i = 0
         rw [map_zero, zero_smul]) }

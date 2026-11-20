@@ -47,7 +47,7 @@ theorem ρ_mul_proj {T : AddSubgroup S.Gam} (hT : S.IsoFree T) (c : T →+ ZMod 
   rw [Finset.mul_sum, Finset.smul_sum,
     ← Equiv.sum_comp (Equiv.addLeft a) fun t : T => S.ζN ^ (c a).val • chi S (c t) • S.ρ t]
   refine Finset.sum_congr rfl fun t _ => ?_
-  rw [Matrix.mul_smul, ρ_mul_ρ hT, Equiv.coe_addLeft, map_add, chi_add, smul_smul, ← _root_.mul_assoc, h1, _root_.one_mul]
+  rw [Matrix.mul_smul, ρ_mul_ρ hT, Equiv.coe_addLeft, map_add (f := _), chi_add, smul_smul, ← _root_.mul_assoc, h1, _root_.one_mul]
 
 end Alg
 

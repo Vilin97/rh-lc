@@ -23,7 +23,7 @@ theorem cA_smul (r : AF D.host.F) (z : AE D) : cA D (r • z) = r • cA D z := 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [cA, sigR, TensorProduct.smul_tmul']
-  | add a b ha hb => rw [smul_add, map_add, map_add, ha, hb, smul_add]
+  | add a b ha hb => rw [smul_add, map_add (f := _), map_add (f := _), ha, hb, smul_add]
 
 def cALin (D : D7) : AE D →ₗ[AF D.host.F] AE D where
   toFun := cA D
@@ -37,7 +37,7 @@ theorem infPart_cA_eq (a : AE D) : infPart D (cA D a) = sigR (Ainf D.host.F) D.s
     induction a using TensorProduct.induction_on with
     | zero => simp
     | tmul r e => simp [cA, sigR, infPart]
-    | add a b ha hb => rw [map_add, map_add, map_add, ha, hb, map_add]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb, map_add (f := _)]
 
 theorem infPart_cA' (a : AE D) (h : infPart D a = 0) : infPart D (cA D a) = 0 := by
   rw [infPart_cA_eq, h, map_zero]

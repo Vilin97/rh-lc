@@ -43,7 +43,7 @@ theorem iso_mem {V ι J : Type} [AddCommGroup V] [Module ℂ V] (A : ι → V �
         U.sub_mem (hU i _ hsum) (U.smul_mem _ hsum)
       have h2 : A i (z a + ∑ j ∈ s, z j) - l a i • (z a + ∑ j ∈ s, z j) = ∑ j ∈ s, (l j i - l a i) • z j := by
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [map_add, map_sum, hz a (Finset.mem_insert_self a s), smul_add, Finset.smul_sum,
+          rw [map_add (f := _), map_sum, hz a (Finset.mem_insert_self a s), smul_add, Finset.smul_sum,
           Finset.sum_congr rfl (fun j hj => hz j (Finset.mem_insert_of_mem hj) i), add_sub_add_comm, sub_self, zero_add,
           ← Finset.sum_sub_distrib]
         exact Finset.sum_congr rfl fun j _ => (sub_smul _ _ _).symm
@@ -86,7 +86,7 @@ theorem symplOH_eq (S T : HSp D) (m y : WO S T) :
   unfold symplOH
   rw [GlobalTheory.SplitScalar.symplO_skew S T m y]
   have ha : (algebraMap D.host.F (AF D.host.F)) (1 / 2) + (algebraMap D.host.F (AF D.host.F)) (1 / 2) = 1 := by
-    rw [← map_add]; norm_num
+    rw [← map_add (f := _)]; norm_num
   linear_combination (symplO S T m y) * ha
 
 theorem heisO_eig (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D) {m y : WO S T} {f : WO S T → ℂ} {c : ℂ}

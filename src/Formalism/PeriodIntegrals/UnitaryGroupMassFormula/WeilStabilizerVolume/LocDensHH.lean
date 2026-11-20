@@ -87,7 +87,7 @@ variable {b v}
 theorem intA_zero : intA b v 0 := fun k => by simp [zero_mem]
 
 theorem intA_add {z w : Fv F v ⊗[F] E} (hz : intA b v z) (hw : intA b v w) : intA b v (z + w) :=
-  fun k => by rw [map_add, Finsupp.add_apply]; exact add_mem (hz k) (hw k)
+  fun k => by rw [map_add (f := _), Finsupp.add_apply]; exact add_mem (hz k) (hw k)
 
 theorem intA_sum {ι : Type} (t : Finset ι) (f : ι → Fv F v ⊗[F] E) (hf : ∀ i ∈ t, intA b v (f i)) :
     intA b v (∑ i ∈ t, f i) := by
@@ -288,7 +288,7 @@ theorem hensAA_holds : HensAA := by
   have hTii : ∀ i j, intA b v (Ti i j) := fun i j => intA_incl _ (g5 i j)
 
   set h : Fv F v ⊗[F] E := inclR (Fv F v) (1 / 2 : E) with hhdef
-  have hh : h + h = 1 := by rw [hhdef, ← map_add, add_halves, map_one]
+  have hh : h + h = 1 := by rw [hhdef, ← map_add (f := _), add_halves, map_one]
   have hsh : s h = h := by
     rw [hsdef, hhdef, sigR_incl]
     congr 1

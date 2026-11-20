@@ -54,7 +54,7 @@ theorem exists_log (T : GrpData p q) {k : T.G} (hk : k ∈ T.Kset) :
   have hX : φ.symm Y ∈ upq p q := by
     show (φ.symm Y)ᴴ * Jm p q + Jm p q * φ.symm Y = 0
     apply φ.injective
-    rw [map_add, map_mul, map_mul, hstar, hJ, hφX, map_zero]
+    rw [map_add (f := _), map_mul, map_mul, hstar, hJ, hφX, map_zero]
     exact hY.1
   refine ⟨φ.symm Y, hX, ?_, ?_⟩
   · rw [isKC_iff]

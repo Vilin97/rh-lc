@@ -58,7 +58,7 @@ theorem stab_kapX_of_isStabW : GlobalTheory.FunPr.Hypotheses₂ → ∀ (D : D7)
       obtain ⟨T₁, h₁⟩ := hx
       obtain ⟨T₂, h₂⟩ := hy
       refine ⟨T₁ ∪ T₂, fun S hTS hS₀S k hk1 hk2 hk3 hk4 => ?_⟩
-      rw [map_add, h₁ S (Finset.union_subset_left hTS) hS₀S k hk1 hk2 hk3 hk4,
+      rw [map_add (f := _), h₁ S (Finset.union_subset_left hTS) hS₀S k hk1 hk2 hk3 hk4,
         h₂ S (Finset.union_subset_right hTS) hS₀S k hk1 hk2 hk3 hk4]
     | smul c x _ hx =>
       obtain ⟨T, hT'⟩ := hx

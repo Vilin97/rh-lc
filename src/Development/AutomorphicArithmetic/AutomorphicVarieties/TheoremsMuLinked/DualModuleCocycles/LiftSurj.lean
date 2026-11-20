@@ -25,8 +25,8 @@ private theorem lift_surj {B E E' P : Type} [CommRing B] [Ring E] [Ring E'] [Rin
   · change ρ (s 0) = 0
     rw [← map_zero q, hq', map_zero]
   · change ρ (s (a + b)) = ρ (s a) + ρ (s b)
-    rw [← map_add]
-    exact key _ _ (by rw [map_add, hs, hs, hs])
+    rw [← map_add (f := _)]
+    exact key _ _ (by rw [map_add (f := _), hs, hs, hs])
   · change ρ (s (algebraMap B E' r)) = _
     rw [← q.commutes, hq', ρ.commutes]
 

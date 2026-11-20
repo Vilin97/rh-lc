@@ -170,7 +170,7 @@ theorem ringAct (hM : MapSt) : RingActSt := by
       obtain ⟨v, rfl⟩ := hbij.2 v
       obtain ⟨v, rfl⟩ := eO.surjective v
       induction v with
-      | add u v hu hv => simp only [map_add, hu, hv]
+      | add u v hu hv => simp only [map_add (f := _), hu, hv]
       | tmul r w =>
         rw [← mul_one r, ← smul_eq_mul, ← TensorProduct.smul_tmul']
         simp only [map_smul]

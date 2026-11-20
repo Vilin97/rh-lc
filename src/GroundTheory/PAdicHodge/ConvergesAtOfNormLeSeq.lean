@@ -227,7 +227,7 @@ theorem exists_start_point {x : T.RobbaExt ρ0} (hx : x ≠ 0) {r : ℝ} (h : 0 
     refine (T.norm_ptEval_le hξ0 hr0 _).trans_lt ?_
     rw [hIoc]; exact hb
   have e : x = ((b : T.Econ ρ0) : T.RobbaExt ρ0) + (x - ((b : T.Econ ρ0) : T.RobbaExt ρ0)) := by ring
-  rw [e, map_add]
+  rw [e, map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt hbval hxb)
 
 section Iterate
@@ -564,7 +564,7 @@ theorem exists_zero_of_goodPt (hx : x ≠ 0) (hm : 1 ≤ T.mult x r) (P0 : T.Goo
       rw [le_div_iff₀ h.1, mul_comm]
       exact this
     have e := D.eq
-    rw [e, map_add, map_mul]
+    rw [e, map_add (f := _), map_mul]
     refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le_max h1 ?_)
     rw [norm_mul]
     exact mul_le_mul h2 h3 (norm_nonneg _) (gaussNorm_nonneg h.1)

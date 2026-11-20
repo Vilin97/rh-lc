@@ -260,7 +260,7 @@ theorem map_scale_eq_prod {Q : F[X]} (hQ : Q.Monic) (β c : F) (hc : c ≠ 0) :
   have hcard : Multiset.card f.roots = Q.natDegree := by
     rw [← (IsAlgClosed.splits f).natDegree_eq_card_roots, natDegree_map]
   have hc' : algebraMap F E c ≠ 0 := (map_ne_zero_iff _ (algebraMap F E).injective).2 hc
-  rw [Polynomial.map_mul, Polynomial.map_C, map_comp, Polynomial.map_add, Polynomial.map_mul,
+  rw [Polynomial.map_mul, Polynomial.map_C, map_comp, Polynomial.map_add (f := _), Polynomial.map_mul,
     Polynomial.map_C, Polynomial.map_C, Polynomial.map_X]
   change _ * f.comp _ = _
   conv_lhs => rw [hf]

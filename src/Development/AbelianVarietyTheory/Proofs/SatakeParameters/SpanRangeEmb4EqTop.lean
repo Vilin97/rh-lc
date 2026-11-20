@@ -115,7 +115,7 @@ theorem area_eq (L : PeriodPair) : TaylorLogMetric.area L.lattice.toAddSubgroup 
       obtain ⟨k, l, rfl⟩ := PeriodPair.mem_lattice.1 h₂
       have key : (conj ((m : ℂ) * L.ω₁ + (n : ℂ) * L.ω₂) * ((k : ℂ) * L.ω₁ + (l : ℂ) * L.ω₂)).im
           = ((m * l - n * k : ℤ) : ℝ) * (conj L.ω₁ * L.ω₂).im := by
-        simp only [map_add, map_mul, map_intCast, Complex.mul_im, Complex.add_im, Complex.add_re, Complex.mul_re,
+        simp only [map_add (f := _), map_mul, map_intCast, Complex.mul_im, Complex.add_im, Complex.add_re, Complex.mul_re,
           Complex.conj_re, Complex.conj_im, Complex.intCast_re, Complex.intCast_im]
         push_cast; ring
       rw [key, abs_mul] at ha ⊢
@@ -619,7 +619,7 @@ theorem up : ∃ N : ℕ, 0 < N ∧
   let f : Fin 4 × (Fin 4 × D.what₂.Tau) → D.host.E →+ D.host.K := fun p =>
     { toFun := fun x => B.γ₀.g (Pi.single p.1 x) p.2
       map_zero' := by simp
-      map_add' := fun x y => by rw [Pi.single_add, map_add]; rfl }
+      map_add' := fun x y => by rw [Pi.single_add, map_add (f := _)]; rfl }
   obtain ⟨m, hm, hf⟩ := denom D.host.E D.host.K f
   refine ⟨m * k, Nat.mul_pos hm hk, ?_⟩
   have hle : pow4 B.lamM ≤ ((stdLat B.L (Fin 4 × D.what₂.Tau)).comap

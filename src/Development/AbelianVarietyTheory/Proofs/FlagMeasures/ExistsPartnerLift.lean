@@ -105,12 +105,12 @@ theorem comp_eq_zero (F : FlagG S r T) (F' : FlagG S r T') (hG : Gflag F F' ≠ 
     exact hG) (by
     funext i
     have := h _ (Submodule.mem_sup_left (fvec_mem_Xplus F i))
-    rw [map_add, hT_fvec_sum, neg_add_eq_zero] at this
+    rw [map_add (f := _), hT_fvec_sum, neg_add_eq_zero] at this
     rw [this]
     simp [Matrix.mulVec, dotProduct, Zhat, brS, mul_comm]) (by
     funext i
     have := h _ (Submodule.mem_sup_right (fvec_mem_Xplus F' i))
-    rw [map_add, hT_fvec_sum, add_neg_eq_zero] at this
+    rw [map_add (f := _), hT_fvec_sum, add_neg_eq_zero] at this
     rw [← this]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [Matrix.mulVec, dotProduct, Zhat, brS, map_sum, map_smul, Matrix.conjTranspose_apply, smul_eq_mul]
@@ -451,7 +451,7 @@ theorem det_seen_le {T : D.host.E} (F : Fg D T) (hΛ : Submodule.IsLattice D.hos
       rw [e]
       exact Λ.add_mem (Λ.sub_mem b3 a3) (hM h)
     · convert (Xsp F).sub_mem b2 a2 using 1
-      rw [map_add, map_neg]
+      rw [map_add (f := _), map_neg]
       abel
 
 end Rec

@@ -368,7 +368,7 @@ theorem restrict_inf : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Num
   have hs : ∀ y, sigR w.Completion σ (sigR w.Completion σ y) = y := fun y => by
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a x => exact congrArg (a ⊗ₜ[F] ·) (sigma_sigma hσ x)
   have hmc : ∀ {k l : ℕ} (Z : Matrix (Fin k) (Fin l) E),
       cT (sigR w.Completion σ) (Z.map (inclR (F := F) w.Completion)) = (cT (σ : E →+* E) Z).map (inclR (F := F) w.Completion) :=

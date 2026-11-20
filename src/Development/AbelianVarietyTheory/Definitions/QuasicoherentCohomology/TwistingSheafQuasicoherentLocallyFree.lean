@@ -136,7 +136,7 @@ theorem coord_independent (a b : R)
     (h : algebraMap R Γ(PSpace R 1, ⊤) a • ofSec (ProjSpace.coord R 1 0) ⊤ +
       algebraMap R Γ(PSpace R 1, ⊤) b • ofSec (ProjSpace.coord R 1 1) ⊤ = 0) : a = 0 ∧ b = 0 := by
   have e := congrArg (fun s => (globalEquiv (O1 R 1) s).f (0 : Fin 2)) h
-  simp only [map_add, map_smul, map_zero, ← globalEquiv_symm_apply, LinearEquiv.apply_symm_apply,
+  simp only [map_add (f := _), map_smul, map_zero, ← globalEquiv_symm_apply, LinearEquiv.apply_symm_apply,
     add_f, smul_f, zero_f] at e
   have e' : algebraMap R Γ(PSpace R 1, chart R 1 0) a * ratio R 1 0 0 +
       algebraMap R Γ(PSpace R 1, chart R 1 0) b * ratio R 1 0 1 = 0 := by
@@ -147,7 +147,7 @@ theorem coord_independent (a b : R)
     ((isHomogeneous_X R 0).C_mul a).add ((isHomogeneous_X R 1).C_mul b)
   have hz : (C a * MvPolynomial.X 0 + C b * MvPolynomial.X 1 : MvPolynomial (Fin 2) R) = 0 := by
     rw [← formOn_chart_inj R 1 0 hf (isHomogeneous_zero _ R 1), formOn_zero, formOn_eq_aeval]
-    simp only [map_add, map_mul, aeval_C, aeval_X]
+    simp only [map_add (f := _), map_mul, aeval_C, aeval_X]
     exact e'
   exact ⟨by simpa using congrArg (eval ![1, 0]) hz, by simpa using congrArg (eval ![0, 1]) hz⟩
 

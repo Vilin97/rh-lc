@@ -19,7 +19,7 @@ lemma one_le_det_one_add {m : Type*} [Fintype m] [DecidableEq m] {Z : Matrix m m
       det_one, mul_one]
   have key : 1 + Z = (Unitary.conjStarAlgAut ℂ (Matrix m m ℂ) hZ.1.eigenvectorUnitary)
       (1 + diagonal (RCLike.ofReal ∘ hZ.1.eigenvalues)) := by
-    rw [map_add, map_one, ← hspec]
+    rw [map_add (f := _), map_one, ← hspec]
   rw [key, Unitary.conjStarAlgAut_apply, hdet, ← diagonal_one, diagonal_add, det_diagonal]
   have hev := hZ.eigenvalues_nonneg
   have hprod : ∏ i, ((1 : ℂ) + (RCLike.ofReal ∘ hZ.1.eigenvalues) i) =

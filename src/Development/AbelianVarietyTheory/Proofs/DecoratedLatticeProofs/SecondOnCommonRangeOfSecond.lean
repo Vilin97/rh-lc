@@ -68,7 +68,7 @@ theorem selfDual_of_covolOne {m : ℕ} {T : Matrix (Fin m) (Fin m) D.host.E} (hT
     exact hψ.1.comp (ht.comp (continuous_const.matrix_mul continuous_id).matrix_trace)
   · simp only [hs _ y]
     unfold GramMatrixBlocks.pairing GramMatrixBlocks.trA GramMatrixBlocks.gramQ GramMatrixBlocks.mmul
-    rw [Matrix.mul_add, Matrix.trace_add, map_add, AddChar.map_add_eq_mul]
+    rw [Matrix.mul_add, Matrix.trace_add, map_add (f := _), AddChar.map_add_eq_mul]
 
 theorem mem_siegelParabolic_of_lowerLeft_entries_eq_zero {g : G D n}
     (h : ∀ i j, mat g (finSumFinEquiv (.inr i)) (finSumFinEquiv (.inl j)) = 0)

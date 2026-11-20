@@ -25,7 +25,7 @@ theorem exists_eq_add_single {α : Fin d →₀ ℕ} (h : α ≠ 0) :
     · simp [Finsupp.single_apply, Ne.symm hj]
   refine ⟨i, α - Finsupp.single i 1, (tsub_add_cancel_of_le hle).symm, ?_⟩
   conv_lhs => rw [← tsub_add_cancel_of_le hle]
-  rw [map_add, Finsupp.degree_single]
+  rw [map_add (f := _), Finsupp.degree_single]
 
 variable (c : Chart G d)
 
@@ -67,7 +67,7 @@ theorem dUnit_ev_of_two (n : ℕ) (f : MvPowerSeries (Fin d) O)
   classical
   set P := trunc' O (Finsupp.equivFunOnFinite.symm fun _ => N) f with hP
   have hsplit : f = (P : MvPowerSeries (Fin d) O) + (f - P) := by ring
-  rw [hsplit, map_add, dUnit, map_add, ← dUnit, ← dUnit]
+  rw [hsplit, map_add (f := _), dUnit, map_add (f := _), ← dUnit, ← dUnit]
   rw [c.dUnit_ev_of_high n N hN (f - P) fun α hα => ?_, add_zero]
   · rw [MvPolynomial.as_sum P]
     have : ((∑ v ∈ P.support, MvPolynomial.monomial v (AddMonoidAlgebra.coeff P v) :
@@ -110,7 +110,7 @@ theorem dlog_eq_sum_lin [Fact p.Prime] (χ : G.dual.Tate) (u : MvPowerSeries (Fi
   have e1 : dUnit O (c.ev n u) = dUnit O (c.ev n 1) + dUnit O (c.ev n g) +
       dUnit O (c.ev n (u - 1 - g)) := by
     conv_lhs => rw [hsplit]
-    simp only [PDiv.dUnit, map_add]
+    simp only [PDiv.dUnit, map_add (f := _)]
   rw [e1, c.dUnit_ev_of_two n (u - 1 - g) ?_, add_zero, map_one, hev]
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [PDiv.dUnit, AugCot.d_one, zero_add, map_sum, map_smul]

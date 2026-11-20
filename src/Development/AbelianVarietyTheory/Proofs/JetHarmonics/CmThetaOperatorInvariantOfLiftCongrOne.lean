@@ -68,7 +68,7 @@ theorem _root_.GlobalTheory.MomOne.LiftChange.norm_int {d : ℕ} (hd : d % 4 = 3
     rfl
   have hconj : conj (_root_.Formalism.L2.Ker.JMB.w0 (4 * k + 3)) = 1 - _root_.Formalism.L2.Ker.JMB.w0 (4 * k + 3) := by
     rw [hw]
-    simp only [map_div₀, map_add, map_one, map_mul, Complex.conj_I, Complex.conj_ofReal,
+    simp only [map_div₀, map_add (f := _), map_one, map_mul, Complex.conj_I, Complex.conj_ofReal,
       map_ofNat]
     ring
   have hquad : _root_.Formalism.L2.Ker.JMB.w0 (4 * k + 3) ^ 2 - _root_.Formalism.L2.Ker.JMB.w0 (4 * k + 3) + ((k : ℂ) + 1) = 0 := by
@@ -83,7 +83,7 @@ theorem _root_.GlobalTheory.MomOne.LiftChange.norm_int {d : ℕ} (hd : d % 4 = 3
       simp only [Polynomial.eval_add, Polynomial.eval_sub, Polynomial.eval_pow, Polynomial.eval_X,
         Polynomial.eval_C, Polynomial.eval_zero] at this
       linarith [(Nat.cast_nonneg k : (0 : ℚ) ≤ k)]
-    · simp only [map_add, map_sub, map_pow, Polynomial.aeval_X, Polynomial.aeval_C]
+    · simp only [map_add (f := _), map_sub, map_pow, Polynomial.aeval_X, Polynomial.aeval_C]
       push_cast
       linear_combination hquad
   have hmem : ∀ a b : ℤ, (a : ℂ) + (b : ℂ) * _root_.Formalism.L2.Ker.JMB.w0 (4 * k + 3) ∈ _root_.Formalism.L2.Ker.JMB.Qbar := fun a b =>
@@ -91,13 +91,13 @@ theorem _root_.GlobalTheory.MomOne.LiftChange.norm_int {d : ℕ} (hd : d % 4 = 3
   refine ⟨hmem u v, ?_, ⟨u ^ 2 + u * v + v ^ 2 * ((k : ℤ) + 1), ?_⟩⟩
   · have : conj ((u : ℂ) + (v : ℂ) * _root_.Formalism.L2.Ker.JMB.w0 (4 * k + 3)) =
         ((u + v : ℤ) : ℂ) + ((-v : ℤ) : ℂ) * _root_.Formalism.L2.Ker.JMB.w0 (4 * k + 3) := by
-      rw [map_add, map_mul, hconj]
+      rw [map_add (f := _), map_mul, hconj]
       simp only [map_intCast]
       push_cast
       ring
     rw [this]
     exact hmem _ _
-  · rw [map_add, map_mul, hconj]
+  · rw [map_add (f := _), map_mul, hconj]
     simp only [map_intCast]
     push_cast
     linear_combination (-(v : ℂ) ^ 2) * hquad

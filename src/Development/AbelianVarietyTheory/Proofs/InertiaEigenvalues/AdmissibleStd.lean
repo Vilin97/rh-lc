@@ -29,7 +29,7 @@ def asModuleIso (π : Representation O G M) (π' : Representation O G N) (e : M 
         LinearEquiv.apply_symm_apply]
       induction r using MonoidAlgebra.induction_on with
       | of g => simp [he]
-      | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb]
       | smul c a ha => simp only [map_smul, LinearMap.smul_apply, ha] }
 
 theorem sameSS_of_equiv {π₀ : Representation O G P} {π : Representation O G M} {π' : Representation O G N}
@@ -62,7 +62,7 @@ theorem lTensor_coefRep (W : Representation O G M) (f : N →ₗ[O] P) (g : G) (
   induction m using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [coefRep_tmul]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 end Alg
 
@@ -334,7 +334,7 @@ theorem admissible_coefRep [IsDomain O] [IsPrincipalIdealRing O] [CharZero LL] {
       · rintro g ⟨a, b⟩
         change LinearMap.lTensor M _ (coefRep W _ g a) + LinearMap.lTensor M _ (coefRep W _ g b) =
           coefRep W _ g (LinearMap.lTensor M _ a + LinearMap.lTensor M _ b)
-        rw [lTensor_coefRep, lTensor_coefRep, map_add]
+        rw [lTensor_coefRep, lTensor_coefRep, map_add (f := _)]
       · intro y
         induction y using TensorProduct.induction_on with
         | zero => exact ⟨0, map_zero _⟩

@@ -22,7 +22,7 @@ theorem coord_tail_zero (σ : K →+* ℂ) (r : ℕ) (x : Fibre σ (Fin r → �
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul z f => simp [standardCoord, tailIncl]
-  | add a b ha hb => simp only [map_add, PiLp.add_apply] at ha hb ⊢; rw [ha, hb, add_zero]
+  | add a b ha hb => simp only [map_add (f := _), PiLp.add_apply] at ha hb ⊢; rw [ha, hb, add_zero]
 
 omit [NumberField K] in
 theorem coord_tail_succ (σ : K →+* ℂ) (r : ℕ) (x : Fibre σ (Fin r → 𝓞 K)) (j : Fin r) :
@@ -31,7 +31,7 @@ theorem coord_tail_succ (σ : K →+* ℂ) (r : ℕ) (x : Fibre σ (Fin r → �
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul z f => simp [standardCoord, tailIncl]
-  | add a b ha hb => simp only [map_add, PiLp.add_apply] at ha hb ⊢; rw [ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), PiLp.add_apply] at ha hb ⊢; rw [ha, hb]
 
 omit [NumberField K] in
 theorem coord_head (σ : K →+* ℂ) (r : ℕ) (x : Fibre σ (Fin (r + 1) → 𝓞 K)) :
@@ -40,7 +40,7 @@ theorem coord_head (σ : K →+* ℂ) (r : ℕ) (x : Fibre σ (Fin (r + 1) → �
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul z f => simp [standardCoord, integersCoord]
-  | add a b ha hb => simp only [map_add] at ha hb ⊢; rw [ha, hb]; rfl
+  | add a b ha hb => simp only [map_add (f := _)] at ha hb ⊢; rw [ha, hb]; rfl
 
 theorem coord_zero_of_orth (σ : K →+* ℂ) (r : ℕ) (v : Fibre σ (Fin (r + 1) → 𝓞 K))
     (hv : ∀ w : Fibre σ (Fin r → 𝓞 K), ((HermitianMetric.standard K (Fin (r + 1))).form σ).inner

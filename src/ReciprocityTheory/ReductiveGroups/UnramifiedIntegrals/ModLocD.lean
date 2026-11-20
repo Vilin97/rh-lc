@@ -102,7 +102,7 @@ theorem locLift {d l : ℕ} [Fact l.Prime] (ι : ℂ ≃+* ℂ_[l]) (e : Om d �
       left_inv := fun x => hinj (by rw [hg2, hg1, AlgEquiv.symm_apply_apply])
       right_inv := fun x => hinj (by rw [hg1, hg2, AlgEquiv.apply_symm_apply])
       map_mul' := fun x y => hinj (by rw [hg1, map_mul, map_mul, map_mul, hg1, hg1])
-      map_add' := fun x y => hinj (by rw [hg1, map_add, map_add, map_add, hg1, hg1])
+      map_add' := fun x y => hinj (by rw [hg1, map_add (f := _), map_add (f := _), map_add (f := _), hg1, hg1])
       commutes' := fun k => hinj (by rw [hg1, fix_KQ]) }
   have hσ : ∀ x, e (σ x) = ρ (e x) := hg1
   have hn : ∀ x : Om d, ‖ι (x : ℂ)‖ = ‖e x‖ := fun x => by

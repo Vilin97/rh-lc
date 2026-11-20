@@ -114,10 +114,10 @@ theorem multT_eq_zero_of_apply_eq_zero : ∀ {D : D7} {V : HSp D} {S : D.what₂
     | add y z hy hz =>
       have e : (fun g => star (T w g) * u (y + z) g) =
           fun g => star (T w g) * u y g + star (T w g) * u z g := by
-        funext g; rw [map_add]; simp only [Pi.add_apply]; ring
+        funext g; rw [map_add (f := _)]; simp only [Pi.add_apply]; ring
       rw [e]
       refine ⟨hy.1.add hz.1, ?_⟩
-      rw [integral_add hy.1 hz.1, hy.2, hz.2, map_add]; ring
+      rw [integral_add hy.1 hz.1, hy.2, hz.2, map_add (f := _)]; ring
   have hc0 : c = 0 := by
     by_contra hne
     refine hx (eq_zero_of_tprodInnerFun x fun w => ?_)

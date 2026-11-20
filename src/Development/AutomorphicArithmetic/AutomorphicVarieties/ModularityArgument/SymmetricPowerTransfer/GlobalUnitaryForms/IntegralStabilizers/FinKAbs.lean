@@ -203,7 +203,7 @@ theorem cls_abs {A M Γ G : Type} [Ring A] [CharZero A] [Ring M] [Group Γ] [Gro
       { carrier := {y | ∃ r ∈ R, j (y : A) = a * r}
         add_mem' := by
           rintro x y ⟨r, hr, hx⟩ ⟨s, hs, hy⟩
-          exact ⟨r + s, R.add_mem hr hs, by simp only [Subring.coe_add, map_add, hx, hy, mul_add]⟩
+          exact ⟨r + s, R.add_mem hr hs, by simp only [Subring.coe_add, map_add (f := _), hx, hy, mul_add]⟩
         zero_mem' := ⟨0, R.zero_mem, by simp⟩
         neg_mem' := by
           rintro x ⟨r, hr, hx⟩

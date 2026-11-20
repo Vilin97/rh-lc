@@ -333,7 +333,7 @@ private theorem frame {O A K G : Type} [CommRing O] [IsLocalRing O] [CommRing A]
   have e2 : ∀ i, residue A ((r' y).mat i i) = φ ((r0 η Ψ y).mat i i) := fun i =>
     Ideal.Quotient.eq.2 (hpt.red y i i)
   have e3 := congrArg (residue A) e1
-  rw [trace_fin_three, map_add, map_add, e2, e2, e2, map_zero] at e3
+  rw [trace_fin_three, map_add (f := _), map_add (f := _), e2, e2, e2, map_zero] at e3
   simpa [GG.mat, tor_val, wt1] using e3
 
 end SlopeTestRemainingChoices

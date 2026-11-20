@@ -29,7 +29,7 @@ theorem unramOutside_of_corr : ∀ (D : D7) (N : NData D.R D.host D.what₂) (ar
   obtain ⟨S, k, hS, hS'⟩ := GlobalTheory.finiteIdele_exists_local_approx D.host.E M hM
     (Units.map ((ι : _ →+* _).comp (finPart D)).toMonoidHom x)
   set f := idem Q + cA D (idem Q) with hf
-  have hcf : cA D f = f := by rw [hf, map_add, GlobalTheory.DualPairCheck.cA_cA, add_comm]
+  have hcf : cA D f = f := by rw [hf, map_add (f := _), GlobalTheory.DualPairCheck.cA_cA, add_comm]
   have hfe : ∀ P ∈ Q, idemAt P * f = idemAt P := by
     intro P hP
     have k1 : idemAt P * idem Q = idemAt P :=

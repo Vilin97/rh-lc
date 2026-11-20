@@ -49,7 +49,7 @@ theorem ker_projection_maximalCompact_stable : _root_.GlobalTheory.FunPr.ThetaLo
       map_add' := fun Ψ₁ Ψ₂ => by
         have h := CoinvPass.isDatum_add hstd (hex _ Ψ₁.2).1 (hex _ Ψ₂.2).1
         show p (Fn (Ψ₁.1 + Ψ₂.1)) = _
-        rw [← hFn _ _ h, map_add]
+        rw [← hFn _ _ h, map_add (f := _)]
       map_smul' := fun c Ψ => by
         have h := CoinvPass.isDatum_smul c (hex _ Ψ.2).1
         show p (Fn (c • Ψ.1)) = _

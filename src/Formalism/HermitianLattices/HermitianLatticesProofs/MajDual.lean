@@ -258,7 +258,7 @@ lemma majDual_unimod (h : V →ₗ⋆[K] V →ₗ[K] K) (L : Submodule (RingOfIn
       exact Submodule.zero_mem _
     | add a c _ _ ha hc =>
       intro w hw
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ (ha w hw) (hc w hw)
     | smul r a _ ha =>
       intro w hw

@@ -35,7 +35,7 @@ theorem qp_unit (hπu : IsUnit (algebraMap (LetA O n) W.EE W.π₀)) :
     (Ideal.mem_span_singleton_self ((PD.p : ℕ) : W.EE)))) (↑u⁻¹ : W.EE)
   have : algebraMap (LetA O n) W.EE (Formalism.MainNotions.LiftingTheory.qp W) =
       (u : W.EE) * (((PD.p : ℕ) : W.EE) * ↑u⁻¹ + 1) := by
-    rw [Formalism.MainNotions.LiftingTheory.qp, map_add, ← hu, map_natCast]
+    rw [Formalism.MainNotions.LiftingTheory.qp, map_add (f := _), ← hu, map_natCast]
     rw [mul_add, mul_one, mul_comm ((PD.p : ℕ) : W.EE), ← mul_assoc, Units.mul_inv, one_mul, add_comm]
   rw [this]
   exact u.isUnit.mul hj

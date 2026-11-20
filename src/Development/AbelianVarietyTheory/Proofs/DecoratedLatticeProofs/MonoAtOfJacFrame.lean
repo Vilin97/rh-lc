@@ -33,7 +33,7 @@ theorem herm_smul_right (S : HSp D) (t : AE D) (x y : Fin S.rank → AE D) :
 
 variable (q : SplitPt D k)
 
-theorem conj_eps : cA D (q.e + cA D q.e) = q.e + cA D q.e := by rw [RingHom.map_add, cA_cA, add_comm]
+theorem conj_eps : cA D (q.e + cA D q.e) = q.e + cA D q.e := by rw [RingHom.map_add (f := _), cA_cA, add_comm]
 
 theorem conj_idAt {a : AE D} (ha : a ∈ idAt D (· = q.v)) : cA D a ∈ idAt D (· = q.v) := by
   rw [idem_iff, ← conj_eps, ← RingHom.map_mul, (idem_iff q a).1 ha]

@@ -214,7 +214,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.E.heckeEx :
     intro a b
     have h1 := hfadd (A.sec a) (A.sec b) 1
     rw [one_smul, one_smul] at h1
-    rw [map_add, h1]
+    rw [map_add (f := _), h1]
   have hTs : ∀ (c : ℂ) (a : Eu d), flat 0 (A.sec (c • a)) = c • flat 0 (A.sec a) := by
     intro c a
     funext x

@@ -38,7 +38,7 @@ theorem U_transport (D : D7) (T : Tor D) {N N' g : ℕ} (Hm : Matrix (Fin g) (Fi
   funext z
   have h1 : JMB.hf Hm z (e t) = Hf D T (e.symm z) t := by
     rw [← hhf]; simp
-  simp only [JMB.opU, U, map_add, ContinuousLinearEquiv.symm_apply_apply, h1, hhf]
+  simp only [JMB.opU, U, map_add (f := _), ContinuousLinearEquiv.symm_apply_apply, h1, hhf]
   congr 2
   ring
 

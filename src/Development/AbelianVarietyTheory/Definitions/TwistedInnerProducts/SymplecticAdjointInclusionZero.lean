@@ -72,7 +72,7 @@ theorem mixT_comp {μ : Measure (Mx D ρ S.rank)} {𝓕 : Set (Mx D ρ S.rank)} 
   beta_reduce
   rw [d.integrandT_eq, d.integrandT_eq, Matrix.mul_add, Matrix.mul_add, splitT d n y h3, moveT d n β h2, e3,
     cenT_eq d n y h3, crossT d n β y h2 h3, ← mul_assoc, ← mul_assoc, ← AddChar.map_add_eq_mul, ← AddChar.map_add_eq_mul]
-  simp only [map_add, GlobalTheory.OrientedHeis.symplOH_add_left]
+  simp only [map_add (f := _), GlobalTheory.OrientedHeis.symplOH_add_left]
   congr 2
   · ring
   · abel
@@ -143,7 +143,7 @@ theorem mixS_comp {μ : Measure (Mx D T.rank ρ)} {𝓕 : Set (Mx D T.rank ρ)} 
   beta_reduce
   rw [d.integrandS_eq, d.integrandS_eq, Matrix.add_mul, Matrix.add_mul, splitS d n x h1, moveS d n β h2, e3,
     cenS_eq d n x h1, crossS d n β x h1 h2, ← mul_assoc, ← mul_assoc, ← AddChar.map_add_eq_mul, ← AddChar.map_add_eq_mul]
-  simp only [map_add, GlobalTheory.OrientedHeis.symplOH_add_left]
+  simp only [map_add (f := _), GlobalTheory.OrientedHeis.symplOH_add_left]
   congr 2
   · ring
   · abel

@@ -520,7 +520,7 @@ theorem nrm_N_sub_N_le_mul (n : ℕ) (hk : t.k n ≠ 0) {a b : Ω} (ha : a ∈ t
         · rw [hd, ← t.card_alt n, ← Finset.prod_const, N]
           refine nrm_prod_sub_prod_le _ _ _ (mul_nonneg (nrm_nonneg _) (le_max_of_le_left t.c_nonneg))
             (fun σ _ ↦ by rwa [nrm_algEquiv]) (fun _ _ ↦ h1w) fun σ hσ ↦ ?_
-          have : σ (1 + w) - (1 + w) = σ w - w := by rw [map_add, map_one]; ring
+          have : σ (1 + w) - (1 + w) = σ w - w := by rw [map_add (f := _), map_one]; ring
           rw [this]
           refine (t.step n σ hσ w hwE).trans ?_
           rw [mul_comm]

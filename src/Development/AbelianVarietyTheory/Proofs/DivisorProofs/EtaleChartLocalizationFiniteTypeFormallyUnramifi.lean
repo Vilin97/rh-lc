@@ -72,7 +72,7 @@ theorem locQuot_finiteType_formallyUnramified (R : Type) [CommRing R] (A : Type)
       rw [hΦ, hψ0, hf]
       show MvPolynomial.aeval _ (MvPolynomial.C w) * _ = _
       rw [MvPolynomial.aeval_C, hΩ, ← map_mul, ← map_mul, Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
-    | add x y hx hy => rw [map_add, map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
   have hsurj : Function.Surjective Φ := by
     intro z
     obtain ⟨⟨x, s⟩, rfl⟩ := IsLocalization.mk'_surjective

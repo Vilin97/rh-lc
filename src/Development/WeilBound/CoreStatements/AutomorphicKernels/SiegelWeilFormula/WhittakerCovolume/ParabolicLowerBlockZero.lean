@@ -302,7 +302,7 @@ theorem int_n (d : SD σ) (nb : nA σ d.Y d.b → d.G) (lam : Measure (nA σ d.Y
     simp [Matrix.fromBlocks_multiply, add_comm, b₀]
   have htt : ∀ β : nA σ d.Y d.b, d.tt (T.1.1 * (b₀ + β).1) = d.tt (T.1.1 * β₀) + d.tt (T.1.1 * β.1) := by
     intro β
-    simp [SD.tt, Matrix.mul_add, Matrix.trace_add, map_add, b₀]
+    simp [SD.tt, Matrix.mul_add, Matrix.trace_add, map_add (f := _), b₀]
   calc ∫ β, f (w * nb β * (n0 * m0)) * d.B.ψ (-d.tt (T.1.1 * β.1)) ∂lam
       = ∫ β, (fun β' : nA σ d.Y d.b => f (w * nb β' * m0) * (d.B.ψ (-d.tt (T.1.1 * β'.1)) *
           d.B.ψ (d.tt (T.1.1 * β₀)))) (b₀ + β) ∂lam := by

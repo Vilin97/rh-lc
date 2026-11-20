@@ -394,7 +394,7 @@ theorem UpperTheory.integral_mvExp_sum_logS_of_odd_period :
   rw [step1, Formalism.InvariantFactorPaths.G7.LogarithmEquivalence.subst_mvExp' hΛs hbeS0, hsub]
   have h1 : mvExp Q * mvExp (Q2 - Q) * mvExp (-Q2) = (1 : MvPowerSeries (Lt × β) ℂ_[p]) := by
     rw [← Formalism.InvariantFactorPaths.G7.mvExp_add hQc (by rw [map_sub, hQc, hQ2c, sub_zero]),
-      ← Formalism.InvariantFactorPaths.G7.mvExp_add (by rw [map_add, map_sub, hQc, hQ2c]; simp) (by rw [map_neg, hQ2c, neg_zero])]
+      ← Formalism.InvariantFactorPaths.G7.mvExp_add (by rw [map_add (f := _), map_sub, hQc, hQ2c]; simp) (by rw [map_neg, hQ2c, neg_zero])]
     rw [show Q + (Q2 - Q) + -Q2 = 0 by ring, Formalism.InvariantFactorPaths.G7.LogarithmEquivalence.mvExp_zero']
   calc subst y G = subst y G * (mvExp Q * mvExp (Q2 - Q) * mvExp (-Q2)) := by rw [h1, mul_one]
     _ = _ := by ring

@@ -34,7 +34,7 @@ theorem fderiv_eq_sum_wirt' (h : (Φ → ℂ) → ℂ) (y u : Φ → ℂ) :
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum]
   refine Finset.sum_congr rfl fun τ _ => ?_
-  rw [map_add, map_smul, map_smul]
+  rw [map_add (f := _), map_smul, map_smul]
   simp only [wirt, Bool.false_eq_true, if_false, if_true, real_smul]
   set A := fderiv ℝ h y (Pi.single τ 1)
   set B := fderiv ℝ h y (Pi.single τ I)

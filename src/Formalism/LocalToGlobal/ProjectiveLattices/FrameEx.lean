@@ -424,11 +424,11 @@ theorem perGam_of (hMB : ModelBase M) : PerGam e F M := by
     exact_mod_cast e1.trans e2.symm
   · obtain ⟨b, hb⟩ := hMc a ha
     refine ⟨b, (M.φ k).injective (Subtype.ext ?_)⟩
-    rw [hg, hb, map_add, map_nsmul]
+    rw [hg, hb, map_add (f := _), map_nsmul]
     rfl
   · obtain ⟨b, hb⟩ := hAc a
     refine ⟨b, (M.φ k).injective (Subtype.ext ?_)⟩
-    rw [hg, hb, map_add, map_nsmul]
+    rw [hg, hb, map_add (f := _), map_nsmul]
     rfl
   · funext j
     simp only [pmOf, AddMonoidHom.coe_mk, ZeroHom.coe_mk]

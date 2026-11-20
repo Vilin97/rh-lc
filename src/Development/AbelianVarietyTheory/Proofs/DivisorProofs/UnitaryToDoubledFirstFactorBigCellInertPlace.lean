@@ -173,7 +173,7 @@ theorem exists_nab (Z : Matrix (Fin d) (Fin d) (AE F E))
   have hU : (Matrix.fromBlocks (1 + Z) Z (-Z) (1 - Z))ᵀ * dbl (incM F W.J) *
       (Matrix.fromBlocks (1 + Z) Z (-Z) (1 - Z)).map (cA σ) = dbl (incM F W.J) := by
     rw [fromBlocks_transpose, dbl, fromBlocks_map, fromBlocks_multiply, fromBlocks_multiply]
-    simp only [transpose_add, transpose_sub, transpose_neg, transpose_one, hmap, map_add, map_sub, map_neg, map_one]
+    simp only [transpose_add, transpose_sub, transpose_neg, transpose_one, hmap, map_add (f := _), map_sub, map_neg, map_one]
     rw [hmap] at hZ
     simp only [Matrix.mul_zero, Matrix.zero_mul, add_zero, zero_add]
     congr 1 <;> rw [← sub_eq_zero] <;> convert hZ using 1 <;> noncomm_ring

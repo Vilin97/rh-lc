@@ -38,7 +38,7 @@ theorem infMat_unitary {F E : Type} [Field F] [NumberField F] [Field E] [NumberF
     | tmul a x =>
       have : sigR (AF F) σ (a ⊗ₜ x) = a ⊗ₜ σ x := rfl
       rw [this, hφ, hφ, map_mul, GlobalTheory.InfAdeleCM.conj_ext, hτ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have h2 : ∀ x, φ (inclR (AF F) x) = τ x := by
     intro x
     have : inclR (F := F) (AF F) x = (1 : AF F) ⊗ₜ x := rfl

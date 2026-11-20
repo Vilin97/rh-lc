@@ -158,7 +158,7 @@ theorem proj_norm {A : Type} [CommRing A] (c : A →+* A) {e : A} (he : e * e = 
   congr 1
   refine Units.ext ?_
   change e * c y + (1 - e) = c (e * y + (1 - e))
-  rw [map_add, map_mul, map_sub, map_one, hc]
+  rw [map_add (f := _), map_mul, map_sub, map_one, hc]
 
 theorem mem_of_dvd_absNorm {E : Type} [Field E] [NumberField E] (P : HeightOneSpectrum (𝓞 E)) {q : ℕ} (hq : q.Prime)
     (h : q ∣ Ideal.absNorm P.asIdeal) : (q : 𝓞 E) ∈ P.asIdeal := by
@@ -312,9 +312,9 @@ theorem half_facts {ε : AE D} (hε : IsHalfIdem D ε) :
   obtain ⟨h1, h2, h3, -, -⟩ := hε
   have h1' : cA D ε * cA D ε = cA D ε := by rw [← RingHom.map_mul, h1]
   have h4 : infPart D (ε + cA D ε) = 0 := by
-    rw [RingHom.map_add, GlobalTheory.PlaceIdem.infPart_cA, h3, RingHom.map_zero, add_zero]
+    rw [RingHom.map_add (f := _), GlobalTheory.PlaceIdem.infPart_cA, h3, RingHom.map_zero, add_zero]
   refine ⟨by linear_combination h1 + h1' + 2 * h2, realIdem_mul_of_real finPart_realIdem, realIdem_mul_of_fin h4, h4, ?_⟩
-  rw [RingHom.map_add, GlobalTheory.DualPairCheck.cA_cA, add_comm]
+  rw [RingHom.map_add (f := _), GlobalTheory.DualPairCheck.cA_cA, add_comm]
 
 theorem inert_idem {ε : AE D} (hε : IsHalfIdem D ε) :
     (1 - realIdem D - (ε + cA D ε)) * (1 - realIdem D - (ε + cA D ε)) = 1 - realIdem D - (ε + cA D ε) := by
@@ -332,10 +332,10 @@ theorem decomp {η : (AE D)ˣ →* Circle} (hη : IsEtaTilde D η) {ε : AE D} (
   have e0 := congrArg η (proj_three h2 (half_facts hε).1 (half_facts hε).2.2.1 (inert_idem hε) t)
   rw [η.map_mul, η.map_mul] at e0
   have hi : infPart D (proj _ h2 t : (AE D)ˣ) = infPart D t := by
-    rw [proj_val, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, infPart_realIdem, one_mul, sub_self,
+    rw [proj_val, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, infPart_realIdem, one_mul, sub_self,
       add_zero]
   have hf : finPart D (proj _ h2 t : (AE D)ˣ) = 1 := by
-    rw [proj_val, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, finPart_realIdem, zero_mul, sub_zero,
+    rw [proj_val, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, finPart_realIdem, zero_mul, sub_zero,
       zero_add]
   have e2 := eta_inf hη.2.2.2 hθ _ hf
   rw [hi] at e2
@@ -399,7 +399,7 @@ theorem lam_int {η : (AE D)ˣ →* Circle} (hη : IsEtaTilde D η) {lam : ℕ �
       have e1 := (v5 e Q he).1
       have e2 := congrArg (ev Q) hε.2.1
       rw [map_mul, map_zero] at e2
-      rw [map_sub, map_sub, map_add, map_one, v3 Q _ finPart_realIdem]
+      rw [map_sub, map_sub, map_add (f := _), map_one, v3 Q _ finPart_realIdem]
       obtain ⟨v, α, hα, ⟨h1, h2⟩ | h1⟩ := he.2.1
       · rcases hε.2.2.2.1 e ⟨he.1, h1, v, α, hα, h2⟩ with ⟨h3, -⟩ | ⟨h3, h4⟩
         · have e3 := congrArg (ev Q) h3
@@ -417,7 +417,7 @@ theorem lam_int {η : (AE D)ˣ →* Circle} (hη : IsEtaTilde D η) {lam : ℕ �
       refine (v2 _).2 fun Q => ?_
       have e := congrArg (ev Q) (inert_idem hε)
       rw [map_mul] at e
-      rw [proj_val, map_add, map_mul, map_sub (ev Q) 1, map_one]
+      rw [proj_val, map_add (f := _), map_mul, map_sub (ev Q) 1, map_one]
       by_cases h0 : ev Q (1 - realIdem D - (ε + cA D ε)) = 0
       · rw [h0]; simp
       · rw [(mul_eq_left₀ h0).1 e, one_mul, sub_self, add_zero]
@@ -425,7 +425,7 @@ theorem lam_int {η : (AE D)ˣ →* Circle} (hη : IsEtaTilde D η) {lam : ℕ �
     refine hη.2.1 _ ?_ (hint y hy) ?_
     · have : infPart D (1 - realIdem D - (ε + cA D ε)) = 0 := by
         rw [RingHom.map_sub, RingHom.map_sub, RingHom.map_one, infPart_realIdem, (half_facts hε).2.2.2.1, sub_self, sub_self]
-      rw [proj_val, RingHom.map_add, RingHom.map_mul, RingHom.map_sub _ 1, this, RingHom.map_one, zero_mul, sub_zero,
+      rw [proj_val, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub _ 1, this, RingHom.map_one, zero_mul, sub_zero,
         zero_add]
     · rw [← map_inv]
       exact hint _ fun Q hQ => by rw [map_inv, hy Q hQ, inv_one]
@@ -442,7 +442,7 @@ theorem lam_int {η : (AE D)ˣ →* Circle} (hη : IsEtaTilde D η) {lam : ℕ �
     have hπE : (π : D.host.E) ≠ 0 := by simpa using hπ0
     have hv : P.valuation D.host.E (π : D.host.E) = WithZero.exp (-1 : ℤ) := (P.valuation_of_algebraMap π).trans hπ
     have a1 : ∀ Q, w Q (locU he.1 (Units.mk0 _ hπE)) = Valued.v (1 + ev Q e * (ev Q (incA D π) - 1)) := fun Q => by
-      rw [hw, locU_val, locE, map_add, map_mul, map_sub, map_one, Units.val_mk0]
+      rw [hw, locU_val, locE, map_add (f := _), map_mul, map_sub, map_one, Units.val_mk0]
     have a2 : ∀ Q, w Q (Units.map (cA D).toMonoidHom (locU he.1 (Units.mk0 _ hπE))) =
         Valued.v (1 + ev Q e * (ev Q (incA D (D.host.conj π)) - 1)) := fun Q => by
       change Valued.v (ev Q (cA D (1 + e * (incA D π - 1)))) = _

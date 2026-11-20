@@ -22,7 +22,7 @@ theorem valR_of (x : Sp A ⟶ Y) (V : Y.Opens) (h : ⊤ ≤ x ⁻¹ᵁ V) (f : �
 
 theorem valR_add (x : Sp A ⟶ Y) (V : Y.Opens) (h : ⊤ ≤ x ⁻¹ᵁ V) (f g : Γ(Y, V)) :
     valR x V (f + g) = valR x V f + valR x V g := by
-  simp only [valR_of x V h, map_add]
+  simp only [valR_of x V h, map_add (f := _)]
 
 theorem valR_mul (x : Sp A ⟶ Y) (V : Y.Opens) (h : ⊤ ≤ x ⁻¹ᵁ V) (f g : Γ(Y, V)) :
     valR x V (f * g) = valR x V f * valR x V g := by

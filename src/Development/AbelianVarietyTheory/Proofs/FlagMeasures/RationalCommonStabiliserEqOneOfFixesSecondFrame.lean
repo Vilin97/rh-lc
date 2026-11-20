@@ -69,7 +69,7 @@ theorem local_eq_one (h : S.GLV) (hS : h ∈ S.St) (hf' : ∀ b, h (S.f' b) = S.
         · exact hfix i
         · exact hf' b
       exact this hy
-    rw [map_add, hW0 z hz]
+    rw [map_add (f := _), hW0 z hz]
     rw [LinearMap.mem_eqLocus] at hy'
     rw [show h y = y from hy']
   exact LinearEquiv.ext hall

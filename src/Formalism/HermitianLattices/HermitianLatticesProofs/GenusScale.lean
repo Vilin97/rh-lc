@@ -24,7 +24,7 @@ theorem genusScale_span (hinj : Function.Injective (algebraMap R K))
     | mem b hb => exact hs a ha b hb
     | zero => simp
     | add u w _ _ hu hw =>
-        rw [map_add, mul_add]
+        rw [map_add (f := _), mul_add]
         exact add_mem hu hw
     | smul r u _ hu =>
         rw [genusBasic_hsmul_right, mul_left_comm]
@@ -34,7 +34,7 @@ theorem genusScale_span (hinj : Function.Injective (algebraMap R K))
   | mem a ha => exact key a ha y hy
   | zero => simp
   | add u w _ _ hu hw =>
-      rw [map_add, LinearMap.add_apply, mul_add]
+      rw [map_add (f := _), LinearMap.add_apply, mul_add]
       exact add_mem hu hw
   | smul r u _ hu =>
       rw [genusBasic_hsmul_left hinj hstar, mul_left_comm]

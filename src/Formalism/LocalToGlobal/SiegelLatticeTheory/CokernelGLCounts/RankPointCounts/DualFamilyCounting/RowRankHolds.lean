@@ -61,7 +61,7 @@ theorem rowRank_holds : RowRank := by
         exact Submodule.zero_mem _
       | add x y hx hy ihx ihy =>
         have : eS ⟨x + y, S.add_mem hx hy⟩ = eS ⟨x, hx⟩ + eS ⟨y, hy⟩ := by
-          rw [← map_add]; rfl
+          rw [← map_add (f := _)]; rfl
         rw [this]
         exact Submodule.add_mem _ ihx ihy
       | smul c x hx ihx =>

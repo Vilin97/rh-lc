@@ -127,7 +127,7 @@ theorem IsExp.nsmul (he : IsExp e) (n : ℕ) (z : Fin g → ℂ) : e ((n : ℂ) 
 theorem IsExp.comp_equiv (he : IsExp e) (h : (Fin g' → ℂ) ≃ₗ[ℂ] (Fin g → ℂ)) : IsExp fun z => e (h z) := by
   have hd : ∀ w v, IsDerivAt0 (fun z => (e (h z)).left) w v ↔ IsDerivAt0 (fun z => (e z).left) (h w) v :=
     fun w v => deriv_linear he.2.2.1 h.toLinearMap
-  refine ⟨fun z w => by simp only [map_add, he.1 _ _], he.2.1.comp h.surjective, isHolTo_linear he.2.2.1 h.toLinearMap,
+  refine ⟨fun z w => by simp only [map_add (f := _), he.1 _ _], he.2.1.comp h.surjective, isHolTo_linear he.2.2.1 h.toLinearMap,
     fun w => ?_, fun v hv => ?_⟩
   · simp only [hd]
     exact he.2.2.2.1 (h w)
@@ -278,7 +278,7 @@ def expTateIso {D : Datum H} {P : D.La →+ (Fin g → ℂ)} (he : IsExp e) (hP 
   ζ_prim _ hn := expNegUnit_isPrimitiveRoot hn
   ζ_pow _ _ hn hm := expNegUnit_mul_pow hn hm
   ev n a := e ((n : ℂ)⁻¹ • P a)
-  add n a b := by rw [map_add, smul_add, he.1]
+  add n a b := by rw [map_add (f := _), smul_add, he.1]
   lin n c a := exp_div_smul hP.1 hlin _ c a
   ker n hn a := by
     have hn' : (n : ℂ) ≠ 0 := Nat.cast_ne_zero.2 hn.ne'

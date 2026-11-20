@@ -62,7 +62,7 @@ theorem birational_ratios (x : Ix κ → Ω) {c : κ} (hc : x ⟨(), c⟩ ≠ 0)
     refine ⟨d₁ + d₂, g₁ * h₂ + g₂ * h₁, h₁ * h₂, hsum, ProjLine.mhMul hh₁ hh₂, ?_, ?_⟩
     · rw [map_mul]
       exact mul_ne_zero hne₁ hne₂
-    · rw [map_add, map_mul, map_mul, map_mul, he₁, he₂]
+    · rw [map_add (f := _), map_mul, map_mul, map_mul, he₁, he₂]
       have : (⟨a + b, add_mem ha hb⟩ : ratioField x c) = ⟨a, ha⟩ + ⟨b, hb⟩ := rfl
       rw [this]
       ring

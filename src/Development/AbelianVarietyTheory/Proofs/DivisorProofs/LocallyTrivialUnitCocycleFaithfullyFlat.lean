@@ -51,20 +51,20 @@ theorem isDescentDatum {c : B ⊗[R] B} (hu : IsUnit c)
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul b m => simp
   have h1 : ∀ z : B ⊗[R] B,
       ((datum c).restrictScalars R).lTensor B z = m₁₂ R B z * m₂₃ R B c := by
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy, add_mul]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, add_mul]
     | tmul b m => simp [datum_apply, m₁₂, m₂₃, mul_comm]
   have h2 : ∀ z : B ⊗[R] B, (TensorProduct.mk R B B 1).lTensor B z = m₁₃ R B z := by
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul b m => simp [m₁₃]
   constructor
   · intro n
@@ -91,7 +91,7 @@ theorem exists_local_tensor [Module.FaithfullyFlat R B] {c : B ⊗[R] B} (hu : I
     clear hz
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add]; exact P.add_mem hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact P.add_mem hx hy
     | tmul b m => simpa using hcon b m
   let e := LinearEquiv.ofBijective _ hd.bijective_extend
   let Φ : B →ₗ[B] B :=

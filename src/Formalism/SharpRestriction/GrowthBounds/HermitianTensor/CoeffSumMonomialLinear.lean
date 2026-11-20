@@ -41,7 +41,7 @@ def lcoef {K B σ : Type} [Field K] [CommRing B] [Algebra K B] (L : B →ₗ[K] 
   toFun f := ∑ u ∈ f.support, monomial u (L (AddMonoidAlgebra.coeff f u))
   map_add' f g := by
     ext u
-    rw [MvPolynomial.coeff_add, coeff_sum_monomial_linear, coeff_sum_monomial_linear, coeff_sum_monomial_linear, MvPolynomial.coeff_add, map_add]
+    rw [MvPolynomial.coeff_add, coeff_sum_monomial_linear, coeff_sum_monomial_linear, coeff_sum_monomial_linear, MvPolynomial.coeff_add, map_add (f := _)]
   map_smul' c f := by
     ext u
     rw [RingHom.id_apply, coeff_smul, coeff_sum_monomial_linear, coeff_sum_monomial_linear, coeff_smul, map_smul]

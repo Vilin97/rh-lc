@@ -85,7 +85,7 @@ theorem lin_apply (la : A.La) (v : A.V) :
 
 theorem lin_add (la la' : A.La) : A.lin (la + la') = A.lin la + A.lin la' := by
   refine LinearMap.ext fun v => ?_
-  simp only [lin_apply, LinearMap.add_apply, La.add_l, La.add_y, Submodule.coe_add, H_add_right, map_add]
+  simp only [lin_apply, LinearMap.add_apply, La.add_l, La.add_y, Submodule.coe_add, H_add_right, map_add (f := _)]
   ring
 
 @[simp] theorem lin_zero : A.lin 0 = 0 := LinearMap.ext fun v => by simp [lin_apply]
@@ -128,7 +128,7 @@ theorem perFactor_eq_exp (w : ℂ) (la : A.La) (v : A.V) : A.perFactor w la v = 
 
 theorem perFactor_add_right (w : ℂ) (la : A.La) (v v' : A.V) :
     A.perFactor w la (v + v') = A.perFactor w la v * Complex.exp (A.lin la v') := by
-  rw [perFactor_eq_exp, perFactor_eq_exp, ← Complex.exp_add, L, L, map_add]; congr 1; ring
+  rw [perFactor_eq_exp, perFactor_eq_exp, ← Complex.exp_add, L, L, map_add (f := _)]; congr 1; ring
 
 theorem differentiable_perFactor (w : ℂ) (la : A.La) : Differentiable ℂ (A.perFactor w la) := by
   have : A.perFactor w la = fun v => Complex.exp ((A.lin la).toContinuousLinearMap v + A.logConst w la) :=
@@ -147,8 +147,8 @@ theorem perFactor_cocycle (w : ℂ) (la la' : A.La) (v : A.V) :
       -(A.H (A.ct la.y) la'.l / (2 * Complex.I)) + w * A.be la.y la'.y := by
     rw [Prod.fst_add, AddMonoidHom.add_apply, Pw_fst_apply, A.T_symm, A.be_symm]; ring
   have h2 : (v + A.Pw w la').2 + A.ct la.y = v.2 + A.ct (la.y + la'.y) + la'.l := by
-    simp only [Prod.snd_add, Pw_snd, map_add]; abel
-  have h3 : v.2 + A.ct (la.y + la'.y) = v.2 + A.ct la'.y + A.ct la.y := by rw [map_add]; abel
+    simp only [Prod.snd_add, Pw_snd, map_add (f := _)]; abel
+  have h3 : v.2 + A.ct (la.y + la'.y) = v.2 + A.ct la'.y + A.ct la.y := by rw [map_add (f := _)]; abel
   have h4 : A.ah la'.l (v.2 + A.ct (la.y + la'.y)) =
       A.ah la'.l (v.2 + A.ct la'.y) * Complex.exp (Real.pi * A.H (A.ct la.y) la'.l) := by rw [h3, ah_add]
   rw [perFactor, perFactor, perFactor, ← div_eq_mul_inv, ← div_eq_mul_inv, ← div_eq_mul_inv, h1, h2, La.add_l, La.add_y, ah_cocycle, h4, psi_add, q_add, map_add v.1]
@@ -167,7 +167,7 @@ theorem perFactor_comm (w : ℂ) (la la' : A.La) (v : A.V) :
 theorem L_comm (w : ℂ) (la la' : A.La) (v : A.V) :
     (A.L w la (v + A.Pw w la') + A.L w la' v) - (A.L w la' (v + A.Pw w la) + A.L w la v) =
       -(2 * Real.pi * Complex.I * A.EF la la') := by
-  rw [← A.lin_Pw_sub w]; simp only [L, map_add]; ring
+  rw [← A.lin_Pw_sub w]; simp only [L, map_add (f := _)]; ring
 
 theorem summable_add_Pw_iff {j : ℕ} {α : A.X} {th : (Fin A.gB → ℂ) → ℂ} (h : th ∈ A.Theta j α) (w : ℂ)
     (la : A.La) (v : A.V) :
@@ -328,10 +328,10 @@ theorem shift_shift (la la' : A.La) (α : A.X) (th : (Fin A.gB → ℂ) → ℂ)
       Complex.exp (-(A.lin la' (A.P0 la) / k)) • A.shift k (la + la') α th := by
   funext z
   have h1 : z + (k : ℂ)⁻¹ • (A.P0 la).2 + (k : ℂ)⁻¹ • (A.P0 la').2 = z + (k : ℂ)⁻¹ • (A.P0 (la + la')).2 := by
-    rw [map_add, Prod.snd_add, smul_add, add_assoc]
+    rw [map_add (f := _), Prod.snd_add, smul_add, add_assoc]
   rw [Pi.smul_apply, smul_eq_mul, shift_apply', shift_apply', shift_apply', h1, ← mul_assoc _ _ (th _), ← mul_assoc _ _ (th _)]
   congr 1
-  rw [map_add A.P0, Prod.fst_add, AddMonoidHom.add_apply, map_add, lin_apply, La.add_l, Submodule.coe_add,
+  rw [map_add A.P0, Prod.fst_add, AddMonoidHom.add_apply, map_add (f := _), lin_apply, La.add_l, Submodule.coe_add,
     H_add_left, H_add_right, H_smul_left]
   simp only [e_def, ← Complex.exp_add]
   congr 1; ring
@@ -372,7 +372,7 @@ theorem term_add_P0_div (la : A.La) (α : A.X) (th : (Fin A.gB → ℂ) → ℂ)
   have h2 : (v + (k : ℂ)⁻¹ • A.P0 la).2 + A.ct μ = v.2 + A.ct μ + (k : ℂ)⁻¹ • (A.P0 la).2 := by
     rw [Prod.snd_add, Prod.smul_snd]; abel
   have h3 : v.1 (α + la.y + k • μ) = v.1 (α + k • μ) + v.1 la.y := by
-    rw [add_right_comm, map_add]
+    rw [add_right_comm, map_add (f := _)]
   rw [term, term, h1, h2, h3, shift_apply', exp_lin, map_add (A.T μ), H_add_left]
   simp only [e_add, e_intCast, e_neg_div, mul_add, neg_add, Complex.exp_add, Complex.exp_neg]
   have := e_ne_zero (v.1 la.y)
@@ -382,7 +382,7 @@ theorem term_add_P0_div (la : A.La) (α : A.X) (th : (Fin A.gB → ℂ) → ℂ)
 omit [NeZero k] in
 
 theorem exponent_add_weight (α y μ : A.X) : A.exponent k (α + y) μ = A.exponent k α μ + A.be y μ := by
-  rw [exponent, exponent, map_add, A.be_symm μ y, add_assoc]
+  rw [exponent, exponent, map_add (f := _), A.be_symm μ y, add_assoc]
 
 theorem term_add_Pw_div (w : ℂ) (la : A.La) (α : A.X) (th : (Fin A.gB → ℂ) → ℂ) (μ : A.X) (v : A.V) :
     A.term k α th μ (v + (k : ℂ)⁻¹ • A.Pw w la) * eTwoPi (w * A.exponent k α μ) =

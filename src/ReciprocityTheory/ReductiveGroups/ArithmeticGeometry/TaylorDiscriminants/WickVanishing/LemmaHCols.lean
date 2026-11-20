@@ -220,7 +220,7 @@ def valL {R : Type} [CommRing R] {d : ℕ} {O : Type} [CommRing O] [StarRing O] 
     [Algebra ℚ k] [Algebra R k] (B : FB R d O) {ι : Type} [Fintype ι] (u : ι → Fin d → k) (g : PS k 1 d) :
     MvPolynomial ι k →ₗ[k] k where
   toFun Q := MvPowerSeries.constantCoeff (DpolyOf (B.FK k) u Q g)
-  map_add' P Q := by rw [GE.dpolyOf_add_P, map_add]
+  map_add' P Q := by rw [GE.dpolyOf_add_P, map_add (f := _)]
   map_smul' a Q := by
     rw [GE.dpolyOf_smul_P, map_mul, MvPowerSeries.constantCoeff_C, RingHom.id_apply, smul_eq_mul]
 

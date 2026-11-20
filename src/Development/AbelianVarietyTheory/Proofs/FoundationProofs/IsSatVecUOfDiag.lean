@@ -24,7 +24,7 @@ theorem hecke_induction {p : (G → ℂ) → Prop} (h0 : p 0)
   intro a
   induction a using Finsupp.induction_linear with
   | zero => simpa using h0
-  | add a b ha hb => rw [map_add]; exact hadd _ (e.symm a).2 _ (e.symm b).2 ha hb
+  | add a b ha hb => rw [map_add (f := _)]; exact hadd _ (e.symm a).2 _ (e.symm b).2 ha hb
   | single c r =>
     obtain ⟨g, rfl⟩ : ∃ g, DoubleCoset.mk K K g = c := Quotient.exists_rep c
     convert hind r g

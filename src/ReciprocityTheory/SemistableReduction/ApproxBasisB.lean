@@ -48,7 +48,7 @@ theorem approxB_h_smul_left {K : Type} [Field K] [NumberField K] {r : ℕ} (S : 
 private theorem hermForm_h_add_left {K : Type} [Field K] [NumberField K] {r : ℕ}
     (S : HermForm K r) (x y z : Fin r → K) : S.h (x + y) z = S.h x z + S.h y z := by
   unfold ReciprocityTheory.MultiplicativeHeights.HermForm.h
-  simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem approxB_h_sum_left {K : Type} [Field K] [NumberField K] {r : ℕ} (S : HermForm K r)
     {α : Type*} (s : Finset α) (y : Fin r → K) (f : α → Fin r → K) :

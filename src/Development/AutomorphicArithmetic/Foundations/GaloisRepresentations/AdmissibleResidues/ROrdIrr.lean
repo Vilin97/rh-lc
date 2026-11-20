@@ -90,7 +90,7 @@ private theorem chars_of_red {Γ : Type} [Group Γ] [TopologicalSpace Γ] {k : T
     field_simp
   rw [e1, e2, Matrix.charpoly_fin_two, t]
   conv_lhs => rw [u]
-  rw [← u, map_add]
+  rw [← u, map_add (f := _)]
   conv_lhs => enter [2]; rw [u, map_mul]
   ring
 

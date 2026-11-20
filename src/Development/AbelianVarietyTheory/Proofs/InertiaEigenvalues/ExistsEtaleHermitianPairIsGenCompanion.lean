@@ -29,7 +29,7 @@ theorem charpoly_companion {k : Type} [Field k] {r : ℕ} (p : Fin r → k) :
     rw [AdjoinRoot.mk_self] at h0
     have h2 : aeval (AdjoinRoot.root P) (X ^ r + ∑ i, C (p i) * X ^ (i : ℕ) : k[X]) = 0 := h0
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_pow, map_sum, map_mul, aeval_X, aeval_C] at h2
+      simp only [map_add (f := _), map_pow, map_sum, map_mul, aeval_X, aeval_C] at h2
     rw [eq_neg_of_add_eq_zero_left h2, ← Finset.sum_neg_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [hb, neg_smul, Algebra.smul_def]

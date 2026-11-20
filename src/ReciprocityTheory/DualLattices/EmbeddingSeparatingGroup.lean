@@ -28,7 +28,7 @@ theorem embeddingSeparatingGroup : EmbeddingSeparatingGroupStatement := by
       push_cast at this
       exact this
     have h3 : v (algebraMap R C ((p : R) * (Nat.gcdA p n : R) + (n : R) * (Nat.gcdB p n : R))) < 1 := by
-      rw [map_add]
+      rw [map_add (f := _)]
       refine lt_of_le_of_lt (Valuation.map_add _ _ _) (max_lt ?_ ?_)
       · rw [map_mul, Valuation.map_mul]
         exact lt_of_le_of_lt (mul_le_of_le_one_right zero_le (hv.map_le_one _)) hpv

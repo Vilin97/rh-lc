@@ -57,7 +57,7 @@ theorem effAt_etTower : ∀ {K L : Type} [Field K] [Field L] (cK : ℂ →+* K) 
       refine Finset.sum_nonneg fun g hg => mul_nonneg (hθ g hg).2 ?_
       exact_mod_cast (P.ord_nonneg_iff (hθ g hg).1).2 (hP.1 _ g.2)
     rw [hq] at hθ'
-    rw [Place.disc, map_add]
+    rw [Place.disc, map_add (f := _)]
     rcases GlobalTheory.T.dvrPlace_centre_on_base_of_etaleTowerOverNormalLocal cK cL r R T ι ψ τ P hT hP with h0 | ⟨P0, hP0, h0⟩
     · rw [GlobalTheory.T.order_differential_form_et_tower cK cL n r R T ι ψ τ x P hT hx hP h0, hq, hq]
       have : (φ.sum fun g t => t * (P.ord (ι g : L) : ℚ)) = 0 :=

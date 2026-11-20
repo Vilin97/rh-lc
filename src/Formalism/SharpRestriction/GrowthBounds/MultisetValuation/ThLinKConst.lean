@@ -28,7 +28,7 @@ theorem th_Aw_succ (hW : FrobWH p) (w : WW p) (k : ℕ) :
   refine ⟨wK' p K' y, ?_, ?_⟩
   · have h1 := th_Aw_mem vp y 0
     simpa [Aw] using h1
-  · simp only [Aw, wK', Function.iterate_succ_apply', hy, map_add, map_mul, map_pow, map_natCast]
+  · simp only [Aw, wK', Function.iterate_succ_apply', hy, map_add (f := _), map_mul, map_pow, map_natCast]
 
 theorem th_frob_lin (hF : FrobSumH p n' r0 r1 K' (Rp p K' vp)) (hW : FrobWH p) (w : WW p) (P : Finset (Fin n'))
     (e : Fin n' → ℕ) (x : Fin n' → MvPowerSeries (Zidx n' r0 r1) K') (hx : ∀ s, IntR (Rp p K' vp) (x s)) :
@@ -126,7 +126,7 @@ theorem th_claimM (hF : FrobSumH p n' r0 r1 K' (Rp p K' vp)) (hW : FrobWH p) (μ
     choose y hy he using hT1
     have e : μ = altF K' p + PowerSeries.C (p : K') * PowerSeries.mk y := by
       ext n
-      rw [map_add, PowerSeries.coeff_C_mul, PowerSeries.coeff_mk, ← he n]
+      rw [map_add (f := _), PowerSeries.coeff_C_mul, PowerSeries.coeff_mk, ← he n]
       ring
     refine ⟨PowerSeries.subst (linK K' w P a b 0) (PowerSeries.mk y),
       IntR_psubst hL0 (th_linK_int vp w P a b 0) (fun n => by rw [PowerSeries.coeff_mk]; exact hy n), ?_⟩

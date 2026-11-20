@@ -20,7 +20,7 @@ private theorem cont_rowAct (n : ℕ) (f : MvPolynomial (Fin n × Fin n) ℂ) :
     exact continuous_const
   | add p q hp hq =>
     intro ℓ
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact (hp ℓ).add (hq ℓ)
   | mul_X p v hp =>
     intro ℓ
@@ -86,7 +86,7 @@ theorem UpperTheory.finiteDimensional_nablaT_and_continuous_wtOp :
         (fun τ (g : ι → GL (Fin n) ℂ) => Formalism.UG.dualWeylRep ℂ n n _ (g τ) (x τ))
         (fun τ l => (cont_rep n _ l (x τ)).comp (continuous_apply τ))
     | add a b ha hb =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact ha.add hb
   simp only [wtOp_apply, map_smul]
   have h2 : Continuous fun g : ι → GL (Fin n) ℂ =>

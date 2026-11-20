@@ -27,7 +27,7 @@ theorem coeff_integral_of_QL : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Type) [Comm
     have hsplit : α = Finsupp.single k p + (α - Finsupp.single k p) := (add_tsub_cancel_of_le hs).symm
     have hd : (α - Finsupp.single k p).degree = 0 := by
       have h2 := congrArg Finsupp.degree hsplit
-      rw [map_add, Finsupp.degree_single] at h2
+      rw [map_add (f := _), Finsupp.degree_single] at h2
       omega
     rw [(Finsupp.degree_eq_zero_iff _).1 hd, add_zero] at hsplit
     exact hsplit

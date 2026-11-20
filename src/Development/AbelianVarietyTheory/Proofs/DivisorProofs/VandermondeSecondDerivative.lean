@@ -26,7 +26,7 @@ variable {ν : Type} [Fintype ν]
 theorem apolar_add_left' (P Q D : MvPolynomial ν ℝ) : apolar (P + Q) D = apolar P D + apolar Q D := by
   induction D using MvPolynomial.induction_on' with
   | monomial u a => simp only [GlobalTheory.FlagFormDeg.apolar_monomial, MvPolynomial.coeff_add]; ring
-  | add p q hp hq => simp only [map_add, hp, hq]; ring
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]; ring
 
 theorem apolar_comm' (P Q : MvPolynomial ν ℝ) : apolar P Q = apolar Q P := by
   induction P using MvPolynomial.induction_on' generalizing Q with
@@ -37,8 +37,8 @@ theorem apolar_comm' (P Q : MvPolynomial ν ℝ) : apolar P Q = apolar Q P := by
       by_cases h : u = m
       · subst h; simp only [if_true]; ring
       · simp [h, Ne.symm h]
-    | add p q hp hq => rw [map_add, apolar_add_left', hp, hq]
-  | add p q hp hq => rw [apolar_add_left', hp, hq, map_add]
+    | add p q hp hq => rw [map_add (f := _), apolar_add_left', hp, hq]
+  | add p q hp hq => rw [apolar_add_left', hp, hq, map_add (f := _)]
 
 theorem apolar_smul_left' (c : ℝ) (P D : MvPolynomial ν ℝ) : apolar (c • P) D = c * apolar P D := by
   rw [apolar_comm', map_smul, apolar_comm', smul_eq_mul]
@@ -59,7 +59,7 @@ theorem apolar_rename_equiv (e : ν ≃ ν) (P D : MvPolynomial ν ℝ) :
     rw [← Equiv.prod_comp e]
     refine Finset.prod_congr rfl fun x _ => ?_
     rw [Finsupp.mapDomain_apply e.injective]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 end General
 
@@ -199,7 +199,7 @@ theorem euler_vdm :
 
 theorem deriv2_mul (D : Derivation ℝ (MvPolynomial (Option (Fin r)) ℝ) (MvPolynomial (Option (Fin r)) ℝ))
     (p w : MvPolynomial (Option (Fin r)) ℝ) : D (D (p * w)) = D (D p) * w + 2 * (D p * D w) + p * D (D w) := by
-  simp only [Derivation.leibniz, smul_eq_mul, map_add]; ring
+  simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _)]; ring
 
 theorem bb_eq (a c : Fin r) : bb r a c = apolar (pderiv (some c) (pderiv (some a) (psq r * vdm r))) (vdm r) := by
   rw [bb, GlobalTheory.FlagFormDeg.apolar_X_mul, GlobalTheory.FlagFormDeg.apolar_X_mul]
@@ -249,7 +249,7 @@ theorem trace_sum (hW2 : ∑ a : Fin r, pderiv (some a) (pderiv (some a) (vdm r)
       _ = _ := by
           rw [hW2, euler_vdm, Finset.sum_const, Finset.card_univ, Fintype.card_fin, mul_zero, add_zero,
             smul_eq_C_mul]
-          simp only [nsmul_eq_mul, map_add, map_mul, map_natCast, map_ofNat]
+          simp only [nsmul_eq_mul, map_add (f := _), map_mul, map_natCast, map_ofNat]
           ring
   rw [h1, apolar_smul_left']
   have := two_mul_deg r

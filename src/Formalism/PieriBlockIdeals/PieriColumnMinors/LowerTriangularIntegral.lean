@@ -89,7 +89,7 @@ theorem lower_triangular_integral : LowerTriIntegral := by
         exact ih _ (hd ▸ hlt) _ hf'mem hf'z rfl
     obtain ⟨Q'', hQ''⟩ := hfin
     refine ⟨Q'' + c • bideterminant ℤ sz hsz I, ?_⟩
-    rw [map_add, map_smul, ← hQ'', ← hbmap, hlc, Int.cast_smul_eq_zsmul]
+    rw [map_add (f := _), map_smul, ← hQ'', ← hbmap, hlc, Int.cast_smul_eq_zsmul]
     abel
 
 end Formalism.CohomologicalDescent.LR

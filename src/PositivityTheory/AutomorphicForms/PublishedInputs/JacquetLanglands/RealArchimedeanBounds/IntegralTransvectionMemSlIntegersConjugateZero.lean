@@ -109,7 +109,7 @@ theorem k_prop {k : GF F} (hk : k ∈ K0 F) (w : Pl F) :
       exact this
     have hv : Valued.v (pLoc F w (k.val 1 0) * pLoc F w ((k⁻¹ : GF F).val 0 1) +
         pLoc F w (k.val 1 1) * pLoc F w ((k⁻¹ : GF F).val 1 1)) = 1 := by
-      rw [← map_mul, ← map_mul, ← map_add, e, map_one, map_one]
+      rw [← map_mul, ← map_mul, ← map_add (f := _), e, map_one, map_one]
     refine le_antisymm (max_le (v_le (h1 1 0) w) (v_le (h1 1 1) w)) ?_
     refine hv.ge.trans ((Valuation.map_add _ _ _).trans (max_le_max ?_ ?_))
     · rw [map_mul]; exact mul_le_of_le_one_right' (v_le (h2 0 1) w)

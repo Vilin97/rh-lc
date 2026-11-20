@@ -31,11 +31,11 @@ variable {K : Type} [Field K] [NumberField K] [StarRing K]
 def reForm (S : GSD K) (v : InfinitePlace K) : S.V →+ S.V →+ ℝ :=
   AddMonoidHom.mk' (fun x => AddMonoidHom.mk' (fun y => (S.pairAt v x y).re) (by
       intro y z
-      simp only [GSD.pairAt, map_add, Finsupp.add_apply, mul_add, Finset.sum_add_distrib, Complex.add_re]))
+      simp only [GSD.pairAt, map_add (f := _), Finsupp.add_apply, mul_add, Finset.sum_add_distrib, Complex.add_re]))
     (by
       intro x y
       ext z
-      simp only [GSD.pairAt, map_add, Finsupp.add_apply, add_mul, Finset.sum_add_distrib, Complex.add_re,
+      simp only [GSD.pairAt, map_add (f := _), Finsupp.add_apply, add_mul, Finset.sum_add_distrib, Complex.add_re,
         AddMonoidHom.mk'_apply, AddMonoidHom.add_apply])
 
 theorem sq_nonneg' {S : GSD K} {v : InfinitePlace K} (h : PosAt S v) (x : S.V) : 0 ≤ (S.pairAt v x x).re := by

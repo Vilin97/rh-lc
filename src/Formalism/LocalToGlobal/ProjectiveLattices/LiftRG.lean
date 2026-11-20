@@ -20,7 +20,7 @@ theorem iterHd_cons (β : σ →₀ ℕ) (l : List (σ →₀ ℕ)) (x : Λ) :
 theorem iterHd_add (l : List (σ →₀ ℕ)) (x y : Λ) : iterHd hd l (x + y) = iterHd hd l x + iterHd hd l y := by
   induction l with
   | nil => rfl
-  | cons β l ih => rw [iterHd_cons, iterHd_cons, iterHd_cons, ih, map_add]
+  | cons β l ih => rw [iterHd_cons, iterHd_cons, iterHd_cons, ih, map_add (f := _)]
 
 theorem iterHd_neg (l : List (σ →₀ ℕ)) (x : Λ) : iterHd hd l (-x) = -iterHd hd l x := by
   induction l with
@@ -54,7 +54,7 @@ theorem hd_one' (hd0 : ∀ x, hd 0 x = x)
     have hne2 : q.2 ≠ 0 := fun h => hq2.1 (Prod.ext (by rw [← h12, h, add_zero]) h)
     have hd2 : Finsupp.degree q.2 ≠ 0 := fun h => hne2 ((Finsupp.degree_eq_zero_iff _).1 h)
     have hlt : Finsupp.degree q.1 < n := by
-      rw [← hn, ← h12, map_add]; omega
+      rw [← hn, ← h12, map_add (f := _)]; omega
     rw [ih _ hlt q.1 hne1 rfl, zero_mul]
   rw [hr, add_zero] at h
   have : hd β 1 + hd β 1 = hd β 1 + 0 := by rw [add_zero]; exact h.symm
@@ -84,7 +84,7 @@ theorem low_mul' (hdm : ∀ β x z, hd β (x * z) = ∑ q ∈ antidiagonal β, h
   have h := Ideal.mul_mem_mul (hz q.1) (hz' q.2)
   rw [← pow_add] at h
   refine Ideal.pow_le_pow_right ?_ h
-  rw [← h12, map_add]
+  rw [← h12, map_add (f := _)]
   omega
 
 theorem hd_pow_mem' (hd0 : ∀ x, hd 0 x = x)
@@ -104,7 +104,7 @@ theorem hd_pow_mem' (hd0 : ∀ x, hd 0 x = x)
           exact Submodule.mem_top
       exact low_mul' hdm I (fun β' => ih ha β') hb1 β
     · intro β
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Ideal.add_mem _ (hx β) (hy β)
 
 def stabSub (hd0 : ∀ x, hd 0 x = x)
@@ -127,7 +127,7 @@ def stabSub (hd0 : ∀ x, hd 0 x = x)
         rw [hdm]
         exact AddSubgroup.sum_mem _ fun q _ => AddSubgroup.subset_closure ⟨q.1 :: l₁, q.2 :: l₂, rfl⟩
       · rw [map_zero]; exact A.zero_mem
-      · rw [map_add]; exact A.add_mem hx hy
+      · rw [map_add (f := _)]; exact A.add_mem hx hy
       · rw [map_neg]; exact A.neg_mem hx
     have hAl : ∀ l, iterHd hd l (a * b) ∈ A := by
       intro l
@@ -159,7 +159,7 @@ def appSub {L : Type*} [CommRing L] (ι : L →+* Λ) (F : Subring L) (I : Ideal
     obtain ⟨f, hf, hfa⟩ := ha n
     obtain ⟨g, hg, hgb⟩ := hb n
     refine ⟨f + g, F.add_mem hf hg, ?_⟩
-    have : a + b - ι (f + g) = (a - ι f) + (b - ι g) := by rw [map_add]; ring
+    have : a + b - ι (f + g) = (a - ι f) + (b - ι g) := by rw [map_add (f := _)]; ring
     rw [this]; exact Ideal.add_mem _ hfa hgb
   neg_mem' := by
     intro a ha n
@@ -240,7 +240,7 @@ theorem stabSub_inv (hd0 : ∀ x, hd 0 x = x)
       have h12 : q.1 + q.2 = β := mem_antidiagonal.1 hq1.2
       have hne : q.1 ≠ 0 := fun h => hq1.1 (Prod.ext h (by rw [← h12, h, zero_add]))
       have : Finsupp.degree q.1 ≠ 0 := fun h => hne ((Finsupp.degree_eq_zero_iff _).1 h)
-      rw [← hn, ← h12, map_add]; omega
+      rw [← hn, ← h12, map_add (f := _)]; omega
     have e1 : v * u = 1 := hu.val_inv_mul
     have : hd β v = -(v * ∑ q ∈ (antidiagonal β).erase (0, β), hd q.1 u * hd q.2 v) := by
       linear_combination (-v) * h + (-(hd β v)) * e1
@@ -261,7 +261,7 @@ theorem stabSub_inv (hd0 : ∀ x, hd 0 x = x)
       by_cases hβ : β = 0
       · rw [hβ, hd0]; exact Bs.one_mem
       · rw [hd_one' hd0 hdm β hβ]; exact Bs.zero_mem
-    | add x y _ _ hx hy => exact fun β => by rw [map_add]; exact Bs.add_mem (hx β) (hy β)
+    | add x y _ _ hx hy => exact fun β => by rw [map_add (f := _)]; exact Bs.add_mem (hx β) (hy β)
     | neg x _ hx => exact fun β => by rw [map_neg]; exact Bs.neg_mem (hx β)
     | mul x y _ _ hx hy =>
       intro β
@@ -304,7 +304,7 @@ def intSub {Λ : Type*} [CommRing Λ] {Z : Type*} (T : Z → CDVR) (ev : ∀ ζ,
   zero_mem' := fun ζ => by rw [map_zero, nval_zero]; exact le_top
   one_mem' := fun ζ => by rw [map_one, nval_of_ne one_ne_zero, vV_one']; simp
   add_mem' := fun ha hb ζ => by
-    rw [map_add]; exact (le_min (ha ζ) (hb ζ)).trans (nval_add 1 _ _)
+    rw [map_add (f := _)]; exact (le_min (ha ζ) (hb ζ)).trans (nval_add 1 _ _)
   neg_mem' := fun ha ζ => by rw [map_neg, nval_neg_rg]; exact ha ζ
   mul_mem' := fun ha hb ζ => by rw [map_mul, nval_mul]; exact add_nonneg (ha ζ) (hb ζ)
 

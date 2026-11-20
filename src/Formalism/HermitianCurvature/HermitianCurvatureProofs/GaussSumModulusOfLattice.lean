@@ -313,7 +313,7 @@ theorem sec_mem (hle : PL Λ m ≤ PL L m) {y : Fin m → K ⧸ Λ} (hy : y ∈ 
   rwa [sub_add_cancel] at this
 
 theorem sec_add (y w : Fin m → K ⧸ Λ) : sec Λ (y + w) - (sec Λ y + sec Λ w) ∈ PL Λ m := by
-  rw [← ker_prj, AddMonoidHom.mem_ker, map_sub, map_add, prj_sec, prj_sec, prj_sec, sub_self]
+  rw [← ker_prj, AddMonoidHom.mem_ker, map_sub, map_add (f := _), prj_sec, prj_sec, prj_sec, sub_self]
 
 theorem sec_zero : sec Λ (0 : Fin m → K ⧸ Λ) ∈ PL Λ m := by
   rw [← ker_prj, AddMonoidHom.mem_ker, prj_sec]

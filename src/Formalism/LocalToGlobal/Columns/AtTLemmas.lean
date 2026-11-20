@@ -451,7 +451,7 @@ theorem not_seen_both (hPr : Pr.Ok) (u : Pr.Word) (w : HeightOneSpectrum (𝓞 X
   apply w.isPrime.ne_top
   rw [Ideal.eq_top_iff_one]
   have e' := congrArg (X.embO τ) e
-  rw [map_add, map_mul, map_mul, map_one] at e'
+  rw [map_add (f := _), map_mul, map_mul, map_one] at e'
   rw [← e']
   exact Ideal.add_mem _ (Ideal.mul_mem_left _ _ h1) (Ideal.mul_mem_left _ _ h2)
 

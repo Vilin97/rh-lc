@@ -284,7 +284,7 @@ theorem toF_gaStar (hl : IsLt lt) (h : IsTyp D H) (pW : D.what₂.Tau → ℕ) (
     toF c lt (gaStar c (ga.map (IsCMField.complexConj D.host.E)) P) = sub pW U (toF c lt P) := by
   induction P using MvPolynomial.induction_on with
   | C a => rw [MvPolynomial.algHom_C, MvPolynomial.algebraMap_eq, toF_C, MvPolynomial.algHom_C, MvPolynomial.algebraMap_eq]
-  | add P Q hP hQ => simp only [map_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ]
   | mul_X P ℓ hP =>
     simp only [map_mul, hP]
     congr 1
@@ -464,7 +464,7 @@ theorem io_eq_phase_smul : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0
       rw [MvPolynomial.smul_eq_C_mul, map_mul, toF_C, MvPolynomial.smul_eq_C_mul]
     obtain ⟨B₀, hB₀⟩ := exists_ext O.c0' n4
       { toFun := fun v => toF O.c' lt (O.io v)
-        map_add' := fun v w => by rw [map_add, map_add]
+        map_add' := fun v w => by rw [map_add (f := _), map_add (f := _)]
         map_smul' := fun a v => by rw [map_smul, hsm]; rfl }
     replace hB₀ : ∀ v, B₀ (O.c0' v) = toF O.c' lt (O.io v) := hB₀
     have hpG : toF O.c' lt (O.io O.hw) = RealDat.Delta i := by

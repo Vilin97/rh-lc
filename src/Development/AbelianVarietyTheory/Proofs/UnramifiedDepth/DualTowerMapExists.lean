@@ -39,7 +39,7 @@ private lemma dualTowerRing_π {R₀ : Type} [CommRing R₀] {Λ S : LAlg R₀} 
   obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective x
   induction f using Polynomial.induction_on with
   | C a => rw [dualTowerRing_C, Dq.sect, DualNum.ev_mk, Polynomial.eval_C]
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
   | monomial n a _ =>
     have h := dualTowerRing_X Dq ψ
     rw [DualNum.eta] at h

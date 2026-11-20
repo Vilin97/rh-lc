@@ -49,7 +49,7 @@ theorem good_of_mem (hP : GlobalTheory.Published.CuspRapidDecay) {θ : InfFam D}
     exact ⟨(h1.aut v).cont, GlobalTheory.CuspDecay.bounded_of_cuspForm hP hθ (h1.aut v) (h1.cusp v), (h1.aut v).left,
       fun k hk g => h1.lev v k hk g⟩
   | add a b ha hb =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact good_add ha hb
 
 end GlobalTheory.Core.Mi.TranslatedRow

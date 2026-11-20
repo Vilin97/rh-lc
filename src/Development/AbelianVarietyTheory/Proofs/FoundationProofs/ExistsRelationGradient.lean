@@ -109,7 +109,7 @@ theorem taylor_bound [Fintype ι] [DecidableEq ι] (c : R →+* K) (hc : ∀ w, 
         ∑ j, eval₂ c x (pderiv j (p + q)) * (y j - x j) =
         (eval₂ c y p - eval₂ c x p - ∑ j, eval₂ c x (pderiv j p) * (y j - x j)) +
         (eval₂ c y q - eval₂ c x q - ∑ j, eval₂ c x (pderiv j q) * (y j - x j)) := by
-      simp only [map_add, eval₂_add, add_mul, Finset.sum_add_distrib]; ring
+      simp only [map_add (f := _), eval₂_add, add_mul, Finset.sum_add_distrib]; ring
     rw [this]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hp hq)
   | mul_X p n hp =>
     have h1 : ∀ j, eval₂ c x (pderiv j (p * X n)) * (y j - x j) =

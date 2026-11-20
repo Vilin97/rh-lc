@@ -35,7 +35,7 @@ theorem isD_unique {R : Type} [CommRing R] [IsDomain R] {D : DegPre R} [Algebra 
     rw [(h₀ W₀).2 rfl U f hU]
     have e := congrArg TrivSqZeroExt.snd ((h₁ U f hU).symm.trans (h₂ U f hU))
     simp only [TrivSqZeroExt.snd_add, TrivSqZeroExt.snd_inl, TrivSqZeroExt.snd_inr, zero_add] at e
-    rw [map_add, map_sub, e, sub_self, add_zero]
+    rw [map_add (f := _), map_sub, e, sub_self, add_zero]
   have := (h₀ _).1 key
   have h3 : W₁ - W₂ = 0 := by simpa using this
   exact sub_eq_zero.1 h3

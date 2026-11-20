@@ -36,7 +36,7 @@ lemma evK_ξmul {R' R : LAlg R₀} (π : LHom R' R) (ξ : (R' : Type u)) (hξ : 
     show h g * (ξ * r) = ξ * (h g * r)
     ring
   | add x y hx hy =>
-    simp only [evK, ev, map_add] at hx hy ⊢
+    simp only [evK, ev, map_add (f := _)] at hx hy ⊢
     rw [hx, hy, mul_add]
 
 end BX

@@ -120,7 +120,7 @@ theorem atZero_comp {κ : Type} [Fintype κ] (G : VCx ι a b → ℂ) (hG : Cont
       rw [map_prod]
       simp only [aeval_X]
     rw [h, map_smul, map_smul, map_smul, h2, atZero_comp_prodX G hG L c e hL r]
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
 
 end Chain
 
@@ -137,7 +137,7 @@ theorem eval_blockAct {n : ℕ} (h : ι → Matrix (Fin n) (Fin n) K) (y : ι ×
     eval y (Formalism.GradedWeylDivisibility.blockAct K h R) = eval (fun v => ∑ β, h v.1 v.2.1 β * y (v.1, β, v.2.2)) R := by
   induction R using MvPolynomial.induction_on with
   | C c => simp [Formalism.GradedWeylDivisibility.blockAct]
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_mul, hp, eval_X]
     congr 1
@@ -147,7 +147,7 @@ theorem map_blockAct {L : Type} [Field L] (σ : K →+* L) {n : ℕ} (h : ι →
     MvPolynomial.map σ (Formalism.GradedWeylDivisibility.blockAct K h R) = Formalism.GradedWeylDivisibility.blockAct L (fun τ => (h τ).map σ) (MvPolynomial.map σ R) := by
   induction R using MvPolynomial.induction_on with
   | C c => simp [Formalism.GradedWeylDivisibility.blockAct]
-  | add p q hp hq => rw [map_add, map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_mul, map_mul, hp, map_X]
     congr 1

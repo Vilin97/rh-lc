@@ -99,7 +99,7 @@ theorem exists_jac₂_map {a b n : Type} [Fintype a] [DecidableEq a] [Fintype b]
     show extTensor R (detRep b χ) ((g true)⁻¹, (g false)⁻¹) w = _
     rw [hg]
     induction w with
-    | add x y hx hy => rw [map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
     | tmul x y =>
       rw [extTensor_tmul, ← TensorProduct.tmul_smul]
       simp [detRep]
@@ -128,7 +128,7 @@ theorem piTensor_scalar {α : Type} [Fintype α] {Γ X : α → Type} [∀ a, Gr
     (g : ∀ a, Γ a) (c : α → ℂ) (h : ∀ a x, ρ a (g a) x = c a • x) (y : ⨂[ℂ] a, X a) :
     piTensor ρ g y = (∏ a, c a) • y := by
   induction y using PiTensorProduct.induction_on with
-  | add x y hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | smul_tprod r x =>
     rw [map_smul, smul_comm, piTensor_tprod, ← MultilinearMap.map_smul_univ]
     simp only [h]

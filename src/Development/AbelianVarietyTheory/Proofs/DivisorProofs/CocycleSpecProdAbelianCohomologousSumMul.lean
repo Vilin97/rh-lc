@@ -39,7 +39,7 @@ theorem cohom_of_cob {R : Type} [CommRing R] {X : Over (Sp R)} {K : Type} {W : K
   have h2 := hk D D' φ x hx
   have h3 := ha D D' φ x
   simp only [Fn1.add, Fn1.neg] at h1 ⊢
-  rw [map_add]
+  rw [map_add (f := _)]
   linear_combination h1 + h2 + h3
 
 end GlobalTheory.PtExt.SurjD
@@ -97,6 +97,6 @@ theorem GlobalTheory.PtExt.cohom_sumMul_fv_of_abelian : GlobalTheory.Published.A
     intro E _ _ E' _ _ E'' _ _ φ ψ x hx
     have h1 := hu E E' E'' φ ψ x hx
     have h2 := hsm E E' E'' φ ψ x hx
-    simp only [Fn1.add, Fn1.neg, map_add, map_neg]
+    simp only [Fn1.add, Fn1.neg, map_add (f := _), map_neg]
     linear_combination h1 - h2
   exact GlobalTheory.T.isPointwiseCoboundary_of_pullbackBaseChange_isIso R D (algebraMap R D) _ B' q w hq _ hdiff ⟨k', hk'⟩

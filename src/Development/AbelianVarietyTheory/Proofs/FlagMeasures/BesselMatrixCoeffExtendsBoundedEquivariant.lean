@@ -30,7 +30,7 @@ theorem afun_add (hStd : Std σ w a μG d) (hSide : Side z π μS) {v : H} (hv :
     (σ x u) (hst x hx u hu) v hv).1
   have h2 := (GlobalTheory.T.besselForm_converges_equivariant_hermitian k r σ w a μG d z c π μS hStd hSide (DD σ w) hst hStd.2.2.2.2.2.2.2.1
     (σ x u') (hst x hx u' hu') v hv).1
-  simp only [Afun, be, map_add, coef_add_left, add_smul]
+  simp only [Afun, be, map_add (f := _), coef_add_left, add_smul]
   rw [integral_add h1 h2, ContinuousLinearMap.add_apply]
 
 theorem afun_smul (b : ℂ) (u v : H) (ξ : Wp) (x : Mat k r) :

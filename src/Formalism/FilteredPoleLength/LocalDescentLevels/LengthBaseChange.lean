@@ -144,7 +144,7 @@ theorem ext_core (ϖ : O) (hϖ : Irreducible ϖ) (n : ℕ) (c : V →ₗ[K] (Fin
     obtain ⟨k, hk, s, hs, rfl⟩ := Submodule.mem_sup.1 hv
     obtain ⟨x, rfl⟩ := (Submodule.mem_span_range_iff_exists_fun K).1 hs
     refine ⟨x, ?_⟩
-    rw [map_add, LinearMap.mem_ker.1 hk, zero_add]
+    rw [map_add (f := _), LinearMap.mem_ker.1 hk, zero_add]
     show _ = c (Fintype.linearCombination K th x)
     rw [Fintype.linearCombination_apply]
   obtain ⟨r, hr⟩ := g.exists_leftInverse_of_injective hginj

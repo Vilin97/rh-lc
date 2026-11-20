@@ -49,7 +49,7 @@ theorem Syn.range_incl {X : Type} [AddCommGroup X] [Module ℂ X] (V : Submodule
       show ip (Syn.incl V (x + y)) (Syn.incl V z) = ip (Syn.incl V x) (Syn.incl V z) + ip (Syn.incl V y) (Syn.incl V z)
       have h1 := (h _ (Syn.incl_mem z) _ (Syn.incl_mem x) _ (Syn.incl_mem y) 1).1
       rw [one_smul, one_mul] at h1
-      rw [hs _ (Syn.incl_mem z) _ (Syn.incl_mem (x + y)), map_add, h1, star_add,
+      rw [hs _ (Syn.incl_mem z) _ (Syn.incl_mem (x + y)), map_add (f := _), h1, star_add,
         ← hs _ (Syn.incl_mem z) _ (Syn.incl_mem x), ← hs _ (Syn.incl_mem z) _ (Syn.incl_mem y)]
     smul_left := fun x y r => by
       show ip (Syn.incl V (r • x)) (Syn.incl V y) = starRingEnd ℂ r * ip (Syn.incl V x) (Syn.incl V y)
@@ -123,7 +123,7 @@ theorem exists_lift_models_on {σ : ℂ →+* ℂ} (hM : M.Is V ip) (hM' : M'.Is
     (hadd : ∀ x ∈ V, ∀ y ∈ V, f (x + y) = f x + f y) (hsmul : ∀ (c : ℂ), ∀ x ∈ V, f (c • x) = σ c • f x)
     (hf : ∀ x ∈ V, f x ∈ V') : ∃ g : M.H →ₛₗ[σ] M'.H, ∀ x, M'.e (g x) = f (M.e x) :=
   exists_lift_fun σ hM' (fun x => f (M.e x))
-    (fun a b => by rw [map_add, hadd _ (e_mem hM a) _ (e_mem hM b)])
+    (fun a b => by rw [map_add (f := _), hadd _ (e_mem hM a) _ (e_mem hM b)])
     (fun c a => by rw [map_smul, hsmul c _ (e_mem hM a)]) (fun a => hf _ (e_mem hM a))
 
 end Lift

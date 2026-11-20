@@ -70,7 +70,7 @@ theorem iQ_equiv {a e : ℤ} (b : ℤ) (hae : Mxi AA ξ e ≤ Mxi AA ξ a) (g : 
   | tmul t q =>
     obtain ⟨y, rfl⟩ := Submodule.Quotient.mk_surjective _ q
     rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem pQ_equiv (a : ℤ) {e b : ℤ} (heb : Mxi AA ξ b ≤ Mxi AA ξ e) (g : G)
     (x : TensorProduct O T (Qab AA ξ a b)) :
@@ -81,7 +81,7 @@ theorem pQ_equiv (a : ℤ) {e b : ℤ} (heb : Mxi AA ξ b ≤ Mxi AA ξ e) (g : 
   | tmul t q =>
     obtain ⟨y, rfl⟩ := Submodule.Quotient.mk_surjective _ q
     rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem repX_res {G' : Type} [Group G'] (φ : G' →* G) (act' : G' →* (WC ≃ₐ[O] WC))
     (hact : ∀ g, act' g = act (φ g)) (ρ' : G' →* (T →ₗ[O] T)) (hρ : ∀ g, ρ' g = ρT (φ g))

@@ -92,7 +92,7 @@ theorem expOddTheta_law (τ : UpperHalfPlane) : ∀ ω ∈ (GlobalTheory.periodP
     apply Complex.ext <;> simp
     ring
   have hy : ((τ.im : ℝ) : ℂ) ≠ 0 := by exact_mod_cast τ.im_ne_zero
-  simp only [map_add, map_mul, map_intCast, hc]
+  simp only [map_add (f := _), map_mul, map_intCast, hc]
   field_simp
   push_cast
   ring

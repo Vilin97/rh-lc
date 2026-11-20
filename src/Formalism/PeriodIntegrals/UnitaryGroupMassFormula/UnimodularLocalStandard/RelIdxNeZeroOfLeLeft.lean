@@ -169,7 +169,7 @@ variable {a : ℕ} {b c : ℤ} {d : ℕ}
 lemma theta_conj (b : ℤ) (d : ℕ) : conj (cmTheta b d) = b - cmTheta b d := by
   have h2 : (starRingEnd ℂ) (2 : ℂ) = 2 := map_ofNat _ 2
   first
-  | (simp only [PI.ULS.cmTheta, map_div₀, map_add, map_mul, Complex.conj_I, Complex.conj_ofReal, map_intCast, h2]; ring)
+  | (simp only [PI.ULS.cmTheta, map_div₀, map_add (f := _), map_mul, Complex.conj_I, Complex.conj_ofReal, map_intCast, h2]; ring)
   | (simp [PI.ULS.cmTheta, map_div₀]; ring)
   | (simp [PI.ULS.cmTheta, map_div₀]; done)
   | (apply Complex.ext <;> simp [PI.ULS.cmTheta] <;> ring)

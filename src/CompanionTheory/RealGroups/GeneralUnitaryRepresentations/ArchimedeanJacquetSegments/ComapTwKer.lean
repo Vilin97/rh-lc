@@ -53,7 +53,7 @@ theorem comap_twKer (ρ : Representation ℂ G V) (N₁ : Subgroup G) (θ₁ : N
       have hz : ρ (u₁ : G) (ρ (s a) v) - ((θ₁ u₁ : ℂˣ) : ℂ) • ρ (s a) v ∈ twKer ρ N₁ θ₁ :=
         Submodule.subset_span ⟨u₁, _, rfl⟩
       show (twKer ρ N₁ θ₁).mkQ _ ∈ twKer σ N₂ θ₂
-      rw [hdec, map_add, Submodule.mkQ_apply, (Submodule.Quotient.mk_eq_zero _).2 hz, zero_add, map_smul]
+      rw [hdec, map_add (f := _), Submodule.mkQ_apply, (Submodule.Quotient.mk_eq_zero _).2 hz, zero_add, map_smul]
       refine Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, Submodule.Quotient.mk v, ?_⟩)
       rw [Submodule.mkQ_apply, Submodule.Quotient.mk_sub, Submodule.Quotient.mk_smul, hσ]
   rw [key, Submodule.comap_map_mkQ, sup_eq_right.2 hle]

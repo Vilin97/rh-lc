@@ -63,7 +63,7 @@ def dualLat (g : ℕ) (L : Submodule ℤ E) : Submodule ℤ E where
   zero_mem' := fun y _ => by simp
   add_mem' := fun {a b} ha hb y hy => by
     have h : (a + b) * y / g = a * y / g + b * y / g := by ring
-    rw [h, map_add]
+    rw [h, map_add (f := _)]
     exact add_mem (ha y hy) (hb y hy)
   smul_mem' := fun n a ha y hy => by
     have h : (n • a) * y / g = n • (a * y / g) := by

@@ -24,7 +24,7 @@ theorem repr_phi {κ : Type} (tb : Basis κ O M) (φ : RW →ₐ[O] RW) (z : RW 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r t => simp [Algebra.TensorProduct.basis_repr_tmul]
-  | add a b ha hb => simp only [map_add, Finsupp.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), Finsupp.add_apply, ha, hb]
 
 theorem incl_smul_mem (incl : RA →ₐ[O] RW) (a : RA) (z : RW ⊗[O] M)
     (hz : z ∈ LinearMap.range (TensorProduct.map incl.toLinearMap (LinearMap.id : M →ₗ[O] M))) :
@@ -34,7 +34,7 @@ theorem incl_smul_mem (incl : RA →ₐ[O] RW) (a : RA) (z : RW ⊗[O] M)
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul r t => simp [TensorProduct.smul_tmul']
-  | add a b ha hb => simp only [map_add, smul_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), smul_add, ha, hb]
 
 theorem upper {κ ι : Type} [Fintype κ] [Fintype ι] (tb : Basis κ O M) (incl : RA →ₐ[O] RW)
     (φ : RW →ₐ[O] RW)
@@ -145,7 +145,7 @@ theorem φD_smulA (T : LocLat S.G S.Qp S.LL S.O) (a : LetA S.O S.n) (y : S.W.DD 
   rfl
 
 theorem φA_one_add_π : S.W.φA (1 + letπ) = (1 + letπ) ^ S.PD.p := by
-  rw [map_add, map_one, S.W.φA_π]
+  rw [map_add (f := _), map_one, S.W.φA_π]
   funext i
   have := S.W.q₀_def
   simp only [Pi.add_apply, Pi.mul_apply, Pi.pow_apply, Pi.one_apply, letπ, LocWach.q]
@@ -161,12 +161,12 @@ theorem φA_pow_one_add_π (k : ℕ) :
 theorem frobenius_inclusion_X_eq_mul_Q (hu : S.φR (S.inclR (1 + S.πA)) = S.inclR (1 + S.πA) ^ S.PD.p) :
     S.φR (S.inclR (E.io S.W.X)) = S.inclR (E.io S.W.X) * S.inclR (E.io S.W.Q) := by
   have hX : S.W.X = (1 + letπ) ^ (S.PD.p ^ (S.W.s - 1)) - 1 := by
-    rw [← φA_pow_one_add_π, map_add, map_one, LocWach.X]; ring
+    rw [← φA_pow_one_add_π, map_add (f := _), map_one, LocWach.X]; ring
   have hXQ : S.W.X * S.W.Q = ((1 + letπ) ^ S.PD.p) ^ (S.PD.p ^ (S.W.s - 1)) - 1 := by
     rw [LocWach.X, LocWach.Q, ← map_mul, ← S.W.φA_π, ← pow_mul, mul_comm S.PD.p, pow_mul,
       ← φA_pow_one_add_π, ← map_pow, ← φA_one_add_π, map_add, map_one, map_add, map_one]
     ring
-  have hπ : E.io (1 + letπ) = 1 + S.πA := by rw [map_add, map_one, E.io_π]
+  have hπ : E.io (1 + letπ) = 1 + S.πA := by rw [map_add (f := _), map_one, E.io_π]
   rw [← map_mul, ← map_mul, hXQ, hX]
   simp only [map_sub, map_pow, map_one, hπ, hu]
 

@@ -68,7 +68,7 @@ theorem value0 (hR : Formalism.MainNotions.UnusedSlot80.ToolsR.RingP W) (a : ZMo
   have hza : z a = PowerSeries.subst W.π₀₁ g * W.π₀₁ + c • (1 : PowerSeries O) := by
     rw [hf a]
     change PowerSeries.subst W.π₀₁ (f a) = _
-    rw [hfa, ← PowerSeries.coe_substAlgHom hs0, map_add, map_mul, PowerSeries.substAlgHom_X,
+    rw [hfa, ← PowerSeries.coe_substAlgHom hs0, map_add (f := _), map_mul, PowerSeries.substAlgHom_X,
       map_smul, map_one]
   have key : (letE a : LetA O n) * z = letE a * (algebraMap O (LetA O n) c + W.π₀ * w') := by
     funext i
@@ -271,6 +271,6 @@ theorem killer_elem (hR : Formalism.MainNotions.UnusedSlot80.ToolsR.RingP W) (hK
   rw [hfin]
   obtain ⟨u₁, hu₁, e₁⟩ := hf₁'
   obtain ⟨u₂, hu₂, e₂⟩ := hf₂
-  exact ⟨u₁ + u₂, W.AΔ.add_mem hu₁ hu₂, by rw [mul_add, e₁, e₂, ← map_add]; congr 1; ring⟩
+  exact ⟨u₁ + u₂, W.AΔ.add_mem hu₁ hu₂, by rw [mul_add, e₁, e₂, ← map_add (f := _)]; congr 1; ring⟩
 
 end Formalism.MainNotions.UnusedSlot80.UGen

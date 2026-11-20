@@ -23,7 +23,7 @@ theorem finPart_cA (z : AE D) : finPart D (cA D z) = sigR (Af D.host.F) D.sp.cm.
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a x => rfl
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem cA_cA' (z : AE D) : cA D (cA D z) = z := by
   induction z using TensorProduct.induction_on with
@@ -31,7 +31,7 @@ theorem cA_cA' (z : AE D) : cA D (cA D z) = z := by
   | tmul a x =>
     change a ⊗ₜ[D.host.F] star (star x) = _
     rw [star_star]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem cA_mem {z : AE D} (hz : z ∈ intRing D) : cA D z ∈ intRing D := by
   rw [mem_intRing] at hz ⊢
@@ -49,7 +49,7 @@ def Dvd (N : ℕ) (z : AE D) : Prop :=
 theorem Dvd.add {N : ℕ} {y z : AE D} (hy : Dvd N y) (hz : Dvd N z) : Dvd N (y + z) := by
   obtain ⟨a, ha, e⟩ := hy
   obtain ⟨b, hb, e'⟩ := hz
-  exact ⟨a + b, add_mem ha hb, by rw [RingHom.map_add, e, e', mul_add]⟩
+  exact ⟨a + b, add_mem ha hb, by rw [RingHom.map_add (f := _), e, e', mul_add]⟩
 
 theorem Dvd.mul {N : ℕ} {y z : AE D} (hy : Dvd N y) (hz : z ∈ intRing D) : Dvd N (y * z) := by
   obtain ⟨a, ha, e⟩ := hy

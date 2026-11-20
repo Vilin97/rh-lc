@@ -75,7 +75,7 @@ private theorem not_nonSplitAt_of_emb {D : D7} {v : HeightOneSpectrum (𝓞 D.ho
     by_cases e : u = v
     · subst e; rw [GlobalTheory.AdelicU.evalV_singleFin_self, h1]
     · rw [GlobalTheory.AdelicU.evalV_singleFin_ne e, h0 u e]
-  rw [he, GlobalTheory.EmbChart.cA_idem, GlobalTheory.EmbChart.idem, ← LinearMap.map_add, add_sub_cancel]; rfl
+  rw [he, GlobalTheory.EmbChart.cA_idem, GlobalTheory.EmbChart.idem, ← LinearMap.map_add (f := _), add_sub_cancel]; rfl
 
 private theorem levelLe_one_of_unrAt {L : Type} [Field L] [NumberField L] {χ : HChar L} {w : HeightOneSpectrum (𝓞 L)}
     (h : χ.UnrAt w) : χ.LevelLe w 1 :=

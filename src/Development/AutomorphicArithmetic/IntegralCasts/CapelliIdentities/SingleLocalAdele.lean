@@ -141,11 +141,11 @@ private theorem inter2 (hψ : IsLocallyConstant ψ) (h1 : ∃ t, ψ t ≠ 1)
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [show (Pi.single i (y i) : κ → K) = y i • Pi.single i 1 by rw [← Pi.single_smul]; simp, map_smul]
     rfl
-  have hsp : ∀ w, G w = G (w.1, 0) + G (0, w.2) := fun w => by rw [← map_add]; simp
+  have hsp : ∀ w, G w = G (w.1, 0) + G (0, w.2) := fun w => by rw [← map_add (f := _)]; simp
   have hNi : Function.Injective N := (injective_iff_map_eq_zero _).2 fun z hz => by
     have h0 : ∀ w, ω w (G (0, z)) = 0 := fun w => by
       obtain ⟨w, rfl⟩ := LinearMap.injective_iff_surjective.1 hG w
-      rw [hsp, map_add, LinearMap.add_apply, ← hβ, ← hN, hz, hω, hb]; simp
+      rw [hsp, map_add (f := _), LinearMap.add_apply, ← hβ, ← hN, hz, hω, hb]; simp
     have : G (0, z) = G 0 := by
       rw [map_zero]
       refine Prod.ext (funext fun i => ?_) (funext fun i => ?_)
@@ -158,7 +158,7 @@ private theorem inter2 (hψ : IsLocallyConstant ψ) (h1 : ∃ t, ψ t ≠ 1)
   obtain ⟨ι, hι, H⟩ := inter hψ h1 (G ∘ₗ LinearMap.prodMap LinearMap.id e.symm.toLinearMap) fun w w' => by
     change ω (G (w.1, e.symm w.2)) (G (w'.1, e.symm w'.2)) = _
     rw [hsp (w.1, _), hsp (w'.1, _)]
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     rw [hanti (G (0, _)) (G (_, 0)), ← hβ, ← hβ, ← hN, ← hN, he, he, hω, hω, ha, hb]
     ring
   refine ⟨ι, hι, fun y φ hφ Y => ?_, fun z φ hφ Y => ?_⟩
@@ -259,7 +259,7 @@ private theorem acts_eq {κ : Type} [Fintype κ] (ψ : AddChar (AF F) ℂ) (v : 
       refine forall_congr' fun i => forall_congr' fun u => forall_congr' fun hu => ?_
       have : evalV F u (z i).2 = 0 := by rw [h0]; exact evalV_singleFin_ne hu _
       change evalV F u ((x i).2 + (z i).2) ∈ _ ↔ evalV F u (x i).2 ∈ _
-      rw [map_add, this, add_zero]
+      rw [map_add (f := _), this, add_zero]
     simp only [r, h1, Set.indicator, h2, Pi.one_apply]
   have hg := UpperTheory.schwartz_function_generation F (fun u => (locField u).toLocallyCompactSpace) κ v φ hφ.1 hφ.2 _ fun _ => rfl
   have hR : Rest (evFin F v) φ r := ⟨fun x z hz => hr x z ((at_iff v z).1 hz),
@@ -286,7 +286,7 @@ private theorem acts_eq {κ : Type} [Fintype κ] (ψ : AddChar (AF F) ℂ) (v : 
     rw [mul_add, mul_left_comm, ← smul_eq_mul (sL v 1), ← smul_eq_mul (sL v 1), ← dotProduct_smul, ← dotProduct_smul,
       hw2]), map_add, map_mul, ev_dot, ev_dot, hX, h2] at this
   rw [← this]
-  simp only [schr, evp, Pi.add_apply, map_add]
+  simp only [schr, evp, Pi.add_apply, map_add (f := _)]
   congr 2
   funext i
   exact congrArg (· + _) (eval_single_local v _)
@@ -294,20 +294,20 @@ private theorem acts_eq {κ : Type} [Fintype κ] (ψ : AddChar (AF F) ℂ) (v : 
 private theorem comp_rT (v : Pl F) (y : Fv F v ⊗[F] E) : compFin F E v (LinearMap.rTensor E (sL v) y) = y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a e => exact congrArg (· ⊗ₜ[F] e) (eval_single_local v a)
 
 private theorem rT_comp (v : Pl F) (z : AE F E) : LinearMap.rTensor E (sL v) (compFin F E v z) = sL v 1 • z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy, smul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add]
   | tmul a e => exact congrArg (· ⊗ₜ[F] e) (sL_one_mul_eq_sL_evFin v a).symm
 
 private theorem rT_smul (v : Pl F) (a : Fv F v) (y : Fv F v ⊗[F] E) :
     LinearMap.rTensor E (sL v) (a • y) = sL v a • LinearMap.rTensor E (sL v) y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy, smul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add]
   | tmul b e =>
     refine congrArg (· ⊗ₜ[F] e) (?_ : sL v (a * b) = sL v a * sL v b)
     rw [mul_s, eval_single_local]
@@ -315,7 +315,7 @@ private theorem rT_smul (v : Pl F) (a : Fv F v) (y : Fv F v ⊗[F] E) :
 private theorem piW_cA {v : Pl F} (t : E →ₐ[F] Fv F v) (z : AE F E) : piW t (cA σ z) = piW (t.comp σ) z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul b e => rfl
 
 variable {n d : ℕ}
@@ -346,7 +346,7 @@ variable (h : IsCMExt F E σ) {v : Pl F} (t : E →ₐ[F] Fv F v)
 
 private theorem liftM_add (p q : (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v)) :
     liftM h t (p + q) = liftM h t p + liftM h t q := Matrix.ext fun i j => by
-  simp only [liftM, Matrix.of_apply, Matrix.add_apply, ← map_add]; rfl
+  simp only [liftM, Matrix.of_apply, Matrix.add_apply, ← map_add (f := _)]; rfl
 
 private theorem liftM_smul (a : Fv F v) (p : (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v)) :
     liftM h t (a • p) = sL v a • liftM h t p := Matrix.ext fun i j => by
@@ -393,7 +393,7 @@ private theorem main {X : Spc F E n} {W : Spc F E d} (M : Model σ X W) {ψ : Ad
       ((Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v)) :=
     { toFun := fun p => evp v (M.co.e (liftM h t p))
       map_add' := fun p q => by
-        rw [liftM_add, map_add]
+        rw [liftM_add, map_add (f := _)]
         exact Prod.ext (funext fun i => map_add (evFin F v) _ _) (funext fun i => map_add (evFin F v) _ _)
       map_smul' := fun a p => by
         rw [liftM_smul, map_smul]

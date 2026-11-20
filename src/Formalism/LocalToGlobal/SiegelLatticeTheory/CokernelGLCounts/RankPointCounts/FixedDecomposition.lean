@@ -189,7 +189,7 @@ theorem hT_e_X (a : Fin D.R.rS) : ∀ p ∈ (lf D (X.Fu u)).fl.X, (VS D).hT (X.e
   induction hp using Submodule.span_induction with
   | mem x hx => obtain ⟨b, rfl⟩ := hx; exact X.ee a b
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
   | smul c x _ hx => rw [map_smul, hx, smul_zero]
 
 theorem hJ_E_Xs (a : Fin D.R.rS) : ∀ s ∈ spanAt X v (lf D (X.Fu u)).fl.X,

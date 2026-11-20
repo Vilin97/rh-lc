@@ -72,7 +72,7 @@ theorem cb_eq_top (N : W →ₗ[E] W) (hN : IsNilpotent N) (S : Submodule E W)
       have hz' : z' ∈ S ⊔ LinearMap.range (N ^ k) := ih ▸ Submodule.mem_top
       obtain ⟨x2, hx2, z2, hz2, rfl⟩ := Submodule.mem_sup.mp hz'
       obtain ⟨z3, rfl⟩ := hz2
-      rw [map_add]
+      rw [map_add (f := _)]
       apply Submodule.mem_sup.mpr
       refine ⟨x + N x2, S.add_mem hx (hS _ hx2), (N ^ (k + 1)) z3, ⟨z3, rfl⟩, ?_⟩
       rw [cb_pow_succ, add_assoc]

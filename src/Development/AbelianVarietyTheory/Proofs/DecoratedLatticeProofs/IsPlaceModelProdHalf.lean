@@ -107,7 +107,7 @@ theorem isPlaceModel_prodHalf {S T : HSp D} {ψ : AddChar (AF D.host.F) ℂ} {Λ
     exact hT.trans _ (hsb Φ hΦ) x ((isHalf_iff' _ _).2 hax)
   · have hy' : IsHalf (cA D (a + b)) y := by
       rw [isHalf_iff'] at hy ⊢
-      rw [map_add, add_smul, hy, ← hy, smul_smul, ← map_mul, mul_comm, hab, map_zero, zero_smul, add_zero]
+      rw [map_add (f := _), add_smul, hy, ← hy, smul_smul, ← map_mul, mul_comm, hab, map_zero, zero_smul, add_zero]
     have e : prodHalf a b Ψ (fun t => ψ (symplO S T t y) * Φ t) =
         fun t => ψ (symplO S T t y) * prodHalf a b Ψ Φ t := by
       funext z

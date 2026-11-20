@@ -80,7 +80,7 @@ theorem at_matrix {m n : Type} (v : GlobalTheory.IndefiniteRowSideFullHecke.Weil
 def liftM (σ : E →ₐ[F] E) (hcm : IsCMExt F E σ) {m n : Type} (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F) (t : E →ₐ[F] Fv F v) :
     Matrix m n (Fv F v) × Matrix m n (Fv F v) →+ Matrix m n (AE F E) :=
   AddMonoidHom.mk' (fun p => Matrix.of fun i j => tensAt E v ((splitAlgEquiv hcm t).symm (p.1 i j, p.2 i j)))
-    (fun p q => by ext i j; simp only [Prod.fst_add, Prod.snd_add, Matrix.add_apply, Matrix.of_apply, ← Prod.mk_add_mk, map_add])
+    (fun p q => by ext i j; simp only [Prod.fst_add, Prod.snd_add, Matrix.add_apply, Matrix.of_apply, ← Prod.mk_add_mk, map_add (f := _)])
 
 theorem liftM_at (σ : E →ₐ[F] E) (hcm : IsCMExt F E σ) {m n : Type} (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Pl F) (t : E →ₐ[F] Fv F v)
     (p : Matrix m n (Fv F v) × Matrix m n (Fv F v)) : At (evFin F v) (liftM σ hcm v t p) :=
@@ -165,9 +165,9 @@ theorem exists_split_coords : ∀ (F E : Type) [Field F] [NumberField F] [Field 
   let L := liftM σ hcm (m := Fin a') (n := Fin (a + a')) v t
   let uT : Matrix (Fin a') (Fin (a + a')) (Fv F v) →+ Matrix (Fin a') (Fin (a + a')) (AE F E) :=
     AddMonoidHom.mk' (fun Y => L (0, -(P⁻¹ * Y * Q⁻¹))) (fun Y Y' => by
-      rw [Matrix.mul_add, Matrix.add_mul, neg_add, ← map_add, Prod.mk_add_mk, add_zero])
+      rw [Matrix.mul_add, Matrix.add_mul, neg_add, ← map_add (f := _), Prod.mk_add_mk, add_zero])
   let uM : Matrix (Fin a') (Fin (a + a')) (Fv F v) →+ Matrix (Fin a') (Fin (a + a')) (AE F E) :=
-    AddMonoidHom.mk' (fun z => L (-z, 0)) (fun z z' => by rw [neg_add, ← map_add, Prod.mk_add_mk, add_zero])
+    AddMonoidHom.mk' (fun z => L (-z, 0)) (fun z z' => by rw [neg_add, ← map_add (f := _), Prod.mk_add_mk, add_zero])
   have hco : ∀ u, GlobalTheory.LinBarAt.coAt G t u = -(P * u.map (piW (t.comp σ)) * Q) := fun u => by
     simp [GlobalTheory.LinBarAt.coAt, hPdef, hQdef]
   have hTc : ∀ Y, (uT Y).map (piW (t.comp σ)) = -(P⁻¹ * Y * Q⁻¹) := fun Y => liftM_snd σ hcm v t _

@@ -52,7 +52,7 @@ theorem exists_eqv_ext : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R
     fun p => GlobalTheory.SymFrameClause.exists_symLift R A F N hN (lab' p) ((onto _).2 ⟨p, rfl⟩),
     fun p w θ s s' hw hθ hs => GlobalTheory.T.equivariant_linearExtension_to_algClosedField R hR D A N hN lab E₀ hE F lab' (hem ▸ hlab) e' hc p w θ s s' hw hθ hs⟩, ?_⟩
   · obtain rfl : s'' = s + s' := fam_ext h
-    rw [map_add]
+    rw [map_add (f := _)]
     rfl
   · obtain rfl : s' = c • s := (isSmul_iff _ _ _).1 h
     rw [map_smul]

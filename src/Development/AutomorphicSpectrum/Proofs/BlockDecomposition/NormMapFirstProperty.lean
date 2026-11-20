@@ -373,13 +373,13 @@ theorem norm_onto : PositivityTheory.Rg.Tf.Loc.N1 := by
     intro i s
     induction s with
     | tmul z b => rw [hTm]; rfl
-    | add u v hu hv => rw [map_add, map_add, hu, hv]
+    | add u v hu hv => rw [map_add (f := _), map_add (f := _), hu, hv]
   have hT : T ^ ℓ = 1 := by
     ext s
     rw [← hTi, hτ]
     induction s with
     | tmul z b => rfl
-    | add u v hu hv => rw [map_add, hu, hv]; rfl
+    | add u v hu hv => rw [map_add (f := _), hu, hv]; rfl
   have hXY : ∀ j < ℓ, ∑ i, (x i ⊗ₜ[κ] (1 : A)) * (T ^ j) (y i ⊗ₜ[κ] (1 : A)) =
       if j = 0 then 1 else 0 := by
     intro j hj

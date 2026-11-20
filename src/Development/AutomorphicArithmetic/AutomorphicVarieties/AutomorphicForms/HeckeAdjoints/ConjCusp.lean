@@ -40,7 +40,7 @@ private theorem conjOp_cap (v : InfinitePlace E) (u : ℂ) :
     conjOp (cap (a := a) v u) = cap v (starRingEnd ℂ u) := by
   refine (map_qdet_conj (conjOp (E := E) (a := a)) conjOp_algebraMap (Eop v) (conjOp_Eop v) _).trans ?_
   refine congrArg (Formalism.REAL.qdet (Eop (a := a) v)) ?_
-  simp only [map_add, map_div₀, map_sub, map_natCast, map_one, map_ofNat]
+  simp only [map_add (f := _), map_div₀, map_sub, map_natCast, map_one, map_ofNat]
 
 private theorem conjOp_mem {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) : conjOp z ∈ Zalg E a := by
   induction hz using Algebra.adjoin_induction with
@@ -49,7 +49,7 @@ private theorem conjOp_mem {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) :
     rw [conjOp_cap]
     exact Algebra.subset_adjoin ⟨τ, _, rfl⟩
   | algebraMap c => rw [conjOp_algebraMap]; exact Subalgebra.algebraMap_mem _ _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
 private theorem fin_of_conj {s t : Set (Sm E a)} (h : FiniteDimensional ℂ (Submodule.span ℂ s))

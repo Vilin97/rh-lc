@@ -61,7 +61,7 @@ private theorem mult_form (D : Datum p) (g : ℤ) (hg : ∀ x y, g ∣ D.EF x y)
     | zero =>
       simpa using Mult.zero (p := p) g
     | add z z' _ _ h1 h2 =>
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       exact Mult.add h1 h2
     | neg z _ h =>
       rw [map_neg, LinearMap.neg_apply]
@@ -74,7 +74,7 @@ private theorem mult_form (D : Datum p) (g : ℤ) (hg : ∀ x y, g ∣ D.EF x y)
   | zero =>
     simpa using Mult.zero (p := p) g
   | add z z' _ _ h1 h2 =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Mult.add h1 h2
   | neg z _ h =>
     rw [map_neg]
@@ -196,7 +196,7 @@ theorem UpperTheory.Gal.FiniteEtaleModels.dictP_holds :
       rw [inAf_sub, ← actAf_inAf, smul_sub]
       have e3 : inAf D ((f n) (a • x)) = actAf D a (h₀ (inAf D x)) - n • w1 := by
         rw [← hcomm, actAf_inAf, he1, add_sub_cancel_right]
-      rw [e3, he2, map_add, map_nsmul]
+      rw [e3, he2, map_add (f := _), map_nsmul]
       abel
     have hmem : actAf D a w2 - w1 ∈ LaHat D := (LaHat D).sub_mem (actAf_mem_laHat D a hw2) hw1
     obtain ⟨z, hz⟩ := LatDiv.eq_nsmul_of_inAf_eq_nsmul p D _ n hn hnp _ hmem key
@@ -247,7 +247,7 @@ theorem UpperTheory.Gal.FiniteEtaleModels.dictP_holds :
     have hh : h₀ (L.actG h (inAf D x)) = κ • inAf D x := by
       simp only [h₀, LinearMap.smul_apply]
       rw [hinv]
-    rw [hyw, map_add, map_nsmul, he'] at hh
+    rw [hyw, map_add (f := _), map_nsmul, he'] at hh
     have key : inAf D ((f n) y - κ • x) = n • (-(w' + h₀ w)) := by
       rw [inAf_sub, inAf_nsmul, ← hh, smul_neg, smul_add]
       abel

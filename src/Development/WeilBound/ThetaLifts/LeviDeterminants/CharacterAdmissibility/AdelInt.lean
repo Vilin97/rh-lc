@@ -74,7 +74,7 @@ def glueE : (Vi F κ × Vf F κ) ≃ₜ+ (κ → AF F) where
     funext i
     refine Prod.ext ?_ rfl
     show (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (eI F κ (p.1 + q.1) i) = _
-    rw [map_add, Pi.add_apply, map_add]
+    rw [map_add (f := _), Pi.add_apply, map_add (f := _)]
     rfl
   continuous_toFun := continuous_pi fun i =>
     (continuous_ofMixed.comp ((continuous_apply i).comp ((eI F κ).continuous.comp continuous_fst))).prodMk
@@ -103,7 +103,7 @@ theorem axInt [IsTotallyReal F] : AxInt (adeleClass F) := by
       rw [hp]
       exact (cI f).integrable.mul_prod (hg g hg')
     | zero => rw [map_zero]; exact integrable_zero _ _ _
-    | add x y _ _ hx hy => rw [map_add]; exact hx.add hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact hx.add hy
     | smul c x _ hx => rw [map_smul]; exact hx.smul c
   have : (mu F κ).IsAddHaarMeasure := by unfold mu; infer_instance
   let ν : Measure (κ → AF F) := (mu F κ).map (glueE F κ)

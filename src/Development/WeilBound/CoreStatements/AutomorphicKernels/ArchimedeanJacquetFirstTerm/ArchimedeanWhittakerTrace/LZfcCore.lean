@@ -75,12 +75,12 @@ theorem rat_of_ker (hcm : IsCMExt F E σ) {ψ : AddChar (AF F) ℂ} (hψ : IsStd
   have key : ∀ i j (e : E), ψ (Algebra.trace (AF F) (AE F E) ((1 : AF F) ⊗ₜ[F] e * β i j)) = 1 := by
     intro i j e
     have h1 := h _ (tst_mem hcm ε (Matrix.single j i (-(e / 2))))
-    rw [trace_tst ε _ β hβ, trace_incM_single, map_add, trace_cA hcm] at h1
+    rw [trace_tst ε _ β hβ, trace_incM_single, map_add (f := _), trace_cA hcm] at h1
     have hI : ∀ c : E, inclR (F := F) (AF F) c = (1 : AF F) ⊗ₜ[F] c := fun c => rfl
     have hadd : ∀ a c : E, Algebra.trace (AF F) (AE F E) ((1 : AF F) ⊗ₜ[F] (a + c) * β i j) =
         Algebra.trace (AF F) (AE F E) ((1 : AF F) ⊗ₜ[F] a * β i j) +
           Algebra.trace (AF F) (AE F E) ((1 : AF F) ⊗ₜ[F] c * β i j) := fun a c => by
-      rw [TensorProduct.tmul_add, add_mul, map_add]
+      rw [TensorProduct.tmul_add, add_mul, map_add (f := _)]
     have hneg : ∀ a : E, Algebra.trace (AF F) (AE F E) ((1 : AF F) ⊗ₜ[F] (-a) * β i j) =
         -Algebra.trace (AF F) (AE F E) ((1 : AF F) ⊗ₜ[F] a * β i j) := fun a => by
       rw [TensorProduct.tmul_neg, neg_mul, map_neg]
@@ -157,10 +157,10 @@ theorem fc_inj_pt_per {B : Base F E} (hB : B.IsGood σ) (b : GL (Fin n ⊕ Fin n
     (fun T => hψ.1.comp (htr.comp ((continuous_const.matrix_mul continuous_subtype_val).matrix_trace)).neg)
     (fun T β β' => by
       unfold chr
-      rw [AddSubgroup.coe_add, Matrix.mul_add, Matrix.trace_add, map_add, neg_add, AddChar.map_add_eq_mul])
+      rw [AddSubgroup.coe_add, Matrix.mul_add, Matrix.trace_add, map_add (f := _), neg_add, AddChar.map_add_eq_mul])
     (fun T T' β => by
       unfold chr
-      rw [AddSubgroup.coe_add, AddSubgroup.coe_add, Matrix.add_mul, Matrix.trace_add, map_add, neg_add,
+      rw [AddSubgroup.coe_add, AddSubgroup.coe_add, Matrix.add_mul, Matrix.trace_add, map_add (f := _), neg_add,
         AddChar.map_add_eq_mul])
     (fun β => by
       unfold chr

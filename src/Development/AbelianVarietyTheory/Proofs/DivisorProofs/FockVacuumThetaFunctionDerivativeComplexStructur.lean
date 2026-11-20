@@ -106,7 +106,7 @@ theorem dLine_sum {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) {
     refine ⟨?_, fun t => ?_, ?_⟩
     · show Continuous fun t => N a t + (∑ x ∈ s, N x) t
       exact (hN a).add h1
-    · rw [AddMonoidHom.add_apply, Matrix.map_add _ (finPart D).map_add, hN0 a t, h2 t, add_zero]
+    · rw [AddMonoidHom.add_apply, Matrix.map_add _ (finPart D).map_add (f := _), hN0 a t, h2 t, add_zero]
     · rw [GlobalTheory.BiJoinDeriv.dLine_add_line hψ (hN a) (hN0 a) h1 h2 hf, h3]
 
 theorem fock_line_J : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp D)

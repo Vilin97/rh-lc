@@ -42,7 +42,7 @@ theorem LeibnizPairing.coconeLeft_homology_eq_homologyδ {p s m : ℕ} (h : p + 
     have e1 := LeibnizPairing.iCycles_cycles (LeibnizPairing.coconeLeft μL ρ μK hc) h X e
     have e2 := iCycles_toCycles_hom_apply (mappingCoconeNat f') m (m + 1)
       ((q, 0) : K'.X m × shiftNegOneX L' m)
-    rw [map_add, e1, e2, mappingCoconeNat_d_hom_apply']
+    rw [map_add (f := _), e1, e2, mappingCoconeNat_d_hom_apply']
     refine Prod.ext ?_ ?_
     · change μK.μ h (((mappingCoconeNat f).iCycles (p + 1)).hom X).1 ((N.iCycles s).hom e) =
         (((mappingCoconeNat f').iCycles (m + 1)).hom c').1 + (K'.d m (m + 1)).hom q
@@ -55,7 +55,7 @@ theorem LeibnizPairing.coconeLeft_homology_eq_homologyδ {p s m : ℕ} (h : p + 
           shiftNegOneSucc L' m ((L'.iCycles m).hom w) from congrArg Prod.snd hc'2, map_zero, add_zero,
         shiftNegOneSucc_apply, shiftNegOneSucc_apply, hw]
       exact (sub_add_cancel _ _).symm
-  rw [key, map_add]
+  rw [key, map_add (f := _)]
   exact (congrArg (_ + ·) (homologyπ_toCycles_hom_apply (mappingCoconeNat f') m (m + 1)
     ((q, 0) : K'.X m × shiftNegOneX L' m))).trans (add_zero _)
 

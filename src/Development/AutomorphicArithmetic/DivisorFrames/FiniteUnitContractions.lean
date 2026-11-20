@@ -48,7 +48,7 @@ private lemma key {K A : Type} [NormedField K] [CommRing A] [Algebra K A] [Modul
     intro h1
     let b := Module.finBasis K A
     have hc : Continuous fun x : K => ‖Algebra.norm K (1 + (x - 1) • e m)‖ := by
-      simp only [Algebra.norm_eq_matrix_det b, map_add, map_smul, map_one]
+      simp only [Algebra.norm_eq_matrix_det b, map_add (f := _), map_smul, map_one]
       exact (Continuous.matrix_det (by fun_prop)).norm
     have hn : ∀ n : ℕ, ‖Algebra.norm K (1 + (p ^ n - 1) • e m)‖ = 1 := by
       intro n

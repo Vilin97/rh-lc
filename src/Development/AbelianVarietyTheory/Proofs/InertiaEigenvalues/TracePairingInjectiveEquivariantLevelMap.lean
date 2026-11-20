@@ -89,7 +89,7 @@ theorem mem_lr {r : ℕ} {V : Type} [AddCommGroup V] [Module O V] {T : Submodule
 def pr (r : ℕ) (y : ↥LA'.T) : ↥LA.T →+ ZMod (l ^ r) where
   toFun x := PadicInt.toZModPow r (uv h2 hlam x y)
   map_zero' := by rw [uv_zero_left, map_zero]
-  map_add' a b := by rw [uv_add_left, map_add]
+  map_add' a b := by rw [uv_add_left, map_add (f := _)]
 
 def psi0 (r : ℕ) (y : ↥LA'.T) :
     (↥LA.T ⧸ (Ideal.span {((l : ℕ) : O) ^ r} • ⊤ : Submodule O ↥LA.T)) →+ ZMod (l ^ r) :=

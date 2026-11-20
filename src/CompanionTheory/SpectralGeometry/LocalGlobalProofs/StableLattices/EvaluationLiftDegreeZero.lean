@@ -87,7 +87,7 @@ theorem lift_adL (φ : V →ₗ[ℂ] W) (p q : Fin n) (x : Cn n V) :
 theorem lift_lF (φ : V →ₗ[ℂ] W) (E : Fin n → Fin n → Module.End ℂ V) (F : Fin n → Fin n → Module.End ℂ W)
     (h : ∀ a b x, φ (E a b x) = F a b (φ x)) (p q : Fin n) (x : Cn n V) :
     lift n φ (lF E p q x) = lF F p q (lift n φ x) := by
-  simp only [lF, LinearMap.add_apply, map_add, lift_adL]
+  simp only [lF, LinearMap.add_apply, map_add (f := _), lift_adL]
   congr 1
   funext A
   simp [h]
@@ -113,7 +113,7 @@ theorem bd_lift_comm (lev : Fin n → ℕ) (E : Fin n → Fin n → Module.End �
     bd (allT n) E (lift n T x) = lift n T (bd (allT n) E x) := by
   funext A
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [lift_apply, bd_apply, bd_apply, map_add, map_sum, map_sum]
+    rw [lift_apply, bd_apply, bd_apply, map_add (f := _), map_sum, map_sum]
   congr 1
   · refine Finset.sum_congr rfl fun i _ => ?_
     rw [if_pos rfl, if_pos rfl]
@@ -228,7 +228,7 @@ theorem evaluation_lift_degree_zero (lev : Fin n → ℕ) (E : Fin n → Fin n �
     intro x hx
     obtain ⟨h1, h2⟩ := ha x hx
     obtain ⟨h3, h4⟩ := hb x hx
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     refine ⟨deg_add h1 h3, ?_⟩
     rw [h2, h4]; funext A; simp
 
@@ -380,7 +380,7 @@ theorem acycU (lev : Fin n → ℕ) (E : Fin n → Fin n → Module.End ℂ Z) (
               rw [hw]
               obtain ⟨u, hu, g, hg, e⟩ := Submodule.mem_sup.1 (hy2 A)
               refine Submodule.add_mem _ ?_ (Submodule.mem_sup_right (hL A))
-              rw [← e, map_add, smul_add, add_sub_add_comm]
+              rw [← e, map_add (f := _), smul_add, add_sub_add_comm]
               exact Submodule.add_mem_sup
                 (GlobalTheory.CompanionTheory.DSICKoszul.euler_filt (fun i : I => a i.1) _ (fun i j => hF.d_comm _ _) hda m u hu)
                 (Submodule.sub_mem _ (hNG _ _ hg) (Submodule.smul_mem _ _ hg)))
@@ -429,7 +429,7 @@ theorem coverU (lev : Fin n → ℕ) (E : Fin n → Fin n → Module.End ℂ V) 
   · induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul v f => simp [h0]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
   · exact fun i j => (hF.a_comm i j).map (Module.End.lTensorAlgHom ℂ Z V)
   · exact fun i j => (hF.d_comm i j).map (Module.End.lTensorAlgHom ℂ Z V)
   · intro i j _
@@ -883,7 +883,7 @@ theorem evLc_facts {lev : Fin n → ℕ} (hlev : Monotone lev) {E : Fin n → Fi
     intro x hx
     obtain ⟨h1, h2, h3⟩ := ha x hx
     obtain ⟨h4, h5, h6⟩ := hb x hx
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     exact ⟨supp_add h1 h4, fun j hj => deg_add (h2 j hj) (h5 j hj), by rw [h3, h6]⟩
 
 end Ops

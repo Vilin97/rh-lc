@@ -16,7 +16,7 @@ theorem herr_of_tie {O D M : Type} [CommRing O] [AddCommGroup D] [Module O D] [A
   simp only [herrCocycles, LinearMap.mem_ker, LinearMap.coprod_apply, LinearMap.sub_apply,
     LinearMap.neg_apply, LinearMap.id_apply]
   apply hj
-  rw [map_zero, map_add, map_neg, map_sub, map_sub, hγ, hφ, ← hy, ← hz, map_add, map_sub, map_sub,
+  rw [map_zero, map_add (f := _), map_neg, map_sub, map_sub, hγ, hφ, ← hy, ← hz, map_add (f := _), map_sub, map_sub,
     hc, ht]
   abel
 

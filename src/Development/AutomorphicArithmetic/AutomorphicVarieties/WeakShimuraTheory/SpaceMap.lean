@@ -120,7 +120,7 @@ theorem Space.hom_ext {R : Type} [CommRing R] [Algebra Λ R] [IsCO Λ R] (f f' :
     · exact hn v i j
   | algebraMap b =>
     exact DFunLike.congr_fun hB b
-  | add y z _ _ hy hz => rw [map_add, map_add, hy, hz]
+  | add y z _ _ hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
   | mul y z _ _ hy hz => rw [map_mul, map_mul, hy, hz]
 
 end

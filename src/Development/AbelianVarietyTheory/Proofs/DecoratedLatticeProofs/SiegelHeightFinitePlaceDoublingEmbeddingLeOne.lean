@@ -25,7 +25,7 @@ theorem absNorm_le_one_of_absFin_le_one : ∀ {F E : Type} [Field F] [NumberFiel
       induction w using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [sigR]
-      | add y z hy hz => simp only [map_add, hy, hz]
+      | add y z hy hz => simp only [map_add (f := _), hy, hz]
     rw [e2]
     exact le_absFin F v _ x
   rw [← e1, hN]

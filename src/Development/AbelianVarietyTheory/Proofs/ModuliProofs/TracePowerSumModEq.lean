@@ -17,7 +17,7 @@ theorem trace_aeval_of_isNilpotent {V : Type*} [AddCommGroup V] [Module ℂ V] [
         ((Commute.refl g).pow_left k) h
       rw [pow_succ, Module.End.mul_eq_comp, this, ih]; ring
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, hp, hq, eval_add]; ring
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, eval_add]; ring
   | monomial k a =>
     rw [aeval_monomial, ← Algebra.smul_def, map_smul, hk, eval_monomial, smul_eq_mul]; ring
 

@@ -41,7 +41,7 @@ def coindTensorRight :
       (fun c f b => Subtype.ext (funext fun x => (TensorProduct.smul_tmul' _ _ _).symm))
       (fun f b b' => Subtype.ext (funext fun x => by
         change f.1 x ⊗ₜ[k] B.ρ x (b + b') = f.1 x ⊗ₜ[k] B.ρ x b + f.1 x ⊗ₜ[k] B.ρ x b'
-        rw [map_add, TensorProduct.tmul_add]))
+        rw [map_add (f := _), TensorProduct.tmul_add]))
       (fun c f b => Subtype.ext (funext fun x => by
         change f.1 x ⊗ₜ[k] B.ρ x (c • b) = c • (f.1 x ⊗ₜ[k] B.ρ x b)
         rw [map_smul, TensorProduct.tmul_smul]))),
@@ -55,7 +55,7 @@ def coindTensorLeft :
   Rep.ofHom ⟨TensorProduct.lift (LinearMap.mk₂ k (coindTensorLeftFun U A B)
       (fun a a' f => Subtype.ext (funext fun x => by
         change A.ρ x (a + a') ⊗ₜ[k] f.1 x = A.ρ x a ⊗ₜ[k] f.1 x + A.ρ x a' ⊗ₜ[k] f.1 x
-        rw [map_add, TensorProduct.add_tmul]))
+        rw [map_add (f := _), TensorProduct.add_tmul]))
       (fun c a f => Subtype.ext (funext fun x => by
         change A.ρ x (c • a) ⊗ₜ[k] f.1 x = c • (A.ρ x a ⊗ₜ[k] f.1 x)
         rw [map_smul, TensorProduct.smul_tmul']))
@@ -76,7 +76,7 @@ theorem coindTensorRight_comp_coindEvalOne :
   | tmul f b =>
     change f.1 1 ⊗ₜ[k] B.ρ 1 b = f.1 1 ⊗ₜ[k] b
     rw [map_one, Module.End.one_apply]
-  | add z z' hz hz' => rw [map_add, map_add, hz, hz']
+  | add z z' hz hz' => rw [map_add (f := _), map_add (f := _), hz, hz']
 
 variable [U.FiniteIndex]
 
@@ -95,7 +95,7 @@ theorem coindTensorRight_comp_coindTrace :
     change (A ⊗ B).ρ c.out (f.1 c.out⁻¹ ⊗ₜ[k] B.ρ c.out⁻¹ b) = A.ρ c.out (f.1 c.out⁻¹) ⊗ₜ[k] b
     rw [GroundTheory.GroupCoh.tensor_ρ_tmul, ← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one,
       Module.End.one_apply]
-  | add z z' hz hz' => rw [map_add, map_add, hz, hz']
+  | add z z' hz hz' => rw [map_add (f := _), map_add (f := _), hz, hz']
 
 end Coind
 

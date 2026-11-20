@@ -42,7 +42,7 @@ theorem exists_datum_tate_complex (T : GlobalTheory.CM.PAT H (Sp ℂ)) (hg : 1 �
       omega
   · obtain ⟨I, -⟩ := GlobalTheory.UnifObj.exists_tateIso D D ty Pe (Q := 𝟙_ (Over (Sp ℂ)) ⟶ T.t.G)
       (fun a g => g ≫ T.t.act.act a) (fun n g g' c => Out.WeilIs T.t.G T.t.PP.L n g g' (unitOn c))
-      (fun z => u.ex (F z)) (fun _ => LinearMap.id) hP.1 hP.2.1 (fun z z' => by rw [map_add, u.ex_add])
+      (fun z => u.ex (F z)) (fun _ => LinearMap.id) hP.1 hP.2.1 (fun z z' => by rw [map_add (f := _), u.ex_add])
       (u.ex_onto.comp F.surjective) (fun z => (u.ker _).trans (hF z)) hact
       (fun k a b c hk hc => by
         have ha : F (Pe a) ∈ u.Λ := (hF _).2 ⟨a, rfl⟩

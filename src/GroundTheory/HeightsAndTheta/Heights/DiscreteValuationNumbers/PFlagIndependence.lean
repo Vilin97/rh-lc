@@ -62,7 +62,7 @@ theorem FlagIndependence.proof (hExp : PairNumberExpansionIndependence.Statement
     (by
       intro A B'
       have h2 : IsPairExpansion m (homogeneousComponent m (A + B')) (ex A + ex B') := by
-        rw [map_add]
+        rw [map_add (f := _)]
         exact isPairExpansion_add (hex A) (hex B')
       rw [hind _ _ _ (homogeneousComponent_isHomogeneous m _) (hex (A + B')) h2]
       exact map_add (pairNumHom (pointIdeal O y) (Fin.append x u) (Fin.append x' u')

@@ -32,7 +32,7 @@ variable {om : V →L[ℝ] V →L[ℝ] ℝ} {ρ : V → B →L[ℂ] B}
 
 theorem skew (h0 : ∀ x, om x x = 0) (x y : V) : om y x = -om x y := by
   have hxy := h0 (x + y)
-  simp only [map_add, _root_.add_apply, h0] at hxy
+  simp only [map_add (f := _), _root_.add_apply, h0] at hxy
   linarith
 
 theorem heis_dH (h : IsHeis (fun x y => om x y) ρ) {f : B} (hf : Sm ρ f) (w y : V) :

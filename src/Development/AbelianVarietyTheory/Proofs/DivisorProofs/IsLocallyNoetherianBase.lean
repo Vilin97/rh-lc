@@ -49,7 +49,7 @@ theorem semi_ext {Q T : Type} [AddCommGroup Q] [Module A Q] [AddCommGroup T] [Mo
   induction w using tmul_ind with
   | h1 s => exact h s
   | hs a w hw => simp only [map_smul, map_smulₛₗ, hw, RingHom.id_apply]
-  | ha w w' hw hw' => simp only [map_add, hw, hw']
+  | ha w w' hw hw' => simp only [map_add (f := _), hw, hw']
 
 theorem pair_ext (pr : A ⊗[R] M →ₗ[A] Module.Dual A (A ⊗[R] N)) (pr' : L →ₗ[A'] Module.Dual A' P)
     (l : A ⊗[R] M →ₛₗ[σ] L) (m : A ⊗[R] N →ₛₗ[σ] P)
@@ -60,10 +60,10 @@ theorem pair_ext (pr : A ⊗[R] M →ₗ[A] Module.Dual A (A ⊗[R] N)) (pr' : L
     induction w using tmul_ind with
     | h1 w => exact h y w
     | hs a w hw => rw [m.map_smulₛₗ, map_smul, hw, map_smul, smul_eq_mul, smul_eq_mul, map_mul]
-    | ha w w' hw hw' => simp only [map_add, hw, hw']
+    | ha w w' hw hw' => simp only [map_add (f := _), hw, hw']
   | hs a y hy =>
     rw [l.map_smulₛₗ, map_smul, map_smul, LinearMap.smul_apply, LinearMap.smul_apply, hy, smul_eq_mul, smul_eq_mul, map_mul]
-  | ha y y' hy hy' => simp only [map_add, LinearMap.add_apply, hy, hy']
+  | ha y y' hy hy' => simp only [map_add (f := _), LinearMap.add_apply, hy, hy']
 
 theorem adj_ext (pr : A ⊗[R] M →ₗ[A] Module.Dual A (A ⊗[R] N)) (l : M →ₗ[R] M) (m : N →ₗ[R] N)
     (h : ∀ y w, pr (1 ⊗ₜ l y) (1 ⊗ₜ w) = pr (1 ⊗ₜ y) (1 ⊗ₜ m w)) (y : A ⊗[R] M) (w : A ⊗[R] N) :
@@ -73,23 +73,23 @@ theorem adj_ext (pr : A ⊗[R] M →ₗ[A] Module.Dual A (A ⊗[R] N)) (l : M �
     induction w using tmul_ind with
     | h1 w => exact h y w
     | hs a w hw => simp only [map_smul, hw]
-    | ha w w' hw hw' => simp only [map_add, hw, hw']
+    | ha w w' hw hw' => simp only [map_add (f := _), hw, hw']
   | hs a y hy => simp only [map_smul, LinearMap.smul_apply, hy]
-  | ha y y' hy hy' => simp only [map_add, LinearMap.add_apply, hy, hy']
+  | ha y y' hy hy' => simp only [map_add (f := _), LinearMap.add_apply, hy, hy']
 
 theorem lin_ext {Q : Type} [AddCommGroup Q] [Module A Q] (c : A ⊗[R] M →ₗ[A] Q) (l : M →ₗ[R] M) (v : Q →ₗ[A] Q)
     (h : ∀ s, c (1 ⊗ₜ l s) = v (c (1 ⊗ₜ s))) (w : A ⊗[R] M) : c (l.baseChange A w) = v (c w) := by
   induction w using tmul_ind with
   | h1 s => exact h s
   | hs a w hw => simp only [map_smul, hw]
-  | ha w w' hw hw' => simp only [map_add, hw, hw']
+  | ha w w' hw hw' => simp only [map_add (f := _), hw, hw']
 
 theorem coord_ext {ι : Type} (b : Module.Basis ι R M) (i : ι) (u : Module.Dual A (A ⊗[R] M))
     (h : ∀ s, u (1 ⊗ₜ s) = algebraMap R A (b.repr s i)) (w : A ⊗[R] M) : u w = (b.baseChange A).repr w i := by
   induction w using tmul_ind with
   | h1 s => rw [h, Module.Basis.baseChange_repr_tmul, Algebra.smul_def, mul_one]
   | hs a w hw => simp only [map_smul, hw, Finsupp.smul_apply]
-  | ha w w' hw hw' => simp only [map_add, hw, hw', Finsupp.add_apply]
+  | ha w w' hw hw' => simp only [map_add (f := _), hw, hw', Finsupp.add_apply]
 
 end Ext
 
@@ -117,7 +117,7 @@ theorem ev_basis (l : Fin r) : ev ψ f a (f l) = a l := by
 
 def evInt : Submodule A Om where
   carrier := {w | ev ψ f a w ∈ intO K}
-  add_mem' hx hy := by simpa only [Set.mem_setOf_eq, map_add] using add_mem hx hy
+  add_mem' hx hy := by simpa only [Set.mem_setOf_eq, map_add (f := _)] using add_mem hx hy
   zero_mem' := by simpa only [Set.mem_setOf_eq, map_zero] using zero_mem _
   smul_mem' c w hw := by
     change ev ψ f a _ ∈ intO K
@@ -171,7 +171,7 @@ theorem cut_iff_kerJ (hR : ∀ w : Om, C.ρ w = 0 ↔ w ∈ Submodule.span A (Se
     choose d hd using fun l => hJ l _ (hx l) j
     refine ⟨∑ l, c l * ψ (d l), ?_⟩
     change _ = (ψ π : K) * (∑ l, (ψ (f.repr (η j) l) : K) * a l + _)
-    simp only [Finset.sum_apply, Pi.smul_apply, GlobalTheory.PerfdLat.piMap_apply, sub_eq_iff_eq_add.1 (hd _), smul_eq_mul, map_add,
+    simp only [Finset.sum_apply, Pi.smul_apply, GlobalTheory.PerfdLat.piMap_apply, sub_eq_iff_eq_add.1 (hd _), smul_eq_mul, map_add (f := _),
       map_mul]
     push_cast
     rw [← Finset.sum_add_distrib, Finset.mul_sum]
@@ -225,7 +225,7 @@ theorem exists_res (F : X.Modules) {U U' : AffOp X} (hle : U'.1 ≤ U.1) :
     | tmul b s =>
       rw [TensorProduct.smul_tmul', TensorProduct.map_tmul, TensorProduct.map_tmul, TensorProduct.smul_tmul']
       exact congrArg (· ⊗ₜ _) (map_mul (AffOp.res hle) a b)
-    | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
   · exact (TensorProduct.map_tmul f g 1 s).trans (congrArg (· ⊗ₜ _) (map_one (AffOp.res hle)))
 
 theorem valF_toX (U : AffOp X) {k : Type} [Field k] (κ : U.Bp →+* k) (g : Γ(X, ⊤)) :

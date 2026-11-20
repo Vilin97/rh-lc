@@ -48,7 +48,7 @@ theorem cob_of_gen {l : ℕ} [Fact l.Prime] {Γ : Type} [Group Γ] [TopologicalS
     apply hfM
     have e := hcoc.2 g h k
     rw [← hfz] at e
-    simpa only [map_sub, map_add, map_smul, map_zero] using e
+    simpa only [map_sub, map_add (f := _), map_smul, map_zero] using e
   obtain ⟨g0, hg0⟩ := hG r
   obtain ⟨x, b, hb, hzb⟩ := (hg0 B' hB').2.1 z hzc
   have hx : fM x = 0 := by
@@ -57,9 +57,9 @@ theorem cob_of_gen {l : ℕ} [Fact l.Prime] {Γ : Type} [Group Γ] [TopologicalS
     intro p
     have h2 : fM (z p) = cob χ cM p := congrFun hfz p
     calc g0 p • fM x = fM (z p) - fM (cob χ b p) := by
-          rw [hzb p, map_add, map_smul, add_sub_cancel_right]
+          rw [hzb p, map_add (f := _), map_smul, add_sub_cancel_right]
       _ = cob χ cM p - cob χ (fun g => fM (b g)) p := by
-          rw [h2]; simp only [cob, map_add, map_sub, map_smul]
+          rw [h2]; simp only [cob, map_add (f := _), map_sub, map_smul]
       _ = cob χ (fun g => cM g - fM (b g)) p := by
           simp only [cob, smul_sub]; abel
   have hx0 : x = 0 := hfM (by rw [hx, map_zero])

@@ -260,7 +260,7 @@ theorem defect_frob_pow : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsA
   have key : b = a ^ p + T + (p : MvPowerSeries (Fin d) F.B) * w' := by
     linear_combination hw'
   rw [key]
-  simp only [map_add, map_mul, map_pow, map_natCast]
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast]
   rw [hT0]
   have e' : c.ev 1 (map F.θ a) ^ p + 0 + (p : G.A 1) * c.ev 1 (map F.θ w') -
       c.ev 1 (map F.θ a) ^ p = algebraMap O (G.A 1) (p : O) * c.ev 1 (map F.θ w') := by

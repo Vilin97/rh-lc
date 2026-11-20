@@ -39,7 +39,7 @@ theorem isBaseChange_invForm : ∀ (R : Type) [CommRing R] (A : Over (Sp R)) [Gr
     | tmul b w =>
       have : L (b ⊗ₜ w) = b • evForm A.hom U w.1 := by simp [L, f]
       rw [this, map_smul, hr, TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hi : Function.Injective L := fun x y h ↦ by rw [← hl x, ← hl y, h]
   have hb : Function.Bijective L := ⟨hi, hs⟩
   exact IsBaseChange.of_equiv (LinearEquiv.ofBijective L hb) fun x ↦

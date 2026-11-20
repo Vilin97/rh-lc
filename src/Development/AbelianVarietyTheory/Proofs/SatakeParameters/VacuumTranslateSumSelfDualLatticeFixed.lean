@@ -65,7 +65,7 @@ theorem vacuum_sum_selfDual_fixed : ∀ (L : Type) [Field L] [CharZero L] [Value
     apply hpsi
     · rw [GlobalTheory.Hk3.mem_intL_iff, map_div₀, h2, div_one]
       exact (Formalism.UG.intL L).add_mem hcI hσc
-    · rw [map_div₀, map_add, hσσ, map_ofNat]; ring
+    · rw [map_div₀, map_add (f := _), hσσ, map_ofNat]; ring
   have hcomb : ∀ w w' : Matrix (Fin n') (Fin n) L, (∀ i j, w i j ∈ Formalism.UG.intL L) → (∀ i j, w' i j ∈ Formalism.UG.intL L) →
       ∀ t : M, ρ (w * A) (ρ (w' * A) t) = ρ (w * A + w' * A) t := by
     intro w w' hw hw' t

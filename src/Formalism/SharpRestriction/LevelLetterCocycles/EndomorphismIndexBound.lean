@@ -48,7 +48,7 @@ theorem quot_le (L A B : Submodule O V) (P : V →ₗ[O] V) (hA : ∀ v ∈ A, P
       Submodule.Quotient.mk_eq_zero, Submodule.mem_comap]
     show P v ∈ L ⊓ A
     have hv' : (v : V) = a + b := hab.symm
-    rw [hv', map_add, hA a (Submodule.mem_inf.mp ha).1, hB b (Submodule.mem_inf.mp hb).1, add_zero]
+    rw [hv', map_add (f := _), hA a (Submodule.mem_inf.mp ha).1, hB b (Submodule.mem_inf.mp hb).1, add_zero]
     exact Submodule.mem_inf.mpr ⟨(Submodule.mem_inf.mp ha).2, (Submodule.mem_inf.mp ha).1⟩
   have hq : Function.Surjective q := by
     intro y
@@ -61,7 +61,7 @@ theorem quot_le (L A B : Submodule O V) (P : V →ₗ[O] V) (hA : ∀ v ∈ A, P
     apply Subtype.ext
     show P l = (w : V)
     have hPw : P (w : V) = w := hA w hwA
-    rw [← hPw, ← hlb, map_add, hB b hb, add_zero]
+    rw [← hPw, ← hlb, map_add (f := _), hB b hb, add_zero]
   refine Module.length_le_of_surjective (Submodule.liftQ _ q hK) ?_
   intro y
   obtain ⟨v, rfl⟩ := hq y
@@ -268,7 +268,7 @@ theorem len_le (hsep : ∀ x y : X, x ≠ y → ∃ f ∈ T, f x ≠ f y)
   have hcv : ∀ v, algebraMap O (FractionRing O) C • v =
       actK T act (∑ x ∈ Finset.univ \ S, e x) v + actK T act (∑ x ∈ S, e x) v := by
     intro v
-    rw [← LinearMap.add_apply, ← map_add, Finset.sum_sdiff (Finset.subset_univ S), hsumAll,
+    rw [← LinearMap.add_apply, ← map_add (f := _), Finset.sum_sdiff (Finset.subset_univ S), hsumAll,
       AlgHom.commutes, Module.algebraMap_end_apply, algebraMap_smul]
   have hPB' : ∀ v, v - (algebraMap O (FractionRing O) C)⁻¹ • actK T act (∑ x ∈ S, e x) v ∈
       VS T (actK T act).toRingHom ((S : Set X)ᶜ) := by
@@ -592,7 +592,7 @@ theorem addVal_pow_sub_one (l : ℕ) [Fact l.Prime] [Algebra ℤ_[l] O] (hl0 : (
   obtain ⟨q, hq⟩ : (algebraMap ℤ_[l] O y - (x : O)) ∣ (algebraMap ℤ_[l] O y) ^ k - (x : O) ^ k :=
     sub_dvd_pow_sub_pow _ _ _
   have hyO : algebraMap ℤ_[l] O y - (x : O) = (l : O) ^ (m + 1) * algebraMap ℤ_[l] O z := by
-    rw [hyx, map_add, map_mul, map_pow, map_natCast, map_intCast]
+    rw [hyx, map_add (f := _), map_mul, map_pow, map_natCast, map_intCast]
     ring
   have hsplit : (algebraMap ℤ_[l] O y) ^ k - 1 =
       ((x ^ k - 1 : ℤ) : O) + (l : O) ^ (m + 1) * (algebraMap ℤ_[l] O z * q) := by

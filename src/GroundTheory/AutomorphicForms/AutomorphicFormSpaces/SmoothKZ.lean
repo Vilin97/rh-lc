@@ -23,7 +23,7 @@ theorem UEnv.induction {L : Type*} [LieRing L] [LieAlgebra ℝ L]
   | algebraMap r => rw [AlgHom.commutes]; exact halg r
   | ι x => exact hι x
   | mul a b ha hb => rw [map_mul]; exact hmul _ _ ha hb
-  | add a b ha hb => rw [map_add]; exact hadd _ _ ha hb
+  | add a b ha hb => rw [map_add (f := _)]; exact hadd _ _ ha hb
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
@@ -63,7 +63,7 @@ theorem fg_span_AdU (u : UEnv K n) :
     refine (ha.sup hb).of_le (Submodule.span_le.2 ?_)
     rintro _ ⟨g, rfl⟩
     dsimp only
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (Submodule.subset_span ⟨g, rfl⟩) (Submodule.subset_span ⟨g, rfl⟩)
 
 structure IsSmoothKZ (φ : AdelicGLn.AdelicGL K n → ℂ) : Prop where
@@ -186,7 +186,7 @@ theorem IsSmoothKZ.isKFinite_uAction {φ : AdelicGLn.AdelicGL K n → ℂ} (hφ 
     · rw [map_zero, LinearMap.zero_apply]
       exact M.zero_mem
     · intro x y _ _ hx hy
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       exact M.add_mem hx hy
     · intro r x _ hx
       rw [map_smul, LinearMap.smul_apply]

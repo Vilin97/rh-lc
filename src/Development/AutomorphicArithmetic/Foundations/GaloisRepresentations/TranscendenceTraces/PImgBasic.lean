@@ -75,7 +75,7 @@ theorem UpperTheory.Gal.TranscendenceTraces.imgBasic_of :
       have eα := (GlobalTheory.T.etaleCochainEvalOnSimplex_differential_values R' (E := sch.obj Z) (I := I) hm α A.V).2 q (-((q + 1 : ℕ) : ℤ) + n) s rfl h A.v
       refine eβ.trans ?_
       refine Eq.trans ?_ (congrArg _ eα.symm)
-      rw [map_add]
+      rw [map_add (f := _)]
       congr 1
       · exact (congrArg _ (hαβ _ _ rfl A)).trans (τ.comm A _ s _)
       set_option synthInstance.maxHeartbeats 100000 in

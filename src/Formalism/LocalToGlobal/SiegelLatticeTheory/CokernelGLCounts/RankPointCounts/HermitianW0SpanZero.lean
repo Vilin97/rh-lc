@@ -69,7 +69,7 @@ def psiSharp (t₁ t₂ : Term V M r) (ψ : ↥(H.W0 t₁.f t₁.f') ≃ₗ[E] �
         ⟨x.1, x.2.1⟩ + ⟨y.1, y.2.1⟩ := Subtype.ext rfl
     change ((ψ ⟨((x + y : ↥(ThSharp H t₁ N₁)) : V), (x + y).2.1⟩ : ↥(H.W0 t₂.f t₂.f')) : V) =
       ((ψ ⟨x.1, x.2.1⟩ : ↥(H.W0 t₂.f t₂.f')) : V) + ((ψ ⟨y.1, y.2.1⟩ : ↥(H.W0 t₂.f t₂.f')) : V)
-    rw [e, map_add]
+    rw [e, map_add (f := _)]
     rfl
   map_smul' c x := by
     apply Subtype.ext

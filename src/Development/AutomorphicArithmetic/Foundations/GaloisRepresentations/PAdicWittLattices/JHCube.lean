@@ -15,7 +15,7 @@ private theorem bcSum_mapRange {M N M' N' : Type} [AddCommGroup M] [Module k M] 
     (x : J →₀ M) : bcSum e ψ' (x.mapRange f hf) = g (bcSum e ψ x) := by
   induction x using Finsupp.induction_linear with
   | zero => simp
-  | add a b ha hb => rw [Finsupp.mapRange_add hfa, map_add, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [Finsupp.mapRange_add hfa, map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
   | single j m => rw [Finsupp.mapRange_single, bcSum_single, bcSum_single, map_smul, h]
 
 private theorem isBC_pi {T : Type} [Finite T] {M N : T → Type} [∀ t, AddCommGroup (M t)]

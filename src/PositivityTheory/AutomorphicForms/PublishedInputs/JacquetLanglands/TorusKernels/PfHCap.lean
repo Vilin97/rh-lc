@@ -68,7 +68,7 @@ theorem UpperTheory.Esk.pf_HCap : UpperTheory.Esk.HCap := by
   refine ⟨by simpa using lie_scalar hω hφ 1, fun v u => ?_⟩
   have h0 : Eop v 0 0 φ + Eop v 1 1 φ = 0 := by
     classical
-    rw [← lie_scalar hω hφ (Pi.single v 1), TR.Eop, TR.Eop, ← LinearMap.add_apply, ← map_add]
+    rw [← lie_scalar hω hφ (Pi.single v 1), TR.Eop, TR.Eop, ← LinearMap.add_apply, ← map_add (f := _)]
     congr 2
     ext i j
     fin_cases i <;> fin_cases j <;> simp

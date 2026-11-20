@@ -28,7 +28,7 @@ theorem exists_compatible_roots {O X F : Type} [CommRing O] [StarRing O] [AddCom
       obtain ⟨ρ, hρ⟩ := (Module.Baer.of_divisible (Additive Fˣ)).extension_property_addMonoidHom
         (Int.castAddHom ℚ) Int.cast_injective (zmultiplesHom _ u)
       exact ⟨ρ, by simpa using DFunLike.congr_fun hρ 1⟩) hs.mem_balForms
-  refine ⟨fun n y x => (T y x (n : ℚ)⁻¹).toMul, fun n => ⟨fun y x x' => by beta_reduce; rw [map_add]; rfl,
+  refine ⟨fun n y x => (T y x (n : ℚ)⁻¹).toMul, fun n => ⟨fun y x x' => by beta_reduce; rw [map_add (f := _)]; rfl,
     fun y x => by beta_reduce; rw [hT.1 y x], fun a y x => by beta_reduce; rw [hT.2 a y x]⟩, fun n hn y x => ?_, fun n m hn hm y x => ?_⟩
   · have : (n : ℚ) ≠ 0 := by exact_mod_cast hn.ne'
     show (n • T y x (n : ℚ)⁻¹).toMul = _

@@ -173,7 +173,7 @@ theorem finrank_commutant {κ : Type} [Fintype κ] (J : Matrix (Fin n) (Fin n) �
       module
   rw [← hP.trace]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [π, map_smul, map_sum, map_add, trace_mulLeftRight, smul_eq_mul, Matrix.trace_mul_comm (e _) J, sq]
+    simp only [π, map_smul, map_sum, map_add (f := _), trace_mulLeftRight, smul_eq_mul, Matrix.trace_mul_comm (e _) J, sq]
 
 theorem exists_trace_eq_nat (M : Matrix (Fin n) (Fin n) ℂ) (h : M * M = M) : ∃ m : ℕ, M.trace = m := by
   have hp : LinearMap.IsProj (LinearMap.range (Matrix.toLin' M)) (Matrix.toLin' M) :=

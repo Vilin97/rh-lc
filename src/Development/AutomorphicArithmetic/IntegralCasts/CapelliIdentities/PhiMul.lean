@@ -830,5 +830,5 @@ theorem UpperTheory.Reformulated.B.Qf14.phi_mul :
     induction z using TensorProduct.induction_on with
     | zero => rw [map_zero, map_zero]
     | tmul a b => rfl
-    | add a b ha hb => rw [map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   exact (h (x * y)).trans ((map_mul _ x y).trans (congrArg₂ (· * ·) (h x).symm (h y).symm))

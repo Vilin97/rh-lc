@@ -122,7 +122,7 @@ theorem isCovolOne_map {S : HSp D} {ρ : ℕ} {μ : Measure (Mx D ρ S.rank)} {�
     · filter_upwards [Q.quasiMeasurePreserving.ae hF.ae_covers] with a ha
       obtain ⟨g, hg⟩ := ha
       refine ⟨⟨adjE S ρ g, adjE_mem g.2⟩, ?_⟩
-      rw [Set.mem_preimage, AddSubgroup.vadd_def, vadd_eq_add, coe_adjM_symm, map_add,
+      rw [Set.mem_preimage, AddSubgroup.vadd_def, vadd_eq_add, coe_adjM_symm, map_add (f := _),
         AddEquiv.symm_apply_apply]
       rw [AddSubgroup.vadd_def, vadd_eq_add, coe_adjM_symm] at hg
       exact hg

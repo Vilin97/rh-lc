@@ -207,7 +207,7 @@ theorem GlobalTheory.RatEqui.pull_right_eq_det_smul : ∀ (D : D7) (cc : Ideal (
       obtain ⟨l, b, hl⟩ := GlobalTheory.NegOneNorm.exists_norm_eq_neg_one D M hM
       have hb : D.host.conj (b : D.host.E) = b := by
         have h3 := congrArg D.host.conj hl
-        rw [map_mul, conj_conj, mul_comm, hl, map_add, map_neg, map_one, map_mul, map_natCast] at h3
+        rw [map_mul, conj_conj, mul_comm, hl, map_add (f := _), map_neg, map_one, map_mul, map_natCast] at h3
         exact (mul_left_cancel₀ (Nat.cast_ne_zero.2 hM.ne') (add_left_cancel h3)).symm
       have idg : ∀ a : 𝓞 D.host.E, ∀ i j : Fin N,
           IsIntegral ℤ (Matrix.diagonal (fun _ => (a : D.host.E)) i j) := fun a i j => by

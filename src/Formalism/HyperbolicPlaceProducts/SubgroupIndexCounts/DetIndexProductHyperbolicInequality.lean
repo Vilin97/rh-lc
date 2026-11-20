@@ -16,7 +16,7 @@ theorem polarization_of_orthogonal_splittings : Formalism.SLP.GlobalBoundRefinem
     simp only [map_sub, LinearMap.sub_apply, hyA, hAy]
     ring
   have e2 : h (y' + A') (y' + A') = h y' y' + h A' A' := by
-    simp only [map_add, LinearMap.add_apply, hyA', hAy']
+    simp only [map_add (f := _), LinearMap.add_apply, hyA', hAy']
     ring
   rw [← e1, ← e2, hw]
 

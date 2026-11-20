@@ -37,7 +37,7 @@ theorem commute_proj (K : Submodule â„‚ H) [K.HasOrthogonalProjection] (A : H â†
   calc K.starProjection (A x)
       = K.starProjection (A (K.starProjection x)) + K.starProjection (A (x - K.starProjection x)) := by
         conv_lhs => rw [hx]
-        rw [map_add, map_add]
+        rw [map_add (f := _), map_add (f := _)]
     _ = A (K.starProjection x) := by rw [e1, e2, add_zero]
 
 end InverseCommuting

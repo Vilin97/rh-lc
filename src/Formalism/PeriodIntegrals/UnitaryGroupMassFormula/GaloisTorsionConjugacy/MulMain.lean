@@ -22,7 +22,7 @@ theorem conj_add_alt {x x' y y' : ℂ} (h : Cj1 M₁ ρ₁ x x') (k : Cj1 M₁ �
   obtain ⟨hx, rfl⟩ := h
   obtain ⟨hy, rfl⟩ := k
   refine ⟨M₁.add_mem hx hy, ?_⟩
-  rw [← map_add]
+  rw [← map_add (f := _)]
   rfl
 
 theorem conj_sub_alt {x x' y y' : ℂ} (h : Cj1 M₁ ρ₁ x x') (k : Cj1 M₁ ρ₁ y y') :

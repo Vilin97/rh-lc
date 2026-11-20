@@ -49,10 +49,10 @@ theorem exists_vf : ∀ (K : Type) [Field K] (X : Over (Sp K)) (δ : ∀ x : X.l
     fun U V h a => ?_⟩, fun U s x hx => hD U s x hx⟩
   · apply sec_ext
     intro x hx
-    simp only [map_add, hD]
+    simp only [map_add (f := _), hD]
   · apply sec_ext
     intro x hx
-    simp only [AddMonoidHom.mk'_apply, map_add, map_mul, hD, hL]
+    simp only [AddMonoidHom.mk'_apply, map_add (f := _), map_mul, hD, hL]
   · apply sec_ext
     intro x hx
     simp only [AddMonoidHom.mk'_apply, map_zero, hD, hc]

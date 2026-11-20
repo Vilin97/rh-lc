@@ -58,7 +58,7 @@ theorem coneTangent_eq_ker (h : HermNorm n) {J : Ideal (MvPolynomial (Fin n) ℂ
           = eval (h.pointOf y) a * ∑ j, eval (h.pointOf y) (pderiv j x) * h.pointOf v j := by
             rw [Finset.mul_sum]
             refine Finset.sum_congr rfl fun j _ => ?_
-            rw [smul_eq_mul, pderiv_mul, map_add, map_mul, map_mul, hx0]
+            rw [smul_eq_mul, pderiv_mul, map_add (f := _), map_mul, map_mul, hx0]
             ring
         _ = 0 := by rw [hx, mul_zero]
 

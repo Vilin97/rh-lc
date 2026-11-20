@@ -148,7 +148,7 @@ theorem jump_descends (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K E : FinExt l)
 
   let A : ↥(GK K) → (Fin d → P.R.BdR) →+ (Fin d → P.R.BdR) := fun g =>
     AddMonoidHom.mk' (fun v => ((M g).map am).mulVec (fun i => P.actQdR g (v i)))
-      (fun v w => by simp only [Pi.add_apply, map_add]; exact Matrix.mulVec_add _ _ _)
+      (fun v w => by simp only [Pi.add_apply, map_add (f := _)]; exact Matrix.mulVec_add _ _ _)
   have hAapp : ∀ g v, A g v = ((M g).map am).mulVec (fun i => P.actQdR g (v i)) := fun _ _ => rfl
   let σ : ↥(GK K) → Om l →* Om l := fun g => MonoidHomClass.toMonoidHom (g : GQ l)
   let ι : ↥E.1 →* Om l := MonoidHomClass.toMonoidHom E.1.val

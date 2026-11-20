@@ -73,7 +73,7 @@ theorem evIdx_toR (D : D7) (N : ℕ) (G : MvPolynomial (Vm D.what₂.Tau N) ℚ)
     evIdx D N (toR G) = toR (evIdxQ D N G) := by
   induction G using MvPolynomial.induction_on with
   | C a => simp [toR]
-  | add P Q hP hQ => simp only [toR, map_add] at *; rw [hP, hQ]
+  | add P Q hP hQ => simp only [toR, map_add (f := _)] at *; rw [hP, hQ]
   | mul_X P v hP =>
     simp only [toR, map_mul] at *
     rw [hP]
@@ -158,7 +158,7 @@ theorem evC_eq_aeval (G : MvPolynomial (Vm D.what₂.Tau N) ℚ) :
     · simp only [AlgHom.comp_apply, evV, evIdxQ, aeval_X, lnOf, Sum.elim_inl, lnLB_rootLn z jc]
     · cases b <;>
       set_option synthInstance.maxHeartbeats 100000 in
-        · simp only [AlgHom.comp_apply, evV, evIdxQ, aeval_X, lnOf, Sum.elim_inr, map_mul, map_add, map_sum, map_pow, aeval_C,
+        · simp only [AlgHom.comp_apply, evV, evIdxQ, aeval_X, lnOf, Sum.elim_inr, map_mul, map_add (f := _), map_sum, map_pow, aeval_C,
           Fintype.sum_sum_type, wholeLn, lnLB_false, lnLB_true, mdlOf_lieW, mdlOf_omW]
         refine congrArg (_ * ·) (congrArg₂ (· + ·) ?_ ?_) <;>
           exact Finset.sum_congr rfl fun x _ => congrArg (· ^ k) (aeval_X _ _)
@@ -213,7 +213,7 @@ theorem sum_numL_eq {ι A C' L : Type} [Fintype C'] [Fintype L] {d : ℕ} (num :
     rw [numL_X_mul_prod, numL_X_mul_prod]
   | zero => simp [toR]
   | add x y _ _ hx hy =>
-    simp only [toR, map_add, mul_add, Finset.sum_add_distrib, Rat.cast_add, add_div] at *
+    simp only [toR, map_add (f := _), mul_add, Finset.sum_add_distrib, Rat.cast_add, add_div] at *
     rw [hx, hy]
   | smul q x _ hx =>
     have e : toR (q • x) = (q : ℝ) • toR x := by

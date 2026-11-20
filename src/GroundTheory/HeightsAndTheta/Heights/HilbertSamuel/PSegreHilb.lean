@@ -33,7 +33,7 @@ theorem segreMap_isMultiHomog {m : ℕ} {p : MRing (fun _ : Unit => ∀ k, ι k)
   classical
   induction hp using IsWeightedHomogeneous.induction_on with
   | zero => rw [map_zero]; exact isWeightedHomogeneous_zero _ _ _
-  | add p q _ _ hp hq => rw [map_add]; exact hp.add hq
+  | add p q _ _ hp hq => rw [map_add (f := _)]; exact hp.add hq
   | monomial d r hr =>
     have hX : ∀ v : Σ _ : Unit, ∀ k, ι k,
         IsWeightedHomogeneous (blockWeight ι) (∏ k, (X ⟨k, v.2 k⟩ : MRing ι F)) (fun _ => 1) := by

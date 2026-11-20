@@ -155,12 +155,12 @@ theorem exists_form (β : V n →ₗ[ℝ] V n →ₗ[ℝ] ℝ) (ha : ∀ ξ ζ, 
   have hl (c : ℂ) (ξ ζ) : H (c • ξ) ζ = c * H ξ ζ := by
     simp only [H]
     rw [hs c ξ]
-    simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hI, hI' ξ ζ]
+    simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hI, hI' ξ ζ]
     push_cast
     conv_rhs => rw [← Complex.re_add_im c]
     linear_combination (-(c.im * (β ξ (Complex.I • ζ) : ℝ) / 2)) * Complex.I_mul_I
   have hc (ξ ζ) : conj (H ξ ζ) = -H ζ ξ := by
-    simp only [H, map_div₀, map_add, map_mul, Complex.conj_ofReal, Complex.conj_I, map_ofNat]
+    simp only [H, map_div₀, map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I, map_ofNat]
     rw [ha ξ ζ, ha (Complex.I • ξ) ζ, hI']
     push_cast
     ring
@@ -300,8 +300,8 @@ theorem flat_form_chart_independent [QuasiSeparated A.hom] (hg : SmoothOfRelativ
     obtain ⟨w0, hw0, -⟩ := (hker P hP).2 x.1
     have hx : x = (x.1, w0) + (0, x.2 - w0) := Prod.ext (by simp) (by simp)
     refine ⟨x.2 - w0, ?_, ?_⟩
-    · conv_lhs => rw [hx, map_add, hw0, zero_add]
-    · conv_lhs => rw [hx, map_add, map_add, hor _ hw0, zero_add]
+    · conv_lhs => rw [hx, map_add (f := _), hw0, zero_add]
+    · conv_lhs => rw [hx, map_add (f := _), map_add (f := _), hor _ hw0, zero_add]
       exact congrArg _ (Prod.ext (vert _ 0).1 rfl)
   obtain ⟨s₁, a₁, b₁⟩ := dec u
   obtain ⟨s₂, a₂, b₂⟩ := dec v

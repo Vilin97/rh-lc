@@ -296,7 +296,7 @@ theorem tU_res {W W' : (pullback G.hom x).Opens} (h : W' ≤ W) (h' : prZ G x 1 
     (res h' (tU G x W s)).val = 1 + dltOn G x 1 _ *
       ((prZ G x 1).app W').hom (((pullback G.hom x).presheaf.map (homOfLE h).op).hom s) := by
   show ((Ym G x 1).presheaf.map (homOfLE h').op).hom (1 + dltOn G x 1 _ * ((prZ G x 1).app W).hom s) = _
-  rw [map_add, map_one, map_mul, dltOn_res]
+  rw [map_add (f := _), map_one, map_mul, dltOn_res]
   congr 2
   have := (prZ G x 1).naturality (homOfLE h).op
   exact (congrArg (fun q => q.hom s) this).symm

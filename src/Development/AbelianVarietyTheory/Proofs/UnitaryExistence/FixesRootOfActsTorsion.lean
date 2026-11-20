@@ -91,7 +91,7 @@ theorem fixes_root_of_pullback (C : Curve H) {W W' : C.P.A ⟶ C.P.A} [IsMonHom 
   refine (sq_eq_sq_iff_eq_or_eq_neg.1 hs).resolve_right fun hm => ?_
   have hn' : (n : ℂ) ≠ 0 := Nat.cast_ne_zero.2 (by omega)
   have hα : wC H (0, 1) = (1 + H.rt0) / 2 := by simp [wC]
-  rw [hα, map_div₀, map_add, hm, map_one, map_ofNat] at ha
+  rw [hα, map_div₀, map_add (f := _), hm, map_one, map_ofNat] at ha
   have : wC H (1, -2) = wC H (n * a.1, n * a.2) := by
     simp only [wC] at ha ⊢
     push_cast

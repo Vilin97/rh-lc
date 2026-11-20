@@ -24,10 +24,10 @@ theorem trace_evI_heis {F : Type} [Field F] [NumberField F] [Invertible (2 : AF 
   have h2 : ∀ t : AF F, evIHom F (⅟(2 : AF F) * t) = (1 / 2 : ℝ) • evIHom F t := by
     intro t
     have h : (2 : ℝ) • evIHom F (⅟(2 : AF F) * t) = evIHom F t := by
-      rw [two_smul, ← map_add, ← two_mul, ← mul_assoc, mul_invOf_self, one_mul]
+      rw [two_smul, ← map_add (f := _), ← two_mul, ← mul_assoc, mul_invOf_self, one_mul]
     rw [← h, smul_smul]
     norm_num
-  rw [evI_eq_evIHom, map_add, h2, hdot, hdot, map_add, map_smul, trP, trP, smul_eq_mul]
+  rw [evI_eq_evIHom, map_add (f := _), h2, hdot, hdot, map_add (f := _), map_smul, trP, trP, smul_eq_mul]
   ring
 
 theorem acts_rho_of_at_inf : ∀ {F : Type} [Field F] [NumberField F] (ψ : AddChar (AF F) ℂ), IsStd ψ →
@@ -46,7 +46,7 @@ theorem acts_rho_of_at_inf : ∀ {F : Type} [Field F] [NumberField F] (ψ : AddC
     rw [smul_eq_mul, mul_add, h, mul_left_comm, h, mul_zero, add_zero]
   have hloc : (fun i => evI F ((x + (dc.e w).1) i)) = locV x + locV (dc.e w).1 := by
     funext i
-    simp only [Pi.add_apply, locV, evI_eq_evIHom, map_add]
+    simp only [Pi.add_apply, locV, evI_eq_evIHom, map_add (f := _)]
   simp only [Darboux.rho, schr, tens]
   rw [hψ.2.2 _ ht, trace_evI_heis, hr.1 x _ ha, hf, hloc, schrF]
   exact (mul_assoc _ _ _).symm

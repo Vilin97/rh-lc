@@ -158,8 +158,8 @@ theorem ct_first_linear : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
         rintro f g ⟨hf1, hf2⟩ ⟨hg1, hg2⟩
         refine ⟨?_, fun u hu z => ?_⟩
         · intro t m hm h
-          simp only [map_add, Pi.add_apply, hf1 t m hm h, hg1 t m hm h]; ring
-        · simp only [map_add, Pi.add_apply, hf2 u hu z, hg2 u hu z]
+          simp only [map_add (f := _), Pi.add_apply, hf1 t m hm h, hg1 t m hm h]; ring
+        · simp only [map_add (f := _), Pi.add_apply, hf2 u hu z, hg2 u hu z]
       zero_mem' := by
         refine ⟨?_, fun u hu z => ?_⟩
         · intro t m hm h; simp

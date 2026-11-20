@@ -31,7 +31,7 @@ theorem exists_eq_div_of_mem_idealMod {J : Ideal (Poly S N)} {I : Chart x} {z : 
     refine ⟨f * m' + m * f', m * m', e + e', J.add_mem (J.mul_mem_right _ hf) (J.mul_mem_left _ hf'),
       mul_mem hm hm', (hfe.mul hme').add (hme.mul hfe'), hme.mul hme', ?_⟩
     rw [div_add_div _ _ (eval_ne_zero_of_mem_monos I hm) (eval_ne_zero_of_mem_monos I hm')]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
   | smul a z _ hz =>
     obtain ⟨f, m, e, hf, hm, hfe, hme, rfl⟩ := hz
     obtain ⟨g, n, d, hn, hg, hnd, ha⟩ := a.2

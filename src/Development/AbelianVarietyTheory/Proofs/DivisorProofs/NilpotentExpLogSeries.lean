@@ -114,6 +114,6 @@ theorem exp_truncLog_one_add : ∀ (A : Type) [Ring A] [Algebra ℚ A] (D : ℕ)
   rw [← hE]
   have h3 := hvan _ (X_pow_dvd_expPoly_comp_logPoly_sub N)
   rw [map_sub, sub_eq_zero] at h3
-  rw [h3, map_add, map_one, aeval_X]
+  rw [h3, map_add (f := _), map_one, aeval_X]
 
 end GlobalTheory.NilpExpLog

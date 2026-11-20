@@ -17,7 +17,7 @@ open GlobalTheory.SecJet.Orders
 theorem valR_add' {A : Type} [CommRing A] {X : Scheme.{0}} (x : Sp A ⟶ X) (U : X.Opens) (f g : Γ(X, U)) :
     valR x U (f + g) = valR x U f + valR x U g := by
   by_cases h : ⊤ ≤ x ⁻¹ᵁ U
-  · rw [valR_eq x U h, valR_eq x U h, valR_eq x U h, map_add]
+  · rw [valR_eq x U h, valR_eq x U h, valR_eq x U h, map_add (f := _)]
   · simp only [valR, dif_neg h, add_zero]
 
 theorem valR_scal_mul {R A : Type} [CommRing R] [CommRing A] {X : Scheme.{0}} (ψ : R →+* A) (p : X ⟶ Sp R)

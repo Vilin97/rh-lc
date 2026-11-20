@@ -75,7 +75,7 @@ theorem psIn_law_sub_mem (G : FGLaw S d) {m : ℕ} (hm : 1 ≤ m) (i : Fin d) :
   have e : psIn d m (![0, 1] : Fin 2 → Fin 3) (G.F i) - C (constantCoeff (psIn d m (![0, 1] : Fin 2 → Fin 3) (G.F i))) - (xs S d 0 i + xs S d 1 i) =
       aeval (fun p : Fin 2 × Fin d => (X (((![0, 1] : Fin 2 → Fin 3) p.1), p.2) : MvPolynomial (Fin 3 × Fin d) S))
         (psTrunc m (G.F i) - (X ((0 : Fin 2), i) + X ((1 : Fin 2), i))) := by
-    rw [hc, map_zero, sub_zero, psIn, hr, map_sub, map_add, aeval_X, aeval_X]
+    rw [hc, map_zero, sub_zero, psIn, hr, map_sub, map_add (f := _), aeval_X, aeval_X]
     rfl
   rw [e]
   exact aeval_mem_pow _ (fun p => Ideal.subset_span ⟨_, rfl⟩) 2 (psTrunc_law_sub_mem G hm i)
@@ -86,7 +86,7 @@ private theorem constantCoeff_germEvalPair_eq_zero_lemma {τ : Type} (h : MvPoly
   unfold ev2
   induction h using MvPolynomial.induction_on
   · simp
-  · simp only [map_add, *]
+  · simp only [map_add (f := _), *]
   · rename_i p n _
     rcases n with ⟨i, j⟩
     fin_cases i <;> simp [hu, hv]

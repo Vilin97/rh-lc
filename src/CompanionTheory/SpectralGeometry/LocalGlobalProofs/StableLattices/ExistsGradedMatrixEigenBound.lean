@@ -12,7 +12,7 @@ variable {n : ℕ}
 theorem aeval_intertwine {R : Type*} [Ring R] [Algebra ℝ R] {X A B : R} (h : X * A = B * X)
     (p : Polynomial ℝ) : X * Polynomial.aeval A p = Polynomial.aeval B p * X := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, mul_add, add_mul, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), mul_add, add_mul, hp, hq]
   | monomial k a =>
     have hk : X * A ^ k = B ^ k * X := by
       induction k with
@@ -68,7 +68,7 @@ theorem algebraMap_eq (a : ℝ) : algebraMap ℝ (Matrix (Fin n) (Fin n) ℂ) a 
 theorem cj_aeval (h1 : Uᴴ * U = 1) (h2 : U * Uᴴ = 1) (d : Fin n → ℝ) (p : Polynomial ℝ) :
     Polynomial.aeval (cj U d) p = cj U (fun i => p.eval (d i)) := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, Polynomial.eval_add, hp, hq, cj_add]
+  | add p q hp hq => simp only [map_add (f := _), Polynomial.eval_add, hp, hq, cj_add]
   | monomial k a =>
     have hk : cj U d ^ k = cj U (fun i => d i ^ k) := by
       induction k with

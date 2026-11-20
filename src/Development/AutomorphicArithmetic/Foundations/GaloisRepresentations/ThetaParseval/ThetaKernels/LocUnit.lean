@@ -18,7 +18,7 @@ theorem UpperTheory.TP.K.locUnit_coord {F E : Type} [Field F] [Field E] [CharZer
     intro s t h
     have h' : s • (1 : E) + -(t • ξ) = 0 := by
       have h0 := congrArg σ h
-      simp only [Algebra.smul_def, map_add, map_mul, AlgHom.commutes, map_one, hσξ, map_zero] at h0
+      simp only [Algebra.smul_def, map_add (f := _), map_mul, AlgHom.commutes, map_one, hσξ, map_zero] at h0
       simp only [Algebra.smul_def]
       linear_combination h0
     have hs : (2 : E) * (s • (1 : E)) = 0 := by linear_combination h + h'
@@ -39,13 +39,13 @@ theorem UpperTheory.TP.K.locUnit_diff {F E : Type} [Field F] [Field E] [CharZero
   obtain ⟨a, b, rfl⟩ := UpperTheory.TP.K.locUnit_coord h2 hξ hσξ y
   obtain ⟨p, q, hpq⟩ := UpperTheory.TP.K.locUnit_coord h2 hξ hσξ (ξ * ξ)
   have h' := congrArg σ hpq
-  simp only [map_add, map_mul, AlgHom.commutes, hσξ] at h'
+  simp only [map_add (f := _), map_mul, AlgHom.commutes, hσξ] at h'
   have h3 : (2 : E) * (ξ * ξ) = 2 * algebraMap F E p := by linear_combination hpq + h'
   have h4 : ξ * ξ = algebraMap F E p := mul_left_cancel₀ two_ne_zero h3
   refine ⟨?_, 4 * b * b * p, ?_⟩
-  · simp only [map_add, map_sub, map_mul, map_neg, AlgHom.commutes, hσξ]
+  · simp only [map_add (f := _), map_sub, map_mul, map_neg, AlgHom.commutes, hσξ]
     ring
-  · simp only [map_add, map_mul, AlgHom.commutes, hσξ, map_ofNat, ← h4]
+  · simp only [map_add (f := _), map_mul, AlgHom.commutes, hσξ, map_ofNat, ← h4]
     ring
 
 theorem UpperTheory.TP.K.locUnit_exists_diff_notMem (hu : Algebra.Unramified (𝓞 F) (𝓞 E)) {ξ : E} (hξ : ξ ≠ 0) (hσξ : σ ξ = -ξ)

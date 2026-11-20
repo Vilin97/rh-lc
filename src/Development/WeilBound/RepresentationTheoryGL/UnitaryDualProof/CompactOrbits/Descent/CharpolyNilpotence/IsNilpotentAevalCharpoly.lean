@@ -30,7 +30,7 @@ theorem isNilpotent_of_trace_pow [CharZero k] (A : Matrix (Fin n) (Fin n) k)
       ring
     rw [e, map_mul, aeval_self_charpoly, mul_zero]
   have hsum : aeval A (a * X ^ (r + 1)) + aeval A (b * q) = 1 := by
-    rw [← map_add, hab, map_one]
+    rw [← map_add (f := _), hab, map_one]
   have hprod : aeval A (a * X ^ (r + 1)) * aeval A (b * q) = 0 := by
     rw [← map_mul]
     have e : a * X ^ (r + 1) * (b * q) = (a * b) * (X ^ (r + 1) * q) := by ring
@@ -60,7 +60,7 @@ theorem isNilpotent_of_trace_pow [CharZero k] (A : Matrix (Fin n) (Fin n) k)
   have e : (X ^ (r + 1) : k[X]) = X ^ (r + 1) * (a * X ^ (r + 1)) + b * (X ^ (r + 1) * q) := by
     linear_combination (-(X ^ (r + 1) : k[X])) * hab
   have := congrArg (aeval A) e
-  rw [map_add, map_mul (aeval A) (X ^ (r + 1)), hz, map_mul (aeval A) b, hzero, mul_zero, mul_zero,
+  rw [map_add (f := _), map_mul (aeval A) (X ^ (r + 1)), hz, map_mul (aeval A) b, hzero, mul_zero, mul_zero,
     add_zero, map_pow, aeval_X] at this
   exact this
 

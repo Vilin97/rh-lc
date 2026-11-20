@@ -80,7 +80,7 @@ theorem pureA_schrInf (ψ : AddChar (AdeleRing (𝓞 F) F) ℂ) {κ : Type} [Fin
     funext i
     show InfiniteAdeleRing.ringEquiv_mixedSpace F (x i).1 + v.1 i =
       InfiniteAdeleRing.ringEquiv_mixedSpace F ((x i).1 + (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (v.1 i))
-    rw [map_add, RingEquiv.apply_symm_apply]
+    rw [map_add (f := _), RingEquiv.apply_symm_apply]
   have h2 : (fun i => (x i).2) = fun i => ((x + infE F v.1) i).2 := by
     funext i
     show (x i).2 = (x i).2 + 0

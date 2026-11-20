@@ -282,7 +282,7 @@ theorem nonVan_of_bessel : ∀ (k r : ℕ) {H : Type} [NormedAddCommGroup H] [In
       (fun v hv => aesm_of_continuousOn hG.2.1 (hcont v (hDs v hv)) hνG)
       (fun v hv => (hnorm v (hDs v hv)).le)
       (fun v hv v' hv' => hνG.mono fun x hx => by
-        simp only [map_add]
+        simp only [map_add (f := _)]
         exact hB.1 _ ((htr v (hDs v hv)).1 _ hx) _ ((htr v' (hDs v' hv')).1 _ hx))
       (fun t v hv => hνG.mono fun x hx => by
         simp only [map_smul]

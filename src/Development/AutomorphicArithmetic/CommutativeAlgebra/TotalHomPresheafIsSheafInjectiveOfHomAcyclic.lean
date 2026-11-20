@@ -31,7 +31,7 @@ private def asm {M : Type*} [AddCommGroup M] [Module (ULift.{1} (ZMod q)) M] {K 
     M →ₗ[ULift.{1} (ZMod q)] Cochain K I n where
   toFun x := mkC fun p => f p x
   map_add' x y := coch_ext fun p => by
-    rw [Cochain.add_v, mkC_v, mkC_v, mkC_v, map_add]
+    rw [Cochain.add_v, mkC_v, mkC_v, mkC_v, map_add (f := _)]
   map_smul' r x := coch_ext fun p => by
     rw [RingHom.id_apply, Cochain.smul_v, mkC_v, mkC_v, map_smul]
 

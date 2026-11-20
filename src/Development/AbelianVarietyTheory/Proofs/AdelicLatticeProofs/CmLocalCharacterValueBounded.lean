@@ -57,7 +57,7 @@ theorem unifIdele_exists_chiAt : ∀ (F E : Type) [Field F] [NumberField F] [Fie
     intro c hc
     rw [h2]
     intro Q
-    rw [hψ, map_add, map_sub, map_mul, map_one, ← hψ, ← hψ]
+    rw [hψ, map_add (f := _), map_sub, map_mul, map_one, ← hψ, ← hψ]
     by_cases hQ : Q = P
     · subst hQ
       rw [eb, h1, one_mul, sub_self, add_zero]

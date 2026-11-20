@@ -33,7 +33,7 @@ theorem decomp {D : D7} (a : AE D) : a = secI D (infPart D a) + secF D (finPart 
   induction a using TensorProduct.induction_on with
   | zero => rw [RingHom.map_zero, RingHom.map_zero, LinearMap.map_zero, LinearMap.map_zero, add_zero]
   | add a b ha hb =>
-    rw [RingHom.map_add, RingHom.map_add, LinearMap.map_add, LinearMap.map_add]
+    rw [RingHom.map_add (f := _), RingHom.map_add (f := _), LinearMap.map_add (f := _), LinearMap.map_add (f := _)]
     conv_lhs => rw [ha, hb]
     abel
   | tmul c e =>
@@ -49,7 +49,7 @@ theorem decomp {D : D7} (a : AE D) : a = secI D (infPart D a) + secF D (finPart 
 theorem infPart_secF {D : D7} (y : Af D.host.F ⊗[D.host.F] D.host.E) : infPart D (secF D y) = 0 := by
   induction y using TensorProduct.induction_on with
   | zero => rw [LinearMap.map_zero, RingHom.map_zero]
-  | add a b ha hb => rw [LinearMap.map_add, RingHom.map_add, ha, hb, add_zero]
+  | add a b ha hb => rw [LinearMap.map_add (f := _), RingHom.map_add (f := _), ha, hb, add_zero]
   | tmul c e =>
     show fstA D.host.F (LinearMap.inr D.host.F (Ainf D.host.F) (Af D.host.F) c) ⊗ₜ[D.host.F] e = 0
     have : fstA D.host.F (LinearMap.inr D.host.F (Ainf D.host.F) (Af D.host.F) c) = 0 := rfl
@@ -58,7 +58,7 @@ theorem infPart_secF {D : D7} (y : Af D.host.F ⊗[D.host.F] D.host.E) : infPart
 theorem finPart_secF {D : D7} (y : Af D.host.F ⊗[D.host.F] D.host.E) : finPart D (secF D y) = y := by
   induction y using TensorProduct.induction_on with
   | zero => rw [LinearMap.map_zero, RingHom.map_zero]
-  | add a b ha hb => rw [LinearMap.map_add, RingHom.map_add, ha, hb]
+  | add a b ha hb => rw [LinearMap.map_add (f := _), RingHom.map_add (f := _), ha, hb]
   | tmul c e =>
     show sndA D.host.F (LinearMap.inr D.host.F (Ainf D.host.F) (Af D.host.F) c) ⊗ₜ[D.host.F] e = c ⊗ₜ[D.host.F] e
     have : sndA D.host.F (LinearMap.inr D.host.F (Ainf D.host.F) (Af D.host.F) c) = c := rfl

@@ -48,7 +48,7 @@ theorem first_derivative_shift_integral {B : FB R d O} {h : PS k 2 d} (hc : B.Is
     CZ.cons (constantCoeff_add_first_second B) (CZ.cons (cc_pt 2) CZ.nil)
   have hH0 : constantCoeff (ev (n := 3) ![pt k d 0, pt k d 2] h + ev (n := 3) ![pt k d 1, pt k d 2] h -
       ev (n := 3) ![addOf (B.FK k) (pt k d 0) (pt k d 1), pt k d 2] h) = 0 := by
-    rw [map_sub, map_add, cc_ev' c02, cc_ev' cz12, cc_ev' cA, cc_h hc]
+    rw [map_sub, map_add (f := _), cc_ev' c02, cc_ev' cz12, cc_ev' cA, cc_h hc]
     simp
   have hH := ig_dlog B.ph1 (constantCoeff_first_factor B) _ hH0 hc.ph1 ((1 : Fin 3), b)
   have h2 := ig_ev cz0z integral_family_first_zero_second hH
@@ -100,7 +100,7 @@ theorem first_derivative_shift_integral {B : FB R d O} {h : PS k 2 d} (hc : B.Is
     refine Finset.sum_congr rfl fun c _ => ?_
     rw [ev_mul cz0z, eA, eB, ← eval_first_axis_restrict]
     rfl
-  rw [map_sub, map_add, ev_sub cz0z, ev_add cz0z, t1, ev_zero' cz0z, t2, t3] at h2
+  rw [map_sub, map_add (f := _), ev_sub cz0z, ev_add cz0z, t1, ev_zero' cz0z, t2, t3] at h2
   have e : ∑ c, pderiv k ((0 : Fin 2), c) h * ev (n := 2) ![pt k d 0] (Jac (lawK k B) c b) -
       ev (n := 2) ![0, pt k d 1] (pderiv k ((0 : Fin 2), b) h) =
       -(0 + ev (n := 2) ![0, pt k d 1] (pderiv k ((0 : Fin 2), b) h) -

@@ -102,7 +102,7 @@ private theorem ker_coord (O : Type) [CommRing O] [IsLocalRing O] {R : Type} [Co
       map_add' := fun c d => by
         have : (fun u => e ((c + d) u)) = (fun u => e (c u)) + fun u => e (d u) := by
           funext u; simp
-        rw [this, map_add]; rfl }
+        rw [this, map_add (f := _)]; rfl }
   refine ⟨_, ψ, fun c d h => ?_, fun c => (b.symm fun u => e (c u)).2, fun x hx => ⟨fun u => e.symm (b ⟨x, hx⟩ u), ?_⟩,
     fun x c => ?_⟩
   · have := b.symm.injective (Subtype.ext h)
@@ -248,7 +248,7 @@ private theorem cob_all (Φ : FormData O w) {Γ : Type} [Group Γ] [TopologicalS
       exact Subtype.ext (congrArg (mask w j) hy))
     (fun s t u => Subtype.ext (by
       have := congrArg (mask w j) (h2 s t u)
-      rw [map_add, map_add, mask_right j (hw _), mask_left j (hw _)] at this
+      rw [map_add (f := _), map_add (f := _), mask_right j (hw _), mask_left j (hw _)] at this
       exact this))
     (fun s t n hn n' hn' => Subtype.ext (congrArg (mask w j) (h3 s t n hn n' hn')))
   choose a a1 a2 a3 using key
@@ -387,7 +387,7 @@ private theorem cob_ker (K : Ideal R) (hK : maximalIdeal R * K = ⊥) {Γ : Type
   have hg : ∀ Y, Ψ Y ∈ Φ.g R ↔ ∀ u, Y u ∈ Φ.g (ResidueField O) := fun Y => by
     have e : (Ψ Y)ᵀ * Φ.JR R + Φ.JR R * Ψ Y = 0 ↔
         ∀ u, (Y u)ᵀ * Φ.JR (ResidueField O) + Φ.JR (ResidueField O) * Y u = 0 := by
-      rw [p6, p4, p5, jr, ← map_add, map_eq_zero_iff Ψ p1, funext_iff]
+      rw [p6, p4, p5, jr, ← map_add (f := _), map_eq_zero_iff Ψ p1, funext_iff]
       rfl
     constructor
     · rintro ⟨k1, k2⟩ u
@@ -404,7 +404,7 @@ private theorem cob_ker (K : Ideal R) (hK : maximalIdeal R * K = ⊥) {Γ : Type
     (fun s t v => by
       have := h2 s t v
       simp only [← hc] at this
-      rw [p4, p5, hρ, hρ, ← map_add, ← map_add] at this
+      rw [p4, p5, hρ, hρ, ← map_add (f := _), ← map_add (f := _)] at this
       exact congrFun (p1 this) u)
     (fun s t m hm m' hm' => congrFun (p1 (by rw [hc, hc, h3 s t m hm m' hm'])) u)
   choose a a0 a1 a2 a3 using key
@@ -416,7 +416,7 @@ private theorem cob_ker (K : Ideal R) (hK : maximalIdeal R * K = ⊥) {Γ : Type
       Filter.eventually_all.2 fun u => (IsLocallyConstant.iff_eventually_eq _).1 (a1 u) x
     filter_upwards [this] with y hy
     simp only [hy]
-  · rw [p4, p5, hρ, hρ, ← map_add, ← map_sub, ← hc]
+  · rw [p4, p5, hρ, hρ, ← map_add (f := _), ← map_sub, ← hc]
     congr 1
     funext u
     exact a3 u s t

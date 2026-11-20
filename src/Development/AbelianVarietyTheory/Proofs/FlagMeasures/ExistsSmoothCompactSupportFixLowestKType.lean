@@ -140,7 +140,7 @@ theorem exists_smooth_fix_lowKSub : ∀ (n : ℕ) (ε : Fin n → Bool) (lam : F
   let T : lowKSub ε lam σ →ₗ[ℂ] H :=
     { toFun := fun s => ∫ g, F s g ∂(muG ε)
       map_add' := fun x y => by
-        simp only [F, Submodule.coe_add, map_add, smul_add]
+        simp only [F, Submodule.coe_add, map_add (f := _), smul_add]
         exact integral_add (hFi x) (hFi y)
       map_smul' := fun c x => by
         simp only [F, Submodule.coe_smul, map_smul, RingHom.id_apply]

@@ -35,7 +35,7 @@ theorem valAt'_eval₂ {σ : Type*} {X : Over (Sp ℂ)} (x : 𝟙_ (Over (Sp ℂ
   | C a =>
     rw [MvPolynomial.eval₂_C, MvPolynomial.eval_C]
     exact valAt'_constFn x.left X.hom hx U a h
-  | add p q hp hq => rw [MvPolynomial.eval₂_add, map_add, valAt'_add, hp, hq]
+  | add p q hp hq => rw [MvPolynomial.eval₂_add, map_add (f := _), valAt'_add, hp, hq]
   | mul_X p i hp => rw [MvPolynomial.eval₂_mul, map_mul, valAt'_mul, hp, MvPolynomial.eval₂_X, MvPolynomial.eval_X]
 
 theorem exists_glue_of_values {X : Over (Sp ℂ)}

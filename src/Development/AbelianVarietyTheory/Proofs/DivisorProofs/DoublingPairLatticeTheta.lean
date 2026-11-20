@@ -96,7 +96,7 @@ theorem integral_mul_star_eq (μ : Measure (κ → AF F)) (hμ : μ.IsAddHaarMea
       map_neg, map_one, Complex.conj_I, Complex.star_def]
     linear_combination ((f x * (starRingEnd ℂ) (g x)) / 2 - (g x * (starRingEnd ℂ) (f x)) / 2) * Complex.I_mul_I
   rw [pol _ (hp _ h₁) _ (hp _ h₂), pol _ h₁ _ h₂]
-  simp only [← hn _ (hm _ h₁ _ h₂ _), map_add, map_smul]
+  simp only [← hn _ (hm _ h₁ _ h₂ _), map_add (f := _), map_smul]
 
 open GlobalTheory.GaugeEx in
 
@@ -292,7 +292,7 @@ theorem exists_split {S T : Submodule A (β → A)} (h : S ⊔ T = ⊤) (u : Mat
 theorem rows_of_fst {S T : Submodule A (β → A)} (h : S ⊔ T = ⊤) (hS : ∀ u, (∀ i, u i ∈ S) → (co.e u).1 = 0)
     (hT : ∀ u, (∀ i, u i ∈ T) → (co.e u).2 = 0) {u : Matrix α β A} (hu : (co.e u).1 = 0) : ∀ i, u i ∈ S := by
   obtain ⟨a, b, ha, hb, rfl⟩ := exists_split h u
-  rw [map_add, Prod.fst_add, hS a ha, zero_add] at hu
+  rw [map_add (f := _), Prod.fst_add, hS a ha, zero_add] at hu
   have : b = 0 := co.e.injective (by rw [map_zero]; exact Prod.ext hu (hT b hb))
   rw [this, add_zero]
   exact ha
@@ -300,7 +300,7 @@ theorem rows_of_fst {S T : Submodule A (β → A)} (h : S ⊔ T = ⊤) (hS : ∀
 theorem rows_of_snd {S T : Submodule A (β → A)} (h : S ⊔ T = ⊤) (hS : ∀ u, (∀ i, u i ∈ S) → (co.e u).1 = 0)
     (hT : ∀ u, (∀ i, u i ∈ T) → (co.e u).2 = 0) {u : Matrix α β A} (hu : (co.e u).2 = 0) : ∀ i, u i ∈ T := by
   obtain ⟨a, b, ha, hb, rfl⟩ := exists_split h u
-  rw [map_add, Prod.snd_add, hT b hb, add_zero] at hu
+  rw [map_add (f := _), Prod.snd_add, hT b hb, add_zero] at hu
   have : a = 0 := co.e.injective (by rw [map_zero]; exact Prod.ext (hS a ha) hu)
   rw [this, zero_add]
   exact hb
@@ -319,7 +319,7 @@ def antiMap (e : m ⊕ m ≃ β) : (m → α → A) →ₗ[R] Matrix α β A whe
 def fstAct (x : Matrix α α A) : (κ → R) →ₗ[R] (κ → R) where
   toFun z := (co.e (x * co.e.symm (z, 0))).1
   map_add' z z' := by
-    rw [show ((z + z', 0) : (κ → R) × (κ → R)) = (z, 0) + (z', 0) by simp, map_add, Matrix.mul_add, map_add, Prod.fst_add]
+    rw [show ((z + z', 0) : (κ → R) × (κ → R)) = (z, 0) + (z', 0) by simp, map_add (f := _), Matrix.mul_add, map_add (f := _), Prod.fst_add]
   map_smul' c z := by
     rw [show ((c • z, 0) : (κ → R) × (κ → R)) = c • (z, 0) by simp, map_smul, Matrix.mul_smul, map_smul]
     rfl

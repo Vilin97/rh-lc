@@ -59,10 +59,10 @@ theorem pairing_exists : ∀ (LL O V V' : Type) [Field LL] [CommRing O] [IsDomai
   have hsm : ∀ (c : O) (v : V), c • v = algebraMap O LL c • v := fun c v => (algebraMap_smul LL c v).symm
   have hsm' : ∀ (c : O) (v : V'), c • v = algebraMap O LL c • v := fun c v => (algebraMap_smul LL c v).symm
   let B : ↥T →ₗ[O] ↥T' →ₗ[O] O := LinearMap.mk₂ O pa
-    (fun x x' y => inj (by simp only [map_add, ← hpa, Submodule.coe_add, LinearMap.add_apply]))
+    (fun x x' y => inj (by simp only [map_add (f := _), ← hpa, Submodule.coe_add, LinearMap.add_apply]))
     (fun c x y => inj (by
       simp only [map_mul, ← hpa, Submodule.coe_smul, smul_eq_mul, hsm, map_smul, LinearMap.smul_apply]))
-    (fun x y y' => inj (by simp only [map_add, ← hpa, Submodule.coe_add]))
+    (fun x y y' => inj (by simp only [map_add (f := _), ← hpa, Submodule.coe_add]))
     (fun c x y => inj (by
       simp only [map_mul, ← hpa, Submodule.coe_smul, smul_eq_mul, hsm', map_smul]))
   have hB : ∀ x y, B x y = pa x y := fun _ _ => rfl
@@ -184,9 +184,9 @@ theorem cobO_iff : ∀ (G : Type) [Group G] [TopologicalSpace G] (Qp K₀ K : Ty
       have hb' : algebraMap O LL b =
           ((cycLL PD LL g : LLˣ) : LL) * f h - f (g * h) + f g - z (g, h) := hb
       have h1 : u g * o h - o (g * h) + o g - a = ϖ ^ r * b := inj (by
-        simp only [map_sub, map_add, map_mul, map_pow, ho, ha, hu, hb']
+        simp only [map_sub, map_add (f := _), map_mul, map_pow, ho, ha, hu, hb']
         ring)
-      rw [hza, ← map_mul, ← map_sub, ← map_add]
+      rw [hza, ← map_mul, ← map_sub, ← map_add (f := _)]
       refine Ideal.Quotient.eq.2 ?_
       rw [h1]
       exact Ideal.mul_mem_right _ _ (Ideal.mem_span_singleton_self _)
@@ -208,13 +208,13 @@ theorem cobO_iff : ∀ (G : Type) [Group G] [TopologicalSpace G] (Qp K₀ K : Ty
       obtain ⟨g, h⟩ := x
       obtain ⟨a, ha, hza⟩ := hz (g, h)
       have h1 := hf2 g h
-      rw [hza, ← ho, ← ho, ← ho, ← map_mul, ← map_sub, ← map_add] at h1
+      rw [hza, ← ho, ← ho, ← ho, ← map_mul, ← map_sub, ← map_add (f := _)] at h1
       obtain ⟨b, hb⟩ := Ideal.mem_span_singleton.1 (Ideal.Quotient.eq.1 h1)
       have hb2 : algebraMap O LL b = ((cycLL PD LL g : LLˣ) : LL) * ((algebraMap O LL ϖ)⁻¹ ^ r * algebraMap O LL (o h)) -
           (algebraMap O LL ϖ)⁻¹ ^ r * algebraMap O LL (o (g * h)) +
           (algebraMap O LL ϖ)⁻¹ ^ r * algebraMap O LL (o g) - z (g, h) := by
         have h2 := congrArg (algebraMap O LL) hb
-        simp only [map_sub, map_add, map_mul, map_pow, ha, hu] at h2
+        simp only [map_sub, map_add (f := _), map_mul, map_pow, ha, hu] at h2
         rw [inv_pow]
         field_simp
         linear_combination -h2
@@ -497,7 +497,7 @@ theorem dual_core (PD : PeriodData G Qp K₀ K B BdR) (hTop : TopInj PD)
       refine ⟨fun g => ψ₀ (Ideal.Quotient.mk _ o * f g), hf.comp (fun y => ψ₀ (Ideal.Quotient.mk _ o * y)), fun g h => ?_⟩
       have h1 := hf2 g h
       simp only at h1
-      rw [← h1, ← hψu, ← map_sub, ← map_add]
+      rw [← h1, ← hψu, ← map_sub, ← map_add (f := _)]
       congr 1
       ring
     · intro hall
@@ -511,7 +511,7 @@ theorem dual_core (PD : PeriodData G Qp K₀ K B BdR) (hTop : TopInj PD)
         simp only [a1, a3, a2]
       · intro g h k
         simp only
-        rw [← heq, actQ_mul, hc.2 g h, hc'.2 h k, map_add, map_add, map_add, LinearMap.add_apply]
+        rw [← heq, actQ_mul, hc.2 g h, hc'.2 h k, map_add (f := _), map_add (f := _), map_add (f := _), LinearMap.add_apply]
         ring
       · intro ψ
         obtain ⟨o, ho⟩ := hψ2 ψ

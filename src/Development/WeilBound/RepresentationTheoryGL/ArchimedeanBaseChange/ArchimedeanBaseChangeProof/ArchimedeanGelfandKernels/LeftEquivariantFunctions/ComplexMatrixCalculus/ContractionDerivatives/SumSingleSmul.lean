@@ -69,9 +69,9 @@ theorem Dop_ι_mul (B : X n) (m : Md n → ℂ) (x : abelian₂ n) :
 
 def Philin (n : ℕ) : (Md n → ℂ) →ₗ[ℂ] (Finset (Md n) → ℂ) →ₗ[ℂ] (Finset (Md n) → ℂ) :=
   LinearMap.mk₂ ℂ (fun u c => (fb n).equivFun (ExteriorAlgebra.ι ℂ u * (fb n).equivFun.symm c))
-    (fun u u' c => by simp [map_add, add_mul])
+    (fun u u' c => by simp [map_add (f := _), add_mul])
     (fun a u c => by simp [map_smul, smul_mul_assoc])
-    (fun u c c' => by simp [map_add, mul_add])
+    (fun u c c' => by simp [map_add (f := _), mul_add])
     (fun a u c => by simp [map_smul, mul_smul_comm])
 
 def Phi (n : ℕ) : (Md n → ℂ) →L[ℂ] (Finset (Md n) → ℂ) →L[ℂ] (Finset (Md n) → ℂ) :=
@@ -94,7 +94,7 @@ theorem mv_one' (m : Md n → ℂ) : mv (one' n) m = m := by
 
 def dLin (y : abelian₂ n) : X n →ₗ[ℂ] (Finset (Md n) → ℂ) where
   toFun B := (fb n).equivFun (Dop B y)
-  map_add' B B' := by rw [Dop_add, LinearMap.add_apply, map_add]
+  map_add' B B' := by rw [Dop_add, LinearMap.add_apply, map_add (f := _)]
   map_smul' c B := by rw [Dop_smul, LinearMap.smul_apply, map_smul]; rfl
 
 theorem F_one (y : abelian₂ n) : F y (one' n) = (fb n).equivFun y := by
@@ -129,13 +129,13 @@ theorem key (y : abelian₂ n) : ContDiff ℂ ∞ (F y) ∧
     have hF : F (x + z) = fun g => F x g + F z g := by
       funext g
       unfold F
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
     refine ⟨?_, Lx + Lz, ?_, fun B => ?_⟩
     · rw [hF]
       exact hxc.add hzc
     · rw [hF]
       exact hxd.add hzd
-    · rw [ContinuousLinearMap.add_apply, hxL, hzL, map_add, map_add]
+    · rw [ContinuousLinearMap.add_apply, hxL, hzL, map_add (f := _), map_add (f := _)]
   · rintro x m ⟨hxc, Lx, hxd, hxL⟩
     rw [F_ι_mul]
     have hd := (Phi n).hasFDerivAt_of_bilinear (mvL m).hasFDerivAt hxd

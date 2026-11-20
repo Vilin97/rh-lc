@@ -24,7 +24,7 @@ def gmap (h : V →ₗ⋆[K] V →ₗ[K] K) {m : ℕ} (b : Fin m → V) (a : Fin
     (Y : Matrix (Fin m) (Fin m) (𝓞 K)) : V →ₗ[𝓞 K] V where
   toFun x := ∑ i, (∑ j, jK (Y i j) * crd h b a x j) • b i
   map_add' x y := by
-    simp only [crd, map_add, add_div, mul_add, Finset.sum_add_distrib, add_smul]
+    simp only [crd, map_add (f := _), add_div, mul_add, Finset.sum_add_distrib, add_smul]
   map_smul' c x := by
     simp only [crd, RingHom.id_apply, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_

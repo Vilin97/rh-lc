@@ -106,7 +106,7 @@ theorem regular_span (q : FractionRing A) (ϖ : A) (s : Set A)
     { carrier := {s | ∃ x : A, q * algebraMap A _ s = algebraMap A _ x}
       add_mem' := by
         rintro a b ⟨x, hx⟩ ⟨y, hy⟩
-        exact ⟨x + y, by rw [map_add, map_add, mul_add, hx, hy]⟩
+        exact ⟨x + y, by rw [map_add (f := _), map_add (f := _), mul_add, hx, hy]⟩
       zero_mem' := ⟨0, by simp⟩
       smul_mem' := by
         rintro r a ⟨x, hx⟩
@@ -351,7 +351,7 @@ theorem sup_ne_top_of_nonunits {A V : Type} [CommRing A] [CommRing V] [IsDomain 
     refine (hm : ¬ IsUnit (φ m)) (IsUnit.of_mul_eq_one v (IsFractionRing.injective V (FractionRing V) ?_))
     rw [map_mul, hv, map_one, mul_inv_cancel₀ h0]
   have h3 := W.valuation.map_add_lt h1 h2
-  rw [← map_add, ← map_add, hum, map_one, map_one, map_one] at h3
+  rw [← map_add (f := _), ← map_add (f := _), hum, map_one, map_one, map_one] at h3
   exact lt_irrefl _ h3
 
 theorem exists_unramified_of_trivial {K F T Fr : Type} [Field K] [CharZero K] [Field F] [CommRing T]

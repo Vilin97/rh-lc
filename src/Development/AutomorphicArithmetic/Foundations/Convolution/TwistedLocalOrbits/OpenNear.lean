@@ -95,7 +95,7 @@ private theorem lin_ex (σ : E ≃+* E) (q : ℕ) (hi : ∀ x, valuation E (σ x
     | zero => rfl
     | succ j ih => rw [Function.iterate_succ_apply', hi, ih]
   have hadd : ∀ (j : ℕ) x y, σ^[j] (x + y) = σ^[j] x + σ^[j] y := fun j x y => by
-    rw [← hp, ← hp, ← hp, map_add]
+    rw [← hp, ← hp, ← hp, map_add (f := _)]
   have hn : ∀ j : ℕ, valuation E (j : E) ≤ 1 := fun j => by
     induction j with
     | zero => simp

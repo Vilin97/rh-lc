@@ -28,11 +28,11 @@ theorem finprod_psiE_eq_exp_trace : ∀ {F E : Type} [Field F] [NumberField F] [
     have e : (fun p => (A p).psiE ((A p).ιE (u + v))) =
         fun p => (A p).psiE ((A p).ιE u) * (A p).psiE ((A p).ιE v) := by
       funext p
-      rw [map_add, AddChar.map_add_eq_mul]
+      rw [map_add (f := _), AddChar.map_add_eq_mul]
     refine ⟨?_, ?_⟩
     · rw [e]
       exact (hu.union hv).subset (Function.mulSupport_mul _ _)
-    · rw [e, finprod_mul_distrib hu hv, hu', hv', ← Complex.exp_add, map_add, Rat.cast_add, mul_add]
+    · rw [e, finprod_mul_distrib hu hv, hu', hv', ← Complex.exp_add, map_add (f := _), Rat.cast_add, mul_add]
   have key : ∀ N : ℕ, N ≠ 0 → ∀ y : E, IsIntegral ℤ y → P (y / (N : E)) := by
     intro N
     induction N using Nat.recOnPosPrimePosCoprime with

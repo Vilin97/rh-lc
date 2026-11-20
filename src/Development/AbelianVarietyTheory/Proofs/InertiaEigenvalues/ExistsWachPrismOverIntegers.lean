@@ -222,7 +222,7 @@ def prismS (P : LocPrime l) (hs : 1 ≤ s) (f : (WK K)⟦X⟧ →+* OC l) (hf : 
     obtain ⟨h1, -, -, -, ⟨b, hb⟩, -⟩ := XX_QQ_properties l (WK K) s hs
     have h2 : PowerSeries.map (sigW P K).toRingHom (XX l (WK K) s) = XX l (WK K) s := by simp [XX]
     have h3 : phiS (sigW P K) (QQ l (WK K) s) = l + XX l (WK K) s * QQ l (WK K) s * phiS (sigW P K) b := by
-      conv_lhs => rw [hb, map_add, map_natCast, map_mul, phiS_apply _ (XX l (WK K) s), h1, map_mul, h2, map_QQ]
+      conv_lhs => rw [hb, map_add (f := _), map_natCast, map_mul, phiS_apply _ (XX l (WK K) s), h1, map_mul, h2, map_QQ]
     have h4 : (l : (WK K)⟦X⟧) = QQ l (WK K) s * (-(XX l (WK K) s * phiS (sigW P K) b)) +
         phiS (sigW P K) (QQ l (WK K) s) := by rw [h3]; ring
     rw [h4]

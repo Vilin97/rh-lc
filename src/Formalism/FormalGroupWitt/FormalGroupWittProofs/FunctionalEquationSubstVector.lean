@@ -34,7 +34,7 @@ lemma norm_finsum_le {α : Type v} {g : α → K} {C : ℝ} (hC : 0 ≤ C) (hg :
     simpa using hC
 
 lemma bd_add {τ : Type w} {C : ℝ} {A B : MvPowerSeries τ K} (hA : Bd C A) (hB : Bd C B) :
-    Bd C (A + B) := fun d => by rw [map_add]; exact norm_add_le_of (hA d) (hB d)
+    Bd C (A + B) := fun d => by rw [map_add (f := _)]; exact norm_add_le_of (hA d) (hB d)
 
 lemma bd_mul_left {τ : Type w} {C : ℝ} (hC : 0 ≤ C) {A B : MvPowerSeries τ K}
     (hA : IntegralMv A) (hB : Bd C B) : Bd C (A * B) := by
@@ -187,7 +187,7 @@ theorem main (hC : Formalism.FG.CoeffBoundV.{u, v, v}) : Formalism.FG.FunEqSubst
   rw [e]
   intro d
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, MvPowerSeries.coeff_smul, map_sum]
+    rw [map_add (f := _), MvPowerSeries.coeff_smul, map_sum]
   refine norm_add_le_of (hgI d) ?_
   rw [norm_mul, norm_inv]
   have hsum : ‖∑ k, MvPowerSeries.coeff d (M j k • (MvPowerSeries.subst αq

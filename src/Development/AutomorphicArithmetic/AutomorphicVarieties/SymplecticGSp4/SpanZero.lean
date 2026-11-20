@@ -44,7 +44,7 @@ private theorem span_zero {O S K : Type} [CommRing O] [CommRing S] [Algebra O S]
     obtain ⟨hz1, hz2⟩ := hz
     refine ⟨B.add_mem hy1 hz1, ?_⟩
     have e : (⟨y + z, B.add_mem hy1 hz1⟩ : B) = ⟨y, hy1⟩ + ⟨z, hz1⟩ := rfl
-    rw [e, map_add, hy2, hz2, add_zero]
+    rw [e, map_add (f := _), hy2, hz2, add_zero]
   | smul a y _ hy =>
     obtain ⟨hy1, hy2⟩ := hy
     refine ⟨B.smul_mem hy1 a, ?_⟩

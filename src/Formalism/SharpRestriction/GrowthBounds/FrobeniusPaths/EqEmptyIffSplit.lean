@@ -112,7 +112,7 @@ lemma Ord.add {b : ℕ} {f g : MvPolynomial σ R} (h : Ord wv b f) (h' : Ord wv 
 
 lemma weight_single_add (v : σ) (m : σ →₀ ℕ) :
     Finsupp.weight wv (Finsupp.single v 1 + m) = wv v + Finsupp.weight wv m := by
-  rw [map_add, Finsupp.weight_single]; simp
+  rw [map_add (f := _), Finsupp.weight_single]; simp
 
 lemma Ord.X_mul {b : ℕ} {f : MvPolynomial σ R} (h : Ord wv b f) (v : σ) : Ord wv (wv v + b) (X v * f) := by
   classical
@@ -268,7 +268,7 @@ lemma wedge_tan {o cost : ℕ} {Kj : Finset (Fin (r + K)) → MvPolynomial σ R}
       pl (Jp J) * wedgeR (fun b => y (Fin.natAdd r b)) tn (Jt J) := by
   unfold wedgeR
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [sum_split, map_add, map_sum, map_sum,
+    rw [sum_split, map_add (f := _), map_sum, map_sum,
     Finset.sum_eq_zero (fun a ha => cmp_of_Ord (hoff J a ha _) (Nat.lt_succ_self _)), zero_add, Finset.mul_sum]
   refine Finset.sum_congr rfl fun b hb => ?_
   rw [cmp_term o _ (hyt b), hD, Jp_erase_na, Jt_erase_na, card_filter_na]
@@ -285,7 +285,7 @@ lemma contr_tan {o cost : ℕ} {Kj : Finset (Fin (r + K)) → MvPolynomial σ R}
       pl (Jp J) * contrR (fun b => y (Fin.natAdd r b)) tn (Jt J) := by
   unfold contrR
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [sum_split, Jp_compl, Jt_compl, map_add, map_sum, map_sum,
+    rw [sum_split, Jp_compl, Jt_compl, map_add (f := _), map_sum, map_sum,
     Finset.sum_eq_zero (fun a ha => cmp_of_Ord (hoff J a (by simpa using ha) _) (Nat.lt_succ_self _)), zero_add,
     Finset.mul_sum]
   refine Finset.sum_congr rfl fun b hb => ?_
@@ -304,7 +304,7 @@ lemma wedge_pl {o cost : ℕ} {Kj : Finset (Fin (r + K)) → MvPolynomial σ R} 
       wedgeR (fun a => y (Fin.castAdd K a)) pl (Jp J) * tn (Jt J) := by
   unfold wedgeR
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [sum_split, map_add, map_sum, map_sum,
+    rw [sum_split, map_add (f := _), map_sum, map_sum,
     Finset.sum_eq_zero (s := Jt J) (fun a ha => cmp_of_Ord (hoff J a ha _) (Nat.lt_succ_self _)), add_zero,
     Finset.sum_mul]
   refine Finset.sum_congr rfl fun a ha => ?_
@@ -325,7 +325,7 @@ lemma contr_pl {o cost : ℕ} {Kj : Finset (Fin (r + K)) → MvPolynomial σ R} 
       contrR (fun a => y (Fin.castAdd K a)) pl (Jp J) * tn (Jt J) := by
   unfold contrR
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [sum_split, Jp_compl, Jt_compl, map_add, map_sum, map_sum,
+    rw [sum_split, Jp_compl, Jt_compl, map_add (f := _), map_sum, map_sum,
     Finset.sum_eq_zero (s := univ \ Jt J)
       (fun a ha => cmp_of_Ord (hoff J a (by simpa using ha) _) (Nat.lt_succ_self _)), add_zero,
     Finset.sum_mul]

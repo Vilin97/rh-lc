@@ -83,7 +83,7 @@ theorem exists_lagrInt_ne_zero : ∀ (F E : Type) [Field F] [NumberField F] [Fie
   · rintro _ ⟨γ₀, rfl⟩ u
     obtain ⟨y, z, h⟩ := hrat γ₀
     have e1 : Lm (((incAF F E).toAddMonoidHom.mapMatrix (m := Fin nT) (n := Fin nS)) γ₀ + u) = Lm (incM F γ₀) + Lm u := by
-      rw [map_add]; rfl
+      rw [map_add (f := _)]; rfl
     have hr : Lm (incM F γ₀) ∈ S := ⟨incM F γ₀, rfl⟩
     have hw : Lm u ∈ S := ⟨u, rfl⟩
     have hi := hiso _ hw _ hr

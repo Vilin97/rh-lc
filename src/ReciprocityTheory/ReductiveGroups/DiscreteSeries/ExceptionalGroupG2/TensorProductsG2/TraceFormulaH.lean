@@ -183,7 +183,7 @@ theorem tf_trace_data (dual : Bool) {lam : Fin n → ℝ} [CompleteSpace H] {ε 
     | add x x' _ _ hx hx' =>
       intro c
       filter_upwards [Lp.coeFn_add (x c) (x' c), hx c, hx' c] with g h1 h2 h3
-      rw [map_add, inner_add_right, ← h2, ← h3, ← Pi.add_apply, ← h1]
+      rw [map_add (f := _), inner_add_right, ← h2, ← h3, ← Pi.add_apply, ← h1]
       rfl
     | smul r x _ hx =>
       intro c

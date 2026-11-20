@@ -99,7 +99,7 @@ theorem morita_spread_stable_summand_lie : ∀ {C : Type} [CommRing C] (I : Idea
     refine Submodule.sum_mem _ fun i _ => ?_
     have h1 : E 0 i x ∈ G₀ ⊔ M₀ := by rw [hGM']; exact E0i_mem i x hx
     obtain ⟨g, hg, n, hn, hgn⟩ := Submodule.mem_sup.1 h1
-    rw [← hgn, map_add]
+    rw [← hgn, map_add (f := _)]
     exact Submodule.add_mem_sup (spread_in G₀ i g hg) (spread_in M₀ i n hn)
   · intro c x hx
     have key : ∀ j, E 0 j (ρ c x) ∈ G₀ := by
@@ -120,7 +120,7 @@ theorem morita_spread_stable_summand_lie : ∀ {C : Type} [CommRing C] (I : Idea
       have h1 : E 0 i x ∈ F ⊓ LinearMap.range (E 0 0 * e) := ⟨hFE 0 i x hxF, E0i_mem i x hxe⟩
       rw [← hGF] at h1
       obtain ⟨g, hg, t, ht, hgt⟩ := Submodule.mem_sup.1 h1
-      rw [← hgt, map_add]
+      rw [← hgt, map_add (f := _)]
       refine Submodule.add_mem_sup (spread_in G₀ i g hg) ?_
       have : I • LinearMap.range (E 0 0 * e) ≤ (I • ⊤ ⊓ LinearMap.range e).comap (E i 0) := by
         rw [Submodule.smul_le]

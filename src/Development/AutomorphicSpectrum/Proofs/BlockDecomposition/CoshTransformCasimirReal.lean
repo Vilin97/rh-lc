@@ -85,7 +85,7 @@ theorem conj_cas_of_isHerm {n : ℕ} {χ : Inf n} (h : IsHerm χ) : conj (cas χ
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [map_sub, map_pow, map_pow, hK]
   simp only [cas]
-  rw [map_mul, map_add, hconj, hconj, map_ofNat, gelfVal_two_eq_sum_sq_sub_sq, gelfVal_two_eq_sum_sq_sub_sq]
+  rw [map_mul, map_add (f := _), hconj, hconj, map_ofNat, gelfVal_two_eq_sum_sq_sub_sq, gelfVal_two_eq_sum_sq_sub_sq]
   simp only [Finset.sum_sub_distrib]
   rw [hT, hF]
   ring

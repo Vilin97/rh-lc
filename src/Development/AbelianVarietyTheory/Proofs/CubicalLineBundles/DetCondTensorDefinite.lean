@@ -47,7 +47,7 @@ theorem nonempty_eigenSub_equiv [Algebra O' k] [IsScalarTower O O' k] {I : Type}
     exact congr($this x)
   let g : M →ₗ[O'] k ⊗[O] M :=
     { toFun := fun m => EigenSplit.proj h ρ i (1 ⊗ₜ m)
-      map_add' := fun m n => by rw [TensorProduct.tmul_add, map_add]
+      map_add' := fun m n => by rw [TensorProduct.tmul_add, map_add (f := _)]
       map_smul' := fun a m => by
         rw [← rightAction_tmul, ← (EigenSplit.isEquivariant_action ρ a).proj h,
           EigenSplit.mem_eigenSub.1 (EigenSplit.proj_mem h ρ i _), hi, algebraMap_smul]

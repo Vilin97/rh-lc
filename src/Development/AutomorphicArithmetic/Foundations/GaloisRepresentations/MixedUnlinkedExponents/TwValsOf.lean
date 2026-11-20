@@ -23,7 +23,7 @@ theorem UpperTheory.Gal.GamX.twValsOf :
   have hadd : ∀ {k : Type} [Field k] [ValuativeRel k] (c1 c2 : Multiset (kˣ →* ℂˣ)) (t : kˣ →* ℂˣ),
       vals (c1 + c2) t = vals c1 t + vals c2 t := by
     intro k _ _ c1 c2 t
-    simp only [vals, Multiset.filter_add, Multiset.map_add]
+    simp only [vals, Multiset.filter_add, Multiset.map_add (f := _)]
   induction c using Multiset.induction_on with
   | empty => simp [vals]
   | cons a c ih =>
@@ -105,5 +105,5 @@ theorem UpperTheory.Gal.GamX.twValsOf :
           exact hex w0 this
         simp [hno, hex]
     rw [← Multiset.singleton_add]
-    simp only [hadd, Multiset.map_add, Finset.sum_add_distrib, smul_add]
+    simp only [hadd, Multiset.map_add (f := _), Finset.sum_add_distrib, smul_add]
     rw [hone, ih']

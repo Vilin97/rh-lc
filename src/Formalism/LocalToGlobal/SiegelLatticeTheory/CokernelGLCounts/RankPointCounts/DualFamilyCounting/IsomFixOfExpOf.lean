@@ -50,7 +50,7 @@ theorem extU_mem {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) {U : Submodu
     have hgb : h (g b) (g d) = h b d := by
       have := hg' b d
       simpa only [resF_apply] using this
-    simp only [map_add, LinearMap.add_apply, horth _ a.2 _ (g d).2, horth _ a.2 _ d.2,
+    simp only [map_add (f := _), LinearMap.add_apply, horth _ a.2 _ (g d).2, horth _ a.2 _ d.2,
       horth' _ c.2 _ (g b).2, horth' _ c.2 _ b.2, hgb]
   · intro u hu
     have := extU_apply hUc g ⟨u, hu⟩ 0

@@ -53,7 +53,7 @@ theorem mem_iSup_range_locMap : ∀ (L : Type) [Field L] [NumberField L] [IsCMFi
       exact Submodule.mem_iSup_of_mem ⟨T'', hT''⟩ ⟨_, rfl⟩
     · rw [map_zero]; exact zero_mem _
     · intro f₁ f₂ h₁ h₂
-      rw [map_add]; exact add_mem h₁ h₂
+      rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
   rcases π.irrS.2.2 I hsub hIS with hbot | htop
   · exfalso
     obtain ⟨a, ha⟩ := exists_ne_zero_of_irrRep σ

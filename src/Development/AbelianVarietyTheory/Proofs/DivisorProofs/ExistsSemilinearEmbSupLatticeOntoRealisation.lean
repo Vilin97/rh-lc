@@ -43,7 +43,7 @@ theorem exists_emb_image_latW : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (P
   have he : ∀ f : VK fw i, e f = fw.e i ⟨f, hE ▸ f.2⟩ := fun _ => rfl
   let ι : VK fw i →ₛₗ[algebraMap T.Q.c.F D.what₂.LL] (Fin (R.nW i) → D.what₂.LL) :=
     { toFun := fun f => (e f : Fin (R.nW i) → D.what₂.LL)
-      map_add' := fun f g => by rw [map_add]; rfl
+      map_add' := fun f g => by rw [map_add (f := _)]; rfl
       map_smul' := fun a f => by rw [map_smul, algebraMap_smul]; rfl }
   have key : ∀ f : VK fw i, f ∈ latW (T.U ((i : ℕ) + 1)) (wtZ (wtA (κ i)) (κ i).n) ↔ ι f ∈ (R.FW i).MK := fun f => by
     have en := fun la y => fw.nrm_eq i la y ⟨f.1, hE ▸ f.2⟩

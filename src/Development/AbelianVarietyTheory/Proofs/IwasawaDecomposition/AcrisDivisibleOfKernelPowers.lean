@@ -70,13 +70,13 @@ theorem low_inter (hreg : ∀ y : A, algebraMap R A ξ * y = 0 → y = 0)
     have h2 : algebraMap R A ξ ∣ algebraMap R A (a + c * N) := by
       refine ⟨(N.factorial : ℕ) * z, sub_eq_zero.1 (hregn N _ ?_)⟩
       rw [Algebra.smul_def, Algebra.smul_def] at hz
-      rw [map_add, map_mul, map_natCast]
+      rw [map_add (f := _), map_mul, map_natCast]
       have h3 := hγ N
       linear_combination ((N.factorial : ℕ) : A) * hz - (algebraMap R A a + algebraMap R A c * N) * h3
     obtain ⟨d, hd⟩ := hsat _ h2
     refine ⟨d, ?_⟩
     have h4 := congrArg (algebraMap R A) hd
-    rw [map_add, map_mul, map_natCast, map_mul] at h4
+    rw [map_add (f := _), map_mul, map_natCast, map_mul] at h4
     rw [← mul_gamma hu ξ γ hγ, Algebra.smul_def, Algebra.smul_def, Algebra.smul_def]
     linear_combination γ N * h4
 

@@ -62,7 +62,7 @@ def quotMod (M : GKMod p q) (N : Submodule ℂ M.V) (hN : ∀ Z, ∀ y ∈ N, M.
       show N.mkQ (M.act (Eab a a) x) = _
       rw [hx a, map_smul]
     · intro x y hx hy
-      rw [map_add]; exact add_mem hx hy
+      rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 variable {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
 
@@ -107,7 +107,7 @@ theorem eq_tmul_of_contract {z : V ⊗[ℂ] W} {L : Submodule ℂ V} (hL : Modul
     intro z
     induction z with
     | tmul x y => simp [mul_comm]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have h2 := key z
   rw [← hc', map_smul, hψ] at h2
   rw [map_sub, map_sub, ← hc']
@@ -118,14 +118,14 @@ theorem rid_lTensor_map (φ : W →ₗ[ℂ] ℂ) (A : Module.End ℂ V) (z : V �
       A (TensorProduct.rid ℂ V (LinearMap.lTensor V φ z)) := by
   induction z with
   | tmul x y => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem lid_rTensor_map (ψ : V →ₗ[ℂ] ℂ) (B : Module.End ℂ W) (z : V ⊗[ℂ] W) :
     TensorProduct.lid ℂ W (LinearMap.rTensor W ψ (TensorProduct.map LinearMap.id B z)) =
       B (TensorProduct.lid ℂ W (LinearMap.rTensor W ψ z)) := by
   induction z with
   | tmul x y => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end General
 
@@ -220,7 +220,7 @@ theorem range_eq (M₁ : GKMod p q) (hI : IrrGK M₁) (M₂ B : GKMod r s) (hB :
     rintro _ ⟨z, rfl⟩
     induction z with
     | tmul x y => obtain ⟨_, y, rfl⟩ := y; exact s2 x y
-    | add x y hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 end Core
 

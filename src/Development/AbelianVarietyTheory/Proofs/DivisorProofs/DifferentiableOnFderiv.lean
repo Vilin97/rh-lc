@@ -28,7 +28,7 @@ theorem differentiableOn_fderiv {E V : Type*} [NormedAddCommGroup E] [NormedSpac
   let L₀ : E →ₗ[ℂ] E →L[ℂ] V :=
     { toFun := fun v => fderiv ℂ (fun x => fderiv ℂ f x v) c
       map_add' := fun v u => by
-        simp only [map_add]
+        simp only [map_add (f := _)]
         exact fderiv_fun_add (hda v) (hda u)
       map_smul' := fun a v => by
         simp only [map_smul, RingHom.id_apply]

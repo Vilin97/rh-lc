@@ -37,7 +37,7 @@ def hermQ (D : D7) (r : ℕ) : Submodule ℚ (Matrix (Fin r) (Fin r) D.host.E) w
     have h1 := congrFun (congrFun ha i) j
     have h2 := congrFun (congrFun hb i) j
     simp only [Matrix.transpose_apply, Matrix.map_apply] at h1 h2 ⊢
-    simp only [Matrix.add_apply, map_add, h1, h2]
+    simp only [Matrix.add_apply, map_add (f := _), h1, h2]
   zero_mem' := by
     ext i j
     simp
@@ -67,7 +67,7 @@ def formH (α : D.host.F) (δ : Matrix (Fin r) (Fin r) D.host.E) : hermQ D r →
     (fun a => ∑ τ, (tauE D τ (algebraMap D.host.F D.host.E α * Matrix.trace (δ * a.1))).re)
     (by
       intro a b
-      simp only [Submodule.coe_add, mul_add, Matrix.trace_add, map_add, Complex.add_re,
+      simp only [Submodule.coe_add, mul_add, Matrix.trace_add, map_add (f := _), Complex.add_re,
         Finset.sum_add_distrib])
 
 theorem formH_apply (α : D.host.F) (δ : Matrix (Fin r) (Fin r) D.host.E) (a : hermQ D r) :

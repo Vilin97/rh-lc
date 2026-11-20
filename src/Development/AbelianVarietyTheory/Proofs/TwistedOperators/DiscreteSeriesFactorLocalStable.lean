@@ -235,7 +235,7 @@ theorem exists_homDS_comb (hB : IsFactorisation D.sp.cm.sig V.gram (fun v => (R 
   let f : MultilinearMap ℂ M.H H :=
     { toFun := fun z => B (c z)
       map_update_add' := fun z τ x x' => by
-        simp only [hcdef, comb_update hinj, map_add]
+        simp only [hcdef, comb_update hinj, map_add (f := _)]
         have h := hB.pure_update (hc z) (.inl (placeOf D τ)) 1 (A τ x) (A τ x')
         rw [hcdef] at h
         simpa using h

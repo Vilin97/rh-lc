@@ -84,7 +84,7 @@ theorem isPureSum_of_slices {F : Type} [Field F] [NumberField F] {κ : Type} [Fi
       rw [hr k _ _ (hat _)]
       congr 2
       funext i
-      rw [Pi.add_apply, map_add, hy, zero_add, GlobalTheory.LatVac.evFin_liftV]
+      rw [Pi.add_apply, map_add (f := _), hy, zero_add, GlobalTheory.LatVac.evFin_liftV]
     have e3 : ∀ k, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure ((φ k v₁ ζ / φ₀ ζ) • f k) (Function.update (φ k) v₁ φ₀) x =
         (φ k v₁ ζ * r k x) * ((φ₀ fun k => evFin F v₁ (x k)) / φ₀ ζ) := fun k => by
       have := congrFun (hr' k φ₀) x

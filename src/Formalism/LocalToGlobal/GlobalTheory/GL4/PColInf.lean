@@ -146,7 +146,7 @@ def tcAt (v : InfinitePlace D.what₂.LL) (c : (D.mem u).C.cls 0) (x : ((D.fm u)
 
 theorem tcAt_add (v : InfinitePlace D.what₂.LL) (c : (D.mem u).C.cls 0) (x y : ((D.fm u).lat 0).V) :
     tcAt CV v c (x + y) = tcAt CV v c x + tcAt CV v c y := by
-  simp only [tcAt, map_add, Pi.add_apply]
+  simp only [tcAt, map_add (f := _), Pi.add_apply]
 
 theorem tcAt_smul (v : InfinitePlace D.what₂.LL) (c : (D.mem u).C.cls 0) (a : D.what₂.LL) (x : ((D.fm u).lat 0).V) :
     tcAt CV v c (a • x) = v.embedding a • tcAt CV v c x := by

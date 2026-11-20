@@ -147,7 +147,7 @@ theorem Fdig_der_inl (j0 : ZMod J) (l : Fin (Dt.nL j0)) (a0 : Fin r) (rho : (ZMo
           (by simp only [Pof_inl, Nat.div_one, Finsupp.tsub_apply, Finsupp.single_eq_same]; omega)
         rw [e2, add_tsub_cancel_right]
     · rw [if_neg (fun h => hd ((digOK_iff_of_eq_off_inl Dt j0 l a0 rho mo _ e1).1 h)), if_neg hd, map_zero]
-  · rw [map_add, Fdig_add, Fdig_add, hp, hq, map_add]
+  · rw [map_add (f := _), Fdig_add, Fdig_add, hp, hq, map_add (f := _)]
 
 section Tau
 
@@ -270,7 +270,7 @@ theorem Fdig_der_lt (h : rho ((j0, m0), a0) + 1 < Dt.P j0 m0) (H : MvPolynomial 
               · subst hw
                 omega
               · simp
-            rw [hs, smul_monomial, smul_monomial, ← map_add, smul_eq_mul, smul_eq_mul, ← hc]
+            rw [hs, smul_monomial, smul_monomial, ← map_add (f := _), smul_eq_mul, smul_eq_mul, ← hc]
             congr 1
             ring
         · rw [if_neg (fun h' => hd' (hd.1 h')), if_neg hd']
@@ -287,7 +287,7 @@ theorem Fdig_der_lt (h : rho ((j0, m0), a0) + 1 < Dt.P j0 m0) (H : MvPolynomial 
           omega
         rw [if_neg hn, if_neg hn']
         simp
-  · simp only [map_add, Fdig_add, hp, hq, smul_add, mul_add]
+  · simp only [map_add (f := _), Fdig_add, hp, hq, smul_add, mul_add]
     abel
 
 theorem Fdig_der_eq (h : rho ((j0, m0), a0) + 1 = Dt.P j0 m0) (H : MvPolynomial (TL J Dt.nL r × Fin r) (KK O)) :
@@ -338,7 +338,7 @@ theorem Fdig_der_eq (h : rho ((j0, m0), a0) + 1 = Dt.P j0 m0) (H : MvPolynomial 
           ring
         · rw [if_neg (fun h' => hd' (hd.1 h')), if_neg hd']
           simp
-  · simp only [map_add, Fdig_add, hp, hq, smul_add]
+  · simp only [map_add (f := _), Fdig_add, hp, hq, smul_add]
 
 end Tau
 

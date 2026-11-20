@@ -316,7 +316,7 @@ theorem inPow_add {m n : Type} {N : ℕ} {X Z : Matrix m n (Fv D.host.F v)} (hX 
     InPow ϖ N (X + Z) := fun a b => by
   obtain ⟨o, ho⟩ := hX a b
   obtain ⟨o', ho'⟩ := hZ a b
-  exact ⟨o + o', by rw [Matrix.add_apply, ho, ho', mul_add, map_add]⟩
+  exact ⟨o + o', by rw [Matrix.add_apply, ho, ho', mul_add, map_add (f := _)]⟩
 
 theorem inPow_neg {m n : Type} {N : ℕ} {X : Matrix m n (Fv D.host.F v)} (hX : InPow ϖ N X) : InPow ϖ N (-X) := fun a b => by
   obtain ⟨o, ho⟩ := hX a b

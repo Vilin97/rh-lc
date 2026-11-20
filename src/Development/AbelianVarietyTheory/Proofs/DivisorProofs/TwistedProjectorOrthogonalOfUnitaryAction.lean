@@ -48,7 +48,7 @@ theorem twistedProjector_orthogonal_of_unitary : ∀ {LL Ks : Type} [Field LL] [
   have horth : ⟪A.j σ (A.eOp eC x), A.j σ (y - A.eOp eC y)⟫_ℂ = 0 := by
     have hy : A.eOp eC (A.eOp eC y) = A.eOp eC y := LinearMap.congr_fun hid y
     rw [sa, map_sub, hy, sub_self, map_zero, inner_zero_right]
-  rw [map_add]
+  rw [map_add (f := _)]
   have h := norm_add_sq_eq_norm_sq_add_norm_sq_of_inner_eq_zero _ _ horth
   simpa only [sq] using h
 

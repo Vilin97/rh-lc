@@ -88,7 +88,7 @@ theorem card_quot_eq_of_dense {R S M N : Type} [CommRing R] [CommRing S] [AddCom
     · obtain ⟨x, hx, z, rfl⟩ := hy
       obtain ⟨x', hx', z', rfl⟩ := hy'
       refine ⟨x + x', add_mem hx hx', z + z', ?_⟩
-      rw [map_add, smul_add]
+      rw [map_add (f := _), smul_add]
       abel
   have hker : (𝔞 • ⊤ : Submodule R M).toAddSubgroup = φ.ker := by
     refine AddSubgroup.ext fun x => ?_
@@ -97,7 +97,7 @@ theorem card_quot_eq_of_dense {R S M N : Type} [CommRing R] [CommRing S] [AddCom
     · refine Submodule.smul_induction_on h (fun a ha y _ => ?_) (fun y y' hy hy' => ?_)
       · rw [hι]
         exact Submodule.smul_mem_smul (hab a ha) Submodule.mem_top
-      · rw [map_add]
+      · rw [map_add (f := _)]
         exact add_mem hy hy'
     · obtain ⟨x', hx', z, e⟩ := hdec _ h
       obtain ⟨u, hu⟩ := hi (x - x') z (by rw [map_sub, e, add_sub_cancel_left])
@@ -138,7 +138,7 @@ theorem card_quot_extId : ∀ (I : AutInst) (p : ℕ) (w : HeightOneSpectrum (�
     obtain ⟨b, t, e⟩ := Inhab.exists_approx hp.ne_zero s
     refine ⟨b, (hr b).1 ?_, t, e⟩
     have h0 : r s = 0 := (RingHom.mem_ker).1 (hk.ge hs)
-    rw [e, r.map_add, r.map_mul, map_natCast r p, ZMod.natCast_self, zero_mul, add_zero] at h0
+    rw [e, r.map_add (f := _), r.map_mul, map_natCast r p, ZMod.natCast_self, zero_mul, add_zero] at h0
     exact h0
   refine (card_quot_eq_of_dense (Inhab.psi I.F I.E) (inclLat I) (inclLat_smul I) p w.asIdeal
     (extId I w.asIdeal) hpw hab hba (exists_inclLat_add I hp.ne_zero)

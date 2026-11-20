@@ -97,7 +97,7 @@ theorem norm_le_of_aeval_eq_zero (M H : Type) [AddCommGroup M] [Module ℂ M] [N
       · have h2 : L (m * (p / m)) = 0 := by
           rw [hL, mul_comm, map_mul, Module.End.mul_apply, hx, map_zero]
         have h3 := congrArg L (EuclideanDomain.div_add_mod p m)
-        rw [map_add, h2, zero_add] at h3
+        rw [map_add (f := _), h2, zero_add] at h3
         exact h3
     · exact LinearMap.map_le_range
   haveI : Module.Finite ℂ (Polynomial.degreeLT ℂ m.natDegree) :=

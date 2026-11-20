@@ -70,7 +70,7 @@ theorem exists_minor_not_mem (B : ChartBundle ℤ x 2 E) (i : ι) (hi : x i ≠ 
     have hsplit : fs l₀ ^ Finset.univ.sup mm * bB.repr v j' =
         a 0 * (fs l₀ ^ Finset.univ.sup mm * bB.repr (bs l 0) j') +
           a 1 * (fs l₀ ^ Finset.univ.sup mm * bB.repr (bs l 1) j') := by
-      rw [hva, Fin.sum_univ_two, map_add, map_smul, map_smul, Finsupp.add_apply, Finsupp.smul_apply,
+      rw [hva, Fin.sum_univ_two, map_add (f := _), map_smul, map_smul, Finsupp.add_apply, Finsupp.smul_apply,
         Finsupp.smul_apply, smul_eq_mul, smul_eq_mul]
       ring
     rw [hsplit]
@@ -165,7 +165,7 @@ theorem exists_contr (x : ι → Ω) (δ : ν → Ω) (e : Module.Basis (Fin 2) 
             exact DiagonalForms.isMultiHomog_mul (isMultiHomog_Xbase_pow i M) hF
           · rw [← wwDeg_add]
             exact DiagonalForms.isMultiHomog_mul (isMultiHomog_Xbase_pow i N) hG
-        · simp only [map_add, map_mul, map_pow, aeval_X_base, hFv, hGv, Subalgebra.coe_add]
+        · simp only [map_add (f := _), map_mul, map_pow, aeval_X_base, hFv, hGv, Subalgebra.coe_add]
           ring
       zero_mem' := ⟨0, 0, fun m hm => by simp at hm, by simp, W.zero_mem⟩
       smul_mem' := by

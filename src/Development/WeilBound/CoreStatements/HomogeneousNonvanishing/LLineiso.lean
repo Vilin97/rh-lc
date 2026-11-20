@@ -133,7 +133,7 @@ theorem llRep_add {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k} {s t : Ω} {F G : 
     (h : LlRep y c s F α) (h' : LlRep y c t G β) :
     LlRep y c (s + t) (F * llMon c β + llMon c α * G) (α + β) := by
   refine ⟨ll_add (ll_mul h.1 (ll_mon c β)) (ll_mul (ll_mon c α) h'.1), ?_⟩
-  rw [map_add, map_mul, map_mul, ll_mon_add, map_mul, h.2, h'.2]
+  rw [map_add (f := _), map_mul, map_mul, ll_mon_add, map_mul, h.2, h'.2]
   ring
 
 theorem llRep_mul {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k} {s t : Ω} {F G : MRing ι} {α β : K → ℕ}

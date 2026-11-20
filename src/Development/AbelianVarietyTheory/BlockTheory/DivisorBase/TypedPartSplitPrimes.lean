@@ -61,7 +61,7 @@ def primeBelow (τ : E →+* ℂ) : Ideal (𝓞 E) where
   carrier := {a | X.v (embX io X τ a) < 1}
   zero_mem' := by simp
   add_mem' := fun {a b} ha hb => by
-    simp only [Set.mem_ofPred_eq, map_add] at ha hb ⊢
+    simp only [Set.mem_ofPred_eq, map_add (f := _)] at ha hb ⊢
     exact X.v.map_add_lt ha hb
   smul_mem' := fun a b hb => by
     simp only [Set.mem_ofPred_eq, smul_eq_mul, map_mul] at hb ⊢

@@ -37,7 +37,7 @@ theorem UpperTheory.exists_good_character_of_inert_CMDatum :
     rwa [Valuation.map_neg] at this
   refine ⟨fun x => ψ (H.sg v (-(e.symm x).2)), ⟨fun x y => ?_, fun x hx => ?_, fun x hx => ?_⟩, fun x => ?_⟩
   · beta_reduce
-    rw [map_add, Prod.snd_add, neg_add]
+    rw [map_add (f := _), Prod.snd_add, neg_add]
     exact ga _ _
   · obtain ⟨⟨u, t⟩, rfl⟩ := e.surjective x
     have ht : Valued.v t ≤ 1 := (le_max_right _ _).trans ((h2 u t).symm.le.trans hx)

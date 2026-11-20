@@ -70,7 +70,7 @@ theorem ideal_mul_of_isPushout {A B F G : Type} [CommRing A] [CommRing B] [CommR
       intro b
       obtain ⟨y1, hy1, e1⟩ := hz b
       obtain ⟨y2, hy2, e2⟩ := hw' b
-      exact ⟨y1 + y2, Ideal.add_mem _ hy1 hy2, by rw [map_add, e1, e2, map_add, add_mul]⟩
+      exact ⟨y1 + y2, Ideal.add_mem _ hy1 hy2, by rw [map_add (f := _), e1, e2, map_add (f := _), add_mul]⟩
     | smul m z _ hz =>
       intro b
       obtain ⟨y1, hy1, e1⟩ := hz b
@@ -99,7 +99,7 @@ theorem ideal_mul_of_isPushout {A B F G : Type} [CommRing A] [CommRing B] [CommR
   | add n1 n2 h1 h2 =>
     obtain ⟨y1, hy1, e1⟩ := h1
     obtain ⟨y2, hy2, e2⟩ := h2
-    exact ⟨y1 + y2, Ideal.add_mem _ hy1 hy2, by rw [map_add, e1, e2, mul_add]⟩
+    exact ⟨y1 + y2, Ideal.add_mem _ hy1 hy2, by rw [map_add (f := _), e1, e2, mul_add]⟩
 
 theorem ker_le_of_isPushout {A Q F G : Type} [CommRing A] [CommRing Q] [CommRing F] [CommRing G]
     (f : A →+* F) (q : A →+* Q) (h : F →+* G) (k : Q →+* G)

@@ -125,7 +125,7 @@ theorem prime_order {g : ℕ} (hg : g.Prime) (hprim : ∀ x : A, ∃ j : ℕ, g 
     { toFun := fun y => (N ^ k) (d y)
       map_zero' := hk _ (hd 0)
       map_add' := fun a b => by
-        rw [← map_add, ← sub_eq_zero, ← map_sub]
+        rw [← map_add (f := _), ← sub_eq_zero, ← map_sub]
         apply hk
         rw [smul_sub, smul_add, hd, hd, hd, sub_self] }
   have hMy : ∀ y, M y = (N ^ k) (d y) := fun y => rfl
@@ -153,7 +153,7 @@ theorem prime_order {g : ℕ} (hg : g.Prime) (hprim : ∀ x : A, ∃ j : ℕ, g 
   rw [hpow, end_mul_apply, end_mul_apply, end_mul_apply, ← hMy, ← hMN, sq, end_mul_apply,
     ← end_mul_apply N V, hNV.eq, end_mul_apply] at h0
   have hx : 1 • (N y) = N ((-(V + N ^ e * M)) (N y)) := by
-    rw [one_smul, end_neg_apply, map_neg, end_add_apply, end_mul_apply, map_add, eq_neg_iff_add_eq_zero]
+    rw [one_smul, end_neg_apply, map_neg, end_add_apply, end_mul_apply, map_add (f := _), eq_neg_iff_add_eq_zero]
     rw [← end_mul_apply N (N ^ e), ← pow_succ', pow_succ, end_mul_apply]
     exact h0
   exact inj_core hprim N _ hcZ k 1 (Nat.coprime_one_left _) hk _ hx

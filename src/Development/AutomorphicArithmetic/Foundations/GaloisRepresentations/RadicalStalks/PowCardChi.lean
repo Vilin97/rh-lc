@@ -82,10 +82,10 @@ private theorem proj_gs (ρ : C → Module.End k P) (hI : iSupIndep (Gs ρ)) (hT
       (le_iSup₂_of_le (f := fun (ψ : C → k) (_ : ψ ≠ χ) => Gs ρ ψ) ψ hψ le_rfl : Gs ρ ψ ≤ _) (hTm ψ v hv)
   have h₃ := hmap h₂
   have h₄ : T u₂ ∈ Gs ρ χ := by
-    have : T u₂ = y - T u₁ := by rw [← h, map_add]; abel
+    have : T u₂ = y - T u₁ := by rw [← h, map_add (f := _)]; abel
     rw [this]; exact sub_mem hy (hTm χ _ h₁)
   have h₅ : T u₂ = 0 := (Submodule.disjoint_def.1 (hI χ)) _ h₄ h₃
-  exact ⟨u₁, h₁, by rw [← h, map_add, h₅, add_zero]⟩
+  exact ⟨u₁, h₁, by rw [← h, map_add (f := _), h₅, add_zero]⟩
 
 private theorem semi_surj [IsAlgClosed k] {p : ℕ} (hp : 0 < p) [FiniteDimensional k P] (Φ : P →+ P)
     (semi : ∀ (l : k) x, Φ (l • x) = l ^ p • Φ x) (A B : Submodule k P) (hm : ∀ x ∈ A, Φ x ∈ B)

@@ -142,7 +142,7 @@ theorem local_le {μ₀ : T} (hL : L.Is μ₀) (hO : OffQ D) (G : GridData L sc)
   let p : WO (G.V (.grid (i + 1) 0)) (G.V (.grid i 0)) → Prop := fun u => ∀ a b,
     Valued.v (cpt (D := D) w (Comparison₂.fr (B.β i 0) (B.β (i + 1) 0) (u.map (toEAf D)) a b)) ≤ κ
   have hadd : ∀ x y, p x → p y → p (x + y) := fun x y hx hy a b => by
-    rw [Matrix.map_add _ (toEAf D).map_add, Comparison₂.fr_add, Matrix.add_apply, RingHom.map_add]
+    rw [Matrix.map_add _ (toEAf D).map_add (f := _), Comparison₂.fr_add, Matrix.add_apply, RingHom.map_add (f := _)]
     exact Valuation.map_add_le _ (hx a b) (hy a b)
   have hneg : ∀ x, p x → p (-x) := fun x hx a b => by
     rw [Matrix.map_neg _ (toEAf D).map_neg, fr_neg, Matrix.neg_apply, RingHom.map_neg, Valuation.map_neg]
@@ -178,7 +178,7 @@ theorem local_le {μ₀ : T} (hL : L.Is μ₀) (hO : OffQ D) (G : GridData L sc)
       simp
     | add x y _ _ hx hy =>
       intro a b
-      rw [genMap_add, Matrix.map_add _ (eToEAf D).map_add, Comparison₂.fr_add, Matrix.add_apply, RingHom.map_add]
+      rw [genMap_add, Matrix.map_add _ (eToEAf D).map_add (f := _), Comparison₂.fr_add, Matrix.add_apply, RingHom.map_add (f := _)]
       exact Valuation.map_add_le _ (hx a b) (hy a b)
     | smul r x _ hx =>
       intro a b

@@ -145,7 +145,7 @@ theorem hkFR_bsup (i : D.ntw.Tw) (j : ℕ) (b : Bool) (hL : ℕ → PlE D.host �
     rw [← e4, ← key] at this
     exact this
   · simp
-  · intro x y _ _ hx hy; rw [map_add]; exact add_mem hx hy
+  · intro x y _ _ hx hy; rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   · intro a x _ hx
     change hkFR S i j b hL hs k P (algebraMap (D.ntw.O i) (FractionRing (D.ntw.O i)) a • x) ∈ Bsup S i j b
     rw [map_smul]

@@ -59,6 +59,6 @@ theorem cusp_of_integral_of_dom : ∀ (E : Type) [Field E] [NumberField E] [IsCM
   simp only [key]
   have h3 := congrArg (evHom ((U σ).un j ⟨x, hx⟩) hy) heq
   set_option synthInstance.maxHeartbeats 100000 in
-    simpa only [map_add, map_mul, map_sum, map_pow, map_zero, evHom_aeval] using h3
+    simpa only [map_add (f := _), map_mul, map_sum, map_pow, map_zero, evHom_aeval] using h3
 
 end GlobalTheory

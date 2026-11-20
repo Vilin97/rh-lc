@@ -108,7 +108,7 @@ theorem mem_span_iff (N : Submodule k (MvPolynomial σ k)) (P : MvPolynomial σ 
       rw [this]
       exact N.smul_mem _ hf
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact N.add_mem (hx ℓ) (hy ℓ)
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact N.add_mem (hx ℓ) (hy ℓ)
     | smul a x _ hx =>
       have : slc ℓ (a • x) = slc (ℓ ∘ₗ LinearMap.mulLeft k a) x := by
         ext e
@@ -465,7 +465,7 @@ theorem torus_slice (Q : MvPolynomial (LVar ι ζ n) A) (ν : Fin n → ℤ) :
       change (AddMonoidAlgebra.single (wt isVec S e) a).coeff ν = _
       rw [AddMonoidAlgebra.coeff_single, Finsupp.single_apply]
     · simp [hd]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 theorem whc_slc (ℓ : A →ₗ[k] k) (P : MvPolynomial (LVar ι ζ n) A) (ν : Fin n → ℤ) :
     weightedHomogeneousComponent (wV isVec S) ν (slc ℓ P) =

@@ -40,7 +40,7 @@ theorem UpperTheory.Gal.productCup_of_system.idJ_of :
     | mem z hz => exact hdec z hz
     | zero => simp
     | add p q _ _ hp hq =>
-      simp only [map_add, add_smul, Finset.sum_add_distrib]
+      simp only [map_add (f := _), add_smul, Finset.sum_add_distrib]
       rw [← hp, ← hq]
     | smul c p _ hp =>
       simp only [map_smul, smul_eq_mul, mul_smul, ← Finset.smul_sum]

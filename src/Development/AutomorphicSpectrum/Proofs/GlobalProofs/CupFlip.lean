@@ -254,7 +254,7 @@ theorem dblAnn : Formalism.GaloisCohomology.LocalTateDualityK → ∀ (l : ℕ) 
     · have := hEq (φ.symm g) (s (φ.symm h))
       rw [MulEquiv.apply_symm_apply] at this
       change E (s (φ.symm (g * h))) = E (s (φ.symm g)) + τ g (E (s (φ.symm h)))
-      rw [map_mul, hs.2, map_add, this]
+      rw [map_mul, hs.2, map_add (f := _), this]
     · rw [toS_apply, AddEquiv.symm_apply_eq]
       change E (s (φ.symm (φ g))) = _
       rw [MulEquiv.symm_apply_apply]

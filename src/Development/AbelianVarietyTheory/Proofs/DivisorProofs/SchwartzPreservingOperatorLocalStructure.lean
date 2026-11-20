@@ -147,7 +147,7 @@ theorem commutant_pure : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [
           rw [← e1, hcomm v w hw _ hmem0, hIH, e2]
         | zero => rw [pure_update_zero f _ h0O, pure_update_zero f₁ _ h0O, map_zero]
         | add g h _ _ hg hh =>
-          rw [pure_update_add f _ h0O, pure_update_add f₁ _ h0O, map_add, hg, hh]
+          rw [pure_update_add f _ h0O, pure_update_add f₁ _ h0O, map_add (f := _), hg, hh]
         | smul a g _ hg => rw [pure_update_smul f _ h0O, pure_update_smul f₁ _ h0O, map_smul, hg]
       rw [hφeq]
       exact step _ hφv

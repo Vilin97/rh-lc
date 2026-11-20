@@ -37,14 +37,14 @@ theorem finE_mem (V : HSp D) (h : GA D V) : finE V h ∈ UA D.sp.cm V.gram := by
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [swapAE, sigR, Formalism.UG.sigR]
-    | add x y hx hy => simp only [RingHom.comp_apply, map_add] at hx hy ⊢; rw [hx, hy]
+    | add x y hx hy => simp only [RingHom.comp_apply, map_add (f := _)] at hx hy ⊢; rw [hx, hy]
   case c1 =>
     apply RingHom.ext
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [sigR]
-    | add x y hx hy => simp only [RingHom.comp_apply, map_add] at hx hy ⊢; rw [hx, hy]
+    | add x y hx hy => simp only [RingHom.comp_apply, map_add (f := _)] at hx hy ⊢; rw [hx, hy]
 
 def finU (V : HSp D) : GA D V →* UA D.sp.cm V.gram := (finE V).codRestrict _ (finE_mem V)
 

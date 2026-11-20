@@ -92,7 +92,7 @@ theorem norm_frm (ce : R) (f : R →+* S) (hK : (K * K).map f = 1) (ht : t + t' 
     (h4 : f (e * ce) = 4) :
     (blk4 1 1 ((ce * t') • K) ((-(ce * t)) • K) * frm K e t t').map f = (2 : S) • 1 := by
   unfold frm
-  have ht' : f t + f t' = 1 := by rw [← map_add, ht, map_one]
+  have ht' : f t + f t' = 1 := by rw [← map_add (f := _), ht, map_one]
   have h2' : 2 * f t = 1 := by rw [← h2, map_mul, map_ofNat]
   rw [map_mul] at h4
   rw [submatrix_fromBlocks_mul, ← block_matrix_one, blockMatrixTwoByTwoFin_smul]
@@ -101,13 +101,13 @@ theorem norm_frm (ce : R) (f : R →+* S) (hK : (K * K).map f = 1) (ht : t + t' 
   congr 1
   · rw [← two_smul R, map_smul_hom, Matrix.map_one _ f.map_zero f.map_one, map_ofNat]
   · convert zero_smul S _ using 2
-    simp only [map_add, map_neg, map_mul]
+    simp only [map_add (f := _), map_neg, map_mul]
     linear_combination f e * h2' - f e * ht'
   · convert zero_smul S _ using 2
-    simp only [map_add, map_neg, map_mul]
+    simp only [map_add (f := _), map_neg, map_mul]
     linear_combination f ce * ht' - f ce * h2'
   · congr 1
-    simp only [map_add, map_neg, map_mul]
+    simp only [map_add (f := _), map_neg, map_mul]
     linear_combination (2 * f t * f t') * h4 + (8 * f t) * ht' + (2 - 4 * f t) * h2'
 
 theorem exists_frame_ring (c : R →+* R) (hc : ∀ x, c (c x) = x) (p : R → Prop) (p0 : p 0) (p1 : p 1)
@@ -185,7 +185,7 @@ theorem compFin_cA (v : HeightOneSpectrum (𝓞 D.host.F)) (z : AE D) :
     compFin D.host.F D.host.E v (cA D z) = sigR _ D.sp.cm.sig (compFin D.host.F D.host.E v z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x => rfl
 
 theorem intA_cA {z : AE D} (h : IntA z) : IntA (cA D z) := fun v => by

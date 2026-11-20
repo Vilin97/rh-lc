@@ -55,7 +55,7 @@ theorem inner_X_mul_of_deriv {κ : Type} [Fintype κ] (h : HasCoeff F v E) (l : 
       c * inner ℂ (F.ι f) v + ∑ k, a k * inner ℂ (F.ι (MvPolynomial.pderiv (m k) f)) v := by
   induction f using MvPolynomial.induction_on' with
   | add f g hf hg =>
-    simp only [mul_add, map_add, inner_add_left, hf, hg, Finset.sum_add_distrib]
+    simp only [mul_add, map_add (f := _), inner_add_left, hf, hg, Finset.sum_add_distrib]
     ring
   | monomial α b =>
     have e : (MvPolynomial.monomial α b : MvPolynomial σ ℂ) = b • MvPolynomial.monomial α 1 := by
@@ -64,12 +64,12 @@ theorem inner_X_mul_of_deriv {κ : Type} [Fintype κ] (h : HasCoeff F v E) (l : 
         MvPolynomial σ ℂ) : MvPowerSeries σ ℂ) =
         MvPowerSeries.C c + ∑ k, MvPowerSeries.C (a k) * MvPowerSeries.X (m k) := by
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_add, map_sum]
+        rw [← MvPolynomial.coeToMvPowerSeries.ringHom_apply, map_add (f := _), map_sum]
       simp
     rw [e, mul_smul_comm]
     simp only [Derivation.map_smul, map_smul, inner_smul_left]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [inner_X_mul_monomial h, inner_pderiv_monomial h, h α, hE, e2, add_mul, Finset.sum_mul, map_add,
+      simp only [inner_X_mul_monomial h, inner_pderiv_monomial h, h α, hE, e2, add_mul, Finset.sum_mul, map_add (f := _),
       map_sum, mul_assoc, MvPowerSeries.coeff_C_mul, mul_add, Finset.mul_sum]
     congr 1
     · ring
@@ -83,7 +83,7 @@ theorem pderiv_inl_gaussPoly (A : Matrix (Fin P) (Fin Q) ℂ) (x : Ix P Q → �
     MvPolynomial.pderiv (Sum.inl i) (gaussPoly A x) =
       MvPolynomial.C (x (Sum.inl i)) + ∑ j, MvPolynomial.C (A i j) * MvPolynomial.X (Sum.inr j) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [gaussPoly, map_add, map_sum, mul_assoc, MvPolynomial.pderiv_mul,
+    simp only [gaussPoly, map_add (f := _), map_sum, mul_assoc, MvPolynomial.pderiv_mul,
     MvPolynomial.pderiv_X, Pi.single_apply]
   rw [add_comm, Finset.sum_comm]
   simp
@@ -92,7 +92,7 @@ theorem pderiv_inr_gaussPoly (A : Matrix (Fin P) (Fin Q) ℂ) (x : Ix P Q → �
     MvPolynomial.pderiv (Sum.inr j) (gaussPoly A x) =
       MvPolynomial.C (x (Sum.inr j)) + ∑ i, MvPolynomial.C (A i j) * MvPolynomial.X (Sum.inl i) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [gaussPoly, map_add, map_sum, mul_assoc, MvPolynomial.pderiv_mul,
+    simp only [gaussPoly, map_add (f := _), map_sum, mul_assoc, MvPolynomial.pderiv_mul,
     MvPolynomial.pderiv_X, Pi.single_apply]
   rw [add_comm]
   simp

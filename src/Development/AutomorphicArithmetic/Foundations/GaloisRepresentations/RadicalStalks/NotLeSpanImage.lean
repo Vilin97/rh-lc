@@ -170,7 +170,7 @@ private lemma exists_not_mem {k C P : Type*} [Field k] [IsAlgClosed k] [CommRing
       rw [hfix, ← congrFun h c]
     · simp
     · intro y z hy hz
-      rw [map_add]
+      rw [map_add (f := _)]
       exact H.add_mem hy hz
   have hεG : ∀ x ∈ G, ρ ε x = x := by
     have aux : ∀ (n : ℕ) (x : P), ((ρ ε - (1 : k) • 1) ^ n) x = 0 → ρ ε x = x := by
@@ -213,7 +213,7 @@ private lemma exists_not_mem {k C P : Type*} [Field k] [IsAlgClosed k] [CommRing
     rintro _ ⟨z, rfl⟩
     have hz : z ∈ G ⊔ H := hsup ▸ Submodule.mem_top
     obtain ⟨z1, h1, z2, h2, rfl⟩ := Submodule.mem_sup.1 hz
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (Submodule.subset_span ⟨z1, h1, rfl⟩) (hAH z2 h2)
   have hstep : ∀ u ∈ G, ∃ w ∈ Wd, ∃ u' ∈ G, u = w + ρ a u' := by
     intro u hu
@@ -225,7 +225,7 @@ private lemma exists_not_mem {k C P : Type*} [Field k] [IsAlgClosed k] [CommRing
     obtain ⟨v1, hv1, v2, hv2, rfl⟩ := Submodule.mem_sup.1 (d v')
     have e0 : ρ (1 - ε) v1 = 0 := h1εG v1 hv1
     have e1 : u - w - ρ a u1 = h + ρ a u2 + ρ (1 - ε) v2 := by
-      simp only [map_add, e0] at hx
+      simp only [map_add (f := _), e0] at hx
       have h' := sub_eq_iff_eq_add.1 hx
       rw [h']
       abel
@@ -253,7 +253,7 @@ private lemma exists_not_mem {k C P : Type*} [Field k] [IsAlgClosed k] [CommRing
       obtain ⟨w, hw, u', hu', e⟩ := ih u hu
       obtain ⟨w2, hw2, u'', hu'', e2⟩ := hstep u' hu'
       refine ⟨w + (ρ a ^ n) w2, Wd.add_mem hw (hpow n _ hw2), u'', hu'', ?_⟩
-      rw [pow_succ, Module.End.mul_apply, e, e2, map_add, add_assoc]
+      rw [pow_succ, Module.End.mul_apply, e, e2, map_add (f := _), add_assoc]
   obtain ⟨e, he⟩ := hnil
   have hGW : G ≤ Wd := by
     intro u hu

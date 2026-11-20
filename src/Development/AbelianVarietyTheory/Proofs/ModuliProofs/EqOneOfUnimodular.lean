@@ -215,7 +215,7 @@ theorem kTriv_matLB (hu : ∀ (T : Over S) (y : Fin n → (T ⟶ A)), ∃! x : T
       rw [cls_pull hd, ← pull_comp, IsOpenImmersion.lift_fac, map_zero] at c₁
       replace c₁ := (congrArg _ (cls_linComb h _ _ hd)).symm.trans c₁
       rw [Fin.sum_univ_two] at c₁
-      simp only [Matrix.cons_val_zero, Matrix.cons_val_one, one_smul, neg_smul, map_add, map_neg, ← pull_comp,
+      simp only [Matrix.cons_val_zero, Matrix.cons_val_one, one_smul, neg_smul, map_add (f := _), map_neg, ← pull_comp,
         ← Over.comp_left, lift_snd] at c₁
       rw [show lift (r ≫ i) a ≫ lift (fst (Over.mk t) G ≫ x) (snd (Over.mk t) G) ≫ μ = (r ≫ i ≫ x) * a from
         (CommutatorPairing.lift_translPt x (r ≫ i) a).trans (by rw [Category.assoc])] at c₁

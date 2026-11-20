@@ -202,7 +202,7 @@ instance : Module.Finite (PowerSeries ℂ) Ram := by
   show @Eq (PowerSeries ℂ) (PowerSeries.expand (R := ℂ) 2 two_ne_zero _ * (1 : PowerSeries ℂ) +
     PowerSeries.expand (R := ℂ) 2 two_ne_zero _ * (PowerSeries.X : PowerSeries ℂ)) a
   refine PowerSeries.ext fun n => ?_
-  rw [mul_one, map_add]
+  rw [mul_one, map_add (f := _)]
   rcases Nat.even_or_odd' n with ⟨k, rfl | rfl⟩
   · rcases k with _ | k
     · simp [PowerSeries.coeff_expand]

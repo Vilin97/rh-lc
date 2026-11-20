@@ -31,7 +31,7 @@ theorem dual_le_of_split (S S' : HSpace E) (ι : S'.V →ₗ[E] S.V) (hι : HSpa
   have huniq : ∀ (v : S'.V) (t : E), ι v + t • z0 = 0 → v = 0 ∧ t = 0 := by
     intro v t h
     have h1 : S.hT z0 (ι v + t • z0) = 0 := by rw [h, map_zero]
-    rw [map_add, map_smul, horth', hz0, smul_eq_mul, zero_add, mul_eq_zero] at h1
+    rw [map_add (f := _), map_smul, horth', hz0, smul_eq_mul, zero_add, mul_eq_zero] at h1
     have ht : t = 0 := h1.resolve_right hTE
     refine ⟨?_, ht⟩
     rw [ht, zero_smul, add_zero] at h
@@ -57,12 +57,12 @@ theorem dual_le_of_split (S S' : HSpace E) (ι : S'.V →ₗ[E] S.V) (hι : HSpa
     rw [← this]; exact hl
   have hpair : ∀ (v : S'.V) (a t : E), S.hT (ι v + a • z0) (t • z0) = star a * t * (T : E) := by
     intro v a t
-    simp only [map_add, LinearMap.add_apply, LinearMap.map_smulₛₗ₂, map_smul, horth, hz0, smul_eq_mul,
+    simp only [map_add (f := _), LinearMap.add_apply, LinearMap.map_smulₛₗ₂, map_smul, horth, hz0, smul_eq_mul,
       starRingEnd_apply, zero_add]
     ring
   have hpair2 : ∀ (v x : S'.V) (a : E), S.hT (ι v + a • z0) (ι x) = S'.hT v x := by
     intro v x a
-    simp only [map_add, LinearMap.add_apply, LinearMap.map_smulₛₗ₂, horth', smul_zero, add_zero]
+    simp only [map_add (f := _), LinearMap.add_apply, LinearMap.map_smulₛₗ₂, horth', smul_zero, add_zero]
     exact hι v x
   set q : S.V := γ.symm ((T : E)⁻¹ • z0) with hq
   have hγq : γ q = (T : E)⁻¹ • z0 := by simp [hq]
@@ -132,7 +132,7 @@ theorem dual_le_of_split (S S' : HSpace E) (ι : S'.V →ₗ[E] S.V) (hι : HSpa
   obtain ⟨l', hl', a, ha⟩ := hdec l hl
   have he : ι x = ι l' + (a : E) • z0 + (b : E) • ((T : E)⁻¹ • z0) := by
     have := congrArg γ hsum
-    rw [LinearEquiv.apply_symm_apply, map_add, ha, ← algebraMap_smul E b q, map_smul, hγq] at this
+    rw [LinearEquiv.apply_symm_apply, map_add (f := _), ha, ← algebraMap_smul E b q, map_smul, hγq] at this
     exact this.symm
   have h2 := huniq (x - l') (-((a : E) + (b : E) * (T : E)⁻¹)) (by
     rw [map_sub, he, neg_smul, add_smul, smul_smul]; abel)
@@ -154,7 +154,7 @@ theorem span_top_of_split (S S' : HSpace E) (ι : S'.V →ₗ[E] S.V) (hι : HSp
   have huniq : ∀ (v : S'.V) (t : E), ι v + t • z0 = 0 → v = 0 ∧ t = 0 := by
     intro v t h
     have h1 : S.hT z0 (ι v + t • z0) = 0 := by rw [h, map_zero]
-    rw [map_add, map_smul, horth', hz0, smul_eq_mul, zero_add, mul_eq_zero] at h1
+    rw [map_add (f := _), map_smul, horth', hz0, smul_eq_mul, zero_add, mul_eq_zero] at h1
     have ht : t = 0 := h1.resolve_right hTE
     refine ⟨?_, ht⟩
     rw [ht, zero_smul, add_zero] at h
@@ -174,7 +174,7 @@ theorem span_top_of_split (S S' : HSpace E) (ι : S'.V →ₗ[E] S.V) (hι : HSp
     | add w w' _ _ h h' =>
       obtain ⟨y, hy, t, rfl⟩ := h
       obtain ⟨y', hy', t', rfl⟩ := h'
-      exact ⟨y + y', add_mem hy hy', t + t', by rw [map_add, add_smul]; abel⟩
+      exact ⟨y + y', add_mem hy hy', t + t', by rw [map_add (f := _), add_smul]; abel⟩
     | smul e w _ h =>
       obtain ⟨y, hy, t, rfl⟩ := h
       exact ⟨e • y, Submodule.smul_mem _ e hy, e * t, by rw [smul_add, map_smul, smul_smul]⟩

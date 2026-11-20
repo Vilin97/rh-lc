@@ -35,7 +35,7 @@ theorem phi_smul (β : V →+* 𝓞_ℂ_[p]) (tι : Dw.La →+ P.T) (v : V) (y :
   | tmul v' b =>
     rw [TensorProduct.smul_tmul', phi_tmul, phi_tmul, TensorProduct.smul_tmul']
     simp
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem le_span_of_casimir (β : V →+* 𝓞_ℂ_[p]) (σ : 𝓞 E →+* V) {J : Type} [DecidableEq J] {N : ℕ}
     (a : Fin N → Dw.La) (T S : J → Fin N → V) (tι : Dw.La →+ P.T) (hL : LatData Dw σ a T S)
@@ -58,7 +58,7 @@ theorem le_span_of_casimir (β : V →+* 𝓞_ℂ_[p]) (σ : 𝓞 E →+* V) {J 
       simp only [phi_tmul]
       exact Submodule.subset_span ⟨i, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Sp.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Sp.add_mem hx hy
     | smul v x _ hx => rw [phi_smul]; exact Sp.smul_mem _ hx
   have hb : ∀ b : Dw.La, Q (1 ⊗ₜ tι b) ∈ Sp := by
     intro b
@@ -87,7 +87,7 @@ theorem le_span_of_casimir (β : V →+* 𝓞_ℂ_[p]) (σ : 𝓞 E →+* V) {J 
     let M : Submodule ℤ_[p] P.T :=
       { carrier := {t | Q ((1 : ℂ_[p]) ⊗ₜ[ℤ_[p]] t) ∈ Sp}
         add_mem' := fun {x y} hx hy => by
-          simp only [Set.mem_setOf_eq, TensorProduct.tmul_add, map_add] at hx hy ⊢
+          simp only [Set.mem_setOf_eq, TensorProduct.tmul_add, map_add (f := _)] at hx hy ⊢
           exact Sp.add_mem hx hy
         zero_mem' := by simp
         smul_mem' := fun r t ht => by
@@ -106,7 +106,7 @@ theorem le_span_of_casimir (β : V →+* 𝓞_ℂ_[p]) (σ : 𝓞 E →+* V) {J 
         rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
       rw [he, map_smul]
       exact Sp.smul_mem _ ht
-    | add x y hx hy => rw [map_add]; exact Sp.add_mem hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact Sp.add_mem hx hy
   intro w hw
   have hw' := GlobalTheory.EigenSplit.mem_eigenSub.1 hw
   have hQ : Q w = χ (∑ j, c j * θ j) • w := by

@@ -124,7 +124,7 @@ theorem growth_vanishing (hN : GlobalTheory.Published.NefNumerics) (k : Type) [F
       rfl
     refine Module.Finite.of_surjective
       ({ toFun := fun x => H0.ofSec q ⊤ (cohZeroTwistEquiv N x)
-         map_add' := fun x y => by rw [map_add, map_add]
+         map_add' := fun x y => by rw [map_add (f := _), map_add (f := _)]
          map_smul' := fun a x => ?_ } : coh (twist (QCoh.structureModule T) N) 0 →ₗ[k] H0 q N ⊤)
       (H0.bijective_ofSec_top.2.comp (cohZeroTwistEquiv N).surjective)
     rw [← algebraMap_smul Γ(T, ⊤) a x, map_smul, e, H0.ofSec_smul]

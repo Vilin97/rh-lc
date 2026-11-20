@@ -21,7 +21,7 @@ theorem primE2_of_primO2 (hO : PrimitiveStructureSheafDegTwoVanish) : PrimitiveE
   have hc : c = eX (eX.symm c) := (eX.apply_symm_apply c).symm
   have hc₁ : c₁ = eY (eY.symm c₁) := (eY.apply_symm_apply c₁).symm
   have hc₂ : c₂ = eY (eY.symm c₂) := (eY.apply_symm_apply c₂).symm
-  have hsum : c₁ + c₂ = eY (eY.symm c₁ + eY.symm c₂) := by rw [map_add, ← hc₁, ← hc₂]
+  have hsum : c₁ + c₂ = eY (eY.symm c₁ + eY.symm c₂) := by rw [map_add (f := _), ← hc₁, ← hc₂]
   have hd : eX.symm c = 0 := by
     refine hO R₁ B g hB hBs (eX.symm c) (eY.symm c₁) (eY.symm c₂) ?_ ?_ ?_
     · refine he A.left B.left A.hom B.hom pr hp (A ⊗ A).left (B ⊗ B).left (A ⊗ A).hom (B ⊗ B).hom pr' hp'

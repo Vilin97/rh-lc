@@ -69,7 +69,7 @@ theorem lin_fix_span (g : HA R σ J) {m : ℕ} (Y : Fin m → Fin n → E)
     obtain ⟨a, rfl⟩ := hw
     exact hY a
   | zero => exact map_zero _
-  | add w w' _ _ hw hw' => rw [map_add, hw, hw']
+  | add w w' _ _ hw hw' => rw [map_add (f := _), hw, hw']
   | smul c w _ hw => rw [map_smul, hw]
 
 theorem spanR_univ {m : ℕ} (Y : Fin m → Fin n → E) :

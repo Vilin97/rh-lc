@@ -33,7 +33,7 @@ variable (O) in
 def Pj (j : Fin rk → ℤ) : Submodule O (MvPowerSeries (Fin a) O) where
   carrier := {f | ∀ m, coeff m f ≠ 0 → monoWt wt m = j}
   add_mem' {f g} hf hg m h := by
-    rw [map_add] at h
+    rw [map_add (f := _)] at h
     by_cases h1 : coeff m f = 0
     · rw [h1, zero_add] at h; exact hg m h
     · exact hf m h1

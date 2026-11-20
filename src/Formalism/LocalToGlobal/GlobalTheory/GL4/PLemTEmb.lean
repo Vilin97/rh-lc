@@ -103,14 +103,14 @@ theorem norm_psi_sq {S : HSpace E} (M : Model S) (x : S.V) : ‖psi M x‖ ^ 2 =
 
 theorem inner_psi {S : HSpace E} (hσ : ∀ (φ : E →+* ℂ) a, φ (star a) = star (φ a)) (M : Model S) (x y : S.V) :
     ⟪psi M x, psi M y⟫_ℝ = trR (S.hT x y) := by
-  rw [real_inner_eq_norm_add_mul_self_sub_norm_mul_self_sub_norm_mul_self_div_two, ← map_add]
+  rw [real_inner_eq_norm_add_mul_self_sub_norm_mul_self_sub_norm_mul_self_div_two, ← map_add (f := _)]
   have h1 := norm_psi_sq M (x + y)
   have h2 := norm_psi_sq M x
   have h3 := norm_psi_sq M y
   rw [sq] at h1 h2 h3
   rw [h1, h2, h3]
   have hsym : S.hT y x = star (S.hT x y) := (S.herm.eq x y).symm
-  simp only [map_add, LinearMap.add_apply, trR_add, hsym, trR_star hσ]
+  simp only [map_add (f := _), LinearMap.add_apply, trR_add, hsym, trR_star hσ]
   ring
 
 end Formalism.L2.GlobalTheoryTheory.TraceIntegrality.LT

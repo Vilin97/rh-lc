@@ -84,7 +84,7 @@ theorem exists_split_tensor (σ : E →ₐ[F] E) {δ : E} (hδ : δ ≠ 0) (hσ�
   · induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [sigR]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · simp [hpe, Algebra.TensorProduct.one_def]
   · have hy' : y ∈ RingHom.ker (Algebra.TensorProduct.map p (AlgHom.id F E)) := hy
     rw [Algebra.TensorProduct.rTensor_ker _ hp] at hy'

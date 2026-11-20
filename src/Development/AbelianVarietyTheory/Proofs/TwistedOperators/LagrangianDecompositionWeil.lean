@@ -62,7 +62,7 @@ theorem main : ∀ {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [I
       obtain ⟨Y, z, h⟩ := hsurj (w.1, c • w.2)
       refine ⟨Y, c⁻¹ • z, ?_⟩
       show S (wT Y) + S (wM (c • c⁻¹ • z)) = w
-      rw [smul_smul, mul_inv_cancel₀ hc0, one_smul, ← map_add, h, hS]
+      rw [smul_smul, mul_inv_cancel₀ hc0, one_smul, ← map_add (f := _), h, hS]
       simp [smul_smul, inv_mul_cancel₀ hc0])
   refine ⟨ι, hbij, fun Y φ hφ => ?_, fun z φ hφ => ?_⟩
   · rw [hschr]; exact htr Y φ hφ

@@ -15,7 +15,7 @@ variable (v : HeightOneSpectrum ℤ) {M : Type} [AddCommGroup M] [Module ℚ M] 
 
 theorem isIntB_add {x y : v.adicCompletion ℚ ⊗[ℚ] M} (hx : IsIntB v b x) (hy : IsIntB v b y) :
     IsIntB v b (x + y) := fun i => by
-  rw [map_add, Finsupp.add_apply]; exact add_mem (hx i) (hy i)
+  rw [map_add (f := _), Finsupp.add_apply]; exact add_mem (hx i) (hy i)
 
 theorem isIntB_smul {a : v.adicCompletion ℚ} (ha : a ∈ v.adicCompletionIntegers ℚ)
     {x : v.adicCompletion ℚ ⊗[ℚ] M} (hx : IsIntB v b x) : IsIntB v b (a • x) := fun i => by

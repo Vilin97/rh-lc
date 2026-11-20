@@ -119,7 +119,7 @@ theorem chainPar_conjPl (c : Com D) (hc : c.Is) (B B' : GlobalTheory.LFun.Fam D.
     obtain ⟨hS, hT⟩ := val_step_conjPl c hc k (by omega) w hw
     rw [chainPar_succ, chainPar_succ]
     simp only [stepPar]
-    rw [ih (by omega), hS, hT, seg_conjPl, Multiset.map_add, Multiset.map_map, Multiset.map_map]
+    rw [ih (by omega), hS, hT, seg_conjPl, Multiset.map_add (f := _), Multiset.map_map, Multiset.map_map]
     congr 1
     refine Multiset.map_congr rfl fun b _ => ?_
     simp only [Function.comp_apply, mul_inv, inv_inv]

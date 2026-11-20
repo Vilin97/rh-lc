@@ -73,7 +73,7 @@ theorem harmLat_le_span {K₀ K : Type} [Field K₀] [NumberField K₀] [Field K
         change MvPolynomial.map (σ.comp f) x.1 = MvPolynomial.map σ y.1
         rw [e, MvPolynomial.map_map]
     | zero => rw [map_zero, map_zero]; exact zero_mem _
-    | add _ _ _ _ h1 h2 => rw [map_add, map_add]; exact add_mem h1 h2
+    | add _ _ _ _ h1 h2 => rw [map_add (f := _), map_add (f := _)]; exact add_mem h1 h2
     | smul a F _ h1 =>
       rw [← algebraMap_smul K a F, LinearMap.map_smulₛₗ, map_smul]
       exact Submodule.smul_mem _ (⟨σ a, hO' a⟩ : O') h1

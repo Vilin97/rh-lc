@@ -114,7 +114,7 @@ theorem locality : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberF
       have e3 : R (y + z + -y') = R 0 := by rw [e2]; exact hRφ.1 0 (yv + z) (at_add_divisor v hatv hz)
       have e4 : (fun i => evFin F v ((y + z + -y') i)) = fun i => evFin F v ((y + z) i) := by
         funext i
-        simp only [Pi.add_apply, Pi.neg_apply, map_add, map_neg, hoff, neg_zero, add_zero]
+        simp only [Pi.add_apply, Pi.neg_apply, map_add (f := _), map_neg, hoff, neg_zero, add_zero]
       simp only [Pi.sub_apply, Pi.smul_apply, smul_eq_mul, tens]
       rw [e1, e3, e4]
       ring

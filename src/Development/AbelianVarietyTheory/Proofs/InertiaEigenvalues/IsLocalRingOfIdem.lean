@@ -434,7 +434,7 @@ theorem adjoin_stable (B : InvAlg K) (hu : B.g * B.σ B.g = 1) (hi : IsIntegral 
     have h1 : eval₂ (algebraMap K.O B.A) B.g p.reverse = 0 :=
       (eval₂_reverse_eq_zero_iff (algebraMap K.O B.A) (B.σ B.g) p).2 h0
     rw [← X_mul_divX_add p.reverse, coeff_zero_reverse, hp.leadingCoeff, ← aeval_def] at h1
-    simp only [map_add, map_mul, aeval_X, map_one] at h1
+    simp only [map_add (f := _), map_mul, aeval_X, map_one] at h1
     have h2 : B.σ B.g = -aeval B.g p.reverse.divX := by
       linear_combination B.σ B.g * h1 - aeval B.g p.reverse.divX * hu
     rw [h2]
@@ -442,7 +442,7 @@ theorem adjoin_stable (B : InvAlg K) (hu : B.g * B.σ B.g = 1) (hi : IsIntegral 
   induction hy using Algebra.adjoin_induction with
   | mem x hx => rw [Set.mem_singleton_iff.1 hx]; exact hg
   | algebraMap a => obtain ⟨b, hb⟩ := hO a; rw [hb]; exact Subalgebra.algebraMap_mem _ _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
 end GlobalTheory.UnitLemma.Orbit

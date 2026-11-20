@@ -155,7 +155,7 @@ theorem chLift_holds : ChLift := by
   choose ℓv hℓc hℓ using hloc
   let ℓ : InfiniteAdeleRing F →+ ℂ := AddMonoidHom.mk' (fun x => ∑ v, ℓv v (x v)) (fun a b => by
     show ∑ v, ℓv v (a v + b v) = _
-    simp [map_add, Finset.sum_add_distrib])
+    simp [map_add (f := _), Finset.sum_add_distrib])
   refine ⟨ℓ, ?_, fun x => ?_⟩
   · show Continuous (fun x : InfiniteAdeleRing F => ∑ v, ℓv v (x v))
     exact continuous_finsetSum _ fun v _ => (hℓc v).comp (continuous_apply v)

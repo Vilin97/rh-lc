@@ -31,7 +31,7 @@ theorem ev_smul (σ : LL →ₐ[Qp] Om) (c : LL) (z : (Fin 1 → LL) ⊗[Qp] BdR
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [TensorProduct.smul_tmul', mul_assoc]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy, mul_add]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy, mul_add]
 
 variable [FiniteDimensional Qp LL] [Algebra.IsSeparable Qp LL] [IsAlgClosed Om]
 

@@ -13,7 +13,7 @@ theorem filtration_coaction_stable : FiltrationCoactionStable := by
       map_zero' := by funext i; simp
       map_add' := fun x y => by
         funext i
-        simp only [Pi.add_apply, Int.cast_add, mul_add, sum_add_distrib, map_add] }
+        simp only [Pi.add_apply, Int.cast_add, mul_add, sum_add_distrib, map_add (f := _)] }
   let L : (M.ι → ℤ) →ₗ[ℤ] (M.ι → ℤ) := L0.toIntLinearMap
   have hL : CF.Mpi pi ≤ (CF.Mpi pi).comap L := by
     unfold ColFam.Mpi

@@ -9,7 +9,7 @@ theorem dvd_functional_of_basis {M ι : Type*} [AddCommGroup M] (b : Module.Basi
   induction hc using Submodule.span_induction with
   | mem x hx => obtain ⟨k, rfl⟩ := hx; exact h k
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact dvd_add hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact dvd_add hx hy
   | smul a x _ hx => rw [map_zsmul, smul_eq_mul]; exact Dvd.dvd.mul_left hx a
 
 theorem exists_represent_mod_of_basis {R ι : Type*} [CommRing R] [Fintype ι]

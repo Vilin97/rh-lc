@@ -427,7 +427,7 @@ theorem exists_good [Fact (Nat.Prime 2)] (ι : ℂ ≃+* ℂ_[2]) : ∃ y, Good 
   have hw : wK 7 * (1 - wK 7) = 2 := by
     rw [wK]; linear_combination (-((Real.sqrt (7 : ℕ) : ℝ) : ℂ) ^ 2 / 4) * Complex.I_sq + 1 / 4 * hsq
   have hc : conj (wK 7) = 1 - wK 7 := by
-    simp only [wK, map_add, map_mul, map_div₀, map_one, map_ofNat, Complex.conj_I, Complex.conj_ofReal]; ring
+    simp only [wK, map_add (f := _), map_mul, map_div₀, map_one, map_ofNat, Complex.conj_I, Complex.conj_ofReal]; ring
   set a := ι (wK 7)
   have ha : a * (1 - a) = 2 := by have := congrArg ι hw; simpa [map_ofNat] using this
   have h2 : ‖(2 : ℂ_[2])‖ = 1 / 2 := by
@@ -454,11 +454,11 @@ theorem exists_good [Fact (Nat.Prime 2)] (ι : ℂ ≃+* ℂ_[2]) : ∃ y, Good 
   rcases hor with h | h
   · refine ⟨_, ⟨_, ⟨-1, -1, rfl⟩, ?_, rfl⟩, hk _ _ (.inr rfl)⟩
     have : conj (((-1 : ℤ) : ℂ) + (-1 : ℤ) * wK 7) = wK 7 ^ 2 := by
-      rw [map_add, map_mul, hc, map_intCast]; push_cast; linear_combination hw
+      rw [map_add (f := _), map_mul, hc, map_intCast]; push_cast; linear_combination hw
     rw [this, map_pow, norm_pow, hb]; nlinarith [norm_nonneg a]
   · refine ⟨_, ⟨_, ⟨-2, 1, rfl⟩, ?_, rfl⟩, hk _ _ (.inl rfl)⟩
     have : conj (((-2 : ℤ) : ℂ) + (1 : ℤ) * wK 7) = (1 - wK 7) ^ 2 := by
-      rw [map_add, map_mul, hc, map_intCast, map_intCast]; push_cast; linear_combination hw
+      rw [map_add (f := _), map_mul, hc, map_intCast, map_intCast]; push_cast; linear_combination hw
     rw [this, map_pow, norm_pow, hb, map_sub, map_one]; nlinarith [norm_nonneg (1 - a)]
 
 theorem shiftS_X (ζ : ℂ_[q]) : shiftS ζ X = C ζ * (1 + X) - 1 := by

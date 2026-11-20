@@ -22,7 +22,7 @@ lemma smoothVec_zero : SmoothVec Lie ρ 0 := by
 
 lemma smoothVec_add {a b : E} (ha : SmoothVec Lie ρ a) (hb : SmoothVec Lie ρ b) : SmoothVec Lie ρ (a + b) := by
   intro k Xs hXs
-  simp only [map_add]
+  simp only [map_add (f := _)]
   exact (ha k Xs hXs).add (hb k Xs hXs)
 
 lemma smoothVec_smul (c : ℂ) {a : E} (ha : SmoothVec Lie ρ a) : SmoothVec Lie ρ (c • a) := by
@@ -336,7 +336,7 @@ theorem word_lin (hρ1 : ρ 1 = 1) (l : List (Matrix (Fin n) (Fin n) ℂ)) (hl :
   rw [key _ hab, key _ ha, key _ hb]
   have horb : orb ρ Z (a + c • b) 0 = fun r => orb ρ Z a 0 r + c • orb ρ Z b 0 r := by
     funext r
-    simp only [orb, map_add, ContinuousLinearMap.map_smul_of_tower]
+    simp only [orb, map_add (f := _), ContinuousLinearMap.map_smul_of_tower]
   rw [horb, pds_add L (contDiff_orb Z hZ ha 0) ((contDiff_orb Z hZ hb 0).const_smul c),
     pds_smul L c (contDiff_orb Z hZ hb 0)]
 

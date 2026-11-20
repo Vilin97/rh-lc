@@ -29,7 +29,7 @@ theorem approx_std {F K : Type} [Field F] [NormedField K] [Algebra F K] (hH : He
     intro r
     induction r using MvPolynomial.induction_on with
     | C a => simpa [ev] using continuous_const
-    | add p q hp hq => simp only [map_add]; exact hp.add hq
+    | add p q hp hq => simp only [map_add (f := _)]; exact hp.add hq
     | mul_X p i hp =>
       have : Continuous fun b : Fin n → K => ev b p * b i := hp.mul (continuous_apply i)
       simpa [ev] using this

@@ -36,7 +36,7 @@ theorem eta_infDiag {F E : Type} [Field F] [NumberField F] [Field E] [NumberFiel
       (InfinitePlace.isReal_mk_iff.2 (ComplexEmbedding.isReal_iff.2 (RingHom.ext fun x => ?_)))
     change starRingEnd ℂ (τ x) = τ x
     rw [← b.sum_repr x, Fin.sum_univ_two, h0, Algebra.smul_def, Algebra.smul_def]
-    simp only [map_add, map_mul, map_one, hτ, h3, Complex.conj_ofReal]
+    simp only [map_add (f := _), map_mul, map_one, hτ, h3, Complex.conj_ofReal]
   have hv := GlobalTheory.HeckeBridge.coe_infDiag (E := F) a
   have e : GlobalTheory.IdeleNormChar.normSign E (infDiag a) =
       ∏ w : InfinitePlace F, GlobalTheory.QuadSymbol.eta F E w.Completion (GlobalTheory.QuadSymbol.infDiag F a w) := by
@@ -88,12 +88,12 @@ theorem exists_hchar_norm {F E : Type} [Field F] [NumberField F] [Field E] [Numb
     induction y using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul a x => rfl
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hsf : ∀ y, finTens F E (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (AF F) σ y) = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR _ σ (finTens F E y) := fun y => by
     induction y using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul a x => rfl
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have key : ∀ (x x' : Neutral.B1.Ideles E) (k : E), (x : AdeleRing (𝓞 E) E).1 = algebraMap E _ k →
       (x' : AdeleRing (𝓞 E) E).1 = algebraMap E _ (c k) →
       (x' : AdeleRing (𝓞 E) E).2 = conjFin c (x : AdeleRing (𝓞 E) E).2 → H.1 x * H.1 x' = 1 := fun x x' k h1 h2 h3 => by
@@ -173,7 +173,7 @@ theorem isCsd_of_norms (H : HChar E)
       simpa using ((Complex.ofRealCLM.hasDerivAt (x := 0)).mul_const (dchi H (z + star z))).cexp
     rw [funext h4] at h5
     have h6 := h5.unique (hasDerivAt_const _ _)
-    rw [map_add] at h6
+    rw [map_add (f := _)] at h6
     rw [map_neg]
     exact (eq_neg_of_add_eq_zero_left h6).symm
 
@@ -190,9 +190,9 @@ theorem exists_neg_at (w₀ : InfinitePlace E) : ∃ (a : (maximalRealSubfield E
       simp [this]⟩
   have hd : ∀ w, InfType.diagInf E k w = w.embedding k := fun w => pInf_algebraMap k w
   have hm : k + IsCMField.complexConj E k ∈ maximalRealSubfield E :=
-    (IsCMField.complexConj_eq_self_iff E _).1 (by rw [map_add, IsCMField.complexConj_apply_apply, add_comm])
+    (IsCMField.complexConj_eq_self_iff E _).1 (by rw [map_add (f := _), IsCMField.complexConj_apply_apply, add_comm])
   have he : ∀ w : InfinitePlace E, w.embedding (k + IsCMField.complexConj E k) = ((2 * (w.embedding k).re : ℝ) : ℂ) :=
-    fun w => by rw [map_add, IsCMField.complexEmbedding_complexConj, Complex.add_conj]
+    fun w => by rw [map_add (f := _), IsCMField.complexEmbedding_complexConj, Complex.add_conj]
   have hn : (w₀.embedding k).re < 0 := hd w₀ ▸ hk1
   refine ⟨Units.mk0 ⟨_, hm⟩ fun h => ?_, fun w => 2 * (w.embedding k).re, he, mul_neg_of_pos_of_neg two_pos hn, fun w hw => ?_⟩
   · have h1 := he w₀

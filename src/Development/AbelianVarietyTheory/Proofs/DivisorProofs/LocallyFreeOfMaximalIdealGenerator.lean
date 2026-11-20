@@ -63,7 +63,7 @@ theorem invertible_of_locally_singly_generated : ∀ (R O : Type) [CommRing R] [
     intro m c
     induction c using Finsupp.induction_linear with
     | zero => simp
-    | add c d hc hd => rw [map_add, add_smul, hc, hd, map_add]
+    | add c d hc hd => rw [map_add (f := _), add_smul, hc, hd, map_add (f := _)]
     | single i x =>
       rw [Module.Basis.repr_symm_single, Finsupp.linearCombination_single]
       simp only [B, Algebra.TensorProduct.basis_apply, TensorProduct.smul_tmul', smul_eq_mul,

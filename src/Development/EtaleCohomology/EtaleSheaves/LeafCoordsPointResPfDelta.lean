@@ -66,7 +66,7 @@ theorem delta_injective (n m : ℕ) (hB : Algebra.IsStandardSmoothOfRelativeDime
     | zero => simp
     | tmul k x =>
       rw [delta_tmul, LinearMap.map_smul, h1, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   exact Function.LeftInverse.injective key
 
 theorem range_delta (hIP : I ≤ P) : LinearMap.range (delta (A := A) I P hIP) =

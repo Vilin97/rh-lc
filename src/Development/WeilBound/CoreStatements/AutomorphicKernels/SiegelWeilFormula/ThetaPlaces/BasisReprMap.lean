@@ -37,7 +37,7 @@ theorem mapV_eq (v : HeightOneSpectrum (𝓞 F)) (x : HeckeCharacterZeroLocus.Si
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a m => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def IntV (bs : Module.Basis (Fin 2) F E) (v : HeightOneSpectrum (𝓞 F)) (z : HeckeCharacterZeroLocus.SiegelWeilU.Fv F v ⊗[F] E) : Prop :=
   ∀ k, (Algebra.TensorProduct.basis (HeckeCharacterZeroLocus.SiegelWeilU.Fv F v) bs).repr z k ∈ v.adicCompletionIntegers F

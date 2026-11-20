@@ -40,7 +40,7 @@ def traceD (μ : Measure G) [μ.IsHaarMeasure] {ρ : Representation ℂ G V} (h�
     (fun S f₁ f₂ => by
       have := fd_range_heckeLin_comp μ hρ (Pr f₁) S
       have := fd_range_heckeLin_comp μ hρ (Pr f₂) S
-      rw [map_add, heckeLin_add μ hρ.1, LinearMap.add_comp]
+      rw [map_add (f := _), heckeLin_add μ hρ.1, LinearMap.add_comp]
       exact finTrace_add _ _)
     (fun c S f => by
       have := fd_range_heckeLin_comp μ hρ (Pr f) S

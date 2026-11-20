@@ -78,7 +78,7 @@ theorem leadingCoeff_finSuccEquiv_nagata :
     have : ∀ j, ((finSuccEquiv A n) ((nagata f) 1 (X j))).leadingCoeff = 1 := fun j ↦ by
       by_cases h : j = 0
       · simp [h, finSuccEquiv_apply]
-      · simp only [aeval_eq_bind₁, bind₁_X_right, if_neg h, one_smul, map_add, map_pow]
+      · simp only [aeval_eq_bind₁, bind₁_X_right, if_neg h, one_smul, map_add (f := _), map_pow]
         obtain ⟨i, rfl⟩ := Fin.exists_succ_eq.mpr h
         simp [finSuccEquiv_X_succ, finSuccEquiv_X_zero, add_comm]
     simp only [this, one_pow, Finset.prod_const_one, mul_one]
@@ -101,7 +101,7 @@ theorem exists_leadingCoeff_nagata (fne : f ≠ 0) :
   have coeff : (finSuccEquiv A n ((nagataEquiv f) (h v + ∑ x ∈ f.support \ {v}, h x))).leadingCoeff =
       (finSuccEquiv A n ((nagataEquiv f) (h v))).leadingCoeff := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum]
+      simp only [map_add (f := _), map_sum]
     rw [add_comm]
     apply leadingCoeff_add_of_degree_lt <| (lt_of_le_of_lt <| degree_sum_le _ _) ?_
     have h2 : h v ≠ 0 := by simpa [h] using mem_support_iff.mp vin
@@ -142,7 +142,7 @@ theorem CombAfterPower.add {d e : D} (hd : CombAfterPower c z s d) (he : CombAft
   have h2 : c ^ (k + l) • e = c ^ k • (c ^ l • e) := by rw [smul_smul, ← pow_add]
   rw [smul_add, h1, h2, hf, hg, smul_sum_aeval, smul_sum_aeval, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun t _ ↦ ?_
-  rw [map_add, add_mul]
+  rw [map_add (f := _), add_mul]
 
 theorem CombAfterPower.mul_left (P : MvPolynomial (Fin m) A) {d : D} (hd : CombAfterPower c z s d) :
     CombAfterPower c z s (aeval z P * d) := by
@@ -194,7 +194,7 @@ theorem algHom_eq_eval₂_finSuccEquiv {A D : Type*} [CommRing A] [CommRing D] [
       (MvPolynomial.aeval (R := A) (fun i : Fin n ↦ ψ (X i.succ))).toRingHom (ψ (X 0)) := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [finSuccEquiv_apply]
-  | add P Q hP hQ => rw [map_add, map_add, Polynomial.eval₂_add, hP, hQ]
+  | add P Q hP hQ => rw [map_add (f := _), map_add (f := _), Polynomial.eval₂_add, hP, hQ]
   | mul_X P i ih =>
     rw [map_mul, map_mul, Polynomial.eval₂_mul, ih]
     congr 1

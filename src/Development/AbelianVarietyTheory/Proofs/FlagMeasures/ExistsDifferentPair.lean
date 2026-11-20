@@ -133,7 +133,7 @@ theorem aut_eq_one (σ : E →+* E) {g : ℕ} (hg : g ≠ 0) {x : Tri E 2 0}
     have q1 : Q 1 0 = (1 + g) * P 1 0 := by
       linear_combination Q 1 0 * e1 - P 1 0 * e3 - σ (P 0 0) * hd
     rw [q0, q1] at e2
-    simp only [map_mul, map_add, map_one, map_natCast] at e2
+    simp only [map_mul, map_add (f := _), map_one, map_natCast] at e2
     apply pow_ne_zero 2 hg'
     linear_combination (1 + g : E) ^ 2 * e1 - e2
   have p (i) := congrFun (congrFun hP i) 0
@@ -417,7 +417,7 @@ theorem norm_add_norm_ne_zero (σ : E →+* E) (τ : E →+* ℂ) (hτ : ∀ x, 
     {a : E} (ha : a ≠ 0) (b : E) : a * σ a + b * σ b ≠ 0 := by
   intro h
   have h1 := congrArg τ h
-  rw [map_add, map_mul, map_mul, hτ, hτ, Complex.mul_conj, Complex.mul_conj, map_zero,
+  rw [map_add (f := _), map_mul, map_mul, hτ, hτ, Complex.mul_conj, Complex.mul_conj, map_zero,
     ← Complex.ofReal_add, Complex.ofReal_eq_zero] at h1
   have h2 := Complex.normSq_pos.2 ((map_ne_zero τ).2 ha)
   have h3 := Complex.normSq_nonneg (τ b)

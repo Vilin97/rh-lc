@@ -26,7 +26,7 @@ private theorem m1bLin_sat (h : IsChart 𝒜 x wt φ) (i : τ) : ∀ f ∈ satSq
   have h2 : ∀ f ∈ RingHom.ker x ^ 2, powerSeriesCoefficientLinear φ i f = 0 := by
     intro f hf
     rw [sq] at hf
-    refine Submodule.mul_induction_on hf (fun a ha b hb => ?_) (fun a b ha hb => by rw [map_add, ha, hb, add_zero])
+    refine Submodule.mul_induction_on hf (fun a ha b hb => ?_) (fun a b ha hb => by rw [map_add (f := _), ha, hb, add_zero])
     have ha' : MvPowerSeries.coeff 0 (φ a) = 0 := by
       rw [MvPowerSeries.coeff_zero_eq_constantCoeff_apply, h.const, show x a = 0 from ha, map_zero]
     have hb' : MvPowerSeries.coeff 0 (φ b) = 0 := by

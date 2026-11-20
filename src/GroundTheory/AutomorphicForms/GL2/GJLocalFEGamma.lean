@@ -349,7 +349,7 @@ theorem exists_mem_zetaIdeal_contragredient {R : RatFunc ℂ} (hR : R ∈ zetaId
   | add R₁ R₂ _ _ h₁ h₂ =>
     obtain ⟨R'₁, hm₁, e₁⟩ := h₁
     obtain ⟨R'₂, hm₂, e₂⟩ := h₂
-    exact ⟨R'₁ + R'₂, add_mem hm₁ hm₂, by rw [mul_add, e₁, e₂, map_add]⟩
+    exact ⟨R'₁ + R'₂, add_mem hm₁ hm₂, by rw [mul_add, e₁, e₂, map_add (f := _)]⟩
   | smul c R _ h =>
     obtain ⟨R', hm, e⟩ := h
     refine ⟨c • R', Submodule.smul_mem _ c hm, ?_⟩
@@ -367,7 +367,7 @@ theorem exists_mem_zetaIdeal_of_contragredient {R' : RatFunc ℂ}
   | add R₁ R₂ _ _ h₁ h₂ =>
     obtain ⟨S₁, hm₁, e₁⟩ := h₁
     obtain ⟨S₂, hm₂, e₂⟩ := h₂
-    exact ⟨S₁ + S₂, add_mem hm₁ hm₂, by rw [map_add, e₁, e₂, mul_add]⟩
+    exact ⟨S₁ + S₂, add_mem hm₁ hm₂, by rw [map_add (f := _), e₁, e₂, mul_add]⟩
   | smul c R' _ h =>
     obtain ⟨S, hm, e⟩ := h
     refine ⟨c • S, Submodule.smul_mem _ c hm, ?_⟩

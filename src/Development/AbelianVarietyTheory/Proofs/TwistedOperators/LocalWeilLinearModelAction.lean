@@ -59,7 +59,7 @@ theorem shapeV_any : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fiel
     have et : ∀ (ψ₁ ψ₂ : (Fin a × Fin (a + a') → Fv F v) → ℂ), tens (evFin F v) (c • ψ₁ + ψ₂) r =
         c • tens (evFin F v) ψ₁ r + tens (evFin F v) ψ₂ r := fun ψ₁ ψ₂ => by
       funext x; simp only [tens, Pi.add_apply, Pi.smul_apply, smul_eq_mul]; ring
-    rw [← (hA _ hsum).2 r r0, et, map_add, map_smul, (hA φ hφ).2 r r1, (hA φ' hφ').2 r r2, et]
+    rw [← (hA _ hsum).2 r r0, et, map_add (f := _), map_smul, (hA φ hφ).2 r r1, (hA φ' hφ').2 r r2, et]
 
   have hact : ∀ γ : Matrix (Fin a) (Fin (a + a')) (AE F E),
       actAB (cA σ) (g, (1 : UA σ G.W.J)) γ = mat g * γ := by
@@ -166,7 +166,7 @@ theorem shapeV_any : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fiel
       (fun (Y : Matrix (Fin a) (Fin (a + a')) (Fv F v)) => ι (A (c • x + y)) (gt * Y)) = c • (fun (Y : Matrix (Fin a) (Fin (a + a')) (Fv F v)) => ι (A x) (gt * Y)) + (fun (Y : Matrix (Fin a) (Fin (a + a')) (Fv F v)) => ι (A y) (gt * Y)) := by
     intro x hx y hy c
     funext Y
-    simp only [hlin x hx y hy c, map_add, map_smul, Pi.add_apply, Pi.smul_apply]
+    simp only [hlin x hx y hy c, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply]
   have h2tr : ∀ C : Matrix (Fin a) (Fin (a + a')) (Fv F v), ∀ x ∈ SB (Fin a × Fin (a + a') → Fv F v),
       schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo G.M.co v (U C 0)) x ∈ SB (Fin a × Fin (a + a') → Fv F v) ∧
       ι (schr (GlobalTheory.LatVac.psiAt B.ψ v) (GlobalTheory.LatVac.locCo G.M.co v (U C 0)) x) = (fun Y => ι x (Y + C)) ∧

@@ -38,10 +38,10 @@ theorem pow_lin_add_comp_eq_zero {ι : Type} [Fintype ι] (d : ℕ) (Φ : MvPoly
       (fun _ => Set.infinite_range_of_injective Int.cast_injective) fun y hy => ?_
     choose n hn using fun i => hy i trivial
     obtain rfl : (fun i => (n i : ℝ)) = y := funext hn
-    simp only [map_add, eval_rename, hQ, Function.comp_def, map_zero]
+    simp only [map_add (f := _), eval_rename, hQ, Function.comp_def, map_zero]
     exact h n
   have := congrArg (eval x) h0
-  simpa only [map_add, eval_rename, hQ, Function.comp_def, map_zero] using this
+  simpa only [map_add (f := _), eval_rename, hQ, Function.comp_def, map_zero] using this
 
 theorem antisym_of_swapEq : ∀ (D : D7) (Y : DV.ShimX D.what₂.Tau) (Φ : ℝ → Fn Y) (hh : Fn Y)
     (G : ℕ → ℤ → ℤ → MvPolynomial (Fin 3) ℝ), LimFam Φ → Propor Y → SwapEq Y G hh (degFl D.what₂.Tau Y.N) →

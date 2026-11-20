@@ -11,7 +11,7 @@ theorem aeval_restrict_coe_of_stable {R M : Type} [CommRing R] [AddCommGroup M] 
     (f : Module.End R M) {N : Submodule R M} (h : ∀ x ∈ N, f x ∈ N) (q : R[X]) (x : N) :
     ((aeval (f.restrict h) q x : N) : M) = aeval f q x := by
   induction q using Polynomial.induction_on' with
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, Submodule.coe_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, Submodule.coe_add, ha, hb]
   | monomial n a =>
     have hpow : ∀ (k : ℕ) (y : N), ((((f.restrict h) ^ k) y : N) : M) = (f ^ k) y := by
       intro k

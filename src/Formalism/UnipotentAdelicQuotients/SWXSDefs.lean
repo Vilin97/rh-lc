@@ -109,7 +109,7 @@ def HermR (σ : E →ₐ[F] E) (n : ℕ) : AddSubgroup (Matrix (Fin n) (Fin n) (
   add_mem' := by
     intro S T hS hT a b
     simp only [Set.mem_setOf_eq] at *
-    simp [map_add, hS a b, hT a b]
+    simp [map_add (f := _), hS a b, hT a b]
   neg_mem' := by
     intro S hS a b
     simp only [Set.mem_setOf_eq] at *

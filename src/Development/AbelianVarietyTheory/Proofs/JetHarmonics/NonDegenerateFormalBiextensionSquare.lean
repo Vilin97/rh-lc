@@ -146,7 +146,7 @@ theorem kp_law (e : σ ↪ τ) {a b : Fin dd → MvPowerSeries τ C} (ha : Zc a)
 theorem kill_dfc (e : σ ↪ τ) {a b c : Fin dd → MvPowerSeries τ C} (ha : Zc a) (hb : Zc b) (hc : Zc c) :
     killCompl e (dfc Y a b c) = dfc Y (kp e a) (kp e b) (kp e c) := by
   unfold dfc
-  rw [map_sub, map_add, killCompl_substPointsPowerSeries_two e ha hb, killCompl_substPointsPowerSeries_two e ha hc, killCompl_substPointsPowerSeries_two e ha (zc_law Y hb hc), kp_law Y e hb hc]
+  rw [map_sub, map_add (f := _), killCompl_substPointsPowerSeries_two e ha hb, killCompl_substPointsPowerSeries_two e ha hc, killCompl_substPointsPowerSeries_two e ha (zc_law Y hb hc), kp_law Y e hb hc]
 
 theorem dfc_left {b c : Fin dd → MvPowerSeries τ C} (hb : Zc b) (hc : Zc c) : dfc Y 0 b c = 0 := by
   unfold dfc
@@ -190,9 +190,9 @@ theorem coeff_formalBiextensionChart_secondPhase (μ : Fin 2 × Fin dd →₀ �
       rintro rfl
       exact hν (0, i) (by simp) rfl
     unfold dfc
-    rw [map_sub, map_add, van_h Y (zc_pt _) (zc_pt _) hx m hs, van_h Y (zc_pt _) (zc_pt _) hx m hs,
+    rw [map_sub, map_add (f := _), van_h Y (zc_pt _) (zc_pt _) hx m hs, van_h Y (zc_pt _) (zc_pt _) hx m hs,
       van_h Y (zc_pt _) (zc_law Y (zc_pt _) (zc_pt _)) hx m hs, add_zero, sub_zero]
-  · rw [map_add, Finsupp.weight_apply, Finsupp.sum_mapDomain_index (by simp) (fun _ _ _ => add_smul _ _ _),
+  · rw [map_add (f := _), Finsupp.weight_apply, Finsupp.sum_mapDomain_index (by simp) (fun _ _ _ => add_smul _ _ _),
       Finsupp.weight_single]
     simp [Finsupp.sum, Fin.succ_ne_zero]
 

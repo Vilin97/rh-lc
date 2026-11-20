@@ -28,12 +28,12 @@ theorem frame_first_column_first_row :
   have hli : ∀ (c : ℂ), ∀ x ∈ LinearMap.ker L, c • v + x = 0 → c = 0 := by
     intro c x hx hc
     have := congrArg L hc
-    rw [map_add, map_smul, LinearMap.mem_ker.mp hx, hL v, h, map_zero] at this
+    rw [map_add (f := _), map_smul, LinearMap.mem_ker.mp hx, hL v, h, map_zero] at this
     simpa using this
   have hsp : ∀ z : Fin (m + 1) → ℂ, ∃ c : ℂ, z + c • v ∈ LinearMap.ker L := by
     intro z
     refine ⟨-(L z), ?_⟩
-    rw [LinearMap.mem_ker, map_add, map_smul, hL v, h]
+    rw [LinearMap.mem_ker, map_add (f := _), map_smul, hL v, h]
     simp
   let b := Module.Basis.mkFinCons v bN hli hsp
   have hb : ⇑b = Fin.cons v (Subtype.val ∘ bN) := Module.Basis.coe_mkFinCons v bN hli hsp

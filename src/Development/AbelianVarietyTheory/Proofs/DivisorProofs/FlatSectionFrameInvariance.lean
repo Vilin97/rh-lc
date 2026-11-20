@@ -50,7 +50,7 @@ theorem evalFr_update_line {K : Type} [Field K] {B : Type} [DecidableEq B] {m : 
     intro a c P
     induction P using MvPolynomial.induction_on with
     | C a => simp
-    | add p q hp hq => rw [map_add, map_add, Polynomial.eval_add, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), Polynomial.eval_add, hp, hq]
     | mul_X p v hp =>
       rw [map_mul, map_mul, Polynomial.eval_mul, hp]
       simp only [MvPolynomial.aeval_X, Polynomial.eval_add, Polynomial.eval_mul, Polynomial.eval_C,

@@ -132,7 +132,7 @@ theorem omO_act (hσ : Chart θ σ) (u v : RW T S) :
 theorem actR_add_infRat (hσ : Chart θ σ) (y : Matrix (Fin T.rank) (Fin S.rank) D.host.E) (v : RW T S) :
     actR S T (fun τ => a.map (tauE D τ)) (fun τ => b.map (tauE D τ)) (infRat S T y + v) =
       infRat S T (b * y * a) + actR S T (fun τ => a.map (tauE D τ)) (fun τ => b.map (tauE D τ)) v := by
-  rw [← piW_ratW hσ.inf, ← piW_ratW hσ.inf, ← act_ratW hg hh, ← hσ.pi_iota T S v, ← map_add,
+  rw [← piW_ratW hσ.inf, ← piW_ratW hσ.inf, ← act_ratW hg hh, ← hσ.pi_iota T S v, ← map_add (f := _),
     ← piW_act hg hh hσ.inf, ← piW_act hg hh hσ.inf, actO_add, map_add]
 
 end Act
@@ -153,7 +153,7 @@ theorem gam_periodic {R X M : Type} [CommRing R] [AddCommGroup X] [Module R X] [
     {s : R →+* R} {w : R} {γ : X → X → ℂ} {W : X → M →ₗ[ℂ] M} (H : IsHeis s w γ W) {A : Submodule R X}
     (hA : SelfDual γ A) (φ : X →ₗ[R] X) (hφ : ∀ x y, γ (φ x) (φ y) = γ x y) (r : R) {y c : X} (hy : φ y - y ∈ A)
     (hc : c ∈ A) (hc' : φ c ∈ A) : γ (r • (φ (y + c) - (y + c))) (y + c) = γ (r • (φ y - y)) y := by
-  have e1 : φ (y + c) - (y + c) = (φ y - y) + (φ c - c) := by rw [map_add]; abel
+  have e1 : φ (y + c) - (y + c) = (φ y - y) + (φ c - c) := by rw [map_add (f := _)]; abel
   have e2 : γ (r • c) y = γ (r • φ c) y := by
     rw [← hφ, map_smul, ← sub_add_cancel (φ y) y, H.add_right, H.iso hA (A.smul_mem r hc') hy, one_mul]
   have e3 : γ (r • (φ c - c)) y = 1 := by
@@ -196,8 +196,8 @@ theorem chiLat_mul_exp (hψ : IsStdChar D ψ (-1)) (hσ : Chart θ σ) (LS : Set
   by_cases hy : b * y * a - y ∈ latQ S T LS LT
   · rw [if_pos hy, if_pos (mem_latQ.1 hy)]
     have e : finRat S T (b * y * a - y) + finRat S T y = finRat S T (b * y * a) := by
-      rw [← map_add, sub_add_cancel]
-    have h1 := phase_identity (W := intA D w) (by rw [cA_intA, ← RingHom.map_add, hw, RingHom.map_one])
+      rw [← map_add (f := _), sub_add_cancel]
+    have h1 := phase_identity (W := intA D w) (by rw [cA_intA, ← RingHom.map_add (f := _), hw, RingHom.map_one])
       (finRat S T (b * y * a - y)) (finRat S T y)
       (by rw [e, ← act_finRat hg hh, ← actO_smul, symplOH, symplOH, GlobalTheory.T.symplecticForm_unitaryPairAction])
     have h2 : gamQ ψ S T (GlobalTheory.FinWeil.sgO D w • (b * y * a - y)) y =
@@ -237,7 +237,7 @@ theorem left_side (hψ : IsStdChar D ψ (-1)) (hσ : Chart θ σ) (halt : ∀ x 
       Complex.exp (-(Real.pi * Complex.I) * (omO S T (z + u) (x + v) : ℝ)) := by
     rw [← Complex.exp_add, ← Complex.exp_add, ← mul_add, ← mul_add, ← Complex.ofReal_add, ← Complex.ofReal_add]
     congr 3
-    simp only [map_add, map_sub, map_neg, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.neg_apply]
+    simp only [map_add (f := _), map_sub, map_neg, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.neg_apply]
     linarith [halt x u, halt v z, halt v x, halt v u]
   rw [e1, ← e2]
   ring
@@ -267,7 +267,7 @@ theorem right_side (hψ : IsStdChar D ψ (-1)) (hσ : Chart θ σ) (halt : ∀ x
       Complex.exp (2 * Real.pi * Complex.I * ((-omO S T (infRat S T y)) v : ℝ)) := by
     rw [← Complex.exp_add]
     congr 1
-    simp only [map_add, map_neg, LinearMap.neg_apply, e2, halt v (infRat S T y)]
+    simp only [map_add (f := _), map_neg, LinearMap.neg_apply, e2, halt v (infRat S T y)]
     push_cast
     ring
   rw [coefQ, symplOH_add_right, AddChar.map_add_eq_mul, beta_iota_right hψ hσ, beta_iota_left hψ hσ,

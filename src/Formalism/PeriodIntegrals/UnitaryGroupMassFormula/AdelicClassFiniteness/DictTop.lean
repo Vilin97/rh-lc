@@ -83,7 +83,7 @@ private theorem hhat_zero_left' (I : AutInst) (z : Fin I.n → I.E ⊗[I.F] Af I
 
 private theorem hhat_add_left' (I : AutInst) (a b z : Fin I.n → I.E ⊗[I.F] Af I.F) :
     hhat I (a + b) z = hhat I a z + hhat I b z := by
-  simp only [hhat, Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hhat, Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 private theorem hhat_smul_left' (I : AutInst) (r : I.E ⊗[I.F] Af I.F)
     (a z : Fin I.n → I.E ⊗[I.F] Af I.F) :

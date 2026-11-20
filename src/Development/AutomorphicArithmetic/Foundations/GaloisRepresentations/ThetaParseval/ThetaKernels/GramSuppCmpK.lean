@@ -87,14 +87,14 @@ theorem psi_add_right_k (ε : ℤˣ) (X Z Z' : Mx F E d.m d.n) :
   have e : d.gram X (Z + Z') = d.gram X Z + d.gram X Z' := by
     unfold _root_.PositivityTheory.SiegelWeilFormula.SD_k.gram
     rw [Matrix.map_add _ (map_add _), Matrix.mul_add]
-  rw [e, _root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, _root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, _root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, Matrix.trace_add, map_add, mul_add, AddChar.map_add_eq_mul]
+  rw [e, _root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, _root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, _root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, Matrix.trace_add, map_add (f := _), mul_add, AddChar.map_add_eq_mul]
 theorem psi_add_left_k (ε : ℤˣ) (X X' Z : Mx F E d.m d.n) :
     d.B.ψ (((ε : ℤ) : AF F) * d.tt (d.gram (X + X') Z)) =
       d.B.ψ (((ε : ℤ) : AF F) * d.tt (d.gram X Z)) * d.B.ψ (((ε : ℤ) : AF F) * d.tt (d.gram X' Z)) := by
   have e : d.gram (X + X') Z = d.gram X Z + d.gram X' Z := by
     unfold _root_.PositivityTheory.SiegelWeilFormula.SD_k.gram
     rw [Matrix.transpose_add, Matrix.add_mul, Matrix.add_mul]
-  rw [e, _root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, _root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, _root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, Matrix.trace_add, map_add, mul_add, AddChar.map_add_eq_mul]
+  rw [e, _root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, _root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, _root_.PositivityTheory.SiegelWeilFormula.SD_k.tt, Matrix.trace_add, map_add (f := _), mul_add, AddChar.map_add_eq_mul]
 theorem cw_gram_k (w : InfinitePlace F) (X Z : Mx F E d.m d.n) :
     d.cw w (d.gram X Z) = (d.cw w X)ᵀ * d.A.J.map (d.B.emb w).1 * (d.cw w Z).map star := by
   unfold _root_.PositivityTheory.SiegelWeilFormula.SD_k.gram _root_.PositivityTheory.SiegelWeilFormula.SD_k.cw

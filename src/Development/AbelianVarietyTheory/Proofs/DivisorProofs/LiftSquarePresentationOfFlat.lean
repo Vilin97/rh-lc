@@ -35,7 +35,7 @@ theorem lift_square_presentation_of_flat : ∀ (O B A k H σ : Type) [CommRing O
     intro F
     induction F using MvPolynomial.induction_on with
     | C a => simp [hΨ, hΦ, hT, hρB]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p i hp =>
       simp only [map_mul, hp]
       simp [hΨ, hΦ, hT]

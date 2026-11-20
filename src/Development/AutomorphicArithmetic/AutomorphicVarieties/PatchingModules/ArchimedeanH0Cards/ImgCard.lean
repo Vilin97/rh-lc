@@ -67,12 +67,12 @@ private theorem eqn_map (p : R →+* R') (f : F.G₀ ⊕ F.Vl → Matrix (Fin n)
   | ine u g hg i j => rfl
   | coc g h i j =>
     simp only [eqn]
-    rw [← Matrix.map_mul, ← Matrix.map_mul, ← Matrix.map_add, ← Matrix.map_sub, Matrix.map_apply]
+    rw [← Matrix.map_mul, ← Matrix.map_mul, ← Matrix.map_add (f := _), ← Matrix.map_sub, Matrix.map_apply]
     all_goals intro a₁ a₂
     all_goals first | exact map_sub p a₁ a₂ | exact map_add p a₁ a₂
   | pol g i j =>
     simp only [eqn]
-    rw [← Matrix.transpose_map, ← Matrix.map_add, Matrix.map_apply]
+    rw [← Matrix.transpose_map, ← Matrix.map_add (f := _), Matrix.map_apply]
     intro a₁ a₂
     exact map_add p a₁ a₂
   | loc v g i j _ =>

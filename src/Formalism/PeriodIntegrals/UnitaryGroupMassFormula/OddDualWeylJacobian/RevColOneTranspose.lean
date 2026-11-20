@@ -14,7 +14,7 @@ variable {R : Type} [CommRing R] {k M : ℕ}
 theorem rel_add {f g f' g' : MvPolynomial (Fin k × Fin k) R} (h1 : Rel R k M f f') (h2 : Rel R k M g g') :
     Rel R k M (f + g) (f' + g') := by
   unfold Rel at *
-  rw [map_add, h1, h2, mul_add]
+  rw [map_add (f := _), h1, h2, mul_add]
 
 theorem rel_smul {f f' : MvPolynomial (Fin k × Fin k) R} (c : R) (h : Rel R k M f f') :
     Rel R k M (c • f) (c • f') := by
@@ -33,7 +33,7 @@ theorem rel_natMul {f f' : MvPolynomial (Fin k × Fin k) R} (n : ℕ) (h : Rel R
 
 theorem rowDiv_add (a b : Fin k) (j : ℕ) (f g : MvPolynomial (Fin k × Fin k) R) :
     rowDiv R a b j (f + g) = rowDiv R a b j f + rowDiv R a b j g := by
-  simp only [rowDiv, map_add, Polynomial.coeff_add]
+  simp only [rowDiv, map_add (f := _), Polynomial.coeff_add]
 
 theorem rowDiv_smul (a b : Fin k) (j : ℕ) (c : R) (f : MvPolynomial (Fin k × Fin k) R) :
     rowDiv R a b j (c • f) = c • rowDiv R a b j f := by

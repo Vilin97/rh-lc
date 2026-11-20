@@ -272,7 +272,7 @@ theorem chi_detU (he : e * e = e) (hπ : Chart e v π) {V : HSp D} (β : GL (Fin
     rw [rho_val, Matrix.det_mul_comm, ← Matrix.mul_assoc, ← Units.val_mul, mul_inv_cancel, Units.val_one,
       Matrix.one_mul] at hu
     change π (e * (mt V g).det + (1 - e)) = _
-    rw [π.map_add, π.map_mul, π.map_sub, π.map_one, hπ.map_e he, one_mul, sub_self, add_zero, RingHom.map_det,
+    rw [π.map_add (f := _), π.map_mul, π.map_sub, π.map_one, hπ.map_e he, one_mul, sub_self, add_zero, RingHom.map_det,
       Units.val_pow_eq_pow_val, π.map_pow, hx2, ← RingHom.map_pow, ← RingHom.map_mul, ← hu]
     rfl
   have h2 : ∀ j : ℕ, (1 - e) * ((x ^ j : (AE D)ˣ) : AE D) = 1 - e := fun j => by
@@ -415,7 +415,7 @@ theorem hecke_identity_split : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (S 
     rw [hx]
     exact one_sub_mul_idem he.1 _
   have hx2 : π x = algebraMap (Ov D v) (Fv D.host.F v) p := by
-    rw [hx, π.map_add, π.map_mul, π.map_sub, π.map_one, hπ.map_e he.1, one_mul, sub_self, add_zero, hpϖ]
+    rw [hx, π.map_add (f := _), π.map_mul, π.map_sub, π.map_one, hπ.map_e he.1, one_mul, sub_self, add_zero, hpϖ]
   have cS := fun {V : HSp D} (β : GL (Fin V.rank) (Fv D.host.F v)) {g : GA D V} {j : ℕ} {u : (Ov D v)ˣ} =>
     chi_detU (g := g) (j := j) (u := u) he.1 hπ β hx1 hx2 fun y h1 h2 h3 => (hχ y h1 h2 h3).1
   have cT := fun {V : HSp D} (β : GL (Fin V.rank) (Fv D.host.F v)) {g : GA D V} {j : ℕ} {u : (Ov D v)ˣ} =>

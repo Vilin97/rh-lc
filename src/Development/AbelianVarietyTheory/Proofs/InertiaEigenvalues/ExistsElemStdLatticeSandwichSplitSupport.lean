@@ -76,7 +76,7 @@ theorem lat_std_of_suppAt : ∀ (D : D7) (V : HSp D), V.gram = 1 → Bridge.hLat
   have hA1 : ∀ Q, Q ∉ Ps → GlobalTheory.IdemSupport.cP Q ∉ Ps → (ev Q).mapMatrix (mt V h) = 1 := fun Q hQ hQ' => by
     have a := hcj e (GlobalTheory.IdemSupport.cP Q)
     rw [e2 _ hQ', map_zero, GlobalTheory.ClassScalarValue.cP_cP, map_eq_zero] at a
-    have hu : ev Q (e + cA D e) = 0 := by rw [map_add, e2 Q hQ, a, add_zero]
+    have hu : ev Q (e + cA D e) = 0 := by rw [map_add (f := _), e2 Q hQ, a, add_zero]
     have : (ev Q).mapMatrix (mt V h - 1) = 0 := by
       refine Matrix.ext fun i j => ?_
       change ev Q ((mt V h - 1) i j) = 0

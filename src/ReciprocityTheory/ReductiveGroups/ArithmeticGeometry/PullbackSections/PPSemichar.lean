@@ -228,7 +228,7 @@ def linB (I : Finset (Fin 2)) (b : (W.F.Di (W.ik k)).La) : (W.F.Di (W.ik k)).La 
 theorem pm_linB (I : Finset (Fin 2)) (b : (W.F.Di (W.ik k)).La) : W.Pm (linB W I b) = linI W I (W.Pm b) := by
   unfold linB linI
   by_cases h0 : (0 : Fin 2) ∈ I <;> by_cases h1 : (1 : Fin 2) ∈ I <;>
-    simp only [h0, h1, ↓reduceIte, map_add, map_zero, pm_smul]
+    simp only [h0, h1, ↓reduceIte, map_add (f := _), map_zero, pm_smul]
 
 theorem linI_add (I : Finset (Fin 2)) (z z' : Fin W.g → ℂ) : linI W I (z + z') = linI W I z + linI W I z' := by
   unfold linI

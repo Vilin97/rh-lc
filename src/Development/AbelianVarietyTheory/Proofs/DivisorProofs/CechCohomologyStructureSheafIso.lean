@@ -21,7 +21,7 @@ theorem lid_baseChange_self {K M N : Type} [Field K] [AddCommGroup M] [Module K 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a m => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem nonempty_equiv_homology_of_baseChange_self {K : Type} [Field K]
     (S : ShortComplex (ModuleCat.{0} K)) {H : Type} [AddCommGroup H] [Module K H]

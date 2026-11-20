@@ -159,7 +159,7 @@ theorem tensor_kunneth (G : Gr k V) (G' : Gr k W) (n : ℤ) (t : V ⊗[k] W) (ht
       have := G.σd (e a)
       rw [de, map_zero] at this
       exact neg_eq_zero.1 this.symm
-    simp only [H, Dt, LinearMap.add_apply, LinearMap.comp_apply, TensorProduct.map_tmul, LinearMap.id_apply, map_add,
+    simp only [H, Dt, LinearMap.add_apply, LinearMap.comp_apply, TensorProduct.map_tmul, LinearMap.id_apply, map_add (f := _),
       e3, ed, eσ, hσ, G.σσ, map_zero, TensorProduct.zero_tmul, TensorProduct.tmul_zero, TensorProduct.neg_tmul]
     rw [e1, TensorProduct.add_tmul, TensorProduct.add_tmul, e2, TensorProduct.tmul_add, TensorProduct.tmul_add]
     abel
@@ -188,7 +188,7 @@ theorem tensor_kunneth (G : Gr k V) (G' : Gr k W) (n : ℤ) (t : V ⊗[k] W) (ht
             omega
     · simp
     · intro x y _ _ hx hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hx hy
     · intro c x _ hx
       rw [map_smul]
@@ -208,7 +208,7 @@ theorem tensor_kunneth (G : Gr k V) (G' : Gr k W) (n : ℤ) (t : V ⊗[k] W) (ht
     · rw [← eπ', hq]
   · simp
   · intro x y _ _ hx hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hx hy
   · intro c x _ hx
     rw [map_smul]
@@ -353,7 +353,7 @@ theorem phi_Dt [Fintype ι] [Fintype κ] (μ : E →ₗ[k] E' →ₗ[k] E'') (A 
   have h : phi μ A B ∘ₗ Dt (grC A hA) (grC B hB) = biD k ι κ E'' ∘ₗ phi μ A B := by
     refine TensorProduct.ext' fun a b => ?_
     funext x
-    simp only [LinearMap.comp_apply, Dt, LinearMap.add_apply, TensorProduct.map_tmul, LinearMap.id_apply, map_add,
+    simp only [LinearMap.comp_apply, Dt, LinearMap.add_apply, TensorProduct.map_tmul, LinearMap.id_apply, map_add (f := _),
       phi_tmul, Pi.add_apply]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [biD, boxC, grC, LinearMap.pi_apply, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.smul_apply,
@@ -490,7 +490,7 @@ theorem phi_mem [Fintype ι] [Fintype κ] (μ : E →ₗ[k] E' →ₗ[k] E'') (A
         simp
   · simp
   · intro x y _ _ hx hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hx hy
   · intro c x _ hx
     rw [map_smul]
@@ -562,7 +562,7 @@ theorem phi_boxes [Fintype ι] [Fintype κ] (μ : E →ₗ[k] E' →ₗ[k] E'') 
       exact Submodule.mem_inf.2 ⟨mem_cechC hB hq, congrArg Subtype.val hb⟩
   · simp
   · intro x y _ _ hx hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hx hy
   · intro c x _ hx
     rw [map_smul]

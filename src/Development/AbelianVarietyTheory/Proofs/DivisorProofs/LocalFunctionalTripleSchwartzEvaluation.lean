@@ -76,7 +76,7 @@ theorem soLoc_vanish : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) [Fi
   have hι₂' : G.M'.IsLinBar B'.ψ B'.τ₁ 1 1 ι₂ := hι₂
   obtain ⟨hT₂, hM₂, -, -⟩ := hA ι₂ hι₂'
   obtain ⟨c, hc⟩ := GlobalTheory.T.eq_smul_of_commute_heisenberg_linearModel_schwartzBruhat (SB (Fin a' × Fin (a + a') → Fv F v)) (GlobalTheory.LatVac.psiAt B'.ψ B'.v₁) hψc hψ1 ι₂ ι
-    hι₂.bij (fun x _ y _ c => by rw [map_add, map_smul])
+    hι₂.bij (fun x _ y _ c => by rw [map_add (f := _), map_smul])
     (fun C => GlobalTheory.WeilM.schr (GlobalTheory.LatVac.psiAt B'.ψ B'.v₁) (wT C))
     (fun l => GlobalTheory.WeilM.schr (GlobalTheory.LatVac.psiAt B'.ψ B'.v₁) (wM l))
     (fun C x hx => ⟨GlobalTheory.T.schrodinger_preserves_schwartz_bruhat B.ψ hT.base.std.1 v _ x hx, hT₂ C x hx, hTι C x hx⟩)

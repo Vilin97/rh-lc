@@ -260,7 +260,7 @@ theorem coeff_zero_eq_zero : ∀ (F E : Type) [Field F] [NumberField F] [Field E
     let L : (Fin n → E) →ₗ[ℚ] ℚ :=
       { toFun := fun w => q ξ w
         map_add' := fun w w' => by
-          simp only [q, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+          simp only [q, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
         map_smul' := fun c w => by
           simp only [q, Pi.smul_apply, mul_smul_comm, ← Finset.smul_sum, map_rat_smul, RingHom.id_apply] }
     have hL : L = 0 := b.ext fun k => by

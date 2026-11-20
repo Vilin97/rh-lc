@@ -23,7 +23,7 @@ theorem gen_hom {A C : Type} [CommRing A] [CommRing C] {g : ℕ} (ψ : A →+* C
   · simp [h1]
   · intro x y
     have e := hsq (fun a => ψ (D a x)) (fun a => ψ (D a y))
-    simp only [hL, map_add, map_mul, add_mul, Finset.sum_add_distrib]
+    simp only [hL, map_add (f := _), map_mul, add_mul, Finset.sum_add_distrib]
     have ex : ∑ a, ψ x * ψ (D a y) * n a = ψ x * ∑ a, ψ (D a y) * n a := by
       rw [Finset.mul_sum]; exact Finset.sum_congr rfl (fun a _ => by ring)
     have ey : ∑ a, ψ y * ψ (D a x) * n a = ψ y * ∑ a, ψ (D a x) * n a := by
@@ -32,7 +32,7 @@ theorem gen_hom {A C : Type} [CommRing A] [CommRing C] {g : ℕ} (ψ : A →+* C
     linear_combination (-1 : C) * e
   · simp
   · intro x y
-    simp only [map_add, add_mul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), add_mul, Finset.sum_add_distrib]
     ring
 
 theorem lTensor_leibniz {R S : Type} [CommRing R] [Algebra ℂ R] [CommRing S] [Algebra ℂ S]

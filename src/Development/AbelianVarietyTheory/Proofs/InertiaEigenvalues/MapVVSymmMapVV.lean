@@ -47,7 +47,7 @@ theorem polLat_conj {K : Type} [Field K] [NumberField K] {σ : K →+* ℂ} {emb
     change MvPolynomial.map (τ : ℂ →+* ℂ) (MvPolynomial.map σ F.1) = MvPolynomial.map σ F.1
     rw [MvPolynomial.map_map, show (τ : ℂ →+* ℂ).comp σ = σ from RingHom.ext hτ]
   | zero => rw [map_zero]; exact zero_mem _
-  | add _ _ _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+  | add _ _ _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
   | smul a y _ h1 =>
     have e : GlobalTheory.CoefModel.mapVV (τ : ℂ →+* ℂ) lam (a • y) = (⟨τ a, hO a a.2⟩ : O') • GlobalTheory.CoefModel.mapVV (τ : ℂ →+* ℂ) lam y := by
       rw [Subring.smul_def, Subring.smul_def, map_smulₛₗ]

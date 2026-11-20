@@ -83,7 +83,7 @@ theorem standardCoord_firstIncl (σ : K →+* ℂ) (x : Fibre σ (𝓞 K)) (i : 
     · subst hi; simp
     · simp [hi]
   | add x y hx hy =>
-    rw [map_add, map_add, PiLp.add_apply, hx, hy, map_add]
+    rw [map_add (f := _), map_add (f := _), PiLp.add_apply, hx, hy, map_add (f := _)]
     split_ifs <;> simp
 
 omit [NumberField K] in
@@ -92,7 +92,7 @@ theorem integersCoord_secondProj (σ : K →+* ℂ) (x : Fibre σ (Fin 2 → �
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul z a => rw [LinearMap.lTensor_tmul, standardCoord_tmul, integersCoord_tmul]; rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, PiLp.add_apply]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), PiLp.add_apply]
 
 omit [NumberField K] in
 theorem firstIncl_injective : Function.Injective (firstIncl K) :=

@@ -103,7 +103,7 @@ def contR (Γ : Type) [TopologicalSpace Γ] : Subring (Γ → A.A) where
   carrier := {f | ∀ k : ℕ, IsLocallyConstant fun γ => Ideal.Quotient.mk (Ideal.span {A.pi ^ k}) (f γ)}
   mul_mem' hf hg k := by simp only [Pi.mul_apply, map_mul]; exact (hf k).mul (hg k)
   one_mem' k := IsLocallyConstant.const (Ideal.Quotient.mk (Ideal.span {A.pi ^ k}) 1)
-  add_mem' hf hg k := by simp only [Pi.add_apply, map_add]; exact (hf k).add (hg k)
+  add_mem' hf hg k := by simp only [Pi.add_apply, map_add (f := _)]; exact (hf k).add (hg k)
   zero_mem' k := IsLocallyConstant.const (Ideal.Quotient.mk (Ideal.span {A.pi ^ k}) 0)
   neg_mem' hf k := by simp only [Pi.neg_apply, map_neg]; exact (hf k).neg
 

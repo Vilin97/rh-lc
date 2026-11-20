@@ -36,7 +36,7 @@ theorem exists_nsmul_of_dvd {M : Type} [AddCommGroup M] (B : M →+ M →+ ℤ) 
   have hadd : ∀ y z, q (y + z) = q y + q z := by
     intro y z
     apply mul_left_cancel₀ hm'
-    rw [mul_add, ← hq, ← hq, ← hq, map_add]
+    rw [mul_add, ← hq, ← hq, ← hq, map_add (f := _)]
   obtain ⟨z, hz⟩ := hB.2 (AddMonoidHom.mk' q hadd)
   refine ⟨z, hB.1 ?_⟩
   ext y
@@ -267,7 +267,7 @@ theorem exists_lagrangian {R : Type} [CommRing R] {M : Type} [AddCommGroup M] [M
       rw [hsesq, smul_comm (σ a) a x2, hw, smul_comm a p w, hBn2]
     have e2 : B l1 (a • x2) = - B (a • x2) l1 := by rw [halt]
     refine ⟨B l1 l2 - k1 + k2 + k3, ?_⟩
-    simp only [map_add, AddMonoidHom.add_apply, hBn, hBn2, e4, e2, hk1, hk2, hk3]
+    simp only [map_add (f := _), AddMonoidHom.add_apply, hBn, hBn2, e4, e2, hk1, hk2, hk3]
     push_cast
     ring
   have hdd : ∀ l : M, (∀ y ∈ X, (p : ℤ) ∣ B l y) → l ∈ L := by

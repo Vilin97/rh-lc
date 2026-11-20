@@ -121,7 +121,7 @@ theorem aeval_mem {σ σ' ι : Type} [Fintype ι] (r : ℚ → σ → ι → K) 
   induction P using MvPolynomial.induction_on generalizing ℓ with
   | C a => simpa using const_mem _
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact add_mem (hp ℓ) (hq ℓ)
   | mul_X p x hp =>
     have := Subalgebra.sum_mem (ratFn K) (t := Finset.univ) fun j _ =>
@@ -209,7 +209,7 @@ theorem exists_curve (K : Type) [Field K] [CharZero K] (γ : Matrix (Fin n) (Fin
         rw [← RingHom.map_det]; exact (_root_.map_ne_zero σ).2 (hu s).ne_zero) i j
     have := sub_mem (add_mem hm hm) (const_mem (σ ((1 : Matrix (Fin n) (Fin n) E) i j)))
     convert this using 1
-    simp only [two_mul, Matrix.sub_apply, Matrix.add_apply, map_sub, map_add]
+    simp only [two_mul, Matrix.sub_apply, Matrix.add_apply, map_sub, map_add (f := _)]
     rfl
 
 theorem exists_scalar (γ : Matrix (Fin n) (Fin n) E) : ∃ z : E, star z * z = 1 ∧ IsUnit (1 + z • γ) := by

@@ -24,7 +24,7 @@ private theorem inP_add {𝔭 : Ideal (𝓞 F)} [𝔭.IsPrime] {k : ℕ} {a b : 
   obtain ⟨t, ht, z, hz, hzb⟩ := hb
   refine ⟨s * t, fun hst => (‹𝔭.IsPrime›.mem_or_mem hst).elim hs ht, ι t * y + ι s * z,
     Ideal.add_mem _ (Ideal.mul_mem_left _ _ hy) (Ideal.mul_mem_left _ _ hz), ?_⟩
-  simp only [map_add, map_mul]
+  simp only [map_add (f := _), map_mul]
   linear_combination (jK (ι t)) * hya + (jK (ι s)) * hzb
 
 theorem InP.sum {𝔭 : Ideal (𝓞 F)} [𝔭.IsPrime] {k : ℕ} {α : Type*} (s : Finset α) (f : α → K)
@@ -116,7 +116,7 @@ theorem form_inP (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} (b : Basis
     · rw [hr]
       have h3 := scale (base u hu v hv) hp
       rwa [zero_add] at h3
-    · rw [map_add]
+    · rw [map_add (f := _)]
       exact inP_add h₁ h₂
   have hstar : ∀ {j m : ℕ} {c : K}, InP 𝔭 m c → ∀ p ∈ extP K 𝔭 ^ j,
       InP 𝔭 (j + m) (star (jK p) * c) := by
@@ -136,7 +136,7 @@ theorem form_inP (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} (b : Basis
       exact Ideal.mem_map_of_mem _ ht
     | zero => simpa using InP.zero (𝔭 := 𝔭) (K := K) (j + m)
     | add x y _ _ hx hy =>
-      rw [map_add, star_add, add_mul]
+      rw [map_add (f := _), star_add, add_mul]
       exact inP_add hx hy
     | smul r x _ hx =>
       rw [smul_eq_mul, map_mul, star_mul', mul_assoc, ← hst]
@@ -145,7 +145,7 @@ theorem form_inP (hF : IsFixF K F) {h : V →ₗ⋆[K] V →ₗ[K] K} (b : Basis
     (fun p hp u hu => ?_) (fun w₁ w₂ h₁ h₂ => ?_)
   · rw [hl]
     exact hstar (step1 u hu hy) p hp
-  · rw [map_add, LinearMap.add_apply]
+  · rw [map_add (f := _), LinearMap.add_apply]
     exact inP_add h₁ h₂
 
 theorem mem_smul_zero {𝔭 : Ideal (𝓞 F)} {A : Submodule (𝓞 K) V} {x : V} (hx : x ∈ A) :
@@ -210,7 +210,7 @@ theorem inP_jK_iff {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) (k : ℕ) (a
     rw [e0, one_pow] at hq
     have e2 : (1 : 𝓞 F) = i ^ k + y * t * q := by linear_combination hq
     have h1 := congrArg ι e2
-    simp only [map_one, map_add, map_mul] at h1
+    simp only [map_one, map_add (f := _), map_mul] at h1
     have e3 : a = ι (i ^ k) * a + ι y * ι q * (ι t * a) := by linear_combination a * h1
     rw [e3]
     refine Ideal.add_mem _ (Ideal.mul_mem_right _ _ ?_) (Ideal.mul_mem_left _ _ (by rw [← e1]; exact hz))
@@ -236,7 +236,7 @@ theorem aut_mem_smul {h : V →ₗ⋆[K] V →ₗ[K] K} {A : Submodule (𝓞 K) 
     (fun u w hu hw => ?_)
   · simp only [hs]
     exact Submodule.smul_mem_smul hr (aut_mem hg ha)
-  · simp only [map_add]
+  · simp only [map_add (f := _)]
     exact Submodule.add_mem _ hu hw
 
 theorem aut_cmb {𝔭 : Ideal (𝓞 F)} (b : Basis κ K V) {g : V ≃ₗ[K] V} {Y : Matrix κ κ (𝓞 K)} {j : ℕ}

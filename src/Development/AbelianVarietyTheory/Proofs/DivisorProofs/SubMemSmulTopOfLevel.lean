@@ -37,7 +37,7 @@ theorem eq_one_of_prime_order [IsDomain R] [IsNoetherianRing R] [Module.Finite R
   obtain ⟨Q, hQ⟩ := exists_poly hg
   set N : Module.End R M := β - 1 with hN
   have hQ' := congrArg (Polynomial.aeval N) hQ
-  simp only [map_pow, map_add, map_mul, Polynomial.aeval_X, map_one, map_natCast] at hQ'
+  simp only [map_pow, map_add (f := _), map_mul, Polynomial.aeval_X, map_one, map_natCast] at hQ'
   set q : Module.End R M := Polynomial.aeval N Q with hq
   have hcomm : N * q = q * N := by
     have := congrArg (Polynomial.aeval N) (mul_comm Polynomial.X Q)
@@ -46,7 +46,7 @@ theorem eq_one_of_prime_order [IsDomain R] [IsNoetherianRing R] [Module.Finite R
   have hrel : ∀ z, (g : R) • (N z + N (N (q z))) = - (N ^ g) z := by
     intro z
     have := congrArg (fun T : Module.End R M => T z) hQ'
-    simp only [LinearMap.add_apply, Module.End.mul_apply, Module.End.one_apply, Module.End.natCast_apply, map_add] at this
+    simp only [LinearMap.add_apply, Module.End.mul_apply, Module.End.one_apply, Module.End.natCast_apply, map_add (f := _)] at this
     rw [Nat.cast_smul_eq_nsmul, eq_neg_iff_add_eq_zero]
     have e : z + ((g • (N z + N (N (q z)))) + (N ^ g) z) = z + 0 := by
       rw [add_zero, smul_add]; conv_rhs => rw [this]

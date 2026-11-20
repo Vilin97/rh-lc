@@ -30,7 +30,7 @@ theorem mapsCls_unique {ψ : k →ₐ[F] k'} {q : Cls P k} {a b : Cls P k'} (ha 
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [m, sigR]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   refine QuotientGroup.eq.2 (Subgroup.mem_subgroupOf.2 ⟨Units.map m.toMonoidHom c, ?_⟩)
   have hc' : x.1.1 * (c.1 * sigR k (star' P) c.1) = y.1.1 := by
     have : c.1 * sigR k (star' P) c.1 = (x.1⁻¹ * y.1).1 := congrArg Units.val hc

@@ -120,7 +120,7 @@ def mL : EL ε × EL ε →ₗ[ℝ] Matrix ι ι ℂ where
   toFun p := ((phiC ε e h1 h2 p.1 : Formalism.BasicNotions.lieU P Q) : Matrix ι ι ℂ) +
     Complex.I • ((phiC ε e h1 h2 p.2 : Formalism.BasicNotions.lieU P Q) : Matrix ι ι ℂ)
   map_add' x y := by
-    simp only [Prod.fst_add, Prod.snd_add, map_add, Submodule.coe_add, smul_add]; abel
+    simp only [Prod.fst_add, Prod.snd_add, map_add (f := _), Submodule.coe_add, smul_add]; abel
   map_smul' c x := by
     simp only [Prod.smul_fst, Prod.smul_snd, map_smul, Submodule.coe_smul, RingHom.id_apply, smul_add]
     rw [smul_comm c Complex.I]

@@ -44,7 +44,7 @@ lemma projFun_add_right (m : Γ(F, i ⁻¹ᵁ V))
     (s s' : Γ(SchemeCoh.twistingSheaf (ProjSpace.grading A n) k, V)) :
     projFun i F k V m (s + s') = projFun i F k V m s + projFun i F k V m s' := by
   unfold projFun
-  rw [map_add, show secX (twistingSheaf i k) _ (pullbackUnitApp i _ V s + pullbackUnitApp i _ V s') =
+  rw [map_add (f := _), show secX (twistingSheaf i k) _ (pullbackUnitApp i _ V s + pullbackUnitApp i _ V s') =
     secX (twistingSheaf i k) _ (pullbackUnitApp i _ V s) +
       secX (twistingSheaf i k) _ (pullbackUnitApp i _ V s') from rfl, TensorProduct.tmul_add]
   exact map_add _ _ _

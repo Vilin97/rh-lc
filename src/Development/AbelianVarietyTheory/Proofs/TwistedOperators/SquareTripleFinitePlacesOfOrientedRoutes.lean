@@ -35,7 +35,7 @@ theorem not_nonSplitAt_of_emb {D : D7} {v : HeightOneSpectrum (𝓞 D.host.F)} {
     by_cases e : u = v
     · subst e; rw [GlobalTheory.AdelicU.evalV_singleFin_self, h1]
     · rw [GlobalTheory.AdelicU.evalV_singleFin_ne e, h0 u e]
-  rw [he, GlobalTheory.EmbChart.cA_idem, GlobalTheory.EmbChart.idem, ← LinearMap.map_add, add_sub_cancel]; rfl
+  rw [he, GlobalTheory.EmbChart.cA_idem, GlobalTheory.EmbChart.idem, ← LinearMap.map_add (f := _), add_sub_cancel]; rfl
 
 theorem not_unramAt_of_forall {D : D7} {χ : (AE D)ˣ →* Circle} {v : HeightOneSpectrum (𝓞 D.host.F)}
     {ε : AF D.host.F} (hε : IsPlaceIdem D v ε)

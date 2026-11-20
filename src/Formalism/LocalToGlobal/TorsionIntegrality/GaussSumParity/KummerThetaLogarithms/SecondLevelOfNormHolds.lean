@@ -470,7 +470,7 @@ theorem fixed_linear : FixedLinear := by
         C.Pts.isPt_fmul hP (C.Clo.endInt_natCast hP hFG m) permutedRowProductSplitSum
       have h := hadd _ _ pm permutedRowProductSplitSum
       rw [hid] at h
-      rw [Nat.cast_succ, C.Pts.fmul_add hP _ _ hX1, C.Pts.fmul_one hP hX1, map_add, map_one, add_mul,
+      rw [Nat.cast_succ, C.Pts.fmul_add hP _ _ hX1, C.Pts.fmul_one hP hX1, map_add (f := _), map_one, add_mul,
         one_mul]
       exact InverseCommuting.sim_trans h (InverseCommuting.sim_add ih (InverseCommuting.sim_refl _))
 

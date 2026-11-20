@@ -84,7 +84,7 @@ theorem nrat_iff (u : D.what₂.Word) {x : X.B.I.GA} {n : (VS D).V ≃ₗ[D.host
         exact hback _ _ h4
       | zero => simp
       | add a b _ _ ha hb =>
-        rw [map_add, add_sub_add_comm]
+        rw [map_add (f := _), add_sub_add_comm]
         exact add_mem ha hb
       | smul c a _ ha =>
         rw [map_smul, ← smul_sub]

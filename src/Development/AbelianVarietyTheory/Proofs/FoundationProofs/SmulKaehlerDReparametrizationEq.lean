@@ -145,7 +145,7 @@ theorem smul_D_psi : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Algebr
       map_zero' := by simp [thL_zero]
       map_add' := by
         intro a c
-        simp only [thL_add, map_add, add_smul, smul_add]
+        simp only [thL_add, map_add (f := _), add_smul, smul_add]
         abel }
   have hpart : ∀ i ∈ Finset.range (p ^ L),
       E (HahnSeries.single (i : ℤ) (1 : ℤ_[p]) * sh (p ^ L) i (fun _ => 1) b) = 0 := by

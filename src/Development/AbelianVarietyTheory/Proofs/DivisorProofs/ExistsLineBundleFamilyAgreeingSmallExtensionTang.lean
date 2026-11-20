@@ -116,13 +116,13 @@ theorem GlobalTheory.DualOpen.exists_same_of_smallExt : ∀ (S : Scheme.{0}) [Is
   have hD₂f : Fam A D₂ := (GlobalTheory.T.additiveLineBundleFamily_calculus_rules S A).2.1 Tε U Tε D M hDf hMf (𝟙 _) (jq ≫ r ≫ u') D₂ hD₂
     (Or.inl (by rw [hD₂c, pull_wl_id, hDc]))
   obtain ⟨v, hv⟩ := hMt k (spMap ρ ≫ s) D₂ hD₂f (kε ≫ jq ≫ r ≫ u') ((calc3 _ _ _ D₂ M hD₂ hMf.isLB _ _).2 (by
-    rw [hD₂c, map_add, h3, zero_add, pull_wl_comp kε]))
+    rw [hD₂c, map_add (f := _), h3, zero_add, pull_wl_comp kε]))
   have hv' : CechPic.pull (A ◁ jq).left d' + CechPic.pull (A ◁ (jq ≫ r ≫ u')).left m =
       CechPic.pull (A ◁ v).left m := by
     have h := (calc3 _ _ _ D₂ M hD₂ hMf.isLB _ _).1 hv
     rwa [pull_wl_id, hD₂c] at h
   have hglue : kc ≫ u' = kε ≫ v := hMi Tk _ _ ((calc3 _ _ _ M M hMf.isLB hMf.isLB _ _).2 (by
-    rw [← hkqr, Category.assoc, Category.assoc, pull_wl_comp kε (jq ≫ r ≫ u'), pull_wl_comp kε v, ← hv', map_add,
+    rw [← hkqr, Category.assoc, Category.assoc, pull_wl_comp kε (jq ≫ r ≫ u'), pull_wl_comp kε v, ← hv', map_add (f := _),
       h3, zero_add]))
   obtain ⟨V, hVa, hV0, -⟩ := exists_isAffineOpen_mem_and_subset (X := U.left) (U := ⊤)
     (x := u'.left (IsLocalRing.closedPoint C)) trivial
@@ -146,5 +146,5 @@ theorem GlobalTheory.DualOpen.exists_same_of_smallExt : ∀ (S : Scheme.{0}) [Is
     rw [sub_sub] at hE
     exact sub_eq_zero.1 hE
   refine ⟨jσ ≫ w, (calc3 _ _ _ N M hNf.isLB hMf.isLB _ _).2 ?_⟩
-  rw [pull_wl_id, pull_wl_comp, hwe, map_add, ← pull_wl_comp, ← Category.assoc, hσr, Category.id_comp, hd'σ]
+  rw [pull_wl_id, pull_wl_comp, hwe, map_add (f := _), ← pull_wl_comp, ← Category.assoc, hσr, Category.id_comp, hd'σ]
   exact (add_sub_cancel _ _).symm

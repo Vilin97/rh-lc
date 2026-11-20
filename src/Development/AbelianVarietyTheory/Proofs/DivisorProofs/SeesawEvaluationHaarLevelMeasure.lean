@@ -69,7 +69,7 @@ theorem continuous_heisS {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [
   ext y
   rw [heisS_apply, heisS_apply, heisS_apply, ← mul_assoc, eChar_apply, eChar_apply, eChar_apply, ← Complex.exp_add]
   congr 2
-  · simp only [ContinuousLinearMap.sub_apply, map_add, map_sub]
+  · simp only [ContinuousLinearMap.sub_apply, map_add (f := _), map_sub]
     push_cast
     ring
   · show y + (p.2.2 - p₀.2.2) + p₀.2.2 = y + p.2.2
@@ -83,7 +83,7 @@ theorem tendsto_family_zero {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) {K : Type
     Tendsto (fun p : K × ((κ → AF F) × (κ → AF F)) => l p.1 (schrLin ψ p.2 Φ)) (𝓝 (k₀, 0)) (𝓝 (l k₀ Φ)) := by
   induction hΦ using Submodule.span_induction with
   | zero => simpa using tendsto_const_nhds
-  | add Φ Ψ _ _ h1 h2 => simpa only [map_add] using h1.add h2
+  | add Φ Ψ _ _ h1 h2 => simpa only [map_add (f := _)] using h1.add h2
   | smul c Φ _ h => simpa only [map_smul] using h.const_smul c
   | mem Φ h =>
     obtain ⟨f, g, hg, rfl⟩ := h

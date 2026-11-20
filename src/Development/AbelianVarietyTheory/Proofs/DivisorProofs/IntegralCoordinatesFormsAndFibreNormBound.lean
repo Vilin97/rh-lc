@@ -115,7 +115,7 @@ theorem map_tval {T : Type} [Fintype T] [DecidableEq T] {N : T → ℕ} (la : �
   generalize intVec (la t) (I t) = p
   induction p using MvPolynomial.induction_on with
   | C a => simp [GlobalTheory.DualWeyl.evalAt]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp]
     simp [GlobalTheory.DualWeyl.evalAt]

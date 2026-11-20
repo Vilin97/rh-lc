@@ -89,7 +89,7 @@ def filTop : Submodule k (H0 p B O) where
   carrier := {f | VanishesTo I a f}
   zero_mem' y _ hy i hi := by rw [map_zero]; exact zero_mem _
   add_mem' hf hg y hs hy i hi := by
-    rw [map_add]; exact add_mem (hf y hs hy i hi) (hg y hs hy i hi)
+    rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hf y hs hy i hi) (hg y hs hy i hi)
   smul_mem' c f hf y hs hy i hi := by
     rw [germ_smul]; exact Ideal.mul_mem_left _ _ (hf y hs hy i hi)
 

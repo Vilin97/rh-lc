@@ -39,14 +39,14 @@ theorem padicInt_ringHom_witt_ext_pt {l : ℕ} [Fact l.Prime] {F : Type} [CommRi
   have hd : f x = g x + (f y - g y) * (l : WittVector l F) ^ (n + 1) := by
     conv_lhs => rw [hx]
     conv_rhs => rw [hx]
-    simp only [map_add, map_mul, map_pow, map_natCast]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast]
     ring
   have ht : WittVector.truncate (n + 1) ((f y - g y) * (l : WittVector l F) ^ (n + 1)) = 0 := by
     rw [← RingHom.mem_ker, WittVector.mem_ker_truncate]
     intro i hi
     exact WittVector.mul_pow_charP_coeff_zero _ hi
   have he : WittVector.truncate (n + 1) (f x) = WittVector.truncate (n + 1) (g x) := by
-    rw [hd, map_add, ht, add_zero]
+    rw [hd, map_add (f := _), ht, add_zero]
   have := congrArg (fun z => TruncatedWittVector.coeff (⟨n, Nat.lt_succ_self n⟩ : Fin (n + 1)) z) he
   simpa only [WittVector.coeff_truncate] using this
 

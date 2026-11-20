@@ -77,7 +77,7 @@ theorem mem_range_of_idem {F R : Type} [Field F] [CharZero F] [Algebra F ℂ] [C
         have e2 : C (g.eval r)⁻¹ * C (g.eval r) = 1 := by rw [← C_mul, inv_mul_cancel₀ hgr, C_1]
         linear_combination (C (g.eval r)⁻¹ * C (g.eval r)⁻¹ * g) * hk + (C (g.eval r)⁻¹ * g) * e2
       unfold IsIdempotentElem
-      rw [← map_mul, e1, map_add, map_mul _ _ ((X - C r) * g), ht, mul_zero, add_zero]
+      rw [← map_mul, e1, map_add (f := _), map_mul _ _ ((X - C r) * g), ht, mul_zero, add_zero]
     have h2 := h p q _ hidem
     rw [← aeval_algHom_apply, ← aeval_algHom_apply] at h2
     simp only [t, Algebra.TensorProduct.lift_tmul, map_one, _root_.one_mul, hp, hq, coe_aeval_eq_eval, eval_mul,

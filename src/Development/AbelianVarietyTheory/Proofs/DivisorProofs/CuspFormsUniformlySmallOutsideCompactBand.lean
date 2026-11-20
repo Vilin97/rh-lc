@@ -89,7 +89,7 @@ theorem span_fin {φ : Sm E a} (hφ : φ ∈ Submodule.span ℂ (formsGL E a L W
   induction hφ using Submodule.span_induction with
   | mem x hx => exact hx.2.1
   | zero => intro l _; exact map_zero _
-  | add x y _ _ hx hy => intro l hl; rw [map_add, hx l hl, hy l hl]
+  | add x y _ _ hx hy => intro l hl; rw [map_add (f := _), hx l hl, hy l hl]
   | smul c x _ hx => intro l hl; rw [map_smul, hx l hl]
 
 theorem span_right {φ : Sm E a} (hφ : φ ∈ Submodule.span ℂ (formsGL E a L W X N)) {l : GL (Fin a) (Af E)} (hl : l ∈ L)

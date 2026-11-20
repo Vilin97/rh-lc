@@ -32,7 +32,7 @@ theorem fs_add_right (O : Subring E) (cj : E →+* E) (qi : E) (Z : Matrix (Fin 
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
-  simp only [Pi.add_apply, Subring.coe_add, map_add]
+  simp only [Pi.add_apply, Subring.coe_add, map_add (f := _)]
   ring
 
 theorem splitSecondProj_iotaOne (hs : M.split = some g) (l : Fin (r + 1) → M.R) (i : Ix r) :
@@ -79,7 +79,7 @@ theorem fs_gram_herm (Zh : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (T T' q : F) (i
     (M.L.cj : E →+* E) (gramG (M.L.cj : E →+* E) (algebraMap F E q) Zh (algebraMap F E T) (algebraMap F E T') j i) =
       gramG (M.L.cj : E →+* E) (algebraMap F E q) Zh (algebraMap F E T) (algebraMap F E T') i j := by
   rcases i with a | a <;> rcases j with b | b <;> by_cases ha : a = Fin.last r <;> by_cases hb : b = Fin.last r <;>
-    simp [gramG, cor, ha, hb, map_mul, map_add, map_neg, map_sub, M.L.cj_cj, AlgEquiv.commutes] <;> ring
+    simp [gramG, cor, ha, hb, map_mul, map_add (f := _), map_neg, map_sub, M.L.cj_cj, AlgEquiv.commutes] <;> ring
 
 theorem fs_herm (Zh : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (T T' q : F)
     (hU : IsUnit (gramG (M.L.cj : E →+* E) (algebraMap F E q) Zh (algebraMap F E T) (algebraMap F E T')).det)

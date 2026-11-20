@@ -17,7 +17,7 @@ private lemma projection_comm_of_mapsTo {p q : Submodule ℂ V} (h : IsCompl p q
   have e2 := (Submodule.IsCompl.projection_eq_self_iff h (T a)).mpr (hp a ha)
   have e3 := (Submodule.IsCompl.projection_apply_eq_zero_iff h).mpr hb
   have e4 := (Submodule.IsCompl.projection_apply_eq_zero_iff h).mpr (hq b hb)
-  simp only [map_add, e1, e2, e3, e4, add_zero]
+  simp only [map_add (f := _), e1, e2, e3, e4, add_zero]
 
 variable {V : Type} [AddCommGroup V] [Module ℂ V] in
 private lemma sub_projection_mem' {p q : Submodule ℂ V} (h : IsCompl p q) (v : V) :
@@ -55,7 +55,7 @@ theorem _root_.GlobalTheory.ClassFin.exists_reynolds_of_completelyReducible (V :
       exact hWgen s hs (T w)
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact W.add_mem hx hy
     | smul a x _ hx =>
       rw [map_smul]
@@ -72,14 +72,14 @@ theorem _root_.GlobalTheory.ClassFin.exists_reynolds_of_completelyReducible (V :
       exact W.sub_mem (W.add_mem (hWgen s hs _) (hWgen s' hs' w)) (hWgen s hs w)
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact W.add_mem hx hy
     | smul a x _ hx =>
       rw [map_smul]
       exact W.smul_mem a hx
   let Fix : Submodule ℂ V :=
     { carrier := {x | ∀ s ∈ S, (s : V → V) x = x}
-      add_mem' := fun ha hb s hs => by simp [map_add, ha s hs, hb s hs]
+      add_mem' := fun ha hb s hs => by simp [map_add (f := _), ha s hs, hb s hs]
       zero_mem' := fun s _ => map_zero s
       smul_mem' := fun c x hx s hs => by simp [map_smul, hx s hs] }
   have hFixW : ∀ v ∈ Fix, v ∈ W → v = 0 := by

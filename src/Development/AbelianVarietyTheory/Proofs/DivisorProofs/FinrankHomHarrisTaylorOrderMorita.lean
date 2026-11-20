@@ -59,7 +59,7 @@ theorem finrank_homO_morita : ∀ (p : ℕ) [Fact p.Prime] (D : GlobalTheory.UPe
         intro x
         have h1 := ha x
         have h2 := hb x
-        simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_add, LinearMap.add_apply] at h1 h2 ⊢
+        simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, map_add (f := _), LinearMap.add_apply] at h1 h2 ⊢
         rw [h1, h2]
       | smul c a _ ha =>
         intro x

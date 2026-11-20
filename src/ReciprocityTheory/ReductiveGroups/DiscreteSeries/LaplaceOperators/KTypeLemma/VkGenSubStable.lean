@@ -42,7 +42,7 @@ theorem vk_eeV_comm (E : Fin n → Fin n → Module.End ℂ M) (hE : IsGlRep E) 
   have h1 : ∀ c, E c d (tensV E a b f c) = E a b (E c d (f c)) + (if d = a then E c b (f c) else 0) -
       (if b = c then E a d (f c) else 0) + (if c = a then E a d (f b) else 0) := by
     intro c
-    rw [vk_tensV_apply, map_add, vk_rel E hE c d a b]
+    rw [vk_tensV_apply, map_add (f := _), vk_rel E hE c d a b]
     by_cases h : c = a
     · subst h; simp
     · simp [h]

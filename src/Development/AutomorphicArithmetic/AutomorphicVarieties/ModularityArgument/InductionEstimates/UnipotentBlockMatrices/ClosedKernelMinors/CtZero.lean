@@ -34,7 +34,7 @@ private theorem fixClosed {K : Type} [Field K] [NumberField K] {n : ℕ} (D : Ty
     { toFun := fun w => ∫ k, D.e k • rightRegularRep (Gam K n) μ k w ∂D.ν
       map_add' := fun a b => by
         rw [← integral_add (intR D μ a) (intR D μ b)]
-        simp only [map_add, smul_add]
+        simp only [map_add (f := _), smul_add]
       map_smul' := fun c a => by
         simp only [map_smul, RingHom.id_apply]
         rw [← integral_smul]

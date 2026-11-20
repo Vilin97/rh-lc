@@ -280,7 +280,7 @@ theorem dTot0_mem (g : Tot0 F) : dTot0 F g ∈ cechDeRhamTotalCocyclesOne F := b
 theorem dTot1_mem (c : Tot1 F) : dTot1 F c ∈ cechDeRhamTotalCocyclesTwo F := by
   rw [mem_cechDeRhamTotalCocyclesTwo_iff]
   refine ⟨differential_one_mem_scaled_lattice F c.1, fun T T' T'' φ ψ ↦ ?_, fun T T' φ ↦ ?_, fun T ↦ ?_⟩
-  · simp only [dTot1_a, cechDeRhamTotalDifferentialOne_functionPart, oneFormsMapOfFunctorMorphism_comp, map_sub, map_add, p1_D]
+  · simp only [dTot1_a, cechDeRhamTotalDifferentialOne_functionPart, oneFormsMapOfFunctorMorphism_comp, map_sub, map_add (f := _), p1_D]
     abel
   · simp only [dTot1_η, dTot1_a, map_sub, pOm_dOne, dOne_D]
     abel
@@ -366,16 +366,16 @@ theorem cupTot_mem (a b : cechDeRhamTotalCocyclesOne F) : cupTot F a.1 b.1 ∈ c
   rw [mem_cechDeRhamTotalCocyclesTwo_iff]
   refine ⟨?_, fun T T' T'' φ ψ ↦ ?_, fun T T' φ ↦ ?_, fun T ↦ ?_⟩
   · intro T T' T'' T''' φ ψ χ
-    simp only [cupTot_apply, cechDeRhamTotalCocyclesOne.comp a, cechDeRhamTotalCocyclesOne.comp b, map_mul, map_add, mp_comp]
+    simp only [cupTot_apply, cechDeRhamTotalCocyclesOne.comp a, cechDeRhamTotalCocyclesOne.comp b, map_mul, map_add (f := _), mp_comp]
     ring
   · simp only [cupTot_a, cupTot_apply]
     rw [cechDeRhamTotalCocyclesOne.comp a φ ψ, cechDeRhamTotalCocyclesOne.comp b φ ψ, cechDeRhamTotalCocyclesOne.conn b ψ, cechDeRhamTotalCocyclesOne.conn a φ]
-    simp only [map_add, map_sub, oneFormsMapOfFunctorMorphism_smul, oneFormsMapOfFunctorMorphism_comp, p1_D, Derivation.leibniz]
+    simp only [map_add (f := _), map_sub, oneFormsMapOfFunctorMorphism_smul, oneFormsMapOfFunctorMorphism_comp, p1_D, Derivation.leibniz]
     module
   · simp only [cupTot_η, cupTot_a, map_sub, dOne_smul, cechDeRhamTotalCocyclesOne.closed b, ← pOm_dOne, cechDeRhamTotalCocyclesOne.closed a,
       map_zero, smul_zero, add_zero, pOm_wedge]
     rw [cechDeRhamTotalCocyclesOne.conn a φ, cechDeRhamTotalCocyclesOne.conn b φ]
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     rw [wedge_swap (D R _ (b.1.1 T T' φ)) (p1 F φ (a.1.2 T))]
     abel
   · rw [cupTot_η]

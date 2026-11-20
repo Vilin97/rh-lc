@@ -81,7 +81,7 @@ theorem unip_algebraMap {r : ℕ} (x : BlockIx a r → E) :
   ext i j
   change (1 + nilM fun p => algebraMap E (Ad E) (x p) : Matrix (Fin a) (Fin a) (Ad E)) i j =
     algebraMap E (Ad E) ((1 + nilM x : Matrix (Fin a) (Fin a) E) i j)
-  simp only [nilM, Matrix.add_apply, Matrix.of_apply, Matrix.one_apply, map_add]
+  simp only [nilM, Matrix.add_apply, Matrix.of_apply, Matrix.one_apply, map_add (f := _)]
   split_ifs <;> simp
 
 def IsCuspidal (φ : GA E a → ℂ) : Prop :=

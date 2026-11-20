@@ -309,7 +309,7 @@ theorem _root_.GlobalTheory.HenQ.Regroup.fac_inert (B' : Multiset ℂ) (X : ℂ)
   induction B' using Multiset.induction_on with
   | empty => simp
   | cons a m ih =>
-    simp only [Multiset.map_cons, Multiset.cons_add, Multiset.prod_cons, Multiset.map_add,
+    simp only [Multiset.map_cons, Multiset.cons_add, Multiset.prod_cons, Multiset.map_add (f := _),
       Multiset.prod_add] at ih ⊢
     rw [← ih]
     have hfac : ((1 : ℂ) - a ^ 2 * X ^ 2)⁻¹ = (1 - a * X)⁻¹ * (1 - -a * X)⁻¹ := by
@@ -362,7 +362,7 @@ theorem core (E : Type) [Field E] [NumberField E] (hE : Module.finrank ℚ E = 2
     convert hasProd_prod_of_ne_finset_one (L := SummationFilter.unconditional _) (s := ({a, a'} : Finset _)) (fun c hc => absurd (hall c) hc) using 1
     rw [Finset.prod_pair hne']
     dsimp only [e, Equiv.coe_fn_mk, a, a', Function.comp_apply]
-    rw [hBQ, Multiset.map_add, Multiset.prod_add, hN, hN']
+    rw [hBQ, Multiset.map_add (f := _), Multiset.prod_add, hN, hN']
   · let a : {v : HeightOneSpectrum (𝓞 E) // v.under (𝓞 ℚ) = w.under (𝓞 ℚ)} := ⟨w, rfl⟩
     have hall : ∀ c : {v : HeightOneSpectrum (𝓞 E) // v.under (𝓞 ℚ) = w.under (𝓞 ℚ)}, c ∈ ({a} : Finset _) := by
       intro c

@@ -27,7 +27,7 @@ theorem cone_cycle_isBoundary : ∀ (V : Type) (F G : Set (List V)) (x : V), (�
     induction d using Finsupp.induction_linear with
     | zero => simp
     | add f g hf hg =>
-      rw [map_add, map_add, hf, hg, map_add, map_add]
+      rw [map_add (f := _), map_add (f := _), hf, hg, map_add (f := _), map_add (f := _)]
       abel
     | single l n =>
       rw [← Finsupp.smul_single_one]

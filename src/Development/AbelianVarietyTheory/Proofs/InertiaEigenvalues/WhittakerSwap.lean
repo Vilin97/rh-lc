@@ -15,7 +15,7 @@ variable {F E : Type} [NontriviallyNormedField F] [NontriviallyNormedField E] [N
 theorem psiK_add (A : Et F E) (ψ : AddChar F ℂ) (u v : A.K) :
     A.psiK ψ (u + v) = A.psiK ψ u * A.psiK ψ v := by
   unfold psiK
-  rw [map_add, AddChar.map_add_eq_mul]
+  rw [map_add (f := _), AddChar.map_add_eq_mul]
 
 theorem psiK_continuous (A : Et F E) {ψ : AddChar F ℂ} (hψ : IsStdChar ψ) : Continuous (A.psiK ψ) := by
   have h1 : Continuous (Algebra.trace F A.K) := IsModuleTopology.continuous_of_linearMap _

@@ -210,7 +210,7 @@ theorem tw_eq_of (hL : IsUnit L.det) (hZ : IsUnit (Formalism.MainNotions.S.Zhat 
     induction hy using Submodule.span_induction with
     | mem x hx => obtain ⟨m, rfl⟩ := hx; exact hg m
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
     | smul c x _ hx => rw [map_smul, map_smul, hx]
   have hτs : ∀ m, τ.symm (gg F F' m) ∈ Sg := fun m => sL_mem_span _ (Submodule.subset_span ⟨m, rfl⟩)
   have hss : ∀ m, s.symm (gg F F' m) ∈ Sg := by
@@ -249,7 +249,7 @@ theorem tw_eq_of (hL : IsUnit L.det) (hZ : IsUnit (Formalism.MainNotions.S.Zhat 
     rw [ha] at h0
     exact sub_eq_zero.1 h0
   have hx : x = p + q := by rw [hq]; abel
-  rw [hx, map_add, map_add, hspan p hpS, hsq, hτq]
+  rw [hx, map_add (f := _), map_add (f := _), hspan p hpS, hsq, hτq]
 
 end TwProps
 

@@ -29,7 +29,7 @@ theorem fderiv_eq_quad_comm : ∀ (V : Type) [NormedAddCommGroup V] [NormedSpace
   obtain ⟨h1, h2, h3, h4, -⟩ := C f hf
   have skew : om w (X w) = - om (X w) w := by
     have := h0 (w + X w)
-    simp only [map_add, _root_.add_apply, h0] at this
+    simp only [map_add (f := _), _root_.add_apply, h0] at this
     linarith
   have key : ∀ u v, dH ρ u (dH ρ v (ρ w f)) = ρ w (dH ρ u (dH ρ v f))
       + (2 * π * I : ℂ) • ρ w ((om v w : ℂ) • dH ρ u f + (om u w : ℂ) • dH ρ v f)
@@ -38,7 +38,7 @@ theorem fderiv_eq_quad_comm : ∀ (V : Type) [NormedAddCommGroup V] [NormedSpace
     obtain ⟨-, g2, -, g4, -⟩ := C _ (h1 v)
     have hs : Sm ρ ((2 * π * I * (om v w : ℂ)) • ρ w f) := (smS ρ).smul_mem _ (h2 w)
     rw [h4 v w, dH_add u (g2 w) hs, dH_smul u _ (h2 w), g4 u w, h4 u w]
-    simp only [map_add, map_smul]
+    simp only [map_add (f := _), map_smul]
     module
   have e1 := hQ.apply_vec (fderiv ℝ (fun u => ρ u f) 0).toLinearMap w
   have e1' : (2 * π * I : ℂ) • ∑ i, c i • ((om (q i) w : ℂ) • dH ρ (p i) f + (om (p i) w : ℂ) • dH ρ (q i) f)

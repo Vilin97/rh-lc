@@ -26,7 +26,7 @@ theorem HR_eq {M : ℕ} (J : Matrix (Fin M) (Fin M) E) (R : Type) [CommRing R] [
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul r e => rfl
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   ext g
   show cT (sigR R (conj F E).toAlgHom) _ * _ * _ = _ ↔ _
   rw [this]
@@ -48,7 +48,7 @@ theorem HFin_eq {M : ℕ} (J : Matrix (Fin M) (Fin M) E) :
       rw [tensorMap_tmul, Algebra.TensorProduct.lid_tmul]
       show algebraMap F 𝔸[F] r ⊗ₜ[F] e = (1 : 𝔸[F]) ⊗ₜ[F] (r • e)
       rw [Algebra.algebraMap_eq_smul_one, TensorProduct.smul_tmul]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   ext g
   rw [Subgroup.mem_subgroupOf]
   constructor

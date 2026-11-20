@@ -47,7 +47,7 @@ theorem riesz (δ : X.Ψ → (Fin r → ℂ) →ₗ[ℂ] ℂ) :
       map_add' := fun u v => by
         rw [← Finset.sum_add_distrib]
         refine Finset.sum_congr rfl fun τ _ => ?_
-        rw [VT.val_add, Pi.add_apply, map_add, Complex.add_re]
+        rw [VT.val_add, Pi.add_apply, map_add (f := _), Complex.add_re]
       map_smul' := fun c u => by
         rw [RingHom.id_apply, smul_eq_mul, Finset.mul_sum]
         refine Finset.sum_congr rfl fun τ _ => ?_

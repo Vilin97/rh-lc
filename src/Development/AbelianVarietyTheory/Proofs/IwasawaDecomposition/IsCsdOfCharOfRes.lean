@@ -186,7 +186,7 @@ theorem isCsd_of_norm (χ : HChar L)
       simpa using ((Complex.ofRealCLM.hasDerivAt (x := 0)).mul_const (dchi χ (z + star z))).cexp
     rw [funext h1] at h2
     have h3 := h2.unique (hasDerivAt_const _ _)
-    rw [map_add] at h3
+    rw [map_add (f := _)] at h3
     rw [map_neg]
     exact (eq_neg_of_add_eq_zero_left h3).symm
 

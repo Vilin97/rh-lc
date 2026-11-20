@@ -66,9 +66,9 @@ theorem LateralTheory.EtaleFoundations.columnPf.kerLoc_of : kerLoc := by
   have he : ∀ κ, (φ.app (op W)).hom (e κ) = 0 := fun κ => by
     have := congrArg (M.obj.map hW.op).hom (hrel κ)
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_smul, map_zero] at this
+      simp only [map_add (f := _), map_sum, map_smul, map_zero] at this
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [e, map_add, map_sum, map_smul, nφ]
+      simp only [e, map_add (f := _), map_sum, map_smul, nφ]
     rw [← this]
     congr 1
     refine Finset.sum_congr rfl fun g _ => ?_

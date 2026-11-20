@@ -24,11 +24,11 @@ theorem UpperTheory.Reformulated.B.ReprMem.repr_mem :
   | add y z _ _ hy hz =>
     obtain ⟨a, b, rfl⟩ := hy
     obtain ⟨a', b', rfl⟩ := hz
-    exact ⟨a + a', b + b', by rw [map_add, map_add]; ring⟩
+    exact ⟨a + a', b + b', by rw [map_add (f := _), map_add (f := _)]; ring⟩
   | mul y z _ _ hy hz =>
     obtain ⟨a, b, rfl⟩ := hy
     obtain ⟨a', b', rfl⟩ := hz
     refine ⟨a * a' + b * b' * c, a * b' + b * a', ?_⟩
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     rw [← h]
     ring

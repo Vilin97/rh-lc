@@ -34,7 +34,7 @@ theorem UpperTheory.V.Cj.graph :
         intro a b
         apply huniq (T.symm (a + b)) _ _ (hjM _) (M.add_mem (hjM a) (hjM b)) (hjR _)
         have h := hlin 1 _ _ _ _ (hjR a) (hjR b)
-        simpa [map_add] using h
+        simpa [map_add (f := _)] using h
       map_smul' := by
         intro c a
         apply huniq (T.symm (c • a)) _ _ (hjM _) (M.smul_mem c (hjM a)) (hjR _)

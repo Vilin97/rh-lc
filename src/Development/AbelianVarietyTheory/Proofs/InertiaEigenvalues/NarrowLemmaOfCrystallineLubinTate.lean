@@ -48,7 +48,7 @@ theorem mem_D (χ : ↥(GK K) →* (↥L.1)ˣ) (x : ↥L.1 ⊗[ℚ_[l]] P.R.B) :
     intro g y
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy, smul_add]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add]
     | tmul v b =>
       change (((χ g : (↥L.1)ˣ) : ↥L.1) • v) ⊗ₜ[ℚ_[l]] (P.PD K).actB g b = _
       rw [P.PD_actB]

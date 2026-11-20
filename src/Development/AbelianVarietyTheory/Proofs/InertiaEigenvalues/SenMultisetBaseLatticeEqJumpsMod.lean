@@ -124,7 +124,7 @@ theorem exists_c {O k : Type} [CommRing O] [CommRing k] (f : O →+* k) (p : O) 
     · have : u ^ (-(i : ℤ)) = u ^ (-(i : ℤ) - 1) * u := by rw [← zpow_add_one]; simp
       rw [this, Units.val_mul, hu] at h1
       rw [mul_add, h1]; ring
-    · rw [map_add, h2, hf]; push_cast; ring
+    · rw [map_add (f := _), h2, hf]; push_cast; ring
 
 theorem rootMult_prod {k : Type} [Field k] (U : Multiset ℤ) (x : k) :
     ((U.map fun u : ℤ => Polynomial.X - Polynomial.C (u : k)).prod).rootMultiplicity x = resCount U 0 x := by
@@ -178,7 +178,7 @@ theorem γ₀_π₀ {δ : W.Gam} (hδ : δ ∈ W.DelF) : W.γ₀ δ W.π₀₁ =
   classical
   have hm : ∀ g, g ∈ W.DelF ↔ IsOfFinOrder g := fun g => by rw [W.DelF_def, isOfFinOrder_iff_pow_eq_one]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [LocWach.π₀₁, map_add, map_sub, map_one, map_natCast, map_sum]
+    rw [LocWach.π₀₁, map_add (f := _), map_sub, map_one, map_natCast, map_sum]
   congr 1
   refine Finset.sum_bijective (δ * ·) (Group.mulLeft_bijective δ) (fun g => ?_) (fun g _ => ?_)
   · rw [hm, hm]
@@ -271,7 +271,7 @@ theorem sen_gen [IsDomain O] (p : Pres W F ι τ γ) (hp : ((PD.p : ℕ) : k) = 
     obtain ⟨x, rfl⟩ := hsur y hy
     rw [hnab]; exact hJN _
   have hq : PowerSeries.map (algebraMap O k) (W.π₀₁ + (PD.p : O⟦X⟧)) = PowerSeries.map (algebraMap O k) W.π₀₁ := by
-    rw [map_add, map_natCast, ← map_natCast (PowerSeries.C (R := k)), hp, map_zero, add_zero]
+    rw [map_add (f := _), map_natCast, ← map_natCast (PowerSeries.C (R := k)), hp, map_zero, add_zero]
   have hq0 : W.π₀₁ + (PD.p : O⟦X⟧) ≠ 0 := by
     intro h
     rw [h, map_zero] at hq
@@ -279,7 +279,7 @@ theorem sen_gen [IsDomain O] (p : Pres W F ι τ γ) (hp : ((PD.p : ℕ) : k) = 
     rw [← hq, map_zero, map_eq_zero] at h1
     exact vv_ne_zero k h1
   have hqi : ∀ δ ∈ W.DelF, W.γA δ (W.π₀ + (PD.p : LetA O n₀)) = W.π₀ + (PD.p : LetA O n₀) := fun δ hδ => by
-    rw [map_add, map_natCast]
+    rw [map_add (f := _), map_natCast]
     congr 1
     exact funext fun _ => γ₀_π₀ W hδ
   have hei : ∀ δ ∈ W.DelF, W.γA δ (letE (τ i) : LetA O n₀) = letE (τ i) := fun δ _ => by
@@ -319,7 +319,7 @@ theorem exists_isC (hp : ((PD.p : ℕ) : k) = 0) (u : Oˣ) (hu : (u : O) = 1 + (
   choose c hc1 hc2 using exists_c (algebraMap O k) ((PD.p : ℕ) : O) (by rw [map_natCast, hp]) _ hu
   refine ⟨c, fun a => ?_, hc2⟩
   have h1 := congrArg (algebraMap O LL) (hc1 a)
-  rw [map_mul, map_natCast, RingHom.map_sub, map_one, map_units_zpow, hu, map_add, map_one, map_natCast] at h1
+  rw [map_mul, map_natCast, RingHom.map_sub, map_one, map_units_zpow, hu, map_add (f := _), map_one, map_natCast] at h1
   exact h1
 
 theorem map_prod_c (c : ℤ → O) (hc : ∀ a : ℤ, algebraMap O k (c a) = -(a : k)) (U : Multiset ℤ) (x : k) :

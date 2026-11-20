@@ -21,7 +21,7 @@ theorem lc_single_one (V : Type) (x : List V →₀ ℤ) :
     Finsupp.linearCombination ℤ (fun l : List V => Finsupp.single l (1:ℤ)) x = x := by
   induction x using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => rw [map_add, hf, hg]
+  | add f g hf hg => rw [map_add (f := _), hf, hg]
   | single l c => rw [Finsupp.linearCombination_single, Finsupp.smul_single, smul_eq_mul, mul_one]
 
 theorem slicePr_mapDomain (V W : Type) (w w' : List W) (x : List V →₀ ℤ) :
@@ -33,7 +33,7 @@ theorem slicePr_mapDomain (V W : Type) (w w' : List W) (x : List V →₀ ℤ) :
   · simp only [Function.comp_def, h, if_false]
     induction x using Finsupp.induction_linear with
     | zero => simp
-    | add f g hf hg => rw [map_add, hf, hg, add_zero]
+    | add f g hf hg => rw [map_add (f := _), hf, hg, add_zero]
     | single l c => simp [Finsupp.linearCombination_single]
 
 theorem slicePr_hbd (V W : Type) (w : List W) :

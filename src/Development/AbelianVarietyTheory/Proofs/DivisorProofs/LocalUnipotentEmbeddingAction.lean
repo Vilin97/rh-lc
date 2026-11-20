@@ -48,11 +48,11 @@ theorem locInc_mul (v : HeightOneSpectrum (𝓞 F)) (a : Fv F v ⊗[F] E) (z : A
     GlobalTheory.UnipEmb.locInc F E v a * z = GlobalTheory.UnipEmb.locInc F E v (a * compFin F E v z) := by
   induction a using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, add_mul, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), add_mul, hx, hy]
   | tmul a e =>
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, mul_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), mul_add, hx, hy]
     | tmul b e' =>
       show (GlobalTheory.UnipEmb.locAd F v a ⊗ₜ[F] e) * (b ⊗ₜ[F] e') =
         GlobalTheory.UnipEmb.locInc F E v ((a ⊗ₜ[F] e) * (evFin F v b ⊗ₜ[F] e'))
@@ -70,7 +70,7 @@ theorem mat_emb (v : HeightOneSpectrum (𝓞 F)) (x : GLoc σ J v) :
   ext z
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => rw [map_add, hx, hy]; exact (map_add _ x y).symm
+  | add x y hx hy => rw [map_add (f := _), hx, hy]; exact (map_add _ x y).symm
   | tmul a e => rfl
 
 theorem emb_mulVec (v : HeightOneSpectrum (𝓞 F)) (x : GLoc σ J v) (y : Fin n → AF F ⊗[F] E) :

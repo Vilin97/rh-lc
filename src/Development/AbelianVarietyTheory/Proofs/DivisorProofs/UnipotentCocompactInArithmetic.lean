@@ -27,7 +27,7 @@ theorem form_swap {n : ℕ} {J : Matrix (Fin n) (Fin n) E} (hσ : ∀ x, σ (σ 
 
 theorem form_add {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (x v w : Fin n → E) :
     form σ J x (v + w) = form σ J x v + form σ J x w := by
-  simp only [form, dotProduct, Matrix.mulVec, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [form, dotProduct, Matrix.mulVec, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem form_smul {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (x v : Fin n → E) (s : E) :
     form σ J x (s • v) = σ s * form σ J x v := by
@@ -122,7 +122,7 @@ theorem cocompact_unip : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
       inclR (F := F) (AF F) s • incV F H'.x + incM F H'.ι *ᵥ incV F u := fun s u => by
     funext k
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, incV, incM, Matrix.mulVec, dotProduct,
+      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, incV, incM, Matrix.mulVec, dotProduct,
       map_sum, Matrix.map_apply]
   set e := toGAd hσ J hc0 with he
   have hfwd : ∀ u ∈ unip σ G.W H', e u ∈ GlobalTheory.UAut.unipFlag σ (c • J.map σ) C (fun _ => 0) := by

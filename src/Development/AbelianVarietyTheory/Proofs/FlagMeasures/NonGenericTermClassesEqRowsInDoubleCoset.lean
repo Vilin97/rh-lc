@@ -84,7 +84,7 @@ theorem nrat_map_Xsp {T : D.host.E} (F : LFlag (VS D) D.R.rS T) {n : (VS D).V �
     have h2 : F.fl.e a ∈ Xsp F := Submodule.subset_span ⟨a, rfl⟩
     simpa using (Xsp F).add_mem h h2
   | zero => simp
-  | add y y' _ _ h h' => rw [map_add]; exact add_mem h h'
+  | add y y' _ _ h h' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
   | smul c y _ h => rw [map_smul]; exact Submodule.smul_mem _ c h
 
 theorem one_mem_NRat {T : D.host.E} (F : LFlag (VS D) D.R.rS T) : (1 : (VS D).V ≃ₗ[D.host.E] (VS D).V) ∈ NRat F :=
@@ -139,7 +139,7 @@ theorem nonGeneric_terms_same_coset_corank_one (t t' : TauC Y u u') (ht : t ∈ 
       have h1 : (VS D).hT ((lf D (X.Fu u)).fl.fvec a) x = 0 := hxo (Sum.inl a)
       have h2 := frame_orth_Xsp (lf D (X.Fu u)) a _ (hn.2.2 x hxF)
       have h3 : n x = x + (n x - x) := by abel
-      rw [h3, map_add, h1, h2, add_zero]
+      rw [h3, map_add (f := _), h1, h2, add_zero]
     · show (VS D).hT (t'.frame.fl.fvec b) (n x) = 0
       have hf : t'.frame.fl.fvec b = n (t.lin (n' ((lf D (X.Fu u')).fl.fvec b))) := by
         show (mapLF t'.lin (lf D (X.Fu u'))).fl.fvec b = _
@@ -153,7 +153,7 @@ theorem nonGeneric_terms_same_coset_corank_one (t t' : TauC Y u u') (ht : t ∈ 
         have := hxo (Sum.inr b)
         simp only [Sum.elim_inr] at this
         rwa [show t.frame.fl.fvec b = t.lin ((lf D (X.Fu u')).fl.fvec b) from mapLF_fvec t.lin hiso _ b] at this
-      rw [h4, map_add, map_add, LinearMap.add_apply, h5, orth_apply hxt (hXt _ hd), add_zero]
+      rw [h4, map_add (f := _), map_add (f := _), LinearMap.add_apply, h5, orth_apply hxt (hXt _ hd), add_zero]
   · show x - n x ∈ Xsp (lf D (X.Fu u))
     have := (Xsp (lf D (X.Fu u))).neg_mem (hn.2.2 x hxF)
     simpa using this

@@ -54,7 +54,7 @@ theorem fcoord_add (b : Module.Basis ι K V) (X : InfinitePlace K → Matrix ι 
   rw [← Matrix.mulVec_add]
   congr 1
   funext i
-  simp [vecAt, map_add]
+  simp [vecAt, map_add (f := _)]
 
 theorem fcoord_zero (b : Module.Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ)
     (v : InfinitePlace K) : fcoord b X v 0 = 0 := by

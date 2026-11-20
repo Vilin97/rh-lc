@@ -46,7 +46,7 @@ theorem RE_mul (K : Type) [CommRing K] (k : ℕ) (a b : Fin k) (f g : MvPolynomi
 theorem RE_add (K : Type) [CommRing K] (k : ℕ) (a b : Fin k) (f g : MvPolynomial (Fin k × Fin k) K) :
     RE K k a b (f + g) = RE K k a b f + RE K k a b g := by
   unfold RE
-  simp only [map_add, mul_add, Finset.sum_add_distrib]
+  simp only [map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem mem_Hd_iff {K : Type} [CommRing K] {k d : ℕ} (P : MvPolynomial (Fin k) K) :
     P ∈ Hd K k d ↔ P ∈ homogeneousSubmodule (Fin k) K d := by

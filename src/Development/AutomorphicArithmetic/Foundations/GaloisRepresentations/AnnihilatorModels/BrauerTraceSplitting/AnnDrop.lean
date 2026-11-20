@@ -29,7 +29,7 @@ theorem annDrop : AnnDrop := by
       rw [ha v]
       congr 1
       exact hb y
-    | add u w hu hw => simp only [map_add, hu, hw]
+    | add u w hu hw => simp only [map_add (f := _), hu, hw]
   have hinv : ∀ g, TensorProduct.map (act g) (s g).toLinearMap (Φ x) = Φ x := by
     intro g
     rw [← hcomm (ρ g) (act g) (σ g) (s g).toLinearMap ?_ (hσ g) x, hx g]

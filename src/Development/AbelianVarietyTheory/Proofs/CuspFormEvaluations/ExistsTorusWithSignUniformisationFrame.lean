@@ -37,7 +37,7 @@ theorem cmHostUnit_add_conj_eq_one {E : Type} [Field E] [NumberField E] [IsCMFie
   have hb : H.bar H.rt = -H.rt := (sq_eq_sq_iff_eq_or_eq_neg.1 hsq).resolve_left hne
   have h2 : 2 * H.bar H.w0 = 1 - H.rt := by
     have := congrArg H.bar H.two_weight_eq_one_add_root
-    rw [map_mul, map_add, map_one, hb, map_ofNat] at this
+    rw [map_mul, map_add (f := _), map_one, hb, map_ofNat] at this
     rw [this]; ring
   have : (2 : 𝓞 E) * (H.w0 + H.bar H.w0) = 2 * 1 := by rw [mul_add, H.two_weight_eq_one_add_root, h2]; ring
   exact mul_left_cancel₀ two_ne_zero this
@@ -70,7 +70,7 @@ theorem exists_torusAt_of_isom {E : Type} [Field E] [NumberField E] [IsCMField E
       funext i
       simp [Algebra.smul_def]
     refine ⟨D.EF a (H.bar H.w0 • b), ?_⟩
-    rw [hs, hu', hv', key, key, hw, sub_smul, add_smul, one_smul, map_sub, map_add]
+    rw [hs, hu', hv', key, key, hw, sub_smul, add_smul, one_smul, map_sub, map_add (f := _)]
     push_cast
     ring
 

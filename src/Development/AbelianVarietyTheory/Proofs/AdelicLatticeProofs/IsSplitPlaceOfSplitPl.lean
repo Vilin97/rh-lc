@@ -30,7 +30,7 @@ theorem eq_zero_of_loc {x : RA F E} (h : ∀ v, loc E v x = 0) : x = 0 := by
       rw [loc_tmul, Algebra.TensorProduct.basis_repr_tmul, Algebra.TensorProduct.basis_repr_tmul]
       simp only [Finsupp.smul_apply, Finsupp.mapRange_apply, smul_eq_mul, map_mul, AlgHom.commutes,
         evalAt_apply v a]
-    | add s t hs ht => simp only [map_add, Finsupp.add_apply, hs, ht]
+    | add s t hs ht => simp only [map_add (f := _), Finsupp.add_apply, hs, ht]
   apply (Algebra.TensorProduct.basis (FiniteAdeleRing (𝓞 F) F) b).repr.injective
   ext i : 1
   refine DFunLike.ext _ _ fun v => ?_
@@ -272,12 +272,12 @@ theorem congAtA_of_congOneAt {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E)) {N
         rw [← map_natCast (algebraMap F _)]
         exact (IsUnit.mk0 _ (Nat.cast_ne_zero.2 (pow_ne_zero _ hN))).map _
       exact (hu.mul_right_eq_zero).1 e2
-    simp only [Pi.smul_apply, Pi.add_apply, nsmul_eq_mul, smul_eq_mul, map_mul, map_add, map_natCast,
+    simp only [Pi.smul_apply, Pi.add_apply, nsmul_eq_mul, smul_eq_mul, map_mul, map_add (f := _), map_natCast,
       Pi.mul_apply, Pi.natCast_apply,
       loc_ind_pos hv, e4] at e1 ⊢
     linear_combination (t : v.adicCompletion F ⊗[F] E) * e1
   · rw [loc_ind_pos (Set.mem_compl hv)] at e2
-    simp only [Pi.smul_apply, Pi.add_apply, nsmul_eq_mul, smul_eq_mul, map_mul, map_add, map_natCast,
+    simp only [Pi.smul_apply, Pi.add_apply, nsmul_eq_mul, smul_eq_mul, map_mul, map_add (f := _), map_natCast,
       Pi.mul_apply, Pi.natCast_apply,
       loc_ind_neg hv] at e2 ⊢
     push_cast at e2 e3

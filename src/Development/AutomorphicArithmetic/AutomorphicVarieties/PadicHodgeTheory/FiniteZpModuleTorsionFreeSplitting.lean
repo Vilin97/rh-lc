@@ -91,7 +91,7 @@ theorem UpperTheory.finite_zp_module_torsion_free_splitting :
   · rintro ⟨v, y⟩
     refine ⟨s (b.equivFun.symm v) + y, ?_⟩
     have hm : T.mkQ (s (b.equivFun.symm v) + y) = b.equivFun.symm v := by
-      rw [map_add, hs', hmk0, add_zero]
+      rw [map_add (f := _), hs', hmk0, add_zero]
     refine Prod.ext ?_ ?_
     · show b.equivFun (T.mkQ _) = v
       rw [hm, LinearEquiv.apply_symm_apply]

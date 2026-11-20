@@ -264,11 +264,11 @@ private theorem split_data (O X R R' κ : Type) [CommRing O] [IsLocalRing O] [Is
       · exact Submodule.zero_mem _
     have hqz : q (i v + ∑ l, Z l) = v := by
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, hqi, map_sum]
+        rw [map_add (f := _), hqi, map_sum]
       simp [hZ2]
     refine ⟨i v + ∑ l, Z l, ?_, by rw [hqz]; exact hv, ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [v, map_add, hφi, map_sum]
+      · simp only [v, map_add (f := _), hφi, map_sum]
       rw [Finset.mul_sum, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun l _ => ?_
       rw [hZ1, hc (cd l) _ (Submodule.smul_mem _ _ (hεp l)), MonoidHom.inv_apply,
@@ -358,8 +358,8 @@ theorem UpperTheory.V.Alg.loc_graded :
   have hME : ∀ g, (M g).map φ = E g := by
     intro g
     ext a b
-    simp only [M, E, Matrix.map_apply, Matrix.of_apply, map_add]
-    rw [hφi _ _ (hyp (a, b) g), hZφ, ← mul_add, ← map_add]
+    simp only [M, E, Matrix.map_apply, Matrix.of_apply, map_add (f := _)]
+    rw [hφi _ _ (hyp (a, b) g), hZφ, ← mul_add, ← map_add (f := _)]
     congr 2
     simp [d]
   have hT0 : ∀ a b c' : ι, (T (Multiplicative.ofAdd (w a - w c')) : S) *
@@ -414,7 +414,7 @@ theorem UpperTheory.V.Alg.loc_graded :
         Ideal.Quotient.mk (maximalIdeal A ^ N') (i (y (a, b) g)) +
           Ideal.Quotient.mk (maximalIdeal A ^ N') (Z (a, b) (d (a, b) g) (hdk (a, b) g)) := by
       funext g
-      rw [← map_add]
+      rw [← map_add (f := _)]
       rfl
     rw [hfun]
     exact h1.comp₂ h2 (· + ·)
@@ -464,10 +464,10 @@ theorem UpperTheory.V.Alg.loc_graded :
   · refine Lift.ext (MonoidHom.ext fun g => Matrix.ext fun a b => ?_)
     rw [Lift.map_hom, Lift.map_hom]
     change p (q (i (y (a, b) g) + Z (a, b) (d (a, b) g) (hdk (a, b) g))) = r'.hom g a b
-    rw [map_add, hqi, map_add, hZp, add_zero, hyl]
+    rw [map_add (f := _), hqi, map_add (f := _), hZp, add_zero, hyl]
   · intro s a b
     rw [Lift.map_hom]
     change q (i (y (a, b) s) + Z (a, b) (d (a, b) s) (hdk (a, b) s)) ∈ W.part (w a - w b)
-    rw [map_add, hqi]
+    rw [map_add (f := _), hqi]
     have hq : q (Z (a, b) (d (a, b) s) (hdk (a, b) s)) ∈ W.part (w a - w b) := hZq (a, b) _ _
     exact (W.part (w a - w b)).add_mem (hyp (a, b) s) hq

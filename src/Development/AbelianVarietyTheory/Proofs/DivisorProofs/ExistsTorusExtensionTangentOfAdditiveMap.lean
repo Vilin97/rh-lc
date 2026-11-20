@@ -22,7 +22,7 @@ namespace GlobalTheory.MBLow.TorVec
 theorem exists_torus_tangent : ∀ (R : Type) [CommRing R] [IsDomain R] (D : DegPre R) (l : D.X →+ R), ∃ gm : GtPt D (epsR R), GtTan gm ∧ gm.b = DegPre.zeroT D (epsR R) ∧ ∀ (χ : D.X) (Z : Scheme.{0}) (q : Z ⟶ (epsR R).left) (z : Z) (J : (Z ⟶ D.P.A.left) → D.P.L.ι), ReciprocityTheory.ChartRestriction.G.Geo.Tor.Good D.P.L z J → (ReciprocityTheory.ChartRestriction.G.Geo.Tor.val (gm.s χ) q z J).val = ReciprocityTheory.ChartRestriction.G.Geo.Tor.gs q z ⊤ ((Scheme.ΓSpecIso (CommRingCat.of (DualNumber R))).inv.hom (1 + TrivSqZeroExt.inr (l χ))) := by
   intro R _ _ D l
   obtain ⟨ν, hb, hv⟩ := GlobalTheory.TorusTangent.exists_pt (D := D) (T := epsR R)
-    (fun x => GlobalTheory.TorusTangent.oneAdd (l x)) fun x y => by rw [map_add, GlobalTheory.TorusTangent.oneAdd_add]
+    (fun x => GlobalTheory.TorusTangent.oneAdd (l x)) fun x y => by rw [map_add (f := _), GlobalTheory.TorusTangent.oneAdd_add]
   refine ⟨ν, ?_, hb, fun χ Z q z J hJ => ?_⟩
   · obtain ⟨g₀, h₀, v₀⟩ := GlobalTheory.TorusTangent.exists_pt (D := D) (T := baseOver (Sp R)) (fun _ => 1)
       fun _ _ => (_root_.mul_one _).symm

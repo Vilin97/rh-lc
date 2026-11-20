@@ -57,7 +57,7 @@ theorem phi_quot_pow_injective :
     rw [← Ideal.mem_span_singleton, ← hI, ← Ideal.Quotient.eq_zero_iff_mem]
     have e := hcf' g h
     simp only [Algebra.smul_def, Ideal.Quotient.algebraMap_eq] at e
-    simp only [hu, map_sub, map_add, map_mul, hs]
+    simp only [hu, map_sub, map_add (f := _), map_mul, hs]
     rw [e]; ring
   obtain ⟨w, hwc, hw⟩ := exists_continuous_div hπ u huc hud
   have hwZ : w ∈ Z2 (twist ε O) := by

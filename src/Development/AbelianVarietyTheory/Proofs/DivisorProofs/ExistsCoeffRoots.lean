@@ -59,7 +59,7 @@ theorem exists_coef_ext {K K' : Type} [Field K] [Field K'] (j : K →+* K') {σ 
     { toFun := fun F => Finsupp.sum ((MvPolynomial.basisMonomials _ K').repr F)
         fun m a => σ' a • c₀ (p (MvPolynomial.monomial m 1))
       map_add' := fun F F' => by
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Finsupp.sum_add_index' (fun _ => by simp) (fun _ _ _ => by simp [add_smul])
       map_smul' := fun a F => by
         rw [map_smul, Finsupp.sum_smul_index' (fun _ => by simp), Finsupp.smul_sum]
@@ -77,7 +77,7 @@ theorem exists_coef_ext {K K' : Type} [Field K] [Field K'] (j : K →+* K') {σ 
     induction F using MvPolynomial.induction_on' with
     | monomial m a =>
       rw [MvPolynomial.map_monomial, hC, hσ, ← map_smulₛₗ, ← map_smul, MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
-    | add F F' h h' => rw [map_add, map_add, h, h', map_add, map_add]
+    | add F F' h h' => rw [map_add (f := _), map_add (f := _), h, h', map_add (f := _), map_add (f := _)]
   exact ⟨C.comp (VV K' lam).subtype, fun v v' h => by
     show C v' = _
     rw [h, key, hp']⟩

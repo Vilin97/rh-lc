@@ -31,7 +31,7 @@ theorem pm_mul {n : ℕ} (f g f' g' : Fin n → L) :
 theorem cT_pm {n : ℕ} (σ : L →+* L) (f g : Fin n → L) :
     cT σ (pm f g) = pm (fun i => σ (f i)) (fun i => σ (g (Fin.rev i))) := by
   ext i j
-  simp only [cT, pm, Matrix.transpose_apply, Matrix.map_apply, Matrix.of_apply, map_add]
+  simp only [cT, pm, Matrix.transpose_apply, Matrix.map_apply, Matrix.of_apply, map_add (f := _)]
   have h2 : (i = Fin.rev j) ↔ (j = Fin.rev i) := by
     constructor <;> rintro rfl <;> simp
   by_cases h1 : j = i

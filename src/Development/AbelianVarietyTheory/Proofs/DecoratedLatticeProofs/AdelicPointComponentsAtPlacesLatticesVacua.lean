@@ -22,7 +22,7 @@ theorem repr_map {F E A B ι : Type} [Field F] [Field E] [Algebra F E] [CommRing
   | zero => simp
   | tmul a e =>
     simp [Algebra.TensorProduct.basis_repr_tmul, Algebra.algebraMap_eq_smul_one]
-  | add x y hx hy => simp [map_add, hx, hy]
+  | add x y hx hy => simp [map_add (f := _), hx, hy]
 
 open Classical in
 
@@ -374,8 +374,8 @@ theorem latV_repr {S : HSp D} {L : Lat S} {Q : Pl D → Prop} {t : ℕ} (g : Fin
     obtain ⟨β, hβ, rfl⟩ := hy
     obtain ⟨γ, hγ, rfl⟩ := hz
     refine ⟨β + γ, fun k => ⟨fun v => ?_, fun w hw => ?_⟩, ?_⟩
-    · rw [Pi.add_apply, map_add]; exact add_mem ((hβ k).1 v) ((hγ k).1 v)
-    · rw [Pi.add_apply, map_add, (hβ k).2 w hw, (hγ k).2 w hw, add_zero]
+    · rw [Pi.add_apply, map_add (f := _)]; exact add_mem ((hβ k).1 v) ((hγ k).1 v)
+    · rw [Pi.add_apply, map_add (f := _), (hβ k).2 w hw, (hγ k).2 w hw, add_zero]
     · funext i
       simp only [Pi.add_apply, pairA_add, TensorProduct.add_tmul, Finset.sum_add_distrib]
   | neg y _ hy =>
@@ -401,7 +401,7 @@ theorem infPart_finIn (z : Af D.host.F ⊗[D.host.F] D.host.E) : infPart D (finI
   induction z using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
   | tmul a e => rw [finIn_tmul, infPart_pair]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
 
 theorem compAt_finIn (w : Pl D) (z : Af D.host.F ⊗[D.host.F] D.host.E) :
     compAt D w (finIn D z) = GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedCharacter.compFin D w z := by
@@ -412,7 +412,7 @@ theorem compAt_finIn (w : Pl D) (z : Af D.host.F ⊗[D.host.F] D.host.E) :
     show _ = Algebra.TensorProduct.map (evalV D.host.F w) (AlgHom.id _ _) (a ⊗ₜ[D.host.F] e)
     rw [Algebra.TensorProduct.map_tmul]
     rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]
 
 theorem infPart_of_idAt {P : Pl D → Prop} {a : AE D} (h : a ∈ idAt D P) : infPart D a = 0 :=
   RingHom.mem_ker.1 (Ideal.mem_inf.1 h).1
@@ -457,7 +457,7 @@ theorem placeIdempotent_integral_smul_mem_latticeCompletionAtPlace {S : HSp D} {
     | add y y' _ _ h h' => rw [smul_add]; exact add_mem h h'
     | neg y _ h => rw [smul_neg]; exact neg_mem h
   | zero => rw [map_zero, mul_zero, zero_smul]; exact zero_mem _
-  | add z z' _ _ h h' => rw [map_add, mul_add, add_smul]; exact add_mem h h'
+  | add z z' _ _ h h' => rw [map_add (f := _), mul_add, add_smul]; exact add_mem h h'
   | neg z _ h => rw [map_neg, mul_neg, neg_smul]; exact neg_mem h
 
 theorem smul_latV {S : HSp D} {L : Lat S} {P : Pl D → Prop} (v : Pl D) {e : AE D} (he : e ∈ intAt D (· = v))

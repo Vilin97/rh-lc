@@ -29,7 +29,7 @@ private theorem ev_cmp {E : Type} [Field E] [NumberField E] [IsTotallyComplex E]
   induction m using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]; rfl
   | tmul φ v => simp [mul_comm]
-  | add x y hx hy => simp only [map_add, Pi.add_apply, Submodule.coe_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, Submodule.coe_add, hx, hy]
 
 private theorem cont_inf (E : Type) [Field E] [NumberField E] [IsTotallyComplex E] (a : ℕ) :
     Continuous (infGL E a) := by

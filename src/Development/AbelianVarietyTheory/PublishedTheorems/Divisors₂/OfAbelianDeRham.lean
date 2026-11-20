@@ -53,7 +53,7 @@ theorem allPrim (H : AbelianDeRhamFree) {A : Over (Sp R)} [GrpObj A] {g : ℕ} (
   have hr : ∀ a b, r (pullOver (dp0 R) (𝟙 _) (fst A A) a + pullOver (dp0 R) (𝟙 _) (snd A A) b) = (a, b) := by
     intro a b
     rw [hv]
-    simp only [map_add, pullOver_pullOver, lift_fst, lift_snd, pull_one,
+    simp only [map_add (f := _), pullOver_pullOver, lift_fst, lift_snd, pull_one,
       pull_id, add_zero, zero_add]
   have hs : Function.Surjective r := fun x ↦ ⟨_, hr x.1 x.2⟩
   have hb : Function.Bijective r :=

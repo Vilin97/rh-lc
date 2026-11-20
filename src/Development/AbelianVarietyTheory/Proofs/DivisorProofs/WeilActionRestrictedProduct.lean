@@ -23,7 +23,7 @@ lemma evFin_phase {κ : Type} [Fintype κ] (v : Pl F) {_ : Invertible (2 : Fv F 
       (fun i => evFin F v (x i)) ⬝ᵥ (fun i => evFin F v (b i)) +
         ⅟(2 : Fv F v) * ((fun i => evFin F v (a i)) ⬝ᵥ (fun i => evFin F v (b i))) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [dotProduct, map_add, map_mul, map_sum, evFin_invOf_two]
+    simp only [dotProduct, map_add (f := _), map_mul, map_sum, evFin_invOf_two]
 
 lemma trace_phase {κ : Type} [Fintype κ] (x a b : κ → AF F) :
     Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F (x ⬝ᵥ b + ⅟(2 : AF F) * (a ⬝ᵥ b))) =
@@ -31,14 +31,14 @@ lemma trace_phase {κ : Type} [Fintype κ] (x a b : κ → AF F) :
         GlobalTheory.ArchUniq.trP F κ (GlobalTheory.ArchUniq.locV a) (GlobalTheory.ArchUniq.locV b) / 2 := by
   have h2 : ∀ z : AF F, evI F z = evI F (⅟(2 : AF F) * z) + evI F (⅟(2 : AF F) * z) := fun z => by
     simp only [GlobalTheory.ArchUniq.evI_eq_evIHom]
-    rw [← map_add, ← two_mul, ← mul_assoc, mul_invOf_self, one_mul]
+    rw [← map_add (f := _), ← two_mul, ← mul_assoc, mul_invOf_self, one_mul]
   have hs : ∀ y c : κ → AF F, evI F (y ⬝ᵥ c) = ∑ i, GlobalTheory.ArchUniq.locV y i * GlobalTheory.ArchUniq.locV c i := fun y c => by
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [dotProduct, GlobalTheory.ArchUniq.evI_eq_evIHom, map_sum, map_mul, GlobalTheory.ArchUniq.locV]
   have hh : Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F (⅟(2 : AF F) * (a ⬝ᵥ b))) =
       Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F (a ⬝ᵥ b)) / 2 := by
-    rw [h2 (a ⬝ᵥ b), map_add]; ring
-  rw [GlobalTheory.ArchUniq.evI_eq_evIHom, map_add, ← GlobalTheory.ArchUniq.evI_eq_evIHom, ← GlobalTheory.ArchUniq.evI_eq_evIHom, map_add, hh,
+    rw [h2 (a ⬝ᵥ b), map_add (f := _)]; ring
+  rw [GlobalTheory.ArchUniq.evI_eq_evIHom, map_add (f := _), ← GlobalTheory.ArchUniq.evI_eq_evIHom, ← GlobalTheory.ArchUniq.evI_eq_evIHom, map_add (f := _), hh,
     hs, hs]
   rfl
 
@@ -92,7 +92,7 @@ theorem GlobalTheory.HeisPure.rho_pure : ∀ {F E : Type} [Field F] [NumberField
       rw [GlobalTheory.AdeleCharProd.psi_eq_inf_mul_finprod F ψ hψ hunr, trace_phase]
       have hx : (fun i => evI F ((x + (M.co.e u).1) i)) = GlobalTheory.ArchUniq.locV x + GlobalTheory.ArchUniq.locV (M.co.e u).1 := by
         funext i
-        simp only [Pi.add_apply, GlobalTheory.ArchUniq.locV, GlobalTheory.ArchUniq.evI_eq_evIHom, map_add]
+        simp only [Pi.add_apply, GlobalTheory.ArchUniq.locV, GlobalTheory.ArchUniq.evI_eq_evIHom, map_add (f := _)]
       rw [hx]
       ring
     _ = pure (locOpInf (M.co.rho ψ (partInf F u)) f) (fun v => locOp v (M.co.rho ψ (partFin v u)) (φ v)) x := by

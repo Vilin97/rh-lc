@@ -33,7 +33,7 @@ def galoisLatticeModIdealInvariants (L : Lattice (O := O) ρ) (I : Ideal O) : Su
   zero_mem' := fun g => map_zero _
   add_mem' := by
     intro a b ha hb g
-    rw [map_add, ha g, hb g]
+    rw [map_add (f := _), ha g, hb g]
   smul_mem' := by
     intro c y hy g
     obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective c

@@ -34,7 +34,7 @@ theorem baseChange_model {R₀ R k B₀ B C₀ C : Type} [CommRing R₀] [CommRi
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul c b => simp [h]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem model_apply {R₀ R B₀ B C₀ C : Type} [CommRing R₀] [CommRing R]
     [Algebra R₀ R] [AddCommGroup B₀] [Module R₀ B₀] [AddCommGroup C₀] [Module R₀ C₀]
@@ -50,7 +50,7 @@ theorem model_apply {R₀ R B₀ B C₀ C : Type} [CommRing R₀] [CommRing R]
       intro M _ _ m
       rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
     rw [LinearMap.baseChange_tmul, h1 b, h1 (u₀ b), map_smul, map_smul, map_smul, h]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem eq_zero_of_fibres (hI : FibreInjective) (hD : SmoothDescent) {R B C : Type} [CommRing R]
     [CommRing B] [CommRing C] [Algebra R B] [Algebra R C] [Algebra.Smooth R B] [Algebra.Smooth R C]
@@ -169,7 +169,7 @@ theorem bc_apply (k : Type) [CommRing k] [Algebra R k] (f : B →ₐ[R] C) (x : 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul c b => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem bc_prR (k : Type) [CommRing k] [Algebra R k] (f : B →ₐ[R] C) :
     Spec.map (bc k f) ≫ prR R k B = prR R k C ≫ Spec.map (CommRingCat.ofHom f.toRingHom) := by

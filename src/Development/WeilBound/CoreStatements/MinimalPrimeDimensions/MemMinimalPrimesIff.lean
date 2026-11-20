@@ -252,7 +252,7 @@ theorem localMult_pr (hs : Function.Surjective (eval₂Hom c t)) (hk : t k = 1) 
       obtain ⟨n, a, h⟩ := h
       obtain ⟨n', a', h'⟩ := h'
       exact ⟨n + n', a * X k ^ n' + a' * X k ^ n, by
-        simp only [map_add, map_mul, map_pow, hXk, ← h, ← h']; ring⟩
+        simp only [map_add (f := _), map_mul, map_pow, hXk, ← h, ← h']; ring⟩
     | monomial n a =>
       obtain ⟨N, G, h1, rfl⟩ := exists_homog' hs hk a
       exact ⟨N, G * X k ^ n, by

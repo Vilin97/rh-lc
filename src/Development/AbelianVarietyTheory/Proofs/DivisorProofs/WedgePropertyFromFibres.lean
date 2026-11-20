@@ -40,7 +40,7 @@ theorem bijective_of_fibres {R B C : Type} [CommRing R] [AddCommGroup B] [Module
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp
-      | add x y hx hy => rw [map_add, map_add, hx, hy]
+      | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
     rw [e]; exact h q
   refine ⟨?_, ?_⟩
   · obtain ⟨r, hr⟩ := GlobalTheory.split_injective_of_forall_lTensor_residueField_injective l

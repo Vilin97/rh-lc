@@ -121,7 +121,7 @@ theorem isProjOver_of_glue : ∀ {E : Type} [Field E] [NumberField E] [IsCMField
         (BD'.lbIso_pull (ψ i) hk)).symm.trans ((CechPic.cls_eq_iff _ _).2
           (EffCartierData.lbIso_of_idealSheaf_eq _ _ ((BD'.idealSheaf_pull (ψ i) hk).trans (hBD' i))))
     refine (CechPic.cls_eq_iff (pull_isLB hPL _) (hP i).2.isLB).1 ?_
-    rw [CechPic.cls_pull hPL (ψ i), cls_polShape m hΛ BD'.isLB_lb hPL, map_add, map_nsmul, map_neg, map_neg, e₁, e₂]
+    rw [CechPic.cls_pull hPL (ψ i), cls_polShape m hΛ BD'.isLB_lb hPL, map_add (f := _), map_nsmul, map_neg, map_neg, e₁, e₂]
     exact (cls_polShape m (hLie i) (BD i).isLB_lb (hP i).2.isLB).symm
   have hamp : IsAmpleLB P := by
     have hX : CompactSpace A := ⟨by simpa using QuasiCompact.isCompact_preimage (f := F) Set.univ isOpen_univ isCompact_univ⟩

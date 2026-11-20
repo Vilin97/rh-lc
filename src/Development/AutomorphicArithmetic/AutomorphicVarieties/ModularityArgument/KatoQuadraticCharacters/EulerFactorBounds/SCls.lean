@@ -33,7 +33,7 @@ theorem sCls : SCls := by
   · intro f f' a a' ha ha'
     refine ⟨?_, ?_⟩
     · show (AdicCompletion.eval (idl l) (X.Kl l) n) (a + a') = X.cls l n (f * f')
-      rw [map_add, hmul]
+      rw [map_add (f := _), hmul]
       rw [ha, ha']
     · show (AdicCompletion.eval (idl l) (X.Kl l) n) (a - a') = X.cls l n (f / f')
       rw [map_sub, hdiv]

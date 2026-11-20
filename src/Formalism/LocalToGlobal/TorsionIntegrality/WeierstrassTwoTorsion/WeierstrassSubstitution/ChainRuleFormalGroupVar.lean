@@ -66,7 +66,7 @@ private theorem constantCoeff_powerSeries_subst_eq_zero {R : Type u} [CommRing R
     (show constantCoeff (g - C (constantCoeff g)) = 0 by simp)
   have hg : g = X * h + (constantCoeff g) • (1 : R⟦X⟧) := by
     rw [PowerSeries.smul_eq_C_mul, mul_one, ← hh]; ring
-  rw [hg, ← PowerSeries.coe_substAlgHom ha, map_add, map_mul, map_smul, map_one,
+  rw [hg, ← PowerSeries.coe_substAlgHom ha, map_add (f := _), map_mul, map_smul, map_one,
     PowerSeries.coe_substAlgHom ha, PowerSeries.subst_X ha]
   simp [ha0, PowerSeries.smul_eq_C_mul]
 
@@ -158,7 +158,7 @@ theorem weierstrass_p_prime_shape : WpPrimeShape.{u} := by
     rw [h0] at e1
     simp at e1
   constructor
-  · rw [(wpShape K W).1, map_add, dL_uPow, dL_toL, WpSh.C_neg_two]
+  · rw [(wpShape K W).1, map_add (f := _), dL_uPow, dL_toL, WpSh.C_neg_two]
     norm_num
   · have h2 : (toL (expSer W))⁻¹ * toL (expSer W) = 1 := inv_mul_cancel₀ hne
     have h3 : Wp.sig he (wU W) * Wp.sig he (xS W) = 1 := by

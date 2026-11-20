@@ -33,9 +33,9 @@ theorem lev_ring {A B D T : Type} [CommRing A] [CommRing B] [CommRing D] [CommRi
         intro a b ha hb
         simp only [Set.mem_setOf_eq] at ha hb ⊢
         have e : (fun i => q ((a + b) i)) = (fun i => q (a i)) + fun i => q (b i) := by
-          funext i; simp [map_add]
+          funext i; simp [map_add (f := _)]
         rw [e, Matrix.mulVec_add, ← ha, ← hb]
-        funext i; simp [map_add]
+        funext i; simp [map_add (f := _)]
       zero_mem' := by
         simp only [Set.mem_setOf_eq, Pi.zero_apply, map_zero]
         exact (Matrix.mulVec_zero ε).symm

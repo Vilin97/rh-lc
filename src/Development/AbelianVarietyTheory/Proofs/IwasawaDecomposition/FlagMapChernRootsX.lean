@@ -31,7 +31,7 @@ theorem coeff_prod_one_add {R : Type*} [CommSemiring R] (s : Multiset R) (n : �
 
 theorem esymm_add {R : Type*} [CommSemiring R] (s t : Multiset R) (n : ℕ) :
     (s + t).esymm n = ∑ i ∈ Finset.range (n + 1), s.esymm i * t.esymm (n - i) := by
-  rw [← coeff_prod_one_add, Multiset.map_add, Multiset.prod_add, Polynomial.coeff_mul,
+  rw [← coeff_prod_one_add, Multiset.map_add (f := _), Multiset.prod_add, Polynomial.coeff_mul,
     Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
   simp only [coeff_prod_one_add]
 
@@ -99,7 +99,7 @@ theorem rename_esymm (τ : GlobalTheory.AllWt.Psi H) (k : ℕ) :
     rename (fun i : Fin (Dw.p + Dw.q) => (τ, i)) (esymm (Fin (Dw.p + Dw.q)) ℝ k) =
       ((Multiset.range Dw.p).map (rootSeq Dw τ) +
         (Multiset.range Dw.q).map (fun i => rootSeq Dw τ (Dw.p + i))).esymm k := by
-  rw [← aeval_X_left_apply (rename _ _), aeval_rename, aeval_esymm_eq_multiset_esymm, univ_map_eq_range, Multiset.range_add, Multiset.map_add,
+  rw [← aeval_X_left_apply (rename _ _), aeval_rename, aeval_esymm_eq_multiset_esymm, univ_map_eq_range, Multiset.range_add, Multiset.map_add (f := _),
     Multiset.map_map]
   rfl
 

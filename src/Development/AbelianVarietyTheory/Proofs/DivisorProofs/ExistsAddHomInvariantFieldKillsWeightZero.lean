@@ -55,7 +55,7 @@ theorem exists_addHom_of_kills_wt_zero : ∀ (R : Type) [CommRing R] [IsDomain R
   have a₃ : ∀ s, valR (A := DualNumber S) (ReciprocityTheory.ChartRestriction.G.Chart.spMap (GlobalTheory.SqZero.inlS R S) ≫ z).left (Y.q.left ⁻¹ᵁ V) s = inl (valR g _ s) := a₂
   have k' := congrArg TrivSqZeroExt.snd ((b₂ f).symm.trans k)
   have hu' : ((Units.map ψ.toRingHom.toMonoidHom (epsUnit (ℓ α)) : (DualNumber S)ˣ) : DualNumber S) = 1 + inr (φ (ℓ α)) := by
-    rw [← hψ, ← map_one ψ, ← map_add]; rfl
+    rw [← hψ, ← map_one ψ, ← map_add (f := _)]; rfl
   simp only [a₃, hψ, hu'] at k'
   set_option synthInstance.maxHeartbeats 100000 in
     rw [WtAlg.valR_sub' _ _ hg, WtAlg.valR_mul'' _ _ hg, Adjust.valR_const _ φ g hφ _ hg, combF,

@@ -28,7 +28,7 @@ theorem algebraMap_mem_chartRing_joinPt (x : ι → Ω) (z : κ → Ω') (i : ι
   | algebraMap n =>
     rw [← IsScalarTower.algebraMap_apply]
     exact Subalgebra.algebraMap_mem _ n
-  | add y w _ _ hy hw => rw [map_add]; exact add_mem hy hw
+  | add y w _ _ hy hw => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hw
   | mul y w _ _ hy hw => rw [map_mul]; exact mul_mem hy hw
 
 theorem div_mem_chartRing_joinPt (x : ι → Ω) (z : κ → Ω') (j : ι) (l m : κ) (hx : x j ≠ 0) :
@@ -125,7 +125,7 @@ def pullbackBundle {x : ι → Ω} (B : ChartBundle ℤ x r E) (z : κ → Ω') 
         | zero => intro q; exact ⟨0, by simp⟩
         | add w w' _ _ hw hw' =>
           intro q
-          rw [map_add, Finsupp.add_apply]
+          rw [map_add (f := _), Finsupp.add_apply]
           exact hRadd _ _ (hw q) (hw' q)
         | neg w _ hw =>
           intro q

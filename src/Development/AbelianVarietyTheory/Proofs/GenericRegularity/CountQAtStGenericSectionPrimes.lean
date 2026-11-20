@@ -121,7 +121,7 @@ theorem val_ne_zero {K Φ Ω L : Type} [Field K] [CommRing Φ] [Algebra K Φ] [F
         obtain ⟨h5, h6⟩ := hadd _ _ _ h1 h3
         refine ⟨a + b, _, h5, ?_⟩
         rw [h6, h2, h4, Prod.mk_add_mk]
-        simp only [map_add, map_mul, map_pow, ← hvdef, pow_add]
+        simp only [map_add (f := _), map_mul, map_pow, ← hvdef, pow_add]
         congr 1 <;> field_simp
       algebraMap_mem' := by
         intro c
@@ -240,13 +240,13 @@ theorem frobenius_zero_not_mem_of_trdeg {Ω : Type} [Field Ω] [Algebra B.KO Ω]
   · intro k F G h1 h2
     have h3 : S k (F + G) := by
       show emb X la N (F + G) ∈ _
-      rw [map_add]; exact Submodule.add_mem _ h1 h2
+      rw [map_add (f := _)]; exact Submodule.add_mem _ h1 h2
     refine ⟨h3, ?_⟩
-    rw [hval _ _ h1, hval _ _ h2, hval _ _ h3, ← map_add]
+    rw [hval _ _ h1, hval _ _ h2, hval _ _ h3, ← map_add (f := _)]
     congr 1
     apply Subtype.ext
     show frac X la w k (emb X la N (F + G)) = frac X la w k (emb X la N F) + frac X la w k (emb X la N G)
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
   · intro k c F h1
     have e : emb X la N (c • F) = τ c • emb X la N F := by
       rw [emb_smul, ← algebraMap_smul (Kp X la N)]

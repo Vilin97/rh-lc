@@ -42,8 +42,8 @@ theorem existsUnique_of_baseChange {R R' : Type} [CommRing R] [CommRing R'] [Alg
     | add x y hx hy =>
       obtain ⟨a, ha, ha'⟩ := hx
       obtain ⟨b, hb, hb'⟩ := hy
-      exact ⟨a + b, by rw [map_add, map_add, ha, hb],
-        fun ψ hψ ↦ by rw [map_add, map_add, ha' ψ hψ, hb' ψ hψ]⟩
+      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb],
+        fun ψ hψ ↦ by rw [map_add (f := _), map_add (f := _), ha' ψ hψ, hb' ψ hψ]⟩
   refine ⟨LinearMap.liftBaseChange R' l ∘ₗ e.symm.toLinearMap ∘ₗ c', ⟨fun f hf ↦ ?_, fun f ↦ ?_⟩,
     fun ψ hψ ↦ LinearMap.ext fun f ↦ ?_⟩
   · simp [hf]

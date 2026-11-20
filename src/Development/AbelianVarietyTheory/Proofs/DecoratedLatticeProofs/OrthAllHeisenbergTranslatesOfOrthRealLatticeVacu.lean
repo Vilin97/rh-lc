@@ -142,7 +142,7 @@ theorem orth_all : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D)
       unfold annih at h0 ⊢
       rw [GlobalTheory.FinTranslate.dRho_heisO hinf hfi, GlobalTheory.FinTranslate.dRho_heisO hinf hfi]
       have h1 := congrArg (GlobalTheory.FinTranslate.heisL S T ψ uf) h0
-      rw [map_add, map_smul, map_zero] at h1
+      rw [map_add (f := _), map_smul, map_zero] at h1
       exact h1
     · show nrm2 p.1 p.2 (heisO ψ S T uf vac) = 1
       haveI := hp.1

@@ -25,7 +25,7 @@ theorem ordGE_mul {σ : Type} {a b : ℕ} {f g : MvPowerSeries σ k} (hf : OrdGE
   apply Finset.sum_eq_zero
   intro p hp
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
-  have hdeg : p.1.degree + p.2.degree = e.degree := by rw [← map_add, hp]
+  have hdeg : p.1.degree + p.2.degree = e.degree := by rw [← map_add (f := _), hp]
   by_cases h1 : p.1.degree < a
   · rw [hf _ h1, zero_mul]
   · have h2 : p.2.degree < b := by omega
@@ -34,7 +34,7 @@ theorem ordGE_mul {σ : Type} {a b : ℕ} {f g : MvPowerSeries σ k} (hf : OrdGE
 theorem ordGE_pderiv {σ : Type} {r : ℕ} (i : σ) {g : MvPowerSeries σ k} (h : OrdGE (r + 1) g) :
     OrdGE r (pderiv k i g) := by
   intro e he
-  rw [coeff_pderiv, h _ (by rw [map_add, Finsupp.degree_single]; omega), zero_mul]
+  rw [coeff_pderiv, h _ (by rw [map_add (f := _), Finsupp.degree_single]; omega), zero_mul]
 
 theorem ordGE_one_of_const {σ : Type} {A : MvPowerSeries σ k} (h : constantCoeff A = 0) : OrdGE 1 A := by
   intro e he
@@ -78,10 +78,10 @@ theorem pderiv_aeval {σ τ : Type} [Fintype σ] (a : σ → MvPowerSeries τ k)
   classical
   induction p using MvPolynomial.induction_on with
   | C c => simp
-  | add p q hp hq => simp only [map_add, hp, hq, add_mul, Finset.sum_add_distrib]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, add_mul, Finset.sum_add_distrib]
   | mul_X p s hp =>
     rw [map_mul, MvPolynomial.aeval_X, Derivation.leibniz, hp]
-    simp only [Derivation.leibniz, MvPolynomial.pderiv_X, map_add, smul_eq_mul, add_mul, Finset.sum_add_distrib,
+    simp only [Derivation.leibniz, MvPolynomial.pderiv_X, map_add (f := _), smul_eq_mul, add_mul, Finset.sum_add_distrib,
       map_mul, MvPolynomial.aeval_X, Pi.single_apply]
     simp only [Finset.mul_sum]
     simp only [apply_ite (MvPolynomial.aeval a), map_one, map_zero, mul_ite, ite_mul, mul_one, mul_zero, zero_mul,
@@ -108,8 +108,8 @@ theorem pderiv_subst {σ τ : Type} [Fintype σ] {a : σ → MvPowerSeries τ k}
     rw [map_sub, MvPolynomial.coeff_coe, coeff_truncTotal _ hd, sub_self]
   obtain ⟨h1, h2⟩ := key _ hr
   have hf : f = (p : MvPowerSeries σ k) + (f - p) := by ring
-  rw [hf, subst_add hs, map_add, map_add, h1, add_zero]
-  simp only [map_add, subst_add hs, add_mul, Finset.sum_add_distrib]
+  rw [hf, subst_add hs, map_add (f := _), map_add (f := _), h1, add_zero]
+  simp only [map_add (f := _), subst_add hs, add_mul, Finset.sum_add_distrib]
   rw [h2, add_zero, subst_coe, pderiv_aeval]
   simp only [pderiv_coe, subst_coe]
 
@@ -118,7 +118,7 @@ theorem constantCoeff_subst_same {σ τ : Type} [Finite σ] {a : σ → MvPowerS
     constantCoeff (subst a f) = constantCoeff f := by
   have hs : HasSubst a := hasSubst_of_constantCoeff_zero ha
   have hf : f = C (constantCoeff f) + (f - C (constantCoeff f)) := by ring
-  rw [hf, subst_add hs, map_add, subst_C, constantCoeff_subst_eq_zero hs ha (by simp)]
+  rw [hf, subst_add hs, map_add (f := _), subst_C, constantCoeff_subst_eq_zero hs ha (by simp)]
   simp
 
 theorem killCompl_eq_subst {σ τ : Type} [Finite τ] (e : σ ↪ τ) (f : MvPowerSeries τ k) :
@@ -230,7 +230,7 @@ theorem jetAt0_subst_linear {σ τ : Type} [Fintype σ] [Fintype τ] (M : σ →
       ← MvPolynomial.monomial_zero', jetAt0_monomial, jetAt0_monomial,
       coeff_zero_eq_constantCoeff_apply, coeff_zero_eq_constantCoeff_apply, constantCoeff_subst_same ha]
     simp [mfact]
-  | add p q hp hq => rw [map_add, jetAt0_add_left, jetAt0_add_left, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), jetAt0_add_left, jetAt0_add_left, hp, hq]
   | mul_X p t hp =>
     rw [jetAt0_mul_X, pderiv_subst ha, map_mul, MvPolynomial.aeval_X, Finset.mul_sum, jetAt0_sum_left]
     have : ∀ s, pderiv K t (∑ t, M s t • (X t : MvPowerSeries τ K)) = C (M s t) := by

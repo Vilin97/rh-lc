@@ -25,7 +25,7 @@ theorem exists_ur_lift (χ : charGrp (GK p K)) (hχ : TrivOn p K (MaximalUnramif
     obtain ⟨n, hn⟩ := QuotientGroup.mk_out_eq_mul (subG p K (MaximalUnramifiedExtension p K)) g
     rw [hn]
     show χ.1 (Additive.ofMul g + Additive.ofMul n.1) = _
-    rw [map_add, hχ n.1 n.2, add_zero]
+    rw [map_add (f := _), hχ n.1 n.2, add_zero]
   have hloc : IsLocallyConstant fun q : GalLK p K (MaximalUnramifiedExtension p K) => f q.out := by
     intro s
     rw [← QuotientGroup.isOpenQuotientMap_mk.isQuotientMap.isOpen_preimage]

@@ -115,7 +115,7 @@ theorem matOf_act {n : ℕ} {V : Type} [NormedAddCommGroup V] [InnerProductSpace
       (if a = c then matOf ℓ G d b else 0) - (if b = d then matOf ℓ G a c else 0) + ℓ (E c d (at1 G a b)) := by
     intro c d a b
     have := congrArg ℓ (arr_operator_one_apply E c d G a b)
-    rw [map_add, map_sub, apply_ite ℓ, apply_ite ℓ, map_zero] at this
+    rw [map_add (f := _), map_sub, apply_ite ℓ, apply_ite ℓ, map_zero] at this
     exact this
   ext a b
   set_option synthInstance.maxHeartbeats 100000 in

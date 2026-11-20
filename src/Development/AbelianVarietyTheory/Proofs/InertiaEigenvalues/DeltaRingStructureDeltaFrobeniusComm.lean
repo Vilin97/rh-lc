@@ -32,7 +32,7 @@ theorem poly_δ_φ (l : ℕ) [hl : Fact l.Prime] (x : MvPolynomial ℕ ℤ) :
   have h3 : D.φ ((l : MvPolynomial ℕ ℤ) * D.δ x) = (l : MvPolynomial ℕ ℤ) * D.φ (D.δ x) := by
     rw [map_mul, map_natCast]
   have h4 : D.φ (D.φ x) = D.φ (x ^ l) + D.φ ((l : MvPolynomial ℕ ℤ) * D.δ x) := by
-    rw [← map_add, ← h2]
+    rw [← map_add (f := _), ← h2]
   rw [map_pow] at h4
   linear_combination -h1 + h4 + h3
 

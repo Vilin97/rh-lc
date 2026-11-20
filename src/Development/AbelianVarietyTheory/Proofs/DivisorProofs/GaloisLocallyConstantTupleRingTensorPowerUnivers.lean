@@ -124,7 +124,7 @@ theorem GlobalTheory.EtC.GalSec.Tens.lem_hom : ∀ (K Ω : Type) [Field K] [Fiel
     simp only [mul_ite, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
   · simp [Tens.lev]
   · intro φ ψ
-    simp only [Tens.lev, LocallyConstant.coe_add, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+    simp only [Tens.lev, LocallyConstant.coe_add, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 private theorem polynomial_eval_eq_sum_eval_mul_idempotent {ι B : Type} [Fintype ι] [CommRing B] (e : ι → B) (he : ∑ i, e i = 1)
     (c : ι → B) (b : B) (hb : ∀ i, b * e i = c i * e i) (q : Polynomial B) :
     q.eval b = ∑ i, q.eval (c i) * e i := by
@@ -354,7 +354,7 @@ theorem lcRing_universal : ∀ (K Ω : Type) [Field K] [Field Ω] [Algebra K Ω]
       obtain ⟨η, h1, h2⟩ := hcommon φ ψ
       obtain ⟨v, hv⟩ := lem_hom K Ω B k g₀ gs hgs η
       show lev g₀ gs (θf (φ + ψ)) (φ + ψ) = lev g₀ gs (θf φ) φ + lev g₀ gs (θf ψ) ψ
-      rw [← hwd _ η (hdadd η φ ψ h1 h2), ← hwd φ η h1, ← hwd ψ η h2, ← hv, ← hv, ← hv, map_add]
+      rw [← hwd _ η (hdadd η φ ψ h1 h2), ← hwd φ η h1, ← hwd ψ η h2, ← hv, ← hv, ← hv, map_add (f := _)]
   have hlegs : ∀ i, u.comp (legHom K Ω k i) = g i := by
     intro i
     cases i using Fin.cases with

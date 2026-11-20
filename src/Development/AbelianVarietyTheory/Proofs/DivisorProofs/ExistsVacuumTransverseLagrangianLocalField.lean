@@ -251,9 +251,9 @@ theorem GlobalTheory.LagVac.exists_vacuum : ∀ {k : Type} [Field k] [ValuativeR
   have hlin : ∀ (w : (κ → k) × (κ → k)) (c : ℂ) (f : (κ → k) → ℂ),
       schr ψ w (c • f) = c • schr ψ w f := fun w c f => (schrL ψ w).map_smul c f
   have hTT : ∀ u u' φ, schr ψ (wT (u + u')) φ = schr ψ (wT u) (schr ψ (wT u') φ) := fun u u' φ => by
-    rw [schr_schr, hT, map_add]; simp
+    rw [schr_schr, hT, map_add (f := _)]; simp
   have hMM : ∀ u u' φ, schr ψ (wM (u + u')) φ = schr ψ (wM u) (schr ψ (wM u') φ) := fun u u' φ => by
-    rw [schr_schr, hM, map_add]; simp
+    rw [schr_schr, hM, map_add (f := _)]; simp
   have hMT : ∀ (u z : intMat k (Fin n) (Fin d)) φ,
       schr ψ (wT u) (schr ψ (wM z) φ) = schr ψ (wM z) (schr ψ (wT u) φ) := fun u z φ => by
     rw [schr_comm, hTM', hψ _ (hpint u z), one_smul]

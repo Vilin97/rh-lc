@@ -56,7 +56,7 @@ theorem kap_one_le_norm (l : ℕ) [Fact l.Prime] (d : ℕ) (hj : jacobiSym (-(d 
     have hmem : (1 : ℤ_[l]) + (d : ℤ_[l]) * W ^ 2 ∈ RingHom.ker (PadicInt.toZMod (p := l)) := by
       rw [PadicInt.ker_toZMod, IsLocalRing.mem_maximalIdeal, PadicInt.mem_nonunits]
       exact hZ
-    rw [RingHom.mem_ker, map_add, map_one, map_mul, map_pow, map_natCast] at hmem
+    rw [RingHom.mem_ker, map_add (f := _), map_one, map_mul, map_pow, map_natCast] at hmem
     set z := PadicInt.toZMod W with hzdef
     have hz : z ≠ 0 := by
       intro h0
@@ -106,7 +106,7 @@ theorem kap_norm_of_normOne {a : ℕ} {b c : ℤ} {d : ℕ} (hok : PI.UnitDetRoo
   have hsq := PI.UnitaryGroupMassFormula.UnitDetRoot.theta_sq hok
   set t := PI.UnitDetRootDefs.cmTheta b d with ht
   have hc : conj ((u : ℂ) + v * t) = (u : ℂ) + v * ((b : ℂ) - t) := by
-    rw [map_add, map_mul, map_ratCast, map_ratCast, ht, PI.UnitaryGroupMassFormula.UnitDetRoot.conj_theta]
+    rw [map_add (f := _), map_mul, map_ratCast, map_ratCast, ht, PI.UnitaryGroupMassFormula.UnitDetRoot.conj_theta]
   rw [hc] at h1
   have hNC : (((u ^ 2 + b * u * v + a * c * v ^ 2 : ℚ)) : ℂ) = 1 := by
     push_cast
@@ -127,7 +127,7 @@ theorem kap_norm_of_normOne {a : ℕ} {b c : ℤ} {d : ℕ} (hok : PI.UnitDetRoo
   have hsum : ‖X + Y‖ = ‖(T : ℚ_[l])‖ := by
     have e : (u : ℂ) + v * t + ((u : ℂ) + v * ((b : ℂ) - t)) = ((T : ℚ) : ℂ) := by
       rw [hT]; push_cast; ring
-    rw [hX, hY, ← map_add, e, kap_norm_ratCast]
+    rw [hX, hY, ← map_add (f := _), e, kap_norm_ratCast]
   by_contra hne
   have hn : ‖X‖ * ‖Y‖ = 1 := by rw [← norm_mul, hXY, norm_one]
   have hbig : 1 < ‖X + Y‖ := by

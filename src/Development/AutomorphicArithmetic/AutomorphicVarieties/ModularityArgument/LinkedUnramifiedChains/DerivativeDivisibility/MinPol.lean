@@ -13,7 +13,7 @@ private lemma aeval_actL {O Λ B : Type} [CommRing O] [CommRing Λ] [CommRing B]
     rw [aeval_C, eval₂_C, Module.algebraMap_end_apply]
     exact hs a m
   | add p q hp hq =>
-    rw [map_add, LinearMap.add_apply, hp, hq, eval₂_add, add_smul]
+    rw [map_add (f := _), LinearMap.add_apply, hp, hq, eval₂_add, add_smul]
   | monomial n a ih =>
     have e : (C a * X ^ (n + 1) : Λ[X]) = (C a * X ^ n) * X := by rw [pow_succ, mul_assoc]
     rw [e, map_mul, aeval_X, Module.End.mul_apply, ih, eval₂_mul (p := C a * X ^ n) (q := X), eval₂_X, mul_smul]

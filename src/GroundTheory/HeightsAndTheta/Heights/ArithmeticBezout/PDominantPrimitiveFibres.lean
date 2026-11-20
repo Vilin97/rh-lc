@@ -167,7 +167,7 @@ theorem proof (hG : GenericProjectionFinite.Statement) : DominantPrimitiveFibres
       | algebraMap r =>
         rw [hsq]
         exact Subalgebra.algebraMap_mem _ _
-      | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+      | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
       | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
     rw [eq_top_iff]
     intro z _
@@ -282,7 +282,7 @@ theorem proof (hG : GenericProjectionFinite.Statement) : DominantPrimitiveFibres
     exact fun h => hne _ htM (hRRA (by rw [h, map_zero]))
   ·
     have h := congrArg (Polynomial.map ev) hab
-    simp only [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_C,
+    simp only [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_C,
       ← Polynomial.derivative_map] at h
     have hu1 : Polynomial.C (eval y (t : MvPolynomial (Fin d) ℂ))⁻¹ * Polynomial.C (eval y (t : MvPolynomial (Fin d) ℂ)) = (1 : Polynomial ℂ) := by
       rw [← Polynomial.C_mul, inv_mul_cancel₀ hty, Polynomial.C_1]

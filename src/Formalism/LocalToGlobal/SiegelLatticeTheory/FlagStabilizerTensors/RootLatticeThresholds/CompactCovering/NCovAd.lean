@@ -65,7 +65,7 @@ theorem NCovAd_inf_approx : ∃ R : ℝ, ∀ x : Ainf F, ∃ β : 𝓞 F,
   set z := x - algebraMap F (Ainf F) ((-γ : 𝓞 F) : F) with hzdef
   have hz : NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace F z ∈ ZSpan.fundamentalDomain b := by
     have e : NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace F z = w + NumberField.InfiniteAdeleRing.ringEquiv_mixedSpace F x := by
-      rw [hzdef, hneg, map_neg, sub_neg_eq_add, map_add, ← hγ,
+      rw [hzdef, hneg, map_neg, sub_neg_eq_add, map_add (f := _), ← hγ,
         NumberField.InfiniteAdeleRing.mixedEmbedding_eq_algebraMap_comp, add_comm]
     rw [e]
     first

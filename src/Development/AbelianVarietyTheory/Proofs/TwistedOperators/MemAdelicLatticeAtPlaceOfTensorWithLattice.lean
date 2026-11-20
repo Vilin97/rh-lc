@@ -46,7 +46,7 @@ lemma mulL_int_mem {d : ℕ} (W : Spc F E d) (v : GlobalTheory.IndefiniteRowSide
     simp only [mulL_apply, Pi.smul_apply]
     rw [Algebra.smul_def (A := E) o (y j), map_mul, mul_smul_comm]
   | zero => simpa using (GlobalTheory.InertSph.latAt W v).zero_mem
-  | add z z' _ _ h h' => rw [map_add]; exact (GlobalTheory.InertSph.latAt W v).add_mem h h'
+  | add z z' _ _ h h' => rw [map_add (f := _)]; exact (GlobalTheory.InertSph.latAt W v).add_mem h h'
   | neg z _ h => rw [map_neg]; exact (GlobalTheory.InertSph.latAt W v).neg_mem h
 
 end GlobalTheory.LatExtract
@@ -79,7 +79,7 @@ lemma rowL_mem {n d : ℕ} (X : Spc F E n) (W : Spc F E d) (v : GlobalTheory.Ind
     congr 2
     rw [← ho]
   | zero => simpa using (GlobalTheory.InertSph.latAt W v).zero_mem
-  | add z z' _ _ h h' => rw [map_add]; exact (GlobalTheory.InertSph.latAt W v).add_mem h h'
+  | add z z' _ _ h h' => rw [map_add (f := _)]; exact (GlobalTheory.InertSph.latAt W v).add_mem h h'
   | neg z _ h => rw [map_neg]; exact (GlobalTheory.InertSph.latAt W v).neg_mem h
 
 lemma rowL_vecMulVec {n d : ℕ} (i₀ : Fin n) (c : E) (x : Fin n → E) (q : Fin d → GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E) :

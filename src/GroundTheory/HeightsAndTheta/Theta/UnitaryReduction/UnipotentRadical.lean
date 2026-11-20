@@ -141,7 +141,7 @@ variable (F E)
 def hypPlaneSesq : (Fin 2 → E) →ₛₗ[conjHom F E] (Fin 2 → E) →ₗ[E] E :=
   LinearMap.mk₂'ₛₗ (conjHom F E) (RingHom.id E)
     (fun x y => conj F E (x 0) * y 1 + conj F E (x 1) * y 0)
-    (by intros; simp only [Pi.add_apply, map_add]; ring)
+    (by intros; simp only [Pi.add_apply, map_add (f := _)]; ring)
     (by intros; simp only [Pi.smul_apply, smul_eq_mul, map_mul]
         rw [show ∀ c, conjHom F E c = conj F E c from fun _ => rfl]; ring)
     (by intros; simp only [Pi.add_apply]; ring)
@@ -154,7 +154,7 @@ def hypPlane : HermitianForm F E (Fin 2 → E) where
   toSesq := hypPlaneSesq F E
   isSymm := ⟨fun x y => by
     change conj F E (hypPlaneSesq F E x y) = hypPlaneSesq F E y x
-    simp only [hypPlaneSesq_apply, map_add, map_mul, conj_conj]
+    simp only [hypPlaneSesq_apply, map_add (f := _), map_mul, conj_conj]
     ring⟩
   nonsingular := by
     refine ⟨fun x x' h => ?_, fun φ => ?_⟩
@@ -173,7 +173,7 @@ def hypPlane : HermitianForm F E (Fin 2 → E) where
       have hy : y = y 0 • Pi.single 0 1 + y 1 • Pi.single 1 1 := by
         funext i; fin_cases i <;> simp
       conv_rhs => rw [hy]
-      simp only [hypPlaneSesq_apply, map_add, map_smul, smul_eq_mul, Matrix.cons_val_zero,
+      simp only [hypPlaneSesq_apply, map_add (f := _), map_smul, smul_eq_mul, Matrix.cons_val_zero,
         Matrix.cons_val_one, conj_conj]
       ring
 

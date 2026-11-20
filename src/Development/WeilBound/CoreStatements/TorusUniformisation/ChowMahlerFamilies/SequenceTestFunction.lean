@@ -205,7 +205,7 @@ theorem isUnit_of_coprime {C O : Type} [Field C] [CommRing O] [Algebra O C] {v :
   have h1 : v (algebraMap O C (a : O)) < 1 := lt_of_le_of_ne (hv.map_le_one _) hne
   obtain ⟨r, s, hrs⟩ := Nat.Coprime.cast (R := O) h
   have h2 : v (algebraMap O C (r * a + s * p)) < 1 := by
-    rw [map_add, map_mul, map_mul]
+    rw [map_add (f := _), map_mul, map_mul]
     refine Valuation.map_add_lt v ?_ ?_ <;> rw [map_mul]
     · exact mul_lt_one_of_nonneg_of_lt_one_right (hv.map_le_one _) zero_le h1
     · exact mul_lt_one_of_nonneg_of_lt_one_right (hv.map_le_one _) zero_le hp

@@ -178,7 +178,7 @@ theorem logInt_frob [CharZero C] {p : ℕ} {f : MvPowerSeries (Fin 2) C} (hL : f
   have hF' : F ∈ ordGe C (wv 1) 1 := by
     rw [hFe]; exact Submodule.add_mem _ (ordGe_mono (by omega) (mvExp_sub hL.1 hf')) hf'
   have hc : coeff (ee p 1) F = coeff (ee p 1) f := by
-    rw [hFe, map_add, mvExp_sub hL.1 hf' _ (by rw [weight_wv]; simp), zero_add]
+    rw [hFe, map_add (f := _), mvExp_sub hL.1 hf' _ (by rw [weight_wv]; simp), zero_add]
   have hFi : IntS V F := fun e => by
     rw [hFdef, map_sub]; exact (hL.2 e).sub (GlobalTheory.RowVal.intS_one e)
   have hF0 : constantCoeff F = 0 := by
@@ -422,7 +422,7 @@ theorem hAt_add [CharZero C] (H : RLaw X V) {τ : Type} {a a' b : κ → MvPower
   have h := logInt_subst hc hi
     (F := hAt X (gp C κ (0 : Fin 3)) (gp C κ 2) + hAt X (gp C κ 1) (gp C κ 2) -
       hAt X (addP X (gp C κ 0) (gp C κ 1)) (gp C κ 2))
-    ⟨by rw [map_sub, map_add, hAt_const H (gp_const _) (gp_const _), hAt_const H (gp_const _) (gp_const _),
+    ⟨by rw [map_sub, map_add (f := _), hAt_const H (gp_const _) (gp_const _), hAt_const H (gp_const _) (gp_const _),
       hAt_const H hA (gp_const _), add_zero, sub_zero], H.ph1⟩
   rw [subst_sub hS, subst_add hS, subst_hAt X (gp_const _) (gp_const _) hc, subst_hAt X (gp_const _) (gp_const _) hc,
     subst_hAt X hA (gp_const _) hc] at h
@@ -708,7 +708,7 @@ theorem good_curve [NeZero d] {g : Fin 2} (H : X.CartHyp V g) {a : ZMod d} {w : 
     ring
   · have e := congrArg (PowerSeries.coeff V.l) (h2 q)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [c1, map_add, map_sub, map_sum, Finset.sum_eq_zero, add_zero] at e
+      rw [c1, map_add (f := _), map_sub, map_sum, Finset.sum_eq_zero, add_zero] at e
     · rw [Cart.c0', e]; ring
     · intro c _
       split_ifs

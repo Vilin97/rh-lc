@@ -60,7 +60,7 @@ def μA (c : (R : Type u)) : (Dp.D : Type u) →ₐ[R₀] (Dp.D : Type u) where
     simp only [fμ, map_mul]
     linear_combination (Dp.σ.1 c - Dp.σ.1 c ^ 2) * h
   map_zero' := by simp [fμ]
-  map_add' a b := by simp only [fμ, map_add]; ring
+  map_add' a b := by simp only [fμ, map_add (f := _)]; ring
   commutes' r := by simp [fμ]
 
 lemma μA_apply (c : (R : Type u)) (d : (Dp.D : Type u)) : Dp.μA c d = Dp.fμ c d := rfl
@@ -135,7 +135,7 @@ def sA : (Dp.F : Type u) →ₐ[R₀] (Dp.D : Type u) where
     linear_combination -e₃ - e₄
   map_zero' := by simp [fs]
   map_add' a b := by
-    simp only [fs, Subalgebra.coe_add, Prod.fst_add, Prod.snd_add, map_add]; ring
+    simp only [fs, Subalgebra.coe_add, Prod.fst_add, Prod.snd_add, map_add (f := _)]; ring
   commutes' r := by
     show algebraMap R₀ (Dp.D : Type u) r + algebraMap R₀ (Dp.D : Type u) r -
       Dp.σ.1 (Dp.π.1 (algebraMap R₀ (Dp.D : Type u) r)) = algebraMap R₀ (Dp.D : Type u) r
@@ -143,7 +143,7 @@ def sA : (Dp.F : Type u) →ₐ[R₀] (Dp.D : Type u) where
 
 lemma π_sA (q : Dp.fpS) : Dp.π.1 (Dp.sA q) = Dp.π.1 q.1.1 := by
   show Dp.π.1 (q.1.1 + q.1.2 - Dp.σ.1 (Dp.π.1 q.1.1)) = _
-  rw [map_sub, map_add, Dp.sect, ← Dp.fp_eq]; ring
+  rw [map_sub, map_add (f := _), Dp.sect, ← Dp.fp_eq]; ring
 
 def sL : LHom Dp.F Dp.D :=
   mkLHom Dp.sA fun q hq => Dp.fp_isUnit q (by simpa [Dp.π_sA] using hq.map Dp.π.1)

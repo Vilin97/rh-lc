@@ -28,7 +28,7 @@ theorem intAt_zero' (P : Pl D → Prop) : (0 : AE D) ∈ intAt D P :=
   ⟨zero_mem _, by rw [RingHom.map_zero]; exact zero_mem _⟩
 
 theorem intAt_add' {P : Pl D → Prop} {a b : AE D} (ha : a ∈ intAt D P) (hb : b ∈ intAt D P) : a + b ∈ intAt D P :=
-  ⟨add_mem ha.1 hb.1, by rw [RingHom.map_add]; exact add_mem ha.2 hb.2⟩
+  ⟨add_mem ha.1 hb.1, by rw [RingHom.map_add (f := _)]; exact add_mem ha.2 hb.2⟩
 
 theorem intAt_neg' {P : Pl D → Prop} {a : AE D} (ha : a ∈ intAt D P) : -a ∈ intAt D P :=
   ⟨neg_mem ha.1, by rw [RingHom.map_neg]; exact neg_mem ha.2⟩

@@ -66,7 +66,7 @@ theorem matrix_unip_cover {A : Type} [CommRing A] [TopologicalSpace A] [IsTopolo
     (by rw [Matrix.mul_assoc, ← Matrix.mul_assoc (cT s D * J), yx, Matrix.one_mul]) hst
     (by rw [Matrix.mul_assoc, ← Matrix.mul_assoc (cT s D * J), yy]; simp)
     (by rw [Matrix.mul_assoc, ← Matrix.mul_assoc (cT s C * J), xx]; simp)
-    (by rw [← map_add, hh, map_one])
+    (by rw [← map_add (f := _), hh, map_one])
     (fun x => (Matrix.scalar_commute _ (fun _ => Commute.all _ _) x).eq) hK hKs
   refine ⟨K', hK', fun g hg => (hU _).1 (h1 g hg).1, fun g u1 u2 ⟨B, u3⟩ => ?_⟩
   obtain ⟨γ, ⟨p1, p2, p3⟩, p4⟩ := h2 g ⟨(hU _).2 u1, by rw [← Matrix.mul_assoc, u2, Matrix.zero_mul], by
@@ -155,7 +155,7 @@ theorem unipRad_cover_of_dual (hσ : ∀ x, σ (σ x) = x) (hJ : IsHermND σ J) 
     (fun a => by
       induction a using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul a x => exact congrArg (a ⊗ₜ[F] ·) (hσ x))
     (GlobalTheory.AdelicUnitaryTop.continuous_sigR (AF F) σ) (adMat F J) (adMat F J⁻¹)
     ((c1 J).trans (congrArg (adMat F) (Matrix.ext fun i j => hJ.1 i j)))
@@ -163,7 +163,7 @@ theorem unipRad_cover_of_dual (hσ : ∀ x, σ (σ x) = x) (hJ : IsHermND σ J) 
     (adMat F C) (adMat F D)
     (by rw [c2, xx]; exact Matrix.map_zero _ (map_zero _)) (by rw [c2, yy]; exact Matrix.map_zero _ (map_zero _))
     (by rw [c2, xy]; exact Matrix.map_one _ (map_zero _) (map_one _)) (φ (1 / 2))
-    (by rw [← map_add, add_halves, map_one]) (φ.mapMatrix (m := Fin n)).range
+    (by rw [← map_add (f := _), add_halves, map_one]) (φ.mapMatrix (m := Fin n)).range
     (by rintro _ ⟨X, rfl⟩; exact ⟨_, (c1 X).symm⟩) ⟨_, rfl⟩ ⟨_, rfl⟩
     ⟨C * cT (σ : E →+* E) D, by rw [c1]; exact Matrix.map_mul⟩
     ⟨Matrix.scalar _ (1 / 2), by ext i j; by_cases h : i = j <;> simp [h]⟩

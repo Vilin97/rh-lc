@@ -81,7 +81,7 @@ private theorem weight_pairW_eq_erase_of_split {r n : ℕ} (l j : Fin n) (hlj : 
       Finsupp.single (a0, l) (m (a0, l) + m (a0, j)) := by
     rw [← hw]
     conv_lhs => rw [hsplit]
-    rw [map_add, map_add, weight_single_eq_nsmul, weight_single_eq_nsmul, hpl, hpj]
+    rw [map_add (f := _), map_add (f := _), weight_single_eq_nsmul, weight_single_eq_nsmul, hpl, hpj]
     first
       | (rw [add_assoc, ← add_smul, Finsupp.smul_single, smul_eq_mul, mul_one])
       | (ext y

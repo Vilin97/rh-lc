@@ -34,7 +34,7 @@ theorem compFin_conj (u : Pl F) (z : AE F E) : compFin F E u (sigR _ σ z) = sig
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a x => rfl
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem absEv_eq (hcm : IsCMExt F E σ) {v : Pl F} (t : E →ₐ[F] Fv F v) (x : (Fv F v ⊗[F] E)ˣ) :
     (absEv F E v x : ℝ) =

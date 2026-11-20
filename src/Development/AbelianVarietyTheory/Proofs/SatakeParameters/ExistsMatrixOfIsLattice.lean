@@ -79,7 +79,7 @@ theorem section_mem {A K ι κ : Type} [CommRing A] [Field K] (O : ValuationSubr
     simp only [Pi.zero_apply, this]
     exact zero_mem L
   | add x y _ _ hx hy =>
-    have : ∀ a b, σ (a + b) = ε * (σ a + σ b) := fun a b => by rw [← h2, map_add, h1, h1]
+    have : ∀ a b, σ (a + b) = ε * (σ a + σ b) := fun a b => by rw [← h2, map_add (f := _), h1, h1]
     simp only [Pi.add_apply, this]
     exact h4 _ hε _ (add_mem hx hy)
   | smul c x _ hx =>
@@ -118,7 +118,7 @@ theorem exists_basis : ∀ {D : D7} (V : HSp D) (e : Formalism.L2.Theta.AE D) (v
       simp only [map_zero, Finsupp.coe_zero, Pi.zero_apply]
       exact zero_mem _
     | add a b _ _ ha hb =>
-      simp only [map_add, Finsupp.coe_add, Pi.add_apply]
+      simp only [map_add (f := _), Finsupp.coe_add, Pi.add_apply]
       exact add_mem ha hb
     | smul c a _ ha =>
       simp only [map_smul, Finsupp.coe_smul, Pi.smul_apply, smul_eq_mul, map_mul]
@@ -158,7 +158,7 @@ theorem exists_basis : ∀ {D : D7} (V : HSp D) (e : Formalism.L2.Theta.AE D) (v
       simp only [Pi.zero_apply, RingHom.map_zero]
       exact zero_mem _
     | add y z _ _ hy hz =>
-      simp only [Pi.add_apply, RingHom.map_add]
+      simp only [Pi.add_apply, RingHom.map_add (f := _)]
       exact add_mem hy hz
     | neg y _ hy =>
       simp only [Pi.neg_apply, RingHom.map_neg]

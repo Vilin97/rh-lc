@@ -55,7 +55,7 @@ theorem map_mem_span_of_mem_span {A B : Subalgebra o Ω} (hAB : A ≤ B) {f : Ω
   | add x y _ _ hx hy =>
     refine ⟨fun j => add_mem (hx.1 j) (hy.1 j), ?_⟩
     have : (fun j => f ((x + y) j)) = (fun j => f (x j)) + fun j => f (y j) := funext fun j =>
-      (hf (⟨_, hx.1 j⟩ + ⟨_, hy.1 j⟩)).symm.trans (by rw [map_add, hf, hf]; rfl)
+      (hf (⟨_, hx.1 j⟩ + ⟨_, hy.1 j⟩)).symm.trans (by rw [map_add (f := _), hf, hf]; rfl)
     rw [this]
     exact add_mem hx.2 hy.2
   | smul c x _ hx =>

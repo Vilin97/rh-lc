@@ -109,7 +109,7 @@ theorem Rel.mul {o₁ o₂ : Module.End ℂ (Sm E a)} {O₁ O₂ : Module.End �
 
 theorem Rel.add {o₁ o₂ : Module.End ℂ (Sm E a)} {O₁ O₂ : Module.End ℂ (Vsp W)} (h₁ : Rel o₁ O₁) (h₂ : Rel o₂ O₂) :
     Rel (o₁ + o₂) (O₁ + O₂) := fun φ hφ β ψ hψ g => by
-  simp only [LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, map_add, h₁ φ hφ β ψ hψ g, h₂ φ hφ β ψ hψ g]
+  simp only [LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, map_add (f := _), h₁ φ hφ β ψ hψ g, h₂ φ hφ β ψ hψ g]
 
 theorem Rel.smul {o : Module.End ℂ (Sm E a)} {O : Module.End ℂ (Vsp W)} (h : Rel o O) (c : ℂ) :
     Rel (c • o) (c • O) := fun φ hφ β ψ hψ g => by
@@ -253,7 +253,7 @@ theorem exists_casK_poly : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyCo
   have hB : ∀ (τ : E →+* ℂ) (i j : Fin a), ∃ O : Module.End ℂ (Vsp W),
       Rel (lieS E a i j (atEmb τ Complex.I) + lieS E a j i (atEmb τ Complex.I)) O := by
     intro τ i j
-    rw [lieS_apply, lieS_apply, ← map_add]
+    rw [lieS_apply, lieS_apply, ← map_add (f := _)]
     refine hlie _ (skew_add ?_ i j)
     rw [star_atEmb, Complex.star_def, Complex.conj_I, atEmb_eq, atEmb_eq τ Complex.I]
     simp

@@ -63,7 +63,7 @@ theorem exists_rel_coeff_zero_ne {Y : Type} {n : ℕ} (S : Set Y) (u : Fin (n + 
         have h1 : Q.coeff (Finsupp.single 0 1 + m) ≠ 0 := by
           rw [hQQ, coeff_X_mul]; exact hm
         have := hh h1
-        rw [map_add, Finsupp.weight_single] at this
+        rw [map_add (f := _), Finsupp.weight_single] at this
         simp at this
         omega
       obtain ⟨m, hm⟩ := ne_zero_iff.mp hQ1ne

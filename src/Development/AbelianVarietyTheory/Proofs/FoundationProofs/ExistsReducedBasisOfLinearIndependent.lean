@@ -149,7 +149,7 @@ theorem exists_reduced_basis_matrix : ExistsBoundedBasis := by
         (e.repr α l : ℝ) - N * w l := by
       intro l
       have : e.repr (e.equivFun.symm w) l = w l := congrFun (e.equivFun.apply_symm_apply w) l
-      rw [map_add, map_smul, map_neg, Finsupp.add_apply, Finsupp.smul_apply, Finsupp.neg_apply, this]
+      rw [map_add (f := _), map_smul, map_neg, Finsupp.add_apply, Finsupp.smul_apply, Finsupp.neg_apply, this]
       push_cast [smul_eq_mul]; ring
     simp only [e1] at h
     linarith
@@ -188,7 +188,7 @@ theorem exists_reduced_basis_of_posDef_gram (q : QuadraticMap ℤ X ℝ) (b : Ba
   · refine h2 N hN (b.equivFun α) (fun w => ?_) i
     have h := hα (b.equivFun.symm w)
     rw [← quadratic_equivFun q b, ← quadratic_equivFun q b] at h
-    simpa only [map_add, map_smul, LinearEquiv.apply_symm_apply] using h
+    simpa only [map_add (f := _), map_smul, LinearEquiv.apply_symm_apply] using h
 
 theorem exists_reduced_basis_pairing_coord [Module.Free ℤ X] [Module.Finite ℤ X]
     (hd : finrank ℤ X = d) (q : QuadraticMap ℤ X ℝ) (hq : (realExt q).PosDef) :

@@ -17,10 +17,10 @@ theorem exists_compact_integral (E : Type) [Field E] [NumberField E] :
   obtain ⟨r, hr⟩ := hCy (x.1 - algebraMap E _ u)
   refine ⟨u + r, ?_, ?_⟩
   · show x.1 - algebraMap E (InfiniteAdeleRing E) (u + r) ∈ C
-    rw [map_add, ← sub_sub]
+    rw [map_add (f := _), ← sub_sub]
     exact hr
   · have : x.2 - algebraMap E (Af E) (u + r) =
-        (x.2 - algebraMap E _ u) - algebraMap E _ (r : E) := by rw [map_add, sub_sub]
+        (x.2 - algebraMap E _ u) - algebraMap E _ (r : E) := by rw [map_add (f := _), sub_sub]
     show ∀ v, (x.2 - algebraMap E (Af E) (u + r)) v ∈ _
     rw [this]
     exact sub_mem hu (Formalism.L2.GlobalTheoryTheory.FiltrationBoundaryCriterion.CompactFixesLatticeTheory.algebraMap_mem_intAd r)

@@ -71,7 +71,7 @@ theorem exists_isCN_common_of_finite : ∀ (R₀ A R' : Type) [CommRing R₀] [I
     induction hx using Submodule.span_induction with
     | mem y hy => exact IntermediateField.subset_adjoin K _ ⟨y, hy, rfl⟩
     | zero => rw [map_zero]; exact zero_mem L
-    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
     | smul r y _ hy =>
       rw [Algebra.smul_def, map_mul]
       refine mul_mem ?_ hy

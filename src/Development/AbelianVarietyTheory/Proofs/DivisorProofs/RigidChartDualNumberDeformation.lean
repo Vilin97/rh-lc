@@ -62,9 +62,9 @@ theorem theta_eq_fibre (P₀ : Out.PolAV (Sp K)) {n : ℕ} (u : Fin n → (epsR 
       (fun W₁ f => (m.app W₁).hom (d p.1 W₁ f - d' p.2 W₁ f))
       (fun W₁ h f f' => ?_) (fun W₁ h f f' => ?_) (fun W₁ W₂ h h₀ f => ?_) (fun W₁ h r => ?_)).exists
     · rw [(hf p.1).1 W₁ (h.trans inf_le_left), (hf' p.2).1 W₁ (h.trans inf_le_right)]
-      simp only [map_sub, map_add]; ring
+      simp only [map_sub, map_add (f := _)]; ring
     · rw [(hf p.1).2.1 W₁ (h.trans inf_le_left), (hf' p.2).2.1 W₁ (h.trans inf_le_right)]
-      simp only [map_sub, map_add, map_mul]; ring
+      simp only [map_sub, map_add (f := _), map_mul]; ring
     · rw [(hf p.1).2.2 W₁ W₂ h (h₀.trans inf_le_left), (hf' p.2).2.2 W₁ W₂ h (h₀.trans inf_le_right), ← map_sub,
         app_resG]
     · rw [bse p.1 W₁ (h.trans inf_le_left), bse' p.2 W₁ (h.trans inf_le_right), sub_self, map_zero]

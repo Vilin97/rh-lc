@@ -49,7 +49,7 @@ theorem der_zero_etale {K B : Type} [Field K] [CommRing B] [Algebra K B] {d : �
   have hP : ∀ q : MvPolynomial (Fin d) K, δ (algebraMap _ B q) = 0 := fun q => by
     induction q using MvPolynomial.induction_on with
     | C k => rw [← MvPolynomial.algebraMap_eq, ← IsScalarTower.algebraMap_apply, hK]
-    | add p q hp hq => rw [map_add, map_add, hp, hq, add_zero]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, add_zero]
     | mul_X p i hp => rw [map_mul, hmul, hp, hz]; simp
   let : Algebra B ℂ := ψ.toAlgebra
   let : Algebra (MvPolynomial (Fin d) K) ℂ := (ψ.comp (algebraMap _ B)).toAlgebra

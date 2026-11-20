@@ -95,7 +95,7 @@ theorem cen_comm (z : S ⊗[ℚ] F) (y : S ⊗[ℚ] B) : Commute (cen S F B z) y
       rw [Algebra.TensorProduct.tmul_mul_tmul, Algebra.TensorProduct.tmul_mul_tmul, mul_comm s s',
         Algebra.commutes]
     | add a b ha hb => exact Commute.add_right ha hb
-  | add a b ha hb => rw [map_add]; exact Commute.add_left ha hb
+  | add a b ha hb => rw [map_add (f := _)]; exact Commute.add_left ha hb
 
 theorem exists_conj_of_traces [Algebra.IsCentral F B] [IsSimpleRing B] (n : ℕ) (hn : Module.finrank F B = n ^ 2)
     (x₀ : B) (hsep : (minpoly F x₀).Separable) (hdeg : (minpoly F x₀).natDegree = n) (y : S ⊗[ℚ] B)

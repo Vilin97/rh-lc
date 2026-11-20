@@ -33,7 +33,7 @@ theorem exists_isSig : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : Ide
   let f : R₁ →+ B₀ →+ B := AddMonoidHom.mk' (fun y ↦ AddMonoidHom.mk' (fun b₀ ↦ α.k y • s b₀) (by
       intro b₀ b₀'
       rw [← smul_add]
-      exact key y _ _ (by rw [map_add, hs', hs', hs'])))
+      exact key y _ _ (by rw [map_add (f := _), hs', hs', hs'])))
     (by
       intro y y'
       ext b₀

@@ -114,7 +114,7 @@ theorem apply_eq_smul_of_forall_conj {V : Type*} [AddCommGroup V] [Module ℂ V]
   let W : Subrepresentation ρ :=
     { toSubmodule :=
         { carrier := {w | ∀ a : A, ρ a w = (l a : ℂ) • w}
-          add_mem' := fun {w w'} hw hw' a ↦ by rw [map_add, hw a, hw' a, smul_add]
+          add_mem' := fun {w w'} hw hw' a ↦ by rw [map_add (f := _), hw a, hw' a, smul_add]
           zero_mem' := fun a ↦ by rw [map_zero, smul_zero]
           smul_mem' := fun c w hw a ↦ by rw [map_smul, hw a, smul_comm] }
       apply_mem_toSubmodule := fun g w hw a ↦ by

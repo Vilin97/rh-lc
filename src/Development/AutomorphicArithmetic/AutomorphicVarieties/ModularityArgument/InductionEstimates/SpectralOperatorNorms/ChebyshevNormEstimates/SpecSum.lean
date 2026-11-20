@@ -16,7 +16,7 @@ private theorem specSum_op {d : ℕ} (a Y : Eu d →L[ℂ] Eu d) (y : ℝ → �
   have hw : w ∈ (⨆ μ : ℂ, Module.End.eigenspace (a : Eu d →ₗ[ℂ] Eu d) μ) := htop ▸ Submodule.mem_top
   induction hw using Submodule.iSup_induction' with
   | zero => simp
-  | add u v _ _ hu hv => simp only [map_add, hu, hv, smul_add, Finset.sum_add_distrib]
+  | add u v _ _ hu hv => simp only [map_add (f := _), hu, hv, smul_add, Finset.sum_add_distrib]
   | mem μ v hv =>
     by_cases h0 : v = 0
     · subst h0; simp

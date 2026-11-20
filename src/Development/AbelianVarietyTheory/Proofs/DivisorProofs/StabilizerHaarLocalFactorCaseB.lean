@@ -136,7 +136,7 @@ theorem compAt_levi {l : (AE F E)ˣ} {g₀ : UA σ X₁.J} {m : UA σ X.J} (h : 
   · rw [compAt_mulVec, h.2.1, comb_smul, ← map_inv]
     congr 1
     change _ = cA σ (eFin v • (l⁻¹ : (AE F E)ˣ).1 + (1 - eFin v) • 1)
-    rw [map_add, map_smul, map_smul, map_one]
+    rw [map_add (f := _), map_smul, map_smul, map_one]
   · rw [mat_compAt, mat_compAt, Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul, Matrix.smul_mul, Matrix.mul_smul,
       Matrix.mul_smul, h.2.2, Matrix.one_mul, Matrix.mul_one]
 

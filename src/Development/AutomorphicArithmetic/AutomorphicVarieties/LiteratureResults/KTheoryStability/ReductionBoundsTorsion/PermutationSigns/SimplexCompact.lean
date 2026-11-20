@@ -209,7 +209,7 @@ theorem intS_pull {V V' : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [Norm
   congr 1
   congr 1
   set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [map_add, map_sum, map_sub, map_smul, add_sub_add_right_eq_sub]
+    · simp only [map_add (f := _), map_sum, map_sub, map_smul, add_sub_add_right_eq_sub]
     abel
   · funext j
     simp
@@ -256,7 +256,7 @@ theorem intP_inv {q : ℕ} {ω : Form (HS L N) q} (hω : ∀ g, FInv ω g) (g : 
   have h1 := hF _ hmem
   rw [← h1]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [ContinuousAlternatingMap.compContinuousLinearMap_apply, map_add, map_sum, map_sub, map_smul,
+    simp only [ContinuousAlternatingMap.compContinuousLinearMap_apply, map_add (f := _), map_sum, map_sub, map_smul,
     Function.comp_def]
 
 def evL {G H Y : Type} [Group G] [Group H] [MulAction H Y] (ρ : G →* H) {m : ℕ}

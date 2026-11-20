@@ -75,7 +75,7 @@ theorem pointwise : PI.KFinSmooth → ∀ (k r : ℕ) (ε : Fin (2 * r + k + 1) 
   set L := lenA k r z g a.succ with hL
   have badd : ∀ v ∈ R.sm, ∀ v' ∈ R.sm, l (R.σ g (v + v')) = l (R.σ g v) + l (R.σ g v') := by
     intro v hv v' hv'
-    rw [map_add]; exact ladd _ (hsm g hg v hv) _ (hsm g hg v' hv')
+    rw [map_add (f := _)]; exact ladd _ (hsm g hg v hv) _ (hsm g hg v' hv')
   have bsmul : ∀ (c : ℂ), ∀ v ∈ R.sm, l (R.σ g (c • v)) = c • l (R.σ g v) := by
     intro c v hv
     rw [map_smul]; exact lsmul _ _ (hsm g hg v hv)

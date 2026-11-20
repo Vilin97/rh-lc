@@ -94,8 +94,8 @@ theorem HfD_eq_unramified : ∀ {G : Type} [Group G] [TopologicalSpace G] {Qp K�
       induction y using TensorProduct.induction_on with
       | zero => simp
       | tmul v b => simp [m, actVB, hρ]
-      | add a b ha hb => simp only [map_add, ha, hb]
-    refine ⟨⟨hc₀c, fun g h => by simp only [hδadd, map_add, hρ]⟩, m x₀, fun g => ?_⟩
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
+    refine ⟨⟨hc₀c, fun g h => by simp only [hδadd, map_add (f := _), hρ]⟩, m x₀, fun g => ?_⟩
     have := congrArg m (hx₀ g)
     simp only [m, AlgebraTensorModule.map_tmul, LinearMap.id_apply, map_sub] at this
     rw [← hm]
@@ -138,7 +138,7 @@ theorem HfD_eq_unramified : ∀ {G : Type} [Group G] [TopologicalSpace G] {Qp K�
     rw [this]
     exact hc₀c.const_smul a
   have hradd : ∀ a g h, r a (g * h) = r a g + r a h := fun a g h => by
-    simp only [r, hδadd, mul_add, map_add]
+    simp only [r, hδadd, mul_add, map_add (f := _)]
   have hrI : ∀ a, ∀ g ∈ I, r a g = 0 := fun a g hg => by
     simp only [r, hδI g hg, mul_zero, map_zero]
   have hr₀ : r (y₀ / δ g₀) g₀ ≠ 0 := by

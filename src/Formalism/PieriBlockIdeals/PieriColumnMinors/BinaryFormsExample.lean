@@ -29,7 +29,7 @@ theorem good_part_abstract_holds : GoodPartAbstract := by
       · rw [hs, zero_smul]; exact Submodule.zero_mem _
       · exact Submodule.smul_mem _ _ (Submodule.mem_iSup_of_mem τ (Submodule.mem_iSup_of_mem hs hm))
     · rw [map_zero]; exact Submodule.zero_mem _
-    · intro x y hx hy; rw [map_add]; exact Submodule.add_mem _ hx hy
+    · intro x y hx hy; rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   · refine iSup₂_le fun τ hτ m hm => ?_
     refine ⟨(w ^ n + ∑ a : Fin n, χ τ a * w ^ a.val)⁻¹ • m, ?_⟩
     rw [map_smul, hAm τ m hm, smul_smul, inv_mul_cancel₀ hτ, one_smul]
@@ -203,7 +203,7 @@ theorem depth_span_holds : DepthSpan := by
       · exact Submodule.mem_iSup_of_mem (n + 1) (h2 n (c, β) z)
       · exact Submodule.mem_iSup_of_mem n ((h5 n z).1 c d)
     · rw [map_zero]; exact Submodule.zero_mem _
-    · intro x y hx hy; rw [map_add]; exact Submodule.add_mem _ hx hy
+    · intro x y hx hy; rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   refine ⟨h1, h2, h3, h4, h5, h6, fun hgen => hgen _ ?_ h6⟩
   exact h1.symm.le.trans (le_iSup (fun n => LinearMap.range (S.mu n)) 0)
 
@@ -235,7 +235,7 @@ theorem iota_injective_holds : IotaInjective := by
     · subst hn; exact iota_kernel_holds k V P R S B h _ _ hz z'
     · exact depth_orthogonal_holds k V P R S B h n' n hn z' z
   · simp
-  · intro x y hx hy; rw [map_add, LinearMap.add_apply, hx, hy, add_zero]
+  · intro x y hx hy; rw [map_add (f := _), LinearMap.add_apply, hx, hy, add_zero]
 
 theorem nabla_criterion_holds : NablaCriterion := by
   intro O K V P R _ _ _ _ _ _ _ _ _ _ _ _ S B DelL h n z
@@ -331,7 +331,7 @@ theorem shape_coefficient_holds : ShapeCoeff := by
   have hd := natDegree_shapePoly_eq htau
   conv_rhs => rw [hm.as_sum, hd]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [Polynomial.map_add, Polynomial.map_pow, map_X, Polynomial.map_sum,
+    rw [Polynomial.map_add (f := _), Polynomial.map_pow, map_X, Polynomial.map_sum,
     Fin.sum_univ_eq_sum_range (fun a => (C (((shapePoly lam2 tau).coeff a : ℤ) : A) * X ^ a : A[X])) i]
   congr 1
   refine Finset.sum_congr rfl fun a _ => ?_

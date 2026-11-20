@@ -23,16 +23,16 @@ theorem adj_actOn_afP : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (G : HTGroup 
   intro p _ D G L x v w
   induction x using TensorProduct.induction_on generalizing v w with
   | zero => simp
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, MulOpposite.unop_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, MulOpposite.unop_add, hx, hy]
   | tmul r c =>
     rw [starT_tmul]
     induction v using TensorProduct.induction_on generalizing w with
     | zero => simp
-    | add v v' hv hv' => simp only [map_add, LinearMap.add_apply, hv, hv']
+    | add v v' hv hv' => simp only [map_add (f := _), LinearMap.add_apply, hv, hv']
     | tmul a v₀ =>
       induction w using TensorProduct.induction_on with
       | zero => simp
-      | add w w' hw hw' => simp only [map_add, hw, hw']
+      | add w w' hw hw' => simp only [map_add (f := _), hw, hw']
       | tmul a' w₀ =>
         rw [actOn_tmul_tmul', actOn_tmul_tmul', LinearMap.BilinForm.baseChange_tmul,
           LinearMap.BilinForm.baseChange_tmul, L.adj c v₀ w₀, mul_left_comm, _root_.mul_assoc]

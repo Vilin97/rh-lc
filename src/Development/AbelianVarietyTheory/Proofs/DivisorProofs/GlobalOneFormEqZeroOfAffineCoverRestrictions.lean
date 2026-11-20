@@ -31,7 +31,7 @@ theorem exists_pow_smul_eq_zero {R C B : Type} [CommRing R] [CommRing C] [CommRi
       obtain ⟨c, rfl⟩ := hx
       rw [hD, KaehlerDifferential.map_D]; rfl
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
     | smul c x _ hx =>
       rw [hs, hx, (KaehlerDifferential.map R R C B).map_smul]
       exact algebraMap_smul B c _

@@ -13,7 +13,7 @@ theorem isNilpotent_of_trace_pow [CharZero K] [FiniteDimensional K V] (x : Modul
   have hp : ∀ a : K[X], LinearMap.trace K V (aeval x (a * X)) = 0 := by
     intro a
     induction a using Polynomial.induction_on' with
-    | add p q hp hq => rw [add_mul, map_add, map_add, hp, hq, add_zero]
+    | add p q hp hq => rw [add_mul, map_add (f := _), map_add (f := _), hp, hq, add_zero]
     | monomial n c =>
       rw [monomial_mul_X, aeval_monomial, ← Algebra.smul_def, map_smul, h, smul_zero]
   obtain ⟨q, hq, hnd⟩ := exists_eq_pow_rootMultiplicity_mul_and_not_dvd x.charpoly
@@ -38,7 +38,7 @@ theorem isNilpotent_of_trace_pow [CharZero K] [FiniteDimensional K V] (x : Modul
   have : (X : K[X]) ^ k = X ^ k * (a * X ^ (k + 1)) + b * (X ^ k * q) := by
     linear_combination (-X ^ k) * hab
   have h2 := congrArg (aeval x) this
-  rw [map_add, map_mul _ (X ^ k), he, map_mul _ b, h0, map_pow, aeval_X] at h2
+  rw [map_add (f := _), map_mul _ (X ^ k), he, map_mul _ b, h0, map_pow, aeval_X] at h2
   simpa using h2
 
 variable {Γ : Type} [Group Γ] (ρ : Representation K Γ V) (H : Subgroup Γ)

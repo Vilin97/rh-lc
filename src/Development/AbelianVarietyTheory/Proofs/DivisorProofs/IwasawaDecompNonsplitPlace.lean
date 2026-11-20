@@ -24,7 +24,7 @@ theorem cA_eq_sigR (σ : E →ₐ[F] E) (z : AE F E) : cA σ z = sigR (AF F) σ 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add y z hy hz => rw [map_add, map_add, hy, hz]
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
 
 theorem transpose_cond {A : Type} [CommRing A] {n : ℕ} (s : A → A) (c : A) (hc : IsUnit c)
     (N G : Matrix (Fin n) (Fin n) A) :

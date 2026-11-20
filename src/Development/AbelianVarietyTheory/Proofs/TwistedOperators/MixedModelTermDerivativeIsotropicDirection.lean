@@ -25,7 +25,7 @@ theorem isoPart_lineAt (hθ : IsInfFam θ) (V W : HSp D) {r : ℕ} (C : Matrix (
   let L : ℝ →+ WO V W :=
     { toFun := fun t => isoPart V W C (lineAt θ τ z t)
       map_zero' := by unfold isoPart; rw [AddMonoidHom.map_zero, Matrix.zero_mul]
-      map_add' := fun s t => by unfold isoPart; rw [AddMonoidHom.map_add, Matrix.add_mul] }
+      map_add' := fun s t => by unfold isoPart; rw [AddMonoidHom.map_add (f := _), Matrix.add_mul] }
   have hL' : IsLineAt θ τ (dirAt V W C τ z) L := by
     refine ⟨(continuous_isoPart V W C).comp hL.1, fun t => ?_, fun t τ' => ?_⟩
     · show (isoPart V W C (lineAt θ τ z t)).map (finPart D) = 0

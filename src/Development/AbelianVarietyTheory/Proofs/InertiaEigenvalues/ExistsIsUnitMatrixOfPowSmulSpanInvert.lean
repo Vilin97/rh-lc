@@ -13,7 +13,7 @@ def powDenomSubring {S EE : Type} [CommRing S] [CommRing EE] (a : S →+* EE) (Q
   add_mem' := by
     rintro e f ⟨n, t, ht⟩ ⟨m, r, hr⟩
     refine ⟨n + m, Q ^ m * t + Q ^ n * r, ?_⟩
-    rw [map_add, map_mul, map_mul, map_pow, map_pow, ← ht, ← hr]; ring
+    rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, ← ht, ← hr]; ring
   zero_mem' := ⟨0, 0, by simp⟩
   neg_mem' := by
     rintro e ⟨n, t, ht⟩

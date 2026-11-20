@@ -54,12 +54,12 @@ theorem exists_trilinear {σ : ℕ} {B : BesLev D (σ + 1)} {J : JacLev D (σ + 
   · intro c y y'
     refine Subtype.ext ?_
     change hand0 s₁ s₂ l vL v.1 (U₁ x) (U₂ (c • y + y')) = _
-    rw [map_add, map_smul]
+    rw [map_add (f := _), map_smul]
     exact Comm.doubleThetaUnfolding_linear_second_datum s₁ s₂ l vL v.2 (h₁ x) (h₂ y) (h₂ y') c
   · intro c x x'
     refine LinearMap.ext fun y => Subtype.ext ?_
     change hand0 s₁ s₂ l vL v.1 (U₁ (c • x + x')) (U₂ y) = _
-    rw [map_add, map_smul]
+    rw [map_add (f := _), map_smul]
     exact Comm.doubleThetaUnfolding_linear_first_datum s₁ s₂ l vL v.2 (h₁ x) (h₁ x') (h₂ y) c
   · intro c v v'
     refine LinearMap.ext fun x => LinearMap.ext fun y => Subtype.ext ?_
@@ -87,7 +87,7 @@ theorem handBF_sum {ρ : ℕ} {B : BesLev D ρ} {J : JacLev D ρ} (s : StepBF ψ
   · funext h w
     simp [handBF]
   · intro a S ha ih
-    rw [Finset.sum_insert ha, Finset.sum_insert ha, ih, map_add]
+    rw [Finset.sum_insert ha, Finset.sum_insert ha, ih, map_add (f := _)]
     have := Comm.handBF_right s l hφ (hU (x a)) (hU (∑ i ∈ S, x i)) 1
     rw [one_smul, star_one, one_smul] at this
     exact this.symm
@@ -479,7 +479,7 @@ theorem vertexGlued (D : D7) : VertexGlued D := by
         rw [map_sum, LinearMap.sum_apply, Submodule.coe_sum]
       refine Finset.sum_congr rfl fun Q' _ => ?_
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum, Submodule.coe_add, Submodule.coe_sum]
+        rw [map_add (f := _), map_sum, Submodule.coe_add, Submodule.coe_sum]
     rw [h2, hΞ₂, hexp, Finset.sum_congr rfl fun Q' hQ' => by rw [t0 Q' hQ', zero_add, t1 Q' hQ', hall Q' hQ'],
       Finset.sum_const, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul, hfin]
 
@@ -602,13 +602,13 @@ theorem vertexGlued (D : D7) : VertexGlued D := by
           = (Θ vP (r⁻¹ • (x₀ + ∑ Q' ∈ withLat Q.lat, xm Q')) yP).1 := (hΘ vP _ _).symm
         _ = r⁻¹ • ((Θ vP x₀ yP).1 + ∑ Q' ∈ withLat Q.lat, (Θ vP (xm Q') yP).1) := by
           set_option synthInstance.maxHeartbeats 100000 in
-            rw [map_smul, map_add, map_sum, LinearMap.smul_apply, LinearMap.add_apply, LinearMap.sum_apply,
+            rw [map_smul, map_add (f := _), map_sum, LinearMap.smul_apply, LinearMap.add_apply, LinearMap.sum_apply,
             Submodule.coe_smul, Submodule.coe_add, Submodule.coe_sum]
         _ = r⁻¹ • ((Θ vP x₀ yP).1 + ∑ Q' ∈ withLat Q.lat, (Θ vP (xmv Q') yP).1) := by
           rw [Finset.sum_congr rfl hm]
         _ = r⁻¹ • (Θ vP (x₀ + ∑ Q' ∈ withLat Q.lat, xmv Q') yP).1 := by
           set_option synthInstance.maxHeartbeats 100000 in
-            rw [map_add, map_sum, LinearMap.add_apply, LinearMap.sum_apply, Submodule.coe_add, Submodule.coe_sum]
+            rw [map_add (f := _), map_sum, LinearMap.add_apply, LinearMap.sum_apply, Submodule.coe_add, Submodule.coe_sum]
         _ = 0 := by
           rw [hs, map_smul, LinearMap.smul_apply, Submodule.coe_smul, hzero, smul_zero, smul_zero]
 

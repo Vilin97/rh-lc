@@ -116,7 +116,7 @@ theorem C_mem_δLocus_of_hausdorff : ∀ (l : ℕ) [Fact l.Prime] (a : ℕ) [NeZ
   obtain ⟨r, hr⟩ := h1
   have h2 := GlobalTheory.T.delta_add_sub_mem_pow_of_mem_pow_succ l C DC J hl n (σ (PowerSeries.C s)) (σ (PowerSeries.C w - PowerSeries.C s))
     (by rw [hy, map_mul, map_pow, map_natCast]; exact Ideal.mul_mem_right _ _ (Ideal.pow_mem_pow hl _))
-  rw [← map_add, add_sub_cancel] at h2
+  rw [← map_add (f := _), add_sub_cancel] at h2
   have h3 : σ ((deltaS l a).δ (PowerSeries.C w)) - σ ((deltaS l a).δ (PowerSeries.C s)) ∈ J ^ n := by
     rw [← map_sub, hr, map_mul, map_pow, map_natCast]
     exact Ideal.mul_mem_right _ _ (Ideal.pow_mem_pow hl _)

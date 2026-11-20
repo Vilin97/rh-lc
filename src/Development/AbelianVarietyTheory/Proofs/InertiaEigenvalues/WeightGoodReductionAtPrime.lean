@@ -86,7 +86,7 @@ theorem HfD_le (T : LocLat G Qp LL O) (hT : IsOpen (T.L.T : Set T.V)) :
   · simp only [sub_eq_add_neg]
     exact (T.cont x).add continuous_const
   · beta_reduce
-    rw [actD_mk, ← Submodule.Quotient.mk_add, hz.1.2, map_mul, map_add, map_sub,
+    rw [actD_mk, ← Submodule.Quotient.mk_add, hz.1.2, map_mul, map_add (f := _), map_sub,
       Module.End.mul_apply]
     congr 1
     abel
@@ -341,7 +341,7 @@ theorem exists_unr (D : Formalism.BasicNotions.D7) (l : ℕ) [Fact l.Prime] (K L
   refine ⟨fun g => algebraMap ℚ_[l] ↥LL.1 (δ g), GlobalTheory.UnramifiedCrys.unramified_mem_Z1f D l K LL _ ?_, ?_, ?_⟩
   · refine ⟨⟨hcont.comp hδc, fun g h => ?_⟩, 0, fun g hg => ?_⟩
     · beta_reduce
-      rw [hδm, map_add]; rfl
+      rw [hδm, map_add (f := _)]; rfl
     · beta_reduce
       rw [hδI g hg, map_zero, map_zero, sub_zero]
   · intro g hg

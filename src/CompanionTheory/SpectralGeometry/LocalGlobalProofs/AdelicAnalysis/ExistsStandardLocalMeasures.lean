@@ -118,7 +118,7 @@ theorem exists_isStdInf : ∃ laminf : Measure (Ainf F), IsStdInf laminf := by
       exact Subtype.ext (e.symm_apply_apply y)
     · intro g x
       change e (e.symm g.1 + x) = g.1 + e x
-      rw [map_add, e.apply_symm_apply]
+      rw [map_add (f := _), e.apply_symm_apply]
   · exact (hmp.measure_preimage hD₀.nullMeasurableSet).trans hμ₁
 
 theorem exists_std : ∀ (F : Type) [Field F] [NumberField F],

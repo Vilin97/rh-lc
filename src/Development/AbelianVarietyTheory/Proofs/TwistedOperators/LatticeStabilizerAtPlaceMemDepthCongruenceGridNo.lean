@@ -78,7 +78,7 @@ theorem finPart_finIn (z : Af D.host.F ⊗[D.host.F] D.host.E) : finPart D (Glob
   induction z using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
   | tmul a e => rw [GlobalTheory.FinPlLoc.finIn_tmul, GlobalTheory.FinPlLoc.finPart_pair]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem finIn_mem_idAt (z : Af D.host.F ⊗[D.host.F] D.host.E) : GlobalTheory.FinPlLoc.finIn D z ∈ idAt D (fun _ => True) := by
   unfold GlobalTheory.FinPl.idAt
@@ -118,7 +118,7 @@ theorem sub_mem_hatL_of_inK {S : HSp D} (Λ : Lat S) {v : GlobalTheory.FinPl.Pl 
       induction y using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => rfl
-      | add p q hp hq => rw [map_add, map_add, hp, hq]⟩
+      | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq]⟩
   set y0 : Fin S.rank → AE D := fun i => GlobalTheory.FinPlLoc.finIn D (z i) with hy0def
   have hφ : ∀ i, (Lev.swapAE D).comp (finPart D) (y0 i) = x i := fun i => by
     rw [RingHom.comp_apply, hy0def, finPart_finIn, hz]

@@ -34,7 +34,7 @@ theorem exists_factor (T : CDVR) {F : Type} [Field F] (io : F →+* T.Fr)
             map_one' := inj (by rw [hf, map_one, map_one])
             map_mul' := fun a b => inj (by rw [map_mul, hf, hf, hf, map_mul])
             map_zero' := inj (by rw [hf, map_zero, map_zero])
-            map_add' := fun a b => inj (by rw [map_add, hf, hf, hf, map_add]) }, ?_⟩
+            map_add' := fun a b => inj (by rw [map_add (f := _), hf, hf, hf, map_add (f := _)]) }, ?_⟩
   ext a
   exact hf a
 

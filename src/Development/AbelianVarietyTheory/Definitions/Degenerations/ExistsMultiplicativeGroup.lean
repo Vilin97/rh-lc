@@ -189,9 +189,9 @@ theorem exists_multiplicativeGroup (k : Type) [Field k] :
       constructor
       · rintro ⟨m, hm⟩
         refine ⟨e.symm m, e.injective ?_⟩
-        rw [map_add, map_nsmul, e.apply_symm_apply, nsmul_eq_mul]; linarith
+        rw [map_add (f := _), map_nsmul, e.apply_symm_apply, nsmul_eq_mul]; linarith
       · rintro ⟨m, rfl⟩
-        exact ⟨e m, by rw [map_add, map_nsmul, nsmul_eq_mul]; ring⟩)
+        exact ⟨e m, by rw [map_add (f := _), map_nsmul, nsmul_eq_mul]; ring⟩)
   refine ⟨Φ, _, cls, F, π, hg, ?_, fun i j h => by rw [← hc i, ← hc j, h]⟩
   rw [hπ, e.finrank_eq]; simp
 

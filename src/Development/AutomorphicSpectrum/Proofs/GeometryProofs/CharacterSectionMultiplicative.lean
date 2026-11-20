@@ -39,7 +39,7 @@ theorem tensor_sep {K B₁ B₂ I J : Type} [Field K] [Algebra R K] [IsFractionR
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [E, F]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have key : ∀ i j, TensorProduct.map (LinearMap.proj i) (LinearMap.proj j) y = (0 : K ⊗[R] K) := by
     intro i j
     apply Algebra.IsEpi.injective_lift_mul (R := R) (A := K)
@@ -52,7 +52,7 @@ theorem tensor_sep {K B₁ B₂ I J : Type} [Field K] [Algebra R K] [IsFractionR
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp
-    | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb]
   have y0 : y = 0 := by
     apply (TensorProduct.piLeft R (J → K) (fun _ : I => K)).injective
     rw [map_zero]

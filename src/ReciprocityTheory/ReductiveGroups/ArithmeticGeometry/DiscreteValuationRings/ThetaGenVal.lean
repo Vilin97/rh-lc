@@ -65,7 +65,7 @@ def vK (hϖ : Irreducible ϖ) : AddValuation (FractionRing V) (WithTop ℚ) :=
         set r : V := (u : V) + ϖ ^ d * (w : V)
         have hab' : a + b = algebraMap V (FractionRing V) ϖ ^ na * algebraMap V (FractionRing V) r := by
           rw [hu, hw, hd, zpow_add₀ hπ, zpow_natCast]
-          simp only [r, map_add, map_mul, map_pow]
+          simp only [r, map_add (f := _), map_mul, map_pow]
           ring
         have hr : r ≠ 0 := by
           rintro h0

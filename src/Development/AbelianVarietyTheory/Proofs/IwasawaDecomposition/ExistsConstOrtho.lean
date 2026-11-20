@@ -36,7 +36,7 @@ theorem exists_root {L : Lt E r} {mk : Dw.La →ₗ[𝓞 E] (Fin r → E)} (hmk 
   obtain ⟨⟨a', ha', hq, h'⟩, -⟩ := hY (fun b => Submodule.Quotient.mk (a b)) b
   obtain ⟨d, hd⟩ := LevCover.modN_of_mem_both l ((Submodule.Quotient.eq _).1 hq) (Submodule.sub_mem _ ha' (ha b))
   have e₀ : mk a' = mk (a b) + (l.M : E) • mk d := by
-    rw [Nat.cast_smul_eq_nsmul, ← map_nsmul, ← hd, ← map_add, add_sub_cancel]
+    rw [Nat.cast_smul_eq_nsmul, ← map_nsmul, ← hd, ← map_add (f := _), add_sub_cancel]
   have e₁ : y b = (l.M : E)⁻¹ • mk (a b) + t b := by
     rw [← inv_smul_smul₀ hM0 (y b), h, smul_add, ← Nat.cast_smul_eq_nsmul E, inv_smul_smul₀ hM0]
   rw [e₀, smul_add, inv_smul_smul₀ hM0] at h'

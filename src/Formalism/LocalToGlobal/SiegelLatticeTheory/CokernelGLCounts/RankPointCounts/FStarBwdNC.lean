@@ -86,7 +86,7 @@ theorem stepW (X : Submodule E S.V) (hXiso : ∀ x ∈ X, ∀ y ∈ X, S.hT x y 
     exact (Submodule.mem_bot E).2 (Subtype.ext h1)
   have hiso : ∀ u v : orth S X, S.hT (f u) (f v) = S.hT u v := fun u v => by
     show S.hT ((u : S.V) + A u) ((v : S.V) + A v) = S.hT u v
-    rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, orth_X' S u.2 (hA v), orth_X S v.2 (hA u),
+    rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, orth_X' S u.2 (hA v), orth_X S v.2 (hA u),
       hXiso _ (hA u) _ (hA v)]
     ring
   obtain ⟨g, hg, hgf⟩ := witt_extension_theorem E S.V S.hT (fun x y => by rw [hsw S x y])

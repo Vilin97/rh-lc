@@ -39,7 +39,7 @@ theorem exists_glue_finset (D : Data T) {V : T.Opens} (hV : IsAffineOpen V) {ι 
     { carrier := {a | ∃ x : D.M V hV, ∀ k ∈ s, D.ρ hV (hW k) (hWV k) x = resG T (hWV k) a • m k}
       add_mem' := by
         rintro a b ⟨x, hx⟩ ⟨y, hy⟩
-        exact ⟨x + y, fun k hk => by rw [map_add, map_add, add_smul, hx k hk, hy k hk]⟩
+        exact ⟨x + y, fun k hk => by rw [map_add (f := _), map_add (f := _), add_smul, hx k hk, hy k hk]⟩
       zero_mem' := ⟨0, fun k _ => by rw [map_zero, map_zero, zero_smul]⟩
       smul_mem' := by
         rintro c a ⟨x, hx⟩

@@ -76,7 +76,7 @@ private theorem degree_count₂ (l : ℕ) {G C : Type} [Group G] [TopologicalSpa
       neg_mem' := fun x => ⟨neg_mem x.1, fun g hg => by rw [Pi.neg_apply, x.2 g hg, neg_zero]⟩ }
   let res : Z →+ (I → M) := AddMonoidHom.mk' (fun z u => z.1 u) fun _ _ => rfl
   let δ : M →+ (I → M) := AddMonoidHom.mk' (fun b u => ρ u b - b) fun x y => funext fun u => by
-    simp only [map_add, Pi.add_apply]; abel
+    simp only [map_add (f := _), Pi.add_apply]; abel
   have rng : res.range = δ.range := by
     ext w
     constructor

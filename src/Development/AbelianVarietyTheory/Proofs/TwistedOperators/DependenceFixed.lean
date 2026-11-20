@@ -101,7 +101,7 @@ theorem cpt_eq_finAd (Q : Pl D.host.E) (z : AE D) :
     have h2 := congrArg (fun s : FiniteAdeleRing (𝓞 D.host.E) D.host.E => s Q)
       ((GlobalTheory.LFun.toFinAd_tmul (F := D.host.F) a.2 x).trans (mul_comm _ _))
     exact h1.trans h2.symm
-  | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, RingEquiv.map_add, ha, hb]; rfl
+  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingEquiv.map_add (f := _), ha, hb]; rfl
 
 theorem exp_lt_one {n : ℕ} (hn : 0 < n) : WithZero.exp (-(n : ℤ)) < (1 : WithZero (Multiplicative ℤ)) := by
   rw [← WithZero.exp_zero, WithZero.exp_lt_exp]; omega
@@ -124,10 +124,10 @@ theorem char_eq_one {c : (AE D)ˣ →* Circle} {χ : Formalism.L2.Host.HChar D.h
   have e1 : x = GlobalTheory.LFun.locIdele D.host.F w (Units.mk0 _ h0) := by
     refine GlobalTheory.LFun.eq_locIdele ?_ (FiniteAdeleRing.ext _ fun P => ?_)
     · change infPart D (x : AE D) = 1
-      rw [hx, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, d0, zero_mul, zero_add, RingHom.map_one, sub_zero]
+      rw [hx, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, d0, zero_mul, zero_add, RingHom.map_one, sub_zero]
     · change GlobalTheory.LFun.finAdEquiv D.host.F D.host.E (finPart D (x : AE D)) P =
         Neutral.B1.finiteSingle D.host.E w (cpt (D := D) w (toEAf D a)) P
-      rw [← cpt_eq_finAd, hx, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, RingHom.map_add,
+      rw [← cpt_eq_finAd, hx, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, RingHom.map_add (f := _),
         RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
       by_cases hP : P = w
       · subst hP
@@ -275,7 +275,7 @@ theorem smAt_piece {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {g g' : GA D V
   have e1 : (Lev.finE V g').val - 1 = toEAf D a • ((Lev.finE V g).val - 1) := by
     rw [GlobalTheory.VecInv.finE_val, GlobalTheory.VecInv.finE_val, hg]
     ext k l
-    simp only [Matrix.sub_apply, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, RingHom.map_add,
+    simp only [Matrix.sub_apply, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, RingHom.map_add (f := _),
       RingHom.map_mul, RingHom.map_sub, RingHom.map_one, Matrix.one_apply, apply_ite (toEAf D), RingHom.map_zero]
     ring
   rw [e1, Comparison₂.fr_smul, Matrix.smul_apply, smul_eq_mul, RingHom.map_mul, ha, one_mul]

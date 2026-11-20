@@ -149,7 +149,7 @@ theorem functor_comparison_of_single_weight (hIOe : ExistsIO) (hPRe : ExistsPR) 
         rw [← map_sum, ← hmin s, hsum1 s (Y s) (hYm s)]
     · simp
     · intro x y _ _ hx hy
-      simp only [map_add, Finset.sum_add_distrib, hx, hy]
+      simp only [map_add (f := _), Finset.sum_add_distrib, hx, hy]
     · intro c x _ hx
       simp only [map_smul]
       rw [← Finset.smul_sum, hx]

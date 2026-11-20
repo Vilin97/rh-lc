@@ -112,7 +112,7 @@ theorem congrP_mul_left_of_sub_one_mem {𝔭 : Ideal (𝓞 F)} {k : ℕ} {c : �
   refine ⟨u, hu, ι c * z + ι (u * (c - 1) * n), ?_, ?_⟩
   · refine add_mem (Ideal.mul_mem_left _ _ hz) (ι_mem_pow ?_)
     exact Ideal.mul_mem_right _ _ (Ideal.mul_mem_left _ _ hc)
-  · rw [map_add, map_mul, e]
+  · rw [map_add (f := _), map_mul, e]
     simp only [MeanB.algebraMap_comp, map_mul, map_sub, map_one]
     ring
 

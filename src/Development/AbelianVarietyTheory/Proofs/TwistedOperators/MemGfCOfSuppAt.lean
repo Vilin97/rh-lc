@@ -146,7 +146,7 @@ theorem mem_GfC_of_suppAt {e : Formalism.L2.Theta.AE D} (he : IsSplitIdem D e) {
   change (Formalism.L2.Theta.mt V g).map (infPart D) = 1
   rw [← sub_eq_zero]
   ext i j
-  rw [← GlobalTheory.SplitCharTrivial.map_sub_one, ← hg i j, RingHom.map_mul, RingHom.map_add, h1, h2, add_zero, zero_mul]
+  rw [← GlobalTheory.SplitCharTrivial.map_sub_one, ← hg i j, RingHom.map_mul, RingHom.map_add (f := _), h1, h2, add_zero, zero_mul]
   rfl
 
 theorem split_alg {e : Formalism.L2.Theta.AE D} (he : IsSplitIdem D e) {g : GA D S} {h : GA D T}
@@ -157,9 +157,9 @@ theorem split_alg {e : Formalism.L2.Theta.AE D} (he : IsSplitIdem D e) {g : GA D
   obtain ⟨r, hr, hℓ⟩ := hW.om_split e he g h hg hh x y hx hy
   have h1 := GlobalTheory.SplitScalar.infPart_splitIdem he
   have hx1 : infPart D (x : Formalism.L2.Theta.AE D) = 1 := by
-    rw [hx, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, h1, RingHom.map_one, zero_mul, zero_add, sub_zero]
+    rw [hx, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, h1, RingHom.map_one, zero_mul, zero_add, sub_zero]
   have hy1 : infPart D (y : Formalism.L2.Theta.AE D) = 1 := by
-    rw [hy, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, h1, RingHom.map_one, zero_mul, zero_add, sub_zero]
+    rw [hy, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, h1, RingHom.map_one, zero_mul, zero_add, sub_zero]
   have hz : ((splitFacO χS χT x y : Circle) : ℂ) ∈ Qb := by
     rw [splitFacO, Circle.coe_mul, Circle.coe_inv]
     exact mul_mem (inv_mem (mem_algebraicClosure_iff.2 (GlobalTheory.T.heckeChar_finiteIdeles_isAlgebraic_of_resEta hv.2.inf hW.hecT hW.resT x hx1)))

@@ -157,7 +157,7 @@ def coordMod (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) (J : Fin n → I
   toFun v i := resI F (J i) (hJ i) ⟨pullV x v.1 i, (mem_globLat x v.1).1 v.2 i⟩
   map_add' v w := by
     funext i
-    rw [Pi.add_apply, ← map_add]
+    rw [Pi.add_apply, ← map_add (f := _)]
     congr 1
     exact Subtype.ext (pullV_add x v.1 w.1 i)
   map_smul' a v := by
@@ -177,7 +177,7 @@ theorem coordMod_surj (x : GL (Fin n) (E ⊗[F] Formalism.L2.Herm.Af F)) (J : Fi
   obtain ⟨t, ht, e⟩ := h i
   have ht' : t ∈ idS F (J i) := Ideal.map_mono (Ideal.prod_le_inf.trans (Finset.inf_le (Finset.mem_univ i))) ht
   have e' : oToS F E (a i) = ⟨pullV x v i, (mem_globLat x v).1 hv i⟩ + t := Subtype.ext e
-  rw [← ha, ← resI_oToS (F := F) (J i) (hJ i), e', map_add, (resI_eq_zero _ _ t).2 ht', add_zero]
+  rw [← ha, ← resI_oToS (F := F) (J i) (hJ i), e', map_add (f := _), (resI_eq_zero _ _ t).2 ht', add_zero]
   rfl
 
 variable {Q : Pl E} {ε : E ⊗[F] Formalism.L2.Herm.Af F}

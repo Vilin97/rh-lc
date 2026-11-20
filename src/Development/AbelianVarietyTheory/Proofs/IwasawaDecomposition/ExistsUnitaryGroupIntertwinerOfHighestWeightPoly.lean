@@ -18,7 +18,7 @@ theorem differentiable_rowSubst {k : ℕ} {κ : Type} {F : Type} [NormedAddCommG
     Differentiable ℂ fun g : Fin k → Fin k → ℂ => ψ (rowSubst (Matrix.of g) P) := by
   induction P using MvPolynomial.induction_on generalizing ψ with
   | C c => simp only [rowSubst_C]; exact differentiable_const _
-  | add p q hp hq => simp only [map_add]; exact (hp ψ).add (hq ψ)
+  | add p q hp hq => simp only [map_add (f := _)]; exact (hp ψ).add (hq ψ)
   | mul_X p s hp =>
     have h : (fun g : Fin k → Fin k → ℂ => ψ (rowSubst (Matrix.of g) (p * X s))) =
         fun g : Fin k → Fin k → ℂ => ∑ l, g l s.1 •

@@ -121,7 +121,7 @@ theorem UpperTheory.V.Ws.Bl.divStep :
     · intro g h
       show z' (g * h) = z' g + modRep ρ n g (z' h)
       apply hφinj
-      rw [hz', map_add, hφρ, hz', hz']
+      rw [hz', map_add (f := _), hφρ, hz', hz']
       exact hzy.coc g h
     · apply hφinj
       rw [hz', map_zero]
@@ -141,7 +141,7 @@ theorem UpperTheory.V.Ws.Bl.divStep :
       have e : z h - (modRep ρ (n + 1) h ((lev A T (n + 1)).mkQ (t • w0)) - (lev A T (n + 1)).mkQ (t • w0))
           = (z h - (modRep ρ (n + 1) h ((lev A T (n + 1)).mkQ (p0 + t ^ 1 • w0))
             - (lev A T (n + 1)).mkQ (p0 + t ^ 1 • w0))) + (lev A T (n + 1)).mkQ (ρ h p0 - p0) := by
-        simp only [pow_one, map_add, map_sub, modRep_mk]
+        simp only [pow_one, map_add (f := _), map_sub, modRep_mk]
         abel
       rw [e]
       exact Submodule.add_mem _ hloc

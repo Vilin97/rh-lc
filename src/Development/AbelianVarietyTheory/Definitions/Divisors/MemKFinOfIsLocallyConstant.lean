@@ -83,7 +83,7 @@ theorem conjR_eq_sigR (z : R ⊗[F] E) : conjR R σ z = sigR R σ z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem map_conjR {α β : Type} (M : Matrix α β (R ⊗[F] E)) : M.map (conjR R σ) = M.map (sigR R σ) :=
   Matrix.ext fun _ _ => conjR_eq_sigR R σ _
@@ -146,7 +146,7 @@ def kFin : Submodule ℂ V where
     obtain ⟨W, _, hW⟩ := (kFin_iff om K _).1 h.2
     obtain ⟨W', _, hW'⟩ := (kFin_iff om K _).1 h'.2
     exact (kFin_iff om K _).2 ⟨W ⊔ W', inferInstance, fun k hk => by
-      rw [map_add]; exact Submodule.add_mem_sup (hW k hk) (hW' k hk)⟩⟩
+      rw [map_add (f := _)]; exact Submodule.add_mem_sup (hW k hk) (hW' k hk)⟩⟩
   smul_mem' := fun c φ h => ⟨Submodule.smul_mem _ c h.1, by
     obtain ⟨W, _, hW⟩ := (kFin_iff om K _).1 h.2
     exact (kFin_iff om K _).2 ⟨W, inferInstance, fun k hk => by rw [map_smul]; exact W.smul_mem c (hW k hk)⟩⟩

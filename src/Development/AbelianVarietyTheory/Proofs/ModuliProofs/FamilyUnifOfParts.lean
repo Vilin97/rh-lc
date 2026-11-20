@@ -95,14 +95,14 @@ theorem triv_iff {D D' : Datum H} (l : Level H) (t : D.La →ₗ[𝓞 E] D'.La)
     · obtain ⟨a, e, rfl⟩ := ht b'
       obtain ⟨x, hx⟩ := h (c • a) (Submodule.smul_mem_smul hc trivial)
       refine ⟨x + k • (gam (c • e) - c • e), ?_⟩
-      rw [smul_add, ← t.map_smul, map_add, hx, smul_comm c, map_nsmul, smul_add, ← mul_smul, hk, smul_sub]
+      rw [smul_add, ← t.map_smul, map_add (f := _), hx, smul_comm c, map_nsmul, smul_add, ← mul_smul, hk, smul_sub]
       abel
     · rintro x y ⟨u, hu⟩ ⟨v, hv⟩
-      exact ⟨u + v, by rw [map_add, hu, hv, smul_add]; abel⟩
+      exact ⟨u + v, by rw [map_add (f := _), hu, hv, smul_add]; abel⟩
   · intro h a ha
     refine h _ (Submodule.smul_induction_on ha (fun c hc a' _ => ?_) fun x y hx hy => ?_)
     · rw [t.map_smul]; exact Submodule.smul_mem_smul hc trivial
-    · rw [map_add]; exact add_mem hx hy
+    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 theorem triv_iff_top {D D' : Datum H} (l : Level H) (t : D.La →ₗ[𝓞 E] D'.La)
     (ht : ∀ b, ∃ a e, b = t a + l.M' • e) (gam : D'.La ≃ₗ[𝓞 E] D'.La) (n : ℕ) (hn : n ∣ l.M') :

@@ -71,7 +71,7 @@ theorem tensAny_coinv_le_comap : ∀ (F E : Type) [Field F] [NumberField F] [Fie
     have h := Submodule.add_mem _ (key Z₁ h₁ g) (Submodule.smul_mem _ Complex.I (key Z₂ h₂ g))
     rw [SetLike.mem_coe]
     convert h using 1
-    simp only [map_add, map_smul, Matrix.trace_add, Matrix.trace_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
+    simp only [map_add (f := _), map_smul, Matrix.trace_add, Matrix.trace_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
     module
   have h := hle hw
   rw [Submodule.mem_comap, he, Function.update_eq_self] at h

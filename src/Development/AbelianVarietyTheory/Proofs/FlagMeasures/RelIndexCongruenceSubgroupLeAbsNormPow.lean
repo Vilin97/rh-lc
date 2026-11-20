@@ -89,7 +89,7 @@ theorem relIndex_le : ∀ (K V : Type) [Field K] [NumberField K] [AddCommGroup V
     refine Submodule.smul_induction_on hx (fun a ha y hy => ?_) (fun y z hy hz => ?_)
     · rw [LinearMapClass.map_smul_of_tower]
       exact Submodule.smul_mem_smul ha (hmem s hs y hy)
-    · rw [map_add]; exact Submodule.add_mem _ hy hz
+    · rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   let ρ : G → (M →ₗ[𝓞 K] M) := fun s =>
     (((s : V ≃ₗ[K] V) : V →ₗ[K] V).restrictScalars (𝓞 K)).restrict (hmem s s.2)
   let Φ : G → (M →ₗ[𝓞 K] M ⧸ (𝔪 • ⊤ : Submodule (𝓞 K) M)) := fun s => (Submodule.mkQ _).comp (ρ s)

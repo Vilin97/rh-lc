@@ -220,7 +220,7 @@ theorem val_eigen_columns {R : Type} [CommRing R] {d : ℕ} {O : Type} [CommRing
           obtain ⟨u, u', huu⟩ := hcop
           have h1 : τ l'.1 (star a) ∉ IsLocalRing.maximalIdeal (TWO.Ov v) := fun hx => by
             have := congrArg (τ l'.1) huu
-            rw [map_add, map_mul, map_mul, map_one] at this
+            rw [map_add (f := _), map_mul, map_mul, map_one] at this
             exact (IsLocalRing.maximalIdeal.isMaximal _).ne_top ((Ideal.eq_top_iff_one _).2 (this ▸
               Ideal.add_mem _ (Ideal.mul_mem_left _ _ (hmax _ (hZ _ hl'))) (Ideal.mul_mem_left _ _ hx)))
           have h2 : IsUnit (τ l.1 a - τ l'.1 (star a)) := by
@@ -287,7 +287,7 @@ theorem val_eigen_columns {R : Type} [CommRing R] {d : ℕ} {O : Type} [CommRing
       simp [f₁, hb, hω1])]
   rw [← map_minorsP (algebraMap (TWO.Ov v) F), MvPolynomial.support_map_of_injective _ hinj]
   simp only [MvPolynomial.coeff_map]
-  rw [hval, map_add]
+  rw [hval, map_add (f := _)]
   have hmain : v (algebraMap (TWO.Ov v) F (MvPolynomial.eval y₁ (minorsP (TWO.Ov v) col m) *
       ∏ b, constantCoeff (f₁ b))) ≤ ((∑ t, ∑ s : Fin (rk t), m t s * (s.val + 1) : ℕ) * γ : ℚ) := by
     rw [map_mul, v.map_mul, map_prod, eval_minorsP, map_prod]

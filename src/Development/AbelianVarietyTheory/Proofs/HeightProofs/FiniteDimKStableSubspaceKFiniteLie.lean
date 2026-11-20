@@ -136,7 +136,7 @@ theorem kstable_lie : ∀ (p q n : ℕ) (e : Ix p q ≃ Fin n) (ε : Fin n → B
       exact hu
     intro Z hZ w hw
     obtain ⟨X, Y, hX, hXK, hY, hYK, rfl⟩ := exists_decomp hZ
-    rw [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply]
+    rw [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply]
     exact W.add_mem (key X hX hXK w hw) (W.smul_mem _ (key Y hY hYK w hw))
 
 end GlobalTheory.RealPar.KStabLie

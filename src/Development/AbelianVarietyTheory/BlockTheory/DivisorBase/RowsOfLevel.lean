@@ -17,7 +17,7 @@ def typePart (ρ : Representation ℂ G V) (σ : K →+* ℂ) (P : Subgroup G) (
   carrier := {x | ∀ g : P, ρ (g : G) x = σ ((ψ g : Kˣ) : K) • x}
   add_mem' := by
     intro x y hx hy g
-    rw [map_add, hx g, hy g, smul_add]
+    rw [map_add (f := _), hx g, hy g, smul_add]
   zero_mem' := by
     intro g
     rw [map_zero, smul_zero]

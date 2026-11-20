@@ -149,7 +149,7 @@ theorem UpperTheory.finrank_unramified_cocycles_eq_finrank_invariants :
       intro x y
       apply Subtype.ext
       show ρ φ (x + y : M) + m = ρ φ x + (ρ φ y + m)
-      rw [map_add, add_assoc]
+      rw [map_add (f := _), add_assoc]
     have hw1 : ∀ g, (w g).1 = a g := fun g => DFunLike.congr_fun hq g
     refine ⟨⟨fun g => ((w g).2 0 : M), (hW _).2 ⟨⟨?_, ?_⟩, ?_⟩⟩, ?_⟩
     · exact (hwl.comp (fun p : Equiv.Perm N × Equiv.Perm N => (p.2 0 : M))).continuous

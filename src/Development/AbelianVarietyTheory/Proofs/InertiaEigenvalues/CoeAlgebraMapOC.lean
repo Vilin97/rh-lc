@@ -108,7 +108,7 @@ theorem inclR_gRA {P : LocPrime l} (AI : LocAinf l P) (LL : FinExt l) (g : GQ l)
     inclR LL (gRA AI LL g r) = AI.gRW LL g (inclR LL r) := by
   induction r using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a w =>
     exact congrArg (fun u => a ⊗ₜ[ℤ_[l]] u) (inclW_act AI g w).symm
 
@@ -119,7 +119,7 @@ theorem kap_thR_gRA {P : LocPrime l} (AI : LocAinf l P) {LL : FinExt l} {f n : �
     kap o (thR LL θ (gRA AI LL g r)) k = AI.actC g (kap o (thR LL θ r) k) := by
   induction r using TensorProduct.induction_on with
   | zero => simp only [map_zero, kap_zero]
-  | add x y hx hy => simp only [map_add, kap_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), kap_add, hx, hy]
   | tmul a w =>
     have h1 : gRA AI LL g (a ⊗ₜ[ℤ_[l]] w) = a ⊗ₜ[ℤ_[l]] AI.actWHom g w := rfl
     rw [h1, thR_tmul, thR_tmul, kap_tmul, kap_tmul, map_mul, hθ.1, act_zC ⟨AI.actC_ext, AI.actC_norm⟩]
@@ -140,14 +140,14 @@ theorem TWincl_smul (f : R →ₐ[O] R') (T : LocLat G Qp LL O) (r : R) (z : TW 
     TWincl f T (r • z) = f r • TWincl f T z := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero, smul_zero]
-  | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
   | tmul a t => simp [TWincl, TensorProduct.smul_tmul']
 
 theorem TWact_smul (f : R →ₐ[O] R) (T : LocLat G Qp LL O) (g : G) (r : R) (z : TW R T) :
     TWact f T g (r • z) = f r • TWact f T g z := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero, smul_zero]
-  | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
   | tmul a t => simp [TWact, TensorProduct.smul_tmul']
 
 theorem TWincl_act (f : R →ₐ[O] R') (u : R →ₐ[O] R) (u' : R' →ₐ[O] R') (h : ∀ r, f (u r) = u' (f r))
@@ -155,7 +155,7 @@ theorem TWincl_act (f : R →ₐ[O] R') (u : R →ₐ[O] R) (u' : R' →ₐ[O] R
     TWincl f T (TWact u T g z) = TWact u' T g (TWincl f T z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a t => simp [TWact, TWincl, h]
 
 theorem TWincl_injective (f : R →ₐ[O] R') (hf : Function.Injective f) (T : LocLat G Qp LL O) :

@@ -56,7 +56,7 @@ theorem exists_linearForm_ext {O : Type} [CommRing O] (bar : O → O) (X : Type)
   let r : LinearMap.BilinForm ℤ X →ₗ[ℤ] balForms bar X :=
     { toFun := fun β => ⟨β - s ((balForms bar X).mkQ β), by
         rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply, map_sub, hs', sub_self]⟩
-      map_add' := fun β γ => by ext1; simp only [map_add, Submodule.coe_add]; abel
+      map_add' := fun β γ => by ext1; simp only [map_add (f := _), Submodule.coe_add]; abel
       map_smul' := fun c β => by ext1; simp [smul_sub] }
   obtain ⟨n, b, hbb⟩ := hb
   refine ⟨(b.constr ℤ (Sum.elim w 0)).comp r, fun i => ?_⟩

@@ -200,7 +200,7 @@ theorem liftO_of_liftF (ℓ : ℕ) (hp : PD.p = ℓ) (hι : Function.Bijective �
   have hz1c : z1 ∈ coZ1s ρP := by
     intro γ δ
     apply hjP
-    rw [map_add, hz1, hz1, hjeqP, hz1, hσmul, hcoc]
+    rw [map_add (f := _), hz1, hz1, hjeqP, hz1, hσmul, hcoc]
     show untr e (c1 (σ γ)) + ρVP (ι (σ γ)) (untr e (c1 (σ δ))) = _
     rw [hισ]
   have hz1f : (fun g => tr e (jP (z1 (ι g)))) = c1 := by
@@ -747,8 +747,8 @@ theorem embAt_Dd {n : ℕ} (hn : K.plOf i dc n ∈ placesOver D.host.E (D.nd.l i
     { toFun := fun v a => e ((Λ (untr e v)) q.1 a q.2)
       map_add' := fun v w => funext fun a => by
         show e ((Λ (untr e v + untr e w)) q.1 a q.2) = _
-        rw [map_add]
-        simp [map_add]
+        rw [map_add (f := _)]
+        simp [map_add (f := _)]
       map_smul' := fun c v => funext fun a => by
         show e ((Λ (e.symm c • untr e v)) q.1 a q.2) = c * e ((Λ (untr e v)) q.1 a q.2)
         rw [smulK]
@@ -853,7 +853,7 @@ variable {D : D7} (i : D.nd.Loc)
 def kappaL (x : Dd.R') :
     K.LeftId (D.nd.O i) x →ₗ[D.nd.O i] (Dd.X' → Matrix (Fin D.R.nV) (Fin D.R.nV) (FractionRing (D.nd.O i))) where
   toFun p := ((K.incl (D.nd.O i) x p : Dd.R') : Dd.X' → Matrix (Fin D.R.nV) (Fin D.R.nV) (FractionRing (D.nd.O i)))
-  map_add' p q := by rw [map_add]; rfl
+  map_add' p q := by rw [map_add (f := _)]; rfl
   map_smul' c p := rfl
 
 theorem kappaL_inj (x : Dd.R') : Function.Injective (kappaL i Dd x) := by

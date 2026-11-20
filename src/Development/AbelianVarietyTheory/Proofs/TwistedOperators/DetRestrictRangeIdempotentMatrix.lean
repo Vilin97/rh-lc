@@ -144,7 +144,7 @@ theorem idempotentDet : IdempotentDet := by
   · intro g
     refine ⟨(blockRat b g * blockRat b ε + 1 - blockRat b ε).det, ?_⟩
     simp only
-    rw [RingHom.map_det, map_sub, map_add, map_mul, map_one, blockRep_map, hpq]
+    rw [RingHom.map_det, map_sub, map_add (f := _), map_mul, map_one, blockRep_map, hpq]
     rfl
   · intro g t hg
     have h1 : blockRep b R g * p = t • p := by

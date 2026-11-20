@@ -117,7 +117,7 @@ private theorem reesAlgebraLiftFun_add (I : Ideal R) (φ : R →+* S) (s : S)
   apply hinj
   have hcoe : ((p + q : ↥(reesAlgebra I)) : Polynomial R)
       = (p : Polynomial R) + (q : Polynomial R) := rfl
-  rw [map_add, algebraMap_reesAlgebraLiftFun, algebraMap_reesAlgebraLiftFun, algebraMap_reesAlgebraLiftFun, hcoe, map_add]
+  rw [map_add (f := _), algebraMap_reesAlgebraLiftFun, algebraMap_reesAlgebraLiftFun, algebraMap_reesAlgebraLiftFun, hcoe, map_add (f := _)]
 
 def reesAlgebraLift (I : Ideal R) (φ : R →+* S) (s : S)
     (hI : Ideal.map φ I = Ideal.span {s}) (hs : s ∈ nonZeroDivisors S) :

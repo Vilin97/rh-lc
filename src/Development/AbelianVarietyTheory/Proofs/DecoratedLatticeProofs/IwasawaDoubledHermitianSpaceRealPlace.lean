@@ -19,7 +19,7 @@ open scoped ComplexOrder
 variable {A : Type} [CommRing A] {n ι : Type} [Fintype n] [DecidableEq n] [Fintype ι] [DecidableEq ι]
 
 theorem cT_add (σ : A →+* A) (M N : Matrix n n A) : cT σ (M + N) = cT σ M + cT σ N := by
-  simp [cT, Matrix.map_add, Matrix.transpose_add]
+  simp [cT, Matrix.map_add (f := _), Matrix.transpose_add]
 
 theorem cT_sub (σ : A →+* A) (M N : Matrix n n A) : cT σ (M - N) = cT σ M - cT σ N := by
   simp [cT, Matrix.map_sub, Matrix.transpose_sub]

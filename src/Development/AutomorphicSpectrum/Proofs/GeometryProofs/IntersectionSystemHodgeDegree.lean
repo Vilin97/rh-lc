@@ -94,7 +94,7 @@ theorem quot_basis {N j : ℕ} (hj : j ≤ N) {b : Fin N → E} {F : Submodule �
     induction he using Submodule.span_induction with
     | mem x h => obtain ⟨i, rfl⟩ := h; exact hall i
     | zero => simp
-    | add _ _ _ _ h h' => rw [map_add]; exact add_mem h h'
+    | add _ _ _ _ h h' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
     | smul a x _ h => rw [map_smul]; exact Submodule.smul_mem _ a h
 
 end Quot

@@ -43,7 +43,7 @@ private theorem lam_lift {n : ℕ} {R S H G : Type} [CommRing R] [CommRing S] [G
   · simp
   · induction z using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => simp
 
 private theorem rep_comap {n : ℕ} {A G H : Type} [CommRing A] [Group G] [Group H]
@@ -53,7 +53,7 @@ private theorem rep_comap {n : ℕ} {A G H : Type} [CommRing A] [Group G] [Group
   congr 1
   induction z using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | single g r => simp [GDet.repAlg]
 
 private theorem genBy_img {O R S : Type} [CommRing O] [CommRing R] [Algebra O R] [IsLocalRing R] [CommRing S]

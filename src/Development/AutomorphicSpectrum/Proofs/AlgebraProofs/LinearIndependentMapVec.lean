@@ -52,7 +52,7 @@ theorem isLatOf_spanLat (C : ACurve K) {V V' : Type} [AddCommGroup V] [Module K 
     | zero => intro q; simp
     | add x y _ _ hx hy =>
       intro q
-      rw [map_add, Finsupp.add_apply]
+      rw [map_add (f := _), Finsupp.add_apply]
       exact (C.v i).map_add_le (hx q) (hy q)
     | neg x _ hx =>
       intro q

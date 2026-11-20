@@ -329,14 +329,14 @@ theorem pointOf_add [Nonempty τ] {u₁ u₂ : MvPowerSeries τ R}
   have rb : secantB (W.map MvPowerSeries.C) l * b = 1 := by
     rw [hl, hb]
     have := congrArg ψ (mul_invOfUnit_one (constantCoeff_secantB W))
-    simpa only [secantB, map_add, map_mul, map_pow, map_one, WeierstrassCurve.map_a₂,
+    simpa only [secantB, map_add (f := _), map_mul, map_pow, map_one, WeierstrassCurve.map_a₂,
       WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆, ψC] using this
   have rz₃ : z₃ = -u₁ - u₂ - secantA (W.map MvPowerSeries.C) l n * b := by
     rw [hz₃, thirdZ, hl, hn, hb]
-    simp only [secantA, map_sub, map_neg, map_mul, map_add, map_pow, map_ofNat, ψX0, ψX1, ψC,
+    simp only [secantA, map_sub, map_neg, map_mul, map_add (f := _), map_pow, map_ofNat, ψX0, ψX1, ψC,
       WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃,
       WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆]
-  have rw₃ : w₃ = l * z₃ + n := by rw [hw₃, thirdW, map_add, map_mul]
+  have rw₃ : w₃ = l * z₃ + n := by rw [hw₃, thirdW, map_add (f := _), map_mul]
   have re : (1 - MvPowerSeries.C W.a₁ * z₃ - MvPowerSeries.C W.a₃ * w₃) * e = 1 := by
     rw [hz₃, hw₃, he]
     have := congrArg ψ (mul_invOfUnit_one (constantCoeff_negDen W))
@@ -358,9 +358,9 @@ theorem pointOf_add [Nonempty τ] {u₁ u₂ : MvPowerSeries τ R}
     linear_combination h
   have hz₃' : ι z₃ = -ι u₁ - ι u₂ - secantA V (ι l) (ι n) * ι b := by
     rw [rz₃, map_sub, map_sub, map_neg, map_mul, map_secantA, map_C_map_algebraMap]
-  have hw₃' : ι w₃ = ι l * ι z₃ + ι n := by rw [rw₃, map_add, map_mul]
+  have hw₃' : ι w₃ = ι l * ι z₃ + ι n := by rw [rw₃, map_add (f := _), map_mul]
   obtain ⟨h₃, hw₃0, hsum⟩ := secant_spec V (zwPoly_curveFrac W τ h₁) (zwPoly_curveFrac W τ h₂)
-    hw₁ hw₂ (by rw [rl₁, map_add, map_mul]) (by rw [rl₂, map_add, map_mul]) hb' hx' hz₃' hw₃'
+    hw₁ hw₂ (by rw [rl₁, map_add (f := _), map_mul]) (by rw [rl₂, map_add (f := _), map_mul]) hb' hx' hz₃' hw₃'
   have he' : (1 - V.a₁ * ι z₃ - V.a₃ * ι w₃) * ι e = 1 := by
     have := congrArg ι re
     rwa [map_mul, map_sub, map_sub, map_mul, map_mul, map_one] at this
@@ -567,7 +567,7 @@ theorem coeff_single_addSeries (i : Fin 2) :
   have h := MvPowerSeries.coeff_of_lt_order (d := Finsupp.single i 1)
     (lt_of_lt_of_le (by simp) (two_le_order_addSeries_sub W))
   rw [map_sub, sub_eq_zero] at h
-  rw [h, map_add, coeff_single_X, coeff_single_X]
+  rw [h, map_add (f := _), coeff_single_X, coeff_single_X]
   fin_cases i <;> simp
 
 def univFormalGroup : FormalGroup (MvPolynomial (Fin 5) ℤ) where

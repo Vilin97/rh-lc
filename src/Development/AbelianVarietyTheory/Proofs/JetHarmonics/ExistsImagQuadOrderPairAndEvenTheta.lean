@@ -72,7 +72,7 @@ theorem thetaTranslation_comp_eq_cocycle_mul (d : ℕ) (a b : ℂ) (F : ℂ → 
   simp only [U1]
   rw [mul_assoc, ← Complex.exp_add, mul_left_comm, ← Complex.exp_add, add_assoc z a b]
   congr 2
-  simp only [h1, map_add]
+  simp only [h1, map_add (f := _)]
   ring
 
 theorem half_not_mem {d : ℕ} (hd : 0 < d) (u v : ℤ) (h : ¬ (Odd u ∧ Even v)) :
@@ -106,7 +106,7 @@ theorem comm_eq {d : ℕ} (hd : 0 < d) (u v : ℤ) :
       2 * u * Complex.I := by
   have hs : ((Real.sqrt d : ℝ) : ℂ) ≠ 0 :=
     Complex.ofReal_ne_zero.2 (Real.sqrt_pos.mpr (by exact_mod_cast hd)).ne'
-  simp only [h1, wK, map_add, map_mul, map_div₀, map_intCast, map_one, Complex.conj_I,
+  simp only [h1, wK, map_add (f := _), map_mul, map_div₀, map_intCast, map_one, Complex.conj_I,
     Complex.conj_ofReal, map_ofNat]
   push_cast
   field_simp

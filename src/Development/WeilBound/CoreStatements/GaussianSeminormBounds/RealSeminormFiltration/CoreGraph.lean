@@ -283,7 +283,7 @@ theorem graph_map {p q : ℕ} {A : Type} [NormedAddCommGroup A] [InnerProductSpa
       rw [hproj]
       trivial
     obtain ⟨g, hgG, g', hgO, rfl⟩ := Submodule.mem_sup.1 hu
-    rw [map_add, map_add, map_add, hΦO g' hgO, hΦO _ (hOinv Z g' hgO), add_zero, add_zero]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), hΦO g' hgO, hΦO _ (hOinv Z g' hgO), add_zero, add_zero]
     refine huniq (ρA Z g) _ _ (hΦG _ (hGinv Z g hgG)) ?_
     have h3 := hNinv Z _ (hΦG g hgG)
     rwa [prodAct_apply] at h3

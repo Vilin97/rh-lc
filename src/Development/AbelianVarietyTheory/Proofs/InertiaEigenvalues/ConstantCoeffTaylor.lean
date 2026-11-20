@@ -19,7 +19,7 @@ theorem sameJets_of_one (hreg : ∀ a b, ι s * a = ι s * b → a = b)
     | succ m ih =>
       obtain ⟨g, h, rfl⟩ := ih
       obtain ⟨g', h', rfl⟩ := div h
-      exact ⟨g + s ^ m * g', h', by simp only [map_add, map_mul, map_pow]; ring⟩
+      exact ⟨g + s ^ m * g', h', by simp only [map_add (f := _), map_mul, map_pow]; ring⟩
   dvd m := by
     induction m with
     | zero => simp
@@ -134,7 +134,7 @@ def taylor : Polynomial K →ₐ[K] (AdjoinRoot P)⟦X⟧ :=
 theorem constantCoeff_taylor (g : Polynomial K) :
     constantCoeff (taylor P g) = AdjoinRoot.mk P g := by
   induction g using Polynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | monomial n a =>
     rw [← Polynomial.C_mul_X_pow_eq_monomial]
     simp [taylor, PowerSeries.algebraMap_apply]
@@ -143,7 +143,7 @@ theorem derivative_taylor (g : Polynomial K) :
     PowerSeries.derivative _ (taylor P g) = taylor P (Polynomial.derivative g) := by
   have := ((PowerSeries.derivative (AdjoinRoot P)).restrictScalars K).map_aeval g
     (C (AdjoinRoot.root P) + X)
-  rw [Derivation.restrictScalars_apply, Derivation.restrictScalars_apply, map_add,
+  rw [Derivation.restrictScalars_apply, Derivation.restrictScalars_apply, map_add (f := _),
     derivative_C, derivative_X, zero_add, smul_eq_mul, mul_one] at this
   exact this
 
@@ -159,7 +159,7 @@ theorem associated_taylor (hP : P.Separable) : Associated (taylor P P) X := by
     rw [isUnit_iff_constantCoeff, h2]
     obtain ⟨a, b, hab⟩ := hP
     have := congrArg (AdjoinRoot.mk P) hab
-    rw [map_add, map_mul, map_mul, AdjoinRoot.mk_self, mul_zero, zero_add, map_one] at this
+    rw [map_add (f := _), map_mul, map_mul, AdjoinRoot.mk_self, mul_zero, zero_add, map_one] at this
     exact IsUnit.of_mul_eq_one _ ((mul_comm _ _).trans this)
   rw [hw]
   exact associated_mul_unit_left _ _ h3

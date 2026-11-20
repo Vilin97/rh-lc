@@ -45,7 +45,7 @@ theorem psiInf_add (g : ℕ) (x y : K) : psiInf g (x + y) = psiInf g x * psiInf 
   unfold psiInf
   rw [← Complex.exp_add]
   congr 1
-  rw [map_add]
+  rw [map_add (f := _)]
   push_cast
   ring
 

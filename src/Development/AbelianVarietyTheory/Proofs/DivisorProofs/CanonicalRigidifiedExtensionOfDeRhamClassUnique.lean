@@ -21,7 +21,7 @@ theorem convMul_includeLeft_includeRight {R : Type} [CommRing R] {D : Type} [Com
   simp only [Bialgebra.comulAlgHom_apply]
   induction (Coalgebra.comul (R := R) a) with
   | zero => simp
-  | add u v hu hv => simp only [map_add, hu, hv]
+  | add u v hu hv => simp only [map_add (f := _), hu, hv]
   | tmul u v => simp
 
 theorem cobOne_algebraMap {R : Type} [CommRing R] {D : Type} [CommRing D] [Bialgebra R D] (r : R) :
@@ -75,7 +75,7 @@ theorem isCan_unique (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (p : �
     have h4 : (G.res n : G.A (n + 1) →ₐ[R] G.A n) (algebraMap R _ r) = algebraMap R _ r := AlgHom.commutes _ _
     change (G.res n : G.A (n + 1) →ₐ[R] G.A n) (b (n + 1)) = b n
     have e1 : ∀ a, (G.res n : G.A (n + 1) →ₐ[R] G.A n) a = G.res n a := fun _ ↦ rfl
-    simp only [b, map_sub, map_add, e1] at h3 h4 ⊢
+    simp only [b, map_sub, map_add (f := _), e1] at h3 h4 ⊢
     linear_combination h1 - h2 - h3 + h4
   refine (Submodule.Quotient.eq _).2 ⟨-⟨b, hb⟩, Prod.ext (Subtype.ext (funext fun n ↦ ?_))
     (Subtype.ext (funext fun n ↦ ?_))⟩
@@ -94,7 +94,7 @@ theorem isCan_unique (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (p : �
     have hk2 := cobOne_algebraMap (R := R) (D := G.A n) r
     simp only [Bialgebra.comulAlgHom_apply, Algebra.TensorProduct.includeLeft_apply,
       Algebra.TensorProduct.includeRight_apply] at hc hL hR
-    simp only [Dat.coc, b, map_neg, map_add, map_sub]
+    simp only [Dat.coc, b, map_neg, map_add (f := _), map_sub]
     linear_combination hk1 - hk2 - h0 + hc - hL - hR
   · change dUnit R (-b n) = w.1 n - w'.1 n
     rw [hw, hw']
@@ -102,7 +102,7 @@ theorem isCan_unique (R : Type) [CommRing R] (A : Over (Sp R)) [GrpObj A] (p : �
     have h1 : dUnit R (algebraMap R (G.A n) r) = 0 := AugCot.d_algebraMap _ r
     simp only [Dat.om, b]
     change AugCot.d _ _ = _
-    simp only [map_neg, map_add, map_sub]
+    simp only [map_neg, map_add (f := _), map_sub]
     change -(dUnit R _ - dUnit R _ - dUnit R _ + dUnit R _) = _
     rw [h1]
     change _ = cotVal d.f (t.y n) - dUnit R _ - (cotVal d'.f (t.y n) - dUnit R _)

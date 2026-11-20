@@ -12,7 +12,7 @@ variable {F : Type} [Field F] [NumberField F] {N : ℕ}
 
 theorem re_add (x y : Ainf F) (w : InfinitePlace F) : re (x + y) w = re x w + re y w := by
   have : (x + y) w = x w + y w := rfl
-  simp only [re, this, map_add, Complex.add_re]
+  simp only [re, this, map_add (f := _), Complex.add_re]
 
 theorem re_neg (x : Ainf F) (w : InfinitePlace F) : re (-x) w = -re x w := by
   have : (-x) w = -x w := rfl
@@ -38,13 +38,13 @@ theorem sz_nonneg (u : Fin N → AF F) : 0 ≤ sz u :=
   Finset.sum_nonneg fun _ _ => Finset.sum_nonneg fun _ _ => abs_nonneg _
 
 theorem inf_add (u v : Fin N → AF F) : inf (u + v) = inf u + inf v := by
-  funext l; simp [inf, map_add]
+  funext l; simp [inf, map_add (f := _)]
 
 theorem inf_neg (u : Fin N → AF F) : inf (-u) = -inf u := by
   funext l; simp [inf, map_neg]
 
 theorem fin_add (u v : Fin N → AF F) : fin (u + v) = fin u + fin v := by
-  funext l; simp [fin, map_add]
+  funext l; simp [fin, map_add (f := _)]
 
 theorem sz_add_le (u v : Fin N → AF F) : sz (u + v) ≤ sz u + sz v := by
   unfold sz

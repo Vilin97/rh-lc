@@ -19,7 +19,7 @@ theorem q_zero_left (hsmul : ∀ a ∈ Z, ∀ c ∈ Z, ∀ t : ℂ, q (t • a) 
 theorem q_add_right (hadd : ∀ a ∈ Z, ∀ b ∈ Z, ∀ c ∈ Z, q (a + b) c = q a c + q b c)
     (hherm : ∀ a ∈ Z, ∀ b ∈ Z, q b a = conj (q a b)) {a b c : M} (ha : a ∈ Z) (hb : b ∈ Z) (hc : c ∈ Z) :
     q c (a + b) = q c a + q c b := by
-  rw [hherm _ (Z.add_mem ha hb) _ hc, hadd a ha b hb c hc, map_add, ← hherm a ha c hc, ← hherm b hb c hc]
+  rw [hherm _ (Z.add_mem ha hb) _ hc, hadd a ha b hb c hc, map_add (f := _), ← hherm a ha c hc, ← hherm b hb c hc]
 
 theorem q_smul_right (hsmul : ∀ a ∈ Z, ∀ c ∈ Z, ∀ t : ℂ, q (t • a) c = t * q a c)
     (hherm : ∀ a ∈ Z, ∀ b ∈ Z, q b a = conj (q a b)) {a c : M} (ha : a ∈ Z) (hc : c ∈ Z) (t : ℂ) :

@@ -113,7 +113,7 @@ theorem Formalism.KernelCokernelLengths.cokernel_torsion_holds : Formalism.Kerne
   have hsplit : ∀ m, aeval d Q m = Q.coeff 0 • m + d (aeval d Q.divX m) := by
     intro m
     conv_lhs => rw [← Polynomial.X_mul_divX_add Q]
-    rw [map_add, map_mul, aeval_X, aeval_C, LinearMap.add_apply, Module.End.mul_apply,
+    rw [map_add (f := _), map_mul, aeval_X, aeval_C, LinearMap.add_apply, Module.End.mul_apply,
       Module.algebraMap_end_apply, add_comm]
   have hcommR : ∀ m, d (aeval d Q.divX m) = aeval d Q.divX (d m) := by
     intro m

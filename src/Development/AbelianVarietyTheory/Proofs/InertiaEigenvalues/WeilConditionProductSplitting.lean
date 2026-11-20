@@ -66,7 +66,7 @@ theorem splitL [Unram F E] (A A₁ A₂ : Et F E) (eK : A.K ≃ₐ[F] A₁.K × 
   have e1 := hK (A.NL y)
   rw [n, map_mul, hst] at e1
   have e2 := hK (Algebra.trace A.K A.L y)
-  rw [t, map_add, hst] at e2
+  rw [t, map_add (f := _), hst] at e2
   refine ⟨Prod.ext (i₁ ?_) (i₂ ?_), Prod.ext (i₁ ?_) (i₂ ?_)⟩
   · rw [n₁]; simpa using (congrArg Prod.fst e1).symm
   · rw [n₂]; simpa using (congrArg Prod.snd e1).symm

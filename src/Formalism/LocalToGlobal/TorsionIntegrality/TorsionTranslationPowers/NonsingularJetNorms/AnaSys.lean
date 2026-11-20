@@ -38,7 +38,7 @@ theorem inU_mul {f g : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (hg : AnalyticAt �
 theorem inU_add {f g : ℂ → ℂ} (hf : AnalyticAt ℂ f 0) (hg : AnalyticAt ℂ g 0) :
     inU l L ι (fun z => f z + g z) = inU l L ι f + inU l L ι g := by
   unfold inU
-  rw [F.Taylor.taylor0_add hf hg, map_add, subst_add (lgS l L ι)]
+  rw [F.Taylor.taylor0_add hf hg, map_add (f := _), subst_add (lgS l L ι)]
 
 theorem inU_const (c : ℂ) : inU l L ι (fun _ => c) = C (ι c) := by
   unfold inU

@@ -116,7 +116,7 @@ theorem sigR_invol (hσ : ∀ x, σ (σ x) = x) (y : R ⊗[F] E) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR, hσ]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem conjUnit_detH {J : Matrix (Fin m) (Fin m) E} (hJ : J.det ≠ 0) (g : HA R σ J) :
     conjUnit σ (detH R σ J g) = (detH R σ J g)⁻¹ := by
@@ -166,7 +166,7 @@ theorem diagH_mem_siegelH [Nontrivial R] {γ : UJ (σ : E →+* E) Q} :
   rw [mem_siegelOf, mem_siegelOf, keepsDiag_iff, keepsDiag_iff]
   refine forall_congr' fun i => forall_congr' fun j => ?_
   change inclR (F := F) R _ + inclR (F := F) R _ = inclR (F := F) R _ + inclR (F := F) R _ ↔ _
-  rw [← map_add, ← map_add, hinj.eq_iff]
+  rw [← map_add (f := _), ← map_add (f := _), hinj.eq_iff]
 
 theorem aH_diagH {γ : UJ (σ : E →+* E) Q} (hγ : γ ∈ siegelRat σ Q) (hγ' : diagH σ Q R γ ∈ siegelH R σ Q) :
     aH R σ Q ⟨_, hγ'⟩ = Units.map (inclR (F := F) R).toMonoidHom (aOf finSumFinEquiv (UJ (σ : E →+* E) Q).subtype ⟨γ, hγ⟩) := by
@@ -253,12 +253,12 @@ theorem mem_siegelH_adelic {g : GAd σ Q} : g ∈ siegelH (AF F) σ Q ↔
     · intro w
       have e1 := (keepsDiag_iff _).1 (mem_siegelOf.1 (h1 w)) i j
       rw [matHom_projArch] at e1
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact e1
     · intro v
       have e1 := (keepsDiag_iff _).1 (mem_siegelOf.1 (h2 v)) i j
       rw [matHom_proj] at e1
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact e1
 
 def embP (v : HeightOneSpectrum (𝓞 F)) : siegelH (Fv F v) σ Q →* siegelH (AF F) σ Q :=

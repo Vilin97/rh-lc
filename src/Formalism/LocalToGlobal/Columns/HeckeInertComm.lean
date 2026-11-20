@@ -49,7 +49,7 @@ theorem hiConj_mul {I J : Ideal (𝓞 E)} (hI : HiConj I) (hJ : HiConj J) : HiCo
   refine Submodule.mul_induction_on (C := fun r => cO E r ∈ I * J) ha (fun x hx y hy => ?_) (fun x y hx hy => ?_)
   · rw [map_mul]
     exact Ideal.mul_mem_mul (hI x hx) (hJ y hy)
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact Ideal.add_mem _ hx hy
 
 theorem hiConj_pow {I : Ideal (𝓞 E)} (hI : HiConj I) (k : ℕ) : HiConj (I ^ k) := by
@@ -78,7 +78,7 @@ theorem hiConj_split (P : HeightOneSpectrum (𝓞 E)) : HiConj (P.asIdeal * (con
       rw [cO_cO]
       exact hx
     exact Ideal.mul_mem_mul_rev hy' hx'
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact Ideal.add_mem _ hx hy
 
 theorem hi_isCoprime {P Q : HeightOneSpectrum (𝓞 E)} (h : P ≠ Q) : IsCoprime P.asIdeal Q.asIdeal := Ideal.isCoprime_iff_sup_eq.2

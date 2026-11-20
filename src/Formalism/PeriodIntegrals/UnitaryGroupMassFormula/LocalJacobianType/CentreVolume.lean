@@ -52,7 +52,7 @@ theorem centre_volume : VolZZ σ v := by
           (g : Fv F v)⁻¹ * t (i, j) * (D.p 1 (z (i, j)) + -(D.p 0 (TF j i)) / t (i, j)) ∈
             v.adicCompletionIntegers F := by
       intro i j
-      rw [D.mem_iff, hy, hκ, map_mul, map_mul, map_add, map_add, D.shear_first_coordinate, D.shear_second_coordinate, hp0, hp1, hp0, hp1]
+      rw [D.mem_iff, hy, hκ, map_mul, map_mul, map_add (f := _), map_add (f := _), D.shear_first_coordinate, D.shear_second_coordinate, hp0, hp1, hp0, hp1]
       rfl
     have hL : ∀ i j, ((locZ v z i j - TF i j) * sc (E := E) v (g : Fv F v)⁻¹ ∈ OEv (E := E) v ∧
         ((locZ v z i j - TF i j) * sc (E := E) v (g : Fv F v)⁻¹ +
@@ -72,7 +72,7 @@ theorem centre_volume : VolZZ σ v := by
             v.adicCompletionIntegers F) := by
       intro i j
       rw [D.mem_iff, D.mem_iff]
-      simp only [locZ, map_mul, map_sub, map_add, D.p_sc, (D.p_sig _).1, (D.p_sig _).2, hf, hf']
+      simp only [locZ, map_mul, map_sub, map_add (f := _), D.p_sc, (D.p_sig _).1, (D.p_sig _).2, hf, hf']
     constructor
     · intro hz k
       obtain ⟨i, j⟩ := k

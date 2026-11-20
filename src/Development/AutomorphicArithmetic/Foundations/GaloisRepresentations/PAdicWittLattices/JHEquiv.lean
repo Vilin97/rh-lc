@@ -12,7 +12,7 @@ theorem UpperTheory.Gal.G3.jHEquiv :
     intro f
     induction f using Finsupp.induction_linear with
     | zero => simp
-    | add f g hf hg => rw [map_add, map_add, map_add, map_add, hf, hg]
+    | add f g hf hg => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hf, hg]
     | single j m =>
       simp only [R, Finsupp.mapRange.addEquiv_apply, Finsupp.mapRange_single]
       rw [bcSum_single, bcSum_single, h, map_smul]

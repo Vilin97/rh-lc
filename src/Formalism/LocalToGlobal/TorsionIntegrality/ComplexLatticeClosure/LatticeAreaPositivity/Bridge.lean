@@ -88,7 +88,7 @@ theorem latI_hasCM (K : Type) [Field K] [NumberField K] (d : ℕ) (hd4 : d % 4 =
   let w : 𝓞 K := ⟨(1 + y) / 2, half_integral K d hd4 y hy⟩
   have hw : φ ((w : 𝓞 K) : K) = F.cmTheta 1 d := by
     change φ ((1 + y) / 2) = _
-    rw [map_div₀, map_add, map_one, hφy, map_ofNat]
+    rw [map_div₀, map_add (f := _), map_one, hφy, map_ofNat]
     unfold F.cmTheta
     push_cast
     ring

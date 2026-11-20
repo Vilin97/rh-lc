@@ -60,7 +60,7 @@ theorem avg_mem_span_hecke (K : Subgroup G) [∀ g, Fintype (K ⧸ (stabSub K g)
     obtain ⟨H₂, hf₂, h₂⟩ := hb
     refine ⟨H₁ ⊓ H₂, inferInstance, fun H hH hHf => ?_⟩
     haveI := hHf
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [finsum_add_distrib (Set.toFinite _) (Set.toFinite _)]
     exact Submodule.add_mem _ (h₁ H (hH.trans inf_le_left) hHf) (h₂ H (hH.trans inf_le_right) hHf)
   | smul c a _ ha =>
@@ -98,7 +98,7 @@ theorem GlobalTheory.fixed_line_of_gelfand_countable : ∀ (G : Type) [Group G] 
         obtain ⟨a, rfl⟩ := h
         exact Submodule.subset_span ⟨g * a, by simp [map_mul]⟩
       | zero => simp
-      | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+      | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
       | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
     · intro h
       have : z ∈ Submodule.span ℂ (Set.range fun g : G => ρ g z) :=

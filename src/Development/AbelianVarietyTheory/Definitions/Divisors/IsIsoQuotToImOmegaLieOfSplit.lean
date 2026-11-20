@@ -759,7 +759,7 @@ theorem dualApp_tangent_dUnit (x : LieG G) {V : (Sp O).Opens} {W : G.left.Opens}
       (specO O (DualNumber O)).hom.appLE V T hT b * resG _ le_top (epsFn O)) :
     dualApp (tangent x) le_top (dUnit G h f) = b := by
   refine (congrArg ((epsIso O).hom.app V) (cotMap_d x.1 (epsZero_comp x) h hV k f)).trans ?_
-  rw [e, map_add, d_base, zero_add, d_mul, d_base,
+  rw [e, map_add (f := _), d_base, zero_add, d_mul, d_base,
     smul_zero, add_zero, appLE_base (sec_hom _) _ _ le_rfl, resG_self, d_resG,
     ← resM_d _ (le_preimage_top _ ⊤) le_top, Scheme.Modules.Hom.app_smul, app_resM, epsIso_d]
   exact (congrArg (b * ·) (map_one (resG (Sp O) (le_top : V ≤ ⊤)))).trans (_root_.mul_one b)
@@ -787,11 +787,11 @@ variable (G) in
 
 def toOmega [QuasiSeparated G.hom] : Γ(omega G, ⊤) →+ Pdiv.omega G :=
   AddMonoidHom.mk' (fun w => ⟨fun x => (Scheme.ΓSpecIso (.of O)).hom (dualApp (tangent x) le_top w),
-    fun x y h => by simp only [tangent_mul, dualApp_add, LinearMap.add_apply, map_add],
+    fun x y h => by simp only [tangent_mul, dualApp_add, LinearMap.add_apply, map_add (f := _)],
     fun a x h => by
       simp only [tangent_scale, dualApp_smul, LinearMap.smul_apply, smul_eq_mul, map_mul, resG_self,
         Iso.inv_hom_id_apply]⟩)
-    fun _ _ => Subtype.ext (funext fun x => by simp only [map_add]; rfl)
+    fun _ _ => Subtype.ext (funext fun x => by simp only [map_add (f := _)]; rfl)
 
 theorem toOmega_apply [QuasiSeparated G.hom] (w : Γ(omega G, ⊤)) (x : LieG G) :
     (toOmega G w).1 x = (Scheme.ΓSpecIso (.of O)).hom (dualApp (tangent x) le_top w) := rfl

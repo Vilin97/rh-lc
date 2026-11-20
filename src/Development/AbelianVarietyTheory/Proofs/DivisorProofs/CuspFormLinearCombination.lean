@@ -35,7 +35,7 @@ theorem isAutForm_smul_add (c : ℂ) {φ ψ : Sm E d} (h : IsAutForm φ) (h' : I
       have h1 : finRep E d k φ = φ := hk.1
       have h2 : finRep E d k ψ = ψ := hk.2
       change finRep E d k (c • φ + ψ) = c • φ + ψ
-      rw [map_add, map_smul, h1, h2]
+      rw [map_add (f := _), map_smul, h1, h2]
   kfin := by
     have := h.kfin
     have := h'.kfin
@@ -43,7 +43,7 @@ theorem isAutForm_smul_add (c : ℂ) {φ ψ : Sm E d} (h : IsAutForm φ) (h' : I
       Submodule.span ℂ (Set.range fun k => cptRep E d k ψ)) (Submodule.span_le.2 ?_)
     rintro _ ⟨k, rfl⟩
     change cptRep E d k (c • φ + ψ) ∈ _
-    rw [map_add, map_smul]
+    rw [map_add (f := _), map_smul]
     exact Submodule.add_mem_sup (Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩))
       (Submodule.subset_span ⟨k, rfl⟩)
   zfin := by
@@ -54,7 +54,7 @@ theorem isAutForm_smul_add (c : ℂ) {φ ψ : Sm E d} (h : IsAutForm φ) (h' : I
         Submodule.span ℂ ((fun z : Module.End ℂ (Sm E d) => z ψ) '' Zalg E d)) (Submodule.span_le.2 ?_)
     rintro _ ⟨z, hz, rfl⟩
     change z (c • φ + ψ) ∈ _
-    rw [map_add, map_smul]
+    rw [map_add (f := _), map_smul]
     exact Submodule.add_mem_sup (Submodule.smul_mem _ _ (Submodule.subset_span ⟨z, hz, rfl⟩))
       (Submodule.subset_span ⟨z, hz, rfl⟩)
   growth g := growth_smul_add c (h.growth g) (h'.growth g)

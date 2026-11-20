@@ -49,7 +49,7 @@ private noncomputable def toSub (U : Submodule ℂ W) (hU : ∀ g, ∀ u ∈ U, 
     Submodule ℂ[H] ρ.asModule where
   carrier := {x | ρ.asModuleEquiv x ∈ U}
   add_mem' := fun {a b} ha hb => by
-    simp only [Set.mem_setOf_eq, map_add] at *
+    simp only [Set.mem_setOf_eq, map_add (f := _)] at *
     exact U.add_mem ha hb
   zero_mem' := by simp
   smul_mem' := fun c x hx => by
@@ -156,5 +156,5 @@ theorem UpperTheory.exists_equivariant_projections_of_sum_irreducible :
       set_option synthInstance.maxHeartbeats 100000 in
         rw [← map_sum, hsum' _ (Finset.mem_image_of_mem _ hx), LinearEquiv.apply_symm_apply]
     | zero => simp
-    | add x y _ _ hx hy => simp_rw [map_add]; rw [Finset.sum_add_distrib, hx, hy]
+    | add x y _ _ hx hy => simp_rw [map_add (f := _)]; rw [Finset.sum_add_distrib, hx, hy]
     | smul c x _ hx => simp_rw [map_smul]; rw [← Finset.smul_sum, hx]

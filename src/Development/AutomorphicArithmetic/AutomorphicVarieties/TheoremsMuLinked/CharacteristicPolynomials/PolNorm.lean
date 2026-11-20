@@ -46,7 +46,7 @@ private theorem pn_ext (R : Representation K G V) (η : G →* ℤˣ) (c : G) (h
   have hA : ∀ g, η g = 1 → z g = R g ((2 : K)⁻¹ • (Y + R c Y)) - (2 : K)⁻¹ • (Y + R c Y) := fun g hg => by
     have h3 : z g = (2 : K)⁻¹ • (z g + z g) := by
       rw [smul_add, ← add_smul]; norm_num
-    rw [map_smul, ← smul_sub, map_add, h3]
+    rw [map_smul, ← smul_sub, map_add (f := _), h3]
     congr 1
     nth_rewrite 1 [hY g hg]
     rw [hY' g hg]
@@ -85,5 +85,5 @@ theorem UpperTheory.V.Th.Det.polNorm :
       rwa [hd, hd] at this
     refine ⟨X₀ + X, fun g => ?_⟩
     have := hX g
-    rw [map_add, add_sub_add_comm, ← this]
+    rw [map_add (f := _), add_sub_add_comm, ← this]
     abel

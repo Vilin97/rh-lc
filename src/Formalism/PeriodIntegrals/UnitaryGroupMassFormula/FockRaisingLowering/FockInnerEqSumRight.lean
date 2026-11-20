@@ -105,7 +105,7 @@ theorem fockInner_add_left (P₁ P₂ Q : MvPolynomial σ ℂ) :
   rw [fockInner_eq_sum_support_right (P₁ + P₂) Q, fockInner_eq_sum_support_right P₁ Q,
     fockInner_eq_sum_support_right P₂ Q, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl (fun α _ => ?_)
-  rw [MvPolynomial.coeff_add, map_add]
+  rw [MvPolynomial.coeff_add, map_add (f := _)]
   ring
 
 theorem fockInner_smul_left (P Q : MvPolynomial σ ℂ) (c : ℂ) :
@@ -215,7 +215,7 @@ theorem fockInner_X_mul (l : σ) (P Q : MvPolynomial σ ℂ) :
         Finsupp.single_eq_same]
       push_cast
       ring
-  · rw [map_add, fockInner_add_right, fockInner_add_right, h₁, h₂]
+  · rw [map_add (f := _), fockInner_add_right, fockInner_add_right, h₁, h₂]
 
 theorem fockInner_mul_X (l : σ) (P Q : MvPolynomial σ ℂ) :
     fockInner P (X l * Q) = fockInner (pderiv l P) Q := by

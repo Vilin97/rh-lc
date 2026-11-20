@@ -43,7 +43,7 @@ theorem dcris_trivial [FiniteDimensional Qp LL] :
         refine Finset.sum_congr rfl fun i _ => ?_
         simp [c, TensorProduct.smul_tmul]
       | add a b ha hb =>
-        simp only [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib, ← ha, ← hb]
+        simp only [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib, ← ha, ← hb]
     have hc : ∀ i g y, c i (actVB PD (Representation.trivial LL G LL) g y) = PD.actB g (c i y) := by
       intro i g y
       induction y using TensorProduct.induction_on with
@@ -54,7 +54,7 @@ theorem dcris_trivial [FiniteDimensional Qp LL] :
         simp only [c, actVB, LinearMap.comp_apply, AlgebraTensorModule.map_tmul,
           LinearMap.rTensor_tmul, LinearEquiv.coe_coe, TensorProduct.lid_tmul, h2]
         simp
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
     rw [hsum x]
     refine Submodule.sum_mem _ fun i _ => ?_
     obtain ⟨k, hk⟩ := PD.invB (c i x) fun g => by rw [← hc, hx]
@@ -63,7 +63,7 @@ theorem dcris_trivial [FiniteDimensional Qp LL] :
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [actVB]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem isCrys_trivial [FiniteDimensional Qp LL] : IsCrys PD (Representation.trivial LL G LL) := by
   haveI := nontrivial_B PD
@@ -90,7 +90,7 @@ theorem isCrys_cyc [FiniteDimensional Qp LL] : IsCrys PD (charRep (cyc PD LL)) :
         (m : LL ⊗[Qp] B →ₗ[LL] LL ⊗[Qp] B).map_smul_of_tower q z
       simp [actVB, charRep, cyc, ← Algebra.smul_def, TensorProduct.smul_tmul, hmq]
       simp [m, hu, PD.t_act]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have h : (Dcris PD (charRep (cyc PD LL))).map (m : LL ⊗[Qp] B →ₗ[LL] LL ⊗[Qp] B) =
       Dcris PD (Representation.trivial LL G LL) := by
     ext x

@@ -21,14 +21,14 @@ theorem hasDerivAt_eval {σ : Type*} [Fintype σ] (v : ℝ → σ → ℂ) (v' :
       funext t; simp
     rw [hf]
     refine (hp.add hq).congr_deriv ?_
-    simp [map_add, add_mul, Finset.sum_add_distrib]
+    simp [map_add (f := _), add_mul, Finset.sum_add_distrib]
   | mul_X p i hp =>
     have hf : (fun t => eval (v t) (p * X i)) = fun t => eval (v t) p * v t i := by
       funext t; simp
     rw [hf]
     refine (hp.mul (hv i)).congr_deriv ?_
     symm
-    · simp only [Derivation.leibniz, smul_eq_mul, map_add, map_mul, eval_X, pderiv_X, add_mul,
+    · simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul, eval_X, pderiv_X, add_mul,
         Finset.sum_add_distrib]
       rw [show ∀ a b c d : ℂ, b = c → a = d → a + b = c + d from
         fun a b c d h1 h2 => by rw [h1, h2, add_comm]]

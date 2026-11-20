@@ -18,7 +18,7 @@ theorem pLoc_prjG_spl (T : Finset (Pl E)) (w : Pl E) (g : GL (Fin n) (FiniteAdel
   refine Units.ext (Matrix.ext fun i j => ?_)
   change pLoc E w (((idem E T • g.val + (1 - idem E T) • (1 : Matrix (Fin n) (Fin n) (FiniteAdeleRing (𝓞 E) E))) :
     Matrix (Fin n) (Fin n) (FiniteAdeleRing (𝓞 E) E)) i j) = _
-  simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, map_sub, map_one, pLoc_idem_spl]
+  simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul, map_sub, map_one, pLoc_idem_spl]
   split_ifs with h
   · simp
   · simp [Matrix.one_apply, apply_ite (pLoc E w)]

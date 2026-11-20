@@ -111,7 +111,7 @@ theorem exists_eq_embedding [IsTotallyReal F] (lam : InfinitePlace F → ℝ)
     ∃ a : F, ∀ w, lam w = (w.embedding a).re := by
   choose q hq using h
   let T : F →ₗ[ℚ] ℝ := AddMonoidHom.toRatLinearMap (AddMonoidHom.mk' (fun x => ∑ w, lam w * (w.embedding x).re)
-    fun x y => by simp only [map_add, Complex.add_re, mul_add, Finset.sum_add_distrib])
+    fun x y => by simp only [map_add (f := _), Complex.add_re, mul_add, Finset.sum_add_distrib])
   let l : F →ₗ[ℚ] ℚ := (integralBasis F).constr ℚ fun i => q (RingOfIntegers.basis F i)
   have hT : T = (Algebra.linearMap ℚ ℝ).comp l := (integralBasis F).ext fun i => by
     rw [LinearMap.comp_apply, Module.Basis.constr_basis, integralBasis_apply]

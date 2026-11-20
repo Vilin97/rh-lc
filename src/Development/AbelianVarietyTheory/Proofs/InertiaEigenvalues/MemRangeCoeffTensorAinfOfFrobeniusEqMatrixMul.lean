@@ -25,14 +25,14 @@ theorem coordT_map (f : S →ₐ[R] T) (k : d) (x : O ⊗[R] S) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul o s => rw [Algebra.TensorProduct.map_tmul, coordT_tmul, coordT_tmul, AlgHom.id_apply, map_smul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem coordT_mul_tmul (k : d) (z : O ⊗[R] S) (s : S) :
     coordT b k (z * ((1 : O) ⊗ₜ[R] s)) = coordT b k z * s := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul o s' => rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, coordT_tmul, coordT_tmul, smul_mul_assoc]
-  | add x y hx hy => simp only [add_mul, map_add, hx, hy]
+  | add x y hx hy => simp only [add_mul, map_add (f := _), hx, hy]
 
 theorem sum_coordT [Fintype d] (x : O ⊗[R] S) : ∑ k, b k ⊗ₜ[R] coordT b k x = x := by
   induction x using TensorProduct.induction_on with
@@ -42,7 +42,7 @@ theorem sum_coordT [Fintype d] (x : O ⊗[R] S) : ∑ k, b k ⊗ₜ[R] coordT b 
     rw [TensorProduct.sum_tmul]
     refine Finset.sum_congr rfl fun k _ => ?_
     rw [coordT_tmul, TensorProduct.smul_tmul]
-  | add x y hx hy => simp only [map_add, TensorProduct.tmul_add, Finset.sum_add_distrib, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), TensorProduct.tmul_add, Finset.sum_add_distrib, hx, hy]
 
 end Coord
 

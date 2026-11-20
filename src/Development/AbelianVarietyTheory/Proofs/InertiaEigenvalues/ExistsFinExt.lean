@@ -22,7 +22,7 @@ theorem exists_lift {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (i : B
            map_one' := hi (by rw [← hg, map_one, map_one])
            map_mul' := fun x y => hi (by rw [map_mul, ← hg, ← hg, ← hg, map_mul])
            map_zero' := hi (by rw [← hg, map_zero, map_zero])
-           map_add' := fun x y => hi (by rw [map_add, ← hg, ← hg, ← hg, map_add]) }, fun x => (hg x).symm⟩
+           map_add' := fun x y => hi (by rw [map_add (f := _), ← hg, ← hg, ← hg, map_add (f := _)]) }, fun x => (hg x).symm⟩
 
 variable {l : ℕ} [Fact l.Prime]
 

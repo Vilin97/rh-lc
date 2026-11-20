@@ -107,13 +107,13 @@ theorem decomp_pair (hh : ∀ x y, star (h x y) = h y x) {e f : Fin r → V} (he
       ∑ a, (star (s a) * t' a + star (t a) * s' a) + h w w' := by
   have hd' := dual_symm hh hd
   have he : ∀ b, h (e b) (∑ a, s' a • e a + ∑ a, t' a • f a + w') = t' b := by
-    intro b; simp only [map_add, pair_sum_zero (hee b), pair_sum_e hd, (hw' b).1, zero_add, add_zero]
+    intro b; simp only [map_add (f := _), pair_sum_zero (hee b), pair_sum_e hd, (hw' b).1, zero_add, add_zero]
   have hf : ∀ b, h (f b) (∑ a, s' a • e a + ∑ a, t' a • f a + w') = s' b := by
-    intro b; simp only [map_add, pair_sum_zero (hff b), pair_sum_e hd', (hw' b).2, zero_add, add_zero]
+    intro b; simp only [map_add (f := _), pair_sum_zero (hff b), pair_sum_e hd', (hw' b).2, zero_add, add_zero]
   have hwe : ∀ a, h w (e a) = 0 := fun a => star_pair hh (hw a).1
   have hwf : ∀ a, h w (f a) = 0 := fun a => star_pair hh (hw a).2
   have hww : h w (∑ a, s' a • e a + ∑ a, t' a • f a + w') = h w w' := by
-    simp only [map_add, pair_sum_zero hwe, pair_sum_zero hwf, zero_add]
+    simp only [map_add (f := _), pair_sum_zero hwe, pair_sum_zero hwf, zero_add]
   rw [LinearMap.map_add₂, LinearMap.map_add₂, pair_first s e, pair_first t f, hww]
   simp only [he, hf, Finset.sum_add_distrib]
 end Gen2
@@ -281,7 +281,7 @@ theorem lmap_char (X : HidaSetting D) (u : D.what₂.Word) (Λ : Submodule (𝓞
       intro a
       have e1 := (hwWb a).1
       rw [← hsum] at e1
-      simp only [map_add] at e1
+      simp only [map_add (f := _)] at e1
       rw [orth_span (X.ee a) hs', (hL l hl a).1, orth_span (X.ee a) hx'] at e1
       simpa using e1
     have ht0 : t = 0 := by

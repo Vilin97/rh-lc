@@ -34,7 +34,7 @@ def pull {E' : Type} [Ring E'] [Algebra A E'] (φ : E' →ₐ[A] E) : Det n A E'
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   homog B _ _ b x := by
     change D.D B (Algebra.TensorProduct.map (AlgHom.id B B) φ (b • x)) = b ^ n * D.D B (Algebra.TensorProduct.map (AlgHom.id B B) φ x)
     rw [map_smul, D.homog]
@@ -70,7 +70,7 @@ def comap {H : Type} [Group H] (φ : H →* G) : GDet n A H where
     congr 1
     induction x using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => simp
   homog B _ _ b x := by
     change D.D B (MonoidAlgebra.mapDomainAlgHom B B φ (b • x)) = b ^ n * D.D B (MonoidAlgebra.mapDomainAlgHom B B φ x)
@@ -88,7 +88,7 @@ def ofRep (ρ : G →* Matrix (Fin n) (Fin n) A) : GDet n A G where
     congr 1
     induction x using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => ext i j; simp [repAlg]
   homog B _ _ b x := by
     change (repAlg ρ B (b • x)).det = b ^ n * (repAlg ρ B x).det

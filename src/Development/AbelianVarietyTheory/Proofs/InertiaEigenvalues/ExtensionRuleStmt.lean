@@ -32,7 +32,7 @@ theorem exists_ext_cocycle [IsTopologicalRing LL] {T Y Z : LocLat G Qp LL O}
   refine ⟨⟨fun g => r (Y.ρ g (x : Y.V) - (x : Y.V)), ⟨?_, fun g h => ?_⟩, fun g _ => ?_⟩, hval⟩
   · exact hrc.comp ((Y.cont x).sub continuous_const)
   · apply h1
-    rw [map_add, ι.equiv, hval, hval, hval, map_mul, Module.End.mul_apply, map_sub]
+    rw [map_add (f := _), ι.equiv, hval, hval, hval, map_mul, Module.End.mul_apply, map_sub]
     abel
   · apply h5
     change ι.f (r _) ∈ _

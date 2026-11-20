@@ -38,7 +38,7 @@ theorem th_one : th ι h (1 : Q d β R) = 1 := by
   fin_cases i <;> fin_cases j <;> simp [th]
 
 theorem th_det (hh : h * h = ι (algebraMap F R d)) (x : Q d β R) : (th ι h x).det = ι (qn x) := by
-  simp only [th, Matrix.det_fin_two_of, qn, map_add, map_sub, map_mul, map_pow]
+  simp only [th, Matrix.det_fin_two_of, qn, map_add (f := _), map_sub, map_mul, map_pow]
   linear_combination (-(ι x.imI) ^ 2 + ι (algebraMap F R β) * ι x.imK ^ 2) * hh
 
 theorem th_mul_star (hh : h * h = ι (algebraMap F R d)) {x : Q d β R} (hx : qn x = 1) :
@@ -153,7 +153,7 @@ theorem co_emb (hb0 : b 0 = 1) (hb1 : b 1 = ξ) (x y : R) :
       x • Algebra.TensorProduct.basis R b 0 + y • Algebra.TensorProduct.basis R b 1 := by
     simp only [Algebra.TensorProduct.basis_apply, hb0, hb1, inclR, Algebra.smul_def]
     simp [Algebra.TensorProduct.one_def]
-  simp only [co, h, map_add, map_smul, Module.Basis.repr_self]
+  simp only [co, h, map_add (f := _), map_smul, Module.Basis.repr_self]
   simp
 
 theorem alg_inj (hb0 : b 0 = 1) (hb1 : b 1 = ξ) {x y : R}
@@ -177,7 +177,7 @@ theorem exists_of_mem (hb0 : b 0 = 1) (hb1 : b 1 = ξ) (σ : E →ₐ[F] E) (hξ
   have hC := decomp (R := R) hb0 hb1 (M 1 0)
   have hsa : ∀ u v : R, sigR R σ (ι u + ι v * h) = ι u - ι v * h := by
     intro u v
-    rw [map_add, map_mul, sig_alg, sig_alg, sig_xh hσ]; ring
+    rw [map_add (f := _), map_mul, sig_alg, sig_alg, sig_xh hσ]; ring
   let x : Q d β R := ⟨co b R 0 (M 0 0), co b R 1 (M 0 0), co b R 0 (M 1 0), -co b R 1 (M 1 0)⟩
   have hthx : thR R E ξ x = M := by
     ext i j

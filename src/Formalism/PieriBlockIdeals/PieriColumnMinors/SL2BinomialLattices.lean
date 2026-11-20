@@ -342,7 +342,7 @@ theorem map_mem_weyl_alt (R O : Type) [CommRing R] [CommRing O] [Algebra R O] {r
     rw [← lclosedeq_applyWord_map, lclosedeq_hw_map]
     exact la_word_mem O hn ν w
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx =>
     rw [map_algebraMap_smul_alt]
     exact Submodule.smul_mem _ _ hx

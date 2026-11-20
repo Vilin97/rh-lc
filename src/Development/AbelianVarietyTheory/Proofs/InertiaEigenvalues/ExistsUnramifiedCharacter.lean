@@ -92,7 +92,7 @@ theorem deg_mul (g h : GQ l) : deg (g * h) = deg g + deg h := by
   refine PadicInt.ext_of_toZModPow.1 fun n => ?_
   obtain ⟨a, ha⟩ := exists_acts g n
   obtain ⟨b, hb⟩ := exists_acts h n
-  rw [map_add, deg_spec ha, deg_spec hb, deg_spec (ha.mul hb), Nat.cast_add]
+  rw [map_add (f := _), deg_spec ha, deg_spec hb, deg_spec (ha.mul hb), Nat.cast_add]
 
 theorem deg_eq_nat {g : GQ l} {a : ℕ} (h : ∀ n, Acts g n a) : deg g = a := by
   refine PadicInt.ext_of_toZModPow.1 fun n => ?_

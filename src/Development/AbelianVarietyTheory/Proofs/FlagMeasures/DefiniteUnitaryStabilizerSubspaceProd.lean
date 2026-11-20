@@ -173,7 +173,7 @@ private lemma apply_add_add_of_mem_perp {h : V →ₗ⋆[K] V →ₗ[K] K} (hs :
   have h2 : h w u' = 0 := by
     rw [← hs.eq u' w, (_root_.GlobalTheory.Mass.StabSplit.mem_perp h U w).1 hw u' hu',
       map_zero]
-  simp only [map_add, LinearMap.add_apply, h1, h2]
+  simp only [map_add (f := _), LinearMap.add_apply, h1, h2]
   ring
 
 open NumberField Matrix in
@@ -207,7 +207,7 @@ theorem _root_.GlobalTheory.Mass.StabSplit.main : ∀ (K V : Type) [Field K] [Nu
     intro v
     have hv : v ∈ U ⊔ W := by rw [hc.sup_eq_top]; exact Submodule.mem_top
     obtain ⟨u, hu, w, hw, rfl⟩ := Submodule.mem_sup.1 hv
-    rw [map_add, map_add, eU u hu, eW w hw]
+    rw [map_add (f := _), map_add (f := _), eU u hu, eW w hw]
   have hsurj : Function.Surjective (_root_.GlobalTheory.Mass.StabSplit.resHom h U) := by
     rintro ⟨a, c⟩
     let e := Submodule.prodEquivOfIsCompl U W hc
@@ -218,7 +218,7 @@ theorem _root_.GlobalTheory.Mass.StabSplit.main : ∀ (K V : Type) [Field K] [Nu
       simp [g, e, Submodule.prodEquivOfIsCompl_symm_apply_right]
     have gsum : ∀ (u : U) (w : W), g ((u : V) + w) = ((a.1 u : U) : V) + (c.1 w : W) := by
       intro u w
-      rw [map_add, gU, gW]
+      rw [map_add (f := _), gU, gW]
     have hiso : g ∈ _root_.Formalism.HermitianLatticesTheory.isom h := by
       intro x y
       obtain ⟨⟨u, w⟩, rfl⟩ := e.surjective x

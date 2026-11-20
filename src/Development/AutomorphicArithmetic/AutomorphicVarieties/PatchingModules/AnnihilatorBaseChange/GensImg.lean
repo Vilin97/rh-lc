@@ -35,7 +35,7 @@ private theorem star_dom {l : ℕ} [Fact l.Prime] {L : Loc} {G G' : Glob l L} (h
   | zero =>
     unfold GFrame.star
     simp
-  | add a b ha hb => rw [hadd, map_add, ha, hb, map_add, hadd]
+  | add a b ha hb => rw [hadd, map_add (f := _), ha, hb, map_add (f := _), hadd]
   | single g b => rw [hsg, dom_single, dom_single, hsg, map_inv, h.p₀_conj, h.eps_p₀]
 
 private theorem oEl_dom {l : ℕ} [Fact l.Prime] {L : Loc} {G G' : Glob l L} (h : G.Hom G') {R : Type}

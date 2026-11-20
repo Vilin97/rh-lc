@@ -44,7 +44,7 @@ theorem pr_cA_e (q : SplitPt D k) : q.pr (cA D q.e) = 0 := by
 theorem cA_mem_idAt (q : SplitPt D k) {a : AE D} (ha : a ∈ idAt D (· = q.v)) : cA D a ∈ idAt D (· = q.v) := by
   rw [FrameLat.idem_iff] at ha ⊢
   conv_rhs => rw [← ha]
-  rw [RingHom.map_mul, RingHom.map_add, GlobalTheory.LocSympl.conj_conj, add_comm]
+  rw [RingHom.map_mul, RingHom.map_add (f := _), GlobalTheory.LocSympl.conj_conj, add_comm]
 
 theorem cA_mem_intAt (q : SplitPt D k) {a : AE D} (ha : a ∈ intAt D (· = q.v)) : cA D a ∈ intAt D (· = q.v) := by
   have h1 : a ∈ idAt D (· = q.v) := ha.1
@@ -218,7 +218,7 @@ theorem normalFr_incAdj_yZero_mem_latO_iff : ∀ {D : D7} (ψ : AddChar (AF D.ho
   · rintro ⟨-, hmap⟩
     have hε : l.q.e + cA D l.q.e ∈ intAt D (· = l.q.v) := by
       rw [GlobalTheory.SplitLine.mem_intAt_iff_pr l.q (FrameLat.sum_mem_idAt l.q)]
-      simp only [map_add, GlobalTheory.LastPrimSplit.pr_e, pr_cA_e, GlobalTheory.LocSympl.conj_conj, add_zero, zero_add]
+      simp only [map_add (f := _), GlobalTheory.LastPrimSplit.pr_e, pr_cA_e, GlobalTheory.LocSympl.conj_conj, add_zero, zero_add]
       exact ⟨one_mem _, one_mem _⟩
     have hy₀ := (hLineM _ (FrameLat.sum_mem_idAt l.q)).2 hε
     have h1 := hmap _ hy₀
@@ -239,7 +239,7 @@ theorem normalFr_incAdj_yZero_mem_latO_iff : ∀ {D : D7} (ψ : AddChar (AF D.ho
       simp only [FrameLat.row, star_sum, star_mul, star_star, GlobalTheory.LatVac.gram_star, Finset.sum_mul]
       rw [Finset.sum_comm]
       exact Finset.sum_congr rfl fun b _ => Finset.sum_congr rfl fun c _ => by ring
-    simp only [map_mul, map_add, GlobalTheory.LastPrimSplit.pr_e, pr_cA_e, GlobalTheory.LocSympl.conj_conj, FrameLat.cA_incA, hzz, hpz,
+    simp only [map_mul, map_add (f := _), GlobalTheory.LastPrimSplit.pr_e, pr_cA_e, GlobalTheory.LocSympl.conj_conj, FrameLat.cA_incA, hzz, hpz,
       add_zero, zero_add, mul_one, one_mul] at h3 h4
     rw [GlobalTheory.SplitLine.mem_intAt_iff_pr l.q ht]
     rw [Valuation.mem_integer_iff] at h3 h4

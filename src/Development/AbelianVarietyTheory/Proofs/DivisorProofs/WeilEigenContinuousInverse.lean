@@ -72,18 +72,18 @@ theorem schr_pure [Invertible (2 : AF F)] [Invertible (2 : mixedEmbedding.mixedS
   have e1 : (fun i => evI F ((x + fun i => infAd (a i)) i)) = (fun i => evI F (x i)) + a := by
     funext i
     change evIHom (x i + infAd (a i)) = evIHom (x i) + a i
-    rw [map_add, evIHom_apply (infAd _), evI_infAd]
+    rw [map_add (f := _), evIHom_apply (infAd _), evI_infAd]
   have e2 : ∀ v, (fun i => evFin F v ((x + fun i => infAd (a i)) i)) = fun i => evFin F v (x i) := fun v => by
     funext i
-    simp only [Pi.add_apply, map_add, evFin_infAd, add_zero]
+    simp only [Pi.add_apply, map_add (f := _), evFin_infAd, add_zero]
   have hs : sndA F (x ⬝ᵥ (fun i => infAd (b i)) + ⅟(2 : AF F) * ((fun i => infAd (a i)) ⬝ᵥ fun i => infAd (b i))) = 0 := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [dotProduct, map_add, map_sum, map_mul, sndA_infAd, mul_zero, Finset.sum_const_zero, add_zero]
+      simp only [dotProduct, map_add (f := _), map_sum, map_mul, sndA_infAd, mul_zero, Finset.sum_const_zero, add_zero]
   have hi : evI F (x ⬝ᵥ (fun i => infAd (b i)) + ⅟(2 : AF F) * ((fun i => infAd (a i)) ⬝ᵥ fun i => infAd (b i))) =
       (fun i => evI F (x i)) ⬝ᵥ b + ⅟(2 : mixedEmbedding.mixedSpace F) * (a ⬝ᵥ b) := by
     rw [← evIHom_apply]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [dotProduct, map_add, map_sum, map_mul, evIHom_invOf]
+      simp only [dotProduct, map_add (f := _), map_sum, map_mul, evIHom_invOf]
     simp only [evIHom_apply, evI_infAd]
   have e3 := infAd_evI _ hs
   rw [hi] at e3
@@ -119,17 +119,17 @@ theorem exists_finprod_ne {κ : Type} [Fintype κ] (φ : ∀ v : Pl F, (κ → F
       simp only [xf, map_sum]
     exact Finset.sum_eq_zero fun x hx => GlobalTheory.AdelicU.evalV_singleFin_ne (fun h => hw (by rw [h]; exact hx)) _
   refine ⟨fun i => infAd (y i) + xf i, funext fun i => ?_, ?_⟩
-  · rw [← evIHom_apply, map_add, evIHom_apply, evIHom_apply, evI_infAd, hxf1, add_zero]
+  · rw [← evIHom_apply, map_add (f := _), evIHom_apply, evIHom_apply, evI_infAd, hxf1, add_zero]
   · have hfin := GlobalTheory.PureFactor.mulSupport_finite φ hstd (fun i => infAd (y i) + xf i)
     rw [finprod_eq_prod_of_mulSupport_toFinset_subset _ hfin (subset_refl _)]
     refine Finset.prod_ne_zero_iff.mpr fun w _ => ?_
     by_cases hw : w ∈ T
     · have : (fun i => evFin F w (infAd (y i) + xf i)) = p w := funext fun i => by
-        rw [map_add, evFin_infAd, zero_add, hxf2 w i hw]
+        rw [map_add (f := _), evFin_infAd, zero_add, hxf2 w i hw]
       rw [this]
       simpa using hp w
     · have : (fun i => evFin F w (infAd (y i) + xf i)) = 0 := funext fun i => by
-        rw [map_add, evFin_infAd, zero_add, hxf3 w i hw, Pi.zero_apply]
+        rw [map_add (f := _), evFin_infAd, zero_add, hxf3 w i hw, Pi.zero_apply]
       have hw' : φ w = Set.indicator {x | ∀ i, x i ∈ w.adicCompletionIntegers F} 1 := by
         by_contra h
         exact hw (hS.mem_toFinset.mpr h)

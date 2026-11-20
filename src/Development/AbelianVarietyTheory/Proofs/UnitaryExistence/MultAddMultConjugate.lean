@@ -164,7 +164,7 @@ theorem span_image_span (S : Set E) :
   induction hx using Submodule.span_induction with
   | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul b x _ hx =>
     have : φ (b • x) = RingOfIntegers.mapRingHom φ b • φ x := by
       change φ ((b : E) * x) = _

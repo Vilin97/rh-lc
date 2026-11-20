@@ -14,7 +14,7 @@ variable {K : Type} [Field K] {R : Subring K}
 
 theorem IntR_add {ι : Type} {f g : MvPowerSeries ι K} (hf : IntR R f) (hg : IntR R g) : IntR R (f + g) := by
   intro n
-  rw [map_add]
+  rw [map_add (f := _)]
   exact R.add_mem (hf n) (hg n)
 
 theorem IntR_zero {ι : Type} : IntR R (0 : MvPowerSeries ι K) := by

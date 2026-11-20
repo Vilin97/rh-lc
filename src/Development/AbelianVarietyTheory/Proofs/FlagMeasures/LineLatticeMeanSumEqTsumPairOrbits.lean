@@ -159,7 +159,7 @@ def vecHom (g : MatInf E j) : (Fin j → E) →+ VecInf E j where
     exact Matrix.mulVec_zero _
   map_add' y z := by
     funext w
-    simp only [vecAt, Pi.add_apply, map_add]
+    simp only [vecAt, Pi.add_apply, map_add (f := _)]
     exact Matrix.mulVec_add _ _ _
 
 theorem mem_latAt (L : Submodule (𝓞 E) (Fin j → E)) (g : MatInf E j) (x : VecInf E j) :

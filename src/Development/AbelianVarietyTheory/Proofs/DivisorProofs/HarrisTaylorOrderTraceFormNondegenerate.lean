@@ -52,7 +52,7 @@ theorem ringHom_padic_eq_algebraMap : ∀ (p : ℕ) [Fact p.Prime] (B : Type) [R
     have hc : c = (c.appr n : ℤ_[p]) + (p : ℤ_[p]) ^ n * μ := by rw [← hμ]; ring
     refine ⟨f μ - algebraMap ℤ_[p] B μ, ?_⟩
     conv_lhs => rw [hc]
-    rw [smul_sub, Algebra.smul_def, Algebra.smul_def, map_add, map_add, map_mul, map_mul, map_pow, map_pow,
+    rw [smul_sub, Algebra.smul_def, Algebra.smul_def, map_add (f := _), map_add (f := _), map_mul, map_mul, map_pow, map_pow,
       map_natCast, map_natCast, map_natCast, map_natCast]
     noncomm_ring
   apply b.repr.injective

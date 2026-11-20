@@ -26,7 +26,7 @@ theorem isNil_frobenius_chart : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C
   have nu_add : ∀ x y : O, ¬IsUnit x → ¬IsUnit y → ¬IsUnit (x + y) := by
     intro x y hx hy
     rw [nu_iff] at hx hy ⊢
-    rw [map_add]
+    rw [map_add (f := _)]
     exact lt_of_le_of_lt (Valuation.map_add _ _ _) (max_lt hx hy)
   have nu_sum : ∀ (s : Finset (Fin d ⊕ Fin k)) (f : Fin d ⊕ Fin k → O),
       (∀ i ∈ s, ¬IsUnit (f i)) → ¬IsUnit (∑ i ∈ s, f i) := by

@@ -198,7 +198,7 @@ theorem nondegenerate_on_orth_compl {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.I
   intro v
   have hv : v ∈ U ⊔ orthK h U := by rw [hUW.sup_eq_top]; exact Submodule.mem_top
   obtain ⟨u, hu, w, hw, rfl⟩ := Submodule.mem_sup.mp hv
-  rw [map_add, hxy w hw, ← hs.eq u x, (mem_orthK.mp hx) u hu, map_zero, add_zero]
+  rw [map_add (f := _), hxy w hw, ← hs.eq u x, (mem_orthK.mp hx) u hu, map_zero, add_zero]
 
 theorem vJof_eq_of_jordan (h2 : JordanInv) (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F)
     {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) {X X' : Submodule K V} {L L' : Submodule (𝓞 K) V}

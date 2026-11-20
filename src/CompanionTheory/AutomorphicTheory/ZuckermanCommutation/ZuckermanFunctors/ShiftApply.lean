@@ -231,7 +231,7 @@ theorem decV (S : Steps) (Lb : Lib t) (hk : 1 ≤ k) (b : Bool) {μ : Fin (2 * r
     intro f g hf hg'
     obtain ⟨α, β, hab, h0⟩ := m1 _ _ ((he f).1 hf) ((he g).1 hg')
     refine ⟨α, β, hab, e.map_eq_zero_iff.1 ?_⟩
-    rw [map_add, map_smul, map_smul, h0]
+    rw [map_add (f := _), map_smul, map_smul, h0]
 
 theorem decW (S : Steps) (Lb : Lib t) (hk : 1 ≤ k) : ∀ (l : ℕ) {μ : Fin (2 * r + k + 1) → ℝ} {U : URep k r} {h : ℝ},
     U.R.IsDS ε μ → GapAtLeast ε μ h → t _ ε + (((2 * r + k + 1) ^ 2 + 2 : ℕ) : ℝ) + 1 + l < h →

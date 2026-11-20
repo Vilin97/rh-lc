@@ -35,7 +35,7 @@ theorem v2rep_iSup_stable (E : GLOps n K V) {ι : Sort*} (p : ι → Submodule K
   exact Submodule.iSup_induction (motive := fun y => E a b y ∈ ⨆ i, p i) p hx
     (fun i y hy => Submodule.mem_iSup_of_mem i (hp i a b y hy))
     (by rw [map_zero]; exact zero_mem _)
-    (fun y z hy hz => by rw [map_add]; exact add_mem hy hz)
+    (fun y z hy hz => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz)
 
 def restrictToStableSubmodule (E : GLOps n K V) (W : Submodule K V) (hW : IsStableUnderOperators E W) : GLOps n K W :=
   fun a b => (E a b).restrict (hW a b)

@@ -77,7 +77,7 @@ theorem map_Lp (G : Matrix (Fin n) (Fin n) ℂ) (z : Bool × Fin n × Fin n → 
 
 theorem eval_dp (G : Matrix (Fin n) (Fin n) ℂ) (z : Bool × Fin n × Fin n → ℂ) :
     eval z (dp G) = det (1 + (eval z).mapMatrix (Lp G)) := by
-  rw [dp, RingHom.map_det, map_add, map_one]
+  rw [dp, RingHom.map_det, map_add (f := _), map_one]
 
 theorem eval_hq (G : Matrix (Fin n) (Fin n) ℂ) (p : MvPolynomial (Fin n × Fin n) ℂ)
     (z : Bool × Fin n × Fin n → ℂ) (A : Matrix (Fin n) (Fin n) ℂ) (hA : (eval z).mapMatrix (Lp G) = A)
@@ -85,7 +85,7 @@ theorem eval_hq (G : Matrix (Fin n) (Fin n) ℂ) (p : MvPolynomial (Fin n × Fin
     eval z (hq G p) = det (1 + A) ^ p.totalDegree *
       eval (fun x => ((1 - A) * (1 + A)⁻¹) x.1 x.2) p := by
   have hMm : (eval z).mapMatrix (Mp G) = (1 - A) * adjugate (1 + A) := by
-    rw [Mp, map_mul, map_sub, map_one, RingHom.map_adjugate, map_add, map_one, hA]
+    rw [Mp, map_mul, map_sub, map_one, RingHom.map_adjugate, map_add (f := _), map_one, hA]
   have hM : ∀ i j, eval z (Mp G i j) = det (1 + A) * ((1 - A) * (1 + A)⁻¹) i j := by
     intro i j
     have h2 : (1 - A) * (1 + A)⁻¹ = (det (1 + A))⁻¹ • ((1 - A) * adjugate (1 + A)) := by

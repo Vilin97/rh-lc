@@ -22,7 +22,7 @@ theorem frame_transport {ε ε' : Rk} {m m' : ℕ} {β : Vc k m →+ Rk ⊗[k] (
     ∃ u : Vc k m →+ Vc k m', (∀ x, β' (u x) = T (β x)) ∧ ∀ c x, u (c • x) = s c • u x := by
   choose u hu using hst
   refine ⟨AddMonoidHom.mk' u fun x y => h'.1 ?_, hu, fun c x => h'.1 ?_⟩
-  · rw [map_add, hu, hu, hu, map_add, map_add]
+  · rw [map_add (f := _), hu, hu, hu, map_add (f := _), map_add (f := _)]
   · change β' (u _) = β' (s c • u x)
     rw [h'.2.1, hu, hu, h.2.1, hT]
 
@@ -65,7 +65,7 @@ theorem frame_map_span {m m' : ℕ} (β : Vc k m →+ Rk ⊗[k] (Fin m → k))
   induction hy using Submodule.span_induction with
   | mem y hy => obtain ⟨x, rfl⟩ := hy; exact Submodule.subset_span ⟨u x, ⟨x, rfl⟩, hu x⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul w y _ hy => rw [hT]; exact Submodule.smul_mem _ _ hy
 
 end
@@ -209,8 +209,8 @@ theorem exists_dfun_of_frames {k G : Type} [Field k] [Group G] {Rk : Type} [Comm
     rw [hM A C _ i hA hC hgf, LinearMap.comp_apply, hM B C g i hB hC hg, hM A B f i hA hB hf,
       LinearMap.baseChange_comp]; rfl
   · have hfg : IsHom A B (f + g) := fun s y => by
-      rw [LinearMap.add_apply, LinearMap.add_apply, hf, hg, map_add]
-    rw [hM A B _ i hA hB hfg, map_add, hM A B f i hA hB hf, hM A B g i hA hB hg, LinearMap.baseChange_add]; rfl
+      rw [LinearMap.add_apply, LinearMap.add_apply, hf, hg, map_add (f := _)]
+    rw [hM A B _ i hA hB hfg, map_add (f := _), hM A B f i hA hB hf, hM A B g i hA hB hg, LinearMap.baseChange_add]; rfl
   · have hcf : IsHom A B (c • f) := fun s y => by
       rw [LinearMap.smul_apply, LinearMap.smul_apply, hf, map_smul]
     rw [hM A B _ i hA hB hcf, vc_const_smul c (M A B f i x), (H.frame B hB i).2.1, H.κ_k,

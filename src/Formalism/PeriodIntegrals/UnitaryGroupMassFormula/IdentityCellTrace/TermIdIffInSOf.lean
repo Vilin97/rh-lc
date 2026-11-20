@@ -29,7 +29,7 @@ theorem coef_add (G : FlagG S r T) (a : Fin r) (x : S.V) (hx : x ∈ G.X) (y : S
   have hxy : x + y ∈ Submodule.span E (Set.range G.e) := Submodule.add_mem _ hx' hy'
   simp only [FlagG.coefX, dif_pos hx', dif_pos hy', dif_pos hxy]
   have e : (⟨x + y, hxy⟩ : Submodule.span E (Set.range G.e)) = ⟨x, hx'⟩ + ⟨y, hy'⟩ := rfl
-  rw [e, map_add, Finsupp.add_apply]
+  rw [e, map_add (f := _), Finsupp.add_apply]
 
 theorem coef_smul (G : FlagG S r T) (a : Fin r) (t : E) (x : S.V) (hx : x ∈ G.X) :
     G.coefX (t • x) a = t * G.coefX x a := by
@@ -171,7 +171,7 @@ theorem isIdF_of (D : D7) (hθ : TraceOne D) {u u' : D.what₂.Word}
       exact PI.UnitaryGroupMassFormula.InSRelevantW.xa_mono F0 (Nat.lt_succ_iff.1 hi') (hin.1 i)
     | zero => simp
     | add y w _ _ hy hw =>
-      have e : n (y + w) - (y + w) = (n y - y) + (n w - w) := by rw [map_add]; abel
+      have e : n (y + w) - (y + w) = (n y - y) + (n w - w) := by rw [map_add (f := _)]; abel
       rw [e]
       exact Submodule.add_mem _ hy hw
     | smul t y _ hy =>

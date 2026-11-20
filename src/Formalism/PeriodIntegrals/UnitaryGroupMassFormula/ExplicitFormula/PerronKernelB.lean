@@ -11,7 +11,7 @@ lemma norm_log_sub_log_le (c T : ℝ) (hc : 0 < c) :
   set z1 : ℂ := (c : ℂ) + T * I with hz1
   set z2 : ℂ := (c : ℂ) + ((-T : ℝ) : ℂ) * I with hz2
   have hconj : (starRingEnd ℂ) z1 = z2 := by
-    rw [hz1, hz2, map_add, map_mul, Complex.conj_ofReal, Complex.conj_ofReal, Complex.conj_I]
+    rw [hz1, hz2, map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_ofReal, Complex.conj_I]
     push_cast
     ring
   have hn : ‖z1‖ = ‖z2‖ := by rw [← hconj, Complex.norm_conj]

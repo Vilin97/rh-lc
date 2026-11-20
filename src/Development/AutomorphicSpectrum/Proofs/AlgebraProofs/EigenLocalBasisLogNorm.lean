@@ -126,7 +126,7 @@ theorem core (V : Subring K) (ρ : 𝓞 E →+* Module.End K U) (σ : E →+* K)
     have hez : z = ∑ a, x a • HT.eigProj ρ σ (u a) := by
       conv_lhs => rw [← heig, ← hc]
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum, map_sum]
+        rw [map_add (f := _), map_sum, map_sum]
       have h0 : ∑ q : J × Fin f, HT.eigProj ρ σ ((c (Sum.inr q) : K) • ρ (b q.2) (u' q.1)) = 0 :=
         Finset.sum_eq_zero fun q _ => by rw [map_smul, hker, smul_zero]
       rw [h0, add_zero, Fintype.sum_prod_type]

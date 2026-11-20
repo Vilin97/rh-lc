@@ -54,7 +54,7 @@ theorem hR_map {R' : Type} [CommRing R'] [Algebra F R'] (φ : R →ₐ[F] R') (x
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [sigR]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   simp [hR, Formalism.UG.hform, hσ, JR, inclR]
 
 end Form

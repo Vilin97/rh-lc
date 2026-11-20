@@ -305,7 +305,7 @@ theorem locTop_shift (hc : cst.Ok) {P : rowSG Pr sel mu} (hP : P.1 ∈ Pr.vGs)
       rw [hD, ev, pow_succ, Finset.mul_sum, Finset.mul_sum, Finset.mul_sum, Finset.mul_sum]
       exact Finset.sum_congr rfl fun j _ => by ring
     have := hc.psi_add P _ _ hz' ((intAt_pow (intAt_nat (P := P.1) (qOf P.1)) _).mul hd)
-    rw [hc.psi_int P _ hd, mul_one, ← mul_add, ← map_add, add_sub_cancel] at this
+    rw [hc.psi_int P _ hd, mul_one, ← mul_add, ← map_add (f := _), add_sub_cancel] at this
     exact this
   · rfl
 

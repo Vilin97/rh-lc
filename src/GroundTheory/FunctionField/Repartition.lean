@@ -249,7 +249,7 @@ noncomputable def residueMap (D : Divisor k K) (P : Place k K) {t : K}
   toFun a := IsLocalRing.residue P.ring ⟨t * (a : Repartition k K) P,
     mul_mem_ring_of_valuation ht (by rw [← add_single_apply_self D P]; exact a.2 P)⟩
   map_add' a b := by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     ext
     simp [mul_add]
@@ -396,7 +396,7 @@ theorem relSpace_add_single (D : Divisor k K) (P : Place k K) :
         exact (A E).sub_mem a.2 (hDE hb)
       refine ⟨⟨x, hxE⟩, ?_⟩
       have hsplit : a = ⟨b, hDE hb⟩ + ψ ⟨x, hxE⟩ := Subtype.ext hbc.symm
-      rw [hsplit, map_add]
+      rw [hsplit, map_add (f := _)]
       have : ρ ⟨b, hDE hb⟩ = 0 := (residueMap_eq_zero_iff D P ht _).2 hb
       rw [this, zero_add]
       rfl
@@ -473,7 +473,7 @@ theorem relSpace_finrank_of_le_of_deg_lt (n : ℕ) :
     rw [e3]
     refine ⟨hfin, ?_⟩
     rw [hsum]
-    have hdeg : deg E = deg E' + v.deg := by rw [hE, map_add, deg_single, one_mul]
+    have hdeg : deg E = deg E' + v.deg := by rw [hE, map_add (f := _), deg_single, one_mul]
     push_cast
     omega
 

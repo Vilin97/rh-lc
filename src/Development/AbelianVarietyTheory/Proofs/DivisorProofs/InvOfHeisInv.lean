@@ -33,7 +33,7 @@ theorem inv_of_heisInv : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
     fun g =>
     { toFun := fun f t => (R 0)⁻¹ * om' (g, 1) (tens (evFin F v) f R) (fun i => GlobalTheory.LatVac.liftV v (t i))
       map_add' := fun f f' => by
-        funext t; simp only [htadd, map_add, Pi.add_apply]; ring
+        funext t; simp only [htadd, map_add (f := _), Pi.add_apply]; ring
       map_smul' := fun c f => by
         funext t; simp only [htsmul, map_smul, Pi.smul_apply, smul_eq_mul, RingHom.id_apply]; ring }
   have hSop : ∀ g f t, Sop g f t = (R 0)⁻¹ * om' (g, 1) (tens (evFin F v) f R) (fun i => GlobalTheory.LatVac.liftV v (t i)) :=

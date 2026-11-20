@@ -39,7 +39,7 @@ theorem tnorm_of (x y : ℤ) (T M : ℕ) (hT : (T : ℤ) = (1 + M * x) ^ 2 + H.d
     exact add_mem (one_mem _) (mul_mem (natCast_mem _ _) (add_mem (intCast_mem _ _) (mul_mem (intCast_mem _ _) hb)))
   · rw [hco]
     have hT' : (T : H.E) = (1 + M * x) ^ 2 + H.d * (M * y) ^ 2 := by exact_mod_cast congrArg (Int.cast : ℤ → H.E) hT
-    simp only [map_add, map_mul, map_one, map_natCast, map_intCast, conj_bE]
+    simp only [map_add (f := _), map_mul, map_one, map_natCast, map_intCast, conj_bE]
     rw [hT']
     linear_combination (-(M : H.E) ^ 2 * (y : H.E) ^ 2) * bE_sq H
   · rw [← hM, Ideal.mem_span_singleton]

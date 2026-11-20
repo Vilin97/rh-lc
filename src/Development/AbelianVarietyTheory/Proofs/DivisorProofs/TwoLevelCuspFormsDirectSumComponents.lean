@@ -117,7 +117,7 @@ theorem pullRep_onComp (M : TwoLevels E r U C) (la : Wt M.Ψ r) (ρ : Representa
     have hy' : y ∈ M.cusp la := (Submodule.span_le.2 (by
       rintro _ ⟨F, ⟨hF, -⟩, rfl⟩; exact Submodule.subset_span ⟨F, hF, rfl⟩)) hy
     have : (⟨x + y, h'⟩ : M.cusp la) = ⟨x, hx'⟩ + ⟨y, hy'⟩ := rfl
-    rw [this, map_add, Submodule.coe_add]
+    rw [this, map_add (f := _), Submodule.coe_add]
     exact (onComp M (g⁻¹ • c)).add_mem (ihx hx') (ihy hy')
   | smul t x hx ihx =>
     intro h'

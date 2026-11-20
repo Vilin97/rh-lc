@@ -38,7 +38,7 @@ theorem comm_of_mem_adjoin {s : Set (Module.End ℂ M)} {f b : Module.End ℂ M}
 
 def core (K : Submodule ℂ M) (S : Subalgebra ℂ (Module.End ℂ M)) : Submodule ℂ M where
   carrier := {x | ∀ b ∈ S, b x ∈ K}
-  add_mem' := fun hx hy b hb => by rw [map_add]; exact K.add_mem (hx b hb) (hy b hb)
+  add_mem' := fun hx hy b hb => by rw [map_add (f := _)]; exact K.add_mem (hx b hb) (hy b hb)
   zero_mem' := fun b _ => by rw [map_zero]; exact K.zero_mem
   smul_mem' := fun c x hx b hb => by rw [map_smul]; exact K.smul_mem c (hx b hb)
 

@@ -14,7 +14,7 @@ theorem map_algHom_smul {O R M N : Type} [CommRing O] [CommRing R] [Algebra O R]
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a m => simp [TensorProduct.smul_tmul', map_mul]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 theorem ext_span {R M N : Type} [CommRing R] [AddCommGroup M] [Module R M] [AddCommGroup N] [Module R N]
     {O : Type} [CommRing O] [Module O M] [Module O N] {ι : Type} (v : ι → M)
@@ -24,7 +24,7 @@ theorem ext_span {R M N : Type} [CommRing R] [AddCommGroup M] [Module R M] [AddC
   induction hy using Submodule.span_induction with
   | mem y hy => obtain ⟨i, rfl⟩ := hy; exact h i
   | zero => simp
-  | add y z _ _ hy hz => simp only [map_add, hy, hz]
+  | add y z _ _ hy hz => simp only [map_add (f := _), hy, hz]
   | smul r y _ hy => rw [hP, hQ, hy]
 
 theorem exists_fixed_lift {O R M N : Type} [CommRing O] [CommRing R] [Algebra O R] [AddCommGroup M]
@@ -58,7 +58,7 @@ theorem tensor_map_eq {O R M N : Type} [CommRing O] [CommRing R] [Algebra O R] [
     have e2 : a ⊗ₜ[O] m = a • ((1 : R) ⊗ₜ[O] m) := by
       rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
     rw [e1, e2, hF0, map_smul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem uniq_of_span {O R M N ι : Type} [CommRing O] [CommRing R] [Algebra O R] [AddCommGroup M]
     [Module O M] [AddCommGroup N] [Module O N] (v : ι → R ⊗[O] M)
@@ -215,7 +215,7 @@ private theorem GlobalTheory.FontaineFullyFaithful.main_tie {G : Type} [Group G]
     induction hy using Submodule.span_induction with
     | mem y hy => obtain ⟨x, rfl⟩ := hy; exact hx x
     | zero => simp
-    | add y z _ _ hy hz => simp only [map_add, hy, hz]
+    | add y z _ _ hy hz => simp only [map_add (f := _), hy, hz]
     | smul r y _ hy => rw [hA, map_smul, hy, map_smul, hA']
   have hφt : ∀ y, ft (TWmap φR T y) = TWmap φR T' (ft y) :=
     comm φR (TWmap φR T) (TWmap φR T')

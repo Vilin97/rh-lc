@@ -45,7 +45,7 @@ theorem eigen_of_pow_fix {V : Type*} [AddCommGroup V] [Module ℂ V] (D : Module
   have hsq : Squarefree p :=
     (separable_X_pow_sub_C (1 : ℂ) (by exact_mod_cast hm.ne') one_ne_zero).squarefree
   have hg : aeval D (EuclideanDomain.gcd p q) v = 0 := by
-    rw [EuclideanDomain.gcd_eq_gcd_ab p q, mul_comm p, mul_comm q, map_add, map_mul, map_mul,
+    rw [EuclideanDomain.gcd_eq_gcd_ab p q, mul_comm p, mul_comm q, map_add (f := _), map_mul, map_mul,
       LinearMap.add_apply, Module.End.mul_apply, Module.End.mul_apply, hp, hq, map_zero, map_zero,
       add_zero]
   have hgd : EuclideanDomain.gcd p q ∣ X - C c := by

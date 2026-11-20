@@ -110,11 +110,11 @@ theorem traceReal_main (h : V →ₗ⋆[K] V →ₗ[K] K) (hS : h.IsSymm)
   have : IsScalarTower ℚ K V := ⟨fun q a x => by rw [hQs, Algebra.smul_def, mul_smul]⟩
   have : FiniteDimensional ℚ V := Module.Finite.trans K V
   let B : LinearMap.BilinForm ℚ V := LinearMap.mk₂ ℚ (fun x y => Algebra.trace ℚ K (h x y))
-    (fun x₁ x₂ y => by simp only [map_add, LinearMap.add_apply])
+    (fun x₁ x₂ y => by simp only [map_add (f := _), LinearMap.add_apply])
     (fun q x y => by
       simp only [hQs, LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul,
         traceReal_star_rat, traceReal_trace_smul])
-    (fun x y₁ y₂ => by simp only [map_add])
+    (fun x y₁ y₂ => by simp only [map_add (f := _)])
     (fun q x y => by simp only [hQs, map_smul, smul_eq_mul, traceReal_trace_smul])
   have hB : ∀ x y, B x y = Algebra.trace ℚ K (h x y) := fun _ _ => rfl
   have hBS : LinearMap.IsSymm B := ⟨fun x y => by

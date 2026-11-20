@@ -32,11 +32,11 @@ theorem liftV_mul (v : Pl F) (a b : Fv F v) :
 theorem liftE_mul (v : Pl F) (x y : Fv F v ⊗[F] E) : liftE v (x * y) = liftE v x * liftE v y := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => rw [add_mul, map_add, hx, hx', map_add, add_mul]
+  | add x x' hx hx' => rw [add_mul, map_add (f := _), hx, hx', map_add (f := _), add_mul]
   | tmul a e =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => rw [mul_add, map_add, hy, hy', map_add, mul_add]
+    | add y y' hy hy' => rw [mul_add, map_add (f := _), hy, hy', map_add (f := _), mul_add]
     | tmul b f =>
       simp only [liftE, Algebra.TensorProduct.tmul_mul_tmul, TensorProduct.map_tmul, LinearMap.id_coe, id_eq,
         liftV_mul]
@@ -44,13 +44,13 @@ theorem liftE_mul (v : Pl F) (x y : Fv F v ⊗[F] E) : liftE v (x * y) = liftE v
 theorem one_add_liftE_mul (v : Pl F) (x y : Fv F v ⊗[F] E) :
     (1 + liftE v (x - 1)) * (1 + liftE v (y - 1)) = 1 + liftE v (x * y - 1) := by
   have : x * y - 1 = (x - 1) + (y - 1) + (x - 1) * (y - 1) := by ring
-  rw [this, map_add, map_add, liftE_mul]
+  rw [this, map_add (f := _), map_add (f := _), liftE_mul]
   ring
 
 theorem one_add_liftV_mul (v : Pl F) (x y : Fv F v) :
     (1 + GlobalTheory.LatVac.liftV v (x - 1)) * (1 + GlobalTheory.LatVac.liftV v (y - 1)) = 1 + GlobalTheory.LatVac.liftV v (x * y - 1) := by
   have : x * y - 1 = (x - 1) + (y - 1) + (x - 1) * (y - 1) := by ring
-  rw [this, map_add, map_add, liftV_mul]
+  rw [this, map_add (f := _), map_add (f := _), liftV_mul]
   ring
 
 def liftU (v : Pl F) : (Fv F v ⊗[F] E)ˣ →* (AE F E)ˣ where
@@ -90,7 +90,7 @@ theorem norm_map_tensor {F E A B : Type} [Field F] [Field E] [Algebra F E] [Fini
     intro y i
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp [map_add, hy, hy']
+    | add y y' hy hy' => simp [map_add (f := _), hy, hy']
     | tmul a e =>
       simp [bA, bB, Algebra.TensorProduct.basis_repr_tmul, Algebra.smul_def]
   have hb : ∀ j, bB j = Algebra.TensorProduct.map f (AlgHom.id F E) (bA j) := by
@@ -114,7 +114,7 @@ theorem liftU_algebraMap (v : Pl F) (a : (Fv F v)ˣ) :
     liftU (E := E) v (Units.map (algebraMap (Fv F v) (Fv F v ⊗[F] E) : Fv F v →* Fv F v ⊗[F] E) a) =
       Units.map (algebraMap (AF F) (AE F E) : AF F →* AE F E) (liftUF v a) := by
   ext
-  rw [liftU_val, Units.coe_map, Units.coe_map, liftUF_val, MonoidHom.coe_coe, MonoidHom.coe_coe, map_add, map_one]
+  rw [liftU_val, Units.coe_map, Units.coe_map, liftUF_val, MonoidHom.coe_coe, MonoidHom.coe_coe, map_add (f := _), map_one]
   congr 1
   rw [Algebra.TensorProduct.algebraMap_apply, Algebra.TensorProduct.algebraMap_apply, Algebra.TensorProduct.one_def,
     Algebra.algebraMap_self, RingHom.id_apply, Algebra.algebraMap_self, RingHom.id_apply, ← TensorProduct.sub_tmul]

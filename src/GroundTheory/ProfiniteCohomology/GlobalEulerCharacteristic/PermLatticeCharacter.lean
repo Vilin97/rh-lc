@@ -40,7 +40,7 @@ theorem exists_equiv_prod_of_injective [Finite G] [NeZero (Nat.card G : k)] {U :
   obtain ⟨u, z⟩ := x
   have h1 : f (τ g u) = σ g (f u) := LinearMap.congr_fun (f.isIntertwining' g) u
   show e (τ g u, Z.toRepresentation g z) = σ g (e (u, z))
-  rw [he, he, map_add, h1]
+  rw [he, he, map_add (f := _), h1]
   rfl
 
 theorem nonempty_equiv_of_character_eq [CharZero k] [Finite G] {V : Type uV} {W : Type uW}

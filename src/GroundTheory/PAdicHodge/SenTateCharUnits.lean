@@ -151,7 +151,7 @@ def levelHom (k : ℕ) (hk : 1 ≤ k) : unitsOneAdd p k →* Multiplicative (ZMo
       linear_combination (((v : ℤ_[p]ˣ) : ℤ_[p])) * hu + (1 + (p : ℤ_[p]) ^ k * levelQuot u) * hv
     rw [levelQuot_eq _ e, ← ofAdd_add]
     congr 1
-    rw [map_add, map_add, map_mul, map_mul, toZMod_natCast_prime_pow hk, zero_mul, zero_mul, add_zero]
+    rw [map_add (f := _), map_add (f := _), map_mul, map_mul, toZMod_natCast_prime_pow hk, zero_mul, zero_mul, add_zero]
 
 theorem levelHom_apply {k : ℕ} (hk : 1 ≤ k) (u : unitsOneAdd p k) :
     levelHom p k hk u = Multiplicative.ofAdd (PadicInt.toZMod (levelQuot u)) := rfl

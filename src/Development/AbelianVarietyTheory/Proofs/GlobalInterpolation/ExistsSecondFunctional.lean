@@ -20,7 +20,7 @@ theorem mem_primeOf_prPbar {σ : E →ₐ[F] E}
   | mem x hx => exact hx
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [Subring.coe_add, map_add]
+    rw [Subring.coe_add, map_add (f := _)]
     exact lt_of_le_of_lt (Valuation.map_add _ _ _) (max_lt hx hy)
   | smul c x _ hx =>
     have hc : Valued.v (prPbar φ c) ≤ 1 := ((hφ.2.2 c).1 c.2).2

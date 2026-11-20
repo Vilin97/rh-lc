@@ -24,7 +24,7 @@ theorem hasSum_of_sumI {R : Type} [CommRing R] [IsNoetherianRing R] {I : Ideal R
     induction hy using Submodule.span_induction with
     | mem y hy => exact hc y hy
     | zero => simpa using h0
-    | add y z _ _ k1 k2 => rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le k1 k2)
+    | add y z _ _ k1 k2 => rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le k1 k2)
     | smul a y _ k1 => rw [hf, norm_mul]; exact (mul_le_of_le_one_left (norm_nonneg _) (h1 a)).trans k1
   obtain ⟨N, ⟨t, rfl⟩, -, -, h⟩ := h
   obtain ⟨u, rfl⟩ := IsNoetherian.noetherian I
@@ -45,7 +45,7 @@ theorem hasSum_of_sumI {R : Type} [CommRing R] [IsNoetherianRing R] {I : Ideal R
       intro y hy
       rw [pow_succ', Submodule.mul_smul] at hy
       refine Submodule.smul_induction_on hy (fun a ha z hz => ?_)
-        (fun y z k1 k2 => by rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le k1 k2))
+        (fun y z k1 k2 => by rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le k1 k2))
       rw [hg, norm_mul, pow_succ', _root_.mul_assoc]
       exact mul_le_mul (hI a ha) (ih z hz) (norm_nonneg _) hr0
   refine Metric.tendsto_nhds.2 fun e he => ?_

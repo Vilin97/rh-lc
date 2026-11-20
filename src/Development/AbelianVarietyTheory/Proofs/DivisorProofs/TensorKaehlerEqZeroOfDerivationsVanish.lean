@@ -43,7 +43,7 @@ theorem tensor_kaehler_eq_zero_of_derivations_vanish :
       | tmul b x =>
         simp [θ, TensorProduct.finsuppRight_apply_tmul_apply, LinearMap.liftBaseChange_tmul,
           TensorProduct.smul_tmul']
-      | add u v hu hv => simp only [map_add, Finsupp.add_apply, hu, hv]
+      | add u v hu hv => simp only [map_add (f := _), Finsupp.add_apply, hu, hv]
     rw [heq, h1]; rfl
   have := congrArg (fun f => f z) hcomp
   simp only [LinearMap.comp_apply, LinearMap.id_apply] at this

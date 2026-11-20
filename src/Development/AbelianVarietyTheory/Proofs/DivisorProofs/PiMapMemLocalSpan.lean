@@ -62,7 +62,7 @@ def glueSub : Sub (freeModule Y (Fin h)) where
         have e₁ := coords_resM (inf_le_left : W₁ ⊓ W₂ ≤ W₁) (resM _ h₁ s)
         have e₂ := coords_resM (inf_le_right : W₁ ⊓ W₂ ≤ W₂) (resM _ h₂ t)
         rw [resM_resM] at e₁ e₂
-        rw [map_add, map_add, e₁, e₂]
+        rw [map_add (f := _), map_add (f := _), e₁, e₂]
         exact add_mem (piMap_mem_localSpan _ m₁) (piMap_mem_localSpan _ m₂)
       smul_mem' := fun a s hs y hy => by
         obtain ⟨W₁, h₁, hy₁, m₁⟩ := hs y hy

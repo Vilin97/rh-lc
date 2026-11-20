@@ -167,7 +167,7 @@ theorem symp_gramM (c : S →ₐ[R] S) (hc : ∀ a, c (c a) = a) (J₁ : Matrix 
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     ring
   have ht : ∀ a, Algebra.trace R S (c a) = Algebra.trace R S a := fun a => Algebra.trace_eq_of_algEquiv eA a
-  rw [← ht (-∑ i, ∑ j, pos Z' i * Matrix.fromBlocks (-gramM 1 J₁) 0 0 K₁ i j * c (mom Z j)), h, symp, symp, hTens_gramM, ← map_add, ← map_sub]
+  rw [← ht (-∑ i, ∑ j, pos Z' i * Matrix.fromBlocks (-gramM 1 J₁) 0 0 K₁ i j * c (mom Z j)), h, symp, symp, hTens_gramM, ← map_add (f := _), ← map_sub]
   congr 1
   ring
 

@@ -32,7 +32,7 @@ theorem comp_cA (z : AE F E) : compFin F E v (cA σ z) = cV σ v (compFin F E v 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 omit [NumberField E] in
 theorem comp_incl (x : E) : compFin F E v (inclR (F := F) (AF F) x) = inclR (F := F) (Fv F v) x :=
@@ -74,7 +74,7 @@ theorem locIdele_spec (hw : IsInertAt F E v w) (h : w.under (𝓞 F) = v) (y : (
       induction z using TensorProduct.induction_on with
       | zero => simp
       | tmul a x => rfl
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     rw [e2] at e1
     exact e1.symm.trans (finSingle_self w _)
 

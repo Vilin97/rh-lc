@@ -59,4 +59,4 @@ theorem UpperTheory.zC_succ_eq_and_envelopingAction_compatible :
       rw [UpperTheory.V.Cm.uC_tmul, e]
       rfl
     | add a b ha hb =>
-      rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, Submodule.coe_add, Submodule.coe_add, ha, hb]
+      rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, Submodule.coe_add, Submodule.coe_add, ha, hb]

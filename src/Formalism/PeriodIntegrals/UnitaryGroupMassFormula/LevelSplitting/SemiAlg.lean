@@ -51,7 +51,7 @@ theorem datR_hyp (hσσ : ∀ x, σ (σ x) = x) (hJ : IsHermND σ J) (hP : P.IsS
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul r e => simp [sigR, hσσ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · intro i j
     show sigR R σ (JR R J j i) = JR R J i j
     simp only [JR, Matrix.map_apply, sigR_inclR, hJ1 i j]
@@ -193,7 +193,7 @@ theorem mapW_S {g : HA R σ J} (hg : g ∈ Ssub R σ J P) : (datR R σ J P T).Ma
   obtain ⟨hWe, -, hWz⟩ := hW
   have hadd : ∀ u v, (datR R σ J P T).h (u + v) w = (datR R σ J P T).h u w + (datR R σ J P T).h v w := by
     intro u v
-    simp only [SemiG.Dat.h, Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+    simp only [SemiG.Dat.h, Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
   have hsmul : ∀ (c : R ⊗[F] E) u, (datR R σ J P T).h (c • u) w =
       (datR R σ J P T).σA c * (datR R σ J P T).h u w := by
     intro c u

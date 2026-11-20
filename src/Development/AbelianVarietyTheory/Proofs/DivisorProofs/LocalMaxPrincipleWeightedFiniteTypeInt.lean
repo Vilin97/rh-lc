@@ -53,7 +53,7 @@ theorem local_max_principle_int : ∀ (B : Type) [CommRing B] [IsDomain B] [Char
     induction t using TensorProduct.induction_on with
     | zero => simpa using continuous_const
     | tmul q b => simp only [ratExtPoint_tmul]; exact continuous_const.mul (hev b)
-    | add t u ht hu => simp only [map_add]; exact ht.add hu
+    | add t u ht hu => simp only [map_add (f := _)]; exact ht.add hu
   have hcomp : ∀ x : B →+* ℂ, (ratExtPoint x).comp φ = x := fun x => by
     ext b
     simp [hφ', ratExtPoint_tmul]

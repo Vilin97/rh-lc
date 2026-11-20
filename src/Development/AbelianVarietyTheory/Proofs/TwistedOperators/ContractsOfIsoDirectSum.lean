@@ -38,7 +38,7 @@ theorem contracts_of_iso_directSum (H G I F V : Type) [Monoid H] [Monoid G] [Add
   have hπJ : ∀ y w, π (J i₀ y w) = ε w • y := fun y w => by
     induction w with
     | tmul x v => rw [hJ, hπ, DirectSum.component.lof_self, hP]
-    | add s t hs ht => simp only [map_add, hs, ht, add_smul]
+    | add s t hs ht => simp only [map_add (f := _), hs, ht, add_smul]
   have hπJ' : ∀ i, i ≠ i₀ → ∀ y x v, π (J i y (x ⊗ₜ v)) = 0 := fun i hi y x v => by
     rw [hJ, hπ, DirectSum.component.of, dif_neg hi]; simp
   refine ⟨π, fun y => ⟨J i₀ y z, by rw [hπJ, hz, one_smul]⟩, fun h g f v => ?_, fun l hl => ?_⟩
@@ -50,13 +50,13 @@ theorem contracts_of_iso_directSum (H G I F V : Type) [Monoid H] [Monoid G] [Add
     generalize DirectSum.component ℂ I (fun i => A i ⊗[ℂ] B i) i₀ f = t
     induction t with
     | tmul x y => rw [TensorProduct.map_tmul, hP, hP, hεi, map_smul]
-    | add s t hs ht => simp only [map_add, TensorProduct.add_tmul, hs, ht]
+    | add s t hs ht => simp only [map_add (f := _), TensorProduct.add_tmul, hs, ht]
   · have hinv : ∀ i y, l ∘ₗ J i y ∈ invFun ((a i).tprod σ) := fun i y => mem_invFun.2 fun h w => by
       induction w with
       | tmul x v =>
         have := hl h (DirectSum.lof ℂ I (fun i => A i ⊗[ℂ] B i) i (x ⊗ₜ y)) v
         simpa [hJ] using this
-      | add s t hs ht => simp only [map_add, hs, ht]
+      | add s t hs ht => simp only [map_add (f := _), hs, ht]
     let c : B i₀ →ₗ[ℂ] ℂ := l ∘ₗ LinearMap.rTensor V (DirectSum.lof ℂ I (fun i => A i ⊗[ℂ] B i) i₀) ∘ₗ
       (TensorProduct.rightComm ℂ (A i₀) (B i₀) V).symm.toLinearMap ∘ₗ TensorProduct.mk ℂ _ _ z
     have hc : ∀ y, c y = l (J i₀ y z) := fun y => by
@@ -65,7 +65,7 @@ theorem contracts_of_iso_directSum (H G I F V : Type) [Monoid H] [Monoid G] [Add
       generalize z = w
       induction w with
       | tmul x v => simp [hJ]
-      | add s t hs ht => simp only [map_add, TensorProduct.add_tmul, hs, ht]
+      | add s t hs ht => simp only [map_add (f := _), TensorProduct.add_tmul, hs, ht]
     have key : ∀ i y x v, l (J i y (x ⊗ₜ v)) = c (π (J i y (x ⊗ₜ v))) := fun i y x v => by
       by_cases hi : i = i₀
       · subst hi

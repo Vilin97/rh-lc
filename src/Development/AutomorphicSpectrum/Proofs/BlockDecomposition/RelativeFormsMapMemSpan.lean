@@ -240,7 +240,7 @@ theorem form_update_add {a : ℕ} (y₀ : A) (x : Fin a → A) (i : Fin a) (u v 
     form K y₀ (Function.update x i (u + v)) =
       form K y₀ (Function.update x i u) + form K y₀ (Function.update x i v) := by
   unfold form
-  rw [D_update, D_update, D_update, map_add, AlternatingMap.map_update_add, smul_add]
+  rw [D_update, D_update, D_update, map_add (f := _), AlternatingMap.map_update_add, smul_add]
 
 theorem form_update_smul {a : ℕ} (y₀ : A) (x : Fin a → A) (i : Fin a) (c : K) (u : A) :
     form K y₀ (Function.update x i (c • u)) = c • form K y₀ (Function.update x i u) := by
@@ -254,7 +254,7 @@ theorem form_multi {N : Type} [AddCommMonoid N] [Module K N] {a : ℕ} (Φ : Om 
   span_multi (fun x => Φ (form K y₀ x)) T
     (fun x i u v => by
       show Φ _ = Φ _ + Φ _
-      rw [form_update_add, map_add])
+      rw [form_update_add, map_add (f := _)])
     (fun x i c u => by
       show Φ _ = c • Φ _
       rw [form_update_smul, map_smul])
@@ -284,7 +284,7 @@ theorem mem_of_spans (S : Finset (Fin d)) {a : ℕ} (q₀ : Prop) (q : Fin a →
     exact Submodule.zero_mem _
   | add u v _ _ hu hv =>
     have h1 : form K (u + v) y = form K u y + form K v y := by unfold form; rw [add_smul]
-    rw [h1, map_add]
+    rw [h1, map_add (f := _)]
     exact Submodule.add_mem _ hu hv
   | smul c u _ hu =>
     have h1 : form K (c • u) y = c • form K u y := by unfold form; rw [smul_assoc]
@@ -320,7 +320,7 @@ theorem relOm_image_mem_span : ∀ {K : Type} [Field K] {n d : ℕ} (S : Finset 
       · exact Or.inl (Ideal.mul_mem_left _ r h)
       · exact Or.inr h
     | zero => intro r; rw [smul_zero, map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => intro r; rw [smul_add, map_add]; exact Submodule.add_mem _ (hx r) (hy r)
+    | add x y _ _ hx hy => intro r; rw [smul_add, map_add (f := _)]; exact Submodule.add_mem _ (hx r) (hy r)
     | smul c x _ hx => intro r; rw [smul_smul]; exact hx (r * c)
   have h1 := key 1
   rw [one_smul] at h1

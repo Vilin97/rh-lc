@@ -56,7 +56,7 @@ theorem IsNabla.add {h k h' k' : HdR A} (e : IsNabla D h k) (e' : IsNabla D h' k
   obtain ⟨d, a, b⟩ := e
   obtain ⟨d', a', b'⟩ := e'
   refine ⟨d + d', fun c ↦ ?_, fun c ↦ ?_⟩
-  · rw [LinearMap.add_apply, a, a', LinearMap.add_apply, map_add]
+  · rw [LinearMap.add_apply, a, a', LinearMap.add_apply, map_add (f := _)]
   · rw [LinearMap.add_apply, b, b']
     ext <;> simp
 

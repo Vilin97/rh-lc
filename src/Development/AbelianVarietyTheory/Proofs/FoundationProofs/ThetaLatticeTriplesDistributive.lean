@@ -56,14 +56,14 @@ theorem lft_add (P : Matrix (Fin N') (Fin N') D.host.E) (z : VC D N N') : lft P 
   funext τ i j
   show ∑ k, embT D τ (P i k) * z τ k j + ∑ k, embT D τ ((1 - P) i k) * z τ k j = z τ i j
   rw [← Finset.sum_add_distrib]
-  simp only [← add_mul, ← map_add, Matrix.sub_apply, add_sub_cancel, Matrix.one_apply]
+  simp only [← add_mul, ← map_add (f := _), Matrix.sub_apply, add_sub_cancel, Matrix.one_apply]
   simp [apply_ite]
 
 theorem rgt_add (P : Matrix (Fin N) (Fin N) D.host.E) (z : VC D N N') : rgt P z + rgt (1 - P) z = z := by
   funext τ i j
   show ∑ k, z τ i k * embT D τ (P k j) + ∑ k, z τ i k * embT D τ ((1 - P) k j) = z τ i j
   rw [← Finset.sum_add_distrib]
-  simp only [← mul_add, ← map_add, Matrix.sub_apply, add_sub_cancel, Matrix.one_apply]
+  simp only [← mul_add, ← map_add (f := _), Matrix.sub_apply, add_sub_cancel, Matrix.one_apply]
   simp [apply_ite]
 
 theorem lft_mem (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (P : Matrix (Fin N') (Fin N') D.host.E) {L : Lat D N}
@@ -147,9 +147,9 @@ theorem dist_La : ∀ (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (N N' : �
     have q3 : ∀ v ∈ L', (1 - P).mulVec v ∈ L' := fun v hv => by
       rw [one_sub_mulVec]; exact L'.sub_mem hv (h2 v hv)
     have e : x = lft P x + lft (1 - P) (x + y) - lft (1 - P) y := by
-      rw [map_add, ← add_assoc, lft_add, add_sub_cancel_right]
+      rw [map_add (f := _), ← add_assoc, lft_add, add_sub_cancel_right]
     have e2 : lft (1 - P) y = lft (1 - P) (x + y) - lft (1 - P) x := by
-      rw [map_add, add_sub_cancel_left]
+      rw [map_add (f := _), add_sub_cancel_left]
     rw [e]
     refine sub_mem (AddSubgroup.mem_sup_left (add_mem
       ⟨lft_mem cc δ P (fun v hv => h1 v (Submodule.mem_sup_right hv)) hx, lft_mem cc δ P h2 hx⟩

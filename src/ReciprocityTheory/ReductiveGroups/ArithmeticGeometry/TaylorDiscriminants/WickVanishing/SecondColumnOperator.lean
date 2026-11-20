@@ -45,7 +45,7 @@ theorem trunc_id (N : ℕ) (x : MvPolynomial σ k) (hx : x.totalDegree ≤ N) : 
 theorem so_coef_add (c1 c2 : σ → σ → k) (P : MvPolynomial σ k) :
     secondOrder k (fun p q => c1 p q + c2 p q) P = secondOrder k c1 P + secondOrder k c2 P := by
   unfold secondOrder
-  simp only [map_add, add_mul, Finset.sum_add_distrib]
+  simp only [map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem so_iter_smul (c : σ → σ → k) (r : k) :
     ∀ (i : ℕ) (y : MvPolynomial σ k), (secondOrder k c)^[i] (r • y) = r • (secondOrder k c)^[i] y

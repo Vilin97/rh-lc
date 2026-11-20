@@ -149,7 +149,7 @@ theorem exists_coordAt (P : HeightOneSpectrum (𝓞 E)) {N : Submodule (𝓞 E) 
   · intro x hx y hy
     rw [hpos _ (Submodule.add_mem _ hx hy), hpos _ hx, hpos _ hy]
     funext i
-    rw [map_add, Finsupp.add_apply, reduction_add (hint x hx i) (hint y hy i)]
+    rw [map_add (f := _), Finsupp.add_apply, reduction_add (hint x hx i) (hint y hy i)]
     rfl
   · intro c
     choose r hr using fun i => Ideal.Quotient.mk_surjective (c i)

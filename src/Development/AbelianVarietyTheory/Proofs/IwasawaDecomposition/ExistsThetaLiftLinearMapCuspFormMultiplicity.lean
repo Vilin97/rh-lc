@@ -128,7 +128,7 @@ theorem exists_member (hP : GlobalTheory.Published.CuspRapidDecay) {ψ : AddChar
     { toFun := fun e => lift om ν 𝓕 fun h => pt (io e (F h))
       map_add' := fun e e' => by
         funext g
-        simp only [lift, thetaKO, map_add, LinearMap.add_apply, Pi.add_apply]
+        simp only [lift, thetaKO, map_add (f := _), LinearMap.add_apply, Pi.add_apply]
         exact integral_add (hint e g) (hint e' g)
       map_smul' := fun a e => by
         funext g

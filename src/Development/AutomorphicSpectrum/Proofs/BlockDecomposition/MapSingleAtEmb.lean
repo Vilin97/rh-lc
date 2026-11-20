@@ -54,7 +54,7 @@ theorem map_single_atEmb {E : Type} [Field E] [NumberField E] [IsTotallyComplex 
   have hL : ∀ x, φ (toL (Matrix.single i j x)) = L x := fun _ => rfl
   have e : atEmb τ (-Complex.I) = -atEmb τ Complex.I := by
     rw [atEmb_eq]; simp
-  rw [hL, atEmb_eq, map_add, map_smul, map_smul]
+  rw [hL, atEmb_eq, map_add (f := _), map_smul, map_smul]
   simp only [cx, hL, atEmb_conj, map_one, Complex.conj_I, e, map_neg]
   have h1 := Complex.add_conj z
   have h2 := Complex.sub_conj z
@@ -114,11 +114,11 @@ theorem frameCas : FrameCas := by
   intro E _ _ _ a M _ _ _ _ φ
   set c : ℂ := (1 + Complex.I) / 2 with hc
   have hc0 : c * c + starRingEnd ℂ c * starRingEnd ℂ c = 0 := by
-    simp only [hc, map_div₀, map_add, map_one, Complex.conj_I, map_ofNat]
+    simp only [hc, map_div₀, map_add (f := _), map_one, Complex.conj_I, map_ofNat]
     ring_nf
     simp
   have hc1 : 2 * (c * starRingEnd ℂ c) = 1 := by
-    simp only [hc, map_div₀, map_add, map_one, Complex.conj_I, map_ofNat]
+    simp only [hc, map_div₀, map_add (f := _), map_one, Complex.conj_I, map_ofNat]
     ring_nf
     simp
     norm_num

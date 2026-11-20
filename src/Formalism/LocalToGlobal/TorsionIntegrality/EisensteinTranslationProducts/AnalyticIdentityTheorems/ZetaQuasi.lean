@@ -61,7 +61,7 @@ theorem zetaQuasi_of (hd : ZetaHasDeriv) (ho : ZetaOdd) : ZetaQuasi := by
       add_mem' := by
         rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
         refine ⟨add_mem ha hb, fun x hx => ?_⟩
-        rw [← add_assoc, hb' _ (add_notMem ha hx), ha' x hx, map_add, add_assoc]
+        rw [← add_assoc, hb' _ (add_notMem ha hx), ha' x hx, map_add (f := _), add_assoc]
       zero_mem' := ⟨zero_mem _, fun x _ => by simp⟩
       neg_mem' := by
         rintro a ⟨ha, ha'⟩

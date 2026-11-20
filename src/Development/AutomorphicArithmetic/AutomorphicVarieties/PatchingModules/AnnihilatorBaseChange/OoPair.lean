@@ -27,7 +27,7 @@ private theorem lam_comap {n : ℕ} {A G H : Type} [CommRing A] [Group G] [Group
     · simp
     · induction y using MonoidAlgebra.induction_linear with
       | zero => simp
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
       | single g r => simp
   rw [GDet.lam, GDet.lam, this]
 
@@ -47,7 +47,7 @@ private theorem ofRep_comap {n : ℕ} {A G H : Type} [CommRing A] [Group G] [Gro
   congr 1
   induction x using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | single g r => simp [GDet.repAlg]
 
 private theorem lam_push {n : ℕ} {A A' G H : Type} [CommRing A] [CommRing A'] [Group G] [Group H] (φ : H →* G)

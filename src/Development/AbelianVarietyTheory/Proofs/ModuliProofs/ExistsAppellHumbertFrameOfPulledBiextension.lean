@@ -101,7 +101,7 @@ theorem exists_appellHumbert_frame :
     rw [hsc] at e3
     have k2 : ({0, 1} : Finset (Fin 2)).card = 2 := by decide
     have s3 : z + F z + ((l + ⟨F l, hF l l.2⟩ : u.Λ) : Fin P.g → ℂ) = z + l + F (z + l) := by
-      simp only [Submodule.coe_add, map_add]; abel
+      simp only [Submodule.coe_add, map_add (f := _)]; abel
     rw [s3] at e3
     have hsum : ∀ x y, hermForm Hm x (F y) + hermForm Hm (F x) y = hermForm Hm x y := fun x y => by
       rw [hadj, ← herm_add_right]
@@ -111,7 +111,7 @@ theorem exists_appellHumbert_frame :
       Real.pi / 2 * hermForm Hm (F l) (F l)) * u.fr _ (F z + F l) at e2
     change _ = _ * Complex.exp (Real.pi * hermForm Hm (z + F z) (l + F l) +
       Real.pi / 2 * hermForm Hm (l + F l) (l + F l)) * _ at e3
-    rw [← map_add] at e2
+    rw [← map_add (f := _)] at e2
     have hx : Real.pi * hermForm Hm (z + F z) (l + F l) +
         Real.pi / 2 * hermForm Hm (l + F l) (l + F l) =
         (Real.pi * hermForm Hm z l + Real.pi / 2 * hermForm Hm l l) +

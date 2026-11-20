@@ -26,7 +26,7 @@ theorem finprod_add_of_at {F : Type} [Field F] [NumberField F] {κ : Type} [Fint
     have := congrArg (evFin F v) (congrFun (hz u hu) i)
     simpa [h1] using this
   refine finprod_congr fun v => congrArg (φ v) (funext fun i => ?_)
-  rw [Pi.add_apply, map_add, h2 v i, add_zero]
+  rw [Pi.add_apply, map_add (f := _), h2 v i, add_zero]
 
 theorem exists_deriv_pure (hP : GlobalTheory.FunPr.Hypotheses₂) {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E]
     [Algebra F E] {σ : E →ₐ[F] E} {n d : ℕ} {Y : Spc F E n} {W : Spc F E d} (M : Model σ Y W) (ψ : AddChar (AF F) ℂ)
@@ -96,10 +96,10 @@ theorem hasDerivAt_theta_lineLeft : ∀ (F E : Type) [Field F] [NumberField F] [
       obtain ⟨s₂, Ψ₂, m₂, d₂, e₂⟩ := h₂
       refine ⟨add_mem s₁ s₂, Ψ₁ + Ψ₂, add_mem m₁ m₂, fun y => ?_, ?_⟩
       · have h := (d₁ y).add (d₂ y)
-        simp only [map_add, Pi.add_apply]
+        simp only [map_add (f := _), Pi.add_apply]
         exact h
       · have h := e₁.add e₂
-        simp only [map_add]
+        simp only [map_add (f := _)]
         exact h
     | smul r Φ₁ _ h₁ =>
       obtain ⟨s₁, Ψ₁, m₁, d₁, e₁⟩ := h₁

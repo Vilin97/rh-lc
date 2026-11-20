@@ -43,7 +43,7 @@ theorem gls_exists (i : Fin 2) (v : HeightOneSpectrum (𝓞 X.F)) (h : (Pr.g i :
     exact this.symm
   have ht' : algebraMap X.F X.E (t : X.F) = (Pr.piG i : X.E) + hc.sig (Pr.piG i : X.E) := by
     have := congrArg (algebraMap (𝓞 X.E) X.E) ht
-    rw [map_add, ← IsScalarTower.algebraMap_apply, IsScalarTower.algebraMap_apply (𝓞 X.F) X.F X.E] at this
+    rw [map_add (f := _), ← IsScalarTower.algebraMap_apply, IsScalarTower.algebraMap_apply (𝓞 X.F) X.F X.E] at this
     exact this
   have htv : t ∉ v.asIdeal := by
     intro htv

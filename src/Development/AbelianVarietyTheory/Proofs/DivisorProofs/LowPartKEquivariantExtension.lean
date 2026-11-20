@@ -46,7 +46,7 @@ theorem isExp_prod {V : Type} [AddCommGroup V] [Module ℂ V] {L U : Module.End 
     | zero => rfl
     | succ n ih => rw [pow_succ', pow_succ', Module.End.mul_apply, ih]; simp
   have h1 := (h x (l ∘ₗ LinearMap.inl ℂ V V)).add (h y (l ∘ₗ LinearMap.inr ℂ V V))
-  simp only [LinearMap.comp_apply, ← mul_add, ← map_add, LinearMap.inl_apply, LinearMap.inr_apply, Prod.mk_add_mk,
+  simp only [LinearMap.comp_apply, ← mul_add, ← map_add (f := _), LinearMap.inl_apply, LinearMap.inr_apply, Prod.mk_add_mk,
     add_zero, zero_add] at h1
   simp only [hp]
   exact h1
@@ -152,7 +152,7 @@ theorem pair_stable (hcm : IsCMExt F E σ)
     rw [hY2, Matrix.conjTranspose_smul, Matrix.conjTranspose_add, Matrix.conjTranspose_conjTranspose]
     rw [show star (1 / (2 * Complex.I)) = -(1 / (2 * Complex.I)) by simp, neg_smul, add_comm]
   have := N.add_mem (key Y1 k1 s1) (N.smul_mem Complex.I (key Y2 k2 s2))
-  rw [hZ', map_add, map_smul]
+  rw [hZ', map_add (f := _), map_smul]
   exact this
 
 set_option maxHeartbeats 1000000 in
@@ -190,7 +190,7 @@ theorem kill_noncompact {M : Model σ X W} {A : InfinitePlace F → Matrix (Fin 
     rwa [e, Matrix.trace_add, Matrix.trace_smul, smul_eq_mul] at this
   have k1 := key Y1 h1
   have k2 := key Y2 h2
-  rw [e, map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, map_add, map_add, map_smul, map_smul,
+  rw [e, map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_add (f := _), map_smul, map_smul,
     eq_neg_of_add_eq_zero_left k1, eq_neg_of_add_eq_zero_left k2, smul_neg, smul_smul, ← neg_add, ← add_smul,
     show c w * Y1.trace + Complex.I * (c w * Y2.trace) = c w * (Y1.trace + Complex.I * Y2.trace) by ring, ht]
   simp

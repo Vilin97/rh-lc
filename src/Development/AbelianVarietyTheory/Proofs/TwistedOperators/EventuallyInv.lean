@@ -132,7 +132,7 @@ theorem stage {Q R : Subgroup G} (hRQ : R ≤ Q) {P : Subgroup M} (ℓ : Q →* 
       (evalAt σ 1).rTensor X (TensorProduct.map (smInd P σ (ℓ q)) (τ q) y) =
         (τ q).lTensor W ((evalAt σ (ℓ q)).rTensor X y) := fun q y => by
     induction y with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul f x =>
       simp only [TensorProduct.map_tmul, LinearMap.rTensor_tmul, LinearMap.lTensor_tmul]
       congr 1
@@ -149,7 +149,7 @@ theorem stage {Q R : Subgroup G} (hRQ : R ≤ Q) {P : Subgroup M} (ℓ : Q →* 
     congr 1
     generalize j y = z
     induction z with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul f x =>
       simp only [TensorProduct.map_tmul, LinearMap.rTensor_tmul, LinearMap.lTensor_tmul]
       congr 1
@@ -269,7 +269,7 @@ theorem dat_snd (e : a ⊕ b ≃ n) (π₁ : Representation ℂ (GL a k) V₁) (
     (q : parab k (two e)) (y : V₁ ⊗[ℂ] V₂) :
     dat e (extTensor π₁ π₂) q y = TensorProduct.map (π₁ (pr e q).1) (tauSnd e π₂ q) y := by
   induction y with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul f x =>
     rw [dat_apply, extTensor_tmul, TensorProduct.map_tmul, ← TensorProduct.tmul_smul, tauSnd_apply]
 
@@ -278,7 +278,7 @@ theorem dat_fst (e : a ⊕ b ≃ n) (π₁ : Representation ℂ (GL a k) V₁) (
     TensorProduct.comm ℂ V₁ V₂ (dat e (extTensor π₁ π₂) q y) =
       TensorProduct.map (π₂ (pr e q).2) (tauFst e π₁ q) (TensorProduct.comm ℂ V₁ V₂ y) := by
   induction y with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul f x =>
     rw [dat_apply, extTensor_tmul, map_smul, TensorProduct.comm_tmul, TensorProduct.comm_tmul,
       TensorProduct.map_tmul, ← TensorProduct.tmul_smul, tauFst_apply]
@@ -350,10 +350,10 @@ theorem action_eq (e₁ : ab ⊕ c ≃ n) (f₁ : a ⊕ b ≃ ab) (e₂ : a ⊕ 
     simp only [Units.val_mul]
     ring
   induction z with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul y x =>
     induction y with
-    | add x y hx hy => simp only [TensorProduct.add_tmul, map_add, hx, hy]
+    | add x y hx hy => simp only [TensorProduct.add_tmul, map_add (f := _), hx, hy]
     | tmul y z =>
       rw [TensorProduct.comm_tmul, TensorProduct.assoc_symm_tmul, TensorProduct.map_tmul,
         TensorProduct.map_tmul, dat_apply, dat_apply, extTensor_tmul, extTensor_tmul, g₁, g₂,

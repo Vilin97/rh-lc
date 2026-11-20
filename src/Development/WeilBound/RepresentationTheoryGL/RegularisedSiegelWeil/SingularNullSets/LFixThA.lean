@@ -41,7 +41,7 @@ theorem compInf_eq (w : InfinitePlace D.host.F) (x : AE D) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => rw [map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem kOff_inf {S : Finset (Pl D)} {g : G D n} (hg : g ∈ KOff D n S) (w : InfinitePlace D.host.F) (i j : Fin (n + n)) :
     compInf D.host.F D.host.E w (mat g i j) = (1 : Matrix (Fin (n + n)) (Fin (n + n)) _) i j := by

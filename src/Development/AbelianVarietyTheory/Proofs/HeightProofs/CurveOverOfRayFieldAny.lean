@@ -35,7 +35,7 @@ theorem curveOver_of_rayField_any : GlobalTheory.NT.RayField → ∀ (E : Type) 
   let φ : K₀ →+* ℂ := algebraMap K₀ ℂ
   have hw' : φ w = (1 + H.rt0) / 2 := by
     have := congrArg φ hw
-    rw [map_mul, map_add, map_one, map_ofNat] at this
+    rw [map_mul, map_add (f := _), map_one, map_ofNat] at this
     change _ = 1 + H.rt0 at this
     linear_combination this / 2
   have hc : ∀ a b : ℤ, φ ((a : 𝓞 K₀) + b * w : 𝓞 K₀) = a + b * ((1 + H.rt0) / 2) := fun a b => by
@@ -98,14 +98,14 @@ theorem curveOver_of_rayField_any : GlobalTheory.NT.RayField → ∀ (E : Type) 
       exact absurd (hinj _ _ (by simpa using h6)) (sq_ne_prime h2 hD φ hp (1 + n * (x + y * w)))
     · have h8 : ι (σ π) = φ (1 + n * (x + y * (1 - w)) : 𝓞 K₀) := by
         rw [h5, hs]
-        simp only [map_add, map_mul, map_sub, map_neg, map_div₀, map_one, map_ofNat, map_natCast, map_intCast, hrr, hw']
+        simp only [map_add (f := _), map_mul, map_sub, map_neg, map_div₀, map_one, map_ofNat, map_natCast, map_intCast, hrr, hw']
         ring
       rw [h7, h8] at h6
       refine ncard_eq_finrank h2 hD φ hn R hR hp (c := x + y * w) (c' := x + y * (1 - w)) ?_
         (hinj _ _ (by simpa using h6))
       rw [← Complex.norm_conj (φ (1 + n * (x + y * w) : 𝓞 K₀))]
       congr 1
-      simp only [map_add, map_mul, map_sub, map_div₀, map_one, map_ofNat, map_natCast, map_intCast, hconj, hw']
+      simp only [map_add (f := _), map_mul, map_sub, map_div₀, map_one, map_ofNat, map_natCast, map_intCast, hconj, hw']
       ring
   refine (GlobalTheory.FinalJoin.CurveField.curveOver_of_weberIn E H F n (by omega)).1
     (hRle (R.algebraMap_mem (⟨H.rt0, hr0⟩ : K₀))) fun P hP => ?_

@@ -49,7 +49,7 @@ theorem cf_comm {φ : K' →+ K} (hφ : ∀ a x, φ (j a * x) = a * φ x)
     have e : (monomial m x : MvPolynomial σ K') = x • map j (monomial m 1) := by
       rw [map_monomial, map_one, smul_monomial, smul_eq_mul, mul_one]
     rw [e, map_smul, h, cf_smul_map j hφ, cf_smul_map j hφ, map_smul]
-  | add p q hp hq => rw [map_add, cf_add, cf_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), cf_add, cf_add, map_add (f := _), hp, hq]
 
 theorem eq_sum_cf {I : Type} [Fintype I] (e : I → K') (φ : I → K' →+ K) (h : ∀ x, ∑ i, e i * j (φ i x) = x)
     (P : MvPolynomial σ K') : P = ∑ i, e i • map j (cf (φ i) P) := by
@@ -65,7 +65,7 @@ theorem exists_ext (T : MvPolynomial σ K →ₗ[K] MvPolynomial τ K) :
       rw [smul_monomial, smul_eq_mul, mul_one]
     have e' : map j (monomial m 1) = basisMonomials σ K' m := by simp
     rw [e, map_smul', map_smul, map_smul, map_smul', e', Module.Basis.constr_basis]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 theorem cf_mem_VV {φ : K' →+ K} (hφ : ∀ a x, φ (j a * x) = a * φ x) {ι : Type} [Fintype ι] {n : ℕ}
     (lam : ι → DomWeight n) {F : Pol K' ι n} (hF : F ∈ VV K' lam) : cf φ F ∈ VV K lam := by
@@ -102,7 +102,7 @@ theorem cf_mem_HHa {φ : K' →+ K} (hφ : ∀ a x, φ (j a * x) = a * φ x) {T 
       simp only [AlgHom.toLinearMap_apply]
       induction Q using MvPolynomial.induction_on with
       | C x => simp [rowShift]
-      | add p q hp hq => simp only [map_add, hp, hq]
+      | add p q hp hq => simp only [map_add (f := _), hp, hq]
       | mul_X p v hp =>
         simp only [map_mul, hp, map_X]
         congr 1
@@ -124,7 +124,7 @@ theorem polyAction_map {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeigh
   have h2 : trAct g' (map j F) = map j (trAct g F) := by
     induction F using MvPolynomial.induction_on with
     | C x => simp [trAct]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p v hp =>
       simp only [map_mul, hp, map_X]
       congr 1
@@ -155,7 +155,7 @@ theorem map_mem_nabStd {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeigh
     rw [← e, GlobalTheory.NabStab.toK_apply, GlobalTheory.NabStab.toK_apply, map_map, map_map]
     rfl
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx =>
     rw [map_smul_alg j (RingOfIntegers.mapRingHom j) (fun _ => rfl)]
     exact Submodule.smul_mem _ _ hx
@@ -223,7 +223,7 @@ theorem gaStar_map (ga : Matrix (Fin n) (Fin n) E) (P : MvPolynomial (LtN Dw n) 
     Formalism.L2.Pj.gaStar c' ga (map (incF c c' hle) P) = map (incF c c' hle) (Formalism.L2.Pj.gaStar c ga P) := by
   induction P using MvPolynomial.induction_on with
   | C x => rw [map_C, Formalism.L2.Pj.gaStar, Formalism.L2.Pj.gaStar, aeval_C, aeval_C, algebraMap_eq, algebraMap_eq, map_C]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp, map_X]
     congr 1
@@ -314,7 +314,7 @@ theorem exists_ioLFRec_over : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
       induction hm using Submodule.span_induction with
       | mem x hx => exact Submodule.subset_span (hHa x hx)
       | zero => rw [map_zero]; exact zero_mem _
-      | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+      | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
       | smul s x _ hx => rw [map_smul']; exact Submodule.smul_mem _ _ hx
     · rw [Submodule.span_le]
       intro P hP

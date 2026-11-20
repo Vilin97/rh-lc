@@ -29,7 +29,7 @@ theorem step : ∀ (p : ℕ) [Fact p.Prime] (S K : Type) [CommRing S] [IsDomain 
     rw [this]
     have e1 := RingHom.map_mulVec (WittVector.constantCoeff (p := p) (R := K)) (U.map F) Y i
     change WittVector.constantCoeff ((U.map F *ᵥ Y) i + F (Z i)) = _
-    rw [map_add, e1]
+    rw [map_add (f := _), e1]
     simp [Matrix.map_map, Function.comp_def, WittVector.constantCoeff_apply, hF, WittVector.map_coeff]
   have hb : ∀ i, ∃ c, f c = (Y i).coeff 0 := fun i =>
     RingHom.mem_range.mp (GlobalTheory.T.artin_schreier_system_integral p S K d (U.map WittVector.constantCoeff) (fun i => (Z i).coeff 0)
@@ -57,11 +57,11 @@ theorem step : ∀ (p : ℕ) [Fact p.Prime] (S K : Type) [CommRing S] [IsDomain 
       rw [hYfun, Matrix.mulVec_add, Matrix.mulVec_smul]
       rfl
     have e3 : Y i = F (B i) + (p : WittVector p K) * Y₁ i := by linear_combination hY₁ i
-    rw [e2, e3, map_add, map_mul, map_natCast] at h
+    rw [e2, e3, map_add (f := _), map_mul, map_natCast] at h
     have e4 : F (Wv i) = (U.map F *ᵥ fun j => F (B j)) i + F (Z i) - WittVector.frobenius (F (B i)) := by
       rw [hWv]
       simp only
-      rw [map_sub, map_add, map_mulVec_witt, hF, map_frobenius_charP]
+      rw [map_sub, map_add (f := _), map_mulVec_witt, hF, map_frobenius_charP]
     rw [e4]
     linear_combination (-1 : WittVector p K) * h
   have hW0 : ∀ i, (Wv i).coeff 0 = 0 := by

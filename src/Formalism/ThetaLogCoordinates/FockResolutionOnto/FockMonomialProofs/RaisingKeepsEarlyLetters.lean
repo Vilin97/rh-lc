@@ -23,7 +23,7 @@ theorem glAct_succ_comm (LL : Letters (K + 1)) (s t a b : Fin r) (F : MvPolynomi
     glAct p LL (K + 1) s t (glAct p LL K a b F) - glAct p LL K a b (glAct p LL (K + 1) s t F) =
       (if t = a then glAct p LL K s b F else 0) - (if b = s then glAct p LL K a t F else 0) := by
   rw [glAct_split LL K (K + 1) s t]
-  simp only [LinearMap.add_apply, map_add]
+  simp only [LinearMap.add_apply, map_add (f := _)]
   rw [glRest_comm LL K (K + 1) (Nat.le_succ K) s t a b F, ← glAct_comm LL K s t a b F]
   abel
 

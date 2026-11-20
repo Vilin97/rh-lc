@@ -33,7 +33,7 @@ theorem minkMult_minkM (hM : Formalism.HermitianLatticeCounting.S6.MinkowskiBoun
       obtain ⟨⟨h, i⟩, rfl⟩ := hx
       exact Submodule.subset_span ⟨(⟨g, hg⟩ * h, i), rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Λ.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Λ.add_mem hx hy
     | smul a x _ hx =>
       rw [← algebraMap_smul ℚ a x, map_smul, algebraMap_smul]
       exact Λ.smul_mem a hx

@@ -67,7 +67,7 @@ theorem psi_unit {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] (ι : ℤ_[l] 
     rw [← map_nsmul, Ideal.Quotient.eq]
     have : ι u * p - m • p = (ι v * p) * ((l ^ n : ℕ) : O) := by
       rw [hu]
-      simp only [map_add, map_mul, map_pow, map_natCast, nsmul_eq_mul, Nat.cast_pow]
+      simp only [map_add (f := _), map_mul, map_pow, map_natCast, nsmul_eq_mul, Nat.cast_pow]
       ring
     rw [this]
     exact J.mul_mem_left _ hN

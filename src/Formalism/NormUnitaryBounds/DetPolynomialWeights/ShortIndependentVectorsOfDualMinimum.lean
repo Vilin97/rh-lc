@@ -143,7 +143,7 @@ theorem exists_short_linearIndependent_of_dualMinimum (M : Submodule ℤ E) [hMd
     · rw [linearIndependent_finSnoc]
       refine ⟨hbli, fun hmem => hp0 ?_⟩
       have e : m = (m - z) + z := by abel
-      rw [e, map_add, hPzero _ _ hmem, hPzero _ _ hzW, add_zero]
+      rw [e, map_add (f := _), hPzero _ _ hmem, hPzero _ _ hzW, add_zero]
     · intro i
       refine Fin.lastCases ?_ (fun j => ?_) i
       · simp only [Fin.snoc_last]

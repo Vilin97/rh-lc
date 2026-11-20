@@ -130,7 +130,7 @@ private theorem exists_Tu_eq_one_add_sq_mul (Z : LocDat D) (p : PlF D) (u : D.wh
     have hιπc : (D.s.atP p).ιE (D.host.conj (π : D.host.E)) = 1 + ((Loc.resChar p : ℕ) : (D.s.atP p).Ep) ^ 2 *
         ((m' : (D.s.atP p).Ep) * (D.s.atP p).cj ((D.s.atP p).ιE (x : D.host.E))) := by
       rw [← D.conjF_eq, ← (D.s.atP p).cj_ιE, hιπ]
-      simp only [map_add, map_one, map_mul, map_pow, map_natCast]
+      simp only [map_add (f := _), map_one, map_mul, map_pow, map_natCast]
     have hXO : (D.s.atP p).ιE (x : D.host.E) ∈ (D.s.atP p).O := PI.CntNotIntW.iE_mem_O D p x
     have hXcO : (D.s.atP p).cj ((D.s.atP p).ιE (x : D.host.E)) ∈ (D.s.atP p).O :=
       Formalism.L2.SG.Pf.LocFacts.lf_cj_mem p _ hXO

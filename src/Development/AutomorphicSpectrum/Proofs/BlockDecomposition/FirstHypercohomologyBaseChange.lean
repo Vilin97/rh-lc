@@ -70,7 +70,7 @@ theorem bijective_middle {M N P M' N' P' : Type} [AddCommGroup M] [Module R M] [
       rw [map_sub, s₂, hz, LinearEquiv.apply_symm_apply, sub_self]
     obtain ⟨m', hm'⟩ := (hex' _).1 h1
     refine ⟨z + i (eM.symm m'), ?_⟩
-    rw [map_add, s₁, LinearEquiv.apply_symm_apply, hm']
+    rw [map_add (f := _), s₁, LinearEquiv.apply_symm_apply, hm']
     abel
 
 section BaseChange
@@ -123,7 +123,7 @@ theorem first_hypercohomology_base_change (w : φ ≫ s = s' ≫ spMap (algebraM
       hex hq (exact_clG s' hcl') (clG_injective s' hcl' hinj') (fun m ↦ ?_) fun n ↦ ?_
     · induction m using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul x ω =>
         have e : x ⊗ₜ[R] ω = x • ((1 : R') ⊗ₜ[R] ω) := by
           rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
@@ -131,7 +131,7 @@ theorem first_hypercohomology_base_change (w : φ ≫ s = s' ≫ spMap (algebraM
         rw [show L (x ⊗ₜ clG s hcl ω) = x • pullHH1 w (clG s hcl ω) from rfl]
     · induction n using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul x c =>
         have e : x ⊗ₜ[R] toHO1 s c = x • ((1 : R') ⊗ₜ[R] toHO1 s c) := by
           rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]

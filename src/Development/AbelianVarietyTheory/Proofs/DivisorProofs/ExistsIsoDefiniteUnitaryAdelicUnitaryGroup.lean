@@ -122,7 +122,7 @@ theorem exists_ring : ∃ (ψ : Ad E ≃+* AF F₀ ⊗[F₀] E) (Θ : Ainf F₀ 
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => rfl
-    | add x y h1 h2 => simp only [map_add, h1, h2]
+    | add x y h1 h2 => simp only [map_add (f := _), h1, h2]
   refine ⟨p.trans e.symm, Θ, h6.comp hp, hp'.comp h5, fun x => hext _ _ ?_ ?_, fun a => hext _ _ ?_ ?_, hf, hi,
     fun τ θ hθ z => ?_⟩
   · refine (hi _).trans (Θ.symm_apply_eq.2 (funext fun w => ?_))

@@ -1140,7 +1140,7 @@ theorem sEE_inner (D : D7) (x y : D.what₂.EE) : inner ℂ (D.sEE x) (D.sEE y) 
   have e1 : D.sEE x + D.sEE y = D.sEE (x + y) := (map_add _ _ _).symm
   have e2 : D.sEE x - D.sEE y = D.sEE (x - y) := (map_sub _ _ _).symm
   have e3 : D.sEE x - (RCLike.I : ℂ) • D.sEE y = D.sEE (x + (RCLike.I : ℂ) • y) := by
-    rw [map_add, map_smulₛₗ, hI, neg_smul, sub_eq_add_neg]
+    rw [map_add (f := _), map_smulₛₗ, hI, neg_smul, sub_eq_add_neg]
   have e4 : D.sEE x + (RCLike.I : ℂ) • D.sEE y = D.sEE (x - (RCLike.I : ℂ) • y) := by
     rw [map_sub, map_smulₛₗ, hI, neg_smul, sub_neg_eq_add]
   have f3 : ‖y - (RCLike.I : ℂ) • x‖ = ‖x + (RCLike.I : ℂ) • y‖ := by

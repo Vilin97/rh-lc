@@ -77,7 +77,7 @@ theorem coeff_scale {ι : Type} (t : ι → ℂ) (s : ι →₀ ℕ) (y : MvPoly
     split_ifs with h
     · rw [h]
     · rw [mul_zero]
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem eq_of_exp_eq {a b : ℝ} (h : ∀ s : ℝ, Complex.exp (((s * a : ℝ) : ℂ) * Complex.I) =
     Complex.exp (((s * b : ℝ) : ℂ) * Complex.I)) : a = b := by

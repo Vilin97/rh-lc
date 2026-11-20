@@ -58,7 +58,7 @@ theorem pure_arch {n d : ℕ} (φ : ∀ v : Pl F, (Fin n × Fin d → Fv F v) �
       show Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v (sndA F (z i)) = 0
       have : sndA F (z i) = 0 := h2 i
       rw [this, map_zero]
-    rw [Pi.add_apply, map_add, h3, add_zero]
+    rw [Pi.add_apply, map_add (f := _), h3, add_zero]
   simp only [e]
 
 section Model
@@ -100,7 +100,7 @@ theorem om_schA (ht : IsTriple B Γ X om om') (p : UA σ Γ.V.J × UA σ Γ.W.J)
 
 theorem theta_add (ht : IsTriple B Γ X om om') {Φ Ψ : (Fin a × Fin (a + a') → AF F) → ℂ} (hΦ : Φ ∈ schA F _) (hΨ : Ψ ∈ schA F _)
     (g : UA σ Γ.V.J) (h : UA σ Γ.W.J) : theta om (Φ + Ψ) g h = theta om Φ g h + theta om Ψ g h := by
-  simp only [theta, map_add]
+  simp only [theta, map_add (f := _)]
   exact thetaSum_add F (om_schA ht _ hΦ) (om_schA ht _ hΨ)
 
 theorem theta_smul (c : ℂ) (Φ : (Fin a × Fin (a + a') → AF F) → ℂ) (g : UA σ Γ.V.J) (h : UA σ Γ.W.J) :

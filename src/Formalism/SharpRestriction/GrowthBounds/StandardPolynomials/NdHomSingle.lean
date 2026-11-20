@@ -30,7 +30,7 @@ theorem nd_rig (L : LvDat C0 CE1 CE2 mu X β) (a0 : Fin (numSeg X.TT) → ℕ) (
   show ndHom X (rig L a0 j0) = 0
   unfold rig rig0 rPl
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, ndHom_single, normal_weight_vector_zero_eq_zero, wN_covS, mul_zero, Finset.sum_const_zero, add_zero]
+    simp only [map_add (f := _), map_sum, ndHom_single, normal_weight_vector_zero_eq_zero, wN_covS, mul_zero, Finset.sum_const_zero, add_zero]
 
 theorem std_eq (O : Type) [CommRing O] [IsDomain O] (L : LvDat C0 CE1 CE2 mu X β) (a0 : Fin (numSeg X.TT) → ℕ)
     (j0 : Fin (numSeg X.TT))

@@ -187,7 +187,7 @@ theorem exists_apply_ne_zero_of_mem_iSup [π.IsIrreducible] (hπ : IsSmooth π)
           exact hyY (Y.toSubmodule.add_mem hwL hb)
       obtain ⟨Fm, hFt, hFY⟩ := exists_retraction hπ hsc hωπ hρ hωρ Y t hL
       refine ⟨Fm, ?_⟩
-      rw [map_add, Representation.IntertwiningMap.toLinearMap_apply, hFt, hFY b hb, add_zero]
+      rw [map_add (f := _), Representation.IntertwiningMap.toLinearMap_apply, hFt, hFY b hb, add_zero]
       rintro rfl
       exact hyY (by rw [map_zero, zero_add]; exact hb)
 
@@ -299,7 +299,7 @@ theorem exists_sub_mem_isotypicKernel (u : U) :
       obtain ⟨g, rfl⟩ := hy
       rw [Representation.IntertwiningMap.isIntertwining, hH, map_zero]
     | zero => exact map_zero H
-    | add a b _ _ ha hb => rw [map_add, ha, hb, add_zero]
+    | add a b _ _ ha hb => rw [map_add (f := _), ha, hb, add_zero]
     | smul c a _ ha => rw [map_smul, ha, smul_zero]
   let Γ0 := Γ.comp (subrepIncl W0)
   have hΓ0 : ∀ x i, Γ0 x i = Gs i (x : U) := fun _ _ => rfl

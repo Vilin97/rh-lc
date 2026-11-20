@@ -20,7 +20,7 @@ theorem extremal_ne_D (n : ℕ) (mu : DomWeight n) : extremal ℂ n mu ≠ 0 :=
 def sqLinD (N : ℕ) (lam : DomWeight N) (g : GL (Fin N) ℂ) :
     MvPolynomial (Fin N × Fin N) ℂ →ₗ[ℂ] MvPolynomial (Fin N × Fin N) ℂ where
   toFun := sqAct ℂ N lam g
-  map_add' x y := by simp only [sqAct, map_add, smul_add]
+  map_add' x y := by simp only [sqAct, map_add (f := _), smul_add]
   map_smul' c x := by
     simp only [sqAct, RingHom.id_apply, map_smul]
     rw [smul_comm]

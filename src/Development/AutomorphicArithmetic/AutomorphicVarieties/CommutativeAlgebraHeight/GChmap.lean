@@ -24,7 +24,7 @@ private theorem map_mem {A B : Type} [Ring A] [Ring B] (f : A →+* B) (S : Set 
   induction hz using TwoSidedIdeal.span_induction with
   | mem x hx => exact TwoSidedIdeal.subset_span ⟨x, hx, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | left_absorb a x _ hx => rw [map_mul]; exact TwoSidedIdeal.mul_mem_left _ _ _ hx
   | right_absorb b x _ hx => rw [map_mul]; exact TwoSidedIdeal.mul_mem_right _ _ _ hx
@@ -48,7 +48,7 @@ theorem UpperTheory.V.CA.g_chmap :
       rw [e]
       exact map_mem _ _ z hz
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul a x _ hx => rw [map_smul, Algebra.smul_def]; exact TwoSidedIdeal.mul_mem_left _ _ _ hx
   · rw [TwoSidedIdeal.span_le]
     rintro _ ⟨z, hz, rfl⟩

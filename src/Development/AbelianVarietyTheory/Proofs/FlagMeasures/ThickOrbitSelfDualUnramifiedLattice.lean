@@ -222,7 +222,7 @@ theorem exists_close (L : LocE F E) {ϖ : 𝒪[F]} (hϖ : Irreducible ϖ) {n : �
       algebraMap F E ((ϖ : F) ^ (N' + N' + j + e + e)) * hf L Hm (u b) (u a)
   have hD : IsHerm L D := by
     ext a b
-    simp only [cT, D, Matrix.of_apply, map_add, map_mul, AlgEquiv.commutes, ← GlobalTheory.HL.Model.hf_symm L hH.1]
+    simp only [cT, D, Matrix.of_apply, map_add (f := _), map_mul, AlgEquiv.commutes, ← GlobalTheory.HL.Model.hf_symm L hH.1]
     ring
   have hD' : IsIntM L D := fun a b =>
     L.O.add_mem (L.O.mul_mem (pow_mem L ϖ _) (L.O.add_mem (hint _ (hy b) _ (hu a))

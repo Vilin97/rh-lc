@@ -64,7 +64,7 @@ theorem sub_eq_nsmul_of_split {L A : Type} [AddCommGroup L] [AddCommGroup A] (j 
     (ha : a = b + M • e) (hw : u (j b) - j (b + M • z) = (M * p) • w) :
     j a - u (j a) = M • (j e - u (j e) - j z - p • w) := by
   rw [hadd, hsm, mul_smul, sub_eq_iff_eq_add] at hw
-  rw [ha, hadd, hsm, map_add, map_nsmul, hw]
+  rw [ha, hadd, hsm, map_add (f := _), map_nsmul, hw]
   simp only [smul_sub]
   abel
 
@@ -107,7 +107,7 @@ theorem congOne_det (V : HSp D) (io : Dw.La →ₗ[𝓞 D.host.E] (Fin V.rank �
       hκ ▸ sub_mem (sub_mem (sub_mem (hmem e) hue) (hmem z)) (nsmul_mem hw p), ?_⟩
     rw [sub_eq_iff_eq_add'.1 hz, hM] at ew
     exact sub_eq_nsmul_of_split (fun x => finVec V (io x)) (finHom V u).1.mulVecLin.toAddMonoidHom
-      (fun x y => by rw [map_add, hadd]) (fun n x => by rw [map_nsmul, hsm]) hsplit ew
+      (fun x y => by rw [map_add (f := _), hadd]) (fun n x => by rw [map_nsmul, hsm]) hsplit ew
   rw [inv_one, one_mul] at hc
   obtain ⟨k1, -, k3, k4, -⟩ := GlobalTheory.T.completedLattice_eq_adelicCompletion_and_gram D V
   obtain ⟨w, hw, e⟩ := GlobalTheory.CharRead.det_cong_one D.host.F (latC V) k3 k4 l.M (by have := l.three_le; omega)

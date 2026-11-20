@@ -155,7 +155,7 @@ theorem exists_finset_factor {V C : Type} [CommRing V] [CommRing C] [IsLocalRing
       refine ⟨φ a, ?_⟩
       rw [← RingHom.comp_apply, hj, ← GlobalTheory.Points.valR_constFn_of_over q j c hc U ht a, GlobalTheory.Points.valR_eq c U ht]
       rfl
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   let e : W ≃+* io.range := RingEquiv.ofBijective io.rangeRestrict
     ⟨fun a b h => hio (congrArg Subtype.val h), io.rangeRestrict_surjective⟩

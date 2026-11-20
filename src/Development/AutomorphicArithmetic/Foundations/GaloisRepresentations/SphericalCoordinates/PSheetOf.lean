@@ -29,7 +29,7 @@ private theorem commutes_rho {D : PLat O bar} {P P' : D.La →+ (Fin g → ℂ)}
     obtain ⟨u, rfl⟩ := hx
     rw [← hP.1, ← hw, ← hw, map_smul, hP'.1]
   | zero => simp
-  | add x y _ _ hx hy => simp only [Matrix.mulVec_add, map_add, hx, hy]
+  | add x y _ _ hx hy => simp only [Matrix.mulVec_add, map_add (f := _), hx, hy]
   | smul c x _ hx =>
     have e : ∀ v : Fin g → ℂ, h (c • v) = c • h v := fun v =>
       (h.toLinearMap.restrictScalars ℝ).map_smul c v

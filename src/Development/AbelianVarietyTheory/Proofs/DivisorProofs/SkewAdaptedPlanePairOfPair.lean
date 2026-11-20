@@ -115,7 +115,7 @@ theorem cA_cA (h : IsCMExt F E σ) (z : AE F E) : cA σ (cA σ z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [cA, sigma_sigma h]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem cA_inclR (e : E) : cA σ (inclR (F := F) (AF F) e) = inclR (AF F) (σ e) := by
   simp [cA, inclR]

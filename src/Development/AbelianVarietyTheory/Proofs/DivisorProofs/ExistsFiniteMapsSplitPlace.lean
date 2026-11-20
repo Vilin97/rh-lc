@@ -253,11 +253,11 @@ theorem core (hP : GlobalTheory.FunPr.Hypotheses₂) (hT : IsTriple B G X om om'
   have hI := GlobalTheory.T.induced_representation_irreducible hP.bernsteinUnitaryProductIrreducible (Fv F v) a a' α β hα hβ
   obtain ⟨p, hp⟩ := exists_linear_ext (SB _) (indSp a a' α β) (fun φ => mapA a' l (α / β) β (ι φ))
     (fun φ h => GlobalTheory.T.intertwining_map_into_induced_left _ a a' α β l hβ hl _ (m φ h))
-    (fun φ h φ' h' => by simp only [map_add]; exact mapA_add hl (m φ h) (m φ' h'))
+    (fun φ h φ' h' => by simp only [map_add (f := _)]; exact mapA_add hl (m φ h) (m φ' h'))
     (fun z φ h => by simp only [map_smul]; exact mapA_smul hl z (m φ h))
   obtain ⟨p', hp'⟩ := exists_linear_ext (SB _) (indSp a a' α β) (fun φ => mapB a l' (α / β) α (ι' φ))
     (fun φ h => GlobalTheory.T.intertwining_map_into_induced_right _ a a' α β l' hα hl' _ (m' φ h))
-    (fun φ h φ' h' => by simp only [map_add]; exact mapB_add hl' (m' φ h) (m' φ' h'))
+    (fun φ h φ' h' => by simp only [map_add (f := _)]; exact mapB_add hl' (m' φ h) (m' φ' h'))
     (fun z φ h => by simp only [map_smul]; exact mapB_smul hl' z (m' φ h))
   have act := fun g hg h hh φ hφ φ₁ hφ₁ H => GlobalTheory.T.linear_witt_model_unitary_action hP F E σ B _ _ _ _ _ _ _ om _ _ _ _ (isPair_big hT) v t b c ι hι
     g hg h hh φ hφ φ₁ hφ₁ H

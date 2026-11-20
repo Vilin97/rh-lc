@@ -117,7 +117,7 @@ theorem latD_coords {l : ℕ} [Fact l.Prime] {ι : Type} [Fintype ι] [Decidable
     obtain ⟨r, hr, hx⟩ := hx
     obtain ⟨s, hs, hy⟩ := hy
     refine ⟨r + s, fun i => (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hr i) (hs i)), ?_⟩
-    rw [map_add, hx, hy, ← Finset.sum_add_distrib]
+    rw [map_add (f := _), hx, hy, ← Finset.sum_add_distrib]
     simp only [Pi.add_apply, add_smul]
   | neg x _ hx =>
     obtain ⟨r, hr, hx⟩ := hx

@@ -173,7 +173,7 @@ theorem exists_isLattice_eq_localLattice (Zd : LocDat D) (p : PlF D) (M : Submod
         exact M.add_mem (hsM m hm) (hcv _ (hov m))
       · rw [hbcf]; exact hce i
     | zero => rw [map_zero]; exact M.zero_mem
-    | add a b _ _ ha hb => rw [map_add]; exact M.add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact M.add_mem ha hb
     | smul a y _ hy =>
       rw [oE_smul, baseChange_smul₂]
       exact smulM (iE_int (D.s.atP p) (a : 𝓞 D.host.E).2) hy

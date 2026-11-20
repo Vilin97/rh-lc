@@ -88,7 +88,7 @@ theorem exists_smul_eq_field {F E : Type} [Field F] [NumberField F] [Field E] [N
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul k e => exact congrArg (k ⊗ₜ[F] ·) (hi e)
-      | add x y hx hy => simp only [map_add, hx, hy])
+      | add x y hx hy => simp only [map_add (f := _), hx, hy])
     h2 hS (JR K J)
     (fun i j => by
       show (1 : K) ⊗ₜ[F] σ (J j i) = (1 : K) ⊗ₜ[F] J i j

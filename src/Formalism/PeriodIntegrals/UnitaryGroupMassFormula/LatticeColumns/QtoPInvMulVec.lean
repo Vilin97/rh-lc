@@ -21,7 +21,7 @@ variable (X : HidaSetting D) (p : TypX X) (θ : TpX X p ≃ₐ[FpX X p] FpX X p 
   (Q : GL (Idx D.R.rS D.R.k) (FpX X p))
 
 theorem crd_add (v w : Fin X.B.I.n → TpX X p) : crd X p θ Q (v + w) = crd X p θ Q v + crd X p θ Q w := by
-  simp only [crd, map_add, Pi.add_comp, Matrix.mulVec_add]
+  simp only [crd, map_add (f := _), Pi.add_comp, Matrix.mulVec_add]
 
 theorem crd_sub (v w : Fin X.B.I.n → TpX X p) : crd X p θ Q (v - w) = crd X p θ Q v - crd X p θ Q w := by
   simp only [crd, map_sub, Pi.sub_comp, Matrix.mulVec_sub]

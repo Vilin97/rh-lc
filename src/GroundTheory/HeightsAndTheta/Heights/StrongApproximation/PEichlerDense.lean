@@ -120,7 +120,7 @@ theorem sigA_invol' (c : E ≃ₐ[F] E) (hc2 : ∀ x, c (c x) = x) (a : AE F E) 
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sigA, Algebra.TensorProduct.map_tmul, hc2]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem along (hT : AETopologicalRing.Statement) (hD : EDenseInAE.Statement)
     (hO : OrthProjection.Statement) (c : E ≃ₐ[F] E) (h2 : Module.finrank F E = 2) (hc : c ≠ 1)
@@ -142,7 +142,7 @@ theorem along (hT : AETopologicalRing.Statement) (hD : EDenseInAE.Statement)
   have hκ : (2 : E)⁻¹ + (2 : E)⁻¹ = 1 := by
     rw [← two_mul, mul_inv_cancel₀ two_ne_zero]
   have hcκ : c.toRingHom (2 : E)⁻¹ = (2 : E)⁻¹ := by rw [map_inv₀, map_ofNat]
-  have hκA : inclA F E (2 : E)⁻¹ + inclA F E (2 : E)⁻¹ = 1 := by rw [← map_add, hκ, map_one]
+  have hκA : inclA F E (2 : E)⁻¹ + inclA F E (2 : E)⁻¹ = 1 := by rw [← map_add (f := _), hκ, map_one]
   have hσκA : sigA c (inclA F E (2 : E)⁻¹) = inclA F E (2 : E)⁻¹ := by rw [← hφ, hcκ]
   have heA : hf (sigA c) (J.map (inclA F E)) (inclA F E ∘ e) (inclA F E ∘ e) = 0 := by
     rw [hf_map c.toRingHom (sigA c) (inclA F E) hφ, he, map_zero]

@@ -36,7 +36,7 @@ theorem exists_admissible_integral {F : Type} [Field F] [NumberField F] {κ : Ty
   let fI : schA F κ →ₗ[ℂ] ℂ :=
     { toFun := fun Φ => ∫ x, t x Φ.1 ∂μ
       map_add' := fun Φ Ψ => by
-        simp only [Submodule.coe_add, map_add]
+        simp only [Submodule.coe_add, map_add (f := _)]
         exact integral_add (hint _ Φ.2) (hint _ Ψ.2)
       map_smul' := fun c Φ => by
         simp only [Submodule.coe_smul, map_smul, smul_eq_mul, RingHom.id_apply]

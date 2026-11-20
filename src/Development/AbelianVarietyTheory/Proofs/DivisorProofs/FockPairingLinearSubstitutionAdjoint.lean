@@ -22,7 +22,7 @@ theorem pderiv_rsub [DecidableEq σ] [DecidableEq σ'] (M : Matrix σ' σ ℂ) (
     pderiv s (rsub M g) = ∑ w, C (M s w) * rsub M (pderiv w g) := by
   induction g using MvPolynomial.induction_on with
   | C c => simp
-  | add p q hp hq => simp only [map_add, hp, hq, mul_add, Finset.sum_add_distrib]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, mul_add, Finset.sum_add_distrib]
   | mul_X p k hp =>
     have hX : pderiv s (rsub M (X k)) = C (M s k) := by
       set_option synthInstance.maxHeartbeats 100000 in
@@ -33,7 +33,7 @@ theorem pderiv_rsub [DecidableEq σ] [DecidableEq σ'] (M : Matrix σ' σ ℂ) (
         simp
       · simp
     rw [map_mul, Derivation.leibniz, hX, hp, smul_eq_mul, smul_eq_mul]
-    simp_rw [Derivation.leibniz, smul_eq_mul, map_add, map_mul, mul_add, Finset.sum_add_distrib]
+    simp_rw [Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul, mul_add, Finset.sum_add_distrib]
     congr 1
     · rw [Finset.sum_eq_single k]
       · rw [pderiv_X_self, map_one]; ring
@@ -50,7 +50,7 @@ theorem fockL_rsub_adj (M : Matrix σ' σ ℂ) (F : MvPolynomial σ ℂ) (F' : M
   classical
   induction F using MvPolynomial.induction_on generalizing F' with
   | C a => rw [algHom_C, algebraMap_eq, fockL_C_left, fockL_C_left, constantCoeff_rsub]
-  | add p q hp hq => rw [map_add, map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, hp, hq]
   | mul_X p v hp =>
     have e1 : rsub M (p * X v) = ∑ w, M w v • (X w * rsub M p) := by
       rw [map_mul, rsub_X, Finset.mul_sum]

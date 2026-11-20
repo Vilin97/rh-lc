@@ -165,7 +165,7 @@ theorem HilbEventuallyPoly.of_exactDivide_polyOfDiffs (h1 : HilbExactDivide.Stat
     refine ⟨bind₁ (fun j => X j - C (((Pi.single v.1 1 : K → ℤ) j : ℤ) : ℚ)) p1 + p2, ?_⟩
     filter_upwards [eventually_sub hp1 (Pi.single v.1 1), hp2] with m hm1 hm2
     have hz := hex m
-    rw [map_add, ← eval_shift, ← hm1, ← hm2]
+    rw [map_add (f := _), ← eval_shift, ← hm1, ← hm2]
     have hz' : hilbFn J m = hilbFn (J.colon (Ideal.span {(X v : MRing ι F)})) (m - Pi.single v.1 1)
         + hilbFn (J ⊔ Ideal.span {(X v : MRing ι F)}) m := by linarith
     rw [hz']

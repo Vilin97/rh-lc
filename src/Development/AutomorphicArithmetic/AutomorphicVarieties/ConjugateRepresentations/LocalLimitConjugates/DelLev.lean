@@ -46,7 +46,7 @@ private theorem adj_span (Ξ : AlgRep E a) (r : ℝ) (P : Sm E a → Prop) (hP :
       (Submodule.subset_span ⟨_, _, hP X φ hφ, rfl⟩))
       (Submodule.smul_of_tower_mem _ _ (Submodule.subset_span ⟨_, _, hφ, rfl⟩))
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 private theorem k_adj (Ξ : AlgRep E a) (r : ℝ) (k : Kinf E a) (X : Matrix (Fin a) (Fin a) (Cinf E)) :

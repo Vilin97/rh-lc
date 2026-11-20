@@ -94,7 +94,7 @@ def EqFun : Submodule K (S.D → S.V) where
   carrier := {φ | ∀ (g : S.G) (d : S.D), φ (g • d) = S.ρ g (φ d)}
   add_mem' := by
     intro φ ψ hφ hψ g d
-    simp only [Pi.add_apply, map_add, hφ g d, hψ g d]
+    simp only [Pi.add_apply, map_add (f := _), hφ g d, hψ g d]
   zero_mem' := by
     intro g d
     simp
@@ -291,7 +291,7 @@ def op : S.EqFun →ₗ[K] S'.EqFun where
     apply Subtype.ext
     funext d'
     show (A.ker d').sum (fun d k => k ((φ : S.D → S.V) d + (ψ : S.D → S.V) d)) = _
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact Finsupp.sum_add
   map_smul' a φ := by
     apply Subtype.ext
@@ -388,7 +388,7 @@ def opOf (h : S.Ok) (s : S.Sec) : S.EqFun →ₗ[K] S'.EqFun where
     funext d'
     show A.appOf h s (fun d => (φ : S.D → S.V) d + (ψ : S.D → S.V) d) d' = A.appOf h s φ d' + A.appOf h s ψ d'
     unfold appOf
-    simp only [map_add, smul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), smul_add, Finset.sum_add_distrib]
   map_smul' a φ := by
     apply Subtype.ext
     funext d'
@@ -561,7 +561,7 @@ def formOf (h' : S'.Ok) (s' : S'.Sec) : S.EqFun →ₗ[K] S'.EqFun →ₗ[K] K :
       intro φ φ' ψ
       show S'.csOf h' s' (fun d' => P.B ((φ : S.D → S.V) (P.p d') + (φ' : S.D → S.V) (P.p d')) _) = _
       unfold sumOf GSD.csOf
-      simp only [map_add, LinearMap.add_apply, smul_add, Finset.sum_add_distrib])
+      simp only [map_add (f := _), LinearMap.add_apply, smul_add, Finset.sum_add_distrib])
     (by
       intro a φ ψ
       show S'.csOf h' s' (fun d' => P.B (a • (φ : S.D → S.V) (P.p d')) _) = _
@@ -572,7 +572,7 @@ def formOf (h' : S'.Ok) (s' : S'.Sec) : S.EqFun →ₗ[K] S'.EqFun →ₗ[K] K :
       intro φ ψ ψ'
       show S'.csOf h' s' (fun d' => P.B _ ((ψ : S'.D → S'.V) d' + (ψ' : S'.D → S'.V) d')) = _
       unfold sumOf GSD.csOf
-      simp only [map_add, smul_add, Finset.sum_add_distrib])
+      simp only [map_add (f := _), smul_add, Finset.sum_add_distrib])
     (by
       intro a φ ψ
       show S'.csOf h' s' (fun d' => P.B _ (a • (ψ : S'.D → S'.V) d')) = _

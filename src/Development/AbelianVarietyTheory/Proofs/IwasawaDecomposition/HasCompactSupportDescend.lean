@@ -87,7 +87,7 @@ theorem exists_invariant_form [LocallyCompactSpace G] [SecondCountableTopology G
     { carrier := {f | Integrable (descend H f) μ}
       zero_mem' := by simp
       add_mem' := fun {f g} hf hg => by
-        simp only [Set.mem_ofPred_eq, map_add] at *
+        simp only [Set.mem_ofPred_eq, map_add (f := _)] at *
         exact hf.add hg
       smul_mem' := fun c f hf => by
         simp only [Set.mem_ofPred_eq, map_smul] at *

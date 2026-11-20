@@ -161,7 +161,7 @@ theorem isLocal_R (M : Model F E) (hOK : M.OK) {g : SplitG M.L} (hs : M.split = 
   obtain ⟨a, b, he, hab⟩ := (mem_R_some M hs x).1 x.2
   obtain ⟨a', b', he', hab'⟩ := (mem_R_some M hs y).1 y.2
   have hsum : g.e ((x + y : M.R) : E) = (((a + a' : 𝒪[F]) : F), ((b + b' : 𝒪[F]) : F)) := by
-    rw [Subring.coe_add, map_add, he, he']; simp
+    rw [Subring.coe_add, map_add (f := _), he, he']; simp
   have hu := fst_isUnit M hs (x + y) hxy (a + a') (b + b') hsum
   rcases IsLocalRing.isUnit_or_isUnit_of_isUnit_add hu with h | h
   · exact hx (isUnit_of_fst M hOK hs x a b he hab h)

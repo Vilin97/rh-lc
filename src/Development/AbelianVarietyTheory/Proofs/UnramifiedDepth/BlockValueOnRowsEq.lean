@@ -154,7 +154,7 @@ private lemma coeff_pow_eq_zero_of_degree_lt_unramified_depth (f : MvPowerSeries
     by_cases hp1 : p.1 = 0
     · rw [hp1, MvPowerSeries.coeff_zero_eq_constantCoeff_apply, hf, zero_mul]
     · have h1 : 0 < p.1.degree := Nat.pos_of_ne_zero ((Finsupp.degree_eq_zero_iff _).not.mpr hp1)
-      have h2 : m.degree = p.1.degree + p.2.degree := by rw [← hp, map_add]
+      have h2 : m.degree = p.1.degree + p.2.degree := by rw [← hp, map_add (f := _)]
       rw [coeff_pow_eq_zero_of_degree_lt_unramified_depth f hf k p.2 (by omega), mul_zero]
 
 open scoped BigOperators in
@@ -178,7 +178,7 @@ private lemma coeff_pow_mul_pow_eq_zero_of_degree_lt {f g : MvPowerSeries σ C}
   rw [MvPowerSeries.coeff_mul]
   refine Finset.sum_eq_zero fun p hp => ?_
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
-  have hd : m.degree = p.1.degree + p.2.degree := by rw [← hp, map_add]
+  have hd : m.degree = p.1.degree + p.2.degree := by rw [← hp, map_add (f := _)]
   by_cases h1 : p.1.degree < i
   · rw [coeff_pow_eq_zero_of_degree_lt_unramified_depth f hf i _ h1, zero_mul]
   · rw [coeff_pow_eq_zero_of_degree_lt_unramified_depth g hg j _ (by omega), mul_zero]
@@ -192,7 +192,7 @@ private lemma mvExp_add_unramified_depth [CharZero C] {a b : MvPowerSeries σ C}
   ext m
   obtain ⟨N, hN⟩ : ∃ N, N = m.degree + 1 := ⟨_, rfl⟩
   have hfac : ∀ k : ℕ, (k.factorial : C) ≠ 0 := fun k => Nat.cast_ne_zero.2 k.factorial_ne_zero
-  have hab : MvPowerSeries.constantCoeff (a + b) = 0 := by rw [map_add, ha, hb, add_zero]
+  have hab : MvPowerSeries.constantCoeff (a + b) = 0 := by rw [map_add (f := _), ha, hb, add_zero]
   have hprod : ∀ p ∈ Finset.HasAntidiagonal.antidiagonal m,
       MvPowerSeries.coeff p.1 (_root_.Formalism.IncomingBounds.mvExp a) * MvPowerSeries.coeff p.2 (_root_.Formalism.IncomingBounds.mvExp b) =
         ∑ i ∈ Finset.range N, ∑ j ∈ Finset.range N,
@@ -200,7 +200,7 @@ private lemma mvExp_add_unramified_depth [CharZero C] {a b : MvPowerSeries σ C}
             ((i.factorial : C) * (j.factorial : C)) := by
     intro p hp
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
-    have hd : m.degree = p.1.degree + p.2.degree := by rw [← hp, map_add]
+    have hd : m.degree = p.1.degree + p.2.degree := by rw [← hp, map_add (f := _)]
     rw [coeff_mvExp_eq_sum_range_of_degree_lt a ha p.1 N (by omega),
       coeff_mvExp_eq_sum_range_of_degree_lt b hb p.2 N (by omega), Finset.sum_mul_sum]
     exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => div_mul_div_comm _ _ _ _

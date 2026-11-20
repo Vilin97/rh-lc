@@ -33,7 +33,7 @@ theorem sub_mem_of_uniformizer {σ : L ≃ₐ[K] L} (hσ : σ ∈ lowerRamificat
   set e := integerAlgEquiv K L σ
   let P : 𝒪[L] → Prop := fun y ↦ e y - y ∈ 𝓂[L] ^ n
   have hadd : ∀ a b, P a → P b → P (a + b) := fun a b ha hb ↦ by
-    have : e (a + b) - (a + b) = (e a - a) + (e b - b) := by rw [map_add]; ring
+    have : e (a + b) - (a + b) = (e a - a) + (e b - b) := by rw [map_add (f := _)]; ring
     simp only [P, this]
     exact add_mem ha hb
   have hmul : ∀ a b, P a → P b → P (a * b) := fun a b ha hb ↦ by

@@ -104,7 +104,7 @@ private theorem loc_sat (w : HeightOneSpectrum (𝓞 E)) {V : Type} [AddCommGrou
       have hr' : 0 < ‖(b : ℂ)‖ := norm_pos_iff.2 hB0
       nlinarith [mul_inv_cancel₀ hr'.ne']
     refine ⟨by rw [norm_mul, n1, n2, one_mul], ?_, ?_⟩
-    · rw [map_add, c1, c2]
+    · rw [map_add (f := _), c1, c2]
       field_simp
       ring
     · rw [n1]
@@ -116,7 +116,7 @@ private theorem loc_sat (w : HeightOneSpectrum (𝓞 E)) {V : Type} [AddCommGrou
       have := congrArg norm c1
       rwa [RCLike.norm_conj, norm_inv] at this
     refine ⟨by rw [norm_mul, n1, inv_mul_cancel₀ (norm_ne_zero_iff.2 hB0)], ?_, ?_⟩
-    · rw [map_add, c1, c2]
+    · rw [map_add (f := _), c1, c2]
       field_simp
     · have hbe : (b : ℂ) = (starRingEnd ℂ (a : ℂ))⁻¹ := by rw [c1, inv_inv]
       have e3 : ‖(a + b : ℂ)‖ = ‖(a : ℂ)‖ + ‖(a : ℂ)‖⁻¹ := by
@@ -222,7 +222,7 @@ theorem UpperTheory.ConvolutionTheory.RankTwoDescent.satU_of :
     exact k1
   · have e : starRingEnd ℂ ((α : ℂ) * c + β * c) * (α * c * (β * c)) =
         starRingEnd ℂ ((α : ℂ) + β) * (α * β) * (starRingEnd ℂ c * c) * c := by
-      simp only [map_add, map_mul]
+      simp only [map_add (f := _), map_mul]
       ring
     rw [e, hcc, mul_one] at k2
     exact mul_right_cancel₀ hc0 (k2.trans (by ring))

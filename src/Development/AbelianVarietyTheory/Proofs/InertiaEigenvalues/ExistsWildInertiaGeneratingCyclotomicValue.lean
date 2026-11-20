@@ -151,7 +151,7 @@ namespace GlobalTheory.WildCycGen
 theorem one_add_pow_sub_mem {l : ℕ} [Fact l.Prime] {s c : ℕ} (hs : 1 ≤ s) (hc : c % l = 1) :
     (1 + (l : ℤ_[l]) ^ s) ^ c - (1 + (l : ℤ_[l]) ^ s) ∈ Ideal.span {(l : ℤ_[l]) ^ (s + 1)} := by
   rw [← PadicInt.ker_toZModPow, RingHom.mem_ker]
-  simp only [map_sub, map_pow, map_add, map_one, map_natCast]
+  simp only [map_sub, map_pow, map_add (f := _), map_one, map_natCast]
   obtain ⟨s', rfl⟩ : ∃ s', s = s' + 1 := ⟨s - 1, by omega⟩
   set X : ZMod (l ^ (s' + 1 + 1)) := (l : ZMod (l ^ (s' + 1 + 1))) ^ (s' + 1) with hX
   have hlx : (l : ZMod (l ^ (s' + 1 + 1))) * X = 0 := by

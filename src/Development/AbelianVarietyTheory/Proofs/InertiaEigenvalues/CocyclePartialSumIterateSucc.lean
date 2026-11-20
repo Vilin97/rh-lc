@@ -69,7 +69,7 @@ theorem isGauss_phi (ρ : ℝ) (h0 : (l : ℝ)⁻¹ ≤ ρ) (h1 : ρ < 1) :
   have hpos : (0 : ℝ) < 1 / l := by positivity
   refine ⟨fun x => ⟨Real.rpow_nonneg (e1 _).1 _, Real.rpow_le_one (e1 _).1 (e1 _).2 hpos.le⟩, fun x y => ?_,
     fun x => ?_, fun x y => ?_, fun a => ?_⟩
-  · simp only [map_add]
+  · simp only [map_add (f := _)]
     refine (Real.rpow_le_rpow (e1 _).1 (e2 _ _) hpos.le).trans ?_
     rcases le_total (gC l ρ (φc l x)) (gC l ρ (φc l y)) with h | h
     · rw [max_eq_right h, max_eq_right (Real.rpow_le_rpow (e1 _).1 h hpos.le)]

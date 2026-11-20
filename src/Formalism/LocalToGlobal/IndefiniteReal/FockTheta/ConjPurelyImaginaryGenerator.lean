@@ -56,7 +56,7 @@ theorem pair_eq_zero (R : Type) [CommRing R] [Algebra D.host.F R] (x y : R)
     simp [basR, Algebra.TensorProduct.basis_apply, Eqv.basE_one, TensorProduct.smul_tmul']
   rw [e0, e1] at h
   have h' := congrArg (basR D R).repr h
-  simp only [map_add, map_smul, Module.Basis.repr_self, map_zero] at h'
+  simp only [map_add (f := _), map_smul, Module.Basis.repr_self, map_zero] at h'
   constructor
   · simpa using congrArg (fun f => f 0) h'
   · simpa using congrArg (fun f => f 1) h'
@@ -90,20 +90,20 @@ theorem traceE_alpha : Algebra.trace D.host.F D.host.E (Eqv.alphaE D) = 0 := by
 theorem traceAE (c : AE D) :
     Algebra.trace (AF D.host.F) (AE D) c = 2 * (basR D (AF D.host.F)).repr c 0 := by
   conv_lhs => rw [decR D c]
-  rw [map_add, trace_tmul, trace_tmul, traceE_one, traceE_alpha, (algebraMap D.host.F (AF D.host.F)).map_zero,
+  rw [map_add (f := _), trace_tmul, trace_tmul, traceE_one, traceE_alpha, (algebraMap D.host.F (AF D.host.F)).map_zero,
     mul_zero, add_zero, map_ofNat, mul_comm]
 
 theorem infPart_dec (c : AE D) :
     infPart D c = fstA D.host.F ((basR D (AF D.host.F)).repr c 0) ⊗ₜ[D.host.F] (1 : D.host.E) +
       fstA D.host.F ((basR D (AF D.host.F)).repr c 1) ⊗ₜ[D.host.F] Eqv.alphaE D := by
   conv_lhs => rw [decR D c]
-  rw [map_add, infPart_tmul, infPart_tmul]
+  rw [map_add (f := _), infPart_tmul, infPart_tmul]
 
 theorem finPart_dec (c : AE D) :
     finPart D c = sndA D.host.F ((basR D (AF D.host.F)).repr c 0) ⊗ₜ[D.host.F] (1 : D.host.E) +
       sndA D.host.F ((basR D (AF D.host.F)).repr c 1) ⊗ₜ[D.host.F] Eqv.alphaE D := by
   conv_lhs => rw [decR D c]
-  rw [map_add, finPart_tmul, finPart_tmul]
+  rw [map_add (f := _), finPart_tmul, finPart_tmul]
 
 theorem fin_coord_zero (c : AE D) (h : finPart D c = 0) :
     sndA D.host.F ((basR D (AF D.host.F)).repr c 0) = 0 ∧ sndA D.host.F ((basR D (AF D.host.F)).repr c 1) = 0 := by
@@ -126,14 +126,14 @@ theorem finPart_cA (c : AE D) :
   induction c using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a e => rw [cA_tmul, finPart_tmul, finPart_tmul, Algebra.TensorProduct.map_tmul]; rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem infPart_cA (c : AE D) :
     infPart D (cA D c) = Algebra.TensorProduct.map (AlgHom.id D.host.F (Ainf D.host.F)) D.sp.cm.sig (infPart D c) := by
   induction c using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a e => rw [cA_tmul, infPart_tmul, infPart_tmul, Algebra.TensorProduct.map_tmul]; rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem conj_gW (w : NumberField.InfinitePlace D.host.F) (a : Ainf D.host.F) : conj (Eqv.gW D w a) = Eqv.gW D w a := by
   rw [Eqv.gW_real, Complex.conj_ofReal]
@@ -151,12 +151,12 @@ theorem thC_cA (ρ : D.what₂.Tau) (c : AE D) :
   | zero => simp only [map_zero]
   | tmul a e =>
     rw [cA_tmul, infPart_tmul, infPart_tmul, Eqv.thetaC_tmul, Eqv.thetaC_tmul, Eqv.tauE_star, map_mul, conj_gW]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem thC_dec (ρ : D.what₂.Tau) (c : AE D) :
     Eqv.thetaC D ρ (infPart D c) = Eqv.gW D (Eqv.plW D ρ) (fstA D.host.F ((basR D (AF D.host.F)).repr c 0)) +
       Eqv.gW D (Eqv.plW D ρ) (fstA D.host.F ((basR D (AF D.host.F)).repr c 1)) * Eqv.betaT D ρ := by
-  rw [infPart_dec, map_add, Eqv.thetaC_tmul, Eqv.thetaC_tmul, map_one, mul_one]
+  rw [infPart_dec, map_add (f := _), Eqv.thetaC_tmul, Eqv.thetaC_tmul, map_one, mul_one]
   try rfl
 
 theorem re_thC (ρ : D.what₂.Tau) (c : AE D) :
@@ -203,11 +203,11 @@ def emb (y : D.what₂.Tau → ℂ) : AE D :=
     pairA D.host.F (Eqv.preA D y 1) 0 ⊗ₜ[D.host.F] Eqv.alphaE D
 
 theorem infPart_emb (y : D.what₂.Tau → ℂ) : infPart D (emb y) = Eqv.splitInv D y := by
-  simp only [emb, map_add, infPart_tmul]
+  simp only [emb, map_add (f := _), infPart_tmul]
   rfl
 
 theorem finPart_emb (y : D.what₂.Tau → ℂ) : finPart D (emb y) = 0 := by
-  rw [emb, map_add, finPart_tmul, finPart_tmul]
+  rw [emb, map_add (f := _), finPart_tmul, finPart_tmul]
   show (0 : Af D.host.F) ⊗ₜ[D.host.F] (1 : D.host.E) + (0 : Af D.host.F) ⊗ₜ[D.host.F] Eqv.alphaE D = 0
   rw [TensorProduct.zero_tmul, TensorProduct.zero_tmul, add_zero]
 
@@ -217,8 +217,8 @@ theorem thC_emb (y : D.what₂.Tau → ℂ) (ρ : D.what₂.Tau) : Eqv.thetaC D 
 theorem emb_add (y y' : D.what₂.Tau → ℂ) : emb (y + y') = emb y + emb y' := by
   rw [← sub_eq_zero]
   apply eq_zero_of_parts D
-  · rw [map_sub, map_add, infPart_emb, infPart_emb, infPart_emb, ← Eqv.splitEquiv_symm, map_add, sub_self]
-  · rw [map_sub, map_add, finPart_emb, finPart_emb, finPart_emb, add_zero, sub_self]
+  · rw [map_sub, map_add (f := _), infPart_emb, infPart_emb, infPart_emb, ← Eqv.splitEquiv_symm, map_add (f := _), sub_self]
+  · rw [map_sub, map_add (f := _), finPart_emb, finPart_emb, finPart_emb, add_zero, sub_self]
 
 theorem emb_zero : emb (0 : D.what₂.Tau → ℂ) = 0 := by
   simpa using emb_add (D := D) 0 0
@@ -273,7 +273,7 @@ def sigH (D : D7) (m n : ℕ) : Mx D m n →+ V D m n where
   map_add' c c' := by
     funext ρ i j
     show Eqv.thetaC D ρ (infPart D (c i j + c' i j)) = _
-    rw [(infPart D).map_add, (Eqv.thetaC D ρ).map_add]
+    rw [(infPart D).map_add (f := _), (Eqv.thetaC D ρ).map_add (f := _)]
     rfl
 
 theorem sigH_apply (c : Mx D m n) (ρ : D.what₂.Tau) (i : Fin m) (j : Fin n) :
@@ -402,7 +402,7 @@ theorem eR_swap (ρ : D.what₂.Tau) (x w : Matrix (Fin T.rank) (Fin S.rank) ℂ
 theorem compAt_add {m n : ℕ} (ρ : D.what₂.Tau) (a a' : Mx D m n) :
     compAt (Eqv.thetaC D) ρ (a + a') = compAt (Eqv.thetaC D) ρ a + compAt (Eqv.thetaC D) ρ a' := by
   ext i j
-  simp [compAt, map_add]
+  simp [compAt, map_add (f := _)]
 
 theorem phR_add_left (a a' : WO S T) (u : V D T.rank S.rank) : phR S T (a + a') u = phR S T a u + phR S T a' u := by
   unfold phR
@@ -564,7 +564,7 @@ theorem G_shift (f : WO S T → ℂ) (x : WO S T) (a : V D T.rank S.rank) :
     G f (x + Lb D _ _ a) = fun u => G f x (a + u) := by
   funext u
   show f (x + Lb D _ _ a + Lb D _ _ u) = f (x + Lb D _ _ (a + u))
-  rw [map_add, add_assoc]
+  rw [map_add (f := _), add_assoc]
 
 theorem contDiff_G {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f) (x : WO S T) : ContDiff ℝ ∞ (G f x) := by
   let b := Module.finBasis ℝ (V D T.rank S.rank)
@@ -674,7 +674,7 @@ def lH (v : V D T.rank S.rank) : V D T.rank S.rank →+ ℝ where
     rw [add_zero] at h
     linarith
   map_add' u u' := by
-    rw [map_add, phR_add_left]
+    rw [map_add (f := _), phR_add_left]
 
 variable (S T) in
 
@@ -715,7 +715,7 @@ theorem continuous_DG (hψ : IsStdChar D ψ (-1)) {f : WO S T → ℂ} (hf : IsT
     have hGx : G f x = fun u => (ψ (symplOH S T x0 (b x)))⁻¹ * G f x0 (sg0 x + u) := by
       funext u
       have hx' : x + Lb D _ _ u = x0 + Lb D _ _ (sg0 x + u) + b x := by
-        simp only [b, map_add, map_neg]
+        simp only [b, map_add (f := _), map_neg]
         abel
       have hl := congrFun (hU (b x) hx (by ext i j; exact hbinf x i j)) (x0 + Lb D _ _ (sg0 x + u))
       have h0 := (symplOH_real_fin S T (Lb D _ _ (sg0 x + u)) (b x) (finPart_Lb _) (hbinf x)).1

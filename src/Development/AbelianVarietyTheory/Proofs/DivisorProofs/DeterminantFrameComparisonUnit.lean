@@ -27,7 +27,7 @@ theorem exists_freeForm : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsA
     induction r using TensorProduct.induction_on with
     | zero => simp
     | tmul a l => rw [hψ, hψ₀]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hsurj : Function.Surjective ψ := fun r => ⟨φ₀ r, by rw [hψeq, hφψ]⟩
   have calc₁ := fun (e e' e'' : (Fin N → RL p O Λ) ≃ₗ[Ainf p O] (Fin h → Ainf p O)) =>
     GlobalTheory.T.frame_matrix_composition_unique p O Λ N h e e' e''

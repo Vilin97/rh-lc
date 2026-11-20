@@ -81,7 +81,7 @@ theorem exists_roots_fixed_of_mem_Ine (E Ω : Type) [Field E] [NumberField E] [F
     rw [← hf0d]; exact Polynomial.degree_add_eq_left_of_degree_lt hlt
   have hev : ∀ y : Ω, Polynomial.aeval y g0 = Polynomial.aeval y f + e * Polynomial.aeval y h := by
     intro y
-    simp only [g0, map_add, map_mul, Polynomial.aeval_map_algebraMap, Polynomial.aeval_C]
+    simp only [g0, map_add (f := _), map_mul, Polynomial.aeval_map_algebraMap, Polynomial.aeval_C]
     rfl
   have hhev : ∀ y : Ω, Polynomial.aeval y h = y ^ m - 1 - Polynomial.aeval y f := by
     intro y

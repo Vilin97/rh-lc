@@ -20,7 +20,7 @@ theorem eval_sub (g h : Matrix ι ι ℂ) (z : (ι × A) ⊕ (ι × B) → ℂ) 
     eval z (sub g h p) = eval (actP g h z) p := by
   induction p using MvPolynomial.induction_on with
   | C a => simp [sub]
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p s hp =>
     rw [map_mul, map_mul, map_mul, hp]
     congr 1
@@ -51,7 +51,7 @@ theorem continuous_coeff_sub {K : Type} [TopologicalSpace K] (g h : K → Matrix
   classical
   induction p using MvPolynomial.induction_on with
   | C a => intro m; simp only [sub, aeval_C, algebraMap_eq]; exact continuous_const
-  | add p q hp hq => intro m; simp only [map_add, MvPolynomial.coeff_add]; exact (hp m).add (hq m)
+  | add p q hp hq => intro m; simp only [map_add (f := _), MvPolynomial.coeff_add]; exact (hp m).add (hq m)
   | mul_X p s hp =>
     intro m
     rcases s with x | y

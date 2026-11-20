@@ -93,7 +93,7 @@ theorem pt_sub (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) {N N' : ℕ} (z 
 theorem pt_add (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) {N N' : ℕ} (z w : Matrix (Fin N') (Fin N) D.host.E) :
     pt D (tor0 D cc δ) δ z + pt D (tor0 D cc δ) δ w = pt D (tor0 D cc δ) δ (z + w) := by
   funext τ i j
-  simp only [Pi.add_apply, pt_apply, Matrix.add_apply, map_add, mul_add]
+  simp only [Pi.add_apply, pt_apply, Matrix.add_apply, map_add (f := _), mul_add]
 
 def ptH (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (N : ℕ) {N' : ℕ} (t₀ : D.host.E) (b : Fin N' → D.host.E) :
     (Fin N → 𝓞 D.host.E) →+ VC D N N' :=
@@ -110,7 +110,7 @@ def phiH (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) {N' : ℕ} (t₀ : D.h
   AddMonoidHom.mk' (fun s => (∑ τ, ∑ i, embT D τ (s : D.host.E) *
       (δ * embT D τ (t₀ * x i) * (starRingEnd ℂ) (δ * embT D τ (t₀ * b i)))) / (area (tor0 D cc δ).abelian₂ : ℂ))
     fun s s' => by
-      simp only [RingOfIntegers.coe_eq_algebraMap, map_add, add_mul, Finset.sum_add_distrib, add_div]
+      simp only [RingOfIntegers.coe_eq_algebraMap, map_add (f := _), add_mul, Finset.sum_add_distrib, add_div]
 
 theorem Hf_ptH (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (N : ℕ) {N' : ℕ} (t₀ : D.host.E)
     (b x : Fin N' → D.host.E) (c c' : Fin N → 𝓞 D.host.E) :

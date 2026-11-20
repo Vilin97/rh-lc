@@ -19,7 +19,7 @@ theorem aeval_comp_X {σ A B : Type} [CommRing A] [CommRing B] {_ : Algebra ℤ 
   | C a =>
     rw [aeval_C]
     exact (eq_intCast (algebraMap ℤ B) a).trans (eq_intCast ((e.comp φ).comp C) a).symm
-  | add p q hp hq => rw [map_add, hp, hq, map_add, map_add]
+  | add p q hp hq => rw [map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
   | mul_X p q hp => rw [map_mul, hp, aeval_X, map_mul, map_mul]
 
 omit [Fintype K] [∀ k, Fintype (ι k)] in

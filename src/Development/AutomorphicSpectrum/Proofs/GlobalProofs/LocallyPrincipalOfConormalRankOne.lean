@@ -80,7 +80,7 @@ theorem locPrincipal_of_rankAtStalk_eq_one {A : Type} [CommRing A] [IsDomain A]
       IsLocalization.map_units (Localization.AtPrime p) (⟨s, hs⟩ : p.primeCompl)
     rw [← Ideal.unit_mul_mem_iff_mem _ hunit, ← map_mul]
     have hdecomp : s * x = b * f0 + (s * x - b * f0) := by ring
-    rw [hdecomp, map_add]
+    rw [hdecomp, map_add (f := _)]
     refine Submodule.add_mem_sup ?_ ?_
     · exact Ideal.mem_map_of_mem _ (Ideal.mul_mem_left _ _ (Ideal.mem_span_singleton_self f0))
     · have h2 : φ (s * x - b * f0) ∈ (I ^ 2).map φ := Ideal.mem_map_of_mem _ hsb

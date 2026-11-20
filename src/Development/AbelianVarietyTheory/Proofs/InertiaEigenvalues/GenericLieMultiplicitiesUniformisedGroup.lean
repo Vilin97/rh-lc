@@ -29,7 +29,7 @@ theorem trace_add_of_exact {A M₀ M₁ M₂ : Type} [CommRing A] [AddCommGroup 
   choose p₀ hp₀ using hk
   let p : M₁ →ₗ[A] M₀ :=
     { toFun := p₀
-      map_add' := fun x y => hi (by simp only [map_add, hp₀]; abel)
+      map_add' := fun x y => hi (by simp only [map_add (f := _), hp₀]; abel)
       map_smul' := fun c x => hi (by simp [hp₀, smul_sub]) }
   have hp : ∀ x, i (p x) = x - s (q x) := hp₀
   have hpi : p ∘ₗ i = LinearMap.id := LinearMap.ext fun y => hi (by
@@ -44,11 +44,11 @@ theorem trace_add_of_exact {A M₀ M₁ M₂ : Type} [CommRing A] [AddCommGroup 
     have h := LinearMap.congr_fun hid x
     have h' := LinearMap.congr_fun h₀ (p x)
     simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.id_apply] at h h' ⊢
-    rw [← h', ← map_add, h]
+    rw [← h', ← map_add (f := _), h]
   have t₄ : LinearMap.trace A M₁ ((f₁ ∘ₗ s) ∘ₗ q) = LinearMap.trace A M₁ (s ∘ₗ (q ∘ₗ f₁)) := by
     rw [LinearMap.trace_comp_comm' q (f₁ ∘ₗ s), LinearMap.trace_comp_comm' (q ∘ₗ f₁) s, LinearMap.comp_assoc]
   conv_lhs => rw [t₃]
-  rw [map_add, t₁, t₄, t₂]
+  rw [map_add (f := _), t₁, t₄, t₂]
 
 theorem trace_map_eq {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) {n : ℕ} (u : Module.End R (Fin n → R)) :
     f (LinearMap.trace R _ u) = ((LinearMap.toMatrix' u)ᵀ.map f).trace := by
@@ -258,7 +258,7 @@ theorem trace_of_unif {R : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationR
       (i := gc.i) (q := gc.q) hi ⟨inferInstance, hl.q_lin e⟩ gc.isKernel hvK hv' hw' a
       (MK a) ((LinearMap.toMatrix' (ρ a))ᵀ.map f) ((LinearMap.toMatrix' (ρB a))ᵀ.map f)
       (fun c => (ConstBasis.prodPts_act hvK hMK a c).symm) (fun c => by rw [← hM, hρ']) (fun c => by rw [← hMB, hρB'])
-    rw [← Ideal.Quotient.eq, map_add, map_intCast, trace_map_eq, trace_map_eq, h]
+    rw [← Ideal.Quotient.eq, map_add (f := _), map_intCast, trace_map_eq, trace_map_eq, h]
     refine (add_comm _ _).trans (congrArg _ ?_)
     simp [MK, latTrace, Matrix.trace]
   rw [← sub_eq_zero, ← Ideal.mem_bot, ← Ideal.iInf_pow_eq_bot_of_isLocalRing _ (maximalIdeal.isMaximal R).ne_top,
@@ -317,7 +317,7 @@ theorem lieMult_unif : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H
     (Module.finrank (𝓞 E) P.D.toPre.X) (fun a => by
       have hT := trace_eq_sum hσ (torusRep (𝓞 E) P.D.toPre.X F) a
       simp only [fun i => finrank_eigenSub_torusRep (X := P.D.toPre.X) (σ i) (injective_of_charZero _)] at hT
-      rw [← trace_eq_sum hσ, ← trace_eq_sum hσ, ← hT, tG, tB, htr, trace_torusRep b, map_add, map_intCast]) j
+      rw [← trace_eq_sum hσ, ← trace_eq_sum hσ, ← hT, tG, tB, htr, trace_torusRep b, map_add (f := _), map_intCast]) j
   rw [Lie.lieMult_iff_finrank (isLinearPullback_pullback _ (spMap f)), he] at hN
   refine ⟨_, ?_, hm.symm.trans hN.2⟩
   rw [Lie.lieMult_iff_finrank (isLinearPullback_pullback _ (spMap f)), he]

@@ -53,7 +53,7 @@ theorem dependent_of_card_le : ∀ (l : ℕ) [Fact l.Prime] (G : Type) [Group G]
       ⟨fun g => PadicInt.toZModPow (r + v) (∑ i, ((c i : ℕ) : ℤ_[l]) * w i g),
         (continuous_toZModPow _).comp
           (continuous_finset_sum _ fun i _ => continuous_const.mul (hw i)), fun g h => by
-        rw [ReciprocityTheory.Gal.charRep_apply, redChar_apply, ← map_mul, ← map_add, Finset.mul_sum,
+        rw [ReciprocityTheory.Gal.charRep_apply, redChar_apply, ← map_mul, ← map_add (f := _), Finset.mul_sum,
           ← Finset.sum_add_distrib]
         refine congrArg (PadicInt.toZModPow (r + v)) ?_
         exact Finset.sum_congr rfl fun i _ => by rw [hwc]; ring⟩

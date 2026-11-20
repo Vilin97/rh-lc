@@ -113,10 +113,10 @@ theorem pureA_fixed_fin :
     refine Prod.ext ?_ ?_
     · change GlobalTheory.HeisSchA.p1 (x ⬝ᵥ finE F v + ⅟(2 : AdeleRing (𝓞 F) F) * (finE F u ⬝ᵥ finE F v)) = 0
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_mul, dotProduct, map_sum, hp1, mul_zero, Finset.sum_const_zero, add_zero]
+        simp only [map_add (f := _), map_mul, dotProduct, map_sum, hp1, mul_zero, Finset.sum_const_zero, add_zero]
     · change GlobalTheory.HeisSchA.p2 (x ⬝ᵥ finE F v + ⅟(2 : AdeleRing (𝓞 F) F) * (finE F u ⬝ᵥ finE F v)) = _
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_mul, dotProduct, map_sum, hp2]
+        simp only [map_add (f := _), map_mul, dotProduct, map_sum, hp2]
       rfl
   have hf : (fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F ((x + finE F u) i).1) =
       fun i => InfiniteAdeleRing.ringEquiv_mixedSpace F (x i).1 := by

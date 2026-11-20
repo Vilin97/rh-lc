@@ -40,7 +40,7 @@ theorem h_smul_left (x y : Fin M → A) (a : A) : hform c J (a • x) y = c a * 
 
 theorem h_add_left (x y z : Fin M → A) :
     hform c J (x + y) z = hform c J x z + hform c J y z := by
-  simp only [hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem h_sum_left {ι : Type} (s : Finset ι) (x : ι → Fin M → A) (z : Fin M → A) :
     hform c J (∑ i ∈ s, x i) z = ∑ i ∈ s, hform c J (x i) z := by

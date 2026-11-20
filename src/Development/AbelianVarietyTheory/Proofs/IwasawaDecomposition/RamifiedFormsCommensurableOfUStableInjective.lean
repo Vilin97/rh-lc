@@ -26,7 +26,7 @@ theorem exists_nsmul_map_mem {K V W : Type*} [Field K] [NumberField K] [AddCommG
     rw [hk, mul_comm, mul_smul]
     exact L.toAddSubmonoid.nsmul_mem (hc y) k
   | zero => simp
-  | add y z _ _ hy hz => rw [map_add, smul_add]; exact L.add_mem hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _), smul_add]; exact L.add_mem hy hz
   | smul r y _ hy =>
     rw [← algebraMap_smul K r y, map_smul, smul_comm, algebraMap_smul]
     exact L.smul_mem r hy

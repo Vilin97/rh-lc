@@ -32,7 +32,7 @@ theorem comp_aeval {R M N : Type} [CommRing R] [AddCommGroup M] [Module R M] [Ad
     (φ : M →ₗ[R] N) (A : Module.End R M) (B : Module.End R N) (h : φ ∘ₗ A = B ∘ₗ φ)
     (q : Polynomial R) : φ ∘ₗ Polynomial.aeval A q = Polynomial.aeval B q ∘ₗ φ := by
   induction q using Polynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, LinearMap.comp_add, LinearMap.add_comp, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), LinearMap.comp_add, LinearMap.add_comp, hp, hq]
   | monomial n a =>
     simp only [Polynomial.aeval_monomial, Algebra.algebraMap_eq_smul_one, smul_mul_assoc, one_mul,
       LinearMap.comp_smul, LinearMap.smul_comp]

@@ -183,7 +183,7 @@ theorem phase_line (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (a b x : κ → AF
     congr 1
     · exact Finset.sum_congr rfl fun i _ => by ring
     · exact Finset.sum_congr rfl fun i _ => by ring
-  rw [ev, map_add, map_smul, map_smul, linForm_apply]
+  rw [ev, map_add (f := _), map_smul, map_smul, linForm_apply]
   simp [smul_eq_mul]
 
 omit [Fintype κ] in

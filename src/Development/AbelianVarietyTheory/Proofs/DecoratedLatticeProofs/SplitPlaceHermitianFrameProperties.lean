@@ -75,7 +75,7 @@ theorem det_at (β : Frame p S n) (g : GL n k) :
   refine ⟨⟨p.e * a + (1 - p.e), p.e * c + (1 - p.e), ?_, ?_⟩, rfl, ?_⟩
   · linear_combination (2 - a - c) * hee + p.e * p.e * hac
   · linear_combination (2 - a - c) * hee + p.e * p.e * hac
-  · simp only [Units.val_mk, map_add, map_mul, map_sub, map_one, pr_e p, one_mul, sub_self, add_zero]
+  · simp only [Units.val_mk, map_add (f := _), map_mul, map_sub, map_one, pr_e p, one_mul, sub_self, add_zero]
     simp only [a]
     rw [RingHom.map_det, RingHom.mapMatrix_apply, gl_map, Matrix.mul_assoc, Matrix.det_comm' β.bb' β.b'b, Matrix.mul_assoc, β.b'b,
       Matrix.mul_one]

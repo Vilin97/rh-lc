@@ -106,7 +106,7 @@ theorem univ_of_mat [Fact p.Prime] (k : ℕ) (R₁ : Matrix (Fin m) (Fin r) A) (
       Fintype.linearCombination_apply _ _ _
     have hK : ∀ {n : ℕ} (C : Matrix (Fin r) (Fin n) A) (D : Matrix (Fin m) (Fin n) A) (c : Fin n → A),
         L ((R₁.map (· ^ p ^ k) * C + (p : A) • D) *ᵥ c) = 0 := fun C D c => by
-      rw [add_mulVec, smul_mulVec, map_add, map_smul, hP, add_zero, ← mulVec_mulVec]
+      rw [add_mulVec, smul_mulVec, map_add (f := _), map_smul, hP, add_zero, ← mulVec_mulVec]
       generalize C *ᵥ c = d
       have : R₁.map (· ^ p ^ k) *ᵥ d = ∑ j, d j • fun i => R₁ i j ^ p ^ k := by
         funext l

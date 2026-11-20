@@ -15,7 +15,7 @@ variable {A : Type} [CommRing A] {n : ℕ} (s : A →+* A) (J : Matrix (Fin n) (
 
 theorem hf_add_l (x y z : Fin n → A) :
     Formalism.UG.hform s J (x + y) z = Formalism.UG.hform s J x z + Formalism.UG.hform s J y z := by
-  simp only [Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hf_smul_l (c : A) (x z : Fin n → A) :
     Formalism.UG.hform s J (c • x) z = s c * Formalism.UG.hform s J x z := by
@@ -91,7 +91,7 @@ theorem sigR_invol (hσ : ∀ e, σ (σ e) = e) (a : R ⊗[F] E) : sigR R σ (si
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sigR, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem JR_herm (hJ : IsHermND σ J) (i j : Fin n) : sigR R σ (JR R J j i) = JR R J i j := by
   simp only [JR, Matrix.map_apply, sigR_inclR, hJ.1 i j]
@@ -212,7 +212,7 @@ theorem cc_cond (hσ : ∀ e, σ (σ e) = e) (hJ : IsHermND σ J) (hP : P.IsStd 
       field_simp
       ring
     have h1 := congrArg (fun t => inclR (F := F) R (algebraMap F E t)) h0
-    simp only [map_add, map_mul, map_neg, map_zero] at h1 ⊢
+    simp only [map_add (f := _), map_mul, map_neg, map_zero] at h1 ⊢
     linear_combination h1
   | cast j =>
     simp only [wv, cc, Fin.lastCases_castSucc]
@@ -378,7 +378,7 @@ theorem unitri_section : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [N
       induction a using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [sigR, L]
-      | add x y hx hy => rw [map_add, map_add, hx, hy]
+      | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
     have hc : Continuous L := IsModuleTopology.continuous_of_linearMap L
     exact hc.congr fun a => (hL a).symm
   have hdet := JR_det_isUnit (Fv F v) σ J hJ

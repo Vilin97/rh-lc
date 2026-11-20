@@ -135,7 +135,7 @@ theorem relIndex_le_of_append {E' : Submodule (𝓞 K) V'} {E : Submodule (𝓞 
       obtain ⟨i, rfl⟩ := hy
       exact Submodule.subset_span ⟨Fin.castAdd m i, by simp⟩
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
     | smul r y _ hy =>
       rw [← algebraMap_smul K r y, map_smul, algebraMap_smul]
       exact Submodule.smul_mem _ r hy

@@ -104,7 +104,7 @@ theorem fock_of_ccr {ι X : Type} (M : Submodule ℂ (X → ℂ)) (A : ι → (X
     intro k v
     rw [hPdef, hPdef]
     have hp : ((Finsupp.toMultiset (k + Finsupp.single v 1)).toList).Perm (v :: (Finsupp.toMultiset k).toList) := by
-      rw [← Multiset.coe_eq_coe, Multiset.coe_toList, ← Multiset.cons_coe, Multiset.coe_toList, map_add,
+      rw [← Multiset.coe_eq_coe, Multiset.coe_toList, ← Multiset.cons_coe, Multiset.coe_toList, map_add (f := _),
         Finsupp.toMultiset_single, one_nsmul, add_comm, Multiset.singleton_add]
     rw [foldr_eq_of_perm_of_comm (fun i h => a i h) (fun i j y => haa i j y) hp]
     rfl
@@ -149,7 +149,7 @@ theorem fock_of_ccr {ι X : Type} (M : Submodule ℂ (X → ℂ)) (A : ι → (X
       rw [hmono]
       exact M.smul_mem c (P u).2
     · rename_i p q hp hq
-      rw [map_add]
+      rw [map_add (f := _)]
       exact M.add_mem hp hq
   refine ⟨hmem, ?_⟩
   intro ip hadd hsmul hzero hadj1 hadj2 β Q
@@ -208,7 +208,7 @@ theorem fock_of_ccr {ι X : Type} (M : Submodule ℂ (X → ℂ)) (A : ι → (X
       simp
     · simp [h]
   · rename_i p q hp hq
-    rw [map_add, MvPolynomial.coeff_add, add_mul, ← hp, ← hq]
+    rw [map_add (f := _), MvPolynomial.coeff_add, add_mul, ← hp, ← hq]
     exact hadd ⟨_, hmem p⟩ ⟨_, hmem q⟩ (P β)
 
 variable {D : D7} {V W : HSp D} {S S' : D.what₂.Tau → SPar}

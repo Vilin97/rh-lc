@@ -33,7 +33,7 @@ def prj (i : I) : Cx.Hom (Dsum E) (E i) (RingHom.id K) where
       · subst h
         simp only [DirectSum.component.lof_self]
       · rw [DirectSum.component.of, DirectSum.component.of, dif_neg h, dif_neg h, map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def toH (n : ℕ) : (⨁ i, (E i).H n) →ₗ[K] (Dsum E).H n :=
   DirectSum.toModule K I _ fun i => (inj E i).mapH n
@@ -60,7 +60,7 @@ theorem prj_toH (n : ℕ) (i : I) (y : ⨁ i, (E i).H n) :
       refine hcl _ _ _ _ ?_
       show DirectSum.component K I (fun i ↦ (E i).X n) i (DirectSum.lof K I (fun i ↦ (E i).X n) j a) = 0
       rw [DirectSum.component.of, dif_neg hji]
-  | add y₁ y₂ h₁ h₂ => simp only [map_add, h₁, h₂]
+  | add y₁ y₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂]
 
 theorem toH_injective (n : ℕ) : Function.Injective (toH E n) := by
   refine (injective_iff_map_eq_zero (toH E n)).2 fun y hy ↦ ?_

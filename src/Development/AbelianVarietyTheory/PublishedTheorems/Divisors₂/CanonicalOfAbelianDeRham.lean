@@ -153,7 +153,7 @@ theorem canonical_of_abelianDeRham (P : AbelianDeRham) (hκ : IsNilDP κ)
     · exact (Submodule.mem_dualAnnihilator _).2 fun c hc ↦ by
         rw [LinearMap.comp_apply, (Submodule.projection_apply_eq_zero_iff hN).2 hc, map_zero]
     · ext c
-      rw [LinearMap.add_apply, LinearMap.comp_apply, LinearMap.comp_apply, ← map_add, add_comm,
+      rw [LinearMap.add_apply, LinearMap.comp_apply, LinearMap.comp_apply, ← map_add (f := _), add_comm,
         Submodule.projection_add_projection_eq_self hN]
   · intro hy
     let l : primDR A →ₗ[R] R₀ :=
@@ -166,7 +166,7 @@ theorem canonical_of_abelianDeRham (P : AbelianDeRham) (hκ : IsNilDP κ)
     have z : l (Submodule.projection _ _ hN c) = 0 := (Submodule.mem_dualAnnihilator _).1 hy _
       (hF ▸ Submodule.subset_span ⟨_, Submodule.projection_apply_mem hN c, rfl⟩)
     change l c = π (x _)
-    conv_lhs => rw [← Submodule.projection_add_projection_eq_self hN c, map_add, z, zero_add, ← hx]
+    conv_lhs => rw [← Submodule.projection_add_projection_eq_self hN c, map_add (f := _), z, zero_add, ← hx]
     rfl
   · rintro ⟨x, hx, e⟩
     rw [Fil, hF, Submodule.mem_dualAnnihilator]

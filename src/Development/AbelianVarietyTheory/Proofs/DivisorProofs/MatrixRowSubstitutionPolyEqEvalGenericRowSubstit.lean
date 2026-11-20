@@ -18,7 +18,7 @@ theorem evY_genSub (O : Type) [CommRing O] (N : ℕ) (R : Type) [CommRing R] [Al
   | C a =>
     simp [evY, GlobalTheory.HighWt.genSub, rowSubst, MvPolynomial.algebraMap_eq]
   | add p q hp hq =>
-    simp only [GlobalTheory.HighWt.genSub, map_add] at hp hq ⊢
+    simp only [GlobalTheory.HighWt.genSub, map_add (f := _)] at hp hq ⊢
     rw [hp, hq]
   | mul_X p v hp =>
     simp only [GlobalTheory.HighWt.genSub, map_mul] at hp ⊢

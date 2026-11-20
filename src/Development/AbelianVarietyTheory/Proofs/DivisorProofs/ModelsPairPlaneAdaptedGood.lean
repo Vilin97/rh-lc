@@ -85,7 +85,7 @@ theorem GlobalTheory.ThK.IsoUniq.finRel_unique : GlobalTheory.ThK.KP → ∀ (F 
         refine ⟨z + z', y + y', ?_, ?_, ?_⟩
         · rw [Matrix.add_vecMulVec]; exact atAdd hz hz'
         · rw [Matrix.mulVec_add, Matrix.vecMulVec_add]; exact atAdd hy hy'
-        · rw [Matrix.add_vecMulVec, Matrix.mulVec_add, Matrix.vecMulVec_add, map_add, map_add]; abel
+        · rw [Matrix.add_vecMulVec, Matrix.mulVec_add, Matrix.vecMulVec_add, map_add (f := _), map_add (f := _)]; abel
       zero_mem' := ⟨0, 0, by simpa [vz0, vz1, vz] using at0,
         by simpa [vz0, vz1, vz] using at0, by simp [vz0, vz1, vz]⟩
       smul_mem' := by

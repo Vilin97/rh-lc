@@ -60,7 +60,7 @@ theorem eq_of_proportional {R : Type} [CommRing R] [IsDomain R] {g n j N' : ℕ}
       rw [hx, hy, map_nsmul, map_nsmul, LinearMap.smul_apply, ← mul_smul, ← sq, nsmul_eq_mul, ZMod.natCast_self,
         zero_mul]
     change ω _ _ = ω _ _ at h
-    simp only [map_add, LinearMap.add_apply] at h
+    simp only [map_add (f := _), LinearMap.add_apply] at h
     rw [sw (S b)]
     linear_combination h - h₀
   let q : (Fin (2 * g) → ZMod (N' ^ 2)) → ZMod (N' ^ 2) := fun a => (((N' ^ 2 + 1) / 2 : ℕ) : ZMod (N' ^ 2)) * ω a (S a)
@@ -138,7 +138,7 @@ theorem levelBasis_eq_of_isThetaPt : Out.Laws → ∀ (g n j N' : ℕ), Odd n �
   have e : ∀ a, levelPoint lev' hg a = levelPoint lev hg (σ a) := fun a => by
     rw [levelPoint_eq_lab, levelPoint_eq_lab]
     refine char_ext (lab (levelBasis lev' hg)) (fun a => lab (levelBasis lev hg) (σ a)) (lab_add hp')
-      (fun a b => by rw [map_add, lab_add hp]) (fun i => ?_) a
+      (fun a b => by rw [map_add (f := _), lab_add hp]) (fun i => ?_) a
     rw [lab_single hp', ← hs' i, pow_one, levelPoint_eq_lab, Fintype.linearCombination_apply_single, one_smul]
   have hw : ∀ (l : Out.Level P (N' ^ 2) ze) a b, Out.WeilIs P.A P.L (N' ^ 2 : ℕ) (levelPoint l hg a) (levelPoint l hg b)
       (ze ^ (labelSymp a b).val) := fun l a b => by

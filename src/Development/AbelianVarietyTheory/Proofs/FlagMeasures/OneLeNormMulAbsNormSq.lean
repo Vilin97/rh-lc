@@ -55,7 +55,7 @@ theorem exists_diag {K V : Type} [Field K] [StarRing K] [AddCommGroup V] [Module
     generalize P x = y at *
     generalize g x = c at *
     rw [hx']
-    simp only [map_add, LinearMap.add_apply, map_smul, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
+    simp only [map_add (f := _), LinearMap.add_apply, map_smul, LinearMap.map_smulₛₗ, LinearMap.smul_apply,
       smul_eq_mul, hk, hk', starRingEnd_apply]
     ring
 
@@ -132,7 +132,7 @@ theorem one_le_norm_mul_absNorm_sq {K : Type} [Field K] [NumberField K] [StarRin
     · rintro x y ⟨o, ho⟩ ⟨o', ho'⟩
       refine ⟨o + o', ?_⟩
       change algebraMap _ K (o + o') = c * algebraMap _ K (x + y)
-      rw [map_add, map_add, mul_add]
+      rw [map_add (f := _), map_add (f := _), mul_add]
       exact congrArg₂ (· + ·) ho ho')
   rw [map_mul, hN] at this
   push_cast at this

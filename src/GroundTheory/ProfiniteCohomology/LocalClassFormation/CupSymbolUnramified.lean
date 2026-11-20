@@ -73,9 +73,9 @@ noncomputable def charRestrict (E : IntermediateField F Ω) [Normal F E]
       rw [AlgEquiv.restrict_liftNormal, AlgEquiv.restrict_liftNormal, AlgEquiv.restrict_liftNormal]
       simp
     have e := hE _ h
-    rw [ofMul_mul, map_add, ofMul_inv, map_neg, ofMul_mul, map_add] at e
+    rw [ofMul_mul, map_add (f := _), ofMul_inv, map_neg, ofMul_mul, map_add (f := _)] at e
     change QZ.toAddCircle (ψ _) = QZ.toAddCircle (ψ _) + QZ.toAddCircle (ψ _)
-    rw [← map_add]
+    rw [← map_add (f := _)]
     exact congrArg QZ.toAddCircle (neg_add_eq_zero.1 e).symm
 
 theorem charRestrict_apply (E : IntermediateField F Ω) [Normal F E]
@@ -88,7 +88,7 @@ theorem charRestrict_apply (E : IntermediateField F Ω) [Normal F E]
       ((AlgEquiv.restrictNormalHom E g).liftNormal Ω).restrictNormal E = 1
     rw [AlgEquiv.restrict_liftNormal, inv_mul_cancel]
   have e := hE _ h
-  rw [ofMul_mul, map_add, ofMul_inv, map_neg, neg_add_eq_zero] at e
+  rw [ofMul_mul, map_add (f := _), ofMul_inv, map_neg, neg_add_eq_zero] at e
   change QZ.toAddCircle (ψ (Additive.ofMul ((AlgEquiv.restrictNormalHom E g).liftNormal Ω))) = _
   rw [← e]
   rfl
@@ -162,7 +162,7 @@ theorem charAdd_eq_zero_of_mem_fixingSubgroup
     have := mem_charKer.1 hn
     exact QZ.toAddCircle.injective (this.trans (map_zero _).symm)
   have : g = h ^ (n : ℕ) * ((h ^ (n : ℕ))⁻¹ * g) := by group
-  rw [this, ofMul_mul, map_add, e1, e2, add_zero]
+  rw [this, ofMul_mul, map_add (f := _), e1, e2, add_zero]
 
 end Field
 

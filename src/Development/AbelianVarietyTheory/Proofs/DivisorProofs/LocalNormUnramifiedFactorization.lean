@@ -36,7 +36,7 @@ theorem norm_at_split : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Nu
         induction y using TensorProduct.induction_on with
         | zero => simp
         | tmul a x => rfl
-        | add x y hx hy => simp only [map_add, hx, hy]
+        | add x y hx hy => simp only [map_add (f := _), hx, hy]
       rw [hs, splitProj_comp]
     have ha : piW τ (algebraMap (AF F) (AE F E) (Algebra.norm (AF F) z)) = evFin F v (Algebra.norm (AF F) z) := by
       change splitProj τ (compFin F E v (Algebra.norm (AF F) z ⊗ₜ[F] 1)) = _

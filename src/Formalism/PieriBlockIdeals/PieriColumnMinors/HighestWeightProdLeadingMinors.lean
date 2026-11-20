@@ -489,7 +489,7 @@ theorem nablaDual : NablaDual := by
   | add x y _ _ hx hy =>
     obtain ⟨g, hg, hg'⟩ := hx
     obtain ⟨g2, hg2, hg2'⟩ := hy
-    exact ⟨g + g2, Submodule.add_mem _ hg hg2, by rw [mul_add, map_add, mul_add, hg', hg2']⟩
+    exact ⟨g + g2, Submodule.add_mem _ hg hg2, by rw [mul_add, map_add (f := _), mul_add, hg', hg2']⟩
   | smul c x _ hx =>
     obtain ⟨g, hg, hg'⟩ := hx
     exact ⟨c • g, Submodule.smul_mem _ c hg, by rw [mul_smul_comm, map_smul, mul_smul_comm, hg']⟩
@@ -780,7 +780,7 @@ theorem weyl_le_of_stable_submodule {r : ℕ} (ν : Fin r → ℕ) (hν : Antito
 theorem eval_neg_x_coeff {S : Type*} [CommRing S] (φ : S →+* S) (p : Polynomial S) (k : ℕ) :
     (Polynomial.eval₂ (Polynomial.C.comp φ) (-Polynomial.X) p).coeff k = (-1) ^ k * φ (p.coeff k) := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [Polynomial.eval₂_add, Polynomial.coeff_add, Polynomial.coeff_add, hp, hq, map_add, mul_add]
+  | add p q hp hq => rw [Polynomial.eval₂_add, Polynomial.coeff_add, Polynomial.coeff_add, hp, hq, map_add (f := _), mul_add]
   | monomial n a =>
     rw [Polynomial.eval₂_monomial, RingHom.comp_apply, Polynomial.coeff_C_mul, neg_pow, Polynomial.coeff_monomial,
       ← Polynomial.C_1, ← Polynomial.C_neg, ← Polynomial.C_pow, Polynomial.coeff_C_mul, Polynomial.coeff_X_pow]

@@ -97,7 +97,7 @@ theorem exists_gens_mod : ∀ (E : Type) [Field E] [NumberField E] (ℓ : ℕ) [
   refine ⟨fun k => c (σ k), z, z.2, ?_⟩
   have h1 := congrArg N.subtype h
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum, map_smul, Nat.cast_smul_eq_nsmul, ← Nat.cast_smul_eq_nsmul ℂ,
+    rw [map_add (f := _), map_sum, map_smul, Nat.cast_smul_eq_nsmul, ← Nat.cast_smul_eq_nsmul ℂ,
     ← σ.sum_comp] at h1
   exact h1
 
@@ -135,7 +135,7 @@ theorem exists_tate_gens : ∀ (E : Type) [Field E] [NumberField E] (ℓ : ℕ) 
     have h3 : lv t = φ w := congrArg Additive.ofMul hw.symm
     have h4 : φ z = 0 := congrArg Additive.ofMul ((hL z).2 hz)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sub, sub_eq_zero, h3, h1, map_add, h4, add_zero, map_sum, map_sum]
+      rw [map_sub, sub_eq_zero, h3, h1, map_add (f := _), h4, add_zero, map_sum, map_sum]
     refine Finset.sum_congr rfl fun k _ => congrArg Additive.ofMul ?_
     exact (hβ _ _).trans (hα _ (T k) 1).symm
   obtain ⟨s, hs⟩ := GlobalTheory.TateSpan.exists_eq_p_smul_of_lev_one (t - ∑ k, α (c k) (T k)) h2
@@ -167,7 +167,7 @@ theorem tate_free_of_lattice : ∀ (E : Type) [Field E] [NumberField E] (ℓ : �
   let F : (κ → ℤ_[ℓ] ⊗[ℤ] 𝓞 E) →ₗ[ℤ_[ℓ]] GlobalTheory.HTLat.Tate ℓ M :=
     { toFun := fun r => ∑ k, act (r k) (T k)
       map_add' := fun r s => by
-        simp only [Pi.add_apply, map_add, LinearMap.add_apply, Finset.sum_add_distrib]
+        simp only [Pi.add_apply, map_add (f := _), LinearMap.add_apply, Finset.sum_add_distrib]
       map_smul' := fun c r => by
         simp only [Pi.smul_apply, map_smul, LinearMap.smul_apply, Finset.smul_sum, RingHom.id_apply] }
   have hF : ∀ r, F r = ∑ k, act (r k) (T k) := fun r => rfl

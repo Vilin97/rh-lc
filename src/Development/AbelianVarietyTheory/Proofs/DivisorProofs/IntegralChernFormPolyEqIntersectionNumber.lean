@@ -57,7 +57,7 @@ theorem integral_evalF_c1W_eq_interPoly : GlobalTheory.Published.ChernDegree →
       { toFun := fun Q => dens (evalF (atlas X σ) (fun a => c1W (ψ a)) Q x)
         map_zero' := by simp [evalF, LineForm.fld, dens]
         map_add' := fun Q Q' => by
-          simp only [evalF, LineForm.fld, map_add, Subalgebra.coe_add]
+          simp only [evalF, LineForm.fld, map_add (f := _), Subalgebra.coe_add]
           exact LineForm.TopInt.dens_add _ _ }
     refine eq_homogeneousComponent f X.dim (fun d hd Q hQ => ?_) P
     exact GlobalTheory.T.topDensity_hermitianForms_eq_zero_offDegree X.dim κ _ d Q hQ hd

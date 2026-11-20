@@ -63,7 +63,7 @@ theorem exists_int_mul {n : ℕ} (g : MvPolynomial (Fin n) ℚ) :
     obtain ⟨N, p', hN, hp⟩ := hp
     obtain ⟨M, q', hM, hq⟩ := hq
     refine ⟨N * M, M * p' + N * q', mul_ne_zero hN hM, ?_⟩
-    rw [map_add, map_mul, map_mul, hp, hq, map_natCast, map_natCast]
+    rw [map_add (f := _), map_mul, map_mul, hp, hq, map_natCast, map_natCast]
     push_cast
     ring
   | mul_X p i hp =>
@@ -75,14 +75,14 @@ theorem aeval_map_int {n : ℕ} {A : Type} [CommRing A] [Algebra ℚ A] (z : Fin
     aeval z (map (Int.castRingHom ℚ) g) = aeval z g := by
   induction g using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp only [map_mul, hp, map_X, aeval_X]
 
 theorem hom_aeval {n : ℕ} {A B : Type} [CommRing A] [CommRing B] (φ : A →+* B) (z : Fin n → A)
     (g : MvPolynomial (Fin n) ℤ) : φ (aeval z g) = aeval (fun i => φ (z i)) g := by
   induction g using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp only [map_mul, hp, aeval_X]
 
 theorem exists_seq_emb {B Ω : Type} [CommRing B] [IsDomain B] [Algebra.FiniteType ℤ B] [Field Ω] [CharZero Ω]

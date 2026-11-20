@@ -41,7 +41,7 @@ def sub (hv : ∀ j, IsFrame (v j)) (e : ∀ j, α ↪ κ j) (S : Finset α) : S
   sec V :=
     { carrier := {x | ∀ j (W : C.Opens) (h₁ : W ≤ V) (h₂ : W ≤ T j), resM F h₁ x ∈ spn v e S j h₂}
       add_mem' := fun hs ht j W h₁ h₂ => by
-        rw [map_add]; exact add_mem (hs j W h₁ h₂) (ht j W h₁ h₂)
+        rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hs j W h₁ h₂) (ht j W h₁ h₂)
       zero_mem' := fun j W h₁ h₂ => by rw [map_zero]; exact zero_mem _
       smul_mem' := fun a s hs j W h₁ h₂ => by
         rw [resM_smul]; exact Submodule.smul_mem _ _ (hs j W h₁ h₂) }
@@ -141,7 +141,7 @@ theorem IsTriangular.repr_eq (H : IsTriangular v rk e g) (hv : ∀ j, IsFrame (v
     rwa [mul_ite, mul_one, mul_zero] at hcf
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add, map_add, Finsupp.add_apply, Finsupp.add_apply, hx, hy, mul_add]
+    rw [map_add (f := _), map_add (f := _), Finsupp.add_apply, Finsupp.add_apply, hx, hy, mul_add]
   | smul c x _ hx =>
     rw [map_smul, map_smul, Finsupp.smul_apply, Finsupp.smul_apply, hx, smul_eq_mul, smul_eq_mul,
       mul_left_comm]
@@ -303,7 +303,7 @@ theorem IsTriangular.exists_hom (H : IsTriangular v rk e g) (hv : ∀ j, IsFrame
       map_add' := fun s t => by
         refine GlobalTheory.LB.sec_ext fun j => ?_
         rw [GlobalTheory.LB.coord_add, GlobalTheory.LB.coord_mkSec, GlobalTheory.LB.coord_mkSec, GlobalTheory.LB.coord_mkSec]
-        simp only [f, map_add, Finsupp.add_apply]
+        simp only [f, map_add (f := _), Finsupp.add_apply]
       map_smul' := fun c s => by
         refine GlobalTheory.LB.sec_ext fun j => ?_
         rw [RingHom.id_apply, GlobalTheory.LB.coord_smul, GlobalTheory.LB.coord_mkSec, GlobalTheory.LB.coord_mkSec]

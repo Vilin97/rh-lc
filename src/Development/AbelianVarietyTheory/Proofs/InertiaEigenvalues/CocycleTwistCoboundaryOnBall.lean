@@ -115,7 +115,7 @@ theorem tw_add (σ : GQ l) (x y : Fin r → PadicComplex l) :
     twAct act χ i U σ (x + y) = twAct act χ i U σ x + twAct act χ i U σ y := by
   have hv : (fun a => act σ ((x + y) a)) = (fun a => act σ (x a)) + (fun a => act σ (y a)) := by
     funext a
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
   simp only [twAct, hv, Matrix.mulVec_add, smul_add]
 
 theorem tw_sub (σ : GQ l) (x y : Fin r → PadicComplex l) :

@@ -14,7 +14,7 @@ def catC : PowerSeries ℂ_[2] := PowerSeries.map (Nat.castRingHom ℂ_[2]) Powe
 
 theorem catC_eq : catC ^ 2 * PowerSeries.X + 1 = catC := by
   have h := congrArg (PowerSeries.map (Nat.castRingHom ℂ_[2])) PowerSeries.catalanSeries_sq_mul_X_add_one
-  simp only [map_add, map_mul, map_pow, map_one, PowerSeries.map_X] at h
+  simp only [map_add (f := _), map_mul, map_pow, map_one, PowerSeries.map_X] at h
   exact h
 
 def wqc : PowerSeries ℂ_[2] := PowerSeries.subst (PowerSeries.X ^ 3 : PowerSeries ℂ_[2]) catC

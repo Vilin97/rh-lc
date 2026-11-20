@@ -65,7 +65,7 @@ theorem pt_of_eigvec : ∀ {O K V : Type} [CommRing O] [Field K] [Algebra O K] [
     | add a b _ _ iha ihb =>
       obtain ⟨c1, h1⟩ := iha
       obtain ⟨c2, h2⟩ := ihb
-      exact ⟨c1 + c2, by rw [LinearMap.add_apply, h1, h2, map_add, add_smul]⟩
+      exact ⟨c1 + c2, by rw [LinearMap.add_apply, h1, h2, map_add (f := _), add_smul]⟩
     | mul a b _ _ iha ihb =>
       obtain ⟨c1, h1⟩ := iha
       obtain ⟨c2, h2⟩ := ihb
@@ -78,7 +78,7 @@ theorem pt_of_eigvec : ∀ {O K V : Type} [CommRing O] [Field K] [Algebra O K] [
     rw [← hf (s * t), map_mul, mul_comm, mul_smul, ← hf s, ← map_smul, ← hf t]; rfl)
   have f0 : f 0 = 0 := uniq _ _ (by rw [← hf 0, map_zero, zero_smul]; rfl)
   have fa : ∀ s t, f (s + t) = f s + f t := fun s t => uniq _ _ (by
-    rw [← hf (s + t), map_add, add_smul, ← hf s, ← hf t]; rfl)
+    rw [← hf (s + t), map_add (f := _), add_smul, ← hf s, ← hf t]; rfl)
   have fc : ∀ r, f (algebraMap O (Algebra.adjoin O S) r) = r := fun r => uniq _ _ (by
     rw [← hf]
     show (algebraMap O (Module.End K V) r) e = _

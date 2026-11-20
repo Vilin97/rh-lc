@@ -645,7 +645,7 @@ theorem norm_one_add_mul (S : Type) [CommRing S] [Algebra ℤ S] [Module.Free �
     ext i j
     rw [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.algebraMap_matrix_apply]
     split_ifs <;> simp [hc]
-  rw [map_add, map_one, map_mul, AlgHom.commutes, map_add, map_one, map_mul, h0, zero_mul, add_zero,
+  rw [map_add (f := _), map_one, map_mul, AlgHom.commutes, map_add (f := _), map_one, map_mul, h0, zero_mul, add_zero,
     Matrix.det_one]
 
 theorem norm_congruent_one : NormCongrOne := by
@@ -1030,7 +1030,7 @@ theorem trace_asAlgebraHom {G V : Type} [Group G] [Fintype G] [AddCommGroup V] [
   induction e using MonoidAlgebra.induction_linear with
   | zero => simp
   | add f g hf hg =>
-    rw [map_add, map_add, hf, hg, ← Finset.sum_add_distrib]
+    rw [map_add (f := _), map_add (f := _), hf, hg, ← Finset.sum_add_distrib]
     simp [MonoidAlgebra.coeff_add, add_mul]
   | single g r =>
     rw [Representation.asAlgebraHom_single, map_smul, smul_eq_mul]
@@ -1904,7 +1904,7 @@ theorem sqWeight_mul {K : Type} [Field K] [Fintype K] (f g : K[X]) (hf : f ≠ 0
     sqWeight (f * g) = sqWeight f * sqWeight g := by
   classical
   unfold sqWeight
-  rw [UniqueFactorizationMonoid.normalizedFactors_mul hf hg, Multiset.map_add, Multiset.prod_add]
+  rw [UniqueFactorizationMonoid.normalizedFactors_mul hf hg, Multiset.map_add (f := _), Multiset.prod_add]
 
 theorem divisor_square_weight_sum_le (hM : SqMassLeOne) (K : Type) [Field K] [Fintype K] (N : ℕ) (h : K[X])
     (hmon : h.Monic) (hdeg : h.natDegree ≤ N) (S : Finset (Fin N → K))

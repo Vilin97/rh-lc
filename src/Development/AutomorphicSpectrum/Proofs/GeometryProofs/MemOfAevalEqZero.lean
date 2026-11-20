@@ -129,7 +129,7 @@ theorem aeval_scaled (y : (Σ k, ι k) → Ω) (τ : K → Ω) (h : MRing ι) :
     aeval (fun p : Σ k, ι k => y p * τ p.1) h = aeval τ (mConeMap y h) := by
   induction h using MvPolynomial.induction_on with
   | C a => simp [mConeMap]
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p i hp =>
     rw [map_mul, map_mul, map_mul, hp]
     simp [mConeMap]
@@ -167,7 +167,7 @@ theorem chart_form {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k} (hc : ∀ k, y �
     refine ⟨m1 + m2, G1 * cMon c m2 + G2 * cMon c m1,
       homog_add (homog_mul hG1 (homog_cMon c m2))
         (by rw [add_comm m1 m2]; exact homog_mul hG2 (homog_cMon c m1)), ?_⟩
-    rw [map_add, map_mul, map_mul, aeval_cMon, aeval_cMon, ← e1, ← e2]
+    rw [map_add (f := _), map_mul, map_mul, aeval_cMon, aeval_cMon, ← e1, ← e2]
     simp only [Pi.add_apply, pow_add, Finset.prod_mul_distrib]
     ring
   | mul x1 x2 _ _ ih1 ih2 =>

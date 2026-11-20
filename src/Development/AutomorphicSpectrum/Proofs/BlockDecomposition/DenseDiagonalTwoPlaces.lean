@@ -84,12 +84,12 @@ theorem isPlacesIdem_sumIdem (S₁ : Finset (InfinitePlace F)) (S₂ : Finset (H
       ∑ u : S₁, (placeMapInf w).proj ((placeMapInf u.1).inj 1) := by
     intro w
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [sumIdem, map_add, map_sum, inf_proj_fin, Finset.sum_const_zero, add_zero]
+      simp only [sumIdem, map_add (f := _), map_sum, inf_proj_fin, Finset.sum_const_zero, add_zero]
   have hF : ∀ v, (placeMapFin v).proj (sumIdem S₁ S₂) =
       ∑ u : S₂, (placeMapFin v).proj ((placeMapFin u.1).inj 1) := by
     intro v
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [sumIdem, map_add, map_sum, fin_proj_inf, Finset.sum_const_zero, zero_add]
+      simp only [sumIdem, map_add (f := _), map_sum, fin_proj_inf, Finset.sum_const_zero, zero_add]
   refine ⟨fun w hw => ?_, fun w hw => ?_, fun v hv => ?_, fun v hv => ?_⟩
   · refine (hI w).trans ?_
     rw [Finset.sum_eq_single (⟨w, hw⟩ : S₁)]
@@ -156,7 +156,7 @@ theorem denseRange_pair {K₁ K₂ : Type} [Field K₁] [Algebra F K₁] [Topolo
   have hsurj : Function.Surjective G := by
     rintro ⟨x₁, x₂⟩
     refine ⟨_, (hval (P₁.inj x₁ + P₂.inj x₂)).trans ?_⟩
-    rw [map_add, map_add, P₁.proj_inj, P₂.proj_inj, proj_inj_other P₁ P₂ z₁, proj_inj_other P₂ P₁ z₂, add_zero,
+    rw [map_add (f := _), map_add (f := _), P₁.proj_inj, P₂.proj_inj, proj_inj_other P₁ P₂ z₁, proj_inj_other P₂ P₁ z₂, add_zero,
       zero_add]
   have hdense := hsurj.denseRange.comp (GroundTheory.Global.denseRange_algebraMap_prod_pi (A₂ ∪ B₂) (A₁ ∪ B₁)) hG
   convert hdense using 1

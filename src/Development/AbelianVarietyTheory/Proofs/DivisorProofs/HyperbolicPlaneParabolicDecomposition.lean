@@ -32,7 +32,7 @@ theorem exists_realIdem (σ : E →ₐ[F] E) : ∃ e : AE F E, e * e = e ∧ cA 
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => simp [Algebra.TensorProduct.one_def, h]
-    | add x y hx hy => rw [map_add, map_add, hx, hy, mul_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, mul_add]
   refine ⟨GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.tensNU (E := E) j hj 1, by rw [← map_mul, mul_one], ?_, fun n J g => ?_⟩
   · change Algebra.TensorProduct.map (AlgHom.id (AF F) (AF F)) σ (j 1 ⊗ₜ[F] (1 : E)) = j 1 ⊗ₜ[F] (1 : E)
     rw [Algebra.TensorProduct.map_tmul, map_one σ]
@@ -61,7 +61,7 @@ theorem isLevi_mix (he : e * e = e) (hce : cA σ e = e) {t : (AE F E)ˣ} {y y' :
     rfl
   · rw [hm', Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec, hm.2.1, smul_smul, ← add_smul]
     change _ = cA σ ((1 - e) + e * (t⁻¹).1) • _
-    rw [map_add, map_sub, map_mul, map_one, hce]
+    rw [map_add (f := _), map_sub, map_mul, map_one, hce]
   · rw [hm', hy', Matrix.add_mul, Matrix.mul_add, Matrix.smul_mul, Matrix.smul_mul, Matrix.mul_smul, Matrix.mul_smul,
       Matrix.one_mul, Matrix.mul_one, hm.2.2]
 

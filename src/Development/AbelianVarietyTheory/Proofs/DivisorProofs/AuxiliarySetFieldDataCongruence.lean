@@ -141,7 +141,7 @@ theorem form_ratio : GlobalTheory.Published.PeriodComparison → GlobalTheory.Pu
   let gR : E →ₗ[ℚ] ℝ :=
     { toFun := fR
       map_add' := fun z z' ↦ by
-        simp only [fR, map_add, Complex.add_im, mul_add, Finset.sum_add_distrib]
+        simp only [fR, map_add (f := _), Complex.add_im, mul_add, Finset.sum_add_distrib]
       map_smul' := fun q z ↦ by
         simp only [fR, RingHom.id_apply]
         rw [Finset.smul_sum]
@@ -237,7 +237,7 @@ theorem form_ratio : GlobalTheory.Published.PeriodComparison → GlobalTheory.Pu
     intro i
     have h1 := hsc (ev i) (yv i)
     rw [hty i, map_smul, smul_eq_mul, hcorr _ _ _ _ (he i) (hf i)] at h1
-    rw [← h1, two_smul, LinearMap.add_apply, LinearMap.add_apply, map_add, two_mul]
+    rw [← h1, two_smul, LinearMap.add_apply, LinearMap.add_apply, map_add (f := _), two_mul]
     rfl
   have hcF : ((c₀ : FR E)) * (n₁ : FR E) = ((t : FR E)) * (U.c : FR E) := by
     have := congrArg (fun z : 𝔠.elt ↦ (z : FR E)) het

@@ -209,7 +209,7 @@ theorem eval_lag {ι : Type*} [Fintype ι] [DecidableEq ι] (x : ι → ℂ) (hx
 theorem aeval_commute {A : Type*} [Ring A] [Algebra ℂ A] {T y : A} (h : Commute T y) (p : ℂ[X]) :
     Commute (aeval T p) y := by
   refine Polynomial.induction_on' p (fun p q hp hq => ?_) (fun n a => ?_)
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact hp.add_left hq
   · rw [Polynomial.aeval_monomial]
     exact Commute.mul_left (Algebra.commutes a y) (h.pow_left n)
@@ -311,7 +311,7 @@ theorem ks (Y0 : ℂ) {ι : Type*} [Fintype ι] (x : ι → ℂ) {c : Fin r → 
     rw [Polynomial.aeval_C, Algebra.algebraMap_eq_smul_one, coe_smulEnd]
     simp only [Module.End.one_apply, hΨ g hg, Finset.smul_sum, smul_smul, Polynomial.eval_C]
   · intro p q hp hq Ψ a hΨ g hg
-    rw [map_add]
+    rw [map_add (f := _)]
     simp only [LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, hp Ψ a hΨ g hg, hq Ψ a hΨ g hg,
       Polynomial.eval_add, add_mul, add_smul, Finset.sum_add_distrib]
   · intro n b ih Ψ a hΨ g hg

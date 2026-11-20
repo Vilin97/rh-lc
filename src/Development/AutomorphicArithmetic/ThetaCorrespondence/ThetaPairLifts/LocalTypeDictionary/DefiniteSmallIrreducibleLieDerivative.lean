@@ -99,7 +99,7 @@ theorem theta_vanish_all_of_irreducible : _root_.GlobalTheory.FunPr.ThetaLocalIn
       GlobalTheory.SquareComm.thetaInt ωB ν₁ 𝓕₁ (Φ + Ψ) = GlobalTheory.SquareComm.thetaInt ωB ν₁ 𝓕₁ Φ + GlobalTheory.SquareComm.thetaInt ωB ν₁ 𝓕₁ Ψ := by
     intro Φ Ψ hΦ hΨ; funext h
     have e : (fun g => thetaKO ωB g h (Φ + Ψ)) = fun g => thetaKO ωB g h Φ + thetaKO ωB g h Ψ := by
-      funext g; simp [thetaKO, map_add]
+      funext g; simp [thetaKO, map_add (f := _)]
     simp only [GlobalTheory.SquareComm.thetaInt, Pi.add_apply]
     rw [e]
     exact integral_add (hΦ h) (hΨ h)
@@ -114,7 +114,7 @@ theorem theta_vanish_all_of_irreducible : _root_.GlobalTheory.FunPr.ThetaLocalIn
     { carrier := {Φ | (∀ h, IntegrableOn (fun g => thetaKO ωB g h Φ) 𝓕₁ ν₁) ∧ GlobalTheory.SquareComm.thetaInt ωB ν₁ 𝓕₁ Φ = 0}
       add_mem' := fun {a b} ha hb => ⟨fun h => by
           have e : (fun g => thetaKO ωB g h (a + b)) = fun g => thetaKO ωB g h a + thetaKO ωB g h b := by
-            funext g; simp [thetaKO, map_add]
+            funext g; simp [thetaKO, map_add (f := _)]
           rw [e]; exact (ha.1 h).add (hb.1 h),
         by rw [tadd a b ha.1 hb.1, ha.2, hb.2, add_zero]⟩
       zero_mem' := ⟨fun h => by simp [thetaKO], by funext h; simp [GlobalTheory.SquareComm.thetaInt, thetaKO]⟩

@@ -39,12 +39,12 @@ theorem ker_map_mkQ_le {V₀ V₁ : Type} [AddCommGroup V₀] [Module ℂ V₀] 
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul x k => exact Submodule.subset_span ⟨x, k, Or.inr k.2, by simp⟩
-    | add a b ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   · rintro _ ⟨z, rfl⟩
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul k y => exact Submodule.subset_span ⟨k, y, Or.inl k.2, by simp⟩
-    | add a b ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
 
 theorem simpleOver_tensKer : ∀ {V₀ V₁ : Type} [AddCommGroup V₀] [Module ℂ V₀] [AddCommGroup V₁] [Module ℂ V₁]
     (A : Set (Module.End ℂ V₀)) (B : Set (Module.End ℂ V₁)) (K₀ : Submodule ℂ V₀) (K₁ : Submodule ℂ V₁),

@@ -209,7 +209,7 @@ theorem evB_inter {V V' : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup V'
     · cases s <;> simp [h, h1, h2]
     · simp [h]
   | mul a b ha hb => simp only [map_mul, Module.End.mul_apply, ha, hb]
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb]
 
 section Letters
 
@@ -242,7 +242,7 @@ theorem evLv_toK (lev : Fin n → ℕ) (E1 E2 : Fin n → Fin n → Module.End �
         simp only [e, if_true, Bool.false_eq_true, if_false, map_smul, map_sub, FreeAlgebra.lift_ι_apply, kA, pA]
         module
       · simp only [Function.comp, AlgHom.comp_apply, toK, evLv, GlobalTheory.CompanionTheory.PairMult.evB, FreeAlgebra.lift_ι_apply]
-        simp only [e, if_true, Bool.false_eq_true, if_false, map_smul, map_add, FreeAlgebra.lift_ι_apply, kA, pA]
+        simp only [e, if_true, Bool.false_eq_true, if_false, map_smul, map_add (f := _), FreeAlgebra.lift_ι_apply, kA, pA]
         module
     · cases s <;> simp [toK, evLv, GlobalTheory.CompanionTheory.PairMult.evB, e]
   exact DFunLike.congr_fun h b

@@ -35,8 +35,8 @@ theorem lt_add_zsmul_of_le_add (hQ : Q.PosDef) {t : ℝ} (ht : 0 < t) (ν : X �
     t * Q a + ν a < t * Q (a + n • m) + ν (a + n • m) := by
   have h1 := map_add_zsmul Q a m 1
   rw [one_smul] at h1
-  rw [h1, map_add] at h
-  rw [map_add_zsmul, map_add, map_zsmul, zsmul_eq_mul]
+  rw [h1, map_add (f := _)] at h
+  rw [map_add_zsmul, map_add (f := _), map_zsmul, zsmul_eq_mul]
   have hn' : (2 : ℝ) ≤ n := by exact_mod_cast hn
   have hp : 0 < t * Q m := mul_pos ht (hQ m hm)
   have h2 : 0 ≤ t * polar Q a m + t * Q m + ν m := by push_cast at h; linarith
@@ -267,7 +267,7 @@ def ofIntBilin (β : LinearMap.BilinForm ℤ X) : QuadraticMap ℤ X ℝ :=
 
 theorem polar_ofIntBilin {β : LinearMap.BilinForm ℤ X} (hβ : ∀ x y, β x y = β y x) (x y : X) :
     polar (ofIntBilin β) x y = β x y := by
-  simp only [polar, ofIntBilin_apply, map_add, LinearMap.add_apply, hβ y x]
+  simp only [polar, ofIntBilin_apply, map_add (f := _), LinearMap.add_apply, hβ y x]
   push_cast
   ring
 

@@ -21,7 +21,7 @@ theorem sgA_sgA (D : D7) (y : AE D) : sgA D (sgA D y) = y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sgA, Formalism.UG.sigR, conj_conj]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem sgA_mem (D : D7) {s : AE D} (hs : s ∈ OhE D) : sgA D s ∈ OhE D :=
   Formalism.UG.P.csDual_sig_mem _ hs
@@ -81,13 +81,13 @@ theorem exists_half_idem (D : D7) : ∃ ε ∈ OhE D, ε * ε = ε ∧ ε * sgA 
     refine ⟨v + (inc D (e N : D.host.E) * sgA D w + w * sgA D (inc D (e N : D.host.E)) + N * w * sgA D w), ?_, ?_⟩
     · exact add_mem hv (add_mem (add_mem (mul_mem (inc_int D _) (sgA_mem D hw))
         (mul_mem hw (sgA_mem D (inc_int D _)))) (mul_mem (mul_mem (natCast_mem _ _) hw) (sgA_mem D hw)))
-    · rw [hh, map_add, map_mul, map_natCast]; linear_combination hh''
+    · rw [hh, map_add (f := _), map_mul, map_natCast]; linear_combination hh''
   · obtain ⟨w, hw, hh⟩ := h (q ^ k) (pow_pos hq.pos k)
     obtain ⟨v, hv, hh'⟩ := inc_dvd D ((h3 q k hq).1 hi)
     have hh'' : inc D (e (q ^ k) : D.host.E) + sgA D (inc D (e (q ^ k) : D.host.E)) = (q ^ k : ℕ) * v := by
       rw [← hh', ← hc]; simp
     refine ⟨1, one_pos, by simp, v + (w + sgA D w), add_mem hv (add_mem hw (sgA_mem D hw)), ?_⟩
-    rw [hh, map_add, map_mul, map_natCast]
+    rw [hh, map_add (f := _), map_mul, map_natCast]
     push_cast at hh'' ⊢
     linear_combination hh''
   · obtain ⟨w, hw, hh⟩ := h (q ^ k) (pow_pos hq.pos k)
@@ -95,7 +95,7 @@ theorem exists_half_idem (D : D7) : ∃ ε ∈ OhE D, ε * ε = ε ∧ ε * sgA 
     have hh'' : 1 - (inc D (e (q ^ k) : D.host.E) + sgA D (inc D (e (q ^ k) : D.host.E))) = (q ^ k : ℕ) * v := by
       rw [← hh', ← hc]; simp
     refine ⟨1, one_pos, by simp, v - (w + sgA D w), sub_mem hv (add_mem hw (sgA_mem D hw)), ?_⟩
-    rw [hh, map_add, map_mul, map_natCast]
+    rw [hh, map_add (f := _), map_mul, map_natCast]
     push_cast at hh'' ⊢
     linear_combination hh''
 
@@ -117,7 +117,7 @@ theorem exists_splitComp (D : D7) (u : (AE D)ˣ) (hu : (u : AE D) * sgA D u = 1)
     simp only; ring
   · ext
     change (1 - η) + η * u = ((1 - (ε + η)) + (ε + η) * u) * sgA D ((1 - η) + η * u)
-    rw [map_add, map_mul, map_sub, map_one, hη, sgA_sgA, ← hη, ← hv]
+    rw [map_add (f := _), map_mul, map_sub, map_one, hη, sgA_sgA, ← hη, ← hv]
     linear_combination (-(1 - u - v + u * v)) * (h1 + h2) - ε * hu
   · exact add_mem (sub_mem (one_mem _) (sgA_mem D hε)) (mul_mem (sgA_mem D hε) hO)
   · exact add_mem (sub_mem (one_mem _) (sgA_mem D hε)) (mul_mem (sgA_mem D hε) (sgA_mem D hO))

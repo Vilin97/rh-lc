@@ -230,7 +230,7 @@ theorem exists_poly_mul_gauss_of_annC : ∀ (D : D7) (V : HSp D) (n : ℕ) (l : 
     | nil => rfl
     | cons y L ih =>
       funext x
-      simp only [List.foldr_cons, List.map_cons, ih, dirD, Function.comp, map_add, map_smul]
+      simp only [List.foldr_cons, List.map_cons, ih, dirD, Function.comp, map_add (f := _), map_smul]
   obtain ⟨p, hp⟩ := GlobalTheory.PolyOfDeriv.eq_eval_of_dirDeriv_vanish _ N (u ∘ eL) hv (fun L hlen => by
     have h := htr L
     rw [hall (L.map eL) (by simp [hlen])] at h
@@ -256,7 +256,7 @@ theorem exists_poly_mul_gauss_of_annC : ∀ (D : D7) (V : HSp D) (n : ℕ) (l : 
   funext k
   obtain ⟨τ, i, j, b⟩ := k
   cases b
-  · simp only [φ, r, Bool.false_eq_true, if_false, if_true, map_mul, map_add, MvPolynomial.aeval_C, MvPolynomial.aeval_X,
+  · simp only [φ, r, Bool.false_eq_true, if_false, if_true, map_mul, map_add (f := _), MvPolynomial.aeval_C, MvPolynomial.aeval_X,
       Matrix.of_apply, Algebra.algebraMap_self, RingHom.id_apply, Complex.re_eq_add_conj]
     ring
   · simp only [φ, r, Bool.false_eq_true, if_false, if_true, map_mul, map_sub, MvPolynomial.aeval_C, MvPolynomial.aeval_X,

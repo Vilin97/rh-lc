@@ -65,7 +65,7 @@ def ord : Subalgebra R (Tors G N K → K) where
   add_mem' {f g} hf hg s := by
     obtain ⟨σ, hσ, hσf⟩ := hf s
     obtain ⟨τ, hτ, hτg⟩ := hg s
-    exact ⟨fun B _ _ z => σ B z + τ B z, fun B C _ _ _ _ φ z => by show σ C _ + τ C _ = _; rw [hσ, hτ, map_add],
+    exact ⟨fun B _ _ z => σ B z + τ B z, fun B C _ _ _ _ φ z => by show σ C _ + τ C _ = _; rw [hσ, hτ, map_add (f := _)],
       fun x => (congrArg₂ _ (hσf x) (hτg x)).trans rfl⟩
   algebraMap_mem' c s := ⟨fun B _ _ _ => algebraMap R B c, fun B C _ _ _ _ φ z => (φ.commutes c).symm,
     fun x => rfl⟩

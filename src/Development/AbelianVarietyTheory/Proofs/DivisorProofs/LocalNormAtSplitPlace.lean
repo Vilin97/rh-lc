@@ -108,7 +108,7 @@ theorem exists_sq_of_split (E : Type) [Field E] [NumberField E] [IsCMField E]
     simp
   have heq := li (a * c + d' * b' * e) (a * e + b' * c) (by
     rw [← hprod, hu0, hu1]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     linear_combination (-(algebraMap K _ b' * algebraMap K _ e)) * htt)
   have hz : c * c - d' * e * e = 0 := by
     by_contra hz
@@ -174,7 +174,7 @@ theorem exists_norm_of_split : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
     rw [← map_ofNat (algebraMap K B) 2, ← map_mul, inv_mul_cancel₀ h2K, map_one]
   have hih : GlobalTheory.IndefiniteRowSideFullHecke.SelfReciprocalLocalField.involBase Q K hf = hf := AlgHom.commutes _ _
   refine ⟨hf * (1 + uc) * (1 ⊗ₜ x) + hf * (1 - uc), ?_⟩
-  rw [map_add, map_mul, map_mul, map_mul, map_add, map_sub, map_one, hic, hiX, hih]
+  rw [map_add (f := _), map_mul, map_mul, map_mul, map_add (f := _), map_sub, map_one, hic, hiX, hih]
   linear_combination (hf ^ 2 * (2 * (1 ⊗ₜ x : B) - (1 ⊗ₜ x : B) ^ 2 - 1)) * hc + ((2 * hf + 1) * (1 ⊗ₜ x : B)) * hh
 
 end GlobalTheory.LocalNormSplit

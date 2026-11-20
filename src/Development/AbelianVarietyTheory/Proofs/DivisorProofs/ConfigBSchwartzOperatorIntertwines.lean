@@ -72,7 +72,7 @@ theorem GlobalTheory.ArchSchB.infRelB_proportional : GlobalTheory.FunPr.Hypothes
   have eadd : ∀ x y : Matrix (Fin (b + 2)) (Fin (a + (b + 2))) (AE F E),
       arch F (G.M'.co.e (x + y)).1 = arch F (G.M'.co.e x).1 + arch F (G.M'.co.e y).1 ∧
       arch F (G.M'.co.e (x + y)).2 = arch F (G.M'.co.e x).2 + arch F (G.M'.co.e y).2 := fun x y =>
-    ⟨by rw [map_add, Prod.fst_add, arch_add], by rw [map_add, Prod.snd_add, arch_add]⟩
+    ⟨by rw [map_add (f := _), Prod.fst_add, arch_add], by rw [map_add (f := _), Prod.snd_add, arch_add]⟩
   have inv : ∀ S : SInf F (Fin (b + 2) × Fin (a + (b + 2))) →L[ℂ] SInf F (Fin b × Fin (a + b)),
       GlobalTheory.ThK.EvUniqB.InfRel B G.M' G₁.M' H.ι H'.ι (isoB H H') S →
       ∀ l ∈ Λ, ∀ f g : SInf F (Fin (b + 2) × Fin (a + (b + 2))), ⇑g = sch (trP F _) l.1 l.2 ⇑f → ℓ S g = ℓ S f := by

@@ -90,7 +90,7 @@ theorem expStar_of_sum : ∀ (LT : LocTheory) (l : ℕ) [Fact l.Prime] (AI : Loc
   · have h4 : qB (LT l) (logZl l u) * oB (LT l) (algebraMap ℚ_[l] (Om l) (logZl l u)⁻¹) = 1 := by
       rw [← IsScalarTower.algebraMap_apply, ← map_mul, mul_inv_cancel₀ hL, map_one]
     convert hN using 1
-    rw [hLc, Finset.sum_range_succ, ← hSg, map_add, map_mul]
+    rw [hLc, Finset.sum_range_succ, ← hSg, map_add (f := _), map_mul]
     linear_combination (oB (LT l) (w e) * tD (LT l) ^ e) * h4
 
 end GlobalTheory.ExpImage.LowTerms

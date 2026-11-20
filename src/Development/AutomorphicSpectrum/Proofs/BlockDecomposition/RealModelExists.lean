@@ -119,7 +119,7 @@ theorem model_of_ops (lam : Fin n → ℤ) (lev : Fin n → ℕ) (hlev : IsLev l
       have hm : (muQ lam lev a : ℂ) = (lam a : ℂ) - (yZ lam lev a : ℂ) := by
         rw [← muZ_cast]
         simp [yZ]
-      simp only [kF, LinearMap.add_apply, map_add, h1, hm]
+      simp only [kF, LinearMap.add_apply, map_add (f := _), h1, hm]
       linear_combination -h2
     · by_contra hcon
       push_neg at hcon

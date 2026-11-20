@@ -14,7 +14,7 @@ private theorem isCM_of_conj (K : Type) [Field K] [NumberField K] [IsTotallyComp
       left_inv := hcc
       right_inv := hcc
       map_mul' := fun x y => φ.injective (by simp only [hc, map_mul])
-      map_add' := fun x y => φ.injective (by simp only [hc, map_add]) }
+      map_add' := fun x y => φ.injective (by simp only [hc, map_add (f := _)]) }
   let σ : K ≃ₐ[ℚ] K := AlgEquiv.ofRingEquiv (f := τ) (fun q => by simp)
   have hσ : ∀ ψ : K →+* ℂ, ComplexEmbedding.IsConj ψ σ := fun ψ => by
     ext x
@@ -63,7 +63,7 @@ theorem UpperTheory.V.Kum.fnCM :
     obtain ⟨a, ha⟩ := ihx
     obtain ⟨b, hb⟩ := ihy
     refine ⟨a + b, fun φ => ?_⟩
-    rw [map_add, ha, hb, ← map_add, ← map_add]
+    rw [map_add (f := _), ha, hb, ← map_add (f := _), ← map_add (f := _)]
     rfl
   | inv x hx ihx =>
     obtain ⟨a, ha⟩ := ihx

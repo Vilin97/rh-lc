@@ -85,8 +85,8 @@ theorem log_mul (u v : BdRPlus p R) (hu : theta p R u = 1) (hv : theta p R v = 1
   refine ext_eval fun n => ?_
   have e : eval p R n (u * v - 1) =
       eval p R n (u - 1) + eval p R n (v - 1) + eval p R n (u - 1) * eval p R n (v - 1) := by
-    rw [← map_mul, ← map_add, ← map_add]; congr 1; ring
-  rw [map_add, eval_log, eval_log, eval_log, e]
+    rw [← map_mul, ← map_add (f := _), ← map_add (f := _)]; congr 1; ring
+  rw [map_add (f := _), eval_log, eval_log, eval_log, e]
   refine truncLog_add (eval_pow_eq_zero (by simp [hu]) n) (eval_pow_eq_zero (by simp [hv]) n) ?_
   rw [← e]
   exact eval_pow_eq_zero (by simp [hu, hv]) n

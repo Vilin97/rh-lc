@@ -45,7 +45,7 @@ theorem plus_eq (R L : Module.End ℂ (MvPolynomial σ ℂ))
       R (homogeneousComponent d P) := by
     intro d
     have hmem := hR d _ (homogeneousComponent_mem d P)
-    rw [LinearMap.add_apply, map_add, hL, hc_hc,
+    rw [LinearMap.add_apply, map_add (f := _), hL, hc_hc,
       if_neg (show ¬ (d + 2 + 2 = d) by omega), map_zero, add_zero,
       homogeneousComponent_of_mem hmem, if_pos rfl]
   have hsupp : (Function.support fun d => R (homogeneousComponent d P)) ⊆
@@ -81,7 +81,7 @@ theorem minus_eq (R L : Module.End ℂ (MvPolynomial σ ℂ))
       L (homogeneousComponent (d + 2) P) := by
     intro d
     have hmem := hR (d + 2) _ (homogeneousComponent_mem (d + 2) P)
-    rw [LinearMap.add_apply, map_add, hL, hc_hc, if_pos rfl,
+    rw [LinearMap.add_apply, map_add (f := _), hL, hc_hc, if_pos rfl,
       homogeneousComponent_of_mem hmem]
     split_ifs with hc
     · exact absurd hc (by omega)

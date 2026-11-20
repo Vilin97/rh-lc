@@ -43,7 +43,7 @@ def shPair {I J : Cx R} (T : TensPre I J) : Pair I J (shK T) where
   leibniz U s t w h a b := by
     simp only [LinearMap.compr₂_apply, TensorProduct.mk_apply, LinearMap.comp_apply, DirectSum.lof_eq_of]
     rw [tS_d, T.leibniz]
-    rw [map_add, Units.smul_def, Units.smul_def, map_zsmul]
+    rw [map_add (f := _), Units.smul_def, Units.smul_def, map_zsmul]
     rfl
 
 theorem shPair_lift {I J : Cx R} (T : TensPre I J) (U : Scheme.{0}) (w : ℤ) :

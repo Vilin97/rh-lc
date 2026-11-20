@@ -76,7 +76,7 @@ theorem subst_mem_quasiInt : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [
     have hk : (γ j : Fr p k) * φ (coeff γ (∏ s, v s ^ α s)) =
         φ (∑ i, coeff δ (α i • ((∏ s ∈ Finset.univ.erase i, v s ^ α s) *
           (v i ^ (α i - 1) * pderiv (WittVector p k) j (v i))))) := by
-      rw [key, map_mul, map_add, map_natCast, map_one, ← hδj]
+      rw [key, map_mul, map_add (f := _), map_natCast, map_one, ← hδj]
       ring
     set_option synthInstance.maxHeartbeats 100000 in
       rw [mul_left_comm, hk, map_sum, Finset.mul_sum]

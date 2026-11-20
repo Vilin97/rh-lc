@@ -144,7 +144,7 @@ theorem gp_foldr (ℓ : E →L[ℂ] ℂ) (EopE : Fin m → Fin m → (B.Mat k r 
     · rw [← h2]
       funext g
       have h5 : ℓ (EopE q.2.1 q.2.2 F g) = EopC q.2.1 q.2.2 (fun g => ℓ (F g)) g := congrFun h4 g
-      simp only [gpLtr, Pi.add_apply, Pi.smul_apply, map_add, map_smul]
+      simp only [gpLtr, Pi.add_apply, Pi.smul_apply, map_add (f := _), map_smul]
       rw [h5]
 
 theorem gp_foldl (ℓ : E →L[ℂ] ℂ) (EopE : Fin m → Fin m → (B.Mat k r → E) → B.Mat k r → E)
@@ -168,7 +168,7 @@ theorem gp_foldl (ℓ : E →L[ℂ] ℂ) (EopE : Fin m → Fin m → (B.Mat k r 
     have hq : (fun g => ℓ (gpLtr EopE q f g)) = gpLtr EopC q (fun g => ℓ (f g)) := by
       funext g
       have h5 : ℓ (EopE q.2.1 q.2.2 f g) = EopC q.2.1 q.2.2 (fun g => ℓ (f g)) g := congrFun h4 g
-      simp only [gpLtr, Pi.add_apply, Pi.smul_apply, map_add, map_smul]
+      simp only [gpLtr, Pi.add_apply, Pi.smul_apply, map_add (f := _), map_smul]
       rw [h5]
     obtain ⟨h6, h7⟩ := gp_foldl ℓ EopE EopC h qs j _ h1
     simp only [List.map_cons, List.foldl_cons]

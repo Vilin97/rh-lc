@@ -82,7 +82,7 @@ def TautBase.torus {o W : Type} [CommRing o] [CommRing W] [IsLocalRing W] (b : o
   τ₀_add a a' a'' z J hJ := by
     refine (congrArg₂ (· * ·) (gm_res _ z _ (hJ.mem _ _) _) ((gm_res _ z _ (hJ.mem _ _) _).trans (map_one _))).trans
       (Eq.trans ?_ (congrArg₂ (· * ·) (gm_res _ z _ (hJ.mem _ _) _) (gm_res _ z _ (hJ.mem _ _) _)).symm)
-    rw [_root_.mul_one, ← map_mul, ← zpow_add, map_add, LinearMap.add_apply]
+    rw [_root_.mul_one, ← map_mul, ← zpow_add, map_add (f := _), LinearMap.add_apply]
 
 def TautBase.ofPolAV {o W : Type} [CommRing o] [CommRing W] [IsLocalRing W] (b : o →+* W) (P : PolAV (Sp W))
     [IsCommMonObj P.A] (rig : LB.Gen (P.L.pull (eSec P.A))) (hr : rig.IsGen)

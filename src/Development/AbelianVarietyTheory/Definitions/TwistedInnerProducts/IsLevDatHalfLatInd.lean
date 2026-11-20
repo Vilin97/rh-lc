@@ -60,7 +60,7 @@ def halfLat (E : ExpSet D) (e : AE D) : AddSubgroup (WO E.V E.W) where
     · show cA D e * (a i j + b i j) = a i j + b i j
       rw [mul_add, ha i j, hb i j]
     · unfold frMapO
-      rw [Matrix.map_add _ (toEAf D).map_add, Matrix.mul_add, Matrix.add_mul]
+      rw [Matrix.map_add _ (toEAf D).map_add (f := _), Matrix.mul_add, Matrix.add_mul]
       exact add_mem (ha' i j) (hb' i j)
   neg_mem' := by
     rintro a ⟨ha, ha'⟩

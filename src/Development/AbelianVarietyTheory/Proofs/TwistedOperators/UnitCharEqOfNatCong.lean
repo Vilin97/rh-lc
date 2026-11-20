@@ -54,7 +54,7 @@ theorem hom_sum {R R' ι : Type} [CommRing R] [CommRing R'] (f : R →+* R') (p 
 
 theorem hom_shift {R κ : Type} [CommRing R] [CommRing κ] (f : R →+* κ) {a b z u u' : R} (h0 : f a * f b = 0)
     (hu' : u' = u + a * (b * z)) : f u' = f u := by
-  rw [hu', map_add, map_mul, map_mul, ← mul_assoc, h0, zero_mul, add_zero]
+  rw [hu', map_add (f := _), map_mul, map_mul, ← mul_assoc, h0, zero_mul, add_zero]
 
 theorem hom_natCast {R R' : Type} [CommRing R] [CommRing R'] (f : R →+* R') (n : ℕ) : f n = n := map_natCast f n
 
@@ -68,7 +68,7 @@ theorem toEAf_surj (z : EAf D) : ∃ w : AE D, infPart D w = 0 ∧ toEAf D w = z
   | add x y hx hy =>
     obtain ⟨a, ha, rfl⟩ := hx
     obtain ⟨b, hb, rfl⟩ := hy
-    exact ⟨a + b, by rw [RingHom.map_add, ha, hb, add_zero], RingHom.map_add _ _ _⟩
+    exact ⟨a + b, by rw [RingHom.map_add (f := _), ha, hb, add_zero], RingHom.map_add _ _ _⟩
 
 theorem finPart_eq_of_toEAf {a b : AE D} (h : toEAf D a = toEAf D b) : finPart D a = finPart D b :=
   (Algebra.TensorProduct.comm D.host.F (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F) D.host.E).injective h
@@ -87,15 +87,15 @@ theorem exists_unit {u v : EAf D} (huv : u * v = 1) :
   have w₁ : infPart D (1 - g₁) = 1 := by rw [RingHom.map_sub, a₁, RingHom.map_one, sub_zero]
   have w₀ : toEAf D (1 - g₁) = 0 := by rw [RingHom.map_sub, b₁, RingHom.map_one, sub_self]
   have h : (1 - g₁ + g) * (1 - g₁ + g') = 1 := eq_of_parts
-    (by simp only [RingHom.map_mul, RingHom.map_add, w₁, a₂, a₃, RingHom.map_one, add_zero, mul_one])
-    (by simp only [RingHom.map_mul, RingHom.map_add, w₀, b₂, b₃, RingHom.map_one, zero_add, huv])
+    (by simp only [RingHom.map_mul, RingHom.map_add (f := _), w₁, a₂, a₃, RingHom.map_one, add_zero, mul_one])
+    (by simp only [RingHom.map_mul, RingHom.map_add (f := _), w₀, b₂, b₃, RingHom.map_one, zero_add, huv])
   refine ⟨⟨_, _, h, by rw [mul_comm]; exact h⟩, ?_, ?_, ?_⟩
   · change infPart D (1 - g₁ + g) = 1
-    rw [RingHom.map_add, w₁, a₂, add_zero]
+    rw [RingHom.map_add (f := _), w₁, a₂, add_zero]
   · change toEAf D (1 - g₁ + g) = u
-    rw [RingHom.map_add, w₀, b₂, zero_add]
+    rw [RingHom.map_add (f := _), w₀, b₂, zero_add]
   · change toEAf D (1 - g₁ + g') = v
-    rw [RingHom.map_add, w₀, b₃, zero_add]
+    rw [RingHom.map_add (f := _), w₀, b₃, zero_add]
 
 theorem res_idem_off {a : AE D} {P Q : Pl D.host.E} (ha : Formalism.L2.NTheta.IsIdemAt a P) (hQ : Q ≠ P)
     (h : toEAf D a ∈ OO) : resS D.host.F Q ⟨toEAf D a, h⟩ = 0 := by
@@ -144,7 +144,7 @@ theorem det_cong {R : Type} [CommRing R] {k : ℕ} {A B : Matrix (Fin k) (Fin k)
   have e : (Ideal.Quotient.mk (Ideal.span {c})).mapMatrix B = (Ideal.Quotient.mk (Ideal.span {c})).mapMatrix A := by
     ext i j
     obtain ⟨z, hz⟩ := h i j
-    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, hz, RingHom.map_add, RingHom.map_mul]
+    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, hz, RingHom.map_add (f := _), RingHom.map_mul]
     rw [Ideal.Quotient.eq_zero_iff_mem.2 (Ideal.mem_span_singleton_self c), zero_mul, add_zero]
   have e2 : Ideal.Quotient.mk (Ideal.span {c}) B.det = Ideal.Quotient.mk (Ideal.span {c}) A.det := by
     rw [RingHom.map_det, RingHom.map_det, e]

@@ -64,7 +64,7 @@ theorem adelic_schur_lemma : _root_.GlobalTheory.FunPr.ThetaLocalInputs → ∀ 
       have hg : φ + c • schr ψ (0, y) φ ∈ schA F κ :=
         (schA F κ).add_mem hφ ((schA F κ).smul_mem c (GlobalTheory.HeisSchA.schr_mem_schA ψ hψ _ φ hφ))
       have hMg : M (φ + c • schr ψ (0, y) φ) = M φ + c • schr ψ (0, y) (M φ) := by
-        rw [map_add, map_smul, hcomm _ φ hφ]
+        rw [map_add (f := _), map_smul, hcomm _ φ hφ]
       have h1 := hnorm _ hg
       rw [hMg] at h1
       have hpt : ∀ f : (κ → AF F) → ℂ, (fun x => ‖(f + c • schr ψ (0, y) f) x‖ ^ 2) =
@@ -120,7 +120,7 @@ theorem adelic_schur_lemma : _root_.GlobalTheory.FunPr.ThetaLocalInputs → ∀ 
     have hg : φ + c • schr ψ (a, 0) φ' ∈ schA F κ :=
       (schA F κ).add_mem hφ ((schA F κ).smul_mem c (GlobalTheory.HeisSchA.schr_mem_schA ψ hψ _ φ' hφ'))
     have h1 := hdiag _ hg x
-    rw [map_add, map_smul, hcomm _ φ' hφ'] at h1
+    rw [map_add (f := _), map_smul, hcomm _ φ' hφ'] at h1
     simpa [schr] using h1
   by_cases h0 : ∃ φ₀ ∈ schA F κ, ∃ x₀, φ₀ x₀ ≠ 0
   · obtain ⟨φ₀, hφ₀, x₀, hx₀⟩ := h0

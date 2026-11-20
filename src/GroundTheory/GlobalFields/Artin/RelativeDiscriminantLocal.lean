@@ -301,7 +301,7 @@ theorem le_differentExponent_of_differentIdeal_le_pow {n : ℕ}
       algebraMap M (w.adicCompletion M) (x0 * algebraMap (𝓞 M) M b) := by
     rw [map_mul, ← hX0def, hzdef, mul_sub, ← mul_assoc, mul_inv_cancel₀ hX00, one_mul,
       sub_add_cancel]
-  rw [hy, map_add]
+  rw [hy, map_add (f := _)]
   refine (Valuation.map_add _ _ _).trans (max_le ?_ key)
   refine (forall_valued_trace_le_one_iff v w 0).2 (Nat.zero_le _) _ ?_
   rw [Nat.cast_zero, WithZero.exp_zero]

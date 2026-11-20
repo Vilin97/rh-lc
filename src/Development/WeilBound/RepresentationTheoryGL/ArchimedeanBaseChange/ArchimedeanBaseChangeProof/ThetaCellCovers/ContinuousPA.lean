@@ -113,12 +113,12 @@ theorem posIdele_val (t : ℝ) : ((posIdele (K := E) (Real.exp t) (Real.exp_pos 
 theorem cV_pA (v : InfinitePlace E) (s : ℝ) : cV v (pA E s) = s := by
   have h : ∀ x, pInf E (sInf E x) = x := fun x => (infEq E).symm_apply_apply x
   change pInf E (pA E s) v = s
-  simp only [pA, map_add, map_sub, map_one, h, sub_self, zero_add]
+  simp only [pA, map_add (f := _), map_sub, map_one, h, sub_self, zero_add]
 
 theorem cW_pA (w : HeightOneSpectrum (𝓞 E)) (s : ℝ) : cW w (pA E s) = 1 := by
   have h : ∀ x, pFin E (sInf E x) = 0 := fun x => rfl
   change pLoc E w (pFin E (pA E s)) = 1
-  simp only [pA, map_add, map_sub, map_one, h, sub_zero, add_zero]
+  simp only [pA, map_add (f := _), map_sub, map_one, h, sub_zero, add_zero]
 
 theorem continuous_pA : Continuous (pA E) := by
   refine continuous_const.add ?_

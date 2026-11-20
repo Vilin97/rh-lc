@@ -55,7 +55,7 @@ theorem SyS_compZ {H0 : PP} (hH0 : IsWeightedHomogeneous (normalVariableWeight n
   | add a b _ _ ha hb =>
     obtain ⟨Za, hZa, ea⟩ := ha
     obtain ⟨Zb, hZb, eb⟩ := hb
-    exact ⟨Za + Zb, add_mem hZa hZb, by rw [add_mul, map_add, ea, eb, add_mul]⟩
+    exact ⟨Za + Zb, add_mem hZa hZb, by rw [add_mul, map_add (f := _), ea, eb, add_mul]⟩
 
 end Comp
 

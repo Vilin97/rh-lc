@@ -50,7 +50,7 @@ theorem aeval_mem [Algebra ℚ Ω] (L : IntermediateField ℚ Ω) {y : (Σ k, ι
     rw [aeval_C, algebraMap_int_eq, eq_intCast]
     exact intCast_mem _ a
   | add f g hf hg =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hf hg
   | mul_X f p hf =>
     rw [map_mul, aeval_X]

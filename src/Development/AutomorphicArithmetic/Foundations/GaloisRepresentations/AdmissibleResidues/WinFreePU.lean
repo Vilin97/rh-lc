@@ -30,7 +30,7 @@ private theorem place_under {F Ω : Type} [Field F] [NumberField F] [Field Ω] [
       add_mem' := by
         intro a b ha hb
         show A.valuation (algebraMap F Ω ((a : F) + (b : F))) < 1
-        rw [map_add]
+        rw [map_add (f := _)]
         exact A.valuation.map_add_lt ha hb
       zero_mem' := by
         show A.valuation (algebraMap F Ω (0 : F)) < 1

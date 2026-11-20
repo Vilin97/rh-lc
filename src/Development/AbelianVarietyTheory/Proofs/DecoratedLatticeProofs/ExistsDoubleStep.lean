@@ -181,7 +181,7 @@ theorem eventually_isUnram (D : D7) (χ : (AE D)ˣ →* Circle) (hχ : Continuou
     have hy' := (sec_mem_intAt q (y - 1)).2 ((Valuation.map_sub _ _ _).trans (max_le hy (map_one _).le))
     have e : q.sec y + (1 - q.e) = q.sec (y - 1) + 1 := by rw [map_sub, sec_one]; ring
     have hi : infPart D (q.sec (y - 1)) = 0 := hy'.1.1
-    rw [e, RingHom.map_add, RingHom.map_add, RingHom.map_one, RingHom.map_one, hi, zero_add, add_sub_cancel_right]
+    rw [e, RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_one, RingHom.map_one, hi, zero_add, add_sub_cancel_right]
     refine ⟨rfl, add_mem hy'.2 (GlobalTheory.HeckeConj.one_mem_intAE D), _, (hv _ hy').2, ?_⟩
     have e' : q.sec (y - 1) = N • (incA D (N : D.host.E)⁻¹ * q.sec (y - 1)) := by
       rw [nsmul_eq_mul, ← mul_assoc, ← map_natCast (incA D), ← RingHom.map_mul,

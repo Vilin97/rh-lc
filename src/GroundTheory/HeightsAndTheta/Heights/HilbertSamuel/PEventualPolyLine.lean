@@ -24,7 +24,7 @@ theorem eval_lineRestrict [Fintype K] (a c : K → ℚ) (p : MvPolynomial K ℚ)
   unfold lineRestrict
   induction p using MvPolynomial.induction_on with
   | C r => simp
-  | add p q hp hq => simp only [map_add, Polynomial.eval_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), Polynomial.eval_add, hp, hq]
   | mul_X p k hp =>
     simp only [map_mul, Polynomial.eval_mul, hp, MvPolynomial.aeval_X, MvPolynomial.eval_X,
       Polynomial.eval_add, Polynomial.eval_C, Polynomial.eval_X]

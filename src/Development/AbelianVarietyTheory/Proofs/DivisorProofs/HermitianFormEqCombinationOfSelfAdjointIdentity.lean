@@ -39,7 +39,7 @@ theorem herm_form_identity (g : ℕ) (H₁ H₂ : Matrix (Fin g) (Fin g) ℂ)
       rw [hsmul, hsmulL]
     | add p q hp hq =>
       intro z w
-      simp only [map_add, LinearMap.add_apply]
+      simp only [map_add (f := _), LinearMap.add_apply]
       rw [hadd, hp, hq, add_dotProduct]
     | monomial n a ih =>
       intro z w

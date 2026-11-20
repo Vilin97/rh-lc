@@ -113,7 +113,7 @@ theorem cong_on_half {V : HSp D} {La : Type} [AddCommGroup La] [Module (𝓞 D.h
     exact ⟨w, hw, by rw [e₀, Matrix.mulVec_smul, Matrix.mulVec_smul, ← smul_sub, e]⟩
   · rintro x y ⟨w, hw, e⟩ ⟨w', hw', e'⟩
     have e₀ : finVec V (ι (x + y)) = finVec V (ι x) + finVec V (ι y) := by
-      rw [map_add]; funext i; exact TensorProduct.tmul_add _ _ _
+      rw [map_add (f := _)]; funext i; exact TensorProduct.tmul_add _ _ _
     refine ⟨w + w', add_mem hw hw', ?_⟩
     rw [e₀, Matrix.mulVec_add, Matrix.mulVec_add, smul_add, ← e, ← e']
     abel

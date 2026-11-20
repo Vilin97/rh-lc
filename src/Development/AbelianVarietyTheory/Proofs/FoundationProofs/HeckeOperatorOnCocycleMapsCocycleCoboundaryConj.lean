@@ -206,7 +206,7 @@ theorem hk_cocycle_coboundary_conj : ∀ (Γ : Subgroup SL(2, ℤ)) (w : ℕ) (�
       set_option synthInstance.maxHeartbeats 100000 in
         rw [hk_apply w hD hα z _ _ _ hg, hk_apply w hD hα z γ π1 g1 hg1, hk_apply w hD hα z γ' π2 g2 hg2,
         map_sum]
-      simp only [hz2, map_add, Finset.sum_add_distrib, Equiv.trans_apply]
+      simp only [hz2, map_add (f := _), Finset.sum_add_distrib, Equiv.trans_apply]
       have hs := Equiv.sum_comp π1 (fun j => slP w (δ (π2 j)) (z (g2 j)))
       rw [hs, add_left_inj]
       refine Finset.sum_congr rfl fun i _ => ?_

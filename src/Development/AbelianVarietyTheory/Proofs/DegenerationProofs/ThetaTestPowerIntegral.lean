@@ -67,7 +67,7 @@ theorem exists_finite_factor {p : ℕ} [Fact p.Prime] {V : Type} [CommRing V] {X
     | algebraMap r =>
       change (ψ.comp α) r ∈ K
       rw [hψα]; exact hk (hφ r)
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   refine ⟨K, hk, IntermediateField.finiteDimensional_sup _ _, spMap (ψ.codRestrict K hmem) ≫ i, ?_⟩
   rw [← Category.assoc, spMap_comp_spMap]

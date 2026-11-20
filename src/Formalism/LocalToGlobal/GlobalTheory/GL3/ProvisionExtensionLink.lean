@@ -86,22 +86,22 @@ theorem lam_basis (D : D7) (cc : Ideal (𝓞 D.host.K)) (hcc : cc ≠ ⊥) (δ :
         (m : D.host.E) * ((c1 : D.host.K) : D.host.E) + (n : D.host.E) * ((c2 : D.host.K) : D.host.E) := by
       rw [← CS.coe_intO D m, ← CS.coe_intO D n]
       rfl
-    rw [e, hw1, hw2, map_add, map_mul, map_mul, map_intCast, map_intCast]
+    rw [e, hw1, hw2, map_add (f := _), map_mul, map_mul, map_intCast, map_intCast]
     ring
   refine ⟨w1, h1, w2, h2, hb, ?_⟩
   obtain ⟨p1, q1, e1⟩ := CS.K_repr D _ (c1 : D.host.K).2
   obtain ⟨p2, q2, e2⟩ := CS.K_repr D _ (c2 : D.host.K).2
   have hφ1 : D.host.φ₀ ((c1 : D.host.K) : D.host.E) =
       (p1 : ℂ) + (q1 : ℂ) * (Complex.I * (Real.sqrt D.host.d : ℂ)) := by
-    rw [e1, map_add, map_mul, map_ratCast, map_ratCast, CS.embedding_sqrt_neg_d]
+    rw [e1, map_add (f := _), map_mul, map_ratCast, map_ratCast, CS.embedding_sqrt_neg_d]
   have hφ2 : D.host.φ₀ ((c2 : D.host.K) : D.host.E) =
       (p2 : ℂ) + (q2 : ℂ) * (Complex.I * (Real.sqrt D.host.d : ℂ)) := by
-    rw [e2, map_add, map_mul, map_ratCast, map_ratCast, CS.embedding_sqrt_neg_d]
+    rw [e2, map_add (f := _), map_mul, map_ratCast, map_ratCast, CS.embedding_sqrt_neg_d]
   have him : (starRingEnd ℂ w1 * w2).im =
       Complex.normSq δ * (((p1 * q2 - q1 * p2 : ℚ) : ℝ) * Real.sqrt D.host.d) := by
     rw [hw1, hw2, CS.im_conj_mul, hφ1, hφ2]
     congr 1
-    simp only [map_add, map_mul, Complex.conj_ofReal, Complex.conj_I, Complex.mul_im,
+    simp only [map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I, Complex.mul_im,
       Complex.mul_re, Complex.add_im, Complex.add_re, Complex.ratCast_re, Complex.ratCast_im,
       Complex.ofReal_re, Complex.ofReal_im, Complex.I_re, Complex.I_im, Complex.neg_re,
       Complex.neg_im, map_ratCast]

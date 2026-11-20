@@ -48,7 +48,7 @@ theorem exists_coord_polynomial : ∀ (F β : Type) [Field F] [Algebra ℚ F] [F
     obtain ⟨Q2, h2⟩ := hq
     refine ⟨fun k => Q1 k + Q2 k, ?_⟩
     intro R A _ _ _ _ _ b hb x k
-    rw [map_add, map_add, Finsupp.add_apply, map_add, h1 R A b hb x k, h2 R A b hb x k]
+    rw [map_add (f := _), map_add (f := _), Finsupp.add_apply, map_add (f := _), h1 R A b hb x k, h2 R A b hb x k]
   | mul_X p n hp =>
     obtain ⟨Q1, h1⟩ := hp
     refine ⟨fun k => ∑ i, ∑ j, Q1 i * MvPolynomial.X (n, j) *

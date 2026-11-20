@@ -161,7 +161,7 @@ theorem sigR_invol' (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) (K : Type)
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [sigR, hσ]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem continuous_sigR' (σ : E →ₐ[F] E) (K : Type) [NontriviallyNormedField K] [Algebra F K] :
     Continuous (sigR K σ) := by

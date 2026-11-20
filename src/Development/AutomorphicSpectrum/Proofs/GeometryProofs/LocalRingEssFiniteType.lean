@@ -67,7 +67,7 @@ theorem essFiniteType_locRing : ∀ (B : Type) [Fintype B] (J : B → Type) [∀
       rw [aeval_C, algebraMap_int_eq, Int.coe_castRingHom]
       exact intCast_mem _ a
     next f g hf hg =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hf hg
     next f q hf =>
       rw [map_mul, aeval_X]

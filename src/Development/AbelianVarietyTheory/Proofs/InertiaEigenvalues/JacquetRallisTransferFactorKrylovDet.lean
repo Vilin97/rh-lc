@@ -39,7 +39,7 @@ theorem vrow_poly (Y : Gl r k) (i : ℕ) : ∃ p : Polynomial k, p.coeff i = 1 �
       rw [Polynomial.coeff_mul_X, h2 M (by omega)]; simp
     · funext l
       rw [vrow_succ_cast, h3]
-      simp [map_add, Polynomial.aeval_X, Polynomial.aeval_C, Matrix.vecMul_add, Matrix.vecMul_vecMul,
+      simp [map_add (f := _), Polynomial.aeval_X, Polynomial.aeval_C, Matrix.vecMul_add, Matrix.vecMul_vecMul,
         Algebra.algebraMap_eq_smul_one, Matrix.vecMul_smul, mul_comm]
 
 theorem lastDet_eq (Y : Gl r k) : lastDet Y = (-1) ^ r * (Cm Y).det := by

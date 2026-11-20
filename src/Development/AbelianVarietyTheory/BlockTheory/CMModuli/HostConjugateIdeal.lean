@@ -80,7 +80,7 @@ def w₀ : 𝓞 E := ⟨(1 + H.s) / 2, H.isIntegral_half⟩
 theorem w₀_add_conj : H.w₀ + conjO E H.w₀ = 1 := by
   apply RingOfIntegers.ext
   change (1 + H.s) / 2 + IsCMField.complexConj E ((1 + H.s) / 2) = 1
-  rw [map_div₀, map_add, map_one, H.isCMField_complexConj_s_eq_neg, map_ofNat]
+  rw [map_div₀, map_add (f := _), map_one, H.isCMField_complexConj_s_eq_neg, map_ofNat]
   ring
 
 theorem conj_mem_K {x : E} (hx : x ∈ H.K) : IsCMField.complexConj E x ∈ H.K := by
@@ -89,7 +89,7 @@ theorem conj_mem_K {x : E} (hx : x ∈ H.K) : IsCMField.complexConj E x ∈ H.K 
     rw [Set.mem_singleton_iff.mp hx, H.isCMField_complexConj_s_eq_neg]
     exact neg_mem (IntermediateField.mem_adjoin_simple_self ℚ H.s)
   | algebraMap q => rw [eq_ratCast, map_ratCast]; exact SubfieldClass.ratCast_mem _ q
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | inv x _ hx => rw [map_inv₀]; exact inv_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 

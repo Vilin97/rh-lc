@@ -38,7 +38,7 @@ theorem top_coeff_eq (hp : 1 ≤ p) (b : Fin (p + 1) → B) (v : B)
     (1 + MvPolynomial.X () ^ p * MvPolynomial.C v) with hPdef
   have hP : P ∈ orig B Unit ^ (p + 1) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← Ideal.Quotient.eq_zero_iff_mem, hPdef, map_sub, map_add, map_sum, map_one, map_mul, map_pow, sub_eq_zero]
+      rw [← Ideal.Quotient.eq_zero_iff_mem, hPdef, map_sub, map_add (f := _), map_sum, map_one, map_mul, map_pow, sub_eq_zero]
     simp only [map_mul, map_pow]
     exact h
   have hd := X_pow_dvd_of_mem B p hP
@@ -48,7 +48,7 @@ theorem top_coeff_eq (hp : 1 ≤ p) (b : Fin (p + 1) → B) (v : B)
       ∑ i : Fin (p + 1), Polynomial.C (b i) * Polynomial.X ^ (i : ℕ) -
         (1 + Polynomial.C v * Polynomial.X ^ p) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [hPdef, map_sub, map_add, map_sum, map_mul, map_pow, map_one, MvPolynomial.aeval_X, MvPolynomial.aeval_C,
+      simp only [hPdef, map_sub, map_add (f := _), map_sum, map_mul, map_pow, map_one, MvPolynomial.aeval_X, MvPolynomial.aeval_C,
       Polynomial.algebraMap_eq]
     ring
   have e₂ : ∑ i : Fin (p + 1), (if p = (i : ℕ) then b i else 0) = b (Fin.last p) := by

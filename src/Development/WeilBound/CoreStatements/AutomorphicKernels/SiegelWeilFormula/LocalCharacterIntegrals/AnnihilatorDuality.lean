@@ -62,7 +62,7 @@ theorem trPair_comm (S T : Matrix (Fin n) (Fin n) (R ⊗[F] E)) : trPair R S T =
 theorem trPair_add_right (S T T' : Matrix (Fin n) (Fin n) (R ⊗[F] E)) :
     trPair R S (T + T') = trPair R S T + trPair R S T' := by
   unfold trPair
-  simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+  simp only [Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem trPair_neg_right (S T : Matrix (Fin n) (Fin n) (R ⊗[F] E)) : trPair R S (-T) = -trPair R S T := by
   unfold trPair
@@ -92,7 +92,7 @@ theorem sigR_invol' (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) (
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [sigR, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem gramR_mem' (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {M n : ℕ}
     (J : Matrix (Fin M) (Fin M) E) (hJ : ∀ i j, σ (J j i) = J i j)
@@ -153,7 +153,7 @@ theorem trace_sigR (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) (x : Fv F v
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul r e => rfl
-    | add y z hy hz => rw [map_add, map_add, hy, hz]
+    | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
   have hinv : Function.Involutive f := fun y => by
     rw [hf, hf]; exact sigR_invol' (Fv F v) σ hσ y
   have h := Algebra.trace_eq_of_algEquiv (AlgEquiv.ofBijective f hinv.bijective) x
@@ -184,7 +184,7 @@ theorem trPair_herm {n : ℕ} (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) 
       map_mul]
     rw [h2]
   unfold trPair
-  rw [h1, map_add, trace_sigR σ hσ, ← two_mul, ← mul_assoc, half_mul_two, one_mul]
+  rw [h1, map_add (f := _), trace_sigR σ hσ, ← two_mul, ← mul_assoc, half_mul_two, one_mul]
 
 end Inv
 
@@ -257,7 +257,7 @@ theorem perp_bound (σ : E →ₐ[F] E) (hcm : IsCMExt F E σ) {ψ : AddChar (AF
       _ ≤ C1 := le_max_right _ _
   have hM : t • M ∈ HermR (Fv F v) σ n := by
     intro a b
-    simp only [M, Matrix.smul_apply, Matrix.add_apply, Matrix.transpose_apply, Matrix.map_apply, sigR_smul, map_add,
+    simp only [M, Matrix.smul_apply, Matrix.add_apply, Matrix.transpose_apply, Matrix.map_apply, sigR_smul, map_add (f := _),
       sigR_invol' (Fv F v) σ hσ]
     rw [add_comm]
   have hnM : nM v (t • M) ≤ R := by

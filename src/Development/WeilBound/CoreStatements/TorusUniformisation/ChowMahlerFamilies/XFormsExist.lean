@@ -42,7 +42,7 @@ def fracs (O : Type) [CommRing O] [Algebra O Ω] (x : (Σ k, ι k) → Ω) (s : 
     obtain ⟨G', hG', eG'⟩ := shift x s d hG
     rw [add_comm e d] at hG'
     refine ⟨d + e, F' + G', IsWeightedHomogeneous.add hF' hG', ?_⟩
-    simp only [map_add, eF', eG', eF, eG, Pi.add_apply, pow_add, Finset.prod_mul_distrib]
+    simp only [map_add (f := _), eF', eG', eF, eG, Pi.add_apply, pow_add, Finset.prod_mul_distrib]
     ring
   algebraMap_mem' r := ⟨0, C r, isWeightedHomogeneous_C _ _, by simp⟩
 

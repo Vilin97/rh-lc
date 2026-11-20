@@ -79,7 +79,7 @@ theorem iso_span (Y : NX.FormsIso A A') (h : Submodule.span Ks' (A'.MK : Set WL'
       induction hy using Submodule.span_induction with
       | mem y hy => exact Submodule.subset_span ((Y.mkK _).2 (by simpa using hy))
       | zero => simp
-      | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+      | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
       | smul c a _ ha => rw [iso_symm_smul]; exact Submodule.smul_mem _ _ ha
     simpa using h2 _ h1
 

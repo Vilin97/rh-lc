@@ -33,11 +33,11 @@ theorem smul_eq_map_mul (c : k ⊗[F] E) (y : k ⊗[F] Fld P) :
 theorem coordF_smul (i : Fin r) (c : k ⊗[F] E) (y : k ⊗[F] Fld P) : coordF P k i (c • y) = c * coordF P k i y := by
   induction c using TensorProduct.induction_on with
   | zero => simp
-  | add c c' h h' => rw [add_smul, map_add, h, h', add_mul]
+  | add c c' h h' => rw [add_smul, map_add (f := _), h, h', add_mul]
   | tmul a e =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' h h' => rw [smul_add, map_add, h, h', map_add, mul_add]
+    | add y y' h h' => rw [smul_add, map_add (f := _), h, h', map_add (f := _), mul_add]
     | tmul a' z =>
       rw [smul_eq_map_mul, Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.tmul_mul_tmul, coordF_tmul,
         coordF_tmul, Algebra.TensorProduct.tmul_mul_tmul]
@@ -58,7 +58,7 @@ theorem coordInv_coordF (y : k ⊗[F] Fld P) : coordInv P k (fun i => coordF P k
   | zero => simp [coordInv]
   | add y y' h h' =>
     conv_rhs => rw [← h, ← h']
-    simp only [coordInv, map_add, add_smul, Finset.sum_add_distrib]
+    simp only [coordInv, map_add (f := _), add_smul, Finset.sum_add_distrib]
   | tmul a z =>
     simp only [coordInv, coordF_tmul, smul_eq_map_mul, Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.tmul_mul_tmul,
       mul_one, AlgHom.id_apply, IsScalarTower.coe_toAlgHom']

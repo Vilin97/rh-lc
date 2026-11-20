@@ -128,7 +128,7 @@ theorem gl_first_line_divided_powers : RowGlDiv := by
     | 0 => simp [rgl_rowDiv_C_zero, rgl_swp_C]
     | k + 1 =>
       rw [rgl_rowDiv_C_succ, pow_succ, Module.End.mul_apply, glAct_C', map_zero, map_zero, smul_zero]
-  | add f g hf hg => rw [rowDiv_add, map_add, map_add, map_add, smul_add, hf, hg]
+  | add f g hf hg => rw [rowDiv_add, map_add (f := _), map_add (f := _), map_add (f := _), smul_add, hf, hg]
   | mul_X f v hf =>
     set_option synthInstance.maxHeartbeats 100000 in
       rw [rgl_rowDiv_mul, map_mul, divPow_mul _ (Formalism.GM.M.FB.glAct_mul (vecL ν) n a b), map_sum]
@@ -140,7 +140,7 @@ theorem gl_one_first_line_action : RowGlOne := by
   rw [rgl_E]
   induction f using MvPolynomial.induction_on with
   | C c => rw [rgl_rowDiv_C_succ, rgl_swp_C, glAct_C', map_zero]
-  | add f g hf hg => rw [rowDiv_add, map_add, map_add, map_add, hf, hg]
+  | add f g hf hg => rw [rowDiv_add, map_add (f := _), map_add (f := _), map_add (f := _), hf, hg]
   | mul_X f v hf =>
     obtain ⟨c, s⟩ := v
     have h1 : Finset.HasAntidiagonal.antidiagonal 1 = {(0, 1), (1, 0)} := rfl

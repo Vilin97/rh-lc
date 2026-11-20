@@ -107,7 +107,7 @@ theorem exists_aeval_div_pow {x : K} (hx0 : x ≠ 0) (hx : v.ring.valuation x < 
     intro _
     refine ⟨0, a, ha, ?_⟩
     obtain ⟨q, rfl⟩ : X ∣ p := Polynomial.X_dvd_iff.2 hp0
-    rw [pow_zero, div_one, map_add, aeval_C, add_sub_cancel_right, map_mul, aeval_X, map_mul]
+    rw [pow_zero, div_one, map_add (f := _), aeval_C, add_sub_cancel_right, map_mul, aeval_X, map_mul]
     calc v.ring.valuation x * v.ring.valuation (aeval x q) ≤ v.ring.valuation x * 1 :=
           mul_le_mul' le_rfl (v.valuation_aeval_le_one hxO q)
       _ < 1 := by rwa [mul_one]

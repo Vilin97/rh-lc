@@ -40,7 +40,7 @@ theorem swap_mem [IsCMField E] (F : Subfield E) (h : F = maximalRealSubfield E) 
       rw [Algebra.TensorProduct.comm_tmul]
   | zero => rw [map_zero]; exact zero_mem _
   | one => rw [map_one]; exact one_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
@@ -140,7 +140,7 @@ theorem exists_nat_mul_mem_of_latHat {D : D7} (V : HSp D) : ∃ d : ℕ, 0 < d �
       intro i
       obtain ⟨a, ha⟩ := hx i
       obtain ⟨b, hb⟩ := hy i
-      exact ⟨a + b, by rw [map_add, Finsupp.add_apply, mul_add, ← ha, ← hb]; push_cast; rfl⟩
+      exact ⟨a + b, by rw [map_add (f := _), Finsupp.add_apply, mul_add, ← ha, ← hb]; push_cast; rfl⟩
     | smul c x _ hx =>
       intro i
       obtain ⟨a, ha⟩ := hx i

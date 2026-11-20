@@ -166,7 +166,7 @@ theorem eval_spec {F K : Type} [CommRing F] [CommRing K] [Algebra F K] {D N : �
   induction f using MvPolynomial.induction_on with
   | C a => simp [spec, MvPolynomial.algebraMap_apply]
   | add p q hp hq =>
-    simp only [spec, map_add] at hp hq ⊢
+    simp only [spec, map_add (f := _)] at hp hq ⊢
     rw [hp, hq]
   | mul_X p v hp =>
     simp only [spec, map_mul, aeval_X] at hp ⊢

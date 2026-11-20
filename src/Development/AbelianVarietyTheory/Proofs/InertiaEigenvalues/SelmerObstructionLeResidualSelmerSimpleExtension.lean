@@ -95,12 +95,12 @@ theorem exists_isConn [ContinuousMul Γ] (x : H1 ρ'') : ∃ k, IsConn ρ' ρ ρ
   have h1 : ∀ p, u (Function.invFun u (d1 ρ (s ∘ z.1) p)) = d1 ρ (s ∘ z.1) p := fun p => by
     refine Function.invFun_eq ((hex _).1 ?_)
     obtain ⟨g, h⟩ := p
-    simp only [d1_apply, map_add, map_sub, hw, Function.comp_apply, hs, z.2.2 g h]
+    simp only [d1_apply, map_add (f := _), map_sub, hw, Function.comp_apply, hs, z.2.2 g h]
     abel
   refine ⟨_, z, s ∘ z.1, ⟨fun p => Function.invFun u (d1 ρ (s ∘ z.1) p),
     (continuous_of_discreteTopology (f := Function.invFun u)).comp hZ.1, fun g h k => hinj ?_⟩, hcont, rfl,
     fun g => hs _, h1, rfl⟩
-  rw [map_sub, map_add, map_sub, hu, h1, h1, h1, h1, map_zero]
+  rw [map_sub, map_add (f := _), map_sub, hu, h1, h1, h1, h1, map_zero]
   exact hZ.2 g h k
 
 include hu hex in
@@ -112,7 +112,7 @@ theorem IsConn.lift {x : H1 ρ''} (h : IsConn ρ' ρ ρ'' u w x 0) :
     hc.sub ((continuous_of_discreteTopology (f := u)).comp hc'), fun g h => ?_⟩, ?_⟩
   · have e1 := h2 (g, h)
     have e2 : t.1 (g, h) = _ := (congrFun e (g, h)).symm
-    rw [e2, d1_apply, d1_apply, map_add, map_sub, hu] at e1
+    rw [e2, d1_apply, d1_apply, map_add (f := _), map_sub, hu] at e1
     change c (g * h) - u (c' (g * h)) = c g - u (c' g) + ρ g (c h - u (c' h))
     rw [map_sub]
     rw [← sub_eq_zero] at e1 ⊢
@@ -140,7 +140,7 @@ theorem IsConn.eq_zero {a : H1 ρ} {k : H2 ρ'}
   funext ⟨g, h⟩
   refine hinj ?_
   change _ = u (t.1 (g, h))
-  rw [h2, d1_apply, d1_apply, map_add, map_sub, hu, h3, h3, h3, a.2.2, hb.2, map_sub, map_sub]
+  rw [h2, d1_apply, d1_apply, map_add (f := _), map_sub, hu, h3, h3, h3, a.2.2, hb.2, map_sub, map_sub]
   abel
 
 variable {I : Type} {D : I → Type} [∀ i, Group (D i)] [∀ i, TopologicalSpace (D i)]

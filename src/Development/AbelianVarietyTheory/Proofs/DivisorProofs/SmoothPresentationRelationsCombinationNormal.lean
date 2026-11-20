@@ -15,7 +15,7 @@ theorem derivation_mem_of_mem_sq {R A : Type} [CommRing R] [CommRing A] [Algebra
   refine Submodule.mul_induction_on hx (fun y hy z hz => ?_) (fun y z hy hz => ?_)
   · rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
     exact I.add_mem (I.mul_mem_right _ hy) (I.mul_mem_right _ hz)
-  · rw [map_add]; exact I.add_mem hy hz
+  · rw [map_add (f := _)]; exact I.add_mem hy hz
 
 theorem taylor_rem_mem {R σ : Type} [CommRing R] [Fintype σ] (I : Ideal (MvPolynomial σ R))
     (u : σ → MvPolynomial σ R) (hu : ∀ i, u i ∈ I) (h : MvPolynomial σ R) :
@@ -27,7 +27,7 @@ theorem taylor_rem_mem {R σ : Type} [CommRing R] [Fintype σ] (I : Ideal (MvPol
   | add p q hp hq =>
     have := Ideal.add_mem _ hp hq
     convert this using 1
-    simp only [map_add, add_mul, Finset.sum_add_distrib]; ring
+    simp only [map_add (f := _), add_mul, Finset.sum_add_distrib]; ring
   | mul_X p s hp =>
     have hD : ∑ i, MvPolynomial.pderiv i p * u i ∈ I :=
       Ideal.sum_mem _ fun i _ ↦ I.mul_mem_left _ (hu i)
@@ -67,7 +67,7 @@ theorem relations_combination :
     Ideal.Quotient.eq_zero_iff_mem.mpr (hg k)
   rw [← Ideal.Quotient.eq_zero_iff_mem] at hF ⊢
   set_option synthInstance.maxHeartbeats 100000 in
-    simpa [Derivation.leibniz, map_sum, map_add, map_mul, hg0, smul_eq_mul, mul_add,
+    simpa [Derivation.leibniz, map_sum, map_add (f := _), map_mul, hg0, smul_eq_mul, mul_add,
     Finset.sum_add_distrib] using hF
 
 end GlobalTheory.SmoothRel

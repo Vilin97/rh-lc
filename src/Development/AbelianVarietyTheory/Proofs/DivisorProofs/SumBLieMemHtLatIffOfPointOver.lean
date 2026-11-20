@@ -116,7 +116,7 @@ theorem exists_bLie_eq (he : ∀ s t, weilT P'.A p (e s) (e t) = weilT P.A p s t
       P'.pairV (u • e.toLinearMap.baseChange C w) (1 ⊗ₜ e t) := fun w t => by
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, smul_add, LinearMap.add_apply, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), smul_add, LinearMap.add_apply, ha, hb]
     | tmul c s =>
       rw [LinearMap.baseChange_tmul, TensorProduct.smul_tmul', Point.pairV_tmul, Point.pairV_tmul, h1, mul_comm u,
         mul_smul, smul_mul_assoc]
@@ -131,7 +131,7 @@ theorem map_latT_le : P.latT.map ((e.toLinearMap.baseChange C).restrictScalars O
   rintro _ ⟨_, ⟨x, rfl⟩, rfl⟩
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add]; exact Submodule.add_mem _ ha hb
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ ha hb
   | tmul c t => exact ⟨c ⊗ₜ e t, by rw [Point.inclT_tmul, Point.inclT_tmul]; rfl⟩
 
 omit [IsAlgClosed C] [CharZero C] [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O]
@@ -141,7 +141,7 @@ theorem isEquivariant_baseChange (ha : ∀ a t, e (P.actT a t) = P'.actT a (e t)
     IsEquivariant P.actV P'.actV (e.toLinearMap.baseChange C) := fun a x => by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul c t => exact congrArg (c ⊗ₜ ·) (ha a t)
 
 omit [IsAlgClosed C] [CharZero C] [Algebra ℤ_[p] O] [Algebra ℤ_[p] C] [IsScalarTower ℤ_[p] O C]

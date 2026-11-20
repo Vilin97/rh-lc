@@ -131,7 +131,7 @@ theorem powerSum_mul_vertical (hP : Hypotheses2) (M : TrueGeo.Model Y) {ι : Typ
   obtain ⟨num, hn, -⟩ := GlobalTheory.T.arith_intersection_form_exists hC _ _ V'.p _ V'.ar
   obtain ⟨rt, rd, -, -⟩ := GlobalTheory.T.arith_class_form_properties hC _ _ V'.p _ V'.ar num hn
   induction g using MvPolynomial.induction_on' with
-  | add P Q hP hQ => rw [mul_add, mul_add, map_add, hP, hQ, add_zero]
+  | add P Q hP hQ => rw [mul_add, mul_add, map_add (f := _), hP, hQ, add_zero]
   | monomial u a =>
     obtain ⟨n, ν, hν⟩ := exists_monomial_eq_prod u
     have e₁ : (monomial u a : MvPolynomial ι ℝ) = a • ∏ j, X (ν j) := by rw [← hν, smul_monomial, smul_eq_mul, mul_one]
@@ -187,7 +187,7 @@ theorem numL_rename {ι B : Type} (w : ι → B) (num : Multiset B → ℝ) (d :
     (h : ∀ μ : Multiset ι, Multiset.card μ = d → num (μ.map w) = Ψ (μ.map X).prod / c) (P : MvPolynomial ι ℝ) :
     numL num d (rename w P) = Ψ P / c := by
   induction P using MvPolynomial.induction_on' with
-  | add P Q hP hQ => rw [map_add, map_add, map_add, hP, hQ, add_div]
+  | add P Q hP hQ => rw [map_add (f := _), map_add (f := _), map_add (f := _), hP, hQ, add_div]
   | monomial u a =>
     have e₁ : (monomial u a : MvPolynomial ι ℝ) = a • monomial u 1 := by rw [smul_monomial, smul_eq_mul, mul_one]
     rw [e₁, map_smul, map_smul, map_smul, smul_eq_mul, smul_eq_mul, mul_div_assoc]

@@ -29,7 +29,7 @@ theorem UpperTheory.ConvolutionTheory.R2.split :
       map_add' := fun u u' => funext fun x => by
         have := (H.weEig F E D _ (hcont u)).2.2 _ 1 (hcont u') (h * J x)
         rw [one_smul, one_mul] at this
-        rw [map_add]; exact this
+        rw [map_add (f := _)]; exact this
       map_smul' := fun c u => funext fun x => by
         have := (H.weEig F E D 0 continuous_const).2.2 _ c (hcont u) (h * J x)
         rw [zero_add, hz, zero_add] at this

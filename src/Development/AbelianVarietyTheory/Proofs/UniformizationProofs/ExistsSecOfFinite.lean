@@ -44,7 +44,7 @@ theorem nm_of_isPushout {φ : A →+* B} {α : A →+* A'} {β : B →+* B'} {φ
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul r x => simp [IsBaseChange.equiv_tmul]; rfl
-  | add s t hs ht => simp only [map_add, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), hs, ht]
 
 theorem isUnit_of_nm {φ : A →+* B} (h : FinFree φ) {b : B} (hb : IsUnit (nm φ b)) : IsUnit b := by
   letI := φ.toAlgebra

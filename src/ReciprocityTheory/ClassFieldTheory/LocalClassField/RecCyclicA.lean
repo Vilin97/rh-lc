@@ -31,7 +31,7 @@ theorem exists_defect {t : G → ℚ} (χ : Additive G →+ QZ)
     ∃ m : (Fin 2 → G) → ℤ, ∀ g, (m g : ℚ) = t (g 0) + t (g 1) - t (g 0 * g 1) := by
   have : ∀ g : Fin 2 → G, ∃ k : ℤ, (k : ℚ) = t (g 0) + t (g 1) - t (g 0 * g 1) := fun g => by
     have h0 : (QuotientAddGroup.mk (t (g 0) + t (g 1) - t (g 0 * g 1)) : QZ) = 0 := by
-      rw [QuotientAddGroup.mk_sub, QuotientAddGroup.mk_add, h, h, h, ofMul_mul, map_add, sub_self]
+      rw [QuotientAddGroup.mk_sub, QuotientAddGroup.mk_add, h, h, h, ofMul_mul, map_add (f := _), sub_self]
     obtain ⟨k, hk⟩ := (QuotientAddGroup.eq_zero_iff _).1 h0
     exact ⟨k, hk⟩
   choose m hm using this

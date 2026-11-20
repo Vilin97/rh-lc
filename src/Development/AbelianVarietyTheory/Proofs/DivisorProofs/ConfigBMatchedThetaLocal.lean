@@ -69,7 +69,7 @@ theorem q_genOp {q : Tens F P Q R S →ₗ[ℂ] Z} (hq : Function.Surjective q)
   set_option synthInstance.maxHeartbeats 100000 in
     rw [genOp_apply, map_sum, LinearMap.sum_apply]
   refine Finset.sum_congr rfl fun w _ => ?_
-  rw [map_add, map_smul, LinearMap.add_apply, fockOp_apply hq (hK w)]
+  rw [map_add (f := _), map_smul, LinearMap.add_apply, fockOp_apply hq (hK w)]
   rfl
 
 theorem centLine (hcm : IsCMExt F E σ) (hC : ∀ w, IsFrame (Complex.I • (incM F W.J).map (piInf (B.emb w))) (C w))
@@ -242,7 +242,7 @@ theorem keeps_q (hKP : KP) (hM : IsMatched B G X om om' Rm Rf) (hD : IsFockData 
     rwa [genOp_single, map_add, map_smul, hT0, smul_zero, add_zero] at h2
   obtain ⟨Y₁, h₁, Y₂, h₂, rfl⟩ := upq_decomp Z
   intro T hT0
-  rw [map_add, map_smul, Main.atPl_add, Main.atPl_smul, LinearMap.add_apply, LinearMap.smul_apply, map_add, map_smul,
+  rw [map_add (f := _), map_smul, Main.atPl_add, Main.atPl_smul, LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_smul,
     key Y₁ h₁ T hT0, key Y₂ h₂ T hT0, smul_zero, add_zero]
 
 theorem fockOp_mem (hKP : KP) (hM : IsMatched B G X om om' Rm Rf) (hD : IsFockData B G.M A C Φ) (I : Set (Ix R S))
@@ -484,7 +484,7 @@ theorem bridge_beta : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Number
       rfl
     intro v
     rw [twPart, hs, Submodule.span_eq]
-    simp only [Submodule.mem_inf, Submodule.mem_iInf, LinearMap.mem_ker, cen, map_add, LinearMap.add_apply]
+    simp only [Submodule.mem_inf, Submodule.mem_iInf, LinearMap.mem_ker, cen, map_add (f := _), LinearMap.add_apply]
     refine and_congr_right fun hv => forall_congr' fun w => ⟨fun h => ?_, fun h => ?_⟩
     · exact bottom_of_sum _ _ x₂ (low_weights hKP hM hD w r₀ s₀ hv) h
     · rw [h.1, h.2, neg_smul, add_neg_cancel]

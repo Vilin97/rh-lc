@@ -66,7 +66,7 @@ theorem linearIndependent_sumElim_of_exact (hi : Function.Injective i) (hex : Fu
   have h2 : ∑ j, g (Sum.inr j) • s'' j = 0 := by
     have := congrArg p hg
     set_option synthInstance.maxHeartbeats 100000 in
-      simpa [map_add, map_sum, map_smul, hex.apply_apply_eq_zero, hu] using this
+      simpa [map_add (f := _), map_sum, map_smul, hex.apply_apply_eq_zero, hu] using this
   have hr := hs'' _ h2
   have h1 : ∑ k, g (Sum.inl k) • s' k = 0 := by
     apply hi
@@ -105,7 +105,7 @@ theorem card_quotient_sumElim_of_exact (hi : Function.Injective i) (hp : Functio
         have h2 : ∑ j, g (Sum.inr j) • s'' j = 0 := by
           have := congrArg p hg
           set_option synthInstance.maxHeartbeats 100000 in
-            simpa [map_add, map_sum, map_smul, hex.apply_apply_eq_zero, hu] using this
+            simpa [map_add (f := _), map_sum, map_smul, hex.apply_apply_eq_zero, hu] using this
         have hr := (Fintype.linearIndependent_iff.mp hs'') _ h2
         simp only [hr, zero_smul, Finset.sum_const_zero, add_zero] at hg
         have : i (∑ k, g (Sum.inl k) • s' k) = i x := by

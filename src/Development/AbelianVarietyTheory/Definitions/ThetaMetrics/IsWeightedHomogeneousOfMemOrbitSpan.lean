@@ -32,7 +32,7 @@ variable (R T p q κ) in
 
 def harmonicSubmodule : Submodule R (Poly R T p q κ) where
   carrier := {P | IsHarmonic P}
-  add_mem' hP hQ t a b := by rw [map_add, hP, hQ, add_zero]
+  add_mem' hP hQ t a b := by rw [map_add (f := _), hP, hQ, add_zero]
   zero_mem' t a b := map_zero _
   smul_mem' r P hP t a b := by rw [map_smul, hP, smul_zero]
 
@@ -339,7 +339,7 @@ theorem eval_colSubst (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ R) (z
       | (t, Sum.inr b, k) => ((fun l => z (yVar t b l)) ᵥ* B t) k) P := by
   induction P using MvPolynomial.induction_on with
   | C r => simp [algHom_C]
-  | add P Q hP hQ => simp only [map_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ]
   | mul_X P v hP =>
     obtain ⟨t, a | b, k⟩ := v
     · rw [map_mul, map_mul, map_mul, hP, eval_X, colSubst_X_xVar, eval_xForm]; rfl
@@ -493,7 +493,7 @@ theorem colAct_mem_orbitSpan (g : T → GL (Fin n) R) {P : Poly R T p q (Fin n)}
     have := colAct_basePoly_mem h c c' (g * g')
     rwa [map_mul] at this
   | zero => simp
-  | add P Q _ _ hP hQ => rw [map_add]; exact add_mem hP hQ
+  | add P Q _ _ hP hQ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hP hQ
   | smul r P _ hP => rw [map_smul]; exact Submodule.smul_mem _ _ hP
 
 variable (R) in

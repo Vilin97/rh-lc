@@ -66,7 +66,7 @@ theorem exists_finite_values {V : Type} [CommRing V] (j : V →+* OO p) (K₀ : 
       have := hj ((Scheme.ΓSpecIso (CommRingCat.of V)).hom.hom r)
       rw [← e'] at this
       exact this
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   intro U hU f
   obtain ⟨g, hgU, hyg⟩ := hW.exists_basicOpen_le ⟨c (cpt _), hU trivial⟩ hyW

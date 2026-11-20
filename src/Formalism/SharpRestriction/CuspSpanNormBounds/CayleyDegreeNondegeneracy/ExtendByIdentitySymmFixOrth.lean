@@ -129,7 +129,7 @@ theorem inner_decomp_orth_range (w w' : (D.sp.X 0).V) (b b' : (VS D).V)
     (VS D).hT (D.sp.iXY 0 w + b) (D.sp.iXY 0 w' + b') = (D.sp.X 0).hT w w' + (VS D).hT b b' := by
   have h1 : (VS D).hT (D.sp.iXY 0 w) b' = 0 := (Formalism.MainNotions.mem_orth_iff _ _).1 hb' _ ⟨w, rfl⟩
   have h2 : (VS D).hT b (D.sp.iXY 0 w') = 0 := Formalism.MainNotions.hT_swap_zero ((Formalism.MainNotions.mem_orth_iff _ _).1 hb _ ⟨w', rfl⟩)
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   rw [embedding_isometry_W, h1, h2]
   ring
 

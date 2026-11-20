@@ -90,7 +90,7 @@ theorem mem_of_forall_map_mem {S σ : Type} [CommRing S] (J : Ideal (MvPolynomia
       have h2 : (monomial m c : MvPolynomial σ S) = c • monomial m 1 := by simp [smul_monomial]
       rw [map_monomial, h1, map_smul, h2, map_smul, map_smul, smul_eq_mul, smul_eq_mul, map_mul]
       simp only [Λ, Module.Basis.constr_basis]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
   have key : ∀ G ∈ J.map (map x), ∀ H, Λ (H * G) = 0 := by
     intro G hG
     induction hG using Submodule.span_induction with
@@ -102,9 +102,9 @@ theorem mem_of_forall_map_mem {S σ : Type} [CommRing S] (J : Ideal (MvPolynomia
         have h1 : (monomial m c : MvPolynomial σ K) = c • map x (monomial m 1) := by simp [smul_monomial]
         rw [h1, smul_mul_assoc, map_smul, ← map_mul, hΛ, (hπ _).2 (hJ _ (J.mul_mem_left _ hG))]
         simp
-      | add p q hp hq => rw [add_mul, map_add, hp, hq, add_zero]
+      | add p q hp hq => rw [add_mul, map_add (f := _), hp, hq, add_zero]
     | zero => simp
-    | add p q _ _ hp hq => intro H; rw [mul_add, map_add, hp, hq, add_zero]
+    | add p q _ _ hp hq => intro H; rw [mul_add, map_add (f := _), hp, hq, add_zero]
     | smul c p _ hp => intro H; rw [smul_eq_mul, ← _root_.mul_assoc, hp]
   have := key _ hm 1
   rw [_root_.one_mul, hΛ] at this

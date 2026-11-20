@@ -50,7 +50,7 @@ theorem metEx : GlobalTheory.Published.CuspRapidDecay → ∀ D : D7, MetEx D :=
   let T : s.CC c → MMap s.M := fun x => PiTensorProduct.lift.symm (x : SmT s.M →ₗ[ℂ] (GA D s.V → ℂ))
   have hT : ∀ x : s.CC c, T x ∈ Mult c.θ s.M J χ := fun x => (mem_multT c.θ s.M J χ _).1 x.2
   have hTadd : ∀ x y : s.CC c, T (x + y) = T x + T y := fun x y => by
-    simp only [T, Submodule.coe_add, map_add]
+    simp only [T, Submodule.coe_add, map_add (f := _)]
   have hTsmul : ∀ (a : ℂ) (x : s.CC c), T (a • x) = a • T x := fun a x => by
     simp only [T, Submodule.coe_smul, map_smul]
   have hlin : ∀ x y y' : s.CC c, ∀ a : ℂ,

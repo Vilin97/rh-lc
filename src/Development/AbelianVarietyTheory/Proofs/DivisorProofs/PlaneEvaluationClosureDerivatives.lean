@@ -58,7 +58,7 @@ theorem dH_comm (f : (κ → mixedEmbedding.mixedSpace F) → ℂ) (hf : ContDif
   ring
 
 theorem trL_add (b b' x : κ → mixedEmbedding.mixedSpace F) : trL (b + b') x = trL b x + trL b' x := by
-  simp only [trL_apply, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+  simp only [trL_apply, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem trL_zero (x : κ → mixedEmbedding.mixedSpace F) : trL 0 x = 0 := by
   simp [trL_apply]
@@ -107,7 +107,7 @@ theorem Dop_add (hD : HasDH F κ) (a b a' b' : κ → mixedEmbedding.mixedSpace 
     Dop hD (a + a') (b + b') = Dop hD a b + Dop hD a' b' := by
   ext f x
   simp only [LinearMap.add_apply, SchwartzMap.add_apply]
-  rw [coe_Dop, coe_Dop, coe_Dop, dH_apply', dH_apply', dH_apply', map_add, trL_add]
+  rw [coe_Dop, coe_Dop, coe_Dop, dH_apply', dH_apply', dH_apply', map_add (f := _), trL_add]
   push_cast
   ring
 
@@ -232,7 +232,7 @@ theorem ei_Balg : ∀ T ∈ Balg hd hD, ∃ c : ℂ, ∀ g, ei F hd (T g) = c �
   | add x y hx hy ihx ihy =>
     obtain ⟨c₁, h₁⟩ := ihx
     obtain ⟨c₂, h₂⟩ := ihy
-    exact ⟨c₁ + c₂, fun g => by rw [LinearMap.add_apply, map_add, h₁, h₂, add_smul]⟩
+    exact ⟨c₁ + c₂, fun g => by rw [LinearMap.add_apply, map_add (f := _), h₁, h₂, add_smul]⟩
   | mul x y hx hy ihx ihy =>
     obtain ⟨c₁, h₁⟩ := ihx
     obtain ⟨c₂, h₂⟩ := ihy
@@ -253,7 +253,7 @@ theorem ei_Ealg (P₁ : Submodule ℂ (SInf F (Fin n × Fin d₁)))
     exact P₁.smul_mem r hg
   | add x y hx hy ihx ihy =>
     intro g hg
-    rw [LinearMap.add_apply, map_add]
+    rw [LinearMap.add_apply, map_add (f := _)]
     exact add_mem (ihx g hg) (ihy g hg)
   | mul x y hx hy ihx ihy =>
     intro g hg

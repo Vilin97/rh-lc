@@ -142,7 +142,7 @@ theorem redFn_eq_one_of_le (V : HSp D) (β β₀ : GL (Fin V.rank) (Lev.EAf D))
     have hsf := GlobalTheory.LevSplit.supp_fin V (f := e + cA D e) hs
     rw [← hp] at hκ
     have hf : GlobalTheory.LevSplit.finSw D (e + cA D e) = p + Formalism.UG.sigR D.sp.cm.sig (Formalism.L2.Herm.Af D.host.F) p := by
-      rw [RingHom.map_add, GlobalTheory.LevSplit.finSw_cA, hp]
+      rw [RingHom.map_add (f := _), GlobalTheory.LevSplit.finSw_cA, hp]
     have hSt : finE V κ ∈ Formalism.L2.DIV.St β₀ :=
       GlobalTheory.ParahoricLift.mem_St_of_part D.sp.cm.sig V.gram _ β₀ hB.1 (GlobalTheory.ParahoricLift.hatL_selfDual hB) p p hpp
         (GlobalTheory.LevSplit.sigR_int p.2) _ hu' (finE V κ) (GlobalTheory.LevSplit.finE_mem_UA V κ) _ hf hsf hκ

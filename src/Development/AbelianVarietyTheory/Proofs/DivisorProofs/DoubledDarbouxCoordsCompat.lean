@@ -87,7 +87,7 @@ theorem glue_add (p q : Vi F κ × Vf F κ) : glue (p + q) = glue p + glue q := 
   show (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (eI F κ (p.1 + q.1) i) =
       (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (eI F κ p.1 i) +
         (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (eI F κ q.1 i)
-  rw [map_add, Pi.add_apply, map_add]
+  rw [map_add (f := _), Pi.add_apply, map_add (f := _)]
 
 theorem glue_zero : glue (0 : Vi F κ × Vf F κ) = 0 := by
   have h := glue_add (0 : Vi F κ × Vf F κ) 0
@@ -113,7 +113,7 @@ theorem continuous_resD {φ : (κ ⊕ κ → AdeleRing (𝓞 F) F) → ℂ} (hφ
     rw [show resD F κ (pureA F f g) = fun p => compD F κ f p.1 * g (Sum.elim p.2 p.2) from funext (resD_pureA f g)]
     exact ((compD F κ f).continuous.comp continuous_fst).mul ((hg.1.continuous.comp hd).comp continuous_snd)
   | zero => rw [map_zero]; exact continuous_zero
-  | add x y _ _ hx hy => rw [map_add]; exact hx.add hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact hx.add hy
   | smul c x _ hx => rw [map_smul]; exact hx.const_smul c
 
 instance mu_haar : (mu F κ).IsAddHaarMeasure := by unfold mu; infer_instance

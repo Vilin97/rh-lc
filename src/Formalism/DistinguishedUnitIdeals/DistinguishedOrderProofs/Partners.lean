@@ -24,7 +24,7 @@ theorem X_dvd_alg_sub (f : PowerSeries O →ₐ[O] PowerSeries O) (hX : X ∣ f 
   refine ⟨f a' * t - a', ?_⟩
   have h2 : f a = f a' * f X + C (constantCoeff a) := by
     conv_lhs => rw [h]
-    rw [map_add, map_mul, alg_C]
+    rw [map_add (f := _), map_mul, alg_C]
   generalize C (constantCoeff a) = c0 at h h2
   rw [h2, ht, h]
   ring
@@ -50,7 +50,7 @@ theorem γp (B : Base O) (h3 : B.E3) (h4 : B.E4) (s : ℕ) :
   have hq : B.γ B.q = B.q * (1 + (e : PowerSeries O) * X) := by
     have : B.γ B.q = B.γ X + C (B.ℓ : O) := by
       simp only [Base.q]
-      rw [map_add, alg_C]
+      rw [map_add (f := _), alg_C]
     rw [this, he]
     simp only [Base.q]
     ring
@@ -105,7 +105,7 @@ theorem γ_sub_pull (h3 : B.E3) (h4 : B.E4) {i : ZMod n} (h9 : L.GamN i) (k : �
   | add x y _ _ hx hy =>
     have : L.γ (i + (k : ZMod n)) (x + y) - (x + y) =
         (L.γ (i + (k : ZMod n)) x - x) + (L.γ (i + (k : ZMod n)) y - y) := by
-      rw [map_add]; abel
+      rw [map_add (f := _)]; abel
     rw [this]
     exact Submodule.add_mem _ hx hy
   | smul a x hx0 hx =>
@@ -353,7 +353,7 @@ theorem frame_core {ell j M g sig : ℕ} (hj : j ≤ ell) (hT : B.Trunc j M g si
     ∑ t ∈ Finset.Ico 1 M, (B.lc ^ b t * y t) • L.phiIt i ell (d t), ?_, ?_, ?_, ?_, ?_, ?_⟩
   · exact Submodule.add_mem _ (Submodule.smul_mem _ _ he) (sm_le _ _ hvX)
   · convert hres using 1
-    rw [map_add, γ_lc, smul_neg, smul_sub]
+    rw [map_add (f := _), γ_lc, smul_neg, smul_sub]
     abel
   · simpa using hvX
   · refine Submodule.add_mem _ (Submodule.smul_mem _ _ (phiIt_mem_pull L ell he))
@@ -522,7 +522,7 @@ theorem XDivisibilityOfActions.partner_gen {O : Type} [CommRing O] {B : Base O} 
         simpa using hid
       have h1 := congrArg (fun p => S.loc s (θ p)) hid'
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_smul, map_sum] at h1
+        simp only [map_add (f := _), map_smul, map_sum] at h1
       apply flSat_pow S hS hs (K + K₀)
       have hZ : S.locL s Z = ∑ k, Z k • S.locL s (bv O k) :=
         LinearMap.pi_apply_eq_sum_univ (S.locL s) Z
@@ -569,7 +569,7 @@ theorem XDivisibilityOfActions.partner_gen {O : Type} [CommRing O] {B : Base O} 
           B.lc ^ K • (⟨Q, hQ⟩ : ↥(L.pull c' ell)) + f' • (⟨R, hR⟩ : ↥(L.pull c' ell)) :=
         Subtype.ext hid
       have h3 := congrArg (fun p => S.loc s (θ p)) hid'
-      simp only [map_add, map_smul] at h3
+      simp only [map_add (f := _), map_smul] at h3
       apply flSat_pow S hS hs K
       have h4 : B.lc ^ K • (S.loc s (θ ⟨Q, hQ⟩) - B.lc ^ sig • S.locL s (bv O k)) =
           B.lc ^ sig • (S.loc s (θ ⟨L.phiIt c' ell x, phiIt_mem_pull L ell hx⟩) -
@@ -627,7 +627,7 @@ theorem fr_exists {u₁ : O} (hE : B.GammaXUnitShape u₁) (h9 : L.P9) (c : ZMod
     simp only [fr]
     rw [hs]
     convert hres using 1
-    rw [map_add, γ_lc, smul_neg, smul_sub]
+    rw [map_add (f := _), γ_lc, smul_neg, smul_sub]
     abel
 
 theorem fr_sub (k : ℕ) (e : V) {d : ℕ → V} {S : Submodule (PowerSeries O) V}
@@ -769,7 +769,7 @@ theorem height_inverse_holds : HinvOf := by
   have hdet : IsUnit Gm.det := by
     rw [PowerSeries.isUnit_iff_constantCoeff]
     have h1 : (constantCoeff (R := O)).mapMatrix Gm = 1 := by
-      rw [hGm, map_add, map_one]
+      rw [hGm, map_add (f := _), map_one]
       ext a b
       simp
     have h2 := RingHom.map_det (constantCoeff (R := O)) Gm

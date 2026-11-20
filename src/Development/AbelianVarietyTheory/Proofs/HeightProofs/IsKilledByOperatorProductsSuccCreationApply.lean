@@ -24,7 +24,7 @@ theorem foldr_add_smul (l : List I) (β : ℂ) (x y : M) :
       l.foldr (fun i x => a i x) x + β • l.foldr (fun i x => a i x) y := by
   induction l with
   | nil => rfl
-  | cons i l ih => simp only [List.foldr_cons, ih, map_add, map_smul]
+  | cons i l ih => simp only [List.foldr_cons, ih, map_add (f := _), map_smul]
 
 theorem foldr_zero (l : List I) : l.foldr (fun i x => a i x) (0 : M) = 0 := by
   induction l with

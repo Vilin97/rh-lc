@@ -32,13 +32,13 @@ theorem actPow {G : Type} [Group G] {Qp K₀ K : Type} [Field Qp] [Field K₀] [
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [actVB]
-    | add a b ha hb => rw [map_add, ha, hb, map_add]
+    | add a b ha hb => rw [map_add (f := _), ha, hb, map_add (f := _)]
   | succ n ih =>
     rw [pow_succ, pow_succ, Module.End.mul_apply, ← ih]
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [actVB, map_mul, AlgEquiv.mul_apply]
-    | add a b ha hb => rw [map_add, ha, hb, map_add, map_add]
+    | add a b ha hb => rw [map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
 
 theorem sumAeval {O LL M : Type} [CommRing O] [Field LL] [AddCommGroup M] [Module LL M] (f : O →+* LL)
     (T : Module.End LL M) (p : O[X]) (x : M) :

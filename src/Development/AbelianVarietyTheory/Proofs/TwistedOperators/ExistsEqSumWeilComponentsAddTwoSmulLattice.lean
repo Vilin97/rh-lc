@@ -100,7 +100,7 @@ theorem one_sub_sum_idem (P : Finset (Place D)) (hP : P.toRight = Finset.univ) :
     rw [show (1 : AE D) - (∑ v ∈ P.toLeft, idem D (.inl v) + ∑ τ : D.what₂.Tau, idem D (.inr τ)) =
       algebraMap (AF D.host.F) (AE D) (1 - (∑ v ∈ P.toLeft, pairA D.host.F 0 (singleV D.host.F v 1) +
         ∑ τ : D.what₂.Tau, pairA D.host.F (GlobalTheory.AutFunCompare.sgW (plTau D τ) 1) 0)) by
-    rw [map_sub, map_add, map_one, map_sum, map_sum]
+    rw [map_sub, map_add (f := _), map_one, map_sum, map_sum]
     rfl]
   congr 1
   apply af_ext_of_fstA_sndA

@@ -61,7 +61,7 @@ theorem exists_clear {R : Type} [CommRing R] [IsDomain R] {A A' : CommRingCat.{0
     obtain ⟨s, x, hs, e⟩ := hy
     obtain ⟨s', x', hs', e'⟩ := hz
     refine ⟨s * s', a.hom s' * x + a.hom s * x', mul_ne_zero hs hs', ?_⟩
-    simp only [map_mul, map_add, ← e, ← e']
+    simp only [map_mul, map_add (f := _), ← e, ← e']
     ring
   | neg y _ hy =>
     obtain ⟨s, x, hs, e⟩ := hy
@@ -380,7 +380,7 @@ theorem generic_invariants : ∀ (R : Type) [CommRing R] [IsDomain R] [IsNoether
       obtain ⟨l, rfl⟩ := hy
       exact Subring.subset_closure (Or.inr ⟨l.1, l.2, rfl⟩)
     | algebraMap r => exact Subring.subset_closure (Or.inl ⟨_, (hw r).symm⟩)
-    | add y z _ _ hy hz => rw [map_add]; exact B.add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact B.add_mem hy hz
     | mul y z _ _ hy hz => rw [map_mul]; exact B.mul_mem hy hz
   have h2 := h1 _ hr
   have hne : algebraMap R (FractionRing R) (r * s) ≠ 0 := fun e =>

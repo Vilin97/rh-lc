@@ -70,7 +70,7 @@ theorem embeds_of_maxWeight : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscre
     | add x y hx hy ihx ihy =>
       intro z hz
       have e : (⟨x + y, Subalgebra.add_mem _ hx hy⟩ : alg O N lam) = ⟨x, hx⟩ + ⟨y, hy⟩ := rfl
-      rw [e, add_smul, map_add, ihx z hz, ihy z hz, add_zero]
+      rw [e, add_smul, map_add (f := _), ihx z hz, ihy z hz, add_zero]
     | mul x y hx hy ihx ihy =>
       intro z hz
       have e : (⟨x * y, Subalgebra.mul_mem _ hx hy⟩ : alg O N lam) = ⟨x, hx⟩ * ⟨y, hy⟩ := rfl
@@ -78,7 +78,7 @@ theorem embeds_of_maxWeight : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscre
       exact ihx _ (ihy z hz)
   let K : Submodule (alg O N lam) Gm :=
     { carrier := {z | Pz z = 0}
-      add_mem' := fun {a b} ha hb => by simp only [Set.mem_setOf_eq, map_add] at *; rw [ha, hb, add_zero]
+      add_mem' := fun {a b} ha hb => by simp only [Set.mem_setOf_eq, map_add (f := _)] at *; rw [ha, hb, add_zero]
       zero_mem' := by simp
       smul_mem' := fun a z hz => hsm a z hz }
   have hK : K = ⊥ := by
@@ -91,7 +91,7 @@ theorem embeds_of_maxWeight : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscre
   let ψ : Gm →+ NablaT O N (GlobalTheory.HighWt.extW N w) ⧸ (Ideal.span {ϖ} • ⊤ : Submodule O (NablaT O N (GlobalTheory.HighWt.extW N w))) :=
     { toFun := q
       map_zero' := hLinj (by rw [hq, map_zero, map_zero])
-      map_add' := fun a b => hLinj (by rw [hq, map_add, map_add, hq, hq]) }
+      map_add' := fun a b => hLinj (by rw [hq, map_add (f := _), map_add (f := _), hq, hq]) }
   refine ⟨ψ, ?_, ?_, ?_, ?_⟩
   · intro a b hab
     have h1 : Pz (a - b) = 0 := by

@@ -87,7 +87,7 @@ theorem depthSet_bddAbove_of_unique_centre : ∀ (O : Type) [CommRing O] (bar : 
     have hz : ∀ y, v y y = 0 := fun y => le_antisymm (hc y) (hvp y)
     refine LinearMap.ext₂ fun x y => ?_
     have h := hz (x + y)
-    simp only [map_add, LinearMap.add_apply, hz x, hz y, hv.1 y x] at h
+    simp only [map_add (f := _), LinearMap.add_apply, hz x, hz y, hv.1 y x] at h
     simp only [LinearMap.zero_apply]
     omega
   have hy₀' : (0 : ℝ) < v y₀ y₀ := by exact_mod_cast hy₀

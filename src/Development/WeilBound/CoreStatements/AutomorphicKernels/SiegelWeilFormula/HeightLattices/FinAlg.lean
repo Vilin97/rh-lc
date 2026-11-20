@@ -22,7 +22,7 @@ theorem sgv_sgv (hcm : HeckeCharacterZeroLocus.SiegelWeilU.IsCMExt F E σ) (v : 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [HeckeCharacterZeroLocus.SiegelWeilU.sigR, sig_sig hcm]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem OE_gen_mul (v : HeightOneSpectrum (𝓞 F)) {a b : v.adicCompletion F ⊗[F] E}
     (ha : ∃ a₀ ∈ v.adicCompletionIntegers F, ∃ o : 𝓞 E, a = a₀ ⊗ₜ[F] (o : E))
@@ -65,7 +65,7 @@ theorem OE_sig (v : HeightOneSpectrum (𝓞 F)) {z : v.adicCompletion F ⊗[F] E
     · simp [HeckeCharacterZeroLocus.SiegelWeilU.sigR]
       rfl
   | zero => simp
-  | add x x' _ _ h h' => rw [map_add]; exact add_mem h h'
+  | add x x' _ _ h h' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
   | neg x _ h => rw [map_neg]; exact neg_mem h
 
 theorem mem_lat (v : HeightOneSpectrum (𝓞 F)) {n : ℕ} (y : Fin n → v.adicCompletion F ⊗[F] E) :

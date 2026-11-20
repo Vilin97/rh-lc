@@ -18,7 +18,7 @@ lemma dg_mul (g h : Ix S → ℂ) : (dg g * dg h : SlopeTestRemainingChoices S A
 lemma dg_add (g h : Ix S → ℂ) : (dg g + dg h : SlopeTestRemainingChoices S A) = dg (fun e => g e + h e) := by
   unfold dg
   rw [Matrix.diagonal_add]
-  simp only [map_add]
+  simp only [map_add (f := _)]
 
 lemma dg_smul (c : ℂ) (g : Ix S → ℂ) : (c • dg g : SlopeTestRemainingChoices S A) = dg (fun e => c * g e) := by
   apply Matrix.ext

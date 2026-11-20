@@ -44,7 +44,7 @@ theorem endP_latP (Z : LocDat D) (p : PlF D) (Q : (VS D).V →ₗ[D.host.E] (VS 
     exact Submodule.subset_span ⟨Q x, Submodule.mem_map_of_mem hx, rfl⟩
   · rw [map_zero]; exact Submodule.zero_mem _
   · intro a b _ _ ha hb
-    rw [map_add]; exact Submodule.add_mem _ ha hb
+    rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   · intro c a _ ha
     have e : endP p Q (c • a) = c • endP p Q a := by
       rw [Subring.smul_def, Subring.smul_def, map_smul]
@@ -74,7 +74,7 @@ theorem herm_span_right {F E : Type} [Field F] [ValuativeRel F] [TopologicalSpac
   refine Submodule.span_induction (p := fun w _ => H.h u w = 0) hS ?_ ?_ ?_ hw
   · rw [H.h_herm 0 u, H.h_zero_left, map_zero]
   · intro a b _ _ ha hb
-    rw [H.h_herm (a + b) u, H.h_add_left, map_add, ← H.h_herm a u, ← H.h_herm b u, ha, hb, add_zero]
+    rw [H.h_herm (a + b) u, H.h_add_left, map_add (f := _), ← H.h_herm a u, ← H.h_herm b u, ha, hb, add_zero]
   · intro c a _ ha
     rw [herm_smul_right, ha, mul_zero]
 
@@ -123,7 +123,7 @@ theorem lsub_le (Z : LocDat D) {T : D.host.E} (G : LFlag (VS D) D.R.rS T)
         simp only
         rw [map_smul, bcP_endP, hQX _ (Submodule.subset_span ⟨a, by simp [frame, FlagG.fvec]⟩), map_zero, smul_zero]
       · exact map_zero _
-      · intro a b _ _ ha hb; rw [map_add, ha, hb, add_zero]
+      · intro a b _ _ ha hb; rw [map_add (f := _), ha, hb, add_zero]
       · intro c a _ ha; rw [map_smul, ha, smul_zero]
     have hperp : baseChange₂ D p l ∈ (locH Z p).perp ((locH Z p).X (f p)) := by
       intro w hw
@@ -148,14 +148,14 @@ theorem lsub_le (Z : LocDat D) {T : D.host.E} (G : LFlag (VS D) D.R.rS T)
       have := hXQ _ hdiff
       rw [map_sub, sub_eq_zero] at this
       exact this.symm
-    rw [← bcP_endP, map_add, map_add, e, bcP_endP p Q x, hQX x hx, map_zero, add_zero]
+    rw [← bcP_endP, map_add (f := _), map_add (f := _), e, bcP_endP p Q x, hQX x hx, map_zero, add_zero]
     exact localLattice_mono' Z p (le_sup_right : Λ₂.map (Q.restrictScalars (𝓞 D.host.E)) ≤ Γ) (endP_latP Z p Q Λ₂ hy)
   have hmem : Q (l + x) ∈ Γ := mem_of_local Z Γ hΓ _ hloc
   obtain ⟨a, ha, b', hb', hab⟩ := Submodule.mem_sup.1 hmem
   obtain ⟨b, hb, rfl⟩ := Submodule.mem_map.1 hb'
   have hQab : Q a + Q b = Q (l + x) := by
     have := congrArg Q hab
-    simp only [LinearMap.restrictScalars_apply, map_add, hQQ] at this
+    simp only [LinearMap.restrictScalars_apply, map_add (f := _), hQQ] at this
     rw [map_add Q l x]
     exact this
   have h2 : Q (l + x - (a + b)) = 0 := by

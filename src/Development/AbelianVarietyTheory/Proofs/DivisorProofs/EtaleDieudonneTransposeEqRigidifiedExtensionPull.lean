@@ -25,7 +25,7 @@ theorem linearMap_eq_of_liftSemi_surjective {R R' M N : Type} [CommRing R] [Comm
   obtain ⟨t, rfl⟩ := hf v
   induction t using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul r m => rw [liftSemi_tmul, map_smul, map_smul, h]
 
 set_option maxHeartbeats 2000000 in

@@ -25,7 +25,7 @@ def invDiff : Submodule (OF E) E where
     refine ⟨w + w', by simp, fun a => ?_⟩
     obtain ⟨m, hm⟩ := hw a
     obtain ⟨n, hn⟩ := hw' a
-    exact ⟨m + n, by rw [add_mul, map_add, hm, hn]; push_cast; rfl⟩
+    exact ⟨m + n, by rw [add_mul, map_add (f := _), hm, hn]; push_cast; rfl⟩
   smul_mem' := by
     rintro c _ ⟨w, rfl, hw⟩
     refine ⟨(c : maximalRealSubfield E) * w, ?_, fun a => ?_⟩
@@ -102,7 +102,7 @@ def imagPart (E : Type) [Field E] [NumberField E] [IsCMField E] : Submodule (OF 
   zero_mem' := by simp [bar]
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_setOf_eq, bar, map_add] at ha hb ⊢
+    simp only [Set.mem_setOf_eq, bar, map_add (f := _)] at ha hb ⊢
     rw [ha, hb]; ring
   smul_mem' := by
     intro c a ha
@@ -317,7 +317,7 @@ theorem GlobalTheory.PolModLattice.polMod_isUnit_mul_eq_dual : ∀ (E : Type) [F
       have key : ∀ t ∈ L, z * bar t + bar z * t ∈ invDiff E := by
         intro t ht
         have hr : bar (z * bar t + bar z * t) = z * bar t + bar z * t := by
-          simp only [bar, map_add, map_mul, IsCMField.complexConj_apply_apply]; ring
+          simp only [bar, map_add (f := _), map_mul, IsCMField.complexConj_apply_apply]; ring
         obtain ⟨w, hw⟩ := real_of_bar hr
         refine ⟨w, hw, fun c => ?_⟩
         obtain ⟨n, hn⟩ := hz (c • t) (L.smul_mem c ht)

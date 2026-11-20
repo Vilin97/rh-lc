@@ -80,7 +80,7 @@ theorem coeff_X_mul_pderiv_columns (v : σ) (F : MvPolynomial σ ℂ) (m : σ �
         · rw [if_neg h2]
     · rw [if_neg hv, Finsupp.notMem_support_iff.1 hv]
       simp
-  | add p q hp hq => rw [map_add, mul_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]; ring
+  | add p q hp hq => rw [map_add (f := _), mul_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq]; ring
 
 theorem coeff_pderiv_eq_coeff_add_single_mul (v : σ) (F : MvPolynomial σ ℂ) (m : σ →₀ ℕ) :
     AddMonoidAlgebra.coeff (pderiv v F) m = AddMonoidAlgebra.coeff F (m + Finsupp.single v 1) * ((m v : ℂ) + 1) := by

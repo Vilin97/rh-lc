@@ -293,7 +293,7 @@ theorem kerAct_add (a a' : 𝓞 D.F) (y : kerPts ψ T) : kerAct ψ h T (algebraM
     kerAct ψ h T (algebraMap (𝓞 D.F) D.O a) y * kerAct ψ h T (algebraMap (𝓞 D.F) D.O a') y :=
   Subtype.ext (by
     change y.1 ≫ _ = (y.1 ≫ _) * (y.1 ≫ _)
-    rw [map_add, o.act.add, MonObj.comp_mul])
+    rw [map_add (f := _), o.act.add, MonObj.comp_mul])
 
 theorem kerAct_natCast (n : ℕ) (y : kerPts ψ T) : kerAct ψ h T (algebraMap (𝓞 D.F) D.O n) y = y ^ n := by
   induction n with

@@ -219,8 +219,8 @@ theorem idem_supp_iff {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v : HeightOneSpe
   · rintro ⟨h1, h2⟩ i j
     rw [← sub_eq_zero, ← add_eq_right (b := 1)]
     refine adTens_eq_one (fun w => ?_) fun u => ?_
-    · rw [map_add, map_sub, map_mul, h1, map_one]; simp
-    · rw [map_add, map_sub, map_mul, map_one]
+    · rw [map_add (f := _), map_sub, map_mul, h1, map_one]; simp
+    · rw [map_add (f := _), map_sub, map_mul, map_one]
       by_cases hu : u = v
       · subst hu; rw [c1]; simp
       · rw [h2 u hu]; simp

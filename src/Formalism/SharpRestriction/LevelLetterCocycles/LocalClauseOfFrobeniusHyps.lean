@@ -247,7 +247,7 @@ theorem UPi_γA (g : W.Gam) {a : LetA O n} (ha : UPi PD.p a) : UPi PD.p (W.γA g
   obtain ⟨u, m, r, rfl⟩ := ha
   obtain ⟨u', hu'⟩ := γA_letπ (W := W) g
   refine ⟨(Units.map (W.γA g : LetA O n →* LetA O n) u) * u' ^ m, m, W.γA g r, ?_⟩
-  rw [map_add, map_mul, map_mul, map_pow, hu', map_natCast, mul_pow, Units.val_mul, Units.val_pow_eq_pow_val]
+  rw [map_add (f := _), map_mul, map_mul, map_pow, hu', map_natCast, mul_pow, Units.val_mul, Units.val_pow_eq_pow_val]
   simp only [Units.coe_map, MonoidHom.coe_coe]
   ring
 
@@ -524,7 +524,7 @@ theorem clause5 [IsDomain O] (hA : Formalism.MainNotions.LiftingTheory.CaseA W) 
       set_option synthInstance.maxHeartbeats 100000 in
         rw [map_sum, Finset.sum_sub_distrib]
     have e2 : ∀ a b : W.DD T, W.γ T (a + b) - (a + b) = (W.γ T a - a) + (W.γ T b - b) := fun a b => by
-      rw [map_add]; abel
+      rw [map_add (f := _)]; abel
     rw [e1, hz', key_id σ J K (eY PD.p) hJ w cc r s hrs', e2, eA, eS, hφ]
     exact ((htop ν hν).smul _).add (InMN.sum _ _ fun y _ => ((ht y).smul _).γsub hR)
   refine ⟨?_, ?_⟩
@@ -639,7 +639,7 @@ theorem cc_γ₀ (g : W.Gam) (a : PowerSeries O) :
     have : PowerSeries.C c = algebraMap O (PowerSeries O) c := by simp
     rw [this, AlgHom.commutes]
   conv_lhs => rw [PowerSeries.eq_X_mul_shift_add_const a]
-  rw [map_add, map_mul, hC, map_add, map_mul, (W.γ₀_X g).1, zero_mul, zero_add,
+  rw [map_add (f := _), map_mul, hC, map_add (f := _), map_mul, (W.γ₀_X g).1, zero_mul, zero_add,
     PowerSeries.constantCoeff_C]
 
 theorem divπ (a : LetA O n) (h : ∀ i, PowerSeries.constantCoeff (a i) = 0) : ∃ r : LetA O n, a = letπ * r := by

@@ -84,7 +84,7 @@ theorem cA_cA (h : ∀ x, σ (σ x) = x) (x : AE F E) : cA σ (cA σ x) = x := b
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [cA, h]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem cA_incl (e : E) : cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := rfl
 
@@ -97,7 +97,7 @@ def incV (y : Fin d → E) : Fin d → AE F E := fun i => inclR (F := F) (AF F) 
 
 def trF (σ : E →ₐ[F] E) (J : Matrix (Fin d) (Fin d) E) (y : Fin d → E) : (Fin d → AE F E) →ₗ[AF F] AF F where
   toFun w := Algebra.trace (AF F) (AE F E) (∑ l, inclR (F := F) (AF F) ((y ᵥ* J) l) * cA σ (w l))
-  map_add' w w' := by simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  map_add' w w' := by simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
   map_smul' a w := by simp only [Pi.smul_apply, map_smul, mul_smul_comm, ← Finset.smul_sum, RingHom.id_apply]
 
 theorem form_eq (J : Matrix (Fin d) (Fin d) E) (y x : Fin d → E) : form σ J y x = ∑ l, (y ᵥ* J) l * σ (x l) := by
@@ -184,7 +184,7 @@ theorem mem_latW {B : Base F E} (hB : B.IsGood σ) {W : Spc F E d} {r s : ℕ} (
       exact Finset.sum_congr rfl fun i _ =>
         map_smul (Algebra.TensorProduct.includeRight : E →ₐ[F] AF F ⊗[F] E) _ _
     | zero => simp
-    | add x y _ _ hx hy => simp only [map_add, add_smul, Finset.sum_add_distrib, ← hx, ← hy]
+    | add x y _ _ hx hy => simp only [map_add (f := _), add_smul, Finset.sum_add_distrib, ← hx, ← hy]
     | smul a x _ hx => simp only [map_smul, smul_eq_mul, mul_smul, ← Finset.smul_sum, ← hx]
   rw [hdec w]
   refine sum_mem fun i _ => AddSubgroup.subset_closure ⟨_, fun a ha => ?_, ?_, g i, hg i, rfl⟩

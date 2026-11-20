@@ -35,7 +35,7 @@ theorem pl_mul_eq (v : HeightOneSpectrum (𝓞 D.host.F)) (z : Formalism.IndefR.
     rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul]
     change _ = x ⊗ₜ[D.host.F] singleV D.host.F v (evalV D.host.F v a)
     rw [mul_comm, GlobalTheory.IdemModTwo.singleV_mul (D := D), mul_one]
-  | add x y hx hy => simp only [mul_add, hx, hy, map_add]
+  | add x y hx hy => simp only [mul_add, hx, hy, map_add (f := _)]
 
 theorem idem_mul_eq_zero : ∀ {D : D7} (v : HeightOneSpectrum (𝓞 D.host.F)) (Pb : Formalism.L2.DIV.Pl D.host.E) (e : Formalism.L2.Theta.AE D), Formalism.L2.Col.IsOver v Pb → Formalism.L2.NTheta.IsIdemAt e (Formalism.L2.Col.conjPrime₂ Pb) → ∀ z : Formalism.IndefR.Lev.EAf D, Formalism.UG.prV v z = 0 → swapAE D (finPart D e) * z = 0 := by
   intro D v Pb e hov he z hz

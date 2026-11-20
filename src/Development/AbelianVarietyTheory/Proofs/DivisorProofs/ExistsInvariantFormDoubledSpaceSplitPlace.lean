@@ -30,7 +30,7 @@ theorem exists_ext_form (hadd : ∀ x ∈ Y, ∀ x' ∈ Y, ∀ f, ρ x (ρ x' f)
     induction hp using Submodule.span_induction with
     | mem f hf => exact hinv u hu f hf
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add, map_add, map_add, ha, hb]
+    | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
     | smul c a _ ha => rw [map_smul, map_smul, map_smul, ha]
   have hPK : ∀ m ∈ P, m ∈ K → l0 m = 0 := by
     intro m hmP hmK
@@ -72,7 +72,7 @@ def conjForm {X : Type} (ℓ : (X → ℂ) →ₗ[ℂ] ℂ) : (X → ℂ) →ₗ
   map_add' a b := by
     have : (fun y => conj ((a + b) y)) = (fun y => conj (a y)) + fun y => conj (b y) := by
       funext y; simp
-    rw [this, map_add, map_add]
+    rw [this, map_add (f := _), map_add (f := _)]
   map_smul' c a := by
     have : (fun y => conj ((c • a) y)) = conj c • fun y => conj (a y) := by
       funext y; simp

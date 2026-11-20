@@ -155,7 +155,7 @@ instance (R : Type) [CommRing R] : Group (Heis R) where
 def Heis.map {R R' : Type} [CommRing R] [CommRing R'] (f : R →+* R') : Heis R →* Heis R' :=
   MonoidHom.mk' (fun g => ⟨f g.a, f g.b, f g.c⟩) fun g h => Heis.ext (map_add f _ _) (map_add f _ _) (by
     show f (g.c + h.c + g.a * h.b) = f g.c + f h.c + f g.a * f h.b
-    rw [map_add, map_add, map_mul])
+    rw [map_add (f := _), map_add (f := _), map_mul])
 
 def heisFunctor (S : Scheme.{0}) : (Over S)ᵒᵖ ⥤ GrpCat.{0} where
   obj T := GrpCat.of (Heis Γ(T.unop.left, ⊤))

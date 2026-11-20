@@ -48,7 +48,7 @@ theorem lineDerivList_comp_linearMap {E' : Type*} [AddCommGroup E'] [Module 𝕜
   | nil => rfl
   | cons v l ih =>
     funext z
-    simp only [lineDerivList_cons, ih, lineDeriv, List.map_cons, map_add, map_smul]
+    simp only [lineDerivList_cons, ih, lineDeriv, List.map_cons, map_add (f := _), map_smul]
 
 theorem lineDerivList_comp_add_const (c : E) (l : List E) (F : E → V) :
     lineDerivList 𝕜 l (fun z => F (z + c)) = fun z => lineDerivList 𝕜 l F (z + c) := by

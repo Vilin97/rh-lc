@@ -67,7 +67,7 @@ theorem imB_iso (hI : IsIsoSub R.form I) {u u' : Fin g → ℂ} (hu : u ∈ Subm
 
 theorem im_part_zero (hI : IsIsoSub R.form I) {u u' : Fin g → ℂ} (hu : u ∈ Submodule.span ℝ (R.P '' I))
     (hu' : u' ∈ Submodule.span ℝ (R.P '' I)) (h : imB R u' (u + Complex.I • u') = 0) : u' = 0 := by
-  rw [map_add, imB_iso R hI hu' hu, zero_add, imB_apply, ip_smul_right, Complex.I_mul_im] at h
+  rw [map_add (f := _), imB_iso R hI hu' hu, zero_add, imB_apply, ip_smul_right, Complex.I_mul_im] at h
   exact eq_zero_of_re R h
 
 theorem span_split {T : Set (Fin g → ℂ)} {w : Fin g → ℂ} (hw : w ∈ Submodule.span ℂ T) :
@@ -170,7 +170,7 @@ theorem isotropic_quotient_lattice : ∀ (E : Type) [Field E] [NumberField E] [I
         rw [map_zero, LinearMap.zero_apply, map_zero]
       map_add' := fun a b => LinearMap.ext fun z => by
         show q (R.B (a + b) (j z)) = q (R.B a (j z)) + q (R.B b (j z))
-        rw [map_add, LinearMap.add_apply, map_add] }
+        rw [map_add (f := _), LinearMap.add_apply, map_add (f := _)] }
   let R' : RiemLat E g' Λ' :=
     { free := hfree
       fin := hfin

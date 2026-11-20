@@ -55,7 +55,7 @@ theorem aeval_mem_of_mem_satIdeal [DecidableEq K] {p : Kleiman.Poly S N} (hp : p
     obtain ⟨n, -, hf⟩ := hf
     exact hf i hi d hd
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | smul r a _ ha =>
     rw [smul_eq_mul, map_mul]
     have hr : aeval (fun j => baseVec y k₀ e j / baseVec y k₀ e i) r ∈ overRing (S := S) y k₀ e d i :=

@@ -50,7 +50,7 @@ lemma dd_step (S : Multiset ℂ) (n : ℕ) (hS : Multiset.card S = n + 1) (T : M
   have h' : ψ (v (j + 1)) = ψ (T (v j)) + (-1 : ℂ) ^ (j + 1) * S.esymm (j + 1) * ψ x := by
     rw [← h]; ring
   rw [h']
-  simp only [LinearMap.comp_apply, map_add, map_mul]
+  simp only [LinearMap.comp_apply, map_add (f := _), map_mul]
   ring
 
 lemma dd_pow (S : Multiset ℂ) (n : ℕ) (hS : Multiset.card S = n + 1) (T : Module.End ℂ E) (v : ℕ → E) (x : E)
@@ -79,7 +79,7 @@ lemma dd_aeval (S : Multiset ℂ) (n : ℕ) (hS : Multiset.card S = n + 1) (T : 
   | add p r hp hr =>
     have : (p + r) * dd n v ψ - dd n v (ψ ∘ₗ (aeval T (p + r))) =
         (p * dd n v ψ - dd n v (ψ ∘ₗ (aeval T p))) + (r * dd n v ψ - dd n v (ψ ∘ₗ (aeval T r))) := by
-      rw [map_add, LinearMap.comp_add, dd_add]; ring
+      rw [map_add (f := _), LinearMap.comp_add, dd_add]; ring
     rw [this]; exact dvd_add hp hr
   | monomial k a =>
     have e : ψ ∘ₗ (aeval T (monomial k a)) = a • (ψ ∘ₗ (T ^ k)) := by

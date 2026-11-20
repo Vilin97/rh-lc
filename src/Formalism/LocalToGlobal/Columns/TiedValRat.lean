@@ -29,7 +29,7 @@ theorem tr_of_mem_Fi {φ : S.Cl → E.Y → ℂ} (hφ : φ ∈ E.Fi) (c : S.Cl) 
     obtain ⟨ψ, rfl⟩ := hx
     rw [E.emb_apply, E.tr_ev, ← ψ.2 g, hg]
   | zero => exact map_zero _
-  | add x y _ _ hx hy => rw [Pi.add_apply, map_add, hx, hy]
+  | add x y _ _ hx hy => rw [Pi.add_apply, map_add (f := _), hx, hy]
   | smul a x _ hx => rw [Pi.smul_apply, map_smul, hx]
 
 theorem exists_emb_iff (h : S.Ok) (φ : S.Cl → E.Y → ℂ) :
@@ -140,13 +140,13 @@ theorem map_mem_RatSpanG (lam : ι → DomWeight n) {F : MvPolynomial (ι × Fin
       rw [← Formalism.GradedWeylDivisibility.lclosedeq_applyWord_map, Formalism.GradedWeylDivisibility.lclosedeq_hw_map, ← Formalism.GradedWeylDivisibility.lclosedeq_applyWord_map,
         Formalism.GradedWeylDivisibility.lclosedeq_hw_map]
      | zero => rw [map_zero]; exact AddSubgroup.zero_mem _
-     | add y z _ _ hy hz => rw [map_add]; exact AddSubgroup.add_mem _ hy hz
+     | add y z _ _ hy hz => rw [map_add (f := _)]; exact AddSubgroup.add_mem _ hy hz
      | smul c y _ hy =>
       rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]
       exact smul_mem_RatSpanG s lam c hy
     exact key _ h2
   | zero => rw [map_zero]; exact AddSubgroup.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact AddSubgroup.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact AddSubgroup.add_mem _ hx hy
   | smul c x _ hx =>
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]
     exact smul_mem_RatSpanG s lam c hx

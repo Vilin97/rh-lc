@@ -22,7 +22,7 @@ theorem finite_coinv_of_common_generator : ∀ (H V : Type) [Group H] [AddCommGr
     | add x y _ _ hx hy =>
       obtain ⟨s, hs⟩ := hx
       obtain ⟨u, hu⟩ := hy
-      exact ⟨s + u, by rw [map_add, hs, hu, add_smul]⟩
+      exact ⟨s + u, by rw [map_add (f := _), hs, hu, add_smul]⟩
     | smul c x _ hx =>
       obtain ⟨s, hs⟩ := hx
       exact ⟨c * s, by rw [map_smul, hs, mul_smul]⟩

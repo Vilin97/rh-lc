@@ -19,7 +19,7 @@ private theorem filT_le_spanT : FilT (l := l) E V 0 ≤ spanT l (⊤ : Submodule
   rintro _ ⟨z, rfl⟩
   induction z with
   | tmul v b => exact Submodule.subset_span ⟨v, trivial, b.1, b.2, by simp⟩
-  | add x y hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 private theorem spanT_le_filT (W : Submodule E V) : spanT l W ≤ FilT (l := l) E V 0 := by
   refine Submodule.span_le.2 ?_
@@ -74,7 +74,7 @@ private theorem step (φ : G →* GQ l) (ρ : Representation E G V) (κ : G →*
     intro z
     induction z with
     | tmul v b => simp [hL, sub_tmul]
-    | add x y hx hy => simp only [map_add, hx, hy]; abel
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]; abel
   rwa [h2, h0, map_zero, sub_zero] at h1
 
 private theorem H0_eq_bot_of_filD_zero_eq_bot (φ : G →* GQ l) (ρ : Representation E G V) [TopologicalSpace G]
@@ -156,7 +156,7 @@ theorem UpperTheory.V.Loc.posBasic :
       have hfil := ((charFil φ hφ κ hcont w hκ).2 0).2 (by omega)
       refine ⟨fun g v hv => ?_, fun y hy hD => hz y (step φ ρ κ hfil (F i) (F (i + 1)) x lam ?_ ?_ y hy hD) hD⟩
       · obtain ⟨u, hu, c, rfl⟩ := hdec v hv
-        rw [map_add, map_smul]
+        rw [map_add (f := _), map_smul]
         refine add_mem (hle (hst g u hu)) (Submodule.smul_mem _ _ ?_)
         have := add_mem (hle (hx g)) (Submodule.smul_mem _ (κ g : E) hx1)
         rwa [sub_add_cancel] at this

@@ -169,7 +169,7 @@ theorem exists_semilinear [IsLocalRing O] (hO : Function.Injective (algebraMap O
     simp [Pi.single_apply, eq_comm]
   let θ : (Fin F.P₀.g → K) →ₛₗ[i] W :=
     { toFun := fun c => β (i ∘ c)
-      map_add' := fun c c' => by rw [← map_add]; exact congrArg β (funext fun l => map_add i _ _)
+      map_add' := fun c c' => by rw [← map_add (f := _)]; exact congrArg β (funext fun l => map_add i _ _)
       map_smul' := fun s c => by rw [← map_smul]; exact congrArg β (funext fun l => map_mul i _ _) }
   refine ⟨θ, fun u c x hc hx => by rw [← hβ, hκ u c x hc hx]; rfl, fun {Λ} _ act α hα τ w => ?_⟩
   obtain ⟨r, hr, hre⟩ := GenFib.exists_lieRep_eigLat K P F Λ act
@@ -196,7 +196,7 @@ theorem exists_semilinear [IsLocalRing O] (hO : Function.Injective (algebraMap O
     | add _ _ _ _ hx hy =>
       obtain ⟨x, rfl, hx⟩ := hx
       obtain ⟨y, rfl, hy⟩ := hy
-      refine ⟨lieAdd x y, by rw [c₁, map_add], ?_⟩
+      refine ⟨lieAdd x y, by rw [c₁, map_add (f := _)], ?_⟩
       rw [show AvDefs.lieAct G α a (lieAdd x y) = lieAdd (AvDefs.lieAct G α a x) (AvDefs.lieAct G α a y) from
         Subtype.ext (MonObj.mul_comp _ _ _), c₁, map_add, hx, hy, Matrix.mulVec_add]
     | smul s _ _ hx =>
@@ -268,7 +268,7 @@ theorem span_range_eq {K C O V V' W W' J : Type} [Field K] [NumberField K] [Fiel
       ((key a).le (Submodule.mem_span_singleton_self _))
   · rintro _ ⟨c, hc, rfl⟩
     refine Submodule.iSup_induction _ (motive := fun c => θ c ∈ Submodule.span O (Set.range fun a => ψ a (y a))) hc
-      (fun a c hc => ?_) (by simp) fun _ _ h₁ h₂ => by rw [map_add]; exact add_mem h₁ h₂
+      (fun a c hc => ?_) (by simp) fun _ _ h₁ h₂ => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h₁ h₂
     exact Submodule.span_mono (Set.singleton_subset_iff.2 (Set.mem_range_self (f := fun a => ψ a (y a)) a))
       ((key a).ge (Submodule.subset_span ⟨c, hc, rfl⟩))
 

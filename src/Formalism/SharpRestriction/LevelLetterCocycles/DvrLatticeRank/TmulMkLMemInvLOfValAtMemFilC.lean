@@ -30,7 +30,7 @@ theorem ser_van {LL : Type} [Field LL] (e e₁ P G A : PowerSeries LL) (u x₀ :
     · subst hk; simp
     · simp
   have hresc : rescale u A = C x₀ * rescale u (e ^ h) + X ^ N * (C (u ^ N) * rescale u D₁) := by
-    rw [hA', map_add, map_mul, map_mul, hRC, map_pow (rescale u) X N, rescale_X, mul_pow]
+    rw [hA', map_add (f := _), map_mul, map_mul, hRC, map_pow (rescale u) X N, rescale_X, mul_pow]
     simp only [map_pow]; ring
   have key : X ^ h * (C (u ^ h) * (rescale u e₁) ^ h * P * G) =
       X ^ h * (X ^ N * (e₁ ^ h * C (u ^ N) * rescale u D₁ - C (u ^ h) * (rescale u e₁) ^ h * D₁)) := by
@@ -247,7 +247,7 @@ theorem combine (ρ y : ℕ) (o : O) (X XK XN : ↥(LamLA W T₂ π' Eπ h' c �
   obtain ⟨-, wK, hwK, hK'⟩ := hK zK zK.2 hzK.symm
   obtain ⟨-, wN, hwN, hN'⟩ := hN zN zN.2 hzN.symm
   have h1 := congrArg (α T₂) hX
-  rw [map_smul, map_add, map_smul, hα, ← hzK, ← hzN] at h1
+  rw [map_smul, map_add (f := _), map_smul, hα, ← hzK, ← hzN] at h1
   have hJ : Submodule.Quotient.mk (((PD.p : ℕ) : O) ^ y • (⟨z, hz⟩ : ↥(LamPS W T₂ Eπ h' c)) -
       (o • zK + zN)) = (0 : QLamP W T₂ π' Eπ h' M c) := by
     rw [Submodule.Quotient.mk_sub, Submodule.Quotient.mk_smul, Submodule.Quotient.mk_add,
@@ -259,7 +259,7 @@ theorem combine (ρ y : ℕ) (o : O) (X XK XN : ↥(LamLA W T₂ π' Eπ h' c �
   have h2 := Submodule.add_mem _ (Submodule.add_mem _
     (Submodule.smul_mem _ (((PD.p : ℕ) : O) ^ ρ) hP) (Submodule.smul_mem _ o hK')) hN'
   convert h2 using 1
-  rw [map_add, LinearMap.map_smul_of_tower, pow_add]
+  rw [map_add (f := _), LinearMap.map_smul_of_tower, pow_add]
   module
 
 theorem NL_rep (T : LocLat G Qp LL O) {x : LA W T π' c} (hx : x ∈ NL W T Pt π' Eπ h' c) :
@@ -275,7 +275,7 @@ theorem NL_rep (T : LocLat G Qp LL O) {x : LA W T π' c} (hx : x ∈ NL W T Pt �
     let U : Fin (m + m') → ↥(NcS W T (c - 1)) :=
       Fin.append (fun j => ⟨u j, hu j⟩) (fun j => ⟨u' j, hu' j⟩)
     refine ⟨m + m', Fin.append a a', fun j => U j, ⟨fun j => (U j).2, ?_⟩, fun τ ζ hpt i => ?_⟩
-    · rw [map_add, hx1, hy1, Fin.sum_univ_add]
+    · rw [map_add (f := _), hx1, hy1, Fin.sum_univ_add]
       simp only [U, Fin.append_left, Fin.append_right]
     · have := Submodule.add_mem _ (hx2 τ ζ hpt i) (hy2 τ ζ hpt i)
       unfold expS at this ⊢
@@ -336,7 +336,7 @@ theorem compare {ρ : ℕ} (hW : WKill W F ρ) (hNL : NinLam W T₁ Eπ h') (V�
       | tmul u w =>
         rw [ModelFPf.smulLA_tmul, TensorProduct.map_tmul, LinearMap.mulLeft_apply, LinearMap.id_apply,
           ← mul_assoc, hΛu.val_inv_mul, one_mul]
-      | add u w hu hw => simp only [map_add, hu, hw]
+      | add u w hu hw => simp only [map_add (f := _), hu, hw]
     exact Function.LeftInverse.injective hl
   have hν1 : ν = ∑ j, e j ⊗ₜ mkL W T₁ π' c (y j) (hy j) := hinjΛ (by rw [hrep, hΛe])
   have hν₂ : ∑ j, e j ⊗ₜ mkL W T₂ π' c (W.map F (y j)) (hy2 j) ∈ LamLA W T₂ π' Eπ h' c ⊤ := by

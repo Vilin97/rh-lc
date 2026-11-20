@@ -223,7 +223,7 @@ theorem stepA_core (Wp Wq : Type) [NormedAddCommGroup Wp] [NormedSpace ℂ Wp] [
       -(uC k (r + 1) l.castSucc Y • WorkedExample c + pOp l WorkedExample c) - (c l)⁻¹ • LargeParameterEstimates c := by
     rw [map_sub, map_neg, stp_ev_mul (ho1 l hD'.1) (sf_aCi l) _ hc hg hgD]
     unfold bTee
-    rw [add_mul, map_add, smul_mul_assoc, one_mul, map_smul, e1]
+    rw [add_mul, map_add (f := _), smul_mul_assoc, one_mul, map_smul, e1]
     rfl
 
   have hnear := near_pt (ho1 l hD'.1) hc hgD

@@ -60,7 +60,7 @@ theorem raise_lower_pow_commutator_on_weight {E : GLOps n (KK O) V} (hE : IsGLRe
       · subst h
         simp
       · rw [e1, Nat.sub_add_cancel h]
-    rw [← e1, h0, ih, map_add, map_smul, e1, e2, Nat.add_sub_cancel, add_assoc, ← add_smul]
+    rw [← e1, h0, ih, map_add (f := _), map_smul, e1, e2, Nat.add_sub_cancel, add_assoc, ← add_smul]
     congr 2
     push_cast
     ring

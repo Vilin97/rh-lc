@@ -102,7 +102,7 @@ noncomputable def dehomZ : MvPolynomial (Fin 3) R →+* W.toAffine.CoordinateRin
 theorem dehomZ_X_two : dehomZ W (X 2) = 1 := by simp [dehomZ]
 
 theorem dehomZ_cubic : dehomZ W W.toProjective.polynomial = 0 := by
-  simp only [dehomZ, WeierstrassCurve.Projective.polynomial, map_sub, map_add, map_mul, map_pow,
+  simp only [dehomZ, WeierstrassCurve.Projective.polynomial, map_sub, map_add (f := _), map_mul, map_pow,
     coe_eval₂Hom, eval₂_X, eval₂_C]
   simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons,
     Matrix.tail_cons]
@@ -118,7 +118,7 @@ theorem dehomZ_surjective : Function.Surjective (dehomZ W) := by
     | add p q hp hq =>
       obtain ⟨P, hP⟩ := hp
       obtain ⟨Q, hQ⟩ := hq
-      exact ⟨P + Q, by rw [map_add, hP, hQ, Polynomial.C_add, map_add]⟩
+      exact ⟨P + Q, by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), hP, hQ, Polynomial.C_add, RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]⟩
     | monomial n r _ =>
       refine ⟨C r * X 0 ^ (n + 1), ?_⟩
       simp only [dehomZ, map_mul, map_pow, coe_eval₂Hom, eval₂_C, eval₂_X]
@@ -128,7 +128,7 @@ theorem dehomZ_surjective : Function.Surjective (dehomZ W) := by
   | add p q hp hq =>
     obtain ⟨P, hP⟩ := hp
     obtain ⟨Q, hQ⟩ := hq
-    exact ⟨P + Q, by rw [map_add, hP, hQ, map_add]⟩
+    exact ⟨P + Q, by rw [map_add (f := _), hP, hQ, map_add (f := _)]⟩
   | monomial n a hp =>
     obtain ⟨P, hP⟩ := hp
     refine ⟨P * X 1, ?_⟩
@@ -148,7 +148,7 @@ theorem val_scale_eq_zero_z :
     RingHom.comp_apply, Polynomial.coe_eval₂RingHom, HomogeneousLocalization.algebraMap_apply,
     HomogeneousLocalization.val_add, HomogeneousLocalization.val_mul, HomogeneousLocalization.val_pow,
     val_frac, val_scalarAway]
-  simp only [scale, WeierstrassCurve.Projective.polynomial, map_sub, map_add, map_mul, map_pow,
+  simp only [scale, WeierstrassCurve.Projective.polynomial, map_sub, map_add (f := _), map_mul, map_pow,
     coe_eval₂Hom, eval₂_X, eval₂_C, RingHom.comp_apply, π_C] at h0
   set u := vinv W 2
   set x := algebraMap (HomRing W) (Localization.Away (var W 2)) (var W 0)
@@ -217,7 +217,7 @@ noncomputable def dehomY : MvPolynomial (Fin 3) R →+* InfChart W :=
 theorem dehomY_X_one : dehomY W (X 1) = 1 := by simp [dehomY]
 
 theorem dehomY_cubic : dehomY W W.toProjective.polynomial = 0 := by
-  simp only [dehomY, WeierstrassCurve.Projective.polynomial, map_sub, map_add, map_mul, map_pow,
+  simp only [dehomY, WeierstrassCurve.Projective.polynomial, map_sub, map_add (f := _), map_mul, map_pow,
     coe_eval₂Hom, eval₂_X, eval₂_C]
   simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons,
     Matrix.tail_cons]
@@ -233,7 +233,7 @@ theorem dehomY_surjective : Function.Surjective (dehomY W) := by
     | add p q hp hq =>
       obtain ⟨P, hP⟩ := hp
       obtain ⟨Q, hQ⟩ := hq
-      exact ⟨P + Q, by rw [map_add, hP, hQ, Polynomial.C_add, map_add]⟩
+      exact ⟨P + Q, by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), hP, hQ, Polynomial.C_add, RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]⟩
     | monomial n r _ =>
       refine ⟨C r * X 2 ^ (n + 1), ?_⟩
       simp only [dehomY, map_mul, map_pow, coe_eval₂Hom, eval₂_C, eval₂_X]
@@ -242,7 +242,7 @@ theorem dehomY_surjective : Function.Surjective (dehomY W) := by
   | add p q hp hq =>
     obtain ⟨P, hP⟩ := hp
     obtain ⟨Q, hQ⟩ := hq
-    exact ⟨P + Q, by rw [map_add, hP, hQ, map_add]⟩
+    exact ⟨P + Q, by rw [map_add (f := _), hP, hQ, map_add (f := _)]⟩
   | monomial n a hp =>
     obtain ⟨P, hP⟩ := hp
     refine ⟨P * X 0, ?_⟩
@@ -262,7 +262,7 @@ theorem val_scale_eq_zero_y :
     RingHom.comp_apply, Polynomial.coe_eval₂RingHom, HomogeneousLocalization.algebraMap_apply,
     HomogeneousLocalization.val_add, HomogeneousLocalization.val_mul, HomogeneousLocalization.val_pow,
     HomogeneousLocalization.val_sub, val_frac, val_scalarAway]
-  simp only [scale, WeierstrassCurve.Projective.polynomial, map_sub, map_add, map_mul, map_pow,
+  simp only [scale, WeierstrassCurve.Projective.polynomial, map_sub, map_add (f := _), map_mul, map_pow,
     coe_eval₂Hom, eval₂_X, eval₂_C, RingHom.comp_apply, π_C] at h0
   set u := vinv W 1
   set x := algebraMap (HomRing W) (Localization.Away (var W 1)) (var W 0)

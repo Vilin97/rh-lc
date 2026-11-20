@@ -32,7 +32,7 @@ private lemma alg_core {F κ V : Type} [CommRing F] [Field κ] [AddCommGroup V] 
     have e1 : T (a * (α + α' - 1)) = 0 := hp _ (Ideal.mul_mem_left _ _ h2)
     have e2 : T (a * α) = 0 := hp _ (h1 a ha)
     have hs : a * α' = a + a * (α + α' - 1) - a * α := by ring
-    rw [hs, map_sub, map_add, e1, e2]
+    rw [hs, map_sub, map_add (f := _), e1, e2]
     simp
   intro a ha
   have step : ∀ k : ℕ, T a = T (a * α' ^ k) ∧ a * α' ^ k ∈ u ^ (k + 1) := by

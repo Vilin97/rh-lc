@@ -99,7 +99,7 @@ private lemma contDiff_of_isPolyDeg {N κ : ℕ} {P : Matrix (Fin N) (Fin N) ℂ
   clear hq
   induction q using MvPolynomial.induction_on with
   | C a => simpa using contDiff_const
-  | add p q hp hq => simpa only [map_add] using hp.add hq
+  | add p q hp hq => simpa only [map_add (f := _)] using hp.add hq
   | mul_X p i hp =>
     simp only [map_mul, MvPolynomial.eval_X]
     refine hp.mul ?_

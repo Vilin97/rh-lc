@@ -62,11 +62,11 @@ theorem teichmuller_quot :
     obtain ⟨y, hy⟩ := teich_decomp p x
     refine ⟨x.coeff 0, pr y, ?_⟩
     conv_lhs => rw [hy]
-    rw [map_add, map_mul, map_natCast]
+    rw [map_add (f := _), map_mul, map_natCast]
   · obtain ⟨w, hw⟩ := ((teichSum p (Fin n) Finset.univ).2 (PreTilt O p) a (wS p n) (wS_mul p n)).1
     have h := congrArg pr hw
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sum, map_add, map_add, map_mul, map_mul, hp2, zero_mul, add_zero, map_natCast] at h
+      rw [map_sum, map_add (f := _), map_add (f := _), map_mul, map_mul, hp2, zero_mul, add_zero, map_natCast] at h
     rw [h, MvPolynomial.aeval_def]
     rfl
   · have hK := ((a0 p C v O hv).2.2.1 ϖ hϖ).2.2
@@ -76,7 +76,7 @@ theorem teichmuller_quot :
       exact hc
     obtain ⟨x, y, hxy⟩ := Ideal.mem_span_pair.mp hm
     have h := congrArg (WittVector.constantCoeff (p := p) (R := PreTilt O p)) hxy
-    rw [map_add, map_mul, map_mul, map_natCast, CharP.cast_eq_zero, mul_zero, zero_add] at h
+    rw [map_add (f := _), map_mul, map_mul, map_natCast, CharP.cast_eq_zero, mul_zero, zero_add] at h
     simp only [WittVector.constantCoeff_apply, WittVector.teichmuller_coeff_zero] at h
     rw [← h, map_mul, map_mul, hϖ0, mul_zero]
 

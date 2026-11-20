@@ -61,7 +61,7 @@ theorem coeff_scale {σ : Type} (u : σ → K) (R : MvPolynomial σ K) (s : σ �
     split_ifs with h
     · subst h; rfl
     · simp
-  | add f g hf hg => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hf, hg, add_mul]
+  | add f g hf hg => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hf, hg, add_mul]
 
 open Classical in
 theorem degAt_eq (m : DVar ι a b →₀ ℕ) (τ : ι) : degAt m τ = ∑ k : DVar ι a b, if k.1 = τ then m k else 0 := by

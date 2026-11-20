@@ -80,7 +80,7 @@ theorem coeff_rowOp_self (i : Fin n) (m : Fin n × Fin n →₀ ℕ) (f : Poly n
     AddMonoidAlgebra.coeff (rowOp i i f) m = (rowWt m i : ℂ) * AddMonoidAlgebra.coeff f m := by
   classical
   induction f using MvPolynomial.induction_on' with
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
   | monomial s c =>
     rw [rowOp_self_monomial, coeff_monomial, coeff_monomial]
     by_cases h : s = m

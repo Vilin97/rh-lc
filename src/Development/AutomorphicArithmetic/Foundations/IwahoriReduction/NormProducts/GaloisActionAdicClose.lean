@@ -21,7 +21,7 @@ private theorem UpperTheory.Kd.K4.galoisAction_adic_close {Ω : Type} [Field Ω]
       (hF s (fun x hx => hs x (Finset.mem_union_right _ hx)) u)
     have e : (X.galB l s (a + b) - (a + b)) u =
         (X.galB l s a - a) u + (X.galB l s b - b) u := by
-      simp only [map_add, Pi.add_apply, Pi.sub_apply]
+      simp only [map_add (f := _), Pi.add_apply, Pi.sub_apply]
       abel
     rw [e]
     exact h

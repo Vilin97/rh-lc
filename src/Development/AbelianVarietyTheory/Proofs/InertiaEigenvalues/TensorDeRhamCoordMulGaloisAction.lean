@@ -22,7 +22,7 @@ theorem PhiS_act : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K L : FinExt l
     simp only [map_zero, PhiS_zero, Pi.zero_apply]
     exact (Matrix.mulVec_zero _).symm
   | add x y hx hy =>
-    rw [map_add, PhiS_add, hx, hy, PhiS_add]
+    rw [map_add (f := _), PhiS_add, hx, hy, PhiS_add]
     rw [← Matrix.mulVec_add]
     congr 1
   | tmul v b =>

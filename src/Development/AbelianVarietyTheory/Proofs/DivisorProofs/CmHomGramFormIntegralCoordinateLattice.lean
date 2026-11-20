@@ -147,7 +147,7 @@ theorem gram_integral : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
       obtain ⟨y, hy⟩ := h
       obtain ⟨y', hy'⟩ := h'
       refine ⟨y + y', ?_⟩
-      simp only [map_add, hy, hy', Pi.add_apply, mul_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), hy, hy', Pi.add_apply, mul_add, Finset.sum_add_distrib]
     | smul s d _ h =>
       obtain ⟨y, hy⟩ := h
       refine ⟨H.bar s * y, ?_⟩
@@ -161,7 +161,7 @@ theorem gram_integral : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (
     obtain ⟨y, hy⟩ := h
     obtain ⟨y', hy'⟩ := h'
     refine ⟨y + y', ?_⟩
-    simp only [map_add, hy, hy', Pi.add_apply, add_mul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), hy, hy', Pi.add_apply, add_mul, Finset.sum_add_distrib]
   | smul s c _ h =>
     obtain ⟨y, hy⟩ := h
     refine ⟨s * y, ?_⟩

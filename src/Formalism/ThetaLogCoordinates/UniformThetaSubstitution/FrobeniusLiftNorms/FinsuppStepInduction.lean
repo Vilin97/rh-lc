@@ -30,7 +30,7 @@ lemma shiftPoly_mul (b : κ → ι → K) (f g : MvPolynomial ι K) :
 
 lemma shiftPoly_add (b : κ → ι → K) (f g : MvPolynomial ι K) :
     shiftPoly b (f + g) = shiftPoly b f + shiftPoly b g := by
-  simp only [shiftPoly_eq, map_add]
+  simp only [shiftPoly_eq, map_add (f := _)]
 
 lemma shiftPoly_zero (b : κ → ι → K) : shiftPoly b (0 : MvPolynomial ι K) = 0 := by
   simp only [shiftPoly_eq, map_zero]
@@ -66,7 +66,7 @@ lemma hasseDir_zero_left (b : κ → ι → K) (Q : MvPolynomial ι K) : hasseDi
   rw [← MvPolynomial.constantCoeff_eq]
   induction Q using MvPolynomial.induction_on with
   | C a => rw [shiftPoly_C, MvPolynomial.constantCoeff_C]
-  | add p q hp hq => rw [shiftPoly_add, map_add, hp, hq]
+  | add p q hp hq => rw [shiftPoly_add, map_add (f := _), hp, hq]
   | mul_X p x hp =>
     rw [shiftPoly_mul, map_mul, hp, shiftPoly_X]
     simp [shiftGen]
@@ -79,7 +79,7 @@ lemma pderiv_shiftGen (b : κ → ι → K) (x : ι) (k : κ) :
   classical
   unfold shiftGen
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, MvPolynomial.pderiv_C, zero_add, map_sum, Finset.sum_eq_single k]
+    rw [map_add (f := _), MvPolynomial.pderiv_C, zero_add, map_sum, Finset.sum_eq_single k]
   · rw [MvPolynomial.pderiv_C_mul, MvPolynomial.pderiv_X_self, mul_one]
   · intro k' _ hk'
     rw [MvPolynomial.pderiv_C_mul, MvPolynomial.pderiv_X_of_ne hk', mul_zero]
@@ -93,8 +93,8 @@ lemma shiftPoly_dirD [Fintype ι] (b : κ → ι → K) (k : κ) (Q : MvPolynomi
   | C a => simp [dirD, shiftPoly_C, shiftPoly_zero]
   | add p q hp hq =>
     have : dirD (b k) (p + q) = dirD (b k) p + dirD (b k) q := by
-      simp only [dirD, map_add, mul_add, Finset.sum_add_distrib]
-    rw [this, shiftPoly_add, shiftPoly_add, map_add, hp, hq]
+      simp only [dirD, map_add (f := _), mul_add, Finset.sum_add_distrib]
+    rw [this, shiftPoly_add, shiftPoly_add, map_add (f := _), hp, hq]
   | mul_X p x hp =>
     have : dirD (b k) (p * MvPolynomial.X x) =
         dirD (b k) p * MvPolynomial.X x + p * MvPolynomial.C (b k x) := by
@@ -139,7 +139,7 @@ lemma jetPair_X_mul (Q : MvPolynomial ι K) (x : ι) (G : MvPowerSeries ι K) :
   classical
   induction Q using MvPolynomial.induction_on' with
   | add p q hp hq =>
-    rw [map_add, Formalism.DworkPowerSeriesWeights.jetPair_add_left, Formalism.DworkPowerSeriesWeights.jetPair_add_left, hp, hq]
+    rw [map_add (f := _), Formalism.DworkPowerSeriesWeights.jetPair_add_left, Formalism.DworkPowerSeriesWeights.jetPair_add_left, hp, hq]
   | monomial κ a =>
     rw [MvPolynomial.pderiv_monomial, jetPair_monomial_left, jetPair_monomial_left]
     by_cases h : κ x = 0
@@ -286,7 +286,7 @@ lemma biHom_mul {d e : ℕ} {F G : MvPolynomial κ (MvPolynomial ι K)} (hF : bi
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hx hy
   have h1 := hF x.1 y.1 (left_ne_zero_of_mul h)
   have h2 := hG x.2 y.2 (right_ne_zero_of_mul h)
-  rw [← hx, ← hy, map_add, map_add]
+  rw [← hx, ← hy, map_add (f := _), map_add (f := _)]
   omega
 
 lemma biHom_one : biHom 0 (1 : MvPolynomial κ (MvPolynomial ι K)) := by

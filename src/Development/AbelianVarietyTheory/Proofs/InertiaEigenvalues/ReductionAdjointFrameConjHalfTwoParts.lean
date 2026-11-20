@@ -28,7 +28,7 @@ theorem redM_part_eq {D : D7} (S T : HSp D) (βS : GL (Fin S.rank) (EAf D))
   have hsplit : x = cA D e • x + cA D f • x := by
     ext i j
     simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul]
-    rw [← add_mul, ← map_add, hx i j]
+    rw [← add_mul, ← map_add (f := _), hx i j]
   have h1 : frMapAdj S T βS βT x
       = frMapAdj S T βS βT (cA D e • x) + toEAf D f • frMapAdj S T βS βT x := by
     conv_lhs => rw [hsplit]

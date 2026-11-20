@@ -163,7 +163,7 @@ theorem main : ∀ (V : Type) [CommRing V] [IsDomain V] [IsDiscreteValuationRing
     refine ⟨z' - hD.xe (hD₀.xe.symm z), ?_⟩
     show q'.y = hD.xe (hD₀.xe.symm q.y) + k • (z' - hD.xe (hD₀.xe.symm z))
     rw [hz', hz]
-    simp only [map_add, map_nsmul]
+    simp only [map_add (f := _), map_nsmul]
     rw [← hp₁, hp₁', AddEquiv.apply_symm_apply, smul_sub]
     abel
 

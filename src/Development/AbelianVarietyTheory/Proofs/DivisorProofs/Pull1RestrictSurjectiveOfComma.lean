@@ -28,7 +28,7 @@ theorem pull1_restrict_surjective_of_comma : ∀ {R : Type} [CommRing R] {C : Ty
     have k2 := hx T T' φ t (ψ ≫ u)
     have k3 := hx T' T'' ψ t u
     rw [mp_comp] at k2
-    simp only [map_sub, map_add, Category.assoc] at k1 k2 ⊢
+    simp only [map_sub, map_add (f := _), Category.assoc] at k1 k2 ⊢
     linear_combination k1 - k2 - k3)
   refine ⟨H1.mk F ⟨x, hxc⟩, ?_⟩
   rw [CoefMap.pullCohomologyOne_class, H1.mk_eq_mk]

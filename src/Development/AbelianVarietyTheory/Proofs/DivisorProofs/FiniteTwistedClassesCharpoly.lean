@@ -178,7 +178,7 @@ theorem exists_aeval_of_comm (a b : Matrix (Fin n) (Fin n) K) (hs : a.charpoly.S
     exact LinearMap.congr_fun h1 v
   have hc : ∀ q : K[X], b * aeval a q = aeval a q * b := fun q => by
     induction q using Polynomial.induction_on' with
-    | add p q hp hq => rw [map_add, mul_add, add_mul, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), mul_add, add_mul, hp, hq]
     | monomial k c =>
       rw [aeval_monomial]
       exact (Commute.mul_right (Algebra.commutes c b).symm (Commute.pow_right h.symm k)).eq

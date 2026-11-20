@@ -25,8 +25,8 @@ theorem evR_eq (a : AF F) : evI F a = evR a := rfl
 
 def lf : (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] Module.Dual ℝ (κ → mixedEmbedding.mixedSpace F) :=
   LinearMap.mk₂ ℝ (fun b y => -(2 * Real.pi) * Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (y ⬝ᵥ b))
-    (fun a b y => by rw [dotProduct_add, map_add, mul_add]) (fun c b y => by rw [dotProduct_smul, map_smul, smul_eq_mul, smul_eq_mul]; ring)
-    (fun b x y => by rw [add_dotProduct, map_add, mul_add]) (fun c b y => by rw [smul_dotProduct, map_smul, smul_eq_mul, smul_eq_mul]; ring)
+    (fun a b y => by rw [dotProduct_add, map_add (f := _), mul_add]) (fun c b y => by rw [dotProduct_smul, map_smul, smul_eq_mul, smul_eq_mul]; ring)
+    (fun b x y => by rw [add_dotProduct, map_add (f := _), mul_add]) (fun c b y => by rw [smul_dotProduct, map_smul, smul_eq_mul, smul_eq_mul]; ring)
 
 theorem lf_surj [IsTotallyReal F] : Function.Surjective (lf (F := F) (κ := κ)) := by
   haveI : IsEmpty {w : InfinitePlace F // w.IsComplex} :=
@@ -96,7 +96,7 @@ theorem rest_pure (f : SInf F κ) (φ : ∀ v : Pl F, (κ → Fv F v) → ℂ) (
   refine ⟨fun x z hz => ?_, ?_⟩
   · refine finprod_congr fun v => congrArg (φ v) (funext fun i => ?_)
     have : z i = realAd F 1 * z i := (congrFun (at_iff.1 hz) i).symm
-    rw [Pi.add_apply, map_add, this, map_mul, show evFin F v (realAd F 1) = 0 from map_zero (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v),
+    rw [Pi.add_apply, map_add (f := _), this, map_mul, show evFin F v (realAd F 1) = 0 from map_zero (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v),
       zero_mul, add_zero]
   · exact Submodule.subset_span ⟨f, fun y => ∏ᶠ v, φ v fun i => evalV F v (y i),
       ⟨GlobalTheory.WeilM.isLocallyConstant_finprod_evalV φ h1 h2, GlobalTheory.AdelicCoordSupport.hasCompactSupport_finprod φ h1 h2⟩, rfl⟩

@@ -102,7 +102,7 @@ theorem Pf_LvEquiv_Φ_rTensor (s : ℕ) (D : Type) [AddCommGroup D] [Module LL D
     simp [Pf_LvEquiv_Φ, TensorProduct.piScalarRightHom_tmul, precomp_apply]
   | add z z' hz hz' =>
     funext ζ
-    rw [map_add, map_add, hz, hz', map_add]
+    rw [map_add (f := _), map_add (f := _), hz, hz', map_add (f := _)]
     rfl
 
 variable {T : LocLat G Qp LL O} {c : ZMod n}

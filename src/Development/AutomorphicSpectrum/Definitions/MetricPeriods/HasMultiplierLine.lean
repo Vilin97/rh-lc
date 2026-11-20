@@ -36,8 +36,8 @@ theorem hasVal_unique (y : (Σ k, ι k) → Ω) (a : K → ℤ) (s : Ω) {𝕜 :
     simp only [Pi.add_apply]; omega
   have hom : IsMultiHomog (g * h' + -(g' * h)) (dg + dh') :=
     ProjLine.mhAdd (ProjLine.mhMul hg hh') (ProjLine.mhNeg (hdeg ▸ ProjLine.mhMul hg' hh))
-  have h0 := hz.2 _ (mem_of_aeval y hom (by simp only [map_add, map_neg, map_mul, e1, e1']; ring))
-  simp only [map_add, map_neg, map_mul, v1, v1'] at h0
+  have h0 := hz.2 _ (mem_of_aeval y hom (by simp only [map_add (f := _), map_neg, map_mul, e1, e1']; ring))
+  simp only [map_add (f := _), map_neg, map_mul, v1, v1'] at h0
   have : (w - w') * (aeval z h * aeval z h') = 0 := by linear_combination h0
   exact sub_eq_zero.mp ((mul_eq_zero.mp this).resolve_right (mul_ne_zero n1 n1'))
 
@@ -81,13 +81,13 @@ theorem liesOver_rat [CharZero Ω] (y : (Σ k, ι k) → Ω) (sg : ℚ →+* ℂ
   have hom : IsMultiHomog (C (θ.den : ℤ) * g + -(C θ.num * h)) (0 + d) :=
     ProjLine.mhAdd (ProjLine.mhMul (hC _) hg) (ProjLine.mhNeg (ProjLine.mhMul (hC _) hh))
   have h0 := hz.2 _ (mem_of_aeval y hom (by
-    simp only [map_add, map_neg, map_mul, e, eq_intCast, map_intCast, map_natCast, eq_ratCast,
+    simp only [map_add (f := _), map_neg, map_mul, e, eq_intCast, map_intCast, map_natCast, eq_ratCast,
       Int.cast_natCast]
     have : (θ.den : Ω) * (θ : Ω) = θ.num := by exact_mod_cast Rat.den_mul_eq_num θ
     rw [← this]; ring))
   rw [eval_map_eq] at h0
   rw [eval_map_eq, eval_map_eq]
-  simp only [map_add, map_neg, map_mul, eq_intCast, map_intCast, map_natCast, Int.cast_natCast] at h0
+  simp only [map_add (f := _), map_neg, map_mul, eq_intCast, map_intCast, map_natCast, Int.cast_natCast] at h0
   have h1 : (θ.den : ℂ) * (θ : ℂ) = θ.num := by exact_mod_cast Rat.den_mul_eq_num θ
   have h2 : (θ.den : ℂ) ≠ 0 := by exact_mod_cast θ.den_ne_zero
   rw [eq_ratCast]
@@ -160,9 +160,9 @@ theorem multBound_half (L : HermLine (GlobalTheory (Fin 2))) (c : ℕ → ℝ) (
       HasVal (ι := GlobalTheory (Fin 2)) y (L.a - L.a) 2⁻¹ z (2⁻¹ : 𝕜) := by
     intro 𝕜 _ _ z
     refine ⟨0, 0, 1, 1 + 1, isMultiHomog_one, mhAdd isMultiHomog_one isMultiHomog_one, by simp, ?_, ?_, ?_⟩
-    · simp only [map_one, map_add]; norm_num
-    · simp only [map_one, map_add]; norm_num
-    · simp only [map_one, map_add]; norm_num
+    · simp only [map_one, map_add (f := _)]; norm_num
+    · simp only [map_one, map_add (f := _)]; norm_num
+    · simp only [map_one, map_add (f := _)]; norm_num
   have hp : ∀ (𝕜 : Type) [Field 𝕜], (1 : Ix (Fin 2) → 𝕜) ∈ ptsOver 𝕜 (mCoordIdeal (ι := GlobalTheory (Fin 2)) y) := by
     intro 𝕜 _
     refine ⟨fun _ => ⟨0, one_ne_zero⟩, fun f hf => ?_⟩

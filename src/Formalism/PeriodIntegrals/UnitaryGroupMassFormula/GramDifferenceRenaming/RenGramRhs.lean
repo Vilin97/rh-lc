@@ -86,7 +86,7 @@ theorem ren_GramRhs (hex0 : PowerSeries.constantCoeff ex = 0) (hl0 : PowerSeries
   unfold GramRhs GR
   simp only [Finset.sum_filter, Xv]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum, map_sum]
+    rw [map_add (f := _), map_sum, map_sum]
   congr 1
   · refine Fintype.sum_equiv E.symm _ _ fun j => ?_
     rw [map_mul, ren_C, ren_phAt r (constantCoeff_X j), ren_X, Equiv.apply_symm_apply]

@@ -42,7 +42,7 @@ theorem exists_multilinear_of_commuting_endAlgHom :
     obtain rfl : dec = hd := Subsingleton.elim _ _
     have e : (ℓ v).smulRight (a + b) = (ℓ v).smulRight a + (ℓ v).smulRight b := by
       ext z; simp [smul_add]
-    rw [hsplit _ v, hsplit _ v, hsplit _ v, hR, hR, hR, hfu, hfu, hfu, e, map_add,
+    rw [hsplit _ v, hsplit _ v, hsplit _ v, hR, hR, hR, hfu, hfu, hfu, e, map_add (f := _),
       LinearMap.add_apply]
   · intro dec x v c a
     obtain rfl : dec = hd := Subsingleton.elim _ _

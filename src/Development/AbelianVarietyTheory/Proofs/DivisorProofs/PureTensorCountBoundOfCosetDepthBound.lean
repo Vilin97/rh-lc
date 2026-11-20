@@ -89,7 +89,7 @@ private theorem reps_latO (S T : HSp D) (LS : Submodule (𝓞 D.host.E) (Fin S.r
       obtain ⟨a, ha, s, hs, t, ht, rfl⟩ := hx
       exact AddSubgroup.subset_closure ⟨1, h1, fun v h => absurd trivial h, a, ha, s, hs, t, ht, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul c x _ hx => rw [map_zsmul]; exact zsmul_mem hx c
   have key : ∀ u ∈ Λ, ∃ x ∈ M, ∃ v ∈ Λ, u = φ x + n • v := fun u hu => by
     induction hu using AddSubgroup.closure_induction with
@@ -119,14 +119,14 @@ private theorem reps_latO (S T : HSp D) (LS : Submodule (𝓞 D.host.E) (Fin S.r
     | add x y _ _ hx hy =>
       obtain ⟨a, ha, v, hv, rfl⟩ := hx
       obtain ⟨a', ha', v', hv', rfl⟩ := hy
-      exact ⟨a + a', add_mem ha ha', v + v', add_mem hv hv', by rw [map_add, nsmul_add]; abel⟩
+      exact ⟨a + a', add_mem ha ha', v + v', add_mem hv hv', by rw [map_add (f := _), nsmul_add]; abel⟩
     | neg x _ hx =>
       obtain ⟨a, ha, v, hv, rfl⟩ := hx
       exact ⟨-a, neg_mem ha, -v, neg_mem hv, by rw [map_neg, smul_neg]; abel⟩
   refine ⟨R.image φ, Finset.card_image_le.trans hR, fun u hu => ?_⟩
   obtain ⟨x, hx, v, hv, rfl⟩ := key u hu
   obtain ⟨r, hr, y, hy, rfl⟩ := hR' x hx
-  exact ⟨φ r, Finset.mem_image_of_mem _ hr, φ y + v, add_mem (hφ y hy) hv, by rw [map_add, map_nsmul, nsmul_add]; abel⟩
+  exact ⟨φ r, Finset.mem_image_of_mem _ hr, φ y + v, add_mem (hφ y hy) hv, by rw [map_add (f := _), map_nsmul, nsmul_add]; abel⟩
 
 private theorem coset_fns {a b : ℕ} (e : AE D) (Λ : AddSubgroup (Mx D a b)) {k : ℕ} (hk : 0 < k) (R : Finset (Mx D a b))
     (hR : ∀ u ∈ Λ, ∃ r ∈ R, ∃ v ∈ Λ, u = r + (k * k) • v) :

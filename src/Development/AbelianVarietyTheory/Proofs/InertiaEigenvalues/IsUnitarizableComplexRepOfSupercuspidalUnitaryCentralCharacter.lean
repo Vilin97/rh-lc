@@ -106,7 +106,7 @@ theorem isUnitarisable_of_isSupercuspidal : ∀ (G V : Type) [Group G] [Topologi
   have hadd1 : ∀ v v' w q, qterm ρ l (v + v') w q = qterm ρ l v w q + qterm ρ l v' w q := by
     intro v v' w q
     induction q using QuotientGroup.induction_on with
-    | H g => simp only [qterm_mk, term, map_add, add_mul]
+    | H g => simp only [qterm_mk, term, map_add (f := _), add_mul]
   have hsmul1 : ∀ (a : ℂ) v w q, qterm ρ l (a • v) w q = a * qterm ρ l v w q := by
     intro a v w q
     induction q using QuotientGroup.induction_on with
@@ -114,7 +114,7 @@ theorem isUnitarisable_of_isSupercuspidal : ∀ (G V : Type) [Group G] [Topologi
   have hadd2 : ∀ v w w' q, qterm ρ l v (w + w') q = qterm ρ l v w q + qterm ρ l v w' q := by
     intro v w w' q
     induction q using QuotientGroup.induction_on with
-    | H g => simp only [qterm_mk, term, map_add, mul_add]
+    | H g => simp only [qterm_mk, term, map_add (f := _), mul_add]
   have hsmul2 : ∀ (a : ℂ) v w q, qterm ρ l v (a • w) q = starRingEnd ℂ a * qterm ρ l v w q := by
     intro a v w q
     induction q using QuotientGroup.induction_on with

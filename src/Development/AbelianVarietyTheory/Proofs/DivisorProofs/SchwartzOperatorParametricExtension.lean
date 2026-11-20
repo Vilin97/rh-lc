@@ -235,7 +235,7 @@ theorem finiteRing_sq_sub_mul_sq_eq_of_card (n : ℕ) : ∀ (E' : Type) [NormedA
 
 def tensorId (T : 𝓢(V, ℂ) →L[ℂ] 𝓢(W, ℂ)) : 𝓢(V × V', ℂ) →L[ℂ] 𝓢(W × V', ℂ) :=
   SchwartzMap.mkCLM (σ := RingHom.id ℂ) (fun f p => opFst T f p)
-    (fun f g p => by simp [opFst, map_add])
+    (fun f g p => by simp [opFst, map_add (f := _)])
     (fun a f p => by simp [opFst, map_smul])
     (fun f => contDiff_infty.2 fun n => (finiteRing_sq_sub_mul_sq_eq_of_card n ℂ T).1 f)
     (fun m => (finiteRing_sq_sub_mul_sq_eq_of_card m.2 ℂ T).2 m.1)

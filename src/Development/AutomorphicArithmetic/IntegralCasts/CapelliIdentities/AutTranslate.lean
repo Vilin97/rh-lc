@@ -177,7 +177,7 @@ noncomputable def UpperTheory.Reformulated.B.Gr38.eqForms :
         add_mem' := (by
           intro f g hf hg
           refine ⟨fun v => (GlobalTheory.DefU.autU E n).add_mem (hf.1 v) (hg.1 v), fun x v => ?_⟩
-          simp only [LinearMap.add_apply, hf.2 x v, hg.2 x v, map_add]),
+          simp only [LinearMap.add_apply, hf.2 x v, hg.2 x v, map_add (f := _)]),
         zero_mem' := (by
           refine ⟨fun v => (GlobalTheory.DefU.autU E n).zero_mem, fun x v => ?_⟩
           simp only [LinearMap.zero_apply, map_zero]),

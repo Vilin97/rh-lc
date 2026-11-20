@@ -198,7 +198,7 @@ theorem exists_sub (hL : Laws) (hGt : BrGtSt) (hWp : BrWpSt) {R F F' : Type} [Co
     fun p p' => ⟨fun h => by
       obtain ⟨z, h₁, h₂⟩ := (equiv_iff hB _ _).1 h
       refine (equiv_iff hB _ _).2 ⟨z, h₁, Balanced.gtExt_injective f hf _ ?_⟩
-      rw [map_add, gtExt_iota]; exact h₂, qkExt_congr hB f hf⟩
+      rw [map_add (f := _), gtExt_iota]; exact h₂, qkExt_congr hB f hf⟩
   have rel : ∀ n a, 0 < n → (A'.q n a).1.1.toAdd = I.e (q n (ev n a)).1.1.toAdd ∧
       I.Rel (q n (ev n a)).1.2 (A'.q n a).1.2 := fun n a hn =>
     ⟨A'.ν.eX.injective (by rw [he, (hq n _).1, (A'.hq n a).1, ← hev n a hn]; rfl),

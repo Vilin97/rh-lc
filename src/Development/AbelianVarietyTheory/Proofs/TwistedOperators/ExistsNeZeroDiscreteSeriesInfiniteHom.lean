@@ -207,7 +207,7 @@ noncomputable def insertMap (σ : ι) (u : Hs σ) (B : Hs σ →L[ℂ] Continuou
         obtain rfl : inst = dec := Subsingleton.elim _ _
         by_cases hi : i = σ
         · subst hi
-          simp only [Function.update_self, Function.update_idem, map_add, ContinuousMultilinearMap.add_apply]
+          simp only [Function.update_self, Function.update_idem, map_add (f := _), ContinuousMultilinearMap.add_apply]
         · simp only [Function.update_comm hi,
             ContinuousMultilinearMap.map_update_add]
           rw [Function.update_of_ne (Ne.symm hi), Function.update_of_ne (Ne.symm hi),

@@ -115,7 +115,7 @@ theorem _root_.GlobalTheory.CNorm.pows_eq_range_dif_pow : ∀ (p : ℕ) (M : Typ
     rw [← ofMul_prod, ← _root_.GlobalTheory.CNorm.nrm_apply, hN, ofMul_one]
     rfl
   have hy : aeval Y ((cyclotomic p ℤ).comp (X + 1)) = 0 := by
-    rw [aeval_comp, map_add, aeval_X, map_one, hYT, hT]
+    rw [aeval_comp, map_add (f := _), aeval_X, map_one, hYT, hT]
   obtain ⟨W, V, h1, h2, h3, h4⟩ := exists_pow_factor_of_aeval_cyclotomic p Y hy
   have hL : ∀ a, Additive.ofMul ((lam ^ (p - 1) : Monoid.End M) a) =
       (Y ^ (p - 1)) (Additive.ofMul a) := fun a => by

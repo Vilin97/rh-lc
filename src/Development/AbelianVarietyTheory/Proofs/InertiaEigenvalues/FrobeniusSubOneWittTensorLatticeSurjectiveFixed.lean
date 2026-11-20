@@ -50,7 +50,7 @@ theorem tensor_flat {R W T : Type} [CommRing R] [CommRing W] [Algebra R W] [AddC
     | tmul r t =>
       simp only [LinearMap.rTensor_tmul, TensorProduct.lid_tmul, i, Algebra.linearMap_apply]
       rw [Algebra.algebraMap_eq_smul_one (A := W) r, TensorProduct.smul_tmul]
-    | add x y hx hy => rw [map_add, map_add, hx, hy, TensorProduct.tmul_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, TensorProduct.tmul_add]
   refine ⟨fun y => ?_, fun b => ?_, ?_⟩
   · obtain ⟨b, hb⟩ := LinearMap.rTensor_surjective T gsurj y
     exact ⟨b, by rw [key]; exact hb⟩
@@ -86,7 +86,7 @@ theorem baseChange_flat {R W O : Type} [CommRing R] [CommRing W] [Algebra R W] [
     induction b using TensorProduct.induction_on with
     | zero => simp
     | tmul o w => simp [g, TensorProduct.tmul_sub]
-    | add x y hx hy => rw [map_add, map_add, ← hx, ← hy]; abel
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), ← hx, ← hy]; abel
   have gsurj : Function.Surjective g := fun y => by
     obtain ⟨b, hb⟩ := hs y
     exact ⟨b, by simpa [g] using hb⟩
@@ -114,7 +114,7 @@ theorem baseChange_flat {R W O : Type} [CommRing R] [CommRing W] [Algebra R W] [
       simp only [LinearMap.lTensor_tmul, TensorProduct.rid_tmul, i, Algebra.linearMap_apply,
         Algebra.TensorProduct.algebraMap_apply, Algebra.algebraMap_self_apply]
       rw [Algebra.algebraMap_eq_smul_one (A := W) r, ← TensorProduct.smul_tmul]
-    | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
   refine ⟨fun y => ?_, fun b hb => ?_, ?_⟩
   · obtain ⟨b, hb⟩ := LinearMap.lTensor_surjective O gsurj y
     exact ⟨b, by rw [key]; exact hb⟩

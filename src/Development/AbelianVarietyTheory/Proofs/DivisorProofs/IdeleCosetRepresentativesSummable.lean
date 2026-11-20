@@ -293,14 +293,14 @@ theorem nnnorm_norm_one_add {w : AE F E} (hw : w ∈ ord F E) (v : HeightOneSpec
   have e : evFin F v (Algebra.norm (AF F) (1 + Ideal.absNorm v.asIdeal • w)) =
       O.subtype (1 + Ideal.absNorm v.asIdeal • W).det := by
     rw [Algebra.norm_eq_matrix_det (bas F E), AlgHom.map_det, RingHom.map_det]
-    simp only [map_add, map_one, map_nsmul]
+    simp only [map_add (f := _), map_one, map_nsmul]
     congr 2
   have hp : IsLocalRing.residue O (Ideal.absNorm v.asIdeal : O) = 0 := by
     rw [IsLocalRing.residue_eq_zero_iff, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff,
       HeightOneSpectrum.adicCompletionIntegers.isUnit_iff_valued_eq_one]
     exact (valued_absNorm_lt_one v).ne
   have hu : IsUnit (1 + Ideal.absNorm v.asIdeal • W).det := by
-    rw [← IsLocalRing.residue_ne_zero_iff_isUnit, RingHom.map_det, map_add, map_one, map_nsmul,
+    rw [← IsLocalRing.residue_ne_zero_iff_isUnit, RingHom.map_det, map_add (f := _), map_one, map_nsmul,
       ← Nat.cast_smul_eq_nsmul (IsLocalRing.ResidueField O), ← map_natCast (IsLocalRing.residue O), hp]
     simp
   rw [e]

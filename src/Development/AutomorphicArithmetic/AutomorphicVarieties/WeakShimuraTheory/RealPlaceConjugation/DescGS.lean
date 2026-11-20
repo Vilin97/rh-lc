@@ -83,7 +83,7 @@ theorem UpperTheory.V.Ws.exists_descent_to_galoisGroupUnramifiedOutside :
           intro g h
           funext m
           show ρ (g * h) m + z (g * h) = ρ g (ρ h m + z h) + z g
-          rw [hzc, map_mul, Module.End.mul_apply, map_add]
+          rw [hzc, map_mul, Module.End.mul_apply, map_add (f := _)]
           abel }
     have hkerφ : ∀ g, g ∈ φ.ker ↔ z g = 0 ∧ ∀ m, ρ g m = m := by
       intro g

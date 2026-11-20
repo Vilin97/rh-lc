@@ -43,7 +43,7 @@ theorem groupMat_apply (u : R) (h g : G) : groupMat st u h g = st (h * g) u := r
 def eigen (χ : G →* Kˣ) : Submodule K R where
   carrier := {F | ∀ h, st h F = ((χ h : Kˣ) : K) • F}
   zero_mem' := fun h => by simp
-  add_mem' := fun {a b} ha hb h => by rw [map_add, ha h, hb h, smul_add]
+  add_mem' := fun {a b} ha hb h => by rw [map_add (f := _), ha h, hb h, smul_add]
   smul_mem' := fun c a ha h => by rw [map_smul, ha h, smul_comm]
 
 theorem mem_eigen {χ : G →* Kˣ} {F : R} : F ∈ eigen st χ ↔ ∀ h, st h F = ((χ h : Kˣ) : K) • F := Iff.rfl
@@ -84,7 +84,7 @@ theorem IsRightAct.algOp_eq {st : G → R →ₐ[K] R} (hs : IsRightAct st) (e :
     algOp st e = hs.leftRep.asAlgebraHom e := by
   induction e using MonoidAlgebra.induction_linear with
   | zero => simp [algOp]
-  | add a b ha hb => rw [map_add, ← ha, ← hb]; simp [algOp]
+  | add a b ha hb => rw [map_add (f := _), ← ha, ← hb]; simp [algOp]
   | single g a => ext x; rw [algOp_single, Representation.asAlgebraHom_single]; rfl
 
 theorem IsRightAct.algOp_mul {st : G → R →ₐ[K] R} (hs : IsRightAct st) (e e' : MonoidAlgebra K G) :

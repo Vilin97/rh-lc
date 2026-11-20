@@ -129,7 +129,7 @@ theorem mu_mem_LL : Sites (fun {D L hT Gi Gl Kc Dx cX ex u μ w hg Lv I H X} [Fa
       rw [hzdef, map_sub, map_one, sub_add_cancel]
       rfl
     have e2 : (b : AdeleRing (𝓞 t.X.E) t.X.E).2 = ι ((x : (AfE t.X.F t.X.E)ˣ) : AfE t.X.F t.X.E) := rfl
-    rw [e2, e1, map_add, map_one]
+    rw [e2, e1, map_add (f := _), map_one]
     show ι (J.A.iA.symm z) P + 1 = 1
     rw [h0, zero_add]
   have hu : ∀ P ∈ T, (t.glob.mu0 ⟨j, hj⟩).UnrAt P := by

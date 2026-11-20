@@ -31,7 +31,7 @@ private theorem symm_of_eigen {R : Type} [CommRing R] [IsDomain R] {n : ℕ} {q 
     rw [← mul_assoc, e, add_mul, mul_assoc, simple_one b h, mul_smul_comm, smul_mul_assoc] at e1
     have e2 : q • rename (swap a c) y + (q - 1) • (X a * z) - q • y = 0 := by
       apply hb
-      rw [map_sub, map_add, map_smul, map_smul, map_smul, sub_mul, add_mul, smul_mul_assoc, smul_mul_assoc,
+      rw [map_sub, map_add (f := _), map_smul, map_smul, map_smul, sub_mul, add_mul, smul_mul_assoc, smul_mul_assoc,
         smul_mul_assoc, e1, sub_self]
     have e3 : (C q * X c - X a) * z = 0 := by
       simp only [smul_eq_C_mul, map_sub, map_one] at e2

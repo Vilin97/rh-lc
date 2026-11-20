@@ -31,7 +31,7 @@ theorem exists_isGamma {K : Type} [CommRing K] {V : Type} [AddCommGroup V] [Modu
     { toFun := fun v => (ExteriorAlgebra.ι K (f v) : ExteriorAlgebra K V)
       map_add' := fun v w => by
         show ExteriorAlgebra.ι K (f (v + w)) = ExteriorAlgebra.ι K (f v) + ExteriorAlgebra.ι K (f w)
-        rw [map_add, map_add]
+        rw [map_add (f := _), map_add (f := _)]
       map_smul' := fun c v => by
         have h1 : ExteriorAlgebra.ι K (f (c • v)) =
             algebraMap K (ExteriorAlgebra K V) (c ^ p) * ExteriorAlgebra.ι K (f v) := by

@@ -88,7 +88,7 @@ theorem rec2 (W : PowerSeries ℂ) (c : ℂ) (hc : c ∈ M)
     | 1, _ => exact h1
     | m + 2, ih =>
       have e := congrArg (PowerSeries.coeff m) h
-      rw [PowerSeries.coeff_derivative, PowerSeries.coeff_derivative, map_add, PowerSeries.coeff_C_mul,
+      rw [PowerSeries.coeff_derivative, PowerSeries.coeff_derivative, map_add (f := _), PowerSeries.coeff_C_mul,
         PowerSeries.coeff_mul, PowerSeries.coeff_C] at e
       have h6 : (6 : ℂ) ∈ M := by
         have := natCast_mem M 6
@@ -231,7 +231,7 @@ theorem caseA (L : PeriodPair) (ω₀ s : ℂ) (hω : ω₀ ∈ L.lattice) (hh :
   have hVc : ∀ n, PowerSeries.coeff n (taylor0 v) ∈ M := by
     refine rec0 M _ _ TV ?_ ?_
     · intro k
-      rw [map_add, PowerSeries.coeff_C_mul, PowerSeries.coeff_C]
+      rw [map_add (f := _), PowerSeries.coeff_C_mul, PowerSeries.coeff_C]
       refine add_mem (mul_mem (neg_mem (one_mem _)) (hWc k)) ?_
       split_ifs
       · exact neg_mem hs2

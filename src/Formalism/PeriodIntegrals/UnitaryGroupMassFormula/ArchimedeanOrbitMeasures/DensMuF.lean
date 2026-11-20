@@ -75,7 +75,7 @@ theorem densMu_of (hS : BetaSym) (hN : MatND) : DensMu := by
   haveI := hν.1
   have hB : ST.IsBichar (fun x y : EuclideanSpace ℝ (KapI X) => ((𝐞 ⟪x, A y⟫ : Circle) : ℂ)) :=
     { addL := fun x x' y => by simp only [inner_add_left, AddChar.map_add_eq_mul, Circle.coe_mul]
-      addR := fun x y y' => by simp only [map_add, inner_add_right, AddChar.map_add_eq_mul, Circle.coe_mul]
+      addR := fun x y y' => by simp only [map_add (f := _), inner_add_right, AddChar.map_add_eq_mul, Circle.coe_mul]
       norm1 := fun x y => Circle.norm_coe _
       contL := fun y => (continuous_subtype_val.comp Real.continuous_fourierChar).comp
         (continuous_id.inner continuous_const)

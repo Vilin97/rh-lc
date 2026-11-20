@@ -66,7 +66,7 @@ def orad (β : LinearMap.BilinForm ℤ X) : Submodule O X where
   carrier := {x | ∀ (a : O) (y : X), β (a • x) y = 0}
   add_mem' := by
     intro x x' hx hx' a y
-    rw [smul_add, map_add, LinearMap.add_apply, hx a y, hx' a y, add_zero]
+    rw [smul_add, map_add (f := _), LinearMap.add_apply, hx a y, hx' a y, add_zero]
   zero_mem' := by
     intro a y
     rw [smul_zero, map_zero, LinearMap.zero_apply]

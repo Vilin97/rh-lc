@@ -25,7 +25,7 @@ theorem qn_coeff_X_pderiv {σ : Type*} (i : σ) (f : MvPolynomial σ ℚ) (m : �
     split_ifs with hsm
     · rw [hsm]
     · simp
-  | add p q hp hq => rw [map_add, mul_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add (f := _), mul_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 def qn_wt {n : ℕ} (m : Fin n × Fin n →₀ ℕ) : Fin n → ℤ := fun a => ((∑ l : Fin n, m (l, a) : ℕ) : ℤ)
 

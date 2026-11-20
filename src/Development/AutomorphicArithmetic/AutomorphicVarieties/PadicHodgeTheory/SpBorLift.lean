@@ -76,7 +76,7 @@ theorem UpperTheory.V.Loc.cocLift (hP : LocalPublishedTheorems) {v l : ℕ} [Fac
   · have e : χ g * y h - y (g * h) + y g = z (g, h) := congrArg Subtype.val (congrFun hyZ (g, h))
     simp only [z] at e
     linear_combination -e
-  · rw [map_add, hs', (hJ _).1 (y g).2, add_zero]
+  · rw [map_add (f := _), hs', (hJ _).1 (y g).2, add_zero]
 
 namespace UpperTheory.V.Loc.SpBor
 

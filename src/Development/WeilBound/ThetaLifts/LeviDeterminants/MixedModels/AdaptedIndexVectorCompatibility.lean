@@ -157,7 +157,7 @@ theorem adapted_index_vector_compatibility : ∀ (F E : Type) [Field F] [NumberF
       have ed : γ = _ := (by rw [hw, ← Matrix.mul_assoc, hQ2, Matrix.one_mul] : γ = incM F (frame H) * w).trans (dec w)
       have h2 : (fun k => liftV v (a k)) ⬝ᵥ (co.e γ).2 =
           (fun k => liftV v (a k)) ⬝ᵥ (co.e (Matrix.vecMulVec (incV F H.x) (w (.inr 0)))).2 := by
-        conv_lhs => rw [ed, map_add, map_add, Prod.snd_add, Prod.snd_add, hι, (hy _).1, add_zero, dotProduct_add]
+        conv_lhs => rw [ed, map_add (f := _), map_add (f := _), Prod.snd_add, Prod.snd_add, hι, (hy _).1, add_zero, dotProduct_add]
         rw [dotProduct_comm _ (Function.extend _ _ _), dot_extend hj]
         simp [ha, dotProduct]
       have h3 := congrFun (E0 _ hg) x

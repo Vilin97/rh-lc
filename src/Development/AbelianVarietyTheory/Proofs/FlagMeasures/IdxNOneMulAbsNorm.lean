@@ -256,11 +256,11 @@ theorem exists_norm_eq (F : FlagG S r T) (F' : FlagG S r T') (hT : T ≠ 0) (hs 
   refine ⟨y + (Z.det / T) • F.z, (Formalism.MainNotions.mem_orth_iff _ _).2 (Formalism.MainNotions.hT_zero_of_mem_Xplus F (fun a => ?_) ?_), ?_⟩
   · have := h1 a.castSucc
     simp only [FlagG.fvec, Fin.snoc_castSucc, Fin.castSucc_ne_last, if_false] at this
-    rw [map_add, map_smul, this, F.z_orth, smul_zero, add_zero]
-  · rw [map_add, map_smul, h3, F.z_norm, smul_eq_mul]
+    rw [map_add (f := _), map_smul, this, F.z_orth, smul_zero, add_zero]
+  · rw [map_add (f := _), map_smul, h3, F.z_norm, smul_eq_mul]
     field_simp
     ring
-  · simp only [map_add, LinearMap.add_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, h2, h3, h4,
+  · simp only [map_add (f := _), LinearMap.add_apply, map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul, h2, h3, h4,
       F.z_norm, starRingEnd_apply, RingHom.id_apply, star_div₀, hs, Gflag, Dl_succ, ← hZ]
     field_simp
     ring
@@ -351,7 +351,7 @@ theorem main : ∀ (D : D7) (large₂ : SizeData₂ D) (u u' : D.what₂.Word) (
     have a1 := (Formalism.MainNotions.mem_orth_iff _ _).1 hw x (Submodule.mem_sup_left hx)
     have a2 := Formalism.MainNotions.hT_swap_zero ((Formalism.MainNotions.mem_orth_iff _ _).1
       (hW.le (Submodule.mem_sup_left ⟨p, rfl⟩)) x (Submodule.mem_sup_left hx))
-    rw [map_add (VS D).hT, LinearMap.add_apply, a1, add_zero, map_add, a2, add_zero,
+    rw [map_add (VS D).hT, LinearMap.add_apply, a1, add_zero, map_add (f := _), a2, add_zero,
       D.sp.iXY_isom 0 (lt_of_lt_of_le (by norm_num) D.R.two_le_m)] at e
     rw [hGd, ← e, map_mul, map_natCast, ← Complex.ofReal_natCast, Complex.re_ofReal_mul]
     refine mul_nonneg (Nat.cast_nonneg _) ?_

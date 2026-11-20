@@ -239,7 +239,7 @@ private theorem subDeg_top_eq_sum_subDeg_eig_of_ncard_le (K : Type) [Field K] (C
           intro a b
           refine LinearMap.ext fun x => Subtype.ext ?_
           show ρ (a + b) (x : V) = ρ a x + ρ b x
-          rw [map_add]
+          rw [map_add (f := _)]
           rfl }
     let ρW : O → Module.End K W0 := fun a =>
       ((ρ a).comp W0.subtype).codRestrict W0 fun x => hpresW a x x.2

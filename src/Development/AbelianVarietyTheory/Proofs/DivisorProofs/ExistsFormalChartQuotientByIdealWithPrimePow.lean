@@ -23,10 +23,10 @@ def twoRing {R R' A A' : Type} [CommRing R] [CommRing R'] {σ : R →+* R'} [Com
       Algebra.TensorProduct.one_def]
   map_mul' x y := by
     induction x with
-    | add a b ha hb => simp only [add_mul, map_add, ha, hb]
+    | add a b ha hb => simp only [add_mul, map_add (f := _), ha, hb]
     | tmul a b =>
       induction y with
-      | add u v hu hv => simp only [mul_add, map_add, hu, hv]
+      | add u v hu hv => simp only [mul_add, map_add (f := _), hu, hv]
       | tmul u v => simp
 
 theorem ev₂_map {p m d : ℕ} {O k : Type} [CommRing O] [CommRing k] {r : O →+* k}

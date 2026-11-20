@@ -32,7 +32,7 @@ theorem schr_eq_schrF {F : Type} [Field F] [NumberField F] [Invertible (2 : mixe
   funext x
   simp only [schr, GlobalTheory.ArchUniq.schrF, hψ]
   congr 3
-  rw [map_add, trace_half]
+  rw [map_add (f := _), trace_half]
   rfl
 
 theorem int_phase_shift {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V]

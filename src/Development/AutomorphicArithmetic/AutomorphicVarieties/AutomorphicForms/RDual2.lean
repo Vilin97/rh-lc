@@ -270,7 +270,7 @@ theorem isSelfDualBy_of_iso {χ : HChar E} (B : π.V →ₗ[ℂ] π.V →ₗ[ℂ
   have hS : ∀ o ψ, S (π.op o ψ) = ((opMul χ o : ℂˣ) : ℂ) • π.op (invTOp o) (S ψ) + opAdd χ o • S ψ := fun o ψ => by
     have e : T ψ = π.dual.toTwist χ (π.toDual (S ψ)) := by simp [S]
     generalize S ψ = y at e
-    simp only [S, LinearEquiv.trans_apply, hT, e, op_toTwist, op_toDual, LinearEquiv.symm_apply_apply, map_add, map_smul]
+    simp only [S, LinearEquiv.trans_apply, hT, e, op_toTwist, op_toDual, LinearEquiv.symm_apply_apply, map_add (f := _), map_smul]
   refine ⟨B.compl₂ S.toLinearMap, (dchi χ).toLinearMap, fun φ h => h1 φ fun ψ => ?_,
     fun ψ h => (map_eq_zero_iff S S.injective).1 (h2 _ h), fun z u hu => ?_, fun k φ ψ => ?_, fun k φ ψ => ?_,
     fun X φ ψ => ?_⟩
@@ -284,7 +284,7 @@ theorem isSelfDualBy_of_iso {χ : HChar E} (B : π.V →ₗ[ℂ] π.V →ₗ[ℂ
     rw [hS, opAdd, zero_smul, add_zero, map_smul, invTOp, hc]
     rfl
   · change B _ (S _) + B _ (S _) = dchi χ _ * B φ (S ψ)
-    rw [hS, opMul, Units.val_one, one_smul, map_add, map_smul, invTOp, ← add_assoc, hl, zero_add]
+    rw [hS, opMul, Units.val_one, one_smul, map_add (f := _), map_smul, invTOp, ← add_assoc, hl, zero_add]
     rfl
 
 end CuspSub

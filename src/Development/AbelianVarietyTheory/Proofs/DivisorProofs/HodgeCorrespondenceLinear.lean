@@ -25,7 +25,7 @@ theorem corr_add_smul : ∀ {T : Scheme.{0}} (A : Over T) [GrpObj A] (V : T.Open
       GlobalTheory.HodgeSub.Corr A hV (s + s') (c + c') ∧ GlobalTheory.HodgeSub.Corr A hV (r • s) (r • c) := by
   intro T A _ V hV s s' c c' r hs hs'
   refine ⟨fun v h hv w we => ?_, fun v h hv w we => ?_⟩
-  · rw [map_add, hs v h hv w we, hs' v h hv w we, map_add]
+  · rw [map_add (f := _), hs v h hv w we, hs' v h hv w we, map_add (f := _)]
     have key : ∀ (a b : Γ((Scheme.Modules.pullback hV.fromSpec).obj (GlobalTheory.IndefiniteRowSideFullHecke.ZeroSectionBase.hodge A), ⊤)),
         (GlobalTheory.TanFibre.form w we).app ⊤ (a + b) = (GlobalTheory.TanFibre.form w we).app ⊤ a + (GlobalTheory.TanFibre.form w we).app ⊤ b :=
       fun a b => map_add _ a b

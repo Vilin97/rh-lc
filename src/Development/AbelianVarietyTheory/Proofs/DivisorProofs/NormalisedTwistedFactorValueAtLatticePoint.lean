@@ -117,7 +117,7 @@ theorem mem_of_add {X G : Type} [AddCommGroup X] [CommGroup G] (H : Subgroup G) 
     have := (QuotientGroup.eq_one_iff _).2 (hl a b)
     rw [← QuotientGroup.mk'_apply, map_mul, map_mul, map_inv, map_inv, _root_.mul_assoc, ← mul_inv, mul_inv_eq_one] at this
     rw [this, ofMul_mul])
-  have e : f (β + (n • ν + j • δ)) = f β + (n • f ν + j • f δ) := by simp only [map_add, map_zsmul]
+  have e : f (β + (n • ν + j • δ)) = f β + (n • f ν + j • f δ) := by simp only [map_add (f := _), map_zsmul]
   refine (QuotientGroup.eq_one_iff _).1 ?_
   rw [← QuotientGroup.mk'_apply, map_mul, map_inv, map_mul, map_mul, map_zpow, map_zpow, mul_inv_eq_one, _root_.mul_assoc]
   exact congrArg Additive.toMul e
@@ -217,7 +217,7 @@ theorem val_fac {R : Type} [CommRing R] [IsDomain R] (D : DegPre R) (hB : D.TauB
   show val u₁ ρ₁.left z J = ψ (ν + mu) ^ n * ψ (h (ν + mu)) ^ j * τ (ν + mu) β₀ * rg ^ (n + j) *
     (ψ mu ^ n * ψ (h mu) ^ j * τ mu β₁ * rg ^ (n + j))⁻¹
   change val u₁ ρ₀.left z J = ψ ν ^ n * ψ (h ν) ^ j * τ ν β₀ * rg ^ (n + j) at v₀
-  rw [map_add, pa, pa]
+  rw [map_add (f := _), pa, pa]
   rw [v₀, ts β₁, ts β₀, ts (h' (h ν)), ← tb, ts (h mu)] at key
   apply Additive.ofMul.injective
   have k := congrArg Additive.ofMul key

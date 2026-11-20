@@ -46,7 +46,7 @@ theorem graphD [CompleteSpace H₁] [CompleteSpace H₂] (h₁ : IsURepOn (UJset
     { carrier := {x | U (ofLp x).1 = (ofLp x).2}
       add_mem' := fun {a b} ha hb => by
         show U ((ofLp a).1 + (ofLp b).1) = (ofLp a).2 + (ofLp b).2
-        rw [map_add, show U (ofLp a).1 = (ofLp a).2 from ha, show U (ofLp b).1 = (ofLp b).2 from hb]
+        rw [map_add (f := _), show U (ofLp a).1 = (ofLp a).2 from ha, show U (ofLp b).1 = (ofLp b).2 from hb]
       zero_mem' := map_zero U
       smul_mem' := fun r a ha => by
         show U (r • (ofLp a).1) = r • (ofLp a).2
@@ -213,7 +213,7 @@ theorem dictD (hS : KFSm) (h : IsHCMod πU M io) {j : ℕ} (m : ℕ)
       simp only [id, neg_add_cancel, Complex.exp_zero, mul_one, twD, ContinuousLinearMap.smul_apply, Complex.coe_smul]
       rfl
     · show io _ = _
-      simp only [map_add, map_smul, id, zero_smul, NormedSpace.exp_zero, det_one, one_pow, Complex.ofReal_zero, zero_mul,
+      simp only [map_add (f := _), map_smul, id, zero_smul, NormedSpace.exp_zero, det_one, one_pow, Complex.ofReal_zero, zero_mul,
         zero_div, mul_zero, neg_zero, Complex.exp_zero, mul_one, one_mul, one_smul, T.expt_zero, map_one,
         ContinuousLinearMap.one_apply, trace_rxC, Complex.ofReal_one]
       congr 2
@@ -222,7 +222,7 @@ theorem dictD (hS : KFSm) (h : IsHCMod πU M io) {j : ℕ} (m : ℕ)
   obtain ⟨Y₁, h₁, Y₂, h₂, e, -⟩ := upq_decC Z
   show actLC _ (rx Z) (κ v) = _
   rw [e, show rx (Y₁ + Complex.I • Y₂) = rx Y₁ + Complex.I • rx Y₂ from rfl]
-  simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, key Y₁ h₁, key Y₂ h₂, trace_add, trace_smul,
+  simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, key Y₁ h₁, key Y₂ h₂, trace_add, trace_smul,
     smul_eq_mul]
   module
 

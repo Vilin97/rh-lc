@@ -30,7 +30,7 @@ variable {R R' : Type} [CommRing R] [CommRing R'] [Algebra R R']
 
 def cZ : Z1 ρ' →ₗ[R] Z1 ρ where
   toFun f := ⟨u ∘ f.1, hu.comp f.2.1, fun g h => by
-    simp only [Function.comp_apply, f.2.2 g h, map_add, he]⟩
+    simp only [Function.comp_apply, f.2.2 g h, map_add (f := _), he]⟩
   map_add' f f' := Subtype.ext (funext fun g => map_add u _ _)
   map_smul' r f := Subtype.ext (funext fun g => map_smul u _ _)
 

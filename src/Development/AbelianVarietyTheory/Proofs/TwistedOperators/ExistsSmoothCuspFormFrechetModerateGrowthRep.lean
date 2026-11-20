@@ -127,7 +127,7 @@ variable (θ N hU) in
 def sem (d : ℕ) : Seminorm ℂ (Sp θ N hU) :=
   Seminorm.of (fun x => (growthSob θ V d N (incl θ N hU x)).toReal)
     (fun x y => by
-      rw [map_add, ← ENNReal.toReal_add (incl_fin x d) (incl_fin y d)]
+      rw [map_add (f := _), ← ENNReal.toReal_add (incl_fin x d) (incl_fin y d)]
       exact ENNReal.toReal_mono (ENNReal.add_ne_top.2 ⟨incl_fin x d, incl_fin y d⟩)
         (growthSob_add_le (incl_sm x) (incl_sm y) d N))
     fun c x => by rw [map_smul, growthSob_smul, ENNReal.toReal_mul, toReal_enorm]
@@ -282,7 +282,7 @@ theorem tendsto_zero_of_comm (hθ : IsInfFam θ) {α : Type} {F : Filter α} (u 
       refine tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds this (fun _ => zero_le) fun a => ?_
       refine le_trans ?_ (add_le_add (le_wordSum (l := l) le_rfl _) le_rfl)
       refine le_of_eq_of_le (congrArg _ ?_) growthSize_add_le
-      rw [← (linOnSm_glWord l).add _ (incl_sm _) _ (incl_sm _), ← map_add, sub_add_cancel, wordAct_append]
+      rw [← (linOnSm_glWord l).add _ (incl_sm _) _ (incl_sm _), ← map_add (f := _), sub_add_cancel, wordAct_append]
       rfl
   refine tendsto_zero_iff.2 fun d => ?_
   simpa only [Finset.sum_const_zero, growthSob, wordSum] using tendsto_finsetSum (Finset.range (d + 1)) fun k _ =>
@@ -375,7 +375,7 @@ theorem tendsto_quot (hθ : IsInfFam θ) {τ : D.what₂.Tau} {X : Matrix (Fin V
     · subst c
       refine ⟨_, (tendsto_ad_exp X Z).congr fun t => ?_, incl_injective ?_⟩
       · rw [adAt, hi, (hs _).2.1, (hs _).2.1]
-      · rw [map_add, eX, incl_derL, eX]
+      · rw [map_add (f := _), eX, incl_derL, eX]
         exact hbr.1
     · refine ⟨0, tendsto_const_nhds.congr fun t => ?_, incl_injective ?_⟩
       · rw [adAt, hi, (hs _).2.2 _ c, (hs _).2.2 _ c, Matrix.one_mul, Matrix.mul_one, sub_self, smul_zero]

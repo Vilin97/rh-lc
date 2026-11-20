@@ -59,7 +59,7 @@ theorem _root_.GlobalTheory.QuadSymbol.Model.eta_real_place (w : InfinitePlace K
     rw [map_neg, map_one] at h
     simpa [_root_.GlobalTheory.QuadSymbol.infDiag, _root_.GlobalTheory.QuadSymbol.toUnits, sub_eq_add_neg] using h
   have := congrArg (InfinitePlace.Completion.ringEquivRealOfIsReal hw) h'
-  simp only [map_neg, map_one, map_add, map_pow] at this
+  simp only [map_neg, map_one, map_add (f := _), map_pow] at this
   nlinarith [sq_nonneg (InfinitePlace.Completion.ringEquivRealOfIsReal hw a),
     sq_nonneg (InfinitePlace.Completion.ringEquivRealOfIsReal hw b)]
 

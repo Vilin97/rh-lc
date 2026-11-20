@@ -63,7 +63,7 @@ theorem span_eq_top (hβ : Function.Injective β) {F : Submodule K H} (hF : IsLa
     obtain ⟨x, hx, f, hf, e⟩ := Submodule.mem_sup.1 hm
     obtain ⟨y, hy⟩ := Submodule.mem_one.1 (hh x hx)
     have e2 := congrArg (fun z => β z w) e
-    simp only [map_add, LinearMap.add_apply, map_smul, LinearMap.smul_apply, (hF f).1 hf w hw, add_zero,
+    simp only [map_add (f := _), LinearMap.add_apply, map_smul, LinearMap.smul_apply, (hF f).1 hf w hw, add_zero,
       smul_eq_mul] at e2
     rw [LinearMap.BilinForm.flip_apply, e2, Algebra.smul_def] at hy
     refine hπ.not_isUnit (IsUnit.of_mul_eq_one y (IsFractionRing.injective R K ?_))
@@ -79,7 +79,7 @@ theorem span_eq_top (hβ : Function.Injective β) {F : Submodule K H} (hF : IsLa
     rwa [← algebraMap_smul K a x, map_smul, LinearMap.smul_apply, algebraMap_smul]
   obtain ⟨y, hy, f, hf, e⟩ := Submodule.mem_sup.1 hm
   have e2 := congrArg (β s) e
-  rw [map_add, h0 y hy, (hF s).1 hsF f hf, add_zero, ← algebraMap_smul K a x, map_smul, smul_eq_mul] at e2
+  rw [map_add (f := _), h0 y hy, (hF s).1 hsF f hf, add_zero, ← algebraMap_smul K a x, map_smul, smul_eq_mul] at e2
   exact (mul_eq_zero.1 e2.symm).resolve_left (IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors ha)
 
 omit [Module.Finite K H] in
@@ -182,7 +182,7 @@ theorem repr_mem {ι : Type} (e : Basis ι K H) {x : H} (hx : x ∈ Submodule.sp
     · exact Submodule.mem_one.2 ⟨1, map_one _⟩
     · exact zero_mem _
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul r x _ hx =>
     rw [← algebraMap_smul K r x, map_smul, Finsupp.smul_apply, algebraMap_smul]
     exact Submodule.smul_mem _ _ hx
@@ -202,7 +202,7 @@ theorem exists_inv (hβ : Function.Injective β) {F : Submodule K H} (hF : IsLag
       exact repr_mem e (h₁ ▸ hy.1) _
     obtain ⟨x, hx, f, hf, rfl⟩ := Submodule.mem_sup.1 hm
     refine ⟨x, hx, fun k => ?_⟩
-    rw [← hs, map_add, LinearMap.add_apply, (hF f).1 hf _ (h₂ k), add_zero]
+    rw [← hs, map_add (f := _), LinearMap.add_apply, (hF f).1 hf _ (h₂ k), add_zero]
   choose x hx hk using key
   obtain ⟨A, -, hA⟩ := det_mem (R := R) (A := Matrix.of fun j i => e.repr (x j) (Sum.inr i))
     fun j i => repr_mem e (h₁ ▸ hx j) _
@@ -213,7 +213,7 @@ theorem exists_inv (hβ : Function.Injective β) {F : Submodule K H} (hF : IsLag
   have := hk j k
   rw [← e.sum_repr (x j)] at this
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_add, map_smul, Fintype.sum_sum_type, LinearMap.add_apply, LinearMap.sum_apply,
+    simp only [map_sum, map_add (f := _), map_smul, Fintype.sum_sum_type, LinearMap.add_apply, LinearMap.sum_apply,
     LinearMap.smul_apply, (hF _).1 (h₂ _) _ (h₂ _), smul_zero, Finset.sum_const_zero, zero_add] at this
   simp only [Matrix.mul_apply, blk, Matrix.of_apply, ← smul_eq_mul]
   rw [this]

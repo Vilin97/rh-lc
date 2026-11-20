@@ -20,7 +20,7 @@ theorem locFin_tens (ε : Fin n → Bool) (X : GMod n) (h : LocFin ε X.E) : Loc
     refine Submodule.iSup_induction S (motive := fun y => X.E a b y ∈ ⨆ i, S i) hx
       (fun i y hy => (le_iSup S i) (hSst i a b hab y hy)) (by simp) ?_
     intro y w hy hw
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hy hw
   have hfd : FiniteDimensional ℂ (Submodule.pi Set.univ fun _ : Fin n => ⨆ i, S i) := by
     let f : (Submodule.pi Set.univ fun _ : Fin n => ⨆ i, S i) →ₗ[ℂ] (Fin n → ↥(⨆ i, S i)) :=

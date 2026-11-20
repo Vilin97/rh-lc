@@ -44,7 +44,7 @@ theorem hE_add_left (D : D7) {n : ℕ} (x x' y : Fin n → D.host.E) : hE D (x +
   simp only [hE, Pi.add_apply, add_mul, Finset.sum_add_distrib]
 
 theorem hE_add_right (D : D7) {n : ℕ} (x y y' : Fin n → D.host.E) : hE D x (y + y') = hE D x y + hE D x y' := by
-  simp only [hE, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [hE, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hE_smul_left (D : D7) {n : ℕ} (a : D.host.E) (x y : Fin n → D.host.E) : hE D (a • x) y = a * hE D x y := by
   simp only [hE, Pi.smul_apply, smul_eq_mul, Finset.mul_sum, mul_assoc]
@@ -111,7 +111,7 @@ theorem Hf_add_left (D : D7) (T : Tor D) {N N' : ℕ} (x x' y : VC D N N') :
 
 theorem Hf_add_right (D : D7) (T : Tor D) {N N' : ℕ} (x y y' : VC D N N') :
     Hf D T x (y + y') = Hf D T x y + Hf D T x y' := by
-  simp only [Hf, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib, add_div]
+  simp only [Hf, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib, add_div]
 
 theorem Hf_conj (D : D7) (T : Tor D) {N N' : ℕ} (x y : VC D N N') :
     (starRingEnd ℂ) (Hf D T x y) = Hf D T y x := by

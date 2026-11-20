@@ -51,7 +51,7 @@ theorem char_sum (D : Datum H) {N : ℕ} (hN : 0 < N) {I : Ideal (𝓞 E)}
       map_add_eq_mul' := fun x y => by
         obtain ⟨x, rfl⟩ := Submodule.Quotient.mk_surjective _ x
         obtain ⟨y, rfl⟩ := Submodule.Quotient.mk_surjective _ y
-        rw [← Submodule.Quotient.mk_add, hmk, hmk, hmk, map_add, LinearMap.add_apply, zpow_add₀ hz0] }
+        rw [← Submodule.Quotient.mk_add, hmk, hmk, hmk, map_add (f := _), LinearMap.add_apply, zpow_add₀ hz0] }
   have hiff : χ = 0 ↔ v ∈ (I • ⊤ : Submodule (𝓞 E) D.La) := by
     constructor
     · intro h

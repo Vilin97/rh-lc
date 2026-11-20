@@ -36,13 +36,13 @@ theorem twisted_square_local_matching : GlobalTheory.Published.HoweDualityReal �
       smul_mem' := fun c _ hf => hsmul' c _ hf }
   let βA : S →ₗ[ℂ] PolF D X.rank W.rank →ₗ[ℂ] Pi :=
     LinearMap.mk₂ ℂ (fun f P => p (fockF ψ θ true A B f.1 P)) (fun f g P => by
-        rw [Submodule.coe_add, hfadd _ _ _ f.2 g.2, map_add])
-      (fun c f P => by rw [Submodule.coe_smul, hfsmul _ _ _ f.2, map_smul]) (fun f P P' => by rw [map_add, map_add])
+        rw [Submodule.coe_add, hfadd _ _ _ f.2 g.2, map_add (f := _)])
+      (fun c f P => by rw [Submodule.coe_smul, hfsmul _ _ _ f.2, map_smul]) (fun f P P' => by rw [map_add (f := _), map_add (f := _)])
       (fun c f P => by rw [map_smul, map_smul])
   let βB : S' →ₗ[ℂ] PolF D X.rank W₁.rank →ₗ[ℂ] Pi :=
     LinearMap.mk₂ ℂ (fun f P => p' (fockF ψ θ false A₁ B f.1 P)) (fun f g P => by
-        rw [Submodule.coe_add, hfadd' _ _ _ f.2 g.2, map_add])
-      (fun c f P => by rw [Submodule.coe_smul, hfsmul' _ _ _ f.2, map_smul]) (fun f P P' => by rw [map_add, map_add])
+        rw [Submodule.coe_add, hfadd' _ _ _ f.2 g.2, map_add (f := _)])
+      (fun c f P => by rw [Submodule.coe_smul, hfsmul' _ _ _ f.2, map_smul]) (fun f P P' => by rw [map_add (f := _), map_add (f := _)])
       (fun c f P => by rw [map_smul, map_smul])
   have hspan : ∀ {M : HSp D} {ε : Bool} {A' : Fr M} {P : Type} [AddCommGroup P] [Module ℂ P] (pp : (WO M X → ℂ) →ₗ[ℂ] P),
       (algF ψ θ ε A' B).map pp = ⊤ →

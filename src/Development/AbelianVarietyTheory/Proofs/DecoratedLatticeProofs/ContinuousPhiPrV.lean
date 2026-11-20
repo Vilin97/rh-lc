@@ -28,7 +28,7 @@ theorem redM_eq_one (v : HeightOneSpectrum (𝓞 F)) (X : Matrix (Fin n) (Fin n)
     exact (hX i j).ne
   have e : (⟨X i j, hx⟩ : v.adicCompletionIntegers F) = ⟨_, hd⟩ + ⟨_, h1⟩ := Subtype.ext (sub_add_cancel _ _).symm
   simp only [redM, dif_pos hx]
-  rw [e, map_add, h0, zero_add]
+  rw [e, map_add (f := _), h0, zero_add]
   by_cases hij : i = j
   · subst hij
     have : (⟨_, h1⟩ : v.adicCompletionIntegers F) = 1 := Subtype.ext (Matrix.one_apply_eq i)

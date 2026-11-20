@@ -232,7 +232,7 @@ theorem commute_map {G H : Type} [Group G] [Group H] (i : G →* H) (e : MonoidA
     (h : ∀ x c, Commute e (single (i x) c)) (a : MonoidAlgebra ℂ G) : Commute e (mapDomainAlgHom ℂ ℂ i a) := by
   induction a using MonoidAlgebra.induction_on with
   | of m => simpa using h m 1
-  | add x y hx hy => rw [map_add]; exact hx.add_right hy
+  | add x y hx hy => rw [map_add (f := _)]; exact hx.add_right hy
   | smul r x hx => rw [map_smul]; exact hx.smul_right r
 
 open MonoidAlgebra in
@@ -298,12 +298,12 @@ theorem ser_vanish (L : LabelDatum g) (h5 : 5 ≤ g) (hG : Green) (σ : Fin k �
   refine finsum_mem_induction (fun a => eN g σ * mapDomainAlgHom ℂ ℂ (inA σ) a *
     mapDomainAlgHom ℂ ℂ (inB σ) (eSerC L l f₂) * eSerC L n f = 0) (by simp) ?_ ?_
   · intro x y hx hy
-    simp only [map_add, mul_add, add_mul, hx, hy, add_zero]
+    simp only [map_add (f := _), mul_add, add_mul, hx, hy, add_zero]
   rintro α ⟨hα, hα'⟩
   refine finsum_mem_induction (fun b => eN g σ * mapDomainAlgHom ℂ ℂ (inA σ) (zOf α) *
     mapDomainAlgHom ℂ ℂ (inB σ) b * eSerC L n f = 0) (by simp) ?_ ?_
   · intro x y hx hy
-    simp only [map_add, mul_add, add_mul, hx, hy, add_zero]
+    simp only [map_add (f := _), mul_add, add_mul, hx, hy, add_zero]
   rintro β ⟨hβ, hβ'⟩
   refine finsum_mem_induction (fun c => eN g σ * mapDomainAlgHom ℂ ℂ (inA σ) (zOf α) *
     mapDomainAlgHom ℂ ℂ (inB σ) (zOf β) * c = 0) (by simp) ?_ ?_
@@ -334,7 +334,7 @@ theorem comp_alg {G H W : Type} [Group G] [Group H] [AddCommGroup W] [Module ℂ
     Representation.asAlgebraHom (ρ.comp i : Representation ℂ G W) a = ρ.asAlgebraHom (mapDomainAlgHom ℂ ℂ i a) := by
   induction a using MonoidAlgebra.induction_on with
   | of m => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | smul r x hx => simp only [map_smul, hx]
 
 theorem equiv_alg {G W W' : Type} [Group G] [AddCommGroup W] [Module ℂ W] [AddCommGroup W'] [Module ℂ W']
@@ -342,7 +342,7 @@ theorem equiv_alg {G W W' : Type} [Group G] [AddCommGroup W] [Module ℂ W] [Add
     (a : MonoidAlgebra ℂ G) (w : W) : T (ρ.asAlgebraHom a w) = ρ'.asAlgebraHom a (T w) := by
   induction a using MonoidAlgebra.induction_on with
   | of m => simpa using LinearMap.congr_fun (h m) w
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
   | smul r x hx => simp only [map_smul, LinearMap.smul_apply, hx]
 
 theorem eN_left {W W' : Type} [AddCommGroup W] [Module ℂ W] [AddCommGroup W'] [Module ℂ W']

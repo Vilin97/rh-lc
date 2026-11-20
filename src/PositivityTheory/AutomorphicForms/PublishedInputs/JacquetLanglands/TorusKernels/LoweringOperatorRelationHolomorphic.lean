@@ -63,7 +63,7 @@ theorem lie_scalar {k c} {ω : HChar F} (h : IsOfFinOrder ω)
 theorem cent0 {k c} {ω : HChar F} (h : IsOfFinOrder ω) {φ : Sm F 2} (hφ : UpperTheory.Esk.IsHolV k c ω φ) (v : InfinitePlace F) :
     Eop v 0 0 φ + Eop v 1 1 φ = 0 := by
   classical
-  rw [← lie_scalar h hφ (Pi.single v 1), TR.Eop, TR.Eop, ← LinearMap.add_apply, ← map_add]
+  rw [← lie_scalar h hφ (Pi.single v 1), TR.Eop, TR.Eop, ← LinearMap.add_apply, ← map_add (f := _)]
   congr 2
   ext i j
   fin_cases i <;> fin_cases j <;> simp
@@ -167,7 +167,7 @@ theorem cr {G : ℂ → ℂ} {L : ℂ →L[ℝ] ℂ} {t0 : ℂ} (h : HasFDerivAt
     simp only [ContinuousLinearMap.coe_restrictScalars', ContinuousLinearMap.smulRight_apply,
       ContinuousLinearMap.one_apply, smul_eq_mul]
     conv_rhs => rw [hw]
-    rw [map_add, map_smul, map_smul, hI, Complex.real_smul, Complex.real_smul]
+    rw [map_add (f := _), map_smul, map_smul, hI, Complex.real_smul, Complex.real_smul]
     conv_lhs => rw [← Complex.re_add_im w]
     ring
   exact (hasFDerivAt_of_restrictScalars ℝ h e).differentiableAt

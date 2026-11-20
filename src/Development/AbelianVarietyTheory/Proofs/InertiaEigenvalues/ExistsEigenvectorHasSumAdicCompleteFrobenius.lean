@@ -38,7 +38,7 @@ theorem abssum_eigen_lim : ∀ (l : ℕ) [Fact l.Prime] (A : Type) [CommRing A] 
     intro n
     rw [SModEq.sub_mem, sub_zero, key]
     obtain ⟨c, hc⟩ := hWN n
-    rw [hc, map_add, map_mul, map_pow, map_natCast, hSψ]
+    rw [hc, map_add (f := _), map_mul, map_pow, map_natCast, hSψ]
     exact ⟨(φ ^ h) c - (l : A) * c, by ring⟩
   · intro Θ hΘ
     have hl : ‖(l : ℂ_[l])‖ = (l : ℝ)⁻¹ := by
@@ -63,7 +63,7 @@ theorem abssum_eigen_lim : ∀ (l : ℕ) [Fact l.Prime] (A : Type) [CommRing A] 
     refine squeeze_zero (fun _ => norm_nonneg _) (fun N => ?_)
       (tendsto_pow_atTop_nhds_zero_of_lt_one (norm_nonneg _) hlt)
     obtain ⟨c, hc⟩ := hWN N
-    rw [hc, map_add, sub_add_cancel_left, norm_neg, map_mul, map_pow, map_natCast, norm_mul, norm_pow]
+    rw [hc, map_add (f := _), sub_add_cancel_left, norm_neg, map_mul, map_pow, map_natCast, norm_mul, norm_pow]
     exact mul_le_of_le_one_right (by positivity) (hΘ _)
 
 end GlobalTheory

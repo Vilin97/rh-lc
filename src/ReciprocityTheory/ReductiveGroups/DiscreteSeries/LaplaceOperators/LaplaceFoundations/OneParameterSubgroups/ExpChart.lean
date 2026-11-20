@@ -58,7 +58,7 @@ theorem det_of_shear (G : ℕ → Submodule ℝ E) (L : ℕ) (hG0 : G 0 = ⊤) (
       pow_ne_zero _ (by norm_num)
     exact mul_left_cancel₀ hne (hev.symm.trans (mul_one _).symm)
   have hD' : LinearMap.toMatrix b b (D : E →ₗ[ℝ] E) = 1 + LinearMap.toMatrix b b N := by
-    rw [← LinearMap.toMatrix_id b, ← map_add]
+    rw [← LinearMap.toMatrix_id b, ← map_add (f := _)]
     congr 1
     ext x
     simp [N]
@@ -440,7 +440,7 @@ theorem st_exp (hF : IsFil F L) (hst : IsAdj F st) {Y : A} (hY : Y ∈ F 0) :
     | zero => simp [hst.one]
     | succ n ih => rw [pow_succ, hst.mul, ih, pow_succ']
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hF.exp_eq hY, hF.exp_eq (hst.mem Y hY), map_add, map_add, map_sum, hst.one]
+    rw [hF.exp_eq hY, hF.exp_eq (hst.mem Y hY), map_add (f := _), map_add (f := _), map_sum, hst.one]
   simp only [map_smul, hpow]
 
 theorem exp_mem_grpN (hF : IsFil F L) (hst : IsAdj F st) {Y : A} (hY : Y ∈ lieN F st) :

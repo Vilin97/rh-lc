@@ -72,7 +72,7 @@ private theorem exists_res (e : Fin r ↪ Fin n) (h : GA E n) : ∃ T : Sm E n �
     | hadd a b ha hb =>
       obtain ⟨a', ha⟩ := ha
       obtain ⟨b', hb⟩ := hb
-      exact ⟨a' + b', fun G => by rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, hb, ha, map_add]⟩
+      exact ⟨a' + b', fun G => by rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, hb, ha, map_add (f := _)]⟩
   refine ⟨(smEq E r).symm.toLinearMap ∘ₗ f ∘ₗ (smEq E n).toLinearMap, fun G x => hf _ x, fun u => ?_⟩
   induction u using TensorProduct.induction_on with
   | zero => exact ⟨0, fun G => by simp⟩
@@ -86,7 +86,7 @@ private theorem exists_res (e : Fin r ↪ Fin n) (h : GA E n) : ∃ T : Sm E n �
   | add a b ha hb =>
     obtain ⟨a', ha⟩ := ha
     obtain ⟨b', hb⟩ := hb
-    exact ⟨a' + b', fun G => by rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, hb, ha, map_add]⟩
+    exact ⟨a' + b', fun G => by rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, hb, ha, map_add (f := _)]⟩
 
 private def stab (ψ : Sm E n) : Subgroup (GL (Fin n) (Af E)) where
   carrier := {k | GlobalTheory.CuspRep.finRep E n k ψ = ψ}

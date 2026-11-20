@@ -49,7 +49,7 @@ theorem lintegral_comp_aut {G : Type} [AddCommGroup G] [TopologicalSpace G] [IsT
         fun b => ⟨⟨e.symm b, (he _).1 (by simp)⟩, Subtype.ext (e.apply_symm_apply _)⟩⟩
       fun γ x => by
         change e.symm (e γ + x) = γ + e.symm x
-        rw [map_add, e.symm_apply_apply]
+        rw [map_add (f := _), e.symm_apply_apply]
   have h4 : E ⁻¹' (E.symm ⁻¹' 𝓕) = 𝓕 := by ext x; simp
   have h5 := (hN _ _ h2 h3).2.2.1
   rw [E.map_apply, h4, h1, E.restrict_map, lintegral_map_equiv, h4] at h5
@@ -331,10 +331,10 @@ theorem cube_dilate_bound (hψ : IsStdChar D ψ (-1)) (hc : Chart θ σ) {N : �
       ext i j
       exact ThetaCont.infPart_eq_zero hc _ fun τ => congrFun (congrFun (congrFun hp τ) i) j
     have := GlobalTheory.HeisOrtho.norm_heisO hψ.1 φ (n • (w - ι (π w))) (e (ι (π w)))
-    rw [hl _ hw hinf, ← he, ← map_add, add_sub_cancel] at this
+    rw [hl _ hw hinf, ← he, ← map_add (f := _), add_sub_cancel] at this
     rw [← en, ← en, this]
   have a2 := hM _ hmeas fun γ hγ w => by
-    rw [← en, ← en, map_add, theta_norm_periodic hψ hφ _ ((heL γ).2 hγ)]
+    rw [← en, ← en, map_add (f := _), theta_norm_periodic hψ hφ _ ((heL γ).2 hγ)]
   have a3 := lintegral_comp_aut (G := WA T S) (ratL T S) hK hcov e heL hμ h𝓕 h1 hm.1 hm.2.1 hm.2.2 hφ.cont
     (theta_norm_periodic hψ hφ)
   simp only [hsum]

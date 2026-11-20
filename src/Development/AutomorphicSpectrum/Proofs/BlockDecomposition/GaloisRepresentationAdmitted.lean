@@ -24,10 +24,10 @@ theorem dchi_atEmb (χ : HChar E) (τ : E →+* ℂ) (z : ℂ) :
     dchi χ (atEmb τ z) = expo χ τ * z + expo χ (ComplexEmbedding.conjugate τ) * starRingEnd ℂ z := by
   have e : atEmb τ (-Complex.I) = -atEmb τ Complex.I := by
     rw [atEmb_eq]; simp
-  rw [atEmb_eq, map_add, map_smul, map_smul]
+  rw [atEmb_eq, map_add (f := _), map_smul, map_smul]
   simp only [expo, atEmb_conj, map_one, Complex.conj_I, e, map_neg, Complex.real_smul]
   conv_rhs => rw [← Complex.re_add_im z]
-  simp only [map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
+  simp only [map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I]
   linear_combination (z.im * dchi χ (atEmb τ Complex.I)) * Complex.I_mul_I
 
 theorem dchi_eq_sum (χ : HChar E) (z : Cinf E) : dchi χ z = ∑ φ : E →+* ℂ, expo χ φ * coord φ z := by

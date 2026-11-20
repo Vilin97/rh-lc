@@ -66,7 +66,7 @@ theorem ShFormula.proof : ShFormula.Statement := by
   refine Finset.sum_congr rfl (fun k hk => ?_)
   rw [Finset.mem_Icc] at hk
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum,
+    rw [map_add (f := _), map_sum,
     Finset.sum_eq_zero (fun σ _ => intFl_blockPowerSum_mul d k σ _ hk.1 hk.2), zero_add, mul_assoc,
     intFl_natCast_mul]
 

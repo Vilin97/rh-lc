@@ -28,7 +28,7 @@ theorem one_add_mul_derivative_trunc {R : Type} [CommRing R] (n : ℕ) (u : R[X]
     have hs : derivative ((-1 : R[X]) ^ k) = 0 := by
       rcases neg_one_pow_eq_or R[X] k with h | h <;> simp [h]
     rw [derivative_mul, derivative_mul, hs, derivative_natCast, derivative_pow_succ, ← hc, neg_pow u]
-    simp only [map_add, map_natCast, map_one]
+    simp only [map_add (f := _), map_natCast, map_one]
     ring
   have h2 : (1 + u) * ∑ k ∈ Finset.range n, (-u) ^ k = 1 := by
     have := mul_neg_geom_sum (-u) n
@@ -111,7 +111,7 @@ theorem log_add : ∀ (l : ℕ) [Fact l.Prime], ∀ (e e' : Per.Fl l) (y y' z : 
     have := (GlobalTheory.RingBasics.isUnit_nat l m hm).map q
     rwa [map_natCast] at this
   apply (hR _ n.factorial_ne_zero).mul_left_cancel
-  rw [map_add, mul_add, GlobalTheory.CrisIncl.factorial_mul_ev l e y he hy n,
+  rw [map_add (f := _), mul_add, GlobalTheory.CrisIncl.factorial_mul_ev l e y he hy n,
     GlobalTheory.CrisIncl.factorial_mul_ev l e' y' he' hy' n,
     GlobalTheory.CrisIncl.factorial_mul_ev l _ z (by rw [map_mul, he, he', mul_one]) hz n]
   have hI : ((Per.kerP l).map q) ^ n = ⊥ := by
@@ -124,7 +124,7 @@ theorem log_add : ∀ (l : ℕ) [Fact l.Prime], ∀ (e e' : Per.Fl l) (y y' z : 
   generalize algebraMap (Per.Ainf l) (Per.AinfP l) (Per.tm e' - 1) = b at key ⊢
   change q _ = q _ + q _
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_mul, map_pow, map_neg, map_one, map_natCast, map_add]
+    simp only [map_sum, map_mul, map_pow, map_neg, map_one, map_natCast, map_add (f := _)]
   exact key
 
 end GlobalTheory.MemLoc.LogAdd

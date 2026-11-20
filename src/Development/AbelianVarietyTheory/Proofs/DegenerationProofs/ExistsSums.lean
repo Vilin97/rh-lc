@@ -94,7 +94,7 @@ theorem exists_map {O O₁ K : Type} [CommRing O] [CommRing O₁] [Field K] [Alg
         induction ha using Submodule.span_induction with
         | mem x hx => exact Algebra.subset_adjoin (.inl ⟨x, hx, rfl⟩)
         | zero => rw [map_zero]; exact zero_mem _
-        | add x y _ _ a b => rw [map_add]; exact add_mem a b
+        | add x y _ _ a b => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem a b
         | smul c x _ a => rw [Algebra.smul_def, map_mul, hio]; exact mul_mem (Subalgebra.algebraMap_mem _ _) a
     · exact Algebra.subset_adjoin (.inr rfl)
 

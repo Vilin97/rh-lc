@@ -35,7 +35,7 @@ theorem natAct_rat {p : ℕ} {O Kf : Type} [CommRing O] [IsDomain O] [IsDiscrete
     intro R
     induction R using MvPolynomial.induction_on with
     | C a => simp [substR, Places.subst]
-    | add f q hf hq => simp only [map_add, hf, hq]
+    | add f q hf hq => simp only [map_add (f := _), hf, hq]
     | mul_X f x hf =>
       simp only [map_mul, hf]
       congr 1

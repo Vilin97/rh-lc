@@ -483,7 +483,7 @@ theorem kTriv_sharp (hu : ∀ (T : Over S) (y : Fin n → (T ⟶ A)), ∃! x : T
     have e₁ : pull (lift (r ≫ j) a).left (cls _ hD) = 0 := by rw [← e, pull_comp, h₀, map_zero]
     have e₂ : cls _ hD = (1 : ℤ) • pull ((fst T G ≫ x) * snd T G).left (cls _ h) +
         (-1 : ℤ) • pull (snd T G).left (cls _ h) := (cls_linComb h _ _ hD).trans (Fin.sum_univ_two _)
-    rw [e₂, one_smul, neg_smul, one_smul, map_add, map_neg, ← pull_comp, ← pull_comp, ← Over.comp_left,
+    rw [e₂, one_smul, neg_smul, one_smul, map_add (f := _), map_neg, ← pull_comp, ← pull_comp, ← Over.comp_left,
       ← Over.comp_left, MonObj.comp_mul, lift_fst_assoc, lift_snd, pull_sharp hP, pull_sharp hP, Category.assoc] at e₁
     simp only [MonObj.mul_comp] at e₁
     rw [quad_mul (hB _) (hs _)] at e₁

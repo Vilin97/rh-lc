@@ -130,7 +130,7 @@ private theorem add_mem_intV {y z : _root_.Formalism.MainNotions.GlobalTheoryThe
     y + z ∈ _root_.GlobalTheory.GaugeEx.intV b v := by
   rw [mem_intV_iff_basis_repr_mem_integers] at hy hz ⊢
   intro k
-  rw [map_add, Finsupp.add_apply]
+  rw [map_add (f := _), Finsupp.add_apply]
   exact add_mem (hy k) (hz k)
 
 open NumberField IsDedekindDomain MeasureTheory Topology in
@@ -204,7 +204,7 @@ theorem _root_.GlobalTheory.GaugeEx.IntBasis.main : ∀ (F E : Type) [Field F] [
       exact _root_.GlobalTheory.GaugeEx.IntBasis.tmul_mem b v ha he
     | add x y hx hy =>
       filter_upwards [hx, hy] with v hxv hyv
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem_intV b v hxv hyv
   · filter_upwards [eventually_basis_repr_mem_adicCompletionIntegers b' (fun k => b k),
       eventually_basis_repr_mem_adicCompletionIntegers b (fun k => b' k)] with v h h'

@@ -40,7 +40,7 @@ theorem wach_invariants_holds : StatInvWach := by
     { carrier := {x | ∀ i, j x i ∈ W.N i}
       add_mem' := by
         intro a b ha hb i
-        rw [map_add]
+        rw [map_add (f := _)]
         exact (W.N i).add_mem (ha i) (hb i)
       zero_mem' := by
         intro i

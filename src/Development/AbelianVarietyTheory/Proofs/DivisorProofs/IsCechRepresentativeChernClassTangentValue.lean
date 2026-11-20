@@ -259,7 +259,7 @@ private theorem prism_eq_of_pullback_cup_sub_d1 {K : Type} [Field K] {A : Over (
   simp only [prism_cup' hA] at hN
   rw [ev_sum_smul']
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sub, map_add, map_sum]
+    simp only [map_sub, map_add (f := _), map_sum]
   have hsm : ∀ k, tanVal v (ω k) • ev (c k) φ.triv =
       ev (c k) φ.triv * algebraMap K Q.B (tanVal v (ω k)) := fun k ↦ by
     rw [Algebra.smul_def, mul_comm]

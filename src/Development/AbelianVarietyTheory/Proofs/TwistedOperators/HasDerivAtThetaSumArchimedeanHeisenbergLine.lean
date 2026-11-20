@@ -117,7 +117,7 @@ theorem bound_aux {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] (h : V �
 end Helpers
 
 theorem realAd_add (t s : ℝ) : realAd F (t + s) = realAd F t + realAd F s := by
-  unfold realAd; rw [map_add, map_add, map_add]; rfl
+  unfold realAd; rw [map_add (f := _), map_add (f := _), map_add (f := _)]; rfl
 
 theorem realAd_zero : realAd F 0 = 0 := by
   unfold realAd; rw [map_zero, map_zero, map_zero]; rfl
@@ -160,7 +160,7 @@ theorem rho_apply (w : Matrix (Fin n) (Fin d) (AE F E)) (Ψ : (Fin n × Fin d �
 theorem heisLine_add (u : Matrix (Fin n) (Fin d) (AE F E)) (t s : ℝ) (Ψ : (Fin n × Fin d → AF F) → ℂ) :
     M.heisLine ψ u (t + s) Ψ = M.heisLine ψ u t (M.heisLine ψ u s Ψ) := by
   funext z
-  simp only [Model.heisLine, rho_apply, realAd_add, add_smul, map_add, map_smul, Prod.smul_fst, Prod.smul_snd,
+  simp only [Model.heisLine, rho_apply, realAd_add, add_smul, map_add (f := _), map_smul, Prod.smul_fst, Prod.smul_snd,
     Prod.fst_add, Prod.snd_add]
   rw [← mul_assoc, ← AddChar.map_add_eq_mul, add_assoc z]
   congr 2
@@ -191,7 +191,7 @@ end Line
 theorem finprod_add {κ : Type} (φ : ∀ v : HeightOneSpectrum (𝓞 F), (κ → v.adicCompletion F) → ℂ) (x z : κ → AF F)
     (hz : At (evI F) z) :
     (∏ᶠ v, φ v fun i => evFin F v ((x + z) i)) = ∏ᶠ v, φ v fun i => evFin F v (x i) := by
-  congr 1; funext v; congr 1; funext i; rw [Pi.add_apply, map_add, evFin_eq_zero hz, add_zero]
+  congr 1; funext v; congr 1; funext i; rw [Pi.add_apply, map_add (f := _), evFin_eq_zero hz, add_zero]
 
 theorem evI_add (a b : AF F) : evI F (a + b) = evI F a + evI F b := map_add (InfiniteAdeleRing.ringEquiv_mixedSpace F) a.1 b.1
 

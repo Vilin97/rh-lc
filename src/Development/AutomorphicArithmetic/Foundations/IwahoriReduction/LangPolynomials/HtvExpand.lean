@@ -45,7 +45,7 @@ private lemma eps_ser (Φ : Fr l A j) (ε : PowerSeries Φ.R →+* ℂ_[l]) (w :
     ε (Φ.ser P) = algebraMap (PadicAlgCl l) ℂ_[l] (j ((P.map (R0 A).subtype).eval w)) := by
   unfold Fr.ser
   induction P using Polynomial.induction_on' with
-  | add f g hf hg => simp only [Polynomial.map_add, Polynomial.eval₂_add, Polynomial.eval_add, map_add, hf, hg]
+  | add f g hf hg => simp only [Polynomial.map_add (f := _), Polynomial.eval₂_add, Polynomial.eval_add, map_add (f := _), hf, hg]
   | monomial n a =>
     simp only [Polynomial.map_monomial, Polynomial.eval₂_monomial, Polynomial.eval_monomial, map_mul, map_pow, hC, hz,
       Φ.jh_comp_incl]
@@ -277,6 +277,6 @@ theorem UpperTheory.Kd.C7.pClause1 :
   unfold Cg
   rw [hex, ← map_pow j, ← hw, ← norm_alg, ← norm_alg ((l : PadicAlgCl l) ^ n), ← hι, map_pow ι, map_natCast, map_sub, map_sub, hh P uP, hh _ uE]
   refine le_of_eq_of_le (congrArg _ ?_) (add_le (add_le (add_le e1 e2) e3) e4)
-  simp only [ser_mul, dl_mul (uS _) (uE _), map_add, mul_sub, mul_add, Finset.sum_sub_distrib, Finset.sum_add_distrib, e5,
+  simp only [ser_mul, dl_mul (uS _) (uE _), map_add (f := _), mul_sub, mul_add, Finset.sum_sub_distrib, Finset.sum_add_distrib, e5,
     map_mul, map_pow]
   ring

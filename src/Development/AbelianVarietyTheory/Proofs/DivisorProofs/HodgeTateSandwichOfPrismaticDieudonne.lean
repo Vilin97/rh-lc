@@ -82,14 +82,14 @@ theorem form_map_smul (M : PDivGroup p O ⥤ ModuleCat.{0} (Ainf p O)) [M.Additi
   haveI : IsAdicComplete (span {(p : Ainf p O)}) (Ainf p O) := WittVector.isAdicCompleteIdealSpanP
   let T : (G ⟶ G') →+ Ainf p O :=
     AddMonoidHom.mk' (fun f => l (M.map f m)) fun f g => by
-      rw [M.map_add, ← map_add]; rfl
+      rw [M.map_add (f := _), ← map_add (f := _)]; rfl
   exact Dieudonne.map_padic_smul (ofPadic p O) T a f
 
 def tateToM (M : PDivGroup p O ⥤ ModuleCat.{0} (Ainf p O)) [M.Additive] {G : PDivGroup p O}
     {h : ℕ} (b : Module.Basis (Fin h) (Ainf p O) (M.obj G)) (m₀ : M.obj (const p O)) :
     G.Tate →ₛₗ[ofPadic p O] M.obj G where
   toFun t := M.map (constHom G t) m₀
-  map_add' s t := by rw [map_add, M.map_add]; rfl
+  map_add' s t := by rw [map_add (f := _), M.map_add (f := _)]; rfl
   map_smul' a t := b.ext_elem fun i => by
     rw [map_smul, map_smul]
     exact form_map_smul M (b.coord i) m₀ a _

@@ -125,7 +125,7 @@ theorem FD.unip (h : FD (σ := σ) B H' m C C₁ n n') {γ : Multiplicative ℝ 
       have e5 := congrFun ((piInf_incV (B.emb w) H'.x).trans (h.hx w)) i
       have := h.n0 w
       simp only [Function.comp_apply, Pi.smul_apply, smul_eq_mul] at e5
-      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, hb', e5, Matrix.mulVec_smul, Function.comp_apply]
+      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, hb', e5, Matrix.mulVec_smul, Function.comp_apply]
       field_simp
 
 theorem single_prop {ι A A' : Type} [DecidableEq ι] [Zero A] [Zero A'] (P : A → A' → Prop) (w : ι) {a : A} {a' : A'} (h : P a a')
@@ -262,7 +262,7 @@ theorem core (hD : Dic) {a a' a₁ a₁' : ℕ} {G : Geo σ a a'} {G₁ : Geo σ
           rwa [c0, zero_smul, zero_add] at this
         intro Y
         obtain ⟨Y₁, h₁, Y₂, h₂, rfl⟩ := upq_split Y
-        simp only [Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul, Pi.single_add, Pi.single_smul, map_add,
+        simp only [Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul, Pi.single_add, Pi.single_smul, map_add (f := _),
           map_smul, LinearMap.add_apply, LinearMap.smul_apply, k1 _ h₁, k1 _ h₂]
       have := key (Matrix.single a b 1)
       rwa [m.conj_single] at this

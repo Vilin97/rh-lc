@@ -65,7 +65,7 @@ private theorem spans_of_der {O A K ι : Type} [CommRing O] [IsDomain O] [CommRi
       simp only [he, map_mul, Algebra.smul_def]; ring
     have h4 : (satSq x).mkQ (e a * e b) = 0 := (Submodule.Quotient.mk_eq_zero _).2 h2
     simp only [δ, LinearMap.comp_apply]
-    rw [h3, map_add, h4, zero_add, map_add, map_smul, map_smul, map_add, map_smul, map_smul]
+    rw [h3, map_add (f := _), h4, zero_add, map_add (f := _), map_smul, map_smul, map_add (f := _), map_smul, map_smul]
   let D : A →ₗ[O] K := δ ∘ₗ GradedAlgebra.proj 𝒜 j
   have hD1 : ∀ a ∈ 𝒜 j, D a = δ a := fun a ha => by
     simp only [D, LinearMap.comp_apply, GradedAlgebra.proj_apply, DirectSum.decompose_of_mem_same 𝒜 ha]
@@ -97,11 +97,11 @@ private theorem spans_of_der {O A K ι : Type} [CommRing O] [IsDomain O] [CommRi
     intro a b
     induction a using DirectSum.Decomposition.inductionOn 𝒜 with
     | zero => simp
-    | add a a' h h' => simp only [add_mul, map_add, h, h', add_smul, smul_add]; abel
+    | add a a' h h' => simp only [add_mul, map_add (f := _), h, h', add_smul, smul_add]; abel
     | homogeneous a =>
       induction b using DirectSum.Decomposition.inductionOn 𝒜 with
       | zero => simp
-      | add b b' h h' => simp only [mul_add, map_add, h, h', add_smul, smul_add]; abel
+      | add b b' h h' => simp only [mul_add, map_add (f := _), h, h', add_smul, smul_add]; abel
       | homogeneous b => exact hhom _ _ _ a.2 _ b.2
   have hδ0 : ∀ a, x a = 0 → δ a = lam ((satSq x).mkQ a) := fun a ha => by
     simp only [δ, LinearMap.comp_apply, he, ha, map_zero, sub_zero]

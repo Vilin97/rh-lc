@@ -25,7 +25,7 @@ theorem sub_bar_mem_pow_succ (H : Host E) (𝔭 : Ideal (𝓞 E)) (n : ℕ) (hn 
   haveI := H.unram
   let L : 𝓞 E →ₗ[𝓞 (maximalRealSubfield E)] (𝓞 E ⧸ 𝔭 ^ (n + 1)) :=
     { toFun := fun c => Ideal.Quotient.mk _ (c - H.bar c)
-      map_add' := fun a b => by rw [← map_add, map_add H.bar]; congr 1; ring
+      map_add' := fun a b => by rw [← map_add (f := _), map_add H.bar]; congr 1; ring
       map_smul' := fun r a => by
         rw [Algebra.smul_def, map_mul, bar_algebraMap, ← mul_sub, RingHom.id_apply, Algebra.smul_def, map_mul,
           Ideal.Quotient.mk_algebraMap] }
@@ -33,7 +33,7 @@ theorem sub_bar_mem_pow_succ (H : Host E) (𝔭 : Ideal (𝓞 E)) (n : ℕ) (hn 
     Derivation.mk' L fun a b => by
       show Ideal.Quotient.mk _ (a * b - H.bar (a * b)) =
         a • Ideal.Quotient.mk _ (b - H.bar b) + b • Ideal.Quotient.mk _ (a - H.bar a)
-      rw [Algebra.smul_def, Algebra.smul_def, Ideal.Quotient.algebraMap_eq, ← map_mul, ← map_mul, ← map_add,
+      rw [Algebra.smul_def, Algebra.smul_def, Ideal.Quotient.algebraMap_eq, ← map_mul, ← map_mul, ← map_add (f := _),
         Ideal.Quotient.eq]
       have hab : (a - H.bar a) * (b - H.bar b) ∈ 𝔭 ^ (n + 1) :=
         Ideal.pow_le_pow_right (by omega : n + 1 ≤ n + n) (by rw [pow_add]; exact Ideal.mul_mem_mul (h a) (h b))
@@ -137,7 +137,7 @@ theorem exists_real_notMem (H : Host E) {M : FractionalIdeal (𝓞 E)⁰ E} (hM 
   have hbar : IsCMField.complexConj E (c : E) = (H.bar c : E) := (H.bar_eq c).symm
   by_cases h1 : x + IsCMField.complexConj E x ∈ (𝔭 : FractionalIdeal (𝓞 E)⁰ E) * M
   · refine ⟨(c : E) * x + IsCMField.complexConj E ((c : E) * x), fi_add_mem _ (fi_mul_mem M c hx)
-      (hconj _ (fi_mul_mem M c hx)), by rw [map_add, hcc, add_comm], fun h2 => hx' ?_⟩
+      (hconj _ (fi_mul_mem M c hx)), by rw [map_add (f := _), hcc, add_comm], fun h2 => hx' ?_⟩
     have h3 : ((c - H.bar c : 𝓞 E) : E) * x ∈ (𝔭 : FractionalIdeal (𝓞 E)⁰ E) * M := by
       have := fi_sub_mem _ h2 (fi_mul_mem _ (H.bar c) h1)
       convert this using 1
@@ -150,7 +150,7 @@ theorem exists_real_notMem (H : Host E) {M : FractionalIdeal (𝓞 E)⁰ E} (hM 
     rw [this]
     exact fi_add_mem _ (fi_mul_mem _ y h3)
       (FractionalIdeal.mul_mem_mul ((FractionalIdeal.mem_coeIdeal _).2 ⟨i, hi, rfl⟩) hx)
-  · exact ⟨x + IsCMField.complexConj E x, fi_add_mem _ hx (hconj x hx), by rw [map_add, hcc, add_comm], h1⟩
+  · exact ⟨x + IsCMField.complexConj E x, fi_add_mem _ hx (hconj x hx), by rw [map_add (f := _), hcc, add_comm], h1⟩
 
 theorem trace_conj (y : E) : Algebra.trace ℚ E (IsCMField.complexConj E y) = Algebra.trace ℚ E y :=
   Algebra.trace_eq_of_algEquiv ((IsCMField.complexConj E).restrictScalars ℚ) y
@@ -188,7 +188,7 @@ theorem exists_bar_inv_trace_gen : ∀ {E : Type} [Field E] [NumberField E] [IsC
     exact ⟨z, by rw [← Algebra.traceForm_apply, ← hz]; simp⟩
   choose z hz using hint δ hδM
   let θ : 𝓞 E →+ ℤ := AddMonoidHom.mk' z fun a b => Int.cast_injective (α := ℚ) (by
-    push_cast; rw [hz, hz, hz]; push_cast; rw [mul_add, map_add])
+    push_cast; rw [hz, hz, hz]; push_cast; rw [mul_add, map_add (f := _)])
   have hθ : ∀ u, ((θ u : ℤ) : ℚ) = Algebra.trace ℚ E (δ * u) := hz
   have hmemψ : ∀ ψ : 𝓞 E →+ ℤ, ∃ x ∈ M, ∀ u : 𝓞 E, ((ψ u : ℤ) : ℚ) = Algebra.trace ℚ E (x * u) := by
     intro ψ
@@ -224,7 +224,7 @@ theorem exists_bar_inv_trace_gen : ∀ {E : Type} [Field E] [NumberField E] [IsC
     refine ⟨s + H.bar s, hsb, by rwa [map_add, bar_bar, add_comm], fun ψ => ?_⟩
     obtain ⟨t, ht⟩ := hPs ψ
     obtain ⟨t', ht'⟩ := hPbar s hPs ψ
-    exact ⟨t + t', fun u => by rw [add_mul, map_add, ht, ht', add_mul, map_add]⟩
+    exact ⟨t + t', fun u => by rw [add_mul, map_add (f := _), ht, ht', add_mul, map_add (f := _)]⟩
   · exact ⟨s, hs, hb, hPs⟩
 
 end GlobalTheory.RealTheta

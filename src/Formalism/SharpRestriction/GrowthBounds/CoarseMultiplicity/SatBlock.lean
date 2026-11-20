@@ -47,7 +47,7 @@ theorem gi_be_tau (P : MvPolynomial (BVar N r D.T.t) (KK O)) :
     rintro (a | ⟨i, _ | _⟩)
     · simp [tau, tauF, beF, giF]
     · simp [tau, tauF, beF, giF]
-    · simp only [AlgHom.comp_apply, tau, aeval_X, tauF, map_add, map_mul, beF, one_mul, giF, map_one]
+    · simp only [AlgHom.comp_apply, tau, aeval_X, tauF, map_add (f := _), map_mul, beF, one_mul, giF, map_one]
       rw [qq_fix D (beF D) (fun _ => rfl), qq_fix D (giF D) (fun _ => rfl)]
       ring
   exact DFunLike.congr_fun h P
@@ -75,7 +75,7 @@ theorem ppi_int (q : MvPolynomial (BVar N r D.T.t) O) (e : (Fin (D.T.t + 1) ⊕ 
     · exact ⟨C a, by simp⟩
     · exact (IntAlg O _).zero_mem
   | add p q hp hq =>
-    rw [map_add, map_add, MvPolynomial.coeff_add]
+    rw [map_add (f := _), map_add (f := _), MvPolynomial.coeff_add]
     exact (IntAlg O _).add_mem (hp e) (hq e)
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_X]

@@ -65,7 +65,7 @@ theorem nonZero_reG : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Number
       have hxS := hPol hx
       have hyS := hPol hy
       have e : ∀ g, theta om' (x + y) g h = theta om' x g h + theta om' y g h := fun g => by
-        simp only [theta, map_add]
+        simp only [theta, map_add (f := _)]
         exact thetaSum_add F (pres _ x hxS) (pres _ y hyS)
       have ix := (hWC.1 x hxS).1 h
       have iy := (hWC.1 y hyS).1 h

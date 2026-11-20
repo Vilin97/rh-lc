@@ -22,7 +22,7 @@ theorem periodic_of_dbar : ∀ (U : ℂ → ℂ) (h : ℍ → ℂ) (w : ℕ) (T 
     ((Complex.continuous_im.tendsto s).eventually (lt_mem_nhds hs)).mono fun z hz => (hp z hz).symm
   have hL : L0 = L1 := hL0.unique (hshift.congr_of_eventuallyEq hev)
   have hconj : (s + T) - (starRingEnd ℂ) (s + T) = s - (starRingEnd ℂ) s := by
-    simp only [map_add, Complex.conj_ofReal]; ring
+    simp only [map_add (f := _), Complex.conj_ofReal]; ring
   have hne : 2 * Complex.I * (s - (starRingEnd ℂ) s) ^ w ≠ 0 := by
     have : s - (starRingEnd ℂ) s ≠ 0 := by
       rw [Complex.sub_conj]

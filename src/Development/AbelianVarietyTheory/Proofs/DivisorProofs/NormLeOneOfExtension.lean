@@ -84,7 +84,7 @@ theorem main : ∀ (p : ℕ) [Fact (Nat.Prime p)] (A B : Type) [CommRing A] [IsL
     { carrier := {b | ‖e b‖ < 1}
       add_mem' := fun {a b} ha hb => by
         show ‖e (a + b)‖ < 1
-        rw [map_add]
+        rw [map_add (f := _)]
         exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ha hb)
       zero_mem' := by simp
       smul_mem' := fun c b hb => by

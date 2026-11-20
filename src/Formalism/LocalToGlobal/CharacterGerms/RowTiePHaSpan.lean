@@ -24,7 +24,7 @@ theorem hha_add {P Q : MvPolynomial (Letter Ty r n) k} (hP : P ∈ HHa r n k cc 
   obtain ⟨hP1, hP2, hP3⟩ := hP
   obtain ⟨hQ1, hQ2, hQ3⟩ := hQ
   refine ⟨Submodule.add_mem _ hP1 hQ1, fun σ i i' hii t => ?_, fun m hm => ?_⟩
-  · rw [map_add, hP2 σ i i' hii t, hQ2 σ i i' hii t]
+  · rw [map_add (f := _), hP2 σ i i' hii t, hQ2 σ i i' hii t]
   · rcases Finset.mem_union.mp (support_add hm) with h | h
     · exact hP3 m h
     · exact hQ3 m h

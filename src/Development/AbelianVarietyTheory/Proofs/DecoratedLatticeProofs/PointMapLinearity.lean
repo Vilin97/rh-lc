@@ -115,7 +115,7 @@ theorem uniform_place : ∀ (D : D7) (V W : HSp D) (S S' : D.what₂.Tau → SPa
   have h1 : ∀ (a : ℂ) x y z, vac x → vac y → vac z → E (a • x + y) z = a * E x z + E y z := by
     intro a x y z hx hy hz
     simp only [E, pt]
-    rw [ptAt_lin hψ hθ _ _ _ _ _ a hx.1 hy.1, map_add, map_smul]
+    rw [ptAt_lin hψ hθ _ _ _ _ _ a hx.1 hy.1, map_add (f := _), map_smul]
     simp only [GlobalTheory.ThetaL2InnerProduct.ipTh_eq]
     rw [GlobalTheory.Size.ipO_add_left hψ hμ h𝓕 (GlobalTheory.OrientedHeis.theta_smul a (th x z hx hz).1) (th y z hy hz).1
         (th x z hx hz).2, GlobalTheory.Size.ipO_smul_left,
@@ -290,7 +290,7 @@ theorem uniform_all : ∀ (D : D7) (V W : HSp D) (S S' : D.what₂.Tau → SPar)
       obtain ⟨C₂, h₂⟩ := hz'
       refine ⟨C₁ + C₂, fun χS χT ω hW hE x y hx vx hy vy => ?_⟩
       have hψ := hW.std
-      rw [ptOf_add', map_add, GlobalTheory.ThetaL2InnerProduct.ipTh_eq,
+      rw [ptOf_add', map_add (f := _), GlobalTheory.ThetaL2InnerProduct.ipTh_eq,
         GlobalTheory.Size.ipO_add_left hψ hμ h𝓕 (hW.om_pres _ _ (GlobalTheory.FockProdCoef.ptOf_theta M M' hψ hθ hx z))
           (hW.om_pres _ _ (GlobalTheory.FockProdCoef.ptOf_theta M M' hψ hθ hx z')) (GlobalTheory.FockProdCoef.ptOf_theta M M' hψ hθ hy Q'),
         ← GlobalTheory.ThetaL2InnerProduct.ipTh_eq, ← GlobalTheory.ThetaL2InnerProduct.ipTh_eq, h₁ χS χT ω hW hE x y hx vx hy vy,

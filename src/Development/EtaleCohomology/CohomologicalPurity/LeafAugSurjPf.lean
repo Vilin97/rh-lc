@@ -54,7 +54,7 @@ def imSv {K L : PCx R} (φ : K ⟶ L) (n : ℕ) {T : Scheme.{0}} (y : (L.X n).ob
 theorem imSv_add {K L : PCx R} (φ : K ⟶ L) (n : ℕ) {T : Scheme.{0}} (y z : (L.X n).obj (op T)) :
     imSv φ n y ⊓ imSv φ n z ≤ imSv φ n (y + z) := by
   rintro U f ⟨⟨a, ha⟩, ⟨b, hb⟩⟩
-  exact ⟨a + b, by rw [map_add, map_add, ha, hb]⟩
+  exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
 
 theorem imSv_smul {K L : PCx R} (φ : K ⟶ L) (n : ℕ) {T : Scheme.{0}} (y : (L.X n).obj (op T)) (r : ULift.{1} R) :
     imSv φ n y ≤ imSv φ n (r • y) := by

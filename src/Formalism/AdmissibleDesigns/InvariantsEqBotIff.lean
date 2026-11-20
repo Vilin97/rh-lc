@@ -99,7 +99,7 @@ theorem isCrys_congr (h : IsCrys PD ρ) : IsCrys PD ρ' := by
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [E, actVB, he]
-    | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
   have hD : Dcris PD ρ = (Dcris PD ρ').comap (E : V ⊗[Qp] B →ₗ[LL] V' ⊗[Qp] B) := by
     ext x
     simp only [Dcris, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply,
@@ -124,7 +124,7 @@ theorem filV_map_tmul (a : ℤ) (y : V ⊗[Qp] ↥((PD.Fil a).restrictScalars Qp
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp
-  | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
 
 omit he in
 theorem congr_symm_tmul (x : V ⊗[Qp] BdR) :
@@ -133,7 +133,7 @@ theorem congr_symm_tmul (x : V ⊗[Qp] BdR) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 theorem mem_fildR_iff (τ : K →ₐ[Qp] LL) (a : ℤ) (x : V ⊗[Qp] BdR) :
     x ∈ FildR PD ρ τ a ↔ AlgebraTensorModule.congr e (LinearEquiv.refl Qp BdR) x ∈ FildR PD ρ' τ a := by
@@ -143,14 +143,14 @@ theorem mem_fildR_iff (τ : K →ₐ[Qp] LL) (a : ℤ) (x : V ⊗[Qp] BdR) :
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [E, actVdR, he]
-    | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
   have hM : ∀ c x, E (mulVdR (K := K) (BdR := BdR) (V := V) (LL := LL) c x) =
       mulVdR (K := K) (BdR := BdR) (V := V') (LL := LL) c (E x) := by
     intro c x
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [E, mulVdR]
-    | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
   have hF : x ∈ FilV PD (LL := LL) (V := V) a ↔ E x ∈ FilV PD (LL := LL) (V := V') a := by
     simp only [FilV, LinearMap.mem_range]
     constructor

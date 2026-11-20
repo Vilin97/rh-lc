@@ -220,7 +220,7 @@ theorem spanW_irred (hε : ∀ a : Fin (2 * r + k + 1), a.val < k → ε a = tru
     set c := Complex.exp (((∑ a, Λ (fI k r a) * t a : ℝ) : ℂ) * Complex.I)
     change rhoK (k := k) (r := r) T (dgk t) T.w = c • T.w at h1
     change rhoK (k := k) (r := r) T (dgk t) p = c • p
-    rw [hpq, map_add, smul_add] at h1
+    rw [hpq, map_add (f := _), smul_add] at h1
     have hA : rhoK (k := k) (r := r) T (dgk t) p - c • p ∈ S' := S'.sub_mem (hS' _ hu _ hp) (S'.smul_mem _ hp)
     have hB : rhoK (k := k) (r := r) T (dgk t) p - c • p ∈ S'ᗮ := by
       have e : rhoK (k := k) (r := r) T (dgk t) p - c • p = c • q - rhoK (k := k) (r := r) T (dgk t) q := by

@@ -40,7 +40,7 @@ theorem idele_one (hσ : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (x : (Fv F v)�
     rw [sub_smul, sub_smul, one_smul, one_smul] at o
     rw [← o, sub_add_cancel])
   have n1 : evFin F v (Algebra.norm (AF F) (z : AE F E)) = x := by
-    rw [norm_eq hσ t za z1 z2, map_add, map_sub, map_one, ev_sgl, ev_sgl, sub_self, zero_add]
+    rw [norm_eq hσ t za z1 z2, map_add (f := _), map_sub, map_one, ev_sgl, ev_sgl, sub_self, zero_add]
   rw [e1, GlobalTheory.Doubling.absE_ideleAt, GlobalTheory.Doubling.absEv_unitFin, n1]
   have := (val_eq_one_iff _).1 hx
   exact NNReal.eq (le_antisymm (Valued.toNormedField.norm_le_one_iff.2 this.le) (Valued.toNormedField.one_le_norm_iff.2 this.ge))

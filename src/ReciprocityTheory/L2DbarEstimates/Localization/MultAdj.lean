@@ -84,7 +84,7 @@ theorem multAdj (n : ℕ) (M : Type*) [TopologicalSpace M] [T2Space M]
     intro x
     rw [hin, Finset.sum_mul, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl (fun j _ => ?_)
-    rw [hdbψ, map_add, map_mul, map_mul, hconj, Complex.conj_ofReal]
+    rw [hdbψ, map_add (f := _), map_mul, map_mul, hconj, Complex.conj_ofReal]
     simp only [PiLp.smul_apply, smul_eq_mul]
     ring
   have eB : ∀ x, conj (g x) * ((η x : ℂ) * w x - (Real.exp (ph₁ x - ph₂ x) : ℂ) *

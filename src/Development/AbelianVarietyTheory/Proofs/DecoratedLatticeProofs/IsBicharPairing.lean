@@ -185,7 +185,7 @@ theorem exists_vacuum {V : Type} [AddCommGroup V] [Module ℂ V] {ψ : AddChar k
   let Q : Submodule ℂ V :=
     { carrier := {v | v ∈ P ∧ ∀ x ∈ box Y Y' (1 : kˣ), ρ x v = v}
       zero_mem' := ⟨P.zero_mem, fun _ _ => map_zero _⟩
-      add_mem' := fun h h' => ⟨P.add_mem h.1 h'.1, fun x hx => by rw [map_add, h.2 x hx, h'.2 x hx]⟩
+      add_mem' := fun h h' => ⟨P.add_mem h.1 h'.1, fun x hx => by rw [map_add (f := _), h.2 x hx, h'.2 x hx]⟩
       smul_mem' := fun c _ h => ⟨P.smul_mem c h.1, fun x hx => by rw [map_smul, h.2 x hx]⟩ }
   have hb2 : IsBichar fun y x : Matrix Y Y' k => pairing ψ (-x) y :=
     ⟨fun a b y => hb.right _ _ _, fun a y z => by rw [neg_add, hb.left], fun y => hb.zero_right _,

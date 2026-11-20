@@ -74,7 +74,7 @@ theorem image_le (hlS : ¬ l ∣ H.QS) (M : IntermediateField ℚ_[l] (Om l)) (h
   | algebraMap r =>
     rw [eq_ratCast, map_ratCast]
     exact SubfieldClass.ratCast_mem M r
-  | add a b _ _ ha hb => rw [map_add]; exact M.add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact M.add_mem ha hb
   | inv a _ ha => rw [map_inv₀]; exact M.inv_mem ha
   | mul a b _ _ ha hb => rw [map_mul]; exact M.mul_mem ha hb
 
@@ -178,13 +178,13 @@ theorem mu_mul (c d : K) (x : V ⊗[Qp] BdR) : μ (c * d) x = μ c (μ d x) := b
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [mulVdR, mul_assoc]
-  | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
 
 theorem mu_add (c d : K) (x : V ⊗[Qp] BdR) : μ (c + d) x = μ c x + μ d x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [mulVdR, add_mul, tmul_add]
-  | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]; abel
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]; abel
 
 theorem mu_alg (q : Qp) (x : V ⊗[Qp] BdR) : μ (algebraMap Qp K q) x = algebraMap Qp LL q • x := by
   induction x using TensorProduct.induction_on with
@@ -192,7 +192,7 @@ theorem mu_alg (q : Qp) (x : V ⊗[Qp] BdR) : μ (algebraMap Qp K q) x = algebra
   | tmul a b =>
     simp only [mulVdR, AlgebraTensorModule.map_tmul, LinearMap.id_apply, LinearMap.mulLeft_apply]
     rw [← IsScalarTower.algebraMap_apply, ← Algebra.smul_def, smul_tmul', algebraMap_smul, smul_tmul]
-  | add a b ha hb => rw [map_add, smul_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), smul_add, ha, hb]
 
 theorem mu_pow (c : K) (n : ℕ) (x : V ⊗[Qp] BdR) : μ (c ^ n) x = ((μ c) ^ n) x := by
   induction n generalizing x with
@@ -204,7 +204,7 @@ theorem mu_pow (c : K) (n : ℕ) (x : V ⊗[Qp] BdR) : μ (c ^ n) x = ((μ c) ^ 
 theorem mu_aeval (c : K) (p : Qp[X]) (x : V ⊗[Qp] BdR) :
     aeval (μ c) (p.map (algebraMap Qp LL)) x = μ (aeval c p) x := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [Polynomial.map_add, map_add, LinearMap.add_apply, hp, hq, map_add, mu_add]
+  | add p q hp hq => rw [Polynomial.map_add (f := _), map_add (f := _), LinearMap.add_apply, hp, hq, map_add (f := _), mu_add]
   | monomial n a =>
     rw [Polynomial.map_monomial, aeval_monomial, aeval_monomial, mu_mul, mu_alg, mu_pow, Module.End.mul_apply,
       Module.algebraMap_end_apply]
@@ -217,7 +217,7 @@ theorem mu_mem (c : K) (a : ℤ) (x : V ⊗[Qp] BdR) (hx : x ∈ DdR PD ρ ⊓ F
       induction y using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [mulVdR, actVdR]
-      | add a b ha hb => rw [map_add, map_add, map_add, map_add, ha, hb]
+      | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
     have h1 := hx.1
     simp only [DdR, SetLike.mem_coe, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.id_apply,
       sub_eq_zero] at h1 ⊢
@@ -230,7 +230,7 @@ theorem mu_mem (c : K) (a : ℤ) (x : V ⊗[Qp] BdR) (hx : x ∈ DdR PD ρ ⊓ F
     | tmul v b =>
       refine ⟨v ⊗ₜ ⟨c • (b : BdR), (PD.Fil a).smul_mem c b.2⟩, ?_⟩
       simp [mulVdR, Algebra.smul_def]
-    | add a b ha hb => rw [map_add, map_add]; exact Submodule.add_mem _ ha hb
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ ha hb
 
 theorem aeval_mem {W : Type} [AddCommGroup W] [Module LL W] (M : Module.End LL W) (U : Submodule LL W)
     (h : ∀ x ∈ U, M x ∈ U) (q : LL[X]) (x : W) (hx : x ∈ U) : aeval M q x ∈ U := by
@@ -240,7 +240,7 @@ theorem aeval_mem {W : Type} [AddCommGroup W] [Module LL W] (M : Module.End LL W
     | zero => simpa using hx
     | succ n ih => rw [pow_succ', Module.End.mul_apply]; exact h _ ih
   induction q using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, LinearMap.add_apply]; exact U.add_mem hp hq
+  | add p q hp hq => rw [map_add (f := _), LinearMap.add_apply]; exact U.add_mem hp hq
   | monomial n a =>
     rw [aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply]
     exact U.smul_mem _ (hp n)
@@ -299,7 +299,7 @@ theorem jump_of_total [CharZero Qp] [FiniteDimensional Qp K] (hs : Nat.card (K �
     induction hc using Algebra.adjoin_induction with
     | mem z hz => rw [Set.mem_singleton_iff.1 hz]; exact hy2
     | algebraMap q => rw [mu_alg, AlgHom.commutes]
-    | add c d _ _ hc hd => rw [mu_add, hc, hd, map_add, add_smul]
+    | add c d _ _ hc hd => rw [mu_add, hc, hd, map_add (f := _), add_smul]
     | mul c d _ _ hc hd => rw [mu_mul, hd, map_smul, hc, map_mul, smul_smul, mul_comm]
   have hy4 : y ∈ FildR PD ρ τ a := by
     refine ⟨⟨hy1.1, ?_⟩, hy1.2⟩

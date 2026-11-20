@@ -112,7 +112,7 @@ theorem anAll_of (hW : WeilConv) (hC : KCoinv) (hI : ILeft) : AnAll := by
   rw [one_smul, one_smul, add_sub_cancel, Function.update_eq_self] at a2
   have k' : J (pure (f' j) (φ₀ j)) = J (pure (f' j) (φ' j)) := by
     have := congrArg J a2
-    rw [map_add] at this
+    rw [map_add (f := _)] at this
     exact this.trans (by rw [show J _ = 0 from k, add_zero])
   exact k'
 

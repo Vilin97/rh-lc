@@ -235,7 +235,7 @@ theorem repr_scaleB {d : ℕ} (b : Module.Basis (Fin d) F E) (c : F) (hc : c ≠
     simp only [Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply, Finsupp.mapRange_apply, h,
       map_mul, smul_eq_mul]
     ring
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy, mul_add]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy, mul_add]
 
 theorem exists_den {d n : ℕ} (b : Module.Basis (Fin d) F E) (G : Matrix (Fin n) (Fin n) E) :
     ∃ c : F, c ≠ 0 ∧ ∀ (v : HeightOneSpectrum (𝓞 F)) (i j : Fin n) (k l : Fin d),

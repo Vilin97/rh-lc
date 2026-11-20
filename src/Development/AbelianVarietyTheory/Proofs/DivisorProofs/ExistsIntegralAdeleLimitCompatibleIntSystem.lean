@@ -102,7 +102,7 @@ theorem exists_integer_lim (p : ℕ) [hp : Fact p.Prime] (a : ℕ → ℤ)
   refine ⟨e L, fun n hn hnp => ?_⟩
   obtain ⟨b, hb⟩ := hL n hn hnp
   refine ⟨e b, ?_⟩
-  rw [hb, map_add, map_mul, map_intCast, map_natCast]
+  rw [hb, map_add (f := _), map_mul, map_intCast, map_natCast]
 
 theorem exists_lim : ∀ (p : ℕ) [Fact p.Prime] (a : ℕ → ℤ), (∀ n m : ℕ, 0 < n → 0 < m → (n * m).Coprime p → (n : ℤ) ∣ a (n * m) - a n) → ∃ α : AfP p, IsIntAf α ∧ ∀ n : ℕ, 0 < n → n.Coprime p → ∃ β : AfP p, IsIntAf β ∧ α = (a n : AfP p) + n • β := by
   intro p _ a ha
@@ -117,7 +117,7 @@ theorem exists_lim : ∀ (p : ℕ) [Fact p.Prime] (a : ℕ → ℤ), (∀ n m : 
   have h1 : AfP.eval v α = x v := rfl
   have h2 : AfP.eval v β = b v := rfl
   have h3 : AfP.eval v ((a n : AfP p) + n • β) = (a n : v.1.adicCompletion ℚ) + (n : v.1.adicCompletion ℚ) * b v := by
-    rw [map_add, map_intCast, map_nsmul, h2, nsmul_eq_mul]
+    rw [map_add (f := _), map_intCast, map_nsmul, h2, nsmul_eq_mul]
   change AfP.eval v α = AfP.eval v ((a n : AfP p) + n • β)
   rw [h3, h1, hb v]
   push_cast

@@ -50,7 +50,7 @@ theorem eval_tanLinPoly (p w : Fin n → ℂ) : eval p (tanLinPoly p w) = 0 := b
   simp [tanLinPoly]
 
 theorem tanLinPoly_add (p w w' : Fin n → ℂ) : tanLinPoly p (w + w') = tanLinPoly p w + tanLinPoly p w' := by
-  simp only [tanLinPoly, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [tanLinPoly, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem tanLinPoly_smul (p w : Fin n → ℂ) (c : ℂ) : tanLinPoly p (c • w) = C c * tanLinPoly p w := by
   simp only [tanLinPoly, Pi.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum, mul_assoc]
@@ -84,7 +84,7 @@ theorem sub_tanLinPoly_mem_sq (p : Fin n → ℂ) (f : MvPolynomial (Fin n) ℂ)
     have e : f + g - C (eval p (f + g)) - tanLinPoly p (polyDiff p (f + g)) =
         (f - C (eval p f) - tanLinPoly p (polyDiff p f)) +
           (g - C (eval p g) - tanLinPoly p (polyDiff p g)) := by
-      rw [map_add, map_add, map_add, tanLinPoly_add]; ring
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), tanLinPoly_add]; ring
     rw [e]
     exact add_mem hf hg
   | mul_X f i hf =>

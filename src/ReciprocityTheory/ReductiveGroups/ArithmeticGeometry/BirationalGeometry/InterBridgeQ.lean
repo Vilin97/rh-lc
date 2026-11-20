@@ -158,7 +158,7 @@ theorem normPoly_of (hM : PCMinContractStatement) : NormPolyStatement := by
     intro z q
     induction q using MvPolynomial.induction_on with
     | C a => simp
-    | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
     | mul_X p j hp => rw [map_mul, map_mul, hp, bind₁_X_right, eval_psiPoly, map_mul, eval_X]
   have hevalH : ∀ z, eval z H = ∑ j ∈ S, eval (Ψ (segre z)) (c j) * eval (segre z) F ^ (j - k0) := by
     intro z

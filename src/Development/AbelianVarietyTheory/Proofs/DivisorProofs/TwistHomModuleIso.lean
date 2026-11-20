@@ -36,7 +36,7 @@ def fwdSec {V : Y.Opens} (φ : Γ(twist (homMod F G) M, V)) {T : Y.Opens} (hT : 
       exact homApp_coord_rel F G M φ i j _ _ _ _
   map_add' s t := Twist.sec_ext fun i => by
     change homApp (coord φ i) _ (resM F _ (s + t)) = _
-    simp only [map_add]; rfl
+    simp only [map_add (f := _)]; rfl
   map_smul' a s := Twist.sec_ext fun i => by
     change homApp (coord φ i) _ (resM F _ (a • s)) = _
     simp only [coord_smul, resM_smul, map_smul, RingHom.id_apply]; rfl
@@ -55,7 +55,7 @@ def bwdSec {V : Y.Opens} (ψ : Γ(homMod F (twist G M), V)) (i : M.ι) {T : Y.Op
     (h : T ≤ V ⊓ M.U i) : Γ(F, T) →ₗ[Γ(Y, T)] Γ(G, T) where
   toFun s := resM G (le_inf le_rfl (h.trans inf_le_right) : T ≤ T ⊓ M.U i)
     (coord (homApp ψ (h.trans inf_le_left) s) i)
-  map_add' s t := by simp only [map_add, coord_add]
+  map_add' s t := by simp only [map_add (f := _), coord_add]
   map_smul' a s := by
     simp only [map_smul, coord_smul, resM_smul, resG_resG, resG_self, RingHom.id_apply]
 

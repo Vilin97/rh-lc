@@ -82,5 +82,5 @@ theorem GlobalTheory.EigInert.eigen_at_inert : GlobalTheory.Published.Automorphi
     · simp [hC]
     · intro g1 g2 h1 h2
       rw [hC] at h1 h2 ⊢
-      simp only [map_add, smul_add, Finset.sum_add_distrib, h1, h2]
+      simp only [map_add (f := _), smul_add, Finset.sum_add_distrib, h1, h2]
   exact key _ hf

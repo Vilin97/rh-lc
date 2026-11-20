@@ -21,12 +21,12 @@ theorem rTensor_mul_one_tmul {O R k : Type} [CommRing O] [CommRing R] [CommRing 
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul r b => simp [Φ]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hsm : ∀ (r : R) t, Φ (r • t) = ρ₀ r • Φ t := fun r t => by
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul s b => simp [Φ, TensorProduct.smul_tmul']
-    | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
   rw [hΦ, ← hsm, ← he a, map_mul]
   simp [Φ]
 
@@ -49,8 +49,8 @@ theorem span_rTensor_range_tensorAction {O R k Λ : Type} [CommRing O] [CommRing
       induction m using TensorProduct.induction_on with
       | zero => simp
       | tmul s l => simp [red, TensorProduct.smul_tmul']
-      | add x y hx hy => rw [map_add, smul_add, map_add, hx, hy, map_add, map_add, smul_add]
-    | add x y hx hy => rw [map_add, LinearMap.add_apply, map_add, hx, hy, map_add, map_add, LinearMap.add_apply]
+      | add x y hx hy => rw [map_add (f := _), smul_add, map_add (f := _), hx, hy, map_add (f := _), map_add (f := _), smul_add]
+    | add x y hx hy => rw [map_add (f := _), LinearMap.add_apply, map_add (f := _), hx, hy, map_add (f := _), map_add (f := _), LinearMap.add_apply]
   have hspan : Submodule.span k (Set.range red) = ⊤ := by
     refine eq_top_iff.2 fun x _ => ?_
     induction x using TensorProduct.induction_on with
@@ -77,7 +77,7 @@ theorem baseChangeAction_regular_apply {O R : Type} [CommRing O] [CommRing R] (a
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul r b => simp [Algebra.TensorProduct.tmul_mul_tmul, mul_comm]
-  | add x y hx hy => rw [map_add, hx, hy, add_mul]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, add_mul]
 
 theorem exists_generator {V M : Type} [CommRing V] [Nontrivial V] [AddCommGroup M] [Module V M] (P : Submodule V M)
     [Module.Free V P] [Module.Finite V P] (h1 : Module.finrank V P = 1) {Q : Submodule V M} (hQ : IsCompl P Q) :

@@ -58,7 +58,7 @@ theorem isom_eq_mul : ∀ (K : GlobalTheory.UnitLemma.UQ) (B : GlobalTheory.Unit
       add_mem' := by
         intro a b ha hb y
         simp only [Set.mem_setOf_eq] at ha hb ⊢
-        rw [add_mul, map_add, ha, hb, add_mul]
+        rw [add_mul, map_add (f := _), ha, hb, add_mul]
       algebraMap_mem' := by
         intro e y
         show f (algebraMap K.E B.A e * y) = algebraMap K.E B.A e * f y

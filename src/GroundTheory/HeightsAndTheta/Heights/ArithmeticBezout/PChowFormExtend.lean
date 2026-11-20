@@ -87,7 +87,7 @@ def coordPoly (φ : L →ₗ[K] K) : MvPolynomial Y L →+ MvPolynomial Y K wher
     rw [coeff_addMonoidAlgebraMap, coeff_zero, coeff_zero, map_zero]
   map_add' p q := by
     ext m
-    simp only [coeff_addMonoidAlgebraMap, MvPolynomial.coeff_add, map_add]
+    simp only [coeff_addMonoidAlgebraMap, MvPolynomial.coeff_add, map_add (f := _)]
 
 theorem coeff_coordPoly (φ : L →ₗ[K] K) (p : MvPolynomial Y L) (m : Y →₀ ℕ) :
     AddMonoidAlgebra.coeff (coordPoly φ p) m = φ (AddMonoidAlgebra.coeff p m) :=
@@ -147,7 +147,7 @@ theorem coordPoly_mem_of_mem_map (b : Module.Basis β K L) (T : Ideal (MvPolynom
     rw [e]
     exact T.mul_mem_left _ ht
   | zero => intro c; rw [map_zero]; exact T.zero_mem
-  | add x y _ _ hx hy => intro c; rw [map_add]; exact T.add_mem (hx c) (hy c)
+  | add x y _ _ hx hy => intro c; rw [map_add (f := _)]; exact T.add_mem (hx c) (hy c)
   | smul r x _ hx =>
     intro c
     have e : r * x = ∑ c₁ ∈ coordSupport b r, ∑ c₂ ∈ coordSupport b x,

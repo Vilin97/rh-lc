@@ -105,7 +105,7 @@ theorem GlobalTheory.HoweGlobal.howe_tensor_transfer : _root_.GlobalTheory.FunPr
         { carrier := {t | ∀ z, HasDerivAt (fun s : ℝ => om (1, γ (Multiplicative.ofAdd s)) (L t) z)
             (L (TensorProduct.map g LinearMap.id t) z) 0}
           add_mem' := fun {t₁ t₂} h₁ h₂ z => by
-            simp only [map_add, Pi.add_apply]
+            simp only [map_add (f := _), Pi.add_apply]
             exact (h₁ z).add (h₂ z)
           zero_mem' := fun z => by
             simp only [map_zero, Pi.zero_apply]

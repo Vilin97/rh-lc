@@ -297,7 +297,7 @@ theorem exists_core {V : Type} [AddCommGroup V] [Module ℂ V] {Λ : Type} [Fint
   · show 0 ≤ (∑ l, (ρ l : ℂ) * ∑ i, starRingEnd ℂ (f l a i) * f l a i).re
     rw [hre, Complex.ofReal_re]
     exact Finset.sum_nonneg fun l _ => hnn a l
-  · simp only [map_add, Pi.add_apply, add_mul, Finset.sum_add_distrib, mul_add]
+  · simp only [map_add (f := _), Pi.add_apply, add_mul, Finset.sum_add_distrib, mul_add]
   · simp only [map_smul, Pi.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum]
     exact Finset.sum_congr rfl fun l _ => Finset.sum_congr rfl fun i _ => by ring
   · have h1 : (∑ l, (ρ l : ℂ) * ∑ i, starRingEnd ℂ (f l a i) * f l a i) = 0 := ha

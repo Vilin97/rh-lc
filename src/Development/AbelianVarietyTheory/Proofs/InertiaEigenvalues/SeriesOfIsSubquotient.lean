@@ -101,12 +101,12 @@ theorem ser_vanish (L : LabelDatum g) (h5 : 5 ≤ g) {k l n : ℕ} (σ : Fin k �
   refine finsum_mem_induction (fun a => eN g σ * mapDomainAlgHom ℂ ℂ (inA σ) a *
     mapDomainAlgHom ℂ ℂ (inB σ) (eSerC L l f₂) * eSerC L n f = 0) (by simp) ?_ ?_
   · intro x y hx hy
-    simp only [map_add, mul_add, add_mul, hx, hy, add_zero]
+    simp only [map_add (f := _), mul_add, add_mul, hx, hy, add_zero]
   rintro α ⟨hα, hα'⟩
   refine finsum_mem_induction (fun b => eN g σ * mapDomainAlgHom ℂ ℂ (inA σ) (zOf α) *
     mapDomainAlgHom ℂ ℂ (inB σ) b * eSerC L n f = 0) (by simp) ?_ ?_
   · intro x y hx hy
-    simp only [map_add, mul_add, add_mul, hx, hy, add_zero]
+    simp only [map_add (f := _), mul_add, add_mul, hx, hy, add_zero]
   rintro β ⟨hβ, hβ'⟩
   refine finsum_mem_induction (fun c => eN g σ * mapDomainAlgHom ℂ ℂ (inA σ) (zOf α) *
     mapDomainAlgHom ℂ ℂ (inB σ) (zOf β) * c = 0) (by simp) ?_ ?_

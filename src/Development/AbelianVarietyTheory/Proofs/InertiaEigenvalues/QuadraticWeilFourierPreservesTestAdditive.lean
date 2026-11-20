@@ -21,10 +21,10 @@ theorem star_smul_F (A : Et F E) (c : F) (y : A.L) : star (c • y) = c • star
 
 def beta (A : Et F E) (x : A.K) : LinearMap.BilinForm F A.L :=
   LinearMap.mk₂ F (fun y' y => Algebra.trace F A.K (x * Algebra.trace A.K A.L (star y' * y)))
-    (by intro a b c; simp only [star_add, add_mul, map_add, mul_add])
+    (by intro a b c; simp only [star_add, add_mul, map_add (f := _), mul_add])
     (by intro c a b
         rw [star_smul_F, smul_mul_assoc, LinearMap.map_smul_of_tower, mul_smul_comm, LinearMap.map_smul])
-    (by intro a b c; simp only [mul_add, map_add])
+    (by intro a b c; simp only [mul_add, map_add (f := _)])
     (by intro c a b
         rw [mul_smul_comm, LinearMap.map_smul_of_tower, mul_smul_comm, LinearMap.map_smul])
 

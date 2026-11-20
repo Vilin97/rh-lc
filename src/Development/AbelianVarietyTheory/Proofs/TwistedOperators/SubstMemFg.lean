@@ -28,7 +28,7 @@ theorem fg_of_vars {σ ι : Type*} (φ : ι → MvPolynomial σ ℂ →ₐ[ℂ] 
     obtain ⟨V₁, h₁, h₁'⟩ := hp
     obtain ⟨V₂, h₂, h₂'⟩ := hq
     refine ⟨V₁ ⊔ V₂, h₁.sup h₂, fun i => ?_⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (h₁' i) (h₂' i)
   | mul_X p v hp =>
     obtain ⟨V₁, h₁, h₁'⟩ := hp

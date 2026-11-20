@@ -76,7 +76,7 @@ theorem UpperTheory.Gal.W2.Seed.pUEx :
       map_one' := hinj (by rw [hf]; simp)
       map_mul' := fun x y => hinj (by rw [hf, map_mul, hf, hf]; simp)
       map_zero' := hinj (by rw [hf]; simp)
-      map_add' := fun x y => hinj (by rw [hf, map_add, hf, hf]; simp) }
+      map_add' := fun x y => hinj (by rw [hf, map_add (f := _), hf, hf]; simp) }
   refine ⟨u, ρ₀, ?_, ?_⟩
   · unfold LiesOver
     intro x

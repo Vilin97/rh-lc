@@ -88,7 +88,7 @@ theorem keeps {V : HSp D} {P : HeightOneSpectrum (𝓞 D.host.E)} {e : Formalism
   rw [hsx] at hteq'
   have h6 := mulVec_parts (finPart D) ((suppAt_iff e V a₀).1 ha.2.1) z
   rw [← fm_eq V a₀] at h6
-  rw [h6, RingHom.map_add, add_smul, smul_sub, smul_add, smul_add]
+  rw [h6, RingHom.map_add (f := _), add_smul, smul_sub, smul_add, smul_add]
   have hi1 := idem_mem hee
   have hi2 := idem_mem hce
   refine sub_mem (add_mem (add_mem ?_ ?_) (smul_mem V hint hz))

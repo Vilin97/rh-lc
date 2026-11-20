@@ -75,7 +75,7 @@ theorem flag_iff {D : D7} (X : HidaSetting D) (u : D.what₂.Word) (n : (VS D).V
       exact Submodule.span_mono (Set.image_mono hsub) (hstep i)
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       convert Submodule.add_mem _ hx hy using 1
       abel
     | smul c x _ hx =>

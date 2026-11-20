@@ -34,8 +34,8 @@ theorem exists_basis (hinj : Function.Injective (algebraMap A Ω)) (N : Submodul
       { carrier := {s | ∃ n ∈ N, (∀ j < i, φ j n = 0) ∧ φ i n = algebraMap A Ω s * t i}
         add_mem' := by
           rintro a b ⟨n, hn, h0, h⟩ ⟨n', hn', h0', h'⟩
-          refine ⟨n + n', N.add_mem hn hn', fun j hj => by rw [map_add, h0 j hj, h0' j hj, add_zero], ?_⟩
-          rw [map_add, map_add, h, h', add_mul]
+          refine ⟨n + n', N.add_mem hn hn', fun j hj => by rw [map_add (f := _), h0 j hj, h0' j hj, add_zero], ?_⟩
+          rw [map_add (f := _), map_add (f := _), h, h', add_mul]
         zero_mem' := ⟨0, N.zero_mem, fun j _ => map_zero _, by simp⟩
         smul_mem' := by
           rintro c a ⟨n, hn, h0, h⟩
@@ -52,7 +52,7 @@ theorem exists_basis (hinj : Function.Injective (algebraMap A Ω)) (N : Submodul
       { carrier := {s | ∃ a : A, algebraMap A Ω s * φ i n = algebraMap A Ω a * t i}
         add_mem' := by
           rintro a b ⟨x, h⟩ ⟨y, h'⟩
-          exact ⟨x + y, by rw [map_add, map_add, add_mul, add_mul, h, h']⟩
+          exact ⟨x + y, by rw [map_add (f := _), map_add (f := _), add_mul, add_mul, h, h']⟩
         zero_mem' := ⟨0, by simp⟩
         smul_mem' := by
           rintro c a ⟨x, h⟩

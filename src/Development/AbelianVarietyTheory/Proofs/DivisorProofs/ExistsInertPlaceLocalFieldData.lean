@@ -22,7 +22,7 @@ theorem trace_tmul (R : Type) [CommRing R] [Algebra F R] [Module.Free F E] [Modu
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [LinearMap.baseChange_tmul, Algebra.TensorProduct.tmul_mul_tmul]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem trace_singleTens (v : HeightOneSpectrum (𝓞 F)) (y : Fv F v ⊗[F] E) :
     Algebra.trace (AF F) (AF F ⊗[F] E) (Supp.singleTens E v y) =
@@ -34,13 +34,13 @@ theorem trace_singleTens (v : HeightOneSpectrum (𝓞 F)) (y : Fv F v ⊗[F] E) 
     rw [show Supp.singleTens E v (a ⊗ₜ[F] x) = GlobalTheory.EmbChart.atPlace v a ⊗ₜ[F] x from
       GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.tensNU_tmul _ _ a x, trace_tmul, trace_tmul, mul_comm a, ← Algebra.smul_def,
       LinearMap.map_smul, Algebra.smul_def, mul_comm]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem trace_mem {v : HeightOneSpectrum (𝓞 F)} {y : Fv F v ⊗[F] E} (hy : y ∈ intLoc F E v) :
     Algebra.trace (Fv F v) (Fv F v ⊗[F] E) y ∈ v.adicCompletionIntegers F := by
   haveI : Module.Finite F E := Module.Finite.of_restrictScalars_finite ℚ F E
   refine intLoc_induction (p := fun y => Algebra.trace (Fv F v) (Fv F v ⊗[F] E) y ∈ v.adicCompletionIntegers F)
-    (fun a ha x => ?_) (by simp) (fun y z hy hz => by rw [map_add]; exact add_mem hy hz)
+    (fun a ha x => ?_) (by simp) (fun y z hy hz => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz)
     (fun y hy => by rw [map_neg]; exact neg_mem hy) hy
   rw [trace_tmul]
   refine mul_mem ha ?_
@@ -113,7 +113,7 @@ theorem exists_unif (hσ : IsCMExt F E σ) (hw : IsInertAt F E v w) (hc : IsConj
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => exact congrArg (a ⊗ₜ[F] ·) (conj_conj hσ x)
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · by_cases h0 : x = 0
     · simp [h0]
     have h0' : Valued.v x ≠ 0 := by simpa using h0
@@ -162,7 +162,7 @@ theorem GlobalTheory.InertPsi.exists_field_data : ∀ (F E : Type) [Field F] [Nu
     { toFun := fun z => B.ψ (⅟(2 : AF F) * Algebra.trace (AF F) (AE F E) (-1 * ptAt hw h z))
       map_zero_eq_one' := by simp
       map_add_eq_mul' := fun a b => by
-        simp only [map_add, mul_add, AddChar.map_add_eq_mul] }
+        simp only [map_add (f := _), mul_add, AddChar.map_add_eq_mul] }
   have hval : ∀ z, ψL z = psiLoc B.ψ v
       (Algebra.trace (Fv F v) (Fv F v ⊗[F] E) ((InertChart.complEquiv hw h).symm (-z)) * k) := fun z => by
     show B.ψ _ = _
@@ -213,7 +213,7 @@ theorem GlobalTheory.InertPsi.exists_field_data : ∀ (F E : Type) [Field F] [Nu
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul a x => exact congrArg (a ⊗ₜ[F] ·) (InertChart.conj_conj hB.cm x)
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     let cE : AE F E ≃ₐ[AF F] AE F E := AlgEquiv.ofAlgHom (cA σ) (cA σ) (AlgHom.ext hcc) (AlgHom.ext hcc)
     have hT : ∀ x, Algebra.trace (AF F) (AE F E) (cA σ x) = Algebra.trace (AF F) (AE F E) x := fun x =>
       Algebra.trace_eq_of_algEquiv cE x
@@ -223,7 +223,7 @@ theorem GlobalTheory.InertPsi.exists_field_data : ∀ (F E : Type) [Field F] [Nu
     have key : Algebra.trace (AF F) (AE F E) (ptAt hw h y) = Algebra.trace (AF F) (AE F E) (ptAt hw h z) := by
       have e1 : Algebra.trace (AF F) (AE F E) (ptAt hw h y) + Algebra.trace (AF F) (AE F E) (ptAt hw h y) =
           Algebra.trace (AF F) (AE F E) (ptAt hw h z) + Algebra.trace (AF F) (AE F E) (ptAt hw h z) := by
-        rw [← map_add, ← map_add (ptAt hw h), hy, map_add, map_add, ← cA_ptAt hw h σ hc, hT]
+        rw [← map_add (f := _), ← map_add (ptAt hw h), hy, map_add (f := _), map_add (f := _), ← cA_ptAt hw h σ hc, hT]
       have e2 : ∀ t : AF F, t = ⅟(2 : AF F) * (t + t) := fun t => by
         rw [← two_mul, ← mul_assoc, invOf_mul_self, one_mul]
       rw [e2 (Algebra.trace _ _ (ptAt hw h y)), e1, ← e2]

@@ -162,6 +162,6 @@ theorem cohom_split_baseChange : ∀ (R : Type) [CommRing R] (K : CochainComplex
       simp only [ext, LinearMap.rTensor_tmul, AlgHom.toLinearMap_apply, Algebra.ofId_apply,
         LinearMap.baseChange_tmul, TensorProduct.lid_tmul]
       rw [TensorProduct.tmul_smul, TensorProduct.smul_tmul', Algebra.smul_def, _root_.mul_one]
-    | add x y hx hy => simp only [map_add, hx, hy, TensorProduct.tmul_add]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, TensorProduct.tmul_add]
 
 end GlobalTheory.AbCoh

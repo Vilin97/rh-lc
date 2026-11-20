@@ -36,7 +36,7 @@ theorem gamA_add_left {D : D7} {ψ : AE D → ℂ} (hψ : ∀ x y, ψ (x + y) = 
 
 theorem gamA_add_right {D : D7} {ψ : AE D → ℂ} (hψ : ∀ x y, ψ (x + y) = ψ x * ψ y) {N N' : ℕ} (ζ η ξ : XA D N N') :
     gamA ψ ζ (η + ξ) = gamA ψ ζ η * gamA ψ ζ ξ := by
-  simp only [gamA, ← hψ, Matrix.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [gamA, ← hψ, Matrix.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem gamA_rat {D : D7} {cc : Ideal (𝓞 D.host.K)} {δ : ℂ} {ψ : AE D → ℂ} (hψ : ∀ a, ψ (inc D a) = psi0 D cc δ a)
     {N N' : ℕ} (z y : Matrix (Fin N') (Fin N) D.host.E) :

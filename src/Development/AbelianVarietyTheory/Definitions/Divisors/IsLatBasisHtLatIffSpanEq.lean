@@ -267,7 +267,7 @@ variable [IsAlgClosed C] [CharZero C] [Algebra ℤ_[p] C] [Algebra ℤ_[p] O] [I
 theorem pairV_bLie_eq_evLie (x : LieG P.Gt) (w : P.V) : P.pairV (P.bLie x) w = evLie P x (P.alC w) := by
   induction w using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul c t =>
     have : (c ⊗ₜ t : P.V) = c • (1 : C) ⊗ₜ t := by
       rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]

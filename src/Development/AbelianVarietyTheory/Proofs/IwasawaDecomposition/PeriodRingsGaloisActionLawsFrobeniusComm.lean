@@ -198,7 +198,7 @@ theorem endo_zA_pt (F : Per.Ainf l →+* Per.Ainf l) (z : ℤ_[l]) : F (Per.zA l
     refine Ideal.mem_span_singleton'.2 ⟨F (Per.zA l w) - Per.zA l w, ?_⟩
     generalize z.appr (m + 1) = a at hz
     rw [hz]
-    simp only [map_add, map_mul, map_pow, map_natCast]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast]
     ring
   rw [(WittVector.mem_span_p_pow_iff_le_coeff_eq_zero _ _).1 h m (Nat.lt_succ_self m), WittVector.zero_coeff]
 

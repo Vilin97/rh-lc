@@ -97,7 +97,7 @@ theorem exists_rat_add_nsmul (z : EAf D) (N : ℕ) (hN : 0 < N) :
     obtain ⟨γ₁, w₁, hw₁, h₁⟩ := hx
     obtain ⟨γ₂, w₂, hw₂, h₂⟩ := hy
     refine ⟨γ₁ + γ₂, w₁ + w₂, add_mem hw₁ hw₂, ?_⟩
-    rw [h₁, h₂, map_add, smul_add]
+    rw [h₁, h₂, map_add (f := _), smul_add]
     abel
 
 theorem exists_half_approx {S T : HSp D} {Q : Finset (Formalism.L2.DIV.Pl D.host.E)} {E₂ : AE D} (hE : IsIdemSum E₂ Q)

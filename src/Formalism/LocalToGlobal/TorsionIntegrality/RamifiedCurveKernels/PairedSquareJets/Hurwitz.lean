@@ -65,7 +65,7 @@ theorem jetsIn_X (i : ι) : JetsIn R (MvPowerSeries.X i : MvPowerSeries ι K) :=
 theorem jetsIn_add {f g : MvPowerSeries ι K} (hf : JetsIn R f) (hg : JetsIn R g) :
     JetsIn R (f + g) := by
   intro κ
-  rw [map_add, mul_add]
+  rw [map_add (f := _), mul_add]
   exact R.add_mem (hf κ) (hg κ)
 
 theorem jetsIn_neg {f : MvPowerSeries ι K} (hf : JetsIn R f) : JetsIn R (-f) := by

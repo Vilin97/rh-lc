@@ -29,7 +29,7 @@ theorem perFr_add {r : ℕ} (X : ReciprocityTheory.ChartRestriction.G.FD.Data E 
     | (simp [Matrix.mulVec_add]; done)
     | (simp [hermC, Matrix.dotProduct_add, Matrix.mulVec_add, mul_add, add_mul, Finset.sum_add_distrib]; done)
     | (unfold hermC; simp [Matrix.dotProduct_add, Matrix.mulVec_add, mul_add, add_mul, Finset.sum_add_distrib]; done)
-    | (unfold hermC; simp [mul_add, add_mul, Finset.sum_add_distrib, map_add])
+    | (unfold hermC; simp [mul_add, add_mul, Finset.sum_add_distrib, map_add (f := _)])
 
 theorem perFr_zero {r : ℕ} (X : ReciprocityTheory.ChartRestriction.G.FD.Data E r) (x : Frame X.Ψ r) (τ : E →+* ℂ) (i : ℕ) :
     perFr X x 0 τ i = 0 := by

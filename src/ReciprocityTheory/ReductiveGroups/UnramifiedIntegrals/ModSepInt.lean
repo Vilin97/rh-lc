@@ -22,7 +22,7 @@ theorem exists_int_multiple {Ω : Type*} [Field Ω] [CharZero Ω] {β : Ω} (hβ
   · have hmem := adjoin_le_integralClosure hβ (Polynomial.aeval_mem_adjoin_singleton ℤ β (p := q.divX))
     exact (neg_mem hmem : _ ∈ integralClosure ℤ Ω)
   · have h2 := congrArg (Polynomial.aeval β) (Polynomial.divX_mul_X_add q)
-    rw [map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C, haq, eq_intCast] at h2
+    rw [map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C, haq, eq_intCast] at h2
     linear_combination h2
 
 theorem mem_valuationSubring_of_isIntegral {Ω : Type*} [Field Ω] {x : Ω} (hx : IsIntegral ℤ x)

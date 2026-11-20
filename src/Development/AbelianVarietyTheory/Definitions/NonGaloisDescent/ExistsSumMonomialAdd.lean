@@ -25,7 +25,7 @@ theorem eq_sum_monomial_add (x : K⟦X⟧) (N : ℕ) : x = ∑ n ∈ Finset.rang
     X ^ N * PowerSeries.mk fun n => coeff (n + N) x := by
   ext n
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, coeff_monomial, coeff_X_pow_mul', coeff_mk, Finset.sum_ite_eq,
+    simp only [map_add (f := _), map_sum, coeff_monomial, coeff_X_pow_mul', coeff_mk, Finset.sum_ite_eq,
     Finset.mem_range]
   split_ifs with h1 h2 h2
   · omega
@@ -54,7 +54,7 @@ theorem exists_sum_monomial_add {x : K⟦X⟧} (hx : x ∈ S O K e) (m : ℕ) : 
   · ext n
     rw [← map_natCast (C : K →+* K⟦X⟧), ← map_pow]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, coeff_monomial, coeff_C_mul, coeff_mk, Finset.sum_ite_eq, Finset.mem_range]
+      simp only [map_add (f := _), map_sum, coeff_monomial, coeff_C_mul, coeff_mk, Finset.sum_ite_eq, Finset.mem_range]
     split_ifs with h
     · simp
     · rw [zero_add, mul_inv_cancel_left₀ h0]
@@ -105,7 +105,7 @@ theorem ringHom_ext_S (htf : ∀ x : R, (l : R) * x = 0 → x = 0) (hs : ∀ x :
   have h2 : (⟨((l : A O K) : K⟦X⟧) ^ k * p, A_le_S l e hk⟩ : S O K e) = (l : S O K e) ^ k *
       (Subalgebra.inclusion (inf_le_left : Sb O K l e ≤ S O K e)).toRingHom p := Subtype.ext (by simp)
   rw [h2, map_mul, map_mul, map_pow, map_pow, map_natCast, map_natCast, ← sub_eq_zero, ← mul_sub] at h1
-  simp only [map_add, map_mul, map_pow, map_natCast, sub_eq_zero.1 (htf' _ _ h1)]
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast, sub_eq_zero.1 (htf' _ _ h1)]
   exact ⟨g q - g' q, by ring⟩
 
 variable [Algebra O R]
@@ -156,7 +156,7 @@ theorem exists_extend_S (htf : ∀ x : R, (l : R) * x = 0 → x = 0) [IsAdicComp
       simpa using eq_sum_monomial_add x (e * l ^ k))
     change F ⟨x, k, hk⟩ ∈ j.range
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [h3, map_add, map_sum]
+      rw [h3, map_add (f := _), map_sum]
     refine add_mem (sum_mem fun n _ => h1 n _ (hx.1 n)) ?_
     obtain ⟨d, hd⟩ := hd (l ^ k)
     obtain ⟨m, hm⟩ := Nat.dvd_factorial (pow_pos hl.out.pos k) le_rfl
@@ -293,12 +293,12 @@ theorem dpow_one (x : Ainf l) (hx : Per.θ l x = 0) : dpow x hx 1 = ainfToAcris 
 theorem PiSys.exists_dpow_teich {e : ℕ} (ϖ : PiSys l e) (q : ℕ) :
     ∃ d : Per.Acris l, (q.factorial : Per.Acris l) * d = ainfToAcris l ϖ.teich ^ (e * q) := by
   have hE : Per.θ l (ϖ.teich ^ e + l) = 0 := by
-    rw [map_add, map_pow, ϖ.theta_teich, ϖ.seqO_zero, map_natCast, neg_add_cancel]
+    rw [map_add (f := _), map_pow, ϖ.theta_teich, ϖ.seqO_zero, map_natCast, neg_add_cancel]
   choose c hc using GlobalTheory.RingBasics.exists_pow_div_factorial l
   have hc' : ∀ n : ℕ, (n.factorial : Per.Acris l) * algebraMap ℤ_[l] _ (c n) = (l : Per.Acris l) ^ n :=
     fun n => by simpa only [map_mul, map_natCast, map_pow] using congrArg (algebraMap ℤ_[l] (Per.Acris l)) (hc n)
   have h1 : ainfToAcris l ϖ.teich ^ e = ainfToAcris l (ϖ.teich ^ e + l) + -(l : Per.Acris l) := by
-    rw [map_add, map_pow, map_natCast, add_neg_cancel_right]
+    rw [map_add (f := _), map_pow, map_natCast, add_neg_cancel_right]
   refine ⟨∑ k ∈ Finset.range (q + 1), dpow _ hE k * ((-1) ^ (q - k) * algebraMap ℤ_[l] _ (c (q - k))), ?_⟩
   rw [pow_mul, h1, add_pow, Finset.mul_sum]
   refine Finset.sum_congr rfl fun k hk => ?_
@@ -351,13 +351,13 @@ theorem frobOCr_toOCr (x : OA l O) : frobOCr l O (toOCr l O x) = toOCr l O (frob
   | tmul o w =>
     exact congrArg (fun y : Per.Acris l => o ⊗ₜ[ℤ_[l]] y) (((GlobalTheory.CrisMaps.phiA_extends l).alg w).trans
       (congrArg (algebraMap (Per.Ainf l) (Per.Acris l)) (phiA_eq_frobA_pt w)))
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem galOCr_toOCr (g : GQ l) (x : OA l O) : galOCr O g (toOCr l O x) = toOCr l O (galOA O g x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul o w => exact congrArg (fun y : Per.Acris l => o ⊗ₜ[ℤ_[l]] y) ((GlobalTheory.CrisMaps.sigA_extends g).alg w)
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem frobOB_toOB (x : OCr l O) : frobOB l O (toOB l O x) = toOB l O (frobOCr l O x) := by
   induction x using TensorProduct.induction_on with
@@ -365,7 +365,7 @@ theorem frobOB_toOB (x : OCr l O) : frobOB l O (toOB l O x) = toOB l O (frobOCr 
   | tmul o w =>
     exact congrArg (fun y : Per.Bcris l => o ⊗ₜ[ℤ_[l]] y)
       ((GlobalTheory.MemLoc.ActLaws.act_laws l).2.2.2.2.2.2.2.2.2.2.2.2 w)
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem galOB_toOB (g : GQ l) (x : OCr l O) : galOB O g (toOB l O x) = toOB l O (galOCr O g x) := by
   induction x using TensorProduct.induction_on with
@@ -373,7 +373,7 @@ theorem galOB_toOB (g : GQ l) (x : OCr l O) : galOB O g (toOB l O x) = toOB l O 
   | tmul o w =>
     exact congrArg (fun y : Per.Bcris l => o ⊗ₜ[ℤ_[l]] y)
       ((GlobalTheory.MemLoc.ActLaws.act_laws l).2.2.2.2.2.2.2.2.2.2.2.1 g w)
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def constC : (ZMod a → O) →ₐ[O] OCr l O := (toOCr l O).comp (constA t)
 
@@ -476,7 +476,7 @@ theorem galOCr_iS_monomial (g : GQ l) (n : ℕ) (c : K) (h : monomial n c ∈ S 
   have h2 := congrArg (ϖ.iS O K) h1
   rw [map_mul, map_natCast, map_smul, map_pow, iS_u] at h2
   have h3 := congrArg (galOCr O g) h2
-  rw [map_mul, map_natCast, map_smul, map_pow, galOCr_toOCr, galOA_teichR, map_mul, map_add, map_one,
+  rw [map_mul, map_natCast, map_smul, map_pow, galOCr_toOCr, galOA_teichR, map_mul, map_add (f := _), map_one,
     toOCr_tmul, mul_pow, add_comm] at h3
   refine sub_eq_zero.1 (nat_cancel_OCr (pow_pos hl.out.pos k).ne' ?_)
   rw [mul_sub, h3, mul_left_comm, h2, mul_smul_comm, sub_self]
@@ -514,7 +514,7 @@ theorem taylor_S (g : ↥(GK (ϖ.field a))) (f : S O K e) (r : ℕ) : ∃ M₀, 
     have h4 : ∀ n : ℕ, (n : K⟦X⟧) = C (n : K) := fun n => by simp
     change descN K i f = _
     set_option synthInstance.maxHeartbeats 100000 in
-      conv_lhs => rw [hf, map_add, map_sum, h3, ← smul_eq_C_mul, map_smul, smul_eq_C_mul, ← h3]
+      conv_lhs => rw [hf, map_add (f := _), map_sum, h3, ← smul_eq_C_mul, map_smul, smul_eq_C_mul, ← h3]
     simp only [AddMemClass.coe_add, MulMemClass.coe_mul, SubmonoidClass.coe_pow, SubringClass.coe_natCast,
       AddSubmonoidClass.coe_finset_sum, m]
     congr 1
@@ -536,7 +536,7 @@ theorem taylor_S (g : ↥(GK (ϖ.field a))) (f : S O K e) (r : ℕ) : ∃ M₀, 
     simp only [mul_assoc, m]
   simp only [h2]
   conv_lhs => rw [h1]
-  simp only [map_add, h5, mul_add, Finset.sum_add_distrib, map_mul, map_pow, map_natCast, mul_sub,
+  simp only [map_add (f := _), h5, mul_add, Finset.sum_add_distrib, map_mul, map_pow, map_natCast, mul_sub,
     Finset.mul_sum, mul_left_comm ((l : OCr l O) ^ r)]
   ring
 

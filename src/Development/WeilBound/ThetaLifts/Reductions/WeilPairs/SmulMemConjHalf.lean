@@ -66,7 +66,7 @@ def hlf : AEF F E := incAF F E (1 / 2)
 
 theorem hlf_add : hlf F E + hlf F E = 1 := by
   unfold hlf
-  rw [← map_add, show (1 / 2 : E) + 1 / 2 = 1 by norm_num, map_one]
+  rw [← map_add (f := _), show (1 / 2 : E) + 1 / 2 = 1 by norm_num, map_one]
 
 theorem exists_decomp {e : AEF F E} {u : WOF F E nS (nT + nT)} (hu : u ∈ conjHalf σ e nS (nT + nT)) :
     ∃ a ∈ conjHalf σ e nS nT, ∃ b ∈ conjHalf σ e nS nT, u = dC F E nT * a + aC F E nT * b := by

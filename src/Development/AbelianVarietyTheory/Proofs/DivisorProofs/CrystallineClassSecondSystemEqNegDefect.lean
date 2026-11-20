@@ -85,7 +85,7 @@ theorem r_eq_neg_defect : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : 
   let β : S.thickObj hI U ⟶ S'.thickObj hI V := (S.thick hI).map a ≫ ΦU V
   have hθ : IsTheta I (S.p U) α.φ β.φ (θ U V a) := hΘ U V a
   have tay := (T U V).2 (Q U) (hQ U) α β (θ U V a) hθ f
-  rw [connForm_sub_eq hI hk hC S Q hQ f g hg F h hh U, map_add] at tay
+  rw [connForm_sub_eq hI hk hC S Q hQ f g hg F h hh U, map_add (f := _)] at tay
   erw [hθ.der (g U)] at tay
   have hw' : connForm F.1 (affPt s₀ U.unop) (affPt_w s₀ U.unop) = w.1 U := by
     rw [← hFw, cmpForm_apply]
@@ -102,7 +102,7 @@ theorem r_eq_neg_defect : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : 
   erw [E3, E4] at tay
   change Φ.φ V (g V) + ev f (ΦU V) - mp S'.F a (Φ.φ U (g U) + ev f (ΦU U)) =
     @id (S'.F.obj V) (ev f ((S'.thick hI).map a)) - -z.1 U V a
-  rw [map_add]
+  rw [map_add (f := _)]
   have key : ∀ x y z' p q r s t u : S'.F.obj V, x - y = z' + (p - q) → y = r + s → x = t - q + u →
       t + u - (p + r) = s - -z' := by
     intro x y z' p q r s t u h₁ h₂ h₃

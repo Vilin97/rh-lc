@@ -133,7 +133,7 @@ theorem exists_psi {R : Ranks} {H : Host R} {what₂ : Rows.Data R} (N : NData R
       map_one' := hj (by rw [hf, map_one, map_one])
       map_mul' := fun a b => hj (by rw [hf, map_mul, map_mul, hf, hf])
       map_zero' := hj (by rw [hf, map_zero, map_zero])
-      map_add' := fun a b => hj (by rw [hf, map_add, map_add, hf, hf]) }
+      map_add' := fun a b => hj (by rw [hf, map_add (f := _), map_add (f := _), hf, hf]) }
   have hψ : ∀ a, j (ψ a) = iotaOQ N NA i a := hf
   refine ⟨ψ, hψ, Ideal.Quotient.lift (IsLocalRing.maximalIdeal (N.O i)) ((IsLocalRing.residue B).comp ψ)
     fun a ha => ?_, fun a => Ideal.Quotient.lift_mk _ _ _⟩

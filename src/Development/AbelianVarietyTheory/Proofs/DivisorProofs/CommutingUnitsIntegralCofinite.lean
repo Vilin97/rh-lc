@@ -20,7 +20,7 @@ def tauR (G : HTGroup p) (β : G.Cˣ) (R : Type) [CommRing R] [Algebra ℚ R] (x
 variable (G : HTGroup p) (β : G.Cˣ) (R : Type) [CommRing R] [Algebra ℚ R]
 
 theorem tauR_add (x y : R ⊗[ℚ] G.C) : tauR G β R (x + y) = tauR G β R x + tauR G β R y := by
-  simp only [tauR, map_add, MulOpposite.unop_add, mul_add, add_mul]
+  simp only [tauR, map_add (f := _), MulOpposite.unop_add, mul_add, add_mul]
 
 theorem inC_inv_mul : inC G R ((β⁻¹ : G.Cˣ) : G.C) * inC G R (β : G.C) = 1 := by
   rw [← map_mul, Units.inv_mul, map_one]

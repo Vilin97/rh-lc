@@ -213,7 +213,7 @@ theorem mult_iff {Hm : Matrix (Fin g) (Fin g) ℂ} {χ : u.Λ → ℂ} (h : u.Is
       genVal u D.P.isLB (Y := Sp ℂ) (s x) (𝟙 _) ![ct x + z, ct x, z, 0] *
         genVal u D.P.isLB (Y := Sp ℂ) (s x') (𝟙 _) ![ct x' + z, ct x', z, 0] := genVal_mul D.P.isLB _ _ _ _
   have p := prod_mult (ct x) (ct x') z
-  rw [← map_add] at p
+  rw [← map_add (f := _)] at p
   have g₁ := DVR.mulGen_isGen _ _ _ _ _ _ _ (hs (x + x')) (DVR.pullGen_isGen D.P.L (thφ D.P.A (x3 D.P.A)) thε D.cub.t
     D.cub.isGen (lift (Out.DegPre.cF D ℂ x) (lift (Out.DegPre.cF D ℂ x') (pt u z))).left)
   have g₂ := DVR.mulGen_isGen _ _ _ _ _ _ _ (hs x) (hs x')

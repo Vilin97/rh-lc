@@ -69,7 +69,7 @@ theorem span_coefIdeal_eq_span_frFac : ∀ (D : D7) (T : D.host.E) (G : LFlag (V
     | zero =>
       rw [map_zero]; exact Submodule.zero_mem _
     | add x y _ _ hx hy =>
-      rw [map_add]; exact Submodule.add_mem _ hx hy
+      rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul r x _ hx =>
       have hrO : (D.s.atP p).ιE (algebraMap (𝓞 D.host.E) D.host.E r) ∈ (Z.M p).L.O :=
         hint _ (NumberField.RingOfIntegers.isIntegral r).algebraMap

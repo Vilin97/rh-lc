@@ -90,7 +90,7 @@ theorem pull_translDiff {T T' : Over S} (x : T ⟶ G) (j : T' ⟶ T) (b : T' ⟶
       ∑ u, ∑ v, (W + W.transpose) u v • pair π (j ≫ x ≫ pr u) (b ≫ pr v) := by
   unfold Out.translDiff at h ⊢
   rw [cls_linComb hL, Fin.sum_univ_two]
-  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, one_smul, neg_smul, hLW, pull_quad, map_add, map_neg]
+  simp only [Matrix.cons_val_zero, Matrix.cons_val_one, one_smul, neg_smul, hLW, pull_quad, map_add (f := _), map_neg]
   have e : ∀ u, lift j b ≫ (lift (fst T G ≫ x) (snd T G) ≫ μ[G]) ≫ pr u = (j ≫ x ≫ pr u) * (b ≫ pr u) := fun u => by
     have := hmon u
     rw [← Hom.mul_def, MonObj.mul_comp, MonObj.comp_mul, Category.assoc, lift_fst_assoc, lift_snd_assoc]

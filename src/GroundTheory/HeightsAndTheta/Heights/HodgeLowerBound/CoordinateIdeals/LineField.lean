@@ -163,7 +163,7 @@ theorem birational_yLine : Birational yLine := by
       isMultiHomog_add (isMultiHomog_mul hg₁ hh₂) (by rw [add_comm]; exact isMultiHomog_mul hg₂ hh₁),
       isMultiHomog_mul hh₁ hh₂, by rw [map_mul]; exact mul_ne_zero hy₁ hy₂, ?_⟩
     have : (⟨x + y, add_mem hx hy⟩ : Ω) = ⟨x, hx⟩ + ⟨y, hy⟩ := rfl
-    rw [this, map_add, map_mul, map_mul, map_mul, e₁, e₂]
+    rw [this, map_add (f := _), map_mul, map_mul, map_mul, e₁, e₂]
     ring
   | inv x hx ih =>
     obtain ⟨d, g, h, hg, hh, hy, e⟩ := ih

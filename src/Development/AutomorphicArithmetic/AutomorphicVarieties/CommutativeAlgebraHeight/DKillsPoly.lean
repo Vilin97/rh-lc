@@ -29,5 +29,5 @@ theorem UpperTheory.V.CA.d_kills_poly :
   rw [H k m hm, map_one] at h1
   refine Eq.trans (congrArg _ ?_) h1
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Det.gen, map_add, map_mul, map_one, map_sum, Algebra.TensorProduct.map_tmul, MvPolynomial.aeval_X,
+    simp only [Det.gen, map_add (f := _), map_mul, map_one, map_sum, Algebra.TensorProduct.map_tmul, MvPolynomial.aeval_X,
     AlgHom.id_apply, ← hmg, smul_tmul', smul_eq_mul, mul_one]

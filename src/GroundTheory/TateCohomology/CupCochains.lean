@@ -199,7 +199,7 @@ theorem d_cupCochain (h : p + q = n) (f : (Fin p → G) → A) (g : (Fin q → G
     rw [this]
     rfl
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hlast, hT, hG, map_add, TensorProduct.tmul_add, smul_add, hP, TensorProduct.add_tmul,
+    rw [hlast, hT, hG, map_add (f := _), TensorProduct.tmul_add, smul_add, hP, TensorProduct.add_tmul,
     TensorProduct.add_tmul, ← TensorProduct.smul_tmul', TensorProduct.sum_tmul, map_sum,
     TensorProduct.tmul_sum, Finset.smul_sum, Fin.val_last, pow_succ, mul_neg_one, neg_smul]
   abel

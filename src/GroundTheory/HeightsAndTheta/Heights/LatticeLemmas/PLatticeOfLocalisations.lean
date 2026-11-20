@@ -115,7 +115,7 @@ theorem localLattice_span (s : Set V) :
   induction hx using Submodule.span_induction with
   | mem x hx => exact subset_span ⟨x, hx, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x z _ _ hx hz => rw [map_add]; exact add_mem hx hz
+  | add x z _ _ hx hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hz
   | smul a x _ hx => rw [toLocal_smul]; exact smul_mem _ _ hx
 
 theorem span_localLattice_eq_top (L : Submodule (𝓞 K) V) (hL : span K (L : Set V) = ⊤) :
@@ -141,7 +141,7 @@ def intCoords {ι : Type*} (e : Module.Basis ι K V) :
     Submodule (v.adicCompletionIntegers K) (v.adicCompletion K ⊗[K] V) where
   carrier := {w | ∀ i, (Algebra.TensorProduct.basis (v.adicCompletion K) e).repr w i ∈
     v.adicCompletionIntegers K}
-  add_mem' hw hz i := by rw [map_add, Finsupp.add_apply]; exact add_mem (hw i) (hz i)
+  add_mem' hw hz i := by rw [map_add (f := _), Finsupp.add_apply]; exact add_mem (hw i) (hz i)
   zero_mem' i := by rw [map_zero, Finsupp.zero_apply]; exact zero_mem _
   smul_mem' o w hw i := by
     rw [← algebraMap_smul (v.adicCompletion K) o w, map_smul, Finsupp.smul_apply, smul_eq_mul]

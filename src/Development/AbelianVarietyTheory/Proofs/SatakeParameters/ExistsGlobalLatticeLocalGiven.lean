@@ -38,7 +38,7 @@ theorem exists_approx {E : Type} [Field E] (f : E →+* K) {π : R} (hπ : Irred
     have hr : IsLocalRing.residue R π = 0 := by
       rw [IsLocalRing.residue_eq_zero_iff]; exact hπ.not_isUnit
     have : (IsLocalRing.residue R).mapMatrix (1 + π • (h * Matrix.of z)) = 1 := by
-      rw [map_add, map_one]
+      rw [map_add (f := _), map_one]
       have : (IsLocalRing.residue R).mapMatrix (π • (h * Matrix.of z)) = 0 := by
         ext i j; simp [hr]
       rw [this, add_zero]
@@ -47,7 +47,7 @@ theorem exists_approx {E : Type} [Field E] (f : E →+* K) {π : R} (hπ : Irred
         1 + algebraMap R K π • (h.map (algebraMap R K) * (Matrix.of z).map (algebraMap R K)) := by
       rw [← Matrix.map_mul]
       ext i j
-      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, Matrix.one_apply,
+      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul, Matrix.one_apply,
         apply_ite (algebraMap R K), map_one, map_zero]
     rw [e1, ← h1, mul_add, mul_one, Matrix.mul_smul, Matrix.smul_mul, Matrix.mul_smul, ← Matrix.mul_assoc,
       Matrix.mul_nonsing_inv _ hg, Matrix.one_mul]

@@ -13,7 +13,7 @@ namespace GlobalTheory.Heat
 
 theorem scheme_constantSection_add {R : Type} [CommRing R] {X : Scheme.{0}} (p : X ⟶ Sp R) (U : X.Opens) (a b : R) :
     constFn p U (a + b) = constFn p U a + constFn p U b := by
-  simp [constFn, map_add]
+  simp [constFn, map_add (f := _)]
 
 theorem constFn_mul_on_open {R : Type} [CommRing R] {X : Scheme.{0}} (p : X ⟶ Sp R) (U : X.Opens) (a b : R) :
     constFn p U (a * b) = constFn p U a * constFn p U b := by
@@ -51,12 +51,12 @@ theorem liftDer_isDerivation : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [Gr
   have hadd : ∀ a b, D (a + b) = D a + D b := by
     intro a b
     have := congrArg ev (hc (a + b))
-    rw [scheme_constantSection_add, hL.1.1 W le_rfl, hc, hc, map_add, hev, hev, hev] at this
+    rw [scheme_constantSection_add, hL.1.1 W le_rfl, hc, hc, map_add (f := _), hev, hev, hev] at this
     exact this.symm
   have hmul : ∀ a b, D (a * b) = a * D b + b * D a := by
     intro a b
     have := congrArg ev (hc (a * b))
-    rw [constFn_mul_on_open, hL.1.2.1 W le_rfl, hc, hc, map_add, map_mul, map_mul, hev, hev, hev, hev, hev] at this
+    rw [constFn_mul_on_open, hL.1.2.1 W le_rfl, hc, hc, map_add (f := _), map_mul, map_mul, hev, hev, hev, hev, hev] at this
     exact this.symm
   let L : R →ₗ[ℤ] R := (AddMonoidHom.mk' D hadd).toIntLinearMap
   exact ⟨Derivation.mk' L (fun a b => by simpa [L, smul_eq_mul] using hmul a b), fun r => rfl⟩

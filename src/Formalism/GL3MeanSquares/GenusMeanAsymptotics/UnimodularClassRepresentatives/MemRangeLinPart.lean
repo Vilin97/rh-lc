@@ -28,7 +28,7 @@ theorem card_lift_pred [Finite A] (hπ : Function.Surjective π) (hστ : ∀ a,
       obtain ⟨a0, ha0⟩ := hπ b
       exact Nat.card_congr
         { toFun := fun a => ⟨a.1 - a0, by rw [RingHom.mem_ker, map_sub, a.2, ha0, sub_self]⟩
-          invFun := fun k => ⟨k.1 + a0, by rw [map_add, RingHom.mem_ker.mp k.2, ha0, zero_add]⟩
+          invFun := fun k => ⟨k.1 + a0, by rw [map_add (f := _), RingHom.mem_ker.mp k.2, ha0, zero_add]⟩
           left_inv := fun a => Subtype.ext (sub_add_cancel a.1 a0)
           right_inv := fun k => Subtype.ext (add_sub_cancel_right k.1 a0) }
     have hB : 0 < Nat.card B := Nat.card_pos
@@ -62,7 +62,7 @@ theorem card_lift_pred [Finite A] (hπ : Function.Surjective π) (hστ : ∀ a,
         set_option synthInstance.maxHeartbeats 100000 in
           · rw [linPart_apply, map_sum]
           refine Finset.sum_congr rfl fun i _ => ?_
-          simp only [map_add, map_mul, hσ]
+          simp only [map_add (f := _), map_mul, hσ]
           ring
       · intro hw
         exact AddMonoidHom.mem_range.mp (hsurj x0 hp w hw)
@@ -140,7 +140,7 @@ theorem card_lift_pred [Finite A] (hπ : Function.Surjective π) (hστ : ∀ a,
     exact (δ i).2
   have hbinv : ∀ (δ : Fin M → RingHom.ker π) i, π (x0 i + δ i) = y.1 i := by
     intro δ i
-    rw [map_add, RingHom.mem_ker.mp (δ i).2, add_zero, hx0]
+    rw [map_add (f := _), RingHom.mem_ker.mp (δ i).2, add_zero, hx0]
   have hpinv : ∀ δ : Fin M → RingHom.ker π, p (fun i => π (x0 i + δ i)) := by
     intro δ
     have h : (fun i => π (x0 i + δ i)) = y.1 := funext (hbinv δ)

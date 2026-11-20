@@ -141,7 +141,7 @@ theorem form_eq (P0 : Pair K G)
       rw [Representation.asAlgebraHom_of, M.j_eq, M.io_eq]
     | add a b ha hb =>
       intro w
-      rw [map_add, LinearMap.add_apply, map_add, map_add]
+      rw [map_add (f := _), LinearMap.add_apply, map_add (f := _), map_add (f := _)]
       exact Y.add_mem (ha w) (hb w)
     | smul r a ha =>
       intro w
@@ -158,7 +158,7 @@ theorem form_eq (P0 : Pair K G)
       rw [map_zero, LinearMap.zero_apply, map_zero, map_zero]
       exact Y.zero_mem
     · intro x y _ _ hx hy w
-      rw [map_add, LinearMap.add_apply, map_add, map_add]
+      rw [map_add (f := _), LinearMap.add_apply, map_add (f := _), map_add (f := _)]
       exact Y.add_mem (hx w) (hy w)
     · intro x _ hx w
       rw [map_neg, LinearMap.neg_apply, map_neg, map_neg]

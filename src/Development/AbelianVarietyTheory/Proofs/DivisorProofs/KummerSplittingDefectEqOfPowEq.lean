@@ -52,7 +52,7 @@ theorem dv_mul_prim {U : Scheme.{0}} (ζ : Prim q Γ(U, ⊤)) (v w : (Γ(U, ⊤)
       Sec.map (resι ℤ (twZ q)) (show Sec (twZ q) U from twGen 1 ζ) :=
     restrMap_spec _ _ U _
   unfold dv
-  rw [hk, map_add, h2, hw, PicSpec.unitSec_mul, PicSpec.sec_map_add, h1]
+  rw [hk, map_add (f := _), h2, hw, PicSpec.unitSec_mul, PicSpec.sec_map_add, h1]
   abel
 
 theorem dv_mul_prim_pow {U : Scheme.{0}} (ζ : Prim q Γ(U, ⊤)) (a : ℕ) :

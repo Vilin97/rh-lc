@@ -32,7 +32,7 @@ theorem sum_le_sum_shift (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (h
     have hny : n + y ∈ boxSet K F T' := by
       rw [mem_boxSet_iff hK hF]
       intro w
-      rw [map_add]
+      rw [map_add (f := _)]
       constructor
       · linarith [(hb w).1, hy0 w]
       · linarith [(hb w).2, hyT w]
@@ -43,7 +43,7 @@ theorem sum_le_sum_shift (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (h
       · intro w _
         exact (hb w).1.le
       · intro w _
-        rw [map_add]
+        rw [map_add (f := _)]
         linarith [hy0 w]
     exact pow_le_pow_left₀ (Nat.cast_nonneg _) hle _
   calc ∑ n ∈ hA.toFinset, (Ideal.absNorm (Ideal.span {n}) : ℝ) ^ (m - 1)
@@ -85,7 +85,7 @@ theorem exists_shifts {I : Ideal (𝓞 F)} (hI : I ≠ ⊥) (x₀ : 𝓞 F) :
     have h := abs_le.1 (hCw w)
     constructor <;> linarith [h.1, h.2]
   · intro w
-    rw [map_add, map_natCast]
+    rw [map_add (f := _), map_natCast]
     have h := abs_le.1 (hCw w)
     constructor <;> linarith [h.1, h.2]
   · intro n hn

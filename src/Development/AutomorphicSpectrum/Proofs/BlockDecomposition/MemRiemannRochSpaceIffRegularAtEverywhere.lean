@@ -124,7 +124,7 @@ def stabV (red : Γ →* GL (Fin (n + 1)) k) (ρ : Γ →* Module.End ℂ V) : S
   carrier := {y | ∀ γ, gmap (red γ) (Submodule.span k {e0 k n}) = Submodule.span k {e0 k n} → ρ γ y = y}
   add_mem' := by
     intro a b ha hb γ h
-    rw [map_add, ha γ h, hb γ h]
+    rw [map_add (f := _), ha γ h, hb γ h]
   zero_mem' := by
     intro γ _
     simp

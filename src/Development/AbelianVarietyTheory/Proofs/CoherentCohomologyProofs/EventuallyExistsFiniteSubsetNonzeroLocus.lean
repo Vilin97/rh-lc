@@ -421,7 +421,7 @@ theorem exists_finite_subset_nonzeroLocus {W : Type*} [AddCommGroup W] [Module k
   let p : S → Submodule k W := fun x =>
     { carrier := {w | x.1 ∉ nonzeroLocus (φ w)}
       add_mem' := fun {a b} ha hb hx => by
-        rw [map_add] at hx
+        rw [map_add (f := _)] at hx
         exact (nonzeroLocus_add_le _ _ hx).elim ha hb
       zero_mem' := fun hx => by
         rw [map_zero] at hx

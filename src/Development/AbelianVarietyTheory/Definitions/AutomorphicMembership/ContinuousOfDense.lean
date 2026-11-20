@@ -54,7 +54,7 @@ theorem emb_apply (f : MvPolynomial σ ℂ) (α : σ →₀ ℕ) : emb σ f α =
       simp
     · simp [h]
   | add f g hf hg =>
-    rw [map_add, lp.coeFn_add, Pi.add_apply, hf, hg, MvPolynomial.coeff_add, add_mul]
+    rw [map_add (f := _), lp.coeFn_add, Pi.add_apply, hf, hg, MvPolynomial.coeff_add, add_mul]
 
 theorem emb_injective : Function.Injective (emb σ) := by
   rw [← LinearMap.ker_eq_bot, LinearMap.ker_eq_bot']

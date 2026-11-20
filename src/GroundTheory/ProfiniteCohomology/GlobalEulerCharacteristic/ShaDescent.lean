@@ -24,7 +24,7 @@ def shaSubmodule (A : Rep.{u} k G) [IsDiscreteRep A] (n : ℕ) : Submodule k (co
   carrier := {x | ∀ v, (cohomologyMapAlong (φ v).toMonoidHom (continuous_toMonoidHom (φ v)) (𝟙 _) n).hom x = 0}
   add_mem' {x y} hx hy v := by
     change (cohomologyMapAlong (φ v).toMonoidHom (continuous_toMonoidHom (φ v)) (𝟙 _) n).hom (x + y) = 0
-    rw [map_add, hx v, hy v, add_zero]
+    rw [map_add (f := _), hx v, hy v, add_zero]
   zero_mem' v := map_zero _
   smul_mem' c x hx v := by
     change (cohomologyMapAlong (φ v).toMonoidHom (continuous_toMonoidHom (φ v)) (𝟙 _) n).hom (c • x) = 0

@@ -28,7 +28,7 @@ theorem th_map {Q' : Type} [CommRing Q'] (f : A →+* Q) (σ : G →* Matrix (Fi
   induction y using MonoidAlgebra.induction_linear with
   | zero => simp
   | add a b ha hb =>
-    rw [map_add, map_add, ha, hb]
+    rw [map_add (f := _), map_add (f := _), ha, hb]
     ext i k
     simp
   | single g a => simp [th_single, Matrix.map_smul']
@@ -44,7 +44,7 @@ theorem chi_ofRep (σ : G →* Matrix (Fin n) (Fin n) Q) (y : MonoidAlgebra Q G)
     induction y using MonoidAlgebra.induction_linear with
     | zero => simp
     | add a b ha hb =>
-      rw [map_add, map_add, ha, hb]
+      rw [map_add (f := _), map_add (f := _), ha, hb]
       ext i k
       simp
     | single g a =>
@@ -101,7 +101,7 @@ private theorem th_map_coeffAddMonoidHom_eq_coeff_th {n m : ℕ} {A Q G : Type} 
   induction x using MonoidAlgebra.induction_linear with
   | zero => simp
   | add a b ha hb =>
-    rw [MonoidAlgebra.map_add, map_add, map_add, Matrix.add_apply, Matrix.add_apply, ha, hb,
+    rw [MonoidAlgebra.map_add (f := _), map_add (f := _), map_add (f := _), Matrix.add_apply, Matrix.add_apply, ha, hb,
       MvPolynomial.coeff_add]
   | single g p =>
     simp only [MonoidAlgebra.map_single, th_single]
@@ -195,7 +195,7 @@ theorem th_row {A R : Type} [CommRing A] [CommRing R] (j : A →+* R) (σ : G �
     (hσ : ∀ g, σ g 1 0 = 0 ∧ σ g 1 2 = 0) (y : MonoidAlgebra A G) : th j σ y 1 0 = 0 ∧ th j σ y 1 2 = 0 := by
   induction y using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp [map_add, ha.1, ha.2, hb.1, hb.2]
+  | add a b ha hb => simp [map_add (f := _), ha.1, ha.2, hb.1, hb.2]
   | single g a => simp [th_single, (hσ g).1, (hσ g).2]
 
 def mid {E R : Type} [Ring E] [CommRing R] (τ : E →+* Matrix (Fin 3) (Fin 3) R)
@@ -279,10 +279,10 @@ theorem not_irr [IsAlgClosed κ] (j : κ →+* K) (σ : G →* Matrix (Fin 3) (F
     rw [map_sub, map_mul, sub_eq_zero] at h3
     exact h3
   have h1 := L (1 - (e 0 0 + e 1 1 + e 2 2)) (by
-    rw [map_sub, map_add, map_add, he, he, he, map_one]
+    rw [map_sub, map_add (f := _), map_add (f := _), he, he, he, map_one]
     ext i k
     fin_cases i <;> fin_cases k <;> simp [Matrix.single_apply, Matrix.one_apply])
-  rw [map_sub, map_one, map_add, map_add, hd 0 1, hd 1 2, hd 2 0, hsq 0 1 (by decide),
+  rw [map_sub, map_one, map_add (f := _), map_add (f := _), hd 0 1, hd 1 2, hd 2 0, hsq 0 1 (by decide),
     hsq 1 2 (by decide), hsq 2 0 (by decide)] at h1
   simp at h1
 

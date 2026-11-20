@@ -70,7 +70,7 @@ theorem exists_split_at (F E : Type) [Field F] [NumberField F] [Field E] [Number
     have hT : Mᵀ = e • Gᵀ + (1 - e) • (1 : Matrix (Fin n) (Fin n) (AE F E)) := by
       rw [hM, transpose_add, transpose_smul, transpose_smul, transpose_one]
     have hc : M.map (cA σ) = e • G.map (cA σ) + (1 - e) • (1 : Matrix (Fin n) (Fin n) (AE F E)) := by
-      rw [← AlgHom.mapMatrix_apply, hM, map_add, map_smul, map_smul, map_one, AlgHom.mapMatrix_apply]
+      rw [← AlgHom.mapMatrix_apply, hM, map_add (f := _), map_smul, map_smul, map_one, AlgHom.mapMatrix_apply]
     rw [hT, hc, split (incM F J), mix_mul hee, mix_mul hee, hg, one_mul, mul_one]
   let g₁ : UA σ J := ⟨g1gl, hmem⟩
   have hm1 : mat g₁ - 1 = e • (G - 1) := by

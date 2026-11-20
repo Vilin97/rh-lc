@@ -60,13 +60,13 @@ lemma jetLin_map {K K' : Type} [Field K] [Field K'] (f : K →+* K') (J : (DVar 
     jetLin (f ∘ J) (map f Q) = map f (jetLin J Q) := by
   induction Q using MvPolynomial.induction_on' with
   | monomial u c => simp [jetLin_monomial, map_monomial]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 lemma subD_map {K K' : Type} [Field K] [Field K'] (f : K →+* K') (P : Formalism.L2.DIV.Pol K ι a) :
     subD K' ι a b (map f P) = map f (subD K ι a b P) := by
   induction P using MvPolynomial.induction_on with
   | C c => simp [subD]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [map_mul, map_X, map_mul, hp, map_mul, map_mul]
     congr 1

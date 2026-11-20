@@ -112,7 +112,7 @@ theorem exists_taylor_algHom : ∀ {I I₀ : Type} [Fintype I] [DecidableEq I] [
     intro x y
     apply GlobalTheory.tensor_hol_ext_of_values W₀ D
     intro p hp
-    rw [map_add, ev_poly, ev_poly, ev_poly,
+    rw [map_add (f := _), ev_poly, ev_poly, ev_poly,
       slice_eq hp (F := fun z ↦ x.fn (z, p.2) + y.fn (z, p.2)) _ fun z hz ↦ Hol.fn_add x y hz,
       GlobalTheory.PeriodFamily.taylor_add_of_analyticAt N t _ _ (analyticAt_slice x (hW p hp))
         (analyticAt_slice y (hW p hp))]

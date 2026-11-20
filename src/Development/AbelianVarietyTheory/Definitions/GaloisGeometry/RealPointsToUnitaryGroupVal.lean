@@ -213,7 +213,7 @@ theorem psiR_star (v : InfinitePlace G.F) (x : ℝ ⊗[ℚ] G.C) :
     rw [starT_tmul, HTGroup.psiR_tmul, HTGroup.psiR_tmul, G.psi_star, Matrix.conjTranspose_smul, star_trivial,
       Matrix.mul_smul, Matrix.smul_mul]
   | add x y hx hy =>
-    simp only [map_add, MulOpposite.unop_add, hx, hy, Matrix.conjTranspose_add, Matrix.mul_add, Matrix.add_mul]
+    simp only [map_add (f := _), MulOpposite.unop_add, hx, hy, Matrix.conjTranspose_add, Matrix.mul_add, Matrix.add_mul]
 
 theorem psiR_sim (g : G.GR) (v : InfinitePlace G.F) :
     (G.psiR v ((g : (ℝ ⊗[ℚ] G.C)ˣ × ℝˣ).1 : ℝ ⊗[ℚ] G.C))ᴴ * G.gram v *

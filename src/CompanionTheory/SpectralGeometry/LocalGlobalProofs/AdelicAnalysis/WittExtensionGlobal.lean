@@ -116,7 +116,7 @@ theorem exists_norm_ne_zero (B : V →ₛₗ[σ] V →ₗ[E] E) (hB : ∀ x y, �
   have hba : B (X b) (X a) = σ s := (hB _ _).symm
   have h := hc (Pi.single a (1 : E) + s⁻¹ • Pi.single b (1 : E))
   rw [lin_add, lin_smul, lin_single, lin_single] at h
-  simp only [map_add, map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, map_smul,
+  simp only [map_add (f := _), map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, map_smul,
     smul_eq_mul, hu, hv, hba, ← hsdef, map_inv₀, RingHom.id_apply] at h
   have hσs : σ s ≠ 0 := (map_ne_zero σ).2 hs
   simp only [mul_zero, add_zero, zero_add, inv_mul_cancel₀ hs, inv_mul_cancel₀ hσs] at h
@@ -231,7 +231,7 @@ theorem exists_isom_tuple (B : V →ₛₗ[σ] V →ₗ[E] E) (hσ : ∀ x, σ (
   have hXa : X a = X' a + (t a / q) • x := by simp [hX']
   have hYa : Y a = Y' a + (t a / q) • y := by simp [hY']
   have hf : γ₂ (Y' a) = Y' a := f2 _ (by rw [← e1 a, i1]; exact hx0 a) (hy0 a)
-  rw [LinearMap.comp_apply, hXa, map_add, map_smul, e1, map_add, map_smul, hf, e2, ← hYa]
+  rw [LinearMap.comp_apply, hXa, map_add (f := _), map_smul, e1, map_add (f := _), map_smul, hf, e2, ← hYa]
 
 end Induct
 
@@ -243,7 +243,7 @@ def formB (s : E →+* E) {M : ℕ} (J : Matrix (Fin M) (Fin M) E) :
     (Fin M → E) →ₛₗ[s] (Fin M → E) →ₗ[E] E :=
   LinearMap.mk₂'ₛₗ s (RingHom.id E) (fun x y => hform s J x y)
     (fun x x' y => by
-      simp only [hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib])
+      simp only [hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib])
     (fun c x y => by
       simp only [hform, Pi.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum, mul_assoc])
     (fun x y y' => by

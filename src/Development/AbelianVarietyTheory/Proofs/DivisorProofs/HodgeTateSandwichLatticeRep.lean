@@ -52,11 +52,11 @@ theorem pairV_inclT (x z : O ⊗[ℤ_[p]] P.T) : P.pairV (P.inclT x) (P.inclT z)
     algebraMap O C (LinearMap.BilinForm.baseChange O (pairT P.A P.eps) x z) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
   | tmul c s =>
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul d t =>
       rw [P.inclT_tmul, P.inclT_tmul, P.pairV_tmul, LinearMap.BilinForm.baseChange_tmul,
         Algebra.smul_def, Algebra.smul_def, map_mul, map_mul, ← IsScalarTower.algebraMap_apply]
@@ -66,7 +66,7 @@ theorem inclT_injective : Function.Injective P.inclT := by
     fun x => by
       induction x using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul c s => rw [P.inclT_tmul]; rfl
   intro x y hxy
   rw [h, h] at hxy
@@ -77,7 +77,7 @@ theorem inclT_baseChange (g : P.T →ₗ[ℤ_[p]] P.T) (x : O ⊗[ℤ_[p]] P.T) 
     P.inclT (g.baseChange O x) = g.baseChange C (P.inclT x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul c s => rw [LinearMap.baseChange_tmul, P.inclT_tmul, P.inclT_tmul, LinearMap.baseChange_tmul]
 
 theorem pairT_flip_bijective : Function.Bijective (pairT P.A P.eps).flip := by
@@ -150,7 +150,7 @@ theorem ker_iff_of_weil [IsDomain O] (K : GlobalTheory.IndefiniteRowSideFullHeck
       algebraMap O C (TensorProduct.rid ℤ_[p] O ((B.flip (c t)).baseChange O x)) := fun t => by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
     | tmul a s =>
       rw [LinearMap.baseChange_tmul, LinearMap.baseChange_tmul, P.inclT_tmul, P.pairV_tmul,
         LinearMap.flip_apply, hc, TensorProduct.rid_tmul, mul_one, Algebra.smul_def,
@@ -238,11 +238,11 @@ theorem exists_pol_point : ∃ pol : G ≅ G.dual, ∀ s t,
         (e.toLinearMap.baseChange O z) := fun x z => by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
     | tmul c s =>
       induction z using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul d t => simp
   have hb : Function.Bijective ((pairT P.A P.eps).compl₁₂ e.toLinearMap e.toLinearMap).flip := by
     have h : ((pairT P.A P.eps).compl₁₂ e.toLinearMap e.toLinearMap).flip =

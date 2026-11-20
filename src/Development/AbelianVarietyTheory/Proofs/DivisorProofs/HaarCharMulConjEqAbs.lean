@@ -43,7 +43,7 @@ theorem cA_inclR (σ : E →ₐ[F] E) (e : E) : cA σ (inclR (F := F) (AF F) e) 
 theorem cA_eq_sigR (σ : E →ₐ[F] E) (z : AE F E) : cA σ z = sigR (AF F) σ z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x => simp [cA, sigR]
 
 section Iso
@@ -55,7 +55,7 @@ def splitIm (hσ : ∀ x, σ (σ x) = x) (δ : E) (hδ0 : δ ≠ 0) (hδ : σ δ
   invFun z := (⟨inclR (F := F) (AF F) (2⁻¹ : E) * (z - cA σ z), by
       rw [mem_imA, map_mul, map_sub, cA_inclR, cA_cA σ hσ, map_inv₀ σ 2, map_ofNat σ 2]; ring⟩,
     ⟨inclR (F := F) (AF F) (2⁻¹ : E) * inclR (F := F) (AF F) δ⁻¹ * (z + cA σ z), by
-      rw [mem_imA, map_mul, map_mul, map_add, cA_inclR, cA_inclR, cA_cA σ hσ, map_inv₀ σ 2, map_inv₀ σ δ,
+      rw [mem_imA, map_mul, map_mul, map_add (f := _), cA_inclR, cA_inclR, cA_cA σ hσ, map_inv₀ σ 2, map_inv₀ σ δ,
         map_ofNat σ 2, hδ, inv_neg, map_neg]; ring⟩)
   left_inv p := by
     obtain ⟨⟨x, hx⟩, ⟨y, hy⟩⟩ := p
@@ -65,7 +65,7 @@ def splitIm (hσ : ∀ x, σ (σ x) = x) (δ : E) (hδ0 : δ ≠ 0) (hδ : σ δ
     have hc : inclR (F := F) (AF F) δ * inclR (F := F) (AF F) δ⁻¹ = 1 := by
       rw [← map_mul, mul_inv_cancel₀ hδ0, map_one]
     have hz : cA σ (x + inclR (F := F) (AF F) δ * y) = -x + inclR (F := F) (AF F) δ * y := by
-      rw [map_add, map_mul, hx, hy, cA_inclR, hδ, map_neg]; ring
+      rw [map_add (f := _), map_mul, hx, hy, cA_inclR, hδ, map_neg]; ring
     refine Prod.ext (Subtype.ext ?_) (Subtype.ext ?_)
     · show inclR (F := F) (AF F) (2⁻¹ : E) * ((x + inclR (F := F) (AF F) δ * y) - cA σ (x + inclR (F := F) (AF F) δ * y)) = x
       rw [hz]; linear_combination x * hh

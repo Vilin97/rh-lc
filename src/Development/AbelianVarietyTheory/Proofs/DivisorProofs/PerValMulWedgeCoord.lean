@@ -143,7 +143,7 @@ def IsCoef (x : Hor.Idx D τ → Di.La) (Q : Di.La →+ (Pad.Letter D → ℂ)) 
 theorem IsCoef.add {t t' : Hor.Idx D τ → ℂ} {s s' : Pad.Letter D → ℂ} (h : IsCoef x Q t s) (h' : IsCoef x Q t' s') :
     IsCoef x Q (t + t') (s + s') :=
   ⟨fun i => by simp only [Pi.add_apply, h.1, h'.1, add_mul, Finset.sum_add_distrib],
-    fun j => by simp only [Pi.add_apply, map_add, h.2, h'.2, add_mul, Finset.sum_add_distrib]⟩
+    fun j => by simp only [Pi.add_apply, map_add (f := _), h.2, h'.2, add_mul, Finset.sum_add_distrib]⟩
 
 theorem IsCoef.smul {t : Hor.Idx D τ → ℂ} {s : Pad.Letter D → ℂ} (h : IsCoef x Q t s) (r : ℝ) :
     IsCoef x Q (r • t) (r • s) :=
@@ -189,7 +189,7 @@ theorem exists_coef {g' : ℕ} {Hm' : Matrix (Fin g') (Fin g') ℂ} {P' : Di.La 
     obtain ⟨t₂, s₂, s₂', b1, b2, b3, b4⟩ := h2
     refine ⟨_, _, _, ?_, ?_, a3.add b3, a4.add b4⟩
     · simp only [a1, b1, Pi.add_apply, add_smul, Finset.sum_add_distrib]
-    · simp only [map_add, a2, b2, Pi.add_apply, add_smul, Finset.sum_add_distrib]
+    · simp only [map_add (f := _), a2, b2, Pi.add_apply, add_smul, Finset.sum_add_distrib]
   | smul r u _ h1 =>
     obtain ⟨t, s, s', a1, a2, a3, a4⟩ := h1
     refine ⟨_, _, _, ?_, ?_, a3.smul r, a4.smul r⟩

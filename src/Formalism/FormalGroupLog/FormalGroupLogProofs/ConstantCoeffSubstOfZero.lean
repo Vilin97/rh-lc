@@ -96,7 +96,7 @@ theorem pderiv_log {g : PowerSeries R} (hg : IsLog F g) :
     (PowerSeries.derivative (R := R) g).subst F.toPowerSeries * MvPowerSeries.pderiv (R := R) 1 F.toPowerSeries =
       atY (PowerSeries.derivative (R := R) g) := by
   have := congrArg (MvPowerSeries.pderiv (R := R) 1) hg.2.2
-  rw [pderiv_psubst F.zero_constantCoeff, map_add, atX, atY, pderiv_psubst hX0,
+  rw [pderiv_psubst F.zero_constantCoeff, map_add (f := _), atX, atY, pderiv_psubst hX0,
     pderiv_psubst hX1] at this
   simpa [pderiv_X_of_ne (show (0 : Fin 2) ≠ 1 by decide)] using this
 

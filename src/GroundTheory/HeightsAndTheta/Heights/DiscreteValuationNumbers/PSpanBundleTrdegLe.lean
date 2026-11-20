@@ -77,7 +77,7 @@ theorem SpanBundleTrdegLe.proof : SpanBundleTrdegLe.Statement := by
       exact div_mem (prod_mem fun k _ => IntermediateField.subset_adjoin _ _ ⟨_, rfl⟩)
         (prod_mem fun k _ => IntermediateField.subset_adjoin _ _ ⟨_, rfl⟩)
     | algebraMap r => exact IntermediateField.algebraMap_mem _ r
-    | add u v _ _ hu hv => rw [map_add]; exact add_mem hu hv
+    | add u v _ _ hu hv => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hu hv
     | mul u v _ _ hu hv => rw [map_mul]; exact mul_mem hu hv
 
   choose g hg hGm using hGH

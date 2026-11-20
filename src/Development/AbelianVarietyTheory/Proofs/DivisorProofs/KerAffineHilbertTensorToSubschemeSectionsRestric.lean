@@ -18,7 +18,7 @@ theorem kappa_res_apply (A B : Type) [CommRing A] [CommRing B] [Algebra A B] {T 
   intro ρ hρ t
   induction t using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero, map_zero, map_zero]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul c b =>
     rw [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, kappa_tmul, kappa_tmul, map_mul]
     have hc : ρ c = (T.presheaf.map (homOfLE h).op).hom c := by

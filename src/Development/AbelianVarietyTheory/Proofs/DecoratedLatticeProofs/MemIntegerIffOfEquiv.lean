@@ -96,7 +96,7 @@ def toFv : k ≃+* Fv D.host.F v where
     rw [ι_mul, map_mul]
   map_add' x y := by
     change comp he (p.ι (x + y)) = comp he (p.ι x) + comp he (p.ι y)
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
 
 theorem continuous_toFv : Continuous (toFv p he) := (continuous_comp he).comp p.cont_ι
 

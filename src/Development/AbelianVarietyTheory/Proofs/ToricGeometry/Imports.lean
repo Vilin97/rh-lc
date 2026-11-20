@@ -19,7 +19,7 @@ theorem exists_common_denominator {R : Type u_1} {A : Type u_2} [CommRing R] [Is
     { carrier := {b | ∃ p : Polynomial R, algebraMap R A (∏ b ∈ S, f b) * b = Polynomial.aeval a p}
       add_mem' := by
         rintro x y ⟨p, hp⟩ ⟨q, hq⟩
-        exact ⟨p + q, by rw [mul_add, hp, hq, map_add]⟩
+        exact ⟨p + q, by rw [mul_add, hp, hq, map_add (f := _)]⟩
       zero_mem' := ⟨0, by simp⟩
       smul_mem' := by
         rintro c x ⟨p, hp⟩

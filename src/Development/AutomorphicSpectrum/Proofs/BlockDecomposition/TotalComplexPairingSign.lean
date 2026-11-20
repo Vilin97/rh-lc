@@ -109,7 +109,7 @@ theorem leib_gen (P : DPairing K L M) (p q p' q' : ℕ) (x : K.X p q) (y : L.X p
   have e₂ := sgl_mu P (p := p) (p' := p' + 1) (a := p + p' + 1) (by omega) (rfl : q + q' = q + q') x (L.dh p' q' y)
   have e₃ := sgl_mu P (q := q + 1) (q' := q') (b := q + q' + 1) (rfl : p + p' = p + p') (by omega) (K.dv p q x) y
   have e₄ := sgl_mu P (q := q) (q' := q' + 1) (b := q + q' + 1) (rfl : p + p' = p + p') (by omega) x (L.dv p' q' y)
-  simp only [gen_apply, map_zsmul, DCx.D_sgl, P.lh rfl rfl, P.lv rfl rfl, map_add, e₁, e₂, e₃, e₄]
+  simp only [gen_apply, map_zsmul, DCx.D_sgl, P.lh rfl rfl, P.lv rfl rfl, map_add (f := _), e₁, e₂, e₃, e₄]
   have ht : ((-1 : ℤ) ^ q) * ((-1 : ℤ) ^ q) = 1 := by
     rw [← mul_pow]; simp
   have s₁ : (-1 : ℤ) ^ (p + p') = (-1) ^ p * (-1) ^ p' := pow_add _ _ _
@@ -132,7 +132,7 @@ theorem leib_fam (P : DPairing K L M) {a b : ℕ} {x : ∀ p q, K.X p q} {y : �
   obtain ⟨p, q⟩ := c'
   dsimp only at e e' ⊢
   rw [fam_sgl P e e', leib_gen, DCx.D_sgl, DCx.D_sgl]
-  simp only [map_add, map_zsmul, LinearMap.add_apply, LinearMap.smul_apply]
+  simp only [map_add (f := _), map_zsmul, LinearMap.add_apply, LinearMap.smul_apply]
   rw [fam_sgl P (by omega) e', fam_sgl P (by omega) e', fam_sgl P e (by omega), fam_sgl P e (by omega), e]
 
 def totP (P : DPairing K L M) : CxPairing K.tot L.tot M.tot where

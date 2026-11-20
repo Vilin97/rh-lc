@@ -72,7 +72,7 @@ theorem eigChar {A M ι K E T : Type} [CommRing A] [AddCommGroup M] [Module A M]
     | add x y _ _ hx hy =>
       obtain ⟨c, hc⟩ := hx
       obtain ⟨d, hd⟩ := hy
-      exact ⟨c + d, by rw [map_add, add_mulVec, hc, hd, add_smul]⟩
+      exact ⟨c + d, by rw [map_add (f := _), add_mulVec, hc, hd, add_smul]⟩
     | mul x y _ _ hx hy =>
       obtain ⟨c, hc⟩ := hx
       obtain ⟨d, hd⟩ := hy
@@ -84,7 +84,7 @@ theorem eigChar {A M ι K E T : Type} [CommRing A] [AddCommGroup M] [Module A M]
             map_one' := hu _ _ (by simp)
             map_mul' := fun x y => hu _ _ (by rw [map_mul, ← mulVec_mulVec, hχ, mulVec_smul, hχ, smul_smul, mul_comm])
             map_zero' := hu _ _ (by simp)
-            map_add' := fun x y => hu _ _ (by rw [map_add, add_mulVec, hχ, hχ, add_smul]) },
+            map_add' := fun x y => hu _ _ (by rw [map_add (f := _), add_mulVec, hχ, hχ, add_smul]) },
     fun a => hu _ _ (hρa a), fun i => hu _ _ (hρt i)⟩
 
 theorem intIff {l : ℕ} [Fact l.Prime] (x : PadicAlgCl l) : IsIntegral ℤ_[l] x ↔ ‖x‖ ≤ 1 := by
@@ -136,7 +136,7 @@ theorem eigPt {l : ℕ} [Fact l.Prime] {A M ι E : Type} [CommRing A] [IsCNL A] 
       rw [this]
       exact add_mem (Valued.integer.mem_iff.2 (ha i).le) (Valued.integer.mem_iff.2 (hx1 _))
     | algebraMap r => rw [h1']; exact Valued.integer.mem_iff.2 (hx1 _)
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   haveI : IsLocalRing (Valued.integer (PadicAlgCl l)) :=
     inferInstanceAs (IsLocalRing (Valued.v (R := PadicAlgCl l)).valuationSubring)

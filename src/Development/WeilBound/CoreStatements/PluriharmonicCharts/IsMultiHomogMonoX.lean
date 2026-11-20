@@ -141,8 +141,8 @@ theorem congr_aeval {σ : Type} (O : Subring Φ) (a b : σ → Φ) (V : Φ) (ha 
   | add f g hf hg =>
     obtain ⟨h1, ρ, h2, h3⟩ := hf
     obtain ⟨h1', ρ', h2', h3'⟩ := hg
-    exact ⟨by rw [map_add]; exact add_mem h1 h1', ρ + ρ', add_mem h2 h2', by
-      rw [map_add, map_add]; linear_combination h3 + h3'⟩
+    exact ⟨by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h1', ρ + ρ', add_mem h2 h2', by
+      rw [map_add (f := _), map_add (f := _)]; linear_combination h3 + h3'⟩
   | mul_X f q hf =>
     obtain ⟨h1, ρ, h2, h3⟩ := hf
     obtain ⟨ρ', h2', h3'⟩ := hab q
@@ -239,7 +239,7 @@ theorem local_data {z : (Σ o : Option K, ι (o.getD k₀)) → L}
     rwa [Fr.p_eq, show Fr.ε * y ⟨k₀, m⟩ * (Fr.ε⁻¹ / y ⟨k₀, c (some k₀)⟩) = y ⟨k₀, m⟩ / y ⟨k₀, c (some k₀)⟩ by
       field_simp] at this
   · rw [Fr.p_eq, Fr.r_eq, show w ⟨none, m⟩ = φ (y ⟨k₀, m⟩) + RatFunc.X * φ (B m) from rfl]
-    simp only [map_mul, map_add, map_neg, map_inv₀, map_zero]
+    simp only [map_mul, map_add (f := _), map_neg, map_inv₀, map_zero]
     change _ = φ _ * φ _ * _ + (φ _ * φ _ + φ _ * φ _) * _
     field_simp
     ring

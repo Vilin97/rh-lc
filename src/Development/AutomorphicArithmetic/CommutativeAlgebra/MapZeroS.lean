@@ -26,7 +26,7 @@ def psi (W : Scheme.{0}) {I Q P : Cx R} (μ : Pair Q P I) (z : Sec (P.X 1) W) (T
   AddMonoidHom.mk' (fun x => Sec.res (prod.snd : W ⨯ T ⟶ T) (c₁ x) +
       s.negOnePow • μ.mul (W ⨯ T) (s + -1) 1 s (by omega) (Sec.res (prod.snd : W ⨯ T ⟶ T) (c₂ x)) (Sec.res (prod.fst : W ⨯ T ⟶ W) z))
     (fun x y => by
-      simp only [map_add, LinearMap.add_apply, smul_add]
+      simp only [map_add (f := _), LinearMap.add_apply, smul_add]
       abel)
 
 def inL {K I Q : Cx R} {m n : ℤ} (h : m + 1 = n) (α₁ : Cocycle K I n) (α₂ : Cocycle K Q m) : Cocycle K (LL I Q) n :=
@@ -71,7 +71,7 @@ theorem c₁_cc {I Q : Cx R} {T : Scheme.{0}} {s : ℤ} (a : Sec (I.X s) T) (b :
   have h2 : ((biprod.inr : sh Q ⟶ LL I Q).f s) ≫ ((biprod.fst : LL I Q ⟶ I).f s) = 0 := by
     rw [← HomologicalComplex.comp_f, biprod.inr_fst, HomologicalComplex.zero_f]
   unfold cc
-  rw [map_add]
+  rw [map_add (f := _)]
   change Sec.map _ (Sec.map _ a) + Sec.map _ (Sec.map _ _) = a
   rw [map_map, map_map, h1, h2, map_idS, map_zeroS, add_zero]
 
@@ -81,7 +81,7 @@ theorem c₂_cc {I Q : Cx R} {T : Scheme.{0}} {s : ℤ} (a : Sec (I.X s) T) (b :
   have h2 : ((biprod.inr : sh Q ⟶ LL I Q).f s) ≫ ((biprod.snd : LL I Q ⟶ sh Q).f s) = 𝟙 _ := by
     rw [← HomologicalComplex.comp_f, biprod.inr_snd, HomologicalComplex.id_f]
   unfold cc
-  rw [map_add]
+  rw [map_add (f := _)]
   change (Sec.map (((biprod.inl : I ⟶ LL I Q).f s) ≫ ((biprod.snd : LL I Q ⟶ sh Q).f s)) a +
     Sec.map (((biprod.inr : sh Q ⟶ LL I Q).f s) ≫ ((biprod.snd : LL I Q ⟶ sh Q).f s)) (show Sec ((sh Q).X s) T from b) : Sec ((sh Q).X s) T) = b
   rw [h1, h2, map_zeroS, zero_add]

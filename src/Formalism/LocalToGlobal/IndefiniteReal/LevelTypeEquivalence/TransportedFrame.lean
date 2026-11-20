@@ -58,7 +58,7 @@ theorem thetaO_heis {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1))
     have hsm := hf.smooth k' L' hL' hL'0 (w + w₀)
     have hr : ∀ t, eInf D • L' t = L' t := fun t => (wo_real_iff (L' t)).mp (hL'0 t)
     let c : (Fin k' → ℝ) →+ ℂ := AddMonoidHom.mk' (fun t => Λ (symplOH S T (L' t) w₀).1) (fun a b => by
-      simp only [map_add, symplOH_add_left]; exact Λ.map_add _ _)
+      simp only [map_add (f := _), symplOH_add_left]; exact Λ.map_add _ _)
     have hc : Continuous c := by
       have h1 : Continuous fun t => symplOH S T (L' t) w₀ := (continuous_symplOH_left w₀).comp hL'
       exact hΛ.comp (continuous_fst.comp h1)

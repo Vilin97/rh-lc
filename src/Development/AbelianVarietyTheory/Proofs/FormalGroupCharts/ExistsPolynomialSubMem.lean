@@ -94,7 +94,7 @@ theorem exists_polynomial_sub_mem {O σ τ : Type*} [CommRing O] [Finite σ] [Fi
   let Φ : (Option τ → MvPowerSeries σ O) →ₗ[O] MvPowerSeries σ O :=
     { toFun := fun x => (truncTotal N (x none) : MvPolynomial σ O) + ∑ j, x (some j) * f j
       map_add' := fun x y => by
-        simp only [Pi.add_apply, map_add, MvPolynomial.coe_add, add_mul, Finset.sum_add_distrib]
+        simp only [Pi.add_apply, map_add (f := _), MvPolynomial.coe_add, add_mul, Finset.sum_add_distrib]
         ring
       map_smul' := fun c x => by
         simp only [Pi.smul_apply, map_smul, MvPolynomial.coe_smul, smul_add, Finset.smul_sum,
@@ -137,7 +137,7 @@ theorem mk_mem_span_map : ∀ (T O : Type) [CommRing T] [CommRing O] [Algebra T 
     rw [this, ← Ideal.Quotient.mkₐ_eq_mk O, map_smul]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
   | add p q hp hq =>
-    rw [MvPolynomial.coe_add, map_add]
+    rw [MvPolynomial.coe_add, map_add (f := _)]
     exact add_mem hp hq
 
 end GlobalTheory.CompleteBaseChange

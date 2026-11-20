@@ -102,7 +102,7 @@ theorem inv_mem_range {E : Type*} [Field E] {n : ℕ} (Γ X : Matrix (Fin n) (Fi
   have h1 : aeval X (divX X.charpoly) * X + algebraMap E _ c = 0 := by
     have h := Matrix.aeval_self_charpoly X
     rw [← divX_mul_X_add X.charpoly] at h
-    simpa [map_add, map_mul, aeval_X, aeval_C, ← hcdef] using h
+    simpa [map_add (f := _), map_mul, aeval_X, aeval_C, ← hcdef] using h
   have h2 : (-(c⁻¹) • aeval X (divX X.charpoly)) * X = 1 := by
     rw [Matrix.smul_mul, eq_neg_of_add_eq_zero_left h1, smul_neg, neg_smul, neg_neg,
       Algebra.algebraMap_eq_smul_one, smul_smul, inv_mul_cancel₀ hc, one_smul]

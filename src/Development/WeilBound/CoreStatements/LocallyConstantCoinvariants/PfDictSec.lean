@@ -80,9 +80,9 @@ theorem norm_eq (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) {z : AE F E} {x : 
     change _ = (1 - ep v) * (1 - ep v + sgl v x)
     rw [es x]
     linear_combination (1 - sgl v x) * (-ep_ep (v := v))
-  · rw [map_mul, piW_cA, h1, h2, e, piW_smul, map_add, map_sub, ev, ev, map_one, map_one]
+  · rw [map_mul, piW_cA, h1, h2, e, piW_smul, map_add (f := _), map_sub, ev, ev, map_one, map_one]
     ring
-  · rw [map_mul, piW_cA, comp_conj_conj h, h1, h2, e, piW_smul, map_add, map_sub, ev, ev, map_one, map_one]
+  · rw [map_mul, piW_cA, comp_conj_conj h, h1, h2, e, piW_smul, map_add (f := _), map_sub, ev, ev, map_one, map_one]
     ring
 
 theorem eq_locIdele (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) {z : (AE F E)ˣ} {x : (Fv F v)ˣ} (hz : At (evFin F v) ((z : AE F E) - 1))

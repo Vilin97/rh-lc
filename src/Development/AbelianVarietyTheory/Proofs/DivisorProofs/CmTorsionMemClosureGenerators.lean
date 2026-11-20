@@ -147,7 +147,7 @@ private theorem lattice_mem_closure (E : Type) [Field E] [NumberField E] (gA gB 
       rw [hval ⟨x', hx'⟩]
       exact sB _ _ hl
     · rintro _ _ ⟨u, rfl, hu⟩ ⟨u', rfl, hu'⟩
-      exact ⟨u + u', add_mul _ _ _, by rw [map_add, LinearMap.add_apply]; exact add_mem hu hu'⟩
+      exact ⟨u + u', add_mul _ _ _, by rw [map_add (f := _), LinearMap.add_apply]; exact add_mem hu hu'⟩
   obtain ⟨u, hu, h⟩ := key c (hI' ▸ Ideal.mem_span_singleton_self c)
   obtain rfl : u = 1 := mul_right_cancel₀ hc (hu.trans (_root_.one_mul c).symm)
   simpa using h

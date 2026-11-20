@@ -22,7 +22,7 @@ theorem coeff_mul_apply (hγ : constantCoeff (γ X) = 0) (g c : K⟦X⟧) (n : �
       ∑ d ∈ Finset.range (n + 1), coeff d c • X ^ d := by
     ext m
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, coeff_X_pow_mul', map_sum]
+      rw [map_add (f := _), coeff_X_pow_mul', map_sum]
     simp only [coeff_smul, coeff_X_pow, smul_eq_mul, mul_ite, mul_one, mul_zero, Finset.sum_ite_eq,
       Finset.mem_range, coeff_mk]
     split_ifs with h1 h2 h2
@@ -32,7 +32,7 @@ theorem coeff_mul_apply (hγ : constantCoeff (γ X) = 0) (g c : K⟦X⟧) (n : �
     · omega
   conv_lhs => rw [hc]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, mul_add, map_add, map_mul γ, map_pow γ, map_sum γ, Finset.mul_sum, map_sum]
+    rw [map_add (f := _), mul_add, map_add (f := _), map_mul γ, map_pow γ, map_sum γ, Finset.mul_sum, map_sum]
   have h0 : ∀ b : K⟦X⟧, coeff n (g * (γ X ^ (n + 1) * b)) = 0 := fun b => by
     rw [ha, mul_pow, show g * (X ^ (n + 1) * a ^ (n + 1) * b) = X ^ (n + 1) * (g * a ^ (n + 1) * b) by ring,
       coeff_X_pow_mul', if_neg (by omega)]

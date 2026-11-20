@@ -137,7 +137,7 @@ theorem latRetract {O K V V' : Type} [CommRing O] [IsDomain O] [IsDiscreteValuat
       rw [map_zero]
       exact (congrArg Subtype.val (map_zero retO)).symm
     | add x y hx hy ihx ihy =>
-      rw [map_add, ihx, ihy]
+      rw [map_add (f := _), ihx, ihy]
       exact (congrArg Subtype.val (map_add retO ⟨x, hx⟩ ⟨y, hy⟩)).symm
     | smul a x hx ih =>
       have h1 : ret (a • x) = a • ret x := by

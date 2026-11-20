@@ -200,13 +200,13 @@ theorem exists_stab_lift (l : Level H) {V : HSp D} {β : GL (Fin V.rank) (EAf D)
   have hsf := supp_fin V (f := e + cA D e) hs
   rw [← hp] at hκ
   have hf : finSw D (e + cA D e) = p + Formalism.UG.sigR D.sp.cm.sig (Formalism.L2.Herm.Af D.host.F) p := by
-    rw [RingHom.map_add, finSw_cA, hp]
+    rw [RingHom.map_add (f := _), finSw_cA, hp]
   have hSt : finE V κ ∈ St β :=
     mem_St_of_part D.sp.cm.sig V.gram _ β hB.1 (hatL_selfDual hB) p u hpp (sigR_int p.2) Y hu' (finE V κ)
       (finE_mem_UA V κ) _ hf hsf hκ
   have hSt' : GlobalTheory.IndefiniteRowSideFullHecke.LatticeBasisLifts.finR V rfl κ ∈ St β := by rw [GlobalTheory.GeoLevel.finR_rfl]; exact hSt
   refine ⟨κ, mem_GfC_of_suppF V (f := e + cA D e) ?_ hs, hSt', ?_⟩
-  · rw [map_add, (parts_cA e).1, hinf, map_zero, add_zero]
+  · rw [map_add (f := _), (parts_cA e).1, hinf, map_zero, add_zero]
   · have h1 := (Formalism.L2.DIV.frGL_pullFr β ⟨_, hSt'⟩).trans (GlobalTheory.GeoLevel.finR_rfl V κ)
     rw [← h1] at hκ
     rw [map_eq_of_smul_eq _ β _ p hres _ Y hκ, hY]

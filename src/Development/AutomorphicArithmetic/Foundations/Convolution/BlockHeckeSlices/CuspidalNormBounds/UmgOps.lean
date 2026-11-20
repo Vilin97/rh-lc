@@ -30,7 +30,7 @@ private theorem uc_fin (u : UC E n) (k : GL (Fin n) (Af E)) : Commute (uC E n u)
   induction u using uc_ind with
   | h1 c => rw [AlgHom.commutes]; exact Algebra.commutes c _
   | hι X => rw [uC_ιC]; exact lie_rt_fin X k
-  | hadd x y hx hy => rw [map_add]; exact hx.add_left hy
+  | hadd x y hx hy => rw [map_add (f := _)]; exact hx.add_left hy
   | hmul x y hx hy => rw [map_mul]; exact hx.mul_left hy
 
 private theorem uc_inf (y : GL (Fin n) (Cinf E)) (u : UC E n) :
@@ -46,7 +46,7 @@ private theorem uc_inf (y : GL (Fin n) (Cinf E)) (u : UC E n) :
   | hadd a b ha hb =>
     obtain ⟨a', ha⟩ := ha
     obtain ⟨b', hb⟩ := hb
-    exact ⟨a' + b', by rw [map_add, map_add, add_mul, mul_add, ha, hb]⟩
+    exact ⟨a' + b', by rw [map_add (f := _), map_add (f := _), add_mul, mul_add, ha, hb]⟩
   | hmul a b ha hb =>
     obtain ⟨a', ha⟩ := ha
     obtain ⟨b', hb⟩ := hb
@@ -74,7 +74,7 @@ private theorem uc_left (h : GA E n) (u : UC E n) : ∀ φ : Sm E n, (∀ g, φ.
     simp only [this]
   | hadd a b ha hb =>
     intro φ hφ g
-    rw [map_add]
+    rw [map_add (f := _)]
     exact congrArg₂ (· + ·) (ha φ hφ g) (hb φ hφ g)
   | hmul a b ha hb =>
     intro φ hφ g
@@ -123,7 +123,7 @@ private theorem umg_add {φ ψ : Sm E n} (h : Umg φ) (h' : Umg ψ) : Umg (φ + 
     obtain ⟨C, hC⟩ := hM u
     refine ⟨|B| + |C|, fun g => ?_⟩
     have h1 := AutomorphicForm.one_le_height g
-    rw [map_add, add_mul]
+    rw [map_add (f := _), add_mul]
     refine (norm_add_le _ _).trans (add_le_add ((hB g).trans ?_) ((hC g).trans ?_))
     · exact mul_le_mul (le_abs_self _) (pow_le_pow_right₀ h1 (le_max_left _ _)) (by positivity) (abs_nonneg _)
     · exact mul_le_mul (le_abs_self _) (pow_le_pow_right₀ h1 (le_max_right _ _)) (by positivity) (abs_nonneg _)

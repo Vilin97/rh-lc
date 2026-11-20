@@ -50,7 +50,7 @@ theorem Carried.add (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {L₁ L₂ :
   beta_reduce
   rw [e₁ f hf g w, e₂ f hf g w]
   funext h
-  simp only [Pi.add_apply, map_add]
+  simp only [Pi.add_apply, map_add (f := _)]
 
 theorem Carried.smul (c : ℂ) {L : (GA D T → ℂ) → (GA D T → ℂ)} (hL : Carried ψ θ om L) :
     Carried ψ θ om fun φ => c • L φ := by

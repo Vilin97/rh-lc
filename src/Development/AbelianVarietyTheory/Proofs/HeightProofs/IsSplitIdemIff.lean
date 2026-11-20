@@ -122,7 +122,7 @@ theorem isChange_kapT {A B : HSp D} (hr : A.rank < B.rank) : IsChange (kapT A B)
 theorem heis_change {A B V W : HSp D} {κ : WA A B ≃+ WA V W} {σ} (hκ : IsChange κ σ) (ψ : AddChar (AF D.host.F) ℂ)
     (u : WA A B) (f : WA V W → ℂ) : Heisenberg₂ ψ V W (κ u) f ∘ κ = HeisenbergWeilMatrices.rho ψ u (f ∘ κ) := by
   funext w
-  simp only [Function.comp, Heisenberg₂, HeisenbergWeilMatrices.rho_apply, hκ.2.2.1, map_add]
+  simp only [Function.comp, Heisenberg₂, HeisenbergWeilMatrices.rho_apply, hκ.2.2.1, map_add (f := _)]
 
 theorem isSplitIdem_iff (e : AE D) : IsSplitIdem D e ↔ ∃ v, HeisenbergWeilMatrices.IsSplitIdem D v e := by
   classical

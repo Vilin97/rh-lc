@@ -107,7 +107,7 @@ theorem heis_coords : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
   have hmemK : ∀ g : unip σ X H, K (mat (g : UA σ X.J)) ∈ imA σ := by
     intro g
     obtain ⟨b, c, hc, hg⟩ := unip_eq_hmat σ hσ X H hJ hH.xx hH.yy hH.xy hH.orth hdec _ g.2
-    rw [hg, hK_h, mem_imA, map_add, map_mul, hσhalf, hself]
+    rw [hg, hK_h, mem_imA, map_add (f := _), map_mul, hσhalf, hself]
     linear_combination hc + hA σ X.J (incM F H.ι *ᵥ b) (incM F H.ι *ᵥ b) * hhalf
   let invf : unip σ X H → (Fin n₁ → AE F E) × imA σ := fun g =>
     (A (mat (g : UA σ X.J)), ⟨K (mat (g : UA σ X.J)), hmemK g⟩)

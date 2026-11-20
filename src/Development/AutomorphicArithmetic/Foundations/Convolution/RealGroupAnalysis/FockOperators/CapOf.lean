@@ -19,5 +19,5 @@ theorem UpperTheory.ConvolutionTheory.R2.Fo.capOf : ∀ (F E : Type) [Field F] [
     have := hm.2 u f hf
     rw [show pl F τ = InfinitePlace.mk (τ.comp (algebraMap F E)) from rfl, this, map_smul, LinearMap.smul_apply]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | smul c x _ hx => rw [map_smul, hx, smul_comm]

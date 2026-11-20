@@ -13,7 +13,7 @@ theorem eichler_isometry_holds : Formalism.SL.IwahoriBlocks.EichIsom := by
   have huw : h u w = star (h w u) := hH w u
   have hxv : h x v = star (h v x) := hH v x
   have huv : h u v = star (h v u) := hH v u
-  simp only [eich, map_add, map_sub, map_smul, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.map_smul,
+  simp only [eich, map_add (f := _), map_sub, map_smul, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.map_smul,
     LinearMap.smul_apply, LinearMap.map_smulₛₗ, smul_eq_mul, hxx, hux, hxu, hxw, huw, starRingEnd_apply, star_add, star_sub, star_mul', star_star, mul_zero, add_zero, sub_zero]
   rw [← hs]
   ring
@@ -21,14 +21,14 @@ theorem eichler_isometry_holds : Formalism.SL.IwahoriBlocks.EichIsom := by
 theorem eichler_move_holds : Formalism.SL.IwahoriBlocks.EichMove := by
   intro E _ _ V _ _ h x x' u s hH hux hux' v hv
   have hx'u : h x' u = 0 := by rw [hH, hux', star_zero]
-  simp only [eich, map_add, map_sub, map_smul, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.map_smul,
+  simp only [eich, map_add (f := _), map_sub, map_smul, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.map_smul,
     LinearMap.smul_apply, LinearMap.map_smulₛₗ, smul_eq_mul, hv, hx'u, mul_zero, add_zero, sub_zero, zero_smul, zero_mul, smul_zero]
   module
 
 theorem eichler_composition_holds : Formalism.SL.IwahoriBlocks.EichComp := by
   intro E _ _ V _ _ h x a b s t hH hxx hax hbx v
   have hxa : h x a = 0 := by rw [hH, hax, star_zero]
-  simp only [eich, map_add, map_sub, map_smul, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.map_smul, LinearMap.smul_apply, LinearMap.map_smulₛₗ, smul_eq_mul, hxx, hax, hbx, hxa, mul_zero, zero_mul, add_zero, sub_zero, zero_smul, smul_zero]
+  simp only [eich, map_add (f := _), map_sub, map_smul, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.map_smul, LinearMap.smul_apply, LinearMap.map_smulₛₗ, smul_eq_mul, hxx, hax, hbx, hxa, mul_zero, zero_mul, add_zero, sub_zero, zero_smul, smul_zero]
   module
 
 theorem eichler_inverse_holds : Formalism.SL.IwahoriBlocks.EichInv := by
@@ -52,7 +52,7 @@ theorem eichler_integrality_holds : Formalism.SL.IwahoriBlocks.EichInt := by
   have hx'u : h x' u = 0 := by rw [hH, hux', star_zero]
   have hvx : h v x = h v (x + x') := by simp [hvx']
   have key : eich h x u s (eich h x' u s v) = v + h v u • (x + x') - (h v x + h v u * h x' x) • (u + s • x) := by
-    simp only [eich, map_add, map_sub, map_smul, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.map_smul,
+    simp only [eich, map_add (f := _), map_sub, map_smul, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.map_smul,
       LinearMap.smul_apply, LinearMap.map_smulₛₗ, smul_eq_mul, hvx', hx'u, mul_zero, add_zero, sub_zero, zero_smul, zero_mul, smul_zero]
     module
   rw [key]

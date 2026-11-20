@@ -76,7 +76,7 @@ theorem exists_ker_of_closure {A B K : Type} [CommRing A] [CommRing B] [CommRing
     | add x y _ _ hx hy =>
       obtain ⟨X, h1, h2⟩ := hx
       obtain ⟨Y, h3, h4⟩ := hy
-      exact ⟨X + Y, by rw [map_add, ← h1, ← h3]; rfl, by rw [map_add, h2, h4, add_zero]⟩
+      exact ⟨X + Y, by rw [map_add (f := _), ← h1, ← h3]; rfl, by rw [map_add (f := _), h2, h4, add_zero]⟩
     | neg x _ hx =>
       obtain ⟨X, h1, h2⟩ := hx
       exact ⟨-X, by rw [map_neg, ← h1]; rfl, by rw [map_neg, h2, neg_zero]⟩

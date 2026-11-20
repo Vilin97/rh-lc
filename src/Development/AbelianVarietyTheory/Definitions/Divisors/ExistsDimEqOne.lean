@@ -170,7 +170,7 @@ def tateHom (A B : AbVar K) : ℤ_[l] ⊗[ℤ] (A ⟶ B) →ₗ[ℤ_[l]] (Tl l A
 
 def tateHomQ (A B : AbVar K) : ℚ_[l] ⊗[ℤ] (A ⟶ B) →ₗ[ℚ_[l]] (Vl l A →ₗ[ℚ_[l]] Vl l B) :=
   (AddMonoidHom.mk' (fun f : A ⟶ B => vmap l f) fun f g => by
-    simp only [vmap, map_add, LinearMap.baseChange_add]).toIntLinearMap.liftBaseChange ℚ_[l]
+    simp only [vmap, map_add (f := _), LinearMap.baseChange_add]).toIntLinearMap.liftBaseChange ℚ_[l]
 
 def galHomT (A B : AbVar K) : Submodule ℤ_[l] (Tl l A →ₗ[ℤ_[l]] Tl l B) where
   carrier := {φ | ∀ σ : Gal K, φ ∘ₗ galT l A σ = galT l B σ ∘ₗ φ}

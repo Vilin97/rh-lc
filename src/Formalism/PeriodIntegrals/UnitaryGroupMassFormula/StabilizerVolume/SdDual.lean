@@ -36,7 +36,7 @@ def latSub (a M : ℕ) : AddSubgroup (Fin a → Fin M → Fv F v ⊗[F] E) where
     intro X Y hX hY
     simp only [latV, Set.mem_ofPred_eq] at hX hY ⊢
     intro p i k
-    simpa [Pi.add_apply, map_add] using add_mem (hX p i k) (hY p i k)
+    simpa [Pi.add_apply, map_add (f := _)] using add_mem (hX p i k) (hY p i k)
   neg_mem' := by
     intro X hX
     simp only [latV, Set.mem_ofPred_eq] at hX ⊢
@@ -62,7 +62,7 @@ theorem BR_smul_left (σ : E →ₐ[F] E) {M n : ℕ} (J : Matrix (Fin M) (Fin M
 theorem BR_add_right (σ : E →ₐ[F] E) {M n : ℕ} (J : Matrix (Fin M) (Fin M) E)
     (X Y Y' : Fin n → Fin M → Fv F v ⊗[F] E) :
     BR (Fv F v) σ J X (Y + Y') = BR (Fv F v) σ J X Y + BR (Fv F v) σ J X Y' := by
-  simp only [BR, hR, Formalism.UG.hform, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+  simp only [BR, hR, Formalism.UG.hform, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem BR_smul_right (σ : E →ₐ[F] E) {M n : ℕ} (J : Matrix (Fin M) (Fin M) E) (s : Fv F v)
     (X Y : Fin n → Fin M → Fv F v ⊗[F] E) :
@@ -83,7 +83,7 @@ theorem trace_one_tmul (e : E) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul k y => simp [Algebra.TensorProduct.tmul_mul_tmul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 include b in
 
@@ -286,7 +286,7 @@ def latA : AddSubgroup (Fv F v ⊗[F] E) where
   zero_mem' := by intro k; simp [crd]
   add_mem' := by
     intro x y hx hy k
-    simpa [crd, map_add] using add_mem (hx k) (hy k)
+    simpa [crd, map_add (f := _)] using add_mem (hx k) (hy k)
   neg_mem' := by
     intro x hx k
     simpa [crd, map_neg] using neg_mem (hx k)
@@ -399,7 +399,7 @@ def iota (σ : E →ₐ[F] E) {a : ℕ} (X : Fin a → Fin a → Fv F v ⊗[F] E
 theorem iota_mem (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {a : ℕ}
     (X : Fin a → Fin a → Fv F v ⊗[F] E) : iota v σ X ∈ HermR (Fv F v) σ a := by
   intro p q
-  simp only [iota, map_add, sigR_invol (Fv F v) σ hσ]
+  simp only [iota, map_add (f := _), sigR_invol (Fv F v) σ hσ]
   exact add_comm _ _
 
 theorem pairHerm_iota (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {a : ℕ}
@@ -423,7 +423,7 @@ theorem pairHerm_iota (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {a : ℕ
       map_one, map_zero, mul_ite, mul_one, mul_zero, ite_mul, zero_mul, Finset.sum_ite_eq,
       Finset.mem_univ, if_true, map_sum]
   rw [hBR]
-  simp only [pairHerm, iota, add_mul, Finset.sum_add_distrib, map_add]
+  simp only [pairHerm, iota, add_mul, Finset.sum_add_distrib, map_add (f := _)]
   simp only [← hTm]
   rw [h2]
   have h12 : algebraMap F (Fv F v) (1 / 2) * 2 = 1 := by

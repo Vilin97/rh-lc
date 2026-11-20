@@ -163,7 +163,7 @@ theorem badCrit_pairs (be : Vs →ₗ[ℚ_[p]] Vs →ₗ[ℚ_[p]] ℚ_[p]) (L L�
     { toFun := g
       map_add' := fun w w' => by
         funext a; apply PadicInt.ext
-        rw [Pi.add_apply, PadicInt.coe_add, hg, hg, hg, Submodule.coe_add, map_add, mul_add]
+        rw [Pi.add_apply, PadicInt.coe_add, hg, hg, hg, Submodule.coe_add, map_add (f := _), mul_add]
       map_smul' := fun c w => by
         funext a; apply PadicInt.ext
         rw [Pi.smul_apply, RingHom.id_apply, smul_eq_mul, PadicInt.coe_mul, hg, hg,

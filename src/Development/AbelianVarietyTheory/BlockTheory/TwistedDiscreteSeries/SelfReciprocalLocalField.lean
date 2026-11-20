@@ -185,12 +185,12 @@ theorem norms_le : norms P (maximalRealSubfield E) ≤
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [toLocalFld, involBase]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have e2 : ∀ y, toLocalFld P k (inclPlus P _ y) = inclPlus P k (toLocalPlus P k y) := fun y => by
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [toLocalFld, toLocalPlus, inclPlus]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   refine ⟨Units.map (toLocalFld P k).toMonoidHom c, Units.ext ?_⟩
   change toLocalFld P k c * involBase P k (toLocalFld P k c) = inclPlus P k (toLocalPlus P k n)
   rw [← e1, ← e2, ← map_mul, hc']

@@ -98,7 +98,7 @@ theorem UpperTheory.V.Fr.ep_ps :
       · rw [h n hn, mul_zero, mul_zero]
   · intro j y
     ext n
-    rw [two_mul, map_add, coeff_wcomp, map_add, coeff_sg, hτ]
+    rw [two_mul, map_add (f := _), coeff_wcomp, map_add (f := _), coeff_sg, hτ]
     split_ifs with hn
     · rw [hn]
       linear_combination (-MvPowerSeries.coeff n y) * hsq j

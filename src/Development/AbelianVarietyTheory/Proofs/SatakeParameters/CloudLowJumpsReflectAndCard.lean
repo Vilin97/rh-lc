@@ -43,7 +43,7 @@ theorem jR_symm_card {R : Ranks} (P : HCParam R) (j : Fin R.m) :
     · simp only [jW, Bool.false_eq_true, if_false, Multiset.card_map, h]
     · simp only [jW, if_true, h]
   refine ⟨?_, fun s => ?_⟩
-  · simp only [jR, jW, if_true, Bool.false_eq_true, if_false, Multiset.map_add, block_map_reflect]
+  · simp only [jR, jW, if_true, Bool.false_eq_true, if_false, Multiset.map_add (f := _), block_map_reflect]
   · have hR : (jR P j s).card = R.nV := by
       simp only [jR, Multiset.card_add, hW s, block, Multiset.card_map, Multiset.card_range, Ranks.nV]
     refine ⟨hW s, hR, ?_, ?_⟩

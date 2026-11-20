@@ -78,7 +78,7 @@ theorem arcTx_hom {F F' : Type} [Field F] [Field F'] {f : F →+* F'} {N : NumD 
   conv_lhs => rw [← finsum_comp_equiv I.e.toEquiv]
   refine finsum_congr fun χ => ?_
   have hx : p'.1.1.toAdd + m • I.e χ = I.e (p.1.1.toAdd + m • χ) := by
-    rw [h1, map_add, map_nsmul]
+    rw [h1, map_add (f := _), map_nsmul]
   have hχ : I.e.toEquiv χ = I.e χ := rfl
   rw [hχ]
   simp only [hx, ← hb, I.txT_eq ho p p' h1 h2 χ]

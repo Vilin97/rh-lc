@@ -164,7 +164,7 @@ theorem support_degrees_add_subset {R : Type*} [CommRing R] {ι : Type*} {n : �
   rw [not_or, mem_support_degrees_iff, mem_support_degrees_iff] at hcon
   push Not at hcon
   apply hm
-  rw [map_add, MvPolynomial.coeff_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, hcon.1 m, hcon.2 m, add_zero]
+  rw [map_add (f := _), MvPolynomial.coeff_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, hcon.1 m, hcon.2 m, add_zero]
 
 theorem support_degrees_smul_subset {R : Type*} [CommRing R] {ι : Type*} {n : ℕ} (LL : Letters ι) (S : Set ι) (j : Fin n)
     (a : R) (G : MvPolynomial (ι × Fin n) R) {k : ℤ} (hk : k ∈ sDegs LL S j (a • G)) :
@@ -568,7 +568,7 @@ theorem twist_substitution_X_vector {l : Fin N} (hl : l ∈ S) (hv : LL.vec l = 
     twistSub (R := ℤ) LL S jj (X (l, m)) =
       X (l, m) + (laurentPower N n 1 - 1) * twistRowVector N jj m * ∑ b, twistColumnVector N jj b * X (l, b) := by
   rw [twist_substitution_eq_action, twisted_action_X, if_pos hl, if_pos hv]
-  simp only [twist_matrix_apply, map_add, map_mul, map_sub, map_one, add_mul, Finset.sum_add_distrib]
+  simp only [twist_matrix_apply, map_add (f := _), map_mul, map_sub, map_one, add_mul, Finset.sum_add_distrib]
   congr 1
   · simp [apply_ite C, Finset.sum_ite_eq']
   · unfold laurentPower twistRowVector twistColumnVector
@@ -580,7 +580,7 @@ theorem twist_substitution_X_covector {l : Fin N} (hl : l ∈ S) (hv : ¬ LL.vec
     twistSub (R := ℤ) LL S jj (X (l, m)) =
       X (l, m) + (laurentPower N n (-1) - 1) * twistColumnVector N jj m * ∑ b, twistRowVector N jj b * X (l, b) := by
   rw [twist_substitution_eq_action, twisted_action_X, if_pos hl, if_neg hv]
-  simp only [twist_matrix_apply, map_add, map_mul, map_sub, map_one, add_mul, Finset.sum_add_distrib]
+  simp only [twist_matrix_apply, map_add (f := _), map_mul, map_sub, map_one, add_mul, Finset.sum_add_distrib]
   congr 1
   · simp [apply_ite C, Finset.sum_ite_eq]
   · unfold laurentPower twistRowVector twistColumnVector

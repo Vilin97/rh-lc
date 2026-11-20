@@ -164,9 +164,9 @@ theorem cx_bilin {R : Type} [CommRing R] {K : Cx.{w} R} {L : Cx.{w'} R} {M : Cx.
     obtain ⟨a, ha, rfl⟩ := (CrystallineSemistableComparison.P.cls_surj K p).1 x
     obtain ⟨a', ha', rfl⟩ := (CrystallineSemistableComparison.P.cls_surj K p).1 x'
     obtain ⟨b, hb, rfl⟩ := (CrystallineSemistableComparison.P.cls_surj L q).1 y
-    have hs : K.d p (a + a') = 0 := by rw [map_add, ha, ha', add_zero]
+    have hs : K.d p (a + a') = 0 := by rw [map_add (f := _), ha, ha', add_zero]
     rw [← (CrystallineSemistableComparison.P.cls_surj K p).2.2.2.1 a a' ha ha' hs, cc, cc, cc]
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     exact (CrystallineSemistableComparison.P.cls_surj M n).2.2.2.1 _ _ _ _ _
   · intro r x y
     obtain ⟨a, ha, rfl⟩ := (CrystallineSemistableComparison.P.cls_surj K p).1 x
@@ -179,9 +179,9 @@ theorem cx_bilin {R : Type} [CommRing R] {K : Cx.{w} R} {L : Cx.{w'} R} {M : Cx.
     obtain ⟨a, ha, rfl⟩ := (CrystallineSemistableComparison.P.cls_surj K p).1 x
     obtain ⟨b, hb, rfl⟩ := (CrystallineSemistableComparison.P.cls_surj L q).1 y
     obtain ⟨b', hb', rfl⟩ := (CrystallineSemistableComparison.P.cls_surj L q).1 y'
-    have hs : L.d q (b + b') = 0 := by rw [map_add, hb, hb', add_zero]
+    have hs : L.d q (b + b') = 0 := by rw [map_add (f := _), hb, hb', add_zero]
     rw [← (CrystallineSemistableComparison.P.cls_surj L q).2.2.2.1 b b' hb hb' hs, cc, cc, cc]
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact (CrystallineSemistableComparison.P.cls_surj M n).2.2.2.1 _ _ _ _ _
   · intro r x y
     obtain ⟨a, ha, rfl⟩ := (CrystallineSemistableComparison.P.cls_surj K p).1 x

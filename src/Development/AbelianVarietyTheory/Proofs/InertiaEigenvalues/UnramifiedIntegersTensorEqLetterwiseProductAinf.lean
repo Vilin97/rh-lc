@@ -103,7 +103,7 @@ theorem ringHom_eq (ψ : ℤ_[l] →+* OC l) (z : ℤ_[l]) :
     have e : ((ψ z : OC l) : ℂ_[l]) - algebraMap ℚ_[l] ℂ_[l] (z : ℚ_[l]) =
         (l : ℂ_[l]) ^ n * (((ψ y : OC l) : ℂ_[l]) - algebraMap ℚ_[l] ℂ_[l] (y : ℚ_[l])) := by
       conv_lhs => rw [hz]
-      simp only [map_add, map_mul, map_pow, map_natCast, PadicInt.coe_add, PadicInt.coe_mul,
+      simp only [map_add (f := _), map_mul, map_pow, map_natCast, PadicInt.coe_add, PadicInt.coe_mul,
         PadicInt.coe_pow, PadicInt.coe_natCast]
       push_cast
       ring

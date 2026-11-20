@@ -44,7 +44,7 @@ theorem exists_finite_pt {R K L : Type} [CommRing R] [Field K] [Field L] [Algebr
     induction ha using Algebra.adjoin_induction with
     | mem a ha => exact IntermediateField.subset_adjoin _ _ ⟨a, ha, rfl⟩
     | algebraMap r => exact (hc' r) ▸ M.algebraMap_mem _
-    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
   refine ⟨M, IntermediateField.finiteDimensional_adjoin fun y _ => Algebra.IsIntegral.isIntegral y,
     spMap (ψ.hom.codRestrict M hM) ≫ u, ?_⟩
@@ -162,7 +162,7 @@ theorem exists_finite_qk (hL : Laws) (hB : D.TauBimult) [IsAlgClosed L] {N : ℕ
     | add a b _ _ ha hb =>
       obtain ⟨g, m, e⟩ := ha
       obtain ⟨g', m', e'⟩ := hb
-      exact ⟨g + g', add_mem m m', by rw [nsmul_add, e, e', map_add]⟩
+      exact ⟨g + g', add_mem m m', by rw [nsmul_add, e, e', map_add (f := _)]⟩
     | smul c a _ ha =>
       obtain ⟨g, m, e⟩ := ha
       exact ⟨c • g, zsmul_mem m c, by rw [smul_comm, e, map_zsmul]⟩

@@ -87,7 +87,7 @@ theorem vFin_seen_le_one (V : HSp D) {a : GA D V} (ha : a ∈ GinfC V) {u : Fin 
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul c x => simp [compFin, evFin]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hent : ∀ i j, compFin D.host.F D.host.E v (Formalism.L2.Theta.mt V a⁻¹ i j) =
       (1 : Matrix (Fin V.rank) (Fin V.rank) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv D.host.F v ⊗[D.host.F] D.host.E)) i j := by
     intro i j
@@ -122,7 +122,7 @@ private theorem infEmb_compInf_eq_theta (V : HSp D) (fr : UI.Frames D V) (w : In
     simp only [compInf, evInf, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, Algebra.TensorProduct.map_tmul,
       AlgHom.coe_id, id_eq, infEmb_tmul]
     rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 private theorem map_mt_brg_inv_eq_conj_uMat (V : HSp D) (fr : UI.Frames D V) (y : (UI.instV fr).Ginf)
     (w : InfinitePlace D.host.F) (θ : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF D.host.F ⊗[D.host.F] D.host.E →+* ℂ) (hθ : θ = Formalism.L2.SG.AdBridge.thetaV (UI.instV fr) w) :

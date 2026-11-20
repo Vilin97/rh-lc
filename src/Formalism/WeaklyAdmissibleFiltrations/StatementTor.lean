@@ -37,7 +37,7 @@ def quotientCocycles [TopologicalSpace G] (L : Lattice (O := O) ρ) (I : Submodu
   add_mem' := by
     rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
     refine ⟨ha.add hb, fun g h => ?_⟩
-    simp only [Pi.add_apply, ha', hb', map_add]
+    simp only [Pi.add_apply, ha', hb', map_add (f := _)]
     abel
   smul_mem' := by
     rintro c a ⟨ha, ha'⟩
@@ -93,7 +93,7 @@ def Z1urQ (L : Lattice (O := O) ρ) (I : Submodule O ↥L.T) (hI : StableSub L I
   add_mem' := by
     rintro a b ⟨ha, x, hx⟩ ⟨hb, y, hy⟩
     refine ⟨(quotientCocycles L I hI).add_mem ha hb, x + y, fun g hg => ?_⟩
-    simp only [Pi.add_apply, hx g hg, hy g hg, map_add]
+    simp only [Pi.add_apply, hx g hg, hy g hg, map_add (f := _)]
     abel
   smul_mem' := by
     rintro c a ⟨ha, x, hx⟩
@@ -109,7 +109,7 @@ def divisibleCocycles (L : Lattice (O := O) ρ) : Submodule O (G → V ⧸ L.T) 
   add_mem' := by
     rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
     refine ⟨ha.add hb, fun g h => ?_⟩
-    simp only [Pi.add_apply, ha', hb', map_add]
+    simp only [Pi.add_apply, ha', hb', map_add (f := _)]
     abel
   smul_mem' := by
     rintro c a ⟨ha, ha'⟩

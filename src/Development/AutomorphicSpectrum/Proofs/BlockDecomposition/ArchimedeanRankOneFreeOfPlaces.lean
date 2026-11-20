@@ -32,7 +32,7 @@ theorem real_indep {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
       apply mul_right_cancel₀ hb0
       rw [add_mul, mul_assoc, hθ]
       exact hAB
-    rw [h1, map_add, map_mul, hfix, AlgHom.commutes, AlgHom.commutes]
+    rw [h1, map_add (f := _), map_mul, hfix, AlgHom.commutes, AlgHom.commutes]
   have him : (τ θ).im ≠ 0 := im_ne_zero h hmoved τ
   have hb1 : τ (b 1) = τ θ * τ (b 0) := by rw [← map_mul, hθ]
   have ht0 : τ (b 0) ≠ 0 := (map_ne_zero τ).2 hb0
@@ -77,7 +77,7 @@ theorem linearIndependent_of_xw_ne_zero : ∀ (F E : Type) [Field F] [NumberFiel
     intro y w hy k
     have h1 : Θ y w = (e ((Algebra.TensorProduct.basis (Ainf F) b).repr y 0) w : ℂ) * τ w (b 0) +
         (e ((Algebra.TensorProduct.basis (Ainf F) b).repr y 1) w : ℂ) * τ w (b 1) := by
-      conv_lhs => rw [eq_coord b y, map_add, Pi.add_apply, hΘ, hΘ]
+      conv_lhs => rw [eq_coord b y, map_add (f := _), Pi.add_apply, hΘ, hΘ]
     rw [hy] at h1
     obtain ⟨h0, h1'⟩ := real_indep h b (τ w) _ _ h1.symm
     fin_cases k

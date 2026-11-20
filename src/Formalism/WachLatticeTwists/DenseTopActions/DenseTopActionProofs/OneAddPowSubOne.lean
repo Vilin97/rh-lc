@@ -18,7 +18,7 @@ theorem xi : StatXi := by
   have hx : ∀ i, jS (xOf S.ℓ S.s πs) i = S.X := by
     intro i
     change ((Pi.evalRingHom (fun _ => A) i).comp jS) (xOf S.ℓ S.s πs) = S.X
-    rw [S.X_eq, xOf, map_sub, map_pow, map_add, map_one]
+    rw [S.X_eq, xOf, map_sub, map_pow, map_add (f := _), map_one]
     simp [hπ, HidaSetting.ε]
   refine ⟨hx, ?_, ?_, ?_⟩
   · intro i

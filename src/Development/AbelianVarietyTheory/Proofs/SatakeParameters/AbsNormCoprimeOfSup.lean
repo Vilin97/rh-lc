@@ -148,7 +148,7 @@ theorem absNorm_coprime_of_sup (I : Ideal (𝓞 E)) (hI : I ≠ ⊥) (D : ℕ) (
   obtain ⟨t, rfl⟩ := Ideal.mem_span_singleton'.1 hb
   apply hx0
   have e1 : Ideal.Quotient.mk I (t * ((p * q : ℕ) : 𝓞 E)) = 1 := by
-    rw [← map_one (Ideal.Quotient.mk I), ← hab, map_add, Ideal.Quotient.eq_zero_iff_mem.2 ha, zero_add]
+    rw [← map_one (Ideal.Quotient.mk I), ← hab, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 ha, zero_add]
   calc x = Ideal.Quotient.mk I (t * ((p * q : ℕ) : 𝓞 E)) * x := by rw [e1, one_mul]
     _ = Ideal.Quotient.mk I t * (Ideal.Quotient.mk I (q : 𝓞 E)) * (p • x) := by
         rw [nsmul_eq_mul]; push_cast; simp only [map_mul, map_natCast]; ring

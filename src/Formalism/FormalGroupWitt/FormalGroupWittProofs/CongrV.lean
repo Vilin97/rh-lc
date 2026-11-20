@@ -20,7 +20,7 @@ def Zd (d : τ →₀ ℕ) (x : MvPowerSeries τ R) : Prop := ∀ e ≤ d, coeff
 theorem zd_zero (d : τ →₀ ℕ) : Zd d (0 : MvPowerSeries τ R) := fun _ _ => by simp
 
 theorem zd_add {d : τ →₀ ℕ} {x y : MvPowerSeries τ R} (hx : Zd d x) (hy : Zd d y) :
-    Zd d (x + y) := fun e he => by rw [map_add, hx e he, hy e he, add_zero]
+    Zd d (x + y) := fun e he => by rw [map_add (f := _), hx e he, hy e he, add_zero]
 
 theorem zd_mul_left {d : τ →₀ ℕ} (x : MvPowerSeries τ R) {y : MvPowerSeries τ R} (hy : Zd d y) :
     Zd d (x * y) := by
@@ -72,7 +72,7 @@ theorem coeff_subst_perturb {ι : Type v} [Fintype ι] {d : τ →₀ ℕ} (hd :
   have hm0 : ∀ i, constantCoeff (monomial d (c i) : MvPowerSeries τ R) = 0 := fun i => by
     rw [← coeff_zero_eq_constantCoeff_apply, coeff_monomial_ne (Ne.symm hd)]
   have hk'0 : ∀ i, constantCoeff (k' i) = 0 := fun i => by
-    simp only [hk'def, map_add, hk i, hm0 i, add_zero]
+    simp only [hk'def, map_add (f := _), hk i, hm0 i, add_zero]
   have hs := hasSubst_of_constantCoeff_zero hk
   have hs' := hasSubst_of_constantCoeff_zero hk'0
   have hdiff : ∀ i, k' i - k i = monomial d (c i) := fun i => by simp [hk'def]
@@ -139,7 +139,7 @@ theorem divBy_mul_sub {c : K} {a a' b b' : MvPowerSeries τ K} (ha' : IntegralMv
     DivByMv c (a * b - a' * b') := by
   have e : a * b - a' * b' = (a - a') * b + a' * (b - b') := by ring
   intro d
-  rw [e, map_add]
+  rw [e, map_add (f := _)]
   refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ?_ ?_)
   · simpa using (Formalism.LT.CoeffP.Bd.mul hab hb (norm_nonneg c) zero_le_one) d
   · simpa using (Formalism.LT.CoeffP.Bd.mul ha' hbb zero_le_one (norm_nonneg c)) d
@@ -240,7 +240,7 @@ theorem bwd [CharZero K] {p q : ℕ} {hq : q ≠ 0} {σ : K →+* K} (hS : Funct
     set β₁ : ι → MvPowerSeries τ K := fun i => β i + monomial d (c i) with hβ₁
     have hcβ₁ : ∀ i e, coeff e (β₁ i) = coeff e (β i) + if e = d then c i else 0 := by
       intro i e
-      simp only [hβ₁, map_add, coeff_monomial]
+      simp only [hβ₁, map_add (f := _), coeff_monomial]
     have hβ₁0 : ∀ i, constantCoeff (β₁ i) = 0 := fun i => by
       rw [← coeff_zero_eq_constantCoeff_apply, hcβ₁, if_neg (Ne.symm hd0), add_zero,
         coeff_zero_eq_constantCoeff_apply, hβ0]

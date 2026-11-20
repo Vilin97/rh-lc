@@ -37,7 +37,7 @@ theorem TQ.exists_affine_weight_units [Module.Free ℤ X] [Module.Finite ℤ X] 
         rw [map_zero]; exact isWt_one
       add_mem' := fun {a c} ha hc => by
         show IsWt Q.i _ (Additive.toMul (l (a + c))).val (a + c)
-        rw [map_add]; exact IsWt.mul ha hc
+        rw [map_add (f := _)]; exact IsWt.mul ha hc
       neg_mem' := fun {a} ha => by
         show IsWt Q.i _ (Additive.toMul (l (-a))).val (-a)
         rw [map_neg]; exact IsWt.inv ha }

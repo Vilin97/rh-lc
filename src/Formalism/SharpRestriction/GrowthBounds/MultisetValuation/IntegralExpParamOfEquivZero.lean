@@ -82,7 +82,7 @@ theorem sx_simeq_of {σ : Type} [Finite σ] {f g : MvPowerSeries σ (K0 p)} (h :
   rw [th_inParam_sub] at h1 hw
   refine ⟨h1, ?_⟩
   rw [← sx_expS_eq p h1, sx_integral_iff, hw]
-  exact ⟨1 + w, by rw [map_add, map_one]⟩
+  exact ⟨1 + w, by rw [map_add (f := _), map_one]⟩
 
 theorem integralExp_of_equiv {σ : Type} {f g : MvPowerSeries σ (K0 p)} (h : Formalism.InvariantFactorPaths.G7.Simeq f g) : E0 p (f - g) := by
   obtain ⟨h0, h1⟩ := h
@@ -108,7 +108,7 @@ theorem equiv_zero_of_integralExp {σ : Type} {f : MvPowerSeries σ (K0 p)} (h :
   rw [Formalism.InvariantFactorPaths.G7.Simeq, sub_zero]
   refine ⟨h0, ?_⟩
   rw [← sx_expS_eq p h0, sx_integral_iff]
-  exact ⟨1 + w, by rw [map_add, map_one]; exact hw⟩
+  exact ⟨1 + w, by rw [map_add (f := _), map_one]; exact hw⟩
 
 theorem integralExp_param_of_equiv_zero {σ : Type} [Finite σ] {f : MvPowerSeries σ (K0 p)} (h : Simeq p f 0) : E0 p (inParam p f) := by
   have := integralExp_of_equiv p (sx_simeq_of p h)

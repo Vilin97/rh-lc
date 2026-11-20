@@ -39,7 +39,7 @@ theorem linT (hKP : KP) (hT : IsTriple B G X om om') : ∀ Ψ₁ ∈ PolData B G
   refine ⟨?_, ?_⟩
   · funext h
     have e : ∀ g, theta om (Φ + Ψ) g h = theta om Φ g h + theta om Ψ g h := fun g => by
-      simp only [theta, map_add]
+      simp only [theta, map_add (f := _)]
       exact thetaSum_add F (pres _ Φ hΦS) (pres _ Ψ hΨS)
     have iΦ := (hconv Φ hΦS).1 h
     have iΨ := (hconv Ψ hΨS).1 h

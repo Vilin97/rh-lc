@@ -186,7 +186,7 @@ theorem resT_of_mem (v : TR.Pl) {x : X.B.I.E ⊗[X.B.I.F] Af X.B.I.F} (hx : x �
 
 theorem resT_add (v : TR.Pl) {x y : X.B.I.E ⊗[X.B.I.F] Af X.B.I.F} (hx : x ∈ IntAf X.B.I.F X.B.I.E)
     (hy : y ∈ IntAf X.B.I.F X.B.I.E) : resT TR v (x + y) = resT TR v x + resT TR v y := by
-  rw [resT_of_mem TR v (add_mem hx hy), resT_of_mem TR v hx, resT_of_mem TR v hy, ← map_add]; rfl
+  rw [resT_of_mem TR v (add_mem hx hy), resT_of_mem TR v hx, resT_of_mem TR v hy, ← map_add (f := _)]; rfl
 
 theorem resT_sub (v : TR.Pl) {x y : X.B.I.E ⊗[X.B.I.F] Af X.B.I.F} (hx : x ∈ IntAf X.B.I.F X.B.I.E)
     (hy : y ∈ IntAf X.B.I.F X.B.I.E) : resT TR v (x - y) = resT TR v x - resT TR v y := by

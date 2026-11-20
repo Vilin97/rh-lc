@@ -84,7 +84,7 @@ theorem crit (S : Finset (HeightOneSpectrum (𝓞 F))) (e : AF F ⊗[F] E) (h1 :
     · exact (h2 v).trans (if_pos hv))
   refine ⟨m, Ω, fld, φ, he, fun z => ⟨fun h k => ?_, fun h => ?_⟩⟩
   · have h' := h.map (φ k)
-    rw [map_add, map_sub, map_mul, map_one, he, sub_self, zero_add, one_mul] at h'
+    rw [map_add (f := _), map_sub, map_mul, map_one, he, sub_self, zero_add, one_mul] at h'
     exact h'.ne_zero
   · have hz := (hu z).1 h
     have hI : ∀ w, IsUnit (compInf F E w z) := fun w => hz (.inl w)
@@ -92,9 +92,9 @@ theorem crit (S : Finset (HeightOneSpectrum (𝓞 F))) (e : AF F ⊗[F] E) (h1 :
     obtain ⟨x, hxf, hxi⟩ := exists_adele (E := E) S
       (fun v => if h : v ∈ S then (hS v h).unit⁻¹ else 1) (fun v hv => dif_neg hv) (fun w => (hI w).unit⁻¹)
     refine isUnit_iff_exists_inv.2 ⟨x, GlobalTheory.AdelicU.Supp.adTens_eq_one' (fun w => ?_) fun v => ?_⟩
-    · rw [map_mul, map_add, map_sub, map_mul, map_one, h1, hxi, sub_self, zero_add, one_mul]
+    · rw [map_mul, map_add (f := _), map_sub, map_mul, map_one, h1, hxi, sub_self, zero_add, one_mul]
       exact (hI w).mul_val_inv
-    · rw [map_mul, map_add, map_sub, map_mul, map_one, h2, hxf]
+    · rw [map_mul, map_add (f := _), map_sub, map_mul, map_one, h2, hxf]
       by_cases hv : v ∈ S
       · simp only [if_pos hv, dif_pos hv, sub_self, zero_add, one_mul]
         exact (hS v hv).mul_val_inv

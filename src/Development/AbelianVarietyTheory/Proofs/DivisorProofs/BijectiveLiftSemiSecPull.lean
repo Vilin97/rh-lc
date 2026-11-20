@@ -34,7 +34,7 @@ theorem bijective_liftSemi_secPull : ∀ (R R' : Type) [CommRing R] [CommRing R'
     induction x using TensorProduct.induction_on with
     | zero => rw [map_zero, map_zero]
     | tmul c v => rw [liftSemi_tmul, h.out.equiv_tmul, hf]; rfl
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   rw [e]
   exact h.out.equiv.bijective
 

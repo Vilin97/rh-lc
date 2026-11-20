@@ -23,7 +23,7 @@ def quotStarRing (J : Ideal L) (hJ : ∀ a ∈ J, star a ∈ J) : StarRing (L �
   star_add x y := by
     obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective x
     obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective y
-    simp [← map_add]
+    simp [← map_add (f := _)]
 
 end star
 

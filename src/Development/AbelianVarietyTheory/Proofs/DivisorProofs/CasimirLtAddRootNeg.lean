@@ -22,7 +22,7 @@ theorem coeff_diag {σ : Type*} (A : MvPolynomial σ ℂ →ₗ[ℂ] MvPolynomia
     by_cases h' : u = α
     · subst h'; simp; ring
     · simp [h']
-  | add p q hp hq => simp [map_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => simp [map_add (f := _), MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem eig_supp {σ : Type*} (A : MvPolynomial σ ℂ →ₗ[ℂ] MvPolynomial σ ℂ) (w : (σ →₀ ℕ) → ℂ)
     (hA : ∀ α, A (monomial α 1) = w α • monomial α 1) (g : MvPolynomial σ ℂ) (c : ℂ)

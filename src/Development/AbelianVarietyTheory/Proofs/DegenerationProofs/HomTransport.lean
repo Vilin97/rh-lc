@@ -58,7 +58,7 @@ def img (g : N.Gt) : N'.Gt :=
     fun χ χ' => by
       obtain ⟨χ, rfl⟩ := I.e.surjective χ
       obtain ⟨χ', rfl⟩ := I.e.surjective χ'
-      rw [← map_add]
+      rw [← map_add (f := _)]
       simp only [AddEquiv.symm_apply_apply]
       rw [I.c_eq, I.c_eq, N.c_add]
       have a := I.θ_eq (N.c χ) (N.c χ') g.b
@@ -111,7 +111,7 @@ theorem rel_io (y : N.X) : I.Rel (N.io y) (N'.io (I.e y)) := by
   have a := I.ψ_eq (y + χ)
   have b := I.ψ_eq y
   have c := I.ψ_eq χ
-  rw [N.c_add, map_add, mul_comm (N.c y)] at a
+  rw [N.c_add, map_add (f := _), mul_comm (N.c y)] at a
   simp only [io_s, io_b, τ, map_div]
   apply Additive.ofMul.injective
   replace a := congrArg Additive.ofMul a

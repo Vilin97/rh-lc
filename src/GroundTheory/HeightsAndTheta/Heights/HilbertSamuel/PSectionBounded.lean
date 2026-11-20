@@ -180,7 +180,7 @@ theorem exists_form_of_mem_chartRingZ (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k
       homog_add (homog_mul h₁ (homog_chartMon c δ₂)) ?_, ?_⟩
     · rw [add_comm δ₁]
       exact homog_mul h₂ (homog_chartMon c δ₁)
-    · rw [map_add, map_mul, map_mul, v₁, v₂, aeval_chartMon, aeval_chartMon, hpow]
+    · rw [map_add (f := _), map_mul, map_mul, v₁, v₂, aeval_chartMon, aeval_chartMon, hpow]
       ring
   | mul x z _ _ hx hz =>
     obtain ⟨δ₁, e₁, h₁, v₁⟩ := hx

@@ -12,9 +12,9 @@ variable (E : Type) [Field E] [NumberField E] (j : ℕ)
 
 def halfTraceForm : LinearMap.BilinForm ℚ (Fin j → E) :=
   LinearMap.mk₂ ℚ (fun x y => Algebra.trace ℚ E (x ⬝ᵥ y) / 2)
-    (fun x x' y => by rw [add_dotProduct, map_add, add_div])
+    (fun x x' y => by rw [add_dotProduct, map_add (f := _), add_div])
     (fun c x y => by rw [smul_dotProduct, map_smul, smul_eq_mul, smul_eq_mul, mul_div_assoc])
-    (fun x y y' => by rw [dotProduct_add, map_add, add_div])
+    (fun x y y' => by rw [dotProduct_add, map_add (f := _), add_div])
     (fun c x y => by rw [dotProduct_smul, map_smul, smul_eq_mul, smul_eq_mul, mul_div_assoc])
 
 theorem halfTraceForm_apply (x y : Fin j → E) :

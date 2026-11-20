@@ -164,7 +164,7 @@ theorem UpperTheory.archimedean_ideles_plane_compat :
       Matrix.vecMulVec (incV F H.y) (incM F X.J *ᵥ fun i => c (incV F H.x i)) = 1 := by
     rw [hJv, hJv, ← hmul, ← hone, ← p2]
     ext i j
-    simp only [incM, incV, Matrix.vecMulVec_apply, Matrix.map_apply, Matrix.add_apply, map_add, map_mul]
+    simp only [incM, incV, Matrix.vecMulVec_apply, Matrix.map_apply, Matrix.add_apply, map_add (f := _), map_mul]
   have ho : ∀ x : Fin n → E, (∀ u, form σ X.J (H.ι *ᵥ u) x = 0) →
       (incM F X.J *ᵥ fun i => c (incV F x i)) ᵥ* incM F H.ι = 0 := by
     intro x hx

@@ -22,7 +22,7 @@ theorem ev_eq (ρ : G →* H) {m : ℕ} (F : (Fin (m + 1) → Y) → ℝ) (y : Y
 
 theorem ev_add (ρ : G →* H) {m : ℕ} (F : (Fin (m + 1) → Y) → ℝ) (y : Y) (z z' : Chn G m) :
     ev ρ F y (z + z') = ev ρ F y z + ev ρ F y z' := by
-  simp only [ev_eq, map_add]
+  simp only [ev_eq, map_add (f := _)]
 
 theorem ev_sub (ρ : G →* H) {m : ℕ} (F : (Fin (m + 1) → Y) → ℝ) (y : Y) (z z' : Chn G m) :
     ev ρ F y (z - z') = ev ρ F y z - ev ρ F y z' := by

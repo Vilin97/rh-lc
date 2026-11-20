@@ -98,7 +98,7 @@ theorem exists_int_root : ∃ a : 𝓞 H.K, (2 * H.φ₀ (((a : H.K) : H.E)) - 1
   change (2 * H.φ₀ (algebraMap H.K H.E ((1 + b) / 2)) - 1) ^ 2 = _
   have := congrArg (fun x => H.φ₀ (algebraMap H.K H.E x)) hb'
   simp only [map_pow, map_neg, map_natCast] at this
-  rw [map_div₀, map_add, map_one, map_ofNat, map_div₀, map_add, map_one, map_ofNat, ← this]
+  rw [map_div₀, map_add (f := _), map_one, map_ofNat, map_div₀, map_add (f := _), map_one, map_ofNat, ← this]
   ring
 
 theorem root_cases {d : ℕ} {α : ℂ} (h : (2 * α - 1) ^ 2 = -(d : ℂ)) :
@@ -122,7 +122,7 @@ theorem isHalfPt_baseLat : IsHalfPt H.d (baseLat H) ((Ideal.absNorm H.ccK : ℕ)
     simp
     ring
   · refine GlobalTheory.TwoTorsionPt.not_integral_half hN (hint _ h) ?_
-    simp only [map_mul, map_div₀, map_add, map_one, Complex.conj_I, Complex.conj_ofReal,
+    simp only [map_mul, map_div₀, map_add (f := _), map_one, Complex.conj_I, Complex.conj_ofReal,
       map_natCast, map_ofNat]
     ring
   · refine GlobalTheory.TwoTorsionPt.not_integral_half hN (hint _ h) ?_

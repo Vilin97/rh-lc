@@ -58,7 +58,7 @@ theorem lsub_eq {F : LFlag (VS D) D.R.rS T} {M : LV D} {A h : GV D} (hA : A ∈ 
     refine ⟨?_, hy2⟩
     have e2 : y = A l + ((h l - A l) + h ξ) := by
       have : y = h (l + ξ) := by rw [e, LinearEquiv.apply_symm_apply]
-      rw [this, map_add]; abel
+      rw [this, map_add (f := _)]; abel
     rw [e2]
     exact Submodule.add_mem_sup ((aut_lrep hA l).2 hl)
       (show _ ∈ Xsp F from add_mem (hc l hl.2) (mem_of_map_eq (adapt_xsp hh) hξ))
@@ -69,7 +69,7 @@ theorem lsub_eq {F : LFlag (VS D) D.R.rS T} {M : LV D} {A h : GV D} (hA : A ∈ 
     have h1 := hc _ hm.2
     rw [LinearEquiv.apply_symm_apply] at h1
     have e2 : h.symm y = A.symm l + h.symm (ξ - (h (A.symm l) - l)) := by
-      rw [← e]; simp only [map_add, map_sub, LinearEquiv.symm_apply_apply]; abel
+      rw [← e]; simp only [map_add (f := _), map_sub, LinearEquiv.symm_apply_apply]; abel
     rw [e2]
     exact Submodule.add_mem_sup hm
       (show _ ∈ Xsp F from symm_mem_of_map_eq (adapt_xsp hh) (sub_mem (show ξ ∈ Xsp F from hξ) h1))

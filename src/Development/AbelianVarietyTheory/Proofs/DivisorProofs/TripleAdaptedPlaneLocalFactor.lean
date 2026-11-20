@@ -28,7 +28,7 @@ theorem sf_smul_left (r : R) (u v : Fin n → R) : sf c J (r • u) v = r * sf c
   simp [sf, smul_dotProduct]
 
 theorem sf_add_right (u v w : Fin n → R) : sf c J u (v + w) = sf c J u v + sf c J u w := by
-  simp only [sf, Pi.add_apply, map_add]
+  simp only [sf, Pi.add_apply, map_add (f := _)]
   rw [show (fun i => c (v i) + c (w i)) = (fun i => c (v i)) + fun i => c (w i) from rfl, mulVec_add, dotProduct_add]
 
 theorem sf_sub_right (u v w : Fin n → R) : sf c J u (v - w) = sf c J u v - sf c J u w := by
@@ -132,7 +132,7 @@ theorem cA_invol {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (z : AE F E) : cA σ 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [cA, sigma_invol h]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem cA_inclR (σ : E →ₐ[F] E) (x : E) : cA σ (inclR (F := F) (AF F) x) = inclR (F := F) (AF F) (σ x) := by
   simp [cA, inclR]

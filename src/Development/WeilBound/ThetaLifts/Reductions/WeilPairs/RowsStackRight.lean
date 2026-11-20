@@ -80,7 +80,7 @@ theorem hRat_sum {ι : Type} [Fintype ι] (JT : Matrix (Fin n) (Fin n) E) (JS : 
   | empty => simp [hRatF]
   | insert i s hi ih =>
     rw [Finset.sum_insert hi, Finset.sum_insert hi, ← ih]
-    simp only [hRatF, Matrix.add_apply, map_add, mul_add, add_mul, Finset.sum_add_distrib]
+    simp only [hRatF, Matrix.add_apply, map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib]
 
 theorem latH_of {B : Base F E} (hcm : IsCMExt F E σ) {X : Spc F E n} {W : Spc F E d} {r s r' s' : ℕ} {ξ₀ : E}
     (hX : X.IsHerm σ B r s) (hW : W.IsSkew σ B r' s') (hXu : IsUnit X.J.det) (hWu : IsUnit W.J.det) (hξ : ξ₀ ≠ 0) :

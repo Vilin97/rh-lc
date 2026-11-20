@@ -37,7 +37,7 @@ theorem Uniformises.comp_equiv {Xo : Moduli D l} {σ : KA l →+* ℂ} {g : ℕ}
     (hlin : ∀ (a : 𝓞 E) z, k (fun i => ty i (a : E) * z i) = fun i => ty i (a : E) * k z i) :
     Uniformises Xo σ ty D' t P y (fun z => e (k z)) := by
   obtain ⟨h1, -, ⟨h3, h4, h5, h6, h7⟩, h8, h9, h10, h11, h12⟩ := h
-  refine ⟨h1, hP, ⟨fun z w => by simp only [map_add, h3], h4.comp k.surjective, ?_, fun w => ?_, fun v hv => ?_⟩,
+  refine ⟨h1, hP, ⟨fun z w => by simp only [map_add (f := _), h3], h4.comp k.surjective, ?_, fun w => ?_, fun v hv => ?_⟩,
     fun z => ?_, fun a z => by simp only [hlin, h9], fun n a a₂ c hn hc => ?_, fun a ha => ?_, fun a => ?_⟩
   · have hd : DifferentiableOn ℂ (fun z => k z) Set.univ :=
       k.toContinuousLinearEquiv.differentiable.differentiableOn

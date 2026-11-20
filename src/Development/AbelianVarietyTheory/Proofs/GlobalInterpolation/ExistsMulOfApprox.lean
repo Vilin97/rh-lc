@@ -62,7 +62,7 @@ theorem ptEval_subD (hab : a ≤ b) (σ : K →+* L) (ap : ι → Matrix (Fin a)
     ptEval σ ap (subD K ι a b P) = substAdj hab ap (map σ P) := by
   induction P using MvPolynomial.induction_on with
   | C c => simp [ptEval, subD, substAdj]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp, map_X]
     congr 1
@@ -137,7 +137,7 @@ theorem evalFr_substAdj (hab : a ≤ b) (ap : ι → Matrix (Fin a) (Fin b) K) (
   unfold evalFr
   induction P using MvPolynomial.induction_on with
   | C c => simp [substAdj]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp]
     simp [substAdj, Matrix.mul_apply]
@@ -187,7 +187,7 @@ theorem substAdj_int (v : Valuation L Γ) (hab : a ≤ b) (A : ι → Matrix (Fi
   obtain ⟨Q, rfl⟩ := hP
   induction Q using MvPolynomial.induction_on with
   | C c => exact ⟨C c, by simp [substAdj]⟩
-  | add p q hp hq => rw [map_add, map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _)]; exact add_mem hp hq
   | mul_X p x hp =>
     rw [map_mul, map_mul, map_X]
     refine mul_mem hp ?_
@@ -231,7 +231,7 @@ theorem map_blockAct (σ : K →+* L) (g : ι → Matrix (Fin a) (Fin a) K) (P :
     map σ (blockAct K g P) = blockAct L (fun τ => (g τ).map σ) (map σ P) := by
   induction P using MvPolynomial.induction_on with
   | C c => simp [blockAct]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p x hp =>
     simp only [map_mul, hp]
     simp [blockAct]

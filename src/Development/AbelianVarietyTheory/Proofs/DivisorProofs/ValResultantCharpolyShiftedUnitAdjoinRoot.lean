@@ -154,7 +154,7 @@ theorem val_resultant_shift : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
     intro B Q hQm hadj hQ hfin
     have hd : (Q.map e.symm.toRingHom).natDegree = Q.natDegree := natDegree_map _
     have hu : aeval B.g (C t' * X + C 1) = 1 + algebraMap K.O B.A t * B.g := by
-      rw [map_add, map_mul, aeval_C, aeval_X, aeval_C, map_one, ht'def, ← IsScalarTower.algebraMap_apply]
+      rw [map_add (f := _), map_mul, aeval_C, aeval_X, aeval_C, map_one, ht'def, ← IsScalarTower.algebraMap_apply]
       ring
     unfold InvAlg.P
     apply charpoly_eq_of_adjoin

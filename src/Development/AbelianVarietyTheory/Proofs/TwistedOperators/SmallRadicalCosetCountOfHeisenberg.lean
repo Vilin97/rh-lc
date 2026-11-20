@@ -162,7 +162,7 @@ theorem count_of_heis : Heis → LatIndex → TraceIndex → Count := by
         have t2 := (mem_traceZero.1 b'.out.2).2
         refine ⟨?_, ?_⟩
         · convert hc using 1; push_cast; ring
-        · push_cast; rw [map_add, map_neg]; linear_combination t2 - t1
+        · push_cast; rw [map_add (f := _), map_neg]; linear_combination t2 - t1
       rw [hb]
     · rintro ⟨x, hx⟩
 

@@ -98,7 +98,7 @@ theorem BaseId.d_C (I : BaseId W) (m : O) : I.d (PowerSeries.C m) = algebraMap O
 
 theorem BaseId.d_q (I : BaseId W) : I.d I.Bs.q = qP W := by
   unfold Formalism.ExponentWindows.E.Base.q qP
-  rw [map_add, I.d_X, I.d_C, I.ℓ_eq, map_natCast]
+  rw [map_add (f := _), I.d_X, I.d_C, I.ℓ_eq, map_natCast]
 
 theorem BaseId.d_p (I : BaseId W) (s : ℕ) : I.d (I.Bs.p s) = pS W s := by
   unfold Formalism.ExponentWindows.E.Base.p pS
@@ -113,7 +113,7 @@ def DDl (T : LocLat G Qp LL O) (i : ZMod n) : AddSubgroup (W.DD T) where
   zero_mem' := ⟨smul_zero _, fun δ _ => map_zero _⟩
   add_mem' := by
     rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
-    exact ⟨by rw [smul_add, ha, hb], fun δ hδ => by rw [map_add, ha' δ hδ, hb' δ hδ]⟩
+    exact ⟨by rw [smul_add, ha, hb], fun δ hδ => by rw [map_add (f := _), ha' δ hδ, hb' δ hδ]⟩
   neg_mem' := by
     rintro a ⟨ha, ha'⟩
     exact ⟨by rw [smul_neg, ha], fun δ hδ => by rw [map_neg, ha' δ hδ]⟩
@@ -150,7 +150,7 @@ variable {I : BaseId W} {T : LocLat G Qp LL O}
 def Coord.t (C : Coord W I T) (i : ZMod n) (x : C.V) : W.DD T := ((C.θ i x : ↥(DDl W T i)) : W.DD T)
 
 theorem Coord.t_add (C : Coord W I T) (i : ZMod n) (x y : C.V) : C.t i (x + y) = C.t i x + C.t i y := by
-  simp only [Coord.t, map_add, AddSubgroup.coe_add]
+  simp only [Coord.t, map_add (f := _), AddSubgroup.coe_add]
 
 theorem Coord.t_sub (C : Coord W I T) (i : ZMod n) (x y : C.V) : C.t i (x - y) = C.t i x - C.t i y := by
   simp only [Coord.t, map_sub, AddSubgroup.coe_sub]

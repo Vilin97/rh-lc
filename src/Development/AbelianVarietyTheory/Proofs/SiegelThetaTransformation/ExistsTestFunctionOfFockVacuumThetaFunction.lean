@@ -28,7 +28,7 @@ theorem differentiable_of_fderiv_I {V : Type} [NormedAddCommGroup V] [NormedSpac
     intro c u
     have e : c • u = c.re • u + c.im • (I • u) := by
       rw [← Complex.coe_smul, ← Complex.coe_smul, smul_smul, ← add_smul, Complex.re_add_im]
-    rw [e, map_add, map_smul, map_smul, hI, Complex.real_smul, Complex.real_smul, ← mul_assoc, ← add_mul,
+    rw [e, map_add (f := _), map_smul, map_smul, hI, Complex.real_smul, Complex.real_smul, ← mul_assoc, ← add_mul,
       Complex.re_add_im]
   let A : V →L[ℂ] ℂ :=
     { toFun := fderiv ℝ Φ z

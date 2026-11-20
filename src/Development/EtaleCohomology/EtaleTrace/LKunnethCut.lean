@@ -14,11 +14,11 @@ theorem bilin_ext_one_tmul (l : ℕ) [Fact l.Prime] {M N W : Type 1} [AddCommGro
   refine TensorProduct.ext' fun u v => ?_
   induction u using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [TensorProduct.add_tmul, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [TensorProduct.add_tmul, map_add (f := _), map_add (f := _), ha, hb]
   | tmul a x =>
     induction v using TensorProduct.induction_on with
     | zero => simp
-    | add c d hc hd => rw [TensorProduct.tmul_add, map_add, map_add, hc, hd]
+    | add c d hc hd => rw [TensorProduct.tmul_add, map_add (f := _), map_add (f := _), hc, hd]
     | tmul b y =>
       have e1 : (a ⊗ₜ[ℤ_[l]] x : ℚ_[l] ⊗[ℤ_[l]] M) = a • ((1 : ℚ_[l]) ⊗ₜ[ℤ_[l]] x) := by
         rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]

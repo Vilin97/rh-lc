@@ -38,7 +38,7 @@ theorem main : ∀ (p : ℕ) (k : Type) [CommRing k] (d : ℕ) (G : PDivGroup p 
       intro t
       induction t with
       | tmul a b => simp [Algebra.TensorProduct.lift_tmul, Bialgebra.counitAlgHom_apply]
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     rw [key, Coalgebra.rTensor_counit_comul, TensorProduct.lid_tmul, one_smul]
     exact c.aug 0 i
   refine ⟨hconst, fun n f => ?_⟩

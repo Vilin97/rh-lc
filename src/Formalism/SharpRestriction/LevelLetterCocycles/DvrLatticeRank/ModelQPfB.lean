@@ -42,7 +42,7 @@ theorem phibN_div (p : ℕ) (hp : p.Prime) [Nontrivial O] [IsAdicComplete (Ideal
   haveI : CharP (PowerSeries (O ⧸ I)) p := charP_of_injective_algebraMap hinj p
   have hmap : PowerSeries.map (Ideal.Quotient.mk I) (((1 + PowerSeries.X) ^ p - 1) ^ N) =
       PowerSeries.X ^ (p * N) := by
-    simp only [map_pow, map_sub, map_add, map_one, PowerSeries.map_X]
+    simp only [map_pow, map_sub, map_add (f := _), map_one, PowerSeries.map_X]
     rw [add_pow_char, one_pow, add_sub_cancel_left, ← pow_mul]
   have key : ∀ c : O, Ideal.Quotient.mk I c = 1 → IsUnit c := by
     intro c hc
@@ -132,7 +132,7 @@ theorem avg_self (u : Oˣ) (hu : (u : O) = (W.DelF.card : ℕ)) {x : LetA O n} (
     smul_smul, Units.inv_mul, one_smul]
 
 theorem avg_add (u : Oˣ) (x y : LetA O n) : avg W u (x + y) = avg W u x + avg W u y := by
-  simp only [avg, map_add, Finset.sum_add_distrib, smul_add]
+  simp only [avg, map_add (f := _), Finset.sum_add_distrib, smul_add]
 
 theorem avg_mul_left (u : Oˣ) {y : LetA O n} (hy : y ∈ W.AΔ) (x : LetA O n) :
     avg W u (y * x) = y * avg W u x := by

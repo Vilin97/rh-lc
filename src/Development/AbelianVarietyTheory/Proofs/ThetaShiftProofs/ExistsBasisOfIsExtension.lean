@@ -36,7 +36,7 @@ theorem exists_basis_of_isExtension {K L : Type} [Field K] [Field L] [Algebra K 
   induction hx using Submodule.span_induction with
   | mem y hy => obtain ⟨i, rfl⟩ := hy; exact Submodule.subset_span ⟨i, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | smul d y _ hy => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hy
 
 theorem exists_basis_of_components {L : Type} [Field L] {M : Type} [AddCommGroup M] [Module L M] {C : Type}
@@ -84,10 +84,10 @@ theorem exists_basis_constFam {C : Type} (rep : C → a.D₀.X) (hrep : ∀ α, 
   · refine fam_ext fun χ i => ?_
     obtain ⟨x, ⟨mu, hmu⟩, -⟩ := hrep (e.symm χ)
     have hχ : ∃ nu, e (rep x) + j • nu = χ :=
-      ⟨e mu, by rw [← map_nsmul, ← map_add, hmu, LinearEquiv.apply_symm_apply]⟩
+      ⟨e mu, by rw [← map_nsmul, ← map_add (f := _), hmu, LinearEquiv.apply_symm_apply]⟩
     exact congrArg (fun q => LB.Sec.f q i) (FamFree.eq_of_eq_add_nsmul hG m 0 hχ (hm x))
   · refine constFam_off hW F hG hj _ _ _ fun mu hmu => h ?_
     refine (hrep (rep y)).unique ⟨0, by rw [smul_zero, add_zero]⟩ ⟨e.symm mu, e.injective ?_⟩
-    rw [map_add, map_nsmul, LinearEquiv.apply_symm_apply, hmu]
+    rw [map_add (f := _), map_nsmul, LinearEquiv.apply_symm_apply, hmu]
 
 end GlobalTheory.ConstFam

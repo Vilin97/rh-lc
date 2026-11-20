@@ -119,7 +119,7 @@ theorem eab_coeff : ∀ (p q n : ℕ) (e : Ix p q ≃ Fin n) (ε : Fin n → Boo
     rw [this]
     simp [Eab, Matrix.single_apply]
   rw [hE]
-  simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, inner_add_right, inner_smul_right]
+  simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, inner_add_right, inner_smul_right]
 
 end GlobalTheory.CoeffEab
 

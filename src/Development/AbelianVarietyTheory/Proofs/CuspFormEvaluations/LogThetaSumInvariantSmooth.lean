@@ -33,7 +33,7 @@ theorem gen_map {Λ : Submodule (𝓞 E) (Fin r → E)} (e : (Fin r → E) ≃�
     refine ⟨c, e y, (he _).1 hy, ?_⟩
     have := congrArg e h2
     set_option synthInstance.maxHeartbeats 100000 in
-      simpa only [LinearEquiv.apply_symm_apply, map_add, map_sum, map_smul] using this
+      simpa only [LinearEquiv.apply_symm_apply, map_add (f := _), map_sum, map_smul] using this
 
 theorem exists_reps_map {Λ : Submodule (𝓞 E) (Fin r → E)} (e : (Fin r → E) ≃ₗ[E] (Fin r → E))
     (he : ∀ v, v ∈ Λ ↔ e v ∈ Λ) (𝒯 : Finset (Fin r → Fin r → E)) (h1 : ∀ t ∈ 𝒯, Gen Λ t)

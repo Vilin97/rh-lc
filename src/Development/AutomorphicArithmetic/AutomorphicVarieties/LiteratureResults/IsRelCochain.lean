@@ -19,7 +19,7 @@ def smK (k : Kinf E a) : Module.End ℂ (Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ)) :=
 
 def smLie : Lie E a →ₗ[ℝ] Module.End ℂ (Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ)) where
   toFun X := (lie E a X).rTensor _ + (Matrix.toLin' (Ξ.dmat X)).lTensor _
-  map_add' X Y := by simp only [map_add, LinearMap.rTensor_add, LinearMap.lTensor_add]; abel
+  map_add' X Y := by simp only [map_add (f := _), LinearMap.rTensor_add, LinearMap.lTensor_add]; abel
   map_smul' c X := by
     rw [map_smul, map_smul, RingHom.id_apply, ← algebraMap_smul ℂ c (lie E a X), ← algebraMap_smul ℂ c (Ξ.dmat X),
       ← algebraMap_smul ℂ c (_ + _ : Module.End ℂ (Sm E a ⊗[ℂ] (Fin Ξ.d → ℂ))), map_smul,

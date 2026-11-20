@@ -20,7 +20,7 @@ theorem memLp_matrixCoeff_span
     | zero => simpa using (MemLp.zero : MemLp (fun _ : G => (0 : ℂ)) q μ)
     | add y z _ _ hy hz =>
       have := hy.add hz
-      simp only [map_add, ContinuousLinearMap.add_apply, inner_add_right]
+      simp only [map_add (f := _), ContinuousLinearMap.add_apply, inner_add_right]
       exact this
     | smul c y _ hy =>
       have := hy.const_mul c

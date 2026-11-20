@@ -58,7 +58,7 @@ lemma th_zero : th (0 : ι → Fin 2 → Fin 2 → ℝ) = 0 := by
 def hermSub : Submodule ℝ (ι → Fin 2 → Fin 2 → ℂ) where
   carrier := {b | IsHermFam b}
   add_mem' {a b} ha hb τ i k := by
-    simp only [Pi.add_apply, map_add]; rw [ha τ i k, hb τ i k]
+    simp only [Pi.add_apply, map_add (f := _)]; rw [ha τ i k, hb τ i k]
   zero_mem' τ i k := by simp
   smul_mem' s b hb τ i k := by
     simp only [Pi.smul_apply, Complex.real_smul, map_mul, Complex.conj_ofReal]; rw [hb τ i k]

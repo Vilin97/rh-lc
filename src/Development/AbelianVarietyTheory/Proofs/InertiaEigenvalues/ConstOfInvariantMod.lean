@@ -54,7 +54,7 @@ theorem const_of_invariant_mod : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (
         rw [map_sub, AlgEquiv.commutes, sub_sub_sub_cancel_right]
         exact hFa hmb (hg g))
       refine ⟨c + d, ?_, ?_⟩
-      · rw [map_add]
+      · rw [map_add (f := _)]
         exact Submodule.add_mem _ hc (hFa hm hd)
       · rwa [map_add, ← sub_sub]
   exact key b hab le_rfl

@@ -114,7 +114,7 @@ theorem ikeda_projK_intertwine : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (
       projK om ν (f + g) = projK om ν f + projK om ν g := by
     intro f g hf hg
     funext w
-    simp only [projK, map_add, Pi.add_apply]
+    simp only [projK, map_add (f := _), Pi.add_apply]
     exact integral_add (integrable_om_Kmax hW hf b ν 1 w) (integrable_om_Kmax hW hg b ν 1 w)
   have hPsmul : ∀ (c : ℂ) f, projK om ν (c • f) = c • projK om ν f := by
     intro c f

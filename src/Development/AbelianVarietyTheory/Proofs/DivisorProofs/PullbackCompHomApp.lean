@@ -52,7 +52,7 @@ theorem exists_secEquiv {X : Scheme.{0}} {U : X.Opens} (hU : IsAffineOpen U) (R 
   change Ψ _ = _ • Ψ _
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add y z hy hz => rw [smul_add, map_add, map_add, hy, hz, smul_add]
+  | add y z hy hz => rw [smul_add, map_add (f := _), map_add (f := _), hy, hz, smul_add]
   | tmul b s => rw [TensorProduct.smul_tmul', hΨ, hΨ, smul_eq_mul, map_mul, mul_smul]
 
 theorem pullbackComp_hom_app {S Y X : Scheme.{0}} (b : S ⟶ Y) (a : Y ⟶ X) (M : X.Modules) {U : X.Opens} {V : Y.Opens}
@@ -150,7 +150,7 @@ theorem exists_lam {U : X.Opens} (hU : IsAffineOpen U) (R : Type) [CommRing R] [
   have hδ : Function.Bijective (δ.app ⊤) := ConcreteCategory.bijective_of_isIso (δ.app ⊤)
   have hω := OmegaGlobal.toOmega_bijective R G ⟨tangent_injective R G, TangentSurj.tangent_surjective R G⟩
   refine ⟨{ toFun := fun z => toOmega G (δ.app ⊤ (Ψ z))
-            map_add' := fun y z => by rw [map_add, map_add, map_add]
+            map_add' := fun y z => by rw [map_add (f := _), map_add (f := _), map_add (f := _)]
             map_smul' := fun a z => by rw [h₂, Scheme.Modules.Hom.app_smul, toOmega_smul]; rfl },
     hω.comp (hδ.comp h₁), fun μ v => ?_⟩
   have e₀ := IsIso.hom_inv_id β

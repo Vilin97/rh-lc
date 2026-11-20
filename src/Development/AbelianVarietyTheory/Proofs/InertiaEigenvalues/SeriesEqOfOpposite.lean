@@ -27,7 +27,7 @@ theorem map_conj {G : Type} [Group G] (p : G) (a : MonoidAlgebra ℂ G) :
     mapDomainAlgHom ℂ ℂ (MulAut.conj p).toMonoidHom a = single p 1 * a * single p⁻¹ 1 := by
   induction a using MonoidAlgebra.induction_on with
   | of m => simp [single_mul_single]
-  | add x y hx hy => simp only [map_add, hx, hy, add_mul, mul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, add_mul, mul_add]
   | smul r x hx => simp only [map_smul, hx, smul_mul_assoc, mul_smul_comm]
 
 variable {g : ℕ} [Fact g.Prime] {k l n : ℕ}

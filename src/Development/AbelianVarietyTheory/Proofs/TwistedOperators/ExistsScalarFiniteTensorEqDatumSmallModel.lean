@@ -246,9 +246,9 @@ def graphMap (t : T) (e : Num G i j) (T₁ : (HomA G t i j → ℂ) →ₗ[ℂ] 
         (fun x => T₂ (fun y => g (ofMaps t e (x, y))) (mapB e u)) + fun x => T₂ (fun y => g' (ofMaps t e (x, y))) (mapB e u) :=
       funext fun x => by
         show T₂ ((fun y => g (ofMaps t e (x, y))) + fun y => g' (ofMaps t e (x, y))) (mapB e u) = _
-        rw [map_add]; rfl
+        rw [map_add (f := _)]; rfl
     show T₁ (fun x => T₂ (fun y => (g + g') (ofMaps t e (x, y))) (mapB e u)) (mapA t e u) = _
-    rw [h, map_add]; rfl
+    rw [h, map_add (f := _)]; rfl
   map_smul' c g := funext fun u => by
     have h : (fun x => T₂ (fun y => (c • g) (ofMaps t e (x, y))) (mapB e u)) =
         c • fun x => T₂ (fun y => g (ofMaps t e (x, y))) (mapB e u) :=

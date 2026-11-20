@@ -35,7 +35,7 @@ theorem exists_split (n m : ℕ) (f : MvPowerSeries (Fin d) O) :
     rw [map_sub, MvPolynomial.coeff_coe, hP, coeff_trunc',
       if_pos (hle α (lt_of_lt_of_le hα (le_max_left _ _))), sub_self]
   refine ⟨P, a, ?_, ?_, fun i => ?_⟩
-  · rw [← ev_coe, ← ha, ← map_add, add_sub_cancel]
+  · rw [← ev_coe, ← ha, ← map_add (f := _), add_sub_cancel]
   · rw [MvPolynomial.constantCoeff_eq, hP, coeff_trunc',
       if_pos (hle 0 (by simp)), coeff_zero_eq_constantCoeff_apply]
   · rw [hP, coeff_trunc', if_pos (hle _ (lt_of_lt_of_le (by simp) (le_max_right N 2))), lin]
@@ -61,7 +61,7 @@ theorem counit_ev [IsAdicComplete (Ideal.span {(p : O)}) O] (n : ℕ)
     Bialgebra.counitAlgHom O (G.A n) (c.ev n f) = constantCoeff f := by
   refine sub_eq_zero.1 (eq_zero_of_dvd (p := p) _ fun m => ?_)
   obtain ⟨P, a, h1, h2, -⟩ := (exists_split c) n m f
-  rw [h1, map_add, counit_aeval, h2, map_mul, map_pow, map_natCast, add_sub_cancel_left]
+  rw [h1, map_add (f := _), counit_aeval, h2, map_mul, map_pow, map_natCast, add_sub_cancel_left]
   exact dvd_mul_right _ _
 
 theorem d_aeval (n : ℕ) (P : MvPolynomial (Fin d) O) :
@@ -76,7 +76,7 @@ theorem d_aeval (n : ℕ) (P : MvPolynomial (Fin d) O) :
     simp [MvPolynomial.coeff_C, PDiv.dUnit, h0]
   | add P Q hP hQ =>
     unfold PDiv.dUnit at *
-    rw [map_add, map_add, hP, hQ, ← Finset.sum_add_distrib]
+    rw [map_add (f := _), map_add (f := _), hP, hQ, ← Finset.sum_add_distrib]
     simp [add_smul]
   | mul_X P j h =>
     have hc : ∀ i, AddMonoidAlgebra.coeff (P * MvPolynomial.X j) (Finsupp.single i 1) =
@@ -98,7 +98,7 @@ theorem d_ev (n : ℕ) (f : MvPowerSeries (Fin d) O) :
     rw [show (p : G.A n) ^ n * a = ((p : O) ^ n) • a by
       rw [Algebra.smul_def, map_pow, map_natCast], map_smul]
     exact G.pow_smul_cot n _
-  rw [h1, PDiv.dUnit, map_add, h4, add_zero, ← PDiv.dUnit, (d_aeval c)]
+  rw [h1, PDiv.dUnit, map_add (f := _), h4, add_zero, ← PDiv.dUnit, (d_aeval c)]
   simp only [h3]
 
 theorem coeff_single_of_mem_sq {h : MvPowerSeries (Fin d) O}
@@ -110,13 +110,13 @@ theorem coeff_single_of_mem_sq {h : MvPowerSeries (Fin d) O}
     refine Finset.sum_eq_zero fun q hq => ?_
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hq
     have hdeg := congrArg Finsupp.degree hq
-    rw [map_add, Finsupp.degree_single] at hdeg
+    rw [map_add (f := _), Finsupp.degree_single] at hdeg
     rcases (show q.1.degree = 0 ∨ q.2.degree = 0 by omega) with h0 | h0
     · rw [(Finsupp.degree_eq_zero_iff _).1 h0, coeff_zero_eq_constantCoeff_apply,
         RingHom.mem_ker.1 hf, zero_mul]
     · rw [(Finsupp.degree_eq_zero_iff _).1 h0, coeff_zero_eq_constantCoeff_apply,
         RingHom.mem_ker.1 hg, mul_zero]
-  · rw [map_add, hf, hg, add_zero]
+  · rw [map_add (f := _), hf, hg, add_zero]
 
 def lvl (n : ℕ) : (Fin d → O) →ₗ[O] PDiv.Cot O (G.A n) :=
   Fintype.linearCombination O fun i => PDiv.dUnit O (c.x n i)

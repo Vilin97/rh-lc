@@ -24,7 +24,7 @@ private theorem ts_prod {X σ S : Type} [AddCommGroup X] [CommRing S] (wt : σ �
   | zero => simp
   | add f g hf hg =>
     rw [Finsupp.prod_add_index' (by simp) (fun _ _ _ => pow_add _ _ _),
-      Finsupp.prod_add_index' (by simp) (fun _ _ _ => pow_add _ _ _), hf, hg, map_add, ofAdd_add,
+      Finsupp.prod_add_index' (by simp) (fun _ _ _ => pow_add _ _ _), hf, hg, map_add (f := _), ofAdd_add,
       map_mul, Units.val_mul]
     ring
   | single i k =>
@@ -129,7 +129,7 @@ private theorem ts_agree (hι : Function.Injective ι)
         (x - algebraMap O _ (constantCoeff b)) (by
           rw [map_sub, AlgHom.commutes, ← hx]; rfl)
       refine ⟨c + algebraMap O B (constantCoeff b), ?_, ?_⟩
-      · rw [map_add, hc, AlgHom.commutes, map_sub, AlgHom.commutes]
+      · rw [map_add (f := _), hc, AlgHom.commutes, map_sub, AlgHom.commutes]
         simp
       · rw [map_sub, AlgHom.commutes, sub_sub, add_comm] at hc'
         rwa [pow_succ]
@@ -167,7 +167,7 @@ private theorem ts_factor [DecidableEq X] (hι : Function.Injective ι)
   refine ⟨f, AlgHom.ext fun x => ?_⟩
   induction x using DirectSum.Decomposition.inductionOn W.gr with
   | zero => rw [map_zero, map_zero]
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   | @homogeneous j x =>
     obtain ⟨x, hx⟩ := x
     rw [act_of_mem W.gr t ξ hx]
@@ -271,7 +271,7 @@ private theorem ts_ext {O X R K : Type} [CommRing O] [IsDomain O] [IsDiscreteVal
   clear h2
   induction x using DirectSum.Decomposition.inductionOn W.gr with
   | zero => rw [map_zero, map_zero]
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   | @homogeneous j x => rw [act_of_mem W.gr 1 ξ x.2]; simp
 
 private def ts_near {O R K : Type} [CommRing O] [CommRing R] [Algebra O R] [NormedField K] [IsUltrametricDist K]
@@ -282,9 +282,9 @@ private def ts_near {O R K : Type} [CommRing O] [CommRing R] [Algebra O R] [Norm
     rintro x y ⟨a, ha, ha'⟩ ⟨b, hb, hb'⟩
     refine ⟨a + b, ?_, ?_⟩
     · convert add_mem ha hb using 1
-      rw [map_add, Subalgebra.coe_add]; ring
+      rw [map_add (f := _), Subalgebra.coe_add]; ring
     · have : f (x + y) - algebraMap O K (a + b) = (f x - algebraMap O K a) + (f y - algebraMap O K b) := by
-        rw [map_add, map_add]; ring
+        rw [map_add (f := _), map_add (f := _)]; ring
       rw [this]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt ha' hb')
   mul_mem' := by

@@ -123,7 +123,7 @@ theorem fourier_coefficient_support_of (h3 : FourierCoefficientProperties (E := 
       cexp (-(4 * Real.pi * I) * ∑ τ, (ν τ : ℂ) * s τ) * cexp (-(4 * Real.pi * I) * X.pairR χ (B t)) with hF
   have hherm_add : ∀ a b : X.Ψ → Fin 2 → Fin 2 → ℂ, IsHermFam a → IsHermFam b → IsHermFam (a + b) := by
     intro a b ha hb' τ i k
-    simp only [Pi.add_apply, map_add, ha τ i k, hb' τ i k]
+    simp only [Pi.add_apply, map_add (f := _), ha τ i k, hb' τ i k]
   have hflowZ : ∀ (s : X.Ψ → ℝ) t, X.flow (u 0) (cR X.toData s) (X.Zb u (B t) x) =
       X.Zb u (e00 X.toData s + B t) x := by
     intro s t

@@ -159,7 +159,7 @@ theorem small_eq_big_std {E K : Type} [Field E] [NumberField E] [Field K] [Numbe
       exact Submodule.mem_iSup_of_mem b ⟨e, he, rfl⟩
     | zero => simp
     | add x y _ _ hx hy =>
-      simp only [Pi.add_apply, map_add, add_smul, Finset.sum_add_distrib]
+      simp only [Pi.add_apply, map_add (f := _), add_smul, Finset.sum_add_distrib]
       exact add_mem hx hy
     | smul r x _ hx =>
       have key : ∀ a, τE ((r • x) a) • M a e = τ r • (τE (x a) • M a e) := by

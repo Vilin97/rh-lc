@@ -160,7 +160,7 @@ theorem exists_monic_trace (n : Fin c → ℕ) (h : ∑ i, n i = N) (Xf : Fin N 
       have e2 : (⟨∑ p, Xi i p p, hm⟩ : Algebra.adjoin ℂ s) =
           ⟨a i (n i - 1), hamem _ _⟩ + algebraMap ℂ _ ((n i : ℂ) * ((n i : ℂ) - 1) / 2) :=
         Subtype.ext (by simp [e, Algebra.algebraMap_eq_smul_one])
-      rw [e2, map_add, AlgHom.commutes]
+      rw [e2, map_add (f := _), AlgHom.commutes]
       refine IsIntegral.add ?_ isIntegral_algebraMap
       have := hcoef i (Finset.mem_univ i) (n i - 1)
       simp only [Pp, sumPoly_coeff] at this

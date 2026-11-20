@@ -21,7 +21,7 @@ def finVec {G V : Type} [Group G] [AddCommGroup V] [Module ℂ V] (ρ : Represen
       (S₂ := Submodule.span ℂ (Set.range fun k => ρ k v) ⊔ Submodule.span ℂ (Set.range fun k => ρ k w))
       (Submodule.span_le.2 (by
         rintro _ ⟨k, rfl⟩
-        simp only [map_add]
+        simp only [map_add (f := _)]
         exact Submodule.add_mem_sup (Submodule.subset_span ⟨k, rfl⟩) (Submodule.subset_span ⟨k, rfl⟩)))
   zero_mem' := FiniteDimensional.span_of_finite ℂ ((Set.finite_singleton 0).subset (by
     rintro _ ⟨k, rfl⟩

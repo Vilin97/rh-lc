@@ -31,7 +31,7 @@ def smV (ρ : Representation ℂ G V) : Submodule ℂ V where
     fun g hg => by
       have h1 : ρ g x = x := hg.1
       have h2 : ρ g y = y := hg.2
-      rw [map_add, h1, h2]
+      rw [map_add (f := _), h1, h2]
   zero_mem' := by
     change IsOpen {g | ρ g 0 = 0}
     simp only [map_zero, Set.setOf_true]

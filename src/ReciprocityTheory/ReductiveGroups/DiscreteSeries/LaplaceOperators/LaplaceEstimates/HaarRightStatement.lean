@@ -205,9 +205,9 @@ theorem frameLaw : FrameLawStatement := by
     have e2 : (Matrix.single (capIdx k r (Capelli.wIdx k r i)) (capIdx k r (Capelli.wIdx k r j)) 1 : Mat k r) =
         EvaluationEquivalence.emb0 k r A := (EvaluationEquivalence.block_embedding_single i j).symm
     rw [hfr, e2]
-    conv_lhs => rw [e1, map_add, map_smul _ Complex.I]
+    conv_lhs => rw [e1, map_add (f := _), map_smul _ Complex.I]
     rw [hΛ _ _ m hm, hW _ s1 m hm, hW _ s2 m hm]
-    conv_rhs => rw [e1, map_add, map_smul _ Complex.I]
+    conv_rhs => rw [e1, map_add (f := _), map_smul _ Complex.I]
     rfl
 
 end ReciprocityTheory.ChartRestriction.DS.Lap

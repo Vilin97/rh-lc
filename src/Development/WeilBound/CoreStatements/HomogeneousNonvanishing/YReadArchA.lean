@@ -29,7 +29,7 @@ theorem aeval_conj (z : (Σ k, ι k) → ℂ) (g : MRing ι) :
     MvPolynomial.aeval (fun p => starRingEnd ℂ (z p)) g = starRingEnd ℂ (MvPolynomial.aeval z g) := by
   induction g using MvPolynomial.induction_on with
   | C n => simp
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p i hp => rw [map_mul, map_mul, map_mul, hp, MvPolynomial.aeval_X, MvPolynomial.aeval_X]
 
 theorem hv_conj {a : K → ℤ} {s : Ω} {z : (Σ k, ι k) → ℂ} {w : ℂ} (h : Small.HasVal y a s z w) :

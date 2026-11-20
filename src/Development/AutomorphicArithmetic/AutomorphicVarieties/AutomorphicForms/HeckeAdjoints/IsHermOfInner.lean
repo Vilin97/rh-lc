@@ -25,8 +25,8 @@ private theorem isHerm_of_inner {F : Type} [Field F] [NumberField F] [IsTotallyR
     (h3 : ∀ k φ ψ, inner ℂ (p (π.op (.cpt k) φ)) (p (π.op (.cpt k) ψ)) = inner ℂ (p φ) (p ψ))
     (h4 : ∀ X φ ψ, inner ℂ (p (π.op (.lie X) φ)) (p ψ) + inner ℂ (p φ) (p (π.op (.lie X) ψ)) = 0) : ∃ H, IsHerm π H :=
   ⟨LinearMap.mk₂'ₛₗ (starRingEnd ℂ) (RingHom.id ℂ) (fun φ ψ => inner ℂ (p φ) (p ψ))
-    (fun _ _ _ => by rw [map_add, inner_add_left]) (fun _ _ _ => by rw [map_smul, inner_smul_left]; rfl)
-    (fun _ _ _ => by rw [map_add, inner_add_right]) (fun _ _ _ => by rw [map_smul, inner_smul_right]; rfl), h1, h2, h3, h4⟩
+    (fun _ _ _ => by rw [map_add (f := _), inner_add_left]) (fun _ _ _ => by rw [map_smul, inner_smul_left]; rfl)
+    (fun _ _ _ => by rw [map_add (f := _), inner_add_right]) (fun _ _ _ => by rw [map_smul, inner_smul_right]; rfl), h1, h2, h3, h4⟩
 
 theorem hermEx_of (h1 : ToFound) (h2 : LieMatch) : HermEx := by
   intro F _ _ _ a _ π h0

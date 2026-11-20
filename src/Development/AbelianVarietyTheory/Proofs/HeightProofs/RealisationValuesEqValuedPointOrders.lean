@@ -42,9 +42,9 @@ def pullVal {L : Type} [Field L] (U : CDVR) (ι : L →+* U.Fr) : AddValuation L
       · subst hx; rw [zero_add]; exact min_le_right _ _
       by_cases hy : y = 0
       · subst hy; rw [add_zero]; exact min_le_left _ _
-      simp only [hxy, hx, hy, if_false, map_add]
+      simp only [hxy, hx, hy, if_false, map_add (f := _)]
       have := min_le_vV_add (V := U.V) ((map_ne_zero ι).2 hx) ((map_ne_zero ι).2 hy)
-        (by rw [← map_add]; exact (map_ne_zero ι).2 hxy)
+        (by rw [← map_add (f := _)]; exact (map_ne_zero ι).2 hxy)
       exact_mod_cast this)
     (fun x y => by
       by_cases hx : x = 0

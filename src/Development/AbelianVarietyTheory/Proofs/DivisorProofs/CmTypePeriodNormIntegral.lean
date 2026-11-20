@@ -114,7 +114,7 @@ def extHom (hc : c ≠ ⊥) (g : orderC c →+* A) : E →+* A where
     have e' : (⟨((mulN hc x * mulN hc y : ℕ) : E) * (x + y), hxy⟩ : orderC c) =
         ((mulN hc y : ℕ) : orderC c) * ⟨(mulN hc x : E) * x, hx⟩ + ((mulN hc x : ℕ) : orderC c) * ⟨(mulN hc y : E) * y, hy⟩ :=
       Subtype.ext e
-    rw [e', map_add, map_natMul (K := K), map_natMul (K := K)]
+    rw [e', map_add (f := _), map_natMul (K := K), map_natMul (K := K)]
     show _ = ((mulN hc x : K))⁻¹ • g ⟨(mulN hc x : E) * x, hx⟩ + ((mulN hc y : K))⁻¹ • g ⟨(mulN hc y : E) * y, hy⟩
     rw [smul_add, smul_smul, smul_smul]
     congr 2

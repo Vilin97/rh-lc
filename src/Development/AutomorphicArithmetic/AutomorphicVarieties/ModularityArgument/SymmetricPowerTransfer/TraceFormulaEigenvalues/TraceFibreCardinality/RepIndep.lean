@@ -59,7 +59,7 @@ private def opL (hf : s.IsTest f) : Module.End ℂ B.Forms where
     unfold Base.Tw.opF
     rw [← finsum_add_distrib (fin_supp hf _) (fin_supp hf _)]
     refine finsum_congr fun x => ?_
-    rw [Pi.add_apply, map_add, smul_add]
+    rw [Pi.add_apply, map_add (f := _), smul_add]
   map_smul' c φ := by
     refine Subtype.ext (funext fun g => ?_)
     change s.opF f (c • φ.1) g = c • s.opF f φ.1 g

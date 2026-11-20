@@ -23,7 +23,7 @@ def finSubF (nS nT : ℕ) : Submodule (AEF F E) (WOF F E nS nT) where
     have h1 : infPartF F E (x i j) = 0 := congrFun (congrFun hx i) j
     have h2 : infPartF F E (y i j) = 0 := congrFun (congrFun hy i) j
     show infPartF F E (x i j + y i j) = 0
-    rw [map_add, h1, h2, add_zero]
+    rw [map_add (f := _), h1, h2, add_zero]
   zero_mem' := by
     funext i j
     exact (infPartF F E).map_zero
@@ -233,7 +233,7 @@ variable (σ JS JT) in
 theorem symplOHF_add_self (ξ₀ : E) (x y : WOF F E nS nT) :
     symplOHF σ JS JT ξ₀ x y + symplOHF σ JS JT ξ₀ x y = symplOF σ JS JT ξ₀ x y := by
   unfold symplOHF
-  rw [← add_mul, ← map_add, show (1 / 2 : F) + 1 / 2 = 1 by norm_num, map_one, one_mul]
+  rw [← add_mul, ← map_add (f := _), show (1 / 2 : F) + 1 / 2 = 1 by norm_num, map_one, one_mul]
 
 variable (σ JS JT) in
 theorem symplOHF_skew (hσ : ∀ x, σ (σ x) = x) (hS : IsHermND σ JS) (hT : IsHermND σ JT) (ξ₀ : E) (hξ : σ ξ₀ = -ξ₀)
@@ -282,7 +282,7 @@ theorem isHeis_opFF (hσ : ∀ x, σ (σ x) = x) (hS : IsHermND σ JS) (hT : IsH
       ← AddChar.map_add_eq_mul, ← AddChar.map_add_eq_mul, coe_smul, XFF.coe_add]
     congr 2
     have h1 : intAF F w • (x : WOF F E nS nT) + cAF σ (intAF F w) • (x : WOF F E nS nT) = x := by
-      rw [← add_smul, cAF_intAF, ← map_add, hw, map_one, one_smul]
+      rw [← add_smul, cAF_intAF, ← map_add (f := _), hw, map_one, one_smul]
     have h2 := congrArg (fun z => symplOHF σ JS JT ξ₀ z y) h1
     simp only [GlobalTheory.HeisLineF.symplOHF_add_left] at h2
     have h3 := symplOHF_smul σ JS JT hσ ξ₀ (intAF F w) (y : WOF F E nS nT) x

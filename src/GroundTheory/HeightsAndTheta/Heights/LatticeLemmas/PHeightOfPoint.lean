@@ -62,7 +62,7 @@ def archLinear (τ : K →+* ℂ) (yv : DualVec F W K) :
       rw [TensorProduct.smul_tmul', RingHom.id_apply]
       simp only [archFunctional, TensorProduct.lift.tmul, LinearMap.mk₂_apply]
       exact smul_mul_assoc c z _
-    | add s t hs ht => rw [smul_add, map_add, map_add, hs, ht, smul_add]
+    | add s t hs ht => rw [smul_add, map_add (f := _), map_add (f := _), hs, ht, smul_add]
 
 theorem archDualNorm_pos (h : HermitianMetric F W) (τ : K →+* ℂ) (yv : DualVec F W K) (x : W)
     (hx : yv x ≠ 0) : 0 < archDualNorm h τ yv := by

@@ -45,7 +45,7 @@ variable {K : Type} [Field K] [CharZero K]
 theorem constantCoeff_lam (e : PowerSeries K) (s2 : K) :
     PowerSeries.constantCoeff (lam e s2) = 0 := by
   unfold lam dblInt
-  rw [map_add, ← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_mk]
+  rw [map_add (f := _), ← PowerSeries.coeff_zero_eq_constantCoeff_apply, PowerSeries.coeff_mk]
   simp
 
 end Rat

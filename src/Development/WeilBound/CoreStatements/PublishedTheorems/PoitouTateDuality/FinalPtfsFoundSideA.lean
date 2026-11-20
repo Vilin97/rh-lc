@@ -55,7 +55,7 @@ theorem d_comp_homF (rho : Representation R G M) (A : Rep.{0} k G) (e : M →+ A
     (inhomogeneousCochains.d A n).hom (fun s => e (f s)) = fun s => e (dn rho n f s) := by
   funext s
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [inhomogeneousCochains.d_hom_apply, dn_app, map_add, map_sum, he]
+    rw [inhomogeneousCochains.d_hom_apply, dn_app, map_add (f := _), map_sum, he]
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [neg_one_pow_smul' (S := k), neg_one_pow_smul' (S := R), map_zsmul]
@@ -65,7 +65,7 @@ end Cochains
 theorem urChar_mulF {K Ω : Type} [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] [Field Ω] [Algebra K Ω] [HasUnramifiedRoots K Ω] (N : ℕ+)
     (σ τ : Gal(Ω/K)) : urChar K Ω N (σ * τ) = urChar K Ω N σ + urChar K Ω N τ := by
-  simp only [urChar, map_mul, toAdd_mul, map_add]
+  simp only [urChar, map_mul, toAdd_mul, map_add (f := _)]
 
 theorem urChar_isLocallyConstant {K Ω : Type} [Field K] [ValuativeRel K] [TopologicalSpace K]
     [IsNonarchimedeanLocalField K] [Field Ω] [Algebra K Ω] [HasUnramifiedRoots K Ω] (N : ℕ+) :

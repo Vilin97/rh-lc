@@ -24,7 +24,7 @@ private theorem iso_alg {R : Type} [CommRing R] [Algebra ℂ R] [IsNoetherianRin
   let dl : R →ₗ[ℂ] R ⧸ m ^ 2 :=
     { toFun := fun x => Ideal.Quotient.mk (m ^ 2) (x - algebraMap ℂ R (e x))
       map_add' := fun x y => by
-        simp only [map_add, map_sub]
+        simp only [map_add (f := _), map_sub]
         ring
       map_smul' := fun c x => by
         simp only [RingHom.id_apply, Algebra.smul_def, map_mul, map_sub, AlgHom.commutes,
@@ -32,7 +32,7 @@ private theorem iso_alg {R : Type} [CommRing R] [Algebra ℂ R] [IsNoetherianRin
         ring }
   let dd : Derivation ℂ R (R ⧸ m ^ 2) := Derivation.mk' dl (fun a b => by
     simp only [dl, LinearMap.coe_mk, AddHom.coe_mk, Algebra.smul_def, Ideal.Quotient.algebraMap_eq]
-    rw [← map_mul, ← map_mul, ← map_add, Ideal.Quotient.eq]
+    rw [← map_mul, ← map_mul, ← map_add (f := _), Ideal.Quotient.eq]
     have h2 : (a - algebraMap ℂ R (e a)) * (b - algebraMap ℂ R (e b)) ∈ m ^ 2 := by
       rw [pow_two]
       exact Ideal.mul_mem_mul (hsub a) (hsub b)

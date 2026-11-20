@@ -19,7 +19,7 @@ private theorem wtPart_decomp {O σ : Type} [CommRing O] (wt : σ → ℤ) (j : 
   · rw [hg]
     split_ifs
     · apply hf
-      rw [map_add]
+      rw [map_add (f := _)]
       intro h
       apply hm
       have : (Finsupp.weight wt) (Finsupp.single i 1) = wt i := by

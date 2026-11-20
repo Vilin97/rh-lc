@@ -52,7 +52,7 @@ theorem in_add {B Q σ : Type} [CommRing B] [CommRing Q] [Algebra B Q] {N : Idea
     {f g : MvPowerSeries σ Q} (hf : In N f) (hg : In N g) : In N (f + g) := fun α => by
   obtain ⟨a, ha, ea⟩ := hf α
   obtain ⟨b, hb, eb⟩ := hg α
-  exact ⟨a + b, N.add_mem ha hb, by rw [map_add, ea, eb, map_add]⟩
+  exact ⟨a + b, N.add_mem ha hb, by rw [map_add (f := _), ea, eb, map_add (f := _)]⟩
 
 theorem coeff_inr_of_unit {B : Type} [CommRing B] {d : ℕ} (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) B)
     (hu : op μ (fun i => (X i : MvPowerSeries (Fin d) B)) (fun _ => 0) = fun i => X i)
@@ -134,7 +134,7 @@ theorem dIn_of_QL : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Type) [CommRing B] [Co
     have l4 := restr_inL_inR f i
     rw [← hρe] at l4
     simp only [g]
-    rw [hsplit, map_add, map_add, ← substAlgHom_apply hρ, map_add, map_add]
+    rw [hsplit, map_add (f := _), map_add (f := _), ← substAlgHom_apply hρ, map_add (f := _), map_add (f := _)]
     simp only [substAlgHom_apply]
     rw [l4.1, l4.2, add_zero]
     refine in_add ?_ ?_

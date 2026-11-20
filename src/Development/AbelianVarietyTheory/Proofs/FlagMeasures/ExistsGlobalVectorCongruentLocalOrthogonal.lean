@@ -56,7 +56,7 @@ theorem approx : ∀ (D : D7) (Z : LocDat D) (p : PlF D), (∀ c ∈ (D.s.atP p)
       obtain ⟨l, hl, h⟩ := ihu
       obtain ⟨l', hl', h'⟩ := ihv
       refine ⟨l + l', add_mem hl hl', ?_⟩
-      rw [map_add, show u + v - (baseChange₂ D p l + baseChange₂ D p l') = (u - baseChange₂ D p l) + (v - baseChange₂ D p l') by abel]
+      rw [map_add (f := _), show u + v - (baseChange₂ D p l + baseChange₂ D p l') = (u - baseChange₂ D p l) + (v - baseChange₂ D p l') by abel]
       exact add_mem h h'
     | smul o v _ ih =>
       obtain ⟨l, hl, h⟩ := ih

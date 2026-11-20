@@ -26,7 +26,7 @@ theorem conv_sum {G W : Type} [Group G] [AddCommGroup W] [Module ℂ W] (T : G �
     | zero => simp
     | add b b' hb hb' =>
       rw [mul_add, MonoidAlgebra.coeff_add, MonoidAlgebra.coeff_add, Finsupp.sum_add_index', Finsupp.sum_add_index',
-        map_add, smul_add, hb, hb'] <;> intros <;> simp [add_smul]
+        map_add (f := _), smul_add, hb, hb'] <;> intros <;> simp [add_smul]
     | single h d =>
       rw [MonoidAlgebra.single_mul_single, MonoidAlgebra.coeff_single, MonoidAlgebra.coeff_single,
         Finsupp.sum_single_index, Finsupp.sum_single_index, map_smul, hT, smul_smul] <;> simp
@@ -102,7 +102,7 @@ variable {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchim
   {χ : Fˣ →* ℂˣ} {W : Type} [AddCommGroup W] [Module ℂ W] {π : Representation ℂ (GL (Fin (r + t)) F) W}
 
 theorem isBlockVec_add {v w : W} (hv : IsBlockVec χ π v) (hw : IsBlockVec χ π w) : IsBlockVec χ π (v + w) :=
-  fun h hh h1 h2 u hu => by rw [map_add, hv h hh h1 h2 u hu, hw h hh h1 h2 u hu, smul_add]
+  fun h hh h1 h2 u hu => by rw [map_add (f := _), hv h hh h1 h2 u hu, hw h hh h1 h2 u hu, smul_add]
 
 theorem isBlockVec_smul (c : ℂ) {v : W} (hv : IsBlockVec χ π v) : IsBlockVec χ π (c • v) :=
   fun h hh h1 h2 u hu => by rw [map_smul, hv h hh h1 h2 u hu, smul_comm]

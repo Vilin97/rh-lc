@@ -138,7 +138,7 @@ theorem _root_.GlobalTheory.exists_eigen_projector_ringOfIntegers : ∀ (E K : T
         _ = C r * G + ((hK - C r) /ₘ (X - C (σ τ))) * ((X - C (σ τ)) * G) := by ring
         _ = _ := by rw [hXG]; ring
     have hev := congrArg (aeval (ρ θ)) hkey
-    rw [map_add, map_mul, map_mul, map_mul, hPρ R n ρ, mul_zero, add_zero, aeval_C] at hev
+    rw [map_add (f := _), map_mul, map_mul, map_mul, hPρ R n ρ, mul_zero, add_zero, aeval_C] at hev
     have hρh : aeval (ρ θ) hK = algebraMap K _ (D : K) * ρ b := by
       rw [hKdef, aeval_map_algebraMap, show ρ θ = ρ.toIntAlgHom θ from rfl, aeval_algHom_apply,
         ← hh]

@@ -153,7 +153,7 @@ theorem exists_rep (hl : EvLaws Xo c) (hA : Atlas h) {S : Type} [CommRing S] [Al
       add_mem' := by
         rintro g g' ⟨s, hs⟩ ⟨s', hs'⟩
         exact ⟨s + s', fun L _ _ χ w v h1 h2 => by
-          rw [map_add, map_add, add_mul, hs L χ w v h1 h2, hs' L χ w v h1 h2]⟩
+          rw [map_add (f := _), map_add (f := _), add_mul, hs L χ w v h1 h2, hs' L χ w v h1 h2]⟩
       smul_mem' := by
         rintro r g ⟨s, hs⟩
         exact ⟨r * s, fun L _ _ χ w v h1 h2 => by

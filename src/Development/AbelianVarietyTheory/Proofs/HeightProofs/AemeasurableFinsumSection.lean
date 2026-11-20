@@ -67,7 +67,7 @@ theorem liftS_fieldRange {K Ω : Type} [Field K] [Field Ω] [Algebra K Ω] {D N 
     next a =>
       exact Subfield.subset_closure (Or.inl ⟨a, by simp [sHom]⟩)
     next p q hp hq =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hp hq
     next p i hp =>
       rw [map_mul]

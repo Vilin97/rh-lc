@@ -121,7 +121,7 @@ theorem gauss : CMOrd GaussianInt star := by
       rcases sq_eq_sq_iff_eq_or_eq_neg.1 h with e | e <;> simp [e]
     rw [d']
     conv_rhs => rw [d a]
-    simp only [map_add, map_sub, map_mul, map_intCast, h2]
+    simp only [map_add (f := _), map_sub, map_mul, map_intCast, h2]
     ring
   · refine ⟨⟨{1, Zsqrtd.sqrtd}, ?_⟩⟩
     rw [eq_top_iff]

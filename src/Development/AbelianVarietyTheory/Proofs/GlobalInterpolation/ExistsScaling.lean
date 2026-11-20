@@ -75,11 +75,11 @@ theorem exists_dual (hσ : IsCMExt F E σ) {w : Fv F v ⊗[F] E} {t n : v.adicCo
       map_sub, sigR_sigR _ hσ, sigR_algebraMap]
     linear_combination (-z) * hd'
   · apply algebraMap_inj (E := E) v
-    simp only [trace_tensor _ hσ, Matrix.cons_val_zero, map_mul, map_neg, map_add,
+    simp only [trace_tensor _ hσ, Matrix.cons_val_zero, map_mul, map_neg, map_add (f := _),
       map_sub, sigR_sigR _ hσ, sigR_algebraMap]
     linear_combination (algebraMap (Fv F v) (Fv F v ⊗[F] E) a) * hd'
   · apply algebraMap_inj (E := E) v
-    simp only [trace_tensor _ hσ, Matrix.cons_val_zero, Matrix.cons_val_one, map_mul, map_add,
+    simp only [trace_tensor _ hσ, Matrix.cons_val_zero, Matrix.cons_val_one, map_mul, map_add (f := _),
       map_sub, sigR_sigR _ hσ, sigR_algebraMap]
     linear_combination (algebraMap (Fv F v) (Fv F v ⊗[F] E) b) * hd'
 
@@ -113,7 +113,7 @@ theorem hR_smul_left (x y : Fin M → Fv F v ⊗[F] E) (c : Fv F v ⊗[F] E) :
 
 theorem hR_add_left (x x' y : Fin M → Fv F v ⊗[F] E) :
     hR (Fv F v) σ J (x + x') y = hR (Fv F v) σ J x y + hR (Fv F v) σ J x' y := by
-  simp only [hR, Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hR, Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem exists_frame {L : Submodule (SelfDualLatticeActions.OEv E v) (SelfDualLatticeActions.Wv E v M)}
     (hL : SelfDualLatticeActions.IsSelfDualLat v σ J L) (hb : SelfDualLatticeActions.HasOrthonormalBasis v σ J L) :
@@ -276,7 +276,7 @@ theorem exists_coords (hσ : IsCMExt F E σ) (hJ : IsHermND σ J)
     change _ = algebraMap (Fv F v) _
       (e X (i, 0) ^ 2 + t * e X (i, 0) * e X (i, 1) + n * e X (i, 1) ^ 2)
     rw [hg']
-    simp only [map_add, map_mul, map_pow, sigR_algebraMap, ← ht, ← hn]
+    simp only [map_add (f := _), map_mul, map_pow, sigR_algebraMap, ← ht, ← hn]
     ring
   · change (∀ i, Valued.v (e Y i) ≤ WithZero.exp m) ↔ _
     have hB : ∀ X : Fin 1 → Fin M → Fv F v ⊗[F] E, BR (Fv F v) σ J X Y =

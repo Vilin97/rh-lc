@@ -14,7 +14,7 @@ theorem levi_polar {D : ℕ} {f : (Fin D → ℂ) → ℝ} {z : Fin D → ℂ} (
       2 * (levi f z (a + b) - levi f z a - levi f z b) := by
   have hs : IsSymmSndFDerivAt ℝ f z := hf.isSymmSndFDerivAt (by simp)
   unfold levi
-  simp only [smul_add, map_add, ContinuousLinearMap.add_apply]
+  simp only [smul_add, map_add (f := _), ContinuousLinearMap.add_apply]
   rw [hs b a, hs (Complex.I • b) (Complex.I • a)]
   ring
 

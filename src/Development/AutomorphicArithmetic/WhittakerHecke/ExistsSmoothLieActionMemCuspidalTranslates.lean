@@ -54,7 +54,7 @@ theorem UpperTheory.exists_smooth_lie_action_mem_cuspidal_translates :
     obtain ⟨fa, rfl, ha⟩ := ha
     obtain ⟨fb, rfl, hb⟩ := hb
     refine ⟨fa + fb, rfl, ?_⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (Tr P).add_mem ha hb
   | smul c a _ ha =>
     obtain ⟨fa, rfl, ha⟩ := ha

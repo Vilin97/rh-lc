@@ -87,7 +87,7 @@ theorem ef_left_zero {c : 𝓞 E} (hc : c ∈ conjHalf l) {u : D.La}
   refine Submodule.smul_induction_on hu (fun m hm w _ => ?_) (fun x y hx hy => ?_)
   · rw [D.adj, ← mul_smul]
     exact ef_smul_eq_zero D l (bar_mem_of_mem_conjHalf l hm) hc w v
-  · rw [map_add, LinearMap.add_apply, Int.cast_add, hx, hy, add_zero]
+  · rw [map_add (f := _), LinearMap.add_apply, Int.cast_add, hx, hy, add_zero]
 
 theorem ef_right_zero {c : 𝓞 E} (hc : c ∈ conjHalf l) (u : D.La) {v : D.La}
     (hv : v ∈ l.Mb • (⊤ : Submodule (𝓞 E) D.La)) :
@@ -95,7 +95,7 @@ theorem ef_right_zero {c : 𝓞 E} (hc : c ∈ conjHalf l) (u : D.La) {v : D.La}
   refine Submodule.smul_induction_on hv (fun m hm w _ => ?_) (fun x y hx hy => ?_)
   · rw [← mul_smul, mul_comm]
     exact ef_smul_eq_zero D l hm hc u w
-  · rw [smul_add, map_add, Int.cast_add, hx, hy, add_zero]
+  · rw [smul_add, map_add (f := _), Int.cast_add, hx, hy, add_zero]
 
 def pairOne (a : ConjCl D l) (x : NamedCl D l) : ZMod l.M :=
   Quotient.liftOn₂' a x (fun u v => ((D.EF u (sep l • v) : ℤ) : ZMod l.M)) (by

@@ -29,7 +29,7 @@ theorem rId_snd (t : ℝ) : (rId F t).2 = 1 := add_zero _
 theorem rId_inf [IsTotallyReal F] (w : InfinitePlace F) (t : ℝ) :
     InfinitePlace.Completion.extensionEmbedding w ((rId F t).1 w) = Real.exp t := by
   change InfinitePlace.Completion.extensionEmbedding w (1 + (realAd F (Real.exp t - 1)).1 w) = _
-  rw [map_add, map_one, realAd_inf]
+  rw [map_add (f := _), map_one, realAd_inf]
   push_cast
   ring
 
@@ -157,7 +157,7 @@ theorem exists_torus (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hW : IsWittFrame
     (fun a => by
       induction a using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul a x => exact congrArg (a ⊗ₜ[F] ·) (sigma_sigma h x))
     ((c1 J).trans (congrArg (adMat F) (Matrix.ext fun i j => hJ.1 i j)))
     ((c2 X X).trans (hW.xx ▸ Matrix.map_zero _ (map_zero _))) ((c2 Y Y).trans (hW.yy ▸ Matrix.map_zero _ (map_zero _)))
@@ -207,7 +207,7 @@ theorem exists_torus (h : IsCMExt F E σ) (hJ : IsHermND σ J) (hW : IsWittFrame
     change ψ ((m t).1 i j) = (1 : Matrix (Fin n) (Fin n) _) i j
     rw [he]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Matrix.add_apply, Matrix.mul_apply (N := cT _ _ * _), mul_diagonal, map_add, map_sum, map_mul, map_sub, h1,
+      simp only [Matrix.add_apply, Matrix.mul_apply (N := cT _ _ * _), mul_diagonal, map_add (f := _), map_sum, map_mul, map_sub, h1,
       h2, map_one, sub_self, mul_zero, zero_mul, Finset.sum_const_zero, add_zero, Matrix.one_apply, apply_ite ψ, map_zero]
   · let φ := (infEmb τ).comp (compInf F E w)
     have h0 : ∀ x : E, φ (inclR (F := F) (AF F) x) = τ.1 x := fun x => by

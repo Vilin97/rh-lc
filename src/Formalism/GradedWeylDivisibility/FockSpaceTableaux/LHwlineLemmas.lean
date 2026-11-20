@@ -27,7 +27,7 @@ theorem lhwline_eval_rowGen (a b : Fin r) (t : K) (x : Fin r × Fin n → K)
       (rowGen (n := n) K a b).commutes c
     rw [h1, Polynomial.eval₂_C, MvPolynomial.eval_C, MvPolynomial.eval_C]
   next p q hp hq =>
-    simp only [map_add, Polynomial.eval₂_add, hp, hq]
+    simp only [map_add (f := _), Polynomial.eval₂_add, hp, hq]
   next p v hp =>
     rw [map_mul, Polynomial.eval₂_mul, hp, map_mul]
     congr 1
@@ -41,7 +41,7 @@ theorem lhwline_eval_colAdd (l j : Fin n) (c : K) (x : Fin r × Fin n → K)
   next c =>
     simp [colAdd]
   next p q hp hq =>
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   next p v hp =>
     simp only [map_mul, hp, colAdd, aeval_X, lhwline_colOp]
     congr 1
@@ -57,7 +57,7 @@ theorem lhwline_rowDiv_zero (a b : Fin r) (g : MvPolynomial (Fin r × Fin n) K) 
       (rowGen (n := n) K a b).commutes c
     rw [h1, Polynomial.constantCoeff_apply, Polynomial.coeff_C_zero]
   next p q hp hq =>
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   next p v hp =>
     simp only [map_mul, hp]
     congr 1

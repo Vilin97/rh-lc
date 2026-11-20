@@ -179,7 +179,7 @@ lemma fh_conj_all (g : KG (fun _ : Fin k => true)) (Z : Matrix (Fin k) (Fin k) �
     ((τ g : unitary (H →L[ℂ] H)) : H →L[ℂ] H) * dτ Z * star ((τ g : unitary (H →L[ℂ] H)) : H →L[ℂ] H) =
       dτ (toMK g * Z * star (toMK g)) := by
   obtain ⟨Z₁, Z₂, h1, h2, rfl⟩ := fh_decomp Z
-  rw [map_add, map_smul, mul_add, add_mul, mul_smul_comm, smul_mul_assoc, fh_conj τ dτ hder g h1,
+  rw [map_add (f := _), map_smul, mul_add, add_mul, mul_smul_comm, smul_mul_assoc, fh_conj τ dτ hder g h1,
     fh_conj τ dτ hder g h2, Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul, map_add,
     map_smul]
 

@@ -93,7 +93,7 @@ theorem T_add {w w' : Fin n → E ⊗[F] Af F} (hw : w ∈ Tset (F := F) m) (hw'
   refine ⟨a + a', fun j => add_mem (ha j) (ha' j), ?_⟩
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
-  simp only [Pi.add_apply, map_add, add_smul]
+  simp only [Pi.add_apply, map_add (f := _), add_smul]
 
 theorem T_neg {w : Fin n → E ⊗[F] Af F} (hw : w ∈ Tset (F := F) m) : -w ∈ Tset (F := F) m := by
   obtain ⟨a, ha, rfl⟩ := hw

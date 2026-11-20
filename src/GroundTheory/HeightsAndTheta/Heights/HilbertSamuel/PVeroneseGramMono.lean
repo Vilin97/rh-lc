@@ -82,7 +82,7 @@ theorem aeval_alt (f : MvPolynomial (Ix (Veronese.Idx D)) ℚ) :
     rw [aeval_C, phi, bind₁_C_right]
     exact congrArg (fun g : ℚ →+* Veronese.Fld D => g a)
       (Subsingleton.elim _ ((algebraMap (MvPolynomial (Fin (D + 1)) ℚ) (Veronese.Fld D)).comp C))
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p q hp =>
     rw [map_mul, map_mul, map_mul, hp, aeval_X]
     simp [phi, Veronese.x, Veronese.t]

@@ -32,7 +32,7 @@ theorem exists_sub_bd_mem_chains_linkIn_nil :
       obtain ⟨b', hb', hcb'⟩ := ih (c - bd V b) hcb
         (by rw [map_sub, h0, GlobalTheory.T.seqChain_boundary_comp_boundary_apply, sub_zero])
       refine ⟨b + b', Submodule.add_mem _ hb hb', ?_⟩
-      rw [map_add, ← sub_sub]
+      rw [map_add (f := _), ← sub_sub]
       exact hcb'
   intro c hc h0
   have hc' : c ∈ chains {l ∈ F | ∀ y ∈ l.drop p, y ∈ S} p := by

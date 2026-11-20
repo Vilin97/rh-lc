@@ -63,7 +63,7 @@ theorem symplOH_laws : ∀ (D : D7) (S T : HSp D), (∀ x y z : WO S T, symplOH 
     fun x y => ?_, GlobalTheory.OrientedHeis.continuous_symplOH continuous_fst continuous_snd, ?_, fun a x y => ?_,
     fun e a u he hu => ?_, fun x y hx hy => (GlobalTheory.OrientedHeis.symplOH_fin_real hy hx).2⟩
   · unfold symplOH
-    rw [← add_mul, ← RingHom.map_add, add_halves, RingHom.map_one, one_mul]
+    rw [← add_mul, ← RingHom.map_add (f := _), add_halves, RingHom.map_one, one_mul]
   · rintro _ ⟨M, rfl⟩ _ ⟨N, rfl⟩
     exact ⟨_, symplOH_rat M N⟩
   · unfold symplOH symplO

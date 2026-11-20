@@ -173,7 +173,7 @@ theorem UpperTheory.V.Hi.ordA :
   have he : ∀ g v, e.toLinearEquiv (π g v) = PS ω g (e.toLinearEquiv v) := fun g v => e.toIntertwiningMap.isIntertwining _ _ g v
   let l : V →ₗ[ℂ] ℂ :=
     { toFun := fun v => (e.toLinearEquiv v).1.1 1
-      map_add' := fun a b => by rw [map_add]; rfl
+      map_add' := fun a b => by rw [map_add (f := _)]; rfl
       map_smul' := fun a b => by rw [map_smul]; rfl }
   let σ := (twist ((ofChar (torusChar μ)).comp (leviTorus k (Fin n)).symm.toMonoidHom) (deltaHalf k _)).comp
     (leviProj k (points (Fin n)))

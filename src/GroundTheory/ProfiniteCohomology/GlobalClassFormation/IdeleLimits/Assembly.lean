@@ -117,7 +117,7 @@ theorem limitCohomologyFun_add (x₁ x₂ : cohomology (limitRep K) n) :
   obtain ⟨r, h1r, h2r⟩ := GLevel.exists_ge p₁ p₂
   have hsum : (levelInfl K r.1 n).hom ((levelTransitionG n h1r).hom y₁ +
       (levelTransitionG n h2r).hom y₂) = (levelInfl K p₁.1 n).hom y₁ + (levelInfl K p₂.1 n).hom y₂ := by
-    rw [map_add, levelTransitionG_comp_levelInfl, levelTransitionG_comp_levelInfl]
+    rw [map_add (f := _), levelTransitionG_comp_levelInfl, levelTransitionG_comp_levelInfl]
   rw [limitCohomologyFun_eq D T hn p₁ y₁ _ rfl, limitCohomologyFun_eq D T hn p₂ y₂ _ rfl,
     limitCohomologyFun_eq D T hn r _ _ hsum, map_add, levelSum_levelTransition, levelSum_levelTransition]
 

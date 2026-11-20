@@ -73,7 +73,7 @@ theorem measurePreserving_coord {m : ℕ} {A : ℕ → Submodule ℝ (Matrix (Fi
           have h3 : (uMat s - 1) * (uMat (σ x) - uMat (σ y)) =
               (uMat s - 1) * (uMat (σ x) - 1) - (uMat s - 1) * (uMat (σ y) - 1) := by noncomm_ring
           rw [h3, map_sub] at h2
-          simp only [mul_sub_one, map_add, hσ2]
+          simp only [mul_sub_one, map_add (f := _), hσ2]
           linarith)
       have he : (fun g => s * g) ∘ σ =
           σ ∘ fun x => x + fun i => ipL (E i) (uMat (s * σ x) - 1) - x i := by
@@ -151,11 +151,11 @@ theorem covol_le_prod_layers : ∀ (ι : Type) [Fintype ι] (n d m : ℕ) (ε : 
       · rcases (Nat.lt_succ_iff.1 hck).lt_or_eq with h | rfl
         · convert hc c h using 1
           funext v i
-          rw [hexp, map_add, map_add, horth v k i.1 (by rw [i.2]; exact h) _ (hδk v),
+          rw [hexp, map_add (f := _), map_add (f := _), horth v k i.1 (by rw [i.2]; exact h) _ (hδk v),
             horth v (k + 1) i.1 (by rw [i.2]; exact hck) _ (hprod v), zero_add, add_zero]
         · convert hδD using 1
           funext v i
-          rw [hexp, map_add, map_add, horth v (c + 1) i.1 (by rw [i.2]; exact hck) _ (hprod v), add_zero]
+          rw [hexp, map_add (f := _), map_add (f := _), horth v (c + 1) i.1 (by rw [i.2]; exact hck) _ (hprod v), add_zero]
           rfl
   obtain ⟨γ, hγ, -, hc⟩ := key m
   exact ⟨γ, hγ, hc⟩

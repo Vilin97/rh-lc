@@ -32,7 +32,7 @@ theorem zz_scale (Zh : Matrix (Fin (r + 1)) (Fin (r + 1)) E) (T T' : F)
   · subst ha; subst hb
     simp only [and_self, if_true] at hZab ⊢
     push_cast
-    rw [map_sub, map_mul, map_add, map_mul, hZab]
+    rw [map_sub, map_mul, map_add (f := _), map_mul, hZab]
     simp only [map_sub, AlgEquiv.apply_symm_apply, he1, he2, hcc, hα, map_mul]
     ext <;> simp <;> field_simp <;> ring
   · simp only [ha, hb, and_false, if_false, if_true, and_true] at hZab ⊢

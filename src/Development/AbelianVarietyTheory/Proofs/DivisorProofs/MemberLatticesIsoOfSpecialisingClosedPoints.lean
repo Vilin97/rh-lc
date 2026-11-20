@@ -234,4 +234,4 @@ theorem GlobalTheory.Poinc.Sep.Spz.latTo_of_specializes : ∀ (g n : ℕ) (F : S
     obtain ⟨w, hw⟩ := lab a mu mu₂ h₁ h₂
     obtain ⟨w', rfl⟩ := onto w
     refine (cong₂ a mu₂ _ h₂).2 (vec _ _ (𝔫₂.e₈.symm w') (𝔫₂.e₈.injective (inj ?_)))
-    rw [hK, map_add, map_add, map_nsmul, map_nsmul, AddEquiv.apply_symm_apply, ← hw, add_sub_cancel]
+    rw [hK, map_add (f := _), map_add (f := _), map_nsmul, map_nsmul, AddEquiv.apply_symm_apply, ← hw, add_sub_cancel]

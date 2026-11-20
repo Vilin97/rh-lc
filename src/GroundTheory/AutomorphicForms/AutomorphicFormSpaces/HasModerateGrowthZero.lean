@@ -113,7 +113,7 @@ theorem IsZFinite.add {φ ψ : archSmooth K n} (hφ : IsZFinite φ) (hψ : IsZFi
         ((isExpLieAlgebra K n).centerU : Set (UEnv K n))) := by
     refine Submodule.span_le.2 ?_
     rintro _ ⟨z, hz, rfl⟩
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact Submodule.add_mem_sup (Submodule.subset_span ⟨z, hz, rfl⟩)
       (Submodule.subset_span ⟨z, hz, rfl⟩)
   exact Submodule.finiteDimensional_of_le hle

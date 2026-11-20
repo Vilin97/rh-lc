@@ -52,7 +52,7 @@ theorem archAt_repr (r : Fin (Module.finrank F E)) {c : E}
     archAt F w ((coB F E).repr y r) = ∑ τ : EmbOver E w, τ.1 c * piInf τ y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy, mul_add, Finset.sum_add_distrib]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy, mul_add, Finset.sum_add_distrib]
   | tmul a x =>
     have h1 : (coB F E).repr (a ⊗ₜ[F] x) r = a * algebraMap F (AF F) ((Module.finBasis F E).repr x r) := by
       simp [coB, Algebra.TensorProduct.basis_repr_tmul]

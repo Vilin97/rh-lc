@@ -33,7 +33,7 @@ theorem exists_cev {z : Fr emb σ n → ℂ} (hz : z ∈ ValC (Gr emb σ n) lam)
   | add x y _ _ hx hy =>
     obtain ⟨P, hP, e⟩ := hx
     obtain ⟨Q, hQ, e'⟩ := hy
-    exact ⟨P + Q, Submodule.add_mem _ hP hQ, by rw [map_add, map_add, e, e']⟩
+    exact ⟨P + Q, Submodule.add_mem _ hP hQ, by rw [map_add (f := _), map_add (f := _), e, e']⟩
   | smul r x _ hx =>
     obtain ⟨P, hP, e⟩ := hx
     exact ⟨starRingEnd ℂ r • P, Submodule.smul_mem _ _ hP, by rw [map_smulₛₗ, map_smul, e, Complex.conj_conj]⟩

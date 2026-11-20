@@ -81,7 +81,7 @@ private theorem jet_local [IsLocalRing O] (I : Ideal O) (hI : I ≤ IsLocalRing.
   | add f f' hf hf' =>
     have := Ideal.add_mem _ hf hf'
     convert this using 1
-    simp only [map_add]
+    simp only [map_add (f := _)]
     ring
   | mul_X f i _ =>
     simp only [map_mul, MvPolynomial.constantCoeff_X, mul_zero, map_zero, sub_zero]

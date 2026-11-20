@@ -41,7 +41,7 @@ theorem momInt_add (ι : ℂ ≃+* ℂ_[q]) {κ : Type} [Fintype κ] (v : κ →
         iteratedFDeriv ℂ k F 0 + iteratedFDeriv ℂ k G 0 :=
       iteratedFDeriv_add_apply (hF.contDiffAt.of_le (by exact_mod_cast le_top))
         (hG.contDiffAt.of_le (by exact_mod_cast le_top))
-    rw [h, ContinuousMultilinearMap.add_apply, map_add, eμ k j f hf, eν k j f hf,
+    rw [h, ContinuousMultilinearMap.add_apply, map_add (f := _), eμ k j f hf, eν k j f hf,
       ContinuousLinearMap.add_apply]
 
 theorem momInt_const_mul (ι : ℂ ≃+* ℂ_[q]) {κ : Type} [Fintype κ] (v : κ → V) {c : ℂ} {G : V → ℂ}

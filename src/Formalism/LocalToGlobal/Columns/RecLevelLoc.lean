@@ -292,7 +292,7 @@ theorem rll_mem_hat_base (z : Fin n → E ⊗[F] Formalism.L2.Herm.Af F) :
       obtain ⟨y', hy', hyP'⟩ := hb
       refine ⟨y + y', fun i => ?_, fun P hP => ?_⟩
       · rw [Pi.add_apply, Pi.add_apply, ← hy, ← hy']; rfl
-      · rw [Pi.add_apply, map_add, hyP P hP, hyP' P hP, add_zero]
+      · rw [Pi.add_apply, map_add (f := _), hyP P hP, hyP' P hP, add_zero]
     | smul s a _ ha =>
       obtain ⟨y, hy, hyP⟩ := ha
       refine ⟨fun i => s * y i, fun i => ?_, fun P hP => ?_⟩

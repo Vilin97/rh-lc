@@ -394,7 +394,7 @@ theorem ratTwist_of_isRatScalar (hRF : GlobalTheory.NT.RayField) {T : CoreJ D} [
   have hQG : hQ' ∈ GfC (Vc D j) := by
     refine GlobalTheory.WeilProduct.mem_GfC_of_supp ?_ hQs
     have hIS := ht.split.isIdemSum
-    rw [RingHom.map_add, GlobalTheory.PlaceDatum.infPart_idemSum hIS,
+    rw [RingHom.map_add (f := _), GlobalTheory.PlaceDatum.infPart_idemSum hIS,
       GlobalTheory.PlaceDatum.infPart_cA (GlobalTheory.PlaceDatum.infPart_idemSum hIS), add_zero]
   have hs : h * hQ' ∈ GfC (Vc D j) := mul_mem hd.fin hQG
 

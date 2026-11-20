@@ -119,7 +119,7 @@ theorem exists_den (L : Submodule (𝓞 E) (Fin n → E)) (hL : L.FG) :
     intro i
     obtain ⟨z, hz⟩ := hx i
     obtain ⟨z', hz'⟩ := hy i
-    exact ⟨z + z', by rw [map_add, hz, hz', Pi.add_apply, mul_add]⟩
+    exact ⟨z + z', by rw [map_add (f := _), hz, hz', Pi.add_apply, mul_add]⟩
   | smul r x _ hx =>
     intro i
     obtain ⟨z, hz⟩ := hx i

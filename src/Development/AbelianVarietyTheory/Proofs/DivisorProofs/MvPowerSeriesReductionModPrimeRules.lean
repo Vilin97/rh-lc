@@ -44,7 +44,7 @@ theorem red_add_sub (f f' : MvPowerSeries σ (Fr p k)) (g g' : MvPowerSeries σ 
   · intro α
     obtain ⟨w, hw, hg⟩ := h α
     obtain ⟨w', hw', hg'⟩ := h' α
-    exact ⟨w + w', by rw [map_add, map_add, hw, hw'], by rw [map_add, map_add, hg, hg']⟩
+    exact ⟨w + w', by rw [map_add (f := _), map_add (f := _), hw, hw'], by rw [map_add (f := _), map_add (f := _), hg, hg']⟩
   · intro α
     obtain ⟨w, hw, hg⟩ := h α
     obtain ⟨w', hw', hg'⟩ := h' α

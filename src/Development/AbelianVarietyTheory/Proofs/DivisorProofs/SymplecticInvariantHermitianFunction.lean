@@ -131,7 +131,7 @@ theorem invHermFun_eq_const_and_smul_sdens : ∀ (g : ℕ) (F : symMat g → sym
       exact mul_left_cancel₀ Complex.I_ne_zero e
     rw [← hD, ← hD, sesq_polar B hl hh (D x) (D y), sesq_polar B hl hh x y]
     have h1 : D x + D y = D (x + y) := (map_add D x y).symm
-    have h2 : D x + Complex.I • D y = D (x + Complex.I • y) := by rw [map_add, map_smul]
+    have h2 : D x + Complex.I • D y = D (x + Complex.I • y) := by rw [map_add (f := _), map_smul]
     rw [h1, h2, hQ, hQ, hQ, hQ]
   obtain ⟨c, hc⟩ := GlobalTheory.unitary_invariant_hermitian_form_symm_eq_smul_trace g
     (fun Z W => B (symPart Z) (symPart W))

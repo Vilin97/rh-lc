@@ -37,7 +37,7 @@ theorem UpperTheory.Reformulated.B.Ra9.exists_semi :
     induction v using TensorProduct.induction_on with
     | zero => simp
     | tmul x m => rw [TensorProduct.smul_tmul', hΨ, hΨ, smul_eq_mul, map_mul, mul_smul]
-    | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
   refine ⟨Ψ, hΨ, hsemi, ?_, ?_⟩
   · refine (injective_iff_map_eq_zero Ψ).2 ?_
     intro v hv
@@ -80,5 +80,5 @@ theorem UpperTheory.Reformulated.B.Ra9.exists_semi :
         rw [hΨ]
         exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨m, rfl⟩)
       | add x y hx hy =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem _ hx hy

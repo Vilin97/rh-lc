@@ -91,7 +91,7 @@ theorem typed {O C : Type} [CommRing O] [Field C] [Algebra O C] (RC : Subalgebra
         add_mem' := by
           rintro a b ⟨x, hx, ha⟩ ⟨y, hy, hb⟩
           refine ⟨x + y, hh.add_mem hx hy, fun k => ?_⟩
-          rw [map_add, Pi.add_apply, ha, hb, ← map_add]
+          rw [map_add (f := _), Pi.add_apply, ha, hb, ← map_add (f := _)]
           rfl
         zero_mem' := ⟨0, hh.zero_mem, fun k => by rw [map_zero]; exact (map_zero (evs k)).symm⟩
         smul_mem' := by
@@ -205,7 +205,7 @@ theorem typed {O C : Type} [CommRing O] [Field C] [Algebra O C] (RC : Subalgebra
             (p / w) * ∑ k, (w • w • a) k * evr k (fun j => (u' j : C)) := by
         have : (fun j => ((c • u + P • u') j : C)) = (fun j => ((c • u) j : C)) + fun j => ((P • u') j : C) := rfl
         rw [e, this]
-        simp only [map_add, mul_add, Finset.sum_add_distrib, hlin, hP]
+        simp only [map_add (f := _), mul_add, Finset.sum_add_distrib, hlin, hP]
         congr 1
         simp only [Pi.smul_apply, smul_eq_mul, mul_assoc w, ← Finset.mul_sum]
         field_simp

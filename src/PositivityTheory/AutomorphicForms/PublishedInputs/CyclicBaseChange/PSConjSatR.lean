@@ -167,7 +167,7 @@ theorem map_s_finGL (c : M ≃+* M) (s : Ad M ≃+* Ad M) (hs : ∀ x, (s x).2 =
       sFin M ((k : Matrix (Fin a) (Fin a) (Af M)) i j)) =
     (1 : Matrix (Fin a) (Fin a) (Ad M)) i j - sFin M ((1 : Matrix (Fin a) (Fin a) (Af M)) i j) +
       sFin M (conjFin c ((k : Matrix (Fin a) (Fin a) (Af M)) i j))
-  rw [map_add, map_sub, s_sFin c s hs, s_sFin c s hs]
+  rw [map_add (f := _), map_sub, s_sFin c s hs, s_sFin c s hs]
   by_cases h : i = j
   · subst h
     simp

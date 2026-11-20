@@ -24,7 +24,7 @@ theorem twCoef_chi_one (g : G) (m : O ⊗[O] X) : twCoef (Γ.Wchi 1) Γ.χ₁ X 
     change ((Γ.χ₁⁻¹ g : Oˣ) : O) • ((Γ.chi 1 g : O) • a) = a
     rw [GalData.chi_one, smul_smul]
     simp
-  | add a b ha hb => rw [map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), ha, hb]
 
 def homModInertia (I : Subgroup G) : Set (H1 (twCoef (Γ.Wchi 1) Γ.χ₁ X) ⊤) :=
   {c | ∃ z : ↥(Z1 (twCoef (Γ.Wchi 1) Γ.χ₁ X) ⊤), Submodule.Quotient.mk z = c ∧

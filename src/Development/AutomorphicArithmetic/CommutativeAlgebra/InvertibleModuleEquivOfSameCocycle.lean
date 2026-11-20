@@ -36,7 +36,7 @@ private theorem injective_and_range {A C M : Type} [CommRing A] [CommRing C] [Al
         intro x
         induction x using TensorProduct.induction_on with
         | zero => simp
-        | add x y hx hy => simp only [map_add, hx, hy, add_smul]
+        | add x y hx hy => simp only [map_add (f := _), hx, hy, add_smul]
         | tmul c m =>
           have h1 : c ⊗ₜ[A] t m = c • ((1 : C) ⊗ₜ[A] t m) := by simp [smul_tmul']
           simp [h1, ← ht m, mul_smul]
@@ -81,7 +81,7 @@ theorem UpperTheory.invertibleModule_equiv_of_same_cocycle :
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy, mul_add]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, mul_add]
     | tmul c m => simp [t₁, mul_left_comm]
   have hbij : Function.Bijective (LinearMap.liftBaseChange C t₁) := by
     have : (LinearMap.liftBaseChange C t₁ : C ⊗[A] M → C) =

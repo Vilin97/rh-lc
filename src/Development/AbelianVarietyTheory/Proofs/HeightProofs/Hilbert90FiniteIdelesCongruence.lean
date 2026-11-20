@@ -24,7 +24,7 @@ theorem fixed_baseChange {F E : Type} [Field F] [CharZero F] [Field E] [Algebra 
     induction z using TensorProduct.induction_on with
     | zero => exact ⟨0, by simp⟩
     | tmul a x =>
-      obtain ⟨t, ht⟩ := hfix (x + c x) (by rw [map_add, hcc, add_comm])
+      obtain ⟨t, ht⟩ := hfix (x + c x) (by rw [map_add (f := _), hcc, add_comm])
       refine ⟨t • a, ?_⟩
       rw [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, ← TensorProduct.tmul_add, ht,
         Algebra.algebraMap_eq_smul_one, TensorProduct.smul_tmul]
@@ -32,7 +32,7 @@ theorem fixed_baseChange {F E : Type} [Field F] [CharZero F] [Field E] [Algebra 
       obtain ⟨t, ht⟩ := hx
       obtain ⟨t', ht'⟩ := hy
       refine ⟨t + t', ?_⟩
-      rw [map_add, TensorProduct.add_tmul, ← ht, ← ht']; ring
+      rw [map_add (f := _), TensorProduct.add_tmul, ← ht, ← ht']; ring
   obtain ⟨t, ht⟩ := hT y
   refine ⟨(2 : F)⁻¹ • t, ?_⟩
   rw [← TensorProduct.smul_tmul', ← ht, hy, ← two_smul F y, smul_smul, inv_mul_cancel₀ two_ne_zero, one_smul]

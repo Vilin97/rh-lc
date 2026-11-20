@@ -76,7 +76,7 @@ theorem ValuativeCentre.proof : ValuativeCentre.Statement.{u} := by
     intro p
     induction p using MvPolynomial.induction_on with
     | C a => rw [chartMap, aeval_C]; exact hF a
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | mul_X p v hp =>
       rw [map_mul]
       refine mul_mem hp ?_

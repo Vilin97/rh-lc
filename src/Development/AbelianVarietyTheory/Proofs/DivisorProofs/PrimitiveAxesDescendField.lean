@@ -49,7 +49,7 @@ theorem noPrimO2_axesO1_descend : ∀ (K L : Type) [Field K] [Field L] [Algebra 
     rw [map_zero]
     apply hB
     have e := congrArg (pullHO2 hΦ.w) hz
-    rw [map_add] at e
+    rw [map_add (f := _)] at e
     rw [← (N A (A ⊗ A) B (B ⊗ B) μ[A] μ[B] φ Φ hφ.1.w hΦ.w hμ).2,
       ← (N A (A ⊗ A) B (B ⊗ B) (fst A A) (fst B B) φ Φ hφ.1.w hΦ.w hf).2,
       ← (N A (A ⊗ A) B (B ⊗ B) (snd A A) (snd B B) φ Φ hφ.1.w hΦ.w hs).2]

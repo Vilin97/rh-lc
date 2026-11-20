@@ -106,7 +106,7 @@ theorem selfDual_divLat {r : ℕ} {AA : Submodule (𝓞 E) E} (hfg : AA.FG) (h0 
         add_mem' := by
           rintro u w ⟨n, hn⟩ ⟨k, hk⟩
           refine ⟨n + k, ?_⟩
-          rw [herm_add_right, mul_add, map_add, hn, hk]
+          rw [herm_add_right, mul_add, map_add (f := _), hn, hk]
           push_cast; rfl
         zero_mem' := ⟨0, by rw [herm_zero_right]; simp⟩ }
     refine mem_of_forall_mul_smul AA hfg h0 N y fun a' ha' b hb => ?_

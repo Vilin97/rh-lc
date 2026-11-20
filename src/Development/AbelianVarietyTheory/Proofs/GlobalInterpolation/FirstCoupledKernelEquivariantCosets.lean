@@ -38,7 +38,7 @@ theorem joinCol_source (hc : c' = 1) (r : Sp E (n' + c') ≃ₗ[E] Sp E (n' + c'
       rw [dif_neg hl, if_pos (Fin.val_last _), mul_one, zero_add]
   have e1 : r v = Loc.inX E n' 1 (g (LinearMap.funLeft E E (Fin.castAdd 1) v)) + v (Fin.last n') • Loc.eN E (n' + 1) n' := by
     conv_lhs => rw [e]
-    rw [map_add, map_smul, h, hr.2.1]
+    rw [map_add (f := _), map_smul, h, hr.2.1]
   have e2 : LinearMap.funLeft E E (Fin.castAdd 1) (r v) = g (LinearMap.funLeft E E (Fin.castAdd 1) v) := by
     funext l
     rw [LinearMap.funLeft_apply, e1, Pi.add_apply, CongLevel.inX_apply, Pi.smul_apply, Loc.eN, smul_eq_mul,

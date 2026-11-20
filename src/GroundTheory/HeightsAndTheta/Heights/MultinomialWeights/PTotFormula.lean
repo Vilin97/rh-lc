@@ -58,7 +58,7 @@ theorem TotFormula.proof (hK : RestTerms.FlagIntegralKillsPowerSums.Statement) :
         else 0 := by
     intro k hk σ
     rw [Finset.mem_Icc] at hk
-    rw [Derivation.leibniz, map_add, smul_eq_mul, smul_eq_mul,
+    rw [Derivation.leibniz, map_add (f := _), smul_eq_mul, smul_eq_mul,
       intFl_powerSum_mul hK d hk.1 hk.2, zero_add, totalDeriv_blockPowerSum]
     split_ifs with h
     · subst h

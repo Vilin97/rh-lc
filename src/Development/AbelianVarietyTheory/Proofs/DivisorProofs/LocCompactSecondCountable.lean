@@ -79,13 +79,13 @@ def basisEquiv {σ : L →+* L} (hσ : ∀ x, σ (σ x) = x) (hc : Continuous σ
   toFun x := θ * x 0 + d * x 1
   invFun z := ![⟨z + σ z, by show σ _ = _; simp [hσ, add_comm]⟩, ⟨d⁻¹ * (z - θ * (z + σ z)), by
     show σ _ = d⁻¹ * (z - θ * (z + σ z))
-    simp only [map_mul, map_inv₀, map_sub, map_add, hσ, hd, inv_neg]
+    simp only [map_mul, map_inv₀, map_sub, map_add (f := _), hσ, hd, inv_neg]
     linear_combination d⁻¹ * (z + σ z) * hθ⟩]
   left_inv x := by
     have h0 : σ (x 0) = x 0 := (x 0).2
     have h1 : σ (x 1) = x 1 := (x 1).2
     have h2 : θ * x 0 + d * x 1 + σ (θ * x 0 + d * x 1) = x 0 := by
-      simp only [map_mul, map_add, h0, h1, hd]
+      simp only [map_mul, map_add (f := _), h0, h1, hd]
       linear_combination (x 0 : L) * hθ
     funext i
     fin_cases i
@@ -216,7 +216,7 @@ include hσ hθ hd in
 theorem trace_corner (y : Fin n → L) (c : fixK σ) :
     θ * (rowOf σ y ⬝ᵥ y) + d * c + σ (θ * (rowOf σ y ⬝ᵥ y) + d * c) = rowOf σ y ⬝ᵥ y := by
   have h1 : σ c = c := c.2
-  rw [map_add, map_mul, map_mul, map_rowOf_dot hσ, hd, h1]
+  rw [map_add (f := _), map_mul, map_mul, map_rowOf_dot hσ, hd, h1]
   linear_combination (rowOf σ y ⬝ᵥ y) * hθ
 
 def coord (n : ℕ) : (lineParU σ hσ hc n).U ≃ₜ (Fin n → L) × fixK σ where

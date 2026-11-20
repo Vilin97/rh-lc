@@ -30,7 +30,7 @@ theorem descent_of_points_killed : ∀ (l : ℕ) [Fact l.Prime] (A B : Type) [Co
       | zero => simp
       | tmul b b' =>
         simp [U, Algebra.TensorProduct.algebraMap_apply, mul_comm]
-      | add y z hy hz => rw [add_mul, hy, hz, map_add]
+      | add y z hy hz => rw [add_mul, hy, hz, map_add (f := _)]
     rw [mem_nonZeroDivisors_iff_right]
     intro y hy
     rw [hmul] at hy

@@ -73,9 +73,9 @@ theorem Dec.add {γ δ : Matrix (Fin n) (Fin d) (AE F E)} (h : Dec σ X W H H' X
   obtain ⟨⟨a, ha, ea⟩, ⟨b, hb, eb⟩, hc⟩ := h
   obtain ⟨⟨a', ha', ea'⟩, ⟨b', hb', eb'⟩, hc'⟩ := h'
   refine ⟨⟨a + a', add_mem ha ha', ?_⟩, ⟨b + b', add_mem hb hb', ?_⟩, ?_⟩
-  · rw [map_add, map_add, ea, ea']; simp only [Prod.mk_add_mk, add_zero, Prod.fst_add, Prod.snd_add]
-  · rw [map_add, map_add, eb, eb']; simp only [Prod.mk_add_mk, add_zero, Prod.fst_add]
-  · rw [map_add]; exact add_mem hc hc'
+  · rw [map_add (f := _), map_add (f := _), ea, ea']; simp only [Prod.mk_add_mk, add_zero, Prod.fst_add, Prod.snd_add]
+  · rw [map_add (f := _), map_add (f := _), eb, eb']; simp only [Prod.mk_add_mk, add_zero, Prod.fst_add]
+  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hc hc'
 
 theorem Dec.neg {γ : Matrix (Fin n) (Fin d) (AE F E)} (h : Dec σ X W H H' X₁ W₁ v γ) :
     Dec σ X W H H' X₁ W₁ v (-γ) := by
@@ -135,7 +135,7 @@ theorem latAtV_dec : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
       simp only [← smul_add]
       congr 1
       ext i j
-      simp only [incM, Matrix.map_apply, Matrix.add_apply, Matrix.vecMulVec_apply, ← map_add]
+      simp only [incM, Matrix.map_apply, Matrix.add_apply, Matrix.vecMulVec_apply, ← map_add (f := _)]
       congr 1
       have e1 := congrFun ex i
       have e2 := congrFun ey j

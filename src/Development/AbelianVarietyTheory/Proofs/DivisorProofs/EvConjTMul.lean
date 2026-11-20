@@ -79,7 +79,7 @@ theorem rangeK : RangeK := by
   let Bl : U →ₗ[ℂ] U :=
     { toFun := fun v => ∫ k, ev (toMK k) P • π k v ∂(muK ε)
       map_add' := fun v w => by
-        simp only [map_add, smul_add]
+        simp only [map_add (f := _), smul_add]
         exact integral_add (hint P v) (hint P w)
       map_smul' := fun c v => by
         simp only [map_smul, RingHom.id_apply]

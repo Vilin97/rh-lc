@@ -56,7 +56,7 @@ def subProj {ρ : Representation ℂ G X} (S T : Subrepresentation ρ) (hc : IsC
     obtain ⟨s, hs, t, ht, rfl⟩ := Submodule.mem_sup.1 hx
     have hs' := S.apply_mem_toSubmodule g hs
     have ht' := T.apply_mem_toSubmodule g ht
-    simp only [LinearMap.comp_apply, map_add,
+    simp only [LinearMap.comp_apply, map_add (f := _),
       Submodule.projectionOnto_apply_of_mem_right hc.symm hs,
       Submodule.projectionOnto_apply_of_mem_right hc.symm hs',
       Submodule.projectionOnto_apply_of_mem_left hc.symm ht,

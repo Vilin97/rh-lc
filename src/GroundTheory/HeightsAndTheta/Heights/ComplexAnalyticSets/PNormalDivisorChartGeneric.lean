@@ -56,7 +56,7 @@ theorem isIntegral_mk_comp_rename {n : ℕ} {J : Ideal (MvPolynomial (Fin n) ℂ
     rw [h]
     exact isIntegral_algebraMap
   | add p q hp hq =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hp.add hq
   | mul_X p s hp =>
     rw [map_mul]

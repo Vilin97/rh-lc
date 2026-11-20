@@ -16,7 +16,7 @@ variable {R : Type} [CommRing R] {M : ℕ} (c : R →+* R) (Jm : Matrix (Fin M) 
 theorem form_left (p q : R) (a b w : Fin M → R) :
     Formalism.UG.hform c Jm (p • a + q • b) w =
       c p * Formalism.UG.hform c Jm a w + c q * Formalism.UG.hform c Jm b w := by
-  simp only [Formalism.UG.hform, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, Finset.mul_sum,
+  simp only [Formalism.UG.hform, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, Finset.mul_sum,
     ← Finset.sum_add_distrib]
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
 
@@ -104,7 +104,7 @@ theorem sigR_twice (hσ : ∀ x, σ (σ x) = x) (K : Type) [CommRing K] [Algebra
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [sigR, hσ]
-  | add y z hy hz => rw [map_add, map_add, hy, hz]
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
 
 theorem sigR_iota (K : Type) [CommRing K] [Algebra F K] (t : K) :
     sigR K σ (algebraMap K (K ⊗[F] E) t) = algebraMap K (K ⊗[F] E) t := by
@@ -140,7 +140,7 @@ theorem fixed_eq (htr : ∀ e : E, ∃ f : F, e + σ e = algebraMap F E f) (K : 
       obtain ⟨s, hs⟩ := hy
       obtain ⟨t, ht⟩ := hz
       refine ⟨s + t, ?_⟩
-      rw [map_add, map_add, ← hs, ← ht]
+      rw [map_add (f := _), map_add (f := _), ← hs, ← ht]
       ring
   obtain ⟨t, ht⟩ := hsum x
   rw [hx] at ht
@@ -193,7 +193,7 @@ theorem trace_mem (h : IsCMExt F E σ) (e : E) : ∃ f : F, e + σ e = algebraMa
       rw [finrank_span_singleton (one_ne_zero)]
       omega
   have hm : e + σ e ∈ LinearMap.ker φ := by
-    rw [LinearMap.mem_ker, hφ, map_add, sig_twice h]
+    rw [LinearMap.mem_ker, hφ, map_add (f := _), sig_twice h]
     ring
   rw [← hker] at hm
   obtain ⟨f, hf⟩ := Submodule.mem_span_singleton.1 hm

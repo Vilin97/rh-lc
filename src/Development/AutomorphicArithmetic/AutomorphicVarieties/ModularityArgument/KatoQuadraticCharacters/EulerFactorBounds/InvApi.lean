@@ -155,7 +155,7 @@ private def Im (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (N w n : ℕ) : Submod
     rintro a b ⟨⟨t, ht, hat⟩, ha, x, hx, hxa⟩ ⟨⟨s, hs, hbs⟩, hb, y, hy, hyb⟩
     obtain ⟨-, h, -⟩ := sApi Ω ε X l n
     refine ⟨⟨t + s, (Pm X l w n).add_mem ht hs, (h _ _ _ _ hat hbs).1⟩, fun γ hγ => ?_, x + y, add_mem hx hy, ?_⟩
-    · rw [map_add]; exact (h _ _ _ _ (ha γ hγ) (hb γ hγ)).1
+    · rw [map_add (f := _)]; exact (h _ _ _ _ (ha γ hγ) (hb γ hγ)).1
     · have := (h x ((l : ℤ_[l]) ^ cL X l N w • a) y ((l : ℤ_[l]) ^ cL X l N w • b) hxa hyb).1
       rw [← smul_add] at this
       exact this

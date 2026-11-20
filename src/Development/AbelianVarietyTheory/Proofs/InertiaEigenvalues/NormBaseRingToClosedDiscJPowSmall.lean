@@ -78,7 +78,7 @@ theorem GlobalTheory.BSP.norm_toDisc_J_pow_small : ∀ (l : ℕ) [Fact l.Prime] 
       exact hlmem
     · show s bk.E ∈ ballIdeal l (s X) ρ t
       obtain ⟨q, hq⟩ := exists_E_eq bk
-      rw [hq, map_add, map_mul, map_pow, map_natCast, mem_ballIdeal, map_add, map_mul, mul_comm, ← Algebra.smul_def]
+      rw [hq, map_add (f := _), map_mul, map_pow, map_natCast, mem_ballIdeal, map_add (f := _), map_mul, mul_comm, ← Algebra.smul_def]
       refine add_mem (Submodule.subset_span ⟨0, bk.Ep.natDegree, 0, ?_, by simp⟩) (Submodule.smul_mem _ _ hlmem)
       show (l:ℝ)^0 * (ρ:ℝ)^bk.Ep.natDegree ≤ t * (l:ℝ)^0
       simp only [pow_zero, one_mul, mul_one]

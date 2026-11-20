@@ -34,7 +34,7 @@ theorem restrictThirdZero_mul (f g : MvPowerSeries (Fin 3) K) : ev3 (f * g) = ev
   simp only [restrictThirdZero_eq_rescale, map_mul]
 
 theorem restrictThirdZero_add (f g : MvPowerSeries (Fin 3) K) : ev3 (f + g) = ev3 f + ev3 g := by
-  simp only [restrictThirdZero_eq_rescale, map_add]
+  simp only [restrictThirdZero_eq_rescale, map_add (f := _)]
 
 theorem restrictThirdZero_sub (f g : MvPowerSeries (Fin 3) K) : ev3 (f - g) = ev3 f - ev3 g := by
   simp only [restrictThirdZero_eq_rescale, map_sub]

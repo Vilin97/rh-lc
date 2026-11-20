@@ -89,8 +89,8 @@ theorem congruence_selfadj (B : InvAlg K) (a x y : K.O) (ha0 : a ≠ 0)
   have sa : B.σ (algebraMap K.O B.A a) = algebraMap K.O B.A a := by
     rw [σ_algebraMap, hac, ← IsScalarTower.algebraMap_apply]
   have h1 := congrArg B.σ hY
-  simp only [map_mul, map_sub, map_add, sx, sy, sa] at h1 hY hw
-  rw [map_add, map_one, map_mul, sa] at hu
+  simp only [map_mul, map_sub, map_add (f := _), sx, sy, sa] at h1 hY hw
+  rw [map_add (f := _), map_one, map_mul, sa] at hu
   set G := B.g
   set S := B.σ B.g
   set xA := algebraMap K.O B.A x

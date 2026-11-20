@@ -208,7 +208,7 @@ theorem UpperTheory.Kd.L.arith :
     calc (ex l n w (gm r₀ * liftSL _ γ) : Ω) * repM (topM l n m (N * N)) y (EE ε l (m + n) N x c d (gm r₀ * liftSL _ γ) (i : ℚ))
         = repM (topM l n m (N * N)) y ((ex l n w (gm r₀ * liftSL _ γ) : Ω) * EE ε l (m + n) N x c d (gm r₀ * liftSL _ γ) (i : ℚ)) := by
           rw [map_mul, map_natCast]
-      _ = _ := by rw [h1, map_add, map_mul, map_mul, map_pow, map_pow, map_natCast]
+      _ = _ := by rw [h1, map_add (f := _), map_mul, map_mul, map_pow, map_pow, map_natCast]
   have hS2Z : InZl ε l (m + n) S2 := isum _ _ fun y _ => isum _ _ fun r₀ _ => isum _ _ fun γ hγ => irep y _ (hE r₀ γ hγ).1
   have hE0 : InZl ε l (m + n) ((N : Ω) ^ 3 * S2) := imul _ _ iN3 hS2Z
   obtain ⟨E', hNT', hE'Z, -⟩ := GlobalTheory.T.exists_unique_normalizedCyclotomicTrace ε l (m + n) m hm (by omega) _ hE0
@@ -220,7 +220,7 @@ theorem UpperTheory.Kd.L.arith :
       (N : Ω) ^ 3 * (l : Ω) ^ ((m + n) * w) * τ a S1 + (l : Ω) ^ n * τ' a ((N : Ω) ^ 3 * S2) := by
     intro a
     rw [← IsNTr.apply_eq_of_mem_adjoin hE0.mem_adjoin ((hτ a).trans (hτ' a).symm)]
-    simp only [map_mul, map_add, map_pow, map_natCast]
+    simp only [map_mul, map_add (f := _), map_pow, map_natCast]
     ring
   have hB : (l : Ω) ^ (m + n) = (l : Ω) ^ n * (l : Ω) ^ m := by rw [add_comm, pow_add]
   have hln : (l : Ω) ^ n ≠ 0 := pow_ne_zero _ (Nat.cast_ne_zero.2 hl.ne_zero)

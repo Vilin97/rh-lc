@@ -48,7 +48,7 @@ theorem isUnit_subst {u : PowerSeries K} (hu : constantCoeff u = 1) {σ : Type}
   have ha : PowerSeries.HasSubst s := PowerSeries.HasSubst.of_constantCoeff_zero hs
   obtain ⟨u', hu'⟩ := PowerSeries.X_dvd_iff.mpr (show constantCoeff (u - 1) = 0 by simp [hu])
   have h1 : u = 1 + X * u' := by rw [← hu']; ring
-  rw [MvPowerSeries.isUnit_iff_constantCoeff, h1, ← PowerSeries.coe_substAlgHom ha, map_add,
+  rw [MvPowerSeries.isUnit_iff_constantCoeff, h1, ← PowerSeries.coe_substAlgHom ha, map_add (f := _),
     map_one, map_mul, PowerSeries.coe_substAlgHom, PowerSeries.subst_X ha]
   simp [hs]
 

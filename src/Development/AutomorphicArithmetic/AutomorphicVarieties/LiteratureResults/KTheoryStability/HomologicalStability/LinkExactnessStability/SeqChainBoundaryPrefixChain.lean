@@ -30,7 +30,7 @@ theorem bd_mapDomain_prepend : ∀ (V : Type) (τ : List V) (c : List V →₀ �
   induction c using Finsupp.induction_linear with
   | zero => simp
   | add f g hf hg =>
-    rw [Finsupp.mapDomain_add, map_add, hf, hg, map_add, Finsupp.mapDomain_add, smul_add,
+    rw [Finsupp.mapDomain_add, map_add (f := _), hf, hg, map_add (f := _), Finsupp.mapDomain_add, smul_add,
       Finsupp.sum_add_index' (by intro; simp) (by intros; simp [add_smul])]
     abel
   | single w a =>

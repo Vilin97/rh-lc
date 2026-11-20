@@ -118,7 +118,7 @@ theorem eq_mul_thetaSum_coset : ∀ (F : Type) [Field F] [NumberField F] (κ : T
         congr 1
         funext i
         show InfiniteAdeleRing.ringEquiv_mixedSpace F ((x i).1 + (algebraMap F (AF F) (ξ i)).1) = _
-        rw [map_add]
+        rw [map_add (f := _)]
         congr 1
         exact (InfiniteAdeleRing.mixedEmbedding_eq_algebraMap_comp (K := F)).symm
       · show g ((fun i => (x i).2) + ratFin F κ ξ) = g (fun i => (x i).2)

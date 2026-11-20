@@ -38,11 +38,11 @@ def lift (φ : L →ₐ[K] A) (v : (L ≃ₐ[K] L) → A)
   map_mul' x y := by
     induction x using induction_on with
     | zero => simp
-    | add x x' hx hx' => rw [add_mul, map_add, map_add, hx, hx', add_mul]
+    | add x x' hx hx' => rw [add_mul, map_add (f := _), map_add (f := _), hx, hx', add_mul]
     | single σ a =>
     induction y using induction_on with
     | zero => simp
-    | add y y' hy hy' => rw [mul_add, map_add, map_add, hy, hy', mul_add]
+    | add y y' hy hy' => rw [mul_add, map_add (f := _), map_add (f := _), hy, hy', mul_add]
     | single τ b =>
     rw [single_mul_single, liftAdd_single, liftAdd_single, liftAdd_single, map_mul, map_mul]
     simp only [mul_assoc]
@@ -74,7 +74,7 @@ theorem algHom_ext {g₁ g₂ : CrossedProduct hf →ₐ[K] A} (hL : ∀ a, g₁
   ext x
   induction x using induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | single σ a => rw [← incl_mul_u, map_mul, map_mul, hL, hu]
 
 end lift

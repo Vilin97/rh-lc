@@ -25,7 +25,7 @@ theorem DeRham.corr_aeval_push : ∀ (R R' : Type) [CommRing R] [CommRing R'] (�
     simp only [Polynomial.aeval_C, Polynomial.map_C, Module.algebraMap_end_apply,
       LinearMap.smul_apply, smul_eq_mul, hx c, map_mul]
   · intro p q hp hq x x' hx c
-    simp only [Polynomial.map_add, map_add, LinearMap.add_apply, hp x x' hx c, hq x x' hx c]
+    simp only [Polynomial.map_add (f := _), map_add (f := _), LinearMap.add_apply, hp x x' hx c, hq x x' hx c]
   · intro n a ih x x' hx
     have h := ih _ _ (hT x x' hx)
     rw [_root_.pow_succ, ← _root_.mul_assoc, Polynomial.map_mul, Polynomial.map_X]

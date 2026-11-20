@@ -52,7 +52,7 @@ theorem multT_apply_cusp {W : HSp D} {S : D.what₂.Tau → SPar} (θ : InfFam D
     rw [hFv, LinearMap.map_smul, PiTensorProduct.lift.tprod]
     exact ⟨GlobalTheory.MultMem.isAutFunSm_smul r (hT.aut x), GlobalTheory.MultMem.isCuspFun_smul r (hT.cusp x)⟩
   | add a b ha hb =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact ⟨GlobalTheory.MultMem.isAutFunSm_add ha.1 hb.1,
       GlobalTheory.MultMem.isCuspFun_add ha.1.toIsAutFun hb.1.toIsAutFun ha.2 hb.2⟩
 

@@ -173,7 +173,7 @@ theorem radSide_chain (X : Q.ActualOps k r z z' π π') (L : R.LevelData (Q.Pr (
       simp only [Wd.Ts, YangianSpanCharacter.T.Tm, P5.site, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
         Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
       rw [hp, hc]
-      simp only [map_add, map_mul, map_neg, AlgHom.commutes, LinearMap.add_apply, LinearMap.neg_apply,
+      simp only [map_add (f := _), map_mul, map_neg, AlgHom.commutes, LinearMap.add_apply, LinearMap.neg_apply,
         Module.End.mul_apply, Module.algebraMap_end_apply]
       rw [sub_eq_add_neg]
       rfl
@@ -184,7 +184,7 @@ theorem radSide_chain (X : Q.ActualOps k r z z' π π') (L : R.LevelData (Q.Pr (
       simp only [Wd.Ts, YangianSpanCharacter.T.Tm, P5.site, Matrix.of_apply, Matrix.cons_val', Matrix.cons_val_zero,
         Matrix.cons_val_one, Matrix.empty_val', Matrix.cons_val_fin_one, Matrix.head_cons]
       rw [hci]
-      simp only [map_add, map_mul, map_zero, zero_mul, add_zero, Module.End.mul_apply]
+      simp only [map_add (f := _), map_mul, map_zero, zero_mul, add_zero, Module.End.mul_apply]
       rfl
     rw [e0, e1]
     simp only [Q.vAB, dif_pos hnr, Q.crd]

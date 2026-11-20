@@ -79,7 +79,7 @@ theorem GlobalTheory.LogFlatLam.exists_lam : ∀ (l : ℕ) [Fact l.Prime] (K : F
   set yA := ι (Polynomial.X + Polynomial.C b) with hyA
   have hy : ∀ g : ↥(GK K), P.actQdR (g : GQ l) yA = yA + P.ιB ((c g : ℚ_[l]) • P.tB) := by
     intro g
-    rw [hyA, ← hιg, hact g, map_add, hιC]
+    rw [hyA, ← hιg, hact g, map_add (f := _), hιC]
   have hKc : ∀ (g : ↥(GK K)) (d : ↥K.1), P.actQdR (g : GQ l) (algebraMap ↥K.1 P.R.BdR d) =
       algebraMap ↥K.1 P.R.BdR d := by
     intro g d
@@ -99,8 +99,8 @@ theorem GlobalTheory.LogFlatLam.exists_lam : ∀ (l : ℕ) [Fact l.Prime] (K : F
   have hequiv : ∀ g : ↥(GK K), Per.σDp (g : GQ l) lam = lam + aDp l (Per.zA l (c g)) * C.j C.t := by
     intro g
     apply hinj
-    rw [map_add, ← σD_alg, hlamE, ← T.actD, hlamA, map_sub, hKc, hy]
-    simp only [map_sub, map_add, eD_smul_tB hF]
+    rw [map_add (f := _), ← σD_alg, hlamE, ← T.actD, hlamA, map_sub, hKc, hy]
+    simp only [map_sub, map_add (f := _), eD_smul_tB hF]
     ring
   refine ⟨lam, hequiv, fun m => ?_⟩
   obtain ⟨k, s, hEs, hs⟩ := happrox m

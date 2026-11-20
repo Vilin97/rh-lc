@@ -35,7 +35,7 @@ private lemma htDualRing_π {R₀ : Type} [CommRing R₀] {Λ S : LAlg R₀} (Dq
   obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective x
   induction f using Polynomial.induction_on with
   | C a => rw [htDualRing_C, Dq.sect, DualNum.ev_mk, Polynomial.eval_C]
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
   | monomial n a _ =>
     have h := htDualRing_X Dq ψ
     rw [DualNum.eta] at h
@@ -134,7 +134,7 @@ theorem evHt_of_lam :
       show t i = ((PadicInt.toZMod (t i)).val : ℤ_[p]) + _
       ring
     rw [D.L.Ht_eq, Function.comp_apply, e3]
-    rw [map_add, map_mul (algebraMap ℤ_[p] (Tw.O : Type)), map_natCast, map_natCast, map_mul, map_add,
+    rw [map_add (f := _), map_mul (algebraMap ℤ_[p] (Tw.O : Type)), map_natCast, map_natCast, map_mul, map_add (f := _),
       map_mul (Tw.q 0).1, map_natCast, map_natCast, hp0, zero_mul, add_zero, natCast_zsmul,
       LinearMap.smul_apply, nsmul_eq_mul, mul_comm]
     rfl

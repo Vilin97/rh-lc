@@ -65,7 +65,7 @@ section FibreVec
 variable (h : HermitianMetric K E) (σ : K →+* ℂ)
 
 theorem fibreVec_add (e f : E) : fibreVec h σ (e + f) = fibreVec h σ e + fibreVec h σ f := by
-  simp only [fibreVec, tmul_add, map_add]
+  simp only [fibreVec, tmul_add, map_add (f := _)]
 
 theorem fibreVec_smul (a : 𝓞 K) (e : E) :
     fibreVec h σ (a • e) = (σ (a : K)) • fibreVec h σ e := by

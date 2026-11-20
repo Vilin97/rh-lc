@@ -110,7 +110,7 @@ theorem latticeCoord_conjMap (σ : K →+* ℂ) {N : ℕ} (M : Submodule (𝓞 K
     rw [conjMap_tmul, latticeCoord_tmul, Pi.star_apply, latticeCoord_tmul, conjugate_coe_eq]
     change _ * starRingEnd ℂ ((ofComplex σ).symm z) = _
     simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, star_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), star_add]
 
 @[instance_reducible]
 def matrixCore {V : Type*} [AddCommGroup V] [Module ℂ V] {ι : Type*} [Fintype ι]
@@ -130,7 +130,7 @@ def matrixCore {V : Type*} [AddCommGroup V] [Module ℂ V] {ι : Type*} [Fintype
   re_inner_nonneg x := by
     have := hH.posSemidef.dotProduct_mulVec_nonneg (Ψ x)
     exact (Complex.nonneg_iff.mp this).1
-  add_left x y z := by simp only [map_add, star_add, add_dotProduct]
+  add_left x y z := by simp only [map_add (f := _), star_add, add_dotProduct]
   smul_left x y r := by simp only [map_smul, star_smul, smul_dotProduct, smul_eq_mul, RCLike.star_def]
   definite x h := by
     by_contra hx

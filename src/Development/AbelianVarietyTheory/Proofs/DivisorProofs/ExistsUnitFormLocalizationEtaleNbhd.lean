@@ -16,7 +16,7 @@ private lemma exists_sub_mem_span_pow_of_surj_mod_span {B A₂ : Type} [CommRing
     refine ⟨a + f ^ n * a₁, Ideal.mem_span_singleton'.2 ⟨s, ?_⟩⟩
     have hr' : a' = r * algebraMap B A₂ f ^ n + algebraMap B A₂ a := by rw [hr]; ring
     have hs' : r = s * algebraMap B A₂ f + algebraMap B A₂ a₁ := by rw [hs]; ring
-    rw [hr', hs', map_add, map_mul, map_pow]
+    rw [hr', hs', map_add (f := _), map_mul, map_pow]
     ring
 
 theorem _root_.GlobalTheory.DivUnitForm.unit_form : ∀ (B A₂ : Type) [CommRing B] [CommRing A₂]

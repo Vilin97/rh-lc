@@ -33,7 +33,7 @@ theorem valAt'_mul {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) (f f' : Γ(X, U)) :
 
 theorem valAt'_add {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) (f f' : Γ(X, U)) :
     valAt' x U (f + f') = valAt' x U f + valAt' x U f' := by
-  simp only [valAt'_eq_valHom x h, map_add]
+  simp only [valAt'_eq_valHom x h, map_add (f := _)]
 
 theorem valAt'_sum {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) {I : Type*} (t : Finset I) (f : I → Γ(X, U)) :
     valAt' x U (∑ i ∈ t, f i) = ∑ i ∈ t, valAt' x U (f i) := by

@@ -127,7 +127,7 @@ private theorem fix_of_real {Z Ω F' : Type} [Field Z] [NumberField Z] [IsCMFiel
     · exact h
   intro y
   have ha : (y + c y) / 2 ∈ maximalRealSubfield Z := by
-    rw [← IsCMField.complexConj_eq_self_iff, map_div₀, map_add, IsCMField.complexConj_apply_apply, map_ofNat]
+    rw [← IsCMField.complexConj_eq_self_iff, map_div₀, map_add (f := _), IsCMField.complexConj_apply_apply, map_ofNat]
     ring
   have hb : (y - c y) / (2 * X) ∈ maximalRealSubfield Z := by
     rw [← IsCMField.complexConj_eq_self_iff, map_div₀, map_sub, map_mul, IsCMField.complexConj_apply_apply, map_ofNat, ← hc, hcX]
@@ -138,7 +138,7 @@ private theorem fix_of_real {Z Ω F' : Type} [Field Z] [NumberField Z] [IsCMFiel
     ring
   have h1 : g (algebraMap Z Ω ((y + c y) / 2)) = algebraMap Z Ω ((y + c y) / 2) := hreal ⟨_, ha⟩
   have h2 : g (algebraMap Z Ω ((y - c y) / (2 * X))) = algebraMap Z Ω ((y - c y) / (2 * X)) := hreal ⟨_, hb⟩
-  rw [hy, map_add, map_mul, map_add, map_mul, h1, h2, hgx]
+  rw [hy, map_add (f := _), map_mul, map_add (f := _), map_mul, h1, h2, hgx]
 
 private theorem conj_of_sq {u : ℂ} {q : ℕ} (hq : 0 < q) (h : u ^ 2 = (q : ℂ)) : star u = u := by
   have h1 := congrArg Complex.re h

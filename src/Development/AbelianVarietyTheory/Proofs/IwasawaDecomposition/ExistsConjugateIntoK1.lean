@@ -52,7 +52,7 @@ theorem cpt_swap {E : Type} [Field E] [NumberField E] [IsCMField E] (F1 : Subfie
   induction y using TensorProduct.induction_on with
   | zero => simp
   | add y z hy hz =>
-    rw [map_add, map_add, map_add, map_add, ← hy, ← hz]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), ← hy, ← hz]
     rfl
   | tmul x a =>
     change Φ (a ⊗ₜ x) s.w = c (s.i x * ReciprocityTheory.Aut.evalAt E s.v a)

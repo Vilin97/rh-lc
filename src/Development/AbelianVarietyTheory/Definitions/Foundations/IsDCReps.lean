@@ -21,7 +21,7 @@ def Z1 (Γ : Subgroup SL(2, ℤ)) (w : ℕ) : Submodule ℂ (Γ → ℂ[X]) wher
   add_mem' := by
     rintro z z' ⟨h1, h2⟩ ⟨h1', h2'⟩
     refine ⟨fun γ => Submodule.add_mem _ (h1 γ) (h1' γ), fun γ δ => ?_⟩
-    simp only [Pi.add_apply, h2, h2', map_add]
+    simp only [Pi.add_apply, h2, h2', map_add (f := _)]
     abel
   zero_mem' := ⟨fun _ => Submodule.zero_mem _, fun _ _ => by simp⟩
   smul_mem' := by

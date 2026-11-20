@@ -40,7 +40,7 @@ theorem tensorToHom_ev (f : A →ₐ[R] D) (g : B →ₐ[R] E) (u : A ⊗[R] B) 
     tensorToHom R D E (ev (Algebra.TensorProduct.includeLeft.comp f) (Algebra.TensorProduct.includeRight.comp g) u) φ =
       f (tensorToHom R A B u (transpose g.toLinearMap φ)) := by
   induction u with
-  | add s t hs ht => simp only [map_add, LinearMap.add_apply, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, hs, ht]
   | tmul a b => simp
 
 theorem tensorToHom_mul_right (u v : A ⊗[R] B) (φ ψ : CartierDual R B) :
@@ -51,10 +51,10 @@ theorem tensorToHom_mul_right (u v : A ⊗[R] B) (φ ψ : CartierDual R B) :
           (Algebra.TensorProduct.includeRight.comp Algebra.TensorProduct.includeRight) v : A ⊗[R] (B ⊗[R] B))
       (toConv (pair R B B (φ ⊗ₜ ψ))) = tensorToHom R A B u φ * tensorToHom R A B v ψ := by
   induction u with
-  | add s t hs ht => simp only [map_add, LinearMap.add_apply, add_mul, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, add_mul, hs, ht]
   | tmul a b =>
     induction v with
-    | add s t hs ht => simp only [map_add, LinearMap.add_apply, mul_add, hs, ht]
+    | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, mul_add, hs, ht]
     | tmul a' b' => simp [mul_smul, smul_comm (φ.ofConv b)]
 
 theorem tensorToHom_mul_left [Module.Finite R B] [Module.Projective R B] (u v : A ⊗[R] B) (φ : CartierDual R B) :
@@ -65,16 +65,16 @@ theorem tensorToHom_mul_left [Module.Finite R B] [Module.Projective R B] (u v : 
           Algebra.TensorProduct.includeRight v : (A ⊗[R] A) ⊗[R] B) φ =
       TensorProduct.map (tensorToHom R A B u) (tensorToHom R A B v) (Coalgebra.comul φ) := by
   induction u with
-  | add s t hs ht => simp only [map_add, LinearMap.add_apply, add_mul, hs, ht, TensorProduct.map_add_left]
+  | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, add_mul, hs, ht, TensorProduct.map_add_left]
   | tmul a b =>
     induction v with
-    | add s t hs ht => simp only [map_add, LinearMap.add_apply, mul_add, hs, ht, TensorProduct.map_add_right]
+    | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, mul_add, hs, ht, TensorProduct.map_add_right]
     | tmul a' b' =>
       have key : ∀ t : CartierDual R B ⊗[R] CartierDual R B,
           TensorProduct.map (tensorToHom R A B (a ⊗ₜ b)) (tensorToHom R A B (a' ⊗ₜ b')) t =
             pair R B B t (b ⊗ₜ b') • (a ⊗ₜ a') := fun t => by
         induction t with
-        | add s t hs ht => simp only [map_add, LinearMap.add_apply, add_smul, hs, ht]
+        | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, add_smul, hs, ht]
         | tmul f g => simp [← smul_tmul', smul_smul, mul_comm]
       rw [key, pair_comul_tmul]
       simp
@@ -111,7 +111,7 @@ def IsBimul.hom : CartierDual R B →ₐc[R] A where
     have k : ∀ v : A ⊗[R] B, Coalgebra.counit (tensorToHom R A B v φ) =
         φ (ev (1 : WithConv (A →ₐ[R] B)).ofConv (AlgHom.id R B) v) := fun v => by
       induction v with
-      | add s t hs ht => simp only [map_add, LinearMap.add_apply, hs, ht]
+      | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, hs, ht]
       | tmul a b =>
         have : φ.ofConv (algebraMap R B (Coalgebra.counit a) * b) = Coalgebra.counit a * φ.ofConv b := by
           rw [← Algebra.smul_def, map_smul, smul_eq_mul]
@@ -132,7 +132,7 @@ def IsBimul.hom : CartierDual R B →ₐc[R] A where
     have k : ∀ v : A ⊗[R] B, tensorToHom R A B v 1 =
         ev (AlgHom.id R A) (1 : WithConv (B →ₐ[R] A)).ofConv v := fun v => by
       induction v with
-      | add s t hs ht => simp only [map_add, LinearMap.add_apply, hs, ht]
+      | add s t hs ht => simp only [map_add (f := _), LinearMap.add_apply, hs, ht]
       | tmul a b => simp [Algebra.smul_def, mul_comm]
     exact (k u).trans e'
   map_mul' φ ψ := by

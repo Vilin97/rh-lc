@@ -50,7 +50,7 @@ theorem GlobalTheory.KSp.parFun_sieg_mul : ∀ (F : Type) [Field F] [CharZero F]
       simp only [hm, Matrix.transpose_map, hcc, transpose_mul, transpose_transpose, h1c] at h
       exact h
     have hadd : ∀ u v w : Matrix α ν E, pr c Q u (v + w) = pr c Q u v + pr c Q u w := by
-      intro u v w; rw [← hβ, ← hβ, ← hβ, map_add]
+      intro u v w; rw [← hβ, ← hβ, ← hβ, map_add (f := _)]
     have hkey : pr c Q (x * A * A') (x * B * D') = pr c Q (x * A) (x * B) := by
       rw [← hβ, ← hβ, hadj, Matrix.mul_assoc (x * B), hDA, Matrix.mul_one]
     simp only [parFun, e11, e12, det_mul, hscmul, Matrix.mul_add, ← Matrix.mul_assoc, hadd, hkey, mul_add,

@@ -180,7 +180,7 @@ theorem kcrt_holds {m₁ m₂ : ℕ} (h : Nat.Coprime m₁ m₂) : Formalism.L2.
   have hC₁ : iA I (1 - s) = (m₁ : I.E ⊗[I.F] Af I.F) * iA I c₁ := by rw [e₁, map_mul, map_natCast]
   have hC₂ : iA I s = (m₂ : I.E ⊗[I.F] Af I.F) * iA I c₂ := by rw [e₂, map_mul, map_natCast]
   have h0 : iA I (1 - s) * iA I s = 0 := by rw [← map_mul, sub_mul, one_mul, hss, sub_self, map_zero]
-  have h1 : iA I (1 - s) + iA I s = 1 := by rw [← map_add, sub_add_cancel, map_one]
+  have h1 : iA I (1 - s) + iA I s = 1 := by rw [← map_add (f := _), sub_add_cancel, map_one]
   refine ⟨mkG I _ hu₁ (sig_iA I _) x, mkG_Kg I hu₁ (sig_iA I _) hI₁ (iA_mem I hc₁) hC₁ hx,
     mkG I _ hu₂ (sig_iA I _) x, mkG_Kg I hu₂ (sig_iA I _) hI₂ (iA_mem I hc₂) hC₂ hx, ?_⟩
   refine Subtype.ext (Units.ext ?_)

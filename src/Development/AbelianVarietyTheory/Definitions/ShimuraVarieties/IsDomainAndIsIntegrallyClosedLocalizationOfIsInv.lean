@@ -175,7 +175,7 @@ theorem isInvariant_of_isBaseChange_of_sum_eq_one {c : A} (hc : ∑ g : G, g •
     | smul b x hx =>
       rw [map_smul, smul_eq_mul, map_mul, hx, ← Algebra.smul_def, Finset.smul_sum]
       simp only [mul_smul_comm, smul_comm _ b]
-    | add x y hx hy => simp only [map_add, hx, hy, mul_add, smul_add, Finset.sum_add_distrib]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy, mul_add, smul_add, Finset.sum_add_distrib]
   have h1 : τ 1 = 1 := by
     have : FreeQuotient.ringTrace G B A c = 1 := FaithfulSMul.algebraMap_injective B A (by
       rw [FreeQuotient.algebraMap_ringTrace, hc, map_one])
@@ -427,7 +427,7 @@ theorem exists_comp_eq (f : X ⟶ Z) (hf : ∀ g, (ρ g).hom ≫ f = f) : ∃ f'
       map_one' := h.app_injective _ (by rw [hc, map_one, map_one])
       map_mul' a b := h.app_injective _ (by rw [map_mul, hc, hc, hc, map_mul])
       map_zero' := h.app_injective _ (by rw [hc, map_zero, map_zero])
-      map_add' a b := h.app_injective _ (by rw [map_add, hc, hc, hc, map_add]) }
+      map_add' a b := h.app_injective _ (by rw [map_add (f := _), hc, hc, hc, map_add (f := _)]) }
   have hc' (W : Z.Opens) : c' W ≫ π.app (V W) = f.appLE W _ (e W) := by
     ext s; exact hc W s
   let m : Y.toPresheafedSpace.Hom Z.toPresheafedSpace :=

@@ -119,8 +119,8 @@ def sqUnif {L : LB A.left} (u : HolUnif A L g) : HolUnif (A ⊗ A) (trivLB (A �
   ex v := lift (u.ex (halfL g v)) (u.ex (halfR g v))
   ex_add z w := by
     refine CartesianMonoidalCategory.hom_ext _ _ ?_ ?_
-    · rw [MonObj.mul_comp, lift_fst, lift_fst, lift_fst, map_add, u.ex_add]
-    · rw [MonObj.mul_comp, lift_snd, lift_snd, lift_snd, map_add, u.ex_add]
+    · rw [MonObj.mul_comp, lift_fst, lift_fst, lift_fst, map_add (f := _), u.ex_add]
+    · rw [MonObj.mul_comp, lift_snd, lift_snd, lift_snd, map_add (f := _), u.ex_add]
   ex_onto p := by
     obtain ⟨x, hx⟩ := u.ex_onto (p ≫ fst _ _)
     obtain ⟨y, hy⟩ := u.ex_onto (p ≫ snd _ _)

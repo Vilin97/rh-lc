@@ -45,7 +45,7 @@ def CplFun (Y : Cpl S) : Submodule K (S.D → Y.Yb → S.V) where
   carrier := {G | ∀ (g : S.G) (d : S.D) (y : Y.Yb), G (g • d) (g • y) = S.ρ g (G d y)}
   add_mem' := fun {G G'} h h' g d y => by
     show G (g • d) (g • y) + G' (g • d) (g • y) = S.ρ g (G d y + G' d y)
-    rw [h, h', map_add]
+    rw [h, h', map_add (f := _)]
   zero_mem' := fun g _ _ => (map_zero (S.ρ g)).symm
   smul_mem' := fun a G h g d y => by
     show a • G (g • d) (g • y) = S.ρ g (a • G d y)
@@ -90,7 +90,7 @@ def cp1Op {S₀ : GSD K} {Y : Cpl S} (k1 : S₀.D → S.D → Y.Yb → (S₀.V �
     show S₀.csOf h₀ s₀ (fun d₀ => k1 d₀ d y ((φ : S₀.D → S₀.V) d₀ + (ψ : S₀.D → S₀.V) d₀)) =
       S₀.csOf h₀ s₀ (fun d₀ => k1 d₀ d y ((φ : S₀.D → S₀.V) d₀)) + S₀.csOf h₀ s₀ (fun d₀ => k1 d₀ d y ((ψ : S₀.D → S₀.V) d₀))
     unfold GSD.csOf
-    simp only [map_add, smul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), smul_add, Finset.sum_add_distrib]
   map_smul' a φ := by
     apply Subtype.ext
     funext d y
@@ -110,7 +110,7 @@ def cp2Fun (Y : Cpl S) {D₁ V₁ : Type} [AddCommGroup V₁] [Module K V₁] (k
       S.csOf h s (fun d => ∑ y ∈ (Y.fin d).toFinset, k2 d y e ((G : S.D → Y.Yb → S.V) d y)) +
         S.csOf h s (fun d => ∑ y ∈ (Y.fin d).toFinset, k2 d y e ((G' : S.D → Y.Yb → S.V) d y))
     unfold GSD.csOf
-    simp only [map_add, smul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), smul_add, Finset.sum_add_distrib]
   map_smul' a G := by
     funext e
     show S.csOf h s (fun d => ∑ y ∈ (Y.fin d).toFinset, k2 d y e (a • (G : S.D → Y.Yb → S.V) d y)) =

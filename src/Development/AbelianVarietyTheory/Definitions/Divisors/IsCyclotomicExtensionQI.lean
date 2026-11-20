@@ -126,7 +126,7 @@ def bcMap {R R' : Type} [CommRing R] [Algebra ℚ R] [CommRing R'] [Algebra ℚ 
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul r y => rfl
-      | add x y hx hy => simp only [map_add, hx, hy])
+      | add x y hx hy => simp only [map_add (f := _), hx, hy])
     (fun a => rfl)
     (by rw [Matrix.map_map]; congr 1; funext x; simp [Algebra.TensorProduct.map_tmul])
 
@@ -336,7 +336,7 @@ def ubcMap {R R' : Type} [CommRing R] [Algebra ℚ R] [CommRing R'] [Algebra ℚ
       | tmul r y =>
         simp only [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, Algebra.TensorProduct.map_tmul, AlgHom.id_apply,
           starT_tmul]
-      | add x y hx hy => simp only [map_add, MulOpposite.unop_add, hx, hy])
+      | add x y hx hy => simp only [map_add (f := _), MulOpposite.unop_add, hx, hy])
     (fun a => by simp [Algebra.TensorProduct.algebraMap_apply])
 
 def uSimQ : UQpts star →* ℚˣ := (MonoidHom.snd _ _).comp (UQpts star).subtype
@@ -675,7 +675,7 @@ def hermStar (H : Matrix (Fin n) (Fin n) F) (hdet : H.det ≠ 0) :
   map_zero' := by simp
   map_add' x y := by
     apply MulOpposite.unop_injective
-    simp [Matrix.map_add, Matrix.transpose_add, Matrix.mul_add, Matrix.add_mul]
+    simp [Matrix.map_add (f := _), Matrix.transpose_add, Matrix.mul_add, Matrix.add_mul]
 
 theorem hermStar_apply (H : Matrix (Fin n) (Fin n) F) (hdet : H.det ≠ 0) (x : Matrix (Fin n) (Fin n) F) :
     (hermStar H hdet x).unop = (H.map (IsCMField.complexConj F : F →+* F))⁻¹ *

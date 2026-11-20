@@ -154,7 +154,7 @@ theorem pureTensorO_subst : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : 
     rw [← mul_one (MvPolynomial.C a), MvPolynomial.C_mul', map_smul, map_smul, map_smul, map_one (substF _ _)]
     unfold pureTensorO
     rw [pure_one, pure_one]
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p v hp =>
     have hm : IsThetaFunO ψ S T
         (pureTensorO ψ θ S T (fun _ => 1) (fun _ => 1) BS BT f (substF h (fun τ => ((g τ)⁻¹)ᵀ) p)) :=

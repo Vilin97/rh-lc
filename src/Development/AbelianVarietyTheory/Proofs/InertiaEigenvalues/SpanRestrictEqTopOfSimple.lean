@@ -79,7 +79,7 @@ theorem span_restrict_eq_top_of_irreducible : ∀ {k Γ : Type} [Field k] [Group
       · rw [hpdef, hpdef, hI.ofBijective_coeLinearMap_of_mem_ne hij hx,
           hI.ofBijective_coeLinearMap_of_mem_ne hij (hs i g x hx), map_zero]
     | zero => simp
-    | add x y _ _ hx hy => simp only [map_add, hx, hy]
+    | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy]
   obtain ⟨w0, hw0, hw0'⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hne
   have : ∃ j, p j w0 ≠ 0 := by
     by_contra hcon

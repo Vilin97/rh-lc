@@ -156,7 +156,7 @@ theorem hi_exists_conj {I J : Ideal (𝓞 E)} (hJ : ∀ a ∈ J, cO E a ∈ J) (
     ∃ α ∈ I, ∃ β ∈ J, α + β = 1 ∧ cO E α = α ∧ cO E β = β := by
   obtain ⟨a, ha, b, hb, hab⟩ :=
     Submodule.mem_sup.1 (show (1 : 𝓞 E) ∈ I ⊔ J by rw [hIJ]; exact Submodule.mem_top)
-  have hc1 : cO E a + cO E b = 1 := by rw [← map_add, hab, map_one]
+  have hc1 : cO E a + cO E b = 1 := by rw [← map_add (f := _), hab, map_one]
   refine ⟨a * cO E a, Ideal.mul_mem_right _ _ ha, 1 - a * cO E a, ?_, by ring, ?_, ?_⟩
   · have e : 1 - a * cO E a = a * cO E b + b * cO E a + b * cO E b := by
       have h1 : (a + b) * (cO E a + cO E b) = 1 := by rw [hab, hc1, one_mul]
@@ -194,7 +194,7 @@ theorem hiCorner_mem_dual {α β : 𝓞 E} (hα : cO E α = α) (hβ : cO E β =
     obtain ⟨y1, hy1, y2, hy2, rfl⟩ := Submodule.mem_sup.1 hy
     obtain ⟨m, hm, rfl⟩ := (Submodule.mem_smul_pointwise_iff_exists _ _ _).1 hy1
     obtain ⟨z, hz, rfl⟩ := (Submodule.mem_smul_pointwise_iff_exists _ _ _).1 hy2
-    rw [map_add, LinearMap.add_apply, hi_hStd_conj hα, hi_hStd_conj hβ]
+    rw [map_add (f := _), LinearMap.add_apply, hi_hStd_conj hα, hi_hStd_conj hβ]
     exact Submodule.add_mem _ ((mem_dual M _).1 hM' m hm) ((mem_dual N _).1 hN' z hz)
 
 theorem hiCorner_unimodular {α β : 𝓞 E} (hab : α + β = 1) (hα : cO E α = α) (hβ : cO E β = β)

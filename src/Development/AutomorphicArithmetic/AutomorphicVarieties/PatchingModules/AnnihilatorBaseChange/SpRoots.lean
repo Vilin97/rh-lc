@@ -20,4 +20,4 @@ theorem UpperTheory.V.Pa.Core.spRoots :
     rw [Polynomial.coeff_map, Polynomial.coeff_map, ← hC]
     refine (Ideal.Quotient.eq (I := spIdeal P ut)).2 ?_
     exact Ideal.subset_span ⟨j, k, by rw [Polynomial.coeff_sub, Polynomial.coeff_map]⟩
-  · rw [Sp.u, map_add, hC, add_sub_cancel_left]
+  · rw [Sp.u, map_add (f := _), hC, add_sub_cancel_left]

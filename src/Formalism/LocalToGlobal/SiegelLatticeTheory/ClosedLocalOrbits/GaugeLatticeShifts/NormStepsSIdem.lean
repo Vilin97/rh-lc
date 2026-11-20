@@ -34,7 +34,7 @@ theorem val_g (v : HeightOneSpectrum (𝓞 X.B.I.F)) :
           | (simp only [map_zero, UniformSpace.Completion.coe_zero]; rfl)
         | succ n ih =>
           push_cast
-          rw [ih, map_add, map_one, UniformSpace.Completion.coe_add, UniformSpace.Completion.coe_one]
+          rw [ih, map_add (f := _), map_one, UniformSpace.Completion.coe_add, UniformSpace.Completion.coe_one]
           rfl)
   rw [h, HeightOneSpectrum.valuedAdicCompletion_eq_valuation', HeightOneSpectrum.valuation_of_algebraMap]
 

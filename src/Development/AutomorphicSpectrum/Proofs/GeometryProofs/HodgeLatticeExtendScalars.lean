@@ -72,7 +72,7 @@ theorem exists_transport {E : Type} [Field E] [NumberField E] {Ω W J C X : Type
       map_one' := hinj (by rw [hm, map_one, map_one, map_one])
       map_zero' := hinj (by rw [hm, map_zero, map_zero, map_zero])
       map_mul' := fun a b => hinj (by rw [map_mul, hm, hm, hm, map_mul, map_mul])
-      map_add' := fun a b => hinj (by rw [map_add, hm, hm, hm, map_add, map_add]) }
+      map_add' := fun a b => hinj (by rw [map_add (f := _), hm, hm, hm, map_add (f := _), map_add (f := _)]) }
   let ρX : 𝓞 E →+* Module.End C X :=
     ((Matrix.toLinAlgEquiv F).toRingEquiv.toRingHom.comp ψ.mapMatrix).comp mr
   have hρX : ∀ a j, ρX a (F j) = ∑ i, ψ (m a i j) • F i := by
@@ -192,7 +192,7 @@ theorem stable_of_isFreeOn {E K V A : Type} [Field E] [NumberField E] [CommRing 
     rw [e]
     refine Submodule.sum_mem _ fun j _ => Submodule.smul_of_tower_mem _ _ (Submodule.subset_span ⟨(q.1, j), rfl⟩)
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx =>
     rw [LinearMap.map_smul_of_tower]
     exact Submodule.smul_mem _ _ hx

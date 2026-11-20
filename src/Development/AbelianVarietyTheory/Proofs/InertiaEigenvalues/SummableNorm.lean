@@ -63,7 +63,7 @@ theorem tendsto_ev (hc : Bdd c) (hν : Small ν) {a : K⟦X⟧} (ha : SC a) :
 theorem ev_add (hc : Bdd c) (hν : Small ν) {a b : K⟦X⟧} (ha : SC a) (hb : SC b) :
     ev c ν (a + b) = ev c ν a + ev c ν b := by
   refine HasSum.tsum_eq ?_
-  simpa only [map_add, add_mul] using (hasSum_ev hc hν ha).add (hasSum_ev hc hν hb)
+  simpa only [map_add (f := _), add_mul] using (hasSum_ev hc hν ha).add (hasSum_ev hc hν hb)
 
 theorem ev_mul (hc : Bdd c) (hν : Small ν) {a b : K⟦X⟧} (ha : SC a) (hb : SC b) :
     ev c ν (a * b) = ev c ν a * ev c ν b := by
@@ -104,7 +104,7 @@ theorem ev_map {O : Type} [CommRing O] (j : O →+* K) (hν : Small ν) (hc : Bd
       f a - ν ^ m * f (mk fun i => coeff (i + m) a) := by
     intro m
     have e0 := congrArg f (eq_X_pow_mul_shift_add_trunc m a)
-    rw [e0, map_add, map_mul, map_pow, hX, add_sub_cancel_left, trunc_apply, Polynomial.coe_def]
+    rw [e0, map_add (f := _), map_mul, map_pow, hX, add_sub_cancel_left, trunc_apply, Polynomial.coe_def]
     have e : (mk (∑ k ∈ Ico 0 m, Polynomial.monomial k (coeff k a)).coeff : O⟦X⟧) =
         ∑ k ∈ range m, C (coeff k a) * X ^ k := by
       ext n

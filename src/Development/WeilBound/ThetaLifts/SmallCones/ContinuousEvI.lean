@@ -143,7 +143,7 @@ theorem slice_unif (hS : Slice) (hB : B.IsGood σ) (hM : M.IsGood B.ψ) (hM₁ :
     obtain ⟨a, a1, a2⟩ := h1
     obtain ⟨b, b1, b2⟩ := h2
     exact ⟨a + b, a1.add b1, fun y w => by
-      simp only [map_add]; exact (norm_add_le _ _).trans (add_le_add (a2 y w) (b2 y w))⟩
+      simp only [map_add (f := _)]; exact (norm_add_le _ _).trans (add_le_add (a2 y w) (b2 y w))⟩
   | smul c Φ _ h1 =>
     obtain ⟨a, a1, a2⟩ := h1
     exact ⟨fun y => ‖c‖ * a y, a1.mul_left _, fun y w => by

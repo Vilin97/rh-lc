@@ -86,7 +86,7 @@ theorem cA_cA {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (z : AE F E) : cA σ (cA
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [cA, Algebra.TensorProduct.map_tmul, GlobalTheory.OppLagr.conj_conj h]
-  | add x y hx hy => simp [map_add, hx, hy]
+  | add x y hx hy => simp [map_add (f := _), hx, hy]
 
 theorem continuous_cA (σ : E →ₐ[F] E) : Continuous (cA σ) := by
   haveI : Module.Finite (AF F) (AE F E) := inferInstance
@@ -101,7 +101,7 @@ theorem cA_mem_intHat (σ : E →ₐ[F] E) {z : AE F E} (hz : z ∈ intHat F E) 
     rw [map_smul, cA_inclR]
     rfl
   | zero => simp [zero_mem]
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 end CM

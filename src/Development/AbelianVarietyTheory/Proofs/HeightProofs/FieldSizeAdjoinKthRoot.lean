@@ -22,7 +22,7 @@ private theorem natCast_mul_pow_pred_mem_differentIdeal_of_pow_eq {K L : Type} [
   have hmem := aeval_derivative_mem_differentIdeal (𝓞 K) K L β hgen
   have hder : aeval β (derivative (X ^ k - C r : (𝓞 K)[X])) = (k : 𝓞 L) * β ^ (k - 1) := by
     simp [derivative_X_pow]
-  rw [← hder, hh, derivative_mul, map_add, map_mul, map_mul, minpoly.aeval, zero_mul, add_zero]
+  rw [← hder, hh, derivative_mul, map_add (f := _), map_mul, map_mul, minpoly.aeval, zero_mul, add_zero]
   exact Ideal.mul_mem_right _ _ hmem
 
 set_option autoImplicit false in
@@ -111,7 +111,7 @@ theorem _root_.GlobalTheory.FieldSize.natCast_mem_differentIdeal_of_root {K L : 
         · rw [map_mul, map_mul, pow_succ, ← hta, ← hβ]
           ring
       · rintro x x' ⟨t, ht, htx⟩ ⟨t', ht', htx'⟩
-        exact ⟨t + t', add_mem ht ht', by rw [map_add, add_mul, htx, htx', map_add]⟩
+        exact ⟨t + t', add_mem ht ht', by rw [map_add (f := _), add_mul, htx, htx', map_add (f := _)]⟩
   have hspan : Ideal.span S = ⊤ := by
     have hyk : y ∈ I ^ k := by
       rw [hI]

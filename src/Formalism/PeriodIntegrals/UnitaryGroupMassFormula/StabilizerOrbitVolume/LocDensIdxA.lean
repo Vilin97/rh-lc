@@ -39,7 +39,7 @@ theorem crd_sigR (y : Fv F v ⊗[F] E) (k : Fin d) :
     refine Finset.sum_congr rfl fun l _ => ?_
     ring
   | add x y hx hy =>
-    rw [map_add, map_add, Finsupp.add_apply, hx, hy, map_add]
+    rw [map_add (f := _), map_add (f := _), Finsupp.add_apply, hx, hy, map_add (f := _)]
     simp only [Finsupp.add_apply, mul_add, Finset.sum_add_distrib]
 
 theorem eventually_int (x : F) :

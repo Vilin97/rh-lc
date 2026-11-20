@@ -81,7 +81,7 @@ theorem exists_den {F B : Type} [Field F] [NumberField F] [Ring B] [Algebra F B]
     { carrier := {y | ∀ i, IsIntegral ℤ ((D : F) * v.repr (y : B) i)}
       add_mem' := by
         intro y z hy hz i
-        simp only [Set.mem_setOf_eq, Subring.coe_add, map_add, Finsupp.add_apply, mul_add] at hy hz ⊢
+        simp only [Set.mem_setOf_eq, Subring.coe_add, map_add (f := _), Finsupp.add_apply, mul_add] at hy hz ⊢
         exact (hy i).add (hz i)
       zero_mem' := by
         intro i

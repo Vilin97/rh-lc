@@ -123,7 +123,7 @@ theorem pure_mem {κ : Type} [Fintype κ] (ψ : AddChar (AdeleRing (𝓞 F) F) �
     exact GroundTheory.Global.continuous_infiniteAdeleInl.comp
       (GroundTheory.Global.continuous_mixedToInfinite.comp (continuous_apply i))
   have hT : Function.HasTemperateGrowth fun u => ψ (a u) :=
-    temperate_char _ (hψ.comp ha) (fun _ => hn _) (by simp) fun s t => by rw [map_add, AddChar.map_add_eq_mul]
+    temperate_char _ (hψ.comp ha) (fun _ => hn _) (by simp) fun s t => by rw [map_add (f := _), AddChar.map_add_eq_mul]
   let ψf : AddChar (FiniteAdeleRing (𝓞 F) F) ℂ := ψ.compAddMonoidHom GroundTheory.Global.finiteAdeleInr
   have hf : IsLocallyConstant ψf :=
     isLocallyConstant_fin ψf (hψ.comp GroundTheory.Global.continuous_finiteAdeleInr) fun _ => hn _
@@ -178,7 +178,7 @@ theorem schr_mem_and_thetaSum : ∀ (F : Type) [Field F] [NumberField F] [Locall
     refine tsum_congr fun ξ => ?_
     have := hF (ξ ⬝ᵥ w.2 + 2⁻¹ * (w.1 ⬝ᵥ w.2))
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [dotProduct, map_add, map_mul, map_sum] at this
+      simp only [dotProduct, map_add (f := _), map_mul, map_sum] at this
     simp only [schr, dotProduct, h2]
     rw [this, one_mul]
     congr 1

@@ -89,7 +89,7 @@ theorem harmonic_submodule : HarmSub := by
   · intro P Q hP hQ
     rw [harmIff] at hP hQ ⊢
     intro c d hcd
-    rw [map_add, hP c d hcd, hQ c d hcd, add_zero]
+    rw [map_add (f := _), hP c d hcd, hQ c d hcd, add_zero]
   · intro k P hP
     rw [harmIff] at hP ⊢
     intro c d hcd

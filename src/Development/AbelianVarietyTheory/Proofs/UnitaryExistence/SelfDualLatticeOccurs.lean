@@ -86,4 +86,4 @@ theorem GlobalTheory.selfDual_lattice_occurs : GlobalTheory.Published.HasseNormS
     rw [he] at h
     rw [← h]
     change ψ (gam ((e.symm.toLinearMap ∘ₗ f l.M) a)) = ψ (F.t k a) + l.M • ψ w
-    rw [hw, map_add, map_nsmul]
+    rw [hw, map_add (f := _), map_nsmul]

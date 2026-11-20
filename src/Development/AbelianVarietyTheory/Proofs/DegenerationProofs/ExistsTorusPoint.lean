@@ -24,7 +24,7 @@ theorem exists_form {o Ω : Type} [CommRing o] [Field Ω] [Algebra o Ω] (S : Th
     rw [← sub_add_cancel b b', eStd_add_right, h0, zero_add]
   refine ⟨AddMonoidHom.mk' (fun α => eStd S.g _ a (σ α)) fun α β => ?_, fun b α e => ind _ _ ((hσ α).trans e.symm)⟩
   rw [← eStd_add_right]
-  exact ind _ _ (by rw [map_add, hσ, hσ, hσ, QuotientAddGroup.mk_add])
+  exact ind _ _ (by rw [map_add (f := _), hσ, hσ, hσ, QuotientAddGroup.mk_add])
 
 attribute [local instance] gtGroup in
 

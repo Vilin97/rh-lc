@@ -30,7 +30,7 @@ theorem toEAf_mem_of_finPart {w : AE D} (hw : finPart D w ∈ intAE D) :
       rw [Algebra.TensorProduct.comm_tmul]
       exact GlobalTheory.PlaceDatum.tmul_mem_int ⟨x, rfl⟩ ha
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
   exact key _ hw
 
@@ -157,7 +157,7 @@ theorem frMap_int_of_mem_lat : ∀ {D : D7} {S T : HSp D} {F : Frame S T}, F.Goo
   let p : WO S T → Prop := fun u => IsIntM (fO (mR u)) ∧ IsIntM (fA (mR u))
   have hadd : ∀ u v, p u → p v → p (u + v) := by
     intro u v hu hv
-    simp only [p, map_add]
+    simp only [p, map_add (f := _)]
     exact ⟨fun i j => add_mem (hu.1 i j) (hv.1 i j), fun i j => add_mem (hu.2 i j) (hv.2 i j)⟩
   have hneg : ∀ u, p u → p (-u) := by
     intro u hu

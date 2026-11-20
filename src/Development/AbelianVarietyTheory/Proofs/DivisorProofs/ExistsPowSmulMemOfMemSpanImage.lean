@@ -33,7 +33,7 @@ theorem exists_pow_smul_mem_of_mem_span_image {A B : Type} [CommRing A] [CommRin
       obtain ⟨n, u, hu, e⟩ := hx
       obtain ⟨m, u', hu', e'⟩ := hy
       refine ⟨n + m, a ^ m • u + a ^ n • u', N.add_mem (N.smul_mem _ hu) (N.smul_mem _ hu'), fun i => ?_⟩
-      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, map_pow, e, e']
+      simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, map_pow, e, e']
       ring
     | smul c x _ hx =>
       obtain ⟨n, u, hu, e⟩ := hx

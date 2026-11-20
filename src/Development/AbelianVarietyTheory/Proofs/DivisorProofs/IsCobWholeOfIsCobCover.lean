@@ -42,7 +42,7 @@ theorem isCob_whole_of_isCob_cover : ∀ (R : Type) [CommRing R] (X : Over (Sp R
     have h1 := hk' D x E (ψ.comp φ) (by rw [e]; exact hψ)
     have c := hu D D' E φ ψ x (sm_whole x)
     rw [e, c, AlgHom.comp_apply] at h1
-    rw [map_add, ← h1]
+    rw [map_add (f := _), ← h1]
     ring
   rw [huniq]
   ring

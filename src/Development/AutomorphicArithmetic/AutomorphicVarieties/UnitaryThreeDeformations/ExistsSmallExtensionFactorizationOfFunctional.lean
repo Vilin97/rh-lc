@@ -34,7 +34,7 @@ theorem UpperTheory.exists_small_extension_factorization_of_functional :
         rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
         refine ⟨add_mem ha hb, ?_⟩
         have : (⟨a + b, add_mem ha hb⟩ : RingHom.ker p) = ⟨a, ha⟩ + ⟨b, hb⟩ := rfl
-        rw [this, map_add, ha', hb', add_zero]
+        rw [this, map_add (f := _), ha', hb', add_zero]
       zero_mem' := ⟨zero_mem _, map_zero φ⟩
       smul_mem' := by
         rintro r x ⟨hx, hx'⟩

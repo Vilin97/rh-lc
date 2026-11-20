@@ -59,7 +59,7 @@ def framepf_coordL : ↥(NcS W T (c - 1)) →ₗ[O] (Fin Bs.r → O) where
       refine Finset.sum_congr rfl fun k _ => ?_
       rw [Pi.add_apply, framepf_ι_add π' (c - 1) (hπ0 _), add_smul]
     funext k
-    rw [e, Pi.add_apply, map_add]
+    rw [e, Pi.add_apply, map_add (f := _)]
     rfl
   map_smul' o x := by
     have e : framepf_gco Bs π' c (o • x) = fun k => PowerSeries.C o * framepf_gco Bs π' c x k := by

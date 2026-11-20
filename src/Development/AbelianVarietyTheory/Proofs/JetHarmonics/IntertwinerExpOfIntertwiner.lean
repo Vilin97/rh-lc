@@ -45,7 +45,7 @@ theorem intertwiner_dOp_of_EB {V₁ : Type} [NormedAddCommGroup V₁] [NormedSpa
     have e₁ := (hE V₁ k r z π₁ h₁ Z Z' h.1 h'.1).1
     have e₂ := (hE V₂ k r z π₂ h₂ Z Z' h.1 h'.1).1
     refine ⟨e₁.1, fun v => ?_⟩
-    rw [e₁.2, e₂.2, _root_.add_apply, _root_.add_apply, map_add, h.2, h'.2]
+    rw [e₁.2, e₂.2, _root_.add_apply, _root_.add_apply, map_add (f := _), h.2, h'.2]
   have gsmul : ∀ (c : ℂ) Z, Gd Z → Gd (c • Z) := by
     intro c Z h
     have e₁ := (hE V₁ k r z π₁ h₁ Z Z h.1 h.1).2.1 c

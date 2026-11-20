@@ -138,10 +138,10 @@ theorem gram_class_family : ∀ (L : Type) [Field L] [Valued L (WithZero (Multip
       rw [map_div₀, h2, div_one]
       exact (Valuation.map_add _ _ _).trans (max_le hoO (by show Valued.v (σ o) ≤ 1; rw [hσv]; exact hoO))
     have hpσ : σ (-((o + σ o) / 2)) = -((o + σ o) / 2) := by
-      rw [map_neg, map_div₀, map_add, hσσ, map_ofNat]; ring
+      rw [map_neg, map_div₀, map_add (f := _), hσσ, map_ofNat]; ring
     have e1 : -(((w0 + o) + σ (w0 + o)) / 2) = -w0 + -((o + σ o) / 2) := by
       have h2ne : (2 : L) ≠ 0 := fun h0 => by rw [h0, map_zero] at h2; exact zero_ne_one h2
-      rw [map_add, hw0]; field_simp; ring
+      rw [map_add (f := _), hw0]; field_simp; ring
     rw [e1, AddChar.map_add_eq_mul, hpsi_int _ ((Formalism.UG.intL L).neg_mem hp) hpσ, mul_one]
   have hkey : ∀ b y, (∀ i j, (y * (a : Matrix (Fin n) (Fin n) L)) i j ∈ Formalism.UG.intL L) →
       ψ (-((locH σ δ JS JT y (l b y) + σ (locH σ δ JS JT y (l b y))) / 2)) = ψ (-(w b y)) := by

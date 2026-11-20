@@ -120,7 +120,7 @@ theorem binary_form_splits : ∀ (F : Type) [Field F] (m : ℕ) (p : Fin (m + 1)
       rw [← hu, Multiset.map_map]; rfl
     simp only [mul_assoc] at h1 ⊢
     rw [h1, hprod]
-    simp only [M, Multiset.map_add, Multiset.prod_add, Multiset.map_map, Function.comp_def,
+    simp only [M, Multiset.map_add (f := _), Multiset.prod_add, Multiset.map_map, Function.comp_def,
       Multiset.map_replicate, Multiset.prod_replicate]
     congr 2
     · congr 1

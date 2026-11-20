@@ -219,14 +219,14 @@ private lemma eq_pow_mul_unit_of_mem_adjoin [IsLocalRing W] {π : W}
   obtain ⟨A, rfl⟩ := Polynomial.map_surjective φ hφ a
   obtain ⟨B, rfl⟩ := Polynomial.map_surjective φ hφ b
   have hker2 : A * f + B * g1 - 1 ∈ RingHom.ker (mapRingHom φ) := by
-    rw [RingHom.mem_ker, coe_mapRingHom, Polynomial.map_sub, Polynomial.map_add, Polynomial.map_mul,
+    rw [RingHom.mem_ker, coe_mapRingHom, Polynomial.map_sub, Polynomial.map_add (f := _), Polynomial.map_mul,
       Polynomial.map_mul, Polynomial.map_one, hab, sub_self]
   rw [Polynomial.ker_mapRingHom, hker, Ideal.map_span, Set.image_singleton,
     Ideal.mem_span_singleton] at hker2
   obtain ⟨H, hH⟩ := hker2
   have hev : aeval α B * aeval α g1 = 1 + algebraMap W Ω π * aeval α H := by
     have h := congrArg (aeval α) hH
-    simp only [map_sub, map_add, map_mul, map_one, hα, mul_zero, zero_add, aeval_C] at h
+    simp only [map_sub, map_add (f := _), map_mul, map_one, hα, mul_zero, zero_add, aeval_C] at h
     rw [IsScalarTower.algebraMap_apply W M Ω]
     linear_combination h
   obtain ⟨v, hvN, hv⟩ : ∃ v ∈ N, v * (1 + algebraMap W Ω π * aeval α H) = 1 := by

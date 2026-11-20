@@ -23,7 +23,7 @@ theorem flatFB_holds : ∀ (D : D7), FlatLaw D → GlobalTheory.FinPl.FlatLaws D
   let L : SB (Matrix (n ⊕ Fin c) (n' ⊕ Fin (c + 1)) k) →ₗ[ℂ] (WO J.W₀ B.V₀ → ℂ) :=
     { toFun := fun Φ => flatFB st (Tm Φ)
       map_add' := fun Φ Φ' => by
-        simp only [map_add]
+        simp only [map_add (f := _)]
         exact (GlobalTheory.T.jacobiToBesselFlatSchwartz_add_smul D hFL ψ hstd σ J B st _ _ (hTm.theta Φ) (hTm.theta Φ')).1
       map_smul' := fun a Φ => by
         simp only [map_smul, RingHom.id_apply]

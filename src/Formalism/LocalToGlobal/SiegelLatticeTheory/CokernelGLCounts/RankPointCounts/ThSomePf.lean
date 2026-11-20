@@ -362,7 +362,7 @@ theorem firstProj_det_corner (hA : ∀ p, Agree δ M p) (u u' : D.what₂.Word) 
       split_ifs
       · rfl
       · exact map_zero _
-    rw [map_add, hp1Z, hp1c]
+    rw [map_add (f := _), hp1Z, hp1c]
     split_ifs
     · field_simp
       ring
@@ -424,7 +424,7 @@ theorem secondProj_det_corner (hA : ∀ p, Agree δ M p) (u u' : D.what₂.Word)
       split_ifs
       · rfl
       · exact map_zero _
-    rw [map_add, hp2Z, hp2c]
+    rw [map_add (f := _), hp2Z, hp2c]
     split_ifs
     · field_simp
       ring

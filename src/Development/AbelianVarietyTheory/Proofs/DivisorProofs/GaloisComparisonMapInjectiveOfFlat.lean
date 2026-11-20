@@ -43,7 +43,7 @@ theorem GlobalTheory.GoodEtale.galMap_injective_of_flat : ∀ (A R C O : Type) [
         rw [map_mul, map_mul]; ring
       simp_rw [h2, ← key, TensorProduct.tmul_sum, TensorProduct.smul_tmul]
     | add m m' hm hm' =>
-      rw [map_add, map_add, ← hm, ← hm']
+      rw [map_add (f := _), map_add (f := _), ← hm, ← hm']
       simp only [Φ, Pi.add_apply, mul_add, Finset.sum_add_distrib, TensorProduct.add_tmul]
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro m hm

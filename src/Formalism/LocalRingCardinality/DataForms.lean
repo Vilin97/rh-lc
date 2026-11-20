@@ -59,7 +59,7 @@ def descend {K V W M N : Type} [Field K] [AddCommGroup V] [Module K V] [AddCommG
     have h1 := Classical.choose_spec (h (x + y))
     have h2 := Classical.choose_spec (h x)
     have h3 := Classical.choose_spec (h y)
-    rw [map_add e₂, h1, h2, h3, map_add, map_add]
+    rw [map_add e₂, h1, h2, h3, map_add (f := _), map_add (f := _)]
   map_smul' c x := by
     apply hinj
     show e₂ (Classical.choose (h (c • x))) = e₂ (c • Classical.choose (h x))
@@ -81,7 +81,7 @@ def Klin (i : ℕ) : (C.cls i → C.Y i → ℂ) →ₗ[ℂ] (C.cls (i + 1) → 
   toFun := C.K i
   map_add' φ ψ := by
     funext L' y
-    simp [ColumnChain.K, Formalism.ThetaLiftIndependence.kerOpM, map_add, smul_add, Finset.sum_add_distrib]
+    simp [ColumnChain.K, Formalism.ThetaLiftIndependence.kerOpM, map_add (f := _), smul_add, Finset.sum_add_distrib]
   map_smul' a φ := by
     funext L' y
     simp [ColumnChain.K, Formalism.ThetaLiftIndependence.kerOpM, Finset.mul_sum, smul_eq_mul]

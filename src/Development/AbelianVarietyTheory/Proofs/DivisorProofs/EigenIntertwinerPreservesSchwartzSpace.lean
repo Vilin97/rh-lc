@@ -24,7 +24,7 @@ theorem extEquiv {V : Type} [AddCommGroup V] [Module ℂ V] (S : Submodule ℂ V
     obtain ⟨s, hs, q, hq, rfl⟩ := Submodule.mem_sup.1 this
     exact ⟨s, hs, q, hq, rfl⟩
   have hf : ∀ s ∈ S, ∀ q ∈ Q, f (s + q) = e s + q := fun s hs q hq => by
-    rw [map_add, LinearMap.ofIsCompl_apply_left hQ (⟨s, hs⟩ : S), LinearMap.ofIsCompl_apply_right hQ (⟨q, hq⟩ : Q)]
+    rw [map_add (f := _), LinearMap.ofIsCompl_apply_left hQ (⟨s, hs⟩ : S), LinearMap.ofIsCompl_apply_right hQ (⟨q, hq⟩ : Q)]
     rfl
   have hdisj : ∀ y ∈ S, y ∈ Q → y = 0 := fun y h1 h2 => by
     have := hQ.inf_eq_bot

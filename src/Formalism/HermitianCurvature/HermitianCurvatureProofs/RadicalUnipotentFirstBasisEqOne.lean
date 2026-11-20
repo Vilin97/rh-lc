@@ -223,7 +223,7 @@ theorem dlt_apply (x : U.RC k j (1 + ρ)) (y : U.RC k 1 ρ) (a b : Fin j) :
 
 theorem dlt_skew (x : U.RC k j (1 + ρ)) (y : U.RC k 1 ρ) (a b : Fin j) : dlt x y a b = -star (dlt x y b a) := by
   rw [dlt_apply, dlt_apply]
-  simp only [star_add, star_mul', star_sub, star_star, Complex.star_def, map_mul, map_sub, map_add, Complex.conj_conj,
+  simp only [star_add, star_mul', star_sub, star_star, Complex.star_def, map_mul, map_sub, map_add (f := _), Complex.conj_conj,
     Complex.conj_I, Complex.conj_ofReal, map_div₀, map_one, map_ofNat]
   ring
 

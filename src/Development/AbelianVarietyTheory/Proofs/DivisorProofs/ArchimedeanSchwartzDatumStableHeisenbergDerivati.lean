@@ -81,7 +81,7 @@ theorem datum_stable : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} {G 
       unfold GlobalTheory.WeilM.thetaSum
       rw [← tsum_mul_left]
       refine tsum_congr fun ξ => ?_
-      simp only [GlobalTheory.WeilM.Darboux.rho, map_add]
+      simp only [GlobalTheory.WeilM.Darboux.rho, map_add (f := _)]
       exact schr_schr_apply W.ψ _ _ _ _
     rw [e2, ha.2, sum_tensT, Finsupp.sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun P _ => ?_

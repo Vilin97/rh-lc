@@ -19,7 +19,7 @@ theorem theta_period_eq_zero_of_theta_eq_zero :
     | succ n ih =>
       have hs : ltIter ϖ q (n + 1) Q = ϖ * ltIter ϖ q n Q + (ltIter ϖ q n Q) ^ q := by
         simp only [ltIter, Function.iterate_succ_apply']
-      rw [hs, map_add, map_mul, map_pow, ih]
+      rw [hs, map_add (f := _), map_mul, map_pow, ih]
       simp [show q ≠ 0 by omega]
   have hne : θ ϖ ≠ 0 := by
     intro h0

@@ -72,11 +72,11 @@ def integerTiltHom (N : IntermediateField K♭ C♭) (σ : N →ₐ[K♭] N)
       apply Subtype.ext; apply IsFractionRing.injective 𝒪C♭ C♭
       rw [(hex (a + b)).choose_spec.2]
       change _ = algebraMap 𝒪C♭ C♭ ((hex a).choose + (hex b).choose)
-      rw [map_add, (hex a).choose_spec.2, (hex b).choose_spec.2]
+      rw [map_add (f := _), (hex a).choose_spec.2, (hex b).choose_spec.2]
       have : (⟨algebraMap 𝒪C♭ C♭ ((a + b : integerTilt K C p N) : 𝒪C♭), (a + b).2⟩ : N) =
           ⟨algebraMap 𝒪C♭ C♭ a, a.2⟩ + ⟨algebraMap 𝒪C♭ C♭ b, b.2⟩ := by
         apply Subtype.ext; simp
-      rw [this, map_add]; rfl }
+      rw [this, map_add (f := _)]; rfl }
 
 theorem algebraMap_integerTiltHom (N : IntermediateField K♭ C♭) (σ : N →ₐ[K♭] N)
     (hσ : ∀ x : N, ‖((σ x : N) : C♭)‖ = ‖(x : C♭)‖) (a : integerTilt K C p N) :

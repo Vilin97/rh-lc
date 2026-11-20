@@ -60,7 +60,7 @@ theorem UpperTheory.V.AlgebraTools.exists_groupRing_surj :
     (Algebra.ofId Λ _) (fun s => gen s - 1) hamem
   have hφ1 : ∀ s, φ (1 + MvPowerSeries.X s) = gen s := by
     intro s
-    rw [map_add, map_one, hφX]
+    rw [map_add (f := _), map_one, hφX]
     ring
   have hofrange : ∀ g, MonoidAlgebra.of Λ _ g ∈ φ.range := by
     intro g

@@ -86,7 +86,7 @@ theorem nb_unitary {J : Matrix (Fin d) (Fin d) (AE F E)} {Z : Matrix (Fin d) (Fi
     (hZ : Zᵀ * J + J * Z.map (cA σ) = 0) : (nb Z)ᵀ * dbl J * (nb Z).map (cA σ) = dbl J := by
   rw [nb, dbl, Matrix.fromBlocks_transpose, Matrix.fromBlocks_map, Matrix.fromBlocks_multiply,
     Matrix.fromBlocks_multiply]
-  simp only [mapc_eq, map_add, map_sub, map_neg, map_one, Matrix.transpose_add, Matrix.transpose_sub,
+  simp only [mapc_eq, map_add (f := _), map_sub, map_neg, map_one, Matrix.transpose_add, Matrix.transpose_sub,
     Matrix.transpose_neg, Matrix.transpose_one] at hZ ⊢
   refine Matrix.fromBlocks_inj.mpr ⟨?_, ?_, ?_, ?_⟩ <;> rw [← sub_eq_zero] <;> refine Eq.trans ?_ hZ <;> noncomm_ring
 
@@ -200,12 +200,12 @@ theorem gauss_decomp : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Num
   have hsum : (a + b)ᵀ * J * (cA σ).mapMatrix (a + b) - (c + e)ᵀ * J * (cA σ).mapMatrix (c + e) = 0 := by
     have := congrArg₂ HAdd.hAdd (congrArg₂ HAdd.hAdd h11 h12) (congrArg₂ HAdd.hAdd h21 h22)
     rw [show (0 : Matrix (Fin d) (Fin d) (AE F E)) = J + 0 + (0 + -J) by abel, ← this]
-    simp only [map_add, Matrix.transpose_add]
+    simp only [map_add (f := _), Matrix.transpose_add]
     noncomm_ring
   have h2x : (Aᵀ * J * (cA σ).mapMatrix C + Cᵀ * J * (cA σ).mapMatrix A) +
       (Aᵀ * J * (cA σ).mapMatrix C + Cᵀ * J * (cA σ).mapMatrix A) = 0 := by
     rw [← hsum, hP, hQ]
-    simp only [map_add, map_sub, Matrix.transpose_add, Matrix.transpose_sub]
+    simp only [map_add (f := _), map_sub, Matrix.transpose_add, Matrix.transpose_sub]
     noncomm_ring
   have hkey : Aᵀ * J * (cA σ).mapMatrix C + Cᵀ * J * (cA σ).mapMatrix A = 0 := by
     rw [← invOf_two_smul_add_self (F := F) (Aᵀ * J * (cA σ).mapMatrix C + Cᵀ * J * (cA σ).mapMatrix A), ← smul_add, h2x,

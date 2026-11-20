@@ -57,7 +57,7 @@ theorem UpperTheory.V.Pa.star_closure :
   intro l _ F n O _ _ R _ _ I S hl hS y hy
   have hadd : ∀ y z, F.star O R n (y + z) = F.star O R n y + F.star O R n z := by
     intro y z
-    simp [GFrame.star, map_add]
+    simp [GFrame.star, map_add (f := _)]
   have hneg : ∀ y, F.star O R n (-y) = -F.star O R n y := by
     intro y
     simp [GFrame.star, map_neg]
@@ -95,7 +95,7 @@ theorem UpperTheory.V.Pa.star_closure :
     have hv : ((F.eps O R h : Rˣ) : R) = algebraMap O R (algebraMap ℤ_[l] O ((F.ε h : ℤ_[l]ˣ) : ℤ_[l])) := by
       simp [GFrame.eps, pushCh]
     rw [hv, eq_add_of_sub_eq' ht.symm]
-    simp only [map_add, map_mul, map_pow, map_natCast, map_one, add_sub_cancel_left]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast, map_one, add_sub_cancel_left]
     exact Ideal.mul_mem_left _ _ (Ideal.pow_mem_pow hl N)
   refine TwoSidedIdeal.span_induction (p := fun x _ => F.star O R n x ∈ T) ?_ ?_ ?_ ?_ ?_ ?_ (hy N H')
   · rintro x ((hx | ⟨a, ha, rfl⟩) | ⟨h, hh, rfl⟩)

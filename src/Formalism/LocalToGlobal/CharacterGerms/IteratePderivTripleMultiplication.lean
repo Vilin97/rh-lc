@@ -33,7 +33,7 @@ theorem decomp {f : PS C 3 dd} (h1 : ev (rz 2) f = 1) : f = 1 + ∑ k, X ((0 : F
   classical
   ext p
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, MvPowerSeries.coeff_one, map_sum]
+    rw [map_add (f := _), MvPowerSeries.coeff_one, map_sum]
   have hX : ∀ k, coeff p (X ((0 : Fin 3), k) * Tk f k) =
       if Finsupp.single ((0 : Fin 3), k) 1 ≤ p then
         coeff (p - Finsupp.single ((0 : Fin 3), k) 1) (Tk f k) else 0 := by
@@ -370,7 +370,7 @@ theorem phiQ (Y : FBChart C V O dd) (u : Fin dd → C) (hu : ∀ i, V.Ge 0 (u i)
         (Tk Y.B.ph2 k)) := by
     intro i
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, MvPowerSeries.coeff_one, if_neg, zero_add]
+      rw [map_add (f := _), map_sum, MvPowerSeries.coeff_one, if_neg, zero_add]
     intro h
     have h2 := congrArg (fun p => p ((0 : Fin 3), i)) h
     simp [index_raise_first] at h2

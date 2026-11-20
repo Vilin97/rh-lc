@@ -73,7 +73,7 @@ theorem exists_jet_of_periods {ι A : Type} [Fintype ι] [AddCommGroup A] (p : A
     obtain ⟨a, rfl⟩ := (hb x).1 hx
     obtain ⟨a', rfl⟩ := (hb y).1 hy
     obtain ⟨k, hk⟩ := hQ a a'
-    rw [← map_add, hka, hka, hka, hk, ← Complex.exp_add, ← Complex.exp_add,
+    rw [← map_add (f := _), hka, hka, hka, hk, ← Complex.exp_add, ← Complex.exp_add,
       Complex.exp_eq_exp_iff_exists_int]
     refine ⟨k, ?_⟩
     push_cast
@@ -127,10 +127,10 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {r g : ℕ} {X : Dat
   {𝔐 : Ideal (𝓞 E)} {M : ℕ}
 
 theorem EF_add_left (u u' v : Fin r → E) : EF X (u + u') v = EF X u v + EF X u' v := by
-  simp only [EF_eq_bilin, map_add, LinearMap.add_apply]
+  simp only [EF_eq_bilin, map_add (f := _), LinearMap.add_apply]
 
 theorem EF_add_right (u v v' : Fin r → E) : EF X u (v + v') = EF X u v + EF X u v' := by
-  simp only [EF_eq_bilin, map_add]
+  simp only [EF_eq_bilin, map_add (f := _)]
 
 theorem EF_ratSmul_left (c : ℚ) (u v : Fin r → E) : EF X ((c : E) • u) v = c * EF X u v := by
   rw [Rat.cast_smul_eq_qsmul, EF_eq_bilin, EF_eq_bilin, map_smul, LinearMap.smul_apply, smul_eq_mul]
@@ -294,7 +294,7 @@ theorem GlobalTheory.Dict.exists_theta_sublattice_jet_ne_zero : ∀ (E : Type) [
   obtain ⟨b, hb⟩ := exists_basis_cols Φ b₁
   let p : (Fin n → (𝔐 • L : Lt E r)) →+ EuclideanSpace ℂ (Harm.Var X.Ψ q0 X.p0 (Fin n)) :=
     AddMonoidHom.mk' (fun a => Φ fun k => pl (a k)) fun a a' => by
-      rw [← map_add]
+      rw [← map_add (f := _)]
       congr 1
       funext k
       exact map_add pl _ _
@@ -351,7 +351,7 @@ theorem GlobalTheory.Dict.exists_theta_sublattice_jet_ne_zero : ∀ (E : Type) [
     M P hP hdeg hs0
   refine ⟨G ∘ Φ.toContinuousLinearEquiv, hG.comp Φ.toContinuousLinearEquiv.differentiable, fun u hu z => ?_, ?_⟩
   · have h := hlaw (fun k => ⟨u k, hu k⟩) (Φ z)
-    rw [hp, ← map_add, mul_div_cancel₀ _ hMR, mul_comm (M : ℂ), _root_.mul_assoc (Real.pi : ℂ) M,
+    rw [hp, ← map_add (f := _), mul_div_cancel₀ _ hMR, mul_comm (M : ℂ), _root_.mul_assoc (Real.pi : ℂ) M,
       _root_.mul_assoc (Real.pi : ℂ) M, hH, hH] at h
     simp only at h
     obtain ⟨m, hm⟩ := hZ u (fun k => (w : E) • u k) hu fun k => Submodule.smul_mem _ w (hu k)

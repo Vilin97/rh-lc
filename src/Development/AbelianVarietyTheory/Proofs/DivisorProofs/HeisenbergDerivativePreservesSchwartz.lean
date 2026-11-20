@@ -37,7 +37,7 @@ theorem hasDerivAt_pureA (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (w : (κ →
     have hxy : evI F (x ⬝ᵥ w.2) = ∑ i, z i * evI F (w.2 i) := by
       simp only [dotProduct, evI_sum, evI_mul, hz]
     have htr : Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F A) = t * (P + t * Q) := by
-      rw [hA, evI_mul, evI_add, evI_mul, evI_realAd, ← Algebra.smul_def, ← Algebra.smul_def, map_smul, map_add,
+      rw [hA, evI_mul, evI_add, evI_mul, evI_realAd, ← Algebra.smul_def, ← Algebra.smul_def, map_smul, map_add (f := _),
         map_smul, hxy, hP, trForm_apply, hQ, smul_eq_mul, smul_eq_mul]
     have harg : (fun i => evI F ((x + realAd F t • w.1) i)) = z + t • v := by
       funext i

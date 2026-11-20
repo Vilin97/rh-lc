@@ -21,7 +21,7 @@ theorem levMap_mul_of_goodRing {A : Type} [CommRing A] {n : Type} [Fintype n] [D
   have redAdd : ∀ a b, a ∈ S → b ∈ S → red S ϖ (a + b) = red S ϖ a + red S ϖ b := by
     intro a b ha hb
     simp only [red, dif_pos ha, dif_pos hb, dif_pos (add_mem ha hb)]
-    rw [← map_add]; rfl
+    rw [← map_add (f := _)]; rfl
   have redPi : ∀ t ∈ S, red S ϖ (ϖ * t) = 0 := by
     intro t ht
     rw [red, dif_pos (mul_mem hϖS ht), Ideal.Quotient.eq_zero_iff_mem]

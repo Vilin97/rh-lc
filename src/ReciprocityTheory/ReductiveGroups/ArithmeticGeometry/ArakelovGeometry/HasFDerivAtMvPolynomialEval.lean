@@ -24,7 +24,7 @@ theorem bilinear_real_imag_expand {V : Type*} [NormedAddCommGroup V] [NormedSpac
       | exact Finset.sum_comm
   rw [key]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
-  simp only [map_add, map_smul, ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply, smul_eq_mul]
+  simp only [map_add (f := _), map_smul, ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply, smul_eq_mul]
   ring
 
 theorem decompose_real_imag_basis (v : Fin D → ℂ) :

@@ -84,12 +84,12 @@ theorem schr_wFin_pureA (ψ : AddChar (AF F) ℂ) (y z : κ → Af F) (a : Af F)
   simp only [schr, pureA]
   rw [GlobalTheory.HeisSchA.map_eq_mul ψ]
   have h1 : GlobalTheory.HeisSchA.p1 (x ⬝ᵥ (wFin y z a).2 + ⅟(2 : AF F) * ((wFin y z a).1 ⬝ᵥ (wFin y z a).2)) = 0 := by
-    simp only [map_add, map_mul, RingHom.map_dotProduct]
+    simp only [map_add (f := _), map_mul, RingHom.map_dotProduct]
     have : (⇑GlobalTheory.HeisSchA.p1 ∘ (wFin y z a).2 : κ → InfiniteAdeleRing F) = 0 := by funext i; rfl
     simp [this]
   have h2 : GlobalTheory.HeisSchA.p2 (x ⬝ᵥ (wFin y z a).2 + ⅟(2 : AF F) * ((wFin y z a).1 ⬝ᵥ (wFin y z a).2)) =
       phase y z (a, fun i => (x i).2) := by
-    simp only [map_add, map_mul, RingHom.map_dotProduct]
+    simp only [map_add (f := _), map_mul, RingHom.map_dotProduct]
     rfl
   rw [h1, h2]
   have h0 : ψ (GlobalTheory.HeisSchA.mk 0 0) = 1 := AddChar.map_zero_eq_one ψ

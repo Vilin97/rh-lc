@@ -37,7 +37,7 @@ theorem exists_eq_of_locally_fraction_on_generisations
       add_mem' := by
         rintro g g' ⟨a, ha⟩ ⟨a', ha'⟩
         exact ⟨a + a', fun k _ _ _ φ h => by
-          rw [map_add, map_add, add_mul, ha k φ h, ha' k φ h]⟩
+          rw [map_add (f := _), map_add (f := _), add_mul, ha k φ h, ha' k φ h]⟩
       smul_mem' := by
         rintro c g ⟨a, ha⟩
         exact ⟨c * a, fun k _ _ _ φ h => by

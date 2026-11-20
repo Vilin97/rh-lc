@@ -22,7 +22,7 @@ private theorem exists_int_eq_mul_of_ne_zero_lattice {Λ : Type} [Ring Λ] [IsDo
     simpa only [map_mul, Polynomial.aeval_X] using e1
   refine ⟨q.coeff 0, hq0, -Polynomial.aeval y q.divX, ?_⟩
   have e2 := congrArg (Polynomial.aeval y) (Polynomial.divX_mul_X_add q)
-  rw [map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C, hqy, hcomm, algebraMap_int_eq,
+  rw [map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C, hqy, hcomm, algebraMap_int_eq,
     eq_intCast] at e2
   rw [mul_neg]
   exact (eq_neg_of_add_eq_zero_right e2).symm
@@ -181,7 +181,7 @@ private theorem short_abs {D M Γ G : Type} [Ring D] [IsDomain D] [CharZero D] [
       { carrier := {x | w * j (x : D) ∈ R}
         add_mem' := fun {a b} ha hb => by
           show w * j ((a : D) + b) ∈ R
-          rw [map_add, mul_add]
+          rw [map_add (f := _), mul_add]
           exact R.add_mem ha hb
         zero_mem' := by
           show w * j 0 ∈ R
@@ -349,7 +349,7 @@ theorem cls_abs_unit {D M Γ G : Type} [Ring D] [IsDomain D] [CharZero D] [Ring 
         simpa [zsmul_eq_mul] using this
       rw [h2]
       abel
-    rw [h1, map_add, map_mul, map_natCast]
+    rw [h1, map_add (f := _), map_mul, map_natCast]
   set a : M := (ψ (g⁻¹ * ι (γf g)) : M) with ha
   set a' : M := (ψ (g'⁻¹ * ι (γf g')) : M) with ha'
   set b : M := (ψ ((ι (γf g))⁻¹ * g) : M) with hb

@@ -16,10 +16,10 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 theorem baseChange_neg_form (D : Datum H) (x y : ℝ ⊗[ℤ] D.La) :
     (-D.EF).baseChange ℝ x y = -D.EF.baseChange ℝ x y := by
   induction x with
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, ha, hb]; ring
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, ha, hb]; ring
   | tmul r a =>
     induction y with
-    | add a b ha hb => simp only [map_add, ha, hb]; ring
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]; ring
     | tmul s b => simp
 
 def oppDatum (D : Datum H) : Datum H where
@@ -198,7 +198,7 @@ theorem conj_bt : IsCMField.ringOfIntegersComplexConj CyclotomicFieldTwentyEight
   have h28 : z ^ 28 = 1 := z_prim.pow_eq_one
   have e1 : (-z ^ 13) ^ 7 = -z ^ 7 := by linear_combination -(z ^ 63 + z ^ 35 + z ^ 7) * h28
   have e2 : (-z ^ 13) ^ 4 = -z ^ 10 := by linear_combination z ^ 24 * h28 + z ^ 10 * z_pow_14
-  rw [bt, map_mul, map_add, map_sub, map_one, map_pow, map_pow, conj_cyclotomicTwentyEight_eq_neg_pow_thirteen, e1, e2]
+  rw [bt, map_mul, map_add (f := _), map_sub, map_one, map_pow, map_pow, conj_cyclotomicTwentyEight_eq_neg_pow_thirteen, e1, e2]
   ring
 
 theorem norm_bt : bt * IsCMField.ringOfIntegersComplexConj CyclotomicFieldTwentyEight bt * host.rt = (-z + z ^ 3 - z ^ 9) * dd := by

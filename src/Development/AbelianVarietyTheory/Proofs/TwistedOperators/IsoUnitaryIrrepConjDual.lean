@@ -14,7 +14,7 @@ theorem map_rowAct {r n : ℕ} (φ : ℂ →+* ℂ) (A : Matrix (Fin r) (Fin r) 
     map φ (rowAct ℂ A f) = rowAct ℂ (A.map φ) (map φ f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [rowAct]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp, map_X]
     congr 1
@@ -24,7 +24,7 @@ def bil (σ : Type) : MvPolynomial σ ℂ →ₗ[ℂ] MvPolynomial σ ℂ →ₗ
   LinearMap.mk₂ ℂ (fun f f' => fockF f (map (starRingEnd ℂ) f'))
     (fun _ _ _ => fischerInner_add_left _ _ _)
     (fun c f f' => by rw [smul_eq_C_mul, LFocks_C_mul_left, smul_eq_mul])
-    (fun f a b => by rw [map_add, fischerInner_add_right])
+    (fun f a b => by rw [map_add (f := _), fischerInner_add_right])
     (fun c f f' => by
       rw [smul_eq_C_mul, map_mul, map_C, LFocks_C_mul_right, smul_eq_mul]
       simp)

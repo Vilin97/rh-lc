@@ -251,7 +251,7 @@ def toFramesLinear (he : ∀ i, IsFrame (e i)) (V : X.Opens) :
     rw [resG_ofFrames_g, IsFrame.resG_repr, IsFrame.resG_repr, QCoh.res_res, QCoh.res_res]
     exact (he i).repr_change (he j) _ _ _
   map_add' s t := sec_ext fun i => by
-    simp only [coord_add, map_add]
+    simp only [coord_add, map_add (f := _)]
     rfl
   map_smul' a s := sec_ext fun i => by
     simp only [coord_smul, map_smul_resG, map_smul, smul_eq_mul, RingHom.id_apply]

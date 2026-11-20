@@ -190,7 +190,7 @@ theorem exists_avg (S : ℝ → Sch l →L[ℂ] Sch l) (hc : ∀ t, Conf (S t)) 
   let m : Sch l →ₗ[ℂ] ℂ :=
     { toFun := fun f => ∫ s in (0 : ℝ)..δ, lam (S s f)
       map_add' := fun f g => by
-        simp only [map_add]
+        simp only [map_add (f := _)]
         exact intervalIntegral.integral_add ((Sc lam f).intervalIntegrable _ _) ((Sc lam g).intervalIntegrable _ _)
       map_smul' := fun a f => by
         simp only [map_smul, RingHom.id_apply]

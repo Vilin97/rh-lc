@@ -120,7 +120,7 @@ theorem sig_sig (R : Type) [CommRing R] [Algebra F R] (z : R ⊗[F] E) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [sigR, CMData.sig]
-  | add y z hy hz => rw [map_add, map_add, hy, hz]
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
 
 theorem cT_JR (R : Type) [CommRing R] [Algebra F R] : cT (sigR R hc.sig) (JR R V.gram) = JR R V.gram := by
   have h := GlobalTheory.IndefiniteRowSideFullHecke.AdelicUnitaryGroups.cT_gram hc V

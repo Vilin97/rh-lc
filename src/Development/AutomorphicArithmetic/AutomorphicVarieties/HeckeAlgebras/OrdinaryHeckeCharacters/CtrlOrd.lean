@@ -243,7 +243,7 @@ theorem UpperTheory.V.Hi.ctrlOrd :
     { toFun := fun F p => X.unt m W F p.2.1 (x p.1) p.2.2
       map_add' := fun F G => by
         funext p
-        simp [map_add]
+        simp [map_add (f := _)]
       map_smul' := fun a F => by
         funext p
         simp [map_smul] }

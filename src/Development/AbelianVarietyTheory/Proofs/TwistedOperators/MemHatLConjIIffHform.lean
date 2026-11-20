@@ -150,7 +150,7 @@ theorem sigR_invol (x : Lev.EAf D) :
       AlgHom.id_apply]
     congr 1
     exact star_star a
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def cO (D : D7) : 𝓞 D.host.E →+* 𝓞 D.host.E :=
   NumberField.RingOfIntegers.mapRingHom (D.sp.cm.sig : D.host.E →+* D.host.E)

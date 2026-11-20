@@ -68,7 +68,7 @@ theorem exists_semilinear_L2_independent (hS : Out.SecBaseChangeSt) (U : ∀ σ 
     { toFun := fun P => (hmem P).toLp _
       map_add' := fun P Q => by
         rw [← MemLp.toLp_add]
-        exact MemLp.toLp_congr _ _ (Filter.EventuallyEq.of_eq (by rw [Submodule.coe_add, map_add, map_add]))
+        exact MemLp.toLp_congr _ _ (Filter.EventuallyEq.of_eq (by rw [Submodule.coe_add, map_add (f := _), map_add (f := _)]))
       map_smul' := fun a P => by
         rw [RingHom.id_apply, ← MemLp.toLp_const_smul]
         exact MemLp.toLp_congr _ _ (Filter.EventuallyEq.of_eq (by rw [Submodule.coe_smul, map_smul, map_smul])) }
@@ -76,13 +76,13 @@ theorem exists_semilinear_L2_independent (hS : Out.SecBaseChangeSt) (U : ∀ σ 
   let R : GlobalTheory.AllWt.cuspW Xo c U G → holSub (U σ).X (GlobalTheory.AllWt.modelWt (U σ) G) := fun f => ⟨_, hhol f⟩
   have hRadd : ∀ f g, R (f + g) = R f + R g := fun f g => Subtype.ext (by
     show rdU (U σ) ((f + g : GlobalTheory.AllWt.cuspW Xo c U G) : Rul Xo c) = rdU (U σ) (f : Rul Xo c) + rdU (U σ) (g : Rul Xo c)
-    rw [Submodule.coe_add, map_add])
+    rw [Submodule.coe_add, map_add (f := _)])
   have hRsm : ∀ (a : c.F) f, R (a • f) = σ a • R f := fun a f => Subtype.ext (by
     show rdU (U σ) ((a • f : GlobalTheory.AllWt.cuspW Xo c U G) : Rul Xo c) = σ a • rdU (U σ) (f : Rul Xo c)
     rw [Submodule.coe_smul, map_smulₛₗ])
   let cf : ℝ := GlobalTheory.AllWt.lieFacZ Dw x G
   have hcf : 0 < cf := GlobalTheory.AllWt.lieFacZ_pos x G
-  refine ⟨AddMonoidHom.mk' (fun f => (cf : ℂ) • L (R f)) (fun f g => by rw [hRadd, map_add, smul_add]),
+  refine ⟨AddMonoidHom.mk' (fun f => (cf : ℂ) • L (R f)) (fun f g => by rw [hRadd, map_add (f := _), smul_add]),
     fun a f => ?_, fun f => ?_, fun n e he => ?_⟩
   · show (cf : ℂ) • L (R (a • f)) = σ a • ((cf : ℂ) • L (R f))
     rw [hRsm, map_smul, smul_comm]

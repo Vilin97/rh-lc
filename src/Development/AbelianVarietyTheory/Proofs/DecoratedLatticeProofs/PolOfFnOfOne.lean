@@ -139,7 +139,7 @@ theorem thCEq_of_ind {X : Fields} (A : Amb X) (a b : ℕ) (Sa : Finset (HeightOn
       Ξ ((conjE γ.1 γ'.1).symm (x + w)) = Ξ ((conjE γ.1 γ'.1).symm x) := fun x w hw => by
     rw [hmul] at hw
     obtain ⟨y, hy, rfl⟩ := hw
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (congrArg (fun t => Ξ (_ + t)) (LinearEquiv.symm_apply_apply _ y)).trans (hΞ _ y hy)
   have hadd : ∀ x w, w ∈ mulLat cB (homAt Sa (Formalism.HermitianLatticesTheory.gmap γ.1 N) (Formalism.HermitianLatticesTheory.gmap γ'.1 N')) →
       A.thInd Sa (Formalism.HermitianLatticesTheory.gmap γ.1 N) (Formalism.HermitianLatticesTheory.gmap γ'.1 N') cB (x + w) = A.thInd Sa (Formalism.HermitianLatticesTheory.gmap γ.1 N) (Formalism.HermitianLatticesTheory.gmap γ'.1 N') cB x :=

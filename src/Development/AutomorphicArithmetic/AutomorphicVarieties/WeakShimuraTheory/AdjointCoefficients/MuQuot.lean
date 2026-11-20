@@ -42,7 +42,7 @@ theorem UpperTheory.V.Ws.X1.muQuot :
       · simp [e, key, (hPψ v).2]
     · exact map_zero g
     · intro x y _ _ hx hy
-      rw [map_add, hx, hy, add_zero]
+      rw [map_add (f := _), hx, hy, add_zero]
     · intro r x _ hx
       rw [smul_eq_mul, map_mul, hx, mul_zero]
   have hne : I ≠ ⊤ := by

@@ -40,7 +40,7 @@ theorem stabFun_gen {A R M : Type} [CommRing A] [CommRing R] [Algebra R A] [AddC
   refine ⟨hst, fun x => ?_⟩
   have e : (⟨(g : Matrix (Fin N) (Fin N) A) *ᵥ (x : Fin N → A), (hst x).1 x.2⟩ : Λ) = x + ⟨_, hm (hd x.1 x.2)⟩ :=
     Subtype.ext (by simp)
-  rw [e, map_add, hf ⟨_, hm (hd x.1 x.2)⟩ (hd x.1 x.2), add_zero]
+  rw [e, map_add (f := _), hf ⟨_, hm (hd x.1 x.2)⟩ (hd x.1 x.2), add_zero]
 
 end GenE
 

@@ -33,7 +33,7 @@ theorem hv_smul (hX : X.Ok) (r : X.E) (x y : HomE X.E a b) :
 theorem emb_add (x y : HomE X.E a b) : emb A (x + y) = emb A x + emb A y := map_add (embH _ _) x y
 
 theorem coc_add_left (x y z : HomE X.E a b) : coc A (x + y) z = coc A x z + coc A y z := by
-  simp only [coc, imH, altE, emb_add, map_add, LinearMap.add_apply, Complex.add_re, Complex.add_im]
+  simp only [coc, imH, altE, emb_add, map_add (f := _), LinearMap.add_apply, Complex.add_re, Complex.add_im]
   ring
 
 theorem coc_zero_left (z : HomE X.E a b) : coc A 0 z = 0 := by
@@ -82,7 +82,7 @@ theorem coc_int (hX : X.Ok) (hδ : A.δ ≠ 0) (hL : LaFacts (X.embC A.σ₀) A.
   have h3 : (HV A.sc (emb A y) (emb A x)).re = (HV A.sc (emb A x) (emb A y)).re := by
     rw [hv_swap]; simp
   simp only [imH] at hm
-  simp only [map_add, LinearMap.add_apply, Complex.add_re, h3, hm] at h2
+  simp only [map_add (f := _), LinearMap.add_apply, Complex.add_re, h3, hm] at h2
   simp at h2
   simp only [coc, imH, hm]
   push_cast

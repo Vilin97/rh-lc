@@ -149,7 +149,7 @@ theorem _root_.GlobalTheory.CuspGL.UnipNilRad.exists_unip_bijOn_nilRad :
         by noncomm_ring; rw [hN]; simp⟩
       have hu : Matrix.toLin' (u : Matrix (Fin d) (Fin d) F) - 1 = f := by
         show Matrix.toLin' (1 + N) - 1 = f
-        rw [map_add, Matrix.toLin'_one, hNf]
+        rw [map_add (f := _), Matrix.toLin'_one, hNf]
         exact add_sub_cancel_left (1 : Module.End F (Fin d → F)) f
       refine ⟨u, ?_, hu⟩
       show Matrix.toLin' (u : Matrix (Fin d) (Fin d) F) - 1 ∈

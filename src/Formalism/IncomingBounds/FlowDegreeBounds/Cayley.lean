@@ -281,7 +281,7 @@ theorem dm_succ {σ : Type} (x : σ) (m : σ →₀ ℕ) (Q : MvPolynomial σ K)
           | field_simp
     · have hn : ¬ (Finsupp.single x 1 + m ≤ a) := fun h => hma (le_trans le_add_self h)
       rw [if_neg hma, if_neg hn, map_zero]
-  | add p q hp hq => rw [dm_add, dm_add, hp, hq, map_add]
+  | add p q hp hq => rw [dm_add, dm_add, hp, hq, map_add (f := _)]
 
 theorem diffOp_X_mul {σ : Type} (x : σ) (P Q : MvPolynomial σ K) :
     diffOp (X x * P) Q = pderiv x (diffOp P Q) := by
@@ -290,7 +290,7 @@ theorem diffOp_X_mul {σ : Type} (x : σ) (P Q : MvPolynomial σ K) :
     have hX : (X x : MvPolynomial σ K) * monomial u a = monomial (Finsupp.single x 1 + u) a := by
       rw [X, monomial_mul, one_mul]
     rw [hX, diffOp_monomial, diffOp_monomial, dm_succ, Derivation.map_smul]
-  | add p q hp hq => rw [mul_add, diffOp_add, diffOp_add, hp, hq, map_add]
+  | add p q hp hq => rw [mul_add, diffOp_add, diffOp_add, hp, hq, map_add (f := _)]
 
 theorem diffOp_C_mul {σ : Type} (c : K) (P Q : MvPolynomial σ K) :
     diffOp (MvPolynomial.C c * P) Q = c • diffOp P Q := by
@@ -404,7 +404,7 @@ theorem gen (n s : ℕ) : ∀ (k : ℕ) (r c : Fin (k+1) → Fin n),
     rw [pow_zero, one_mul, det_fin_one, det_fin_one]
     have hx : ((Mg K n).submatrix r c) 0 0 = X (Sum.inl (r 0, c 0)) := rfl
     rw [hx, ← mul_one (X _), diffOp_X_mul, diffOp_one, Derivation.leibniz_pow, ddet]
-    simp only [submatrix_apply, Finset.prod_range_succ, Finset.prod_range_zero, one_mul, Nat.cast_zero, add_zero, map_add, map_natCast,
+    simp only [submatrix_apply, Finset.prod_range_succ, Finset.prod_range_zero, one_mul, Nat.cast_zero, add_zero, map_add (f := _), map_natCast,
       map_one, nsmul_eq_mul, smul_eq_mul, Nat.add_sub_cancel]
     push_cast
     ring
@@ -467,7 +467,7 @@ theorem gen (n s : ℕ) : ∀ (k : ℕ) (r c : Fin (k+1) → Fin n),
     rw [Finset.sum_congr rfl fun j _ => hsum j, ← Finset.mul_sum, Finset.sum_add_distrib,
       ← Finset.mul_sum, ← det_succ_column_zero, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
       nsmul_eq_mul, Finset.prod_range_succ _ (k+1), map_mul]
-    simp only [map_add, map_natCast, map_one]
+    simp only [map_add (f := _), map_natCast, map_one]
     push_cast
     ring
 

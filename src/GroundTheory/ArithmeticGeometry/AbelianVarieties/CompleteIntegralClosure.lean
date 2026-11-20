@@ -24,7 +24,7 @@ theorem mem_ideal_smul_top_iff_repr (b : Module.Basis ι R M) (J : Ideal R) (x :
     refine Submodule.smul_induction_on hx (fun r hr m _ => ?_) (fun x y hx hy => ?_)
     · rw [map_smul, Finsupp.smul_apply, smul_eq_mul]
       exact J.mul_mem_right _ hr
-    · rw [map_add, Finsupp.add_apply]
+    · rw [map_add (f := _), Finsupp.add_apply]
       exact J.add_mem hx hy
   · intro h
     rw [← b.sum_repr x]

@@ -78,7 +78,7 @@ def uAction : UEnv K n →ₐ[ℝ] Module.End ℂ (archSmooth K n) where
     { toFun := fun φ => ⟨uActFun u φ, uActFun_mem u φ⟩
       map_add' := fun φ ψ => by
         ext g
-        simp only [uActFun, map_add, Submodule.coe_add, Pi.add_apply]
+        simp only [uActFun, map_add (f := _), Submodule.coe_add, Pi.add_apply]
       map_smul' := fun c φ => by
         ext g
         simp only [uActFun, map_smul, Submodule.coe_smul, Pi.smul_apply, RingHom.id_apply] }

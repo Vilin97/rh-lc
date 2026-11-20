@@ -40,7 +40,7 @@ lemma barInclF_comm (j : ℕ) :
   rw [barInclF_single, barComplex.d_single]
   rw [Rep.resMap_hom_apply, OneMemClass.coe_one, barComplex.d_single]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum, barInclF_single]
+    rw [map_add (f := _), map_sum, barInclF_single]
   refine congrArg₂ (· + ·) rfl (Finset.sum_congr rfl fun i _ => ?_)
   rw [barInclF_single, OneMemClass.coe_one]
   exact congrArg (fun v => Finsupp.single v _) (contractNth_subtype S i x)

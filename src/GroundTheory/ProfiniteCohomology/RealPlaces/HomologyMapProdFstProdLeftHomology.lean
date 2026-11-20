@@ -77,7 +77,7 @@ noncomputable def tateNormHomotopy {s m : ℕ} (h : s = m + 1) :
     (fun _ _ _ => funext fun w => LinearMap.map_add₂ (normHomotopy (μᵣ w) h) _ _ _)
     (fun _ _ _ => funext fun w => LinearMap.map_smul₂ (normHomotopy (μᵣ w) h) _ _ _)
     (fun e _ _ => funext fun w => by
-      rw [map_add]
+      rw [map_add (f := _)]
       exact map_add (normHomotopy (μᵣ w) h (e w)) _ _)
     (fun c e _ => funext fun w => by
       rw [map_smul]

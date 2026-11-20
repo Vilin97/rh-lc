@@ -34,7 +34,7 @@ section ActPairings
 variable {H : Type} [Group H]
 
 def intActBiadd (A Z' : Rep.{0} (ULift.{0} ℤ) H) (e : Z' →+ ℤ) : A →+ Z' →+ A :=
-  AddMonoidHom.mk' (fun a => AddMonoidHom.mk' (fun z => e z • a) (fun z z' => by rw [map_add, add_smul]))
+  AddMonoidHom.mk' (fun a => AddMonoidHom.mk' (fun z => e z • a) (fun z z' => by rw [map_add (f := _), add_smul]))
     (fun a a' => by
       ext z
       change e z • (a + a') = e z • a + e z • a'
@@ -72,7 +72,7 @@ def zmodActBiadd (D Z' : Rep.{0} (ULift.{0} ℤ) H) (hD : ∀ d : D, n • d = 0
   AddMonoidHom.mk' (fun d => AddMonoidHom.mk' (fun z => zmodMulAddHom n hD (e z) d)
       (fun z z' => by
         change zmodMulAddHom n hD (e (z + z')) d = zmodMulAddHom n hD (e z) d + zmodMulAddHom n hD (e z') d
-        rw [map_add, map_add, AddMonoidHom.add_apply]))
+        rw [map_add (f := _), map_add (f := _), AddMonoidHom.add_apply]))
     (fun d d' => by
       ext z
       change zmodMulAddHom n hD (e z) (d + d') = zmodMulAddHom n hD (e z) d + zmodMulAddHom n hD (e z) d'

@@ -62,7 +62,7 @@ lemma lin_mul_rel (hn : 0 < n) (p : MvPolynomial (Fin r) R) (i : Fin r) :
     rw [mul_sub, X_pow_eq_monomial, monomial_mul, mul_one, mul_comm (monomial b c) (C (x i)),
       C_mul_monomial, map_sub, lin_monomial, lin_monomial, wt_add_single n x hn]
     ring
-  | add p q hp hq => rw [add_mul, map_add, hp, hq, add_zero]
+  | add p q hp hq => rw [add_mul, map_add (f := _), hp, hq, add_zero]
 
 lemma lin_rel (hn : 0 < n) {f : MvPolynomial (Fin r) R} (hf : f ∈ rel n x) : lin n x f = 0 := by
   obtain ⟨c, rfl⟩ := Ideal.mem_span_range_iff_exists_fun.mp hf
@@ -92,7 +92,7 @@ theorem isIntegral (hn : 0 < n) : Algebra.IsIntegral R (MvPolynomial (Fin r) R �
   obtain ⟨f, rfl⟩ := Ideal.Quotient.mk_surjective a
   induction f using MvPolynomial.induction_on with
   | C c => rw [← algebraMap_eq_mk]; exact isIntegral_algebraMap
-  | add p q hp hq => rw [map_add]; exact hp.add hq
+  | add p q hp hq => rw [map_add (f := _)]; exact hp.add hq
   | mul_X p i hp =>
     rw [map_mul]
     refine hp.mul ⟨Polynomial.X ^ n - Polynomial.C (x i), Polynomial.monic_X_pow_sub_C _ hn.ne', ?_⟩

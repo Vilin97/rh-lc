@@ -92,11 +92,11 @@ theorem powForm_baseChange {L : Type} [AddCommGroup L] (B : LinearMap.BilinForm 
         (TensorProduct.piRight ℤ ℝ ℝ (fun _ : Fin n => L) y i) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, LinearMap.add_apply, Pi.add_apply, ha, hb, Finset.sum_add_distrib]
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_apply, Pi.add_apply, ha, hb, Finset.sum_add_distrib]
   | tmul r u =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb, Finset.sum_add_distrib]
+    | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb, Finset.sum_add_distrib]
     | tmul s v => simp [powForm_apply, Finset.sum_smul, Finset.sum_mul]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
@@ -153,7 +153,7 @@ def powDatum (D : Datum H) (n : ℕ) : Datum H where
         intro x
         induction x using TensorProduct.induction_on with
         | zero => simp
-        | add a b ha hb => simp only [map_add, ha, hb]
+        | add a b ha hb => simp only [map_add (f := _), ha, hb]
         | tmul r u =>
           have : r ⊗ₜ[ℤ] u = r • ((1 : ℝ) ⊗ₜ[ℤ] u) := by simp [TensorProduct.smul_tmul']
           rw [this, map_smul, map_smul, hA]

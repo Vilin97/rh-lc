@@ -180,7 +180,7 @@ theorem cA_cA' (z : AE D) : cA D (cA D z) = z := by
     rw [Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul]
     show a ⊗ₜ[D.host.F] star (star w) = _
     rw [star_star]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem hO_smul_left (a : AE D) (x y : WO S T) : hO S T (a • x) y = a * hO S T x y := by
   unfold hO
@@ -250,7 +250,7 @@ def U0 (Λ : AddSubgroup (WO S T)) : AddSubgroup (WO S T) where
     refine ⟨u + u', Λ.add_mem hu hu', fun i j => ?_⟩
     have : (a + b - (u + u')) i j = (a - u) i j + (b - u') i j := by
       simp only [Matrix.sub_apply, Matrix.add_apply]; abel
-    rw [this, map_add, ha, hb, add_zero]
+    rw [this, map_add (f := _), ha, hb, add_zero]
   zero_mem' := ⟨0, Λ.zero_mem, fun i j => by simp⟩
   neg_mem' := by
     rintro a ⟨u, hu, ha⟩
@@ -390,7 +390,7 @@ theorem phi_heis_two (hdy : DyadIdem D) (ψ : AddChar (AF D.host.F) ℂ) {Λ : A
   unfold heisO phiV
   have h2u : 2 • u ∈ U0 S T Λ := (U0 S T Λ).nsmul_mem (le_open_neighbourhood S T hu) 2
   have hfi2 : ∀ i j, infPart D ((2 • u) i j) = 0 := by
-    intro i j; rw [two_nsmul, Matrix.add_apply, map_add, hL.fi u hu i j, add_zero]
+    intro i j; rw [two_nsmul, Matrix.add_apply, map_add (f := _), hL.fi u hu i j, add_zero]
   by_cases hy : y ∈ U0 S T Λ
   · rw [if_pos ((U0 S T Λ).add_mem hy h2u), if_pos hy, hg y _ hfi2]
     obtain ⟨x, hx, hr⟩ := hy

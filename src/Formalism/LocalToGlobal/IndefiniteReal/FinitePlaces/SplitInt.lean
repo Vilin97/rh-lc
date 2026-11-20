@@ -71,7 +71,7 @@ def valIdeal {w : HeightOneSpectrum (𝓞 D.host.F)} (ι : D.host.E →ₐ[D.hos
   carrier := {x | Valued.v (ι (x : D.host.E)) < 1}
   add_mem' := fun {x y} hx hy => by
     show Valued.v (ι ((x + y : 𝓞 D.host.E) : D.host.E)) < 1
-    rw [show ((x + y : 𝓞 D.host.E) : D.host.E) = (x : D.host.E) + (y : D.host.E) from rfl, map_add]
+    rw [show ((x + y : 𝓞 D.host.E) : D.host.E) = (x : D.host.E) + (y : D.host.E) from rfl, map_add (f := _)]
     exact lt_of_le_of_lt (Valuation.map_add _ _ _) (max_lt hx hy)
   zero_mem' := by
     show Valued.v (ι ((0 : 𝓞 D.host.E) : D.host.E)) < 1

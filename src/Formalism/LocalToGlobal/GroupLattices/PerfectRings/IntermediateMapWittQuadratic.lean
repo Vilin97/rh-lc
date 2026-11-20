@@ -115,10 +115,10 @@ def gO : OO p n →+* Kc p where
   map_zero' := by
     show gW p n (0 : OO p n).re + gW p n (0 : OO p n).im * rtP p = 0
     rw [QuadraticAlgebra.re_zero, QuadraticAlgebra.im_zero, map_zero, zero_mul, add_zero]
-  map_add' x y := by simp only [QuadraticAlgebra.re_add, QuadraticAlgebra.im_add, map_add]; ring
+  map_add' x y := by simp only [QuadraticAlgebra.re_add, QuadraticAlgebra.im_add, map_add (f := _)]; ring
   map_mul' x y := by
     have h : rtP p * rtP p = (p : Kc p) := by rw [← sq, sqrtPrime_sq]
-    simp only [QuadraticAlgebra.re_mul, QuadraticAlgebra.im_mul, map_add, map_mul, map_natCast, zero_mul,
+    simp only [QuadraticAlgebra.re_mul, QuadraticAlgebra.im_mul, map_add (f := _), map_mul, map_natCast, zero_mul,
       add_zero]
     linear_combination (gW p n x.im * gW p n y.im) * (-h)
 

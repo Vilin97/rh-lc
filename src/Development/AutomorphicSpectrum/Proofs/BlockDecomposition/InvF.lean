@@ -12,7 +12,7 @@ def invF (r : Matrix.unitaryGroup (Fin n) ℂ →* (F →L[ℂ] F)) (E : KMod n)
     Submodule ℂ ((E.V →L[ℂ] ℂ) →L[ℂ] F) where
   carrier := {t | ∀ k ξ, t (ξ ∘L E.ρ k⁻¹) = r k (t ξ)}
   add_mem' {a b} ha hb k ξ := by
-    simp only [ContinuousLinearMap.add_apply, map_add]
+    simp only [ContinuousLinearMap.add_apply, map_add (f := _)]
     rw [ha k ξ, hb k ξ]
   zero_mem' k ξ := by simp
   smul_mem' c a ha k ξ := by

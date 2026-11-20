@@ -40,7 +40,7 @@ theorem iter_smul (n : ℕ) (q : ℚ_[l]) (x : P.R.B) : P.φB^[n] (q • x) = q 
 theorem iter_add (n : ℕ) (x y : P.R.B) : P.φB^[n] (x + y) = P.φB^[n] x + P.φB^[n] y := by
   induction n generalizing x y with
   | zero => rfl
-  | succ n ih => rw [Function.iterate_succ_apply, Function.iterate_succ_apply, Function.iterate_succ_apply, map_add, ih]
+  | succ n ih => rw [Function.iterate_succ_apply, Function.iterate_succ_apply, Function.iterate_succ_apply, map_add (f := _), ih]
 
 def phiN (n : ℕ) : P.R.B →+* P.R.B := (P.φB : P.R.B →+* P.R.B) ^ n
 
@@ -60,7 +60,7 @@ theorem ev_smul (n : ℕ) (q : ℚ_[l]) (x : P.R.B) : ev P n (q • x) = q • e
   simp only [ev, iter_smul, map_smul]
 
 theorem ev_add (n : ℕ) (x y : P.R.B) : ev P n (x + y) = ev P n x + ev P n y := by
-  simp only [ev, iter_add, map_add]
+  simp only [ev, iter_add, map_add (f := _)]
 
 theorem crisFrobenius_cyclotomicPeriod : P.φB P.tB = (l : P.R.B) * P.tB := by
   have h := (P.PD (botExt l)).t_φ

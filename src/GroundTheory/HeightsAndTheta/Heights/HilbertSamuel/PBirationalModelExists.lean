@@ -62,7 +62,7 @@ theorem aeval_coordClass (g : MRing ι) :
     aeval (coordClass P) g = algebraMap (MRing ι ⧸ P) (FractionRing (MRing ι ⧸ P)) (Ideal.Quotient.mk P g) := by
   induction g using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n hp => simp only [map_mul, hp, aeval_X, coordClass]
 
 theorem aeval_coordClass_eq_zero (g : MRing ι) : aeval (coordClass P) g = 0 ↔ g ∈ P := by
@@ -79,7 +79,7 @@ def fnField : Subfield (FractionRing (MRing ι ⧸ P)) where
     refine ⟨d + d', g * h' + h * g', h * h',
       isMultiHomog_add' (isMultiHomog_mul hg hh') (isMultiHomog_mul hh hg'), isMultiHomog_mul hh hh',
       by simp [h0, h0'], ?_⟩
-    simp only [map_add, map_mul, hs, ht]
+    simp only [map_add (f := _), map_mul, hs, ht]
     ring
   mul_mem' := by
     rintro s t ⟨d, g, h, hg, hh, h0, hs⟩ ⟨d', g', h', hg', hh', h0', ht⟩
@@ -140,7 +140,7 @@ theorem eval_mConeMap_birPoint (c : ∀ k, ι k) (hc : ∀ k, (X ⟨k, c k⟩ : 
     have e1 := map_intCast (eval₂Hom (fnField P).subtype (fun k => coordClass P ⟨k, c k⟩)) a
     simp only [coe_eval₂Hom] at e1
     simpa [mConeMap] using e1
-  | add p q hp hq => simp only [map_add, eval₂_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), eval₂_add, hp, hq]
   | mul_X p n hp =>
     have hX : mConeMap (birPoint c hc) (X n) = C (birPoint c hc n) * X n.1 := by simp [mConeMap]
     have e : (fnField P).subtype (birPoint c hc n) * coordClass P ⟨n.1, c n.1⟩ = coordClass P n :=

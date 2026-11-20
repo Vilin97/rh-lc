@@ -37,7 +37,7 @@ theorem exists_subst {K J : Type} [CommRing K] [Fintype J] (g : Matrix J J K) {F
   · clear hF
     induction F using MvPolynomial.induction_on with
     | C a => simp
-    | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
     | mul_X p i hp =>
       rw [map_mul, map_mul, map_mul, hp]
       simp [Matrix.mulVec, dotProduct]

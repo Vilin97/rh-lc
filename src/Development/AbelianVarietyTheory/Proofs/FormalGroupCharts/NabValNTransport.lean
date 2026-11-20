@@ -66,7 +66,7 @@ theorem nabValN_transport (R : Type) [CommRing R] (d : ℕ) (O : Type) [CommRing
     intro e he
     have := hgg e he
     rw [map_sub, map_sub] at this
-    rw [map_sub, map_add, ← this]
+    rw [map_sub, map_add (f := _), ← this]
     change _ - (_ - MvPowerSeries.coeff e (ev ![comp1 (mapPt (algebraMap R k) φ) (pt k (n := 2) d 0),
       comp1 (mapPt (algebraMap R k) φ) (pt k (n := 2) d 1)] h) - _) = _
     ring

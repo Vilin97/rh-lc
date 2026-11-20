@@ -355,7 +355,7 @@ theorem plane_threshold (k : Type) [Field k] [CharZero k] :
         (Finsupp.single (x 0).1 1 + Finsupp.single (x 1).1 s) =
       P.formOrd (dForm _ fun i => (x i : FractionRing (MvPolynomial (Fin 2) k))) -
         (P.ord (x 0).1 + s * P.ord (x 1).1) := fun P s => by
-    rw [Place.disc, map_add, Place.ordQ_single, Place.ordQ_single, one_mul]
+    rw [Place.disc, map_add (f := _), Place.ordQ_single, Place.ordQ_single, one_mul]
   have hSd : ∀ s : ℚ, S.disc (dForm _ fun i => (x i : FractionRing (MvPolynomial (Fin 2) k)))
       (Finsupp.single (x 0).1 1 + Finsupp.single (x 1).1 s) = -1 := fun s => by
     rw [hdisc, formOrd_eq_zero hQ hω hS, hS1, hE0 S hS hne'.symm]

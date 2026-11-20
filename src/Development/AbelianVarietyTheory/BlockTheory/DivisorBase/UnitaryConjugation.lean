@@ -44,7 +44,7 @@ theorem continuous_conj (D : D7) : Continuous (cA D) := by
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [cA, sigR, f]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [hf]
   exact IsModuleTopology.continuous_of_linearMap f
 

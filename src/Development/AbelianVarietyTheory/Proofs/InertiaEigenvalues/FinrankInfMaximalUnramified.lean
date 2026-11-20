@@ -113,7 +113,7 @@ theorem exists_data [IsAlgClosed Ω] [Normal F Ω] {π : 𝒪[F]} (hπ : Irreduc
     rw [hc] at h
     rw [← h]
     have hs : PowerSeries.HasSubst φ := PowerSeries.HasSubst.of_constantCoeff_zero' hφ0
-    rw [← PowerSeries.coe_substAlgHom hs, map_add, map_mul, map_pow, PowerSeries.substAlgHom_X]
+    rw [← PowerSeries.coe_substAlgHom hs, map_add (f := _), map_mul, map_pow, PowerSeries.substAlgHom_X]
     congr 2
     exact ((PowerSeries.substAlgHom hs).commutes π).symm
   · let x : IdealPoint Ω (lubinTateFormalGroup hπ hf) := IdealPoint.mk (z n) (hv n)
@@ -141,7 +141,7 @@ theorem map_commute {A B : Type} [CommRing A] [CommRing B] (h : A →+* B) (π :
   have h2 := PowerSeries.map_subst hsub (h := h) φ
   rw [← hc] at h2
   change PowerSeries.map h _ = PowerSeries.subst (PowerSeries.map h _) _ at h2
-  simpa only [map_add, map_mul, map_pow, PowerSeries.map_C, PowerSeries.map_X] using h2
+  simpa only [map_add (f := _), map_mul, map_pow, PowerSeries.map_C, PowerSeries.map_X] using h2
 
 end General
 

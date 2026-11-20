@@ -33,7 +33,7 @@ theorem cpt_supp_zero {S : Finset ℕ} {w : Pl D.host.E} (hw : ¬ Off S w) {P : 
     rw [map_sum, ← Finset.sum_add_distrib, map_sum, map_sum]
   refine Finset.sum_eq_zero fun w' hw' => ?_
   obtain ⟨hne, hnc⟩ := GlobalTheory.StdHalfLat.ne_and_not_conj hw (hoff w' hw')
-  rw [map_add, map_add, (cpt_of_isIdemAt (hes w' hw')).2 w hne,
+  rw [map_add (f := _), map_add (f := _), (cpt_of_isIdemAt (hes w' hw')).2 w hne,
     (cpt_of_isIdemAt (GlobalTheory.MovedIdem.isIdemAt_conj (hes w' hw') (GlobalTheory.IdemSupport.mem_cP w'))).2 w ?_, add_zero]
   rintro rfl
   apply hnc

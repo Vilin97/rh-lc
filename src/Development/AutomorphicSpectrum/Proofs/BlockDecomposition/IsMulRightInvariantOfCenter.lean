@@ -300,10 +300,10 @@ theorem exists_proj {W₁ W₂ V₂ V₃ : Sb} (c₁ : W₁ ⊔ V₂ = W₂) (d�
   · rw [m2]
     obtain ⟨a, ha, b, hb, c, hc, rfl⟩ := exists_sum_along_flag c₁ c₂ y
     have f1 : E₁ (a + b + c) = a := by
-      rw [map_add, map_add, e1 a ha, e1' b (Submodule.mem_sup_left hb),
+      rw [map_add (f := _), map_add (f := _), e1 a ha, e1' b (Submodule.mem_sup_left hb),
         e1' c (Submodule.mem_sup_right hc), add_zero, add_zero]
     have f3 : E₃ (a + b + c) = c := by
-      rw [map_add, map_add, e3' a (hle₁ ha), e3' b (hle₂ hb), e3 c hc, zero_add, zero_add]
+      rw [map_add (f := _), map_add (f := _), e3' a (hle₁ ha), e3' b (hle₂ hb), e3 c hc, zero_add, zero_add]
     rw [f1, f3, show a + b + c - a - c = b by abel]
     exact hb
   · rw [m3]; exact Submodule.projection_apply_mem h3 y

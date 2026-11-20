@@ -31,7 +31,7 @@ theorem add_zero_of (G : FGLaw C d) (Q : PS C 1 d)
   have hrow : ∀ k, ∑ b, Mm G b k * pderiv C ((0 : Fin 1), b) Q = 0 := by
     intro k
     have D := congrArg (fun g => ev (n := 1) ![pt C d 0, 0] (pderiv C ((1 : Fin 2), k) g)) hQ
-    simp only [map_add, pderiv_eval_single G.F G.const, pderiv_eval_single (pt C d 0) (coordinate_point_constantCoeff 0), pderiv_eval_single (pt C d 1) (coordinate_point_constantCoeff 1),
+    simp only [map_add (f := _), pderiv_eval_single G.F G.const, pderiv_eval_single (pt C d 0) (coordinate_point_constantCoeff 0), pderiv_eval_single (pt C d 1) (coordinate_point_constantCoeff 1),
       sum_d_pt_other (0 : Fin 2) 1 (by decide), sum_d_pt_self, zero_add] at D
     rw [ev_sum constant_zero_first_zero] at D
     simp only [ev_mul constant_zero_first_zero, eval_group_law_at_zero G, log_jacobian_at_zero G] at D

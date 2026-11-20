@@ -200,9 +200,9 @@ theorem respectsAdd_of_map (ψ : Isogeny (E.map σ) (E'.map σ))
   have hpm' : Function.Injective pm' := fun _ _ h => h
   apply Point.map_injective (W' := E') ιA
   apply hpm'
-  rw [map_add, map_add, key _ h₃, key _ h₁, key _ h₂]
+  rw [map_add (f := _), map_add (f := _), key _ h₃, key _ h₁, key _ h₂]
   have h₃' : IsGenPt (E.map σ) (pm P₁ + pm P₂) := by
-    rw [← map_add]; exact hgen _ h₃
+    rw [← map_add (f := _)]; exact hgen _ h₃
   rw [← ψ.app_add (hgen P₁ h₁) (hgen P₂ h₂) h₃']
   exact happ (map_add _ _ _) _ _
 

@@ -144,7 +144,7 @@ theorem evalAt_lft_eq (g y : ι → Matrix (Fin a) (Fin a) ℂ) (F : PY ι a) :
   simp only [evalAt, lft]
   induction F using MvPolynomial.induction_on with
   | C r => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_mul, hp, aeval_X, eval_X, map_sum, eval_C, Matrix.mul_apply]

@@ -64,7 +64,7 @@ theorem subst_mem {n₀ n₁ : ℕ} (h : n₀ ≤ n₁) (x : Matrix (Fin n₁) (
         · have h2 : Fin.castLE h v.2 = j := by rw [hv]; rfl
           have h3 : Fin.castLE h (⟨l.val, hl⟩ : Fin n₀) = l := rfl
           set_option synthInstance.maxHeartbeats 100000 in
-            simp only [AlgHom.comp_apply, subst, colAdd, aeval_X, map_sum, map_mul, map_add, algHom_C,
+            simp only [AlgHom.comp_apply, subst, colAdd, aeval_X, map_sum, map_mul, map_add (f := _), algHom_C,
             if_pos hv, h2, h3, if_true, algebraMap_eq, mul_add, Finset.sum_add_distrib, Finset.mul_sum]
           refine congrArg₂ (· + ·) (Finset.sum_congr rfl fun b _ => rfl) (Finset.sum_congr rfl fun b _ => ?_)
           ring

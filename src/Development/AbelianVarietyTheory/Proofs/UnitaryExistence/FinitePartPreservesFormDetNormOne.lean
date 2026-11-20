@@ -47,7 +47,7 @@ theorem unitary_map {F E R S : Type} [Field F] [Field E] [Algebra F E] [CommRing
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [hπ, sigR]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hJ : (JR R J).map π = JR S J := by
     ext i j
     simp [hπ, JR, inclR]

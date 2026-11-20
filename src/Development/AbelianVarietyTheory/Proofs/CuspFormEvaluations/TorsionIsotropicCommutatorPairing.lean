@@ -37,7 +37,7 @@ theorem dvd_EF_of_killed (m j : ℕ) (a b : Dw.La) (ha : ∀ c ∈ l.Mb ^ j, Dw.
   obtain ⟨a', ha'⟩ := ha r hr
   obtain ⟨b', hb'⟩ := hb p hp
   have e₁ : Dw.EF a b = Dw.EF a (p • b) + Dw.EF (r • a) b := by
-    rw [Dw.adj, ← map_add, ← add_smul]
+    rw [Dw.adj, ← map_add (f := _), ← add_smul]
     have : p + H.bar r = 1 := hpq
     rw [this, one_smul]
   rw [e₁, ha', hb', map_nsmul, map_nsmul, LinearMap.smul_apply, nsmul_eq_mul, nsmul_eq_mul]

@@ -48,7 +48,7 @@ theorem polData_stable_right (hA : ActsEx) {n d : ℕ} {X : Spc F E n} {W : Spc 
     · filter_upwards [hev, Filter.eventually_cofinite_ne v] with w hw hne
       rw [Function.update_of_ne hne]; exact hw
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem polData_stable_inf {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (B : Base F E) (M : Model σ X W)
@@ -65,7 +65,7 @@ theorem polData_stable_inf {n d : ℕ} {X : Spc F E n} {W : Spc F E d} (B : Base
     rw [GlobalTheory.ThetaFacInf.Fib.acts_pure φ hSB hs hact]
     exact Submodule.subset_span ⟨f₁, hf₁, φ, hSB, hev, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem kInfV_exists : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]

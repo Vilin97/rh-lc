@@ -167,7 +167,7 @@ theorem eventuallyPoly_projectiveLine :
     rw [hilbFn_projectiveSpace, binomFn, if_pos ht, Nat.choose_one_right]
     have e : (((m ()).toNat : ℕ) : ℤ) = m () := Int.toNat_of_nonneg ht
     have e' : (((m ()).toNat : ℕ) : ℚ) = (m () : ℚ) := by exact_mod_cast e
-    simp only [map_add, eval_X, map_one]
+    simp only [map_add (f := _), eval_X, map_one]
     push_cast
     rw [e']
 

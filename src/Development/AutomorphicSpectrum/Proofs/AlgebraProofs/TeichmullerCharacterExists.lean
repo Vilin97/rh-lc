@@ -259,7 +259,7 @@ theorem fund_ex_relay : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlg
   obtain ⟨r, hr⟩ := exists_add_pow_prime_pow_eq hpp (σf a) (σf b) f
   have hst : σf a + σf b - σf (a + b) ∈ M := by
     rw [← Ideal.Quotient.eq]
-    simp only [map_add, hs2, Subfield.coe_add]
+    simp only [map_add (f := _), hs2, Subfield.coe_add]
   obtain ⟨u, hu, hsu⟩ := H (σf a + σf b) (σf (a + b)) (hs1 _) hst
   rw [hr, hs1, hs1] at hsu
   have hmem : (p : R) ∣ (σf a + σf b - σf (a + b)) * u := by

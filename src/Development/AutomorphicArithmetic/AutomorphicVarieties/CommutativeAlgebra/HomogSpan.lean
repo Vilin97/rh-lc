@@ -13,7 +13,7 @@ private theorem wcomp_mul_homog (O : Type) [CommRing O] {σ X : Type} [AddCommGr
     have hp' := Finset.HasAntidiagonal.mem_antidiagonal.1 hp
     by_cases h2 : Finsupp.weight wt p.2 = w
     · rw [coeff_wcomp, if_pos]
-      rw [← h, ← hp', map_add, h2, add_sub_cancel_right]
+      rw [← h, ← hp', map_add (f := _), h2, add_sub_cancel_right]
     · rw [he _ h2, mul_zero, mul_zero]
   · symm
     refine Finset.sum_eq_zero fun p hp => ?_
@@ -22,7 +22,7 @@ private theorem wcomp_mul_homog (O : Type) [CommRing O] {σ X : Type} [AddCommGr
     · rw [coeff_wcomp, if_neg, zero_mul]
       intro h1
       apply h
-      rw [← hp', map_add, h1, h2, sub_add_cancel]
+      rw [← hp', map_add (f := _), h1, h2, sub_add_cancel]
     · rw [he _ h2, mul_zero]
 
 theorem UpperTheory.V.Alg.homog_span :
@@ -73,9 +73,9 @@ theorem UpperTheory.V.Alg.homog_span :
         exact ⟨f, rfl, {i}, fun n hn => hf n (by simpa using hn)⟩
       · exact ⟨0, map_zero _, ∅, fun n _ => map_zero _⟩
       · rintro a b ⟨f, hf, s, hs⟩ ⟨f', hf', s', hs'⟩
-        refine ⟨f + f', by rw [map_add, hf, hf'], s ∪ s', fun n hn => ?_⟩
+        refine ⟨f + f', by rw [map_add (f := _), hf, hf'], s ∪ s', fun n hn => ?_⟩
         rw [Finset.mem_union, not_or] at hn
-        rw [map_add, hs n hn.1, hs' n hn.2, add_zero]
+        rw [map_add (f := _), hs n hn.1, hs' n hn.2, add_zero]
     obtain ⟨f, hf, s, hs⟩ := hl
     have hsum : f = ∑ j ∈ s, wcomp O W.wt j f := by
       ext n

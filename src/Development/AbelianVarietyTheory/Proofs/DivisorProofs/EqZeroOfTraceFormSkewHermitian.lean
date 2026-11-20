@@ -135,7 +135,7 @@ theorem traceForm_nondegenerate : ∀ (E : Type) [Field E] [NumberField E] [IsCM
       ring
     have hB : Bᵀ + B.map cc = 0 := by
       ext i j
-      simp only [B, Matrix.add_apply, transpose_apply, map_apply, of_apply, Matrix.zero_apply, cc, map_add,
+      simp only [B, Matrix.add_apply, transpose_apply, map_apply, of_apply, Matrix.zero_apply, cc, map_add (f := _),
         map_div₀, map_mul, map_ofNat, IsCMField.complexConj_apply_apply, hβ']
       field_simp
       ring

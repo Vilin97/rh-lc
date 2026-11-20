@@ -194,7 +194,7 @@ theorem dsig_kfin [CompleteSpace H] (hK : PI.KFinSmooth) (hmu : IsHCParam mu) (h
       rw [dsig_conj hσ hY (hsm s hs) hg.1]
       exact Submodule.subset_span ⟨_, lie_conj' hY hg.1, _, hS g hg s hs, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ ihx ihy => rw [map_add]; exact Submodule.add_mem _ ihx ihy
+    | add x y _ _ ihx ihy => rw [map_add (f := _)]; exact Submodule.add_mem _ ihx ihy
     | smul a x _ ih => rw [map_smul]; exact Submodule.smul_mem _ a ih
 
 theorem dsig_skew (hσ : IsDSHpk k r ε mu σ) {X : Mx k r} (hX : InLieHpk k r X) {v w : H}

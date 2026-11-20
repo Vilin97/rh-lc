@@ -44,7 +44,7 @@ theorem valued_lt_of_mem {P : HeightOneSpectrum (𝓞 E)} {w : Formalism.L2.Herm
     exact (HeightOneSpectrum.valuation_lt_one_iff_mem _ _).2 hb
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [Subring.coe_add, map_add]
+    rw [Subring.coe_add, map_add (f := _)]
     exact Valuation.map_add_lt _ hx hy
   | smul a x _ hx =>
     rw [smul_eq_mul, Subring.coe_mul, map_mul, map_mul]
@@ -84,7 +84,7 @@ def glue (z : AfE F E) (a b : HeightOneSpectrum (𝓞 E) → E) : AfE F E :=
 
 theorem sig_glue (z : AfE F E) (a b : HeightOneSpectrum (𝓞 E) → E) : σ (glue hc Q z a b) = glue hc Q (σ z) b a := by
   unfold glue
-  rw [map_add, map_add, map_mul, map_sub, map_sub, sig_sig, sig_sig, map_one]
+  rw [map_add (f := _), map_add (f := _), map_mul, map_sub, map_sub, sig_sig, sig_sig, map_one]
   ring
 
 open Classical in
@@ -94,7 +94,7 @@ theorem adAt_glue (hQ : ∀ P ∈ Q, conjPrime₂ P ∉ Q) (z : AfE F E) (a b : 
       if w ∈ Q then algebraMap E _ (a w) else if conjPrime₂ w ∈ Q then algebraMap E _ (star (b (conjPrime₂ w))) else adAt F w z := by
   unfold glue
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_mul, map_sub, map_sum, map_one, adAt_idem, adAt_sig_idem, sigR_inclE, adAt_inclE, ite_mul,
+    simp only [map_add (f := _), map_mul, map_sub, map_sum, map_one, adAt_idem, adAt_sig_idem, sigR_inclE, adAt_inclE, ite_mul,
     one_mul, zero_mul, Finset.sum_ite_eq]
   by_cases h : w ∈ Q
   · simp [h, hQ w h]
@@ -195,7 +195,7 @@ theorem valued_symm_le {N : Submodule (𝓞 E) (Sp E n)} {P : HeightOneSpectrum 
     rwa [hr, Pi.smul_apply, Algebra.smul_def, map_mul, CharValCompare.val_of_notMem hs, one_mul] at h2
   | zero => simp
   | add x y _ _ hx hy =>
-    simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
     exact Valuation.map_add_le _ hx hy
   | smul a x _ hx =>
     have e : ∀ j, algebraMap E (P.adicCompletion E) (mat f.symm i j) * adAt F P ((a • x) j) =

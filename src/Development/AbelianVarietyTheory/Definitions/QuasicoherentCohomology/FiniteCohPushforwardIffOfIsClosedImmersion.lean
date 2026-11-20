@@ -219,7 +219,7 @@ def cohPushMap (hf : ∀ r : R, f.appTop (algebraMap R Γ(X, ⊤) r) = algebraMa
     (H : Y.Modules) (U : X.Opens) (n : ℕ) :
     cohOn ((Scheme.Modules.pushforward f).obj H) U n →ₗ[R] cohOn H (f ⁻¹ᵁ U) n where
   toFun x := (cohOn.toH' H _ n).symm (pushH' f H U n (cohOn.toH' _ U n x))
-  map_add' x y := by simp only [map_add]
+  map_add' x y := by simp only [map_add (f := _)]
   map_smul' r x := by
     apply (cohOn.toH' H _ n).injective
     rw [RingHom.id_apply, cohOn.toH'_smul, cohOn.toH'_smul, AddEquiv.apply_symm_apply,

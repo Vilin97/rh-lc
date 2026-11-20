@@ -55,7 +55,7 @@ theorem exists_small_degree {g : ℕ} [Fact g.Prime] {x y : AlgebraicClosure (ZM
       induction ht using IntermediateField.adjoin_induction with
       | mem t ht => rw [Set.mem_singleton_iff.1 ht, map_pow, hσ, h]
       | algebraMap t => exact σ.commutes t
-      | add a b _ _ ha hb => rw [map_add, ha, hb]
+      | add a b _ _ ha hb => rw [map_add (f := _), ha, hb]
       | inv a _ ha => rw [map_inv₀, ha]
       | mul a b _ _ ha hb => rw [map_mul, ha, hb]
     have := (IntermediateField.mem_fixedField_iff _ _).1 (hfix hx) σ (Subgroup.mem_zpowers σ)

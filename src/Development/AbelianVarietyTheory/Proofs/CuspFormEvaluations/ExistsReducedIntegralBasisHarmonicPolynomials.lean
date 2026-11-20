@@ -22,7 +22,7 @@ theorem mem_HHa_of_mem_span {T : Type} {r : T → ℕ} {n : ℕ} {k : Type} [Fie
   | zero => exact ⟨zero_mem _, fun _ _ _ _ _ => map_zero _, fun m hm => by simp at hm⟩
   | add y z _ _ hy hz =>
     refine ⟨add_mem hy.1 hz.1, fun σ i i' h t => ?_, fun m hm => ?_⟩
-    · rw [map_add, hy.2.1 σ i i' h t, hz.2.1 σ i i' h t]
+    · rw [map_add (f := _), hy.2.1 σ i i' h t, hz.2.1 σ i i' h t]
     · rcases Finset.mem_union.1 (support_add hm) with h | h
       exacts [hy.2.2 m h, hz.2.2 m h]
   | smul q y _ hy =>

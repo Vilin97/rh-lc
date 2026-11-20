@@ -47,7 +47,7 @@ theorem exists_decomp {M : Type} [NormedAddCommGroup M] [InnerProductSpace ℂ M
       · exact h1 ω h
       · exact h1' ω h
     · intro ω a
-      simp only [map_add, h2 ω a, h2' ω a, smul_add]
+      simp only [map_add (f := _), h2 ω a, h2' ω a, smul_add]
     · intro ω h
       rw [Finset.mem_union, not_or] at h
       simp [h3 ω h.1, h3' ω h.2]

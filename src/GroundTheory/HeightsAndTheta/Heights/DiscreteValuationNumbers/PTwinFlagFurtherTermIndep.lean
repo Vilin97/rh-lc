@@ -116,7 +116,7 @@ theorem rename_divDiff_natAdd_mul {N r : ℕ} (l : Fin r) (G : MvPolynomial (Fin
   induction G using MvPolynomial.induction_on' with
   | monomial α c => exact rename_divDiff_natAdd_monomial l α c Q
   | add A B hA hB =>
-    rw [map_add, add_mul, plainPolynomialPairNumber.rename_divDiff_add, hA, hB, map_add, add_mul]
+    rw [map_add (f := _), add_mul, plainPolynomialPairNumber.rename_divDiff_add, hA, hB, map_add (f := _), add_mul]
 
 def emb (N r : ℕ) : Fin (N + (r + r)) → Fin ((N + r) + (N + r)) :=
   Fin.append (fun i : Fin N => Fin.natAdd (N + r) (Fin.castAdd r i))

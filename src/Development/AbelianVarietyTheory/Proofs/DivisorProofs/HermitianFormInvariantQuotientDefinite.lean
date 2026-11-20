@@ -16,7 +16,7 @@ theorem radical_orthogonal : ∀ {V : Type} [AddCommGroup V] [Module ℂ V] (B :
   intro V _ _ B D hadd hsmul hherm hpos x hx hxx y hy
   have hadd2 : ∀ u ∈ D, ∀ v ∈ D, ∀ w ∈ D, B u (v + w) = B u v + B u w := by
     intro u hu v hv w hw
-    rw [hherm (v + w) (D.add_mem hv hw) u hu, hadd v hv w hw u hu, map_add, ← hherm v hv u hu,
+    rw [hherm (v + w) (D.add_mem hv hw) u hu, hadd v hv w hw u hu, map_add (f := _), ← hherm v hv u hu,
       ← hherm w hw u hu]
   have hsmul2 : ∀ c : ℂ, ∀ u ∈ D, ∀ v ∈ D, B u (c • v) = starRingEnd ℂ c * B u v := by
     intro c u hu v hv
@@ -59,7 +59,7 @@ theorem fixed_projection_nonradical : ∀ {V G : Type} [AddCommGroup V] [Module 
   intro V G _ _ _ ρ B D hD hadd hsmul hherm hinv hrad0 x₀ hx₀ Z hZU hZ a haZ ha hnz h0
   have hadd2 : ∀ u ∈ D, ∀ v ∈ D, ∀ w ∈ D, B u (v + w) = B u v + B u w := by
     intro u hu v hv w hw
-    rw [hherm (v + w) (D.add_mem hv hw) u hu, hadd v hv w hw u hu, map_add, ← hherm v hv u hu,
+    rw [hherm (v + w) (D.add_mem hv hw) u hu, hadd v hv w hw u hu, map_add (f := _), ← hherm v hv u hu,
       ← hherm w hw u hu]
   have hsmul2 : ∀ c : ℂ, ∀ u ∈ D, ∀ v ∈ D, B u (c • v) = starRingEnd ℂ c * B u v := by
     intro c u hu v hv
@@ -110,7 +110,7 @@ theorem isSimpleOver_sup_of_minimal : ∀ {V G : Type} [AddCommGroup V] [Module 
   have hstab : ∀ g, ∀ x ∈ N ⊔ Z, ρ g x ∈ N ⊔ Z := by
     intro g x hx
     obtain ⟨n, hn, z, hz, rfl⟩ := Submodule.mem_sup.1 hx
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (hNst g n hn) (hZst g z hz)
   refine ⟨lt_of_le_of_ne le_sup_left fun hEq => ?_, ?_, ?_⟩
   · obtain ⟨z, hz, hzz⟩ := hnz
@@ -156,7 +156,7 @@ theorem exists_isSimpleOver_of_unitary : ∀ {V G : Type} [AddCommGroup V] [Modu
   have hrad0 := radical_orthogonal B D hadd hsmul hherm hpos
   have hadd2 : ∀ x ∈ D, ∀ y ∈ D, ∀ z ∈ D, B x (y + z) = B x y + B x z := by
     intro x hx y hy z hz
-    rw [hherm (y + z) (D.add_mem hy hz) x hx, hadd y hy z hz x hx, map_add, ← hherm y hy x hx,
+    rw [hherm (y + z) (D.add_mem hy hz) x hx, hadd y hy z hz x hx, map_add (f := _), ← hherm y hy x hx,
       ← hherm z hz x hx]
   have hsmul2 : ∀ c : ℂ, ∀ x ∈ D, ∀ y ∈ D, B x (c • y) = starRingEnd ℂ c * B x y := by
     intro c x hx y hy
@@ -186,7 +186,7 @@ theorem exists_isSimpleOver_of_unitary : ∀ {V G : Type} [AddCommGroup V] [Modu
     let Wf : Submodule ℂ V :=
       { carrier := {z | z ∈ Z ∧ ∀ k ∈ K, ρ k z = z}
         add_mem' := fun {a b} ha hb => ⟨Z.add_mem ha.1 hb.1, fun k hk => by
-          rw [map_add, ha.2 k hk, hb.2 k hk]⟩
+          rw [map_add (f := _), ha.2 k hk, hb.2 k hk]⟩
         zero_mem' := ⟨Z.zero_mem, fun k _ => map_zero _⟩
         smul_mem' := fun c z hz => ⟨Z.smul_mem c hz.1, fun k hk => by
           rw [map_smul, hz.2 k hk]⟩ }

@@ -34,7 +34,7 @@ theorem colPsiKer : StatColPsiKer := by
             (((⟨x, hx⟩ : Ymod r χ E)), (0 : (l : ι) → A × (Fin (j l) → A) × A)) +
             (((⟨z, hz⟩ : Ymod r χ E)), (0 : (l : ι) → A × (Fin (j l) → A) × A)) :=
           Prod.ext rfl (add_zero 0).symm
-        rw [e, Submodule.Quotient.mk_add, map_add, ihx, ihz, add_zero]
+        rw [e, Submodule.Quotient.mk_add, map_add (f := _), ihx, ihz, add_zero]
       | smul a x hx ih =>
         have e : (((⟨a • x, Submodule.smul_mem _ a hx⟩ : Ymod r χ E)),
             (0 : (l : ι) → A × (Fin (j l) → A) × A)) =

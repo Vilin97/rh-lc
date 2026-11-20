@@ -97,7 +97,7 @@ theorem lTensor_bijective_of_isBaseChange {S B N M P : Type} [CommRing S] [CommR
     (h₂ : IsBaseChange B (ev ∘ₗ T)) : Function.Bijective (T.lTensor B) := by
   have e : ∀ x, h₁.equiv (T.lTensor B x) = h₂.equiv x := fun x ↦ by
     induction x with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul b n => simp [IsBaseChange.equiv_tmul]
   refine (Function.Bijective.of_comp_iff' h₁.equiv.bijective _).1 ?_
   have e' : (h₁.equiv ∘ T.lTensor B) = h₂.equiv := funext e
@@ -112,7 +112,7 @@ theorem oneFormMap_eq_kaehlerDifferential_map {R R' B B' : Type} [CommRing R] [C
   | h b c =>
     rw [SemiHom.oneFormMap_smul_semilinear, SemiHom.m1_D, map_smul, KaehlerDifferential.map_D, algebraMap_smul]
   | h0 => simp
-  | ha x y hx hy => rw [map_add, map_add, hx, hy]
+  | ha x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem isBaseChange_of_isPushout {R R' B B' W : Type} [CommRing R] [CommRing R'] [CommRing B] [CommRing B']
     [Algebra R R'] [Algebra R B] [Algebra R' B'] [Algebra B B'] [Algebra R B'] [IsScalarTower R R' B']
@@ -128,7 +128,7 @@ theorem isBaseChange_of_isPushout {R R' B B' W : Type} [CommRing R] [CommRing R'
         obtain ⟨a, rfl⟩ := hx
         simp
       | zero => simp
-      | add x y _ _ hx hy => rw [TensorProduct.tmul_add, map_add, map_add, hx, hy]
+      | add x y _ _ hx hy => rw [TensorProduct.tmul_add, map_add (f := _), map_add (f := _), hx, hy]
       | smul a x _ hx =>
         rw [TensorProduct.tmul_smul, ← algebraMap_smul B', map_smul, hx, map_smul, algebraMap_smul]
   have h₂ := IsBaseChange.comp hev h₁

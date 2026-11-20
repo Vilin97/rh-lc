@@ -157,7 +157,7 @@ theorem univLinkPf_class {T₁ T₂ : LocLat G Qp LL O} (F : LatHom T₁.L T₂.
       rw [map_sub, map_sub, univLinkPf_map_osmul, map_smul, sub_eq_zero] at e2
       rw [← Submodule.Quotient.mk_eq_zero, ← Submodule.mkQ_apply]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_sub, map_add, map_sum, map_smul, e3]
+        simp only [map_sub, map_add (f := _), map_sum, map_smul, e3]
       rw [pow_add, mul_smul, e1, ← e2, smul_add, Finset.smul_sum]
       simp only [smul_smul, mul_comm (((PD.p : ℕ) : O) ^ σ)]
       abel

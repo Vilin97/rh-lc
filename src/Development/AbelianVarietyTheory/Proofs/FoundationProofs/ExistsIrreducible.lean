@@ -153,7 +153,7 @@ theorem exists_equiv {K A : Type} [Field K] [CharZero K] [CommRing A] [Algebra K
           simp; ring
         have h2 : ((x + y).1 - (x + y).2) / (2 * β) =
             (x.1 - x.2) / (2 * β) + (y.1 - y.2) / (2 * β) := by simp; ring
-        rw [h1, h2, map_add, map_add]; ring
+        rw [h1, h2, map_add (f := _), map_add (f := _)]; ring
       map_smul' := fun c x => by
         have h1 : ((c • x).1 + (c • x).2) / 2 = c * ((x.1 + x.2) / 2) := by simp; ring
         have h2 : ((c • x).1 - (c • x).2) / (2 * β) = c * ((x.1 - x.2) / (2 * β)) := by simp; ring
@@ -168,7 +168,7 @@ theorem exists_equiv {K A : Type} [Field K] [CharZero K] [CommRing A] [Algebra K
       ((x.1 - x.2) / (2 * β)) * ((y.1 + y.2) / 2) := by
       simp only [Prod.fst_mul, Prod.snd_mul]; field_simp; ring
     rw [hgl, hgl, hgl, h1, h2]
-    simp only [map_add, map_mul, ← ht]
+    simp only [map_add (f := _), map_mul, ← ht]
     ring)
   have hsurj : Function.Surjective gl := by
     intro y
@@ -185,7 +185,7 @@ theorem exists_equiv {K A : Type} [Field K] [CharZero K] [CommRing A] [Algebra K
   obtain ⟨z, rfl⟩ := e.surjective x
   rw [e.symm_apply_apply, AlgEquiv.symm_apply_eq]
   change cj (gl z) = gl z.swap
-  rw [hgl, hgl, map_add, map_mul, cj.commutes, cj.commutes, hc]
+  rw [hgl, hgl, map_add (f := _), map_mul, cj.commutes, cj.commutes, hc]
   have h2 : (z.swap.1 - z.swap.2) / (2 * β) = -((z.1 - z.2) / (2 * β)) := by simp; ring
   rw [h2, map_neg, Prod.fst_swap, Prod.snd_swap, add_comm z.2]
   ring
@@ -333,12 +333,12 @@ theorem nonempty_splitAt : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
       | mem x hx =>
         obtain ⟨x, rfl⟩ := hx
         obtain ⟨u, v, rfl⟩ := hsp x
-        exact ⟨L.ιF u, L.ιF v, by rw [map_add, map_mul, L.compat, L.compat]⟩
+        exact ⟨L.ιF u, L.ιF v, by rw [map_add (f := _), map_mul, L.compat, L.compat]⟩
       | zero => exact ⟨0, 0, by simp⟩
       | add x y _ _ hx hy =>
         obtain ⟨u, v, rfl⟩ := hx
         obtain ⟨u', v', rfl⟩ := hy
-        exact ⟨u + u', v + v', by rw [map_add, map_add]; ring⟩
+        exact ⟨u + u', v + v', by rw [map_add (f := _), map_add (f := _)]; ring⟩
       | smul c x _ hx =>
         obtain ⟨u, v, rfl⟩ := hx
         exact ⟨c * u, c * v, by rw [map_mul, map_mul, Algebra.smul_def]; ring⟩)

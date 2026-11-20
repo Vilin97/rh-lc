@@ -16,7 +16,7 @@ theorem isLocalRing_of_value {Ω : Type} [Field Ω] (W : Subring Ω) (φ : W →
   refine IsLocalRing.of_nonunits_add fun a b ha hb hu => ?_
   have h0 : ∀ c : W, c ∈ nonunits W → φ c = 0 := fun c hc => by_contra fun h => hc (hW c h)
   have := hu.map φ
-  rw [map_add, h0 a ha, h0 b hb, add_zero] at this
+  rw [map_add (f := _), h0 a ha, h0 b hb, add_zero] at this
   exact not_isUnit_zero this
 
 theorem exists_stalkHom {X : Scheme.{0}} {Ω₁ Ω : Type} [Field Ω₁] [Field Ω]

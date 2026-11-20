@@ -46,7 +46,7 @@ theorem coef_eq (i : Fin n) (ω : GlobForm s) (r : R)
 def coefL : GlobForm s →ₗ[R] (Fin n → R) where
   toFun ω i := coef fr hc i ω
   map_add' ω ω' := funext fun i ↦ coef_eq fr hc i _ _ fun T ↦ by
-    simp only [Submodule.coe_add, Pi.add_apply, map_add]
+    simp only [Submodule.coe_add, Pi.add_apply, map_add (f := _)]
     rw [coef_spec fr hc i ω T, coef_spec fr hc i ω' T]
   map_smul' r ω := funext fun i ↦ coef_eq fr hc i _ _ fun T ↦ by
     simp only [Submodule.coe_smul, Pi.smul_apply, LinearMap.map_smul_of_tower, RingHom.id_apply,
@@ -76,7 +76,7 @@ def back (U : AffOp X) (x : Ω[Sec s U.unop.1⁄R]) : Sec s U.unop.1 ⊗[R] Glob
   ∑ i, (fr.δ i U x : Sec s U.unop.1) ⊗ₜ[R] fr.w i
 
 theorem back_add (U : AffOp X) (x y : Ω[Sec s U.unop.1⁄R]) : back fr U (x + y) = back fr U x + back fr U y := by
-  simp only [back, map_add, TensorProduct.add_tmul, Finset.sum_add_distrib]
+  simp only [back, map_add (f := _), TensorProduct.add_tmul, Finset.sum_add_distrib]
 
 include fr hc in
 
@@ -97,7 +97,7 @@ theorem par (U : AffOp X) : IsBaseChange (Sec s U.unop.1) (evForm s U) := by
       change fr.δ i U (a • ω.1 U) = coef fr hc i ω • a
       rw [(fr.δ i U).map_smul a (ω.1 U), coef_spec fr hc i ω U, Algebra.smul_def, mul_comm]
       rfl
-    | add t t' ht ht' => rw [map_add, back_add, ht, ht']
+    | add t t' ht ht' => rw [map_add (f := _), back_add, ht, ht']
   · conv_rhs => rw [fr.sum U x]
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [back, map_sum, TensorProduct.lift.tmul, LinearMap.restrictScalars_apply, LinearMap.flip_apply,

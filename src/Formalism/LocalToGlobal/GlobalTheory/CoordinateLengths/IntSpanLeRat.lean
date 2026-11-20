@@ -82,7 +82,7 @@ theorem fnOf_frame (B : GL (Fin (D.R.N 0)) D.host.E)
     intro A z P
     induction P using MvPolynomial.induction_on with
     | C a => simp [subP]
-    | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
     | mul_X p i hp =>
       rw [map_mul, map_mul, map_mul, hp]
       simp [subP, Matrix.mul_apply]

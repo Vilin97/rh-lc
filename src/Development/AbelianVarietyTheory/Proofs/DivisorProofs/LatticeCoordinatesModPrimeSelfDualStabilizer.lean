@@ -214,7 +214,7 @@ theorem resS_combo (PP : Pl D.host.E) {n : ℕ} (s t : Fin n → SI D) (u : SI D
     (hM : (M : 𝓞 D.host.E) ∈ PP.asIdeal) :
     resS D.host.F PP (∑ j, s j * t j + M • u) = ∑ j, resS D.host.F PP (s j) * resS D.host.F PP (t j) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_nsmul, nsmul_eq_mul, natCast_kP PP hM, zero_mul, add_zero, map_sum]
+    rw [map_add (f := _), map_nsmul, nsmul_eq_mul, natCast_kP PP hM, zero_mul, add_zero, map_sum]
   simp only [map_mul]
 
 theorem coord_red : ∀ (D : D7) (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)), IsSDFrame V β Λ 1 → ∀ (La : Type) [AddCommGroup La] [Module (𝓞 D.host.E) La] (ι : La →ₗ[𝓞 D.host.E] (Fin V.rank → D.host.E)), LatEmb V ι → ∀ PP : Formalism.L2.DIV.Pl D.host.E, ∃ φ : La →ₗ[𝓞 D.host.E] (Fin V.rank → kP PP), Function.Surjective φ ∧ ∀ k : GA D V, Lev.finE V k ∈ Formalism.L2.DIV.St β → ∀ M : ℕ, (M : 𝓞 D.host.E) ∈ PP.asIdeal → ∀ a b : La, (∃ w ∈ latGHat V 1, finVec V (ι b) - (finHom V k).1.mulVec (finVec V (ι a)) = M • w) → φ b = (redFn β PP (Lev.finE V k)).1.mulVec (φ a) := by
@@ -229,10 +229,10 @@ theorem coord_red : ∀ (D : D7) (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) 
         intro a b
         funext i
         simp only [Pi.add_apply]
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         apply Subtype.ext
-        simp only [map_add, finVec_add, crd_add, Pi.add_apply, Subring.coe_add]
+        simp only [map_add (f := _), finVec_add, crd_add, Pi.add_apply, Subring.coe_add]
       map_smul' := by
         intro b a
         funext i

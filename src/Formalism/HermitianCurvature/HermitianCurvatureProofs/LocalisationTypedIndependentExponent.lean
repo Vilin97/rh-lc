@@ -25,13 +25,13 @@ theorem exists_real_mem_different (g : ℕ) (hc : PrimeToDifferent E g)
   have hfix2 : ringOfIntegersComplexConj E (w + ringOfIntegersComplexConj E w -
       (g : 𝓞 E) * (w * ringOfIntegersComplexConj E w)) =
       w + ringOfIntegersComplexConj E w - (g : 𝓞 E) * (w * ringOfIntegersComplexConj E w) := by
-    simp only [map_sub, map_add, map_mul, conj_conj, map_natCast]
+    simp only [map_sub, map_add (f := _), map_mul, conj_conj, map_natCast]
     ring
   obtain ⟨b, hb⟩ := (ringOfIntegersComplexConj_eq_self_iff E _).mp hfix2
   have hx' : x = 1 - w * (g : 𝓞 E) := by rw [← hxy]; ring
   have hab : a + (g : 𝓞 (maximalRealSubfield E)) * b = 1 := by
     apply FaithfulSMul.algebraMap_injective (𝓞 (maximalRealSubfield E)) (𝓞 E)
-    rw [map_add, map_mul, ha, hb, map_natCast, map_one, hx']
+    rw [map_add (f := _), map_mul, ha, hb, map_natCast, map_one, hx']
     simp only [map_sub, map_mul, map_one, map_natCast]
     ring
   refine ⟨a, fun haP => hP.ne_top ?_, ?_⟩
@@ -113,7 +113,7 @@ def ann {L : Submodule ℤ E} (hL : IsFLattice E L) (t : E) : Ideal (𝓞 (maxim
   zero_mem' := by simp
   add_mem' := fun {a b} ha hb => by
     show algebraMap _ E (a + b) * t ∈ L
-    rw [map_add, add_mul]; exact L.add_mem ha hb
+    rw [map_add (f := _), add_mul]; exact L.add_mem ha hb
   smul_mem' := fun c a ha => by
     show algebraMap _ E (c • a) * t ∈ L
     rw [smul_eq_mul, map_mul, mul_assoc]; exact hL.1 c _ ha
@@ -157,7 +157,7 @@ theorem exists_multiplier {L : Submodule ℤ E} (hL : IsFLattice E L)
         -(algebraMap (𝓞 (maximalRealSubfield E)) E (u * b) * τ) := by
       have h3 : algebraMap (𝓞 (maximalRealSubfield E)) E u +
           algebraMap (𝓞 (maximalRealSubfield E)) E e = 1 := by
-        rw [← map_add, hue, map_one]
+        rw [← map_add (f := _), hue, map_one]
       rw [map_mul]
       linear_combination (algebraMap (𝓞 (maximalRealSubfield E)) E b * τ) * h3
     rw [h2]; exact L.neg_mem h1

@@ -39,7 +39,7 @@ theorem val_lev {c : Com D} {s : PiLocalization₂ D} (u : s.CC c) (v : SmT s.M)
     simp only [map_smul, PiTensorProduct.lift.tprod, Pi.smul_apply, smul_eq_mul, LinearEquiv.coe_coe]
     rw [hM.lev f κ hκ' g]; ring
   | add x y hx hy =>
-    simp only [map_add, Pi.add_apply, hx, hy]; ring
+    simp only [map_add (f := _), Pi.add_apply, hx, hy]; ring
 
 theorem chart_fin : ∀ (D : D7) (s : PiLocalization₂ D) (j : ℕ) (v : HeightOneSpectrum (𝓞 D.host.F)) (φ : SplitProj D v) (ι : GL (Fin D.R.r ⊕ Blocks j D.R.t) (Fv D.host.F v) →* GA D s.V), IsChart s j φ ι → ∀ y, ι y ∈ GfC s.V := by
   intro D s j v φ ι hι y
@@ -80,7 +80,7 @@ theorem hecke_keeps : ∀ D : D7, ForStageQ D fun c w j s => ∀ PP ∈ w.Q, ∀
     simp only [map_smul, PiTensorProduct.lift.tprod, Pi.smul_apply, smul_eq_mul, LinearEquiv.coe_coe, hT'v, Finset.mul_sum]
     refine Finset.sum_congr rfl fun y _ => by ring
   | add x y hx hy =>
-    simp only [map_add, Pi.add_apply, hx, hy, mul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), Pi.add_apply, hx, hy, mul_add, Finset.sum_add_distrib]
 
 theorem qOfVal : ∀ D : D7, SoftQ D → QOfVal D := by
   intro D hS c w hw j hj s hs

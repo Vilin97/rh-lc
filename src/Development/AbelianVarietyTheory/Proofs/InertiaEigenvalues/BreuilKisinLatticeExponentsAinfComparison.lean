@@ -150,7 +150,7 @@ theorem crd_TWmap (k : κ) (w : TW (OW l O) T) :
       Finsupp.lapply_apply, Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply,
       Finsupp.mapRange_apply, smul_eq_mul, map_mul, AlgHom.commutes, AlgHom.toLinearMap_apply,
       LinearMap.id_apply]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem mem_range_TWincl (w : TW (OW l O) T) (h : ∀ k, crd b k w ∈ (inclO l O).range) :
     ∃ z : TW (OA l O) T, TWincl (inclO l O) T z = w := by

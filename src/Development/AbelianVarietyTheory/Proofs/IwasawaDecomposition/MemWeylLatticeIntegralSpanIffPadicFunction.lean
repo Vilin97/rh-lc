@@ -83,7 +83,7 @@ theorem mem_vlIntSpan_iff {K : Type} [Field K] (σ : K →+* ℂ) (Pl : Rows.Pla
         rw [map_zero, smul_zero]
         exact zero_mem _
       | add x y _ _ hx hy =>
-        rw [map_add, smul_add]
+        rw [map_add (f := _), smul_add]
         exact add_mem hx hy
       | smul a x _ hx =>
         rw [map_zsmul, smul_comm]

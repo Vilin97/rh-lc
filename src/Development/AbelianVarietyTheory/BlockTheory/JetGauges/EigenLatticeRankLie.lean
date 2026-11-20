@@ -27,7 +27,7 @@ def eigenLattice (hx : Chart.IsUnivChart G n x) {O : Type} [CommRing O] (act : O
     Submodule R (Fin n → R) where
   carrier := {c | ∀ a, lieAct hx act a c = τ a • c}
   zero_mem' a := by simp
-  add_mem' {c c'} hc hc' a := by rw [map_add, hc a, hc' a, smul_add]
+  add_mem' {c c'} hc hc' a := by rw [map_add (f := _), hc a, hc' a, smul_add]
   smul_mem' r c hc a := by rw [map_smul, hc a, smul_comm]
 
 theorem mem_eigenLattice_iff (hx : Chart.IsUnivChart G n x) {O : Type} [CommRing O] (act : OAct O G) (τ : O →+* R)

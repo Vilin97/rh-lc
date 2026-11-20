@@ -43,7 +43,7 @@ theorem exists_nsmul_of_dvd_EF {p : ℕ} [Fact p.Prime] (D : Datum p) {e : ℕ} 
       rw [hx, LinearMap.smul_apply, nsmul_eq_mul]
     have h2 : D.EF x a = - D.EF a x := by
       have := D.alt (x + a)
-      simp only [map_add, LinearMap.add_apply, D.alt] at this
+      simp only [map_add (f := _), LinearMap.add_apply, D.alt] at this
       linarith
     obtain ⟨t, ht⟩ := ha x
     have h3 : (e : ℤ) * bs.coord i a = (e : ℤ) * (n * (-t)) := by
@@ -213,7 +213,7 @@ theorem exists_tateIsoO_transl_sys : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) 
         exact (smul_eq_zero.1 e3).resolve_left (by exact_mod_cast hn.ne')
       have e4 : w = h (n * k) z + k • v := by rw [sub_sub, sub_eq_zero] at e2; exact e2
       obtain ⟨y'', z'', hy''⟩ := hsurj (n * k) hnk hnkp v
-      have e5 : h (n * k) (z + y'') = w + (n * k) • z'' := by rw [map_add, hy'', e4, add_assoc]
+      have e5 : h (n * k) (z + y'') = w + (n * k) • z'' := by rw [map_add (f := _), hy'', e4, add_assoc]
       refine ⟨z + y'', ?_⟩
       rw [e5, I.add, (I.ker _ hnk hnkp ((n * k) • z'')).2 ⟨z'', rfl⟩, _root_.mul_one, hw, ha]
     · rintro ⟨y, rfl⟩
@@ -257,7 +257,7 @@ theorem exists_tateIsoO_transl_sys : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) 
   · intro n y y'
     simp only [ev']
     split_ifs with hn
-    · rw [map_add, I.add, MonObj.mul_comp]
+    · rw [map_add (f := _), I.add, MonObj.mul_comp]
     · rw [_root_.mul_one]
   · intro n b' y
     simp only [ev']

@@ -39,7 +39,7 @@ theorem outerTensor_intertwining_eq_zero_of_left :
         induction y using TensorProduct.induction_on with
         | zero => simp
         | tmul a c => simp
-        | add a c ha hc => simp only [map_add, ha, hc]
+        | add a c ha hc => simp only [map_add (f := _), ha, hc]
       have e1 : ρ g x ⊗ₜ[ℂ] w = (Representation.tprod (ρ.comp (MonoidHom.fst G H))
           (σ.comp (MonoidHom.snd G H))) (g, 1) (x ⊗ₜ[ℂ] w) := by
         simp [Representation.tprod_apply]

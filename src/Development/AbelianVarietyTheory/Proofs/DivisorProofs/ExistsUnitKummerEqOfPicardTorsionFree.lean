@@ -67,7 +67,7 @@ theorem GlobalTheory.EtC.kum_surjective : ∀ (q : ℕ) [NeZero q] (A : Type) [C
     have hsi := hs _ u⁻¹ hqX
     have hsum : bd (sch.obj (Spec (CommRingCat.of A))) 0 (secClass Gm (unitSec u⁻¹)) +
         bd (sch.obj (Spec (CommRingCat.of A))) 0 (secClass Gm (unitSec u)) = 0 := by
-      rw [← map_add, ← hadd, ← unitSec_mul', inv_mul_cancel]
+      rw [← map_add (f := _), ← hadd, ← unitSec_mul', inv_mul_cancel]
       have h0 : unitSec (1 : (Γ(Spec (CommRingCat.of A), ⊤))ˣ) = 0 := by
         have := unitSec_mul' (1 : (Γ(Spec (CommRingCat.of A), ⊤))ˣ) 1
         rw [mul_one] at this

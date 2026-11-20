@@ -42,7 +42,7 @@ theorem algTens_wtNear : ∀ (M : Type) [NormedAddCommGroup M] [InnerProductSpac
           simp [hi]
         · simp [hi, ha]
     | zero => simp
-    | add x y _ _ hx hy => rw [Pi.single_add, map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [Pi.single_add, map_add (f := _)]; exact add_mem hx hy
     | smul r x _ hx => rw [Pi.single_smul, map_smul]; exact Submodule.smul_mem _ _ hx
   · induction hy using Submodule.span_induction with
     | mem x hx =>
@@ -60,7 +60,7 @@ theorem algTens_wtNear : ∀ (M : Type) [NormedAddCommGroup M] [InnerProductSpac
       · have : ¬ d = a := fun h => ha h.symm
         simp [ha, this]
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, Pi.add_apply]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), Pi.add_apply]; exact add_mem hx hy
     | smul r x _ hx => rw [map_smul, Pi.smul_apply]; exact Submodule.smul_mem _ _ hx
 
 end GlobalTheory

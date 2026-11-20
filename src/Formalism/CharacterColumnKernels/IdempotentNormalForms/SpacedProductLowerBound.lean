@@ -60,7 +60,7 @@ lemma map_mem_smul_top (I : Ideal O) {M N : Type*} [AddCommGroup M] [Module O M]
     φ x ∈ I • (⊤ : Submodule O N) := by
   refine Submodule.smul_induction_on hx (fun r hr a _ => ?_) (fun u v hu hv => ?_)
   · rw [map_smul]; exact Submodule.smul_mem_smul hr Submodule.mem_top
-  · rw [map_add]; exact Submodule.add_mem _ hu hv
+  · rw [map_add (f := _)]; exact Submodule.add_mem _ hu hv
 
 lemma precomplete_pi (I : Ideal O) [IsNoetherianRing O] [IsAdicComplete I O] (n : ℕ) :
     IsPrecomplete I (Fin n → O) := by
@@ -80,7 +80,7 @@ lemma precomplete_pi (I : Ideal O) [IsNoetherianRing O] [IsAdicComplete I O] (n 
   | add u v hu hv =>
     obtain ⟨p, hp⟩ := hu
     obtain ⟨q, hq⟩ := hv
-    exact ⟨p + q, by rw [map_add, map_add, hp, hq]⟩
+    exact ⟨p + q, by rw [map_add (f := _), map_add (f := _), hp, hq]⟩
 
 lemma precomplete_of_surjective (I : Ideal O) {M N : Type*} [AddCommGroup M] [Module O M]
     [AddCommGroup N] [Module O N] [IsPrecomplete I M] (π : M →ₗ[O] N)
@@ -107,7 +107,7 @@ lemma precomplete_of_surjective (I : Ideal O) {M N : Type*} [AddCommGroup M] [Mo
     | zero => simp [g, hg0]
     | succ k ih =>
       have e : g (k + 1) = g k + d k := by simp [g, Finset.sum_range_succ, add_assoc]
-      rw [e, map_add, ih, hdπ]; abel
+      rw [e, map_add (f := _), ih, hdπ]; abel
   have hgc : ∀ m k, m ≤ k → g m - g k ∈ I ^ m • (⊤ : Submodule O M) := by
     intro m k hmk
     induction k, hmk using Nat.le_induction with

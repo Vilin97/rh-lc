@@ -80,7 +80,7 @@ theorem eq_zero_of_herm (D : D7) (X : Data D.host.E r) {w : Fin r → D.host.E}
         intro a b ha hb
         simp only [Set.mem_setOf_eq] at ha hb ⊢
         have e : herm X.Gm w (a + b) = herm X.Gm w a + herm X.Gm w b := by
-          simp only [herm, Pi.add_apply, cc, map_add, mul_add, Finset.sum_add_distrib]
+          simp only [herm, Pi.add_apply, cc, map_add (f := _), mul_add, Finset.sum_add_distrib]
         rw [e, ha, hb, add_zero]
       zero_mem' := by
         simp only [Set.mem_setOf_eq, herm, Pi.zero_apply, cc, map_zero, mul_zero, Finset.sum_const_zero]
@@ -156,7 +156,7 @@ theorem lat_dual (hP : FactPrincipalDatum) {D : D7} (T : Top D) (h : LawsP T) (j
       have e1 := Classical.choose_spec (hint (a + b))
       have e2 := Classical.choose_spec (hint a)
       have e3 := Classical.choose_spec (hint b)
-      rw [Int.cast_add, e1, e2, e3, map_add, Submodule.coe_add, herm_add_right, mul_add, map_add])
+      rw [Int.cast_add, e1, e2, e3, map_add (f := _), Submodule.coe_add, herm_add_right, mul_add, map_add (f := _)])
     obtain ⟨b, hb⟩ := (F.Di (ik k)).unimod.2 ψ.toIntLinearMap
     set w := y - (φ k b : Fin D.R.r → D.host.E) with hw
     have hzero : ∀ a : (F.Di (ik k)).La,
@@ -172,7 +172,7 @@ theorem lat_dual (hP : FactPrincipalDatum) {D : D7} (T : Top D) (h : LawsP T) (j
       have e3 : (ψ a : ℚ) = Algebra.trace ℚ D.host.E
           (-((T.U j σ).X k).ξ0 * herm ((T.U j σ).X k).Gm y (φ k a : Fin D.R.r → D.host.E)) :=
         Classical.choose_spec (hint a)
-      rw [e1, mul_add, map_add, ← e2] at e3
+      rw [e1, mul_add, map_add (f := _), ← e2] at e3
       linarith
     have hperp : ∀ a : (F.Di (ik k)).La, herm ((T.U j σ).X k).Gm w (φ k a : Fin D.R.r → D.host.E) = 0 := by
       intro a

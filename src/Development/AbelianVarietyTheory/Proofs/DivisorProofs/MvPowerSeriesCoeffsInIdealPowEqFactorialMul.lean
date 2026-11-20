@@ -16,7 +16,7 @@ variable {B : Type} [CommRing B] {τ : Type}
 def coeffIdeal (J : Ideal B) (τ : Type) : Ideal (MvPowerSeries τ B) where
   carrier := {f | ∀ α, coeff α f ∈ J}
   add_mem' {a b} ha hb α := by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact J.add_mem (ha α) (hb α)
   zero_mem' α := by simp
   smul_mem' c f hf α := by

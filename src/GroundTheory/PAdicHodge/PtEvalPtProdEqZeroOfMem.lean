@@ -69,7 +69,7 @@ theorem exists_step_pt {P Q : T.Pt} {δ : ℝ} (hrad : T.ptRad Q.1 = T.ptRad P.1
         simp only [AddSubgroupClass.coe_sub] at h
         rw [show (W : Γ) = T.teich z * V from rfl] at h
         linear_combination h
-      rw [this, map_add, map_mul, map_mul, red_teich]
+      rw [this, map_add (f := _), map_mul, map_mul, red_teich]
     have hQ : ‖T.red (Q.1 : Γ)‖ = T.ptRad P.1 := by rw [← coeff_zero, ← hrad]; rfl
     have hP : ‖T.red (P.1 : Γ)‖ = T.ptRad P.1 := by rw [← coeff_zero]; rfl
     have hzV' : ‖z * T.red V‖ < T.ptRad P.1 := by
@@ -186,7 +186,7 @@ theorem exists_limit_pt {r : ℝ} (ξ : ℕ → T.int) (hξ : ∀ J, T.IsPrimOne
       rw [mul_assoc, ← Subring.coe_mul, Units.inv_mul]; simp)
     have hη : (⟨η J, hηint J⟩ : T.int) = ηp + ⟨η J - ηL, sub_mem (hηint J) hLint⟩ :=
       Subtype.ext (by simp only [Subring.coe_add, hηp]; ring)
-    rw [← intEval_apply, hξJ, map_mul, norm_mul, hη, map_add, intEval_apply, intEval_apply]
+    rw [← intEval_apply, hξJ, map_mul, norm_mul, hη, map_add (f := _), intEval_apply, intEval_apply]
     rw [show ((ηp : T.int) : Γ) = ηp from rfl, T.ptE_ξ hηL, zero_add]
     refine (mul_le_of_le_one_right (norm_nonneg _) (T.norm_intEval_le_one hηL _)).trans ?_
     refine (T.norm_ptE_le hηL ?_).trans ?_
@@ -347,7 +347,7 @@ theorem exists_zero_ann (v : T.Ann ρ0 σ0) (hv : ∀ s, 0 < T.annNorm ρ0 σ0 s
       rw [hcy J, map_mul, T.ptEval_ptProd_eq_zero_of_mem hP hPle, zero_mul]
     have hsmall : ‖T.ptEval P.2 hPle (c (J + 1) : T.RobbaExt ρ0)‖ < ε J := by
       have e : (c (J + 1) : T.RobbaExt ρ0) = ((c (J + 1) : T.RobbaExt ρ0) - c J) + c J := by ring
-      rw [e, map_add, h0, add_zero]
+      rw [e, map_add (f := _), h0, add_zero]
       refine (T.norm_ptEval_le P.2 hPle _).trans_lt ?_
       rw [hrIoc P.2 hPr, ← annNorm_toAnn, map_sub, toAnn_coe, toAnn_coe]
       have e2 : T.coeAnn (c (J + 1)) - T.coeAnn (c J) = (v - T.coeAnn (c J)) - (v - T.coeAnn (c (J + 1))) := by
@@ -395,7 +395,7 @@ theorem exists_zero_ann (v : T.Ann ρ0 σ0) (hv : ∀ s, 0 < T.annNorm ρ0 σ0 s
       max (ε J) (‖T.ptE hη ((x J).1 : Γ)‖ * (Nr / R ^ m)) := by
     intro J
     have e : v = (v - T.coeAnn (c J)) + T.coeAnn (c J) := by ring
-    rw [e, map_add]
+    rw [e, map_add (f := _)]
     refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le_max ?_ ?_)
     · refine (T.norm_annEval_le hη _ _).trans ?_
       have : T.ptAnnRad (by rw [hηr]; exact r.2 : T.ptRad η ∈ Set.Icc (σ0 : ℝ) ρ0) = r := Subtype.ext hηr

@@ -164,7 +164,7 @@ def plc : HeightOneSpectrum (𝓞 ℚ) where
   asIdeal :=
     { carrier := {x | ‖algebraMap ℚ (PadicAlgCl l) (x : ℚ)‖ < 1}
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_setOf_eq, map_add] at *
+        simp only [Set.mem_setOf_eq, map_add (f := _)] at *
         exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt ha hb)
       zero_mem' := by simp
       smul_mem' := fun c x hx => by
@@ -269,7 +269,7 @@ def scReads (ev : ℕ → ℤ) : Reads (scFrame l ev) (fun _ _ => 0) (dat ev) (p
     { toFun := fun f _ => algebraMap ℚ (PadicAlgCl l) (f.1 ()) • oneVec l 3
       map_add' := fun f g => funext fun _ => by
         change algebraMap ℚ (PadicAlgCl l) ((show ℚ from f.1 ()) + (show ℚ from g.1 ())) • oneVec l 3 = _
-        rw [map_add, add_smul]; rfl
+        rw [map_add (f := _), add_smul]; rfl
       map_smul' := fun c f => funext fun _ => by
         change algebraMap ℚ (PadicAlgCl l) (c * (show ℚ from f.1 ())) • oneVec l 3 = _
         rw [map_mul, mul_smul]; rfl }
@@ -328,7 +328,7 @@ def scReads (ev : ℕ → ℤ) : Reads (scFrame l ev) (fun _ _ => 0) (dat ev) (p
         rw [map_smul, cc_tprod, smul_eq_mul, ← hx0, MvPolynomial.coeff_map, norm_mul]
         exact mul_le_one₀ (hn c) (norm_nonneg _) (hn _)
       | zero => simp
-      | add a b _ _ ha hb => rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
+      | add a b _ _ ha hb => rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
       | neg a _ ha => rwa [map_neg, norm_neg]
     have h := key _ (hf (1 : GL (Fin 3) ℤ_[l]))
     set q : ℚ := f.1 () with hq

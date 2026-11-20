@@ -31,7 +31,7 @@ theorem intAt_zero (P : Pl D → Prop) : (0 : AE D) ∈ intAt D P :=
   ⟨zero_mem _, by rw [map_zero]; exact zero_mem _⟩
 
 theorem intAt_add {P : Pl D → Prop} {a b : AE D} (ha : a ∈ intAt D P) (hb : b ∈ intAt D P) : a + b ∈ intAt D P :=
-  ⟨add_mem ha.1 hb.1, by rw [map_add]; exact add_mem ha.2 hb.2⟩
+  ⟨add_mem ha.1 hb.1, by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha.2 hb.2⟩
 
 theorem intAt_neg {P : Pl D → Prop} {a : AE D} (ha : a ∈ intAt D P) : -a ∈ intAt D P :=
   ⟨neg_mem ha.1, by rw [map_neg]; exact neg_mem ha.2⟩
@@ -98,7 +98,7 @@ theorem wachExpansion_smul_compatible {S : HSp D} {LS : Lat S} (P : Pl D → Pro
       mul_one, one_mul]
     congr 1
   | zero => rw [map_zero, mul_zero, zero_smul]; exact zero_mem _
-  | add z z' _ _ h h' => rw [map_add, mul_add, add_smul]; exact add_mem h h'
+  | add z z' _ _ h h' => rw [map_add (f := _), mul_add, add_smul]; exact add_mem h h'
   | neg z _ h => rw [map_neg, mul_neg, neg_smul]; exact neg_mem h
 
 theorem smul_mem {S : HSp D} {LS : Lat S} {P : Pl D → Prop} {c : AE D} (hc : c ∈ intAt D P) {s : Fin S.rank → D.host.E}

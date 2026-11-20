@@ -73,7 +73,7 @@ theorem dRho_laws (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {f : WO S T �
     ring
   · have sk : ∀ u v, omO S T v u = -omO S T u v := fun u v => by
       have h1 := omO_self h (S := S) (T := T) (u + v)
-      simp only [LinearMap.map_add, LinearMap.add_apply, omO_self h] at h1
+      simp only [LinearMap.map_add (f := _), LinearMap.add_apply, omO_self h] at h1
       linarith
     rw [hE, hE, hE, hE, heisenberg_derivative_commutator _ _ _ _ _ (h.pi_iota T S)
       (fun g hg u w => hD_eq_fderiv _ _ _ g hg u w) sk f hs, pl, pl]
@@ -279,7 +279,7 @@ theorem pureTensorO_mul_source : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (
   | C a =>
     rw [MvPolynomial.algHom_C, MvPolynomial.algebraMap_eq, ← mul_one (MvPolynomial.C a), ← MvPolynomial.smul_eq_C_mul,
       map_smul, map_smul, h1, h1]
-  | add P Q hP hQ => rw [map_add, map_add, map_add, hP, hQ]
+  | add P Q hP hQ => rw [map_add (f := _), map_add (f := _), map_add (f := _), hP, hQ]
   | mul_X P v hP =>
     obtain ⟨τ, i, j⟩ := v
     rw [mul_comm, hX, hP, map_mul, MvPolynomial.aeval_X]

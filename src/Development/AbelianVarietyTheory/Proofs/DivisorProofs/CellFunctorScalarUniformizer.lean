@@ -96,7 +96,7 @@ theorem extTensor_detRep_apply (χ₁ χ₂ : kˣ →* ℂˣ) (a b : Type) [Fint
       ((χ₁ (GeneralLinearGroup.det (y false)) * χ₂ (GeneralLinearGroup.det (y true)) : ℂˣ) : ℂ) • t := by
   induction t using TensorProduct.induction_on with
   | zero => simp
-  | add s t hs ht => rw [map_add, hs, ht, smul_add]
+  | add s t hs ht => rw [map_add (f := _), hs, ht, smul_add]
   | tmul s t =>
     refine (extTensor_tmul (detRep a χ₁) (detRep b χ₂) (y false, y true) s t).trans ?_
     rw [detRep, detRep, ofChar_apply, ofChar_apply, ← smul_eq_mul, ← smul_eq_mul,

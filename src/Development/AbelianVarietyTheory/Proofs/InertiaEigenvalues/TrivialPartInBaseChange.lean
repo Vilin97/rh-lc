@@ -181,7 +181,7 @@ theorem split_step (D : D7) (Rw : RowSide D) (hL : ParLaws D) (j : ℕ) (σ : D.
       (D.naut.frobEig (Rw.locR σ w)).map (· * e⁻¹) +
       ((List.range D.R.t).map fun k => ({(m * e⁻¹) * ((Formalism.ConjugateSelfDual.normV w : ℕ) : ℂ) ^
         (((((D.R.t : ℝ) - 1) / 2 - (k : ℝ) : ℝ)) : ℂ)} : Multiset ℂ)).sum := by
-    rw [hV, D.naut.frobEig_char _ _ _ hXu hbu hbd hb, D.naut.frobEig_sum _ _ hWu hSu, Multiset.map_add]
+    rw [hV, D.naut.frobEig_char _ _ _ hXu hbu hbd hb, D.naut.frobEig_sum _ _ hWu hSu, Multiset.map_add (f := _)]
     rw [hmu.2, hm]
     congr 1
     rw [← Multiset.coe_mapAddMonoidHom, map_list_sum, List.map_map]

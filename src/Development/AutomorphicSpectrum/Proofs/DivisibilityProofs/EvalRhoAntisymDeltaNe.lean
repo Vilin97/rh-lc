@@ -26,7 +26,7 @@ theorem eval_formPoly_none_zero {σ : Type} [Fintype σ] (n : ℕ) (a : (Fin n �
     intro Q
     induction Q using MvPolynomial.induction_on with
     | C r => simp
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p o hp =>
       rw [map_mul, map_mul, map_mul, hp]
       cases o <;> simp

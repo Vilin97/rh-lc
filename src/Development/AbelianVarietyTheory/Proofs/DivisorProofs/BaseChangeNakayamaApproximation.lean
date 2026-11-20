@@ -71,7 +71,7 @@ theorem modIso_tensor_mod : ∀ (A R : Type) [CommRing A] [CommRing R] [Algebra 
     have h0 : ∀ t : R ⊗[A] M, τA.rTensor M (algebraMap A R a • t) = 0 := fun t => by
       induction t using TensorProduct.induction_on with
       | zero => rw [smul_zero, map_zero]
-      | add s t hs ht => rw [smul_add, map_add, hs, ht, add_zero]
+      | add s t hs ht => rw [smul_add, map_add (f := _), hs, ht, add_zero]
       | tmul r m =>
         rw [TensorProduct.smul_tmul', LinearMap.rTensor_tmul]
         change τ (algebraMap A R a * r) ⊗ₜ[A] m = 0

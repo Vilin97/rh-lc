@@ -328,8 +328,8 @@ theorem monomial {ι : Type} [Fintype ι] (v : ι → V) (n : ι → ℤ) {𝔡 
     revert y
     refine hind (C := fun y => ∀ x ∈ P, H.B (algebraMap (𝓞 K) K γ • y) x ∈ (1 : Submodule (𝓞 K) K))
       (fun _ _ => by simp) (fun a b ha hb x hx => ?_) (fun i t ht => ?_)
-    · rw [smul_add, map_add, LinearMap.add_apply]; exact add_mem (ha x hx) (hb x hx)
-    refine hind (by simp) (fun a b ha hb => by rw [map_add]; exact add_mem ha hb) (fun k β hβ => ?_)
+    · rw [smul_add, map_add (f := _), LinearMap.add_apply]; exact add_mem (ha x hx) (hb x hx)
+    refine hind (by simp) (fun a b ha hb => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb) (fun k β hβ => ?_)
     by_cases hk : H.B (v i) (v k) = 0
     · simp [LinearMap.map_smulₛₗ, hk]
     have := (h1 i k hk γ hγ).1 _ (mul_mem h rfl ht (star_mem h hs hβ))

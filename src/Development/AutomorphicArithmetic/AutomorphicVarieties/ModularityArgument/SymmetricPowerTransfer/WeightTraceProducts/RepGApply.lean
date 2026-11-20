@@ -56,7 +56,7 @@ variable (d) in
 
 def MH (n : K → ℕ) : Submodule ℂ (MvPolynomial (K × Fin d) ℂ) where
   carrier := {P | ∀ (s : K → ℂ) (x : K × Fin d → ℂ), eval (fun p => s p.1 * x p) P = (∏ v, s v ^ n v) * eval x P}
-  add_mem' h h' s x := by rw [map_add, map_add, h, h', mul_add]
+  add_mem' h h' s x := by rw [map_add (f := _), map_add (f := _), h, h', mul_add]
   zero_mem' s x := by simp
   smul_mem' c P h s x := by rw [smul_eval, smul_eval, h]; ring
 

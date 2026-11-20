@@ -48,7 +48,7 @@ theorem aeval_chartGen (y : Fin (D + 1) → Ω) (g : MvPolynomial {k : Fin (D + 
       deh y 0 (MvPolynomial.rename Subtype.val g) := by
   induction g using MvPolynomial.induction_on with
   | C a => simp [deh_apply]
-  | add p q hp hq => simp only [map_add, AddMemClass.coe_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), AddMemClass.coe_add, hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, MvPolynomial.aeval_X, MvPolynomial.rename_X, MulMemClass.coe_mul, hp]
     congr 1
@@ -166,7 +166,7 @@ theorem coord_div_isIntegral (x : ι → Ω) (e : Fin (D + 1) → ι) (h : IsPro
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp [coneMap, ψ]
-    | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
     | mul_X p k hp => rw [map_mul, map_mul, map_mul, hp]; simp [coneMap, ψ]
   let φ : coneRing ℤ y →+* chartRing y :=
     (MvPolynomial.aeval w).toRingHom.comp eqv.symm.toAlgHom.toRingHom

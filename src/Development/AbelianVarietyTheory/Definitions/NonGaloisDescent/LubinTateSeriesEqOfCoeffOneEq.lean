@@ -44,7 +44,7 @@ theorem commGroup_mul_eq_mul_mul_div (O : Type) [CommRing O] [Algebra ℤ_[2] O]
     PowerSeries.C 2 * GlobalTheory.Cyc.cyc 2 O c + GlobalTheory.Cyc.cyc 2 O c ^ 2 =
       PowerSeries.subst (PowerSeries.C 2 * PowerSeries.X + PowerSeries.X ^ 2 : PowerSeries O) (GlobalTheory.Cyc.cyc 2 O c) := by
   have h := GlobalTheory.Cyc.Series.phi_act 2 O c PowerSeries.X
-  rw [GlobalTheory.Cyc.Series.phi_X, GlobalTheory.Cyc.Series.act_X, map_sub, map_pow, map_add, map_one, GlobalTheory.Cyc.Series.act_X] at h
+  rw [GlobalTheory.Cyc.Series.phi_X, GlobalTheory.Cyc.Series.act_X, map_sub, map_pow, map_add (f := _), map_one, GlobalTheory.Cyc.Series.act_X] at h
   have e : (PowerSeries.C 2 * PowerSeries.X + PowerSeries.X ^ 2 : PowerSeries O) =
       GlobalTheory.Cyc.cyc 2 O ((2 : ℕ) : ℤ_[2]) := by
     rw [GlobalTheory.Cyc.Series.cyc_natCast, map_ofNat]; ring
@@ -221,7 +221,7 @@ theorem lubinTateSeries_eq_of_coeff_one_eq {O : Type} [CommRing O] [IsDomain O] 
         conv_lhs => rw [PowerSeries.eq_X_mul_shift_add_const u, map_add F, map_mul F, hX, hC]
         simp
       have e4 := congrArg PowerSeries.constantCoeff e2
-      simp only [map_add, map_mul, map_pow, hS0, e3, PowerSeries.constantCoeff_C, PowerSeries.constantCoeff_X,
+      simp only [map_add (f := _), map_mul, map_pow, hS0, e3, PowerSeries.constantCoeff_C, PowerSeries.constantCoeff_X,
         zero_pow (Nat.succ_ne_zero p), add_zero, zero_mul] at e4
       have e5 : π * (1 - π ^ (k + 1)) * PowerSeries.constantCoeff u = 0 := by linear_combination e4
       have hne : (1 - π ^ (k + 1)) ≠ 0 := fun h1 =>
@@ -242,7 +242,7 @@ theorem IsLTEndo_one (K : FinExt l) (π : ↥(OL K)) : IsLTEndo K π 1 PowerSeri
   refine ⟨by simp, by simp, ?_⟩
   have hs : PowerSeries.HasSubst (ltSeries K π) := PowerSeries.HasSubst.of_constantCoeff_zero' (by
     have := two_le_resCard K
-    rw [ltSeries, map_add, map_mul, map_pow, PowerSeries.constantCoeff_X, mul_zero, zero_pow (by omega), add_zero])
+    rw [ltSeries, map_add (f := _), map_mul, map_pow, PowerSeries.constantCoeff_X, mul_zero, zero_pow (by omega), add_zero])
   rw [PowerSeries.subst_X hs, ltSeries]
 
 theorem fixed_of_chi_eq_one {K : FinExt l} {χ : ↥(GK K) →* (↥K.1)ˣ} {π : ↥(OL K)} {z : ℕ → Om l}
@@ -272,7 +272,7 @@ theorem not_ltData_one (z : ℕ → Om 2) : ¬ LTData Kb 1 2 z := by
   have hmem : z 2 ∈ (⊥ : IntermediateField ℚ_[2] (Om 2)) := (InfiniteGalois.mem_bot_iff_fixed (z 2)).2 hfix
   obtain ⟨y, hy⟩ := IntermediateField.mem_bot.1 hmem
   have hy2 : (y + 1) ^ 2 = -1 := (algebraMap ℚ_[2] (Om 2)).injective (by
-    rw [map_pow, map_add, map_one, map_neg, map_one, hy]; linear_combination e1 + hz1)
+    rw [map_pow, map_add (f := _), map_one, map_neg, map_one, hy]; linear_combination e1 + hz1)
   have hn : ‖y + 1‖ ≤ 1 := by
     have := congrArg norm hy2
     rw [norm_pow, norm_neg, norm_one] at this

@@ -78,7 +78,7 @@ theorem symplOH_add_right (S T : HSp D) (x y y' : WO S T) :
 
 theorem symplOH_add_self (S T : HSp D) (x y : WO S T) :
     symplOH S T x y + symplOH S T x y = symplO S T x y := by
-  rw [symplOH, ← add_mul, ← map_add, add_halves, map_one, one_mul]
+  rw [symplOH, ← add_mul, ← map_add (f := _), add_halves, map_one, one_mul]
 
 theorem symplOH_skew (S T : HSp D) (x y : WO S T) : symplOH S T y x = -symplOH S T x y := by
   rw [symplOH, symplOH, symplO_skew, mul_neg]
@@ -159,7 +159,7 @@ theorem latO_fin {S T : HSp D} {LS : Set (Fin S.rank → D.host.E)} {LT : Set (F
     have h1 : infPart D (x i j) = 0 := congrFun (congrFun hx i) j
     have h2 : infPart D (y i j) = 0 := congrFun (congrFun hy i) j
     show infPart D (x i j + y i j) = 0
-    rw [RingHom.map_add, h1, h2, add_zero]
+    rw [RingHom.map_add (f := _), h1, h2, add_zero]
   · ext i j
     have h1 : infPart D (x i j) = 0 := congrFun (congrFun hx i) j
     show infPart D (-x i j) = 0

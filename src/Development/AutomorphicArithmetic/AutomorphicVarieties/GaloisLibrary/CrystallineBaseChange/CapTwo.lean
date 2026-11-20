@@ -15,7 +15,7 @@ private theorem cap2 {V : Type} [AddCommGroup V] [Module ℂ V] (E : Fin 2 → F
   have h0 := h 0
   have h1 := h 1
   rw [qdet2] at h0 h1
-  simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.add_apply, Module.algebraMap_end_apply, map_add,
+  simp only [LinearMap.sub_apply, Module.End.mul_apply, LinearMap.add_apply, Module.algebraMap_end_apply, map_add (f := _),
     map_smul] at h0 h1
   have hs : E 0 0 φ + E 1 1 φ = (a + b) • φ := by
     linear_combination (norm := module) h1 - h0
@@ -25,7 +25,7 @@ private theorem cap2 {V : Type} [AddCommGroup V] [Module ℂ V] (E : Fin 2 → F
     simpa using LinearMap.congr_fun (hE 0 1 1 0) φ
   have s0 := congrArg (E 0 0) hs
   have s1 := congrArg (E 1 1) hs
-  simp only [map_add, map_smul] at s0 s1
+  simp only [map_add (f := _), map_smul] at s0 s1
   refine ⟨hs, ?_⟩
   linear_combination (norm := module) s0 + s1 + (a + b) • hs + r1 + r2 - (2 : ℂ) • h0
 

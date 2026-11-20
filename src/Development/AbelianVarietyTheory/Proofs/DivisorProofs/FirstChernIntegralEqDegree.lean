@@ -236,7 +236,7 @@ theorem finsum_chernInt (hX : IsArithVar p 1) (hs : GenSmooth p 1) (hB : B.IsLB)
     rw [ratDeg_eq_degLB hT, ratDeg_eq_degLB hB, ratDeg_eq_degLB hM]
     refine hC.degLB_of_cls_eq_add (Semi.LB.isLB_pull hT _) (Semi.LB.isLB_pull hB _)
       (Semi.LB.isLB_pull hM _) ?_
-    rw [CechPic.cls_pull hT, CechPic.cls_pull hB, CechPic.cls_pull hM, CechPic.cls_tens hB hM, map_add]
+    rw [CechPic.cls_pull hT, CechPic.cls_pull hB, CechPic.cls_pull hM, CechPic.cls_tens hB hM, map_add (f := _)]
   rw [finsum_congr fun σ => (hs σ).elim fun R =>
     chernInt_tens hX.isProjOver R (h σ) ((H.pow n).cInf σ), finsum_add_distrib (toFinite _)
     (toFinite _), e₂, e₃, Int.cast_add] at e₁

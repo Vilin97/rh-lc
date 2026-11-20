@@ -166,7 +166,7 @@ theorem UpperTheory.ConvolutionTheory.R2.H.slZero :
     exact (le_max_left _ _).trans (val_le_one_of _ h3)
   have hb1 := hint u hne
   have hb2 := hint (u + sg v ((ϖ⁻¹ : (Kv v)ˣ) : Kv v)) (by rw [hshift]; exact hne)
-  rw [map_add, hcp] at hb2
+  rw [map_add (f := _), hcp] at hb2
   have hb3 : Valued.v (((ϖ⁻¹ : (Kv v)ˣ) : Kv v)) ≤ 1 := by
     have e5 : ((ϖ⁻¹ : (Kv v)ˣ) : Kv v) = (cp v u + ((ϖ⁻¹ : (Kv v)ˣ) : Kv v)) - cp v u := by ring
     rw [e5]

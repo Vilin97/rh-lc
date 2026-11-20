@@ -139,7 +139,7 @@ theorem gb_ae_good {c : ℂ} {Δ : MvPolynomial (Fin (D + 1)) ℂ} {y₀ : Fin D
       simp only [eval_C]
       exact analyticOnNhd_const
     next p q hp hq =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact hp.add hq
     next p i hp =>
       simp only [map_mul, eval_X]

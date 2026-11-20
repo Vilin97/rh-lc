@@ -315,7 +315,7 @@ theorem inversion_of_relevant (hσ : ∀ x, σ (σ x) = x) (hJ : cT σ J = J) (h
         · simp [h2])
     have := hR _ _ _ h1 h2
     rw [simpleSum_single, simpleSum_single, if_pos hw] at this
-    split_ifs at this ⊢ <;> simp only [map_sub, map_neg, map_mul, map_add, map_zero, hσ] at this ⊢ <;>
+    split_ifs at this ⊢ <;> simp only [map_sub, map_neg, map_mul, map_add (f := _), map_zero, hσ] at this ⊢ <;>
       linear_combination -this
   have h0 : (d a + if (b : ℕ) = a + 1 then d b else 0) = 0 := by
     by_contra h

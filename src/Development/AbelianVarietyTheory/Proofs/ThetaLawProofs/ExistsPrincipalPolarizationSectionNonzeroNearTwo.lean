@@ -44,7 +44,7 @@ theorem exists_global [CompactSpace X] [QuasiSeparatedSpace X] (hL : L.IsLB) (a 
     ((LBGerm.isUnit_gs_iff (𝟙 X) g _ hi' _).2 hi)
 
 def add (s t : L.Sec) : L.Sec :=
-  ⟨fun i => s.f i + t.f i, fun i j => by rw [map_add, map_add, s.compat i j, t.compat i j, mul_add]⟩
+  ⟨fun i => s.f i + t.f i, fun i j => by rw [map_add (f := _), map_add (f := _), s.compat i j, t.compat i j, mul_add]⟩
 
 theorem add_comm' (s t : L.Sec) : add s t = add t s := by
   unfold add

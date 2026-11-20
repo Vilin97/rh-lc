@@ -9,7 +9,7 @@ theorem transpose_j_reversed : Formalism.YangianSpanCharacter.T.TJTrev := by
   have hc : algebraMap R A Y * d = d * algebraMap R A Y := Algebra.commutes Y d
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [Matrix.mul_apply, Fin.sum_univ_two, Formalism.YangianSpanCharacter.T.Tm, Formalism.YangianSpanCharacter.T.J, map_add, add_mul, mul_add]
+    simp [Matrix.mul_apply, Fin.sum_univ_two, Formalism.YangianSpanCharacter.T.Tm, Formalism.YangianSpanCharacter.T.J, map_add (f := _), add_mul, mul_add]
   all_goals first
     | exact h1
     | exact h2

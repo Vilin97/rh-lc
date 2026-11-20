@@ -21,7 +21,7 @@ def atOp (v : Pl F) (π : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ((κ → Fv F v)
     have e : (fun y : κ → Fv F v => (Φ + Ψ) (x + fun i => GlobalTheory.LatVac.liftV v (y i - evFin F v (x i)))) =
       (fun y => Φ (x + fun i => GlobalTheory.LatVac.liftV v (y i - evFin F v (x i)))) +
         (fun y => Ψ (x + fun i => GlobalTheory.LatVac.liftV v (y i - evFin F v (x i)))) := rfl
-    rw [e, map_add, Pi.add_apply, Pi.add_apply]
+    rw [e, map_add (f := _), Pi.add_apply, Pi.add_apply]
   map_smul' c Φ := by
     funext x
     have e : (fun y : κ → Fv F v => (c • Φ) (x + fun i => GlobalTheory.LatVac.liftV v (y i - evFin F v (x i)))) =
@@ -37,7 +37,7 @@ theorem atOp_tens (v : Pl F) (π : ((κ → Fv F v) → ℂ) →ₗ[ℂ] ((κ �
     funext y
     have hz : At (evFin F v) (fun i => GlobalTheory.LatVac.liftV v (y i - evFin F v (x i))) :=
       fun u hu => funext fun i => GlobalTheory.LatVac.at_liftV v _ u hu
-    simp only [tens, hr x _ hz, Pi.add_apply, map_add, GlobalTheory.LatVac.evFin_liftV, add_sub_cancel, Pi.smul_apply, smul_eq_mul]
+    simp only [tens, hr x _ hz, Pi.add_apply, map_add (f := _), GlobalTheory.LatVac.evFin_liftV, add_sub_cancel, Pi.smul_apply, smul_eq_mul]
     ring
   show π _ _ = _
   rw [e, map_smul]

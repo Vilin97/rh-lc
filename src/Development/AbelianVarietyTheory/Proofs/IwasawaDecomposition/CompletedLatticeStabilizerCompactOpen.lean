@@ -49,7 +49,7 @@ theorem exists_compact_latHat (F E : Type) [Field F] [NumberField F] [Field E] [
     obtain ⟨c, hc, rfl⟩ := hy
     obtain ⟨d, hd, rfl⟩ := hz
     refine ⟨c + d, fun k _ w => ?_, ?_⟩
-    · rw [Pi.add_apply, map_add]
+    · rw [Pi.add_apply, map_add (f := _)]
       exact add_mem (hc k trivial w) (hd k trivial w)
     · funext i
       simp only [g, Pi.add_apply, TensorProduct.add_tmul, Finset.sum_add_distrib]

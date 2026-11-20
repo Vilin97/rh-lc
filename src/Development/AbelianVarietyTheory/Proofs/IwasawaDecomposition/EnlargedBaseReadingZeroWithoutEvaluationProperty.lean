@@ -42,7 +42,7 @@ theorem exists_extend {L L' : Type} [Field L] [Field L'] (ι : L →+* L') (σ' 
     ∃ j' : (Fin n → L') →ₛₗ[σ'] A, ∀ x x', CrdOver ι x x' → j' x' = j x := by
   refine ⟨{ toFun := fun x' => ∑ k, σ' (x' k) • j (Pi.single k 1), map_add' := ?_, map_smul' := ?_ }, ?_⟩
   · intro x y
-    simp only [Pi.add_apply, map_add, add_smul, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), add_smul, Finset.sum_add_distrib]
   · intro a x
     simp only [Pi.smul_apply, smul_eq_mul, map_mul, mul_smul, Finset.smul_sum]
   · intro x x' h

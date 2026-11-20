@@ -51,7 +51,7 @@ theorem realRd_eq_zero (fw : FWTie T Rl.toRealDat κ v₀) {ρ : Setup D.ntw} (h
   have key : ∀ x : NX.KB S i b ⊗[S.Ks] NX.FmK S ((j : ℕ) + 1), evK YS v₀ hρ i j b x = 0 := fun x => by
     induction x using TensorProduct.induction_on with
     | zero => exact map_zero _
-    | add x y hx hy => rw [map_add, hx, hy, add_zero]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, add_zero]
     | tmul a g => rw [evK_tmul, evW_eq_zero YS fw h, smul_zero]
   exact (congrArg (fun x => ν⁻¹ • x) (key _)).trans (smul_zero _)
 

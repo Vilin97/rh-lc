@@ -68,7 +68,7 @@ theorem meas_hOf_k {d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ} {R : 
       (_root_.PositivityTheory.SiegelWeilFormula.MeasD.ratE_k hR.ne hR.hof hR.herm) ?_
     intro S β
     show e (e.symm S.1 + β) = S.1 + e β
-    rw [map_add, ContinuousAddEquiv.apply_symm_apply]
+    rw [map_add (f := _), ContinuousAddEquiv.apply_symm_apply]
   · rw [hemb.map_apply, Set.preimage_image_eq _ hemb.injective, h1]
 end PositivityTheory.SiegelWeilFormula.MeasD
 end

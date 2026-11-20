@@ -315,7 +315,7 @@ theorem exists_local_matrix : ∀ (D : D7) (P : Formalism.L2.DIV.Pl D.host.E) (e
           (fun j => π ((GlobalTheory.AdLat.fv D.host.F y : Fin n → GlobalTheory.SplitPlace.RF D) j)) := by
     intro x y
     funext j
-    simp only [GlobalTheory.AdLat.fv, Pi.add_apply, TensorProduct.tmul_add, map_add]
+    simp only [GlobalTheory.AdLat.fv, Pi.add_apply, TensorProduct.tmul_add, map_add (f := _)]
   let Ψ : Λ.toAddSubgroup →+ (Fin n → Formalism.UG.Ov D.host.F v) :=
     { toFun := fun x i => ⟨_, hfvΛ x.1 x.2 i⟩
       map_zero' := by
@@ -372,7 +372,7 @@ theorem exists_local_matrix : ∀ (D : D7) (P : Formalism.L2.DIV.Pl D.host.E) (e
         ((Ideal.absNorm P.asIdeal : ℕ) : v.adicCompletion D.host.F) • (fun j => π (z j)) := by
       funext j
       have h8 := congrArg (fun q : Fin n → GlobalTheory.SplitPlace.RF D => π (q j)) hdec
-      simp only [Pi.smul_apply, Pi.add_apply, smul_eq_mul, map_mul, map_add, map_nsmul, hπe, one_mul, hs2] at h8
+      simp only [Pi.smul_apply, Pi.add_apply, smul_eq_mul, map_mul, map_add (f := _), map_nsmul, hπe, one_mul, hs2] at h8
       rw [h8, nsmul_eq_mul]
       rfl
     refine ⟨⟨x, hx⟩, ?_⟩

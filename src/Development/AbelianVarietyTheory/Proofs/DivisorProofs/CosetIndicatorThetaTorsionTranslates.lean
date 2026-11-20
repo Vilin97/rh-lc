@@ -97,7 +97,7 @@ theorem opU_neg_opU (H : Sesq V) (hH : IsHerm H) (s y : V) (e : V → ℂ) (z : 
   have h2 : Complex.I * (altE H s y : ℂ) = (H s y - H y s) / 2 := by
     rw [hH s y, Complex.sub_conj]; unfold altE; push_cast; ring
   rw [mul_assoc, h2]
-  simp only [map_add, map_neg, map_sub, LinearMap.add_apply, LinearMap.neg_apply, LinearMap.sub_apply]
+  simp only [map_add (f := _), map_neg, map_sub, LinearMap.add_apply, LinearMap.neg_apply, LinearMap.sub_apply]
   ring
 
 theorem xiInd_expand (H : Sesq V) (hH : IsHerm H) (α : V → ℂ) (vol : ℝ) (M : AddSubgroup V) (SA SB : Finset V) (e : V → ℂ) (s z : V) :

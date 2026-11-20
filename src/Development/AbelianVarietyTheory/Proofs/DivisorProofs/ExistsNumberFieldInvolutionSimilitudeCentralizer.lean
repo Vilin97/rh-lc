@@ -74,8 +74,8 @@ theorem centraliser_field_involution : ∀ (p : ℕ) [Fact p.Prime] (G : HTGroup
   have ha : ∀ a b, t (a + b) = t a + t b := by
     intro a b
     apply hj
-    rw [ht, map_add, ht, ht, hw]; dsimp only
-    rw [map_add, GlobalTheory.CentConj.sh_add']; noncomm_ring
+    rw [ht, map_add (f := _), ht, ht, hw]; dsimp only
+    rw [map_add (f := _), GlobalTheory.CentConj.sh_add']; noncomm_ring
   have h1 : t 1 = 1 := by
     apply hj
     rw [ht, hw]; dsimp only

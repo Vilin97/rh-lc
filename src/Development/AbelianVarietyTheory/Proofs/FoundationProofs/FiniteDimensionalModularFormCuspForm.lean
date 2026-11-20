@@ -126,7 +126,7 @@ def coeffMap {Γ : Subgroup (GL (Fin 2) ℝ)} [Γ.HasDetOne] {h : ℝ} (hh : 0 <
   map_add' f g := by
     funext n
     simp only [Pi.add_apply]
-    rw [ModularForm.coe_add, ModularForm.qExpansion_add hh hΓ f g, map_add]
+    rw [ModularForm.coe_add, ModularForm.qExpansion_add hh hΓ f g, map_add (f := _)]
   map_smul' c f := by
     funext n
     simp only [Pi.smul_apply, smul_eq_mul, RingHom.id_apply]

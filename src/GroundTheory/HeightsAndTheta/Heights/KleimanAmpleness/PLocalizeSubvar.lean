@@ -32,7 +32,7 @@ theorem LocalizeSubvar.quotientMap_surjective (S : Type) [CommRing S] (𝔪 : Id
       set v : O := IsLocalization.mk' O (1 : S) t
       have h1 : algebraMap S O t * v = 1 := by rw [IsLocalization.mk'_spec', map_one]
       have h2 : algebraMap S O y * algebraMap S O t + algebraMap S O i = 1 := by
-        rw [← map_mul, ← map_add, hyi, map_one]
+        rw [← map_mul, ← map_add (f := _), hyi, map_one]
       have ho : IsLocalization.mk' O s t = algebraMap S O s * v := IsLocalization.mk'_eq_mul_mk'_one s t
       have hd : algebraMap S O (s * y) - IsLocalization.mk' O s t =
           -(algebraMap S O i * (algebraMap S O s * v)) := by
@@ -42,7 +42,7 @@ theorem LocalizeSubvar.quotientMap_surjective (S : Type) [CommRing S] (𝔪 : Id
       rw [← map_sub, hd, map_neg, map_mul]
       refine neg_mem (Ideal.mul_mem_right _ _ (hle ?_))
       exact Ideal.mem_map_of_mem _ (Ideal.mem_map_of_mem _ hi)
-    | add p q hp hq => rw [map_add]; exact Subring.add_mem _ hp hq
+    | add p q hp hq => rw [map_add (f := _)]; exact Subring.add_mem _ hp hq
     | mul_X p j hp =>
       rw [map_mul]
       refine Subring.mul_mem _ hp ⟨Ideal.Quotient.mk _ (X j), ?_⟩

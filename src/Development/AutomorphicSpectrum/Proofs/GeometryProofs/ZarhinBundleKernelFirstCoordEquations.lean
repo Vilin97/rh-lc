@@ -77,7 +77,7 @@ theorem mem_range_of_forall (φ : A →+* Ω) (c : Ω)
   let I : Ideal A :=
     { carrier := {s | c * φ s ∈ φ.range}
       add_mem' := fun {a b} ha hb => by
-        simp only [Set.mem_setOf_eq, map_add, mul_add] at *
+        simp only [Set.mem_setOf_eq, map_add (f := _), mul_add] at *
         exact add_mem ha hb
       zero_mem' := ⟨0, by simp⟩
       smul_mem' := fun a b hb => by

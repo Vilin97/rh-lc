@@ -68,7 +68,7 @@ theorem UpperTheory.Reformulated.B.Qf30.isotypic_stable_under_operators.{u_1, u_
   · rw [map_zero]
     exact Submodule.zero_mem _
   · intro y z _ _ hy hz
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hy hz
   · intro c y _ hy
     rw [map_smul]

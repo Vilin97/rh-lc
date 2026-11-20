@@ -47,7 +47,7 @@ theorem slice_mul_left (γ : MvPolynomial (S × τ) K →ₗ[K] K) (P R : MvPoly
       zero_add, mul_smul_comm, monomial_mul, smul_monomial, smul_monomial, smul_eq_mul, smul_eq_mul]
     congr 1
     ring
-  | add p q hp hq => rw [mul_add, map_add, hp, hq, map_add, mul_add]
+  | add p q hp hq => rw [mul_add, map_add (f := _), hp, hq, map_add (f := _), mul_add]
 
 theorem slice_spec (γ : MvPolynomial (S × τ) K →ₗ[K] K) (Q : MvPolynomial (S × τ) K)
     (hQ : Q ∈ supported K {v : S × τ | v.1 ∉ A}) : slice A γ Q = γ Q • 1 := by
@@ -133,7 +133,7 @@ theorem slice_tensor (A : Finset S) (M MT Msp : S → Submodule R (MvPolynomial 
   | add x y _ _ hx hy =>
     obtain ⟨a, ha, ea⟩ := hx
     obtain ⟨b, hb, eb⟩ := hy
-    exact ⟨a + b, add_mem ha hb, by rw [map_add, ea, eb, smul_add]⟩
+    exact ⟨a + b, add_mem ha hb, by rw [map_add (f := _), ea, eb, smul_add]⟩
   | smul r x _ hx =>
     obtain ⟨a, ha, ea⟩ := hx
     exact ⟨r • a, Submodule.smul_mem _ r ha, by rw [LinearMap.map_smul_of_tower, ea, smul_comm]⟩

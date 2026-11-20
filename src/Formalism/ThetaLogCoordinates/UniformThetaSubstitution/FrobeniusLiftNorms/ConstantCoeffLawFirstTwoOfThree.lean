@@ -56,7 +56,7 @@ theorem pderiv_subst {R σ τ : Type} [CommRing R] [Fintype σ] {a : σ → MvPo
         rw [← coe_substAlgHom ha, map_zero]
       simp only [MvPolynomial.coe_C, subst_C, pderiv_C, h0, zero_mul, Finset.sum_const_zero]
     | add p q hp hq =>
-      simp only [MvPolynomial.coe_add, subst_add ha, map_add, add_mul, Finset.sum_add_distrib]
+      simp only [MvPolynomial.coe_add, subst_add ha, map_add (f := _), add_mul, Finset.sum_add_distrib]
       rw [hp, hq]
     | mul_X p j hp =>
       simp only [MvPolynomial.coe_mul, MvPolynomial.coe_X, subst_mul ha, subst_X ha,
@@ -434,7 +434,7 @@ theorem StepI_of (h1 : LemmaOne) (hF : FirstDeriv) (hC : CobLin) : StepI := by
       have e : PowerSeries.coeff j (fLin G) - α * PowerSeries.coeff j (g0F K p) =
           PowerSeries.coeff j R := by
         rw [hf]
-        simp only [map_add, PowerSeries.coeff_C_mul, hl]
+        simp only [map_add (f := _), PowerSeries.coeff_C_mul, hl]
         ring
       rw [e]
       exact hR j

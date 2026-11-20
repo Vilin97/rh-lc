@@ -34,7 +34,7 @@ theorem existsUnique_const_of_trivSqZeroExt (R : Type) [CommRing R] (C : Type) [
     | tmul r b =>
       rw [LinearMap.lTensor_tmul, hpure, hpure, map_smul]
       exact congrArg (r • ·) (bc.naturality φ b)
-    | add x y hx hy => rw [map_add, map_add, map_add, hx, hy, map_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]
   let jj : ∀ T : C, M ⊗[R] F.obj T →ₗ[R] TrivSqZeroExt R M ⊗[R] F.obj T :=
     fun T ↦ (TrivSqZeroExt.inrHom R M).rTensor _
   have hsnd : ∀ (T : C) (x : M ⊗[R] F.obj T),
@@ -43,14 +43,14 @@ theorem existsUnique_const_of_trivSqZeroExt (R : Type) [CommRing R] (C : Type) [
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [jj]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hcomm : ∀ {T T' : C} (φ : T ⟶ T') (x : M ⊗[R] F.obj T),
       jj T' ((mp F φ).toLinearMap.lTensor M x) = (mp F φ).toLinearMap.lTensor _ (jj T x) := by
     intro T T' φ x
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [jj]
-    | add x y hx hy => rw [map_add, map_add, map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
   have hconst : ∀ (T : C) (r : TrivSqZeroExt R M),
       algebraMap (TrivSqZeroExt R M) (F'.obj T) r = e T (r ⊗ₜ[R] (1 : F.obj T)) := by
     intro T r

@@ -39,7 +39,7 @@ theorem UpperTheory.V.AlgRepEndIrreducible.telML :
     refine ⟨{ toFun := fun f => LinearMap.uncurryLeft (R := ℂ) (M := fun _ : Fin (n + 1) => X) (g f)
               map_add' := fun u v => MultilinearMap.ext fun y => ?_
               map_smul' := fun c u => MultilinearMap.ext fun y => ?_ }, fun f x => ?_⟩
-    · simp only [MultilinearMap.add_apply, hg, map_add, LinearMap.add_apply]
+    · simp only [MultilinearMap.add_apply, hg, map_add (f := _), LinearMap.add_apply]
       abel
     · simp only [MultilinearMap.smul_apply, hg, map_smul, LinearMap.smul_apply, RingHom.id_apply, smul_add]
     · rw [tel_succ, ← hT, ← hR]

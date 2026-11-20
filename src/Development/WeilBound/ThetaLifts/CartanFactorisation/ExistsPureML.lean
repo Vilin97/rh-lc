@@ -142,7 +142,7 @@ theorem exists_factorOp (v : Pl F) (π : Module.End ℂ ((κ → Fv F v) → ℂ
   have e2 : (fun y => tens (evFin F v) (φ v) r (sh x y)) = r x • φ v := by
     funext y
     have h1 : (fun i => evFin F v (sh x y i)) = y := funext fun i => by
-      simp only [sh, map_add, GlobalTheory.EmbChart.evFin_atPlace, add_sub_cancel]
+      simp only [sh, map_add (f := _), GlobalTheory.EmbChart.evFin_atPlace, add_sub_cancel]
     have h2 : r (sh x y) = r x := hr x (fun i => GlobalTheory.EmbChart.atPlace v (y i - evFin F v (x i))) fun u hu => by
       funext i
       show u * GlobalTheory.EmbChart.atPlace v (y i - evFin F v (x i)) = 0

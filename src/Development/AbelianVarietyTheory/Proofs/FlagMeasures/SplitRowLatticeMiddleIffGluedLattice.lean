@@ -259,7 +259,7 @@ theorem ddS_stable : StarStable (ddS D) := by
     exact FractionalIdeal.mem_coeIdeal_of_mem _ (Ideal.mem_map_of_mem _ ht)
   · simpa using (ddS D).zero_mem
   · intro x y _ _ hx hy
-    rw [map_add, star_add]
+    rw [map_add (f := _), star_add]
     exact (ddS D).coeToSubmodule.add_mem hx hy
   · intro a x _ hx
     obtain ⟨t, ht⟩ := star_algebraMap_ringOfIntegers_mem_range a

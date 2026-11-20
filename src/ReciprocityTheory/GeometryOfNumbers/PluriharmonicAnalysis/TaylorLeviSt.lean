@@ -23,12 +23,12 @@ lemma pgtl_clin {F : Type*} [AddCommGroup F] [Module ℂ F] (f : (Fin D → ℂ)
 noncomputable def pgtlCx (d : (Fin D → ℂ) →L[ℝ] ℝ) : (Fin D → ℂ) →L[ℂ] ℂ :=
   LinearMap.toContinuousLinearMap
   { toFun := fun z => (d z : ℂ) - I * (d (I • z) : ℂ)
-    map_add' := by intro x y; simp only [smul_add, map_add, ofReal_add]; ring
+    map_add' := by intro x y; simp only [smul_add, map_add (f := _), ofReal_add]; ring
     map_smul' := by
       intro c z
       simp only [RingHom.id_apply, smul_eq_mul]
       refine pgtl_clin (fun z => (d z : ℂ) - I * (d (I • z) : ℂ)) ?_ ?_ ?_ c z
-      · intro x y; simp only [smul_add, map_add, ofReal_add]; ring
+      · intro x y; simp only [smul_add, map_add (f := _), ofReal_add]; ring
       · intro r x
         rw [smul_comm I r x, map_smul, map_smul, smul_eq_mul, smul_eq_mul, smul_eq_mul]
         push_cast; ring
@@ -66,7 +66,7 @@ noncomputable def pgtlBil (B : (Fin D → ℂ) →L[ℝ] (Fin D → ℂ) →L[�
     map_add' := by
       intro x y
       refine ContinuousLinearMap.ext fun w => ?_
-      simp only [ContinuousLinearMap.add_apply, pgtlCx_apply, pgtlDz_apply, smul_add, map_add]
+      simp only [ContinuousLinearMap.add_apply, pgtlCx_apply, pgtlDz_apply, smul_add, map_add (f := _)]
       apply Complex.ext <;> simp <;> ring
     map_smul' := by
       intro c z
@@ -74,7 +74,7 @@ noncomputable def pgtlBil (B : (Fin D → ℂ) →L[ℝ] (Fin D → ℂ) →L[�
       refine pgtl_clin (fun z => pgtlCx (pgtlDz B z)) ?_ ?_ ?_ c z
       · intro x y
         refine ContinuousLinearMap.ext fun w => ?_
-        simp only [ContinuousLinearMap.add_apply, pgtlCx_apply, pgtlDz_apply, smul_add, map_add]
+        simp only [ContinuousLinearMap.add_apply, pgtlCx_apply, pgtlDz_apply, smul_add, map_add (f := _)]
         apply Complex.ext <;> simp <;> ring
       · intro r x
         refine ContinuousLinearMap.ext fun w => ?_

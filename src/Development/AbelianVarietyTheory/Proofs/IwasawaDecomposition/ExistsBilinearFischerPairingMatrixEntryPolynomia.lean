@@ -54,7 +54,7 @@ theorem pair_mul_X (P Q : MvPolynomial σ ℂ) (v : σ) : pair (P * X v) Q = pai
   | monomial α c =>
     rw [X, monomial_mul, mul_one, pair_monomial, pair_monomial, coeff_pderiv, wt_add_single]
     ring
-  | add P P' h h' => simp only [add_mul, map_add, LinearMap.add_apply, h, h']
+  | add P P' h h' => simp only [add_mul, map_add (f := _), LinearMap.add_apply, h, h']
 
 def lin (A : σ → σ → ℂ) : MvPolynomial σ ℂ →ₐ[ℂ] MvPolynomial σ ℂ :=
   aeval fun v => ∑ w, A v w • X w
@@ -76,10 +76,10 @@ theorem pderiv_lin (A : σ → σ → ℂ) (v : σ) (Q : MvPolynomial σ ℂ) :
   classical
   induction Q using MvPolynomial.induction_on with
   | C c => simp [lin]
-  | add P P' h h' => simp only [map_add, h, h', smul_add, Finset.sum_add_distrib]
+  | add P P' h h' => simp only [map_add (f := _), h, h', smul_add, Finset.sum_add_distrib]
   | mul_X P u h =>
     rw [map_mul, Derivation.leibniz, h, pderiv_lin_X]
-    simp only [Derivation.leibniz, smul_eq_mul, map_add, map_mul, smul_add, Finset.sum_add_distrib,
+    simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul, smul_add, Finset.sum_add_distrib,
       Finset.mul_sum, mul_smul_comm]
     congr 1
     rw [Finset.sum_eq_single u]
@@ -92,7 +92,7 @@ theorem coeff_zero_lin (A : σ → σ → ℂ) (Q : MvPolynomial σ ℂ) : AddMo
   change constantCoeff (lin A Q) = constantCoeff Q
   induction Q using MvPolynomial.induction_on with
   | C c => simp [lin]
-  | add P P' h h' => simp only [map_add, h, h']
+  | add P P' h h' => simp only [map_add (f := _), h, h']
   | mul_X P u h => simp [lin_X, map_sum, smul_eq_C_mul]
 
 theorem pair_lin (A : σ → σ → ℂ) (P Q : MvPolynomial σ ℂ) :
@@ -101,7 +101,7 @@ theorem pair_lin (A : σ → σ → ℂ) (P Q : MvPolynomial σ ℂ) :
   | C c =>
     have : lin A (C c) = C c := by simp [lin]
     rw [this, C_apply, pair_monomial, pair_monomial, coeff_zero_lin]
-  | add P P' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+  | add P P' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
   | mul_X P u h =>
     set_option synthInstance.maxHeartbeats 100000 in
       rw [pair_mul_X, pderiv_lin, map_mul, lin_X, Finset.mul_sum, map_sum, map_sum, LinearMap.sum_apply]
@@ -129,7 +129,7 @@ theorem pair_rep (ℓ : MvPolynomial σ ℂ →ₗ[ℂ] ℂ) (d : ℕ)
     split_ifs with hd
     · exact mul_div_cancel₀ _ (wt_ne_zero α)
     · rw [h α (not_le.1 hd), mul_zero]
-  | add P P' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+  | add P P' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
 
 open Classical in
 theorem subst_eq_lin {ι : Type} [Fintype ι] {m n : ℕ} (a : ι → Matrix (Fin n) (Fin n) ℂ)

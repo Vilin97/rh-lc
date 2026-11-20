@@ -44,7 +44,7 @@ theorem UpperTheory.V.Cj.H.opLim :
     exact Eventually.of_forall fun k x _ => by simpa using hε
   | add φ ψ _ _ h1 h2 =>
     intro C hC
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact (h1 C hC).add (h2 C hC)
   | smul c φ _ h =>
     intro C hC

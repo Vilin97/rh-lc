@@ -22,7 +22,7 @@ variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algeb
 theorem tensAt_compFin (v : Pl F) (z : AE F E) : tensAt E v (compFin F E v z) = atPlace v 1 • z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
   | tmul a x =>
     show atPlace v (evFin F v a) ⊗ₜ[F] x = atPlace v 1 • (a ⊗ₜ[F] x)
     rw [TensorProduct.smul_tmul', smul_eq_mul, atPlace_mul_right, one_mul]
@@ -33,7 +33,7 @@ theorem at_atPlace (v : Pl F) (c : Fv F v) : At (evFin F v) (atPlace v c) := fun
 theorem at_tensAt (v : Pl F) (y : Fv F v ⊗[F] E) : At (evFin F v) (tensAt E v y) := fun u hu => by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, smul_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), smul_add, hx, hy, add_zero]
   | tmul a x =>
     rw [tensAt_tmul, TensorProduct.smul_tmul', at_atPlace v a u hu, TensorProduct.zero_tmul]
 
@@ -47,7 +47,7 @@ theorem compFin_cA (σ : E →ₐ[F] E) (v : Pl F) (z : AE F E) :
     compFin F E v (cA σ z) = sigR (Fv F v) σ (compFin F E v z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x => rfl
 
 theorem piW_apply {v : Pl F} (τ : E →ₐ[F] Fv F v) (z : AE F E) : piW τ z = splitProj τ (compFin F E v z) := rfl

@@ -39,7 +39,7 @@ theorem exists_int_smul_mem_latticeDual {m : ℕ} {L : Submodule (𝓞 K) (Fin m
   | add x y _ _ hx hy =>
     obtain ⟨b, hb⟩ := hx
     obtain ⟨c, hc⟩ := hy
-    exact ⟨b + c, by rw [map_add, hb, hc, dotProduct_add]⟩
+    exact ⟨b + c, by rw [map_add (f := _), hb, hc, dotProduct_add]⟩
   | smul c x _ hx =>
     obtain ⟨b, hb⟩ := hx
     exact ⟨c * b, by rw [map_mul, hb, dotProduct_smul, Algebra.smul_def c]⟩
@@ -187,7 +187,7 @@ theorem dehom_latticeForm (u : Fin (r + 1) → K) :
     dehom K r (latticeForm u) = algebraMap (MvPolynomial (Fin r) K) (LatticeField K r)
       (C (u 0) + ∑ j : Fin r, C (u j.succ) * X j) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [dehom, latticeForm, map_sum, map_mul, map_add, coe_eval₂Hom, eval₂_C, eval₂_X, algebraMap_C,
+    simp only [dehom, latticeForm, map_sum, map_mul, map_add (f := _), coe_eval₂Hom, eval₂_C, eval₂_X, algebraMap_C,
     Fin.sum_univ_succ, genericVal, Fin.cases_zero, Fin.cases_succ, mul_one]
 
 theorem latticeCoord_eq (φ : Fin (N + 1) → Fin (r + 1) → K) (v : Coord fun _ : Unit ↦ N) :
@@ -221,7 +221,7 @@ theorem mCoordIdeal_latticeCoord (φ : Fin (N + 1) → Fin (r + 1) → K) :
         intro g
         induction g using MvPolynomial.induction_on with
         | C a => simp [Geo.mConeMap, χ]
-        | add p q hp hq => rw [map_add, map_add, hp, hq, map_add, map_add]
+        | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
         | mul_X p v hp =>
           rw [map_mul, map_mul, hp, map_mul, map_mul]
           congr 1
@@ -236,12 +236,12 @@ theorem mCoordIdeal_latticeCoord (φ : Fin (N + 1) → Fin (r + 1) → K) :
         intro g
         induction g using MvPolynomial.induction_on with
         | C a => simp [χ, latticeMap]
-        | add p q hp hq => rw [map_add, map_add, hp, hq, map_add, map_add]
+        | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
         | mul_X p v hp =>
           rw [map_mul, map_mul, hp, map_mul, map_mul]
           congr 1
           set_option synthInstance.maxHeartbeats 100000 in
-            simp only [χ, latticeMap, coe_eval₂Hom, eval₂_X, latticeForm, map_mul, map_add, map_sum, eval_C, eval_X,
+            simp only [χ, latticeMap, coe_eval₂Hom, eval₂_X, latticeForm, map_mul, map_add (f := _), map_sum, eval_C, eval_X,
             Fin.sum_univ_succ]
           rw [mul_add, Finset.mul_sum]
           congr 1
@@ -265,7 +265,7 @@ theorem mCoordIdeal_latticeCoord (φ : Fin (N + 1) → Fin (r + 1) → K) :
       intro g
       induction g using MvPolynomial.induction_on with
       | C a => simp [Geo.mConeMap, ψ, latticeMap]
-      | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+      | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
       | mul_X p v hp =>
         rw [map_mul, map_mul, hp, map_mul]
         congr 1

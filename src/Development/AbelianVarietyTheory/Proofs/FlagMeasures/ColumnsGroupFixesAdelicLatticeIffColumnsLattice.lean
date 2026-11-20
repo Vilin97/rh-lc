@@ -189,7 +189,7 @@ def ic (v : (VS D).V) : VA X.B.I := incl X.B.I (X.crd v)
 
 theorem ic_add (v w : (VS D).V) : ic X (v + w) = ic X v + ic X w := by
   funext i
-  simp only [ic, incl, Pi.add_apply, HidaSetting.crd, crdOf, map_add, Finsupp.coe_add]
+  simp only [ic, incl, Pi.add_apply, HidaSetting.crd, crdOf, map_add (f := _), Finsupp.coe_add]
 
 theorem ic_smul (a : D.host.E) (v : (VS D).V) :
     ic X (a • v) = Formalism.UG.inclE (F := X.B.I.F) (Af X.B.I.F) (X.ιE.symm a) • ic X v := by

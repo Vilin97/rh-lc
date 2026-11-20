@@ -332,7 +332,7 @@ theorem gaMap_unip {r : ℕ} (x : BlockIx a r → Ad E) : gaMap a j (unip x) = u
   ext i k
   change adm j ((1 + nilM x : Matrix (Fin a) (Fin a) (Ad E)) i k) =
     (1 + nilM fun p => adm j (x p) : Matrix (Fin a) (Fin a) (Ad F)) i k
-  simp only [nilM, Matrix.add_apply, Matrix.of_apply, Matrix.one_apply, map_add]
+  simp only [nilM, Matrix.add_apply, Matrix.of_apply, Matrix.one_apply, map_add (f := _)]
   split_ifs <;> simp
 
 theorem mem_ratN {r : ℕ} {x : BlockIx a r → Ad E} (hx : x ∈ ratN E a r) : (fun p => adm j (x p)) ∈ ratN F a r := by
@@ -360,7 +360,7 @@ theorem isCuspidal_pull {φ : GA F a → ℂ} (hφ : IsCuspidal φ) : IsCuspidal
   have h2 := hφ r h0 h1 (μ.map m) (m '' 𝓕) (β.isAddHaarMeasure_map μ)
     (hF.image_of_equiv m.toEquiv (MeasurePreserving.symm m ⟨m.measurable, rfl⟩).quasiMeasurePreserving e fun y x => by
       change β (β.symm y + x) = y + β x
-      rw [map_add, β.apply_symm_apply]) (gaMap a j g)
+      rw [map_add (f := _), β.apply_symm_apply]) (gaMap a j g)
   rw [m.measurableEmbedding.setIntegral_map, m.injective.preimage_image] at h2
   rw [← h2]
   congr 1

@@ -439,7 +439,7 @@ theorem exists_common_pow (f g : Robba K) : ∃ s, 0 < s ∧ s < 1 ∧ ∀ ρ, s
 theorem phiSeq_add {f g : ℤ → K} (h1 : F.r₀ ≤ ρ) (h2 : ρ < 1) (hf : ConvergesAt f (ρ ^ F.q))
     (hg : ConvergesAt g (ρ ^ F.q)) : F.phiSeq (f + g) = F.phiSeq f + F.phiSeq g := by
   funext m
-  simp only [phiSeq, Pi.add_apply, map_add, add_mul]
+  simp only [phiSeq, Pi.add_apply, map_add (f := _), add_mul]
   exact (summable_phi_term h1 h2 hf m).tsum_add (summable_phi_term h1 h2 hg m)
 
 theorem phiFun_add (f g : Robba K) : F.phiFun (f + g) = F.phiFun f + F.phiFun g := by

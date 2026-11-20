@@ -48,7 +48,7 @@ def FinalTheorems.Lw (Φ : s.Flag) (k : s.Comp) : (D.what₂.Tau → Fin N → �
   AddMonoidHom.mk' (fun la => (Φ.C k).Lw (S.wt L la)) fun a b => by
     have h := GlobalTheory.AllWt.exOf_add (Dw := S.Dw) (S.wt L a) (S.wt L b) 0 0
     rw [add_zero] at h
-    simp only [FlagCpt.Lw, map_add, h]
+    simp only [FlagCpt.Lw, map_add (f := _), h]
 
 variable (C : CxSt D.what₂.LL) (K : CutSt C) (R : ResSt C)
 

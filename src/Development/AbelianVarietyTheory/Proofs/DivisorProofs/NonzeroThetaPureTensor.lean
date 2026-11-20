@@ -41,7 +41,7 @@ theorem exists_pure_ne : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Num
     | add x y hx hy ihx ihy =>
       intro h
       have e : ∀ g, theta om (x + y) g h = theta om x g h + theta om y g h := fun g => by
-        simp only [theta, map_add]
+        simp only [theta, map_add (f := _)]
         exact GlobalTheory.WeilM.thetaSum_add F (hpres _ _ (hsch hx)) (hpres _ _ (hsch hy))
       simp only [Model.I, e]
       rw [integral_add (hconv x (hsch hx) h) (hconv y (hsch hy) h)]

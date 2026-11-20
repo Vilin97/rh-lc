@@ -67,7 +67,7 @@ theorem exists_complex_equiv {U V I : Type} [AddCommGroup U] [Module ℂ U] [Add
       obtain ⟨x, rfl⟩ := hx
       rw [← map_smul, ← e', ← e', map_smul]
     | zero => simp
-    | add x y _ _ hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+    | add x y _ _ hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
   exact ⟨{ h.toAddEquiv with map_smul' := hc }, fun _ => rfl⟩
 
 theorem exists_compare {S S' : Scheme.{0}} {G : Over S} {A B : Over S'} [GrpObj G] [GrpObj A] [GrpObj B] {f : S' ⟶ S}

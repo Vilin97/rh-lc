@@ -162,13 +162,13 @@ theorem twoCocycle_lift : ∀ (l : ℕ) [Fact l.Prime] (Γ : Type) [Group Γ] [T
         intro g h k m
         have := congrArg (PadicInt.toZModPow 1) (hz g h k m)
         rw [← hρχ] at this
-        simpa only [map_add, map_sub, h1, map_zero] using this)
+        simpa only [map_add (f := _), map_sub, h1, map_zero] using this)
     obtain ⟨u, hu, huv⟩ := exists_continuous_lift 1 v hv
     obtain ⟨c', hc', e⟩ := exists_continuous_div (fun p => c p - dTwo χ u p)
       (hc.sub (continuous_dTwo hχc hu)) l hl0 (by
         rintro ⟨g, h, k⟩
         rw [← pow_one (l : ℤ_[l]), ← toZModPow_eq_zero_iff]
-        simp only [dTwo, ← hρχ, map_add, map_sub, h1, huv, hvc, sub_self])
+        simp only [dTwo, ← hρχ, map_add (f := _), map_sub, h1, huv, hvc, sub_self])
     exact ⟨u, c', hu, hc', (hz.sub (isCocycleThree_dTwo χ hχm u)).cancel hl0 e,
       fun p => by linear_combination e p⟩
   obtain ⟨Y, hY, hYy⟩ := exists_continuous_lift r y hy.1
@@ -176,7 +176,7 @@ theorem twoCocycle_lift : ∀ (l : ℕ) [Fact l.Prime] (Γ : Type) [Group Γ] [T
     ((l : ℤ_[l]) ^ r) (pow_ne_zero _ hl0) (by
       rintro ⟨g, h, k⟩
       rw [← toZModPow_eq_zero_iff]
-      simp only [dTwo, ← hρχ, map_add, map_sub, hr, hYy]
+      simp only [dTwo, ← hρχ, map_add (f := _), map_sub, hr, hYy]
       exact hy.2 g h k)
   obtain ⟨u, hu, hcu⟩ := exists_dTwo_eq χ step c hc
     ((isCocycleThree_dTwo χ hχm Y).cancel (pow_ne_zero _ hl0) e)

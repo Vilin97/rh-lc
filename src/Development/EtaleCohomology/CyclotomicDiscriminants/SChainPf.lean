@@ -44,7 +44,7 @@ lemma bd_cm {G H : Type} [Group G] [Group H] (f : G →* H) (m : ℕ) (z : Ch A 
   have : (bd A H m).comp (cm A f (m + 1)) = (cm A f m).comp (bd A G m) := by
     refine Finsupp.lhom_ext fun g a => ?_
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [LinearMap.comp_apply, cm_single, bd_single, map_add, map_sum, map_smul]
+      simp only [LinearMap.comp_apply, cm_single, bd_single, map_add (f := _), map_sum, map_smul]
     simp only [contract_map]
   exact LinearMap.congr_fun this z
 

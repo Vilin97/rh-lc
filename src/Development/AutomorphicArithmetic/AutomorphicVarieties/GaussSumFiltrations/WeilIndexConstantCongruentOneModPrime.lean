@@ -35,7 +35,7 @@ theorem absNorm_coprime_of_away {p : ℕ} (hp : p.Prime) (J : Ideal (𝓞 F))
     rw [← nsmul_eq_mul, ← hx, addOrderOf_nsmul_eq_zero]
   have h2 : (Ideal.Quotient.mk J b) * (p : 𝓞 F ⧸ J) = 1 := by
     have := congrArg (Ideal.Quotient.mk J) haz
-    rw [map_add, Ideal.Quotient.eq_zero_iff_mem.2 ha, zero_add, map_mul, map_natCast, map_one] at this
+    rw [map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 ha, zero_add, map_mul, map_natCast, map_one] at this
     exact this
   have h3 : x = 0 := by
     calc x = (Ideal.Quotient.mk J b * (p : 𝓞 F ⧸ J)) * x := by rw [h2, one_mul]

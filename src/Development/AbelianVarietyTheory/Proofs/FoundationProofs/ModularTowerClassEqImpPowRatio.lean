@@ -40,14 +40,14 @@ theorem tensor_padic_cls_eq {G : Type} [CommGroup G] (l : ℕ) [Fact l.Prime] (n
     rw [PadicInt.ker_toZModPow, Ideal.span_singleton_pow]
   have hzero : ∀ x ∈ ((Ideal.span {(l : ℤ_[l])}) ^ n • (⊤ : Submodule ℤ_[l] (ℤ_[l] ⊗[ℤ] M))), φ x = 0 := by
     intro x hx
-    refine Submodule.smul_induction_on hx (fun r hr y hy => ?_) (fun a b ha hb => by rw [map_add, ha, hb, add_zero])
+    refine Submodule.smul_induction_on hx (fun r hr y hy => ?_) (fun a b ha hb => by rw [map_add (f := _), ha, hb, add_zero])
     rw [hI, RingHom.mem_ker] at hr
     clear hy
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul c m =>
       rw [TensorProduct.smul_tmul', smul_eq_mul, hφ, map_mul, hr, zero_mul, zero_smul]
-    | add a b ha hb => rw [smul_add, map_add, ha, hb, add_zero]
+    | add a b ha hb => rw [smul_add, map_add (f := _), ha, hb, add_zero]
   have h0 := hzero _ h
   rw [map_sub, hφ, hφ, map_one, one_smul, one_smul, sub_eq_zero, Submodule.mkQ_apply, Submodule.mkQ_apply,
     Submodule.Quotient.eq] at h0

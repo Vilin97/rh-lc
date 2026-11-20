@@ -33,7 +33,7 @@ def cForms (Λ : LevFam X.E X.K n SG) : Submodule ℂ (DecoSet X.E n ST SG → P
     intro F G hF hG d
     refine ⟨Submodule.add_mem _ (hF d).1 (hG d).1, fun g => ?_⟩
     simp only [Pi.add_apply]
-    rw [(hF d).2 g, (hG d).2 g, map_add, smul_add]
+    rw [(hF d).2 g, (hG d).2 g, map_add (f := _), smul_add]
   zero_mem' := fun d => ⟨Submodule.zero_mem _, fun g => by simp⟩
   smul_mem' := by
     intro r F hF d

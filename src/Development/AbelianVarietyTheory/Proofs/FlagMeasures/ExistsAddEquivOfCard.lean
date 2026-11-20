@@ -39,7 +39,7 @@ theorem exists_coords_of_card {R M : Type} [CommRing R] [AddCommGroup M] [Module
     rw [sub_smul, sub_eq_zero] at h1
     rw [h1, Nat.cast_smul_eq_nsmul, map_nsmul, ← Nat.cast_smul_eq_nsmul (ZMod p), ZMod.natCast_zmod_val]
   refine ⟨{ toFun := fun y => e (S.mkQ y)
-            map_add' := fun x y => by rw [map_add, map_add]
+            map_add' := fun x y => by rw [map_add (f := _), map_add (f := _)]
             map_smul' := fun a y => by rw [map_smul, hs] },
     e.surjective.comp S.mkQ_surjective, fun y => ?_⟩
   show e (S.mkQ y) = 0 ↔ _

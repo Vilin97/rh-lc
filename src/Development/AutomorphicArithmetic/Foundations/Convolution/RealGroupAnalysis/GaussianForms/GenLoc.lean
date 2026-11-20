@@ -29,7 +29,7 @@ theorem UpperTheory.ConvolutionTheory.R2.C.genLoc :
   obtain ⟨u, hu⟩ := hex
   obtain ⟨t, rfl⟩ := IsLocalRing.residue_surjective u
   refine ⟨t, fun p hp => ?_⟩
-  rw [← IsLocalRing.residue_ne_zero_iff_isUnit, map_add, map_mul]
+  rw [← IsLocalRing.residue_ne_zero_iff_isUnit, map_add (f := _), map_mul]
   intro h0
   by_cases hb : IsLocalRing.residue R p.2 = 0
   · rw [hb, zero_mul, add_zero] at h0

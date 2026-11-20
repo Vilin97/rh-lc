@@ -66,7 +66,7 @@ theorem padicTransportSeries_add (lam : Qbar →+* ℂ_[p]) {F G : ℂ → ℂ} 
     rw [taylorCoeff_add_entire hF.1 hG.1, ha, hb]; rfl
   refine ⟨⟨hF.1.add hG.1, fun n => e n ▸ Subtype.property _⟩, ?_⟩
   ext n
-  simp only [map_add, coeff_padicTransportSeries, e, ha, hb, lamC_coe]
+  simp only [map_add (f := _), coeff_padicTransportSeries, e, ha, hb, lamC_coe]
 
 theorem padicTransportSeries_mul (lam : Qbar →+* ℂ_[p]) {F G : ℂ → ℂ} (hF : AlgEnt F) (hG : AlgEnt G) :
     AlgEnt (fun z => F z * G z) ∧

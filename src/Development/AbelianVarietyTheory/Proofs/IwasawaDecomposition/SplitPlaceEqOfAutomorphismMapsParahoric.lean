@@ -45,7 +45,7 @@ theorem algHom_eq_or_conj {F : Type} [Field F] [Algebra L⁺ F] (φ ψ : L →�
     rw [← map_mul, ← map_mul]
     exact fix _ (by rw [map_mul, hyc]; ring)
   have fp : ∀ x : L, IsCMField.complexConj L (x + IsCMField.complexConj L x) = x + IsCMField.complexConj L x := by
-    intro x; rw [map_add, cc, add_comm]
+    intro x; rw [map_add (f := _), cc, add_comm]
   have fq : ∀ x : L, IsCMField.complexConj L ((x - IsCMField.complexConj L x) * y⁻¹) =
       (x - IsCMField.complexConj L x) * y⁻¹ := by
     intro x; rw [map_mul, map_inv₀, hyc, map_sub, cc]; ring_nf
@@ -56,7 +56,7 @@ theorem algHom_eq_or_conj {F : Type} [Field F] [Algebra L⁺ F] (φ ψ : L →�
     calc 2 * χ x = χ (2 * x) := by rw [map_mul, two]
       _ = χ ((x + IsCMField.complexConj L x) + ((x - IsCMField.complexConj L x) * y⁻¹) * y) := by
           congr 1; field_simp; ring
-      _ = _ := by rw [map_add, map_mul]
+      _ = _ := by rw [map_add (f := _), map_mul]
   have decc : ∀ (χ : L →ₐ[L⁺] F) (x : L), 2 * χ (IsCMField.complexConj L x) = χ (x + IsCMField.complexConj L x) -
       χ ((x - IsCMField.complexConj L x) * y⁻¹) * χ y := by
     intro χ x
@@ -85,7 +85,7 @@ theorem proj_conj {v : HeightOneSpectrum (𝓞 L⁺)} (i j : L →ₐ[L⁺] v.ad
   | zero => simp
   | tmul a b =>
     simp [SplitPlace.proj, conjAL, Algebra.TensorProduct.map_tmul, hij]
-  | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
 
 theorem loc_conj {v : HeightOneSpectrum (𝓞 L⁺)} (i j : L →ₐ[L⁺] v.adicCompletion L⁺)
     (hij : ∀ x, j x = i (IsCMField.complexConj L x)) {n : ℕ} (κ : GAf L n) (a b : Fin n) :

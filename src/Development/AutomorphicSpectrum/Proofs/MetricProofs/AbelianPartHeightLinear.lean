@@ -124,7 +124,7 @@ theorem iSup_eigSp_eq_top {E L V ι : Type} [Field E] [NumberField E] [Field L] 
   have hP : ∀ P : ℤ[X], (aeval (ρ θ) P) x = (aeval (σ s θ) P) • x := by
     intro P
     induction P using Polynomial.induction_on' with
-    | add p q hp hq => simp only [map_add, LinearMap.add_apply, hp, hq, add_smul]
+    | add p q hp hq => simp only [map_add (f := _), LinearMap.add_apply, hp, hq, add_smul]
     | monomial k a =>
       simp only [aeval_monomial, Module.End.mul_apply, hpow, eq_intCast, map_intCast]
       rw [Module.End.intCast_apply, mul_smul, Int.cast_smul_eq_zsmul]
@@ -187,7 +187,7 @@ theorem saturation_iSup_img (hcard : 2 * Fintype.card Ψ = Module.finrank ℚ E)
         exact A.Λ.add_mem (A.Λ.smul_mem _ hbx) (A.Λ.smul_mem _ hcy)
       have e : (⟨(b * c) • (x + y), h1⟩ : A.Λ) = c • ⟨b • x, hbx⟩ + b • ⟨c • y, hcy⟩ := Subtype.ext e0
       refine ⟨b * c, mul_ne_zero hb hc, h1, ?_⟩
-      rw [e, map_add, map_smul, map_smul]
+      rw [e, map_add (f := _), map_smul, map_smul]
       exact Submodule.add_mem _ (Submodule.smul_mem _ _ hfx) (Submodule.smul_mem _ _ hfy)
   rw [eq_top_iff]
   intro y _

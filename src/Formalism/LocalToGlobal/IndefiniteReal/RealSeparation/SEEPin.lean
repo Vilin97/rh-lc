@@ -27,7 +27,7 @@ def sEEcF {M : DSModel (D.sp.Y 0) S} (HE : HMod (MMap M)) {E : Submodule ℂ (MM
       apply Subtype.ext
       show HE.e (Tw.out x + Tw.out y) = HE.e (Tw.out x) + HE.e (Tw.out y)
       exact map_add _ _ _
-    rw [e1, map_add, smul_add]
+    rw [e1, map_add (f := _), smul_add]
     rfl
   map_smul' z x := by
     have e1 : (⟨HE.e (Tw.out (z • x)), hE _⟩ : E) = cj t z • ⟨HE.e (Tw.out x), hE _⟩ := by

@@ -38,7 +38,7 @@ lemma proj_fin {W : Submodule ℂ V} (hW : KStable act W) {ν : Ix p q → ℚ} 
     have := ih hF.2 ((((ν a : ℚ) : ℂ) - ((μ a : ℚ) : ℂ)) • y) (Submodule.smul_mem _ _ hy)
       (act (Eab a a) z2 - ((μ a : ℚ) : ℂ) • z2) (sub_mem h3 (Submodule.smul_mem _ _ h2)) (by
         convert W.sub_mem (hW _ (isKC_Eab (same_refl a)) _ h) (W.smul_mem ((μ a : ℚ) : ℂ) h) using 1
-        rw [map_add, map_add, mem_wt.1 hy, mem_wt.1 h1]
+        rw [map_add (f := _), map_add (f := _), mem_wt.1 hy, mem_wt.1 h1]
         module)
     exact (W.smul_mem_iff hc).1 this
 
@@ -361,7 +361,7 @@ lemma stable_sup {A B : Submodule ℂ V} (hA : KStable act A) (hB : KStable act 
     KStable act (A ⊔ B) := by
   intro Z hZ w hw
   obtain ⟨x, hx, y, hy, rfl⟩ := Submodule.mem_sup.1 hw
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Submodule.add_mem_sup (hA Z hZ x hx) (hB Z hZ y hy)
 
 lemma casK_hw (hL : IsKLieAct act) {μ : Ix p q → ℚ} {x : V} (hx : x ∈ hwSub act μ) :

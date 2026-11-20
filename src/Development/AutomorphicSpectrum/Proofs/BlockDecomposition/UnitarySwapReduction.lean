@@ -182,7 +182,7 @@ theorem swapStepU : PositivityTheory.SphericalProduct.SwapStepU := by
         rw [← Iadd _ _ (hAdm v g) (hAdm v' g)]
         congr 1
         funext x
-        simp [map_add]
+        simp [map_add (f := _)]
       map_smul' := fun c v => by
         refine Subtype.ext (funext fun g => ?_)
         show I (fun x => (f (c • v)).1 (s * u x * g)) = c * I _

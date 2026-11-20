@@ -37,7 +37,7 @@ theorem exists_schwartz_of_isSchwartzArch {θ : InfFam D} (hθ : IsInfFam θ) {m
   have hQ : ∀ Y τ i j, Q Y τ i j = θ τ (Y j i) := fun Y τ i j => hP _ _
   have hadd : ∀ X Y, Q (X + Y) = Q X + Q Y := fun X Y => by
     funext τ i j
-    simp only [hQ, Pi.add_apply, map_add]
+    simp only [hQ, Pi.add_apply, map_add (f := _)]
   let A : (D.what₂.Tau → Fin m → Fin r → ℂ) ≃+ (Fin N → ℝ) := (AddEquiv.mk' Q.toEquiv hadd).symm.trans e
   have hA : Continuous A := he.comp Q.symm.continuous
   have hA' : Continuous A.symm := Q.continuous.comp he'

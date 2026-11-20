@@ -17,7 +17,7 @@ theorem red_mem (p : O) (hp : Continuous (Lev.mk p)) (θ : Γ →* Oˣ) (a : Γ 
     (fun s => Lev.mk p (a s)) ∈ Z1 (Formalism.GaloisCohomology.scalRep (Lev p) θ) := by
   refine ⟨hp.comp ha, fun s t => ?_⟩
   have h := (Lev.mk_eq_zero p _).2 (hc s t)
-  rw [map_sub, sub_eq_zero, map_add, ← smul_eq_mul ((θ s : Oˣ) : O), map_smul] at h
+  rw [map_sub, sub_eq_zero, map_add (f := _), ← smul_eq_mul ((θ s : Oˣ) : O), map_smul] at h
   exact h
 
 omit [TopologicalSpace O] in

@@ -59,7 +59,7 @@ theorem hom_cmp {G H : GMod B R k} (hG : DirectSum.IsInternal G.gr)
     · subst hn
       rw [cmp_of_mem _ _ y.2, cmp_of_mem _ _ (hφ _ _ y.2)]
     · rw [cmp_of_mem_ne _ _ y.2 hn, cmp_of_mem_ne _ _ (hφ _ _ y.2) hn, map_zero]
-  | add a b ha hb => rw [map_add, cmp_add, cmp_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), cmp_add, cmp_add, map_add (f := _), ha, hb]
 
 theorem isHomSub_of_cmp (F : GMod B R k) (h : DirectSum.IsInternal F.gr) (N : Submodule R F.M)
     (hN : ∀ x ∈ N, ∀ m, cmp F h x m ∈ N) : F.IsHomSub N := by

@@ -136,7 +136,7 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.repEigCompl :
       obtain ⟨A, hA, ha⟩ := ha
       obtain ⟨B, hB, hb⟩ := hb
       refine ⟨A ⊓ B, inferInstance, fun S _ _ hS => ?_⟩
-      simp only [map_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), Finset.sum_add_distrib]
       rw [ha S (hS.trans inf_le_left), hb S (hS.trans inf_le_right), add_zero]
     | smul c a _ ha =>
       obtain ⟨A, hA, ha⟩ := ha

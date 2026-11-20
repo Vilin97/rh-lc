@@ -213,7 +213,7 @@ theorem UpperTheory.Gal.Ord.hasse :
     rw [hvτ, Category.assoc, hku c hc, MonObj.comp_one]
   have hvE : v ≫ o.act.act (algebraMap (𝓞 D.F) D.O π.ε) = v := by
     have e : o.act.act (algebraMap (𝓞 D.F) D.O π.ε) = o.act.act (algebraMap (𝓞 D.F) D.O (π.ε - 1)) * 𝟙 o.A := by
-      rw [← o.act.one, ← o.act.add, ← map_one (algebraMap (𝓞 D.F) D.O), ← map_add, sub_add_cancel]
+      rw [← o.act.one, ← o.act.add, ← map_one (algebraMap (𝓞 D.F) D.O), ← map_add (f := _), sub_add_cancel]
     rw [e, MonObj.comp_mul, hkill _ π.one, Category.comp_id, _root_.one_mul]
   have hlE : IsLieImage (hom o π.ε h₁) v := by
     have := hl₁.push (o.act.act (algebraMap (𝓞 D.F) D.O π.ε))

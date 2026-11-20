@@ -230,7 +230,7 @@ theorem main : ∀ (D : D7) (u u' : D.what₂.Word) (F0 : Fb D u) (Λ : LatV D),
         rw [map_sub, map_smul, F0.z_norm, hζ, smul_eq_mul]
         field_simp
         ring
-      rw [map_add, LinearMap.add_apply, h1, h2, add_zero]
+      rw [map_add (f := _), LinearMap.add_apply, h1, h2, add_zero]
     rw [← hW.1] at hperp
     obtain ⟨_, ⟨y, rfl⟩, x, hx, hyx⟩ := Submodule.mem_sup.1 hperp
     have hWp : ∀ (σ : (D.sp.X 0).V), ∀ v ∈ Xplus (lf D F0), (hS D).hT v (D.sp.iXY 0 σ) = 0 := fun σ =>
@@ -239,7 +239,7 @@ theorem main : ∀ (D : D7) (u u' : D.what₂.Word) (F0 : Fb D u) (Λ : LatV D),
     have hdec : om = x + D.sp.iXY 0 y + ζ • F0.z := by
       rw [add_comm x, hyx]; abel
     have hσom : ∀ σ, (hS D).hT (D.sp.iXY 0 σ) om = (D.sp.X 0).hT σ y := fun σ => by
-      rw [hdec, map_add, map_add, map_smul, hT_zero _ (hWp σ x (Submodule.mem_sup_left hx)),
+      rw [hdec, map_add (f := _), map_add (f := _), map_smul, hT_zero _ (hWp σ x (Submodule.mem_sup_left hx)),
         hT_zero _ (hWp σ _ hzp), hiso]
       simp
     have hyP : y ∈ perpE D P := by

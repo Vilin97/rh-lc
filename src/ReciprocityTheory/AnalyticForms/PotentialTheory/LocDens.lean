@@ -167,7 +167,7 @@ theorem re_star_dot_hessC {D : ℕ} (φ : (Fin D → ℂ) → ℝ) (z x : Fin D 
     unfold levi
     rw [← hH, hIw, hw]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_add, map_smul, ContinuousLinearMap.sum_apply,
+      simp only [map_sum, map_add (f := _), map_smul, ContinuousLinearMap.sum_apply,
       ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply, ContinuousLinearMap.coe_smul',
       Pi.smul_apply, smul_eq_mul]
     simp only [Finset.mul_sum, ← Finset.sum_add_distrib, Finset.sum_div]

@@ -132,7 +132,7 @@ private theorem sigR_smul' {F E : Type} [Field F] [Field E] [Algebra F E] (R : T
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [sigR, TensorProduct.smul_tmul']
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem UpperTheory.exists_compact_subgroup_character :
     ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) (n : ℕ) (J : Matrix (Fin n) (Fin n) E), J.det ≠ 0 →
@@ -151,9 +151,9 @@ theorem UpperTheory.exists_compact_subgroup_character :
   choose τ hτ using hσ
   let B : (Fin n → Fv F v ⊗[F] E) →ₗ[Fv F v] (Fin n → Fv F v ⊗[F] E) →ₗ[Fv F v] Fv F v :=
     LinearMap.mk₂ (Fv F v) (fun x y => Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (pairV σ J v x y))
-      (fun x x' y => by rw [pairV, pairV, pairV, add_dotProduct, map_add])
+      (fun x x' y => by rw [pairV, pairV, pairV, add_dotProduct, map_add (f := _)])
       (fun r x y => by rw [pairV, pairV, smul_dotProduct, map_smul])
-      (fun x y y' => by rw [pairV_add_right, map_add])
+      (fun x y y' => by rw [pairV_add_right, map_add (f := _)])
       (fun r x y => by
         have e : (fun i => sigR (Fv F v) σ ((r • y) i)) = r • fun i => sigR (Fv F v) σ (y i) :=
           funext fun i => sigR_smul' _ σ r (y i)

@@ -182,7 +182,7 @@ variable {R σ J}
 
 theorem hR_add_left (x x' y : Fin n → R ⊗[F] E) :
     hR R σ J (x + x') y = hR R σ J x y + hR R σ J x' y := by
-  simp only [hR, Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hR, Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hR_smul_left (c : R ⊗[F] E) (x y : Fin n → R ⊗[F] E) :
     hR R σ J (c • x) y = sigR R σ c * hR R σ J x y := by

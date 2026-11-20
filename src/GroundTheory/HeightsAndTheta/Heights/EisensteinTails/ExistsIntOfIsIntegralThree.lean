@@ -128,9 +128,9 @@ theorem fibrePi_conjMap (σ : K' →+* ℂ) {ι : Type*} [Fintype ι] [Decidable
   | zero => funext c; simp only [map_zero, Pi.zero_apply]
   | tmul z v => rfl
   | add x y hx hy =>
-    rw [map_add, map_add, hx, hy, map_add]
+    rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]
     funext c
-    simp only [Pi.add_apply, map_add]
+    simp only [Pi.add_apply, map_add (f := _)]
 
 instance projective_pi {R : Type*} [CommRing R] {ι : Type*} [Fintype ι] [DecidableEq ι]
     {E : ι → Type*} [∀ c, AddCommGroup (E c)] [∀ c, Module R (E c)]
@@ -446,7 +446,7 @@ theorem exists_int_of_isIntegral_three {a b : ℚ}
     have e : (a : ℂ) - (b : ℂ) * sqrtNeg 3 =
         (starRingEnd ℂ).toIntAlgHom ((a : ℂ) + (b : ℂ) * sqrtNeg 3) := by
       change _ = starRingEnd ℂ ((a : ℂ) + (b : ℂ) * sqrtNeg 3)
-      rw [map_add, map_mul, hconj, map_ratCast, map_ratCast]
+      rw [map_add (f := _), map_mul, hconj, map_ratCast, map_ratCast]
       ring
     rw [e]
     exact h.map _
@@ -513,7 +513,7 @@ theorem image_one_three :
   · rintro ⟨m, n, rfl⟩
     refine ⟨algebraMap (𝓞 (K 3)) (K 3) ((m : 𝓞 (K 3)) + (n : 𝓞 (K 3)) * omegaO),
       SetLike.mem_coe.2 ((FractionalIdeal.mem_one_iff _).2 ⟨_, rfl⟩), ?_⟩
-    simp only [map_add, map_mul, map_intCast, one_mul]
+    simp only [map_add (f := _), map_mul, map_intCast, one_mul]
     rfl
 
 theorem isTauOf_three : IsTauOf 3 1 omegaH :=

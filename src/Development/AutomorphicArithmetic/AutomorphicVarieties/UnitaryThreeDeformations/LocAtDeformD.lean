@@ -187,9 +187,9 @@ private theorem condD_of (η : D →* ℤˣ) (Ψ : D →* Oˣ) (I : Subgroup D) 
         = (o * psi Ψ b g + oy a b * psi Ψ b g - psi Ψ a g * oy a b) • f := by
       rw [hDd]
       simp only [Matrix.sub_apply, Matrix.add_apply, Matrix.mul_diagonal, Matrix.diagonal_mul, hγo, hNab]
-      simp only [Algebra.smul_def, map_add, map_sub, map_mul]
+      simp only [Algebra.smul_def, map_add (f := _), map_sub, map_mul]
       ring
-    rw [Matrix.add_apply, e, smul_f hf (by simp only [map_add, map_sub, map_mul, ho, hoy]; exact h1 g hg a b hab),
+    rw [Matrix.add_apply, e, smul_f hf (by simp only [map_add (f := _), map_sub, map_mul, ho, hoy]; exact h1 g hg a b hab),
       add_zero]
   refine ⟨h * U, ?_, ⟨?_, ?_⟩, ?_⟩
   · show EntIn (maximalIdeal R) (((h * U : GL (Fin 3) R) : Matrix (Fin 3) (Fin 3) R) - 1)

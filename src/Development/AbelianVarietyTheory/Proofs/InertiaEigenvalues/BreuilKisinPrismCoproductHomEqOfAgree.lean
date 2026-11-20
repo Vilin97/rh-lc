@@ -28,7 +28,7 @@ theorem envExt_agree : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (
   have hw : F En.w = F' En.w := by
     have h1 := congrArg F En.w_eq
     have h2 := congrArg F' En.w_eq
-    rw [map_add, map_mul] at h1 h2
+    rw [map_add (f := _), map_mul] at h1 h2
     have h3 : F (En.inl.f d) * F En.w = F (En.inl.f d) * F' En.w := by
       rw [hb d] at h1 ⊢
       rw [hb p] at h1
@@ -41,7 +41,7 @@ theorem envExt_agree : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K) (
     intro a ha
     have e1 := hF a
     have e2 := hF' a
-    rw [En.Q.D.φ_eq, map_add, map_mul, map_pow, map_natCast] at e1 e2
+    rw [En.Q.D.φ_eq, map_add (f := _), map_mul, map_pow, map_natCast] at e1 e2
     rw [← ha] at e2
     have : ((l : ℕ) : C) * (F (En.Q.D.δ a) - F' (En.Q.D.δ a)) = 0 := by
       linear_combination e1 - e2

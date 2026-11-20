@@ -33,7 +33,7 @@ theorem goal1 :
       right_inv := by
         rintro ⟨⟨a, ha'⟩, ⟨b, hb'⟩⟩
         have h1 : (a + b * θ - τ (a + b * θ)) / (θ - τ θ) = b := by
-          rw [map_add, map_mul, ha', hb', div_eq_iff hθ]; ring
+          rw [map_add (f := _), map_mul, ha', hb', div_eq_iff hθ]; ring
         refine Prod.ext (Subtype.ext ?_) (Subtype.ext ?_)
         · show a + b * θ - (a + b * θ - τ (a + b * θ)) / (θ - τ θ) * θ = a
           rw [h1]; ring

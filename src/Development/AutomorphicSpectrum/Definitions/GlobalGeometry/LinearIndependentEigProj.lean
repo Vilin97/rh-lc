@@ -402,7 +402,7 @@ theorem isFreeOn_latH (A : Subring Ω) (hA : ∀ a, chi σ a ∈ A) (h2 : Module
 theorem eigProj_actH (hω : ω - bar ω ≠ 0) (y : Ω × Module.Dual Ω Ω) :
     HT.eigProj (actH σ bar) σ y = (y.1, 0) := by
   have e : y = (y.1, 0) + (0, y.2) := by simp
-  conv_lhs => rw [e, map_add]
+  conv_lhs => rw [e, map_add (f := _)]
   rw [HT.LatBasic.eigProj_of_mem (x := (y.1, 0)) (HT.LatBasic.mem_eigSp.2 fun a => by simp [actH_apply, chi]),
     HT.LatBasic.eigProj_of_eigenSub_ne (χ := (chi σ).comp bar.toRingHom) (x := (0, y.2)) ?_
       (GlobalTheory.EigenSplit.mem_eigenSub.2 fun a => by simp [actH_apply]), add_zero]
@@ -598,7 +598,7 @@ theorem exists_i : ∃ ω : 𝓞 Ki, ω - cj ω = 2 * ω ∧ ω ≠ 0 ∧ ∀ a,
     induction ha using Algebra.adjoin_induction with
     | mem x hx => rw [Set.mem_singleton_iff.1 hx]
     | algebraMap r => simp
-    | add x y _ _ hx hy => rw [map_add, add_sub_add_comm]; exact dvd_add hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), add_sub_add_comm]; exact dvd_add hx hy
     | mul x y _ _ hx hy =>
       rw [map_mul, show x * y - cj x * cj y = (x - cj x) * y + cj x * (y - cj y) by ring]
       exact dvd_add (hx.mul_right _) (hy.mul_left _)
@@ -692,7 +692,7 @@ theorem exists_line (o : Type) [CommRing o] [IsDomain o] [Algebra Ki o] (k : Typ
         rw [← MvPolynomial.algebraMap_eq, ← IsScalarTower.algebraMap_apply]
         exact Subalgebra.algebraMap_mem _ r
       | add p q hp hq =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_mem hp hq
       | mul_X p i hp =>
         rw [map_mul]

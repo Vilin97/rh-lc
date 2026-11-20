@@ -33,7 +33,7 @@ def QMor.o (m : QMor Φ Φ' c) (b : IdF Φ'.A) (h : ∀ T, c.S T ≤ b.S T) :
         exact Ideal.mem_map_of_mem _ trivial⟩
       map_add' := fun x y => Subtype.ext (by
         change Ideal.Quotient.factor (h T) (m.ρ T ((show Φ.A.obj _ from x) + (show Φ.A.obj _ from y))) = _
-        rw [map_add, map_add]; rfl)
+        rw [map_add (f := _), map_add (f := _)]; rfl)
       map_smul' := fun r x => Subtype.ext (by
         change Ideal.Quotient.factorₐ R (h T) (m.ρ T (r • (show Φ.A.obj _ from x))) = r • Ideal.Quotient.factorₐ R (h T) (m.ρ T x)
         rw [map_smul, map_smul]) }

@@ -294,7 +294,7 @@ theorem t_ReduceToBoxes : ReduceToBoxes := by
         exact h'.1 (sg' a, Y' a) (by rw [List.mem_ofFn]; exact ⟨a, rfl⟩)
       rw [Finset.prod_congr rfl (fun a _ => this a), Finset.prod_mul_distrib, Finset.prod_const, Finset.card_univ,
         Fintype.card_fin]
-      simp only [Q₀, map_mul, MvPolynomial.eval_C, map_prod, map_add, MvPolynomial.eval_X, Sys.P]
+      simp only [Q₀, map_mul, MvPolynomial.eval_C, map_prod, map_add (f := _), MvPolynomial.eval_X, Sys.P]
       ring
     let n := S.k + 2 * S.r + 1
     let lo : Fin N → ℝ := fun a => S.α + (S.β - S.α) / 3 + 2 * ((N - 1 - (a : ℕ) : ℕ) : ℝ) * S.L

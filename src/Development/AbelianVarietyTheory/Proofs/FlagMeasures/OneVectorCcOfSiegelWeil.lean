@@ -102,7 +102,7 @@ private theorem exists_witt_eq_teich_add_p_teich_frob_symm_add_p_sq_mul (h : IsC
     intro s t hst
     rw [Algebra.smul_def, Algebra.smul_def, mul_one] at hst
     have h2 := congrArg σ hst
-    simp only [map_add, map_mul, AlgHom.commutes, map_sub, sigma_sigma h, map_zero] at h2
+    simp only [map_add (f := _), map_mul, AlgHom.commutes, map_sub, sigma_sigma h, map_zero] at h2
     have h3 : (2 : E) * algebraMap F E t * (y - σ y) = 0 := by linear_combination hst - h2
     have ht : algebraMap F E t = 0 := by
       rcases mul_eq_zero.mp h3 with h4 | h4
@@ -133,10 +133,10 @@ theorem add_sigma (h : IsCMExt F E σ) (x : E) : x + σ x = algebraMap F E (Alge
     simpa using h2
   obtain ⟨a, b, rfl⟩ := hdec x
   have e1 : σ (algebraMap F E a + algebraMap F E b * w) = algebraMap F E a - algebraMap F E b * w := by
-    rw [map_add, map_mul, AlgHom.commutes, AlgHom.commutes, hw]
+    rw [map_add (f := _), map_mul, AlgHom.commutes, AlgHom.commutes, hw]
     ring
   have e2 : Algebra.trace F E (algebraMap F E a + algebraMap F E b * w) = 2 * a := by
-    rw [map_add, ← Algebra.smul_def, map_smul, htw, smul_zero, add_zero, Algebra.trace_algebraMap, h.2.2.1, nsmul_eq_mul,
+    rw [map_add (f := _), ← Algebra.smul_def, map_smul, htw, smul_zero, add_zero, Algebra.trace_algebraMap, h.2.2.1, nsmul_eq_mul,
       Nat.cast_ofNat]
   rw [e1, e2, map_mul, map_ofNat]
   ring
@@ -154,7 +154,7 @@ theorem trace_tmul (r : R) (x : E) :
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a y => simp [Algebra.TensorProduct.tmul_mul_tmul]
-    | add p q hp hq => rw [map_add, map_add, hp, hq]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq]
   rw [hl, LinearMap.trace_baseChange]
 
 theorem add_sigR (h : IsCMExt F E σ) (z : R ⊗[F] E) :
@@ -167,13 +167,13 @@ theorem add_sigR (h : IsCMExt F E σ) (z : R ⊗[F] E) :
     rw [hs, ← TensorProduct.tmul_add, add_sigma h, Algebra.TensorProduct.algebraMap_apply,
       Algebra.algebraMap_self_apply, Algebra.algebraMap_eq_smul_one (A := E),
       ← TensorProduct.smul_tmul, Algebra.smul_def, mul_comm]
-  | add p q hp hq => rw [map_add, map_add, map_add, ← hp, ← hq]; abel
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), ← hp, ← hq]; abel
 
 theorem sigR_sigR (h : IsCMExt F E σ) (z : R ⊗[F] E) : sigR R σ (sigR R σ z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r x => simp [sigR, sigma_sigma h]
-  | add p q hp hq => rw [map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq]
 
 theorem sigR_algebraMap (t : R) : sigR R σ (algebraMap R (R ⊗[F] E) t) = algebraMap R (R ⊗[F] E) t := by
   rw [Algebra.TensorProduct.algebraMap_apply, Algebra.algebraMap_self_apply]

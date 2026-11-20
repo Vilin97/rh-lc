@@ -95,7 +95,7 @@ theorem smul_mem_of_idS {𝔪 : Ideal (𝓞 D.host.E)} (h𝔪 : ∀ r ∈ 𝔪, 
     | add x y _ _ hx hy =>
       obtain ⟨a, ha, ha'⟩ := hx
       obtain ⟨c, hc, hc'⟩ := hy
-      exact ⟨a + c, by rw [RingHom.map_add, ha, hc, Subring.coe_add], by rw [add_smul]; exact add_mem ha' hc'⟩
+      exact ⟨a + c, by rw [RingHom.map_add (f := _), ha, hc, Subring.coe_add], by rw [add_smul]; exact add_mem ha' hc'⟩
     | smul c x _ hx =>
       obtain ⟨a, ha, ha'⟩ := hx
       obtain ⟨c', hc, hc'⟩ := exists_lift_int c

@@ -52,7 +52,7 @@ private theorem tors_le (hF : F.Ok) (a : O) (j : OQ a →ₗ[O] M) (hj : Functio
           rw [show j ∘ y = _ from funext hy]
           exact z₀.2.1.sub (hc.sub continuous_const)
         exact (((IsLocallyConstant.iff_continuous _).2 h1).desc _ _ hj).continuous
-      · rw [map_add, he, hy, hy, hy, z₀.2.2, map_mul, Module.End.mul_apply, map_sub, map_sub]
+      · rw [map_add (f := _), he, hy, hy, hy, z₀.2.2, map_mul, Module.End.mul_apply, map_sub, map_sub]
         abel
     have hloc : ∀ v, ∃ m, ∀ g : F.D v, j (y (F.loc v g)) = ρ (F.loc v g) m - m := fun v => by
       obtain ⟨m, hm⟩ := hP z₀ hx v

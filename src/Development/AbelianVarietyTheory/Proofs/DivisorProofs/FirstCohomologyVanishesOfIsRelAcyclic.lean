@@ -214,7 +214,7 @@ theorem firstCohomologyVanishes_of_isRelAcyclic (R : Type) [CommRing R] (X : Sch
     have hb : O ≤ M.U (c b) := h₂.trans (inf_le_left.trans (hV b))
     apply (SecOn.chart hM (c a) ha).injective
     have e := congrArg (rs X (le_inf h₁ (h₂.trans inf_le_right) : O ≤ V a ⊓ V b ⊓ V d)) (hφ a b d)
-    simp only [map_add, map_mul, rs_rs] at e
+    simp only [map_add (f := _), map_mul, rs_rs] at e
     refine ((SecOn.chart hM (c a) ha).map_add _ _).trans ?_
     refine Eq.trans ?_ (e.trans (hch a d O h₃).symm)
     exact congrArg₂ (· + ·) (hch a b O h₁) ((SecOn.chart_change hM (c a) (c b) ha hb _).trans

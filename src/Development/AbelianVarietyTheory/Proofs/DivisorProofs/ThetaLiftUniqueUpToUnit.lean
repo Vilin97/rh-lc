@@ -64,7 +64,7 @@ theorem exists_invForm (hω : IsWeilDatumO ψ V W χV χW ω) :
   refine ⟨LinearMap.mk₂'ₛₗ (starRingEnd ℂ) (RingHom.id ℂ) (fun x y => ∫ w in 𝓕, y.1 w * conj (x.1 w) ∂μ)
     (fun x x' y => ?_) (fun a x y => ?_) (fun x y y' => ?_) (fun a x y => ?_),
     fun x y => ?_, fun x => ?_, fun x h0 => ?_, fun p x y x' y' hx hy => ?_⟩
-  · simp only [Submodule.coe_add, Pi.add_apply, map_add, mul_add]
+  · simp only [Submodule.coe_add, Pi.add_apply, map_add (f := _), mul_add]
     exact integral_add (hI y x) (hI y x')
   · simp only [Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, map_mul, mul_left_comm _ (conj a)]
     exact integral_const_mul _ _

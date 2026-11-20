@@ -59,7 +59,7 @@ private theorem valBound_embedding_mem_mul_lemma_2 {l : ℕ} [Fact l.Prime] {lam
           (_root_.GlobalTheory.DiffSize.sz_invDiff l lam F _ i (hdual α hα)) (h𝔟 β hβ i)
       · intro y z hy hz
         show _root_.GlobalTheory.LatVal.Sz l lam _ _
-        rw [mul_add, map_add, Complex.ofReal_add]
+        rw [mul_add, map_add (f := _), Complex.ofReal_add]
         exact ((_root_.GlobalTheory.QFam.SzSum.sz_ring l lam).2.1 _ _ _ hy hz).1
     exact hmul
   have hl0 : l ≠ 0 := (Fact.out : l.Prime).ne_zero

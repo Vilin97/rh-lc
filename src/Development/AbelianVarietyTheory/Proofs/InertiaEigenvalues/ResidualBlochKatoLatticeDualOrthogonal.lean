@@ -27,7 +27,7 @@ def leftPerp (y : Γ → M') : Submodule k (Γ → M) where
   add_mem' := by
     rintro x x' ⟨f, hf, e⟩ ⟨f', hf', e'⟩
     refine ⟨f + f', hf.add hf', fun g h => ?_⟩
-    simp only [Pi.add_apply, map_add, LinearMap.add_apply, e, e']
+    simp only [Pi.add_apply, map_add (f := _), LinearMap.add_apply, e, e']
     ring
   smul_mem' := by
     rintro c x ⟨f, hf, e⟩
@@ -41,7 +41,7 @@ def rightPerp (x : Γ → M) : Submodule k (Γ → M') where
   add_mem' := by
     rintro y y' ⟨f, hf, e⟩ ⟨f', hf', e'⟩
     refine ⟨f + f', hf.add hf', fun g h => ?_⟩
-    simp only [Pi.add_apply, map_add, e, e']
+    simp only [Pi.add_apply, map_add (f := _), e, e']
     ring
   smul_mem' := by
     rintro c y ⟨f, hf, e⟩
@@ -58,7 +58,7 @@ theorem cupCob_of_left_coboundary (hP : ∀ g x y, P (ρ g x) (ρ' g y) = χ g *
     {y : Γ → M'} (hy : y ∈ Z1 ρ') : CupCob χ ρ' P x y := by
   obtain ⟨m, hm⟩ := (mem_coboundaries1 _ _).1 hx
   refine ⟨fun g => P m (y g), ((IsLocallyConstant.iff_continuous _).2 hy.1).comp _, fun g h => ?_⟩
-  simp only [hm, hy.2, map_sub, map_add, LinearMap.sub_apply, hP]
+  simp only [hm, hy.2, map_sub, map_add (f := _), LinearMap.sub_apply, hP]
   ring
 
 theorem cupCob_of_right_coboundary (hP : ∀ g x y, P (ρ g x) (ρ' g y) = χ g * P x y) (hρ' : ContAction ρ')
@@ -67,7 +67,7 @@ theorem cupCob_of_right_coboundary (hP : ∀ g x y, P (ρ g x) (ρ' g y) = χ g 
   have h1 : Continuous fun g => ρ' g m := hρ'.comp (f := fun g : Γ => (g, m)) (by fun_prop)
   refine ⟨fun g => -P (x g) (ρ' g m), (((IsLocallyConstant.iff_continuous _).2 hx.1).prodMk
     ((IsLocallyConstant.iff_continuous _).2 h1)).comp fun p => -P p.1 p.2, fun g h => ?_⟩
-  simp only [hm, hx.2, map_sub, map_add, map_mul, LinearMap.add_apply, Module.End.mul_apply, hP]
+  simp only [hm, hx.2, map_sub, map_add (f := _), map_mul, LinearMap.add_apply, Module.End.mul_apply, hP]
   ring
 
 theorem cupCob_of_span (hP : ∀ g x y, P (ρ g x) (ρ' g y) = χ g * P x y) (hρ' : ContAction ρ')
@@ -195,7 +195,7 @@ theorem bkOn_orthogonal : LocalTateDuality → ∀ (D : Formalism.BasicNotions.D
   have hπ : ∀ a, π (IsLocalRing.residue (X.O0 i) a) = algebraMap (X.O0 i) K a := fun a => rfl
   refine ⟨fun g => b * b' * π (c g), hc.comp fun t => b * b' * π t, fun g h => ?_⟩
   have e1 := congrArg π (ec g h)
-  rw [hπ, map_add, map_sub, Algebra.smul_def, map_mul] at e1
+  rw [hπ, map_add (f := _), map_sub, Algebra.smul_def, map_mul] at e1
   have e2 : π (algebraMap (X.O0 i) _ (algebraMap ℤ_[X.l i] (X.O0 i)
       ((cycZ D.host.E N.Om (X.l i) g.1 : ℤ_[X.l i]ˣ) : ℤ_[X.l i]))) =
       algebraMap (X.O0 i) K ((eps0 X i g.1 : (X.O0 i)ˣ) : X.O0 i) := rfl

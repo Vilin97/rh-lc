@@ -50,7 +50,7 @@ theorem pure_lin {ι X : Type} {A : ι → (X → ℂ) → (X → ℂ)} {P : (X 
     unfold opPow
     rw [foldr_lin hA hl a hf hf', smul_add, smul_comm c a]
   | add p q hp hq =>
-    rw [map_add, map_add, map_add, hp, hq, smul_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq, smul_add]
     abel
 
 theorem polar {Y : Type} [AddCommGroup Y] [Module ℂ Y] {vac : Y → Prop}
@@ -255,7 +255,7 @@ theorem coef_at_place : ∀ (D : D7) (V W : HSp D) (S S' : D.what₂.Tau → SPa
   have h1 : ∀ (a : ℂ) x y z, vac x → vac y → vac z → E (a • x + y) z = a * E x z + E y z := by
     intro a x y z hx hy hz
     simp only [E, pt]
-    rw [ptAt_lin hψ hθ _ _ _ _ _ a hx.1 hy.1, map_add, map_smul]
+    rw [ptAt_lin hψ hθ _ _ _ _ _ a hx.1 hy.1, map_add (f := _), map_smul]
     simp only [GlobalTheory.ThetaL2InnerProduct.ipTh_eq]
     rw [GlobalTheory.Size.ipO_add_left hψ hμ h𝓕 (GlobalTheory.OrientedHeis.theta_smul a (th x z hx hz).1) (th y z hy hz).1
         (th x z hx hz).2, GlobalTheory.Size.ipO_smul_left,

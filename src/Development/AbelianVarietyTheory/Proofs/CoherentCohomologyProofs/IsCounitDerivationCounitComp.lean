@@ -44,14 +44,14 @@ theorem contrRight_mul {φ : H →ₗ[k] k} (hφ : IsCounitDerivation φ) (s t :
 
   induction s using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [add_mul, map_add, hx, hy]; ring
+  | add x y hx hy => simp only [add_mul, map_add (f := _), hx, hy]; ring
   | tmul a b =>
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [mul_add, map_add, hx, hy]; ring
+    | add x y hx hy => simp only [mul_add, map_add (f := _), hx, hy]; ring
     | tmul c d =>
       rw [Algebra.TensorProduct.tmul_mul_tmul]
-      simp only [contrRight_tmul, hφ b d, Algebra.smul_def, map_add, map_mul]
+      simp only [contrRight_tmul, hφ b d, Algebra.smul_def, map_add (f := _), map_mul]
       ring
 
 theorem contrLeft_mul {φ : H →ₗ[k] k} (hφ : IsCounitDerivation φ) (s t : H ⊗[k] H) :
@@ -60,14 +60,14 @@ theorem contrLeft_mul {φ : H →ₗ[k] k} (hφ : IsCounitDerivation φ) (s t : 
         contrLeft (Coalgebra.counit (R := k)) t * contrLeft φ s := by
   induction s using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [add_mul, map_add, hx, hy]; ring
+  | add x y hx hy => simp only [add_mul, map_add (f := _), hx, hy]; ring
   | tmul a b =>
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [mul_add, map_add, hx, hy]; ring
+    | add x y hx hy => simp only [mul_add, map_add (f := _), hx, hy]; ring
     | tmul c d =>
       rw [Algebra.TensorProduct.tmul_mul_tmul]
-      simp only [contrLeft_tmul, hφ a c, Algebra.smul_def, map_add, map_mul]
+      simp only [contrLeft_tmul, hφ a c, Algebra.smul_def, map_add (f := _), map_mul]
       ring
 
 theorem contrRight_one (φ : H →ₗ[k] k) : contrRight φ 1 = φ 1 • (1 : H) := by
@@ -82,7 +82,7 @@ theorem counit_contrRight (φ : H →ₗ[k] k) (s : H ⊗[k] H) :
   induction s using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [mul_comm]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem counit_contrLeft (φ : H →ₗ[k] k) (s : H ⊗[k] H) :
     Coalgebra.counit (R := k) (contrLeft φ s) =
@@ -90,7 +90,7 @@ theorem counit_contrLeft (φ : H →ₗ[k] k) (s : H ⊗[k] H) :
   induction s using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [mul_comm]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 section Ring
 

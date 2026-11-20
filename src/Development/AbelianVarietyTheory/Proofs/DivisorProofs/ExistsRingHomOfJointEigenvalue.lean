@@ -22,7 +22,7 @@ theorem jointEigen_ringHom_toIntegers (C : Type) [Field C] (v : Valuation C NNRe
   have canc : ∀ c d : C, c • x = d • x → c = d := fun c d hcd => smul_left_injective C hx0 hcd
   have h1 : χ 1 = 1 := canc _ _ (by rw [← hE, map_one, Matrix.one_mulVec, one_smul])
   have hadd : ∀ a b, χ (a + b) = χ a + χ b := fun a b =>
-    canc _ _ (by rw [← hE, map_add, Matrix.add_mulVec, hE, hE, add_smul])
+    canc _ _ (by rw [← hE, map_add (f := _), Matrix.add_mulVec, hE, hE, add_smul])
   have hmul : ∀ a b, χ (a * b) = χ a * χ b := fun a b =>
     canc _ _ (by rw [← hE, map_mul, ← Matrix.mulVec_mulVec, hE, Matrix.mulVec_smul, hE, smul_smul, mul_comm])
   have h0 : χ 0 = 0 := canc _ _ (by rw [← hE, map_zero, Matrix.zero_mulVec, zero_smul])
@@ -60,6 +60,6 @@ theorem jointEigen_ringHom_toIntegers (C : Type) [Field C] (v : Valuation C NNRe
   · exact hv.hom_inj (by rw [hσf, h1, map_one])
   · intro a b; exact hv.hom_inj (by rw [hσf, map_mul, hσf, hσf, hmul])
   · exact hv.hom_inj (by rw [hσf, h0, map_zero])
-  · intro a b; exact hv.hom_inj (by rw [hσf, map_add, hσf, hσf, hadd])
+  · intro a b; exact hv.hom_inj (by rw [hσf, map_add (f := _), hσf, hσf, hadd])
 
 end GlobalTheory

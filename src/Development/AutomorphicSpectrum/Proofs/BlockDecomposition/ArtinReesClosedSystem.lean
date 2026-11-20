@@ -177,7 +177,7 @@ lemma map_pow_le (hE : E.IsQuasicoherent) {D : Subobject E} (hD : QC D) (n : ℕ
     rw [Scheme.Modules.Hom.app_smul]
     exact Submodule.smul_mem_smul hr trivial
   · intro a b ha hb
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem ha hb
 
 variable {I} {S : ℕ → Subobject E}

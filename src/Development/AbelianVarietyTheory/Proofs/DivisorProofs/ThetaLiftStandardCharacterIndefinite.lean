@@ -66,7 +66,7 @@ theorem continuous_cAF (σ : E →ₐ[F] E) : Continuous (cAF σ) := by
         (a ⊗ₜ[F] b) = Algebra.TensorProduct.map (AlgHom.id F (AF F)) σ (a ⊗ₜ[F] b)
       rw [TensorProduct.AlgebraTensorModule.map_tmul, Algebra.TensorProduct.map_tmul]
       rfl
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   rw [e] at h
   exact h
 
@@ -154,10 +154,10 @@ def realCh (nS nT : ℕ) : (Fin nT × Fin nS × Fin (Module.finrank F E) → mix
     show (crd F E).symm (fun l => pairA F ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (x (i, j, l) + y (i, j, l))) 0) =
       (crd F E).symm (fun l => pairA F ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (x (i, j, l))) 0) +
       (crd F E).symm (fun l => pairA F ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (y (i, j, l))) 0)
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     funext l
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Prod.ext rfl (add_zero (0 : Af F)).symm
 
 variable (F E) in

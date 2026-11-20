@@ -323,7 +323,7 @@ theorem IsCompleteCurve.interNumRed_of_cls_eq_add (hZ : IsCompleteCurve k Z) (hH
   rw [interNumRed_one_eq hN, interNumRed_one_eq hA, interNumRed_one_eq hB]
   exact interNum_one_of_cls_eq_add (hH.pull_of_isClosedImmersion (redι Z))
     ((topologicalKrullDim_red Z).trans hZ.2) (LB.isLB_pull hN _) (LB.isLB_pull hA _)
-    (LB.isLB_pull hB _) (by rw [cls_pull hN, cls_pull hA, cls_pull hB, e, map_add])
+    (LB.isLB_pull hB _) (by rw [cls_pull hN, cls_pull hA, cls_pull hB, e, map_add (f := _)])
 
 theorem interNumRed_one_eq_zero (hL : L.IsLB) (e : cls L hL = 0) (Z : Closeds X) :
     interNumRed k Z ![L] = 0 :=

@@ -27,7 +27,7 @@ theorem equivFinsuppOfBasisRight_rTensor {K M N N' ι : Type*} [Field K] [AddCom
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul m n => simp [TensorProduct.equivFinsuppOfBasisRight_apply_tmul_apply]
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 theorem rTensor_eq_zero {K M N P Q ι : Type*} [Field K] [AddCommGroup M] [Module K M]
     [AddCommGroup N] [Module K N] [AddCommGroup P] [Module K P] [AddCommGroup Q] [Module K Q]
@@ -57,12 +57,12 @@ theorem AE_eq_zero (D : D7) (x : Formalism.L2.Theta.AE D) (h1 : Formalism.L2.The
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul m n => rfl
-    | add x y hx hy => rw [LinearMap.map_add, RingHom.map_add, hx, hy]
+    | add x y hx hy => rw [LinearMap.map_add (f := _), RingHom.map_add (f := _), hx, hy]
   · rw [← h2]; clear h1 h2
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul m n => rfl
-    | add x y hx hy => rw [LinearMap.map_add, RingHom.map_add, hx, hy]
+    | add x y hx hy => rw [LinearMap.map_add (f := _), RingHom.map_add (f := _), hx, hy]
 
 set_option maxHeartbeats 2000000 in
 

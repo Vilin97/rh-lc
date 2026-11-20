@@ -23,7 +23,7 @@ theorem invDer_coeff_eq_zero_of_degree_lt :
   rw [(coeff_subst_restrict_sum (pderiv R (Sum.inr i) (subst μ F))).1 α, coeff_pderiv]
   have h := coeff_subst_eq_zero_of_degree_lt R (Fin d) (Fin d ⊕ Fin d) μ F (r + 1) hμ hF
     (α.mapDomain Sum.inl + Finsupp.single (Sum.inr i) 1) (by
-      rw [map_add, Finsupp.degree_mapDomain, Finsupp.degree_single]; omega)
+      rw [map_add (f := _), Finsupp.degree_mapDomain, Finsupp.degree_single]; omega)
   rw [h, zero_mul, smul_zero]
 
 end GlobalTheory

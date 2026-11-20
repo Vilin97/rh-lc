@@ -173,7 +173,7 @@ theorem exists_notMem : ∀ (O M : Type) [CommRing O] [IsDedekindDomain O] [AddC
     have a3 := P.add_mem (P.mul_mem_left ρ a1) a2
     have e : ρ * (h (x + y) (x + y) - h x x - h y y) +
         (h (ρ • x + y) (ρ • x + y) - h (ρ • x) (ρ • x) - h y y) = 2 * ρ * h x y := by
-      simp only [map_add, map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hρ, RingHom.id_apply]
+      simp only [map_add (f := _), map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hρ, RingHom.id_apply]
       ring
     rw [e] at a3
     exact (hP.isPrime.mem_or_mem a3).resolve_left h2ρ
@@ -237,7 +237,7 @@ theorem exists_isCoprime : ∀ (O M : Type) [CommRing O] [IsDedekindDomain O] [A
         simp only [map_mul, map_sub, map_one, hσ, hσc]
         ring
       have e : h (c • f + b • g) (c • f + b • g) = c * c * c + b * (c * (h f g + h g f)) + b * b * h g g := by
-        simp only [map_add, map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hσc, hσb,
+        simp only [map_add (f := _), map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hσc, hσb,
           RingHom.id_apply, ← hcdef]
         ring
       refine ⟨c • f + b • g, W.add_mem (W.smul_mem _ hf) (W.smul_mem _ hg), fun P hP hmem => ?_⟩
@@ -422,7 +422,7 @@ theorem exists_family (h : M →ₗ[𝓞 E] M →ₛₗ[σ] 𝓞 E) (G : Matrix 
   have eww : h w w = h f f + ((q * s : ℕ) : 𝓞 E) * (h f (π y) + h (π y) f) +
       ((q * s : ℕ) : 𝓞 E) ^ 2 * h (π y) (π y) := by
     rw [hw]
-    simp only [map_add, map_smul, map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, map_natCast]
+    simp only [map_add (f := _), map_smul, map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, map_natCast]
     ring
   refine ⟨Fin.cons w v, fun i j hij => ?_, fun i τ => ?_, fun i => ?_⟩
   · induction i using Fin.cases with
@@ -441,7 +441,7 @@ theorem exists_family (h : M →ₗ[𝓞 E] M →ₛₗ[σ] 𝓞 E) (G : Matrix 
           (((q * s : ℕ) : ℝ) : ℂ) * τ (algebraMap (𝓞 E) E (h f (π y) + h (π y) f)) +
           ((((q * s : ℕ) : ℝ) ^ 2 : ℝ) : ℂ) * τ (algebraMap (𝓞 E) E (h (π y) (π y))) := by
         rw [eww]
-        simp only [map_add, map_mul, map_pow, map_natCast, Complex.ofReal_pow, Complex.ofReal_natCast]
+        simp only [map_add (f := _), map_mul, map_pow, map_natCast, Complex.ofReal_pow, Complex.ofReal_natCast]
       change 0 < (τ (algebraMap (𝓞 E) E (h w w))).re
       rw [e3, Complex.add_re, Complex.add_re, Complex.re_ofReal_mul, Complex.re_ofReal_mul]
       exact this
@@ -527,13 +527,13 @@ theorem exists_split_prime_to : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
   let σ : 𝓞 E →+* 𝓞 E := H.bar
   let h : D.La →ₗ[𝓞 E] D.La →ₛₗ[σ] 𝓞 E := LinearMap.mk₂'ₛₗ (RingHom.id _) σ h₀
     (fun x y z => RingOfIntegers.ext (by
-      rw [RingOfIntegers.coe_eq_algebraMap (_ + _), map_add]
+      rw [RingOfIntegers.coe_eq_algebraMap (_ + _), map_add (f := _)]
       simp [hh₀, FD.herm, add_mul, Finset.sum_add_distrib]))
     (fun c x y => RingOfIntegers.ext (by
       rw [hh₀, hsm, herm_smul_left, ← hh₀]
       rfl))
     (fun x y z => RingOfIntegers.ext (by
-      rw [hh₀, map_add, herm_add_right, ← hh₀, ← hh₀]
+      rw [hh₀, map_add (f := _), herm_add_right, ← hh₀, ← hh₀]
       rfl))
     (fun c x y => RingOfIntegers.ext (by
       rw [hh₀, hsm, herm_smul_right, ← hh₀, ← hbar, mul_comm]
@@ -605,7 +605,7 @@ theorem exists_split_prime_to : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
     have hΔR : (discr E : ℝ) ≠ 0 := by exact_mod_cast hΔ
     have hΔQ : (discr E : ℚ) ≠ 0 := by exact_mod_cast hΔ
     have h1 : D.EF ((2 * H.w0) • a) a = D.EF ((1 + H.rt) • a) a := by rw [H.two_weight_eq_one_add_root]
-    rw [two_mul, add_smul, add_smul, one_smul, map_add, map_add, LinearMap.add_apply, LinearMap.add_apply,
+    rw [two_mul, add_smul, add_smul, one_smul, map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply,
       D.alt, zero_add] at h1
     have h2 := hEF (H.rt • a) a
     have h3 : ξ * FD.herm G (φ (H.rt • a)) (φ a) = (-(ε : ℚ) / (discr E : ℚ) ^ 2) • (h a a : E) := by

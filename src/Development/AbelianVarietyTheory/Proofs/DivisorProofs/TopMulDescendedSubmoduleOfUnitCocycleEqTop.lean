@@ -50,7 +50,7 @@ theorem top_mul_descMod_eq_top (A B : Type) [CommRing A] [CommRing B] [Algebra A
     | tmul c m =>
       rw [LinearMap.lTensor_tmul, Algebra.TensorProduct.lmul'_apply_tmul]
       exact Submodule.mul_mem_mul Submodule.mem_top (by rw [hD]; exact m.2)
-    | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
   have hv := hmem z
   rw [hz] at hv
   set v := Algebra.TensorProduct.lmul' A (((u⁻¹ : (B ⊗[A] B)ˣ) : B ⊗[A] B)) with hvdef

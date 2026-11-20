@@ -106,7 +106,7 @@ theorem gaPt_add {A : Type} [CommRing A] (y : Spec (CommRingCat.of A) ⟶ X) (a 
       Multiplicative.ofAdd ((Scheme.ΓSpecIso (CommRingCat.of A)).inv c) :=
     fun c => (gaEquiv _).apply_symm_apply _
   apply (gaEquiv (Over.mk y)).injective
-  rw [gaEquiv_mul, e, e, e, map_add, ofAdd_add]
+  rw [gaEquiv_mul, e, e, e, map_add (f := _), ofAdd_add]
 
 theorem gaPt_zero {A : Type} [CommRing A] (y : Spec (CommRingCat.of A) ⟶ X) : gaPt y 0 = 1 := by
   have e : ∀ c : A, gaEquiv (Over.mk y) (gaPt y c) =

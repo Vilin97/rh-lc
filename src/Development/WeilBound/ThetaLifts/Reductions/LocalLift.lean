@@ -11,7 +11,7 @@ variable {l : Type} [Fintype l] [DecidableEq l]
 
 def bl (i j : l → l ⊕ l) : Matrix (l ⊕ l) (l ⊕ l) ℝ →ₗ[ℝ] (Eu l →L[ℝ] Eu l) where
   toFun g := Matrix.toEuclideanCLM (𝕜 := ℝ) (n := l) (g.submatrix i j)
-  map_add' g h := by rw [← map_add]; rfl
+  map_add' g h := by rw [← map_add (f := _)]; rfl
   map_smul' c g := by rw [RingHom.id_apply, ← map_smul]; rfl
 
 theorem bl_apply (i j : l → l ⊕ l) (g : Matrix (l ⊕ l) (l ⊕ l) ℝ) (x : Eu l) (a : l) :

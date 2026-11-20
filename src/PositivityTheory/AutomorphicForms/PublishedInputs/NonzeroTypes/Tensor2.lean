@@ -34,7 +34,7 @@ def contrML (a : ι) (φ : ∀ b, Module.Dual ℂ (Y b)) : MultilinearMap ℂ Y 
     by_cases h : i = a
     · subst h
       simp only [prod_update_self, Function.update_self, smul_add]
-    · simp only [prod_update a φ x i h, Function.update_of_ne (Ne.symm h), map_add, add_mul, add_smul]
+    · simp only [prod_update a φ x i h, Function.update_of_ne (Ne.symm h), map_add (f := _), add_mul, add_smul]
   map_update_smul' := by
     intro inst x i c u
     obtain rfl : inst = hd := Subsingleton.elim _ _
@@ -74,7 +74,7 @@ theorem exists_factor_vec {Γ : ι → Type} [∀ b, Group (Γ b)] (ρ : ∀ b, 
         smul_eq_mul, Basis.coord_apply, φ]
       rw [← Finset.mul_prod_erase Finset.univ _ (Finset.mem_univ a)]
       ring
-    | add z w hz hw => rw [map_add, map_add, hz, hw, map_add, Finsupp.add_apply]
+    | add z w hz hw => rw [map_add (f := _), map_add (f := _), hz, hw, map_add (f := _), Finsupp.add_apply]
   have hequiv : ∀ g z, contr a φ (piTensor ρ (Pi.mulSingle a g) z) = ρ a g (contr a φ z) := by
     intro g z
     induction z using PiTensorProduct.induction_on with
@@ -84,7 +84,7 @@ theorem exists_factor_vec {Γ : ι → Type} [∀ b, Group (Γ b)] (ρ : ∀ b, 
         refine Finset.prod_congr rfl fun b hb => ?_
         rw [Pi.mulSingle_eq_of_ne (Finset.ne_of_mem_erase hb), map_one, Module.End.one_apply]
       simp only [map_smul, piTensor_tprod, contr_tprod, Pi.mulSingle_eq_same, hpr]
-    | add z w hz hw => simp only [map_add, hz, hw]
+    | add z w hz hw => simp only [map_add (f := _), hz, hw]
   refine ⟨contr a φ y, fun h0 => hp ?_, fun g hg => ?_⟩
   · rw [← key, h0, map_zero]
   · rw [← hequiv, h g hg, map_smul]

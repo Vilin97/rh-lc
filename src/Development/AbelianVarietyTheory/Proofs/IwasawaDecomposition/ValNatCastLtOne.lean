@@ -35,7 +35,7 @@ theorem redM_eq_one {n : ℕ} (v : HeightOneSpectrum (𝓞 F)) (p : ℕ) (hv : (
   unfold redM
   rw [dif_pos hm]
   have : (⟨M r c, hm⟩ : v.adicCompletionIntegers F) = u := Subtype.ext e'
-  rw [this, hu, map_add, map_mul, hp, zero_mul, add_zero, Matrix.one_apply]
+  rw [this, hu, map_add (f := _), map_mul, hp, zero_mul, add_zero, Matrix.one_apply]
   split_ifs <;> simp
 
 theorem mem_Uloc_of_cong : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (σ : E →ₐ[F] E) {n : ℕ} {J : Matrix (Fin n) (Fin n) E} {T f : ℕ} {bad : Set (HeightOneSpectrum (𝓞 F))} {gp : Fin 2 → ℕ}

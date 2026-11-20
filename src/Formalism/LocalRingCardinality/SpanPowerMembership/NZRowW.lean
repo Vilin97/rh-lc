@@ -144,7 +144,7 @@ def levelRecordTwistEntries (P : EntPl DR) : KerEnt DR (levelRecordDivisor H u0 
   ev_inj := fun _ _ _ _ a b h => (DR).what₂.embLL.injective (congrFun h ())
   prS := fun _ _ w i _ =>
     { toFun := fun v => P.iL w v • (MvPolynomial.aeval (xS (R.N i) ((DR).what₂.places.resChar w))).toLinearMap
-      map_add' := fun a b => by rw [map_add, add_smul]; rfl
+      map_add' := fun a b => by rw [map_add (f := _), add_smul]; rfl
       map_smul' := fun a b => by rw [smul_eq_mul, map_mul, mul_smul]; rfl }
   prT := fun u _ w i _ =>
     { toFun := fun v I => P.iL w v * indC (nuD DR u i) I ℂ_[(DR).what₂.places.resChar w]

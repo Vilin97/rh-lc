@@ -18,7 +18,7 @@ private theorem monomial_one_mem_span_X_pow_degree {R σ : Type*} [CommRing R] (
   induction α using Finsupp.induction with
   | zero => simp
   | single_add a b f _ _ ih =>
-    rw [← one_mul (1 : R), ← MvPowerSeries.monomial_mul_monomial, map_add, Finsupp.degree_single,
+    rw [← one_mul (1 : R), ← MvPowerSeries.monomial_mul_monomial, map_add (f := _), Finsupp.degree_single,
       pow_add, ← MvPowerSeries.X_pow_eq]
     exact Ideal.mul_mem_mul (Ideal.pow_mem_pow (Ideal.subset_span (Set.mem_range_self a)) b) ih
 

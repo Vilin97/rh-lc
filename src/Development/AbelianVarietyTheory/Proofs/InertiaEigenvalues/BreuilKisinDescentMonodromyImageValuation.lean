@@ -177,7 +177,7 @@ theorem mem_Z_aeval (hI : Integral D) (q : Polynomial ℤ) (x : D.Zl) (hx : (x :
       exact hI _ (ih y hy)
   induction q using Polynomial.induction_on' with
   | add p q hp hq =>
-    rw [map_add, LinearMap.add_apply, Submodule.coe_add]; exact D.Z.add_mem hp hq
+    rw [map_add (f := _), LinearMap.add_apply, Submodule.coe_add]; exact D.Z.add_mem hp hq
   | monomial n c =>
     rw [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply]
     have := hpow n x hx

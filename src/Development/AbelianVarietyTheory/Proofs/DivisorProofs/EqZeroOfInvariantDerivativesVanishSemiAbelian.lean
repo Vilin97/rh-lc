@@ -117,9 +117,9 @@ theorem exists_stalkDer (Z : Scheme) (d : Fld Z) (hd : IsField ⊤ d) (z : Z) :
       rw [TopCat.Presheaf.germ_res_apply]; exact (hg w).symm
     have e : u + w = Z.presheaf.germ V z hV
         (Z.presheaf.map iu.op (g u) + Z.presheaf.map iw.op (g w)) := by
-      rw [map_add, ← eu, ← ew]
+      rw [map_add (f := _), ← eu, ← ew]
     show Z.presheaf.germ (W (u + w)) z (hW _) (d _ (g (u + w))) = _
-    rw [wd _ _ _ hV _ _ ((hg (u + w)).trans e), hadd V le_top, map_add, hres', hres',
+    rw [wd _ _ _ hV _ _ ((hg (u + w)).trans e), hadd V le_top, map_add (f := _), hres', hres',
       TopCat.Presheaf.germ_res_apply, TopCat.Presheaf.germ_res_apply]
   · intro u w
     let V := W u ⊓ W w
@@ -134,7 +134,7 @@ theorem exists_stalkDer (Z : Scheme) (d : Fld Z) (hd : IsField ⊤ d) (z : Z) :
         (Z.presheaf.map iu.op (g u) * Z.presheaf.map iw.op (g w)) := by
       rw [map_mul, ← eu, ← ew]
     show Z.presheaf.germ (W (u * w)) z (hW _) (d _ (g (u * w))) = _
-    rw [wd _ _ _ hV _ _ ((hg (u * w)).trans e), hmul V le_top, map_add, map_mul, map_mul, hres', hres']
+    rw [wd _ _ _ hV _ _ ((hg (u * w)).trans e), hmul V le_top, map_add (f := _), map_mul, map_mul, hres', hres']
     simp only [TopCat.Presheaf.germ_res_apply, hg]
 
 theorem germ_mem_of_valR_eq_zero (A : Type) [CommRing A] (Z : Scheme) (x : Sp A ⟶ Z) (W : Z.Opens)

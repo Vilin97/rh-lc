@@ -75,7 +75,7 @@ theorem simpleQuot_iso_of_intertwined : ∀ (ι Fm Q Q' Pi : Type) [AddCommGroup
   have hPσ : ∀ i y, P (σ i y) = σ i (P y) := by
     intro i y
     obtain ⟨u, hu, n, hn, rfl⟩ := hdec y
-    rw [map_add, map_add, map_add, hPU _ (hUs i u hu), hPN _ (hN's i n hn), hPU u hu, hPN n hn, add_zero, add_zero]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), hPU _ (hUs i u hu), hPN _ (hN's i n hn), hPU u hu, hPN n hn, add_zero, add_zero]
 
   obtain ⟨f, hf⟩ : ∃ f, P ∘ₗ β f ≠ 0 := by
     by_contra hall
@@ -84,7 +84,7 @@ theorem simpleQuot_iso_of_intertwined : ∀ (ι Fm Q Q' Pi : Type) [AddCommGroup
       rintro f _ ⟨x, rfl⟩
       obtain ⟨u, hu, n, hn, he⟩ := hdec (β f x)
       have h0 : P (β f x) = 0 := by rw [← LinearMap.comp_apply, hall f, LinearMap.zero_apply]
-      rw [he, map_add, hPU u hu, hPN n hn, add_zero] at h0
+      rw [he, map_add (f := _), hPU u hu, hPN n hn, add_zero] at h0
       rw [he, h0, zero_add]; exact hn
     have hN'top : N' = ⊤ := eq_top_iff.2 (hspan ▸ iSup_le hle)
     have hU0 : U = ⊥ := by

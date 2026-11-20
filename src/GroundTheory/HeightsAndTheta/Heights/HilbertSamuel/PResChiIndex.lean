@@ -27,7 +27,7 @@ theorem exists_int_mul (f : MvPolynomial J ℚ) :
   · obtain ⟨N₁, g₁, h₁, e₁⟩ := hp
     obtain ⟨N₂, g₂, h₂, e₂⟩ := hq
     refine ⟨N₁ * N₂, C (N₂ : ℤ) * g₁ + C (N₁ : ℤ) * g₂, mul_ne_zero h₁ h₂, ?_⟩
-    rw [map_add, map_mul, map_mul, map_C, map_C, e₁, e₂]
+    rw [map_add (f := _), map_mul, map_mul, map_C, map_C, e₁, e₂]
     simp only [eq_intCast, Int.cast_natCast, Nat.cast_mul, C_mul]
     ring
 

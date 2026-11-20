@@ -62,7 +62,7 @@ theorem factor_mem (w : HeightOneSpectrum (𝓞 K)) (p e n : ℕ) (ν : Fin n �
     field_simp
   | zero => simpa using zero_mem _
   | add a b _ _ ha hb =>
-    rw [map_add, smul_add]
+    rw [map_add (f := _), smul_add]
     exact add_mem ha hb
   | smul a g _ hg =>
     rw [map_smul, smul_comm]

@@ -142,7 +142,7 @@ theorem isIntegralLat_adjoin (hs : h.IsSymm) (S : VecSplit h h')
   obtain ⟨w, hw⟩ := Submodule.mem_one.mp (hL' a ha b hb)
   rw [SplitBAux.h_decomp hs S, ← hn, ← hw]
   refine Submodule.mem_one.mpr ⟨conjO K r * t * n + w, ?_⟩
-  rw [map_add, map_mul, map_mul]
+  rw [map_add (f := _), map_mul, map_mul]
   rfl
 
 theorem exists_max_over {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) :

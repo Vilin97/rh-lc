@@ -154,7 +154,7 @@ private theorem span_prime_sup_span_proper_of_dvd_norm {E : Type} [Field E] [Num
       rw [← nsmul_eq_mul, ← hz]; exact addOrderOf_nsmul_eq_zero z
     have hunit : (Ideal.Quotient.mk I y) * (p : 𝓞 E ⧸ I) = 1 := by
       have := congrArg (Ideal.Quotient.mk I) hab
-      rw [map_add, Ideal.Quotient.eq_zero_iff_mem.mpr hb, add_zero, map_one, map_mul,
+      rw [map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.mpr hb, add_zero, map_one, map_mul,
         map_natCast] at this
       exact this
     have hz0 : z = 0 := by

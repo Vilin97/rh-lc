@@ -58,13 +58,13 @@ theorem isSemisimple_of_unitary_model {Mon : Type} [Monoid Mon] {N : Type} [AddC
     { carrier := {n | gi n ∈ SEᗮ}
       add_mem' := fun {a b} ha hb => by
         show gi (a + b) ∈ SEᗮ
-        rw [map_add]; exact SEᗮ.add_mem ha hb
+        rw [map_add (f := _)]; exact SEᗮ.add_mem ha hb
       zero_mem' := by show gi 0 ∈ SEᗮ; rw [map_zero]; exact SEᗮ.zero_mem
       smul_mem' := fun r n hn => by
         show gi (r • n) ∈ SEᗮ
         induction r using MonoidAlgebra.induction_linear with
         | zero => rw [zero_smul, map_zero]; exact SEᗮ.zero_mem
-        | add x y hx hy => rw [add_smul, map_add]; exact SEᗮ.add_mem hx hy
+        | add x y hx hy => rw [add_smul, map_add (f := _)]; exact SEᗮ.add_mem hx hy
         | single κ c =>
           rw [← hggi n, hint, hgig]
           exact SEᗮ.smul_mem c (hT κ _ hn) }
@@ -81,7 +81,7 @@ theorem isSemisimple_of_unitary_model {Mon : Type} [Monoid Mon] {N : Type} [AddC
     rw [Submodule.mem_sup]
     refine ⟨g p, hp, g q, ?_, ?_⟩
     · show gi (g q) ∈ SEᗮ; rw [hgig]; exact hq
-    · rw [← map_add, hpq, hggi]
+    · rw [← map_add (f := _), hpq, hggi]
 
 end GlobalTheory.LocFinIso
 
@@ -128,7 +128,7 @@ theorem isSemisimpleModule_repD_of_locally_unitary : ∀ (G : Type) [Group G] (K
     { carrier := {u | ((π.asModuleEquiv u : D) : V) ∈ Submodule.span ℂ (Set.range b)}
       add_mem' := fun {u w} hu hw => by
         rw [Set.mem_setOf_eq] at hu hw ⊢
-        rw [map_add, Submodule.coe_add]; exact Submodule.add_mem _ hu hw
+        rw [map_add (f := _), Submodule.coe_add]; exact Submodule.add_mem _ hu hw
       zero_mem' := by
         rw [Set.mem_setOf_eq]
         rw [map_zero, Submodule.coe_zero]; exact Submodule.zero_mem _
@@ -161,7 +161,7 @@ theorem isSemisimpleModule_repD_of_locally_unitary : ∀ (G : Type) [Group G] (K
     let g : EuclideanSpace ℂ (Fin m) →+ Wsub m b A hact := AddMonoidHom.mk' gfun (by
       intro e f
       apply gext
-      rw [Submodule.coe_add, map_add, Submodule.coe_add, gval, gval, gval]
+      rw [Submodule.coe_add, map_add (f := _), Submodule.coe_add, gval, gval, gval]
       simp [vec, add_smul, Finset.sum_add_distrib])
 
     have hg : ∀ e, g e = gfun e := fun e => rfl

@@ -43,7 +43,7 @@ def Oh : AddSubgroup (AF F) where
   zero_mem' := ⟨map_zero (InfiniteAdeleRing.ringEquiv_mixedSpace F), fun v => by rw [map_zero]; exact zero_mem _⟩
   add_mem' := fun {a b} ha hb => ⟨(map_add (InfiniteAdeleRing.ringEquiv_mixedSpace F) a.1 b.1).trans
     ((congrArg₂ (· + ·) ha.1 hb.1).trans (add_zero _)),
-    fun v => by rw [map_add]; exact add_mem (ha.2 v) (hb.2 v)⟩
+    fun v => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha.2 v) (hb.2 v)⟩
   neg_mem' := fun {a} ha => ⟨(map_neg (InfiniteAdeleRing.ringEquiv_mixedSpace F) a.1).trans
     ((congrArg Neg.neg ha.1).trans neg_zero), fun v => by rw [map_neg]; exact neg_mem (ha.2 v)⟩
 

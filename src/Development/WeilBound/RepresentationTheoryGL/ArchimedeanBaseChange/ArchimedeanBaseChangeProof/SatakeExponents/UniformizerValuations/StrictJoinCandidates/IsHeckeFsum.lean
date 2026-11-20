@@ -199,7 +199,7 @@ theorem xi_map (β : Fin (n / 2) → ℂˣ) : Finset.univ.val.map (xiOf n β) = 
     have hc := congrArg Multiset.card hsplit
     simp only [Multiset.card_add, ← Finset.card_def, e1, e2, Finset.card_map, Finset.card_univ, Fintype.card_fin] at hc
     omega
-  rw [hsplit, Multiset.map_add, Multiset.map_add, e3, hcard, e1, e2, Finset.map_val, Finset.map_val, Multiset.map_map,
+  rw [hsplit, Multiset.map_add (f := _), Multiset.map_add (f := _), e3, hcard, e1, e2, Finset.map_val, Finset.map_val, Multiset.map_map,
     Multiset.map_map]
   unfold GlobalTheory.LGrp.bcParam
   congr 3

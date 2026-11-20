@@ -53,7 +53,7 @@ theorem specU_rTensor (A : Module.End (X.O i) (Y.Fm i j b)) (Q : Finset (PlE D.h
     specU Y i j b Q M k χ (A.rTensor _ w) = A.baseChange (X.Ok i k) (specU Y i j b Q M k χ w) := by
   induction w with
   | tmul v g => simp [specU]
-  | add v w hv hw => simp only [map_add, hv, hw]
+  | add v w hv hw => simp only [map_add (f := _), hv, hw]
 
 theorem exists_coord {Ball : Submodule (X.O i) (Y.Fm i j b)}
     (hA : Ball.map A ≤ Submodule.span (X.O i) (Set.range bs)) {ι : Type} [Fintype ι] (P : ι → PlE D.host)
@@ -108,7 +108,7 @@ theorem Coord.step {P : PlE D.host} {t : ℕ → Matrix (Fin n) (Fin n) (X.O i)}
   have hc : ∀ w, A.baseChange (X.Ok i k) (PqF Y i j b k P y w) = PqF Y i j b k P y (A.baseChange (X.Ok i k) w) := by
     intro w
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [PqF, LinearMap.add_apply, Module.End.one_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_add,
+      simp only [PqF, LinearMap.add_apply, Module.End.one_apply, LinearMap.sum_apply, LinearMap.smul_apply, map_add (f := _),
       map_sum, map_smul]
     congr 1
     refine Finset.sum_congr rfl fun m hm => ?_
@@ -289,7 +289,7 @@ theorem residue_prod_det {O k ι κ : Type} [CommRing O] [Field k] [Fintype κ] 
     refine Finset.prod_congr rfl fun a _ => ?_
     have e : (MvPolynomial.map (σ := ι) ρ).comp MvPolynomial.C = MvPolynomial.C.comp ρ := by ext1 r; simp
     rw [← hdet, map_det_polyMat, e]
-    simp only [polyMat, Matrix.map_map, map_pow, map_add, map_one, MvPolynomial.map_X, RingHom.coe_comp]
+    simp only [polyMat, Matrix.map_map, map_pow, map_add (f := _), map_one, MvPolynomial.map_X, RingHom.coe_comp]
 
 theorem propABCD_of_rel : ∀ (D : Formalism.BasicNotions.D7) (N : NData D.R D.host D.what₂) (X : NTw D.R D.host D.what₂ D.LL0 N)
     (Y : NExp D.R D.host D.what₂ D.LL0 N X), ThURel Y → HeckeLaws Y → AllGood Y → Formalism.MainNotions.BlochKatoReduction.Gen.adm8 X Y → PropABCD Y := by
@@ -434,7 +434,7 @@ theorem propABCD_of_rel : ∀ (D : Formalism.BasicNotions.D7) (N : NData D.R D.h
           rw [← IsLocalRing.residue_ne_zero_iff_isUnit] at h2 ⊢
           convert h2 using 1
           set_option synthInstance.maxHeartbeats 100000 in
-            simp only [map_add, map_sum, map_mul]
+            simp only [map_add (f := _), map_sum, map_mul]
           congr 1
           refine Finset.sum_congr rfl fun m hm => ?_
           have h3 := (IsLocalRing.residue_eq_zero_iff _).2 (hs m _ (hidx m hm))

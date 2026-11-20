@@ -97,7 +97,7 @@ theorem UpperTheory.V.Z.Kato.Nb.sXiScal :
     simp only [Equiv.coe_mulLeft, hU, hdet]
     rw [xs_cD N M₀ M hM _ _ hm.1.1, Matrix.vecMul_smul, Matrix.vecMul_smul, Matrix.smul_vecMul, Matrix.smul_vecMul]
     apply xs_eval
-    simp only [map_mul, map_pow, map_add, map_natCast, Matrix.smul_apply, smul_eq_mul, xs_cast hlnM]
+    simp only [map_mul, map_pow, map_add (f := _), map_natCast, Matrix.smul_apply, smul_eq_mul, xs_cast hlnM]
     rw [mul_inv, Units.val_mul, map_mul, ← inv_pow, Units.val_pow_eq_pow_val, map_pow]
     have hee : ZMod.castHom hlnM (ZMod (l ^ n)) (ν : ZMod M) * ZMod.castHom hlnM (ZMod (l ^ n)) ((ν⁻¹ : (ZMod M)ˣ) : ZMod M) = 1 := by
       rw [← map_mul, Units.mul_inv, map_one]

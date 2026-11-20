@@ -145,7 +145,7 @@ theorem equiv_qkExt_iff (p q : QkPt D F k) :
   refine ⟨fun h => ?_, qkExt_congr hB f hf⟩
   obtain ⟨z, hy, hg⟩ := (equiv_iff hB _ _).1 h
   refine (equiv_iff hB _ _).2 ⟨z, hy, gtExt_injective f hf ?_⟩
-  rw [map_add, gtExt_iota]
+  rw [map_add (f := _), gtExt_iota]
   exact hg
 
 theorem exists_qkExt (hL : Laws) [IsAlgClosed F] [IsAlgClosed F'] (hk : (k : F) ≠ 0) (p' : QkPt D F' k) :
@@ -158,7 +158,7 @@ theorem exists_qkExt (hL : Laws) [IsAlgClosed F] [IsAlgClosed F'] (hk : (k : F) 
     rw [map_nsmul, ht, map_zero, nsmul_sub, ← map_nsmul, qk_nsmul hB, qk_nsmul hB, gtExt_iota, hq, sub_self])
   refine ⟨qkMk hB p'.y (q.g + t) (by rw [nsmul_add, ht0, add_zero, qk_nsmul hB, hq]), qk_ext rfl ?_⟩
   show gtExt D f hf (q.g + t) = _
-  rw [map_add, ht, add_sub_cancel]
+  rw [map_add (f := _), ht, add_sub_cancel]
 
 section Hom
 variable {N : NumD F} {N' : NumD F'} (ν : NumOf D F N) (ν' : NumOf D F' N')

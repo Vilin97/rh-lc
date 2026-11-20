@@ -180,6 +180,6 @@ theorem exists_place : ∀ (D : D7) (s : SplitPlace D.host.E) (hF : D.host.F = m
       rw [tensCastR_one_tmul]
       show _ = c (s.i x * ReciprocityTheory.Aut.evalAt D.host.E s.v 1)
       rw [map_one, mul_one, hci]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 end GlobalTheory.SplitLocPlace

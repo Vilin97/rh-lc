@@ -44,7 +44,7 @@ private lemma valuation_algebraMap_eq_of_unit_at_under {F E : Type} [Field F] [N
   obtain ⟨x, hx⟩ := HeightOneSpectrum.valuation_exists_uniformizer E w
   obtain ⟨a, b, hab⟩ := hq.span x
   have hσx : σ x = algebraMap F E a - algebraMap F E b * θ := by
-    rw [hab, map_add, map_mul, AlgEquiv.commutes, AlgEquiv.commutes, hσθ]; ring
+    rw [hab, map_add (f := _), map_mul, AlgEquiv.commutes, AlgEquiv.commutes, hσθ]; ring
   obtain ⟨-, -, -, hnorm, -⟩ := _root_.GlobalTheory.QNorm.isQuad_basic F E δ θ σ hq
   obtain ⟨a', b', hN⟩ := hnorm x
   have hbθ : V (algebraMap F E b * θ) = V (algebraMap F E b) := by rw [map_mul, hθ, mul_one]

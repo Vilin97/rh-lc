@@ -62,7 +62,7 @@ theorem stalk_derivation_span : ∀ (R : Type) [CommRing R] [IsDomain R] [IsNoet
       exact germ_res ⊤ V le_top trivial hpV _
     have := GlobalTheory.VertCoeffRing.existsUnique_coeff_alg hv hdd y hV h
       (fun f => δ (G.left.presheaf.germ V p hpV f))
-      (fun f f' => by simp only [map_add, hadd])
+      (fun f f' => by simp only [map_add (f := _), hadd])
       (fun f f' => by simp only [map_mul, hmul, ev]; rfl)
       (fun r => by rw [hconst]; exact hbase r)
     simpa only [ev] using this

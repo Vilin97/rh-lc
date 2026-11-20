@@ -50,7 +50,7 @@ lemma herm_lam_lam (c c' : Fin n → E) (e e' : E) :
       herm G (∑ k, c k • β k) (∑ k, c' k • β k) := by
   have hadd : ∀ x y y' : Fin r → E, herm G x (y + y') = herm G x y + herm G x y' := by
     intro x y y'
-    simp only [herm, Pi.add_apply, cc, map_add, mul_add, Finset.sum_add_distrib]
+    simp only [herm, Pi.add_apply, cc, map_add (f := _), mul_add, Finset.sum_add_distrib]
   have hsm : ∀ (x y : Fin r → E) (a : E), herm G x (a • y) = cc a * herm G x y := by
     intro x y a
     simp only [herm, Pi.smul_apply, smul_eq_mul, cc, map_mul, Finset.mul_sum]

@@ -67,7 +67,7 @@ theorem filt_ball {A C ρ : ℝ} (hC : 0 ≤ C) (hρ : 0 ≤ ρ) (hA1 : ∀ x : 
     have hy1 : y = -x + -(x * y) := by
       rw [hy]; field_simp; ring
     have h1 : ‖Phi K L y‖ ≤ max ‖Phi K L x‖ ‖Phi K L (x * y)‖ := by
-      conv_lhs => rw [hy1, map_add, map_neg, map_neg]
+      conv_lhs => rw [hy1, map_add (f := _), map_neg, map_neg]
       refine (IsUltrametricDist.norm_add_le_max _ _).trans ?_
       rw [norm_neg, norm_neg]
     have h2 : ‖Phi K L (x * y)‖ ≤ (1 / 2) * ‖Phi K L y‖ := by

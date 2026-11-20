@@ -85,7 +85,7 @@ theorem exists_norm {R : Ranks} (H : Host R) (t : H.E) (ht : H.conj t = t) :
     rcases key g with ⟨-, h1, h2⟩ | ⟨-, h1, h2⟩ <;> rw [map_mul, h1, h2]
     ring
   obtain ⟨A, hA⟩ := exists_rat H (x := s + s') fun g => by
-    rcases key g with ⟨-, h1, h2⟩ | ⟨-, h1, h2⟩ <;> rw [map_add, h1, h2]
+    rcases key g with ⟨-, h1, h2⟩ | ⟨-, h1, h2⟩ <;> rw [map_add (f := _), h1, h2]
     ring
   obtain ⟨W, hW⟩ := exists_rat H (x := (s - s') * (H.sqq * H.sqd)) fun g => by
     rw [map_mul, map_mul, map_sub, sigmaOf_aE, sigmaOf_bE, mul_mul_mul_comm, ← Int.cast_mul, ← Units.val_mul]

@@ -123,7 +123,7 @@ theorem exists_basis (σ : E →ₐ[F] E) (h : IsCMExt F E σ) {δ : E} (hδ : �
     intro s t hst
     have h2 : s • (1 : E) - t • δ = 0 := by
       have := congrArg σ.toLinearMap hst
-      rw [map_add, LinearMap.map_smul, LinearMap.map_smul, map_zero] at this
+      rw [map_add (f := _), LinearMap.map_smul, LinearMap.map_smul, map_zero] at this
       simp only [AlgHom.toLinearMap_apply, map_one, hδ, smul_neg] at this
       rwa [sub_eq_add_neg]
     have h3 : (2 * t) • δ = 0 := by
@@ -263,7 +263,7 @@ theorem exists_equiv (σ : E →ₐ[F] E) (h : IsCMExt F E σ) :
       fun w => ((ρ w (a w) : ℝ) : ℂ) + ((ρ w (c w) : ℝ) : ℂ) * t w := by
     intro a c
     funext w
-    rw [map_add]
+    rw [map_add (f := _)]
     simp only [Φ₀, Algebra.TensorProduct.productMap_apply_tmul]
     show ((ρ w (a w) : ℝ) : ℂ) * τ w 1 + ((ρ w (c w) : ℝ) : ℂ) * τ w δ = _
     rw [map_one, mul_one]

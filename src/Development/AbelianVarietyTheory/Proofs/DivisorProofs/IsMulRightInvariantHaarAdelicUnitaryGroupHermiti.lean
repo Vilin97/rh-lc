@@ -208,7 +208,7 @@ theorem sigR_sigR {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) (x : R ⊗[F
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sigR, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem exists_split_tensor (σ : E →ₐ[F] E) {δ : E} (hδ : δ ≠ 0) (hσδ : σ δ = -δ) {κ : Type} [Finite κ]
     (C : NonUnitalSubring (AF F ⊗[F] E)) (hC : ∀ r ∈ intFin F, ∀ β : 𝓞 E, r ⊗ₜ[F] (β : E) ∈ C)
@@ -228,7 +228,7 @@ theorem exists_split_tensor (σ : E →ₐ[F] E) {δ : E} (hδ : δ ≠ 0) (hσ�
   · induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [sigR]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · simp [hpe, Algebra.TensorProduct.one_def]
   · have hy' : y ∈ RingHom.ker (Algebra.TensorProduct.map p (AlgHom.id F E)) := hy
     rw [Algebra.TensorProduct.rTensor_ker _ hp] at hy'

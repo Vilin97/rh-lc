@@ -392,7 +392,7 @@ theorem par_of_family (hS : Stein F) {W : Type} [AddCommGroup W] [Module R W] (g
     · rw [← hc φ w, hLam, hLam]
       exact (mp F φ).commutes _
     · rw [(abelian₂ k T).map_smul, oneFormsMapOfFunctorMorphism_smul, (abelian₂ k T').map_smul, smul_eq_mul, smul_eq_mul, map_mul, hn]
-    · simp only [map_add, ha, hb]
+    · simp only [map_add (f := _), ha, hb]
   let jm : W →ₗ[R] Glob1 F := LinearMap.codRestrict (Glob1 F) (LinearMap.pi u) fun w T T' φ ↦ hc φ w
   have hj : ∀ w T, (jm w).1 T = u T w := fun _ _ ↦ rfl
   have hinj : Function.Injective jm := (injective_iff_map_eq_zero jm).2 fun w h ↦ by

@@ -90,7 +90,7 @@ theorem exists_of_isDiscreteValuationRing (I : Ideal (MvPolynomial σ ℂ)) (w :
       rw [RingHom.mem_ker, map_mul] at h1
       exact (mul_eq_zero.1 h1).resolve_left hs
     have h2 : eval w s • grad w x = grad w z := by
-      rw [← grad_mul_of_eval_eq_zero w s x hxm, ← hyz, map_add, grad_eq_zero_of_mem_sq w hy, zero_add]
+      rw [← grad_mul_of_eval_eq_zero w s x hxm, ← hyz, map_add (f := _), grad_eq_zero_of_mem_sq w hy, zero_add]
     have h3 : grad w z ∈ V := ⟨z, hz, rfl⟩
     have h4 : grad w x = (eval w s)⁻¹ • grad w z := by
       rw [← h2, smul_smul, inv_mul_cancel₀ hs, one_smul]
@@ -109,7 +109,7 @@ theorem exists_of_isDiscreteValuationRing (I : Ideal (MvPolynomial σ ℂ)) (w :
       have hp0 : algebraMap _ S p = 0 := by
         rw [hRS, ← RingHom.mem_ker, hker]
         exact Ideal.mem_map_of_mem _ hp
-      rw [show X i - C (w i) = (X i - C (w i) - p) + p by ring, map_add, hp0, add_zero, ← hmap,
+      rw [show X i - C (w i) = (X i - C (w i) - p) + p by ring, map_add (f := _), hp0, add_zero, ← hmap,
         ← Ideal.map_pow]
       exact Ideal.mem_map_of_mem _ h2
     have hgen : maximalIdeal S =

@@ -67,7 +67,7 @@ theorem coneFin_ne_zero : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Nu
       obtain ⟨φ, hφ, rfl⟩ := hx
       exact hall φ hφ (hsupp φ hφ)
     | zero => exact map_zero l
-    | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
     | smul c x _ hx => rw [map_smul, hx, smul_zero]
   have hψN : ψ ∈ N := hNtop ▸ hψ.1
   obtain ⟨s, hs, t, ht, hst⟩ := Submodule.mem_sup.1 hψN
@@ -86,10 +86,10 @@ theorem coneFin_ne_zero : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Nu
       obtain ⟨g, hg, ψ₀, hψ₀, ψ₁, hψ₁, hA, rfl⟩ := hx
       rw [map_sub, hl g hg ψ₀ hψ₀ ψ₁ hψ₁ hA, sub_self]
     | zero => exact map_zero l
-    | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
     | smul c x _ hx => rw [map_smul, hx, smul_zero]
   have hlt : l t = 0 := hkill2 t (GlobalTheory.T.augmented_span_translate_generators hKP F E σ B a b G₁ X om₁ om₁' hT₁ t ht htspan)
   apply hlψ
-  rw [← hst, map_add, hkill s hs, hlt, add_zero]
+  rw [← hst, map_add (f := _), hkill s hs, hlt, add_zero]
 
 end GlobalTheory.ConeLv1

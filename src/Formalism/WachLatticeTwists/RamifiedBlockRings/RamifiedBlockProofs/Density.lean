@@ -162,8 +162,8 @@ theorem density : StatDensity := by
       · rw [hof, hofb]; rfl
     · intro f g hf hg
       refine ⟨fun x y hxy => ?_, fun i => ?_⟩
-      · rw [map_add, Matrix.add_apply, hf.1 x y hxy, hg.1 x y hxy, add_zero]
-      · rw [map_add, map_add, ← hf.2 i, ← hg.2 i]; rfl
+      · rw [map_add (f := _), Matrix.add_apply, hf.1 x y hxy, hg.1 x y hxy, add_zero]
+      · rw [map_add (f := _), map_add (f := _), ← hf.2 i, ← hg.2 i]; rfl
     · intro x f hf
       refine ⟨fun y z hyz => ?_, fun i => ?_⟩
       · rw [map_smul, Matrix.smul_apply, hf.1 y z hyz, smul_zero]
@@ -191,7 +191,7 @@ theorem density : StatDensity := by
         rw [this, hP'P, Matrix.one_mul, Matrix.mul_one]
       rw [this]; exact Submodule.subset_span ⟨g, rfl⟩
     · intro f g hf hg
-      rw [map_add, Matrix.mul_add, Matrix.add_mul]; exact Submodule.add_mem _ hf hg
+      rw [map_add (f := _), Matrix.mul_add, Matrix.add_mul]; exact Submodule.add_mem _ hf hg
     · intro x f hf
       rw [map_smul, Matrix.mul_smul, Matrix.smul_mul]; exact Submodule.smul_mem _ _ hf
   have hfin : B = P⁻¹ * L a * P := by

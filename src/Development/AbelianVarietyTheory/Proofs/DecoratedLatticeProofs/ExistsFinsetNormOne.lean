@@ -194,7 +194,7 @@ theorem strong_approx (v₀ : HeightOneSpectrum (𝓞 F)) (t : InfiniteAdeleRing
       have e : algebraMap F w.Completion (M * u + M * x * o') - t w = algebraMap F w.Completion (M * x) *
           (algebraMap F w.Completion (o' : F) -
             (t w - algebraMap F w.Completion (M * u)) / algebraMap F w.Completion (M * x)) := by
-        rw [map_add, map_mul _ (M * x), mul_sub, mul_div_cancel₀ _ h0]; ring
+        rw [map_add (f := _), map_mul _ (M * x), mul_sub, mul_div_cancel₀ _ h0]; ring
       rw [e, norm_mul, norm_alg_inf, map_mul, InfinitePlace.map_natCast]
       calc _ ≤ (M * w x) * (C + 1) := mul_le_mul_of_nonneg_left (ho' w).le (by positivity)
         _ < (M * (ε / (M * (C + 1)))) * (C + 1) := by gcongr; exact hxw w
@@ -205,7 +205,7 @@ theorem strong_approx (v₀ : HeightOneSpectrum (𝓞 F)) (t : InfiniteAdeleRing
       have e : algebraMap F (v.adicCompletion F) (M * u + M * x * o') - s v = (M : v.adicCompletion F) *
           (-(algebraMap F (v.adicCompletion F) (M : F)⁻¹ * s v - algebraMap F (v.adicCompletion F) u) +
             algebraMap F (v.adicCompletion F) x * algebraMap F (v.adicCompletion F) (o' : F)) := by
-        simp only [map_add, map_mul, map_inv₀, map_natCast]
+        simp only [map_add (f := _), map_mul, map_inv₀, map_natCast]
         field_simp
         ring
       rw [e, norm_mul]
@@ -219,7 +219,7 @@ theorem strong_approx (v₀ : HeightOneSpectrum (𝓞 F)) (t : InfiniteAdeleRing
     · have h1 := norm_add_le (1 : w.Completion) (algebraMap F w.Completion (o : F) -
         (t w - algebraMap F w.Completion (M * u)) / algebraMap F w.Completion (M * x))
       have e : ((o + 1 : 𝓞 F) : F) = 1 + o := by push_cast; ring
-      rw [e, map_add, map_one, add_sub_assoc]
+      rw [e, map_add (f := _), map_one, add_sub_assoc]
       rw [norm_one] at h1
       linarith [ho w]
   · exact ⟨_, hc, key o fun w => (ho w).trans (lt_add_one C)⟩

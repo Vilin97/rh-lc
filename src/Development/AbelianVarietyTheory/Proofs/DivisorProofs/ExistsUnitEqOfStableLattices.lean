@@ -18,7 +18,7 @@ theorem polyStable {O K : Type} [CommRing O] [Field K] [Algebra O K] {n : ℕ}
   induction r using Polynomial.induction_on' with
   | add p q hp hq =>
     intro v hv
-    rw [Polynomial.map_add, map_add, Matrix.add_mulVec]
+    rw [Polynomial.map_add (f := _), map_add (f := _), Matrix.add_mulVec]
     exact M.add_mem (hp v hv) (hq v hv)
   | monomial k a =>
     intro v hv

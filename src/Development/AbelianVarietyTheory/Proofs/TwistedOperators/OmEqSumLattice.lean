@@ -133,7 +133,7 @@ theorem om_model_of_base : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : 
     rw [LinearMap.map_zero, LinearMap.map_zero, smul_zero]
   | add f f' _ _ h1 h2 =>
     change _ = c • Tm ((fun x => f (actO S T g⁻¹ h⁻¹ x)) + fun x => f' (actO S T g⁻¹ h⁻¹ x))
-    rw [LinearMap.map_add, LinearMap.map_add, LinearMap.map_add, h1, h2, smul_add]
+    rw [LinearMap.map_add (f := _), LinearMap.map_add (f := _), LinearMap.map_add (f := _), h1, h2, smul_add]
   | smul d f _ h1 =>
     change _ = c • Tm (d • fun x => f (actO S T g⁻¹ h⁻¹ x))
     rw [LinearMap.map_smul, LinearMap.map_smul, LinearMap.map_smul, h1, smul_comm]

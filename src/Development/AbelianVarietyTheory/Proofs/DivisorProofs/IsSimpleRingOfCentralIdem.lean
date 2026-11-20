@@ -171,7 +171,7 @@ theorem GDatum.isSemisimpleRing (G : GDatum) : IsSemisimpleRing (ℚ ⊗[ℤ] G.
         induction w using TensorProduct.induction_on with
         | zero => simp
         | tmul a b => rfl
-        | add a b ha hb => simp only [map_add, Function.comp_apply] at ha hb ⊢; rw [ha, hb]
+        | add a b ha hb => simp only [map_add (f := _), Function.comp_apply] at ha hb ⊢; rw [ha, hb]
       rw [this]; exact h2.comp h1
     have hf : Function.Injective f := fun a b hab => hmap ((Algebra.TensorProduct.comm ℤ G.F ℚ_[q]).injective hab)
     haveI := GlobalTheory.isReduced_tensor_int_numberField G.F ℚ_[q]
@@ -187,7 +187,7 @@ theorem GDatum.isSemisimpleRing (G : GDatum) : IsSemisimpleRing (ℚ ⊗[ℤ] G.
       refine ⟨k, ?_⟩
       rw [hy, ← map_mul, ← map_pow, Algebra.TensorProduct.tmul_mul_tmul, mul_one,
         Algebra.TensorProduct.tmul_pow, hox, TensorProduct.zero_tmul, map_zero]
-    | add a b ha hb => rw [map_add, add_mul, Matrix.trace_add, ha, hb, add_zero]
+    | add a b ha hb => rw [map_add (f := _), add_mul, Matrix.trace_add, ha, hb, add_zero]
   have hy0 : y = 0 := by
     ext i j
     have := htr (Φ.symm (Matrix.single j i 1))

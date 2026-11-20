@@ -77,7 +77,7 @@ theorem exists_coeffs_of_degree_eq_one_of_isAlgClosed (ψ : Isogeny A B) (h : ψ
     C (2 * γ * ε + B.a₁ * γ * β + B.a₃ * γ - γ ^ 2 * A.a₃) with hQ
   have key : algebraMap F[X] A.toAffine.FunctionField P +
       algebraMap F[X] A.toAffine.FunctionField Q * genY A = 0 := by
-    simp only [hP, hQ, map_add, map_mul, map_pow, algebraMap_C_functionField, ← genX_eq, map_sub,
+    simp only [hP, hQ, map_add (f := _), map_mul, map_pow, algebraMap_C_functionField, ← genX_eq, map_sub,
       map_ofNat]
     linear_combination eB - ι γ ^ 2 * eA
   obtain ⟨hP0, hQ0⟩ := eq_zero_of_algebraMap_add_mul_genY A key

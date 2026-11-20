@@ -18,7 +18,7 @@ theorem tens_repr {F E : Type} [Field F] [Field E] [Algebra F E] {R R' : Type} [
   | zero => simp
   | tmul a e =>
     simp [tensMap, Algebra.TensorProduct.map_tmul, Finsupp.mapRange_apply, map_mul, AlgHom.commutes]
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 theorem tensInj_holds : TensInj := by
   intro D X x y h

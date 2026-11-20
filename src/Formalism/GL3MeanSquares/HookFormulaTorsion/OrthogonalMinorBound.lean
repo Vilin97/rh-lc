@@ -68,7 +68,7 @@ private lemma one_le_det_one_add {r : ℕ} (R : Matrix (Fin r) (Fin r) ℂ) (hR 
   have e : (1 + R).det = ((∏ i, (1 + hH.eigenvalues i) : ℝ) : ℂ) := by
     have h1 : 1 + R = Unitary.conjStarAlgAut ℂ _ hH.eigenvectorUnitary
         (1 + diagonal (RCLike.ofReal ∘ hH.eigenvalues)) := by
-      rw [map_add, map_one, ← hH.spectral_theorem]
+      rw [map_add (f := _), map_one, ← hH.spectral_theorem]
     rw [h1, Unitary.conjStarAlgAut_apply, det_mul_comm, ← mul_assoc]
     have h2 : (1 : Matrix (Fin r) (Fin r) ℂ) + diagonal (RCLike.ofReal ∘ hH.eigenvalues)
         = diagonal (fun i => (1 : ℂ) + (hH.eigenvalues i : ℂ)) := by

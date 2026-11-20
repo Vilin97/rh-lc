@@ -73,7 +73,7 @@ theorem spread_of_coord (hcoord : TangentCoordinatesSmoothCommGroupLocalRing) : 
   have fmul : ∀ c d, fa (c * d) = fa c * fa d := fun c d => mat_ext fun v => T1inj (by
     rw [← key, map_mul, act.mul, ← Category.assoc, key, key, Matrix.mulVec_mulVec])
   have fadd : ∀ c d, fa (c + d) = fa c + fa d := fun c d => mat_ext fun v => T1inj (by
-    rw [← key, map_add, act.add, MonObj.comp_mul, key, key, ← T1add, Matrix.add_mulVec])
+    rw [← key, map_add (f := _), act.add, MonObj.comp_mul, key, key, ← T1add, Matrix.add_mulVec])
   have f0 : fa 0 = 0 := by
     have h := fadd 0 0; rw [add_zero] at h; exact add_left_cancel (h.symm.trans (add_zero _).symm)
   let f : 𝓞 D.F →+* Matrix (Fin n) (Fin n) C :=

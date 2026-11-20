@@ -90,7 +90,7 @@ def reduction [IsLocalRing O] (L : Submodule O (Fin n → F)) :
   carrier := {w | ∃ v : Fin n → O, inclVec O F n v ∈ L ∧ (fun i => residue O (v i)) = w}
   add_mem' := by
     rintro _ _ ⟨v, hv, rfl⟩ ⟨v', hv', rfl⟩
-    refine ⟨v + v', by rw [map_add]; exact L.add_mem hv hv', ?_⟩
+    refine ⟨v + v', by rw [map_add (f := _)]; exact L.add_mem hv hv', ?_⟩
     funext i
     simp
   zero_mem' := ⟨0, by rw [map_zero]; exact L.zero_mem, by funext i; simp⟩

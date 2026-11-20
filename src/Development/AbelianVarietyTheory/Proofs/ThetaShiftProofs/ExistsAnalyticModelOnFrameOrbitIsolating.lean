@@ -82,7 +82,7 @@ lemma transv_of_levelPar {La Y : Type} [AddCommGroup La] [Module (𝓞 E) La] [A
     have hN' : (N : ℚ) ≠ 0 := by exact_mod_cast hN.ne'
     refine ⟨(AddMonoidHom.mk' m fun a b => ?_).toIntLinearMap, hm⟩
     have e := hm (a + b)
-    rw [p2, cc_add, mul_add, map_add, hm, hm, ← mul_add] at e
+    rw [p2, cc_add, mul_add, map_add (f := _), hm, hm, ← mul_add] at e
     exact_mod_cast (mul_left_cancel₀ hN' e).symm
   obtain ⟨t', ht'⟩ := hrep θ
   refine ⟨-(φ t' : Fin r → E), X.Λ.neg_mem (φ t').2, ?_⟩
@@ -112,7 +112,7 @@ lemma re_eq_of_maj {x : Frame X.Ψ r} (hx : x ∈ X.dom) {La : Type} [AddCommGro
   simp only [he, UnipotentCoefficientShift.Hf_add_left, UnipotentCoefficientShift.Hf_add_right, Complex.add_re, hs _ (Data.emb _ (φ v)), mul_add,
     Finset.sum_add_distrib] at h1
   rw [← OfPeriod.sesq_apply, map_add P] at h1
-  simp only [map_add, LinearMap.add_apply, Complex.add_re, OfPeriod.sesq_apply] at h1
+  simp only [map_add (f := _), LinearMap.add_apply, Complex.add_re, OfPeriod.sesq_apply] at h1
   linarith
 
 lemma Hf_eq_zero {x : Frame X.Ψ r} (hx : x ∈ X.dom) {ξ : Fin r → E} (hξ : ξ ≠ 0) (m : Fin r → E) (n : ℕ) (e e' : E)
@@ -145,7 +145,7 @@ lemma exists_quot {La : Type} [AddCommGroup La] [Module (𝓞 E) La] [Module.Fin
   have hcj := herm_conj X.Gm X.Gm_herm
   let f : La →ₗ[𝓞 E] E :=
     { toFun := fun v => herm X.Gm (φ v : Fin r → E) (φ t)
-      map_add' := fun v v' => by rw [map_add, Submodule.coe_add, herm_add_left]
+      map_add' := fun v v' => by rw [map_add (f := _), Submodule.coe_add, herm_add_left]
       map_smul' := fun a v => by rw [hsm, herm_smul_left]; rfl }
   have hf0 : ∀ v, f.rangeRestrict v = 0 ↔ herm X.Gm (φ v : Fin r → E) (φ t) = 0 := fun v => Subtype.ext_iff
   have hk : ∀ v, f.rangeRestrict v = 0 ↔
@@ -254,7 +254,7 @@ theorem exists_anArc_onOrbit : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
         rw [h.apply_symm_apply] at this
         rw [← this, h.symm_apply_apply]) gam.toAddEquiv gam.map_smul hEF P hPe
     obtain ⟨hs, hPm⟩ := flow_period Uw hσ hU k hκ nn _ hξ'.2.1 sE hsE.1 hform ⟨x, hx⟩ w P hPw fun v => by
-      rw [hPe, h.symm_apply_eq, map_add, map_smul, hh, hh, hnn, A.degeneratingTori_basePeriodMap_nilpotentMap, A.Pw_apply]
+      rw [hPe, h.symm_apply_eq, map_add (f := _), map_smul, hh, hh, hnn, A.degeneratingTori_basePeriodMap_nilpotentMap, A.Pw_apply]
     exact ⟨_, hs, h, fun v => by rw [hPm, hPe, h.apply_symm_apply]⟩
   · rw [← natCast_zsmul]
     refine hct n' (fun v hv a ha ha' => ?_) a

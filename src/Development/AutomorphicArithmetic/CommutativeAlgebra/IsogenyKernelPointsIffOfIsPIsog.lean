@@ -566,10 +566,10 @@ private theorem half {E : ℕ} {r : ℤ} (o₁ o₂ o' : Obj b N σ) (ψ₁ : o�
   haveI : IsMonHom (o₁.act.act (algebraMap (𝓞 D.F) D.O t)) := o₁.act.hom _
   have hsplit : ψ₁ ≫ φ₂ = (o₁.act.act (algebraMap (𝓞 D.F) D.O a) ≫ ψ₁ ≫ φ₂) *
       (o₁.act.act (algebraMap (𝓞 D.F) D.O β) ≫ ψ₁ ≫ φ₂) := by
-    rw [← MonObj.mul_comp, ← o₁.act.add, ← map_add, hab, map_one, o₁.act.one, Category.id_comp]
+    rw [← MonObj.mul_comp, ← o₁.act.add, ← map_add (f := _), hab, map_one, o₁.act.one, Category.id_comp]
   have ha : o₁.act.act (algebraMap (𝓞 D.F) D.O a) ≫ ψ₁ ≫ φ₂ =
       M * (o₁.act.act (algebraMap (𝓞 D.F) D.O t) ≫ ψ₁ ≫ φ₂) ^ (p ^ E) := by
-    rw [ht, map_add, o₁.act.add, MonObj.mul_comp, map_mul, map_pow, map_natCast, ← Nat.cast_pow,
+    rw [ht, map_add (f := _), o₁.act.add, MonObj.mul_comp, map_mul, map_pow, map_natCast, ← Nat.cast_pow,
       o₁.act.mul, act_nat, idPow_comp, MonObj.pow_comp, ← hbβ, ← hMdef]
   refine ⟨ν ^ u' * M ^ w * (o₁.act.act (algebraMap (𝓞 D.F) D.O t) ≫ ψ₁ ≫ φ₂) * κ, ?_, ?_⟩
   · have hX : IsMonHom (o₁.act.act (algebraMap (𝓞 D.F) D.O t) ≫ ψ₁ ≫ φ₂) := inferInstance

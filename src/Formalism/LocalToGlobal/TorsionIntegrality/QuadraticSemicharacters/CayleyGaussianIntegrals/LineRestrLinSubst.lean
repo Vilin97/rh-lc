@@ -30,7 +30,7 @@ theorem lineHom_apply (v : n → K) (T : MvPowerSeries n K) : lineHom v T = line
 
 theorem lineRestr_add (v : n → K) (S T : MvPowerSeries n K) :
     lineRestr v (S + T) = lineRestr v S + lineRestr v T := by
-  simp only [← lineHom_apply, map_add]
+  simp only [← lineHom_apply, map_add (f := _)]
 
 theorem lineRestr_mul (v : n → K) (S T : MvPowerSeries n K) :
     lineRestr v (S * T) = lineRestr v S * lineRestr v T := by

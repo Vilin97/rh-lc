@@ -45,14 +45,14 @@ theorem lTensor_comp_mulLeft_of_balanced {N : Type*} [AddCommGroup N] [Module O 
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp
-    | add x y hx hy => simp only [map_add, mul_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), mul_add, hx, hy]
   have h2 : ∀ t : H ⊗[O] H, h • LinearMap.lTensor H α t
       = LinearMap.lTensor H α ((h ⊗ₜ[O] (1 : H)) * t) := by
     intro t
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [TensorProduct.smul_tmul']
-    | add x y hx hy => simp only [map_add, mul_add, smul_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), mul_add, smul_add, hx, hy]
   rw [h1, h2, hΘ]
 
 noncomputable def contractRight (Θ : H ⊗[O] H) : Module.Dual O H →ₗ[O] H where
@@ -71,7 +71,7 @@ theorem sum_contractRight_coord_tmul {ι : Type*} [Fintype ι] (b : Module.Basis
     simp only [contractRight_apply, LinearMap.lTensor_tmul, TensorProduct.rid_tmul,
       TensorProduct.smul_tmul, ← TensorProduct.tmul_sum, Module.Basis.coord_apply, b.sum_repr]
   | add x y hx hy =>
-    simp only [contractRight_apply, map_add, TensorProduct.add_tmul, Finset.sum_add_distrib] at *
+    simp only [contractRight_apply, map_add (f := _), TensorProduct.add_tmul, Finset.sum_add_distrib] at *
     rw [hx, hy]
 
 theorem contractRight_trace {ι : Type*} [Fintype ι] [DecidableEq ι] (b : Module.Basis ι O H)
@@ -87,7 +87,7 @@ theorem contractRight_trace {ι : Type*} [Fintype ι] [DecidableEq ι] (b : Modu
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [TensorProduct.smul_tmul']
-    | add x y hx hy => simp only [map_add, mul_add, smul_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), mul_add, smul_add, hx, hy]
   conv_rhs => rw [← sum_contractRight_coord_tmul b Θ]
   set_option synthInstance.maxHeartbeats 100000 in
     rw [htr, map_sum, map_sum]
@@ -149,7 +149,7 @@ theorem eq_zero_of_lTensor_eq_zero_of_balanced [Module.Free O H] [Module.Finite 
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [ga]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [this]
   exact hsm _ _ hvW
 

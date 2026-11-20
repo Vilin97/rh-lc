@@ -36,7 +36,7 @@ def redSub (hρ : Function.Surjective ρ) {A₁ : Over (Sp R₁)} [GrpObj A₁] 
   add_mem' := by
     rintro y y' ⟨x, hx, e⟩ ⟨x', hx', e'⟩
     exact ⟨x + x', F.add_mem hx hx', fun c ↦ by
-      rw [LinearMap.add_apply, LinearMap.add_apply, e, e', map_add]⟩
+      rw [LinearMap.add_apply, LinearMap.add_apply, e, e', map_add (f := _)]⟩
   zero_mem' := ⟨0, F.zero_mem, fun c ↦ by simp⟩
   smul_mem' := by
     rintro r₁ y ⟨x, hx, e⟩

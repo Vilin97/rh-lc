@@ -60,7 +60,7 @@ theorem exists_denom_of_injective {R K B S : Type} [CommRing R] [IsDomain R] [Fi
       obtain ⟨d, hd, b, hb⟩ := hx
       obtain ⟨e, he, c, hc⟩ := hy
       refine ⟨d * e, mul_ne_zero hd he, ρ e * b + ρ d * c, fun i => ?_⟩
-      simp only [map_add, map_mul, hρ, hb, hc, Pi.add_apply]
+      simp only [map_add (f := _), map_mul, hρ, hb, hc, Pi.add_apply]
       ring
     | smul k x _ hx =>
       obtain ⟨d, hd, b, hb⟩ := hx

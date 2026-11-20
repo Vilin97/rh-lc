@@ -20,7 +20,7 @@ theorem isHomogeneous_aeval_of_weighted {σ τ : Type} (w : σ → ℕ) (f : σ 
     (aeval f G).IsHomogeneous m := by
   induction hG using IsWeightedHomogeneous.induction_on with
   | zero => rw [map_zero]; exact isHomogeneous_zero _ _ _
-  | add p q _ _ hp hq => rw [map_add]; exact hp.add hq
+  | add p q _ _ hp hq => rw [map_add (f := _)]; exact hp.add hq
   | monomial d r hr =>
     rw [aeval_monomial, ← hr, Finsupp.weight_apply, Finsupp.prod, Finsupp.sum, algebraMap_eq]
     refine IsHomogeneous.C_mul ?_ r
@@ -43,7 +43,7 @@ theorem real_of_rat {σ ι : Type} [Finite ι] (w : σ → ℕ) (m : ℕ) (L : M
   induction hQ using IsWeightedHomogeneous.induction_on with
   | zero => simp
   | add p q _ _ hp hq =>
-    simp only [map_add, mul_add]
+    simp only [map_add (f := _), mul_add]
     rw [(hs p).tsum_add (hs q), hp, hq]
     ring
   | monomial d r hr =>
@@ -84,7 +84,7 @@ theorem capDeg_divP_pow {Z : ITh}
     Z.capDeg Z.divP ((a + Z.cD V) ^ n * Q) = Z.capDeg Z.divP (a ^ n * Q) := by
   obtain ⟨b, hb⟩ := sub_dvd_pow_sub_pow (a + Z.cD V) a n
   have : (a + Z.cD V) ^ n * Q = a ^ n * Q + Z.cD V * (b * Q) := by linear_combination Q * hb
-  rw [this, map_add, hc, Z.cD_divP, zero_mul, map_zero, add_zero]
+  rw [this, map_add (f := _), hc, Z.cD_divP, zero_mul, map_zero, add_zero]
 
 end General
 

@@ -41,7 +41,7 @@ theorem GlobalTheory.Poinc.Sep.sharpRef_equivariant_of_unif_pow : ∀ (g n : ℕ
         simp [this]
       map_add' := by
         intro mu mu'
-        simp only [hactadd, Pi.add_apply, map_add, Finset.sum_add_distrib] }
+        simp only [hactadd, Pi.add_apply, map_add (f := _), Finset.sum_add_distrib] }
   have hfb : Function.Bijective f := by
     have hA : Function.Bijective (act (W + W.transpose)) := by
       refine ⟨fun x y hxy => ?_, fun x => ⟨act (W + W.transpose)⁻¹ x, by rw [hact, hM1, hone]⟩⟩

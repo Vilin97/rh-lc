@@ -58,7 +58,7 @@ theorem mem_of_fixed_of_not_isUnit (hc : ∀ x, c (c x) = x)
   by_contra hxn
   obtain ⟨r, y, hy, hry⟩ := hn.exists_inv hxn
   have hfix : c (x * (r + c r - x * (r * c r))) = x * (r + c r - x * (r * c r)) := by
-    simp only [map_mul, map_sub, map_add, hc, hx]; ring
+    simp only [map_mul, map_sub, map_add (f := _), hc, hx]; ring
   rcases hloc _ hfix with h | h
   · exact hu (isUnit_of_mul_isUnit_left h)
   · refine hn.ne_top (n.eq_top_of_isUnit_mem ?_ h)
@@ -139,7 +139,7 @@ theorem exists_congr_insert (hc : ∀ x, c (c x) = x)
     · rw [hpq]; exact hdn q hq
     refine mem_of_forall_trace_mem c hc hw n fun t => ?_
     have h1 := mem_of_fixed_of_not_isUnit c hc hloc (by
-      simp only [map_add, map_mul, hc, hG]; ring) (hx p hp q hq hpq t) n
+      simp only [map_add (f := _), map_mul, hc, hG]; ring) (hx p hp q hq hpq t) n
     have h2 := n.sub_mem (n.sub_mem h1 (hdn p hp)) (n.mul_mem_left (t * c t) (hdn q hq))
     convert h2 using 1
     rw [map_mul, hG]
@@ -280,7 +280,7 @@ theorem exists_norm_eq_of_henselian (c : R →+* R) (hc : ∀ x, c (c x) = x)
     exact hm.ne_top (m.eq_top_of_isUnit_mem (QuadraticEtale.algebraMap_mem_of_isMaximal m h) hr)
   obtain ⟨w, hw⟩ := QuadraticEtale.exists_add_eq_one c hc hgal
   obtain ⟨ω, hω⟩ := hgal
-  obtain ⟨a, ha⟩ := hfix (ω + c ω) (by rw [map_add, hc, add_comm])
+  obtain ⟨a, ha⟩ := hfix (ω + c ω) (by rw [map_add (f := _), hc, add_comm])
   obtain ⟨n, hn⟩ := hfix (ω * c ω) (by rw [map_mul, hc, mul_comm])
   obtain ⟨n', hn'⟩ := hfix (w * c w) (by rw [map_mul, hc, mul_comm])
   obtain ⟨u, rfl⟩ := hfix u hcu
@@ -296,7 +296,7 @@ theorem exists_norm_eq_of_henselian (c : R →+* R) (hc : ∀ x, c (c x) = x)
   obtain ⟨r, rfl⟩ := residue_surjective r
   obtain ⟨s, rfl⟩ := residue_surjective s
   have hN : residue R₀ (r ^ 2 + a * r * s + n * s ^ 2) = residue R₀ u := by
-    simpa only [map_add, map_mul, map_pow] using hrs
+    simpa only [map_add (f := _), map_mul, map_pow] using hrs
   have hNu : IsUnit (r ^ 2 + a * r * s + n * s ^ 2) := by
     rw [← residue_ne_zero_iff_isUnit, hN]
     exact (hu'.map _).ne_zero
@@ -308,7 +308,7 @@ theorem exists_norm_eq_of_henselian (c : R →+* R) (hc : ∀ x, c (c x) = x)
     rw [ht]; linear_combination u * hv
   refine ⟨(algebraMap R₀ R r + algebraMap R₀ R s * ω) * (1 + algebraMap R₀ R t * w), ?_⟩
   rw [← hfinal]
-  simp only [map_add, map_mul, map_pow, map_one, hbase, ha, hn, hn']
+  simp only [map_add (f := _), map_mul, map_pow, map_one, hbase, ha, hn, hn']
   linear_combination (algebraMap R₀ R r + algebraMap R₀ R s * ω)
     * (algebraMap R₀ R r + algebraMap R₀ R s * c ω) * algebraMap R₀ R t * hw
 

@@ -71,7 +71,7 @@ theorem filV_anti : Antitone fun a => FilV PD (LL := LL) (V := V) a := by
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => exact ⟨v ⊗ₜ ⟨b.1, PD.Fil_anti a b.2⟩, rfl⟩
-  | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
 
 theorem filV_exh (x : TensorProduct Qp V BdR) : ∃ a, x ∈ FilV PD (LL := LL) (V := V) a := by
   induction x using TensorProduct.induction_on with
@@ -155,11 +155,11 @@ theorem finite_ddR_of_isField (hF : IsField BdR) [Module.Finite Qp V] (ρ : Repr
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul c v => simp [σ, TensorProduct.smul_tmul']
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
   let U : Submodule K (TensorProduct Qp BdR V) :=
     { carrier := {x | ∀ g, σ g x = x}
       zero_mem' := fun g => map_zero _
-      add_mem' := fun hx hy g => by rw [map_add, hx g, hy g]
+      add_mem' := fun hx hy g => by rw [map_add (f := _), hx g, hy g]
       smul_mem' := fun c x hx g => by
         rw [← algebraMap_smul BdR c x, hσ, hx g, AlgEquiv.commutes] }
   haveI : Module.Finite K U := finite_of_invariant (F := BdR) (fun g b => PD.actdR g b)
@@ -171,7 +171,7 @@ theorem finite_ddR_of_isField (hF : IsField BdR) [Module.Finite Qp V] (ρ : Repr
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul c v => simp [σ, actVdR]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   let f : DdR PD ρ →ₗ[Qp] U :=
     { toFun := fun x => ⟨TensorProduct.comm Qp V BdR x, fun g => by
         have := x.2

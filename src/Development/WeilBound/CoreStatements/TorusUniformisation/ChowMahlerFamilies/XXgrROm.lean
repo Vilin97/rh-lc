@@ -48,7 +48,7 @@ theorem sq_bound (hv : v.Integers R) {X : Type} (s : Set (X → C)) (l : (X → 
     ∀ g ∈ sqIdeal (Submodule.span R s), v (l g) ≤ b := by
   have key : ∀ x y : X → C, v (l x) ≤ b → v (l y) ≤ b → v (l (x + y)) ≤ b := by
     intro x y hx hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact le_trans (v.map_add _ _) (max_le hx hy)
   have ksm : ∀ (r : R) (x : X → C), v (l x) ≤ b → v (l (r • x)) ≤ b := by
     intro r x hx

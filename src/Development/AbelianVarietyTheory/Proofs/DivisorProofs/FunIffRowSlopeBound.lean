@@ -109,7 +109,7 @@ theorem quotNormSq_eq [IsTotallyComplex K] {n d D : ℕ} (H : Matrix (Fin n) (Fi
       funext k
       simp only [Pi.sub_apply, map_sub, congrFun h2 k]
       rfl
-    rw [Pi.add_apply, map_add, congrFun h1 i, h3]
+    rw [Pi.add_apply, map_add (f := _), congrFun h1 i, h3]
     rfl
   refine key.trans (le_of_eq ?_)
   unfold f

@@ -99,7 +99,7 @@ theorem exists_majorant {ι : Type} (A : ι → ℂ) (B : ι → W →ₗ[ℂ] W
     refine Finset.sum_congr rfl fun j _ => ?_
     rw [← Finset.sum_add_distrib, Finset.sum_div]
     refine Finset.sum_congr rfl fun k _ => ?_
-    simp only [map_add, map_sub, LinearMap.add_apply, LinearMap.sub_apply]
+    simp only [map_add (f := _), map_sub, LinearMap.add_apply, LinearMap.sub_apply]
     ring
   rw [e', Finset.mul_sum]
   refine norm_sum_le_of_le _ fun j _ => ?_

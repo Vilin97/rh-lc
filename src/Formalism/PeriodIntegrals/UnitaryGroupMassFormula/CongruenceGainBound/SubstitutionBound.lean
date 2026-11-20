@@ -44,7 +44,7 @@ theorem IntA_one : IntA Oc (1 : MvPowerSeries σ (MvPolynomial τ Kc)) := fun n 
 
 theorem IntA_add {F G : MvPowerSeries σ (MvPolynomial τ Kc)} (hF : IntA Oc F) (hG : IntA Oc G) :
     IntA Oc (F + G) := fun n => by
-  rw [map_add]; exact coeffsIn_add Oc (hF n) (hG n)
+  rw [map_add (f := _)]; exact coeffsIn_add Oc (hF n) (hG n)
 
 theorem IntA_mul {F G : MvPowerSeries σ (MvPolynomial τ Kc)} (hF : IntA Oc F) (hG : IntA Oc G) :
     IntA Oc (F * G) := fun n => by

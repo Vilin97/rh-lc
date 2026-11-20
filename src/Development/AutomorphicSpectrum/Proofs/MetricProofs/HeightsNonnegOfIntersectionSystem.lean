@@ -51,7 +51,7 @@ theorem VanishesOnChart.add {W : Ideal (MRing ι)} {y : (Σ k, ι k) → Ω} {c 
     W.add_mem (W.mul_mem_right _ m₁) (W.mul_mem_right _ m₂), ?_⟩
   · rw [add_comm δ₁]
     exact isMultiHomog_mul h₂ (isMultiHomog_xpow c δ₁)
-  · rw [map_add, map_mul, map_mul, v₁, v₂, aeval_xpow, aeval_xpow, prod_pow_add']
+  · rw [map_add (f := _), map_mul, map_mul, v₁, v₂, aeval_xpow, aeval_xpow, prod_pow_add']
     ring
 
 theorem VanishesOnChart.mul_left {W : Ideal (MRing ι)} {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k}

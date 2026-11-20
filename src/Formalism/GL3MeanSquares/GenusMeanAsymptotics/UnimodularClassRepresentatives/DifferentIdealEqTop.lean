@@ -113,14 +113,14 @@ theorem minpoly_eq (hF : ∀ a : K, star a = a ↔ a ∈ Set.range (algebraMap F
     (ht : algebraMap (𝓞 K) K t = star (algebraMap (𝓞 K) K θ)) (hne : θ ≠ t) :
     aeval θ (derivative (minpoly (𝓞 F) θ)) = θ - t := by
   have ht' : star (algebraMap (𝓞 K) K t) = algebraMap (𝓞 K) K θ := by rw [ht, star_star]
-  obtain ⟨s, hs⟩ := exists_int_of_star_eq hF (θ + t) (by rw [map_add, star_add, ht', ← ht, add_comm])
+  obtain ⟨s, hs⟩ := exists_int_of_star_eq hF (θ + t) (by rw [map_add (f := _), star_add, ht', ← ht, add_comm])
   obtain ⟨p, hp⟩ := exists_int_of_star_eq hF (θ * t) (by rw [map_mul, star_mul', ht', ← ht, mul_comm])
   obtain ⟨q, hq⟩ : ∃ q : Polynomial (𝓞 F), q = X ^ 2 - C s * X + C p := ⟨_, rfl⟩
   have hqdeg : q.natDegree = 2 := by rw [hq]; compute_degree!
   have hqm : q.Monic := by rw [hq]; monicity!
   have hroot : aeval θ q = 0 := by
     rw [hq]
-    simp only [map_add, map_sub, map_mul, map_pow, aeval_X, aeval_C, hs, hp]
+    simp only [map_add (f := _), map_sub, map_mul, map_pow, aeval_X, aeval_C, hs, hp]
     ring
   have hint : IsIntegral (𝓞 F) θ := by
     first

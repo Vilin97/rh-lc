@@ -118,7 +118,7 @@ theorem pderiv_zero_weierstrass_difference (P : PowerSeries K) : pd 0 (wpDiff P)
     fun f => partialDeriv_inVar_of_ne (by decide) f
   have t0 : MvPowerSeries.pderiv (R := K) 0 (2 : A2) = 0 := pd_two 0
   have t1 : MvPowerSeries.pderiv (R := K) 1 (2 : A2) = 0 := pd_two 1
-  simp only [pd, map_add, map_sub, map_neg, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul, nsmul_eq_mul,
+  simp only [pd, map_add (f := _), map_sub, map_neg, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul, nsmul_eq_mul,
     MvPowerSeries.pderiv_X_self, MvPowerSeries.pderiv_X_of_ne (i := (0 : Fin 2)) (j := 1) (by decide),
     MvPowerSeries.pderiv_X_of_ne (i := (1 : Fin 2)) (j := 0) (by decide), s0, s1, n01, n10, t0, t1,
     map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, sub_zero, Nat.cast_ofNat, pow_one, pow_zero,
@@ -139,7 +139,7 @@ theorem pderiv_one_weierstrass_difference (P : PowerSeries K) : pd 1 (wpDiff P) 
     fun f => partialDeriv_inVar_of_ne (by decide) f
   have t0 : MvPowerSeries.pderiv (R := K) 0 (2 : A2) = 0 := pd_two 0
   have t1 : MvPowerSeries.pderiv (R := K) 1 (2 : A2) = 0 := pd_two 1
-  simp only [pd, map_add, map_sub, map_neg, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul, nsmul_eq_mul,
+  simp only [pd, map_add (f := _), map_sub, map_neg, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul, nsmul_eq_mul,
     MvPowerSeries.pderiv_X_self, MvPowerSeries.pderiv_X_of_ne (i := (0 : Fin 2)) (j := 1) (by decide),
     MvPowerSeries.pderiv_X_of_ne (i := (1 : Fin 2)) (j := 0) (by decide), s0, s1, n01, n10, t0, t1,
     map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, sub_zero, Nat.cast_ofNat, pow_one, pow_zero,
@@ -161,7 +161,7 @@ theorem pderiv_zero_zero_weierstrass_difference (P : PowerSeries K) : pd 0 (pd 0
     fun f => partialDeriv_inVar_of_ne (by decide) f
   have t0 : MvPowerSeries.pderiv (R := K) 0 (2 : A2) = 0 := pd_two 0
   have t1 : MvPowerSeries.pderiv (R := K) 1 (2 : A2) = 0 := pd_two 1
-  simp only [pd, map_add, map_sub, map_neg, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul, nsmul_eq_mul,
+  simp only [pd, map_add (f := _), map_sub, map_neg, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul, nsmul_eq_mul,
     MvPowerSeries.pderiv_X_self, MvPowerSeries.pderiv_X_of_ne (i := (0 : Fin 2)) (j := 1) (by decide),
     MvPowerSeries.pderiv_X_of_ne (i := (1 : Fin 2)) (j := 0) (by decide), s0, s1, n01, n10, t0, t1,
     map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, sub_zero, Nat.cast_ofNat, pow_one, pow_zero,
@@ -183,7 +183,7 @@ theorem pderiv_one_one_weierstrass_difference (P : PowerSeries K) : pd 1 (pd 1 (
     fun f => partialDeriv_inVar_of_ne (by decide) f
   have t0 : MvPowerSeries.pderiv (R := K) 0 (2 : A2) = 0 := pd_two 0
   have t1 : MvPowerSeries.pderiv (R := K) 1 (2 : A2) = 0 := pd_two 1
-  simp only [pd, map_add, map_sub, map_neg, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul, nsmul_eq_mul,
+  simp only [pd, map_add (f := _), map_sub, map_neg, Derivation.leibniz, Derivation.leibniz_pow, smul_eq_mul, nsmul_eq_mul,
     MvPowerSeries.pderiv_X_self, MvPowerSeries.pderiv_X_of_ne (i := (0 : Fin 2)) (j := 1) (by decide),
     MvPowerSeries.pderiv_X_of_ne (i := (1 : Fin 2)) (j := 0) (by decide), s0, s1, n01, n10, t0, t1,
     map_zero, mul_one, mul_zero, zero_mul, add_zero, zero_add, sub_zero, Nat.cast_ofNat, pow_one, pow_zero,
@@ -194,7 +194,7 @@ theorem Lop_mulD (N : A2) :
     Lop ((MvPowerSeries.X 0 ^ 2 - MvPowerSeries.X 1 ^ 2) * N) =
       (MvPowerSeries.X 0 ^ 2 - MvPowerSeries.X 1 ^ 2) ^ 2 * Lop N := by
   unfold Lop
-  simp only [pd, Derivation.leibniz, Derivation.leibniz_pow, map_sub, map_add, smul_eq_mul, nsmul_eq_mul,
+  simp only [pd, Derivation.leibniz, Derivation.leibniz_pow, map_sub, map_add (f := _), smul_eq_mul, nsmul_eq_mul,
     MvPowerSeries.pderiv_X_self, MvPowerSeries.pderiv_X_of_ne (i := (0 : Fin 2)) (j := 1) (by decide),
     MvPowerSeries.pderiv_X_of_ne (i := (1 : Fin 2)) (j := 0) (by decide), mul_one, mul_zero, zero_mul,
     add_zero, zero_add, Nat.cast_ofNat, pow_one, Nat.add_one_sub_one, pow_zero, sub_zero, pd_two, map_zero]
@@ -221,7 +221,7 @@ theorem Lop_wpDiff (h8 : WpReduced) {g2 g3 : K} {P : PowerSeries K} (hP : IsWp g
         MvPowerSeries.C g3 * (MvPowerSeries.X x) ^ 4 := by
     intro x
     have := congrArg (PowerSeries.substAlgHom (PowerSeries.HasSubst.X (S := K) x)) hA
-    simp only [map_sub, map_add, map_mul, map_pow, map_ofNat, map_one] at this
+    simp only [map_sub, map_add (f := _), map_mul, map_pow, map_ofNat, map_one] at this
     simp only [T, hX, series_at_variable_const] at this
     exact this
   have F2 : ∀ x : Fin 2, (MvPowerSeries.X x) ^ 2 * at1 x (dz (dz P)) =
@@ -229,7 +229,7 @@ theorem Lop_wpDiff (h8 : WpReduced) {g2 g3 : K} {P : PowerSeries K} (hP : IsWp g
         MvPowerSeries.C (g2 / 2) * (MvPowerSeries.X x) ^ 2 := by
     intro x
     have := congrArg (PowerSeries.substAlgHom (PowerSeries.HasSubst.X (S := K) x)) hB
-    simp only [map_sub, map_add, map_mul, map_pow, map_ofNat, map_one] at this
+    simp only [map_sub, map_add (f := _), map_mul, map_pow, map_ofNat, map_one] at this
     simp only [T, hX, series_at_variable_const] at this
     exact this
   have F1a := F1 0
@@ -461,12 +461,12 @@ theorem AddSigma_of (hL : AddSigmaLog) (h1 : ExpLogRules) (h3 : ExpLogSubst) (h9
     unfold par0 at hLog
     linear_combination hLog
   have c00 : MvPowerSeries.constantCoeff (at1 0 (sigS P) + at1 0 (sigS P) : MvPowerSeries (Fin 2) K) = 0 := by
-    rw [map_add, c0, add_zero]
+    rw [map_add (f := _), c0, add_zero]
   have c11 : MvPowerSeries.constantCoeff (at1 1 (sigS P) + at1 1 (sigS P) : MvPowerSeries (Fin 2) K) = 0 := by
-    rw [map_add, c1, add_zero]
+    rw [map_add (f := _), c1, add_zero]
   have c0011 : MvPowerSeries.constantCoeff ((at1 0 (sigS P) + at1 0 (sigS P)) +
       (at1 1 (sigS P) + at1 1 (sigS P)) : MvPowerSeries (Fin 2) K) = 0 := by
-    rw [map_add, c00, c11, add_zero]
+    rw [map_add (f := _), c00, c11, add_zero]
   have hprod : fExp (atS (sigS P)) * fExp (atD (sigS P)) =
       (fExp (at1 0 (sigS P)) * fExp (at1 0 (sigS P))) * (fExp (at1 1 (sigS P)) * fExp (at1 1 (sigS P))) *
         (1 - MvPowerSeries.X 0 ^ 2 * MvPowerSeries.X 1 ^ 2 * dq P) := by
@@ -503,10 +503,10 @@ theorem AddSgStar_of (hA : AddSigma) (h1 : ExpLogRules) (h3 : ExpLogSubst) : Add
   have q1 := hq _ (hX0 1)
   have q00 : MvPowerSeries.constantCoeff (-(MvPowerSeries.C (s2 / 2) * (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) K) ^ 2) +
       -(MvPowerSeries.C (s2 / 2) * (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) K) ^ 2)) = 0 := by
-    rw [map_add, q0, add_zero]
+    rw [map_add (f := _), q0, add_zero]
   have q11 : MvPowerSeries.constantCoeff (-(MvPowerSeries.C (s2 / 2) * (MvPowerSeries.X 1 : MvPowerSeries (Fin 2) K) ^ 2) +
       -(MvPowerSeries.C (s2 / 2) * (MvPowerSeries.X 1 : MvPowerSeries (Fin 2) K) ^ 2)) = 0 := by
-    rw [map_add, q1, add_zero]
+    rw [map_add (f := _), q1, add_zero]
   have hG : fExp (-(MvPowerSeries.C (s2 / 2) * (MvPowerSeries.X 0 + MvPowerSeries.X 1) ^ 2)) *
       fExp (-(MvPowerSeries.C (s2 / 2) * (MvPowerSeries.X 0 - MvPowerSeries.X 1) ^ 2)) =
       (fExp (-(MvPowerSeries.C (s2 / 2) * (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) K) ^ 2)) *

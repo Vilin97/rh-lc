@@ -368,7 +368,7 @@ lemma exists_limit_hom {R₀ R : Type} [CommRing R₀] [CommRing R] (φ : R₀ �
     exact map_one (β F)
   · intro a b
     filter_upwards [hmem a, hmem b, hmem (a + b)] with F ha hb hab
-    rw [hv F _ hab, hv F _ ha, hv F _ hb, ← map_add]
+    rw [hv F _ hab, hv F _ ha, hv F _ hb, ← map_add (f := _)]
     rfl
   · intro a b
     filter_upwards [hmem a, hmem b, hmem (a * b)] with F ha hb hab

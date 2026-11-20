@@ -23,7 +23,7 @@ theorem cr_evalM_rowAct {N : ℕ} (g x : Matrix (Fin N) (Fin N) ℂ) (s : MvPoly
     rw [cr_rowAct_C]
     simp [evalM]
   next p q hp hq =>
-    simp only [map_add, evalM] at hp hq ⊢
+    simp only [map_add (f := _), evalM] at hp hq ⊢
     rw [hp, hq]
   next p v hp =>
     simp only [evalM, map_mul] at hp ⊢
@@ -71,7 +71,7 @@ theorem cr_polyFun {N : ℕ} (s : MvPolynomial (Fin N × Fin N) ℂ) :
       rw [cr_rowAct_C]
       simp [Φ]
     next p q hp hq =>
-      simp only [map_add, hp, hq]
+      simp only [map_add (f := _), hp, hq]
     next p w hp =>
       simp only [map_mul, hp, cr_rowAct_X]
       set_option synthInstance.maxHeartbeats 100000 in

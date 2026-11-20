@@ -29,7 +29,7 @@ variable {D : D7}
 theorem cA_cA (z : AE D) : cA D (cA D z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => rw [RingHom.map_zero, RingHom.map_zero]
-  | add x y hx hy => rw [RingHom.map_add, RingHom.map_add, hx, hy]
+  | add x y hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), hx, hy]
   | tmul a x =>
     change a ⊗ₜ[D.host.F] star (star x) = _
     rw [star_star]
@@ -56,7 +56,7 @@ theorem redM_add (PP : Pl D.host.E) {b a : ℕ} {M N : Matrix (Fin b) (Fin a) (E
   have h2 : (M + N) i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E := add_mem (hM i j) (hN i j)
   rw [Matrix.add_apply]
   unfold redM
-  rw [dif_pos h2, dif_pos (hM i j), dif_pos (hN i j), ← RingHom.map_add]
+  rw [dif_pos h2, dif_pos (hM i j), dif_pos (hN i j), ← RingHom.map_add (f := _)]
   rfl
 
 theorem redM_neg (PP : Pl D.host.E) {b a : ℕ} {N : Matrix (Fin b) (Fin a) (EAf D)} (hN : IsIntM N) :

@@ -79,7 +79,7 @@ private theorem exists_map_eq_algebraMap_padicInt_of_isDvr {l : ℕ} [Fact l.Pri
     have e1 : f μ = f ((t.appr k : ℕ) : A) + f (w * π ^ k) := by rw [hw]; simp
     have e2 : 𝔞.a c (algebraMap ℤ_[l] c.O t) = 𝔞.a c (algebraMap ℤ_[l] c.O ((t.appr k : ℕ) : ℤ_[l]))
         + 𝔞.a c (algebraMap ℤ_[l] c.O (w' * (l : ℤ_[l]) ^ k)) := by
-      rw [hw', ← map_add, ← map_add]; simp
+      rw [hw', ← map_add (f := _), ← map_add (f := _)]; simp
     rw [hd_def, e1, e2]
     simp only [map_natCast, map_mul, map_pow]
     rw [hl]
@@ -170,7 +170,7 @@ private theorem exists_finset_coef_mem_subfield_closure_of_isDvr {l : ℕ} [Fact
     exact Subfield.subset_closure
       (Or.inr (Finset.mem_coe.mpr (Finset.mem_image_of_mem _ (Finset.mem_univ i))))
   | zero => rw [map_zero, map_zero]; exact Subfield.zero_mem _
-  | add x z _ _ hx hz => rw [map_add, map_add]; exact Subfield.add_mem _ hx hz
+  | add x z _ _ hx hz => rw [map_add (f := _), map_add (f := _)]; exact Subfield.add_mem _ hx hz
   | smul t x _ hx =>
     rw [Algebra.smul_def, map_mul, map_mul]
     refine Subfield.mul_mem _ ?_ hx

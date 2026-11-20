@@ -176,7 +176,7 @@ theorem kFix_iff_mem_chiPart : GlobalTheory.RealLift.ActsLaws → GlobalTheory.R
       rw [eq_neg_of_add_eq_zero_left hz, ← neg_smul, neg_mul, neg_neg]
     intro w Xm hXm
     obtain ⟨Y₁, Y₂, h1u, h1k, h2u, h2k, rfl⟩ := isKC_decomp Xm hXm
-    rw [map_add, map_smul, GlobalTheory.TensIrr.atPl_add, GlobalTheory.TensIrr.atPl_smul, LinearMap.add_apply, LinearMap.smul_apply,
+    rw [map_add (f := _), map_smul, GlobalTheory.TensIrr.atPl_add, GlobalTheory.TensIrr.atPl_smul, LinearMap.add_apply, LinearMap.smul_apply,
       key w Y₁ h1u h1k, key w Y₂ h2u h2k, Matrix.trace_add, Matrix.trace_smul, smul_smul, ← add_smul]
     congr 1
     simp only [smul_eq_mul]

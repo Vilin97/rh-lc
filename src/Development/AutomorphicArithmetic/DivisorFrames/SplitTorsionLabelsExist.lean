@@ -117,7 +117,7 @@ theorem UpperTheory.split_torsion_labels_exist :
     rw [← Category.assoc, hlb, hlb]
     exact I.lin q o a
   · intro k k'
-    rw [← zpow_add, ← map_add]
+    rw [← zpow_add, ← map_add (f := _)]
     refine hwd _ _ _ ?_
     exact (hbk (k * k')).trans ((map_mul e.symm k.1 k'.1).trans
       ((congrArg₂ (· * ·) (hbk k) (hbk k')).symm.trans (hadd _ _).symm))

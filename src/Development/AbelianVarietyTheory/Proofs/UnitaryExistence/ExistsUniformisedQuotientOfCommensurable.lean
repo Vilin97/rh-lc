@@ -92,7 +92,7 @@ theorem exists_uniformised_quotient_of_commensurable : Out.Laws → (∀ (E : Ty
   let φ : Multiplicative D'.La →* (𝟙_ (Over (Sp ℂ)) ⟶ t.G) :=
     { toFun := fun a => e ((N : ℂ)⁻¹ • P' a.toAdd)
       map_one' := by rw [toAdd_one, map_zero, smul_zero, e0]
-      map_mul' := fun a b => by rw [toAdd_mul, map_add, smul_add, hadd] }
+      map_mul' := fun a b => by rw [toAdd_mul, map_add (f := _), smul_add, hadd] }
   have hmem : ∀ x, x ∈ φ.range ↔ ∃ a, e ((N : ℂ)⁻¹ • P' a) = x := fun x => Iff.rfl
   have hrw : ∀ (k : ℕ) a, ((k * N ^ 2 : ℕ) : ℂ)⁻¹ • P (j' a) = (N : ℂ)⁻¹ • (k : ℂ)⁻¹ • P' a := fun k a => by
     rw [hj', smul_smul, smul_smul]

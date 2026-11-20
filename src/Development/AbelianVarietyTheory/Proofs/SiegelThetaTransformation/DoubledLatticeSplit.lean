@@ -108,7 +108,7 @@ theorem pair_sub_left (x x' y : Fin r → E) : pair (x - x') y = pair x y - pair
   simp only [pair, Pi.sub_apply, sub_mul, Finset.sum_sub_distrib]
 
 theorem pair_add_right (x y y' : Fin r → E) : pair x (y + y') = pair x y + pair x y' := by
-  simp only [pair, cc, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [pair, cc, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem pair_sub_right (x y y' : Fin r → E) : pair x (y - y') = pair x y - pair x y' := by
   simp only [pair, cc, Pi.sub_apply, map_sub, mul_sub, Finset.sum_sub_distrib]
@@ -123,7 +123,7 @@ theorem pair_vecMul (x y : Fin r → E) (M : Matrix (Fin r) (Fin r) E) :
 
 theorem ccT_add (A B : Matrix (Fin r) (Fin r) E) : ccT (A + B) = ccT A + ccT B := by
   ext i j
-  simp [ccT, cc, map_add]
+  simp [ccT, cc, map_add (f := _)]
 
 theorem ccT_sub (A B : Matrix (Fin r) (Fin r) E) : ccT (A - B) = ccT A - ccT B := by
   ext i j

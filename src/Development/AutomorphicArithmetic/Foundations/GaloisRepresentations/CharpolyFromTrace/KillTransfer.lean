@@ -12,7 +12,7 @@ theorem UpperTheory.Gal.NearKilling.killTransfer : KillTransfer := by
     intro y
     induction y using MonoidAlgebra.induction_on with
     | of g => simpa [Representation.asAlgebraHom_of] using htr g
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | smul c a ha => simp only [map_smul, ha]
   have h2 : ∀ g : I, LinearMap.trace ℂ V (ρ.asAlgebraHom x * ρ g) = 0 := by
     intro g
@@ -49,7 +49,7 @@ theorem UpperTheory.Gal.NearKilling.killTransfer : KillTransfer := by
       rw [Representation.asAlgebraHom_of, ← hr]
       exact Submodule.subset_span ⟨g, rfl⟩
     | add a c ha hc =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact Submodule.add_mem _ ha hc
     | smul c a ha =>
       rw [map_smul, map_smul]

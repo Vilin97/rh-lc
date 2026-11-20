@@ -107,7 +107,7 @@ theorem foComm_anticomm (c : K → V → ℂ) (ε : K → Ext m →L[ℂ] Ext m)
     intro k
     cases hk : vt k
     set_option synthInstance.maxHeartbeats 100000 in
-      · simp only [foOp, map_add, map_sum, map_smul, h5 _ k hk, h6 k hk, smul_add, Finset.smul_sum,
+      · simp only [foOp, map_add (f := _), map_sum, map_smul, h5 _ k hk, h6 k hk, smul_add, Finset.smul_sum,
         smul_neg, Finset.sum_neg_distrib, smul_comm (c _ P) (c k P * _)]
       abel
     · simp [h1 k hk]
@@ -120,7 +120,7 @@ theorem foComm_anticomm (c : K → V → ℂ) (ε : K → Ext m →L[ℂ] Ext m)
       set_option synthInstance.maxHeartbeats 100000 in
         rw [hd, map_sum, Finset.smul_sum, ← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun k _ => ?_
-      simp only [map_add, map_smul, smul_add, smul_smul, mul_assoc]
+      simp only [map_add (f := _), map_smul, smul_add, smul_smul, mul_assoc]
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [foComm, map_sum]
   rw [e, hX0, zero_add, foComm, ← Finset.sum_add_distrib]

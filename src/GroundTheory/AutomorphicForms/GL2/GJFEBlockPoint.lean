@@ -287,7 +287,7 @@ def blockBForm (μ : Measure (GL (Fin m) F)) (σ : Representation ℂ (GL (Fin m
     W →ₗ[ℂ] smoothVectors (Representation.dual σ) →ₗ[ℂ] ℂ :=
   LinearMap.mk₂ ℂ (fun w l => blockB μ σ Ψ w (l : Module.Dual ℂ W) s)
     (fun w₁ w₂ l => by
-      simp only [blockB, map_add, mul_add]
+      simp only [blockB, map_add (f := _), mul_add]
       exact integral_add (hint _ _ l.2) (hint _ _ l.2))
     (fun c w l => by
       simp only [blockB, map_smul, smul_eq_mul]

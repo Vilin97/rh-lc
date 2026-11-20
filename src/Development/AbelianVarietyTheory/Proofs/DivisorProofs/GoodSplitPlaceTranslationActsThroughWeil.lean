@@ -50,7 +50,7 @@ theorem linear_of_acts {F : Type} [Field F] [NumberField F] {κ : Type} [Fintype
     intro f f'; funext x; simp only [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens, Pi.add_apply, Pi.smul_apply, smul_eq_mul]; ring
   have e : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v) (S (c • φ + φ')) R =
       GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens (evFin F v) (c • S φ + S φ') R := by
-    rw [← (hS _ hs).2 R (hR _ hs), tl, tl, map_add, map_smul, (hS φ hφ).2 R (hR φ hφ), (hS φ' hφ').2 R (hR φ' hφ')]
+    rw [← (hS _ hs).2 R (hR _ hs), tl, tl, map_add (f := _), map_smul, (hS φ hφ).2 R (hR φ hφ), (hS φ' hφ').2 R (hR φ' hφ')]
   funext y
   have hx := congrFun e (fun k => GlobalTheory.LatVac.liftV v (y k))
   have hRx : R (fun k => GlobalTheory.LatVac.liftV v (y k)) = R 0 := by

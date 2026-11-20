@@ -16,7 +16,7 @@ theorem unitAt_of_cong {X : Scheme.{0}} [IsIntegral X] {x : X} {e f : X.function
   refine ⟨1 + a, ?_, ?_⟩
   · refine (IsLocalRing.isUnit_or_isUnit_one_sub_self _).resolve_right fun hu => ha ?_
     rwa [sub_add_cancel_left, IsUnit.neg_iff] at hu
-  · rw [map_add, map_one, ha']
+  · rw [map_add (f := _), map_one, ha']
     field_simp
     ring
 

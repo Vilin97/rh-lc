@@ -15,7 +15,7 @@ private theorem coord_mem_of_mem {A D ι : Type} [CommRing A] [CommRing D] [Alge
     rw [map_smul, Finsupp.smul_apply, smul_eq_mul]
     exact I.mul_mem_right _ ha
   · intro y z hy hz
-    rw [map_add, Finsupp.add_apply]
+    rw [map_add (f := _), Finsupp.add_apply]
     exact I.add_mem hy hz
 
 private theorem mem_smul_span_of_coord {A D ι : Type} [CommRing A] [CommRing D] [Algebra A D]

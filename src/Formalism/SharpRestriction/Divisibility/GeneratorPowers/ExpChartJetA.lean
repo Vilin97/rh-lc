@@ -41,7 +41,7 @@ theorem aeval_inr {κ : Type} [Fintype κ] [DecidableEq κ] (g : κ → R) (P : 
   induction P using MvPolynomial.induction_on with
   | C a => simp [MvPolynomial.coeff_C, zero_ne_single, TrivSqZeroExt.algebraMap_eq_inl]
   | add p q hp hq =>
-    rw [map_add, hp, hq]
+    rw [map_add (f := _), hp, hq]
     simp only [MvPolynomial.coeff_add, mul_add, Finset.sum_add_distrib, TrivSqZeroExt.inl_add,
       TrivSqZeroExt.inr_add]
     abel

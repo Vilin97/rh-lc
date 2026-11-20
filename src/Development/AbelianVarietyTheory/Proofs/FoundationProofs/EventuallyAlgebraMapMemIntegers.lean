@@ -30,7 +30,7 @@ theorem eventually_map_evalV_mem_intLoc (z : Af F ⊗[F] E) :
       Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v) (AlgHom.id F E) z ∈ intLoc F E v := by
   induction z using TensorProduct.induction_on with
   | zero => exact Eventually.of_forall fun v => by rw [map_zero]; exact zero_mem _
-  | add y z hy hz => filter_upwards [hy, hz] with v h h' using by rw [map_add]; exact add_mem h h'
+  | add y z hy hz => filter_upwards [hy, hz] with v h h' using by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
   | tmul a e =>
     filter_upwards [a.2, eventually_one_tmul_mem_intLoc (F := F) e] with v h h'
     have := mul_mem (tmul_mem_intLoc (a := Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV F v a) h (1 : 𝓞 E)) h'
@@ -198,7 +198,7 @@ theorem existsUnique_projFinLoc_eq (x : ∀ v, GLoc σ J v) (hx : ∀ᶠ v in co
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [φ, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hJ : ∀ v, (JR (Af F) J).map (φ v) = JR (Fv F v) J := fun v => by ext r s; simp [φ, JR, inclR]
   let u : GL (Fin n) (Af F ⊗[F] E) := ⟨Matrix.of A, Matrix.of B,
     hext _ _ fun v => by

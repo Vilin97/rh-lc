@@ -98,7 +98,7 @@ theorem arch (hR3 : ActionCoordinates.RealPlaceMeasures) (c : CDHaar) (hσ : IsC
     have h := hrθ (Algebra.trace (Ainf F) (Ainf F ⊗[F] E) z) ρ
     have h0 : Algebra.trace (Ainf F) (Ainf F ⊗[F] E) z ⊗ₜ[F] (1 : E) = z + sigR (Ainf F) σ z :=
       GlobalTheory.SelfDualLatticeCompare.trace_tensor (Ainf F) hσ z
-    rw [h0, map_add, GlobalTheory.Mem.VolExists.infEmb_sigR hσ (hθ ρ), Complex.add_conj] at h
+    rw [h0, map_add (f := _), GlobalTheory.Mem.VolExists.infEmb_sigR hσ (hθ ρ), Complex.add_conj] at h
     exact_mod_cast h
   have hhalf : ∀ ρ, r (algebraMap F (Ainf F) (1 / 2)) ρ = 1 / 2 := by
     intro ρ

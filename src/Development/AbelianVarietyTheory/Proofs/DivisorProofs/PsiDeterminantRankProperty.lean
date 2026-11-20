@@ -26,7 +26,7 @@ theorem detElt_transport_isom : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C
     induction r using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => rw [hf, hg]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hcomp : ∀ σ : Λ →+* O, ((γ.symm : O ≃+* O) : O →+* O).comp ((γ : O →+* O).comp σ) = σ := by
     intro σ
     ext l

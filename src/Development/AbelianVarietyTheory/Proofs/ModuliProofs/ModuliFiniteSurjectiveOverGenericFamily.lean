@@ -66,7 +66,7 @@ theorem exists_tate_of_lin (hc : l.A.Coprime l.M) {k : Type} [Field k] {Q : Type
       exact ⟨fun ⟨c, hc⟩ => ⟨c, hc.symm⟩, fun ⟨c, hc⟩ => ⟨c, hc.symm⟩⟩
     let φ : D.La →ₗ[𝓞 E] D.La ⧸ P :=
       { toFun := fun a => P.mkQ (s a)
-        map_add' := fun a b => by rw [← map_add, hP, I.add, hs, hs, hs, hadd]
+        map_add' := fun a b => by rw [← map_add (f := _), hP, I.add, hs, hs, hs, hadd]
         map_smul' := fun c a => by rw [RingHom.id_apply, ← map_smul, hP, I.lin, hs, hs, hlin] }
     haveI := D.proj
     obtain ⟨f, hf⟩ := Module.projective_lifting_property P.mkQ φ P.mkQ_surjective

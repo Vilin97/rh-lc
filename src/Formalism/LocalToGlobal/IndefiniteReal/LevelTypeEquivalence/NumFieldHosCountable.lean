@@ -152,7 +152,7 @@ theorem sigR_continuous (R : Type) [CommRing R] [Algebra F R] [TopologicalSpace 
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul r e => simp [sigR]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   rw [h]
   exact IsModuleTopology.continuous_of_linearMap _
 

@@ -75,7 +75,7 @@ section Int
 variable {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ)
 
 private theorem int_add {x y : ℂ} (hx : ‖ι.symm x‖ ≤ 1) (hy : ‖ι.symm y‖ ≤ 1) : ‖ι.symm (x + y)‖ ≤ 1 := by
-  rw [map_add]
+  rw [map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
 
 private theorem int_sub {x y : ℂ} (hx : ‖ι.symm x‖ ≤ 1) (hy : ‖ι.symm y‖ ≤ 1) : ‖ι.symm (x - y)‖ ≤ 1 := by
@@ -207,7 +207,7 @@ theorem UpperTheory.V.Sd.propE :
     rw [hcf 1 le_rfl, hs1]
     refine le_antisymm (int_sub ι (by simp) hy.le) ?_
     have hmax := IsUltrametricDist.norm_add_le_max (ι.symm (1 - c * coef (⇑G) 1)) (ι.symm (c * coef (⇑G) 1))
-    rw [← map_add, sub_add_cancel, map_one, norm_one] at hmax
+    rw [← map_add (f := _), sub_add_cancel, map_one, norm_one] at hmax
     rcases le_max_iff.1 hmax with h' | h'
     · exact h'
     · exact absurd h' (not_le.2 hy)

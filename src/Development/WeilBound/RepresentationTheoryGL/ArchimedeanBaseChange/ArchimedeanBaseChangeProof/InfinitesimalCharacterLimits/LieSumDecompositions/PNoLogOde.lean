@@ -15,7 +15,7 @@ theorem pev_eq (p : ℂ[X]) (f : ℕ → ℝ → ℂ) (t : ℝ) : pev p f t = pe
   exact congrArg p.sum (funext fun k => funext fun a => mul_comm _ _)
 
 theorem pev_add (p q : ℂ[X]) (f : ℕ → ℝ → ℂ) (t : ℝ) : pev (p + q) f t = pev p f t + pev q f t := by
-  simp only [pev_eq, map_add]
+  simp only [pev_eq, map_add (f := _)]
 
 theorem pev_C_mul (c : ℂ) (p : ℂ[X]) (f : ℕ → ℝ → ℂ) (t : ℝ) : pev (C c * p) f t = c * pev p f t := by
   simp only [pev_eq, Polynomial.C_mul', map_smul, smul_eq_mul]

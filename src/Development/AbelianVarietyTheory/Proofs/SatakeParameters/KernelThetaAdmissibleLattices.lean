@@ -39,7 +39,7 @@ theorem hatS_map (hH : ∀ x y, H (T x) (T y) = H x y) (vol : ℝ) (SA : Finset 
 theorem opU_map (hH : ∀ x y, H (T x) (T y) = H x y) (x : V) (e : V → ℂ) (z : V) :
     opU H (T x) e (T z) = opU H x (fun v => e (T v)) z := by
   unfold opU
-  rw [hH, hH, ← map_add]
+  rw [hH, hH, ← map_add (f := _)]
 
 theorem xiL_map (hH : ∀ x y, H (T x) (T y) = H x y) (hα : ∀ x, α (T x) = α x) (vol : ℝ) (SX SA SB : Finset V) (Φ e : V → ℂ) (z : V) :
     xiL H α vol (SX.image T) (SA.image T) (SB.image T) Φ e (T z) =
@@ -48,7 +48,7 @@ theorem xiL_map (hH : ∀ x y, H (T x) (T y) = H x y) (hα : ∀ x, α (T x) = �
   refine Finset.sum_congr rfl fun x _ => ?_
   rw [Finset.sum_image (fun a _ b _ h => T.injective h)]
   refine Finset.sum_congr rfl fun y _ => ?_
-  rw [hatS_map H T hH, hα, hα, hH, hH, ← map_add, opU_map H T hH]
+  rw [hatS_map H T hH, hα, hα, hH, hH, ← map_add (f := _), opU_map H T hH]
 
 theorem isReps_image {Λ₁ Λ₂ M₁ M₂ : AddSubgroup V} {S : Finset V} (hS : IsReps Λ₁ Λ₂ S) (h1 : ∀ x, T x ∈ M₁ ↔ x ∈ Λ₁)
     (h2 : ∀ x, T x ∈ M₂ ↔ x ∈ Λ₂) : IsReps M₁ M₂ (S.image T) := by

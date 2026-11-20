@@ -242,7 +242,7 @@ theorem φ_mul_gen (y : A p D d) (k : Fin d) :
     φ t (y * (single (u p k 0) 1 - single 0 (t k))) = 0 := by
   induction y using AddMonoidAlgebra.induction_linear with
   | zero => simp
-  | add x y hx hy => rw [add_mul, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [add_mul, map_add (f := _), hx, hy, add_zero]
   | single a c =>
     rw [mul_sub, single_mul_single, single_mul_single, map_sub, φ_single, φ_single, fr_add, T_add,
       add_zero, mul_one, sub_eq_zero]
@@ -255,7 +255,7 @@ theorem φ_mul_of_mem {x : A p D d} (hx : x ∈ J p t) : ∀ y, φ t (y * x) = 0
     obtain ⟨k, rfl⟩ := h
     exact fun y => φ_mul_gen t y k
   | zero => simp
-  | add x y _ _ hx hy => exact fun z => by rw [mul_add, map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => exact fun z => by rw [mul_add, map_add (f := _), hx, hy, add_zero]
   | smul a x _ hx => exact fun y => by rw [smul_eq_mul, ← mul_assoc]; exact hx _
 
 theorem φ_of_mem {x : A p D d} (hx : x ∈ J p t) : φ t x = 0 := by
@@ -313,7 +313,7 @@ theorem spanning : ⊤ ≤ Submodule.span D (Set.range fun i : I p d => cl t i.1
   obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective x
   induction y using AddMonoidAlgebra.induction_linear with
   | zero => simp
-  | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | single a c =>
     rw [mk_single, cl_eq_smul]
     exact Submodule.smul_mem _ _ (Submodule.smul_mem _ _ (Submodule.subset_span ⟨fr a, rfl⟩))

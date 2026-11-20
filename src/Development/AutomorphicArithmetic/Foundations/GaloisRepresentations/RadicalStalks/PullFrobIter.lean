@@ -55,7 +55,7 @@ private theorem pull_mem_span (p : ℕ) [Fact p.Prime] (hR : (p : R) = 0) (hR' :
     simp only
     rw [pull_primPull h g g' hg, pull_frob_iter p hR hR' h]
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   | smul r a _ ha => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ ha
 
 private theorem no_up (p : ℕ) [Fact p.Prime] (hR : (p : R) = 0) (hR' : (p : R') = 0)
@@ -71,7 +71,7 @@ private theorem no_up (p : ℕ) [Fact p.Prime] (hR : (p : R) = 0) (hR' : (p : R'
     rw [← pull_primPull h e e' he]
     exact pull_mem_span p hR hR' h g g' hg f (hN c hc)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   | smul r a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
 
 end SlopeTestRemainingChoices
@@ -140,7 +140,7 @@ private theorem no_down (p : ℕ) [Fact p.Prime] (hK : (p : K) = 0) (hL : (p : L
         exact Submodule.subset_span ⟨v, rfl⟩
       exact LinearMap.mem_range.mpr ⟨(a ^ p ^ f) ⊗ₜ[K] (⟨_, hmem⟩ : W), hΦ _ _⟩
     | add t1 t2 h1 h2 =>
-      rw [map_add, iterate_map_add, map_add]
+      rw [map_add (f := _), iterate_map_add, map_add (f := _)]
       exact Submodule.add_mem _ h1 h2
   have hle : Submodule.span L (Set.range fun c => primPull (dp0 L) (𝟙 (Sp L)) g' ((frobDR p L hL A')^[f] c)) ≤
       LinearMap.range Φ := by

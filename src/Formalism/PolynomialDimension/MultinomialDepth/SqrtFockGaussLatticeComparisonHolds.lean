@@ -530,7 +530,7 @@ private theorem coeff_pderiv_eq_coeff_add_single_mul_multinomial_depth (v : XY k
         simp [hsv]
       · rfl
   · intro p q hp hq
-    rw [map_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add, add_mul]
+    rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add, add_mul]
 
 theorem coeff_ctrF (f : PolXY K k) (m : XY k →₀ ℕ) :
     AddMonoidAlgebra.coeff (ctrF K k f) m = ∑ i : Fin k,

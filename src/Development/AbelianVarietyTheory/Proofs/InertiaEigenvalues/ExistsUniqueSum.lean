@@ -22,7 +22,7 @@ theorem coeff_map_lead (h : σ X = w * X ^ s) (hs : 0 < s) {j : ℕ} {G : R⟦X�
   obtain ⟨H, rfl⟩ := hG
   have h0 : constantCoeff (σ H) = constantCoeff H := by
     conv_lhs => rw [eq_X_mul_shift_add_const H]
-    rw [map_add, map_mul, h, show σ (C (constantCoeff H)) = C (constantCoeff H) from σ.commutes _]
+    rw [map_add (f := _), map_mul, h, show σ (C (constantCoeff H)) = C (constantCoeff H) from σ.commutes _]
     simp [hs.ne']
   have h1 : σ (X ^ j * H) = X ^ (s * j) * (w ^ j * σ H) := by
     rw [map_mul, map_pow, h, pow_mul]; ring
@@ -109,7 +109,7 @@ theorem exists_sum (h : σ X = w * X ^ s) (hs : 0 < s) (hw : IsUnit w) (b : R⟦
     rw [h1]
     ext n
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, coeff_X_pow_mul', map_sum]
+      rw [map_add (f := _), coeff_X_pow_mul', map_sum]
     simp only [coeff_mul_C, coeff_X_pow, coeff_mk]
     split_ifs with hn
     · rw [Nat.sub_add_cancel hn, Finset.sum_eq_zero, add_zero]
@@ -126,7 +126,7 @@ theorem exists_sum (h : σ X = w * X ^ s) (hs : 0 < s) (hw : IsUnit w) (b : R⟦
     have : G b k = X * G (T b) k + C (coeff k b) := by
       conv_lhs => rw [eq_X_mul_shift_add_const (G b k)]
       simp [G]
-    rw [this, map_add, map_mul]
+    rw [this, map_add (f := _), map_mul]
     congr 1
     exact σ.commutes _
   have key : ∀ n, ∀ b : R⟦X⟧, X ^ n ∣ b - ∑ k : Fin s, X ^ (k : ℕ) * σ (G b k) := by

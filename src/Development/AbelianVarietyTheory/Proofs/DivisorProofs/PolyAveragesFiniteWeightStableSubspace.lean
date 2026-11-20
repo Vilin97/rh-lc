@@ -44,7 +44,7 @@ theorem polyAverages_finiteWeightStableSubspace : PolyAvg := by
   let Xu : H → MvPolynomial (EntIdx n) ℂ →ₗ[ℂ] H := fun u =>
     { toFun := fun Q => ∫ k, eval (entVar (φ k)) Q • σ (φ k) u ∂(muK ε)
       map_add' := fun Q R => by
-        simp only [map_add, add_smul]
+        simp only [map_add (f := _), add_smul]
         exact integral_add (hint Q u) (hint R u)
       map_smul' := fun c Q => by
         simp only [smul_eval, mul_smul, RingHom.id_apply]

@@ -116,7 +116,7 @@ theorem chi_smul_rho_mul_proj {T : AddSubgroup S.Gam} (hT : S.IsoFree T) (c : T 
     ← Equiv.sum_comp (Equiv.addLeft s) fun t : T => chi S (c t) • S.ρ t]
   congr 1
   refine Finset.sum_congr rfl fun t _ => ?_
-  rw [mul_smul_comm, smul_smul, ρ_mul_ρ hT, ← chi_add, ← map_add]
+  rw [mul_smul_comm, smul_smul, ρ_mul_ρ hT, ← chi_add, ← map_add (f := _)]
   rfl
 
 theorem rho_comm (hodd : Odd S.N) (hmul : ∀ a b, S.ρ a * S.ρ b =

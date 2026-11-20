@@ -163,7 +163,7 @@ theorem isLcA_add {f g : LocallyConstant (SU A) (ZMod (l ^ n))} {x y z : A.Acr n
   have h3 := hz (e ab) (ab.1 + ab.2) (he.idem ab) fun p hp => by
     change f p + g p = _
     rw [(h ab p hp).1, (h ab p hp).2]
-  rw [h3, mul_add, h1, h2, ← hc, ← hc, ← hc, map_add, mul_add]
+  rw [h3, mul_add, h1, h2, ← hc, ← hc, ← hc, map_add (f := _), mul_add]
 
 theorem isLcA_mul {f g : LocallyConstant (SU A) (ZMod (l ^ n))} {x y z : A.Acr n}
     (hx : IsLcA A n f x) (hy : IsLcA A n g y) (hz : IsLcA A n (f * g) z) : z = x * y := by

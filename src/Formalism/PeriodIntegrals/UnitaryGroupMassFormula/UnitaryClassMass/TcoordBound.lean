@@ -84,7 +84,7 @@ theorem tcoord_bound {ι : Type} (B : Module.Basis ι F E) (m : ℤ)
     obtain ⟨u1, hu1, e1⟩ := ha
     obtain ⟨u2, hu2, e2⟩ := hb
     refine ⟨u1 + u2, add_mem hu1 hu2, ?_⟩
-    rw [mul_add, map_add, mul_add, e1, e2, mul_add]
+    rw [mul_add, map_add (f := _), mul_add, e1, e2, mul_add]
   | neg a _ ha =>
     obtain ⟨u1, hu1, e1⟩ := ha
     refine ⟨-u1, neg_mem hu1, ?_⟩

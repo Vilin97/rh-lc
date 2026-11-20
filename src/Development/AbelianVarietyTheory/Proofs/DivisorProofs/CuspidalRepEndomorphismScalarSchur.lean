@@ -23,7 +23,7 @@ def imgPart (π : CuspSub E a) (L : Subgroup (GL (Fin a) (Af E))) {W : Type} [Ad
     ∃ T : W →ₗ[ℂ] π.V, (∀ k v, T (ρ k v) = π.op (.cpt k) (T v)) ∧ T w = ψ}
   add_mem' := by
     rintro x y ⟨h1, T, h2, rfl⟩ ⟨h3, T', h4, rfl⟩
-    exact ⟨fun k hk => by rw [map_add, h1 k hk, h3 k hk], T + T', fun k v => by simp [h2, h4], rfl⟩
+    exact ⟨fun k hk => by rw [map_add (f := _), h1 k hk, h3 k hk], T + T', fun k v => by simp [h2, h4], rfl⟩
   zero_mem' := ⟨fun _ _ => map_zero _, 0, fun _ _ => by simp, rfl⟩
   smul_mem' := by
     rintro c x ⟨h1, T, h2, rfl⟩

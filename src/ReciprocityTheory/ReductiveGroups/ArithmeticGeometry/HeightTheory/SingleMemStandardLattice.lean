@@ -92,7 +92,7 @@ theorem exists_integral_completion {b : Fin k → Fin r → K} (hb : LinearIndep
     have h1 : ∑ j, g (Fin.natAdd k j) • T (c j) = 0 := by
       have := congrArg T hg
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_zero, map_sum, map_sum] at this
+        rw [map_add (f := _), map_zero, map_sum, map_sum] at this
       have h0 : ∑ i, T (g (Fin.castAdd (r - k) i) • b i) = 0 :=
         Finset.sum_eq_zero fun i _ => by
           rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]

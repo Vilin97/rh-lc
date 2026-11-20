@@ -152,8 +152,8 @@ theorem exists_positive_period_line {E : Type} [Field E] (i₀ : MvPolynomial K 
       obtain ⟨D₂, f₂, h₂, a₂, b₂⟩ := hg
       refine ⟨D₁ * D₂, f₁ * rename (v₀ k₀) D₂ + f₂ * rename (v₀ k₀) D₁, by rw [map_mul]; exact mul_ne_zero h₁ h₂,
         ?_, ?_⟩
-      · simp only [map_add, map_mul, r1, a₁, a₂]; ring
-      · simp only [map_add, map_mul, r2, b₁, b₂]; ring
+      · simp only [map_add (f := _), map_mul, r1, a₁, a₂]; ring
+      · simp only [map_add (f := _), map_mul, r2, b₁, b₂]; ring
     | mul_X f q hf =>
       obtain ⟨D₁, f₁, h₁, a₁, b₁⟩ := hf
       refine ⟨D₁, f₁ * X ⟨q.1.1, q.2⟩, h₁, ?_, ?_⟩

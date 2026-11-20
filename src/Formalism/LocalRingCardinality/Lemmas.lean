@@ -218,7 +218,7 @@ theorem range_liftBaseChange {A : Type*} [CommRing A] (O : Type*) [CommRing O] [
     | tmul c x =>
       rw [LinearMap.liftBaseChange_tmul]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨x, rfl⟩)
-    | add a b ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+    | add a b ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   · rw [Submodule.span_le]
     rintro _ ⟨x, rfl⟩
     exact ⟨1 ⊗ₜ x, by simp⟩
@@ -317,7 +317,7 @@ theorem liftBaseChange_injective_top
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul c x => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   intro s t hst
   rw [hc, hc] at hst
   exact h2 (h3 hst)
@@ -334,7 +334,7 @@ theorem liftBaseChange_injective [Module.Flat A O]
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul c x => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   intro s t hst
   rw [hc, hc] at hst
   exact h1 (liftBaseChange_injective_top hO φ b hb hst)
@@ -398,7 +398,7 @@ theorem span_inf_span_tower [Module.Flat A O]
         induction hy using Submodule.span_induction with
         | mem y hy => obtain ⟨i, rfl⟩ := hy; exact Submodule.subset_span ⟨i, rfl⟩
         | zero => simp
-        | add y y' _ _ h h' => rw [map_add]; exact Submodule.add_mem _ h h'
+        | add y y' _ _ h h' => rw [map_add (f := _)]; exact Submodule.add_mem _ h h'
         | smul k y _ h =>
           rw [map_smul, ← IsScalarTower.algebraMap_smul Kf k (φ y)]
           exact Submodule.smul_mem _ _ h
@@ -438,7 +438,7 @@ theorem span_inf_span_tower [Module.Flat A O]
       induction t using TensorProduct.induction_on with
       | zero => simp
       | tmul c x => simp [f, φq]
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
     have h0 : f.lTensor O t = 0 := by
       apply hΞ
       rw [hcomm, map_zero]
@@ -450,7 +450,7 @@ theorem span_inf_span_tower [Module.Flat A O]
       induction s using TensorProduct.induction_on with
       | zero => simp
       | tmul c x => simp
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
     rw [hc2]
     have hmem : (((φ.restrictScalars A) ∘ₗ L.subtype ∘ₗ (LinearMap.ker f).subtype).liftBaseChange O) s ∈
         LinearMap.range (((φ.restrictScalars A) ∘ₗ L.subtype ∘ₗ (LinearMap.ker f).subtype).liftBaseChange O) := ⟨s, rfl⟩
@@ -833,7 +833,7 @@ theorem fg_span_image {V W : Type*} [AddCommGroup V] [Module K V] [Module A V] [
       induction hx using Submodule.span_induction with
       | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
       | zero => simp
-      | add y y' _ _ h h' => rw [map_add]; exact Submodule.add_mem _ h h'
+      | add y y' _ _ h h' => rw [map_add (f := _)]; exact Submodule.add_mem _ h h'
       | smul a y _ h =>
         rw [← algebraMap_smul K a y, hφ, ← toO_spec w σ hσ a, algebraMap_smul]
         exact Submodule.smul_mem _ _ h

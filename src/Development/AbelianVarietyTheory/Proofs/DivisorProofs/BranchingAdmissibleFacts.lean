@@ -359,7 +359,7 @@ theorem fock_lift {lam sg : Fin n → ℕ} (hI : Interlace (lamZ lam) (fun i => 
         refine ⟨G + G', bmLift_add hG hG', fun x hx => ?_⟩
         have h1 := e x hx
         have h2 := e' x hx
-        simp only [map_add, mul_add, ← fockBL_apply] at h1 h2 ⊢
+        simp only [map_add (f := _), mul_add, ← fockBL_apply] at h1 h2 ⊢
         linear_combination h1 + h2
       zero_mem' := ⟨0, bmG_zero _ _ _ _, fun x _ => by simp [← fockBL_apply]⟩
       smul_mem' := by
@@ -504,7 +504,7 @@ theorem splitLast_blockEmb {K ι : Type} [Field K] {N n : ℕ} (hN : N = n + 1) 
           (splitLast K Unit hN (rename (fun v : Fin N × Fin N => (((), v) : Unit × Fin N × Fin N)) f))) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp only [Formalism.GradedWeylDivisibility.blockEmb, rename_C, splitLast_C, map_C, AlgHom.toRingHom_eq_coe, RingHom.coe_coe]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     have : splitLast K ι hN (Formalism.GradedWeylDivisibility.blockEmb K τ (X v)) =
       rename (fun p : Unit × Fin n => (τ, p.2))
@@ -569,7 +569,7 @@ theorem pair_gen (hI : ∀ τ, InterlacingNumerators.Interlace (lam τ) (sg τ))
       pairB sg (brStdP rfl lam sg F : Pol K ι n) (InterlacingNumerators.piAll K lam sg t) := by
   induction t using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
   | single g c =>
     have hm := piAll_mem (K := K) hI hE (Finsupp.single g 1)
     simp only [InterlacingNumerators.zPhiAll, InterlacingNumerators.piAll, Finsupp.linearCombination_single, map_smul, one_smul] at hm ⊢
@@ -591,7 +591,7 @@ theorem pair_gen (hI : ∀ τ, InterlacingNumerators.Interlace (lam τ) (sg τ))
       field_simp
       linear_combination h
     | zero => simp
-    | add y z _ _ hy hz => simp only [map_add, LinearMap.add_apply, Submodule.coe_add, hy, hz]
+    | add y z _ _ hy hz => simp only [map_add (f := _), LinearMap.add_apply, Submodule.coe_add, hy, hz]
     | smul a y _ hy => simp only [map_smul, LinearMap.smul_apply, Submodule.coe_smul, hy]
 
 theorem branchT_eq (hI : ∀ τ, InterlacingNumerators.Interlace (lam τ) (sg τ)) (hE : ∀ τ, InterlacingNumerators.EqualLast (lam τ) (sg τ)) :

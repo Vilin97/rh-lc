@@ -34,7 +34,7 @@ theorem heckePol_map (D : D7) (L : LocAll (lay0 D)) (i : (withLoc L).nd.Loc) (x 
     intro hmem
     exact hSi (((withLoc L).nd.S_def i v).2 hmem)
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [heckePol, sysPol, Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
+    simp only [heckePol, sysPol, Polynomial.map_add (f := _), Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
     Polynomial.map_mul, Polynomial.map_C]
   congr 1
   refine Finset.sum_congr rfl fun k hk => ?_

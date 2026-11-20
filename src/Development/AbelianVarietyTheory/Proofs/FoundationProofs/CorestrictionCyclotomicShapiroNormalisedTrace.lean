@@ -193,7 +193,7 @@ theorem pows_eq (p : ℕ) [Fact p.Prime] (hp2 : p ≠ 2) (L m : ℕ) (hm : 1 ≤
     refine ⟨Finset.mem_univ _, ?_⟩
     have hd : p ^ m ∣ p ^ L := pow_dvd_pow p hmL
     have h1 : (((u ^ k : (ZMod (p ^ L))ˣ) : ZMod (p ^ L)).val : ZMod (p ^ m)) = ((1 : ℕ) : ZMod (p ^ m)) := by
-      rw [← ZMod.cast_eq_val, ← ZMod.castHom_apply (h := hd), Units.val_pow_eq_pow_val, map_pow, hu, map_add, map_one,
+      rw [← ZMod.cast_eq_val, ← ZMod.castHom_apply (h := hd), Units.val_pow_eq_pow_val, map_pow, hu, map_add (f := _), map_one,
         map_pow, map_natCast, ← Nat.cast_pow, ZMod.natCast_self, add_zero, one_pow, Nat.cast_one]
     exact (ZMod.natCast_eq_natCast_iff _ _ _).1 h1
   · rw [Finset.card_image_of_injOn, Finset.card_range, IsNTr.card_filter p L m hm hmL]
@@ -351,7 +351,7 @@ theorem shapiro {G : Type} [CommGroup G] (χ : (Ω ≃ₐ[ℚ] Ω) →* G) (z : 
   have a2 := hz _ _ (stab_pow hg k) (stab_mul (stab_mul (stab_inv (stab_pow hg k)) hs) (stab_pow hg ((k + N - j) % N))) (χ g ^ k)
   have a3 := cg_map (stab_pow hg k) (h1 k hk)
   have e : g ^ k * ((g ^ k)⁻¹ * s * g ^ ((k + N - j) % N)) = s * g ^ ((k + N - j) % N) := by group
-  rw [map_add, map_sub, ← AlgEquiv.mul_apply (g ^ k) (_ * _), e, AlgEquiv.mul_apply] at a3
+  rw [map_add (f := _), map_sub, ← AlgEquiv.mul_apply (g ^ k) (_ * _), e, AlgEquiv.mul_apply] at a3
   rw [e, map_pow, mul_inv_cancel] at a2
   rw [hx k hk] at a1
   have a4 := cg_sub (cg_trans (cg_symm a1) (cg_trans a2 (cg_add (cg_refl _) a3)))
@@ -505,7 +505,7 @@ theorem cores_law : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∃ c : ℕ, ∀ {
   have k2 := cg_mul _ hpc key
   rw [mul_add, hterm] at k2
   refine cg_congr (cg_trans k2 (cg_add (cg_refl _) hab)) rfl ?_
-  simp only [map_add, map_mul, map_pow, map_natCast]
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast]
   ring
 
 end GlobalTheory.Glue.CorShap

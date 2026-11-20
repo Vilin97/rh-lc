@@ -49,12 +49,12 @@ theorem mem_smul_iff (X : Data E r) {L : Lt E r} (hL : SelfD X L) {𝔪 : Ideal 
         obtain ⟨k₂, h₂⟩ := h₂
         refine ⟨k₁ + k₂, ?_⟩
         rw [Int.cast_add, ← h₁, ← h₂]
-        simp only [TensLat.EF_eq_bilin, map_add, mul_add]
+        simp only [TensLat.EF_eq_bilin, map_add (f := _), mul_add]
     · obtain ⟨k₁, h₁⟩ := h₁
       obtain ⟨k₂, h₂⟩ := h₂
       refine ⟨k₁ + k₂, ?_⟩
       rw [Int.cast_add, ← h₁, ← h₂]
-      simp only [TensLat.EF_eq_bilin, map_add, mul_add, LinearMap.add_apply]
+      simp only [TensLat.EF_eq_bilin, map_add (f := _), mul_add, LinearMap.add_apply]
   · intro h
     have h1 : ∀ b ∈ conjI 𝔪, b • (M : E)⁻¹ • x ∈ L := by
       intro b hb

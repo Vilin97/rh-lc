@@ -90,7 +90,7 @@ theorem avg_smooth : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D 
       hl.comp (continuous_symplOH S T hL continuous_const)
     have e : φ i = fun t => -(phase lam S T (M i 1) w + ((phase lam S T (M i 1)).comp L) t) := by
       funext t
-      simp only [φ, map_add, AddMonoidHom.comp_apply]
+      simp only [φ, map_add (f := _), AddMonoidHom.comp_apply]
     rw [e]
     exact (contDiff_const.add (contDiff_additive _ hc')).neg
   have hmem : (fun k t => F k (w + L t)) ∈ 𝒢' := ⟨F, hF, rfl⟩

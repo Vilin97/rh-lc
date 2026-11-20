@@ -152,7 +152,7 @@ theorem read_normalForm : ∀ (E : Type) [Field E] [NumberField E] [StarRing E] 
       unfold Loc.eN
       rw [if_neg (by have := a.2; simp; omega)]
     have h5 : Loc.eN E (n + c) n (Fin.natAdd n ⟨0, hc⟩) = 1 := by simp [Loc.eN]
-    rw [map_smul, map_add, hγ, h3] at h2
+    rw [map_smul, map_add (f := _), hγ, h3] at h2
     simp only [Pi.smul_apply, Pi.add_apply, inX_natAdd, inX_castAdd, h4, h5, smul_eq_mul] at h2
     have h6 := h1.add (intAt_neg ((intAt_zpow (P := P) (k := -e' 1) (by have := (he' 1 le_rfl (by omega)).2; omega)).mul h2))
     convert h6 using 1

@@ -140,7 +140,7 @@ private theorem exists_sq_neg (F K : Type) [Field F] [NumberField F] [IsTotallyR
     rw [← map_mul, h1, hF]
   have hall : ∀ x, star (τ x) = τ x := fun x => by
     obtain ⟨a, b, rfl⟩ := hx x
-    simp only [map_add, map_mul, hF, ht, star_add, star_mul', Complex.star_def, Complex.conj_ofReal]
+    simp only [map_add (f := _), map_mul, hF, ht, star_add, star_mul', Complex.star_def, Complex.conj_ofReal]
   have hreal : ComplexEmbedding.IsReal (τ : K →+* ℂ) :=
     ComplexEmbedding.isReal_iff.2 (RingHom.ext hall)
   exact (InfinitePlace.not_isReal_iff_isComplex.2 (IsTotallyComplex.isComplex (InfinitePlace.mk (τ : K →+* ℂ))))
@@ -293,11 +293,11 @@ private theorem compositum (F E Ω : Type) [Field F] [NumberField F] [IsTotallyR
     · rw [← map_mul, hu, ← IsScalarTower.algebraMap_apply]
     · have hE' : ∀ x : E, algebraMap E M x ∈ L := fun x => by
         obtain ⟨y, z, rfl⟩ := hx x
-        rw [map_add, map_mul, ← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply]
+        rw [map_add (f := _), map_mul, ← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply]
         exact add_mem (L.algebraMap_mem y) (mul_mem (L.algebraMap_mem z) haL)
       have hB' : ∀ x : ↥Q.K, algebraMap ↥Q.K M x ∈ L := fun x => by
         obtain ⟨y, z, rfl⟩ := hx' x
-        rw [map_add, map_mul, ← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply]
+        rw [map_add (f := _), map_mul, ← IsScalarTower.algebraMap_apply, ← IsScalarTower.algebraMap_apply]
         exact add_mem (L.algebraMap_mem y) (mul_mem (L.algebraMap_mem z) hbL)
       have hle : M ≤ L.map M.val := sup_le
         (by rintro _ ⟨x, rfl⟩; exact ⟨algebraMap E M x, hE' x, rfl⟩)

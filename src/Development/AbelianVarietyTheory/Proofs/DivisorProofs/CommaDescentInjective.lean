@@ -38,7 +38,7 @@ theorem pull2_restrict_injective_of_comma : ∀ {R : Type} [CommRing R] {C : Typ
     have k2 := hg T t t' (φ ≫ u) a
     have k3 := hg T' t t' u a
     rw [Category.assoc] at k2
-    simp only [map_sub, map_add]
+    simp only [map_sub, map_add (f := _)]
     linear_combination -k1 - k2 + k3
   choose x hx using hx
   refine H2.mk_eq_zero.2 ⟨x, ?_⟩
@@ -50,7 +50,7 @@ theorem pull2_restrict_injective_of_comma : ∀ {R : Type} [CommRing R] {C : Typ
   have k4 := hx T' T'' ψ t u
   rw [mp_comp] at k2
   rw [d1_apply]
-  simp only [map_sub, map_add, Category.assoc] at k2 k3 ⊢
+  simp only [map_sub, map_add (f := _), Category.assoc] at k2 k3 ⊢
   linear_combination k2 - k3 + k4 - k1
 
 end GlobalTheory.CatCoh

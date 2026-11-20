@@ -68,7 +68,7 @@ theorem HasCoord.char_eq_exp {V : Type} [AddCommGroup V] [TopologicalSpace V] (h
   have hfa : ∀ u v, f (u + v) = f u * f v := fun u v => by
     apply Subtype.ext
     show χ (e.symm (u + v)) = χ (e.symm u) * χ (e.symm v)
-    rw [map_add, ha]
+    rw [map_add (f := _), ha]
   have hf0 : f 0 = 1 := by
     have := hfa 0 0
     rw [add_zero] at this
@@ -147,12 +147,12 @@ theorem sigR_tmul (r : R) (x : E) : sigR R σ (r ⊗ₜ[F] x) = r ⊗ₜ[F] σ x
 theorem sigR_invol (hσ : ∀ x, σ (σ x) = x) (z : R ⊗[F] E) : sigR R σ (sigR R σ z) = z := by
   induction z with
   | tmul r x => rw [sigR_tmul, sigR_tmul, hσ]
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 theorem sigR_smul (r : R) (z : R ⊗[F] E) : sigR R σ (r • z) = r • sigR R σ z := by
   induction z with
   | tmul s x => simp [TensorProduct.smul_tmul', sigR_tmul]
-  | add a b ha hb => rw [smul_add, map_add, ha, hb, map_add, smul_add]
+  | add a b ha hb => rw [smul_add, map_add (f := _), ha, hb, map_add (f := _), smul_add]
 
 def sigLin : R ⊗[F] E →ₗ[R] R ⊗[F] E where
   toFun := sigR R σ
@@ -166,7 +166,7 @@ theorem trace_sigR (hσ : ∀ x, σ (σ x) = x) (z : R ⊗[F] E) :
     rw [sigR_tmul, trace_tmul, trace_tmul]
     congr 2
     exact Algebra.trace_eq_of_algEquiv (AlgEquiv.ofAlgHom σ σ (AlgHom.ext hσ) (AlgHom.ext hσ)) x
-  | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
 
 theorem trace_nondeg [Algebra.IsSeparable F E] (z : R ⊗[F] E)
     (h : ∀ u, Algebra.trace R (R ⊗[F] E) (z * u) = 0) : z = 0 := by
@@ -229,7 +229,7 @@ theorem BR_comm (hσ : ∀ x, σ (σ x) = x) {M n : ℕ} {J : Matrix (Fin M) (Fi
 theorem BR_add_right {M n : ℕ} (J : Matrix (Fin M) (Fin M) E)
     (X Y Y' : Fin n → Fin M → R ⊗[F] E) :
     BR R σ J X (Y + Y') = BR R σ J X Y + BR R σ J X Y' := by
-  simp only [BR, hR, hform, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+  simp only [BR, hR, hform, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem trace_nondeg_of [Algebra.IsSeparable F E] (L : R →+ ℝ)
     (hL : ∀ t, (∀ r, L (r * t) = 0) → t = 0) (z : R ⊗[F] E)
@@ -288,7 +288,7 @@ def hermUnit (hσ : ∀ x, σ (σ x) = x) (n : ℕ) (a b : Fin n) (u : R ⊗[F] 
     intro i j
     have e1 : (j = b ∧ i = a) ↔ (i = a ∧ j = b) := and_comm
     have e2 : (j = a ∧ i = b) ↔ (i = b ∧ j = a) := and_comm
-    simp only [map_add, apply_ite (sigR R σ), map_zero, sigR_invol R σ hσ, e1, e2]
+    simp only [map_add (f := _), apply_ite (sigR R σ), map_zero, sigR_invol R σ hσ, e1, e2]
     rw [add_comm]⟩
 
 theorem pairHerm_hermUnit [CharZero F] (hσ : ∀ x, σ (σ x) = x) (n : ℕ) (S : HermR R σ n)
@@ -306,7 +306,7 @@ theorem pairHerm_hermUnit [CharZero F] (hσ : ∀ x, σ (σ x) = x) (n : ℕ) (S
     rw [show (2 : R) = algebraMap F R 2 from (map_ofNat _ 2).symm, ← map_mul,
       one_div_mul_cancel (two_ne_zero), map_one]
   unfold pairHerm
-  rw [hsum, map_add, trace_sigR R σ hσ, ← two_mul, ← mul_assoc, h2, one_mul]
+  rw [hsum, map_add (f := _), trace_sigR R σ hσ, ← two_mul, ← mul_assoc, h2, one_mul]
 
 theorem pairHerm_nondeg [CharZero F] [Algebra.IsSeparable F E] (L : R →+ ℝ)
     (hL : ∀ t, (∀ r, L (r * t) = 0) → t = 0) (hσ : ∀ x, σ (σ x) = x) (n : ℕ) (S : HermR R σ n)
@@ -444,13 +444,13 @@ theorem exists_sdW_sdHerm : ∀ (F E : Type) [Field F] [NumberField F] [Field E]
   have : BorelSpace (HermR (Ainf F) σ n) := ⟨rfl⟩
   constructor
   · exact ((hT.pi (Fin M)).pi (Fin n)).exists_selfDual (fun X Y => L (BR (Ainf F) σ J X Y))
-      (fun X Y Y' => by rw [BR_add_right, map_add])
+      (fun X Y Y' => by rw [BR_add_right, map_add (f := _)])
       (fun X => hLc.comp (continuous_BR (Ainf F) σ J X))
       (fun X Y => by rw [BR_comm (Ainf F) σ hσ hJ.1])
       (fun X h => BR_nondeg (Ainf F) σ L hLn hσ hJ.2 X h) _ (fun X Y => hLx _)
   · exact (hasCoord_herm (Ainf F) σ hA n hσ).exists_selfDual
       (fun S T => L (pairHerm (Ainf F) σ n S T))
-      (fun S T T' => by rw [pairHerm_add_right, map_add])
+      (fun S T T' => by rw [pairHerm_add_right, map_add (f := _)])
       (fun S => hLc.comp (continuous_pairHerm (Ainf F) σ n S))
       (fun S T => by rw [pairHerm_comm])
       (fun S h => pairHerm_nondeg (Ainf F) σ L hLn hσ n S h) _ (fun S T => hLx _)

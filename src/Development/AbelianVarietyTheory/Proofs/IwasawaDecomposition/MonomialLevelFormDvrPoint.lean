@@ -101,7 +101,7 @@ theorem eq_of_diag {X Y : Type} [AddCommGroup X] [AddCommGroup Y] (A : LinearMap
     (B : LinearMap.BilinForm ℤ Y) (e : X →+ Y) (k : ℤ) (hA : ∀ u v, A u v = A v u) (hB : ∀ u v, B u v = B v u)
     (h : ∀ u, A u u = k * B (e u) (e u)) (u v : X) : A u v = k * B (e u) (e v) := by
   have h1 := h (u + v)
-  simp only [map_add, LinearMap.add_apply] at h1
+  simp only [map_add (f := _), LinearMap.add_apply] at h1
   have h2 : 2 * A u v = 2 * (k * B (e u) (e v)) := by
     linear_combination h1 - h u - h v - hA v u + k * hB (e v) (e u)
   exact mul_left_cancel₀ two_ne_zero h2

@@ -101,7 +101,7 @@ theorem GlobalTheory.VacResNonvan.nonvan : ∀ (F E : Type) [Field F] [NumberFie
       by_cases hk : ∃ k', j k' = k
       · obtain ⟨k', rfl⟩ := hk; rw [hlc]; simp [(hx a).2 k']
       · rw [hx'o k hk, zero_mul]
-    rw [map_add, map_add, Prod.snd_add, Prod.snd_add, dotProduct_add, dotProduct_add, e1, e2, e3,
+    rw [map_add (f := _), map_add (f := _), Prod.snd_add, Prod.snd_add, dotProduct_add, dotProduct_add, e1, e2, e3,
       add_zero, add_zero, dotProduct_zero, zero_sub]
     have h1 := hA a ha
     have h2 := AddChar.map_add_eq_mul (GlobalTheory.LatVac.psiAt B.ψ v)
@@ -114,7 +114,7 @@ theorem GlobalTheory.VacResNonvan.nonvan : ∀ (F E : Type) [Field F] [NumberFie
   have hC : GlobalTheory.LatVac.locCo co v (Matrix.vecMulVec (incV F H.y) b) = (t, 0) := by
     refine Prod.ext (funext fun k => ?_) (funext fun k => ?_)
     · have e := congrFun (congrArg Prod.fst hγ₀e) k
-      rw [map_add, map_add] at e
+      rw [map_add (f := _), map_add (f := _)] at e
       simp only [Prod.fst_add, Pi.add_apply] at e
       by_cases hk : ∃ k', j k' = k
       · obtain ⟨k', rfl⟩ := hk

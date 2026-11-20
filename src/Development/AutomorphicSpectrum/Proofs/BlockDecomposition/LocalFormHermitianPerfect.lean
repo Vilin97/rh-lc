@@ -71,7 +71,7 @@ theorem sigR_sigR_of_invol (hσ : ∀ x, σ (σ x) = x) (t : R ⊗[F] E) : sigR 
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR, hσ]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem isUnit_det_JR (h : J.det ≠ 0) : IsUnit (JR (F := F) R J).det := by
   have h1 : (JR (F := F) R J).det = inclR (F := F) R J.det := by

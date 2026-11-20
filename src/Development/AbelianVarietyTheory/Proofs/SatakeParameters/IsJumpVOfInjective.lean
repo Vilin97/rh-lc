@@ -31,14 +31,14 @@ theorem map_mem_FilV (f : V →ₗ[LL] V') (a : ℤ) (x : V ⊗[Qp] BdR)
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 private theorem algebraTensorModule_map_id_eq_rTensor (f : V →ₗ[LL] V') (x : V ⊗[Qp] BdR) :
     AlgebraTensorModule.map f (LinearMap.id : BdR →ₗ[Qp] BdR) x = (f.restrictScalars Qp).rTensor BdR x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 private theorem comap_ker_sub_eq_ker_sub_of_injective_intertwining {M M' : Type} [AddCommGroup M] [Module LL M] [AddCommGroup M'] [Module LL M']
     (F : M →ₗ[LL] M') (hF : Function.Injective F) (A B : M →ₗ[LL] M) (A' B' : M' →ₗ[LL] M')
@@ -58,7 +58,7 @@ private theorem mem_filV_iff_of_isScalarTower {W : Type} [AddCommGroup W] [Modul
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   rw [← LinearMap.mem_ker, lTensor_mkQ, FilV, LinearMap.mem_range, LinearMap.mem_range]
   simp only [e]
 
@@ -92,13 +92,13 @@ private theorem ddRE_comap_tensorMap_eq_of_injective_equivariant (ρ : Represent
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [actVdR, he]
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   · refine iInf_congr fun c => comap_ker_sub_eq_ker_sub_of_injective_intertwining _ hF _ _ _ _ ?_ ?_
     · intro x
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul v b => simp [mulVdR]
-      | add y z hy hz => simp only [map_add, hy, hz]
+      | add y z hy hz => simp only [map_add (f := _), hy, hz]
     · intro x
       simp
 

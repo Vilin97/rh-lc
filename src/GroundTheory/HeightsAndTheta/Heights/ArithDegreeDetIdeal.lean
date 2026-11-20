@@ -76,7 +76,7 @@ theorem card_quotient_succ {r : ℕ} (E : Submodule (𝓞 K) (Fin (r + 1) → �
         rw [map_sub, hex, sub_self]
       · rintro ⟨e, he, k, hk, rfl⟩
         refine ⟨e, he, ?_⟩
-        rw [map_add, LinearMap.mem_ker.mp hk, add_zero]
+        rw [map_add (f := _), LinearMap.mem_ker.mp hk, add_zero]
     rw [← hker]
     exact Nat.card_congr (φ.quotKerEquivOfSurjective hφ).toEquiv
 

@@ -65,8 +65,8 @@ theorem darbAlg_stable {F E : Type} [Field F] [NumberField F] [Field E] [NumberF
   | zero => simp
   | add x y _ _ hx hy =>
     refine ⟨?_, ?_⟩
-    · rw [map_add]; exact Submodule.add_mem _ hx.1 hy.1
-    · simp only [map_add, hx.2, hy.2]
+    · rw [map_add (f := _)]; exact Submodule.add_mem _ hx.1 hy.1
+    · simp only [map_add (f := _), hx.2, hy.2]
   | smul c x _ hx =>
     refine ⟨?_, ?_⟩
     · rw [map_smul]; exact Submodule.smul_mem _ c hx.1

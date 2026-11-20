@@ -36,8 +36,8 @@ theorem eq_of_ratios {K A L M : Type} [Field K] [CommRing A] [Algebra K A] [Fiel
       add_mem' := by
         rintro x x' ⟨a, n, h1, h2⟩ ⟨a', n', h1', h2'⟩
         refine ⟨a * g₀ ^ n' + a' * g₀ ^ n, n + n', ?_, ?_⟩
-        · rw [map_add, map_mul, map_mul, map_pow, map_pow, ← h1, ← h1', pow_add]; ring
-        · rw [map_add, map_add, map_mul, map_mul, map_pow, map_pow, ← h2, ← h2', pow_add]; ring
+        · rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, ← h1, ← h1', pow_add]; ring
+        · rw [map_add (f := _), map_add (f := _), map_mul, map_mul, map_pow, map_pow, ← h2, ← h2', pow_add]; ring
       algebraMap_mem' := fun r => ⟨algebraMap K A r, 0, by simp, by simp⟩ }
   have hmem : ∀ x, x ∈ S ↔ ∃ (a : A) (n : ℕ), x * ι g₀ ^ n = ι a ∧ φ x * ψ g₀ ^ n = ψ a := fun x => Iff.rfl
   have hφ0 : φ (ι g₀) ≠ 0 := (map_ne_zero φ).2 h0

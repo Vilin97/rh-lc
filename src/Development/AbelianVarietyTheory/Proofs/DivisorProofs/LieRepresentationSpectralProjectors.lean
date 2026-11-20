@@ -16,7 +16,7 @@ theorem aeval_mul_of_mul_eq {g : ℕ} {T P : Matrix (Fin g) (Fin g) ℂ} {r : �
     | zero => simp
     | succ k ih => rw [pow_succ', mul_assoc, ih, mul_smul_comm, h, smul_smul, pow_succ, mul_comm (r ^ k)]
   induction q using Polynomial.induction_on' with
-  | add p q hp' hq' => rw [map_add, add_mul, hp', hq', eval_add, add_smul]
+  | add p q hp' hq' => rw [map_add (f := _), add_mul, hp', hq', eval_add, add_smul]
   | monomial k a =>
     rw [aeval_monomial, eval_monomial, Algebra.algebraMap_eq_smul_one, smul_mul_assoc, one_mul, smul_mul_assoc, hp,
       smul_smul]
@@ -188,7 +188,7 @@ theorem lie_projectors : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (R : Type) [
     have h0 : D.ω ^ 2 - (D.tr : 𝓞 D.F) * D.ω + (D.nm : 𝓞 D.F) = 0 := by
       rw [← D.tr_eq, ← D.nm_eq]; ring
     have := congrArg (τ'.comp (algebraMap (𝓞 D.F) D.F)) h0
-    simp only [map_sub, map_add, map_mul, map_pow, map_intCast, map_zero] at this
+    simp only [map_sub, map_add (f := _), map_mul, map_pow, map_intCast, map_zero] at this
     exact this
   have hτω : ∀ i, τ i (D.ω : D.F) = lam := fun i => by rw [hτ, b.t_ω]
   have hexp : ∀ x : D.F, Φ x = ∑ τ', τ' x • E τ' := by

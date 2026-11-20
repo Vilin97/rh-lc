@@ -54,7 +54,7 @@ theorem exists_components (D : D7) (V : HSp D) (g : GA D V)
     rw [hgs, GlobalTheory.IdemSupport.mt_one, Finset.sum_empty, map_zero, zero_smul, sub_zero, one_smul, zero_add]
   · intro v B hvB
     apply GlobalTheory.IdemSupport.mt_inj V
-    rw [GlobalTheory.IdemSupport.mt_mul, hgs, hgs, hgs, Finset.sum_cons, Finset.sum_singleton, map_add]
+    rw [GlobalTheory.IdemSupport.mt_mul, hgs, hgs, hgs, Finset.sum_cons, Finset.sum_singleton, map_add (f := _)]
     refine (mix_orth ?_ _).symm
     rw [hsum, Finset.mul_sum]
     exact Finset.sum_eq_zero fun w hw =>

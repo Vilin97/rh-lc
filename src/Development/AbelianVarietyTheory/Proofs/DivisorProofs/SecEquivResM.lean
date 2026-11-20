@@ -41,7 +41,7 @@ abbrev AffIn (U : T.Opens) : Type := {W : T.Opens // IsAffineOpen W ∧ W ≤ U}
 
 def fam (U : T.Opens) : AddSubgroup (∀ W : AffIn U, D.M W.1 W.2.1) where
   carrier := {m | ∀ (W W' : AffIn U) (h : W'.1 ≤ W.1), D.ρ W.2.1 W'.2.1 h (m W) = m W'}
-  add_mem' {a b} ha hb W W' h := by simp only [Pi.add_apply, map_add, ha W W' h, hb W W' h]
+  add_mem' {a b} ha hb W W' h := by simp only [Pi.add_apply, map_add (f := _), ha W W' h, hb W W' h]
   zero_mem' W W' h := by simp only [Pi.zero_apply, map_zero]
   neg_mem' {a} ha W W' h := by simp only [Pi.neg_apply, map_neg, ha W W' h]
 
@@ -67,7 +67,7 @@ instance famModule (U : T.Opens) : Module Γ(T, U) (fam D U) where
   smul_add a m m' := Subtype.ext <| funext fun W => smul_add _ _ _
   add_smul a b m := Subtype.ext <| funext fun W => by
     change resG T W.2.2 (a + b) • m.1 W = resG T W.2.2 a • m.1 W + resG T W.2.2 b • m.1 W
-    rw [map_add, add_smul]
+    rw [map_add (f := _), add_smul]
   zero_smul m := Subtype.ext <| funext fun W => by
     change resG T W.2.2 (0 : Γ(T, U)) • m.1 W = 0
     rw [map_zero, zero_smul]

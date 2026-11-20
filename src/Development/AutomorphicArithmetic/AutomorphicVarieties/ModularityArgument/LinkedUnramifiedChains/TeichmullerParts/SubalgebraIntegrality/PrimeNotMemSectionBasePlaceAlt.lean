@@ -114,7 +114,7 @@ private def formLin (ι : Qbar l ≃+* ℂ)
     (Ga l L n × GL' n V → Fin d → ℂ) →ₗ[ℂ]
       Module.Dual ℂ (⨂[ℂ] e : Emb l (fun v : V.frame.Vl => s.w v.1), nablaSq ℂ n (lam e.res)) →ₗ[ℂ] (UA L n → ℂ) :=
   LinearMap.mk₂ ℂ (toForm ι e)
-    (fun F F' ℓ => funext fun g => by simp only [toForm, Pi.add_apply, map_add])
+    (fun F F' ℓ => funext fun g => by simp only [toForm, Pi.add_apply, map_add (f := _)])
     (fun a F ℓ => funext fun g => by simp only [toForm, Pi.smul_apply, map_smul])
     (fun _ _ _ => rfl) (fun _ _ _ => rfl)
 

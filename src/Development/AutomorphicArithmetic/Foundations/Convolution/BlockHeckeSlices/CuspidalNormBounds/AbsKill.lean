@@ -70,7 +70,7 @@ theorem UpperTheory.ConvolutionTheory.BW.absKill :
   rw [hsub, map_zero, zero_smul, map_zero] at key
   let J : Ideal A :=
     { carrier := {a | ∀ ψ, c (a • ψ) = 0}
-      add_mem' := fun {a a'} ha ha' ψ => by rw [add_smul, map_add, ha, ha', add_zero]
+      add_mem' := fun {a a'} ha ha' ψ => by rw [add_smul, map_add (f := _), ha, ha', add_zero]
       zero_mem' := fun ψ => by rw [zero_smul, map_zero]
       smul_mem' := fun a a' ha ψ => by rw [smul_eq_mul, mul_comm, mul_smul]; exact ha _ }
   have hJ : ∀ a a' : A, a - a' ∈ J ↔ ∀ ψ, c (a • ψ) = c (a' • ψ) := fun a a' =>

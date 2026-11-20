@@ -52,7 +52,7 @@ private theorem exists_eps {C B OE : Type} [Field C] [CommRing B] [Algebra C B] 
   induction hz using Submodule.span_induction with
   | mem x hx => obtain ⟨a, rfl⟩ := hx; exact h2 a
   | zero => simp
-  | add x y _ _ hx hy => rw [add_mul, hx, hy, map_add, add_smul]
+  | add x y _ _ hx hy => rw [add_mul, hx, hy, map_add (f := _), add_smul]
   | smul c x _ hx => rw [smul_mul_assoc, hx, map_smul, smul_eq_mul, mul_smul]
 
 private theorem core {C B OE κ I H : Type} [Field C] [CommRing B] [Algebra C B] [CommRing OE]
@@ -102,7 +102,7 @@ private theorem core {C B OE κ I H : Type} [Field C] [CommRing B] [Algebra C B]
         induction hz using Submodule.span_induction with
         | mem x hx => obtain ⟨a, rfl⟩ := hx; exact hx' a
         | zero => simp
-        | add x y _ _ hx hy => rw [map_add, Matrix.add_mulVec, hx, hy, map_add, add_smul]
+        | add x y _ _ hx hy => rw [map_add (f := _), Matrix.add_mulVec, hx, hy, map_add (f := _), add_smul]
         | smul c x _ hx => rw [map_smul, Matrix.smul_mulVec, hx, map_smul, smul_eq_mul, mul_smul]
       obtain ⟨c, hc⟩ := (Submodule.mem_span_range_iff_exists_fun C).1 (hsp x)
       have : x = ρ ε *ᵥ (ρ e *ᵥ x) := by rw [hx2 e, he, one_smul, hx2, h1, one_smul]

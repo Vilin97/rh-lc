@@ -59,7 +59,7 @@ theorem pflat_dvd_of_roots : ∀ (p : ℕ) [Fact p.Prime] (A R : Type) [CommRing
         _ = _ := by rw [e1, hp2]; ring
     have hbp : g (b ^ p) = 0 := (hz _).2 ⟨_, mul_left_cancel₀ hp0 e2⟩
     have hz2 : z (n + 2) ^ p = z (n + 1) + b := by rw [hb]; ring
-    rw [← map_pow, ← pow_mul, mul_comm, pow_mul, hz2, map_pow, map_add, add_pow_char, ← map_pow g b, hbp,
+    rw [← map_pow, ← pow_mul, mul_comm, pow_mul, hz2, map_pow, map_add (f := _), add_pow_char, ← map_pow g b, hbp,
       add_zero, map_pow]
   let d : PreTilt R p := ⟨fun n => g (z (n + 1) ^ p), fun n => compat n⟩
   refine ⟨d, Perfection.ext fun n => ?_⟩

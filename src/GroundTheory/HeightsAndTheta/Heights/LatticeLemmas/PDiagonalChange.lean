@@ -42,7 +42,7 @@ theorem span_fibreVec_eq_top (h : HermitianMetric K E) (σ : K →+* ℂ) {ι : 
   obtain ⟨y, rfl⟩ := (FibreSpace.equiv h σ).surjective x
   induction y using TensorProduct.induction_on with
   | zero => rw [map_zero]; exact W.zero_mem
-  | add y z hy hz => rw [map_add]; exact W.add_mem hy hz
+  | add y z hy hz => rw [map_add (f := _)]; exact W.add_mem hy hz
   | tmul z e =>
     have hz : (z ⊗ₜ[𝓞 K] e : Fibre σ E) = ((ofComplex σ).symm z) • ((1 : ComplexAt σ) ⊗ₜ e) := by
       rw [← fibre_smul_eq, smul_tmul', smul_eq_mul, mul_one]
@@ -58,7 +58,7 @@ theorem gramDet_eq_of_norm_eq (h h' : HermitianMetric K E) (σ : K →+* ℂ)
   have kadd : ∀ (c : ℂ) (x y : Fibre σ E), ‖FibreSpace.equiv h' σ x + c • FibreSpace.equiv h' σ y‖ =
       ‖FibreSpace.equiv h σ (T x) + c • FibreSpace.equiv h σ (T y)‖ := by
     intro c x y
-    rw [← map_smul, ← map_add, hT, map_add, map_add, map_smul, map_smul]
+    rw [← map_smul, ← map_add (f := _), hT, map_add (f := _), map_add (f := _), map_smul, map_smul]
   have ksub : ∀ (c : ℂ) (x y : Fibre σ E), ‖FibreSpace.equiv h' σ x - c • FibreSpace.equiv h' σ y‖ =
       ‖FibreSpace.equiv h σ (T x) - c • FibreSpace.equiv h σ (T y)‖ := by
     intro c x y

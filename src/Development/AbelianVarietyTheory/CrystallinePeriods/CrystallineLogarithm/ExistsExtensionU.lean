@@ -127,7 +127,7 @@ theorem p_dvd_geom [IsDomain R] (e : Tilt p R) (he : PreTilt.untilt e = 1) :
     have h1 := AcrisZero.p_dvd_frob (Ainf.teich p e' - 1)
       (by rw [map_sub, Ainf.theta_teich, h, map_one, sub_self])
     rw [map_sub (Ainf.frob p R), hφ, map_one] at h1
-    rw [hc, map_add, map_natCast, map_mul]
+    rw [hc, map_add (f := _), map_natCast, map_mul]
     exact dvd_add dvd_rfl (h1.mul_right _)
   · have h1 := AcrisZero.p_dvd_frob (∑ i ∈ Finset.range p, Ainf.teich p e' ^ i) (by
       set_option synthInstance.maxHeartbeats 100000 in

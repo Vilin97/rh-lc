@@ -23,7 +23,7 @@ theorem exists_not_mem_sq_add_sub (F : Type) [Field F] [NumberField F]
   obtain ⟨ρ, rfl⟩ := Ideal.Quotient.mk_surjective r
   refine ⟨ρ, fun a ha => hr (Ideal.Quotient.mk _ a) ?_⟩
   have h := (Ideal.Quotient.eq_zero_iff_mem).mpr ha
-  simp only [map_sub, map_add, map_pow] at h
+  simp only [map_sub, map_add (f := _), map_pow] at h
   exact sub_eq_zero.mp h
 
 theorem exists_evenNorms_unit : ∀ (F : Type) [Field F] [NumberField F] (v : HeightOneSpectrum (𝓞 F)), ∃ Δ : v.adicCompletion F, EvenNorms Valued.v Δ ∧ Valued.v Δ = 1 ∧ Valued.v (Δ - 1) ≤ Valued.v (4 : v.adicCompletion F) := by

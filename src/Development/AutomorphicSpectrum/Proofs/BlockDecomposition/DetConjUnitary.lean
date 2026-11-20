@@ -128,7 +128,7 @@ theorem detW_eq {n : ℕ} {b : Matrix (Fin n) (Fin n) ℂ} (hb : b.IsHermitian) 
   set D : Matrix (Fin n) (Fin n) ℂ := diagonal (RCLike.ofReal ∘ hb.eigenvalues) with hD
   have hs := hb.spectral_theorem
   have h1 : 1 + b * b = Unitary.conjStarAlgAut ℂ _ hb.eigenvectorUnitary (1 + D * D) := by
-    rw [map_add, map_one, map_mul, ← hs]
+    rw [map_add (f := _), map_one, map_mul, ← hs]
   have h2 : 1 + D * D = diagonal fun i => (((1 + hb.eigenvalues i ^ 2 : ℝ)) : ℂ) := by
     rw [hD, diagonal_mul_diagonal, ← diagonal_one, diagonal_add]
     congr 1

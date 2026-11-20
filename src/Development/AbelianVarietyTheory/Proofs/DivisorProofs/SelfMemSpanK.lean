@@ -21,7 +21,7 @@ theorem spanK_stable (φ : Sm E a) : ∀ k, ∀ w ∈ spanK E a φ, cptRep E a k
     obtain ⟨k', rfl⟩ := hx
     exact Submodule.subset_span ⟨k * k', by simp only [map_mul, Module.End.mul_apply]⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem self_mem_spanK (φ : Sm E a) : φ ∈ spanK E a φ :=

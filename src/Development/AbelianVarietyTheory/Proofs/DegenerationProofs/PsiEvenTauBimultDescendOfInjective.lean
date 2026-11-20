@@ -101,7 +101,7 @@ theorem tauBimult_desc (hG : GlobalFnsSt) (hφ : Function.Injective φ) (hD : Is
     rw [Category.id_comp, Category.id_comp, Category.id_comp]
   have key : τ (hD.xe a + hD.xe a') (hD.xe b) * θ (cP D T (hD.xe a)) (cP D T (hD.xe a')) (cP D T (hD.xe b)) =
       τ (hD.xe a) (hD.xe b) * τ (hD.xe a') (hD.xe b) := by
-    rw [← βc, ← βc, ← βc, cub, ← map_add, vτ, vτ, vτ, cPoint_add]
+    rw [← βc, ← βc, ← βc, cub, ← map_add (f := _), vτ, vτ, vτ, cPoint_add]
     apply Additive.ofMul.injective
     have e' := congrArg Additive.ofMul e
     simp only [ofMul_mul, ofMul_inv] at e' ⊢

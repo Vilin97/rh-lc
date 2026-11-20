@@ -132,7 +132,7 @@ theorem algebraMap_zp_eq (m : ℤ_[p]) :
   have hm : m = (m.appr K : ℤ_[p]) + (p : ℤ_[p]) ^ K * u := by rw [← hu]; ring
   refine ⟨algebraMap ℤ_[p] (O0 p) u - algebraMap (Lau p) (O0 p) (HahnSeries.C u), ?_⟩
   conv_lhs => rw [hm]
-  simp only [map_add, map_mul, map_pow, map_natCast]
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast]
   ring
 
 theorem isAlgZp_zp (m : ℤ_[p]) : IsAlgZp p (zp Ω m) := by

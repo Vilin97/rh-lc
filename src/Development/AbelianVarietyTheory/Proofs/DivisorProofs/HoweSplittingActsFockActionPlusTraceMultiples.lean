@@ -51,10 +51,10 @@ theorem lieScalarD : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
     simp only [add_mul, add_smul, ← add_assoc]
     exact GlobalTheory.LieScal.sumPl_add_smul
       (fun w => fockAct2 (P w) (Q w) (R w) (S w) (Y w) + (c₀ w * (Y w).trace) • (1 : Module.End ℂ _)) _
-  rw [e2, LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply, map_add, map_smul]
+  rw [e2, LinearMap.add_apply, LinearMap.smul_apply, Module.End.one_apply, map_add (f := _), map_smul]
   have key : ∀ (z : ℂ) (f f' : SInf F κ), pureA F ⇑(f' + z • f) g = z • pureA F ⇑f g + pureA F ⇑f' g := by
     intro z f f'; funext x; simp [pureA]; ring
-  rw [key, map_add, map_smul, smul_eq_mul]
+  rw [key, map_add (f := _), map_smul, smul_eq_mul]
 
 end GlobalTheory.HoweD
 

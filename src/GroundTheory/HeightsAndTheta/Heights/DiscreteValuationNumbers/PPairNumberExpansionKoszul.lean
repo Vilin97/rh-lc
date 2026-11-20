@@ -53,7 +53,7 @@ theorem exists_sub_rename_pairCollapse (p : Fin n) (G : MvPolynomial (Fin n ⊕ 
     obtain ⟨Q₁, h₁⟩ := hG
     obtain ⟨Q₂, h₂⟩ := hH
     refine ⟨Q₁ + Q₂, ?_⟩
-    rw [map_add, mul_add, ← h₁, ← h₂]
+    rw [map_add (f := _), mul_add, ← h₁, ← h₂]
     ring
   | mul_X G s hG =>
     obtain ⟨Q, hQ⟩ := hG

@@ -60,7 +60,7 @@ theorem X_zero_one_dvd_sub_substZeroOne (g : MvPolynomial (Fin 1 × Fin 2) ℚ) 
   | C a => simp [substZeroOne]
   | add p q hp hq =>
     have e : p + q - substZeroOne (p + q) = (p - substZeroOne p) + (q - substZeroOne q) := by
-      simp only [map_add]; ring
+      simp only [map_add (f := _)]; ring
     rw [e]; exact dvd_add hp hq
   | mul_X p i hp =>
     have e : p * X i - substZeroOne (p * X i) =

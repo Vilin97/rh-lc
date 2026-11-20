@@ -33,14 +33,14 @@ theorem finPart_incInf (y : Ainf D.host.F ⊗[D.host.F] D.host.E) :
   | tmul a e =>
     show (0 : Af D.host.F) ⊗ₜ[D.host.F] e = 0
     exact TensorProduct.zero_tmul _ _
-  | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
 
 theorem infPart_incInf (y : Ainf D.host.F ⊗[D.host.F] D.host.E) :
     infPart D (incInf D y) = y := by
   induction y using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
   | tmul a e => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 def realPt (D : D7) (w : D.what₂.Tau → ℂ) : AE D :=
   incInf D (Formalism.IndefR.Eqv.splitInv D w)

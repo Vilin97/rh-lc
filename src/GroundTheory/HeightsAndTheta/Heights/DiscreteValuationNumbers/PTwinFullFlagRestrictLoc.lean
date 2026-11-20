@@ -233,7 +233,7 @@ def locAlg : Subalgebra O Ω where
   add_mem' := by
     rintro _ _ ⟨F, G, h1, hx, rfl⟩ ⟨F', G', h2, hx', rfl⟩
     exact ⟨F * G' + G * F', G * G', isLocFrac_add h1 h2, by rw [map_mul]; exact mul_ne_zero hx hx',
-      by rw [div_add_div _ _ hx hx', map_add, map_mul, map_mul, map_mul]⟩
+      by rw [div_add_div _ _ hx hx', map_add (f := _), map_mul, map_mul, map_mul]⟩
   algebraMap_mem' c := ⟨C c, 1, isLocFrac_C c, by simp, by simp⟩
 
 theorem mem_locAlg_iff {z : Ω} : z ∈ locAlg x Q ↔
@@ -284,8 +284,8 @@ theorem rs_add (hPQ : redIdeal O (mcIdeal O x) ≤ Q) {a b : Ω} (ha : a ∈ loc
   obtain ⟨F, G, h1, hx, rfl⟩ := ha
   obtain ⟨F', G', h2, hx', rfl⟩ := hb
   rw [rs_frac hPQ h1, rs_frac hPQ h2, rs_eq hPQ (isLocFrac_add h1 h2)
-    (by rw [div_add_div _ _ hx hx', map_add, map_mul, map_mul, map_mul])]
-  simp only [resOf, map_add, map_mul]
+    (by rw [div_add_div _ _ hx hx', map_add (f := _), map_mul, map_mul, map_mul])]
+  simp only [resOf, map_add (f := _), map_mul]
   rw [div_add_div _ _ (aeval_genPt_red_ne_zero h1.choose_spec.2.2)
     (aeval_genPt_red_ne_zero h2.choose_spec.2.2)]
 

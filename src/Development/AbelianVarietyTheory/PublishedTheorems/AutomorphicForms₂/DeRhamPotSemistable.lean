@@ -37,7 +37,7 @@ theorem actVdR_resQ (g : ↥(GK K)) (x : V ⊗[ℚ_[l]] P.R.BdR) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVdR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem DdR_resQ : DdR (P.PD K) (resQ ρ) = (DdR (P.PD K) ρ).restrictScalars ℚ_[l] := by
   ext x
@@ -54,7 +54,7 @@ theorem stRep_resQ (g : ↥(GK K)) (x : V ⊗[ℚ_[l]] Bst P) : stRep P (resQ ρ
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem mem_Dpst_resQ (x : V ⊗[ℚ_[l]] Bst P) : x ∈ Dpst P (resQ ρ) ↔ x ∈ Dpst P ρ := by
   simp only [mem_Dpst, stRep_resQ]
@@ -63,7 +63,7 @@ theorem mulV_resQ (c : ↥(MaximalUnramifiedExtension l)) (x : V ⊗[ℚ_[l]] Bs
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def dpstUrEquiv : DpstUr P (resQ ρ) ≃ₗ[↥(MaximalUnramifiedExtension l)] DpstUr P ρ where
   toFun x := toUr P ρ ⟨((toUr P (resQ ρ)).symm x).1, (mem_Dpst_resQ P ρ _).mp ((toUr P (resQ ρ)).symm x).2⟩

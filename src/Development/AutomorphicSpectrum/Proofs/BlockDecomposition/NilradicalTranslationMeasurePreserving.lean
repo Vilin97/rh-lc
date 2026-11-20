@@ -16,7 +16,7 @@ theorem det_one_add_sqZero {E : Type*} [AddCommGroup E] [Module ℝ E] [FiniteDi
   rw [Matrix.eval_charpoly] at h1
   rw [← LinearMap.det_toMatrix b, ← h1]
   congr 1
-  simp [map_add, LinearMap.toMatrix_one]
+  simp [map_add (f := _), LinearMap.toMatrix_one]
 
 theorem measurePreserving_add_one_add {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E]
     [FiniteDimensional ℝ E] [MeasurableSpace E] [BorelSpace E] (ν : Measure E)

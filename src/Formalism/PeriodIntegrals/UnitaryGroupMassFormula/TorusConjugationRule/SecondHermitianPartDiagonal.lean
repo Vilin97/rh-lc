@@ -313,7 +313,7 @@ lemma lin_single {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] (l : Fin 
       simp only [Pi.add_apply, Pi.smul_apply, Pi.single_eq_same, Complex.real_smul, mul_one]
       exact (Complex.re_add_im z).symm
     · simp [hi]
-  rw [h, map_add, map_smul, map_smul, Complex.coe_smul, Complex.coe_smul]
+  rw [h, map_add (f := _), map_smul, map_smul, Complex.coe_smul, Complex.coe_smul]
 
 theorem ruleTorus : RuleTorus := by
   intro E _ _ k r l D f hD hf c hcO g₁ hg₁ hcD
@@ -334,7 +334,7 @@ theorem ruleTorus : RuleTorus := by
       Complex.I_im, Complex.neg_re, Complex.neg_im]
     push_cast
     conv_rhs => rw [← Complex.re_add_im (c l)]
-    try simp only [Complex.star_def, map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
+    try simp only [Complex.star_def, map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I]
     generalize (c l).re = a
     generalize (c l).im = b
     match_scalars <;> ring_nf <;> (try simp only [Complex.I_sq]) <;> ring_nf
@@ -353,7 +353,7 @@ theorem ruleTorus : RuleTorus := by
       Complex.I_im, Complex.neg_re, Complex.neg_im]
     push_cast
     conv_rhs => rw [← Complex.re_add_im (c l)]
-    try simp only [Complex.star_def, map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
+    try simp only [Complex.star_def, map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I]
     generalize (c l).re = a
     generalize (c l).im = b
     match_scalars <;> ring_nf <;> (try simp only [Complex.I_sq]) <;> ring_nf

@@ -36,7 +36,7 @@ theorem flagStep_comp {Ω Ω' V V' : Type} [Field Ω] [Field Ω'] [AddCommGroup 
       exact Submodule.subset_span ⟨d, hd, rfl⟩
     · simp
     · intro x y _ _ hx hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hx hy
     · intro t x _ hx
       rw [hj]
@@ -57,7 +57,7 @@ theorem span_image_span {Ω Ω' V V' : Type} [Field Ω] [Field Ω'] [AddCommGrou
       exact Submodule.subset_span ⟨d, rfl⟩
     · simp
     · intro x y _ _ hx hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hx hy
     · intro t x _ hx
       have h1 : j (t • x) = (⟨i t, hR t t.2⟩ : R') • j x := hj (t : Ω) x

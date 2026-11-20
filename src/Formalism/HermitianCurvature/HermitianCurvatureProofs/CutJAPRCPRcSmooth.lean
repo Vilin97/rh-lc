@@ -27,7 +27,7 @@ theorem radial_coefficient_smoothness : RcSmooth := by
     show RdV _ (fun x => L (f x)) g + Complex.I • RdV _ (fun x => L (f x)) g = L (RdV _ f g + Complex.I • RdV _ f g)
     have e1 : RdV (hpart1 (Hpk k r) Z) (fun y => L (f y)) g = L (RdV _ f g) := Qx5.ntw_rd L hZ.1 f hf g hg
     have e2 : RdV (hpart2 (Hpk k r) Z) (fun y => L (f y)) g = L (RdV _ f g) := Qx5.ntw_rd L hZ.2 f hf g hg
-    rw [e1, e2, map_add, map_smul]
+    rw [e1, e2, map_add (f := _), map_smul]
 
 end
 

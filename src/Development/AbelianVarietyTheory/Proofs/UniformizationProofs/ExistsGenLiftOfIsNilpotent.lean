@@ -40,7 +40,7 @@ theorem pullSec_surjective (f : Y ⟶ X) [IsClosedImmersion f] [IsAffine X] {L :
     { carrier := {c | ∃ σ, pullSec L f ⊤ σ = (f.app ⊤).hom c • s}
       add_mem' := by
         rintro a b ⟨σ, hσ⟩ ⟨τ, hτ⟩
-        exact ⟨σ + τ, by rw [map_add, hσ, hτ, map_add, add_smul]⟩
+        exact ⟨σ + τ, by rw [map_add (f := _), hσ, hτ, map_add (f := _), add_smul]⟩
       zero_mem' := ⟨0, by rw [map_zero, map_zero, zero_smul]⟩
       smul_mem' := by
         rintro a b ⟨σ, hσ⟩

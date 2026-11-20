@@ -57,7 +57,7 @@ theorem split_move {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) {n : �
   rw [← map_mulVec']
   funext i
   have h4 : (a + b) * ((M *ᵥ y) i - y i) = (M *ᵥ y) i - y i := congrFun h3 i
-  simp only [Pi.add_apply, Pi.sub_apply, ← map_add, ← map_sub]
+  simp only [Pi.add_apply, Pi.sub_apply, ← map_add (f := _), ← map_sub]
   congr 1
   linear_combination -h4
 
@@ -97,7 +97,7 @@ theorem suppAt_inv {e : AE D} {V : HSp D} {g : GA D V} (hg : SuppAt e V g) : Sup
 theorem mem_GfC {e : AE D} (he : IsSplitIdem D e) {V : HSp D} {g : GA D V} (hg : SuppAt e V g) : g ∈ GfC V := by
   refine Units.ext (Matrix.ext fun i j => ?_)
   have h : infPart D ((mt V g - 1) i j) = 0 := by
-    rw [← hg i j, RingHom.map_mul, RingHom.map_add, GlobalTheory.SplitScalar.infPart_splitIdem he,
+    rw [← hg i j, RingHom.map_mul, RingHom.map_add (f := _), GlobalTheory.SplitScalar.infPart_splitIdem he,
       GlobalTheory.SplitScalar.infPart_splitIdem (GlobalTheory.SplitScalar.isSplitIdem_conj he), add_zero, zero_mul]
   rw [Matrix.sub_apply, RingHom.map_sub, sub_eq_zero] at h
   show infPart D (mt V g i j) = (1 : Matrix _ _ _) i j

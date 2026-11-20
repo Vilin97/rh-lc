@@ -212,7 +212,7 @@ theorem mem_span_of_average {P Z : Type} [AddCommGroup P] [Module ℂ P] [AddCom
       · rw [Function.update_of_ne e]; exact hv ρ (by simp [e, hρ])
   induction x using PiTensorProduct.induction_on with
   | smul_tprod r v => rw [map_smul]; exact Submodule.smul_mem _ _ (key Finset.univ φ v (by simp))
-  | add a b ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
 
 def glueM (D : D7) (a b : ℕ) : MultilinearMap ℂ (fun _ : D.what₂.Tau => LPol b a) (PolF D b a) :=
   (MultilinearMap.mkPiAlgebra ℂ D.what₂.Tau (PolF D b a)).compLinearMap fun τ =>
@@ -301,13 +301,13 @@ theorem exists_factor_kFin (hdec : GlobalTheory.Published.CuspDecaySobolev) {θ 
       simp only [LinearMap.compr₂_apply, slice_apply, multi_apply, s1, hIs τ X hX, hL']
       exact (ha τ).skew X hX _ _
     · simp only [LinearMap.compr₂_apply, slice_apply, multi_apply, s2, s3]
-      rw [← map_add, hIt τ Y hY, map_zero]
+      rw [← map_add (f := _), hIt τ Y hY, map_zero]
   have pB : ∀ τ p y, IsLocPair M M' τ (aS τ) (aT τ) (a' τ) ((slice (multi B) τ p y).compr₂ E) := fun τ p y => by
     refine ⟨fun X hX P P' z z' => ?_, fun Y hY P z => ?_⟩
     · simp only [LinearMap.compr₂_apply, slice_apply, multi_apply, s1, hBs τ X hX]
       exact hE τ X hX _ _ (hBg _ _) (hBg _ _) (hBs τ X hX _ _ ▸ hBg _ _) (hBs τ X hX _ _ ▸ hBg _ _)
     · simp only [LinearMap.compr₂_apply, slice_apply, multi_apply, s2, s3]
-      rw [← map_add, hBt τ Y hY, map_zero]
+      rw [← map_add (f := _), hBt τ Y hY, map_zero]
   obtain ⟨⟨T, hT⟩, hs⟩ := exists_factor (fun τ (X : lieAt V τ) => sOp M M' τ (aT τ) X) _ hirr (multi I) (multi B)
     (by by_contra hn; exact h0 (span_multi I fun p y => by_contra fun h => hn ⟨p, y, h⟩))
     (fun τ X p y => by rw [multi_apply, multi_apply, ← srcOp_glue, hIs τ X X.2])
@@ -363,7 +363,7 @@ theorem exists_mult (hG : GlobalTheory.IndefiniteRowSideFullHecke.KTypeExtension
       obtain ⟨φ, y, h0⟩ := h0
       exact h0 (by rw [← hI, e]; simp)) hIs'
     (fun τ Y hY φ y => inj (by
-      rw [map_add, hI, hI, map_zero]
+      rw [map_add (f := _), hI, hI, map_zero]
       exact hIt τ Y hY φ _ _ ((GlobalTheory.Chain.IoLift.FinTensor.kFinTensor D W S' M' τ h').2.1 _ (ha' τ) Y hY _)))
     (fun φ y => hBg _ _) (fun τ X hX φ y => hBs τ X hX _ _) fun τ Y hY φ y => by
       rw [LinearMap.compl₂_apply, LinearMap.compl₂_apply, position_tprod, inclK_update, inclK_tprod]
@@ -379,18 +379,18 @@ theorem exists_mult (hG : GlobalTheory.IndefiniteRowSideFullHecke.KTypeExtension
     | add _ _ _ _ a b => intro c; rw [smul_add]; exact h3 _ _ (a c) (b c)
     | smul a _ _ h => intro c; rw [smul_smul]; exact h _
   have hg : ∀ x, IsCuspGrow θ V (T x) := fun x => GlobalTheory.Chain.CuspGrowSpace.isCuspGrow_of_mem_span D θ V _ (hind (fun x => T x ∈ _)
-    (fun φ y => Submodule.subset_span (hT φ y ▸ hBg _ _)) (fun x y a b => by rw [map_add]; exact add_mem a b) x)
+    (fun φ y => Submodule.subset_span (hT φ y ▸ hBg _ _)) (fun x y a b => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem a b) x)
   obtain ⟨μ, 𝓕, hμ, h𝓕⟩ := GlobalTheory.Ker.HypModel.exists_haar_fundDom D V
   obtain ⟨E, hE0, -⟩ := GlobalTheory.Chain.CuspL2.exists_embedding_skew hdec D θ V μ 𝓕 hθ hμ h𝓕
   obtain ⟨U, ⟨hU, hUe⟩, -⟩ := hG θ hθ V S M J χ μ 𝓕 hμ h𝓕 (T.compMultilinearMap (PiTensorProduct.tprod ℂ))
     ⟨fun u => (hg _).1, fun u => (hg _).2.1, fun u => (hg _).2.2.1, fun u => (hE0 _ (hg _)).1, fun u => (hg _).2.2.2,
       fun u => hind (fun x => ∀ k ∈ J, ∀ g, T x (g * k) = χ k * T x g) (fun φ y => hT φ y ▸ hlev _ _)
-        (fun x y a b k hk g => by simp only [map_add, Pi.add_apply, a k hk g, b k hk g, mul_add]) _,
+        (fun x y a b k hk g => by simp only [map_add (f := _), Pi.add_apply, a k hk g, b k hk g, mul_add]) _,
       fun τ k hk u w hw => by
         obtain rfl : w = kOp M τ hk (u τ) := Subtype.ext hw
         rw [LinearMap.compMultilinearMap_apply, ← position_tprod]
         refine hind (fun x => T (intersection_update_fsHerm_neg_one τ (kOp M τ hk) x) = rTr V (atTau θ V τ k) (T x)) (fun φ y => ?_)
-          (fun x y a b => by rw [map_add, map_add, map_add, a, b]; rfl) _
+          (fun x y a b => by rw [map_add (f := _), map_add (f := _), map_add (f := _), a, b]; rfl) _
         obtain ⟨φ', -, h2⟩ := hK τ φ k hk
         rw [hT, ← (h2 _).2, ← hT]
         refine congrArg T (inj ((tensorLaw D V S M).inj ?_))
@@ -400,7 +400,7 @@ theorem exists_mult (hG : GlobalTheory.IndefiniteRowSideFullHecke.KTypeExtension
         rw [LinearMap.compMultilinearMap_apply, ← position_tprod]
         refine hind (fun x => T (intersection_update_fsHerm_neg_one τ (a τ X) x) = Rder θ V τ X (T x)) (fun φ y => ?_)
           (fun x y a b => by
-            rw [map_add, map_add, map_add, a, b, (GlobalTheory.Mem.AutSpace.linOnSm_Rder hX).add _ (hg _).2.1 _ (hg _).2.1]) _
+            rw [map_add (f := _), map_add (f := _), map_add (f := _), a, b, (GlobalTheory.Mem.AutSpace.linOnSm_Rder hX).add _ (hg _).2.1 _ (hg _).2.1]) _
         rw [← hIs' τ X hX, hT, hT, hBs τ X hX]⟩
   refine ⟨PiTensorProduct.lift U, ⟨U, Submodule.subset_span hU, rfl⟩, fun φ y => ?_⟩
   have e : PiTensorProduct.lift U ∘ₗ inclK h = T := PiTensorProduct.ext (MultilinearMap.ext fun u => by
@@ -432,19 +432,19 @@ theorem exists_trilinear {G H S P Ds : Type} [MeasurableSpace H] [AddCommGroup S
   let b : P → Ds → C →ₗ[ℂ] (G → ℂ) := fun φ v =>
     { toFun := fun F g => I fun h => th g h (pt φ) * (F : Ds →ₗ[ℂ] (H → ℂ)) v h
       map_add' := fun F F' => funext fun g => by
-        rw [Pi.add_apply, ← map_add]; congr 1; funext h; simp [mul_add]
+        rw [Pi.add_apply, ← map_add (f := _)]; congr 1; funext h; simp [mul_add]
       map_smul' := fun c F => funext fun g => by
         rw [Pi.smul_apply, ← map_smul]; congr 1; funext h; simp [mul_left_comm] }
   refine ⟨LinearMap.mk₂ ℂ b ?_ ?_ ?_ ?_, fun φ v F => funext fun g => hI _ (hint F φ v g)⟩
   · refine fun φ φ' v => LinearMap.ext fun F => funext fun g => ?_
     show I _ = I _ + I _
-    rw [← map_add]; congr 1; funext h; simp [add_mul]
+    rw [← map_add (f := _)]; congr 1; funext h; simp [add_mul]
   · refine fun c φ v => LinearMap.ext fun F => funext fun g => ?_
     show I _ = c • I _
     rw [← map_smul]; congr 1; funext h; simp [mul_assoc]
   · refine fun φ v v' => LinearMap.ext fun F => funext fun g => ?_
     show I _ = I _ + I _
-    rw [← map_add]; congr 1; funext h; simp [mul_add]
+    rw [← map_add (f := _)]; congr 1; funext h; simp [mul_add]
   · refine fun c φ v => LinearMap.ext fun F => funext fun g => ?_
     show I _ = c • I _
     rw [← map_smul]; congr 1; funext h; simp [mul_left_comm]
@@ -460,7 +460,7 @@ theorem ioExists_of_forall {G H S P Ds Dt : Type} [MeasurableSpace H] [AddCommGr
   choose u hu he using hex
   refine ⟨LinearMap.codRestrict C' ⟨⟨u, fun F F' => ?_⟩, fun c F => ?_⟩ hu, hint, fun F φ v g => ?_⟩
   · refine sub_eq_zero.1 (hun _ (sub_mem (hu _) (add_mem (hu _) (hu _))) fun φ v => ?_)
-    simp only [LinearMap.sub_apply, LinearMap.add_apply, he, map_add, sub_self]
+    simp only [LinearMap.sub_apply, LinearMap.add_apply, he, map_add (f := _), sub_self]
   · refine sub_eq_zero.1 (hun _ (sub_mem (hu _) (C'.smul_mem _ (hu _))) fun φ v => ?_)
     simp only [LinearMap.sub_apply, LinearMap.smul_apply, he, map_smul, RingHom.id_apply, sub_self]
   · exact congrFun ((hB φ v F).symm.trans (he F φ v).symm) g

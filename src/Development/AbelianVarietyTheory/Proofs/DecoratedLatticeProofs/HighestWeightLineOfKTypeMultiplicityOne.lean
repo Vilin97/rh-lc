@@ -56,7 +56,7 @@ theorem eq_smul_of_mem_span {V : Type*} [AddCommGroup V] [Module ℂ V] {act : M
   have hzw : ∀ a, act (Eab a a) z = ((μ a : ℚ) : ℂ) • z := by
     intro a
     have h1 := hwt a
-    rw [map_add, map_smul, hv a, smul_add, smul_comm c] at h1
+    rw [map_add (f := _), map_smul, hv a, smul_add, smul_comm c] at h1
     exact add_left_cancel h1
   obtain ⟨⟨l, hl0⟩, hl⟩ := weight_of_mem_span (fun a => act (Eab a a)) m'
     (fun l a => ((((μ a : ℚ) : ℝ) - drop l.1 a : ℝ) : ℂ)) (fun l a => mono_weight h hv l.1 a)
@@ -123,12 +123,12 @@ theorem isKTypeOf_span (h : BlockOrd e ε) (hσ : Factors R.U e σ) (μ : Ix p q
     obtain ⟨t, -, rfl⟩ := Submodule.mem_map.1 (Submodule.mem_inf.1 hc').2
     have hs : s ∈ S'.comap R.ι := Submodule.mem_comap.2 hs'
     have ht : t ∈ (S'ᗮ ⊓ W.map R.ι).comap R.ι := Submodule.mem_comap.2 hc'
-    have hvst : v = s + t := hι (by rw [map_add]; exact hsc.symm)
+    have hvst : v = s + t := hι (by rw [map_add (f := _)]; exact hsc.symm)
     have hsw : ∀ a, R.HK.act (Eab a a) s = ((μ a : ℚ) : ℂ) • s := by
       intro a
       have hK : IsKC (Eab a a) := isKC_Eab ((h.sameBlock_iff a a).2 rfl)
       have e1 := hvw a
-      rw [hvst, map_add, smul_add] at e1
+      rw [hvst, map_add (f := _), smul_add] at e1
       have hm1 : R.HK.act (Eab a a) s - ((μ a : ℚ) : ℂ) • s ∈ S'.comap R.ι :=
         Submodule.sub_mem _ (hS0st _ hK _ hs) (Submodule.smul_mem _ _ hs)
       have hm2 : R.HK.act (Eab a a) s - ((μ a : ℚ) : ℂ) • s ∈ (S'ᗮ ⊓ W.map R.ι).comap R.ι := by

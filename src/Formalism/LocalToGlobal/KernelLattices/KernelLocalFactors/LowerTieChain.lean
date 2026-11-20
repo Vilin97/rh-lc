@@ -26,11 +26,11 @@ theorem fock_pairing_normalized_isometry (c : Fin n → ℕ) (p q : MvPolynomial
   have H : BsForm s.natW D := by
     refine ⟨?_, ?_, ?_, ?_, ?_⟩
     · intro p p' q
-      simp only [D, map_add, fischerInner_add_left]; ring
+      simp only [D, map_add (f := _), fischerInner_add_left]; ring
     · intro c p q
       simp only [D, map_smul, bs_fock_smul_left]; ring
     · intro p q q'
-      simp only [D, map_add, fischerInner_add_right]; ring
+      simp only [D, map_add (f := _), fischerInner_add_right]; ring
     · intro c p q
       simp only [D, map_smul, bs_fock_smul_right]; ring
     · intro g p _ q _
@@ -84,7 +84,7 @@ theorem lc_blk_mem {n n' : ℕ} (A : ι → MvPolynomial (Fin n × Fin n) ℂ �
     rw [Formalism.MainNotions.product_first_zeroth_parts.blk_ten]
     exact Submodule.subset_span ⟨_, fun τ => hA τ _ (hf τ), rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem lc_ten_adj {n n' : ℕ} (A : ι → MvPolynomial (Fin n × Fin n) ℂ →ₗ[ℂ] MvPolynomial (Fin n' × Fin n') ℂ)
@@ -103,10 +103,10 @@ theorem lc_ten_adj {n n' : ℕ} (A : ι → MvPolynomial (Fin n × Fin n) ℂ �
       rw [Formalism.MainNotions.product_first_zeroth_parts.blk_ten, Formalism.MainNotions.product_first_zeroth_parts.blk_ten, lc_fock_ten, lc_fock_ten, ← Finset.prod_mul_distrib]
       exact Finset.prod_congr rfl fun τ _ => hadj τ _ (hf τ) _ (hg τ)
     | zero => rw [map_zero, lc_fockF_zero_right, lc_fockF_zero_right, mul_zero]
-    | add y y' _ _ h1 h2 => rw [map_add, fischerInner_add_right, fischerInner_add_right, h1, h2, mul_add]
+    | add y y' _ _ h1 h2 => rw [map_add (f := _), fischerInner_add_right, fischerInner_add_right, h1, h2, mul_add]
     | smul c y _ h1 => rw [map_smul, bs_fock_smul_right, bs_fock_smul_right, h1]; ring
   | zero => rw [map_zero, nm_fockF_zero_left, nm_fockF_zero_left, mul_zero]
-  | add x x' _ _ h1 h2 => rw [map_add, fischerInner_add_left, fischerInner_add_left, h1, h2, mul_add]
+  | add x x' _ _ h1 h2 => rw [map_add (f := _), fischerInner_add_left, fischerInner_add_left, h1, h2, mul_add]
   | smul c x _ h1 => rw [map_smul, bs_fock_smul_left, bs_fock_smul_left, h1]; ring
 
 theorem lc_ten_iso {n n' : ℕ} (J : ι → MvPolynomial (Fin n' × Fin n') ℂ →ₗ[ℂ] MvPolynomial (Fin n × Fin n) ℂ)
@@ -124,10 +124,10 @@ theorem lc_ten_iso {n n' : ℕ} (J : ι → MvPolynomial (Fin n' × Fin n') ℂ 
       rw [Formalism.MainNotions.product_first_zeroth_parts.blk_ten, Formalism.MainNotions.product_first_zeroth_parts.blk_ten, lc_fock_ten, lc_fock_ten, ← Finset.prod_mul_distrib]
       exact Finset.prod_congr rfl fun τ _ => hiso τ _ (hf τ) _ (hg τ)
     | zero => rw [map_zero, lc_fockF_zero_right, lc_fockF_zero_right, mul_zero]
-    | add y y' _ _ h1 h2 => rw [map_add, fischerInner_add_right, fischerInner_add_right, h1, h2, mul_add]
+    | add y y' _ _ h1 h2 => rw [map_add (f := _), fischerInner_add_right, fischerInner_add_right, h1, h2, mul_add]
     | smul c y _ h1 => rw [map_smul, bs_fock_smul_right, bs_fock_smul_right, h1]; ring
   | zero => rw [map_zero, nm_fockF_zero_left, nm_fockF_zero_left, mul_zero]
-  | add x x' _ _ h1 h2 => rw [map_add, fischerInner_add_left, fischerInner_add_left, h1, h2, mul_add]
+  | add x x' _ _ h1 h2 => rw [map_add (f := _), fischerInner_add_left, fischerInner_add_left, h1, h2, mul_add]
   | smul c x _ h1 => rw [map_smul, bs_fock_smul_left, bs_fock_smul_left, h1]; ring
 
 theorem lc_ten_le {n n' : ℕ} (A : ι → MvPolynomial (Fin n × Fin n) ℂ →ₗ[ℂ] MvPolynomial (Fin n' × Fin n') ℂ)

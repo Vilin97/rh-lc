@@ -20,9 +20,9 @@ variable {n d : ℕ} {Y : Spc F E n} {W : Spc F E d}
 
 def goodSub (M : Model σ Y W) (om : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ Y W) : Submodule ℂ (Fn F n d) where
   carrier := {Φ | (∀ x, om x Φ ∈ schA F (Fin n × Fin d)) ∧ M.Conv om Φ}
-  add_mem' := fun {Φ Ψ} hΦ hΨ => ⟨fun x => by rw [map_add]; exact add_mem (hΦ.1 x) (hΨ.1 x), fun h => by
+  add_mem' := fun {Φ Ψ} hΦ hΨ => ⟨fun x => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hΦ.1 x) (hΨ.1 x), fun h => by
       have e : (fun g => theta om (Φ + Ψ) g h) = fun g => theta om Φ g h + theta om Ψ g h := funext fun g => by
-        simp only [theta, map_add]; exact thetaSum_add F (hΦ.1 _) (hΨ.1 _)
+        simp only [theta, map_add (f := _)]; exact thetaSum_add F (hΦ.1 _) (hΨ.1 _)
       rw [e]; exact (hΦ.2 h).add (hΨ.2 h)⟩
   zero_mem' := ⟨fun x => by rw [map_zero]; exact zero_mem _, fun h => by
       have e : (fun g => theta om (0 : Fn F n d) g h) = fun _ => 0 := funext fun g => by
@@ -48,7 +48,7 @@ theorem I_add (M : Model σ Y W) (om : GlobalTheory.IndefiniteRowSideFullHecke.W
   rw [← MeasureTheory.integral_add (hΦ.2 h) (hΨ.2 h)]
   refine MeasureTheory.integral_congr_ae (Filter.Eventually.of_forall fun g => ?_)
   show thetaSum F (om (g, h) (Φ + Ψ)) = thetaSum F (om (g, h) Φ) + thetaSum F (om (g, h) Ψ)
-  rw [map_add, thetaSum_add F (hΦ.1 _) (hΨ.1 _)]
+  rw [map_add (f := _), thetaSum_add F (hΦ.1 _) (hΨ.1 _)]
 
 theorem I_sub (M : Model σ Y W) (om : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.Rep σ Y W) {Φ Ψ : Fn F n d} (hΦ : Φ ∈ goodSub M om)
     (hΨ : Ψ ∈ goodSub M om) : M.I om (Φ - Ψ) = M.I om Φ - M.I om Ψ := by

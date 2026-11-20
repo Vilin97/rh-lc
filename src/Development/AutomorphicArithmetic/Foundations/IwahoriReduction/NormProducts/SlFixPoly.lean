@@ -35,7 +35,7 @@ private theorem sl_fix (X : Tower Ω ε) (Γ' : Subgroup SL(2, ℤ)) (γ : SL(2,
   have hp : ∀ p : Polynomial Ω, X.sl (ofSL γ) ((jPoly X Γ' p : lev X Γ') : X.K) = (jPoly X Γ' p : lev X Γ') := by
     intro p
     induction p using Polynomial.induction_on' with
-    | add p q hp hq => simp only [map_add, Subfield.coe_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), Subfield.coe_add, hp, hq]
     | monomial n c =>
       rw [← Polynomial.C_mul_X_pow_eq_monomial]
       simp only [jPoly, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_mul, Polynomial.eval₂_C, Polynomial.eval₂_X_pow]
@@ -85,7 +85,7 @@ private theorem jPoly_coe_eq_aeval_jK {Ω : Type} [Field Ω] [Algebra ℚ Ω] {�
     (Γ' : Subgroup SL(2, ℤ)) (p : Polynomial Ω) :
     ((jPoly X Γ' p : lev X Γ') : X.K) = Polynomial.aeval X.jK p := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, Subfield.coe_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), Subfield.coe_add, hp, hq]
   | monomial n c =>
     rw [← Polynomial.C_mul_X_pow_eq_monomial]
     simp only [jPoly, Polynomial.coe_eval₂RingHom, Polynomial.eval₂_mul, Polynomial.eval₂_C,
@@ -143,7 +143,7 @@ private theorem valuation_eq_one_of_mem_of_inv_mem {K : Type} [Field K] (W : Val
 private theorem aeval_jK_mem_of_overY {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ} (X : Tower Ω ε)
     (V : ValuationSubring X.K) (hV : X.OverY V) (P : Polynomial Ω) : Polynomial.aeval X.jK P ∈ V := by
   induction P using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | monomial n c =>
     rw [Polynomial.aeval_monomial]
     exact mul_mem (hV.1 c) (pow_mem hV.2 n)

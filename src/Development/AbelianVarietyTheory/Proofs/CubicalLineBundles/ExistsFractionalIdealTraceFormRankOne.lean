@@ -227,12 +227,12 @@ theorem exists_ideal_traceForm_of_rank_one : ∀ (E : Type) [Field E] [NumberFie
       field_simp
       rw [coe_rt_eq]
       ring
-    rw [h3, map_add, map_smul (Algebra.trace ℚ E), map_smul (Algebra.trace ℚ E), ← h2, smul_zero, zero_add,
+    rw [h3, map_add (f := _), map_smul (Algebra.trace ℚ E), map_smul (Algebra.trace ℚ E), ← h2, smul_zero, zero_add,
       smul_eq_mul] at h1
     exact (mul_pos_iff_of_pos_left (by positivity)).1 h1
   · rw [← relTrace_eq H hΩ, ← hE, ← hE', hh]
     push_cast
-    simp only [map_add, map_mul, map_sub, map_intCast]
+    simp only [map_add (f := _), map_mul, map_sub, map_intCast]
     ring
   · have h1 := log_absNorm_of_selfDual h𝔞 (mul_ne_zero (div_ne_zero hε0 hrt) hdet) fun v => by
       have h2 := hdual fun _ => v

@@ -95,7 +95,7 @@ theorem jac_lg_mul_jacEntry (G : LogFGL v d) (a k : Fin d) :
     ∑ l, pderiv C l (G.lg a) * jacEntry G k l = if a = k then 1 else 0 := by
   classical
   have h := congrArg (pderiv C (Sum.inr k)) (G.lg_F a)
-  rw [ReciprocityTheory.ChartRestriction.G.TB.LogPf.pderiv_subst G.F_const, map_add,
+  rw [ReciprocityTheory.ChartRestriction.G.TB.LogPf.pderiv_subst G.F_const, map_add (f := _),
     ReciprocityTheory.ChartRestriction.G.TB.LogPf.pderiv_subst (fun b => constantCoeff_X _),
     ReciprocityTheory.ChartRestriction.G.TB.LogPf.pderiv_subst (fun b => constantCoeff_X _)] at h
   simp only [pderiv_X, Pi.single_apply, reduceCtorEq, if_false, mul_zero, Finset.sum_const_zero,

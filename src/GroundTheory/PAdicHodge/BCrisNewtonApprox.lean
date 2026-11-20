@@ -170,7 +170,7 @@ theorem exists_lower_bound {a : ACris K p} (ha : a ≠ 0) :
         (p : Q) ^ M * ((p : Q) ^ (k₀ + v) * Ideal.Quotient.mk (kerAway K p ^ (m + 1)) (algebraMap _ 𝔸 w)) := by
       have := congrArg (Ideal.Quotient.mk (kerAway K p ^ (m + 1))) hc'
       rw [map_mul, map_pow, map_natCast] at this
-      rw [this, hwz, map_add, map_add, hz0, add_zero]
+      rw [this, hwz, map_add (f := _), map_add (f := _), hz0, add_zero]
       simp only [map_mul, map_pow, map_natCast]
       ring
     rw [mul_comm] at e1

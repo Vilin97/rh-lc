@@ -243,7 +243,7 @@ theorem rigid {ι : Type*} [Fintype ι] [DecidableEq ι] (v : ι → (VS D).V)
     rw [ha, hab j, hb, hc j, sub_self]
   have hw : a w = b w := sub_eq_zero.1 (eq_zero_of_gram (a ∘ v) hM' (hspan hd) h0)
   have hx : x = u + w := by simp [w]
-  rw [hx, map_add, map_add, hu, hw]
+  rw [hx, map_add (f := _), map_add (f := _), hu, hw]
 
 end Geo
 
@@ -260,7 +260,7 @@ theorem fix_X {n : (VS D).V ≃ₗ[D.host.E] (VS D).V} (he : ∀ a, n (F0.e a) =
   induction hx using Submodule.span_induction with
   | mem y hy => obtain ⟨a, rfl⟩ := hy; exact he a
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add, ha, hb]
+  | add a b _ _ ha hb => rw [map_add (f := _), ha, hb]
   | smul c a _ ha => rw [map_smul, ha]
 
 theorem Xa_le_X (j : ℕ) : F0.Xa j ≤ F0.X := Submodule.span_mono (Set.image_subset_range _ _)

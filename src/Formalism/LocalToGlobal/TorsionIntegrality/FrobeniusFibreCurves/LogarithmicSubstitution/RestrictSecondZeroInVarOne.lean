@@ -179,7 +179,7 @@ private theorem dz_dz_sig1S_eq_neg_C_add_C_mul (h4 : Formalism.L2.Th1.B.PrimRule
 private theorem at1_neg_C_add_C_mul {ι : Type} (e1 kap : K) (w : PowerSeries K) (x : ι) :
     Formalism.InvariantFactorPaths.G7.at1 x (-(PowerSeries.C e1 + PowerSeries.C kap * w)) =
       -(MvPowerSeries.C e1 + MvPowerSeries.C kap * Formalism.InvariantFactorPaths.G7.at1 x w) := by
-  simp only [triple_lintegral_eq, map_neg, map_add, map_mul, inVarAlgHom_C]
+  simp only [triple_lintegral_eq, map_neg, map_add (f := _), map_mul, inVarAlgHom_C]
 
 private theorem at1_dz_sq_eq_cubic {A kap : K} {w : PowerSeries K}
     (hw : Formalism.L2.Th1.B.dz w ^ 2 = 4 * w + 4 * PowerSeries.C A * w ^ 2 + 4 * PowerSeries.C kap * w ^ 3)
@@ -187,7 +187,7 @@ private theorem at1_dz_sq_eq_cubic {A kap : K} {w : PowerSeries K}
     Formalism.InvariantFactorPaths.G7.at1 x (Formalism.L2.Th1.B.dz w) ^ 2 = 4 * Formalism.InvariantFactorPaths.G7.at1 x w + 4 * MvPowerSeries.C A * Formalism.InvariantFactorPaths.G7.at1 x w ^ 2 +
       4 * MvPowerSeries.C kap * Formalism.InvariantFactorPaths.G7.at1 x w ^ 3 := by
   have h := congrArg (at1H (K := K) x) hw
-  simp only [map_add, map_mul, map_pow, map_ofNat, inVarAlgHom_C] at h
+  simp only [map_add (f := _), map_mul, map_pow, map_ofNat, inVarAlgHom_C] at h
   simp only [triple_lintegral_eq]
   exact h
 
@@ -197,7 +197,7 @@ private theorem at1_dz_dz_eq_quadratic {A kap : K} {w : PowerSeries K}
     Formalism.InvariantFactorPaths.G7.at1 x (Formalism.L2.Th1.B.dz (Formalism.L2.Th1.B.dz w)) = 2 + 4 * MvPowerSeries.C A * Formalism.InvariantFactorPaths.G7.at1 x w +
       6 * MvPowerSeries.C kap * Formalism.InvariantFactorPaths.G7.at1 x w ^ 2 := by
   rw [hw]
-  simp only [triple_lintegral_eq, map_add, map_mul, map_pow, map_ofNat, inVarAlgHom_C]
+  simp only [triple_lintegral_eq, map_add (f := _), map_mul, map_pow, map_ofNat, inVarAlgHom_C]
 
 theorem fLog_one (h1 : ExpLogRules) {ι : Type} : fLog (1 : MvPowerSeries ι K) = 0 := by
   obtain ⟨hA, hB, -⟩ := h1 K ι

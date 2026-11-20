@@ -84,7 +84,7 @@ theorem psiInv_of (hL : LieSkewU) (hS : SkewLieU) (hC : CaySkewU) (hI : CayIdU) 
         EuclideanSpace ℝ (Fin n × Fin n × Bool)) +
       ((L₁ (L₁.symm (h.orthogonalProjectionOnto ((WithLp.equiv 2 _).symm (realifyFun X)))) : h) :
         EuclideanSpace ℝ (Fin n × Fin n × Bool)) = _
-    rw [LinearIsometryEquiv.apply_symm_apply, LinearIsometryEquiv.apply_symm_apply, ← huw, map_add, map_add,
+    rw [LinearIsometryEquiv.apply_symm_apply, LinearIsometryEquiv.apply_symm_apply, ← huw, map_add (f := _), map_add (f := _),
       Submodule.orthogonalProjectionOnto_apply_of_mem_orthogonal h1,
       Submodule.orthogonalProjectionOnto_apply_of_mem_orthogonal h2, add_zero, zero_add]
     rw [show u = ((⟨u, hu'⟩ : m) : EuclideanSpace ℝ _) from rfl, Submodule.orthogonalProjectionOnto_mem_subspace_eq_self,

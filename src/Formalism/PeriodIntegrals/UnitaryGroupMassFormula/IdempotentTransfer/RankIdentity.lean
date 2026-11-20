@@ -60,7 +60,7 @@ lemma dim_sq_le (T : GoodSet K G) (s : T.S) :
     intro a
     induction a using MonoidAlgebra.induction_on with
     | of y => rw [Representation.asAlgebraHom_of]; exact Submodule.subset_span ⟨y, rfl⟩
-    | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul r x hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
   have htop : Submodule.span K (Set.range (T.tau s)) = ⊤ := by
     rw [eq_top_iff]

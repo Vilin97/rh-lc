@@ -138,7 +138,7 @@ theorem exists_ext (hπ0 : π ≠ 0) (hπS : ι π ∈ S) (hw : 1 ≤ w π)
     obtain ⟨l', b', hb', h'⟩ := happ y m
     refine ⟨w l, w l', w (l + l'), hf x m l ⟨b, hb, h⟩, hf y m l' ⟨b', hb', h'⟩,
       hf _ m _ ⟨b + b', S.add_mem hb hb', ?_⟩, w.map_add _ _⟩
-    rw [map_add]; linear_combination h + h'
+    rw [map_add (f := _)]; linear_combination h + h'
   · intro x y
     obtain ⟨n1, hx⟩ := hden x
     obtain ⟨n2, hy⟩ := hden y
@@ -193,7 +193,7 @@ theorem exists_approx_base
     rw [maximalIdeal_eq_span hmax hϖ, Ideal.mem_span_singleton'] at hm
     obtain ⟨c, hc⟩ := hm
     refine ⟨r₀ + ϖ ^ m * s, c, ?_⟩
-    rw [h, map_add, map_mul, map_pow]
+    rw [h, map_add (f := _), map_mul, map_pow]
     linear_combination (-(algebraMap R R' ϖ) ^ m) * hc
 
 variable {F F' : Type} [Field F] [Algebra R F] [IsFractionRing R F] [Field F'] [Algebra R' F']
@@ -341,13 +341,13 @@ theorem exists_unique_place_baseChange : ∀ (R R' F F' : Type) [CommRing R] [Is
       obtain ⟨l, b, hb, h⟩ := hx
       obtain ⟨l', b', hb', h'⟩ := hy
       refine ⟨l + l', b + b', S.add_mem hb hb', ?_⟩
-      rw [map_add]; linear_combination h + h'
+      rw [map_add (f := _)]; linear_combination h + h'
     | smul a x hxs hx =>
       obtain ⟨l, b, hb, h⟩ := hx
       obtain ⟨r₀, r₁, hr⟩ := exists_approx_base hmax hres hϖ m a
       refine ⟨algebraMap R L r₀ * l, ι (algebraMap R L r₀) * b + algebraMap R' _ r₁ * x,
         S.add_mem (S.mul_mem (halg r₀ ▸ hR'S _) hb) (S.mul_mem (hR'S _) ((hB x).2 hxs)), ?_⟩
-      rw [Algebra.smul_def, hr, map_add, map_mul, map_pow, halg, halg, map_mul]
+      rw [Algebra.smul_def, hr, map_add (f := _), map_mul, map_pow, halg, halg, map_mul]
       linear_combination ι (algebraMap R L r₀) * h
   have happ : ∀ x (m : ℕ), ∃ l, ∃ b ∈ S, x - ι l = ι π ^ m * b := by
     intro x m

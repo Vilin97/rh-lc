@@ -26,7 +26,7 @@ theorem eps_single (x : G ⧸ K) (c : ℂ) : eps K (Finsupp.single x c) = c := b
 theorem eps_lam (g : G) (v : (G ⧸ K) →₀ ℂ) : eps K (lam K g v) = eps K v := by
   induction v using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
   | single x c => rw [lam_single, eps_single, eps_single]
 
 theorem hk_comm (A : Hk K) (g : G) (v : (G ⧸ K) →₀ ℂ) : A.1 (lam K g v) = lam K g (A.1 v) := by

@@ -254,7 +254,7 @@ theorem val_conj {χ : (AE D)ˣ →* Circle} {n : ℕ} (hχ : ResEta D χ n) {P 
       rw [Units.val_inv_eq_inv_val, map_inv₀, hu, inv_one]
   have h4 : χ x * χ (L k) = 1 := GlobalTheory.SplitDetCharacter.char_norm hχ x (L k) (by
     show locE D _ _ = _
-    rw [hx, map_add, map_mul, map_sub, map_one, GlobalTheory.MovedIdem.cA_incA]
+    rw [hx, map_add (f := _), map_mul, map_sub, map_one, GlobalTheory.MovedIdem.cA_incA]
     unfold locE
     have : (k : D.host.E) = star (ϖ : D.host.E) := rfl
     rw [this]

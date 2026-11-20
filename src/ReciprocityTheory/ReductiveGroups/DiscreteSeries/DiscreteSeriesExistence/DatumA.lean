@@ -141,7 +141,7 @@ theorem pdA_eabV_clm {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {ε :
       (φ.restrictScalars ℝ).hasFDerivAt.comp_hasDerivAt 0 hd
     simp only [Formalism.REAL.RdV, Formalism.REAL.Rd]
     rw [hd.deriv, hd'.deriv]
-  simp only [Formalism.REAL.EabV, Formalism.REAL.EcV, Formalism.REAL.Eab, Formalism.REAL.Ec, map_add, map_smul, smul_eq_mul]
+  simp only [Formalism.REAL.EabV, Formalism.REAL.EcV, Formalism.REAL.Eab, Formalism.REAL.Ec, map_add (f := _), map_smul, smul_eq_mul]
   rw [key _ h1, key _ h2]
 
 theorem pdA_casF_clm {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] {ε : Fin n → Bool}
@@ -284,7 +284,7 @@ theorem pdA_eab_compact {ε : Fin n → Bool} {Λ : Fin n → ℝ} (T : S7.KType
   simp only [Formalism.REAL.Eab, Formalism.REAL.Ec]
   rw [e1, e2]
   conv_rhs => rw [hZ]
-  simp only [map_add, map_smul, ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply,
+  simp only [map_add (f := _), map_smul, ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply,
     inner_add_right, inner_smul_right]
 
 open scoped Classical in

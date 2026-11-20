@@ -75,7 +75,7 @@ def actHom : Matrix (Fin h) (Fin h) ℤ →+* End (freeModule X (Fin h)) where
     ext W s
     apply (coords X h W).injective
     refine (coords_act X h _ W s).trans ?_
-    rw [map_add, Matrix.add_mulVec, ← coords_act, ← coords_act, ← map_add]
+    rw [map_add (f := _), Matrix.add_mulVec, ← coords_act, ← coords_act, ← map_add (f := _)]
     rfl
 
 theorem exists_act : ∀ (X : Scheme.{0}) (h : ℕ), ∃ μ : Matrix (Fin h) (Fin h) ℤ →+* End (freeModule X (Fin h)), ∀ (N : Matrix (Fin h) (Fin h) ℤ) (W : X.Opens) (s : Γ(freeModule X (Fin h), W)), GlobalTheory.LatGlue.coords X h W ((μ N : freeModule X (Fin h) ⟶ freeModule X (Fin h)).app W s) = mv (RingHom.id _) N (GlobalTheory.LatGlue.coords X h W s) :=

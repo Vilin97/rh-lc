@@ -97,7 +97,7 @@ theorem StLat.kummer_not_frac : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (A
   have hU : ∀ g : GQ l, P.actQdR g U = U + P.ιB ((kummer P g : ℚ_[l]) • P.tB) := by
     intro g
     apply T.eD.injective
-    rw [T.actD, hUdef, RingEquiv.apply_symm_apply, map_add, RingEquiv.apply_symm_apply, hct]
+    rw [T.actD, hUdef, RingEquiv.apply_symm_apply, map_add (f := _), RingEquiv.apply_symm_apply, hct]
     rw [show Per.σD g (algebraMap (Per.BdRp l) (Per.BdR l) u) =
       algebraMap (Per.BdRp l) (Per.BdR l) (Per.σDp g u) from
         GlobalTheory.RingIface.sigD_alg l g u, hg, map_add]

@@ -117,7 +117,7 @@ theorem wt_two (J : ℕ) (hJK : J ≤ D.K) (c b : C) (hcJ : D.lev c < J) (τ : M
     push_cast at this ⊢
     linarith
   · by_cases hK1 : D.lev c + 1 < D.K
-    · rw [main, if_pos ⟨hcJ, hK1⟩, ← hμdef, ← add_mul, ← map_add]
+    · rw [main, if_pos ⟨hcJ, hK1⟩, ← hμdef, ← add_mul, ← map_add (f := _)]
       have h1 : D.al c 2 b + -(D.l : k)⁻¹ * D.g c b = D.lam c b := by
         rw [D.al_two c hcK b]
         have := D.l_ne

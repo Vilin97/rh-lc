@@ -91,7 +91,7 @@ theorem exists_clear (hPW : P ≤ W) (G : MvPolynomial K (locRing P W)) :
       exact homog_mul (hN2 e).1 hV1
     · rw [MvPolynomial.coeff_add]
       change (((AddMonoidAlgebra.coeff G1 e : locRing P W) : FractionRing (MRing ι ⧸ P)) + (AddMonoidAlgebra.coeff G2 e : locRing P W)) * _ = _
-      simp only [map_add, map_mul]
+      simp only [map_add (f := _), map_mul]
       rw [← (hN1 e).2, ← (hN2 e).2]
       ring
 
@@ -183,7 +183,7 @@ theorem exists_lift (hPW : P ≤ W) {v : ∀ k, ι k} (hv : ∀ k, (X ⟨k, v k�
   | add p q hp hq =>
     obtain ⟨F, hF⟩ := hp
     obtain ⟨G, hG⟩ := hq
-    exact ⟨F + G, by rw [map_add, hF, hG, map_add, map_add]⟩
+    exact ⟨F + G, by rw [map_add (f := _), hF, hG, map_add (f := _), map_add (f := _)]⟩
   | mul_X p n hp =>
     obtain ⟨F, hF⟩ := hp
     obtain ⟨k, i⟩ := n

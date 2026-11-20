@@ -45,7 +45,7 @@ theorem spec_local_point_descends {R : Type} [CommRing R] [Algebra.FiniteType �
       obtain ⟨c, hc⟩ := hs (Finset.mem_coe.2 (Finset.mem_image_of_mem _ hb))
       exact ⟨c, hc⟩
     | algebraMap n => exact ⟨(n : S), by simp⟩
-    | add b c _ _ hb hc => rw [map_add]; exact φ.range.add_mem hb hc
+    | add b c _ _ hb hc => rw [map_add (f := _)]; exact φ.range.add_mem hb hc
     | mul b c _ _ hb hc => rw [map_mul]; exact φ.range.mul_mem hb hc
   let e : S ≃+* φ.range := RingEquiv.ofBijective φ.rangeRestrict
     ⟨fun a b h => hφ (congrArg Subtype.val h), φ.rangeRestrict_surjective⟩

@@ -117,7 +117,7 @@ lemma map_finSuccEquiv {B : Type*} [CommRing B] (φ : A →+* B)
       finSuccEquiv B n (MvPolynomial.map φ h) := by
   induction h using MvPolynomial.induction_on with
   | C a => simp [finSuccEquiv_apply]
-  | add p q hp hq => simp [hp, hq, Polynomial.map_add]
+  | add p q hp hq => simp [hp, hq, Polynomial.map_add (f := _)]
   | mul_X p i hp =>
     simp only [map_mul, Polynomial.map_mul, hp]
     congr 1
@@ -190,7 +190,7 @@ private lemma leadingCoeff_finSuccEquiv_t :
       cases j using Fin.cases with
       | zero => simp [shear_X_zero, finSuccEquiv_X_zero]
       | succ i =>
-        simp only [shear_X_succ, map_add, map_pow, finSuccEquiv_X_succ, finSuccEquiv_X_zero]
+        simp only [shear_X_succ, map_add (f := _), map_pow, finSuccEquiv_X_succ, finSuccEquiv_X_zero]
         simp [add_comm, Polynomial.leadingCoeff_X_pow_add_C]
     simp only [h0, map_pow, Polynomial.leadingCoeff_pow, this, one_pow, Finset.prod_const_one, mul_one]
   exact fun i ↦ pow_zero _
@@ -211,7 +211,7 @@ theorem shear_leadingCoeff_isUnit (fne : f ≠ 0) :
   have coeff : (finSuccEquiv k n (T (h v + ∑ x ∈ f.support \ {v}, h x))).leadingCoeff =
       (finSuccEquiv k n (T (h v))).leadingCoeff := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum]
+      simp only [map_add (f := _), map_sum]
     rw [add_comm]
     apply Polynomial.leadingCoeff_add_of_degree_lt <| (lt_of_le_of_lt <| Polynomial.degree_sum_le _ _) ?_
     have h2 : h v ≠ 0 := by simpa [h] using mem_support_iff.mp vin

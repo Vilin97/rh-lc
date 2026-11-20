@@ -71,12 +71,12 @@ theorem integral_cov_gen {G : Type} [AddCommGroup G] [TopologicalSpace G] [IsTop
       exact g'.2
     refine ⟨⟨_, hg⟩, ?_, ?_⟩
     · show e.symm (g' : ι → AdeleRing (𝓞 F) F) + x ∈ e ⁻¹' GroundTheory.Automorphic.FourierWhittaker.vecDomain F ι
-      rw [Set.mem_preimage, map_add, e.apply_symm_apply]
+      rw [Set.mem_preimage, map_add (f := _), e.apply_symm_apply]
       exact hg'
     · rintro ⟨y, hy⟩ hyx
       have hy' : e y ∈ GroundTheory.Automorphic.FourierWhittaker.vecLattice F ι := (he y).1 hy
       have hyx' : e y + e x ∈ GroundTheory.Automorphic.FourierWhittaker.vecDomain F ι := by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         exact hyx
       have := hu ⟨e y, hy'⟩ hyx'
       apply Subtype.ext

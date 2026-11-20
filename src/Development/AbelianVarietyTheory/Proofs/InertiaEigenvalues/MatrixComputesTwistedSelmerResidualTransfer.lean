@@ -72,7 +72,7 @@ theorem exists_linear (hsurj : Function.Surjective (algebraMap O K)) {n : ℕ} (
   refine ⟨{ toFun := fun x => tau φ hs ρ κ hκ (e (kerIn φ hs Φ x)).1
             map_add' := fun x y => ?_
             map_smul' := fun c x => ?_ }, fun x y hxy => ?_, fun _ => rfl⟩
-  · rw [show kerIn φ hs Φ (x + y) = kerIn φ hs Φ x + kerIn φ hs Φ y from rfl, map_add, Submodule.coe_add, map_add]
+  · rw [show kerIn φ hs Φ (x + y) = kerIn φ hs Φ x + kerIn φ hs Φ y from rfl, map_add (f := _), Submodule.coe_add, map_add (f := _)]
   · obtain ⟨o, rfl⟩ := hsurj c
     have h1 : kerIn φ hs Φ (algebraMap O K o • x) = algebraMap O Λ o • kerIn φ hs Φ x := by
       apply Subtype.ext
@@ -111,7 +111,7 @@ theorem tau_mem_bkOn (v : PlE D.host) (x : H1 ((repOn ρ κ K).comp (DecV N v).s
       change ((z : ↥(DecV N v) → Fin r → K) g a) = _
       rw [hz, smul_eq_mul, hs, AlgHom.commutes]
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul a x _ hx => rw [map_smulₛₗ]; exact Submodule.smul_mem _ _ hx
   · rw [Submodule.mem_bot] at hx ⊢
     rw [hx, map_zero]

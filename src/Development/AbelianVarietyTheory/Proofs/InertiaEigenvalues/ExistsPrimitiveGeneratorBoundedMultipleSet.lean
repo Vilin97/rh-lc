@@ -134,7 +134,7 @@ theorem wdiv [CompleteSpace K] (g h : K⟦X⟧) (d : ℕ) (hg1 : ∀ n, ‖coeff
     rw [hord, ENat.toNat_coe] at hdl
     exact lt_of_lt_of_le hdl (by exact_mod_cast hn)
   · have e := congrArg (PowerSeries.map ι) hdiv.eq_mul_add
-    rw [hh', map_add, map_mul, hg'] at e
+    rw [hh', map_add (f := _), map_mul, hg'] at e
     exact e
 
 theorem first_unit_index (g : K⟦X⟧) (m : ℕ) (hg1 : ∀ n, ‖coeff n g‖ ≤ 1)

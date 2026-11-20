@@ -120,7 +120,7 @@ private theorem retract_lemma_3 [IsDedekindDomain O] {M : Type} [AddCommGroup M]
         rw [LinearMap.smulRight_apply, hcx, zero_smul]
     · rintro y z ⟨g, hg1, hg2⟩ ⟨g', hg1', hg2'⟩
       refine ⟨g + g', fun x => ?_, fun x hx => ?_⟩
-      · rw [LinearMap.add_apply, map_add, hg1, hg1', add_mul]
+      · rw [LinearMap.add_apply, map_add (f := _), hg1, hg1', add_mul]
       · rw [LinearMap.add_apply, hg2 x hx, hg2' x hx, add_zero]
   refine ⟨LinearMap.id - g, fun x => ?_, fun x hx => ?_⟩
   · rw [LinearMap.sub_apply, map_sub, hg1, one_mul, LinearMap.id_apply, sub_self]

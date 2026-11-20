@@ -40,7 +40,7 @@ theorem mSub_top_eq_ker_smul : ∀ (k : Type) [Field k] (C : Type) [CommRing C] 
       simp
     | add a b ha hb =>
       convert add_mem ha hb using 1
-      rw [map_add, map_add, LinearMap.add_apply, add_smul]
+      rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, add_smul]
       abel
   constructor
   · intro hx

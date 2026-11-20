@@ -16,7 +16,7 @@ theorem hform_comb {R : Type} [CommRing R] {n : Type} [Fintype n] (c : R →+* R
         c t * p * Formalism.UG.hform c Jm b a' + c t * q * Formalism.UG.hform c Jm b b' := by
   simp only [Formalism.UG.hform, Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
-  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul]
+  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul]
   ring
 
 variable {F E : Type} [Field F] [Field E] [Algebra F E]
@@ -67,7 +67,7 @@ theorem isoAt_of_split : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [N
   set c := sigR K σ with hc
   have hcc : c (c e) = e := by
     have h := congrArg c hsum
-    rw [map_add, map_one] at h
+    rw [map_add (f := _), map_one] at h
     linear_combination h - hsum
   have hce : c e * c e = c e := by rw [← map_mul, he]
   refine ⟨e • incV K x + c e • incV K y,

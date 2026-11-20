@@ -85,7 +85,7 @@ theorem UpperTheory.V.Fr.pr_correct :
   have hpe : ∀ X, GeneralLinearGroup.map (p : C' →+* C) (e X) = 1 := by
     intro X
     ext i j
-    simp only [GeneralLinearGroup.map_apply, he1, Matrix.add_apply, Matrix.map_apply, Units.val_one, map_add]
+    simp only [GeneralLinearGroup.map_apply, he1, Matrix.add_apply, Matrix.map_apply, Units.val_one, map_add (f := _)]
     have h0 : (p : C' →+* C) (μ (X i j)) = 0 := hpμ _
     rw [h0, add_zero, Matrix.one_apply, Matrix.one_apply]
     split_ifs <;> simp

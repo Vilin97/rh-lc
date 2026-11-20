@@ -453,7 +453,7 @@ lemma rho_fix (A : Fin r → ι) (l : Fin r) {p : MvPolynomial ((ι × Fin r) �
   clear hp hsub this
   induction q using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp' hq' => rw [map_add, map_add, hp', hq']
+  | add p q hp' hq' => rw [map_add (f := _), map_add (f := _), hp', hq']
   | mul_X p n hp' => rw [map_mul, map_mul, hp', aeval_X, rename_X]
 
 lemma coprime_det_cc (A : Fin r → ι) (hA : Function.Injective A) (lst : Fin r) :
@@ -513,7 +513,7 @@ lemma aeval_X_comp {σ τ : Type} (f : σ → τ) (p : MvPolynomial σ K) :
     aeval (fun q => (X (f q) : MvPolynomial τ K)) p = rename f p := by
   induction p using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp' hq' => rw [map_add, map_add, hp', hq']
+  | add p q hp' hq' => rw [map_add (f := _), map_add (f := _), hp', hq']
   | mul_X p n hp' => rw [map_mul, map_mul, hp', aeval_X, rename_X]
 
 def lst (hr : 0 < r) : Fin r := ⟨r - 1, by omega⟩

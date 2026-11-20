@@ -32,7 +32,7 @@ private theorem uf_of_charpoly {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) 
     rw [h, Fin.prod_univ_two]
     simp [Polynomial.map_mul, he]
   rw [(Ga.ufFacts _ g).1 _ _ hc]
-  simp only [_root_.map_add, ← _root_.map_div, ← _root_.map_inv, he]
+  simp only [_root_.map_add (f := _), ← _root_.map_div, ← _root_.map_inv, he]
 
 private theorem uf_of_pol {l : ℕ} [Fact l.Prime] (ι : Qbar l ≃+* ℂ) {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k]
     [IsNonarchimedeanLocalField k] (g : GL (Fin 2) (Qbar l)) (φ : Fin 2 → kˣ →* ℂˣ) (x : kˣ)

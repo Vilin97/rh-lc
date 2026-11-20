@@ -105,7 +105,7 @@ theorem aeval_mem_invariant_submodule (A : Module.End ℂ Y) (p : Submodule ℂ 
 theorem aeval_commute_of_commute (A T : Module.End ℂ Y) (h : Commute A T) (q : ℂ[X]) :
     Commute (aeval A q) T := by
   induction q using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add]; exact hp.add_left hq
+  | add p q hp hq => rw [map_add (f := _)]; exact hp.add_left hq
   | monomial k c =>
     rw [aeval_monomial]
     exact (Algebra.commute_algebraMap_left c T).mul_left (h.pow_left k)

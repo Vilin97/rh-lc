@@ -144,7 +144,7 @@ private theorem exists_sign_EE_lattice_eq_det : ∃ s : ℤ, (s = 1 ∨ s = -1) 
     ring
 
 theorem altE_add_right (x y z : ℂ) : EE x (y + z) = EE x y + EE x z := by
-  simp only [Formalism.L2.Th1.F.altE, herm, map_add, mul_add, add_div, Complex.add_im]
+  simp only [Formalism.L2.Th1.F.altE, herm, map_add (f := _), mul_add, add_div, Complex.add_im]
 
 private theorem exists_int_EE_eq_of_mem_lattice (x : ℂ) (hx : x ∈ L.lattice) (y : ℂ) (hy : y ∈ L.lattice) :
     ∃ m : ℤ, EE x y = m := by
@@ -205,7 +205,7 @@ theorem altE_theta (w : ℂ) : EE (cmTheta 1 d * w) w = q1 L d w := by
 
 private theorem q1_add (x y : ℂ) :
     q1 L d (x + y) = q1 L d x + q1 L d y + 2 * EE (cmTheta 1 d * x) y - EE x y := by
-  simp only [q1, Formalism.L2.Th1.F.altE, herm, cmTheta_one_eq, map_add]
+  simp only [q1, Formalism.L2.Th1.F.altE, herm, cmTheta_one_eq, map_add (f := _)]
   simp only [Complex.div_ofReal_re, Complex.div_ofReal_im, Complex.add_re, Complex.add_im,
     Complex.mul_re, Complex.mul_im, Complex.conj_re, Complex.conj_im, Complex.ofReal_re,
     Complex.ofReal_im, Complex.I_re, Complex.I_im]

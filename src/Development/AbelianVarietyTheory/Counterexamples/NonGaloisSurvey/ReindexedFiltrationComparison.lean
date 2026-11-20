@@ -160,7 +160,7 @@ theorem ddR_triv : DdR PD (charRep (1 : G →* LLˣ)) =
         have : ∀ (q : Qp) (z : BdR), PD.actdR g (q • z) = q • PD.actdR g z := fun q z =>
           ((PD.actdR g).toLinearMap.restrictScalars Qp).map_smul q z
         simp [e, actVdR, charRep, this]
-      | add a b ha hb => simp only [map_add, Finsupp.add_apply, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), Finsupp.add_apply, ha, hb]
     have hx' : x = (e x).sum fun i c => b i ⊗ₜ[Qp] c := by
       rw [← TensorProduct.equivFinsuppOfBasisLeft_symm_apply]
       exact (e.symm_apply_apply x).symm
@@ -175,7 +175,7 @@ theorem ddR_triv : DdR PD (charRep (1 : G →* LLˣ)) =
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v c => simp [incK, actVdR, charRep]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem isDR_triv : IsDR PD (charRep (1 : G →* LLˣ)) := by
   have : Nontrivial BdR := ⟨⟨1, 0, fun h => one_notMem PD (h ▸ (PD.Fil 1).zero_mem)⟩⟩
@@ -212,7 +212,7 @@ theorem jump_triv (hK : Function.Surjective (algebraMap Qp K)) (τ : K →ₐ[Qp
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v c => simpa [m] using ((PD.Fil (0 + 1)).restrictScalars Qp).smul_mem (φ v) c.2
-    | add a b ha hb => simpa only [map_add] using Submodule.add_mem _ ha hb
+    | add a b ha hb => simpa only [map_add (f := _)] using Submodule.add_mem _ ha hb
   have := hm y
   rw [hy] at this
   exact one_notMem PD (by simpa [m, hφ] using this)

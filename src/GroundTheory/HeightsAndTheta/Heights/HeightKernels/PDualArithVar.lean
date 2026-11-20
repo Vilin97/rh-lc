@@ -38,7 +38,7 @@ theorem mem_of_gen_mem {m : ℕ} (E : IntermediateField K (ProjField K m))
     | C c =>
       rw [← MvPolynomial.algebraMap_eq, ← IsScalarTower.algebraMap_apply]
       exact E.algebraMap_mem c
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | mul_X p j hp => rw [map_mul]; exact mul_mem hp (h j)
   obtain ⟨p, q, -, rfl⟩ := IsFractionRing.div_surjective (A := MvPolynomial (Fin m) K) z
   exact div_mem (hp p) (hp q)
@@ -74,7 +74,7 @@ theorem span_dualLattice (F : HermLattice K i) :
     | add x y _ _ hx hy =>
       obtain ⟨a, ha⟩ := hx
       obtain ⟨c, hc⟩ := hy
-      exact ⟨a + c, by rw [dotProduct_add, map_add, ha, hc]⟩
+      exact ⟨a + c, by rw [dotProduct_add, map_add (f := _), ha, hc]⟩
     | smul r x _ hx =>
       obtain ⟨a, ha⟩ := hx
       refine ⟨r * a, ?_⟩

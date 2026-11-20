@@ -169,7 +169,7 @@ theorem isLift_fock1 {P Q R S : ℕ} {x t : ℚ} {N : GKMod R S} {p : Formalism.
     (h : IsLift x t N p) (X : Mat P Q) (c : ℂ) (hc : (x : ℂ) + c = 0) :
     p ∘ₗ (fockAct1 P Q R S X + (c * X.trace) • 1) = 0 ∘ₗ p := by
   refine LinearMap.ext fun f => ?_
-  simp only [LinearMap.comp_apply, LinearMap.add_apply, map_add, LinearMap.smul_apply, Module.End.one_apply, map_smul,
+  simp only [LinearMap.comp_apply, LinearMap.add_apply, map_add (f := _), LinearMap.smul_apply, Module.End.one_apply, map_smul,
     LinearMap.zero_apply]
   rw [h.2.1 X f, ← add_smul, show (x : ℂ) * X.trace + c * X.trace = ((x : ℂ) + c) * X.trace by ring, hc, zero_mul, zero_smul]
 
@@ -177,7 +177,7 @@ theorem isLift_fock2 {P Q R S : ℕ} {x t : ℚ} {N : GKMod R S} {p : Formalism.
     (h : IsLift x t N p) (Y : Mat R S) (c c' : ℂ) (hc : c = (t : ℂ) + c') :
     p ∘ₗ (fockAct2 P Q R S Y + (c * Y.trace) • 1) = (N.act Y + (c' * Y.trace) • 1) ∘ₗ p := by
   refine LinearMap.ext fun f => ?_
-  simp only [LinearMap.comp_apply, LinearMap.add_apply, map_add, LinearMap.smul_apply, Module.End.one_apply, map_smul]
+  simp only [LinearMap.comp_apply, LinearMap.add_apply, map_add (f := _), LinearMap.smul_apply, Module.End.one_apply, map_smul]
   rw [h.2.2 Y f, hc, add_mul, add_smul]
   abel
 

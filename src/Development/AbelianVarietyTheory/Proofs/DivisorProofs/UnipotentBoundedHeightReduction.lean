@@ -116,7 +116,7 @@ def cT (X : Matrix (Fin d) (Fin d) (AE F E)) : Matrix (Fin d) (Fin d) (AE F E) :
 def adj (Li L : Matrix (Fin d) (Fin d) E) : Matrix (Fin d) (Fin d) (AE F E) →+ Matrix (Fin d) (Fin d) (AE F E) where
   toFun X := incM F Li * cT σ X * incM F L
   map_zero' := by simp [cT]
-  map_add' X Y := by simp only [cT, map_add, Matrix.transpose_add, Matrix.mul_add, Matrix.add_mul]
+  map_add' X Y := by simp only [cT, map_add (f := _), Matrix.transpose_add, Matrix.mul_add, Matrix.add_mul]
 
 variable {σ}
 
@@ -443,7 +443,7 @@ theorem exists_bounded_translate : ∀ (F E : Type) [Field F] [NumberField F] [F
   have h31 : e₃ * e₁ = 0 := by rw [he₁, he₃, ← incM_mul, E3_mul_E1 hxx]; ext; simp [incM]
   have hhalf : hh + hh = 1 := by
     have h2 : (2⁻¹ : E) + 2⁻¹ = 1 := by norm_num
-    rw [hhdef, ← incM_add, ← map_add, h2, map_one, incM_one]
+    rw [hhdef, ← incM_add, ← map_add (f := _), h2, map_one, incM_one]
   have hcomm : ∀ X, hh * X = X * hh := by
     intro X
     have : hh = Matrix.scalar (Fin d) (inclR (F := F) (AF F) 2⁻¹) := by

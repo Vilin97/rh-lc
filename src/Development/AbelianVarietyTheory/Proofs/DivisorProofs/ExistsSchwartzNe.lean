@@ -249,7 +249,7 @@ theorem exists_isVac {B : Base F E} {r s r' s' : ℕ} (hX : X.IsHerm σ B r s) (
   simp only [Darboux.rho, schr, tens, hco, glue_dot, glue_add, glue_map ε (evFin F v), Pi.smul_apply, box_glue]
   by_cases ha : (fun k => evFin F v (a k)) ∈ Λ
   · have ha' : (fun k => evFin F v ((a + p γ) k)) ∈ Λ := by
-      simp only [Pi.add_apply, map_add]
+      simp only [Pi.add_apply, map_add (f := _)]
       exact Λ.add_mem ha hp
     have hR₁ : Rest (evFin F v) φ fun b => R (glue ε a b) := by
       refine ⟨fun x z hz => ?_, ?_⟩
@@ -292,7 +292,7 @@ theorem cA_cA {B : Base F E} (hB : B.IsGood σ) (z : AE F E) : cA σ (cA σ z) =
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [cA, conj_conj hB]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem exists_model {B : Base F E} {r s r' s' : ℕ} (hB : B.IsGood σ) (hX : X.IsHerm σ B r s) (hW : W.IsSkew σ B r' s')
     {M : Model σ X W} (hM : M.IsGood B.ψ) {M₁ : Model σ X₁ W₁} (hM₁ : M₁.IsGood B.ψ) {κ : Type} [Fintype κ]
@@ -327,8 +327,8 @@ theorem exists_model {B : Base F E} {r s r' s' : ℕ} (hB : B.IsGood σ) (hX : X
   let Φ : Matrix (Fin n) (Fin d) (AE F E) →ₗ[AF F] (Fin n × Fin d → AF F) × (Fin n × Fin d → AF F) :=
     { toFun := fun z => (glue ε (p z) (M₁.co.e (π z)).1, glue ε (q z) (M₁.co.e (π z)).2)
       map_add' := fun z z' => by
-        rw [Prod.mk_add_mk, glue_add, glue_add, hπ.map_add, map_add]
-        congr 2 <;> funext k <;> simp [p, q, hb.map_add, hD.map_add, mul_add, add_comm]
+        rw [Prod.mk_add_mk, glue_add, glue_add, hπ.map_add (f := _), map_add (f := _)]
+        congr 2 <;> funext k <;> simp [p, q, hb.map_add (f := _), hD.map_add (f := _), mul_add, add_comm]
       map_smul' := fun c z => by
         rw [Prod.smul_mk, glue_smul, glue_smul, hπ.map_smul, map_smul]
         congr 2 <;> funext k <;> simp [p, q, hb.map_smul, hD.map_smul] }
@@ -337,7 +337,7 @@ theorem exists_model {B : Base F E} {r s r' s' : ℕ} (hB : B.IsGood σ) (hX : X
     have h1 := M₁.co.form (π z) (π z')
     show Tr _ = glue ε _ _ ⬝ᵥ glue ε _ _ - glue ε _ _ ⬝ᵥ glue ε _ _
     change Tr _ = _ at h1
-    rw [glue_dot, glue_dot, hpq, hpq, hH, mul_add, map_add, h1, neg_one_mul, map_neg, map_sub, hTr]
+    rw [glue_dot, glue_dot, hpq, hpq, hH, mul_add, map_add (f := _), h1, neg_one_mul, map_neg, map_sub, hTr]
     ring
   have hbij : Function.Bijective Φ := by
     have := (bijective_of_symp (Φ ∘ₗ M.co.e.symm.toLinearMap) fun u w => by
@@ -378,13 +378,13 @@ theorem exists_model {B : Base F E} {r s r' s' : ℕ} (hB : B.IsGood σ) (hX : X
       simp only [← AddChar.map_add_eq_mul]
       congr 1
       have h1 : inclR (F := F) (AF F) (θ : E) + cA σ (inclR (F := F) (AF F) (θ : E)) = 1 := by
-        rw [GlobalTheory.VacIndic.cA_inclR, ← map_add, hθ, map_one]
+        rw [GlobalTheory.VacIndic.cA_inclR, ← map_add (f := _), hθ, map_one]
       have h2 : Tr (inclR (F := F) (AF F) (θ : E) * cA σ (b γ ⬝ᵥ D γ)) =
           Tr (b γ ⬝ᵥ D γ) - Tr (inclR (F := F) (AF F) (θ : E) * (b γ ⬝ᵥ D γ)) := by
         rw [← hTr, map_mul, cA_cA hB, ← map_sub, eq_sub_of_add_eq' h1, sub_mul, one_mul]
       have h3 : (⅟(2 : AF F)) * 2 = 1 := invOf_mul_self _
       show _ * Tr _ = _ + (_ + _ * Tr _)
-      rw [hpq, hH, mul_add (inclR (F := F) (AF F) (θ : E)), mul_sub, map_add, map_sub, h2]
+      rw [hpq, hH, mul_add (inclR (F := F) (AF F) (θ : E)), mul_sub, map_add (f := _), map_sub, h2]
       generalize (⅟(2 : AF F)) = t at h3 ⊢
       linear_combination (Tr (inclR (F := F) (AF F) (θ : E) * (b γ ⬝ᵥ D γ))) * h3
   choose φa hφa hφb using hv

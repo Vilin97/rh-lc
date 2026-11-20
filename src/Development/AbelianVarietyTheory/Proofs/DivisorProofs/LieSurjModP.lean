@@ -24,7 +24,7 @@ theorem lie_surj_mod_p : ∀ (p : ℕ) [Fact p.Prime] (O E : Type) [CommRing O] 
     have h1 := hl w φ hφ
     have h2 := hl'.2 1 w φ s hφ (by rw [pow_one]; exact hs)
     rw [pow_one] at h1 h2
-    rw [hy, map_add, map_smul, smul_eq_mul] at h2
+    rw [hy, map_add (f := _), map_smul, smul_eq_mul] at h2
     have h3 : (p : O) ∣ l' w - φ b := by
       have := dvd_add h2 (dvd_mul_right (p : O) (φ y))
       rwa [show l' w - (φ b + (p : O) * φ y) + (p : O) * φ y = l' w - φ b by ring] at this

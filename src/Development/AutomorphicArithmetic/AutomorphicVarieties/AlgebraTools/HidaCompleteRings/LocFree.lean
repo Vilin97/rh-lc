@@ -13,7 +13,7 @@ private theorem pres_smul {A M : Type} [CommRing A] [AddCommGroup M] [Module A M
   intro y hy
   refine Submodule.smul_induction_on hy (fun r hr n hn => ?_) (fun x y hx hy => ?_)
   · rw [map_smul]; exact Submodule.smul_mem_smul hr (h n hn)
-  · rw [map_add]; exact add_mem hx hy
+  · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 private theorem pres_sub {A M : Type} [CommRing A] [AddCommGroup M] [Module A M] (N : Submodule A M)
     (T : Module.End A M) (c : A) (h : ∀ y ∈ N, T y ∈ N) :
@@ -57,7 +57,7 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.locFree :
       intro y hy
       refine Submodule.smul_induction_on hy (fun r hr n _ => ?_) (fun x y hx hy => ?_)
       · rw [map_smul]; exact Submodule.smul_mem_smul hr (heL n)
-      · rw [map_add]; exact add_mem hx hy
+      · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     have h1 := h0 ⟨w, hLY hw⟩ ((Submodule.mem_smul_top_iff I Y _).2 hw')
     rwa [(hmem ⟨w, hLY hw⟩).1 hw] at h1
   refine ⟨⟨hst, fun i j y hy => h.2 i j y (hLY hy)⟩, ?_, hfin, ?_, fun hP => ?_⟩

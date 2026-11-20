@@ -50,7 +50,7 @@ private theorem pullback_fin_relation (l : ℕ) [Fact l.Prime] (k : Type) [Field
         rfl
       map_mul' := by
         intro x y
-        simp only [Subgroup.coe_mul, key r x x.2 y y.2, map_add, ofAdd_add] }
+        simp only [Subgroup.coe_mul, key r x x.2 y y.2, map_add (f := _), ofAdd_add] }
   have hφopen : ∀ r a b f, IsOpen ((φ r a b f).ker : Set rbar.ker) := by
     intro r a b f
     have hlc' : IsLocallyConstant fun x : rbar.ker => φ r a b f x :=
@@ -108,7 +108,7 @@ theorem UpperTheory.finite_lift_dualNumber_of_phiCond :
       rw [res_eq_zero_iff, hmem]
       simp
     conv_lhs => rw [hx]
-    rw [map_add, hz, add_zero, AlgHom.commutes, IsLocalRing.ResidueField.algebraMap_eq, ha]
+    rw [map_add (f := _), hz, add_zero, AlgHom.commutes, IsLocalRing.ResidueField.algebraMap_eq, ha]
   have hsq : maximalIdeal (DualNumber (ResidueField O)) ^ 2 = ⊥ := by
     rw [sq, eq_bot_iff]
     refine Ideal.mul_le.2 fun x hx y hy => ?_

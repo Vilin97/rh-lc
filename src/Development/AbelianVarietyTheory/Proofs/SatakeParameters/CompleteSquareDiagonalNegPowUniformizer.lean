@@ -179,10 +179,10 @@ theorem square_diag : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicati
         have e1 : (i = l ∧ j = k) ↔ (j = k ∧ i = l) := and_comm
         have e2 : (j = l ∧ i = k) ↔ (i = k ∧ j = l) := and_comm
         by_cases hP : i = k ∧ j = l <;> by_cases hQ : j = k ∧ i = l
-        · rw [if_pos hP, if_pos hQ, if_pos (e1.2 hQ), if_pos (e2.2 hP), map_add, hσx, hσy]; ring
-        · rw [if_pos hP, if_neg hQ, if_neg (fun h => hQ (e1.1 h)), if_pos (e2.2 hP), map_add, hσx, map_zero]; ring
-        · rw [if_neg hP, if_pos hQ, if_pos (e1.2 hQ), if_neg (fun h => hP (e2.1 h)), map_add, hσy, map_zero]; ring
-        · rw [if_neg hP, if_neg hQ, if_neg (fun h => hQ (e1.1 h)), if_neg (fun h => hP (e2.1 h)), map_add, map_zero]; ring
+        · rw [if_pos hP, if_pos hQ, if_pos (e1.2 hQ), if_pos (e2.2 hP), map_add (f := _), hσx, hσy]; ring
+        · rw [if_pos hP, if_neg hQ, if_neg (fun h => hQ (e1.1 h)), if_pos (e2.2 hP), map_add (f := _), hσx, map_zero]; ring
+        · rw [if_neg hP, if_pos hQ, if_pos (e1.2 hQ), if_neg (fun h => hP (e2.1 h)), map_add (f := _), hσy, map_zero]; ring
+        · rw [if_neg hP, if_neg hQ, if_neg (fun h => hQ (e1.1 h)), if_neg (fun h => hP (e2.1 h)), map_add (f := _), map_zero]; ring
       have hsmall : ∀ k l, Valued.v (C k l) < 1 := by
         intro k l
         simp only [hCdef, Matrix.add_apply, Matrix.single_apply]
@@ -217,7 +217,7 @@ theorem square_diag : ∀ (L : Type) [Field L] [Valued L (WithZero (Multiplicati
       have key : (δ * (x * G j i + y * G i j) + σ (δ * (x * G j i + y * G i j))) / 2 =
           b * (δ ^ 2 * ϖ ^ m * G j i) + σ (b * (δ ^ 2 * ϖ ^ m * G j i)) := by
         rw [hx, hy]
-        simp only [map_add, map_mul, map_pow, hσϖ, hδ.2, hσσ, hGσ]
+        simp only [map_add (f := _), map_mul, map_pow, hσϖ, hδ.2, hσσ, hGσ]
         rw [div_eq_iff h20]; ring
       rw [← key]; exact h
     have e : Valued.v (δ ^ 2 * ϖ ^ m * G j i) = Valued.v (ϖ ^ m * G j i) := by

@@ -131,7 +131,7 @@ theorem fd_conj (f : S τ) (q : Qp 0 τ) (e : E 0) :
 
 theorem th_cj (f : S τ) : th (cj f) = cj (thb f) := S_ext fun q => by
   rw [ev_cj, ev_th, ev_thb, wirt_alt, wirt_zb, fd_conj, fd_conj]
-  simp only [map_mul, map_add, Complex.conj_conj, Complex.conj_I, map_div₀, map_one, map_ofNat]
+  simp only [map_mul, map_add (f := _), Complex.conj_conj, Complex.conj_I, map_div₀, map_one, map_ofNat]
   ring
 theorem thb_cj (f : S τ) : thb (cj f) = cj (th f) := S_ext fun q => by
   rw [ev_cj, ev_th, ev_thb, wirt_alt, wirt_zb, fd_conj, fd_conj]
@@ -334,7 +334,7 @@ theorem Cl.th (hτ : 1 ≤ τ) {K} {f : S τ} (h : Cl K f) : Cl K (th f) := by
   | mzi h ih => rw [th_mul, th_zi hτ, neg_mul]; exact h.mzi.neg.add ih.mzi
   | mzbi h ih => rw [th_mul, th_zbi hτ, zero_mul, zero_add]; exact ih.mzbi
   | up _ ih => exact ih.up
-  | add _ _ ih ih' => rw [map_add]; exact ih.add ih'
+  | add _ _ ih ih' => rw [map_add (f := _)]; exact ih.add ih'
   | smul c _ ih => rw [map_smul]; exact ih.smul c
 
 theorem Cl.thb (hτ : 1 ≤ τ) {K} {f : S τ} (h : Cl K f) : Cl K (thb f) := by
@@ -346,7 +346,7 @@ theorem Cl.thb (hτ : 1 ≤ τ) {K} {f : S τ} (h : Cl K f) : Cl K (thb f) := by
   | mzi h ih => rw [thb_mul, thb_zi hτ, zero_mul, zero_add]; exact ih.mzi
   | mzbi h ih => rw [thb_mul, thb_zbi hτ, neg_mul]; exact h.mzbi.neg.add ih.mzbi
   | up _ ih => exact ih.up
-  | add _ _ ih ih' => rw [map_add]; exact ih.add ih'
+  | add _ _ ih ih' => rw [map_add (f := _)]; exact ih.add ih'
   | smul c _ ih => rw [map_smul]; exact ih.smul c
 
 theorem Cl.mono {K} {f : S τ} (h : Cl K f) (n : ℕ) : Cl (K + n) f := by
@@ -525,7 +525,7 @@ theorem act_mul (a b : A P (DQ P)) (f) : actA P (a * b) f = actA P a (actA P b f
     simp only [actA_eq, Matrix.mul_apply, map_sum, map_mul, LinearMap.sum_apply, Module.End.mul_apply]
   rw [Finset.sum_comm]
 theorem act_add (a b : A P (DQ P)) (f π) : actA P (a + b) f π = actA P a f π + actA P b f π := by
-  simp only [actA_eq, Matrix.add_apply, map_add, LinearMap.add_apply, Finset.sum_add_distrib]
+  simp only [actA_eq, Matrix.add_apply, map_add (f := _), LinearMap.add_apply, Finset.sum_add_distrib]
 theorem act_sub (a b : A P (DQ P)) (f π) : actA P (a - b) f π = actA P a f π - actA P b f π := by
   simp only [actA_eq, Matrix.sub_apply, map_sub, LinearMap.sub_apply, Finset.sum_sub_distrib]
 theorem act_neg (a : A P (DQ P)) (f π) : actA P (-a) f π = -actA P a f π := by
@@ -612,7 +612,7 @@ theorem raising_star_action (y f π) : actA (Pb b) (star (L.R0 y)) f π = opRs (
   simp only [act_mul, act_sub, act_neg, act_alg, gg_act, nabs_act, z_act, ggi_act]
   refine S_ext fun q => ?_
   have := gg_ne' q
-  simp only [opRs, ev_mul, ev_sub, ev_add, ev_neg, ev_smul, ev_gg, ev_ggi (hT b), map_add, Complex.conj_natCast,
+  simp only [opRs, ev_mul, ev_sub, ev_add, ev_neg, ev_smul, ev_gg, ev_ggi (hT b), map_add (f := _), Complex.conj_natCast,
     Complex.star_def]
   field_simp
   ring
@@ -627,7 +627,7 @@ theorem R0vs_act (y f π) : actA (Pb b) (star (L.R0v y)) f π = opVs (b + (y - 1
   simp only [act_mul, act_sub, act_neg, act_alg, gg_act, nab_act, zb_act, ggi_act]
   refine S_ext fun q => ?_
   have := gg_ne' q
-  simp only [opVs, ev_mul, ev_sub, ev_add, ev_neg, ev_smul, ev_gg, ev_ggi (hT b), map_add, map_sub, Complex.conj_natCast,
+  simp only [opVs, ev_mul, ev_sub, ev_add, ev_neg, ev_smul, ev_gg, ev_ggi (hT b), map_add (f := _), map_sub, Complex.conj_natCast,
     Complex.star_def]
   field_simp
   ring
@@ -812,7 +812,7 @@ theorem jeigen (b d : ℕ) : JEigen (Pb b) (fun _ => jf b (d + 1 + 2 * b)) (lamb
   rw [cmValueConst_eq, t11, h21, h12, h4, mul_zero, mul_zero, zero_mul, add_zero, add_zero, add_zero, hp]
   simp only [xA, l0A, m0A, act_mul, act_add, act_sub, act_neg, act_alg, act_kap, gg_act, ggi_act, nab_act, nabs_act,
     z_act, zb_act, hx, wC_eq, one_smul]
-  simp only [map_sub, map_neg, map_add, map_smul, thb_mul, th_jf hτ, thb_jf hτ, theta_bar_zeta, thb_zb, thb_zi hτ, thb_ggi hτ]
+  simp only [map_sub, map_neg, map_add (f := _), map_smul, thb_mul, th_jf hτ, thb_jf hτ, theta_bar_zeta, thb_zb, thb_zi hτ, thb_ggi hτ]
   refine S_ext fun q => ?_
   have h1 := gg_ne' q
   have h2 := z_ne hτ q
@@ -1773,7 +1773,7 @@ theorem fd_conj (f : S τ) (q : Qp 0 τ) (e : E 0) :
 
 theorem th_cj (f : S τ) : th (cj f) = cj (thb f) := S_ext fun q => by
   rw [ev_cj, ev_th, ev_thb, wirt_alt, wirt_zb, fd_conj, fd_conj]
-  simp only [map_mul, map_add, Complex.conj_conj, Complex.conj_I, map_div₀, map_one, map_ofNat]
+  simp only [map_mul, map_add (f := _), Complex.conj_conj, Complex.conj_I, map_div₀, map_one, map_ofNat]
   ring
 theorem thb_cj (f : S τ) : thb (cj f) = cj (th f) := S_ext fun q => by
   rw [ev_cj, ev_th, ev_thb, wirt_alt, wirt_zb, fd_conj, fd_conj]
@@ -2002,7 +2002,7 @@ theorem raising_star_action {L : LevelData (A PP (DQ PP)) 0} (hL : IsModelLevel 
   simp only [act_mul, act_sub, act_neg, act_alg, gg_act, nabs_act, z_act, ggi_act]
   refine S_ext fun q => ?_
   have := gg_ne' q
-  simp only [opRs, ev_mul, ev_sub, ev_add, ev_neg, ev_smul, ev_gg, ev_ggi hτ, map_add, Complex.conj_ofReal,
+  simp only [opRs, ev_mul, ev_sub, ev_add, ev_neg, ev_smul, ev_gg, ev_ggi hτ, map_add (f := _), Complex.conj_ofReal,
     Complex.star_def]
   field_simp
   ring
@@ -2017,7 +2017,7 @@ theorem R0vs_act {L : LevelData (A PP (DQ PP)) 0} (hL : IsModelLevel PP (DQ PP) 
   simp only [act_mul, act_sub, act_neg, act_alg, gg_act, nab_act, zb_act, ggi_act]
   refine S_ext fun q => ?_
   have := gg_ne' q
-  simp only [opVs, ev_mul, ev_sub, ev_add, ev_neg, ev_smul, ev_gg, ev_ggi hτ, map_add, map_sub, Complex.conj_ofReal,
+  simp only [opVs, ev_mul, ev_sub, ev_add, ev_neg, ev_smul, ev_gg, ev_ggi hτ, map_add (f := _), map_sub, Complex.conj_ofReal,
     Complex.star_def]
   field_simp
   ring
@@ -2083,7 +2083,7 @@ theorem bdd_zero (δ) : Bdd δ (0 : S τ) := ⟨0, le_rfl, fun q _ => by simp⟩
 theorem bdd_const (δ) (c : ℂ) : Bdd δ (c • (1 : S τ)) := ⟨‖c‖, norm_nonneg _, fun q _ => by simp⟩
 
 theorem Good.add (hτ : 0 ≤ τ) {δ} {a b : S τ} (ha : Good δ a) (hb : Good δ b) : Good δ (a + b) :=
-  ⟨ha.1.add hb.1, by rw [map_add]; exact ha.2.1.add hb.2.1, by rw [map_add]; exact ha.2.2.add hb.2.2⟩
+  ⟨ha.1.add hb.1, by rw [map_add (f := _)]; exact ha.2.1.add hb.2.1, by rw [map_add (f := _)]; exact ha.2.2.add hb.2.2⟩
 theorem Good.mul (hτ : 0 ≤ τ) {δ} {a b : S τ} (ha : Good δ a) (hb : Good δ b) : Good δ (a * b) :=
   ⟨ha.1.mul hb.1, by rw [th_mul]; exact (ha.2.1.mul hb.1).add (ha.1.mul hb.2.1),
     by rw [thb_mul]; exact (ha.2.2.mul hb.1).add (ha.1.mul hb.2.2)⟩
@@ -2294,7 +2294,7 @@ theorem adjR (hτ : 0 ≤ τ) {f g : S τ} {δ : ℝ} (hδ : 0 < δ)
     refine S_ext fun q => ?_
     have := z_ne hτ q
     have h2 : conj q.1.2 ≠ 0 := (map_ne_zero _).2 this
-    simp only [ev_mul, ev_add, ev_cj, ev_zi hτ, ev_zbi hτ, eval_zeta, ev_zb, ev_gg, map_mul, map_add, map_sub,
+    simp only [ev_mul, ev_add, ev_cj, ev_zi hτ, ev_zbi hτ, eval_zeta, ev_zb, ev_gg, map_mul, map_add (f := _), map_sub,
       Complex.conj_conj, Complex.conj_ofReal, map_inv₀]
     field_simp
     try ring
@@ -2303,7 +2303,7 @@ theorem adjR (hτ : 0 ≤ τ) {f g : S τ} {δ : ℝ} (hδ : 0 < δ)
     refine S_ext fun q => ?_
     have := z_ne hτ q
     have h2 : conj q.1.2 ≠ 0 := (map_ne_zero _).2 this
-    simp only [ev_mul, ev_add, ev_cj, ev_zi hτ, ev_zbi hτ, eval_zeta, ev_zb, ev_gg, map_mul, map_add, map_sub,
+    simp only [ev_mul, ev_add, ev_cj, ev_zi hτ, ev_zbi hτ, eval_zeta, ev_zb, ev_gg, map_mul, map_add (f := _), map_sub,
       Complex.conj_conj, Complex.conj_ofReal, map_inv₀]
     field_simp
     try ring
@@ -2942,8 +2942,8 @@ theorem wirt_conj {v w : M.Var r} (hb : Bar v w) {F : E r → ℂ} {x : E r} (hF
   unfold wirt
   rw [hd, hb.1, hb.2.1]
   by_cases h : (ofLex w).2 = 0
-  · simp [h, h2, map_add, map_mul]
-  · simp [h, h2, map_add, map_mul]
+  · simp [h, h2, map_add (f := _), map_mul]
+  · simp [h, h2, map_add (f := _), map_mul]
 
 theorem ev_cj {v w : M.Var r} (hb : Bar v w) (g : SmQ r TT) : eulerQ v (cj g) = cj (eulerQ w g) :=
   S_ext fun q => by

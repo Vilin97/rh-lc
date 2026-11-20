@@ -21,7 +21,7 @@ private theorem tr_rep {R G : Type} [CommRing R] [Group G] {n : ℕ} (hn : 1 ≤
       simp [GDet.repAlg, Matrix.one_apply, Matrix.diagonal_apply]
     · induction z using MonoidAlgebra.induction_linear with
       | zero => simp
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
       | single g r => ext i j : 2; simp [GDet.repAlg]
   haveI : Nonempty (Fin n) := ⟨⟨0, hn⟩⟩
   rw [GDet.tr, GDet.lam, h, Matrix.trace_eq_neg_charpoly_coeff, Fintype.card_fin]
@@ -39,7 +39,7 @@ private theorem rep_comap {n : ℕ} {A G H : Type} [CommRing A] [Group G] [Group
   congr 1
   induction x using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | single g r => simp [GDet.repAlg]
 
 private noncomputable def qq {R G : Type} [CommRing R] [Group G] {n : ℕ} (E : ℕ) (ph : G) (u : Fin n → R) (i : Fin n) :

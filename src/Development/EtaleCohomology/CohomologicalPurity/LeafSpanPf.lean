@@ -20,7 +20,7 @@ theorem span_of_subsingleton {R P B ι : Type} [CommRing R] [CommRing P] [CommRi
       rw [KaehlerDifferential.map_D]
       exact Submodule.subset_span ⟨i, rfl⟩
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add]; exact T.add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact T.add_mem ha hb
     | smul c m _ hm =>
       rw [LinearMap.map_smul, ← algebraMap_smul B c]
       exact T.smul_mem _ hm
@@ -35,7 +35,7 @@ theorem span_of_subsingleton {R P B ι : Type} [CommRing R] [CommRing P] [CommRi
     | tmul b m =>
       rw [KaehlerDifferential.mapBaseChange_tmul]
       exact T.smul_mem _ (hmap m)
-    | add a b ha hb => rw [map_add]; exact T.add_mem ha hb
+    | add a b ha hb => rw [map_add (f := _)]; exact T.add_mem ha hb
   obtain ⟨t, rfl⟩ := (KaehlerDifferential.exact_mapBaseChange_map R P B (ω)).mp hk
   exact hbc t
 

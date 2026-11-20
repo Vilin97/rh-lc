@@ -420,7 +420,7 @@ theorem ord_split : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClos
       refine ⟨_, hcoset (-(f (0, b))), ?_⟩
       funext z
       have h1 : e z + -(f (0, b)) = f (z.1, z.2 - b) := by
-        rw [he, ← map_neg, ← map_add]
+        rw [he, ← map_neg, ← map_add (f := _)]
         congr 1
         ext <;> simp [sub_eq_add_neg]
       simp only [LinearMap.funLeft_apply, h1]

@@ -42,7 +42,7 @@ theorem mem_schA_of_level : ∀ (F : Type) [Field F] [NumberField F] (N : ℕ) (
     intro a b hab z
     rw [← hU (ι (-a + b)) hab (hιinf _) (ι a + z)]
     congr 1
-    rw [map_add, map_neg]
+    rw [map_add (f := _), map_neg]
     abel
   obtain ⟨t, ht⟩ := hK.elim_finite_subcover (fun a : Fin N → Af F => {b | -a + b ∈ W})
     (fun a => hWo.preimage (continuous_const.add continuous_id))

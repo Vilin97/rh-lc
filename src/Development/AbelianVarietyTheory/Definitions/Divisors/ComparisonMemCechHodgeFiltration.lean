@@ -345,7 +345,7 @@ theorem IsPull1.zero : IsPull1 h 0 0 := (map_zero _).trans (map_zero _).symm
 
 theorem IsPull1.add {a b : HH1 s} {a' b' : HH1 s'} (ha : IsPull1 h a a') (hb : IsPull1 h b b') :
     IsPull1 h (a + b) (a' + b') := by
-  unfold IsPull1 at *; rw [map_add, map_add, ha, hb]
+  unfold IsPull1 at *; rw [map_add (f := _), map_add (f := _), ha, hb]
 
 theorem IsPull1.smul {a : HH1 s} {a' : HH1 s'} (ha : IsPull1 h a a') (r : R) :
     IsPull1 h (r • a) (σ r • a') := by
@@ -355,7 +355,7 @@ theorem IsPull2.zero : IsPull2 h 0 0 := (map_zero _).trans (map_zero _).symm
 
 theorem IsPull2.add {a b : HH2 s} {a' b' : HH2 s'} (ha : IsPull2 h a a') (hb : IsPull2 h b b') :
     IsPull2 h (a + b) (a' + b') := by
-  unfold IsPull2 at *; rw [map_add, map_add, ha, hb]
+  unfold IsPull2 at *; rw [map_add (f := _), map_add (f := _), ha, hb]
 
 theorem IsPull2.smul {a : HH2 s} {a' : HH2 s'} (ha : IsPull2 h a a') (r : R) :
     IsPull2 h (r • a) (σ r • a') := by
@@ -438,7 +438,7 @@ theorem dOne_line (ω : Ω[R[X]⁄R]) : dOne R R[X] ω = 0 := by
     rw [dOne_smul_D, polynomial_D_apply R b, polynomial_D_apply R c]
     simp
   | h0 => simp
-  | ha x y hx hy => rw [map_add, hx, hy, add_zero]
+  | ha x y hx hy => rw [map_add (f := _), hx, hy, add_zero]
 
 def lineEquiv : (Ω[R[X]⁄R] ⧸ LinearMap.range (D R R[X]).toLinearMap) ≃ₗ[R] HH1 (lineStr R) :=
   (Submodule.Quotient.equiv (exact1 R R[X]) _

@@ -87,7 +87,7 @@ def descOp (hsm : ∀ (a : LL) x, cmp (a • x) = e a • cmp x) (hinj : Functio
     have h1 := Classical.choose_spec (h (x + y))
     have h2 := Classical.choose_spec (h x)
     have h3 := Classical.choose_spec (h y)
-    rw [map_add cmp (Classical.choose (h x)), h1, h2, h3, map_add, map_add]
+    rw [map_add cmp (Classical.choose (h x)), h1, h2, h3, map_add (f := _), map_add (f := _)]
   map_smul' a x := by
     apply hinj
     have h1 := Classical.choose_spec (h (a • x))
@@ -231,7 +231,7 @@ theorem cmp_mem_span u (w : D.what₂.places.Pl) (hg : GIdx D.host (D.mem u).A.T
     rw [← c.cmp_M u w hg]
     exact Submodule.subset_span ⟨y, hy, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ h1 h2 => rw [map_add]; exact Submodule.add_mem _ h1 h2
+  | add y z _ _ h1 h2 => rw [map_add (f := _)]; exact Submodule.add_mem _ h1 h2
   | smul a y _ h1 => rw [c.cmp_smul]; exact Submodule.smul_mem _ _ h1
 
 theorem ValRat.all (h : ValRat c) u (w : D.what₂.places.Pl) (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w))
@@ -268,7 +268,7 @@ theorem yv_span {p : ℕ} (G : GAtP p) (v : Fin G.P.nV) (F : G.Fn)
   induction hF using Submodule.span_induction with
   | mem y hy => exact Submodule.subset_span ((Model.operators_preserve_lattices D' G).2 v y hy)
   | zero => rw [← yK_apply, map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ h1 h2 => rw [← yK_apply, map_add]; exact Submodule.add_mem _ h1 h2
+  | add y z _ _ h1 h2 => rw [← yK_apply, map_add (f := _)]; exact Submodule.add_mem _ h1 h2
   | smul a y _ h1 => rw [← yK_apply, map_smul]; exact Submodule.smul_mem _ _ h1
 
 theorem yvRat_of_valRat (h : ValRat c) (u : D.what₂.Word) (w : D.what₂.places.Pl)

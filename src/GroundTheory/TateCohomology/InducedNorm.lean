@@ -74,11 +74,11 @@ theorem sum_leftRegular_tensor (t : (leftRegular k G ⊗ B : Rep k G)) :
       (TensorProduct.map coeffOneProj LinearMap.id ((leftRegular k G ⊗ B).ρ g⁻¹ t)) = t := by
   induction t using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, Finset.sum_add_distrib, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finset.sum_add_distrib, hx, hy]
   | tmul x b =>
     induction x using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add x y hx hy => simp only [TensorProduct.add_tmul, map_add, Finset.sum_add_distrib, hx, hy]
+    | add x y hx hy => simp only [TensorProduct.add_tmul, map_add (f := _), Finset.sum_add_distrib, hx, hy]
     | single h c =>
       rw [Fintype.sum_eq_single h]
       · simp [Rep.tensor_ρ, coeffOneProj_apply]

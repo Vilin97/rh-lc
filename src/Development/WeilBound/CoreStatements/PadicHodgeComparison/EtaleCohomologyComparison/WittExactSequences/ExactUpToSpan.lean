@@ -40,7 +40,7 @@ theorem exactUpTo_span {M N P : Type*} [AddCommGroup M] [AddCommGroup N] [AddCom
     intro z hz
     obtain ⟨u, hu⟩ := hx z hz
     obtain ⟨v, hv⟩ := hy z hz
-    exact ⟨u + v, by rw [map_add, hu, hv, add_smul]⟩
+    exact ⟨u + v, by rw [map_add (f := _), hu, hv, add_smul]⟩
   | smul a x _ hx =>
     intro z hz
     obtain ⟨u, hu⟩ := hx z hz
@@ -106,7 +106,7 @@ theorem mkPowers_dK (N : Type) [AddCommGroup N] [Module R N] (n : ℕ) (w : N �
     (mkPowers j A B hB K hK ι hι δ hδ hrel h0 h1).dK j (tensF p R N) n w = ((alt (δ n)).restrictScalars R).lTensor N w := by
   induction w using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
-  | add u v hu hv => rw [map_add, map_add, hu, hv]
+  | add u v hu hv => rw [map_add (f := _), map_add (f := _), hu, hv]
   | tmul a b =>
     rw [Powers.dK, LinearMap.lTensor_tmul, LinearMap.restrictScalars_apply, alt, LinearMap.sum_apply,
       LinearMap.sum_apply, TensorProduct.tmul_sum]

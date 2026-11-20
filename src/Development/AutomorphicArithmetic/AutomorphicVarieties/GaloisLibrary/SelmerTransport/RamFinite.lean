@@ -107,5 +107,5 @@ theorem UpperTheory.V.Base.ramFinite :
       obtain rfl : n = N := hn
       exact fix_root h0 A hA hσ.2 (by rw [← map_pow, hy, map_one])
     | algebraMap r => rw [← IsScalarTower.algebraMap_apply]; exact hσ.1 r
-    | add a b _ _ ha hb => rw [map_add, map_add, ha, hb]
+    | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
     | mul a b _ _ ha hb => rw [map_mul, map_mul, ha, hb]

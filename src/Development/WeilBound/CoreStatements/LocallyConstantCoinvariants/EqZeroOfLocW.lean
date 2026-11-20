@@ -78,7 +78,7 @@ theorem exists_e (h : IsSec σ t sec) (hG : Grams σ t JA JB) (d : Darboux (symp
     rw [this, map_smul, locW_smul, ev_sgl, one_smul]
   let f : ((α × β → Fv F v) × (α × β → Fv F v)) →ₗ[Fv F v] ((κ → Fv F v) × (κ → Fv F v)) :=
     { toFun := fun w => locW v (d.e (s w))
-      map_add' := fun w w' => by rw [← locW_add, ← map_add, ← key (s w + s w'), coord_add, hs2, hs2]
+      map_add' := fun w w' => by rw [← locW_add, ← map_add (f := _), ← key (s w + s w'), coord_add, hs2, hs2]
       map_smul' := fun a w => by
         have := key (sgl v a • s w)
         rw [coord_smul h, hs2, ev_sgl, map_smul, locW_smul, ev_sgl] at this

@@ -198,7 +198,7 @@ theorem le_finrank_eigenSub {R V F O X : Type} [CommRing R] [CommRing V] [IsDoma
       rw [RingHom.map_vecMul] at h₂
       exact h₂.trans (map_mul _ _ _)
     | zero => simp
-    | add a a' _ _ h h' => rw [map_add, map_add, LinearMap.add_apply, h, h', add_smul]
+    | add a a' _ _ h h' => rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, h, h', add_smul]
     | smul z a _ h => rw [map_zsmul, map_zsmul, LinearMap.smul_apply, h, smul_assoc]
   have li : LinearIndependent F (W.map (algebraMap V F)).row := by
     rw [← Matrix.vecMul_injective_iff]

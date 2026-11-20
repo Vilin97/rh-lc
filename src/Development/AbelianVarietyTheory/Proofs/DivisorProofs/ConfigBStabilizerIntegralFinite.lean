@@ -160,7 +160,7 @@ theorem continuousAt_schr_zero (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) {l : (
     exact tendsto_const_nhds
   | add a b _ _ ha hb =>
     have : ∀ w : (κ → AF F) × (κ → AF F), schr ψ w (a + b) = schr ψ w a + schr ψ w b := fun w => map_add (schrL ψ w) a b
-    simp only [this, map_add]
+    simp only [this, map_add (f := _)]
     exact ha.add hb
   | smul c a _ ha =>
     have : ∀ w : (κ → AF F) × (κ → AF F), schr ψ w (c • a) = c • schr ψ w a := fun w => map_smul (schrL ψ w) c a

@@ -47,7 +47,7 @@ private theorem exists_root_lift_of_ker_sq_eq_bot {R' R : Type} [CommRing R'] [C
     have := Ideal.pow_mem_pow h1 2
     rwa [hk, Ideal.mem_bot] at this
   refine ⟨z₀ + -(v * Polynomial.aeval z₀ f), ?_, ?_⟩
-  · rw [map_add, RingHom.mem_ker.mp h1, add_zero]
+  · rw [map_add (f := _), RingHom.mem_ker.mp h1, add_zero]
   · rw [Polynomial.aeval_add_of_sq_eq_zero _ _ _ h2, mul_neg, ← _root_.mul_assoc, hv, _root_.one_mul,
       add_neg_cancel]
 
@@ -61,7 +61,7 @@ private theorem isUnit_aeval_derivative_cyclotomic {R : Type} [CommRing R] (M : 
     simpa [sub_eq_zero] using this
   have hzu : IsUnit z := IsUnit.of_pow_eq_one h1 hM
   have h2 := congrArg (fun q => Polynomial.aeval z (derivative q)) hg
-  simp only [derivative_mul, map_add, map_mul, hz, zero_mul, add_zero, derivative_sub,
+  simp only [derivative_mul, map_add (f := _), map_mul, hz, zero_mul, add_zero, derivative_sub,
     derivative_one, sub_zero, derivative_X_pow, map_natCast, map_pow, aeval_X] at h2
   have h3 : IsUnit ((M : R) * z ^ (M - 1)) := hu.mul (hzu.pow _)
   rw [h2] at h3
@@ -133,7 +133,7 @@ private theorem exists_mul_eq_aeval_zeta_of_mem (p M : ℕ) (x : ℂ) (hx : x �
     obtain ⟨n, hn, g, hg⟩ := hx
     obtain ⟨m, hm, k, hk⟩ := hy
     refine ⟨n * m, mul_mem hn hm, g * (m : ℤ[X]) + k * (n : ℤ[X]), ?_⟩
-    simp only [map_add, map_mul, map_natCast, Nat.cast_mul, ← hg, ← hk]
+    simp only [map_add (f := _), map_mul, map_natCast, Nat.cast_mul, ← hg, ← hk]
     ring
   | neg x _ hx =>
     obtain ⟨n, hn, g, hg⟩ := hx

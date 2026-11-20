@@ -237,7 +237,7 @@ theorem continuous_eA [IsTotallyReal F] : Continuous (eA F E) := by
       have : (InfinitePlace.Completion.extensionEmbedding w) ∘ (fun t => (1 + realAd F (t - 1) : AF F).1 w) =
           fun t : ℝ => (t : ℂ) := funext fun t => by
         change InfinitePlace.Completion.extensionEmbedding w (1 + (realAd F (t - 1)).1 w) = _
-        rw [map_add, map_one, realAd_inf]
+        rw [map_add (f := _), map_one, realAd_inf]
         push_cast
         ring
       rw [this]

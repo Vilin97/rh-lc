@@ -293,7 +293,7 @@ theorem continuous_infEmb_symm (h : IsCMExt F E σ) {w : InfinitePlace F} (τ : 
   have : (e.symm : ℂ → _) = fun z => r.symm z.re • (1 : w.Completion ⊗[F] E) + r.symm z.im • e.symm Complex.I := by
     funext z
     apply e.injective
-    rw [map_add, hs, hs, map_one, mul_one, e.apply_symm_apply, e.apply_symm_apply, Complex.re_add_im]
+    rw [map_add (f := _), hs, hs, map_one, mul_one, e.apply_symm_apply, e.apply_symm_apply, Complex.re_add_im]
   rw [this]
   have h1 : Continuous fun z : ℂ => r.symm z.re := r.symm.continuous.comp Complex.continuous_re
   have h2 : Continuous fun z : ℂ => r.symm z.im := r.symm.continuous.comp Complex.continuous_im

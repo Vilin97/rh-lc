@@ -301,7 +301,7 @@ theorem char_zero_stability_of_closure {p : ℕ} (hp : p.Prime) {O : Type} [Comm
         intro m
         obtain ⟨a, ha⟩ := hF m
         obtain ⟨b, hb⟩ := hG m
-        exact ⟨a + b, by rw [MvPolynomial.coeff_add, ha, hb, map_add]⟩
+        exact ⟨a + b, by rw [MvPolynomial.coeff_add, ha, hb, map_add (f := _)]⟩
       · intro u' hu' F hF
         refine hint u' (fun m => ?_) F hF
         have h1 := hmono m 1

@@ -20,13 +20,13 @@ theorem liftT_smul (v : Pl F) (a : Fv F v) (t : Fv F v ⊗[F] E) :
   | tmul b e =>
     rw [TensorProduct.smul_tmul', GlobalTheory.VanishLoc.liftT, LinearMap.rTensor_tmul, LinearMap.rTensor_tmul,
       TensorProduct.smul_tmul', smul_eq_mul, smul_eq_mul, liftV_mul]
-  | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), smul_add]
 
 variable {n n₁ d d₁ : ℕ}
 
 theorem uAt_add (H : Plane E n n₁) (H' : Plane E d d₁) (v : Pl F) (s t : Fv F v ⊗[F] E) :
     GlobalTheory.VanishLoc.uAt H H' v (s + t) = GlobalTheory.VanishLoc.uAt H H' v s + GlobalTheory.VanishLoc.uAt H H' v t := by
-  simp only [GlobalTheory.VanishLoc.uAt, map_add, add_smul, Matrix.vecMulVec_add]
+  simp only [GlobalTheory.VanishLoc.uAt, map_add (f := _), add_smul, Matrix.vecMulVec_add]
 
 theorem uAt_smul (H : Plane E n n₁) (H' : Plane E d d₁) (v : Pl F) (a : Fv F v) (t : Fv F v ⊗[F] E) :
     GlobalTheory.VanishLoc.uAt H H' v (a • t) = GlobalTheory.LatVac.liftV v a • GlobalTheory.VanishLoc.uAt H H' v t := by
@@ -45,7 +45,7 @@ theorem locCo_smul (M : Model σ X W) (v : Pl F) (a : Fv F v) (u : Matrix (Fin n
 def locUAt (M : Model σ X W) (H : Plane E n n₁) (H' : Plane E d d₁) (v : Pl F) :
     (Fv F v ⊗[F] E) →ₗ[Fv F v] (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v) where
   toFun t := GlobalTheory.LatVac.locCo M.co v (GlobalTheory.VanishLoc.uAt H H' v t)
-  map_add' s t := by rw [uAt_add, map_add]
+  map_add' s t := by rw [uAt_add, map_add (f := _)]
   map_smul' a t := by rw [uAt_smul, locCo_smul, RingHom.id_apply]
 
 theorem tendsto_locCo_uAt : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]

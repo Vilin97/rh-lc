@@ -208,10 +208,10 @@ theorem dual_closure (R R' : Subalgebra O Ω) (hR : ∀ a ∈ R, a ∈ R') {N : 
         rw [map_smul, map_smul, LinearMap.smul_apply, smul_eq_mul, smul_eq_mul]
         exact R'.mul_mem ha (R'.mul_mem hc (hR _ ((hM e).1 he y hy)))
       | zero => rw [map_zero, LinearMap.zero_apply]; exact R'.zero_mem
-      | add x y _ _ hx hy => rw [map_add, LinearMap.add_apply]; exact R'.add_mem hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _), LinearMap.add_apply]; exact R'.add_mem hx hy
       | neg x _ hx => rw [map_neg, LinearMap.neg_apply]; exact R'.neg_mem hx
     | zero => intro v _; rw [map_zero]; exact R'.zero_mem
-    | add x y _ _ hx hy => intro v hv; rw [map_add]; exact R'.add_mem (hx v hv) (hy v hv)
+    | add x y _ _ hx hy => intro v hv; rw [map_add (f := _)]; exact R'.add_mem (hx v hv) (hy v hv)
     | neg x _ hx => intro v hv; rw [map_neg]; exact R'.neg_mem (hx v hv)
   · intro hw
     obtain ⟨k, v, l, hv, hl, -, hs⟩ := exists_system R L h β hβ

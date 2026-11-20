@@ -123,7 +123,7 @@ theorem approx (N : ℕ) (hN : 0 < N) (r : Af F ⊗[F] E) :
     obtain ⟨e1, o1, ho1, rfl⟩ := hx
     obtain ⟨e2, o2, ho2, rfl⟩ := hy
     refine ⟨e1 + e2, o1 + o2, add_mem ho1 ho2, ?_⟩
-    rw [map_add, smul_add]; abel
+    rw [map_add (f := _), smul_add]; abel
 
 theorem nat_mult (c : 𝓞 F) (hc : c ≠ 0) : ∃ k : ℕ, 0 < k ∧ ∃ c' : 𝓞 F, (k : 𝓞 F) = c * c' := by
   obtain ⟨c', h⟩ := Ideal.mem_span_singleton'.mp (Ideal.absNorm_mem (Ideal.span {c}))

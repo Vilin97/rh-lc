@@ -52,7 +52,7 @@ theorem idem_mem (B C : InvAlg K) (p q : K.O[X]) (hp : p.map (algebraMap K.O K.E
     refine Prod.ext ?_ ?_
     · refine Eq.trans ?_ h1
       have := congrArg (aeval B.g) hab
-      rw [map_add, map_mul, aeval_lift B p hp, mul_zero, zero_add, map_one] at this
+      rw [map_add (f := _), map_mul, aeval_lift B p hp, mul_zero, zero_add, map_one] at this
       exact this.symm
     · refine Eq.trans ?_ h2
       change 0 = aeval C.g (b * q)

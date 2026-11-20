@@ -145,7 +145,7 @@ theorem soCut_of : SoCut := by
   rw [eig] at hΦ
   have := coef_eigen hψ.2.1 μ (tens (evFin F v) (χ i) r) _ (M.co.e z) (atPlace v (trace (Y₀ * Uᵀ)))
     (hΦ.trans (funext fun x => mul_assoc _ _ _))
-  rw [← neg_sub, ← M.co.form, sy, ← map_add, ← map_neg, ← map_add, ← psv_apply] at this
+  rw [← neg_sub, ← M.co.form, sy, ← map_add (f := _), ← map_neg, ← map_add (f := _), ← psv_apply] at this
   by_contra h0
   apply hU'
   have h1 := (mul_eq_right₀ h0).1 this.symm

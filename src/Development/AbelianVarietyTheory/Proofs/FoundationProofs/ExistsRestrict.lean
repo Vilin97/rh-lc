@@ -135,7 +135,7 @@ theorem exists_limit [IsAlgClosure ℚ Ω] (X : Tower Ω ε) (A : ValuationSubri
     (by
       rintro n b hb b' hb' a a' _ _ ⟨φ, h, rfl⟩ ⟨φ', h', rfl⟩
       refine ⟨_, GlobalTheory.ThAdd.isThB_add Ω ε X A N l n w b b' hlA hb hb' a a' φ φ' h h', ?_⟩
-      rw [← smul_eq_mul, ← smul_eq_mul, ← map_smul, ← map_smul, ← map_add]
+      rw [← smul_eq_mul, ← smul_eq_mul, ← map_smul, ← map_smul, ← map_add (f := _)]
       congr 1
       funext s
       simp [seqN])
@@ -256,7 +256,7 @@ theorem act_sgD_one (X : Tower Ω ε) {N w : ℕ} (hN : N ≠ 0) {b : X.Fn l} (h
   induction hb using Submodule.span_induction with
   | mem x hx => exact hx.2 _ h4
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | smul a x _ hx => rw [map_smul, hx]
 
 end GlobalTheory.LamPr

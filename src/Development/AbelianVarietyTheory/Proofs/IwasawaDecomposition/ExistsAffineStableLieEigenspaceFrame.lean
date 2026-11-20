@@ -188,7 +188,7 @@ theorem exists_projectors {L : Type} [CommRing L] (φ : c.F →+* L) {x : Sp L �
       ψ ∘ Polynomial.aeval (rho hx α) (Q.map (algebraMap c.F L)) cc := fun Q cc => by
     induction Q using Polynomial.induction_on' with
     | add p q hp hq =>
-      rw [Polynomial.map_add, Polynomial.map_add, map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, hp, hq]
+      rw [Polynomial.map_add (f := _), Polynomial.map_add (f := _), map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, hp, hq]
       funext j; simp
     | monomial j a =>
       rw [Polynomial.map_monomial, Polynomial.map_monomial, Polynomial.aeval_monomial, Polynomial.aeval_monomial,

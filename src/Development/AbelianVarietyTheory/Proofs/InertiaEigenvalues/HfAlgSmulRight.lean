@@ -24,7 +24,7 @@ theorem _root_.GlobalTheory.HermNbr.hf_add_left (cK : K ≃+* K) (J : Matrix (Fi
     (x y z : Fin r → K) :
     _root_.GlobalTheory.HermNbr.hf cK J (x + y) z =
       _root_.GlobalTheory.HermNbr.hf cK J x z + _root_.GlobalTheory.HermNbr.hf cK J y z := by
-  simp only [_root_.GlobalTheory.HermNbr.hf, dotProduct, Pi.add_apply, map_add, add_mul,
+  simp only [_root_.GlobalTheory.HermNbr.hf, dotProduct, Pi.add_apply, map_add (f := _), add_mul,
     Finset.sum_add_distrib]
 
 open scoped BigOperators in

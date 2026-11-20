@@ -31,7 +31,7 @@ theorem smul_eighth_power_diag : ∀ (X₀ X : Type) [AddCommGroup X₀] [AddCom
       map_add' := by
         intro x y
         show K ((fun _ => x) + (fun _ => y)) 0 = _
-        rw [map_add]
+        rw [map_add (f := _)]
         rfl }
   have hform : ∀ (mu : Fin 8 → X₀) (u : Fin 8), K mu u = f (mu u) := by
     intro mu u

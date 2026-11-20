@@ -26,7 +26,7 @@ theorem monomial_pderiv_difference_primitive (n : ℕ) (i i' : Fin (n + 1)) (hii
   have hsplit : ∀ x y : MvPolynomial (Fin (n + 1)) ℝ,
       pderiv i' (x + y) - pderiv i (x + y) = (pderiv i' x - pderiv i x) + (pderiv i' y - pderiv i y) := by
     intro x y
-    simp only [map_add]
+    simp only [map_add (f := _)]
     abel
   intro b
   induction b with
@@ -54,7 +54,7 @@ theorem monomial_pderiv_difference_primitive (n : ℕ) (i i' : Fin (n + 1)) (hii
       have e1 : -(1 / ((α i : ℝ) + 1)) * (c * ((b + 1 : ℕ) : ℝ)) + c * ((b : ℝ) + 1) / ((α i : ℝ) + 1) = 0 := by
         push_cast; field_simp; ring
       have e2 : -(1 / ((α i : ℝ) + 1)) * (c * ((α i : ℝ) + 1)) = -c := by field_simp
-      rw [e2, map_neg, sub_neg_eq_add, add_comm _ (monomial α c), add_assoc, ← map_add, e1, map_zero, add_zero]
+      rw [e2, map_neg, sub_neg_eq_add, add_comm _ (monomial α c), add_assoc, ← map_add (f := _), e1, map_zero, add_zero]
     · intro β hβ
       rw [hJ', hXm, smul_monomial] at hβ
       rcases Finset.mem_union.1 (support_add hβ) with h | h

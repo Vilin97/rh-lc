@@ -25,7 +25,7 @@ theorem inner_realize_eq_zero [StarRing K] {n : ℕ} {b : Module.Basis (Fin n) K
     rw [GlobalTheory.AllWt.norm_realize_sq]
     exact Finset.sum_congr rfl fun v _ => by rw [(hG v).2]
   have h1 := hs (x + y)
-  rw [map_add, norm_add_sq_real, hs x, hs y] at h1
+  rw [map_add (f := _), norm_add_sq_real, hs x, hs y] at h1
   rw [Finset.sum_congr rfl fun v _ => h v, Finset.sum_add_distrib] at h1
   linarith
 

@@ -21,7 +21,7 @@ theorem ty_eq_of_rt {i j : Fin g} (h : ty i (H.rt : E) = ty j (H.rt : E)) (α : 
       exact e0
     have hi := congrArg (ty i) e
     have hj := congrArg (ty j) e
-    simp only [map_mul, map_add, map_one, map_ofNat] at hi hj
+    simp only [map_mul, map_add (f := _), map_one, map_ofNat] at hi hj
     have h2 : (2 : ℂ) * ty i ((H.w0 : 𝓞 E) : E) = 2 * ty j ((H.w0 : 𝓞 E) : E) := by
       rw [hi, hj, h]
     exact mul_left_cancel₀ two_ne_zero h2
@@ -34,7 +34,7 @@ theorem ty_eq_of_rt {i j : Fin g} (h : ty i (H.rt : E) = ty j (H.rt : E)) (α : 
   | algebraMap r => simp
   | add x y _ _ hx hy =>
     push_cast
-    rw [map_add, map_add, hx, hy]
+    rw [map_add (f := _), map_add (f := _), hx, hy]
   | mul x y _ _ hx hy =>
     push_cast
     rw [map_mul, map_mul, hx, hy]

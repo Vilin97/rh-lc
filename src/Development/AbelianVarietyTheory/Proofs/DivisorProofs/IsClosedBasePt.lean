@@ -66,7 +66,7 @@ theorem htTie_of_reads : ∀ (D : D7) (O : Setup D) (A : SlopeTestRemainingChoic
     have e₄ := h.pts_is.L B hB y (A.sh u s)
     have e₅ := h.pts_is.a B hB y
     refine (h.aux.ht (O.Mb B u s) y).trans (e₁.trans ?_)
-    rw [map_add, map_add, map_smul, smul_eq_mul]
+    rw [map_add (f := _), map_add (f := _), map_smul, smul_eq_mul]
     erw [e₃, e₄, e₅, e₂]
     simp only [Fintype.sum_option, Option.elim, Setup.htWt, neg_mul, Finset.sum_neg_distrib]
     ring

@@ -48,7 +48,7 @@ theorem c_fix_rat (hK : Module.finrank ℚ K = 2) (c : K →+* K) (hc : ∃ x, c
 
 theorem add_c_int (hK : Module.finrank ℚ K = 2) (c : K →+* K) (hc : ∃ x, c x ≠ x) (a : 𝓞 K) :
     ∃ n : ℤ, a + RingOfIntegers.mapRingHom c a = (n : 𝓞 K) := by
-  have hfix : c ((a : K) + c a) = (a : K) + c a := by rw [map_add, c_invol hK c, add_comm]
+  have hfix : c ((a : K) + c a) = (a : K) + c a := by rw [map_add (f := _), c_invol hK c, add_comm]
   obtain ⟨r, hr⟩ := c_fix_rat hK c hc hfix
   have hint : IsIntegral ℤ (algebraMap ℚ K r) := by
     rw [eq_ratCast, hr]

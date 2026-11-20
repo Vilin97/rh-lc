@@ -23,7 +23,7 @@ theorem GlobalTheory.PZ.ltData_read_OC : ∀ (l : ℕ) [Fact l.Prime] (K : FinEx
   refine ⟨hπ, hF, v, h0, h1, fun n => ?_, fun g => ?_⟩
   · apply Subtype.ext
     have e := congrArg (algebraMap (Om l) ℂ_[l]) (hrel n)
-    rw [map_add, map_mul, map_pow, ← hv, ← hv] at e
+    rw [map_add (f := _), map_mul, map_pow, ← hv, ← hv] at e
     have hq : resCard K = l ^ fK K := rfl
     rw [← hq]
     exact e

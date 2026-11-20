@@ -86,7 +86,7 @@ lemma exists_formalK_le (q : ℕ) : ∃ c, ∀ n, formalK I F q (n + c) ≤
   refine Submodule.smul_induction_on hmem (fun a ha y _ => ?_) (fun y y' hy hy' => ?_)
   · rw [map_smul]
     exact Submodule.smul_mem_smul ha trivial
-  · rw [map_add]
+  · rw [map_add (f := _)]
     exact add_mem hy hy'
 
 include hF in

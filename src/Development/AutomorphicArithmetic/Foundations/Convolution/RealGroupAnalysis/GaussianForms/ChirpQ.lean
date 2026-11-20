@@ -25,7 +25,7 @@ private theorem continuous_eval_poly {R ι : Type*} [CommRing R] [TopologicalSpa
     Continuous fun v : ι → R => MvPolynomial.eval v p := by
   induction p using MvPolynomial.induction_on with
   | C a => simpa using continuous_const
-  | add p q hp hq => simp only [map_add]; exact hp.add hq
+  | add p q hp hq => simp only [map_add (f := _)]; exact hp.add hq
   | mul_X p i hp => simp only [map_mul, MvPolynomial.eval_X]; exact hp.mul (continuous_apply i)
 
 variable (F) in

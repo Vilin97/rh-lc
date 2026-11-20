@@ -248,7 +248,7 @@ theorem dn_exists {d : Deco E a ST SG} {d' : Deco E b ST SG'} (hd : d.Ok) (hd' :
   have hOk : (d.dn P f').Ok := by
     refine hd.dn P hP (fun y hy y' hy' => ?_) (fun r y hy => ?_) (fun y hy => if_neg hy)
       ⟨q • e1, le_sup_left (a := d.kerAt P) (hd.smul_mem_kerAt P hq he1), by rw [hf1 e1 he1 hfe1]; exact one_ne_zero⟩
-    · rw [hpos _ (Submodule.add_mem _ hy hy'), hpos _ hy, hpos _ hy', map_add, hd'.f_add P _ (hxin y hy) _ (hxin y' hy')]
+    · rw [hpos _ (Submodule.add_mem _ hy hy'), hpos _ hy, hpos _ hy', map_add (f := _), hd'.f_add P _ (hxin y hy) _ (hxin y' hy')]
     · rw [hpos _ (Submodule.smul_mem _ r hy), hpos _ hy, LinearMap.map_smul_of_tower, hd'.f_smul P r _ (hxin y hy)]
   have hfP : (d.dn P f').f P = f' := by simp [Deco.dn]
   refine ⟨d.dn P f', hOk, ⟨by rw [hfP], fun e0 he0 h1 => by rw [hfP]; exact hf1 e0 he0 h1⟩, fun Q y hy => ?_⟩
@@ -1291,7 +1291,7 @@ theorem rankOneScaling_one (lam : Sp E n →ₗ[E] E) (v : Sp E n) : rk1C lam v 
 
 theorem rankOneScaling_comp (lam : Sp E n →ₗ[E] E) (v : Sp E n) (hv : lam v = 1) (c c' : E) : rk1C lam v c ∘ₗ rk1C lam v c' = rk1C lam v (c * c') := by
   refine LinearMap.ext fun y => ?_
-  rw [LinearMap.comp_apply, rankOneScaling_apply lam v c', rankOneScaling_apply lam v c, rankOneScaling_apply lam v (c * c'), map_add, map_smul, hv, smul_eq_mul, mul_one,
+  rw [LinearMap.comp_apply, rankOneScaling_apply lam v c', rankOneScaling_apply lam v c, rankOneScaling_apply lam v (c * c'), map_add (f := _), map_smul, hv, smul_eq_mul, mul_one,
     add_assoc, ← add_smul]
   refine congrArg (fun t => y + t • v) ?_
   ring
@@ -1343,7 +1343,7 @@ theorem rankOneDilation_apply (lam : Sp E n →ₗ[E] E) (v : Sp E n) (c : E) (y
   simp [rk1D, smul_smul]
 
 theorem lam_rk1D (lam : Sp E n →ₗ[E] E) (v : Sp E n) (h1 : lam v = 1) (c : E) (y : Sp E n) : lam (rk1D lam v c y) = c * lam y := by
-  rw [rankOneDilation_apply, map_add, map_smul, h1, smul_eq_mul]
+  rw [rankOneDilation_apply, map_add (f := _), map_smul, h1, smul_eq_mul]
   ring
 
 theorem rankOneDilation_comp (lam : Sp E n →ₗ[E] E) (v : Sp E n) (h1 : lam v = 1) (c c' : E) :

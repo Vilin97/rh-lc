@@ -32,7 +32,7 @@ def scalarAct (R : Type) [CommRing R] (d : ℕ) : OAct R (addLaw R d) where
   add_act := by
     intro a b
     rw [addLaw_add _ _ (by simp) (by simp)]
-    funext i; rw [map_add]; ring
+    funext i; rw [map_add (f := _)]; ring
   mul_act := by
     intro a b
     rw [comp1_scalar _ _ (by simp)]

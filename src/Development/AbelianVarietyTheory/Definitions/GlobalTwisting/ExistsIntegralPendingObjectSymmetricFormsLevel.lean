@@ -37,7 +37,7 @@ def idl (G : MvPolynomial (D.what₂.Tau × Fin n × Fin n) ℂ) : Submodule (�
   carrier := {x | D.what₂.embLL (x ()) • G ∈ GSpan D lam}
   add_mem' {a b} ha hb := by
     show D.what₂.embLL (a () + b ()) • G ∈ GSpan D lam
-    rw [map_add, add_smul]; exact add_mem ha hb
+    rw [map_add (f := _), add_smul]; exact add_mem ha hb
   zero_mem' := by
     show D.what₂.embLL 0 • G ∈ GSpan D lam
     rw [map_zero, zero_smul]; exact zero_mem _

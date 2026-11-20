@@ -76,7 +76,7 @@ theorem prV_toEAf (v : GlobalTheory.FinPl.Pl D) (x : AE D) :
   induction x using TensorProduct.induction_on with
   | zero => simp only [RingHom.map_zero, map_zero]
   | tmul x y => rfl
-  | add x y hx hy => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, hx, hy, map_add]
+  | add x y hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), hx, hy, map_add (f := _)]
 
 theorem pr_eq_zero (q : GlobalTheory.FinPl.SplitPt D k) (x : AE D) (hx : Formalism.UG.prV (E := D.host.E) q.v (toEAf D x) = 0) : q.pr x = 0 := by
   rw [prV_toEAf, map_eq_zero_iff _ (AlgEquiv.injective _)] at hx
@@ -123,7 +123,7 @@ theorem exists_int_lift (v : GlobalTheory.FinPl.Pl D) (y : D.host.E ⊗[D.host.F
   | add a b _ _ ha hb =>
     obtain ⟨x, hx, rfl⟩ := ha
     obtain ⟨y, hy, rfl⟩ := hb
-    exact ⟨x + y, by rw [RingHom.map_add]; exact add_mem hx hy, by rw [RingHom.map_add, RingHom.map_add]⟩
+    exact ⟨x + y, by rw [RingHom.map_add (f := _)]; exact add_mem hx hy, by rw [RingHom.map_add (f := _), RingHom.map_add (f := _)]⟩
   | neg a _ ha =>
     obtain ⟨x, hx, rfl⟩ := ha
     exact ⟨-x, by rw [RingHom.map_neg]; exact neg_mem hx, by rw [RingHom.map_neg, RingHom.map_neg]⟩

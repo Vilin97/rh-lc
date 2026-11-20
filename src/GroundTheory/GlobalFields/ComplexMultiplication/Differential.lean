@@ -105,7 +105,7 @@ theorem D_equation {x y : L} (h : (E.baseChange L).toAffine.Equation x y) :
   have h3 : D F L (E.baseChange L).a₃ = 0 := D_coeff E.a₃
   have h4 : D F L (E.baseChange L).a₄ = 0 := D_coeff E.a₄
   have h6 : D F L (E.baseChange L).a₆ = 0 := D_coeff E.a₆
-  simp only [map_add, Derivation.leibniz, Derivation.leibniz_pow, h1, h2, h3, h4, h6, smul_zero,
+  simp only [map_add (f := _), Derivation.leibniz, Derivation.leibniz_pow, h1, h2, h3, h4, h6, smul_zero,
     add_zero] at e
   linear_combination (norm := module) e
 
@@ -168,7 +168,7 @@ theorem D_addX (x₁ x₂ l : L) :
       (2 * l + (E.baseChange L).a₁) • D F L l - D F L x₁ - D F L x₂ := by
   have h1 : D F L (E.baseChange L).a₁ = 0 := D_coeff E.a₁
   have h2 : D F L (E.baseChange L).a₂ = 0 := D_coeff E.a₂
-  simp only [WeierstrassCurve.Affine.addX, map_sub, map_add, Derivation.leibniz,
+  simp only [WeierstrassCurve.Affine.addX, map_sub, map_add (f := _), Derivation.leibniz,
     Derivation.leibniz_pow, h1, h2, smul_zero, add_zero]
   module
 
@@ -244,7 +244,7 @@ theorem omegaAt_add (P Q : (E.baseChange L).toAffine.Point) :
           (E.baseChange L).a₁ * y₁ := by
       rw [hl_def, WeierstrassCurve.Affine.slope_of_Y_ne rfl hy, hu, div_mul_cancel₀ _ hu0]
     have hDl := congrArg (D F L) hl
-    simp only [Derivation.leibniz, map_add, map_sub, Derivation.leibniz_pow, ha₁, ha₂, ha₃, ha₄,
+    simp only [Derivation.leibniz, map_add (f := _), map_sub, Derivation.leibniz_pow, ha₁, ha₂, ha₃, ha₄,
       D_two, D_three, smul_zero, add_zero] at hDl
     rw [← s₁, ← t₁] at hDl
     obtain ⟨iE, iF⟩ := tangent_identities (x₃ := (E.baseChange L).toAffine.addX x₁ x₁ l)
@@ -332,9 +332,9 @@ theorem kpush_omegaAt (σ : L →ₐ[F] L') (P : (E.baseChange L).toAffine.Point
     have c4 : (E.baseChange L').a₄ = σ (E.baseChange L).a₄ := (σ.commutes E.a₄).symm
     refine (omegaAt_some_eq E _ ?_ ?_).symm
     · rw [c1, c3, ← kpush_D, ← s, kpush_smul]
-      simp only [map_add, map_mul, map_ofNat]
+      simp only [map_add (f := _), map_mul, map_ofNat]
     · rw [c1, c2, c4, ← kpush_D, ← t, kpush_smul]
-      simp only [map_add, map_sub, map_mul, map_pow, map_ofNat]
+      simp only [map_add (f := _), map_sub, map_mul, map_pow, map_ofNat]
 
 end Push
 
@@ -504,7 +504,7 @@ theorem isogCoeff_add {φ ψ χ : Isogeny E E'} (h : χ.1 = φ.1 + ψ.1) :
     isogCoeff χ = isogCoeff φ + isogCoeff ψ := by
   have e : (⟨χ.1, χ.respectsAdd⟩ : isogHom E E') = ⟨φ.1, φ.respectsAdd⟩ + ⟨ψ.1, ψ.respectsAdd⟩ :=
     Subtype.ext h
-  rw [isogCoeff, isogCoeff, isogCoeff, e, map_add]
+  rw [isogCoeff, isogCoeff, isogCoeff, e, map_add (f := _)]
 
 variable (E) in
 

@@ -27,7 +27,7 @@ theorem deg_pderiv {σ : Type} (i : σ) (f : MvPolynomial σ ℂ) (k : ℕ) (h :
       rw [Finsupp.single_le_iff]
       omega
     have e2 := congrArg Finsupp.degree e
-    rw [map_add, Finsupp.degree_single] at e2
+    rw [map_add (f := _), Finsupp.degree_single] at e2
     have h3 := (le_totalDegree hs).trans h
     change s.degree ≤ k + 1 at h3
     change (s - Finsupp.single i 1).degree ≤ k
@@ -183,7 +183,7 @@ theorem free_module_induction : FreeStep := by
   · induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul v f => simp [hcc, hc, h0]
-    | add p q hp hq => simp only [map_add, hp, hq, add_zero]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq, add_zero]
   · intro i j
     apply TensorProduct.ext'
     intro z f
@@ -198,7 +198,7 @@ theorem free_module_induction : FreeStep := by
       obtain ⟨q', hq2⟩ := hq j
       rw [hq1, hq2, hq2, hq1, mul_left_comm]
     simp only [Module.End.mul_apply] at e1
-    simp only [Module.End.mul_apply, LinearMap.add_apply, LinearMap.rTensor_tmul, LinearMap.lTensor_tmul, map_add,
+    simp only [Module.End.mul_apply, LinearMap.add_apply, LinearMap.rTensor_tmul, LinearMap.lTensor_tmul, map_add (f := _),
       e1, e2]
     abel
   · intro i j
@@ -321,7 +321,7 @@ theorem cover2_of (hA : AcycAbs) : Cover2 := by
   · induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul v f => simp [h0]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
   · exact fun i j => (hF.a_comm i j).map (Module.End.lTensorAlgHom ℂ Z V)
   · exact fun i j => (hF.d_comm i j).map (Module.End.lTensorAlgHom ℂ Z V)
   · intro i j _

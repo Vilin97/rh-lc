@@ -134,7 +134,7 @@ theorem exists_lift_of_reached {Xo : Moduli Dw l} {c : Coeff l} {n : ℕ} (d : D
     obtain ⟨b, -, hb⟩ := MarkLift.modN_of_mem_half d.l₂ hu (Submodule.sub_mem _ (hpres (liftLa k) _ ha) ha')
     obtain ⟨b', hb'⟩ := MarkLift.modN_of_mem_bar d.l₂ hv hδ
     have e₀ : mk₂ (liftLa k (liftLa k.symm a')) = mk₂ a' + d.l₂.M • mk₂ (b + b') := by
-      rw [← map_nsmul, smul_add, ← hb, ← hb', ← add_smul, huv, one_smul, ← map_add, add_sub_cancel]
+      rw [← map_nsmul, smul_add, ← hb, ← hb', ← add_smul, huv, one_smul, ← map_add (f := _), add_sub_cancel]
     obtain ⟨t, ht, e₁⟩ := hk₂ _ ha
     have e₂ := (hper _ t ht).symm.trans ((congrArg (fun q => A.ex (pv X idx x ((d.l₂.M : E)⁻¹ • q))) (e₁.symm.trans e₀)).trans (hper _ _ (hm₂.mem _)))
     apply Over.OverMorphism.ext

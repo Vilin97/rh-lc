@@ -66,7 +66,7 @@ private theorem key_abs (π : UnitaryRep G H) {V : Submodule ℂ H} (hcl : IsClo
   let M : Submodule ℂ H :=
     { carrier := {u | u ∈ V ∧ ∀ g, e (π (φ g) u) = 0}
       add_mem' := fun {a b} ha hb => ⟨V.add_mem ha.1 hb.1, fun g => by
-        rw [map_add, map_add, ha.2, hb.2, add_zero]⟩
+        rw [map_add (f := _), map_add (f := _), ha.2, hb.2, add_zero]⟩
       zero_mem' := ⟨V.zero_mem, fun g => by simp⟩
       smul_mem' := fun c a ha => ⟨V.smul_mem c ha.1, fun g => by
         rw [map_smul, map_smul, ha.2, smul_zero]⟩ }

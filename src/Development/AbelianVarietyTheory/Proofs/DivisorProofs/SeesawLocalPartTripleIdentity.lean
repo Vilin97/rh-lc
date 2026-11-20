@@ -22,7 +22,7 @@ theorem cA_cA {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [cA, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem mat_inv_mulVec {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     {σ : E →ₐ[F] E} {d : ℕ} {W : Spc F E d} (m : UA σ W.J) (t : (AE F E)ˣ) (x : Fin d → AE F E)

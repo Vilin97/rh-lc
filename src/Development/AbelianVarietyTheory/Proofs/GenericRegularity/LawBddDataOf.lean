@@ -27,7 +27,7 @@ theorem nrm_add_le (Z : Comp Xo c) (G : WTZ E) (x y : AC Z) (P : Om Z →+* ℂ)
   rw [← add_mul]
   refine mul_le_mul_of_nonneg_right ?_ (Finset.prod_nonneg fun i _ => by positivity)
   have hc : (x + y).coeff G = x.coeff G + y.coeff G := by rfl
-  rw [hc, map_add]
+  rw [hc, map_add (f := _)]
   exact norm_add_le _ _
 
 theorem nrm_smul (Z : Comp Xo c) (G : WTZ E) (a : Om Z) (x : AC Z) (P : Om Z →+* ℂ) :

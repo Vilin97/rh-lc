@@ -116,7 +116,7 @@ theorem eval₂_subst {R : Type*} [CommRing R] [Algebra k R] {r : ℕ} (lam : Fi
   induction F using MvPolynomial.induction_on with
   | C a =>
     simp [subst, Polynomial.eval₂_C, Polynomial.algebraMap_apply]
-  | add p q hp hq => rw [map_add, Polynomial.eval₂_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), Polynomial.eval₂_add, hp, hq, map_add (f := _)]
   | mul_X p j hp =>
     rw [map_mul, Polynomial.eval₂_mul, hp, map_mul]
     congr 1

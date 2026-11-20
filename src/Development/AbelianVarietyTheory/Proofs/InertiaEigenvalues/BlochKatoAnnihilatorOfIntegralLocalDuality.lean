@@ -39,7 +39,7 @@ theorem actVB_resQ (P : LocPrime l) {K : FinExt l} {LL : Type} [Field LL] [Algeb
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 section Coch
 variable (P : LocPrime l) {K : FinExt l} {LL : Type} [Field LL] [Algebra ℚ_[l] LL]
@@ -97,7 +97,7 @@ theorem mem_quotientCocycles_iff (L : Lattice (O := O) ρ) (LZ : Lattice (O := �
     (IsLocallyConstant (fun g => q (c g)) ∧ ∀ g h, q (c (g * h)) = q (c g) + actD LZ g (q (c h)))
   refine and_congr ⟨fun h => h.comp q, fun h => IsLocallyConstant.desc c q h q.injective⟩ ?_
   refine forall₂_congr fun g h => ?_
-  rw [← q_actD L LZ q hq, ← map_add]
+  rw [← q_actD L LZ q hq, ← map_add (f := _)]
   exact q.injective.eq_iff.symm
 
 variable [TopologicalSpace V] [ContinuousAdd V] [ContinuousConstSMul LL V] [ContinuousConstSMul ℚ_[l] V]
@@ -278,11 +278,11 @@ theorem bkBCore_of_integralDuality : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime 
   obtain ⟨L1Z, hL1Z⟩ := GlobalTheory.Published.BlochKato.exists_cyclotomicLattice l P K
   obtain ⟨q, hq⟩ := exists_quotEquiv LA'.T LZ'.T hLZ'
   let PQ : A.V →ₗ[ℚ_[l]] A'.V →ₗ[ℚ_[l]] ℚ_[l] := LinearMap.mk₂ ℚ_[l] (fun x y => lam (Pr x y))
-    (fun x x' y => by beta_reduce; rw [map_add, LinearMap.add_apply, map_add])
+    (fun x x' y => by beta_reduce; rw [map_add (f := _), LinearMap.add_apply, map_add (f := _)])
     (fun c x y => by
       beta_reduce
       rw [← algebraMap_smul LL c x, map_smul, LinearMap.smul_apply, smul_eq_mul, ← Algebra.smul_def, map_smul])
-    (fun x y y' => by beta_reduce; rw [map_add, map_add])
+    (fun x y y' => by beta_reduce; rw [map_add (f := _), map_add (f := _)])
     (fun c x y => by
       beta_reduce
       rw [← algebraMap_smul LL c y, map_smul, smul_eq_mul, ← Algebra.smul_def, map_smul])

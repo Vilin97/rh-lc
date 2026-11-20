@@ -161,7 +161,7 @@ theorem lower (A : Submodule ℝ (Matrix (Fin n) (Fin n) ℂ)) (E : Fin d → Ma
   have p2 := bessel E hE R
   rw [GlobalTheory.GaugeConst.sqrt_hs] at p1 p2 ⊢
   have p3 : ‖coord E v‖ ≤ 2 * ‖coord E D‖ + ‖coord E R‖ := by
-    rw [e2, map_add, map_smul]
+    rw [e2, map_add (f := _), map_smul]
     refine (norm_add_le _ _).trans ?_
     rw [norm_smul, Real.norm_two]
   have p4 : 2 * ‖D‖ ≤ ‖v‖ + ‖R‖ := by

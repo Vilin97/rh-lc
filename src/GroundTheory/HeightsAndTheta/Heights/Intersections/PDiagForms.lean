@@ -122,7 +122,7 @@ theorem exists_bounded_frame (B : ChartBundle ℤ x 2 E) (i : ι) (hi : x i ≠ 
   have hsplit : fs l₀ ^ Finset.univ.sup m * bB.repr v q' =
       a 0 * (fs l₀ ^ Finset.univ.sup m * bB.repr (bs l 0) q') +
         a 1 * (fs l₀ ^ Finset.univ.sup m * bB.repr (bs l 1) q') := by
-    rw [hva, Fin.sum_univ_two, map_add, map_smul, map_smul, Finsupp.add_apply, Finsupp.smul_apply,
+    rw [hva, Fin.sum_univ_two, map_add (f := _), map_smul, map_smul, Finsupp.add_apply, Finsupp.smul_apply,
       Finsupp.smul_apply, smul_eq_mul, smul_eq_mul]
     ring
   rw [hsplit]
@@ -338,9 +338,9 @@ theorem exists_form (x : ι → Ω) (δ : ν → Ω) (e : Module.Basis (Fin 2) �
       have := isMultiHomog_mul (hXp N) hG
       rwa [hdeg] at this
     refine ⟨N + M, _, isMultiHomog_add h₁ h₂, ?_⟩
-    rw [map_add, map_mul, map_mul, map_pow, map_pow, aeval_X, hFv, hGv]
+    rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, aeval_X, hFv, hGv]
     show algebraMap Ω Φ (x i) ^ M * _ + algebraMap Ω Φ (x i) ^ N * _ = _
-    simp only [map_mul, map_pow, map_add]
+    simp only [map_mul, map_pow, map_add (f := _)]
     ring
   | mul y z _ _ hy hz =>
     obtain ⟨N, F, hF, hFv⟩ := hy

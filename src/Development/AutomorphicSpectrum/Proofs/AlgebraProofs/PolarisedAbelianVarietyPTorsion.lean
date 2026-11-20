@@ -33,7 +33,7 @@ theorem equation_map {A B : Type} [CommRing A] [CommRing B] (f : A →+* B)
     (W.map f).toAffine.Equation (f x) (f y) := by
   rw [WeierstrassCurve.Affine.equation_iff] at h ⊢
   have := congrArg f h
-  simpa only [map_add, map_mul, map_pow, WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆] using this
+  simpa only [map_add (f := _), map_mul, map_pow, WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃, WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆] using this
 
 open GlobalTheory.WeierstrassCurve in
 
@@ -482,7 +482,7 @@ theorem GlobalTheory.CompanionTheory.Ar.GR.exists_ord_point : ∀ (p : ℕ) [Fac
     exact ⟨fun h => lt_of_le_of_ne (hv.map_le_one a) h, fun h => h.ne⟩
   haveI : IsLocalRing R := IsLocalRing.of_nonunits_add fun a b ha hb => by
     rw [hnon] at ha hb ⊢
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (Valuation.map_add v _ _).trans_lt (max_lt ha hb)
   haveI : IsAlgClosed (IsLocalRing.ResidueField R) := isAlgClosed_residueField v hv
   haveI : CharP (IsLocalRing.ResidueField R) p := by

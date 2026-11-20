@@ -12,7 +12,7 @@ theorem ext_orbit {p q : ℕ} {T : GrpData p q} (D : DSRep T) (u : D.U.H) (hu : 
     { carrier := {x | ∀ g, A (D.U.π g x) = B (D.U.π g x)}
       add_mem' := by
         intro a b ha hb g
-        simp only [map_add]
+        simp only [map_add (f := _)]
         rw [ha g, hb g]
       zero_mem' := by intro g; simp
       smul_mem' := by
@@ -87,9 +87,9 @@ theorem exists_tensor_embedding :
   have hadd : ∀ y y', io (y + y') = io y + io y' := fun y y' =>
     isHomG_ext D πU _ hu _ _ (hG _) (fun g x => by
       show io y (D.U.π g x) + io y' (D.U.π g x) = πU.π g (io y x + io y' x)
-      rw [hG, hG, map_add]) (by
+      rw [hG, hG, map_add (f := _)]) (by
       show io (y + y') (D.ι v) = io y (D.ι v) + io y' (D.ι v)
-      rw [hiov, hiov, hiov, map_add])
+      rw [hiov, hiov, hiov, map_add (f := _)])
   have hsmul : ∀ (c : ℂ) y, io (c • y) = c • io y := fun c y =>
     isHomG_ext D πU _ hu _ _ (hG _) (fun g x => by
       show c • io y (D.U.π g x) = πU.π g (c • io y x)

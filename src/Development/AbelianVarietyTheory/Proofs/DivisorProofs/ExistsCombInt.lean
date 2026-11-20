@@ -177,7 +177,7 @@ theorem exists_comb [IsDomain A] {Dw : Datum H} {act : PDivGroup.Action (𝓞 E)
     refine congrArg Subtype.val (hb.1 (a₂ := ⟨_, h⟩) ?_)
     have h1 := θ.mul 1 K (s y) (s y') ⟨_, h⟩ rfl
     rw [hs, hs] at h1
-    rw [hs, map_add]
+    rw [hs, map_add (f := _)]
     exact (congrArg ofConv (map_mul (ptsPush (GG.A 1) (Algebra.ofId A K)) ((τ y).conv 1) ((τ y').conv 1))).trans
       (congrArg ofConv h1.symm)
   have hζ := primitive_map h0 (algebraMap A K) (by simpa only [pow_one] using hP.prim 1 : IsPrimitiveRoot (muRoot ε 1) p)
@@ -195,7 +195,7 @@ theorem exists_comb [IsDomain A] {Dw : Datum H} {act : PDivGroup.Action (𝓞 E)
   let g₂ : Dw.La →+ Additive K :=
     { toFun := fun y => Additive.ofMul (algebraMap A K (muRoot (pairing GG A (τ y) χ) 1))
       map_zero' := by rw [map_zero, map_zero, LinearMap.zero_apply, muRoot_zero, map_one, ofMul_one]
-      map_add' := fun y y' => by rw [map_add, map_add, LinearMap.add_apply, muRoot_add, map_mul, ofMul_mul] }
+      map_add' := fun y y' => by rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, muRoot_add, map_mul, ofMul_mul] }
   have hg : g₁ = g₂ := AddMonoidHom.eq_of_eqOn_dense (s := Set.range b)
     (by rw [← Submodule.span_int_eq_addSubgroupClosure, b.span_eq]; rfl) (by
       rintro _ ⟨i, rfl⟩

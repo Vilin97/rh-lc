@@ -146,9 +146,9 @@ theorem pairHom_surjective {P : Ideal (𝓞 K)} (hP : P.IsMaximal)
   rw [pairHom_apply, Prod.mk.injEq]
   constructor
   · rw [Ideal.Quotient.eq]
-    have hconj : conjO K e + conjO K f = 1 := by rw [← map_add, hef, map_one]
+    have hconj : conjO K e + conjO K f = 1 := by rw [← map_add (f := _), hef, map_one]
     have h2 : conjO K (b' * f + conjO K a' * e) - a' = conjO K b' * conjO K f - a' * conjO K f := by
-      rw [map_add, map_mul, map_mul, conjO_conjO]
+      rw [map_add (f := _), map_mul, map_mul, conjO_conjO]
       linear_combination a' * hconj
     rw [h2]
     exact P.sub_mem (P.mul_mem_left _ hf') (P.mul_mem_left _ hf')

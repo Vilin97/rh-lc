@@ -96,13 +96,13 @@ theorem span_inf_ker_of_flat [Module.Flat O R] (M : Submodule O W)
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul r m => first | (simp [L, q]; rfl) | simp [L, q] | rfl
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hLf : ∀ z, L (f.lTensor R z) = K.subtype.liftBaseChange R z := by
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul r m => first | (simp [L, f]; rfl) | simp [L, f] | rfl
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hspan : ∀ z, K.subtype.liftBaseChange R z ∈ Submodule.span R (K : Set W) := by
     intro z
     induction z using TensorProduct.induction_on with
@@ -153,7 +153,7 @@ theorem liftBaseChange_injective_of {O R W : Type} [CommRing O] [CommRing R] [Al
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul r m => simp [algebraMap_smul]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   intro a b hab
   apply Module.Flat.rTensor_preserves_injective_linearMap _ hf
   apply hC

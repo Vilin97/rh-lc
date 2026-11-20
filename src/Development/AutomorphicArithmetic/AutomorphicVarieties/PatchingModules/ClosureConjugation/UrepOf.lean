@@ -75,7 +75,7 @@ theorem UpperTheory.V.Pa.urep_of :
       induction z using MonoidAlgebra.induction_linear with
       | zero => simp
       | add a b ha hb =>
-        rw [map_add, map_add]
+        rw [map_add (f := _), map_add (f := _)]
         exact Submodule.add_mem _ ha hb
       | single γ c =>
         have hc : (MonoidAlgebra.single γ c : MonoidAlgebra Bh G.G₀) = c • MonoidAlgebra.single γ 1 := by

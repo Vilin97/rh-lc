@@ -73,7 +73,7 @@ theorem pderiv_subst [Fintype σ] {a : σ → MvPowerSeries τ S} (ha : HasSubst
   | C r =>
     simp [MvPolynomial.coe_C, pderiv_C, subst_C' ha, subst_zero' ha]
   | add p q hp hq =>
-    simp only [MvPolynomial.coe_add, subst_add ha, map_add, hp, hq, add_mul,
+    simp only [MvPolynomial.coe_add, subst_add ha, map_add (f := _), hp, hq, add_mul,
       Finset.sum_add_distrib]
   | mul_X p n hp =>
     simp only [MvPolynomial.coe_mul, MvPolynomial.coe_X, subst_mul ha, Derivation.leibniz, hp,
@@ -99,7 +99,7 @@ theorem constantCoeff_subst_of_zero {a : σ → MvPowerSeries τ S} (ha : HasSub
   have h : f = C (constantCoeff f) + (f - C (constantCoeff f)) := by simp
   have h' : constantCoeff (subst a (f - C (constantCoeff f))) = 0 :=
     constantCoeff_subst_eq_zero ha ha0 (by simp)
-  conv_lhs => rw [h, subst_add ha, map_add, h', subst_C' ha]
+  conv_lhs => rw [h, subst_add ha, map_add (f := _), h', subst_C' ha]
   simp
 
 theorem pderiv_map {T : Type*} [CommRing T] (φ : R →+* T) (i : σ) (f : MvPowerSeries σ R) :

@@ -150,7 +150,7 @@ theorem UpperTheory.projectiveBundleFormula_rank_two :
       rw [← hρ1, pull_comp]
     funext p
     simp only [Function.comp]
-    rw [a1, a1, a2, map_add, pull_cup]
+    rw [a1, a1, a2, map_add (f := _), pull_cup]
   have t0 : IsTrivBy (f 0 ≫ L) wc := by rw [hfL]; exact gch_triv 0
   have t1 : IsTrivBy (f 1 ≫ L) wc := by rw [hfL]; exact gch_triv 1
   have uc : ∀ (T : Scheme.{0}) (y : Sx (pullback (f 0) (f 1)) 0 T),

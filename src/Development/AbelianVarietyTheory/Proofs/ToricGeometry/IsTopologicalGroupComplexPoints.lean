@@ -119,7 +119,7 @@ theorem isContFamily_of_isPullback {X Y S Z : Scheme.{0}} [IsAffine S] {f : Y �
   | add x y _ _ hx hy =>
     refine (hx.add hy).congr fun t ht => ?_
     obtain ⟨ev, hev⟩ := (hv Z (e t)).2.1 _ ht
-    simp only [hev, map_add, Pi.add_apply]
+    simp only [hev, map_add (f := _), Pi.add_apply]
   | neg x _ hx =>
     refine hx.neg.congr fun t ht => ?_
     obtain ⟨ev, hev⟩ := (hv Z (e t)).2.1 _ ht

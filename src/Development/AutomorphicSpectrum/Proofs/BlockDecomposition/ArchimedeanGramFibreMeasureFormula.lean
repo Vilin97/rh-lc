@@ -214,7 +214,7 @@ theorem fibre_schwartzN : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [
         show e0 ((Algebra.TensorProduct.basis (Ainf F) b).repr (x + y) k) w =
           e0 ((Algebra.TensorProduct.basis (Ainf F) b).repr x k) w +
             e0 ((Algebra.TensorProduct.basis (Ainf F) b).repr y k) w
-        simp only [map_add, Finsupp.add_apply, Pi.add_apply] }
+        simp only [map_add (f := _), Finsupp.add_apply, Pi.add_apply] }
   have hεc : Continuous ε := Hc.continuous
   have hεs : Continuous ε.symm := Hc.symm.continuous
   let ψ := matCoords ε n

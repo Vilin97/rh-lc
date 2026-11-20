@@ -15,7 +15,7 @@ variable (F : Fin d → PS k 2 d) (v : Fin d → k)
 
 theorem dof_add (f g : PS k 1 d) : Dof F v (f + g) = Dof F v f + Dof F v g := by
   unfold Dof
-  simp only [map_add, mul_add, Finset.sum_add_distrib]
+  simp only [map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem dof_zero : Dof F v (0 : PS k 1 d) = 0 := by
   simp [Dof]

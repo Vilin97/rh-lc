@@ -29,6 +29,6 @@ theorem UpperTheory.ideleCongruenceCondition_mul_congruenceUnit_iff :
     · intro h
       have e : (((y * τ : (A ℚ)ˣ) : A ℚ) - 1) = ((y : A ℚ) - 1) * (τ : A ℚ) + ((τ : A ℚ) - 1) := by
         rw [Units.val_mul]; ring
-      rw [e, map_add]
+      rw [e, map_add (f := _)]
       exact Valuation.map_add_le _ (he ▸ h) hv
   simp only [h1, h2]

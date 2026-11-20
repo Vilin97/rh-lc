@@ -50,7 +50,7 @@ private theorem evFin_aS_pk {S : Finset (Pl F)} {v : Pl F} (h : v ∈ S) : evFin
   induction S using Finset.induction_on with
   | empty => exact absurd h (Finset.notMem_empty v)
   | insert u S hu ih =>
-    rw [aS_insert hu, map_add]
+    rw [aS_insert hu, map_add (f := _)]
     rcases Finset.mem_insert.1 h with rfl | h'
     · rw [evFin_idem_self, evFin_aS_not_pk hu, add_zero]
     · rw [ih h', evFin_idem_ne (by rintro rfl; exact hu h'), zero_add]

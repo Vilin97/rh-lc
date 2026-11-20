@@ -67,7 +67,7 @@ theorem UpperTheory.V.Fr.st_tame :
   have hψa : ∀ a b : ↥(Ine (F := ℚ) A), ψ (a * b) = ψ a + ψ b := by
     intro a b
     simp only [ψ]
-    rw [hφIa, Subgroup.coe_mul, hyadd _ a.2 _ b.2, map_add]
+    rw [hφIa, Subgroup.coe_mul, hyadd _ a.2 _ b.2, map_add (f := _)]
     ring
   have hψγ : ψ γ = 0 := by
     simp only [ψ, c]

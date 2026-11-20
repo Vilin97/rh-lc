@@ -190,10 +190,10 @@ theorem eventually_exists_unitary (h2 : (2 : k) ≠ 0) (s : R →ₗ[k] R) (hm :
   have h1 : s 1 = 1 := by simpa [hs] using (hm (s 1) 1).symm
   let V : Submodule k R :=
     { carrier := {l | s l = l ∧ l * g = g * l}
-      add_mem' := fun ha hb => ⟨by rw [map_add, ha.1, hb.1], by rw [add_mul, mul_add, ha.2, hb.2]⟩
+      add_mem' := fun ha hb => ⟨by rw [map_add (f := _), ha.1, hb.1], by rw [add_mul, mul_add, ha.2, hb.2]⟩
       zero_mem' := ⟨map_zero _, by simp⟩
       smul_mem' := fun c _ ha => ⟨by rw [map_smul, ha.1], by rw [smul_mul_assoc, mul_smul_comm, ha.2]⟩ }
-  let f : V → V → V := fun a b => (2 : k)⁻¹ • ⟨a.1 * b.1 + b.1 * a.1, by rw [map_add, hm, hm, a.2.1, b.2.1, add_comm],
+  let f : V → V → V := fun a b => (2 : k)⁻¹ • ⟨a.1 * b.1 + b.1 * a.1, by rw [map_add (f := _), hm, hm, a.2.1, b.2.1, add_comm],
       (Commute.add_left (Commute.mul_left a.2.2 b.2.2) (Commute.mul_left b.2.2 a.2.2)).eq⟩
   let B : V →ₗ[k] V →ₗ[k] V := LinearMap.mk₂ k f
     (fun a b c => Subtype.ext (by simp [f, add_mul, mul_add]; abel))
@@ -365,7 +365,7 @@ theorem isClosed_class_HA (h : IsCMExt F E σ) (hJ : IsHermND σ J) (k : Type) [
   · exact map_smul (Algebra.TensorProduct.map (AlgHom.id k k) σ) c a
   · induction a with
     | tmul a b => simp [sigR, hσ]
-    | add a b ha hb => rw [map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   · ext i j
     simp [cT, JR, sigR, inclR, hJ.1]
   · rw [JR, ← RingHom.mapMatrix_apply, ← RingHom.map_det]

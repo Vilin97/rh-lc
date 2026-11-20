@@ -198,9 +198,9 @@ private theorem sub_mem_pow_succ_of_sub_mem_pow (P : Type*) {R B : Type*} [CommR
             = Ideal.Quotient.mk (m ^ (k + 1)) (T a - φ' a)
               + Ideal.Quotient.mk (m ^ (k + 1)) (T b - φ' b)
         have harg : T (a + b) - φ' (a + b) = T a - φ' a + (T b - φ' b) := by
-          rw [hadd, map_add]
+          rw [hadd, map_add (f := _)]
           ring
-        rw [harg, map_add]
+        rw [harg, map_add (f := _)]
       map_smul' := by
         intro p a
         show Ideal.Quotient.mk (m ^ (k + 1)) (T (p • a) - φ' (p • a))
@@ -234,7 +234,7 @@ private theorem sub_mem_pow_succ_of_sub_mem_pow (P : Type*) {R B : Type*} [CommR
         simp only [Algebra.smul_def]
         have halg : ∀ y : R, (algebraMap R (B ⧸ m ^ (k + 1))) y
             = Ideal.Quotient.mk (m ^ (k + 1)) (φ' y) := fun _ => rfl
-        rw [halg a, halg b, ← map_mul, ← map_mul, ← map_add]
+        rw [halg a, halg b, ← map_mul, ← map_mul, ← map_add (f := _)]
         exact Ideal.Quotient.eq.mpr (hleib a b) }
   have hdx : Ideal.Quotient.mk (m ^ (k + 1)) (T x - φ' x) = 0 :=
     derivation_apply_eq_zero_of_formallyUnramified d x
@@ -370,7 +370,7 @@ private theorem mem_of_forall_mem_sup_maximalIdeal_pow {B : Type*} [CommRing B] 
     intro N
     obtain ⟨j, hj, y, hy, hxy⟩ := Submodule.mem_sup.1 (hx N)
     have hxe : Ideal.Quotient.mk J x = Ideal.Quotient.mk J y := by
-      rw [← hxy, map_add, Ideal.Quotient.eq_zero_iff_mem.2 hj, zero_add]
+      rw [← hxy, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 hj, zero_add]
     rw [hxe]
     exact (Ideal.map_pow (Ideal.Quotient.mk J) (IsLocalRing.maximalIdeal B) N).le
       (Ideal.mem_map_of_mem _ hy)

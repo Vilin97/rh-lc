@@ -54,7 +54,7 @@ theorem norm_sub_le (hJ : ∀ x, J (J x) = -x) (h : IsHeis (omJ J) ρ) {f : B} (
     (C := ‖dH ρ z f‖ + π * (‖u‖ * ‖z‖) * ‖f‖) (fun s _ => (hd s).hasDerivWithinAt) (fun s _ => ?_)
   · simpa using this
   · have e : omJ J (u + s • z) z = omJ J u z := by
-      rw [← omL_apply, map_add, map_smul, ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply,
+      rw [← omL_apply, map_add (f := _), map_smul, ContinuousLinearMap.add_apply, ContinuousLinearMap.smul_apply,
         omL_self hJ, smul_zero, add_zero, omL_apply]
     rw [(calc' hJ h hf).2.2.1, e]
     refine (_root_.norm_sub_le _ _).trans ?_

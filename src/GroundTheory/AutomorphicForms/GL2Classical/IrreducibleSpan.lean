@@ -214,7 +214,7 @@ theorem reflSpan_induction {P : cuspForms ℚ 2 → Prop} (h0 : P 0) (hadd : ∀
   | smul c a _ ha => exact hsmul c a ha
 
 theorem Rop_reflSpan {s : cuspForms ℚ 2} (hs : s ∈ reflSpan f) : Rop s = 0 := by
-  refine reflSpan_induction f (P := fun s => Rop s = 0) (map_zero _) (fun a b ha hb => by rw [map_add, ha, hb, add_zero])
+  refine reflSpan_induction f (P := fun s => Rop s = 0) (map_zero _) (fun a b ha hb => by rw [map_add (f := _), ha, hb, add_zero])
     (fun c a ha => by rw [map_smul, ha, smul_zero]) (fun x hx t ht => ?_) hs
   obtain ⟨w, hw, -, hK⟩ := hx
   have h := σc_Lop_refl hK t
@@ -223,7 +223,7 @@ theorem Rop_reflSpan {s : cuspForms ℚ 2} (hs : s ∈ reflSpan f) : Rop s = 0 :
   exact (smul_eq_zero.1 h.symm).resolve_left hc
 
 theorem negJop_reflSpan {s : cuspForms ℚ 2} (hs : s ∈ reflSpan f) : (-Jop) s = (I * k) • s := by
-  refine reflSpan_induction f (P := fun s => (-Jop) s = (I * k) • s) (by simp) (fun a b ha hb => by rw [map_add, ha, hb, smul_add])
+  refine reflSpan_induction f (P := fun s => (-Jop) s = (I * k) • s) (by simp) (fun a b ha hb => by rw [map_add (f := _), ha, hb, smul_add])
     (fun c a ha => by rw [map_smul, ha, smul_comm]) (fun x hx t ht => ?_) hs
   obtain ⟨w, hw, -, hK⟩ := hx
   have h := σc_Jop_refl hK t
@@ -232,7 +232,7 @@ theorem negJop_reflSpan {s : cuspForms ℚ 2} (hs : s ∈ reflSpan f) : (-Jop) s
   exact (neg_one_smul ℂ _).symm
 
 theorem Zop_reflSpan {s : cuspForms ℚ 2} (hs : s ∈ reflSpan f) : Zop s = 0 := by
-  refine reflSpan_induction f (P := fun s => Zop s = 0) (map_zero _) (fun a b ha hb => by rw [map_add, ha, hb, add_zero])
+  refine reflSpan_induction f (P := fun s => Zop s = 0) (map_zero _) (fun a b ha hb => by rw [map_add (f := _), ha, hb, add_zero])
     (fun c a ha => by rw [map_smul, ha, smul_zero]) (fun x _ t ht => ?_) hs
   rw [← archCompactRepCusp_cuspOp_one, Zop_T f ht, map_zero]
 
@@ -362,7 +362,7 @@ theorem σc_weightSpan (x : archCompact ℚ 2) : ∀ v ∈ weightSpan f, σc x v
   · obtain ⟨s, hs, rfl⟩ := hv
     refine reflSpan_induction f (P := fun s => σc x ((Lop ^ j) s) ∈ weightSpan f)
       (by rw [map_zero, map_zero]; exact zero_mem _)
-      (fun a b ha hb => by rw [map_add, map_add]; exact add_mem ha hb)
+      (fun a b ha hb => by rw [map_add (f := _), map_add (f := _)]; exact add_mem ha hb)
       (fun c a ha => by rw [map_smul, map_smul]; exact Submodule.smul_mem _ _ ha) (fun y hy t ht => ?_) hs
     rcases isRot_or_isRefl x with ⟨w, hw, h1, hK⟩ | ⟨w, hw, h1, hK⟩
     · rw [σc_pow (σc_Lop_rot hK) j, σc_mul_apply]
@@ -376,7 +376,7 @@ theorem σc_weightSpan (x : archCompact ℚ 2) : ∀ v ∈ weightSpan f, σc x v
 theorem finRepCusp_reflSpan (g : FiniteAdelicGL ℚ 2) {s : cuspForms ℚ 2} (hs : s ∈ reflSpan f) :
     finRepCusp ℚ 2 g s ∈ reflSpan f := by
   refine reflSpan_induction f (P := fun s => finRepCusp ℚ 2 g s ∈ reflSpan f)
-    (by rw [map_zero]; exact zero_mem _) (fun a b ha hb => by rw [map_add]; exact add_mem ha hb)
+    (by rw [map_zero]; exact zero_mem _) (fun a b ha hb => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb)
     (fun c a ha => by rw [map_smul]; exact Submodule.smul_mem _ _ ha) (fun y hy t ht => ?_) hs
   rw [← σc_finRepCusp]
   exact Submodule.subset_span ⟨y, hy, _, finRepCusp_mem_translateSpanCusp f g ht, rfl⟩
@@ -418,7 +418,7 @@ theorem σc_inv_apply (y : archCompact ℚ 2) (ψ : cuspForms ℚ 2) : σc y⁻�
 theorem σc_refl_reflSpan {y : archCompact ℚ 2} (hy : IsRefl y) {s : cuspForms ℚ 2} (hs : s ∈ reflSpan f) :
     σc y s ∈ translateSpanCusp f := by
   refine reflSpan_induction f (P := fun s => σc y s ∈ translateSpanCusp f)
-    (by rw [map_zero]; exact zero_mem _) (fun a b ha hb => by rw [map_add]; exact add_mem ha hb)
+    (by rw [map_zero]; exact zero_mem _) (fun a b ha hb => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb)
     (fun c a ha => by rw [map_smul]; exact Submodule.smul_mem _ _ ha) (fun x hx t ht => ?_) hs
   rw [σc_mul_apply]
   obtain ⟨w, hw, h1, hK⟩ := IsRefl.mul_isRefl hy hx

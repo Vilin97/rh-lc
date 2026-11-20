@@ -92,7 +92,7 @@ theorem main : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C]
   have hEq : h = comb a e0 := sub_eq_zero.1 hs'.symm
   rw [hEq]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [lin, comb, Fintype.sum_sum_type, map_add, map_sum, coeff_smul, smul_eq_mul]
+    simp only [lin, comb, Fintype.sum_sum_type, map_add (f := _), map_sum, coeff_smul, smul_eq_mul]
   have h2 : ∀ j, algebraMap O C (a (Sum.inr j)) * coeff (Finsupp.single i 1) (e0 (Sum.inr j)) = 0 :=
     fun j => by rw [hinr j, map_zero, zero_mul]
   have h1 : ∀ i', coeff (Finsupp.single i 1) (e0 (Sum.inl i')) = (Pi.single i' (1 : C) : Fin d → C) i :=

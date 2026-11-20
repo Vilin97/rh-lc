@@ -54,7 +54,7 @@ theorem stalkLinear_add (φ ψ : F ⟶ G) (x : X) :
     stalkLinear (φ + ψ) x = stalkLinear φ x + stalkLinear ψ x := by
   ext t
   obtain ⟨V, hV, s, rfl⟩ := F.presheaf.exists_germ_eq t
-  rw [LinearMap.add_apply, stalkLinear_germ, stalkLinear_germ, stalkLinear_germ, ← map_add]; rfl
+  rw [LinearMap.add_apply, stalkLinear_germ, stalkLinear_germ, stalkLinear_germ, ← map_add (f := _)]; rfl
 
 @[simp]
 theorem stalkLinear_zero (x : X) : stalkLinear (0 : F ⟶ G) x = 0 := by

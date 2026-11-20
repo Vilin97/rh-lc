@@ -21,7 +21,7 @@ def fixA (A : ValuationSubring Ω) : Subring A where
   zero_mem' := fun s _ => by simp
   add_mem' := fun {a b} ha hb s hs => by
     show s ((a : Ω) + (b : Ω)) = (a : Ω) + (b : Ω)
-    rw [map_add, ha s hs, hb s hs]
+    rw [map_add (f := _), ha s hs, hb s hs]
   neg_mem' := fun {a} ha s hs => by
     show s (-(a : Ω)) = -(a : Ω)
     rw [map_neg, ha s hs]

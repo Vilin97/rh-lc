@@ -65,7 +65,7 @@ theorem phaseAtRep_of (hL : PhaseLoc M δ u u' F0 what₂) (hP : PsiProdE D) : P
   rw [hfun]
   obtain ⟨hf, hp⟩ := hP (-((PairVal.sgLo L + PairVal.sgUp U) / ((gS D : ℕ) : D.host.E)))
   refine ⟨hf, ?_⟩
-  rw [hp, trace_neg_div, map_add]
+  rw [hp, trace_neg_div, map_add (f := _)]
   unfold PairVal.phasePair PairVal.psiInf
   rw [← Complex.exp_neg, ← Complex.exp_neg, ← Complex.exp_add]
   congr 1

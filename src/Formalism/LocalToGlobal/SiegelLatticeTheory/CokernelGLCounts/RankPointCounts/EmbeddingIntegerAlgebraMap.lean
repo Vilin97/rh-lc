@@ -111,7 +111,7 @@ theorem coord_int {b : Module.Basis (Fin (Module.finrank D.host.E (VS D).V)) D.h
     · exact isIntegral_zero
   | zero => simp [isIntegral_zero]
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hx.add hy
   | smul c y _ hy =>
     rw [oE_smul, map_smul, smul_eq_mul]

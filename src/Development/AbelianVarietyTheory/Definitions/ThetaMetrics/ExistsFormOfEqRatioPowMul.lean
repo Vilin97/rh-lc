@@ -139,7 +139,7 @@ theorem exists_form_of_eq_ratio_pow_mul {i j : Fin (N + 1)} (hij : j ≠ i) (n :
     intro m hm
     rw [coeff_divMonomial] at hm
     have := hH hm
-    rw [map_add, Finsupp.weight_single] at this
+    rw [map_add (f := _), Finsupp.weight_single] at this
     simpa using this
   refine ⟨_, hf, ?_⟩
   have := congrArg (aeval (R := R) (ratioOn (chart R N i) i le_rfl)) hdiv

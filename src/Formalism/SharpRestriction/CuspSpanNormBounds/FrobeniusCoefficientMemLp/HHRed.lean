@@ -47,7 +47,7 @@ theorem boxS_cover : ∀ x : D.host.E, ∃ a ∈ intS D, x + a ∈ boxS D := by
   refine ⟨(a : D.host.E), coe_mem_intS D a, fun τ => ?_⟩
   rw [norm_embS_eq, ← InfinitePlace.norm_embedding_eq]
   have := ha (Formalism.MainNotions.BesselShellMomentBounds.plOf D τ)
-  rw [map_add, show (Formalism.MainNotions.BesselShellMomentBounds.plOf D τ).embedding x + (Formalism.MainNotions.BesselShellMomentBounds.plOf D τ).embedding (a : D.host.E) =
+  rw [map_add (f := _), show (Formalism.MainNotions.BesselShellMomentBounds.plOf D τ).embedding x + (Formalism.MainNotions.BesselShellMomentBounds.plOf D τ).embedding (a : D.host.E) =
     -(-(Formalism.MainNotions.BesselShellMomentBounds.plOf D τ).embedding x - (Formalism.MainNotions.BesselShellMomentBounds.plOf D τ).embedding (a : D.host.E)) by ring, norm_neg]
   exact this
 

@@ -66,7 +66,7 @@ private theorem coeff_rename_mem_multiple_of_coeff {σ τ : Type} (φ : σ → �
   · intro Q R hQ hR m
     obtain ⟨c1, h1⟩ := hQ m
     obtain ⟨c2, h2⟩ := hR m
-    exact ⟨c1 + c2, by rw [MvPolynomial.coeff_add, h1, h2, mul_add, map_add]⟩
+    exact ⟨c1 + c2, by rw [MvPolynomial.coeff_add, h1, h2, mul_add, map_add (f := _)]⟩
   · intro m
     exact ⟨0, by simp⟩
   · intro u _ m

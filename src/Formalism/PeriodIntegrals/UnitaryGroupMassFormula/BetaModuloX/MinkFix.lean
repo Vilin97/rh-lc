@@ -56,7 +56,7 @@ theorem mink_fix (L : Submodule (𝓞 E) Q) (hL : L.FG) (φ : Q →ₗ[E] Q) (h�
     rw [LinearMap.toMatrixAlgEquiv_apply]
     have h := hyf (b j)
     rw [sub_eq_iff_eq_add'] at h
-    rw [h, map_add, map_zsmul, Finsupp.add_apply, Finsupp.smul_apply, Module.Basis.repr_self,
+    rw [h, map_add (f := _), map_zsmul, Finsupp.add_apply, Finsupp.smul_apply, Module.Basis.repr_self,
       Finsupp.single_apply]
     simp [B, Matrix.one_apply, eq_comm]
   have hA1 := Formalism.HermitianLatticeCounting.P.finite_order_congruence _ n (g : ℤ) A B (by exact_mod_cast hg) hn hAn hAB

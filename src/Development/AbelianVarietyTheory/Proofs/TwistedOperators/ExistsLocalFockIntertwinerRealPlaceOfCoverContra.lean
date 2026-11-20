@@ -139,7 +139,7 @@ theorem exists_locIt (D : D7) (V W : HSp D) (S S' : D.what₂.Tau → SPar) (M :
     · funext t
       rw [hA, matches_exp h₂ (exp_plainMat e') hZ, LinearMap.map_smulₛₗ]
       rfl
-    · rw [h5, hA, fr_toFrame, trace_toFrame, h4, map_add, map_smul, plainMat, hκ.2]
+    · rw [h5, hA, fr_toFrame, trace_toFrame, h4, map_add (f := _), map_smul, plainMat, hκ.2]
       simp [T₂.expt_zero]
       abel
 

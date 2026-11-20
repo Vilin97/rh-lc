@@ -144,7 +144,7 @@ theorem exists_isLift_lowC (h1 : LiftIsCuspC R F) : ∃ th, IsLift R i σ ω (pt
     (fun _ _ _ _ => rfl) (fun _ _ _ _ => rfl) HV.e c.ext
     (fun v g h w => Datum.thetaKO ω h g (ptAt R i σ BW f (io (PiTensorProduct.tprod ℂ v) w))) (fun v g h w w' => ?_)
     (fun v g h a w => ?_) (integrableOn_isLift_lowC hd hν HV hV) fun x => ?_
-  · rw [← ptL_apply, map_add, Datum.thetaKO, map_add]
+  · rw [← ptL_apply, map_add (f := _), Datum.thetaKO, map_add (f := _)]
     rfl
   · rw [← ptL_apply, map_smul, thetaKO_smul]
     rfl

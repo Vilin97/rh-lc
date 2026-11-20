@@ -145,7 +145,7 @@ theorem frame_main {Fil : ℤ → IdF Φ.A} (hF : IsFil Φ Fil) {d : ℕ} (E : F
   have hU : IsUnit (gh T) := by
     rw [e1]; exact (hun T _ (hh T)).mul (hy T)
   have e3 : (Φ.A.map φ).hom (gh T) = (1 + H0) * (Φ.A.map (σ T ≫ φ)).hom G := by
-    rw [e1, map_mul, map_add, map_one, Φ.A.map_comp]
+    rw [e1, map_mul, map_add (f := _), map_one, Φ.A.map_comp]
     rfl
   have hW : Ring.inverse ((Φ.A.map φ).hom (gh T)) * ((1 + H0) * (Φ.A.map (σ T ≫ φ)).hom G) = 1 := by
     rw [← e3]

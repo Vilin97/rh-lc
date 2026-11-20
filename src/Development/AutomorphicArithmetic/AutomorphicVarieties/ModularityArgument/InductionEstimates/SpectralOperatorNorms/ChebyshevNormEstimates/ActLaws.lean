@@ -68,7 +68,7 @@ private theorem KK_add {A A' : L V →L[ℂ] L V} {s s'} (h : KK A s) (h' : KK A
   refine ⟨_, h, ?_, ?_⟩
   · ext1 x
     rw [ContinuousLinearMap.add_apply, conv_eq h, conv_eq hk, conv_eq hk', ← integral_add (conv_int hk x) (conv_int hk' x)]
-    simp only [map_add, ContinuousLinearMap.add_apply]
+    simp only [map_add (f := _), ContinuousLinearMap.add_apply]
   · ext1 z
     simp only [symb, smul_add]
     rw [integral_add (symb_int hk z) (symb_int hk' z)]
@@ -161,7 +161,7 @@ private theorem opD_apply (u : ℝ →₀ (V →L[ℂ] V)) (x : L V) :
   simp only [opD, Finsupp.sum, ContinuousLinearMap.sum_apply]; rfl
 
 private theorem opD_add (u u' : ℝ →₀ (V →L[ℂ] V)) : opD (u + u') = opD u + opD u' :=
-  Finsupp.sum_add_index' (fun _ => by simp) fun _ _ _ => by rw [map_add, ContinuousLinearMap.add_comp]
+  Finsupp.sum_add_index' (fun _ => by simp) fun _ _ _ => by rw [map_add (f := _), ContinuousLinearMap.add_comp]
 
 private theorem syD_add (u u' : ℝ →₀ (V →L[ℂ] V)) (z : ℂ) : syD (u + u') z = syD u z + syD u' z :=
   Finsupp.sum_add_index' (fun _ => by simp) fun _ _ _ => smul_add _ _ _

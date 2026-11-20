@@ -31,7 +31,7 @@ theorem dvd_aeval_sub_aeval {K S σ : Type*} [CommRing K] [CommRing S] [Algebra 
   | C c => simp
   | add p q hp hq =>
     have := dvd_add hp hq
-    simp only [map_add]
+    simp only [map_add (f := _)]
     convert this using 1
     ring
   | mul_X p i hp =>

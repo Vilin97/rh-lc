@@ -53,7 +53,7 @@ theorem comap_map_eq_of_isUnit_finrank : ∀ (V V' : Type) [CommRing V] [IsDomai
     · intro x y _ _ hx hy z
       obtain ⟨c, hc, hcx⟩ := hx z
       obtain ⟨d, hd, hdy⟩ := hy z
-      exact ⟨c + d, I.add_mem hc hd, by rw [map_add, hcx, hdy, mul_add, map_add, map_add]⟩
+      exact ⟨c + d, I.add_mem hc hd, by rw [map_add (f := _), hcx, hdy, mul_add, map_add (f := _), map_add (f := _)]⟩
     · intro w x _ hx z
       obtain ⟨c, hc, hcx⟩ := hx (z * w)
       exact ⟨c, hc, by rw [hcx, smul_eq_mul, _root_.mul_assoc]⟩

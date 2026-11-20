@@ -18,7 +18,7 @@ theorem norm_deriv_psi_symplO_lineAt : ∀ (D : D7) (ψ : AddChar (AF D.host.F) 
   have h2 : ∀ x y : WO S T, symplO S T x y = symplOH S T x y + symplOH S T x y := by
     intro x y
     unfold symplOH
-    rw [← add_mul, ← map_add]
+    rw [← add_mul, ← map_add (f := _)]
     norm_num
   have hphase : ∀ t : ℝ, ψ (symplO S T (lineAt θ τ z t) w) =
       Complex.exp ((-(2 * Real.pi * Complex.I * (a : ℂ))) * (t : ℂ)) := by

@@ -60,7 +60,7 @@ theorem step_eq (D : Delta l A) (e : A) (k : ℕ) (s : MvPolynomial ℕ A) :
         (MvPolynomial.X k ^ l * MvPolynomial.C (D.δ e) + (polyDelta D).δ s -
           cc l (MvPolynomial.C e * MvPolynomial.X k) s) := by
   rw [(polyDelta D).δ_add, (polyDelta D).δ_mul, polyDelta_C, polyDelta_X, D.φ_eq]
-  simp only [map_add, map_pow, map_mul, map_natCast]
+  simp only [map_add (f := _), map_pow, map_mul, map_natCast]
   unfold cc; ring
 
 theorem shape (D : Delta l A) (J : Ideal A) (d p : A) (hlJ : (l : A) ∈ J) (hd : d ∈ J)

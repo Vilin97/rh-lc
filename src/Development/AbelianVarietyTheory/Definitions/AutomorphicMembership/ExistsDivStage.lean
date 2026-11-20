@@ -58,7 +58,7 @@ theorem ker_rational [Fintype ι] {J : Type} [Fintype J] (σ : K →+* ℂ) (e :
     intro j t
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul c x =>
       have : ∀ y : V, c ⊗ₜ[K] y = c • ((1 : ℂ) ⊗ₜ[K] y) := fun y => by
         rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
@@ -93,7 +93,7 @@ theorem ker_rational [Fintype ι] {J : Type} [Fintype J] (σ : K →+* ℂ) (e :
   generalize t = s
   induction s using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
   | tmul c x =>
     have : ∀ y : V, c ⊗ₜ[K] y = c • ((1 : ℂ) ⊗ₜ[K] y) := fun y => by
       rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
@@ -299,7 +299,7 @@ theorem nm_rat (v : A.vT) (x : (M.lat 0).V) : ∃ y, M.emb 0 y = A.Nm v (M.emb 0
     | add x y _ _ hx hy =>
       obtain ⟨x', hx⟩ := hx
       obtain ⟨y', hy⟩ := hy
-      exact ⟨x' + y', by simp only [map_add, hx, hy]⟩
+      exact ⟨x' + y', by simp only [map_add (f := _), hx, hy]⟩
     | smul k x _ hx =>
       obtain ⟨x', hx⟩ := hx
       exact ⟨k • x', by rw [LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ, map_smul, hx]⟩

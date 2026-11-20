@@ -126,7 +126,7 @@ theorem irreducible : ∀ {X M : Type} [AddCommGroup X] [AddCommGroup M] [Module
       rw [S.rho_rho]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨x + y, rfl⟩)
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
     | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
   rcases main _ hinv with h | h
   · exfalso

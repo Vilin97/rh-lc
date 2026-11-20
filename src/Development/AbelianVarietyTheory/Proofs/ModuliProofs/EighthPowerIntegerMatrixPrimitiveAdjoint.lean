@@ -54,7 +54,7 @@ theorem form_polar (B : M →+ M →+ V) (hB : ∀ a b, B a b = B b a) (W : Matr
   have hyx : ∑ u, ∑ v, W u v • B (y u) (x v) = ∑ u, ∑ v, W v u • B (x u) (y v) := by
     rw [Finset.sum_comm]
     simp only [hB (y _) (x _)]
-  simp only [form, Pi.add_apply, Pi.zero_apply, map_add, map_zero, AddMonoidHom.add_apply,
+  simp only [form, Pi.add_apply, Pi.zero_apply, map_add (f := _), map_zero, AddMonoidHom.add_apply,
     smul_add, smul_zero, Finset.sum_add_distrib, Finset.sum_const_zero, Matrix.add_apply, Matrix.transpose_apply, add_smul]
   rw [hyx]
   abel

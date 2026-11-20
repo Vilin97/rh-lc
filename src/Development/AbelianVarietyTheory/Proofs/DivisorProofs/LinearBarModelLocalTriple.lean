@@ -205,7 +205,7 @@ theorem GlobalTheory.SwapSchur.sliceT_swap_eq_smul : ∀ (F E : Type) [Field F] 
       ∀ y ∈ SB (Fin a' × Fin (a + a') ⊕ Fin a' × Fin (a + a') → Fv F v), ∀ c : ℂ, ι₂ (c • x + y) = c • ι₂ x + ι₂ y := by
     intro x hx y hy c
     funext Y
-    simp only [ι₂, hSlin x hx y hy c, map_add, map_smul, Pi.add_apply, Pi.smul_apply]
+    simp only [ι₂, hSlin x hx y hy c, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply]
 
   have tMap : ∀ (π : AE F E →+* Fv F v) (x : Matrix (Fin a') (Fin (a + a')) (AE F E)), x.map π = 0 → xᵀ.map π = 0 := by
     intro π x hx; rw [Matrix.transpose_map, hx, Matrix.transpose_zero]

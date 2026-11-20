@@ -37,7 +37,7 @@ def pull {E' : Type} [Ring E'] [Algebra A E'] (φ : E' →ₐ[A] E) : Det n A E'
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   homog B _ _ b x := by
     change D.D B (Algebra.TensorProduct.map (AlgHom.id B B) φ (b • x)) = b ^ n * D.D B (Algebra.TensorProduct.map (AlgHom.id B B) φ x)
     rw [map_smul, D.homog]
@@ -73,7 +73,7 @@ def comap {H : Type} [Group H] (φ : H →* G) : GDet n A H where
     congr 1
     induction x using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => simp
   homog B _ _ b x := by
     change D.D B (MonoidAlgebra.mapDomainAlgHom B B φ (b • x)) = b ^ n * D.D B (MonoidAlgebra.mapDomainAlgHom B B φ x)
@@ -91,7 +91,7 @@ def ofRep (ρ : G →* Matrix (Fin n) (Fin n) A) : GDet n A G where
     congr 1
     induction x using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => ext i j; simp [repAlg]
   homog B _ _ b x := by
     change (repAlg ρ B (b • x)).det = b ^ n * (repAlg ρ B x).det
@@ -205,7 +205,7 @@ theorem PhiFin.finite_cocycles {l : ℕ} [Fact l.Prime] {G : Type} [Group G] [To
   let res : {f : G → M | IsLocallyConstant f ∧ ∀ g h, f (g * h) = L g (f h) + R h (f g)} →
       Module.Dual (ZMod l) M → (H →* Multiplicative (ZMod l)) := fun f φ =>
     MonoidHom.mk' (fun h => Multiplicative.ofAdd (φ (f.1 h))) (fun a b => by
-      rw [Subgroup.coe_mul, f.2.2, hL _ a.2, hR _ b.2, map_add, add_comm, ofAdd_add])
+      rw [Subgroup.coe_mul, f.2.2, hL _ a.2, hR _ b.2, map_add (f := _), add_comm, ofAdd_add])
   have hres : ∀ f φ, IsOpen ((res f φ).ker : Set H) := fun f φ =>
     ((f.2.1.comp fun m => Multiplicative.ofAdd (φ m)).comp_continuous continuous_subtype_val).isOpen_fiber 1
   refine Finite.of_injective (β := (Module.Dual (ZMod l) M →
@@ -530,7 +530,7 @@ theorem chi_ofRep {n : ℕ} {A G : Type} [CommRing A] [Group G]
   · ext i j; simp [GDet.repAlg, Matrix.one_apply, Matrix.diagonal_apply]
   · induction y using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => ext i j; simp [GDet.repAlg]
 
 theorem tr_ofRep {n : ℕ} {A G : Type} [CommRing A] [Nontrivial A] [Group G]

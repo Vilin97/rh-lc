@@ -152,6 +152,6 @@ theorem isDatum_rho : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam
     exact GlobalTheory.HeisSchA.rho_mem_schA M ψ hstd w Φ hD.1
   · rw [GlobalTheory.BigDat.rho_rho M.co ψ u w Φ, GlobalTheory.WeilM.thetaSum_smul, hD.2 (u + w)]
     unfold heisO symplOH
-    rw [symp_eq ε S X e Vs.J Ws.J hJ hJW cS hcS u w, map_add, invOf_two']
+    rw [symp_eq ε S X e Vs.J Ws.J hJ hJW cS hcS u w, map_add (f := _), invOf_two']
 
 end GlobalTheory.SquareAgree.HeisCov

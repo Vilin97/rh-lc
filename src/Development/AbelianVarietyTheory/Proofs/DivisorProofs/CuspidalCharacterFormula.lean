@@ -140,7 +140,7 @@ def Tr (β : Fbar g ≃* Fbar g) (f f' : (ZMod g)[X]) : Prop :=
 theorem Tr.mul {β : Fbar g ≃* Fbar g} {f f' h h' : (ZMod g)[X]} (hf : f ≠ 0) (hh : h ≠ 0)
     (h1 : Tr β f f') (h2 : Tr β h h') : Tr β (f * h) (f' * h') :=
   ⟨h1.1.mul h2.1, by
-    rw [rootsBar_mul h1.1.ne_zero h2.1.ne_zero, rootsBar_mul hf hh, h1.2, h2.2, Multiset.map_add]⟩
+    rw [rootsBar_mul h1.1.ne_zero h2.1.ne_zero, rootsBar_mul hf hh, h1.2, h2.2, Multiset.map_add (f := _)]⟩
 
 theorem Tr.unique {β : Fbar g ≃* Fbar g} {f f' f'' : (ZMod g)[X]} (h1 : Tr β f f') (h2 : Tr β f f'') : f' = f'' :=
   eq_of_rootsBar h1.1 h2.1 (h1.2.trans h2.2.symm)

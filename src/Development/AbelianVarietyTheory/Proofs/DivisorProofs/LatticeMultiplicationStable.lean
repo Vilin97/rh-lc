@@ -183,7 +183,7 @@ theorem exists_obj_of_polarised_torus : ∀ (F : Type) [Field F] [NumberField F]
       add := fun x x' ↦ GlobalTheory.T.hermitian_forms_add_of_factor_product _ A ab hproj (M x) (M x') (M (x + x')) (u x) (u x') (u (x + x'))
         (Hc x) (Hc x') (Hc (x + x')) (χ x) (χ x') (χ (x + x')) (hM x) (hM x') (hM _)
         ((hex x').trans (hex x).symm) ((hex _).trans (hex x).symm) (hf x) (hf x') (hf _) (by
-          simp only [Hc, Submodule.coe_add, map_add, Matrix.diagonal_add]
+          simp only [Hc, Submodule.coe_add, map_add (f := _), Matrix.diagonal_add]
           congr 1
           funext i
           push_cast

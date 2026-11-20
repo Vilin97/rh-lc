@@ -40,7 +40,7 @@ theorem ext_ext_of_leftInverse (f : V →ₗ[LL] V') (s : V' →ₗ[LL] V) (hs :
     ext Qp F s (ext Qp F f x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v b => simp [hs]
 
 theorem ext_injective (f : V →ₗ[LL] V') (hf : Function.Injective f) : Function.Injective (ext Qp F f) := by
@@ -62,7 +62,7 @@ theorem ext_eq_rTensor (f : V →ₗ[LL] V') (x : V ⊗[Qp] F) :
     ext Qp F f x = (f.restrictScalars Qp).rTensor F x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v b => simp
 
 theorem ext_exact (f : V →ₗ[LL] V') (g : V' →ₗ[LL] V'') (h : Function.Exact f g) (hg : Function.Surjective g) :
@@ -100,7 +100,7 @@ theorem mulR_mem_Dcris (ρ : Representation LL G V) (c : K₀) {x : V ⊗[Qp] B}
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [actVB]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   rw [this, hx]
 
 theorem ιV_mem_DdR (ρ : Representation LL G V) {x : V ⊗[Qp] B} (hx : x ∈ Dcris PD ρ) :
@@ -110,7 +110,7 @@ theorem ιV_mem_DdR (ρ : Representation LL G V) {x : V ⊗[Qp] B} (hx : x ∈ D
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [actVB, ιV, PD.ι_comm]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   rw [mem_Dcris] at hx
   rw [mem_DdR]
   intro g
@@ -121,7 +121,7 @@ theorem ιV_mulR (b : B) (x : V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [ιV]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 def TensInj : Prop := ∀ (m : ℕ) (c : Fin m → K), LinearIndependent K₀ c → ∀ b : Fin m → B,
   ∑ i, algebraMap K F (c i) * PD.ι (b i) = 0 → ∀ i, b i = 0
@@ -143,7 +143,7 @@ theorem TensInj.tensor (h : TensInj PD) (m : ℕ) (c : Fin m → K) (hc : Linear
       have hsm : ∀ (q : Qp) (b : B), PD.ι (q • b) = q • PD.ι b := fun q b =>
         (PD.ι.toLinearMap.restrictScalars Qp).map_smul q b
       simp [ιV, hsm]
-    | add a b ha hb => simp only [map_add, ha, hb, Finsupp.add_apply, mul_add]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb, Finsupp.add_apply, mul_add]
   apply (TensorProduct.equivFinsuppOfBasisLeft (N := B) b).injective
   ext j
   have := congrArg (fun z => TensorProduct.equivFinsuppOfBasisLeft (N := F) b z j) hx

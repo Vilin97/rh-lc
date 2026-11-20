@@ -23,11 +23,11 @@ def setAt (y : κ → Af F) (v : Pl F) (z : κ → Fv F v) : κ → Af F :=
 
 theorem evalV_setAt_self (y : κ → Af F) (v : Pl F) (z : κ → Fv F v) (i : κ) :
     evalV F v (setAt y v z i) = z i := by
-  rw [setAt, map_add, evalV_singleFin_self]; ring
+  rw [setAt, map_add (f := _), evalV_singleFin_self]; ring
 
 theorem evalV_setAt_ne (y : κ → Af F) {v u : Pl F} (h : u ≠ v) (z : κ → Fv F v) (i : κ) :
     evalV F u (setAt y v z i) = evalV F u (y i) := by
-  rw [setAt, map_add, evalV_singleFin_ne h, add_zero]
+  rw [setAt, map_add (f := _), evalV_singleFin_ne h, add_zero]
 
 theorem setAt_eval (y : κ → Af F) (v : Pl F) : setAt y v (fun i => evalV F v (y i)) = y := by
   funext i; simp [setAt]
@@ -38,8 +38,8 @@ theorem setAt_add (y : κ → Af F) (v : Pl F) (z p : κ → Fv F v) :
   intro u i
   by_cases h : u = v
   · subst h
-    simp only [Pi.add_apply, map_add, evalV_setAt_self, evalV_singleFin_self]
-  · simp only [Pi.add_apply, map_add, evalV_setAt_ne y h, evalV_singleFin_ne h, add_zero]
+    simp only [Pi.add_apply, map_add (f := _), evalV_setAt_self, evalV_singleFin_self]
+  · simp only [Pi.add_apply, map_add (f := _), evalV_setAt_ne y h, evalV_singleFin_ne h, add_zero]
 
 def setOn (S : Finset (Pl F)) (y : κ → Af F) (z₀ : ∀ v : Pl F, κ → Fv F v) : κ → Af F :=
   fun i => y i + ∑ v ∈ S, singleFin v (z₀ v i - evalV F v (y i))
@@ -47,14 +47,14 @@ def setOn (S : Finset (Pl F)) (y : κ → Af F) (z₀ : ∀ v : Pl F, κ → Fv 
 theorem evalV_setOn_mem {S : Finset (Pl F)} (y : κ → Af F) (z₀ : ∀ v : Pl F, κ → Fv F v) {u : Pl F} (hu : u ∈ S)
     (i : κ) : evalV F u (setOn S y z₀ i) = z₀ u i := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [setOn, map_add, map_sum, Finset.sum_eq_single u (fun w _ hw => evalV_singleFin_ne (Ne.symm hw) _)
+    rw [setOn, map_add (f := _), map_sum, Finset.sum_eq_single u (fun w _ hw => evalV_singleFin_ne (Ne.symm hw) _)
     (fun h => absurd hu h), evalV_singleFin_self]
   ring
 
 theorem evalV_setOn_not {S : Finset (Pl F)} (y : κ → Af F) (z₀ : ∀ v : Pl F, κ → Fv F v) {u : Pl F} (hu : u ∉ S)
     (i : κ) : evalV F u (setOn S y z₀ i) = evalV F u (y i) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [setOn, map_add, map_sum, Finset.sum_eq_zero (fun w hw => evalV_singleFin_ne (by rintro rfl; exact hu hw) _),
+    rw [setOn, map_add (f := _), map_sum, Finset.sum_eq_zero (fun w hw => evalV_singleFin_ne (by rintro rfl; exact hu hw) _),
     add_zero]
 
 theorem setOn_empty (y : κ → Af F) (z₀ : ∀ v : Pl F, κ → Fv F v) : setOn ∅ y z₀ = y := by

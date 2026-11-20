@@ -88,7 +88,7 @@ theorem exists_sub_mem_of_split (hσ : ∀ x, σ (σ x) = x) (hfix : ∀ x, σ x
     exact Ideal.IsMaximal.coprime_of_ne hP hP' (Ne.symm hc)
   obtain ⟨u, hu, v, hv, huv⟩ := Submodule.mem_sup.1 (hsup ▸ Submodule.mem_top : (1 : B) ∈ P ⊔ P.comap σ)
   rw [Ideal.mem_comap] at hv
-  have hfx : σ (b * v + σ (b * v)) = b * v + σ (b * v) := by rw [map_add, hσ, add_comm]
+  have hfx : σ (b * v + σ (b * v)) = b * v + σ (b * v) := by rw [map_add (f := _), hσ, add_comm]
   obtain ⟨a, ha⟩ := (hfix _).1 hfx
   refine ⟨a, ?_⟩
   have hv' : v = 1 - u := by rw [← huv]; ring

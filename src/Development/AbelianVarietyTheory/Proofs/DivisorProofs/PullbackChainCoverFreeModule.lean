@@ -70,10 +70,10 @@ theorem main : ∀ (O : Type) [CommRing O] [IsDomain O] [IsDiscreteValuationRing
   · obtain ⟨x, y, h1, h2, h3⟩ := k
     obtain ⟨x', y', h1', h2', h3'⟩ := k'
     refine ⟨x + x', y + y', ?_, ?_, ?_⟩
-    · rw [map_add, map_add, ← h1, ← h1']; rfl
-    · rw [TensorProduct.tmul_add, map_add, h2, h2']; rfl
+    · rw [map_add (f := _), map_add (f := _), ← h1, ← h1']; rfl
+    · rw [TensorProduct.tmul_add, map_add (f := _), h2, h2']; rfl
     · letI := appLEModule f.f ((Scheme.Modules.pullback f.f).obj Lie.V) (le_rfl : f.f ⁻¹ᵁ U'.1 ≤ _)
-      rw [map_add, map_add, map_add, h3, h3']
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), h3, h3']
 
 end GlobalTheory.ChainDesc.UpSmallJ
 

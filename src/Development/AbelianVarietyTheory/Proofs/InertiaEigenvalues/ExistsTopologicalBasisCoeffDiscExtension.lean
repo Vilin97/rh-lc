@@ -89,7 +89,7 @@ theorem norm_preCoeff_le (y : PreDisc l (s u) ρ) : ‖preCoeff l s u ρ c y‖ 
     rw [e, preCoeff_mono, e2]
     exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, b, k, h1, rfl⟩)
   | zero => intro a'; rw [smul_zero, map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => intro a'; rw [smul_add, map_add]; exact add_mem (hx a') (hy a')
+  | add x y _ _ hx hy => intro a'; rw [smul_add, map_add (f := _)]; exact add_mem (hx a') (hy a')
   | smul a x _ hx => intro a'; rw [smul_smul]; exact hx _
 
 theorem continuous_preCoeff : Continuous (preCoeff l s u ρ c).toAddMonoidHom :=

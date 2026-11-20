@@ -117,7 +117,7 @@ theorem trace_mul_offAlg {i : ι} {g : G i} (hg : g ≠ 1) {x : Module.End K ((�
     have := congrFun h i
     simpa [hb] using this
   | zero => simp
-  | add x y _ _ hx hy => rw [mul_add, map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [mul_add, map_add (f := _), hx, hy, add_zero]
   | smul a x _ hx => rw [mul_smul_comm, map_smul, hx, smul_zero]
 
 theorem trace_nmF_mul {i : ι} {x : Module.End K ((∀ i, G i) → M)} (hx : x ∈ offAlg K G M i) :

@@ -92,7 +92,7 @@ def liftMat (h : IsCMExt F E σ) (τ : E →ₐ[F] Fv F v) :
     exact (liftPair h τ).map_zero
   map_add' p q := by
     ext i j
-    simp only [Prod.fst_add, Prod.snd_add, Matrix.add_apply, Matrix.of_apply, ← map_add, Prod.mk_add_mk]
+    simp only [Prod.fst_add, Prod.snd_add, Matrix.add_apply, Matrix.of_apply, ← map_add (f := _), Prod.mk_add_mk]
   map_mul' p q := by
     ext i j
     simp only [Prod.fst_mul, Prod.snd_mul, Matrix.mul_apply, Matrix.of_apply]
@@ -110,26 +110,26 @@ theorem map_one_add_of_zero {R : Type} [CommRing R] (f : AF F ⊗[F] E →+* R) 
     (hf : ∀ q, f (liftPair h τ q) = 0) (p : Matrix n n (Fv F v) × Matrix n n (Fv F v)) :
     (1 + liftMat h τ p).map f = 1 := by
   ext i j
-  simp only [Matrix.map_apply, Matrix.add_apply, map_add, liftMat_apply, hf, add_zero]
+  simp only [Matrix.map_apply, Matrix.add_apply, map_add (f := _), liftMat_apply, hf, add_zero]
   by_cases e : i = j <;> simp [Matrix.one_apply, e]
 
 theorem map_one_add_piW (h : IsCMExt F E σ) (τ : E →ₐ[F] Fv F v) (p : Matrix n n (Fv F v) × Matrix n n (Fv F v)) :
     (1 + liftMat h τ p).map (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.piW τ) = 1 + p.1 := by
   ext i j
-  simp only [Matrix.map_apply, Matrix.add_apply, map_add, liftMat_apply, piW_liftPair]
+  simp only [Matrix.map_apply, Matrix.add_apply, map_add (f := _), liftMat_apply, piW_liftPair]
   by_cases e : i = j <;> simp [Matrix.one_apply, e]
 
 theorem map_one_add_piW_comp (h : IsCMExt F E σ) (τ : E →ₐ[F] Fv F v)
     (p : Matrix n n (Fv F v) × Matrix n n (Fv F v)) :
     (1 + liftMat h τ p).map (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.piW (τ.comp σ)) = 1 + p.2 := by
   ext i j
-  simp only [Matrix.map_apply, Matrix.add_apply, map_add, liftMat_apply, piW_comp_liftPair]
+  simp only [Matrix.map_apply, Matrix.add_apply, map_add (f := _), liftMat_apply, piW_comp_liftPair]
   by_cases e : i = j <;> simp [Matrix.one_apply, e]
 
 theorem map_one_add_cA (h : IsCMExt F E σ) (τ : E →ₐ[F] Fv F v) (p : Matrix n n (Fv F v) × Matrix n n (Fv F v)) :
     (1 + liftMat h τ p).map (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA σ) = 1 + liftMat h τ p.swap := by
   ext i j
-  simp only [Matrix.map_apply, Matrix.add_apply, map_add, liftMat_apply, cA_liftPair, Prod.swap_prod_mk, Prod.fst_swap,
+  simp only [Matrix.map_apply, Matrix.add_apply, map_add (f := _), liftMat_apply, cA_liftPair, Prod.swap_prod_mk, Prod.fst_swap,
     Prod.snd_swap]
   by_cases e : i = j <;> simp [Matrix.one_apply, e]
 
@@ -185,7 +185,7 @@ def oneAdd {R S : Type} [Ring R] [Ring S] (Φ : R →ₙ+* S) : R →* S where
   map_one' := by simp
   map_mul' x y := by
     have e : x * y - 1 = (x - 1) + (y - 1) + (x - 1) * (y - 1) := by noncomm_ring
-    rw [e, map_add, map_add, map_mul]
+    rw [e, map_add (f := _), map_add (f := _), map_mul]
     noncomm_ring
 
 theorem unitary (h : IsCMExt F E σ) (τ : E →ₐ[F] Fv F v) (J : Matrix n n E) (herm : ∀ i j, σ (J j i) = J i j)

@@ -55,14 +55,14 @@ theorem eval_toWt_gap {Ψ : Type} {N : ℕ} (Q : MvPolynomial (Ψ × Fin N) ℝ)
     eval lam (toWt Q) = eval (gap lam) Q := by
   induction Q using MvPolynomial.induction_on with
   | C r => simp [toWt]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => rw [map_mul, map_mul, map_mul, hp]; simp [toWt, gap]
 
 theorem eval_toWtS_gapS {Ψ : Type} {N : ℕ} (Q : MvPolynomial (Option (Ψ × Fin N)) ℝ) (lam : Ψ × Fin N → ℝ)
     (s : ℝ) : eval (fun o => o.elim s lam) (toWtS Q) = eval (gapS lam s) Q := by
   induction Q using MvPolynomial.induction_on with
   | C r => simp [toWtS]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     rw [map_mul, map_mul, map_mul, hp]
     congr 1

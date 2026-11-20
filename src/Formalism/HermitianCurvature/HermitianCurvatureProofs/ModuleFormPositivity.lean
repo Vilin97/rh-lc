@@ -20,7 +20,7 @@ variable {U : Submodule ℂ V} {β : V → V → ℂ}
 
 theorem SesqCls.add_right (hβ : SesqCls U β) {x y y' : V} (hx : x ∈ U) (hy : y ∈ U) (hy' : y' ∈ U) :
     β x (y + y') = β x y + β x y' := by
-  rw [hβ.herm _ (U.add_mem hy hy') _ hx, hβ.add_left _ hy _ hy' _ hx, map_add, ← hβ.herm _ hy _ hx,
+  rw [hβ.herm _ (U.add_mem hy hy') _ hx, hβ.add_left _ hy _ hy' _ hx, map_add (f := _), ← hβ.herm _ hy _ hx,
     ← hβ.herm _ hy' _ hx]
 
 theorem SesqCls.smul_right (hβ : SesqCls U β) {x y : V} (hx : x ∈ U) (hy : y ∈ U) (c : ℂ) :

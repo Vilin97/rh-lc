@@ -68,7 +68,7 @@ theorem mp_zero (g : MvPolynomial σ ℂ) : minusPart (0 : Module.End ℂ (MvPol
 theorem mp_add_right (A : Module.End ℂ (MvPolynomial σ ℂ)) (g g' : MvPolynomial σ ℂ) :
     minusPart A (g + g') = minusPart A g + minusPart A g' := by
   refine hc_ext fun d => ?_
-  simp only [map_add, mp_hc]
+  simp only [map_add (f := _), mp_hc]
 
 theorem mp_smul_right (A : Module.End ℂ (MvPolynomial σ ℂ)) (c : ℂ) (g : MvPolynomial σ ℂ) :
     minusPart A (c • g) = c • minusPart A g := by

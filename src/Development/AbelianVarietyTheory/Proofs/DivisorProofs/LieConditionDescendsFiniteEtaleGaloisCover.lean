@@ -156,7 +156,7 @@ def psiR {O : Type} [Ring O] (F : Type) [CommRing F] [Algebra F O] (act : OActN 
     rw [map_zero, h0, comp_one])
   map_add' c d := AddMonoidHom.ext fun u => Subtype.ext (by
     show _ ≫ act.act (algebraMap F O (c + d)) = (_ ≫ act.act (algebraMap F O c)) * (_ ≫ act.act (algebraMap F O d))
-    rw [map_add, act.add, comp_mul])
+    rw [map_add (f := _), act.add, comp_mul])
 
 def theta {O : Type} [Ring O] (F : Type) [CommRing F] [Algebra F O] (act : OActN O G) {R : Type} [CommRing R]
     (β₁ : R →+* R₁) (y : Sp R₁ ⟶ S) : R ⊗[ℤ] F →+* AddMonoid.End (TM G y) :=
@@ -191,10 +191,10 @@ theorem pullM_theta {O : Type} [Ring O] (F : Type) [CommRing F] [Algebra F O] (a
     show j ≫ scaleAt y (β₁ r) ≫ (_ ≫ _) = scaleAt y' (g₁ (β₁ r)) ≫ (j ≫ _) ≫ _
     rw [← Category.assoc, hs, Category.assoc, Category.assoc]
   | add z z' hz hz' =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     show pullM G y y' j g₀ hj (theta G F act β₁ y z u + theta G F act β₁ y z' u) =
       theta G F act (g₁.comp β₁) y' z (pullM G y y' j g₀ hj u) + theta G F act (g₁.comp β₁) y' z' (pullM G y y' j g₀ hj u)
-    rw [map_add, hz, hz']
+    rw [map_add (f := _), hz, hz']
 
 end Theta
 

@@ -76,7 +76,7 @@ theorem vac_trans {σ : Matrix (ι ⊕ ι) (ι ⊕ ι) ℚ} (hσ : σ ∈ Matrix
       simpa using this
   · intro y hy; exact h.norm _ ((mem _).1 hy)
   · intro y hy y' hy'
-    rw [map_add, h.semi _ ((mem _).1 hy) _ ((mem _).1 hy'), hom']
+    rw [map_add (f := _), h.semi _ ((mem _).1 hy) _ ((mem _).1 hy'), hom']
   · obtain ⟨m, hm, H⟩ := h.ord
     exact ⟨m, hm, fun y hy => by rw [map_nsmul]; exact H _ ((mem _).1 hy)⟩
   · intro y hy

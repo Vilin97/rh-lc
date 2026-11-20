@@ -24,7 +24,7 @@ theorem _root_.GlobalTheory.LawDer.Linear.invDer_linear : ∀ (R : Type) [CommRi
   · unfold _root_.GlobalTheory.LawDer.invDer _root_.GlobalTheory.LawDer.atZero
     rw [← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun i _ ↦ ?_
-    rw [subst_add hμs, map_add, subst_add hzero, smul_add]
+    rw [subst_add hμs, map_add (f := _), subst_add hzero, smul_add]
   · unfold _root_.GlobalTheory.LawDer.invDer _root_.GlobalTheory.LawDer.atZero
     rw [Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ ↦ ?_

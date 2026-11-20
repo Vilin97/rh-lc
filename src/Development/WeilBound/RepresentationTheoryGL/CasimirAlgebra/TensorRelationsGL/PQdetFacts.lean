@@ -220,7 +220,7 @@ theorem qdetFacts_holds : QdetFacts := by
       rw [List.prod_ofFn] at h3
       set_option synthInstance.maxHeartbeats 100000 in
         rw [coeff_qdetPoly_top E m le_rfl, h2, h3, Finset.sum_sub_distrib, sub_eq_iff_eq_add, ← map_sum] at h1
-      rw [h1, ← map_add, sum_fin_cast]
+      rw [h1, ← map_add (f := _), sum_fin_cast]
   · unfold GlRel
     intro a b c d
     have h := hE d c b a

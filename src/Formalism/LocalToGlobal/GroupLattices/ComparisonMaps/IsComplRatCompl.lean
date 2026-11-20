@@ -87,7 +87,7 @@ theorem extK_unique (c0 : V0 →ₛₗ[e] W0) (c1 : V1 →ₛₗ[e] W1) (b : Mod
     obtain ⟨x, rfl⟩ := hz
     rw [hg, extK_apply]
   | zero => simp
-  | add y z _ _ hy hz => rw [map_add, map_add, hy, hz]
+  | add y z _ _ hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
   | smul a y _ hy => rw [map_smul, map_smul, hy]
 
 theorem extK_mem_spanK (c0 : V0 →ₛₗ[e] W0) (c1 : V1 →ₛₗ[e] W1) (b : Module.Basis ι LL V0)
@@ -146,7 +146,7 @@ def ratDom (e0 : V0 →ₛₗ[s] M0) (e1 : V1 →ₛₗ[s] M1) (f : M0 →ₗ[Cc
   carrier := {x | ∃ y, e1 y = f (e0 x)}
   add_mem' := by
     rintro a b ⟨y, hy⟩ ⟨z, hz⟩
-    exact ⟨y + z, by rw [map_add, map_add, map_add, hy, hz]⟩
+    exact ⟨y + z, by rw [map_add (f := _), map_add (f := _), map_add (f := _), hy, hz]⟩
   zero_mem' := ⟨0, by rw [map_zero, map_zero, map_zero]⟩
   smul_mem' := by
     rintro a x ⟨y, hy⟩
@@ -160,8 +160,8 @@ def ratPart (e0 : V0 →ₛₗ[s] M0) (e1 : V1 →ₛₗ[s] M1) (hinj : Function
   toFun x := Classical.choose x.2
   map_add' x y := by
     apply hinj
-    rw [map_add, Classical.choose_spec x.2, Classical.choose_spec y.2, Classical.choose_spec (x + y).2]
-    rw [Submodule.coe_add, map_add, map_add]
+    rw [map_add (f := _), Classical.choose_spec x.2, Classical.choose_spec y.2, Classical.choose_spec (x + y).2]
+    rw [Submodule.coe_add, map_add (f := _), map_add (f := _)]
   map_smul' a x := by
     apply hinj
     rw [RingHom.id_apply, LinearMap.map_smulₛₗ, Classical.choose_spec x.2, Classical.choose_spec (a • x).2]

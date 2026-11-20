@@ -367,7 +367,7 @@ private theorem UF_maps_clOrd_of_maps_cl {O Ω : Type} [Field Ω] [CommRing O] [
         rw [UF_comm_on_N_fixed X W _ _ y (hN y hy)]
     rw [key k x hx1, hk, map_zero]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
 
 private theorem sum_raF_rpF_comm {Ω : Type} [Field Ω] (d : ℕ) {m : ℕ} (τ : X.Ub →* GL (Fin m) Ω)
     (κ : Type) [Fintype κ] (u : κ → X.Ub) (b : Gp) (F : Fin m → X.Fn Ω d) :
@@ -422,7 +422,7 @@ private theorem sum_raF_maps_clOrd_of_maps_fixd {O Ω : Type} [Field Ω] [CommRi
     exact Submodule.mem_iSup_of_mem μ (Submodule.mem_inf.mpr
       ⟨hCl x hx1, Module.End.mapsTo_maxGenEigenspace_of_comm hUF μ hx2⟩)
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
 
 theorem absSpec {A O Ω : Type} [CommRing A] [IsCNL A] [CommRing O] [IsDomain O] [IsCNL O] [Field Ω] [IsAlgClosed Ω]
     [Algebra A O] [Algebra O Ω] [Algebra A Ω] [IsScalarTower A O Ω] [IsLocalHom (algebraMap A O)]
@@ -525,7 +525,7 @@ theorem absSpec {A O Ω : Type} [CommRing A] [IsCNL A] [CommRing O] [IsDomain O]
   · intro K f hf f' hf'
     obtain ⟨h1, h2⟩ := hspec K c le_rfl f hf
     obtain ⟨h1', h2'⟩ := hspec K c le_rfl f' hf'
-    exact hsp _ _ ⟨⟨K, c, le_rfl, Submodule.add_mem _ h1 h1'⟩, by rw [map_add, h2, h2', map_add]⟩
+    exact hsp _ _ ⟨⟨K, c, le_rfl, Submodule.add_mem _ h1 h1'⟩, by rw [map_add (f := _), h2, h2', map_add (f := _)]⟩
   · intro K f hf b
     obtain ⟨h1, h2⟩ := hspec K c le_rfl f hf
     exact hsp _ _ ⟨⟨K, c, le_rfl, Submodule.smul_mem _ _ h1⟩, by rw [map_smul, h2, map_smul, algebraMap_smul]⟩
@@ -552,7 +552,7 @@ theorem absSpec {A O Ω : Type} [CommRing A] [IsCNL A] [CommRing O] [IsDomain O]
         rw [Submodule.coe_smul, map_smul, ← algebraMap_smul Ω s]
         exact Submodule.smul_mem _ _ hn
       · intro n1 n2 h1 h2
-        rw [Submodule.coe_add, map_add]
+        rw [Submodule.coe_add, map_add (f := _)]
         exact Submodule.add_mem _ h1 h2
     have h1 : X.ctrl m W F ∈ Submodule.map (X.ctrl m W) (X.ClOrd W τ' (U K) e φ') := ⟨F, hF, rfl⟩
     rw [(hCO K e he).2] at h1

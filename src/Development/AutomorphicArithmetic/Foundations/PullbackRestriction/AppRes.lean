@@ -28,7 +28,7 @@ def term (p : ℕ) : Cube.Term A p →ₗ[R] Cube.Term B p where
   map_add' x y := by
     funext t
     by_cases h : (t.1.image τ).card = p
-    · simp only [Pi.add_apply, h, dite_true, map_add]
+    · simp only [Pi.add_apply, h, dite_true, map_add (f := _)]
       exact smul_add _ _ _
     · simp [h]
   map_smul' r x := by

@@ -51,7 +51,7 @@ theorem exists_frac (h𝒲 : ∀ W ∈ 𝒲, W.IsPrime) (x : semiLocRing P 𝒲)
       notMem_mul ‹_› hwP hwP', fun W hW => notMem_mul (h𝒲 W hW) (hwW W hW) (hwW' W hW), ?_⟩
     · rw [add_comm a a']
       exact homog_mul hu' hw
-    · simp only [map_add, map_mul]
+    · simp only [map_add (f := _), map_mul]
       rw [← hx, ← hy]
       ring
   | neg x _ hx =>

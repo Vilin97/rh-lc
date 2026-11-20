@@ -44,7 +44,7 @@ theorem mem_mcPts_of_specialise : ∀ (K : Type) [Fintype K] (ι : K → Type) [
     have hne : (∏ k, t k ^ d k) ≠ 0 := Finset.prod_ne_zero_iff.2 fun k _ => pow_ne_zero _ (ht k)
     exact (mul_eq_zero.1 h2).resolve_left hne
   | zero => simp
-  | add x y _ _ hx hy => simp [map_add, hx, hy]
+  | add x y _ _ hx hy => simp [map_add (f := _), hx, hy]
   | smul r x _ hx => simp [smul_eq_mul, map_mul, hx]
 
 end GlobalTheory.CompanionTheory.Ar.PB.CovGraph.Spec

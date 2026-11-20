@@ -40,7 +40,7 @@ theorem acts_lin_eq (v : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModel
       tens (evFin F v) (a • x + b • y) R = a • tens (evFin F v) x R + b • tens (evFin F v) y R := by
     intro x y; funext z; simp only [tens, Pi.add_apply, Pi.smul_apply, smul_eq_mul]; ring
   refine GlobalTheory.InertAvgDual.eq_of_tens_eq v hR0 (hR _ hs).1 ?_
-  rw [← h₃ R (hR _ hs), hlin, map_add, map_smul, map_smul, h₁ R (hR _ hφ), h₂ R (hR _ hψ), hlin]
+  rw [← h₃ R (hR _ hs), hlin, map_add (f := _), map_smul, map_smul, h₁ R (hR _ hφ), h₂ R (hR _ hψ), hlin]
 
 open Classical in
 
@@ -122,7 +122,7 @@ theorem polMatchOn_step : GlobalTheory.FunPr.Hypotheses₂ → ∀ (F E : Type) 
         intro y z
         obtain ⟨x, hx, rfl⟩ := pre y
         obtain ⟨w, hw, rfl⟩ := pre z
-        rw [← map_add, K _ (add_mem hx hw), K x hx, K w hw, ← map_add]
+        rw [← map_add (f := _), K _ (add_mem hx hw), K x hx, K w hw, ← map_add (f := _)]
         congr 1
         simpa using Klin x hx w hw 1 1
       map_smul' := by

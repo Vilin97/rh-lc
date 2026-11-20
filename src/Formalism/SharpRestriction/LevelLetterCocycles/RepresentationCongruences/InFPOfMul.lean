@@ -158,9 +158,9 @@ theorem InI_sum {c : ZMod n} {ι : Type} (s : Finset ι) (x : ι → W.DD T) (h 
     · unfold InLet at hx1 hy1 ⊢
       rw [smul_add, hx1, hy1]
     · intro δ hδ
-      rw [map_add, hx2 δ hδ, hy2 δ hδ]
+      rw [map_add (f := _), hx2 δ hδ, hy2 δ hδ]
     · rw [smul_add, hul, hul']
-    · rw [map_add, add_sub_add_comm, hux, hux', smul_add]
+    · rw [map_add (f := _), add_sub_add_comm, hux, hux', smul_add]
   have hzero : InI W T c 0 := ⟨by unfold InLet; rw [smul_zero], fun δ _ => map_zero _, 0,
     (W.NΔ T).zero_mem, smul_zero _, by rw [map_zero, sub_zero, smul_zero]⟩
   induction s using Finset.induction_on with

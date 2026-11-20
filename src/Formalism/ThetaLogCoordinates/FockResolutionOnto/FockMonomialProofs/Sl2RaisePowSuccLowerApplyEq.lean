@@ -29,7 +29,7 @@ theorem sl2_raise_pow_succ_lower_apply_eq (he : ∀ x, h (e x) - e (h x) = (2 : 
     rw [h1, hu, add_comm]
   | succ m ih =>
     have hs : e ((e ^ m) u) = (e ^ (m + 1)) u := by rw [pow_succ', Module.End.mul_apply]
-    rw [pow_succ' e (m + 1), Module.End.mul_apply, Module.End.mul_apply, ih, map_add, map_smul]
+    rw [pow_succ' e (m + 1), Module.End.mul_apply, Module.End.mul_apply, ih, map_add (f := _), map_smul]
     have h1 := hef ((e ^ (m + 1)) u)
     rw [sub_eq_iff_eq_add] at h1
     rw [h1, sl2_weight_raise_pow_apply_eq he hu (m + 1), hs, add_comm (_ • _) (f _), add_assoc, ← add_smul]

@@ -320,7 +320,7 @@ lemma real_smul_mx (a : ℝ) (N : Mx k r) : (a : ℂ) • N = a • N := by
 
 lemma lam_add (Φ : Mx k r →L[ℝ] E) (g Z W : Mx k r) : lam Φ g (Z + W) = lam Φ g Z + lam Φ g W := by
   unfold lam
-  rw [hpart1_add, hpart2_add, mul_add, mul_add, map_add, map_add, smul_add]
+  rw [hpart1_add, hpart2_add, mul_add, mul_add, map_add (f := _), map_add (f := _), smul_add]
   abel
 
 lemma lam_real (Φ : Mx k r →L[ℝ] E) (g Z : Mx k r) (a : ℝ) :

@@ -96,7 +96,7 @@ theorem quotMap_mem_quotPart (hVW : V ≤ W) {c : K → ℤ} {x : MRingOver S ι
     obtain ⟨p, hp, rfl⟩ := hx
     exact Submodule.subset_span ⟨p, hp, rfl⟩
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul s x _ hx => rw [quotMap_smul]; exact Submodule.smul_mem _ s hx
 
 theorem locMap_mem_locPart (hVW : V ≤ W) (T : Submonoid (MRingOver S ι)) {c : K → ℤ}
@@ -109,7 +109,7 @@ theorem locMap_mem_locPart (hVW : V ≤ W) (T : Submonoid (MRingOver S ι)) {c :
     rw [locMap_mk]
     exact GenTwistGenerated.mk_mem_locPart _ t a ht (quotMap_mem_quotPart hVW hm)
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul s x _ hx => rw [locMap_smul]; exact Submodule.smul_mem _ s hx
 
 end GeneratedRestrict

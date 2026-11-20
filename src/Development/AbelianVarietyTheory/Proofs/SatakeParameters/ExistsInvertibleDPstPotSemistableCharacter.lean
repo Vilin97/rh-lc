@@ -60,7 +60,7 @@ theorem toAlg_comm (L : FinExt l) (z : (Fin 1 → ↥L.1) ⊗[ℚ_[l]] Bst P) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => rfl
-  | add x x' hx hx' => simp only [map_add, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), hx, hx']
 
 theorem linearIndependent_toA {K L : FinExt l} (ρ : Representation ↥L.1 ↥(GK K) (Fin 1 → ↥L.1)) {d : ℕ}
     (b : Basis (Fin d) ↥(MaximalUnramifiedExtension l) (DpstUr P ρ)) :
@@ -122,7 +122,7 @@ theorem GlobalTheory.Pst.UnitLetter.exists_unit_Dpst : ∀ {l : ℕ} [Fact l.Pri
   let G := {g : ↥(GK K) // (g : GQ l) ∈ GK K'}
   let σ : G → (Bst P ⊗[ℚ_[l]] ↥L.1) →+ (Bst P ⊗[ℚ_[l]] ↥L.1) := fun g => AddMonoidHom.mk' (fun z =>
       Algebra.TensorProduct.map (actSt P ((g.1 : ↥(GK K)) : GQ l)) (AlgHom.id ℚ_[l] ↥L.1) z *
-        ((1 : Bst P) ⊗ₜ[ℚ_[l]] χ g.1)) (fun a b => by simp [map_add, add_mul])
+        ((1 : Bst P) ⊗ₜ[ℚ_[l]] χ g.1)) (fun a b => by simp [map_add (f := _), add_mul])
   have hσ : ∀ (g : G) (b : Bst P) (z : Bst P ⊗[ℚ_[l]] ↥L.1),
       σ g (b • z) = actSt P ((g.1 : ↥(GK K)) : GQ l) b • σ g z := by
     intro g b z

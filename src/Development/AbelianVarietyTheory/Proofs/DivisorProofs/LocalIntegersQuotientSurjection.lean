@@ -166,7 +166,7 @@ theorem exists_sub_intLocIncl_mem_map (v : HeightOneSpectrum (𝓞 (maximalRealS
     ring
   · exact ⟨0, 0, zero_mem _, by simp⟩
   · rintro _ _ ⟨x, w, hw, rfl⟩ ⟨x', w', hw', rfl⟩
-    exact ⟨x + x', w + w', add_mem hw hw', by simp only [map_add, Subring.coe_add]; abel⟩
+    exact ⟨x + x', w + w', add_mem hw hw', by simp only [map_add (f := _), Subring.coe_add]; abel⟩
   · rintro _ ⟨x, w, hw, rfl⟩
     exact ⟨-x, -w, neg_mem hw, by simp only [map_neg, Subring.coe_neg]; abel⟩
 

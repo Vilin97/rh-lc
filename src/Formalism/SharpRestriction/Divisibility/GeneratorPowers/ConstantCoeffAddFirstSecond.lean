@@ -99,7 +99,7 @@ theorem formal_log_add_first_two (G : FGLaw S d) (l : Fin d) :
     funext j i
     fin_cases j
     rfl
-  rw [e1, ReciprocityTheory.ChartRestriction.G.TB.LogPf.logOf_add (G := G), ev_hom_lemma_4 _ hb, map_add,
+  rw [e1, ReciprocityTheory.ChartRestriction.G.TB.LogPf.logOf_add (G := G), ev_hom_lemma_4 _ hb, map_add (f := _),
     ← ev_hom_lemma_4 _ hb, ← ev_hom_lemma_4 _ hb, germEval_oneStandardPoint_self_lemma_3 _ hb, germEval_oneStandardPoint_self_lemma_3 _ hb]
   all_goals rfl
 

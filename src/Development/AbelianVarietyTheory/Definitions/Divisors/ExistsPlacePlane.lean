@@ -24,7 +24,7 @@ theorem klt_top_iff (η : Forms c n) (φ : K →₀ ℚ) : Klt c n ⊤ η φ ↔
 theorem disc_smul [PerfectField k] {x : Fin n → K} (hx : TrBasis c x) (E : Place c)
     {η : Forms c n} (hη : η ≠ 0) {f : K} (hf : f ≠ 0) (φ : K →₀ ℚ) :
     E.disc (f • η) (φ + Finsupp.single f 1) = E.disc η φ := by
-  rw [Place.disc, Place.disc, E.formOrd_smul hx hη hf, map_add, Place.ordQ_single]
+  rw [Place.disc, Place.disc, E.formOrd_smul hx hη hf, map_add (f := _), Place.ordQ_single]
   push_cast
   ring
 
@@ -44,7 +44,7 @@ theorem klt_smul_iff [PerfectField k] {x : Fin n → K} (hx : TrBasis c x) (R : 
 theorem disc_single_mul (E : Place c) (η : Forms c n) {f g : K} (hf : f ≠ 0) (hg : g ≠ 0)
     (s : ℚ) : E.disc η (Finsupp.single (f * g) s) =
       E.disc η (Finsupp.single f s + Finsupp.single g s) := by
-  rw [Place.disc, Place.disc, map_add, Place.ordQ_single, Place.ordQ_single, Place.ordQ_single,
+  rw [Place.disc, Place.disc, map_add (f := _), Place.ordQ_single, Place.ordQ_single, Place.ordQ_single,
     E.ord_mul hf hg]
   push_cast
   ring
@@ -207,7 +207,7 @@ theorem three_lines [PerfectField k] (E : Place c) {x : Fin 2 → K} (hx : TrBas
     rfl
   have hd (s : ℚ) : E.disc (dForm c ![(t : K), t * u]) (Finsupp.single (t : K) s +
       Finsupp.single ((t : K) * u) s + Finsupp.single ((t : K) * u - t) s) = 1 - 3 * s := by
-    rw [Place.disc, e, E.formOrd_smul_toRat hω h0, map_add, map_add, Place.ordQ_single,
+    rw [Place.disc, e, E.formOrd_smul_toRat hω h0, map_add (f := _), map_add (f := _), Place.ordQ_single,
       Place.ordQ_single, Place.ordQ_single, o1, o2, E.ord_irreducible ht]
     push_cast
     ring

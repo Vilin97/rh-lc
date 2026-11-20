@@ -48,7 +48,7 @@ theorem gaussSumAt_normSq (χ : HChar E) (w : HeightOneSpectrum (𝓞 E)) (a : �
   have f_add : ∀ x y, f (x + y) = f x * f y := fun x y => by
     have e : ((x + y : 𝓞 E) : E) / c = (x : E) / c + (y : E) / c := by push_cast; ring
     show psiAt w _ = psiAt w _ * psiAt w _
-    rw [e, map_add, psiAt_add]
+    rw [e, map_add (f := _), psiAt_add]
   have f_zero : ∀ x ∈ P ^ a, f x = 1 := fun x hx => by
     apply psiAt_eq_one
     have h1 := valuation_sub_le (w := w) (y := x) (y' := 0) (by simpa using hx)
@@ -62,7 +62,7 @@ theorem gaussSumAt_normSq (χ : HChar E) (w : HeightOneSpectrum (𝓞 E)) (a : �
       map_add_eq_mul' := fun q r => by
         rw [← f_add]
         apply f_congr
-        rw [← Ideal.Quotient.eq, map_add, Ideal.Quotient.mk_out, Ideal.Quotient.mk_out, Ideal.Quotient.mk_out] }
+        rw [← Ideal.Quotient.eq, map_add (f := _), Ideal.Quotient.mk_out, Ideal.Quotient.mk_out, Ideal.Quotient.mk_out] }
   have ψb_mk : ∀ x, ψb (Ideal.Quotient.mk _ x) = f x := fun x =>
     f_congr _ _ (by rw [← Ideal.Quotient.eq, Ideal.Quotient.mk_out])
   have hout : ∀ u : (𝓞 E ⧸ P ^ a)ˣ, (Quotient.out (u : 𝓞 E ⧸ P ^ a) : 𝓞 E) ∉ P := out_notMem w ha

@@ -45,7 +45,7 @@ theorem fockT_stable_gen {E cp cm : Fin n → Fin n → Module.End ℂ W} (hC : 
     rw [fockT_cm_cp hC hjb huv, fockT_cm_cm hC, hx0]
     simp
   refine ⟨hE0, fun a c => ?_, ?_, ?_⟩
-  · simp only [diagE, LinearMap.add_apply, map_add, hE0, zero_add, sgE]
+  · simp only [diagE, LinearMap.add_apply, map_add (f := _), hE0, zero_add, sgE]
     split_ifs with h1 h2
     set_option synthInstance.maxHeartbeats 100000 in
       · simp only [LinearMap.sum_apply, map_sum, Module.End.mul_apply]
@@ -86,7 +86,7 @@ theorem fock_contractLeft_involute (d : Module.Dual ℂ (Fin n × Fin n → ℂ)
       -CliffordAlgebra.involute (CliffordAlgebra.contractLeft d x) := by
   induction x using CliffordAlgebra.left_induction with
   | algebraMap r => simp [CliffordAlgebra.contractLeft_algebraMap]
-  | add x y hx hy => simp only [map_add, hx, hy, neg_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, neg_add]
   | ι_mul x m hx =>
     simp only [map_mul, CliffordAlgebra.involute_ι, neg_mul, map_neg, CliffordAlgebra.contractLeft_ι_mul,
       hx, map_sub, map_smul, mul_neg]

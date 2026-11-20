@@ -39,7 +39,7 @@ theorem coordMap_smul (b : Basis ι L V) (φ : L →ₗ[K] K) {w : V} (hw : w �
     rw [Finset.sum_eq_single j (fun i _ hi => by simp [Finsupp.single_apply, Ne.symm hi]) (by simp)]
     simp
   | zero => simp
-  | add x y _ _ hx hy => rw [smul_add, map_add, hx, hy, smul_add]
+  | add x y _ _ hx hy => rw [smul_add, map_add (f := _), hx, hy, smul_add]
   | smul c x _ hx => rw [smul_comm a c x, LinearMap.map_smul, hx, smul_comm]
 
 theorem coordMap_comm (b : Basis ι L V) (φ : L →ₗ[K] K) (T : V →ₗ[L] V)

@@ -40,7 +40,7 @@ theorem exists_contraction [DecidableEq α] (l : ∀ i, Module.Dual ℂ (W i)) (
   | add x y hx hy =>
     obtain ⟨u, hu⟩ := hx
     obtain ⟨v, hv⟩ := hy
-    exact ⟨u + v, fun μ => by rw [map_add, map_add, hu, hv]⟩
+    exact ⟨u + v, fun μ => by rw [map_add (f := _), map_add (f := _), hu, hv]⟩
   | smul_tprod c v =>
     refine ⟨c • (∏ j ∈ Finset.univ.erase i, l j (v j)) • v i, fun μ => ?_⟩
     rw [map_smul, map_smul, map_smul, prodForm_tprod, ← Finset.mul_prod_erase _ _ (Finset.mem_univ i),

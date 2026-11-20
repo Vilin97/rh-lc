@@ -53,7 +53,7 @@ theorem UpperTheory.V.Cj.H.twSq :
   have hG := gardFacts E a ha μ
   have hlie : ∀ ψ : Sm E a, mulChi a χ ψ ∈ gard μ → ∀ X, mulChi a χ (lie E a X ψ) ∈ gard μ := fun ψ hψ X => by
     have h1 := (hG _ hψ).2.2.2.1 X
-    rw [hχ, map_add, map_smul] at h1
+    rw [hχ, map_add (f := _), map_smul] at h1
     simpa using (gard μ).sub_mem h1 ((gard μ).smul_mem ((r * ell E a X : ℝ) : ℂ) hψ)
   have hleft : ∀ ψ : Sm E a, mulChi a χ ψ ∈ gard μ → ∀ γ g,
       (mulChi a χ ψ).1 (ratGL E a γ * g) = (mulChi a χ ψ).1 g := fun ψ hψ γ g =>

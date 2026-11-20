@@ -28,7 +28,7 @@ private theorem exists_int_add_star_eq_one_of_isCMUnram (hK : Formalism.Hermitia
       add_mem' := by
         rintro a b ⟨θ, hθ⟩ ⟨θ', hθ'⟩
         refine ⟨θ + θ', ?_⟩
-        simp only [tr, map_add, star_add] at hθ hθ' ⊢
+        simp only [tr, map_add (f := _), star_add] at hθ hθ' ⊢
         linear_combination hθ + hθ'
       zero_mem' := ⟨0, by simp [tr]⟩
       smul_mem' := by
@@ -148,7 +148,7 @@ theorem exists_newton (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
   have hphi : ∀ x y, IA.phi h X x y - Z x y = h (Y x) (Y y) := by
     intro x y
     rw [IA.phi_apply, hXeq, hXeq]
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     rw [hhY, hYh]
     linear_combination (Z x y) * hθ1
   have hYY : ∀ x ∈ locF 𝔭 A₀, ∀ y ∈ locF 𝔭 A₀, h (Y x) (Y y) ∈ pK K 𝔭 ((k - e) + (k - e)) :=

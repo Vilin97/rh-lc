@@ -36,7 +36,7 @@ theorem ap₂_add (hS : PairSlices) (T : Sm E b →ₗ[ℂ] Sm E b) (hF : F ∈ 
     funext y
     exact congrArg₂ (· + ·) (sl₂_val hS hF x.1 y) (sl₂_val hS hG x.1 y))
   change (T (sl₂ (F + G) x.1)).1 x.2 = _
-  rw [e, map_add]
+  rw [e, map_add (f := _)]
   rfl
 
 theorem ap₂_smul (hS : PairSlices) (T : Sm E b →ₗ[ℂ] Sm E b) (c : ℂ) (hF : F ∈ pairSpace U₁ U₂) :

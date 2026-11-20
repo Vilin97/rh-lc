@@ -39,7 +39,7 @@ def KMax : Subgroup (∀ n : ℕ+, LaMod D n ≃ₗ[𝓞 E] LaMod D n) where
     · obtain ⟨y, rfl⟩ := (cls_eq D).mp ha
       obtain ⟨z, rfl⟩ := (cls_eq D).mp hb
       refine Int.modEq_iff_dvd.mpr ⟨D.EF a' z + D.EF y b' + (n : ℕ) * D.EF y z, ?_⟩
-      simp only [map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul]
+      simp only [map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul]
       ring
   mul_mem' := by
     rintro g g' ⟨h1, h2⟩ ⟨h1', h2'⟩

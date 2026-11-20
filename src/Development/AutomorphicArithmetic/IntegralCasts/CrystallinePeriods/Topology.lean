@@ -30,7 +30,7 @@ def nhd (nk : ℕ × ℕ) : AddSubgroup (BdRPlus p R) where
   zero_mem' := ⟨0, by simp⟩
   add_mem' := by
     rintro x y ⟨a, ha⟩ ⟨b, hb⟩
-    exact ⟨a + b, by rw [map_add, ha, hb, mul_add, map_add, map_add]⟩
+    exact ⟨a + b, by rw [map_add (f := _), ha, hb, mul_add, map_add (f := _), map_add (f := _)]⟩
   neg_mem' := by
     rintro x ⟨a, ha⟩
     exact ⟨-a, by rw [map_neg, ha, mul_neg, map_neg, map_neg]⟩
@@ -149,7 +149,7 @@ theorem monodromy_mem_plus {x : Bst p R} (hx : x ∈ plus p R) : monodromy p R x
     · simp
   | zero => simp
   | one => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | mul x y hx' hy' hx hy =>
     rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]

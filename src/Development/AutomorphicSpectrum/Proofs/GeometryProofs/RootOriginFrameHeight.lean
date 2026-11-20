@@ -35,7 +35,7 @@ theorem test_mem {K Ω : Type} [Field K] [CommRing Ω] [Algebra K Ω] (t : TRing
     rw [h, φ.commutes]
     exact hc a
   | add p p' hp hp' =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact A.add_mem hp hp'
   | mul_X p i hp =>
     rw [map_mul, map_mul]

@@ -92,7 +92,7 @@ theorem exists_homogenise {m : ℕ} (σ : Fin m ≃ ((k : K) → ι k)) (i : (k 
     obtain ⟨F, D, hF⟩ := hf
     obtain ⟨G, E, hG⟩ := hg
     refine ⟨F * chartMono i ^ E + G * chartMono i ^ D, D + E, fun x hx => ?_⟩
-    simp only [map_add, map_mul, map_pow, eval_chartMono, hF x hx, hG x hx]
+    simp only [map_add (f := _), map_mul, map_pow, eval_chartMono, hF x hx, hG x hx]
     ring
   | mul_X f a hf =>
     obtain ⟨F, D, hF⟩ := hf
@@ -134,7 +134,7 @@ theorem eval_chartSection [DecidableEq K] {m : ℕ} (σ : Fin m ≃ ((k : K) →
   induction s using MvPolynomial.induction_on with
   | C c => simp [chartSection]
   | add f g hf hg =>
-    simp only [chartSection, map_add] at hf hg ⊢
+    simp only [chartSection, map_add (f := _)] at hf hg ⊢
     rw [hf, hg]
   | mul_X f q hf =>
     simp only [chartSection, map_mul, aeval_X, eval_X] at hf ⊢

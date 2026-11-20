@@ -49,7 +49,7 @@ theorem ringOp_add {Ω : Type} [CommRing Ω] {n : ℕ} (d : Derivation ℤ Ω Ω
     ringOp ⇑d (fun a => ⇑(δ a)) Θ u p p' k (f + g) =
       ringOp ⇑d (fun a => ⇑(δ a)) Θ u p p' k f + ringOp ⇑d (fun a => ⇑(δ a)) Θ u p p' k g := by
   unfold ringOp
-  simp only [map_add, mul_add, Finset.sum_add_distrib]
+  simp only [map_add (f := _), mul_add, Finset.sum_add_distrib]
   ring
 
 theorem ringOp_mul {Ω : Type} [CommRing Ω] {n : ℕ} (d : Derivation ℤ Ω Ω)
@@ -113,7 +113,7 @@ noncomputable def cstR {A : Type} [CommRing A] {Z : Scheme.{0}} (q : Z ⟶ Sp A)
   map_one' := by simp only [cst, map_one, gs_eq q z ⊤ (show q z ∈ (⊤ : (Sp A).Opens) from trivial)]
   map_mul' a b := by simp only [cst, map_mul, gs_mul q z ⊤ (show q z ∈ (⊤ : (Sp A).Opens) from trivial)]
   map_zero' := by simp only [cst, map_zero, gs_eq q z ⊤ (show q z ∈ (⊤ : (Sp A).Opens) from trivial)]
-  map_add' a b := by simp only [cst, map_add, gs_add q z ⊤ (show q z ∈ (⊤ : (Sp A).Opens) from trivial)]
+  map_add' a b := by simp only [cst, map_add (f := _), gs_add q z ⊤ (show q z ∈ (⊤ : (Sp A).Opens) from trivial)]
 
 theorem cstR_id {Ω : Type} [CommRing Ω] (z : Sp Ω) (a : Ω) : cstR (𝟙 (Sp Ω)) z a = toStkA z a :=
   gs_id_eq z a
@@ -328,7 +328,7 @@ theorem core {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] [IsNoetherianR
     rw [GlobalTheory.ExpInt.gs_scal,
       Category.assoc, hx', cst_comp, mul_pow, Units.val_mul, Units.val_pow_eq_pow_val (gm r z ⊤ ρ), hρc]
     change cstR r z s₂ * _ + cstR r z (φ c') * (cstR r z ω * _) = cstR r z _ * _
-    rw [map_add, map_mul, map_mul, map_pow]
+    rw [map_add (f := _), map_mul, map_mul, map_pow]
     ring
   · rw [hs₂e, hTs, show (ρU * uU⁻¹)⁻¹ = uU * ρU⁻¹ by rw [mul_inv_rev, inv_inv], Units.val_mul, Units.val_mul]
     have hX : s₀ * (uU : Ω) ^ k = φ r₀ * (((uU : Ω) * ((ρU⁻¹ : Ωˣ) : Ω)) ^ k * ω) := by

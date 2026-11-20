@@ -290,7 +290,7 @@ theorem tnDelta_on (lam1 : Fin n' → Fin (m + 1) → ℤ) (hDom : IsDominant la
       rw [tn_const _ _ _ hFs, tn_blockEmb_C, AlgHom.commutes, AlgHom.commutes]
     · exact h1 _
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | smul a x _ hx => rw [map_smul, map_smul, hx]
 
 end Nu

@@ -59,7 +59,7 @@ theorem quotM : QuotMStatement := by
       add_mem' := by
         rintro y₁ y₂ ⟨h1X, h1⟩ ⟨h2X, h2⟩
         refine ⟨X.add_mem h1X h2X, fun g hg => ?_⟩
-        rw [map_add, QuotA.per_add hP hB hp hq hsg (hcont _ (hXG h1X)) (hbd _ (hXG h1X)) (hcont _ (hXG h2X))
+        rw [map_add (f := _), QuotA.per_add hP hB hp hq hsg (hcont _ (hXG h1X)) (hbd _ (hXG h1X)) (hcont _ (hXG h2X))
           (hbd _ (hXG h2X)) ξ hg, h1 g hg, h2 g hg, add_zero]
       zero_mem' := by
         refine ⟨X.zero_mem, fun g hg => ?_⟩

@@ -255,7 +255,7 @@ theorem exists_sum_of_add_bar_eq_one (w : 𝓞 E) (hw : w + bar E w = 1) (l : Ex
       intro y y'
       simp only [hu, Fintype.sum_sum_type, Sum.elim_inl, Sum.elim_inr, Finset.sum_add_distrib]
     rw [pairing_of_sum l β (Sum.elim u v) (Sum.elim v u) hS, Fintype.sum_sum_type]
-    simp only [Sum.elim_inl, Sum.elim_inr, quad, map_add, AddMonoidHom.add_apply]
+    simp only [Sum.elim_inl, Sum.elim_inr, quad, map_add (f := _), AddMonoidHom.add_apply]
     rw [← Finset.sum_add_distrib, Finset.sum_div]
     refine Finset.sum_congr rfl fun p _ => ?_
     ring

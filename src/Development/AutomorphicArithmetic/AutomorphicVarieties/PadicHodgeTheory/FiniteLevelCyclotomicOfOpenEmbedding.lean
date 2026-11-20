@@ -67,7 +67,7 @@ private theorem numField {v : ℕ} [Fact v.Prime] (K : FinExt v) {Ω : Type} [Fi
       obtain ⟨a, ha, h⟩ := hT hy
       exact h ▸ ha
     | algebraMap y => rw [eq_ratCast, map_ratCast]; exact SubfieldClass.ratCast_mem _ _
-    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | inv a _ ha => rw [map_inv₀]; exact inv_mem ha
     | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
 

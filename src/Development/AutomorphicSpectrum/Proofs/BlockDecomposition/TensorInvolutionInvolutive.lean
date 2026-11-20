@@ -16,6 +16,6 @@ theorem sigR_sigR_eq : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Num
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sigR, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 end GlobalTheory.CompanionTheory.SaGen

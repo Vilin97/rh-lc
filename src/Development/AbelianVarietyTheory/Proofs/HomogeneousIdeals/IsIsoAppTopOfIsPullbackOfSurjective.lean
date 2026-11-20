@@ -27,7 +27,7 @@ theorem mem_map_of_tmul_eq_zero {R A M : Type*} [CommRing R] [CommRing A] [Algeb
       simp only [LinearMap.lTensor_tmul, Submodule.subtype_apply, TensorProduct.rid_tmul,
         Algebra.smul_def]
       exact Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ (hJ _ (LinearMap.mem_ker.mp r.2)))
-    | add a b ha hb => simpa only [map_add] using Ideal.add_mem _ ha hb
+    | add a b ha hb => simpa only [map_add (f := _)] using Ideal.add_mem _ ha hb
   simpa [hy] using key y
 
 theorem mem_map_of_mul_mem_map {R A : Type*} [CommRing R] [CommRing A] (φ : R →+* A)

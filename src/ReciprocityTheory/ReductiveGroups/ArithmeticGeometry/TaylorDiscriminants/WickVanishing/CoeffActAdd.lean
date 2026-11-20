@@ -31,7 +31,7 @@ theorem coeff_act_add (B : FB R d O) (a b : O) (i j : Fin d) :
   have hab : CZ (![B.A.act a, B.A.act b] : Fin 2 → Pt R 1 d) := CZ.cons (B.A.const a) (CZ.cons (B.A.const b) CZ.nil)
   rw [← cc_pderiv', ← cc_pderiv' (B.A.act a i), ← cc_pderiv' (B.A.act b i), d2 hab]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, map_mul, cc_ev' hab, cc_pderiv', coeff_single_zero_F_eq_ite, coeff_F_y, ite_mul, one_mul, zero_mul,
+    simp only [map_add (f := _), map_sum, map_mul, cc_ev' hab, cc_pderiv', coeff_single_zero_F_eq_ite, coeff_F_y, ite_mul, one_mul, zero_mul,
     Finset.sum_ite_eq, Finset.mem_univ, if_true]
 
 variable {k : Type} [CommRing k] [Algebra ℚ k] [Algebra R k]
@@ -39,7 +39,7 @@ variable {k : Type} [CommRing k] [Algebra ℚ k] [Algebra R k]
 theorem dAct_sum (B : FB R d O) (w0 : O) (hw : w0 + star w0 = 1) (i j : Fin d) :
     dAct k B w0 i j + dAct k B (star w0) i j = if i = j then 1 else 0 := by
   simp only [dAct, FB.actK, MvPowerSeries.coeff_map]
-  rw [← map_add, ← coeff_act_add, hw, B.A.one_act]
+  rw [← map_add (f := _), ← coeff_act_add, hw, B.A.one_act]
   simp only [pt, MvPowerSeries.coeff_X]
   by_cases h : i = j
   · subst h

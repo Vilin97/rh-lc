@@ -261,7 +261,7 @@ theorem tvecOver_comp (hx : IsUnivChart G n x) (f : G ⟶ G) [IsMonHom f] (c : F
   refine family_ext (F := fun c => tvecOver x c ≫ f) (F' := fun c => tvecOver x (extendLin S (tmap hx f) c))
     (fun c c' => ?_) (fun c c' => ?_) (fun r c => ?_) (fun r c => ?_) (fun c => ?_) c
   · rw [tvecOver_add hx, Hom.mul_def, Hom.mul_def, Category.assoc, IsMonHom.mul_hom, ← Category.assoc, lift_map]
-  · rw [map_add, tvecOver_add hx]
+  · rw [map_add (f := _), tvecOver_add hx]
   · rw [tvecOver_smul, Category.assoc]
   · rw [map_smul, tvecOver_smul]
   · rw [extendLin_comp, ← dualAlg_tvec, ← dualAlg_tvec, tvec_tmap, Category.assoc]

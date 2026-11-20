@@ -113,7 +113,7 @@ theorem UpperTheory.Reformulated.B.DYhd6.main :
     let e : V →ₗ[B] V :=
       { toFun := fun x => a • x - d x
         map_add' := fun x y => by
-          rw [smul_add, d.map_add]
+          rw [smul_add, d.map_add (f := _)]
           abel
         map_smul' := fun b x => by
           simp only [RingHom.id_apply]

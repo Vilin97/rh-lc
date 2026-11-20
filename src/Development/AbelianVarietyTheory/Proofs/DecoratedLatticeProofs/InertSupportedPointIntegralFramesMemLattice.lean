@@ -58,7 +58,7 @@ theorem secW_rank_one_mem (hw : IsInertAt D.host.F D.host.E v w) (h : w.under (�
     simp
   · convert add_mem h1 h2 using 1
     ext i j
-    simp only [Matrix.of_apply, Matrix.add_apply, map_add, add_mul]
+    simp only [Matrix.of_apply, Matrix.add_apply, map_add (f := _), add_mul]
   · convert neg_mem h1 using 1
     ext i j
     simp only [Matrix.of_apply, Matrix.neg_apply, map_neg, neg_mul]
@@ -92,7 +92,7 @@ theorem secW_span_mem (hw : IsInertAt D.host.F D.host.E v w) (h : w.under (𝓞 
       intro z hz
       convert add_mem (h1 z hz) (h2 z hz) using 1
       ext i j
-      simp only [Matrix.of_apply, Matrix.add_apply, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib, mul_add]
+      simp only [Matrix.of_apply, Matrix.add_apply, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib, mul_add]
     | smul o y _ h1 =>
       intro z hz
       convert h1 (z * c o) (mul_mem hz (GlobalTheory.LFun.InertChart.conj_mem hw hc o.2)) using 1
@@ -112,7 +112,7 @@ theorem secW_span_mem (hw : IsInertAt D.host.F D.host.E v w) (h : w.under (𝓞 
     intro z hz
     convert add_mem (h1 z hz) (h2 z hz) using 1
     ext i j
-    simp only [Matrix.of_apply, Matrix.add_apply, Pi.add_apply, map_add, add_mul, mul_add]
+    simp only [Matrix.of_apply, Matrix.add_apply, Pi.add_apply, map_add (f := _), add_mul, mul_add]
   | smul o p _ h1 =>
     intro z hz
     convert h1 (z * o) (mul_mem hz o.2) using 1

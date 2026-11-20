@@ -118,7 +118,7 @@ lemma ana_rdAdd (hH : HInvol H) {f : Matrix (Fin n) (Fin n) ℂ → E} {A B g : 
     (hf : SmoothOnH H f) (hA : inLH H A) (hB : inLH H B) (hg : inUH H g) :
     RdV (A + B) f g = RdV A f g + RdV B f g := by
   obtain ⟨U, F, hU, hgU, hF, hfF⟩ := hf g hg
-  rw [rd_extension_h n H E f F U g (A + B) hH hU hgU hg hF hfF (ana_add hA hB), rd_extension_h n H E f F U g (A) hH hU hgU hg hF hfF (hA), rd_extension_h n H E f F U g (B) hH hU hgU hg hF hfF (hB), Matrix.mul_add, map_add]
+  rw [rd_extension_h n H E f F U g (A + B) hH hU hgU hg hF hfF (ana_add hA hB), rd_extension_h n H E f F U g (A) hH hU hgU hg hF hfF (hA), rd_extension_h n H E f F U g (B) hH hU hgU hg hF hfF (hB), Matrix.mul_add, map_add (f := _)]
 
 lemma ana_rdSub (hH : HInvol H) {f : Matrix (Fin n) (Fin n) ℂ → E} {A B g : Matrix (Fin n) (Fin n) ℂ}
     (hf : SmoothOnH H f) (hA : inLH H A) (hB : inLH H B) (hg : inUH H g) :

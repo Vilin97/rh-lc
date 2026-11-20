@@ -69,7 +69,7 @@ theorem seqHyp_of_mod (R : Subalgebra o Ω) {r s n : ℕ}
     obtain ⟨y, hy, e⟩ := h4 a ha
     refine mem_mulLat.2 ⟨u • y + q x, om.add_mem (hos u hu _ hy) (h2 x hx), ?_⟩
     have e1 : b = i a + w • x := by rw [hxe]; abel
-    rw [e1, map_add, map_smul, e, hP, smul_add, smul_smul]
+    rw [e1, map_add (f := _), map_smul, e, hP, smul_add, smul_smul]
   · intro z hz
     obtain ⟨b, hb, y, hy, e⟩ := h6 z hz
     refine ⟨b, hb, mem_mulLat.2 ⟨u • y, hos u hu _ hy, ?_⟩⟩
@@ -231,7 +231,7 @@ theorem exists_form [IsNoetherianRing R] [IsFractionRing R Ω] [CharZero Ω] [Fa
       map_add' := fun g g' => by
         apply Subtype.ext
         have : ev (g + g') = ev g + ev g' := huniq _ _ (hev _) (V'.add_mem (hev g) (hev g')) (fun y => by
-          rw [map_add, hevg, hevg, hevg, LinearMap.add_apply, map_add])
+          rw [map_add (f := _), hevg, hevg, hevg, LinearMap.add_apply, map_add (f := _)])
         simp [this]
       map_smul' := fun a g => by
         apply Subtype.ext
@@ -386,7 +386,7 @@ theorem seqHyp_chart : ∀ (o Ω Li : Type) [CommRing o] [Field Ω] [CharZero Ω
     obtain ⟨a', ha'⟩ := hSv _ ((hLat _).1 he').1
     refine ⟨a', (hWl a').2 (by rw [ha']; exact he'), hIv _ _ ?_⟩
     have e1 : Lv (Rt ((J ∘ₗ Lv) a)) = Lv (a + (p : Ω) ^ m • a') := by
-      rw [hRtL, LinearMap.comp_apply, hLv a, h, map_add, map_smul, hLv, hLv, ha']
+      rw [hRtL, LinearMap.comp_apply, hLv a, h, map_add (f := _), map_smul, hLv, hLv, ha']
     rwa [hLv, hLv] at e1
   have h4 : ∀ a ∈ W, ∃ y ∈ dotDual R W', q ((J ∘ₗ Lv) a) = (p : Ω) ^ m • y := by
     intro a ha
@@ -447,7 +447,7 @@ theorem seqHyp_chart : ∀ (o Ω Li : Type) [CommRing o] [Field Ω] [CharZero Ω
     rw [hf1 y]
     exact hEσ _ (hVv a) _
   simp only [LinearMap.comp_apply, hf2]
-  rw [hz, map_add, e1, map_mul, map_pow, map_natCast]
+  rw [hz, map_add (f := _), e1, map_mul, map_pow, map_natCast]
   rfl
 
 end GlobalTheory.CompanionTheory.Ar.Num.FamEx.SeqPure

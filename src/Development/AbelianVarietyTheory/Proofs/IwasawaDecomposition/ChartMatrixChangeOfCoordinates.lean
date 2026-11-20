@@ -91,12 +91,12 @@ theorem matIn_trans (k : Type) [CommRing k] (Y : Scheme.{0}) (p : Y ⟶ Sp k) (�
       ((J (WithLp.toLp 2 x)).ofLp ᵥ* polMat (a c' (c.e.symm v))) ⬝ᵥ star (J (WithLp.toLp 2 z)).ofLp
   have h := eq_zero_of_diag f
     (fun x y z => by
-      simp only [f, WithLp.toLp_add, map_add, WithLp.ofLp_add, add_vecMul, add_dotProduct]; ring)
+      simp only [f, WithLp.toLp_add, map_add (f := _), WithLp.ofLp_add, add_vecMul, add_dotProduct]; ring)
     (fun c x z => by
       simp only [f, WithLp.toLp_smul, map_smul, WithLp.ofLp_smul, smul_vecMul, smul_dotProduct,
         smul_eq_mul]; ring)
     (fun x y z => by
-      simp only [f, WithLp.toLp_add, map_add, WithLp.ofLp_add, star_add, dotProduct_add]; ring)
+      simp only [f, WithLp.toLp_add, map_add (f := _), WithLp.ofLp_add, star_add, dotProduct_add]; ring)
     (fun c x z => by
       simp only [f, WithLp.toLp_smul, map_smul, WithLp.ofLp_smul, star_smul, dotProduct_smul, smul_eq_mul,
         Complex.star_def]; ring)

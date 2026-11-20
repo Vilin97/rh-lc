@@ -100,7 +100,7 @@ theorem val_ratioPoly {w : (Σ k, J k) → ℂ} {c : (k : K) → J k} (hz : genP
       (MvPolynomial.aeval (ratioAt c w) P) := by
   induction P using MvPolynomial.induction_on with
   | C n => simpa using val_intCast hz n
-  | add p q hp hq => simpa only [map_add] using val_add hp hq
+  | add p q hp hq => simpa only [map_add (f := _)] using val_add hp hq
   | mul_X p i hp =>
     simpa only [map_mul, MvPolynomial.aeval_X] using val_mul hp (val_ratio hz hw hc i)
 
@@ -115,7 +115,7 @@ theorem continuousAt_ratioPoly {w₀ : (Σ k, J k) → ℂ} {c : (k : K) → J k
   induction P using MvPolynomial.induction_on with
   | C n => simpa using continuousAt_const
   | add p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   | mul_X p i hp =>
     simp only [map_mul, MvPolynomial.aeval_X]

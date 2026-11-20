@@ -91,7 +91,7 @@ theorem real_partR {u : epsR R ⟶ G} (hu : IsTangent u) (O : G.left.Opens) (f a
   have hjO : O ≤ (fib G).left ⁻¹ᵁ ((snd (epsR R) G).left ⁻¹ᵁ O) := by
     rw [← Scheme.Hom.comp_preimage, fib_snd, Scheme.Hom.id_preimage]
   have k := congrArg ((fib G).left.appLE _ _ hjO).hom h
-  simp only [map_add, map_mul, Scheme.Hom.app_eq_appLE, appLE_appLE, appLE_constFn] at k
+  simp only [map_add (f := _), map_mul, Scheme.Hom.app_eq_appLE, appLE_appLE, appLE_constFn] at k
   rw [appLE_eq_of_eq (fib_transl hu) O O _ le_rfl, appLE_eq_of_eq fib_snd O O _ le_rfl, fib_fst] at k
   have h0 : (TrivSqZeroExt.fstHom R R R).toRingHom DualNumber.eps = 0 := by simp
   rw [constFn_spMap, h0] at k
@@ -129,19 +129,19 @@ theorem exists_isInv (v : TanM (𝟙 (Sp R)) G) : ∃ dd : Fld G.left, IsInv G v
   refine ⟨fun O f => (ab O f).2, ⟨?_, ?_, ?_⟩, ?_⟩
   · intro W _ f f'
     refine huniq W _ (f + f') _ ?_
-    rw [map_add, hab W f, hab W f', hre, hre]
-    simp only [map_add]
+    rw [map_add (f := _), hab W f, hab W f', hre, hre]
+    simp only [map_add (f := _)]
     ring
   · intro W _ f f'
     refine huniq W _ (f * f') _ ?_
     rw [map_mul, hab W f, hab W f', hre, hre]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     linear_combination (((snd (epsR R) G).left.app W).hom (ab W f).2 *
       ((snd (epsR R) G).left.app W).hom (ab W f').2) * hee W
   · intro W W' h _ f
     refine huniq W' _ (resG _ h f) _ ?_
     have h' : (snd (epsR R) G).left ⁻¹ᵁ W' ≤ (snd (epsR R) G).left ⁻¹ᵁ W := (snd (epsR R) G).left.preimage_mono h
-    rw [appLE_res _ h h' (preimage_translR hu W).ge, hab W f, hre, map_add, map_mul, res_app _ h h',
+    rw [appLE_res _ h h' (preimage_translR hu W).ge, hab W f, hre, map_add (f := _), map_mul, res_app _ h h',
       res_app _ h h', res_constFn]
   · intro S _ φ g₀ w O f hg hgO htr
     obtain ⟨g', v', hg', hv', rfl⟩ := htr

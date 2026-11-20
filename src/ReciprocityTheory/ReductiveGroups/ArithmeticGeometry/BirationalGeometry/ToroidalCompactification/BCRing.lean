@@ -314,7 +314,7 @@ theorem gen_baseChangeR (hS : SecBaseChangeAnySt) (hT : SecTwistSt) (o : Obj D l
     exact ⟨a * ↑u⁻¹, (iff _).2 (by rwa [Units.inv_mul_cancel_right]), fun a' h =>
       (Units.eq_mul_inv_iff_mul_eq u).2 (hu _ ((iff _).1 h))⟩
   have cadd : ∀ {Z : Scheme.{0}} (q : Z ⟶ Sp K) z a c, cst q z (a + c) = cst q z a + cst q z c := fun q z a c => by
-    rw [cst, map_add, gs_eq q z ⊤ trivial, map_add, map_add, ← gs_eq q z ⊤ trivial, ← gs_eq q z ⊤ trivial]; rfl
+    rw [cst, map_add (f := _), gs_eq q z ⊤ trivial, map_add (f := _), map_add (f := _), ← gs_eq q z ⊤ trivial, ← gs_eq q z ⊤ trivial]; rfl
   let I : Ideal K :=
     { carrier := {r | ∃ a, ∀ j, ∀ y ∈ t'.PP.L.U j,
         cst t'.G.hom y r * gs (𝟙 _) y _ (s'.f j) = cst t'.G.hom y a * gs (𝟙 _) y _ (σ'.f j)}

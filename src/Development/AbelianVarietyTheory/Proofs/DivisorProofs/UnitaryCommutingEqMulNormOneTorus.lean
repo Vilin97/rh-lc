@@ -50,7 +50,7 @@ theorem torusOf_mem_of_mem_UL_commute : ∀ (E : Type) [Field E] [NumberField E]
   have conj : ∀ g : GLw n w, g * γ = γ * g → ∀ y, ψ.symm (g.val *ᵥ ψ y) = ψ.symm (g.val *ᵥ ψ 1) * y := by
     intro g hg
     apply mul_of_comm_gen B u hfit.1 (fun y => ψ.symm (g.val *ᵥ ψ y))
-    · intro y z; simp [map_add, Matrix.mulVec_add]
+    · intro y z; simp [map_add (f := _), Matrix.mulVec_add]
     · intro c y
       apply ψ.injective
       simp only [hsm, ψ.apply_symm_apply, Matrix.mulVec_smul]

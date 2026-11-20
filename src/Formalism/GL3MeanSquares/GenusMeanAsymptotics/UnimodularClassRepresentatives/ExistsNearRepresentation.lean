@@ -39,7 +39,7 @@ theorem exact_step {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) {b x : V}
     ring
   · have e4 : h x x - h b b = d + (h b w + h w b) := by
       rw [hx]
-      simp only [map_add, LinearMap.add_apply, ← hdd]
+      simp only [map_add (f := _), LinearMap.add_apply, ← hdd]
       ring
     rw [e4]
     have e5 : d⁻¹ * (d + (h b w + h w b)) = 1 + (h b w + h w b) * d⁻¹ := by

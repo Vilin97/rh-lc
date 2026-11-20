@@ -26,7 +26,7 @@ theorem GlobalTheory.ArcCM.cfOf_linear_and_degree : Known → ∀ (E : Type) [Fi
   have hadd : ∀ F G : sec Xo c a' n, arcNum (evR Xo c (F + G).1 d.yF) =
       arcNum (evR Xo c F.1 d.yF) + arcNum (evR Xo c G.1 d.yF) := fun F G =>
     LinOfPoly.inj _ K₁ (by
-      rw [map_add, hnum, hnum, hnum, Submodule.coe_add, LinOfPoly.evR_add])
+      rw [map_add (f := _), hnum, hnum, hnum, Submodule.coe_add, LinOfPoly.evR_add])
   have hsmul : ∀ (a : c.F) (F : sec Xo c a' n), arcNum (evR Xo c (a • F).1 d.yF) =
       algebraMap c.F (MvPolynomial (ArcLt Dw) (LaurentSeries K₁)) a *
         arcNum (evR Xo c F.1 d.yF) := fun a F =>

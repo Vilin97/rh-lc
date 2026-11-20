@@ -10,7 +10,7 @@ private def sg {E : Type} [Field E] [NumberField E] (U : Set (Plc E)) (N : ℕ) 
   carrier := {x | ∀ w ∈ U, Valued.v (pLoc E w x) ≤ Valued.v (N : w.adicCompletion E)}
   zero_mem' := fun w _ => by simp
   add_mem' := fun {a b} ha hb w hw => by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (Valuation.map_add _ _ _).trans (max_le (ha w hw) (hb w hw))
   neg_mem' := fun {a} ha w hw => by
     rw [map_neg, Valuation.map_neg]

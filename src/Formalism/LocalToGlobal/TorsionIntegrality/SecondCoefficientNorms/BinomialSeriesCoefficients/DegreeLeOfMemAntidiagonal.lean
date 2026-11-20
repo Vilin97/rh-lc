@@ -37,7 +37,7 @@ theorem pderiv_subst_coe (p : Polynomial A) {a : MvPowerSeries σ A}
 theorem degree_le_of_mem_antidiagonal [DecidableEq σ] {d : σ →₀ ℕ} {x : (σ →₀ ℕ) × (σ →₀ ℕ)}
     (hx : x ∈ Finset.HasAntidiagonal.antidiagonal d) : x.1.degree ≤ d.degree := by
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hx
-  rw [← hx, map_add]
+  rw [← hx, map_add (f := _)]
   omega
 
 theorem pderiv_subst (g : PowerSeries A) {a : MvPowerSeries σ A}
@@ -47,7 +47,7 @@ theorem pderiv_subst (g : PowerSeries A) {a : MvPowerSeries σ A}
   classical
   ext d
   have hdeg : (d + Finsupp.single i 1).degree = d.degree + 1 := by
-    rw [map_add, Finsupp.degree_single]
+    rw [map_add (f := _), Finsupp.degree_single]
   have h1 : MvPowerSeries.coeff (d + Finsupp.single i 1) (g.subst a) =
       MvPowerSeries.coeff (d + Finsupp.single i 1)
         (((trunc (d.degree + 2) g : Polynomial A) : PowerSeries A).subst a) := by
@@ -67,14 +67,14 @@ theorem degree_snd_lt [DecidableEq σ] {d : σ →₀ ℕ} {x : (σ →₀ ℕ) 
     (hx : x ∈ Finset.HasAntidiagonal.antidiagonal d) (h1 : x.1 ≠ 0) : x.2.degree < d.degree := by
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hx
   have : x.1.degree ≠ 0 := fun h => h1 ((Finsupp.degree_eq_zero_iff _).mp h)
-  rw [← hx, map_add]
+  rw [← hx, map_add (f := _)]
   omega
 
 theorem degree_fst_lt [DecidableEq σ] {d : σ →₀ ℕ} {x : (σ →₀ ℕ) × (σ →₀ ℕ)}
     (hx : x ∈ Finset.HasAntidiagonal.antidiagonal d) (h2 : x.2 ≠ 0) : x.1.degree < d.degree := by
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hx
   have : x.2.degree ≠ 0 := fun h => h2 ((Finsupp.degree_eq_zero_iff _).mp h)
-  rw [← hx, map_add]
+  rw [← hx, map_add (f := _)]
   omega
 
 end Chain
@@ -159,7 +159,7 @@ theorem intMv_of_sq {g : MvPowerSeries σ K} (h2 : (2 : K)⁻¹ ∈ R) (h20 : (2
       - MvPowerSeries.coeff n ((g - 1) * (g - 1))) := by
     intro n
     have : g * g - 1 - (g - 1) * (g - 1) = (g - 1) + (g - 1) := by ring
-    rw [← map_sub, ← map_sub, this, map_add]
+    rw [← map_sub, ← map_sub, this, map_add (f := _)]
     field_simp
     ring
   have key : ∀ (m : ℕ) (n : σ →₀ ℕ), n.degree = m → MvPowerSeries.coeff n (g - 1) ∈ R := by
@@ -178,7 +178,7 @@ theorem intMv_of_sq {g : MvPowerSeries σ K} (h2 : (2 : K)⁻¹ ∈ R) (h20 : (2
         (ih _ (hn ▸ degree_snd_lt hp h1) _ rfl)
   intro n
   have : g = (g - 1) + 1 := by ring
-  rw [this, map_add]
+  rw [this, map_add (f := _)]
   exact R.add_mem (key _ n rfl) (intMv_one n)
 
 end Integral
@@ -225,7 +225,7 @@ theorem lGSubgroup_of (hE : MvExpLaws) : LGSubgroup := by
   refine ⟨⟨map_zero _, ?_⟩, ?_, ?_⟩
   · rw [h0]; exact intMv_one
   · intro f g hf hg
-    refine ⟨by rw [map_add, hf.1, hg.1, add_zero], ?_⟩
+    refine ⟨by rw [map_add (f := _), hf.1, hg.1, add_zero], ?_⟩
     rw [hadd f g hf.1 hg.1]
     exact intMv_mul hf.2 hg.2
   · intro f hf
@@ -238,7 +238,7 @@ theorem lGHalf_of (hE : MvExpLaws) : LGHalf := by
   obtain ⟨-, -, hadd, -⟩ := hE K σ
   have hf0 : MvPowerSeries.constantCoeff f = 0 := by
     have h := hf.1
-    rw [map_add, ← two_mul] at h
+    rw [map_add (f := _), ← two_mul] at h
     exact (mul_eq_zero.mp h).resolve_left two_ne_zero
   refine ⟨hf0, intMv_of_sq h2 two_ne_zero (constantCoeff_mvExp hf0) ?_⟩
   rw [← hadd f f hf0 hf0]

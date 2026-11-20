@@ -117,7 +117,7 @@ theorem howe_nonsplit_ker : GlobalTheory.Published.HoweDualityFinite → ∀ (F 
     have hn₁N : n₁ ∈ N := hN.2.2 h hh n hn n₁ hn₁ hactn
     have hk₁K : k₁ ∈ K := hK.2.2 h hh (ψ - n) hk k₁ hk₁ hactk
     have hpk : Rf.p v k₁ = 0 := LinearMap.mem_ker.1 (Submodule.mem_inf.1 hk₁K).1
-    rw [he, map_add, hpk, add_zero]
+    rw [he, map_add (f := _), hpk, add_zero]
     exact Submodule.mem_map_of_mem hn₁N) with h0 | htop
   · have hmem : Rf.p v φ ∈ N.map (Rf.p v) := Submodule.mem_map_of_mem hφ
     rw [h0] at hmem

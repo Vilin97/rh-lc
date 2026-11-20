@@ -37,7 +37,7 @@ theorem lin_of_summable {ι : Type} (M : Model σ X W) (ψ : AddChar (AF F) ℂ)
   refine ⟨fun Ψ hΨ Ψ' hΨ' => ?_, fun c Ψ => ?_⟩
   · have h : ∀ ξ, thetaSum F (e₀ (M.co.rho ψ (u ξ) (Ψ + Ψ'))) =
         thetaSum F (e₀ (M.co.rho ψ (u ξ) Ψ)) + thetaSum F (e₀ (M.co.rho ψ (u ξ) Ψ')) := fun ξ => by
-      rw [rho_add, map_add]
+      rw [rho_add, map_add (f := _)]
       exact GlobalTheory.WeilM.thetaSum_add F (he _ (GlobalTheory.HeisSchA.rho_mem_schA M ψ hψ _ Ψ hΨ))
         (he _ (GlobalTheory.HeisSchA.rho_mem_schA M ψ hψ _ Ψ' hΨ'))
     rw [tsum_congr h]

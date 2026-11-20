@@ -26,11 +26,11 @@ private theorem apolar_symm (P Q : MvPolynomial V ℝ) : apolar P Q = apolar Q P
       · subst h; simp; ring
       · simp [h, Ne.symm h]
     | add p q hp hq =>
-      rw [map_add, ← hp, ← hq, apolar_monomial, apolar_monomial, apolar_monomial, MvPolynomial.coeff_add]; ring
+      rw [map_add (f := _), ← hp, ← hq, apolar_monomial, apolar_monomial, apolar_monomial, MvPolynomial.coeff_add]; ring
   | add p q hp hq =>
     have h := apolar_sum_left (Finset.univ : Finset Bool) (fun _ => 1) (fun t => if t then p else q) P
     simp at h
-    rw [map_add, hp, hq, h]
+    rw [map_add (f := _), hp, hq, h]
 
 private theorem apolar_rename (f : V → V) (hf : Function.Involutive f) (P Q : MvPolynomial V ℝ) :
     apolar (rename f P) (rename f Q) = apolar P Q := by
@@ -41,7 +41,7 @@ private theorem apolar_rename (f : V → V) (hf : Function.Involutive f) (P Q : 
     rw [← Equiv.prod_comp hf.toPerm]
     refine Finset.prod_congr rfl fun x _ => ?_
     rw [Function.Involutive.coe_toPerm, Finsupp.mapDomain_apply hf.injective]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 private theorem apolar_rename' (f : V → V) (hf : Function.Involutive f) (P Q : MvPolynomial V ℝ) :
     apolar P (rename f Q) = apolar (rename f P) Q := by
@@ -53,7 +53,7 @@ private theorem pderiv_mid {x y : V} (hxy : x ≠ y) (M : MvPolynomial V ℝ) :
     pderiv y (mid x y M) = pderiv x (mid x y M) := by
   induction M using MvPolynomial.induction_on with
   | C a => simp [mid]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p z hp =>
     have : pderiv y (mid x y (X z)) = pderiv x (mid x y (X z)) := by
       by_cases hx : z = x
@@ -75,7 +75,7 @@ private theorem eq_zero_of_mid (x y : V) (L : MvPolynomial V ℝ →ₗ[ℝ] ℝ
   | C a =>
     intro j M
     rw [mul_comm _ (C a), C_mul', map_smul, hL, smul_zero]
-  | add p q hp hq => intro j M; rw [mul_add, map_add, hp, hq, add_zero]
+  | add p q hp hq => intro j M; rw [mul_add, map_add (f := _), hp, hq, add_zero]
   | mul_X p z hp =>
     intro j M
     by_cases hx : z = x
@@ -91,7 +91,7 @@ private theorem eq_zero_of_mid (x y : V) (L : MvPolynomial V ℝ →ₗ[ℝ] ℝ
           + C (1 / 2) * ((X z - X x) ^ (j + 1) * mid x z M * p) := by
         rw [map_mul, mid_X_right]
         linear_combination (-((X z - X x) ^ j * mid x z M * p * X z)) * h2
-      rw [this, map_add, C_mul', map_smul, hp, hp]; simp
+      rw [this, map_add (f := _), C_mul', map_smul, hp, hp]; simp
     · have : (X y - X x) ^ j * mid x y M * (p * X z) = (X y - X x) ^ j * mid x y (M * X z) * p := by
         rw [map_mul, mid_X_of_ne hx hy]; ring
       rw [this, hp]
@@ -251,7 +251,7 @@ private theorem rename_mid (σ : ι) (a b : Fin N) (M : Pol ι N) :
     rename (swapAt σ a b) (mid (σ, a) (σ, b) M) = mid (σ, a) (σ, b) M := by
   induction M using MvPolynomial.induction_on with
   | C c => simp [mid]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p z hp =>
     rw [map_mul, map_mul, hp]
     congr 1
@@ -301,7 +301,7 @@ private theorem bc_sum (τ σ : ι) {a b : Fin N} (hab : (b : ℕ) = a + 1) (Q :
       exact (Finset.mul_prod_erase _ _
         (Finset.mem_erase.2 ⟨(Finset.ne_of_mem_erase he).symm, mem_pairs σ hab⟩)).symm
     · simp
-  rw [bc_eq, bc_eq, ← apolar_rename' _ (swapAt_swapAt σ a b), ← add_div, ← map_add, hB, map_add (rename _), map_mul,
+  rw [bc_eq, bc_eq, ← apolar_rename' _ (swapAt_swapAt σ a b), ← add_div, ← map_add (f := _), hB, map_add (rename _), map_mul,
     rename_sum τ hab, rename_u, apolar_symm (∏ e ∈ (pairs ι N).erase (σ, a, b), rt e) Q]
   congr 1
   rw [← smul_eq_mul (4 * _ : ℝ), ← map_smul]
@@ -361,7 +361,7 @@ private theorem main (hh : Pol ι N →ₗ[ℝ] ℝ) (τ σ : ι) {a b : Fin N} 
         linear_combination (-((X (σ, b) - X (σ, a)) ^ (2 * k + 1) * mid (σ, a) (σ, b) M)) * hp
       rw [h4, deg_eq, deg_eq, map_sub, apolar_pSum, C_mul', map_smul, smul_eq_mul]
       ring
-    rw [hs, h1, map_add, C_mul', map_smul, H, H, h3, show 2 * (k + 1) - 1 = 2 * k + 1 by omega, h2, oddHarm_succ,
+    rw [hs, h1, map_add (f := _), C_mul', map_smul, H, H, h3, show 2 * (k + 1) - 1 = 2 * k + 1 by omega, h2, oddHarm_succ,
       smul_eq_mul]
     have : (2 * (k : ℝ) + 1) ≠ 0 := by positivity
     field_simp

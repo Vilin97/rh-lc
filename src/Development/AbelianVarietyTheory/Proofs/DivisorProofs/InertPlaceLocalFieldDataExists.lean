@@ -62,7 +62,7 @@ theorem evT_liftT (v : Pl F) (y : Fv F v ⊗[F] E) : evT E v (liftT E v y) = y :
     rw [liftT_tmul]
     change evFin F v (GlobalTheory.LatVac.liftV v a) ⊗ₜ[F] e = a ⊗ₜ[F] e
     rw [GlobalTheory.LatVac.evFin_liftV]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem liftT_injective (v : Pl F) : Function.Injective (liftT E v) :=
   Function.LeftInverse.injective (evT_liftT (E := E) v)
@@ -73,7 +73,7 @@ theorem liftV_one_smul (v : Pl F) (z : AE F E) : GlobalTheory.LatVac.liftV v 1 �
   | tmul a e =>
     rw [TensorProduct.smul_tmul', smul_eq_mul, liftV_one_mul]
     rfl
-  | add x y hx hy => rw [smul_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem at_liftT (v : Pl F) (y : Fv F v ⊗[F] E) : At (evFin F v) (liftT E v y) := by
   intro u hu
@@ -82,7 +82,7 @@ theorem at_liftT (v : Pl F) (y : Fv F v ⊗[F] E) : At (evFin F v) (liftT E v y)
   | tmul a e =>
     rw [liftT_tmul, TensorProduct.smul_tmul', smul_eq_mul, eq_liftV_of_at v (GlobalTheory.LatVac.at_liftV v a),
       ← liftV_one_mul, ← mul_assoc, mul_comm u, liftV_one_mul, hu, map_zero, zero_mul, TensorProduct.zero_tmul]
-  | add x y hx hy => rw [map_add, smul_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), smul_add, hx, hy, add_zero]
 
 theorem at_iff (v : Pl F) (z : AE F E) : At (evFin F v) z ↔ ∃ y, liftT E v y = z := by
   refine ⟨fun hz => ⟨evT E v z, ?_⟩, fun ⟨y, hy⟩ => hy ▸ at_liftT v y⟩
@@ -93,11 +93,11 @@ theorem at_iff (v : Pl F) (z : AE F E) : At (evFin F v) z ↔ ∃ y, liftT E v y
 theorem liftT_mul (v : Pl F) (y y' : Fv F v ⊗[F] E) : liftT E v (y * y') = liftT E v y * liftT E v y' := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x z hx hz => rw [add_mul, map_add, hx, hz, map_add, add_mul]
+  | add x z hx hz => rw [add_mul, map_add (f := _), hx, hz, map_add (f := _), add_mul]
   | tmul a e =>
     induction y' using TensorProduct.induction_on with
     | zero => simp
-    | add x z hx hz => rw [mul_add, map_add, hx, hz, map_add, mul_add]
+    | add x z hx hz => rw [mul_add, map_add (f := _), hx, hz, map_add (f := _), mul_add]
     | tmul b f =>
       rw [Algebra.TensorProduct.tmul_mul_tmul, liftT_tmul, liftT_tmul, liftT_tmul, liftV_mul,
         Algebra.TensorProduct.tmul_mul_tmul]
@@ -107,7 +107,7 @@ theorem liftT_sigR (σ : E →ₐ[F] E) (v : Pl F) (y : Fv F v ⊗[F] E) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 end GlobalTheory.InertLocField
 
@@ -133,7 +133,7 @@ theorem trace_liftT (v : Pl F) (y : Fv F v ⊗[F] E) :
   | zero => simp
   | tmul a e =>
     rw [liftT_tmul, trace_tmul_base, trace_tmul_base, liftV_mul_algebraMap, mul_comm]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem trace_mem_of_mem_intLoc (v : Pl F) {y : Fv F v ⊗[F] E} (hy : y ∈ intLoc F E v) :
     Algebra.trace (Fv F v) (Fv F v ⊗[F] E) y ∈ v.adicCompletionIntegers F :=
@@ -143,7 +143,7 @@ theorem trace_mem_of_mem_intLoc (v : Pl F) {y : Fv F v ⊗[F] E} (hy : y ∈ int
       refine mul_mem ha ?_
       have hi : IsIntegral ℤ (Algebra.trace F E (o : E)) := Algebra.isIntegral_trace o.2
       exact GlobalTheory.AdeleBaseChange.algebraMap_int_mem (⟨_, hi⟩ : 𝓞 F) v)
-    (by rw [map_zero]; exact zero_mem _) (fun _ _ h h' => by rw [map_add]; exact add_mem h h')
+    (by rw [map_zero]; exact zero_mem _) (fun _ _ h h' => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h')
     (fun _ h => by rw [map_neg]; exact neg_mem h) hy
 
 theorem odd_absNorm_of_two_notMem (P : HeightOneSpectrum (𝓞 F)) (h : (2 : 𝓞 F) ∉ P.asIdeal) :
@@ -313,12 +313,12 @@ theorem field_data : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
       | tmul a b =>
         change a ⊗ₜ[F] σ (σ b) = a ⊗ₜ[F] b
         rw [conj_conj hσ]
-      | add y z hy hz => rw [map_add, map_add, hy, hz]
+      | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
     let cE : AE F E ≃ₐ[AF F] AE F E := AlgEquiv.ofAlgHom (cA σ) (cA σ) (AlgHom.ext hcc) (AlgHom.ext hcc)
     have htr : Algebra.trace (AF F) (AE F E) (ι (c x)) = Algebra.trace (AF F) (AE F E) (ι x) := by
       rw [hι, hconj, liftT_sigR, ← hι]
       exact Algebra.trace_eq_of_algEquiv cE (ι x)
-    rw [hψL, map_add, map_add, htr]
+    rw [hψL, map_add (f := _), map_add (f := _), htr]
     congr 1
     rw [← two_mul, mul_comm (2 : AF F), mul_assoc, ← map_ofNat (algebraMap F (AF F)) 2, ← map_mul,
       mul_inv_cancel₀ two_ne_zero, map_one, mul_one]

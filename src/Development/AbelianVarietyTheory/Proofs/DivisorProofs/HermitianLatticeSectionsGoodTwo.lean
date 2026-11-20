@@ -233,7 +233,7 @@ private theorem valAt_add' (hf : RegAt (below x) f) (hg : RegAt (below x) g) :
     TrueGeo.valAt x (f + g) = TrueGeo.valAt x f + TrueGeo.valAt x g := by
   obtain ⟨a, rfl⟩ := hf
   obtain ⟨b, rfl⟩ := hg
-  rw [← map_add, valAt_algebraMap, valAt_algebraMap, valAt_algebraMap, map_add]
+  rw [← map_add (f := _), valAt_algebraMap, valAt_algebraMap, valAt_algebraMap, map_add (f := _)]
 
 private theorem valAt_one' : TrueGeo.valAt x (1 : X.functionField) = 1 := by
   rw [← map_one (algebraMap (X.presheaf.stalk (below x)) X.functionField), valAt_algebraMap, map_one]
@@ -279,7 +279,7 @@ private theorem exists_spec {F : Type} [Field F] [NumberField F] {X : Scheme.{0}
     obtain ⟨q, rfl⟩ := Ideal.Quotient.mk_surjective r
     induction q using MvPolynomial.induction_on with
     | C c => exact (hc c).1
-    | add q q' h h' => rw [map_add, map_add]; exact h.add h'
+    | add q q' h h' => rw [map_add (f := _), map_add (f := _)]; exact h.add h'
     | mul_X q i h =>
       rw [map_mul, map_mul, ← ha i]
       exact h.mul (regAt_fnOf (Set.mem_iInter.1 hO i) _ _)
@@ -288,14 +288,14 @@ private theorem exists_spec {F : Type} [Field F] [NumberField F] {X : Scheme.{0}
       map_one' := by rw [map_one, valAt_one']
       map_mul' := fun r r' => by rw [map_mul, valAt_mul (hreg r) (hreg r')]
       map_zero' := by rw [map_zero, valAt_zero']
-      map_add' := fun r r' => by rw [map_add, valAt_add' (hreg r) (hreg r')]
+      map_add' := fun r r' => by rw [map_add (f := _), valAt_add' (hreg r) (hreg r')]
       commutes' := fun c => (hc c).2 }
   let K := IntermediateField.adjoin F (Set.range fun i : Fin P.n => θ (Ideal.Quotient.mk _ (MvPolynomial.X i)))
   have hK : ∀ r, θ r ∈ K := fun r => by
     obtain ⟨q, rfl⟩ := Ideal.Quotient.mk_surjective r
     induction q using MvPolynomial.induction_on with
     | C c => exact (θ.commutes c).symm ▸ K.algebraMap_mem c
-    | add q q' h h' => rw [map_add, map_add]; exact K.add_mem h h'
+    | add q q' h h' => rw [map_add (f := _), map_add (f := _)]; exact K.add_mem h h'
     | mul_X q i h =>
       rw [map_mul, map_mul]
       exact K.mul_mem h (IntermediateField.subset_adjoin _ _ ⟨i, rfl⟩)

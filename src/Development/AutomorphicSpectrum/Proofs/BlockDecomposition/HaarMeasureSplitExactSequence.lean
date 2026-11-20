@@ -40,7 +40,7 @@ theorem periodized_invariant {π : A →+ A'} (hπ : Measurable π) {s : A' →+
   have key : ∀ x : A, ∑' γ : Γ', f (c + ((γ : A') + π x)) = ∑' γ : Γ', f ((γ : A') + π (s c + x)) := by
     intro x
     refine tsum_congr fun γ => ?_
-    rw [map_add, hs]
+    rw [map_add (f := _), hs]
     congr 1
     abel
   simp_rw [key]
@@ -54,7 +54,7 @@ theorem periodized_invariant {π : A →+ A'} (hπ : Measurable π) {s : A' →+
   show ∑' γ : Γ', f ((γ : A') + π ((g : A) + x)) = ∑' γ : Γ', f ((γ : A') + π x)
   rw [← (Equiv.addRight (⟨π g, hΓ g g.2⟩ : Γ')).tsum_eq (fun γ : Γ' => f ((γ : A') + π x))]
   refine tsum_congr fun γ => ?_
-  simp only [Equiv.coe_addRight, AddSubgroup.coe_add, map_add, add_assoc]
+  simp only [Equiv.coe_addRight, AddSubgroup.coe_add, map_add (f := _), add_assoc]
 
 instance {π : A →+ A'} {Γ' : AddSubgroup A'} [Countable Γ'] {lam : Measure A} [SFinite lam]
     {𝓖 : Set A} : SFinite (periodized π Γ' lam 𝓖) := by

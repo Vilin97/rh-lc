@@ -172,7 +172,7 @@ theorem complex_norm_eq_re_of_nonneg {z : ℂ} (hz : 0 ≤ z) : ‖z‖ = z.re :
 private lemma act_add_smul_hermitian_curvature (M : SlopeTestRemainingChoices S (Pr (RadSp P.k P.r z z' π π')))
     (x y : Ix S → RadSp P.k P.r z z' π π') (a : ℂ) : act M (x + a • y) = act M x + a • act M y := by
   funext b
-  simp only [act, Pi.add_apply, Pi.smul_apply, map_add, map_smul, Finset.sum_add_distrib, Finset.smul_sum]
+  simp only [act, Pi.add_apply, Pi.smul_apply, map_add (f := _), map_smul, Finset.sum_add_distrib, Finset.smul_sum]
 
 private lemma inK_add_smul_of_inK {Kc : Submodule ℂ (RadSp P.k P.r z z' π π')} {x y : Ix S → RadSp P.k P.r z z' π π'}
     (hx : InK Kc x) (hy : InK Kc y) (a : ℂ) : InK Kc (x + a • y) :=

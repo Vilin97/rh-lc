@@ -162,7 +162,7 @@ theorem LDiv_of (hG : GCob) : LDiv := by
     have e6 : MvPowerSeries.C a1 * MvPowerSeries.X 0 * MvPowerSeries.X 1 =
         (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) K) * (MvPowerSeries.C a1 * MvPowerSeries.X 1) := by
       ring
-    rw [e6, map_sub, map_add, a0, a1', a1', add_zero, sub_zero]
+    rw [e6, map_sub, map_add (f := _), a0, a1', a1', add_zero, sub_zero]
     exact (Formalism.G.LogP.constantCoeff_subst_of_zero (σ := Unit) (thT ep xT yT)
       (b := fun _ => (MvPowerSeries.X 0 : MvPowerSeries (Fin 2) K)) (fun _ => c0')).trans hth0
   have h2 : MvPowerSeries.coeff (Finsupp.single (1 : Fin 2) 1) (F * nu) =

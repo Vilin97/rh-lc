@@ -31,7 +31,7 @@ theorem map_mem_Z1DΔ (F : LatHom T₁.L T₂.L) (w : ↥(W.wachCocyclesDelta T�
     LinearMap.neg_apply, LinearMap.id_apply, LinearMap.prodMap_apply] at hw ⊢
   obtain ⟨h1, h2⟩ := hw
   refine ⟨?_, fun d hd => ?_⟩
-  · rw [← W.map_γ, ← W.map_φ, ← map_sub, ← map_sub, ← map_neg, ← map_add, h1, map_zero]
+  · rw [← W.map_γ, ← W.map_φ, ← map_sub, ← map_sub, ← map_neg, ← map_add (f := _), h1, map_zero]
   · have h3 := h2 d hd
     rw [← W.map_γ, ← W.map_γ]
     simp only [Prod.mk_sub_mk, Prod.mk_eq_zero, sub_eq_zero] at h3 ⊢

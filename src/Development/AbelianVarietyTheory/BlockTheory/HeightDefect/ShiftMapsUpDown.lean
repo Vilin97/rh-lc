@@ -31,8 +31,8 @@ def offS (V W : HSp D) (S : Finset (HeightOneSpectrum (𝓞 D.host.F))) : AddSub
   add_mem' := by
     rintro x y ⟨hx, hx'⟩ ⟨hy, hy'⟩
     refine ⟨fun i j => ?_, fun v hv i j => ?_⟩
-    · rw [Matrix.add_apply, RingHom.map_add, hx i j, hy i j, add_zero]
-    · rw [Matrix.add_apply, RingHom.map_add, hx' v hv i j, hy' v hv i j, add_zero]
+    · rw [Matrix.add_apply, RingHom.map_add (f := _), hx i j, hy i j, add_zero]
+    · rw [Matrix.add_apply, RingHom.map_add (f := _), hx' v hv i j, hy' v hv i j, add_zero]
   neg_mem' := by
     rintro x ⟨hx, hx'⟩
     refine ⟨fun i j => ?_, fun v hv i j => ?_⟩

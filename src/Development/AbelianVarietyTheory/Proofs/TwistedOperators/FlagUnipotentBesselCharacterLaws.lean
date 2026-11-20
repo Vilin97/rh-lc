@@ -104,7 +104,7 @@ theorem simpleSum_rat (z : Fin S₀.rank → D.host.E) {γ : GA D S} (hγ : γ �
     rw [blockX, ← hM', rat_mul, rat_mul]; rfl
   have hc : coefX d z γ = ratV ((d.qX * (M * d.i₀)) *ᵥ z) := by
     rw [coefX, ← hM', ratV_mulVec, rat_mul, rat_mul]; rfl
-  rw [simpleSum, hb, hc, upSum_rat, ell_eq, ratV_dotProduct, ← map_add]
+  rw [simpleSum, hb, hc, upSum_rat, ell_eq, ratV_dotProduct, ← map_add (f := _)]
   exact ⟨_, rfl⟩
 
 theorem psiBes_rat (hψ : ∀ a : D.host.F, ψ (algebraMap D.host.F (AF D.host.F) a) = 1) (θ : D.host.E)

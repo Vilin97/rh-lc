@@ -34,7 +34,7 @@ theorem rightTr_mem (φ : G → ℂ) (h : G) {f : G → ℂ} (hf : f ∈ transla
       funext g; simp [mul_assoc]
     rw [this]; exact gen_mem φ _
   | zero => simp
-  | add f f' _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+  | add f f' _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
   | smul c f _ h1 => rw [map_smul]; exact Submodule.smul_mem _ _ h1
 
 def rightEquiv (φ : G → ℂ) (h : G) : translates φ ≃ₗ[ℂ] translates φ where

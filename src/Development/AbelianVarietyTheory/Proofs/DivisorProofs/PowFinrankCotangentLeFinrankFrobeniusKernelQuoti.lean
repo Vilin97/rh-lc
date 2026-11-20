@@ -41,7 +41,7 @@ theorem map_pow_eq (t : H ⊗[k] H) :
       (TensorProduct.lid k H (LinearMap.rTensor H (counit (R := k) (A := H)) t)) ^ p) := by
   induction t with
   | add x y hx hy =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [add_pow_of_cast_eq_zero hp.out (cast_eq_zero_of_algebra p k _),
       add_pow_of_cast_eq_zero hp.out (cast_eq_zero_of_algebra p k _), hx, hy, tmul_add]
   | tmul x y =>

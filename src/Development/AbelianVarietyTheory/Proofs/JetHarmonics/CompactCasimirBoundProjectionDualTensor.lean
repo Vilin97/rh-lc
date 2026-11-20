@@ -49,7 +49,7 @@ theorem casKLe_proj_single : ∀ (M : Type) [NormedAddCommGroup M] [InnerProduct
     simp only [LinearMap.comp_apply, LinearMap.single_apply, Matrix.of_apply]
     rw [← hT.pr_comm]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [← map_smul, ← map_sum, ← map_add]
+      simp only [← map_smul, ← map_sum, ← map_add (f := _)]
     congr 1
     funext i
     rw [Finset.sum_eq_single b]

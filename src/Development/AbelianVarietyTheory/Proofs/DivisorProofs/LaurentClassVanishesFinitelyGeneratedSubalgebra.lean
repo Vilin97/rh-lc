@@ -97,7 +97,7 @@ theorem exists_finset_adjoin_laurent_preimage (x : LaurentPolynomial S) : ∃ (t
     have h2 : (t' : Set S) ⊆ ((t ⊔ t' : Finset S) : Set S) := Finset.coe_subset.2 le_sup_right
     refine ⟨t ⊔ t', laurentMap (Subalgebra.inclusion (Algebra.adjoin_mono h1)).toRingHom y +
       laurentMap (Subalgebra.inclusion (Algebra.adjoin_mono h2)).toRingHom y', ?_⟩
-    rw [map_add, lm_val_incl A S h1, lm_val_incl A S h2]
+    rw [map_add (f := _), lm_val_incl A S h1, lm_val_incl A S h2]
   | C_mul_T n a =>
     have hmem : a ∈ Algebra.adjoin A (({a} : Finset S) : Set S) :=
       Algebra.subset_adjoin (Finset.mem_coe.2 (Finset.mem_singleton_self a))

@@ -62,7 +62,7 @@ theorem coeY_mem_Isub
   obtain ⟨A, B, hAB⟩ := cop (fun t => -χ t - cn (m + 1)) (-(χ s + 1) - cn (m + 1))
     (fun t h => hfree t (by linear_combination -h)) K k
   have e := congrArg (fun q => Polynomial.aeval (Om' X) q (coeY G)) hAB
-  simp only [map_add, map_mul, map_one, LinearMap.add_apply, Module.End.mul_apply,
+  simp only [map_add (f := _), map_mul, map_one, LinearMap.add_apply, Module.End.mul_apply,
     Module.End.one_apply] at e
   rw [← e, aeval_CH, Om'_CH K hK, LinearMap.zero_apply, map_zero, zero_add, aeval_lin]
   exact aeval_mem_Isub B hI
@@ -123,7 +123,7 @@ theorem phiB_E (hS : ScalChar X χ) (hB : BackStable) (a b : Fin (m + 1)) (v : X
   dsimp only
   by_cases h : c = b
   · subst h
-    rw [if_pos rfl, ← Pr_tensE, tensE_single, if_pos rfl, map_add, add_sub_cancel_right]
+    rw [if_pos rfl, ← Pr_tensE, tensE_single, if_pos rfl, map_add (f := _), add_sub_cancel_right]
   · rw [if_neg h, sub_zero, ← Pr_tensE, tensE_single, if_neg (Ne.symm h), add_zero]
 
 theorem unit_of_dualFacts (hDF : DualFacts) : Unit := by

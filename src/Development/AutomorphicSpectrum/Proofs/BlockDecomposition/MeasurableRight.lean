@@ -39,7 +39,7 @@ theorem rh_sum_left {A R ι : Type} [Ring A] [Ring R] (f : A →+* R) (s : Finse
   exact Finset.sum_eq_zero fun k _ => by rw [map_mul, h k, zero_mul]
 
 theorem rh_add_zero {A R : Type} [Ring A] [Ring R] (f : A →+* R) (p q : A) (h : f q = 0) : f (p + q) = f p := by
-  rw [map_add, h, add_zero]
+  rw [map_add (f := _), h, add_zero]
 
 variable {A B : Type} [MeasurableSpace A] [MeasurableSpace B]
 

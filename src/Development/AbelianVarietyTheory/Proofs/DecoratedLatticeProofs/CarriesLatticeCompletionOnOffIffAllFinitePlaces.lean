@@ -41,9 +41,9 @@ theorem idem_add_idem (P : Pl D → Prop) {a : AE D} (ha : a ∈ idAt D (fun _ =
   classical
   rw [← sub_eq_zero]
   apply eq_zero_of_comp
-  · rw [RingHom.map_sub, RingHom.map_add, RingHom.map_mul, RingHom.map_mul, infPart_of_idAt ha, mul_zero, mul_zero, add_zero, sub_zero]
+  · rw [RingHom.map_sub, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_mul, infPart_of_idAt ha, mul_zero, mul_zero, add_zero, sub_zero]
   · intro w
-    rw [RingHom.map_sub, RingHom.map_add, RingHom.map_mul, RingHom.map_mul, compAt_idem, compAt_idem]
+    rw [RingHom.map_sub, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_mul, compAt_idem, compAt_idem]
     by_cases h : P w
     · simp [h]
     · simp [h]

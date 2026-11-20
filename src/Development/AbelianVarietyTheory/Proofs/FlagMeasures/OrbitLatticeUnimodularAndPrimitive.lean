@@ -136,7 +136,7 @@ theorem lmap_isLattice (u : D.what₂.Word) (Λ : Submodule (𝓞 D.host.E) (VS 
     apply Subtype.ext
     change pr X l = (w : (VS D).V)
     have hx0 : pr X x = 0 := pr_X X ((mem_XO X u x).1 hx)
-    calc pr X l = pr X (l + x) := by rw [map_add, hx0, add_zero]
+    calc pr X l = pr X (l + x) := by rw [map_add (f := _), hx0, add_zero]
       _ = pr X w := by rw [hlx]
       _ = w := pr_Wb X w.2
   · intro s hs hli
@@ -243,7 +243,7 @@ theorem lmap_unimod (Y : Full X) (u : D.what₂.Word) (Λ : Submodule (𝓞 D.ho
       obtain ⟨y0, hy0, l, hl, rfl⟩ := Submodule.mem_sup.1 hy1
       have h0 : (VS D).hT y0 w' = 0 := hT_span_left X.eX w' hw'e (latSpan_le (Formalism.L2.SG.Saturated.aaS D) X.eX hy0)
       have h3 : (VS D).hT y3 w' = 0 := hT_span_left f w' hw'f (latSpan_le (fun a => (Formalism.L2.SG.Saturated.aaS D a)⁻¹) f hy3)
-      rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, h0, h3, zero_add, add_zero]
+      rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, h0, h3, zero_add, add_zero]
       have hle : ∀ a, (VS D).hT l (X.eX a) = 0 := by
         intro a; rw [a_herm, (hL l hl a).1, star_zero]
       have e1 : (VS D).hT l w' = (VS D).hT l w := by
@@ -295,9 +295,9 @@ theorem lmap_unimod (Y : Full X) (u : D.what₂.Word) (Λ : Submodule (𝓞 D.ho
     have ec : (VS D).hT x1 x2 = 0 :=
       hT_span_left X.eX x2 (fun a => hT_span_right X.eX (X.eX a) (fun b => X.ee a b) hx2') hx1'
     have ed : (VS D).hT l1 x2 = 0 := by
-      have := eb; rw [← h1, map_add, LinearMap.add_apply, ec, add_zero] at this; exact this
+      have := eb; rw [← h1, map_add (f := _), LinearMap.add_apply, ec, add_zero] at this; exact this
     have key : (VS D).hT (y : (VS D).V) w = (VS D).hT l1 l2 := by
-      rw [← h1, map_add, LinearMap.add_apply, ea, add_zero, ← h2, map_add, ed, add_zero]
+      rw [← h1, map_add (f := _), LinearMap.add_apply, ea, add_zero, ← h2, map_add (f := _), ed, add_zero]
     rw [key]
     exact (memΛ l2).1 hl2 l1 hl1
 

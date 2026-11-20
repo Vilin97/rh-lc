@@ -112,7 +112,7 @@ theorem colength_bound_linDat : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C
     | add x y hx hy =>
       obtain ⟨u1, h1⟩ := hx
       obtain ⟨u2, h2⟩ := hy
-      exact ⟨u1 + u2, fun j => by rw [map_add, h1, h2, map_add, add_smul]⟩
+      exact ⟨u1 + u2, fun j => by rw [map_add (f := _), h1, h2, map_add (f := _), add_smul]⟩
   let κ : (Fin d → O) →ₗ[O] (Fin w.n × Fin rp → O) :=
     LinearMap.pi fun y : Fin w.n × Fin rp => (LinearMap.proj y.2).comp (Pdiv.ChartF.res (W y.1))
   have hκa : ∀ u y, κ u y = Pdiv.ChartF.res (W y.1) u y.2 := fun u y => rfl

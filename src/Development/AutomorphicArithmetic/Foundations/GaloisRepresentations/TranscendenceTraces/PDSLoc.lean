@@ -19,7 +19,7 @@ private theorem DS_map_apply {R : Type} [CommRing R] {Z S : Scheme.{0}} (p : Z �
       simp [DirectSum.of_eq_same]
     · rw [DirectSum.of_eq_of_ne _ _ _ (Ne.symm hv), DirectSum.of_eq_of_ne _ _ _ (Ne.symm hv)]
       simp [Sec.map]
-  | add x y hx hy => simp [map_add, hx, hy, Sec.map]
+  | add x y hx hy => simp [map_add (f := _), hx, hy, Sec.map]
 
 theorem UpperTheory.Gal.TranscendenceTraces.dSLoc_of :
     DSOne → DSLoc := by

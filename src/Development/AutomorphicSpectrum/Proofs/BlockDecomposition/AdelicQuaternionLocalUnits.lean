@@ -40,7 +40,7 @@ theorem qmap_glue_mem (T : Finset (Pl F)) (y : (u : Pl F) → Q d β (Kp u)) {u 
   classical
   ext
   · change proj u (1 + ∑ t ∈ T, inc t ((y t).re - 1)) = (y u).re
-    rw [map_add, map_one, proj_sum_inc T (fun t => (y t).re - 1) u, if_pos h]
+    rw [map_add (f := _), map_one, proj_sum_inc T (fun t => (y t).re - 1) u, if_pos h]
     ring
   · change proj u (∑ t ∈ T, inc t (y t).imI) = (y u).imI
     rw [proj_sum_inc T (fun t => (y t).imI) u, if_pos h]
@@ -54,7 +54,7 @@ theorem qmap_glue_not_mem (T : Finset (Pl F)) (y : (u : Pl F) → Q d β (Kp u))
   classical
   ext
   · change proj u (1 + ∑ t ∈ T, inc t ((y t).re - 1)) = 1
-    rw [map_add, map_one, proj_sum_inc T (fun t => (y t).re - 1) u, if_neg h, add_zero]
+    rw [map_add (f := _), map_one, proj_sum_inc T (fun t => (y t).re - 1) u, if_neg h, add_zero]
   · change proj u (∑ t ∈ T, inc t (y t).imI) = 0
     rw [proj_sum_inc T (fun t => (y t).imI) u, if_neg h]
   · change proj u (∑ t ∈ T, inc t (y t).imJ) = 0

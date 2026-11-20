@@ -55,7 +55,7 @@ theorem UpperTheory.exists_injective_lattice_hom_ringOfIntegers_of_finrank_ge :
     exact this
   choose f hf using hmem
   refine ⟨AddMonoidHom.mk' f (fun a b => hinj ?_), fun a b hab => ?_, fun s x => hinj ?_⟩
-  · rw [map_add, hf, hf, hf, smul_add]
+  · rw [map_add (f := _), hf, hf, hf, smul_add]
   · have h1 : f a = f b := hab
     have h2 : d • a = d • b := by rw [← hf, ← hf, h1]
     have h3 : (d : ℂ) • (a : Fin g → ℂ) = (d : ℂ) • (b : Fin g → ℂ) := by

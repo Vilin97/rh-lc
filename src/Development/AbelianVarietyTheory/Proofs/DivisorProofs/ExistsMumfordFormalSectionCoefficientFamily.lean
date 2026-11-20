@@ -15,7 +15,7 @@ namespace GlobalTheory.MumCoef
 
 theorem shift_add' {X : Type} [AddCommGroup X] (h h' : X →+ X) (n j : ℤ) (a b : X) :
     shift h h' n j (a + b) = shift h h' n j a + shift h h' n j b := by
-  simp only [shift, map_add, smul_add]; abel
+  simp only [shift, map_add (f := _), smul_add]; abel
 
 theorem shift_zero' {X : Type} [AddCommGroup X] (h h' : X →+ X) (n j : ℤ) :
     shift h h' n j 0 = 0 := by

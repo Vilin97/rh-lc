@@ -44,7 +44,7 @@ theorem weylQ_denom {r n : ℕ} (hn : n ≤ r) (ν : Fin n → ℕ) (x : MvPolyn
     obtain ⟨N2, h2, y2, hy2, e2⟩ := ihy
     refine ⟨N1 * N2, mul_ne_zero h1 h2, N2 • y1 + N1 • y2,
       Submodule.add_mem _ (Submodule.smul_mem _ _ hy1) (Submodule.smul_mem _ _ hy2), ?_⟩
-    rw [map_add, map_smul_gen, map_smul_gen, ← e1, ← e2, smul_add, smul_smul, smul_smul, eq_intCast, eq_intCast,
+    rw [map_add (f := _), map_smul_gen, map_smul_gen, ← e1, ← e2, smul_add, smul_smul, smul_smul, eq_intCast, eq_intCast,
       Int.cast_mul, mul_comm (N2 : ℚ)]
   | smul c x _ ihx =>
     obtain ⟨N1, h1, y1, hy1, e1⟩ := ihx

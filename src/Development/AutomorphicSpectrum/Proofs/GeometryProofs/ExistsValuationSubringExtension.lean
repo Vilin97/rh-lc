@@ -93,7 +93,7 @@ theorem isLocalRing_of_maximal {G : Subring (Ω × L)} (hG : Maximal Functional 
   refine IsLocalRing.of_nonunits_add ?_
   intro a b ha hb
   rw [key] at ha hb ⊢
-  rw [map_add, ha, hb, add_zero]
+  rw [map_add (f := _), ha, hb, add_zero]
 
 theorem exists_common_root [IsAlgClosed L] {k : Type*} [Field k] (ι : k →+* L) (I : Ideal k[X])
     (hI : I ≠ ⊤) : ∃ ξ : L, ∀ p ∈ I, eval₂ ι ξ p = 0 := by

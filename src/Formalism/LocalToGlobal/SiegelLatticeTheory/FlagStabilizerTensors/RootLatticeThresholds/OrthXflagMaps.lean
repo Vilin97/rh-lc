@@ -133,8 +133,8 @@ theorem unip_fin (A : Module.End K M) {k N : ℕ} (hk : 0 < k) (h1 : A ^ k = 1) 
   obtain ⟨r0, hr0⟩ := hd2
   have hq' : q = C (k : K) + X * r0 := by rw [← hr0]; ring
   have hev : aeval B ((X + 1 : K[X]) ^ k - 1) = 0 := by
-    rw [map_sub, map_pow, map_add, aeval_X, map_one, ← hA, h1, sub_self]
-  rw [hq, hq', map_mul, map_add, map_mul, aeval_X, aeval_C] at hev
+    rw [map_sub, map_pow, map_add (f := _), aeval_X, map_one, ← hA, h1, sub_self]
+  rw [hq, hq', map_mul, map_add (f := _), map_mul, aeval_X, aeval_C] at hev
 
   have step : ∀ i, B ^ (i + 1 + 1) = 0 → B ^ (i + 1) = 0 := by
     intro i hi

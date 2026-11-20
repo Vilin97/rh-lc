@@ -90,14 +90,14 @@ theorem quadOp_X_mul {ι : Type} [DecidableEq ι] (c : ℂ) (z z' y : ι) (P : M
       rw [pderiv_mul, pderiv_X, add_comm, Pi.single_apply]
       split_ifs <;> simp
   unfold quadOp
-  rw [hd, map_add, hd, apply_ite (pderiv z), map_zero, mul_sub, mul_smul_comm, mul_smul_comm, mul_left_comm _ (X y),
+  rw [hd, map_add (f := _), hd, apply_ite (pderiv z), map_zero, mul_sub, mul_smul_comm, mul_smul_comm, mul_left_comm _ (X y),
     add_assoc, smul_add, sub_sub]
 
 theorem pderiv_quadOp_one {ι : Type} [DecidableEq ι] (c : ℂ) (z z' y : ι) :
     pderiv y (quadOp c z z' (1 : MvPolynomial ι ℂ)) =
       c • ((if y = z then X z' else 0) + (if y = z' then X z else 0)) := by
   unfold quadOp
-  simp only [pderiv_mul, pderiv_X, Pi.single_apply, map_add, mul_one, pderiv_one, map_zero, smul_zero, sub_zero, Derivation.map_smul]
+  simp only [pderiv_mul, pderiv_X, Pi.single_apply, map_add (f := _), mul_one, pderiv_one, map_zero, smul_zero, sub_zero, Derivation.map_smul]
   simp only [@eq_comm _ y, ite_mul, mul_ite, one_mul, mul_one, zero_mul, mul_zero]
 
 variable {D : D7} {m n pS pT : ℕ} {YS : Matrix (Fin n) (Fin n) ℂ} {YT : Matrix (Fin m) (Fin m) ℂ} {τ : D.what₂.Tau}
@@ -108,7 +108,7 @@ theorem fockOperator_add (P Q : MvPolynomial (FVar D m n) ℂ) :
       (if p then quadOp c z z' P else 0) + (if p then quadOp c z z' Q else 0) := fun p _ c z z' => by
     unfold quadOp
     split_ifs
-    · simp only [map_add, mul_add, smul_add]; abel
+    · simp only [map_add (f := _), mul_add, smul_add]; abel
     · simp
   simp only [fockP, e, Finset.sum_add_distrib]
   abel
@@ -151,7 +151,7 @@ theorem pderiv_fockP_one (hS : IsPMat pS YS) (hT : IsPMat pT YT) (y : FVar D m n
       ∑ i, ∑ d, lin pS pT (act YS YT (single y.2.1 y.2.2 1)) i d • X (τ, i, d) else 0 := by
   obtain ⟨ρ, i₀, c₀⟩ := y
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [fockP, map_add, map_sum, apply_ite (pderiv _), map_zero, pderiv_quadOp_one]
+    simp only [fockP, map_add (f := _), map_sum, apply_ite (pderiv _), map_zero, pderiv_quadOp_one]
   split_ifs with h
   · subst h
     have := comb (RingHom.id ℂ) hS hT (fun i d => (X (ρ, i, d) : MvPolynomial (FVar D m n) ℂ)) i₀ c₀
@@ -218,7 +218,7 @@ theorem expand {d : Matrix (Fin m) (Fin n) ℂ →+ Module.End ℂ M} (hd : ∀ 
     cre pS pT d N = ∑ i, ∑ j, lin pS pT N i j • cre pS pT d (single i j 1) ∧
     ann pS pT d N = ∑ i, ∑ j, conj (lin pS pT N i j) • ann pS pT d (single i j 1) := by
   have hs : ∀ (w : ℂ) u, d (w • u) = (w.re : ℂ) • d u + (w.im : ℂ) • d (I • u) := fun w u => by
-    rw [← hd, ← hd, ← map_add, smul_smul, ← add_smul, Complex.re_add_im]
+    rw [← hd, ← hd, ← map_add (f := _), smul_smul, ← add_smul, Complex.re_add_im]
   have e : N = ∑ i, ∑ j, single i j (N i j) := Matrix.matrix_eq_sum_single N
   have e1 : d N = ∑ i, ∑ j, d (single i j (N i j)) := by
     conv_lhs => rw [e]
@@ -258,7 +258,7 @@ theorem quad_of_comm (hS : IsPMat (pS τ) YS) (hT : IsPMat (pT τ) YT)
     module
   have ga : ∀ N g, G (ann (pS τ) (pT τ) (d τ) N g) =
       ann (pS τ) (pT τ) (d τ) N (G g) + cre (pS τ) (pT τ) (d τ) (act YS YT N) g := fun N g => by
-    simp only [cre, ann, LinearMap.sub_apply, LinearMap.add_apply, LinearMap.smul_apply, map_add, map_smul, hG,
+    simp only [cre, ann, LinearMap.sub_apply, LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_smul, hG,
       act_cplx hS hT, map_neg, LinearMap.neg_apply]
     module
   have gc' : ∀ ρ, ρ ≠ τ → ∀ N g, G (cre (pS ρ) (pT ρ) (d ρ) N g) = cre (pS ρ) (pT ρ) (d ρ) N (G g) :=
@@ -266,7 +266,7 @@ theorem quad_of_comm (hS : IsPMat (pS τ) YS) (hT : IsPMat (pT τ) YT)
       simp only [cre, LinearMap.sub_apply, LinearMap.smul_apply, map_sub, map_smul, hG' ρ h]
   have ga' : ∀ ρ, ρ ≠ τ → ∀ N g, G (ann (pS ρ) (pT ρ) (d ρ) N g) = ann (pS ρ) (pT ρ) (d ρ) N (G g) :=
     fun ρ h N g => by
-      simp only [ann, LinearMap.add_apply, LinearMap.smul_apply, map_add, map_smul, hG' ρ h]
+      simp only [ann, LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_smul, hG' ρ h]
   have hv : ∀ ρ i j, ann (pS ρ) (pT ρ) (d ρ) (single i j 1) (E 1) = 0 := fun ρ i j => by
     have := hb (ρ, i, j) 1
     rw [pderiv_one, map_zero] at this
@@ -290,7 +290,7 @@ theorem quad_of_comm (hS : IsPMat (pS τ) YS) (hT : IsPMat (pT τ) YT)
     · rw [← ga' ρ h, hv, map_zero, map_zero, smul_zero]
   · induction P using MvPolynomial.induction_on with
     | C a => rw [fockP_C, C_eq_smul_one, map_smul, map_smul, h1, map_smul]
-    | add p q hp hq => rw [fockOperator_add, map_add, map_add, map_add, hp, hq]
+    | add p q hp hq => rw [fockOperator_add, map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
     | mul_X p k hp =>
       obtain ⟨ρ, i, j⟩ := k
       rw [mul_comm, fockP_X_mul hS hT, map_sub, hX, hX, map_smul, ← hp]
@@ -491,9 +491,9 @@ theorem annih_pure {f : WO S T → ℂ} (hf : IsThetaFunO ψ S T f)
   | C a =>
     rw [C_eq_smul_one, map_smul, pure_one, annih_smul hψ hθ _ _ _ _ hf, hv, Derivation.map_smul, pderiv_one, smul_zero,
       smul_zero, map_zero, smul_zero]
-  | add p q hp hq => rw [map_add, annih_add hψ hθ _ _ _ (hm _) (hm _), hp, hq, map_add, map_add, smul_add]
+  | add p q hp hq => rw [map_add (f := _), annih_add hψ hθ _ _ _ (hm _) (hm _), hp, hq, map_add (f := _), map_add (f := _), smul_add]
   | mul_X p j hp =>
-    rw [mul_comm, hX, ccr hψ hθ hS hT bS bT _ _ (hm _), hp, pderiv_mul, map_add, hX, pderiv_X, add_comm, smul_add]
+    rw [mul_comm, hX, ccr hψ hθ hS hT bS bT _ _ (hm _), hp, pderiv_mul, map_add (f := _), hX, pderiv_X, add_comm, smul_add]
     refine congrArg₂ (· + ·) ?_ (aPlus_smul hψ hθ _ _ _ _ (hm _))
     by_cases h : k = j
     · subst h; simp

@@ -91,7 +91,7 @@ theorem inner_ι {n : ℕ} {ε : Fin n → Bool} (I : IndModule ε) (f g : I.fns
     rw [← Complex.ofReal_pow, this, ← integral_complex_ofReal]
     push_cast; rfl
   have key' : ∀ u : I.fns, (RCLike.ofReal ‖I.ι u‖ : ℂ) ^ 2 = ∫ k : KG ε, ((‖u.1 k‖ : ℂ)) ^ 2 ∂muK ε := key
-  rw [inner_eq_sum_norm_sq_div_four (𝕜 := ℂ), ← map_add, ← map_sub, ← map_smul, ← map_sub, ← map_add,
+  rw [inner_eq_sum_norm_sq_div_four (𝕜 := ℂ), ← map_add (f := _), ← map_sub, ← map_smul, ← map_sub, ← map_add (f := _),
     key', key', key', key']
   have e : (fun k : KG ε => ⟪g.1 k, f.1 k⟫_ℂ) = fun k : KG ε =>
       (((‖(g + f).1 k‖ : ℂ)) ^ 2 - ((‖(g - f).1 k‖ : ℂ)) ^ 2 +

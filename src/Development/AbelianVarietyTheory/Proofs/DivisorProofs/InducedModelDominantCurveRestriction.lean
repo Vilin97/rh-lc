@@ -55,7 +55,7 @@ theorem topSelf_of_cls_eq_add (hp : IsProjOver p) {N A B : LB X} (hN : N.IsLB) (
   rw [e2, e2, e2]
   refine interNum_one_of_cls_eq_add (hH.pull_of_isClosedImmersion i) hd (LB.isLB_pull hN i) (LB.isLB_pull hA i)
     (LB.isLB_pull hB i) ?_
-  rw [cls_pull hN, cls_pull hA, cls_pull hB, h, map_add]
+  rw [cls_pull hN, cls_pull hA, cls_pull hB, h, map_add (f := _)]
 
 theorem topSelf_pow (hp : IsProjOver p) (L : HermLB p) (m : ℕ) (Z : Scheme.{0}) (i : Z ⟶ X) [IsClosedImmersion i]
     (κ : Type) [Field κ] [Finite κ] [Algebra κ Γ(Z, ⊤)] (hd : topologicalKrullDim Z = 1) :

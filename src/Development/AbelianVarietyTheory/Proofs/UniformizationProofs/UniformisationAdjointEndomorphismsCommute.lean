@@ -148,7 +148,7 @@ theorem exists_equiv_qkExt (k : ℕ) (hk : 1 ≤ k) (p : QkPt D.toPre F' k) :
     rintro ⟨a⟩ ⟨b⟩ hab
     obtain ⟨z, hy, hg⟩ := (equiv_iff hB _ _).1 ((equiv_equivalence hB).eqvGen_iff.1 (Quot.eq.1 hab))
     refine Quot.sound ((equiv_iff hB _ _).2 ⟨z, hy, gtExt_injective σ.toRingHom (hom_comp σ) _ ?_⟩)
-    rw [map_add, gtExt_iota]
+    rw [map_add (f := _), gtExt_iota]
     exact hg
   have : Finite (Quot (QkPt.Equiv D.toPre F' (k := k))) :=
     Nat.finite_of_card_ne_zero (by rw [c']; exact pow_ne_zero _ (by omega))
@@ -178,8 +178,8 @@ theorem keepsTors_up (H₁ : KeepsIota E h F) (H : KeepsTors E h F) : KeepsTors 
   refine (hf' _ _).2 (c.trans ((he' _ _).2 ?_))
   obtain ⟨z, hz, hg⟩ := (equiv_iff hB _ _).1 hq
   refine (equiv_iff hB _ _).2 ⟨h z, ?_, ?_⟩
-  · rw [hy, hz, map_add, map_nsmul]; rfl
-  · rw [(hα' _ _).1 ha, hg, map_add, hι']
+  · rw [hy, hz, map_add (f := _), map_nsmul]; rfl
+  · rw [(hα' _ _).1 ha, hg, map_add (f := _), hι']
     exact congrArg (· + _) ((hα' _ _).1 (act_gtExt σ.toRingHom (hom_comp σ) E ((hα q.g _).2 rfl))).symm
 
 end Field
@@ -214,7 +214,7 @@ theorem keeps_of_add (E : EndU U.toUnifPre) (h : D.toPre.X →+ D.toPre.X) (m : 
     hsum g g' _ _ ha ((mAct F _ _).2 ((isNsmul_iff_eq _ _ _).2 rfl)) ((isAdd_iff_eq _ _ _).2 rfl)
   refine ⟨fun y g g' hy ha => ?_, fun k hk p p' x hy ha hx => ?_⟩
   · have := (isIota_iff_eq hB _ _).1 (H₁ y _ _ hy (sum g g' ha))
-    rw [eh, map_add, map_nsmul, (isIota_iff_eq hB _ _).1 hy] at this
+    rw [eh, map_add (f := _), map_nsmul, (isIota_iff_eq hB _ _).1 hy] at this
     exact (isIota_iff_eq hB _ _).2 (add_right_cancel this)
   · obtain ⟨f, hf, -, -, hadd, -⟩ := GlobalTheory.T.uniformisation_torsion_identification_with_pairing hL R I hR D A G hG U F k hk
     let q : ℕ → QkPt D.toPre F k := fun n => qkMk hB (n • p.y) (n • p.g) (by

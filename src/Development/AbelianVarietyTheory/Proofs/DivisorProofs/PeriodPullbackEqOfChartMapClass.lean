@@ -49,7 +49,7 @@ theorem Φc_sh (b : (I₁ → ℂ) → I₂ → ℂ) (M : (Fin g₁ → ℂ) →
     rw [Hol.fn_comap _ _ _ _ hp, Charts.fn_sh _ _ (hW k' p hp), Charts.fn_sh _ _ hp,
       Hol.fn_comap _ _ _ _ (K₁.maps h p hp)]
     congr 1
-    simp [Fam.shift, map_add, hτ l p.1 (K₁.base k' p hp)]
+    simp [Fam.shift, map_add (f := _), hτ l p.1 (K₁.base k' p hp)]
 
 theorem dw_Φc (b : (I₁ → ℂ) → I₂ → ℂ) (hb : AnalyticOnNhd ℂ b F₁.V)
     (M : (Fin g₁ → ℂ) →ₗ[ℂ] (Fin g₂ → ℂ)) {K₁ : Charts F₁} {K₂ : Charts F₂}

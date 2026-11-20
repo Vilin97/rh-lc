@@ -53,7 +53,7 @@ theorem grpMor_isBC (P : AbelianDeRham) {F : Type} [Field F] [NumberField F] {�
   have rg := PR _ C _ hC gC _ J.κ J.nil R J.π J.π_surjective rfl X.A _ hic
   have e : ∀ z, liftSemi m.pull z = (liftMor J.κ hic).pull (liftSemi (bcMor hφ).pull z) := fun z => by
     induction z with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul r c =>
       rw [liftSemi_tmul, liftSemi_tmul, map_smul,
         ← GrpMor.pull_pull (bcMor hφ) (liftMor J.κ hic) m (fun _ => rfl) (by simpa using e1) c]

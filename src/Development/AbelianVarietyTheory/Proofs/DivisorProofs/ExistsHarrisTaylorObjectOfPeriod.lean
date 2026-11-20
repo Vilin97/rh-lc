@@ -31,7 +31,7 @@ lemma exists_nsmul_eq_of_dvd {La : Type} [AddCommGroup La] (EF E₁ : LinearMap.
   let φ : La →ₗ[ℤ] ℤ :=
     { toFun := fun y => E₁ a y / k
       map_add' := fun u v => by
-        rw [map_add]; exact Int.add_ediv_of_dvd_left (hdv u)
+        rw [map_add (f := _)]; exact Int.add_ediv_of_dvd_left (hdv u)
       map_smul' := fun c u => by
         rw [map_zsmul, smul_eq_mul, smul_eq_mul, RingHom.id_apply]
         exact Int.mul_ediv_assoc c (hdv u) }

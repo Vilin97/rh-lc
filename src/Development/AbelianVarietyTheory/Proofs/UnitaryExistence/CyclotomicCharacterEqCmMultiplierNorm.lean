@@ -168,7 +168,7 @@ theorem wC_norm (H : Host E) (s : ℤ × ℤ) : wC H s * starRingEnd ℂ (wC H s
     rcases cmHost_rootComplex_eq_pm_sqrt H with h | h <;> rw [h] <;> simp
   have h := four_mul_div H
   have h' := H.sqrt_neg_disc_sq
-  simp only [wC, Int.cast_pow, Int.cast_mul, Int.cast_add, map_add, map_mul, map_div₀, map_intCast, map_one,
+  simp only [wC, Int.cast_pow, Int.cast_mul, Int.cast_add, map_add (f := _), map_mul, map_div₀, map_intCast, map_one,
     map_ofNat, hc]
   linear_combination (-s.2 ^ 2 / 4 : ℂ) * h - (s.2 ^ 2 / 4 : ℂ) * h'
 

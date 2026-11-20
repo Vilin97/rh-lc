@@ -25,7 +25,7 @@ theorem evFin_trace [FiniteDimensional F E] (v : Pl F) (z : AE F E) :
     rw [trace_tmul, map_mul, AlgHom.commutes]
     change _ = Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (evFin F v a ⊗ₜ[F] e)
     rw [trace_tmul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem compFin_liftT (v : Pl F) (t : Fv F v ⊗[F] E) : compFin F E v (GlobalTheory.VanishLoc.liftT v t) = t := by
   induction t using TensorProduct.induction_on with
@@ -33,7 +33,7 @@ theorem compFin_liftT (v : Pl F) (t : Fv F v ⊗[F] E) : compFin F E v (GlobalTh
   | tmul a e =>
     change Algebra.TensorProduct.map (evFin F v) (AlgHom.id F E) ((GlobalTheory.LatVac.liftV v a) ⊗ₜ[F] e) = a ⊗ₜ[F] e
     rw [Algebra.TensorProduct.map_tmul, GlobalTheory.LatVac.evFin_liftV, AlgHom.id_apply]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 open GlobalTheory.LatVac in
 
@@ -51,7 +51,7 @@ theorem cA_cA {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) (z : AE F E) : c
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [cA, hσ]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem hTens_eq {σ : E →ₐ[F] E} (hσ : ∀ x, σ (σ x) = x) {n n₁ d d₁ : ℕ} (JA : Matrix (Fin n) (Fin n) E)
     (JB : Matrix (Fin d) (Fin d) E) (H : Plane E n n₁) (H' : Plane E d d₁) (v : Pl F) (t : Fv F v ⊗[F] E)

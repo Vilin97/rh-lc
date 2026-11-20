@@ -144,7 +144,7 @@ def etaS (S : Finset (HeightOneSpectrum (𝓞 F))) : AF F := ∑ w : InfinitePla
 
 theorem etaS_fst (S : Finset (HeightOneSpectrum (𝓞 F))) (w : InfinitePlace F) : piI w (etaS S) = 1 := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [etaS, map_add, map_sum, map_sum, Finset.sum_eq_single w]
+    rw [etaS, map_add (f := _), map_sum, map_sum, Finset.sum_eq_single w]
   · rw [show piI w (jI w 1) = (jI w 1).1 w from rfl, jI_self]
     simp only [show ∀ v, piI w (jF v 1) = (jF v 1).1 w from fun v => rfl, jF_fst, Finset.sum_const_zero, add_zero]
   · intro w' _ hw'
@@ -156,7 +156,7 @@ theorem etaS_fst (S : Finset (HeightOneSpectrum (𝓞 F))) (w : InfinitePlace F)
 theorem etaS_in (S : Finset (HeightOneSpectrum (𝓞 F))) (v : HeightOneSpectrum (𝓞 F)) (hv : v ∈ S) :
     piF v (etaS S) = 1 := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [etaS, map_add, map_sum, map_sum, Finset.sum_eq_single v]
+    rw [etaS, map_add (f := _), map_sum, map_sum, Finset.sum_eq_single v]
   · simp only [show ∀ w, piF v (jI w 1) = (jI w 1).2 v from fun w => rfl, jI_snd, Finset.sum_const_zero, zero_add]
     show (jF v 1).2 v = 1
     exact jF_self v 1
@@ -169,7 +169,7 @@ theorem etaS_in (S : Finset (HeightOneSpectrum (𝓞 F))) (v : HeightOneSpectrum
 theorem etaS_out (S : Finset (HeightOneSpectrum (𝓞 F))) (v : HeightOneSpectrum (𝓞 F)) (hv : v ∉ S) :
     piF v (etaS S) = 0 := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [etaS, map_add, map_sum, map_sum]
+    rw [etaS, map_add (f := _), map_sum, map_sum]
   simp only [show ∀ w, piF v (jI w 1) = (jI w 1).2 v from fun w => rfl, jI_snd, Finset.sum_const_zero, zero_add]
   refine Finset.sum_eq_zero fun v' hv' => ?_
   show (jF v' 1).2 v = 0

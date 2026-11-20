@@ -200,8 +200,8 @@ theorem inf_eq_span [IsGalois K K'] (hc : ∀ a : Fin n → K', c (∑ k, a k �
       induction hx using Submodule.closure_induction with
       | zero => simp
       | add x y _ _ h1 h2 =>
-        refine ⟨fun i => by rw [map_add]; exact L.add_mem (h1.1 i) (h2.1 i), ?_⟩
-        simp only [map_add, smul_add, Finset.sum_add_distrib, h1.2, h2.2]
+        refine ⟨fun i => by rw [map_add (f := _)]; exact L.add_mem (h1.1 i) (h2.1 i), ?_⟩
+        simp only [map_add (f := _), smul_add, Finset.sum_add_distrib, h1.2, h2.2]
       | smul_mem r x h =>
         obtain ⟨v, hv, rfl⟩ := h
         rw [← algebraMap_smul K' r]
@@ -237,7 +237,7 @@ theorem tw_mem_span (hc : ∀ a : Fin n → K', c (∑ k, a k • ι (b k)) = a)
   induction hx using Submodule.span_induction with
   | mem x h => obtain ⟨v, hv, rfl⟩ := h; rw [tw_map hc]; exact Submodule.subset_span ⟨v, hv, rfl⟩
   | zero => simp
-  | add x y _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+  | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
   | smul r x _ h1 =>
     have := Submodule.smul_mem _ (RingOfIntegers.mapRingHom (g : K' →+* K') r) h1
     rw [← algebraMap_smul K'] at this
@@ -252,7 +252,7 @@ theorem eq_sum_coord (hc : ∀ a : Fin n → K', c (∑ k, a k • ι (b k)) = a
     exact (tw_map hc 1 v).symm
   | zero => simp
   | add x y _ _ h1 h2 =>
-    simp only [map_add, Pi.add_apply, add_smul, Finset.sum_add_distrib, ← h1, ← h2]
+    simp only [map_add (f := _), Pi.add_apply, add_smul, Finset.sum_add_distrib, ← h1, ← h2]
   | smul r x _ h1 =>
     rw [← algebraMap_smul K', map_smul]
     simp only [Pi.smul_apply, smul_eq_mul, mul_smul, ← Finset.smul_sum, ← h1]
@@ -489,7 +489,7 @@ theorem slopeMax_sq_span_le : ∀ (K K' V V' : Type) [Field K] [NumberField K] [
     induction hx using Submodule.span_induction with
     | mem x h => exact Submodule.subset_span (hst g x h)
     | zero => simp
-    | add x y _ _ h1 h2 => rw [map_add]; exact add_mem h1 h2
+    | add x y _ _ h1 h2 => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h1 h2
     | smul a x _ h1 => rw [tw_smul]; exact W.smul_mem _ h1
   have hMW : L' ⊓ W.restrictScalars (𝓞 K') = M := by
     have h1 : M ≤ L' ⊓ W.restrictScalars (𝓞 K') := fun x hx => ⟨hM hx, Submodule.subset_span hx⟩

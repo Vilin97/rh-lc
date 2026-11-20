@@ -62,7 +62,7 @@ theorem exists_poly_rowSubst_coef (τ : ι) (k l : Fin m) (f : Pol ι m n) (φ :
   | add p q hp hq =>
     obtain ⟨P, hP, hP'⟩ := hp φ
     obtain ⟨Q, hQ, hQ'⟩ := hq φ
-    exact ⟨P + Q, fun g => by simp only [map_add, hP, hQ], by simp only [map_add, hP', hQ']⟩
+    exact ⟨P + Q, fun g => by simp only [map_add (f := _), hP, hQ], by simp only [map_add (f := _), hP', hQ']⟩
   | mul_X p v hp =>
     obtain ⟨ρ, j, c⟩ := v
     by_cases h : ρ = τ
@@ -78,8 +78,8 @@ theorem exists_poly_rowSubst_coef (τ : ι) (k l : Fin m) (f : Pol ι m n) (φ :
           intro b
           rw [← hP b 1, rowSubst_one]; rfl
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [rowLie_mul, rowLie_X_self, map_add, map_sum, map_sum]
-        simp only [Derivation.leibniz, smul_eq_mul, map_add, map_mul, eval_X, ← hP', h1, Finset.sum_add_distrib,
+          rw [rowLie_mul, rowLie_X_self, map_add (f := _), map_sum, map_sum]
+        simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul, eval_X, ← hP', h1, Finset.sum_add_distrib,
           pderiv_X]
         congr 1
         · simp [Matrix.one_apply]

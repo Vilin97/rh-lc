@@ -57,7 +57,7 @@ theorem FunctionFieldDegree.proof : FunctionFieldDegree.Statement := by
         rw [hC, ← IsScalarTower.algebraMap_apply,
           IsScalarTower.algebraMap_apply (MvPolynomial (Fin d) ℂ) K L]
         exact F.algebraMap_mem _
-      | add p q hp hq => rw [map_add, map_add]; exact F.add_mem hp hq
+      | add p q hp hq => rw [map_add (f := _), map_add (f := _)]; exact F.add_mem hp hq
       | mul_X p j hp =>
         rw [map_mul, map_mul]
         exact F.mul_mem hp (IntermediateField.subset_adjoin _ _ ⟨j, rfl⟩)

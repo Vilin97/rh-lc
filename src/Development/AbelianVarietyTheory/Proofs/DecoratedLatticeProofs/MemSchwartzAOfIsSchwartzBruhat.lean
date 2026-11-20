@@ -91,9 +91,9 @@ theorem decomp {θ : InfFam D} {σ : (D.what₂.Tau → ℂ) →+ AE D} (hσ : G
   funext i j
   refine sub_eq_zero.1 (hσ.ext _ ?_ fun τ => ?_)
   · show finPart D (y i j - (s (finPart D (y i j)) + σ fun τ => compAt θ τ y i j)) = 0
-    rw [RingHom.map_sub, RingHom.map_add, hsf, hσ.fin, add_zero, sub_self]
+    rw [RingHom.map_sub, RingHom.map_add (f := _), hsf, hσ.fin, add_zero, sub_self]
   · show θ τ (infPart D (y i j - (s (finPart D (y i j)) + σ fun τ => compAt θ τ y i j))) = 0
-    rw [RingHom.map_sub, RingHom.map_add, RingHom.map_sub, RingHom.map_add, hsi, hσ.comp, RingHom.map_zero, zero_add]
+    rw [RingHom.map_sub, RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_add (f := _), hsi, hσ.comp, RingHom.map_zero, zero_add]
     exact sub_self _
 
 end GlobalTheory.SchwartzBruhatTensor
@@ -160,7 +160,7 @@ theorem mem_schwartzA_of_isSchwartzBruhat : ∀ (D : D7) (θ : InfFam D), IsInfF
     exact hsi (a i j)
   let W : AddSubgroup (Matrix (Fin m) (Fin n) (Af D.host.F ⊗[D.host.F] D.host.E)) :=
     { carrier := {a | S a ∈ U ∧ ∀ i j, a i j ∈ intAE D}
-      add_mem' := fun {a b} ha hb => ⟨by rw [S.map_add]; exact U.add_mem ha.1 hb.1,
+      add_mem' := fun {a b} ha hb => ⟨by rw [S.map_add (f := _)]; exact U.add_mem ha.1 hb.1,
         fun i j => (intAE D).add_mem (ha.2 i j) (hb.2 i j)⟩
       zero_mem' := ⟨by rw [S.map_zero]; exact U.zero_mem, fun _ _ => (intAE D).zero_mem⟩
       neg_mem' := fun {a} ha => ⟨by rw [S.map_neg]; exact U.neg_mem ha.1, fun i j => (intAE D).neg_mem (ha.2 i j)⟩ }
@@ -231,7 +231,7 @@ theorem mem_schwartzA_of_isSchwartzBruhat : ∀ (D : D7) (θ : InfFam D), IsInfF
       rw [← e]
       conv_lhs => rw [hdec]
       congr 1
-      rw [S.map_add, S.map_neg]
+      rw [S.map_add (f := _), S.map_neg]
       abel
     · by_contra hne
       obtain ⟨b, hb, hab⟩ := Set.mem_iUnion₂.1 (ht (hKs y hne))

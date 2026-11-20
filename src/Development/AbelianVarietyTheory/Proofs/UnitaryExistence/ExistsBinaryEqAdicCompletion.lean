@@ -59,7 +59,7 @@ theorem exists_binary_eq_adicCompletion {F : Type*} [Field F] [NumberField F]
   obtain ⟨s, rfl⟩ := Ideal.Quotient.mk_surjective s
   have hN : u - (r ^ 2 + a * r * s + n * s ^ 2) ∈ v.asIdeal := by
     rw [← Ideal.Quotient.eq]
-    simpa only [map_add, map_mul, map_pow] using hrs.symm
+    simpa only [map_add (f := _), map_mul, map_pow] using hrs.symm
   have hN' : r ^ 2 + a * r * s + n * s ^ 2 ∉ v.asIdeal := fun h => hu (by
     simpa using v.asIdeal.add_mem hN h)
   set φ : 𝓞 F →+* v.adicCompletion F := (algebraMap F _).comp (algebraMap (𝓞 F) F) with hφ
@@ -84,7 +84,7 @@ theorem exists_binary_eq_adicCompletion {F : Type*} [Field F] [NumberField F]
     (e := φ (u - (r ^ 2 + a * r * s + n * s ^ 2)) / φ (r ^ 2 + a * r * s + n * s ^ 2))
     (by rw [norm_neg, norm_div, hD1, div_one]; exact hle n)
     (by rw [norm_div, hN1, div_one]; exact hlt _ hN)
-  simp only [map_sub, map_add, map_mul, map_pow, map_ofNat] at ht hD0 hN0
+  simp only [map_sub, map_add (f := _), map_mul, map_pow, map_ofNat] at ht hD0 hN0
   change ∃ r' s', r' ^ 2 + φ a * r' * s' + φ n * s' ^ 2 = φ u
   generalize φ a = A, φ n = N, φ u = U, φ r = R, φ s = S at *
   obtain ⟨y, hy⟩ : ∃ y, (A ^ 2 - 4 * N) * y = 1 := ⟨_, mul_inv_cancel₀ hD0⟩
@@ -117,7 +117,7 @@ theorem exists_sub_notMem {A B : Type*} [CommRing A] [CommRing B] [IsDomain B] [
       exact P.mul_mem_left _ (hcon y)
     | add x y hx hy =>
       have := P.add_mem hx hy
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       convert this using 1
       ring
   have := h1 t
@@ -186,7 +186,7 @@ theorem exists_coords (H : Host E) (z : E) : ∃ α β : maximalRealSubfield E,
   refine ⟨⟨(z + IsCMField.complexConj E z) / 2, (IsCMField.complexConj_eq_self_iff E _).1 ?_⟩,
     ⟨(z - IsCMField.complexConj E z) / (2 * H.rt), (IsCMField.complexConj_eq_self_iff E _).1 ?_⟩,
     ?_, ?_⟩
-  · simp only [map_div₀, map_add, map_ofNat, IsCMField.complexConj_apply_apply, add_comm]
+  · simp only [map_div₀, map_add (f := _), map_ofNat, IsCMField.complexConj_apply_apply, add_comm]
   · simp only [map_div₀, map_sub, map_mul, map_ofNat, IsCMField.complexConj_apply_apply,
       complexConj_rt]
     field_simp
@@ -313,7 +313,7 @@ theorem exists_eq_sq_add_of_notMem (H : Host E)
   have hcc : ∀ y, IsCMField.ringOfIntegersComplexConj E (IsCMField.ringOfIntegersComplexConj E y)
       = y := fun y => RingOfIntegers.ext (IsCMField.complexConj_apply_apply E (y : E))
   obtain ⟨a, ha⟩ := (IsCMField.ringOfIntegersComplexConj_eq_self_iff E
-    (w + IsCMField.ringOfIntegersComplexConj E w)).1 (by rw [map_add, hcc, add_comm])
+    (w + IsCMField.ringOfIntegersComplexConj E w)).1 (by rw [map_add (f := _), hcc, add_comm])
   obtain ⟨n, hn⟩ := (IsCMField.ringOfIntegersComplexConj_eq_self_iff E
     (w * IsCMField.ringOfIntegersComplexConj E w)).1 (by rw [map_mul, hcc, mul_comm])
   have hD : a ^ 2 - 4 * n ∉ v.asIdeal := by
@@ -331,7 +331,7 @@ theorem exists_eq_sq_add_of_notMem (H : Host E)
   have hn' : (n : maximalRealSubfield E) = α ^ 2 + H.d * β ^ 2 :=
     Subtype.ext ((congrArg (algebraMap (𝓞 E) E) hn).trans hβ.symm)
   rw [ha', hn'] at hrs
-  simp only [map_add, map_mul, map_pow, map_ofNat, map_natCast] at hrs
+  simp only [map_add (f := _), map_mul, map_pow, map_ofNat, map_natCast] at hrs
   refine ⟨r + algebraMap (maximalRealSubfield E) _ α * s,
     algebraMap (maximalRealSubfield E) _ β * s, ?_⟩
   linear_combination -hrs
@@ -356,7 +356,7 @@ theorem local_norm_of_ideal_norm : ∀ (E : Type) [Field E] [NumberField E] [IsC
     exact Subtype.ext hxu
   have hv := congrArg (algebraMap _ (v.adicCompletion (maximalRealSubfield E))) hF
   have hne' := (map_ne_zero (algebraMap _ (v.adicCompletion (maximalRealSubfield E)))).2 hne
-  simp only [map_add, map_mul, map_pow, map_natCast, h₀] at hv hne'
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast, h₀] at hv hne'
   obtain ⟨a, b, hab⟩ := exists_eq_sq_add_of_mul_eq hne' hv
   exact ⟨a, b, by rw [hab, map_neg, map_natCast]; ring⟩
 

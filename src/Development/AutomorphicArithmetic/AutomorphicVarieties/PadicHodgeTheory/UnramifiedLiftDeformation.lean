@@ -323,7 +323,7 @@ theorem UpperTheory.V.Loc.unramified_lift_deformation :
         obtain ⟨n, h⟩ := hπ _ (hν0 ((r g).mat a b))
         refine IsNilpotent.eq_zero (IsNilpotent.map ⟨n, Subtype.ext ?_⟩ (res O C))
         simpa using h
-      rw [Matrix.map_apply, h1, map_add, h2, zero_add, res_map, ← U.r.red g]
+      rw [Matrix.map_apply, h1, map_add (f := _), h2, zero_add, res_map, ← U.r.red g]
       rfl
     have hu : ∀ g, IsUnit (A g).det := fun g => by
       by_contra hn

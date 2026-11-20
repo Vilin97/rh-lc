@@ -82,7 +82,7 @@ instance : Group (Heis β) where
   inv x := (-x.1, -x.2 + β x.1 x.1)
   mul_assoc x y z := Prod.ext (add_assoc _ _ _) (by
     change x.2 + y.2 + β x.1 y.1 + z.2 + β (x.1 + y.1) z.1 = x.2 + (y.2 + z.2 + β y.1 z.1) + β x.1 (y.1 + z.1)
-    simp only [map_add, AddMonoidHom.add_apply]
+    simp only [map_add (f := _), AddMonoidHom.add_apply]
     abel)
   one_mul x := Prod.ext (zero_add _) (by change 0 + x.2 + β 0 x.1 = x.2; simp)
   mul_one x := Prod.ext (add_zero _) (by change x.2 + 0 + β x.1 0 = x.2; simp)

@@ -48,12 +48,12 @@ lemma mvExp_add [CharZero C] {a b : MvPowerSeries σ C} (ha : MvPowerSeries.cons
     apply Finset.sum_congr rfl
     intro q hq
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hq
-    have hd : q.1.degree + q.2.degree = m.degree := by rw [← hq, map_add]
+    have hd : q.1.degree + q.2.degree = m.degree := by rw [← hq, map_add (f := _)]
     rw [coeff_mvExp_eq ha q.1 N (by omega), coeff_mvExp_eq hb q.2 N (by omega),
       Finset.sum_mul_sum, Finset.sum_product]
     refine Finset.sum_congr rfl fun j _ => Finset.sum_congr rfl fun k _ => ?_
     rw [div_mul_div_comm]
-  rw [hR, coeff_mvExp_eq (by rw [map_add, ha, hb, add_zero]) m N (by omega)]
+  rw [hR, coeff_mvExp_eq (by rw [map_add (f := _), ha, hb, add_zero]) m N (by omega)]
   rw [← Finset.sum_filter_of_ne (p := fun p : ℕ × ℕ => p.1 + p.2 ∈ Finset.range N)]
   · rw [← Finset.sum_fiberwise_eq_sum_filter]
     refine Finset.sum_congr rfl fun k hk => ?_

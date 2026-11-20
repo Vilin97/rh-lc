@@ -41,9 +41,9 @@ theorem ordGE_pderiv {σ : Type} {r : ℕ} (i : σ) {g : MvPowerSeries σ k} (h 
   intro e he
   have key : coeff (e + Finsupp.single i 1) g = 0 := h _ (by
     first
-    | (rw [map_add, Finsupp.degree_single]; omega)
+    | (rw [map_add (f := _), Finsupp.degree_single]; omega)
     | (simp; omega)
-    | (simp [map_add]; omega))
+    | (simp [map_add (f := _)]; omega))
   have key' : coeff (Finsupp.single i 1 + e) g = 0 := by rw [add_comm]; exact key
   first
   | (rw [MvPowerSeries.coeff_pderiv, key, mul_zero])
@@ -115,7 +115,7 @@ theorem pderiv_subst_coe {σ τ : Type} [Fintype σ] [DecidableEq σ] {a : σ �
     rw [hc]
     simp [map_smul, Derivation.map_one_eq_zero, h1, h0, MvPowerSeries.subst_smul hs]
   next p q hp hq =>
-    simp only [MvPolynomial.coe_add, map_add, MvPowerSeries.subst_add hs, hp, hq, add_mul, Finset.sum_add_distrib]
+    simp only [MvPolynomial.coe_add, map_add (f := _), MvPowerSeries.subst_add hs, hp, hq, add_mul, Finset.sum_add_distrib]
   next p s hp =>
     have hpX : ((p * MvPolynomial.X s : MvPolynomial σ k) : MvPowerSeries σ k) = (p : MvPowerSeries σ k) * X s := by
       first
@@ -147,8 +147,8 @@ theorem pderiv_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] (a : σ → Mv
     intro m s
     have h := congrArg Finsupp.degree (Finsupp.single_add_erase s m)
     first
-    | (rw [map_add, Finsupp.degree_single] at h; omega)
-    | (rw [map_add] at h
+    | (rw [map_add (f := _), Finsupp.degree_single] at h; omega)
+    | (rw [map_add (f := _)] at h
        have h3 : Finsupp.degree (Finsupp.single s (m s)) = m s := by simp
        omega)
     | exact Finsupp.le_degree s m
@@ -181,7 +181,7 @@ theorem pderiv_subst {σ τ : Type} [Fintype σ] [DecidableEq σ] (a : σ → Mv
   rw [MvPowerSeries.coe_substAlgHom] at hpoly
   have hfq : f = (q : MvPowerSeries σ k) + (f - (q : MvPowerSeries σ k)) := (add_sub_cancel _ _).symm
   rw [hfq]
-  simp only [MvPowerSeries.subst_add hs, map_add, add_mul, Finset.sum_add_distrib, hpoly, k1, k2]
+  simp only [MvPowerSeries.subst_add hs, map_add (f := _), add_mul, Finset.sum_add_distrib, hpoly, k1, k2]
 
 variable {d : ℕ}
 

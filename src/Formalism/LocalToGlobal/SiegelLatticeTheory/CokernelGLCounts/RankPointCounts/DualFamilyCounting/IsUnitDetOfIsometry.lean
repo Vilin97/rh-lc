@@ -23,7 +23,7 @@ theorem sigR_sigR (hσ : ∀ e, σ (σ e) = e) (x : E ⊗[F] v.adicCompletion F)
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul e r => simp [PI.UnitaryApproxDefs.sigR, hσ]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def starO (hσ : ∀ e, σ (σ e) = e) : StarRing (Formalism.MainNotions.UnitaryGroupLocal.oE (E := E) v) where
   star x := ⟨PI.UnitaryApproxDefs.sigR σ _ x, Formalism.MainNotions.UnitaryGroupLocal.sigR_mem v σ x.2⟩

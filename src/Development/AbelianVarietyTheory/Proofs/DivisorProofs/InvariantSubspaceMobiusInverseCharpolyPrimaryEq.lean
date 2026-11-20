@@ -61,7 +61,7 @@ theorem eq_top_of_nilpotent {F V : Type} [Field F] [AddCommGroup V] [Module F V]
       obtain ⟨w, hw, u, rfl⟩ := ih v
       obtain ⟨w', hw', u', rfl⟩ := h u
       refine ⟨w + (N ^ j) w', W.add_mem hw (hp j w' hw'), u', ?_⟩
-      rw [map_add, pow_succ, Module.End.mul_apply, add_assoc]
+      rw [map_add (f := _), pow_succ, Module.End.mul_apply, add_assoc]
   refine eq_top_iff.2 fun v _ => ?_
   obtain ⟨w, hw, u, rfl⟩ := key m v
   simpa [hN] using hw

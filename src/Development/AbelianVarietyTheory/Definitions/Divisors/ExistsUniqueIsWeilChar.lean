@@ -220,7 +220,7 @@ theorem isLocalRing : IsLocalRing O := by
   rw [mem_nonunits_iff, hv.isUnit_iff_valuation_eq_one] at *
   have ha' := lt_of_le_of_ne (hv.map_le_one a) ha
   have hb' := lt_of_le_of_ne (hv.map_le_one b) hb
-  rw [map_add]
+  rw [map_add (f := _)]
   exact ne_of_lt (lt_of_le_of_lt (v.map_add _ _) (max_lt ha' hb'))
 
 omit [Fact p.Prime] [Fact ¬IsUnit (p : O)] [IsAdicComplete (Ideal.span {(p : O)}) O] in
@@ -444,7 +444,7 @@ theorem map_range_al_le : (LinearMap.range P.al).map (omega P.Gt).subtype ≤ ht
     rw [P.al_tmul]
     exact Submodule.smul_mem _ c (Submodule.subset_span ⟨P.weilChar t, rfl⟩)
   | add u u' hu hu' =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hu hu'
 
 end Point

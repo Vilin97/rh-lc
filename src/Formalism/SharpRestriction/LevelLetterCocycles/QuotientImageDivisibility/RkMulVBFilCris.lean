@@ -36,7 +36,7 @@ theorem rk_act_mulVB (g : G) (c : K₀) (x : V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul w b => simp [actVB, mulVB, map_mul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem rk_mulVB_Dcris (c : K₀) {x : V ⊗[Qp] B} (hx : x ∈ Dcris PD ρ) :
     mulVB (K₀ := K₀) (B := B) (V := V) (LL := LL) c x ∈ Dcris PD ρ := by
@@ -55,7 +55,7 @@ theorem rk_ιV_mul (c : K₀) (y : V ⊗[Qp] B) :
       LinearMap.coe_restrictScalars, AlgHom.toLinearMap_apply, LinearMap.mulLeft_apply, map_mul,
       AlgHom.commutes]
     rw [← IsScalarTower.algebraMap_apply K₀ K BdR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem rk_mulVdR_FilV (c : K) (a : ℤ) {y : V ⊗[Qp] BdR} (hy : y ∈ FilV PD (LL := LL) (V := V) a) :
     mulVdR (K := K) (BdR := BdR) (V := V) (LL := LL) c y ∈ FilV PD (LL := LL) (V := V) a := by
@@ -68,7 +68,7 @@ theorem rk_mulVdR_FilV (c : K) (a : ℤ) {y : V ⊗[Qp] BdR} (hy : y ∈ FilV PD
       exact (PD.Fil a).smul_mem c f.2
     · simp [mulVdR, AlgebraTensorModule.map_tmul]
   | add y z hy hz =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact Submodule.add_mem _ hy hz
 
 theorem rk_mulVB_FilCris (c : K₀) (a : ℤ) {x : V ⊗[Qp] B} (hx : x ∈ FilCris PD ρ a) :
@@ -86,7 +86,7 @@ theorem rk_mapVB_mulVB {V' : Type} [AddCommGroup V'] [Module LL V'] [Module Qp V
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul w b => simp [Formalism.MainNotions.RamifiedCoefficientChains.mapVB, mulVB]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem rk_ιV_inj : Function.Injective (ιV PD (LL := LL) (V := V)) := by
   have h : ∀ y, ιV PD (LL := LL) (V := V) y =
@@ -94,7 +94,7 @@ theorem rk_ιV_inj : Function.Injective (ιV PD (LL := LL) (V := V)) := by
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul x b => simp [ιV]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hi : Function.Injective (PD.ι.toLinearMap.restrictScalars Qp) := PD.ι_inj
   intro a b hab
   rw [h, h] at hab

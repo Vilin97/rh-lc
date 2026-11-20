@@ -222,7 +222,7 @@ theorem sig_mul (n : ℕ) (c₁ c₂ : G.A n →ₐ[O] IsLocalRing.ResidueField 
   obtain ⟨t₁, rfl⟩ := hpt n c₁
   obtain ⟨t₂, rfl⟩ := hpt n c₂
   have h : ofConv (toConv (t₁.pt n) * toConv (t₂.pt n)) = (t₁ + t₂).pt n := rfl
-  rw [h, sig_eq hw, sig_eq hw, sig_eq hw, map_add]
+  rw [h, sig_eq hw, sig_eq hw, sig_eq hw, map_add (f := _)]
   rfl
 
 include hw in
@@ -335,7 +335,7 @@ theorem map_endo_endo (n : ℕ) (z : G.A n ⊗[O] G.A n) :
     refine Finset.sum_congr rfl fun c₂ _ => ?_
     rw [Algebra.TensorProduct.lift_tmul, TensorProduct.smul_tmul_smul]
   | add x y hx hy =>
-    simp only [map_add, hx, hy, add_smul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), hx, hy, add_smul, Finset.sum_add_distrib]
 
 include hw in
 theorem comul_endo (H : HasIdem O) (n : ℕ) :

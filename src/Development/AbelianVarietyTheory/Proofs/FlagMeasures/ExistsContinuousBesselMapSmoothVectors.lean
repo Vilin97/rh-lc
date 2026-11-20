@@ -40,7 +40,7 @@ theorem smooth_add {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
   have e1 := hFe g hg.1 hgH
   have e2 := hFe' g hg.2 hgH
   simp only at e1 e2
-  simp only [map_add, Pi.add_apply, e1, e2]
+  simp only [map_add (f := _), Pi.add_apply, e1, e2]
 
 theorem smooth_smul {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     {σ : Mat k r → (H →L[ℂ] H)} {u : H} (b : ℂ) (hu : IsSmoothVec σ u) :

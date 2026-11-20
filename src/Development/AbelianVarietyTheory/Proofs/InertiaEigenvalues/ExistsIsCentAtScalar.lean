@@ -56,13 +56,13 @@ theorem scal_norm_one {R : Type} [CommRing R] (c : R →+* R) (hc : ∀ t, c (c 
     (e * x + c e * c w + (1 - e - c e)) * c (e * x + c e * c w + (1 - e - c e)) = 1 := by
   have hf2 : c e * c e = c e := by rw [← map_mul, he2]
   have hyX : c w * c x = 1 := by rw [← map_mul, mul_comm, hxw, map_one]
-  simp only [map_add, map_mul, map_sub, map_one, hc]
+  simp only [map_add (f := _), map_mul, map_sub, map_one, hc]
   linear_combination (x * c x + c w * w - x - c w - c x - w + 2) * hef +
     (x * w - x - w + 1) * he2 + (c w * c x - c w - c x + 1) * hf2 + e * hxw + c e * hyX
 
 theorem hom_scal {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) (e f x y : R) (h0 : φ e = 0) (h1 : φ f = 0) :
     φ (e * x + f * y + (1 - e - f)) = 1 := by
-  rw [map_add, map_add, map_mul, map_mul, map_sub, map_sub, map_one, h0, h1]
+  rw [map_add (f := _), map_add (f := _), map_mul, map_mul, map_sub, map_sub, map_one, h0, h1]
   simp
 
 theorem scal_supp {R : Type} [CommRing R] (e f x y : R) (he2 : e * e = e) (hf2 : f * f = f) (hef : e * f = 0) :

@@ -27,7 +27,7 @@ theorem subfield_closure_coords_eq_top {K' : Type} [Fintype K'] {ι' : K' → Ty
     intro f
     induction f using MvPolynomial.induction_on with
     | C r => rw [eq_intCast C r, map_intCast, map_intCast]; exact intCast_mem _ r
-    | add f g hf hg => rw [map_add, map_add]; exact add_mem hf hg
+    | add f g hf hg => rw [map_add (f := _), map_add (f := _)]; exact add_mem hf hg
     | mul_X f q hf =>
       rw [map_mul, map_mul]
       exact mul_mem hf (Subfield.subset_closure (by simp))

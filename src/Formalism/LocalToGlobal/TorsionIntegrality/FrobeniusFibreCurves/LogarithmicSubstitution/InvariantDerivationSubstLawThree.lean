@@ -152,7 +152,7 @@ theorem invariant_derivation_subst_law_pair (hF : MvPowerSeries.constantCoeff F 
   have kb := key h1 j b
   simp only [pd] at ka kb
   rw [hl]
-  simp only [pd, map_add, mul_add]
+  simp only [pd, map_add (f := _), mul_add]
   rw [ka, kb]
   rcases eq_or_ne a j with ha | ha <;> rcases eq_or_ne b j with hb | hb
   · exact absurd (ha.trans hb.symm) hab
@@ -178,7 +178,7 @@ theorem invariant_derivation_subst_law_three (hF : MvPowerSeries.constantCoeff F
   have k2 := key h1 j 2
   simp only [pd] at k0 k1 k2
   rw [e1, e2]
-  simp only [pd, map_add, mul_add]
+  simp only [pd, map_add (f := _), mul_add]
   rw [k0, k1, k2]
   have hsum : ((if (0 : Fin 3) = j then 1 else 0) + (if (1 : Fin 3) = j then 1 else 0) +
       (if (2 : Fin 3) = j then 1 else 0) : MvPowerSeries (Fin 3) K) = 1 := by
@@ -239,7 +239,7 @@ theorem constantCoeff_subst_law_three (hF : MvPowerSeries.constantCoeff F = 0) (
   have h0 : PowerSeries.constantCoeff (g - PowerSeries.C (PowerSeries.constantCoeff g)) = 0 := by
     simp
   conv_lhs => rw [hg]
-  rw [PowerSeries.subst_add hs, PowerSeries.subst_C, map_add, MvPowerSeries.constantCoeff_C,
+  rw [PowerSeries.subst_add hs, PowerSeries.subst_C, map_add (f := _), MvPowerSeries.constantCoeff_C,
     PowerSeries.constantCoeff_subst_eq_zero (constantCoeff_law_three hF) _ h0, add_zero]
 
 theorem inv_dz_eq (hF : MvPowerSeries.constantCoeff F = 0) (hc : cob F l = 0)
@@ -259,7 +259,7 @@ theorem inv_dz_eq (hF : MvPowerSeries.constantCoeff F = 0) (hc : cob F l = 0)
     linear_combination e
   have hd := congrArg (MvPowerSeries.pderiv (R := K) 1) hcob
   simp only [at1] at hd
-  rw [Formalism.G.LogCR.pderiv_psubst hF, map_add, Formalism.G.LogCR.pderiv_psubst (ccX (0 : Fin 2)),
+  rw [Formalism.G.LogCR.pderiv_psubst hF, map_add (f := _), Formalism.G.LogCR.pderiv_psubst (ccX (0 : Fin 2)),
     Formalism.G.LogCR.pderiv_psubst (ccX (1 : Fin 2)), MvPowerSeries.pderiv_X_of_ne (by decide),
     MvPowerSeries.pderiv_X_self, mul_zero, zero_add, mul_one] at hd
   have he := congrArg ev0 hd

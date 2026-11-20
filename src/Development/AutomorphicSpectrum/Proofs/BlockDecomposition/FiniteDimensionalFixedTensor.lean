@@ -21,7 +21,7 @@ theorem coord_lTensor (b : Module.Basis ι ℂ X) (f : W →ₗ[ℂ] W) (y : X �
     TensorProduct.equivFinsuppOfBasisLeft b (f.lTensor X y) i =
       f (TensorProduct.equivFinsuppOfBasisLeft b y i) := by
   induction y with
-  | add x y hx hy => simp only [TensorProduct.tmul_add, map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [TensorProduct.tmul_add, map_add (f := _), Finsupp.add_apply, hx, hy]
   | tmul x w => simp [TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply]
 
 theorem mem_range_lTensor_fixed (σ : Representation ℂ G W) (K : Subgroup G) (y : X ⊗[ℂ] W)
@@ -63,7 +63,7 @@ theorem fixed_le_range (ρ : Representation ℂ G V) (σ : Representation ℂ H 
     simp only [map_one]
     generalize x = z
     induction z with
-    | add a c ha hc => simp only [map_add, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), ha, hc]
     | tmul v w => simp
   obtain ⟨y', hy'⟩ := mem_range_lTensor_fixed ρ K₁ _ h1
   let y : (fixed ρ K₁) ⊗[ℂ] W := TensorProduct.comm ℂ W (fixed ρ K₁) y'
@@ -73,7 +73,7 @@ theorem fixed_le_range (ρ : Representation ℂ G V) (σ : Representation ℂ H 
       simp only [y]
       generalize y' = z
       induction z with
-      | add a c ha hc => simp only [map_add, ha, hc]
+      | add a c ha hc => simp only [map_add (f := _), ha, hc]
       | tmul v w => simp
     rw [this, hy']
     simp
@@ -90,14 +90,14 @@ theorem fixed_le_range (ρ : Representation ℂ G V) (σ : Representation ℂ H 
     simp only [map_one]
     generalize y = z
     induction z with
-    | add a c ha hc => simp only [map_add, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), ha, hc]
     | tmul v w => simp
   obtain ⟨z, hz⟩ := mem_range_lTensor_fixed σ K₂ y h2
   refine ⟨z, ?_⟩
   rw [← hy, ← hz]
   generalize z = t
   induction t with
-  | add a c ha hc => simp only [map_add, ha, hc]
+  | add a c ha hc => simp only [map_add (f := _), ha, hc]
   | tmul v w => simp
 
 theorem finiteDimensional_fixed_extTensor : ∀ (G H V W : Type) [Group G] [Group H] [AddCommGroup V]

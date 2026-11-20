@@ -148,7 +148,7 @@ theorem jetCalc : JetCalc := by
     rw [repr_mul_of_coeff J _ _ _ _ (repr_jet_eq_coeff J hf) (repr_jet_eq_coeff J hg) ν,
       repr_jet_eq_coeff J (hf.mul hg), GlobalTheory.taylor_mul hf hg]
   · refine J.b.ext_elem fun ν => ?_
-    rw [map_add, Finsupp.add_apply, repr_jet_eq_coeff J hf, repr_jet_eq_coeff J hg,
+    rw [map_add (f := _), Finsupp.add_apply, repr_jet_eq_coeff J hf, repr_jet_eq_coeff J hg,
       repr_jet_eq_coeff J (hf.add hg), GlobalTheory.taylor_add hf hg, map_add, mul_add]
   · have e : ∀ k, iteratedFDeriv ℂ k f 0 = iteratedFDeriv ℂ k g 0 := fun k => (h.iteratedFDeriv ℂ k).eq_of_nhds
     simp only [jet, GlobalTheory.PeriodFamily.taylor, e]

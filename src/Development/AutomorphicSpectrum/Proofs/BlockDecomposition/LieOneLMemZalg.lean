@@ -33,7 +33,7 @@ theorem trace_mem {A : Type} [Ring A] [Algebra ℂ A] (S : Subalgebra ℂ A) (n 
     have h1 := hf _ (h u)
     rw [hR u] at h1
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_smul, smul_eq_mul, f1, mul_zero, zero_add] at h1
+      simp only [map_add (f := _), map_sum, map_smul, smul_eq_mul, f1, mul_zero, zero_add] at h1
     simp only [hQ, eval_add, eval_finsetSum, eval_mul, eval_C, eval_prod, eval_sub, eval_X, eval_pow, eval_zero]
     rw [← h1]
     congr 1

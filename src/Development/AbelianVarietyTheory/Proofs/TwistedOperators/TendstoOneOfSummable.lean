@@ -343,7 +343,7 @@ theorem lConvPos (h1 : GlobalTheory.IndefiniteRowSideFullHecke.SatakeTrivialRang
         param_conj_place hc hJ hL (hd _) hne (hπ _ v.2).unitary (hπc _ v.2 w hw) (hπc _ v.2 w' hw')]
     rw [Lv, e, Finset.prod_pair hne, locL, locL, e2, ← eulerFac_add]
     refine isPosReal_eulerFac (by
-      rw [e3, Multiset.map_add, Multiset.map_map, add_comm]
+      rw [e3, Multiset.map_add (f := _), Multiset.map_map, add_comm]
       simp only [Function.comp_def, star_star, Multiset.map_id']) (star_npow _ _) fun x hx => ?_
     exact (Multiset.mem_add.1 hx).elim (hlt w hw x) (e2 ▸ hlt w' hw' x)
   · refine isPosReal_prod _ fun w hw => ?_

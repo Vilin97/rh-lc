@@ -110,7 +110,7 @@ theorem determinant_shift_coefficient : DetShiftCoeff := by
   set Q : MvPolynomial (Fin 2) ℂ := ∑ σ : Equiv.Perm (Fin t), ((Equiv.Perm.sign σ : ℤ) : MvPolynomial (Fin 2) ℂ) *
       ∏ i : Fin t, ((if σ i = i then X 0 else 0) + X 1 * C (M (σ i) i)) with hQdef
   have hdeg : D.degree = t := by
-    rw [hD, map_add, Finsupp.degree_single, Finsupp.degree_single]
+    rw [hD, map_add (f := _), Finsupp.degree_single, Finsupp.degree_single]
     omega
   have hQ : Q.IsHomogeneous t := by
     apply IsHomogeneous.sum

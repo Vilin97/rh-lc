@@ -130,7 +130,7 @@ def coordMap (X : Data E r) (e : X.Ψ → Fin r → (Fin r → ℂ)) :
     simp only [PiLp.add_apply, coord]
     split_ifs
     · rw [pr_add]
-    · rw [pr_add, map_add]; ring
+    · rw [pr_add, map_add (f := _)]; ring
   map_smul' t y := by
     ext i
     simp only [PiLp.smul_apply, coord, RingHom.id_apply, Complex.real_smul]

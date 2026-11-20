@@ -53,7 +53,7 @@ theorem dvd_EF_sub {n : ℕ} {a a' b b' : D.La} (ha : D.ModN n (a - a')) (hb : D
   obtain ⟨x, hx⟩ := ha; obtain ⟨y, hy⟩ := hb
   rw [sub_eq_iff_eq_add] at hx hy
   subst hx hy
-  simp only [map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul]
+  simp only [map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul]
   exact ⟨D.EF x b' + D.EF a' y + n * D.EF x y, by ring⟩
 
 end ModN
@@ -147,7 +147,7 @@ theorem exists_inv {τ : 𝓞 E ≃+* 𝓞 E} {f : ℕ → D.La → D.La} (hf : 
 
 theorem rt_fix {τ : 𝓞 E ≃+* 𝓞 E} (hτ : τ H.w0 = H.w0) : τ H.rt = H.rt := by
   have h := congrArg τ H.two_weight_eq_one_add_root
-  rw [map_mul, map_ofNat, hτ, H.two_weight_eq_one_add_root, map_add, map_one] at h
+  rw [map_mul, map_ofNat, hτ, H.two_weight_eq_one_add_root, map_add (f := _), map_one] at h
   exact (add_left_cancel h).symm
 
 theorem symm_w0 {τ : 𝓞 E ≃+* 𝓞 E} (hτ : τ H.w0 = H.w0) : τ.symm H.w0 = H.w0 :=
@@ -260,14 +260,14 @@ theorem mb_stable (l : Level H) {τ : 𝓞 E ≃+* 𝓞 E} (hτ : τ H.w0 = H.w0
     induction ha using Algebra.adjoin_induction with
     | mem x hx => rw [Set.mem_singleton_iff.1 hx, hτ]
     | algebraMap r => simp
-    | add x y _ _ hx hy => rw [map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
     | mul x y _ _ hx hy => rw [map_mul, hx, hy]
   intro x hx
   rw [l.fromK] at hx ⊢
   induction hx using Submodule.span_induction with
   | mem y hy => rw [fix y hy.2]; exact Submodule.subset_span hy
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul r y _ hy => rw [smul_eq_mul, map_mul]; exact Ideal.mul_mem_left _ _ hy
 
 theorem mbbar_stable (l : Level H) {τ : 𝓞 E ≃+* 𝓞 E} (hτ : τ H.w0 = H.w0) :
@@ -447,11 +447,11 @@ theorem twist_aut : Hypotheses2 → ∀ (D : D7) (O : Setup D), O.Core → ∀ h
     exact GlobalTheory.InertiaPairs.sigmaOf_sqrt_pos D.host h hh
   have hw : σ O.A.H.w0 = O.A.H.w0 := by
     have h2 := congrArg σ O.A.H.two_weight_eq_one_add_root
-    rw [map_mul, map_ofNat, map_add, map_one, hrt, ← O.A.H.two_weight_eq_one_add_root] at h2
+    rw [map_mul, map_ofNat, map_add (f := _), map_one, hrt, ← O.A.H.two_weight_eq_one_add_root] at h2
     exact mul_left_cancel₀ two_ne_zero h2
   obtain ⟨f, hf1, hf2, hf3, hf4, hf5⟩ := GlobalTheory.T.exists_compatible_level_maps O.A.H O.S.Dw σ.symm (symm_w0 hw)
   have hf : IsSemiIso O.S.Dw σ.symm (fun n a => f n a) :=
-    ⟨fun n _ a b => by rw [map_add, sub_self]; exact modN_zero n, hf1, hf2, hf3, hf4, hf5⟩
+    ⟨fun n _ a b => by rw [map_add (f := _), sub_self]; exact modN_zero n, hf1, hf2, hf3, hf4, hf5⟩
   obtain ⟨r, hr, hsnd⟩ := exists_twist (O.S.Xo O.κ.l) O.κ.c O.s.T.Z.oF O.s.T.Z.m0 σ hw hf
   exact ⟨σ, r, hs, hw, hr, hsnd⟩
 

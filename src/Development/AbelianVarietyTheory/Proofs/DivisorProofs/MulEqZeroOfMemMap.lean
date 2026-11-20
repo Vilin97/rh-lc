@@ -40,7 +40,7 @@ theorem exists_unique_formExt : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀]
     AddMonoidHom.mk' g (fun s t => by
       ext w
       show α (l (s + t)) * E w = α (l s) * E w + α (l t) * E w
-      rw [key (l (s + t)) (l s + l t) (by rw [map_add, hl, hl, hl]) _ (hEmem w), map_add, add_mul])
+      rw [key (l (s + t)) (l s + l t) (by rw [map_add (f := _), hl, hl, hl]) _ (hEmem w), map_add (f := _), add_mul])
   have hf : ∀ (r : R₀) (s : Sec s₀ U.unop.1) (w : GlobForm s₀), f (r • s) w = f s (r • w) := by
     intro r s w
     obtain ⟨r', rfl⟩ := hπ r
@@ -58,13 +58,13 @@ theorem exists_unique_formExt : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀]
       rw [TensorProduct.smul_tmul', TensorProduct.liftAddHom_tmul, TensorProduct.liftAddHom_tmul]
       show α (l (p b • s)) * E w = α b * (α (l s) * E w)
       rw [key (l (p b • s)) (b * l s) (by rw [hl, map_mul, hl, smul_eq_mul]) _ (hEmem w), map_mul, mul_assoc]
-    | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, mul_add]
+    | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, mul_add]
   have hmem : ∀ t : Sec s₀ U.unop.1 ⊗[R₀] GlobForm s₀, T t ∈ I.map (algebraMap R B') := by
     intro t
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul s w => exact Ideal.mul_mem_left _ _ (hEmem w)
-    | add x y hx hy => rw [map_add]; exact Ideal.add_mem _ hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact Ideal.add_mem _ hx hy
   have hev : ∀ w : GlobForm s₀, θ (w.1 U) = E w := by
     intro w
     have h1 : hb.equiv.symm (w.1 U) = 1 ⊗ₜ w := by
@@ -82,6 +82,6 @@ theorem exists_unique_formExt : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀]
     · intro s n hn
       rw [← hl s, hy1, hn, hθ, hθ, LinearEquiv.map_smul, hsm]
     · intro n₁ n₂ h₁ h₂
-      rw [map_add, map_add, h₁, h₂]
+      rw [map_add (f := _), map_add (f := _), h₁, h₂]
 
 end GlobalTheory.LiftSys

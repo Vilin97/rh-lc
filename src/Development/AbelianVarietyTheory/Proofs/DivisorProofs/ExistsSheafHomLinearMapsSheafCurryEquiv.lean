@@ -9,7 +9,7 @@ def homShEval (J X : Shv R) (M : ModuleCat.{1} (ULift.{1} R)) (f : X ⟶ (homSh 
   ⟨{ app := fun U => ModuleCat.ofHom
         { toFun := fun x => (show M ⟶ J.obj.obj U from (f.hom.app U).hom x).hom m
           map_add' := fun x y => by
-            rw [(f.hom.app U).hom.map_add]; rfl
+            rw [(f.hom.app U).hom.map_add (f := _)]; rfl
           map_smul' := fun r x => by
             rw [(f.hom.app U).hom.map_smul]; rfl }
      naturality := fun U V g => by
@@ -33,7 +33,7 @@ def homShUncurry (J X : Shv R) (M : ModuleCat.{1} (ULift.{1} R)) (l : M →ₗ[U
   ⟨{ app := fun U => ModuleCat.ofHom
         { toFun := fun x => (show M ⟶ J.obj.obj U from ModuleCat.ofHom
             { toFun := fun m => ((l m).hom.app U).hom x
-              map_add' := fun m n => by rw [l.map_add]; rfl
+              map_add' := fun m n => by rw [l.map_add (f := _)]; rfl
               map_smul' := fun r m => by rw [l.map_smul]; rfl })
           map_add' := fun x y => by
             apply ModuleCat.hom_ext; apply LinearMap.ext; intro m

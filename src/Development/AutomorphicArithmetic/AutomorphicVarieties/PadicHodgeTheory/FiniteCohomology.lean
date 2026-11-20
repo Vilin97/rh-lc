@@ -116,7 +116,7 @@ def finiteCocycles [TopologicalSpace G] [TopologicalSpace V] [IsTopologicalAddGr
   add_mem' := by
     rintro a b ⟨ha, x, hx⟩ ⟨hb, y, hy⟩
     refine ⟨(Z1 ρ).add_mem ha hb, x + y, fun g => ?_⟩
-    simp only [Pi.add_apply, add_tmul, hx, hy, map_add]
+    simp only [Pi.add_apply, add_tmul, hx, hy, map_add (f := _)]
     abel
   smul_mem' := by
     rintro c a ⟨ha, x, hx⟩

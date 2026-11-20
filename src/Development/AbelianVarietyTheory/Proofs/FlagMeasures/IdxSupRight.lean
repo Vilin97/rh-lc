@@ -172,7 +172,7 @@ theorem key (H : HermSpace K V) {M : Submodule (𝓞 K) V} {S I : Submodule K V}
     · rintro ⟨hd, hdM⟩
       refine ⟨hd, fun x hx => ?_⟩
       obtain ⟨m, hm, u, hu, rfl⟩ := Submodule.mem_sup.1 hdM
-      rw [map_add, LinearMap.add_apply, (mem_perp_iff H T u).1 hu.2 x hx.2, add_zero]
+      rw [map_add (f := _), LinearMap.add_apply, (mem_perp_iff H T u).1 hu.2 x hx.2, add_zero]
       exact ((hMd m).1 hm).2 x hx.1
   · apply le_antisymm
     · rintro s ⟨hs, hs'⟩

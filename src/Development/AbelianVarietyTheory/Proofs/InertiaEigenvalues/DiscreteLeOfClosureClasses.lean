@@ -65,12 +65,12 @@ def typeSub (L : Subgroup (GL (Fin N) (Af E))) {U : Type} [AddCommGroup U] [Modu
       have : (fun k : Kinf E N => (cptRep E N k 0).1 g) = 0 := funext fun k => by simp
       rw [this]; exact zero_mem _,
     fun _ _ => by simp⟩
-  add_mem' := fun {φ ψ} h h' => ⟨fun k hk => by rw [map_add, h.1 k hk, h'.1 k hk], fun g => by
+  add_mem' := fun {φ ψ} h h' => ⟨fun k hk => by rw [map_add (f := _), h.1 k hk, h'.1 k hk], fun g => by
       have : (fun k : Kinf E N => (cptRep E N k (φ + ψ)).1 g) =
           (fun k : Kinf E N => (cptRep E N k φ).1 g) + (fun k : Kinf E N => (cptRep E N k ψ).1 g) :=
-        funext fun k => by simp [map_add]
+        funext fun k => by simp [map_add (f := _)]
       rw [this]; exact add_mem (h.2.1 g) (h'.2.1 g),
-    fun τ u => by rw [map_add, h.2.2 τ u, h'.2.2 τ u, smul_add]⟩
+    fun τ u => by rw [map_add (f := _), h.2.2 τ u, h'.2.2 τ u, smul_add]⟩
   smul_mem' := fun a φ h => ⟨fun k hk => by rw [map_smul, h.1 k hk], fun g => by
       have : (fun k : Kinf E N => (cptRep E N k (a • φ)).1 g) = a • (fun k : Kinf E N => (cptRep E N k φ).1 g) :=
         funext fun k => by simp [map_smul]

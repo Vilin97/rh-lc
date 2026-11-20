@@ -37,7 +37,7 @@ theorem derivation_inner_of_separability_element (O : Type) [CommRing O] (N : �
       simp only [Module.End.mul_apply] at h
       simp [Algebra.TensorProduct.tmul_mul_tmul, hΦ, hδ, h]
     | add x y hx hy =>
-      simp only [mul_add, map_add, hx, hy, LinearMap.add_apply]
+      simp only [mul_add, map_add (f := _), hx, hy, LinearMap.add_apply]
       abel
   have hN' : (N : ℚ) ≠ 0 := by exact_mod_cast hN.ne'
   refine ⟨(N : ℚ)⁻¹ • Φ e, fun c => ?_⟩

@@ -110,13 +110,13 @@ theorem real_part_k (hP : _root_.GlobalTheory.ThK.IsPair_k B M χX χW om n 0 d 
   let Ψ : nablaSq ℂ d lam' → PolData B M := fun x => ⟨pure (i x) φf, pure_mem_pol_pk (hi x) hfin⟩
   have hadd : ∀ x y, Ψ (x + y) = Ψ x + Ψ y := fun x y => Subtype.ext (by
     change pure (i (x + y)) φf = pure (i x) φf + pure (i y) φf
-    rw [map_add, pure_add'_pk])
+    rw [map_add (f := _), pure_add'_pk])
   have hsm : ∀ (a : ℂ) x, Ψ (a • x) = a • Ψ x := fun a x => Subtype.ext (by
     change pure (i (a • x)) φf = a • pure (i x) φf
     rw [map_smul, pure_smul'_pk])
   refine ⟨hirr, { toFun := fun x => pr (Θ (Ψ x) φ), map_add' := fun x y => ?_, map_smul' := fun a x => ?_ }, ?_,
     fun x => (hp _ (hΘ _ _ hφ).2.1).1, fun k x => ?_⟩
-  · simp only [hadd, map_add, LinearMap.add_apply]
+  · simp only [hadd, map_add (f := _), LinearMap.add_apply]
   · simp only [hsm, map_smul, LinearMap.smul_apply, RingHom.id_apply]
   · intro h0
     apply hne
@@ -210,9 +210,9 @@ theorem split_part_k (T : _root_.UpperTheory.TP.Tools_k) (hA : AbsIso) (hP : _ro
     exact this)
   let A : SB (Fin n × Fin d → Fv (maximalRealSubfield E) v) →ₗ[ℂ] τ.V →ₛₗ[starRingEnd ℂ] τ'.V :=
     LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ) (fun ψ x => p (pr (Θ (Ψ ψ) (c x))))
-      (fun a b x => by simp only [hadd, map_add, LinearMap.add_apply])
+      (fun a b x => by simp only [hadd, map_add (f := _), LinearMap.add_apply])
       (fun r a x => by simp only [hsm, map_smul, LinearMap.smul_apply, RingHom.id_apply])
-      (fun a x y => by simp only [map_add])
+      (fun a x y => by simp only [map_add (f := _)])
       (fun r a x => by simp only [map_smul, map_smulₛₗ])
   refine ⟨A ∘ₗ ιe.symm.toLinearMap, ?_, fun g h Φ Φ₁ hΦ x => ?_⟩
   · intro h0

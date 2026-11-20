@@ -59,7 +59,7 @@ def fin : Subring K⟦X⟧⟦X⟧ where
   add_mem' := by
     rintro F G ⟨M, h⟩ ⟨M', h'⟩
     exact ⟨M + M', fun i n hin => by
-      rw [map_add, map_add, h i n (by omega), h' i n (by omega), add_zero]⟩
+      rw [map_add (f := _), map_add (f := _), h i n (by omega), h' i n (by omega), add_zero]⟩
   zero_mem' := ⟨0, fun i n _ => by simp⟩
   neg_mem' := by
     rintro F ⟨M, h⟩

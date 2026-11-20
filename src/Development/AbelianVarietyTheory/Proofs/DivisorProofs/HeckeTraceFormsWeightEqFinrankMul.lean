@@ -36,7 +36,7 @@ theorem trOn_forms_eq_finrank_mul : ∀ (E : Type) [Field E] [NumberField E] [Is
     | tmul F w =>
       rw [TensorProduct.map_tmul, Phi_tmul, Phi_tmul, GlobalTheory.T.unitaryHeckeOperator_commute_weightVectorFunction_explicit]
       rfl
-    | add x y hx hy => rw [map_add, map_add, map_add, hx, hy, map_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]
   have hF : ∀ v ∈ forms S lam K', hop S K' f v ∈ forms S lam K' := by
     intro v hv
     rw [← hrange] at hv ⊢

@@ -63,7 +63,7 @@ private theorem exists_mul_add_mul_eq_C_of_monic_irreducible {k : Type} [Field k
     (ca : Polynomial k) * cb,
     mul_ne_zero (nonZeroDivisors.coe_ne_zero ca) (nonZeroDivisors.coe_ne_zero cb), ?_⟩
   apply Polynomial.map_injective _ hinj
-  simp only [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_C, hA, hB,
+  simp only [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_C, hA, hB,
     polynomial_smul_eq_C_algebraMap_mul, map_mul, Polynomial.C_mul]
   linear_combination (Polynomial.C (algebraMap (Polynomial k) (FractionRing (Polynomial k)) ca) *
     Polynomial.C (algebraMap (Polynomial k) (FractionRing (Polynomial k)) cb)) * hab
@@ -208,7 +208,7 @@ theorem _root_.GlobalTheory.gaussExtension_coeff_mem_nonunits : ∀ {F : Type} [
   obtain ⟨cv, rfl⟩ := Polynomial.map_surjective _ IsLocalRing.residue_surjective c
   set D : Polynomial (Polynomial V) := Av * Rv + Bv * Ψ - Polynomial.C cv with hDdef
   have hDm : D.map (Polynomial.mapRingHom (IsLocalRing.residue V)) = 0 := by
-    simp only [hDdef, Polynomial.map_sub, Polynomial.map_add, Polynomial.map_mul, Polynomial.map_C]
+    simp only [hDdef, Polynomial.map_sub, Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_C]
     rw [sub_eq_zero]
     exact hABc
   have hD : ∀ i j, W.valuation (algebraMap F L ((D.coeff i).coeff j : F)) < 1 := by
@@ -224,7 +224,7 @@ theorem _root_.GlobalTheory.gaussExtension_coeff_mem_nonunits : ∀ {F : Type} [
       (Polynomial.aeval t).toRingHom ω := fun P => rfl
   have hCeq : Polynomial.C cv = Av * Rv + Bv * Ψ - D := (sub_sub_cancel _ _).symm
   have hsplit : ev (Polynomial.C cv) = ev Av * ev Rv + ev Bv * ev Ψ - ev D := by
-    rw [hCeq, map_sub, map_add, map_mul, map_mul]
+    rw [hCeq, map_sub, map_add (f := _), map_mul, map_mul]
   rw [hev Ψ, hroot, mul_zero, add_zero] at hsplit
   obtain ⟨j, hj⟩ : ∃ j, IsLocalRing.residue V (cv.coeff j) ≠ 0 := by
     by_contra h

@@ -30,7 +30,7 @@ def carried {X : Type} [AddCommGroup X] [Module ℂ X] {n : ℕ} (j : (Fin n →
   carrier := {y | ∃ y', ∀ a, p a → e (j y') = c • T a (e (j y))}
   add_mem' := by
     rintro x y ⟨x', hx⟩ ⟨y', hy⟩
-    exact ⟨x' + y', fun a ha => by simp only [map_add, hx a ha, hy a ha, smul_add]⟩
+    exact ⟨x' + y', fun a ha => by simp only [map_add (f := _), hx a ha, hy a ha, smul_add]⟩
   zero_mem' := ⟨0, fun a _ => by simp⟩
   smul_mem' := by
     rintro s x ⟨x', hx⟩

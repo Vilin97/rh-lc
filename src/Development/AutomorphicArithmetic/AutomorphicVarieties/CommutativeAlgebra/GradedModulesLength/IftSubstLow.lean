@@ -13,7 +13,7 @@ private theorem ift_P_mem {w : σ → Y} {w' : τ → Y} {k : σ → MvPowerSeri
     (hw : ∀ i, k i ∈ wtPart E w' (w i)) (e : σ →₀ ℕ) : P k e ∈ wtPart E w' (Finsupp.weight w e) := by
   induction e using Finsupp.induction_linear with
   | zero => rw [P_zero, map_zero]; exact one_mem_wtPart E w'
-  | add e₁ e₂ h₁ h₂ => rw [P_add, map_add]; exact mul_mem_wtPart E w' h₁ h₂
+  | add e₁ e₂ h₁ h₂ => rw [P_add, map_add (f := _)]; exact mul_mem_wtPart E w' h₁ h₂
   | single i n =>
     rw [P_single, Finsupp.weight_single]
     exact SetLike.pow_mem_graded n (hw i)
@@ -140,7 +140,7 @@ theorem UpperTheory.V.Alg.M.ift_holds :
     rw [map_sub, map_sub, sub_eq_zero] at this
     rw [this]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_smul, map_one, map_sum, hX, map_sub, hlow _ (hg _) d hd, sub_zero, smul_eq_mul]
+      simp only [map_add (f := _), map_smul, map_one, map_sum, hX, map_sub, hlow _ (hg _) d hd, sub_zero, smul_eq_mul]
   refine ⟨ψ, fun j f hf => ?_, ?_, fun f => ?_, fun f i => ?_⟩
   · rw [hψ]; exact ift_subst_mem hl (ift_lim_mem hG hg hGw hgw) hf
   · refine ift_span (E := E) (κ := {i // wt i = 0}) (by rw [← hcard, Nat.card_eq_fintype_card])

@@ -21,7 +21,7 @@ theorem tw_tate : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Ho
             ev := fun n x => I.ev n (a.a n x),
             add := ?_, lin := ?_, ker := ?_, onto := ?_, tower := ?_, isom := ?_ }, rfl, fun _ _ => rfl⟩
   · intro n x y
-    rw [map_add]
+    rw [map_add (f := _)]
     exact I.add n _ _
   · intro n c x
     rw [map_smul]

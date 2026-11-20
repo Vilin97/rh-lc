@@ -155,7 +155,7 @@ theorem _root_.GlobalTheory.UnramOrder.card_coker_of_det_eq : ∀ {F : Type} [Fi
     intro s t hst
     rw [Algebra.smul_def, Algebra.smul_def, mul_one] at hst
     have hst' := congrArg c hst
-    rw [map_add, map_mul, map_zero] at hst'
+    rw [map_add (f := _), map_mul, map_zero] at hst'
     have hfix : ∀ r : 𝒪[F], c (algebraMap 𝒪[F] L.O r) = algebraMap 𝒪[F] L.O r :=
       fun r => Subtype.ext (by simp [hc, hφ])
     rw [hfix, hfix] at hst'

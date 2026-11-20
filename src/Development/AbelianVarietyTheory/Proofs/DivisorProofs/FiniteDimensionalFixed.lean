@@ -54,7 +54,7 @@ theorem mem_irrSum {W X : Type} [AddCommGroup W] [Module ℂ W] [AddCommGroup X]
       (f := f.comp U.toSubmodule.subtype) ⟨fun s => hf.1 _, fun g s => hf.2 g s⟩ ⟨σ.asModuleEquiv y, hy⟩
   · simp
   · intro a b ha hb
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact Submodule.add_mem _ ha hb
 
 theorem isDecomp_of_form {X : Type} [AddCommGroup X] [Module ℂ X] (ρ : Representation ℂ H X) (C : Submodule ℂ X)

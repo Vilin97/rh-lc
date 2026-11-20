@@ -36,7 +36,7 @@ theorem mem_idOff_iff_pr {D : D7} {k : Type} [Field k] [ValuativeRel k] [Topolog
       exact Algebra.TensorProduct.one_def.symm
     · rw [hαo w hw, TensorProduct.zero_tmul]
   have hinf : infPart D E' = 0 := by
-    rw [← hsum, map_add, Formalism.IndefR.Fin.LevelGroupLemmas.Lat.infPart_of_splitIdem hsplit,
+    rw [← hsum, map_add (f := _), Formalism.IndefR.Fin.LevelGroupLemmas.Lat.infPart_of_splitIdem hsplit,
       Formalism.IndefR.Fin.LevelGroupLemmas.Lat.infPart_of_splitIdem hsplitc, add_zero]
   have hoff : a ∈ idOff D (· = p.v) ↔ GlobalTheory.FinPl.compAt D p.v a = 0 := by
     simp only [GlobalTheory.FinPl.idOff, Submodule.mem_iInf, RingHom.mem_ker]
@@ -148,11 +148,11 @@ theorem core_coord {O k : Type} [CommRing O] [Field k] [Algebra O k] (hinj : Fun
     ⟨_, fun _ _ => rfl⟩
   have hξ : ∀ p i, algebraMap O k (ξ p i) = s p * (P + PA) i p := by
     intro p i
-    rw [hξd, map_add, hz1, Matrix.add_apply, mul_add, h1]
+    rw [hξd, map_add (f := _), hz1, Matrix.add_apply, mul_add, h1]
     split_ifs <;> simp
   have hη : ∀ q i, algebraMap O k (η q i) = t q * (Q + QA) q i := by
     intro q i
-    rw [hηd, map_add, hz2, Matrix.add_apply, mul_add, h2]
+    rw [hηd, map_add (f := _), hz2, Matrix.add_apply, mul_add, h2]
     split_ifs <;> simp
   have hξI : ∀ p i, ξ p i - (if i = ι p then 1 else 0) ∈ I := by
     intro p i

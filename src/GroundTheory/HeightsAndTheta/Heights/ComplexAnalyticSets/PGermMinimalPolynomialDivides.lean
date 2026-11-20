@@ -170,7 +170,7 @@ theorem proof (hF : FiniteFibreGermIntegral.Statement) (hH : HolGermsIntegrallyC
     rw [← Fin.sum_univ_eq_sum_range (fun i => C (m.coeff i) * Polynomial.X ^ i)] at h1
     conv_rhs => rw [h1]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [P, bt, Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
+      simp only [P, bt, Polynomial.map_add (f := _), Polynomial.map_pow, Polynomial.map_X, Polynomial.map_sum,
       Polynomial.map_mul, Polynomial.map_C, germOf_germRep]
   have hPz : ∀ z, eval₂ (preLinear w A) g P z = g z ^ m.natDegree + ∑ j, (bt j).1 (A z) * g z ^ (j : ℕ) :=
     fun z => eval₂_monic_apply w A g bt z

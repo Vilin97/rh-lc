@@ -41,7 +41,7 @@ theorem GlobalTheory.Mum.TensTor.tate_tens : ∀ (R : Type) [CommRing R] [IsDoma
   ·
     intro n hn a b
     have hs := hP n (a + b)
-    simp only [map_add, Pi.add_apply] at hs
+    simp only [map_add (f := _), Pi.add_apply] at hs
     exact GlobalTheory.T.tensor_torsion_add_componentwise R hB D D' W T F N N' ν ν' n (P n a) (P n b) (P n (a + b)) _ _ _ (hP n a) (hP n b) hs
       (fun i => hadd n hn (e a i) (e b i))
   ·
@@ -58,11 +58,11 @@ theorem GlobalTheory.Mum.TensTor.tate_tens : ∀ (R : Type) [CommRing R] [IsDoma
     · intro h
       choose c hc using h
       refine ⟨e.symm c, e.injective ?_⟩
-      rw [map_add, map_nsmul, e.apply_symm_apply]
+      rw [map_add (f := _), map_nsmul, e.apply_symm_apply]
       funext i
       simp only [Pi.add_apply, Pi.smul_apply, hc i]
     · rintro ⟨c, rfl⟩ i
-      exact ⟨e c i, by simp only [map_add, map_nsmul, Pi.add_apply, Pi.smul_apply]⟩
+      exact ⟨e c i, by simp only [map_add (f := _), map_nsmul, Pi.add_apply, Pi.smul_apply]⟩
   ·
     intro n hn p
     obtain ⟨ps, hps⟩ := GlobalTheory.T.exists_component_tuple_tensor_torsion_unimodular R hB D D' W T F N N' ν ν' hdet n p

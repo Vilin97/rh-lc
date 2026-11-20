@@ -117,7 +117,7 @@ theorem sec_map (X : PT E) {q n : ℕ} {F : (Fin n → Vsp X.dim) → ℂ} (hF :
   have hγ' := (mem_latT X n γ).mp hγ
   show F ((eT X n).symm (v + γ)) = (∏ k, (X.eps ((eT X n).symm γ k) : ℂ)) ^ q *
     cexp (q * Real.pi * Hf v γ + q * Real.pi * Hf γ γ / 2) * F ((eT X n).symm v)
-  rw [map_add, hF.2 _ hγ' _]
+  rw [map_add (f := _), hF.2 _ hγ' _]
   have e1 : Hf v γ = HC ((eT X n).symm v) ((eT X n).symm γ) := by
     rw [← Hf_eT, LinearEquiv.apply_symm_apply, LinearEquiv.apply_symm_apply]
   have e2 : Hf γ γ = HC ((eT X n).symm γ) ((eT X n).symm γ) := by

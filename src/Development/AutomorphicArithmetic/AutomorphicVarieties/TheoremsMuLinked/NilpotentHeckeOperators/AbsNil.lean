@@ -129,7 +129,7 @@ theorem UpperTheory.V.Th.absNil :
         add_mem' := by
           intro p q hp hq x hx
           show act (p + q) x = 0
-          rw [map_add, LinearMap.add_apply, hp x hx, hq x hx, add_zero]
+          rw [map_add (f := _), LinearMap.add_apply, hp x hx, hq x hx, add_zero]
         zero_mem' := by
           intro x hx
           show act 0 x = 0
@@ -166,4 +166,4 @@ theorem UpperTheory.V.Th.absNil :
     rw [htop]
     trivial
   exact Submodule.iSup_induction (motive := fun x => act F x = 0) _ hw (fun χ x hx => key χ x hx) (map_zero _)
-    (fun x y hx hy => by rw [map_add, hx, hy, add_zero])
+    (fun x y hx hy => by rw [map_add (f := _), hx, hy, add_zero])

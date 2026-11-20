@@ -30,7 +30,7 @@ theorem infPart_eq_zero_of_isSplitIdem {D : D7} {e : AE D} (h : IsSplitIdem D e)
     show infPart D ((pairA D.host.F 0 α) ⊗ₜ[D.host.F] (1 : D.host.E)) = 0
     show (fstA D.host.F (pairA D.host.F 0 α)) ⊗ₜ[D.host.F] (1 : D.host.E) = 0
     rw [show fstA D.host.F (pairA D.host.F 0 α) = 0 from rfl, TensorProduct.zero_tmul]
-  have hs : infPart D e + infPart D (cA D e) = 0 := by rw [← (infPart D).map_add, hε, hz]
+  have hs : infPart D e + infPart D (cA D e) = 0 := by rw [← (infPart D).map_add (f := _), hε, hz]
   have hm : infPart D e * infPart D (cA D e) = 0 := by rw [← (infPart D).map_mul, h2, (infPart D).map_zero]
   have hi : infPart D e * infPart D e = infPart D e := by rw [← (infPart D).map_mul, h1]
   have hb : infPart D (cA D e) = - infPart D e := eq_neg_of_add_eq_zero_right hs

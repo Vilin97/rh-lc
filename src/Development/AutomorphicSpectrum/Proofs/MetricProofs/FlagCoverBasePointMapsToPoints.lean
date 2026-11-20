@@ -21,7 +21,7 @@ theorem comp_v_mem_mcPts : ∀ (K : Type) [Fintype K] (ι : K → Type) [∀ k, 
       intro g
       induction g using MvPolynomial.induction_on with
       | C a => simp [mConeMap]
-      | add p q hp hq => simp only [map_add, hp, hq]
+      | add p q hp hq => simp only [map_add (f := _), hp, hq]
       | mul_X p n hp =>
         simp only [map_mul, hp]
         congr 1

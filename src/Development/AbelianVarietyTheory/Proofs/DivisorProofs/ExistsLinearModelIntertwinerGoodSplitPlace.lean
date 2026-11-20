@@ -103,7 +103,7 @@ theorem exists_isLinBar : ∀ {D : D7} {a a' : ℕ} (Bs : GlobalTheory.Indefinit
     (fun w => by
       obtain ⟨u, hu, rfl⟩ := locCo_surj Γ.M'.co Bs.v₁ w
       obtain ⟨Y, z, rfl⟩ := hspan u hu
-      exact ⟨Y, z, by simp only [AddMonoidHom.comp_apply, map_add]⟩)
+      exact ⟨Y, z, by simp only [AddMonoidHom.comp_apply, map_add (f := _)]⟩)
   have hφ₁ : ∀ (u : Matrix (Fin a') (Fin (a + a')) (AE D.host.F D.host.E)), At (evFin D.host.F Bs.v₁) u →
       ∀ φ ∈ GlobalTheory.WeilM.SB _, ∀ φ₁, Acts (evFin D.host.F Bs.v₁) (Γ.M'.co.rho Bs.ψ u) φ φ₁ →
         φ₁ = GlobalTheory.WeilM.schr (GlobalTheory.LatVac.psiAt Bs.ψ Bs.v₁) (GlobalTheory.LatVac.locCo Γ.M'.co Bs.v₁ u) φ :=

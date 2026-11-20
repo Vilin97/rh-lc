@@ -27,7 +27,7 @@ theorem resS_zero (m : ℕ) (u : n → P.R.BdR) : resS P m u 0 = 0 := by simp [r
 
 theorem resS_add (m : ℕ) (u : n → P.R.BdR) (d e : n → ↥(MaximalUnramifiedExtension l)) :
     resS P m u (d + e) = resS P m u d + resS P m u e := by
-  simp [resS, map_add, add_mul, Finset.sum_add_distrib]
+  simp [resS, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem resS_neg (m : ℕ) (u : n → P.R.BdR) (d : n → ↥(MaximalUnramifiedExtension l)) : resS P m u (-d) = -resS P m u d := by
   simp [resS, map_neg, neg_mul, Finset.sum_neg_distrib]

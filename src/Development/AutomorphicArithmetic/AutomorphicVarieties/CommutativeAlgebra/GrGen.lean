@@ -33,7 +33,7 @@ private theorem exists_decomp {O σ X : Type} [CommRing O] [Fintype σ] [AddComm
     apply hk
     have hm : Finsupp.weight wt m = j := hwt m (hTP m hmT)
     have hkm := hwt _ h1
-    rw [map_add, hm] at hkm
+    rw [map_add (f := _), hm] at hkm
     simpa using hkm
   · ext n
     set_option synthInstance.maxHeartbeats 100000 in

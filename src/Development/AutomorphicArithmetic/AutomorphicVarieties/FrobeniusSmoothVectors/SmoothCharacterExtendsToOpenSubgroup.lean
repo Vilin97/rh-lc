@@ -46,7 +46,7 @@ theorem UpperTheory.smoothCharacter_extends_to_open_subgroup :
       rw [hξ'.alg, hξ.alg]
     · intro x y hx hy h1 h2
       show ξ' ((⟨x, hx⟩ : S.A) + ⟨y, hy⟩) = ξ ((⟨x, hx⟩ : S.A) + ⟨y, hy⟩)
-      rw [map_add, map_add, h1, h2]
+      rw [map_add (f := _), map_add (f := _), h1, h2]
     · intro x y hx hy h1 h2
       show ξ' ((⟨x, hx⟩ : S.A) * ⟨y, hy⟩) = ξ ((⟨x, hx⟩ : S.A) * ⟨y, hy⟩)
       rw [map_mul, map_mul, h1, h2]

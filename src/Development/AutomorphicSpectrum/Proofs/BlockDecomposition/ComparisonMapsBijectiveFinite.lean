@@ -35,7 +35,7 @@ theorem liftSemi_piS_bijective {I : Type} [Finite I] {M N : I → Type} [∀ i, 
       funext i
       simp
     | add a b ha hb =>
-      simp only [map_add, Function.comp_apply] at ha hb ⊢
+      simp only [map_add (f := _), Function.comp_apply] at ha hb ⊢
       rw [ha, hb]
       funext i
       simp
@@ -63,7 +63,7 @@ theorem liftSemi_cT_bijective (m : BC F F') (T : C) : Function.Bijective (liftSe
     funext t
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul s b =>
       have h1 : s ⊗ₜ[R] b = s • ((1 : S) ⊗ₜ[R] b) := by simp [TensorProduct.smul_tmul']
       rw [liftSemi_tmul, h1, map_smul, he]

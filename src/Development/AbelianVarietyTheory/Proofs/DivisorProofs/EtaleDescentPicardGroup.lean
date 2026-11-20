@@ -53,7 +53,7 @@ theorem mem_cocycles_units_iff (w : (B ⊗[A] B)ˣ) :
   change (_ = _) ↔ _
   rw [AddMonoidHom.add_apply]
   erw [gmOf_nat, gmOf_nat, gmOf_nat]
-  rw [← map_add, (gmOf_bijective _).1.eq_iff]
+  rw [← map_add (f := _), (gmOf_bijective _).1.eq_iff]
   simp only [MonoidHom.toAdditive_apply_apply, toMul_ofMul]
   rw [← ofMul_mul, EmbeddingLike.apply_eq_iff_eq, Units.ext_iff]
   simp
@@ -67,7 +67,7 @@ theorem zOf_coe {w : (B ⊗[A] B)ˣ} (hw : UCoc A B w) :
     (zOf hw : (onRings Gm).obj (CommRingCat.of (B ⊗[A] B))) = gmOf (CommRingCat.of (B ⊗[A] B)) (Additive.ofMul w) := rfl
 
 theorem UCoc_mul {w v : (B ⊗[A] B)ˣ} (hw : UCoc A B w) (hv : UCoc A B v) : UCoc A B (w * v) := by
-  rw [← mem_cocycles_units_iff, ofMul_mul, map_add]
+  rw [← mem_cocycles_units_iff, ofMul_mul, map_add (f := _)]
   exact add_mem ((mem_cocycles_units_iff w).2 hw) ((mem_cocycles_units_iff v).2 hv)
 
 theorem UCoc_inv {w : (B ⊗[A] B)ˣ} (hw : UCoc A B w) : UCoc A B w⁻¹ := by
@@ -76,7 +76,7 @@ theorem UCoc_inv {w : (B ⊗[A] B)ˣ} (hw : UCoc A B w) : UCoc A B w⁻¹ := by
 
 theorem zOf_mul {w v : (B ⊗[A] B)ˣ} (hw : UCoc A B w) (hv : UCoc A B v) :
     zOf (UCoc_mul hw hv) = zOf hw + zOf hv :=
-  Subtype.ext (by rw [zOf_coe, ofMul_mul, map_add]; rfl)
+  Subtype.ext (by rw [zOf_coe, ofMul_mul, map_add (f := _)]; rfl)
 
 theorem zOf_inv {w : (B ⊗[A] B)ˣ} (hw : UCoc A B w) : zOf (UCoc_inv hw) = - zOf hw :=
   Subtype.ext (by rw [zOf_coe, ofMul_inv, map_neg]; rfl)
@@ -91,7 +91,7 @@ theorem UCoc_map {B' : Type} [CommRing B'] [Algebra A B'] (φ : B →ₐ[A] B') 
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have e2 : ∀ t : B ⊗[A] B, Algebra.TensorProduct.map (AlgHom.id A B')
       (Algebra.TensorProduct.includeLeft : B' →ₐ[A] B' ⊗[A] B') (Algebra.TensorProduct.map φ φ t) =
       Algebra.TensorProduct.map φ (Algebra.TensorProduct.map φ φ) (Algebra.TensorProduct.map (AlgHom.id A B)
@@ -100,7 +100,7 @@ theorem UCoc_map {B' : Type} [CommRing B'] [Algebra A B'] (φ : B →ₐ[A] B') 
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have e3 : ∀ t : B ⊗[A] B, (Algebra.TensorProduct.includeRight : B' ⊗[A] B' →ₐ[A] B' ⊗[A] (B' ⊗[A] B'))
       (Algebra.TensorProduct.map φ φ t) = Algebra.TensorProduct.map φ (Algebra.TensorProduct.map φ φ)
       ((Algebra.TensorProduct.includeRight : B ⊗[A] B →ₐ[A] B ⊗[A] (B ⊗[A] B)) t) := by
@@ -209,7 +209,7 @@ theorem common {x y : H ℤ (sp A) Gm 1} {c d : CommRing.Pic A} (hx : Rep x c) (
 theorem rep_unique {x : H ℤ (sp A) Gm 1} {c c' : CommRing.Pic A} (h : Rep x c) (h' : Rep x c') : c = c' := by
   obtain ⟨C, _, _, _, _, w, hw, v, hv, e1, rfl, e2, rfl⟩ := common h h'
   have hq := UCoc_mul hw (UCoc_inv hv)
-  have h0 : cg A C (zOf hq) = 0 := by rw [zOf_mul hw (UCoc_inv hv), zOf_inv hv, map_add, map_neg, e1, e2, add_neg_cancel]
+  have h0 : cg A C (zOf hq) = 0 := by rw [zOf_mul hw (UCoc_inv hv), zOf_inv hv, map_add (f := _), map_neg, e1, e2, add_neg_cancel]
   rw [cg_zero_iff] at h0
   have : w = (w * v⁻¹) * v := by rw [inv_mul_cancel_right]
   rw [this, cd_mul hq hv, h0, one_mul]
@@ -217,7 +217,7 @@ theorem rep_unique {x : H ℤ (sp A) Gm 1} {c c' : CommRing.Pic A} (h : Rep x c)
 theorem rep_add {x y : H ℤ (sp A) Gm 1} {c d : CommRing.Pic A} (hx : Rep x c) (hy : Rep y d) : Rep (x + y) (c * d) := by
   obtain ⟨C, _, _, _, _, w, hw, v, hv, e1, f1, e2, f2⟩ := common hx hy
   refine ⟨C, inferInstance, inferInstance, inferInstance, inferInstance, w * v, UCoc_mul hw hv, ?_, ?_⟩
-  · rw [zOf_mul hw hv, map_add, e1, e2]
+  · rw [zOf_mul hw hv, map_add (f := _), e1, e2]
   · rw [cd_mul hw hv, f1, f2]
 
 theorem rep_exists (x : H ℤ (sp A) Gm 1) : ∃ c, Rep x c := by

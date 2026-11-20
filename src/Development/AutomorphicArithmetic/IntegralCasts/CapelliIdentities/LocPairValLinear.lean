@@ -22,7 +22,7 @@ theorem UpperTheory.Reformulated.B.Qp9.locPair_val_linear :
         (GroundTheory.Heights₂.Heights.NumbersDVR.classList (Sum.elim T.x T.x') μ ++ []) : ℝ))
       (MvPolynomial.basisMonomials (σ ⊕ σ) ℝ |>.repr (Gs i)) := fun Gs => rfl
   refine ⟨fun Gs Hs => ?_, fun c Gs => ?_, fun α s Gs => ?_⟩
-  · simp only [key, Pi.add_apply, map_add, Finset.sum_add_distrib]
+  · simp only [key, Pi.add_apply, map_add (f := _), Finset.sum_add_distrib]
   · simp only [key, MvPolynomial.C_mul', map_smul, smul_eq_mul, Finset.mul_sum]
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [key, map_sum]

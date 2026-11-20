@@ -26,7 +26,7 @@ theorem ip_eq_of_sq {X : Type} [MeasurableSpace X] (ν : Measure X) (a b c d : X
     intro p q
     have e : ∀ w : ℂ, ((‖w‖ ^ 2 : ℝ) : ℂ) = w * (starRingEnd ℂ) w := by
       intro w; rw [Complex.mul_conj, Complex.normSq_eq_norm_sq]
-    simp only [e, map_add, map_mul, map_neg, map_one, Complex.conj_I]
+    simp only [e, map_add (f := _), map_mul, map_neg, map_one, Complex.conj_I]
     show (starRingEnd ℂ) p * q = _
     ring_nf
     try (simp only [Complex.I_sq]; ring)
@@ -123,7 +123,7 @@ theorem thetaInner_weilRep {D : D7} {S T' : HSp D} {ψ : AddChar (AF D.host.F) �
     (memLp_two_of_lintegral (aesm_of_theta _ (hW.om_pres p u hu)) (by rw [un u hu]; exact hu2))
     (memLp_two_of_lintegral (aesm_of_theta _ (hW.om_pres p v hv)) (by rw [un v hv]; exact hv2)) (fun z => ?_)
   have := un (u + z • v) (isThetaFunO_add_smul hu hv z)
-  simpa only [map_add, map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul] using this
+  simpa only [map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul] using this
 
 theorem thetaIP₂ {D : D7} {S T' : HSp D} {μ : Measure (WO S T')} {𝓕 : Set (WO S T')}
     {v : WO S T' → ℂ} (h : thetaIP μ 𝓕 v v ≠ 0) : ∫⁻ w in 𝓕, ‖v w‖ₑ ^ 2 ∂μ < ⊤ := by

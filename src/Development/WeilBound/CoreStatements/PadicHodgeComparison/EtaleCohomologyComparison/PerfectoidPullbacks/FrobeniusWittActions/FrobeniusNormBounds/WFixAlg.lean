@@ -47,7 +47,7 @@ theorem rho_iZ (r : Res l K) (a : ℤ_[l]) : r.ρ (iZ K a) = ZMod.castHom (dvd_r
   have e : PadicInt.toZMod a = (((PadicInt.toZMod a).val : ℕ) : ZMod l) := (ZMod.natCast_zmod_val _).symm
   rw [e, map_natCast]
   conv_lhs => rw [ha]
-  rw [map_add, map_add, map_mul, map_mul, map_natCast, map_natCast, map_natCast, map_natCast,
+  rw [map_add (f := _), map_add (f := _), map_mul, map_mul, map_natCast, map_natCast, map_natCast, map_natCast,
     CharP.cast_eq_zero r.k l, mul_zero, add_zero]
 
 theorem alg_pow (r : Res l K) [FiniteDimensional ℚ_[l] K] (c : r.k) : ∃ f : ℕ, 0 < f ∧ c ^ (l ^ f) = c := by

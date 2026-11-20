@@ -40,7 +40,7 @@ theorem support_colSub_bdd {d a : ℕ} (P : Pol ι d a) :
   | add p q hp hq =>
     obtain ⟨S, hS⟩ := hp
     obtain ⟨T, hT⟩ := hq
-    exact ⟨S ∪ T, fun u => by rw [map_add]; exact support_add.trans (Finset.union_subset_union (hS u) (hT u))⟩
+    exact ⟨S ∪ T, fun u => by rw [map_add (f := _)]; exact support_add.trans (Finset.union_subset_union (hS u) (hT u))⟩
   | mul_X p y hp =>
     obtain ⟨S, hS⟩ := hp
     refine ⟨S + Finset.univ.image (fun j : Fin a => Finsupp.single (y.1, y.2.1, j) 1), fun u => ?_⟩
@@ -90,7 +90,7 @@ theorem coeff_colSub_good (ρ : K →* (ι → Matrix.unitaryGroup (Fin a) ℂ))
     simp only [algHom_C, algebraMap_eq]
     exact ⟨measurable_const, _, fun _ => le_rfl⟩
   | add p q hp hq =>
-    simp only [map_add, MvPolynomial.coeff_add]
+    simp only [map_add (f := _), MvPolynomial.coeff_add]
     obtain ⟨hpm, Cp, hCp⟩ := hp m
     obtain ⟨hqm, Cq, hCq⟩ := hq m
     exact ⟨hpm.add hqm, Cp + Cq, fun g => (norm_add_le _ _).trans (add_le_add (hCp g) (hCq g))⟩

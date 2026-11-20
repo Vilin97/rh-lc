@@ -24,10 +24,10 @@ theorem X_iso : ∀ x ∈ Xsp F, ∀ y ∈ Xsp F, (VS D).hT x y = 0 := by
     induction hy using Submodule.span_induction with
     | mem y hy => obtain ⟨b, rfl⟩ := hy; exact F.fl.e_iso a b
     | zero => simp
-    | add y y' _ _ h1 h2 => simp [map_add, h1, h2]
+    | add y y' _ _ h1 h2 => simp [map_add (f := _), h1, h2]
     | smul c y _ h => simp [map_smul, h]
   | zero => simp
-  | add x x' _ _ h1 h2 => simp [map_add, h1, h2]
+  | add x x' _ _ h1 h2 => simp [map_add (f := _), h1, h2]
   | smul c x _ h => simp [h]
 
 theorem X_le_orth : Xsp F ≤ orth (VS D) (Xsp F) := by

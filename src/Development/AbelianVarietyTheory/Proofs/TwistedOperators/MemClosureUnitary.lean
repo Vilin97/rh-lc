@@ -85,7 +85,7 @@ private theorem cayley_preserves_form_of_skew {A : Type} [CommRing A] (σ : A �
   simp only [hφ] at hS ⊢
   have hS' : Sᵀ * G = -(G * φ S) := eq_neg_of_add_eq_zero_left hS
   have e1 : (1 - S)ᵀ * G = G * φ (1 + S) := by
-    rw [Matrix.transpose_sub, Matrix.transpose_one, sub_mul, hS', map_add, map_one]; noncomm_ring
+    rw [Matrix.transpose_sub, Matrix.transpose_one, sub_mul, hS', map_add (f := _), map_one]; noncomm_ring
   have e2 : (1 + S)ᵀ * G = G * φ (1 - S) := by
     rw [Matrix.transpose_add, Matrix.transpose_one, add_mul, hS', map_sub, map_one]; noncomm_ring
   have e3 : (1 + S) * ((1 - S) * V) = 1 - S := by
@@ -114,7 +114,7 @@ private theorem cayley_skew_and_inverse_of_preserves_form {A : Type} [CommRing A
       have e0 : (1 + h)ᵀ * (Sᵀ * G + G * φ S) * φ (1 + h) =
           (S * (1 + h))ᵀ * G * φ (1 + h) + (1 + h)ᵀ * G * φ (S * (1 + h)) := by
         rw [Matrix.transpose_mul, map_mul]; noncomm_ring
-      rw [e0, hS1, Matrix.transpose_sub, Matrix.transpose_add, Matrix.transpose_one, map_add, map_sub, map_one]
+      rw [e0, hS1, Matrix.transpose_sub, Matrix.transpose_add, Matrix.transpose_one, map_add (f := _), map_sub, map_one]
       have e : (1 - hᵀ) * G * (1 + φ h) + (1 + hᵀ) * G * (1 - φ h) =
           G + G - (hᵀ * G * φ h + hᵀ * G * φ h) := by noncomm_ring
       rw [e, hh, sub_self]
@@ -193,7 +193,7 @@ private theorem exists_norm_one_isUnit_det_one_add_smul {K R : Type} [Field K] [
     intro a b hab
     simp only [hlamdef] at hab
     rw [div_eq_div_iff (hcw a) (hcw b)] at hab
-    simp only [map_add, map_natCast] at hab
+    simp only [map_add (f := _), map_natCast] at hab
     have h0 : ((a : K) - b) * (c z - z) = 0 := by linear_combination hab
     rcases mul_eq_zero.1 h0 with h | h
     · exact_mod_cast sub_eq_zero.1 h
@@ -446,7 +446,7 @@ theorem dense_inf (F E : Type) [Field F] [NumberField F] [Field E] [NumberField 
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [sigR, hc]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hσc : Continuous (sigR (Ainf F) σ) := by
     have hL := IsModuleTopology.continuous_of_linearMap (R := Ainf F)
       (TensorProduct.AlgebraTensorModule.map (LinearMap.id : Ainf F →ₗ[Ainf F] Ainf F) σ.toLinearMap :
@@ -456,7 +456,7 @@ theorem dense_inf (F E : Type) [Field F] [NumberField F] [Field E] [NumberField 
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [sigR]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hd : DenseRange (inclR (F := F) (E := E) (Ainf F)) := by
     have hg : DenseRange (fun c : Fin (Module.finrank F E) → F => fun i => algebraMap F (Ainf F) (c i)) :=
       DenseRange.piMap fun _ => InfiniteAdeleRing.denseRange_algebraMap F
@@ -488,7 +488,7 @@ private theorem exists_tensor_fst_snd_decomposition (F E : Type) [Field F] [Numb
   | tmul a e =>
     simp only [Algebra.TensorProduct.map_tmul]
     rfl
-  | add x y hx hy => simp only [map_add, hx, hy, Prod.mk_add_mk]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, Prod.mk_add_mk]
 
 private theorem weak_approx_real_lemma_2 (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (a : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF F) (z : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF F ⊗[F] E) :
     (Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.fstA F) (AlgHom.id F E)) (a • z) = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.fstA F a • (Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.fstA F) (AlgHom.id F E)) z ∧ (Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sndA F) (AlgHom.id F E)) (a • z) = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sndA F a • (Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sndA F) (AlgHom.id F E)) z := by
@@ -526,7 +526,7 @@ private theorem weak_approx_real_lemma_3 (F E : Type) [Field F] [NumberField F] 
         ← (Prod.mk.inj h0).1, ← (Prod.mk.inj h0).2]
       exact Prod.ext rfl (smul_zero _)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [AlgEquiv.apply_symm_apply, map_add, map_sum, AlgEquiv.apply_symm_apply]
+      rw [AlgEquiv.apply_symm_apply, map_add (f := _), map_sum, AlgEquiv.apply_symm_apply]
     simp only [hw]
     refine Prod.ext ?_ ?_
     · simp [Prod.fst_sum]
@@ -555,13 +555,13 @@ private theorem weak_approx_real_lemma_7 (F E : Type) [Field F] [NumberField F] 
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hsF : ∀ z, (Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sndA F) (AlgHom.id F E)) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.AF F) σ z) = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af F) σ ((Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sndA F) (AlgHom.id F E)) z) := by
     intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   refine ⟨?_, ?_, ?_, ?_⟩
   · ext i j; simp [Formalism.UG.cT, hsI]
   · ext i j; simp [Formalism.UG.cT, hsF]

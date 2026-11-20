@@ -18,7 +18,7 @@ private theorem projTrace_comm (u : M →ₗ[R] N) (v : N →ₗ[R] M) :
   obtain ⟨t, rfl⟩ := (dualTensorHom_bijective (R := R) (M := M) (N := N)).2 u
   induction t using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, LinearMap.add_comp, LinearMap.comp_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), LinearMap.add_comp, LinearMap.comp_add, ha, hb]
   | tmul ξ n =>
     have e1 : dualTensorHom R M N (ξ ⊗ₜ n) ∘ₗ v = (ξ ∘ₗ v).smulRight n := by ext; simp
     have e2 : v ∘ₗ dualTensorHom R M N (ξ ⊗ₜ n) = ξ.smulRight (v n) := by ext; simp

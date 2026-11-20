@@ -73,7 +73,7 @@ theorem finrank_eigW : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgC
     have h1 : ∀ z, (P.al z).1 x = (P.al z).1 y := fun z => by
       induction z using TensorProduct.induction_on with
       | zero => simp
-      | add z z' hz hz' => simp only [map_add, Submodule.coe_add, Pi.add_apply, hz, hz']
+      | add z z' hz hz' => simp only [map_add (f := _), Submodule.coe_add, Pi.add_apply, hz, hz']
       | tmul c t => simp only [Point.al_tmul, Submodule.coe_smul, Pi.smul_apply, h0]
     refine hb.1 (LinearMap.ext fun f => ?_)
     obtain ⟨z, hz⟩ := hcok f

@@ -71,7 +71,7 @@ theorem frobLog_eigen : ∀ (K : Type) [NormedField K] [IsUltrametricDist K] [Ch
     rw [PowerSeries.coeff_derivative, hg, PowerSeries.coeff_map]
     have hk : (σ ^ i) ((PowerSeries.coeff (k + 1)) f) * ((k : K) + 1)
         = (σ ^ i) ((PowerSeries.coeff (k + 1)) f * ((k : K) + 1)) := by
-      rw [map_mul, map_add, map_one, map_natCast]
+      rw [map_mul, map_add (f := _), map_one, map_natCast]
     rw [hk, hτ, ← PowerSeries.coeff_derivative]
     exact hd k
   set M := Formalism.L2.Th1.C.mulBy f e w with hMdef

@@ -35,7 +35,7 @@ theorem map_mem_VV {ι : Type} [Fintype ι] {n : ℕ} (lam : ι → DomWeight n)
     rw [MvPolynomial.map_map, show s.comp (Int.castRingHom K) = Int.castRingHom ℂ from RingHom.ext_int _ _]
     exact Submodule.subset_span ⟨i, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add p q _ _ hp hq => rw [map_add]; exact add_mem hp hq
+  | add p q _ _ hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | smul a p _ hp =>
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hp
@@ -69,10 +69,10 @@ theorem maj_bc (c : (D.mem u).C.cls 0) (τ : D.what₂.Tau) (v : InfinitePlace D
     (G := fun y z => φ ((D.sp.X 0).hT y z)) (σ := φ) (emb_nonreal φ) ⟨?_, ?_, ?_, ?_⟩ ⟨?_, ?_, ?_, ?_⟩ ?_ y z
   · intro x x' y
     show majAt _ _ v (CV.bc c τ (x + x')) _ = _
-    rw [map_add, s1]
+    rw [map_add (f := _), s1]
   · intro x y y'
     show majAt _ _ v _ (CV.bc c τ (y + y')) = _
-    rw [map_add, s2]
+    rw [map_add (f := _), s2]
   · intro a x y
     show majAt _ _ v (CV.bc c τ (a • x)) _ = _
     rw [CV.bc_smul, s3]
@@ -83,10 +83,10 @@ theorem maj_bc (c : (D.mem u).C.cls 0) (τ : D.what₂.Tau) (v : InfinitePlace D
     rfl
   · intro x x' y
     show φ ((D.sp.X 0).hT (x + x') y) = φ ((D.sp.X 0).hT x y) + φ ((D.sp.X 0).hT x' y)
-    rw [map_add, LinearMap.add_apply, map_add]
+    rw [map_add (f := _), LinearMap.add_apply, map_add (f := _)]
   · intro x y y'
     show φ ((D.sp.X 0).hT x (y + y')) = φ ((D.sp.X 0).hT x y) + φ ((D.sp.X 0).hT x y')
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
   · intro a x y
     show φ ((D.sp.X 0).hT (a • x) y) = starRingEnd ℂ (φ a) * φ ((D.sp.X 0).hT x y)
     rw [LinearMap.map_smulₛₗ₂, smul_eq_mul, map_mul, starRingEnd_apply, hcm]
@@ -121,7 +121,7 @@ theorem riesz_bc (c : (D.mem u).C.cls 0) (τ : D.what₂.Tau) (v : InfinitePlace
     have := s2 (CV.bc c τ y) 0 0
     rw [add_zero] at this
     linear_combination this
-  | add q q' _ _ h1 h2 => rw [map_add, map_add, s2, h1, h2]
+  | add q q' _ _ h1 h2 => rw [map_add (f := _), map_add (f := _), s2, h1, h2]
   | smul a q _ h1 => rw [map_smul, smul_eq_mul, map_mul, s4, h1]
 
 theorem gM_map (c : (D.mem u).C.cls 0) (y : Fin (D.R.N 0) → (D.sp.X 0).V) (τ : D.what₂.Tau) (v : InfinitePlace D.what₂.LL) :

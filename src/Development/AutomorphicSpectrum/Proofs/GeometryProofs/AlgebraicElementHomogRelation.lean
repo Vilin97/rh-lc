@@ -179,7 +179,7 @@ theorem core {Ω' : Type} [Field Ω'] {y : (Σ k, ι k) → Ω} (hy : Birational
     · exact form_zero _
   have hEm : (U * M + V * Polynomial.derivative M - Polynomial.C (H * H)).map
       (aeval y : MRing ι →ₐ[ℤ] Ω).toRingHom = 0 := by
-    rw [Polynomial.map_sub, Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul,
+    rw [Polynomial.map_sub, Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_mul,
       ← Polynomial.derivative_map, Polynomial.map_C, hUm, hVm, hMm, Polynomial.derivative_C_mul]
     simp only [map_mul, AlgHom.toRingHom_eq_coe, RingHom.coe_coe]
     linear_combination (Polynomial.C (aeval y H) * Polynomial.C (aeval y H)) * huv
@@ -205,7 +205,7 @@ theorem core {Ω' : Type} [Field Ω'] {y : (Σ k, ι k) → Ω} (hy : Birational
       ext j
       rw [Polynomial.coeff_map, Polynomial.coeff_zero, evalAt_apply]
       exact key j
-    rw [Polynomial.map_sub, Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul,
+    rw [Polynomial.map_sub, Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_mul,
       ← Polynomial.derivative_map, Polynomial.map_C] at hE0
     have hMe : (M.map (evalAt w)).eval τ = 0 := by
       rw [← sum_eval (M.map (evalAt w)) M.natDegree Polynomial.natDegree_map_le τ]

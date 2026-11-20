@@ -23,7 +23,7 @@ theorem exists_left_inv {K : Type} [Field K] {Γ : Type} [Group Γ] {n k : ℕ}
     subst hv
     have h1 : P a = ⟨a, ha⟩ := Submodule.linearProjOfIsCompl_apply_left hc ⟨a, ha⟩
     have h2 : P b = 0 := Submodule.linearProjOfIsCompl_apply_right hc ⟨b, hb⟩
-    rw [map_add, Submodule.coe_add, h1, h2]
+    rw [map_add (f := _), Submodule.coe_add, h1, h2]
     simp
   refine ⟨e.symm.toLinearMap ∘ₗ P, ?_, ?_⟩
   · intro u

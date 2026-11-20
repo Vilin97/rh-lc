@@ -63,7 +63,7 @@ theorem regularisedIntegral_of_const : _root_.GlobalTheory.FunPr.ThetaLocalInput
     rw [← e, hsum]; abel
   have eW : wop ωB z ΦB = wop ωB z Φ₀ + ∑ i, c i • (ωB (u' i, 1) (wop ωB z (Ψ i)) - wop ωB z (Ψ i)) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [eB, map_add, map_sum]
+      rw [eB, map_add (f := _), map_sum]
     simp only [map_smul, map_sub, hcomm]
   have hJ : thetaInt ωB ν₁ 𝓕₁ (wop ωB z ΦB) = GlobalTheory.FunObj.zdeg z • thetaInt ωB ν₁ 𝓕₁ Φ₀ := by
     have hi : ∀ i ∈ (Finset.univ : Finset (Fin n)),

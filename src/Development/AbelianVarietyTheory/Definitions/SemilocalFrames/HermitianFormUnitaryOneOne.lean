@@ -143,7 +143,7 @@ theorem IsURep.exists_isOpOf {G H : Type} [Group G] [TopologicalSpace G] [Measur
       funext g
       ring)
     (fun x y y' => by
-      simp only [map_add, inner_add_right, mul_add]
+      simp only [map_add (f := _), inner_add_right, mul_add]
       exact integral_add (hI x y) (hI x y'))
     (fun c x y => by
       simp only [map_smul, inner_smul_right, smul_eq_mul, RingHom.id_apply]

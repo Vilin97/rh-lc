@@ -50,13 +50,13 @@ theorem lift_agree {R : Type} [CommRing R] {G : Over (Sp R)} {n : ℕ} {X : Sche
       π g * ∑ a, π (constFn G.hom O (h.u a)) * π (dd a O f) + π f * ∑ a, π (constFn G.hom O (h.u a)) * π (dd a O g) := by
     rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [(hdd a).2.1 O le_top, map_add, map_mul, map_mul]
+    rw [(hdd a).2.1 O le_top, map_add (f := _), map_mul, map_mul]
     ring
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [op, pow_one, _root_.mul_one, Nat.cast_one, one_pow, map_add, map_sub, map_mul, map_sum, hΘ, zero_mul,
+    simp only [op, pow_one, _root_.mul_one, Nat.cast_one, one_pow, map_add (f := _), map_sub, map_mul, map_sum, hΘ, zero_mul,
     Finset.sum_const_zero, sub_zero, map_ofNat, isField_one (hdd _) le_top, isField_one (h.lift i').1 hi', map_zero,
     mul_zero, map_one] at e₁ e₀
-  rw [hs, (h.lift i).1.2.1 O hi, map_add, map_mul, map_mul] at e₁
+  rw [hs, (h.lift i).1.2.1 O hi, map_add (f := _), map_mul, map_mul] at e₁
   refine (h2.mul (hg.map π)).mul_left_cancel ?_
   linear_combination e₁ - π f * e₀
 
@@ -186,8 +186,8 @@ theorem exists_desc (V : Q.P.A.left.Opens) (d : Fld Y.H.left) (D : R → R) (hd 
       ((Over.w Y.q).trans ((Category.comp_id _).symm.trans (congrArg (Y.H.hom ≫ ·) (Spec.map_id _).symm))) V' r
   refine ⟨e, ⟨⟨fun W hW f f' => inj W ?_, fun W hW f f' => inj W ?_, fun W W' h hW f => inj W' ?_⟩,
     fun W hW r => inj W ?_⟩, fun V' hV f => he V' f hV⟩
-  · rw [map_add, he _ _ hW, he _ _ hW, he _ _ hW, map_add, hd.1.1 _ (pre_mono _ hW)]
-  · rw [map_add, map_mul, map_mul, he _ _ hW, he _ _ hW, he _ _ hW, map_mul, hd.1.2.1 _ (pre_mono _ hW)]
+  · rw [map_add (f := _), he _ _ hW, he _ _ hW, he _ _ hW, map_add (f := _), hd.1.1 _ (pre_mono _ hW)]
+  · rw [map_add (f := _), map_mul, map_mul, he _ _ hW, he _ _ hW, he _ _ hW, map_mul, hd.1.2.1 _ (pre_mono _ hW)]
   · rw [he _ _ (h.trans hW), ← res_app _ h (pre_mono _ h), ← res_app _ h (pre_mono _ h), he _ _ hW,
       hd.1.2.2 _ _ _ (pre_mono _ hW)]
   · rw [he _ _ hW, hc, hc, hd.2 _ (pre_mono _ hW)]
@@ -210,8 +210,8 @@ theorem exists_locDerK (hdd : ∀ a, IsField ⊤ (dd a)) (hB : IsBasic Y h) {K :
     rw [hV] at hi
     exact ⟨i, hx ▸ hi⟩
   · refine ⟨fun W hW f f' => ?_, fun W hW f f' => ?_, fun W W' h' hW f => ?_, fun W hW r => ?_⟩
-    · rw [(he i).1.1 W hW, map_add]
-    · rw [(he i).1.2.1 W hW, map_add, map_mul, map_mul]
+    · rw [(he i).1.1 W hW, map_add (f := _)]
+    · rw [(he i).1.2.1 W hW, map_add (f := _), map_mul, map_mul]
     · rw [(he i).1.2.2 W W' h' hW, rsT_eq (pre_mono m h'), res_app m h']
     · rw [(he i).2 W hW, app_const φ _ p m hm]
   · let a := pullback.fst Y.q.left m

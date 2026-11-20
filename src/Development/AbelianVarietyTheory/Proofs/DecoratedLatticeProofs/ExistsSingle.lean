@@ -138,11 +138,11 @@ theorem gl_single {n : ℕ} (Q : P) (y : GL (Fin n) (Z.K Q)) :
   choose j hj hj' using Z.exists_single Q
   let g : Matrix (Fin n) (Fin n) (Z.K Q) → Matrix (Fin n) (Fin n) A := fun M => 1 + (M - 1).map j
   have g1 : ∀ M, (Z.p Q).mapMatrix (g M) = M := fun M => by
-    rw [map_add, map_one]
+    rw [map_add (f := _), map_one]
     have : (Z.p Q).mapMatrix ((M - 1).map j) = M - 1 := by ext a b; exact hj _
     rw [this, add_sub_cancel]
   have g2 : ∀ M Q', Q' ≠ Q → (Z.p Q').mapMatrix (g M) = 1 := fun M Q' h => by
-    rw [map_add, map_one]
+    rw [map_add (f := _), map_one]
     have : (Z.p Q').mapMatrix ((M - 1).map j) = 0 := by ext a b; exact hj' _ Q' h
     rw [this, add_zero]
   have gm : ∀ M N, M * N = 1 → g M * g N = 1 := fun M N h => Matrix.ext fun a b => Z.ext' fun Q' => by

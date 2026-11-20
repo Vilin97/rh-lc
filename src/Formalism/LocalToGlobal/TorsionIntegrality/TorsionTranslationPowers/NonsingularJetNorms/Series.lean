@@ -47,7 +47,7 @@ theorem intS_X : IntS (X : K⟦X⟧) := by
 
 theorem intS_add {f g : K⟦X⟧} (hf : IntS f) (hg : IntS g) : IntS (f + g) := by
   intro n
-  rw [map_add]
+  rw [map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hf n) (hg n))
 
 theorem intS_neg {f : K⟦X⟧} (hf : IntS f) : IntS (-f) := by

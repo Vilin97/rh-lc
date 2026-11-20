@@ -200,7 +200,7 @@ theorem side_of {p q r s : ℕ} (c τ : ℂ) (c0 τ0 : ℚ) (hc : c = c0) (hτ :
       have e : thMkC p q r s c (units (fockAct2 p q r s) a b x) =
           thAct p q r s c τ (Eab a b) (thMkC p q r s c x) -
             (τ * (Eab a b).trace) • thMkC p q r s c x := by
-        rw [thAct_mk, twAct_apply, map_add, map_smul]
+        rw [thAct_mk, twAct_apply, map_add (f := _), map_smul]
         simp [units]
       rw [e]
       exact N.sub_mem (hst _ _ hx) (N.smul_mem _ hx)

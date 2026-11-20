@@ -64,8 +64,8 @@ theorem nonempty_holArc : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [N
     theta := fun th σ fam bas S h τ c₁ c₂ w₂ w₁ w₀ h1 h2 h3 =>
       hth _ (le_max_right _ _) th σ fam bas S h τ c₁ c₂ w₂ w₁ w₀ ⟨h1, h2, h3⟩ }⟩
   · show K.Pw w v = K.h (Λ.A.P0 (K.gam v)) + w • K.h (Λ.A.N (K.gam v))
-    rw [K.Pw_eq, AnArc.Pw_apply, map_add, map_smul]
-  · rw [map_add]; exact hadd _ _
+    rw [K.Pw_eq, AnArc.Pw_apply, map_add (f := _), map_smul]
+  · rw [map_add (f := _)]; exact hadd _ _
   · have : K.h.symm (fun k => ty k (x : E) * z k) = Λ.A.actV x (K.h.symm z) := by
       apply K.h.injective
       funext k

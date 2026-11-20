@@ -177,7 +177,7 @@ theorem eigLat_eq_span (hB : Out.PolBaseChangeSt) (hξ : IsPolFibre (RingOfInteg
       rw [← LinearMap.toMatrix'_mulVec (r a) c]
       exact RingHom.map_mulVec j _ c t
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, Matrix.mulVec_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), Matrix.mulVec_add, hx, hy]
     | smul s x _ hx => rw [← algebraMap_smul K' s x, map_smul, Matrix.mulVec_smul, hx]
   have hs : (F.eigLat act τ : Set (Fin F.P₀.g → K)) =
       {c | c ∈ F.lieLat ∧ ∀ a, (LinearMap.toMatrix' (r a)).mulVec c = algebraMap (𝓞 K) K (τ a) • c} := by

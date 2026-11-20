@@ -83,7 +83,7 @@ theorem linear_expand {K : Type} [Fintype K] [DecidableEq K] (l : (K → ℂ) �
     · subst h
       simp [Complex.ext_iff]
     · simp [h]
-  rw [e, map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul]
+  rw [e, map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul]
 
 end GlobalTheory.FourierRealPart
 

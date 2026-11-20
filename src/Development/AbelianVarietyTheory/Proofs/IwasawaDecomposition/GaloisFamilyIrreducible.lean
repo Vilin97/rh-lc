@@ -36,7 +36,7 @@ theorem exists_fixed_of_mem_biSup (ρ : Representation ℂ (GQ L n) W) (K : Set 
       have hfa : ∀ κ ∈ K, NG.rt L n κ a = a ∧ NG.rt L n κ b = b := by
         intro κ hκ
         have e := hfix κ hκ
-        rw [map_add] at e
+        rw [map_add (f := _)] at e
         have h1 : NG.rt L n κ a - a = b - NG.rt L n κ b := by
           rw [sub_eq_sub_iff_add_eq_add, e, add_comm]
         have hm : NG.rt L n κ a - a ∈ S ⊓ (⨆ S' ∈ t, S') :=

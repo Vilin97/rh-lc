@@ -179,7 +179,7 @@ theorem IsSmoothVecU.add {v w : H} (hv : IsSmoothVecU ε σ v) (hw : IsSmoothVec
   refine ⟨U1 ∩ U2, fun g => F1 g + F2 g, hU1.inter hU2, ⟨hg1, hg2⟩,
     (hF1.mono Set.inter_subset_left).add (hF2.mono Set.inter_subset_right), fun g hg hgJ => ?_⟩
   show σ g (v + w) = F1 g + F2 g
-  rw [map_add]
+  rw [map_add (f := _)]
   exact congrArg₂ (· + ·) (hE1 g hg.1 hgJ) (hE2 g hg.2 hgJ)
 
 theorem IsSmoothVecU.smul (c : ℂ) {v : H} (hv : IsSmoothVecU ε σ v) : IsSmoothVecU ε σ (c • v) := by
@@ -231,7 +231,7 @@ theorem dS_add_smul (hσ : IsURepOn (UJset ε) σ) {X Y : Matrix (Fin n) (Fin n)
     dS σ (X + (r : ℂ) • Y) v = dS σ X v + (r : ℂ) • dS σ Y v := by
   obtain ⟨D, hD⟩ := smd_orbit_deriv hv
   have e : ∀ Z, inG ε Z → dS σ Z v = D Z := fun Z hZ => (hD Z hZ).deriv
-  rw [e _ (smd_inG_add_smul hX hY r), e X hX, e Y hY, map_add]
+  rw [e _ (smd_inG_add_smul hX hY r), e X hX, e Y hY, map_add (f := _)]
   have hY' : ((r : ℂ) • Y) = r • Y := by
     ext a b; simp [Complex.real_smul]
   rw [hY', map_smul]

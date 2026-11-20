@@ -49,7 +49,7 @@ theorem exists_corestriction_cocycle : ∀ (R G X : Type) [CommRing R] [Group G]
     simp only [MulAction.toPerm_apply, mul_smul]
     have e : (g • h • q).out⁻¹ * (g * h) * q.out =
         ((g • h • q).out⁻¹ * g * (h • q).out) * ((h • q).out⁻¹ * h * q.out) := by group
-    rw [e, hc _ (corCoc_mem H g (h • q)) _ (corCoc_mem H h q), map_add, hmul, hmul]
+    rw [e, hc _ (corCoc_mem H g (h • q)) _ (corCoc_mem H h q), map_add (f := _), hmul, hmul]
     congr 3
     group
   · refine ⟨0, fun h hh => ?_⟩
@@ -87,7 +87,7 @@ theorem exists_corestriction_cocycle : ∀ (R G X : Type) [CommRing R] [Group G]
     rw [map_sub, map_sub, map_sub, hmul, e] at a1
     have := Y.add_mem (Y.sub_mem a1 a2) a3
     convert this using 1
-    rw [map_add, hmul]
+    rw [map_add (f := _), hmul]
     abel
 
 end GlobalTheory

@@ -114,7 +114,7 @@ theorem ioMem (hK2 : RegroupP) (i : TT → MvPolynomial (Fin k × Fin n) K →�
     rw [map_zero, smul_zero]
     exact Submodule.zero_mem _
   | add x y _ _ ihx ihy =>
-    rw [map_add, smul_add]
+    rw [map_add (f := _), smul_add]
     exact Submodule.add_mem _ ihx ihy
   | smul a x _ ih =>
     rw [LinearMap.map_smul_of_tower, hcomm]
@@ -155,7 +155,7 @@ theorem prMem (pr : TT → MvPolynomial (Bool × (Fin k × Fin n)) K →ₗ[K] M
     rw [map_zero, smul_zero]
     exact Submodule.zero_mem _
   | add x y _ _ ihx ihy =>
-    rw [map_add, smul_add]
+    rw [map_add (f := _), smul_add]
     exact Submodule.add_mem _ ihx ihy
   | smul a x _ ih =>
     rw [LinearMap.map_smul_of_tower, hcomm]

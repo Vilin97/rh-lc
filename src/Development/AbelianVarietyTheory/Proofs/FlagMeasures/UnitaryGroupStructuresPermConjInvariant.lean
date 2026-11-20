@@ -102,7 +102,7 @@ lemma perm_P (ε : Fin n → Bool) (s : Equiv.Perm (Fin n)) (g : Matrix (Fin n) 
     inP (ε ∘ s) g ↔ inP ε (perm s g) := by
   simp only [inP, inG]
   rw [perm_ct, perm_Jm ε s]
-  simp only [← map_mul, ← map_add, ← map_neg, EmbeddingLike.map_eq_zero_iff,
+  simp only [← map_mul, ← map_add (f := _), ← map_neg, EmbeddingLike.map_eq_zero_iff,
     (perm s).injective.eq_iff]
 
 attribute [local instance] Matrix.linftyOpNormedRing Matrix.linftyOpNormedAlgebra in

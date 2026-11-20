@@ -50,7 +50,7 @@ theorem I_left (hU : Unimod) (hT : ThetaBasic) (hp : IsPair B M χX χW om r s r
 
 theorem theta_add (hp : IsPair B M χX χW om r s r' s') {Φ Ψ : Fn F n d} (hΦ : Φ ∈ schA F _) (hΨ : Ψ ∈ schA F _) (g h) :
     theta om (Φ + Ψ) g h = theta om Φ g h + theta om Ψ g h := by
-  simp only [theta, map_add]
+  simp only [theta, map_add (f := _)]
   exact thetaSum_add F (hp.weil.isUSplitting.pres _ _ hΦ) (hp.weil.isUSplitting.pres _ _ hΨ)
 
 def convS (hp : IsPair B M χX χW om r s r' s') : Submodule ℂ (Fn F n d) where

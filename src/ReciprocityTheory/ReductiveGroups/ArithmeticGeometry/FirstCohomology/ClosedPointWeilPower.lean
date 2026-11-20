@@ -31,7 +31,7 @@ lemma comp_act_nat {O : Type} [Ring O] (ρ : RingAct A O) (x : T ⟶ A) :
   | succ n ih =>
     rcases Nat.eq_zero_or_pos n with rfl | hpos
     · simp [ρ.map_one]
-    · rw [Nat.cast_succ, ρ.map_add, ρ.map_one, padd, ← Category.assoc,
+    · rw [Nat.cast_succ, ρ.map_add (f := _), ρ.map_one, padd, ← Category.assoc,
         CartesianMonoidalCategory.comp_lift, Category.comp_id, ih hpos, pow_succ, Hom.mul_def]
 
 end Grp

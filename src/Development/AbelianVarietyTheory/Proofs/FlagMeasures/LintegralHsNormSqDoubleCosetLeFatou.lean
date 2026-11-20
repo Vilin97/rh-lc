@@ -59,7 +59,7 @@ theorem DD_stable {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
     rw [hσ.1.2 g hg h hh] at this
     exact this
   | zero => simp
-  | add u v _ _ hu hv => rw [map_add]; exact (DD σ w).add_mem hu hv
+  | add u v _ _ hu hv => rw [map_add (f := _)]; exact (DD σ w).add_mem hu hv
   | smul a v _ hv => rw [map_smul]; exact (DD σ w).smul_mem a hv
 
 theorem integrable_coef {H : Type*} [NormedAddCommGroup H] [InnerProductSpace ℂ H]

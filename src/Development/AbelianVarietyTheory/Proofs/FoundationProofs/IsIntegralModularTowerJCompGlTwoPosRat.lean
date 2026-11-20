@@ -63,7 +63,7 @@ def holR (X : Tower Ω ε) : Subring X.K where
   one_mem' := ⟨fun _ => 1, differentiableOn_const 1, by rw [map_one]; rfl⟩
   add_mem' := by
     rintro a b ⟨φ, hφ, ha⟩ ⟨ψ, hψ, hb⟩
-    exact ⟨φ + ψ, hφ.add hψ, by rw [map_add, ha, hb]; rfl⟩
+    exact ⟨φ + ψ, hφ.add hψ, by rw [map_add (f := _), ha, hb]; rfl⟩
   zero_mem' := ⟨fun _ => 0, differentiableOn_const 0, by rw [map_zero]; rfl⟩
   neg_mem' := by
     rintro a ⟨φ, hφ, ha⟩

@@ -124,7 +124,7 @@ theorem embedding_cases (w : InfinitePlace I.E) :
     obtain ⟨s, hs⟩ := (I.cm.fixed (e + star e)).1 (by rw [star_add, star_star, add_comm])
     obtain ⟨t, ht⟩ := (I.cm.fixed (e * star e)).1 (by rw [star_mul, star_star])
     have h1 : w.embedding e + starRingEnd ℂ (w.embedding e) = ψ e + starRingEnd ℂ (ψ e) := by
-      rw [← hcm w.embedding, ← hcm ψ, ← map_add, ← map_add, ← hs, hF]
+      rw [← hcm w.embedding, ← hcm ψ, ← map_add (f := _), ← map_add (f := _), ← hs, hF]
     have h2 : w.embedding e * starRingEnd ℂ (w.embedding e) = ψ e * starRingEnd ℂ (ψ e) := by
       rw [← hcm w.embedding, ← hcm ψ, ← map_mul, ← map_mul, ← ht, hF]
     have h3 : (w.embedding e - ψ e) * (w.embedding e - starRingEnd ℂ (ψ e)) = 0 := by
@@ -147,10 +147,10 @@ theorem embedding_cases (w : InfinitePlace I.E) :
   have hb' := (hpt b).resolve_right hb
   rcases hpt (a + b) with h | h
   · apply ha
-    rw [map_add, map_add] at h
+    rw [map_add (f := _), map_add (f := _)] at h
     linear_combination h - hb'
   · apply hb
-    rw [map_add, map_add, map_add] at h
+    rw [map_add (f := _), map_add (f := _), map_add (f := _)] at h
     linear_combination h - ha'
 
 theorem frm_frame (x : I.GA) (w : InfinitePlace I.E) :

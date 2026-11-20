@@ -46,7 +46,7 @@ private theorem tan_finite : Module.Finite (ResidueField O) (Tan O R) := by
     induction hy using Submodule.span_induction with
     | mem z hz => exact h0 z hz
     | zero => exact map_zero _
-    | add a b _ _ ha hb => rw [map_add, ha, hb, add_zero]
+    | add a b _ _ ha hb => rw [map_add (f := _), ha, hb, add_zero]
     | smul c z hz ih =>
       have hz' : z ∈ maximalIdeal R := by
         rw [← hs]

@@ -25,7 +25,7 @@ def sigW (hinj : Function.Injective (algebraMap W Qq)) (σ : Qq ≃+* Qq)
   map_one' := hinj (by rw [sigF_spec]; simp)
   map_mul' x y := hinj (by simp only [sigF_spec, map_mul])
   map_zero' := hinj (by rw [sigF_spec]; simp)
-  map_add' x y := hinj (by simp only [sigF_spec, map_add])
+  map_add' x y := hinj (by simp only [sigF_spec, map_add (f := _)])
 
 theorem sigW_spec (hinj : Function.Injective (algebraMap W Qq)) (σ : Qq ≃+* Qq)
     (hσ : ∀ x : W, ∃ y : W, σ (algebraMap W Qq x) = algebraMap W Qq (x ^ p + (p : W) * y)) (x : W) :
@@ -63,7 +63,7 @@ theorem G_coeff_zero (x : W) : (G p Qq F x).coeff 0 = algebraMap W Qq x := by
 theorem G_add (x y : W) : G p Qq F (x + y) = G p Qq F x + G p Qq F y := by
   have hit : ∀ n, (F^[n]) = ⇑(F ^ n) := fun n => (RingHom.coe_pow F n).symm
   simp only [G]
-  rw [← map_add]
+  rw [← map_add (f := _)]
   congr 1
 
 theorem G_mul (x y : W) : G p Qq F (x * y) = G p Qq F x * G p Qq F y := by
@@ -166,7 +166,7 @@ def sHom (hinj : Function.Injective (algebraMap W Qq)) : W →+* WittVector p W 
   map_one' := map_injective _ hinj (by rw [map_sFun, map_one, G_one])
   map_mul' x y := map_injective _ hinj (by rw [map_mul, map_sFun, map_sFun, map_sFun, G_mul])
   map_zero' := map_injective _ hinj (by rw [map_sFun, map_zero, G_zero])
-  map_add' x y := map_injective _ hinj (by rw [map_add, map_sFun, map_sFun, map_sFun, G_add])
+  map_add' x y := map_injective _ hinj (by rw [map_add (f := _), map_sFun, map_sFun, map_sFun, G_add])
 
 theorem sHom_apply (hinj : Function.Injective (algebraMap W Qq)) (x : W) :
     sHom p Qq F hF hinj x = sFun p Qq F hF hinj x := rfl
@@ -181,7 +181,7 @@ private theorem map_frobenius' (f : W →+* Qq) (w : WittVector p W) :
       | exact DFunLike.congr_fun (MvPolynomial.comp_aeval w.coeff f.toIntAlgHom) P
       | (induction P using MvPolynomial.induction_on with
           | C a => simp [MvPolynomial.aeval_C, algebraMap_int_eq, eq_intCast, map_intCast]
-          | add P Q hP hQ => simp only [map_add, hP, hQ]
+          | add P Q hP hQ => simp only [map_add (f := _), hP, hQ]
           | mul_X P i hP => simp only [map_mul, hP, MvPolynomial.aeval_X])
   ext n
   rw [WittVector.map_coeff, WittVector.coeff_frobenius, WittVector.coeff_frobenius, key]

@@ -14,7 +14,7 @@ variable {E : Type} [Field E] [NumberField E] {a : ℕ}
 
 def kgT : Lie E a →ₗ[ℝ] ℂ where
   toFun X := ∑ τ : E →+* ℂ, ∑ i, coord τ (X i i)
-  map_add' X Y := by simp only [Pi.add_apply, map_add, Finset.sum_add_distrib]
+  map_add' X Y := by simp only [Pi.add_apply, map_add (f := _), Finset.sum_add_distrib]
   map_smul' c X := by
     simp only [Pi.smul_apply, RingHom.id_apply, Finset.smul_sum]
     refine Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun i _ => ?_

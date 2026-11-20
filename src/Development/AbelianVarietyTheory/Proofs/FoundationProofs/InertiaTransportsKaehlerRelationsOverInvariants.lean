@@ -42,7 +42,7 @@ theorem transp_rel : ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] (A : ValuationS
   have hD : IsDerOn (⊤ : Subalgebra (fixA A) A) D :=
     { add := fun x _ y _ => by
         show dA A (τ (x + y)) = dA A (τ x) + dA A (τ y)
-        rw [map_add, map_add]
+        rw [map_add (f := _), map_add (f := _)]
       mul := fun x _ y _ => by
         show dA A (τ (x * y)) = τ x • dA A (τ y) + τ y • dA A (τ x)
         rw [map_mul, Derivation.leibniz]

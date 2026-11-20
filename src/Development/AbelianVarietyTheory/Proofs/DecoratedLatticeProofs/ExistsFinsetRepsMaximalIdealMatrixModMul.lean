@@ -47,7 +47,7 @@ def redMap (ϖ : kˣ) (hϖ : valuation k (ϖ : k) = uniformizer k) : maxLat k A 
   map_add' ν ν' := by
     funext i a
     simp only [Pi.add_apply]
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     ext
     simp [mul_add]

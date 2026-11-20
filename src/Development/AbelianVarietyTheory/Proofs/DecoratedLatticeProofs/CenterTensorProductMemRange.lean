@@ -28,7 +28,7 @@ theorem center_tensorProduct_mem_range {A B : Type} [Ring A] [Algebra ℂ A] [Ri
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [hf]
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     rw [this]
     exact Module.Flat.lTensor_preserves_injective_linearMap _ Subtype.val_injective
   have hw2 : w ∈ Subalgebra.centralizer ℂ
@@ -53,7 +53,7 @@ theorem center_tensorProduct_mem_range {A B : Type} [Ring A] [Algebra ℂ A] [Ri
   induction u using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [hf]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem center_eq_adjoin : ∀ (A B C : Type) [Ring A] [Algebra ℂ A] [Ring B] [Algebra ℂ B] [Ring C] [Algebra ℂ C] (e : (A ⊗[ℂ] B) ≃ₐ[ℂ] C), Subalgebra.center ℂ C = Algebra.adjoin ℂ ((fun a => e (a ⊗ₜ 1)) '' (Subalgebra.center ℂ A : Set A) ∪ (fun b => e (1 ⊗ₜ b)) '' (Subalgebra.center ℂ B : Set B)) := by
   intro A B C _ _ _ _ _ _ e
@@ -80,7 +80,7 @@ theorem center_eq_adjoin : ∀ (A B C : Type) [Ring A] [Algebra ℂ A] [Ring B] 
       refine Subalgebra.mul_mem _ (Algebra.subset_adjoin ?_) (Algebra.subset_adjoin ?_)
       · exact Or.inl ⟨a, a.2, rfl⟩
       · exact Or.inr ⟨b, b.2, rfl⟩
-    | add x y hx hy => rw [map_add, map_add]; exact Subalgebra.add_mem _ hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Subalgebra.add_mem _ hx hy
   · rw [Algebra.adjoin_le_iff]
     rintro _ (⟨a, ha, rfl⟩ | ⟨b, hb, rfl⟩)
     · rw [SetLike.mem_coe, Subalgebra.mem_center_iff]

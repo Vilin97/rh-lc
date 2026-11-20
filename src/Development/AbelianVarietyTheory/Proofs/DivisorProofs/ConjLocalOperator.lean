@@ -23,7 +23,7 @@ theorem conjSchR_apply {κ : Type} [Fintype κ] (f : SInf F κ) (x : κ → mixe
 
 def conjSchCLM {κ κ₁ : Type} [Fintype κ] [Fintype κ₁] (T : SInf F κ →L[ℂ] SInf F κ₁) : SInf F κ →L[ℂ] SInf F κ₁ where
   toFun f := conjSchR κ₁ (T (conjSchR κ f))
-  map_add' f g := by simp only [map_add]
+  map_add' f g := by simp only [map_add (f := _)]
   map_smul' c f := by
     have h : conjSchR κ (c • f) = starRingEnd ℂ c • conjSchR κ f := by
       refine SchwartzMap.ext fun y => ?_; simp only [conjSchR_apply, SchwartzMap.smul_apply, smul_eq_mul, map_mul]

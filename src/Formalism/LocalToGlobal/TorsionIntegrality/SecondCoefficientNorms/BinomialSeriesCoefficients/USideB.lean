@@ -59,7 +59,7 @@ theorem subst_wpShift {e l A : PowerSeries K} {c0 : K} (hl : PowerSeries.constan
     rw [e1, PowerSeries.subst_sub hs, PowerSeries.subst_mul hs, PowerSeries.subst_C,
       PowerSeries.subst_pow hs, PowerSeries.subst_X hs]
     rfl
-  rw [e2, mul_sub, ← hX, map_add]
+  rw [e2, mul_sub, ← hX, map_add (f := _)]
   ring
 
 end SlopeTestRemainingChoices
@@ -163,7 +163,7 @@ def intSub (R : Subring K) : Subring (PowerSeries K) where
     · exact R.zero_mem
   add_mem' := by
     intro f g hf hg n
-    rw [map_add]
+    rw [map_add (f := _)]
     exact R.add_mem (hf _) (hg _)
   zero_mem' := by
     intro n

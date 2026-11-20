@@ -145,7 +145,7 @@ def WtPol (K : Type) [Field K] {ι : Type} [Fintype ι] {n : ℕ} (ν : ι → F
   carrier := {Q | ∀ β : ι → Matrix (Fin n) (Fin n) K, IsBor β → colSub β Q = (∏ τ, ∏ r, β τ r r ^ ν τ r) • Q}
   add_mem' := by
     intro P Q hP hQ β hβ
-    rw [map_add, hP β hβ, hQ β hβ, smul_add]
+    rw [map_add (f := _), hP β hβ, hQ β hβ, smul_add]
   zero_mem' := by
     intro β _
     rw [map_zero, smul_zero]

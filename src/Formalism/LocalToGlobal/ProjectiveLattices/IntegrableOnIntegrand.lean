@@ -113,7 +113,7 @@ def coefVia {N : ℕ} {C : Type} [AddCommGroup C] [Module K C] (act : (Fin N →
   map_add' F G := by
     have h : (⟨rd (F + G), hrd (F + G)⟩ : OrbInt act S) = ⟨rd F, hrd F⟩ + ⟨rd G, hrd G⟩ :=
       Subtype.ext (by simp)
-    rw [h, map_add]
+    rw [h, map_add (f := _)]
     rfl
   map_smul' a F := by
     have h : (⟨rd (a • F), hrd (a • F)⟩ : OrbInt act S) = σ a • ⟨rd F, hrd F⟩ :=

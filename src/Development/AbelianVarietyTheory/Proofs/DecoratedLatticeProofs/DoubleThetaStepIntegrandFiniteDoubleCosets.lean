@@ -176,7 +176,7 @@ theorem off_add (e : AE D) (x y : WO S T) (hx : Off S T e x) (hy : Off S T e y) 
     have h1 : infPart D (x i j) = 0 := congrFun (congrFun hx.2 i) j
     have h2 : infPart D (y i j) = 0 := congrFun (congrFun hy.2 i) j
     change infPart D (x i j + y i j) = 0
-    rw [RingHom.map_add, h1, h2, add_zero]
+    rw [RingHom.map_add (f := _), h1, h2, add_zero]
 
 theorem off_of_half {e e' : AE D} (h : e * e' = 0) (hi : infPart D e' = 0) (u : WO S T) (hu : IsHalf e' u) : Off S T e u := by
   refine ⟨fun i j => ?_, ?_⟩

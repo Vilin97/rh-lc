@@ -13,7 +13,7 @@ theorem mem_of_isometry_eigen_of_dense_iSup :
   haveI := hfin m
   obtain ⟨p, hp, q, hq, rfl⟩ := (E m).exists_add_mem_mem_orthogonal y
   have hUq : U q = lam m • q := by
-    rw [map_add, hE m p hp, smul_add] at hy
+    rw [map_add (f := _), hE m p hp, smul_add] at hy
     exact add_left_cancel hy
   have horth : ∀ m', ∀ e ∈ E m', ⟪e, q⟫_ℂ = 0 := by
     intro m' e he

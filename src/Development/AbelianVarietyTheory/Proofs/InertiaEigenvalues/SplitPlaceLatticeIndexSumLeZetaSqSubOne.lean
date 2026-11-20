@@ -48,7 +48,7 @@ theorem chart_of_finIdem {D : D7} {v : HeightOneSpectrum (𝓞 D.host.F)} {e : A
     exact this.symm
   have hπc : π (cA D e) = 0 := (hπ.2.1 _).2 he.2.1
   have h1 : π (algebraMap (AF D.host.F) (AE D) (pairA D.host.F 0 α)) = 1 := by
-    rw [← hf, map_add, hπe, hπc, add_zero]
+    rw [← hf, map_add (f := _), hπe, hπc, add_zero]
   rw [hπ.2.2.1] at h1
   by_cases hvv : v' = v
   · subst hvv; exact ⟨π, hπ⟩

@@ -108,7 +108,7 @@ theorem supLat_eq_iff {R K : Type} [CommRing R] [IsDomain R] [IsDiscreteValuatio
       simp only [vecK, Pi.add_apply, Pi.smul_apply] at e
       simp only [smul_eq_mul] at e
       simp only [Algebra.smul_def] at e
-      rw [map_add, map_mul, map_mul]
+      rw [map_add (f := _), map_mul, map_mul]
       linear_combination (-(algebraMap R K ϖ)) * e +
         (algebraMap R K s * algebraMap R K (y i) - algebraMap R K (x i)) * hw
     refine ⟨s, ?_, fun i => ⟨z i, by rw [hxi i]; ring⟩⟩

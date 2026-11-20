@@ -16,7 +16,7 @@ theorem exists_orthogonal_proj_span_finset_of_isotropic_radical
   classical
   have hadd2 : ∀ x ∈ D, ∀ y ∈ D, ∀ z ∈ D, B x (y + z) = B x y + B x z := by
     intro x hx y hy z hz
-    rw [hherm (y + z) (D.add_mem hy hz) x hx, hadd y hy z hz x hx, map_add,
+    rw [hherm (y + z) (D.add_mem hy hz) x hx, hadd y hy z hz x hx, map_add (f := _),
       ← hherm y hy x hx, ← hherm z hz x hx]
   have hsmul2 : ∀ c : ℂ, ∀ x ∈ D, ∀ y ∈ D, B x (c • y) = starRingEnd ℂ c * B x y := by
     intro c x hx y hy

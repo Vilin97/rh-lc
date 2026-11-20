@@ -52,7 +52,7 @@ theorem UpperTheory.ConvolutionTheory.R2.H.lcLaws :
   · intro y
     apply Units.ext
     ext i j
-    rw [Matrix.GeneralLinearGroup.map_apply, hlc, map_add, hcp]
+    rw [Matrix.GeneralLinearGroup.map_apply, hlc, map_add (f := _), hcp]
     fin_cases i <;> fin_cases j <;> simp
   · intro g y
     have one_l : ∀ (R : Type) [CommRing R] (M : Matrix (Fin 2) (Fin 2) R) (i j : Fin 2),

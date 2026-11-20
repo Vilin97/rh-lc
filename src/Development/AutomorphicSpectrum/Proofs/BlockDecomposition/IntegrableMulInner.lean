@@ -36,7 +36,7 @@ def coefOp (ν : Measure Γ) (τ : Γ → (H →L[ℂ] H)) (hτ : IsU τ) (f : �
     { toFun := fun b => ∫ g, f g • τ g b ∂ν
       map_add' := fun x y => by
         rw [← integral_add (integrable_smul_rep hτ hf x) (integrable_smul_rep hτ hf y)]
-        simp only [map_add, smul_add]
+        simp only [map_add (f := _), smul_add]
       map_smul' := fun c x => by
         simp only [RingHom.id_apply]
         rw [← integral_smul]

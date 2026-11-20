@@ -46,7 +46,7 @@ variable {P : Y.Modules} {T : Y.Opens}
 def toCut (l : Γ(dual P, T)) : P ⟶ cut T :=
   homOfLinear (fun W =>
     { toFun s := (cutEquiv T W).symm (dualApp l (cutO_le' T W) (resM P (cutO_le T W) s))
-      map_add' s t := by simp only [map_add]
+      map_add' s t := by simp only [map_add (f := _)]
       map_smul' a s := (cutEquiv T W).injective (by
         rw [RingHom.id_apply, cutEquiv_smul, AddEquiv.apply_symm_apply, AddEquiv.apply_symm_apply,
           resM_smul, map_smul, smul_eq_mul]) })
@@ -65,7 +65,7 @@ theorem toCut_injective {l l' : Γ(dual P, T)} (h : toCut l = toCut l') : l = l'
 def ofCut (φ : P ⟶ cut T) : Γ(dual P, T) :=
   dualMk (fun W h =>
     { toFun s := resG Y (le_cutO h le_rfl) (cutEquiv T W (φ.app W s))
-      map_add' s t := by simp only [map_add]
+      map_add' s t := by simp only [map_add (f := _)]
       map_smul' a s := by
         rw [Scheme.Modules.Hom.app_smul, cutEquiv_smul, map_mul, resG_resG, resG_self]; rfl })
     fun W W' h h' s => by
@@ -129,7 +129,7 @@ def formPush (l : Γ(dual F, V)) : F ⟶ (Scheme.Modules.pushforward f).obj (cut
   homOfLinear (fun W =>
     { toFun s := (cutEquiv (f ⁻¹ᵁ V) (f ⁻¹ᵁ W)).symm (f.appLE (W ⊓ V) _ (cutO_le_inf f V W)
         (dualApp l inf_le_right (resM F inf_le_left s)))
-      map_add' s t := by simp only [map_add]; rfl
+      map_add' s t := by simp only [map_add (f := _)]; rfl
       map_smul' a s := (cutEquiv (f ⁻¹ᵁ V) (f ⁻¹ᵁ W)).injective (by
         refine Eq.trans ?_ (cutEquiv_smul _ _ (f.app W a) _).symm
         rw [AddEquiv.apply_symm_apply, AddEquiv.apply_symm_apply,

@@ -36,7 +36,7 @@ private theorem avg {ρ : Representation ℂ G V} (hρ : IsSmooth ρ) (C : Subgr
     { toFun := fun w => ∫ c : C, θ c * l (ρ (c : G)⁻¹ w) ∂μ
       map_add' := fun a b => by
         rw [← integral_add (hi a) (hi b)]
-        simp only [map_add, mul_add]
+        simp only [map_add (f := _), mul_add]
       map_smul' := fun t a => by
         simp only [map_smul, smul_eq_mul, RingHom.id_apply]
         rw [← integral_const_mul]
@@ -96,7 +96,7 @@ theorem eq_zero_of_no_intertwining {ρ : Representation ℂ G V} (hρ : IsSmooth
       obtain ⟨F, hF, h⟩ := ha
       obtain ⟨F', hF', h'⟩ := hb
       refine ⟨F ∪ F', fun u hu => (Finset.mem_union.1 hu).elim (hF u) (hF' u), fun l' hl => ?_⟩
-      rw [map_add, h l' fun c hc => hl c (Finset.mem_union_left _ hc), h' l' fun c hc => hl c (Finset.mem_union_right _ hc),
+      rw [map_add (f := _), h l' fun c hc => hl c (Finset.mem_union_left _ hc), h' l' fun c hc => hl c (Finset.mem_union_right _ hc),
         add_zero]
     | smul t a _ ha =>
       obtain ⟨F, hF, h⟩ := ha

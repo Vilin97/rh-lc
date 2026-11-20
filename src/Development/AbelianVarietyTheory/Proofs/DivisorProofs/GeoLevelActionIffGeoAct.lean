@@ -50,7 +50,7 @@ theorem exists_half (a : Dw.La) : ∃ b ∈ l.Mb.map (H.bar : 𝓞 E →+* 𝓞 
   rw [Submodule.sup_smul] at h
   obtain ⟨x, hx, b, hb, rfl⟩ := Submodule.mem_sup.1 h
   refine ⟨b, hb, ?_⟩
-  rw [map_add, show (l.Mb • (⊤ : Submodule (𝓞 E) Dw.La)).mkQ x = 0 from (Submodule.Quotient.mk_eq_zero _).2 hx, zero_add]
+  rw [map_add (f := _), show (l.Mb • (⊤ : Submodule (𝓞 E) Dw.La)).mkQ x = 0 from (Submodule.Quotient.mk_eq_zero _).2 hx, zero_add]
 
 theorem map_mem_smul_top {I : Ideal (𝓞 E)} (f : Dw.La →ₗ[𝓞 E] Dw.La) {a : Dw.La}
     (ha : a ∈ I • (⊤ : Submodule (𝓞 E) Dw.La)) : f a ∈ I • (⊤ : Submodule (𝓞 E) Dw.La) := by
@@ -126,7 +126,7 @@ theorem exists_coord_of {O S La : Type} [CommRing O] [CommRing S] [AddCommGroup 
       rw [hlin]
       exact Ideal.mul_mem_right _ _ (Ideal.mem_map_of_mem _ hb)
     · intro x y hx hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hx hy
   let f : La →ₗ[O] (Fin r → O ⧸ I) :=
     { toFun := fun a i => π (ρ a i)
@@ -143,7 +143,7 @@ theorem exists_coord_of {O S La : Type} [CommRing O] [CommRing S] [AddCommGroup 
     obtain ⟨a, s', e⟩ := hsur fun i => o (b i)
     refine ⟨a, funext fun i => ?_⟩
     have := congrArg π (congrFun e i)
-    rw [Pi.add_apply, map_add, Pi.smul_apply, hπM, add_zero, hπ, hb] at this
+    rw [Pi.add_apply, map_add (f := _), Pi.smul_apply, hπM, add_zero, hπ, hb] at this
     exact this.symm
   refine ⟨(Submodule.quotEquivOfEq _ _ hk.symm).trans (f.quotKerEquivOfSurjective hs), fun y a ha a' ha' => ?_⟩
   change _ ↔ f a' = (y.map π).mulVec (f a)

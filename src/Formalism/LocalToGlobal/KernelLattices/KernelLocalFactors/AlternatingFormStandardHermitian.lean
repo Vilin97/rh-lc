@@ -102,11 +102,11 @@ theorem char_sum_zero {Λ₁ Λ₂ : AddSubgroup V} {S : Finset V} (hS : IsReps 
 theorem brk_ne_zero (H : Sesq V) (y t : V) : brk H y t ≠ 0 := Complex.exp_ne_zero _
 
 theorem brk_add_right (H : Sesq V) (y t t' : V) : brk H y (t + t') = brk H y t * brk H y t' := by
-  simp only [brk, altE, map_add, LinearMap.add_apply, Complex.add_im]
+  simp only [brk, altE, map_add (f := _), LinearMap.add_apply, Complex.add_im]
   rw [← Complex.exp_add]; congr 1; push_cast; ring
 
 theorem brk_add_left (H : Sesq V) (y y' t : V) : brk H (y + y') t = brk H y t * brk H y' t := by
-  simp only [brk, altE, map_add, Complex.add_im]
+  simp only [brk, altE, map_add (f := _), Complex.add_im]
   rw [← Complex.exp_add]; congr 1; push_cast; ring
 
 theorem brk_sub_right (H : Sesq V) (y t t' : V) : brk H y (t - t') = brk H y t * (brk H y t')⁻¹ := by
@@ -439,10 +439,10 @@ theorem half_periods_complex : HalvesC := by
     · refine tw_mem_of _ c hc _ hx ε (fun Q => ?_) (fun Q hQ => h2 Q (expS_eq_neg_one SS Q hQ))
       rcases expS_cases SS Q with h | h | h <;> simp [h]
     · exact tw_mem_of _ c hc _ hx (1 - ε) (expS_cases SS) (fun Q hQ => h1 Q (expS_eq_one SS Q hQ))
-    · rw [← map_add, ← add_smul]; simp
+    · rw [← map_add (f := _), ← add_smul]; simp
   have h3 : ∀ u ∈ AC emb δ AA0 SS N N' c, ∀ v ∈ BC emb δ AA0 SS N N' c, u + v ∈ LamC emb δ AA0 N N' → u ∈ LamC emb δ AA0 N N' := by
     rintro _ ⟨a₀, ha₀, rfl⟩ _ ⟨b₀, hb₀, rfl⟩ ⟨m, hm, hme⟩
-    rw [← map_add] at hme
+    rw [← map_add (f := _)] at hme
     have hm' : a₀ + b₀ ∈ perO AA0 N N' := by rw [← hinj hme]; exact hm
     exact ⟨a₀, tw_split _ c hc _ (expS_cases SS) ha₀ hb₀ hm', rfl⟩
   refine ⟨hH, scA, scB, sdA, sdB, scΛ, hsum, h3, ?_, ?_⟩
@@ -588,7 +588,7 @@ theorem XiIndCClass_of (h : XiIndClass) : XiIndCClass := by
       · have h2 := nat_smul_mem _ c (nat_smul_mem _ c hAQ)
         rwa [smul_smul (c : E) (c : E)⁻¹, mul_inv_cancel₀ hc, one_smul] at h2
   funext z
-  have e0 : embH emb δ s = embH emb δ s' + embH emb δ (s - s') := by rw [← map_add]; congr 1; abel
+  have e0 : embH emb δ s = embH emb δ s' + embH emb δ (s - s') := by rw [← map_add (f := _)]; congr 1; abel
   show xiInd _ _ _ _ _ _ θ (embH emb δ s) z = xiInd _ _ _ _ _ _ θ (embH emb δ s') z
   rw [e0]
   exact h _ _ _ _ _ _ hyp _ _ (repsOf_spec _ _ hr1) (repsOf_spec _ _ hr2) _ θ hθ _ ⟨s', hl'.1, rfl⟩ _ ⟨s - s', hA, rfl⟩ ⟨s - s', hB, rfl⟩ z
@@ -1378,7 +1378,7 @@ namespace Test
 def H1 : Sesq ℂ :=
   LinearMap.mk₂'ₛₗ (RingHom.id ℂ) (starRingEnd ℂ) (fun z w => z * (starRingEnd ℂ) w)
     (by intro x y w; ring) (by intro c x w; simp only [smul_eq_mul, RingHom.id_apply]; ring)
-    (by intro x y w; simp only [map_add]; ring) (by intro c x w; simp only [smul_eq_mul, map_mul]; ring)
+    (by intro x y w; simp only [map_add (f := _)]; ring) (by intro c x w; simp only [smul_eq_mul, map_mul]; ring)
 
 theorem standard_hermitian_apply (z w : ℂ) : H1 z w = z * (starRingEnd ℂ) w := rfl
 

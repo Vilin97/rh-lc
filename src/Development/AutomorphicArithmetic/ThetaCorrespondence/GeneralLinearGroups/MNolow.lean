@@ -127,7 +127,7 @@ theorem UpperTheory.Lit.Mix.nolow :
   let A₁ : Multiset (IrrGL k) := Sᶜ.val.map x
   have hA01 : A₀ + A₁ = A := by
     show S.val.map x + Sᶜ.val.map x = A
-    rw [← hxA, ← e0, ← e1, ← Multiset.map_add, Multiset.filter_add_not]
+    rw [← hxA, ← e0, ← e1, ← Multiset.map_add (f := _), Multiset.filter_add_not]
   have hA₀sum : (A₀.map Sigma.fst).sum = S.card := by
     simp only [A₀, Multiset.map_map]
     rw [← Finset.sum_eq_multiset_sum]

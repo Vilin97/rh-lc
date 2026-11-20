@@ -58,7 +58,7 @@ theorem mem_sup_span {L : Ideal (MRing ι F)} {f : MRing ι F} {s : K → ℕ}
   refine ⟨c, ?_⟩
   have hx2 := weightedHomogeneousComponent_eq_self
     ((mem_weightedHomogeneousSubmodule _ _ _ _).mp hx)
-  rw [← hx2, map_add, mul_comm c f, component_mul hf, add_sub_cancel_right]
+  rw [← hx2, map_add (f := _), mul_comm c f, component_mul hf, add_sub_cancel_right]
   exact hL l hl n
 
 open Classical in

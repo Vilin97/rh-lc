@@ -71,7 +71,7 @@ theorem clause_map {σ τ Ω : Type} [Field Ω] [Algebra ℚ Ω] (S : Subalgebra
   have hev : ∀ g, ((ev g : S) : Ω) = aeval v g := fun g => by
     induction g using MvPolynomial.induction_on with
     | C a => simp [ev]
-    | add p q hp hq => simp only [map_add, Subalgebra.coe_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), Subalgebra.coe_add, hp, hq]
     | mul_X p i hp => simp only [map_mul, Subalgebra.coe_mul, hp]; simp [ev]
   constructor
   · exact fun h g hg s hs => h _ (Ideal.mem_map_of_mem _ hg) s (hs.trans (hφ g).symm)

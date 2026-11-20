@@ -79,7 +79,7 @@ theorem corOne_red {ϖ : Fv F v} {K : Type} [CommRing K] {τ : K →+* K} {π : 
         OR (E := E) v) = ⟨T i₀ i₀, hT i₀ i₀⟩ + 1 := by
       apply Subtype.ext
       simp [Matrix.add_apply]
-    rw [h1, map_add, map_one]
+    rw [h1, map_add (f := _), map_one]
     show π ⟨T i₀ i₀, hT i₀ i₀⟩ + (Matrix.single i₀ i₀ 1 : Matrix (Fin a) (Fin a) K) i₀ i₀ = _
     simp
   · have h1 : (⟨(T + Matrix.single i₀ i₀ 1 : Matrix (Fin a) (Fin a) (Fv F v ⊗[F] E)) i j, hT' i j⟩ :

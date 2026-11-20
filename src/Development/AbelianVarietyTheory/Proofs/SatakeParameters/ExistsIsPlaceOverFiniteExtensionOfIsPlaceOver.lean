@@ -20,7 +20,7 @@ theorem exists_isPlaceOver_of_tower : ∀ (K L Ω : Type) [Field Ω] [Field K] [
     { carrier := {y | A.valuation (algebraMap L Ω (y : L)) < 1}
       add_mem' := by
         intro a b ha hb
-        simp only [Set.mem_setOf_eq, map_add] at ha hb ⊢
+        simp only [Set.mem_setOf_eq, map_add (f := _)] at ha hb ⊢
         exact Valuation.map_add_lt _ ha hb
       zero_mem' := by simp
       smul_mem' := by

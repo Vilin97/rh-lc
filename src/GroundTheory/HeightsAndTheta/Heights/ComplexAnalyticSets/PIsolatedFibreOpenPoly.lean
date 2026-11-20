@@ -50,7 +50,7 @@ theorem eval_graphSubst (p : Fin d → MvPolynomial (Fin n) ℂ) (x : Fin n → 
     (q : MvPolynomial (Fin (n + d)) ℂ) : eval x (graphSubst p q) = eval (graphPt p x) q := by
   induction q using MvPolynomial.induction_on with
   | C a => simp [graphSubst]
-  | add q r hq hr => simp only [map_add, hq, hr]
+  | add q r hq hr => simp only [map_add (f := _), hq, hr]
   | mul_X q i hq =>
     simp only [map_mul, graphSubst, aeval_X, eval_X]
     congr 1

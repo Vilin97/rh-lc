@@ -107,7 +107,7 @@ theorem homog_coeff_isMH (q : MvPolynomial (Fin (D + 1) × Fin (N + 1)) K) :
     · exact isMH_zero _
   · rename_i p q hp hq
     intro γ
-    rw [map_add, MvPolynomial.coeff_add]; exact isMH_add (hp γ) (hq γ)
+    rw [map_add (f := _), MvPolynomial.coeff_add]; exact isMH_add (hp γ) (hq γ)
   · rename_i p v hp
     intro γ
     obtain ⟨i, j⟩ := v

@@ -56,7 +56,7 @@ theorem bd_derivative {f : ℂ_[p]⟦X⟧} (hf : Bd 1 f) : Bd 1 (derivative ℂ_
 theorem bd_DT {f : ℂ_[p]⟦X⟧} (hf : Bd 1 f) : Bd 1 (DT f) := by
   have h := bd_derivative hf
   intro n
-  rw [DT, add_mul, one_mul, map_add]
+  rw [DT, add_mul, one_mul, map_add (f := _)]
   refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (h n) ?_)
   cases n with
   | zero => simp

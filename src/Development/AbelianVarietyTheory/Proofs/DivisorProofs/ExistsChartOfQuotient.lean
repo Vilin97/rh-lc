@@ -100,7 +100,7 @@ theorem mem_chartIdeal_iff {c : Fin N → Fin r → S} (hc : IsChart e σ c) (y 
     refine Submodule.span_induction ?_ ?_ ?_ ?_ hy
     · rintro _ ⟨m, rfl⟩; exact coord_ell e σ hc.1 m
     · simp
-    · intro u v _ _ hu hv; rw [map_add, hu, hv, add_zero]
+    · intro u v _ _ hu hv; rw [map_add (f := _), hu, hv, add_zero]
     · intro z u _ hu; exact coord_mul_eq_zero e σ hc z u hu
   · intro hy
     rw [decomp e σ c y, hy]
@@ -131,7 +131,7 @@ theorem quotient_basis {c : Fin N → Fin r → S} (hc : IsChart e σ c) :
     intro x
     obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective x
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [decomp e σ c y, map_add, map_sum, map_sum]
+      rw [decomp e σ c y, map_add (f := _), map_sum, map_sum]
     have h0 : ∀ m, Ideal.Quotient.mk (chartIdeal e σ c)
         ((Algebra.TensorProduct.basis S e).repr y m • ell e σ c m) = 0 := fun m => by
       rw [Ideal.Quotient.eq_zero_iff_mem, Algebra.smul_def]
@@ -197,7 +197,7 @@ theorem exists_chart_of_quotient (J : Ideal (S ⊗[A] B))
     intro y
     conv_lhs => rw [decomp e σ c y]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, mk_smul, hell, smul_zero, Finset.sum_const_zero, zero_add, hbq]
+      simp only [map_add (f := _), map_sum, mk_smul, hell, smul_zero, Finset.sum_const_zero, zero_add, hbq]
   have hmem : ∀ y, y ∈ J ↔ coord e c y = 0 := by
     intro y
     rw [← Ideal.Quotient.eq_zero_iff_mem, hq y]

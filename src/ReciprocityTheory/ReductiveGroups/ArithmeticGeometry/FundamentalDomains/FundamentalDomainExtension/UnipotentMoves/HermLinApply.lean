@@ -170,7 +170,7 @@ theorem sDelta_of (hemb : SEmb E) (hext : SExt E) (hdual : SDual E)
         rfl
       rw [hL, hR]
       congr 1
-      rw [hδ', hF μ hμ, map_add, map_mul, map_natCast, hα, map_mul, map_natCast, map_mul, map_neg, hdE]
+      rw [hδ', hF μ hμ, map_add (f := _), map_mul, map_natCast, hα, map_mul, map_natCast, map_mul, map_neg, hdE]
       field_simp
       ring
 

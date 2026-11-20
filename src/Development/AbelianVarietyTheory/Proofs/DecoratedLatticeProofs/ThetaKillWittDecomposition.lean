@@ -88,7 +88,7 @@ theorem dblInt_regRes_eq_zero : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (�
   have hzero : ∀ h, thetaKO omh 1 h φ' = 0 := by
     intro h
     have e := hcol (fun f => thetaKO omh 1 h f)
-      (fun f f' _ _ => by simp [thetaKO, map_add])
+      (fun f f' _ _ => by simp [thetaKO, map_add (f := _)])
       (fun c f _ => by simp [thetaKO, map_smul])
       (fun γ hγ g => by
         simp only [thetaKO_one_om]

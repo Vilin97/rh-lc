@@ -115,7 +115,7 @@ theorem exists_reproducing_kernel : ∀ (K : Type) [Group K] [TopologicalSpace K
         rintro _ _ ⟨l, rfl⟩ ⟨l', rfl⟩
         refine ⟨l + l', ?_⟩
         ext m
-        simp only [LinearMap.add_apply, hΨ, map_add, add_mul]
+        simp only [LinearMap.add_apply, hΨ, map_add (f := _), add_mul]
         exact (integral_add (hint l m) (hint l' m)).symm
       zero_mem' := ⟨0, by ext m; simp [hΨ]⟩
       smul_mem' := by

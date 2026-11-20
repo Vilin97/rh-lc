@@ -86,7 +86,7 @@ theorem adeleEquiv_snd (z : AE F E) : (adeleEquiv F E z).2 = finEquiv F E (finPa
     rw [finEquiv_tmul]
     rfl
   | add y z hy hz =>
-    rw [map_add, map_add, map_add, ← hy, ← hz]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), ← hy, ← hz]
     rfl
 
 theorem finEquiv_symm_eq_sum {ι : Type*} [Fintype ι] [DecidableEq ι] (b : Module.Basis ι F E)
@@ -115,7 +115,7 @@ theorem finEquiv_mem_of_mem_intAE {y : Af F ⊗[F] E} (hy : y ∈ intAE F E) :
     exact Subring.mul_mem _ (algebraMap_mem_integralFiniteAdeles x)
       (finiteAdeleMap_mem_integralFiniteAdeles ha)
   | zero => rw [map_zero]; exact Subring.zero_mem _
-  | add _ _ _ _ h1 h2 => rw [map_add]; exact Subring.add_mem _ h1 h2
+  | add _ _ _ _ h1 h2 => rw [map_add (f := _)]; exact Subring.add_mem _ h1 h2
   | neg _ _ h => rw [map_neg]; exact Subring.neg_mem _ h
 
 theorem exists_basis_isIntegral :
@@ -182,7 +182,7 @@ theorem mem_intAE_of_mem_integralFiniteAdeles {t : FiniteAdeleRing (𝓞 E) E}
       exact algebraMap_mem_integralFiniteAdeles (D : 𝓞 E)
     exact h1 w
   obtain ⟨z, hz⟩ := hDk
-  rw [htk, map_add]
+  rw [htk, map_add (f := _)]
   refine AddSubgroup.add_mem _ ?_ (hcoord s hk)
   have h1 : (finEquiv F E).symm (algebraMap E (FiniteAdeleRing (𝓞 E) E) ((D : E) * k)) =
       (1 : Af F) ⊗ₜ[F] ((z : 𝓞 E) : E) := by

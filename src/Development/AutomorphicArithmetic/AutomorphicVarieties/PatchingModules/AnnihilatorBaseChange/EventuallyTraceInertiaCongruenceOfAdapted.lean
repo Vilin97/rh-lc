@@ -23,7 +23,7 @@ private theorem lam_push {n : ℕ} {R S H G : Type} [CommRing R] [CommRing S] [G
     intro z
     induction z using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => simp
   congr 1
   rw [map_sub]

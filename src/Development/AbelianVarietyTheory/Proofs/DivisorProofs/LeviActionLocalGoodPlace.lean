@@ -112,7 +112,7 @@ theorem acts_lin (v : Pl F) (T : Module.End ℂ ((κ → AF F) → ℂ))
   have e' : tens (evFin F v) (a • φ₁ + b • ψ₁) R = a • tens (evFin F v) φ₁ R + b • tens (evFin F v) ψ₁ R := by
     funext x; simp only [tens, Pi.add_apply, Pi.smul_apply, smul_eq_mul]; ring
   have key : tens (evFin F v) χ R = tens (evFin F v) (a • φ₁ + b • ψ₁) R := by
-    rw [← hχ R (hR _ hs), e, map_add, map_smul, map_smul, h₁ R (hR φ hφ), h₂ R (hR ψ hψ), e']
+    rw [← hχ R (hR _ hs), e, map_add (f := _), map_smul, map_smul, h₁ R (hR φ hφ), h₂ R (hR ψ hψ), e']
   have hχe : χ = a • φ₁ + b • ψ₁ := by
     funext t
     have hz : At (evFin F v) (fun i => GlobalTheory.LatVac.liftV v (t i)) := by

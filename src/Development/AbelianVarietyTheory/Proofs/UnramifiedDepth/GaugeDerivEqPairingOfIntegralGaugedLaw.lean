@@ -19,7 +19,7 @@ variable {C : Type} [Field C] {V : VF C} {σ τ υ : Type}
 theorem int_zero : IntS V (0 : MvPowerSeries σ C) := fun μ => by rw [map_zero]; exact VF.Ge.zero 0
 
 theorem int_add {f g : MvPowerSeries σ C} (hf : IntS V f) (hg : IntS V g) : IntS V (f + g) :=
-  fun μ => by rw [map_add]; exact (hf μ).add (hg μ)
+  fun μ => by rw [map_add (f := _)]; exact (hf μ).add (hg μ)
 
 theorem int_sub {f g : MvPowerSeries σ C} (hf : IntS V f) (hg : IntS V g) : IntS V (f - g) :=
   fun μ => by rw [map_sub]; exact (hf μ).sub (hg μ)
@@ -165,7 +165,7 @@ variable [Fintype σ] {p : σ → MvPowerSeries τ C} (hp : ∀ s, constantCoeff
 include hp
 
 theorem tder_add (f g : MvPowerSeries σ C) : tder p w (f + g) = tder p w f + tder p w g := by
-  simp only [tder, map_add, subst_add (hasSubst_of_constantCoeff_zero hp), add_mul, Finset.sum_add_distrib]
+  simp only [tder, map_add (f := _), subst_add (hasSubst_of_constantCoeff_zero hp), add_mul, Finset.sum_add_distrib]
 
 theorem tder_sub (f g : MvPowerSeries σ C) : tder p w (f - g) = tder p w f - tder p w g := by
   simp only [tder, map_sub, subst_sub (hasSubst_of_constantCoeff_zero hp), sub_mul, Finset.sum_sub_distrib]
@@ -288,7 +288,7 @@ theorem cc_hAt {a b : κ → MvPowerSeries τ C} (ha : ∀ i, constantCoeff (a i
 
 theorem cc_addP {a b : κ → MvPowerSeries τ C} (ha : ∀ i, constantCoeff (a i) = 0)
     (hb : ∀ i, constantCoeff (b i) = 0) (i : κ) : constantCoeff (addP Y a b i) = 0 :=
-  constantCoeff_subst_zero (fun x => by rw [map_add, cc_slg R ha, cc_slg R hb, add_zero]) (R.exc i)
+  constantCoeff_subst_zero (fun x => by rw [map_add (f := _), cc_slg R ha, cc_slg R hb, add_zero]) (R.exc i)
 
 theorem ex_lg {a : κ → MvPowerSeries τ C} (ha : ∀ i, constantCoeff (a i) = 0) (i : κ) :
     subst (fun x => subst a (Y.lg x)) (Y.ex i) = a i := by
@@ -302,13 +302,13 @@ theorem lg_addP {a b : κ → MvPowerSeries τ C} (ha : ∀ i, constantCoeff (a 
     (hb : ∀ i, constantCoeff (b i) = 0) (x : κ) :
     subst (addP Y a b) (Y.lg x) = subst a (Y.lg x) + subst b (Y.lg x) :=
   lg_ex R (a := fun x => subst a (Y.lg x) + subst b (Y.lg x))
-    (fun x => by rw [map_add, cc_slg R ha, cc_slg R hb, add_zero]) x
+    (fun x => by rw [map_add (f := _), cc_slg R ha, cc_slg R hb, add_zero]) x
 
 theorem subst_addP [Finite τ] {a b : κ → MvPowerSeries τ C} (ha : ∀ i, constantCoeff (a i) = 0)
     (hb : ∀ i, constantCoeff (b i) = 0) {p : τ → MvPowerSeries υ C} (hp : ∀ s, constantCoeff (p s) = 0) (i : κ) :
     subst p (addP Y a b i) = addP Y (fun i => subst p (a i)) (fun i => subst p (b i)) i := by
   unfold addP
-  rw [subst_subst (fun x => by rw [map_add, cc_slg R ha, cc_slg R hb, add_zero]) hp]
+  rw [subst_subst (fun x => by rw [map_add (f := _), cc_slg R ha, cc_slg R hb, add_zero]) hp]
   simp only [subst_add (hasSubst_of_constantCoeff_zero hp), subst_subst ha hp, subst_subst hb hp]
 
 theorem lg_zero (x : κ) : subst (fun _ : κ => (0 : MvPowerSeries τ C)) (Y.lg x) = 0 := by
@@ -445,7 +445,7 @@ theorem tder_addP [Fintype τ] {a b : κ → MvPowerSeries τ C} (ha : ∀ i, co
         (fun x => tder (fun i => subst p (a i)) (fun i => tder p w (a i)) (Y.lg x) +
           tder (fun i => subst p (b i)) (fun i => tder p w (b i)) (Y.lg x)) (Y.ex i) := by
   unfold addP
-  rw [tder_subst hp w (fun x => by rw [map_add, cc_slg R ha, cc_slg R hb, add_zero])]
+  rw [tder_subst hp w (fun x => by rw [map_add (f := _), cc_slg R ha, cc_slg R hb, add_zero])]
   simp only [subst_add (hasSubst_of_constantCoeff_zero hp), subst_subst ha hp, subst_subst hb hp, tder_add hp,
     tder_subst hp w ha, tder_subst hp w hb]
 
@@ -473,7 +473,7 @@ theorem int_cocycle : IntS V (subst (addP Y a b) (Y.sg v) - subst a (Y.sg v) - s
     rfl
   have h := int_tder_of_exp hp (tr (fun _ => 0) (fun _ => 0) fun i => MvPowerSeries.C (v i))
     (tr_prop hai hbi fun _ => int_zero) (tr_prop (fun _ => int_zero) (fun _ => int_zero) fun i => int_C (hv i))
-    (by rw [map_sub, map_add, cc_hAt R (cc_gp _) (cc_gp _), cc_hAt R (cc_gp _) (cc_gp _), cc_hAt R hA (cc_gp _)]; simp)
+    (by rw [map_sub, map_add (f := _), cc_hAt R (cc_gp _) (cc_gp _), cc_hAt R (cc_gp _) (cc_gp _), cc_hAt R hA (cc_gp _)]; simp)
     R.ph1 (by
       rw [subst_sub hs, subst_add hs, subst_hAt (cc_gp _) (cc_gp _) hp, subst_hAt (cc_gp _) (cc_gp _) hp,
         subst_hAt hA (cc_gp _) hp, e1]
@@ -510,7 +510,7 @@ theorem int_second : IntS V (subst a (Y.sg v) + tder (pr a b) (pr (fun _ => 0) (
     exact congrFun (addP_zero R hb) i
   have h := int_tder_of_exp hp (tr (fun _ => 0) (fun _ => 0) fun i => MvPowerSeries.C (v i))
     (tr_prop hai hbi fun _ => int_zero) (tr_prop (fun _ => int_zero) (fun _ => int_zero) fun i => int_C (hv i))
-    (by rw [map_sub, map_add, cc_hAt R (cc_gp _) (cc_gp _), cc_hAt R (cc_gp _) (cc_gp _), cc_hAt R (cc_gp _) hA]; simp)
+    (by rw [map_sub, map_add (f := _), cc_hAt R (cc_gp _) (cc_gp _), cc_hAt R (cc_gp _) (cc_gp _), cc_hAt R (cc_gp _) hA]; simp)
     R.ph2 (by
       rw [subst_sub hs, subst_add hs, subst_hAt (cc_gp _) (cc_gp _) hp, subst_hAt (cc_gp _) (cc_gp _) hp,
         subst_hAt (cc_gp _) hA hp, e1]
@@ -548,7 +548,7 @@ theorem int_first : IntS V (subst b (Y.sg v) + tder (pr a b) (pr (invF Y v a) fu
     exact congrFun (addP_zero R ha) i
   have h := int_tder_of_exp hp (tr (fun _ => 0) (fun i => MvPowerSeries.C (v i)) fun _ => 0)
     (tr_prop hai (fun _ => int_zero) hbi) (tr_prop (fun _ => int_zero) (fun i => int_C (hv i)) fun _ => int_zero)
-    (by rw [map_sub, map_add, cc_hAt R (cc_gp _) (cc_gp _), cc_hAt R (cc_gp _) (cc_gp _), cc_hAt R hA (cc_gp _)]; simp)
+    (by rw [map_sub, map_add (f := _), cc_hAt R (cc_gp _) (cc_gp _), cc_hAt R (cc_gp _) (cc_gp _), cc_hAt R hA (cc_gp _)]; simp)
     R.ph1 (by
       rw [subst_sub hs, subst_add hs, subst_hAt (cc_gp _) (cc_gp _) hp, subst_hAt (cc_gp _) (cc_gp _) hp,
         subst_hAt hA (cc_gp _) hp, e1]
@@ -943,7 +943,7 @@ theorem cEqSt_of_rLaw (C : Type) [Field C] (V : VF C) (d : ℕ) [NeZero d] (I : 
       · exact zero_mul _
       · exact zero_mul _
     rw [RawChart.hRow, Derivation.map_smul, e₁, e₂, subst_smul hsΘ, subst_sub hsΘ]
-    simp only [coeff_smul, map_sub, map_add, map_neg, hz]
+    simp only [coeff_smul, map_sub, map_add (f := _), map_neg, hz]
     ring
   · exact sub_zero _
 

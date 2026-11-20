@@ -79,7 +79,7 @@ lemma vanish {V : Type} [AddCommGroup V] [Module K V] (ρ : Representation K G V
     ρ.asAlgebraHom (eps P0 * c) x = 0 := by
   induction c using MonoidAlgebra.induction_on with
   | of g => rw [map_mul, Module.End.mul_apply, Representation.asAlgebraHom_of, h g]
-  | add a b ha hb => rw [mul_add, map_add, LinearMap.add_apply, ha, hb, add_zero]
+  | add a b ha hb => rw [mul_add, map_add (f := _), LinearMap.add_apply, ha, hb, add_zero]
   | smul r a ha => rw [mul_smul_comm, map_smul, LinearMap.smul_apply, ha, smul_zero]
 
 lemma exists_g (T : GoodSet K G) (P0 P : Pair K G) (hM : M1 T P0) {V : Type} [AddCommGroup V] [Module K V]

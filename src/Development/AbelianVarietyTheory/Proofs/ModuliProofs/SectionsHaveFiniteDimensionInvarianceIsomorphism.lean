@@ -130,9 +130,9 @@ private theorem exists_sections_map_of_lbIso (p : X ⟶ Sp K) {A B : LB X} (hA :
     have e2 := DVR.secOfIso_spec t hu hA hB a b
     have e3 := DVR.secOfIso_spec t' hu hA hB a b
     simp only [DVR.rs] at e1 e2 e3 ⊢
-    rw [map_add, e1, e2, e3]
+    rw [map_add (f := _), e1, e2, e3]
     simp only [DVR.isoCand, DVR.rs]
-    rw [← mul_add, ← map_add]
+    rw [← mul_add, ← map_add (f := _)]
     rfl
   · intro k t
     refine DVR.SecOps.sec_ext fun a => sepA a _ _ fun b => ?_

@@ -34,13 +34,13 @@ def dev {n : ℕ} (P : HeightOneSpectrum (𝓞 E)) (A : Matrix (Fin n) (Fin n) (
 theorem map_dev_self {n : ℕ} (P : HeightOneSpectrum (𝓞 E)) (A : Matrix (Fin n) (Fin n) (P.adicCompletion E)) :
     (1 + dev F P A).map (adAt F P) = A := by
   ext i j
-  simp only [dev, Matrix.map_apply, Matrix.add_apply, map_add, adAt_sng_self, Matrix.sub_apply, Matrix.one_apply]
+  simp only [dev, Matrix.map_apply, Matrix.add_apply, map_add (f := _), adAt_sng_self, Matrix.sub_apply, Matrix.one_apply]
   split_ifs <;> simp
 
 theorem map_dev_ne {n : ℕ} {P w : HeightOneSpectrum (𝓞 E)} (h : w ≠ P) (A : Matrix (Fin n) (Fin n) (P.adicCompletion E)) :
     (1 + dev F P A).map (adAt F w) = 1 := by
   ext i j
-  simp only [dev, Matrix.map_apply, Matrix.add_apply, map_add, adAt_sng_ne F h, Matrix.one_apply]
+  simp only [dev, Matrix.map_apply, Matrix.add_apply, map_add (f := _), adAt_sng_ne F h, Matrix.one_apply]
   split_ifs <;> simp
 
 variable {F}
@@ -60,7 +60,7 @@ theorem map_cT_dev {n : ℕ} {P w : HeightOneSpectrum (𝓞 E)} (h : conjPrime�
     rwa [adAt_sng_ne F h, map_zero, Valuation.zero_iff] at e
   refine Matrix.ext fun i j => ?_
   show adAt F w (σ ((1 + dev F P A) j i)) = _
-  simp only [dev, Matrix.map_apply, Matrix.add_apply, map_add, key, Matrix.one_apply]
+  simp only [dev, Matrix.map_apply, Matrix.add_apply, map_add (f := _), key, Matrix.one_apply]
   by_cases e : i = j
   · subst e; simp
   · simp [e, Ne.symm e]

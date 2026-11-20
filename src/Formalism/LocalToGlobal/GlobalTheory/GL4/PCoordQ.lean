@@ -119,12 +119,12 @@ theorem between_finite_card {n : ℕ} (Gm : Matrix (Fin n) (Fin n) (𝓞 E))
         have hm_eq : m = ∑ a, c a • mb a + (Nat.card ((Fin n → 𝓞 E) ⧸ Rg)) • mz := by
           apply psi_injective G hdet
           set_option synthInstance.maxHeartbeats 100000 in
-            rw [map_add, map_sum, map_nsmul, hx, hmz, ← Nat.cast_smul_eq_nsmul E]
+            rw [map_add (f := _), map_sum, map_nsmul, hx, hmz, ← Nat.cast_smul_eq_nsmul E]
           congr 1
           refine Finset.sum_congr rfl fun a _ ↦ ?_
           rw [map_smul, hmb]
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [hm_eq, map_add, map_sum, map_nsmul, hN, add_zero]
+          rw [hm_eq, map_add (f := _), map_sum, map_nsmul, hN, add_zero]
         exact Submodule.sum_mem _ fun a _ ↦ Submodule.smul_mem _ _ (Submodule.subset_span (Set.mem_range_self a))
     · show (((C.comap (psi G)).map Rg.mkQ).comap Rg.mkQ).map (psi G) = C
       rw [Submodule.comap_map_mkQ, sup_eq_right.2 hRC, Submodule.map_comap_eq, inf_eq_right.2 h1]

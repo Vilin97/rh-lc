@@ -156,7 +156,7 @@ lemma kill_of_mem_span {R : Type} [CommRing R] {V : Type} [AddCommGroup V] [Modu
     (h2 : aeval T P₂ x = 0) : r • x = 0 := by
   obtain ⟨a, b, hab⟩ := Ideal.mem_span_pair.mp h
   have h3 : aeval T (C r) x = 0 := by
-    rw [← hab, map_add, map_mul, map_mul, LinearMap.add_apply, Module.End.mul_apply,
+    rw [← hab, map_add (f := _), map_mul, map_mul, LinearMap.add_apply, Module.End.mul_apply,
       Module.End.mul_apply, h1, h2, map_zero, map_zero, add_zero]
   rwa [aeval_C, Module.algebraMap_end_apply] at h3
 

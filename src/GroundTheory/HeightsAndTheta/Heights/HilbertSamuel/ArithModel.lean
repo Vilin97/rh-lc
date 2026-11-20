@@ -152,8 +152,8 @@ theorem linearIndependent_y : LinearIndependent ℤ y := by
     simpa [Fin.sum_univ_two, zsmul_eq_mul] using hg
   have hK : algebraMap (MRing (GlobalTheory (Fin 2))) Kfr (C (g ⟨(), 0⟩) * X ⟨(), 0⟩ + C (g ⟨(), 1⟩) * X ⟨(), 1⟩) = 0 := by
     have := congrArg (fun t => incl t * Xk 0) hs
-    simp only [map_add, map_mul, map_intCast, map_zero, zero_mul] at this
-    rw [map_add, map_mul, map_mul, ← this]
+    simp only [map_add (f := _), map_mul, map_intCast, map_zero, zero_mul] at this
+    rw [map_add (f := _), map_mul, map_mul, ← this]
     have hu : incl uF * Xk 0 = Xk 1 := incl_y_mul ⟨(), 1⟩
     simp only [map_intCast, eq_intCast]
     rw [add_mul, mul_assoc, hu]
@@ -197,7 +197,7 @@ theorem birational_y : Birational (ι := GlobalTheory (Fin 2)) y := by
     refine ⟨d₁ + d₂, g₁ * h₂ + g₂ * h₁, h₁ * h₂, hsum, mhMul hh₁ hh₂, ?_, ?_⟩
     · rw [map_mul]
       exact mul_ne_zero hne₁ hne₂
-    · rw [map_add, map_mul, map_mul, map_mul, he₁, he₂]
+    · rw [map_add (f := _), map_mul, map_mul, map_mul, he₁, he₂]
       have : (⟨a + b, add_mem ha hb⟩ : FnField) = ⟨a, ha⟩ + ⟨b, hb⟩ := rfl
       rw [this]
       ring

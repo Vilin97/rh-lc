@@ -37,7 +37,7 @@ theorem letE_mul_self (a : ZMod n) : (letE a : LetA O n) * letE a = letE a := by
 theorem ea_add (a : ZMod n) (F F' : PowerSeries O) : ea Br a (F + F') = ea Br a F + ea Br a F' := by
   have h : Br.cst (F + F') = Br.cst F + Br.cst F' := funext fun _ => map_add Br.ι F F'
   unfold Formalism.MainNotions.N.FrobeniusPowerSeries.ArcLengthThreeFiltration.ea
-  rw [h, mul_add, map_add]
+  rw [h, mul_add, map_add (f := _)]
 
 theorem ea_zero (a : ZMod n) : ea Br a 0 = 0 := by
   have h : Br.cst 0 = 0 := funext fun _ => map_zero Br.ι

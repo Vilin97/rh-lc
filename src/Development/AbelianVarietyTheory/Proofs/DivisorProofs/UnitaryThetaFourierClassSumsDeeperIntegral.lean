@@ -90,7 +90,7 @@ theorem eq_of_qf {X : USetup C} {p : ℕ} [Fact p.Prime] {z : X.M.Z} (c : UCTrai
   have hiso : ∀ u v, β (e u) (e v) = β u v := by
     intro u v
     have huv := hd (u + v)
-    simp only [map_add, LinearMap.add_apply] at huv
+    simp only [map_add (f := _), LinearMap.add_apply] at huv
     rw [hd u, hd v] at huv
     rw [hβ, hβ]
     show c.T.be (κ u) (κ v) + c.T.be (κ v) (κ u) = _
@@ -262,7 +262,7 @@ theorem wtChar_eq (hs : Function.Surjective yy) {a a' : D.X.S.Gam} {ν ν' : Y} 
     exact Finset.sum_congr rfl fun _ _ => by ring
   show ZMod.castHom (dvd_mul_left D.X.S.N D.X.S.r) (ZMod D.X.S.N) (eStd D.X.S.g _ t.1 (D.m • a)) =
     ZMod.castHom (dvd_mul_left D.X.S.N D.X.S.r) (ZMod D.X.S.N) (eStd D.X.S.g _ t.1 (D.m • a'))
-  rw [e, t.2 _ hk, smul_zero, add_zero, map_add, map_nsmul, ← sq, ← D.sq, nsmul_eq_mul D.X.S.N, ZMod.natCast_self, zero_mul,
+  rw [e, t.2 _ hk, smul_zero, add_zero, map_add (f := _), map_nsmul, ← sq, ← D.sq, nsmul_eq_mul D.X.S.N, ZMod.natCast_self, zero_mul,
     add_zero]
 
 end Labels

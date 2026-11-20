@@ -35,7 +35,7 @@ private theorem Phi_nat (q : ℕ) (m j : ℤ) {V' V : Scheme.{0}} (g : V' ⟶ V)
       pull _ (sch.map (prod.fst : Gq q ⨯ V' ⟶ Gq q)) _ _ (kappa q) := by
     rw [← pull_comp, ← sch.map_comp, prod.map_fst, Category.comp_id]
   simp only [Phi]
-  rw [map_add, pull_cup', h1, h1, h2]
+  rw [map_add (f := _), pull_cup', h1, h1, h2]
 
 private theorem pull_prod (q : ℕ) {n i : ℤ} {V'' V' V : Scheme.{0}} (h : V'' ⟶ V') (g : V' ⟶ V)
     (y : Ht q (sch.obj (Gq q ⨯ V)) n i) :

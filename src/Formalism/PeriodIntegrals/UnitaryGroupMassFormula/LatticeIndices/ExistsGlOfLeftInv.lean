@@ -28,7 +28,7 @@ theorem exists_gl_of_left_inv (g : O) (hg : ¬ IsUnit g) (C R N : Matrix ι ι K
       rfl
     rw [hs, h]
     change _ = algebraMap O K ((1 : Matrix ι ι O) i j + g * N' i j)
-    rw [map_add, map_mul]
+    rw [map_add (f := _), map_mul]
     have hN'' : algebraMap O K (N' i j) = N i j := rfl
     have hg' : algebraMap O K g = (g : K) := rfl
     rw [hN'', hg']

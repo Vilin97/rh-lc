@@ -293,7 +293,7 @@ theorem rank_one [Module.Finite ℤ Y] (hY : Module.finrank (𝓞 E) Y = 1) (hκ
         have hN' : (N : ℚ) ≠ 0 := by exact_mod_cast hN
         refine ⟨(AddMonoidHom.mk' m fun a b => ?_).toIntLinearMap, hm⟩
         have e := hm (a + b)
-        rw [p2, cc_add, mul_add, map_add, hm, hm, ← mul_add] at e
+        rw [p2, cc_add, mul_add, map_add (f := _), hm, hm, ← mul_add] at e
         exact_mod_cast (mul_left_cancel₀ hN' e).symm
     obtain ⟨t', ht'⟩ := hrep η
     refine ⟨-(φ t' : Fin r → E), X.Λ.neg_mem (φ t').2, ?_⟩

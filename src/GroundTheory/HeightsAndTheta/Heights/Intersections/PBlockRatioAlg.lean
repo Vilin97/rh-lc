@@ -120,7 +120,7 @@ theorem BlockRatioAlg.proof : BlockRatioAlg.Statement := by
     rw [hy'] at htr
     have := hprime'
     have hA := IntDomainDim.proof (MRing ι' ⧸ P') (CoordinateConeArithVar.algebraMap_injective P' hhor')
-    rw [hdim', htr, map_add, map_natCast] at hA
+    rw [hdim', htr, map_add (f := _), map_natCast] at hA
     have hA' : ((n + 1 + Fintype.card K' : ℕ) : ℕ∞) =
         Cardinal.toENat (Algebra.trdeg ℤ Ω) + Fintype.card K' + 1 := by exact_mod_cast hA
     obtain ⟨t, ht⟩ : ∃ t : ℕ, Cardinal.toENat (Algebra.trdeg ℤ Ω) = t := by

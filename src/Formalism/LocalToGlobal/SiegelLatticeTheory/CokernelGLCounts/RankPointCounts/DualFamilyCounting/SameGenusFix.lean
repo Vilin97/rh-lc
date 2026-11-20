@@ -38,7 +38,7 @@ def dualF (h : V →ₗ⋆[K] V →ₗ[K] K) (𝔭 : Ideal (𝓞 F)) (L : Submod
   zero_mem' := fun y _ => by simp
   add_mem' := by
     intro x x' hx hx' y hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ (hx y hy) (hx' y hy)
   smul_mem' := by
     intro c x hx y hy

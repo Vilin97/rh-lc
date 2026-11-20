@@ -34,7 +34,7 @@ theorem exists_away_bijective_of_fg {A B : Type} [CommRing A] [CommRing B] [Alge
     rw [map_zero, map_zero]
     induction z with
     | zero => rw [map_zero, map_zero]
-    | add y z hy hz => rw [map_add, map_add, hy, hz, add_zero]
+    | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz, add_zero]
     | tmul x c =>
       have e : (x : A) ⊗ₜ[R] c = (x : A) • ((1 : A) ⊗ₜ[R] c) := by
         rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]

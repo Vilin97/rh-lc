@@ -159,7 +159,7 @@ theorem e_ι (x : k) : p.e * p.ι x = p.ι x := by rw [← p.ι_π, p.π_ι]
 theorem exists_isChar {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1)) : ∃ ψk, p.IsChar ψ ψk :=
   ⟨{ toFun := fun x => ⟨psiE ψ (incA D D.host.xi0 * p.ι x), mem_sphere_zero_iff_norm.2 (hψ.1.2.1 _)⟩
      map_zero_eq_one' := Subtype.ext (by simp only [map_zero, mul_zero, psiE_zero]; rfl)
-     map_add_eq_mul' := fun a b => Subtype.ext (by simp only [map_add, mul_add, psiE_add]; rfl) }, fun _ => rfl⟩
+     map_add_eq_mul' := fun a b => Subtype.ext (by simp only [map_add (f := _), mul_add, psiE_add]; rfl) }, fun _ => rfl⟩
 
 variable {Y Y' : Type} [Fintype Y] [DecidableEq Y] [Fintype Y'] [DecidableEq Y'] {S T : HSp D}
   (FS : Frame k S.rank Y') (FT : Frame k T.rank Y)
@@ -491,7 +491,7 @@ theorem exists_unitary_supportedAt_place_of_mul_eq_idem (a b : Mx D S.rank S.ran
       (1 : Mx D S.rank S.rank) i j * (h1 + h1' + 2 * h2)
   · rw [mt_ofMat]
     ext i j
-    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, RingHom.map_add, RingHom.map_mul,
+    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, RingHom.map_add (f := _), RingHom.map_mul,
       RingHom.map_sub, RingHom.map_one, p1, p2, one_mul, zero_mul, add_zero, sub_self]
 
 theorem exists_isLoc (F : Frame k S.rank Y) (gk : GL Y k) : ∃ g, p.IsLoc F g gk := by

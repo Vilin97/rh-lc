@@ -15,7 +15,7 @@ theorem eigSum_good_sup_compl_eq_top : ∀ (D : D7) (i : D.nd.Loc), ZRat D (D.nd
     unfold ZRat at hZ
     rw [hZ]; exact Submodule.mem_top
   obtain ⟨u, hu, u', hu', rfl⟩ := Submodule.mem_sup.1 hy
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Submodule.add_mem_sup (hS.1 u hu) (hS.2 u' hu')
 
 end GlobalTheory.EtaJoin

@@ -12,7 +12,7 @@ theorem dvd_aeval_sub_aeval_two {K A : Type*} [CommRing K] [CommRing A] [Algebra
   | C c => simp
   | add p r hp hr =>
     have := dvd_add hp hr
-    simp only [map_add]
+    simp only [map_add (f := _)]
     convert this using 1
     ring
   | mul_X p i hp =>

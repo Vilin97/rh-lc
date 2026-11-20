@@ -88,10 +88,10 @@ theorem glue {K : Type} [Field K] {R : Type} [CommRing R] {Y X : Scheme.{0}} (q 
   refine ⟨d₁, ?_, ?_, ?_, ?_⟩
   · intro O _ f f'
     refine ext O _ _ fun i => ?_
-    rw [map_add, hd, hd, hd, map_add, (he i).add _ inf_le_right]
+    rw [map_add (f := _), hd, hd, hd, map_add (f := _), (he i).add _ inf_le_right]
   · intro O _ f f'
     refine ext O _ _ fun i => ?_
-    rw [map_add, map_mul, map_mul, hd, hd, hd, map_mul, (he i).mul _ inf_le_right,
+    rw [map_add (f := _), map_mul, map_mul, hd, hd, hd, map_mul, (he i).mul _ inf_le_right,
       res_app m inf_le_left, res_app m inf_le_left]
   · intro O O' h _ f
     refine ext O' _ _ fun i => ?_
@@ -115,7 +115,7 @@ theorem GlobalTheory.KS.exists_global_locDer_of_isCob : ∀ (K : Type) [Field K]
     (fun i O f => d i O f - ∑ a, rsT (b a i) (m ⁻¹ᵁ O) * dd a (m ⁻¹ᵁ O) ((m.app O).hom f)) (fun i => ?_) ?_
   · refine ⟨?_, ?_, ?_, ?_⟩
     · intro O hO f f'
-      simp only [(hc.der i).add O hO, map_add, fun a => (H a).1, mul_add, Finset.sum_add_distrib]
+      simp only [(hc.der i).add O hO, map_add (f := _), fun a => (H a).1, mul_add, Finset.sum_add_distrib]
       ring
     · intro O hO f f'
       simp only [(hc.der i).mul O hO, map_mul, fun a => (H a).2.1, mul_add, Finset.sum_add_distrib, mul_sub,

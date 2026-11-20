@@ -170,7 +170,7 @@ theorem normFormGaussBound : NormFormGaussBound.Statement := by
       obtain ⟨e1, r1, h1⟩ := ha
       obtain ⟨e2, r2, h2⟩ := hb
       refine ⟨e1 + e2, W ^ e2 * r1 + W ^ e1 * r2, ?_⟩
-      rw [map_add, map_mul, map_mul, map_pow, map_pow, h1, h2]
+      rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, h1, h2]
       show w ^ e2 * _ + w ^ e1 * _ = _
       ring
     | neg a _ ha =>

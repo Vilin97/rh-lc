@@ -94,7 +94,7 @@ def realLie (Ψ : Finset (E →+* ℂ)) (G : Matrix (Fin r) (Fin r) E) : Submodu
     have h1 := (hX τ).2 u w
     have h2 := (hY τ).2 u w
     rw [e]
-    simp only [hermC, add_mulVec, Pi.add_apply, map_add, add_mul, mul_add, Finset.sum_add_distrib] at h1 h2 ⊢
+    simp only [hermC, add_mulVec, Pi.add_apply, map_add (f := _), add_mul, mul_add, Finset.sum_add_distrib] at h1 h2 ⊢
     linear_combination h1 + h2
   smul_mem' c X hX τ := by
     have e : Matrix.of ((c • X) τ) = (c : ℂ) • Matrix.of (X τ) := rfl
@@ -140,7 +140,7 @@ def lieLat (G : Matrix (Fin r) (Fin r) E) (Λ : Submodule (𝓞 E) (Fin r → E)
     refine ⟨by rw [trace_add, hX.1, hY.1, add_zero], fun u w => ?_, fun x hx => ?_⟩
     · have h1 := hX.2.1 u w
       have h2 := hY.2.1 u w
-      simp only [herm, cc, add_mulVec, Pi.add_apply, map_add, add_mul, mul_add, Finset.sum_add_distrib] at h1 h2 ⊢
+      simp only [herm, cc, add_mulVec, Pi.add_apply, map_add (f := _), add_mul, mul_add, Finset.sum_add_distrib] at h1 h2 ⊢
       linear_combination h1 + h2
     · rw [add_mulVec]; exact Λ.add_mem (hX.2.2 x hx) (hY.2.2 x hx)
   neg_mem' {X} hX := by

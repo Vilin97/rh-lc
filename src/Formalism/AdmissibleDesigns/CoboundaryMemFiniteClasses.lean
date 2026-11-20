@@ -69,10 +69,10 @@ theorem bT_smulK_right (k : FractionRing O) (v : VT) (w : VT') : Dat.bT v (k •
 
 def pairLL : TrV e VT →ₗ[LL] TrV e VT' →ₗ[LL] LL :=
   LinearMap.mk₂ LL (fun x y => e (Dat.bT (toV e x) (toV e y)))
-    (fun x x' y => by rw [toV_add, map_add, LinearMap.add_apply, map_add])
+    (fun x x' y => by rw [toV_add, map_add (f := _), LinearMap.add_apply, map_add (f := _)])
     (fun c x y => by
       rw [toV_smul, bT_smulK_left, smul_eq_mul, map_mul, RingEquiv.apply_symm_apply, smul_eq_mul])
-    (fun x y y' => by rw [toV_add, map_add, map_add])
+    (fun x y y' => by rw [toV_add, map_add (f := _), map_add (f := _)])
     (fun c x y => by
       rw [toV_smul, bT_smulK_right, smul_eq_mul, map_mul, RingEquiv.apply_symm_apply, smul_eq_mul])
 
@@ -193,7 +193,7 @@ theorem mem_span_iff (ρ : Representation O Γ V) [ContinuousConstSMul (Fraction
       add_mem' := fun {a b} ha hb c hc => by
         obtain ⟨ca, rfl⟩ := Submodule.mkQ_surjective _ a
         obtain ⟨cb, rfl⟩ := Submodule.mkQ_surjective _ b
-        have h := sub_mem_of_mk_eq ρ Z hB c (ca + cb) (by rw [hc, map_add])
+        have h := sub_mem_of_mk_eq ρ Z hB c (ca + cb) (by rw [hc, map_add (f := _)])
         have e1 : (c : Γ → V) = ((c : Γ → V) - ((ca + cb : Z1 ρ) : Γ → V)) + ((ca : Γ → V) + cb) := by
           simp
         rw [e1]
@@ -246,7 +246,7 @@ variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] [Topol
 def dualMap : VT' →ₗ[FractionRing O] (VT →ₗ[FractionRing O] FractionRing O) where
   toFun f :=
     { toFun := fun x => Dat.bT x f
-      map_add' := fun x y => by rw [map_add, LinearMap.add_apply]
+      map_add' := fun x y => by rw [map_add (f := _), LinearMap.add_apply]
       map_smul' := fun k x => bT_smulK_left Dat k x f }
   map_add' f f' := LinearMap.ext fun x => map_add (Dat.bT x) f f'
   map_smul' k f := LinearMap.ext fun x => bT_smulK_right Dat k x f
@@ -408,7 +408,7 @@ theorem cup_iff (hι : Continuous ι) (hK : HomeoK e) (hcyc : CycMatch Dat e ι 
     simp only [d1_apply, cupCocycleZ1Z1_apply, twist_apply, Algebra.smul_def] at h1
     show ((cycLL PD LL g : LLˣ) : LL) * e (f (ι g')) - e (f (ι (g * g'))) + e (f (ι g)) =
       e (Dat.bT (c.1 (ι g)) (Dat.ρT' (ι g) (d.1 (ι g'))))
-    rw [← hcyc g, ← map_mul, ← map_sub, ← map_add, map_mul ι]
+    rw [← hcyc g, ← map_mul, ← map_sub, ← map_add (f := _), map_mul ι]
     exact congrArg e h1
   · rintro ⟨f', hf', hfe'⟩
     refine ⟨fun γ => e.symm (f' (h.symm γ)), hK.2.comp (hf'.comp h.symm.continuous), ?_⟩
@@ -422,7 +422,7 @@ theorem cup_iff (hι : Continuous ι) (hK : HomeoK e) (hcyc : CycMatch Dat e ι 
       e.symm (f' (h.symm (ι g1))) = Dat.bT (c.1 (ι g1)) (Dat.ρT' (ι g1) (d.1 (ι g2)))
     rw [← map_mul ι, symm_iota' ι h hh, symm_iota' ι h hh, symm_iota' ι h hh]
     apply e.injective
-    rw [map_add, map_sub, Algebra.smul_def, map_mul, hcyc g1, e.apply_symm_apply, e.apply_symm_apply,
+    rw [map_add (f := _), map_sub, Algebra.smul_def, map_mul, hcyc g1, e.apply_symm_apply, e.apply_symm_apply,
       e.apply_symm_apply]
     exact h1
 

@@ -89,14 +89,14 @@ theorem pos_perp (hstar : ∀ (τ : E →+* ℂ) (a : E), τ (star a) = starRing
     induction hx using Submodule.span_induction with
     | mem x hx => obtain ⟨a, rfl⟩ := hx; exact hze a
     | zero => simp
-    | add x y _ _ h1 h2 => simp [map_add, h1, h2]
+    | add x y _ _ h1 h2 => simp [map_add (f := _), h1, h2]
     | smul c x _ h => simp [h]
   let u : Fin r ⊕ Fin 2 → S.V := Sum.elim e ![z, y]
   have hpair : LinearIndependent E ![z, y] := by
     rw [LinearIndependent.pair_iff]
     intro s t hst
     have h1 := congrArg (S.hT z) hst
-    simp [map_add, hzy] at h1
+    simp [map_add (f := _), hzy] at h1
     have hs : s = 0 := by
       rcases h1 with h1 | h1
       · exact h1
@@ -114,7 +114,7 @@ theorem pos_perp (hstar : ∀ (τ : E →+* ℂ) (a : E), τ (star a) = starRing
       Set.singleton_union, Submodule.mem_span_pair] at hw2
     obtain ⟨s, t, rfl⟩ := hw2
     have h1 := hXz _ hw1
-    simp [map_add, hzy] at h1
+    simp [map_add (f := _), hzy] at h1
     have hs : s = 0 := by
       rcases h1 with h1 | h1
       · exact h1

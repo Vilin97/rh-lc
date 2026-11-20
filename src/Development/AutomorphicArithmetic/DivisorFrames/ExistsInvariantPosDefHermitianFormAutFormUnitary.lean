@@ -51,7 +51,7 @@ theorem UpperTheory.exists_invariant_posDef_hermitian_form_autForm_unitary :
   let B : (UA D.host.E V.rank → ℂ) →ₗ⋆[ℂ] (UA D.host.E V.rank → ℂ) →ₗ[ℂ] ℂ :=
     LinearMap.mk₂'ₛₗ (starRingEnd ℂ) (RingHom.id ℂ) F
     (fun x x' y => by
-      simp only [F, map_add, Submodule.coe_add]
+      simp only [F, map_add (f := _), Submodule.coe_add]
       rw [← integral_add (hI _ (hPN x) _ (hPN y)) (hI _ (hPN x') _ (hPN y))]
       congr 1
     (fun c x y => by
@@ -60,7 +60,7 @@ theorem UpperTheory.exists_invariant_posDef_hermitian_form_autForm_unitary :
       congr 1
       ring)
     (fun x y y' => by
-      simp only [F, map_add, Submodule.coe_add]
+      simp only [F, map_add (f := _), Submodule.coe_add]
       rw [← integral_add (hI _ (hPN x) _ (hPN y)) (hI _ (hPN x) _ (hPN y'))]
       congr 1
     (fun c x y => by

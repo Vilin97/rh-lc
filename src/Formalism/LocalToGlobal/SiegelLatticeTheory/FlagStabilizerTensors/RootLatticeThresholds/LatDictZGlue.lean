@@ -63,7 +63,7 @@ theorem adelic_gluing : Z0.AdelGlue := by
   have hsum : φ + ∑ i ∈ Qs, ε i = 1 := by
     simp only [φ, ε]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← map_sum, ← map_add, eT_sum hQ, map_one]
+      rw [← map_sum, ← map_add (f := _), eT_sum hQ, map_one]
 
   let G : HeightOneSpectrum (𝓞 I.F) → Matrix (Fin I.n) (Fin I.n) (I.E ⊗[I.F] Af I.F) := fun q =>
     (g q : Matrix (Fin I.n) (Fin I.n) I.E).map (Formalism.UG.inclE (F := I.F) (Af I.F))

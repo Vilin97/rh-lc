@@ -187,7 +187,7 @@ theorem restriction_of_blocks_and_jordan (hB : BlocksCycle) (hJ : JordanTransiti
       ∀ j, (∀ g, e j ∉ W.map (ρ g)) → e.repr x j = 0 :=
     ⟨{ carrier := {x | ∀ j, (∀ g, e j ∉ W.map (ρ g)) → e.repr x j = 0}
        add_mem' := fun {a b} ha hb j hj => by
-         rw [map_add, Finsupp.add_apply, ha j hj, hb j hj, add_zero]
+         rw [map_add (f := _), Finsupp.add_apply, ha j hj, hb j hj, add_zero]
        zero_mem' := fun j _ => by rw [map_zero, Finsupp.zero_apply]
        smul_mem' := fun c {x} hx j hj => by
          rw [map_smul, Finsupp.smul_apply, hx j hj, smul_zero] }, fun x => Iff.rfl⟩

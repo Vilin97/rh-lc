@@ -23,7 +23,7 @@ theorem inf_le_stabilizer_add (a b : V) :
   intro g hg
   rw [Subgroup.mem_inf] at hg
   simp only [mem_stabilizer] at *
-  rw [map_add, hg.1, hg.2]
+  rw [map_add (f := _), hg.1, hg.2]
 
 theorem stabilizer_le_stabilizer_smul (r : k) (a : V) :
     stabilizer ρ a ≤ stabilizer ρ (r • a) := by

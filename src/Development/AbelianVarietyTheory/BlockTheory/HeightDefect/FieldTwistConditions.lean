@@ -115,6 +115,6 @@ theorem bar_bar (x : AfE D) : bar D (bar D x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [bar, sigR, hc]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 end GlobalTheory.IndefiniteRowSideFullHecke.FieldTwistConditions

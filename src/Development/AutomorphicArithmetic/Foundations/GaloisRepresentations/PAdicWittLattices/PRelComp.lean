@@ -28,7 +28,7 @@ theorem UpperTheory.Gal.G3.pRelComp :
       exact (IsMonHom.monoidHom ψ₁ (Over.mk t)).map_one
     obtain ⟨y, hy⟩ := (I₂.onto n hn _).1 htor
     obtain ⟨v₁, hv₁, e₁⟩ := (r₁ n hn hcop x y).1 hy.symm
-    rw [← Category.assoc, ← hy, r₂ n hn hcop y z, map_mul, Module.End.mul_apply, e₁, map_add,
+    rw [← Category.assoc, ← hy, r₂ n hn hcop y z, map_mul, Module.End.mul_apply, e₁, map_add (f := _),
       map_nsmul]
     have hw := hint v₁ hv₁
     constructor

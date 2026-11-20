@@ -86,7 +86,7 @@ theorem xEx_star (P : M.Par) (l : ℕ) (ρ : M.Ty P) (Y : ℝ) : star (M.xEx P {
   show (starRingEnd ℂ) _ = _
   rw [map_prod]
   refine Finset.prod_congr rfl fun i _ => ?_
-  rw [map_add, Complex.conj_ofReal, Complex.conj_ofReal]
+  rw [map_add (f := _), Complex.conj_ofReal, Complex.conj_ofReal]
 
 end
 

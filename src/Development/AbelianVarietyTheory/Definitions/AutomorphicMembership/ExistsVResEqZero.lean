@@ -29,11 +29,11 @@ theorem capDeg_vp_symm (p d : ℕ) (D D' : Z.VDivQ) (Q : PicSym Z.X) :
     Z.capDeg_vp p d D (Z.cDQ D' * Q) = Z.capDeg_vp p d D' (Z.cDQ D * Q) := by
   induction D using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, add_mul, LinearMap.add_apply, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), add_mul, LinearMap.add_apply, ha, hb]
   | tmul a D =>
     induction D' using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, add_mul, LinearMap.add_apply, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), add_mul, LinearMap.add_apply, ha, hb]
     | tmul b D' =>
       have h (a : ℚ) (D : Z.VDivZ) : (a ⊗ₜ[ℤ] D : Z.VDivQ) = a • toQ D := by
         simp [toQ, TensorProduct.smul_tmul']

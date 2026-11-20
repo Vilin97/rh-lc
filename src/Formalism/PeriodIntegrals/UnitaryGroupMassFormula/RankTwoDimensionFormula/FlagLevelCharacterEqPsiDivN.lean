@@ -117,7 +117,7 @@ theorem sigA_sigA (a : I.E ⊗[I.F] Af I.F) : sigA I (sigA I a) = a := by
   induction a using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul x y => rw [sigA_tmul, sigA_tmul, star_star]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem sigA_inclE (a : I.E) : sigA I (Formalism.UG.inclE (F := I.F) (Af I.F) a) =
     Formalism.UG.inclE (F := I.F) (Af I.F) (star a) := by
@@ -157,7 +157,7 @@ theorem hA_smul_right (u v : VA I) (c : I.E ⊗[I.F] Af I.F) : hA I u (c • v) 
 
 theorem hA_add_left (u u' v : VA I) : hA I (u + u') v = hA I u v + hA I u' v := by
   unfold Formalism.L2.SG.HidaSetting.hA Formalism.UG.hform
-  simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hA_smul_left (u v : VA I) (c : I.E ⊗[I.F] Af I.F) : hA I (c • u) v = sigA I c * hA I u v := by
   unfold Formalism.L2.SG.HidaSetting.hA Formalism.UG.hform

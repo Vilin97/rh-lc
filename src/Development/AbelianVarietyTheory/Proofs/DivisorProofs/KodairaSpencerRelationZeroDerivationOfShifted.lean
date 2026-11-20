@@ -133,14 +133,14 @@ theorem ksRel_zero : ∀ (K : Type) [Field K] [CharZero K] (P₀ : Out.PolAV (Sp
   let Dv : I → F → F := fun i x => δ₀ x - (k : F)⁻¹ * Tm i x
   have Tm_add : ∀ i x y, Tm i (x + y) = Tm i x + Tm i y := by
     intro i x y
-    simp only [Tm, map_add, mul_add, Finset.sum_add_distrib]
+    simp only [Tm, map_add (f := _), mul_add, Finset.sum_add_distrib]
   have Tm_mul : ∀ i x y, Tm i (x * y) = x * Tm i y + y * Tm i x := by
     intro i x y
     simp only [Tm, Derivation.leibniz, smul_eq_mul, Finset.mul_sum, ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun e _ => by ring
   have Dv_add : ∀ i x y, Dv i (x + y) = Dv i x + Dv i y := by
     intro i x y
-    simp only [Dv, map_add, Tm_add]; ring
+    simp only [Dv, map_add (f := _), Tm_add]; ring
   have Dv_mul : ∀ i x y, Dv i (x * y) = x * Dv i y + y * Dv i x := by
     intro i x y
     simp only [Dv, Derivation.leibniz, smul_eq_mul, Tm_mul]; ring

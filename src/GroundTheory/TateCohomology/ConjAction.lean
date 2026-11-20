@@ -75,7 +75,7 @@ lemma cocycle_conj (f : cocycles₁ (res S.subtype A)) (t u : S) :
     rw [res_obj_ρ]
     simp only [MonoidHom.coe_comp, Function.comp_apply, Subgroup.coe_subtype, Subgroup.coe_inv]
     rw [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply]
-  rw [h, h, map_add, map_add, hinv, e1, e2]
+  rw [h, h, map_add (f := _), map_add (f := _), hinv, e1, e2]
   abel
 
 instance : Representation.IsTrivial ((conjRep A S 1).comp S.subtype) where
@@ -102,7 +102,7 @@ lemma cocycle_conj_sub (φ : cocycles₁ A) (g : G) (s : G) :
     A.ρ g (φ (g⁻¹ * s * g)) - φ s = A.ρ s (φ g) - φ g := by
   have h := (mem_cocycles₁_iff φ).1 φ.2
   have hinv : A.ρ g (φ g⁻¹) = -φ g := cocycles₁_map_inv φ g
-  rw [h, h, map_add, map_add, hinv, ← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply,
+  rw [h, h, map_add (f := _), map_add (f := _), hinv, ← Module.End.mul_apply, ← map_mul, ← Module.End.mul_apply,
     ← map_mul, mul_inv_cancel_left, mul_inv_cancel, map_one, Module.End.one_apply]
   abel
 

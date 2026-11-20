@@ -49,7 +49,7 @@ theorem exists_tensor_stabiliser_closed_orbit : ∀ (ι : Type) [Fintype ι] [De
         clear hP h
         induction P using MvPolynomial.induction_on with
         | C a => simp
-        | add p q hp hq => simp only [map_add, hp, hq]
+        | add p q hp hq => simp only [map_add (f := _), hp, hq]
         | mul_X p n hp => simp only [map_mul, hp, MvPolynomial.aeval_X, MvPolynomial.eval_X])
     have : orb d (fun k => ((t k : ℚ) : ℂ)) = {z : TIdx ι d → ℂ | ∃ y : Matrix ι ι ℂ, y.det = 1 ∧
         z = fun k => evC (MvPolynomial.map (algebraMap ℚ ℂ) (Φ k)) y} := by

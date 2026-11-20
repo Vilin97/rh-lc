@@ -29,4 +29,4 @@ theorem UpperTheory.exists_constantTerm_linearMap_equivariant_universalEnvelopin
     rw [map_mul, map_mul, Module.End.mul_apply, Module.End.mul_apply, ha, hb]
   | hadd a b ha hb =>
     intro φ
-    rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, map_add, ha, hb]
+    rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, map_add (f := _), ha, hb]

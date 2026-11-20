@@ -52,7 +52,7 @@ theorem brauerSumInv_eq_zero (x : cohomology (unitsLimitRep K) 2) : brauerSumInv
     exact finsum_char_localSymbolAt_eq_zero E ι (hEle.trans (sup_le_sup_left Cyclotomic.zhatField_le_maxCyclotomic _))
       χ hχ b
   have hx : x = x' + globalCupClass (iChar K) a₀ := by rw [hx', sub_add_cancel]
-  rw [hx, map_add, h', brauerSumInv_globalCupClass_iChar, add_zero]
+  rw [hx, map_add (f := _), h', brauerSumInv_globalCupClass_iChar, add_zero]
 
 end
 

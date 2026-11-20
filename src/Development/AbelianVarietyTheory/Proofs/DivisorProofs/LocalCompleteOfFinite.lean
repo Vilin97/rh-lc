@@ -22,7 +22,7 @@ theorem precomplete_of_finite {R : Type} [CommRing R] (I : Ideal R) [IsPrecomple
   | add s t hs ht =>
     obtain ⟨a, ha⟩ := hs
     obtain ⟨b, hb⟩ := ht
-    exact ⟨a + b, by rw [map_add, map_add, ha, hb]⟩
+    exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
 
 theorem precomplete_of_pow_le {S : Type} [CommRing S] (I J : Ideal S) [hI : IsPrecomplete I S] (hIJ : I ≤ J) (k : ℕ)
     (hk : J ^ (k + 1) ≤ I) : IsPrecomplete J S := by

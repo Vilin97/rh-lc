@@ -22,7 +22,7 @@ private def embeddingPrimeIdeal (σ : K →+* k) : Ideal (𝓞 K) where
   add_mem' := by
     intro x y hx hy
     change ‖σ (algebraMap (𝓞 K) K (x + y))‖ < 1
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt hx hy)
   zero_mem' := by
     change ‖σ (algebraMap (𝓞 K) K 0)‖ < 1

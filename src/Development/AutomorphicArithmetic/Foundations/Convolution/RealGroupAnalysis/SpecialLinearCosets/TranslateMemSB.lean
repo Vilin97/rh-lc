@@ -126,7 +126,7 @@ private theorem core {V : Type} [AddCommGroup V] [Module ℂ V] (hL : Lgrp G) (a
     have hIa : I a ≠ 0 := hne U a ho rfl
     apply mul_left_cancel₀ hIa
     have hf : ∀ g ∈ U, act g (f + f') = f + f' := fun g hg => by
-      rw [map_add, h₁ g hg, h₂ g hg]
+      rw [map_add (f := _), h₁ g hg, h₂ g hg]
     rw [mul_add, ← key f U a ho rfl h₁, ← key f' U a ho rfl h₂, ← key (f + f') U a ho rfl hf,
       map_add, LinearMap.add_apply]
   have hsmul : ∀ (c : ℂ) f, Λ₀ (c • f) = c * Λ₀ f := by

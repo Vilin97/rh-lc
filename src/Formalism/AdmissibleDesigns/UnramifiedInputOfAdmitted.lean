@@ -53,7 +53,7 @@ theorem unrFinIn_of (hA : UnrIn i dc) (l : K.Col i dc) : KFin.UnrFinIn i dc δO 
       have h1 : f (Br.iota D.nbr i _ hn g * Br.iota D.nbr i _ hn h) =
           f (Br.iota D.nbr i _ hn g) + f (Br.iota D.nbr i _ hn h) := hf.1 _ _
       simp only [c', map_mul]
-      rw [h1, map_add, map_add]
+      rw [h1, map_add (f := _), map_add (f := _)]
     · show c' g = 0 - 0
       rw [sub_zero]
       show KHf.eK Bw (algebraMap (D.nd.O i) (FractionRing (D.nd.O i)) (f (Br.iota D.nbr i _ hn g))) = 0

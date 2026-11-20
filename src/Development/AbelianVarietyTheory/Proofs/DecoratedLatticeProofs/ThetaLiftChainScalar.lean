@@ -91,7 +91,7 @@ theorem lift_eq_cI_io : ∀ {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : 
       simp only [PiTensorProduct.lift_symm, LinearMap.compMultilinearMap_apply] at this
       simp only [map_smul, Pi.smul_apply, smul_eq_mul, this]
     | add a a' ha ha' =>
-      simp only [map_add, Pi.add_apply, ha, ha']
+      simp only [map_add (f := _), Pi.add_apply, ha, ha']
   have hthL : ∀ g, ∀ γ ∈ GQ (Yc D (j + 1)), ∀ x, (pk W).ωY t j (g, γ * x) ((f.t t).pt j P) 0 =
       (pk W).ωY t j (g, x) ((f.t t).pt j P) 0 := by
     intro g γ hγ x

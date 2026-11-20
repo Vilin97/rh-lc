@@ -91,8 +91,8 @@ theorem mem_siegelH_of_split (h : IsCMExt F E σ) (hQ : Q = dblGram finSumFinEqu
   have h2 := (keepsDiag_iff _).1 (keepsDiag_of_pairing finSumFinEquiv hu (x := (splitHom σ Q (τ.comp σ) g).1)
     (fun u' u => e ▸ pairing_splitHom τ g u' u) hg)
   refine mem_siegelOf.2 ((keepsDiag_iff _).2 fun i j => split_ext h τ ?_ ?_)
-  · rw [map_add, map_add]; exact h1 i j
-  · rw [map_add, map_add]; exact h2 i j
+  · rw [map_add (f := _), map_add (f := _)]; exact h1 i j
+  · rw [map_add (f := _), map_add (f := _)]; exact h2 i j
 
 theorem hasIwasawa_of_algHom (h : IsCMExt F E σ) (hQ : Q = dblGram finSumFinEquiv J) (hJ : IsHermND σ J)
     (hQ' : IsHermND σ Q) (τ : E →ₐ[F] Fv F v) (L : Submodule (𝓞 E) (Fin n → E)) [Submodule.IsLattice E L]

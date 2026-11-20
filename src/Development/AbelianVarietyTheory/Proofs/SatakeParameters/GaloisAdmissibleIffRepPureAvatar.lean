@@ -26,7 +26,7 @@ theorem exists_inducesW (i : N.Loc) (τ : H.E →+* Qbar (N.l i)) :
       zero_mem' := by simp
       add_mem' := fun {x y} hx hy => by
         change ‖τ ((x + y : 𝓞 H.E) : H.E)‖ < 1
-        rw [show ((x + y : 𝓞 H.E) : H.E) = x + y from rfl, map_add]
+        rw [show ((x + y : 𝓞 H.E) : H.E) = x + y from rfl, map_add (f := _)]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt hx hy)
       smul_mem' := fun c x hx => by
         change ‖τ ((c * x : 𝓞 H.E) : H.E)‖ < 1

@@ -21,7 +21,7 @@ theorem Near.map_of_fixed (g : R →+* R) (hg : ∀ a, ∃ b, ι b = g (ι a)) (
     {x : R} (hx : Near ι p t m x) : Near ι p t m (g x) := by
   obtain ⟨a, r, rfl⟩ := hx
   obtain ⟨b, hb⟩ := hg a
-  exact ⟨b, g r, by rw [map_add, map_mul, map_mul, map_pow, map_natCast, ht, hb]⟩
+  exact ⟨b, g r, by rw [map_add (f := _), map_mul, map_mul, map_pow, map_natCast, ht, hb]⟩
 
 theorem fixed_complete_generic {G : Type} (H : Set G) (act : G → (R →+* R)) (S : Subring R)
     (hS : ∀ x, x ∈ S ↔ ∀ g ∈ H, act g x = x) {τ : A} (hτ : ι τ = t)

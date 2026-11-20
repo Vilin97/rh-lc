@@ -48,7 +48,7 @@ theorem fin_add {x y : WO S T} (hx : x.map (infPart D) = 0) (hy : y.map (infPart
   have h := congrFun (congrFun hx i) j
   have h' := congrFun (congrFun hy i) j
   simp only [Matrix.map_apply, Matrix.add_apply, Matrix.zero_apply] at h h' ⊢
-  rw [RingHom.map_add, h, h', add_zero]
+  rw [RingHom.map_add (f := _), h, h', add_zero]
 
 variable {μ : Measure (WO S T)} {𝓕 : Set (WO S T)}
 

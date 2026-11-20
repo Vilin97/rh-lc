@@ -43,7 +43,7 @@ theorem eventually_fix_k (hσ : ∀ x, σ (σ x) = x) (hS : IsHermND σ JS) (hT 
     have e4 := H.comp x (N • l) e
     rw [he _ (nsmul_mem hl N), e2, one_smul] at e4
     rw [h.op, (_root_.PositivityTheory.ThKW.LatA.rep_k h).fix_of_map_le hs (by rintro _ ⟨a, ha, rfl⟩; exact hp a ha) he, e1, ← e4]
-  · filter_upwards [hu, hv] with p h3 h4 using by rw [map_add, h3, h4]
+  · filter_upwards [hu, hv] with p h3 h4 using by rw [map_add (f := _), h3, h4]
   · filter_upwards [hu] with p h3 using by rw [map_smul, h3]
 end PositivityTheory.ThKW.LatA
 end

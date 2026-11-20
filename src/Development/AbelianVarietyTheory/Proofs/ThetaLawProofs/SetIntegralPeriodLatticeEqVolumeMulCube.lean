@@ -64,7 +64,7 @@ theorem setIntegral_periodLattice_eq_volume_mul_cube :
   let L : (Fin g ⊕ Fin g → ℝ) →ₗ[ℝ] (Fin g → ℂ) :=
     { toFun := fun p => φ ((fun i => (p (.inl i) : ℂ)) + τ.mulVec (fun i => (p (.inr i) : ℂ)))
       map_add' := fun p q => by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         ext i
         simp [Matrix.mulVec, dotProduct, mul_add, Finset.sum_add_distrib]

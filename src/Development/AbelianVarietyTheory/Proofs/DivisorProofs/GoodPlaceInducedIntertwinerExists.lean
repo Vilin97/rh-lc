@@ -61,7 +61,7 @@ theorem zeta_coinv : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberF
   obtain ⟨p, hp⟩ := GlobalTheory.KSplit.exists_linear_ext (SB _) (GlobalTheory.KSplit.indSp a a' α β)
     (fun φ => GlobalTheory.KSplit.mapA a' l (α / β) β (ι φ))
     (fun φ h => GlobalTheory.T.intertwining_map_into_induced_left _ a a' α β l hβ hl _ (m φ h))
-    (fun φ h φ' h' => by simp only [map_add]; exact GlobalTheory.KSplit.mapA_add hl (m φ h) (m φ' h'))
+    (fun φ h φ' h' => by simp only [map_add (f := _)]; exact GlobalTheory.KSplit.mapA_add hl (m φ h) (m φ' h'))
     (fun z φ h => by simp only [map_smul]; exact GlobalTheory.KSplit.mapA_smul hl z (m φ h))
   have act := fun g hg h hh φ hφ φ₁ hφ₁ H => GlobalTheory.T.linear_witt_model_unitary_action hP F E σ B _ _ _ _ _ _ _ om _ _ _ _
     (GlobalTheory.KSplit.isPair_big hT) v t b c ι hι g hg h hh φ hφ φ₁ hφ₁ H

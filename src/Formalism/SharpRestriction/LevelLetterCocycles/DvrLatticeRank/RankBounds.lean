@@ -68,13 +68,13 @@ theorem smulE_smulE (e e' : W.EE) (x : LA W T π' c) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [smulE_tmul, mul_assoc]
-  | add x y hx hy => simp [map_add, hx, hy]
+  | add x y hx hy => simp [map_add (f := _), hx, hy]
 
 theorem smulE_one (x : LA W T π' c) : smulE W T π' c 1 x = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [smulE_tmul]
-  | add x y hx hy => simp [map_add, hx, hy]
+  | add x y hx hy => simp [map_add (f := _), hx, hy]
 
 theorem smulE_inj {e : W.EE} (he : IsUnit e) : Function.Injective (smulE W T π' c e) := by
   obtain ⟨u, rfl⟩ := he
@@ -90,7 +90,7 @@ theorem γLA_smulE (e : W.EE) (x : LA W T π' c) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [smulE_tmul, γLA_tmul, map_mul]
-  | add x y hx hy => simp [map_add, hx, hy]
+  | add x y hx hy => simp [map_add (f := _), hx, hy]
 
 theorem toLA_tmul (S : Submodule O (LcQ W T π' c)) (a : ↥W.AΔ) (s : ↥S) :
     toLA W T π' c S (a ⊗ₜ s) = algebraMap (LetA O n) W.EE ((letE c : LetA O n) * a) ⊗ₜ (s : LcQ W T π' c) := by
@@ -119,7 +119,7 @@ theorem R_smul {b : LetA O n} (hb : b ∈ W.AΔ) {r : LA W T π' c}
     congr 2
     simp only [Subalgebra.coe_mul]
     ring
-  | add x y hx hy => rw [map_add, map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
 
 theorem R_smul_letE (p : LetA O n) {r : LA W T π' c} (hr : r ∈ LinearMap.range (toLA W T π' c S)) :
     smulLA W T π' c p r = smulLA W T π' c ((letE c : LetA O n) * p) r := by
@@ -133,7 +133,7 @@ theorem R_smul_letE (p : LetA O n) {r : LA W T π' c} (hr : r ∈ LinearMap.rang
       funext j; simp only [letE, Pi.mul_apply, Pi.single_apply]; split_ifs <;> simp
     calc p * ((letE c : LetA O n) * (a : LetA O n)) = p * ((letE c * letE c) * (a : LetA O n)) := by rw [he]
       _ = _ := by ring
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def Fl (Eπ : LetA O n) (h' : ℕ) (f : ℕ → LetA O n) (k : ℕ) : Submodule O (LA W T π' c) :=
   ((LinearMap.range (toLA W T π' c S)).map (smulLA W T π' c (∏ j ∈ Finset.range k, f j))).comap
@@ -197,7 +197,7 @@ theorem Fl_gamma (Eπ : LetA O n) (h' : ℕ) (f : ℕ → LetA O n) (cc : ℕ �
   | add x y hx hy =>
     have := add_mem hx hy
     convert this using 1
-    simp only [map_add, smul_add]
+    simp only [map_add (f := _), smul_add]
     abel
 
 theorem piNL_gamma (Pt : ZMod n → LL → (K →ₐ[Qp] LL) → Prop) (Eπ : LetA O n) (h' M : ℕ)
@@ -262,7 +262,7 @@ theorem Fl_gr_rank (Eπ : LetA O n) (h' : ℕ) (f : ℕ → LetA O n)
         TensorProduct.tmul_smul, TensorProduct.smul_tmul', ← TensorProduct.sub_tmul]
       congr 1
       have h2 := congrArg (algebraMap (LetA O n) W.EE) hab
-      simp only [map_mul, map_add, Subalgebra.coe_one, mul_one] at h2 ⊢
+      simp only [map_mul, map_add (f := _), Subalgebra.coe_one, mul_one] at h2 ⊢
       rw [Algebra.smul_def, IsScalarTower.algebraMap_apply O (LetA O n) W.EE]
       linear_combination -h2
     | add x y hx hy =>
@@ -271,7 +271,7 @@ theorem Fl_gr_rank (Eπ : LetA O n) (h' : ℕ) (f : ℕ → LetA O n)
       refine ⟨s₁ + s₂, ?_⟩
       have := add_mem hs₁ hs₂
       convert this using 1
-      simp only [map_add, TensorProduct.tmul_add]
+      simp only [map_add (f := _), TensorProduct.tmul_add]
       abel
   have hsurj : Function.Surjective θ := by
     intro q

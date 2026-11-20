@@ -196,7 +196,7 @@ def logC (χ : GQ l →* ℚ_[l]ˣ) (σ : GQ l) : PadicComplex l :=
 theorem logC_mul {χ : GQ l →* ℚ_[l]ˣ} (hχ : IsCyc χ) (g h : GQ l) :
     logC χ (g * h) = logC χ g + logC χ h := by
   have hn := (GlobalTheory.Cyc.cyc_basic l χ hχ).1
-  rw [logC, map_mul, Units.val_mul, (GlobalTheory.PadicLogUnits.logZl_hom l).1 _ _ (hn g) (hn h), map_add]
+  rw [logC, map_mul, Units.val_mul, (GlobalTheory.PadicLogUnits.logZl_hom l).1 _ _ (hn g) (hn h), map_add (f := _)]
   rfl
 
 theorem logC_hinf {χ : GQ l →* ℚ_[l]ˣ} (hχ : IsCyc χ) (K : FinExt l) {h : GQ l}
@@ -302,7 +302,7 @@ theorem exists_coeff {act : GQ l →* (PadicComplex l ≃+* PadicComplex l)} {χ
     exact mul_le_of_le_one_left (by positivity) hy.2
   · have := key σ hσ
     simp only [hc1def] at this
-    rw [map_div₀ (act σ) _ (l : PadicComplex l), map_natCast, map_add]
+    rw [map_div₀ (act σ) _ (l : PadicComplex l), map_natCast, map_add (f := _)]
     generalize S w / (ζ - 1) = z at this ⊢
     generalize y / logC χ γ = β at this ⊢
     field_simp
@@ -323,7 +323,7 @@ theorem coeff_eq_zero {act : GQ l →* (PadicComplex l ≃+* PadicComplex l)} {�
     rw [map_mul, map_pow, map_natCast, this]
   obtain ⟨y, hy, x, hx, hyx⟩ := T1a _ hO
   have h1 := congrArg (act γ) hyx
-  rw [map_mul, map_pow, map_natCast, map_add, act_inC ha hγ.1 hy.1] at h1
+  rw [map_mul, map_pow, map_natCast, map_add (f := _), act_inC ha hγ.1 hy.1] at h1
   have h2 : logC χ γ * α = 0 := by
     refine T1b _ ?_ _ ((Xj K s).sub_mem (T1e γ (gj_le K s hγ.1) x hx) hx) n ?_
     · rw [mem_inC_iff]

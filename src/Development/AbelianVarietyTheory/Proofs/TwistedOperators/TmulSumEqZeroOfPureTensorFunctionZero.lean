@@ -166,7 +166,7 @@ def formOf {T : Finset (Pl F)} {P : Type} [AddCommGroup P] [Module ℂ P] (p : S
     intro _ w l a b
     cases l with
     | none =>
-      simp only [upd_none, Function.update_self, map_add, TensorProduct.add_tmul]
+      simp only [upd_none, Function.update_self, map_add (f := _), TensorProduct.add_tmul]
     | some v₀ =>
       simp only [upd_some, Function.update_of_ne (Option.some_ne_none v₀).symm, q_add,
         MultilinearMap.map_update_add, TensorProduct.tmul_add, map_add]

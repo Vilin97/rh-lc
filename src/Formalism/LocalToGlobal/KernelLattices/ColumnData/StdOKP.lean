@@ -259,7 +259,7 @@ theorem up : ∃ N : ℕ, 0 < N ∧
   let f : Fin 4 × (Fin 4 × D.what₂.Tau) → D.host.E →+ D.host.K := fun p =>
     { toFun := fun x => B.γ₀.g (Pi.single p.1 x) p.2
       map_zero' := by simp
-      map_add' := fun x y => by rw [Pi.single_add, map_add]; rfl }
+      map_add' := fun x y => by rw [Pi.single_add, map_add (f := _)]; rfl }
   obtain ⟨m, hm, hf⟩ := denom D.host.E D.host.K f
   refine ⟨m * k, Nat.mul_pos hm hk, ?_⟩
   have hle : pow4 B.lamM ≤ ((stdLat B.L (Fin 4 × D.what₂.Tau)).comap

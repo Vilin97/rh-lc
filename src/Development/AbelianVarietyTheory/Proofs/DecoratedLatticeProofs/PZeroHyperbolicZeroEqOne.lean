@@ -34,7 +34,7 @@ variable {D : D7}
 
 def intGrp (D : D7) (v : Pl D) : AddSubgroup (AE D) where
   carrier := intAt D (· = v)
-  add_mem' ha hb := ⟨add_mem ha.1 hb.1, by rw [RingHom.map_add]; exact add_mem ha.2 hb.2⟩
+  add_mem' ha hb := ⟨add_mem ha.1 hb.1, by rw [RingHom.map_add (f := _)]; exact add_mem ha.2 hb.2⟩
   zero_mem' := ⟨zero_mem _, by rw [map_zero]; exact zero_mem _⟩
   neg_mem' ha := ⟨neg_mem ha.1, by rw [RingHom.map_neg]; exact neg_mem ha.2⟩
 

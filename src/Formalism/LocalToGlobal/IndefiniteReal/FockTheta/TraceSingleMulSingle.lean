@@ -79,7 +79,7 @@ theorem opPow_add_single (h : IsCCR Sm aP aM) (hv : v ∈ Sm) (k : ι →₀ ℕ
     opPow aP (k + Finsupp.single j 1) v = aP j (opPow aP k v) := by
   rw [opPow_of_list h hv (k + Finsupp.single j 1) (j :: (Finsupp.toMultiset k).toList)]
   · rfl
-  · rw [← Multiset.cons_coe, Multiset.coe_toList, map_add, Finsupp.toMultiset_single, one_smul, add_comm,
+  · rw [← Multiset.cons_coe, Multiset.coe_toList, map_add (f := _), Finsupp.toMultiset_single, one_smul, add_comm,
       Multiset.singleton_add]
 
 theorem aM_lpow (h : IsCCR Sm aP aM) (hv : v ∈ Sm) (i : ι) (hi : aM i v = 0) : ∀ l : List ι,
@@ -309,7 +309,7 @@ theorem ip_opPow (h : IsCCR Sm aP aM) (hv : v ∈ Sm) (hvac : ∀ i, aM i v = 0)
   | @cons a t ih =>
     intro β
     have e : Multiset.toFinsupp (a ::ₘ t) = Multiset.toFinsupp t + Finsupp.single a 1 := by
-      rw [← Multiset.singleton_add, map_add, Multiset.toFinsupp_singleton, add_comm]
+      rw [← Multiset.singleton_add, map_add (f := _), Multiset.toFinsupp_singleton, add_comm]
     rw [e, opPow_add_single h hv, hPM a _ _ (opPow_mem h hv _) (opPow_mem h hv _), aM_opPow h hv a (hvac a),
       ip_smul_right hs h.zero_mem _ (opPow_mem h hv _) (opPow_mem h hv _), ih, map_natCast]
     by_cases hβa : β a = 0

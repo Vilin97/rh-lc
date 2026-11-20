@@ -31,7 +31,7 @@ theorem frame_psi_eq_phiInv : ∀ (p : ℕ) [Fact p.Prime] (O : Type) [CommRing 
     | add x y hx hy =>
       rw [map_add ψ, Pi.single_add, map_add e, hx, hy, Pi.single_add, map_add e]
       funext j
-      simp only [Pi.add_apply, map_add]
+      simp only [Pi.add_apply, map_add (f := _)]
   have hw : (fun i => ψ (w i)) = ∑ i, Pi.single i (ψ (w i)) := (Finset.univ_sum_single _).symm
   set_option synthInstance.maxHeartbeats 100000 in
     rw [hw, map_sum]

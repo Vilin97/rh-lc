@@ -19,13 +19,13 @@ variable {D : D7}
 
 theorem pair_add_left (T : HSp D) {ρ : ℕ} (x x' a : Mx D T.rank ρ) :
     trHalf D (pairS T (x + x') a) = trHalf D (pairS T x a) + trHalf D (pairS T x' a) := by
-  rw [← map_add]
+  rw [← map_add (f := _)]
   congr 1
   simp only [pairS, Matrix.mul_add, trace_add]
 
 theorem pair_add_right (T : HSp D) {ρ : ℕ} (x a a' : Mx D T.rank ρ) :
     trHalf D (pairS T x (a + a')) = trHalf D (pairS T x a) + trHalf D (pairS T x a') := by
-  rw [← map_add]
+  rw [← map_add (f := _)]
   congr 1
   simp only [pairS, adj_add, Matrix.add_mul, trace_add]
 

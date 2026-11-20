@@ -40,7 +40,7 @@ theorem inter_eq_of_divIso : ∀ (F : Type) [Field F] (Y Y' : Var F) (Δ : Y.Dv)
     (ψ : Y'.Fn →+* Y.Fn) (u : Y.Fnˣ), DivIso Δ Δ' φ ψ u → Y.inter (fun _ => Δ) = Y'.inter (fun _ => Δ') := by
   intro F _ Y Y' Δ Δ' φ ψ u h
   have e : toPic Δ = cls _ (DomPull.presents_pullback φ.hom Δ').isLB := by
-    rw [eq_pullback_add h, map_add, toPic_principal, add_zero]
+    rw [eq_pullback_add h, map_add (f := _), toPic_principal, add_zero]
     exact (DomPull.presents_pullback φ.hom Δ').toPic_eq
   rw [Var.inter_eq_of_toPic_eq (fun _ => (DomPull.presents_pullback φ.hom Δ').isLB) fun _ => e, Var.inter_const,
     ← h.2.2.1]

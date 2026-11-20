@@ -29,7 +29,7 @@ private theorem UpperTheory.V.KT.fe_comm {I : Type} (S : ∀ n, Set (Fin n → I
   induction f using Finsupp.induction_linear with
   | zero => simp
   | add f g hf hg =>
-    rw [map_add, Finsupp.mapDomain_add, hf, hg, Finsupp.mapDomain_add, map_add]
+    rw [map_add (f := _), Finsupp.mapDomain_add, hf, hg, Finsupp.mapDomain_add, map_add (f := _)]
   | single t c =>
     rw [KH.faceD_single, Finsupp.mapDomain_single]
     simp only [ConeExtensionAcyclic.bd, Finsupp.linearCombination_single, Finset.smul_sum]
@@ -46,7 +46,7 @@ private theorem UpperTheory.V.KT.fe_aug {I : Type} (s : Set (Fin 1 → I)) (f : 
   induction f using Finsupp.induction_linear with
   | zero => simp
   | add f g hf hg =>
-    rw [Finsupp.mapDomain_add, map_add, hf, hg, map_add, Finsupp.single_add]
+    rw [Finsupp.mapDomain_add, map_add (f := _), hf, hg, map_add (f := _), Finsupp.single_add]
   | single t c =>
     rw [Finsupp.mapDomain_single, KH.aug_single]
     simp only [ConeExtensionAcyclic.bd, Finsupp.linearCombination_single]

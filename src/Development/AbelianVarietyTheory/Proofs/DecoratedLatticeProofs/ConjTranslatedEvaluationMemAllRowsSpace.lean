@@ -33,11 +33,11 @@ theorem inner_antiunitary_swap {E F : Type*} [NormedAddCommGroup E] [InnerProduc
     [InnerProductSpace ℂ F] (U : E ≃ₗᵢ⋆[ℂ] F) (x y : E) : ⟪U x, U y⟫_ℂ = ⟪y, x⟫_ℂ := by
   have hI : ∀ z : E, U (Complex.I • z) = (-Complex.I) • U z := by
     intro z; rw [map_smulₛₗ]; simp
-  have h1 : ‖U x + U y‖ = ‖y + x‖ := by rw [← map_add, U.norm_map, add_comm]
+  have h1 : ‖U x + U y‖ = ‖y + x‖ := by rw [← map_add (f := _), U.norm_map, add_comm]
   have h2 : ‖U x - U y‖ = ‖y - x‖ := by rw [← map_sub, U.norm_map, norm_sub_rev]
   have h3 : ‖U x - Complex.I • U y‖ = ‖y - Complex.I • x‖ := by
     have e1 : U x - Complex.I • U y = U (x + Complex.I • y) := by
-      rw [map_add, hI, neg_smul, sub_eq_add_neg]
+      rw [map_add (f := _), hI, neg_smul, sub_eq_add_neg]
     have e2 : y - Complex.I • x = (-Complex.I) • (x + Complex.I • y) := by
       rw [smul_add, smul_smul, neg_mul, Complex.I_mul_I, neg_neg, one_smul, neg_smul]; abel
     rw [e1, U.norm_map, e2, norm_smul]; simp

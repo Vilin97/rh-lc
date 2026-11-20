@@ -45,7 +45,7 @@ theorem card_le_of_surjective [Nontrivial V] {κ κ' : Type} [Fintype κ] [Finty
       rw [MvPolynomial.algHom_C, TrivSqZeroExt.algebraMap_eq_inl, TrivSqZeroExt.snd_inl]
       exact zero_mem _
     | add p q hp hq =>
-      rw [map_add, TrivSqZeroExt.snd_add]
+      rw [map_add (f := _), TrivSqZeroExt.snd_add]
       exact add_mem hp hq
     | mul_X p j hp =>
       rw [map_mul, TrivSqZeroExt.snd_mul, op_smul_eq_smul]

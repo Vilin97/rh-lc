@@ -120,7 +120,7 @@ theorem exists_rational_dblCoord {J : Matrix (Fin n) (Fin n) E} {J' : Matrix (Fi
     simp only [h1, h2, h3] at h4
     refine Prod.ext (funext fun ⟨k, j⟩ => ?_) (funext fun ⟨k, j⟩ => ?_) <;>
       obtain ⟨i | i, rfl⟩ := finSumFinEquiv.surjective k <;>
-      simp only [h4 i j, pairVec_inl, pairVec_inr, map_sub, map_add, map_mul, map_neg]
+      simp only [h4 i j, pairVec_inl, pairVec_inr, map_sub, map_add (f := _), map_mul, map_neg]
   · have h1 : (fun i => u (finSumFinEquiv (.inr i))) = fun i => u (finSumFinEquiv (.inl i)) :=
       funext fun i => funext fun j => (congrFun (hu j) i).symm
     obtain ⟨k, j⟩ := p

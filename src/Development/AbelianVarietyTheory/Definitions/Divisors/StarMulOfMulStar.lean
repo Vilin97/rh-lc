@@ -188,7 +188,7 @@ theorem locMap_star (ι : L →ₐ[ℚ] B) (c : L →ₐ[ℚ] L) (hc : ∀ a, ι
   | zero => simp
   | tmul s x =>
     simp only [locMap, locInv, Algebra.TensorProduct.map_tmul, AlgHom.id_apply, hstar, hc]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, star_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), star_add]
 
 def invLoc (ι : L →ₐ[ℚ] B) (hι : Function.Injective ι) (γ₀ : Bˣ)
     (hcent : ∀ x : B, x * γ₀ = γ₀ * x ↔ x ∈ Set.range ι) (c : L →ₐ[ℚ] L) (hc : ∀ a, ι (c a) = star (ι a))

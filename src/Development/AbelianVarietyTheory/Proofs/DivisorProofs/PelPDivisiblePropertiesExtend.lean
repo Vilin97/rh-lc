@@ -55,7 +55,7 @@ theorem baseChangeMap_bidual_hom (G : PDivGroup p R) :
   change (CartierDual.baseChangeLinear R K (CartierDual R (G.A n)) ((1 : K) ⊗ₜ[R] CartierDual.bidual R (G.A n) b)).ofConv y =
     (CartierDual.baseChangeLinear R K (G.A n) y).ofConv ((1 : K) ⊗ₜ[R] b)
   induction y with
-  | add x y hx hy => simp only [map_add, WithConv.ofConv_add, LinearMap.add_apply] at hx hy ⊢; rw [hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), WithConv.ofConv_add, LinearMap.add_apply] at hx hy ⊢; rw [hx, hy]
   | tmul r φ =>
     rw [CartierDual.baseChangeLinear_tmul_tmul, CartierDual.baseChangeLinear_tmul_tmul, CartierDual.bidual_apply]
     simp [mul_comm]

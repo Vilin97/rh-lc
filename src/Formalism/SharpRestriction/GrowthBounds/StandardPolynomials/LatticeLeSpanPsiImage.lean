@@ -129,7 +129,7 @@ theorem genSet_le {D : Formalism.BasicNotions.D7} (hA2 : Formalism.MainNotions.C
         exact Submodule.smul_mem _ a h1
     | zero => simp
     | add y1 y2 _ _ h1 h2 =>
-      rw [map_add, mul_add, add_mul]
+      rw [map_add (f := _), mul_add, add_mul]
       exact Submodule.add_mem _ h1 h2
     | smul a y1 _ h1 =>
       rw [AlgHom.map_smul_of_tower, mul_smul_comm, smul_mul_assoc]

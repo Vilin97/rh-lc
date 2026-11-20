@@ -48,7 +48,7 @@ theorem weyl_exists_cofRel : ∀ (R : Type) [CommRing R] [IsDomain R] (m : ℕ) 
     obtain ⟨g', hg', hr'⟩ := hy
     refine ⟨g + g', add_mem hg hg', ?_⟩
     unfold CofRel at hr hr' ⊢
-    rw [map_add, ← hr, ← hr', mul_add]
+    rw [map_add (f := _), ← hr, ← hr', mul_add]
   | smul c x _ hx =>
     obtain ⟨g, hg, hr⟩ := hx
     refine ⟨c • g, Submodule.smul_mem _ c hg, ?_⟩

@@ -98,7 +98,7 @@ theorem onMin_canInv_mem (hfit : ∀ s c, (nu s).colLen c ≤ N) (F : FrP D w N 
     (LinearMap.ker_eq_bot.2 (P.iL w).injective)
   let ρ : Cw D w → Cw D w := fun z => P.iL w (π z)
   have ρ_add : ∀ a b, ρ (a + b) = ρ a + ρ b := fun a b => by
-    simp only [ρ, map_add]
+    simp only [ρ, map_add (f := _)]
   have ρ_mul : ∀ x z, ρ (P.iL w x * z) = P.iL w x * ρ z := fun x z => by
     have : P.iL w x * z = x • z := by rw [Algebra.smul_def]; rfl
     simp only [ρ, this, map_smul, smul_eq_mul, map_mul]
@@ -122,7 +122,7 @@ theorem onMin_canInv_mem (hfit : ∀ s c, (nu s).colLen c ≤ N) (F : FrP D w N 
         rw [map_monomial, smul_monomial, smul_eq_mul, mul_one]
       rw [e, map_smul, map_smul, smul_eq_mul, smul_eq_mul, ρ_mul, ψ'_mon]
     | add p q hp hq =>
-      rw [map_add, map_add, map_add, hp, hq, ρ_add]
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq, ρ_add]
   have hpt : ∀ y : D.what₂.Tau → Matrix (Fin N) (Fin N) D.what₂.LL,
       canM D w N nu ψ' (fun τ => (y τ).map (P.iL w)) = canM D w N nu ψ (fun τ => (y τ).map (P.iL w)) := by
     intro y

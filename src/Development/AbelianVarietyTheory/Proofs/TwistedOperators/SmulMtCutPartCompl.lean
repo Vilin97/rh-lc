@@ -42,7 +42,7 @@ theorem idem_conj_sum {e : AE D} (he : e * e = e) (hc : e * cA D e = 0) :
     (e + cA D e) * (e + cA D e) = e + cA D e ∧ cA D (e + cA D e) = e + cA D e := by
   have h1 : cA D e * cA D e = cA D e := by rw [← RingHom.map_mul, he]
   refine ⟨by linear_combination he + h1 + 2 * hc, ?_⟩
-  rw [RingHom.map_add, GlobalTheory.SplitOnto.cA_cA, add_comm]
+  rw [RingHom.map_add (f := _), GlobalTheory.SplitOnto.cA_cA, add_comm]
 
 theorem idem_compl {f : AE D} (hf : f * f = f ∧ cA D f = f) : (1 - f) * (1 - f) = 1 - f ∧ cA D (1 - f) = 1 - f := by
   refine ⟨by linear_combination hf.1, ?_⟩

@@ -65,7 +65,7 @@ theorem linPart_add {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host
     rfl
   ext i j
   apply IsFractionRing.injective T.V T.Fr
-  rw [Matrix.add_apply, map_add, ← key, ← key, ← key, ReciprocityTheory.ChartRestriction.G.PullbackSections.Pf.EigA.dAct_add, Matrix.add_apply]
+  rw [Matrix.add_apply, map_add (f := _), ← key, ← key, ← key, ReciprocityTheory.ChartRestriction.G.PullbackSections.Pf.EigA.dAct_add, Matrix.add_apply]
 
 end GlobalTheory.CharDepth.EigExt
 

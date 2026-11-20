@@ -14,7 +14,7 @@ theorem frobSemilinear_iterate_eq_zero : ∀ (p : ℕ) [Fact p.Prime] (S : Type)
         exact Matrix.mulVec_zero Q
       map_add' := by
         intro x y
-        simp only [L, Pi.add_apply, map_add]
+        simp only [L, Pi.add_apply, map_add (f := _)]
         exact Matrix.mulVec_add Q _ _ }
   have hF : ∀ n, ⇑(F ^ n) = L^[n] := fun n => AddMonoid.End.coe_pow (M := ι → S) F n
   have hsmul : ∀ (a : S) (w : ι → S), L (a • w) = a ^ p • L w := by

@@ -25,10 +25,10 @@ theorem exists_idele_all {D : D7} {θ : D.what₂.Tau → (Ainf D.host.F ⊗[D.h
   let a : (D.what₂.Tau → ℂ) → AE D := fun w => 1 + σ (w - 1)
   have a1 : ∀ w, finPart D (a w) = 1 := fun w => by
     simp only [a]
-    rw [RingHom.map_add, hσ.fin, RingHom.map_one, add_zero]
+    rw [RingHom.map_add (f := _), hσ.fin, RingHom.map_one, add_zero]
   have a3 : ∀ w τ, θ τ (infPart D (a w)) = w τ := fun w τ => by
     simp only [a]
-    rw [RingHom.map_add, RingHom.map_add, hσ.comp, RingHom.map_one, RingHom.map_one, Pi.sub_apply, Pi.one_apply]
+    rw [RingHom.map_add (f := _), RingHom.map_add (f := _), hσ.comp, RingHom.map_one, RingHom.map_one, Pi.sub_apply, Pi.one_apply]
     ring
   have m : a z * a z⁻¹ = 1 := by
     refine sub_eq_zero.1 (hσ.ext _ ?_ fun τ => ?_)

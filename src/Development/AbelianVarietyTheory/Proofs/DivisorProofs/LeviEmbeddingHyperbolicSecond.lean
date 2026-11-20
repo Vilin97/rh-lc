@@ -51,7 +51,7 @@ theorem extM_map {A B : Type} [CommRing A] [CommRing B] {m k : Type} [Fintype m]
     [DecidableEq k] (ρ : A →+* B) (ι : Matrix m k A) (Q : Matrix k m A) (g : Matrix k k A) :
     (extM ι Q g).map ρ = extM (ι.map ρ) (Q.map ρ) (g.map ρ) := by
   simp only [extM]
-  rw [← RingHom.mapMatrix_apply, map_add, map_sub, map_one, RingHom.mapMatrix_apply, RingHom.mapMatrix_apply,
+  rw [← RingHom.mapMatrix_apply, map_add (f := _), map_sub, map_one, RingHom.mapMatrix_apply, RingHom.mapMatrix_apply,
     Matrix.map_mul, Matrix.map_mul, Matrix.map_mul]
 
 section Frame

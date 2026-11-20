@@ -23,7 +23,7 @@ lemma good_add {y : Fin D → K} {j : Fin D} {N : ℕ} {b b' : K} (h : Good y j 
     (h' : Good y j N b') : Good y j N (b + b') := by
   obtain ⟨C, hC, he⟩ := h
   obtain ⟨C', hC', he'⟩ := h'
-  exact ⟨C + C', (totalDegree_add _ _).trans (max_le hC hC'), by rw [add_mul, he, he', map_add]⟩
+  exact ⟨C + C', (totalDegree_add _ _).trans (max_le hC hC'), by rw [add_mul, he, he', map_add (f := _)]⟩
 
 lemma good_mul {y : Fin D → K} {j : Fin D} {N N' : ℕ} {b b' : K} (h : Good y j N b)
     (h' : Good y j N' b') : Good y j (N + N') (b * b') := by
@@ -41,7 +41,7 @@ lemma aeval_good {ι : Type} {y : Fin D → K} {j : Fin D} {z : ι → K}
   · intro r; exact ⟨0, by rw [aeval_C]; exact good_algebraMap y j r⟩
   · rintro p p' ⟨N, hN⟩ ⟨N', hN'⟩
     refine ⟨N + N', ?_⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     exact good_add (good_mono hN N') (by rw [add_comm]; exact good_mono hN' N)
   · rintro p i ⟨N, hN⟩
     obtain ⟨M, hM⟩ := hz i
@@ -98,7 +98,7 @@ theorem GlobalTheory.totalDegree_le_of_integral_at_infinity : ∀ {K : Type} [Fi
     have : aeval y (B + A) =
         y j ^ (q * n + N * n) * ((∑ k ∈ Finset.range n, c k * s ^ k) + s ^ n) := by
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [mul_add, Finset.mul_sum, map_add, map_sum]
+        rw [mul_add, Finset.mul_sum, map_add (f := _), map_sum]
       congr 1
       · refine Finset.sum_congr rfl fun k hk => ?_
         have hk' := Finset.mem_range.mp hk

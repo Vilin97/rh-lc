@@ -51,7 +51,7 @@ theorem trace_norm_local_sizes : ∀ (F E : Type) [Field F] [NumberField F] [Fie
     rw [← heq] at hzk
     obtain ⟨c, hc⟩ := Submodule.mem_span_singleton.1 hzk
     exact ⟨c, by rw [Algebra.algebraMap_eq_smul_one]; exact hc⟩
-  obtain ⟨y₁, hy₁⟩ := hfix (x + σ x) (by rw [map_add, hσσ, add_comm])
+  obtain ⟨y₁, hy₁⟩ := hfix (x + σ x) (by rw [map_add (f := _), hσσ, add_comm])
   obtain ⟨y₂, hy₂⟩ := hfix (x * σ x) (by rw [map_mul, hσσ, mul_comm])
   refine ⟨y₁, y₂, by rw [hy₁, hy₂]; ring, fun v τ => ?_⟩
   have key : ∀ y : F, τ (algebraMap F E y) =
@@ -59,7 +59,7 @@ theorem trace_norm_local_sizes : ∀ (F E : Type) [Field F] [NumberField F] [Fie
     rw [τ.commutes]
     exact IsScalarTower.algebraMap_apply F (Fv F v) (FvBar F v) y
   constructor
-  · rw [← absBar_algebraMap F v, ← key, hy₁, map_add]
+  · rw [← absBar_algebraMap F v, ← key, hy₁, map_add (f := _)]
     exact absBar_add_le F v _ _
   · rw [← absBar_algebraMap F v, ← key, hy₂, map_mul]
     exact absBar_mul F v _ _

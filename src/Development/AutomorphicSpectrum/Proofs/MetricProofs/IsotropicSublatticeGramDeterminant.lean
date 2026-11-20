@@ -272,7 +272,7 @@ end Tower
 
 def reForm (R : RiemLat E g Λ) : Λ →+ Λ →+ ℝ :=
   AddMonoidHom.mk' (fun x => AddMonoidHom.mk' (fun y => (R.ip (R.P x) (R.P y)).re)
-    (fun a b => by simp [map_add, ip_add_right])) (fun a b => by ext y; simp [map_add, ip_add_left])
+    (fun a b => by simp [map_add (f := _), ip_add_right])) (fun a b => by ext y; simp [map_add (f := _), ip_add_left])
 
 theorem reForm_apply (R : RiemLat E g Λ) (x y : Λ) : reForm R x y = (R.ip (R.P x) (R.P y)).re := rfl
 

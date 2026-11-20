@@ -16,7 +16,7 @@ private lemma blockAct_map_mem_range_map_of_entries_mem {K : Type} [Field K] (K�
     refine ⟨MvPolynomial.C a, ?_⟩
     rw [MvPolynomial.map_C, ← MvPolynomial.algebraMap_eq, AlgHom.commutes]
   | add p q hp hq =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact add_mem hp hq
   | mul_X p v hp =>
     rw [map_mul, map_mul, MvPolynomial.map_X, _root_.Formalism.L2.DIV.blockAct_X]

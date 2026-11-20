@@ -131,7 +131,7 @@ theorem aeval_mem_OP {C : Type} [Field C] {O : Subring C} {σ τ : Type} (f : σ
     rw [MvPolynomial.map_C, MvPolynomial.aeval_C, eq_intCast (Int.castRingHom C) z, map_intCast]
     exact intCast_mem _ z
   · rename_i p q hp hq
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact add_mem hp hq
   · rename_i p x hp
     rw [map_mul, map_mul, MvPolynomial.map_X, MvPolynomial.aeval_X]

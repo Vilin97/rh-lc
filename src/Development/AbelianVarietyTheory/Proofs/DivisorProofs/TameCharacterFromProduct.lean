@@ -59,7 +59,7 @@ theorem mem_idealHat_of_idS {I : Ideal (𝓞 D.host.E)} {s : LatticeBasisLifts.O
     intro z hz
     obtain ⟨p, hp⟩ := hb (a : EAf D)
     obtain ⟨q, hq⟩ := hb (b : EAf D)
-    rw [show z = p + q from swapAE_injective (by rw [RingHom.map_add, hp, hq]; exact hz)]
+    rw [show z = p + q from swapAE_injective (by rw [RingHom.map_add (f := _), hp, hq]; exact hz)]
     exact add_mem (h1 p hp) (h2 q hq)
   | smul a b _ h2 =>
     intro z hz
@@ -99,7 +99,7 @@ theorem cA_cA (z : AE D) : cA D (cA D z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => rfl
   | tmul a x => exact congrArg (a ⊗ₜ[D.host.F] ·) (star_star x)
-  | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, ha, hb]
+  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
 
 theorem conj_quot_congr {R S : Type} [CommRing R] [CommRing S] (f : R →+* S) (c : R →+* R) (O A B : AddSubgroup S)
     (hA : ∀ z ∈ A, ∀ y ∈ O, z * y ∈ A) (hO : ∀ z, f z ∈ O → f (c z) ∈ O)

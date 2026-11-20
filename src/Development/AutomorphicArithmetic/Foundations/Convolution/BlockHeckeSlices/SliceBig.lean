@@ -169,7 +169,7 @@ private def passAlg (b : Blo S r) (s : ℕ) (t : ℝ) : Subalgebra ℂ (UC E (r 
     exact hu _ _ (hF.uC v) (hv F G hF hG)
   add_mem' {u v} hu hv F G hF hG := by
     funext g
-    rw [map_add]
+    rw [map_add (f := _)]
     change (uC E (r + s) u G).1 g + (uC E (r + s) v G).1 g = _
     rw [hu F G hF hG, hv F G hF hG, avg, avg, avg,
       ← integral_add ((cls b s t).integrable (hF.uC u) g) ((cls b s t).integrable (hF.uC v) g)]

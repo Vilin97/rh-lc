@@ -37,7 +37,7 @@ theorem _root_.GlobalTheory.qminor_polyMap (A : Type) [Ring A] [Algebra ℂ A] (
     simp only [F, Polynomial.eval₂_add, Polynomial.eval₂_mul_X, Polynomial.eval₂_C,
       RingHom.id_apply]
     split_ifs with h
-    · rw [one_mul, ← add_assoc, ← map_add]
+    · rw [one_mul, ← add_assoc, ← map_add (f := _)]
       congr 2
       ring
     · simp

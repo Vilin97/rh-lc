@@ -35,7 +35,7 @@ theorem periods_unif : GlobalTheory.Published.PeriodComparison →
     { carrier := {x | em x ∈ U.u.Λ}
       add_mem' := fun {a b} ha hb => by
         show em (a + b) ∈ U.u.Λ
-        rw [map_add]; exact add_mem ha hb
+        rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
       zero_mem' := by
         show em 0 ∈ U.u.Λ
         rw [map_zero]; exact zero_mem _
@@ -49,7 +49,7 @@ theorem periods_unif : GlobalTheory.Published.PeriodComparison →
         rw [show (⟨em ((0 : S) : E), hemL _ (0 : S).2⟩ : U.u.Λ) = 0 from
           Subtype.ext (by simp), map_zero]
       map_add' := fun x x' => by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         ext
         simp }

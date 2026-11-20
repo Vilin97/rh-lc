@@ -19,7 +19,7 @@ theorem sigR_eq_cA {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem absE_det_UA (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E]
     (σ : E →ₐ[F] E) {b : ℕ} (J₁ : Matrix (Fin b) (Fin b) E) (hJ : J₁.det ≠ 0) (g : UA σ J₁) :

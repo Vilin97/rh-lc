@@ -65,18 +65,18 @@ theorem IsCoaction.tensorCoeff_mem {ρ : M →ₗ[R] M ⊗[R] R[X]} (h : IsCoact
       ρ (tensorCoeff R M x t) := by
     intro t
     induction t with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul m p => simp
   have h2 : ∀ t : M ⊗[R] R[X], tensorCoeff R (M ⊗[R] R[X]) x
       ((TensorProduct.assoc R M R[X] R[X]).symm ((comul (R := R)).lTensor M t)) =
       tensorCoeff R M x t ⊗ₜ single x 1 := by
     intro t
     induction t with
-    | add a b ha hb => simp only [map_add, ha, hb, add_tmul]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb, add_tmul]
     | tmul m p =>
       induction p using AddMonoidAlgebra.induction_linear with
       | zero => simp
-      | add a b ha hb => simp only [tmul_add, map_add, ha, hb, add_tmul]
+      | add a b ha hb => simp only [tmul_add, map_add (f := _), ha, hb, add_tmul]
       | single y r =>
         by_cases hy : y = x
         · subst hy; simp [smul_tmul']
@@ -104,7 +104,7 @@ theorem IsCoaction.isInternal_torusWeightSpace {ρ : M →ₗ[R] M ⊗[R] R[X]} 
     intro z x
     induction z using DirectSum.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb, DirectSum.add_apply, Submodule.coe_add]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb, DirectSum.add_apply, Submodule.coe_add]
     | of y m =>
       rw [coeAddMonoidHom_of, tensorCoeff_of_mem_torusWeightSpace m.2]
       split_ifs with hy
@@ -131,7 +131,7 @@ theorem coe_decompose_torusWeightSpace (ρ : M →ₗ[R] M ⊗[R] R[X])
   induction m using Decomposition.inductionOn (torusWeightSpace ρ) with
   | zero => simp
   | add a b ha hb =>
-    simp only [decompose_add, map_add, ← ha, ← hb, DirectSum.add_apply, Submodule.coe_add]
+    simp only [decompose_add, map_add (f := _), ← ha, ← hb, DirectSum.add_apply, Submodule.coe_add]
   | @homogeneous y m =>
     rw [tensorCoeff_of_mem_torusWeightSpace m.2]
     split_ifs with hy
@@ -154,7 +154,7 @@ theorem tensorCoeff_gradingCoaction (ℳ : X → Submodule R M) [Decomposition �
   induction m using Decomposition.inductionOn ℳ with
   | zero => simp
   | add a b ha hb =>
-    simp only [decompose_add, map_add, ha, hb, DirectSum.add_apply, Submodule.coe_add]
+    simp only [decompose_add, map_add (f := _), ha, hb, DirectSum.add_apply, Submodule.coe_add]
   | @homogeneous y m =>
     rw [gradingCoaction_of_mem ℳ m.2, tensorCoeff_tmul_single_one]
     split_ifs with hy
@@ -166,12 +166,12 @@ theorem isCoaction_gradingCoaction (ℳ : X → Submodule R M) [Decomposition �
   coassoc m := by
     induction m using Decomposition.inductionOn ℳ with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | homogeneous m => simp [gradingCoaction_of_mem ℳ m.2]
   counit m := by
     induction m using Decomposition.inductionOn ℳ with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb, add_tmul]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb, add_tmul]
     | homogeneous m => simp [gradingCoaction_of_mem ℳ m.2]
 
 @[simp] theorem torusWeightSpace_gradingCoaction (ℳ : X → Submodule R M) [Decomposition ℳ] :
@@ -211,7 +211,7 @@ theorem IsCoaction.comm_iff_mapsTo_torusWeightSpace {ρ : M →ₗ[R] M ⊗[R] R
   letI := h.decomposition
   induction m using Decomposition.inductionOn (torusWeightSpace ρ) with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | homogeneous m =>
     rw [mem_coactionWeightSpace.1 (hf _ _ m.2), mem_coactionWeightSpace.1 m.2,
       LinearMap.rTensor_tmul]
@@ -250,11 +250,11 @@ noncomputable def gradingCoactionAlgHom (𝒜 : X → Submodule R A) [GradedAlge
     (fun a b => by
       induction a using Decomposition.inductionOn 𝒜 with
       | zero => simp
-      | add a a' ha ha' => simp only [add_mul, map_add, ha, ha']
+      | add a a' ha ha' => simp only [add_mul, map_add (f := _), ha, ha']
       | homogeneous a =>
         induction b using Decomposition.inductionOn 𝒜 with
         | zero => simp
-        | add b b' hb hb' => simp only [mul_add, map_add, hb, hb']
+        | add b b' hb hb' => simp only [mul_add, map_add (f := _), hb, hb']
         | homogeneous b =>
           rw [gradingCoaction_of_mem 𝒜 a.2, gradingCoaction_of_mem 𝒜 b.2,
             gradingCoaction_of_mem 𝒜 (SetLike.mul_mem_graded a.2 b.2),

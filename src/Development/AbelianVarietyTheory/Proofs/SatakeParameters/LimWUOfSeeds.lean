@@ -29,7 +29,7 @@ theorem overPl_unique {E : Type} [Field E] [NumberField E] {l : ℕ} [Fact l.Pri
   have hx' := hu x hx
   have hy' := hw y hy
   have hsum : ι.symm (τ ((x : E))) + ι.symm (τ ((y : E))) = 1 := by
-    rw [← map_add, ← map_add]
+    rw [← map_add (f := _), ← map_add (f := _)]
     have : ((x : E) + (y : E)) = 1 := by exact_mod_cast congrArg (fun z : 𝓞 E => (z : E)) hxy
     rw [this, map_one, map_one]
   have hle := IsUltrametricDist.norm_add_le_max (ι.symm (τ ((x : E)))) (ι.symm (τ ((y : E))))

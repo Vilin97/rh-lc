@@ -76,7 +76,7 @@ lemma dirD_linSer (c : ι → ι → K) (L L' : ι → K) :
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum, map_sum]
   refine Finset.sum_congr rfl fun y _ => ?_
-  simp only [Derivation.leibniz, dirD_X, dirD_C, smul_eq_mul, map_add, map_mul]
+  simp only [Derivation.leibniz, dirD_X, dirD_C, smul_eq_mul, map_add (f := _), map_mul]
   ring
 
 lemma constantCoeff_linSer (c : ι → ι → K) (L : ι → K) :

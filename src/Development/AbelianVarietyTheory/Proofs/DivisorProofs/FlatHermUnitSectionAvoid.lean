@@ -142,7 +142,7 @@ theorem coneContraction : ∃ (cone : ∀ a b n : ℕ, (bo a b ⟶ bo n n) →+ 
     refine ind (P := fun r => cone a b 0 r ≫ dD 1 0 = r - eps a b r • bop (idc a 0) (idc b 0)) ?_ ?_ ?_ r
     · rw [map_zero, map_zero, Limits.zero_comp, zero_smul, sub_zero]
     · intro f g hf hg
-      simp only [map_add, Preadditive.add_comp, add_smul, hf, hg]
+      simp only [map_add (f := _), Preadditive.add_comp, add_smul, hf, hg]
       abel
     · intro α β c
       rw [map_zsmul, Preadditive.zsmul_comp, key0, map_zsmul, eps_bop, smul_sub, smul_eq_mul, mul_one]
@@ -151,7 +151,7 @@ theorem coneContraction : ∃ (cone : ∀ a b n : ℕ, (bo a b ⟶ bo n n) →+ 
       ?_ ?_ ?_ r
     · rw [map_zero, Limits.zero_comp, Limits.zero_comp, map_zero, sub_zero]
     · intro f g hf hg
-      simp only [map_add, Preadditive.add_comp, hf, hg]
+      simp only [map_add (f := _), Preadditive.add_comp, hf, hg]
       abel
     · intro α β c
       rw [map_zsmul, Preadditive.zsmul_comp, key, Preadditive.zsmul_comp, map_zsmul, smul_sub]

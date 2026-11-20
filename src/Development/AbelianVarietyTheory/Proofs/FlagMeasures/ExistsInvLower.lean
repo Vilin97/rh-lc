@@ -49,9 +49,9 @@ theorem exists_reframe (F : FlagD H r) (f : Fin (r + 1) → V) (hf : ∀ a, f a 
     rw [h2, Set.image_univ] at h
     rw [Set.finrank, h, Fintype.card_fin]
     exact (finrank_X F).symm
-  · rw [hz, map_add, pairing_isotropicSpan_lastVector F (hX a), X_iso F (hX a) hx, add_zero]
+  · rw [hz, map_add (f := _), pairing_isotropicSpan_lastVector F (hX a), X_iso F (hX a) hx, add_zero]
   · rw [hz]
-    simp only [map_add, LinearMap.add_apply, pairing_lastVector_lastVector, pairing_isotropicSpan_lastVector F hx, z_X F hx, X_iso F hx hx, add_zero]
+    simp only [map_add (f := _), LinearMap.add_apply, pairing_lastVector_lastVector, pairing_isotropicSpan_lastVector F hx, z_X F hx, X_iso F hx hx, add_zero]
 
 omit [StarRing K] in
 
@@ -162,10 +162,10 @@ theorem exists_ist [FiniteDimensional K V] [CharZero K] (G G' : FlagD H r) {j : 
     obtain ⟨y, hy⟩ := exists_dual G b
     obtain ⟨x, hx, hxp⟩ := hs y
     refine ⟨y - x + star (H.B G.z (y - x) / G.T) • G.z, fun a => ?_, fun u hu => ?_, ?_⟩
-    · rw [map_add, map_sub, map_smulₛₗ, hy, e_X G _ hx, pairing_isotropicSpan_lastVector G (e_mem_X G a)]; simp
+    · rw [map_add (f := _), map_sub, map_smulₛₗ, hy, e_X G _ hx, pairing_isotropicSpan_lastVector G (e_mem_X G a)]; simp
     · have := hp (Fin.last r) hj u hu
-      rw [map_add, hxp u hu, map_smulₛₗ, FlagD.z, this]; simp
-    · rw [map_add, map_smulₛₗ, pairing_lastVector_lastVector]
+      rw [map_add (f := _), hxp u hu, map_smulₛₗ, FlagD.z, this]; simp
+    · rw [map_add (f := _), map_smulₛₗ, pairing_lastVector_lastVector]
       have := G.hT
       simp only [starRingEnd_apply, star_star, smul_eq_mul]
       field_simp

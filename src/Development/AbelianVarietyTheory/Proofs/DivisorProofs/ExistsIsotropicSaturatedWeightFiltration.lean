@@ -33,13 +33,13 @@ def twistI {D : Datum H} {R : Type} [CommRing R] [IsDomain R] {D₀ : DegPre R} 
   ζ_prim := I.ζ_prim
   ζ_pow := I.ζ_pow
   ev n a := I.ev n (g n a)
-  add n hn a b := by rw [map_add]; exact I.add n hn _ _
+  add n hn a b := by rw [map_add (f := _)]; exact I.add n hn _ _
   lin n hn x a := by rw [map_smul]; exact I.lin n hn x _
   ker n hn a b := (I.ker n hn _ _).trans
     ⟨fun ⟨e, he⟩ => ⟨(g n).symm e, by
         have := congrArg (g n).symm he
         rwa [LinearEquiv.symm_apply_apply, map_add, LinearEquiv.symm_apply_apply, map_nsmul] at this⟩,
-     fun ⟨e, he⟩ => ⟨g n e, by rw [he, map_add, map_nsmul]⟩⟩
+     fun ⟨e, he⟩ => ⟨g n e, by rw [he, map_add (f := _), map_nsmul]⟩⟩
   onto n hn p := by
     obtain ⟨b, hb⟩ := I.onto n hn p
     exact ⟨(g n).symm b, by rw [LinearEquiv.apply_symm_apply]; exact hb⟩

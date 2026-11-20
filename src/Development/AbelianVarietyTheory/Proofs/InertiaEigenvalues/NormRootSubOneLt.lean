@@ -339,7 +339,7 @@ theorem exists_tilt {P : LocPrime l} (AI : LocAinf l P) (N : Subgroup (GQ l)) (S
           ∑ s ∈ S, AI.actC s ((B k : PadicComplex l) ^ l ^ k) := by
       rw [← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun s _ => ?_
-      rw [← map_add, sub_add_cancel]
+      rw [← map_add (f := _), sub_add_cancel]
     refine absurd htr (not_lt.2 ?_)
     rw [h5]
     refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le_max ?_ (h3 ▸ h2))

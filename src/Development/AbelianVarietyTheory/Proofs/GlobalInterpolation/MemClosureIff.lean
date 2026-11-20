@@ -110,7 +110,7 @@ theorem mem_closure_iff (σ : K →+* ℂ) (w : HeightOneSpectrum (𝓞 K)) (O :
         rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, map_ten_int, ← MvPolynomial.smul_eq_C_mul, ← hS]
         exact AddSubgroup.subset_closure ⟨r, f, hr, hf, rfl⟩
       | zero => intro r _; rw [smul_zero, map_zero]; exact S.zero_mem
-      | add a b _ _ ha hb => intro r hr; rw [smul_add, map_add]; exact S.add_mem (ha r hr) (hb r hr)
+      | add a b _ _ ha hb => intro r hr; rw [smul_add, map_add (f := _)]; exact S.add_mem (ha r hr) (hb r hr)
       | smul c a _ ha =>
         intro r hr
         rw [← algebraMap_smul K c a, smul_smul]

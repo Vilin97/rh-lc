@@ -61,7 +61,7 @@ theorem suppIn_finsuppProd {T : Set σ} {τ : Type} (β : τ →₀ ℕ) (a : τ
 theorem suppIn_add {T : Set σ} {f g : MvPowerSeries σ C} (hf : SuppIn T f) (hg : SuppIn T g) :
     SuppIn T (f + g) := by
   intro α hα
-  rw [map_add] at hα
+  rw [map_add (f := _)] at hα
   by_cases h : coeff α f = 0
   · rw [h, zero_add] at hα; exact hg α hα
   · exact hf α h

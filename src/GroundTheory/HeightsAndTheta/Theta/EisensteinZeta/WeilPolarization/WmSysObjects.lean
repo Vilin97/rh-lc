@@ -54,7 +54,7 @@ instance : Group (Heis ω) where
   mul_assoc a b c := by
     ext
     · simp [add_assoc]
-    · simp only [product_torus_component, mul_w, map_add, LinearMap.add_apply]
+    · simp only [product_torus_component, mul_w, map_add (f := _), LinearMap.add_apply]
       ring
   one_mul a := by ext <;> simp
   mul_one a := by ext <;> simp

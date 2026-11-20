@@ -52,7 +52,7 @@ theorem resS_eq_zero (w : Pl E) (v : HeightOneSpectrum (𝓞 F))
     rw [Subring.coe_add, Subring.coe_mul, oToS_algebraMap, oToS_algebraMap]
     show (1 : E) ⊗ₜ[F] b = _ + _ * (1 : E) ⊗ₜ[F] y
     rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, ← TensorProduct.tmul_add, ← e]
-  rw [key, map_add, map_mul, hz r hr, hz d hd, zero_mul, add_zero]
+  rw [key, map_add (f := _), map_mul, hz r hr, hz d hd, zero_mul, add_zero]
 
 open Classical in
 

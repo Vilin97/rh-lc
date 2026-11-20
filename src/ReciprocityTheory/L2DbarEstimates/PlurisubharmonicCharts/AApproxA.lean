@@ -16,7 +16,7 @@ def dv {n : ℕ} (D : V n →L[ℝ] ℂ) (ζ : V n) : ℂ := (D ζ - I * D (I �
 theorem clm_smul_decomp {n : ℕ} (D : V n →L[ℝ] ℂ) (c : ℂ) (e : V n) :
     D (c • e) = c.re * D e + c.im * D (I • e) := by
   conv_lhs => rw [← Complex.re_add_im c]
-  rw [add_smul, mul_smul, Complex.coe_smul, Complex.coe_smul, map_add, D.map_smul, D.map_smul,
+  rw [add_smul, mul_smul, Complex.coe_smul, Complex.coe_smul, map_add (f := _), D.map_smul, D.map_smul,
     Complex.real_smul, Complex.real_smul]
 
 theorem vec_expand {n : ℕ} (w : V n) : w = ∑ j, w j • bas n j := by

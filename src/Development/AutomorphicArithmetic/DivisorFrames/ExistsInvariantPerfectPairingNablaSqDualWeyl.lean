@@ -27,7 +27,7 @@ private noncomputable def fischer (σ : Type) : MvPolynomial σ ℂ →ₗ[ℂ] 
       rw [Formalism.GradedWeylDivisibility.fockHerm σ _ (f + f'), fock_add_right, star_add, ← Formalism.GradedWeylDivisibility.fockHerm, ← Formalism.GradedWeylDivisibility.fockHerm])
     (fun c f h => by
       rw [Formalism.GradedWeylDivisibility.fockHerm σ _ (c • f), fock_smul_right, star_mul', star_star, ← Formalism.GradedWeylDivisibility.fockHerm, smul_eq_mul])
-    (fun f h h' => by rw [map_add, fock_add_right])
+    (fun f h h' => by rw [map_add (f := _), fock_add_right])
     (fun c f h => by
       rw [smul_eq_C_mul, map_mul, map_C, ← smul_eq_C_mul, fock_smul_right, smul_eq_mul]
       simp)
@@ -39,7 +39,7 @@ private theorem map_rowAct {n : ℕ} (A : Matrix (Fin n) (Fin n) ℂ) (h : MvPol
     map (starRingEnd ℂ) (rowAct ℂ A h) = rowAct ℂ (Aᵀ)ᴴ (map (starRingEnd ℂ) h) := by
   induction h using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp]
     congr 1

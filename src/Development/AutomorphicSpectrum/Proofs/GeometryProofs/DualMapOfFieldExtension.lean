@@ -35,7 +35,7 @@ theorem dual_ext : ∀ (Ω Ω' : Type) [Field Ω] [Field Ω'] (i : Ω →+* Ω')
     exact Submodule.sum_mem _ fun k _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨k, rfl⟩)
   let b' := Module.Basis.mk hli hsp
   refine ⟨AddMonoidHom.mk' (fun w => b'.constr Ω' fun k => i (w (b k))) fun w₁ w₂ => ?_, fun w e => ?_⟩
-  · rw [← map_add]
+  · rw [← map_add (f := _)]
     congr 1
   · show b'.constr Ω' (fun k => i (w (b k))) (j e) = i (w e)
     set_option synthInstance.maxHeartbeats 100000 in

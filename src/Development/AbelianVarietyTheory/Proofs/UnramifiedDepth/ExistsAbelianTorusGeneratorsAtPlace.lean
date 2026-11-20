@@ -220,7 +220,7 @@ theorem exists_generators : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [I
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul c a => rw [extM_tmul, hLt, Matrix.mul_smul, Matrix.smul_mul, hL.eqB]
-    | add x x' h h' => rw [map_add, map_add, Matrix.mul_add, Matrix.add_mul, h, h']
+    | add x x' h h' => rw [map_add (f := _), map_add (f := _), Matrix.mul_add, Matrix.add_mul, h, h']
   have hA : ∀ x, Aᵀ * (extM p ρG x)ᵀ = (extM p (trR NZ) x).map (algebraMap ℤ_[p] O) * Aᵀ := by
     intro x
     induction x using TensorProduct.induction_on with
@@ -233,7 +233,7 @@ theorem exists_generators : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [I
         ← Matrix.transpose_mul, ← Matrix.transpose_mul, hL.eqA]
       rfl
     | add x x' h h' =>
-      rw [map_add, map_add, Matrix.transpose_add, Matrix.mul_add, h, h', Matrix.map_add _ (map_add _),
+      rw [map_add (f := _), map_add (f := _), Matrix.transpose_add, Matrix.mul_add, h, h', Matrix.map_add _ (map_add _),
         Matrix.add_mul]
   let ρ' : (ℤ_[p] ⊗[ℤ] OE) →ₐ[ℤ_[p]] Matrix (Ix g) (Ix g) ℤ_[p] := H.ρ.comp (sigE p OE).toAlgHom
   have hρ' : ∀ x, ρ' x = H.ρ (sigE p OE x) := fun x => rfl
@@ -248,7 +248,7 @@ theorem exists_generators : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [I
     | tmul c a =>
       rw [extM_tmul, Matrix.transpose_smul, Matrix.smul_mulVec, map_smul, res_eig _ _ _ (hW j), smul_smul]
       congr 1
-    | add x x' h h' => rw [map_add, map_add, Matrix.transpose_add, Matrix.add_mulVec, map_add, h, h', add_smul]
+    | add x x' h h' => rw [map_add (f := _), map_add (f := _), Matrix.transpose_add, Matrix.add_mulVec, map_add (f := _), h, h', add_smul]
   obtain ⟨h₁, y, hy, hyd⟩ := wfd p C v O hv OE w b (Ix g) ρ'
   obtain ⟨h₂, z, hz, hzd⟩ := wfd p C v O hv OE w b (Fin r) (extM p (trR NZ))
   choose kB hkB using hL.fromB

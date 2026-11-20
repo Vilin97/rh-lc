@@ -94,7 +94,7 @@ theorem eval_liftPolyC [DecidableEq K] {m : ℕ} (σ : Fin m ≃ ((k : K) → ι
   induction f using MvPolynomial.induction_on with
   | C c => simp [liftPolyC]
   | add f g hf hg =>
-    simp only [liftPolyC, map_add] at hf hg ⊢
+    simp only [liftPolyC, map_add (f := _)] at hf hg ⊢
     rw [hf, hg]
   | mul_X f q hf =>
     simp only [liftPolyC, map_mul] at hf ⊢

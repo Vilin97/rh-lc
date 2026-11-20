@@ -145,7 +145,7 @@ theorem exists_prime_saturation_generic_section (K L : Type) [Field K] [Field L]
       obtain ⟨c, hc, h, hh⟩ := hf
       obtain ⟨d, hd, k, hk⟩ := hg
       refine ⟨c * d, mul_ne_zero hc hd, map C (ρ d) * h + map C (ρ c) * k, ?_⟩
-      rw [map_add, map_mul, map_mul, hΨc, hΨc, hh, hk, map_mul, map_mul]
+      rw [map_add (f := _), map_mul, map_mul, hΨc, hΨc, hh, hk, map_mul, map_mul]
       ring
     | mul_X f v hf =>
       obtain ⟨c, hc, h, hh⟩ := hf

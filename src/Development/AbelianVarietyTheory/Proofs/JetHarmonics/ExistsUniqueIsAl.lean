@@ -190,7 +190,7 @@ theorem existsUnique_isAl [IsAdicComplete (Ideal.span {(p : O)}) O] :
   choose f hf using exists_limit χ
   refine ⟨f, ⟨⟨fun x y h => eq_of_forall (p := p) fun n => ?_,
     fun a x h => eq_of_forall (p := p) fun n => ?_⟩, (isAl_iff χ f).2 hf⟩, fun g hg => ?_⟩
-  · rw [map_add, hf x n _ (pow_quot n), hf y n _ (pow_quot n)]
+  · rw [map_add (f := _), hf x n _ (pow_quot n), hf y n _ (pow_quot n)]
     exact (hf _ n _ (pow_quot n)).trans (unitAt_mul χ _ x y _ rfl)
   · rw [map_mul, hf x n _ (pow_quot n)]
     exact (hf _ n _ (pow_quot n)).trans (unitAt_scale χ _ a x _ rfl)

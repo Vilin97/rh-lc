@@ -154,7 +154,7 @@ theorem one_mem_dualLattice_standard :
     exact ⟨1, by fin_cases j; simp [dotProduct]⟩
   · exact ⟨0, by simp⟩
   · rintro x y _ _ ⟨a, ha⟩ ⟨c, hc⟩
-    exact ⟨a + c, by rw [dotProduct_add, map_add, ha, hc]⟩
+    exact ⟨a + c, by rw [dotProduct_add, map_add (f := _), ha, hc]⟩
   · rintro r x _ ⟨a, ha⟩
     refine ⟨r * a, ?_⟩
     rw [dotProduct_smul, map_mul, ha]

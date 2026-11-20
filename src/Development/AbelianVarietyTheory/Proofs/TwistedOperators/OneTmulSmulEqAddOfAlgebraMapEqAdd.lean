@@ -53,11 +53,11 @@ theorem local_norm (v : HeightOneSpectrum (𝓞 H.F)) (u : v.adicCompletionInteg
       (t : v.adicCompletion H.F) * β, fun h => absurd hd h, ?_⟩
     have h1 : 2 * α + β = 1 := by
       have := congrArg (algebraMap H.F (v.adicCompletion H.F)) (adelic_alpha_beta_linear H)
-      simpa [α, β, map_add, map_mul, map_ofNat] using this
+      simpa [α, β, map_add (f := _), map_mul, map_ofNat] using this
     have h2 : α ^ 2 + α * β + ((adelNd H : ℤ) : v.adicCompletion H.F) * β ^ 2 =
         ((adelNq H : ℤ) : v.adicCompletion H.F) := by
       have := congrArg (algebraMap H.F (v.adicCompletion H.F)) (adelic_alpha_beta_norm H)
-      simpa [α, β, map_add, map_mul, map_pow, map_intCast] using this
+      simpa [α, β, map_add (f := _), map_mul, map_pow, map_intCast] using this
     linear_combination h3 + ((s : v.adicCompletion H.F) * t) * h1 + (t : v.adicCompletion H.F) ^ 2 * h2
   · have hdisc : (((1 : ℤ) ^ 2 - 4 * adelNd H : ℤ) : 𝓞 H.F) ∉ v.asIdeal := by
       have e : ((1 : ℤ) ^ 2 - 4 * adelNd H : ℤ) = -(H.d : ℤ) := by
@@ -136,7 +136,7 @@ theorem trace_mem (z : Ef D) : z + sg D z ∈ (iR D).range := by
     obtain ⟨c, hc⟩ := (D.sp.cm.fixed (x + star x)).1 (by rw [star_add, star_star, add_comm])
     exact ⟨_, one_tmul_smul_eq_add_of_algebraMap_eq_add c x (star x) a hc⟩
   | add a b ha hb =>
-    rw [RingHom.map_add, add_add_add_comm]
+    rw [RingHom.map_add (f := _), add_add_add_comm]
     exact add_mem ha hb
 
 theorem sg_theta : sg D (eToEAf D (adelTheta D.host)) = 1 - eToEAf D (adelTheta D.host) := by
@@ -166,8 +166,8 @@ theorem unit_norm {d d' : Ef D} (hd : d ∈ OA D) (hd' : d' ∈ OA D) (h : d' * 
   refine ⟨iR D S + eToEAf D (adelTheta D.host) * iR D T, ?_⟩
   have h1 := congrArg (iR D) hST
   have h2 := congrArg (eToEAf D) (adelic_theta_mul_one_sub D.host)
-  simp only [RingHom.map_add, RingHom.map_mul, map_intCast, RingHom.map_sub, RingHom.map_one] at h1 h2
-  rw [RingHom.map_add, RingHom.map_mul, sg_iR, sg_iR, sg_theta]
+  simp only [RingHom.map_add (f := _), RingHom.map_mul, map_intCast, RingHom.map_sub, RingHom.map_one] at h1 h2
+  rw [RingHom.map_add (f := _), RingHom.map_mul, sg_iR, sg_iR, sg_theta]
   linear_combination (iR D T * iR D T) * h2 + h1
 
 def IsN (D : D7) (x : D.host.E) : Prop := ∃ y : Ef D, sg D y * y = eToEAf D x

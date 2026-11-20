@@ -211,7 +211,7 @@ theorem exists_killed (F : Filt X A) (B : GradBasis A) (W' : Submodule ℂ (Modu
 def Sk (F : Filt X A) (B : GradBasis A) (W' : Submodule ℂ (Module.Dual ℂ X.V)) : Submodule ℂ (Module.Dual ℂ X.V) where
   carrier := {φ | φ ∈ W F ∧ ∀ p q, bl B p < bl B q → (Eb X B p q).dualMap φ ∈ W'}
   add_mem' := fun {φ ψ} h1 h2 => ⟨(W F).add_mem h1.1 h2.1, fun p q h => by
-    rw [map_add]; exact W'.add_mem (h1.2 p q h) (h2.2 p q h)⟩
+    rw [map_add (f := _)]; exact W'.add_mem (h1.2 p q h) (h2.2 p q h)⟩
   zero_mem' := ⟨(W F).zero_mem, fun p q h => by rw [map_zero]; exact W'.zero_mem⟩
   smul_mem' := fun c φ h1 => ⟨(W F).smul_mem c h1.1, fun p q h => by
     rw [map_smul]; exact W'.smul_mem c (h1.2 p q h)⟩
@@ -379,7 +379,7 @@ theorem aeval_dual_mem {V : Type} [AddCommGroup V] [Module ℂ V] (W' : Submodul
     have : (aeval T (p + q)).dualMap φ - (p + q).eval z • φ =
         ((aeval T p).dualMap φ - p.eval z • φ) + ((aeval T q).dualMap φ - q.eval z • φ) := by
       ext x
-      simp only [map_add, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.dualMap_apply, LinearMap.smul_apply,
+      simp only [map_add (f := _), LinearMap.add_apply, LinearMap.sub_apply, LinearMap.dualMap_apply, LinearMap.smul_apply,
         eval_add, smul_eq_mul]
       ring
     rw [this]
@@ -518,7 +518,7 @@ theorem aeval_mem (I : Submodule ℂ Z) (T : Module.End ℂ Z) (hI : ∀ x ∈ I
     rw [this]
     exact I.smul_mem a hx
   | add p q hp hq =>
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact I.add_mem hp hq
   | monomial k a ih =>
     have h1 : aeval T (C a * X ^ (k + 1)) = T * aeval T (C a * X ^ k) := by

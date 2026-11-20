@@ -141,7 +141,7 @@ theorem mem_ratPts_of_isIdTorusElt (hσ : IsCMExt F E σ) (hJ : IsHermND σ J) (
     have h1 : Ma = Ma * (adMat F X * adMat F Ys + adMat F Y * adMat F Xs + P) := by
       rw [show adMat F X * adMat F Ys + adMat F Y * adMat F Xs + P = 1 by simp only [P]; abel, Matrix.mul_one]
     rw [h1, Matrix.mul_add, Matrix.mul_add, hMP, ← Matrix.mul_assoc, ← Matrix.mul_assoc, ha.1, ha.2.1, hD, hD', hue]
-    simp only [ι, P, adMat, Matrix.map_add, Matrix.map_sub, Matrix.map_one _ (map_zero ι) (map_one ι), Matrix.map_mul,
+    simp only [ι, P, adMat, Matrix.map_add (f := _), Matrix.map_sub, Matrix.map_one _ (map_zero ι) (map_one ι), Matrix.map_mul,
       Matrix.mul_sub, Matrix.sub_mul, Matrix.mul_one]
     simp only [Matrix.map_add _ (map_add (inclR (F := F) (AF F))), Matrix.map_sub _ (map_sub (inclR (F := F) (AF F))),
       Matrix.map_one _ (map_zero (inclR (F := F) (AF F))) (map_one (inclR (F := F) (AF F))), Matrix.map_mul]

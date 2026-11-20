@@ -84,7 +84,7 @@ theorem hecke_compat (hH : F.IsHecke lam jK Gm) (hHm : F.IsHecke mu jKm (NablaT 
     rw [map_smul, hxz, hψs]
   | add p q hp hq =>
     rw [add_smul, add_smul]
-    simp only [Submodule.coe_add, Pi.add_apply, map_add]
+    simp only [Submodule.coe_add, Pi.add_apply, map_add (f := _)]
     rw [hp x z hxz g, hq x z hxz g]
   | mul_X p i hp =>
     set_option synthInstance.maxHeartbeats 100000 in
@@ -188,7 +188,7 @@ theorem form_of_mem_span (hJm : F.IsJ mu jKm) (b : NablaT F.O N mu →ₛₗ[F.e
   | zero => exact ⟨fun _ _ _ => rfl, fun _ _ => by simp⟩
   | add w w' _ _ hw hw' =>
     refine ⟨fun γ hγ g => by simp [hw.1 γ hγ g, hw'.1 γ hγ g], fun κ g => ?_⟩
-    simp only [Pi.add_apply, map_add, smul_add]
+    simp only [Pi.add_apply, map_add (f := _), smul_add]
     rw [hw.2 κ g, hw'.2 κ g]
   | smul c w _ hw =>
     refine ⟨fun γ hγ g => by simp [hw.1 γ hγ g], fun κ g => ?_⟩

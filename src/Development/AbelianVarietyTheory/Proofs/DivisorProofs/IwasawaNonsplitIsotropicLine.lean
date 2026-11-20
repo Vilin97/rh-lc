@@ -127,7 +127,7 @@ def proj (hinj : Function.Injective ι) (him : ∀ z : AE F E, At (evFin F v) z 
   toFun z := pre ι (ι 1 * z)
   map_one' := hinj (by rw [iota_pre him, mul_one])
   map_zero' := hinj (by rw [iota_pre him, mul_zero, map_zero])
-  map_add' a b := hinj (by rw [map_add, iota_pre him, iota_pre him, iota_pre him, mul_add])
+  map_add' a b := hinj (by rw [map_add (f := _), iota_pre him, iota_pre him, iota_pre him, mul_add])
   map_mul' a b := hinj (by
     rw [hmul, iota_pre him, iota_pre him, iota_pre him, mul_mul_mul_comm, ← hmul, mul_one])
 

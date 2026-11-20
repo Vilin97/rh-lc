@@ -89,7 +89,7 @@ theorem coeff_inCol (col : Fin 2) (f : PS C 1 dd) (μ : Fin 2 × Fin dd →₀ �
     (g := MvPowerSeries.C (MvPowerSeries.constantCoeff f) +
         ∑ i, Pdiv.ChartF.dl f i • (MvPowerSeries.X ((0 : Fin 1), i) : PS C 1 dd)) ?_ μ hμ]
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [← MvPowerSeries.coe_substAlgHom (R := C) hS, map_add, map_sum]
+    · rw [← MvPowerSeries.coe_substAlgHom (R := C) hS, map_add (f := _), map_sum]
     simp only [map_smul, MvPowerSeries.coe_substAlgHom hS, MvPowerSeries.subst_X hS]
     congr 2
     rw [← MvPowerSeries.coe_substAlgHom (R := C) hS]

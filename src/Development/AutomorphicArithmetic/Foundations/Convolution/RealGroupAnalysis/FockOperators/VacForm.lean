@@ -26,7 +26,7 @@ private theorem slice_mem {F : Type} [Field F] [NumberField F] {f : V4 F → ℂ
 private theorem gauss_fin {F : Type} [Field F] [NumberField F] [IsTotallyReal F] (δ : F)
     (y : Fin 4 → FiniteAdeleRing (𝓞 F) F) : gauss δ (fun i => ((0, y i) : A F)) = 1 := by
   have key : ∀ a : V4 F, (∀ i, TR.pInf F (a i) = 0) → gauss δ a = 1 := fun a h => by
-    simp only [gauss, map_add, map_sub, map_mul, map_pow, h]
+    simp only [gauss, map_add (f := _), map_sub, map_mul, map_pow, h]
     simp
   exact key _ fun i => map_zero (TR.infEq F).symm
 

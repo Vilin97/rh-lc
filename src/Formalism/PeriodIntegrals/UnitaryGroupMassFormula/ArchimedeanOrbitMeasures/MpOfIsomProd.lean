@@ -113,9 +113,9 @@ def psiLp {m : ℕ} {η : Type} [Fintype η] (H : EuclideanSpace ℝ η →ₗ[�
   map_add' a b := by
     show reimL (Complex.I • H (a + b).1 + H (a + b).2) =
       reimL (Complex.I • H a.1 + H a.2) + reimL (Complex.I • H b.1 + H b.2)
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
-    simp only [Prod.fst_add, Prod.snd_add, map_add, smul_add]
+    simp only [Prod.fst_add, Prod.snd_add, map_add (f := _), smul_add]
     abel
   map_smul' c z := by
     simp only [Prod.smul_fst, Prod.smul_snd, map_smul, RingHom.id_apply]

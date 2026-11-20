@@ -56,7 +56,7 @@ theorem wq_mem {S : Subring ℂ_[p]} {W : WeierstrassCurve ℂ_[p]} {wq : PowerS
   have key : ∀ n, (∀ i < n, PowerSeries.coeff i wq ∈ S) → PowerSeries.coeff n wq ∈ S := by
     intro n ih
     rw [h']
-    simp only [map_add, coeff_termS, PowerSeries.coeff_one]
+    simp only [map_add (f := _), coeff_termS, PowerSeries.coeff_one]
     refine S.add_mem (S.add_mem (S.add_mem (S.add_mem (S.add_mem ?_ ?_) ?_) ?_) ?_) ?_
     · split_ifs
       · exact S.one_mem
@@ -95,7 +95,7 @@ def serS (S : Subring ℂ_[p]) : Subring (PowerSeries ℂ_[p]) where
     · exact S.one_mem
     · exact S.zero_mem
   add_mem' {f g} hf hg n := by
-    rw [map_add]; exact S.add_mem (hf n) (hg n)
+    rw [map_add (f := _)]; exact S.add_mem (hf n) (hg n)
   zero_mem' n := by simp
   neg_mem' {f} hf n := by
     rw [map_neg]; exact S.neg_mem (hf n)
@@ -151,7 +151,7 @@ theorem vInv_mul_omega {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]}
       algebraMap ℂ_[p] (PowerSeries ℂ_[p]) W.a₆ *
         (6 * PowerSeries.X ^ 5 * wq ^ 3 + 3 * PowerSeries.X ^ 6 * wq ^ 2 * PowerSeries.derivative (R := ℂ_[p]) wq) := by
     conv_lhs => rw [h]
-    simp only [map_add, Derivation.leibniz, Derivation.leibniz_pow, Derivation.map_algebraMap,
+    simp only [map_add (f := _), Derivation.leibniz, Derivation.leibniz_pow, Derivation.map_algebraMap,
       PowerSeries.derivative_X, Derivation.map_one_eq_zero, smul_eq_mul, nsmul_eq_mul]
     norm_num
     ring

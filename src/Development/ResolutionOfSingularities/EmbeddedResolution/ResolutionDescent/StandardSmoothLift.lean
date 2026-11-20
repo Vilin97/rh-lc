@@ -196,9 +196,9 @@ private theorem mvPolynomialToBaseChange_section_add (x y : B) :
       mvPolynomialToBaseChange hsurj P (P.σ' x) + mvPolynomialToBaseChange hsurj P (P.σ' y) := by
   have h1 : (MvPolynomial.aeval P.val : MvPolynomial ι R →ₐ[R] B)
       (P.σ' (x + y) - (P.σ' x + P.σ' y)) = 0 := by
-    rw [map_sub, map_add, P.aeval_val_σ' (x + y), P.aeval_val_σ' x, P.aeval_val_σ' y, sub_self]
+    rw [map_sub, map_add (f := _), P.aeval_val_σ' (x + y), P.aeval_val_σ' x, P.aeval_val_σ' y, sub_self]
   have h0 := mvPolynomialToBaseChange_eq_zero_of_aeval_eq_zero hsurj P _ h1
-  rw [map_sub, map_add] at h0
+  rw [map_sub, map_add (f := _)] at h0
   linear_combination h0
 
 private theorem mvPolynomialToBaseChange_section_algebraMap (r : R) :
@@ -410,7 +410,7 @@ theorem baseChangeHom_bijective : Function.Bijective (baseChangeHom hsurj P) := 
         rw [h1, map_mul, h2, invBaseChangeHom_liftedAlgebraHom,
           Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
       · intro a b ha hb
-        rw [map_add, map_add, ha, hb]
+        rw [map_add (f := _), map_add (f := _), ha, hb]
     exact hleft.injective
   · intro b
     obtain ⟨x, hx⟩ := liftedAlgebraHom_surjective hsurj P b

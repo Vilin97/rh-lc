@@ -104,7 +104,7 @@ theorem lubinTateFormalGroup_multiplicative :
     have hs : MvPowerSeries.HasSubst (substEach (multiplicativeLTPoly p : PowerSeries 𝒪[ℚ_[p]]) :
         Fin 2 → MvPowerSeries (Fin 2) 𝒪[ℚ_[p]]) :=
       hasSubst_substEach (isLubinTateSeries_multiplicativeLTPoly p).constantCoeff_eq_zero
-    rw [subst_multiplicativeLTPoly p h0, ← MvPowerSeries.coe_substAlgHom hs, map_add, map_add,
+    rw [subst_multiplicativeLTPoly p h0, ← MvPowerSeries.coe_substAlgHom hs, map_add (f := _), map_add (f := _),
       map_mul, MvPowerSeries.coe_substAlgHom hs, MvPowerSeries.subst_X hs,
       MvPowerSeries.subst_X hs, substEach_apply, substEach_apply,
       subst_multiplicativeLTPoly p (by simp), subst_multiplicativeLTPoly p (by simp)]
@@ -128,7 +128,7 @@ omit [TopologicalSpace K] [IsNonarchimedeanLocalField K] [ValuativeRel Ω] [Topo
 theorem psTerm_add {σ : Type*} (f g : MvPowerSeries σ 𝒪[K]) (x : σ → Ω) :
     psTerm (f + g) x = psTerm f x + psTerm g x := by
   funext d
-  simp only [psTerm, map_add, Subring.coe_add, Pi.add_apply, add_mul]
+  simp only [psTerm, map_add (f := _), Subring.coe_add, Pi.add_apply, add_mul]
 
 theorem psEval_add {σ : Type*} [Finite σ] (f g : MvPowerSeries σ 𝒪[K]) {x : σ → Ω}
     (hx : ∀ i, valuation Ω (x i) < 1) :

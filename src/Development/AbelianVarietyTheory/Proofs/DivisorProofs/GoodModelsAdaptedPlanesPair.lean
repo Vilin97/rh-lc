@@ -56,7 +56,7 @@ theorem GlobalTheory.ArchSchA.infRelA_proportional_uniq : GlobalTheory.ThK.KP �
   have eadd : ∀ x y : Matrix (Fin n) (Fin d) (AE F E),
       arch F (M.co.e (x + y)).1 = arch F (M.co.e x).1 + arch F (M.co.e y).1 ∧
       arch F (M.co.e (x + y)).2 = arch F (M.co.e x).2 + arch F (M.co.e y).2 := fun x y =>
-    ⟨by rw [map_add, Prod.fst_add, archA_add], by rw [map_add, Prod.snd_add, archA_add]⟩
+    ⟨by rw [map_add (f := _), Prod.fst_add, archA_add], by rw [map_add (f := _), Prod.snd_add, archA_add]⟩
   have inv : ∀ S : SInf F (Fin n × Fin d) →L[ℂ] SInf F (Fin n₁ × Fin d₁),
       GlobalTheory.ThK.EvUniqB.InfRel B M M₁ H.ι H'.ι (isoA H H') S →
       ∀ l ∈ Λ, ∀ f g : SInf F (Fin n × Fin d), ⇑g = sch (trP F _) l.1 l.2 ⇑f → ℓ S g = ℓ S f := by

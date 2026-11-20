@@ -66,7 +66,7 @@ theorem trace_of_unif_loc {R : Type} [CommRing R] [IsDomain R] [IsLocalRing R] [
       (i := gc.i) (q := gc.q) hi ⟨inferInstance, hl.q_lin e⟩ gc.isKernel hvK hv' hw' a
       (MK a) ((LinearMap.toMatrix' (ρ a))ᵀ.map f) ((LinearMap.toMatrix' (ρB a))ᵀ.map f)
       (fun c => (ConstBasis.prodPts_act hvK hMK a c).symm) (fun c => by rw [← hM, hρ']) (fun c => by rw [← hMB, hρB'])
-    rw [← Ideal.Quotient.eq, map_add, map_intCast, trace_map_eq, trace_map_eq, h]
+    rw [← Ideal.Quotient.eq, map_add (f := _), map_intCast, trace_map_eq, trace_map_eq, h]
     refine (add_comm _ _).trans (congrArg _ ?_)
     simp [MK, latTrace, Matrix.trace]
   rw [← sub_eq_zero, ← Ideal.mem_bot, ← Ideal.iInf_pow_eq_bot_of_isLocalRing _ (maximalIdeal.isMaximal R).ne_top,
@@ -118,7 +118,7 @@ theorem lieMult_unif_loc {E : Type} [Field E] [NumberField E] [IsCMField E] (H :
     (Module.finrank (𝓞 E) P.D.toPre.X) (fun a => by
       have hT := trace_eq_sum hσ (torusRep (𝓞 E) P.D.toPre.X F) a
       simp only [fun i => finrank_eigenSub_torusRep (X := P.D.toPre.X) (σ i) (injective_of_charZero _)] at hT
-      rw [← trace_eq_sum hσ, ← trace_eq_sum hσ, ← hT, tG, tB, htr, trace_torusRep b, map_add, map_intCast]) j
+      rw [← trace_eq_sum hσ, ← trace_eq_sum hσ, ← hT, tG, tB, htr, trace_torusRep b, map_add (f := _), map_intCast]) j
   rw [Lie.lieMult_iff_finrank (isLinearPullback_pullback _ (spMap f)), he] at hN
   refine ⟨_, ?_, hm.symm.trans hN.2⟩
   rw [Lie.lieMult_iff_finrank (isLinearPullback_pullback _ (spMap f)), he]

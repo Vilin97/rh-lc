@@ -29,7 +29,7 @@ theorem UpperTheory.V.Pa.BC.nonSS_mono :
     intro w
     induction w using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g c => simp
   have hcomp : ∀ (T H : Type) [CommRing T] [Group H] (θ : T →+* S) (z : MonoidAlgebra T H),
       MonoidAlgebra.mapRingHom H (f.comp θ) z =
@@ -37,7 +37,7 @@ theorem UpperTheory.V.Pa.BC.nonSS_mono :
     intro T H _ _ θ z
     induction z using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g c => simp
   have hle : TwoSidedIdeal.span (MonoidAlgebra.mapRingHom G φ '' I) ≤
       J.comap (MonoidAlgebra.mapRingHom G f) := by

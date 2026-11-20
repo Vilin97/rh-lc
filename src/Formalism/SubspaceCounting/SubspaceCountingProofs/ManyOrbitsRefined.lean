@@ -293,7 +293,7 @@ theorem lengthPart2 {R X : Type} [CommRing R] [IsDomain R] [IsDiscreteValuationR
     obtain ⟨x, rfl⟩ := hEcases j w hw
     obtain ⟨n, hn, c, hc, hnc⟩ := Submodule.mem_sup.mp (hCx j hj x x.2)
     have hmk : N.mkQ (π ^ (τ + j * S) • (x : X)) = N.mkQ c := by
-      rw [← hnc, map_add, Submodule.mkQ_apply N n, (Submodule.Quotient.mk_eq_zero N).mpr hn,
+      rw [← hnc, map_add (f := _), Submodule.mkQ_apply N n, (Submodule.Quotient.mk_eq_zero N).mpr hn,
         zero_add]
     rw [hmk]
     have hle : Submodule.map N.mkQ (Submodule.span R (↑(C j) : Set X)) ≤ Submodule.span R

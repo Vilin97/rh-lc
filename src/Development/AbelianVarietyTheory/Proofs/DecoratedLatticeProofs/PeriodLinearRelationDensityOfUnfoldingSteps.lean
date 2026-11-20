@@ -99,9 +99,9 @@ theorem isContAut_multT {V : HSp D} {S : D.what₂.Tau → SPar} {θ : InfFam D}
     | smul_tprod r v =>
       rw [map_smul, LinearEquiv.coe_coe, PiTensorProduct.lift.tprod]
       exact isContAut_smul ⟨(hT.aut v).left, (hT.aut v).cont⟩ r
-    | add x y hx hy => rw [map_add]; exact isContAut_add hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact isContAut_add hx hy
   | zero => simpa using isContAut_zero V
-  | add T₁ T₂ _ _ h₁ h₂ => rw [map_add, LinearMap.add_apply]; exact isContAut_add (h₁ x) (h₂ x)
+  | add T₁ T₂ _ _ h₁ h₂ => rw [map_add (f := _), LinearMap.add_apply]; exact isContAut_add (h₁ x) (h₂ x)
   | smul c T _ h => rw [map_smul, LinearMap.smul_apply]; exact isContAut_smul (h x) c
 
 end GlobalTheory.SeeSaw.DenseRel

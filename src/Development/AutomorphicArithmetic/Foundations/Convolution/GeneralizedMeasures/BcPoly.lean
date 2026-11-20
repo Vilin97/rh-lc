@@ -12,7 +12,7 @@ private theorem bc_at {F E : Type} [Field F] [NumberField F] [Field E] [NumberFi
   unfold atPl
   induction p using MvPolynomial.induction_on with
   | C a => simp [bcPR]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, hp]
     simp [bcPR]

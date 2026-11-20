@@ -34,7 +34,7 @@ theorem ga_add (i : Fin d) {n : ℕ} (s : ComposableArrows C n) (p q r : Fin (n 
     rw [← s.map_comp]; rfl
   have e2 : s.map (homOfLE (Fin.le_last q)) = s.map (homOfLE h') ≫ s.map (homOfLE (Fin.le_last r)) := by
     rw [← s.map_comp]; rfl
-  rw [e, a_comp, map_add, e2, Functor.map_comp]
+  rw [e, a_comp, map_add (f := _), e2, Functor.map_comp]
   rfl
 
 theorem ga_mem {Fil : ℤ → IdF Φ.A} (hF : IsFil Φ Fil) (i : Fin d) {n : ℕ} (s : ComposableArrows C n)

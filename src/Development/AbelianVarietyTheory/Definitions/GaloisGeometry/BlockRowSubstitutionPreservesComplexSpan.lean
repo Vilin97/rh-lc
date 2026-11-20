@@ -60,7 +60,7 @@ def InvK (a : H.comp) (L : H.P.Tup) : Submodule H.Kf H.P.Xsp where
     ∀ γ : (H.lev a).Γ, (H.lev a).smul γ L = L → ((H.lev a).χ γ : H.O) • (H.lev a).actX γ X = X}
   zero_mem' := ⟨Submodule.zero_mem _, fun γ _ => by rw [map_zero, smul_zero]⟩
   add_mem' := fun {x y} hx hy => ⟨Submodule.add_mem _ hx.1 hy.1, fun γ hγ => by
-    rw [map_add, smul_add, hx.2 γ hγ, hy.2 γ hγ]⟩
+    rw [map_add (f := _), smul_add, hx.2 γ hγ, hy.2 γ hγ]⟩
   smul_mem' := fun c x hx => ⟨Submodule.smul_mem _ c hx.1, fun γ hγ => by
     rw [map_smul, ← algebraMap_smul H.Kf, smul_smul, mul_comm, ← smul_smul, algebraMap_smul, hx.2 γ hγ]⟩
 
@@ -78,7 +78,7 @@ def Eqv : Submodule H.Kf H.Fn where
       show F a _ + F' a _ = _
       rw [(hF a).2.2 γ L, (hF' a).2.2 γ L]
       show _ = ((H.lev a).χ γ : H.O) • (H.lev a).actX γ (F a L + F' a L)
-      rw [map_add, smul_add]⟩
+      rw [map_add (f := _), smul_add]⟩
   smul_mem' := fun c F hF a => ⟨fun L hL => Submodule.smul_mem _ c ((hF a).1 L hL),
     fun L hL => by
       show c • F a L = 0
@@ -443,7 +443,7 @@ theorem colAddGen_map {r n : ℕ} (l j : Fin n) (Q : MvPolynomial (Fin r × Fin 
   · rename_i a
     simp [Formalism.GradedWeylDivisibility.colAddGen]
   · rename_i p q hp hq
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   · rename_i p v hp
     simp only [map_mul]
     rw [hp, MvPolynomial.map_X]
@@ -545,7 +545,7 @@ def YInv (a : H.comp) (L : H.P.Tup) : Submodule LL (YR H LL) where
   carrier := {Q | MvPolynomial.map e Q ∈ H.P.Vtup ∧ ∀ γ : (H.lev a).Γ, (H.lev a).smul γ L = L →
     ((H.lev a).χ γ : H.O) • (H.lev a).actX γ (MvPolynomial.map e Q) = MvPolynomial.map e Q}
   add_mem' := fun {Q Q'} h h' => by
-    simp only [Set.mem_ofPred_eq, map_add] at h h' ⊢
+    simp only [Set.mem_ofPred_eq, map_add (f := _)] at h h' ⊢
     exact ⟨Submodule.add_mem _ h.1 h'.1, fun γ hγ => by rw [smul_add, h.2 γ hγ, h'.2 γ hγ]⟩
   zero_mem' := by
     simp only [Set.mem_ofPred_eq, map_zero]
@@ -579,7 +579,7 @@ theorem inv_le_span {a : H.comp} {L : H.P.Tup} (hL : H.P.IsLatTup L) (h1 : SpanR
   let Vr : Submodule LL (YR H LL) :=
     { carrier := {Q | MvPolynomial.map e Q ∈ H.P.Vtup}
       add_mem' := fun {Q Q'} h h' => by
-        simp only [Set.mem_ofPred_eq, map_add] at h h' ⊢
+        simp only [Set.mem_ofPred_eq, map_add (f := _)] at h h' ⊢
         exact Submodule.add_mem _ h h'
       zero_mem' := by
         simp only [Set.mem_ofPred_eq, map_zero]
@@ -901,7 +901,7 @@ theorem eval_blockRowSubstitution (g : ι → Matrix (Fin n) (Fin n) ℂ) (z : �
     eval z (blockRowSubstitutionAlgHom g P) = eval (fun x => ∑ c, g x.1 x.2.1 c * z (x.1, c, x.2.2)) P := by
   induction P using MvPolynomial.induction_on
   next a => simp [blockRowSubstitutionAlgHom]
-  next p q hp hq => simp only [map_add, hp, hq]
+  next p q hp hq => simp only [map_add (f := _), hp, hq]
   next p x hp => simp only [map_mul, hp, blockRowSubstitution_X, eval_X, map_sum, eval_C]
 
 theorem blockRowSubstitution_rename (g : ι → Matrix (Fin n) (Fin n) ℂ) (τ : ι) (q : MvPolynomial (Fin n × Fin n) ℂ) :
@@ -1161,7 +1161,7 @@ theorem evC_le (h : P.m + 1 = n) (pos : (Σ v : Fin P.nV, Fin (P.n' v)) ≃ Tau)
     obtain ⟨f, hf, rfl⟩ := hX
     exact gen_mem P pos G M lam hw f hf
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
 
 end Main
@@ -1291,7 +1291,7 @@ theorem lin_ext_map {σ : Type} (φ : MvPolynomial σ LL →ₗ[LL] LL) (P : MvP
       rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
     rw [h1, map_smul, Basis.constr_basis, h2, map_smul, smul_eq_mul, smul_eq_mul, map_mul]
   next p q hp hq =>
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
 
 theorem desc_span {σ : Type} (V : Submodule LL (MvPolynomial σ LL)) {Q : MvPolynomial σ LL}
     (hQ : MvPolynomial.map e Q ∈ Submodule.span K (MvPolynomial.map e '' (V : Set (MvPolynomial σ LL)))) : Q ∈ V := by
@@ -1377,7 +1377,7 @@ theorem span_prod_map {S : Type} [Fintype S] {σ : S → Type} {τ : Type} (f : 
     refine Submodule.subset_span ⟨fun s => MvPolynomial.map e (F s), fun s => h s _ (hF s), ?_⟩
     simp only [map_prod, MvPolynomial.map_rename]
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx => rw [mapE_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem vsp_map {n' m : ℕ} (lam0 : Fin n' → Fin (m + 1) → ℤ) {x : MvPolynomial (Fin n' × (Fin (m + 1) × Fin (m + 1))) LL}

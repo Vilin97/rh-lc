@@ -23,7 +23,7 @@ theorem isOpen_of_nhds {G G' : Type} [AddCommGroup G] [TopologicalSpace G] [IsTo
       add_mem' := by
         rintro x y ⟨l, hl, e⟩ ⟨l', hl', e'⟩
         refine ⟨l + l', L.add_mem hl hl', ?_⟩
-        rw [show x + y - N • (l + l') = (x - N • l) + (y - N • l') by rw [nsmul_add]; abel, map_add, e, e', add_zero]
+        rw [show x + y - N • (l + l') = (x - N • l) + (y - N • l') by rw [nsmul_add]; abel, map_add (f := _), e, e', add_zero]
       neg_mem' := by
         rintro x ⟨l, hl, e⟩
         refine ⟨-l, L.neg_mem hl, ?_⟩

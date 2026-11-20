@@ -18,7 +18,7 @@ section Gen
 variable {N : Type} [AddCommGroup N] [Module ℂ N] {C : Submodule ℂ N} {ip : N → N → ℂ}
 
 theorem hp_add_right (h : PeterssonHilbertSpace.IsHermPos C ip) (x y y' : C) : ip x ((y : N) + y') = ip x y + ip x y' := by
-  rw [← Submodule.coe_add, ← h.herm (y + y') x, Submodule.coe_add, h.add y y' x, map_add, h.herm y x, h.herm y' x]
+  rw [← Submodule.coe_add, ← h.herm (y + y') x, Submodule.coe_add, h.add y y' x, map_add (f := _), h.herm y x, h.herm y' x]
 
 theorem hp_smul_right (h : PeterssonHilbertSpace.IsHermPos C ip) (s : ℂ) (x y : C) : ip x (s • (y : N)) = s * ip x y := by
   rw [← Submodule.coe_smul, ← h.herm (s • y) x, Submodule.coe_smul, h.smul s y x, map_mul, h.herm y x,
@@ -57,7 +57,7 @@ theorem hp_riesz {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H] [Fi
       { toFun := fun x => ip w (j x)
         map_add' := fun a b => by
           have := hp_add_right h w ⟨j a, hj a⟩ ⟨j b, hj b⟩
-          simpa [map_add] using this
+          simpa [map_add (f := _)] using this
         map_smul' := fun s a => by
           have := hp_smul_right h s w ⟨j a, hj a⟩
           simpa [map_smul] using this }

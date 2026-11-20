@@ -111,7 +111,7 @@ theorem exists_isPerBasis : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
       have := h1 (H.bar.symm a) k
       rwa [Di.adj, RingEquiv.apply_symm_apply] at this
     | zero => simp
-    | add y z _ _ hy hz => intro a; rw [smul_add, map_add, hy, hz, add_zero]
+    | add y z _ _ hy hz => intro a; rw [smul_add, map_add (f := _), hy, hz, add_zero]
     | smul b y _ hy => intro a; rw [← mul_smul, hy]
   have h3 : v = 0 := by
     apply Di.unimod.1

@@ -62,7 +62,7 @@ theorem isUnit_det_MuR (hv : v.Integers R) (hp1 : v (algebraMap R C (p : R)) < 1
   letI : IsLocalRing R := IsLocalRing.of_nonunits_add fun a b ha hb hu => by
     have h1 := hv.isUnit_iff_valuation_eq_one.mp hu
     have h2 : v (algebraMap R C (a + b)) < 1 := by
-      rw [map_add]; exact v.map_add_lt (hlt a ha) (hlt b hb)
+      rw [map_add (f := _)]; exact v.map_add_lt (hlt a ha) (hlt b hb)
     rw [h1] at h2
     exact lt_irrefl _ h2
   haveI : CharP (IsLocalRing.ResidueField R) p :=

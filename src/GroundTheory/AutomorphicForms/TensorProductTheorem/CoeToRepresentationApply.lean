@@ -80,7 +80,7 @@ def subQuotρ : h.lieSubalgebra →ₗ⁅ℝ⁆ Module.End ℂ (U.toSubmodule �
       ← Submodule.Quotient.mk_add]
     congr 1
     refine Subtype.ext ?_
-    simp only [Submodule.coe_add, coe_toRepresentation_apply, GKModule.rep_of_inl, map_add,
+    simp only [Submodule.coe_add, coe_toRepresentation_apply, GKModule.rep_of_inl, map_add (f := _),
       LinearMap.add_apply]
   map_smul' r X := by
     refine Submodule.linearMap_qext _ (LinearMap.ext fun u => ?_)

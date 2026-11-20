@@ -74,7 +74,7 @@ theorem exists_coords (hζ : IsPrimitiveRoot ζ 4) (a : 𝓞 E) :
     change algebraMap (𝓞 E) E y = _ at h2
     refine ⟨a + c, b + d, ?_⟩
     change algebraMap (𝓞 E) E (x + y) = _
-    rw [map_add, h1, h2]
+    rw [map_add (f := _), h1, h2]
     push_cast
     ring
   | mul x y _ _ hx hy =>
@@ -99,7 +99,7 @@ theorem trace_form (hζ : IsPrimitiveRoot ζ 4) (a b c d : ℤ) :
     simp only [map_div₀, map_intCast, map_neg, map_ofNat]
     push_cast
     linear_combination (-(b * c - a * d : E) / 2 + b * d * ζ / 2) * hs
-  rw [h, map_add, map_smul, trace_root hζ, Algebra.trace_algebraMap, finrank_eq]
+  rw [h, map_add (f := _), map_smul, trace_root hζ, Algebra.trace_algebraMap, finrank_eq]
   simp only [smul_zero, add_zero, nsmul_eq_mul]
   push_cast
   ring

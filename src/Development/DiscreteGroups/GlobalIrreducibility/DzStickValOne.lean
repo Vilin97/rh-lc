@@ -61,7 +61,7 @@ variable {p f : ℕ} [Fact p.Prime] {k : Type*} [Field k] [Fintype k] [Algebra (
 theorem sum_inv_val_add_one_mem :
     (∑ x : k, (D.ω⁻¹) x * ((Algebra.trace (ZMod p) k x).val : A)) + 1 ∈ Q.asIdeal := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [← Ideal.Quotient.eq_zero_iff_mem, map_add, map_sum, map_one]
+    rw [← Ideal.Quotient.eq_zero_iff_mem, map_add (f := _), map_sum, map_one]
   have h : ∀ x : k, Ideal.Quotient.mk Q.asIdeal
       ((D.ω⁻¹) x * ((Algebra.trace (ZMod p) k x).val : A)) =
       D.ι (x⁻¹ * algebraMap (ZMod p) k (Algebra.trace (ZMod p) k x)) := by

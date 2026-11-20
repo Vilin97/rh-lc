@@ -33,7 +33,7 @@ variable (E a) in
 def fixL (L : Subgroup (GL (Fin a) (Af E))) : Submodule ℂ (Sm E a) where
   carrier := {ψ | ∀ k ∈ L, finRep E a k ψ = ψ}
   zero_mem' k _ := map_zero _
-  add_mem' {ψ ψ'} h h' k hk := by rw [map_add, h k hk, h' k hk]
+  add_mem' {ψ ψ'} h h' k hk := by rw [map_add (f := _), h k hk, h' k hk]
   smul_mem' c ψ h k hk := by rw [map_smul, h k hk]
 
 theorem lie_mem_fixL (L : Subgroup (GL (Fin a) (Af E))) (X : Lie E a) {ψ : Sm E a} (h : ψ ∈ fixL E a L) :

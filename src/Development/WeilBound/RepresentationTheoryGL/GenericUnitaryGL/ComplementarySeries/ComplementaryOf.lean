@@ -156,7 +156,7 @@ theorem complementary_of (h : Signature) : Complementary := by
           obtain ⟨g', rfl⟩ := hy
           exact Submodule.subset_span ⟨g * g', by simp only [map_mul, Module.End.mul_apply]⟩
         | zero => simp
-        | add x y _ _ hx hy => rw [map_add]; exact S.add_mem hx hy
+        | add x y _ _ hx hy => rw [map_add (f := _)]; exact S.add_mem hx hy
         | smul c x _ hx => rw [map_smul]; exact S.smul_mem c hx
       have hSt : S = ⊤ := by
         rcases irr_sub (hall t ht).2.2.1 S hS with h1 | h1

@@ -79,7 +79,7 @@ theorem IsEllipticAt.exists_regularity_radius {T : 𝓢'(E, ℂ) →L[ℂ] 𝓢'
   have hid : u + K u = Qop a w x₀ μ 1 ((prinOp a w + N) u) + Rop a w x₀ μ 1 u := by
     have h1 := congrArg (fun A : 𝓢'(E, ℂ) →L[ℂ] 𝓢'(E, ℂ) ↦ A u) (parametrix_comp_frozenOperator a w x₀ hμ0.le 1)
     simp only [ContinuousLinearMap.comp_apply, sub_apply, ContinuousLinearMap.id_apply] at h1
-    rw [hTu', map_add, h1]
+    rw [hTu', map_add (f := _), h1]
     simp only [K, ContinuousLinearMap.comp_apply]
     abel
   have hz : MemSobolev (s + 1) 2 (Qop a w x₀ μ 1 ((prinOp a w + N) u) + Rop a w x₀ μ 1 u) := by

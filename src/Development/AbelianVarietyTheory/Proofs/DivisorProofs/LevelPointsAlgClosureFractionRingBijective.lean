@@ -110,7 +110,7 @@ theorem exists_qkExt_descent [IsAlgClosed F₀] [IsAlgClosed F] (hk : (k : F₀)
     rw [nsmul_sub, ← map_nsmul, hg₀, e₀, sub_self]
   obtain ⟨t, ht⟩ := GlobalTheory.ArcExt.exists_gtExt_of_torsion f hf hL hk _ ht'
   have ht0 : k • t = 0 := GlobalTheory.ArcExt.gtExt_injective f hf (by rw [map_nsmul, ht, ht', map_zero])
-  have e : p'.g = gtExt D f hf (g₀ + t) := by rw [map_add, ht, add_sub_cancel]
+  have e : p'.g = gtExt D f hf (g₀ + t) := by rw [map_add (f := _), ht, add_sub_cancel]
   refine ⟨⟨p'.y, g₀ + t, h₀, (isNsmul_iff_eq _ _ _).2 ?_, hh₀⟩, rfl, (eq_gtExt_iff f hf _ _).1 e⟩
   rw [nsmul_add, ht0, add_zero, hg₀]
 

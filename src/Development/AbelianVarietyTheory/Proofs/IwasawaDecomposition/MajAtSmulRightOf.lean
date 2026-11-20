@@ -29,7 +29,7 @@ theorem fcoord_smul_emb (b : Module.Basis ι K V) (X : InfinitePlace K → Matri
 theorem fcoord_add_of (b : Module.Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ) (v : InfinitePlace K)
     (x y : V) : fcoord b X v (x + y) = fcoord b X v x + fcoord b X v y := by
   have hv : vecAt b v (x + y) = vecAt b v x + vecAt b v y := by
-    funext i; simp [vecAt, map_add]
+    funext i; simp [vecAt, map_add (f := _)]
   simp only [fcoord, hv, Matrix.mulVec_add]
 
 theorem majAt_add_left_of (b : Module.Basis ι K V) (X : InfinitePlace K → Matrix ι ι ℂ) (v : InfinitePlace K)
@@ -73,7 +73,7 @@ theorem majAt_eq_of_diag {V' ι' : Type} [AddCommGroup V'] [Module K V'] [Fintyp
     have h0 := h (x + y)
     have h1 := h x
     have h2 := h y
-    simp only [map_add, majAt_add_left_of, majAt_add_right_of] at h0
+    simp only [map_add (f := _), majAt_add_left_of, majAt_add_right_of] at h0
     linear_combination h0 - h1 - h2
   obtain ⟨a, ha⟩ := hv
   have h3 := hadd x (a • y)

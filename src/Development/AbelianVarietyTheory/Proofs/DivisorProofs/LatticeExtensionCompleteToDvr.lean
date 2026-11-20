@@ -84,7 +84,7 @@ theorem exists_lat_iff [IsNoetherianRing R] (hint : ∀ x, θ x ∈ ψ.range ↔
     { carrier := {s | Lat ψ g (j s)}
       zero_mem' := ⟨0, by simp⟩
       add_mem' := fun hx hy => by
-        rw [Set.mem_setOf_eq, map_add]; exact Lat.add hx hy
+        rw [Set.mem_setOf_eq, map_add (f := _)]; exact Lat.add hx hy
       smul_mem' := fun r x hx => by
         obtain ⟨c, hc⟩ := hc r
         rw [Set.mem_setOf_eq, hs, hj, ← hc]; exact Lat.smul c hx }
@@ -201,7 +201,7 @@ def pullTop (c : Y' ⟶ Y) (ξ : Y ⟶ T) (M : T.Modules) :
     Γ((Scheme.Modules.pullback ξ).obj M, ⊤) →+ Γ((Scheme.Modules.pullback (c ≫ ξ)).obj M, ⊤) where
   toFun s := ((Scheme.Modules.pullbackComp c ξ).hom.app M).app ⊤ (pullbackSections c _ (V := ⊤) le_top s)
   map_zero' := by rw [map_zero, map_zero]
-  map_add' s t := by rw [map_add, map_add]
+  map_add' s t := by rw [map_add (f := _), map_add (f := _)]
 
 variable (c : Y' ⟶ Y) (ξ : Y ⟶ T) {M N : T.Modules}
 
@@ -359,11 +359,11 @@ theorem latSeq_descend {A B : X.Modules} {D : T.Modules} {a : (Scheme.Modules.pu
     obtain ⟨x, rfl⟩ := hsurj y
     obtain ⟨u', hu'⟩ := (hex' (x' - pullTop (spMap θ) ξ D x)).1 (by rw [map_sub, e', pullTop_map, sub_self])
     obtain ⟨u, v, hv⟩ := hA₂ u'
-    refine ⟨x + ((Scheme.Modules.pullback ξ).map a).app ⊤ u, ?_, by rw [map_add, hex.apply_apply_eq_zero, add_zero]⟩
+    refine ⟨x + ((Scheme.Modules.pullback ξ).map a).app ⊤ u, ?_, by rw [map_add (f := _), hex.apply_apply_eq_zero, add_zero]⟩
     have := hΛ _ _ hx' ((h.1 _).2 ⟨v, rfl⟩).1
     rw [← hv, map_sub, hu', ← pullTop_map] at this
     convert this using 1
-    rw [map_add]
+    rw [map_add (f := _)]
     abel
 
 end Descend

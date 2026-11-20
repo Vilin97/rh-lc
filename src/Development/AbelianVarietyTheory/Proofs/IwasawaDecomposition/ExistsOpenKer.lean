@@ -33,12 +33,12 @@ theorem exists_open_ker {G : Type} [AddCommGroup G] [TopologicalSpace G] [IsTopo
         have ha' : ψ _ = 1 := ha
         have hb' : ψ _ = 1 := hb
         show ψ _ = 1
-        rw [map_add, AddChar.map_add_eq_mul, ha', hb', one_mul]
+        rw [map_add (f := _), AddChar.map_add_eq_mul, ha', hb', one_mul]
       neg_mem' := fun {a} ha => by
         have ha' : ψ _ = 1 := ha
         show ψ _ = 1
         have := AddChar.map_add_eq_mul ψ (q a) (q (-a))
-        rw [← map_add, add_neg_cancel, map_zero, ψ.map_zero_eq_one, ha', one_mul] at this
+        rw [← map_add (f := _), add_neg_cancel, map_zero, ψ.map_zero_eq_one, ha', one_mul] at this
         exact this.symm }
   refine ⟨K, K.isOpen_of_mem_nhds (g := 0) ?_, fun w hw h0 => ?_⟩
   · have h1 : Continuous fun w : G => (φ w).2 := continuous_snd.comp hφ

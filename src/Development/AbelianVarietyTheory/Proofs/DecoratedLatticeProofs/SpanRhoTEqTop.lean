@@ -62,7 +62,7 @@ theorem infPart_tensAt (y : Fv D.host.F v ⊗[D.host.F] D.host.E) :
     rw [GlobalTheory.EmbChart.tensAt_tmul, GlobalTheory.EmbChart.atPlace_apply]
     show (fstA D.host.F) (pairA D.host.F 0 (GlobalTheory.AdelicU.singleFin v a)) ⊗ₜ[D.host.F] x = 0
     rw [show (fstA D.host.F) (pairA D.host.F 0 (GlobalTheory.AdelicU.singleFin v a)) = 0 from rfl, TensorProduct.zero_tmul]
-  | add x y hx hy => rw [LinearMap.map_add, RingHom.map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [LinearMap.map_add (f := _), RingHom.map_add (f := _), hx, hy, add_zero]
 
 theorem infPart_secW (z : w.adicCompletion D.host.E) : infPart D (secW hw h z) = 0 :=
   infPart_tensAt _

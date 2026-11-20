@@ -93,7 +93,7 @@ theorem thetaSum_center_phase : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field 
   set S := symp (R := AF F) (cA σ) (-1) (incM F X.J) (incM F W.J) a wξ with hS
   have hcomp : M.co.rho B.ψ a (M.co.rho B.ψ wξ Φ) = B.ψ (⅟2 * S) • M.co.rho B.ψ (a + wξ) Φ := by
     simp only [Darboux.rho]
-    rw [schr_schr, hS, M.co.form a wξ, map_add]
+    rw [schr_schr, hS, M.co.form a wξ, map_add (f := _)]
   have hρ : M.co.rho B.ψ (wξ + a) Φ = B.ψ (-(⅟2 * S)) • M.co.rho B.ψ a (M.co.rho B.ψ wξ Φ) := by
     rw [hcomp, smul_smul, ← AddChar.map_add_eq_mul, neg_add_cancel, AddChar.map_zero_eq_one, one_smul, add_comm]
   have hinv := hE.inv a ⟨-(C • incV F ξ), rfl⟩ _ hm2

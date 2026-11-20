@@ -41,7 +41,7 @@ theorem diagonal_derivation_coeff (LL : Letters ι) (S : Set ι) (a : Fin n) (F 
       rfl
     · simp
   | add p q hp hq =>
-    rw [map_add, MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add, mul_add]
+    rw [map_add (f := _), MvPolynomial.coeff_add, hp, hq, MvPolynomial.coeff_add, mul_add]
 
 theorem polynomial_mem_weightSpace_iff (LL : Letters ι) (S : Set ι) (mu : Fin n → ℤ) (F : MvPolynomial (ι × Fin n) K) :
     F ∈ weightSp (glOps K n LL S) mu ↔ ∀ a, glDerivation K LL S a a F = ((mu a : ℤ) : K) • F := by
@@ -92,7 +92,7 @@ theorem polynomial_isGLRep (LL : Letters ι) (S : Set ι) : IsGLRep (glOps K n L
         exact Submodule.mem_iSup_of_mem m (gl_operator_preserves_multidegree LL S _ a b z hz)
       · simp
       · intro z w hz hw
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem _ hz hw
   · rw [eq_top_iff]
     intro F _

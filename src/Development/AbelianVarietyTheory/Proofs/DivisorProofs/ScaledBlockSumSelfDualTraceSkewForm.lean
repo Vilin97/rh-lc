@@ -63,7 +63,7 @@ theorem form_skewGram (A B : HSp D) {d : ℕ} (e : Fin A.rank ⊕ Fin B.rank ≃
 def IntTr (z : D.host.E) : Prop := ∀ o : 𝓞 D.host.E, IsIntegral ℤ (Algebra.trace ℚ D.host.E (o * z))
 
 theorem IntTr.add {z z' : D.host.E} (h : IntTr z) (h' : IntTr z') : IntTr (z + z') := fun o => by
-  rw [mul_add, map_add]; exact (h o).add (h' o)
+  rw [mul_add, map_add (f := _)]; exact (h o).add (h' o)
 
 theorem IntTr.mul_int {z : D.host.E} (h : IntTr z) (b : 𝓞 D.host.E) : IntTr (z * (b : D.host.E)) := fun o => by
   have := h (o * b)

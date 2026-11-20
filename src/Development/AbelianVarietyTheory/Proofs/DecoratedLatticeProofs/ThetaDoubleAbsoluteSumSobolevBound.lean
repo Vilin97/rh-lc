@@ -79,7 +79,7 @@ theorem infPart_cA {a : AE D} (h : infPart D a = 0) : infPart D (cA D a) = 0 := 
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul a x => rfl
-    | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, RingHom.map_add, ha, hb]
+    | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
   rw [e, h, map_zero]
 
 theorem dualPt_fin {b : Mx D ρ T.rank} (hb : b.map (infPart D) = 0) : (dualPt T ρ b).map (infPart D) = 0 := by

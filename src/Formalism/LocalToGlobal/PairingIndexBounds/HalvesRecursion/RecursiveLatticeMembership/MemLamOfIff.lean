@@ -92,7 +92,7 @@ theorem exists_pp (cc : Ideal (𝓞 D.host.K)) (hcc : cc ≠ ⊥) :
     refine ⟨e.repr ⟨c, hc⟩ 0, e.repr ⟨c, hc⟩ 1, ?_⟩
     rw [Fin.sum_univ_two] at hx
     have hx' := congrArg (fun y : cc => psi D (y : 𝓞 D.host.K)) hx
-    simp only [Submodule.coe_add, map_add] at hx'
+    simp only [Submodule.coe_add, map_add (f := _)] at hx'
     rw [← hx']
     rw [Submodule.coe_smul_of_tower, Submodule.coe_smul_of_tower, map_zsmul, map_zsmul, zsmul_eq_mul,
       zsmul_eq_mul]
@@ -100,7 +100,7 @@ theorem exists_pp (cc : Ideal (𝓞 D.host.K)) (hcc : cc ≠ ⊥) :
     intro m n
     refine ⟨m • (e 0 : 𝓞 D.host.K) + n • (e 1 : 𝓞 D.host.K),
       cc.add_mem (Submodule.smul_of_tower_mem _ m (e 0).2) (Submodule.smul_of_tower_mem _ n (e 1).2), ?_⟩
-    rw [map_add, map_zsmul, map_zsmul, zsmul_eq_mul, zsmul_eq_mul]
+    rw [map_add (f := _), map_zsmul, map_zsmul, zsmul_eq_mul, zsmul_eq_mul]
 
   obtain ⟨c, hc, hc0⟩ := Submodule.exists_mem_ne_zero_of_ne_bot hcc
   obtain ⟨β, hβ⟩ := exists_sqrt D

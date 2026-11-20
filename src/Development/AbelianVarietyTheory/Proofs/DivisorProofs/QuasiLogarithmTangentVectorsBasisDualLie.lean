@@ -35,7 +35,7 @@ theorem defect_add_smul {μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) O}
     (hμ : ∀ i, constantCoeff (μ i) = 0) (n : ℕ) (f g : MvPowerSeries (Fin d) E) (a : O) :
     defect μ n (f + a • g) = defect μ n f + a • defect μ n g := by
   have hs := hasSubst_up_nmul (Q := E) hμ n
-  simp only [defect, ← coe_substAlgHom hs, ← algebraMap_smul E a, map_add, map_smul]
+  simp only [defect, ← coe_substAlgHom hs, ← algebraMap_smul E a, map_add (f := _), map_smul]
   module
 
 theorem isLie_add_smul {p : ℕ} {G : PDivGroup p O} (c : QLog.Chart G d)
@@ -52,7 +52,7 @@ theorem isLie_add_smul {p : ℕ} {G : PDivGroup p O} (c : QLog.Chart G d)
     rw [LinearMap.map_smul] at this
     exact this
   · have := dvd_add (H w φ hφ) (dvd_mul_of_dvd_right (H' w φ hφ) a)
-    rw [LinearMap.add_apply, LinearMap.smul_apply, map_add, map_smul, map_add, map_smul,
+    rw [LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_smul, map_add (f := _), map_smul,
       smul_eq_mul, smul_eq_mul]
     convert this using 1
     ring

@@ -126,7 +126,7 @@ theorem eigLat_eq_pull [CharZero Ω₀] [CharZero Ω] (cst : c.F →+* Ω₀) (h
     · exact Submodule.mem_iSup_of_mem u (Submodule.subset_span ⟨h, e, he, rfl⟩)
     · simp only [map_zero]
       exact zero_mem _
-    · simp only [map_add]
+    · simp only [map_add (f := _)]
       exact add_mem hx hy
   refine le_antisymm ?_ (hle s)
   rintro x ⟨hx1, hx2⟩

@@ -166,7 +166,7 @@ theorem radial_coefficient_linearity : RcLin := by
   unfold RcLin
   intro k r E _ _ D f _ hf g hg a Z Z' hZ hZ'
   obtain ⟨L, hL⟩ := rc_linear hf hg
-  rw [hL _ (glc_lin hZ hZ' a), hL Z hZ, hL Z' hZ', map_add, map_smul]
+  rw [hL _ (glc_lin hZ hZ' a), hL Z hZ, hL Z' hZ', map_add (f := _), map_smul]
 
 end
 

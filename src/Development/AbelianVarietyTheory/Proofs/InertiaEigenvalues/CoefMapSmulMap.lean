@@ -33,7 +33,7 @@ theorem coeff_coefFun (p : MvPolynomial σ ℂ) (m : σ →₀ ℕ) : (coefFun F
 def coefMap : MvPolynomial σ ℂ →+ MvPolynomial σ F where
   toFun := coefFun F lam
   map_zero' := by ext m; rw [coeff_coefFun, coeff_zero, coeff_zero, map_zero]
-  map_add' p q := by ext m; rw [coeff_coefFun, MvPolynomial.coeff_add, MvPolynomial.coeff_add, coeff_coefFun, coeff_coefFun, map_add]
+  map_add' p q := by ext m; rw [coeff_coefFun, MvPolynomial.coeff_add, MvPolynomial.coeff_add, coeff_coefFun, coeff_coefFun, map_add (f := _)]
 
 variable {F lam}
 
@@ -63,7 +63,7 @@ theorem coefMap_comm (Φ : MvPolynomial σ ℂ →ₗ[ℂ] MvPolynomial σ ℂ) 
     have hm : (monomial m c : MvPolynomial σ ℂ) = c • map (algebraMap F ℂ) (monomial m (1 : F)) := by
       rw [map_monomial, map_one, smul_monomial, smul_eq_mul, mul_one]
     rw [hm, map_smul, h, coefMap_smul_map, ← hm, coefMap_monomial, map_smul]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
 
 variable {T : Type} (r : T → ℕ) (n : ℕ)
 

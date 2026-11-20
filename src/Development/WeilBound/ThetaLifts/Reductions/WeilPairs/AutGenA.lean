@@ -200,7 +200,7 @@ theorem refl_map {σ : E →ₐ[F] E} (hcm : IsCMExt F E σ) (c : E ≃ₐ[F] E)
       simp only [Function.comp_apply, mulVec, vecMul, dotProduct, transpose_apply, map_sum, map_mul, Matrix.map_apply,
       Pi.star_apply, h']
     exact Finset.sum_congr rfl fun _ _ => by ring
-  rw [GlobalTheory.UnRep.refl, ← RingHom.mapMatrix_apply, map_add, map_one, ← e]
+  rw [GlobalTheory.UnRep.refl, ← RingHom.mapMatrix_apply, map_add (f := _), map_one, ← e]
   congr 1
   ext i j
   simp [vecMulVec_apply, map_mul]

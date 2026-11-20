@@ -73,7 +73,7 @@ theorem sliceLeading : PeelLead := by
       have hm_eq := lcplead_recon hlj' a0 hg hm
       rw [heq] at hm_eq
       rw [hm_eq, hm0_eq]
-      simp only [map_add]
+      simp only [map_add (f := _)]
       first
       | exact add_le_add le_rfl hle
       | exact add_le_add_left hle _

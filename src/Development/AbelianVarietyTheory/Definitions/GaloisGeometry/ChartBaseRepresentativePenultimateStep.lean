@@ -102,7 +102,7 @@ theorem sameCoset_trans {n : ℕ} {P : rowSG Pr sel mu} {x y z : Sp X.E n} (h : 
   obtain ⟨r₂, s₂, hs₂, e₂⟩ := h' l
   refine ⟨r₁ * s₂ + r₂ * s₁, s₁ * s₂, fun hm => (P.1.isPrime.mem_or_mem hm).elim hs₁ hs₂, ?_⟩
   simp only [Pi.sub_apply] at e₁ e₂ ⊢
-  rw [map_add, map_mul, map_mul, map_mul, ← e₁, ← e₂]
+  rw [map_add (f := _), map_mul, map_mul, map_mul, ← e₁, ← e₂]
   ring
 
 theorem sameCoset_symm {n : ℕ} {P : rowSG Pr sel mu} {x y : Sp X.E n} (h : SameCoset sel mu cst P x y) :

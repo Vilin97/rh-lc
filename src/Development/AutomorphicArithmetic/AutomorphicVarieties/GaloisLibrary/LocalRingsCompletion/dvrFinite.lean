@@ -12,7 +12,7 @@ private theorem mem_smul_top_iff_repr {R M ι : Type*} [CommRing R] [AddCommGrou
     refine Submodule.smul_induction_on hx (fun r hr m _ => ?_) (fun a c ha hc => ?_)
     · rw [map_smul, Finsupp.smul_apply, smul_eq_mul]
       exact I.mul_mem_right _ hr
-    · rw [map_add, Finsupp.add_apply]
+    · rw [map_add (f := _), Finsupp.add_apply]
       exact I.add_mem ha hc
   · intro h
     rw [← b.sum_repr x]

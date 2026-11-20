@@ -125,7 +125,7 @@ theorem QQ_pow_map_ne {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsLocalR
     exact (IsLocalRing.residue_eq_zero_iff _).2 ((IsLocalRing.mem_maximalIdeal _).2 hl)
   have hl1 : ((l : ℕ) : PowerSeries (IsLocalRing.ResidueField O)) = 0 := by
     rw [← map_natCast (PowerSeries.C (R := IsLocalRing.ResidueField O)), hl0, map_zero]
-  rw [map_pow, hb, map_add, map_mul, map_natCast, map_pow, PowerSeries.map_X, hl1, zero_mul, add_zero,
+  rw [map_pow, hb, map_add (f := _), map_mul, map_natCast, map_pow, PowerSeries.map_X, hl1, zero_mul, add_zero,
     ← pow_mul]
   exact pow_ne_zero _ PowerSeries.X_ne_zero
 

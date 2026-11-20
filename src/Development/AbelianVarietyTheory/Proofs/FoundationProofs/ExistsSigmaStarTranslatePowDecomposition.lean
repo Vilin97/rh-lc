@@ -37,7 +37,7 @@ private lemma u1_one_add_mul_eq_u1_one_add_mul_cexp (a b z : ℂ) :
     U1 Λ a (fun _ => (1 : ℂ)) (z + b) * U1 Λ b (fun _ => (1 : ℂ)) z =
       U1 Λ (a + b) (fun _ => (1 : ℂ)) z *
         Complex.exp ((Real.pi : ℂ) * (a * (starRingEnd ℂ) b - b * (starRingEnd ℂ) a) / (2 * (area Λ : ℂ))) := by
-  simp only [U1, one_mul, ← Complex.exp_add, map_add]
+  simp only [U1, one_mul, ← Complex.exp_add, map_add (f := _)]
   congr 1
   ring
 

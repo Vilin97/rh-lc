@@ -213,7 +213,7 @@ theorem isLatVac_iff_epsW : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : 
       D.host.conj_sqrtMinusD] at h2
     linear_combination (1 / 2 : D.host.E) * h1 + (1 / 2 : D.host.E) * h2
   have hw : incA D (H.w0 : D.host.E) + cA D (incA D (H.w0 : D.host.E)) = 1 := by
-    rw [DualPairCheck.cA_incA, ← RingHom.map_add, hw0, RingHom.map_one]
+    rw [DualPairCheck.cA_incA, ← RingHom.map_add (f := _), hw0, RingHom.map_one]
   have hΛ : ∀ u ∈ (latO V W (ΛV : Set (Fin V.rank → D.host.E)) (ΛW : Set (Fin W.rank → D.host.E)) fun _ => True),
       ∀ u' ∈ (latO V W (ΛV : Set (Fin V.rank → D.host.E)) (ΛW : Set (Fin W.rank → D.host.E)) fun _ => True),
         ψ (symplO V W u (incA D (H.w0 : D.host.E) • u')) = 1 :=

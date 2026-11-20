@@ -37,7 +37,7 @@ theorem pX_of_span (H : D.Hyp) {x : n → A} (hx : x ∈ Submodule.span A (Set.r
     rw [pX_apply]
     simp [fe H]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | smul c x _ hx => rw [map_smul, hx]
 
 theorem h_W_e (H : D.Hyp) {w : n → A} (hw : IsW D w) (a : Fin r) : D.h w (D.e a) = 0 := by
@@ -54,7 +54,7 @@ theorem h_W_span (H : D.Hyp) {w : n → A} (hw : IsW D w) {x : n → A}
     exact map_zero _
   | add x y _ _ hx hy =>
     change D.hL w (x + y) = 0
-    rw [map_add]
+    rw [map_add (f := _)]
     change D.h w x + D.h w y = 0
     rw [hx, hy, add_zero]
   | smul c x _ hx =>

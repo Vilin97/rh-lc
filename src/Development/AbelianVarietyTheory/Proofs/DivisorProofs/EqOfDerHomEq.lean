@@ -119,7 +119,7 @@ theorem snd_val_derHom (δ : Ω[Sec s U.1⁄R] →ₗ[Sec s U.1] Sec s U.1) (y :
       map_mul' := fun a b ↦ by
         ext
         · simp
-        · simp only [TrivSqZeroExt.snd_mul, hop, map_add, map_smul, TrivSqZeroExt.snd_add,
+        · simp only [TrivSqZeroExt.snd_mul, hop, map_add (f := _), map_smul, TrivSqZeroExt.snd_add,
             TrivSqZeroExt.snd_inl, TrivSqZeroExt.snd_inr, TrivSqZeroExt.fst_add,
             TrivSqZeroExt.fst_inl, TrivSqZeroExt.fst_inr, smul_eq_mul]
           simp [MulOpposite.smul_eq_mul_unop]

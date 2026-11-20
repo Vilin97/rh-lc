@@ -42,7 +42,7 @@ theorem norm_shift {S : HSpace E} {r : ℕ} {T T' : E} (F : FlagG S r T) (F' : F
       exact hT_span_right S (by rintro _ ⟨b, rfl⟩; exact F.e_iso a' b) hx) hx
   have h2 := F'.z_norm
   rw [hzx] at h2
-  simp only [map_add, LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul,
+  simp only [map_add (f := _), LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, map_smul,
     smul_eq_mul, hxz, hzx', hxx, F.z_norm, starRingEnd_apply] at h2
   linear_combination h2
 

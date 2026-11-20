@@ -158,7 +158,7 @@ theorem BlockImage.proof (hDim : IntDomainDim.Statement) (hTr : ConeTrdeg.Statem
   rw [hKd] at dimA
   have h1 : ((D + 1 + Fintype.card ι : ℕ) : ℕ∞) =
       (Algebra.trdeg ℤ Ω + Fintype.card ι).toENat + 1 := by exact_mod_cast dimA
-  simp only [map_add, map_natCast] at h1
+  simp only [map_add (f := _), map_natCast] at h1
   have key : (Algebra.trdeg ℤ Ω).toENat = D := by
     generalize (Algebra.trdeg ℤ Ω).toENat = t at h1 ⊢
     induction t using ENat.recTopCoe with
@@ -167,7 +167,7 @@ theorem BlockImage.proof (hDim : IntDomainDim.Statement) (hTr : ConeTrdeg.Statem
       norm_cast at h1 ⊢
       omega
   rw [dimA']
-  simp only [map_add, map_natCast, Fintype.card_unit, key]
+  simp only [map_add (f := _), map_natCast, Fintype.card_unit, key]
   norm_cast
 
 end

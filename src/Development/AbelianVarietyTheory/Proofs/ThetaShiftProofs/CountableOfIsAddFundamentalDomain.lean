@@ -28,7 +28,7 @@ def cubeCoeff {ι : Type*} [Fintype ι] (ω : ι → W) (f : W → ℂ) (χ : W 
     f (∑ i, t i • ω i) * eNeg χ (∑ i, t i • ω i)
 
 theorem eNeg_add (χ : W →ₗ[ℝ] ℝ) (a b : W) : eNeg χ (a + b) = eNeg χ a * eNeg χ b := by
-  simp only [eNeg, map_add, ← Complex.exp_add]; congr 1; push_cast; ring
+  simp only [eNeg, map_add (f := _), ← Complex.exp_add]; congr 1; push_cast; ring
 
 theorem eNeg_add_left (χ ψ : W →ₗ[ℝ] ℝ) (a : W) : eNeg (χ + ψ) a = eNeg χ a * eNeg ψ a := by
   simp only [eNeg, LinearMap.add_apply, ← Complex.exp_add]; congr 1; push_cast; ring

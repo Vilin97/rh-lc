@@ -104,7 +104,7 @@ theorem extend_mem (ψ : Ainf p R →+* Ainf p S)
     rw [AinfInv.map_gamma, AinfInv.extend_algebraMap]
     exact h n x hx
   | algebraMap r => rw [AinfInv.extend_algebraMap]; exact Subalgebra.algebraMap_mem _ _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
 def extend (ψ : Ainf p R →+* Ainf p S)
@@ -123,7 +123,7 @@ theorem gamma_map_mem (f : R →+* S) (n : ℕ) (x : Ainf p R) (hx : Ainf.theta 
 theorem p_dvd_frob (x : Ainf p R) (hx : Ainf.theta p R x = 0) :
     (p : AcrisZero p R) ∣ algebraMap (Ainf p R) (AcrisZero p R) (Ainf.frob p R x) := by
   obtain ⟨y, hy⟩ := Ainf.p_dvd_frob_sub_pow x
-  rw [eq_add_of_sub_eq hy, map_add, map_mul, map_natCast, map_pow, ← factorial_mul_gamma p x hx]
+  rw [eq_add_of_sub_eq hy, map_add (f := _), map_mul, map_natCast, map_pow, ← factorial_mul_gamma p x hx]
   refine dvd_add (dvd_mul_right _ _) (Dvd.dvd.mul_right ?_ _)
   exact Nat.cast_dvd_cast (Nat.dvd_factorial (Fact.out : p.Prime).pos le_rfl)
 
@@ -480,7 +480,7 @@ theorem induction_on {P : Bst p R → Prop} (x : Bst p R)
   obtain ⟨f, rfl⟩ := mk_surjective p R x
   induction f using MvPolynomial.induction_on with
   | C a => have := h₁ a; rwa [← (mk p R).commutes] at this
-  | add f g hf hg => rw [map_add]; exact h₂ _ _ hf hg
+  | add f g hf hg => rw [map_add (f := _)]; exact h₂ _ _ hf hg
   | mul_X f ϖ hf => rw [map_mul]; exact h₃ _ ϖ hf
 
 @[simp] theorem monodromy_algebraMap (a : Bcris p R) : monodromy p R (algebraMap _ _ a) = 0 :=
@@ -490,9 +490,9 @@ theorem monodromy_frob (x : Bst p R) :
     monodromy p R (frob p R x) = p * frob p R (monodromy p R x) := by
   induction x using induction_on with
   | h₁ a => simp
-  | h₂ x y hx hy => simp only [map_add, hx, hy, mul_add]
+  | h₂ x y hx hy => simp only [map_add (f := _), hx, hy, mul_add]
   | h₃ x ϖ hx =>
-    simp only [map_mul, map_add, Derivation.leibniz, smul_eq_mul, frob_logFlat, monodromy_logFlat,
+    simp only [map_mul, map_add (f := _), Derivation.leibniz, smul_eq_mul, frob_logFlat, monodromy_logFlat,
       hx, Derivation.map_natCast, map_neg, map_one]
     ring
 
@@ -500,9 +500,9 @@ theorem monodromy_map (f : R →+* S) (hf : Function.Injective f) (x : Bst p R) 
     monodromy p S (map p f hf x) = map p f hf (monodromy p R x) := by
   induction x using induction_on with
   | h₁ a => simp
-  | h₂ x y hx hy => simp only [map_add, hx, hy]
+  | h₂ x y hx hy => simp only [map_add (f := _), hx, hy]
   | h₃ x ϖ hx =>
-    simp only [map_mul, map_add, Derivation.leibniz, smul_eq_mul, map_logFlat, monodromy_logFlat,
+    simp only [map_mul, map_add (f := _), Derivation.leibniz, smul_eq_mul, map_logFlat, monodromy_logFlat,
       hx, map_neg, map_one]
 
 end Bst

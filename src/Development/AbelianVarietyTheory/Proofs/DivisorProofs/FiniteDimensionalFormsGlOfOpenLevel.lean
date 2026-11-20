@@ -33,7 +33,7 @@ theorem commute_aeval_rt (τ : E →+* ℂ) (u : ℂ) (P : ℂ[X]) (h : GA E a) 
     rw [qdet_eq_cap, ← infGL_mul_finGL h, map_mul]
     exact (GlobalTheory.CapAdInv.cap_commute_rt_infGL E a τ _ _).mul_right (commute_cap_finRep τ _ _)
   induction P using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add]; exact hp.add_left hq
+  | add p q hp hq => rw [map_add (f := _)]; exact hp.add_left hq
   | monomial n c =>
     rw [aeval_monomial]
     exact (Algebra.commute_algebraMap_left _ _).mul_left (h1.pow_left n)
@@ -77,8 +77,8 @@ theorem span_props (L : Subgroup (GL (Fin a) (Af E))) (W : Submodule ℂ (Kinf E
     rw [hR, mul_comm, map_mul, Module.End.mul_apply, ← key, h4, map_zero]
   | zero => exact ⟨fun _ _ => rfl, fun _ _ => map_zero _, zero_mem _, fun _ _ => map_zero _⟩
   | add x y _ _ hx hy =>
-    exact ⟨fun γ g => congrArg₂ (· + ·) (hx.1 γ g) (hy.1 γ g), fun k hk => by rw [map_add, hx.2.1 k hk, hy.2.1 k hk],
-      add_mem hx.2.2.1 hy.2.2.1, fun τ u => by rw [map_add, hx.2.2.2, hy.2.2.2, add_zero]⟩
+    exact ⟨fun γ g => congrArg₂ (· + ·) (hx.1 γ g) (hy.1 γ g), fun k hk => by rw [map_add (f := _), hx.2.1 k hk, hy.2.1 k hk],
+      add_mem hx.2.2.1 hy.2.2.1, fun τ u => by rw [map_add (f := _), hx.2.2.2, hy.2.2.2, add_zero]⟩
   | smul c x _ hx =>
     exact ⟨fun γ g => congrArg (c * ·) (hx.1 γ g), fun k hk => by rw [map_smul, hx.2.1 k hk],
       Submodule.smul_mem _ c hx.2.2.1, fun τ u => by rw [map_smul, hx.2.2.2, smul_zero]⟩
@@ -120,7 +120,7 @@ theorem infGL_unip {r : ℕ} (x : BlockIx a r → Cinf E) : infGL E a (unip x) =
   change (1 : Matrix (Fin a) (Fin a) (Ad E)) i j - sInf E ((1 : Matrix (Fin a) (Fin a) (Cinf E)) i j) +
     sInf E ((1 : Matrix (Fin a) (Fin a) (Cinf E)) i j + nilM x i j) =
     (1 : Matrix (Fin a) (Fin a) (Ad E)) i j + nilM (fun p => sInf E (x p)) i j
-  rw [map_add, ← add_assoc, sub_add_cancel]
+  rw [map_add (f := _), ← add_assoc, sub_add_cancel]
   simp only [nilM, Matrix.of_apply]
   split_ifs <;> simp
 

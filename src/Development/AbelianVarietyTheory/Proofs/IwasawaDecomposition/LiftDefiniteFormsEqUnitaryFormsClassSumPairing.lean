@@ -51,7 +51,7 @@ theorem exists_embed {K N W : Type} [Field K] [AddCommGroup N] [Module ℂ N] [N
     | mem _ h => obtain ⟨x, rfl⟩ := h; exact hv x
     | zero => rw [inner_zero_left, map_zero, hz]
     | add p q _ _ hp hq =>
-      rw [inner_add_left, map_add, hp, hq]
+      rw [inner_add_left, map_add (f := _), hp, hq]
       exact (hC.add ⟨_, hm p⟩ ⟨_, hm q⟩ ⟨_, hm v⟩).symm
     | smul s p _ hp =>
       rw [inner_smul_left, map_smul, hp]

@@ -184,7 +184,7 @@ theorem form_shift (g : ℕ → ℕ → ℤ) (q : ℤ) (hg : ∀ i j, g (i + 1) 
   | add p q hp hq => simp [mul_add, hp, hq]
   | monomial i a =>
     induction h using Polynomial.induction_on' with
-    | add p q hp hq => simp only [mul_add, map_add, hp, hq]
+    | add p q hp hq => simp only [mul_add, map_add (f := _), hp, hq]
     | monomial j c =>
       simp only [← smul_X_eq_monomial, mul_smul_comm, ← pow_succ', map_smul, LinearMap.smul_apply,
         form_pow, hg, smul_eq_mul]
@@ -235,7 +235,7 @@ theorem similitude_algebraic : ∀ (Λ : Type) [AddCommGroup Λ] (Q : Λ → ℤ
     intro i j; simp only [hg, hb]; rw [add_comm]; ring
   have hshift : ∀ i j, g (i + 1) (j + 1) = (q : ℤ) * g i j := by
     intro i j
-    simp only [hg, hb, pow_succ', Module.End.mul_apply, ← map_add, hφ]; ring
+    simp only [hg, hb, pow_succ', Module.End.mul_apply, ← map_add (f := _), hφ]; ring
   set Pc := P.map (Int.castRingHom ℂ) with hPc
   have hinj : Function.Injective (Int.castRingHom ℂ) := Int.cast_injective
   have hPc0 : Pc ≠ 0 := (Polynomial.map_ne_zero_iff hinj).2 hP
@@ -258,7 +258,7 @@ theorem similitude_algebraic : ∀ (Λ : Type) [AddCommGroup Λ] (Q : Λ → ℤ
   have a2 : ∀ h, form g h Pc = 0 := fun h => by rw [form_symm g hsymm, a1]
   have main := form_shift g q hshift f f'
   rw [e1, e2] at main
-  simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, a1, a2, add_zero,
+  simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, a1, a2, add_zero,
     smul_eq_mul, mul_zero] at main
   have hne : form g f f' ≠ 0 := by
     intro hz

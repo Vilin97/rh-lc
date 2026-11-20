@@ -17,7 +17,7 @@ private theorem ms_add {l : ℕ} [Fact l.Prime] (F : GFrame l) (O : Type) [CommR
     (B : Type) [CommRing B] [Algebra O B] (n : ℕ) (a b : MonoidAlgebra B F.G₀) :
     F.star O B n (a + b) = F.star O B n a + F.star O B n b := by
   unfold GFrame.star
-  rw [map_add, MulOpposite.unop_add]
+  rw [map_add (f := _), MulOpposite.unop_add]
 
 private theorem ms_zero {l : ℕ} [Fact l.Prime] (F : GFrame l) (O : Type) [CommRing O] [Algebra ℤ_[l] O]
     (B : Type) [CommRing B] [Algebra O B] (n : ℕ) : F.star O B n 0 = 0 := by
@@ -30,7 +30,7 @@ theorem UpperTheory.V.Pa.map_star :
   refine ⟨fun y => ?_, fun v ψ a => ?_, fun ph U => ?_, fun ph ta U i y => ?_⟩
   · induction y using MonoidAlgebra.induction_linear with
     | zero => rw [ms_zero, map_zero, ms_zero]
-    | add a b ha hb => rw [ms_add, map_add, map_add, ms_add, ha, hb]
+    | add a b ha hb => rw [ms_add, map_add (f := _), map_add (f := _), ms_add, ha, hb]
     | single a c =>
       rw [ms_star, ms_single, ms_single, ms_star, map_inv, g.p₀_conj, g.eps_p₀]
   · unfold GFrame.oEl

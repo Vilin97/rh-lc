@@ -212,7 +212,7 @@ theorem UpperTheory.V.Sd.constSmall :
     rw [h2, map_natCast]; exact nat_lt h1
   have hSlt : ‖ι.symm (∑ a : ZMod (M * w), χ⁻¹ a * Lk k (ZMod.stdAddChar a : ℂ))‖ < 1 := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hS, map_add, map_mul, map_sum]
+      rw [hS, map_add (f := _), map_mul, map_sum]
     refine add_lt (sum_lt _ _ fun n _ => ?_) (mul_lt hw1 hT1)
     split_ifs with hn
     · simp

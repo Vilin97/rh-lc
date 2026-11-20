@@ -61,7 +61,7 @@ noncomputable def evalDisc (i : O →+* K) (hi : ∀ a, ‖i a‖ ≤ 1) (t : K)
   map_add' f g := by
     rw [← (summable_norm_of_bounded (fun n => hi (coeff n f)) ht).of_norm.tsum_add
       (summable_norm_of_bounded (fun n => hi (coeff n g)) ht).of_norm]
-    simp only [map_add, add_mul]
+    simp only [map_add (f := _), add_mul]
 
 variable (i : O →+* K) (hi : ∀ a, ‖i a‖ ≤ 1) (t : K) (ht : ‖t‖ < 1)
 
@@ -99,7 +99,7 @@ def boundedSeries (F : Type*) [NormedField F] [IsUltrametricDist F] : Subring F�
   add_mem' := by
     rintro f g ⟨A, hA⟩ ⟨B, hB⟩
     refine ⟨A + B, fun n => ?_⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (norm_add_le _ _).trans (add_le_add (hA n) (hB n))
   zero_mem' := ⟨0, fun n => by simp⟩
   neg_mem' := by
@@ -137,7 +137,7 @@ noncomputable def evalBounded (π : F) (hπ : ‖π‖ < 1) : boundedSeries F �
   map_add' f g := by
     rw [← (summable_norm_boundedSeries f hπ).of_norm.tsum_add
       (summable_norm_boundedSeries g hπ).of_norm]
-    simp only [Subring.coe_add, map_add, add_mul]
+    simp only [Subring.coe_add, map_add (f := _), add_mul]
 
 variable (π : F) (hπ : ‖π‖ < 1)
 

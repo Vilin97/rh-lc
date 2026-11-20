@@ -117,7 +117,7 @@ theorem loss_mul {z z' : ℂ} {a a' : ℝ} (h : LossLe w z a) (h' : LossLe w z' 
 theorem loss_add {z z' : ℂ} {a : ℝ} (h : LossLe w z a) (h' : LossLe w z' a) : LossLe w (z + z') a := by
   obtain ⟨y, e, h⟩ := h
   obtain ⟨y', e', h'⟩ := h'
-  refine ⟨y + y', by rw [map_add, e, e'], ?_⟩
+  refine ⟨y + y', by rw [map_add (f := _), e, e'], ?_⟩
   by_cases h0 : y = 0
   · subst h0; simpa using h'
   by_cases h0' : y' = 0

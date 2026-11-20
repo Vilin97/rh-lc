@@ -425,7 +425,7 @@ private theorem exists_ne_zero (hP : GlobalTheory.FunPr.Hypotheses₂) (hB : B.I
   beta_reduce
   rw [coneInfInt, map_smul, smul_eq_mul, shiftB, UpperTheory.adapted_plane_hermitian_restrict hP F E σ B _ _ _ _ _ _ _ _ _ _ X W X₁ W₁ M M₁ H H'
     _ _ om hB hX hH hH' hM hM₁ hW e he ei ev hL k.1 k.2.2]
-  exact congrArg _ (phi_congr hB (l.comp ei) f₀ k.1 fun w => by rw [hjw, map_add, hu]; rfl)
+  exact congrArg _ (phi_congr hB (l.comp ei) f₀ k.1 fun w => by rw [hjw, map_add (f := _), hu]; rfl)
 
 end GlobalTheory.ConeBArch
 

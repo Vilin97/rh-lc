@@ -212,7 +212,7 @@ theorem exists_conj_map : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T :
   let f : π.S →ₗ[ℂ] MMap M₀ :=
     { toFun := fun x => GlobalTheory.ConjDim.conjMap (R.MY 0) M₀ c h (Φ (st x))
       map_add' := fun x y => by
-        rw [hadd, map_add]
+        rw [hadd, map_add (f := _)]
         exact MultilinearMap.ext fun v' => star_add _ _
       map_smul' := fun a x => by
         rw [hsmul, map_smul]
@@ -267,7 +267,7 @@ theorem exists_good_base_vec : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl
         exact GlobalTheory.BaseVec.conj_mem_principal R hc (hk g).1 (hk g).2.1
       rw [rt_rt, show c * k g = k g * ((k g)⁻¹ * c * k g) by group, ← rt_rt, hvfix _ hc']
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, hx, hy]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
     | smul a x _ hx => rw [map_smul, hx]
   have hprod : ∀ g h, ∀ w ∈ Ws, Formalism.L2.NG.rt D.host.E n (k g) (Formalism.L2.NG.rt D.host.E n (k h) w) =
       Formalism.L2.NG.rt D.host.E n (k (g * h)) w := by
@@ -299,7 +299,7 @@ theorem exists_good_base_vec : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl
       rw [hprod g h v hvWs]
       exact Submodule.subset_span ⟨g * h, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Ws.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Ws.add_mem hx hy
     | smul a x _ hx => rw [map_smul]; exact Ws.smul_mem a hx
   let ρ : Representation ℂ G Ws :=
     { toFun := fun g => (Formalism.L2.NG.rt D.host.E n (k g)).restrict (fun w hw => hstab g w hw)
@@ -325,7 +325,7 @@ theorem exists_good_base_vec : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl
       simp only [MulEquiv.toEquiv_eq_coe, MulEquiv.coe_toEquiv, MulAut.conj_apply]
       rw [hcen, show h * (h⁻¹ * g * h⁻¹⁻¹) = g * h by group]
     | zero => simp
-    | add x y _ _ hx hy => simp only [map_add, smul_add, Finset.sum_add_distrib, hx, hy]
+    | add x y _ _ hx hy => simp only [map_add (f := _), smul_add, Finset.sum_add_distrib, hx, hy]
     | smul a x _ hx =>
       simp only [map_smul]
       simp only [smul_comm _ a, ← Finset.smul_sum, hx]

@@ -65,9 +65,9 @@ def cupTerm {a a' A q q' Q : ℕ} (ha : a + a' = A) (hq : q + q' = Q) :
   LinearMap.mk₂ R (fun f g s ↦ wedgeOm R (F.obj (s.obj (Fin.last A))) hq
       (ev (F := OmF F q) s (fr a A (by omega)) (fr_mono _ _ _) (Fin.last A) (Fin.le_last _) f)
       (ev (F := OmF F q') s (bk a a' A ha.le) (bk_mono _ _ _ _) (Fin.last A) (Fin.le_last _) g))
-    (fun f f' g ↦ funext fun s ↦ by rw [map_add]; exact LinearMap.map_add₂ _ _ _ _)
+    (fun f f' g ↦ funext fun s ↦ by rw [map_add (f := _)]; exact LinearMap.map_add₂ _ _ _ _)
     (fun r f g ↦ funext fun s ↦ by rw [map_smul]; exact LinearMap.map_smul₂ _ _ _ _)
-    (fun f g g' ↦ funext fun s ↦ by rw [map_add]; exact LinearMap.map_add _ _ _)
+    (fun f g g' ↦ funext fun s ↦ by rw [map_add (f := _)]; exact LinearMap.map_add _ _ _)
     (fun r f g ↦ funext fun s ↦ by rw [map_smul]; exact LinearMap.map_smul _ _ _)
 
 variable {F}
@@ -265,16 +265,16 @@ theorem dTot_cup {m n N : ℕ} (h : m + n = N) (x : Tot F m) (y : Tot F n) :
       (-1 : ℤ) ^ m • Tot.cup F (show m + (n + 1) = N + 1 by omega) x (dTot F n y) := by
   induction x using Tot.induction with
   | h0 => simp
-  | ha x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx', smul_add]; abel
+  | ha x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx', smul_add]; abel
   | hs a q h₁ f =>
   induction y using Tot.induction with
   | h0 => simp
-  | ha y y' hy hy' => simp only [map_add, hy, hy', smul_add]; abel
+  | ha y y' hy hy' => simp only [map_add (f := _), hy, hy', smul_add]; abel
   | hs a' q' h₂ g =>
   have e₁ : a + a' + 1 + (q + q') = N + 1 := by omega
   have e₂ : a + a' + (q + q' + 1) = N + 1 := by omega
   rw [Tot.cup_sg h h₁ h₂ rfl rfl (by omega), map_zsmul, dTot_sg, dTot_sg, dTot_sg, dH_cupTerm, dV_cupTerm]
-  simp only [map_add, map_zsmul, LinearMap.add_apply, LinearMap.smul_apply]
+  simp only [map_add (f := _), map_zsmul, LinearMap.add_apply, LinearMap.smul_apply]
   rw [Tot.cup_sg _ _ h₂ (show a + 1 + a' = a + a' + 1 by omega) rfl e₁,
     Tot.cup_sg _ _ h₂ rfl (show q + 1 + q' = q + q' + 1 by omega) e₂,
     Tot.cup_sg _ h₁ _ (show a + (a' + 1) = a + a' + 1 by omega) rfl e₁,
@@ -295,7 +295,7 @@ def Tot.one : Tot F 0 := Tot.sg F rfl (oneTerm F)
 theorem Tot.one_cup {n : ℕ} (h : 0 + n = n) (x : Tot F n) : Tot.cup F h (Tot.one F) x = x := by
   induction x using Tot.induction with
   | h0 => simp
-  | ha x x' hx hx' => simp only [map_add, hx, hx']
+  | ha x x' hx hx' => simp only [map_add (f := _), hx, hx']
   | hs a q e f =>
     rw [Tot.one, Tot.cup_sg h rfl e (zero_add a) (zero_add q) e, oneTerm_cupTerm, zero_mul, pow_zero,
       one_smul]

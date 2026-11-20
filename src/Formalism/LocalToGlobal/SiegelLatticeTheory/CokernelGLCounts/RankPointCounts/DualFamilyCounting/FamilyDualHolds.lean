@@ -74,10 +74,10 @@ theorem family_dual_holds : FamDual := by
   simp only [Sum.elim_inl, Sum.elim_inr] at hf
   have hbx : ∀ i, h (b i) x = f (Sum.inl i) * algebraMap F K (a i : F) := by
     intro i
-    rw [← hf, map_add, form_sum_orth h b hbo i, form_sum_zero h (b i) w (hbw i), hbn, add_zero]
+    rw [← hf, map_add (f := _), form_sum_orth h b hbo i, form_sum_zero h (b i) w (hbw i), hbn, add_zero]
   have hwx : ∀ j, h (w j) x = f (Sum.inr j) * algebraMap F K (c j) := by
     intro j
-    rw [← hf, map_add, form_sum_orth h w hwo j, form_sum_zero h (w j) b (fun i => hwb i j),
+    rw [← hf, map_add (f := _), form_sum_orth h w hwo j, form_sum_zero h (w j) b (fun i => hwb i j),
       (hwn j).1, zero_add]
   have hα : ∀ i, f (Sum.inl i) * algebraMap F K (a i : F) ∈ SP K 𝔭 := fun i => by
     rw [← hbx]; exact hX _ (hGb i)
@@ -122,7 +122,7 @@ theorem family_dual_holds : FamDual := by
           (f (Sum.inl i) * algebraMap F K (a i : F)) *
           ((algebraMap F K (a i : F))⁻¹ * algebraMap F K (π : F) ^ vF 𝔭 (a i)) *
           ((algebraMap F K (c (τ i)))⁻¹ * algebraMap F K (π : F) ^ vF 𝔭 (a i)) := by
-      rw [map_add, inv_pow, inv_pow, pow_mul]
+      rw [map_add (f := _), inv_pow, inv_pow, pow_mul]
       field_simp [hA0 i, hC0, hϖ0]
       ring
     rw [e]

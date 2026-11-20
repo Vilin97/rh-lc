@@ -138,7 +138,7 @@ theorem nonempty_wCmp [NeZero n] (Dc : Disc R b₀ tS zS) (Mo : WN E zl) {ιdR :
     refine Finset.sum_eq_zero fun i _ => ?_
     obtain ⟨e, he, -, h3⟩ := R.lev_π i 1 ⟨0, by simp⟩
     have h4 := congrArg PowerSeries.constantCoeff h3
-    rw [map_add, map_mul, he] at h4
+    rw [map_add (f := _), map_mul, he] at h4
     have h5 : PowerSeries.constantCoeff (R.lev i 1 letπ) = 0 := by simpa using h4
     rw [hsmul0, h5, zero_smul]
   · rw [hcmp]
@@ -163,7 +163,7 @@ theorem nonempty_wCmp [NeZero n] (Dc : Disc R b₀ tS zS) (Mo : WN E zl) {ιdR :
   · rw [hN, hN, hmap f h h']
     induction levOf bT Fr T i ζ x k using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul a b => simp [ιV]
   · rw [hP.dR T h x k y hy]
     refine GlobalTheory.T.filtration_estimate_expansion_tensorBdR_component PD T ι tS (ιdR p1 ^ k) (Dc.ι_tb ▸ Dc.tb_unit.map PD.ι) Dc.tS_mem (Fr T h).r (Fr T h).w _

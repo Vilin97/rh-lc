@@ -67,7 +67,7 @@ theorem UpperTheory.V.ZK.Up.rankCount :
         simp
       conv_rhs => rw [hx b hb, hxb]
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum, add_comm]
+        rw [map_add (f := _), map_sum, add_comm]
       congr 1
       refine Finset.sum_congr rfl fun i _ => ?_
       rw [map_zsmul, zsmul_eq_toNat_emod_nsmul_of_nsmul_eq_zero q hq _ (hB _)]

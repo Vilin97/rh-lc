@@ -34,7 +34,7 @@ theorem T_fac : ∀ {W A C₀ : Type} [CommRing W] [CommRing A] [CommRing C₀] 
     | tmul x' y =>
       rw [TensorProduct.smul_tmul', hE, hE, smul_eq_mul, map_mul, map_mul, mul_assoc]
     | add t t' ht ht' =>
-      rw [smul_add, map_add, map_add, ht, ht', mul_add]
+      rw [smul_add, map_add (f := _), map_add (f := _), ht, ht', mul_add]
   refine ⟨E, hE, fun G hG z => ?_⟩
   induction z using TensorProduct.induction_on with
   | zero => simp
@@ -52,6 +52,6 @@ theorem T_fac : ∀ {W A C₀ : Type} [CommRing W] [CommRing A] [CommRing C₀] 
       rw [hEs, hT, map_mul, mul_assoc]
     rw [hG, hsum, hE, map_one, map_one, one_mul, hi]
   | add x y hx hy =>
-    simp only [map_add, hx, hy, add_mul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), hx, hy, add_mul, Finset.sum_add_distrib]
 
 end GlobalTheory.CompanionTheory.FrobFac

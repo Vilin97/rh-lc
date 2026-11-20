@@ -61,7 +61,7 @@ theorem pairLev_add_left (hI : IntLevOn μ i U) {c : Fin r → ℂ} (hc : c ∈ 
 theorem pairLev_add_right (hI : IntLevOn μ i U) {c : Fin r → ℂ} (hc : c ∈ OmX r) {Φ Ψ Ψ' : RadSp k r z z' π π'}
     (hΦ : Φ ∈ U) (hΨ : Ψ ∈ U) (hΨ' : Ψ' ∈ U) :
     pairLev μ i Φ (Ψ + Ψ') c = pairLev μ i Φ Ψ c + pairLev μ i Φ Ψ' c := by
-  rw [pairLev_swap, pairLev_add_left hI hc hΨ hΨ' hΦ, map_add, ← pairLev_swap, ← pairLev_swap]
+  rw [pairLev_swap, pairLev_add_left hI hc hΨ hΨ' hΦ, map_add (f := _), ← pairLev_swap, ← pairLev_swap]
 
 theorem pairLev_zero_left (Ψ : RadSp k r z z' π π') (c : Fin r → ℂ) : pairLev μ i 0 Ψ c = 0 := by
   unfold pairLev

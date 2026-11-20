@@ -13,7 +13,7 @@ namespace GlobalTheory.ThKTorus.Scale
 variable {F : Type} [Field F] [NumberField F]
 
 theorem realAd_add (u v : ℝ) : realAd F u + realAd F v = realAd F (u + v) := by
-  simp only [realAd, map_add]
+  simp only [realAd, map_add (f := _)]
   rfl
 
 theorem realAd_mul (u v : ℝ) : realAd F u * realAd F v = realAd F (u * v) := by
@@ -81,9 +81,9 @@ theorem co_mat_mul {σ : E →ₐ[F] E} {n d q : ℕ} {J : Matrix (Fin n) (Fin n
     (ht : ∀ i, 0 < t i) (hta : IsTorusU x y t a) (w : Matrix (Fin n) (Fin d) (AE F E)) :
     co.e (mat a * w) = (blkScale blk (fun i => (t i)⁻¹) (co.e w).1, blkScale blk t (co.e w).2) := by
   have hw : w = co.e.symm ((co.e w).1, 0) + co.e.symm (0, (co.e w).2) := by
-    rw [← map_add]; simp
+    rw [← map_add (f := _)]; simp
   conv_lhs => rw [hw]
-  rw [Matrix.mul_add, map_add, ((hco.2 t a ht hta) _).1, ((hco.2 t a ht hta) _).2]
+  rw [Matrix.mul_add, map_add (f := _), ((hco.2 t a ht hta) _).1, ((hco.2 t a ht hta) _).2]
   simp
 
 def twist {n d : ℕ} {σ : E →ₐ[F] E} {X : Spc F E n} {W : Spc F E d} (e : Fn F n d →ₗ[ℂ] Fn F n d) (om : Rep σ X W)

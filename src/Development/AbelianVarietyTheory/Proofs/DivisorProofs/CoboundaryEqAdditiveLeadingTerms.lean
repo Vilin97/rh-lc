@@ -77,7 +77,7 @@ theorem _root_.GlobalTheory.CobLead.cob_eq_additive_lead : ∀ (R : Type) [CommR
     have h12 := hpts _ _ hs1 hs2
     have h23 := hpts _ _ hs2 hs3
     unfold _root_.GlobalTheory.Katz.cob2 _root_.GlobalTheory.Katz.at2
-    rw [map_sub, map_add, map_sub, map_sub, map_add, map_sub,
+    rw [map_sub, map_add (f := _), map_sub, map_sub, map_add (f := _), map_sub,
       (_root_.GlobalTheory.coeff_subst_leading R _ _
         (Sum.elim (_root_.GlobalTheory.Katz.op μ _root_.GlobalTheory.Katz.x1 _root_.GlobalTheory.Katz.x2)
           _root_.GlobalTheory.Katz.x3)

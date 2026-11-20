@@ -129,7 +129,7 @@ theorem main : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK K), (∀ x :
     have hUU : (U : Formalism.Per.Acris l) * ((U⁻¹ : (Formalism.Per.Acris l)ˣ) : Formalism.Per.Acris l) = 1 := U.mul_inv
     have hxl : a (bk.ev bk.E) ^ l = (l : Formalism.Per.Acris l) * Y := by
       rw [ha, ← map_pow, ← hy, map_mul, map_natCast]
-    rw [RingHom.comp_apply, hφ, map_add, map_mul, map_pow, map_natCast, map_add, map_pow, map_mul, map_natCast, hxl,
+    rw [RingHom.comp_apply, hφ, map_add (f := _), map_mul, map_pow, map_natCast, map_add (f := _), map_pow, map_mul, map_natCast, hxl,
       Units.val_mul, hV, hU, hz_def]
     rw [← hA]
     rw [hU] at hUU

@@ -158,8 +158,8 @@ theorem conj_cartan_arch : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
       (fun w => congrFun (congrFun (h2 w) i) j)
   have hGH : (1 + Dm) * (1 + Dv) = 1 := by
     refine sub_eq_zero.1 (zero _ ?_ fun w => ?_)
-    · rw [map_sub, map_mul, map_add, map_add, map_one, hDm, hDv]; simp
-    · rw [map_sub, map_mul, map_add, map_add, map_one, hDmw, hDvw, add_sub_cancel, add_sub_cancel, huv w, sub_self]
+    · rw [map_sub, map_mul, map_add (f := _), map_add (f := _), map_one, hDm, hDv]; simp
+    · rw [map_sub, map_mul, map_add (f := _), map_add (f := _), map_one, hDmw, hDvw, add_sub_cancel, add_sub_cancel, huv w, sub_self]
   let g0 : GL (Fin n) (AE F E) := ⟨1 + Dm, 1 + Dv, hGH, mul_eq_one_comm.1 hGH⟩
   have hcw : ∀ w, (piInf (B.emb w)).mapMatrix ((cA σ).toRingHom.mapMatrix Dm) = (u w).map star - 1 := fun w => by
     ext i j
@@ -173,10 +173,10 @@ theorem conj_cartan_arch : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     ext i j; simp [incM, piInf_inclR]
   have hUG : g0 ∈ UG (cA σ) (incM F X.J) := by
     change (1 + Dm)ᵀ * incM F X.J * (cA σ).toRingHom.mapMatrix (1 + Dm) = incM F X.J
-    rw [map_add, map_one]
+    rw [map_add (f := _), map_one]
     refine sub_eq_zero.1 (zero _ ?_ fun w => ?_)
-    · rw [map_sub, map_mul, map_mul, mapMatrix_transpose, map_add, map_add, map_one, hDm, hDc]; simp
-    · rw [map_sub, map_mul, map_mul, mapMatrix_transpose, map_add, map_add, map_one, hDmw, hcw, hJw,
+    · rw [map_sub, map_mul, map_mul, mapMatrix_transpose, map_add (f := _), map_add (f := _), map_one, hDm, hDc]; simp
+    · rw [map_sub, map_mul, map_mul, mapMatrix_transpose, map_add (f := _), map_add (f := _), map_one, hDmw, hcw, hJw,
         add_sub_cancel, add_sub_cancel, hun w, sub_self]
   refine ⟨⟨g0, hUG⟩, ?_, fun w => ?_⟩
   · intro a ha
@@ -186,7 +186,7 @@ theorem conj_cartan_arch : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
     exact hlat _ a ha
   · have : (mat (⟨g0, hUG⟩ : UA σ X.J)).map (piInf (B.emb w)) = u w := by
       show (piInf (B.emb w)).mapMatrix (1 + Dm) = u w
-      rw [map_add, map_one, hDmw]; abel
+      rw [map_add (f := _), map_one, hDmw]; abel
     rw [this]; exact hint w
 
 end GlobalTheory.ConjCartan

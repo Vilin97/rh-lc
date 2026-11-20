@@ -218,7 +218,7 @@ theorem hasDerivAt_matrixCoeff_flow (hσ : IsURepOn (UJset ε) σ) (hD : IsDeriv
       ∑ c, (wt dual ε ξ (Formalism.MainNotions.S.umat z * X) c * inner ℂ y (σ (Formalism.MainNotions.S.umat z) ((f c : D) : H)) +
         wt dual ε ξ (Formalism.MainNotions.S.umat z) c * inner ℂ y (σ (Formalism.MainNotions.S.umat z) ((actM E X (f c) : D) : H))) := by
     unfold cf
-    simp only [mx_apply_tensF, Submodule.coe_add, map_add, inner_add_right, mul_add, Finset.sum_add_distrib]
+    simp only [mx_apply_tensF, Submodule.coe_add, map_add (f := _), inner_add_right, mul_add, Finset.sum_add_distrib]
     rw [add_comm]
     congr 1
     rw [wt_deriv_id dual hX ξ (Formalism.MainNotions.S.umat z) (fun c => inner ℂ y (σ (Formalism.MainNotions.S.umat z) ((f c : D) : H)))]

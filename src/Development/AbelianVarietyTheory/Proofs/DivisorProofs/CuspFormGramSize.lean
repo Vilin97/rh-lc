@@ -58,7 +58,7 @@ theorem isTranscendenceBasis_quot_polynomial {k : Type} [Field k] {m : ℕ}
     obtain ⟨q, rfl⟩ := Ideal.Quotient.mk_surjective z
     refine Polynomial.induction_on q (fun b => ?_) (fun f g hf hg => ?_) (fun n b ih => ?_)
     · exact Subalgebra.algebraMap_mem _ (⟨φ b, hS b⟩ : Algebra.adjoin k _)
-    · rw [map_add]
+    · rw [map_add (f := _)]
       exact add_mem hf hg
     · rw [pow_succ, ← mul_assoc, map_mul]
       exact mul_mem ih (Algebra.subset_adjoin rfl)

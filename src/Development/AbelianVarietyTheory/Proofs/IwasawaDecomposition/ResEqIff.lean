@@ -180,7 +180,7 @@ theorem exists_level {x : Om l} (hx : x ∈ MaximalUnramifiedExtension l) :
     exact ⟨1, one_pos, hl.out.not_dvd_one, fun h h' _ => by rw [h.commutes, h'.commutes]⟩
   | add a b _ _ ha hb =>
     obtain ⟨m, hm, hlm, H⟩ := key ha hb
-    exact ⟨m, hm, hlm, fun h h' H' => by rw [map_add, map_add, (H h h' H').1, (H h h' H').2]⟩
+    exact ⟨m, hm, hlm, fun h h' H' => by rw [map_add (f := _), map_add (f := _), (H h h' H').1, (H h h' H').2]⟩
   | inv a _ ha =>
     obtain ⟨m, hm, hlm, H⟩ := ha
     exact ⟨m, hm, hlm, fun h h' H' => by rw [map_inv₀, map_inv₀, H h h' H']⟩

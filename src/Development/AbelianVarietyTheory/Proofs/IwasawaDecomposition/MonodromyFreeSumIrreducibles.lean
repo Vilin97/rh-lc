@@ -83,7 +83,7 @@ theorem exists_irr_list (n : ℕ) : ∀ (V : Type) [AddCommGroup V] [Module ℂ 
     obtain ⟨T, hQT, hTs⟩ := GlobalTheory.WeilDeligne.PrimDecomp.exists_stable_isCompl E Ω A w h V a Q hQs
     have hiso : ((restrictρ a Q hQs).sum (restrictρ a T hTs)).Iso a := by
       refine ⟨Submodule.prodEquivOfIsCompl Q T hQT, fun σ v => ?_, fun v => ?_⟩
-      · simp [map_add]
+      · simp [map_add (f := _)]
       · simp [hN]
     have hdim := Submodule.finrank_add_eq_of_isCompl hQT
     have hQpos : 0 < finrank ℂ Q := Nat.pos_of_ne_zero fun h0 => hQ0 (Submodule.finrank_eq_zero.mp h0)

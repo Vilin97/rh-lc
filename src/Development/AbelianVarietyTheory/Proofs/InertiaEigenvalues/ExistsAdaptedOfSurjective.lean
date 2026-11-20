@@ -58,7 +58,7 @@ theorem exists_adapted_of_surjective (hF : IsField F) [FiniteDimensional LL V'] 
     have qa : ∀ x y, q x → q y → q (x + y) := by
       rintro x y ⟨r, hr, hx⟩ ⟨s, hs, hy⟩
       exact ⟨r + s, fun p => Submodule.add_mem _ (hr p) (hs p), by
-        simp only [map_add, hx, hy, Pi.add_apply, LinearMap.add_apply, Finset.sum_add_distrib]⟩
+        simp only [map_add (f := _), hx, hy, Pi.add_apply, LinearMap.add_apply, Finset.sum_add_distrib]⟩
     have qs : ∀ (c : LL) x, q x → q (c • x) := by
       rintro c x ⟨r, hr, hx⟩
       exact ⟨c • r, fun p => Submodule.smul_mem _ _ (hr p), by
@@ -68,7 +68,7 @@ theorem exists_adapted_of_surjective (hF : IsField F) [FiniteDimensional LL V'] 
       intro a b hb x hx
       induction hx using Submodule.span_induction with
       | zero => simpa using q0
-      | add x y _ _ hx hy => rw [map_add]; exact qa _ _ hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _)]; exact qa _ _ hx hy
       | smul c x _ hx => rw [map_smul]; exact qs _ _ hx
       | mem x hx =>
         obtain ⟨i, hi, rfl⟩ := hx

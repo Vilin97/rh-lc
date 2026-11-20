@@ -44,7 +44,7 @@ theorem LocalizeRestrLen.proof : LocalizeRestrLen.Statement := by
       obtain ⟨t, ht, hty⟩ := exists_mul_mem_secs 𝔪 h
       obtain ⟨u, i, hi, hui⟩ := Ideal.IsMaximal.exists_inv (inferInstance : 𝔪.IsMaximal) ht
       have h1 : algebraMap S Ω u * algebraMap S Ω t + algebraMap S Ω i = 1 := by
-        rw [← map_mul, ← map_add, hui, map_one]
+        rw [← map_mul, ← map_add (f := _), hui, map_one]
       have e : y = algebraMap S Ω u * (algebraMap S Ω t * y) + algebraMap S Ω i * y := by
         linear_combination (-y) * h1
       rw [e]
@@ -58,7 +58,7 @@ theorem LocalizeRestrLen.proof : LocalizeRestrLen.Statement := by
     obtain ⟨t, ht, htw⟩ := exists_mul_mem_secs 𝔪 hw
     obtain ⟨u, i, hi, hui⟩ := Ideal.IsMaximal.exists_inv (inferInstance : 𝔪.IsMaximal) ht
     have h1 : algebraMap S Ω u * algebraMap S Ω t + algebraMap S Ω i = 1 := by
-      rw [← map_mul, ← map_add, hui, map_one]
+      rw [← map_mul, ← map_add (f := _), hui, map_one]
     refine ⟨u • ⟨_, htw⟩, ?_⟩
     change Submodule.Quotient.mk _ = Submodule.Quotient.mk _
     rw [Submodule.Quotient.eq]

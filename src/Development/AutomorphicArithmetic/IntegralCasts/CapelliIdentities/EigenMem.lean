@@ -13,7 +13,7 @@ theorem eigen_mem {k M ι : Type} [Field k] [AddCommGroup M] [Module k M] (T : M
     have key : ∑ j ∈ s, (μ j - μ a) • x j
         = T (x a + ∑ j ∈ s, x j) - μ a • (x a + ∑ j ∈ s, x j) := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, hx, smul_add, Finset.smul_sum, sub_smul, Finset.sum_sub_distrib]
+        simp only [map_add (f := _), map_sum, hx, smul_add, Finset.smul_sum, sub_smul, Finset.sum_sub_distrib]
       abel
     have h1 : ∑ j ∈ s, (μ j - μ a) • x j ∈ Y := by
       rw [key]

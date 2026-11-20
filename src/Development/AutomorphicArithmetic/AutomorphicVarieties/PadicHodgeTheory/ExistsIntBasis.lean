@@ -59,7 +59,7 @@ private theorem exists_int_basis {l : ℕ} [Fact l.Prime] {G : Type} [Group G] [
       obtain ⟨⟨h, j⟩, rfl⟩ := hx
       exact Submodule.subset_span ⟨(g * h, j), by simp⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact Λ.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Λ.add_mem hx hy
     | smul a x _ hx => rw [LinearMap.map_smul_of_tower]; exact Λ.smul_mem a hx
   refine ⟨_, b.extendOfIsLattice ℚ_[l], fun g i j => ?_⟩
   have h1 : ρ g (b.extendOfIsLattice ℚ_[l] j) =
@@ -240,7 +240,7 @@ private theorem map_mem_FilT {V V' : Type} [AddCommGroup V] [Module ℚ_[l] V] [
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => exact ⟨f v ⊗ₜ ⟨s b.1, hs _ b.2⟩, rfl⟩
-  | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
 
 private theorem act_mem_fil (g : GQ l) (a : ℤ) (b : Bdr l) (hb : b ∈ ((PP l).PD (botExt l)).Fil a) :
     (PP l).actQdR g b ∈ ((PP l).PD (botExt l)).Fil a := by
@@ -276,7 +276,7 @@ private theorem fst_act (c : G → V) (hc : ∀ g h, c (g * h) = c g + ρ g (c h
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [UpperTheory.V.Loc.actD, extRep_apply, add_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]; abel
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]; abel
 
 private theorem snd_act (c : G → V) (hc : ∀ g h, c (g * h) = c g + ρ g (c h)) (g : G)
     (z : (V × ℚ_[l]) ⊗[ℚ_[l]] Bdr l) :
@@ -286,7 +286,7 @@ private theorem snd_act (c : G → V) (hc : ∀ g h, c (g * h) = c g + ρ g (c h
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [UpperTheory.V.Loc.actD, extRep_apply]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 private theorem decomp (z : (V × ℚ_[l]) ⊗[ℚ_[l]] Bdr l) :
     z = TensorProduct.map (LinearMap.inl ℚ_[l] V ℚ_[l]) LinearMap.id
@@ -297,7 +297,7 @@ private theorem decomp (z : (V × ℚ_[l]) ⊗[ℚ_[l]] Bdr l) :
   | zero => simp
   | tmul v b => simp [← add_tmul]
   | add x y hx hy =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     conv_lhs => rw [hx, hy]
     abel
 

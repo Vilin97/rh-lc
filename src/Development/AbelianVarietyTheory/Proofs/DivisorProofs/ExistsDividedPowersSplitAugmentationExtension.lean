@@ -86,7 +86,7 @@ theorem mem_ext_iff (h𝔞 : ∀ p, p ∈ 𝔞 ↔ ε p = 0) (x : P) :
       refine Ideal.map_le_iff_le_comap.2 ?_ hy
       intro a ha
       simp [Ideal.mem_comap, ha]
-    rw [map_add, (h𝔞 z).1 hz, add_zero]
+    rw [map_add (f := _), (h𝔞 z).1 hz, add_zero]
     exact hy'
   · intro h
     have hx : x = algebraMap B P (ε x) + (x - algebraMap B P (ε x)) := by ring
@@ -159,7 +159,7 @@ theorem th_add (h𝔞 : ∀ p, p ∈ 𝔞 ↔ ε p = 0) (n : ℕ) (x : P) (hx : 
       PowerSeries.mk (fun k ↦ algebraMap B P (δ.dpow k (ε x))) *
         PowerSeries.mk (fun k ↦ algebraMap B P (δ.dpow k (ε y))) := by
     ext k
-    simp only [PowerSeries.coeff_mul, PowerSeries.coeff_mk, map_add]
+    simp only [PowerSeries.coeff_mul, PowerSeries.coeff_mk, map_add (f := _)]
     set_option synthInstance.maxHeartbeats 100000 in
       rw [δ.dpow_add hu hv, map_sum]
     simp only [map_mul]
@@ -170,7 +170,7 @@ theorem th_add (h𝔞 : ∀ p, p ∈ 𝔞 ↔ ε p = 0) (n : ℕ) (x : P) (hx : 
     simp only [PowerSeries.coeff_mul, PowerSeries.coeff_mk]
     have e : x + y - algebraMap B P (ε (x + y)) =
         (x - algebraMap B P (ε x)) + (y - algebraMap B P (ε y)) := by
-      rw [map_add, map_add]; ring
+      rw [map_add (f := _), map_add (f := _)]; ring
     rw [e, η.dpow_add (sub_mem_aug h𝔞 x) (sub_mem_aug h𝔞 y)]
   have key : PowerSeries.mk (fun k ↦ th δ ε η k (x + y)) =
       PowerSeries.mk (fun k ↦ th δ ε η k x) * PowerSeries.mk (fun k ↦ th δ ε η k y) := by

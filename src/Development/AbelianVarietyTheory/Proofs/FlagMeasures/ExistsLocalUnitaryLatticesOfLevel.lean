@@ -98,7 +98,7 @@ theorem mem_cmp (hπ : ∀ a, π ((1 : E) ⊗ₜ[F] a) = a)
       exact Submodule.subset_span ⟨y, hy, rfl⟩
     | zero => simp only [Pi.zero_apply, map_zero]; exact zero_mem _
     | add x y _ _ hx hy =>
-      simp only [Pi.add_apply, map_add]; exact add_mem hx hy
+      simp only [Pi.add_apply, map_add (f := _)]; exact add_mem hx hy
     | smul c x _ hx =>
       have := (cmp π L).smul_mem ⟨_, hint _ c.2⟩ hx
       convert this using 1
@@ -118,7 +118,7 @@ theorem cmp_fg (hint : ∀ t ∈ intV E v, π t ∈ v.adicCompletionIntegers F)
     | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
     | zero => simp only [Pi.zero_apply, map_zero]; exact zero_mem _
     | add x y _ _ hx hy =>
-      simp only [Pi.add_apply, map_add]; exact add_mem hx hy
+      simp only [Pi.add_apply, map_add (f := _)]; exact add_mem hx hy
     | smul c x _ hx =>
       have hc : inclE (F := F) (v.adicCompletion F) (c : E) ∈ intV E v :=
         Subring.subset_closure (Or.inl ⟨⟨c, c, rfl⟩, rfl⟩)
@@ -138,7 +138,7 @@ theorem cmp_span {L : Submodule (𝓞 E) (Fin n → E)} (hL : IsLat L) :
     | mem x hx => exact Submodule.subset_span (Submodule.subset_span ⟨x, hx, rfl⟩)
     | zero => simp only [Pi.zero_apply, map_zero]; exact zero_mem _
     | add x y _ _ hx hy =>
-      simp only [Pi.add_apply, map_add]; exact add_mem hx hy
+      simp only [Pi.add_apply, map_add (f := _)]; exact add_mem hx hy
     | smul c x _ hx =>
       have := Submodule.smul_mem _ (π (inclE (F := F) _ c)) hx
       convert this using 1

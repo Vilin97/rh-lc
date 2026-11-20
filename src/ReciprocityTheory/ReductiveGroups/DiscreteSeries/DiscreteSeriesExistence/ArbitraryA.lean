@@ -135,7 +135,7 @@ theorem opConv_add (hσ : IsURepOn (UJset ε) σ) {α : Matrix (Fin n) (Fin n) �
   rw [← integral_add (arb_integrable hσ v hα hαc) (arb_integrable hσ w hα hαc)]
   congr 1
   funext y
-  rw [map_add, smul_add]
+  rw [map_add (f := _), smul_add]
 
 theorem opConv_smul {α : Matrix (Fin n) (Fin n) ℂ → ℂ} (c : ℂ) (v : H) :
     opConv ε σ α (c • v) = c • opConv ε σ α v := by

@@ -96,7 +96,7 @@ theorem up (snf : Basis.SmithNormalForm P ι n) (π : O) (hπ : Irreducible π) 
   have hmemC : ∀ x : M, π ^ E • φ x ∈ Submodule.span O ((C.image φ : Finset _) : Set _) := by
     intro x
     obtain ⟨p, hp, w, hw, hpw⟩ := Submodule.mem_sup.mp (hC x Submodule.mem_top)
-    rw [← map_smul, ← hpw, map_add, hφP p hp, zero_add, Finset.coe_image, ← Submodule.map_span]
+    rw [← map_smul, ← hpw, map_add (f := _), hφP p hp, zero_add, Finset.coe_image, ← Submodule.map_span]
     exact Submodule.mem_map_of_mem hw
   have hkill : ∀ w : ↥S → O ⧸ K, π ^ (E + 1) • w = 0 := by
     intro w

@@ -283,7 +283,7 @@ theorem DU {φ : Fn D u i} (hφ : φ ∈ (D.fm u).Fi i) (hU : Uop D u i v φ ∈
       ((D.mem u).A.T : ℂ) ^ (D.R.N i - 1) • φ - ((D.mem u).A.T : ℂ) ^ (D.R.N i - 2) • Nm D u i v φ
         + ((D.mem u).A.T : ℂ) ^ (D.R.N i - 2) • trp D u i v φ := by
   apply H.ext_Q; intro Λ x hx; funext y
-  rw [H.Q_DU hφ hU Λ hx, Formalism.LogVandermondeBounds.product_first_zeroth_parts.down_up_composition_formula _ _ ℂ (two_le_N D.R i) _ x hx, map_add, map_sub, map_smul,
+  rw [H.Q_DU hφ hU Λ hx, Formalism.LogVandermondeBounds.product_first_zeroth_parts.down_up_composition_formula _ _ ℂ (two_le_N D.R i) _ x hx, map_add (f := _), map_sub, map_smul,
     map_smul, map_smul]
   simp only [Pi.add_apply, Pi.sub_apply, Pi.smul_apply, smul_eq_mul]
   rw [H.Q_trp hφ hU Λ hx, H.Q_Nm hφ Λ hx, cardC]
@@ -659,7 +659,7 @@ lemma dia_rat (v) (a) (x : Vl D u 0) : ∃ y, (D.fm u).emb 0 y = dia D u 0 v a (
   | zero => exact ⟨0, by simp⟩
   | add x y _ _ hx hy =>
     obtain ⟨a1, h1⟩ := hx; obtain ⟨a2, h2⟩ := hy
-    exact ⟨a1 + a2, by rw [map_add, map_add, map_add, h1, h2]⟩
+    exact ⟨a1 + a2, by rw [map_add (f := _), map_add (f := _), map_add (f := _), h1, h2]⟩
   | smul r x _ hx =>
     obtain ⟨a1, h1⟩ := hx
     exact ⟨r • a1, by rw [LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ, h1, LinearMap.map_smul]⟩
@@ -672,7 +672,7 @@ lemma dia_S (w) (v) (a) : Into D u w (dia D u 0 v a) ((D.fm u).S 0 w) ((D.fm u).
   | zero => exact ⟨0, Submodule.zero_mem _, by simp⟩
   | add x y _ _ hx hy =>
     obtain ⟨a1, m1, h1⟩ := hx; obtain ⟨a2, m2, h2⟩ := hy
-    exact ⟨a1 + a2, Submodule.add_mem _ m1 m2, by rw [map_add, map_add, map_add, h1, h2]⟩
+    exact ⟨a1 + a2, Submodule.add_mem _ m1 m2, by rw [map_add (f := _), map_add (f := _), map_add (f := _), h1, h2]⟩
   | smul r x _ hx =>
     obtain ⟨a1, m1, h1⟩ := hx
     exact ⟨r • a1, Submodule.smul_mem _ r m1, by
@@ -1063,7 +1063,7 @@ lemma rat_of_into {i j : ℕ} (w : D.what₂.places.Pl) (f : Fn D u i →ₗ[ℂ
   | zero => exact ⟨0, by simp⟩
   | add x y _ _ hx hy =>
     obtain ⟨a1, h1⟩ := hx; obtain ⟨a2, h2⟩ := hy
-    exact ⟨a1 + a2, by rw [map_add, map_add, map_add, h1, h2]⟩
+    exact ⟨a1 + a2, by rw [map_add (f := _), map_add (f := _), map_add (f := _), h1, h2]⟩
   | smul r x _ hx =>
     obtain ⟨a1, h1⟩ := hx
     exact ⟨r • a1, by rw [LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ, h1, LinearMap.map_smul]⟩
@@ -1958,7 +1958,7 @@ lemma fi_of_rat {i j : ℕ} (f : Fn D u i →ₗ[ℂ] Fn D u j) (h : ∀ x, ∃ 
     obtain ⟨y, hy⟩ := h (((D.fm u).lat i).b a)
     rw [← hy]; exact emb_mem j y
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul r x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem KFi_of (C : ℝ) (h : LatticeChainWithoutLast D u C) : KFi D u := by
@@ -2202,7 +2202,7 @@ lemma blk_IntSpan (P : Pend D u) (h4 : ArchimedeanSignatureMatching P) (w : D.wh
     funext τ
     exact hg2 τ
   | zero => rw [map_zero]; exact AddSubgroup.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact AddSubgroup.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact AddSubgroup.add_mem _ hx hy
   | neg x _ hx => rw [map_neg]; exact AddSubgroup.neg_mem _ hx
 
 theorem Pt_loc (P : Pend D u) (h4 : ArchimedeanSignatureMatching P) (hPF : ∀ φ ∈ (D.fm u).Fi D.R.m, Pt D u φ ∈ (D.fm u).ptC)
@@ -2225,7 +2225,7 @@ theorem PRat_of (P : Pend D u) (h4 : ArchimedeanSignatureMatching P) (hPF : ∀ 
   | zero => exact ⟨0, by simp⟩
   | add x y _ _ hx hy =>
     obtain ⟨a1, h1⟩ := hx; obtain ⟨a2, h2⟩ := hy
-    exact ⟨a1 + a2, by rw [map_add, map_add, map_add, h1, h2]⟩
+    exact ⟨a1 + a2, by rw [map_add (f := _), map_add (f := _), map_add (f := _), h1, h2]⟩
   | smul r x _ hx =>
     obtain ⟨a1, h1⟩ := hx
     exact ⟨r • a1, by rw [LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ, h1, LinearMap.map_smul]⟩

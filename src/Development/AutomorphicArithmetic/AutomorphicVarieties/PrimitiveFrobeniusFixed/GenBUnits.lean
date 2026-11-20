@@ -131,7 +131,7 @@ theorem UpperTheory.V.ML.zCong :
       Finset.mul_sum]
     refine Finset.sum_congr rfl fun t _ => ?_
     have h := congrArg (algebraMap ℚ (PadicAlgCl l)) (hz t)
-    simp only [map_mul, map_sub, map_add, map_pow, map_natCast, map_intCast, map_div₀, map_one, map_ofNat] at h
+    simp only [map_mul, map_sub, map_add (f := _), map_pow, map_natCast, map_intCast, map_div₀, map_one, map_ofNat] at h
     rw [← h, map_mul]
     ring
   rw [key]

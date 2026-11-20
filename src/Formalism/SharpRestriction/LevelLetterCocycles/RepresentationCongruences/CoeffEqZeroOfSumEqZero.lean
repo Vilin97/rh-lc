@@ -57,7 +57,7 @@ theorem sum_split {D : ℕ} (h : O⟦X⟧ →ₐ[O] O⟦X⟧) {g : O⟦X⟧} (hX
   rw [coe_poly, Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
   conv_lhs => rw [eq_X_mul_shift_add_const (c i)]
-  rw [map_add, map_mul, hX, h_C]
+  rw [map_add (f := _), map_mul, hX, h_C]
   ring
 
 variable {g : O⟦X⟧} (hg : g.map (IsLocalRing.residue O) ≠ 0)

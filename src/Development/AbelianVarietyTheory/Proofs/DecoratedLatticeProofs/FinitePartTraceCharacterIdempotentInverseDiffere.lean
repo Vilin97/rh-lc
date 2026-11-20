@@ -73,7 +73,7 @@ theorem alpha_mul_inv (S : Finset (Pl D)) (a : Pl D → D.host.E) (ha : ∀ v �
   rw [alpha, add_mul, one_mul, Finset.sum_mul, Finset.sum_congr rfl key, alpha, add_assoc, ← Finset.sum_add_distrib]
   have h2 : ∀ v ∈ S, ex v * incA D ((a v)⁻¹ - 1) + ex v * incA D ((a v - 1) * (a v)⁻¹) = 0 := by
     intro v _
-    rw [← mul_add, ← map_add]
+    rw [← mul_add, ← map_add (f := _)]
     have : (a v)⁻¹ - 1 + (a v - 1) * (a v)⁻¹ = 0 := by rw [sub_mul, mul_inv_cancel₀ (h0 v)]; ring
     rw [this, map_zero, mul_zero]
   rw [Finset.sum_congr rfl h2, Finset.sum_const_zero, add_zero]

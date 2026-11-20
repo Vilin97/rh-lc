@@ -71,7 +71,7 @@ lemma invFun_eq (M : Submodule R (N → C)) (ψ : N →+ Q) (hψ : Function.Surj
   · rintro ⟨q, hq, rfl⟩
     refine ⟨hq, fun x k hk => ?_⟩
     show q (ψ (x + k)) = q (ψ x)
-    rw [map_add, (hK k).1 hk, add_zero]
+    rw [map_add (f := _), (hK k).1 hk, add_zero]
 
 lemma aug_pull (φ : X →+ N) (M : Submodule R (N → C)) (M' : Submodule R (X → C))
     (h : ∀ g ∈ M, LinearMap.funLeft R C φ g ∈ M') {g : N → C} (hg : g ∈ augIdeal M) :

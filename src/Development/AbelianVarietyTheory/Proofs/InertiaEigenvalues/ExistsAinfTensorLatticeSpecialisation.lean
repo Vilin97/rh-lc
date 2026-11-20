@@ -63,7 +63,7 @@ theorem specPhi_generic {G : Type} [Group G] [TopologicalSpace G] {Qp LL O : Typ
     rw [TensorProduct.smul_tmul', smul_eq_mul]
     show (L (r * x)).mulVec (co t) = (L r).mulVec ((L x).mulVec (co t))
     rw [hLm, Matrix.mulVec_mulVec]
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, Matrix.mulVec_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, Matrix.mulVec_add]
 
 theorem specPhi_equiv {G : Type} [Group G] [TopologicalSpace G] {Qp LL O : Type} [Field Qp]
     [Field LL] [Algebra Qp LL] [CommRing O] [Algebra O LL] [TopologicalSpace LL]
@@ -80,10 +80,10 @@ theorem specPhi_equiv {G : Type} [Group G] [TopologicalSpace G] {Qp LL O : Type}
     exact (Matrix.mulVec_zero U).symm
   | tmul r t => exact h r t
   | add x y hx hy =>
-    rw [map_add, map_add, hx, hy, ← Matrix.mulVec_add]
+    rw [map_add (f := _), map_add (f := _), hx, hy, ← Matrix.mulVec_add]
     congr 1
     funext i
-    simp [map_add]
+    simp [map_add (f := _)]
 
 theorem specPhi_norm {G : Type} [Group G] [TopologicalSpace G] {Qp LL O : Type} [Field Qp]
     [Field LL] [Algebra Qp LL] [CommRing O] [Algebra O LL] [TopologicalSpace LL]
@@ -193,7 +193,7 @@ theorem exists_specPhi : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : Loc
   have hL0 : lam o A (thR LL θ 0) = 0 := by rw [map_zero, lamMul_lam_zero]
   have hLa : ∀ x y : RA LL, lam o A (thR LL θ (x + y)) =
       lam o A (thR LL θ x) + lam o A (thR LL θ y) := fun x y => by
-    rw [map_add, lamMul_lam_add]
+    rw [map_add (f := _), lamMul_lam_add]
   have hLm : ∀ x y : RA LL, lam o A (thR LL θ (x * y)) =
       lam o A (thR LL θ x) * lam o A (thR LL θ y) := fun x y => by
     rw [map_mul, hmul.2.2.2]

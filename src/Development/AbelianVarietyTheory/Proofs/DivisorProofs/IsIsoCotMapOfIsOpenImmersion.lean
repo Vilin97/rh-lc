@@ -61,7 +61,7 @@ theorem isFrame_append {S : Scheme.{0}} {F F₁ F₂ : S.Modules} {p₁ : F₁ �
       change p₁.app V a + p₂.app V b = 0 at hab
       have a₁ := congrArg (i₁.app V) hab
       have a₂ := congrArg (i₂.app V) hab
-      rw [map_add, map_zero, QCoh.app_app, QCoh.app_app] at a₁ a₂
+      rw [map_add (f := _), map_zero, QCoh.app_app, QCoh.app_app] at a₁ a₂
       rw [h₁, h₄] at a₁
       rw [h₃, h₂] at a₂
       ext

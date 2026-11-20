@@ -64,7 +64,7 @@ theorem md_sDegs_comp [Fintype ι] (LL : Letters ι) (S : Set ι) (jj : Fin n) (
   have key : (twistSub LL S jj (multidegreeComponent d G)).coeff m' = (twistSub LL S jj G).coeff m' := by
     conv_rhs => rw [hsplit]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, MvPolynomial.coeff_add, map_sum, coeff_sum, Finset.sum_eq_zero, add_zero]
+      rw [map_add (f := _), MvPolynomial.coeff_add, map_sum, coeff_sum, Finset.sum_eq_zero, add_zero]
     intro m hm
     apply (twist_substitution_weighted_homog LL S jj m (G.coeff m)).coeff_eq_zero
     intro h
@@ -218,7 +218,7 @@ theorem md_comp_gen (m : ℤ) (th : ℤ → ℝ) (D : Fin (Mj F j) → ℕ) {ζ 
     · rw [hwh.weightedHomogeneousComponent_ne D hD]
       exact zero_mem _
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 
 end Main

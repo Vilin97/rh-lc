@@ -139,7 +139,7 @@ theorem compl_eq (τ : E →+* PadicAlgCl l) : ∃ α : E, compl τ = Intermedia
   induction hx using IntermediateField.adjoin_induction with
   | mem y hy => exact IntermediateField.subset_adjoin _ _ (by rw [Set.mem_singleton_iff.1 hy]; rfl)
   | algebraMap q => simpa using SubfieldClass.ratCast_mem _ q
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | inv a _ ha => rw [map_inv₀]; exact inv_mem ha
   | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
 
@@ -166,7 +166,7 @@ theorem mem_fix (τ : E →+* PadicAlgCl l) (σ : PadicAlgCl l ≃ₐ[ℚ_[l]] P
   induction hy using IntermediateField.adjoin_induction with
   | mem y hy => obtain ⟨x, rfl⟩ := hy; exact h x
   | algebraMap q => exact σ.commutes q
-  | add a b _ _ ha hb => rw [map_add, ha, hb]
+  | add a b _ _ ha hb => rw [map_add (f := _), ha, hb]
   | inv a _ ha => rw [map_inv₀, ha]
   | mul a b _ _ ha hb => rw [map_mul, ha, hb]
 

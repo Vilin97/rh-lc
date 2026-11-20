@@ -18,7 +18,7 @@ private lemma one_le_re_det_one_add {n : ℕ} (D : Matrix (Fin n) (Fin n) ℂ) (
     have h2 := hD.dotProduct_mulVec_nonneg (⇑(hH.eigenvectorBasis i))
     have h3 : 0 ≤ RCLike.re (star ⇑(hH.eigenvectorBasis i) ⬝ᵥ D *ᵥ ⇑(hH.eigenvectorBasis i)) :=
       (Complex.nonneg_iff.mp h2).1
-    rw [add_mulVec, one_mulVec, dotProduct_add, map_add, h1]
+    rw [add_mulVec, one_mulVec, dotProduct_add, map_add (f := _), h1]
     linarith
   rw [hH.det_eq_prod_eigenvalues]
   have hp : (∏ i, ((hH.eigenvalues i : ℝ) : ℂ)).re = ∏ i, hH.eigenvalues i := by

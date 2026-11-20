@@ -96,7 +96,7 @@ theorem one_add_pow_sub_one_pow_eq_sum (x : AInf K p) (N L : ℕ) (hL : p * N �
   have hdeg : ((((1 : ℤ[X]) + X) ^ p - 1) ^ N).natDegree < L + 1 :=
     Nat.lt_succ_of_le ((natDegree_one_add_X_pow_sub_one_pow_le p N).trans hL)
   have h := aeval_eq_sum_range' (R := ℤ) hdeg x
-  simp only [map_pow, map_sub, map_add, map_one, aeval_X] at h
+  simp only [map_pow, map_sub, map_add (f := _), map_one, aeval_X] at h
   rw [h]
   refine Finset.sum_congr rfl fun m _ => ?_
   rw [zsmul_eq_mul, powCoeff]
@@ -128,7 +128,7 @@ variable {x : AInf K p}
 
 theorem one_add_pow_sub_one_mem (hx : x ∈ RingHom.ker θ) : (1 + x) ^ p - 1 ∈ RingHom.ker θ := by
   rw [RingHom.mem_ker] at hx ⊢
-  rw [map_sub, map_pow, map_add, map_one, hx, add_zero, one_pow, sub_self]
+  rw [map_sub, map_pow, map_add (f := _), map_one, hx, add_zero, one_pow, sub_self]
 
 theorem logTermZero_one_add_pow (hx : x ∈ RingHom.ker θ) (n L : ℕ) (hL : p * (n + 1) ≤ L) :
     logTermZero (one_add_pow_sub_one_mem hx) n =

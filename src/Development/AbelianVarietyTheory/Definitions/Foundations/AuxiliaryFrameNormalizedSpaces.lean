@@ -68,7 +68,7 @@ theorem diag_pair {N n c : ℕ} (h : n + 2 * c ≤ N) (a b a' b' : E) (i j : Fin
       if i = j then star a * a' - star b * b' else 0 := by
   have hi := i.isLt
   have hj := j.isLt
-  simp only [map_add, LinearMap.add_apply, diag_single_single]
+  simp only [map_add (f := _), LinearMap.add_apply, diag_single_single]
   rw [if_neg (show n + (i : ℕ) ≠ n + c + j by omega), if_neg (show n + c + (i : ℕ) ≠ n + j by omega)]
   have h1 : cut N (n + c) ⟨n + i, by omega⟩ = false := by
     simp only [cut, decide_eq_false_iff_not]; omega
@@ -104,11 +104,11 @@ theorem auxiliary_frame_normalized_spaces (j : ℕ) (hj : j < R.m) : HasHyperbol
       diagForm (R.rankY j) (cut _ (pY R j)) (extTo (R.N j) (R.rankY j) x)
         (Pi.single k b + Pi.single k' b') = 0 := by
     intro x k k' b b' hk hk'
-    rw [map_add, diag_ext_single _ _ _ x k b hk, diag_ext_single _ _ _ x k' b' hk', add_zero]
+    rw [map_add (f := _), diag_ext_single _ _ _ x k b hk, diag_ext_single _ _ _ x k' b' hk', add_zero]
   have orthS : ∀ (k k₁ k₂ : Fin (R.rankY j)) (b b₁ b₂ : E), (k : ℕ) ≠ k₁ → (k : ℕ) ≠ k₂ →
       diagForm (R.rankY j) (cut _ (pY R j)) (Pi.single k b) (Pi.single k₁ b₁ + Pi.single k₂ b₂) = 0 := by
     intro k k₁ k₂ b b₁ b₂ h₁ h₂
-    rw [map_add, diag_single_single, diag_single_single, if_neg h₁, if_neg h₂, add_zero]
+    rw [map_add (f := _), diag_single_single, diag_single_single, if_neg h₁, if_neg h₂, add_zero]
   refine ⟨fun i => Pi.single (⟨R.N j + i, by omega⟩ : Fin (R.rankY j)) (1 : E) +
       Pi.single (⟨R.N j + (R.m - 1 - j) / 2 + i, by omega⟩ : Fin (R.rankY j)) (1 : E),
     fun i => Pi.single (⟨R.N j + i, by omega⟩ : Fin (R.rankY j)) (1 / 2 : E) +

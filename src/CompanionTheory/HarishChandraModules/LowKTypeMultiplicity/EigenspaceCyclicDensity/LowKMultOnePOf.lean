@@ -28,7 +28,7 @@ theorem evd_eig (F : Fin n → Module.End ℂ V) (τ : Fin n → ℂ) (x : V) (h
     rfl
   · simp only [CompanionTheory.D.LK.evd, FreeAlgebra.lift_ι_apply, h]
   · rw [map_mul, Module.End.mul_apply, hb, map_smul, ha, map_mul, smul_smul, mul_comm]
-  · rw [map_add, LinearMap.add_apply, ha, hb, map_add, add_smul]
+  · rw [map_add (f := _), LinearMap.add_apply, ha, hb, map_add (f := _), add_smul]
 
 theorem mem_cyc {E : Fin n → Fin n → Module.End ℂ V} {v w : V} : w ∈ Cyc E v ↔ ∃ a, ev E a v = w := by
   unfold CompanionTheory.D.LK.Cyc

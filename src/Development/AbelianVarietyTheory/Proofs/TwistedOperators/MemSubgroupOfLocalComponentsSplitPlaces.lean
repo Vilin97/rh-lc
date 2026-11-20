@@ -114,7 +114,7 @@ theorem mem_of_loc : ∀ {D : D7} (V : HSp D) (P : Finset (Pl D.host.E)) (e : AE
     refine ⟨h, hH, suppAt_of_le hf sh, lh, fun u hu hne => loc_eq_one sh ?_⟩
     have k := congrArg (piAt u) d
     rw [RingHom.map_mul, hce u hu, mul_zero] at k
-    rw [RingHom.map_add, f2 u (by simpa using hne), ← k, add_zero]
+    rw [RingHom.map_add (f := _), f2 u (by simpa using hne), ← k, add_zero]
   obtain ⟨y, hy, sy, ly, -⟩ := exists_subgroup_elem_localComponents_subset H r key P subset_rfl
   have k : e • mt V r = e • mt V y := smul_eq_of_loc e0 fun w => by
     by_cases hw : w ∈ P

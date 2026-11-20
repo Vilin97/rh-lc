@@ -28,7 +28,7 @@ structure Good (σ : E →ₐ[F] E) {d M n : ℕ} (bs : Module.Basis (Fin d) F E
 theorem add_mem_intE {d : ℕ} (bs : Module.Basis (Fin d) F E) (v : HeightOneSpectrum (𝓞 F)) {e e' : Fv F v ⊗[F] E}
     (he : e ∈ intE bs v) (he' : e' ∈ intE bs v) : e + e' ∈ intE bs v := by
   intro k
-  simp only [map_add, Finsupp.add_apply]
+  simp only [map_add (f := _), Finsupp.add_apply]
   exact add_mem (he k) (he' k)
 
 theorem zero_mem_intE {d : ℕ} (bs : Module.Basis (Fin d) F E) (v : HeightOneSpectrum (𝓞 F)) :

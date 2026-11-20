@@ -59,7 +59,7 @@ theorem I_add' {n d : ℕ} {Y : Spc F E n} {Wd : Spc F E d} (M : Model σ Y Wd) 
   rw [← MeasureTheory.integral_add hΦ hΨ]
   refine MeasureTheory.integral_congr_ae (Eventually.of_forall fun g => ?_)
   show GlobalTheory.WeilM.thetaSum F (om (g, h) (Φ + Ψ)) = GlobalTheory.WeilM.thetaSum F (om (g, h) Φ) + GlobalTheory.WeilM.thetaSum F (om (g, h) Ψ)
-  rw [map_add, GlobalTheory.WeilM.thetaSum_add F (hs g).1 (hs g).2]
+  rw [map_add (f := _), GlobalTheory.WeilM.thetaSum_add F (hs g).1 (hs g).2]
 
 theorem exists_algD_ne (hP : GlobalTheory.FunPr.Hypotheses₂) {B : Base F E} {a a' : ℕ} {G : Geo σ a a'} {X : Chars F E}
     {om : Rep σ G.V G.W} {om' : Rep σ G.V' G.W} (hT : IsTriple B G X om om') (hDec : Decay B G om om')

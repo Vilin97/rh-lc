@@ -50,7 +50,7 @@ theorem fixed_part (π : G →* Module.End ℂ M) (V : ι → Submodule ℂ M) (
   have h1 : π g a - a ∈ WA V A := sub_mem (map_WA_le π V hπ hA g ha) ha
   have h2 : π g a - a ∈ WA V B := by
     have e : π g a - a = b - π g b := by
-      rw [sub_eq_sub_iff_add_eq_add, ← map_add, hfix g, add_comm]
+      rw [sub_eq_sub_iff_add_eq_add, ← map_add (f := _), hfix g, add_comm]
     rw [e]
     exact sub_mem hb (map_WA_le π V hπ hB g hb)
   have hd : Disjoint (WA V A) (WA V B) := hV.disjoint_biSup_biSup hAB

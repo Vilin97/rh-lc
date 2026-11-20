@@ -29,7 +29,7 @@ theorem crd_upper {M : ℕ} (b : Module.Basis (Fin M) E V) (L0 : Submodule (𝓞
       intro i
       exact hint _ (Finset.mem_image.mpr ⟨(v, i), Finset.mem_product.mpr ⟨hv, Finset.mem_univ _⟩, rfl⟩)
     | zero => intro i; simp [isIntegral_zero]
-    | add v w _ _ hv hw => intro i; rw [map_add, Pi.add_apply, smul_add]; exact (hv i).add (hw i)
+    | add v w _ _ hv hw => intro i; rw [map_add (f := _), Pi.add_apply, smul_add]; exact (hv i).add (hw i)
     | smul a v _ hv =>
       intro i
       rw [← algebraMap_smul E a v, map_smul, Pi.smul_apply, smul_eq_mul, ← mul_smul_comm]

@@ -58,7 +58,7 @@ def tensorInd (σ : Representation ℂ P W) :
 theorem tensorInd_apply (σ : Representation ℂ P W) (t : V ⊗[ℂ] smoothPart (ind P σ)) (x : H) :
     (tensorInd σ t).1.1 x = (MultiIrr.ev σ x).lTensor V t := by
   induction t with
-  | add s t hs ht => simp only [map_add, ← hs, ← ht]; rfl
+  | add s t hs ht => simp only [map_add (f := _), ← hs, ← ht]; rfl
   | tmul v f => rfl
 
 theorem tensorInd_bijective (σ : Representation ℂ P W) {K : Set H} (hK : IsCompact K)
@@ -97,7 +97,7 @@ theorem exists_lift [T2Space H] {K : Subgroup H} (hP : IsClosed (P : Set H)) (hK
   let α : (onRight V σ).IntertwiningMap ρ :=
     { toLinearMap := TensorProduct.lift
         { toFun := fun v => (A v).toLinearMap
-          map_add' := fun v v' => by rw [map_add]; rfl
+          map_add' := fun v v' => by rw [map_add (f := _)]; rfl
           map_smul' := fun c v => by rw [map_smul]; rfl }
       isIntertwining' := fun p => TensorProduct.ext' fun v w => (A v).isIntertwining _ _ p w }
   have hα : ∀ v w, α (v ⊗ₜ w) = A v w := fun _ _ => rfl
@@ -121,7 +121,7 @@ theorem exists_lift [T2Space H] {K : Subgroup H} (hP : IsClosed (P : Set H)) (hK
     exact ⟨⟨p, hp⟩, w, hw, e⟩)
   let β : V ⊗[ℂ] smoothPart (ind P σ) →ₗ[ℂ] Y := TensorProduct.lift
     { toFun := fun v => (B v).toLinearMap
-      map_add' := fun v v' => by rw [map_add]; rfl
+      map_add' := fun v v' => by rw [map_add (f := _)]; rfl
       map_smul' := fun c v => by rw [map_smul]; rfl }
   have hker : LinearMap.ker (smIndMap α).toLinearMap ≤ LinearMap.ker (β ∘ₗ E.symm.toLinearMap) := by
     intro f hf
@@ -130,7 +130,7 @@ theorem exists_lift [T2Space H] {K : Subgroup H} (hP : IsClosed (P : Set H)) (hK
     obtain ⟨t, rfl⟩ := E.surjective z
     have e1 : smIndMap (T γ) (E t) = E (TensorProduct.map (R γ) (smIndMap (S γ)).toLinearMap t) := by
       induction t with
-      | add s t hs ht => simp only [map_add, hs, ht]
+      | add s t hs ht => simp only [map_add (f := _), hs, ht]
       | tmul v f => rfl
     have e2 : β (TensorProduct.map (R γ) (smIndMap (S γ)).toLinearMap t) = β t :=
       LinearMap.congr_fun (f := β ∘ₗ TensorProduct.map (R γ) (smIndMap (S γ)).toLinearMap) (g := β)
@@ -146,7 +146,7 @@ theorem exists_lift [T2Space H] {K : Subgroup H} (hP : IsClosed (P : Set H)) (hK
   obtain ⟨t, rfl⟩ := E.surjective z
   show T₀ (smInd P ρ h _) = π' h (T₀ _)
   induction t with
-  | add s t hs ht => simp only [map_add, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), hs, ht]
   | tmul v f => exact (hT v (smInd P σ h f)).trans (((B v).isIntertwining _ _ h f).trans (congrArg _ (hT v f).symm))
 
 end Abstract

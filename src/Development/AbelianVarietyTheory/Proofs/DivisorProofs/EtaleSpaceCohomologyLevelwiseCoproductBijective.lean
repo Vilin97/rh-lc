@@ -66,7 +66,7 @@ theorem GlobalTheory.EtC.HCofan.main : ∀ (R : Type) [CommRing R] (F : Shv R) (
     have hw' : ∀ i, ((HC R F).map (a i).op).f (n - 1) w = y i := fun i => congrFun hw i
     refine ⟨w, (hb n).1 (funext fun i => ?_)⟩
     show ((HC R F).map (a i).op).f n z = ((HC R F).map (a i).op).f n (z' + ((HC R F).obj (op E)).d (n - 1) n w)
-    rw [map_add, GlobalTheory.EtC.HCofan.comm_el, hw' i]
+    rw [map_add (f := _), GlobalTheory.EtC.HCofan.comm_el, hw' i]
     exact hy i
   · intro x
     choose z hz hzx using fun i => hsurj (Q i) n (x i)

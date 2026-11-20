@@ -108,7 +108,7 @@ variable {M : Type} [AddCommGroup M] [Module R M] (c : M →ₗ[R] G.omega)
 
 def omegaToBaseChangeOmega : M →ₗ[R] (G.baseChange R').omega where
   toFun w := (G.toBase R').omega (c w)
-  map_add' v w := by rw [map_add, map_add]
+  map_add' v w := by rw [map_add (f := _), map_add (f := _)]
   map_smul' r w := by
     rw [map_smul, map_smulₛₗ, RingHom.id_apply, algebraMap_smul]
 
@@ -121,7 +121,7 @@ theorem omegaBCMap_level (n : ℕ) (x : R' ⊗[R] M) :
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]; rfl
   | add x y hx hy =>
-    rw [map_add, map_add, map_add, ← hx, ← hy]; rfl
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), ← hx, ← hy]; rfl
   | tmul r w =>
     rw [LinearMap.baseChange_tmul, IsBaseChange.equiv_tmul, omegaBCMap,
       LinearMap.liftBaseChange_tmul]

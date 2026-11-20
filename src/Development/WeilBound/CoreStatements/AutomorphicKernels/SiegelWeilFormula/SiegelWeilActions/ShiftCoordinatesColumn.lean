@@ -129,7 +129,7 @@ theorem even_im_hermitian_sub (hs : ∀ a, s (s a) = a) (he : e * e = 1) (hse : 
   have hS : s S2 = S1 := by
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [S2, S1, map_sum, map_mul, hs]
-  rw [map_add, hS]
+  rw [map_add (f := _), hS]
   linear_combination e * h0 - (s α + S1) * he
 
 end PositivityTheory.SiegelWeilFormula.Act.C6.M

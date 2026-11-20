@@ -25,7 +25,7 @@ private theorem letter_lift {LL U D : Type} [Field LL] [Field U] [AddCommGroup D
   have hgs : ∀ (c : F) (y : F ⊗[LL] D), g (c • y) = κ c • g y := fun c y => by
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [smul_add, map_add, map_add, smul_add, hx, hy]
+    | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), smul_add, hx, hy]
     | tmul c' x => rw [TensorProduct.smul_tmul', hg, hg, smul_eq_mul, map_mul, mul_smul]
   let gL : F ⊗[LL] D →ₗ[F] M := { toFun := g, map_add' := g.map_add, map_smul' := hgs }
   have hk : letterKer m F τ ≤ LinearMap.ker gL := iSup_le fun u => by
@@ -34,7 +34,7 @@ private theorem letter_lift {LL U D : Type} [Field LL] [Field U] [AddCommGroup D
     change g _ = 0
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
     | tmul c x =>
       simp only [LinearMap.sub_apply, LinearMap.baseChange_tmul, LinearMap.smul_apply, LinearMap.id_apply,
         map_sub, hgs, hg, hU]
@@ -50,7 +50,7 @@ private theorem coord_smul {l : ℕ} [Fact l.Prime] {P : LocPrime l} {L : FinExt
     ψ₀ (c • y) = (((c : Om l) ⊗ₜ 1 : OB P)) • ψ₀ y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [smul_add, map_add, map_add, smul_add, hx, hy]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), smul_add, hx, hy]
   | tmul v b =>
     funext i
     rw [TensorProduct.smul_tmul', h, Pi.smul_apply, Pi.smul_apply, h, smul_eq_mul, smul_eq_mul,
@@ -63,7 +63,7 @@ private theorem coord_mulV {l : ℕ} [Fact l.Prime] {P : LocPrime l} {L : FinExt
     ψ₀ (GlobalTheory.Pst.mulV P ↥L.1 (Fin a → ↥L.1) c y) = (((c : Om l) ⊗ₜ 1 : OB P)) • ψ₀ y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, map_add, smul_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), smul_add, hx, hy]
   | tmul v b =>
     funext i
     rw [GlobalTheory.Pst.mulV_tmul, h, Pi.smul_apply, h, smul_eq_mul,

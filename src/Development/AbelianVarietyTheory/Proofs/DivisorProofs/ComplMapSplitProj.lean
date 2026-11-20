@@ -179,7 +179,7 @@ theorem compFin_eq (u : HeightOneSpectrum (𝓞 F)) (z : AF F ⊗[F] E) :
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a x => rfl
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 omit [NumberField E] in
 theorem compFin_sigR (σ : E →ₐ[F] E) (u : HeightOneSpectrum (𝓞 F)) (z : AF F ⊗[F] E) :
@@ -187,7 +187,7 @@ theorem compFin_sigR (σ : E →ₐ[F] E) (u : HeightOneSpectrum (𝓞 F)) (z : 
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a x => rfl
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 omit [NumberField E] in
 theorem infTens_sigR (σ : E →ₐ[F] E) (z : AF F ⊗[F] E) :
@@ -195,7 +195,7 @@ theorem infTens_sigR (σ : E →ₐ[F] E) (z : AF F ⊗[F] E) :
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a x => rfl
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem toCompl_compFin {u : HeightOneSpectrum (𝓞 F)} {w : HeightOneSpectrum (𝓞 E)} (h : w.under (𝓞 F) = u)
     (z : AF F ⊗[F] E) : toCompl h (compFin F E u z) = pLoc E w (finAdEquiv F E (finTens F E z)) := by

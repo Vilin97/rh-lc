@@ -339,7 +339,7 @@ def logFlat (ϖ : PFlat p R) : Bst p R := mk p R (MvPolynomial.X ϖ)
 
 theorem logFlat_twist (η : tateModule p R) (ϖ : PFlat p R) :
     logFlat (ϖ.twist η) = algebraMap _ _ (Bcris.logTeich η) + logFlat ϖ := by
-  rw [← sub_eq_zero, logFlat, logFlat, ← (mk p R).commutes, ← map_add, ← map_sub, mk_eq_zero_iff]
+  rw [← sub_eq_zero, logFlat, logFlat, ← (mk p R).commutes, ← map_add (f := _), ← map_sub, mk_eq_zero_iff]
   exact subset_span ⟨η, ϖ, rfl⟩
 
 def lift {B : Type*} [CommRing B] (f : Bcris p R →+* B) (l : PFlat p R → B)
@@ -377,7 +377,7 @@ theorem monodromyDerivation_mem {f : MvPolynomial (PFlat p R) (Bcris p R)} (hf :
   induction hf using Submodule.span_induction with
   | mem f hf => obtain ⟨η, ϖ, rfl⟩ := hf; simp [monodromyDerivation]
   | zero => simp
-  | add f g _ _ hf hg => rw [map_add]; exact add_mem hf hg
+  | add f g _ _ hf hg => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hf hg
   | smul a f h hf =>
     rw [smul_eq_mul, Derivation.leibniz, smul_eq_mul, smul_eq_mul]
     exact add_mem (Ideal.mul_mem_left _ _ hf) (Ideal.mul_mem_right _ _ h)

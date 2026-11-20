@@ -19,12 +19,12 @@ theorem hT_X_X (F : FlagG S r T) {x x' : S.V} (hx : x ∈ F.X) (hx' : x' ∈ F.X
     induction hy using Submodule.span_induction with
     | mem y hy => obtain ⟨b, rfl⟩ := hy; exact F.e_iso a b
     | zero => simp
-    | add y z _ _ h1 h2 => simp [map_add, h1, h2]
+    | add y z _ _ h1 h2 => simp [map_add (f := _), h1, h2]
     | smul c y _ h => simp [map_smul, h]
   induction hx using Submodule.span_induction with
   | mem x hx => obtain ⟨a, rfl⟩ := hx; exact h1 a x' hx'
   | zero => simp
-  | add y z _ _ h1 h2 => simp [map_add, LinearMap.add_apply, h1, h2]
+  | add y z _ _ h1 h2 => simp [map_add (f := _), LinearMap.add_apply, h1, h2]
   | smul c y _ h => simp [LinearMap.map_smulₛₗ, LinearMap.smul_apply, h]
 
 private theorem hT_swap_eq_star (x y : S.V) : S.hT y x = star (S.hT x y) := by
@@ -39,7 +39,7 @@ theorem hT_z_X (F : FlagG S r T) {x : S.V} (hx : x ∈ F.X) : S.hT F.z x = 0 := 
     obtain ⟨a, rfl⟩ := hx
     rw [hT_swap_eq_star, F.z_orth a, star_zero]
   | zero => simp
-  | add y z _ _ h1 h2 => simp [map_add, h1, h2]
+  | add y z _ _ h1 h2 => simp [map_add (f := _), h1, h2]
   | smul c y _ h => simp [map_smul, h]
 
 def Qsp (F : FlagG S r T) (H : Submodule E S.V) : Submodule E S.V :=
@@ -149,7 +149,7 @@ theorem line (F : FlagG S r T) (hT : T ≠ 0) (H : Submodule E S.V) (hXH : ∀ x
     obtain ⟨x, hx, h, hh, hxh⟩ := Submodule.mem_sup.1 hz
     have h1 : S.hT F.z F.z = 0 := by
       calc S.hT F.z F.z = S.hT F.z (x + h) := by rw [hxh]
-        _ = 0 := by rw [map_add, hT_z_X F hx, hzH h hh, add_zero]
+        _ = 0 := by rw [map_add (f := _), hT_z_X F hx, hzH h hh, add_zero]
     have := F.z_norm
     rw [h1] at this
     exact hT (neg_eq_zero.1 this.symm)
@@ -181,7 +181,7 @@ theorem line (F : FlagG S r T) (hT : T ≠ 0) (H : Submodule E S.V) (hXH : ∀ x
     rw [hT_swap_eq_star, ((mem_Qsp F H).1 hy0).1 x hx, star_zero]
   have h2 : c * S.hT y0 y0 = 0 := by
     have := hvy
-    simp only [brS, map_add, map_smul, smul_eq_mul, h1, zero_add] at this
+    simp only [brS, map_add (f := _), map_smul, smul_eq_mul, h1, zero_add] at this
     exact this
   have hc : c = 0 := by
     rcases mul_eq_zero.1 h2 with h | h

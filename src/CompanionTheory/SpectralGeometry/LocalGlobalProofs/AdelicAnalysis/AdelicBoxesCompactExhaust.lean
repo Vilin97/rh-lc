@@ -20,7 +20,7 @@ theorem repr_map {R S : Type} [CommRing R] [CommRing S] [Algebra F R] [Algebra F
     (Algebra.TensorProduct.basis S b).repr (Algebra.TensorProduct.map g (AlgHom.id F E) y) k =
       g ((Algebra.TensorProduct.basis R b).repr y k) := by
   induction y with
-  | add x y hx hy => simp [map_add, hx, hy]
+  | add x y hx hy => simp [map_add (f := _), hx, hy]
   | tmul r e =>
     simp [Algebra.TensorProduct.basis_repr_tmul]
 

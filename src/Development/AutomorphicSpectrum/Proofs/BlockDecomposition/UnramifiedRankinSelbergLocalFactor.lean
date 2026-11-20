@@ -62,13 +62,13 @@ theorem conj_hs {α β : ℂ} (hα : ‖α‖ = 1) (hβ : ‖β‖ = 1) (n : ℕ
   induction n using Nat.twoStepInduction with
   | zero => simp [hs]
   | one =>
-    rw [hs_one, map_add, conj_eq_inv hα, conj_eq_inv hβ]
+    rw [hs_one, map_add (f := _), conj_eq_inv hα, conj_eq_inv hβ]
     field_simp
     ring
   | more n ih1 ih2 =>
     obtain ⟨d, hd, e1, e2⟩ : ∃ d, d = (α * β)⁻¹ ∧ α⁻¹ = d * β ∧ β⁻¹ = d * α :=
       ⟨_, rfl, by field_simp, by field_simp⟩
-    rw [hs_rec, map_sub, map_mul, map_mul, map_mul, map_add, ih1, ih2, conj_eq_inv hα, conj_eq_inv hβ,
+    rw [hs_rec, map_sub, map_mul, map_mul, map_mul, map_add (f := _), ih1, ih2, conj_eq_inv hα, conj_eq_inv hβ,
       ← hd, e1, e2]
     ring
 

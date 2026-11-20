@@ -226,7 +226,7 @@ theorem UpperTheory.Gal.productCup_of_system.deRhamRegulator_trivial_case :
     intro p
     induction p using MvPolynomial.induction_on with
     | C a => rw [hC]; simpa using hmem 1 a
-    | add p q hp hq => rw [map_add]; exact Subalgebra.add_mem _ hp hq
+    | add p q hp hq => rw [map_add (f := _)]; exact Subalgebra.add_mem _ hp hq
     | mul_X p l hp =>
       rw [map_mul, hX]
       refine Subalgebra.mul_mem _ hp ?_
@@ -251,7 +251,7 @@ theorem UpperTheory.Gal.productCup_of_system.deRhamRegulator_trivial_case :
       have e : (s : F ⊗[ℂ] F) ^ (N1 + N2) * (Algebra.TensorProduct.map (rA ℂ (xv x) I).val (rA ℂ (xv x) J).val (u + v)) =
           (s : F ⊗[ℂ] F) ^ N2 * ((s : F ⊗[ℂ] F) ^ N1 * Algebra.TensorProduct.map (rA ℂ (xv x) I).val (rA ℂ (xv x) J).val u) +
           (s : F ⊗[ℂ] F) ^ N1 * ((s : F ⊗[ℂ] F) ^ N2 * Algebra.TensorProduct.map (rA ℂ (xv x) I).val (rA ℂ (xv x) J).val v) := by
-        rw [map_add, pow_add]; ring
+        rw [map_add (f := _), pow_add]; ring
       change (s : F ⊗[ℂ] F) ^ (N1 + N2) * (Algebra.TensorProduct.map (rA ℂ (xv x) I).val (rA ℂ (xv x) J).val (u + v)) ∈ φ.range
       rw [e]
       exact φ.range.add_mem (φ.range.mul_mem (φ.range.pow_mem hs _) h1) (φ.range.mul_mem (φ.range.pow_mem hs _) h2)

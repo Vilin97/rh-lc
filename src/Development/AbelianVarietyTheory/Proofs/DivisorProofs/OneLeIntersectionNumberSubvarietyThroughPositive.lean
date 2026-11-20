@@ -51,7 +51,7 @@ theorem one_le_interNumRed : GlobalTheory.Published.NefNumerics → ∀ (k : Typ
   have hb := hBig k _ q' hpq (N.pull (redι Z)) (N₁.pull (redι Z)) (N₂.pull (redι Z))
     (LB.isLB_pull hN _) (LB.isLB_pull h₁ _) (LB.isLB_pull h₂ _) a w
     (hNef.pull_of_isClosedImmersion _ hi) ha
-    (by rw [cls_pull hN, cls_pull h₁, cls_pull h₂, ← map_nsmul, hcls, map_add])
+    (by rw [cls_pull hN, cls_pull h₁, cls_pull h₂, ← map_nsmul, hcls, map_add (f := _)])
     (hAmp _ _ _ N₁ h₁ w hamp) (hN₂.pull_of_isClosedImmersion _ hi)
   have hstr : strHom k (Scheme.IdealSheafData.vanishingIdeal Z).subscheme = q' :=
     strHom_eq (f := q') fun _ => rfl

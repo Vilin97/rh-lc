@@ -130,7 +130,7 @@ theorem nonempty_fam_equiv (hG : GlobalFnsSt) (hT : SecTwistSt) (hB : D.TauBimul
   · intro s z s' z' h h' c j
     rw [add_f, h c j, h' c j, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun i _ => ?_
-    simp only [Pi.add_apply, map_add, resTop, add_mul]
+    simp only [Pi.add_apply, map_add (f := _), resTop, add_mul]
   · intro a s z h c j
     rw [smul_f, h c j, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_

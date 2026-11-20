@@ -50,7 +50,7 @@ theorem lactCen_of_gen (K : Type) [Field K] [NumberField K] (n : ℕ)
     funext g
     have h3 := rUC_tmul 1 p f g⁻¹
     rw [one_mul] at h3
-    rw [hl g, map_add, ← h3, ← rUC_tmul Complex.I q f g⁻¹]
+    rw [hl g, map_add (f := _), ← h3, ← rUC_tmul Complex.I q f g⁻¹]
     rfl
   have h1 := (kernel_uAction _ ν (archRepT μ) p f hf).1
   have h2 := (kernel_uAction _ ν (archRepT μ) q f hf).1
@@ -58,7 +58,7 @@ theorem lactCen_of_gen (K : Type) [Field K] [NumberField K] (n : ℕ)
     fun γ ψ => oinf_toLp μ ν γ _
   have h5 : Oinf μ ν β (clsL μ (uActionCusp K n p φ + Complex.I • uActionCusp K n q φ)) =
       Oinf μ ν β (clsL μ (uActionCusp K n p φ)) + Complex.I • Oinf μ ν β (clsL μ (uActionCusp K n q φ)) := by
-    rw [(clsL μ).map_add, (clsL μ).map_smul, (Oinf μ ν β).map_add, (Oinf μ ν β).map_smul]
+    rw [(clsL μ).map_add (f := _), (clsL μ).map_smul, (Oinf μ ν β).map_add (f := _), (Oinf μ ν β).map_smul]
   rw [h5, h4, h4, h4, e2, (isExpLieAlgebra K n).integrated_add_kernel ν _ h1 (h2.const_mul _),
     IsExpLieAlgebra.integrated_const_mul_kernel, key p hp, key q hq, (toLp μ).map_add, (toLp μ).map_smul]
 

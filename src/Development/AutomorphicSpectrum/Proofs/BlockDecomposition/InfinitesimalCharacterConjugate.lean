@@ -34,7 +34,7 @@ theorem hasInfChar_conj_eq (E : Type) [Field E] [NumberField E] [IsTotallyComple
     (GlobalTheory.T.lie_operator_gl_relations E a π _) (GlobalTheory.T.lie_operator_hermitian_skew E a π B hB τ) (u + ((a : ℂ) - 1) / 2) φ φ
   have arg : (a : ℂ) - 1 - (starRingEnd ℂ) (u + ((a : ℂ) - 1) / 2) =
       -(starRingEnd ℂ) u + ((a : ℂ) - 1) / 2 := by
-    simp only [map_add, map_div₀, map_sub, map_one, Complex.conj_natCast, map_ofNat]
+    simp only [map_add (f := _), map_div₀, map_sub, map_one, Complex.conj_natCast, map_ofNat]
     ring
   rw [arg, val τ m hm u, LinearMap.smul_apply, val _ m' hm' (-(starRingEnd ℂ) u)] at key
   simp only [map_smul, LinearMap.smul_apply, smul_smul, map_smulₛₗ, smul_eq_mul] at key

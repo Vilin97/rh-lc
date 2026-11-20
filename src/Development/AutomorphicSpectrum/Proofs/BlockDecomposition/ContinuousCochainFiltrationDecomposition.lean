@@ -30,7 +30,7 @@ def tw [IsTopologicalAddGroup G] (ρ : Multiplicative G →* (M →ₗ[R] M)) (v
     refine LocallyConstant.ext fun x => ?_
     change ρ (Multiplicative.ofAdd v) (f _ + g _) - (f x + g x) =
       (ρ (Multiplicative.ofAdd v) (f _) - f x) + (ρ (Multiplicative.ofAdd v) (g _) - g x)
-    rw [map_add]
+    rw [map_add (f := _)]
     abel
   map_smul' c f := by
     refine LocallyConstant.ext fun x => ?_
@@ -71,7 +71,7 @@ def Res (ρ : Multiplicative G →* (M →ₗ[R] M)) (S : Set G) (D : Submodule 
 
 def invS (ρ : Multiplicative G →* (M →ₗ[R] M)) (S : Set G) : Submodule R M where
   carrier := {x | ∀ g ∈ S, ρ (Multiplicative.ofAdd g) x = x}
-  add_mem' {a b} ha hb g hg := by rw [map_add, ha g hg, hb g hg]
+  add_mem' {a b} ha hb g hg := by rw [map_add (f := _), ha g hg, hb g hg]
   zero_mem' g _ := map_zero _
   smul_mem' c a ha g hg := by rw [map_smul, ha g hg]
 

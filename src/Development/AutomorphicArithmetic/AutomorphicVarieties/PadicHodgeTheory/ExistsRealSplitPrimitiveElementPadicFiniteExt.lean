@@ -162,7 +162,7 @@ private theorem exists_rat_monic_aeval_close (l : ℕ) [Fact l.Prime] (f : ℚ_[
         ∑ i : Fin n, algebraMap ℚ_[l] (Om l) ((q i : ℚ_[l]) - f.coeff i) * α ^ (i : ℕ) := by
       conv_lhs => rw [hf', hp]
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_add, map_sum, map_mul, aeval_C, aeval_X_pow, add_sub_add_left_eq_sub,
+        simp only [map_add (f := _), map_sum, map_mul, aeval_C, aeval_X_pow, add_sub_add_left_eq_sub,
         ← Finset.sum_sub_distrib]
       apply Finset.sum_congr rfl
       intro i _
@@ -238,7 +238,7 @@ private theorem exists_rat_monic_close_sign_changing_at_integers (l : ℕ) [Fact
   refine ⟨g₁ + C t * (M - g₁), hmon.add_of_left hCd, ?_, ?_, ?_⟩
   · rw [natDegree_add_eq_left_of_degree_lt hCd, hdeg]
   · have e : aeval α (g₁ + C t * (M - g₁)) - aeval α g₁ = algebraMap ℚ (Om l) t * aeval α (M - g₁) := by
-      rw [map_add, add_sub_cancel_left, map_mul, aeval_C]
+      rw [map_add (f := _), add_sub_cancel_left, map_mul, aeval_C]
     rw [e, norm_mul, IsScalarTower.algebraMap_apply ℚ ℚ_[l] (Om l), norm_algebraMap', ← hA]
     have hnL : ‖((L : ℚ) : ℚ_[l])‖ = (l : ℝ) ^ (-((k + 1 : ℕ) : ℤ)) := by
       rw [hL]; push_cast; exact Padic.norm_p_pow (k + 1)

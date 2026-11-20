@@ -240,7 +240,7 @@ theorem exists_add_eq_of_isCoprime {T₁ T₂ T₁₂ : Type} [CommRing T₁] [A
   have P1 : a e₁ ^ N * ρ f ^ N = 1 := by rw [← mul_pow, ← ha', ← map_mul, he₁, map_one, one_pow]
   have P2 : b e₂ ^ N * ρ g ^ N = 1 := by rw [← mul_pow, ← hb', ← map_mul, he₂, map_one, one_pow]
   have key := congrArg ρ huw
-  simp only [map_add, map_mul, map_pow, map_one] at key
+  simp only [map_add (f := _), map_mul, map_pow, map_one] at key
   rw [map_mul] at hzx
   simp only [map_mul, map_pow, ha', hb']
   rw [← hzx]
@@ -355,7 +355,7 @@ theorem reduction_surjective (hv : IsLieBasis v) (hJ : J ^ 2 = ⊥) :
     rintro f g ⟨y₁, hy₁⟩ ⟨y₂, hy₂⟩
     have hu : IsUnit (awayHom R (f + g) (f + g)) := (isAway_awayHom (R := R) (f + g)).unit
     have hcop : IsCoprime (awayHom R (f + g) f) (awayHom R (f + g) g) :=
-      ⟨↑hu.unit⁻¹, ↑hu.unit⁻¹, by rw [← mul_add, ← map_add]; exact hu.val_inv_mul⟩
+      ⟨↑hu.unit⁻¹, ↑hu.unit⁻¹, by rw [← mul_add, ← map_add (f := _)]; exact hu.val_inv_mul⟩
     obtain ⟨ψ₁, hψ₁⟩ := (isAway_awayHom (R := R) f).lift
       ((awayHom R (awayHom R (f + g) f)).comp (awayHom R (f + g))) (isAway_awayHom (R := R) (awayHom R (f + g) f)).unit
     obtain ⟨ψ₂, hψ₂⟩ := (isAway_awayHom (R := R) g).lift

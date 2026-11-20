@@ -95,7 +95,7 @@ theorem eq_zero_of_mem_ker (ρ : Representation ℂ K U)
       obtain ⟨N₁, h₁, hx⟩ := hx
       obtain ⟨N₂, h₂, hy⟩ := hy
       refine ⟨N₁ ⊓ N₂, inferInstance, fun N' _ _ hle => ?_⟩
-      simp only [map_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), Finset.sum_add_distrib]
       rw [hx N' (hle.trans inf_le_left), hy N' (hle.trans inf_le_right), add_zero]
     | smul c x _ hx =>
       obtain ⟨N₁, h₁, hx⟩ := hx
@@ -268,7 +268,7 @@ theorem exists_deep (a : Fin n → ℤ) : ∃ N : Subgroup (GL (Fin n) ℤ_[g]),
   ext i j
   have : ((m : ℤ) + (a i - a j)).toNat ≠ 0 := by have := hm i j; omega
   rw [red_val, hk']
-  simp only [map_add, map_mul, map_pow, map_natCast, ZMod.natCast_self, zero_pow this]
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast, ZMod.natCast_self, zero_pow this]
   by_cases h : i = j <;> simp [Matrix.one_apply, h]
 
 variable {V : Type} [AddCommGroup V] [Module ℂ V]

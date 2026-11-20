@@ -24,7 +24,7 @@ theorem exists_famLift : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   intro E _ _ _ H R _ ω C D₁ D ε h₁ h T₁ T t L ψ f c k₁ k hf ⟨l, hadd, hsmul, hlam⟩
   let F : D₁.La →ₗ[OK H] Serre.Pts (Serre.comapAct T.t.act (algebraMap (OK H) (𝓞 E))) C.P.A :=
     { toFun := fun a => Serre.Pts.mk _ (ψ (f a))
-      map_add' := fun a b => Serre.Pts.ext (by rw [map_add]; exact hadd _ _)
+      map_add' := fun a b => Serre.Pts.ext (by rw [map_add (f := _)]; exact hadd _ _)
       map_smul' := fun s a => Serre.Pts.ext (by
         have e : f (s • a) = (s : 𝓞 E) • f a := f.map_smul (s : 𝓞 E) a
         rw [e]; exact hsmul _ _) }

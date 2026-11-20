@@ -53,7 +53,7 @@ theorem piInf_eq_infProj {w : InfinitePlace D.host.F} (e : GlobalTheory.AdelicU.
     GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.piInf e y = GlobalTheory.AdelicU.infProj e (infPart D y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, ha, hb]
+  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
   | tmul a x => rfl
 
 theorem isInfFam_thetaC (D : D7) : IsInfFam (Eqv.thetaC D) := by
@@ -208,7 +208,7 @@ theorem fin_one_of_mem {k : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorMo
     fun u hu => congrFun (congrFun (hk u hu) i) j
   have h2 := GlobalTheory.ConjInfExp.finPart_eq_one (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.mat k i j - (1 : Matrix _ _ (AE D)) i j + 1)
     (by rwa [add_sub_cancel_right])
-  rw [RingHom.map_add, RingHom.map_one, add_eq_right, RingHom.map_sub, sub_eq_zero] at h2
+  rw [RingHom.map_add (f := _), RingHom.map_one, add_eq_right, RingHom.map_sub, sub_eq_zero] at h2
   rw [Matrix.map_apply, h2]
   by_cases e : i = j
   · subst e; simp

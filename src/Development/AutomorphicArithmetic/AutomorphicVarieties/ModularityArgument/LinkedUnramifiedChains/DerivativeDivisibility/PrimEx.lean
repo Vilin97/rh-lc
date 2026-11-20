@@ -180,7 +180,7 @@ private theorem finite_span_mod_and_integral_of_j_dat {O Λ B : Type} [CommRing 
         refine LinearMap.ext fun m => ?_
         rw [Module.algebraMap_end_apply]
         exact (h.hs c m).symm
-      | add p q hp hq => rw [Polynomial.eval₂_add, map_add, hFa, hp, hq]
+      | add p q hp hq => rw [Polynomial.eval₂_add, map_add (f := _), hFa, hp, hq]
       | monomial n c _ =>
         rw [Polynomial.eval₂_mul, Polynomial.eval₂_C, Polynomial.eval₂_X_pow]
         rw [show (lam : Λ →+* B) c = lam c from rfl, hFl, hFp, map_mul, Polynomial.aeval_C, map_pow,

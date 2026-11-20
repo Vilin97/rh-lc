@@ -32,7 +32,7 @@ theorem exists_adjoint_similitude : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (
     · exact absurd h' hcZ
     · exact h'
   choose f hf using himg
-  have fadd : ∀ x y, f (x + y) = f x + f y := fun x y => ginj (by rw [map_add, hf, hf, hf, smul_add])
+  have fadd : ∀ x y, f (x + y) = f x + f y := fun x y => ginj (by rw [map_add (f := _), hf, hf, hf, smul_add])
   have fsmul : ∀ (b : D.O) x, f (b • x) = b • f x := fun b x => ginj (by
     rw [map_smul, hf, hf, smul_comm])
   let g' : D.La →ₗ[D.O] D.La :=

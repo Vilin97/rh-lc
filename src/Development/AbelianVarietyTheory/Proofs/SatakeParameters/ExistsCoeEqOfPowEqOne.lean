@@ -61,7 +61,7 @@ theorem isFrob_of_rootOfUnity {l : ℕ} [Fact l.Prime] (σ : ℂ_[l] →+* ℂ_[
       push_cast at hr'
       refine ⟨a + b - x * y * r, sub_mem (add_mem ha hb)
         (mul_mem (mul_mem (hW hx) (hW hy)) r.2), ?_⟩
-      rw [map_add, ea, eb, hr']
+      rw [map_add (f := _), ea, eb, hr']
       ring
     | neg x hx ihx =>
       obtain ⟨a, ha, ea⟩ := ihx

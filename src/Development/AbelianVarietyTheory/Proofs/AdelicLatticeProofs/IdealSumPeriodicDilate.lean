@@ -26,7 +26,7 @@ theorem tsum_ideal_eq_sum_classes {R : Type} [CommRing R] (m b : Ideal R) [Finty
         Ideal.Quotient.eq_zero_iff_mem.2 (hr _ β.2)
       have hβ' : Ideal.Quotient.mk m (β' : R) = 0 :=
         Ideal.Quotient.eq_zero_iff_mem.2 (hr _ β'.2)
-      rw [map_add, map_add, hs, hs, hβ, hβ', zero_add, zero_add] at h2
+      rw [map_add (f := _), map_add (f := _), hs, hs, hβ, hβ', zero_add, zero_add] at h2
       subst h2
       rw [Subtype.ext (add_right_cancel h1)]
     · rintro ⟨a, ha⟩
@@ -103,7 +103,7 @@ theorem ideal_sum_periodic_dilate : ∀ (K : Type) [Field K] [NumberField K] (m 
     intro r
     obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective r
     obtain ⟨x, hx, y, hy, rfl⟩ := Submodule.mem_sup.1 (hbm ▸ Submodule.mem_top : a ∈ b ⊔ m)
-    exact ⟨x, hx, by rw [map_add, Ideal.Quotient.eq_zero_iff_mem.2 hy, add_zero]⟩
+    exact ⟨x, hx, by rw [map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 hy, add_zero]⟩
   choose s hsb hs using hrep
   let J : (Ideal (𝓞 K))⁰ := ⟨b * m, mem_nonZeroDivisors_iff_ne_zero.2 (mul_ne_zero hb hm)⟩
   obtain ⟨C, hC⟩ := GlobalTheory.T.lattice_sum_dilate_haar_asymptotic (mixedSpace K) volume
@@ -143,7 +143,7 @@ theorem ideal_sum_periodic_dilate : ∀ (K : Type) [Field K] [NumberField K] (m 
   rw [tsum_idealLattice K J (fun l => f (t • (l + mixedEmbedding K (s r : K))))] at h
   have hβ : ∀ β : ↥(b * m), mixedEmbedding K (((β : 𝓞 K) + s r : 𝓞 K) : K) =
       mixedEmbedding K ((β : 𝓞 K) : K) + mixedEmbedding K (s r : K) := fun β => by
-    rw [← map_add]
+    rw [← map_add (f := _)]
     rfl
   simp only [hβ]
   exact h

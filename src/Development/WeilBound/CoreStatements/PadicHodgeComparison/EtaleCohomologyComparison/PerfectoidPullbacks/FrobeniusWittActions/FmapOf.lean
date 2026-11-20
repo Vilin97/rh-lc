@@ -117,7 +117,7 @@ theorem psiF_nat (r : Res l K) {N : ℕ} (F : Fac r N) {C₀ : Type} [CommRing C
 def hF (r : Res l K) {N : ℕ} (F : Fac r N) (M : Model l K) (j : ℕ) (f : HL M j →+ (per l K).B) : LW r M j →+ (per l K).B where
   toFun y := f (F.β M j ((1 : AW r) ⊗ₜ y))
   map_zero' := by rw [tmul_zero, map_zero, map_zero]
-  map_add' y y' := by rw [tmul_add, map_add, map_add]
+  map_add' y y' := by rw [tmul_add, map_add (f := _), map_add (f := _)]
 
 theorem one_tmul_smul (r : Res l K) (M : Model l K) (j : ℕ) (w : WittVector l r.k) (y : LW r M j) :
     ((1 : AW r) ⊗ₜ[WittVector l r.k] (w • y) : AL r M j) = ((show (per l K).A from r.w w) • ((1 : AW r) ⊗ₜ[WittVector l r.k] y) : AL r M j) := by
@@ -167,7 +167,7 @@ theorem psiF_fac (r : Res l K) {N : ℕ} (F : Fac r N) {C₀ : Type} [CommRing C
     let G : AL r M j →+ (per l K).B :=
       { toFun := fun z => f (F.β M j z)
         map_zero' := by rw [map_zero, map_zero]
-        map_add' := fun z z' => by rw [map_add, map_add] }
+        map_add' := fun z z' => by rw [map_add (f := _), map_add (f := _)] }
     have hG := (hE f hf).choose_spec.2 G (fun a y => by
       change f (F.β M j (a ⊗ₜ y)) = _
       rw [tmul_eq_smul, LinearMap.map_smul, hf.1]

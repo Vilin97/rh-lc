@@ -60,7 +60,7 @@ theorem twF_preservesFilteredColimits : ∀ (q : ℕ) (i : ℤ), PreservesFilter
       obtain ⟨j, y, hy⟩ := hf
       obtain ⟨j', y', hy'⟩ := hg
       refine ⟨IsFiltered.max j j', ((twF q i).map (D.map (IsFiltered.leftToMax j j'))).hom y + ((twF q i).map (D.map (IsFiltered.rightToMax j j'))).hom y', ?_⟩
-      rw [map_add, hw, hw, hy, hy']
+      rw [map_add (f := _), hw, hw, hy, hy']
       rfl
     | single ζ a =>
       obtain ⟨j, ξ, hξ⟩ := hon ζ

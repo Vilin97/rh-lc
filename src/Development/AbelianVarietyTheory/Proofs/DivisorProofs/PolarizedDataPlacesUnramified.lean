@@ -86,7 +86,7 @@ theorem act_eq_trunc : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Numbe
     obtain ⟨S₁, h₁⟩ := ihx
     obtain ⟨S₂, h₂⟩ := ihy
     refine ⟨S₁ ∪ S₂, fun S hS l hl hlat => ?_⟩
-    rw [map_add, map_add, h₁ S (Finset.subset_union_left.trans hS) l hl hlat,
+    rw [map_add (f := _), map_add (f := _), h₁ S (Finset.subset_union_left.trans hS) l hl hlat,
       h₂ S (Finset.subset_union_right.trans hS) l hl hlat]
   | smul c x _ ih =>
     obtain ⟨S₁, h₁⟩ := ih

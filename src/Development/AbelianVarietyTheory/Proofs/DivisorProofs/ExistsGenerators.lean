@@ -14,7 +14,7 @@ theorem exists_factor {A' B M' N' N : Type} [CommRing A'] [CommRing B] {g : A' �
     (hι : Function.Injective ι) (hF : ∀ x, ∃ y, ι y = F x) : ∃ f : M' →ₗ[A'] N', ∀ x, ι (f x) = F x := by
   choose f hf using hF
   exact ⟨{ toFun := f
-           map_add' := fun x y => hι (by rw [map_add, hf, hf, hf, map_add])
+           map_add' := fun x y => hι (by rw [map_add (f := _), hf, hf, hf, map_add (f := _)])
            map_smul' := fun a x => hι (by rw [RingHom.id_apply, map_smulₛₗ, hf, hf, map_smulₛₗ]) }, hf⟩
 
 theorem exists_baseMap {A A' B M M' : Type} [CommRing A] [CommRing A'] [CommRing B] [Algebra A A'] [Algebra A B]
@@ -27,7 +27,7 @@ theorem exists_baseMap {A A' B M M' : Type} [CommRing A] [CommRing A'] [CommRing
       map_smul' := fun a x => by
         induction x using TensorProduct.induction_on with
         | zero => simp
-        | add s t hs ht => rw [smul_add, map_add, map_add, hs, ht, smul_add]
+        | add s t hs ht => rw [smul_add, map_add (f := _), map_add (f := _), hs, ht, smul_add]
         | tmul b y =>
           rw [TensorProduct.smul_tmul', LinearMap.rTensor_tmul, LinearMap.rTensor_tmul, TensorProduct.smul_tmul']
           congr 1
@@ -53,7 +53,7 @@ theorem exists_descend {A A' B M M' N' N : Type} [CommRing A] [CommRing A'] [Com
     | add y y' _ _ h h' =>
       obtain ⟨z, hz⟩ := h
       obtain ⟨z', hz'⟩ := h'
-      exact ⟨z + z', by rw [map_add, hz, hz', TensorProduct.tmul_add, map_add, map_add]⟩
+      exact ⟨z + z', by rw [map_add (f := _), hz, hz', TensorProduct.tmul_add, map_add (f := _), map_add (f := _)]⟩
     | smul a y _ h =>
       obtain ⟨z, hz⟩ := h
       refine ⟨algebraMap A A' a • z, ?_⟩
@@ -63,7 +63,7 @@ theorem exists_descend {A A' B M M' N' N : Type} [CommRing A] [CommRing A'] [Com
   | add s t hs ht =>
     obtain ⟨z, hz⟩ := hs
     obtain ⟨z', hz'⟩ := ht
-    exact ⟨z + z', by rw [map_add, hz, hz', map_add, map_add]⟩
+    exact ⟨z + z', by rw [map_add (f := _), hz, hz', map_add (f := _), map_add (f := _)]⟩
   | tmul a y =>
     obtain ⟨z, hz⟩ := h1 y
     exact ⟨a • z, by rw [map_smulₛₗ, hz, ← map_smulₛₗ, ← map_smul, TensorProduct.smul_tmul', smul_eq_mul, mul_one]⟩
@@ -79,7 +79,7 @@ theorem exists_support {A B M : Type} [CommRing A] [CommRing B] [Algebra A B] [A
     refine ⟨T ∪ T', hT.union hT', fun A' _ g M' _ _ l hl k => ?_⟩
     obtain ⟨z, hz⟩ := h A' g M' l hl (Set.subset_union_left.trans k)
     obtain ⟨z', hz'⟩ := h' A' g M' l hl (Set.subset_union_right.trans k)
-    exact ⟨z + z', by rw [map_add, hz, hz']⟩
+    exact ⟨z + z', by rw [map_add (f := _), hz, hz']⟩
   | tmul b y =>
     refine ⟨{b}, Set.finite_singleton b, fun A' _ g M' _ _ l hl k => ?_⟩
     obtain ⟨a, rfl⟩ := k rfl

@@ -140,7 +140,7 @@ theorem hermUnit_eq_norm : ∀ (L : Type) [Field L] [Valued L (WithZero (Multipl
       rw [this] at hdet
       exact isUnit_of_mul_isUnit_right hdet
     have e := congrArg (aeval tz) (X_mul_divX_add tO.charpoly)
-    rw [h0, map_add, map_mul, aeval_X, aeval_C] at e
+    rw [h0, map_add (f := _), map_mul, aeval_X, aeval_C] at e
     have hu : IsUnit (tz * aeval tz tO.charpoly.divX) := by
       rw [eq_neg_of_add_eq_zero_left e]
       exact (hc0.map _).neg

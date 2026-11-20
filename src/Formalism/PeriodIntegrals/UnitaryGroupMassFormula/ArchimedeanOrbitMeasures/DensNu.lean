@@ -130,12 +130,12 @@ variable {D : D7} (X : HidaSetting D)
 theorem pairHerm_addL (S S' T : HermR (Ainf X.B.I.F) X.B.I.cm.sig (D.R.rS + 1 + D.R.rS)) :
     pairHerm (Ainf X.B.I.F) X.B.I.cm.sig _ (S + S') T =
       pairHerm (Ainf X.B.I.F) X.B.I.cm.sig _ S T + pairHerm (Ainf X.B.I.F) X.B.I.cm.sig _ S' T := by
-  simp only [pairHerm, AddSubgroup.coe_add, Matrix.add_apply, add_mul, Finset.sum_add_distrib, map_add, mul_add]
+  simp only [pairHerm, AddSubgroup.coe_add, Matrix.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _), mul_add]
 
 theorem pairHerm_addR (S T T' : HermR (Ainf X.B.I.F) X.B.I.cm.sig (D.R.rS + 1 + D.R.rS)) :
     pairHerm (Ainf X.B.I.F) X.B.I.cm.sig _ S (T + T') =
       pairHerm (Ainf X.B.I.F) X.B.I.cm.sig _ S T + pairHerm (Ainf X.B.I.F) X.B.I.cm.sig _ S T' := by
-  simp only [pairHerm, AddSubgroup.coe_add, Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add]
+  simp only [pairHerm, AddSubgroup.coe_add, Matrix.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem pairHerm_symm (S T : HermR (Ainf X.B.I.F) X.B.I.cm.sig (D.R.rS + 1 + D.R.rS)) :
     pairHerm (Ainf X.B.I.F) X.B.I.cm.sig _ S T = pairHerm (Ainf X.B.I.F) X.B.I.cm.sig _ T S := by
@@ -161,7 +161,7 @@ theorem sumReI_add (a b : Ainf X.B.I.F) : sumReI X (a + b) = sumReI X a + sumReI
   simp only [sumReI]
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun w _ => ?_
-  rw [show (a + b) w = a w + b w from rfl, map_add, Complex.add_re]
+  rw [show (a + b) w = a w + b w from rfl, map_add (f := _), Complex.add_re]
 
 theorem continuous_sumReI : Continuous (sumReI X) :=
   continuous_finsetSum _ fun w _ => Complex.continuous_re.comp

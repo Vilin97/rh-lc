@@ -79,7 +79,7 @@ theorem UpperTheory.V.Pa.B2.H2_right_exact_mod_l_of_H3_subsingleton :
     intro g
     simp only [N, LinearMap.mem_ker]
     rw [dn_two_apply']
-    simp only [C, c, map_sub, map_add, hu, us]
+    simp only [C, c, map_sub, map_add (f := _), hu, us]
     simpa using c'.2.2 (g 0) (g 1) (g 2)
   let f : (Fin 3 → G) → N := fun g => ⟨dn M.ρ 2 C g, hfN g⟩
   have key : ∀ t : Fin 3 → G, ((f t : N) : M.X) =

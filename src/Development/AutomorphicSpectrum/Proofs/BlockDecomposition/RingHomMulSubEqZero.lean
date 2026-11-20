@@ -52,7 +52,7 @@ theorem tendsto_tau_fin (v : HeightOneSpectrum (𝓞 F)) {N : ℕ} (hN : ((N : �
   have h3 := ht.div h2 one_ne_zero
   rw [zero_div] at h3
   refine h3.congr fun k => ?_
-  simp [tau, map_div₀, map_add, map_pow, map_natCast]
+  simp [tau, map_div₀, map_add (f := _), map_pow, map_natCast]
 
 theorem tendsto_tau_inf (w : InfinitePlace F) {N : ℕ} (hN : 2 ≤ N) :
     Tendsto (fun k => algebraMap F w.Completion ((tau N k : ℚ) : F)) atTop (𝓝 0) := by

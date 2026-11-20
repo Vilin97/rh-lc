@@ -73,7 +73,7 @@ theorem UpperTheory.V.Alg.M.fix_holds :
         rw [key z hz b, hz0, map_zero, zero_mul]
     | algebraMap c => exact h0 _ (SetLike.algebraMap_mem_graded 𝒜 c) b
     | add a a' _ _ iha iha' =>
-      rw [add_mul, DirectSum.decompose_add, DirectSum.add_apply, map_add, iha, iha',
+      rw [add_mul, DirectSum.decompose_add, DirectSum.add_apply, map_add (f := _), iha, iha',
         DirectSum.decompose_add, DirectSum.add_apply, map_add, add_mul]
     | mul a a' _ _ iha iha' =>
       rw [mul_assoc, iha (a' * b), iha' b, iha a']
@@ -91,7 +91,7 @@ theorem UpperTheory.V.Alg.M.fix_holds :
         intro a b
         show σ (DirectSum.decompose 𝒜 (a + b) 0) =
           σ (DirectSum.decompose 𝒜 a 0) + σ (DirectSum.decompose 𝒜 b 0)
-        rw [DirectSum.decompose_add, DirectSum.add_apply, map_add]
+        rw [DirectSum.decompose_add, DirectSum.add_apply, map_add (f := _)]
       commutes' := by
         intro c
         show σ (DirectSum.decompose 𝒜 (algebraMap O A c) 0) = algebraMap O K c

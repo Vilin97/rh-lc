@@ -90,7 +90,7 @@ theorem core (hA : IsAbelianScheme A₀) {O : Type} [CommRing O] (act : O → (A
       have := neg_mem (hglue j i); rwa [neg_sub] at this
     have := add_mem (hα j i c).2 (hfstab j c _ hδ)
     convert this using 1
-    simp only [map_add, map_sub, map_smul, smul_add, smul_sub]
+    simp only [map_add (f := _), map_sub, map_smul, smul_add, smul_sub]
     abel
   · rw [sub_sum_mem_glueFil_iff]
     simp only [hw1, hw2, LinearMap.proj_pi]

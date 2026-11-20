@@ -84,7 +84,7 @@ theorem UpperTheory.exists_ne_zero_linearModel_vacuum_eq_smul :
           (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F X.J) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F W.J) x γ₁ +
           GlobalTheory.WeilM.symp (R := AF F) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA σ) (-1)
           (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F X.J) (GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.incM F W.J) x γ₂ := by
-        simp only [GlobalTheory.WeilM.symp, GlobalTheory.WeilM.hTens, Matrix.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+        simp only [GlobalTheory.WeilM.symp, GlobalTheory.WeilM.hTens, Matrix.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
       rw [e, hs _ hx.1 hx.2 e₁, zero_add]
       exact h γ₂ h₂ ⟨hat γ₂ h₂, e₂⟩)
   refine ⟨ι (M.vac v) 0, hz, fun x hx hx0 => ?_⟩

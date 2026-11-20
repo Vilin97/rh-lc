@@ -31,7 +31,7 @@ theorem heis_C_k {σ : E →ₐ[F] E} {B : Base F E} (hB : _root_.UpperTheory.TP
     norm_num
   funext w
   simp only [Function.comp_apply, heisOF, thV, GlobalTheory.WeilM.thetaSum, GlobalTheory.WeilM.schr]
-  rw [map_add, hCy]
+  rw [map_add (f := _), hCy]
   have hph : symplOHF σ JS (GlobalTheory.WeilSchrodinger.DblTargetF.dblG JT) ξ₀ w (dC (AF F ⊗[F] E) nT * y) =
       ⅟(2 : AF F) * ((e w).1 ⬝ᵥ β y) := by
     rw [symplOHF, he, hCy, h2]

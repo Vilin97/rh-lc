@@ -15,7 +15,7 @@ def coneD (U : T) (n : ℤ) :
         (φ.app U).f (n + 1) x.1 + (D.obj U).d n (n + 1) x.2)
       map_zero' := by simp
       map_add' := fun x y => by
-        refine Prod.ext ?_ ?_ <;> simp only [Prod.fst_add, Prod.snd_add, map_add, neg_add] <;> abel }
+        refine Prod.ext ?_ ?_ <;> simp only [Prod.fst_add, Prod.snd_add, map_add (f := _), neg_add] <;> abel }
 
 lemma coneD_apply (U : T) (n : ℤ) (x : (C.obj U).X (n + 1) × (D.obj U).X n) :
     coneD φ U n x = (-(C.obj U).d (n + 1) (n + 1 + 1) x.1,

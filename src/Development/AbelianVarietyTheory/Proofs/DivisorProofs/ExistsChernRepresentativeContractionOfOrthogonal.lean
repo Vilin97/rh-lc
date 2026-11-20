@@ -168,7 +168,7 @@ theorem rep_contr {v : epsR R ⟶ B} (hv : IsTangent v) (f : Z1 (O (dp0 R) (A.ho
   rw [fv_sub_sum] at e2
   simp only [Fn1.add, Fn1.neg, hX0, Finset.sum_const_zero, zero_add] at e1 ⊢
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [e1, map_add, map_sum]
+    rw [e1, map_add (f := _), map_sum]
   simp only [e3, Finset.sum_sub_distrib]
   linear_combination e2
 

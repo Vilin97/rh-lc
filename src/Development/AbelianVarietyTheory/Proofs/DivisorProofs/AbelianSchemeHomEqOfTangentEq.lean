@@ -116,7 +116,7 @@ theorem germ_doubling {G : Over (Sp k)} [GrpObj G] (φ : Germ G ⟶ Germ G)
   have h3 := congrArg (fun ρ => ρ.hom x) (stalk_hom_ext _ _ _ h2)
   change tanHom (germEv G) lam (φ.hom x) = epsMul 2 (tanHom (germEv G) lam x) at h3
   have h0 : germEv G x = 0 := hx
-  rw [map_sub, two_mul, map_add, h3]
+  rw [map_sub, two_mul, map_add (f := _), h3]
   ext
   · simp [epsMul, tanHom_fst, h0]
   · simp [epsMul, two_mul]

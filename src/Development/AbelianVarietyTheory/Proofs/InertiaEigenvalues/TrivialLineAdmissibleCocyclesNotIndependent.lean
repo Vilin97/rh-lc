@@ -150,13 +150,13 @@ theorem main : ∀ {k G : Type} [Field k] [Group G] {l n : ℕ} [Fact l.Prime] [
       · change (F.D (chr 1)).φ i (x • m p (i - 1) + m q (i - 1) + d (i - 1) • F.unit (i - 1)) -
           (x • m p i + m q i + d i • F.unit i) = x • b p i + b q i
         have e : d (i - 1) = x * c p i + c q i + d i := by rw [hd i]; ring
-        rw [map_add, map_add, map_smul, map_smul, F.unit_φ, (hm p i).1, (hm q i).1, e]
+        rw [map_add (f := _), map_add (f := _), map_smul, map_smul, F.unit_φ, (hm p i).1, (hm q i).1, e]
         module
       · change (F.D (chr 1)).γ i (x • m p i + m q i + d i • F.unit i) -
           (x • m p i + m q i + d i • F.unit i) = x • g p i + g q i
-        rw [map_add, map_add, map_smul, map_smul, F.unit_γ, (hm p i).2, (hm q i).2]
+        rw [map_add (f := _), map_add (f := _), map_smul, map_smul, F.unit_γ, (hm p i).2, (hm q i).2]
         module)
-    rw [← map_smul, ← map_add]
+    rw [← map_smul, ← map_add (f := _)]
     exact (Submodule.Quotient.mk_eq_zero _).2 h0
   rw [Fintype.linearIndependent_iff] at hli
   by_cases hs : ∑ i, c 0 i = 0

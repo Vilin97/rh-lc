@@ -48,7 +48,7 @@ variable (hσ : IsSmooth σ) {K : Subgroup L} (hKc : IsCompact (K : Set L))
 def genKernel : Submodule ℂ (genSubrep σ N).toSubmodule where
   carrier := {u | ∀ g, fixedProj σ hσ hKc hKo (σ g u) = 0}
   add_mem' {a b} ha hb g := by
-    simp only [mem_setOf_eq, Submodule.coe_add, map_add, ha g, hb g, add_zero]
+    simp only [mem_setOf_eq, Submodule.coe_add, map_add (f := _), ha g, hb g, add_zero]
   zero_mem' g := by simp
   smul_mem' c a ha g := by
     simp only [mem_setOf_eq, Submodule.coe_smul, map_smul, ha g, smul_zero]

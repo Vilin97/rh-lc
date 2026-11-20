@@ -156,7 +156,7 @@ theorem rest_vac {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {M : Model σ X W} 
     change evFin F v (u * z i) = 0 at h3
     rw [map_mul, h2, one_mul] at h3
     exact h3
-  simp only [Pi.add_apply, map_add, hz0, add_zero]
+  simp only [Pi.add_apply, map_add (f := _), hz0, add_zero]
 
 theorem eq_of_pure_vac {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {M : Model σ X W} {ψ : AddChar (AF F) ℂ}
     (hM : M.IsGood ψ) {A C : SInf F (Fin n × Fin d)} (h : pure A M.vac = pure C M.vac) : A = C := by

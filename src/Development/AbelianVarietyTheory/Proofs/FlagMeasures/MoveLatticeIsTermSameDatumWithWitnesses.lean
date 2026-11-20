@@ -203,7 +203,7 @@ theorem main : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [I
     apply inTh_tr S hm
     obtain ⟨c, hc, ec⟩ := hc
     have e : n₀ (x + x') = (x + x') + algebraMap F E S.th • (-(c • (u + s • x))) := by
-      rw [map_add, hfx, e₀, eich_def, hx'u, ec]; module
+      rw [map_add (f := _), hfx, e₀, eich_def, hx'u, ec]; module
     rw [e]
     exact inTh_add S hb ⟨_, Λ.neg_mem (smulO S hc (Λ.add_mem hu hs1)), rfl⟩
   have hu₁ : -u ∈ n₀⁻¹ • Λ := by

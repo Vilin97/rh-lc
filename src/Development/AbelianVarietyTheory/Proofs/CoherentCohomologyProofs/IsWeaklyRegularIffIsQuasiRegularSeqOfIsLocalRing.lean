@@ -46,7 +46,7 @@ noncomputable def MonoDeg.optionEquiv (ι : Type*) (a : ℕ) :
       · have h1 : α - Finsupp.single none 1 + Finsupp.single none 1 = α :=
           tsub_add_cancel_of_le (Finsupp.single_le_iff.mpr (Nat.pos_of_ne_zero h0))
         refine ⟨Sum.inr ⟨α - Finsupp.single none 1, ?_⟩, Subtype.ext h1⟩
-        rw [← h1, map_add, Finsupp.degree_single] at hα
+        rw [← h1, map_add (f := _), Finsupp.degree_single] at hα
         omega
 
 variable {R : Type*} [CommRing R]

@@ -154,7 +154,7 @@ lemma eh_clm (p q : Fin (mdim k r i)) (L : E →L[ℂ] E') (f : Mx k r → E) (h
     EH k r (posL k r i p) (posL k r i q) (fun y => L (f y)) g =
       L (EH k r (posL k r i p) (posL k r i q) f g) := by
   simp only [EH, EabH]
-  rw [rdV_clm _ (exp_first_hermitian_mem_level p q) L f hf g hg, rdV_clm _ (exp_second_hermitian_mem_level p q) L f hf g hg, map_add, map_smul]
+  rw [rdV_clm _ (exp_first_hermitian_mem_level p q) L f hf g hg, rdV_clm _ (exp_second_hermitian_mem_level p q) L f hf g hg, map_add (f := _), map_smul]
 
 lemma mulX_cd (X : Mx k r) : ContDiff ℝ ∞ (fun g : Mx k r => g * X) := by
   refine contDiff_pi.2 fun a => contDiff_pi.2 fun b => ?_
@@ -204,7 +204,7 @@ lemma top_clm (c : ℂ) (p q : Fin (mdim k r i)) (L : E →L[ℂ] E') (f : Mx k 
       L (Top (EH k r) c (posL k r i p) (posL k r i q) f g) := by
   simp only [Formalism.QuantumDeterminants.Top]
   rw [eh_clm p q L f hf g hg]
-  split_ifs <;> simp only [map_add, map_smul, map_zero]
+  split_ifs <;> simp only [map_add (f := _), map_smul, map_zero]
 
 def foldP (k r : ℕ) (i : Fin (r + 1)) {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E]
     (l : List (ℂ × Fin (mdim k r i) × Fin (mdim k r i))) (f : Mx k r → E) : Mx k r → E :=

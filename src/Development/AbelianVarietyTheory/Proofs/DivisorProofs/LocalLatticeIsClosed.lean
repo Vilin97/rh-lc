@@ -24,7 +24,7 @@ def intAt (F : Type) [Field F] [NumberField F] (v : Pl F) : AddSubgroup (AF F) w
     rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
     refine ⟨fun u hu => ?_, ?_⟩
     · rw [smul_add, ha u hu, hb u hu, add_zero]
-    · rw [map_add]; exact add_mem ha' hb'
+    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha' hb'
   neg_mem' := by
     rintro a ⟨ha, ha'⟩
     refine ⟨fun u hu => ?_, ?_⟩

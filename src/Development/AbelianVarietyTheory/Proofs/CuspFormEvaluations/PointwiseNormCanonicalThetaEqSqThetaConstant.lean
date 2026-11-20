@@ -140,7 +140,7 @@ theorem cjFn_mem_Sec : cjFn T e F ∈ T.Sec 1 1 := by
       fun_prop
     exact (h2.comp h3) w
   · have h := hF.2 _ ((hL _).1 (hγ 0)) (cj T e (v 0))
-    simp only [cjFn, Pi.add_apply, map_add, h, hka _ (hγ 0), Hf_cj, map_mul, ← Complex.exp_conj,
+    simp only [cjFn, Pi.add_apply, map_add (f := _), h, hka _ (hγ 0), Hf_cj, map_mul, ← Complex.exp_conj,
       HC, Fin.sum_univ_one, Fin.prod_univ_one, pow_one, map_div₀, conj_conj, map_intCast,
       map_natCast, conj_ofReal, map_ofNat]
 
@@ -448,7 +448,7 @@ theorem exists_char_at (hs : IsSympl X.toData bas) {x : Frame X.Ψ r} (A : Torus
     rw [h3]
     rcases hσ with rfl | rfl <;> rcases A.sg_pm with h4 | h4 <;> simp [h4, mul_comm]
   rw [h2, Real.cos_int_mul_pi] at h
-  rw [map_add, Submodule.coe_add, map_add, mul_comm (π * I : ℂ), Complex.exp_int_mul,
+  rw [map_add (f := _), Submodule.coe_add, map_add (f := _), mul_comm (π * I : ℂ), Complex.exp_int_mul,
     Complex.exp_pi_mul_I]
   have h5 := congrArg ((↑) : ℝ → ℂ) h
   push_cast at h5

@@ -172,7 +172,7 @@ theorem lieN_of_coord (w : D.what₂.Word) (W : Matrix (Kap X) (Kap X) X.B.I.E) 
     · simp only [lvk, Sum.elim_inl, Sum.elim_inr]; have := a.2; have := b.2; omega
   refine ⟨fun x y => ?_, fun a ha1 har x hx => ?_, fun x hx => ?_⟩
   · apply X.ιE.symm.injective
-    rw [map_add, ← Formalism.L2.SG.NonRelPf.hE_crd X, ← Formalism.L2.SG.NonRelPf.hE_crd X, hZ, hZ, map_zero]
+    rw [map_add (f := _), ← Formalism.L2.SG.NonRelPf.hE_crd X, ← Formalism.L2.SG.NonRelPf.hE_crd X, hZ, hZ, map_zero]
     exact hskew _ _
   · rw [hXf] at hx ⊢
     induction hx using Submodule.span_induction with
@@ -182,7 +182,7 @@ theorem lieN_of_coord (w : D.what₂.Word) (W : Matrix (Kap X) (Kap X) X.B.I.E) 
       rintro _ ⟨c, hc, rfl⟩
       exact ⟨c, by simp only [Set.mem_ofPred_eq] at hb hc ⊢; omega, rfl⟩
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
     | smul c y _ hy => rw [map_smul]; exact Submodule.smul_mem _ _ hy
   · have hx0 : ∀ a, hE X (X.eR a) (X.crd x) = 0 := by
       intro a

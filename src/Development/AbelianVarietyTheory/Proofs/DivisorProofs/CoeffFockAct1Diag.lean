@@ -18,7 +18,7 @@ theorem coeff_fockAct1_diag {P Q R S : ℕ} (a : Ix P Q) (f : Pol P Q R S) (α :
     by_cases h : u = α
     · subst h; simp; ring
     · simp [h]
-  | add p q hp hq => simp only [map_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => simp only [map_add (f := _), MvPolynomial.coeff_add, hp, hq, mul_add]
 
 theorem eig_inl {P Q R S : ℕ} (i : Fin P) (α : Ln P Q R S →₀ ℕ) :
     (∑ c, lineSign (Sum.inl i : Ix P Q) c * (((α (Sum.inl i, c) : ℕ) : ℂ) + 1 / 2)) =

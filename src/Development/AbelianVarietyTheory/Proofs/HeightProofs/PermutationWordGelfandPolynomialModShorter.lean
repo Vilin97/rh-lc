@@ -189,7 +189,7 @@ theorem symb_sub {E : Fin n → Fin n → A} (hE : Formalism.REAL.GlRel E) {d : 
   | zero => simp
   | add x y _ _ hx hy =>
     convert add_mem hx hy using 1
-    simp only [Prod.snd_add, Prod.fst_add, map_add]; abel
+    simp only [Prod.snd_add, Prod.fst_add, map_add (f := _)]; abel
   | smul c x _ hx =>
     convert Submodule.smul_mem _ c hx using 1
     simp [smul_sub]

@@ -164,7 +164,7 @@ theorem exists_isogeny : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
   have hlift : ∀ x ∈ Λ.lattice, ∃ b : 𝓞 E, ∀ i, φ i (b : E) = x := fun x hx => by
     obtain ⟨hint, a, b, hab⟩ := (hΛ x).1 hx
     have h1 : ∀ i, φ i ((a : E) + (b : E) * ω) = x := fun i => by
-      rw [map_add, map_mul, map_ratCast, map_ratCast, hω, hab]
+      rw [map_add (f := _), map_mul, map_ratCast, map_ratCast, hω, hab]
     refine ⟨⟨(a : E) + (b : E) * ω, ?_⟩, h1⟩
     rw [← h1 (U.e j₀)] at hint
     exact (isIntegral_algHom_iff (φ (U.e j₀)).toIntAlgHom (φ (U.e j₀)).injective).1 hint

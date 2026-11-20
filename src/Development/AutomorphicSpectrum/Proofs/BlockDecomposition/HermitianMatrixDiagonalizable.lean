@@ -194,7 +194,7 @@ theorem ct_transvection (i j : ι) (s : R) :
     ct σ (Matrix.transvection j i s) = Matrix.transvection i j (σ s) := by
   unfold ct Matrix.transvection
   ext a b
-  simp only [Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, map_add,
+  simp only [Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, map_add (f := _),
     Matrix.one_apply, Matrix.single_apply]
   by_cases hab : a = b
   · subst hab

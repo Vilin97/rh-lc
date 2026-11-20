@@ -23,7 +23,7 @@ def Bd (c : ℝ) (f : MvPowerSeries ι K) : Prop := ∀ n, ‖MvPowerSeries.coef
 
 theorem bd_add {c : ℝ} {f g : MvPowerSeries ι K} (hf : Bd c f) (hg : Bd c g) : Bd c (f + g) :=
   fun n => by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hf n) (hg n))
 
 theorem bd_neg {c : ℝ} {f : MvPowerSeries ι K} (hf : Bd c f) : Bd c (-f) := fun n => by
@@ -149,7 +149,7 @@ theorem bd_of_mul {c : ℝ} (hc : 0 ≤ c) {X U : MvPowerSeries ι K} (hU : Bd 1
     have e : X - (X * U - truncD d X * U + truncD d X) = -((X - truncD d X) * (U - 1)) := by ring
     rw [e]
     exact low_neg (low_mul hXh hU')
-  rw [coeff_eq_of_low hlow hm, map_add, coeff_truncD_self X hm, add_zero]
+  rw [coeff_eq_of_low hlow hm, map_add (f := _), coeff_truncD_self X hm, add_zero]
   exact bd_sub h (sm_mul hc hl hU) m
 
 end Induct
@@ -209,7 +209,7 @@ theorem frob_add (hp : p.Prime) (hnp : ‖(p : K)‖ = (p : ℝ)⁻¹) {x y : Mv
       (x ^ p - PhiH hp.ne_zero σ x) + (y ^ p - PhiH hp.ne_zero σ y) +
         MvPowerSeries.C (p : K) * (x * y *
           ∑ k ∈ Ioo 0 p, x ^ (k - 1) * y ^ (p - k - 1) * ((p.choose k / p : ℕ) : MvPowerSeries ι K)) := by
-    rw [add_pow_prime_eq hp, map_add, map_natCast]
+    rw [add_pow_prime_eq hp, map_add (f := _), map_natCast]
     ring
   rw [e]
   refine bd_add (bd_add hx' hy') (sm_mul hpos (bd_C hpos hnp.le) (int_mul (int_mul hx hy) ?_))
@@ -257,7 +257,7 @@ theorem frob_congr [Finite ι] (hp : p.Prime) (hnp : ‖(p : K)‖ = (p : ℝ)�
         (f ^ p - (truncD (n.degree + 1) f) ^ p) -
         PhiH hp.ne_zero σ (f - truncD (n.degree + 1) f) := by
     rw [map_sub]; ring
-  rw [e, map_sub, map_add, h1 n (by omega), h2 n (by omega), add_zero, sub_zero]
+  rw [e, map_sub, map_add (f := _), h1 n (by omega), h2 n (by omega), add_zero, sub_zero]
   exact hg n
 
 end Congr
@@ -358,7 +358,7 @@ theorem small_of_exp [Finite ι] (hp : p.Prime) (hnp : ‖(p : K)‖ = (p : ℝ)
     · simpa using low_mul hEh (low_zero (mvExp (truncD d D)))
     · have := low_mul hEl1 hDh
       rwa [add_comm] at this
-  rw [coeff_eq_of_low hlow hm, map_add, coeff_truncD_self D hm, add_zero]
+  rw [coeff_eq_of_low hlow hm, map_add (f := _), coeff_truncD_self D hm, add_zero]
   exact bd_sub hD hEl m
 
 end ExpS
@@ -406,7 +406,7 @@ theorem int_of_frob (hp : p.Prime) (hnp : ‖(p : K)‖ = (p : ℝ)⁻¹)
     · exact low_mono (by omega) (low_mul (low_zero k) (low_mul hFh hFh))
     · exact low_mono (by omega) (low_mul (low_mul hFh (low_zero r)) hG1)
   have h1 := coeff_eq_of_low hlow hm
-  rw [map_add, MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_C_mul, hFlm, mul_zero, add_zero] at h1
+  rw [map_add (f := _), MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_C_mul, hFlm, mul_zero, add_zero] at h1
   have h2 := hY m
   rw [← h1, norm_mul, hnp] at h2
   exact le_of_mul_le_mul_left (by simpa using h2) hpos
@@ -424,7 +424,7 @@ theorem mvExp_natMul {Ψ : MvPowerSeries ι K} (h0 : MvPowerSeries.constantCoeff
   | succ n ih =>
     have e : MvPowerSeries.C ((n + 1 + 1 : ℕ) : K) * Ψ =
         MvPowerSeries.C ((n + 1 : ℕ) : K) * Ψ + Ψ := by
-      rw [Nat.cast_succ (n + 1), map_add, map_one]; ring
+      rw [Nat.cast_succ (n + 1), map_add (f := _), map_one]; ring
     rw [e, mvExp_add (by simp [h0]) h0, ih, pow_succ (mvExp Ψ) (n + 1)]
 
 theorem PhiH_mvExp {p : ℕ} (hp : p ≠ 0) (σ : K →+* K) {Ψ : MvPowerSeries ι K}

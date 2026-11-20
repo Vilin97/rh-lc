@@ -21,7 +21,7 @@ theorem lift_counit_eq {O A : Type} [CommRing O] [CommRing A] [Bialgebra O A] (t
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [Algebra.smul_def, mul_comm]
-  | add s t hs ht => simp only [map_add, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), hs, ht]
 
 end GlobalTheory.ChartUnit
 

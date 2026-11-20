@@ -177,10 +177,10 @@ private theorem algebraMap_nrm_second_difference_eq_sum {F : Type} [Field F] [Va
     (W V H : Fin d → E) :
     algebraMap F E (nrm (W + V + H) - nrm (W + V) - nrm (W + H) + nrm W) =
       ∑ a, (V a * L.cj (H a) + H a * L.cj (V a)) := by
-  rw [map_add, map_sub, map_sub, hnrm, hnrm, hnrm, hnrm, ← Finset.sum_sub_distrib,
+  rw [map_add (f := _), map_sub, map_sub, hnrm, hnrm, hnrm, hnrm, ← Finset.sum_sub_distrib,
     ← Finset.sum_sub_distrib, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun a _ => ?_
-  simp only [Pi.add_apply, map_add]
+  simp only [Pi.add_apply, map_add (f := _)]
   ring
 
 private theorem algebraMap_nrm_add_sub_nrm_eq_sum {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F]
@@ -191,7 +191,7 @@ private theorem algebraMap_nrm_add_sub_nrm_eq_sum {F : Type} [Field F] [Valuativ
       ∑ a, (W a * L.cj (V a) + V a * L.cj (W a) + V a * L.cj (V a)) := by
   rw [map_sub, hnrm, hnrm, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun a _ => ?_
-  simp only [Pi.add_apply, map_add]
+  simp only [Pi.add_apply, map_add (f := _)]
   ring
 
 theorem norm_gauss_sum_le : ∀ {F : Type} [Field F] [ValuativeRel F] [TopologicalSpace F] [IsNonarchimedeanLocalField F] [CharZero F] {E : Type} [CommRing E] [Algebra F E] [TopologicalSpace E] (L : LocE F E), ∀ ϖ : 𝒪[F], Irreducible ϖ → ∀ (ψ : AddChar F ℂ), (∀ x : F, ‖ψ x‖ = 1) → (∀ x : F, (∀ y : 𝒪[F], ψ (x * y) = 1) ↔ x ∈ 𝒪[F]) → ∀ (d i N : ℕ), 1 ≤ i → i ≤ N → ∀ (t : F) (u₀ : (𝒪[F])ˣ), t * (ϖ : F) ^ i = ((u₀ : 𝒪[F]) : F) → ∀ (χ : AddChar (Fin d → E) ℂ), (∀ u, ‖χ u‖ = 1) → (∀ u : Fin d → E, (∀ a, u a ∈ L.O) → χ (algebraMap F E ((ϖ : F) ^ N) • u) = 1) → ∀ (R : Finset (Fin d → E)) (nrm : (Fin d → E) → F), (∀ u, algebraMap F E (nrm u) = ∑ a, u a * L.cj (u a)) → (∀ u ∈ R, ∀ a, u a ∈ L.O) → (∀ u : Fin d → E, (∀ a, u a ∈ L.O) → ∃! w, w ∈ R ∧ ∀ a, ∃ c ∈ L.O, u a - w a = algebraMap F E ((ϖ : F) ^ N) * c) → ‖∑ u ∈ R, ψ (t * nrm u) * χ u‖ ≤ (R.card : ℝ) * (resQ ϖ : ℝ) ^ (-(i * d : ℤ)) := by
@@ -250,7 +250,7 @@ theorem norm_gauss_sum_le : ∀ {F : Type} [Field F] [ValuativeRel F] [Topologic
       set_option synthInstance.maxHeartbeats 100000 in
         rw [algebraMap_nrm_add_sub_nrm_eq_sum L nrm hnrm, map_mul (algebraMap F E), map_sum, Finset.mul_sum]
       refine Finset.sum_congr rfl fun a _ => ?_
-      rw [map_add, map_mul (algebraMap F E), ← hτ a, ← hν a, hιp]
+      rw [map_add (f := _), map_mul (algebraMap F E), ← hτ a, ← hν a, hιp]
       simp only [Pi.smul_apply, smul_eq_mul, map_mul, hcje, L.cj_cj]
       ring
     have harg : t * nrm (ι w + ι p) =

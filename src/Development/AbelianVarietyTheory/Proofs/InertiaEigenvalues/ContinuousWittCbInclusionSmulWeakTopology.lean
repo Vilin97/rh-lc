@@ -43,7 +43,7 @@ theorem continuous_io_smul_of {O RA RW M : Type} [CommRing O] [TopologicalSpace 
           have : (fun i => PowerSeries.C ((c + c') i)) =
               (fun i => PowerSeries.C (c i)) + fun i => PowerSeries.C (c' i) := by
             funext i; simp
-          simp only [this, map_add, add_smul]
+          simp only [this, map_add (f := _), add_smul]
         map_smul' := fun o c => by
           have : (fun i => PowerSeries.C ((o • c) i)) = o • (fun i => PowerSeries.C (c i)) := by
             funext i; simp [PowerSeries.smul_eq_C_mul, map_mul]

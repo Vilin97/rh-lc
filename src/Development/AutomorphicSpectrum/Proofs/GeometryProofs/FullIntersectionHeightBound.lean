@@ -115,7 +115,7 @@ theorem exists_integral_bound (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : 
     omega
   have hQy : aeval y Q = 0 := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Q, map_add, map_mul, map_pow, map_sum, aeval_chartMon, hGF]
+      simp only [Q, map_add (f := _), map_mul, map_pow, map_sum, aeval_chartMon, hGF]
     have : ∀ j ∈ Finset.range D, aeval y (Fm j) * (x * aeval y F) ^ j * aeval y F ^ (D - j) =
         (∏ k, y ⟨k, c k⟩ ^ Δ k) * aeval y F ^ D * (((p.coeff j : chartRingZ y c) : Ω) * x ^ j) := by
       intro j hj
@@ -130,7 +130,7 @@ theorem exists_integral_bound (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : 
       _ = 0 := by rw [heq, mul_zero]
   have hQz := vanish hz hQ hQy
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [Q, map_add, map_mul, map_pow, map_sum, eval_chartMon] at hQz
+    simp only [Q, map_add (f := _), map_mul, map_pow, map_sum, eval_chartMon] at hQz
   set gz := eval z (map (Int.castRingHom ℂ) G) with hgz
   set fz := eval z (map (Int.castRingHom ℂ) F) with hfz
   set Pz := ∏ k, ‖z ⟨k, c k⟩‖ ^ Δ k with hPz

@@ -249,7 +249,7 @@ theorem core (hT : TameQuotient) (hG : GalHyp bkP i s) (hF : FirstHalf i s) (hR 
     rw [this, hth]
     simp [lam, delAll]
   have hlamm : ∀ g h, lam (g * h) = lam g + lam h := fun g h => by
-    simp only [lam, map_mul, toAdd_mul, map_add, mul_add, Finset.sum_add_distrib, neg_add]
+    simp only [lam, map_mul, toAdd_mul, map_add (f := _), mul_add, Finset.sum_add_distrib, neg_add]
   have hlamc : IsLocallyConstant lam := by
     have h1 : ∀ q, IsLocallyConstant (d q) := fun q => by
       letI : TopologicalSpace (Multiplicative (ZMod (X.l i ^ M))) := ⊥

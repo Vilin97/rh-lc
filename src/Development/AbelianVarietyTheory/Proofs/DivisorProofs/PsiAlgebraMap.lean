@@ -101,7 +101,7 @@ def decHom (hN : GradedFam c₀ N) : ring hN →+ DirectSum ℕ (fun k => piece 
       dec_eq hN p S (fun x hx => Finset.mem_union_left _ (Finset.mem_union_left _ hx)),
       dec_eq hN q S (fun x hx => Finset.mem_union_left _ (Finset.mem_union_right _ hx)), ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun k _ => ?_
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
 
 instance gradedMonoid (hN : GradedFam c₀ N) : SetLike.GradedMonoid (piece hN) where
   one_mem j hj := by

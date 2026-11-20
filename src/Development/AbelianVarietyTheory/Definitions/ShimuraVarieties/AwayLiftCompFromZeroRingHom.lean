@@ -36,10 +36,10 @@ theorem isInternal_quotGrading {I : Ideal A} (hI : I.IsHomogeneous 𝒜) :
     obtain ⟨b, hb, hab⟩ := hy
     have hb0 : GradedRing.proj 𝒜 i b = 0 := by
       refine Submodule.iSup_induction _ (motive := fun x => GradedRing.proj 𝒜 i x = 0) hb ?_
-        (map_zero _) (fun x y hx hy => by simp only [map_add, hx, hy, add_zero])
+        (map_zero _) (fun x y hx hy => by simp only [map_add (f := _), hx, hy, add_zero])
       intro j x hx
       refine Submodule.iSup_induction _ (motive := fun x => GradedRing.proj 𝒜 i x = 0) hx ?_
-        (map_zero _) (fun x y hx hy => by simp only [map_add, hx, hy, add_zero])
+        (map_zero _) (fun x y hx hy => by simp only [map_add (f := _), hx, hy, add_zero])
       intro hji z hz
       rw [GradedRing.proj_apply, DirectSum.decompose_of_mem_ne 𝒜 hz hji]
     have hab' : a - b ∈ I := Ideal.Quotient.eq.mp hab.symm

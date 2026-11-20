@@ -50,7 +50,7 @@ theorem exists_glue (c : A →ₐ[R] A) (J : Matrix ι ι A) {e : R} (he : e * e
     show (e • g.1.1 + (1 - e) • h.1.1)ᵀ * J * (e • g.1.1 + (1 - e) • h.1.1).map c = J
     have m : (e • g.1.1 + (1 - e) • h.1.1).map c = e • (g.1.1).map c + (1 - e) • (h.1.1).map c := by
       ext i j
-      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add, map_smul]
+      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, map_add (f := _), map_smul]
     rw [m, Matrix.transpose_add, Matrix.transpose_smul, Matrix.transpose_smul]
     have k := glue_mul he (g.1.1)ᵀ (h.1.1)ᵀ J J
     rw [glue_self] at k

@@ -85,7 +85,7 @@ theorem isHCMod_of_graded : ∀ (p q : ℕ), 1 ≤ p + q → ∀ (T : GrpData p 
           simp only [map_mul]
           rfl
         | zero => simp
-        | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+        | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
         | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha)
     rw [hsup] at hle
     exact hle (Submodule.subset_span ⟨⟨1, kset_one T⟩, by simp⟩)

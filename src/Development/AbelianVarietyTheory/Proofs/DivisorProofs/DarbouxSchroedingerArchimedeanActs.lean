@@ -32,19 +32,19 @@ theorem darboux_rho_acts_sch {F : Type} [Field F] [NumberField F] {κ : Type} [F
       ← dotProduct_smul, ← dotProduct_smul, hb0]
     simp
   have hpsi := hψ.2.2 _ ht
-  have h2 : e (⅟(2 : AF F)) + e (⅟(2 : AF F)) = 1 := by rw [← map_add, invOf_two_add_invOf_two, map_one]
+  have h2 : e (⅟(2 : AF F)) + e (⅟(2 : AF F)) = 1 := by rw [← map_add (f := _), invOf_two_add_invOf_two, map_one]
   have hT : ∀ S : mixedEmbedding.mixedSpace F, Algebra.trace ℝ _ (e (⅟(2 : AF F)) * S) =
       Algebra.trace ℝ _ S / 2 := by
     intro S
     have : Algebra.trace ℝ _ (e (⅟(2 : AF F)) * S) + Algebra.trace ℝ _ (e (⅟(2 : AF F)) * S) =
-        Algebra.trace ℝ _ S := by rw [← map_add, ← add_mul, h2, one_mul]
+        Algebra.trace ℝ _ S := by rw [← map_add (f := _), ← add_mul, h2, one_mul]
     linarith
   have hx : (fun i => evI F ((x + (d.e z).1) i)) = (fun i => evI F (x i)) + fun i => evI F ((d.e z).1 i) := by
     funext i; simp [he]
   simp only [Darboux.rho, schr, tens, hg, sch, ech, mixedTracePairing_apply, arch]
   rw [hpsi, hra, hx]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [he, map_add, map_mul, dotProduct, map_sum, hT]
+    simp only [he, map_add (f := _), map_mul, dotProduct, map_sum, hT]
   rw [show arch F (d.e z).1 = fun i => e ((d.e z).1 i) from funext fun i => he _]
   ring
 

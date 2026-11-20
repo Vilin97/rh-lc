@@ -23,7 +23,7 @@ variable {M : Type} [TopologicalSpace M] {n : ℕ} (A : HolAtlas M n)
 theorem evalF_add {ι : Type} (w : ι → A.Pt → Ev n) (P Q : MvPolynomial ι ℝ) :
     evalF A w (P + Q) = evalF A w P + evalF A w Q := by
   funext x
-  simp only [evalF, fld, map_add, Pi.add_apply, Subalgebra.coe_add]
+  simp only [evalF, fld, map_add (f := _), Pi.add_apply, Subalgebra.coe_add]
 
 theorem evalF_smul {ι : Type} (w : ι → A.Pt → Ev n) (t : ℝ) (P : MvPolynomial ι ℝ) :
     evalF A w (t • P) = (t : ℂ) • evalF A w P := by

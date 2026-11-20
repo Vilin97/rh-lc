@@ -61,8 +61,8 @@ theorem weightSpace_iff_idempotent_fixed : ∀ (k : Type) [Field k] (C : Type) [
       | add a b ha hb =>
         have : a + b - algebraMap k (k ⊗[ℤ] C) (φ (a + b)) =
             (a - algebraMap k (k ⊗[ℤ] C) (φ a)) + (b - algebraMap k (k ⊗[ℤ] C) (φ b)) := by
-          rw [map_add, map_add]; abel
-        rw [this, map_add]
+          rw [map_add (f := _), map_add (f := _)]; abel
+        rw [this, map_add (f := _)]
         exact Commute.isNilpotent_add ((Commute.all _ _).map ρX) ha hb
     have h1e : IsNilpotent (ρX (1 - e)) := by
       have := hall (1 - e)

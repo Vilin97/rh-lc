@@ -33,7 +33,7 @@ theorem map_rowAct {R S : Type*} [CommRing R] [CommRing S] (f : R →+* S) {r n 
     rw [map_C, show (C a : MvPolynomial (Fin r × Fin n) R) = algebraMap R _ a from rfl, AlgHom.commutes,
       show (C (f a) : MvPolynomial (Fin r × Fin n) S) = algebraMap S _ (f a) from rfl, AlgHom.commutes]
     exact map_C f a
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, hp, map_X]
     congr 1

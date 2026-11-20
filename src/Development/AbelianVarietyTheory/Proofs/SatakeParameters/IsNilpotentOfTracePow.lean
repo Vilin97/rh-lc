@@ -34,7 +34,7 @@ theorem exists_pow_eq {K : Type} [Field K] {V : Type} [AddCommGroup V] [Module K
     linear_combination (-C (q.coeff 0)⁻¹) * hq + (C (q.coeff 0)⁻¹ * X ^ m) * h1 - X ^ m * h2
   refine ⟨m, C (-(q.coeff 0)⁻¹) * q.divX, ?_⟩
   have := congrArg (aeval f) hpoly
-  rw [map_add, map_mul (aeval f) _ f.charpoly, h0, mul_zero, add_zero, map_mul, map_pow,
+  rw [map_add (f := _), map_mul (aeval f) _ f.charpoly, h0, mul_zero, add_zero, map_mul, map_pow,
     aeval_X] at this
   exact this
 

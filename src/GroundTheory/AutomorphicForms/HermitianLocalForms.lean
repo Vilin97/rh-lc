@@ -42,7 +42,7 @@ theorem exists_algEquiv_quadraticAlgebra (h2 : (2 : K) ≠ 0) :
   have hα : α ∉ Set.range (algebraMap K E) := by
     rintro ⟨c, hc⟩
     apply hζ
-    exact ⟨c + Algebra.trace K E ζ / 2, by rw [map_add, hc, hαdef]; ring⟩
+    exact ⟨c + Algebra.trace K E ζ / 2, by rw [map_add (f := _), hc, hαdef]; ring⟩
   have htr : Algebra.trace K E α = 0 := by
     rw [hαdef, map_sub, trace_algebraMap_quadratic]
     field_simp
@@ -97,7 +97,7 @@ theorem exists_algEquiv_quadraticAlgebra (h2 : (2 : K) ≠ 0) :
     change conj K E (f z) = f (star ((AlgEquiv.ofBijective f hbij).symm (f z)))
     have : (AlgEquiv.ofBijective f hbij).symm (f z) = z :=
       (AlgEquiv.ofBijective f hbij).symm_apply_apply z
-    rw [this, hf, hf, map_add, map_mul, conj_algebraMap, conj_algebraMap, hconj,
+    rw [this, hf, hf, map_add (f := _), map_mul, conj_algebraMap, conj_algebraMap, hconj,
       QuadraticAlgebra.re_star, QuadraticAlgebra.im_star]
     simp
 
@@ -126,7 +126,7 @@ theorem tensorQuadEquiv_conjBase (hψ : ∀ x, ψ (conj K E x) = star (ψ x)) (z
   | tmul r x =>
     rw [conjBase_tmul, tensorQuadEquiv_tmul, tensorQuadEquiv_tmul, hψ]
     ext <;> simp [QuadraticAlgebra.re_star, QuadraticAlgebra.im_star]
-  | add x y hx hy => simp only [map_add, hx, hy, star_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, star_add]
 
 end BaseChange
 

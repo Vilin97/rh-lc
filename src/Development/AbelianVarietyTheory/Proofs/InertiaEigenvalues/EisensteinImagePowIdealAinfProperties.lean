@@ -102,7 +102,7 @@ theorem pow_dvd_of_forall_approx (m : ℕ) : ∀ a : Ainf l,
       obtain ⟨b, c, hbc⟩ := h n
       refine ⟨Per.θ l c, ?_⟩
       have hE : Per.θ l (bk.ev bk.E) = 0 := (theta_eq_zero_iff bk _).mpr dvd_rfl
-      rw [hbc, map_add, map_mul, map_mul, map_pow, map_pow, hE, map_natCast]
+      rw [hbc, map_add (f := _), map_mul, map_mul, map_pow, map_pow, hE, map_natCast]
       simp
     obtain ⟨a', rfl⟩ := (theta_eq_zero_iff bk a).mp hθ
     rw [pow_succ']

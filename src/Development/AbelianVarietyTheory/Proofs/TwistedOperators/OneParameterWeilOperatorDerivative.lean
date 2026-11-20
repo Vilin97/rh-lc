@@ -151,7 +151,7 @@ def archMap (co : GlobalTheory.WeilM.Darboux Bf κ) (L : W →ₗ[AF F] W) :
     have e : ((archLift (w + w').1, archLift (w + w').2) : (κ → AF F) × (κ → AF F)) =
         (archLift w.1, archLift w.2) + (archLift w'.1, archLift w'.2) := by
       rw [Prod.fst_add, Prod.snd_add, archLift_add, archLift_add]; rfl
-    rw [e, map_add, map_add, map_add]
+    rw [e, map_add (f := _), map_add (f := _), map_add (f := _)]
     exact Prod.ext (archPart_add _ _) (archPart_add _ _)
   map_smul' c w := by
     have e : ((archLift (c • w).1, archLift (c • w).2) : (κ → AF F) × (κ → AF F)) =
@@ -210,20 +210,20 @@ theorem rho_tens {ψ : AddChar (AF F) ℂ} (hψ : IsStd ψ) (co : GlobalTheory.W
     refine at_of_snd ?_
     show finHom z = 0
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [hz, dotProduct, map_add, map_mul, map_sum]
+      simp only [hz, dotProduct, map_add (f := _), map_mul, map_sum]
     have h0 : ∀ i, finHom (archLift q i) = 0 := fun _ => rfl
     simp [h0]
   have hev : evI F z = (∑ i, evI F (y i) * q i) +
       algebraMap ℝ (mixedEmbedding.mixedSpace F) (1 / 2) * ∑ i, p i * q i := by
     rw [← evIHom_apply, hz]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [dotProduct, map_add, map_mul, map_sum, evIHom_apply, evI_invTwo]
+      simp only [dotProduct, map_add (f := _), map_mul, map_sum, evIHom_apply, evI_invTwo]
     have h1 : ∀ i, evI F (archLift q i) = q i := fun i => congrFun (archPart_archLift q) i
     have h2 : ∀ i, evI F (archLift p i) = p i := fun i => congrFun (archPart_archLift p) i
     simp only [h1, h2]
   have htr : Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F z) =
       GlobalTheory.GaussLine.pairInf F κ (fun i => evI F (y i)) q + GlobalTheory.GaussLine.pairInf F κ p q / 2 := by
-    rw [hev, GlobalTheory.GaussLine.pairInf_apply, GlobalTheory.GaussLine.pairInf_apply, map_add, ← Algebra.smul_def, map_smul,
+    rw [hev, GlobalTheory.GaussLine.pairInf_apply, GlobalTheory.GaussLine.pairInf_apply, map_add (f := _), ← Algebra.smul_def, map_smul,
       smul_eq_mul]
     ring
   rw [e1, e2, hψ.2.2 z hzat, htr]

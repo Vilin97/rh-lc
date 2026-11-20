@@ -108,7 +108,7 @@ private theorem tens_simple (θ₁ : H₁ →* A) (θ₂ : H₂ →* B) (X₁ : 
       rw [he]
       rfl
     | add a b ha hb =>
-      simp only [map_add, Submodule.coe_add, ha, hb]
+      simp only [map_add (f := _), Submodule.coe_add, ha, hb]
       rfl
   let S : Subrepresentation E :=
     ⟨(Q.comap (tensFn X₁ X₂).subtype).comap e.toLinearMap, fun g y hy => by

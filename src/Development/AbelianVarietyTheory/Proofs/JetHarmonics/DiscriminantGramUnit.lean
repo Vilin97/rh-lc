@@ -59,7 +59,7 @@ theorem sig_eq_bar [StarRing R] (x : Op p R) : AvDefs.sig p R x = bar p R x := b
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul z a => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 def placeUEquiv : AvDefs.PlaceU p R ≃ Place p R where
   toFun w := ⟨w.e, w.idem, w.ne_zero, w.prim⟩

@@ -31,7 +31,7 @@ theorem setIntegral_char_im_eq_zero :
   set r : ℝ := (H v v).re with hr
   refine setIntegral_mul_char_eq_zero μ Λ Fd hF (fun z => cexp (2 * π * I * ((H v z).im : ℂ)))
     (fun x y => ?_) (fun y hy => ?_) (((-(1 / (2 * r)) : ℝ) * I : ℂ) • v) ?_
-  · simp only [map_add, add_im, ofReal_add, mul_add, Complex.exp_add]
+  · simp only [map_add (f := _), add_im, ofReal_add, mul_add, Complex.exp_add]
   · obtain ⟨m, hm⟩ := hint y hy
     simp only [hm, ofReal_intCast]
     rw [mul_comm]

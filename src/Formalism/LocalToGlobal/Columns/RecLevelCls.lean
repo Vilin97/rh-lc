@@ -390,7 +390,7 @@ theorem rlc_mem_hat_baseLb (z : Fin n → E ⊗[F] Formalism.L2.Herm.Af F) :
       refine ⟨fun i => Subring.add_mem _ (ha i) (hb i), fun P hP => ?_⟩
       have e : (⟨(a + b) (lastIdx n), Subring.add_mem _ (ha _) (hb _)⟩ : Formalism.L2.Herm.intAf F E) =
           ⟨a (lastIdx n), ha _⟩ + ⟨b (lastIdx n), hb _⟩ := rfl
-      rw [e, map_add, ha0 P hP, hb0 P hP, add_zero]
+      rw [e, map_add (f := _), ha0 P hP, hb0 P hP, add_zero]
     · rintro c a _ ⟨ha, ha0⟩
       refine ⟨fun i => Subring.mul_mem _ c.2 (ha i), fun P hP => ?_⟩
       have e : (⟨(c • a) (lastIdx n), Subring.mul_mem _ c.2 (ha _)⟩ : Formalism.L2.Herm.intAf F E) =

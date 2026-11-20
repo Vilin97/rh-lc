@@ -101,10 +101,10 @@ private theorem inF_rt (k M : ℕ) [NeZero k] [NeZero M] (γ γ' : SL(2, ℤ))
   have h1 : ZMod.castHom (dvd_mul_left M k) (ZMod M) (x' 1) = x 1 := h.2
   constructor
   · rw [mul_eq_up k M (rt x γ') 0 (z * (γ'.1 0 0 : ℤ) + x' 1 * (γ'.1 1 0 : ℤ))
-      (by rw [rt_zero, map_add, map_mul, map_mul, hz, h1, map_intCast, map_intCast]), rt_zero, h0, e00, e10]
+      (by rw [rt_zero, map_add (f := _), map_mul, map_mul, hz, h1, map_intCast, map_intCast]), rt_zero, h0, e00, e10]
     push_cast; ring
   · show ZMod.castHom (dvd_mul_left M k) (ZMod M) (rt x' γ 1) = _
-    rw [rt_one', rt_one', h0, map_add, map_mul, map_mul, map_mul, hz, h1, map_intCast, map_intCast, map_natCast, e01, e11]
+    rw [rt_one', rt_one', h0, map_add (f := _), map_mul, map_mul, map_mul, hz, h1, map_intCast, map_intCast, map_natCast, e01, e11]
     push_cast; ring
 
 private theorem rel_inv (k : ℕ) (γ γ' : SL(2, ℤ))

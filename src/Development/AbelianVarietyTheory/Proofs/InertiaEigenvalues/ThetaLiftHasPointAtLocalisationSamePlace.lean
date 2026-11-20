@@ -129,7 +129,7 @@ theorem tC_exists (D : D7) (M : MtFam D) (B : NLocBase D M) (hstd : HeckeStdTw B
         map_add' := fun y y' => by
           have := hadd 1 (Mw.real y) (Mw.real y')
           rw [one_smul, one_smul] at this
-          simp only [map_add]
+          simp only [map_add (f := _)]
           exact this
         map_smul' := fun c y => by
           have := hadd c (Mw.real y) 0

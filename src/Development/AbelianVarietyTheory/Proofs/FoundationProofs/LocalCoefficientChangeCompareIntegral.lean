@@ -219,7 +219,7 @@ theorem bkG_le_extCond (l : ℕ) [Fact l.Prime] (P : LocPrime l) (E Ω : Type) [
   have hZ : (fun g => coordQ (p a) (hi a) k ((c : ↥Gw → KOG O k) g)) ∈ Z1 (WKG M₀) :=
     ⟨(continuous_of_discreteTopology (f := coordQ (p a) (hi a) k)).comp c.2.1, fun g h => by
       beta_reduce
-      rw [c.2.2, map_add, coordQ_act (p a) (hp a)]⟩
+      rw [c.2.2, map_add (f := _), coordQ_act (p a) (hp a)]⟩
   exact ⟨⟨_, hZ⟩, ⟨⟨_, hZ⟩, coordQ_mem_HfD (p a) (hp a) (hi a) B₀ B hz P σ hσ M₀ c hc, rfl⟩, rfl⟩
 
 end GlobalTheory.BlochKatoBaseChange

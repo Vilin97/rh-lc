@@ -306,7 +306,7 @@ theorem thetaRule_sum_lower : ChartIndepSt2 → ∀ (E : Type) [Field E] [Number
     (fun v hv => by
       obtain ⟨b, rfl⟩ := (hT.2.2.2.1 v).1 hv
       obtain ⟨a, e, rfl⟩ := hms b
-      exact ⟨a, ψ (W.Pm e), (hT.2.2.2.1 _).2 ⟨_, rfl⟩, by rw [map_add, map_add, hnat, hmk]⟩)
+      exact ⟨a, ψ (W.Pm e), (hT.2.2.2.1 _).2 ⟨_, rfl⟩, by rw [map_add (f := _), map_add (f := _), hnat, hmk]⟩)
     x2 hx2a hx2b n
   obtain ⟨κ, hκ, hκm⟩ := exists_kappa c σ hP hP0 hhom (fun τ => relab c σ τ ((H.bar α : 𝓞 E) : E)) l.M
     (fun τ => normSq_emb_bar α l.M hα _)

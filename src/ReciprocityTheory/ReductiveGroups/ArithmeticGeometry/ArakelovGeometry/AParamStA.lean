@@ -208,7 +208,7 @@ theorem gbap_cut {J : Type} [Fintype J] {D c : ℕ} (e : J ≃ Fin (D + 1 + c))
         rw [hyy, map_rename, eval_rename]
         exact this
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add, map_add, hx, hy, add_zero]
+      | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
       | smul a x _ hx => rw [smul_eq_mul, map_mul, map_mul, hx, mul_zero]
   set p' : Fin (D + 1 + c) → ℂ := fun j => z₀ (e.symm j) with hp'
   have hp'e : (fun j => p' (e j)) = z₀ := by

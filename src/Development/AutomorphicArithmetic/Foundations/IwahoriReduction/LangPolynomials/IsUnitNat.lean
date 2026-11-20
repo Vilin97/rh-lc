@@ -10,7 +10,7 @@ section
 variable {R : Type} [CommRing R]
 
 private theorem sb_one_add (b : ℕ) : sb (R := R) b (1 + PowerSeries.X) = (1 + PowerSeries.X) ^ b := by
-  rw [map_add, map_one, sb, PowerSeries.substAlgHom_X]; ring
+  rw [map_add (f := _), map_one, sb, PowerSeries.substAlgHom_X]; ring
 
 private theorem sb_C (b : ℕ) (a : R) : sb b (PowerSeries.C a : PowerSeries R) = PowerSeries.C a :=
   (sb (R := R) b).commutes a
@@ -19,7 +19,7 @@ private theorem sb_eval₂ (b : ℕ) (P : Polynomial R) :
     sb b (P.eval₂ PowerSeries.C (1 + PowerSeries.X)) =
       (Polynomial.expand R b P).eval₂ PowerSeries.C (1 + PowerSeries.X) := by
   induction P using Polynomial.induction_on' with
-  | add f g hf hg => simp only [Polynomial.eval₂_add, map_add, hf, hg]
+  | add f g hf hg => simp only [Polynomial.eval₂_add, map_add (f := _), hf, hg]
   | monomial n a =>
     rw [Polynomial.expand_monomial, Polynomial.eval₂_monomial, Polynomial.eval₂_monomial, map_mul, map_pow,
       sb_one_add, sb_C, ← pow_mul, mul_comm b n]
@@ -40,7 +40,7 @@ private theorem dd_sb (b : ℕ) (hb : b ≠ 0) (f : PowerSeries R) :
   rw [map_mul, sb_one_add]
   unfold sb
   rw [PowerSeries.coe_substAlgHom, PowerSeries.derivative_subst (hasSubst_pow (R := R) _)]
-  simp only [map_sub, Derivation.leibniz_pow, map_add, Derivation.map_one_eq_zero, PowerSeries.derivative_X,
+  simp only [map_sub, Derivation.leibniz_pow, map_add (f := _), Derivation.map_one_eq_zero, PowerSeries.derivative_X,
     smul_eq_mul, nsmul_eq_mul, Nat.succ_sub_one, Nat.succ_eq_add_one]
   ring
 

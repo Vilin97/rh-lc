@@ -79,7 +79,7 @@ theorem coneMap_map_int (x : J → Ω) (f : MvPolynomial J ℤ) :
     coneMap ℚ x (MvPolynomial.map (Int.castRingHom ℚ) f) = coneMap ℤ x f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [coneMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp only [map_mul, map_X, hp]; simp [coneMap]
 
 theorem ker_coneMap_rat (x : J → Ω) :
@@ -160,7 +160,7 @@ theorem intOver_coneMap (x : J → Ω) {r : ℕ} (w : Fin r → Polynomial Ω)
     rw [h1]
     exact RingHom.isIntegralElem_map _
   | add p q hp hq =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact RingHom.IsIntegralElem.add _ hp hq
   | mul_X p i hp =>
     rw [map_mul]

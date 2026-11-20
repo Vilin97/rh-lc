@@ -207,7 +207,7 @@ private theorem theta_function_infinite_rational_law {D : D7} {θ : InfFam D} {�
         heisO ψ S T (GlobalTheory.VacUnique.finRat S T (-v)) f (GlobalTheory.FockCompare.iotaW σ T S z) := by
   have e : GlobalTheory.FockCompare.iotaW σ T S (z + GlobalTheory.VacUnique.infRat S T v) =
       ratW T S v + (GlobalTheory.FockCompare.iotaW σ T S z + GlobalTheory.VacUnique.finRat S T (-v)) := by
-    rw [GlobalTheory.VacUnique.ratW_eq h, AddMonoidHom.map_add, AddMonoidHom.map_neg]
+    rw [GlobalTheory.VacUnique.ratW_eq h, AddMonoidHom.map_add (f := _), AddMonoidHom.map_neg]
     abel
   have e2 : symplOH S T (ratW T S v) (GlobalTheory.FockCompare.iotaW σ T S z + GlobalTheory.VacUnique.finRat S T (-v)) =
       symplOH S T (ratW T S v) (GlobalTheory.FockCompare.iotaW σ T S z) + symplOH S T (ratW T S v) (GlobalTheory.VacUnique.finRat S T (-v)) := by
@@ -250,7 +250,7 @@ private theorem exists_linear_reading_of_jets {D : D7} {ψ : AddChar (AF D.host.
   have hXadd : ∀ v v', Xf (v + v') = Xf v + Xf v' := fun v v' => by
     funext τ
     show (GlobalTheory.FockPos.frAt frT τ)⁻¹ * Matrix.of (GlobalTheory.VacUnique.infRat S T (v + v') τ) * GlobalTheory.FockPos.frAt frS τ = _
-    rw [map_add]
+    rw [map_add (f := _)]
     show (GlobalTheory.FockPos.frAt frT τ)⁻¹ * (Matrix.of (GlobalTheory.VacUnique.infRat S T v τ) + Matrix.of (GlobalTheory.VacUnique.infRat S T v' τ)) *
       GlobalTheory.FockPos.frAt frS τ = _
     rw [Matrix.mul_add, Matrix.add_mul]

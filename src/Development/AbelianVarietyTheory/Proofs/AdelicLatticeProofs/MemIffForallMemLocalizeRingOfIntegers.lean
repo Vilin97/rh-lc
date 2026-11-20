@@ -358,7 +358,7 @@ variable (A : Type*) {K : Type*} [CommRing A] [Field K] [Algebra A K]
 def sesqDual (B : V →ₗ[K] W →ₛₗ[σ] K) (s : Set W) : Submodule A V where
   carrier := {x | ∀ y ∈ s, B x y ∈ (1 : Submodule A K)}
   add_mem' hx hx' y hy := by
-    rw [map_add, LinearMap.add_apply]; exact add_mem (hx y hy) (hx' y hy)
+    rw [map_add (f := _), LinearMap.add_apply]; exact add_mem (hx y hy) (hx' y hy)
   zero_mem' y _ := by simp
   smul_mem' a x hx y hy := by
     rw [← algebraMap_smul K a x, map_smul, LinearMap.smul_apply, algebraMap_smul]
@@ -413,7 +413,7 @@ def rationalPart (N : Submodule (v.adicCompletionIntegers K) (ι → v.adicCompl
     Submodule (v.valuationSubringAtPrime K) (ι → K) where
   carrier := {x | toCompletion v x ∈ N}
   add_mem' hx hy := by
-    simp only [Set.mem_ofPred_eq, map_add] at *; exact add_mem hx hy
+    simp only [Set.mem_ofPred_eq, map_add (f := _)] at *; exact add_mem hx hy
   zero_mem' := by simp
   smul_mem' a x hx := by
     have := N.smul_mem ⟨_, (algebraMap_mem_adicCompletionIntegers_iff v (a : K)).2 a.2⟩ hx

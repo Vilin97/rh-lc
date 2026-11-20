@@ -235,7 +235,7 @@ theorem eventually_conj_of_charpoly_eq (h : IsCMExt F E σ) (hJ : IsHermND σ J)
       induction y.1 with
       | zero => simp
       | tmul a b => simp [sigR, hσ]
-      | add a b ha hb => rw [map_add, map_add, ha, hb]
+      | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
     · change (inclR (Fv F v) (ω : E) - inclR (Fv F v) (σ ω)) * inclR (Fv F v) (2 * ω : E)⁻¹ = 1
       rw [← map_sub, ← map_mul, hω, sub_neg_eq_add, ← two_mul,
         mul_inv_cancel₀ (mul_ne_zero two_ne_zero (RingOfIntegers.coe_ne_zero_iff.2 hω0)), map_one]
@@ -244,7 +244,7 @@ theorem eventually_conj_of_charpoly_eq (h : IsCMExt F E σ) (hJ : IsHermND σ J)
     · change O.subtype J'.det * inclR (Fv F v) J.det⁻¹ = 1
       rw [RingHom.map_det, show O.subtype.mapMatrix J' = (inclR (Fv F v)).mapMatrix J from rfl, ← RingHom.map_det,
         ← map_mul, mul_inv_cancel₀ hJ.2, map_one]
-    · rw [Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul, ← derivative_map, c1, ha, hb, derivative_map,
+    · rw [Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_mul, ← derivative_map, c1, ha, hb, derivative_map,
         ← Polynomial.map_mul, ← Polynomial.map_mul, ← Polynomial.map_add, hab, Polynomial.map_one, Polynomial.map_one]
   let k : GLoc σ J v := ⟨Formalism.UG.bc O.subtype u, (hU u.1 J').symm.trans (congrArg (·.map O.subtype) hu)⟩
   refine ⟨k, mem_stabLoc_stdLattice_iff.2 ⟨fun i j => (u.1 i j).2, fun i j => (u⁻¹.1 i j).2⟩, ?_⟩

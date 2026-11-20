@@ -34,12 +34,12 @@ theorem tens_ext {z z' : AF F ⊗[F] E} (h₁ : phiInf F E z = phiInf F E z') (h
       ext i j
       rw [Subsingleton.elim i j, Matrix.one_apply_eq]
       change phiInf F E y = 1
-      rw [hy, map_add, map_sub, h₁, sub_self, zero_add, map_one])
+      rw [hy, map_add (f := _), map_sub, h₁, sub_self, zero_add, map_one])
     (by
       ext i j
       rw [Subsingleton.elim i j, Matrix.one_apply_eq]
       change phiFin F E y = 1
-      rw [hy, map_add, map_sub, h₂, sub_self, zero_add, map_one])
+      rw [hy, map_add (f := _), map_sub, h₂, sub_self, zero_add, map_one])
   have h3 : z - z' + 1 = 1 := hy.symm.trans (congrFun (congrFun this 0) 0)
   exact sub_eq_zero.1 (add_right_cancel (h3.trans (zero_add 1).symm))
 

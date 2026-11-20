@@ -41,7 +41,7 @@ theorem isLocalRing_tensorProduct_of_finite_of_points :
     | zero => simp
     | add x y hx hy =>
       have := M.add_mem hx hy
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       convert this using 1
       ring
     | tmul a a' =>

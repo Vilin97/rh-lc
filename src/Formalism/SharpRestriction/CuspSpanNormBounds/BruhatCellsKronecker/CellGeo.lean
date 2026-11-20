@@ -385,12 +385,12 @@ theorem geometric_decomposition_maps_perp_into_flag (F : FlagG S r T) (F' : Flag
       have hQQ : S.hT Q Q = 0 := geo_X_X F' _ _ hQ hQ
       have hQP : S.hT Q P = 0 := by
         have h5 := hs1
-        rw [hYx, map_add, LinearMap.add_apply, hPP, zero_add] at h5
+        rw [hYx, map_add (f := _), LinearMap.add_apply, hPP, zero_add] at h5
         exact h5
       have hPQ : S.hT P Q = 0 := by
         rw [← S.herm.eq Q P, hQP, map_zero]
       rw [hYx]
-      simp only [map_add, LinearMap.add_apply, hPP, hQQ, hPQ, hQP, add_zero]
+      simp only [map_add (f := _), LinearMap.add_apply, hPP, hQQ, hPQ, hQP, add_zero]
 
 end Pair
 

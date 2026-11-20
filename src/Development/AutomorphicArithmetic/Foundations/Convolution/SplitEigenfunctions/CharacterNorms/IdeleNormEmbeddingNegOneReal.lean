@@ -35,12 +35,12 @@ theorem n_add (x y : A E) : gl (nU (x + y)) = gl (nU x) * gl (nU y) := by
   rw [nU_add, gl_mul]
 
 theorem mkE_add (D : Dat ℚ E) (a b c d : A ℚ) : D.mkE (a + c) (b + d) = D.mkE a b + D.mkE c d := by
-  simp only [Dat.mkE, map_add, add_mul]
+  simp only [Dat.mkE, map_add (f := _), add_mul]
   abel
 
 theorem mkE_rat (D : Dat ℚ E) (x y : ℚ) :
     D.mkE (rt x) (rt y) = rt (algebraMap ℚ E x + algebraMap ℚ E y * D.θ) := by
-  simp only [Dat.mkE, UpperTheory.ConvolutionTheory.R2.rt, AdeleBaseChange.adeleMap_algebraMap, map_add, map_mul]
+  simp only [Dat.mkE, UpperTheory.ConvolutionTheory.R2.rt, AdeleBaseChange.adeleMap_algebraMap, map_add (f := _), map_mul]
 
 theorem nE_add (D : Dat ℚ E) (x c : Fin 2 → A ℚ) : nE D (x + c) = nE D x * nE D c := by
   simp only [nE, Pi.add_apply, mkE_add, n_add]
@@ -116,7 +116,7 @@ theorem iy_one : iy 1 = 1 := by
   simp [this]
 
 theorem re_iy {y : ℝ} (h : y ≠ 0) : re (iy y : A ℚ) = y := by
-  rw [re, iy_coe h, map_add, map_sub, pInf_sInf, pInf_sInf, map_one]
+  rw [re, iy_coe h, map_add (f := _), map_sub, pInf_sInf, pInf_sInf, map_one]
   simp
 
 theorem iy_mul_bI {y : ℝ} (h : y ≠ 0) (u : ℝ) : (iy y : A ℚ) * bI u = bI (y * u) := by

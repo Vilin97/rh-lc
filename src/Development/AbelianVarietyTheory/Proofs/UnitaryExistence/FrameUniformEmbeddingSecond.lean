@@ -218,7 +218,7 @@ theorem half_marked {R A B : Type} [CommRing R] [AddCommGroup A] [Module R A] [A
     rw [smul_add, map_smul, mul_smul, smul_comm m N]
   · obtain ⟨a, ha, e, rfl⟩ := hx
     obtain ⟨a', ha', e', rfl⟩ := hy
-    exact ⟨a + a', add_mem ha ha', e + e', by rw [map_add, smul_add]; abel⟩
+    exact ⟨a + a', add_mem ha ha', e + e', by rw [map_add (f := _), smul_add]; abel⟩
 
 theorem archM_mul {D : D7} (V : HSp D) (θ : Ainf D.host.F ⊗[D.host.F] D.host.E →+* ℂ) (δ u k : GA D V)
     (hk : k ∈ GfC V) : archM V θ (δ * u * k) = archM V θ δ * archM V θ u := by
@@ -293,7 +293,7 @@ theorem marked_differ (hT : ThetaUnifAV) (hL : Out.Laws) (D : D7) (V : HSp D)
     obtain ⟨w, hw, ew⟩ := hmark a ha
     obtain ⟨c, hc⟩ := hsur _ (sub_mem (add_mem hw ((hlat _).1 (M.φ k e).2)) (M.φ k e).2)
     refine ⟨c, ?_⟩
-    rw [hc, map_add, map_nsmul, Submodule.coe_add, Submodule.coe_smul_of_tower, Matrix.mulVec_add, ew,
+    rw [hc, map_add (f := _), map_nsmul, Submodule.coe_add, Submodule.coe_smul_of_tower, Matrix.mulVec_add, ew,
       Matrix.mulVec_smul, smul_sub, smul_add]
     abel
   · obtain ⟨c, hc⟩ := hsur _ (sub_mem ((hlat _).1 (M.φ k a).2) (M.φ k a).2)

@@ -16,7 +16,7 @@ theorem liftSemi_prod_bijective : ∀ (R R' : Type) [CommRing R] [CommRing R'] [
     induction y using TensorProduct.induction_on with
     | zero => simp; rfl
     | tmul x c => simp [liftSemi_tmul, hg]
-    | add a b ha hb => rw [map_add, ha, hb, map_add]; ext <;> simp
+    | add a b ha hb => rw [map_add (f := _), ha, hb, map_add (f := _)]; ext <;> simp
   have e : ⇑(liftSemi g) = Prod.map (liftSemi f) (liftSemi f') ∘ (TensorProduct.prodRight R R' R' M N) :=
     funext key
   rw [e]

@@ -102,7 +102,7 @@ theorem range_adjoint_rat {K : Type} [Field K] [StarRing K] (σ : K →+* ℂ) {
       Submodule.span ℂ (jR '' ((LinearMap.range (LinearMap.adjoint Θ)).comap jR : Set F))) ?_ ?_ ?_ ?_ hv
   · rintro _ ⟨i, rfl⟩; exact hrat i
   · simp
-  · intro x y _ _ hx hy; rw [map_add]; exact Submodule.add_mem _ hx hy
+  · intro x y _ _ hx hy; rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   · intro a x _ hx; rw [map_smul]; exact Submodule.smul_mem _ a hx
 
 theorem ratZOfTests : RatZOfTests := by

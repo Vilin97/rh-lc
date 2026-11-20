@@ -82,7 +82,7 @@ theorem multT_rel' {M : DSModel V S} {J : Set (GA D V)} {χ : GA D V → ℂ} (x
   | smul_tprod r v =>
     rw [map_smul, Pi.smul_apply, Pi.smul_apply, multT_rel v v x x' c (fun m hm => h m hm v) hT, smul_eq_mul, smul_eq_mul]
     ring
-  | add a b ha hb => rw [map_add, Pi.add_apply, Pi.add_apply, ha, hb, mul_add]
+  | add a b ha hb => rw [map_add (f := _), Pi.add_apply, Pi.add_apply, ha, hb, mul_add]
 
 theorem exists_ratPt (hθ : IsInfFam θ) {n : ℕ} (hn : V.rank = n) (δ : GL (Fin n) D.host.E)
     (hδ : δ ∈ Formalism.UG.UJ (D.sp.cm.sig : D.host.E →+* D.host.E) (V.gram.reindex (finCongr hn) (finCongr hn))) :
@@ -137,8 +137,8 @@ theorem real_translate (hθ : IsInfFam θ) (hj : IsJ u M j) : ∀ a ∈ GinfC D.
     | add a b ha hb =>
       obtain ⟨a', e1, f1⟩ := ha
       obtain ⟨b', e2, f2⟩ := hb
-      refine ⟨a' + b', by rw [j.map_add, j.map_add, LinearMap.map_add, e1, e2], fun T hT h => ?_⟩
-      rw [T.map_add, T.map_add, Pi.add_apply, Pi.add_apply, f1 T hT, f2 T hT]
+      refine ⟨a' + b', by rw [j.map_add (f := _), j.map_add (f := _), LinearMap.map_add (f := _), e1, e2], fun T hT h => ?_⟩
+      rw [T.map_add (f := _), T.map_add (f := _), Pi.add_apply, Pi.add_apply, f1 T hT, f2 T hT]
 
 theorem hasMat_finPt {h : GA D D.sp.X'} (hh : h ∈ GfC D.sp.X') : HasMat h (finPt h).1 :=
   ⟨hh, fun i j => (finN_apply D.sp.X' (rankP D) h (finCongr (rankP D) i) (finCongr (rankP D) j)).symm⟩

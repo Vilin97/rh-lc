@@ -15,7 +15,7 @@ theorem crdLaw_cT_mul {A : Type} [CommRing A] (s : A →+* A) {a b c : Type} [Fi
 
 theorem crdLaw_cT_add {A : Type} [CommRing A] (s : A →+* A) {a b : Type} (M N : Matrix a b A) :
     cT s (M + N) = cT s M + cT s N := by
-  simp [cT, Matrix.map_add, Matrix.transpose_add]
+  simp [cT, Matrix.map_add (f := _), Matrix.transpose_add]
 
 theorem crdLaw_cT_one {A : Type} [CommRing A] (s : A →+* A) {a : Type} [DecidableEq a] :
     cT s (1 : Matrix a a A) = 1 := by

@@ -65,7 +65,7 @@ private theorem exists_vec_of_dual_apply_col {X Y V W : Type} [AddCommGroup V] [
     { carrier := {ψ | ∃ w : W, jW w = fun y => ψ (col y)}
       add_mem' := by
         rintro ψ χ ⟨w1, h1⟩ ⟨w2, h2⟩
-        exact ⟨w1 + w2, by rw [map_add, h1, h2]; rfl⟩
+        exact ⟨w1 + w2, by rw [map_add (f := _), h1, h2]; rfl⟩
       zero_mem' := ⟨0, by rw [map_zero]; rfl⟩
       smul_mem' := by
         rintro c ψ ⟨w, h⟩

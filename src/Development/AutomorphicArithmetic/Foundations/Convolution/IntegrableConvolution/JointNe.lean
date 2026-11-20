@@ -125,7 +125,7 @@ theorem UpperTheory.ConvolutionTheory.L1.jointNe :
       let M : Submodule ℂ H :=
         { carrier := {w | w ∈ eigIn V E 1 ∧ ∀ g, π (ι k g) w ∈ Zᗮ}
           add_mem' := fun {a b} ha hb => ⟨Submodule.add_mem _ ha.1 hb.1, fun g => by
-            rw [map_add]; exact Submodule.add_mem _ (ha.2 g) (hb.2 g)⟩
+            rw [map_add (f := _)]; exact Submodule.add_mem _ (ha.2 g) (hb.2 g)⟩
           zero_mem' := ⟨Submodule.zero_mem _, fun g => by
             rw [map_zero]; exact Submodule.zero_mem _⟩
           smul_mem' := fun c a ha => ⟨Submodule.smul_mem _ c ha.1, fun g => by

@@ -206,19 +206,19 @@ theorem split_equiv [IsMinimal 𝒪 (W.map (algebraMap 𝒪 K))]
   set C₀ : VariableChange 𝒪 := ⟨1, x₀, 0, y₀⟩ with hC₀
   have h3 : π ∣ (C₀ • W).a₃ := by
     rw [hres]
-    simp only [hC₀, variableChange_a₃, inv_one, Units.val_one, one_pow, one_mul, map_add, map_mul,
+    simp only [hC₀, variableChange_a₃, inv_one, Units.val_one, one_pow, one_mul, map_add (f := _), map_mul,
       map_ofNat]
     simp only [WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₃] at hBb
     linear_combination hBb
   have h4 : π ∣ (C₀ • W).a₄ := by
     rw [hres]
-    simp only [hC₀, variableChange_a₄, inv_one, Units.val_one, one_pow, one_mul, map_add, map_mul,
+    simp only [hC₀, variableChange_a₄, inv_one, Units.val_one, one_pow, one_mul, map_add (f := _), map_mul,
       map_sub, map_pow, map_ofNat, zero_mul, mul_zero, add_zero, sub_zero]
     simp only [WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₄] at hAb
     linear_combination -hAb
   have h6 : π ∣ (C₀ • W).a₆ := by
     rw [hres]
-    simp only [hC₀, variableChange_a₆, inv_one, Units.val_one, one_pow, one_mul, map_add, map_mul,
+    simp only [hC₀, variableChange_a₆, inv_one, Units.val_one, one_pow, one_mul, map_add (f := _), map_mul,
       map_sub, map_pow]
     simp only [WeierstrassCurve.map_a₁, WeierstrassCurve.map_a₂, WeierstrassCurve.map_a₃,
       WeierstrassCurve.map_a₄, WeierstrassCurve.map_a₆] at heb
@@ -242,7 +242,7 @@ theorem split_equiv [IsMinimal 𝒪 (W.map (algebraMap 𝒪 K))]
     rw [hres]
     simp only [eval_mul, eval_C, eval_sub, eval_add, eval_pow, eval_X] at hsb
     have := (mul_eq_zero.1 hsb).resolve_left hc4r
-    simp only [map_sub, map_add, map_mul, map_pow]
+    simp only [map_sub, map_add (f := _), map_mul, map_pow]
     exact this
   obtain ⟨s₁, t2, te, t3, t4, t6⟩ := tate_step1 hπ (C₀ • W) hc₀ h3 h4 h6 hs₀
   obtain ⟨r, s, t, g2, g3, g4, ge, g6⟩ := tate_step2 hπ _ t2 te t3 t4 t6

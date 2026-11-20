@@ -99,7 +99,7 @@ theorem isDomain_tensor_of_isAlgClosed (k A : Type) [Field k] [IsAlgClosed k] [C
       intro z i
       induction z using TensorProduct.induction_on with
       | zero => simp
-      | add u v hu hv => simp only [map_add, Finsupp.add_apply, hu, hv]
+      | add u v hu hv => simp only [map_add (f := _), Finsupp.add_apply, hu, hv]
       | tmul a f =>
         have h1 : Φ (a ⊗ₜ f) = φ a • f := by simp [Φ, Algebra.smul_def]
         rw [h1, map_smul]

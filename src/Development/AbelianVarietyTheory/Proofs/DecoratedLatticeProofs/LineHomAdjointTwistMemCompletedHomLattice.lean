@@ -35,7 +35,7 @@ theorem cA_tmul_one (a : AF D.host.F) : cA D (a ⊗ₜ[D.host.F] (1 : D.host.E))
   simpa [Algebra.TensorProduct.algebraMap_apply] using this
 
 theorem pairH_add_left (L : HSp D) (z z' y : Fin L.rank → AE D) : pairH L (z + z') y = pairH L z y + pairH L z' y := by
-  simp only [pairH, dotProduct, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [pairH, dotProduct, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem pairH_neg_left (L : HSp D) (z y : Fin L.rank → AE D) : pairH L (-z) y = -pairH L z y := by
   simp only [pairH, dotProduct, Pi.neg_apply, map_neg, neg_mul, Finset.sum_neg_distrib]
@@ -81,10 +81,10 @@ theorem pairH_int {L : HSp D} {LL : Lat L} (hL : IsSelfDualC L LL) {P : Pl D →
       rw [pairH_gen, ← hb, GlobalTheory.LatVac.finPart_tmul, one_mul]
       exact AddSubgroup.subset_closure ⟨α * β, GlobalTheory.FinPl.LatMem.intAf_mul' hαi hβi, b, rfl⟩
     | zero => rw [pairH_zero_right]; exact zero_mem _
-    | add y y' _ _ h h' => rw [pairH_add_right, RingHom.map_add]; exact add_mem h h'
+    | add y y' _ _ h h' => rw [pairH_add_right, RingHom.map_add (f := _)]; exact add_mem h h'
     | neg y _ h => rw [pairH_neg_right, RingHom.map_neg]; exact neg_mem h
   | zero => rw [pairH_zero_left]; exact zero_mem _
-  | add z z' _ _ h h' => rw [pairH_add_left, RingHom.map_add]; exact add_mem h h'
+  | add z z' _ _ h h' => rw [pairH_add_left, RingHom.map_add (f := _)]; exact add_mem h h'
   | neg z _ h => rw [pairH_neg_left, RingHom.map_neg]; exact neg_mem h
 
 end GlobalTheory.KapLat

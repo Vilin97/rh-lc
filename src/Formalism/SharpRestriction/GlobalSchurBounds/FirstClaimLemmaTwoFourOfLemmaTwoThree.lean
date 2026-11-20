@@ -1036,7 +1036,7 @@ theorem ms_sum {β : Type*} [AddCommMonoid β] (F : Finset ℂ) (n : ℂ → ℕ
   induction F using Finset.induction_on with
   | empty => simp
   | insert a s ha ih =>
-    rw [Finset.sum_insert ha, Multiset.map_add, Multiset.sum_add, ih, Finset.sum_insert ha,
+    rw [Finset.sum_insert ha, Multiset.map_add (f := _), Multiset.sum_add, ih, Finset.sum_insert ha,
       Multiset.map_replicate, Multiset.sum_replicate]
 
 theorem ms_mem (F : Finset ℂ) (n : ℂ → ℕ) {x : ℂ}

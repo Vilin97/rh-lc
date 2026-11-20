@@ -74,7 +74,7 @@ theorem exists_isCob_of_mem_fil : GlobalTheory.Published.AbelianHodgeDeRham → 
     have e₁ := h₁ E E' ψ z hz
     have e₂ := h₂ E E' ψ z (sm_whole z)
     simp only [Fn1.add, Fn1.neg] at e₁ e₂ ⊢
-    rw [map_add]
+    rw [map_add (f := _)]
     linear_combination e₁ + e₂
   choose m d c k hk using key
   refine ⟨fun D _ _ x ↦ ∑ j, d D x j * algebraMap R D (y ⟨_, hP (c D x j)⟩), ?_⟩

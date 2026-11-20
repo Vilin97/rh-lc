@@ -42,7 +42,7 @@ private theorem expand_small {O : Type} [CommRing O] [IsLocalRing O] {ι : Type}
   · ext a b
     have := congrFun (congrFun hh a) b
     simp only [map_apply] at this
-    rw [map_apply, Matrix.add_apply, map_add, z2, add_zero, this]
+    rw [map_apply, Matrix.add_apply, map_add (f := _), z2, add_zero, this]
 
 open Matrix in
 theorem UpperTheory.V.Alg.hh_small :

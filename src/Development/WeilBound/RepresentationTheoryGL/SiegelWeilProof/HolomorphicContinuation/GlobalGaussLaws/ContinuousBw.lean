@@ -28,11 +28,11 @@ variable {D : D7} {n m : ℕ}
 set_option synthInstance.maxHeartbeats 400000 in
 theorem compAt_add (θ : InfFam D) (τ : D.what₂.Tau) (a b : Mx D m n) :
     compAt θ τ (a + b) = compAt θ τ a + compAt θ τ b := by
-  ext i j; simp only [compAt, Matrix.map_apply, Matrix.add_apply, RingHom.map_add]
+  ext i j; simp only [compAt, Matrix.map_apply, Matrix.add_apply, RingHom.map_add (f := _)]
 
 set_option synthInstance.maxHeartbeats 400000 in
 theorem finMap_add (a b : Mx D m n) : (a + b).map (finPart D) = a.map (finPart D) + b.map (finPart D) := by
-  ext i j; simp only [Matrix.map_apply, Matrix.add_apply, RingHom.map_add]
+  ext i j; simp only [Matrix.map_apply, Matrix.add_apply, RingHom.map_add (f := _)]
 
 theorem away_add {θ : InfFam D} (hθ : IsInfFam θ) {τ : D.what₂.Tau} {fr : Matrix (Fin m) (Fin m) ℂ}
     {Ψ : Mx D m n → ℂ} (hΨ : AwayCls θ τ fr Ψ) (y : Mx D m n) (u : Fin m → Fin n → ℂ) :
@@ -68,7 +68,7 @@ theorem Bw_add {θ : InfFam D} (hθ : IsInfFam θ) {V : HSp D} {τ : D.what₂.T
     (x y : Mx D V.rank n) (u : Fin V.rank → Fin n → ℂ) :
     Bw ψ V θ τ fr Ψ x (y + sIns τ fr u) = Bw ψ V θ τ fr Ψ x y := by
   have e : y + sIns τ fr u - sIns τ fr (piF θ τ fr (y + sIns τ fr u)) = y - sIns τ fr (piF θ τ fr y) := by
-    rw [(piF θ τ fr).map_add, piF_sIns hθ τ hdet, (sIns τ fr).map_add]
+    rw [(piF θ τ fr).map_add (f := _), piF_sIns hθ τ hdet, (sIns τ fr).map_add (f := _)]
     abel
   unfold Bw
   rw [away_add hθ hΨ, e]

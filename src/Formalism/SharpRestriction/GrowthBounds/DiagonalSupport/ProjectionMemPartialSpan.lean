@@ -151,7 +151,7 @@ theorem pj_fix (j : ι) (q : MvPolynomial σ O →ₗ[O] MvPolynomial σ O) (Xj 
     obtain ⟨x, hx, M, hM, rfl⟩ := hy
     rw [pj_mul π j q (hX x hx) hM, hq x hx]
   | zero => simp
-  | add y z _ _ hy hz => rw [map_add, hy, hz]
+  | add y z _ _ hy hz => rw [map_add (f := _), hy, hz]
   | smul c y _ hy => rw [map_smul, hy]
 
 def W (X : ι → Submodule O (MvPolynomial σ O)) (S : Finset ι) : Submodule O (MvPolynomial σ O) :=

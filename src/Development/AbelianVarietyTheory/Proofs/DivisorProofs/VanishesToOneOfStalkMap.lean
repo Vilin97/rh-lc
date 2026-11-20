@@ -64,7 +64,7 @@ theorem vanishFrom_adj_of_nef_big : Quoted → ∀ (K : Type) [Field K] [NumberF
       (by
         rw [cls_pull (isLB_tw (isLB_tens G.K.isLB hB₀) G.isLB j) π]
         erw [cls_pull G.K.isLB π, cls_pull hNnef.isLB π]
-        rw [← map_add]
+        rw [← map_add (f := _)]
         congr 1
         erw [cls_tens (isLB_tens G.K.isLB hB₀) (Twist.isLB_lbZPow G.isLB j), cls_tens G.K.isLB hB₀,
           cls_tens hB₀ (isLB_lbPow G.isLB j)]

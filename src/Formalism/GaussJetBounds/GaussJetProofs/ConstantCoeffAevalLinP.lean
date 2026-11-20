@@ -59,7 +59,7 @@ lemma jetPair_sum_left {α : Type*} (s : Finset α) (P : α → MvPolynomial ι 
 
 lemma jetPair_add_right (P : MvPolynomial ι K) (F G : MvPowerSeries ι K) :
     jetPair P (F + G) = jetPair P F + jetPair P G := by
-  simp only [jetPair, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [jetPair, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 lemma jetPair_C_mul_right (c : K) (P : MvPolynomial ι K) (F : MvPowerSeries ι K) :
     jetPair P (MvPowerSeries.C c * F) = c * jetPair P F := by
@@ -143,13 +143,13 @@ lemma pderiv_aeval_linP (A : ι → ι' → K) (i : ι) (G : MvPolynomial ι' K)
   induction G using MvPolynomial.induction_on
   · simp
   · rename_i p q hp hq
-    simp only [map_add, hp, hq, mul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), hp, hq, mul_add, Finset.sum_add_distrib]
   · rename_i p j hp
     have hk : ∀ k : ι', MvPolynomial.aeval (linP A) (MvPolynomial.pderiv k (p * MvPolynomial.X j)) =
         MvPolynomial.aeval (linP A) p * (if j = k then 1 else 0) +
           linP A j * MvPolynomial.aeval (linP A) (MvPolynomial.pderiv k p) := by
       intro k
-      rw [Derivation.leibniz, MvPolynomial.pderiv_X, smul_eq_mul, smul_eq_mul, map_add, map_mul,
+      rw [Derivation.leibniz, MvPolynomial.pderiv_X, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul,
         map_mul, MvPolynomial.aeval_X, Pi.single_apply]
       split_ifs <;> simp
     simp only [hk, mul_add, Finset.sum_add_distrib]
@@ -173,7 +173,7 @@ lemma constantCoeff_aeval_linP (A : ι → ι' → K) (G : MvPolynomial ι' K) :
   induction G using MvPolynomial.induction_on
   · simp
   · rename_i p q hp hq
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   · rename_i p j hp
     simp only [map_mul, MvPolynomial.aeval_X, hp, MvPolynomial.constantCoeff_X, mul_zero]
     simp [linP]
@@ -205,7 +205,7 @@ lemma jetPair_poly (A : ι → ι' → K) (P : MvPolynomial ι K) :
     | simpa [MvPolynomial.constantCoeff_eq] using h
   · rename_i P Q hP hQ
     intro G
-    rw [jetPair_add_left, hP, hQ, map_add, jetPair_add_left]
+    rw [jetPair_add_left, hP, hQ, map_add (f := _), jetPair_add_left]
   · rename_i P i hP
     intro G
     have hsum : ∀ (f : ι' → MvPolynomial ι K),

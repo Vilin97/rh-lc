@@ -17,7 +17,7 @@ namespace GlobalTheory.AscFin.UniBF
 
 private theorem psiE_add_mul {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (a b : AE D) :
     psiE ψ (a + b) = psiE ψ a * psiE ψ b := by
-  simp only [psiE, map_add, AddChar.map_add_eq_mul]
+  simp only [psiE, map_add (f := _), AddChar.map_add_eq_mul]
 
 private theorem psiE_zero_one {D : D7} (ψ : AddChar (AF D.host.F) ℂ) : psiE ψ (0 : AE D) = 1 := by
   simp only [psiE, map_zero, AddChar.map_zero_eq_one]

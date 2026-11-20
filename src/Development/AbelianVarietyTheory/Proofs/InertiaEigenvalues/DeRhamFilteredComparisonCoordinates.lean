@@ -42,7 +42,7 @@ theorem deRham_filtered_Ql (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAi
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v w => simp [actVdR]; rfl
-    | add u w hu hw => simp only [map_add, hu, hw]
+    | add u w hu hw => simp only [map_add (f := _), hu, hw]
   have hD : ∀ x, x ∈ DdR (P.PD K) ρ' ↔ x ∈ DdR (P.PD K) ρ := fun x => by
     simp only [DdR, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply, LinearMap.id_apply, hR]
   have hDd : (DdR (P.PD K) ρ').restrictScalars ℚ_[l] = DdR (P.PD K) ρ := by
@@ -76,7 +76,7 @@ theorem filtered_coords : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : Lo
       funext i
       simp only [Pi.smul_apply, smul_eq_mul, Algebra.smul_def]
       ring
-    | add u w hu hw => simp only [map_add, hu, hw, smul_add]
+    | add u w hu hw => simp only [map_add (f := _), hu, hw, smul_add]
   have hfil : ∀ (c : ℤ) (x : (Fin d → ℚ_[l]) ⊗[ℚ_[l]] P.R.BdR),
       x ∈ FilV (P.PD K) (LL := ℚ_[l]) (V := Fin d → ℚ_[l]) c → ∀ i, f x i ∈ (P.PD K).Fil c := by
     intro c x hx i
@@ -86,7 +86,7 @@ theorem filtered_coords : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : Lo
       rw [hf]
       exact (((P.PD K).Fil c).restrictScalars ℚ_[l]).smul_mem (v i) hβ
     · intro x x' h h'
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ h h'
   have hact : ∀ (g : ↥(GK K)) (x : (Fin d → ℚ_[l]) ⊗[ℚ_[l]] P.R.BdR),
       f (actVdR (P.PD K) (qRep ρ) g x) =
@@ -108,7 +108,7 @@ theorem filtered_coords : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : Lo
       rw [map_smul, Algebra.smul_def, Algebra.smul_def, ← mul_assoc, ← map_mul]
       rfl
     | add x y hx hy =>
-      rw [map_add, map_add, hx, hy, ← Matrix.mulVec_add]
+      rw [map_add (f := _), map_add (f := _), hx, hy, ← Matrix.mulVec_add]
       congr 1; funext i; simp
   let x : (Fin d → ℚ_[l]) ⊗[ℚ_[l]] P.R.BdR := ∑ i, Pi.single i (1 : ℚ_[l]) ⊗ₜ y i
   have hx : x ∈ FilV (P.PD K) (LL := ℚ_[l]) (V := Fin d → ℚ_[l]) a :=

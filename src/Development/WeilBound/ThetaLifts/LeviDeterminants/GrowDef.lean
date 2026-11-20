@@ -51,7 +51,7 @@ variable {E : Type} [Field E] [NumberField E] [Algebra F E] {σ : E →ₐ[F] E}
 
 def sOf (M : Model σ X W) (g : UA σ X.J) (h : UA σ W.J) : Pt F (Fin n × Fin d) →ₗ[AF F] Pt F (Fin n × Fin d) where
   toFun w := M.co.e (mat g⁻¹ * M.co.e.symm w * (mat h⁻¹)ᵀ)
-  map_add' a b := by rw [map_add, Matrix.mul_add, Matrix.add_mul, map_add]
+  map_add' a b := by rw [map_add (f := _), Matrix.mul_add, Matrix.add_mul, map_add (f := _)]
   map_smul' c a := by rw [map_smul, Matrix.mul_smul, Matrix.smul_mul, map_smul]; rfl
 
 theorem impl_sOf {B : Base F E} {M : Model σ X W} {χX χW : Chr F E} {om : Rep σ X W} (hw : M.IsWeil B.ψ χX χW om)

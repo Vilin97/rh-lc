@@ -398,7 +398,7 @@ theorem rho_preserves_rational_forms (v : (D.mem u).A.vT) (a : ((D.mem u).A.Fv v
   | add x x' _ _ hx hx' =>
     obtain ⟨y, hy⟩ := hx
     obtain ⟨y', hy'⟩ := hx'
-    exact ⟨y + y', by rw [map_add, hy, hy', map_add, map_add]⟩
+    exact ⟨y + y', by rw [map_add (f := _), hy, hy', map_add (f := _), map_add (f := _)]⟩
   | smul c x _ hx =>
     obtain ⟨y, hy⟩ := hx
     exact ⟨c • y, by rw [map_smulₛₗ, hy, map_smulₛₗ, map_smul]⟩
@@ -619,7 +619,7 @@ theorem class_rep_group_elem_unique (hS : Formalism.MainNotions.product_first_ze
 
 def t2sW : Submodule D.what₂.LL ((D.fm u).lat 0).V where
   carrier := {x | ∀ c, t2sRep Tf hE c ≠ c → (D.fm u).emb 0 x c = 0}
-  add_mem' {x y} hx hy c hc := by rw [map_add, Pi.add_apply, hx c hc, hy c hc, add_zero]
+  add_mem' {x y} hx hy c hc := by rw [map_add (f := _), Pi.add_apply, hx c hc, hy c hc, add_zero]
   zero_mem' c _ := by rw [map_zero]; rfl
   smul_mem' r x hx c hc := by rw [map_smulₛₗ, Pi.smul_apply, hx c hc, smul_zero]
 

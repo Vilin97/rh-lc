@@ -21,15 +21,15 @@ theorem amulG {l : ℕ} [Fact l.Prime] {O K V R : Type} [CommRing O] [Algebra �
     (x y : OD l O) (v : V ⊗[ℚ_[l]] R) : A (x * y) v = A x (A y v) := by
   induction v using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add v w hv hw => simp only [map_add, hv, hw]
+  | add v w hv hw => simp only [map_add (f := _), hv, hw]
   | tmul v c =>
     induction x using TensorProduct.induction_on with
     | zero => simp only [zero_mul, map_zero, AddMonoidHom.zero_apply]
-    | add x x' hx hx' => simp only [add_mul, map_add, AddMonoidHom.add_apply, hx, hx']
+    | add x x' hx hx' => simp only [add_mul, map_add (f := _), AddMonoidHom.add_apply, hx, hx']
     | tmul o b =>
       induction y using TensorProduct.induction_on with
       | zero => simp only [mul_zero, map_zero, AddMonoidHom.zero_apply]
-      | add y y' hy hy' => simp only [mul_add, map_add, AddMonoidHom.add_apply, hy, hy']
+      | add y y' hy hy' => simp only [mul_add, map_add (f := _), AddMonoidHom.add_apply, hy, hy']
       | tmul o' b' =>
         rw [Algebra.TensorProduct.tmul_mul_tmul, hA, hA, hA, map_mul, mul_assoc, h1, mul_smul]
 
@@ -41,7 +41,7 @@ theorem aoneG {l : ℕ} [Fact l.Prime] {O K V R : Type} [CommRing O] [Algebra �
     (v : V ⊗[ℚ_[l]] R) : A 1 v = v := by
   induction v using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add v w hv hw => simp only [map_add, hv, hw]
+  | add v w hv hw => simp only [map_add (f := _), hv, hw]
   | tmul v c => rw [Algebra.TensorProduct.one_def, hA, map_one, one_mul, h1, one_smul]
 
 set_option synthInstance.maxHeartbeats 400000 in

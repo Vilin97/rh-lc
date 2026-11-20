@@ -97,7 +97,7 @@ def dniLin (T : Forms0 D u) (v : (D.mem u).A.vT) (c c' : (D.mem u).C.cls 0)
   map_add' w1 w2 := by
     obtain ⟨z1, rfl⟩ := T.lv0.prk_surj v c w1
     obtain ⟨z2, rfl⟩ := T.lv0.prk_surj v c w2
-    rw [← map_add, dniFun_prk, dniFun_prk, dniFun_prk, ← map_add]
+    rw [← map_add (f := _), dniFun_prk, dniFun_prk, dniFun_prk, ← map_add (f := _)]
     congr 1
     apply Subtype.ext
     show g *ᵥ (z1.1 + z2.1) = g *ᵥ z1.1 + g *ᵥ z2.1

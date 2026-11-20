@@ -601,7 +601,7 @@ private theorem exists_X_pow_mul_eval_zero_ne_zero (P : MvPolynomial (Fin 1) ℂ
       · intro a
         simp
       · intro p q hp hq
-        rw [map_add, map_add, hp, hq, Polynomial.eval_add]
+        rw [map_add (f := _), map_add (f := _), hp, hq, Polynomial.eval_add]
       · intro n a _
         simp
     rw [key]

@@ -33,7 +33,7 @@ private theorem rho_rho' {R : Type} [CommRing R] [Invertible (2 : R)] {V : Type}
     {Bf : V → V → R} {κ : Type} [Fintype κ] (d : Darboux Bf κ) (ψ : AddChar R ℂ) (w w' : V) (h : Bf w w' = 0)
     (φ : (κ → R) → ℂ) : d.rho ψ w (d.rho ψ w' φ) = d.rho ψ (w + w') φ := by
   simp only [Darboux.rho]
-  rw [schr_schr', map_add]
+  rw [schr_schr', map_add (f := _)]
   have := d.form w w'
   rw [h] at this
   exact sub_eq_zero.mp this.symm
@@ -93,7 +93,7 @@ private theorem coef_eq {B : Base F E} {n n₁ r s i₀ i₁ : ℕ} {X : Spc F E
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [cA, hσ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hsym : ∀ x y : Fin n → E, form σ X.J y x = σ (form σ X.J x y) := fun x y => by
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [form, dotProduct, Matrix.mulVec, map_sum, map_mul, hσ, hS.herm, Finset.mul_sum]
@@ -107,7 +107,7 @@ private theorem coef_eq {B : Base F E} {n n₁ r s i₀ i₁ : ℕ} {X : Spc F E
         cA σ t • fun i => cA σ (incV F H.y i) := by
     funext i
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [hu, Pi.add_apply, Pi.smul_apply, Finset.sum_apply, smul_eq_mul, map_add, map_mul, map_sum]
+      simp only [hu, Pi.add_apply, Pi.smul_apply, Finset.sum_apply, smul_eq_mul, map_add (f := _), map_mul, map_sum]
   have h0 : ∀ v, form σ X.J H.x (H.ι *ᵥ v) = 0 := fun v => by rw [hsym, (hA.orth v).1, map_zero]
   rw [e]
   simp only [Matrix.mulVec_add, Matrix.mulVec_sum, Matrix.mulVec_smul, dotProduct_add, dotProduct_sum, dotProduct_smul,
@@ -150,7 +150,7 @@ private theorem compFin_cA' (v : Pl F) (x : AE F E) :
     compFin F E v (cA σ x) = sigR (Fv F v) σ (compFin F E v x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x => rfl
 
 private theorem compFin_inclR' (v : Pl F) (x : E) :
@@ -173,7 +173,7 @@ private theorem partFin_uS {n n₁ d d₁ : ℕ} (H : Plane E n n₁) (H' : Plan
   rw [partFin, partFin] at h
   have h' := congrArg (cA σ) h
   rw [map_smul, map_smul] at h'
-  rw [partFin, partFin, uS, Matrix.smul_vecMulVec, map_add, map_add, ← smul_assoc, ← smul_assoc, smul_add, smul_add, h']
+  rw [partFin, partFin, uS, Matrix.smul_vecMulVec, map_add (f := _), map_add (f := _), ← smul_assoc, ← smul_assoc, smul_add, smul_add, h']
 
 end SlopeTestRemainingChoices
 

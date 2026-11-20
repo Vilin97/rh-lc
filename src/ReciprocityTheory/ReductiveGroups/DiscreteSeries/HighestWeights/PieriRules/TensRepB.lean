@@ -49,7 +49,7 @@ def tensD (dρ : Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] Matrix ι ι ℂ) :
     Matrix (Fin n) (Fin n) ℂ →ₗ[ℂ] (PiLp 2 (fun _ : ι => T.V) →L[ℂ] PiLp 2 (fun _ : ι => T.V)) where
   toFun X := tensL (dρ X) 1 + tensL 1 (T.dτ X)
   map_add' X Y := by
-    simp only [map_add, tensL_add_left, tensL_add_right]
+    simp only [map_add (f := _), tensL_add_left, tensL_add_right]
     abel
   map_smul' c X := by
     simp only [map_smul, tensL_smul_left, tensL_smul_right, RingHom.id_apply, smul_add]

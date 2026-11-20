@@ -26,7 +26,7 @@ theorem tco_diagE (E : Fin n → Fin n → Module.End ℂ N) (a b : Fin n)
     simp only [diagE, sgE_cpT, eT, LinearMap.add_apply, TensorProduct.map_tmul, LinearMap.lTensor_tmul,
       LinearMap.id_apply, map_add, tcoef_tmul, LinearMap.coe_comp, Function.comp_apply, map_smul]
   | add y y' hy hy' =>
-    rw [map_add, map_add, hy, hy', map_add, map_add, map_add]
+    rw [map_add (f := _), map_add (f := _), hy, hy', map_add (f := _), map_add (f := _), map_add (f := _)]
     abel
 
 theorem tco_diagE_wt (E : Fin n → Fin n → Module.End ℂ N) (a : Fin n)

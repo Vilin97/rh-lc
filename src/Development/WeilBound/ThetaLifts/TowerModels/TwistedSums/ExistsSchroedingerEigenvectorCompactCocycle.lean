@@ -185,7 +185,7 @@ theorem exists_schr_eigen : ∀ {F : Type} [Field F] [NumberField F] (v : Global
   let Ks : AddSubgroup (M → v.adicCompletionIntegers F) :=
     { carrier := {a | ∀ w ∈ Y, β (lamH a) w = 1}
       zero_mem' := fun w _ => by rw [map_zero]; exact hβ0 w
-      add_mem' := fun {a b} ha hb w hw => by rw [map_add, hβadd, ha w hw, hb w hw, one_mul]
+      add_mem' := fun {a b} ha hb w hw => by rw [map_add (f := _), hβadd, ha w hw, hb w hw, one_mul]
       neg_mem' := fun {a} ha w hw => by
         have := hβadd (lamH a) (-(lamH a)) w
         rw [add_neg_cancel, ha w hw, one_mul, hβ0] at this
@@ -208,7 +208,7 @@ theorem exists_schr_eigen : ∀ {F : Type} [Field F] [NumberField F] (v : Global
       schr ψ w (c • f) = c • schr ψ w f := fun w c f => (schrL ψ w).map_smul c f
   have hπmul : ∀ a b φ, πL (a + b) φ = πL a (πL b φ) := by
     intro a b φ
-    rw [hπ, hπ, hπ, hlin, schr_schr, smul_smul, smul_smul, map_add]
+    rw [hπ, hπ, hπ, hlin, schr_schr, smul_smul, smul_smul, map_add (f := _)]
     congr 1
     rw [hco' a b, mul_inv, mul_inv, inv_inv]
   have hconj : ∀ a (w : (κ → Fv F v) × (κ → Fv F v)) φ,
@@ -229,7 +229,7 @@ theorem exists_schr_eigen : ∀ {F : Type} [Field F] [NumberField F] (v : Global
     exact hf a _ h
   have hβper : ∀ w ∈ Y, ∀ a, ∀ h ∈ Ks, β (lamH (a + h)) w = β (lamH a) w := by
     intro w hw a h hh
-    rw [map_add, hβadd, (hKs h).mp hh w hw, mul_one]
+    rw [map_add (f := _), hβadd, (hKs h).mp hh w hw, mul_one]
   have hout0 : Quotient.out (0 : (M → v.adicCompletionIntegers F) ⧸ Ks) ∈ Ks :=
     (QuotientAddGroup.eq_zero_iff _).mp (QuotientAddGroup.out_eq' 0)
   let θ : Y → AddChar ((M → v.adicCompletionIntegers F) ⧸ Ks) ℂ := fun w =>

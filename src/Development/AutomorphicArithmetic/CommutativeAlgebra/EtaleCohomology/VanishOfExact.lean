@@ -18,7 +18,7 @@ theorem fa_ext {X : Type 1} {A : AddCommGrpCat.{1}} {f g : AddCommGrpCat.of (Fre
   | zero => simp
   | of x => exact h x
   | neg x ih => simpa using congrArg Neg.neg (h x)
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 variable (P : C ⥤ Type)
 

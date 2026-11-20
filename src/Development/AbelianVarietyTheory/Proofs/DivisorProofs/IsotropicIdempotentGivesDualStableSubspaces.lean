@@ -146,7 +146,7 @@ theorem idem_isotropic_pair : ∀ {D : D7} {V : HSp D} (γ : GF V) (ε : Matrix 
       hε'g]
   · rintro _ ⟨a, rfl⟩ hy
     refine V.nondeg.2 _ fun v => ?_
-    rw [split v, map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, hTL ε ε, hiso, hform_zero,
+    rw [split v, map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, hTL ε ε, hiso, hform_zero,
       hTL (1 - ε - ε') ε, mA, hform_zero, zero_add, add_zero]
     exact hy _ ⟨v, rfl⟩
   · rintro _ ⟨b, rfl⟩ hx
@@ -156,7 +156,7 @@ theorem idem_isotropic_pair : ∀ {D : D7} {V : HSp D} (γ : GF V) (ε : Matrix 
         V.hT (Matrix.toLin V.frame V.frame ε' b) (Matrix.toLin V.frame V.frame ε' v) +
         V.hT (Matrix.toLin V.frame V.frame ε' b) (Matrix.toLin V.frame V.frame (1 - ε - ε') v) := by
       conv_lhs => rw [split v]
-      simp only [map_add]
+      simp only [map_add (f := _)]
     have e2 : V.hT (Matrix.toLin V.frame V.frame ε' b) (Matrix.toLin V.frame V.frame ε' v) = 0 := by
       rw [hTL, mC, hform_zero]
     have e3 : V.hT (Matrix.toLin V.frame V.frame ε' b) (Matrix.toLin V.frame V.frame (1 - ε - ε') v) = 0 := by

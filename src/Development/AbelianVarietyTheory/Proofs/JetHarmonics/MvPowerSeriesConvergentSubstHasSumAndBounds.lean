@@ -31,7 +31,7 @@ theorem Decay.mul {θ : ℝ} (h0 : 0 ≤ θ) (h1 : θ ≤ 1) {m n : ℕ} {S T : 
     _ = θ ^ ((m - p.1.degree) + (n - p.2.degree)) := (pow_add _ _ _).symm
     _ ≤ θ ^ (m + n - μ.degree) := by
         apply pow_le_pow_of_le_one h0 h1
-        rw [← hp', map_add]
+        rw [← hp', map_add (f := _)]
         omega
 
 theorem Decay.pow {θ : ℝ} (h0 : 0 ≤ θ) (h1 : θ ≤ 1) {S : MvPowerSeries τ K}

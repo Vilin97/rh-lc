@@ -20,7 +20,7 @@ theorem smul_of_X {F : Type} [Field F] {M N : Type} [AddCommGroup M] [Module F M
     exact e.map_smul a m
   | add p q hp hq =>
     intro m
-    rw [add_smul, add_smul, map_add, hp, hq]
+    rw [add_smul, add_smul, map_add (f := _), hp, hq]
   | monomial k a ih =>
     intro m
     rw [pow_succ, ← mul_assoc, mul_smul (C a * X ^ k) X m, ih, h, ← mul_smul]

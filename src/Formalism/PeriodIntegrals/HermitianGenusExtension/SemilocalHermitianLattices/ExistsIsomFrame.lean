@@ -78,7 +78,7 @@ theorem exists_next (hS : IsHermSemilocal S) (hs : h.IsSymm) (hM : IsSelfDualMod
   refine ⟨c • w + d • α⁻¹ • x j, M.add_mem (hM.smul_mem _ hc _ hwM) (hM.smul_mem _ hd _ hy₀),
     hcd, fun i hi => ?_⟩
   have hij : i ≠ j := fun e => hj (e ▸ hi)
-  rw [map_add, map_smul, map_smul, map_smul, hxw, if_pos hi, sub_self, hx, if_neg hij]
+  rw [map_add (f := _), map_smul, map_smul, map_smul, hxw, if_pos hi, sub_self, hx, if_neg hij]
   simp
 
 theorem exists_isom_frame (hS : IsHermSemilocal S) (hs : h.IsSymm) (hd : ∀ x, h x x = 0 → x = 0)

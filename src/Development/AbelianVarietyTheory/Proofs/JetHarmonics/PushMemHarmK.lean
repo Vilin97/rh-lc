@@ -70,7 +70,7 @@ theorem pderiv_push (γ : Matrix (Fin n) (Fin n) E) (τ : E →+* ℂ) (a : Fin 
   | add p q hp hq => simp [hp, hq, Finset.sum_add_distrib]
   | mul_X p ℓ hp =>
     rw [map_mul, Derivation.leibniz, hp, pderiv_push_X]
-    simp only [Derivation.leibniz, smul_eq_mul, map_add, map_mul, smul_add, Finset.sum_add_distrib,
+    simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul, smul_add, Finset.sum_add_distrib,
       Finset.mul_sum, mul_smul_comm]
 
 theorem lap_one_apply {T : Type} {r : T → ℕ} {k : Type} [Field k] (τ τ' : T) (a : Fin (r τ))

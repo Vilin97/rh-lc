@@ -23,7 +23,7 @@ abbrev pullA (f : B.X ⟶ B₁.X) : AM B₁ Λ ⥤ AM B Λ := (Scheme.Modules.pu
 theorem isAdd_pullA (f : B.X ⟶ B₁.X) {M : AM B₁ Λ} (h : IsAdd M) : IsAdd ((pullA f).obj M) := fun a b => by
   change (Scheme.Modules.pullback f).map (M.ρ (a + b) : M.V ⟶ M.V) =
     (Scheme.Modules.pullback f).map (M.ρ a : M.V ⟶ M.V) + (Scheme.Modules.pullback f).map (M.ρ b : M.V ⟶ M.V)
-  rw [h, Functor.map_add]
+  rw [h, Functor.map_add (f := _)]
 
 def EPres.pull (g : Vert.Model.Hom B B₁) (P : EPres B₁ Λ) : EPres B Λ where
   r := P.r

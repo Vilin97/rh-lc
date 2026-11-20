@@ -34,7 +34,7 @@ variable (M) in
 
 def restrict (h : W ≤ V) : SecOn M V →ₛₗ[rs X h] SecOn M W where
   toFun s := (toMod M).presheaf.map (homOfLE h).op s
-  map_add' s t := sec_ext fun i => by simp only [coord_map, coord_add, map_add]
+  map_add' s t := sec_ext fun i => by simp only [coord_map, coord_add, map_add (f := _)]
   map_smul' a s := sec_ext fun i => by simp only [coord_map, coord_smul, map_mul, rs_rs]
 
 theorem restrict_eq_map (h : W ≤ V) (s : SecOn M V) :
@@ -156,7 +156,7 @@ variable (M) in
 def pullLE (π : X' ⟶ X) (V : X.Opens) (V' : X'.Opens) (e : V' ≤ π ⁻¹ᵁ V) :
     SecOn M V →ₛₗ[(π.appLE V V' e).hom] SecOn (M.pull π) V' where
   toFun s := restrict (M.pull π) e (pull M π V s)
-  map_add' s t := by rw [map_add, map_add]
+  map_add' s t := by rw [map_add (f := _), map_add (f := _)]
   map_smul' a s := by
     rw [map_smulₛₗ, map_smulₛₗ]
     rfl

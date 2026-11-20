@@ -83,7 +83,7 @@ theorem beta_form_linear_left (D : B.RealPlaceData k r Wp Wq) {A : ℝ} (hA : B.
 theorem beta_form_conj_linear_right (D : B.RealPlaceData k r Wp Wq) {A : ℝ} (hA : B.AB k r ≤ A) (a b : ℂ)
     {X Y Z : B.Mat k r → (Wq →L[ℂ] Wp)} (hX : B.InCC A 5 X) (hY : B.InCC A 5 Y) (hZ : B.InCC A 5 Z) :
     B.beta D Z (fun g => a • X g + b • Y g) = conj a * B.beta D Z X + conj b * B.beta D Z Y := by
-  rw [CutMP.ER.beta_conj D Z, beta_form_linear_left D hA a b hX hY hZ, map_add, map_mul, map_mul,
+  rw [CutMP.ER.beta_conj D Z, beta_form_linear_left D hA a b hX hY hZ, map_add (f := _), map_mul, map_mul,
     ← CutMP.ER.beta_conj D Z X, ← CutMP.ER.beta_conj D Z Y]
 
 end lin

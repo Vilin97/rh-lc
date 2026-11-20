@@ -50,7 +50,7 @@ theorem at_tens (y : Ainf F ⊗[F] E) : At (evI F) (tensNU (E := E) (inclArch F)
       Prod.ext (show u.1 * a = 0 by rw [fst_eq_zero hu, zero_mul]) (show u.2 * 0 = 0 from mul_zero _)
     change (u * inclArch F a) ⊗ₜ[F] x = 0
     rw [h, TensorProduct.zero_tmul]
-  | add x y hx hy => rw [map_add, smul_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), smul_add, hx, hy, add_zero]
 
 omit [NumberField E] in
 theorem tens_proj (z : AE F E) :
@@ -59,7 +59,7 @@ theorem tens_proj (z : AE F E) :
   induction z using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero, smul_zero]
   | tmul a x => exact congrArg (· ⊗ₜ[F] x) (inclArch_projArch a)
-  | add x y hx hy => rw [map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 omit [NumberField E] in
 theorem smul_of_at {z : AE F E} (hz : At (evI F) z) : inclArch F 1 • z = z := by

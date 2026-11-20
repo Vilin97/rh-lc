@@ -68,7 +68,7 @@ theorem locK_eq_one {D : D7} {c : (AE D)ˣ →* Circle} {χ : HChar D.host.E} (h
     rw [locU_val, locE_mul_locE he.1]
     simp [locE]
   have h6 := hu (locU he.1 u) (by
-    rw [locU_val, locE, RingHom.map_add, RingHom.map_one, RingHom.map_mul, hinf, zero_mul, add_zero])
+    rw [locU_val, locE, RingHom.map_add (f := _), RingHom.map_one, RingHom.map_mul, hinf, zero_mul, add_zero])
     (key _ h) (by
       rw [hinv]
       refine key _ ?_

@@ -23,7 +23,7 @@ theorem bound_cr {l : ℕ} [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (h
       induction x using TensorProduct.induction_on with
       | zero => simp
       | tmul u b => simp [m]
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
     rw [e]
     exact Module.Flat.lTensor_preserves_injective_linearMap c hc
   have hcomm : ∀ (g : ↥(GK K)) x, AlgebraTensorModule.map (ρ g) (σSt P K g) (m x) = m (AlgebraTensorModule.map (ρ g) (σCr P K g) x) := by
@@ -31,7 +31,7 @@ theorem bound_cr {l : ℕ} [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P) (h
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul u b => simp [m, hcg]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hmem : ∀ x ∈ Dinv (σCr P K) ρ, m x ∈ Dinv (σSt P K) ρ := by
     intro x hx
     rw [mem_Dinv] at hx ⊢
@@ -73,7 +73,7 @@ theorem tm_mem {ρ : Representation L G X} {ρ' : Representation L G Y} {f : X �
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul u b => simp [hf g u]
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   rw [e, hx g]
 
 theorem tm_comp (f : X →ₗ[L] Y) (h : Y →ₗ[L] Z) (x : X ⊗[F] B) :
@@ -81,13 +81,13 @@ theorem tm_comp (f : X →ₗ[L] Y) (h : Y →ₗ[L] Z) (x : X ⊗[F] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul u b => simp
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 theorem tm_zero (x : X ⊗[F] B) : tm (F := F) (B := B) (0 : X →ₗ[L] Y) x = 0 := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul u b => simp
-  | add y z hy hz => simp only [map_add, hy, hz, add_zero]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz, add_zero]
 
 theorem admissible_of_pi_decomposition {e : ℕ} (hB : Bound σ L e) {W : Type} [AddCommGroup W] [Module L W] [Module F W] [IsScalarTower F L W]
     [Module.Finite L W] (ρ : Representation L G W) {I : Type} [Fintype I] [DecidableEq I] (C : I → Type)

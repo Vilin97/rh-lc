@@ -175,7 +175,7 @@ theorem isExactTriple_of_isSESLat_gen {l : ℕ} [Fact l.Prime] {a : ℕ} [NeZero
           have h0 : ((g.f.restrictScalars O).restrict g.T_le) (((f.f.restrictScalars O).restrict f.T_le) x) = 0 :=
             Subtype.ext ((hS.2.2.2.1 (f.f x)).2 ⟨x, rfl⟩)
           simp only [latW, TensorProduct.map_tmul, LinearMap.id_apply, h0, TensorProduct.tmul_zero]
-        | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+        | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
       have hW : ∀ x, homW t ϖ H (homW t ϖ F x) = 0 := fun x =>
         I₂.j.injective (by rw [hH, hF, hlat, map_zero])
       have hM : (Ht * Ft).map φ = 0 := by

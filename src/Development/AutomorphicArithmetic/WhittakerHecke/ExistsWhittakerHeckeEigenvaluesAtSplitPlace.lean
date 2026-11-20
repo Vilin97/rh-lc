@@ -34,7 +34,7 @@ private theorem KAt_aE {E : Type} [Field E] [NumberField E] {w w' : H.P E} (hne 
     rw [← (H.lcLaws E w').2.2.2.1 x]
     apply Units.ext
     ext i j
-    rw [Matrix.GeneralLinearGroup.map_apply, (H.sgLaws E w').2.2.2.2.1, map_add, cp_sg_ne hne]
+    rw [Matrix.GeneralLinearGroup.map_apply, (H.sgLaws E w').2.2.2.2.1, map_add (f := _), cp_sg_ne hne]
     fin_cases i <;> fin_cases j <;> simp
   unfold H.KAt at hg ⊢
   rw [map_mul, h1, one_mul]

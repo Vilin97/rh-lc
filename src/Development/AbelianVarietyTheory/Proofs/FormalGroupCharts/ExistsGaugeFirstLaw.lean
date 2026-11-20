@@ -75,7 +75,7 @@ theorem exists_gauge_first_law :
     obtain ⟨e2, f2⟩ := E (n := 4) _ (triple_points_zero_constant (hA 0 1) (hp 2) (hp 3))
     obtain ⟨e3, f3⟩ := E (n := 4) _ (triple_points_zero_constant (hp 1) (hp 2) (hp 3))
     obtain ⟨e4, f4⟩ := E (n := 4) _ (triple_points_zero_constant (hp 0) (hA 1 2) (hp 3))
-    refine expS_inj (by rw [map_add, f1, f2, add_zero]) (by rw [map_add, f3, f4, add_zero]) ?_
+    refine expS_inj (by rw [map_add (f := _), f1, f2, add_zero]) (by rw [map_add (f := _), f3, f4, add_zero]) ?_
     rw [gt_expS_add _ _ f1 f2, gt_expS_add _ _ f3 f4, ← e1, ← e2, ← e3, ← e4]
     exact B.cocycleLeft_assoc
   obtain ⟨h, hx0, hd, hch⟩ := H1 k d B.G c a0 cm as

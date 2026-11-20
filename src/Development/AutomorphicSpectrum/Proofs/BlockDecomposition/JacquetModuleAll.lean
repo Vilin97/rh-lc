@@ -111,7 +111,7 @@ def fixSub (τ : FDRep ℂ (GL ι K)) (b : ι → Fin s) : Submodule ℂ τ wher
   carrier := {v | ∀ u ∈ unip K b, τ.ρ u v = v}
   add_mem' := by
     intro x y hx hy u hu
-    rw [map_add, hx u hu, hy u hu]
+    rw [map_add (f := _), hx u hu, hy u hu]
   zero_mem' := by
     intro u _
     exact map_zero _
@@ -278,7 +278,7 @@ def killSub (Φ : PiTensorProduct ℂ (fun c => (lam c : Type)) →ₗ[ℂ] τ) 
   carrier := {x | ∀ f : ∀ c, (lam c : Type), Φ (PiTensorProduct.tprod ℂ (Function.update f c x)) = 0}
   add_mem' := by
     intro x y hx hy f
-    rw [MultilinearMap.map_update_add, map_add, hx f, hy f, add_zero]
+    rw [MultilinearMap.map_update_add, map_add (f := _), hx f, hy f, add_zero]
   zero_mem' := by
     intro f
     rw [MultilinearMap.map_update_zero, map_zero]

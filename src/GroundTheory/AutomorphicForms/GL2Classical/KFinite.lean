@@ -84,7 +84,7 @@ theorem realPart_orthogonal {x : AdelicGL ℚ 2} (hx : x ∈ Reduction.maxCompac
     have hsum : ∀ j : Fin 2, ‖e.symm y0 * M 0 j + e.symm y1 * M 1 j‖ =
         |y0 * realPart x 0 j + y1 * realPart x 1 j| := by
       intro j
-      rw [← hEn, map_add, map_mul, map_mul, RingEquiv.apply_symm_apply, RingEquiv.apply_symm_apply,
+      rw [← hEn, map_add (f := _), map_mul, map_mul, RingEquiv.apply_symm_apply, RingEquiv.apply_symm_apply,
         hE, hE, Real.norm_eq_abs]
     have hy0 : ‖e.symm y0‖ = |y0| := by rw [← hEn, RingEquiv.apply_symm_apply, Real.norm_eq_abs]
     have hy1 : ‖e.symm y1‖ = |y1| := by rw [← hEn, RingEquiv.apply_symm_apply, Real.norm_eq_abs]

@@ -24,7 +24,7 @@ theorem exists_coords {x : H.E} (hx : x ∈ H.K) : ∃ a b : ℚ, x = (a : H.E) 
 
 theorem conj_coords (a b : ℚ) :
     H.conj ((a : H.E) + (b : H.E) * H.sqrtMinusD) = (a : H.E) - (b : H.E) * H.sqrtMinusD := by
-  rw [map_add, map_mul, map_ratCast, map_ratCast, H.conj_sqrtMinusD]
+  rw [map_add (f := _), map_mul, map_ratCast, map_ratCast, H.conj_sqrtMinusD]
   ring
 
 theorem conj_mem {x : H.E} (hx : x ∈ H.K) : H.conj x ∈ H.K := by

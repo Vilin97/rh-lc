@@ -84,7 +84,7 @@ theorem basis_of_congr {M : Type} [AddCommGroup M] [Module (LetA O n) M] {r : �
     rw [Module.Basis.det_apply, RingHom.map_det]
     have : ψ.mapMatrix (b.toMatrix x) = 1 := by
       ext j k
-      rw [RingHom.mapMatrix_apply, Matrix.map_apply, Module.Basis.toMatrix_apply, h, map_add,
+      rw [RingHom.mapMatrix_apply, Matrix.map_apply, Module.Basis.toMatrix_apply, h, map_add (f := _),
         map_smul, Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul, map_add, map_mul, hψ,
         zero_mul, add_zero, b.repr_self, Finsupp.single_apply, Matrix.one_apply]
       by_cases hjk : j = k
@@ -116,7 +116,7 @@ theorem div_param [IsDomain O] {e s' : ℕ} {π' : LetA O n} {E : ZMod n → Pol
         + PowerSeries.C (PowerSeries.constantCoeff (f i)) := by
       rw [hf i]
       conv_lhs => rw [e1]
-      rw [← PowerSeries.coe_substAlgHom (hsub i), map_add, map_mul, PowerSeries.substAlgHom_X]
+      rw [← PowerSeries.coe_substAlgHom (hsub i), map_add (f := _), map_mul, PowerSeries.substAlgHom_X]
       congr 1
       exact (PowerSeries.substAlgHom (hsub i)).commutes _
     have e3 : PowerSeries.constantCoeff (a i) = 0 := by

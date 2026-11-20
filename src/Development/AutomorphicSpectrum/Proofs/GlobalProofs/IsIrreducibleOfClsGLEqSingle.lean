@@ -155,7 +155,7 @@ theorem msum_eq_of_coeff_ne (hG : GeometricLemma) (hBZ : BernsteinZelevinskyFini
     rw [hP1def, hP2def, hSdef, Finset.sum_filter_add_sum_filter_not]
     exact support_sum_monomial_coeff P
   have hsum : Ψ.symm P1 + Ψ.symm P2 = Finsupp.single w 1 := by
-    rw [← map_add, hsplit, hP, AddEquiv.symm_apply_apply]
+    rw [← map_add (f := _), hsplit, hP, AddEquiv.symm_apply_apply]
   have hz : ∀ u, (Ψ.symm P1) u = 0 := by
     intro u
     by_contra hu

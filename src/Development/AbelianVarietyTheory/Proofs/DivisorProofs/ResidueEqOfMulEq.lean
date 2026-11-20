@@ -79,7 +79,7 @@ def toDual (htm : t ∈ IsLocalRing.maximalIdeal B) (ht : t ≠ 0) :
     ext <;> simp [h, pr₁]
   map_add' p q := by
     have h : IsLocalRing.residue B (coef t (p + q)) = IsLocalRing.residue B (coef t p + coef t q) :=
-      residue_eq_of_mul_eq ht (by rw [coef_mul, add_mul, coef_mul, coef_mul, map_add, map_add]; ring)
+      residue_eq_of_mul_eq ht (by rw [coef_mul, add_mul, coef_mul, coef_mul, map_add (f := _), map_add (f := _)]; ring)
     ext <;> simp [h, pr₁]
 
 end GlobalTheory.SmallGlue

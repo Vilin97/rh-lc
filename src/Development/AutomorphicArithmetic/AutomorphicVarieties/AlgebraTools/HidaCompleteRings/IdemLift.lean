@@ -14,7 +14,7 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.idemLift :
   have hu : IsUnit (Ideal.Quotient.mk I (2 * x - 1)) := by
     refine IsUnit.of_mul_eq_one (Ideal.Quotient.mk I (2 * x - 1)) ?_
     have : (2 * x - 1) * (2 * x - 1) = 4 * (x * x - x) + 1 := by ring
-    rw [← map_mul, this, map_add, map_mul, h0, mul_zero, zero_add, map_one]
+    rw [← map_mul, this, map_add (f := _), map_mul, h0, mul_zero, zero_add, map_one]
   obtain ⟨e, he, hex⟩ := HenselianRing.is_henselian (I := I) _ hm x
     (by simpa [sq] using hx)
     (by

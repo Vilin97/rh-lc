@@ -62,9 +62,9 @@ variable {A B : Type*} [AddCommGroup A] [Module E A] [AddCommGroup B] [Module E 
 def tensorHermitianPartial (hA : HermL F E A) (hB : HermL F E B) (a : A) (b : B) :
     A →ₛₗ[conjHom F E] B →ₛₗ[conjHom F E] E :=
   LinearMap.mk₂'ₛₗ (conjHom F E) (conjHom F E) (fun a' b' => hA.form a a' * hB.form b b')
-    (fun _ _ _ => by rw [map_add, add_mul])
+    (fun _ _ _ => by rw [map_add (f := _), add_mul])
     (fun _ _ _ => by rw [LinearMap.map_smulₛₗ, smul_eq_mul, smul_eq_mul, mul_assoc])
-    (fun _ _ _ => by rw [map_add, mul_add])
+    (fun _ _ _ => by rw [map_add (f := _), mul_add])
     (fun _ _ _ => by rw [LinearMap.map_smulₛₗ, smul_eq_mul, smul_eq_mul, mul_left_comm])
 
 def tensHerm (hA : HermL F E A) (hB : HermL F E B) :
@@ -93,11 +93,11 @@ variable [Module F A] [IsScalarTower F E A]
 
 def weilForm (ξ : E) (hA : HermL F E A) (hB : HermL F E B) : LinearMap.BilinForm F (A ⊗[E] B) :=
   LinearMap.mk₂ F (fun w w' => Algebra.trace F E (ξ * tensHerm hA hB w w'))
-    (fun _ _ _ => by rw [map_add, LinearMap.add_apply, mul_add, map_add])
+    (fun _ _ _ => by rw [map_add (f := _), LinearMap.add_apply, mul_add, map_add (f := _)])
     (fun c w w' => by
       rw [← algebraMap_smul E c w, map_smul, LinearMap.smul_apply, smul_eq_mul, mul_left_comm,
         ← Algebra.smul_def, map_smul, smul_eq_mul])
-    (fun _ _ _ => by rw [map_add, mul_add, map_add])
+    (fun _ _ _ => by rw [map_add (f := _), mul_add, map_add (f := _)])
     (fun c w w' => by
       rw [← algebraMap_smul E c w', LinearMap.map_smulₛₗ, smul_eq_mul]
       change Algebra.trace F E (ξ * (conj F E (algebraMap F E c) * _)) = _
@@ -193,7 +193,7 @@ instance : Group (Heis ω) :=
     (fun a b c => by
       ext
       · simp [add_assoc]
-      · simp only [Heis.product_torus_component, Heis.mul_w, map_add, LinearMap.add_apply]
+      · simp only [Heis.product_torus_component, Heis.mul_w, map_add (f := _), LinearMap.add_apply]
         ring)
     (fun a => by ext <;> simp)
     (fun a => by
@@ -515,7 +515,7 @@ def gaussFormL : GaussQ →ₗ[GaussQ] GaussQ →ₛₗ[conjHom ℚ GaussQ] Gaus
   LinearMap.mk₂'ₛₗ (RingHom.id GaussQ) (conjHom ℚ GaussQ) (fun x y => x * conj ℚ GaussQ y)
     (fun _ _ _ => add_mul _ _ _)
     (fun c x y => by rw [smul_eq_mul, smul_eq_mul, RingHom.id_apply, mul_assoc])
-    (fun x y y' => by rw [map_add, mul_add])
+    (fun x y y' => by rw [map_add (f := _), mul_add])
     (fun c x y => by
       show x * conj ℚ GaussQ (c * y) = conj ℚ GaussQ c * (x * conj ℚ GaussQ y)
       rw [map_mul]

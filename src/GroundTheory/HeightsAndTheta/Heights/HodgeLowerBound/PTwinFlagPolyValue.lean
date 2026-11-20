@@ -58,7 +58,7 @@ theorem proof : FlagPolynomialValue.Statement := by
     simp only [aeval_C, map_intCast] at h ⊢
     simpa using h
   | add p q hp hq =>
-    rw [map_add, map_add]; exact valPoly_add hp hq
+    rw [map_add (f := _), map_add (f := _)]; exact valPoly_add hp hq
   | mul_X p j hp =>
     rw [map_mul, map_mul, aeval_X, aeval_X]; exact valPoly_mul hp (hAB j)
 

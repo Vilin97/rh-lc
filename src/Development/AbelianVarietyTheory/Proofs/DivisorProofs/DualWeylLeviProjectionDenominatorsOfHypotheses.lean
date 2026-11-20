@@ -32,11 +32,11 @@ theorem lpTen_rTensor (p q : ℕ) (D D' : Module.End ℚ (MvPolynomial (Fin p ×
     lpTen p q (LinearMap.rTensor _ D u) v = lpTen p q u (LinearMap.rTensor _ D' v) := by
   induction u using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
   | tmul a b =>
     induction v using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a' b' => simp only [LinearMap.rTensor_tmul, lpTen_tmul, hD]
 
 theorem lpTen_lTensor (p q : ℕ) (D D' : Module.End ℚ (MvPolynomial (Fin q × Fin q) ℚ))
@@ -44,11 +44,11 @@ theorem lpTen_lTensor (p q : ℕ) (D D' : Module.End ℚ (MvPolynomial (Fin q ×
     lpTen p q (LinearMap.lTensor _ D u) v = lpTen p q u (LinearMap.lTensor _ D' v) := by
   induction u using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
   | tmul a b =>
     induction v using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a' b' => simp only [LinearMap.lTensor_tmul, lpTen_tmul, hD]
 
 def lpF (N : ℕ) (ν : Fin N → ℕ) : LinearMap.BilinForm ℚ (dualWeyl ℚ N N ν) :=
@@ -228,7 +228,7 @@ theorem lp_ten_int (p q : ℕ) (ν : Fin (p + q) → ℕ) (hν : Antitone ν) (c
     | add x y _ _ hx hy =>
       obtain ⟨a, ha⟩ := hx
       obtain ⟨b, hb⟩ := hy
-      exact ⟨a + b, by rw [map_add, mul_add, ha, hb]; push_cast; ring⟩
+      exact ⟨a + b, by rw [map_add (f := _), mul_add, ha, hb]; push_cast; ring⟩
     | smul n x _ hx =>
       obtain ⟨a, ha⟩ := hx
       refine ⟨n * a, ?_⟩
@@ -238,7 +238,7 @@ theorem lp_ten_int (p q : ℕ) (ν : Fin (p + q) → ℕ) (hν : Antitone ν) (c
   | add x y _ _ hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
-    exact ⟨a + b, by rw [map_add, LinearMap.add_apply, mul_add, ha, hb]; push_cast; ring⟩
+    exact ⟨a + b, by rw [map_add (f := _), LinearMap.add_apply, mul_add, ha, hb]; push_cast; ring⟩
   | smul n x _ hx =>
     obtain ⟨a, ha⟩ := hx
     refine ⟨n * a, ?_⟩

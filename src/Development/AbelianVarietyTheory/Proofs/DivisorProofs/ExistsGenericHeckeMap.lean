@@ -181,7 +181,7 @@ theorem tate_transl (G : GDatum) (g : G.La →ₗ[G.O] G.La) (c k N : ℕ) (cpos
       obtain ⟨w, hw⟩ := (ev_eq_iff I (n * k) (Nat.mul_pos hn kpos) _ _).1 hz
       obtain ⟨w', hw'⟩ := hg w
       refine ⟨z + w', ginj ?_⟩
-      rw [map_nsmul, map_add, hw', smul_add, smul_smul, ← sub_eq_iff_eq_add', hw]
+      rw [map_nsmul, map_add (f := _), hw', smul_add, smul_smul, ← sub_eq_iff_eq_add', hw]
     · rintro ⟨z, rfl⟩
       exact ⟨z, by rw [map_nsmul, hlev n hn, hlev N Npos]⟩
   have htor : ∀ n, 0 < n → ∀ y, (I.ev (n * k) (g y) ≫ ψ) ^ n = 1 := by
@@ -210,7 +210,7 @@ theorem tate_transl (G : GDatum) (g : G.La →ₗ[G.O] G.La) (c k N : ℕ) (cpos
       have e4 : w = g z + k • v := by rw [sub_sub, sub_eq_zero] at e2; exact e2
       obtain ⟨v', hv'⟩ := hg v
       refine ⟨z + v', ?_⟩
-      rw [map_add, hv', ← e4, hw, ha]
+      rw [map_add (f := _), hv', ← e4, hw, ha]
     · rintro ⟨y, rfl⟩
       exact htor n hn y
   have hiso2 : LBIso (ReciprocityTheory.ChartRestriction.G.Geo.Tor.lbPow (P.pull (lift (𝟙 A) (𝟙 A)).left) (k ^ 2 / c))
@@ -229,7 +229,7 @@ theorem tate_transl (G : GDatum) (g : G.La →ₗ[G.O] G.La) (c k N : ℕ) (cpos
       Category.comp_id]
   refine ⟨⟨I.ζ, I.ζ_prim, I.ζ_pow, fun n y => I.ev (n * k) (g y) ≫ ψ, ?_, ?_, ker', onto', ?_, ?_⟩, fun n y => rfl⟩
   · intro n y y'
-    rw [map_add, I.add, MonObj.mul_comp]
+    rw [map_add (f := _), I.add, MonObj.mul_comp]
   · intro n b' y
     rw [map_smul, I.lin, Category.assoc, hact, ← Category.assoc]
   · intro n m hn hm y

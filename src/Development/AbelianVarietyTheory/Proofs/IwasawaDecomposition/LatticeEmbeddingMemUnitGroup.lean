@@ -92,7 +92,7 @@ theorem mem_span_ker (h : LinearIndependent ℂ (fun i => e (b i))) {S : Type} [
       refine ⟨?_, ?_⟩
       · simp only [← hN, hSx, hP, LinearMap.comp_apply]
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [← map_sum e, ← map_sum s, ← map_add]
+          rw [← map_sum e, ← map_sum s, ← map_add (f := _)]
         congr 1
         have : ∑ v, LinearMap.single K (fun _ : S => V) v (N v (b i)) = N' (b i) := by
           funext w; simp [N', Finset.sum_apply, Pi.single_apply]
@@ -100,8 +100,8 @@ theorem mem_span_ker (h : LinearIndependent ℂ (fun i => e (b i))) {S : Type} [
       · rw [hP]; exact Submodule.subset_span ⟨p (b i), hp _, rfl⟩
     | zero => simp
     | add x y _ _ hx hy =>
-      refine ⟨?_, by rw [map_add]; exact Submodule.add_mem _ hx.2 hy.2⟩
-      simp only [map_add, Finset.sum_add_distrib]
+      refine ⟨?_, by rw [map_add (f := _)]; exact Submodule.add_mem _ hx.2 hy.2⟩
+      simp only [map_add (f := _), Finset.sum_add_distrib]
       conv_lhs => rw [hx.1, hy.1]
       abel
     | smul a x _ hx =>

@@ -175,7 +175,7 @@ theorem range_valMap_point {i : Fin (r + 1)} (h : ⊤ ≤ point o t ht ⁻¹ᵁ 
       rw [← MvPolynomial.algebraMap_eq, AlgEquiv.commutes, hc]
       exact Subalgebra.algebraMap_mem _ a
     | add p q hp hq =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact add_mem hp hq
     | mul_X p j hp =>
       rw [map_mul, map_mul, chartAlgEquiv_X, hr]

@@ -27,7 +27,7 @@ theorem exists_finite_below_mod_two {X : Type} [AddCommGroup X] [Module.Finite �
     intro y
     refine ⟨e.symm (fun i => -(e y i / 2)), ?_⟩
     apply e.injective
-    rw [map_add, map_add, LinearEquiv.apply_symm_apply, LinearEquiv.apply_symm_apply]
+    rw [map_add (f := _), map_add (f := _), LinearEquiv.apply_symm_apply, LinearEquiv.apply_symm_apply]
     funext i
     simp only [ZMod.val_intCast, Pi.add_apply, Nat.cast_ofNat]
     rw [Int.emod_def]

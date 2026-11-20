@@ -54,7 +54,7 @@ theorem prV_swap {D : D7} (w : HeightOneSpectrum (𝓞 D.host.F))
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add x y hx hy => rw [RingHom.map_add (swapAE D), RingHom.map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [RingHom.map_add (swapAE D), RingHom.map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem bc_prV_swap_eq_one_iff {D : D7} {m : ℕ} (w : HeightOneSpectrum (𝓞 D.host.F))
     (M : GL (Fin m) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F ⊗[D.host.F] D.host.E)) :

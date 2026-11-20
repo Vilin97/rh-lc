@@ -42,7 +42,7 @@ lemma lower_mem (F : Fin n → Fin n → Module.End ℂ U) (w : U) {a b : Fin n}
     · exact hab
     · exact hl p hp
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 lemma comm_apply {F : Fin n → Fin n → Module.End ℂ U} (hF : GlRel F) (i j a b : Fin n) (u : U) :
@@ -85,7 +85,7 @@ theorem stab_lowSpan (hF : GlRel F) (hw : IsHW F ν w) : Stab F (lowSpan F w) :=
     obtain ⟨l, hl, rfl⟩ := hy
     exact gen_mem hF hw l hl i j
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 def wt (ν : Fin n → ℂ) : List (Fin n × Fin n) → Fin n → ℂ
@@ -170,7 +170,7 @@ theorem eq_smul_of_weight (hF : GlRel F) (hw : IsHW F ν w) {x : U} (hx : x ∈ 
     rw [Module.End.mem_eigenspace_iff]
     have h1 : hOp F (t • w + y) = hgt ν • (t • w + y) := hOp_of_diag hxν
     have h2 : hOp F w = hgt ν • w := hOp_of_diag hw.1
-    rw [map_add, map_smul, h2, smul_add, smul_comm] at h1
+    rw [map_add (f := _), map_smul, h2, smul_add, smul_comm] at h1
     exact add_left_cancel h1
   have hdisj := (Module.End.eigenspaces_iSupIndep (hOp F)) (hgt ν)
   exact (Submodule.disjoint_def.1 hdisj) y hy2 hy1

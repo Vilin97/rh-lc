@@ -52,8 +52,8 @@ theorem exists_lift_lt_one {R T O K Γ : Type} [CommRing R] [CommRing T] [CommRi
     exact hI a ha
   · exact ⟨0, map_zero _, by rw [map_zero, map_zero]; exact zero_lt_one⟩
   · rintro x y _ _ ⟨z, hz, h⟩ ⟨z', hz', h'⟩
-    refine ⟨z + z', by rw [map_add, hz, hz']; rfl, ?_⟩
-    rw [map_add]
+    refine ⟨z + z', by rw [map_add (f := _), hz, hz']; rfl, ?_⟩
+    rw [map_add (f := _)]
     exact Valuation.map_add_lt _ h h'
   · rintro c x _ ⟨z, hz, h⟩
     obtain ⟨w, hw⟩ := hs c
@@ -65,13 +65,13 @@ theorem map_eq_one_of_supp {R A : Type} [CommRing R] [CommRing A] (f : R →+* A
     (hx : e * (x - 1) = x - 1) (hy : x = y * (1 + e * (k - 1))) : f y = 1 := by
   have h1 := congrArg f hx
   have h2 := congrArg f hy
-  simp only [map_mul, map_add, map_sub, map_one, he, zero_mul, add_zero, mul_one] at h1 h2
+  simp only [map_mul, map_add (f := _), map_sub, map_one, he, zero_mul, add_zero, mul_one] at h1 h2
   rw [← h2, ← sub_eq_zero, ← h1]
 
 theorem map_eq_mul_of_supp {R A : Type} [CommRing R] [CommRing A] (f : R →+* A) {e x y k : R} (he : f e = 1)
     (hy : x = y * (1 + e * (k - 1))) : f x = f y * f k := by
   rw [hy]
-  simp only [map_mul, map_add, map_sub, map_one, he]
+  simp only [map_mul, map_add (f := _), map_sub, map_one, he]
   ring
 
 theorem exists_units_quot {R : Type} [CommRing R] (x l : Rˣ) {r : R} (hl : (l : R) = r) :

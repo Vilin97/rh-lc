@@ -36,7 +36,7 @@ theorem exists_basis_of_saturated {R : Type} [CommRing R] [IsDomain R] [IsPrinci
     have hr : ∀ j, g (Sum.inr j) = 0 := by
       have h1 := congrArg S.mkQ hg
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [w', Sum.elim_inl, Sum.elim_inr, map_add, map_sum, map_smul, map_zero, Submodule.mkQ_apply,
+        simp only [w', Sum.elim_inl, Sum.elim_inr, map_add (f := _), map_sum, map_smul, map_zero, Submodule.mkQ_apply,
         hmk, hs', smul_zero, Finset.sum_const_zero, zero_add] at h1
       exact Fintype.linearIndependent_iff.1 bQ.linearIndependent _ h1
     have hl : ∀ i, g (Sum.inl i) = 0 := by

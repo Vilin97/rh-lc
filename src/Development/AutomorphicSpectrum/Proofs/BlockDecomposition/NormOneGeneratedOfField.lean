@@ -34,7 +34,7 @@ theorem normOneGen_of_imag {R : Type} [CommRing R] [IsDomain R] [CharZero R]
     intro n
     have h1 : c (((n : R) - θ) * i n) = 1 := by rw [hi, map_one]
     rw [map_mul, map_sub, map_natCast, hc] at h1
-    simp only [hm, map_mul, map_add, map_natCast, hc]
+    simp only [hm, map_mul, map_add (f := _), map_natCast, hc]
     linear_combination (((n : R) - -θ) * c (i n)) * hi n + h1
   have hminj : Function.Injective m := by
     intro a b h

@@ -49,7 +49,7 @@ theorem mem_dual_iff (L : Lat ξ E) (p : Cpt ξ) {r : ℕ} (b : Fin r → E)
       { carrier := {x | w x ∈ regAt ξ p}
         add_mem' := fun {a c} ha hc => by
           show w (a + c) ∈ regAt ξ p
-          rw [map_add]
+          rw [map_add (f := _)]
           exact add_mem ha hc
         zero_mem' := by
           show w 0 ∈ regAt ξ p

@@ -46,9 +46,9 @@ theorem coeffDerivAddHom_mul {B τ : Type} [CommRing B] (D : Derivation ℤ B B)
       simp only [MvPolynomial.monomial_mul, coeffDerivAddHom_monomial, Derivation.leibniz,
         smul_eq_mul, map_add, add_comm v u]
     | add q₁ q₂ h₁ h₂ =>
-      rw [mul_add, map_add, h₁, h₂, map_add]; ring
+      rw [mul_add, map_add (f := _), h₁, h₂, map_add (f := _)]; ring
   | add p₁ p₂ h₁ h₂ =>
-    rw [add_mul, map_add, h₁, h₂, map_add]; ring
+    rw [add_mul, map_add (f := _), h₁, h₂, map_add (f := _)]; ring
 
 theorem derivation_extend_mvPolynomial :
     ∀ (B τ : Type) [CommRing B] (D : Derivation ℤ B B),

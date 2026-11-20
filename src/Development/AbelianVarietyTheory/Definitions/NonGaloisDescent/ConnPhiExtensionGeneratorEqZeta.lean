@@ -304,7 +304,7 @@ def nabla : Module.End K (Vec K a ι) := P.xiExt.conj derV
 
 def conn : Module.End K (Vec K a ι) where
   toFun v := (X : K⟦X⟧) • P.nabla v
-  map_add' v w := by rw [map_add, smul_add]
+  map_add' v w := by rw [map_add (f := _), smul_add]
   map_smul' c v := by rw [map_smul, smul_comm]; rfl
 
 theorem conn_apply (v : Vec K a ι) : P.conn v = (X : K⟦X⟧) • P.nabla v := rfl
@@ -327,7 +327,7 @@ theorem conn_xiExt (w : Vec K a ι) : P.conn (P.xiExt w) = P.xiExt fun τ i => N
 theorem nabla_smul_tot (f : ZMod a → K⟦X⟧) (v : Vec K a ι) :
     P.nabla (f • v) = derTot f • v + f • P.nabla v := by
   obtain ⟨w, rfl⟩ := P.xiExt.surjective v
-  rw [← xiExt_smul_tot, nabla_xiExt, nabla_xiExt, ← xiExt_smul_tot, ← xiExt_smul_tot, ← map_add]
+  rw [← xiExt_smul_tot, nabla_xiExt, nabla_xiExt, ← xiExt_smul_tot, ← xiExt_smul_tot, ← map_add (f := _)]
   congr 1
   ext τ i : 2
   simp [derTot, add_comm, mul_comm]
@@ -555,7 +555,7 @@ theorem conn_phi_extension_generator_eq_zeta : (P.plus hy).conn ((P.plus hy).phi
   rw [Hom.app_zeta, ← zeta_phi_sub, phi_extension_generator_eq_add, add_sub_cancel_left]
 
 theorem plus_conn_xVec_eq : (P.plus hy).conn xVec = (P.plusInl hy).app (P.zeta y - P.conn y) := by
-  rw [map_sub, ← conn_phi_extension_generator_eq_zeta, phi_extension_generator_eq_add, map_add, Hom.app_conn, add_sub_cancel_right]
+  rw [map_sub, ← conn_phi_extension_generator_eq_zeta, phi_extension_generator_eq_add, map_add (f := _), Hom.app_conn, add_sub_cancel_right]
 
 variable [NormedAlgebra ℚ_[l] K] [NeZero e]
 

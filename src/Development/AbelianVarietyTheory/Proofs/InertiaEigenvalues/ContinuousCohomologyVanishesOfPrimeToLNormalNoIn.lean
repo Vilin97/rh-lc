@@ -179,7 +179,7 @@ theorem cohomology_vanishes : ∀ (Γ : Type) [Group Γ] [TopologicalSpace Γ] [
         have e := hfc (a⁻¹ * b) (b⁻¹ * c)
         have e' : a⁻¹ * b * (b⁻¹ * c) = a⁻¹ * c := by group
         simp only [hF']
-        rw [← e', e, map_add, ← Module.End.mul_apply, ← map_mul, mul_inv_cancel_left]
+        rw [← e', e, map_add (f := _), ← Module.End.mul_apply, ← map_mul, mul_inv_cancel_left]
         abel)
     obtain ⟨a, ha⟩ := exists_inverse l _ ((hcop U).pow_left 2) htor (fun q => F 1 q 1)
     refine (mem_coboundaries1 ρ _).2 ⟨a • m, fun g => ?_⟩
@@ -216,7 +216,7 @@ theorem cohomology_vanishes : ∀ (Γ : Type) [Group Γ] [TopologicalSpace Γ] [
         have e := congrArg (ρ a) (hfc (a⁻¹ * b) (b⁻¹ * c) (c⁻¹ * d))
         have e1 : a⁻¹ * b * (b⁻¹ * c) = a⁻¹ * c := by group
         have e2 : b⁻¹ * c * (c⁻¹ * d) = b⁻¹ * d := by group
-        rw [e1, e2, map_sub, map_add, map_sub, ← Module.End.mul_apply, ← map_mul,
+        rw [e1, e2, map_sub, map_add (f := _), map_sub, ← Module.End.mul_apply, ← map_mul,
           mul_inv_cancel_left, map_zero] at e
         simp only [hF]
         exact e)

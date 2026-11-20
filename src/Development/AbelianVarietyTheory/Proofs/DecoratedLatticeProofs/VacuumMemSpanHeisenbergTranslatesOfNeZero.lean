@@ -63,7 +63,7 @@ theorem fin_add {D : D7} {S T : HSp D} {a b : WO S T} (ha : a.map (infPart D) = 
   have h1 : infPart D (a i j) = 0 := congrFun (congrFun ha i) j
   have h2 : infPart D (b i j) = 0 := congrFun (congrFun hb i) j
   show infPart D (a i j + b i j) = 0
-  rw [RingHom.map_add, h1, h2, add_zero]
+  rw [RingHom.map_add (f := _), h1, h2, add_zero]
 
 theorem fin_neg {D : D7} {S T : HSp D} {a : WO S T} (ha : a.map (infPart D) = 0) : (-a).map (infPart D) = 0 := by
   ext i j

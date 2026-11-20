@@ -111,7 +111,7 @@ theorem cut_root (c : A →+* A) (hcc : ∀ z, c (c z) = z) {e d d' : A} (he : e
   · rw [Units.val_mul, hv, cut_val, hu]
     exact cmRing_idempotent_unitRatio_identity he hc hec hd hx
   · rw [hv]
-    simp only [map_mul, map_add, map_sub, map_one, hcc]
+    simp only [map_mul, map_add (f := _), map_sub, map_one, hcc]
     exact mul_comm _ _
 
 theorem eig_limit {G H U W ι : Type} [Group G] [Group H] [Monoid U] [TopologicalSpace G] [TopologicalSpace H]
@@ -178,10 +178,10 @@ theorem finUnit_cut {a : AE D} (ha : a * a = a) {x : (AE D)ˣ} (hx : FinUnit x) 
     GlobalTheory.AdIdem.idempotent_mem_intAE D _ (by rw [← RingHom.map_mul]; congr 1; linear_combination ha)
   have key : ∀ y : (AE D)ˣ, finPart D (y : AE D) ∈ intAE D → finPart D ((cut a ha y : (AE D)ˣ) : AE D) ∈ intAE D :=
     fun y hy => by
-      rw [cut_val, RingHom.map_add, RingHom.map_mul]
+      rw [cut_val, RingHom.map_add (f := _), RingHom.map_mul]
       exact add_mem (mul_mem_intAE h2 hy) h3
   refine ⟨?_, key x hx.2.1, ?_⟩
-  · rw [cut_val, RingHom.map_add, RingHom.map_mul, hx.1, mul_one, ← RingHom.map_add, add_sub_cancel,
+  · rw [cut_val, RingHom.map_add (f := _), RingHom.map_mul, hx.1, mul_one, ← RingHom.map_add (f := _), add_sub_cancel,
       RingHom.map_one]
   · rw [← MonoidHom.map_inv]
     exact key _ hx.2.2
@@ -259,7 +259,7 @@ omit hε in
 theorem idS_cons {v} {s : Finset (HeightOneSpectrum (𝓞 D.host.F))} (hv : v ∉ s) :
     idS ε (Finset.cons v s hv) = idS ε {v} + idS ε s := by
   unfold idS
-  rw [Finset.sum_cons, Finset.sum_singleton, RingHom.map_add]
+  rw [Finset.sum_cons, Finset.sum_singleton, RingHom.map_add (f := _)]
 
 theorem idS_orth {v} {s : Finset (HeightOneSpectrum (𝓞 D.host.F))} (hv : v ∉ s) : idS ε {v} * idS ε s = 0 := by
   unfold idS

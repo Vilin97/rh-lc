@@ -92,7 +92,7 @@ theorem splitPts : StatSplitPts := by
     | algebraMap τ =>
       rw [hΨa]
       exact Algebra.subset_adjoin (Or.inl ⟨τ.1, τ.2, rfl⟩)
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   refine ⟨fun k => Ψ (bas k), fun k => hmemΨ _, ?_, ?_⟩
   · intro f' hf'

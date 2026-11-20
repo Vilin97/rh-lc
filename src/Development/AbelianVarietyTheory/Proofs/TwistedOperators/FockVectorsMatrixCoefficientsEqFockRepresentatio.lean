@@ -411,7 +411,7 @@ theorem coef_of_side : ∀ (p q r s n : ℕ) (T₀ : GrpData (p * r + q * s) (p 
     rw [hD]
     refine hd.congr_deriv ?_
     rw [← hL.unit _ hhU _ (hL.mem _) _ hEΘ, hQ]
-    simp only [D, hκ, map_add, map_smul, inner_add_right, inner_smul_right, inner_zero_left, Function.comp_apply,
+    simp only [D, hκ, map_add (f := _), map_smul, inner_add_right, inner_smul_right, inner_zero_left, Function.comp_apply,
       ContinuousLinearMap.coe_restrictScalars', zero_smul, T₁.expt_zero, Prod.mk_one_one, map_one,
       ContinuousLinearMap.one_apply, Complex.ofReal_zero, zero_mul, Complex.exp_zero, one_mul, add_zero]
     ring
@@ -437,7 +437,7 @@ theorem coef_of_side : ∀ (p q r s n : ℕ) (T₀ : GrpData (p * r + q * s) (p 
         have h := hexp.smul (hasDerivAt_fockData_expt_smul F hY
           ((fun w => fockAct1 p q r s Y w + ((c : ℂ) * Y.trace) • w)^[k] (κ P')) t)
         refine h.congr_deriv ?_
-        simp only [f, Function.iterate_succ_apply', map_add, map_smul, smul_add, smul_smul, one_mul]
+        simp only [f, Function.iterate_succ_apply', map_add (f := _), map_smul, smul_add, smul_smul, one_mul]
       have hA : AnalyticAt ℝ (f 0) 0 := by
         have h := (GlobalTheory.FockAlg.analyticOnNhd_orbit_pol p q r s T₀ T₁ T₂ F _ (GlobalTheory.FockEmbExp.left_mem hY r s)
           (κ P')).1 0 (Set.mem_univ _)

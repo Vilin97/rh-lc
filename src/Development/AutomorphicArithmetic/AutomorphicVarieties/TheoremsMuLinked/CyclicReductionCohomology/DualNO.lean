@@ -78,7 +78,7 @@ theorem UpperTheory.V.Th.dualNO :
       add_mem' := fun {a b} ha hb => ⟨add_mem ha.1 hb.1, fun j => by
         obtain ⟨Y, e1, e2⟩ := ha.2 j
         obtain ⟨Y', e3, e4⟩ := hb.2 j
-        exact ⟨Y + Y', by rw [Pi.add_apply, e1, e3, map_add]; abel, by rw [Pi.add_apply, e2, e4, map_add]; abel⟩⟩
+        exact ⟨Y + Y', by rw [Pi.add_apply, e1, e3, map_add (f := _)]; abel, by rw [Pi.add_apply, e2, e4, map_add (f := _)]; abel⟩⟩
       zero_mem' := ⟨zero_mem _, fun j => ⟨0, by simp, by simp⟩⟩
       neg_mem' := fun {a} ha => ⟨neg_mem ha.1, fun j => by
         obtain ⟨Y, e1, e2⟩ := ha.2 j

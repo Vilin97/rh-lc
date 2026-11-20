@@ -202,7 +202,7 @@ theorem fourier_coeff_eis_any : ∀ (F : Type) [Field F] [NumberField F] [Measur
     intro b h hh
     obtain ⟨r, rfl⟩ := (hHmem h).1 hh
     have : al (b + (N : F) * (r : F)) = al b + (N : A F) * al (r : F) := by
-      rw [map_add, map_mul, hNal]
+      rw [map_add (f := _), map_mul, hNal]
     rw [this]
     exact hper _ (hOr r) _
   have hterm : ∀ (x : InfinitePlace F → ℝ) (b : F),

@@ -76,7 +76,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.ellLin {E : Type} [Fie
         simp only
         rw [← integral_add ((key v).1 m₁) ((key w).1 m₁)]
         refine integral_congr_ae (Eventually.of_forall fun m₂ => ?_)
-        simp only [F, map_add, Pi.add_apply]
+        simp only [F, map_add (f := _), Pi.add_apply]
         ring
       map_smul' := fun c v => by
         simp only [F, map_smul, Pi.smul_apply, smul_eq_mul, RingHom.id_apply, mul_assoc, integral_const_mul c] }

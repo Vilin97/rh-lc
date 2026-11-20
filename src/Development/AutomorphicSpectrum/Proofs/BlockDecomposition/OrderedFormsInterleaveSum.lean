@@ -61,7 +61,7 @@ theorem exists_common_orderedForm : ∀ {k : Type} [Field k] [ValuativeRel k] [T
   obtain ⟨L₁, L₂, L, h1, h2, h3, o1, o2, o3, hI⟩ := GlobalTheory.CompanionTheory.SegOrder.exists_common_ordered_form (sNu (k := k)) ZcWords.sNu_injective
     ZcWords.sNu_aperiodic (𝔪.map toA) (𝔫.map toA)
   refine ⟨_, _, _, (L₁.map fromA).get, (L₂.map fromA).get, (L.map fromA).get, isOrderedForm_get h1 o1,
-    isOrderedForm_get h2 o2, isOrderedForm_get (by rw [h3, Multiset.map_add]) o3, ?_⟩
+    isOrderedForm_get h2 o2, isOrderedForm_get (by rw [h3, Multiset.map_add (f := _)]) o3, ?_⟩
   rw [wtW_get, wtW_get, wtW_get]
   exact ZcWords.interleave_map _ hI
 

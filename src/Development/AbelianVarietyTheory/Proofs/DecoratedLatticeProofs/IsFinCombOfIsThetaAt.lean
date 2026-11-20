@@ -130,9 +130,9 @@ theorem isFinComb_of_isThetaAt : ∀ {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (
     have a1 := congrFun (congrFun h1 i) j
     have a2 := congrFun (congrFun h2 i) j
     simp only [Matrix.map_apply, Matrix.add_apply, Matrix.zero_apply] at a1 a2 ⊢
-    rw [RingHom.map_add, a1, a2, add_zero]
+    rw [RingHom.map_add (f := _), a1, a2, add_zero]
   | zero => rw [LinearMap.map_zero]; exact isFinComb_zero
-  | add g g' _ _ hg hg' => rw [LinearMap.map_add]; exact isFinComb_add hg hg'
+  | add g g' _ _ hg hg' => rw [LinearMap.map_add (f := _)]; exact isFinComb_add hg hg'
   | smul c g _ hg => rw [LinearMap.map_smul]; exact isFinComb_smul c hg
 
 end GlobalTheory.AdForm

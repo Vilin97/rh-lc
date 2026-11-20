@@ -18,7 +18,7 @@ private theorem smEq_aeval {E : Type} [Field E] [NumberField E] [IsTotallyComple
     Polynomial.aeval (GroundTheory.Automorphic.AutomorphicForm.uAction z) p (UpperTheory.V.Cm.smEq E a φ) =
       UpperTheory.V.Cm.smEq E a (Polynomial.aeval (UpperTheory.V.Cm.uTC E a z) p φ) := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => simp only [map_add, LinearMap.add_apply, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), LinearMap.add_apply, hp, hq]
   | monomial n c =>
     simp only [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply, map_smul]
     congr 1
@@ -29,7 +29,7 @@ private theorem smEq_aeval {E : Type} [Field E] [NumberField E] [IsTotallyComple
 private theorem commute_aeval {A : Type} [Ring A] [Algebra ℂ A] {T z : A} (h : Commute T z) (p : Polynomial ℂ) :
     Commute T (Polynomial.aeval z p) := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add]; exact hp.add_right hq
+  | add p q hp hq => rw [map_add (f := _)]; exact hp.add_right hq
   | monomial n c =>
     rw [Polynomial.aeval_monomial]
     exact (Algebra.commute_algebraMap_right c T).mul_right (h.pow_right n)

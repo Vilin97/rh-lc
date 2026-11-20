@@ -38,7 +38,7 @@ theorem exists_cong_lau : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [A
   refine ⟨a, ∑ t, e t * ψ (c t), IsIntegral.sum _ fun t _ => IsIntegral.mul (he t) (isInt_psi h (c t)), ?_⟩
   rw [← Finset.sum_sub_distrib, Finset.mul_sum]
   refine Finset.sum_congr rfl fun t _ => ?_
-  rw [hac t, map_add, map_mul, map_pow, map_natCast]
+  rw [hac t, map_add (f := _), map_mul, map_pow, map_natCast]
   ring
 
 end GlobalTheory.GeoFix

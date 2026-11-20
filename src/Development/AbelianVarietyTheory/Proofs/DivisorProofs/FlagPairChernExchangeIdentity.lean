@@ -135,7 +135,7 @@ theorem core (Z : ITh)
   generalize m - Z.cD b = m' at *
   generalize l' - m' = L' at *
   generalize l - m = L at *
-  simp only [sub_mul, add_mul, neg_mul, map_add, map_sub, map_neg, LinearMap.add_apply,
+  simp only [sub_mul, add_mul, neg_mul, map_add (f := _), map_sub, map_neg, LinearMap.add_apply,
     LinearMap.sub_apply, mul_assoc] at hbr e5 e0 e1 e2 ⊢
   linarith
 
@@ -150,9 +150,9 @@ theorem ck_eq_of_rank_two : ∀ (Z : ITh) (P P' : FPair Z 2) (k : ℕ) (Q : Z.Ch
   have a0 := P.hx 0
   have b0 := P'.hx 0
   have a1 : Z.c1 (P.x' 1) = (Z.c1 (P'.x 0) - Z.cD (P'.Dv 0)) + (z - Z.cD V) := by
-    rw [P.hx 1, hz', hV, map_add]; ring
+    rw [P.hx 1, hz', hV, map_add (f := _)]; ring
   have b1 : Z.c1 (P'.x' 1) = (Z.c1 (P.x 0) - Z.cD (P.Dv 0)) + (z - Z.cD V) := by
-    rw [P'.hx 1, hz, hV', map_add]; ring
+    rw [P'.hx 1, hz, hV', map_add (f := _)]; ring
   have hzz : Z.c1 (P'.x' 1) - Z.c1 (P.x' 0) = z - Z.cD V := by rw [b1, a0]; ring
   have hVV : P.Dv 1 - P'.Dv 0 = V := by rw [hV]; abel
   rw [hzz, a0, b0] at h4

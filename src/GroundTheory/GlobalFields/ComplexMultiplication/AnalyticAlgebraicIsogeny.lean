@@ -258,7 +258,7 @@ theorem germ_derivWeierstrassP_half_ne_zero (L : PeriodPair) (t s : ℂ) (ht : t
   refine ⟨X ^ 3 + C (-(L.g₂ / 4)) * X + C (-(L.g₃ / 4)), ?_, ?_⟩
   · apply_fun (fun p ↦ p.coeff 3)
     simp
-  · simp only [map_add, map_pow, aeval_X, map_mul, aeval_C]
+  · simp only [map_add (f := _), map_pow, aeval_X, map_mul, aeval_C]
     linear_combination -e
 
 theorem omegaDeriv_affinePoint (L : PeriodPair) (t s : ℂ) (ht : t ≠ 0) :

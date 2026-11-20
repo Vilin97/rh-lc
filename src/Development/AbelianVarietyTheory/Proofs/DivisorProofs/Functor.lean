@@ -71,13 +71,13 @@ theorem close {T T' : K₀.Obj} (f : T ⟶ T') :
         (K₀.maps (Charts.Hom.le f)))) x := fun x ↦ by
     induction x using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul d c => rfl
   have e2 : ∀ x : D ⊗[ℂ] Hol (K₀.W T.k), Algebra.TensorProduct.map (AlgHom.id ℂ D) ((Charts.Hom.φc f).comp T.ρc) x =
       Charts.Hom.ten D f (Algebra.TensorProduct.map (AlgHom.id ℂ D) T.ρc x) := fun x ↦ by
     induction x using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul d c => rfl
   have tr : ∀ {W : Opens (Tot I g)} {C : Type} [CommRing C] {J : Ideal C} {a b b' c c' : Hol W →+* C},
       Close J a b → Close J b' c → (∀ h, b h = b' h) → (∀ h, c h = c' h) → Close J a c' := by
@@ -125,7 +125,7 @@ theorem main : ∀ {I₀ : Type} [Fintype I₀] {g : ℕ} {Λ : Type} [AddCommGr
                     (AlgHom.id ℂ (Hol (K₀.W T.k))) (fun _ _ ↦ Commute.all _ _) x) := fun x ↦ by
                 induction x using TensorProduct.induction_on with
                 | zero => simp only [map_zero]
-                | add x y hx hy => simp only [map_add, hx, hy]
+                | add x y hx hy => simp only [map_add (f := _), hx, hy]
                 | tmul d c =>
                   rw [Algebra.TensorProduct.lift_tmul, map_mul]
                   exact congrArg (· * T.ρc c) (T.ρc.commutes (π d)).symm

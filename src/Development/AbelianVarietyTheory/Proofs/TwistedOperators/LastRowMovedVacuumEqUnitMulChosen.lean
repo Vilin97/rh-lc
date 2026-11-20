@@ -88,7 +88,7 @@ theorem isVacO_om (W : G.Weil) (p : Pair T) (hp : p.InRange D.R.m) (g : Formalis
     intro z
     have h1 := h0 z
     unfold annih at h1 ⊢
-    rw [← key, ← key, ← map_smul, ← map_add, h1, map_zero]
+    rw [← key, ← key, ← map_smul, ← map_add (f := _), h1, map_zero]
   · refine ⟨hnrm.1, fun a ha => ?_⟩
     have h1 : nrm2 a.1 a.2 f = 1 := hnrm.2 a ha
     show nrm2 a.1 a.2 _ = 1

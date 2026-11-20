@@ -30,7 +30,7 @@ private theorem algHom_ext_graded {ξ ξ' : A →ₐ[O] K} (h : ∀ j, ∀ f ∈
   induction f using DirectSum.Decomposition.inductionOn 𝒜 with
   | zero => simp
   | homogeneous f => exact h _ _ f.2
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 private theorem same_orbit_trans {ξ ξ' ξ'' : A →ₐ[O] K} (h : SameOrbit 𝒜 ξ ξ') (h' : SameOrbit 𝒜 ξ' ξ'') :
     SameOrbit 𝒜 ξ ξ'' := by

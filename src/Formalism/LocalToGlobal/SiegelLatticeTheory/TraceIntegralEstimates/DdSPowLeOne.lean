@@ -37,7 +37,7 @@ theorem levi_mem (Λ : Submodule (𝓞 E) S.V) (aa : Fin r → FractionalIdeal (
     unfold latSpan at hy ⊢
     induction hy using Submodule.span_induction with
     | zero => simp
-    | add y y' _ _ h h' => rw [map_add]; exact Submodule.add_mem _ h h'
+    | add y y' _ _ h h' => rw [map_add (f := _)]; exact Submodule.add_mem _ h h'
     | smul o y _ h => rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ o h
     | mem y hy =>
     obtain ⟨a, x, hx, rfl⟩ := hy
@@ -56,7 +56,7 @@ theorem levi_mem (Λ : Submodule (𝓞 E) S.V) (aa : Fin r → FractionalIdeal (
     unfold latSpan at hy ⊢
     induction hy using Submodule.span_induction with
     | zero => simp
-    | add y y' _ _ h h' => rw [map_add]; exact Submodule.add_mem _ h h'
+    | add y y' _ _ h h' => rw [map_add (f := _)]; exact Submodule.add_mem _ h h'
     | smul o y _ h => rw [LinearMap.map_smul_of_tower]; exact Submodule.smul_mem _ o h
     | mem y hy =>
     obtain ⟨a, x, hx, rfl⟩ := hy
@@ -75,7 +75,7 @@ theorem levi_mem (Λ : Submodule (𝓞 E) S.V) (aa : Fin r → FractionalIdeal (
   rw [hΛ] at hv ⊢
   obtain ⟨v12, hv12, v3, hv3, rfl⟩ := Submodule.mem_sup.mp hv
   obtain ⟨v1, hv1, v2, hv2, rfl⟩ := Submodule.mem_sup.mp hv12
-  rw [map_add, map_add, psiF_fix e f U U' v2 (fun a => (hL v2 hv2 a).2) (fun a => (hL v2 hv2 a).1)]
+  rw [map_add (f := _), map_add (f := _), psiF_fix e f U U' v2 (fun a => (hL v2 hv2 a).2) (fun a => (hL v2 hv2 a).1)]
   exact Submodule.add_mem _ (Submodule.add_mem _ (Submodule.mem_sup_left (Submodule.mem_sup_left (hA _ hv1)))
     (Submodule.mem_sup_left (Submodule.mem_sup_right hv2))) (Submodule.mem_sup_right (hC _ hv3))
 

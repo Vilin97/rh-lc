@@ -86,7 +86,7 @@ private theorem map_rank_one (f : ∀ i, Module.Dual ℂ (V i)) (v : ∀ i, V i)
     simp only [map_smul, PiTensorProduct.map_tprod, PiTensorProduct.dualDistrib_apply, LinearMap.smulRight_apply,
       LinearMap.smul_apply]
     rw [MultilinearMap.map_smul_univ, smul_assoc]
-  | add a b ha hb => simp only [map_add, ha, hb, LinearMap.add_apply, add_smul]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb, LinearMap.add_apply, add_smul]
 
 private theorem eq_top_of_closed (S : Submodule ℂ (⨂[ℂ] i, V i)) (hne : S ≠ ⊥)
     (hS : ∀ A : ∀ i, Module.End ℂ (V i), ∀ x ∈ S, PiTensorProduct.map A x ∈ S) : S = ⊤ := by
@@ -257,7 +257,7 @@ theorem UpperTheory.TP.RP.formEx :
         GlobalTheory.UnitaryBC.RU E n k.1 ((PiTensorProduct.lift μ) (PiTensorProduct.tprod ℂ v)).1
       rw [PiTensorProduct.map_tprod, PiTensorProduct.lift.tprod, PiTensorProduct.lift.tprod, ← hμ k.1 k.2 v]
       rfl
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   refine ⟨tensRep emb lam, j, inferInstance, hirr, fun _ => rfl, ?_, fun x => (PiTensorProduct.lift μ x).2, hj⟩
   let S : Subrepresentation (tensRep emb lam) :=
     ⟨LinearMap.ker j, fun k x hx => by

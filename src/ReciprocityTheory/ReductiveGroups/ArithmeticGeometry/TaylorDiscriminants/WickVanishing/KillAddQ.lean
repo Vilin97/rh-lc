@@ -66,16 +66,16 @@ theorem quadratic_column_derivative : QuadColDerivSt := by
     · simp [quadCol, map_sum]
   · intro u b
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [dAdd, quadCol, map_sum, pderiv_C_mul_X_mul_X, pderiv_C_mul', map_add, map_mul,
+      simp only [dAdd, quadCol, map_sum, pderiv_C_mul_X_mul_X, pderiv_C_mul', map_add (f := _), map_mul,
       MvPowerSeries.constantCoeff_X, mul_zero, add_zero, Finset.sum_const_zero]
   · intro u v b b'
 
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [dAdd, quadCol, map_sum, pderiv_C_mul_X_mul_X, pderiv_C_mul', map_add, Finset.mul_sum,
+      simp only [dAdd, quadCol, map_sum, pderiv_C_mul_X_mul_X, pderiv_C_mul', map_add (f := _), Finset.mul_sum,
       mul_add, pderiv_X_eq_C_ite]
     simp only [← mul_assoc, ← map_mul]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [← map_add, ← map_sum]
+      simp only [← map_add (f := _), ← map_sum]
     congr 1
     rw [← sum_quadratic_column_indicator_eq_dotProduct_mulVec β u v b b']
     refine Finset.sum_congr rfl fun x _ => Finset.sum_congr rfl fun y _ =>

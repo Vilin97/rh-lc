@@ -145,7 +145,7 @@ theorem val_le_of_mem_span {Ω : Type} [Field Ω] (i : Ω →+* Ω₃) (R : Subr
   induction hx using Submodule.span_induction with
   | mem x hx => exact hS x hx
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact (Valuation.map_add _ _ _).trans (max_le hx hy)
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact (Valuation.map_add _ _ _).trans (max_le hx hy)
   | smul a x _ hx =>
     show O.valuation (i ((a : Ω) * x)) ≤ γ
     rw [map_mul, map_mul]

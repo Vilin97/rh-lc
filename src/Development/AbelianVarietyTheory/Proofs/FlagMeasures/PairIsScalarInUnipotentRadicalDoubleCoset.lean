@@ -124,7 +124,7 @@ theorem pair_scalar (D : D7) {T T' : D.host.E} (Λ : Submodule (𝓞 D.host.E) (
   set d1 := y1 - y1' - (al • F.fl.z + al' • F'.fl.z) with hd1
   set d2 := y2 - y2'' - (al • F.fl.z + al' • F''.fl.z) with hd2
   have key : d2 = n d1 + ((y2 - n y1) - (y2'' - n y1') - al • (F.fl.z - n F.fl.z) - al' • (F''.fl.z - n F'.fl.z)) := by
-    simp only [hd1, hd2, map_sub, map_add, map_smul, smul_sub]; abel
+    simp only [hd1, hd2, map_sub, map_add (f := _), map_smul, smul_sub]; abel
   have kmem : (y2 - n y1) - (y2'' - n y1') - al • (F.fl.z - n F.fl.z) - al' • (F''.fl.z - n F'.fl.z) ∈ Xsp F ⊔ Xsp F'' :=
     sub_mem (sub_mem (sub_mem (Submodule.mem_sup_left A) (Submodule.mem_sup_right B))
       (Submodule.smul_mem _ _ (Submodule.mem_sup_left C))) (Submodule.smul_mem _ _ (Submodule.mem_sup_right Dd))

@@ -115,7 +115,7 @@ theorem ptr_comm {dual : Bool} (hE : IsGlRep E) (hA : IsGKEndo dual ε σ E (gen
         rw [tpsc_tensVd_single]; abel
       have h2 := hA.2.1 a b _ (hs c)
       simp only [tensF, cond_true] at h2
-      rw [h1, map_add, h2, Pi.add_apply, tensVd_coord]
+      rw [h1, map_add (f := _), h2, Pi.add_apply, tensVd_coord]
       split_ifs <;> simp
     simp only [key, Finset.sum_sub_distrib, Finset.sum_add_distrib, Finset.sum_ite_eq', Finset.sum_ite_eq,
       Finset.mem_univ, if_true, sub_add_cancel]

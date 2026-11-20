@@ -15,7 +15,7 @@ theorem hasSubst_add_sqZero {σ τ S : Type} [Fintype σ] [CommRing S]
     (ha : ∀ s, IsNilpotent (constantCoeff (a s))) : HasSubst (fun s => a s + e * b s) := by
   apply hasSubst_of_constantCoeff_nilpotent
   intro s
-  rw [map_add, map_mul]
+  rw [map_add (f := _), map_mul]
   have h1 : IsNilpotent (constantCoeff e) := ⟨2, by rw [pow_two, ← map_mul, he, map_zero]⟩
   exact (Commute.all _ _).isNilpotent_add (ha s) ((Commute.all _ _).isNilpotent_mul_right h1)
 
@@ -46,7 +46,7 @@ theorem subst_add_sqZero {σ τ S : Type} [Fintype σ] [CommRing S]
     induction p using MvPolynomial.induction_on with
     | C r => simp [D2, subst_C, hs0]
     | add p q hp hq =>
-      simp only [D2, MvPolynomial.coe_add, subst_add ha, subst_add hb, map_add] at hp hq ⊢
+      simp only [D2, MvPolynomial.coe_add, subst_add ha, subst_add hb, map_add (f := _)] at hp hq ⊢
       rw [hp, hq]
       simp only [mul_add, Finset.sum_add_distrib]
       ring

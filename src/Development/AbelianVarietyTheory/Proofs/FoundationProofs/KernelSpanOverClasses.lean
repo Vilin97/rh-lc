@@ -195,7 +195,7 @@ theorem singleSeries_add (ω : WeilRep D i) (φ : Datum.WO (Vc D i) (Wc D i) →
     (v : ∀ ρ, lowT (R.MW i (sg0 D A)) ρ) :
     singleSeries R i ω φ h (w + w') v = singleSeries R i ω φ h w v + singleSeries R i ω φ h w' v := by
   funext g
-  simp only [singleSeries, Datum.thetaKO, map_add, Pi.add_apply]
+  simp only [singleSeries, Datum.thetaKO, map_add (f := _), Pi.add_apply]
 
 theorem singleSeries_smul (ω : WeilRep D i) (φ : Datum.WO (Vc D i) (Wc D i) → ℂ) (h : GA D (Vc D i)) (a : ℂ) (w : (R.cV i).W)
     (v : ∀ ρ, lowT (R.MW i (sg0 D A)) ρ) :
@@ -205,7 +205,7 @@ theorem singleSeries_smul (ω : WeilRep D i) (φ : Datum.WO (Vc D i) (Wc D i) �
 
 theorem adForm_add (x y : Fin (R.nW i) → D.what₂.LL) : adForm R i (x + y) = adForm R i x + adForm R i y := by
   unfold adForm
-  rw [map_add, map_add]
+  rw [map_add (f := _), map_add (f := _)]
 
 theorem adForm_smul (a : D.what₂.LL) (x : Fin (R.nW i) → D.what₂.LL) : adForm R i (a • x) = D.what₂.embLL a • adForm R i x := by
   unfold adForm
@@ -222,7 +222,7 @@ theorem seriesAt_fg (hd : FormsDetermined R i) (U : Subgroup G) (ψ : U →* D.w
     { carrier := {q | ∀ v : ∀ ρ, lowT (R.MW i (sg0 D A)) ρ,
         adForm R i q.2 (fun ρ => v ρ) = ph • levelTrace R i U ψ (singleSeries R i ω φ h (cf q.1) v)}
       add_mem' := fun {a b} ha hb v => by
-        rw [Prod.fst_add, Prod.snd_add, adForm_add, map_add, singleSeries_add, map_add, smul_add, ← ha v, ← hb v]
+        rw [Prod.fst_add, Prod.snd_add, adForm_add, map_add (f := _), singleSeries_add, map_add (f := _), smul_add, ← ha v, ← hb v]
         rfl
       zero_mem' := fun v => by
         have h1 := adForm_smul (R := R) (i := i) 0 0

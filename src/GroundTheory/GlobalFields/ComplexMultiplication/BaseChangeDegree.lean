@@ -36,7 +36,7 @@ theorem two_genY_add_ne_zero [E.IsElliptic] :
       (2 : F[X]) • WeierstrassCurve.Affine.CoordinateRing.mk E.toAffine Y = 0 := by
     apply IsFractionRing.injective A K
     rw [map_zero, ← h]
-    simp only [Algebra.smul_def, mul_one, map_add, map_mul, ← IsScalarTower.algebraMap_apply,
+    simp only [Algebra.smul_def, mul_one, map_add (f := _), map_mul, ← IsScalarTower.algebraMap_apply,
       genX_eq, genY, map_ofNat]
     rw [IsScalarTower.algebraMap_apply F F[X] K, IsScalarTower.algebraMap_apply F F[X] K,
       Polynomial.algebraMap_apply, Polynomial.algebraMap_apply]
@@ -86,14 +86,14 @@ theorem negFF_of_mem {w : E.toAffine.FunctionField} (hw : w ∈ F⟮genX E⟯) :
   induction hw using IntermediateField.adjoin_induction with
   | mem x hx => rw [Set.mem_singleton_iff.mp hx, negFF_genX]
   | algebraMap x => exact AlgHom.commutes _ x
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | inv x _ hx => rw [map_inv₀, hx]
   | mul x y _ _ hx hy => rw [map_mul, hx, hy]
 
 theorem mem_adjoin_genX_of_negFF {c : E.toAffine.FunctionField} (h : negFF E c = c) :
     c ∈ F⟮genX E⟯ := by
   obtain ⟨r, s, hr, hs, rfl⟩ := exists_eq_add_mul_genY E c
-  rw [map_add, map_mul, negFF_of_mem hr, negFF_of_mem hs, negFF_genY] at h
+  rw [map_add (f := _), map_mul, negFF_of_mem hr, negFF_of_mem hs, negFF_genY] at h
   have hs0 : s = 0 := by
     have : s * ((2 : E.toAffine.FunctionField) * genY E + algebraMap F _ E.a₁ * genX E +
         algebraMap F _ E.a₃) = 0 := by linear_combination -h

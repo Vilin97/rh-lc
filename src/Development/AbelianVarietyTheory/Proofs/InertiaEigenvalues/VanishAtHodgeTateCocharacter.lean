@@ -52,7 +52,7 @@ def vanJ (ρ : Γ →* Matrix.GeneralLinearGroup n C) (P : Matrix n n C) :
     intro a b ha hb γ
     simp only [Set.mem_setOf_eq] at *
     rw [show (AddMonoidAlgebra.ofCoeff (a + b) : MvPolynomial (n × n) C) =
-      AddMonoidAlgebra.ofCoeff a + AddMonoidAlgebra.ofCoeff b by simp, map_add, ha γ, hb γ, add_zero]
+      AddMonoidAlgebra.ofCoeff a + AddMonoidAlgebra.ofCoeff b by simp, map_add (f := _), ha γ, hb γ, add_zero]
   zero_mem' := by
     intro γ
     simp

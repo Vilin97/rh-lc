@@ -157,7 +157,7 @@ theorem quotient_generic_section_field [CharZero K] (hfg : (⊤ : IntermediateFi
     · intro ω
       exact hΩ ω
     · intro p q hp hq
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hp hq
     · intro p v hp
       rw [map_mul]

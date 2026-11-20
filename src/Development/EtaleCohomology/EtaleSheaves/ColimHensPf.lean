@@ -77,7 +77,7 @@ lemma Krep (I : Ideal B) {k : c.pt} (hk : k ∈ I.map (phi β c)) :
     obtain ⟨j2, x2, h2, rfl⟩ := hy
     refine ⟨IsFiltered.max j1 j2, (D.map (IsFiltered.leftToMax j1 j2)).hom x1 +
       (D.map (IsFiltered.rightToMax j1 j2)).hom x2, add_mem (mapI β I _ h1) (mapI β I _ h2), ?_⟩
-    rw [map_add, iota_nat, iota_nat]
+    rw [map_add (f := _), iota_nat, iota_nat]
   | smul a x _ hx =>
     obtain ⟨j2, x2, h2, rfl⟩ := hx
     obtain ⟨j1, y, rfl⟩ := rep hc a
@@ -143,7 +143,7 @@ theorem ColimHens_of : LateralTheory.E.HensCut.ColimHens := by
     obtain ⟨j, x, hx, hxe⟩ := Krep β hc I (Ideal.mul_mem_right y _ hk)
     obtain ⟨j', f, hu⟩ := hb j x hx
     have := hu.map (c.ι.app j').hom
-    rw [iota_nat, map_add, map_one, hxe, add_comm] at this
+    rw [iota_nat, map_add (f := _), map_one, hxe, add_comm] at this
     exact this
   ·
     intro g hg a₀ hev hder

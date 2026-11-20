@@ -139,7 +139,7 @@ theorem core {K R : Type} [Field K] [CommRing R] (ι : K →+* R) (c : K →+* K
   obtain ⟨d3, hd3, hO3⟩ := hb (U * g)
   obtain ⟨M₀, X, hX, hδ⟩ := hapx (ι 2⁻¹ • S) (N * d1 * d2 * d3 * D) (by positivity)
   have hu2 : ι 2⁻¹ + ι 2⁻¹ = 1 := by
-    rw [← map_add, ← two_mul, mul_inv_cancel₀ h2, map_one]
+    rw [← map_add (f := _), ← two_mul, mul_inv_cancel₀ h2, map_one]
   have hSS : ι 2⁻¹ • S - (G.map ι * (ι 2⁻¹ • S).map σ * (G.map ι)⁻¹)ᵀ = S := by
     have e1 : G.map ι * S.map σ = -(Sᵀ * G.map ι) := eq_neg_of_add_eq_zero_right hS
     rw [map_smul'', hσι, map_inv₀ c, map_ofNat c, mul_smul_comm, e1, smul_mul_assoc, neg_mul, mul_assoc,
@@ -309,7 +309,7 @@ theorem weak_approximation : ∀ (F E : Type) [Field F] [NumberField F] [Field E
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a y => rw [hσt, hσt, hcc]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hσ1 : ∀ a : FiniteAdeleRing (𝓞 F) F, σ (a ⊗ₜ[F] (1 : E)) = a ⊗ₜ[F] (1 : E) := by
     intro a; rw [hσt, map_one]
   have hunit : ∀ d : ℕ, 0 < d → IsUnit (d : RA F E) := by

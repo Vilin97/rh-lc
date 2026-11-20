@@ -64,7 +64,7 @@ theorem half_conj_add_of_right {a b : AE D} (hab : b * a = 0) {m n : ℕ} {y : M
     IsHalf (cA D (b + a)) y := by
   intro i j
   have h : cA D b * y i j = 0 := by rw [← hy i j, ← mul_assoc, ← map_mul, hab, map_zero, zero_mul]
-  rw [map_add, add_mul, h, zero_add, hy i j]
+  rw [map_add (f := _), add_mul, h, zero_add, hy i j]
 
 theorem symplO_sub {S T : HSp D} (x w y : WO S T) :
     symplO S T (x - w) y = symplO S T x y - symplO S T w y := by
@@ -102,7 +102,7 @@ theorem up_add (FS : GlobalTheory.LocMod.Frame k S.rank Y') (FT : GlobalTheory.L
   unfold Place.up
   rw [Matrix.mul_add, Matrix.add_mul]
   ext i j
-  simp [Matrix.map_apply, map_add]
+  simp [Matrix.map_apply, map_add (f := _)]
 
 theorem down_up (FS : GlobalTheory.LocMod.Frame k S.rank Y') (FT : GlobalTheory.LocMod.Frame k T.rank Y) (x : Matrix Y Y' k) :
     p.down FS FT (p.up FS FT x) = x := by

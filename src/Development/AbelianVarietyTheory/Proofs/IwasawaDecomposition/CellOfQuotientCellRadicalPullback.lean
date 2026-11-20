@@ -100,7 +100,7 @@ theorem exists_radical_test {O : Type} [CommRing O] [IsNoetherianRing O] (bar : 
     induction hx using Submodule.span_induction with
     | mem x hx => exact fun y => ConeSub.eq_zero_of_self_eq_zero β hβ.1 hp (hk0 x hx) y
     | zero => simp
-    | add x x' _ _ h1 h2 => intro y; rw [map_add, LinearMap.add_apply, h1, h2, add_zero]
+    | add x x' _ _ h1 h2 => intro y; rw [map_add (f := _), LinearMap.add_apply, h1, h2, add_zero]
     | smul a x _ h1 => intro y; rw [hβ.2 a x y]; exact h1 _
   · rw [← hG]
     exact Submodule.subset_span hk

@@ -29,8 +29,8 @@ def intAd : AddSubgroup (AF F) where
     rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
     refine ⟨?_, fun v => ?_⟩
     · simp only [evI] at ha hb ⊢
-      rw [show (a + b).1 = a.1 + b.1 from rfl, map_add, ha, hb, add_zero]
-    · rw [map_add]; exact add_mem (ha' v) (hb' v)
+      rw [show (a + b).1 = a.1 + b.1 from rfl, map_add (f := _), ha, hb, add_zero]
+    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha' v) (hb' v)
   neg_mem' := by
     rintro a ⟨ha, ha'⟩
     refine ⟨?_, fun v => ?_⟩
@@ -53,7 +53,7 @@ theorem isCompact_intAd : IsCompact (intAd F : Set (AF F)) := by
 
 theorem incV_add {E : Type} [Field E] [NumberField E] [Algebra F E] {n : ℕ} (x y : Fin n → E) :
     incV F (x + y) = incV F x + incV F y := by
-  funext i; simp [incV, map_add]
+  funext i; simp [incV, map_add (f := _)]
 
 theorem incV_zero {E : Type} [Field E] [NumberField E] [Algebra F E] {n : ℕ} :
     incV F (0 : Fin n → E) = 0 := by

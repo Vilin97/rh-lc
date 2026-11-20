@@ -62,7 +62,7 @@ theorem polySlash_eichler_limit : ∀ (k : ℕ) (f h : ℍ → ℂ) (p : ℂ[X])
   have e2 := hLh τ hτ j hj
   rw [coeff_sub] at e1 e2
   rw [coeff_sub, key, trunc_coeff _ _ hj, hR]
-  simp only [coeff_sub, coeff_add, coeff_map, map_add]
+  simp only [coeff_sub, coeff_add, coeff_map, map_add (f := _)]
   calc _ = ‖((eichler (k - 2) (f ∣[(k : ℤ)] σ) τ).coeff j - Lf.coeff j)
         - (starRingEnd ℂ) ((eichler (k - 2) (h ∣[(k : ℤ)] σ) τ).coeff j - Lh.coeff j)‖ := by
           congr 1; rw [map_sub]; ring

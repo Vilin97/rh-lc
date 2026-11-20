@@ -22,7 +22,7 @@ def Fil (a : ℕ) : Submodule R P where
   carrier := {M | ∀ T : List ι, a < T.length → apL δ T M = 0}
   add_mem' := by
     intro M N hM hN T hT
-    rw [map_add, hM T hT, hN T hT, add_zero]
+    rw [map_add (f := _), hM T hT, hN T hT, add_zero]
   zero_mem' := by
     intro T _
     exact map_zero _

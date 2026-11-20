@@ -197,7 +197,7 @@ theorem valAt_add {f g : Y.Fn} (hf : RegAt (below y) f) (hg : RegAt (below y) g)
     valAt y (f + g) = valAt y f + valAt y g := by
   obtain ⟨a, rfl⟩ := hf
   obtain ⟨b, rfl⟩ := hg
-  rw [← map_add, SmallSec.valAt_algebraMap, SmallSec.valAt_algebraMap, SmallSec.valAt_algebraMap, map_add]
+  rw [← map_add (f := _), SmallSec.valAt_algebraMap, SmallSec.valAt_algebraMap, SmallSec.valAt_algebraMap, map_add (f := _)]
 
 omit [NumberField F] in
 
@@ -213,7 +213,7 @@ def evalSec (hy : y ≫ Y.str = spMap τ) {Δ : Y.Dv} {g : Y.Fnˣ} (hg : Δ.IsEq
     [Module F E] (ι : E →ₗ[F] Y.Fn) (hι : ∀ x, ι x ∈ Y.H0 Δ) : E →ₛₗ[τ] K where
   toFun x := valAt y (ι x * g)
   map_add' x x' := by
-    rw [map_add, add_mul]
+    rw [map_add (f := _), add_mul]
     exact valAt_add y (hg.regularAt_iff.1 (Var.mem_riemannRochSpace_iff_regularAt_everywhere.1 (hι x) _)) (hg.regularAt_iff.1 (Var.mem_riemannRochSpace_iff_regularAt_everywhere.1 (hι x') _))
   map_smul' a x := by
     rw [map_smul, Algebra.smul_def, mul_assoc, SmallSec.valAt_mul (Y.regAt_algebraMap _ a)
@@ -289,7 +289,7 @@ theorem exists_generatesAt {Y : Var F} {Δ : Y.Dv} {E α : Type} [AddCommGroup E
       obtain ⟨a, rfl⟩ := hz
       exact CartierDiv.vanishesAt_iff.2 ⟨CartierDiv.mem_sections.1 (h.mem _ ⟨_, rfl⟩) x, h0 a⟩
     | zero => rw [map_zero]; exact Δ.vanishesAt_zero x
-    | add z z' _ _ hz hz' => rw [map_add]; exact hz.add hz'
+    | add z z' _ _ hz hz' => rw [map_add (f := _)]; exact hz.add hz'
     | smul a z _ hz =>
       obtain ⟨g, hg, hz⟩ := hz
       refine ⟨g, hg, ?_⟩
@@ -310,7 +310,7 @@ theorem iSup_lattice {v : HeightOneSpectrum (𝓞 F)} (e : Ext v) {E α : Type} 
     induction hx using Submodule.span_induction with
     | mem z hz => obtain ⟨a, rfl⟩ := hz; exact h₁ a
     | zero => rw [map_zero]; exact zero_mem _
-    | add z z' _ _ hz hz' => rw [map_add]; exact add_mem hz hz'
+    | add z z' _ _ hz hz' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hz hz'
     | smul a z _ hz =>
       rw [← algebraMap_smul F a z, map_smulₛₗ, smul_eq_mul]
       refine mul_mem ((e.mem_O _).2 ?_) hz

@@ -427,7 +427,7 @@ def ratSecs {L : LB X} (s : L.Sec) (V : X.Opens) [Nonempty V] :
   add_mem' := fun {h h'} hh hh' i _ => by
     obtain ⟨a, ha⟩ := hh i
     obtain ⟨a', ha'⟩ := hh' i
-    exact ⟨a + a', by rw [map_add, ha, ha', mul_add]⟩
+    exact ⟨a + a', by rw [map_add (f := _), ha, ha', mul_add]⟩
   zero_mem' := fun i _ => ⟨0, by rw [map_zero, mul_zero]⟩
   smul_mem' := fun c h hh i _ => by
     obtain ⟨a, ha⟩ := hh i
@@ -493,7 +493,7 @@ def ratOf {L : LB X} (hL : L.IsLB) (s : L.Sec) (V : X.Opens) [Nonempty V] :
     (@id X.functionField
       ((X.presheaf.germ _ (genericPoint X) (mem_genericChart hL)).hom (s.f _)))⁻¹
   map_zero' := by rw [Pi.zero_apply, map_zero, zero_mul]
-  map_add' t t' := by rw [Pi.add_apply, map_add, add_mul]
+  map_add' t t' := by rw [Pi.add_apply, map_add (f := _), add_mul]
 
 theorem ratOf_smul {L : LB X} (hL : L.IsLB) (s : L.Sec) (V : X.Opens) [Nonempty V] (c : Γ(X, V))
     (t : ∀ i, Γ(X, V ⊓ L.U i)) :

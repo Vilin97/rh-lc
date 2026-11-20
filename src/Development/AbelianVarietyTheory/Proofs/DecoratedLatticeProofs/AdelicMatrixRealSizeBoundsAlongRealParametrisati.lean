@@ -25,7 +25,7 @@ theorem compAt_add (θ : InfFam D) (τ : D.what₂.Tau) (x y : Mx D m n) :
     compAt θ τ (x + y) = compAt θ τ x + compAt θ τ y := by
   ext i j
   simp only [compAt, Matrix.map_apply, Matrix.add_apply]
-  rw [(infPart D).map_add, (θ τ).map_add]
+  rw [(infPart D).map_add (f := _), (θ τ).map_add (f := _)]
 
 theorem compAt_neg (θ : InfFam D) (τ : D.what₂.Tau) (x : Mx D m n) :
     compAt θ τ (-x) = -compAt θ τ x := by

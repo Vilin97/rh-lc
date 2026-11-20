@@ -82,7 +82,7 @@ theorem mom_pderiv (c : ℝ) (hc : 0 < c) (k : Fin m × Fin n × Bool) (Q : PX m
       rw [X, monomial_mul, one_mul]
     rw [pderiv_monomial, hX, mom_monomial hM c hc, mom_monomial hM c hc, mul_assoc, phi_rel c hc u k]
     ring
-  | add P Q hP hQ => rw [map_add, mom_add hM c hc, hP, hQ, mul_add, mom_add hM c hc, mul_add]
+  | add P Q hP hQ => rw [map_add (f := _), mom_add hM c hc, hP, hQ, mul_add, mom_add hM c hc, mul_add]
 
 theorem pderiv_comm (k j : Fin m × Fin n × Bool) (Q : PX m n) :
     pderiv k (pderiv j Q) = pderiv j (pderiv k Q) := by
@@ -106,7 +106,7 @@ theorem cr_apply (c : ℝ) (k : Fin m × Fin n × Bool) (Q : PX m n) :
 theorem pderiv_cr (c : ℝ) (k j : Fin m × Fin n × Bool) (Q : PX m n) :
     pderiv k (cr c j Q) = cr c j (pderiv k Q) + (if k = flip j then (2 * c : ℂ) else 0) • Q := by
   classical
-  rw [cr_apply, cr_apply, map_add, map_neg, Derivation.map_smul, pderiv_mul, pderiv_X, pderiv_comm k j]
+  rw [cr_apply, cr_apply, map_add (f := _), map_neg, Derivation.map_smul, pderiv_mul, pderiv_X, pderiv_comm k j]
   by_cases h : k = flip j
   · subst h; simp [Pi.single_apply]; ring
   · simp [Pi.single_apply, h, Ne.symm h]

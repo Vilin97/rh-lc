@@ -31,7 +31,7 @@ theorem hT_add_l (x x' y : Matrix (Fin n) (Fin d) S) : hTens c J J' (x + x') y =
   simp only [hTens, Matrix.add_apply, add_mul, Finset.sum_add_distrib]
 
 theorem hT_add_r (x y y' : Matrix (Fin n) (Fin d) S) : hTens c J J' x (y + y') = hTens c J J' x y + hTens c J J' x y' := by
-  simp only [hTens, Matrix.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [hTens, Matrix.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem hT_smul_l (a : S) (x y : Matrix (Fin n) (Fin d) S) : hTens c J J' (a • x) y = a * hTens c J J' x y := by
   simp only [hTens, Matrix.smul_apply, smul_eq_mul, Finset.mul_sum, mul_assoc]
@@ -214,9 +214,9 @@ theorem polar_of {T : Type} [AddCommGroup T] [Module E T] [Module F T] [IsScalar
     ∃ (m : ℕ) (b : Module.Basis (Fin m) F T) (z : Fin m → Matrix (Fin n) (Fin d) E),
       Polar σ X W X₁ W₁ ι ι' I (fun j => U (b j)) z := by
   let β : LinearMap.BilinForm F T := LinearMap.mk₂ F (fun t' t => Algebra.trace F E (-hTens σ X.J W.J (Z t') (U t)))
-    (fun a b c => by rw [map_add, hT_add_l, neg_add, map_add])
+    (fun a b c => by rw [map_add (f := _), hT_add_l, neg_add, map_add (f := _)])
     (fun a b c => by rw [← algebraMap_smul E a b, map_smul, hT_smul_l, ← mul_neg, ← Algebra.smul_def, map_smul])
-    (fun a b c => by rw [map_add, hT_add_r, neg_add, map_add])
+    (fun a b c => by rw [map_add (f := _), hT_add_r, neg_add, map_add (f := _)])
     (fun a b c => by
       rw [← algebraMap_smul E a c, map_smul, hT_smul_r, σ.commutes, ← mul_neg, ← Algebra.smul_def, map_smul])
   have hβ : β.Nondegenerate := LinearMap.BilinForm.Nondegenerate.ofSeparatingRight fun t ht => nd t fun t' => by

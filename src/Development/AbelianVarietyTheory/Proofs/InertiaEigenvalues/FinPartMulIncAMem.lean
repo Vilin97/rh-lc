@@ -81,10 +81,10 @@ theorem chi_eq_one {χ : (AE D)ˣ →* Circle} {Q : Finset (Pl D.host.E)} (hχ :
     (y y' : AE D) (hx : (x : AE D) = 1 + e * (y - 1)) (hx' : ((x⁻¹ : (AE D)ˣ) : AE D) = 1 + e * (y' - 1))
     (hy : finPart D (e * y) ∈ intAE D) (hy' : finPart D (e * y') ∈ intAE D) : χ x = 1 := by
   have key : ∀ w : AE D, finPart D (e * w) ∈ intAE D → finPart D (1 + e * (w - 1)) ∈ intAE D := fun w hw => by
-    rw [show 1 + e * (w - 1) = 1 - e + e * w by ring, RingHom.map_add, RingHom.map_sub, RingHom.map_one]
+    rw [show 1 + e * (w - 1) = 1 - e + e * w by ring, RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_one]
     exact add_mem (sub_mem (GlobalTheory.HeckeConj.one_mem_intAE D) (finPart_mem he)) hw
   refine hχ x ?_ ?_ ?_ ?_
-  · rw [hx, RingHom.map_add, RingHom.map_one, RingHom.map_mul, GlobalTheory.StepVec.infPart_idemAt he, zero_mul, add_zero]
+  · rw [hx, RingHom.map_add (f := _), RingHom.map_one, RingHom.map_mul, GlobalTheory.StepVec.infPart_idemAt he, zero_mul, add_zero]
   · rw [hx]; exact key y hy
   · rw [hx']; exact key y' hy'
   · rw [hx, mul_add, mul_one, ← mul_assoc, hQ, zero_mul, add_zero]

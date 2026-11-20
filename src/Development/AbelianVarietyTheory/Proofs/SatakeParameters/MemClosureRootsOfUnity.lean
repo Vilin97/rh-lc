@@ -82,7 +82,7 @@ theorem frob_periodic {K : Type*} [Field K] {p : ℕ} (hp : p.Prime) {x : K}
       obtain ⟨f, hf, h⟩ := (frobenius_periodic_add_and_mul hp h0 ihz ihw).1
       refine ⟨f, hf, ?_⟩
       show (Ideal.Quotient.mk I (⟨z, hz⟩ + ⟨w, hw⟩)) ^ p ^ f = Ideal.Quotient.mk I (⟨z, hz⟩ + ⟨w, hw⟩)
-      rw [map_add]
+      rw [map_add (f := _)]
       exact h
     | neg z hz ih =>
       obtain ⟨f, hf, h⟩ := ih

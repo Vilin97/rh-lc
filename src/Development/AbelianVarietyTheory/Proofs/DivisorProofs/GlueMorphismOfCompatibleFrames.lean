@@ -82,7 +82,7 @@ theorem exists_hom_of_frames : ∀ (X : Scheme.{0}) (M M' : X.Modules) (r : ℕ)
   refine ⟨LB.homOfLinear (fun V =>
     { toFun := t V
       map_add' := fun s s' => ext V _ _ fun i => by
-        rw [map_add, ht V _ i _ _ inf_le_right, ht V _ i _ _ inf_le_right, ht V _ i _ _ inf_le_right,
+        rw [map_add (f := _), ht V _ i _ _ inf_le_right, ht V _ i _ _ inf_le_right, ht V _ i _ _ inf_le_right,
           map_add, map_add]
       map_smul' := fun c s => ext V _ _ fun i => by
         rw [RingHom.id_apply, res_smul, ht V _ i _ _ inf_le_right, ht V _ i _ _ inf_le_right,

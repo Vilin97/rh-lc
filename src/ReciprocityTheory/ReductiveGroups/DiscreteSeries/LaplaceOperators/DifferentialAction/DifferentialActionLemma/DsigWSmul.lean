@@ -24,7 +24,7 @@ theorem dsigW_add (hU : IsURepOn (UH (Hpk k r)) σ) {a b : H} (ha : a ∈ smooth
     show dsig σ Y (dsigW σ w (a + b)) = _
     rw [ih hw]
     unfold dsig
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact (h1.add h2).deriv
 
 theorem dsigW_smul (hU : IsURepOn (UH (Hpk k r)) σ) (c : ℂ) {a : H} (ha : a ∈ smoothVecs (k := k) (r := r) σ)

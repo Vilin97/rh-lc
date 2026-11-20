@@ -172,7 +172,7 @@ theorem exists_fracTop (O' : Type) [CommRing O'] [IsDomain O'] [IsDiscreteValuat
     rintro _ ⟨z, hz, rfl⟩
     rw [hm] at hz
     show f (x + z) - f x ∈ fracB ϖ i
-    rw [map_add, add_sub_cancel_left]
+    rw [map_add (f := _), add_sub_cancel_left]
     exact algebraMap_mem_fracB.2 hz
   have hopen : IsOpenMap f := by
     refine IsOpenMap.of_nhds_le fun x => ?_
@@ -184,7 +184,7 @@ theorem exists_fracTop (O' : Type) [CommRing O'] [IsDomain O'] [IsDiscreteValuat
     refine ⟨x + c * ϖ ^ n, hn ⟨c * ϖ ^ n, ?_, rfl⟩, ?_⟩
     · rw [hm]
       exact Dvd.intro_left c rfl
-    · rw [map_add, ← hc, add_sub_cancel]
+    · rw [map_add (f := _), ← hc, add_sub_cancel]
   refine ⟨τK, inferInstance, continuousSMul_of_algebraMap O' (FractionRing O') hcont, ⟨?_⟩⟩
   exact Topology.IsOpenEmbedding.of_continuous_injective_isOpenMap hcont
     (IsFractionRing.injective O' (FractionRing O')) hopen

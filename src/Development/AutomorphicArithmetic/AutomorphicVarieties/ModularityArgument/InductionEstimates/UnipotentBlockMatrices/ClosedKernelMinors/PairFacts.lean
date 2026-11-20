@@ -30,7 +30,7 @@ private theorem ext_two {E F H : Type} [NormedAddCommGroup E] [NormedSpace ℂ E
     | zero => simp
     | add x y _ _ hx hy =>
       simp only [mem_setOf_eq] at hx hy ⊢
-      rw [map_add, map_add, inner_add_right, inner_add_right, hx, hy]
+      rw [map_add (f := _), map_add (f := _), inner_add_right, inner_add_right, hx, hy]
     | smul c x _ hx =>
       simp only [mem_setOf_eq] at hx ⊢
       rw [map_smul, map_smul, inner_smul_right, inner_smul_right, hx]
@@ -42,7 +42,7 @@ private theorem ext_two {E F H : Type} [NormedAddCommGroup E] [NormedSpace ℂ E
   | zero => simp
   | add x y _ _ hx hy =>
     simp only [mem_setOf_eq] at hx hy ⊢
-    rw [map_add, map_add, inner_add_left, inner_add_left, hx, hy]
+    rw [map_add (f := _), map_add (f := _), inner_add_left, inner_add_left, hx, hy]
   | smul c x _ hx =>
     simp only [mem_setOf_eq] at hx ⊢
     rw [map_smul, map_smul, inner_smul_left, inner_smul_left, hx]

@@ -30,7 +30,7 @@ theorem interPoly_rename_swap : ∀ (F : Type) [Field F] (Y : Var F) (W : Dbl Y)
     (fun x => π (D₁ x)) (fun x => π (D₂ x))
     (Y.interPoly gr) μ hμ (fun x ha hb => hφ (hx x ha hb)) (hφ ?_) (fun s => ?_) (fun s => ?_)
     (fun k P hP hk => GlobalTheory.T.interPoly_eq_zero_of_isHomogeneous_ne_dim F Y κ gr k P hP hk) (fun s => ?_)
-  · simpa only [map_add, hπ] using hsum
+  · simpa only [map_add (f := _), hπ] using hsum
   · exact (hT' (fun i => D₁ (s i))).trans
       (GlobalTheory.T.intersectionNumber_pullback_dimSuccDivisors_eq_zero F Y W hW W.p₁ _ (fun i => gr (s i)) fun i => h₁ (s i))
   · exact (hT' (fun i => D₂ (s i))).trans

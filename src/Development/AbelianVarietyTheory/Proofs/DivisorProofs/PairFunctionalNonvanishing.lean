@@ -68,7 +68,7 @@ theorem so_kill : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [NumberFiel
   intro hKP F E _ _ _ _ _ σ B n d X W M χX χW om r s r' s' hP Λ c hc hinv Φ hΦ
   induction hΦ using Submodule.span_induction with
   | zero => exact map_zero Λ
-  | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
   | smul a x _ hx => rw [map_smul, hx, smul_zero]
   | mem x hx =>
     obtain ⟨f, φ, hSB, hcof, ⟨hSB1, ι, hι, hrank⟩, rfl⟩ := hx

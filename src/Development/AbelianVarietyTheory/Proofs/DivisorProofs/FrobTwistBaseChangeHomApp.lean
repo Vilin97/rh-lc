@@ -27,21 +27,21 @@ def SemiBialgHom.liftOver {ρ : R →+* R''} (f : SemiBialgHom ρ A A'') (τ : R
   have hg : ∀ r a, g (r ⊗ₜ a) = τ r • f a := fun r a => (Algebra.smul_def (τ r) (f a)).symm
   have hs : ∀ (r : R') x, g (r • x) = τ r • g x := fun r x => by
     induction x with
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
     | tmul s a => rw [smul_tmul', hg, hg, smul_eq_mul, map_mul, mul_smul]
   { toRingHom := g
     smul_map := hs
     counit_map := fun x => by
       change counit (g x) = _
       induction x with
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul r a =>
         rw [hg, map_smul, f.counit_map, TensorProduct.counit_tmul, h]
         simp [Algebra.smul_def, mul_comm]
     comul_map := fun x => by
       change comul (g x) = _
       induction x with
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul r a =>
         rw [← mul_one r, ← smul_eq_mul, ← smul_tmul', hs, map_smul, map_smul, map_smulₛₗ, hg, map_one,
           one_smul]
@@ -50,7 +50,7 @@ def SemiBialgHom.liftOver {ρ : R →+* R''} (f : SemiBialgHom ρ A A'') (τ : R
         rw [← SemiBialgHom.two_comul, ← SemiBialgHom.two_comul]
         generalize comul (R := R) a = c
         induction c with
-        | add x y hx hy => simp only [map_add, hx, hy]
+        | add x y hx hy => simp only [map_add (f := _), hx, hy]
         | tmul a b => simp [hg] }
 
 @[simp] theorem SemiBialgHom.liftOver_tmul {ρ : R →+* R''} (f : SemiBialgHom ρ A A'')
@@ -83,7 +83,7 @@ def frobBialg (h : (p : R) = 0) (A : Type) [CommRing A] [Bialgebra R A] :
     rw [frobRing_apply, comul_pow, ← frobRing_apply (natCast_eq_zero_of_algebra h (A ⊗[R] A))]
     generalize comul (R := R) a = c
     induction c with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a b => simp [Algebra.TensorProduct.tmul_pow]
 
 @[simp] theorem frobBialg_apply (h : (p : R) = 0) {A : Type} [CommRing A] [Bialgebra R A] (a : A) :
@@ -107,7 +107,7 @@ def SemiHom.liftOver {G'' : PDivGroup p O''} {ρ : O →+* O''} (s : SemiHom ρ 
   ⟨fun n => (s.app n).liftOver τ h, fun n x => by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul r a => simp [s.res_app]⟩
 
 @[simp] theorem SemiHom.liftOver_app {G'' : PDivGroup p O''} {ρ : O →+* O''} (s : SemiHom ρ G'' G)
@@ -144,7 +144,7 @@ theorem baseChange_ext_dual (n : ℕ) {x y : (G.baseChange O').A n}
   induction z using baseChange_induction O' (G := G.dual) n with
   | h0 => simp
   | h1 r χ => rw [map_smul, ofConv_smul, LinearMap.smul_apply, LinearMap.smul_apply, h]
-  | h2 z w hz hw => rw [map_add, ofConv_add, LinearMap.add_apply, LinearMap.add_apply, hz, hw]
+  | h2 z w hz hw => rw [map_add (f := _), ofConv_add, LinearMap.add_apply, LinearMap.add_apply, hz, hw]
 
 end Over
 
@@ -278,7 +278,7 @@ def frobTwistBaseChange : frobTwist h' (G.baseChange S) ≅ (frobTwist h G).base
     change _ = (frobProj h' (G.baseChange S)).app n x
     induction x using baseChange_induction S (G := G) n with
     | h0 => simp only [map_zero]
-    | h2 x y hx hy => simp only [map_add, hx, hy]
+    | h2 x y hx hy => simp only [map_add (f := _), hx, hy]
     | h1 r a =>
       rw [SemiBialgHom.smul_map, SemiBialgHom.smul_map, map_smul]
       congr 1
@@ -292,7 +292,7 @@ def frobTwistBaseChange : frobTwist h' (G.baseChange S) ≅ (frobTwist h G).base
     change _ = ((frobTwist h G).toBase S).app n x
     induction x using frobTwist_induction h (G := G) n with
     | h0 => simp only [map_zero]
-    | h2 x y hx hy => simp only [map_add, hx, hy]
+    | h2 x y hx hy => simp only [map_add (f := _), hx, hy]
     | h1 r a =>
       rw [SemiBialgHom.smul_map, SemiBialgHom.smul_map, SemiHom.frobTwist_app_frobProj, map_smul,
         frobLift_app_frobProj]

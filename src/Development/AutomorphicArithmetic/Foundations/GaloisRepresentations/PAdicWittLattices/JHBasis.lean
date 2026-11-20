@@ -33,7 +33,7 @@ theorem UpperTheory.Gal.G3.jHBasis :
     intro g
     induction g using Finsupp.induction_linear with
     | zero => simp
-    | add f g hf hg => rw [map_add, map_add, map_add, hf, hg]
+    | add f g hf hg => rw [map_add (f := _), map_add (f := _), map_add (f := _), hf, hg]
     | single i a =>
       rw [hTs, hbc, Finsupp.sum_mapRange_index (by intro j; simp)]
       simp only [Φ, Finsupp.linearCombination_single]

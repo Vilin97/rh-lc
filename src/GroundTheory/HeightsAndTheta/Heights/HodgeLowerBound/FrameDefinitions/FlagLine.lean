@@ -203,7 +203,7 @@ theorem thetaY_coneY_X (n : SY II hII) : thetaY II hII (coneY II hII (X n)) = rh
 theorem thetaY_coneY (f : MRing (linePl II hII).ιY) : thetaY II hII (coneY II hII f) = rhoY II hII f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [coneY, thetaY]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
   | mul_X p n hp =>
     rw [map_mul, map_mul, hp, map_mul, thetaY_coneY_X]
 
@@ -224,7 +224,7 @@ theorem coneY_spec (f : MRing (linePl II hII).ιY) :
       mConeMap (linePl II hII).yY f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [coneY, mConeMap]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
   | mul_X p n hp => rw [map_mul, map_mul, hp, map_mul, coneY_spec_X]
 
 theorem PY_line : (linePl II hII).PY = ⊥ := by

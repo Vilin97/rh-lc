@@ -41,7 +41,7 @@ theorem phiS_mem_Fil : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAi
     rw [phiS_tmul]
     simpa using (P.PD K).Fil_mul 0 n _ _ (h0 _) hb
   · intro x y hx hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
 
 end GlobalTheory.HodgeAt

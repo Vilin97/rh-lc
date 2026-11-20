@@ -352,7 +352,7 @@ private theorem isIso_shiftLastCoord_lastCoordinate_add_inv (k : Type u) [Field 
       ← Scheme.Hom.comp_appTop, shiftLastCoord_comp_ι, replaceLastCoord_appTop_lastCoordinate]
     ring
   · apply shiftLastCoord_comp_shiftLastCoord
-    rw [map_add, shiftLastCoord_appTop_unitOnPullbackBasicOpen_inv_val, ← CommRingCat.comp_apply,
+    rw [map_add (f := _), shiftLastCoord_appTop_unitOnPullbackBasicOpen_inv_val, ← CommRingCat.comp_apply,
       ← Scheme.Hom.comp_appTop, shiftLastCoord_comp_ι, replaceLastCoord_appTop_lastCoordinate]
     ring
 

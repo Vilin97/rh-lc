@@ -286,7 +286,7 @@ theorem OL_quot_finite (LL : FinExt l) :
     exact hb i
   have hfa : f a = f (fun i => (((a i).zmodRepr : ℕ) : ℤ_[l])) + ((l : ℕ) : ↥(OL LL)) * f b := by
     conv_lhs => rw [ha]
-    rw [map_add, map_nsmul, nsmul_eq_mul]
+    rw [map_add (f := _), map_nsmul, nsmul_eq_mul]
   show Ideal.Quotient.mk _ (f fun i => (((a i).zmodRepr : ℕ) : ℤ_[l])) = Ideal.Quotient.mk _ (f a)
   rw [Ideal.Quotient.eq, Ideal.mem_span_singleton]
   refine ⟨- f b, ?_⟩

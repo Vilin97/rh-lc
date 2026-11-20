@@ -121,7 +121,7 @@ theorem integral_prod_eq {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [
       simp
   have hle : Γ ≤ B := fun v hv i _ => hΓ v hv i
   have h2 := lintegral_sub hle hFd hB (fun v => ENNReal.ofReal (Φ (e v))) fun b hb v => by
-    simp only [Φ, map_add, Pi.add_apply]
+    simp only [Φ, map_add (f := _), Pi.add_apply]
     exact congrArg _ (Finset.prod_congr rfl fun i _ => hp _ (hb i trivial) _)
   have h3 := lintegral_sub hle hFd hB (fun _ => 1) fun _ _ _ => rfl
   have h4 : ∀ Ψ : (Fin n → Fin g → ℂ) → ℝ≥0∞, ∫⁻ v in e ⁻¹' P, Ψ (e v) ∂μ = c * ∫⁻ z in P, Ψ z := fun Ψ => by
@@ -322,7 +322,7 @@ theorem vac_eq_unit_mul : ∀ (D : D7) (S T : HSp D) (r g : ℕ) (hr : T.rank = 
         rw [mul_smul]
         exact nsmul_mem (hN' _ (hΛ ▸ hy b)) _
       | zero => simp
-      | add u u' _ _ hu hu' => exact fun b => by rw [map_add]; exact add_mem (hu b) (hu' b)
+      | add u u' _ _ hu hu' => exact fun b => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hu b) (hu' b)
       | neg u _ hu => exact fun b => by rw [map_neg]; exact neg_mem (hu b)) hFd
   have h3 := hN Fd hFd (fun u => ((‖a‖ ^ 2 * ∏ b, φ (e u b) : ℝ) : ℂ)) fun p hp => by
     rw [Complex.mul_conj, Complex.normSq_eq_norm_sq, hfp p hp, norm_mul, mul_pow, norm_sq_gauss_prod, hJ]

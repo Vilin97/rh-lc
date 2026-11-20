@@ -61,7 +61,7 @@ theorem kappa_apply {T : Scheme.{0}} (g : T ⟶ Spec (CommRingCat.of A))
   intro x
   induction x using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero, map_zero]; rfl
-  | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]; rfl
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]; rfl
   | tmul c b =>
     rw [kappa_tmul, theta_tmul, map_mul]
     have e : (pullback.fst (str A B) g).appLE ⊤ ((pullback.snd (str A B) g) ⁻¹ᵁ U) (by simp) ≫

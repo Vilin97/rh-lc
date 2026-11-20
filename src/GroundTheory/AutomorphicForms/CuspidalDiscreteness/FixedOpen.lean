@@ -20,7 +20,7 @@ variable {L : Type*} [Group L] [TopologicalSpace L] [IsTopologicalGroup L] [Comp
 def fixedIn (σ : BanachRep L E) (W : Submodule ℂ E) (U : Subgroup L) : Submodule ℂ E where
   carrier := {w | w ∈ W ∧ ∀ u ∈ U, σ u w = w}
   add_mem' := fun {a b} ha hb =>
-    ⟨W.add_mem ha.1 hb.1, fun u hu => by rw [map_add, ha.2 u hu, hb.2 u hu]⟩
+    ⟨W.add_mem ha.1 hb.1, fun u hu => by rw [map_add (f := _), ha.2 u hu, hb.2 u hu]⟩
   zero_mem' := ⟨W.zero_mem, fun u _ => map_zero _⟩
   smul_mem' := fun c w hw => ⟨W.smul_mem c hw.1, fun u hu => by rw [map_smul, hw.2 u hu]⟩
 

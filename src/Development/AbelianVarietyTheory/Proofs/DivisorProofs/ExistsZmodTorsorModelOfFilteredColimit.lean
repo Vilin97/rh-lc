@@ -23,7 +23,7 @@ theorem faithfullyFlat_of_split : ∀ (R D : Type) [CommRing R] [CommRing D] [Al
     intro x hx
     refine Submodule.smul_induction_on hx (fun r hr d _ => ?_) (fun x y hx hy => ?_)
     · rw [map_smul, smul_eq_mul]; exact m.mul_mem_right _ hr
-    · rw [map_add]; exact m.add_mem hx hy
+    · rw [map_add (f := _)]; exact m.add_mem hx hy
   have := h2 1 h1
   rw [hτ] at this
   exact hm.ne_top ((Ideal.eq_top_iff_one m).2 this)
@@ -47,7 +47,7 @@ theorem isZModTorsor_of_algEquiv : ∀ (R D D' : Type) [CommRing R] [CommRing D]
       | tmul a b =>
         funext g
         simp [eT, eP, he]
-      | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+      | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
     have hb : Function.Bijective (GlobalTheory.TorsorColim.prodMapOf R D q act) := h4
     have : ⇑(GlobalTheory.TorsorColim.prodMapOf R D' q act') = eP ∘ (GlobalTheory.TorsorColim.prodMapOf R D q act) ∘ eT.symm := by
       funext y

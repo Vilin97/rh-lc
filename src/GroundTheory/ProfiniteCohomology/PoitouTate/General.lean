@@ -76,7 +76,7 @@ theorem bijective_ptCompactDualMap (hM : ∀ m : M, n • m = 0) {r s : ℕ} (h 
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul a f => rfl
-    | add z z' hz hz' => simp only [map_add, hz, hz']
+    | add z z' hz hz' => simp only [map_add (f := _), hz, hz']
   let β : compactCohomologyRes φ M r →+ (cohomology (dualRep D M) s →+ ZMod n) :=
     (AddMonoidHom.compHom t).comp (bilinAddHom (compactCupRes φ (evalPairing D M) h))
   have hβ : Function.Bijective β := by

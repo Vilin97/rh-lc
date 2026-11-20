@@ -16,7 +16,7 @@ theorem repr_map {R R' ι : Type} [CommRing R] [Algebra F R] [CommRing R'] [Alge
       φ ((Algebra.TensorProduct.basis R b).repr z k) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
   | tmul a e => simp [Algebra.TensorProduct.basis_repr_tmul]
 
 omit [NumberField E] in
@@ -83,7 +83,7 @@ theorem mem_latHat_iff :
       simp only [Pi.zero_apply, map_zero]
       exact zero_mem _
     | add y z _ _ hy hz =>
-      simp only [Pi.add_apply, map_add]
+      simp only [Pi.add_apply, map_add (f := _)]
       exact add_mem hy hz
     | neg y _ hy =>
       simp only [Pi.neg_apply, map_neg]

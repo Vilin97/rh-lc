@@ -239,7 +239,7 @@ def ruleOf : H0 (flagStr X) (X.LL e) (flagOpen X) →ₗ[c.F] secZ Xo c e where
     refine (FlagCover.IsVal.eq_val fun S' _ _ ψ P' hP k hz Q t hQ ht => ?_).symm
     have hO := FlagMod.le_preimage_map (z := X.pt P') X.inc (top_le_inc X) le_top
     change ψ (FlagCover.val _ P + FlagCover.val _ P) = _
-    rw [map_add, FlagCover.isVal_val _ P S' ψ P' hP k hz Q t hQ ht, FlagCover.isVal_val _ P S' ψ P' hP k hz Q t hQ ht,
+    rw [map_add (f := _), FlagCover.isVal_val _ P S' ψ P' hP k hz Q t hQ ht, FlagCover.isVal_val _ P S' ψ P' hP k hz Q t hQ ht,
       coef_toSecO _ _ _ _ hO, coef_toSecO _ _ _ _ hO, coef_toSecO _ _ _ _ hO, map_add, mul_add]
   map_smul' a m := Subtype.ext <| funext₂ fun p P => by
     refine (FlagCover.IsVal.eq_val fun S' _ _ ψ P' hP k hz Q t hQ ht => ?_).symm
@@ -385,7 +385,7 @@ theorem sec₀_mul {e₁ e₂ e : Ix Dw → ℤ} (h : e₁ + e₂ = e) (f₁ : s
 def vanBd (la : AllWt.Weight Dw) : Submodule c.F (H0 (str₀ X Z) (L₀ X Z la) ⊤) where
   carrier := {s | ∀ y ∈ bd₀ X Z, ∀ i hi, germ i y (memTop y) hi s ∈ IsLocalRing.maximalIdeal _}
   zero_mem' y _ i hi := by rw [map_zero]; exact zero_mem _
-  add_mem' hs ht y hy i hi := by rw [map_add]; exact add_mem (hs y hy i hi) (ht y hy i hi)
+  add_mem' hs ht y hy i hi := by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hs y hy i hi) (ht y hy i hi)
   smul_mem' a s hs y hy i hi := by rw [germ_smul]; exact Ideal.mul_mem_left _ _ (hs y hy i hi)
 
 theorem mem_vanBd {la : AllWt.Weight Dw} {s : H0 (str₀ X Z) (L₀ X Z la) ⊤} :

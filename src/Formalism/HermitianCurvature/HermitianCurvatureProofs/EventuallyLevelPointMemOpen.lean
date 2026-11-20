@@ -234,7 +234,7 @@ theorem plusPosOfParts : CutHL.PlusPosOfParts := by
       EB (E := E) hD (eI k r ⟨m + 1, by omega⟩) (eI k r ⟨m + 1, by omega⟩))) =
       (u - ((m + 1 : ℕ) : ℂ)) • C3.AAop k r (m + 1) (by omega) u Φ x₁ +
         τ • PBP.dz (fun τ' => C3.AAop k r (m + 1) (by omega) u Φ (x0 k r (m + 1) hj Z τ' γ)) τ := by
-    rw [mul_add, map_add, ← Algebra.commutes, ← Algebra.smul_def, map_smul, hyE, hT1, hdz, hy, hAA]
+    rw [mul_add, map_add (f := _), ← Algebra.commutes, ← Algebra.smul_def, map_smul, hyE, hT1, hdz, hy, hAA]
   rw [hmid, hAA, hAA] at hHA
   have hk : u - ((m + 1 : ℕ) : ℂ) = (Y : ℂ) + levelZeroKernel k r (m + 1) := by
     simp only [hu, levelZeroKernel]

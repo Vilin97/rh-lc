@@ -67,7 +67,7 @@ private theorem exists_nsmul_eq_of_single_one_eq {q : ℕ} [NeZero q] {P N : Typ
       apply ULift.ext
       rw [ULift.down_natCast, ZMod.natCast_zmod_val]
     calc φ (Finsupp.single ξ c + g) = c • g0 + n • g0 := by
-          rw [map_add, ← Finsupp.smul_single_one, map_smul, h, hn]
+          rw [map_add (f := _), ← Finsupp.smul_single_one, map_smul, h, hn]
       _ = (c.down.val + n) • g0 := by
           rw [add_nsmul, ← Nat.cast_smul_eq_nsmul (ULift.{1, 0} (ZMod q)) c.down.val, ← hc]
 

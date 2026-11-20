@@ -20,7 +20,7 @@ theorem trOn_iSup_eq_sum : ∀ (V : Type) [AddCommGroup V] [Module ℂ V] (ι : 
     refine Submodule.iSup_induction M (motive := fun v ↦ L v ∈ ⨆ i, M i) hv ?_ ?_ ?_
     · intro i x hx; exact Submodule.mem_iSup_of_mem i (hinv i x hx)
     · simp
-    · intro x y hx hy; rw [map_add]; exact Submodule.add_mem _ hx hy
+    · intro x y hx hy; rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   have key := LinearMap.trace_eq_sum_trace_restrict_of_eq_biSup (N := M) Finset.univ hs hf
     (⨆ i, M i) hp hsup
   unfold trOn

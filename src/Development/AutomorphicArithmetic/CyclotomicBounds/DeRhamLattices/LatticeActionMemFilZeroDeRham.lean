@@ -18,5 +18,5 @@ theorem _root_.UpperTheory.KN.latticeAction_mem_filZero_deRham :
     rw [FilV.eq_1]
     exact ⟨((o : ↥LL.1) • v) ⊗ₜ[ℚ_[l]] ⟨_, hb⟩, by simp⟩
   | add x y hx hy =>
-    rw [map_add, AddMonoidHom.add_apply]
+    rw [map_add (f := _), AddMonoidHom.add_apply]
     exact Submodule.add_mem _ hx hy

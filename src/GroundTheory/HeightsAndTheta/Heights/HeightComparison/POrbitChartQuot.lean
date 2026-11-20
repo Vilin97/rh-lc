@@ -20,7 +20,7 @@ theorem val_chartEval_eq_aeval_div (x : Cone n (AlgebraicClosure ℚ)) (c : (k :
       aeval (fun p : Coord n ↦ x p.1 p.2 / x p.1 (c p.1)) f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, Subalgebra.coe_add, IntermediateField.coe_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), Subalgebra.coe_add, IntermediateField.coe_add, hp, hq]
   | mul_X p v hp =>
     simp only [map_mul, Subalgebra.coe_mul, IntermediateField.coe_mul, hp]
     simp [chartEval, chartRatio]

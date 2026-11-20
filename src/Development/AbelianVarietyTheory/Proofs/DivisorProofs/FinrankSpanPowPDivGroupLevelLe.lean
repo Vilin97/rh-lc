@@ -77,7 +77,7 @@ theorem GlobalTheory.finrank_span_pow_le : ∀ (p : ℕ) [Fact p.Prime] (K : Typ
       obtain ⟨a, rfl⟩ := hx
       exact hT a
     | zero => exact map_zero _
-    | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
     | smul c x _ hx => rw [map_smul, hx, smul_zero]
   let φ : (D ⧸ J) →ₗ[K] Module.Dual K S :=
     (J.restrictScalars K).liftQ ev hle ∘ₗ

@@ -125,7 +125,7 @@ theorem main : ∀ (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ]
       unfold thetaSum
       have e : ∀ ξ : κ → F, ((fun i => algebraMap F (AdeleRing (𝓞 F) F) (ξ i)) +
           fun i => algebraMap F (AF F) (ρ i)) = fun i => algebraMap F (AdeleRing (𝓞 F) F) ((Equiv.addRight ρ ξ) i) := by
-        intro ξ; funext i; simp [map_add]
+        intro ξ; funext i; simp [map_add (f := _)]
       simp only [e]
       exact (Equiv.addRight ρ).tsum_eq (fun ξ => Ψ fun i => algebraMap F (AdeleRing (𝓞 F) F) (ξ i))
     rw [← htr ρ Ψ hΨm, ← hθ, hT]

@@ -90,7 +90,7 @@ theorem exists_finite_class (M : ℕ) (hM : 0 < M) :
     induction hy using Submodule.span_induction with
     | mem x hx => exact Algebra.subset_adjoin ⟨x, hx, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul a x _ hx => rw [zsmul_eq_mul, map_mul, map_intCast]; exact mul_mem (intCast_mem _ a) hx
   have htop : ∀ x (hx : x ∈ intT F E), (⟨x, hx⟩ : intT F E) ∈ Algebra.adjoin (intF F) s := by
     intro x hx
@@ -274,7 +274,7 @@ theorem orth_or_equiv (ρ : G →* Module.End ℂ V) (hunit : ∀ g x y, inner �
   let W : Submodule ℂ X :=
     { carrier := {f | ∀ f', inner ℂ (Φ f) (Φ' f') = 0}
       zero_mem' := fun f' => by simp
-      add_mem' := fun {a b} ha hb f' => by rw [map_add, inner_add_left, ha, hb, add_zero]
+      add_mem' := fun {a b} ha hb f' => by rw [map_add (f := _), inner_add_left, ha, hb, add_zero]
       smul_mem' := fun c a ha f' => by rw [map_smul, inner_smul_left, ha, mul_zero] }
   have hWinv : ∀ g, ∀ f ∈ W, σ g f ∈ W := by
     intro g f hf f'
@@ -311,7 +311,7 @@ theorem orth_or_equiv (ρ : G →* Module.End ℂ V) (hunit : ∀ g x y, inner �
     { toFun := t
       map_add' := fun f g => uniq (f + g) _ _ (ht _) (fun f' => by
         have : Φ (f + g) - Φ' (t f + t g) = (Φ f - Φ' (t f)) + (Φ g - Φ' (t g)) := by
-          rw [map_add, map_add]; abel
+          rw [map_add (f := _), map_add (f := _)]; abel
         rw [this, inner_add_left, ht, ht, add_zero])
       map_smul' := fun c f => uniq (c • f) _ _ (ht _) (fun f' => by
         have : Φ (c • f) - Φ' ((RingHom.id ℂ c) • t f) = c • (Φ f - Φ' (t f)) := by
@@ -377,7 +377,7 @@ def coreOf {A : Type} [AddCommGroup A] [Module ℂ A] (C : Submodule ℂ A) (B :
       show B ((x + y : C) : A) z = B x z + B y z
       rw [h2 _ (x + y).2 _ z.2]
       show starRingEnd ℂ (B z ((x : A) + y)) = _
-      rw [hadd z z.2 x x.2 y y.2, map_add, ← h2 _ x.2 _ z.2, ← h2 _ y.2 _ z.2]
+      rw [hadd z z.2 x x.2 y y.2, map_add (f := _), ← h2 _ x.2 _ z.2, ← h2 _ y.2 _ z.2]
     smul_left := fun x y r => by
       show B ((r • x : C) : A) y = starRingEnd ℂ r * B x y
       rw [h2 _ (r • x).2 _ y.2]

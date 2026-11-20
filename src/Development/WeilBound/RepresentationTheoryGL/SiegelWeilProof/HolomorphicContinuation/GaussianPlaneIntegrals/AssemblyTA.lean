@@ -11,7 +11,7 @@ theorem eval_aeval' {σ τ : Type} (φ : σ → MvPolynomial τ ℂ) (z : τ →
     eval z (aeval φ p) = eval (fun v => eval z (φ v)) p := by
   induction p using MvPolynomial.induction_on with
   | C a => simp only [aeval_C, MvPolynomial.algebraMap_eq, eval_C]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp => simp only [map_mul, aeval_X, eval_X, hp]
 
 variable {ι A B : Type} [Fintype ι]

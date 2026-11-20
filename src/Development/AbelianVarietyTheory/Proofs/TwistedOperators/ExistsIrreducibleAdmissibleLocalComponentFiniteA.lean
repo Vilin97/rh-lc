@@ -113,7 +113,7 @@ theorem exists_locComp : ∀ (D : D7) (V : HSp D) (u : HeightOneSpectrum (𝓞 D
       rw [T'.isIntertwining, hsplit g (T z)]
       rfl
     · simp only [map_zero]; exact zero_mem _
-    · intro a b ha hb; simp only [map_add]; exact add_mem ha hb
+    · intro a b ha hb; simp only [map_add (f := _)]; exact add_mem ha hb
   rcases hinv _ hI with h | h
   · refine absurd ?_ hf0
     have hr : LinearMap.range F.toLinearMap ≤ ⊥ :=

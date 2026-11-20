@@ -239,7 +239,7 @@ theorem split_local (W : LocWach PD LL O v n) (T Tp : LocLat G Qp LL O) (ι : La
   have hZeq : Z = Zc + (W.γD T W.gamK Wsum - Wsum) := by
     refine (hFP.2 _ hYM).unique ⟨hZM, hYZc.symm⟩ ⟨hZcM, ?_⟩
     have h1' : W.φD T Zc = Zc + (W.γD T W.gamK Wsum - Wsum) := by rw [← h1Z]; abel
-    rw [map_add, map_sub, h1', W.φγ_comm]
+    rw [map_add (f := _), map_sub, h1', W.φγ_comm]
     abel
   have hcob : (W.φD T Wsum - Wsum, W.γD T W.gamK Wsum - Wsum) ∈ W.wachCocyclesDelta T := by
     refine hcocmem _ _ ?_ (fun δ hδ => by rw [map_sub, ← W.φγ_comm, hWΔ δ hδ])
@@ -261,7 +261,7 @@ theorem split_local (W : LocWach PD LL O v n) (T Tp : LocLat G Qp LL O) (ι : La
     have hsum0 : W.clK T ⟨(W.φD T Wsum, Z), hYZ⟩ =
         W.clK T (∑ c, (⟨(w c, zz c), hcoc c⟩ : ↥(herrZ1Δ (W.γD T W.gamK) (W.φD T) W.DelF (W.γD T))) + (⟨_, hcob⟩ : ↥(herrZ1Δ (W.γD T W.gamK) (W.φD T) W.DelF (W.γD T)))) := congrArg (W.clK T) hdecomp
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hsum0, map_add, map_sum, hcob0, add_zero, map_sum]
+      rw [hsum0, map_add (f := _), map_sum, hcob0, add_zero, map_sum]
     exact Finset.sum_congr rfl fun c _ => (hκc c).symm
   have key : Submodule.mkQ ((latticeCoboundaries T.L).comap (latticeCocycles T.L).subtype)
       ((((PD.p : ℕ) : O) ^ (ρ + σ)) • (⟨κ, hκ⟩ : ↥(latticeCocycles T.L))) =

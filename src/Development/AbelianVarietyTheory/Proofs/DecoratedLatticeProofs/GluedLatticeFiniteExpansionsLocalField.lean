@@ -101,7 +101,7 @@ theorem datum_expand (q : Unif k) (χ : AddChar 𝓀[k] ℂ) (hχ : χ ≠ 1) (L
     · have key : ∀ f : Module.Dual 𝓀[k] (Red L), term q χ 1 P L f x₀ *
           (if h : y ∈ L then χ (-f (Red.mk L ⟨y, h⟩)) else 0) =
           χ (-f (Red.mk L (⟨y, hy⟩ + imgE q P h0))) := fun f => by
-        rw [term_pos q χ P h0, dif_pos hy, map_add, map_add, neg_add, AddChar.map_add_eq_mul, mul_comm]
+        rw [term_pos q χ P h0, dif_pos hy, map_add (f := _), map_add (f := _), neg_add, AddChar.map_add_eq_mul, mul_comm]
       rw [finsum_congr key, finsum_char χ hχ, Red.mk_eq_zero q]
       have hc : q.inv • ((⟨y, hy⟩ + imgE q P h0 : L) : n → k) = q.inv • y + x₀ *ᵥ P.vec := by
         simp only [imgE, Submodule.coe_add, smul_add, mulVec_smul, q.inv_smul_smul]

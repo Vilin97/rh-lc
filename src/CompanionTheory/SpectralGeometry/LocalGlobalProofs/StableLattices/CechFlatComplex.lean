@@ -242,7 +242,7 @@ theorem isArtinianRing_fibre_quotient (R C : Type) [CommRing R] [CommRing C] [Al
     | add a b ha hb =>
       obtain ⟨s, hs⟩ := ha
       obtain ⟨s', hs'⟩ := hb
-      exact ⟨s + s', by rw [map_add, hs, hs', map_add]⟩
+      exact ⟨s + s', by rw [map_add (f := _), hs, hs', map_add (f := _)]⟩
   exact hsurj.isArtinianRing
 
 theorem flat_localization (R C : Type) [CommRing R] [IsNoetherianRing R] [CommRing C] [Algebra R C] (g : ℕ)

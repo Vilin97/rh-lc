@@ -112,7 +112,7 @@ private theorem lTensor_rid_assoc_tmul_eq_smul (s : A →ₗ[O] O) (t : A ⊗[O]
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul u v => simp [TensorProduct.tmul_smul]
-  | add t₁ t₂ h₁ h₂ => rw [TensorProduct.add_tmul, map_add, map_add, h₁, h₂, smul_add]
+  | add t₁ t₂ h₁ h₂ => rw [TensorProduct.add_tmul, map_add (f := _), map_add (f := _), h₁, h₂, smul_add]
 
 private theorem lTensor_rid_assoc_rTensor_comul_eq_comul_rid (s : A →ₗ[O] O) (c : A ⊗[O] A) :
     LinearMap.lTensor A ((TensorProduct.rid O A).toLinearMap ∘ₗ s.lTensor A)
@@ -123,7 +123,7 @@ private theorem lTensor_rid_assoc_rTensor_comul_eq_comul_rid (s : A →ₗ[O] O)
   | tmul x y =>
     rw [LinearMap.rTensor_tmul, lTensor_rid_assoc_tmul_eq_smul]
     simp
-  | add c₁ c₂ h₁ h₂ => simp only [map_add, h₁, h₂]
+  | add c₁ c₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂]
 
 private theorem lTensor_rid_assoc_lTensor_comul_eq_tmul_one (s : A →ₗ[O] O)
     (hs : ∀ a, TensorProduct.rid O A (s.lTensor A (comul a)) = s a • 1) (c : A ⊗[O] A) :
@@ -136,7 +136,7 @@ private theorem lTensor_rid_assoc_lTensor_comul_eq_tmul_one (s : A →ₗ[O] O)
     simp only [LinearMap.comp_apply, LinearEquiv.coe_coe]
     rw [hs]
     simp [TensorProduct.tmul_smul, TensorProduct.smul_tmul']
-  | add c₁ c₂ h₁ h₂ => simp only [map_add, h₁, h₂, TensorProduct.add_tmul]
+  | add c₁ c₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂, TensorProduct.add_tmul]
 
 private theorem lTensor_rid_flip_one_eq_self_of_apply_one (s : A →ₗ[O] O) (h1 : s 1 = 1) (c : A ⊗[O] A) :
     LinearMap.lTensor A ((TensorProduct.rid O A).toLinearMap ∘ₗ s.lTensor A)
@@ -144,14 +144,14 @@ private theorem lTensor_rid_flip_one_eq_self_of_apply_one (s : A →ₗ[O] O) (h
   induction c using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [h1]
-  | add c₁ c₂ h₁ h₂ => simp only [map_add, h₁, h₂]
+  | add c₁ c₂ h₁ h₂ => simp only [map_add (f := _), h₁, h₂]
 
 theorem exists_cobOne_of_integral (s : A →ₗ[O] O) (h1 : s 1 = 1)
     (hs : ∀ a, TensorProduct.rid O A (s.lTensor A (comul a)) = s a • 1)
     {c : A ⊗[O] A} (hc : cobTwo O A c = 0) : ∃ b, cobOne O A b = c := by
   refine ⟨-(TensorProduct.rid O A (s.lTensor A c)), ?_⟩
   have key := congrArg (LinearMap.lTensor A ((TensorProduct.rid O A).toLinearMap ∘ₗ s.lTensor A)) hc
-  rw [map_zero, cobTwo_apply, map_sub, map_add, map_sub, lTensor_rid_one_tmul_eq_one_tmul_rid, lTensor_rid_assoc_rTensor_comul_eq_comul_rid,
+  rw [map_zero, cobTwo_apply, map_sub, map_add (f := _), map_sub, lTensor_rid_one_tmul_eq_one_tmul_rid, lTensor_rid_assoc_rTensor_comul_eq_comul_rid,
     lTensor_rid_assoc_lTensor_comul_eq_tmul_one s hs, lTensor_rid_flip_one_eq_self_of_apply_one s h1, sub_eq_zero] at key
   rw [map_neg, cobOne_apply]
   refine Eq.trans ?_ key
@@ -171,7 +171,7 @@ private theorem coeff_zero_lTensor_comul_eq_smul_one (n : ℕ) (a : (PDivGroup.m
       (PDivGroup.mu p O).A n →ₗ[O] O) a • 1 := by
   induction a using AddMonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb, add_smul]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb, add_smul]
   | single g r =>
     by_cases hg : g = 0
     · subst hg

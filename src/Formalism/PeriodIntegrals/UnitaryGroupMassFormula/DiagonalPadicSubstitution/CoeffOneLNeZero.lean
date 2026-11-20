@@ -79,12 +79,12 @@ theorem ident_holds : Ident := by
     fun c => by rw [map_mul, hla, mul_zero]
   have lmul : ∀ c : ℂ_[p], PowerSeries.subst (mulBy l ex c a) l = MvPowerSeries.C c * PowerSeries.subst a l :=
     fun c => l_ex_apply hex0 h _ (hCa c)
-  refine ⟨PowerSeries.constantCoeff_subst_eq_zero (by rw [map_add, hla, hlb, add_zero]) ex hex0,
+  refine ⟨PowerSeries.constantCoeff_subst_eq_zero (by rw [map_add (f := _), hla, hlb, add_zero]) ex hex0,
     fun c => PowerSeries.constantCoeff_subst_eq_zero (hCa c) ex hex0, ?_, ?_, fun c d => ?_, fun c => ?_, ?_, ?_⟩
   · unfold add; rw [add_comm]
   · unfold add mulBy; rw [map_ofNat, two_mul]
-  · unfold add; rw [lmul, lmul, ← add_mul, ← map_add]; rfl
-  · unfold add; rw [lmul]; unfold mulBy; rw [map_add, map_one, add_mul, one_mul]
+  · unfold add; rw [lmul, lmul, ← add_mul, ← map_add (f := _)]; rfl
+  · unfold add; rw [lmul]; unfold mulBy; rw [map_add (f := _), map_one, add_mul, one_mul]
   · unfold mulBy; rw [map_one, one_mul]; exact ex_l_apply hex0 h a ha
   · unfold mulBy; rw [map_zero, zero_mul]; exact PowerSeries.subst_zero_of_constantCoeff_zero hex0
 

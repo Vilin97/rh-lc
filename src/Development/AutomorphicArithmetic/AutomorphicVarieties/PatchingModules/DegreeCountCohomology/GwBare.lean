@@ -141,7 +141,7 @@ variable {ρ₁ : Representation R₁ G₁ M₁} {ρ₂ : Representation R₂ G�
 private theorem transport_cocycle_mem (h : ∀ g m, β (ρ₁ g m) = ρ₂ (e g) (β m)) {z : G₁ → M₁} (hz : z ∈ Zl ρ₁) : tr e β z ∈ Zl ρ₂ := by
   refine ⟨(hz.1.comp β).comp_continuous e.symm.continuous, fun g g' => ?_⟩
   change β (z (e.symm (g * g'))) = β (z (e.symm g)) + ρ₂ g (β (z (e.symm g')))
-  rw [map_mul, hz.2, map_add, h, e.apply_symm_apply]
+  rw [map_mul, hz.2, map_add (f := _), h, e.apply_symm_apply]
 
 private theorem transport_coboundary_mem (h : ∀ g m, β (ρ₁ g m) = ρ₂ (e g) (β m)) {z : G₁ → M₁} (hz : z ∈ Bl ρ₁) : tr e β z ∈ Bl ρ₂ := by
   obtain ⟨m, hm⟩ := (mem_Bl _).1 hz

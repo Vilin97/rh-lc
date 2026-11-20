@@ -338,7 +338,7 @@ theorem be_half (a : ArcIn D l β O' b) (x y : a.D₀.X) :
   have h₁ : (2 : ℤ) ∣ a.be x x := (Dvd.intro _ rfl).trans (a.be_dvd x x)
   have h₂ : (2 : ℤ) ∣ a.be y y := (Dvd.intro _ rfl).trans (a.be_dvd y y)
   have h₃ := a.be_symm y x
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   omega
 
 theorem exists_partner (hG : GlobalFnsSt) (W : ArcWit Y a I f u χ) {F : Type} [Field F] [IsAlgClosed F]
@@ -353,7 +353,7 @@ theorem exists_partner (hG : GlobalFnsSt) (W : ArcWit Y a I f u χ) {F : Type} [
   have ex : ∀ (i : ℕ) (g₀ : GtPtF a.D₀ F), ∃ g : GtPtF W.P.D.toPre F,
       GtRel W.w W.e.toAddEquiv (fun z => v ^ ((i : ℤ) * (a.be q₀.y z / n))) g₀ g :=
     fun i g₀ => ArcTransport.exists_gtRel gp hT (e := W.e.toAddEquiv) hc hw' hG _ (fun x y => by
-      rw [map_add, Int.add_ediv_of_dvd_left (dvd_be a hn _ _), mul_add, zpow_add]) g₀
+      rw [map_add (f := _), Int.add_ediv_of_dvd_left (dvd_be a hn _ _), mul_add, zpow_add]) g₀
   choose dn hdn using ex
   obtain ⟨h, ⟨gs, g₀, gst, gl⟩, hι⟩ := q₀.eq
   refine ⟨⟨W.e q₀.y, dn 1 q₀.g, dn n h, ⟨fun i => dn i (gs i), ?_, fun i => ?_, congrArg (dn n) gl⟩, ?_⟩, rfl, ?_⟩

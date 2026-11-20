@@ -49,7 +49,7 @@ theorem latticeRiemannForm_add_left (Λ : AddSubgroup ℂ) (x y w : ℂ) : gl3Fi
   simp only [gl3FieldFirst, add_mul, Complex.add_im, add_div]
 
 theorem latticeRiemannForm_add_right (Λ : AddSubgroup ℂ) (x y w : ℂ) : gl3FieldFirst Λ w (x + y) = gl3FieldFirst Λ w x + gl3FieldFirst Λ w y := by
-  simp only [gl3FieldFirst, map_add, mul_add, Complex.add_im, add_div]
+  simp only [gl3FieldFirst, map_add (f := _), mul_add, Complex.add_im, add_div]
 
 theorem latticeRiemannForm_natCast_mul_comm (Λ : AddSubgroup ℂ) (n : ℕ) (x w : ℂ) : gl3FieldFirst Λ x (n * w) = gl3FieldFirst Λ (n * x) w := by
   simp only [gl3FieldFirst, map_mul, map_natCast]; congr 2; ring
@@ -83,7 +83,7 @@ theorem value_shift (Λ : AddSubgroup ℂ) (G : ℂ → ℂ) (x l : ℂ)
   rw [← h, ee, gl3FieldFirst, mul_assoc (G _), ← Complex.exp_add, mul_left_comm, ← Complex.exp_add]
   congr 2
   rw [Complex.ofReal_div, Complex.im_eq_sub_conj]
-  simp only [map_add, map_mul, Complex.conj_conj, map_ofNat]
+  simp only [map_add (f := _), map_mul, Complex.conj_conj, map_ofNat]
   by_cases hA : (area Λ : ℂ) = 0
   · simp [hA]
   · field_simp

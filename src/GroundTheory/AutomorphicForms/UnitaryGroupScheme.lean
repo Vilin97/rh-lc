@@ -82,7 +82,7 @@ theorem tensorMap_conjBase (f : R →ₐ[F] S) (z : R ⊗[F] E) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => rw [conjBase_tmul, tensorMap_tmul, tensorMap_tmul, conjBase_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 omit [Algebra.IsQuadraticExtension F E] in
 theorem tensorMap_includeRight (f : R →ₐ[F] S) (e : E) :
@@ -189,7 +189,7 @@ theorem lid_conjBase (z : F ⊗[F] E) :
   | zero => simp
   | tmul r e =>
     simp only [conjBase_tmul, Algebra.TensorProduct.lid_tmul, map_smul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 omit [Algebra.IsQuadraticExtension F E] [Fintype ι] [DecidableEq ι] in
 theorem map_includeRight_lid :

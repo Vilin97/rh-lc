@@ -249,7 +249,7 @@ theorem isSplitAt_of_isSplitPl {w : PlE H} (h : IsSplitPl H w) : IsSplitAt w := 
 theorem ubc_eq_map_inv (n : ℕ) (α : Fin (n / 2) → ℂˣ) :
     ((GlobalTheory.LGrp.bcParam n α).map fun z => ((z⁻¹ : ℂˣ) : ℂ)) = ubc n (Finset.univ.val.map fun i => (α i : ℂ)) := by
   unfold GlobalTheory.LGrp.bcParam ubc
-  simp only [Multiset.map_add, Multiset.map_map, Function.comp_def, inv_inv, Units.val_inv_eq_inv_val]
+  simp only [Multiset.map_add (f := _), Multiset.map_map, Function.comp_def, inv_inv, Units.val_inv_eq_inv_val]
   rw [add_comm (Multiset.map (fun i => ((α i : ℂ))⁻¹) _)]
   rcases Nat.mod_two_eq_zero_or_one n with h | h <;> simp [h, Nat.odd_iff]
 

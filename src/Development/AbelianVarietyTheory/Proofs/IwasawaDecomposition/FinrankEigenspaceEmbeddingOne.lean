@@ -16,7 +16,7 @@ theorem baseChangeAction_toModuleEnd_apply (a : 𝓞 E) (x : K ⊗[ℤ] 𝓞 E) 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r b => simp
-  | add x y hx hy => simp only [map_add, mul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), mul_add, hx, hy]
 
 theorem tensorAction_baseChangeAction_toModuleEnd (t x : K ⊗[ℤ] 𝓞 E) :
     tensorAction (baseChangeAction K

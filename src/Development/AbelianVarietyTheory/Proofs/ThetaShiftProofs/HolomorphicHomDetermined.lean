@@ -192,7 +192,7 @@ theorem holAt_of_isPullback {Y S Z : Scheme.{0}} {f : Y ⟶ S} {g : Z ⟶ X} {iX
     simp only [valAt'_eq_valR, valR_eq _ _ ht, map_one]
   | add x y _ _ hx hy =>
     refine (hx.add hy).congr_of_eventuallyEq (hev.mono fun t ht => ?_)
-    simp only [valAt'_eq_valR, valR_eq _ _ ht, map_add, Pi.add_apply]
+    simp only [valAt'_eq_valR, valR_eq _ _ ht, map_add (f := _), Pi.add_apply]
   | neg x _ hx =>
     refine hx.neg.congr_of_eventuallyEq (hev.mono fun t ht => ?_)
     simp only [valAt'_eq_valR, valR_eq _ _ ht, map_neg, Pi.neg_apply]
@@ -285,7 +285,7 @@ def jetHom {c : V → (Sp ℂ ⟶ X)} {z : V} (h : HolAt c z) (w : V) (U : X.Ope
     simp
   map_add' f f' := by
     have : (fun t => valAt' (c t) U (f + f')) =ᶠ[𝓝 z] fun t => valAt' (c t) U f + valAt' (c t) U f' :=
-      (h U hU).1.mono fun t ht => by simp only [valAt'_eq_valR, valR_eq _ _ ht, map_add]
+      (h U hU).1.mono fun t ht => by simp only [valAt'_eq_valR, valR_eq _ _ ht, map_add (f := _)]
     have h0 := this.self_of_nhds
     beta_reduce at h0
     rw [this.fderiv_eq, h0, fderiv_fun_add ((h U hU).2 f) ((h U hU).2 f')]
@@ -471,7 +471,7 @@ theorem IsDerivAt.snd_linear {X : Scheme.{0}} {c : V → (Sp ℂ ⟶ X)} {z w₁
     {v₁ v₂ v : Sp (DualNumber ℂ) ⟶ X} (h₁ : IsDerivAt c z w₁ v₁) (h₂ : IsDerivAt c z w₂ v₂)
     (h : IsDerivAt c z (a₁ • w₁ + a₂ • w₂) v) (U : X.Opens) (hU : ⊤ ≤ c z ⁻¹ᵁ U) (f : Γ(X, U)) :
     TrivSqZeroExt.snd (valR v U f) = a₁ * TrivSqZeroExt.snd (valR v₁ U f) + a₂ * TrivSqZeroExt.snd (valR v₂ U f) := by
-  rw [h.2 U hU, h₁.2 U hU, h₂.2 U hU, map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul]
+  rw [h.2 U hU, h₁.2 U hU, h₂.2 U hU, map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul]
 
 variable {S : Scheme.{0}} {G : Over S} {g : ℕ}
 
@@ -513,10 +513,10 @@ theorem existsUnique_linear [FiniteDimensional ℂ V] [GrpObj G] {y : Sp ℂ ⟶
   let h : V →ₗ[ℂ] (Fin g → ℂ) :=
     { toFun := k
       map_add' := fun z z' => eq_of_forall_fderiv_eq hA' hdiff fun U hU f => by
-        rw [map_add, hk _ U hU, hk _ U hU, hk _ U hU, map_add]
+        rw [map_add (f := _), hk _ U hU, hk _ U hU, hk _ U hU, map_add (f := _)]
       map_smul' := fun a z => eq_of_forall_fderiv_eq hA' hdiff fun U hU f => by
         rw [map_smul, hk _ U hU, hk _ U hU, map_smul, RingHom.id_apply] }
-  refine ⟨h, congrFun (eq_of_fderiv_eq (e' := fun z => e' (h z)) he (fun z w => by rw [map_add, he']) hol ?_ ?_),
+  refine ⟨h, congrFun (eq_of_fderiv_eq (e' := fun z => e' (h z)) he (fun z w => by rw [map_add (f := _), he']) hol ?_ ?_),
     fun h' hh' => LinearMap.ext fun z => eq_of_forall_fderiv_eq hA' hdiff fun U hU f => ?_⟩
   · exact isHolTo_of_holAt isOpen_univ fun z _ => (holAt_of_isHolTo hol' (Set.mem_univ (h z))).precomp
       (LinearMap.toContinuousLinearMap h).differentiableAt

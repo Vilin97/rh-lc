@@ -130,7 +130,7 @@ lemma frob_lemma (m k : ℕ) (hm : 0 < m) :
   haveI := nontriv p m hm
   haveI := charP_of_zmod p (TQ p m)
   haveI : ExpChar (TQ p m) p := ExpChar.prime (Fact.out : p.Prime)
-  rw [map_add, map_one, add_pow_char_pow, one_pow, one_mul, map_pow]
+  rw [map_add (f := _), map_one, add_pow_char_pow, one_pow, one_mul, map_pow]
 
 def u1X : ((ZMod p)⟦X⟧)ˣ :=
   (show IsUnit (1 + X : (ZMod p)⟦X⟧) by

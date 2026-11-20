@@ -103,7 +103,7 @@ theorem exists_ev {p : ℕ} [hp : Fact p.Prime] {K : Type} [Field K] [Algebra �
     induction hx using IntermediateField.adjoin_induction with
     | mem x hx => exact IntermediateField.subset_adjoin _ _ ⟨x, hx, rfl⟩
     | algebraMap q => rw [eq_ratCast, map_ratCast]; exact SubfieldClass.ratCast_mem L q
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | inv x _ hx => rw [map_inv₀]; exact inv_mem hx
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   let w : Valuation L ℝ≥0 := v.comap (algebraMap L Ω)
@@ -386,12 +386,12 @@ theorem isLocalValueOfQuotient_add_of_common_denominator (hclo : IsClo p Ωl) (h
     ⟨hκ1, ?_, mul_mem hb1K hb2K, ?_, fun r => ⟨?_, ?_⟩⟩, ?_, ?_, mul_ne_zero hxb1 hxb2, ?_⟩
   · exact add_mem (mul_mem ha1K hb2K) (mul_mem (alg_mem_KT X _ _) (mul_mem ha2K hb1K))
   · linear_combination b2 * hr1 + b1 * hr2 - (a2 * b1) * hκl'
-  · rw [map_add, map_mul, map_mul, AlgHom.commutes, map_mul, HahnSeries.coeff_add, coeff_algebraMap_mul]
+  · rw [map_add (f := _), map_mul, map_mul, AlgHom.commutes, map_mul, HahnSeries.coeff_add, coeff_algebraMap_mul]
     exact add_mem (coeff_mul_mem _ (fun r => RS_mono s1 (hc1 r).1) (fun r => RS_mono s2 (hc2 r).2) r)
       (mul_mem hlR (coeff_mul_mem _ (fun r => RS_mono s2 (hc2 r).1) (fun r => RS_mono s1 (hc1 r).2) r))
   · rw [map_mul]
     exact coeff_mul_mem _ (fun r => RS_mono s1 (hc1 r).2) (fun r => RS_mono s2 (hc2 r).2) r
-  · rw [map_add, map_mul, map_mul, AlgHom.commutes, map_mul]
+  · rw [map_add (f := _), map_mul, map_mul, AlgHom.commutes, map_mul]
     exact val_add hclo hreb (val_mul hclo hreb (supp_exp ha1K) (supp_exp hb2K) ha1 hb2)
       (val_smul hclo hreb _ ((hint _).1 hl) (halg _)
         (val_mul hclo hreb (supp_exp ha2K) (supp_exp hb1K) ha2 hb1))

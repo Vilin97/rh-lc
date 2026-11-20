@@ -90,7 +90,7 @@ theorem map_aeval_int {σ R S : Type*} [CommRing R] [Algebra ℤ R] [CommRing S]
     φ (aeval z f) = aeval (fun p => φ (z p)) f := by
   induction f using MvPolynomial.induction_on with
   | C a => rw [aeval_C, aeval_C, eq_intCast (algebraMap ℤ R), eq_intCast (algebraMap ℤ S), map_intCast]
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p n hp => rw [map_mul, map_mul, map_mul, hp, aeval_X, aeval_X]
 
 theorem aeval_scale {R : Type*} [CommRing R] [Algebra ℤ R] (z : (Σ k, ι k) → R) (t : K → R)
@@ -143,7 +143,7 @@ theorem homog (c : ∀ k, ι k) (f : MRing ι) : ∃ d₀ : K → ℕ, ∀ d : K
     obtain ⟨g1, hg1, e1⟩ := h1 d (le_sup_left.trans hd)
     obtain ⟨g2, hg2, e2⟩ := h2 d (le_sup_right.trans hd)
     refine ⟨g1 + g2, mh_add hg1 hg2, fun 𝕜 _ z hz => ?_⟩
-    rw [map_add, map_add, add_mul, e1 𝕜 z hz, e2 𝕜 z hz]
+    rw [map_add (f := _), map_add (f := _), add_mul, e1 𝕜 z hz, e2 𝕜 z hz]
   | mul_X p n hp =>
     obtain ⟨d1, h1⟩ := hp
     obtain ⟨k0, i0⟩ := n

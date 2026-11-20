@@ -567,7 +567,7 @@ theorem UpperTheory.HilbertEisensteinWeightOne.low_weight_holds : SPois → SInt
     rfl
   have hB : UpperTheory.V.TR.Eop v 0 1 φ + UpperTheory.V.TR.Eop v 1 0 φ = UpperTheory.V.TR.lie F 2 (XB v) φ := by
     unfold UpperTheory.V.TR.Eop
-    rw [← LinearMap.add_apply, ← map_add]
+    rw [← LinearMap.add_apply, ← map_add (f := _)]
     rfl
   rw [hA, hB]
   apply Subtype.ext

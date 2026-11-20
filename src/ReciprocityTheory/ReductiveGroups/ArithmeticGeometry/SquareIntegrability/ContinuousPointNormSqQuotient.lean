@@ -65,7 +65,7 @@ theorem term_shift (γ : X.L) (c : Qc X I) (v : Vsp X.dim) :
       (YB_lat hI hP P.q).2 (neg_mem (wmap_mem_GB hd))
     have e : wmap (IR I) (v - ((Quotient.out c' : X.L) : Vsp X.dim)) =
         -wmap (IR I) d + wmap (IR I) (v + γ - ((Quotient.out c : X.L) : Vsp X.dim)) := by
-      rw [← map_neg, ← map_add]; congr 1; simp only [d, Submodule.coe_sub]; abel
+      rw [← map_neg, ← map_add (f := _)]; congr 1; simp only [d, Submodule.coe_sub]; abel
     rw [e, lemS_periodic _ _ hβ hlat]
 
 theorem PhiE_periodic (γ : Vsp X.dim) (hγ : γ ∈ X.L) (v : Vsp X.dim) :

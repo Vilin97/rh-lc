@@ -65,7 +65,7 @@ theorem UpperTheory.V.Cj.H.opLift :
       obtain ⟨x', hx', ex⟩ := ihx
       obtain ⟨y', hy', ey⟩ := ihy
       exact ⟨x' + y', Submodule.add_mem _ hx' hy', by
-        rw [hadd x' hx' y' hy', hadd x hx y hy, ex, ey, map_add]⟩
+        rw [hadd x' hx' y' hy', hadd x hx y hy, ex, ey, map_add (f := _)]⟩
     | smul s x hx ihx =>
       obtain ⟨x', hx', ex⟩ := ihx
       exact ⟨s • x', Submodule.smul_mem _ s hx', by

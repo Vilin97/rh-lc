@@ -14,7 +14,7 @@ theorem sub_mem_span_range {σ A : Type} [CommRing A] [Algebra ℝ A] (f g : MvP
     (Q : MvPolynomial σ ℝ) : f Q - g Q ∈ Ideal.span (Set.range fun i => f (X i) - g (X i)) := by
   induction Q using MvPolynomial.induction_on with
   | C a => rw [← MvPolynomial.algebraMap_eq, f.commutes, g.commutes, sub_self]; exact zero_mem _
-  | add P Q hP hQ => rw [map_add, map_add, add_sub_add_comm]; exact Ideal.add_mem _ hP hQ
+  | add P Q hP hQ => rw [map_add (f := _), map_add (f := _), add_sub_add_comm]; exact Ideal.add_mem _ hP hQ
   | mul_X P i hP =>
     have e : f (P * X i) - g (P * X i) = (f P - g P) * f (X i) + g P * (f (X i) - g (X i)) := by
       simp only [map_mul]; ring

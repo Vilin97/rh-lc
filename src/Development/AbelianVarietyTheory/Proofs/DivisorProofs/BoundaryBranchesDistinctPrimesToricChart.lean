@@ -300,7 +300,7 @@ theorem eq_of_diag {X : Type} [AddCommGroup X] {β β' : LinearMap.BilinForm ℤ
     (hγ : ∀ y z, β' y z = β' z y) (h : ∀ y, β y y = β' y y) : β = β' := by
   refine LinearMap.ext₂ fun y z => ?_
   have h1 := h (y + z)
-  simp only [map_add, LinearMap.add_apply] at h1
+  simp only [map_add (f := _), LinearMap.add_apply] at h1
   rw [h y, h z, hβ z y, hγ z y] at h1
   linarith
 

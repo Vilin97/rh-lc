@@ -17,7 +17,7 @@ noncomputable def wedgeMul (a b : ℕ) : (⋀[R]^a H) ⊗[R] (⋀[R]^b H) →ₗ
       TensorProduct.map (⋀[R]^a H).subtype (⋀[R]^b H).subtype) fun t => by
     induction t using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | tmul x y =>
       simp only [LinearMap.comp_apply, TensorProduct.map_tmul, LinearMap.mul'_apply,
         ExteriorAlgebra.exteriorPower, pow_add]

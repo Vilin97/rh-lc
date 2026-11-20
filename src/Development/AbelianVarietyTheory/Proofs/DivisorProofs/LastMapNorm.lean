@@ -160,7 +160,7 @@ theorem pair_hi {F : Pol K ι (n + 1)} (hF : F ∈ VV K lam) :
     field_simp
     linear_combination ((cBr rfl (lam τ) (sg τ) : ℤ) : K) * h
   | zero => simp
-  | add y z _ _ hy hz => simp only [map_add, LinearMap.add_apply, Submodule.coe_add, mul_add, hy, hz]
+  | add y z _ _ hy hz => simp only [map_add (f := _), LinearMap.add_apply, Submodule.coe_add, mul_add, hy, hz]
   | smul a y _ hy => simp only [map_smul, LinearMap.smul_apply, Submodule.coe_smul, ← hy, smul_eq_mul]; ring
 
 theorem tr_hi : tr K lam sg (hiV K sg) = (∏ τ, ((cBr rfl (lam τ) (sg τ) : ℤ) : K)) • xiV K hI hS := by
@@ -205,7 +205,7 @@ theorem br_tr (y : VV K sg) : brStd rfl lam sg (tr K lam sg y) =
   | add x z hx hz h1 h2 =>
     rw [← GlobalTheory.OrbitSpan.VV_eq_span_orbit] at hx hz
     change brStd rfl lam sg (tr K lam sg (⟨x, hx⟩ + ⟨z, hz⟩)) = _ • (⟨x, hx⟩ + ⟨z, hz⟩ : VV K sg)
-    rw [map_add, map_add, h1, h2, smul_add]
+    rw [map_add (f := _), map_add (f := _), h1, h2, smul_add]
   | smul a x hx h1 =>
     rw [← GlobalTheory.OrbitSpan.VV_eq_span_orbit] at hx
     change brStd rfl lam sg (tr K lam sg (a • ⟨x, hx⟩)) = _ • (a • ⟨x, hx⟩ : VV K sg)

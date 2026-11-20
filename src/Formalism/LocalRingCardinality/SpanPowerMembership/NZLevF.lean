@@ -91,7 +91,7 @@ theorem htenW_int (v : Fin P.nV) (y : MvPolynomial (Fin (P.n' v) × (Fin (P.m + 
     unfold Places.vEmb blockEmb
     rw [rename_rename]; rfl
   | zero => rw [map_zero]; exact Subring.zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact Subring.add_mem _ ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact Subring.add_mem _ ha hb
   | smul o a _ ha =>
     rw [← algebraMap_smul Kf o a, map_smul, algebraMap_smul]
     exact intP_smul P o ha

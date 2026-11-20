@@ -84,7 +84,7 @@ theorem halfAvg_linear : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdCha
           simp only [HypDec.integrandS_eq, Pi.add_apply, mul_add] at h1 h2 ⊢
           exact h1.add h2
         · refine (hf2.add hg2).congr (Filter.Eventually.of_forall fun x => ?_)
-          simp only [Pi.add_apply, madd f g hf1 hg1, map_add]
+          simp only [Pi.add_apply, madd f g hf1 hg1, map_add (f := _)]
       zero_mem' := by
         have h0 : ∀ x, d.mixS T ψ μ 𝓕 (0 : WO S T → ℂ) x = 0 := fun x => by
           simpa using msmul 0 0 x
@@ -110,7 +110,7 @@ theorem halfAvg_linear : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdCha
           ∫ x : H, ℓ₀ (d.mixS T ψ μ 𝓕 f x.1) ∂ν + ∫ x : H, ℓ₀ (d.mixS T ψ μ 𝓕 g x.1) ∂ν
         rw [← integral_add hf2 hg2]
         refine integral_congr_ae (Filter.Eventually.of_forall fun x => ?_)
-        simp only [madd f g hf1 hg1, map_add]
+        simp only [madd f g hf1 hg1, map_add (f := _)]
       map_smul' := by
         rintro c ⟨f, hf1, hf2⟩
         show ∫ x : H, ℓ₀ (d.mixS T ψ μ 𝓕 (c • f) x.1) ∂ν = c • ∫ x : H, ℓ₀ (d.mixS T ψ μ 𝓕 f x.1) ∂ν

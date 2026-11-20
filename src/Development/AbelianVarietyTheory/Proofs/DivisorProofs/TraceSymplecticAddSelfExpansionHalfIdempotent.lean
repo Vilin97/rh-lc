@@ -44,7 +44,7 @@ theorem symp_add_self_expand : ∀ {F E : Type} [Field F] [NumberField F] [Field
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA, hinv]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have hcI : ∀ x : E, GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA σ (inclR (F := F) (AF F) x) = inclR (F := F) (AF F) (σ x) := by
     intro x; simp [GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.cA, inclR]
   let e : GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E ≃ₐ[AF F] GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.AE F E :=
@@ -81,7 +81,7 @@ theorem symp_add_self_expand : ∀ {F E : Type} [Field F] [NumberField F] [Field
       GlobalTheory.WeilM.hTens c A Bm (x + y) (x + y) = GlobalTheory.WeilM.hTens c A Bm x x + GlobalTheory.WeilM.hTens c A Bm y y +
         GlobalTheory.WeilM.hTens c A Bm x y + GlobalTheory.WeilM.hTens c A Bm y x := by
     intro x y
-    simp only [GlobalTheory.WeilM.hTens, Matrix.add_apply, map_add, add_mul, mul_add, Finset.sum_add_distrib]
+    simp only [GlobalTheory.WeilM.hTens, Matrix.add_apply, map_add (f := _), add_mul, mul_add, Finset.sum_add_distrib]
     ring
   have hθ' : σ θ = 1 - θ := eq_sub_of_add_eq' hθ
   have hcΘ : c (inclR (F := F) (AF F) θ) = 1 - inclR (F := F) (AF F) θ := by
@@ -97,7 +97,7 @@ theorem symp_add_self_expand : ∀ {F E : Type} [Field F] [NumberField F] [Field
     simp only [sub_mul, one_mul, neg_mul, map_sub, map_neg]
     ring
   simp only [GlobalTheory.WeilM.symp]
-  rw [hexp, mul_add, mul_add, mul_add, map_add, map_add, map_add, hswap]
+  rw [hexp, mul_add, mul_add, mul_add, map_add (f := _), map_add (f := _), map_add (f := _), hswap]
   ring
 
 end GlobalTheory.VacExpand

@@ -28,7 +28,7 @@ theorem Stab.mul {σ : E →+* E} {I J : FractionalIdeal (𝓞 E)⁰ E} (hI : St
   intro x hx
   refine FractionalIdeal.mul_induction_on hx (fun i hi j hj => ?_) (fun a b ha hb => ?_)
   · rw [map_mul]; exact FractionalIdeal.mul_mem_mul (hI i hi) (hJ j hj)
-  · rw [map_add]; exact Submodule.add_mem (I * J).coeToSubmodule ha hb
+  · rw [map_add (f := _)]; exact Submodule.add_mem (I * J).coeToSubmodule ha hb
 
 theorem Stab.pow {σ : E →+* E} {I : FractionalIdeal (𝓞 E)⁰ E} (hI : Stab σ I) (j : ℕ) :
     Stab σ (I ^ j) := by

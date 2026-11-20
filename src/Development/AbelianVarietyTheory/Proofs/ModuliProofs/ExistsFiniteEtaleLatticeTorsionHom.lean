@@ -59,7 +59,7 @@ theorem exists_finiteEtale_latticeTorsionHom :
     rw [← MonObj.comp_pow, torsionι_pow_eq_one, MonObj.comp_one]
   let et : La → (Z ⟶ G) := fun a => ∏ i, x i ^ (b.repr a i)
   have hadd : ∀ a c, et (a + c) = et a * et c := fun a c => by
-    simp only [et, map_add, Finsupp.add_apply, zpow_add, Finset.prod_mul_distrib]
+    simp only [et, map_add (f := _), Finsupp.add_apply, zpow_add, Finset.prod_mul_distrib]
   have hb : ∀ i, et (b i) = x i := fun i => by
     simp only [et, Module.Basis.repr_self]
     rw [Finset.prod_eq_single i (fun j _ hj => by simp [Finsupp.single_eq_of_ne hj]) (by simp)]

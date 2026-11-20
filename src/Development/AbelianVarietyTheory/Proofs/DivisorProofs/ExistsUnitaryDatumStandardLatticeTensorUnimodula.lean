@@ -150,11 +150,11 @@ theorem dom_exists (hpos : (S.map (Int.cast : ℤ → ℝ)).PosDef)
     rfl
   · induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+    | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
     | tmul c m =>
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add y y' hy hy' => simp only [map_add, hy, hy']
+      | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
       | tmul d n =>
         simp only [LinearMap.baseChange_tmul, LinearMap.BilinForm.baseChange_tmul]
         rw [form_cx_cx]
@@ -162,7 +162,7 @@ theorem dom_exists (hpos : (S.map (Int.cast : ℤ → ℝ)).PosDef)
       refine LinearMap.ext fun x => ?_
       induction x using TensorProduct.induction_on with
       | zero => simp
-      | add x x' hx hx' => simp only [map_add, hx, hx']
+      | add x x' hx hx' => simp only [map_add (f := _), hx, hx']
       | tmul c m =>
         have h1 : c ⊗ₜ[ℤ] m = c • ((1 : ℝ) ⊗ₜ[ℤ] m) := by
           rw [TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]

@@ -89,7 +89,7 @@ theorem exists_pow_mul_sub_rename_mem (g : MvPolynomial ι R) (h : MvPolynomial 
     have e : rename some g ^ (N₁ + N₂) * (p + q) - rename some (g ^ N₂ * f₁ + g ^ N₁ * f₂) =
         rename some g ^ N₂ * (rename some g ^ N₁ * p - rename some f₁) +
           rename some g ^ N₁ * (rename some g ^ N₂ * q - rename some f₂) := by
-      simp only [map_add, map_mul, map_pow]; ring
+      simp only [map_add (f := _), map_mul, map_pow]; ring
     rw [e]
     exact Ideal.add_mem _ (Ideal.mul_mem_left _ _ h₁) (Ideal.mul_mem_left _ _ h₂)
   | mul_X p j hp =>

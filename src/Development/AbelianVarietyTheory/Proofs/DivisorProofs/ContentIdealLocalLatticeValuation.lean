@@ -36,7 +36,7 @@ theorem valued_toCompl_le_one {v : HeightOneSpectrum (𝓞 F)} {w : HeightOneSpe
     rw [toCompl_tmul, map_mul, h2]
     refine mul_le_one' ((HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).1 (complMap_mem h ha)) ?_
     exact HeightOneSpectrum.valuation_le_one w x
-  · rw [map_add]; exact (Valuation.map_add_le _ hy hz)
+  · rw [map_add (f := _)]; exact (Valuation.map_add_le _ hy hz)
   · rw [map_neg, Valuation.map_neg]; exact hy
 
 theorem toCompl_inclR {v : HeightOneSpectrum (𝓞 F)} {w : HeightOneSpectrum (𝓞 E)}
@@ -82,7 +82,7 @@ theorem valAt_le_of_smul_mem_latLoc : ∀ (F E : Type) [Field F] [NumberField F]
       | add x y _ _ hx hy =>
         obtain ⟨r, hr⟩ := hx
         obtain ⟨s, hs⟩ := hy
-        exact ⟨r + s, by rw [map_add, hr, hs, mul_add]⟩
+        exact ⟨r + s, by rw [map_add (f := _), hr, hs, mul_add]⟩
       | smul r x _ hx =>
         obtain ⟨s, hs⟩ := hx
         exact ⟨r * s, by rw [map_mul, hs, Algebra.smul_def, mul_left_comm]⟩
@@ -107,7 +107,7 @@ theorem valAt_le_of_smul_mem_latLoc : ∀ (F E : Type) [Field F] [NumberField F]
     induction hy using Submodule.span_induction with
     | mem x hx => obtain ⟨j, -, rfl⟩ := hx; exact hloc j
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, mul_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), mul_add]; exact add_mem hx hy
     | smul r x _ hx =>
       rw [Algebra.smul_def, map_mul, mul_left_comm]
       exact mul_mem (SelfDual.inclR_mem_intLoc v ⟨r, rfl⟩) hx
@@ -120,7 +120,7 @@ theorem valAt_le_of_smul_mem_latLoc : ∀ (F E : Type) [Field F] [NumberField F]
       rw [map_mul (inclR (Fv F v)) x y, mul_left_comm, map_mul, toCompl_inclR, map_mul, h2]
       exact (mul_le_mul' (GlobalTheory.UnrTate.valuation_le_of_mem w hx)
         (valued_toCompl_le_one hw (hJloc y hy))).trans_eq (mul_one _)
-    · rw [map_add, mul_add, map_add]
+    · rw [map_add (f := _), mul_add, map_add (f := _)]
       exact Valuation.map_add_le _ hx hy
   have := key 1 h1IJ
   rw [map_one, mul_one] at this

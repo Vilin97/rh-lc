@@ -91,7 +91,7 @@ theorem main : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1
         symplO V₀ W (dW.incAdj V₀ y) (dW.incX V₀ ξ) + symplO V₀ W (dW.incY V₀ η) (dW.incX V₀ ξ) := by
       rw [← he, key, key, key]
       conv_lhs => rw [hsplit]
-      rw [Matrix.add_mul, Matrix.add_mul, mul_eq_zero_real_fin hr hξf, add_zero, Matrix.trace_add, map_add, neg_add]
+      rw [Matrix.add_mul, Matrix.add_mul, mul_eq_zero_real_fin hr hξf, add_zero, Matrix.trace_add, map_add (f := _), neg_add]
     rw [e1, AddChar.map_add_eq_mul, hη1, mul_one]
   · intro η hη
     obtain ⟨b, hb⟩ := incAdj_surj dW V₀ η

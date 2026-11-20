@@ -48,7 +48,7 @@ noncomputable def ratNormFam : NormFam ℚ ℚ where
   nonneg _ _ := norm_nonneg _
   eq_zero σ v h := by simpa using h
   smul σ a v := by rw [smul_eq_mul, map_mul, norm_mul]
-  add σ v w := by rw [map_add]; exact norm_add_le _ _
+  add σ v w := by rw [map_add (f := _)]; exact norm_add_le _ _
 
 noncomputable def ratInt : Submodule (𝓞 ℚ) ℚ := Submodule.span (𝓞 ℚ) {1}
 

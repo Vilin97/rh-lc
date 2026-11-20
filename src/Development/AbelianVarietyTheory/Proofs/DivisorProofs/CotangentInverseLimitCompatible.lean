@@ -35,7 +35,7 @@ theorem exists_of_compat {O : Type} [CommRing O] (p : O) [IsPrecomplete (Ideal.s
     obtain ⟨v, -, hv⟩ := h2
     obtain ⟨b, rfl⟩ := hf v
     refine ⟨a + p ^ n • b, ?_, b, rfl⟩
-    rw [map_add, map_smul, hv, add_sub_cancel, hw']
+    rw [map_add (f := _), map_smul, hv, add_sub_cancel, hw']
   choose! g hg using step
   let a : ℕ → Fin k → O := fun n => Nat.rec 0 (fun m x => g m x) n
   have h0 : ∀ x : C 0, x = 0 := fun x => by simpa using hkill 0 x
@@ -72,7 +72,7 @@ theorem exists_of_compat {O : Type} [CommRing O] (p : O) [IsPrecomplete (Ideal.s
   choose e he using fun i => (hmem n _ _).1 (hL i n)
   have hLe : L = a n + p ^ n • e := funext fun i => by
     rw [he i, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
-  rw [hLe, map_add, map_smul, map_add, hsmul, hkill, add_zero, ha]
+  rw [hLe, map_add (f := _), map_smul, map_add (f := _), hsmul, hkill, add_zero, ha]
 
 end GlobalTheory.CompatLift
 

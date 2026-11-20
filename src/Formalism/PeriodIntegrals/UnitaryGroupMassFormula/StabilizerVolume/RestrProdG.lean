@@ -22,7 +22,7 @@ theorem map_sigR (f : R →ₐ[F] S) (σ : E →ₐ[F] E) (z : R ⊗[F] E) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [sigR, Algebra.TensorProduct.map_tmul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem map_inclR (f : R →ₐ[F] S) (e : E) :
     Algebra.TensorProduct.map f (AlgHom.id F E) (inclR R e) = inclR S e := by

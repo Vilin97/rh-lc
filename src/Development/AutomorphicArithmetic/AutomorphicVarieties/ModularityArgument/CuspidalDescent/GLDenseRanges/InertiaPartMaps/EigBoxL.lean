@@ -360,7 +360,7 @@ theorem eigBoxL {L : Type} [Field L] [NumberField L] {n : ℕ} {V : Type} [Finty
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul w F => simp
-    | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]
   have hΦi : Function.Injective Φ := by
     intro t t' h
     apply (TensorProduct.piRight ℂ ℂ W (fun _ : Fin m => W')).injective
@@ -406,7 +406,7 @@ theorem eigBoxL {L : Type} [Field L] [NumberField L] {n : ℕ} {V : Type} [Finty
               LinearMap.coe_proj, Function.eval, LinearMap.coe_single]
             set_option synthInstance.maxHeartbeats 100000 in
               rw [← Finset.sum_smul, ← map_sum, Finset.univ_sum_single]
-          | add x y hx hy => simp only [map_add, hx, hy, Finset.sum_add_distrib]
+          | add x y hx hy => simp only [map_add (f := _), hx, hy, Finset.sum_add_distrib]
         rw [key]
         refine Submodule.sum_mem _ fun i _ => ?_
         rw [hts]
@@ -418,7 +418,7 @@ theorem eigBoxL {L : Type} [Field L] [NumberField L] {n : ℕ} {V : Type} [Finty
           induction t' using TensorProduct.induction_on with
           | zero => simp
           | tmul w F => simp [sr_tmul]
-          | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]
+          | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]
         have e : sr l t = fun i => sr l (s i) := funext fun i => by rw [key, hts]
         rw [e]
         exact eigBoxL_lemma_5 K₁ K₂ τ₀ _ κ (sr l) (eigBoxL_lemma_11 ρ κ l) a N s hsB
@@ -432,7 +432,7 @@ theorem eigBoxL {L : Type} [Field L] [NumberField L] {n : ℕ} {V : Type} [Finty
         simp only [map_zero]
         exact zero_mem _
       | add x y hx hy =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_mem hx hy
       | tmul p F =>
         have e : (Φ ∘ₗ M) (p ⊗ₜ F) = fun i => f ((p : W) ⊗ₜ ((F : Fin m → W') i)) := by

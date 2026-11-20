@@ -78,9 +78,9 @@ theorem decomp_AE (V : AddSubgroup (AE D)) (hV : IsOpen (V : Set (AE D))) (z : A
   | add x y hx hy =>
     obtain ⟨e, u, hu, hu0, r, hr0, hx⟩ := hx
     obtain ⟨e', u', hu', hu0', r', hr0', hy⟩ := hy
-    refine ⟨e + e', u + u', V.add_mem hu hu', by rw [map_add, hu0, hu0', add_zero], r + r',
-      by rw [map_add, hr0, hr0', add_zero], ?_⟩
-    rw [hx, hy, map_add, add_add_add_comm _ r, add_add_add_comm (incA D e) u]
+    refine ⟨e + e', u + u', V.add_mem hu hu', by rw [map_add (f := _), hu0, hu0', add_zero], r + r',
+      by rw [map_add (f := _), hr0, hr0', add_zero], ?_⟩
+    rw [hx, hy, map_add (f := _), add_add_add_comm _ r, add_add_add_comm (incA D e) u]
 
 theorem continuous_single {m n : ℕ} (i : Fin m) (j : Fin n) :
     Continuous fun v : AE D => (Matrix.single i j v : Matrix (Fin m) (Fin n) (AE D)) := by

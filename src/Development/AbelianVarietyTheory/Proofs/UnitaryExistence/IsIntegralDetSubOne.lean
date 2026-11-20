@@ -46,7 +46,7 @@ theorem _root_.GlobalTheory.CongruenceDet.isIntegral_root {R E K : Type} [CommRi
     have h1 : ℓ (g *ᵥ v) = μ * ℓ v := by
       rw [hℓ, hℓ, hmap, Matrix.dotProduct_mulVec, hug, smul_dotProduct, smul_eq_mul]
     have h2 : ℓ (g *ᵥ v) = ℓ v + M * ℓ w := by
-      rw [hgv, map_add, map_nsmul, nsmul_eq_mul]
+      rw [hgv, map_add (f := _), map_nsmul, nsmul_eq_mul]
     field_simp
     linear_combination h1.symm.trans h2
   let N : Submodule R K := Λ.map ℓ

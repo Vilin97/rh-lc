@@ -11,7 +11,7 @@ variable {R : Type*} [CommRing R] [IsAddTorsionFree R]
 theorem ode_coeff (c : R) (f : R⟦X⟧) (hf : (1 + X) * d⁄dX R f = C c * f) (n : ℕ) :
     ((n : R) + 1) * coeff (n + 1) f = (c - n) * coeff n f := by
   have h := congrArg (coeff n) hf
-  rw [add_mul, one_mul, map_add, coeff_derivative, coeff_C_mul] at h
+  rw [add_mul, one_mul, map_add (f := _), coeff_derivative, coeff_C_mul] at h
   cases n with
   | zero =>
     simp only [coeff_zero_X_mul, add_zero] at h
@@ -49,7 +49,7 @@ theorem bin_ode (c : ℤ_[l]) :
       Ring.choose_one_right, nsmul_eq_mul] at this
     push_cast at this
     exact this
-  rw [add_mul, one_mul, map_add, coeff_derivative, coeff_C_mul]
+  rw [add_mul, one_mul, map_add (f := _), coeff_derivative, coeff_C_mul]
   simp only [binomialSeries_coeff, smul_eq_mul, mul_one]
   cases n with
   | zero =>
@@ -75,7 +75,7 @@ theorem const_subst (h f : PowerSeries ℤ_[l]) (hh : constantCoeff h = 0) :
   have hs : HasSubst h := HasSubst.of_constantCoeff_zero' hh
   have h1 : f = C (constantCoeff f) + (f - C (constantCoeff f)) := by ring
   conv_lhs => rw [h1]
-  rw [subst_add hs, map_add]
+  rw [subst_add hs, map_add (f := _)]
   have h2 : constantCoeff (subst h (f - C (constantCoeff f))) = 0 :=
     constantCoeff_subst_eq_zero hh _ (by simp)
   rw [h2, add_zero, subst_C]

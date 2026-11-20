@@ -163,7 +163,7 @@ theorem coords0 {F B V : Type _} [Field F] [Field B] (q : F →+* B) [AddCommGro
     · exact fun f hf => h f hf
     · simp
     · intro f f' _ _ h1 h2
-      simp only [LinearMap.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+      simp only [LinearMap.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
       rw [h1, h2, add_zero]
     · intro c f _ h1
       have e : ∑ k, z k * q ((c • f) (b k)) = q c * ∑ k, z k * q (f (b k)) := by

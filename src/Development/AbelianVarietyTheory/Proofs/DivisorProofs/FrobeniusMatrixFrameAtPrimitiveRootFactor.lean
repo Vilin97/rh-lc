@@ -368,7 +368,7 @@ theorem frame_at_root : ∀ (D : D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA H
       (((HW l).W K 1 LL hA.2.2).χΓ γ : ↥(OL LL)) - ((1 : ℕ) : ↥LL.1)) := by
     have h0 : 0 ≤ (D.loc l).v LL (algebraMap ↥(OL LL) ↥LL.1 (algebraMap ℤ_[l] ↥(OL LL) c)) :=
       ((D.loc l).v_O LL _).2 (algebraMap ℤ_[l] ↥(OL LL) c).2
-    rw [hχ, hu, map_add, map_add, map_one, map_one, Nat.cast_one, Nat.cast_one, add_sub_cancel_left, map_mul, map_mul,
+    rw [hχ, hu, map_add (f := _), map_add (f := _), map_one, map_one, Nat.cast_one, Nat.cast_one, add_sub_cancel_left, map_mul, map_mul,
       map_natCast, map_natCast, AddValuation.map_mul, (D.loc l).v_l]
     exact le_add_of_nonneg_right h0
   obtain ⟨G, H, h1, h2⟩ := matrices_at ((HW l).W K 1 LL hA.2.2) T i (ζ : ↥LL.1) b (U i) (hU i) d hd

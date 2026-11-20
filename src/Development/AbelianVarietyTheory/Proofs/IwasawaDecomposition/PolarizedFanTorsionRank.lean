@@ -117,7 +117,7 @@ theorem exists_monomial : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
     have h2 := hbn x
     have h3 := hbn y
     have h4 := hbal.1 x y
-    simp only [map_add, LinearMap.add_apply] at h1
+    simp only [map_add (f := _), LinearMap.add_apply] at h1
     linarith
   let w : Vˣ := ∏ i, ∏ j, (W (b i + b j) * (W (b i))⁻¹ * (W (b j))⁻¹) ^ a i j
   have key : Units.map gam.toMonoidHom Q = U w * π ^ (ℓ be) := by

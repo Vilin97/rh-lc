@@ -212,7 +212,7 @@ theorem BlowUpLocalChart.proof : BlowUpLocalChart.Statement.{u} := by
       obtain ⟨l₁, hl₁, b₁, e₁⟩ := hx
       obtain ⟨l₂, hl₂, b₂, e₂⟩ := hy
       refine ⟨l₁ * l₂, mul_ne_zero hl₁ hl₂, l₂ * b₁ + l₁ * b₂, ?_⟩
-      rw [map_mul, map_add, map_mul, map_mul, ← e₁, ← e₂]
+      rw [map_mul, map_add (f := _), map_mul, map_mul, ← e₁, ← e₂]
       ring
     | neg x _ hx =>
       obtain ⟨l, hl, b, e₁⟩ := hx
@@ -232,7 +232,7 @@ theorem BlowUpLocalChart.proof : BlowUpLocalChart.Statement.{u} := by
       obtain ⟨l₁, hl₁, q₁, e₁⟩ := h₁
       obtain ⟨l₂, hl₂, q₂, e₂⟩ := h₂
       refine ⟨l₁ * l₂, mul_ne_zero hl₁ hl₂, Polynomial.C l₂ * q₁ + Polynomial.C l₁ * q₂, ?_⟩
-      rw [Polynomial.map_add, Polynomial.map_add, Polynomial.map_mul, Polynomial.map_mul, Polynomial.map_C,
+      rw [Polynomial.map_add (f := _), Polynomial.map_add (f := _), Polynomial.map_mul, Polynomial.map_mul, Polynomial.map_C,
         Polynomial.map_C, ← e₁, ← e₂, map_mul, Polynomial.C_mul]
       ring
     | monomial n c =>
@@ -279,7 +279,7 @@ theorem BlowUpLocalChart.proof : BlowUpLocalChart.Statement.{u} := by
     | add p q hp hq =>
       obtain ⟨a, ha⟩ := hp
       obtain ⟨b, hb⟩ := hq
-      exact ⟨a + b, by rw [map_add, ha, hb, map_add, map_add]⟩
+      exact ⟨a + b, by rw [map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]⟩
     | mul_X p v hp =>
       obtain ⟨a, ha⟩ := hp
       rcases v with ⟨_ | k, i⟩

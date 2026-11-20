@@ -9,10 +9,10 @@ open GlobalTheory.DefLift.BilFischer in
 private theorem pair_symm' {σ : Type} [Fintype σ] (A B : MvPolynomial σ ℂ) : pair A B = pair B A := by
   classical
   induction A using MvPolynomial.induction_on' with
-  | add A A' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+  | add A A' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
   | monomial α c =>
     induction B using MvPolynomial.induction_on' with
-    | add B B' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+    | add B B' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
     | monomial β d =>
       rw [pair_monomial, pair_monomial, coeff_monomial, coeff_monomial]
       by_cases e : α = β

@@ -138,7 +138,7 @@ theorem so_slice (h : M.IsGood B.ψ) {f : SInf F _} (hf : f ≠ 0) {x} (hx : pur
 theorem I_add₂ {o : Rep σ Y W} {χ χ' : Chr F E} (hw : M.IsWeil B.ψ χ χ' o) {Φ Ψ : Fn F n d} (hΦ : Φ ∈ schA F _) (hΨ : Ψ ∈ schA F _)
     (c : M.Conv o Φ) (c' : M.Conv o Ψ) (h : UA σ W.J) : M.I o (Φ + Ψ) h = M.I o Φ h + M.I o Ψ h := by
   have e : ∀ g, theta o (Φ + Ψ) g h = theta o Φ g h + theta o Ψ g h := fun g => by
-    simp only [theta, map_add]
+    simp only [theta, map_add (f := _)]
     exact thetaSum_add F (hw.isUSplitting.pres _ _ hΦ) (hw.isUSplitting.pres _ _ hΨ)
   simp only [Model.I, e]
   exact integral_add (c h) (c' h)

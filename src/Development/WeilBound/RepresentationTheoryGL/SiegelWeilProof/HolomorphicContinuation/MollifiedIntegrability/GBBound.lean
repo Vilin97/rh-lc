@@ -65,7 +65,7 @@ theorem pb_eval_bound {ι : Type} (R : MvPolynomial ι ℂ) (B : ℝ) :
   | add p q hp hq =>
     obtain ⟨C1, h1⟩ := hp; obtain ⟨C2, h2⟩ := hq
     exact ⟨C1 + C2, fun v hv => by
-      simp only [map_add]; exact (norm_add_le _ _).trans (add_le_add (h1 v hv) (h2 v hv))⟩
+      simp only [map_add (f := _)]; exact (norm_add_le _ _).trans (add_le_add (h1 v hv) (h2 v hv))⟩
   | mul_X p k hp =>
     obtain ⟨C1, h1⟩ := hp
     exact ⟨max C1 0 * max B 0, fun v hv => by

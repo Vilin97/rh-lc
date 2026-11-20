@@ -247,9 +247,9 @@ theorem eig (h : Hyp L nb uM nb' w₁ cM δ) (y : AE F E) (hy : cA σ y = -(((R.
         TensorProduct.smul_tmul', smul_eq_mul, mul_one, TensorProduct.smul_tmul]
       exact congrArg (a ⊗ₜ[F] ·) hl
     | add x z hx hz =>
-      rw [map_add, mul_add, add_sub_add_comm, map_add, add_smul, hx, hz]
+      rw [map_add (f := _), mul_add, add_sub_add_comm, map_add (f := _), add_smul, hx, hz]
   have key := hψ y
-  rw [hy, neg_mul, mul_neg, ← mul_assoc, eps_mul R, one_mul, sub_neg_eq_add, map_add, add_smul] at key
+  rw [hy, neg_mul, mul_neg, ← mul_assoc, eps_mul R, one_mul, sub_neg_eq_add, map_add (f := _), add_smul] at key
   have h2 : (2 : F) • (ellA δ y • inclR (F := F) (AF F) δ) = (2 : F) • y := by
     rw [two_smul, two_smul]; exact key
   exact smul_right_injective (AE F E) (two_ne_zero) h2

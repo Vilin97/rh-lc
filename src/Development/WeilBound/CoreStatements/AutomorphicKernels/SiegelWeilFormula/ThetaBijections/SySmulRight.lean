@@ -80,12 +80,12 @@ theorem sy_eq (w w' : Matrix (Fin d.m) (Fin d.n ⊕ Fin d.n) (AE F E)) : sy d w 
 
 theorem sy_add_left (w₁ w₂ w' : Matrix (Fin d.m) (Fin d.n ⊕ Fin d.n) (AE F E)) :
     sy d (w₁ + w₂) w' = sy d w₁ w' + sy d w₂ w' := by
-  simp only [sy_eq, map_add, om, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+  simp only [sy_eq, map_add (f := _), om, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
   ring
 
 theorem sy_add_right (w w₁ w₂ : Matrix (Fin d.m) (Fin d.n ⊕ Fin d.n) (AE F E)) :
     sy d w (w₁ + w₂) = sy d w w₁ + sy d w w₂ := by
-  simp only [sy_eq, map_add, om, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+  simp only [sy_eq, map_add (f := _), om, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
   ring
 
 theorem sy_smul_right (a : AF F) (w w' : Matrix (Fin d.m) (Fin d.n ⊕ Fin d.n) (AE F E)) :

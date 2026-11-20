@@ -39,7 +39,7 @@ theorem deg_pderiv_succ {σ : Type} (i : σ) (f : MvPolynomial σ ℂ) (k : ℕ)
       rw [Finsupp.single_le_iff]
       omega
     have e2 := congrArg Finsupp.degree e
-    rw [map_add, Finsupp.degree_single] at e2
+    rw [map_add (f := _), Finsupp.degree_single] at e2
     have h3 := (le_totalDegree hs).trans h
     change s.degree ≤ k + 1 at h3
     change (s - Finsupp.single i 1).degree ≤ k

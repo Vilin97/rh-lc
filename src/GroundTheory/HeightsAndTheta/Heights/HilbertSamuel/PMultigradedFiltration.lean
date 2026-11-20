@@ -56,7 +56,7 @@ theorem monomial_smul_mem (hM : IsMultigrading ι M piece) (d : (Σ k, ι k) →
     rw [e, mul_smul]
     have h := X_pow_smul_mem hM v n _ _ (ih m x hx)
     convert h using 2
-    rw [map_add, Finsupp.weight_single, degZ_add, add_assoc, add_comm (degZ _)]
+    rw [map_add (f := _), Finsupp.weight_single, degZ_add, add_assoc, add_comm (degZ _)]
 
 theorem homog_smul_mem (hM : IsMultigrading ι M piece) {f : MRing ι F} {b : K → ℕ}
     (hf : IsWeightedHomogeneous (blockWeight ι) f b) {m : K → ℤ} {x : M} (hx : x ∈ piece m) :
@@ -168,7 +168,7 @@ theorem isPrime_of_forms (q : Ideal (MRing ι F)) (hq : IsMultiHomogIdeal q) (hn
     induction d using Finsupp.induction with
     | zero => simp
     | single_add v n d _ _ ih =>
-      rw [map_add, map_add, ih, Finsupp.weight_single, Finsupp.weight_single, toLex_add, toLex_smul]
+      rw [map_add (f := _), map_add (f := _), ih, Finsupp.weight_single, Finsupp.weight_single, toLex_add, toLex_smul]
       rfl
   have hc : ∀ (i : Lex (K → ℕ)) (r : MRing ι F),
       weightedHomogeneousComponent (fun v => toLex (blockWeight ι v)) i r =

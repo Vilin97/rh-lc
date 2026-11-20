@@ -48,7 +48,7 @@ theorem aeval_tan [Fintype κ] [DecidableEq κ] (v : κ → S) (P : MvPolynomial
       rw [MvPolynomial.coeff_C, if_neg (Finsupp.single_ne_zero.2 one_ne_zero).symm]
     simp [h]
   | add p q hp hq =>
-    rw [map_add, hp, hq, map_add, map_add]
+    rw [map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
     simp only [MvPolynomial.coeff_add, add_mul, Finset.sum_add_distrib, add_smul]
     abel
   | mul_X p n hp =>

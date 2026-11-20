@@ -21,7 +21,7 @@ theorem lift_addLaw (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [CharP k p] (d
   funext i
   ext α
   rw [coeff_lift]
-  simp only [addLaw, map_add, coeff_X]
+  simp only [addLaw, map_add (f := _), coeff_X]
   have hne : (Finsupp.single (Sum.inl i) 1 : Fin d ⊕ Fin d →₀ ℕ) ≠ Finsupp.single (Sum.inr i) 1 := by
     rw [Ne, Finsupp.single_left_inj one_ne_zero]; simp
   by_cases h1 : α = Finsupp.single (Sum.inl i) 1
@@ -49,12 +49,12 @@ theorem homogCoc_red_cob : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [Ch
     · have e1 : coeff γ (cob1 (addLaw k d) b) = coeff γ (cob1 (addLaw k d) bN) := by
         have := formalCoboundary_add (hconst k) bN (b - bN)
         rw [add_sub_cancel] at this
-        rw [this, map_add, GlobalTheory.T.coeff_coboundaryOne_additive_eq_zero_of_degree k d N (b - bN) (fun α hα => by
+        rw [this, map_add (f := _), GlobalTheory.T.coeff_coboundaryOne_additive_eq_zero_of_degree k d N (b - bN) (fun α hα => by
           rw [map_sub, hbNc, if_pos hα, sub_self]) γ hγ, add_zero]
       conv_lhs => rw [hb]
-      rw [map_add, map_add, e1]
+      rw [map_add (f := _), map_add (f := _), e1]
     set_option synthInstance.maxHeartbeats 100000 in
-      · rw [hhom γ hγ, map_add, map_sum, (GlobalTheory.T.additive_formal_group_coboundary_homogeneous k d N).1 bN (fun α hα => by
+      · rw [hhom γ hγ, map_add (f := _), map_sum, (GlobalTheory.T.additive_formal_group_coboundary_homogeneous k d N).1 bN (fun α hα => by
         rw [hbNc, if_neg hα]) γ hγ, zero_add]
       refine (Finset.sum_eq_zero fun m _ => ?_).symm
       simp only [cm]
@@ -146,7 +146,7 @@ theorem homogCoc_red_cob : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [Ch
                 rw [hs, h0, (by omega : j = 0), Finsupp.single_zero, add_zero]
               rw [this, hzero]
           · refine (hhom α ?_).symm
-            rw [hs, map_add, Finsupp.degree_single, Finsupp.degree_single]; exact hd
+            rw [hs, map_add (f := _), Finsupp.degree_single, Finsupp.degree_single]; exact hd
     · rw [if_neg hs]
       refine ⟨0, ?_, by simp⟩
       rw [Finset.sum_eq_zero, mul_zero, map_zero]
@@ -155,7 +155,7 @@ theorem homogCoc_red_cob : ∀ (p : ℕ) [Fact p.Prime] (k : Type) [Field k] [Ch
   refine ⟨Katz.lift p bN + ∑ m, t m • (X m ^ N : MvPowerSeries (Fin d) (Fr p k)), ?_, ?_⟩
   · intro α hα
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, coeff_lift, hbNc, if_neg hα, WittVector.teichmuller_zero, map_zero,
+      rw [map_add (f := _), map_sum, coeff_lift, hbNc, if_neg hα, WittVector.teichmuller_zero, map_zero,
       zero_add]
     refine Finset.sum_eq_zero fun m _ => ?_
     rw [map_smul, coeff_X_pow, if_neg, smul_zero]

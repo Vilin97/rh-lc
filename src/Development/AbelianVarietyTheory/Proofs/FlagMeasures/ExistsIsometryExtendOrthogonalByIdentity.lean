@@ -33,7 +33,7 @@ theorem extend_isom : ∀ {E : Type} [Field E] [NumberField E] [StarRing E] (S :
   have key : ∀ (a b : U) (c d : ↥(orth S U)),
       S.hT ((a : S.V) + (c : S.V)) ((b : S.V) + (d : S.V)) = S.hT a b + S.hT c d := by
     intro a b c d
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     rw [GlobalTheory.OrthExt.hT_orth_right S U a.2 d.2, GlobalTheory.OrthExt.hT_orth_left S U b.2 c.2]
     ring
   refine ⟨γ, ?_, ?_, ?_⟩

@@ -146,7 +146,7 @@ theorem brTen_memS (Tf : FormsTiedSym D u Ch chOf) {P : MvPolynomial (D.what₂.
     have := (Formalism.L2.Ker.brOne_member D u τ (interlaceTr D u (sg_interlace Tf.valP) τ)).1 (f τ)
     rwa [sgTr, delSq_wSh] at this
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx
 
 theorem pt_val (Tf : FormsTiedSym D u Ch chOf) (hL : Formalism.L2.Rows.LowerMapTieS Tf) (φ : Fn D u D.R.m)

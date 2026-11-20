@@ -89,7 +89,7 @@ theorem exists_residue_char {ψ : AddChar k Circle} (hψ : HasConductor ψ 1) {�
   obtain ⟨y, rfl⟩ := hs y
   obtain ⟨z, rfl⟩ := hs z
   beta_reduce
-  rw [← map_add, h2, h2, h2, ← AddChar.map_add_eq_mul, ← mul_add]
+  rw [← map_add (f := _), h2, h2, h2, ← AddChar.map_add_eq_mul, ← mul_add]
   rfl
 
 def symSumInt {κ l : ℕ} (g : GL (Fin κ ⊕ Fin l) 𝒪[k]) : 𝒪[k] :=
@@ -100,7 +100,7 @@ omit [TopologicalSpace k] [IsNonarchimedeanLocalField k] in
 theorem map_symSumInt {F : Type} [Field F] (f : 𝒪[k] →+* F) {κ l : ℕ} (g : GL (Fin κ ⊕ Fin l) 𝒪[k]) :
     f (symSumInt g) = symSum (Matrix.GeneralLinearGroup.map f g) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [symSumInt, symSum, simpleSum, superSum, map_add, map_sum, apply_ite f, map_zero]
+    simp only [symSumInt, symSum, simpleSum, superSum, map_add (f := _), map_sum, apply_ite f, map_zero]
   rfl
 
 end Local

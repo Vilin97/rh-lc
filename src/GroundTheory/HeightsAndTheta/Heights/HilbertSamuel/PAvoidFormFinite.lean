@@ -221,7 +221,7 @@ theorem eval_cmp_eq_zero {S : Set (MRingOver ℂ ι)} (hS : ∀ s ∈ S, ∃ a, 
     · exact hz x hx
     · simp
   | zero => intro D; simp
-  | add x y _ _ hx hy => intro D; rw [map_add, map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => intro D; rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
   | smul a x _ hx =>
     intro D
     set_option synthInstance.maxHeartbeats 100000 in
@@ -344,8 +344,8 @@ theorem rel_one {S : Set (MRingOver ℂ ι)} {G : MRingOver ℂ ι} {e : K → �
     rw [add_mul, one_mul, Nat.add_sub_cancel]
   refine ⟨cmp (M • e) a, isMultiHomog_cmp _ _, fun z hz => ?_⟩
   have h1 : monomial μ (1 : ℂ) = cmp ((M + 1) • e) (a * G) + cmp ((M + 1) • e) s := by
-    rw [← map_add, ← hμa, cmp_of_homog (isMultiHomog_monomial μ 1), if_pos hμ]
-  rw [h1, map_add, cmp_mul hG, if_pos heD, hDe, map_mul, eval_cmp_eq_zero hS hz hs, add_zero]
+    rw [← map_add (f := _), ← hμa, cmp_of_homog (isMultiHomog_monomial μ 1), if_pos hμ]
+  rw [h1, map_add (f := _), cmp_mul hG, if_pos heD, hDe, map_mul, eval_cmp_eq_zero hS hz hs, add_zero]
 
 theorem rel_direct {S : Set (MRingOver ℂ ι)} {G : MRingOver ℂ ι} {e : K → ℕ} (hG : IsMultiHomog G e)
     {N₀ M : ℕ} (hM : M ≤ N₀) (μ : (Σ k, ι k) →₀ ℕ) (hμ : bdeg μ = M • e) :
@@ -526,11 +526,11 @@ theorem exists_sep {e : K → ℕ} (he : ∀ k, 1 ≤ e k) {z w : (Σ k, ι k) �
     split_ifs <;> omega
   · rw [map_mul]
     apply mul_eq_zero_of_left
-    simp only [L, map_add, map_mul, eval_C, eval_X]
+    simp only [L, map_add (f := _), map_mul, eval_C, eval_X]
     ring
   · rw [map_mul]
     refine mul_ne_zero ?_ ?_
-    · simp only [L, map_add, map_mul, eval_C, eval_X]
+    · simp only [L, map_add (f := _), map_mul, eval_C, eval_X]
       intro h
       apply hab
       linear_combination h

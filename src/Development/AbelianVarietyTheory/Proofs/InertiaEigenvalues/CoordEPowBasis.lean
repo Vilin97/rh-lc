@@ -26,7 +26,7 @@ theorem tWincl_smul' {R R' : Type} [CommRing R] [CommRing R'] [Algebra O R] [Alg
   | tmul s x =>
     simp only [TWincl, smul_tmul', TensorProduct.map_tmul, AlgHom.toLinearMap_apply, LinearMap.id_apply,
       smul_eq_mul, map_mul]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 end GlobalTheory.BKGal.HatVal.BasisCoord
 

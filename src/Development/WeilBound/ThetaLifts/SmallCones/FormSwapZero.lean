@@ -161,7 +161,7 @@ theorem soEv_of (hL : LinEx) (hLow : Low) : SoEv := by
   let L : Fn F n d →ₗ[ℂ] ℂ :=
     { toFun := fun Φ => ι₀ (fun y => e (M.co.rho B.ψ s₀ Φ) (repl B.v₁ z y)) (coB σ X₁ W₁ t x₀)
       map_add' := fun a b => by
-        rw [rho_add, map_add]
+        rw [rho_add, map_add (f := _)]
         exact congrFun (map_add ι₀ _ _) _
       map_smul' := fun c a => by
         rw [rho_smul, map_smul]

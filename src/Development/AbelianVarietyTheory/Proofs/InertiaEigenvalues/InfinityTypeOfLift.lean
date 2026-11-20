@@ -223,7 +223,7 @@ theorem core (D : D7) (cf : CharFrame D) (A : AUSide D) (chr : CharSide D cf) (M
   · unfold isoInf
     simp only [List.map_cons, List.map_nil, List.sum_cons, List.sum_nil, add_zero, hG1, Multiset.map_singleton, bindCast, List.map_map, Function.comp_def, sum_singletons]
     unfold NG.paramV GlobalTheory.IndefiniteRowSideFullHecke.CMTypeEmbeddings.hcSigma
-    rw [Multiset.map_add, Multiset.map_map, Multiset.map_map, ← Multiset.map_coe, Multiset.coe_range]
+    rw [Multiset.map_add (f := _), Multiset.map_map, Multiset.map_map, ← Multiset.map_coe, Multiset.coe_range]
     refine congrArg₂ (· + ·) (congrArg₂ (· + ·) ?_ ?_) ?_
     · refine Multiset.map_congr rfl fun i _ => ?_
       simp only [Function.comp_apply]
@@ -234,7 +234,7 @@ theorem core (D : D7) (cf : CharFrame D) (A : AUSide D) (chr : CharSide D cf) (M
   · unfold isoInf
     simp only [List.map_cons, List.map_nil, List.sum_cons, List.sum_nil, add_zero, hG2, Multiset.map_singleton, bindCast, List.map_map, Function.comp_def, sum_singletons]
     unfold NG.paramV GlobalTheory.IndefiniteRowSideFullHecke.CMTypeEmbeddings.hcSigma
-    rw [Multiset.map_add, Multiset.map_add, Multiset.map_add, Multiset.map_map, Multiset.map_map, Multiset.map_map,
+    rw [Multiset.map_add (f := _), Multiset.map_add (f := _), Multiset.map_add (f := _), Multiset.map_map, Multiset.map_map, Multiset.map_map,
       Multiset.map_map, Multiset.map_map, ← Multiset.map_coe, Multiset.coe_range]
     refine congrArg₂ (· + ·) (congrArg₂ (· + ·) ?_ ?_) ?_
     · refine Multiset.map_congr rfl fun i _ => ?_

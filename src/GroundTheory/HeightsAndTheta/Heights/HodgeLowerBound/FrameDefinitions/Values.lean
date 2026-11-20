@@ -24,9 +24,9 @@ theorem isValueAt_add {y : (Σ k, ι k) → Ω} {s t : Ω} {z : (Σ k, ι k) →
     isMultiHomog_mul hh hh', ?_, ?_, ?_, ?_⟩
   · rw [add_comm d d']; exact isMultiHomog_mul hg' hh
   · rw [map_mul]; exact mul_ne_zero hy hy'
-  · rw [map_add, map_mul, map_mul, map_mul, heq, heq']; ring
+  · rw [map_add (f := _), map_mul, map_mul, map_mul, heq, heq']; ring
   · rw [map_mul, map_mul]; exact mul_ne_zero hz0 hz0'
-  · simp only [map_add, map_mul]
+  · simp only [map_add (f := _), map_mul]
     field_simp
 
 theorem isValueAt_intCast (y : (Σ k, ι k) → Ω) (z : (Σ k, ι k) → ℂ) (n : ℤ) :

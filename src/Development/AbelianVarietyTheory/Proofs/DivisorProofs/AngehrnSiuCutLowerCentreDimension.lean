@@ -57,7 +57,7 @@ theorem exists_qWeil_eq_comb (X : Scheme.{0}) [IsIntegral X] [IsLocallyNoetheria
   · intro C hC
     have e := interNumRed_of_cls_eq_nsmul_add ℂ X p hp (toLB ((a * b' * k) • D + (a' * b * m) • E))
       (toLB D) (toLB E) (isLB_toLB _) (isLB_toLB D) (isLB_toLB E) (a * b' * k) (a' * b * m) C hC
-      (by rw [← toPic_apply, ← toPic_apply, ← toPic_apply, map_add, map_nsmul, map_nsmul])
+      (by rw [← toPic_apply, ← toPic_apply, ← toPic_apply, map_add (f := _), map_nsmul, map_nsmul])
     rw [e]
     push_cast
     field_simp
@@ -131,7 +131,7 @@ theorem logCanonicalCut_lowers_centre_dimension : GlobalTheory.Published.Princip
 
   set A' : CartierDiv X := s • F + A with hA'def
   have hclsA' : cls (toLB A') (isLB_toLB A') = (s * a) • cls N₀ hN₀ + 1 • cls (toLB A) (isLB_toLB A) := by
-    rw [← toPic_apply, ← toPic_apply, hA'def, map_add, map_nsmul, hF, one_nsmul, smul_smul]
+    rw [← toPic_apply, ← toPic_apply, hA'def, map_add (f := _), map_nsmul, hF, one_nsmul, smul_smul]
   have hA'amp : IsAmpleLB (toLB A') := by
     refine isAmpleLB_of_cls_eq_ample_add_nef ℂ X p hp (toLB A) (lbPow N₀ (s * a)) (toLB A') hA
       (hNnef.pow hA (s * a)) (isLB_toLB A') ?_

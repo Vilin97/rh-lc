@@ -120,7 +120,7 @@ theorem exists_radius {R C : Type} [CommRing R] [IsLocalRing R] [IsNoetherianRin
   induction ha using Submodule.span_induction with
   | mem a ha => exact h2 a ha
   | zero => simpa using h0.le
-  | add a b _ _ ha hb => rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
   | smul r a _ ha =>
     rw [smul_eq_mul, map_mul, norm_mul]
     exact (mul_le_of_le_one_left (norm_nonneg _) (hle r)).trans ha

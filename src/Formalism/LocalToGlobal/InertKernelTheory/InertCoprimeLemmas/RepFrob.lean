@@ -159,7 +159,7 @@ theorem frob_wK {σ : MaximalUnramifiedExtension p →+* MaximalUnramifiedExtens
   have hx : x = S + (p : WW p) ^ (N + 1) * c := by rw [← hc]; ring
   have e : ((f x : MaximalUnramifiedExtension p) : ℂ_[p]) - ((g x : MaximalUnramifiedExtension p) : ℂ_[p]) =
       (p : ℂ_[p]) ^ (N + 1) * (((f c : MaximalUnramifiedExtension p) : ℂ_[p]) - ((g c : MaximalUnramifiedExtension p) : ℂ_[p])) := by
-    rw [hx, map_add, map_add, map_mul, map_mul, map_pow, map_pow, map_natCast, map_natCast, hfS]
+    rw [hx, map_add (f := _), map_add (f := _), map_mul, map_mul, map_pow, map_pow, map_natCast, map_natCast, hfS]
     push_cast; ring
   rw [e, norm_mul, norm_pow, Formalism.L2.G.Pend.norm_p_C]
   have h1 : ‖((f c : MaximalUnramifiedExtension p) : ℂ_[p]) - ((g c : MaximalUnramifiedExtension p) : ℂ_[p])‖ ≤ 1 := nsub1 (hfl c) (hgl c)

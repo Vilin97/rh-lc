@@ -115,7 +115,7 @@ theorem veryAmpleBy_secMono : ∀ (R : Type) [CommRing R] {X : Scheme.{0}} (f : 
         rw [MvPolynomial.eval₂Hom_C]
         exact (rs_cst f (hN l₀) c).symm ▸ hC c
       | add P Q hP hQ =>
-        rw [map_add, map_add]
+        rw [map_add (f := _), map_add (f := _)]
         exact S.add_mem hP hQ
       | mul_X P t hP =>
         rw [map_mul, map_mul, MvPolynomial.eval₂Hom_X']

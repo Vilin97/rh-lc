@@ -491,7 +491,7 @@ theorem dualSub_toIntSubmodule_fg_of_isLattice (S : HSpace E) (L : Submodule (�
       exact congrFun hy ⟨l, hl⟩
     · simp
     · intro a c _ _ ha hc
-      rw [map_add, LinearMap.add_apply, ha, hc, add_zero]
+      rw [map_add (f := _), LinearMap.add_apply, ha, hc, add_zero]
     · intro e a _ ha
       rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, ha, smul_zero]
   apply Submodule.fg_of_fg_map_injective Θ hΘ
@@ -547,11 +547,11 @@ theorem exists_short_basis_of_dual_lower (hT : PI.TransferenceMinima) (S : HSpac
   have hsm : ∀ (q : ℚ) (v : S.V), q • v = (algebraMap ℚ E q) • v := fun _ _ => rfl
   have : IsScalarTower ℚ E S.V := ⟨fun q e v => by rw [hsm, Algebra.smul_def, mul_smul]⟩
   let B : S.V →ₗ[ℚ] S.V →ₗ[ℚ] ℚ := LinearMap.mk₂ ℚ (fun x y => Algebra.trace ℚ E (S.hT x y))
-    (fun x x' y => by simp only [map_add, LinearMap.add_apply])
+    (fun x x' y => by simp only [map_add (f := _), LinearMap.add_apply])
     (fun q x y => by
       rw [hsm, LinearMap.map_smulₛₗ, LinearMap.smul_apply, eq_ratCast, map_ratCast, smul_eq_mul,
         ← Rat.smul_def, map_smul])
-    (fun x y y' => by simp only [map_add])
+    (fun x y y' => by simp only [map_add (f := _)])
     (fun q x y => by
       rw [hsm, map_smul, eq_ratCast, smul_eq_mul, ← Rat.smul_def, map_smul])
   have hB : ∀ x y, B x y = Algebra.trace ℚ E (S.hT x y) := fun _ _ => rfl
@@ -611,7 +611,7 @@ theorem exists_short_basis_of_dual_lower (hT : PI.TransferenceMinima) (S : HSpac
         exact hz i
       · exact ⟨0, by simp⟩
       · rintro a c _ _ ⟨z1, h1⟩ ⟨z2, h2⟩
-        exact ⟨z1 + z2, by rw [map_add, map_add, h1, h2]; push_cast; rfl⟩
+        exact ⟨z1 + z2, by rw [map_add (f := _), map_add (f := _), h1, h2]; push_cast; rfl⟩
       · rintro k a _ ⟨z, h⟩
         exact ⟨k * z, by rw [map_zsmul, map_zsmul, h]; simp⟩)
   have : Module.Finite ℚ S.V := Module.Finite.of_basis b
@@ -1069,17 +1069,17 @@ theorem ColValG.gram_eq {LL : Type} [Field LL] [NumberField LL] [StarRing LL] {P
     (G := fun y y' => v.embedding (h.rho τ (S.hT y y')))
     (exists_im_ne_zero_totallyComplex hH.tcE _) ⟨?_, ?_, ?_, ?_⟩ ⟨?_, ?_, ?_, ?_⟩ ?_ y y'
   · intro x x' z
-    simp only [map_add, m1]
+    simp only [map_add (f := _), m1]
   · intro x z z'
-    simp only [map_add, m2]
+    simp only [map_add (f := _), m2]
   · intro a x z
     simp only [h.bc_smul, m3, RingHom.comp_apply]
   · intro a x z
     simp only [h.bc_smul, m4, RingHom.comp_apply]
   · intro x x' z
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
   · intro x z z'
-    simp only [map_add]
+    simp only [map_add (f := _)]
   · intro a x z
     have h1 := hH.conj (v.embedding.comp (h.rho τ)) a
     simp only [RingHom.comp_apply] at h1 ⊢

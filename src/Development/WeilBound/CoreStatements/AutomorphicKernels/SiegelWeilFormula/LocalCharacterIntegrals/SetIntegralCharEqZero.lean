@@ -26,7 +26,7 @@ theorem sigR_sigR (hcm : IsCMExt F E σ) (a : Fv F v ⊗[F] E) : sigR (Fv F v) �
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul k e => simp [sigR, sigma_sigma hcm]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def sigE (hcm : IsCMExt F E σ) : (Fv F v ⊗[F] E) ≃ₐ[Fv F v] (Fv F v ⊗[F] E) :=
   AlgEquiv.ofAlgHom (Algebra.TensorProduct.map (AlgHom.id (Fv F v) (Fv F v)) σ)
@@ -37,7 +37,7 @@ theorem sigE_apply (hcm : IsCMExt F E σ) (a : Fv F v ⊗[F] E) : sigE hcm a = s
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul k e => simp [sigE, sigR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem trace_sigR (hcm : IsCMExt F E σ) (a : Fv F v ⊗[F] E) :
     Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (sigR (Fv F v) σ a) = Algebra.trace (Fv F v) (Fv F v ⊗[F] E) a := by
@@ -84,7 +84,7 @@ theorem trPair_lin (hcm : IsCMExt F E σ) {n : ℕ} (T b : HermR (Fv F v) σ n) 
       Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (Matrix.trace (T.1 * b.1 * x)) := by
   have h1 : Matrix.trace (T.1 * (cs σ x * b.1)) = sigR (Fv F v) σ (Matrix.trace (T.1 * b.1 * x)) := by
     rw [← trace_cs, cs_mul, cs_mul, cs_herm, cs_herm, Matrix.trace_mul_comm, Matrix.mul_assoc]
-  rw [trPair_eq, Matrix.mul_add, Matrix.trace_add, map_add, h1, trace_sigR hcm, ← Matrix.mul_assoc, ← two_mul,
+  rw [trPair_eq, Matrix.mul_add, Matrix.trace_add, map_add (f := _), h1, trace_sigR hcm, ← Matrix.mul_assoc, ← two_mul,
     ← mul_assoc]
   have : algebraMap F (Fv F v) (1 / 2) * 2 = 1 := by
     rw [show (2 : Fv F v) = algebraMap F (Fv F v) 2 from (map_ofNat _ 2).symm, ← map_mul]; norm_num
@@ -501,7 +501,7 @@ def chi (ψ : AddChar (AF F) ℂ) {n : ℕ} (T b : HermR (Fv F v) σ n) (x : Mat
 
 theorem chi_add (ψ : AddChar (AF F) ℂ) {n : ℕ} (T b : HermR (Fv F v) σ n) (x y : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E)) :
     chi ψ T b (x + y) = chi ψ T b x * chi ψ T b y := by
-  simp only [chi, Matrix.mul_add, Matrix.trace_add, map_add, neg_add]
+  simp only [chi, Matrix.mul_add, Matrix.trace_add, map_add (f := _), neg_add]
   exact psiV_add ψ _ _
 
 theorem continuous_chi {ψ : AddChar (AF F) ℂ} (hψ : IsCharAF F ψ) {n : ℕ} (T : HermR (Fv F v) σ n) :

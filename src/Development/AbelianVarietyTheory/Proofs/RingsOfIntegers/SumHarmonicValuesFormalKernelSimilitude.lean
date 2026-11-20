@@ -158,7 +158,7 @@ theorem map_pushL {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E
   unfold pushL
   induction P using MvPolynomial.induction_on with
   | C a => simp
-  | add p1 p2 h1 h2 => simp only [_root_.map_add, h1, h2]
+  | add p1 p2 h1 h2 => simp only [_root_.map_add (f := _), h1, h2]
   | mul_X p ℓ h =>
     simp only [Matrix.map_apply] at h
     set_option synthInstance.maxHeartbeats 100000 in
@@ -178,7 +178,7 @@ private theorem isLinearMap_nabValN {R : Type} [CommRing R] {d : ℕ} {O : Type}
       GlobalTheory.PowGerm.NabJet.constantCoeff_DpolyN_eq _ cp u P _ P.support subset_rfl,
       GlobalTheory.PowGerm.NabJet.constantCoeff_DpolyN_eq _ cp u P _ P.support subset_rfl, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl (fun mo _ => ?_)
-    rw [add_mul, (hD mo).map_add, _root_.map_add, mul_add]
+    rw [add_mul, (hD mo).map_add (f := _), _root_.map_add (f := _), mul_add]
   · show nabValN B k h w0 m (a • f) cp u P = a • nabValN B k h w0 m f cp u P
     unfold nabValN
     rw [GlobalTheory.PowGerm.NabJet.constantCoeff_DpolyN_eq _ cp u P _ P.support subset_rfl,

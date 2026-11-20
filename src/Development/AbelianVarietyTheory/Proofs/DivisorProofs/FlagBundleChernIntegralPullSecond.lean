@@ -302,7 +302,7 @@ theorem fibre_integral_vanish : ∀ (k : Type) [CommRing k] (B Y : Scheme.{0}) [
     rw [l, r, hren] at hh
     rw [← hh]
     congr 1
-    simp only [map_add, rename_X]
+    simp only [map_add (f := _), rename_X]
     rfl
   have fε : (hB.atlas σ).IsForm (xi (hB.atlas σ) f4 (X 1 + X 2)) := isForm_xi (hB.atlas σ) f4 ff4 _
   have KY1 : ∀ (n : ℕ) (χ : (hB.atlas σ).Fld), (hB.atlas σ).IsForm χ → (hY.atlas σ).integral (xi (hY.atlas σ) x6 (X 0 ^ (n + 1)) * P χ) =
@@ -315,10 +315,10 @@ theorem fibre_integral_vanish : ∀ (k : Type) [CommRing k] (B Y : Scheme.{0}) [
       rw [← evalF_eq_xi]; exact (glob χ hχ n).2
     have key : xi (hY.atlas σ) x6 (X 0 ^ (n + 1)) * P χ = (fld (hY.atlas σ) (x5 0) + fld (hY.atlas σ) om) ^ (n + 1) * pullF hB hY σ π w χ +
         ((-((n : ℝ) + 1) : ℝ) : ℂ) • (fld (hY.atlas σ) om * (fld (hY.atlas σ) (x5 0) + fld (hY.atlas σ) om) ^ n * pullF hB hY σ π w χ) := by
-      rw [hR, map_add, map_mul (xi (hY.atlas σ) x6) (X 5 * X 5) R, xi6_sq, zero_mul, add_zero]
-      simp only [map_add, map_sub, map_mul, map_pow, map_natCast, map_one, xi6_0, xi6_5]
+      rw [hR, map_add (f := _), map_mul (xi (hY.atlas σ) x6) (X 5 * X 5) R, xi6_sq, zero_mul, add_zero]
+      simp only [map_add (f := _), map_sub, map_mul, map_pow, map_natCast, map_one, xi6_0, xi6_5]
       rw [Algebra.smul_def, hP, pullHom_apply]
-      simp only [Complex.ofReal_neg, Complex.ofReal_add, Complex.ofReal_natCast, Complex.ofReal_one, map_neg, map_add,
+      simp only [Complex.ofReal_neg, Complex.ofReal_add, Complex.ofReal_natCast, Complex.ofReal_one, map_neg, map_add (f := _),
         map_natCast, map_one]
       noncomm_ring
     have f1 : (hY.atlas σ).IsForm ((fld (hY.atlas σ) (x5 0) + fld (hY.atlas σ) om) ^ (n + 1) * pullF hB hY σ π w χ) :=
@@ -381,7 +381,7 @@ theorem fibre_integral_vanish : ∀ (k : Type) [CommRing k] (B Y : Scheme.{0}) [
   refine Finset.sum_eq_zero fun x _ => ?_
   have hA : rename Fin.castSucc ((X 0 * (X 3 + X 4 - X 0) : MvPolynomial (Fin 5) ℝ) ^ m x) =
       (X 0 * (X 3 + X 4 - X 0) : MvPolynomial (Fin 6) ℝ) ^ m x := by
-    simp only [map_pow, map_mul, map_sub, map_add, rename_X]
+    simp only [map_pow, map_mul, map_sub, map_add (f := _), rename_X]
     rfl
   have hx : pullF hB hY σ π w phi * xi (hY.atlas σ) x5 ((X 0 * (X 3 + X 4 - X 0)) ^ m x * aeval ![X 2, X 3, X 4] (W x)) =
       xi (hY.atlas σ) x6 ((X 0 * (X 3 + X 4 - X 0)) ^ m x) * P (phi * xi (hB.atlas σ) f4 (aeval ![X 0, X 1, X 2] (W x))) := by

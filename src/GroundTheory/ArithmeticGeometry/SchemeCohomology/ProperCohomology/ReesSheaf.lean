@@ -108,7 +108,7 @@ def reesSectionsMap (x : Γ(reesSheaf I F, reesPr I X ⁻¹ᵁ V)) : PolynomialM
 
 lemma reesSectionsMap_add (x x' : Γ(reesSheaf I F, reesPr I X ⁻¹ᵁ V)) :
     reesSectionsMap I hF hV (x + x') = reesSectionsMap I hF hV x + reesSectionsMap I hF hV x' := by
-  rw [reesSectionsMap, map_add, targetToPolySec_add, map_add, toPolyA_add]
+  rw [reesSectionsMap, map_add (f := _), targetToPolySec_add, map_add (f := _), toPolyA_add]
   rfl
 
 lemma reesSectionsMap_zero : reesSectionsMap I hF hV 0 = 0 := by
@@ -140,7 +140,7 @@ lemma reesSectionsMap_mem (x : Γ(reesSheaf I F, reesPr I X ⁻¹ᵁ V)) :
     exact single_zero_mem_reesSubmodule I Γ(F, V) m
   | zero => rw [map_zero]; exact zero_mem _
   | add z z' _ _ hz hz' =>
-    rw [map_add, toPolyA_add]
+    rw [map_add (f := _), toPolyA_add]
     exact add_mem hz hz'
   | smul s z _ hz =>
     rw [theta₁_smul]

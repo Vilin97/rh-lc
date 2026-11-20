@@ -45,7 +45,7 @@ theorem atPlace_central (D : D7) (k : Fin 2) (v : D.nd.PlG k)
         simp [hg']
       · simp [Pi.mulSingle_eq_of_ne hj]
     | add x y hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact hx.add_right hy
     | smul r x hx =>
       have e : plHom D k v (r • x) = r • plHom D k v x := by

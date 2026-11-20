@@ -182,7 +182,7 @@ theorem Cov.trans {E : Pts R B} {E' : Pts R C} (φ : B →ₐ[R] C) (ho : GenOpe
 
 def vanish (π : R) (E : Pts R B) : Ideal B where
   carrier := {b | ∀ (R' : Type) [CommRing R'] [Algebra R R'] (a : B →ₐ[R] R'), E R' a → algebraMap R R' π ∣ a b}
-  add_mem' hx hy R' _ _ a ha := by rw [map_add]; exact dvd_add (hx R' a ha) (hy R' a ha)
+  add_mem' hx hy R' _ _ a ha := by rw [map_add (f := _)]; exact dvd_add (hx R' a ha) (hy R' a ha)
   zero_mem' R' _ _ a _ := by rw [map_zero]; exact dvd_zero _
   smul_mem' c x hx R' _ _ a ha := by rw [smul_eq_mul, map_mul]; exact (hx R' a ha).mul_left _
 

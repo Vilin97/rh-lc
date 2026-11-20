@@ -13,7 +13,7 @@ theorem commute_cenMap (ℓ : ℕ) [Fact (Nat.Prime ℓ)] (F B : Type) [Field F]
     Commute (GlobalTheory.LKInvGood.cenMap ℓ F B a) y := by
   induction a using TensorProduct.induction_on with
   | zero => rw [map_zero]; exact Commute.zero_left _
-  | add a₁ a₂ h₁ h₂ => rw [map_add]; exact h₁.add_left h₂
+  | add a₁ a₂ h₁ h₂ => rw [map_add (f := _)]; exact h₁.add_left h₂
   | tmul x f =>
     rw [cenMap_tmul_eq]
     induction y using TensorProduct.induction_on with

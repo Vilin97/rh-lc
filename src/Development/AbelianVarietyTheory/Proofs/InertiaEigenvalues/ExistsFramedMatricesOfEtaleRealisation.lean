@@ -20,9 +20,9 @@ theorem repr_map_baseChange {l : ℕ} [Fact l.Prime] {T : Type} [AddCommGroup T]
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [Module.Basis.baseChange_repr_tmul, map_smul, Algebra.smul_def, Algebra.smul_def, map_mul, mul_assoc]
   | add y z hy hz =>
-    rw [map_add, map_add, Finsupp.add_apply, hy, hz, ← Finset.sum_add_distrib]
+    rw [map_add (f := _), map_add (f := _), Finsupp.add_apply, hy, hz, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun n _ => ?_
-    simp only [map_add, Finsupp.add_apply, mul_add]
+    simp only [map_add (f := _), Finsupp.add_apply, mul_add]
 
 end GlobalTheory.BSP
 

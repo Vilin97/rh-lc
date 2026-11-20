@@ -702,7 +702,7 @@ def sphOff (V : HSp D)
   carrier := {F | ∀ g ∈ X.Ksph V S, X.actF V g F = F}
   add_mem' := by
     intro a b ha hb g hg
-    rw [map_add, ha g hg, hb g hg]
+    rw [map_add (f := _), ha g hg, hb g hg]
   zero_mem' := by intro g _; exact map_zero _
   smul_mem' := by
     intro c a ha g hg

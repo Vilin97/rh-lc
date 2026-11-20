@@ -132,7 +132,7 @@ variable {κ k' K : Type} [CommRing κ] [Field k'] [Field K] {n : ℕ}
 def glmPsi (e : κ ≃+* k') (σ₀ : K →+* ℂ) (ψ : AddChar κ K) : AddChar k' ℂ where
   toFun x := σ₀ (ψ (e.symm x))
   map_zero_eq_one' := by rw [map_zero, AddChar.map_zero_eq_one, map_one]
-  map_add_eq_mul' x y := by rw [map_add, AddChar.map_add_eq_mul, map_mul]
+  map_add_eq_mul' x y := by rw [map_add (f := _), AddChar.map_add_eq_mul, map_mul]
 
 theorem glmPsi_apply (e : κ ≃+* k') (σ₀ : K →+* ℂ) (ψ : AddChar κ K) (x : κ) : glmPsi e σ₀ ψ (e x) = σ₀ (ψ x) := by
   show σ₀ (ψ (e.symm (e x))) = σ₀ (ψ x)

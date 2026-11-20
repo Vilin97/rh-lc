@@ -14,7 +14,7 @@ theorem aeval_baseChange {L K M : Type} [Field L] [Field K] [Algebra L K] [AddCo
     (f : Module.End L M) (p : L[X]) :
     aeval (f.baseChange K) (p.map (algebraMap L K)) = (aeval f p).baseChange K := by
   induction p using Polynomial.induction_on' with
-  | add p r hp hr => rw [Polynomial.map_add, map_add, hp, hr, map_add, LinearMap.baseChange_add]
+  | add p r hp hr => rw [Polynomial.map_add (f := _), map_add (f := _), hp, hr, map_add (f := _), LinearMap.baseChange_add]
   | monomial k c =>
     rw [Polynomial.map_monomial, aeval_monomial, aeval_monomial, ← LinearMap.baseChange_pow]
     apply TensorProduct.AlgebraTensorModule.curry_injective

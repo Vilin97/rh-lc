@@ -143,8 +143,8 @@ lemma proj_comm (T : Submodule ℂ H) [T.HasOrthogonalProjection] (A : H →L[�
     T.starProjection (A x) = A (T.starProjection x) := by
   have hx := Submodule.sub_starProjection_mem_orthogonal (K := T) x
   have e : A x = A (T.starProjection x) + A (x - T.starProjection x) := by
-    rw [← map_add, add_sub_cancel]
-  rw [e, map_add, Submodule.starProjection_eq_self_iff.mpr (h1 _ (T.starProjection_apply_mem x)),
+    rw [← map_add (f := _), add_sub_cancel]
+  rw [e, map_add (f := _), Submodule.starProjection_eq_self_iff.mpr (h1 _ (T.starProjection_apply_mem x)),
     (Submodule.starProjection_apply_eq_zero_iff T).mpr (h2 _ hx), add_zero]
 
 variable {D : Submodule ℂ H} {E : Fin n → Fin n → Module.End ℂ D}

@@ -48,14 +48,14 @@ theorem isAW_add_left {n m k : ℤ} (hk : n + m = k) {a a' : Cochain ((chains R)
   intro N w hw U x
   rw [ev_add, h N w hw U x, h' N w hw U x, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun p _ => ?_
-  rw [ev_add, map_add, LinearMap.add_apply, smul_add]
+  rw [ev_add, map_add (f := _), LinearMap.add_apply, smul_add]
 
 theorem isAW_add_right {n m k : ℤ} (hk : n + m = k) {a : Cochain ((chains R).obj E) I n} {b b' : Cochain ((chains R).obj E) J m}
     {c c' : Cochain ((chains R).obj E) K k} (h : μ.IsAW hk a b c) (h' : μ.IsAW hk a b' c') : μ.IsAW hk a (b + b') (c + c') := by
   intro N w hw U x
   rw [ev_add, h N w hw U x, h' N w hw U x, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun p _ => ?_
-  rw [ev_add, map_add, smul_add]
+  rw [ev_add, map_add (f := _), smul_add]
 
 theorem isAW_zero_left {n m k : ℤ} (hk : n + m = k) (b : Cochain ((chains R).obj E) J m) : μ.IsAW hk 0 b 0 := by
   intro N w hw U x
@@ -140,7 +140,7 @@ theorem image_unique {a : Cochain ((chains S).obj E) I n} {b b' : Cochain ((chai
 
 theorem image_add {a a' : Cochain ((chains S).obj E) I n} {b b' : Cochain ((chains R).obj E) J n}
     (h : ρ.IsImage a b) (h' : ρ.IsImage a' b') : ρ.IsImage (a + a') (b + b') := fun p s hs U x => by
-  rw [ev_add, ev_add, map_add, h p s hs, h' p s hs]
+  rw [ev_add, ev_add, map_add (f := _), h p s hs, h' p s hs]
 
 theorem image_zero : ρ.IsImage (0 : Cochain ((chains S).obj E) I n) 0 := fun p s hs U x => by
   rw [ev_zero, ev_zero, map_zero]
@@ -152,7 +152,7 @@ theorem image_δ {m : ℤ} (hm : n + 1 = m) {a : Cochain ((chains S).obj E) I n}
   | zero => rw [ev_δ_zero hm b U _ t rfl, ev_δ_zero hm a U _ t rfl, h, ρ.comm]
   | succ p =>
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [ev_δ_succ hm b U p _ t rfl, ev_δ_succ hm a U p _ t rfl, h, ρ.comm, map_add, sg_smul, sg_smul, map_zsmul, map_sum]
+      rw [ev_δ_succ hm b U p _ t rfl, ev_δ_succ hm a U p _ t rfl, h, ρ.comm, map_add (f := _), sg_smul, sg_smul, map_zsmul, map_sum]
     refine congrArg₂ (· + ·) rfl (congrArg _ (Finset.sum_congr rfl fun i _ => ?_))
     rw [map_zsmul, h]
 

@@ -39,7 +39,7 @@ theorem piInf_alg {w : InfinitePlace F} (τ : EmbOver E w) (a : AF F) :
 
 theorem piInf_rId (hF : IsTotallyReal F) {w : InfinitePlace F} (τ : EmbOver E w) (t : ℝ) :
     piInf τ (algebraMap (AF F) (AE F E) (rId F t)) = (Real.exp t : ℝ) := by
-  rw [piInf_alg, rId, map_add, map_add, map_one, map_one, emb_realAd hF]
+  rw [piInf_alg, rId, map_add (f := _), map_add (f := _), map_one, map_one, emb_realAd hF]
   push_cast
   ring
 

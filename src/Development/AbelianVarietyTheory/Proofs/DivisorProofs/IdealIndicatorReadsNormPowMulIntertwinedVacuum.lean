@@ -113,7 +113,7 @@ theorem wdPh_eq_one {δ : ℂ} (hc : Crv D ⊤ δ) {𝔪 : Ideal (𝓞 D.host.E)
       Finset.mul_sum (a := (2 : ℂ))]
     congr 1
     refine Finset.sum_congr rfl fun τ _ => ?_
-    simp only [map_mul, map_add, map_one, map_ofNat]
+    simp only [map_mul, map_add (f := _), map_one, map_ofNat]
     ring
   have h2 : qH D (tor0 D ⊤ δ) (pt D (tor0 D ⊤ δ) δ ((m : D.host.E) • z)) / 2 = ((n1 - n2 - n3 : ℤ) : ℝ) := by
     push_cast
@@ -136,7 +136,7 @@ theorem char_sum {M V : Type} [AddCommGroup M] [AddCommGroup V] (p : M →+ V) (
     obtain ⟨y, hy, hye⟩ := hA h2
     have h3 : z (q + q₀) = z q + z₀ + y := by
       apply hp
-      rw [map_add, map_add, hye, hz, hz]
+      rw [map_add (f := _), map_add (f := _), hye, hz, hz]
       simp only [AddSubgroup.coe_add, AddSubgroup.coe_neg]
       abel
     rw [h3, hg, hg, h0 y hy, mul_one]
@@ -242,9 +242,9 @@ theorem term_reads (hc : D.host.ccK = ⊤) (hs : Setup ψ θ S T ⊤ δ 1) {v : 
   have hx := GlobalTheory.LatticeStable.smul_mem_latO D S T _ _ _ _ hce _ (hnu 2)
   have h5 : incA D (m : D.host.E) • u = cA D e • u + 2 • ((2 * n) • (cA D s • ((1 * n) • u))) := by
     refine Matrix.ext fun i j => GlobalTheory.SplitScalar.adele_ext ?_ ?_
-    · simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, nsmul_eq_mul, RingHom.map_add, RingHom.map_mul, hu0,
+    · simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, nsmul_eq_mul, RingHom.map_add (f := _), RingHom.map_mul, hu0,
         mul_zero, add_zero]
-    · simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, nsmul_eq_mul, RingHom.map_add, RingHom.map_mul, h4,
+    · simp only [Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, nsmul_eq_mul, RingHom.map_add (f := _), RingHom.map_mul, h4,
         map_natCast]
       push_cast
       ring
@@ -252,7 +252,7 @@ theorem term_reads (hc : D.host.ccK = ⊤) (hs : Setup ψ θ S T ⊤ δ 1) {v : 
   rw [hv.1 _ (nsmul_mem hl _), ← h5] at h6
   have h7 : ψ (symplOH S T (cA D e • u) (2 • ((2 * n) • (cA D s • ((1 * n) • u))))) = 1 := by
     have h8 : ∀ x w : WO S T, symplOH S T x (2 • w) = symplO S T x w := fun x w => by
-      rw [two_nsmul, symplOH, symplO_add_right, mul_add, ← add_mul, ← RingHom.map_add, add_halves, RingHom.map_one, one_mul]
+      rw [two_nsmul, symplOH, symplO_add_right, mul_add, ← add_mul, ← RingHom.map_add (f := _), add_halves, RingHom.map_one, one_mul]
     rw [h8]
     refine ((GlobalTheory.PlaceModel.isBichar_symplO S T ψ).nsmul (2 * n) _ _).symm.trans ?_
     rw [← smul_comm]

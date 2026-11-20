@@ -56,7 +56,7 @@ theorem tau_box (pD : IsPowDeg D' D j) {y : (TK R).left} {J J'} (hJ : Good D.P.L
   have e : ∀ i, val (D.tau (pD.xe p i) (pD.xe q i)) (𝟙 _) y J =
       val (D.psi (pD.xe (p + q) i)) (𝟙 _) y J * (val (D.psi (pD.xe p i)) (𝟙 _) y J)⁻¹ *
         (val (D.psi (pD.xe q i)) (𝟙 _) y J)⁻¹ * (val D.rigK (𝟙 _) y J)⁻¹ := fun i => by
-    rw [tau_val D hJ, map_add, Pi.add_apply]
+    rw [tau_val D hJ, map_add (f := _), Pi.add_apply]
   rw [Finset.prod_congr rfl (fun i _ => e i), Finset.prod_mul_distrib, Finset.prod_mul_distrib,
     Finset.prod_mul_distrib, Finset.prod_inv_distrib, Finset.prod_inv_distrib, Finset.prod_inv_distrib, ← h1, ← h2,
     ← h3, ← h4, tau_val D' hJ' p q (𝟙 _)]

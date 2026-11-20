@@ -52,7 +52,7 @@ variable (τ : R →+* R) (k : Subring R) (w v : R)
 
 theorem bet_dec (hk : ∀ x ∈ k, τ x = x) (hv : (w - τ w) * v = 1) {a b : R} (ha : a ∈ k)
     (hb : b ∈ k) : bet τ v (a + b * w) = b := by
-  simp only [bet, map_add, map_mul, hk a ha, hk b hb]
+  simp only [bet, map_add (f := _), map_mul, hk a ha, hk b hb]
   linear_combination b * hv
 
 theorem alp_dec (hk : ∀ x ∈ k, τ x = x) (hv : (w - τ w) * v = 1) {a b : R} (ha : a ∈ k)

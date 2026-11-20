@@ -155,7 +155,7 @@ variable {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValuationRing O] {A : T
 def eveM (ρ : A →ₐ[O] Matrix n n O) (e₁ : A) (v₁ : LatM O O n ρ.toRingHom) :
     LeftId O e₁ →ₗ[O] LatM O O n ρ.toRingHom where
   toFun p := incl O e₁ p • v₁
-  map_add' p q := by rw [map_add, add_smul]
+  map_add' p q := by rw [map_add (f := _), add_smul]
   map_smul' c p := by
     rw [RingHom.id_apply, incl_apply, incl_apply, lv_smul]
     funext i
@@ -191,7 +191,7 @@ def evEM (ρ₁ : A →ₐ[O] Matrix m m O) (E : A) (δO : O) (hE : ρ₁ E = δ
   toFun p := ⟨(ρ₁ (incl O E p)).trace, trace_mem ρ₁ E δO hE p⟩
   map_add' p q := Subtype.ext (by
     show (ρ₁ (incl O E (p + q))).trace = (ρ₁ (incl O E p)).trace + (ρ₁ (incl O E q)).trace
-    rw [map_add, map_add, Matrix.trace_add])
+    rw [map_add (f := _), map_add (f := _), Matrix.trace_add])
   map_smul' c p := Subtype.ext (by
     show (ρ₁ (lv O E (c • p))).trace = c * (ρ₁ (lv O E p)).trace
     rw [lv_smul, map_smul, Matrix.trace_smul, smul_eq_mul])
@@ -259,7 +259,7 @@ def lamM (ρ : A →ₐ[O] Matrix n n O) (w : n → O) : LatQ O n ρ.toRingHom �
 
 def piM (ρ : A →ₐ[O] Matrix n n O) (e₁ : A) (w : n → O) : FirstSummandSubmodule O e₁ →ₗ[O] (n → O) where
   toFun b := Matrix.vecMul w (ρ (b : A))
-  map_add' b b' := by rw [Submodule.coe_add, map_add, Matrix.vecMul_add]
+  map_add' b b' := by rw [Submodule.coe_add, map_add (f := _), Matrix.vecMul_add]
   map_smul' c b := by rw [Submodule.coe_smul, map_smul, Matrix.vecMul_smul, RingHom.id_apply]
 
 theorem piM_apply (ρ : A →ₐ[O] Matrix n n O) (e₁ : A) (w : n → O) (b : FirstSummandSubmodule O e₁) :
@@ -461,7 +461,7 @@ variable {n : Type} [Fintype n] [DecidableEq n]
 
 def piA (ρ : A →ₐ[O] Matrix n n O) (w : n → O) : A →ₗ[O] (n → O) where
   toFun b := Matrix.vecMul w (ρ b)
-  map_add' b b' := by rw [map_add, Matrix.vecMul_add]
+  map_add' b b' := by rw [map_add (f := _), Matrix.vecMul_add]
   map_smul' c b := by rw [map_smul, Matrix.vecMul_smul, RingHom.id_apply]
 
 theorem piM_cont (hO : PadicCoeff ℓ O) (hA : IsFGTop O A) (ρ : A →ₐ[O] Matrix n n O) (e₁ : A) (w : n → O) :

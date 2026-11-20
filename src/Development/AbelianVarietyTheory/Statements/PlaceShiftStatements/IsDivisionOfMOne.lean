@@ -69,7 +69,7 @@ def bG : Base gaussOneDatum RG where
         (gaussOneDatum.nm : 𝓞 gaussOneDatum.F) = 0 := by
       rw [← gaussOneDatum.tr_eq, ← gaussOneDatum.nm_eq]; ring
     have h' := congrArg (algebraMap (𝓞 gaussOneDatum.F) RG) h
-    simpa only [map_sub, map_add, map_mul, map_pow, map_intCast, map_zero] using h'
+    simpa only [map_sub, map_add (f := _), map_mul, map_pow, map_intCast, map_zero] using h'
   t _ := algebraMap (𝓞 gaussOneDatum.F) RG
   t_ω _ := rfl
   comax i j h := (h (Fin.ext (by have hi := i.isLt; have hj := j.isLt; change _ < 1 at hi hj; omega))).elim

@@ -82,7 +82,7 @@ theorem hecke_values_map {V W : Type} [AddCommGroup V] [Module O V] [Module A V]
       apply Subtype.ext
       simp only [add_smul]
       rfl
-    rw [e, map_add, ← hp f φ hf hφ g hp', ← hq f φ hf hφ g hq', add_smul]
+    rw [e, map_add (f := _), ← hp f φ hf hφ g hp', ← hq f φ hf hφ g hq', add_smul]
     rfl
   | mul_X p i hp =>
     intro f φ hf hφ g h

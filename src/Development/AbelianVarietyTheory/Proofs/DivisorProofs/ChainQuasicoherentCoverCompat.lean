@@ -32,7 +32,7 @@ theorem span_pullbackSections {X Y : Scheme.{0}} (f : X ⟶ Y) (G : Y.Modules) [
     induction hs using Submodule.span_induction with
     | mem w hw => exact Submodule.subset_span ⟨w, hw, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | smul a b _ hb => rw [pullbackSections_smul]; exact Submodule.smul_mem _ _ hb
   refine eq_top_iff.2 fun y _ => ?_
   refine (isBaseChange_pullbackSections f G hU hV e).inductionOn y (fun y => y ∈ Submodule.span Γ(X, U) ((fun s => pullbackSections f G e s) '' T)) (zero_mem _) key
@@ -56,7 +56,7 @@ theorem sq_of_span {A₁ A₂ B₁ B₂ L₁ L₂ N₁ N₂ : Type} [CommRing A�
   induction hy using Submodule.span_induction with
   | mem w hw => exact k w hw
   | zero => simp only [map_zero]
-  | add a b _ _ ha hb => simp only [map_add, ha, hb]
+  | add a b _ _ ha hb => simp only [map_add (f := _), ha, hb]
   | smul a b _ hb => simp only [map_smulₛₗ, hb, hc]
 
 set_option maxHeartbeats 800000 in

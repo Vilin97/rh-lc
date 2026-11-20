@@ -453,7 +453,7 @@ theorem ipO_add_left (hψ : IsStdChar D ψ (-1)) (hμ : μ.IsAddHaarMeasure) (h�
 theorem ipO_add_right (hψ : IsStdChar D ψ (-1)) (hμ : μ.IsAddHaarMeasure) (h𝓕 : IsAddFundamentalDomain (ratL W V) 𝓕 μ)
     (h : IsThetaFunO ψ V W f) (h' : IsThetaFunO ψ V W f') (h'' : IsThetaFunO ψ V W f'') :
     ipO μ 𝓕 f (f' + f'') = ipO μ 𝓕 f f' + ipO μ 𝓕 f f'' := by
-  rw [← ipO_conj, ipO_add_left hψ hμ h𝓕 h' h'' h, map_add, ipO_conj, ipO_conj]
+  rw [← ipO_conj, ipO_add_left hψ hμ h𝓕 h' h'' h, map_add (f := _), ipO_conj, ipO_conj]
 
 theorem l2O_eq_zero_iff_of_isThetaFunO (hψ : IsStdChar D ψ (-1)) (hμ : μ.IsAddHaarMeasure)
     (h𝓕 : IsAddFundamentalDomain (ratL W V) 𝓕 μ) (h : IsThetaFunO ψ V W f) : l2O μ 𝓕 f = 0 ↔ f = 0 := by
@@ -506,7 +506,7 @@ theorem ipO_om {χS χT : (AE D)ˣ →* Circle} {om : GA D V × GA D W →* Modu
     ⟨h.cont.measurable, theta_bounded hom.std h⟩
   have e : ∀ c : ℂ, ∫ w in 𝓕, ‖(om p f + c • om p f') w‖ ^ 2 ∂μ = ∫ w in 𝓕, ‖(f + c • f') w‖ ^ 2 ∂μ := fun c => by
     have hs := theta_add h (theta_smul c h')
-    rw [← map_smul, ← map_add]
+    rw [← map_smul, ← map_add (f := _)]
     exact (sqNormIntegralFundamentalDomain_eq_l2Norm_sq μ 𝓕 (hom.om_pres p _ hs).cont).trans (by
       rw [l2O_om_apply_eq_of_isThetaFunO hom hμ h𝓕 hs]; exact (sqNormIntegralFundamentalDomain_eq_l2Norm_sq μ 𝓕 hs.cont).symm)
   simp only [ipO]

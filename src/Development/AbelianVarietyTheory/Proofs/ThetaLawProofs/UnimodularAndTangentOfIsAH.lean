@@ -92,7 +92,7 @@ lemma hermForm_eq (hL : L.IsLB) (u u₀ : HolUnif A L g) {Hm H₀ : Matrix (Fin 
       have h4 : χ₀ ⟨F l, hΛ l⟩ ≠ 0 := norm_ne_zero_iff.1 (by rw [hu₀.2.2.1]; exact one_ne_zero)
       have h5 := u.fr_ne _ _ hi'
       rw [hrφ i z hi, hrφ i (z + l) hi']
-      simp only [hsub, map_add]
+      simp only [hsub, map_add (f := _)]
       rw [h1, h2]
       simp only [hermForm]
       generalize (z ⬝ᵥ Hm.mulVec (star (l : Fin g → ℂ))) = a

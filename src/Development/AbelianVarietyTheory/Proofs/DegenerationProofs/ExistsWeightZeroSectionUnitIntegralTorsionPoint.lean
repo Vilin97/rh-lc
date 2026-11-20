@@ -53,7 +53,7 @@ theorem value_nonneg_all : LL → TwistBCSpanStatement → TWM.VRatioGtStatement
   have e₃ := QForm.two_Q_eq hϖ D hQ p.y
   have e₄ : QForm.bHom hϖ D hQ χ p.y = QForm.bHom hϖ D hQ p.y χ := QForm.bOf_comm D χ p.y
   rw [← QForm.bHom_apply hϖ D hQ] at e₁ e₂ e₃ ⊢
-  simp only [map_add, map_nsmul, AddMonoidHom.add_apply, AddMonoidHom.nsmul_apply, nsmul_eq_mul, e₄, ← e₂, ← e₃] at e₁
+  simp only [map_add (f := _), map_nsmul, AddMonoidHom.add_apply, AddMonoidHom.nsmul_apply, nsmul_eq_mul, e₄, ← e₂, ← e₃] at e₁
   have h1 : (0 : ℤ) ≤ n ^ 2 * Q χ + n * QForm.bHom hϖ D hQ p.y χ + Q p.y := by nlinarith
   have h2 : (0 : ℚ) ≤ n ^ 2 * Q χ + n * QForm.bHom hϖ D hQ p.y χ + Q p.y := by exact_mod_cast h1
   have hn0 : (0 : ℚ) < n := by exact_mod_cast hn

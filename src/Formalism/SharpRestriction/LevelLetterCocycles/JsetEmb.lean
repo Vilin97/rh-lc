@@ -145,7 +145,7 @@ theorem finrank_sum_embedding_eigenspaces [FiniteDimensional Qp K] [Algebra.IsSe
       map_add' := fun x y => by
         funext τ; apply Subtype.ext
         show e τ (x + y : M) = e τ x + e τ y
-        rw [map_add]
+        rw [map_add (f := _)]
       map_smul' := fun a x => by
         funext τ; apply Subtype.ext
         show e τ (a • (x : M)) = a • e τ x
@@ -180,7 +180,7 @@ theorem de_rham_mul_one : mulVdR (Qp := Qp) (LL := LL) (V := V) (BdR := BdR) (1 
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [mulVdR]
-  | add x y hx hy => rw [map_add, hx, hy, map_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, map_add (f := _)]
 
 theorem de_rham_mul_mul (c d : K) : mulVdR (Qp := Qp) (LL := LL) (V := V) (BdR := BdR) (c * d) =
     mulVdR (Qp := Qp) (LL := LL) (V := V) (BdR := BdR) c * mulVdR (Qp := Qp) (LL := LL) (V := V) (BdR := BdR) d := by
@@ -189,14 +189,14 @@ theorem de_rham_mul_mul (c d : K) : mulVdR (Qp := Qp) (LL := LL) (V := V) (BdR :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [mulVdR]
-  | add x y hx hy => rw [map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem de_rham_mul_zero : mulVdR (Qp := Qp) (LL := LL) (V := V) (BdR := BdR) (0 : K) = 0 := by
   refine LinearMap.ext fun x => ?_
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [mulVdR]
-  | add x y hx hy => rw [map_add, hx, hy]; simp
+  | add x y hx hy => rw [map_add (f := _), hx, hy]; simp
 
 theorem de_rham_mul_add (c d : K) : mulVdR (Qp := Qp) (LL := LL) (V := V) (BdR := BdR) (c + d) =
     mulVdR (Qp := Qp) (LL := LL) (V := V) (BdR := BdR) c + mulVdR (Qp := Qp) (LL := LL) (V := V) (BdR := BdR) d := by
@@ -205,7 +205,7 @@ theorem de_rham_mul_add (c d : K) : mulVdR (Qp := Qp) (LL := LL) (V := V) (BdR :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [mulVdR, add_mul, TensorProduct.tmul_add]
-  | add x y hx hy => rw [map_add, hx, hy, map_add, map_add]; abel
+  | add x y hx hy => rw [map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]; abel
 
 theorem de_rham_mul_algebraMap (q : Qp) : mulVdR (Qp := Qp) (LL := LL) (V := V) (BdR := BdR) (algebraMap Qp K q) =
     algebraMap LL (Module.End LL (V ⊗[Qp] BdR)) (algebraMap Qp LL q) := by
@@ -217,7 +217,7 @@ theorem de_rham_mul_algebraMap (q : Qp) : mulVdR (Qp := Qp) (LL := LL) (V := V) 
     simp only [mulVdR, AlgebraTensorModule.map_tmul, LinearMap.id_apply, LinearMap.mulLeft_apply]
     rw [← IsScalarTower.algebraMap_apply Qp K BdR, ← Algebra.smul_def, ← TensorProduct.smul_tmul,
       TensorProduct.smul_tmul', algebraMap_smul]
-  | add x y hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
 
 variable (PD : PeriodData G Qp K₀ K B BdR) (ρ : Representation LL G V)
 
@@ -227,7 +227,7 @@ theorem de_rham_action_mul (g : G) (c : K) (x : V ⊗[Qp] BdR) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVdR, mulVdR, map_mul, AlgEquiv.commutes]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem de_rham_mul_stable (c : K) (x : V ⊗[Qp] BdR) (hx : x ∈ DdR PD ρ) :
     mulVdR (Qp := Qp) (LL := LL) (V := V) (BdR := BdR) c x ∈ DdR PD ρ := by
@@ -246,7 +246,7 @@ theorem de_rham_mul_filtration_stable (a : ℤ) (c : K) (x : V ⊗[Qp] BdR)
     refine ⟨v ⊗ₜ ⟨algebraMap K BdR c * b, ?_⟩, ?_⟩
     · rw [← Algebra.smul_def]; exact (PD.Fil a).smul_mem c b.2
     · simp [mulVdR]
-  | add y z hy hz => rw [map_add, map_add]; exact Submodule.add_mem _ hy hz
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ hy hz
 
 end Conc
 

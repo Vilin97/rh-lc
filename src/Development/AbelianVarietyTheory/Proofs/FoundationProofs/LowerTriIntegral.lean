@@ -79,6 +79,6 @@ theorem lowerTriIntegral : Formalism.GradedWeylDivisibility.LowerTriIntegral := 
       rw [hf', hb, coeff_sub, hw, intQ_apply, coeff_map]
       simp only [Int.cast_sub, eq_intCast]
     obtain ⟨Q', hQ'⟩ := hQ
-    exact ⟨Q' + z • bideterminant ℤ sz hsz I, by rw [map_add, ← hQ']; exact hdecomp⟩
+    exact ⟨Q' + z • bideterminant ℤ sz hsz I, by rw [map_add (f := _), ← hQ']; exact hdecomp⟩
 
 end GlobalTheory.WeylInt

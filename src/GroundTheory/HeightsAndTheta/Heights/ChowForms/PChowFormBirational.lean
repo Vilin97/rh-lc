@@ -14,9 +14,9 @@ theorem pderiv_aeval_eq_sum {F K : Type*} [CommRing F] [CommRing K] [Algebra F K
   classical
   induction g using MvPolynomial.induction_on with
   | C a => simp [MvPolynomial.algebraMap_apply]
-  | add p q hp hq => simp only [map_add, hp, hq, add_mul, Finset.sum_add_distrib]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, add_mul, Finset.sum_add_distrib]
   | mul_X p j hp =>
-    simp only [map_mul, aeval_X, Derivation.leibniz, smul_eq_mul, hp, map_add, add_mul,
+    simp only [map_mul, aeval_X, Derivation.leibniz, smul_eq_mul, hp, map_add (f := _), add_mul,
       Finset.sum_add_distrib, pderiv_X, Finset.mul_sum]
     congr 1
     · rw [Finset.sum_eq_single j]

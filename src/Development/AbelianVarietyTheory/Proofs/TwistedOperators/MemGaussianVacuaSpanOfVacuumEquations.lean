@@ -58,7 +58,7 @@ theorem schr_pureA (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (w : (κ → AF F)
       t • ((fun i => evI F (x i)) ⬝ᵥ (fun i => evI F (w.2 i)) + t • evI F (⅟(2 : AF F) * (w.1 ⬝ᵥ w.2))) := by
     rw [evI_realAd_mul]
     congr 1
-    rw [← evIHom_apply, map_add, evIHom_apply, evIHom_apply, evI_realAd_mul, ← evIHom_apply (x ⬝ᵥ w.2),
+    rw [← evIHom_apply, map_add (f := _), evIHom_apply, evIHom_apply, evI_realAd_mul, ← evIHom_apply (x ⬝ᵥ w.2),
       RingHom.map_dotProduct]
     rfl
   unfold schr pureA gam
@@ -67,13 +67,13 @@ theorem schr_pureA (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (w : (κ → AF F)
       (fun i => evI F (x i)) + t • fun i => evI F (w.1 i) := by
     funext i
     show evIHom (x i + realAd F t * w.1 i) = evI F (x i) + t • evI F (w.1 i)
-    rw [map_add, evIHom_apply, evIHom_apply, evI_realAd_mul]
+    rw [map_add (f := _), evIHom_apply, evIHom_apply, evI_realAd_mul]
   have hg : (fun i => ((x + (realAd F t • w).1) i).2) = fun i => (x i).2 := by
     funext i
     show (x i).2 + (realAd F t * w.1 i).2 = (x i).2
     rw [realAd_mul_snd, add_zero]
   rw [hf, hg]
-  simp only [map_smul, map_add, smul_eq_mul]
+  simp only [map_smul, map_add (f := _), smul_eq_mul]
   ring_nf
 
 end GlobalTheory.VacFactor

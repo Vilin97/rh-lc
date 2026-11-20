@@ -118,7 +118,7 @@ theorem arg_eq (a : κ → Fv F v) (w : (κ → AF F) × (κ → AF F)) :
     inA κ v a ⬝ᵥ w.2 + ⅟(2 : AF F) * (w.1 ⬝ᵥ w.2 - putA v w.1 0 ⬝ᵥ putA v w.2 0) =
       atPlace v (a ⬝ᵥ (locW v w).2 + ⅟(2 : Fv F v) * ((locW v w).1 ⬝ᵥ (locW v w).2)) := by
   refine extF v ?_ ?_
-  · rw [evFin_atPlace, map_add, map_mul, map_sub, ev_dot, ev_dot, ev_dot, evA_inA, ev_put (evA_inA v),
+  · rw [evFin_atPlace, map_add (f := _), map_mul, map_sub, ev_dot, ev_dot, ev_dot, evA_inA, ev_put (evA_inA v),
       GlobalTheory.VacAny.evFin_invOf_two, zero_dotProduct, sub_zero]
     rfl
   · have e : ∀ i, awF v (inA κ v a i) = 0 := fun i => awF_at v _

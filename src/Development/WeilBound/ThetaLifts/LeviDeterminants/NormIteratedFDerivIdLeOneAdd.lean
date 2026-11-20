@@ -63,7 +63,7 @@ theorem phase_line (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (a b x : κ → AF
     congr 1
     · exact Finset.sum_congr rfl fun i _ => by ring
     · exact Finset.sum_congr rfl fun i _ => by ring
-  rw [ev, map_add, map_smul, map_smul, linForm_apply]
+  rw [ev, map_add (f := _), map_smul, map_smul, linForm_apply]
   simp [smul_eq_mul]
 
 theorem evI_sub (a b : AF F) : evI F (a - b) = evI F a - evI F b :=
@@ -93,7 +93,7 @@ theorem dop_apply (a : V) (L : V →L[ℝ] ℝ) (f : 𝓢(V, ℂ)) (x : V) :
 theorem dop_add (a b : V) (L M : V →L[ℝ] ℝ) (f : 𝓢(V, ℂ)) :
     dop (a + b) (L + M) f = dop a L f + dop b M f := by
   ext x
-  simp only [SchwartzMap.add_apply, dop_apply, map_add, ContinuousLinearMap.add_apply]
+  simp only [SchwartzMap.add_apply, dop_apply, map_add (f := _), ContinuousLinearMap.add_apply]
   push_cast
   ring
 
@@ -195,15 +195,15 @@ variable {n d : ℕ} {X : Spc F E n} {W : Spc F E d}
 theorem aOf_add (M : Model σ X W) (u v : Matrix (Fin n) (Fin d) (AE F E)) :
     aOf M (u + v) = aOf M u + aOf M v := by
   funext i
-  simp [aOf, map_add, evI_add]
+  simp [aOf, map_add (f := _), evI_add]
 
 theorem lOf_add (M : Model σ X W) (u v : Matrix (Fin n) (Fin d) (AE F E)) :
     lOf M (u + v) = lOf M u + lOf M v := by
   ext y
-  simp only [lOf, ContinuousLinearMap.add_apply, linForm_apply, ← map_add, ← Finset.sum_add_distrib]
+  simp only [lOf, ContinuousLinearMap.add_apply, linForm_apply, ← map_add (f := _), ← Finset.sum_add_distrib]
   congr 1
   refine Finset.sum_congr rfl fun i _ => ?_
-  simp [map_add, evI_add, mul_add]
+  simp [map_add (f := _), evI_add, mul_add]
 
 theorem evI_half_trace (S : mixedEmbedding.mixedSpace F) :
     Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F ⅟(2 : AF F) * S) =
@@ -214,7 +214,7 @@ theorem evI_half_trace (S : mixedEmbedding.mixedSpace F) :
   have h2 : S = evI F ⅟(2 : AF F) * S + evI F ⅟(2 : AF F) * S := by
     rw [← add_mul, h1, one_mul]
   have h3 := congrArg (Algebra.trace ℝ (mixedEmbedding.mixedSpace F)) h2
-  rw [map_add] at h3
+  rw [map_add (f := _)] at h3
   linarith
 
 open scoped Classical in
@@ -363,7 +363,7 @@ theorem l2Inner_op_right (a : V) (L : V →L[ℝ] ℝ) (p q : 𝓢(V, ℂ)) : P 
     rw [op, P_add, P_smul]
   have e2 : P μ (op a L p) q = P μ (∂_{a} p) q + (2 * Real.pi * Complex.I) * P μ (SchwartzMap.smulLeftCLM ℂ (L : V → ℝ) p) q := by
     have : ∀ r s : 𝓢(V, ℂ), P μ (r + s) q = P μ r q + P μ s q := fun r s => by
-      simp only [P, SchwartzMap.add_apply, map_add, add_mul]
+      simp only [P, SchwartzMap.add_apply, map_add (f := _), add_mul]
       exact integral_add (integrable_conj_mul₂ μ r q) (integrable_conj_mul₂ μ s q)
     rw [op, this, l2Inner_smul_left]
     have c2 : conj (-(2 * (Real.pi : ℂ) * Complex.I)) = 2 * Real.pi * Complex.I := by

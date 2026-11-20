@@ -124,7 +124,7 @@ theorem piInf_cA {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {w : InfinitePlace F}
     piInf τ (cA σ z) = star (piInf τ z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb, star_add]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb, star_add]
   | tmul a e =>
     show piInf τ (a ⊗ₜ[F] σ e) = _
     rw [piInf_tmul, piInf_tmul, h.2.2.2, star_mul']
@@ -162,7 +162,7 @@ theorem eq_zero_of_piInf {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (τ : ∀ w :
     exact (one_mul _).symm.trans h3
   have hre : ∀ w i, (C.repr x i).1 w = 0 := fun w => by
     have e := hinf w
-    rw [hdec, map_add, piInf_tmul, piInf_tmul, hB0, hB1, map_one, mul_one] at e
+    rw [hdec, map_add (f := _), piInf_tmul, piInf_tmul, hB0, hB1, map_one, mul_one] at e
     have hi := congrArg Complex.im e
     have him := im_ne_zero h hβ (τ w).1
     set p := InfinitePlace.Completion.extensionEmbedding w ((C.repr x 0).1 w) with hp
@@ -227,7 +227,7 @@ theorem exists_section {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (τ : ∀ w : I
         piInf (τ w) (ofInf c • ((1 : AF F) ⊗ₜ[F] y)) = ((e w (c w) : ℝ) : ℂ) * (τ w).1 y := fun c y => by
       rw [← he, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
       rfl
-    rw [map_add, hc, hc]
+    rw [map_add (f := _), hc, hc]
     simp only [(e w).apply_symm_apply, map_one, mul_one]
     apply Complex.ext
     · simp only [Complex.add_re, Complex.ofReal_re, Complex.re_ofReal_mul, r]; ring

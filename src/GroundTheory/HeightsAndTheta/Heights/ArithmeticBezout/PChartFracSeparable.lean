@@ -116,7 +116,7 @@ theorem ChartFracSeparable.proof (h : ChartPointSeparable.Statement) : ChartFrac
         rw [hC, IsScalarTower.algebraMap_apply F K L]
         exact E.algebraMap_mem _
       | add a b ha hb =>
-        rw [map_add, map_add]
+        rw [map_add (f := _), map_add (f := _)]
         exact add_mem ha hb
       | mul_X a v ha =>
         rw [map_mul, map_mul]

@@ -29,7 +29,7 @@ theorem rTensor_coefRep (W : Representation O G M) (W' : Representation O G M') 
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul m x => rw [coefRep_tmul, LinearMap.rTensor_tmul, LinearMap.rTensor_tmul, coefRep_tmul, he]
-  | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
 
 theorem twist_intertwine (W : Representation O G M) (W' : Representation O G M') (e : M →ₗ[O] M')
     (he : ∀ g x, e (W g x) = W' g (e x)) (χ : G →* Oˣ) (g : G) (x : M) :
@@ -53,7 +53,7 @@ theorem mem_Z1_comp {z : G → P} (hz : z ∈ Z1 π ⊤) : (fun g => F (z g)) �
   funext x
   have := congrFun h2 x
   simp only [d1, LinearMap.coe_mk, AddHom.coe_mk, Pi.zero_apply] at this ⊢
-  rw [← hF, ← map_sub, ← map_add, this, map_zero]
+  rw [← hF, ← map_sub, ← map_add (f := _), this, map_zero]
 
 theorem cob_comp {z : G → P} (S : Set G) (b : P) (hb : ∀ g ∈ S, z g = π g b - b) :
     ∀ g ∈ S, F (z g) = π' g (F b) - F b := by
@@ -122,7 +122,7 @@ theorem transport {O G : Type} [CommRing O] [Group G] [TopologicalSpace G] {M M'
     rw [LinearEquiv.prodCongr_apply, Ea_apply, LinearEquiv.prodCongr_apply, LinearEquiv.refl_apply,
       LinearEquiv.refl_apply, Ea_apply]
     simp only [Prod.mk.injEq, and_true]
-    rw [map_add, map_smul, keyc, hzz]
+    rw [map_add (f := _), map_smul, keyc, hzz]
   · rw [hz'f]; exact mem_B1_comp _ _ _ key hz
   · rw [hzf]; exact mem_B1_comp _ _ _ keys hz'
   · rintro ⟨b, hb⟩

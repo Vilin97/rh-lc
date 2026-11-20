@@ -397,7 +397,7 @@ def fundamentalUnitSqrtTwentyNine : 𝓞 QuadraticFieldTwentyNine := ⟨Quadrati
 
 theorem fundamentalUnit_sq : fundamentalUnitSqrtTwentyNine ^ 2 = 1 + 5 * fundamentalUnitSqrtTwentyNine := by
   refine RingOfIntegers.ext ?_
-  simp only [map_pow, map_add, map_mul, map_one, map_ofNat]
+  simp only [map_pow, map_add (f := _), map_mul, map_one, map_ofNat]
   exact omega_sq_sqrtTwentyNine
 
 def tateCurveSqrtTwentyNine : _root_.WeierstrassCurve (𝓞 QuadraticFieldTwentyNine) := ⟨1, 0, fundamentalUnitSqrtTwentyNine ^ 2, 0, 0⟩

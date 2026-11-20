@@ -88,7 +88,7 @@ theorem mem_span_of_aeval_eq_zero {O O' : Type} [CommRing O] [CommRing O'] [IsDo
     have h0 := hh u (fun q => Units.ext (by simpa [u] using hx1 q))
       (fun a => Units.ext (by simpa [u] using Finset.mem_singleton.1 (hx (.inr a))))
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hu, hf, map_add, Finsupp.linearCombination_apply, Finsupp.sum, map_sum, Finset.sum_eq_zero, zero_add] at h0
+      rw [hu, hf, map_add (f := _), Finsupp.linearCombination_apply, Finsupp.sum, map_sum, Finset.sum_eq_zero, zero_add] at h0
     · rw [eval_map, ← aeval_def, h0]
     · rintro (i | i) _
       · have := hx1 (.inl i)
@@ -414,7 +414,7 @@ theorem isUnit_det_of_eigen {O : Type} [CommRing O] [IsLocalRing O] [IsAlgClosed
       exact this)
   have h2 : Pm.mulVec v = ρ (1 + ∑ k ∈ s, c k * ev k p₀) • v := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Pm, Matrix.add_mulVec, Matrix.one_mulVec, Matrix.sum_mulVec, Matrix.smul_mulVec, map_add, map_one,
+      simp only [Pm, Matrix.add_mulVec, Matrix.one_mulVec, Matrix.sum_mulVec, Matrix.smul_mulVec, map_add (f := _), map_one,
       map_sum, map_mul, add_smul, one_smul, Finset.sum_smul, mul_smul]
     congr 1
     exact Finset.sum_congr rfl fun k hk => by rw [hev k p₀ (hs k hk)]
@@ -483,7 +483,7 @@ theorem exists_coords {O W V ι : Type} [CommRing O] [AddCommGroup W] [Module O 
     obtain ⟨m, hm⟩ := hx
     obtain ⟨m', hm'⟩ := hy
     refine ⟨m + m', fun O' _ _ u χ h => ?_⟩
-    simp only [map_add, hm O' u χ h, hm' O' u χ h, Pi.add_apply, add_smul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), hm O' u χ h, hm' O' u χ h, Pi.add_apply, add_smul, Finset.sum_add_distrib]
   | tmul x g =>
     obtain ⟨v, hv⟩ := (Submodule.mem_span_range_iff_exists_fun O).1 x.2
     have hg : ∃ p : MvPolynomial ι O, ∀ (O' : Type) [CommRing O'] [Algebra O O'] (u : ι → O'ˣ)
@@ -499,7 +499,7 @@ theorem exists_coords {O W V ι : Type} [CommRing O] [AddCommGroup W] [Module O 
       | add f g hf hg =>
         obtain ⟨p, hp⟩ := hf
         obtain ⟨p', hp'⟩ := hg
-        exact ⟨p + p', fun O' _ _ u χ h => by rw [map_add, map_add, hp O' u χ h, hp' O' u χ h]⟩
+        exact ⟨p + p', fun O' _ _ u χ h => by rw [map_add (f := _), map_add (f := _), hp O' u χ h, hp' O' u χ h]⟩
       | smul r f hf =>
         obtain ⟨p, hp⟩ := hf
         exact ⟨r • p, fun O' _ _ u χ h => by rw [map_smul, map_smul, hp O' u χ h]⟩

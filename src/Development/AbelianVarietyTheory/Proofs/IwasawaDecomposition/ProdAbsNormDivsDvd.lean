@@ -117,7 +117,7 @@ theorem modEq_one_of_dvd (s : 𝓞 E →+* 𝓞 E) {a : 𝓞 E} {T c : ℕ} (ha 
     rw [← hy]
     ring
   have h2 : s a = 1 + (c : 𝓞 E) * s y := by
-    rw [h1, map_add, map_one, map_mul, map_natCast]
+    rw [h1, map_add (f := _), map_one, map_mul, map_natCast]
   have h3 : (c : 𝓞 E) ∣ (((T : ℤ) - 1 : ℤ) : 𝓞 E) := by
     refine ⟨y + s y + (c : 𝓞 E) * (y * s y), ?_⟩
     push_cast

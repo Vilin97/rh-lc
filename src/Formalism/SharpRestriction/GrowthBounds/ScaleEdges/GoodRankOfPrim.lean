@@ -44,7 +44,7 @@ theorem goodRank_of_prim {O Kf X : Type*} [CommRing O] [IsDomain O] [IsDiscreteV
     { carrier := {v | ∃ G ∈ A, ∀ i, algebraMap O Kf (v i) = φ i G}
       add_mem' := by
         rintro v v' ⟨G, hG, hv⟩ ⟨G', hG', hv'⟩
-        exact ⟨G + G', A.add_mem hG hG', fun i => by rw [Pi.add_apply, map_add, hv, hv', hadd]⟩
+        exact ⟨G + G', A.add_mem hG hG', fun i => by rw [Pi.add_apply, map_add (f := _), hv, hv', hadd]⟩
       zero_mem' := ⟨0, A.zero_mem, fun i => by rw [Pi.zero_apply, map_zero, h0]⟩
       smul_mem' := by
         rintro c v ⟨G, hG, hv⟩
@@ -160,15 +160,15 @@ theorem s7 : S7 := by
     have hrest : ∃ z : O, (∑ e ∈ Finset.univ.erase e0, ∑ i,
         algebraMap O Kf (c (eqv.symm ⟨e, i⟩)) * be p r lam0 (F e.1 i) G) = algebraMap O Kf ((p : O) ^ (D + 1) * z) := by
       refine Finset.sum_induction _ (fun x => ∃ z : O, x = algebraMap O Kf ((p : O) ^ (D + 1) * z))
-        (fun x y ⟨z₁, h₁⟩ ⟨z₂, h₂⟩ => ⟨z₁ + z₂, by rw [h₁, h₂, mul_add, map_add]⟩) ⟨0, by simp⟩ ?_
+        (fun x y ⟨z₁, h₁⟩ ⟨z₂, h₂⟩ => ⟨z₁ + z₂, by rw [h₁, h₂, mul_add, map_add (f := _)]⟩) ⟨0, by simp⟩ ?_
       intro e he
       refine Finset.sum_induction _ (fun x => ∃ z : O, x = algebraMap O Kf ((p : O) ^ (D + 1) * z))
-        (fun x y ⟨z₁, h₁⟩ ⟨z₂, h₂⟩ => ⟨z₁ + z₂, by rw [h₁, h₂, mul_add, map_add]⟩) ⟨0, by simp⟩ ?_
+        (fun x y ⟨z₁, h₁⟩ ⟨z₂, h₂⟩ => ⟨z₁ + z₂, by rw [h₁, h₂, mul_add, map_add (f := _)]⟩) ⟨0, by simp⟩ ?_
       intro i _
       obtain ⟨z, hz⟩ := hterm e i (Finset.ne_of_mem_erase he)
       exact ⟨c (eqv.symm ⟨e, i⟩) * z, by rw [hz, ← map_mul]; congr 1; ring⟩
     obtain ⟨z, hz⟩ := hrest
     obtain ⟨b', hb'⟩ := dvd_of_add (p : O) (p_nonunit hS) D a z ⟨b, hab.symm⟩
-    exact ⟨a + (p : O) ^ (D + 1) * z, b', by rw [hsplit, hva, hz, map_add], hb'.symm⟩
+    exact ⟨a + (p : O) ^ (D + 1) * z, b', by rw [hsplit, hva, hz, map_add (f := _)], hb'.symm⟩
 
 end Formalism.MainNotions.Pf14

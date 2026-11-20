@@ -165,13 +165,13 @@ theorem cusp_hasCen : ∀ (D : D7) (θ : InfFam D), IsInfFam θ → ∀ (N : Glo
         ring
       | add a b ha hb =>
         intro g
-        simp only [map_add, Pi.add_apply]
+        simp only [map_add (f := _), Pi.add_apply]
         rw [ha g, hb g]
         ring
     | zero => intro x g; simp
     | add T T' _ _ h1 h2 =>
       intro x g
-      simp only [map_add, LinearMap.add_apply, Pi.add_apply]
+      simp only [map_add (f := _), LinearMap.add_apply, Pi.add_apply]
       rw [h1 x g, h2 x g]
       ring
     | smul a T _ h =>

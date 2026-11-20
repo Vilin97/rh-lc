@@ -97,19 +97,19 @@ theorem cc_fockS (Y : Matrix (Fin a) (Fin a) ℂ) :
   classical
   unfold fockS
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.add_apply, map_sum, map_add]
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.add_apply, map_sum, map_add (f := _)]
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [Finset.sum_eq_single j]
   · rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.constantCoeff_C, ← sum_half]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [LinearMap.sum_apply, LinearMap.add_apply, map_sum, map_add, cc_rai_low, if_true]
+      simp only [LinearMap.sum_apply, LinearMap.add_apply, map_sum, map_add (f := _), cc_rai_low, if_true]
     congr 1
     refine Finset.sum_congr rfl fun i _ => ?_
     simp [MvPolynomial.smul_eq_C_mul]
   · intro k _ hk
     rw [MvPolynomial.smul_eq_C_mul, map_mul]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [LinearMap.sum_apply, LinearMap.add_apply, map_sum, map_add, cc_rai_low]
+      simp only [LinearMap.sum_apply, LinearMap.add_apply, map_sum, map_add (f := _), cc_rai_low]
     simp [Ne.symm hk]
   · simp
 
@@ -118,19 +118,19 @@ theorem cc_fockT (Y : Matrix (Fin b) (Fin b) ℂ) :
   classical
   unfold fockT
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.add_apply, map_sum, map_add]
+    simp only [LinearMap.sum_apply, LinearMap.smul_apply, LinearMap.add_apply, map_sum, map_add (f := _)]
   refine Finset.sum_congr rfl fun i _ => ?_
   rw [Finset.sum_eq_single i]
   · rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.constantCoeff_C, ← sum_half]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [LinearMap.sum_apply, LinearMap.add_apply, map_sum, map_add, cc_rai_low, if_true]
+      simp only [LinearMap.sum_apply, LinearMap.add_apply, map_sum, map_add (f := _), cc_rai_low, if_true]
     congr 1
     refine Finset.sum_congr rfl fun j _ => ?_
     simp [MvPolynomial.smul_eq_C_mul, ne_comm, eq_comm]
   · intro k _ hk
     rw [MvPolynomial.smul_eq_C_mul, map_mul]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [LinearMap.sum_apply, LinearMap.add_apply, map_sum, map_add, cc_rai_low]
+      simp only [LinearMap.sum_apply, LinearMap.add_apply, map_sum, map_add (f := _), cc_rai_low]
     simp [Ne.symm hk]
   · simp
 
@@ -139,7 +139,7 @@ theorem cc_subst (g : Matrix (Fin a) (Fin a) ℂ) (k : Matrix (Fin b) (Fin b) �
   classical
   induction R using MvPolynomial.induction_on with
   | C r => rw [← MvPolynomial.algebraMap_eq, AlgHom.commutes]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     rw [map_mul, map_mul, map_mul, hp, MvPolynomial.constantCoeff_X]
     have : cc (subst τ ε ε' g k (MvPolynomial.X v)) = 0 := by
@@ -474,10 +474,10 @@ theorem kappa_core {U : HSp D} {ι' : Type} (hθ : IsInfFam θ) (hω : IsWeilDat
       funext z
       exact der_add hθ 𝒮 hc hd (φ := fun g => ω (ι g) (E 1) z) ⟨_, z, hE 1, rfl⟩ hX hY hXY
         (hD X hX 1 z) (hD Y hY 1 z) (hD _ hXY 1 z)
-    rw [← map_add] at key
+    rw [← map_add (f := _)] at key
     have k2 := congrArg cc (hinj key)
     rw [hQ] at k2
-    simp only [LinearMap.add_apply, map_add, cc_smul_one] at k2
+    simp only [LinearMap.add_apply, map_add (f := _), cc_smul_one] at k2
     linear_combination k2
   have h0 : κ 0 = 0 := by
     have h1 : (0 : Matrix (Fin U.rank) (Fin U.rank) ℂ) ∈ lieAt U τ := by
@@ -516,7 +516,7 @@ theorem kappa_core {U : HSp D} {ι' : Type} (hθ : IsInfFam θ) (hω : IsWeilDat
       refine h2.unique (h1.congr_of_eventuallyEq (Filter.Eventually.of_forall fun t => ?_))
       simp only [e1, Pi.smul_apply, smul_eq_mul]
     have k2 := congrArg cc (hinj e2)
-    simp only [map_add, cc_smul_one, partK_diag hF] at k2
+    simp only [map_add (f := _), cc_smul_one, partK_diag hF] at k2
     linear_combination k2
   have hPc : κ (partP (C.fr τ) (C.ε τ) X) = -cc (Q (partP (C.fr τ) (C.ε τ) X) 1) := by
     have hZl := partP_lie hF hG hXl
@@ -565,7 +565,7 @@ theorem kappa_core {U : HSp D} {ι' : Type} (hθ : IsInfFam θ) (hω : IsWeilDat
       exact mul_left_cancel₀ hd0 h3
     have k2 := congrArg cc (hinj key)
     rw [hsub, hQn] at k2
-    simp only [LinearMap.neg_apply, map_add, map_neg, cc_smul_one] at k2
+    simp only [LinearMap.neg_apply, map_add (f := _), map_neg, cc_smul_one] at k2
     have k3 := hadd Z hZ (-Z) hnZ
     rw [add_neg_cancel, h0] at k3
     linear_combination (1 / 2 : ℂ) * k2 - (1 / 2 : ℂ) * k3
@@ -573,7 +573,7 @@ theorem kappa_core {U : HSp D} {ι' : Type} (hθ : IsInfFam θ) (hω : IsWeilDat
   have h1 := hadd _ (hlie (partK_lie hF hG hXl)) _ (hlie (partP_lie hF hG hXl))
   have h2 := hQ (partK (C.fr τ) (C.ε τ) X) (partP (C.fr τ) (C.ε τ) X)
   rw [hs] at h1 h2
-  rw [h1, h2, hKc, hPc, LinearMap.add_apply, map_add]
+  rw [h1, h2, hKc, hPc, LinearMap.add_apply, map_add (f := _)]
   ring
 
 end Core
@@ -716,7 +716,7 @@ theorem lieFockAll : ∀ D : D7, GlobalTheory.ChainFr.LieFockAll D := by
             (A.fr τ * Y * (A.fr τ)⁻¹).map (starRingEnd ℂ) := by
           rw [Matrix.mul_add, Matrix.add_mul]
           ext i j
-          simp only [Matrix.map_apply, Matrix.add_apply, map_add]
+          simp only [Matrix.map_apply, Matrix.add_apply, map_add (f := _)]
         rw [e, fockS_add]) κS h1 x (fun h => subst τ (A.ε τ) (B.ε τ) (h.map (starRingEnd ℂ)) 1) (fun h R => cc_subst τ _ _ _ _ R)
       (fun h hh P => by
         have := hc h hh 1 (one_mem_K _) P

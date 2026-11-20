@@ -22,7 +22,7 @@ private theorem pi_wcomp_mul {O σ X : Type} [CommRing O] [AddCommGroup X] (wt :
     intro p hp
     by_cases h2 : Finsupp.weight wt p.2 = c
     · have hn : Finsupp.weight wt n = Finsupp.weight wt p.1 + c := by
-        rw [← Finset.HasAntidiagonal.mem_antidiagonal.1 hp, map_add, h2]
+        rw [← Finset.HasAntidiagonal.mem_antidiagonal.1 hp, map_add (f := _), h2]
       rw [coeff_wcomp, hn]
       by_cases h1 : Finsupp.weight wt p.1 = j - c
       · rw [if_pos h1, if_pos (by rw [h1]; abel)]
@@ -97,7 +97,7 @@ private theorem pi_homog (hz : ∀ s, W.z s ∈ maximalIdeal R) (N : ℕ) (f : M
       obtain ⟨g, rfl, hg⟩ := hy
       obtain ⟨g', rfl, hg'⟩ := hz
       refine ⟨g + g', map_add _ _ _, fun a j => ?_⟩
-      rw [mul_add, map_add, map_add]
+      rw [mul_add, map_add (f := _), map_add (f := _)]
       exact add_mem (hg a j) (hg' a j)
     | smul r y _ hy =>
       obtain ⟨g, rfl, hg⟩ := hy
@@ -151,8 +151,8 @@ theorem UpperTheory.V.Alg.pres_indep :
         exact zero_mem _
     · exact ⟨0, map_zero _, by simp⟩
     · rintro a b ⟨f, hf, hf'⟩ ⟨g, hg, hg'⟩
-      refine ⟨f + g, by rw [map_add, hf, hg], ?_⟩
-      rw [map_add, map_add]
+      refine ⟨f + g, by rw [map_add (f := _), hf, hg], ?_⟩
+      rw [map_add (f := _), map_add (f := _)]
       exact add_mem hf' hg'
   obtain ⟨f, hf, hf'⟩ := key
   obtain ⟨g, hg, hgx⟩ := hx

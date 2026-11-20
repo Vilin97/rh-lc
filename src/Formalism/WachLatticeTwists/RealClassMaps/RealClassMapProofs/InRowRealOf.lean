@@ -40,7 +40,7 @@ theorem psiCont : StatPsiCont := by
       obtain ⟨c, hc⟩ := Finset.dvd_prod_of_mem f hx
       rw [hc, mul_comm, mul_smul, hf, smul_zero]
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add, smul_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), smul_add, hx, hy, add_zero]
     | smul c x _ hx => rw [map_smul, smul_comm, hx, smul_zero]
   have hopen := hfg.isOpen_mulSub hO ha
   refine continuous_of_continuousAt_zero ψ.toAddMonoidHom ?_

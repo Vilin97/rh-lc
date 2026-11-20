@@ -185,7 +185,7 @@ theorem hodgeInner_add_left (z : (Σ k, ι k) → ℂ) (v v' w : Fin D.N → Em)
   have h : ∀ τ, (fun b => D.herm.emb τ (v b) + D.herm.emb τ (v' b)) =
       (fun b => D.herm.emb τ (v b)) + fun b => D.herm.emb τ (v' b) := by
     intro τ; rfl
-  simp only [hodgeInner, Pi.add_apply, map_add, h, Matrix.mulVec_add, Pi.add_apply, map_add, add_mul,
+  simp only [hodgeInner, Pi.add_apply, map_add (f := _), h, Matrix.mulVec_add, Pi.add_apply, map_add (f := _), add_mul,
     Finset.sum_add_distrib, Complex.add_re, mul_add]
 
 theorem hodgeInner_add_right (z : (Σ k, ι k) → ℂ) (v w w' : Fin D.N → Em) :
@@ -193,7 +193,7 @@ theorem hodgeInner_add_right (z : (Σ k, ι k) → ℂ) (v w w' : Fin D.N → Em
   have h : ∀ τ, (fun b => D.herm.emb τ (w b) + D.herm.emb τ (w' b)) =
       (fun b => D.herm.emb τ (w b)) + fun b => D.herm.emb τ (w' b) := by
     intro τ; rfl
-  simp only [hodgeInner, Pi.add_apply, map_add, h, Matrix.mulVec_add, Pi.add_apply, mul_add,
+  simp only [hodgeInner, Pi.add_apply, map_add (f := _), h, Matrix.mulVec_add, Pi.add_apply, mul_add,
     Finset.sum_add_distrib, Complex.add_re]
 
 def hodgeAdd (z : (Σ k, ι k) → ℂ) : (Fin D.N → Em) →+ (Fin D.N → Em) →+ ℝ :=

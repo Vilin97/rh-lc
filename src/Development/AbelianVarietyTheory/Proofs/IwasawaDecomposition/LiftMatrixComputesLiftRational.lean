@@ -47,7 +47,7 @@ theorem exists_form {d : ℕ} (e : N →ₗ[ℂ] H) (he : Function.Injective e) 
   choose g hg using hex
   let j : (Fin d → K) →ₛₗ[σ] N :=
     { toFun := g
-      map_add' := fun x y => he (by simp only [map_add, hg])
+      map_add' := fun x y => he (by simp only [map_add (f := _), hg])
       map_smul' := fun a x => he (by simp only [map_smulₛₗ, hg, RingHom.id_apply]) }
   have hj : ∀ y, e (j y) = w y := hg
   refine ⟨j, hj, LinearIndependent.of_comp e ?_, ?_⟩
@@ -107,7 +107,7 @@ theorem oLatTie_of_closure {O : Type} [CommRing O] {φ : O →+* ℂ} (hφ : ∀
         obtain ⟨c, rfl⟩ := h1
         obtain ⟨c', rfl⟩ := h2
         refine ⟨c + c', ?_⟩
-        rw [← map_add, ← Finset.sum_add_distrib]
+        rw [← map_add (f := _), ← Finset.sum_add_distrib]
         simp [add_smul]
       | neg _ _ h1 =>
         obtain ⟨c, rfl⟩ := h1
@@ -231,7 +231,7 @@ variable (R : RealDat D A Ks) (F : Face D A)
 def goodForm (b : Bool) (i : Fin D.R.m) :
     (Fin (Module.finrank D.what₂.LL (R.WL F b i)) → D.what₂.LL) →ₛₗ[D.what₂.embLL] (R.HW i (sg0 D A)).H where
   toFun y := (R.FW i).j (sg0 D A) (∑ k, y k • R.bL F b i k)
-  map_add' x y := by simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib, map_add]
+  map_add' x y := by simp only [Pi.add_apply, add_smul, Finset.sum_add_distrib, map_add (f := _)]
   map_smul' a y := by
     have h : sg0 D A a = D.what₂.embLL a := by rw [sg0, sgAt_mk _ R.hv0]
     simp only [Pi.smul_apply, smul_eq_mul, mul_smul, ← Finset.smul_sum, map_smulₛₗ, h]

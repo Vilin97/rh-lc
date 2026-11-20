@@ -129,7 +129,7 @@ theorem exists_int_charInner_of_mem_spanZ {f : G → ℂ} (hf : f ∈ spanZ E) {
   | add x y _ _ hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
-    exact ⟨a + b, by rw [map_add, LinearMap.add_apply, ha, hb]; push_cast; ring⟩
+    exact ⟨a + b, by rw [map_add (f := _), LinearMap.add_apply, ha, hb]; push_cast; ring⟩
   | smul n x _ hx =>
     obtain ⟨a, ha⟩ := hx
     refine ⟨n * a, ?_⟩

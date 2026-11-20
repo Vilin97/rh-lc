@@ -98,7 +98,7 @@ def val1 (c : ZMod n) (x : ↥(W.N T)) : T.V ⊗[Qp] BdR :=
 
 theorem level_value_add (c : ZMod n) (x y : ↥(W.N T)) : val1 Ct T c (x + y) = val1 Ct T c x + val1 Ct T c y := by
   first
-  | (simp only [val1, map_add, Pi.add_apply]; done)
+  | (simp only [val1, map_add (f := _), Pi.add_apply]; done)
   | (simp [val1]; done)
   | (simp [val1, CmpTie.levB]; done)
 
@@ -187,7 +187,7 @@ def muL (c : ZMod n) (ζ : LL) : LetA O n ⊗[O] XO BdR T →ₗ[O] (ℤ → XO 
   TensorProduct.lift (LinearMap.mk₂ O (fun a d => serC (W.lev c ζ a) d)
     (fun a a' d => by
       funext i
-      simp only [serC, map_add, Pi.add_apply]
+      simp only [serC, map_add (f := _), Pi.add_apply]
       split_ifs <;> simp [add_smul])
     (fun o a d => by
       funext i

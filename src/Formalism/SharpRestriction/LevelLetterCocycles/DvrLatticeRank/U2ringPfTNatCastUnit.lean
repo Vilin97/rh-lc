@@ -68,7 +68,7 @@ theorem u2ringPfT_deriv [IsDomain O] [IsDiscreteValuationRing O] [CharZero O]
     have e1 : (mkI x) (PowerSeries.X * W.q₀) = (mkI x) (PowerSeries.C (x * qv)) := by
       rw [map_mul, DualFramesAlt.eigenRingInvariants.mk_X, hqv, ← map_mul, ← map_mul]
     have e2 : (mkI x) ((1 + PowerSeries.X) ^ p - 1) = (mkI x) (PowerSeries.C ((1 + x) ^ p - 1)) := by
-      simp only [map_sub, map_pow, map_add, map_one, DualFramesAlt.eigenRingInvariants.mk_X]
+      simp only [map_sub, map_pow, map_add (f := _), map_one, DualFramesAlt.eigenRingInvariants.mk_X]
     rw [e1, e2, hx1, sub_self] at h1
     exact (mul_eq_zero.1 (DualFramesAlt.eigenRingInvariants.ev_inj hxm h1)).resolve_left hx0
 
@@ -87,10 +87,10 @@ theorem u2ringPfT_deriv [IsDomain O] [IsDiscreteValuationRing O] [CharZero O]
 
   have hdX : D PowerSeries.X = 1 := PowerSeries.derivative_X
   have hd1 := congrArg D W.q₀_def
-  rw [Derivation.leibniz, map_sub, Derivation.leibniz_pow, Derivation.map_one_eq_zero, sub_zero, map_add,
+  rw [Derivation.leibniz, map_sub, Derivation.leibniz_pow, Derivation.map_one_eq_zero, sub_zero, map_add (f := _),
     Derivation.map_one_eq_zero, zero_add, hdX] at hd1
   have hd2 := congrArg (Ideal.Quotient.mk (DualFramesAlt.eigenRingInvariants.Ia x)) hd1
-  simp only [smul_eq_mul, mul_one, nsmul_eq_mul, map_add, map_mul, map_pow, map_natCast,
+  simp only [smul_eq_mul, mul_one, nsmul_eq_mul, map_add (f := _), map_mul, map_pow, map_natCast,
     DualFramesAlt.eigenRingInvariants.mk_X, hqv, hdqv, hqv0, map_one] at hd2
   have hDπ : D π = u * ((s' : PowerSeries O) * PowerSeries.X ^ (s' - 1)) + PowerSeries.X ^ s' * D u := by
     rw [hπu, Derivation.leibniz, Derivation.leibniz_pow, hdX]
@@ -99,17 +99,17 @@ theorem u2ringPfT_deriv [IsDomain O] [IsDiscreteValuationRing O] [CharZero O]
   have hdq := congrArg D hQ
   rw [Derivation.leibniz, Derivation.map_aeval, hDπ] at hdq
   have hdq2 := congrArg (Ideal.Quotient.mk (DualFramesAlt.eigenRingInvariants.Ia x)) hdq
-  simp only [smul_eq_mul, map_add, map_mul, map_pow, map_natCast, DualFramesAlt.eigenRingInvariants.mk_X, hdqv, hwv, hduv, huv,
+  simp only [smul_eq_mul, map_add (f := _), map_mul, map_pow, map_natCast, DualFramesAlt.eigenRingInvariants.mk_X, hdqv, hwv, hduv, huv,
     u2ringPfE_mk_aeval hy, hEy] at hdq2
 
   have e1 : x * dqv = (p : O) * (1 + x) ^ (p - 1) := by
     apply DualFramesAlt.eigenRingInvariants.ev_inj hxm
-    simp only [map_mul, map_pow, map_add, map_one, map_natCast]
+    simp only [map_mul, map_pow, map_add (f := _), map_one, map_natCast]
     simp only [map_zero, add_zero] at hd2
     linear_combination hd2
   have e2 : dqv = wv * ((Ec.derivative.eval y) * (uv * ((s' : O) * x ^ (s' - 1)) + x ^ s' * duv)) := by
     apply DualFramesAlt.eigenRingInvariants.ev_inj hxm
-    simp only [map_mul, map_pow, map_add, map_natCast]
+    simp only [map_mul, map_pow, map_add (f := _), map_natCast]
     simp only [map_zero, zero_mul, add_zero] at hdq2
     linear_combination hdq2
   have hs'u : IsUnit (s' : O) := u2ringPfT_natCast_unit p hpm hs (by

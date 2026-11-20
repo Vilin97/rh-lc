@@ -212,7 +212,7 @@ theorem gaussAt_comp_alg {T E F F' FE : Type} [CommRing T] [IsDomain T] [IsPrinc
       obtain ⟨u, hu, rfl⟩ := hx
       exact Submodule.subset_span ⟨u, hu, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul a x _ hx =>
       rw [Algebra.smul_def, map_mul, hcT, ← Algebra.smul_def]
       exact Submodule.smul_mem _ _ hx

@@ -96,9 +96,9 @@ theorem add_eq_subst (hOk : g.Ok) {σ : Type} {a b : MvPowerSeries σ ℂ_[p]}
     MvPowerSeries.hasSubst_of_constantCoeff_zero (fun i => by fin_cases i <;> simpa)
   have hX : ∀ i : Fin 2, MvPowerSeries.constantCoeff (Xv i : MvPowerSeries (Fin 2) ℂ_[p]) = 0 := fun i => by simp
   have h0 : MvPowerSeries.constantCoeff (g.lg (Xv 0) + g.lg (Xv 1) : MvPowerSeries (Fin 2) ℂ_[p]) = 0 := by
-    rw [map_add, cc_lg g (hX 0), cc_lg g (hX 1), add_zero]
+    rw [map_add (f := _), cc_lg g (hX 0), cc_lg g (hX 1), add_zero]
   unfold G1.add G1.pt
-  rw [msubst_psubst h0 hs, ← MvPowerSeries.coe_substAlgHom hs, map_add, MvPowerSeries.coe_substAlgHom hs,
+  rw [msubst_psubst h0 hs, ← MvPowerSeries.coe_substAlgHom hs, map_add (f := _), MvPowerSeries.coe_substAlgHom hs,
     subst_lg g (hX 0) hs, subst_lg g (hX 1) hs, MvPowerSeries.subst_X hs, MvPowerSeries.subst_X hs]
   rfl
 
@@ -148,7 +148,7 @@ theorem lin_partial (hOk : g.Ok) {r : ℕ} (c : Fin r → ℂ_[p])
       unfold G1.mulBy
       rw [lg_pt g hOk (by rw [map_mul, cc_lg g (hX j), mul_zero])]
     rw [e]
-    refine ⟨cc_pt g hOk (by rw [map_add, cc_lg g hm0, cc_lg g ih.1, add_zero]), ?_⟩
+    refine ⟨cc_pt g hOk (by rw [map_add (f := _), cc_lg g hm0, cc_lg g ih.1, add_zero]), ?_⟩
     change IntegralMv (g.add _ _)
     rw [add_eq_subst g hOk hm0 ih.1]
     exact IntegralOrthonormalChange.integral_subst _ (fun i => by fin_cases i <;> simp [hm0, ih.1])

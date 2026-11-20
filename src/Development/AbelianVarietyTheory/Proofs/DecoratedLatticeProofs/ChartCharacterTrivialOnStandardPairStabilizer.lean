@@ -25,7 +25,7 @@ theorem prV_toEAf_idem_mul {v v' : HeightOneSpectrum (𝓞 D.host.F)} {ε : AF D
     rw [Algebra.TensorProduct.algebraMap_apply, Algebra.TensorProduct.tmul_mul_tmul]
     simp [Formalism.IndefR.Datum.toEAf, finPart, Formalism.UG.prV]
     rw [h0', zero_mul, TensorProduct.tmul_zero]
-  | add x y hx hy => rw [mul_add, RingHom.map_add, RingHom.map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [mul_add, RingHom.map_add (f := _), RingHom.map_add (f := _), hx, hy, add_zero]
 
 end GlobalTheory.AdForm.ChiStd
 
@@ -47,7 +47,7 @@ theorem finM_gl_map_prV {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace 
     rw [Matrix.sub_apply, sub_add_cancel]
   simp only [finM, Matrix.map_apply, Matrix.reindex_apply, Matrix.submatrix_apply, finCongr_refl, Equiv.refl_symm,
     Equiv.refl_apply]
-  rw [e1, RingHom.map_add, RingHom.map_add, key, zero_add, Matrix.one_apply, Matrix.one_apply]
+  rw [e1, RingHom.map_add (f := _), RingHom.map_add (f := _), key, zero_add, Matrix.one_apply, Matrix.one_apply]
   split_ifs <;> simp
 end GlobalTheory.AdForm.ChiStd
 

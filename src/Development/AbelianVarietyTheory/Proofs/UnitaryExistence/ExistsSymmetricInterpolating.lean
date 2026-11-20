@@ -102,7 +102,7 @@ theorem exists_separating (f : X ⟶ Spec (CommRingCat.of k)) {H : LB X} (hH : H
     obtain ⟨F, rfl⟩ := hsurj x
     induction F using MvPolynomial.induction_on with
     | C c => rw [MvPolynomial.eval₂Hom_C, valueAt_cst f p hp, valueAt_cst f q hq]
-    | add F G hF hG => rw [map_add, map_add, map_add, hF, hG]
+    | add F G hF hG => rw [map_add (f := _), map_add (f := _), map_add (f := _), hF, hG]
     | mul_X F j hF => rw [map_mul, MvPolynomial.eval₂Hom_X', map_mul, map_mul, hF, hc]
   have key : ∀ (x : Spec (CommRingCat.of k) ⟶ X) (hx : x ≫ f = 𝟙 _) (hxa : ⊤ ≤ x ⁻¹ᵁ nonzeroLocus (s a)) (c : k),
       ⊤ ≤ x ⁻¹ᵁ nonzeroLocus (subMulSec f (s b) (s a) c) ↔ valueAt x _ hxa (r b) ≠ c := by

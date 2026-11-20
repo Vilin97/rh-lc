@@ -27,7 +27,7 @@ def twistLeft (Fl : (Fin g → ℂ) →ₗ[ℂ] (Fin g → ℂ)) : (Fin (g + g) 
   map_add' v w := by
     funext q
     refine Fin.addCases (fun k => ?_) (fun k => ?_) q <;>
-      simp only [Fin.append_left, Fin.append_right, map_add, Pi.add_apply]
+      simp only [Fin.append_left, Fin.append_right, map_add (f := _), Pi.add_apply]
   map_smul' c v := by
     funext q
     refine Fin.addCases (fun k => ?_) (fun k => ?_) q <;>
@@ -136,8 +136,8 @@ theorem GlobalTheory.AdjPullFrame.lbIso_cubeLB_of_adjoint : ∀ (A : Over (Sp �
     rw [halfR_twist, ← u.ker, hF'e, (u.ker _).2 hr, MonObj.one_comp]
   have fac1 := lam_factor hM u u rfl hF j1 (twistLeft F z) (twistLeft F w) hwt1 hc1
   have fac2 := lam_factor hM u u rfl hF j2 (twistMap F' z) (twistMap F' w) hwt2 hc2
-  rw [halfL_twistLeft, halfL_twistLeft, halfR_twistLeft, halfR_twistLeft, ← map_add] at fac1
-  rw [halfL_twist, halfL_twist, halfR_twist, halfR_twist, ← map_add] at fac2
+  rw [halfL_twistLeft, halfL_twistLeft, halfR_twistLeft, halfR_twistLeft, ← map_add (f := _)] at fac1
+  rw [halfL_twist, halfL_twist, halfR_twist, halfR_twist, ← map_add (f := _)] at fac2
   have sw := GlobalTheory.AnyAppellHumbert.hermForm_swap hF.1
   have hE : hf Hm (F (halfL g z)) (halfR g w) + hf Hm (halfR g z) (F (halfL g w)) + hf Hm (F (halfL g w)) (halfR g w) =
       hf Hm (halfL g z) (F' (halfR g w)) + hf Hm (F' (halfR g z)) (halfL g w) + hf Hm (halfL g w) (F' (halfR g w)) := by
@@ -150,11 +150,11 @@ theorem GlobalTheory.AdjPullFrame.lbIso_cubeLB_of_adjoint : ∀ (A : Over (Sp �
   rw [hE] at fac1
   have n1 : (lamUnif u u rfl).fr j1 (twistLeft F (z + w)) ≠ 0 := by
     refine (lamUnif u u rfl).fr_ne _ _ ?_
-    rw [lamUnif_ex, map_add, ex_add_mem (sqUnif A u) _ hwt1]
+    rw [lamUnif_ex, map_add (f := _), ex_add_mem (sqUnif A u) _ hwt1]
     exact hc1
   have n2 : (lamUnif u u rfl).fr j2 (twistMap F' (z + w)) ≠ 0 := by
     refine (lamUnif u u rfl).fr_ne _ _ ?_
-    rw [lamUnif_ex, map_add, ex_add_mem (sqUnif A u) _ hwt2]
+    rw [lamUnif_ex, map_add (f := _), ex_add_mem (sqUnif A u) _ hwt2]
     exact hc2
   have hP1 : ∀ v, U1.fr p.2 v = (lamUnif u u rfl).fr j1 (twistLeft F v) := fun v => by
     refine (h1fr p.2 v).trans (Eq.trans ?_ (lamUnif_fr u u rfl j1 (twistLeft F v)).symm)

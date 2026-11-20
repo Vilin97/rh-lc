@@ -92,7 +92,7 @@ theorem tri_bij {σ : Type*} (w : σ → ℕ) (ψ : MvPolynomial σ ℤ →+* Mv
       rw [vars_neg] at ht
       exact (mem_supported.1 hq) (Finset.mem_coe.2 ht)
     · have hqe' : ψ q = ((ε⁻¹ : ℤˣ) : ℤ) • p := hqe
-      rw [map_add, map_neg, map_zsmul, hψ, hqe', smul_add, smul_smul, ← Units.val_mul,
+      rw [map_add (f := _), map_neg, map_zsmul, hψ, hqe', smul_add, smul_smul, ← Units.val_mul,
         inv_mul_cancel, Units.val_one, one_smul, add_neg_cancel_right]
   choose ε' q hq hψq using hpre
   let φ : MvPolynomial σ ℤ →+* MvPolynomial σ ℤ :=
@@ -193,7 +193,7 @@ theorem uni_exists {M I C : Type*} (L : M ≃ I) (c : M → C) (w : M → ℕ) (
       · obtain ⟨i, hi, hmi⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hm1)
         exact hg1 i hi m (Finsupp.support_smul hmi)
     set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_add, map_sum, Finsupp.linearCombination_single, one_smul]
+      · rw [map_add (f := _), map_sum, Finsupp.linearCombination_single, one_smul]
       rw [Finset.sum_congr rfl (fun i hi => by rw [map_smul, hg2 i hi])]
       have hsum : ∑ i ∈ v.support, v i • Finsupp.single i (1 : ℤ) = v := by
         conv_rhs => rw [← Finsupp.sum_single v]

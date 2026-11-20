@@ -401,7 +401,7 @@ theorem kill_ideal_V0 (N : NF H r) {Λ : Submodule (𝓞 K) V}
   obtain ⟨o₁, ho₁⟩ := Submodule.mem_one.1 hβ
   obtain ⟨o₂, ho₂⟩ := Submodule.mem_one.1 hβ2
   have ho : (γ₁ : K) * γ₂ * β = algebraMap (𝓞 K) K (-(δ * (γ₁ * o₁ + o₂))) := by
-    rw [map_neg, map_mul, map_add, map_mul, ho₁, ho₂, hδ]
+    rw [map_neg, map_mul, map_add (f := _), map_mul, ho₁, ho₂, hδ]
     show (γ₁ : K) * algebraMap (𝓞 K) K _ * β = -((δ : K) * ((γ₁ : K) * _ + _))
     rw [map_mul, map_natCast]
     show (γ₁ : K) * (_ * (δ : K)) * β = _

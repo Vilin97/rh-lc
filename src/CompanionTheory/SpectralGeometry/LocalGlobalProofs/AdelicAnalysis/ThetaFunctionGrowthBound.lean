@@ -122,7 +122,7 @@ theorem ei_bound : ∀ (F : Type) [Field F] [NumberField F] [MeasurableSpace (A 
     rw [h2] at h1
     have h3 : ∀ w, τ w + ((ρ w (out q + (r : F)) : ℝ) : ℂ) =
         (τ w + (ρ w (out q) : ℝ)) + (ρ w (r : F) : ℝ) := fun w => by
-      rw [map_add]; push_cast; ring
+      rw [map_add (f := _)]; push_cast; ring
     simp only [h3] at h1
     exact h1
   have hin : ∀ q, Summable (fun r => h' (q, r)) ∧

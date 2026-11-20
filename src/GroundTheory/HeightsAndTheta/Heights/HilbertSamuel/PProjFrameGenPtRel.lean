@@ -69,7 +69,7 @@ theorem ProjFrameGenPtRel.proof : ProjFrameGenPtRel.Statement := by
           rw [aeval_C, eq_intCast, map_intCast]
           exact intCast_mem _ a
         | add p q hp hq =>
-          rw [map_add, map_add]
+          rw [map_add (f := _), map_add (f := _)]
           exact add_mem hp hq
         | mul_X p i hp =>
           rw [map_mul, map_mul, aeval_X]

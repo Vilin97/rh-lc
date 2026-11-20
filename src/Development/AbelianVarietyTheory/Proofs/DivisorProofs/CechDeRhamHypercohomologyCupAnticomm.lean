@@ -15,7 +15,7 @@ theorem cupHyp_add_cupHyp_swap : ∀ (R : Type) [CommRing R] (C : Type) [Categor
   intro R _ C _ F a b
   obtain ⟨a, rfl⟩ := Hyp1.mk_surjective F a
   obtain ⟨b, rfl⟩ := Hyp1.mk_surjective F b
-  rw [cupHyp_mk, cupHyp_mk, ← map_add]
+  rw [cupHyp_mk, cupHyp_mk, ← map_add (f := _)]
   refine Hyp2.mk_eq_zero.2 ⟨(fun T T' φ ↦ -(a.1.1 T T' φ * b.1.1 T T' φ), 0), ?_⟩
   refine Tot2.ext (fun T T' T'' φ ψ ↦ ?_) (fun T T' φ ↦ ?_) fun T ↦ ?_
   · simp only [cechDeRhamTotalDifferentialOne_functionPart, Submodule.coe_add, Prod.fst_add, Pi.add_apply, coe_cupZZ, cupTot_apply,

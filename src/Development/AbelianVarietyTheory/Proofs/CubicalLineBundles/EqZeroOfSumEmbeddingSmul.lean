@@ -197,7 +197,7 @@ theorem exists_eigen_hermForm_eq :
   refine EigenNorm.hermForm_eigen E H P.g Hm hu.1 L h ρ _ x hρ hadd hsmul hsymm hxs hx0 fun a => ?_
   rw [hc, hsum]
   have haddr : ∀ a b c, h a (b + c) = h a b + h a c := fun a b c => by
-    rw [hsymm (b + c) a, hsymm b a, hsymm c a, hadd, map_add]
+    rw [hsymm (b + c) a, hsymm b a, hsymm c a, hadd, map_add (f := _)]
   have key : ∀ a, ((∃ i, a = e i) ∨ ∃ i j, a = e i + e j) → hermForm Hm (X a) (X a) - hermForm H₀ w₀ w₀ *
       ∑ τ ∈ Finset.univ.filter (fun τ : E →+* ℂ => τ (H.rt : E) = ρ), τ (h a a) = 0 := fun a ha => by
     obtain ⟨N, hN, hiso⟩ := hiso a ha
@@ -211,9 +211,9 @@ theorem exists_eigen_hermForm_eq :
   exact sub_eq_zero.1 (quadratic_eq_zero (fun a b => hermForm Hm (X a) (X b) - hermForm H₀ w₀ w₀ *
       ∑ τ ∈ Finset.univ.filter (fun τ : E →+* ℂ => τ (H.rt : E) = ρ), τ (h a b))
     (fun a b c => by
-      simp only [map_add, EigenNorm.hermForm_add_left, hadd, Finset.sum_add_distrib]; ring)
+      simp only [map_add (f := _), EigenNorm.hermForm_add_left, hadd, Finset.sum_add_distrib]; ring)
     (fun a b c => by
-      simp only [map_add, EigenNorm.hermForm_add_right, haddr, Finset.sum_add_distrib]; ring)
+      simp only [map_add (f := _), EigenNorm.hermForm_add_right, haddr, Finset.sum_add_distrib]; ring)
     e he (fun i => key _ (Or.inl ⟨i, rfl⟩)) (fun i j => key _ (Or.inr ⟨i, j, rfl⟩)) a)
 
 end GlobalTheory.CMNormIdentity

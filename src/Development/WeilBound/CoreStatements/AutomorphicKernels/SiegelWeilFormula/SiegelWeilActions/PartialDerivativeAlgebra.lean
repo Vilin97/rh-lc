@@ -144,7 +144,7 @@ theorem cA_inv' (hσ : ∀ x, σ (σ x) = x) (z : AE F E) : cA σ (cA σ z) = z 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [cA, hσ]
-  | add a b ha hb => simp [map_add, ha, hb]
+  | add a b ha hb => simp [map_add (f := _), ha, hb]
 
 theorem uA_neg_mul (u : Fin L.n → AE F E) : uA L (-u) * uA L u = 1 := by
   have := C1.Au_mul L (-u) u

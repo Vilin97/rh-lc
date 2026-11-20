@@ -247,7 +247,7 @@ theorem existsUnique_algHom_implicit [Finite τ] [Finite ι] (J : Ideal S) [IsAd
     rw [funext_iff]
     refine forall_congr' fun i => ?_
     have : ev t (c i • X (Sum.inr i) + Q i) = algebraMap A S (c i) * b * (t i + e i * r t i) := by
-      rw [map_add, map_smul, hev, hr, Algebra.smul_def, Sum.elim_inr]
+      rw [map_add (f := _), map_smul, hev, hr, Algebra.smul_def, Sum.elim_inr]
       linear_combination (b * r t i) * hbe i
     rw [this, mul_left_mem_nonZeroDivisors_eq_zero_iff (hcb i), neg_eq_iff_add_eq_zero, add_comm]
   obtain ⟨t, ht, huniq⟩ := existsUnique_fixedPoint_of_adic_contraction J

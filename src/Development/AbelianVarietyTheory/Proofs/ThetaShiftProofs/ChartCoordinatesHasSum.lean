@@ -217,7 +217,7 @@ theorem eventually_chart {Z : Scheme.{0}} {F R : Type} [CommRing F] [CommRing R]
     rw [hφ, hσ]
     exact mem_sumRing_coe.2 (hasSum_C _ _)
   | add a b _ _ ha hb =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact add_mem_sumRing ha hb
   | mul a b _ _ ha hb =>
     rw [map_mul, map_mul]

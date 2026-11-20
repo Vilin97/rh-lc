@@ -90,8 +90,8 @@ theorem exists_hom_of_exact (φ : Q ⟶ P) (π : P ⟶ F)
     VB.hom_ext fun W h m => sec_ext_affine fun T h' hT => ?_⟩
   · obtain ⟨m, hm⟩ := hs T hT (resM _ h' a)
     obtain ⟨n, hn⟩ := hs T hT (resM _ h' b)
-    rw [map_add, ht W h a T h' hT m hm, ht W h b T h' hT n hn,
-      ht W h _ T h' hT (m + n) (by rw [map_add, map_add, hm, hn]), map_add]
+    rw [map_add (f := _), ht W h a T h' hT m hm, ht W h b T h' hT n hn,
+      ht W h _ T h' hT (m + n) (by rw [map_add (f := _), map_add (f := _), hm, hn]), map_add (f := _)]
   · obtain ⟨n, hn⟩ := hs T hT (resM _ h' b)
     rw [RingHom.id_apply, resM_smul, ht W h b T h' hT n hn,
       ht W h _ T h' hT (_ • n) (by rw [resM_smul, ← hn, Scheme.Modules.Hom.app_smul]), map_smul]

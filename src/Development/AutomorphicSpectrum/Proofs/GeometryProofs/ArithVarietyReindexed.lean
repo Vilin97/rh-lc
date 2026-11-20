@@ -23,7 +23,7 @@ theorem blockFnField_eq_top (y : (Σ k, J k) → Ω) (c : ∀ k, J k) (hc : ∀ 
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | mul_X p i hp =>
       rw [map_mul, aeval_X]
       exact mul_mem hp (IntermediateField.subset_adjoin _ _ ⟨i, ⟨i.1, c i.1⟩, rfl, rfl⟩)
@@ -61,7 +61,7 @@ theorem exists_quot_of_mem_adjoin {L I : Type} [Field L] [CharZero L] (z : I →
     obtain ⟨f₁, g₁, h₁, rfl⟩ := hx
     obtain ⟨f₂, g₂, h₂, rfl⟩ := hy
     refine ⟨f₁ * g₂ + f₂ * g₁, g₁ * g₂, by simpa using ⟨h₁, h₂⟩, ?_⟩
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     field_simp
   | inv x _ hx =>
     obtain ⟨f, g, h, rfl⟩ := hx
@@ -116,7 +116,7 @@ theorem aeval_xPt (y : (Σ k, J k) → Ω) (f : MRing J) :
     aeval (xPt y) f = emb K Ω (mConeMap y f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [mConeMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n hp => simp [map_mul, hp, mConeMap, xPt, cst, tv]
 
 theorem aeval_xPt_eq_zero_iff (y : (Σ k, J k) → Ω) (f : MRing J) :
@@ -141,7 +141,7 @@ theorem coe_aeval_imgPt (y : (Σ k, J k) → Ω) (v : (Σ k, J₀ k) → Σ k, J
     ((aeval (imgPt y v) f : imgField y v) : Fn K Ω) = aeval (fun p => xPt y (v p)) f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, IntermediateField.coe_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), IntermediateField.coe_add, hp, hq]
   | mul_X p n hp => simp only [map_mul, MulMemClass.coe_mul, hp, aeval_X, imgPt]
 
 def genFib (y : (Σ k, J k) → Ω) (v : (Σ k, J₀ k) → Σ k, J k) : GenFibre v (mCoordIdeal y) where

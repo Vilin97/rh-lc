@@ -149,7 +149,7 @@ theorem IsKSValue.baseChange (P : AbelianDeRham) {A' : Over (Sp (DualNumber R))}
     rw [map_zero, map_zero, map_zero, LinearMap.map_zero, LinearMap.map_zero]
     simp
   | add x y hx hy =>
-    simp only [map_add, hx, hy]
+    simp only [map_add (f := _), hx, hy]
     ext <;> simp
   | tmul r c =>
     have n := (constMor A).comp m

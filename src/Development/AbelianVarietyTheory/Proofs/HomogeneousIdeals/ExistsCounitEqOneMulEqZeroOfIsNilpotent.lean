@@ -52,7 +52,7 @@ theorem derivation_sub_nsmul_mem_pow [Algebra k H] (I : Ideal H) (E : Derivation
         exact Ideal.mul_mem_mul (ih b hb) ha
     · have e : E (a + b) - ((n + 1 : ℕ) : H) * (a + b) =
           (E a - ((n + 1 : ℕ) : H) * a) + (E b - ((n + 1 : ℕ) : H) * b) := by
-        rw [map_add]; ring
+        rw [map_add (f := _)]; ring
       rw [e]; exact add_mem ha hb
 
 variable [Bialgebra k H]
@@ -72,7 +72,7 @@ theorem counit_invariantDerivation (φ : H →ₗ[k] k)
       φ (TensorProduct.lid k H ((counit (R := k)).rTensor H s)) := by
     intro s
     induction s with
-    | add s s' h h' => simp only [map_add, h, h']
+    | add s s' h h' => simp only [map_add (f := _), h, h']
     | tmul a b => simp [mul_comm]
   rw [invariantDerivation_apply, key]
   simp
@@ -98,9 +98,9 @@ theorem exists_derivations_sum_sub_mem_sq [Bialgebra k H] [Algebra.FiniteType k 
   have hq : ∀ y, q y = Ideal.Quotient.mk (I ^ 2) (p y) := fun y ↦ rfl
   have hqmul : ∀ a b, q (a * b) = counit (R := k) a • q b + counit (R := k) b • q a := by
     intro a b
-    rw [← map_smul, ← map_smul, ← map_add, hq, hq, Ideal.Quotient.eq]
+    rw [← map_smul, ← map_smul, ← map_add (f := _), hq, hq, Ideal.Quotient.eq]
     have : p (a * b) - p (counit (R := k) a • b + counit (R := k) b • a) = p a * p b := by
-      simp only [hp, map_add, map_smul, counit_mul, smul_eq_mul, map_mul, Algebra.smul_def,
+      simp only [hp, map_add (f := _), map_smul, counit_mul, smul_eq_mul, map_mul, Algebra.smul_def,
         counit_algebraMap, Algebra.algebraMap_self, RingHom.id_apply]
       ring
     rw [this, sq]
@@ -117,7 +117,7 @@ theorem exists_derivations_sum_sub_mem_sq [Bialgebra k H] [Algebra.FiniteType k 
         induction hz using Submodule.span_induction with
         | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
         | zero => simp
-        | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+        | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
         | smul a x hx' hx =>
           have : x ∈ I := hs ▸ hx'
           rw [smul_eq_mul, hqmul, (hmem x).1 this, zero_smul, add_zero]
@@ -134,7 +134,7 @@ theorem exists_derivations_sum_sub_mem_sq [Bialgebra k H] [Algebra.FiniteType k 
     have : q.rangeRestrict (a * c) =
         counit (R := k) a • q.rangeRestrict c + counit (R := k) c • q.rangeRestrict a :=
       Subtype.ext (hqmul a c)
-    simp only [φ, LinearMap.comp_apply, this, map_add, map_smul, smul_eq_mul]
+    simp only [φ, LinearMap.comp_apply, this, map_add (f := _), map_smul, smul_eq_mul]
   refine ⟨_, fun i ↦ p (z i), fun i ↦ invariantDerivation (φ i) (hφ i), fun i ↦ hpI _,
     fun y hy ↦ ?_⟩
   have h1 : ∑ i, φ i y • p (z i) - y ∈ I ^ 2 := by
@@ -428,7 +428,7 @@ theorem isHopfIdeal_closureIdeal_of_flat [Module.Flat V (H ⧸ closureIdeal K J)
       TensorProduct.comul_tmul]
     generalize comul (R := V) x = t
     induction t with
-    | add a b ha hb => simp only [map_add, TensorProduct.tmul_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), TensorProduct.tmul_add, ha, hb]
     | tmul a b =>
       simp only [CommSemiring.comul_apply, TensorProduct.map_tmul, TensorProduct.AlgebraTensorModule.tensorTensorTensorComm_tmul]
       rfl
@@ -468,7 +468,7 @@ theorem isHopfIdeal_ker_counit (R H : Type*) [CommRing R] [CommRing H] [HopfAlge
         π 1 ⊗ₜ π (TensorProduct.lid R H ((counit (R := R)).rTensor H t)) := by
       intro t
       induction t with
-      | add a b ha hb => simp only [map_add, TensorProduct.tmul_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), TensorProduct.tmul_add, ha, hb]
       | tmul a b =>
         rw [TensorProduct.map_tmul, h1 a, TensorProduct.smul_tmul, LinearMap.rTensor_tmul,
           TensorProduct.lid_tmul, map_smul]

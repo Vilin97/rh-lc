@@ -67,7 +67,7 @@ theorem exists_limit_adele (c : ℕ → ℤ)
   refine ⟨ofInt a, fun n hn hp => ?_⟩
   choose b hb using fun v => ha v n hn hp
   refine ⟨ofInt b, isInt_ofInt b, afp_ext fun v => ?_⟩
-  rw [map_add, map_mul, map_intCast, map_natCast, eval_ofInt, eval_ofInt, hb v]
+  rw [map_add (f := _), map_mul, map_intCast, map_natCast, eval_ofInt, eval_ofInt, hb v]
   push_cast
   rfl
 
@@ -133,7 +133,7 @@ theorem exists_adelic_limit (g : ℕ → D.La →+ D.La)
       obtain ⟨w, hw, e⟩ := hx
       obtain ⟨w', hw', e'⟩ := hy
       refine ⟨w + w', add_mem hw hw', ?_⟩
-      rw [map_add, map_add, e, e', map_add, map_add, nsmul_add]
+      rw [map_add (f := _), map_add (f := _), e, e', map_add (f := _), map_add (f := _), nsmul_add]
       abel
     | smul k x _ hx =>
       obtain ⟨w, hw, e⟩ := hx
@@ -149,7 +149,7 @@ theorem exists_adelic_limit (g : ℕ → D.La →+ D.La)
     rw [e, smul_add, one_nsmul]
     exact add_mem (smul_inAf_mem D ha' _) (smul_mem D ha' hw)
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem main : ∀ (p : ℕ) [Fact (Nat.Prime p)] (D : Datum p) (g : ℕ → D.La →+ D.La),

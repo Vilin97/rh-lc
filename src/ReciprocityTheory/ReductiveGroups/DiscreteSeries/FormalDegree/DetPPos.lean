@@ -27,7 +27,7 @@ theorem det_pos_of_posForm {V : Type*} [AddCommGroup V] [Module ℝ V] [FiniteDi
         (1 - t) • (1 : Matrix (Fin (Module.finrank ℝ V)) (Fin (Module.finrank ℝ V)) ℝ)).det := by
       funext t
       show LinearMap.det (t • T + (1 - t) • LinearMap.id) = _
-      rw [← LinearMap.det_toMatrix b, map_add, map_smul, map_smul, LinearMap.toMatrix_id]
+      rw [← LinearMap.det_toMatrix b, map_add (f := _), map_smul, map_smul, LinearMap.toMatrix_id]
     rw [e]
     exact ((continuous_id.smul continuous_const).add
       ((continuous_const.sub continuous_id).smul continuous_const)).matrix_det

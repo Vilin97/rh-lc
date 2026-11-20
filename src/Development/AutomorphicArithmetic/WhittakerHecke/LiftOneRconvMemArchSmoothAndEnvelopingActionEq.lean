@@ -86,4 +86,4 @@ theorem UpperTheory.liftOne_rconv_mem_archSmooth_and_envelopingAction_eq :
   · rintro γ γ' hγ hγ' ⟨h, hu⟩ ⟨h', hu'⟩
     refine pack _ (⟨_, h⟩ + ⟨_, h'⟩) (lift_add hn μ γ γ' e φ) fun u => ?_
     obtain ⟨_, -, -, -, -, -, h6, -⟩ := UpperTheory.ConvolutionTheory.Tf.lactSpec K n _ hγ
-    rw [(h6 γ' hγ').2 u, lift_add hn, map_add, Submodule.coe_add, hu u, hu' u]
+    rw [(h6 γ' hγ').2 u, lift_add hn, map_add (f := _), Submodule.coe_add, hu u, hu' u]

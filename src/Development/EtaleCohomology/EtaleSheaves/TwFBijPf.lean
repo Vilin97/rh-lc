@@ -133,7 +133,7 @@ theorem decomp (η : Prim q C) (z : (Prim q C →₀ ULift.{1} (ZMod q)) ⧸ twR
   induction x using Finsupp.induction_linear with
   | zero => simp
   | add x y hx hy =>
-    rw [Submodule.Quotient.mk_add, map_add, add_smul, ← hx, ← hy]
+    rw [Submodule.Quotient.mk_add, map_add (f := _), add_smul, ← hx, ← hy]
   | single ξ c =>
     have hrel : Finsupp.single ξ (1 : ULift.{1} (ZMod q)) - Finsupp.single η (ULift.up (((ex η η * ex η ξ) ^ i : (ZMod q)ˣ) : ZMod q))
         ∈ twRel q i C := by

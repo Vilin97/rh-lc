@@ -44,7 +44,7 @@ theorem GlobalTheory.LiftCoker.vPow_mem_imL_add_lPow : ∀ (O K : Type) [CommRin
     · rw [Pi.smul_apply, smul_eq_mul]
       exact mul_mem (map_mem_A c) (hw i)
     · have h3 := congrArg (PowerSeries.map (algebraMap O K)) hpq
-      rw [map_add, map_mul, map_pow, map_pow, map_X, map_natCast] at h3
+      rw [map_add (f := _), map_mul, map_pow, map_pow, map_X, map_natCast] at h3
       rw [← pow_mul, ← h3, add_smul, hmeq, smul_smul, mul_comm]
   choose w hw hxw using fun τ => D₂.mem_extc.1 (mem_tot.1 hx τ)
   choose m hm w' hw' hmw using fun τ => comp τ (w τ) (hw τ)

@@ -100,8 +100,8 @@ theorem multT_value {V : HSp D} {S : D.what₂.Tau → SPar} (θ : InfFam D) (M 
     · simp only [map_smul, Pi.smul_apply, h1.2.2 k hk g, smul_eq_mul]; ring
   | add x y hx hy =>
     refine ⟨fun γ hγ g => ?_, fun k hk g => ?_⟩
-    · simp only [map_add, Pi.add_apply, hx.1 γ hγ g, hy.1 γ hγ g]
-    · simp only [map_add, Pi.add_apply, hx.2 k hk g, hy.2 k hk g]; ring
+    · simp only [map_add (f := _), Pi.add_apply, hx.1 γ hγ g, hy.1 γ hγ g]
+    · simp only [map_add (f := _), Pi.add_apply, hx.2 k hk g, hy.2 k hk g]; ring
 
 theorem integral_shift_lift (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (L : LevDat D.host.E ℂ V.rank) (g0 : G0 L.Pg L.r)
     (κ : GA D V) (hκ : IsLevelLift V β L g0 κ) (ν : Measure (GA D V)) (hν : ν.IsHaarMeasure) (𝓕 : Set (GA D V))

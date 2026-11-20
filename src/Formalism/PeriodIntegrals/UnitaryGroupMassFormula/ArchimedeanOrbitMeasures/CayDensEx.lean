@@ -63,7 +63,7 @@ theorem rA_mem_iff (M : Matrix (Fin n) (Fin n) ℂ) :
 theorem rA_skew_iff (M : Matrix (Fin n) (Fin n) ℂ) :
     (rA ε M)ᴴ * HcS.UG.Jpq (pP ε) (pQ ε) + HcS.UG.Jpq (pP ε) (pQ ε) * rA ε M = 0 ↔
       Mᴴ * Formalism.REAL.Jm ε + Formalism.REAL.Jm ε * M = 0 := by
-  rw [rA_conj, ← rA_Jm, ← map_mul, ← map_mul, ← map_add, ← map_zero (rA ε), (rA ε).injective.eq_iff]
+  rw [rA_conj, ← rA_Jm, ← map_mul, ← map_mul, ← map_add (f := _), ← map_zero (rA ε), (rA ε).injective.eq_iff]
 
 theorem continuous_rA : Continuous (rA ε) := by
   exact LinearMap.continuous_of_finiteDimensional (rA ε).toLinearMap
@@ -147,7 +147,7 @@ def psiL : gLie ε →ₗ[ℝ] HcS.BasicNotions.lieU (pP ε) (pQ ε) where
   map_add' x y := by
     apply Subtype.ext
     show rA ε (unrLin n ((x + y : gLie ε) : EuclideanSpace ℝ _)) = rA ε (unrLin n x) + rA ε (unrLin n y)
-    rw [Submodule.coe_add, map_add, map_add]
+    rw [Submodule.coe_add, map_add (f := _), map_add (f := _)]
   map_smul' c x := by
     apply Subtype.ext
     ext i j
@@ -194,7 +194,7 @@ theorem rel_iff (g : Formalism.REAL.UJ ε) (x : gLie ε) :
         2 + unrealify (x : EuclideanSpace ℝ (Fin n × Fin n × Bool)) := by
   have e1 : HcS.BasicNotions.UpqT.mat (phiC ε g) = rA ε (((g : (Matrix (Fin n) (Fin n) ℂ)ˣ)) : Matrix (Fin n) (Fin n) ℂ) :=
     phiF_mat ε g
-  rw [e1, psiC_val, one_add_one_eq_two, ← map_ofNat (rA ε) 2, ← map_sub, ← map_mul, ← map_add,
+  rw [e1, psiC_val, one_add_one_eq_two, ← map_ofNat (rA ε) 2, ← map_sub, ← map_mul, ← map_add (f := _),
     (rA ε).injective.eq_iff]
 
 theorem isUnit_of_mem_cayley_domain (x : gLie ε) (hx : psiC ε x ∈ HcInf.D0 (pP ε) (pQ ε)) :

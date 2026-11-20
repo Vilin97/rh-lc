@@ -209,7 +209,7 @@ theorem gam_symm_of_isUnitTau : ∀ (k : Type) [Field k] (m d : ℕ) (Q : DegPre
       _ = (∏ i, a i ^ n1 i) * algebraMap _ K x' := by
         rw [inv_mul_cancel₀ (hP0 n2), inv_mul_cancel₀ (hP0 n3), _root_.mul_one, _root_.mul_one]
   have hAB := congrFun (exps_eq (σ := Fin m ⊕ Fin d) (k := k) Sum.inl Sum.inl_injective _ _ hx hx' key) i
-  simp only [map_add, LinearMap.add_apply] at hn1
+  simp only [map_add (f := _), LinearMap.add_apply] at hn1
   linarith
 
 end GlobalTheory.UnitTauSymm

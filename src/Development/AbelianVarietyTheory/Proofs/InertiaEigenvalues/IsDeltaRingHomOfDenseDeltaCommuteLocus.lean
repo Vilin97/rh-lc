@@ -26,7 +26,7 @@ theorem isδMap_of_dense_δLocus : ∀ (l : ℕ) [Fact l.Prime] (Q : Type) [Comm
     rw [hxy, ← map_sub]; exact hpow n (Ideal.mem_map_of_mem h h1)
   have hyC : h y ∈ JC ^ (n + 1) := hpow (n + 1) (Ideal.mem_map_of_mem h hxa)
   have h2 : DC.δ (h a + h y) - DC.δ (h a) ∈ JC ^ n := GlobalTheory.T.delta_add_sub_mem_pow_of_mem_pow_succ l C DC JC hlC n (h a) (h y) hyC
-  have h2' : DC.δ (h x) - DC.δ (h a) ∈ JC ^ n := by rw [hxy, map_add]; exact h2
+  have h2' : DC.δ (h x) - DC.δ (h a) ∈ JC ^ n := by rw [hxy, map_add (f := _)]; exact h2
   have key : h (D.δ x) - DC.δ (h x) ∈ JC ^ n := by
     have := (JC ^ n).sub_mem h1' h2'
     rw [ha'] at this

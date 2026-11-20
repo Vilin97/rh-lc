@@ -78,7 +78,7 @@ theorem rename_rowShift {τ : ι} {i i' : Fin (dim τ)} {t : {τ // Ψ τ}} {r r
     simp only [AlgHom.comp_apply, rename_X, Formalism.L2.Pj.rowShift, aeval_X]
     split_ifs with hl
     · obtain ⟨b, rfl⟩ := hl
-      simp only [map_add, map_mul, rename_C, rename_X]
+      simp only [map_add (f := _), map_mul, rename_C, rename_X]
       rw [typeLetterEquiv_apply hσ hΨ hp hq h b, typeLetterEquiv_apply hσ hΨ hp hq h' b,
         rowAdd_X_self]
     · rw [rename_X]
@@ -205,7 +205,7 @@ private theorem X_mul_pderiv_mem_restrictTotalDegree {S' F' : Type*} [Field F'] 
     have hdeg : Finsupp.degree (Finsupp.single v 1 + (m - Finsupp.single u 1)) =
         Finsupp.degree m := by
       conv_rhs => rw [← add_tsub_cancel_of_le hle]
-      simp only [map_add, Finsupp.degree_single]
+      simp only [map_add (f := _), Finsupp.degree_single]
     calc _ ≤ _ := totalDegree_monomial_le _ _
       _ = Finsupp.degree m := hdeg
       _ ≤ Q.totalDegree := le_totalDegree hm

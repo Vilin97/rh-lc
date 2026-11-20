@@ -82,7 +82,7 @@ theorem val_dehom (c : σ) (f : MvPolynomial σ ℂ) :
       (Localization.Away (coord I c)), ← Localization.mk_one_eq_algebraMap]
     rfl
   | add f g hf hg =>
-    simp only [map_add, HomogeneousLocalization.val_add, hf, hg, eval₂_add]
+    simp only [map_add (f := _), HomogeneousLocalization.val_add, hf, hg, eval₂_add]
   | mul_X f q hf =>
     rw [map_mul, HomogeneousLocalization.val_mul, hf, eval₂_mul, eval₂_X]
     congr 1
@@ -196,7 +196,7 @@ theorem adjoin_coord_eq_top : Algebra.adjoin (quotGrading I 0) (Set.range (coord
   | C a =>
     exact Subalgebra.algebraMap_mem _ (⟨Ideal.Quotient.mk _ (C a),
       ⟨C a, (mem_homogeneousSubmodule 0 _).mpr (isHomogeneous_C _ a), rfl⟩⟩ : quotGrading I 0)
-  | add g h hg hh => rw [map_add]; exact add_mem hg hh
+  | add g h hg hh => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hg hh
   | mul_X g q hg => rw [map_mul]; exact mul_mem hg (Algebra.subset_adjoin ⟨q, rfl⟩)
 
 theorem isProper_toSpecC [Fintype σ] : IsProper (toSpecC I) := by

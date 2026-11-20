@@ -84,7 +84,7 @@ theorem Ljj_fg (j : Fin G.T.t → ℕ) (jp : ℕ) : (Ljj p (r := r) G j jp).FG :
         rw [mul_smul_comm]
         exact Submodule.smul_mem _ c hu
     | zero => simp
-    | add u v _ _ hu hv => rw [map_add, add_mul]; exact Submodule.add_mem _ hu hv
+    | add u v _ _ hu hv => rw [map_add (f := _), add_mul]; exact Submodule.add_mem _ hu hv
     | smul c u _ hu =>
       have : rename (Formalism.GM.M.chainEmb N r G.T.t) (c • u) = c • rename (Formalism.GM.M.chainEmb N r G.T.t) u := by
         rw [← algebraMap_smul ℚ_[p] c u, ← algebraMap_smul ℚ_[p] c (rename (Formalism.GM.M.chainEmb N r G.T.t) u)]

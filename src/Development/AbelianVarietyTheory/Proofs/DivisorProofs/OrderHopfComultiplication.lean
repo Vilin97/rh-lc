@@ -57,7 +57,7 @@ theorem tensor_eq_zero_of_lift_eq_zero {R K : Type} [CommRing R] [IsDomain R] [F
       simp only [L, LinearMap.comp_apply, LinearMap.lTensor_tmul, LinearMap.rTensor_tmul,
         LinearEquiv.coe_coe, he]
       simp [g, Φ, Ψ, mul_comm]
-    | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb]
   apply hL
   rw [map_zero]
   funext y x
@@ -125,7 +125,7 @@ def comul [Module.Flat R O] : O →ₐ[R] O ⊗[R] O where
     rw [map_mul, comulFun_spec, comulFun_spec, comulFun_spec]; rfl
   map_zero' := ev2_inj O _ _ fun a b => by rw [comulFun_spec, map_zero]; rfl
   map_add' f g := ev2_inj O _ _ fun a b => by
-    rw [map_add, comulFun_spec, comulFun_spec, comulFun_spec]; rfl
+    rw [map_add (f := _), comulFun_spec, comulFun_spec, comulFun_spec]; rfl
   commutes' r := ev2_inj O _ _ fun a b => by rw [comulFun_spec, AlgHom.commutes]; rfl
 
 def counitFun (f : O) : R := Classical.choose (hε f.1 f.2)
@@ -141,7 +141,7 @@ def counit : O →ₐ[R] R where
     rw [counitFun_spec, map_mul, counitFun_spec, counitFun_spec]; rfl)
   map_zero' := IsFractionRing.injective R K (by rw [counitFun_spec, map_zero]; rfl)
   map_add' f g := IsFractionRing.injective R K (by
-    rw [counitFun_spec, map_add, counitFun_spec, counitFun_spec]; rfl)
+    rw [counitFun_spec, map_add (f := _), counitFun_spec, counitFun_spec]; rfl)
   commutes' r := IsFractionRing.injective R K (by rw [counitFun_spec]; simp)
 
 theorem counit_spec (f : O) : algebraMap R K (counit O hε f) = (f : M → K) 1 :=
@@ -187,7 +187,7 @@ theorem coassoc_left (a b c : M) :
     induction u using TensorProduct.induction_on with
     | zero => simp
     | tmul p q => simp [ev2]; ring
-    | add u v hu hv => simp only [TensorProduct.add_tmul, map_add, hu, hv, add_mul]
+    | add u v hu hv => simp only [TensorProduct.add_tmul, map_add (f := _), hu, hv, add_mul]
   simp only [AlgHom.comp_apply, map_tmul, AlgHom.id_apply, AlgEquiv.toAlgHom_eq_coe,
     AlgHom.coe_coe, AlgEquiv.coe_algHom]
   rw [key, ev2_comul, ev2_tmul]
@@ -319,7 +319,7 @@ theorem cocomm : letI := bialg O hΔ hε; IsCocomm R O := by
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul p q => simp [_root_.mul_comm]
-    | add u v hu hv => simp only [map_add, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), hu, hv]
   show ev2 O a b (TensorProduct.comm R O O (comul O hΔ f)) = ev2 O a b (comul O hΔ f)
   rw [hc, ev2_comul, ev2_comul, _root_.mul_comm]
 

@@ -49,7 +49,7 @@ private theorem exists_preimage_map_eq_zero_of_mem_mm {A D E F : Type} [CommRing
     obtain ⟨b₀, rfl⟩ := hb'
     exact ⟨σ a * b₀, by rw [map_mul, ← hσ, Algebra.smul_def], by rw [map_mul, hψ a ha, zero_mul]⟩
   · rintro x y ⟨x₀, rfl, hx0⟩ ⟨y₀, rfl, hy0⟩
-    exact ⟨x₀ + y₀, map_add _ _ _, by rw [map_add, hx0, hy0, add_zero]⟩
+    exact ⟨x₀ + y₀, map_add _ _ _, by rw [map_add (f := _), hx0, hy0, add_zero]⟩
 
 private theorem pow_mod_eq_pow_of_pow_eq_one_commutative_algebra {S : Type} [CommRing S] {ζ : S} {q : ℕ} (h : ζ ^ q = 1) (n : ℕ) :
     ζ ^ (n % q) = ζ ^ n := by

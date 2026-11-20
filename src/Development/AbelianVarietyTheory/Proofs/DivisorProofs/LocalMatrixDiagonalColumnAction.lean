@@ -27,7 +27,7 @@ theorem tm_sigR (φ : R →ₐ[F] R') (σ : E →ₐ[F] E) (z : R ⊗[F] E) :
     tm E φ (sigR R σ z) = sigR R' σ (tm E φ z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a b => rfl
 
 theorem tm_mat {n r : ℕ} (φ : R →ₐ[F] R') (A : Matrix (Fin n) (Fin n) (R ⊗[F] E)) (X : Matrix (Fin n) (Fin r) E)

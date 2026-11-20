@@ -52,7 +52,7 @@ theorem exists_qkExt_of_b {V : Type} [CommRing V] [IsDomain V] {Q : DegPre V} (h
   refine ⟨qkMk hB 0 (q.g + torusPt Q K (Additive.ofMul t₀)) ?_, (qkExt_iff hB f hf _ _).2 (qk_ext hp ?_)⟩
   · rw [nsmul_add, nq, ← map_nsmul, ← ofMul_pow, t0, ofMul_one, map_zero, map_zero, add_zero]
   · show p.g = gtExt Q f hf (q.g + torusPt Q K (Additive.ofMul t₀))
-    rw [map_add, GlobalTheory.QkNumberField.gtExt_torusPt, ← ht]
+    rw [map_add (f := _), GlobalTheory.QkNumberField.gtExt_torusPt, ← ht]
     abel
 
 theorem exists_ptEquiv {S S' : Scheme.{0}} {G : Over S} {G' : Over S'} [GrpObj G] [GrpObj G'] {f : S' ⟶ S}

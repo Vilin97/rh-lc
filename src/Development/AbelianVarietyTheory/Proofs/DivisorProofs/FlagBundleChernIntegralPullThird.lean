@@ -268,7 +268,7 @@ theorem evalF_hs (A : HermLB q) (j : ℕ) (c : Chart E 2) {P : Matrix (Fin 2) (F
     generalize hs j = Q
     induction Q using MvPolynomial.induction_on with
     | C a => simp
-    | add P Q hP hQ => simp only [map_add, hP, hQ]
+    | add P Q hP hQ => simp only [map_add (f := _), hP, hQ]
     | mul_X P i hP =>
       simp only [map_mul, hP, aeval_X, map_X]
       congr 1

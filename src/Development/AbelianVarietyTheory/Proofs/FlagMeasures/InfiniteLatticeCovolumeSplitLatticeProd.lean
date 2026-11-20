@@ -184,7 +184,7 @@ theorem covAt_latAt_prod : ∀ (E : Type) [Field E] [NumberField E], IsTotallyCo
         exact map_zero (emb E 1)
       have h := add_mem (Submodule.mem_comap.1 (hu huv.1)) (Submodule.mem_comap.1 (hv huv.2))
       rw [Submodule.mem_comap]
-      simpa [← map_add] using h
+      simpa [← map_add (f := _)] using h
   rw [key, hb, hc]
   exact covAt_prod E k b c
 

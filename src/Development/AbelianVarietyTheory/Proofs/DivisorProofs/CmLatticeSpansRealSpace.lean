@@ -177,7 +177,7 @@ theorem GlobalTheory.HermDiagCM.diagonal_of_conj_form : ∀ (K : Type) [Field K]
       rw [← sum_embeddings_eq φ hφ w, ← sum_embeddings_map g w, ← map_sum, sum_embeddings_eq φ hφ w,
       map_sum]
     refine Finset.sum_congr rfl (fun i _ => ?_)
-    rw [map_add, hgc]
+    rw [map_add (f := _), hgc]
   · intro i
     have key : g (Complex.I * (Real.sqrt d : ℂ)) = Complex.I * (Real.sqrt d : ℂ) := by
       have hsq : (Complex.I * (Real.sqrt d : ℂ)) ^ 2 = -(d : ℂ) := by

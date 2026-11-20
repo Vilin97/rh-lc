@@ -687,7 +687,7 @@ theorem local_step {L : Type} [Field L] [NumberField L] (D : PPData H L) (th : O
       map_one' := hinj (by rw [hκf, map_one, map_one, map_one])
       map_mul' := fun a b => hinj (by rw [hκf, map_mul, map_mul, map_mul, hκf, hκf])
       map_zero' := hinj (by rw [hκf, map_zero, map_zero, map_zero])
-      map_add' := fun a b => hinj (by rw [hκf, map_add, map_add, map_add, hκf, hκf]) }
+      map_add' := fun a b => hinj (by rw [hκf, map_add (f := _), map_add (f := _), map_add (f := _), hκf, hκf]) }
   have hκ : ∀ a, algebraMap T₀.V T₀.Fr (κ a) = io (c a) := hκf
   obtain ⟨T', φ, t', hφ, hloc, ⟨m⟩, ⟨P⟩⟩ := exists_ext D T₀ κ
   obtain ⟨ϖ, hϖ⟩ := IsDiscreteValuationRing.exists_irreducible T'.V

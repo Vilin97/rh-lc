@@ -45,7 +45,7 @@ theorem form_curv_const_vec {ι n : Type} [Fintype ι] [Fintype n] [DecidableEq 
   have hg := del_form (s := fun _ => v) (hK.of_le one_le_two) hu (fun _ => contDiffAt_const) ht ξ
   rw [hcov, hmv] at hg
   have hF : mdbar (fun x => conn K x ξ) z ξ = -curv K z ξ ξ := by rw [curv, neg_neg]
-  rw [GlobalTheory.ddbar_eq_dbar_del hφ, GlobalTheory.dbar_congr hev, GlobalTheory.dbar_conj, hg, hF, map_add,
+  rw [GlobalTheory.ddbar_eq_dbar_del hφ, GlobalTheory.dbar_congr hev, GlobalTheory.dbar_conj, hg, hF, map_add (f := _),
     conj_form hh.self_of_nhds, conj_form hh.self_of_nhds]
   simp only [form, neg_mulVec, neg_dotProduct]
   ring

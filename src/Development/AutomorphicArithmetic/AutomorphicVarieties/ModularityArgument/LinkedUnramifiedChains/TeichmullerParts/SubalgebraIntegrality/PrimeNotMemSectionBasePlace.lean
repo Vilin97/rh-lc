@@ -34,7 +34,7 @@ private theorem box_fix (ρ : Representation ℂ G W) (τ : Representation ℂ H
   refine rank_le_of _ hi _ fun z => ?_
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | tmul a b =>
     intro u hu
     rw [TensorProduct.map_tmul, box_tmul]
@@ -57,7 +57,7 @@ private theorem pi_fix {I : Type} [Fintype I] {Gi Wi : I → Type} [∀ i, Group
     simp only [hr, PiTensorProduct.map_id, LinearMap.id_apply]
   refine rank_le_of _ hi _ fun z => ?_
   induction z using PiTensorProduct.induction_on with
-  | add a b ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | smul_tprod a f =>
     rw [map_smul]
     refine Submodule.smul_mem _ _ fun u hu => ?_
@@ -82,7 +82,7 @@ private theorem one_copy (hS : Step) (π : Representation ℂ G W) (τ : Represe
     refine rank_le_of _ hi _ fun z => ?_
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
     | tmul a b =>
       refine ⟨(f _).2, fun u hu => ?_⟩
       exact (key u a b).symm.trans (congrArg (fun m => (f (m ⊗ₜ b) : W)) (a.2 u hu))
@@ -365,7 +365,7 @@ private theorem span_form (σ : Submodule ℂ (UA L n → ℂ)) (F : Ga l L n ×
     intro ℓ
     have : toForm ι e (x + y) ℓ = toForm ι e x ℓ + toForm ι e y ℓ := by
       funext g
-      simp only [toForm, Pi.add_apply, map_add]
+      simp only [toForm, Pi.add_apply, map_add (f := _)]
     rw [this]; exact σ.add_mem (hx ℓ) (hy ℓ)
   | smul a x _ hx =>
     intro ℓ

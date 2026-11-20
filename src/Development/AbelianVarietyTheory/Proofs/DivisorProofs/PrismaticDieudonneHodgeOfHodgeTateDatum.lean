@@ -52,7 +52,7 @@ theorem prismaticDieudonneHodgeAt_of_hasDatum : ∀ (p : ℕ) [Fact p.Prime] (C 
         Subtype.ext (LinearMap.ext fun t => by
           change y.1 (tateMap _ _ O (f + g).unop t) =
             y.1 (tateMap _ _ O f.unop t) + y.1 (tateMap _ _ O g.unop t)
-          rw [unop_add, map_add, LinearMap.add_apply, map_add])) }
+          rw [unop_add, map_add (f := _), LinearMap.add_apply, map_add (f := _)])) }
 
   obtain ⟨D, r, hr, nr⟩ := GlobalTheory.CompanionTheory.ModuleReduction.exists_reduction (Ainf p O) O
     (WittVector.fontaineTheta O p) hθ (xi ε) hker (PDivGroup p O)ᵒᵖ (lattFunctor p O)

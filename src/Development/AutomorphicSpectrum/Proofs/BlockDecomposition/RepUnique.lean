@@ -25,8 +25,8 @@ theorem rep_add {a b : IdF A} {j : ℕ} {z z' : ∀ s : ComposableArrows C j, A.
     CrystallineSemistableComparison.Pb.Rep a b (fun s => z s + z' s) (c + c') := by
   obtain ⟨f, hf, rfl, hv⟩ := h
   obtain ⟨f', hf', rfl, hv'⟩ := h'
-  refine ⟨f + f', by rw [map_add, hf, hf', add_zero], rfl, fun s => ?_⟩
-  rw [map_add, ← hv, ← hv']
+  refine ⟨f + f', by rw [map_add (f := _), hf, hf', add_zero], rfl, fun s => ?_⟩
+  rw [map_add (f := _), ← hv, ← hv']
   rfl
 
 theorem rep_smul {a b : IdF A} {j : ℕ} {z : ∀ s : ComposableArrows C j, A.obj (s.obj (Fin.last j))}

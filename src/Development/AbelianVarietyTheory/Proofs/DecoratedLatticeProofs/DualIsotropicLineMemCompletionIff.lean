@@ -50,7 +50,7 @@ theorem cA_mem_idV_one {v : Pl D} {c : AE D} (hc : c ∈ idV (1 : FI D) v) : cA 
     show pairA D.host.F 0 α ⊗ₜ[D.host.F] star ((o : D.host.E)) = _
     rw [ho']
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem mul_incA_mem {S : HSp D} {L : Lat S} {v : Pl D} {c : AE D} (hc : c ∈ idV (1 : FI D) v)
@@ -92,7 +92,7 @@ theorem hA_zero_left (S : HSp D) (y : Fin S.rank → AE D) : hA S 0 y = 0 := by
   simp only [hA, Pi.zero_apply, mul_zero, Finset.sum_const_zero]
 
 theorem hA_add_right (S : HSp D) (w y y' : Fin S.rank → AE D) : hA S w (y + y') = hA S w y + hA S w y' := by
-  simp only [hA, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hA, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hA_neg_right (S : HSp D) (w y : Fin S.rank → AE D) : hA S w (-y) = -hA S w y := by
   simp only [hA, Pi.neg_apply, map_neg, neg_mul, Finset.sum_neg_distrib]
@@ -143,7 +143,7 @@ theorem cA_cA' (x : AE D) : cA D (cA D x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul c e => show c ⊗ₜ[D.host.F] star (star e) = _; rw [star_star]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem cA_gA (S : HSp D) (a b : Fin S.rank) : cA D (gA S a b) = incA D (S.gram b a) :=
   congrArg (incA D) (GlobalTheory.LatVac.gram_star S a b)

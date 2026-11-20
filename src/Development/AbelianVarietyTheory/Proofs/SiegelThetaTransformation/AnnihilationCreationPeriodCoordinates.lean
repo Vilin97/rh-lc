@@ -146,7 +146,7 @@ theorem dRho_eq (C : Ctx S T) (B : C.Bas) (hB : C.IsB B) (G : WO S T → ℂ)
   beta_reduce
   have hw' : w + lineAt C.θ τ z t =
       R (C.realPt w + t • (Pi.single (C.m.e τ) (fun k a => conj (z a k)) : WR C.X S.rank)) := by
-    rw [hline, map_add, hR2 w hw]
+    rw [hline, map_add (f := _), hR2 w hw]
   have hz : C.zOf (C.xB B)
       (R (C.realPt w + t • (Pi.single (C.m.e τ) (fun k a => conj (z a k)) : WR C.X S.rank))) =
       C.zOf (C.xB B) w + t • u := by

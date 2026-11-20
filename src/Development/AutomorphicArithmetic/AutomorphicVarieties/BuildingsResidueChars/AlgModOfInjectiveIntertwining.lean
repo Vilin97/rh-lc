@@ -16,7 +16,7 @@ theorem UpperTheory.algMod_of_injective_intertwining :
     { carrier := {p | ∀ y, f (p.1 y) = p.2 (f y)}
       mul_mem' := fun {a b} ha hb y => (ha _).trans (congrArg a.2 (hb y))
       add_mem' := fun {a b} ha hb y => by
-        simp only [Prod.fst_add, Prod.snd_add, LinearMap.add_apply, map_add, ha y, hb y]
+        simp only [Prod.fst_add, Prod.snd_add, LinearMap.add_apply, map_add (f := _), ha y, hb y]
       algebraMap_mem' := fun c y => map_smul f c y }
   let Z : Fin n → Fin n → S := fun i j => ⟨(E i j, E' i j), h i j⟩
   have h1 : (Formalism.REAL.qdet Z u).1.1 = Formalism.REAL.qdet E u :=

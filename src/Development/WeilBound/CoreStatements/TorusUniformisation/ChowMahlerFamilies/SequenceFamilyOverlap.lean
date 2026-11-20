@@ -169,7 +169,7 @@ theorem clear {O Ω : Type} [CommRing O] [Field Ω] [Algebra O Ω] (R : Subalgeb
       rw [hd, add_comm, pow_add, _root_.mul_assoc]
       exact mul_mem (pow_mem hf d) (hg l)
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add, mul_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _), mul_add]; exact add_mem ha hb
     | smul r b _ hb =>
       rw [map_smul, Algebra.smul_def, mul_left_comm]
       exact mul_mem r.2 hb

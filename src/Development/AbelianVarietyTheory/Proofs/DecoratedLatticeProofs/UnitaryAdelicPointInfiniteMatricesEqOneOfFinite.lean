@@ -14,7 +14,7 @@ variable {D : D7} {X : Formalism.L2.SG.HidaSetting.HidaSetting D} {u : D.what₂
 
 def conjJAt (tr : Formalism.L2.SG.ColDict.Transport X u F) (z : Formalism.L2.Forms.Fr D 0 (Nat.zero_le _)) : X.Vpi u →ₗ[ℂ] ℂ where
   toFun η := star (tr.J η z)
-  map_add' η η' := by simp [map_add]
+  map_add' η η' := by simp [map_add (f := _)]
   map_smul' c η := by simp [map_smulₛₗ]
 
 def rieszJ (tr : Formalism.L2.SG.ColDict.Transport X u F) (z : Formalism.L2.Forms.Fr D 0 (Nat.zero_le _)) : X.Vpi u :=

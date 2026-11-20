@@ -257,7 +257,7 @@ theorem half_baseChange : ∀ (R : Type) [CommRing R] [IsDomain R] (Q : Data R) 
     have K := (key _ (lift (toUnit (TK R₂) ≫ D₂.c a) (toUnit (TK R₂) ≫ D₂.c b)).left z J J₁ J' hJ hJ₁ hJ').trans
       (congrArg₂ (· * ·) (congrArg (fun q => lamVal w₁ q z J J₁) hP)
         (prod_lam (DVR.cP D₂ (TK R₂) a) (DVR.cP D₂ (TK R₂) b) h))
-    rw [TauPull.val_tau _ hJ₁, ← map_add, vψ, vψ, vψ, vρ, DVR.cPoint_add] at A
+    rw [TauPull.val_tau _ hJ₁, ← map_add (f := _), vψ, vψ, vψ, vρ, DVR.cPoint_add] at A
     refine Eq.trans ?_ (congrArg₂ (· * ·) K.symm rfl)
     rw [TauPull.val_tau _ hJ']
     refine Eq.trans ?_ (mul_right_comm _ _ _)

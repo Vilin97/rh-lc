@@ -125,7 +125,7 @@ theorem specToAffineSpaceExtendCoords_appTop_surjective (k : Type u) [Field k] (
         obtain ⟨P, hP⟩ := hp
         obtain ⟨Q, hQ⟩ := hq
         refine ⟨P + Q, ?_⟩
-        rw [map_add, MvPolynomial.eval₂_add, map_add, hP, hQ]
+        rw [map_add (f := _), MvPolynomial.eval₂_add, map_add (f := _), hP, hQ]
     | mul_X p j hp =>
         obtain ⟨P, hP⟩ := hp
         refine ⟨P * AffineSpace.coord (Spec (CommRingCat.of k))

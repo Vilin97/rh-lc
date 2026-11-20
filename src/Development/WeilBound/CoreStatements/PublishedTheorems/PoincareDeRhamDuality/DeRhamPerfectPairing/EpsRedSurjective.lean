@@ -77,7 +77,7 @@ theorem additive_eps (hC : CubeTheorem) {R : Type} [CommRing R] {A B : Over (Sp 
   obtain ⟨N, hN, eN⟩ := cls_surj (Λ (fst A (A ⊗ epsR R)) (snd A (A ⊗ epsR R)))
   have vN : ∀ {Y : Over (Sp R)} (a : Y ⟶ A) (y : Y ⟶ A ⊗ epsR R), evc hN a y = Λ a y := fun a y ↦ by
     rw [evc, eN]
-    simp only [Λ, map_add, map_sub, pull_evc, MonObj.comp_mul, MonObj.comp_one, lift_fst, lift_snd_assoc]
+    simp only [Λ, map_add (f := _), map_sub, pull_evc, MonObj.comp_mul, MonObj.comp_one, lift_fst, lift_snd_assoc]
   have aN : IsAdditive N := (isAdditive_iff hN).2 fun Y a a' y ↦ by
     rw [vN, vN, vN]
     exact cube_family hC hA hM a a' _ _

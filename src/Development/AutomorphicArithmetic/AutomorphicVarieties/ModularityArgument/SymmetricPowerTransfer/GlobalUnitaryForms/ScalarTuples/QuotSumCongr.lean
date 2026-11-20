@@ -63,7 +63,7 @@ private theorem mem_DX_k (g : GL (Fin 2) (Lsq K Δ)) : g ∈ DX Δ ↔
 private theorem tr_det_rat (g : DX Δ) : ∃ a b : K, (mt g).trace = algebraMap K _ a ∧ (mt g).det = algebraMap K _ b ∧ b ≠ 0 := by
   obtain ⟨h1, h2⟩ : mt g 1 1 = star (mt g 0 0) ∧ mt g 1 0 = - star (mt g 0 1) := (mem_DX_k _).1 g.2
   have hd : (mt g).det = algebraMap K _ (QuadraticAlgebra.norm (mt g 0 0) + QuadraticAlgebra.norm (mt g 0 1)) := by
-    rw [Matrix.det_fin_two, h1, h2, map_add, QuadraticAlgebra.algebraMap_norm_eq_mul_star, QuadraticAlgebra.algebraMap_norm_eq_mul_star]
+    rw [Matrix.det_fin_two, h1, h2, map_add (f := _), QuadraticAlgebra.algebraMap_norm_eq_mul_star, QuadraticAlgebra.algebraMap_norm_eq_mul_star]
     ring
   refine ⟨2 * (mt g 0 0).re, _, ?_, hd, ?_⟩
   · rw [Matrix.trace_fin_two, h1]
@@ -107,7 +107,7 @@ private theorem det_one_add (M : Matrix (Fin 2) (Fin 2) (Lsq K Δ)) : (1 + M).de
 
 private theorem tr_det_one_add {τ : K} {γ δ : DX Δ} (hγ : HasTr γ τ) (h : mt δ = 1 + mt γ) :
     (mt δ).trace = algebraMap K _ (2 + τ) ∧ (mt δ).det = algebraMap K _ (2 + τ) := by
-  rw [h, det_one_add, Matrix.trace_add, hγ.1, hγ.2, Matrix.trace_one, map_add, map_ofNat]
+  rw [h, det_one_add, Matrix.trace_add, hγ.1, hγ.2, Matrix.trace_one, map_add (f := _), map_ofNat]
   refine ⟨by simp, by ring⟩
 
 private theorem rel_inj {a b : K} (hb : b ≠ 0) {δ δ' x z : DX Δ} (hz : z ∈ ZD Δ)
@@ -156,11 +156,11 @@ private theorem cover {τ a b : K} {g : DX Δ} (h1 : (mt g).trace = algebraMap K
   set M : Matrix (Fin 2) (Fin 2) (Lsq K Δ) := algebraMap K (Lsq K Δ) r • mt g - 1 with hM
   have hM1 : 1 + M = algebraMap K (Lsq K Δ) r • mt g := by rw [hM]; abel
   have htr : M.trace = algebraMap K _ τ := by
-    rw [hM, Matrix.trace_sub, Matrix.trace_smul, h1, smul_eq_mul, ← map_mul, hra, Matrix.trace_one, map_add, map_ofNat]
+    rw [hM, Matrix.trace_sub, Matrix.trace_smul, h1, smul_eq_mul, ← map_mul, hra, Matrix.trace_one, map_add (f := _), map_ofNat]
     simp
   have hdet : M.det = 1 := by
     have := det_one_add M
-    rw [hM1, Matrix.det_smul, h2, Fintype.card_fin, ← map_pow, ← map_mul, hrb, htr, map_add, map_ofNat] at this
+    rw [hM1, Matrix.det_smul, h2, Fintype.card_fin, ← map_pow, ← map_mul, hrb, htr, map_add (f := _), map_ofNat] at this
     linear_combination -this
   have hd : IsUnit M := by
     rw [Matrix.isUnit_iff_isUnit_det, hdet]

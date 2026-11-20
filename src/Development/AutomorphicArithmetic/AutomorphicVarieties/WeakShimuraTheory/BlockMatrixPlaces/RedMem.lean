@@ -16,7 +16,7 @@ theorem UpperTheory.V.Ws.Bl.redMem :
     rintro Q _ ⟨x, hx, rfl⟩
     exact ⟨x, hx, rfl⟩
   refine ⟨⟨hz.lc.comp (redn A T n), fun g h => ?_, ?_, fun g hg => ?_, fun h hh => ?_⟩, ?_, ?_⟩
-  · rw [hz.coc, map_add, eqv]
+  · rw [hz.coc, map_add (f := _), eqv]
   · rw [hz.cz, map_zero]
   · rw [hz.kill g hg, map_zero]
   · have := img P _ (hz.loc h hh)

@@ -213,7 +213,7 @@ theorem cond_le (v : PlE D.host) (hv : v ∈ placesOver D.host.E (D.ntw.l i))
     fun g h => ?_⟩, Submodule.subset_span
       ⟨_, z, fun g a => fracMap _ (toOk_inj D.ntw i k) (y g a), hz, fun g a => ?_, fun g a => ?_, rfl⟩⟩
   · beta_reduce
-    rw [c₀.2.2, map_add]
+    rw [c₀.2.2, map_add (f := _)]
     exact congrArg _ (push_WKG _ _ (latT D.ntw i s) _ g.1 g.1 (hM g) _)
   · obtain ⟨n, d, hd, e⟩ := IsFractionRing.div_surjective (A := D.ntw.O0 i) (y g a)
     have hd0 := nonZeroDivisors.ne_zero hd

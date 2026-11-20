@@ -44,7 +44,7 @@ theorem ph_det_pow_sub (p : ℕ) [Fact p.Prime] (e : ℕ) {n : ℕ} (M : Matrix 
   obtain ⟨h, hh⟩ := ph_det_pow S p e M'
   refine ⟨h.1, h.2, ?_⟩
   have h2 := congrArg S.val hh
-  rw [AlgHom.map_det, map_add, map_pow, AlgHom.map_det, map_mul, map_natCast] at h2
+  rw [AlgHom.map_det, map_add (f := _), map_pow, AlgHom.map_det, map_mul, map_natCast] at h2
   have e1 : S.val.mapMatrix (M'.map (· ^ p ^ e)) = M.map (· ^ p ^ e) := by
     ext i j; simp [M']
   have e2 : S.val.mapMatrix M' = M := by
@@ -62,7 +62,7 @@ theorem Spl_pow (π D h : A) (hπ : π ∈ S) (hD : D ∈ S) (hh : h ∈ S) (P n
   obtain ⟨b, rfl⟩ := Ideal.mem_span_singleton'.1 hz
   refine ⟨a.1, a.2, b.1, b.2, ?_⟩
   have h2 := congrArg S.val hyz
-  simp only [map_add, map_mul, map_pow, Subalgebra.coe_val] at h2
+  simp only [map_add (f := _), map_mul, map_pow, Subalgebra.coe_val] at h2
   rw [← h2]; ring
 
 theorem Spl_one (π : A) : Spl S π 1 1 := ⟨1, one_mem _, 0, zero_mem _, by simp⟩
@@ -260,7 +260,7 @@ theorem restPh : RestPh := by
     MvPolynomial.map (algebraMap O (KK O)) Y0,
     bc_IT_of_supp X.Fr _ (mul_mem (prod_mem fun j _ => pow_mem (ph_DlO_mem X _) _) hH0), inWj_map _, ?_⟩
   rw [he]
-  simp only [map_add, map_mul, map_prod, map_pow, ph_DsO_map, ph_DlO_map]
+  simp only [map_add (f := _), map_mul, map_prod, map_pow, ph_DsO_map, ph_DlO_map]
   have E1 : ∏ s ∈ X.Fr.TT, X.sb (Dtop p n' O X.Fr X.hH.2.2.1 X.g (s.val : ℤ)) ^ (X.m1 c' - c') =
       X.sb (DtopProd p n' O X.Fr X.hH.2.2.1 X.g ((2 * X.Q + 3) * c')) * X.DkQ := by
     unfold Ctx.DkQ DtopProd

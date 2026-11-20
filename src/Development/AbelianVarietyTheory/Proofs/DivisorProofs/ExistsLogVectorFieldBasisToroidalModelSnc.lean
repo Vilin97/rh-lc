@@ -27,7 +27,7 @@ theorem mem_of_mul_mem {R : Type} [CommRing R] [IsNoetherianRing R] (hQ : ∀ n 
     | succ n ih =>
       have := hI _ ih
       have hn : d ((n : R) + 1) = 0 := by simp
-      rw [map_add, d.leibniz, d.leibniz, ht, hn, ← hb, ← hb] at this
+      rw [map_add (f := _), d.leibniz, d.leibniz, ht, hn, ← hb, ← hb] at this
       convert this using 1
       simp only [smul_eq_mul]
       push_cast

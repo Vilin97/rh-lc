@@ -45,7 +45,7 @@ theorem exists_form {X : Type} [MeasurableSpace X] (ν : Measure X) [IsFiniteMea
     simp only [Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, mul_assoc]
   · intro f g g'
     rw [← integral_add (hi f g) (hi f g')]
-    simp only [Submodule.coe_add, Pi.add_apply, map_add, mul_add]
+    simp only [Submodule.coe_add, Pi.add_apply, map_add (f := _), mul_add]
   · intro c f g
     rw [smul_eq_mul, ← integral_const_mul]
     simp only [Submodule.coe_smul, Pi.smul_apply, smul_eq_mul, map_mul, mul_left_comm]

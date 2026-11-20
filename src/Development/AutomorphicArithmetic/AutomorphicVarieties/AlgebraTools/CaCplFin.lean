@@ -132,7 +132,7 @@ theorem UpperTheory.V.AlgebraTools.IsCplAt.finite_of_finite :
     | mem x hx => exact Algebra.subset_adjoin ⟨x, hx, rfl⟩
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact S.add_mem hx hy
     | smul a x _ hx =>
       rw [Algebra.smul_def, map_mul, hΛ]

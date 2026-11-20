@@ -59,7 +59,7 @@ theorem latAtV_param : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Num
     | add x y _ _ hx hy =>
       obtain ⟨a, rfl⟩ := hx
       obtain ⟨b, rfl⟩ := hy
-      exact ⟨a + b, by simp only [Pi.add_apply, AddMemClass.coe_add, map_add, add_smul, Finset.sum_add_distrib]⟩
+      exact ⟨a + b, by simp only [Pi.add_apply, AddMemClass.coe_add, map_add (f := _), add_smul, Finset.sum_add_distrib]⟩
     | neg x _ hx =>
       obtain ⟨a, rfl⟩ := hx
       exact ⟨-a, by simp only [Pi.neg_apply, NegMemClass.coe_neg, map_neg, neg_smul, Finset.sum_neg_distrib]⟩

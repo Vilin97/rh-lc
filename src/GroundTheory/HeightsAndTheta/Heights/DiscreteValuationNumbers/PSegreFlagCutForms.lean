@@ -366,7 +366,7 @@ theorem SegreFlagCutForms.proof : SegreFlagCutForms.Statement := by
         ((mem_weightedHomogeneousSubmodule _ _ _ _).mpr hp.2.1)
         (Submodule.smul_mem _ r ((mem_weightedHomogeneousSubmodule _ _ _ _).mpr hq.2.1)))
     · show aeval pt (p.1 + r • q.1) = τ * aeval pt (p.2 + r • q.2)
-      rw [map_add, map_add, map_smul, map_smul, hp.2.2, hq.2.2, mul_add, mul_smul_comm]
+      rw [map_add (f := _), map_add (f := _), map_smul, map_smul, hp.2.2, hq.2.2, mul_add, mul_smul_comm]
 
   have hpair : ∀ (Q : Ideal (MRing (bundleIdx (bundleIdx ι M) M') O)) (c : ∀ j, ι j),
       segreVec y c ≠ 0 → chartMonoZ O M M' c β ∉ Q → ∃ p ∈ G, p.2 ∉ Q := by

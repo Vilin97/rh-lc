@@ -79,7 +79,7 @@ theorem UpperTheory.ConvolutionTheory.R2.Ff.dLCen :
     rw [← smul_add, dE_sum, smul_neg]
   · simp only [Fo.Ops.dL, ← Finset.sum_add_distrib, ← add_smul]
     refine Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
-    rw [show (Y + Y') i j = Y i j + Y' i j from rfl, map_add]
+    rw [show (Y + Y') i j = Y i j + Y' i j from rfl, map_add (f := _)]
   · simp only [Fo.Ops.dL, Finset.smul_sum]
     refine Finset.sum_congr rfl fun τ _ => Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     rw [show (c • Y) i j = c • Y i j from rfl, UpperTheory.V.FieldIso.coord_smul, Complex.real_smul, mul_smul]
@@ -90,7 +90,7 @@ theorem UpperTheory.ConvolutionTheory.R2.Ff.dLCen :
     set_option synthInstance.maxHeartbeats 100000 in
       rw [hz, map_sum]
     refine Finset.sum_congr rfl fun v _ => ?_
-    rw [map_smul, map_add]
+    rw [map_smul, map_add (f := _)]
     first
       | rfl
       | exact (Complex.coe_smul _ _).symm

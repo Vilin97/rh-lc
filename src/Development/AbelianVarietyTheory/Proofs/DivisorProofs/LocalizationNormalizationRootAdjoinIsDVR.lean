@@ -67,7 +67,7 @@ theorem main : ∀ (S K L : Type) [CommRing S] [IsDomain S] [IsDiscreteValuation
       induction z using TensorProduct.induction_on with
       | zero => simp
       | tmul y l => simp [TensorProduct.smul_tmul']
-      | add u v hu hv => rw [smul_add, map_add, hu, hv]
+      | add u v hu hv => rw [smul_add, map_add (f := _), hu, hv]
     have h1 : a • (x : TensorProduct S D L) = 0 := congrArg Subtype.val hax
     rw [hsmul, ← map_zero (LinearMap.rTensor L (LinearMap.mulLeft S a))] at h1
     exact Subtype.ext (hinj h1)

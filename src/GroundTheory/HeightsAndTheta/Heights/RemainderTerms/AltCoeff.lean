@@ -176,7 +176,7 @@ theorem IsAlt.mul_symm {P S : MvPolynomial (Fin m) ℚ} (hP : IsAlt P) (hS : S.I
   rw [map_mul, hP σ, hS σ, smul_mul_assoc]
 
 theorem IsAlt.add {P Q : MvPolynomial (Fin m) ℚ} (hP : IsAlt P) (hQ : IsAlt Q) : IsAlt (P + Q) := by
-  intro σ; rw [map_add, hP σ, hQ σ, smul_add]
+  intro σ; rw [map_add (f := _), hP σ, hQ σ, smul_add]
 
 theorem IsAlt.sub {P Q : MvPolynomial (Fin m) ℚ} (hP : IsAlt P) (hQ : IsAlt Q) : IsAlt (P - Q) := by
   intro σ; rw [map_sub, hP σ, hQ σ, smul_sub]

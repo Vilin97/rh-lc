@@ -23,7 +23,7 @@ def transport {E E' : Type} [AddCommGroup E] [Module R E] [AddCommGroup E'] [Mod
   onto v hv := by
     obtain ⟨w, hw⟩ := M.onto v hv
     exact ⟨e w, by simpa using hw⟩
-  add a b := by rw [map_add, M.add]
+  add a b := by rw [map_add (f := _), M.add]
   smul c a := by rw [map_smul]; exact M.smul c _
 
 theorem transport_pt {E E' : Type} [AddCommGroup E] [Module R E] [AddCommGroup E'] [Module R E'] (M : LieModel G x E)

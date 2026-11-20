@@ -42,7 +42,7 @@ private theorem affine_ker {R Γ M : Type} [CommRing R] [Group Γ] [TopologicalS
       map_one' := funext fun m => by simp [y1]; rfl
       map_mul' := fun g h => funext fun m => by
         show _ = y g + ρ g (y h + ρ h m)
-        rw [h2, map_mul, map_add, add_assoc]; rfl }
+        rw [h2, map_mul, map_add (f := _), add_assoc]; rfl }
   have key : ∀ g, g ∈ a.ker ↔ ρ g = 1 ∧ y g = 0 := by
     intro g
     rw [MonoidHom.mem_ker]

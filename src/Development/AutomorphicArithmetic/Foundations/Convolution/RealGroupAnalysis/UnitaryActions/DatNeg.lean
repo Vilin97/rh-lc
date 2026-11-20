@@ -29,7 +29,7 @@ theorem UpperTheory.ConvolutionTheory.R2.datNeg :
     have hz := b.sum_repr z
     rw [Fin.sum_univ_two, h0, h1, Algebra.smul_def, Algebra.smul_def] at hz
     rw [← hz]
-    simp only [map_add, map_mul, map_one, hτ, Complex.conj_ofReal, hreal]
+    simp only [map_add (f := _), map_mul, map_one, hτ, Complex.conj_ofReal, hreal]
   apply IsTotallyComplex.complexEmbedding_not_isReal τ
   rw [NumberField.ComplexEmbedding.isReal_iff]
   ext z

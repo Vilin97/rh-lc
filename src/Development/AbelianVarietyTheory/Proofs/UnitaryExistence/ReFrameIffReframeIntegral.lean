@@ -39,7 +39,7 @@ theorem isPullback_dualMap (f : R →+* R') :
   · have hs : ∀ x, s.inl.hom (algebraMap R (DualNumber R) x) = s.inr.hom (f x) := fun x =>
       RingHom.congr_fun (congrArg CommRingCat.Hom.hom s.condition) x
     refine CommRingCat.hom_ext (RingHom.ext fun x => ?_)
-    conv_rhs => rw [dec x, map_add, map_mul, hs, hs]
+    conv_rhs => rw [dec x, map_add (f := _), map_mul, hs, hs]
     simp [DualNumber.lift_apply_apply, dualMap]
     rfl
   · refine CommRingCat.hom_ext (RingHom.ext fun x => ?_)
@@ -49,7 +49,7 @@ theorem isPullback_dualMap (f : R →+* R') :
       rw [← h₁, ← he]; rfl
     have e₂ : ∀ x, m.hom (algebraMap R' (DualNumber R') x) = s.inr.hom x := fun x => by rw [← h₂]; rfl
     refine CommRingCat.hom_ext (RingHom.ext fun x => ?_)
-    conv_lhs => rw [dec x, map_add, map_mul, e₁, e₂, e₂]
+    conv_lhs => rw [dec x, map_add (f := _), map_mul, e₁, e₂, e₂]
     simp [DualNumber.lift_apply_apply]
     rfl
 

@@ -190,9 +190,9 @@ theorem exists_lat {l n : ℕ} {R : RingPG k l} {F : DFun R n G} {ι : k⸨X⸩ 
     change W.DelF.card • (x₁ : W.DD T) = ∑ δ ∈ W.DelF, W.γD T δ (a' • y) + PD.p • ∑ δ ∈ W.DelF, W.γD T δ (a' • z)
     rw [Finset.smul_sum, ← Finset.sum_add_distrib, ← Finset.sum_const]
     refine Finset.sum_congr rfl fun δ hδ => ?_
-    rw [← map_nsmul, ← map_add, ← hx₁, x₁.2 δ hδ]
+    rw [← map_nsmul, ← map_add (f := _), ← hx₁, x₁.2 δ hδ]
   have hj := congrArg (p.j T A q i) key
-  rw [map_nsmul, map_add, map_nsmul, p.j_smul T A q hq i a c x x₁ hc rfl,
+  rw [map_nsmul, map_add (f := _), map_nsmul, p.j_smul T A q hq i a c x x₁ hc rfl,
     ← Nat.cast_smul_eq_nsmul k PD.p, hp, zero_smul, add_zero] at hj
   have hy₁ : p.j T A q i y₁ ∈ Submodule.span k⟦X⟧ (Set.range fun j => p.j T A q i (b' j)) :=
     (hmem _).2 ⟨y₁, sum_mem fun δ _ => W.N_Γ T δ _ ((W.N T).smul_mem _ hy), rfl⟩

@@ -78,7 +78,7 @@ theorem sT_sES (E : Fin n → Fin n → Module.End ℂ M) (V : Submodule ℂ M) 
     sT E V (sES V x) = eeV E (sT E V x) := by
   induction x using Finsupp.induction_linear with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | single p v =>
     obtain ⟨w, c⟩ := p
     funext d'
@@ -97,7 +97,7 @@ theorem sθ_sES (V : Submodule ℂ M) (EM : Fin n → Fin n → Module.End ℂ M
     (x : KS (n := n) V) : sθ V EM φ ℓ (sES V x) = eeV EM (sθ V EM φ ℓ x) := by
   induction x using Finsupp.induction_linear with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | single p v =>
     obtain ⟨w, c⟩ := p
     funext d'
@@ -118,7 +118,7 @@ theorem tensorWord_prepend (E : Fin n → Fin n → Module.End ℂ M) (V : Submo
       E a b (sT E V x c') := by
   induction x using Finsupp.induction_linear with
   | zero => simp
-  | add x y hx hy => simp only [Finsupp.mapDomain_add, map_add, Pi.add_apply, hx, hy]
+  | add x y hx hy => simp only [Finsupp.mapDomain_add, map_add (f := _), Pi.add_apply, hx, hy]
   | single p v =>
     obtain ⟨w, c⟩ := p
     rw [Finsupp.mapDomain_single, sT_single, sT_single, wordAction_cons]

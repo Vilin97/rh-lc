@@ -101,7 +101,7 @@ def rowsMap (h2 : X.H2 cr b) (I : RowsId X b c E) (hn : 0 < X.nP b) : (Fin ((lv 
     have h1 := Classical.choose_spec (iC_mem_range X cr b h2 I (y + z))
     have h3 := Classical.choose_spec (iC_mem_range X cr b h2 I y)
     have h4 := Classical.choose_spec (iC_mem_range X cr b h2 I z)
-    rw [h1, map_add I.e, h3, h4, map_add])
+    rw [h1, map_add I.e, h3, h4, map_add (f := _)])
   map_smul' a y := I.e_injective hn (by
     have h1 := Classical.choose_spec (iC_mem_range X cr b h2 I (a • y))
     have h3 := Classical.choose_spec (iC_mem_range X cr b h2 I y)
@@ -147,7 +147,7 @@ theorem mk_eq_of_twist (σ : K →+* ℂ) (hcc : c = RingHom.id ℂ ∨ c = star
 def jEE (h2 : X.H2 cr b) (I : RowsId X b c E) (hn : 0 < X.nP b) (σ : K →+* ℂ) (hc : ∀ a, Bs.v0.embedding a = c (σ a)) :
     (Fin ((lv (fc X.zs) b).dQ Bs.μ0) → K) →ₛₗ[σ] E where
   toFun x := rowsMap X cr b h2 I hn (cptL Bs.v0.embedding _ x)
-  map_add' x y := by rw [map_add, map_add]
+  map_add' x y := by rw [map_add (f := _), map_add (f := _)]
   map_smul' a x := by
     show rowsMap X cr b h2 I hn (cptL Bs.v0.embedding _ (a • x)) = σ a • rowsMap X cr b h2 I hn (cptL Bs.v0.embedding _ x)
     rw [map_smulₛₗ, map_smulₛₗ, hc a, I.c_c]

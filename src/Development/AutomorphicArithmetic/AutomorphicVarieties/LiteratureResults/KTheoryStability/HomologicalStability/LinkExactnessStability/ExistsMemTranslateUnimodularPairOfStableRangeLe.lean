@@ -104,7 +104,7 @@ theorem unimodular_partner_aff : ∀ (R : Type) [CommRing R] (s : ℕ), StableRa
     simp [x, hy0 m hm]
   have hφx : φ x = 0 := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [x, map_add, hφj, zero_add, y, map_sum]
+      simp only [x, map_add (f := _), hφj, zero_add, y, map_sum]
     exact Finset.sum_eq_zero fun i _ => hφs _ _ i.isLt
   let v' : ℕ →₀ R := v - v j • x
   have hv'i : ∀ i : Fin n, v' i = v i + v j * (t i * a j) := by
@@ -129,7 +129,7 @@ theorem unimodular_partner_aff : ∀ (R : Type) [CommRing R] (s : ℕ), StableRa
   have hvdec : v = v' + v j • x := by simp [v']
   have hhv : h v = 1 + v j * h x := by
     conv_lhs => rw [hvdec]
-    rw [map_add, map_smul, hh, smul_eq_mul]
+    rw [map_add (f := _), map_smul, hh, smul_eq_mul]
   have hf1x : f1 x = 0 := by
     simp only [f1, LinearMap.sub_apply, LinearMap.smul_apply, Finsupp.lapply_apply, smul_eq_mul, hxj]
     ring

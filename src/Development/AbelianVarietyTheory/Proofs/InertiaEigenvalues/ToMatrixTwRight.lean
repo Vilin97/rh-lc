@@ -209,7 +209,7 @@ theorem mem_lat (e : Basis (Fin n) E V) (y : V) :
     | zero => intro i; exact ⟨0, by simp⟩
     | add x z _ _ hx hz =>
       intro i
-      rw [map_add, Finsupp.add_apply]
+      rw [map_add (f := _), Finsupp.add_apply]
       exact Subring.add_mem _ (hx i) (hz i)
     | smul a x _ hx =>
       intro i

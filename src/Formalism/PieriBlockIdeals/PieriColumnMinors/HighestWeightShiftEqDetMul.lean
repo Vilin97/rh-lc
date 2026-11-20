@@ -153,7 +153,7 @@ private theorem divOp_mem_weyl (R : Type) [CommRing R] {r : ℕ} (μ : Fin r →
   | zero => simp [rowDiv]
   | add x y _ _ hx hy =>
     unfold rowDiv at hx hy ⊢
-    rw [map_add, Polynomial.coeff_add]
+    rw [map_add (f := _), Polynomial.coeff_add]
     exact Submodule.add_mem _ hx hy
   | smul c x _ hx =>
     unfold rowDiv at hx ⊢
@@ -271,7 +271,7 @@ theorem weighted_homogeneous_cancel {σ : Type} {n : ℕ} (w : σ → Fin n → 
         · exfalso
           apply hy
           have h1 := hD hx
-          rw [← hxy', map_add, h1] at he
+          rw [← hxy', map_add (f := _), h1] at he
           exact add_left_cancel he
     · refine Finset.sum_eq_zero ?_
       rintro ⟨x, y⟩ hxy
@@ -287,7 +287,7 @@ theorem weighted_homogeneous_cancel {σ : Type} {n : ℕ} (w : σ → Fin n → 
         · simp [hx]
         · exfalso
           apply he
-          rw [← hxy', map_add, hD hx, hy]
+          rw [← hxy', map_add (f := _), hD hx, hy]
       · simp
   have hz : D * weightedHomogeneousComponent w (Finsupp.weight w d) g = 0 := by
     ext e

@@ -119,7 +119,7 @@ theorem exists_step [IsNonarchimedeanLocalField F] [CharZero F] (j : Fin (r + 1)
   have hux : hf L S.Hm u x = 0 := by rw [← hf_cj L S.herm.1, hlow x hx, map_zero]
   have hs : algebraMap F E 2⁻¹ * hf L S.Hm u u + L.cj (algebraMap F E 2⁻¹ * hf L S.Hm u u) =
       hf L S.Hm u u := by
-    rw [map_mul, AlgEquiv.commutes, hf_cj L S.herm.1, ← add_mul, ← map_add]
+    rw [map_mul, AlgEquiv.commutes, hf_cj L S.herm.1, ← add_mul, ← map_add (f := _)]
     norm_num
   obtain ⟨n, hn, h1, h2⟩ := eichler_isometry L S.Hm S.herm x u _
     (spanTo_le_perp S g T gram hxX x hxX) hux hs

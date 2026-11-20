@@ -70,7 +70,7 @@ theorem d2_cup (hd : ∀ g x y, P (ρ g x) (ρ' g y) = ((cycLL PD LL g : LLˣ) :
   show charRep (cycLL PD LL) g (P (a h) (ρ' h (b k))) - P (a (g * h)) (ρ' (g * h) (b k)) +
     P (a g) (ρ' g (b (h * k))) - P (a g) (ρ' g (b h)) = 0
   rw [char_pair PD hd, ha, hb, map_mul, Module.End.mul_apply]
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   ring
 
 theorem d1_pair (hd : ∀ g x y, P (ρ g x) (ρ' g y) = ((cycLL PD LL g : LLˣ) : LL) * P x y)
@@ -82,7 +82,7 @@ theorem d1_pair (hd : ∀ g x y, P (ρ g x) (ρ' g y) = ((cycLL PD LL g : LLˣ) 
   show charRep (cycLL PD LL) g (P (a h) (b h)) - P (a (g * h)) (b (g * h)) + P (a g) (b g) =
     -P (a g) (ρ' g (b h)) - P (ρ g (a h)) (b g)
   rw [char_pair PD hd, ha, hb]
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   ring
 
 variable [TopologicalSpace LL]
@@ -106,7 +106,7 @@ theorem cob_of_left (hd : ∀ g x y, P (ρ g x) (ρ' g y) = ((cycLL PD LL g : LL
   show charRep (cycLL PD LL) g (P x (b h)) - P x (b (g * h)) + P x (b g) =
     P (a g) (ρ' g (b h))
   rw [char_pair PD hd, ha, hb]
-  simp only [map_add, map_sub, LinearMap.sub_apply]
+  simp only [map_add (f := _), map_sub, LinearMap.sub_apply]
   ring
 
 end Cup

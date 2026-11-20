@@ -202,7 +202,7 @@ theorem moves_of_link : Hypotheses2 → ∀ (k : Type) [CommRing k] (X : Scheme.
     have s1 := bil_symm (fun j => cl (G j)) hs (cl (H i.succ)) (cl (H i.castSucc))
     have s2 := bil_symm (fun j => cl (G j)) hs (cl (H i.succ)) (cl (L i))
     have s3 := bil_symm (fun j => cl (G j)) hs (cl (H i.castSucc)) (cl (L i))
-    simp only [map_add, map_sub, map_smul, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply,
+    simp only [map_add (f := _), map_sub, map_smul, LinearMap.add_apply, LinearMap.sub_apply, LinearMap.smul_apply,
       smul_eq_mul] at hb ⊢
     linear_combination (2 * (m : ℝ)) * hb + (m : ℝ) ^ 2 * s1 - (m : ℝ) * s2 + (m : ℝ) * s3
   rw [← sub_eq_zero, ← Finset.sum_sub_distrib]

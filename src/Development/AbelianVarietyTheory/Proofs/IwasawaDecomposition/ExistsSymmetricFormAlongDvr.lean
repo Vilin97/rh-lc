@@ -155,9 +155,9 @@ theorem main : ∀ (R : Type) [CommRing R] [IsDomain R] [IsLocalRing R] [CharZer
   have hBa : ∀ a b, B a b = QForm.bOf D' Q a b := fun _ _ => rfl
   let be : LinearMap.BilinForm ℤ Dg.toPre.X :=
     LinearMap.mk₂ ℤ (fun y z => B (hD.xe.symm y) (hD.xe.symm z))
-      (fun y y' z => by simp only [map_add, AddMonoidHom.add_apply])
+      (fun y y' z => by simp only [map_add (f := _), AddMonoidHom.add_apply])
       (fun c y z => by simp only [map_zsmul, AddMonoidHom.smul_apply, smul_eq_mul])
-      (fun y z z' => by simp only [map_add])
+      (fun y z z' => by simp only [map_add (f := _)])
       (fun c y z => by simp only [map_zsmul, smul_eq_mul])
   have hbe : ∀ y z, be y z = QForm.bOf D' Q (hD.xe.symm y) (hD.xe.symm z) := fun _ _ => rfl
   refine ⟨be, fun y z => by rw [hbe, hbe, bOf_comm'], fun y => ?_⟩

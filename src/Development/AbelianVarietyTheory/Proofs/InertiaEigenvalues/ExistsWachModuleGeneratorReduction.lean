@@ -58,7 +58,7 @@ theorem exists_letter_reduction : ∀ {G : Type} [Group G] [TopologicalSpace G] 
     rw [map_mul, hpa, hf, map_pow, ← h, mul_assoc, ← mul_pow, h1, one_pow, mul_one]
   · obtain ⟨a, m, y, h⟩ := hd e
     have h1 := congrArg (p i) h
-    rw [map_mul, he, zero_mul, map_add, map_mul, hpa, hpa, hP, zero_mul, add_zero, hf] at h1
+    rw [map_mul, he, zero_mul, map_add (f := _), map_mul, hpa, hpa, hP, zero_mul, add_zero, hf] at h1
     have h2 : PowerSeries.map (algebraMap O k) (a i) = 0 :=
       (IsFractionRing.injective k⟦X⟧ k⸨X⸩) (by rw [map_zero]; exact h1.symm)
     have h3 : ∀ j, ∃ d, PowerSeries.coeff j (a i) = lam * d := fun j => (hker _).1 (by

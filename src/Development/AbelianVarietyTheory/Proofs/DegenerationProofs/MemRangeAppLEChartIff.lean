@@ -25,7 +25,7 @@ def wtZeroSubring {S : Scheme.{0}} {H : Over S} [GrpObj H] {X : Type} [AddCommGr
     rw [charUnit_zero_val, map_one, _root_.one_mul] at h₁ h₂ ⊢
     rw [map_mul, map_mul, h₁, h₂]
   add_mem' := fun {a b} ha hb Y t g h h' => by
-    rw [map_add, map_add, ha Y t g h h', hb Y t g h h', mul_add]
+    rw [map_add (f := _), map_add (f := _), ha Y t g h h', hb Y t g h h', mul_add]
   neg_mem' := fun {a} ha Y t g h h' => by
     rw [map_neg, map_neg, ha Y t g h h', mul_neg]
 
@@ -53,7 +53,7 @@ theorem mem_range_appLE_chart_iff {R : Type} [CommRing R] {N : ℕ} {Y : Scheme.
     | C r =>
       rw [MvPolynomial.eval₂Hom_C]
       exact Subring.subset_closure (Or.inl ⟨_, rfl⟩)
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | mul_X p j hp =>
       rw [map_mul, MvPolynomial.eval₂Hom_X']
       exact mul_mem hp (Subring.subset_closure (Or.inr ⟨j, rfl⟩))

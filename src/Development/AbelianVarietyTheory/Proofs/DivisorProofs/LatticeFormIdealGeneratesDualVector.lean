@@ -10,7 +10,7 @@ theorem exists_coords_of_alt_ne_zero {F V : Type} [Field F] [AddCommGroup V] [Mo
     {x x' : V} (h : B x x' ≠ 0) (v : V) : ∃ c c' : F, v = c • x + c' • x' := by
   have hanti : B x' x = - B x x' := by
     have h1 := hB (x + x')
-    simp only [map_add, LinearMap.add_apply, hB] at h1
+    simp only [map_add (f := _), LinearMap.add_apply, hB] at h1
     linear_combination h1
   have hli : LinearIndependent F ![x, x'] := by
     rw [LinearIndependent.pair_iff]
@@ -63,7 +63,7 @@ theorem exists_fractionalIdeal_pairing_values :
       FractionalIdeal.spanSingleton (𝓞 F)⁰ c' * J : FractionalIdeal (𝓞 F)⁰ F) :
       Submodule (𝓞 F) F) := by
     rintro _ ⟨z, hz, rfl⟩
-    rw [FractionalIdeal.coe_add, map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul]
+    rw [FractionalIdeal.coe_add, map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul]
     refine Submodule.add_mem_sup ?_ ?_
     · exact FractionalIdeal.mul_mem_mul (FractionalIdeal.mem_spanSingleton_self _ _)
         (hLJ z hz x hx)
@@ -76,7 +76,7 @@ theorem exists_fractionalIdeal_pairing_values :
   have h2 := hK _ (show B x' (c • x + c' • x') ∈ M from ⟨x', hx', rfl⟩)
   have hanti : B x' x = - B x x' := by
     have h1 := hB (x + x')
-    simp only [map_add, LinearMap.add_apply, hB] at h1
+    simp only [map_add (f := _), LinearMap.add_apply, hB] at h1
     linear_combination h1
   simp [hB, hanti, hxx] at h1 h2
   apply hv

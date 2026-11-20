@@ -103,7 +103,7 @@ theorem UpperTheory.lattice_grading_log_product :
   let w : AbsoluteValue K ℝ := (NormedField.toAbsoluteValue ℂ_[p]).comp j.injective
   have hwa : ∀ b, w b = ‖j b‖ := fun b => rfl
   have hna : IsNonarchimedean w := fun a b => by
-    rw [hwa, hwa, hwa, map_add]
+    rw [hwa, hwa, hwa, map_add (f := _)]
     exact IsUltrametricDist.norm_add_le_max _ _
   have hsm : ∀ (r : 𝓞 K) (b : K), ‖j (r • b)‖ ≤ ‖j b‖ := fun r b => by
     rw [Algebra.smul_def, map_mul, norm_mul]
@@ -119,7 +119,7 @@ theorem UpperTheory.lattice_grading_log_product :
       exact h1
     | zero => simp
     | add a b _ _ ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
     | smul r a _ ha => exact (hsm r a).trans ha
   have hsup : sSup ((fun b => w b) '' (𝔞 : Set K)) = ‖j (Matrix.of fun i k => x k i).det‖ := by

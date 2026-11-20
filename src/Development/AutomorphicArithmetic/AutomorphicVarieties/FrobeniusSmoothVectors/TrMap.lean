@@ -31,7 +31,7 @@ private theorem trZ (e : W ≃ₗ[K] W') (ρ : Representation K G W) (ρ' : Repr
     intro s
     apply forall_congr'
     intro t
-    rw [h, ← map_add]
+    rw [h, ← map_add (f := _)]
     exact e.injective.eq_iff
   · apply forall_congr'
     intro v

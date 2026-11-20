@@ -290,7 +290,7 @@ theorem exists_apply_self_eq_one [Finite K] (hs : ∃ a : K, star a ≠ a)
     have htr : ∀ b : K, b + star b = 0 := by
       intro b
       have h1 := hne ((b / h x y) • x + y)
-      simp only [map_add, map_smul, LinearMap.map_smulₛₗ, LinearMap.add_apply,
+      simp only [map_add (f := _), map_smul, LinearMap.map_smulₛₗ, LinearMap.add_apply,
         LinearMap.smul_apply, hne, smul_eq_mul, starRingEnd_apply, hh x y, mul_zero, zero_add,
         add_zero, ← star_mul', div_mul_cancel₀ _ hxy] at h1
       linear_combination h1

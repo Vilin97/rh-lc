@@ -101,7 +101,7 @@ theorem fock_map_of_ccr : ∀ {V : Type} [AddCommGroup V] [Module ℂ V] {W : Ty
     clear hX hD hpd hinj0 hcr hm hd0 hvac hccr hsmul hadd hf₀
     set_option synthInstance.maxHeartbeats 100000 in
       rw [← hL w (heisOp (c w)), GlobalTheory.T.fockHeisenbergOperatorOfCoords_eq_sum_mulLeft_pderiv (c w), map_sum]
-    simp only [map_add, map_smul]
+    simp only [map_add (f := _), map_smul]
     simp only [hL]
   rw [GlobalTheory.T.heisenberg_family_expand_creation_annihilation H hadd hsmul c]
   set_option synthInstance.maxHeartbeats 100000 in

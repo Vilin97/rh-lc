@@ -208,6 +208,6 @@ theorem isCombIn_of_chart : ∀ (Y : Scheme.{0}) (V V' : Y.Opens), IsAffineOpen 
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [chartHom_comp V' g (w i) (hw' i) (h3 i), chartHom_comp V' g u hu' h1, map_mul, map_sub]
   rw [hsum, chartHom_comp V' g c hc' h2, chartHom_comp V' g u hu' h1] at hxx
-  rw [map_sub, map_add, hxx, sub_self]
+  rw [map_sub, map_add (f := _), hxx, sub_self]
 
 end GlobalTheory.SecGlue

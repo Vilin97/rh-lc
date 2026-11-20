@@ -32,7 +32,7 @@ theorem mcPts_torus {B : Ideal (MRing ι)} (hB : IsMultiHomogIdeal B) {z : (Σ k
     rw [IndefiniteRowSideFullHecke.HeightsSet.CurveComplexPoint.eval₂_smul_homog s a ha, ← eval_map, hz.2 s (Ideal.subset_span hs),
       mul_zero]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, eval_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [map_add (f := _), eval_add, hx, hy, add_zero]
   | smul r x _ hx => rw [smul_eq_mul, map_mul, eval_mul, hx, mul_zero]
 
 end Boundary

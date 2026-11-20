@@ -54,7 +54,7 @@ theorem kerRSt : KerRSt := by
       | add a b _ _ ha hb =>
         obtain ⟨k, hk, e⟩ := ha
         obtain ⟨k', hk', e'⟩ := hb
-        exact ⟨k + k', K.add_mem hk hk', by rw [map_add, e, e', smul_add]⟩
+        exact ⟨k + k', K.add_mem hk hk', by rw [map_add (f := _), e, e', smul_add]⟩
       | smul s a _ ha =>
         obtain ⟨k, hk, e⟩ := ha
         exact ⟨s • k, K.smul_mem s hk, by rw [map_smul, e, smul_comm]⟩

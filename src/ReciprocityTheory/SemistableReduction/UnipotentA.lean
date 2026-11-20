@@ -81,7 +81,7 @@ theorem unip_pow_card_eq_zero {K : Type*} [Field K] [CharZero K] {r : ℕ} (N : 
       | exact Polynomial.modByMonic_add_div P m
   have hPeq : aeval N P' = aeval N P := by
     have h := congrArg (aeval N) hdiv
-    rw [map_add, map_mul, hm0, zero_mul, add_zero] at h
+    rw [map_add (f := _), map_mul, hm0, zero_mul, add_zero] at h
     exact h
   have hP'deg : P'.natDegree ≤ r := by
     rw [hP']

@@ -56,7 +56,7 @@ def howeSpace (π : Representation ℂ (GL (Fin n) E) V) (ψ : AddChar E Circle)
   carrier := {v | ∀ x ∈ S, π x v = (ψ (GlobalTheory.Whittaker.superDiag x) : ℂ) • v}
   add_mem' := by
     intro a b ha hb x hx
-    rw [map_add, ha x hx, hb x hx, smul_add]
+    rw [map_add (f := _), ha x hx, hb x hx, smul_add]
   zero_mem' := by intro x _; simp
   smul_mem' := by
     intro c v hv x hx

@@ -41,7 +41,7 @@ theorem main (S : Type) [inst : CommRing S] [Finite S] [IsReduced S] (t m f : S)
     exact h
   choose a b hab using key
   refine ⟨e.symm a, e.symm b, e.injective ?_⟩
-  simp only [map_add, map_mul, map_pow, RingEquiv.apply_symm_apply]
+  simp only [map_add (f := _), map_mul, map_pow, RingEquiv.apply_symm_apply]
   funext I
   exact hab I
 

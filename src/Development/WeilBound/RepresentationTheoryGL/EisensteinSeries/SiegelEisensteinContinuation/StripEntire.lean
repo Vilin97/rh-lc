@@ -51,7 +51,7 @@ structure IsPar (Γ K P : Subgroup G) (c : G → ℂ) : Prop where
 
 def secSp (K P : Subgroup G) (c : G → ℂ) (ρ : K →* (W →L[ℂ] W)) : Submodule ℂ W where
   carrier := {w | ∀ r : K, (r : G) ∈ P → c r • ρ r w = w}
-  add_mem' := fun {a b} ha hb r hr => by rw [map_add, smul_add, ha r hr, hb r hr]
+  add_mem' := fun {a b} ha hb r hr => by rw [map_add (f := _), smul_add, ha r hr, hb r hr]
   zero_mem' := fun r _ => by simp
   smul_mem' := fun a w hw r hr => by rw [map_smul, smul_comm, hw r hr]
 

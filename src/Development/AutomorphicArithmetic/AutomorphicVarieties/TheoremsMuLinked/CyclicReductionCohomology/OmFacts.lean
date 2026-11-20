@@ -32,4 +32,4 @@ theorem UpperTheory.V.Th.omFacts :
     obtain ⟨b, hb⟩ := h
     have e : a = 1 + b * (l : ℤ_[l]) ^ m := by rw [hb]; ring
     rw [e]
-    simp only [map_add, map_one, map_mul, map_pow, map_natCast, hpow, mul_zero, add_zero]
+    simp only [map_add (f := _), map_one, map_mul, map_pow, map_natCast, hpow, mul_zero, add_zero]

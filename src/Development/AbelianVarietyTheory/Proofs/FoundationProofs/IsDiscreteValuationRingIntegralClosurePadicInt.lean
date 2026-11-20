@@ -245,7 +245,7 @@ theorem exists_injective_algHom_integralClosure (B : Type*) [CommRing B] [IsDoma
     | mem x hx =>
       exact IntermediateField.subset_adjoin _ _ (by simpa using ⟨x, hx, rfl⟩)
     | zero => rw [map_zero]; exact K.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact K.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact K.add_mem hx hy
     | smul a x _ hx =>
       rw [map_smul, ← algebraMap_smul ℚ_[p]]
       exact K.smul_mem hx

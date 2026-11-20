@@ -104,7 +104,7 @@ theorem normSq_real_form {D : D7} (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam 
   have hιc : Continuous ι :=
     (hch.continuous_iota T S).comp ((GlobalTheory.FockPos.frLin frS frT).continuous.comp (continuous_const_smul _))
   have hιadd : ∀ Y Z, ι (Y + Z) = ι Y + ι Z := fun Y Z => by
-    simp only [hι, smul_add, map_add]
+    simp only [hι, smul_add, map_add (f := _)]
   have hzι : ∀ Y, GlobalTheory.FockPos.zCo θ frS frT (ι Y) = δ⁻¹ • Y := fun Y => by
     rw [hι]
     dsimp only

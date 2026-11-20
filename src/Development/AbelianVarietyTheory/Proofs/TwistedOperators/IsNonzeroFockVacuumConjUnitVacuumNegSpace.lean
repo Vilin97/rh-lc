@@ -59,7 +59,7 @@ theorem isVacVec_cj_of_isVac_neg : ∀ {D : D7} (S T : GlobalTheory.Grid.Node D)
     simp only [Pi.add_apply, Pi.smul_apply, Pi.neg_apply, smul_eq_mul, Pi.zero_apply] at h2 ⊢
     simp only [GlobalTheory.IndefiniteRowSideFullHecke.ConjugateAdjointDagger.cj, id_eq]
     have e := congrArg (starRingEnd ℂ) h2
-    simp only [map_add, map_mul, map_neg, Complex.conj_I, map_zero] at e
+    simp only [map_add (f := _), map_mul, map_neg, Complex.conj_I, map_zero] at e
     linear_combination e
 
 end GlobalTheory.VacCjNeg

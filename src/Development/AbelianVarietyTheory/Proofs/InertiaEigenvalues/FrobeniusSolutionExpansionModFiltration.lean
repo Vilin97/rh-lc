@@ -100,7 +100,7 @@ theorem expand : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P
   · have ht := Finset.sum_range_sub' H s
     rw [Finset.sum_sub_distrib] at ht
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, Finset.sum_congr rfl (fun k _ => hφ k), ← h0]
+      rw [map_add (f := _), map_sum, Finset.sum_congr rfl (fun k _ => hφ k), ← h0]
     rw [← hs] at h1
     linear_combination ht + h1
   · have hk : ∑ k ∈ Finset.range s, ∑ i ∈ T, oB P (((frK P K ^ k) (c i) : ↥(K0 K)) : Om l) *
@@ -129,7 +129,7 @@ theorem expand : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P
               (j.factorial : ℚ_[l])) * tD P ^ j) +
         ∑ j ∈ Finset.range M, qB P ((j.factorial : ℚ_[l])⁻¹) * oB P (d j : Om l) * tD P ^ j := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [coeff_eq, map_add, map_sum, map_mul, ← qB_eq, add_mul, Finset.sum_add_distrib,
+        simp only [coeff_eq, map_add (f := _), map_sum, map_mul, ← qB_eq, add_mul, Finset.sum_add_distrib,
         Finset.sum_mul, Finset.mul_sum]
       congr 1
       rw [Finset.sum_comm]
@@ -138,7 +138,7 @@ theorem expand : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l P
       refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
       ring
     have := add_mem hk h2
-    rw [map_add, e1, e2]
+    rw [map_add (f := _), e1, e2]
     convert this using 1
     simp only [mul_sub, Finset.sum_sub_distrib]
     ring

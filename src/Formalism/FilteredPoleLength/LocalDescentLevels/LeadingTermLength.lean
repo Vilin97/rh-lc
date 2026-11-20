@@ -120,7 +120,7 @@ theorem leadingTermLength : LeadingTermLength := by
       have hc := hstrict k c hbF k le_rfl
       have hz : (⟨a + ∑ α, ∑ i, c α i • u α i, hx⟩ : ↥(F k)) =
           ⟨a, hF k ha⟩ + ⟨∑ α, ∑ i, c α i • u α i, hbF⟩ := rfl
-      rw [hz, map_add, hkill k a _ ha, zero_add, hval1 k c hbF hc β]
+      rw [hz, map_add (f := _), hkill k a _ ha, zero_add, hval1 k c hbF hc β]
       exact Submodule.sum_mem _ fun i _ => Submodule.smul_mem _ _ (Submodule.subset_span ⟨i, rfl⟩)
     · intro h
       have hch : ∀ β : {α : ι // deg α = k}, ∃ a : Fin δ → O, ∑ i, a i • t i = σ k ⟨x, hx⟩ β :=

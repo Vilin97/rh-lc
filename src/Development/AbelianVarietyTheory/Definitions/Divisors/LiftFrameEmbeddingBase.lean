@@ -40,7 +40,7 @@ def redKer : Submodule (alg O N lam) (NablaT O N lam) where
       rw [map_smul]
       exact Submodule.smul_mem_smul hr trivial
     · show (c : Module.End O (NablaT O N lam)) (x + y) ∈ _
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hx hy
 
 local instance algRing : Ring (alg O N lam) := Subalgebra.toRing _
@@ -96,7 +96,7 @@ theorem nontrivial_red (h : ¬ IsUnit ϖ) :
       redKer O N (fun (_ : Unit) _ => 0) ϖ := ht ▸ Submodule.mem_top
   have h3 : ∀ x ∈ (Ideal.span {ϖ} • ⊤ : Submodule O (NablaT O N (fun (_ : Unit) _ => 0))), f x ∈ Ideal.span {ϖ} := fun x hx =>
     Submodule.smul_induction_on (p := fun x => f x ∈ Ideal.span {ϖ}) hx
-      (fun r hr y _ => by rw [map_smul]; exact Ideal.mul_mem_right _ _ hr) fun x y hx hy => by rw [map_add]; exact add_mem hx hy
+      (fun r hr y _ => by rw [map_smul]; exact Ideal.mul_mem_right _ _ hr) fun x y hx hy => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   have h4 := h3 _ h2
   simp only [f, LinearMap.comp_apply, LinearEquiv.coe_coe, PiTensorProduct.subsingletonEquiv_apply_tprod] at h4
   exact isUnit_of_dvd_one (by simpa [Ideal.mem_span_singleton] using h4)

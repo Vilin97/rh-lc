@@ -232,7 +232,7 @@ theorem ctr_h {A B : ℕ} {f : PolXY K k} (hf : f ∈ PolAB K k A B) :
       f + X (Sum.inl i) * pderiv (Sum.inl i) f + X (Sum.inr i) * pderiv (Sum.inr i) f +
         hXY K k * pderiv (Sum.inl i) (pderiv (Sum.inr i) f) := by
     intro i
-    simp only [Derivation.leibniz, map_add, pderiv_inr_h, pderiv_inl_h, pderiv_X_self, smul_eq_mul]
+    simp only [Derivation.leibniz, map_add (f := _), pderiv_inr_h, pderiv_inl_h, pderiv_X_self, smul_eq_mul]
     ring
   simp only [e, Finset.sum_add_distrib, euler_X_sum hf, euler_y hf, ← Finset.mul_sum, Finset.sum_const,
     Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, MvPolynomial.smul_eq_C_mul, map_natCast]
@@ -357,7 +357,7 @@ theorem ctr_partial [CharZero K] (hk : 1 ≤ k) {A B : ℕ} {f : PolXY K k} (hf 
       congr 1
       omega
     have hrec := harmonicCoeff_recurrence (K := K) (M := A + B + k - 2) (N := N) (by omega)
-    rw [Finset.sum_range_succ, map_add, ih (by omega), map_smul,
+    rw [Finset.sum_range_succ, map_add (f := _), ih (by omega), map_smul,
       ctr_h_pow N (ctrF_pow_mem (N + 1) hf), e1, hc, smul_add, smul_smul, add_left_comm, ← add_smul,
       hrec, zero_smul, add_zero]
 

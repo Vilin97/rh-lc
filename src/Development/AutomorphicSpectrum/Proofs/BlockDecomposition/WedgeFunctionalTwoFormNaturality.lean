@@ -89,7 +89,7 @@ theorem expand (e : Fin n → M) (L : Fin n → Module.Dual A M) (h : ∀ x, x =
   | zero => simp
   | add x y _ _ hx hy =>
     conv_lhs => rw [hx, hy]
-    simp only [map_add, add_smul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), add_smul, Finset.sum_add_distrib]
   | smul c x _ hx =>
     conv_lhs => rw [hx]
     simp only [map_smul, smul_eq_mul, mul_smul, Finset.smul_sum]
@@ -136,7 +136,7 @@ theorem linear_form_extension_naturality (hP : Par F) (l : Module.Dual R (Glob1 
   refine (hP T).inductionOn α _ (by simp) (fun x ↦ ?_) (fun b y hy ↦ ?_) (fun y z hy hz ↦ ?_)
   · rw [form_pullback_evaluation, Lf_ev, Lf_ev, AlgHom.commutes]
   · rw [oneFormsMapOfFunctorMorphism_smul, map_smul, hy, map_smul, smul_eq_mul, smul_eq_mul, map_mul]
-  · simp only [map_add, hy, hz]
+  · simp only [map_add (f := _), hy, hz]
 
 theorem Lf_expand (hP : Par F) {n : ℕ} (w : Fin n → Glob1 F) (l : Fin n → Module.Dual R (Glob1 F))
     (h : ∀ x, x = ∑ i, l i x • w i) (T : C) (α : Ω[F.obj T⁄R]) :
@@ -148,7 +148,7 @@ theorem Lf_expand (hP : Par F) {n : ℕ} (w : Fin n → Glob1 F) (l : Fin n → 
   · conv_lhs => rw [hy]
     simp only [map_smul, smul_eq_mul, mul_smul, Finset.smul_sum]
   · conv_lhs => rw [hy, hz]
-    simp only [map_add, add_smul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), add_smul, Finset.sum_add_distrib]
 
 theorem wedge_functional_two_form_naturality (hP : Par F) {n : ℕ} (l : Fin n → Module.Dual R (Glob1 F)) (i j : Fin n) {T T' : C}
     (φ : T ⟶ T') (z : Om R (F.obj T) 2) :
@@ -161,7 +161,7 @@ theorem wedge_functional_two_form_naturality (hP : Par F) {n : ℕ} (l : Fin n �
     rw [eq_two v, ← wedge_eq_ιMulti, pOm_wedge, wedge_eq_ιMulti, wedge_eq_ιMulti, wedge_functional_iota_multi, wedge_functional_iota_multi]
     simp only [linear_form_extension_naturality, map_sub, map_mul]
   | zero => simp
-  | add x y _ _ hx hy => simp only [map_add, hx, hy]
+  | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy]
   | smul c x _ hx => simp only [pOm_smul, map_smul, hx, smul_eq_mul, map_mul]
 
 theorem wedge_functional_constant_on_image (hP : Par F) {n : ℕ} (l : Fin n → Module.Dual R (Glob1 F)) (i j : Fin n) (T : C)
@@ -178,7 +178,7 @@ theorem wedge_functional_constant_on_image (hP : Par F) {n : ℕ} (l : Fin n →
     simp only [Lf_ev, map_sub, map_mul]
   | zero => simp
   | add x y _ _ hx hy =>
-    simp only [map_add, Pi.add_apply, hx, hy]
+    simp only [map_add (f := _), Pi.add_apply, hx, hy]
   | smul c x _ hx =>
     simp only [map_smul, Pi.smul_apply, hx, smul_eq_mul, map_mul]
     rw [← algebraMap_smul (F.obj T) c, map_smul, hx, smul_eq_mul]

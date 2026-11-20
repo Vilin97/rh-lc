@@ -32,7 +32,7 @@ theorem exists_norm_lift_step : ∀ (L : Type) [Field L] [Valued L (WithZero (Mu
     rw [hπA, GlobalTheory.UTr.conj_algebraMap]; congr 1; exact Subtype.ext h.2.2.1
   have hconjc : GlobalTheory.UTr.conj P (ι cO) + ι cO = 1 := by
     have := congrArg ι hcs
-    rw [map_add, map_one] at this
+    rw [map_add (f := _), map_one] at this
     rw [hι, GlobalTheory.UTr.conj_algebraMap]; rw [← this]; ring
   have h1 : (x : GlobalTheory.UTr.Alg P) - 1 ∈ Ideal.span {πA ^ m} := hxm
   obtain ⟨a, ha⟩ := Ideal.mem_span_singleton'.1 h1
@@ -49,7 +49,7 @@ theorem exists_norm_lift_step : ∀ (L : Type) [Field L] [Valued L (WithZero (Mu
     GlobalTheory.UTr.conj P (1 + πA ^ (k + 1) * (ι cO * a)) ∈ Ideal.span {πA ^ (k + 1 + 1)}
   have e1 : GlobalTheory.UTr.conj P (1 + πA ^ (k + 1) * (ι cO * a)) =
       1 + πA ^ (k + 1) * (GlobalTheory.UTr.conj P (ι cO) * GlobalTheory.UTr.conj P a) := by
-    rw [map_add, map_one, map_mul, map_pow, hconjπ, map_mul]
+    rw [map_add (f := _), map_one, map_mul, map_pow, hconjπ, map_mul]
   rw [e1, Ideal.mem_span_singleton']
   refine ⟨-(πA ^ k * ι cO * a * GlobalTheory.UTr.conj P (ι cO) * GlobalTheory.UTr.conj P a), ?_⟩
   linear_combination ha + GlobalTheory.UTr.conj P (ι cO) * hca + πA ^ (k + 1) * a * hconjc

@@ -44,7 +44,7 @@ theorem finTyp_invariant_form_of_isotIn : ∀ (D : D7) (n : ℕ) (A : Type) [Add
       exact (Submodule.mem_bot ℂ).2 hk'
   refine ⟨fun x y => B (Φ x) (Φ y), ?_, ?_, ?_, ?_⟩
   · intro x y z c
-    simp only [map_add, map_smul]
+    simp only [map_add (f := _), map_smul]
     exact hlin _ (hmemC x) _ (hmemC y) _ (hmemC z) c
   · intro x y
     exact hherm _ (hmemC x) _ (hmemC y)

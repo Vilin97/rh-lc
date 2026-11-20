@@ -12,12 +12,12 @@ theorem chain {σ : Type} [Fintype σ] [DecidableEq σ] (p : σ → Polynomial �
       ∑ l, MvPolynomial.aeval p (MvPolynomial.pderiv l f) * Polynomial.derivative (p l) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp
-  | add g h hg hh => simp only [map_add, hg, hh, Finset.sum_add_distrib, add_mul]
+  | add g h hg hh => simp only [map_add (f := _), hg, hh, Finset.sum_add_distrib, add_mul]
   | mul_X g n hg =>
     have e : ∀ l, pderiv l (g * X n) = g * (Pi.single l (1 : MvPolynomial σ ℂ) : σ → MvPolynomial σ ℂ) n + X n * pderiv l g := by
       intro l; rw [Derivation.leibniz, pderiv_X, smul_eq_mul, smul_eq_mul]
     rw [map_mul, aeval_X, Polynomial.derivative_mul, hg]
-    simp_rw [e, map_add, map_mul, aeval_X, add_mul, Finset.sum_add_distrib]
+    simp_rw [e, map_add (f := _), map_mul, aeval_X, add_mul, Finset.sum_add_distrib]
     rw [add_comm]
     congr 1
     · rw [Finset.sum_eq_single n]
@@ -90,7 +90,7 @@ theorem ext_kc {P Q R S : ℕ} (c : ℂ) (f : Pol P Q R S)
   have hB := h B hB1 (upq_of B hB1 hB2)
   clear_value A B
   clear hAdef hBdef
-  rw [hYAB, map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, Matrix.trace_add, Matrix.trace_smul]
+  rw [hYAB, map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, Matrix.trace_add, Matrix.trace_smul]
   calc _ = (fockAct1 P Q R S A f + (c * A.trace) • f) + Complex.I • (fockAct1 P Q R S B f + (c * B.trace) • f) := by
           simp only [smul_eq_mul]; module
     _ = 0 := by rw [hA, hB, smul_zero, add_zero]
@@ -191,7 +191,7 @@ theorem path_eval (pt : Ix P Q × Ix R S → ℂ) (v : Fin Q → ℂ) (w : Fin R
     Polynomial.eval 1 (aeval (path pt v w) g) = MvPolynomial.eval pt g := by
   induction g using MvPolynomial.induction_on with
   | C a => simp
-  | add g h hg hh => simp only [map_add, Polynomial.eval_add, hg, hh]
+  | add g h hg hh => simp only [map_add (f := _), Polynomial.eval_add, hg, hh]
   | mul_X g n hg => rw [map_mul, map_mul, Polynomial.eval_mul, hg]; simp [path]
 
 theorem comp (pt : Ix P Q × Ix R S → ℂ) (v u : Fin Q → ℂ) (g : Pol P Q R S)
@@ -226,7 +226,7 @@ theorem comp (pt : Ix P Q × Ix R S → ℂ) (v u : Fin Q → ℂ) (g : Pol P Q 
       simp only [map_mul]; ring
     rw [e1, e2]; ring
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [act_Yv, huv, mul_one, map_add, map_sub, map_sum, map_sum, chain, map_smul, Polynomial.smul_eq_C_mul]
+    rw [act_Yv, huv, mul_one, map_add (f := _), map_sub, map_sum, map_sum, chain, map_smul, Polynomial.smul_eq_C_mul]
   simp only [map_mul, h1, h2, zero_mul, Finset.sum_const_zero, path_deriv]
   rw [Fintype.sum_prod_type, Fintype.sum_sum_type]
   set_option synthInstance.maxHeartbeats 100000 in
@@ -276,7 +276,7 @@ theorem no_fixed_fock_polynomial : ∀ (P Q R S : ℕ) (c : ℂ) (f : Formalism.
   have hc' := comp pt v u f hv huv
   set w : Fin R → ℂ := fun x => ∑ b, u b * pt (Sum.inr b, Sum.inl x) with hw
   have h2 := congrArg (aeval (path pt v w)) hY
-  rw [map_add, map_zero, hc', map_smul, Polynomial.smul_eq_C_mul] at h2
+  rw [map_add (f := _), map_zero, hc', map_smul, Polynomial.smul_eq_C_mul] at h2
   have hψ : aeval (path pt v w) f = 0 := by
     apply ode _ ((((R : ℂ) - S) / 2) - c)
     · have : ((((R : ℂ) - S) / 2) - c).re = ((R : ℝ) - S) / 2 - c.re := by simp

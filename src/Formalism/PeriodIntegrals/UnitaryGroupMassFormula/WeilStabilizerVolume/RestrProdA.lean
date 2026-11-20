@@ -109,9 +109,9 @@ theorem repr_change {F E : Type} [Field F] [Field E] [Algebra F E] {d d' : ℕ}
     rw [Algebra.TensorProduct.basis_repr_tmul, Finsupp.smul_apply, Finsupp.mapRange_apply,
       smul_eq_mul, map_mul, mul_assoc]
   | add x y hx hy =>
-    rw [map_add, Finsupp.add_apply, hx, hy, ← Finset.sum_add_distrib]
+    rw [map_add (f := _), Finsupp.add_apply, hx, hy, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun k _ => ?_
-    rw [map_add, Finsupp.add_apply, add_mul]
+    rw [map_add (f := _), Finsupp.add_apply, add_mul]
 
 theorem latCofin_holds : LatCofin := by
   intro F E _ _ _ _ a M d d' b b'

@@ -117,7 +117,7 @@ theorem symplOH_split (hZ : Z.rank = 0) (x y : WO V W) :
       symplOH V' W (sandwich (rat 1) (rat d.i₀) x) (sandwich (rat 1) (rat d.i₀) y) +
         symplOH H W (sandwich (rat 1) (rat (embMat d dH)) x) (sandwich (rat 1) (rat (embMat d dH)) y) := by
   simp only [GlobalTheory.MixModel.symplOH_eq, GlobalTheory.MixModel.sandwich_apply, GlobalTheory.MixModel.rat_one, Matrix.one_mul]
-  rw [hO_split d dH W hZ, map_add]
+  rw [hO_split d dH W hZ, map_add (f := _)]
 
 end Form
 

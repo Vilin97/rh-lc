@@ -15,7 +15,7 @@ theorem nnnorm_le_of_mem_span {R K : Type} [CommRing R] [NormedField K] [IsUltra
   | mem x hx => exact hs x hx
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (IsUltrametricDist.nnnorm_add_le_max _ _).trans (max_le hx hy)
   | smul a x _ hx =>
     rw [smul_eq_mul, map_mul, nnnorm_mul]
@@ -35,7 +35,7 @@ theorem nnnorm_le_pow_of_mem_pow {R K : Type} [CommRing R] [NormedField K] [IsUl
       rw [map_mul, nnnorm_mul, pow_succ]
       exact mul_le_mul' (ih a ha) (hI c hc)
     · intro a c ha hc
-      rw [map_add]
+      rw [map_add (f := _)]
       exact (IsUltrametricDist.nnnorm_add_le_max _ _).trans (max_le ha hc)
 
 end GlobalTheory.Poinc

@@ -21,7 +21,7 @@ theorem UpperTheory.kaehler_functional_vanishing_of_localization_at_prime :
       simp [mul_assoc]⟩
     let D' : Derivation ℂ B ℂ :=
       { toFun := fun b => η (algebraMap B S b)
-        map_add' := fun a b => by simp only [map_add]
+        map_add' := fun a b => by simp only [map_add (f := _)]
         map_smul' := fun c b => by
           simp only [RingHom.id_apply]
           rw [Algebra.smul_def c b, map_mul, ← IsScalarTower.algebraMap_apply, ← Algebra.smul_def,
@@ -50,7 +50,7 @@ theorem UpperTheory.kaehler_functional_vanishing_of_localization_at_prime :
   let F : Ω[S⁄ℂ] →ₗ[S] (Fin d → ℂ) := g.liftBaseChange S ∘ₗ e.symm.toLinearMap
   let δ : S →ₗ[ℂ] (Fin d → ℂ) :=
     { toFun := fun s => F (KaehlerDifferential.D ℂ S s)
-      map_add' := fun a b => by simp only [map_add]
+      map_add' := fun a b => by simp only [map_add (f := _)]
       map_smul' := fun c s => by
         rw [RingHom.id_apply, Derivation.map_smul,
           ← algebraMap_smul S c (KaehlerDifferential.D ℂ S s), map_smul]
@@ -60,7 +60,7 @@ theorem UpperTheory.kaehler_functional_vanishing_of_localization_at_prime :
         rfl }
   have hδL : ∀ a b : S, δ (a * b) = ev a • δ b + ev b • δ a := fun a b => by
     change F (KaehlerDifferential.D ℂ S (a * b)) = _
-    rw [Derivation.leibniz, map_add, map_smul, map_smul]
+    rw [Derivation.leibniz, map_add (f := _), map_smul, map_smul]
     rfl
   have hδB : ∀ b : B, δ (algebraMap B S b) = φ (KaehlerDifferential.D ℂ B b) := fun b => by
     change g.liftBaseChange S (e.symm (KaehlerDifferential.D ℂ S (algebraMap B S b))) = _
@@ -89,7 +89,7 @@ theorem UpperTheory.kaehler_functional_vanishing_of_localization_at_prime :
     rfl
   refine ⟨r, fun s => ?_⟩
   have hrδ : ∀ a b : S, r (δ (a * b)) = ev a * r (δ b) + ev b * r (δ a) := fun a b => by
-    rw [hδL, map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul]
+    rw [hδL, map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul]
   have hδη : ∀ x : B, r (δ (algebraMap B S x)) = η (algebraMap B S x) := fun x => by
     rw [hδB, ← hr, hLD]
   obtain ⟨⟨b, t⟩, hs⟩ := IsLocalization.surj p.primeCompl s

@@ -97,7 +97,7 @@ theorem fischer_X_mul (a : σ) (f g : MvPolynomial σ ℂ) :
   | add p q hp hq => rw [mul_add, fischer_add_left, fischer_add_left, hp, hq]
   | monomial s c =>
     induction g using MvPolynomial.induction_on' with
-    | add p q hp hq => rw [fischer_add_right, map_add, fischer_add_right, hp, hq]
+    | add p q hp hq => rw [fischer_add_right, map_add (f := _), fischer_add_right, hp, hq]
     | monomial t d =>
       rw [X, monomial_mul, one_mul, pderiv_monomial, fischer_monomial, fischer_monomial]
       by_cases ht : t a = 0

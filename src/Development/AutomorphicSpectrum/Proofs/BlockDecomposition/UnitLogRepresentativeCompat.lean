@@ -71,14 +71,14 @@ theorem cupList_diff (hF : IsFil Φ Fil) : ∀ {m : ℕ} (ℓ : Fin m → CH.Cn 
     have hl' : ℓ (Fin.last m) + CH.d _ 0 (α (Fin.last m)) ∈ FC (Fil ((1 : ℕ) : ℤ)) 1 :=
       add_mem (hℓ _) (d_mem (hα _))
     have hdl' : CH.d _ 1 (ℓ (Fin.last m) + CH.d _ 0 (α (Fin.last m))) = 0 := by
-      rw [map_add, hd, CH.d_d, add_zero]
+      rw [map_add (f := _), hd, CH.d_d, add_zero]
     obtain ⟨H₁, hH₁, e₁⟩ := bd_cup hF ih hl' hdl'
     obtain ⟨H₂, hH₂, e₂⟩ := cup_d hF (cupList_mem hF (fun i : Fin m => ℓ i.castSucc) fun i => hℓ _)
       (d_cupList Φ.A _ fun i => hd _) (hα (Fin.last m))
     refine ⟨H₁ + H₂, add_mem hH₁ hH₂, ?_⟩
-    rw [map_add, ← e₁, ← e₂]
+    rw [map_add (f := _), ← e₁, ← e₂]
     change (CH.mulP Φ.A).cupC rfl _ (ℓ (Fin.last m) + CH.d _ 0 (α (Fin.last m))) - (CH.mulP Φ.A).cupC rfl _ (ℓ (Fin.last m)) = _
-    simp only [map_sub, map_add, LinearMap.sub_apply]
+    simp only [map_sub, map_add (f := _), LinearMap.sub_apply]
     abel
 
 theorem rep_of_bd : ∀ {m : ℕ} {z z' : CH.Cn (CH.modF Φ.A) m} {c : CH.H (sq (Fil (m : ℤ)) (Fil ((m : ℤ) + 1))) m},

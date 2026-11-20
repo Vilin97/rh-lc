@@ -98,7 +98,7 @@ theorem mult_act_of_lift (R : RealDat D A Ks) (P : LevelP R.Pg D.R.r ℂ) {g0 : 
   | add T₁ T₂ _ _ h₁ h₂ =>
     intro v g
     show (T₁ v + T₂ v) (g * κ) = actL (Yc D 0) (R.βY 0) (R.dat0 R.triv) g0 (T₁ v + T₂ v) g
-    rw [map_add, Pi.add_apply, Pi.add_apply, h₁ v g, h₂ v g]
+    rw [map_add (f := _), Pi.add_apply, Pi.add_apply, h₁ v g, h₂ v g]
   | smul a T _ hT =>
     intro v g
     show (a • T v) (g * κ) = actL (Yc D 0) (R.βY 0) (R.dat0 R.triv) g0 (a • T v) g

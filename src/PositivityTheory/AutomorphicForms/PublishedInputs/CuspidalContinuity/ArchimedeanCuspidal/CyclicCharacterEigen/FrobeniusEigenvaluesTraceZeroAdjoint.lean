@@ -159,7 +159,7 @@ private theorem resSum_of {Γ : Type} [Group Γ] (ρ : Γ →* GL (Fin 2) (Qbar 
       C (-((ρ s : Matrix (Fin 2) (Fin 2) (Qbar l)).trace - (1 + Φ s))) * X +
         C ((ρ s : Matrix (Fin 2) (Fin 2) (Qbar l)).det - Φ s) := by
     rw [Matrix.charpoly_fin_two, Fin.prod_univ_two]
-    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, MonoidHom.one_apply, Units.val_one, map_one, map_neg, map_sub, map_add]
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, MonoidHom.one_apply, Units.val_one, map_one, map_neg, map_sub, map_add (f := _)]
     ring
   rw [← coeff_sub, e, coeff_add, coeff_C_mul_X, coeff_C]
   refine small_add ?_ ?_
@@ -285,7 +285,7 @@ private theorem ordExL (P : HypothesesH) (ι : Qbar l ≃+* ℂ) {k N : ℕ} [Ne
       rw [hDv, cyc_frob (normV_prime w) hAq (fun h => hq (h.mul_right _)) hσ, dirG_frob _ (normV_prime w) hAq hqN hσ]
       simp [mul_comm]
     have h4 := hg _ (normV_prime w)
-    rw [map_sub, map_add, map_one, ← h1, ← h2] at h4
+    rw [map_sub, map_add (f := _), map_one, ← h1, ← h2] at h4
     exact ⟨h4, by rw [Set.mem_ofPred_eq, h3, h1, (hval w hqN).2]⟩
   have hlev : ∀ w : Pl ℚ, ((l : ℕ) : 𝓞 ℚ) ∉ w.asIdeal → levL l c w = c w := fun w hw => if_neg hw
   have hlev1 : ∀ w : Pl ℚ, ((l : ℕ) : 𝓞 ℚ) ∈ w.asIdeal → levL l c w = 1 := fun w hw => if_pos hw
@@ -337,7 +337,7 @@ private theorem ordExL (P : HypothesesH) (ι : Qbar l ≃+* ℂ) {k N : ℕ} [Ne
       exact pow_lt_self_of_lt_one₀ (norm_pos_iff.2 (Nat.cast_ne_zero.2 (normV_prime w).ne_zero)) h3 (by omega)
     have ha : ‖ι.symm (g.a (normV w)) - 1‖ < 1 := by
       have := small_add (hg _ (normV_prime w)) (hs.trans h3)
-      rw [← map_add] at this
+      rw [← map_add (f := _)] at this
       rw [← map_one ι.symm, ← map_sub]
       convert this using 3
       ring

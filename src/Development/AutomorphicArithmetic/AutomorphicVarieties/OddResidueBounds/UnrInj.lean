@@ -75,7 +75,7 @@ theorem UpperTheory.V.Odd.unrInj :
     · exact ((IsLocallyConstant.iff_continuous w).2 hwc).comp (fun y => eq1 (Function.invFun ι y))
     · intro a b
       apply hdet
-      rw [map_add, map_add, hφ, hφ, hmul]
+      rw [map_add (f := _), map_add (f := _), hφ, hφ, hmul]
     · intro A hA g hg
       have hg' : galEmb E (Fn E Ω l 1) Ω g ∈ Ine A := by
         have h := ((galEmbFam E (Fn E Ω l 1) Ω l).1 A).2

@@ -24,7 +24,7 @@ theorem sigR_smul (σ : E →ₐ[F] E) (r : R) (y : R ⊗[F] E) :
     sigR R σ (r • y) = r • sigR R σ y := by
   induction y with
   | tmul s e => simp [TensorProduct.smul_tmul', HaarCoord.sigR_tmul]
-  | add a b ha hb => simp only [smul_add, map_add, ha, hb]
+  | add a b ha hb => simp only [smul_add, map_add (f := _), ha, hb]
 
 variable {d n : ℕ}
 
@@ -170,7 +170,7 @@ theorem phi_tmul (r : F) (e : E) : phi R (r ⊗ₜ[F] e) = algebraMap F R r ⊗�
 theorem phi_sig (σ : E →ₐ[F] E) (y : F ⊗[F] E) : phi R (sigR F σ y) = sigR R σ (phi R y) := by
   induction y with
   | tmul r e => rw [HaarCoord.sigR_tmul, phi_tmul, phi_tmul, HaarCoord.sigR_tmul]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem phi_incl (e : E) : phi R (inclR F e) = inclR R e := by
   have h1 : inclR F e = (1 : F) ⊗ₜ[F] e := rfl

@@ -88,7 +88,7 @@ theorem dFun_rep (c : ℕ) (s : W⟦X⟧) :
 
 def DPre : PreDisc l (X : W⟦X⟧) ρ →+ PreDisc l (X : W⟦X⟧) ρ :=
   AddMonoidHom.mk' (dFun l ρ) fun y z => dFun_eq l ρ _ _ (by
-    rw [mul_add, X_mul_dFun, X_mul_dFun, c0, c0, c0, map_add, map_add]; abel)
+    rw [mul_add, X_mul_dFun, X_mul_dFun, c0, c0, c0, map_add (f := _), map_add (f := _)]; abel)
 
 theorem DPre_apply (y : PreDisc l (X : W⟦X⟧) ρ) : DPre l ρ y = dFun l ρ y := rfl
 

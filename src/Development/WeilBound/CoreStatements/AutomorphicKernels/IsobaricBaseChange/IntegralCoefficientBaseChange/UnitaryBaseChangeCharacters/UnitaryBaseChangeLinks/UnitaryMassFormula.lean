@@ -102,7 +102,7 @@ theorem exists_B {K : Type} [Field K] [CharZero K] {n : ℕ} (c : K →+* K) (hc
   have hcε : c ε = ε := by simp [hε]
   have h0 : ∀ m : ℕ, (m : K) + c s ≠ 0 := fun m h => hs (by
     have h' := congrArg c h
-    rw [map_add, map_natCast, hc, map_zero] at h'
+    rw [map_add (f := _), map_natCast, hc, map_zero] at h'
     linear_combination h - h')
   have hinj : Function.Injective fun m : ℕ => ((m : K) + s) / ((m : K) + c s) := fun m k h => by
     simp only at h
@@ -132,7 +132,7 @@ theorem exists_B {K : Type} [Field K] [CharZero K] {n : ℕ} (c : K →+* K) (hc
     γ.val * ε • (1 : Matrix (Fin n) (Fin n) K) * cT c (a • (1 : Matrix (Fin n) (Fin n) K) + (ε * c a) • γ.val)
   have e : cT c (a • (1 : Matrix (Fin n) (Fin n) K) + (ε * c a) • γ.val) = c a • 1 + (ε * a) • cT c γ.val := by
     ext i j
-    simp only [cT, Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add,
+    simp only [cT, Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _),
       map_mul, hcε, hc, Matrix.one_apply, apply_ite c, map_one, map_zero, eq_comm (a := j)]
   rw [e, mul_smul_comm, mul_one, smul_mul_assoc, mul_add, mul_smul_comm, mul_smul_comm, mul_one, mul_eq_one_comm.1 hγ,
     smul_add, smul_smul, smul_smul, ← mul_assoc, hε2, one_mul, add_comm]
@@ -150,7 +150,7 @@ theorem conjFin_conjFin (x : Af E) : conjFin (cc E) (conjFin (cc E) x) = x := by
   congr 1
   induction y using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul a x =>
     change a ⊗ₜ[Fr E] (IsCMField.complexConj E (IsCMField.complexConj E x)) = _
     rw [IsCMField.complexConj_apply_apply]
@@ -254,7 +254,7 @@ theorem exists_norm (γ : UE E n) : ∃ δ : GL (Fin n) E, δ * thE E n δ = γ.
       change B.val.map _ = _ + _ • γ.1.val.map _
       rw [hB]
       ext i j
-      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, Matrix.one_apply,
+      simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul, Matrix.one_apply,
         apply_ite (algebraMap E (Af E)), map_one, map_zero]
     have hg' : g.val * (ratF E n γ.1).val = (ratF E n γ.1).val * g.val := congrArg Units.val hg
     apply Units.ext

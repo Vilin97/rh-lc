@@ -106,7 +106,7 @@ private theorem exists_skew_cayley {σ : E →ₐ[F] E} (B : Base F E) (hB : B.I
   have hh2 : ∀ z ∈ GlobalTheory.InertSph.latAt W v,
       (algebraMap (AF F) (AE F E) ⅟(2 : AF F) + algebraMap (AF F) (AE F E) ⅟(2 : AF F)) • z = z := by
     intro z _
-    rw [← map_add, ← two_mul, mul_invOf_self', map_one, one_smul]
+    rw [← map_add (f := _), ← two_mul, mul_invOf_self', map_one, one_smul]
   obtain ⟨hYk, s1, s2, s3⟩ := GlobalTheory.TwoFacCore.units_mod (GlobalTheory.InertSph.latAt W v) (Ideal.absNorm v.asIdeal) (mat k) (mat k⁻¹) β b up um
     (algebraMap (AF F) (AE F E) ⅟(2 : AF F)) N₀ hKK hKiK hKk hKik
     (fun z hz => ⟨(hsc z hz).1, (hsc z hz).2.1, (hsc z hz).2.2.1, (hsc z hz).2.2.2.1, hh z hz⟩)

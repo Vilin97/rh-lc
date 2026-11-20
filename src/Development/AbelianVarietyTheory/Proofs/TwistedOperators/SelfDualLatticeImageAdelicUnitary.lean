@@ -45,7 +45,7 @@ theorem fin_cA (z : Formalism.L2.Theta.AE D) :
   | zero => simp only [map_zero]
   | tmul a e =>
     simp [cA, cjA, finPart, swapAE, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR, Formalism.UG.sigR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem finE_unitary (V : HSp D) (g : GA D V) :
     Formalism.UG.cT (cjA D) (finE V g).val * V.gram.map (inc D) * (finE V g).val = V.gram.map (inc D) := by

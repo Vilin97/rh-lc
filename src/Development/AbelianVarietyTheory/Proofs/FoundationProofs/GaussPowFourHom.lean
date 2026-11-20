@@ -13,7 +13,7 @@ theorem quad_four {M G : Type*} [AddCommGroup M] [AddCommGroup G] (β : M →+ M
       β (c • x + d • y + a • z - b • w) (c • x + d • y + a • z - b • w) +
       β (d • x - c • y + b • z + a • w) (d • x - c • y + b • z + a • w) =
     (a ^ 2 + b ^ 2 + c ^ 2 + d ^ 2) • (β x x + β y y + β z z + β w w) := by
-  simp only [map_add, map_sub, map_zsmul, AddMonoidHom.add_apply,
+  simp only [map_add (f := _), map_sub, map_zsmul, AddMonoidHom.add_apply,
       AddMonoidHom.sub_apply, AddMonoidHom.zsmul_apply]
   module
 

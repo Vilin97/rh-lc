@@ -34,7 +34,7 @@ theorem powerSeries_expansion_image_dense_with_denominator [IsDomain O] [IsFract
     simp only [map_mul] at hne'
     refine ⟨PowerSeries.C (d * n) + PowerSeries.C e * (PowerSeries.X - PowerSeries.C x) * a, d * e,
       mul_ne_zero hd (nonZeroDivisors.ne_zero he), PowerSeries.C (algebraMap O L e) * w * z, ?_⟩
-    simp only [map_add, map_mul, map_sub, ev_C', hev]
+    simp only [map_add (f := _), map_mul, map_sub, ev_C', hev]
     linear_combination (-(PowerSeries.C (algebraMap O L d))) * hne' -
       PowerSeries.C (algebraMap O L d) * PowerSeries.C (algebraMap O L e) * hg +
       PowerSeries.C (algebraMap O L e) * PowerSeries.X * w * hz +
@@ -112,7 +112,7 @@ theorem phi_pow_one_add (j : ℕ) : (W.φA ^ j) (1 + letπ) = (1 + letπ) ^ PD.p
   | zero => simp
   | succ j ih =>
     have h : W.φA (1 + letπ) = (1 + letπ) ^ PD.p := by
-      rw [map_add, map_one, W.φA_π]
+      rw [map_add (f := _), map_one, W.φA_π]
       funext i
       have := W.q₀_def
       simp only [Pi.add_apply, Pi.mul_apply, Pi.pow_apply, Pi.one_apply, letπ, LocWach.q]
@@ -121,7 +121,7 @@ theorem phi_pow_one_add (j : ℕ) : (W.φA ^ j) (1 + letπ) = (1 + letπ) ^ PD.p
 
 theorem X_eq (i : ZMod n) : W.X i = (1 + PowerSeries.X) ^ PD.p ^ (W.s - 1) - 1 := by
   have h := phi_pow_one_add W (W.s - 1)
-  rw [map_add, map_one] at h
+  rw [map_add (f := _), map_one] at h
   have h2 := congrFun h i
   simp only [Pi.add_apply, Pi.pow_apply, Pi.one_apply] at h2
   change 1 + W.X i = (1 + PowerSeries.X) ^ _ at h2

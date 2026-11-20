@@ -118,7 +118,7 @@ private theorem valS_inf_le_valS_add {R : Type} [CommRing R] {ι : Type} {n : �
   apply Finset.inf_mono
   intro k hk
   unfold sDegs at hk ⊢
-  rw [map_add] at hk
+  rw [map_add (f := _)] at hk
   rw [Finset.mem_union, Finset.mem_biUnion, Finset.mem_biUnion]
   rw [Finset.mem_biUnion] at hk
   obtain ⟨m, -, hk⟩ := hk

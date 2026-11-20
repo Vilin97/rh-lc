@@ -90,7 +90,7 @@ theorem GlobalTheory.TensorNormal.localization_tensor_normal_of_charZero : ∀ (
     induction x using TensorProduct.induction_on with
     | zero => simpa using V.zero_mem
     | tmul d r => rw [hθt]; exact V.mul_mem _ _ ((ValuationSubring.valuation_le_one_iff V _).1 (hv1 d)) (hV r)
-    | add x y hx hy => rw [map_add]; exact V.add_mem _ _ hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact V.add_mem _ _ hx hy
   let θV : D ⊗[A] R →+* V := θ.codRestrict V.toSubring hθV
   let q : Ideal (D ⊗[A] R) := (maximalIdeal V).comap θV
   have hmq : ∀ d ∈ maximalIdeal D, d ⊗ₜ[A] (1 : R) ∈ q := by

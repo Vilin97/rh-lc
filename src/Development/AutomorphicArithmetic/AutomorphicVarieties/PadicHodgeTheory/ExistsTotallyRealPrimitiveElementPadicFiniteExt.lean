@@ -122,7 +122,7 @@ private theorem approx_monic_totally_real_rational (l : ℕ) [Fact l.Prime] (f :
       have := (tendsto_const_nhds (x := aeval x h)).add (huR.mul_const (aeval x (g₀ - h)))
       simp only [zero_mul, add_zero] at this
       refine this.congr fun N => ?_
-      simp only [map_add, map_mul, aeval_C, eq_ratCast]
+      simp only [map_add (f := _), map_mul, aeval_C, eq_ratCast]
     exact ((hev _).mul (hev _)).eventually
       (gt_mem_nhds (sign_change_between_integers n j (Finset.mem_range.1 hj)))
   have e2 : ∀ᶠ N in atTop, ∀ i ∈ Finset.range (n + 1),

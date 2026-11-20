@@ -77,7 +77,7 @@ theorem cayley_val (k : ℕ) (m : GL (Fin 2) ℝ) (a b : ℝ) (h00 : m 0 0 = a) 
   have h2 : ((a : ℂ) + b * Complex.I) - ((a : ℂ) - b * Complex.I) * conj u ≠ 0 := by
     have h := (map_ne_zero (starRingEnd ℂ)).2 h1
     convert h using 1
-    simp only [map_sub, map_mul, map_add, Complex.conj_ofReal, Complex.conj_I]; ring
+    simp only [map_sub, map_mul, map_add (f := _), Complex.conj_ofReal, Complex.conj_I]; ring
   have hA : ((a : ℂ) + b * Complex.I) - ((a : ℂ) - b * Complex.I) * u * conj u ≠ 0 := by
     intro h
     rw [mul_assoc, huu, ← Complex.ofReal_pow] at h
@@ -96,7 +96,7 @@ theorem cayley_val (k : ℕ) (m : GL (Fin 2) ℝ) (a b : ℝ) (h00 : m 0 0 = a) 
       (((a : ℂ) - b * Complex.I) - ((a : ℂ) + b * Complex.I) * u)) =
       -Complex.I * (((a : ℂ) + b * Complex.I) + ((a : ℂ) - b * Complex.I) * conj u) /
       (((a : ℂ) + b * Complex.I) - ((a : ℂ) - b * Complex.I) * conj u) := by
-    simp only [map_div₀, map_sub, map_mul, map_add, Complex.conj_ofReal, Complex.conj_I]; ring
+    simp only [map_div₀, map_sub, map_mul, map_add (f := _), Complex.conj_ofReal, Complex.conj_I]; ring
   have hwim : 0 < (m • zP).1.im := by
     rw [coe_smul, im_div, det_eq, h00, h01, h10, h11]
     apply div_pos (mul_pos (by nlinarith) hzpos') (Complex.normSq_pos.2 (den_ne m hz))

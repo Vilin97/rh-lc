@@ -133,7 +133,7 @@ theorem repr_map {ι : Type} (b : Module.Basis ι F E) (φ : R →ₐ[F] R') (u 
       φ ((Algebra.TensorProduct.basis R b).repr u j) := by
   induction u using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
   | tmul a e => simp
 
 end Ext

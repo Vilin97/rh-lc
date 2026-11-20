@@ -184,7 +184,7 @@ theorem etale_quotientMap {P A : Type u} [CommRing P] [CommRing A] {f : P →+* 
       rw [hφ, hqm, ← map_mul (Ideal.Quotient.mk (Ideal.map f I)), hψ]
       exact hb x a
     · intro u v hu hv
-      rw [map_add, map_add, hu, hv]
+      rw [map_add (f := _), map_add (f := _), hu, hv]
   have hsurj : Function.Surjective φ := by
     intro b
     obtain ⟨a, rfl⟩ := Ideal.Quotient.mk_surjective b

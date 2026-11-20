@@ -69,7 +69,7 @@ theorem bar_rt (H : Host E) : H.bar H.rt = -H.rt := by
 
 theorem cmHost_bar_halfIntegerGenerator (H : Host E) : H.bar H.w0 = 1 - H.w0 := by
   have h := congrArg H.bar H.two_weight_eq_one_add_root
-  simp only [map_mul, map_add, map_one, map_ofNat, bar_rt] at h
+  simp only [map_mul, map_add (f := _), map_one, map_ofNat, bar_rt] at h
   have h2 : (2 : 𝓞 E) * (H.bar H.w0 - (1 - H.w0)) = 0 := by
     linear_combination h + H.two_weight_eq_one_add_root
   have h20 : (2 : 𝓞 E) ≠ 0 := by norm_num
@@ -93,7 +93,7 @@ theorem isHermitianForm_linear_left (hh : IsKForm D ε h) (x y : D.La) : h (H.w0
 
 theorem ef_swap (D : Datum H) (x y : D.La) : D.EF y x = -D.EF x y := by
   have e := D.alt (x + y)
-  simp only [map_add, LinearMap.add_apply, D.alt x, D.alt y] at e
+  simp only [map_add (f := _), LinearMap.add_apply, D.alt x, D.alt y] at e
   linarith
 
 theorem isKForm_herm (hh : IsKForm D ε h) (x y : D.La) : (h y x : 𝓞 E) = H.bar (h x y) := by
@@ -102,7 +102,7 @@ theorem isKForm_herm (hh : IsKForm D ε h) (x y : D.La) : (h y x : 𝓞 E) = H.b
     simp only [map_sub, map_one, cmHost_bar_halfIntegerGenerator, sub_sub_cancel, sub_smul, one_smul, LinearMap.sub_apply] at e
     exact e.symm
   rw [hh, hh, ef_swap D x y, ef_swap D x (H.w0 • y), a1]
-  simp only [map_add, map_mul, map_intCast, cmHost_bar_halfIntegerGenerator]
+  simp only [map_add (f := _), map_mul, map_intCast, cmHost_bar_halfIntegerGenerator]
   push_cast
   ring
 

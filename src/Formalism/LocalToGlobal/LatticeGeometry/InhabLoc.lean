@@ -193,11 +193,11 @@ theorem beK_bal (k : ℕ) (c c' : 𝓞 D.host.E) (h : (c' : D.host.E) = D.host.c
 
 theorem trZ_add_left (k : ℕ) (a a' b : Fin k → 𝓞 D.host.E) : trZ D k (a + a') b = trZ D k a b + trZ D k a' b := by
   apply Int.cast_injective (α := ℝ)
-  rw [Int.cast_add, trZ_cast, trZ_cast, trZ_cast, map_add, LinearMap.add_apply]
+  rw [Int.cast_add, trZ_cast, trZ_cast, trZ_cast, map_add (f := _), LinearMap.add_apply]
 
 theorem trZ_add_right (k : ℕ) (a b b' : Fin k → 𝓞 D.host.E) : trZ D k a (b + b') = trZ D k a b + trZ D k a b' := by
   apply Int.cast_injective (α := ℝ)
-  rw [Int.cast_add, trZ_cast, trZ_cast, trZ_cast, map_add]
+  rw [Int.cast_add, trZ_cast, trZ_cast, trZ_cast, map_add (f := _)]
 
 theorem trZ_symm (k : ℕ) (a b : Fin k → 𝓞 D.host.E) : trZ D k a b = trZ D k b a := by
   apply Int.cast_injective (α := ℝ)
@@ -528,7 +528,7 @@ open Classical in
     rw [this, XT.smul_mk]
   tau := fun {_} y a χ => pU p c ^ trZ D (rkB ρ y) a ((XT.mk D (Fin (rkB ρ y) → 𝓞 D.host.E)).symm χ)
   tau_add_left := fun {_} y a a' χ => by rw [trZ_add_left, zpow_add]
-  tau_add_right := fun {_} y a χ χ' => by rw [map_add, trZ_add_right, zpow_add]
+  tau_add_right := fun {_} y a χ χ' => by rw [map_add (f := _), trZ_add_right, zpow_add]
   tau_symm := fun {_} y a b => congrArg (fun z : ℤ => pU p c ^ z) (trZ_symm D (rkB ρ y) a b)
   tau_smul := fun {_} y e a χ => by rw [XT.symm_smul, trZ_bal]
   be_tau := fun {_} y a b => by
@@ -575,7 +575,7 @@ open Classical in
     rw [this, XT.smul_mk]
   taub := fun _ a χ => u2 ^ trZ D 1 a ((XT.mk D (Fin 1 → 𝓞 D.host.E)).symm χ)
   taub_add_left := fun _ a a' χ => by rw [trZ_add_left, zpow_add]
-  taub_add_right := fun _ a χ χ' => by rw [map_add, trZ_add_right, zpow_add]
+  taub_add_right := fun _ a χ χ' => by rw [map_add (f := _), trZ_add_right, zpow_add]
   taub_symm := fun _ a b => congrArg (fun z : ℤ => u2 ^ z) (trZ_symm D 1 a b)
   taub_smul := fun _ e a χ => by rw [XT.symm_smul, trZ_bal]
   taub_pos := fun _ a => two_adic_unit_zpow_mem _ (trZ_self_nonneg D 1 a)

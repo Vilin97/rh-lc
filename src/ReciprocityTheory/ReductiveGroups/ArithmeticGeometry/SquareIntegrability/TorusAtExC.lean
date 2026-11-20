@@ -227,7 +227,7 @@ def phi : (Fin r → E) →+ Vsp (dimT X) where
     rw [this, map_zero]
   map_add' u v := by
     have : X.embV (u + v) = X.embV u + X.embV v := by funext τ a; simp [Data.embV, Data.emb]
-    rw [this, map_add]
+    rw [this, map_add (f := _)]
 
 theorem phi_apply (v : Fin r → E) : phi X e v = Lc X e (X.embV v) := rfl
 

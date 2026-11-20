@@ -142,5 +142,5 @@ theorem GlobalTheory.AbCoh.projective_coker_of_liftsAt :
   have hm : a - (y₀ + (K.d (i - 1) i).hom b₀) ∈ m • (⊤ : Submodule R (K.X i)) := by
     rw [← one_tmul_eq_zero_iff, TensorProduct.tmul_sub, ← hyb, sub_self]
   have := Submodule.mem_map_of_mem (f := (K.d i (i + 1)).hom) hm
-  rw [Submodule.map_smul'', ← LinearMap.range_eq_map, map_sub, map_add, hdd, add_zero] at this
+  rw [Submodule.map_smul'', ← LinearMap.range_eq_map, map_sub, map_add (f := _), hdd, add_zero] at this
   exact this

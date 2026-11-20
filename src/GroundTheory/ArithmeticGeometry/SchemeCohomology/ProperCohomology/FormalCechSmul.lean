@@ -30,7 +30,7 @@ lemma cls_sum {α : Type*} (s : Finset α) (f : α → Cochain P 𝔘 p) (hf : �
         rw [map_sum]
       exact Finset.sum_eq_zero fun b _ => hf b
     conv_rhs => rw [Finset.sum_insert ha, ← ih hs]
-    exact (cls_congr 𝔘 (Finset.sum_insert ha) h (by rw [map_add, hf a, hs, add_zero])).trans
+    exact (cls_congr 𝔘 (Finset.sum_insert ha) h (by rw [map_add (f := _), hf a, hs, add_zero])).trans
       (cls_add _ _ (hf a) hs _)
 
 end Sum

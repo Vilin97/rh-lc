@@ -22,7 +22,7 @@ def intS (A : Subring K) (κ : Type) : Subring (MvPowerSeries κ K) where
     rw [coeff_one]
     split_ifs
     exacts [A.one_mem, A.zero_mem]
-  add_mem' := fun ha hb n => by rw [map_add]; exact A.add_mem (ha n) (hb n)
+  add_mem' := fun ha hb n => by rw [map_add (f := _)]; exact A.add_mem (ha n) (hb n)
   zero_mem' := fun n => by rw [map_zero]; exact A.zero_mem
   neg_mem' := fun ha n => by rw [map_neg]; exact A.neg_mem (ha n)
 
@@ -298,7 +298,7 @@ theorem log_subst_exp_sub_one [CharZero K] :
     | zero => simp [add_mul]
     | succ n => simp [add_mul, PowerSeries.coeff_succ_X_mul, PowerSeries.coeff_one, pow_succ]
   have e2 := congrArg (PowerSeries.substAlgHom (R := K) hs) e
-  rw [map_mul, map_add, map_one, PowerSeries.substAlgHom_X, PowerSeries.coe_substAlgHom, add_sub_cancel] at e2
+  rw [map_mul, map_add (f := _), map_one, PowerSeries.substAlgHom_X, PowerSeries.coe_substAlgHom, add_sub_cancel] at e2
   refine PowerSeries.derivative.ext ?_ ?_
   · rw [PowerSeries.derivative_subst hs, map_sub, PowerSeries.derivative_exp, PowerSeries.derivative_one,
       PowerSeries.derivative_X, sub_zero, mul_comm]

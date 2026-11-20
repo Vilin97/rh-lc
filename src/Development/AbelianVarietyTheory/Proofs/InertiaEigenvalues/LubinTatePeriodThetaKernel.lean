@@ -32,7 +32,7 @@ theorem not_sq_dvd {π : ↥(OL K)} (hπ : Irreducible π) {p : PreTilt (OC l) l
     rw [eta, map_sub, red_teich, red_inO_eq_zero hπ.not_isUnit, sub_zero]
   have hr : red K v ^ ((r + 2) * (r + 1)) = p ^ 2 * red K c := by
     have := congrArg (red K) hc
-    rw [map_add, red_inO_eq_zero hπ.not_isUnit, zero_add, map_pow, hu, map_add, map_mul,
+    rw [map_add (f := _), red_inO_eq_zero hπ.not_isUnit, zero_add, map_pow, hu, map_add (f := _), map_mul,
       red_inO_eq_zero hπ.not_isUnit, zero_mul, zero_add, map_pow, map_mul, map_pow, hre, ← pow_mul] at this
     exact this
   have ha : (red K v).untilt ^ ((r + 2) * (r + 1)) = intToOC K π ^ 2 * (red K c).untilt := by
@@ -40,7 +40,7 @@ theorem not_sq_dvd {π : ↥(OL K)} (hπ : Irreducible π) {p : PreTilt (OC l) l
     rwa [map_pow, map_mul, map_pow, hp] at this
   obtain ⟨d, hd⟩ := dvd_thetaK_sub hπ v
   have hz1 : thetaK K u = intToOC K π * thetaK K v + thetaK K v ^ (r + 2) := by
-    rw [hu, map_add, map_mul, thetaK_inO, map_pow]
+    rw [hu, map_add (f := _), map_mul, thetaK_inO, map_pow]
   have hmp : (maximalIdeal (OC l)).IsPrime := inferInstance
   have ham : (red K v).untilt ∈ maximalIdeal (OC l) :=
     hmp.mem_of_pow_mem ((r + 2) * (r + 1)) (by
@@ -121,7 +121,7 @@ theorem not_mem_sq {π : ↥(OL K)} (hπ : Irreducible π) {ω : AK K} (hω0 : �
     | zero => exact hF
     | succ n ih =>
       refine (frobq_bijective K).1 ?_
-      rw [map_add, map_mul, map_pow, frobq_inO, hw, ih]
+      rw [map_add (f := _), map_mul, map_pow, frobq_inO, hw, ih]
   have hrec : ∀ n, w n = inO K π * w (n + 1) + w (n + 1) ^ (r + 2) := fun n => by rw [← hFw, hw]
   have hall : ∀ n, eta π p ^ 2 ∣ w n := fun n => by
     induction n with

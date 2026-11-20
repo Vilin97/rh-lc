@@ -167,7 +167,7 @@ private lemma associated_pow_sub_one_prime_of_lt_prime {l : ℕ} [Fact l.Prime] 
       (IsLocalRing.mem_maximalIdeal _).mpr hnu
     rw [← PadicInt.ker_toZMod, RingHom.mem_ker] at hmem
     have h1 : ∑ i ∈ Finset.range d, u ^ i = d + l * m := by linear_combination hm
-    rw [h1, map_add, map_mul, map_natCast, map_natCast, ZMod.natCast_self, zero_mul, add_zero,
+    rw [h1, map_add (f := _), map_mul, map_natCast, map_natCast, ZMod.natCast_self, zero_mul, add_zero,
       ZMod.natCast_eq_zero_iff] at hmem
     exact Nat.not_dvd_of_pos_of_lt hd0 hdl hmem
   rw [hg]
@@ -307,7 +307,7 @@ theorem _root_.GlobalTheory.CycFr.exists_frame [IsDiscreteValuationRing O]
         have := (associated_pow_sub_one_prime_of_lt_prime (u : ℤ_[l]) hu hd hdl).map (algebraMap ℤ_[l] O)
         simpa using this
       have h1 : constantCoeff κ' * constantCoeff E = algebraMap ℤ_[l] O u ^ Nat.card Δ - 1 := by
-        rw [← hcc, map_add, map_one, map_mul]; ring
+        rw [← hcc, map_add (f := _), map_one, map_mul]; ring
       obtain ⟨a, ha⟩ := hEl
       obtain ⟨b, hb⟩ := hul
       have hl0 : (l : O) ≠ 0 := Nat.cast_ne_zero.mpr hp.ne_zero
@@ -346,7 +346,7 @@ theorem _root_.GlobalTheory.CycFr.exists_frame [IsDiscreteValuationRing O]
         constantCoeff_C] at h0
       exact sub_eq_zero.mp h0
     obtain ⟨w', hw'⟩ := hξ.symm
-    rw [← hw', map_mul, map_pow, hσ, map_mul, map_pow, map_add, constantCoeff_X, constantCoeff_C,
+    rw [← hw', map_mul, map_pow, hσ, map_mul, map_pow, map_add (f := _), constantCoeff_X, constantCoeff_C,
       zero_add] at h1
     have hunit : IsUnit (constantCoeff (σ (w' : O⟦X⟧))) :=
       (PowerSeries.isUnit_iff_constantCoeff).mp (w'.isUnit.map σ)
@@ -484,7 +484,7 @@ theorem _root_.GlobalTheory.CycFr.exists_frame [IsDiscreteValuationRing O]
       rw [pow_one] at h1
       obtain ⟨q, hq⟩ := h1
       have h2 := congrArg (fun y => constantCoeff (σ' y)) hq
-      simp only [map_sub, map_mul, map_pow, map_add, map_one, hσ', hσ'C, constantCoeff_X,
+      simp only [map_sub, map_mul, map_pow, map_add (f := _), map_one, hσ', hσ'C, constantCoeff_X,
         constantCoeff_C, zero_add, add_sub_cancel_left, hζτ.pow_eq_one, sub_self, zero_mul] at h2
       rw [add_sub_cancel, hζτ.pow_eq_one, sub_self, zero_mul] at h2
       exact sub_eq_zero.mp h2
@@ -493,7 +493,7 @@ theorem _root_.GlobalTheory.CycFr.exists_frame [IsDiscreteValuationRing O]
       intro b
       rw [hB2 (u : ℤ_[l]) 1 b hu.symm.dvd, _root_.GlobalTheory.CycFr.act_one]
     have hval : constantCoeff (lev τ (γ X)) = ϖ τ := by
-      rw [← hA, hγ, hjX, hB, ← hjX, hA, hlev, map_add, constantCoeff_X, constantCoeff_C, zero_add]
+      rw [← hA, hγ, hjX, hB, ← hjX, hA, hlev, map_add (f := _), constantCoeff_X, constantCoeff_C, zero_add]
     have hdvd := _root_.GlobalTheory.CycFr.dvd_sub_C_of_shift (ϖ τ) (lev τ) (hlev τ) (γ X)
     rw [hval] at hdvd
     obtain ⟨W, hW⟩ := hdvd
@@ -513,7 +513,7 @@ theorem _root_.GlobalTheory.CycFr.exists_frame [IsDiscreteValuationRing O]
     have hQval : constantCoeff (σ' Q) = algebraMap ℤ_[l] O u := by
       have hd1 := congrArg (fun y => constantCoeff (σ' (d⁄dX O y))) hQ
       have hdP : d⁄dX O P = 1 := by rw [hP, map_sub, derivative_X, derivative_C, sub_zero]
-      rw [Derivation.leibniz, hdP, smul_eq_mul, smul_eq_mul, mul_one, map_add, map_mul, hPσ, map_add, map_mul, constantCoeff_X,
+      rw [Derivation.leibniz, hdP, smul_eq_mul, smul_eq_mul, mul_one, map_add (f := _), map_mul, hPσ, map_add (f := _), map_mul, constantCoeff_X,
         zero_mul, zero_add] at hd1
       rw [← hd1, hP]
       simp only [map_sub, _root_.GlobalTheory.CycFr.act_X, _root_.GlobalTheory.CycFr.act_C,

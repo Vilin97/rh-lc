@@ -54,7 +54,7 @@ theorem PsiAll_surjective {F E : Type} [Field F] [NumberField F] [Field E] [Numb
     obtain ⟨b, hb⟩ := exists_extensionEmbedding_eq_ofReal hw (c.im / (τ.1 e).im)
     refine ⟨a ⊗ₜ[F] 1 + b ⊗ₜ[F] algebraMap E (Fld P) e, ?_⟩
     ext i : 1
-    rw [PsiAll_apply, map_add, Psi_tmul, Psi_tmul, psiL_algebraMap, map_one, ha, hb, mul_one]
+    rw [PsiAll_apply, map_add (f := _), Psi_tmul, Psi_tmul, psiL_algebraMap, map_one, ha, hb, mul_one]
     apply Complex.ext
     · simp only [Complex.add_re, Complex.ofReal_re, Complex.re_ofReal_mul]; ring
     · simp only [Complex.add_im, Complex.ofReal_im, Complex.im_ofReal_mul]; field_simp; ring

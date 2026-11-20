@@ -19,7 +19,7 @@ private theorem UpperTheory.V.Alg.M.fin_gen {O A K : Type} [CommRing O] [CommRin
   induction hf' using Submodule.span_induction with
   | mem y hy => exact hne y hy
   | zero => exact map_zero ξ
-  | add y z _ _ hy hz => rw [map_add, hy, hz, add_zero]
+  | add y z _ _ hy hz => rw [map_add (f := _), hy, hz, add_zero]
   | smul a y _ hy => rw [Algebra.smul_def, map_mul, hy, mul_zero]
 
 private theorem UpperTheory.V.Alg.M.fin_act {O A K : Type} [CommRing O] [CommRing A] [Algebra O A]

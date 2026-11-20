@@ -105,7 +105,7 @@ theorem characterIntegral : CharIntegral := by
   set f : V → ℂ := fun z => Complex.exp (2 * (Real.pi : ℂ) * Complex.I * (altE H v z : ℂ)) with hf
   have hadd : ∀ x y : V, altE H v (x + y) = altE H v x + altE H v y := by
     intro x y
-    simp [altE, map_add]
+    simp [altE, map_add (f := _)]
   have hmul : ∀ x y : V, f (x + y) = f x * f y := by
     intro x y
     simp only [hf, hadd]

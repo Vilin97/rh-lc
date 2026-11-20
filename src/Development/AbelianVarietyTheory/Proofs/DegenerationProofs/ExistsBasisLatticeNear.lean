@@ -37,7 +37,7 @@ theorem avg_mul_avg [DecidableEq (G →+ B)] (ψ : AddChar B o) (hψ : ∀ a, ψ
     refine Fintype.sum_equiv (Equiv.addLeft s) _ _ fun t => ?_
     rw [smul_mul_smul_comm, hρ, smul_smul, ← AddChar.map_add_eq_mul, ← AddChar.map_add_eq_mul]
     congr 2
-    simp only [AddMonoidHom.sub_apply, Equiv.coe_addLeft, map_add]
+    simp only [AddMonoidHom.sub_apply, Equiv.coe_addLeft, map_add (f := _)]
     abel
   rw [smul_mul_smul_comm, h1, sum_char_comp ψ hψ, smul_smul]
   by_cases h : c = c'

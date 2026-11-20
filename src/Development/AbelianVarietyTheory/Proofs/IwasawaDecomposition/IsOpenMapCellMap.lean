@@ -25,7 +25,7 @@ theorem exists_pow_mul_eval_mem {k : Type} [Field k] {X J : Type} (R : Subalgebr
         D ^ N₂ * (D ^ N₁ * fun x => MvPolynomial.eval (fun j => g j x) p) +
           D ^ N₁ * (D ^ N₂ * fun x => MvPolynomial.eval (fun j => g j x) q) := by
       funext x
-      simp only [Pi.mul_apply, Pi.add_apply, Pi.pow_apply, map_add]
+      simp only [Pi.mul_apply, Pi.add_apply, Pi.pow_apply, map_add (f := _)]
       ring
     rw [this]
     exact add_mem (mul_mem (pow_mem hD _) h₁) (mul_mem (pow_mem hD _) h₂)

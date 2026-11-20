@@ -97,10 +97,10 @@ theorem ch_add {U : Scheme.{0}} (y y' : Q.obj (op U)) (a a' : Sec M U) (ha : Ch 
   obtain ⟨x1, e1⟩ := hl1 W k hk.1
   obtain ⟨x2, e2⟩ := hl2 W k hk.2
   rw [pmap_comp] at e1 e2
-  rw [res_res, res_add, ha W (k ≫ g) x1 e1, ha' W (k ≫ g) x2 e2, hb, ← map_add]
+  rw [res_res, res_add, ha W (k ≫ g) x1 e1, ha' W (k ≫ g) x2 e2, hb, ← map_add (f := _)]
   apply key φ M b hb h2
   rw [nat_apply, hx, pmap_comp]
-  simp only [map_add, e1, e2]
+  simp only [map_add (f := _), e1, e2]
 
 theorem ch_res {U V : Scheme.{0}} (h : V ⟶ U) (y : Q.obj (op U)) (a : Sec M U) (ha : Ch φ M b U y a) :
     Ch φ M b V ((Q.map h.op).hom y) (Sec.res h a) := by

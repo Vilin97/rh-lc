@@ -39,7 +39,7 @@ theorem baseChangeAlgebraRepresentationAction_injective {C V : Type} [Ring C] [A
         rw [LinearMap.baseChange_tmul, TensorProduct.smul_tmul', smul_eq_mul, _root_.mul_one]
       rw [h1]
       simp [g, Algebra.smul_def]
-    | add y z hy hz => simp only [map_add, Pi.add_apply, LinearMap.add_apply, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), Pi.add_apply, LinearMap.add_apply, hy, hz]
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
   intro y hy
   apply hlg

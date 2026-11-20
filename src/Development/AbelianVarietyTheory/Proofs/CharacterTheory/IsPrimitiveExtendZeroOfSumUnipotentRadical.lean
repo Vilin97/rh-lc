@@ -96,6 +96,6 @@ theorem isPrimitive_extZero_of_sum_unipotent : ∀ (F : Type) [Field F] [Finite 
   · rw [← he, LinearEquiv.conj_apply_apply]
     simpa using hh.1 _
   · rw [LinearEquiv.conj_apply_apply, LinearEquiv.symm_symm, hh.2 _ ((he y).2 hy), map_zero]
-  · rw [← map_add, hcl]
+  · rw [← map_add (f := _), hcl]
 
 end GlobalTheory.CuspGL

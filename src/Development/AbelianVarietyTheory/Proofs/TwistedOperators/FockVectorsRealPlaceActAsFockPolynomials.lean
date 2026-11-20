@@ -388,7 +388,7 @@ theorem side_at : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) 
         exact trace_reindex e' Y
       refine ⟨locT εS εT (frT * phiFr frT false e' Y * frT⁻¹) P +
         ((aS : ℂ) * (phiFr frT false e' Y).trace) • P, ?_, ?_⟩
-      · rw [conj_phiFr huT, hpl, map_add, map_smul, hκ.2, htr]
+      · rw [conj_phiFr huT, hpl, map_add (f := _), map_smul, hκ.2, htr]
       · intro g z
         have := (hL.2 _ (memT Y hY) P).1 (1, g) z
         simpa only [MonoidHom.comp_apply, MonoidHom.inr_apply, L (memT Y hY), Prod.mk_mul_mk, one_mul] using this

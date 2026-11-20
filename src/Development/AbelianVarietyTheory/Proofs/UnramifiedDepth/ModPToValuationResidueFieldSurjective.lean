@@ -35,7 +35,7 @@ def piW (ϖ : PreTilt O p) (hϖ : ϖ.untilt = (p : O)) : WRing p O ϖ →+* Ainf
   Ideal.Quotient.lift _ ((Ideal.Quotient.mk (span {(p : O) ^ (0 + 1)})).comp (fontaineTheta O p))
     (fun a ha => by
       obtain ⟨b, c, rfl⟩ := Ideal.mem_span_pair.1 ha
-      simp only [RingHom.comp_apply, map_add, map_mul, map_pow, map_natCast,
+      simp only [RingHom.comp_apply, map_add (f := _), map_mul, map_pow, map_natCast,
         fontaineTheta_teichmuller, hϖ, modP_valuationIntegers_prime_eq_zero]
       simp)
 
@@ -63,7 +63,7 @@ lemma ker_piW (hv : v.Integers O) (ϖ : PreTilt O p) (hϖ : ϖ.untilt = (p : O))
     rw [h3] at ha
     obtain ⟨b, c, rfl⟩ := Ideal.mem_span_pair.1 ha
     refine Ideal.mem_span_singleton'.2 ⟨Ideal.Quotient.mk _ b, ?_⟩
-    simp only [map_add, map_mul, map_natCast, mk_teich, mul_zero, add_zero]
+    simp only [map_add (f := _), map_mul, map_natCast, mk_teich, mul_zero, add_zero]
   · intro hx
     obtain ⟨y, hy⟩ := Ideal.mem_span_singleton'.1 hx
     rw [RingHom.mem_ker, ← hy, map_mul, map_natCast, modP_valuationIntegers_prime_eq_zero, mul_zero]

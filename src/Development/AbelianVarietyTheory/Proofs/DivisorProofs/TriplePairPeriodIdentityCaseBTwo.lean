@@ -62,7 +62,7 @@ private theorem four_shift (T : Fv F v ⊗[F] E → ℂ) (c t : Fv F v ⊗[F] E)
     ← integral_add_right_eq_self (μ := m) (fun s => ψ (-Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (t * c)) *
       (T s * ψ (Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (t * s)))) c]
   refine congrArg (integral m) (funext fun s => ?_)
-  rw [mul_left_comm, ← AddChar.map_add_eq_mul, mul_add t, LinearMap.map_add]
+  rw [mul_left_comm, ← AddChar.map_add_eq_mul, mul_add t, LinearMap.map_add (f := _)]
   congr 2
   ring
 
@@ -267,7 +267,7 @@ theorem _root_.GlobalTheory.T.triple_pair_period_identity_case_b_two : GlobalThe
   obtain ⟨φ, hφ, hproj⟩ := UpperTheory.exists_schwartz_character_average _ _ (SB (Fin (b + 2) × Fin (a + (b + 2)) → Fv F v)) L L' hLc hL'o
     (fun y => locOp v (G.M'.co.rho B.ψ (partFin v (yAt H' v y))) φ₀) φ₀ (fun y => locOp_mem _ _ _) (fun y hy => (hL' y hy).1)
     (fun y => psiAt B.ψ v (Algebra.trace (Fv F v) (Fv F v ⊗[F] E) (pairV σ G.V'.J v (atV v (incV F H.x)) y)))
-    (fun x y => by rw [pairV_add_right, map_add, AddChar.map_add_eq_mul]) (fun y hy => (hL' y hy).2)
+    (fun x y => by rw [pairV_add_right, map_add (f := _), AddChar.map_add_eq_mul]) (fun y hy => (hL' y hy).2)
 
   have hlin : ∀ k ∈ UAt σ G.V' (evFin F v), ∀ (c c' : ℂ), ∀ x ∈ SB (Fin (b + 2) × Fin (a + (b + 2)) → Fv F v),
       ∀ y ∈ SB (Fin (b + 2) × Fin (a + (b + 2)) → Fv F v), Tf (locOp v (om' (k, 1)) (c • x + c' • y)) =
@@ -281,7 +281,7 @@ theorem _root_.GlobalTheory.T.triple_pair_period_identity_case_b_two : GlobalThe
         acts_locOp_om hA P' hk (mem_UAtSub.1 (one_mem _)) hf⟩) c c' hx hy,
       locOp_lin hρ (fun f hf => ⟨_, locOp_mem v _ f, (locOp_rho G.M'.co hψ v _ hf).1⟩) c c' (locOp_mem _ _ _)
         (locOp_mem _ _ _)]
-    simp only [map_add, map_smul, smul_eq_mul]
+    simp only [map_add (f := _), map_smul, smul_eq_mul]
   have hloc : ∀ k ∈ UAt σ G.V' (evFin F v), ∀ t : Fv F v ⊗[F] E,
       four v (psiAt B.ψ v) m (Tf (locOp v (om' (k, 1)) φ)) t =
         V.indicator (fun _ => (1 : ℂ)) (dispA v H.x k t) * four v (psiAt B.ψ v) m (Tf (locOp v (om' (k, 1)) φ₀)) t := by
@@ -299,7 +299,7 @@ theorem _root_.GlobalTheory.T.triple_pair_period_identity_case_b_two : GlobalThe
         simp only [zero_smul, zero_mul, add_zero] at this
         rw [this]
         exact four_smul _ c t)
-      (fun x y => by rw [pairV_add_right, mul_add, map_add, neg_add, AddChar.map_add_eq_mul])
+      (fun x y => by rw [pairV_add_right, mul_add, map_add (f := _), neg_add, AddChar.map_add_eq_mul])
       (fun y => by
         rw [← four_shift]
         congr 1

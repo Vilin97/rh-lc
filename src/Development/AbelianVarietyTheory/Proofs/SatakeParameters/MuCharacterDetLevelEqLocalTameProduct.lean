@@ -157,7 +157,7 @@ theorem h90_mem_U1_of_involutive (σ : E →ₐ[F] E) (hσ : ∀ a, σ (σ a) = 
     induction (k : AfE F E) using TensorProduct.induction_on with
     | zero => simp
     | tmul e c => simp [Formalism.UG.sigR, hσ]
-    | add s t hs ht => rw [map_add, map_add, hs, ht]
+    | add s t hs ht => rw [map_add (f := _), map_add (f := _), hs, ht]
   show k / conjId σ k * conjId σ (k / conjId σ k) = 1
   rw [map_div, h, div_mul_div_cancel, div_self']
 

@@ -296,9 +296,9 @@ theorem exists_half_adele (c : E ≃ₐ[ℚ] E) (hcc : c * c = 1) (P : ℕ → P
     rw [map_mul, map_mul, hσ, ha, hr, prV_unif]
     exact this
   · have := congrArg ((inclE (F := ℚ) (v.adicCompletion ℚ)).comp (algebraMap (𝓞 E) E)) (h2 v)
-    rw [map_add, map_add, map_mul, map_natCast, apply_ite ((inclE (F := ℚ) (v.adicCompletion ℚ)).comp _),
+    rw [map_add (f := _), map_add (f := _), map_mul, map_natCast, apply_ite ((inclE (F := ℚ) (v.adicCompletion ℚ)).comp _),
       map_one, map_zero] at this
-    rw [map_add, map_add, map_mul, hσ, ha, hs, prV_unif, prV_eps]
+    rw [map_add (f := _), map_add (f := _), map_mul, hσ, ha, hs, prV_unif, prV_eps]
     exact this
 
 theorem hilbert90_integral_ideles_of_moved_primes (c : E ≃ₐ[ℚ] E) (hcc : c * c = 1) (P : ℕ → Prop)
@@ -314,7 +314,7 @@ theorem hilbert90_integral_ideles_of_moved_primes (c : E ≃ₐ[ℚ] E) (hcc : c
     | tmul x y =>
       have : c (c x) = x := DFunLike.congr_fun hcc x
       simp [sigR, this]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hε := sig_eps (c : E →ₐ[ℚ] E) P
   have hεε := eps_idem (E := E) P
   have hεm := eps_mem (E := E) P
@@ -338,7 +338,7 @@ theorem hilbert90_integral_ideles_of_moved_primes (c : E ≃ₐ[ℚ] E) (hcc : c
   refine ⟨Units.mkOfMulEqOne _ _ hxy, add_mem (add_mem ha (mul_mem hu ha')) (sub_mem (one_mem _) hεm),
     mul_mem (add_mem (add_mem ha (mul_mem hu' ha')) (sub_mem (one_mem _) hεm)) ht, ?_,
     a + u * σ a - 1, sub_mem (add_mem ha (mul_mem hu ha')) (one_mem _), ?_⟩
-  · rw [Units.val_mkOfMulEqOne, map_add, map_add, map_mul, map_sub, map_one, hσσ, hε]
+  · rw [Units.val_mkOfMulEqOne, map_add (f := _), map_add (f := _), map_mul, map_sub, map_one, hσσ, hε]
     linear_combination (-a) * hn + hs
   · rw [Units.val_mkOfMulEqOne]
     linear_combination - h0 - u * h0'
@@ -375,7 +375,7 @@ theorem cT_cutM (σ : R →+* R) (e : R) (he : e * e = e) (hσ : σ e = e) (A : 
   ext i j
   have := congrFun (congrFun (cT_one (n := n) σ) i) j
   simp only [cT, transpose_apply, Matrix.map_apply] at this
-  simp only [cT, transpose_apply, Matrix.map_apply, cutM_apply, map_add, map_mul, map_sub, map_one, hσ, this]
+  simp only [cT, transpose_apply, Matrix.map_apply, cutM_apply, map_add (f := _), map_mul, map_sub, map_one, hσ, this]
 
 theorem det_cutM (e : R) (he : e * e = e) (A : Matrix n n R) :
     e * ((cutM e he A).det - 1) = (cutM e he A).det - 1 := by

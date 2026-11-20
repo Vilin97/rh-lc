@@ -245,7 +245,7 @@ theorem GlobalTheory.LagrUniq.eq_smul_evalZero : GlobalTheory.FunPr.Hypotheses�
   have hlag : ∀ u, (co.e u).1 = 0 → ∃ a z, (M₁.co.e z).1 = 0 ∧ u = Matrix.vecMulVec (incV F H.x) a + incM F H.ι * z := by
     intro u hu
     obtain ⟨a, b, z, rfl⟩ := GlobalTheory.LagrUniq.exists_decomp hP.herm hH u
-    rw [map_add, map_add, Prod.fst_add, Prod.fst_add, (hx a).1, hι z, zero_add] at hu
+    rw [map_add (f := _), map_add (f := _), Prod.fst_add, Prod.fst_add, (hx a).1, hι z, zero_add] at hu
     have hz : (M₁.co.e z).1 = 0 := by
       funext k
       have := congrFun hu (j k)
@@ -271,7 +271,7 @@ theorem GlobalTheory.LagrUniq.eq_smul_evalZero : GlobalTheory.FunPr.Hypotheses�
     have hmul : M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) a + incM F H.ι * z) Φ =
         M.co.rho B.ψ (Matrix.vecMulVec (incV F H.x) a) (M.co.rho B.ψ (incM F H.ι * z) Φ) := by
       rw [M.co.form] at hsy
-      simp only [Darboux.rho, map_add]
+      simp only [Darboux.rho, map_add (f := _)]
       exact GlobalTheory.LagrUniq.schr_add_of_orth B.ψ _ _ hsy Φ
     rw [hmul, hi _ ⟨a, rfl⟩ _ (GlobalTheory.HeisSchA.rho_mem_schA M B.ψ hψ _ Φ hΦ), ← hone, hh z Φ hΦ]
     simp [Darboux.rho, schr, hz]

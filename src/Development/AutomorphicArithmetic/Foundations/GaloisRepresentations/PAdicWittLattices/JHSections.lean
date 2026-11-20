@@ -46,7 +46,7 @@ private theorem isBC_semiSl_of_pushout {k k' : Type} [CommRing k] [CommRing k'] 
     funext x
     induction x using Finsupp.induction_linear with
     | zero => simp
-    | add x y hx hy => simp only [map_add, Function.comp_apply, hx, hy] at *
+    | add x y hx hy => simp only [map_add (f := _), Function.comp_apply, hx, hy] at *
     | single j b =>
       rw [bcSum_single, Function.comp_apply, TensorProduct.equivFinsuppOfBasisLeft_symm_apply,
         Finsupp.sum_single_index (by simp), IsBaseChange.equiv_tmul]

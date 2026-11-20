@@ -67,4 +67,4 @@ theorem UpperTheory.periodic_integral_fundamentalDomain_invariant :
     · exact Subtype.ext (e.symm_apply_apply _)
     · intro g x
       change e (e.symm g + x) = g + e x
-      rw [map_add, e.apply_symm_apply]
+      rw [map_add (f := _), e.apply_symm_apply]

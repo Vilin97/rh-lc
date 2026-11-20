@@ -29,7 +29,7 @@ private theorem UpperTheory.V.Hi.propCker_avg {H k M : Type} [Group H] [Field k]
       obtain ⟨K1, h1, h1'⟩ := ha
       obtain ⟨K2, h2, h2'⟩ := hb
       refine ⟨K1 ⊓ K2, inferInstance, fun K _ _ hK => ?_⟩
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [Finset.sum_add_distrib, h1' K (hK.trans inf_le_left), h2' K (hK.trans inf_le_right), add_zero]
     | smul c a _ ha =>
       obtain ⟨K1, h1, h1'⟩ := ha
@@ -81,7 +81,7 @@ theorem UpperTheory.V.Hi.propCker :
         obtain ⟨j1, h1⟩ := ha
         obtain ⟨j2, h2⟩ := hb
         refine ⟨max j1 j2, fun j hj => ?_⟩
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_mem (h1 j (le_of_max_le_left hj)) (h2 j (le_of_max_le_right hj))
       | smul c a _ ha =>
         obtain ⟨j1, h1⟩ := ha
@@ -118,7 +118,7 @@ theorem UpperTheory.V.Hi.propCker :
         congr 3
         group
       | zero => simp
-      | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+      | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
       | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
     have h2 := stab _ (inv_mem (I.P_le _ (hz j))) _ h1
     rwa [mul, inv_mul_cancel, map_one, Module.End.one_apply] at h2

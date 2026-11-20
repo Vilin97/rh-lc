@@ -174,7 +174,7 @@ theorem exists_norm_prime : ∀ (R : Ranks) (H : Host R) (M a N : ℕ), M ≠ 0 
       rw [map_mul, map_sub, map_natCast, map_natCast] at this
       rw [← hπ]
       linear_combination -this
-    rw [e, map_add, map_mul, map_natCast, map_natCast] at hnorm
+    rw [e, map_add (f := _), map_mul, map_natCast, map_natCast] at hnorm
     have hd : (M : ℤ) ∣ (p : ℤ) - (a : ℤ) ^ 2 := by
       apply dvd_of_eq_mul_integral (E := H.E) hM
         (y := a * (y : H.E) + a * H.conj (y : H.E) + M * ((y : H.E) * H.conj (y : H.E)))

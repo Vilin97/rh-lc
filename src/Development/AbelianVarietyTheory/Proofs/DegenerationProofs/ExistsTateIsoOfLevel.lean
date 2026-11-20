@@ -40,7 +40,7 @@ theorem exists_retract {F R K κ : Type} [CommRing F] [CommRing R] [Field K] [Is
     induction hr using Algebra.adjoin_induction with
     | mem x hx => exact Algebra.subset_adjoin (by simp only [Finset.coe_insert, Finset.coe_image]; exact Or.inr (Or.inr ⟨x, hx, rfl⟩))
     | algebraMap x => exact (RingHom.congr_fun hφ x).symm ▸ A.algebraMap_mem (b x)
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
   obtain ⟨s⟩ := nonempty_algHom K A
   have h₁ : (u : κ) ∈ A := Algebra.subset_adjoin (by simp)
@@ -83,7 +83,7 @@ theorem exists_tateIso_of_level {E : Type} [Field E] [NumberField E] [IsCMField 
     exact exists_congr fun c => by simp [Nat.cast_smul_eq_nsmul, eq_comm]
   let g₀ : D.La →ₗ[𝓞 E] D.La ⧸ M :=
     { toFun := fun a => M.mkQ (f₀ a)
-      map_add' := fun a b => by rw [← map_add, hM, I.add, hf₀, hf₀, hf₀, hadd]
+      map_add' := fun a b => by rw [← map_add (f := _), hM, I.add, hf₀, hf₀, hf₀, hadd]
       map_smul' := fun c a => by rw [← map_smul, RingHom.id_apply, hM, I.lin, hf₀, hf₀, hlin] }
   obtain ⟨f, hf⟩ := Module.projective_lifting_property M.mkQ g₀ M.mkQ_surjective
   have hf' : ∀ a, I.ev N (f a) = x a := fun a => ((hM _ _).1 (LinearMap.congr_fun hf a)).trans (hf₀ a)

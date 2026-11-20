@@ -115,7 +115,7 @@ theorem halfPrime_eq (l : Level H) {v : Ideal (𝓞 (maximalRealSubfield E))} (h
     rw [hc, Ideal.mem_comap, hz]
     exact P.mul_mem_right _ (add_mem (P.mul_mem_left _ hx) (h (Ideal.mem_sup_left ha)))
   have h1 := Ideal.mem_map_of_mem (algebraMap _ (𝓞 E)) hzv
-  rw [hz, map_add, map_mul, bar_bar'] at h1
+  rw [hz, map_add (f := _), map_mul, bar_bar'] at h1
   refine Submodule.mem_sup.2 ⟨a * (x - 1) + b' * ((1 - H.bar x) * (H.bar b' * x + a)),
     add_mem (l.Mb.mul_mem_right _ ha) (l.Mb.mul_mem_right _ hb'), _, h1, ?_⟩
   linear_combination x * hab + (H.bar b' * x + a) * hab'
@@ -260,7 +260,7 @@ theorem typePrime_coprime : Pairwise (Function.onFun IsCoprime (typePrime l)) :=
     have hvw : v.1 ≠ w.1 := fun e => hne (congrArg _ (Subtype.ext e))
     obtain ⟨a, ha, b, hb, e⟩ := Ideal.isCoprime_iff_exists.1 (HeightOneSpectrum.isCoprime_of_ne _ _ hvw)
     exact Ideal.isCoprime_iff_exists.2 ⟨_, Ideal.mem_sup_right (Ideal.mem_map_of_mem _ ha), _,
-      Ideal.mem_sup_right (Ideal.mem_map_of_mem _ hb), by rw [← map_add, e, map_one]⟩
+      Ideal.mem_sup_right (Ideal.mem_map_of_mem _ hb), by rw [← map_add (f := _), e, map_one]⟩
   · exact isCoprime_of_natCast (g_coprime h) (g_mem_typePrime ⟨i, v⟩) (g_mem_typePrime ⟨j, w⟩)
 
 theorem iInf_typePrime_le :

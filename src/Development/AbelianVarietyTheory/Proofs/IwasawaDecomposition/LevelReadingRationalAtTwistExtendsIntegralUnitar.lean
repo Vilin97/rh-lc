@@ -65,7 +65,7 @@ theorem red_eq_one {F E : Type} [Field F] [NumberField F] [Field E] [NumberField
     congr 1
     rw [Matrix.one_apply, Matrix.one_apply]
     split_ifs <;> rfl
-  rw [e, map_add, map_mul, Formalism.L2.DIV.resS_oToS, Ideal.Quotient.eq_zero_iff_mem.2 hP, zero_mul, add_zero]
+  rw [e, map_add (f := _), map_mul, Formalism.L2.DIV.resS_oToS, Ideal.Quotient.eq_zero_iff_mem.2 hP, zero_mul, add_zero]
   show _ = (1 : Matrix (Fin n) (Fin n) (kP P)) i j
   rw [Matrix.one_apply, Matrix.one_apply]
   split_ifs <;> simp

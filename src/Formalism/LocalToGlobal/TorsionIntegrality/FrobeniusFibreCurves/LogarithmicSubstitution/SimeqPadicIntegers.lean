@@ -54,7 +54,7 @@ theorem integral_of_sq [IsUltrametricDist K] {y : MvPowerSeries ι K} (h2 : ‖(
       have hpa := Finset.mem_erase.mp hp
       have hpb := Finset.mem_erase.mp hpa.2
       have hp1 : p.1 + p.2 = d := by simpa using hpb.2
-      have hdeg : p.1.degree + p.2.degree = d.degree := by rw [← map_add, hp1]
+      have hdeg : p.1.degree + p.2.degree = d.degree := by rw [← map_add (f := _), hp1]
       have hne1 : p.1 ≠ 0 := by
         intro h0
         apply hpb.1

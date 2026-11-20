@@ -28,7 +28,7 @@ theorem emb_mem {A : Type} [Field A] [NumberField A] (f : A →+* ℂ) (x : A) :
 
 theorem lamC_add {x y : ℂ} (hx : x ∈ TaylorLogMetric.Qbar) (hy : y ∈ TaylorLogMetric.Qbar) :
     TaylorLogMetric.lamC lam (x + y) = TaylorLogMetric.lamC lam x + TaylorLogMetric.lamC lam y := by
-  rw [TaylorLogMetric.lamC, TaylorLogMetric.lamC, TaylorLogMetric.lamC, dif_pos hx, dif_pos hy, dif_pos (add_mem hx hy), ← map_add]
+  rw [TaylorLogMetric.lamC, TaylorLogMetric.lamC, TaylorLogMetric.lamC, dif_pos hx, dif_pos hy, dif_pos (add_mem hx hy), ← map_add (f := _)]
   rfl
 
 theorem lamC_sum {ι : Type} (s : Finset ι) (f : ι → ℂ) (hf : ∀ i, f i ∈ TaylorLogMetric.Qbar) :
@@ -147,7 +147,7 @@ theorem exists_comb (n : ℕ) : ∀ α : TaylorLogMetric.Mono D N N', α.degree 
       exact Nat.one_le_iff_ne_zero.2 (Finsupp.mem_support_iff.1 hx)
     obtain ⟨β, rfl⟩ : ∃ β, α = β + Finsupp.single x 1 := ⟨α - Finsupp.single x 1, (tsub_add_cancel_of_le hle).symm⟩
     have hβ : β.degree = n := by
-      rw [map_add, Finsupp.degree_single] at hn
+      rw [map_add (f := _), Finsupp.degree_single] at hn
       omega
     obtain ⟨ι, _, γ, y, h1, h2⟩ := ih β hβ
     obtain ⟨k, δ, z, hz⟩ := exists_vecY D lam x

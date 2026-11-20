@@ -56,7 +56,7 @@ theorem peel {a : (Σ k, ι k) →₀ ℕ} {d : K → ℕ} {k : K}
     (tsub_add_cancel_of_le (Finsupp.single_le_iff.mpr (Nat.one_le_iff_ne_zero.mpr hi))).symm
   refine ⟨i, a - Finsupp.single ⟨k, i⟩ 1, e, ?_⟩
   have h2 := h
-  rw [e, map_add, Finsupp.weight_single, one_smul] at h2
+  rw [e, map_add (f := _), Finsupp.weight_single, one_smul] at h2
   exact add_right_cancel h2
 
 theorem vals_eq_span (y : (Σ k, ι k) → Ω) (d : K → ℕ) :
@@ -88,7 +88,7 @@ theorem vals_mul_le (y : (Σ k, ι k) → Ω) (d e : K → ℕ) : vals F y d * v
   rintro _ ⟨_, ⟨a, ha, rfl⟩, _, ⟨b, hb, rfl⟩, rfl⟩
   show aeval y (monomial a (1 : F)) * aeval y (monomial b (1 : F)) ∈ vals F y (d + e)
   rw [← map_mul, monomial_mul, one_mul]
-  exact mem_vals_of y (by rw [map_add, ha, hb])
+  exact mem_vals_of y (by rw [map_add (f := _), ha, hb])
 
 theorem vals_single_le (y : (Σ k, ι k) → Ω) (d : K → ℕ) (k : K) :
     vals F y (d + Pi.single k 1) ≤ vals F y d * vals F y (Pi.single k 1) := by
@@ -174,7 +174,7 @@ theorem mapDomain_fst (a : (Σ k, ι k) →₀ ℕ) :
     ⇑(Finsupp.mapDomain Sigma.fst a) = Finsupp.weight (NumbersDVR.blockWeight ι) a := by
   induction a using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => rw [Finsupp.mapDomain_add, map_add, Finsupp.coe_add, hf, hg]
+  | add f g hf hg => rw [Finsupp.mapDomain_add, map_add (f := _), Finsupp.coe_add, hf, hg]
   | single v n =>
     rw [Finsupp.mapDomain_single, Finsupp.weight_single, Finsupp.single_eq_pi_single]
     ext k'

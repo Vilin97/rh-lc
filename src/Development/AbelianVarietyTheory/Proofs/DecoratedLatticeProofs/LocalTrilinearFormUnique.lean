@@ -39,7 +39,7 @@ def Mid (l'' : kˣ →* ℂˣ) (π : Representation ℂ (GL m' k) V) : Submodule
   carrier := {f | ∀ (h : GL m' k) (Ψ Ψ' : SB (Matrix m' n k)), (∀ x, Ψ'.1 x = Ψ.1 ((h⁻¹ : GL m' k).val * x)) →
     (l'' (Matrix.GeneralLinearGroup.det h) : ℂ) • f Ψ' = π h (f Ψ)}
   add_mem' {a b} ha hb h Ψ Ψ' e := by
-    simp only [LinearMap.add_apply, smul_add, map_add, ha h Ψ Ψ' e, hb h Ψ Ψ' e]
+    simp only [LinearMap.add_apply, smul_add, map_add (f := _), ha h Ψ Ψ' e, hb h Ψ Ψ' e]
   zero_mem' h Ψ Ψ' e := by simp
   smul_mem' c a ha h Ψ Ψ' e := by
     simp only [LinearMap.smul_apply, map_smul]

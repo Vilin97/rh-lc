@@ -38,7 +38,7 @@ theorem IsTraceFn.post {H Γ W : Type} [Group H] [Group Γ] [AddCommGroup W] [Mo
     rw [hf.1 z hz, map_zero]
   · let L' : W →ₗ[ℂ] ℂ :=
       { toFun := fun v => τ.symm (L (T v))
-        map_add' := fun a b => by rw [map_add, map_add, map_add]
+        map_add' := fun a b => by rw [map_add (f := _), map_add (f := _), map_add (f := _)]
         map_smul' := fun a v => by
           rw [hs, map_smul, smul_eq_mul, map_mul, RingEquiv.symm_apply_apply]
           rfl }

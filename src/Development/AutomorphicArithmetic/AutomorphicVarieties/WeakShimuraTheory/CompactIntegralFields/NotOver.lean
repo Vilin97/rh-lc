@@ -61,7 +61,7 @@ theorem UpperTheory.V.Ws.bl :
   have er : ∀ g, r g = f.mapMatrix (r₁ g) := fun g => by rw [← hr]; rfl
   have eu : u = f.mapMatrix u₁ := hu.symm
   have eV : ∀ g, mapRep f r' g = (1 + (z g).map f) * r g := fun g => by
-    rw [rep_eq, e, map_mul, map_add, map_one, er]; rfl
+    rw [rep_eq, e, map_mul, map_add (f := _), map_one, er]; rfl
   have hzV : ∀ g, (z g).map f ∈ uM 𝔞.V := fun g => uM_map f (hz g)
   have hyV := uM_map f hy
   have kill : ∀ g (B : ValuationSubring Ω), ¬ B.valuation (l : Ω) < 1 → g ∈ Ine (F := ℚ) B → r g = 1 → mapRep f r' g = 1 :=
@@ -82,7 +82,7 @@ theorem UpperTheory.V.Ws.bl :
         rfl
       rw [h1, RingHom.mapMatrix_apply, Matrix.map_apply, hfl s hs i j hij, map_zero]
   have eK : ∀ g, mapRep 𝔞.toK (mapRep f r') g = (1 + ((z g).map f).map 𝔞.toK) * mapRep 𝔞.toK r g := fun g => by
-    rw [rep_eq, eV, map_mul, map_add, map_one]; rfl
+    rw [rep_eq, eV, map_mul, map_add (f := _), map_one]; rfl
   have hBK : ∀ g, IsBlock (mapRep 𝔞.toK r g) := fun g => blk_map 𝔞.toK (hB g)
   have hzK : ∀ g, ((z g).map f).map 𝔞.toK ∈ uM 𝔞.K := fun g => uM_map _ (hzV g)
   refine ⟨mapRep f r', (1 - y.map f) * u, ⟨⟨A, _, _, _, f, ⟨r', fun _ => (1 - y) * u₁⟩, hf, hc, ?_⟩, fun g i j => ?_, fun g => ?_,

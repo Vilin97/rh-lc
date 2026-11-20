@@ -116,7 +116,7 @@ theorem Hyp.pair {e y : Fin r → V} (h : Hyp H e y) (s t s' t' : Fin r → K) {
   have h3' := fun a => swap_zero (h3 a)
   have h4' := fun a => swap_zero (h4 a)
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [map_add, map_sum, LinearMap.add_apply, LinearMap.sum_apply, h.1, h.2.1, h.2.2, h.ye, h1, h2, h3', h4', mul_comm]
+    simp [map_add (f := _), map_sum, LinearMap.add_apply, LinearMap.sum_apply, h.1, h.2.1, h.2.2, h.ye, h1, h2, h3', h4', mul_comm]
   exact add_comm _ _
 
 noncomputable def mid (H : HermSpace K V) (e y : Fin r → V) : V →ₗ[K] V :=

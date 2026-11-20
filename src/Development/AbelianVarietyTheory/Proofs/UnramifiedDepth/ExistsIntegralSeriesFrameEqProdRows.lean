@@ -153,7 +153,7 @@ theorem exists_intS_frame_eq_prod : ∀ (C : Type) [Field C] [CharZero C] (V : V
     intS_mul (intS_prod _ fun o => intS_subst (cπ o) (fun p => hπ o p.1 p.2) (hf o)) hkD.2, ?_⟩
   show MvPowerSeries.subst (expAt X₀ u) _ = ∏ o, MvPowerSeries.subst (r o) _
   rw [mul_assoc, ← mvExp_add hkD.1 c1, MvPowerSeries.subst_mul he,
-    subst_mvExp ce (by rw [map_add, hkD.1, c1, add_zero]), h3,
+    subst_mvExp ce (by rw [map_add (f := _), hkD.1, c1, add_zero]), h3,
     mvExp_sum _ (fun o => by rw [cc_subst (cr o), cH]), ← MvPowerSeries.substAlgHom_apply he, map_prod,
     ← Finset.prod_mul_distrib]
   refine Finset.prod_congr rfl fun o _ => ?_

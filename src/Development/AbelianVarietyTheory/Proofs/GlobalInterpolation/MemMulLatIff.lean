@@ -273,7 +273,7 @@ theorem thInd_eq (hA : Moves A a b) (hS : ∀ P ∈ S, conjPrime₂ P ∉ S) (hU
   have hsup : lam A N N' ≤ (lam A N N' ⊓ lam A N (twist₂ N' c fun Q => -expS S Q)) ⊔ (lam A N N' ⊓ lam A N (twist₂ N' c (expS S))) := by
     rintro _ ⟨y, hy, rfl⟩
     obtain ⟨u, hu, w, hw, rfl⟩ := Submodule.mem_sup.1 (d1.le_sup d2 (full_per h tw' hne) (full_per h h' hne) (full_per h tw hne) hy)
-    rw [map_add]
+    rw [map_add (f := _)]
     exact AddSubgroup.add_mem_sup ⟨⟨_, hu.1, rfl⟩, _, hu.2, rfl⟩ ⟨⟨_, hw.1, rfl⟩, _, hw.2, rfl⟩
   have key := GlobalTheory.XiIndZero.xiInd_eq_inter _ (Formalism.L2.Ker.HV A.sc) (alV A.d A.sc) _ _ _ _ (vac A N N') (embH (X.embC A.σ₀) A.δ (A.liftW S N N' c x)) z
     (isHerm_HV _) (hv N _ h tw).2.2.1 (hv N _ h tw).2.2.2 (hv N N' h h').2.2.1 (hv N N' h h').2.1.2 hvol hsup

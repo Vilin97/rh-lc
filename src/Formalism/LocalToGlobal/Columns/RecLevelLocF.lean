@@ -54,7 +54,7 @@ theorem rll_coprime_v : ∃ a b : 𝓞 E,
     ιv (algebraMap (𝓞 E) E a) * ιv pE + ιv (algebraMap (𝓞 E) E b) * ιv (star pE) = 1 := by
   obtain ⟨a, b, hab⟩ := h.cop
   refine ⟨a, b, ?_⟩
-  rw [← algebraMap_cO, ← map_mul, ← map_mul, ← map_mul, ← map_mul, ← map_add, ← map_add, hab, map_one, map_one]
+  rw [← algebraMap_cO, ← map_mul, ← map_mul, ← map_mul, ← map_mul, ← map_add (f := _), ← map_add (f := _), hab, map_one, map_one]
 
 theorem rll_pv_not_unit {P : Pl E} (hP : P ∈ ST) (hov : IsOver v P) (s : Rv) (hs : s ∈ 𝒪v) : ιv pE * s ≠ 1 := by
   intro e
@@ -107,7 +107,7 @@ def rll_rho (P : Pl E) : 𝒪v →+ kP P where
     have : (⟨afsplitIE v ((a + b : 𝒪v) : Rv), afsplit_IE_int v _ (a + b).2⟩ : Formalism.L2.Herm.intAf F E) =
         ⟨afsplitIE v a.1, afsplit_IE_int v _ a.2⟩ + ⟨afsplitIE v b.1, afsplit_IE_int v _ b.2⟩ :=
       Subtype.ext (map_add _ _ _)
-    rw [this, map_add]
+    rw [this, map_add (f := _)]
 
 theorem rll_rho_incl_mul (P : Pl E) (r : 𝓞 E) (s : 𝒪v) (hm : ιv (algebraMap (𝓞 E) E r) * s.1 ∈ 𝒪v) :
     rll_rho v P ⟨_, hm⟩ = Ideal.Quotient.mk P.asIdeal r * rll_rho v P s := by
@@ -150,7 +150,7 @@ def rll_psi (P : Pl E) : baseDualV hc n ST v →+ kP P where
   map_add' a b := by
     have : (⟨_, rll_last_mem hc n v h (a + b)⟩ : 𝒪v) = ⟨_, rll_last_mem hc n v h a⟩ + ⟨_, rll_last_mem hc n v h b⟩ :=
       Subtype.ext (mul_add _ _ _)
-    rw [this, map_add]
+    rw [this, map_add (f := _)]
 
 theorem rll_psi_surj {P : Pl E} (hov : IsOver v P) : Function.Surjective (rll_psi hc n v h P) := by
   intro c

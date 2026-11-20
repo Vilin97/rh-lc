@@ -21,7 +21,7 @@ theorem tensor_decomp_zero {K M N : Type*} [Field K] [AddCommGroup M] [Module K 
   have h' := congrArg (TensorProduct.equivFinsuppOfBasisLeft b) h
   have h0 := DFunLike.congr_fun h' 0
   have h1 := DFunLike.congr_fun h' 1
-  simp [map_add, TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply] at h0 h1
+  simp [map_add (f := _), TensorProduct.equivFinsuppOfBasisLeft_apply_tmul_apply] at h0 h1
   exact ⟨h0, h1⟩
 
 variable (L : Type) [Field L] [NumberField L] [IsCMField L]
@@ -39,7 +39,7 @@ theorem eq_zero_of_compAt (z : AL L) (hz : ∀ v, compAt L v z = 0) : z = 0 := b
   have hoff : ∀ w, A w = 0 ∧ B w = 0 := by
     intro w
     have h := hz w
-    rw [hAB, map_add, compAt_tmul, compAt_tmul] at h
+    rw [hAB, map_add (f := _), compAt_tmul, compAt_tmul] at h
     exact tensor_decomp_zero b _ _ h
   have hA : A = 0 := by
     apply DFunLike.ext; intro w; exact (hoff w).1

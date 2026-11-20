@@ -84,7 +84,7 @@ theorem rho_slice : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Number
   unfold finOp slice locPt
   congr 2
   set_option synthInstance.maxHeartbeats 100000 in
-    · simp only [dotProduct, map_add, map_mul, map_sum, evFin_invOf_two, evFin_mkPt]
+    · simp only [dotProduct, map_add (f := _), map_mul, map_sum, evFin_invOf_two, evFin_mkPt]
     ring
   · funext i
     show mkPt x y i + (M.co.e w).1 i = _

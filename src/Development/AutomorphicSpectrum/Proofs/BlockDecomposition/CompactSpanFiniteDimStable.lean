@@ -45,7 +45,7 @@ theorem liB_skew_mem_span : ∀ (E : Type) [Field E] [NumberField E] [IsTotallyC
       change cptRep E a (k * k') φ = cptRep E a k (cptRep E a k' φ)
       rw [map_mul, Module.End.mul_apply]
     · rw [map_zero]; exact W.zero_mem
-    · intro x y _ _ hx hy; rw [map_add]; exact W.add_mem hx hy
+    · intro x y _ _ hx hy; rw [map_add (f := _)]; exact W.add_mem hx hy
     · intro r x _ hx; rw [map_smul]; exact W.smul_mem r hx
   let S : Matrix (Fin a) (Fin a) (Cinf E) := Matrix.of (mMap E a (Z : ArchMatrix E a))
   have hS : S.conjTranspose = -S := by

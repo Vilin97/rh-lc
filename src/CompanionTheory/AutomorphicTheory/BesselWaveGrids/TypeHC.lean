@@ -87,7 +87,7 @@ theorem isType_of_hc {u : ℕ → ℝ} {u₀ : Fin k → ℝ} (hz : Formalism.Qu
       simp
   let K : Submodule ℂ W :=
     { carrier := {x | ∀ Y : ℂ, Formalism.REAL.qdet E (Y + ((k : ℂ) - 1) / 2) x = (∏ s, (Y + (u₀ s : ℂ))) • x}
-      add_mem' := fun ha hb w => by rw [map_add, ha w, hb w, smul_add]
+      add_mem' := fun ha hb w => by rw [map_add (f := _), ha w, hb w, smul_add]
       zero_mem' := fun w => by simp
       smul_mem' := fun s x hx w => by rw [map_smul, hx w, smul_comm] }
   have hKs : Qr.Stab (Qr.EB π (fun a => g *ᵥ bvec (bl k r a))) K := by

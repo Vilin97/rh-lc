@@ -50,7 +50,7 @@ private theorem lift_inter [Nontrivial W] [Nontrivial V] (σ : Representation �
   | grade0 r => intro x; simp [Algebra.algebraMap_eq_smul_one]
   | grade1 f => intro x; simp [lv_inter σ ρ T hT]
   | mul a b ha hb => intro x; simp [map_mul, Module.End.mul_apply, ha, hb]
-  | add a b ha hb => intro x; simp [map_add, LinearMap.add_apply, ha, hb]
+  | add a b ha hb => intro x; simp [map_add (f := _), LinearMap.add_apply, ha, hb]
 
 private def isoM (σ : Representation ℂ G W) (ρ : Representation ℂ G V) (H : Subgroup G) : Submodule ℂ V :=
   ⨆ f : {f : W →ₗ[ℂ] V // ∀ g v, f (σ g v) = ρ g (f v)}, (fixed σ H).map f.1

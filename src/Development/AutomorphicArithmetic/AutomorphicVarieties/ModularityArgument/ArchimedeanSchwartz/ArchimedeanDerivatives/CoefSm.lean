@@ -230,7 +230,7 @@ private theorem cap_comm {σ : CuspSub K n} (T : σ.V →ₗ[ℂ] Sm K n)
       add_mem' := fun {x y} hx hy ψ => by
         obtain ⟨a, ha, ha'⟩ := hx ψ
         obtain ⟨b, hb, hb'⟩ := hy ψ
-        exact ⟨a + b, by rw [Submodule.coe_add, hb, ha]; rfl, by rw [map_add, hb', ha']; rfl⟩
+        exact ⟨a + b, by rw [Submodule.coe_add, hb, ha]; rfl, by rw [map_add (f := _), hb', ha']; rfl⟩
       algebraMap_mem' := fun c ψ => ⟨c • ψ, rfl, map_smul T c ψ⟩ }
   have hl : ∀ X, lie K n X ∈ S := fun X ψ => ⟨σ.op (.lie X) ψ, rfl, hT X ψ⟩
   have hE : ∀ i j : Fin n, Eop τ i j ∈ S := fun i j => by

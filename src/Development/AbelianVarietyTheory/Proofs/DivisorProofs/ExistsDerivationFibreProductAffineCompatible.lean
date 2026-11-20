@@ -53,7 +53,7 @@ theorem exists_der_fibre : ∀ (Z Z' X X' : Scheme.{0}) (p : Z ⟶ X) (p' : Z' �
       simp [hσr, b]
   have hfst : ∀ x, (σ.hom x).fst = x := fun x => congr($(hfst0).hom x)
   refine ⟨Derivation.mk' (AddMonoidHom.toIntLinearMap
-    { toFun := fun x => (σ.hom x).snd, map_zero' := by simp, map_add' := fun x y => by rw [map_add]; rfl })
+    { toFun := fun x => (σ.hom x).snd, map_zero' := by simp, map_add' := fun x y => by rw [map_add (f := _)]; rfl })
     fun x y => ?_, fun r => ?_, fun f => ?_⟩
   · change (σ.hom (x * y)).snd = x • (σ.hom y).snd + y • (σ.hom x).snd
     rw [map_mul, TrivSqZeroExt.snd_mul, hfst, hfst]

@@ -36,7 +36,7 @@ theorem acts_schr_of_ref {F : Type} [Field F] [NumberField F] {κ : Type} [Finty
     rw [← sub_eq_zero, ← sub_mul, h0]
   have hφ : (fun i => evFin F v ((x + w.1) i)) = (fun i => evFin F v ((y + w.1) i)) := by
     funext i
-    simp only [Pi.add_apply, map_add, hev]
+    simp only [Pi.add_apply, map_add (f := _), hev]
   have hφ₁ : (fun i => evFin F v (x i)) = (fun i => evFin F v (y i)) := by
     funext i
     exact (hev i).symm

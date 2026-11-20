@@ -455,7 +455,7 @@ theorem phiBir_hyp : Y.phiBir (Y.hyp hi) (Set.range (Y.coordFn hi)) := by
     clear e
     induction g using MvPolynomial.induction_on with
     | C a => rw [algHom_C]; exact IntermediateField.algebraMap_mem _ a
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | mul_X p j hp =>
       rw [map_mul, aeval_X]
       exact mul_mem hp (IntermediateField.subset_adjoin _ _ ⟨_, ⟨j, rfl⟩, _, ⟨i, rfl⟩,

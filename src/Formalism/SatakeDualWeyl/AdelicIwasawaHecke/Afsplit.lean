@@ -112,7 +112,7 @@ private lemma prV_IE_lemma (x : E ⊗[F] v.adicCompletion F) : prV (E := E) v (a
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => rw [IE_tmul_lemma_10, prV_tmul_lemma_12, afsplitF_self]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 private lemma IE_prV_lemma_3 (x : E ⊗[F] 𝔸) : afsplitIE v (prV (E := E) v x) = afsplitEps E v * x := by
   induction x using TensorProduct.induction_on with
@@ -127,7 +127,7 @@ private lemma IE_prV_lemma_3 (x : E ⊗[F] 𝔸) : afsplitIE v (prV (E := E) v x
     · subst h
       rw [afsplitF_self, afsplitF_self, one_mul]
     · rw [afsplitF_ne v w h, afsplitF_ne v w h, zero_mul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, mul_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, mul_add]
 
 private lemma prV_eps_lemma_4 : prV (E := E) v (afsplitEps E v) = 1 := by
   rw [show afsplitEps E v = afsplitIE v 1 from rfl, prV_IE_lemma]
@@ -159,7 +159,7 @@ theorem afsplit_prV_int (x : E ⊗[F] 𝔸) (hx : x ∈ tensInt (F := F) 𝔸 (i
       simp [prV_tmul_lemma_12]
   | zero => rw [map_zero]; exact zero_mem _
   | one => rw [map_one]; exact one_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
@@ -183,7 +183,7 @@ theorem afsplit_IE_int (x : E ⊗[F] v.adicCompletion F)
   | one =>
     rw [show afsplitIE v 1 = afsplitEps E v from rfl, eps_eq_lemma_2]
     exact Subring.subset_closure (Set.mem_union_right _ ⟨⟨afsplitF v 1, F_int_lemma_9 v 1 (one_mem _)⟩, rfl⟩)
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
@@ -223,7 +223,7 @@ private lemma prV_sig_lemma_8 (x : E ⊗[F] 𝔸) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a y => simp only [prV_tmul_lemma_12, sig_tmul_lemma_13]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem afsplit_bc_mem (g : GL n (E ⊗[F] 𝔸)) (hg : g ∈ UPts σ J 𝔸) :
     bc (prV (E := E) v) g ∈ UPts σ J (v.adicCompletion F) := by
@@ -251,7 +251,7 @@ theorem afsplit_coe_bc_prV (g : GL n (E ⊗[F] 𝔸)) (w : HeightOneSpectrum (�
 private lemma C_map_prV_lemma_5 (M : Matrix n n (E ⊗[F] v.adicCompletion F)) (N : Matrix n n (E ⊗[F] 𝔸)) :
     (afsplitC v M N).map (prV (E := E) v) = M := by
   ext i j
-  simp only [afsplitC, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul,
+  simp only [afsplitC, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul,
     map_sub, map_one, prV_IE_lemma, prV_eps_lemma_4, sub_self, zero_mul, add_zero]
 
 theorem afsplit_ker_mem (g : GL n (E ⊗[F] 𝔸)) (hg : g ∈ UPts σ J 𝔸) :
@@ -337,7 +337,7 @@ private lemma prV_IE_ne_lemma_16 (w : HeightOneSpectrum (𝓞 F)) (hw : w ≠ v)
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => rw [IE_tmul_lemma_10, prV_tmul_lemma_12, afsplitF_ne v w hw, TensorProduct.tmul_zero]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
 
 private lemma eps_ne_lemma_17 (w : HeightOneSpectrum (𝓞 F)) (hw : w ≠ v) : prV (E := E) w (afsplitEps E v) = 0 := by
   rw [show afsplitEps E v = afsplitIE v 1 from rfl]
@@ -347,7 +347,7 @@ private lemma C_map_ne_lemma_15 (w : HeightOneSpectrum (𝓞 F)) (hw : w ≠ v)
     (M : Matrix n n (E ⊗[F] v.adicCompletion F)) (N : Matrix n n (E ⊗[F] 𝔸)) :
     (afsplitC v M N).map (prV (E := E) w) = N.map (prV (E := E) w) := by
   ext i j
-  simp only [afsplitC, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul,
+  simp only [afsplitC, Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul,
     map_sub, map_one, prV_IE_ne_lemma_16 v w hw, eps_ne_lemma_17 v w hw, sub_zero, one_mul, zero_add]
 
 private lemma Z_lemma_14 (z : E ⊗[F] 𝔸)

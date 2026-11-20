@@ -116,7 +116,7 @@ theorem exists_mul_conj (D : D7) (cc c0 : Ideal (𝓞 D.host.K)) (hc : cc ≠ �
     rw [hxdef]
     push_cast
     try rfl
-  rw [map_add, map_mul, ha, hb, hs]
+  rw [map_add (f := _), map_mul, ha, hb, hs]
   have key : ((a : D.host.E) + b * D.host.sqrtMinusD) * (a + b * -D.host.sqrtMinusD) = x := by
     rw [hxE]; linear_combination (-(b : D.host.E) ^ 2) * hs2
   rw [key, hxE']

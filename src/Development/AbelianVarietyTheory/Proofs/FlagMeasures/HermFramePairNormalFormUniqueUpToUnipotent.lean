@@ -209,7 +209,7 @@ theorem main (N₀ N₁ : NF H r) (h : SameGr N₀.F N₁.F) (hj : N₀.j = N₁
       refine Fin.lastCases ?_ (fun a => ?_) a
       · have := N₀.F.hT
         change H.B N₀.F.z _ = 0
-        simp only [map_add, LinearMap.map_smulₛₗ, starRingEnd_apply, star_star, smul_eq_mul, pairing_lastVector_lastVector]
+        simp only [map_add (f := _), LinearMap.map_smulₛₗ, starRingEnd_apply, star_star, smul_eq_mul, pairing_lastVector_lastVector]
         field_simp
         ring
       · simp [hy a, pairing_isotropicSpan_lastVector N₀.F (e_mem_X _ a)])

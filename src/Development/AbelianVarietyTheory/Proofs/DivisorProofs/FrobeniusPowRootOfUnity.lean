@@ -80,7 +80,7 @@ theorem comp_sigKQ {f : ℕ} (hq : qK p K = p ^ f) (r i : ℕ) (x : KQ p K r) :
     | add y z hy hz =>
       have e1 : sigKQ p K r (y + z) = sigKQ p K r y + sigKQ p K r z := map_add _ _ _
       have e2 : comp p K hq r (i + 1) (y + z) = comp p K hq r (i + 1) y + comp p K hq r (i + 1) z := map_add _ _ _
-      rw [e1, map_add, e2, hy, hz]
+      rw [e1, map_add (f := _), e2, hy, hz]
   exact h x
 
 theorem comp_inclK {f : ℕ} (hq : qK p K = p ^ f) (r i : ℕ) (a : K) :

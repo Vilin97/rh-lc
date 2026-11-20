@@ -35,7 +35,7 @@ theorem logDeriv {R : Subring K} {l linv : PowerSeries K} (h : IsLogPair l linv)
     MvPowerSeries.pderiv_X_of_ne (by decide)
   have hFc := Pts.constantCoeff_fadd h hX0 hX1
   have e1 := congrArg (MvPowerSeries.pderiv (R := K) (1 : Fin 2)) (Pts.l_fadd h hX0 hX1)
-  rw [map_add, IntegralMvPolynomialLemmas.pderiv_subst _ hFc, IntegralMvPolynomialLemmas.pderiv_subst _ hX0, IntegralMvPolynomialLemmas.pderiv_subst _ hX1, h10,
+  rw [map_add (f := _), IntegralMvPolynomialLemmas.pderiv_subst _ hFc, IntegralMvPolynomialLemmas.pderiv_subst _ hX0, IntegralMvPolynomialLemmas.pderiv_subst _ hX1, h10,
     MvPowerSeries.pderiv_X_self, mul_zero, zero_add, mul_one] at e1
   have ha : ∀ s : Fin 2, IsPt R ((![PowerSeries.X, 0] : Fin 2 → MvPowerSeries Unit K) s) := by
     intro s
@@ -106,12 +106,12 @@ theorem third {l linv ph : PowerSeries K} (hFr : Frame R l linv ph) (hF1 : F1 R 
   have hzz : ∀ i j : Fin 3, MvPowerSeries.constantCoeff
       (PowerSeries.subst (MvPowerSeries.X i : MvPowerSeries (Fin 3) K) l +
         PowerSeries.subst (MvPowerSeries.X j : MvPowerSeries (Fin 3) K) l) = 0 :=
-    fun i j => by rw [map_add, hz, hz, add_zero]
+    fun i j => by rw [map_add (f := _), hz, hz, add_zero]
   have hzzz : MvPowerSeries.constantCoeff
       (PowerSeries.subst (MvPowerSeries.X (0 : Fin 3) : MvPowerSeries (Fin 3) K) l +
         PowerSeries.subst (MvPowerSeries.X (1 : Fin 3) : MvPowerSeries (Fin 3) K) l +
         PowerSeries.subst (MvPowerSeries.X (2 : Fin 3) : MvPowerSeries (Fin 3) K) l) = 0 := by
-    rw [map_add, hzz, hz, add_zero]
+    rw [map_add (f := _), hzz, hz, add_zero]
   have h01 : MvPowerSeries.pderiv (R := K) (0 : Fin 3) (MvPowerSeries.X (1 : Fin 3)) = 0 :=
     MvPowerSeries.pderiv_X_of_ne (by decide)
   have h02 : MvPowerSeries.pderiv (R := K) (0 : Fin 3) (MvPowerSeries.X (2 : Fin 3)) = 0 :=
@@ -153,7 +153,7 @@ theorem integral_third_invariant_derivative {l linv ph : PowerSeries K} (hFr : F
       (PowerSeries.subst (MvPowerSeries.X (0 : Fin 3) : MvPowerSeries (Fin 3) K) l +
         PowerSeries.subst (MvPowerSeries.X (1 : Fin 3) : MvPowerSeries (Fin 3) K) l +
         PowerSeries.subst (MvPowerSeries.X (2 : Fin 3) : MvPowerSeries (Fin 3) K) l) = 0 := by
-    rw [map_add, map_add, hz, hz, hz, add_zero, add_zero]
+    rw [map_add (f := _), map_add (f := _), hz, hz, hz, add_zero, add_zero]
   have ha : ∀ s : Fin 3, IsPt R ((![PowerSeries.X, 0, 0] : Fin 3 → MvPowerSeries Unit K) s) := by
     intro s
     fin_cases s

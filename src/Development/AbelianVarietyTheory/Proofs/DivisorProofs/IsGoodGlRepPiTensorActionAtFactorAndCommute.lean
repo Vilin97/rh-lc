@@ -30,7 +30,7 @@ theorem atPl_comm' {w w' : T} (h : w ≠ w') (L : Module.End ℂ (V w)) (L' : Mo
   | smul_tprod r f =>
     simp only [map_smul, atPl_tprod', Function.update_of_ne h, Function.update_of_ne h.symm]
     rw [Function.update_comm h]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def intersection_update_fsHerm_neg_one (f : ∀ i, V i) (w : T) : V w →ₗ[ℂ] ⨂[ℂ] i, V i := (PiTensorProduct.tprod ℂ (s := V)).toLinearMap f w
 
@@ -67,7 +67,7 @@ theorem actAt_wts (w : T) {a : Mat p q →ₗ[ℂ] Module.End ℂ (V w)} (h : �
       intro c
       rw [actAt_apply, atPl_tprod_update, ← map_smul, ← map_sub, hy c, map_zero]
     · intro x y hx hy
-      rw [map_add]; exact add_mem hx hy
+      rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | add x y hx hy => exact Submodule.add_mem _ hx hy
 
 theorem actAt_locU (w : T) {a : Mat p q →ₗ[ℂ] Module.End ℂ (V w)} (h : LocU (fun c : Ix p q => c.isLeft) (units a)) :

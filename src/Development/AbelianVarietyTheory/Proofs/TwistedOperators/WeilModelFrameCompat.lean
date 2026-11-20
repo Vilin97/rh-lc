@@ -118,7 +118,7 @@ theorem lieDer_mem_coinv : GlobalTheory.FunPr.Hypotheses₂ →
     have hev : (fun i => GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI D.host.F ((x₀ + z) i)) = y := by
       funext i
       show InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F ((x₀ i).1 + (z i).1) = y i
-      rw [map_add]
+      rw [map_add (f := _)]
       show GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI D.host.F (x₀ i) + InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F
         ((InfiniteAdeleRing.ringEquiv_mixedSpace D.host.F).symm (y i - GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI D.host.F (x₀ i))) = y i
       rw [RingEquiv.apply_symm_apply, add_sub_cancel]

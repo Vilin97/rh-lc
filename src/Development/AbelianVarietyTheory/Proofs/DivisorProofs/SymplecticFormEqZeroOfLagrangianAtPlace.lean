@@ -17,7 +17,7 @@ theorem smul_eq_map_compFin (v : Pl F) (a : AE F E) :
       TensorProduct.map (GlobalTheory.EmbChart.atPlace v) LinearMap.id (compFin F E v a) := by
   induction a using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [smul_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]
   | tmul x b =>
     rw [TensorProduct.smul_tmul', smul_eq_mul, GlobalTheory.EmbChart.atPlace_mul_right, one_mul]
     simp [compFin, Algebra.TensorProduct.map_tmul]
@@ -31,7 +31,7 @@ theorem compFin_cA (σ : E →ₐ[F] E) (v : Pl F) (a : AE F E) :
       Algebra.TensorProduct.map (AlgHom.id (Fv F v) (Fv F v)) σ (compFin F E v a) := by
   induction a using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
   | tmul x b => simp [cA, compFin, Algebra.TensorProduct.map_tmul]
 
 theorem self_eq_smul_of_at {n d : ℕ} (v : Pl F) {u : Matrix (Fin n) (Fin d) (AE F E)} (h : At (evFin F v) u) :

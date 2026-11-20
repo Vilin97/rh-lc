@@ -193,7 +193,7 @@ theorem main : ∀ {o Ω o' Ω' : Type} [CommRing o] [Field Ω] [Algebra o Ω] [
     unfold CongMod at hc ⊢
     obtain ⟨z, hz⟩ := hc
     refine ⟨hD₂.xe z, ?_⟩
-    rw [← hq₂, hz, map_add, map_nsmul, ← hq₁]
+    rw [← hq₂, hz, map_add (f := _), map_nsmul, ← hq₁]
     simp
 
 end GlobalTheory.UnifTorsK

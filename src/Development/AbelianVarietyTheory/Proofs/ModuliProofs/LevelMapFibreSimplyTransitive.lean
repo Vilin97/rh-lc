@@ -95,7 +95,7 @@ theorem inGam_of_diff (l l₂ : Level H) (hd : l.Dvd l₂) (J J' : TateIso D k Q
   · have h := hA a
     rw [ev_pow_div J l₂.A_pos hd.2.2, ev_pow_div J' l₂.A_pos hd.2.2, (hg _ l.A_pos).1] at h
     exact modN_of_ev_eq J l.A_pos h.symm
-  · rw [hcs a, hP', hk' _ (Submodule.smul_mem_smul hu trivial), map_add, hP, map_smul, map_smul,
+  · rw [hcs a, hP', hk' _ (Submodule.smul_mem_smul hu trivial), map_add (f := _), hP, map_smul, map_smul,
       hk _ (Submodule.smul_mem_smul hu trivial), hJ _ (Submodule.smul_mem_smul hv trivial),
       hJ' _ (Submodule.smul_mem_smul hv trivial), (hg _ (level_pos l₂)).1, map_smul]
 

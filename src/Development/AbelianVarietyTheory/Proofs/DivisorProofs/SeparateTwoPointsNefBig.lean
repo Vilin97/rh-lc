@@ -94,7 +94,7 @@ theorem separate_nef_big : GlobalTheory.Published.Principalisation → GlobalThe
       (by rw [cls_lbPow hNn.isLB, hcls])
     rw [hC.interNumRed_lbPow hAmp hNn.isLB] at dK
     have dG := deg_of_cls_eq hC hAmp (isLB_toLB (m' • G + m • E₀)) (isLB_toLB G) (isLB_toLB E₀)
-      m' m (by rw [← toPic_apply, ← toPic_apply, ← toPic_apply, map_add, map_nsmul, map_nsmul])
+      m' m (by rw [← toPic_apply, ← toPic_apply, ← toPic_apply, map_add (f := _), map_nsmul, map_nsmul])
     rw [h1, dN', dG]
     have dK' : (a : ℚ) * interNumRed ℂ C ![N] = interNumRed ℂ C ![A] + interNumRed ℂ C ![toLB E₀] := by
       exact_mod_cast dK

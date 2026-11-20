@@ -68,7 +68,7 @@ theorem vGeK_zero (g : ℝ) : X.vGeK 0 g := by
 theorem vGeK_add {x y : X.G.Kf} {g : ℝ} (hx : X.vGeK x g) (hy : X.vGeK y g) : X.vGeK (x + y) g := by
   obtain ⟨a, rfl⟩ := (vGeK_iff X).1 hx
   obtain ⟨b, rfl⟩ := (vGeK_iff X).1 hy
-  exact (vGeK_iff X).2 ⟨a + b, by rw [map_add, mul_add]⟩
+  exact (vGeK_iff X).2 ⟨a + b, by rw [map_add (f := _), mul_add]⟩
 
 theorem vGeK_sum {ι : Type*} (s : Finset ι) (f : ι → X.G.Kf) {g : ℝ} (h : ∀ i ∈ s, X.vGeK (f i) g) :
     X.vGeK (∑ i ∈ s, f i) g := by

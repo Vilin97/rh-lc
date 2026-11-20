@@ -37,7 +37,7 @@ theorem valAt_aeval (hz : genPt ξ ⤳ centre z) (hw : CoordsAt ξ y z w) (c : �
   induction g using MvPolynomial.induction_on with
   | C n => simpa using valAt_intCast hz n
   | add a b ha hb =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact valAt_add ha hb
   | mul_X a p ha =>
     rw [map_mul, map_mul, aeval_X, aeval_X]

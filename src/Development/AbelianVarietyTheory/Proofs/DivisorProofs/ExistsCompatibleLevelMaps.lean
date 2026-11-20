@@ -93,7 +93,7 @@ theorem exists_modN (H : Host E) (D : Datum H) (σ : 𝓞 E ≃+* 𝓞 E) (N : �
     intro z
     have h1 : x * H.bar x * z = μ * z + N • (b₂ * z) := by
       rw [nsmul_eq_mul] at hx ⊢; linear_combination z * hx
-    rw [h1, map_add, map_nsmul, nsmul_eq_mul]
+    rw [h1, map_add (f := _), map_nsmul, nsmul_eq_mul]
     have := hμT z
     have h2 : T (μ * z) + (N : ℤ) * T (b₂ * z) - T₂ z = (T (μ * z) - T₂ z) + (N : ℤ) * T (b₂ * z) := by ring
     rw [h2]; exact dvd_add this (dvd_mul_right _ _)
@@ -151,7 +151,7 @@ theorem exists_modN (H : Host E) (D : Datum H) (σ : 𝓞 E ≃+* 𝓞 E) (N : �
       rw [h2, ← Finset.sum_sub_distrib]
       refine Finset.sum_congr rfl fun i _ => ?_
       have hci : c' i = c i + N • β i := by rw [← hβ i]; abel
-      rw [hci, map_add, map_nsmul, ← sub_smul, mul_add, add_sub_cancel_left, mul_smul_comm, smul_assoc]
+      rw [hci, map_add (f := _), map_nsmul, ← sub_smul, mul_add, add_sub_cancel_left, mul_smul_comm, smul_assoc]
     rw [h3, modN_iff]
     exact Submodule.sum_mem _ fun i _ => (modN_iff D).1 ⟨_, rfl⟩
   obtain ⟨bxy, hbxy⟩ := hxy

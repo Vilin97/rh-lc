@@ -371,13 +371,13 @@ theorem _root_.GlobalTheory.HTLat.exists_grAt_eq {v : Valuation C ℝ≥0} (hv :
     obtain ⟨b, rfl⟩ := Submodule.mem_span_singleton.1 ht
     refine ⟨b, ?_⟩
     show S.mkQ w = b • S.mkQ (f i)
-    rw [← hst, map_add, map_smul, Submodule.mkQ_apply S s,
+    rw [← hst, map_add (f := _), map_smul, Submodule.mkQ_apply S s,
       (Submodule.Quotient.mk_eq_zero S).2 hs, zero_add]
   have hmem : a • xb ∈ _root_.GlobalTheory.HTLat.grAt C La f i := by
     refine Submodule.mem_map.2 ⟨a • f i + y, ⟨hLa, ?_⟩, ?_⟩
     · exact S'.add_mem (S'.smul_mem a hfi) (hSS' hy)
     · show S.mkQ (a • f i + y) = a • S.mkQ (f i)
-      rw [map_add, map_smul, Submodule.mkQ_apply S y, (Submodule.Quotient.mk_eq_zero S).2 hy,
+      rw [map_add (f := _), map_smul, Submodule.mkQ_apply S y, (Submodule.Quotient.mk_eq_zero S).2 hy,
         add_zero]
   have hGfg : (_root_.GlobalTheory.HTLat.grAt C La f i).FG :=
     (_root_.GlobalTheory.HTLat.fg_inf hv hfg S').map _

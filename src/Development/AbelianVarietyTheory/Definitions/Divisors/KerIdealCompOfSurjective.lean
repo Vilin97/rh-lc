@@ -383,7 +383,7 @@ theorem pow_digit_one {n : ℕ} {x : M} (hx : x ^ p ^ n = 1) : x ^ digit n (1 : 
 theorem pow_digit_add {n : ℕ} {x : M} (hx : x ^ p ^ n = 1) (a b : ℤ_[p]) :
     x ^ digit n (a + b) = x ^ digit n a * x ^ digit n b := by
   rw [← pow_add]
-  exact pow_digit_eq hx (by rw [Nat.cast_add, cast_digit, cast_digit, map_add])
+  exact pow_digit_eq hx (by rw [Nat.cast_add, cast_digit, cast_digit, map_add (f := _)])
 
 theorem pow_digit_mul {n : ℕ} {x : M} (hx : x ^ p ^ n = 1) (a b : ℤ_[p]) :
     x ^ digit n (a * b) = (x ^ digit n b) ^ digit n a := by

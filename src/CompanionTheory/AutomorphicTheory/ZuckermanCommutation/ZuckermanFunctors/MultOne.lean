@@ -153,7 +153,7 @@ theorem multOne_of (hC : HomCat) (hM : MatHom) (hT : TensHom) (hL : HomLie) (hS 
   have a1 := LinearMap.congr_fun hl v
   have a2 := LinearMap.congr_fun hl' v
   simp only [LinearMap.comp_apply, LinearMap.smul_apply, LinearMap.id_apply] at a1 a2
-  rw [e, map_add, map_smul, map_smul, a1, a2, smul_smul, smul_smul, ← add_smul, h0, zero_smul]
+  rw [e, map_add (f := _), map_smul, map_smul, a1, a2, smul_smul, smul_smul, ← add_smul, h0, zero_smul]
 
 end CompanionTheory.Zuck
 

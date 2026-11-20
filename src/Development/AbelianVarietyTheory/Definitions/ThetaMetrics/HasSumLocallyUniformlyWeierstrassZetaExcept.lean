@@ -247,7 +247,7 @@ theorem weierstrassZeta_add {w : ℂ} (hw : w ∈ L.lattice) {z : ℂ} (hz : z �
       exact weierstrassZeta_add_of_half_notMem L L.ω₂_mem_lattice L.ω₂_div_two_notMem_lattice hz
   | zero => simp
   | add x y hx hy ihx ihy =>
-    rw [← add_assoc, ihy (add_notMem_lattice hz hx), ihx hz, map_add, add_assoc]
+    rw [← add_assoc, ihy (add_notMem_lattice hz hx), ihx hz, map_add (f := _), add_assoc]
   | smul n x hx ih =>
     have hx' : x ∈ L.lattice := hx
     rw [map_zsmul]
@@ -515,7 +515,7 @@ theorem realLinear_eq_add_conj (f : ℂ →ₗ[ℝ] ℂ) (w : ℂ) :
     f w = (f 1 - I * f I) / 2 * w + (f 1 + I * f I) / 2 * conj w := by
   have : f w = w.re * f 1 + w.im * f I := by
     conv_lhs => rw [show w = w.re • (1 : ℂ) + w.im • I by simp]
-    rw [map_add, map_smul, map_smul, real_smul, real_smul]
+    rw [map_add (f := _), map_smul, map_smul, real_smul, real_smul]
   rw [this]
   have h1 : conj w = w.re - w.im * I := by apply Complex.ext <;> simp
   rw [h1]
@@ -937,7 +937,7 @@ theorem latticeForm_add_left (u u' v : ℂ) :
 
 theorem latticeForm_add_right (u v v' : ℂ) :
     latticeForm L u (v + v') = latticeForm L u v + latticeForm L u v' := by
-  simp only [latticeForm, map_add]; ring
+  simp only [latticeForm, map_add (f := _)]; ring
 
 theorem latticeForm_mul_left (a u v : ℂ) : latticeForm L (a * u) v = a * latticeForm L u v := by
   simp only [latticeForm]; ring
@@ -1068,7 +1068,7 @@ theorem sigmaSign_add {a b : ℂ} (ha : a ∈ L.lattice) (hb : b ∈ L.lattice) 
     have h3 := sub_conj (latticeForm L a b)
     rw [conj_latticeForm] at h3
     push_cast at h3
-    simp only [latticeForm, map_add] at h3 ⊢
+    simp only [latticeForm, map_add (f := _)] at h3 ⊢
     linear_combination (π / 2 : ℂ) * h3
   refine mul_right_cancel₀ (mul_ne_zero (exp_ne_zero
     (π * latticeForm L x (a + b) + π * latticeForm L (a + b) (a + b) / 2)) hx) ?_

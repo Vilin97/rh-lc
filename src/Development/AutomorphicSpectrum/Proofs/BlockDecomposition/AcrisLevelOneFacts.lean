@@ -31,7 +31,7 @@ theorem smul_acr (A : PAlg l) (c : Ob l) (y : A.Acr 1) : c • y = A.aTo1 (A.s c
 
 def mulDxi (A : PAlg l) (k : ℕ) : A.A →ₗ[Ob l] A.Acr 1 where
   toFun a := A.aTo1 a * A.dxi 1 (l * k)
-  map_add' x y := by rw [map_add, add_mul]
+  map_add' x y := by rw [map_add (f := _), add_mul]
   map_smul' c a := by
     rw [Algebra.smul_def, map_mul, RingHom.id_apply, smul_acr, mul_assoc]; rfl
 

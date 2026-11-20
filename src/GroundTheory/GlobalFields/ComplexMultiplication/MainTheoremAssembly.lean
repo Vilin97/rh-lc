@@ -220,7 +220,7 @@ theorem exists_uniformization_of_data (σ : ℂ ≃ₐ[K] ℂ) (s : IdeleGroup K
     refine map_mem_idealLattice _ ?_
     rw [← neg_sub]
     exact Submodule.neg_mem _ h1
-  rw [← sub_add_cancel (algebraMap K ℂ y) (algebraMap K ℂ ((x⁻¹ : K) * t)), map_add,
+  rw [← sub_add_cancel (algebraMap K ℂ y) (algebraMap K ℂ ((x⁻¹ : K) * t)), map_add (f := _),
     (hf'.map_eq_zero_iff _).2 hdiff, zero_add]
 
   set z := algebraMap K ℂ t with hz

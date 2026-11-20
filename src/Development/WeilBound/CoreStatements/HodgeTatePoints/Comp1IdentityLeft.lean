@@ -210,7 +210,7 @@ theorem act_zero_eq (B : FB R d O) : B.A.act 0 = 0 := by
         omega
       · exact Nat.zero_le _
     have hsum := congrArg Finsupp.degree (tsub_add_cancel_of_le hle)
-    rw [map_add, Finsupp.degree_single, he] at hsum
+    rw [map_add (f := _), Finsupp.degree_single, he] at hsum
     have hz : Finsupp.degree (e - Finsupp.single t 1) = 0 := by omega
     rw [Finsupp.degree_eq_zero_iff, tsub_eq_zero_iff_le] at hz
     exact le_antisymm hz hle

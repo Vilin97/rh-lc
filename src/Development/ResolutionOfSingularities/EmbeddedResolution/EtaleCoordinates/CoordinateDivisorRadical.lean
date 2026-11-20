@@ -150,7 +150,7 @@ theorem linearIndependent_toCotangent_etaleChartCoord (k : Type u) [Field k] (m 
         have hzm : z ∈ IsLocalRing.maximalIdeal A := by rw [← hspan]; exact hz
         have hzm' : z' ∈ IsLocalRing.maximalIdeal A := by rw [← hspan]; exact hz'
         have hsum : (⟨z + z', hbb⟩ : IsLocalRing.maximalIdeal A) = ⟨z, hzm⟩ + ⟨z', hzm'⟩ := rfl
-        rw [hsum, map_add]
+        rw [hsum, map_add (f := _)]
         exact Submodule.add_mem _ (ihz hzm) (ihz' hzm')
     | smul c z hz ih =>
         intro hbb

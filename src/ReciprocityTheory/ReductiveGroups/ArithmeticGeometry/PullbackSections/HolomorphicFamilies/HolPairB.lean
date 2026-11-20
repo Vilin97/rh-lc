@@ -55,7 +55,7 @@ private theorem valAt'_top_add_lemma_3 {Y : Scheme.{0}} (x : Sp ℂ ⟶ Y) (f g 
       | exact le_top
       | simp
   first
-    | simp only [valAt', dif_pos h, valAt, map_add]
+    | simp only [valAt', dif_pos h, valAt, map_add (f := _)]
     | simp [valAt', valAt, h]
 
 theorem isHolTo_pullbackSpec {R S T : Type} [CommRing R] [CommRing S] [CommRing T] [Algebra R S] [Algebra R T]
@@ -111,7 +111,7 @@ theorem isHolTo_pullbackSpec {R S T : Type} [CommRing R] [CommRing S] [CommRing 
       simp only [hst, map_mul, valAt'_top_mul_lemma_2]
       exact (hS s).mul (hT t)
     | add x y hx hy =>
-      simp only [map_add, valAt'_top_add_lemma_3]
+      simp only [map_add (f := _), valAt'_top_add_lemma_3]
       exact hx.add hy
 
   have hr : ∀ b, valAt' (w b) ⊤ r = valAt' (w b ≫ (pullbackSpecIso R S T).hom) ⊤

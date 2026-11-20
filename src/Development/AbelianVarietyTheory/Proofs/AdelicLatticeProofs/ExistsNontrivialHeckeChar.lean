@@ -72,7 +72,7 @@ theorem cA_int (σ : E →ₐ[F] E) (y : AE F E) (h : finPart F E y ∈ intAE F 
     clear h
     induction y using TensorProduct.induction_on with
     | zero => simp only [RingHom.map_zero]
-    | add x y hx hy => simp only [RingHom.map_add, hx, hy]
+    | add x y hx hy => simp only [RingHom.map_add (f := _), hx, hy]
     | tmul a x => rfl
   rw [e]
   generalize finPart F E y = z at h
@@ -81,7 +81,7 @@ theorem cA_int (σ : E →ₐ[F] E) (y : AE F E) (h : finPart F E y ∈ intAE F 
     obtain ⟨a, ha, x, rfl⟩ := hy
     exact AddSubgroup.subset_closure ⟨a, ha, RingOfIntegers.mapRingHom (σ : E →+* E) x, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem idem_arch {σ : E →ₐ[F] E} {θ : AE F E →+* ℂ} (hθ : ∀ α, θ (algebraMap (AF F) (AE F E) (pairA F 0 α)) = 0)
@@ -90,7 +90,7 @@ theorem idem_arch {σ : E →ₐ[F] E} {θ : AE F E →+* ℂ} (hθ : ∀ α, θ
   · have a1 := congrArg θ h1
     have a2 := congrArg θ h2
     have a3 := congrArg θ h3
-    rw [hθ, RingHom.map_add] at a3
+    rw [hθ, RingHom.map_add (f := _)] at a3
     rw [RingHom.map_mul] at a1 a2
     rw [RingHom.map_zero] at a2
     have : θ e = 0 := by linear_combination θ e * a3 - a1 - a2
@@ -162,7 +162,7 @@ theorem unif_val {σ : E →ₐ[F] E} {Φ : AE F E →+* FiniteAdeleRing (𝓞 E
     rintro rfl
     exact P.ne_bot (by rw [hπ]; simp)
   have e1 : Φ (x : AE F E) Q = Φ e Q * algebraMap E (FiniteAdeleRing (𝓞 E) E) (ϖ : E) Q + (1 - Φ e Q) := by
-    rw [hx, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, hι]
+    rw [hx, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, hι]
     rfl
   have e2 : ∀ y : 𝓞 E, Q.valuation E (y : E) = Q.intValuation y := fun y => HeightOneSpectrum.valuation_of_algebraMap Q y
   rw [e1, e2]
@@ -295,9 +295,9 @@ theorem exists_of_principal (σ : E →ₐ[F] E) (hσ : IsCMExt F E σ) [IsPrinc
     intro e f z x he hx
     obtain ⟨d1, d2⟩ := idem_arch hθ0 he
     constructor
-    · rw [hx, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, d1]; ring
+    · rw [hx, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, d1]; ring
     · rw [hx]
-      simp only [RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, d2]; ring
+      simp only [RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, d2]; ring
   have hunr : IsUnramAt σ χ P := by
     obtain ⟨x, e, f, ϖ, he, -⟩ := hex
     refine ⟨e, f, he, fun y hy h1 h2 => Circle.ext ?_⟩

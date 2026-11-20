@@ -140,4 +140,4 @@ theorem UpperTheory.V.Pa.gr_ss :
   | add x y hx hy =>
     obtain ⟨z, hz⟩ := hx
     obtain ⟨w, hw⟩ := hy
-    exact ⟨z + w, by rw [map_add, hz, hw]⟩
+    exact ⟨z + w, by rw [map_add (f := _), hz, hw]⟩

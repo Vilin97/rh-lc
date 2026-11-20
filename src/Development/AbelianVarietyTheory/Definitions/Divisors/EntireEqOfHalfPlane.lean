@@ -317,7 +317,7 @@ theorem mem_orderC {c : Ideal (OF E)} {x : E} : x ∈ orderC c ↔
     | add x y _ _ hx hy =>
       obtain ⟨a, b, hb, rfl⟩ := hx
       obtain ⟨a', b', hb', rfl⟩ := hy
-      exact ⟨a + a', b + b', add_mem hb hb', by simp only [map_add]; ring⟩
+      exact ⟨a + a', b + b', add_mem hb hb', by simp only [map_add (f := _)]; ring⟩
     | neg x _ hx =>
       obtain ⟨a, b, hb, rfl⟩ := hx
       exact ⟨-a, -b, neg_mem hb, by simp only [map_neg]; ring⟩
@@ -326,7 +326,7 @@ theorem mem_orderC {c : Ideal (OF E)} {x : E} : x ∈ orderC c ↔
       obtain ⟨a', b', hb', rfl⟩ := hy
       refine ⟨a * a', algebraMap (OF E) (𝓞 E) a * b' + (algebraMap (OF E) (𝓞 E) a' + b') * b,
         add_mem (Ideal.mul_mem_left _ _ hb') (Ideal.mul_mem_left _ _ hb), ?_⟩
-      simp only [map_add, map_mul, hc]; ring
+      simp only [map_add (f := _), map_mul, hc]; ring
   · rintro ⟨a, b, hb, rfl⟩
     exact add_mem (Subring.subset_closure (Or.inl ⟨a, rfl⟩)) (Subring.subset_closure (Or.inr ⟨b, hb, rfl⟩))
 
@@ -371,7 +371,7 @@ def latticeSub (c : Ideal (OF E)) (y : (Af E)ˣ) : AddSubgroup E where
   carrier := lattice c y
   zero_mem' := by simp [lattice]
   add_mem' := fun {a b} ha hb => by
-    rw [mem_lattice, map_add, add_mul]; exact add_mem ha hb
+    rw [mem_lattice, map_add (f := _), add_mul]; exact add_mem ha hb
   neg_mem' := fun {a} ha => by
     rw [mem_lattice, map_neg, neg_mul]; exact neg_mem ha
 
@@ -466,7 +466,7 @@ example (x : E) : x ∈ orderC (⊤ : Ideal (OF E)) ↔ ∃ b : 𝓞 E, x = alge
   rw [mem_orderC]
   constructor
   · rintro ⟨a, b, -, rfl⟩
-    exact ⟨algebraMap (OF E) (𝓞 E) a + b, by rw [map_add]; rfl⟩
+    exact ⟨algebraMap (OF E) (𝓞 E) a + b, by rw [map_add (f := _)]; rfl⟩
   · rintro ⟨b, rfl⟩
     exact ⟨0, b, by simp [Ideal.map_top], by simp⟩
 

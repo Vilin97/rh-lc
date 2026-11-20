@@ -66,7 +66,7 @@ theorem exists_unit_hat (F E : Type) [Field F] [NumberField F] [Field E] [Number
     ∃ y ∈ intHat F E, ∃ y' ∈ intHat F E, ∃ w ∈ intHat F E, y * y' = 1 ∧
       y = (1 : FiniteAdeleRing (𝓞 F) F) ⊗ₜ[F] (b : E) + (N : RA F E) * w := by
   obtain ⟨y, w, hy⟩ := GlobalTheory.TwistChar.exists_unit_lift F E N (ratHat F E b) (ratHat F E b')
-    (ratHat F E k) (by rw [← RingHom.map_mul, h, RingHom.map_add, RingHom.map_one, RingHom.map_mul, map_natCast])
+    (ratHat F E k) (by rw [← RingHom.map_mul, h, RingHom.map_add (f := _), RingHom.map_one, RingHom.map_mul, map_natCast])
   refine ⟨_, (y : intHat F E).2, _, ((y⁻¹ : (intHat F E)ˣ) : intHat F E).2, _, w.2,
     congrArg Subtype.val y.mul_inv, ?_⟩
   rw [hy]

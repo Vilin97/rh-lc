@@ -27,7 +27,7 @@ theorem flat_of_map_maximalIdeal_self {A : Type*} [CommRing A] [IsLocalRing A] [
     obtain ⟨a, ha, hay⟩ := hy
     obtain ⟨b, hb, hbz⟩ := hz
     refine ⟨a + b, add_mem ha hb, ?_⟩
-    rw [show φ (a + b) - (y + z) = (φ a - y) + (φ b - z) by rw [map_add]; ring]
+    rw [show φ (a + b) - (y + z) = (φ a - y) + (φ b - z) by rw [map_add (f := _)]; ring]
     exact add_mem hay hbz
   | smul c y _ hy =>
     obtain ⟨a, ha, hay⟩ := hy

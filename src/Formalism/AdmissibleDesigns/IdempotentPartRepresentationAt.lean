@@ -177,8 +177,8 @@ theorem rowSub_at
     { toFun := fun v j => e ((Λ (KLift.untr e v)) q.1 q.2 j)
       map_add' := fun v w => funext fun j => by
         show e ((Λ (KLift.untr e v + KLift.untr e w)) q.1 q.2 j) = _
-        rw [map_add]
-        simp [map_add]
+        rw [map_add (f := _)]
+        simp [map_add (f := _)]
       map_smul' := fun c v => funext fun j => by
         show e ((Λ (e.symm c • KLift.untr e v)) q.1 q.2 j) = c * e ((Λ (KLift.untr e v)) q.1 q.2 j)
         rw [smulK]

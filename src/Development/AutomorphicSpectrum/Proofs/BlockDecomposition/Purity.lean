@@ -42,7 +42,7 @@ theorem purity : GlobalTheory.Published.CuspFormsBoundedGL → ∀ (E : Type) [F
     simp only [Multiset.map_map, Function.comp_def, add_sub_cancel_right, Multiset.map_id'] at e2
     rw [e2]
     refine Multiset.map_congr rfl fun z hz => ?_
-    rw [map_add, hreal τ z hz]
+    rw [map_add (f := _), hreal τ z hz]
     ring
   obtain ⟨τ₀⟩ : Nonempty (E →+* ℂ) := inferInstance
   obtain ⟨z, hz⟩ : ∃ z, z ∈ (CG.mk π).infChar τ₀ := by

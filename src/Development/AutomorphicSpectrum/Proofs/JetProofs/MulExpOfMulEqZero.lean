@@ -23,7 +23,7 @@ variable {n : ℕ} {H : Type} [NormedAddCommGroup H] [InnerProductSpace ℂ H]
 def circleSpace (π : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)) (m : ℤ) : Submodule ℂ H where
   carrier := {x | ∀ z : ℂ, ‖z‖ = 1 → π (z • (1 : Matrix (Fin n) (Fin n) ℂ)) x = z ^ m • x}
   zero_mem' := fun z _ => by simp
-  add_mem' := fun {x y} hx hy z hz => by rw [map_add, hx z hz, hy z hz, smul_add]
+  add_mem' := fun {x y} hx hy z hz => by rw [map_add (f := _), hx z hz, hy z hz, smul_add]
   smul_mem' := fun c x hx z hz => by rw [map_smul, hx z hz, smul_comm]
 
 theorem mem_circleSpace {π : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} {m : ℤ} {x : H} :

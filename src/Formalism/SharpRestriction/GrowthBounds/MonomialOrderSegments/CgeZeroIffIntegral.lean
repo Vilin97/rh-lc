@@ -146,7 +146,7 @@ private lemma coeff_dg_eq_mul_coeff {σ : Type} (f : (σ →₀ ℕ) → K) (F :
     · subst h
       ring
     · simp
-  | add F G hF hG => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hF, hG, mul_add]
+  | add F G hF hG => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hF, hG, mul_add]
 
 theorem cge_dg {σ : Type} {a b : ℝ} {f : (σ →₀ ℕ) → K} {F : MvPolynomial σ K}
     (hf : ∀ α, vge v a (f α)) (hF : cge v b F) : cge v (a + b) (dg f F) := by

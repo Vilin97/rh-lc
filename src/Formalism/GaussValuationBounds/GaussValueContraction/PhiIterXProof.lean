@@ -50,7 +50,7 @@ theorem psIdeal_proof : PsIdeal := by
         linear_combination (B.u * B.X) * hc
       obtain ⟨e, he⟩ := sub_dvd_pow_sub_pow (B.φ B.X) (B.u * B.X ^ B.ℓ) (B.ℓ ^ s)
       have e1 : (⇑B.φ)^[s + 1] B.X = B.φ a * B.ℓ + B.φ b * (B.φ B.X) ^ B.ℓ ^ s := by
-        rw [Function.iterate_succ_apply', ← hab, map_add, map_mul, map_mul, map_pow, map_natCast]
+        rw [Function.iterate_succ_apply', ← hab, map_add (f := _), map_mul, map_mul, map_pow, map_natCast]
       have e4 : B.X ^ B.ℓ ^ (s + 1) = (B.X ^ B.ℓ) ^ B.ℓ ^ s := by rw [← pow_mul, pow_succ']
       refine Ideal.mem_span_pair.mpr ⟨B.φ a + B.φ b * (B.u * B.X * c) * e, B.φ b * B.u ^ B.ℓ ^ s, ?_⟩
       rw [e1, e4]
@@ -59,7 +59,7 @@ theorem psIdeal_proof : PsIdeal := by
     intro s
     induction s with
     | zero => rfl
-    | succ s ih => rw [Function.iterate_succ_apply', ih, Function.iterate_succ_apply', map_add, map_natCast]
+    | succ s ih => rw [Function.iterate_succ_apply', ih, Function.iterate_succ_apply', map_add (f := _), map_natCast]
   simp only [Formalism.WachCohomologyFacts.Base.p, Formalism.WachCohomologyFacts.Base.q]
   rw [hadd]
   exact Ideal.add_mem _ (hX s) (Ideal.subset_span (by simp))
@@ -91,7 +91,7 @@ theorem dSat_proof : DSat := by
       zero_pow (by omega : N ≠ 0), mul_zero, sub_zero] at h1
     exact h1
   have hc0 := congrArg PowerSeries.constantCoeff hab
-  simp only [map_add, map_mul, PowerSeries.constantCoeff_C, hp0] at hc0
+  simp only [map_add (f := _), map_mul, PowerSeries.constantCoeff_C, hp0] at hc0
   exact ⟨PowerSeries.constantCoeff a + PowerSeries.constantCoeff b * PowerSeries.constantCoeff q, by
     rw [← hc0]
     ring⟩
@@ -117,7 +117,7 @@ theorem dUDeg_proof : DUDeg := by
   rw [Ideal.mem_span_pair] at hmem
   obtain ⟨a, b, hab⟩ := hmem
   have hm := congrArg (PowerSeries.map (Ideal.Quotient.mk (Ideal.span {ϖ}))) hab
-  simp only [map_add, map_mul, map_pow, PowerSeries.map_C, hϖ0, map_zero, mul_zero, zero_add] at hm
+  simp only [map_add (f := _), map_mul, map_pow, PowerSeries.map_C, hϖ0, map_zero, mul_zero, zero_add] at hm
   rw [hred p₀ v₀ _ h₀, hred p₁ v₁ _ h₁, mul_pow, mul_pow, ← pow_mul, ← pow_mul, ← mul_assoc, ← mul_assoc] at hm
   have hc := congrArg (PowerSeries.coeff (ℓ ^ s₀ * b₀)) hm
   rw [PowerSeries.coeff_mul_X_pow', PowerSeries.coeff_mul_X_pow', if_neg (not_le.mpr hlt), if_pos le_rfl,

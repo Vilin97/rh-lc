@@ -80,7 +80,7 @@ lemma hdList_add (l : List (Idx D j G.N →₀ ℕ)) (x z : LamL hs) :
     hdList hs l (x + z) = hdList hs l x + hdList hs l z := by
   induction l with
   | nil => rfl
-  | cons β l ih => rw [hdList_cons, hdList_cons, hdList_cons, ih, map_add]
+  | cons β l ih => rw [hdList_cons, hdList_cons, hdList_cons, ih, map_add (f := _)]
 
 lemma hdList_zero (l : List (Idx D j G.N →₀ ℕ)) : hdList hs l 0 = 0 := by
   induction l with
@@ -117,7 +117,7 @@ lemma intAll_one : IntAllL hs 1 := fun ζ => by
   rw [map_one, nval_of_ne one_ne_zero, vV_one']; simp
 
 lemma intAll_add {x z : LamL hs} (hx : IntAllL hs x) (hz : IntAllL hs z) : IntAllL hs (x + z) := fun ζ => by
-  rw [map_add]; exact (le_min (hx ζ) (hz ζ)).trans (nval_add 1 _ _)
+  rw [map_add (f := _)]; exact (le_min (hx ζ) (hz ζ)).trans (nval_add 1 _ _)
 
 lemma intAll_mul {x z : LamL hs} (hx : IntAllL hs x) (hz : IntAllL hs z) : IntAllL hs (x * z) := fun ζ => by
   rw [map_mul, nval_mul]; exact add_nonneg (hx ζ) (hz ζ)
@@ -135,7 +135,7 @@ lemma hdL_closure (x z : LamL hs) (β : Idx D j G.N →₀ ℕ) {u : LamL hs}
     rw [hdL_mul]
     exact AddSubmonoid.sum_mem _ fun q _ => AddSubmonoid.subset_closure ⟨q.1 :: l₁, q.2 :: l₂, rfl⟩
   | zero => rw [map_zero]; exact AddSubmonoid.zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact AddSubmonoid.add_mem _ ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact AddSubmonoid.add_mem _ ha hb
 
 lemma hdList_mul_mem (x z : LamL hs) (l : List (Idx D j G.N →₀ ℕ)) :
     hdList hs l (x * z) ∈ AddSubmonoid.closure (prodSet hs x z) := by
@@ -231,7 +231,7 @@ lemma evL_eq_zero_of_mem {u : LamL hs}
     obtain ⟨i, rfl⟩ := hx
     rw [evW_ι, coe_sfr, (hs ζ).lift_frac, (hs ζ).onS i, zero_mul]
   | zero => exact map_zero _
-  | add x z _ _ hx hz => rw [map_add, hx, hz, add_zero]
+  | add x z _ _ hx hz => rw [map_add (f := _), hx, hz, add_zero]
   | smul a x _ hx => rw [smul_eq_mul, map_mul, hx, mul_zero]
 
 lemma toE_eq_top {w : WithTop ℤ} (h : toE w = ⊤) : w = ⊤ := by

@@ -43,7 +43,7 @@ def addDers {κ : Type} [Fintype κ] (τ : κ → Derivation R B B) (φ : B →�
       map_add' := fun b b' => by simp [add_mul, Finset.sum_add_distrib]
       map_smul' := fun r b => by simp [Finset.smul_sum] }
     (fun b b' => by
-      simp only [LinearMap.coe_mk, AddHom.coe_mk, Derivation.leibniz, smul_eq_mul, map_add, map_mul,
+      simp only [LinearMap.coe_mk, AddHom.coe_mk, Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul,
         Finset.mul_sum, ← Finset.sum_add_distrib]
       exact Finset.sum_congr rfl fun i _ => by ring)
     (fun b b' => by
@@ -87,7 +87,7 @@ theorem exists_ders [Algebra.Smooth R B] :
   have : IsScalarTower R B A := IsScalarTower.of_algebraMap_eq fun r => (φ'.commutes r).symm
   let δ : Derivation R B A :=
     { toFun := fun b => φ b - φ' b
-      map_add' := fun b b' => by simp only [map_add]; ring
+      map_add' := fun b b' => by simp only [map_add (f := _)]; ring
       map_smul' := fun r b => by simp [smul_sub]
       map_one_eq_zero' := by simp
       leibniz' := fun a b => by

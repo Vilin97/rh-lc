@@ -59,7 +59,7 @@ theorem proof : ChartParAlgebraic.Statement := by
       rw [← IsScalarTower.algebraMap_apply F K L]
       exact hmem _ (hFB x)
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact hx.add hy
     | inv x _ hx =>
       rw [map_inv₀]

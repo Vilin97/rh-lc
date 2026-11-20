@@ -83,7 +83,7 @@ def redS {n : ℕ} (S : Finset (Fin n)) :
   toFun x i := IsLocalRing.residue _ ⟨x.1 i, (mem_std w x.1).1 x.2 i⟩
   map_add' x y := by
     funext i
-    rw [Pi.add_apply, ← map_add]
+    rw [Pi.add_apply, ← map_add (f := _)]
     rfl
   map_smul' c x := by
     funext i

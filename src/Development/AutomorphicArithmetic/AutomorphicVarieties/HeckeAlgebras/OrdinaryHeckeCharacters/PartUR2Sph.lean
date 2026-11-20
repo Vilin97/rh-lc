@@ -38,7 +38,7 @@ private noncomputable def formLin {l : ℕ} [Fact l.Prime] {L Ω : Type} [Field 
     (Fin m → Ga l L n × GV n (fun v : V.frame.Vl => s.w v.1) → Fin d → ℂ) →ₗ[ℂ] (UA L n → ℂ) where
   toFun F := toForm ι e (F i) ℓ
   map_add' F F' := funext fun g => by
-    simp only [toForm, Pi.add_apply, map_add]
+    simp only [toForm, Pi.add_apply, map_add (f := _)]
   map_smul' a F := funext fun g => by
     simp only [toForm, Pi.smul_apply, map_smul, RingHom.id_apply]
 

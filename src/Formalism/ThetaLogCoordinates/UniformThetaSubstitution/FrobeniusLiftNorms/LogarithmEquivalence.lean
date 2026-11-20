@@ -108,7 +108,7 @@ theorem exp_integral_add {K ι : Type} [NormedField K] [IsUltrametricDist K] [Ch
     (ha : MvPowerSeries.constantCoeff a = 0 ∧ Integral (mvExp a))
     (hb : MvPowerSeries.constantCoeff b = 0 ∧ Integral (mvExp b)) :
     MvPowerSeries.constantCoeff (a + b) = 0 ∧ Integral (mvExp (a + b)) := by
-  refine ⟨by rw [map_add, ha.1, hb.1, add_zero], ?_⟩
+  refine ⟨by rw [map_add (f := _), ha.1, hb.1, add_zero], ?_⟩
   rw [mvExp_add ha.1 hb.1]
   exact integral_mul' ha.2 hb.2
 
@@ -325,7 +325,7 @@ theorem constantCoeff_altR (R : Type) [CommRing R] {p : ℕ} (hp : 2 ≤ p) :
 theorem altR_add_expand (R : Type) [CommRing R] {p : ℕ} (hp : 2 ≤ p) (hq : p ^ 2 ≠ 0) :
     altR R p + PowerSeries.expand (p ^ 2) hq (altR R p) = PowerSeries.X := by
   ext n
-  rw [map_add, PowerSeries.coeff_expand, PowerSeries.coeff_X]
+  rw [map_add (f := _), PowerSeries.coeff_expand, PowerSeries.coeff_X]
   have hq1 : 1 < p ^ 2 := by nlinarith
   by_cases h : ∃ l, n = (p ^ 2) ^ l
   · obtain ⟨l, rfl⟩ := h

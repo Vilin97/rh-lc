@@ -53,7 +53,7 @@ theorem pi_tensor_ext (t : (∀ p, A p) ⊗[F] (∀ q, B q))
       simp only [TensorProduct.map_tmul, LinearMap.proj_apply, LinearMap.single_apply, ← TensorProduct.tmul_sum,
         ← TensorProduct.sum_tmul, Finset.univ_sum_single]
     | add x y hx hy =>
-      simp only [map_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), Finset.sum_add_distrib]
       rw [← hx, ← hy]
   rw [this t]
   simp [h]
@@ -96,14 +96,14 @@ theorem exists_sum_of_compatible (hF : IsField F) {A' : P → P → Type} {B' : 
       induction t using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [d₁, TensorProduct.sub_tmul]
-      | add x y hx hy => simp only [map_add, hx, hy]; abel)
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]; abel)
     (pi_tensor_ext _ fun p x => by
       rw [← sub_eq_zero.2 (h₂ p x.1 x.2), ← ht, ← ht]
       clear ht
       induction t using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [d₂, TensorProduct.tmul_sub]
-      | add x y hx hy => simp only [map_add, hx, hy]; abel)
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]; abel)
   refine ⟨n, a, b, fun i p p' => sub_eq_zero.1 (congrFun (ha i) (p, p')),
     fun i p p' => sub_eq_zero.1 (congrFun (hb i) (p, p')), fun p q => ?_⟩
   rw [← ht, e]
@@ -247,7 +247,7 @@ theorem gs_prodFn_map (hz' : r z ∈ p ⁻¹ᵁ U' ⊓ q ⁻¹ᵁ V') (f : Fn i�
   induction t using TensorProduct.induction_on with
   | zero => rw [map_zero, gs_prodFn_zero H r z hz, gs_prodFn_zero H r z hz', mul_zero]
   | tmul a b => rw [TensorProduct.map_tmul, gs_prodFn_tmul H r z hz, gs_prodFn_tmul H r z hz', hf, hg]; ring
-  | add x y hx hy => rw [map_add, gs_prodFn_add H r z hz, gs_prodFn_add H r z hz', hx, hy, mul_add]
+  | add x y hx hy => rw [map_add (f := _), gs_prodFn_add H r z hz, gs_prodFn_add H r z hz', hx, hy, mul_add]
 
 end
 

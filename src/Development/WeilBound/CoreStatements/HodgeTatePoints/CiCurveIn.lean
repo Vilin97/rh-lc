@@ -46,8 +46,8 @@ theorem exists_homog {Ω K : Type} [Field Ω] [Field K] (y : (Σ k, J k) → Ω)
     obtain ⟨N, f', h1, h2⟩ := hf
     obtain ⟨M, g', h3, h4⟩ := hg
     refine ⟨N + M, f' * (∏ l, MvPolynomial.X ⟨l, c l⟩) ^ M + g' * (∏ l, MvPolynomial.X ⟨l, c l⟩) ^ N, ?_, ?_⟩
-    · rw [map_add, map_mul, map_mul, map_pow, map_pow, h1, h3, map_add, map_add]; ring
-    · rw [map_add, map_mul, map_mul, map_pow, map_pow, h2, h4, map_add, map_add]; ring
+    · rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, h1, h3, map_add (f := _), map_add (f := _)]; ring
+    · rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, h2, h4, map_add (f := _), map_add (f := _)]; ring
   | mul_X f q hf =>
     obtain ⟨N, f', h1, h2⟩ := hf
     refine ⟨N + 1, f' * (MvPolynomial.X q * ∏ l ∈ Finset.univ.erase q.1, MvPolynomial.X ⟨l, c l⟩), ?_, ?_⟩

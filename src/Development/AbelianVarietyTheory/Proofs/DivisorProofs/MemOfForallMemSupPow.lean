@@ -18,7 +18,7 @@ private theorem mem_of_forall_mem_sup_maximalIdeal_pow' (N : Ideal V) (x : V)
     refine Submodule.mem_iInf _ |>.2 fun e => ?_
     obtain ⟨a, ha, y, hy, rfl⟩ := Submodule.mem_sup.1 (hx e)
     have h1 : Ideal.Quotient.mk N (a + y) = y • Ideal.Quotient.mk N 1 := by
-      rw [map_add, Ideal.Quotient.eq_zero_iff_mem.2 ha, zero_add, Algebra.smul_def, map_one,
+      rw [map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 ha, zero_add, Algebra.smul_def, map_one,
         mul_one]
       rfl
     rw [h1]

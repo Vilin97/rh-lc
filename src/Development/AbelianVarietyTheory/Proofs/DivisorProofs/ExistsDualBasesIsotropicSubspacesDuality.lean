@@ -115,7 +115,7 @@ theorem exists_dual_bases : ∀ {D : D7} {V : HSp D} (X X' : Submodule D.host.E 
       intro k
       have := congrArg (V.hT (x k)) hc
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [map_add, map_sum, map_sum, map_zero] at this
+        rw [map_add (f := _), map_sum, map_sum, map_zero] at this
       simp only [map_smul, smul_eq_mul, hTX (hxX k) (hxX _), mul_zero, Finset.sum_const_zero,
         zero_add, hxx', mul_ite, mul_one, mul_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true] at this
       exact this

@@ -25,7 +25,7 @@ theorem level_sch_k (hL : _root_.PositivityTheory.ThKEst.Level_k) {n : ℕ} {X :
     obtain ⟨U, hU, h⟩ := hL F E σ B n d X W M χX χW om r s r' s' hp g hg
     exact mem_of_superset hU fun u hu k => h u hu k f
   | zero => exact Eventually.of_forall fun _ _ => map_zero _
-  | add x y _ _ hx hy => filter_upwards [hx, hy] with u h1 h2 k using by rw [map_add, h1 k, h2 k]
+  | add x y _ _ hx hy => filter_upwards [hx, hy] with u h1 h2 k using by rw [map_add (f := _), h1 k, h2 k]
   | smul a x _ hx => filter_upwards [hx] with u h1 k using by rw [map_smul, h1 k]
 variable {a a' : ℕ} {B : Base F E} {G : Geo σ a a'} {X : Chars F E} {om : Rep σ G.V G.W} {om' : Rep σ G.V' G.W} {R : RealMaps F a a'}
   {Rf : FinMaps F a a'}

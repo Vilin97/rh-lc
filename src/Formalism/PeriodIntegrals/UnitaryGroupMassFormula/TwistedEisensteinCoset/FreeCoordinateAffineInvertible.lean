@@ -234,7 +234,7 @@ def xxwLin {n' c' n c : ℕ} (ρ : (Fin (n + c) → E) ≃ₗ[E] (Fin (n + c) �
       simp only [Pi.add_apply]
       split_ifs <;> simp
     show ρ _ f.1.1 = ρ _ f.1.1 + ρ _ f.1.1
-    rw [hv, map_add]
+    rw [hv, map_add (f := _)]
     rfl
   map_smul' a t := by
     funext f
@@ -254,7 +254,7 @@ theorem xxw_tr_eq {n' c' n c : ℕ} (ρ : (Fin (n + c) → E) ≃ₗ[E] (Fin (n 
   rw [xxw_eN_eq]
   have h := xxw_diff (E := E) t f.1.2
   rw [sub_eq_iff_eq_add] at h
-  rw [h, map_add, Pi.add_apply]
+  rw [h, map_add (f := _), Pi.add_apply]
   rfl
 
 theorem xxw_tr_inv {n' c' n c : ℕ} {ρ : (Fin (n + c) → E) ≃ₗ[E] (Fin (n + c) → E)} (hρ : ρ ∈ R1 E n c) (t : FC n' c' n c → E) :
@@ -284,7 +284,7 @@ theorem free_coordinate_affine_invertible : TrAffP := by
     intro σ hσ t
     have h1 := xxw_tr_inv hσ t
     have h0 := xxw_tr_inv hσ (0 : FC n' c' n c → E)
-    rw [xxw_tr_eq σ⁻¹, xxw_tr_eq σ t, map_add] at h1
+    rw [xxw_tr_eq σ⁻¹, xxw_tr_eq σ t, map_add (f := _)] at h1
     rw [xxw_tr_eq σ⁻¹] at h0
     calc xxwLin σ⁻¹ (xxwLin σ t) = (xxwLin σ⁻¹ (xxwLin σ t) + xxwLin σ⁻¹ (Tr σ 0) + Tr σ⁻¹ 0) -
           (xxwLin σ⁻¹ (Tr σ 0) + Tr σ⁻¹ 0) := by abel

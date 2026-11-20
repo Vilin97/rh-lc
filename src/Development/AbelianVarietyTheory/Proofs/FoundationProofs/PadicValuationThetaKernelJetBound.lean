@@ -38,7 +38,7 @@ theorem Bd.add {B : ℝ} {x y : ℂ} (hx : Bd lam B x) (hy : Bd lam B y) : Bd la
   lift y to Qbar using hy
   rw [lamC_coe] at h1 h2
   have := Bd.coe (lam := lam) (B := B) (x := x + y) (by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le h1 h2))
   simpa using this
 

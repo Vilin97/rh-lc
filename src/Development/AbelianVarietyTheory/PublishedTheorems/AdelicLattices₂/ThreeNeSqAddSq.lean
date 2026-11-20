@@ -113,7 +113,7 @@ theorem three_not_norm : ¬ ∃ x : Qi, (3 : Qi) = x * cc x := by
   rintro ⟨x, hx⟩
   obtain ⟨a, b, rfl⟩ := exists_coord x
   apply three_ne_sq_add_sq a b
-  simp only [cc, map_add, map_mul, map_ratCast, cc_ii] at hx
+  simp only [cc, map_add (f := _), map_mul, map_ratCast, cc_ii] at hx
   have : ((3 : ℚ) : Qi) = ((a ^ 2 + b ^ 2 : ℚ) : Qi) := by
     push_cast
     linear_combination hx - (b : Qi) ^ 2 * ii_mul

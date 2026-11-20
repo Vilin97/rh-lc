@@ -117,7 +117,7 @@ def psi (hd : LocDerK q p m D ⊤ d) (W : X.Opens) : Γ(X, W) →+* Γ(Y', (ρ �
   map_mul' f f' := by
     have h := eps_sq π (ρ ⁻¹ᵁ m ⁻¹ᵁ W)
     rw [hd.mul W le_top]
-    simp only [map_mul, map_add]
+    simp only [map_mul, map_add (f := _)]
     change (_ : Γ(Y', ρ ⁻¹ᵁ m ⁻¹ᵁ W)) = (_ : Γ(Y', ρ ⁻¹ᵁ m ⁻¹ᵁ W)) * (_ : Γ(Y', ρ ⁻¹ᵁ m ⁻¹ᵁ W))
     linear_combination -((ρ.app (m ⁻¹ᵁ W)).hom (d W f) * (ρ.app (m ⁻¹ᵁ W)).hom (d W f')) * h
   map_zero' := by
@@ -128,7 +128,7 @@ def psi (hd : LocDerK q p m D ⊤ d) (W : X.Opens) : Γ(X, W) →+* Γ(Y', (ρ �
     rfl
   map_add' f f' := by
     rw [hd.add W le_top]
-    simp only [map_add]
+    simp only [map_add (f := _)]
     change (_ : Γ(Y', ρ ⁻¹ᵁ m ⁻¹ᵁ W)) = (_ : Γ(Y', ρ ⁻¹ᵁ m ⁻¹ᵁ W)) + (_ : Γ(Y', ρ ⁻¹ᵁ m ⁻¹ᵁ W))
     ring
 
@@ -143,7 +143,7 @@ theorem psi_nat (hd : LocDerK q p m D ⊤ d) (W W' : X.Opens) (h : W' ≤ W) (f 
       constFn π (ρ ⁻¹ᵁ m ⁻¹ᵁ W') DualNumber.eps * (ρ.app (m ⁻¹ᵁ W')).hom (d W' (resG X h f)) =
       resG Y' (ρ.preimage_mono h1) ((ρ.app (m ⁻¹ᵁ W)).hom ((m.app W).hom f) +
       constFn π (ρ ⁻¹ᵁ m ⁻¹ᵁ W) DualNumber.eps * (ρ.app (m ⁻¹ᵁ W)).hom (d W f)) := by
-    rw [hd.res W W' h le_top, rsT, dif_pos h1, res_app, res_app, res_app, map_add, map_mul, res_constFn]
+    rw [hd.res W W' h le_top, rsT, dif_pos h1, res_app, res_app, res_app, map_add (f := _), map_mul, res_constFn]
   exact h2
 
 theorem psi_nil (hd : LocDerK q p m D ⊤ d) (W : X.Opens) (f : Γ(X, W)) :
@@ -174,7 +174,7 @@ theorem exists_hom_of_derivation : ∀ (K : Type) [Field K] (Y Y' : Scheme.{0}) 
     have h3 : ∀ (k : Y ⟶ X) (_ : k = m) (e''), k.appLE U (m ⁻¹ᵁ U) e'' = m.app U := by
       rintro k rfl e''
       exact Scheme.Hom.appLE_eq_app _
-    rw [h1, map_add, map_mul, h2, h3 (j ≫ ρ ≫ m) hjm e', appLE_constFn, hjπ, constFn_spMap, constFn_eq]
+    rw [h1, map_add (f := _), map_mul, h2, h3 (j ≫ ρ ≫ m) hjm e', appLE_constFn, hjπ, constFn_spMap, constFn_eq]
     simp
   · apply ext_of_isAffine
     rw [← cancel_epi (Scheme.ΓSpecIso (CommRingCat.of R)).inv]

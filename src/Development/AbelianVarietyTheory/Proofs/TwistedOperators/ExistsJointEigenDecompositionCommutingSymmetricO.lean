@@ -50,7 +50,7 @@ theorem exists_finset_joint_eigen : ∀ {E ι : Type} [AddCommGroup E] [Module �
         · exact (hpos x x.2 hx).le
       add_left := fun x y z => by
         show b ((x : E) + y) z = b x z + b y z
-        rw [map_add, LinearMap.add_apply]
+        rw [map_add (f := _), LinearMap.add_apply]
       smul_left := fun x y r => by
         show b (r • (x : E)) y = starRingEnd ℂ r * b x y
         rw [LinearMap.map_smulₛₗ₂, smul_eq_mul]

@@ -153,7 +153,7 @@ private theorem mat_io (c : R ≃ₐ[k] R) (z : R ⊗[k] A) : mat b (io c A z) =
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul r a => simp [io, Algebra.TensorProduct.basis_repr_tmul]
-    | add u v hu hv => simp only [map_add, Finsupp.add_apply, hu, hv]
+    | add u v hu hv => simp only [map_add (f := _), Finsupp.add_apply, hu, hv]
   ext i j
   rw [map_apply, mat, mat, Algebra.leftMulMatrix_eq_repr_mul, Algebra.leftMulMatrix_eq_repr_mul, ← h1,
     map_mul (io c A)]

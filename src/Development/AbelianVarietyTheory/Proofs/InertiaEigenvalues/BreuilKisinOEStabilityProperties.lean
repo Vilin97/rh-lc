@@ -81,7 +81,7 @@ theorem frob (w : WCb l) (hw : w ∈ bk.OE) : frobW l w ∈ bk.OE := by
     rw [BK.evW, RingHom.comp_apply, RingHom.comp_apply, frobW_inclW, bk.ev_frob]
   refine ⟨l * m, frobS l bk.a s, frobW l y, ?_⟩
   have h' := congrArg (frobW l) h
-  simp only [map_mul, map_add, map_pow, map_natCast, key, frobS_X] at h'
+  simp only [map_mul, map_add (f := _), map_pow, map_natCast, key, frobS_X] at h'
   rw [pow_mul]
   linear_combination h'
 
@@ -109,7 +109,7 @@ theorem gal (g : ↥(GK K)) (hg : bk.FixFlat g) (w : WCb l) (hw : w ∈ bk.OE) :
   intro n
   obtain ⟨m, s, y, h⟩ := hw n
   have h' := congrArg (galW l (g : GQ l)) h
-  simp only [map_mul, map_add, map_pow, map_natCast, hW] at h'
+  simp only [map_mul, map_add (f := _), map_pow, map_natCast, hW] at h'
   obtain ⟨u, hu'⟩ := hu.pow m
   have e : (u : WCb l) * (galW l (g : GQ l) w - w) =
       ((l : ℕ) : WCb l) ^ n * (galW l (g : GQ l) y - y) := by

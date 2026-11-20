@@ -68,7 +68,7 @@ theorem exists_proj_of_graded {σ : Type} (K : Submodule ℂ (MvPolynomial σ �
           hq0 f' (max (max f.totalDegree f'.totalDegree) (f + f').totalDegree + 1) (by omega),
           hq0 (f + f') (max (max f.totalDegree f'.totalDegree) (f + f').totalDegree + 1) (by omega),
           ← Finset.sum_add_distrib]
-        simp only [map_add]
+        simp only [map_add (f := _)]
       map_smul' := fun c f => by
         simp only [RingHom.id_apply]
         rw [hq0 f (max f.totalDegree (c • f).totalDegree + 1) (by omega),

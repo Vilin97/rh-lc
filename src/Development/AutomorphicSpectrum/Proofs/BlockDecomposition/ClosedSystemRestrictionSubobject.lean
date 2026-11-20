@@ -109,7 +109,7 @@ lemma map_mem_secs_powSub {A : Type} [CommRing A] [IsNoetherianRing A] (I : Idea
     exact Submodule.smul_mem_smul (hJ a ha) Submodule.mem_top
   · intro y z hy hz
     show _ ∈ _
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact Submodule.add_mem _ hy hz
 
 end GlobalTheory.CompanionTheory.GE.ImageOpen
@@ -170,7 +170,7 @@ theorem image_on_open : ∀ {A : Type} [CommRing A] [IsNoetherianRing A] (I : Id
     refine ⟨f.app W ((P.restrictAppIso O.ι W).inv s), (hsecs W hW).symm ▸ ⟨s, hs, rfl⟩,
       f.app W ((P.restrictAppIso O.ι W).inv t),
       map_mem_secs_powSub I O hP.1 hE.1 f (e + 1) W hW t ht, ?_⟩
-    rw [← map_add, ← map_add, ← hst]
+    rw [← map_add (f := _), ← map_add (f := _), ← hst]
     rfl
 
 end GlobalTheory.CompanionTheory.GE.ImageOpen

@@ -78,7 +78,7 @@ theorem killFin (hU : Unimod) (hT : ThetaBasic) (hP : PureAct) (hL : LocCpt) (hp
   have jc : ∀ x : Q, j x ∈ 𝓒 := fun x => hj x ▸ h𝓒 x x.2
   let u : Q →ₗ[ℂ] (UA σ W.J → ℂ) :=
     { toFun := fun x => M.I om (j x)
-      map_add' := fun x y => by rw [Submodule.coe_add, map_add, I_add' hp hc (jc x) (jc y)]
+      map_add' := fun x y => by rw [Submodule.coe_add, map_add (f := _), I_add' hp hc (jc x) (jc y)]
       map_smul' := fun c x => funext fun h => by
         rw [Submodule.coe_smul, map_smul]; exact PositivityTheory.ThKG.I_smul M om c _ h }
   have hu' : ∀ x, u x = M.I om (j x) := fun _ => rfl
@@ -106,12 +106,12 @@ theorem killFin (hU : Unimod) (hT : ThetaBasic) (hP : PureAct) (hL : LocCpt) (hp
     induction hz using Submodule.span_induction with
     | mem z h =>
       obtain ⟨g, hg, x, hx, y, hy, hxy, rfl⟩ := h
-      have e : j y = j (y - x) + j x := by rw [← map_add, sub_add_cancel]
+      have e : j y = j (y - x) + j x := by rw [← map_add (f := _), sub_add_cancel]
       have e2 := I_add' hp hc (jc ⟨y - x, sub_mem hy hx⟩) (jc ⟨x, hx⟩)
       rw [← e, ← hjS _ x hx y hxy, I_left hU hT hp (hc.sch (jc ⟨x, hx⟩))] at e2
       exact (left_eq_add.1 (e2.trans (add_comm _ _)))
     | zero => rw [map_zero]; exact PositivityTheory.ThKG.I_zero M om
-    | add a b ha hb iha ihb => rw [map_add, I_add' hp hc (jc ⟨a, augle ha⟩) (jc ⟨b, augle hb⟩), iha, ihb, add_zero]
+    | add a b ha hb iha ihb => rw [map_add (f := _), I_add' hp hc (jc ⟨a, augle ha⟩) (jc ⟨b, augle hb⟩), iha, ihb, add_zero]
     | smul c a _ iha => funext h; rw [map_smul, PositivityTheory.ThKG.I_smul, iha]; simp
   obtain ⟨m1, m2⟩ := max_comap Q (GlobalTheory.Published.ThetaSub om v) (fun P => A₀ ≤ P ∧ ∀ T ∈ 𝒪, ∀ x ∈ P, T x ∈ P)
     (fun _ h => h.2.1) (fun P => ⟨fun h => ⟨fun z hz => ⟨⟨z, augle hz⟩, h.1 hz, rfl⟩, Submodule.map_subtype_le _ _,

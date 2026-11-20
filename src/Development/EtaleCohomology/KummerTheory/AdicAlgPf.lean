@@ -54,7 +54,7 @@ theorem adic_qbasis {r : ℕ} (c : Fin r → M) (e : ℕ) (he : 0 < e) (hli : Li
     have h1 : (e : ℚ_[l]) • f τ = 0 := by rw [Nat.cast_smul_eq_nsmul, ← map_nsmul, hτ, map_zero]
     exact (smul_eq_zero.mp h1).resolve_left (Nat.cast_ne_zero.mpr he.ne')
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, hfτ, add_zero, map_sum]
+    rw [map_add (f := _), hfτ, add_zero, map_sum]
   refine Submodule.sum_mem _ fun s _ => ?_
   rw [map_smul]
   exact Submodule.smul_of_tower_mem _ _ (Submodule.subset_span ⟨s, rfl⟩)

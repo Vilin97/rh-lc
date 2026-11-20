@@ -24,7 +24,7 @@ theorem disc_cyc (L L' : Type) [Field L] [NumberField L] [Field L'] [NumberField
     minpoly.isIntegrallyClosed_dvd hint (by simp [hx])
   obtain ⟨g, hg⟩ := hdvd
   have h1 := congrArg (fun p => aeval x (derivative p) * x) hg
-  simp only [derivative_sub, derivative_X_pow, derivative_one, sub_zero, derivative_mul, map_add, map_mul,
+  simp only [derivative_sub, derivative_X_pow, derivative_one, sub_zero, derivative_mul, map_add (f := _), map_mul,
     minpoly.aeval, zero_mul, add_zero, map_pow, aeval_X, map_natCast] at h1
   have h2 : (N : 𝓞 L') ∈ differentIdeal (𝓞 L) (𝓞 L') := by
     have h3 : (N : 𝓞 L') = aeval x (derivative (minpoly (𝓞 L) x)) * (aeval x g * x) := by

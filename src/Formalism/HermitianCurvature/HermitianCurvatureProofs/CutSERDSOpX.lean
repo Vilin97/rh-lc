@@ -92,7 +92,7 @@ theorem opAt_aeval {x : (Fin r → ℂ) × Mx k r} {a : Pr (RadSp k r z z' π π
     simp [Algebra.algebraMap_eq_smul_one]
   | add p q hp hq =>
     intro Φ
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     show (((Polynomial.aeval a p).1 Φ + (Polynomial.aeval a q).1 Φ : RadSp k r z z' π π') :
       Fn k r (Wq →L[ℂ] Wp)) x.1 x.2 = _
     simp only [Submodule.coe_add, Pi.add_apply, ContinuousLinearMap.add_apply]
@@ -128,7 +128,7 @@ theorem aeval_intertwine (φ : (Wq →L[ℂ] Wp) → (Wq →L[ℂ] Wp)) (hφa : 
     simp [Polynomial.aeval_C, Algebra.algebraMap_eq_smul_one, hφs]
   | add p q hp hq =>
     intro A
-    simp only [map_add, ContinuousLinearMap.add_apply, hp, hq, hφa]
+    simp only [map_add (f := _), ContinuousLinearMap.add_apply, hp, hq, hφa]
   | monomial n c hn =>
     intro A
     have e1 : Polynomial.C c * Polynomial.X ^ (n + 1) = Polynomial.C c * Polynomial.X ^ n * Polynomial.X := by

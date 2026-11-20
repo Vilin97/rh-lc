@@ -63,7 +63,7 @@ theorem eq_top_of_compact_quotient (g : ℕ) (H : Type) [Group H] [TopologicalSp
     obtain ⟨w, hw, hwz⟩ := hcz
     have h1 : π w = π (lift c + z) := by rw [hwz, hadd, hlift]
     have h2 := heq _ _ h1
-    rw [map_add] at h2
+    rw [map_add (f := _)] at h2
     have h3 : ℓ z = ℓ w - ℓ (lift c) := by rw [h2]; ring
     have h4 : ‖ℓ w‖ ≤ ‖ℓ'‖ := by
       have := ℓ'.le_opNorm w
@@ -298,7 +298,7 @@ theorem differentiable_torusExp_coord (α : torusRing ZU X) :
   induction α using AddMonoidAlgebra.induction_linear with
   | zero => simp
   | add f f' hf hf' =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hf.add hf'
   | single χ r =>
     have e : (AddMonoidAlgebra.single χ r : AddMonoidAlgebra (ULift.{0} ℤ) X) =

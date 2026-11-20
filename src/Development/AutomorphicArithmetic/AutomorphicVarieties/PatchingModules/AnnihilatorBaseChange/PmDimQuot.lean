@@ -38,7 +38,7 @@ private theorem pmDim_quot {A B σ M : Type} [CommRing A] [CommRing B] [Algebra 
         rw [TensorProduct.tmul_add]
         exact Submodule.add_mem _ hu hv
     | add x z hx hz =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hx hz
   · rw [Submodule.smul_le]
     intro r hr x hx

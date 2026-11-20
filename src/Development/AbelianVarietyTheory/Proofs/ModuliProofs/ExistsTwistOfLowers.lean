@@ -69,7 +69,7 @@ theorem exists_factor {l : Level H} {K : Type} [Field K] (β β' : KA l →+* K)
             map_one' := β.injective (by rw [hσ, map_one, map_one])
             map_mul' := fun a b => β.injective (by rw [hσ, map_mul, map_mul, hσ, hσ])
             map_zero' := β.injective (by rw [hσ, map_zero, map_zero])
-            map_add' := fun a b => β.injective (by rw [hσ, map_add, map_add, hσ, hσ]) }, RingHom.ext hσ⟩
+            map_add' := fun a b => β.injective (by rw [hσ, map_add (f := _), map_add (f := _), hσ, hσ]) }, RingHom.ext hσ⟩
 
 theorem zeta_zpow_congr (l : Level H) {i j : ℤ} (h : (l.A : ℤ) ∣ i - j) : (baseKA l).ζ ^ i = (baseKA l).ζ ^ j := by
   have h0 : (baseKA l).ζ ≠ 0 := (baseKA l).ζ_prim.ne_zero l.A_pos.ne'
@@ -127,10 +127,10 @@ def twistObj {s' : S ⟶ Sp (KA l)} (o : Obj D l (baseKA l) s') (g : Sim D) (hpq
   ample := o.ample
   ktriv := o.ktriv
   eta a := o.eta (g.f l.M a)
-  eta_add a c := by rw [map_add, o.eta_add]
+  eta_add a c := by rw [map_add (f := _), o.eta_add]
   eta_ker a ha := o.eta_ker _ (LevelTwist.map_mem_smul_top _ _ ha)
   etaA a := o.etaA (g.f l.A a)
-  etaA_add a c := by rw [map_add, o.etaA_add]
+  etaA_add a c := by rw [map_add (f := _), o.etaA_add]
   etaA_ker a := by rw [map_nsmul, o.etaA_ker]
   geom k _ _ x β hx := by
     obtain ⟨hd, I, hζ', hA', hM⟩ := o.geom k x β hx
@@ -342,7 +342,7 @@ theorem exists_twist_of_lowers (hL : Out.Laws) (hpq : 1 ≤ D.p + D.q) (hd : l.D
   have hM : ∀ a, e (toUnit _ ≫ o.eta a) = toUnit _ ≫ Xo.univ.eta (g.f l₂.M a) := fun a => by
     obtain ⟨u, hu, v, hv, huv⟩ := level_split l₂
     have hcs : a = u • a + v • a := by rw [← add_smul, huv, one_smul]
-    rw [hcs, o.eta_add, o.eta_ker _ (Submodule.smul_mem_smul hu trivial), map_add, Xo.univ.eta_add, map_smul, map_smul,
+    rw [hcs, o.eta_add, o.eta_ker _ (Submodule.smul_mem_smul hu trivial), map_add (f := _), Xo.univ.eta_add, map_smul, map_smul,
       Xo.univ.eta_ker _ (Submodule.smul_mem_smul hu trivial), _root_.one_mul, _root_.one_mul,
       hI _ (Submodule.smul_mem_smul hv trivial), hJ _ (Submodule.smul_mem_smul hv trivial), ← hJ',
       (hg _ (level_pos l₂)).1, map_smul]

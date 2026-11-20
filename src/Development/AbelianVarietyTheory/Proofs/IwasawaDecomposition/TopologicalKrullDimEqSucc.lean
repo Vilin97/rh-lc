@@ -47,7 +47,7 @@ theorem ringKrullDim_adjoin_le {R S : Type} [CommRing R] [IsDomain R] [IsNoether
       | add x y _ _ hx hy =>
         obtain ⟨p, hp⟩ := hx
         obtain ⟨q, hq⟩ := hy
-        exact ⟨p + q, by rw [map_add, hp, hq]; rfl⟩
+        exact ⟨p + q, by rw [map_add (f := _), hp, hq]; rfl⟩
       | mul x y _ _ hx hy =>
         obtain ⟨p, hp⟩ := hx
         obtain ⟨q, hq⟩ := hy

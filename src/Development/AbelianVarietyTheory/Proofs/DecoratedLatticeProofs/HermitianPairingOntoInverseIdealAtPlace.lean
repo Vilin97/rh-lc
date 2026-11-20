@@ -95,7 +95,7 @@ theorem hermAt_gen (S : HSp D) (z x : Fin S.rank → D.host.E) (α : Af D.host.F
   rw [Algebra.TensorProduct.tmul_mul_tmul, Algebra.TensorProduct.tmul_mul_tmul, mul_one, mul_one, one_mul]
 
 theorem hermAt_add (S : HSp D) (w x y : Fin S.rank → AE D) : hermAt S w (x + y) = hermAt S w x + hermAt S w y := by
-  simp only [hermAt, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hermAt, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hermAt_zero (S : HSp D) (w : Fin S.rank → AE D) : hermAt S w 0 = 0 := by
   simp [hermAt]

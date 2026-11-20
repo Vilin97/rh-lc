@@ -47,7 +47,7 @@ theorem W_mul (σ : Setup) (x : Sp σ.R) {a b : σ.A.left.functionField} (ha : a
 
 theorem W_add (σ : Setup) (x : Sp σ.R) {a b : σ.A.left.functionField} (ha : a ∈ σ.W x) (hb : b ∈ σ.W x) :
     a + b ∈ σ.W x := fun z hz => by
-  rw [map_add]; exact (ha z hz).add (hb z hz)
+  rw [map_add (f := _)]; exact (ha z hz).add (hb z hz)
 
 theorem sec_mul_left {X : Scheme.{0}} [IsIntegral X] (D : CartierDiv X) (k : ℕ) {a b : X.functionField}
     (ha : ∀ x, RegAt x a) (hb : b ∈ Sec D k) : a * b ∈ Sec D k := fun x => by

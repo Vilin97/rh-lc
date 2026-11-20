@@ -37,7 +37,7 @@ theorem IsU.add {a b : ∀ (K : Type) [Field K] [CharZero K], K → K → K} (ha
   obtain ⟨q, hq⟩ := hb
   exact ⟨p + q, fun K _ _ g2 g3 => by
     show a K g2 g3 + b K g2 g3 = _
-    rw [map_add, hp, hq]⟩
+    rw [map_add (f := _), hp, hq]⟩
 
 theorem IsU.mul {a b : ∀ (K : Type) [Field K] [CharZero K], K → K → K} (ha : IsU a) (hb : IsU b) :
     IsU (fun K [Field K] [CharZero K] g2 g3 => a K g2 g3 * b K g2 g3) := by

@@ -363,7 +363,7 @@ theorem nablaE_gauge : ∀ {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E]
     have ex : (Complex.I • x).1 = Complex.I • x.1 := rfl
     simp only [d10]
     rw [hG, hG, ex, hKI, der_fibZero_smul]
-    simp only [map_add, map_sub, map_smul]
+    simp only [map_add (f := _), map_sub, map_smul]
     match_scalars <;> ring_nf <;> simp only [Complex.I_sq] <;> ring
   have hd01 : ∀ x : Pt E g, d01 (gauge n τ γ s) P x =
       der (fibZero n (K x.1)) (Φ (s (reframe τ γ P))) + Φ (d01 (fun Q => s (reframe τ γ Q)) P x) := by
@@ -371,7 +371,7 @@ theorem nablaE_gauge : ∀ {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E]
     have ex : (Complex.I • x).1 = Complex.I • x.1 := rfl
     simp only [d01]
     rw [hG, hG, ex, hKI, der_fibZero_smul]
-    simp only [map_add, map_smul]
+    simp only [map_add (f := _), map_smul]
     match_scalars <;> ring_nf <;> simp only [Complex.I_sq] <;> ring
   have hHol : ∀ v, Pullback.nabHol τ (fun Q => h (reframe τ γ Q)) (gauge n τ γ s) P v =
       Φ (Pullback.nabHol τ' h s (reframe τ γ P) v) := by
@@ -426,7 +426,7 @@ theorem nablaE_gauge : ∀ {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E]
     have hx1 : (hor τ P v).1 = v := rfl
     have hR1 : (reframe τ γ P).1 = b := rfl
     simp only [Pullback.nabAnti]
-    rw [hd01, hx1, d01_comp_continuousLinearMap s _ P _ hRc hsR, GlobalTheory.T.fderiv_reframe_horizontal B τ γ hτ hτ' P hP v, map_add, hR1,
+    rw [hd01, hx1, d01_comp_continuousLinearMap s _ P _ hRc hsR, GlobalTheory.T.fderiv_reframe_horizontal B τ γ hτ hτ' P hP v, map_add (f := _), hR1,
       hconn τ, hconn τ']
     have hfix : fibZero n ((Matrix.of fun a e => d01 (fun b' => imPart τ' b' a e) b v) *
           (imPart τ' b)⁻¹) * fibMat n (φ b) =
@@ -444,7 +444,7 @@ theorem nablaE_gauge : ∀ {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E]
   refine Finset.sum_congr rfl fun i _ => ?_
   simp only [Pullback.nabPiece]
   have hw := fun w => (GlobalTheory.TorsionForm.FrameWedge.frameMap_wedge n (den γ (τ b)) w).2 i
-  rw [hHol, hAnti, map_add]
+  rw [hHol, hAnti, map_add (f := _)]
   exact congrArg₂ (· + ·) (hw _).1.symm (hw _).2.symm
 
 end GlobalTheory.TorsionForm.Gauge.NablaConj

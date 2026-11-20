@@ -282,7 +282,7 @@ theorem span_image_le (f : V →ₛₗ[e] W) (A : Subring LL) (hA : ∀ a ∈ A,
     obtain ⟨i, rfl⟩ := hz
     exact Submodule.subset_span ⟨i, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ h1 h2 => rw [map_add]; exact Submodule.add_mem _ h1 h2
+  | add y z _ _ h1 h2 => rw [map_add (f := _)]; exact Submodule.add_mem _ h1 h2
   | smul a y _ h1 =>
     obtain ⟨o, ho⟩ := hA a.1 a.2
     have : f (a • y) = o • f y := by

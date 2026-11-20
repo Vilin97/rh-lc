@@ -38,7 +38,7 @@ private theorem charpoly_of_representation {n : ℕ} {K G : Type} [CommRing K] [
       (Polynomial.C : K →+* Polynomial K).mapMatrix (GDet.repAlg ρ K y) := by
     induction y using MonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single g r => ext i j; simp [GDet.repAlg]
   rw [map_sub, h, Matrix.charmatrix]
   congr 1

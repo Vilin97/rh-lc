@@ -19,7 +19,7 @@ variable {σ : E →+* E} {V : Type} [AddCommGroup V] [Module E V] {h : V → V 
 
 theorem IsHermForm.add_left (hh : IsHermForm σ h) (x y z : V) :
     h (x + y) z = h x z + h y z := by
-  rw [hh.herm z (x + y), hh.add, map_add, ← hh.herm z x, ← hh.herm z y]
+  rw [hh.herm z (x + y), hh.add, map_add (f := _), ← hh.herm z x, ← hh.herm z y]
 
 theorem IsHermForm.smul_left (hh : IsHermForm σ h) (a : E) (x y : V) :
     h (a • x) y = σ a * h x y := by

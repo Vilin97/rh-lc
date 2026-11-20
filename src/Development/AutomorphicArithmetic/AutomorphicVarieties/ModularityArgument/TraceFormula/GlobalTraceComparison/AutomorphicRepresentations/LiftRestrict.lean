@@ -28,7 +28,7 @@ private theorem lift_restrict {V J : Type} [AddCommGroup V] [Module ℂ V] (P : 
   · intro a b ha hb x
     rw [map_mul, map_mul, Module.End.mul_apply, Module.End.mul_apply, ha, hb]
   · intro a b ha hb x
-    rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, Submodule.coe_add, ha, hb]
+    rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, Submodule.coe_add, ha, hb]
 
 private theorem list_restrict {V ι : Type} [AddCommGroup V] [Module ℂ V] (P : Submodule ℂ V)
     (e : ι → Module.End ℂ V) (r : ι → Module.End ℂ P) (h : ∀ i (x : P), ((r i x : P) : V) = e i x)

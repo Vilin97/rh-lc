@@ -83,7 +83,7 @@ theorem UpperTheory.Gal.TP.Sub.frobSub_holds :
       unfold cp at h3 h4
       rw [h3, Polynomial.map_mul, h4] at e
       simp only [Polynomial.map_sub, Polynomial.map_X, Polynomial.map_C] at e
-      rw [hc A hA σ hσ, Multiset.map_add, Multiset.prod_add, Multiset.map_singleton,
+      rw [hc A hA σ hσ, Multiset.map_add (f := _), Multiset.prod_add, Multiset.map_singleton,
         Multiset.prod_singleton] at e
       exact mul_right_cancel₀ (Polynomial.X_sub_C_ne_zero c) e
   · intro A hA

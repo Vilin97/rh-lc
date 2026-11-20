@@ -344,7 +344,7 @@ private theorem normCount_lemma (K : Type) [Field K] [NumberField K] : ∀ n : �
       obtain ⟨r, rfl⟩ := Ideal.mem_span_singleton'.1 hb
       have hu : Ideal.Quotient.mk I r * (p : 𝓞 K ⧸ I) = 1 := by
         have := congrArg (Ideal.Quotient.mk I) hab
-        rw [map_add, Ideal.Quotient.eq_zero_iff_mem.2 ha, zero_add, map_mul, map_one] at this
+        rw [map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 ha, zero_add, map_mul, map_one] at this
         simpa [hqdef] using this
       have hpy : (p : 𝓞 K ⧸ I) * y = 0 := by
         rw [← nsmul_eq_mul, ← hy]; exact addOrderOf_nsmul_eq_zero y
@@ -747,7 +747,7 @@ theorem projective_quotient_card : ProjQuotCard := by
     rintro ⟨x, q⟩ ⟨x', q'⟩ hxy
     simp only [φ, LinearMap.coprod_apply, Submodule.coe_subtype] at hxy
     have h1 := congrArg f hxy
-    rw [map_add, map_add, hfh', hfh', LinearMap.mem_ker.1 q.2, LinearMap.mem_ker.1 q'.2,
+    rw [map_add (f := _), map_add (f := _), hfh', hfh', LinearMap.mem_ker.1 q.2, LinearMap.mem_ker.1 q'.2,
       add_zero, add_zero] at h1
     subst h1
     exact Prod.ext rfl (Subtype.ext (add_left_cancel hxy))

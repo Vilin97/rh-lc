@@ -205,9 +205,9 @@ theorem fn_translate : Out.Laws → Out.Laws2 → ∀ (E : Type) [Field E] [Numb
     · exact congrArg (fun m => m.left)
         ((MonObj.comp_one _).trans (ex_zero Λ.u).symm : basePt ≫ DegPre.zeroF a.D₀ ℂ = Λ.u.ex 0)
     · exact (Category.id_comp _).trans hb
-  · refine (secVal_translate hL.globalFns Λ.ah hb hv (by rw [map_add, hy]) (Λ.ct α) (Λ.ct (α + la.y))
+  · refine (secVal_translate hL.globalFns Λ.ah hb hv (by rw [map_add (f := _), hy]) (Λ.ct α) (Λ.ct (α + la.y))
       (l := la.l) ?_ hst ht z).trans ?_
-    · rw [← Nat.cast_smul_eq_nsmul ℂ, smul_inv_smul₀ hk, AnArc.degeneratingTori_basePeriodMap_snd, map_add]
+    · rw [← Nat.cast_smul_eq_nsmul ℂ, smul_inv_smul₀ hk, AnArc.degeneratingTori_basePeriodMap_snd, map_add (f := _)]
       abel
     · rw [hs, Pi.smul_apply, smul_eq_mul, AnArc.shift_apply', GtAn.fn, AnArc.H_def]
       ring

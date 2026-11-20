@@ -45,7 +45,7 @@ theorem frobenius_span_decomposition (W : LocWach PD LL O v n) [IsAdicComplete (
     obtain ⟨s, hs, rfl⟩ := hx
     obtain ⟨s', hs', rfl⟩ := hy
     exact ⟨fun k => s k + s' k, fun k => S.add_mem (hs k) (hs' k),
-      by simp only [map_add, smul_add, Finset.sum_add_distrib]⟩
+      by simp only [map_add (f := _), smul_add, Finset.sum_add_distrib]⟩
   | smul a x _ hx =>
     obtain ⟨s, hs, rfl⟩ := hx
     choose t ht he using fun k : Fin PD.p =>

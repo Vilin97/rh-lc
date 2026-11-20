@@ -211,7 +211,7 @@ def thC (G : FormGaps D) (Om : WeilC ψ) (petF : HSp D → ℝ) (V W : HSp D) (�
         rw [thFun_apply, thFun_apply, thFun_apply, ← mul_add]
         unfold intC
         rw [← integral_add ((lift_ok G Om h Φ F).1 x) ((lift_ok G Om h Φ' F).1 x)]
-        simp only [kerC, map_add, Submodule.coe_add, Pi.add_apply, add_mul]))
+        simp only [kerC, map_add (f := _), Submodule.coe_add, Pi.add_apply, add_mul]))
       (fun c Φ F => Subtype.ext (funext fun x => by
         show (thFun G Om petF h (c • Φ) F).1 x = c * (thFun G Om petF h Φ F).1 x
         rw [thFun_apply, thFun_apply, mul_left_comm]
@@ -342,7 +342,7 @@ theorem conj_ex {M : Type} [AddCommGroup M] [Module ℂ M] (K : Submodule ℂ M)
     refine ⟨fun x => r.symm ((r x).mapRange star (star_zero ℂ)), fun x y => ?_, fun a x => ?_, fun x => ?_⟩
     · apply r.injective
       ext i
-      simp only [r.map_add, r.apply_symm_apply, Finsupp.mapRange_apply, Finsupp.add_apply, star_add]
+      simp only [r.map_add (f := _), r.apply_symm_apply, Finsupp.mapRange_apply, Finsupp.add_apply, star_add]
     · apply r.injective
       ext i
       simp only [r.map_smul, r.apply_symm_apply, Finsupp.mapRange_apply, Finsupp.smul_apply, smul_eq_mul, star_mul']
@@ -356,7 +356,7 @@ theorem conj_ex {M : Type} [AddCommGroup M] [Module ℂ M] (K : Submodule ℂ M)
     ⟨Submodule.prodEquivOfIsCompl K Q hQ, Submodule.prodEquivOfIsCompl_symm_apply_left K Q hQ, fun x => by simp⟩
   refine ⟨fun x => e (c1 (e.symm x).1, c2 (e.symm x).2), fun x y => ?_, fun a x => ?_, fun x => ?_, fun x hx => ?_⟩
   · show e (c1 (e.symm (x + y)).1, c2 (e.symm (x + y)).2) = e _ + e _
-    rw [← e.map_add, e.symm.map_add, Prod.fst_add, Prod.snd_add, a1, a2, Prod.mk_add_mk]
+    rw [← e.map_add (f := _), e.symm.map_add (f := _), Prod.fst_add, Prod.snd_add, a1, a2, Prod.mk_add_mk]
   · show e (c1 (e.symm (a • x)).1, c2 (e.symm (a • x)).2) = star a • e _
     rw [← e.map_smul, e.symm.map_smul, Prod.smul_fst, Prod.smul_snd, s1, s2, Prod.smul_mk]
   · show e (c1 (e.symm (e _)).1, c2 (e.symm (e _)).2) = x

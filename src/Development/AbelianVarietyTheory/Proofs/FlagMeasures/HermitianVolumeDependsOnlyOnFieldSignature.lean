@@ -37,11 +37,11 @@ theorem eq_or_conj {E : Type} [Field E] [CharZero E] [StarRing E] (φ ψ : E →
   rcases sq_eq_sq_iff_eq_or_eq_neg.1 hsq with h1 | h1
   · left; ext a
     obtain ⟨u, w, hu, hw, rfl⟩ := dec a
-    simp only [map_add, map_mul, h u hu, h w hw, h1]
+    simp only [map_add (f := _), map_mul, h u hu, h w hw, h1]
   · right; ext a
     obtain ⟨u, w, hu, hw, rfl⟩ := dec a
     rw [RingHom.comp_apply, ← hψ, star_add, star_mul', hu, hw, hs]
-    simp only [map_add, map_mul, map_neg, h u hu, h w hw, h1]
+    simp only [map_add (f := _), map_mul, map_neg, h u hu, h w hw, h1]
 
 theorem hasSignature_all (I : AutInst) {p q : ℕ} (h : HasSig I p q) (φ : I.E →+* ℂ) :
     Formalism.UG.HasSignature (I.J.map φ) p q := by

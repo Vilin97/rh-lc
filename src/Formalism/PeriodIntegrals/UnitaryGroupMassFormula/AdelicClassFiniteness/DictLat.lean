@@ -21,7 +21,7 @@ theorem DictLat.hhat_zero_right (I : AutInst) (y : Fin I.n → I.E ⊗[I.F] Af I
 
 theorem DictLat.hhat_add_left (I : AutInst) (y y' z : Fin I.n → I.E ⊗[I.F] Af I.F) :
     hhat I (y + y') z = hhat I y z + hhat I y' z := by
-  simp only [hhat, Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hhat, Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem DictLat.hhat_smul_left (I : AutInst) (y z : Fin I.n → I.E ⊗[I.F] Af I.F)
     (r : I.E ⊗[I.F] Af I.F) :
@@ -77,7 +77,7 @@ theorem DictLat.sigR_int (I : AutInst) {r : I.E ⊗[I.F] Af I.F} (hr : r ∈ Int
 
 theorem DictLat.iv_add (I : AutInst) (v w : Fin I.n → I.E) : iv I (v + w) = iv I v + iv I w := by
   funext i
-  simp [iv, map_add]
+  simp [iv, map_add (f := _)]
 
 theorem DictLat.iv_zero (I : AutInst) : iv I (0 : Fin I.n → I.E) = 0 := by
   funext i

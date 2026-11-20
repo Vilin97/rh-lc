@@ -75,7 +75,7 @@ def TjDualLat (μ : D.Tup) (j : ℕ) : Submodule (𝓞 D.LL) (D.MtL μ j) where
     refine ⟨(TjSpan D μ j).add_mem hx hy, fun a ha => ?_⟩
     obtain ⟨c, hc⟩ := h1 a ha
     obtain ⟨d, hd⟩ := h2 a ha
-    exact ⟨c + d, by rw [map_add, inner_add_right, hc, hd]; simp⟩
+    exact ⟨c + d, by rw [map_add (f := _), inner_add_right, hc, hd]; simp⟩
   zero_mem' := ⟨(TjSpan D μ j).zero_mem, fun a _ => ⟨0, by simp⟩⟩
   smul_mem' := by
     rintro s x ⟨hx, h1⟩
@@ -132,7 +132,7 @@ def thCan (μ : Dd.Tup) (j : ℕ) : Submodule (𝓞 Dd.LL) (Dd.Mj j) where
     · rw [← Finset.sum_add_distrib]
       refine Finset.sum_congr rfl fun v _ => ?_
       simp [add_smul]
-    · rw [map_add, map_add, ← hxa, ← hyb]
+    · rw [map_add (f := _), map_add (f := _), ← hxa, ← hyb]
   zero_mem' := ⟨⟨0, by simp⟩, 0, (TjLat Dd μ j).zero_mem, by simp⟩
   smul_mem' := by
     rintro s a ⟨⟨c, rfl⟩, x, hx, hxa⟩
@@ -236,7 +236,7 @@ theorem jM_mem_rng (j : ℕ) (h1 : 1 ≤ j) (h2 : j ≤ D.R.m) (y : (X.MjH j).V)
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
     refine ⟨a + b, ?_⟩
-    rw [map_add, ha, hb, ← Finset.sum_add_distrib]
+    rw [map_add (f := _), ha, hb, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun v _ => ?_
     simp [add_smul]
   | smul r x _ hx =>
@@ -336,7 +336,7 @@ theorem perOf_linL (p : PkB B C G) (e : PerD p) (W₀ : RowsRest B C) (u : B.Wor
     IsLinearMap ℂ (fun φ : W₀.Mu u => perOf p e W₀ u C.mu0 φ F) := by
   constructor
   · intro φ ψ
-    simp only [periodAgainstColumnForm_referenceTuple_eq, PeriodMap.PtilCol, PeriodMap.Ptil, map_add, Submodule.coe_add,
+    simp only [periodAgainstColumnForm_referenceTuple_eq, PeriodMap.PtilCol, PeriodMap.Ptil, map_add (f := _), Submodule.coe_add,
       Formalism.BasicNotions.Examples₂.NZ.col_add, LinearMap.add_apply]
   · intro s φ
     simp only [periodAgainstColumnForm_referenceTuple_eq, PeriodMap.PtilCol, PeriodMap.Ptil, map_smul, Submodule.coe_smul,
@@ -346,7 +346,7 @@ theorem perOf_linR (p : PkB B C G) (e : PerD p) (W₀ : RowsRest B C) (u : B.Wor
     IsLinearMap ℂ (fun F : (p.sA true C.mu0).A.T => perOf p e W₀ u C.mu0 φ F) := by
   constructor
   · intro F F'
-    simp only [periodAgainstColumnForm_referenceTuple_eq, PeriodMap.PtilCol, PeriodMap.Ptil, map_add]
+    simp only [periodAgainstColumnForm_referenceTuple_eq, PeriodMap.PtilCol, PeriodMap.Ptil, map_add (f := _)]
   · intro s F
     simp only [periodAgainstColumnForm_referenceTuple_eq, PeriodMap.PtilCol, PeriodMap.Ptil, map_smul]
 

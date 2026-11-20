@@ -171,7 +171,7 @@ theorem span_A {n n₁ : ℕ} {B : Base F E} {X : Spc F E n} {X₁ : Spc F E n�
   obtain ⟨a, b, v, h⟩ := span_E hH hX (fun j => if i = j then 1 else 0)
   refine ⟨inclR (AF F) a, inclR (AF F) b, incV F v, funext fun j => ?_⟩
   have hj := congrArg (inclR (F := F) (AF F)) (congrFun h j)
-  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, RingHom.map_mulVec] at hj
+  simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, RingHom.map_mulVec] at hj
   simp only [Pi.add_apply, Pi.smul_apply, smul_eq_mul]
   convert hj using 1
   · split_ifs <;> simp

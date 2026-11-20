@@ -188,7 +188,7 @@ variable {R R' : Type} [CommRing R] [CommRing R']
 theorem dual_hom_ext {ρ ρ' : DualNumber R →+* R'} (h : ∀ r, ρ (TrivSqZeroExt.inl r) = ρ' (TrivSqZeroExt.inl r))
     (he : ρ DualNumber.eps = ρ' DualNumber.eps) : ρ = ρ' := RingHom.ext fun a => by
   have e : a = TrivSqZeroExt.inl a.fst + TrivSqZeroExt.inl a.snd * DualNumber.eps := by ext <;> simp
-  rw [e, map_add, map_add, map_mul, map_mul, h, h, he]
+  rw [e, map_add (f := _), map_add (f := _), map_mul, map_mul, h, h, he]
 
 theorem dualMap_inl (φ : R →+* R') (a : R) : dualMap φ (TrivSqZeroExt.inl a) = TrivSqZeroExt.inl (φ a) := by
   ext <;> simp [dualMap]

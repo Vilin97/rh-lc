@@ -38,7 +38,7 @@ theorem whit_smul (c : ℂ) (F : GA E a → ℂ) (y : GA E a) : whit (c • F) y
 def psiLocChar (w : HeightOneSpectrum (𝓞 E)) : AddChar (w.adicCompletion E) ℂ where
   toFun := psiLoc w
   map_zero_eq_one' := by simp [psiLoc]
-  map_add_eq_mul' x y := by simp only [psiLoc, map_add, AddChar.map_add_eq_mul, Circle.coe_mul]
+  map_add_eq_mul' x y := by simp only [psiLoc, map_add (f := _), AddChar.map_add_eq_mul, Circle.coe_mul]
 
 theorem finGL_locGL_apply (w : HeightOneSpectrum (𝓞 E)) (k : GL (Fin a) (w.adicCompletion E)) (i j : Fin a) :
     ((finGL E a (locGL E a w k) : GA E a) : Matrix (Fin a) (Fin a) (Ad E)) i j =
@@ -47,7 +47,7 @@ theorem finGL_locGL_apply (w : HeightOneSpectrum (𝓞 E)) (k : GL (Fin a) (w.ad
   change (1 : Matrix (Fin a) (Fin a) (Ad E)) i j - sFin E ((1 : Matrix (Fin a) (Fin a) (Af E)) i j) +
     sFin E ((1 : Matrix (Fin a) (Fin a) (Af E)) i j - sLoc E w ((1 : Matrix (Fin a) (Fin a) (w.adicCompletion E)) i j)
       + sLoc E w ((k : Matrix (Fin a) (Fin a) (w.adicCompletion E)) i j)) = _
-  rw [map_add, map_sub]
+  rw [map_add (f := _), map_sub]
   abel
 
 end GlobalTheory.JSW

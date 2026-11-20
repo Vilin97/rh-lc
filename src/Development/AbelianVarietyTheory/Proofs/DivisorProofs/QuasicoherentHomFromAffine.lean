@@ -58,7 +58,7 @@ theorem ext_affine {U : T.Opens} {t t' : Γ(G, U)}
 def glueLinear (U : T.Opens) : Γ(F, U) →ₗ[Γ(T, U)] Γ(G, U) where
   toFun := glue j hj U
   map_add' s s' := ext_affine fun W hW hWU => by
-    rw [map_add, glue_spec j hj _ _ W hW, glue_spec j hj _ _ W hW, glue_spec j hj _ _ W hW, map_add,
+    rw [map_add (f := _), glue_spec j hj _ _ W hW, glue_spec j hj _ _ W hW, glue_spec j hj _ _ W hW, map_add (f := _),
       map_add]
   map_smul' a s := ext_affine fun W hW hWU => by
     rw [RingHom.id_apply, GlobalTheory.Twist.resM_smul, glue_spec j hj _ _ W hW, glue_spec j hj _ _ W hW,

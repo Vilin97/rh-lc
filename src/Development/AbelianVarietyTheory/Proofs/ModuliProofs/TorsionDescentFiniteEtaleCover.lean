@@ -29,7 +29,7 @@ theorem mem_of_integral (S K F B : Type) [CommRing S] [IsDomain S] [IsIntegrally
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [ev]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hi : ∀ i, ∃ r : S, algebraMap S K r = ev K i c := by
     intro i
     apply IsIntegrallyClosed.isIntegral_iff.1
@@ -49,7 +49,7 @@ theorem mem_of_integral (S K F B : Type) [CommRing S] [IsDomain S] [IsIntegrally
       conv_lhs => rw [hb, TensorProduct.tmul_sum]
       simp [ev, TensorProduct.smul_tmul]
     | add a b ha hb =>
-      simp only [map_add, TensorProduct.add_tmul, Finset.sum_add_distrib]
+      simp only [map_add (f := _), TensorProduct.add_tmul, Finset.sum_add_distrib]
       rw [← ha, ← hb]
   refine ⟨∑ i, r i • p (Pi.single i 1), ?_⟩
   rw [hc c, TensorProduct.tmul_sum]

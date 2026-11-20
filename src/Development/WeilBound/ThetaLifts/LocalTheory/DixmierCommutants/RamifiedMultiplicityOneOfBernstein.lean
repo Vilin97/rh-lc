@@ -223,7 +223,7 @@ theorem acts_lin {κ : Type} [Fintype κ] {T : Module.End ℂ ((κ → AF F) →
   · have hs := add_mem ha ((SB _).smul_mem c hb)
     have e1 : ∀ f g : (κ → Fv F v) → ℂ, tens (evFin F v) (f + c • g) r = tens (evFin F v) f r + c • tens (evFin F v) g r := fun f g =>
       funext fun _ => by simp [tens, mul_assoc, add_mul]
-    rw [e1, e1, map_add, map_smul, h1 r (adjoint_statement.rest F κ v r _ hs h0 hr a ha), h2 r (adjoint_statement.rest F κ v r _ hs h0 hr b hb)]
+    rw [e1, e1, map_add (f := _), map_smul, h1 r (adjoint_statement.rest F κ v r _ hs h0 hr a ha), h2 r (adjoint_statement.rest F κ v r _ hs h0 hr b hb)]
 
 theorem ramifiedMultiplicityOne_of_bernstein (hBe : GlobalTheory.Published.BernsteinUnitaryProductIrreducible) : RamifiedMultiplicityOne := by
   intro F E _ _ _ _ _ σ B a a' a₁ a₁' G G₁ X om om' om₁ om₁' R Rf R₁ Rf₁ H i₀ i₁ χ r m m₁ st hH v hv lam lam' hl hl' h0
@@ -254,7 +254,7 @@ theorem ramifiedMultiplicityOne_of_bernstein (hBe : GlobalTheory.Published.Berns
     have lin : ∀ x y (c : ℂ), Rf₁.p v (A _ (s1 (x + c • y))) = Rf₁.p v (A _ (s1 x)) + c • Rf₁.p v (A _ (s1 y)) := fun x y c => by
       have := k _ (add_mem (s1 x) ((SB _).smul_mem c (s1 y))) _ (add_mem (A1 _ (s1 x)) ((SB _).smul_mem c (A1 _ (s1 y))))
         (acts_lin (ex₁ h hh) (s1 x) (s1 y) (A2 _ _) (A2 _ _) c)
-      rw [map_add, map_smul, s2, s2, map_add, map_smul] at this
+      rw [map_add (f := _), map_smul, s2, s2, map_add (f := _), map_smul] at this
       exact this
     obtain ⟨f, hf⟩ : ∃ f : Rf₁.Pi v → Rf₁.Pi v, ∀ x, f x = Rf₁.p v (A _ (s1 x)) := ⟨_, fun _ => rfl⟩
     have k' : ∀ φ ∈ SB _, ∀ φ₁ ∈ SB _, Acts (evFin F v) (om₁ (1, h)) φ φ₁ → f (Rf₁.p v φ) = Rf₁.p v φ₁ :=

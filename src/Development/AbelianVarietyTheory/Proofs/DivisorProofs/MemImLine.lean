@@ -18,7 +18,7 @@ def imLine (σ : E →ₐ[F] E) : AddSubgroup (AE F E) where
   zero_mem' := by simp
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_ofPred_eq, map_add] at *
+    simp only [Set.mem_ofPred_eq, map_add (f := _)] at *
     calc a + b + (cA σ a + cA σ b) = (a + cA σ a) + (b + cA σ b) := by abel
       _ = 0 := by rw [ha, hb, add_zero]
   neg_mem' := by

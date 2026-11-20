@@ -32,7 +32,7 @@ theorem cyc_stable (ρ : Representation ℂ G V) (x : V) (g : G) (v : V) (hv : v
     obtain ⟨h, rfl⟩ := hy
     exact Submodule.subset_span ⟨g * h, by simp⟩
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ _ ha
 
 def quoRep (σ : Representation ℂ G V) (M : Submodule ℂ V) (hM : ∀ g, ∀ v ∈ M, σ g v ∈ M) :

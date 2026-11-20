@@ -83,7 +83,7 @@ theorem exists_fixed_step {V : Submodule ℂ (Sm E N)} (hV : IsDiscrete V) (W : 
   let X : Submodule ℂ V :=
     { carrier := {y | TypeW W y.1 ∧ ∀ c ∈ C, finRep E N c y.1 = y.1}
       add_mem' := fun {a b} ha hb => ⟨fun g => W.add_mem (ha.1 g) (hb.1 g), fun c h => by
-        rw [Submodule.coe_add, map_add, ha.2 c h, hb.2 c h]⟩
+        rw [Submodule.coe_add, map_add (f := _), ha.2 c h, hb.2 c h]⟩
       zero_mem' := ⟨fun g => W.zero_mem, fun c _ => map_zero _⟩
       smul_mem' := fun r a ha => ⟨fun g => W.smul_mem r (ha.1 g), fun c h => by
         rw [Submodule.coe_smul, map_smul, ha.2 c h]⟩ }
@@ -371,7 +371,7 @@ theorem isLocCompGL_of_equiv {E : Type} [Field E] [NumberField E] [IsCMField E] 
     { toFun := fun v => (e ⟨f v, h1 v⟩).1
       map_add' := fun a b => by
         have : (⟨f (a + b), h1 (a + b)⟩ : toR V hV) = ⟨f a, h1 a⟩ + ⟨f b, h1 b⟩ := Subtype.ext (map_add f a b)
-        rw [this, map_add]
+        rw [this, map_add (f := _)]
         rfl
       map_smul' := fun c a => by
         exact equiv_val_smul e (algebraMap ℂ (OpAlg E N) c) ⟨f a, h1 a⟩ ⟨f (c • a), h1 _⟩ (map_smul f c a) }

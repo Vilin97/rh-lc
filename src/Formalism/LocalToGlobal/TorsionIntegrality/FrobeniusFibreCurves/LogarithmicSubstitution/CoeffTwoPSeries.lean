@@ -53,7 +53,7 @@ theorem kappa_sum_holds : KappaSum := by
   obtain ⟨neg, -, -, -, h3⟩ := Formalism.L2.Th1.F.endoZInstance L α S hα hst hS
   have h4 := congrArg (PowerSeries.coeff 2) h3
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [PowerSeries.coeff_C_mul, PowerSeries.coeff_rescale, map_add, map_sum,
+    rw [PowerSeries.coeff_C_mul, PowerSeries.coeff_rescale, map_add (f := _), map_sum,
     coeff_two_pSeries] at h4
   have h5 : ∀ P : S, PowerSeries.coeff 2
       (taylor0 (fun z => L.weierstrassP (z + (P : ℂ))) - PowerSeries.C (L.weierstrassP (P : ℂ)))

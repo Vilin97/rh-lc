@@ -27,7 +27,7 @@ theorem mem_of_tmul_mem (S : Submodule Qp R) {v : LL} (hv : v ≠ 0) {r : R}
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v c => simpa [m] using S.smul_mem (φ v) c.2
-    | add a b ha hb => simpa only [map_add] using Submodule.add_mem _ ha hb
+    | add a b ha hb => simpa only [map_add (f := _)] using Submodule.add_mem _ ha hb
   have := hm y
   rw [hy] at this
   simpa [m, hφ] using this
@@ -63,7 +63,7 @@ theorem fixed_iff (act : G → R →ₗ[Qp] R) (hmul : ∀ g x y, act g (x * y) 
         rw [ht]
         simp only [e, equivFinsuppOfBasisLeft_apply_tmul_apply, map_smul]
         rw [smul_comm]
-      | add a b ha hb => simp only [map_add, Finsupp.add_apply, ha, hb, smul_add]
+      | add a b ha hb => simp only [map_add (f := _), Finsupp.add_apply, ha, hb, smul_add]
     have hx' : x = (e x).sum fun i c => b i ⊗ₜ[Qp] c := by
       rw [← TensorProduct.equivFinsuppOfBasisLeft_symm_apply]
       exact (e.symm_apply_apply x).symm

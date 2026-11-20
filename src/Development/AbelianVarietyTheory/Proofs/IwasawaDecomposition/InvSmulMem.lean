@@ -109,7 +109,7 @@ theorem deco_up {d d' : Deco E n ST SG} (hd : d.Ok) (P : ST) (hP : MoveHyp ST SG
       exact (Formalism.L2.Col.mem_gmap γ _ _).2 (by rwa [γ.symm_apply_apply])
     have k1 := f_kill hd P id (fun _ _ => rfl) (fun _ _ => rfl) (M := dual (hStd E n) d.L)
       (fun m hm => h2.le (Formalism.L2.Col.le_locP P.1 _ hm)) hx'
-    have k2 := f_kill hd P (fun m => q • γ m) (fun a b => by rw [map_add, smul_add])
+    have k2 := f_kill hd P (fun m => q • γ m) (fun a b => by rw [map_add (f := _), smul_add])
       (fun a b => by rw [equiv_osmul, smul_comm]) (M := dual (hStd E n) d'.L) (fun m hm => by
         have a1 : γ m ∈ gmap γ (dual (hStd E n) d'.L) := (Formalism.L2.Col.mem_gmap γ _ _).2 (by rwa [γ.symm_apply_apply])
         rw [hD] at a1

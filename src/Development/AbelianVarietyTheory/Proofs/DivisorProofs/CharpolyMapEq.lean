@@ -61,7 +61,7 @@ theorem rho_pow (f : End A) (n : ℕ) : rho T t (f ^ n) = rho T t f ^ n := by
 theorem rho_aeval (f : End A) (R : Polynomial ℤ) :
     rho T t (Polynomial.aeval f R) = Polynomial.aeval (rho T t f) R := by
   induction R using Polynomial.induction_on' with
-  | add a b ha hb => rw [map_add, map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]
   | monomial n a =>
     rw [Polynomial.aeval_monomial, Polynomial.aeval_monomial, eq_intCast (algebraMap ℤ (End A)),
       eq_intCast (algebraMap ℤ (Module.End (WittVector p k) (T.M G))), ← zsmul_eq_mul, ← zsmul_eq_mul, map_zsmul, rho_pow]

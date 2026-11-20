@@ -121,7 +121,7 @@ theorem vacuum_bound : ∀ (V : Type) [NormedAddCommGroup V] [InnerProductSpace 
   refine ⟨⟨C, hC⟩, fun u v => ?_, fun u v => ?_⟩
   · let T : B →L[ℂ] B := LinearMap.mkContinuous
       { toFun := fun x => dH ρ v (proj h x)
-        map_add' := fun x y => by rw [map_add, dH_add v (hs x) (hs y)]
+        map_add' := fun x y => by rw [map_add (f := _), dH_add v (hs x) (hs y)]
         map_smul' := fun a x => by rw [map_smul, dH_smul v a (hs x), RingHom.id_apply] } (C * ‖v‖) (hC v)
     obtain ⟨D, hD⟩ := dH_bound h T fun x => sm_dH h (hs x) v
     exact ⟨D * ‖u‖, hD u⟩
@@ -129,7 +129,7 @@ theorem vacuum_bound : ∀ (V : Type) [NormedAddCommGroup V] [InnerProductSpace 
     have hφ : ContDiff ℝ ∞ fun w : V => (π * I * (omJ J w v : ℂ)) * gau w + fderiv ℝ gau w v :=
       ((contDiff_omJ v).mul hg).add ((ContDiff.fderiv_right (m := ∞) hg (by simp)).clm_apply contDiff_const)
     refine ⟨_, fun x => fderiv_compress (proj h) (sm_dH h (hs x) v) hφ (fun w => ?_) 0 u⟩
-    rw [heis_dH h (hs x), map_add, map_smul, proj_heis_proj hJ h,
+    rw [heis_dH h (hs x), map_add (f := _), map_smul, proj_heis_proj hJ h,
       fderiv_compress (proj h) (hs x) hg (fun w => proj_heis_proj hJ h w x), add_smul, mul_smul _ (gau w)]
 
 end GlobalTheory.Mem.Lift.VacBd

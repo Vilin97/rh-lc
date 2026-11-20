@@ -192,7 +192,7 @@ def goodSubring {X : Scheme.{0}} (F : End X) (p r : ℕ) (hp : p.Prime) (U : X.O
   add_mem' := fun {x y} a b => by
     obtain ⟨m, hm, ⟨h, e⟩, ⟨h', e'⟩⟩ := Good.two a b
     refine ⟨m, hm, h, ?_⟩
-    rw [map_add, e, e', ← pow_mul]
+    rw [map_add (f := _), e, e', ← pow_mul]
     exact (map_add (powHom _ p (r * m) hp hc) x y).symm
   one_mem' := ⟨1, le_rfl, by rw [pow_one]; exact h, by rw [map_one, one_pow]⟩
   zero_mem' := ⟨1, le_rfl, by rw [pow_one]; exact h, by

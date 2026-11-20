@@ -45,7 +45,7 @@ lemma zeroSieve_add {U : Cᵒᵖ} (x y : M.obj U) :
     zeroSieve x ⊓ zeroSieve y ≤ zeroSieve (x + y) := by
   rintro W h ⟨hx, hy⟩
   change M.map h.op (x + y) = 0
-  rw [map_add]
+  rw [map_add (f := _)]
   erw [hx, hy]
   exact add_zero _
 
@@ -53,7 +53,7 @@ lemma imSieve_add (φ : M ⟶ N) {U : Cᵒᵖ} (x y : N.obj U) :
     imSieve φ x ⊓ imSieve φ y ≤ imSieve φ (x + y) := by
   rintro W h ⟨⟨a, ha⟩, ⟨b, hb⟩⟩
   refine ⟨a + b, ?_⟩
-  rw [map_add, ha, hb, map_add]
+  rw [map_add (f := _), ha, hb, map_add (f := _)]
   rfl
 
 section
@@ -105,7 +105,7 @@ lemma zeroSieve_mem_of_rTensor_rangeRestrict (φ : M ⟶ N)
     rw [LinearMap.mem_ker] at this
     exact congrArg Subtype.val this
   | add a b ha hb =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact J.superset_covering (zeroSieve_add (M := M ⊗ P) _ _) (J.intersection_covering ha hb)
 
 end
@@ -166,7 +166,7 @@ lemma whiskerRight_zeroSieve_mem (φ : M ⟶ N)
       (LinearMap.range (φ.app (op W)).hom) ⊗[RW] P.obj (op W) :=
     TensorProduct.liftAddHom (R := (R ⋙ forget₂ CommRingCat RingCat).obj U)
       { toFun := fun b => AddMonoidHom.mk' (fun p => ρ b ⊗ₜ[RW] pW p)
-          (fun p q => by rw [map_add, tmul_add])
+          (fun p q => by rw [map_add (f := _), tmul_add])
         map_zero' := by ext p; simp
         map_add' := fun a b => by ext p; simp [add_tmul] }
       (fun r b p => by
@@ -184,7 +184,7 @@ lemma whiskerRight_zeroSieve_mem (φ : M ⟶ N)
       congr 1
       exact Subtype.ext (PresheafOfModules.naturality_apply φ g.op (a : M.obj U))
     | add a b ha hb =>
-      simp only [map_add] at ha hb ⊢
+      simp only [map_add (f := _)] at ha hb ⊢
       exact (congrArg _ (map_add ((M ⊗ P).map g.op).hom _ _)).trans
         ((map_add _ _ _).trans (congrArg₂ (· + ·) ha hb))
   erw [key, hB0, map_zero]

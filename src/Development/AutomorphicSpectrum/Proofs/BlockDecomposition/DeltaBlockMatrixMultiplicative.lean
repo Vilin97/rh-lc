@@ -104,7 +104,7 @@ theorem map_proj_lam {m : ℕ} (σ : E →ₐ[F] E) (c : Matrix (Fin m) (Fin m) 
         = (proj E m x + c.mulVec (proj E m y)) + o • u := by
       funext i
       have := blk_mulVec_castSucc σ c u d y i
-      simp only [proj_apply, Pi.add_apply, map_add, LinearMap.restrictScalars_apply,
+      simp only [proj_apply, Pi.add_apply, map_add (f := _), LinearMap.restrictScalars_apply,
         Matrix.mulVecLin_apply, Pi.smul_apply, Algebra.smul_def, ho]
       rw [this, add_assoc]
       rfl

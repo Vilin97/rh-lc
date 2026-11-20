@@ -36,7 +36,7 @@ lemma mem_latPull (u : HolUnif A Lb g) (lam : Fin g → ℂ) (h : ∀ j, lam j �
 
 def rescale (u : HolUnif A Lb g) (lam : Fin g → ℂ) (h : ∀ j, lam j ≠ 0) : HolUnif A Lb g where
   ex w := u.ex (scale lam h w)
-  ex_add z w := by rw [map_add]; exact u.ex_add _ _
+  ex_add z w := by rw [map_add (f := _)]; exact u.ex_add _ _
   ex_onto := u.ex_onto.comp (scale lam h).surjective
   Λ := latPull u lam h
   ker z := (u.ker _).trans (mem_latPull u lam h z).symm
@@ -101,7 +101,7 @@ theorem GlobalTheory.holUnif_rescale : ∀ (A : Over (Sp ℂ)) [GrpObj A] (Lb : 
     · intro l i z hz
       have e := hfr ⟨scale lam h l, l.2⟩ i (scale lam h z) hz
       show u.fr i (scale lam h z) = _ * _ * u.fr i (scale lam h (z + l))
-      rw [diag_form lam h d z l, diag_form lam h d l l, map_add]
+      rw [diag_form lam h d z l, diag_form lam h d l l, map_add (f := _)]
       exact e
   · intro W v
     unfold HolUnif.IsDiff

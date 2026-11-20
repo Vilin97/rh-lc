@@ -65,7 +65,7 @@ theorem UpperTheory.Gal.LocalSmoothExtension.eigOf_of :
       obtain ⟨w, z, rfl⟩ := h
       exact Submodule.subset_span ⟨j :: w, z, by simp [Module.End.mul_apply]⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
   have hcm : ∀ b j j', ∀ x ∈ U b, T b j (T b j' x) = T b j' (T b j x) := by
     intro b j j' x hx
@@ -75,7 +75,7 @@ theorem UpperTheory.Gal.LocalSmoothExtension.eigOf_of :
       have := LinearMap.congr_fun (hc b j j' w) z
       simpa [Module.End.mul_apply] using this
     | zero => simp
-    | add x y _ _ hx hy => simp only [map_add, hx, hy]
+    | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy]
     | smul a x _ hx => simp only [map_smul, hx]
   let S : ∀ b, J → End ℂ (U b) := fun b j => (T b j).restrict (hst b j)
   have hS : ∀ b j j', S b j * S b j' = S b j' * S b j := by

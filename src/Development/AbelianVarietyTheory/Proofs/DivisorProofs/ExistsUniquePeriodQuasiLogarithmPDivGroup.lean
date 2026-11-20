@@ -120,7 +120,7 @@ private lemma exists_integral_pderiv_of_integral_cob1_lin {B Q : Type} [CommRing
         rw [← hb j, ← coeff_zero_eq_constantCoeff_apply, coeff_pderiv]
         simp [_root_.GlobalTheory.Katz.lin]
       rw [hcc, map_C]
-    simp only [M, w, map_add, ← hsm, ← hpm]
+    simp only [M, w, map_add (f := _), ← hsm, ← hpm]
     simp only [_root_.GlobalTheory.QLog.up] at h
     rw [← hc, hpm s, hsm, h, sub_add_cancel]
   have hdet : IsUnit M.det := by
@@ -384,7 +384,7 @@ theorem _root_.GlobalTheory.PeriodExists.main : ∀ (p : ℕ) [Fact p.Prime] (C 
         obtain ⟨z', hz', q', hq', b, hb⟩ := hdesc n z q hz hq
         obtain ⟨b', hb'⟩ := ih z' q' hz' hq'
         refine ⟨(p : F.B) ^ n * b + b', ?_⟩
-        rw [map_add, map_mul, map_pow, map_natCast, ← hb, ← hb']
+        rw [map_add (f := _), map_mul, map_pow, map_natCast, ← hb, ← hb']
         ring
     have hlift_ex : ∀ n, ∃ z, IsLift n z := fun n =>
       ⟨fun i => (hF.surj (t.pt n (c.x n i))).choose,
@@ -400,7 +400,7 @@ theorem _root_.GlobalTheory.PeriodExists.main : ∀ (p : ℕ) [Fact p.Prime] (C 
       obtain ⟨z', hz', q', hq', b, hb⟩ := hdesc n (z (n + 1)) (q (n + 1)) (hz _) (hq _)
       obtain ⟨b', hb'⟩ := hdiff n z' (z n) q' (q n) hz' (hz n) hq' (hq n)
       refine ⟨b + b', hF.inj ?_⟩
-      rw [map_sub, ← hr, ← hr, map_mul, map_pow, map_natCast, map_add, ← hb, ← hb']
+      rw [map_sub, ← hr, ← hr, map_mul, map_pow, map_natCast, map_add (f := _), ← hb, ← hb']
       ring
     have hcauchy : ∀ {m n : ℕ}, m ≤ n → r m ≡ r n
         [SMOD (Ideal.span {(p : F.B)} ^ m • ⊤ : Submodule F.B F.B)] := by
@@ -428,7 +428,7 @@ theorem _root_.GlobalTheory.PeriodExists.main : ∀ (p : ℕ) [Fact p.Prime] (C 
     have hqw' : qw = q n + algebraMap F.B F.Q e := by
       rw [← he]; ring
     rw [hqw', mul_add, hr n, hrn]
-    simp only [map_add, map_mul, map_pow, map_natCast]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast]
     ring
   obtain ⟨y, hy⟩ := hex
   exact ⟨y, hy, fun y' hy' =>

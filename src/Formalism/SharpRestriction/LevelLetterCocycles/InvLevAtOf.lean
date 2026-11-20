@@ -41,7 +41,7 @@ theorem denI_upd (H : ℕ → ℕ) (e s : ℕ) (hs : s < e) (x : ℤ) :
 theorem aev_fixed (P : Polynomial O) : ∀ z : W.EE, W.γE W.gam z = z → aev P z = P.eval 1 • z := by
   induction P using Polynomial.induction_on with
   | C c => intro z _; simp [Polynomial.aeval_C, Module.algebraMap_end_apply]
-  | add p q hp hq => intro z hz; rw [map_add, LinearMap.add_apply, hp z hz, hq z hz,
+  | add p q hp hq => intro z hz; rw [map_add (f := _), LinearMap.add_apply, hp z hz, hq z hz,
       Polynomial.eval_add, add_smul]
   | monomial k c ih =>
     intro z hz

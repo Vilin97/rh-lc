@@ -31,9 +31,9 @@ theorem insT_add (τ : D.what₂.Tau) (v w : Matrix (Fin m) (Fin n) ℂ) : insT 
   ext i j
   apply ae_ext' D
   · intro τ'
-    rw [Matrix.add_apply, RingHom.map_add, psiT_insT, psiT_insT, psiT_insT]
+    rw [Matrix.add_apply, RingHom.map_add (f := _), psiT_insT, psiT_insT, psiT_insT]
     split_ifs <;> simp
-  · rw [Matrix.add_apply, RingHom.map_add, finPart_insT, finPart_insT, finPart_insT, add_zero]
+  · rw [Matrix.add_apply, RingHom.map_add (f := _), finPart_insT, finPart_insT, finPart_insT, add_zero]
 
 theorem insT_zero (τ : D.what₂.Tau) : insT (D := D) (m := m) (n := n) τ 0 = 0 := by
   ext i j
@@ -76,7 +76,7 @@ def piF (θ : InfFam D) (τ : D.what₂.Tau) (fr : Matrix (Fin m) (Fin m) ℂ) :
     simp [compAt]
   map_add' y y' := by
     have h : compAt θ τ (y + y') = compAt θ τ y + compAt θ τ y' := by
-      ext i j; simp only [compAt, Matrix.map_apply, Matrix.add_apply, RingHom.map_add]
+      ext i j; simp only [compAt, Matrix.map_apply, Matrix.add_apply, RingHom.map_add (f := _)]
     ext i j
     simp only [h, Matrix.mul_add]
     rfl

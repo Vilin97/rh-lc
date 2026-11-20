@@ -158,7 +158,7 @@ theorem sigR_sigR (K : Type) [CommRing K] [Algebra F K] (σ : E →ₐ[F] E) (h�
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => simp [sigR, hσ]
-  | add y z hy hz => rw [map_add, map_add, hy, hz]
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz]
 
 theorem hform_ne_zero (K : Type) [CommRing K] [Algebra F K] (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {M : ℕ}
     (J : Matrix (Fin M) (Fin M) E) (hJ : J.det ≠ 0) (hf : IsField (K ⊗[F] E)) (hiso : ¬ IsoAt K σ J)

@@ -191,7 +191,7 @@ theorem sum_range_pow_apply_eq (τ : Gal(PadicAlgCl p/K)) (n : ℕ) (y : PadicAl
       rfl
   have key := congrArg (fun P => (Polynomial.aeval D P) y) (sum_range_X_add_one_pow n)
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_pow, map_add, aeval_X, map_one, map_mul, map_natCast] at key
+    simp only [map_sum, map_pow, map_add (f := _), aeval_X, map_one, map_mul, map_natCast] at key
   rw [LinearMap.sum_apply, LinearMap.sum_apply] at key
   simp only [Module.End.mul_apply, Module.End.natCast_apply, nsmul_eq_mul] at key
   rw [sub_add_cancel] at key

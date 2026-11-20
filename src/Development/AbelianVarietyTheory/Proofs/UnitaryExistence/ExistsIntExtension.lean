@@ -41,7 +41,7 @@ theorem exists_int_extension {L V : Type} [AddCommGroup L] [AddCommGroup V] [Mod
   · intro a b
     have : ((n (a + b) : ℤ) : ℚ) = ((n a + n b : ℤ) : ℚ) := by
       push_cast
-      rw [← hn, ← hn, ← hn, map_add, map_add]
+      rw [← hn, ← hn, ← hn, map_add (f := _), map_add (f := _)]
     exact_mod_cast this
   · intro x hx
     change ((n x : ℤ) : ℚ) = f x
@@ -106,12 +106,12 @@ theorem pairing_pseudoBasis : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
     let q : D.La →ₗ[ℤ] (Fin r → E) := AddMonoidHom.toIntLinearMap
       (AddMonoidHom.mk' (fun x => φ x - j (π (φ x))) (by
         intro a b
-        simp only [map_add]
+        simp only [map_add (f := _)]
         abel))
     let f : D.La →ₗ[ℤ] ℚ := AddMonoidHom.toIntLinearMap
       (AddMonoidHom.mk' (fun x => ∑ b, Algebra.trace ℚ E (y b * FD.cc (π (φ x) b))) (by
         intro a b
-        simp only [map_add, Pi.add_apply, FD.cc, mul_add, Finset.sum_add_distrib]))
+        simp only [map_add (f := _), Pi.add_apply, FD.cc, mul_add, Finset.sum_add_distrib]))
     have hq : ∀ x, q x = φ x - j (π (φ x)) := fun _ => rfl
     have hf : ∀ x, f x = ∑ b, Algebra.trace ℚ E (y b * FD.cc (π (φ x) b)) := fun _ => rfl
     obtain ⟨g, hg⟩ := exists_int_extension q f (by

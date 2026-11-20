@@ -15,7 +15,7 @@ abbrev cf (T : GoodSet K G) (s : T.S) : K :=
 def phiS (T : GoodSet K G) (s : T.S) : Module.End K (T.W s) →ₗ[K] MonoidAlgebra K G where
   toFun X := ∑ x : G, (cf T s * LinearMap.trace K (T.W s) (T.tau s x⁻¹ * X)) • MonoidAlgebra.of K G x
   map_add' X Y := by
-    simp only [mul_add, map_add, add_smul, Finset.sum_add_distrib]
+    simp only [mul_add, map_add (f := _), add_smul, Finset.sum_add_distrib]
   map_smul' r X := by
     simp only [mul_smul_comm, map_smul, smul_eq_mul, RingHom.id_apply, Finset.smul_sum, smul_smul]
     refine Finset.sum_congr rfl fun x _ => ?_
@@ -51,14 +51,14 @@ lemma mul_eS (T : GoodSet K G) (s : T.S) (a : MonoidAlgebra K G) :
     a * eS T s = phiS T s ((T.tau s).asAlgebraHom a) := by
   induction a using MonoidAlgebra.induction_on with
   | of y => rw [of_mul_eS, Representation.asAlgebraHom_of]
-  | add x y hx hy => rw [add_mul, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [add_mul, hx, hy, map_add (f := _), map_add (f := _)]
   | smul r x hx => rw [smul_mul_assoc, hx, map_smul, map_smul]
 
 lemma eS_mul (T : GoodSet K G) (s : T.S) (a : MonoidAlgebra K G) :
     eS T s * a = phiS T s ((T.tau s).asAlgebraHom a) := by
   induction a using MonoidAlgebra.induction_on with
   | of y => rw [eS_mul_of, Representation.asAlgebraHom_of]
-  | add x y hx hy => rw [mul_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [mul_add, hx, hy, map_add (f := _), map_add (f := _)]
   | smul r x hx => rw [mul_smul_comm, hx, map_smul, map_smul]
 
 lemma eS_comm (T : GoodSet K G) (s : T.S) (a : MonoidAlgebra K G) : a * eS T s = eS T s * a := by
@@ -70,7 +70,7 @@ lemma scalar_of_comm (T : GoodSet K G) (s : T.S) (Z : Module.End K (T.W s))
     intro a
     induction a using MonoidAlgebra.induction_on with
     | of y => rw [Representation.asAlgebraHom_of, h]
-    | add x y hx hy => rw [map_add, mul_add, add_mul, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), mul_add, add_mul, hx, hy]
     | smul r x hx => rw [map_smul, mul_smul_comm, smul_mul_assoc, hx]
   have hc : Z ∈ Set.center (Module.End K (T.W s)) := by
     rw [Semigroup.mem_center_iff]

@@ -25,7 +25,7 @@ private lemma cauchy_far (d : ℕ → AdicCompletion I M) (n : ℕ)
     have h1 := ev_le (show n + k ≤ n + (k + j) by omega) (hd (k + j))
     have e : d (k + (j + 1)) - d k = (d (k + j + 1) - d (k + j)) + (d (k + j) - d k) := by
       rw [← add_assoc]; abel
-    rw [e, map_add, h1, ih, add_zero]
+    rw [e, map_add (f := _), h1, ih, add_zero]
 
 private lemma lim_exists (d : ℕ → AdicCompletion I M) (n : ℕ)
     (hd : ∀ k, AdicCompletion.eval I M (n + k) (d (k + 1) - d k) = 0) :
@@ -184,7 +184,7 @@ theorem UpperTheory.Kd.K4.lim :
       rw [map_sub, map_smul, smul_sub]
       abel
     have h5 : AdicCompletion.eval (idl l) (X.Kl l) s (X.act l (γ : Matrix (Fin 2) (Fin 2) ℤ) b u - b u) = 0 := by
-      rw [e, map_sub, map_add, map_smul, h3, h4, h1]
+      rw [e, map_sub, map_add (f := _), map_smul, h3, h4, h1]
       simp
     rw [map_sub, sub_eq_zero] at h5
     exact h5

@@ -36,7 +36,7 @@ theorem norm_E_le_radius : ∀ (l : ℕ) [Fact l.Prime] (K : FinExt l) (bk : BK 
       simp
     have hmem : algebraMap A (PreDisc l (s X) bk.ρ₀) (s bk.E) ∈ ball l (s X) bk.ρ₀ (l : ℝ)⁻¹ := by
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [hE, map_add, map_add, map_sum, map_sum]
+        rw [hE, map_add (f := _), map_add (f := _), map_sum, map_sum]
       refine add_mem ?_ (Submodule.sum_mem _ fun i hi => ?_)
       · refine Submodule.subset_span ⟨0, bk.Ep.natDegree, 0, ?_, ?_⟩
         · simp [hρe]

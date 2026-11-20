@@ -95,7 +95,7 @@ theorem weak_exists (σ : Mat n → (H' →L[ℂ] H')) (ρ : Mat n → (K →L[�
   let L : K →ₗ[ℂ] K :=
     { toFun := fun x => (d : ℂ) • ∫ h, star (m h) • ρ (umat h) x ∂muG ε'
       map_add' := fun x y => by
-        simp only [map_add, smul_add]
+        simp only [map_add (f := _), smul_add]
         rw [integral_add (hint x) (hint y), smul_add]
       map_smul' := fun c x => by
         simp only [map_smul, RingHom.id_apply]

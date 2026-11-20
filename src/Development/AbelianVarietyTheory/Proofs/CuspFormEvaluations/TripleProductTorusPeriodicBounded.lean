@@ -186,7 +186,7 @@ theorem gen_linComb_in_frame (hL : L.IsLB) {Hm : Matrix (Fin g) (Fin g) ℂ} {χ
     (fun z w => ∑ k, (ε k : ℂ) * hermForm Hm (lam k z) (lam k w))
     (continuous_finsetSum _ fun k _ => continuous_const.mul
       ((continuous_hermForm_self Hm).comp (hld k).continuous))
-    (fun z z' w => by simp only [map_add, hermForm_add_left, mul_add, Finset.sum_add_distrib])
+    (fun z z' w => by simp only [map_add (f := _), hermForm_add_left, mul_add, Finset.sum_add_distrib])
     (fun c z w => by
       simp only [map_smul, hermForm_smul_left, Finset.mul_sum]
       exact Finset.sum_congr rfl fun k _ => by ring)
@@ -211,7 +211,7 @@ theorem gen_linComb_in_frame (hL : L.IsLB) {Hm : Matrix (Fin g) (Fin g) ℂ} {χ
         rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib, Complex.exp_sum,
           ← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib]
         refine Finset.prod_congr rfl fun k _ => ?_
-        rw [hu.2.2.2 ⟨lam k l, hΛ k⟩ (j k) (lam k z) ((hD j z).1 hj k), map_add, mul_zpow, mul_zpow,
+        rw [hu.2.2.2 ⟨lam k l, hΛ k⟩ (j k) (lam k z) ((hD j z).1 hj k), map_add (f := _), mul_zpow, mul_zpow,
           ← Complex.exp_int_mul]
         congr 3
         simp only [hermForm]

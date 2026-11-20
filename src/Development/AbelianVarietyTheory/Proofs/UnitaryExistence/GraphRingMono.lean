@@ -108,7 +108,7 @@ lemma indep_insert {p : ℕ} (hp : p.Prime) (h0 : (p : k) = 0) {B : Set k} (hB :
     simp [ev, c, hga]
   have hR : ev (P %ₘ (X ^ p - C c)) = ev P := by
     conv_rhs => rw [← modByMonic_add_div P (X ^ p - C c)]
-    rw [map_add, map_mul, hevq, zero_mul, add_zero]
+    rw [map_add (f := _), map_mul, hevq, zero_mul, add_zero]
   have hirr : Irreducible (X ^ p - C (ψ c) : K[X]) := by
     apply X_pow_sub_C_irreducible_of_prime hp
     intro b hb

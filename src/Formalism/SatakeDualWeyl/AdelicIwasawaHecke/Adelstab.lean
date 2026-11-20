@@ -111,7 +111,7 @@ def adelstabLam (G : GL n (E ⊗[F] FiniteAdeleRing (𝓞 F) F)) (L : Submodule 
   carrier := {x | ((G⁻¹ : GL n 𝒜) : Matrix n n 𝒜) *ᵥ (fun i => ι (x i)) ∈ L}
   add_mem' := by
     intro x y hx hy
-    simp only [Set.mem_ofPred_eq, Pi.add_apply, map_add] at *
+    simp only [Set.mem_ofPred_eq, Pi.add_apply, map_add (f := _)] at *
     rw [show (fun i => ι (x i) + ι (y i)) = (fun i => ι (x i)) + (fun i => ι (y i)) from rfl,
       mulVec_add]
     exact add_mem hx hy

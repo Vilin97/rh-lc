@@ -108,7 +108,7 @@ theorem omega_exists' [IsCMField E] : ∃ (n : ℕ) (ω : Fin n → 𝓞 E),
     | add a b _ _ ha hb =>
       obtain ⟨α, hα⟩ := ha
       obtain ⟨β, hβ⟩ := hb
-      exact ⟨α + β, by rw [map_add, Submodule.coe_add, hα, hβ, ← soPsi_add]; push_cast; rfl⟩
+      exact ⟨α + β, by rw [map_add (f := _), Submodule.coe_add, hα, hβ, ← soPsi_add]; push_cast; rfl⟩
     | smul n a _ ha =>
       obtain ⟨α, hα⟩ := ha
       refine ⟨n • α, ?_⟩

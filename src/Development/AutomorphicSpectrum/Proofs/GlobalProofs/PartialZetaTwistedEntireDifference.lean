@@ -134,9 +134,9 @@ theorem embedding_conePt {r : ℕ} (σ : F →+* ℝ) (y : 𝓞 F) (v : Fin r �
   have : ((conePt y v m : 𝓞 F) : F) = (y : F) + ∑ i, (m i : F) * (v i : F) := by
     change algebraMap (𝓞 F) F (conePt y v m) = _
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [conePt, map_add, map_sum, map_mul, map_natCast]
+      simp [conePt, map_add (f := _), map_sum, map_mul, map_natCast]
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [this, map_add, map_sum]
+    rw [this, map_add (f := _), map_sum]
   simp [mul_comm]
 
 theorem totPos_conePt {r : ℕ} {y : 𝓞 F} {v : Fin r → 𝓞 F} (hy : TotPos F (y : F)) (hv : ∀ i, TotPos F (v i : F))

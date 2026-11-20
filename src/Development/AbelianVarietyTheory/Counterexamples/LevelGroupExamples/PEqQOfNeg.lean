@@ -48,7 +48,7 @@ theorem finrank_le (B : V →ₗ[ℝ] V →ₗ[ℝ] ℝ) (A J K : V →ₗ[ℝ] 
   let W' := LinearMap.ker (K ∘ₗ A - s • LinearMap.id)
   have hm : ∀ x, x ∈ W' ↔ K (A x) = s • x := fun x => by simp [W', sub_eq_zero]
   let f : W →ₗ[ℝ] W' := LinearMap.codRestrict W' ((K ∘ₗ A + s • LinearMap.id) ∘ₗ W.subtype) (fun x => (hm _).2 (by
-    simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.id_apply, map_add,
+    simp only [LinearMap.comp_apply, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.id_apply, map_add (f := _),
       map_smul, Submodule.subtype_apply]
     rw [c (K (A x)), hK, map_neg, hA]
     module))

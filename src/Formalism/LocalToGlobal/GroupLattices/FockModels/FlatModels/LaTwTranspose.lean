@@ -51,7 +51,7 @@ theorem gen_equiv (h : HidaSetting p n' W Qq O Kf ι σ j w) (m : ℕ) (hm : 1 �
         intro F G
         apply Subtype.ext
         show thF h m vec hs (F.1 + G.1) = thF h m vec hs F.1 + thF h m vec hs G.1
-        simp only [thF, map_add]
+        simp only [thF, map_add (f := _)]
       map_smul' := by
         intro a F
         apply Subtype.ext

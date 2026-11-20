@@ -89,7 +89,7 @@ theorem exists_coef_ext {K K' : Type} [Field K] [Field K'] {σ : K →+* ℂ} {�
       have e2 : MvPolynomial.monomial m a = a • MvPolynomial.monomial m (1 : K) := by simp [MvPolynomial.smul_monomial]
       rw [e1, map_smul, Module.Basis.constr_basis, e2, map_smul, map_smulₛₗ, ← RingHom.congr_fun hσ a]
       rfl
-    | add p q hp hq => rw [map_add, map_add, hp, hq, map_add, map_add]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
   refine ⟨{ toFun := fun v => g v, map_add' := fun x y => g.map_add _ _, map_smul' := fun a x => g.map_smul a _ },
     fun v => ⟨⟨_, GlobalTheory.Proof.TensorMapDescent.map_mem_VV ι lam _ v.2⟩, rfl, (hg v).trans (congrArg c₀ (LinearMap.congr_fun hπ v))⟩⟩
 

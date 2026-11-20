@@ -260,7 +260,7 @@ theorem adjoin_range_eq (c : E →+* PadicAlgCl l) {α : E}
       rw [e1]
       exact IntermediateField.algebraMap_mem _ _
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hx hy
     | mul x y _ _ hx hy =>
       rw [map_mul]

@@ -74,7 +74,7 @@ theorem span_bcP_X {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') :
       rw [SetLike.mem_coe, hw]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
     | zero => rw [SetLike.mem_coe, map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [SetLike.mem_coe, map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [SetLike.mem_coe, map_add (f := _)]; exact add_mem hy hz
     | smul c y _ hy =>
       rw [SetLike.mem_coe, Formalism.L2.SG.Pf.LocalDenominators.baseChange_smul₂]
       exact Submodule.smul_mem _ _ hy
@@ -118,7 +118,7 @@ theorem latP_XS {T' : D.host.E} (F' : LFlag (VS D) D.R.rS T') :
       rw [SetLike.mem_coe, e]
       exact smul_mem_O Zd p (Subring.mul_mem _ o.2 hs) (Submodule.subset_span ⟨a, rfl⟩)
     | zero => rw [SetLike.mem_coe, map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [SetLike.mem_coe, map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [SetLike.mem_coe, map_add (f := _)]; exact add_mem hy hz
     | smul c y _ hy =>
       rw [SetLike.mem_coe, Formalism.L2.SG.Pf.LocalDenominators.oE_smul, Formalism.L2.SG.Pf.LocalDenominators.baseChange_smul₂]
       have hc : (D.s.atP p).ιE (c : D.host.E) ∈ (Zd.M p).L.O :=
@@ -222,7 +222,7 @@ theorem int_of_loc (c : D.host.E) (h : ∀ p : PlF D, (D.s.atP p).ιE c ∈ (D.s
     { carrier := {s | IsIntegral ℤ (algebraMap D.host.F D.host.E (s : D.host.F) * c)}
       add_mem' := fun {a b} ha hb => by
         simp only [Set.mem_setOf_eq] at ha hb ⊢
-        rw [show ((a + b : 𝓞 D.host.F) : D.host.F) = (a : D.host.F) + b from rfl, map_add, add_mul]
+        rw [show ((a + b : 𝓞 D.host.F) : D.host.F) = (a : D.host.F) + b from rfl, map_add (f := _), add_mul]
         exact ha.add hb
       zero_mem' := by
         simp only [Set.mem_setOf_eq]

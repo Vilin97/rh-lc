@@ -17,17 +17,17 @@ noncomputable def cross (t : T) (a : Fin p) (b : Fin q) (P Q : Poly R T p q κ) 
 theorem laplacian_mul (t : T) (a : Fin p) (b : Fin q) (P Q : Poly R T p q κ) :
     laplacian t a b (P * Q) =
       laplacian t a b P * Q + P * laplacian t a b Q + cross t a b P Q + cross t a b Q P := by
-  simp only [laplacian_apply, cross, pderiv_mul, map_add, Finset.sum_mul, Finset.mul_sum,
+  simp only [laplacian_apply, cross, pderiv_mul, map_add (f := _), Finset.sum_mul, Finset.mul_sum,
     ← Finset.sum_add_distrib]
   exact Finset.sum_congr rfl fun k _ => by ring
 
 theorem cross_add_left (t : T) (a : Fin p) (b : Fin q) (P P' Q : Poly R T p q κ) :
     cross t a b (P + P') Q = cross t a b P Q + cross t a b P' Q := by
-  simp only [cross, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [cross, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem cross_add_right (t : T) (a : Fin p) (b : Fin q) (P Q Q' : Poly R T p q κ) :
     cross t a b P (Q + Q') = cross t a b P Q + cross t a b P Q' := by
-  simp only [cross, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [cross, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem cross_mul_left (t : T) (a : Fin p) (b : Fin q) (P P' Q : Poly R T p q κ) :
     cross t a b (P * P') Q = cross t a b P Q * P' + P * cross t a b P' Q := by
@@ -273,7 +273,7 @@ theorem pderiv_xVar_colSubst (A : T → Matrix κ κ' R) (B : T → Matrix κ' �
   classical
   induction P using MvPolynomial.induction_on with
   | C r => simp [algHom_C]
-  | add P Q hP hQ => simp only [map_add, hP, hQ, smul_add, Finset.sum_add_distrib]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ, smul_add, Finset.sum_add_distrib]
   | mul_X P v hP =>
     have : pderiv (xVar t a l) (colSubst A B (X v : Poly R T p q κ)) =
         ∑ k : κ, A t k l • colSubst A B (pderiv (xVar t a k) (X v : Poly R T p q κ)) := by
@@ -293,7 +293,7 @@ theorem pderiv_xVar_colSubst (A : T → Matrix κ κ' R) (B : T → Matrix κ' �
       · rw [colSubst_X_yVar, yForm, pderiv_rowForm, if_neg (by simp)]
         refine (Finset.sum_eq_zero fun k _ => ?_).symm
         rw [pderiv_X_of_ne (by simp), map_zero, smul_zero]
-    simp only [map_mul, pderiv_mul, map_add, hP, this, smul_add, Finset.sum_add_distrib,
+    simp only [map_mul, pderiv_mul, map_add (f := _), hP, this, smul_add, Finset.sum_add_distrib,
       Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm]
 
 theorem pderiv_yVar_colSubst (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ R) (t : T) (b : Fin q)
@@ -303,7 +303,7 @@ theorem pderiv_yVar_colSubst (A : T → Matrix κ κ' R) (B : T → Matrix κ' �
   classical
   induction P using MvPolynomial.induction_on with
   | C r => simp [algHom_C]
-  | add P Q hP hQ => simp only [map_add, hP, hQ, smul_add, Finset.sum_add_distrib]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ, smul_add, Finset.sum_add_distrib]
   | mul_X P v hP =>
     have : pderiv (yVar t b l) (colSubst A B (X v : Poly R T p q κ)) =
         ∑ k : κ, B t l k • colSubst A B (pderiv (yVar t b k) (X v : Poly R T p q κ)) := by
@@ -323,7 +323,7 @@ theorem pderiv_yVar_colSubst (A : T → Matrix κ κ' R) (B : T → Matrix κ' �
         · refine (Finset.sum_eq_zero fun k _ => ?_).symm
           rw [pderiv_X_of_ne, map_zero, smul_zero]
           intro e'; simp only [Prod.mk.injEq] at e'; exact e ⟨e'.1, e'.2.1⟩
-    simp only [map_mul, pderiv_mul, map_add, hP, this, smul_add, Finset.sum_add_distrib,
+    simp only [map_mul, pderiv_mul, map_add (f := _), hP, this, smul_add, Finset.sum_add_distrib,
       Finset.sum_mul, Finset.mul_sum, smul_mul_assoc, mul_smul_comm]
 
 theorem laplacian_colSubst (A : T → Matrix κ κ' R) (B : T → Matrix κ' κ R) (t : T) (a : Fin p)

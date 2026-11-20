@@ -170,14 +170,14 @@ theorem exists_colMat {P₀ : D.La →+ (Fin g → ℂ)} (hP₀ : IsPeriod D ty 
     fun j => (1 / 2 : ℂ) • k (r j) + (Complex.I / 2) • k (r' j), fun P hP x => ?_⟩
   have := relation hP₀ hP (Finsupp.single x 1 - ∑ j, ((P₀ x j).re • r j + (P₀ x j).im • r' j)) (by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sub, map_sum, map_add, map_smul, hr, hr', Finsupp.linearCombination_single, one_smul]
+      simp only [map_sub, map_sum, map_add (f := _), map_smul, hr, hr', Finsupp.linearCombination_single, one_smul]
     funext i
     simp [Finset.sum_apply, Pi.single_apply, Finset.sum_add_distrib])
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sub, map_sum, map_add, map_smul, Finsupp.linearCombination_single, one_smul, sub_eq_zero] at this
+    simp only [map_sub, map_sum, map_add (f := _), map_smul, Finsupp.linearCombination_single, one_smul, sub_eq_zero] at this
   rw [this]
   funext i
-  simp only [realMap_apply, Pi.add_apply, mulVec, dotProduct, colMat_apply, map_sub, map_add, map_smul, hk,
+  simp only [realMap_apply, Pi.add_apply, mulVec, dotProduct, colMat_apply, map_sub, map_add (f := _), map_smul, hk,
     Finset.sum_apply, ← Finset.sum_add_distrib, Pi.smul_apply, Pi.sub_apply, Pi.star_apply]
   refine Finset.sum_congr rfl fun j _ => ?_
   apply Complex.ext <;> simp <;> ring

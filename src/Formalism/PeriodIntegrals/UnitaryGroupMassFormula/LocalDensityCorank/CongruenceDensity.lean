@@ -111,7 +111,7 @@ theorem gram_act (H : Loc.HermSp M V) (ϖE : E) {ι : Type} [Fintype ι]
       ∈ Submodule.span M.L.O {ϖE} := by
   have hR : ∀ x y y', H.h x (y + y') = H.h x y + H.h x y' := by
     intro x y y'
-    rw [H.h_herm (y + y') x, H.h_add_left, map_add, ← H.h_herm y x, ← H.h_herm y' x]
+    rw [H.h_herm (y + y') x, H.h_add_left, map_add (f := _), ← H.h_herm y x, ← H.h_herm y' x]
   have hS : ∀ (c : E) x y, H.h x (c • y) = M.L.cj c * H.h x y := by
     intro c x y
     rw [H.h_herm (c • y) x, H.h_smul_left, map_mul, ← H.h_herm y x]

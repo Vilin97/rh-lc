@@ -15,7 +15,7 @@ theorem algebraMap_mem_span_of_mem_span {K L A M : Type} [Field K] [Field L] [Al
   induction hx using Submodule.span_induction with
   | mem y hy => obtain ⟨i, rfl⟩ := hy; exact Submodule.subset_span ⟨i, rfl⟩
   | zero => simp
-  | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+  | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   | smul c y _ hy =>
     rw [Algebra.smul_def, map_mul, ← hg, ← Algebra.smul_def]
     exact Submodule.smul_mem _ _ hy

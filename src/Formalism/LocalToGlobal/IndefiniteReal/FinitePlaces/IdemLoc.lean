@@ -51,7 +51,7 @@ theorem sglV_ne (a : v.adicCompletion F) {w : HeightOneSpectrum (𝓞 F)} (h : w
 
 theorem sglV_add (a b : v.adicCompletion F) : sglV v (a + b) = sglV v a + sglV v b := by
   refine af_ext fun w => ?_
-  rw [map_add]
+  rw [map_add (f := _)]
   by_cases h : w = v
   · subst h
     rw [sglV_same, sglV_same, sglV_same]

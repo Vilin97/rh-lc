@@ -14,7 +14,7 @@ def Coh : Subring (∀ m : ℕ, ZMod (l ^ m)) where
   one_mem' a b h := map_one _
   mul_mem' {u v} hu hv a b h := by simp only [Pi.mul_apply, map_mul]; rw [hu a b h, hv a b h]
   zero_mem' a b h := map_zero _
-  add_mem' {u v} hu hv a b h := by simp only [Pi.add_apply, map_add]; rw [hu a b h, hv a b h]
+  add_mem' {u v} hu hv a b h := by simp only [Pi.add_apply, map_add (f := _)]; rw [hu a b h, hv a b h]
   neg_mem' {u} hu a b h := by simp only [Pi.neg_apply, map_neg]; rw [hu a b h]
 
 def toZl : Coh l →+* ℤ_[l] :=

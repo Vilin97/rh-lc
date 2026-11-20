@@ -28,7 +28,7 @@ theorem norm_fockL_sq_le {σ : Type} (f g : MvPolynomial σ ℂ) :
     { inner := fun x y => fockL x y
       conj_inner_symm := fun x y => (fockL_symm x y).symm
       re_inner_nonneg := fun x => (Complex.le_def.mp (fockL_nonneg x)).1
-      add_left := fun x y z => by simp only [map_add, LinearMap.add_apply]
+      add_left := fun x y z => by simp only [map_add (f := _), LinearMap.add_apply]
       smul_left := fun x y r => by simp only [LinearMap.map_smulₛₗ, LinearMap.smul_apply, smul_eq_mul] }
   have h : ‖fockL f g‖ * ‖fockL g f‖ ≤ (fockL f f).re * (fockL g g).re :=
     InnerProductSpace.Core.inner_mul_inner_self_le (c := c) f g

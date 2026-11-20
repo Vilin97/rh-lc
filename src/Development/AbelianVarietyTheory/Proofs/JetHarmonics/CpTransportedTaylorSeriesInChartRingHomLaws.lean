@@ -11,7 +11,7 @@ theorem tay_add {F G : ℂ → ℂ} (hF : AnalyticAt ℂ F 0) (hG : AnalyticAt �
     tay (fun z => F z + G z) = tay F + tay G := by
   ext n
   have := iteratedDeriv_add (n := n) (x := (0 : ℂ)) hF.contDiffAt hG.contDiffAt
-  simp only [tay, coeff_mk, map_add]
+  simp only [tay, coeff_mk, map_add (f := _)]
   rw [← add_div, ← this]
   rfl
 
@@ -117,7 +117,7 @@ theorem hat_laws : ∀ (q : ℕ) [Fact q.Prime] (ι : ℂ ≃+* ℂ_[q]) (ℓ : 
   have hs : HasSubst ℓ := HasSubst.of_constantCoeff_zero' hℓ
   refine ⟨fun F G hF hG => ⟨?_, ?_, ?_, ?_⟩, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · simp only [hat]
-    rw [tay_add hF hG, map_add, subst_add hs]
+    rw [tay_add hF hG, map_add (f := _), subst_add hs]
   · simp only [hat]
     rw [tay_mul hF hG, map_mul, subst_mul hs]
   · intro h

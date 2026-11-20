@@ -147,7 +147,7 @@ theorem pointed (hH : HtpySt) (n : ℕ) (z : Cn F (n + 1)) (hz : dn F (n + 1) z 
           E F a₀ hb (n + 1) t c := by rw [s]
       _ = _ := by rw [add_smul, this, add_zero]
   refine ⟨y₁ - y₂ + E F a₀ hb n t, ?_⟩
-  rw [map_add, map_sub, ← e₁, ← e₂, ← e3, e0, e2]
+  rw [map_add (f := _), map_sub, ← e₁, ← e₂, ← e3, e0, e2]
   abel
 
 end Pointed
@@ -228,9 +228,9 @@ theorem exact_of_span {B : Type} [CommRing B] (F : C ⥤ CommAlgCat.{0} R) (io' 
       add_mem' := by
         rintro a b ⟨y, hy⟩ ⟨y', hy'⟩
         refine ⟨y + y', ?_⟩
-        rw [map_add, hy, hy']
+        rw [map_add (f := _), hy, hy']
         funext c
-        simp only [sc, Pi.add_apply, map_add, add_mul]
+        simp only [sc, Pi.add_apply, map_add (f := _), add_mul]
       zero_mem' := ⟨0, by
         rw [map_zero]; funext c; simp [sc]⟩
       smul_mem' := by

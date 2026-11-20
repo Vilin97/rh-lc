@@ -55,7 +55,7 @@ theorem eval_rowGen {N n : ℕ} (a b : Fin N) (t : ℂ) (f : MvPolynomial (Fin N
   · rename_i c
     simp [rowGen, rowAct]
   · rename_i p q hp hq
-    simp only [map_add, Polynomial.eval_add, hp, hq]
+    simp only [map_add (f := _), Polynomial.eval_add, hp, hq]
   · rename_i p v hp
     obtain ⟨i, j⟩ := v
     simp only [map_mul, Polynomial.eval_mul, hp, eval_rowGen_X_eq_rowAct_one_add_single]

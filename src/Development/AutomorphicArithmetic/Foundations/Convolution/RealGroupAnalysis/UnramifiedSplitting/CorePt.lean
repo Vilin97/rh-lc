@@ -94,7 +94,7 @@ theorem UpperTheory.ConvolutionTheory.R2.H.corePt :
     rw [this]; field_simp
   have hηp' : ((W.η.1 (a * p⁻¹) : ℂˣ) : ℂ) = -W.η.1 a := by
     rw [map_mul, map_inv, Units.val_mul, Units.val_inv_eq_inv_val, hηp]; simp
-  have hcp : cp v (p : A F) = ϖ := by rw [s4, map_add, map_one, s3]; ring
+  have hcp : cp v (p : A F) = ϖ := by rw [s4, map_add (f := _), map_one, s3]; ring
   have hsc : dM (p ^ 2) * gl (mD (a * p) * k) = gl (mD a * k) * Matrix.GeneralLinearGroup.scalar (Fin 2) p := by
     have h2 : gl (mD a * k) * Matrix.GeneralLinearGroup.scalar (Fin 2) p = Matrix.GeneralLinearGroup.scalar (Fin 2) p * gl (mD a * k) :=
       Units.ext ((Matrix.scalar_commute _ (fun _ => Commute.all _ _) (gl (mD a * k)).val).eq.symm)

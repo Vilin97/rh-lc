@@ -23,7 +23,7 @@ theorem map_I_smul_of_cauchyRiemann {g : ℕ} (L : (Fin g → ℂ) →L[ℝ] ℂ
     linear_combination (-I) * h a + L (I • (Pi.single a 1 : Fin g → ℂ)) * I_sq
   have hline : ∀ a (w : ℂ), L (Pi.single a w : Fin g → ℂ) = w * L (Pi.single a 1) := by
     intro a w
-    rw [pi_single_eq_re_smul_add_im_smul a w, map_add, map_smul, map_smul, hI a]
+    rw [pi_single_eq_re_smul_add_im_smul a w, map_add (f := _), map_smul, map_smul, hI a]
     conv_rhs => rw [← Complex.re_add_im w]
     simp only [Complex.real_smul]
     ring

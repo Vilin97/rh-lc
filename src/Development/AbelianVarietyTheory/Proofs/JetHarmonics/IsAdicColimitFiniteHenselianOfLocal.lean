@@ -36,7 +36,7 @@ theorem isAdicComplete_map_eval {A ι : Type} [CommRing A] (T : ι → Type) [�
   letI : Algebra A (T i) := ((Pi.evalRingHom T i).comp e.toRingHom).toAlgebra
   let s : T i →ₗ[A] A :=
     { toFun t := e.symm (Pi.single i t)
-      map_add' x y := by rw [Pi.single_add, map_add]
+      map_add' x y := by rw [Pi.single_add, map_add (f := _)]
       map_smul' a t := by
         apply e.injective
         rw [RingHom.id_apply, smul_eq_mul, map_mul, e.apply_symm_apply, e.apply_symm_apply,

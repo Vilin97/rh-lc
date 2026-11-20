@@ -158,7 +158,7 @@ theorem sep_pair [TopologicalSpace G1] [TopologicalSpace G2] {X1 X2 : Type} [Add
       induction t using TensorProduct.induction_on with
       | zero => simp
       | tmul u v => exact Submodule.subset_span ⟨u.1, u.2, v.1, v.2, rfl⟩
-      | add t t' ht ht' => rw [map_add]; exact add_mem ht ht'
+      | add t t' ht ht' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ht ht'
   rw [hR]
   set Ψ := prodT S1 S2
   have hinj : Function.Injective Ψ := by
@@ -215,7 +215,7 @@ theorem sep_pair [TopologicalSpace G1] [TopologicalSpace G2] {X1 X2 : Type} [Add
       refine ⟨(⟨ρ1 g.1 u.1, hs1 g.1 u.1 u.2⟩ : S1) ⊗ₜ (⟨ρ2 g.2 v.1, hs2 g.2 v.1 v.2⟩ : S2), ?_⟩
       funext z
       simp [Ψ, hρ, hρ1, hρ2]
-    | add t t' ht ht' => rw [map_add, map_add]; exact add_mem ht ht'
+    | add t t' ht ht' => rw [map_add (f := _), map_add (f := _)]; exact add_mem ht ht'
   · intro j g G hG hsm
     obtain ⟨U1, U2, κ, s, x, y, hU1o, hU2o, hx, hy, -, rfl⟩ := hdec G hG hsm
     have hG' : ρ g (fun z => ∑ k ∈ s, (x k).1.1 z.1 * (y k).1.1 z.2) =

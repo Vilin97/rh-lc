@@ -357,7 +357,7 @@ theorem nonempty_prod₂_equiv_multiProd {d : Fin 2 → ℕ} (hd : ∑ a, d a = 
   rw [MonoidHom.one_apply, Units.val_one, one_smul]
   induction v using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
   | tmul x y =>
     rw [hL]
     simp only [MonoidHom.comp_apply, twist_apply]

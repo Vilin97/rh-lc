@@ -60,7 +60,7 @@ theorem fderiv_phase_mul {R : Type} [NormedAddCommGroup R] [NormedSpace ℝ R] [
       fun t : ℝ => Complex.exp (-(Real.pi * Complex.I) * (om a w : ℂ)) *
         (Complex.exp (-(Real.pi * Complex.I) * (om a (t • u) : ℂ)) * F (w + t • u)) := by
     funext t
-    rw [LinearMap.map_add, Complex.ofReal_add, mul_add, Complex.exp_add]
+    rw [LinearMap.map_add (f := _), Complex.ofReal_add, mul_add, Complex.exp_add]
     ring
   rw [e, deriv_const_mul_field, deriv_twisted_line_at F hF om a w u]
 
@@ -85,7 +85,7 @@ theorem dRho_eq_at (h : Chart θ σ) {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsS
   unfold Formalism.IndefR.Datum.dRho
   congr 1
   funext t
-  rw [GlobalTheory.VacUnique.Ann.lineAt_eq h S T τ z t, heisO_real_at h hψ, (piW θ T S).map_add, h.pi_iota, add_assoc,
+  rw [GlobalTheory.VacUnique.Ann.lineAt_eq h S T τ z t, heisO_real_at h hψ, (piW θ T S).map_add (f := _), h.pi_iota, add_assoc,
     ← (iotaW σ T S).map_add]
 
 open Classical in
@@ -109,7 +109,7 @@ theorem heis_translate_cauchy_riemann : ∀ (D : D7) (θ : InfFam D) (σ : (D.wh
     { toFun := fun s => Fd s - Real.pi * Complex.I * (omO S T (a + w) s : ℂ) * Fw
       map_zero' := by simp
       map_add' := fun x x' => by
-        rw [ContinuousLinearMap.map_add, LinearMap.map_add, Complex.ofReal_add]
+        rw [ContinuousLinearMap.map_add (f := _), LinearMap.map_add (f := _), Complex.ofReal_add]
         ring }
   have hL : L z + Complex.I * L (jO S T A.cart B.cart z) = 0 := by
     set_option synthInstance.maxHeartbeats 100000 in
@@ -127,11 +127,11 @@ theorem heis_translate_cauchy_riemann : ∀ (D : D7) (θ : InfFam D) (σ : (D.wh
     exact (congrArg (fun b => L (Pi.single τ (z τ)) + Complex.I * L b) h5).trans h6
   have e1 : L z = Fd z - Real.pi * Complex.I * ((omO S T a z : ℂ) + (omO S T w z : ℂ)) * Fw := by
     show Fd z - Real.pi * Complex.I * (omO S T (a + w) z : ℂ) * Fw = _
-    rw [LinearMap.map_add, LinearMap.add_apply, Complex.ofReal_add]
+    rw [LinearMap.map_add (f := _), LinearMap.add_apply, Complex.ofReal_add]
   have e2 : L (jO S T A.cart B.cart z) = Fd (jO S T A.cart B.cart z) - Real.pi * Complex.I *
       ((omO S T a (jO S T A.cart B.cart z) : ℂ) + (omO S T w (jO S T A.cart B.cart z) : ℂ)) * Fw := by
     show Fd _ - Real.pi * Complex.I * (omO S T (a + w) _ : ℂ) * Fw = _
-    rw [LinearMap.map_add, LinearMap.add_apply, Complex.ofReal_add]
+    rw [LinearMap.map_add (f := _), LinearMap.add_apply, Complex.ofReal_add]
   rw [e1, e2] at hL
   linear_combination (Complex.exp (-(Real.pi * Complex.I) * (omO S T a w : ℂ))) * hL
 

@@ -25,7 +25,7 @@ def hermN : AddSubgroup (Mx D n n) where
     have h1 := congrFun (congrFun ha i) j
     have h2 := congrFun (congrFun hb i) j
     simp only [adj, Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply] at h1 h2 ⊢
-    rw [map_add, h1, h2]
+    rw [map_add (f := _), h1, h2]
   zero_mem' := by simp [adj]
   neg_mem' := by
     intro a ha

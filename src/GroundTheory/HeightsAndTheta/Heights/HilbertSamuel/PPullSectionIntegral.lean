@@ -34,7 +34,7 @@ theorem eval_mConeMap (y : (Σ k, ι k) → Ω) (t : K → Ω) (f : MRing ι) :
     eval t (mConeMap y f) = aeval (fun p => t p.1 * y p) f := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [mConeMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     rw [map_mul, map_mul, hp]
     simp [mConeMap, mul_comm]
@@ -59,7 +59,7 @@ theorem exists_sum_eq_one [CharZero Ω] (P : Ideal (MRing ι)) (y' : (Σ k, ι k
     refine ⟨β, ?_⟩
     have := congrArg φ hab
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, show φ a = 0 from ha, zero_add, map_sum, map_one] at this
+      rw [map_add (f := _), show φ a = 0 from ha, zero_add, map_sum, map_one] at this
     rw [← this]
     exact Finset.sum_congr rfl fun i _ => by rw [map_mul, hLq]
   · exfalso
@@ -104,7 +104,7 @@ theorem aeval_mem_of_forall [CharZero Ω] (V : Subring Ω) (hQ : ∀ r : ℚ, al
     (y' : (Σ k, ι k) → Ω) (hy : ∀ p, y' p ∈ V) (b : MvPolynomial (Σ k, ι k) ℚ) : aeval y' b ∈ V := by
   induction b using MvPolynomial.induction_on with
   | C a => simpa using hQ a
-  | add p q hp hq => rw [map_add]; exact V.add_mem hp hq
+  | add p q hp hq => rw [map_add (f := _)]; exact V.add_mem hp hq
   | mul_X p i hp => rw [map_mul, aeval_X]; exact V.mul_mem hp (hy i)
 
 theorem proof : PullSectionIntegral.Statement := by

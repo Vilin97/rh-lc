@@ -27,13 +27,13 @@ theorem actC_mul (φ : G →* GQ l) (ρ : Representation A G V) (g h : G) (y : V
     actC φ ρ (g * h) y = actC φ ρ g (actC φ ρ h y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v b => simp [actC]
 
 theorem actC_one (φ : G →* GQ l) (ρ : Representation A G V) (y : V ⊗[ℚ_[l]] Bcr l) : actC φ ρ 1 y = y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul v b => simp [actC]
 
 theorem mem_Dcr_iff (K : FinExt l) (ρ : Representation A ↥(GK K) V) (y : V ⊗[ℚ_[l]] Bcr l) :
@@ -46,7 +46,7 @@ theorem mem_Dcr_iff (K : FinExt l) (ρ : Representation A ↥(GK K) V) (y : V �
     | tmul v b =>
       change ρ g v ⊗ₜ[ℚ_[l]] (PP l).actQ (g : GQ l) b = ρ g v ⊗ₜ[ℚ_[l]] ((PP l).PD K).actB g b
       rw [(PP l).PD_actB]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   rw [this]
 
 theorem mem_FilD_iff (K : FinExt l) (ρ : Representation A ↥(GK K) V) (a : ℤ) (y : V ⊗[ℚ_[l]] Bdr l) :
@@ -62,7 +62,7 @@ theorem mem_FilD_iff (K : FinExt l) (ρ : Representation A ↥(GK K) V) (a : ℤ
       | tmul v b =>
         change ρ g v ⊗ₜ[ℚ_[l]] (PP l).actQdR (g : GQ l) b = ρ g v ⊗ₜ[ℚ_[l]] ((PP l).PD K).actdR g b
         rw [(PP l).PD_actdR]
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
     rw [this]
   · have : (((PP l).PD (botExt l)).Fil a).restrictScalars ℚ_[l] = (((PP l).PD K).Fil a).restrictScalars ℚ_[l] :=
       SetLike.coe_injective ((PP l).PD_Fil _ _ a)
@@ -114,7 +114,7 @@ theorem FilD_succ_le (φ : G →* GQ l) (ρ : Representation A G V) (a : ℤ) : 
   rintro _ ⟨y, rfl⟩
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | tmul v b => exact ⟨v ⊗ₜ ⟨b.1, ((PP l).PD (botExt l)).Fil_anti a b.2⟩, rfl⟩
 
 end Mem
@@ -296,7 +296,7 @@ theorem crys_lift {L : FinExt l} (h : K.1 ≤ L.1) (hc : Crys L (ρ.comp (incl h
     intro c
     induction c using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a k => simp [q, s]
   have hnil : ∀ c, q c = 0 → IsNilpotent c := by
     intro c hc

@@ -23,7 +23,7 @@ theorem UpperTheory.exists_eigenvector_of_root :
     induction p using Polynomial.induction_on' with
     | add p r hp hr =>
       intro x
-      simp only [Polynomial.map_add, map_add, LinearMap.add_apply, hp, hr]
+      simp only [Polynomial.map_add (f := _), map_add (f := _), LinearMap.add_apply, hp, hr]
     | monomial n a =>
       intro x
       rw [Polynomial.map_monomial, aeval_monomial, aeval_monomial, Module.End.mul_apply,

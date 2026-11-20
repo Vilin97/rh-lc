@@ -57,7 +57,7 @@ theorem ev_bilL {n : ℕ} (G : FGLaw S d) (cc : Fin d → Fin d → S) (a : Fin 
 
 private theorem ev_add_lemma {m n : ℕ} (a : Fin m → Pt S n d) (ha : ∀ j i, MvPowerSeries.constantCoeff (a j i) = 0)
     (f g : PS S m d) : ev a (f + g) = ev a f + ev a g := by
-  simp only [ev_eq_hom a ha, map_add]
+  simp only [ev_eq_hom a ha, map_add (f := _)]
 
 theorem formal_log_add_last_two (G : FGLaw S d) (l : Fin d) :
     ev (n := 3) ![G.add (pt S d 1) (pt S d 2)] (LogPf.logOf G l) =

@@ -151,17 +151,17 @@ private theorem atPi_C_mul_X_mul_X_pow {K : Type} [Field K] (vp k : K) (x y : Fi
   rw [MvPowerSeries.coeff_C_mul, MvPowerSeries.coeff_C_mul, MvPowerSeries.X_pow_eq, MvPowerSeries.X,
     MvPowerSeries.monomial_mul_monomial, MvPowerSeries.coeff_monomial]
   split_ifs with h
-  · rw [h, map_add, Finsupp.degree_single, Finsupp.degree_single]
+  · rw [h, map_add (f := _), Finsupp.degree_single, Finsupp.degree_single]
     ring
   · simp
 
 private theorem atPi_add {σ K : Type} [Field K] (vp : K) (f g : MvPowerSeries σ K) :
     atPi vp (f + g) = atPi vp f + atPi vp g := by
   ext n
-  rw [map_add]
+  rw [map_add (f := _)]
   change vp ^ n.degree * MvPowerSeries.coeff n (f + g) =
     vp ^ n.degree * MvPowerSeries.coeff n f + vp ^ n.degree * MvPowerSeries.coeff n g
-  rw [map_add, mul_add]
+  rw [map_add (f := _), mul_add]
 
 private theorem atPi_sub {σ K : Type} [Field K] (vp : K) (f g : MvPowerSeries σ K) :
     atPi vp (f - g) = atPi vp f - atPi vp g := by
@@ -232,7 +232,7 @@ theorem gcCondition_of_twoSums (hT : TwoSumsCondition p) : RestGc p := by
       ring
     rw [hG, atPi_add, atPi_sub, hRr, atPi_C_mul_X_mul_X_pow, atPi_C_mul_X_mul_X_pow,
       ← MvPowerSeries.coe_substAlgHom (hPs e)]
-    simp only [map_add, map_sub, map_mul, map_pow]
+    simp only [map_add (f := _), map_sub, map_mul, map_pow]
     simp only [MvPowerSeries.coe_substAlgHom, MvPowerSeries.subst_C, MvPowerSeries.subst_X (hPs e)]
     simp only [P, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, div_eq_mul_inv, map_mul, map_pow]
     ring
@@ -277,6 +277,6 @@ theorem gcCondition_of_twoSums (hT : TwoSumsCondition p) : RestGc p := by
   rw [hexp, expK_add]
   · exact ⟨u, hu, _, IntR_expK (pow_mul_inv_factorial_mem_Rp K' vp hvp) (IntR_neg (IntR_add hY hWI)), rfl⟩
   · rw [map_neg, map_mul, hhS_const, mul_zero, neg_zero]
-  · rw [map_mul, map_neg, map_add, hY0, hW0, add_zero, neg_zero, mul_zero]
+  · rw [map_mul, map_neg, map_add (f := _), hY0, hW0, add_zero, neg_zero, mul_zero]
 
 end Formalism.MainNotions.FormalGroupSystem.Pf

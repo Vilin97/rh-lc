@@ -181,7 +181,7 @@ def shear (hι : Continuous ι) (hτ : Continuous τ) (hττ : ∀ x, τ (τ x) 
   toFun x := (x.1, fun j => ι x.1 * x.2.1 j,
     ⟨fun a b => x.2.2.1 a b + τ (x.2.1 a) * ι x.1 * x.2.1 b, by
       intro a b
-      simp only [map_add, map_mul, hττ, hτι]
+      simp only [map_add (f := _), map_mul, hττ, hτι]
       rw [x.2.2.2 a b]
       ring⟩)
   invFun x := (x.1, fun j => ι ((x.1⁻¹ : Rˣ) : R) * x.2.1 j,

@@ -49,7 +49,7 @@ theorem exists_hom {R : Type} [CommRing R] (f : R →+* Ω) (hf : ∀ a, IsInteg
            map_one' := hi (by rw [hg, map_one, map_one])
            map_mul' := fun a b => hi (by rw [hg, map_mul, map_mul, hg, hg])
            map_zero' := hi (by rw [hg, map_zero, map_zero])
-           map_add' := fun a b => hi (by rw [hg, map_add, map_add, hg, hg]) }, hg⟩
+           map_add' := fun a b => hi (by rw [hg, map_add (f := _), map_add (f := _), hg, hg]) }, hg⟩
 
 end Ring
 
@@ -121,9 +121,9 @@ theorem orbit_abstract {p : ℕ} (hp : p.Prime) (hd : ¬ (p : ℤ) ∣ NumberFie
   let sc : (𝓞 E ⧸ w₀) →+ (𝓞 E ⧸ Ideal.span {(p : 𝓞 E)}) :=
     AddMonoidHom.mk' (fun a => Ideal.Quotient.mk _ (ε * lf a)) fun a b => by
       have hm : lf (a + b) - (lf a + lf b) ∈ w₀ := by
-        rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_add, hlf, hlf, hlf, sub_self]
+        rw [← Ideal.Quotient.eq_zero_iff_mem, map_sub, map_add (f := _), hlf, hlf, hlf, sub_self]
       have := hz _ hm
-      rw [mul_sub, map_sub, sub_eq_zero, mul_add, map_add] at this
+      rw [mul_sub, map_sub, sub_eq_zero, mul_add, map_add (f := _)] at this
       exact this
   have hsc : ∀ a, sc a = Ideal.Quotient.mk _ (ε * lf a) := fun a => rfl
   let Sg : Type := {t : T // RingHom.ker (r t) = w₀}

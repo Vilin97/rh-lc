@@ -51,7 +51,7 @@ theorem intE_mul_conj (D : Formalism.BasicNotions.D7) (cc : Ideal (𝓞 D.host.K
       obtain ⟨α₂, hα₂, γ₂, hγ₂, rfl⟩ := hg'
       exact intE_gen D cc r hn hs hα₁ hα₂ hγ₁ hγ₂
     | zero => rw [map_zero, mul_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [map_add, mul_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _), mul_add]; exact add_mem hy hz
     | smul c y _ hy =>
       rw [conj_smul, mul_left_comm]
       exact mul_mem (GlobalTheory.InertSign.IntE.conj (intE_coe D c)) hy

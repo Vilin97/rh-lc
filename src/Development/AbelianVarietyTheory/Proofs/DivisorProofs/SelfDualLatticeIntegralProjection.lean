@@ -58,7 +58,7 @@ theorem exists_mem_hE_eq_of_integral :
       show ((K.projectionOnto K' hc b : K) : Fin n → E) = 0
       rw [show b = ((⟨b, hbK'⟩ : K') : Fin n → E) from rfl, Submodule.projectionOnto_apply_right]
       rfl
-    rw [map_add, hpK a ha.2, hb0, add_zero]
+    rw [map_add (f := _), hpK a ha.2, hb0, add_zero]
     exact ⟨ha.1, ha.2⟩
   set Pm := LinearMap.toMatrix' p with hPmdef
   have hPm : ∀ x, Pm *ᵥ x = p x := fun x => by simp [Pm, LinearMap.toMatrix'_mulVec]

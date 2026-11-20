@@ -111,7 +111,7 @@ theorem exists_approx_sol [IsAlgClosed L] (ha : 0 < F.a) (c : ℕ) {d : T.B}
   refine ⟨z + F.fwdSum c w K, algebraMap Γ T.B T.π ^ c * (F.fwd c)^[K] w, ?_, ?_, ?_⟩
   · have h1 := F.toB_fwdSum_sub c w K
     rw [hπw] at h1
-    rw [map_add, ← hsd]
+    rw [map_add (f := _), ← hsd]
     linear_combination hz + h1
   · intro ρ hρ0 hρ1
     have hdρ := hd ρ hρ0 hρ1

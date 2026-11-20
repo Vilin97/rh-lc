@@ -19,7 +19,7 @@ private theorem kugaSm_A {E : Type} [Field E] [NumberField E] [IsTotallyComplex 
     cas (shift (smA Ξ) r) e = (cas (shift (lie E a) r) e).rTensor (Fin Ξ.d → ℂ) := by
   refine kugaSm_map e (Module.End.rTensorAlgHom ℂ (Sm E a) (Fin Ξ.d → ℂ)).toRingHom _ _ fun X => ?_
   change _ = (Module.End.rTensorAlgHom ℂ (Sm E a) (Fin Ξ.d → ℂ)) _
-  rw [shift_apply, shift_apply, map_add, ← algebraMap_smul ℂ (r * ell E a X) (1 : Module.End ℂ (Sm E a)), map_smul, map_one,
+  rw [shift_apply, shift_apply, map_add (f := _), ← algebraMap_smul ℂ (r * ell E a X) (1 : Module.End ℂ (Sm E a)), map_smul, map_one,
     algebraMap_smul]
   rfl
 
@@ -32,7 +32,7 @@ private theorem kugaSm_B {E : Type} [Field E] [NumberField E] [IsTotallyComplex 
   have h1 : cas (shift (smB Ξ) (-r)) e = f (cas (shift Ξ.dmat (-r)) e) := by
     refine kugaSm_map e f.toRingHom _ _ fun X => ?_
     change _ = f _
-    rw [shift_apply, shift_apply, map_add, ← algebraMap_smul ℂ (-r * ell E a X) (1 : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ), map_smul,
+    rw [shift_apply, shift_apply, map_add (f := _), ← algebraMap_smul ℂ (-r * ell E a X) (1 : Matrix (Fin Ξ.d) (Fin Ξ.d) ℂ), map_smul,
       map_one, algebraMap_smul, smB_apply]
     rfl
   rw [h1, show cas (shift Ξ.dmat (-r)) e = _ from h, map_smul, map_one]

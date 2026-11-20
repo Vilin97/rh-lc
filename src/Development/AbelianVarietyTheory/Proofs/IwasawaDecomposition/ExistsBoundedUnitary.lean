@@ -59,7 +59,7 @@ theorem exists_short_notMem {X ι : Type} [NormedAddCommGroup X] [NormedSpace �
   have hyc : ‖y‖ < c := mem_ball_zero_iff.1 hy
   refine ⟨x, x.2, fun hxW => ?_, ?_⟩
   · have h1 : f (T x) = 0 := hf ⟨x, hxW, rfl⟩
-    rw [← hxy, hA, map_add, map_smul, hfv, smul_eq_mul] at h1
+    rw [← hxy, hA, map_add (f := _), map_smul, hfv, smul_eq_mul] at h1
     have h2 : f y = 0 := by
       have : f y * (1 + s) = 0 := by linarith
       exact (mul_eq_zero.1 this).resolve_right (by positivity)

@@ -87,7 +87,7 @@ theorem affineLine_localAcyclicity_of_strictHenselian_points (core : ∀ (q : �
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul o b => simp [Algebra.smul_def]
-  | add x y hx hy => simp only [map_add] at hx hy ⊢; rw [hx, hy]
+  | add x y hx hy => simp only [map_add (f := _)] at hx hy ⊢; rw [hx, hy]
 
 end GlobalTheory.EtC.LineAcyc
 

@@ -91,7 +91,7 @@ theorem isPre_blk_image :
       simp
     change _ = (σ : ℂ →+* ℂ).mapMatrix (blk e g)
     unfold blk
-    rw [map_add, map_mul, map_mul, map_mul, map_mul, map_sub, map_one, hσ]
+    rw [map_add (f := _), map_mul, map_mul, map_mul, map_mul, map_sub, map_one, hσ]
     rfl
 
 end GlobalTheory.ClassFin

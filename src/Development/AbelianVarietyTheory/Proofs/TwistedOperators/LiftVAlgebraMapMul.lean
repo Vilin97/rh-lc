@@ -165,20 +165,20 @@ theorem exists_adelic_idem (σ : E →ₐ[F] E) {d : ℕ} (W : Spc F E d) (v : P
   set j : AE F E := inclR (F := F) (AF F) (a : E)
   have hj : j * j + ιA b' * j + ιA c' = 0 := by
     have := congrArg (inclR (F := F) (AF F)) hq
-    simp only [map_add, map_mul, map_pow, inclR_algebraMap, map_zero, pow_two] at this
+    simp only [map_add (f := _), map_mul, map_pow, inclR_algebraMap, map_zero, pow_two] at this
     exact this
   have hσj : cA σ j = -ιA b' - j := by
     rw [cA_inclR, hσa, map_sub, map_neg, inclR_algebraMap]
   have hσι : ∀ x : AF F, cA σ (ιA x) = ιA x := fun x => (cA σ).commutes x
   set Eid := ιA M + ιA K * j
   have hσE : cA σ Eid = ιA M + ιA K * (-ιA b' - j) := by
-    simp only [Eid, map_add, map_mul, hσι, hσj]
+    simp only [Eid, map_add (f := _), map_mul, hσι, hσj]
   have s1 := congrArg ιA r1
   have s2 := congrArg ιA r2
   have s3 := congrArg ιA r3
   have s4 := congrArg ιA r4
   have s5 := congrArg ιA r5
-  simp only [map_sub, map_add, map_mul] at s1 s2 s3 s4 s5
+  simp only [map_sub, map_add (f := _), map_mul] at s1 s2 s3 s4 s5
   have E1 : Eid * Eid = Eid := by
     linear_combination s1 + s2 * j + ιA K * ιA K * hj
   have E2 : Eid + cA σ Eid = ιA e1 := by

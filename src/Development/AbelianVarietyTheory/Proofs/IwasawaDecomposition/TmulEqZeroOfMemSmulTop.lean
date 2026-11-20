@@ -41,7 +41,7 @@ theorem baseChange_mkQ_injective (P : Submodule O X) (hP : ∀ x ∈ P, ∀ c : 
   | tmul c x =>
     rw [LinearMap.lTensor_tmul]
     exact hP _ ((Submodule.Quotient.mk_eq_zero P).1 (LinearMap.mem_ker.1 x.2)) c
-  | add u v hu hv => rw [map_add, hu, hv, add_zero]
+  | add u v hu hv => rw [map_add (f := _), hu, hv, add_zero]
 
 end GlobalTheory.LineSummand
 
@@ -158,7 +158,7 @@ theorem line_summand (P : Submodule O X) (hPz : ∀ x ∈ P, ∀ c : k, c ⊗ₜ
       | tmul c a =>
         rw [tensorAction_tmul, hρ, LinearMap.baseChange_tmul, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
         rfl
-      | add s t hs ht => rw [map_add, LinearMap.add_apply, hs, ht, map_add]
+      | add s t hs ht => rw [map_add (f := _), LinearMap.add_apply, hs, ht, map_add (f := _)]
     let mO : O →ₗ[ℤ] O ⧸ Ideal.span {(p : O)} := (Submodule.mkQ (Ideal.span {(p : O)})).restrictScalars ℤ
     let es : (O ⧸ Ideal.span {(p : O)}) →ₗ[ℤ] l := (e.symm : (O ⧸ Ideal.span {(p : O)}) →ₗ[O] l).restrictScalars ℤ
     have key : ∀ t, π.baseChange k (fA.baseChange k t) = ls.baseChange k (es.baseChange k (mO.baseChange k t)) := by
@@ -169,7 +169,7 @@ theorem line_summand (P : Submodule O X) (hPz : ∀ x ∈ P, ∀ c : k, c ⊗ₜ
         simp only [LinearMap.baseChange_tmul]
         congr 1
         exact hmk a
-      | add s t hs ht => simp only [map_add, hs, ht]
+      | add s t hs ht => simp only [map_add (f := _), hs, ht]
     have hmO : Function.Injective (mO.baseChange k) := by
       refine baseChange_mkQ_injective k (Ideal.span {(p : O)}) fun x hx c => ?_
       obtain ⟨a, rfl⟩ := Ideal.mem_span_singleton'.1 hx
@@ -182,7 +182,7 @@ theorem line_summand (P : Submodule O X) (hPz : ∀ x ∈ P, ∀ c : k, c ⊗ₜ
       induction y using TensorProduct.induction_on with
       | zero => simp
       | tmul c u => simp [es]
-      | add s t hs ht => simp only [map_add, hs, ht]
+      | add s t hs ht => simp only [map_add (f := _), hs, ht]
     have hls : Function.Injective (ls.baseChange k) := by
       refine Function.LeftInverse.injective (g := (proj.restrictScalars ℤ).baseChange k) fun y => ?_
       induction y using TensorProduct.induction_on with
@@ -191,7 +191,7 @@ theorem line_summand (P : Submodule O X) (hPz : ∀ x ∈ P, ∀ c : k, c ⊗ₜ
         simp only [LinearMap.baseChange_tmul]
         congr 1
         exact LinearMap.ofIsCompl_apply_left h (φ := LinearMap.id) (ψ := 0) u
-      | add s t hs ht => simp only [map_add, hs, ht]
+      | add s t hs ht => simp only [map_add (f := _), hs, ht]
     intro t ht
     rw [hT] at ht
     have h0 : ls.baseChange k (es.baseChange k (mO.baseChange k t)) = 0 := by rw [← key, ht, map_zero]

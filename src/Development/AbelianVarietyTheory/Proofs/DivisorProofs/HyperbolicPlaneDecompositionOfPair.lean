@@ -69,7 +69,7 @@ theorem symp_mixed (hxx : form σ X.J H.x H.x = 0)
       simp only [symp, hTens_eq, piece_ii hgram]
     rw [this, M₁.co.form, hz, hz', zero_dotProduct, zero_dotProduct, sub_self]
   rw [← hQ] at h1 h2 h3 h4
-  simp only [map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
+  simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]
   linear_combination h1 + h2 - h3 + h4
 
 end GlobalTheory.MixedLagrXPlain
@@ -196,7 +196,7 @@ theorem mixed_lagrangian_plane : ∀ (F E : Type) [Field F] [NumberField F] [Fie
       ⟨0, z, hz, by ext i j; simp [Matrix.vecMulVec_apply]⟩
     have h0 := symp_mixed hxx horth hgram M M₁ hu hv
     change schr B.ψ (t • GlobalTheory.MixedLagr.hat w) φ = schr B.ψ (M.co.e _) (schr B.ψ (M.co.e _) φ)
-    rw [GlobalTheory.MixedLagr.schr_comp, h0, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add, key]
+    rw [GlobalTheory.MixedLagr.schr_comp, h0, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add (f := _), key]
 
 end GlobalTheory.MixedLagrXPlain
 

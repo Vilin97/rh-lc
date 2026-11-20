@@ -66,7 +66,7 @@ theorem det_finHom_norm {D : D7} (V : HSp D) (k : GA D V) :
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [φ, sigR]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [e, c, ← map_mul, h, map_one]
 
 theorem finHom_inv_mulVec_mem {D : D7} (V : HSp D) (k : GA D V)

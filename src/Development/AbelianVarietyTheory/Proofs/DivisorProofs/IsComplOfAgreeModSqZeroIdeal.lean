@@ -92,7 +92,7 @@ theorem GlobalTheory.SqZeroSummand.summand_of_agree_mod_sqZero :
     have hc : c.1 ∈ K ⊔ I • N := by
       rw [← sup_smul_top_eq I hKN, hKF]; exact Submodule.mem_sup_left c.2
     obtain ⟨k, hk, b, hb, hkb⟩ := Submodule.mem_sup.mp hc
-    rw [← hkb, map_add, (Submodule.projection_apply_eq_zero_iff _).mpr hk, zero_add,
+    rw [← hkb, map_add (f := _), (Submodule.projection_apply_eq_zero_iff _).mpr hk, zero_add,
       Submodule.projection_apply_of_mem_left _ (Submodule.smul_le_right hb)]
     exact Submodule.smul_mono le_rfl le_top hb
   · intro c hc

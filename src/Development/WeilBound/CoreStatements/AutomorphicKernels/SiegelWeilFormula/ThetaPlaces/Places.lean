@@ -31,7 +31,7 @@ theorem thW_th' (B : Base F E) (w : InfinitePlace F) (y : AE F E) :
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   show starRingEnd ℂ (infEmb (B.emb w) (Algebra.TensorProduct.map (GlobalTheory.AutFunCompare.evW w) (AlgHom.id F E)
       (Algebra.TensorProduct.map (HeckeCharacterZeroLocus.SiegelWeilU.fstA F) (AlgHom.id F E) y))) = _
   rw [h]

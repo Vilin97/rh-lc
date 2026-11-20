@@ -170,7 +170,7 @@ private theorem cont_sg {σ : E ≃+* E} (hσ : Isom σ) : Continuous σ := by
   refine ⟨γ, ?_⟩
   rintro _ ⟨z, hz, rfl⟩
   show σ (x + z) ∈ s
-  rw [map_add]
+  rw [map_add (f := _)]
   refine hγ ⟨σ z, ?_, rfl⟩
   show valuation E (σ z) < _
   rw [hσ z]

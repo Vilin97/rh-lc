@@ -169,7 +169,7 @@ theorem good0 (hD : IsOpen D) {T : (Mx k r → E) → Mx k r → E} (h : Qx2.Goo
   congr := fun f _ f' _ he => (level_restriction_eq_iff _ _).2 (h.loc f f' ((level_restriction_eq_iff _ _).1 he))
   lin := fun f hf f' hf' s => by
     show cut0 i D _ = cut0 i D _ + s • cut0 i D _
-    rw [← map_smul, ← map_add]
+    rw [← map_smul, ← map_add (f := _)]
     exact (level_restriction_eq_iff _ _).2 (h.lin f f' s hf hf')
 
 def E0 (E : Type*) [NormedAddCommGroup E] [NormedSpace ℂ E] (i : Fin (r + 1)) {D : Set (Mx k r)} (hD : IsOpen D)
@@ -400,7 +400,7 @@ theorem sf_good_of (ho : IsOpen (UU Dc)) {T : Fn k r E → Fn k r E}
   congr := fun Φ h Ψ h' he => (cutP_eq_iff _ _).2 (h2 Φ Ψ h h' ((cutP_eq_iff _ _).1 he))
   lin := fun Φ h Ψ h' s => by
     show cutP L Dc _ = cutP L Dc _ + s • cutP L Dc _
-    rw [← map_smul, ← map_add]
+    rw [← map_smul, ← map_add (f := _)]
     exact (cutP_eq_iff _ _).2 (h3 Φ Ψ h h' s)
 
 theorem sf_diff {Φ : Fn k r E} (h : SmoothFam k r L (UU Dc) Φ) {c : Fin r → ℂ} (hc : c ∈ OmX r)
@@ -760,7 +760,7 @@ theorem IntQ.add {T S : Module.End ℂ V₀} {T' S' : Module.End ℂ V₁} (h : 
   obtain ⟨h1', h2'⟩ := h'
   refine And.intro (fun F hF => VL.add_mem (h1 F hF) (h1' F hF)) (fun F hF => ?_)
   show ρ (T F + S F) = T' (ρ F) + S' (ρ F)
-  rw [map_add, h2 F hF, h2' F hF]
+  rw [map_add (f := _), h2 F hF, h2' F hF]
 
 theorem IntQ.smul {T : Module.End ℂ V₀} {T' : Module.End ℂ V₁} (h : IntQ ρ VL T T') (s : ℂ) :
     IntQ ρ VL (s • T) (s • T') := by
@@ -971,7 +971,7 @@ def rho (E : Type*) [NormedAddCommGroup E] [NormedSpace ℂ E] (hW : WeylLevelEl
   toFun := fun F => (sfData E l.succ (ho1 l hD)).toV (rr l F) (sf_rr hW l F.2.1)
   map_add' := fun F F' => Subtype.ext (by
     show cutP _ _ (rr l ((F : Mx k r → E) + (F' : Mx k r → E))) = cutP _ _ _ + cutP _ _ _
-    rw [← map_add]
+    rw [← map_add (f := _)]
     rfl)
   map_smul' := fun s F => Subtype.ext (by
     show cutP _ _ (rr l (s • (F : Mx k r → E))) = s • cutP _ _ _
@@ -1226,7 +1226,7 @@ theorem IntJ.add {T S : Module.End ℂ V₀} {T' S' : Module.End ℂ V₁} (h : 
   obtain ⟨h1', h2'⟩ := h'
   refine And.intro (VL.add_mem h1 h1') ?_
   show ρ (T J₀ + S J₀) = T' (ρ J₀) + S' (ρ J₀)
-  rw [map_add, h2, h2']
+  rw [map_add (f := _), h2, h2']
 
 theorem IntJ.neg {T : Module.End ℂ V₀} {T' : Module.End ℂ V₁} (h : IntJ ρ VL J₀ T T') :
     IntJ ρ VL J₀ (-T) (-T') := by
@@ -1940,7 +1940,7 @@ theorem double_sign_sum_reindex_ordered {R M : Type*} [CommRing R] [AddCommGroup
       obtain ⟨sj1, sj2⟩ := sign_pair_of_lt hj
       simp only [hT, min_eq_left hi.le, max_eq_right hi.le, min_eq_right hi.le, max_eq_left hi.le,
         min_eq_left hj.le, max_eq_right hj.le, min_eq_right hj.le, max_eq_left hj.le, si1, si2, sj1, sj2]
-      simp only [← map_add]
+      simp only [← map_add (f := _)]
       congr 1
       push_cast
       ring

@@ -44,7 +44,7 @@ theorem gen_mod {D : Datum H} {g : ℕ} {ty : Fin g → (E →+* ℂ)} {Pm : D.L
   obtain ⟨cf, v, rfl⟩ := ha u
   refine ⟨cf, ψ (Pm ((R ^ 3) • v)), (hL _).2 ⟨_, rfl⟩, ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_add, map_sum, map_sum]
+    rw [map_add (f := _), map_add (f := _), map_sum, map_sum]
   congr 1
   · refine Finset.sum_congr rfl fun b _ => ?_
     rw [← hact]

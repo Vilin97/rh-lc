@@ -195,7 +195,7 @@ theorem exists_smul_mem_range [IsDomain A] [IsPrincipalIdealRing A] {S : Submodu
   rw [← hm']
   induction Z.cM.symm m using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add]; exact Submodule.add_mem _ ha hb
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ ha hb
   | tmul a v => exact Submodule.tmul_mem_baseChange_of_mem a ⟨v, rfl⟩
 
 end CxDat
@@ -232,7 +232,7 @@ def cq : ℂ ⊗[ℤ] ℚ ≃ₗ[ℂ] ℂ :=
       refine LinearMap.ext fun x => ?_
       induction x using TensorProduct.induction_on with
       | zero => simp
-      | add a b ha hb => rw [map_add, map_add, ha, hb]
+      | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
       | tmul z q =>
         rw [LinearMap.id_apply, tmul_rat z q]
         simp [TensorProduct.smul_tmul'])
@@ -331,7 +331,7 @@ theorem goodProj : cx.GoodProj ⊤ pr := by
   have h2 : ∀ y, c2 (pr.baseChange ℂ y) = (c2 y 0) • EuclideanSpace.single (0 : Fin 2) (1 : ℂ) := fun y => by
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, PiLp.add_apply, add_smul]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), PiLp.add_apply, add_smul]
     | tmul z w =>
       ext a
       rw [LinearMap.baseChange_tmul, complex_rational_tmul_coord, complex_rational_tmul_coord]

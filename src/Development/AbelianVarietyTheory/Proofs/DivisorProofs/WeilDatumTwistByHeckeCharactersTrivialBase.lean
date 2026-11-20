@@ -39,7 +39,7 @@ theorem exists_trace (hcm : IsCMExt F E σ) (x : E) : ∃ t : F, algebraMap F E 
     · rw [h]; rfl
     · rw [h]
       change σ (x + σ x) = x + σ x
-      rw [map_add, InertChart.conj_conj hcm, add_comm]
+      rw [map_add (f := _), InertChart.conj_conj hcm, add_comm]
   obtain ⟨t, ht⟩ := (IsGalois.mem_range_algebraMap_iff_fixed _).2 hfix
   exact ⟨t, ht⟩
 

@@ -57,7 +57,7 @@ theorem UpperTheory.V.AlgebraTools.AnnihilatorQuotientFinite.repEigSum :
     rintro _ ⟨n, rfl⟩
     have hn : n ∈ eig σ K χ ⊔ twKer σ K χ := by rw [hC.sup_eq_top]; trivial
     obtain ⟨a, ha, t, ht, rfl⟩ := Submodule.mem_sup.1 hn
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (Submodule.mem_iSup_of_mem f ⟨a, ha, rfl⟩) (hT f t ht)
   rintro v ⟨hv, hv'⟩
   obtain ⟨e, he, _, ⟨t, ht, rfl⟩, rfl⟩ := Submodule.mem_sup.1 (hle hv)

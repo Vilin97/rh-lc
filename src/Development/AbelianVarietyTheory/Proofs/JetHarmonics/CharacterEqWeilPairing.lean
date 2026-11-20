@@ -43,7 +43,7 @@ theorem datum_character_eq_zpow {E : Type} [Field E] [NumberField E] [IsCMField 
   refine ⟨-d, fun a => ?_⟩
   have skew : Dw.EF a (-d) = ψ a := by
     have := Dw.alt (d + a)
-    simp only [map_add, LinearMap.add_apply, Dw.alt] at this
+    simp only [map_add (f := _), LinearMap.add_apply, Dw.alt] at this
     rw [map_neg, ← hd]
     linarith
   have h2 : f (ψ a) = φ a := congrArg Subtype.val (LinearMap.congr_fun hψ a)

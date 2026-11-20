@@ -60,7 +60,7 @@ theorem poly_of_list {V : Type} [AddCommGroup V] [Module ℂ V] :
     refine ⟨Polynomial.C c * Polynomial.X * P1 + P2, fun u => ?_⟩
     have e2 := hP2 u
     simp only [LinearMap.comp_apply] at e2
-    simp only [List.map_cons, List.prod_cons, Module.End.mul_apply, hf, LinearMap.add_apply, map_add,
+    simp only [List.map_cons, List.prod_cons, Module.End.mul_apply, hf, LinearMap.add_apply, map_add (f := _),
       Module.algebraMap_end_apply, map_smul, smul_eq_mul, hP1, e2, Polynomial.eval_add, Polynomial.eval_mul,
       Polynomial.eval_C, Polynomial.eval_X]
 
@@ -128,7 +128,7 @@ theorem Tm_affine {V : Type} [AddCommGroup V] [Module ℂ V] {n : ℕ} (E : Fin 
       Formalism.REAL.Tm E (u - g) a b = algebraMap ℂ _ (c * u) + D := by
   by_cases h : a = b
   · refine ⟨1, algebraMap ℂ _ (-g) + E a b, fun u => ?_⟩
-    simp only [Formalism.REAL.Tm, if_pos h, one_mul, ← add_assoc, ← map_add, sub_eq_add_neg]
+    simp only [Formalism.REAL.Tm, if_pos h, one_mul, ← add_assoc, ← map_add (f := _), sub_eq_add_neg]
   · exact ⟨0, E a b, fun u => by simp [Formalism.REAL.Tm, h]⟩
 
 theorem perm_ends {m : ℕ} (p q : Fin (m + 2)) (hpq : p ≠ q) :

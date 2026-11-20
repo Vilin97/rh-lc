@@ -178,7 +178,7 @@ theorem lie_cocompact (p : Matrix (Fin d) (Fin d) E) : ∃ C : Set (Matrix (Fin 
   have comm : ∀ v, eqs (cA σ) (incM F W.J) (incM F e) (incM F f) (incM F p) (incL F E v) =
       (incL F E).prodMap ((incL F E).prodMap ((incL F E).prodMap ((incL F E).prodMap (incL F E)))) (eqs σ W.J e f p v) := fun v => by
     have h : ∀ y, incL F E (d := d) y = incM F y := fun _ => rfl
-    simp only [eqs, LinearMap.coe_mk, AddHom.coe_mk, LinearMap.prodMap_apply, map_add, map_sub]
+    simp only [eqs, LinearMap.coe_mk, AddHom.coe_mk, LinearMap.prodMap_apply, map_add (f := _), map_sub]
     simp only [h, incM_mul, incM_conj]
     rfl
   obtain ⟨C, h1, h2, h3⟩ := ker_cocompact hK hc b (IsBaseChange.prodMap _ _ b (IsBaseChange.prodMap _ _ b
@@ -209,7 +209,7 @@ theorem expG_rat {v : Matrix (Fin d) (Fin d) E} (hv : Tri e f v) (h : incM F v �
   refine Subgroup.mem_subgroupOf.2 ⟨⟨ex F v, ex F (-v), ex_neg (hv.three hv hv), by
     simpa using ex_neg (A := F) (hv.neg.three hv.neg hv.neg)⟩, Units.ext ?_⟩
   change incL F E (ex F v) = ex (AF F) (incM F v)
-  rw [ex, map_add, map_add, map_smul, ex, ← incM_mul, ← incM_one (F := F) (E := E), ← algebraMap_smul (AF F)]
+  rw [ex, map_add (f := _), map_add (f := _), map_smul, ex, ← incM_mul, ← incM_one (F := F) (E := E), ← algebraMap_smul (AF F)]
   congr 2
 
 theorem triG_cov : ∃ C : Set (triG σ W e f), IsCompact C ∧ ∀ u : triG σ W e f, ∃ γ : triG σ W e f, γ.1 ∈ ratU σ W.J ∧ γ * u ∈ C := by

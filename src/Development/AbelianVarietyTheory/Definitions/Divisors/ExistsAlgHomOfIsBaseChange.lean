@@ -34,11 +34,11 @@ theorem exists_algHom_of_isBaseChange {φ : M →ₗ[A] N} (hφ : IsBaseChange B
   have anti (n n' : N) : f n * f n' + f n' * f n = 0 := by
     induction n using hφ.inductionOn with
     | smul s n h => rw [map_smul, smul_mul_assoc, mul_smul_comm, ← smul_add, h, smul_zero]
-    | add a b ha hb => rw [map_add, add_mul, mul_add, add_add_add_comm, ha, hb, add_zero]
+    | add a b ha hb => rw [map_add (f := _), add_mul, mul_add, add_add_add_comm, ha, hb, add_zero]
     | tmul m =>
       induction n' using hφ.inductionOn with
       | smul s n h => rw [map_smul, smul_mul_assoc, mul_smul_comm, ← smul_add, h, smul_zero]
-      | add a b ha hb => rw [map_add, add_mul, mul_add, add_add_add_comm, ha, hb, add_zero]
+      | add a b ha hb => rw [map_add (f := _), add_mul, mul_add, add_add_add_comm, ha, hb, add_zero]
       | tmul m' =>
         rw [hf, hf, Algebra.TensorProduct.tmul_mul_tmul, Algebra.TensorProduct.tmul_mul_tmul,
           ← TensorProduct.tmul_add, ExteriorAlgebra.ι_add_mul_swap, TensorProduct.tmul_zero]
@@ -46,7 +46,7 @@ theorem exists_algHom_of_isBaseChange {φ : M →ₗ[A] N} (hφ : IsBaseChange B
     induction n using hφ.inductionOn with
     | smul s n h => rw [map_smul, smul_mul_assoc, mul_smul_comm, h, smul_zero, smul_zero]
     | add a b ha hb =>
-      rw [map_add, add_mul, mul_add, mul_add, ha, hb, zero_add, add_zero, anti]
+      rw [map_add (f := _), add_mul, mul_add, mul_add, ha, hb, zero_add, add_zero, anti]
     | tmul m =>
       rw [hf, Algebra.TensorProduct.tmul_mul_tmul, ExteriorAlgebra.ι_sq_zero,
         TensorProduct.tmul_zero]

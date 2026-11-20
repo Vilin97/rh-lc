@@ -69,7 +69,7 @@ theorem good_plc {i : E →+* Qn p n}
   obtain ⟨x, z, hz, e⟩ := h y
   refine ⟨x, ?_⟩
   simp only
-  rw [← IsFractionRing.injective (Wn p n) (Qn p n) (e.trans (hg x).symm), map_add, (mem_max z).1 hz, add_zero]
+  rw [← IsFractionRing.injective (Wn p n) (Qn p n) (e.trans (hg x).symm), map_add (f := _), (mem_max z).1 hz, add_zero]
 
 omit [NumberField E] in
 theorem good_approx {Q : HeightOneSpectrum (𝓞 E)} {i : E →+* Qn p n} (h : Good Q i) (y : Wn p n) :
@@ -248,7 +248,7 @@ theorem good_twF (g : R.GG) : Good (plc (twF H i g)) (twF H i g) :=
     obtain ⟨t, ht⟩ := exists_real (b + H.conj • b) (by rw [smul_add, conj_conj, add_comm])
     obtain ⟨u, hu, eu⟩ := (mem_plc _ _).1 (sub_mem ((mem_plc_tw_cc i g b).1 hb) ha)
     refine ⟨t, z + u, add_mem hz hu, ?_⟩
-    rw [← add_assoc, map_add, e, eu, ← map_add]
+    rw [← add_assoc, map_add (f := _), e, eu, ← map_add (f := _)]
     have : x + (H.conj • b - a) = algebraMap (𝓞 H.F) (𝓞 H.E) t := by rw [ht, ← hab]; ring
     exact congrArg (fun y : 𝓞 H.E => tw H i g (y : H.E)) this
 

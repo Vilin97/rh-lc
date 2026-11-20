@@ -20,7 +20,7 @@ theorem splitting_k (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ) : Is
   d.ok.dbl.weil.2.1.toIsSplitting
 theorem imp_k (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ) (k : d.G) :
     Box.Imp d.B.ψ (d.om k) fun w => d.dd.e (actB (cA σ) k (d.dd.e.symm w)) :=
-  ⟨(_root_.PositivityTheory.SiegelWeilFormula.KK.splitting_k d).pres k, (_root_.PositivityTheory.SiegelWeilFormula.KK.splitting_k d).adm k, fun w w' => by simp only [actB, map_add, Matrix.add_mul],
+  ⟨(_root_.PositivityTheory.SiegelWeilFormula.KK.splitting_k d).pres k, (_root_.PositivityTheory.SiegelWeilFormula.KK.splitting_k d).adm k, fun w w' => by simp only [actB, map_add (f := _), Matrix.add_mul],
     fun c w => by simp only [actB, map_smul, Matrix.smul_mul], fun w φ hφ => by
       have := (_root_.PositivityTheory.SiegelWeilFormula.KK.splitting_k d).impl k (d.dd.e.symm w) φ hφ
       rwa [Darboux.rho, LinearEquiv.apply_symm_apply] at this⟩
@@ -44,7 +44,7 @@ theorem D_kfS_k {u : Matrix (Fin d.m) (Fin d.n ⊕ Fin d.n) (AE F E)} (hu : At (
       obtain ⟨v, hv, x, hx, rfl⟩ := hz
       exact Submodule.subset_span ⟨_, Box.at_actB k hv, _, h2 k hk x hx, _root_.PositivityTheory.SiegelWeilFormula.KK.om_D_k k hv (h0 hx)⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add _ _ _ _ i j => rw [map_add]; exact add_mem i j
+    | add _ _ _ _ i j => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem i j
     | smul c _ _ i => rw [map_smul]; exact Submodule.smul_mem _ _ i
 theorem vac_kfS_k (θ : InfinitePlace F → Matrix (Fin d.m) (Fin d.m) ℂ)
     (θ' : InfinitePlace F → Matrix (Fin d.n ⊕ Fin d.n) (Fin d.n ⊕ Fin d.n) ℂ)

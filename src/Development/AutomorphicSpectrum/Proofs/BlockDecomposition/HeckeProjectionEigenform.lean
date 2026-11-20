@@ -174,7 +174,7 @@ theorem hecke_projection_sum_right {C : ℝ} (hc : Continuous φ) (hb : ∀ g, �
   simp only [Fn, ← mul_assoc]
   have h2 := congrArg conj (hT (g * u'))
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, map_mul] at h2
+    simp only [map_add (f := _), map_sum, map_mul] at h2
   rw [← Finset.sum_mul, ← Finset.mul_sum, ← add_mul, ← mul_add, h2]
   ring
 
@@ -261,7 +261,7 @@ theorem pure_conj {k N : ℕ} {χ : DirichletCharacter ℂ N} {a : ℕ → ℂ} 
   have e2 : α = χ p * conj β := by
     apply mul_left_cancel₀ hQ0
     linear_combination (-α) * hB + conj β * hm
-  rw [← hs, map_add, mul_add, ← e1, ← e2, add_comm]
+  rw [← hs, map_add (f := _), mul_add, ← e1, ← e2, add_comm]
 
 section Key
 

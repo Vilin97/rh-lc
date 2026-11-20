@@ -66,13 +66,13 @@ theorem finSt_of (hAdd : AddSt) (hAct : ActSt) (hUnit : UnitSt) (hBi : BiaddSt) 
       π (pairSer (fglOf hB) h (x + y) z) = π (pairSer (fglOf hB) h x z) + π (pairSer (fglOf hB) h y z) := by
     intro z hz x y hx hy
     have := (key _).2 (hbi x y z hx hy hz).2.1
-    rw [map_sub, map_add, sub_eq_zero] at this
+    rw [map_sub, map_add (f := _), sub_eq_zero] at this
     exact this.symm
   have h2 : ∀ z, IntLog (fglOf hB) z → ∀ x y, IntLog (fglOf hB) x → IntLog (fglOf hB) y →
       π (pairSer (fglOf hB) h z (x + y)) = π (pairSer (fglOf hB) h z x) + π (pairSer (fglOf hB) h z y) := by
     intro z hz x y hx hy
     have := (key _).2 (hbi x y z hx hy hz).2.2.1
-    rw [map_sub, map_add, sub_eq_zero] at this
+    rw [map_sub, map_add (f := _), sub_eq_zero] at this
     exact this.symm
   have h3 : ∀ (c : O) x z, IntLog (fglOf hB) x → IntLog (fglOf hB) z →
       π (pairSer (fglOf hB) h (mv (dAct C B c) x) z) =

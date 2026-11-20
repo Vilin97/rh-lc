@@ -248,7 +248,7 @@ theorem mem_dual_psL (u : Fin e → S.V) {I : Fin e → FractionalIdeal (𝓞 E)
       exact mem_one_frac.1 this
     | zero => simp
     | add y z _ _ hy hz =>
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       exact Submodule.add_mem _ hy hz
     | smul o y _ hy =>
       rw [← IsScalarTower.algebraMap_smul E o y, hT_smul_left]

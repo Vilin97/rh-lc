@@ -46,7 +46,7 @@ theorem idemLift : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : Ideal R
       intro c
       have := hx c
       have := hy c
-      rw [mul_add, map_add, map_add]
+      rw [mul_add, map_add (f := _), map_add (f := _)]
       linear_combination hx c + hy c
     | smul a x _ hx =>
       intro c
@@ -66,7 +66,7 @@ theorem idemLift : ∀ (R R₀ : Type) [CommRing R] [CommRing R₀] (I : Ideal R
         simp only [map_mul]
         linear_combination (-6 : B') * h
       map_zero' := by simp
-      map_add' := by intro x y; simp only [map_add]; ring
+      map_add' := by intro x y; simp only [map_add (f := _)]; ring
       commutes' := by intro r; simp only [AlgHom.commutes]; ring }
   refine ⟨e', ?_, ?_⟩
   · intro b

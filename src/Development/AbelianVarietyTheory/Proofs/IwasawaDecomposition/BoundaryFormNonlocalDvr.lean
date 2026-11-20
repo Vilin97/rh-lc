@@ -59,7 +59,7 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host 
   intro a b
   have s1 := BalancedTrait.two_mul_apply be (mem_levelForms.1 hbe).1 a b
   have s2 := BalancedTrait.two_mul_apply be' (mem_levelForms.1 hbe').1 (ρ a) (ρ b)
-  rw [← map_add, hdiag, hdiag, hdiag] at s2
+  rw [← map_add (f := _), hdiag, hdiag, hdiag] at s2
   omega
 
 end GlobalTheory.TraitQuot

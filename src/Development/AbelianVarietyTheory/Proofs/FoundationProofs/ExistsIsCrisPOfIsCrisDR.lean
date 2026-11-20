@@ -26,8 +26,8 @@ theorem pair_onto {B D : Type} [AddCommGroup B] [AddCommGroup D] (φ : B →+ B)
   obtain ⟨x0, hx0⟩ := h1 u
   obtain ⟨b, hb, hF⟩ := h2 (w - ι x0)
   refine ⟨x0 + b, _, hF, ?_, ?_⟩
-  · rw [map_add, hb, ← hx0]; abel
-  · rw [map_add]; abel
+  · rw [map_add (f := _), hb, ← hx0]; abel
+  · rw [map_add (f := _)]; abel
 
 variable {l : ℕ} [Fact l.Prime]
 

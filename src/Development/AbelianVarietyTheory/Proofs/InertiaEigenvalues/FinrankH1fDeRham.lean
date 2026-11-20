@@ -69,7 +69,7 @@ def E : Submodule LL (V ⊗[Qp] B) where
   add_mem' := by
     rintro x y ⟨c, hc, hx⟩ ⟨d, hd, hy⟩
     refine ⟨c + d, (finiteCocycles PD ρ).add_mem hc hd, fun g => ?_⟩
-    simp only [Pi.add_apply, add_tmul, hx, hy, map_add]
+    simp only [Pi.add_apply, add_tmul, hx, hy, map_add (f := _)]
     abel
   smul_mem' := by
     rintro a x ⟨c, hc, hx⟩
@@ -89,7 +89,7 @@ def cE : E PD ρ →ₗ[LL] finiteCocycles PD ρ where
     apply Subtype.ext
     refine cob_unique PD ρ (x := ((x + y : E PD ρ) : V ⊗[Qp] B)) (x + y).2.choose_spec.2 ?_
     intro g
-    simp only [Submodule.coe_add, Pi.add_apply, add_tmul, x.2.choose_spec.2, y.2.choose_spec.2, map_add]
+    simp only [Submodule.coe_add, Pi.add_apply, add_tmul, x.2.choose_spec.2, y.2.choose_spec.2, map_add (f := _)]
     abel
   map_smul' a x := by
     apply Subtype.ext
@@ -166,7 +166,7 @@ theorem mem_ker_Θ (hρ : ∀ x, Continuous fun g => ρ g x) (x : E PD ρ) :
     symm
     apply cE_eq
     intro g
-    rw [cob_apply, sub_tmul, ← hdw, map_add, (mem_Dcris PD ρ d).1 hd g, incl_apply, actVB_incl]
+    rw [cob_apply, sub_tmul, ← hdw, map_add (f := _), (mem_Dcris PD ρ d).1 hd g, incl_apply, actVB_incl]
     abel
 
 section abelian₂
@@ -197,7 +197,7 @@ def Λ₂ : E PD ρ →ₗ[LL] (DdR PD ρ ⧸ F0 PD ρ) where
       ((FilV PD (LL := LL) (V := V) 0).add_mem (dE_spec PD ρ hinj x) (dE_spec PD ρ hinj y))
       (dE_spec PD ρ hinj (x + y))
     convert h using 1
-    simp only [Submodule.coe_sub, Submodule.coe_add, Submodule.subtype_apply, map_add]
+    simp only [Submodule.coe_sub, Submodule.coe_add, Submodule.subtype_apply, map_add (f := _)]
     abel
   map_smul' a x := by
     rw [RingHom.id_apply, ← Submodule.Quotient.mk_smul, Submodule.Quotient.eq, Submodule.mem_comap]

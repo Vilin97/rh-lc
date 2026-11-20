@@ -144,7 +144,7 @@ theorem LiftsMult.exists_linear {θ : InfFam D} {A B : Node D} {P : Type} {m : A
     refine ⟨?_, ?_⟩
     · rw [e]
       exact hx1.add hy1
-    · rw [e, integral_add hx1 hy1, hx2, hy2, map_add]
+    · rw [e, integral_add hx1 hy1, hx2, hy2, map_add (f := _)]
       simp
   | smul c x _ hx =>
     intro p v h

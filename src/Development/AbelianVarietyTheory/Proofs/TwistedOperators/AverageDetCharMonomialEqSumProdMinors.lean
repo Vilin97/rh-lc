@@ -24,7 +24,7 @@ theorem continuous_colSub_mul (Λ : Pol ι d a →ₗ[ℂ] ℂ) (P : Pol ι d a)
     exact continuous_const
   | add p q hp hq =>
     intro Q
-    simp only [map_add, add_mul]
+    simp only [map_add (f := _), add_mul]
     exact (hp Q).add (hq Q)
   | mul_X p y hp =>
     intro Q
@@ -106,7 +106,7 @@ theorem average_monomial_eq_sum_prodMinors : ∀ {ι : Type} [Fintype ι] (a d :
     induction hspan using Submodule.span_induction with
     | mem x hx => obtain ⟨T, rfl⟩ := hx; exact hR T
     | zero => rw [map_zero, LinearMap.zero_apply]
-    | add x y _ _ hx hy => rw [map_add, LinearMap.add_apply, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [map_add (f := _), LinearMap.add_apply, hx, hy, add_zero]
     | smul c x _ hx => rw [map_smulₛₗ, LinearMap.smul_apply, hx, smul_zero]
   have h0 := GlobalTheory.T.unitaryAverage_kills_fock_complement_relInvariants a d (fun τ => (-m τ).toNat) ν hP hInv ρ hmeas hsurj Λ R hperp
   have hdet0 : ∀ g τ, (ρ g τ : Matrix (Fin a) (Fin a) ℂ).det ≠ 0 := fun g τ => by
@@ -138,7 +138,7 @@ theorem average_monomial_eq_sum_prodMinors : ∀ {ι : Type} [Fintype ι] (a d :
           Λ (colSub (fun τ => (ρ g τ : Matrix (Fin a) (Fin a) ℂ)) R) := by
     intro g
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hD g, hmono, map_add, map_sum, map_add, map_sum, mul_add, Finset.mul_sum]
+      rw [hD g, hmono, map_add (f := _), map_sum, map_add (f := _), map_sum, mul_add, Finset.mul_sum]
     congr 1
     refine Finset.sum_congr rfl fun p _ => ?_
     rw [map_smul, colSub_prodMinors, smul_smul, map_smul, smul_eq_mul]

@@ -105,7 +105,7 @@ theorem gaussTerm_mul_one_add (χ : HChar E) (w : HeightOneSpectrum (𝓞 E)) (c
   have h1 : r * (1 + z) ≠ 0 := by rw [← he]; exact mul_ne_zero hr e.ne_zero
   have hu : Units.mk0 _ h1 = Units.mk0 r hr * e := by ext; simp [he]
   have hψ : r * (1 + z) / c = r / c + r * z / c := by ring
-  rw [gaussTerm, gaussTerm, dif_neg h1, dif_neg hr, hu, map_mul, hψ, map_add, psiAt_add]
+  rw [gaussTerm, gaussTerm, dif_neg h1, dif_neg hr, hu, map_mul, hψ, map_add (f := _), psiAt_add]
   simp only [mul_inv, Units.val_mul]
   ring
 
@@ -117,7 +117,7 @@ theorem psiAt_mul_congr {w : HeightOneSpectrum (𝓞 E)} {c : Eˣ}
   have e : (r : E) * z / c = (r' : E) * z / c + (((r - r') * z : 𝓞 E) : E) / c := by push_cast; ring
   have hm : (r - r') * z - 0 ∈ w.asIdeal ^ 2 := by rw [sub_zero, pow_two]; exact Ideal.mul_mem_mul h hz
   have hv := valuation_sub_le (E := E) hm
-  rw [e, map_add, psiAt_add, psiAt_eq_one (t := algebraMap E _ ((((r - r') * z : 𝓞 E) : E) / c)), mul_one]
+  rw [e, map_add (f := _), psiAt_add, psiAt_eq_one (t := algebraMap E _ ((((r - r') * z : 𝓞 E) : E) / c)), mul_one]
   have hval : ∀ x : E, Valued.v (algebraMap E (w.adicCompletion E) x) = w.valuation E x := fun x =>
     HeightOneSpectrum.valuedAdicCompletion_eq_valuation' w x
   rw [hval, map_div₀, hc,
@@ -266,7 +266,7 @@ theorem gaussSumAt_mul_tame {χ ξ : HChar E} {w : HeightOneSpectrum (𝓞 E)} (
       show φ h = 1
       rw [hh]
       show Ideal.Quotient.mk w.asIdeal (1 + z) = 1
-      rw [map_add, map_one, Ideal.Quotient.eq_zero_iff_mem.2 hz, add_zero]
+      rw [map_add (f := _), map_one, Ideal.Quotient.eq_zero_iff_mem.2 hz, add_zero]
 
     have key : ∀ u : (𝓞 E ⧸ w.asIdeal ^ 2)ˣ,
         (¬ ∃ h ∈ H, ∃ μ : ℂ, μ ≠ 1 ∧ ∀ k ∈ H, f (u * k * h) = μ * f (u * k)) →
@@ -284,7 +284,7 @@ theorem gaussSumAt_mul_tame {χ ξ : HChar E} {w : HeightOneSpectrum (𝓞 E)} (
     have eu := key u hu
     have e2 : ((rep u : E) * z / c) = (rep v : E) * z / c + (((rep u - rep v : 𝓞 E) : E) * z / c) := by
       push_cast; ring
-    rw [e2, map_add, psiAt_add, ev] at eu
+    rw [e2, map_add (f := _), psiAt_add, ev] at eu
     have := (χ.locK w e).ne_zero
     exact (mul_eq_left₀ this).1 eu
   obtain ⟨u₀, hu₀⟩ := sum_mul_eq_of_concentrated H f g hg huniq

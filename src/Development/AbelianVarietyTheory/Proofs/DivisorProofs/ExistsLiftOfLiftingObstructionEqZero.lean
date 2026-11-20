@@ -37,7 +37,7 @@ theorem exists_lift_of_bock_zero : ∀ (R R' R₀ : Type) [CommRing R] [CommRing
     fun a y ↦ (preCoef h₀.w).naturality a y
   have hker : ∀ (U V W : AffOp X) (a : U ⟶ V) (a' : V ⟶ W), t • (w U V W a a' - d1 (OAff s) u U V W a a') = 0 := by
     intro U V W a a'
-    rw [← (S W).2.2.2, map_sub, d1_apply, map_add, map_sub, nat₀, hu, hu, hu, ← hc₀, ← d1_apply, hb, sub_self]
+    rw [← (S W).2.2.2, map_sub, d1_apply, map_add (f := _), map_sub, nat₀, hu, hu, hu, ← hc₀, ← d1_apply, hb, sub_self]
   have hg : f - t • u ∈ Z1 (OAff s) := by
     rw [commAlgFunctorCocyclesOne_eq_ker, LinearMap.mem_ker, map_sub, hfw, map_smul, ← smul_sub]
     funext U V W a a'

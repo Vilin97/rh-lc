@@ -48,7 +48,7 @@ theorem bialgHom_dual_integral_of_pairs : ∀ (R K : Type) [CommRing R] [IsDomai
         Algebra.TensorProduct.productMap (AlgHom.id R K) y t := by
     intro y t
     induction t with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul a b => simp
   obtain ⟨T, hT⟩ := GlobalTheory.T.weil_pairing_level_structure_finite_flat R K G hG N hN A θ hθ (fun x y => E (s x) y) (by
     intro x y z w hz
@@ -79,7 +79,7 @@ theorem bialgHom_dual_integral_of_pairs : ∀ (R K : Type) [CommRing R] [IsDomai
   refine Eq.trans ?_ h
   clear h hT
   induction T with
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul a b => simp [Algebra.ofId_apply]
 
 end GlobalTheory.GroupBplus.Aff

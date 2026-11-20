@@ -174,7 +174,7 @@ theorem char_split_value (D : D7) (c : (Formalism.L2.Theta.AE D)ˣ →* Circle) 
   obtain ⟨m, hm⟩ := inf_val D c n hc hr
   obtain ⟨-, -, -, M, hM, hMu⟩ := GlobalTheory.CharFin.char_finUnit_finite_order D c hc.1
   have hinf : Formalism.L2.Theta.infPart D (x₀ : Formalism.L2.Theta.AE D) = 1 := by
-    rw [hx, RingHom.map_add, RingHom.map_sub, RingHom.map_mul, RingHom.map_one,
+    rw [hx, RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_mul, RingHom.map_one,
       GlobalTheory.SplitScalar.infPart_splitIdem he, zero_mul, sub_zero, zero_add]
   obtain ⟨h, k, y, w, hh, hw, hy1, hy2, e1, hk⟩ := exists_pow_rel D x₀ hinf
   have e2 : c x₀ ^ (h * M) * c y ^ M = 1 := by
@@ -185,7 +185,7 @@ theorem char_split_value (D : D7) (c : (Formalism.L2.Theta.AE D)ˣ →* Circle) 
     rw [Finset.prod_pow, ← hm k y hy1 hy2, ← Circle.coe_pow, ← Circle.coe_pow, ← Circle.coe_mul, e2, Circle.coe_one]
   obtain ⟨h1, h2⟩ := values_of_rel D _ (h * M) k (fun τ => m τ * M) (Nat.mul_pos hh hM) e3
   refine ⟨h1, fun q _ hq => h2 q fun P hP => hk P ?_⟩
-  rw [hx, RingHom.map_add, RingHom.map_sub, RingHom.map_mul, RingHom.map_one, RingEquiv.map_add, RingEquiv.map_sub,
+  rw [hx, RingHom.map_add (f := _), RingHom.map_sub, RingHom.map_mul, RingHom.map_one, RingEquiv.map_add (f := _), RingEquiv.map_sub,
     RingEquiv.map_mul, RingEquiv.map_one]
   show finIso D (Formalism.L2.Theta.finPart D e) P * finIso D (Formalism.L2.Theta.finPart D a) P + (1 - finIso D (Formalism.L2.Theta.finPart D e) P) = 1
   rw [finIso_idem D he hq P hP, zero_mul, sub_zero, zero_add]

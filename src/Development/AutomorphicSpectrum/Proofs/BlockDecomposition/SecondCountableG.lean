@@ -86,7 +86,7 @@ theorem Rd_clm (T : L →L[ℂ] L) (X : Mat n) {f : Mat n → L} (hf : ContDiffO
 theorem Eu_clm (T : L →L[ℂ] L) (s : Bool) (a b : Fin n) {f : Mat n → L} (hf : ContDiffOn ℝ ∞ f (GLs n)) :
     Set.EqOn (Eu s a b fun x => T (f x)) (fun x => T (Eu s a b f x)) (GLs n) := by
   intro g hg
-  simp only [Eu, Pi.smul_apply, Pi.add_apply, Rd_clm T _ hf hg, map_smul, map_add]
+  simp only [Eu, Pi.smul_apply, Pi.add_apply, Rd_clm T _ hf hg, map_smul, map_add (f := _)]
 
 theorem Epow_clm (hR : RCalc) (T : L →L[ℂ] L) (s : Bool) {f : Mat n → L} (hf : ContDiffOn ℝ ∞ f (GLs n)) (m : ℕ) :
     ∀ a b : Fin n, Set.EqOn (Epow s m a b fun x => T (f x)) (fun x => T (Epow s m a b f x)) (GLs n) := by

@@ -18,7 +18,7 @@ theorem regM_dbarDir_eq {n : ℕ} (g : V n → ℂ) (y v : V n) :
     have hc : c • w = c.re • w + c.im • (Complex.I • w) := by
       conv_lhs => rw [← Complex.re_add_im c]
       rw [add_smul, mul_smul, Complex.coe_smul, Complex.coe_smul]
-    rw [hc, map_add, map_smul, map_smul]
+    rw [hc, map_add (f := _), map_smul, map_smul]
   have hv : v = ∑ j, v j • bas n j := by
     conv_lhs => rw [← (EuclideanSpace.basisFun (Fin n) ℂ).sum_repr v]
     simp [bas]

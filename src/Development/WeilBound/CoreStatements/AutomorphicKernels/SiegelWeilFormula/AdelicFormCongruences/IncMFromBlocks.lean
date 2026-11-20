@@ -254,7 +254,7 @@ theorem cNA_pres (hσ : ∀ a, σ (σ a) = a) {b : GL (Fin n ⊕ Fin n) E} (hb :
   have hfd : IsAddFundamentalDomain (nF σ Y b) (τ '' 𝓖) lam :=
     h𝓖.image_of_equiv τ.toEquiv hq eF fun γ x => by
       show τ (τ.symm γ.1 + x) = γ.1 + τ x
-      rw [map_add, τ.apply_symm_apply]
+      rw [map_add (f := _), τ.apply_symm_apply]
   refine ⟨⟨hm, ?_⟩, hfd⟩
   have hmeas : lam (τ '' 𝓖) = 1 := (hfd.measure_eq h𝓖).trans h1
   let τm : nA σ Y b ≃ᵐ nA σ Y b := τ.toHomeomorph.toMeasurableEquiv
@@ -341,7 +341,7 @@ theorem fc_levi (hσ : ∀ a, σ (σ a) = a) {b : GL (Fin n ⊕ Fin n) E} (hb : 
     congr 1
     obtain ⟨S, hS⟩ := (mem_nF_iff γ.1).1 γ.2
     obtain ⟨T1', hT1'⟩ := (mem_nF_iff T₁.1).1 T₁.2
-    rw [Matrix.mul_add, Matrix.trace_add, map_add, neg_add, AddChar.map_add_eq_mul, hT1', hS, ← kfour.incM_mul',
+    rw [Matrix.mul_add, Matrix.trace_add, map_add (f := _), neg_add, AddChar.map_add_eq_mul, hT1', hS, ← kfour.incM_mul',
       psi_rat_trace hψ, one_mul]
   have := hc.2.1
   unfold fc

@@ -130,7 +130,7 @@ theorem pol_eq_zero_of_mem_lowDeg {k : ℕ} (hk : k < Fintype.card β) {g : (α 
     have h1 := hx L
     have h2 := hy L
     simp only [pol] at h1 h2 ⊢
-    simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib, h1, h2, add_zero]
+    simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib, h1, h2, add_zero]
   | smul c x _ hx =>
     intro L
     have := hx (L ∘ₗ LinearMap.mulLeft ℝ c)

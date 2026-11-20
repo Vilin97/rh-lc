@@ -22,7 +22,7 @@ theorem projB_sigR (P : PlaceMap F K) (σ : E →ₐ[F] E) (y : AF F ⊗[F] E) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [projB, sigR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem projB_inclR (P : PlaceMap F K) (e : E) : projB P (inclR (AF F) e) = inclR K e := by
   simp [projB, inclR]
@@ -33,7 +33,7 @@ theorem iB_projB (P : PlaceMap F K) (y : AF F ⊗[F] E) :
   | zero => simp
   | tmul a b =>
     simp [projB, iB, P.inj_proj, Algebra.TensorProduct.algebraMap_apply]
-  | add x y hx hy => simp only [map_add, hx, hy, mul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, mul_add]
 
 theorem cT_map_projB (P : PlaceMap F K) (σ : E →ₐ[F] E) {M : ℕ}
     (A : Matrix (Fin M) (Fin M) (AF F ⊗[F] E)) :

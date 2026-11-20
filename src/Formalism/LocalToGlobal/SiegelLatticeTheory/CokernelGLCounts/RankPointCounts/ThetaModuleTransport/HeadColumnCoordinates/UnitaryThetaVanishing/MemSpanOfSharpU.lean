@@ -60,7 +60,7 @@ theorem mkW_decompU (f f' : Fin (r + 1) → V) (T T' : F) (hF : Formalism.MainNo
         H.mkW f ⟨omP H f f', omP_mem H f f' hD⟩ := by
   have hd := decompU H f f' T T' hF hF' hD hG u hu u.2
   unfold HermSp.mkW
-  rw [← map_smul, ← map_smul, ← map_add, Submodule.mkQ_apply, Submodule.mkQ_apply,
+  rw [← map_smul, ← map_smul, ← map_add (f := _), Submodule.mkQ_apply, Submodule.mkQ_apply,
     Submodule.Quotient.eq, Submodule.mem_comap, Submodule.subtype_apply, Submodule.coe_sub,
     Submodule.coe_add, Submodule.coe_smul, Submodule.coe_smul]
   exact hd

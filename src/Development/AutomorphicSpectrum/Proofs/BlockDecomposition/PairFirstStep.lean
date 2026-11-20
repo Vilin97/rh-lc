@@ -106,7 +106,7 @@ theorem ap₁_add (hS : PairSlices) (T : Sm E a →ₗ[ℂ] Sm E a) {F G : H E a
     sl₁_eq (funext fun y => by
       show (sl₁ F x.2).1 y + (sl₁ G x.2).1 y = F (y, x.2) + G (y, x.2)
       rw [sl_val hS hF, sl_val hS hG])
-  simp only [ap₁, e, map_add, Pi.add_apply]
+  simp only [ap₁, e, map_add (f := _), Pi.add_apply]
   rfl
 
 theorem ap₁_smul (hS : PairSlices) (T : Sm E a →ₗ[ℂ] Sm E a) {F : H E a b → ℂ} (hF : F ∈ pairSpace U₁ U₂) (c : ℂ) :

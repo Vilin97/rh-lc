@@ -158,7 +158,7 @@ private lemma loc_step (hA : LatA) (hc : IsFinCover ℂ K (xv x)) (a : ℕ) (hg 
       add_mem' := by
         rintro m m' ⟨N, h⟩ ⟨N', h'⟩
         refine ⟨N + N', ?_⟩
-        rw [map_add]
+        rw [map_add (f := _)]
         refine add_mem (hup N N' m h) ?_
         rw [add_comm]
         exact hup N' N m' h'

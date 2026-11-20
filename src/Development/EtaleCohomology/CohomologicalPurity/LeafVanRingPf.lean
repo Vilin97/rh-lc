@@ -12,7 +12,7 @@ theorem sub_C_mem_X {σ R : Type} [CommRing R] (f : MvPolynomial σ R) :
   | add p r hp hr =>
     have : p + r - MvPolynomial.C (MvPolynomial.constantCoeff (p + r)) =
       (p - MvPolynomial.C (MvPolynomial.constantCoeff p)) + (r - MvPolynomial.C (MvPolynomial.constantCoeff r)) := by
-      simp only [map_add]; ring
+      simp only [map_add (f := _)]; ring
     rw [this]; exact add_mem hp hr
   | mul_X p n _ =>
     simp only [map_mul, MvPolynomial.constantCoeff_X, mul_zero, map_zero, sub_zero]

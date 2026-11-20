@@ -40,7 +40,7 @@ theorem mem_intV_iff (z : E ⊗[maximalRealSubfield E] v.adicCompletion (maximal
         obtain ⟨a, rfl⟩ := hx
         exact Subring.subset_closure (Or.inl ⟨⟨a, a, rfl⟩, rfl⟩)
       | algebraMap r => exact Subring.subset_closure (Or.inr ⟨⟨r.1, r.2⟩, rfl⟩)
-      | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+      | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
       | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
     simpa using key _ hz
 
@@ -91,7 +91,7 @@ theorem sw_sigR (hc : CMData (maximalRealSubfield E) E)
     sw v (Formalism.UG.sigR hc.sig (v.adicCompletion (maximalRealSubfield E)) z) = locConj v (sw v z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a e => rfl
 
 theorem unramified (hc : CMData (maximalRealSubfield E) E) :

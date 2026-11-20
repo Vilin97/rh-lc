@@ -22,7 +22,7 @@ theorem norm_one_eq_unit_div_conj (hU : Unr E) (w : Pl E) (hw : ¬ IsSplitAt w) 
   obtain ⟨-, -, hϖc, hϖv, ⟨x, -, hx⟩, -⟩ := hUI
   have key : ∀ y, u * cj w (y + u * cj w y) = y + u * cj w y := by
     intro y
-    rw [map_add, map_mul, hcc, mul_add, ← mul_assoc, hu, one_mul, add_comm]
+    rw [map_add (f := _), map_mul, hcc, mul_add, ← mul_assoc, hu, one_mul, add_comm]
   obtain ⟨v0, hv0, hkey⟩ : ∃ v0, v0 ≠ 0 ∧ u * cj w v0 = v0 := by
     by_cases h1 : (1 : w.adicCompletion E) + u * cj w 1 = 0
     · refine ⟨x + u * cj w x, ?_, key x⟩

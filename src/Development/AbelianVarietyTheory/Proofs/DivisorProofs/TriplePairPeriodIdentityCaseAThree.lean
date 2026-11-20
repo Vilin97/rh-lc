@@ -157,13 +157,13 @@ private theorem at_liftE (v : Pl F) (z : Fv F v ⊗[F] E) : At (evFin F v) (lift
   | zero => simp
   | tmul t x =>
     rw [liftE, TensorProduct.map_tmul, TensorProduct.smul_tmul', GlobalTheory.LatVac.at_liftV v t u hu, TensorProduct.zero_tmul]
-  | add x y hx hy => rw [map_add, smul_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), smul_add, hx, hy, add_zero]
 
 private theorem compFin_liftE (v : Pl F) (z : Fv F v ⊗[F] E) : compFin F E v (liftE E v z) = z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul t x => exact congrArg (· ⊗ₜ[F] x) (GlobalTheory.LatVac.evFin_liftV v t)
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 private theorem at_smul {M : Type} [AddCommGroup M] [Module (AF F) M] (v : Pl F) (a : Fv F v) (z : M) :
     At (evFin F v) (GlobalTheory.LatVac.liftV v a • z) := fun u hu => by
@@ -188,7 +188,7 @@ private theorem liftE_compFin (v : Pl F) (z : AE F E) : liftE E v (compFin F E v
 private theorem ptAt_add {n d : ℕ} (v : Pl F) (y y' : Fin n → Fv F v ⊗[F] E) (w : Fin d → E) :
     ptAt v (y + y') w = ptAt v y w + ptAt v y' w := by
   ext i j
-  simp [ptAt, Matrix.vecMulVec_apply, map_add, add_mul]
+  simp [ptAt, Matrix.vecMulVec_apply, map_add (f := _), add_mul]
 
 private theorem ptAt_smul {n d : ℕ} (v : Pl F) (a : Fv F v) (y : Fin n → Fv F v ⊗[F] E) (w : Fin d → E) :
     ptAt v (a • y) w = GlobalTheory.LatVac.liftV v a • ptAt v y w := by
@@ -214,22 +214,22 @@ private theorem mul_ptAt {n d : ℕ} (v : Pl F) (A : Matrix (Fin n) (Fin n) (AE 
 private theorem symp_add_left {σ : E →ₐ[F] E} {n d : ℕ} (JX : Matrix (Fin n) (Fin n) (AE F E)) (JW : Matrix (Fin d) (Fin d) (AE F E))
     (ξ : AE F E) (x x' y : Matrix (Fin n) (Fin d) (AE F E)) :
     symp (R := AF F) (cA σ) ξ JX JW (x + x') y = symp (R := AF F) (cA σ) ξ JX JW x y + symp (R := AF F) (cA σ) ξ JX JW x' y := by
-  simp only [symp, hTens, Matrix.add_apply, map_add, mul_add, add_mul, Finset.sum_add_distrib]
+  simp only [symp, hTens, Matrix.add_apply, map_add (f := _), mul_add, add_mul, Finset.sum_add_distrib]
 
 private theorem symp_add_right {σ : E →ₐ[F] E} {n d : ℕ} (JX : Matrix (Fin n) (Fin n) (AE F E)) (JW : Matrix (Fin d) (Fin d) (AE F E))
     (ξ : AE F E) (x y y' : Matrix (Fin n) (Fin d) (AE F E)) :
     symp (R := AF F) (cA σ) ξ JX JW x (y + y') = symp (R := AF F) (cA σ) ξ JX JW x y + symp (R := AF F) (cA σ) ξ JX JW x y' := by
-  simp only [symp, hTens, Matrix.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [symp, hTens, Matrix.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 private def pairAt (σ : E →ₐ[F] E) {n d : ℕ} (JX : Matrix (Fin n) (Fin n) E) (JW : Matrix (Fin d) (Fin d) E) (v : Pl F)
     (w' w : Fin d → E) : (Fin n → Fv F v ⊗[F] E) →ₗ[Fv F v] (Fin n → Fv F v ⊗[F] E) →ₗ[Fv F v] Fv F v :=
   LinearMap.mk₂ (Fv F v)
     (fun x y => evFin F v (symp (R := AF F) (cA σ) (-1) (incM F JX) (incM F JW) (ptAt v x w') (ptAt v y w)))
-    (fun x x' y => by rw [ptAt_add, symp_add_left, map_add])
+    (fun x x' y => by rw [ptAt_add, symp_add_left, map_add (f := _)])
     (fun a x y => by
       rw [ptAt_smul, ← one_smul (AF F) (ptAt v y w), GlobalTheory.LatVac.symp_smul_smul, one_smul, mul_one, map_mul,
         GlobalTheory.LatVac.evFin_liftV, smul_eq_mul])
-    (fun x y y' => by rw [ptAt_add, symp_add_right, map_add])
+    (fun x y y' => by rw [ptAt_add, symp_add_right, map_add (f := _)])
     (fun a x y => by
       rw [ptAt_smul, ← one_smul (AF F) (ptAt v x w'), GlobalTheory.LatVac.symp_smul_smul, one_smul, one_mul, map_mul,
         GlobalTheory.LatVac.evFin_liftV, smul_eq_mul])
@@ -307,7 +307,7 @@ private theorem cA_cA {σ : E →ₐ[F] E} (h : IsCMExt F E σ) (z : AE F E) : c
   | tmul a x =>
     change a ⊗ₜ[F] σ (σ x) = _
     rw [conj_conj h]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 private theorem form_swap {σ : E →ₐ[F] E} (h : IsCMExt F E σ) {d : ℕ} {J : Matrix (Fin d) (Fin d) E}
     (hJ : ∀ i j, σ (J j i) = -J i j) (x y : Fin d → E) : form σ J y x = -σ (form σ J x y) := by
@@ -415,7 +415,7 @@ private theorem exists_fix {σ : E →ₐ[F] E}
   have hχ0 : ∀ᶠ y in 𝓝 (0 : Fv F v), GlobalTheory.LatVac.psiAt ψ v y = 1 := by simpa using hχl.eventually_eq 0
   let T : (Fin n → Fv F v ⊗[F] E) →ₗ[Fv F v] (Fin n × Fin d → Fv F v) × (Fin n × Fin d → Fv F v) :=
     { toFun := fun y => GlobalTheory.LatVac.locCo M.co v (ptAt v y w)
-      map_add' := fun y y' => by rw [ptAt_add, map_add]
+      map_add' := fun y y' => by rw [ptAt_add, map_add (f := _)]
       map_smul' := fun t y => by
         rw [ptAt_smul]
         refine Prod.ext (funext fun k => ?_) (funext fun k => ?_) <;>

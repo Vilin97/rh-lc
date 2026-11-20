@@ -116,7 +116,7 @@ theorem exists_vector [Algebra.IsSeparable Qp K] (χ : G →* Kˣ) (τ : K →�
       | tmul v y =>
         rw [AlgebraTensorModule.map_tmul, hΛ]
         exact ((PD.Fil 2).restrictScalars Qp).smul_mem _ y.2
-      | add x y hx hy => rw [map_add, map_add]; exact add_mem hx hy
+      | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
     have hx := hmem z
     rw [hz] at hx
     have hκ : Λ (∑ j, β (b j) (d j)) = (∑ j, lam (τ (b j)) • d j) • Y := by

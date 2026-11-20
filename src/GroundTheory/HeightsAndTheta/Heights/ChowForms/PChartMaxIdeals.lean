@@ -48,7 +48,7 @@ theorem ker_toSub {I W : Ideal (MvPolynomial (Fin n) F)} (h : I ≤ W) (t : Fin 
         exact Ideal.mem_map_of_mem (chartX I t e) hw
       exact hle hb
     have ha' : Ideal.Quotient.mk (chartIncIdeal I t e) a = 0 := Ideal.Quotient.eq_zero_iff_mem.mpr ha
-    rw [map_add, ha', zero_add]
+    rw [map_add (f := _), ha', zero_add]
     exact hb'
   · rw [Ideal.map_le_iff_le_comap]
     intro w hw

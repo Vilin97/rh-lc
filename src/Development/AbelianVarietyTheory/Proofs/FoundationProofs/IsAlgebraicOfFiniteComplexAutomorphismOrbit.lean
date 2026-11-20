@@ -44,7 +44,7 @@ theorem exists_algEquiv_shift (E : Subfield ℂ) (z : ℂ) (hz : Transcendental 
   have : e.toRingEquiv (hB.1.aevalEquiv (MvPolynomial.X b0))
       = hB.1.aevalEquiv (MvPolynomial.X b0 + (k : MvPolynomial B E)) := by
     simp [e, n, f]
-  rw [this, map_add, map_natCast, map_add, map_natCast, h1]
+  rw [this, map_add (f := _), map_natCast, map_add (f := _), map_natCast, h1]
 
 theorem isAlgebraic_of_finite_orbit :
     ∀ (E : Subfield ℂ) (x : ℂ), (Set.range fun g : ℂ ≃ₐ[E] ℂ => g x).Finite → IsAlgebraic E x := by

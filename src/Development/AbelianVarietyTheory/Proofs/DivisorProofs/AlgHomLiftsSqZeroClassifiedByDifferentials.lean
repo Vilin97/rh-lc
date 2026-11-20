@@ -81,7 +81,7 @@ instance (h : Setup I π p α) : Module B₀ (J h) where
   smul_add x y z := J.ext (by rw [smul_val h (h.p_sec x), J.val_add, J.val_add, smul_val h (h.p_sec x),
     smul_val h (h.p_sec x), mul_add])
   add_smul x z y := J.ext (by
-    rw [smul_val h (b := h.sec x + h.sec z) (by rw [map_add, h.p_sec, h.p_sec]), J.val_add, smul_val h (h.p_sec x),
+    rw [smul_val h (b := h.sec x + h.sec z) (by rw [map_add (f := _), h.p_sec, h.p_sec]), J.val_add, smul_val h (h.p_sec x),
       smul_val h (h.p_sec z), map_add, add_mul])
   zero_smul y := J.ext (by rw [smul_val h (map_zero p), map_zero, zero_mul, J.val_zero])
 
@@ -98,7 +98,7 @@ theorem eq_on_ideal (h : Setup I π p α) (β : B →ₐ[R] B') (hβ : ∀ b, α
   refine Submodule.span_induction (p := fun z _ ↦ α z = β z) ?_ ?_ ?_ ?_ hx'
   · rintro z ⟨r, -, rfl⟩; rw [AlgHom.commutes, AlgHom.commutes]
   · rw [map_zero, map_zero]
-  · intro y z _ _ hy hz; rw [map_add, map_add, hy, hz]
+  · intro y z _ _ hy hz; rw [map_add (f := _), map_add (f := _), hy, hz]
   · intro c z hzI hz
     have hzI' : z ∈ I.map (algebraMap R B) := hzI
     rw [smul_eq_mul, map_mul, map_mul, hz]
@@ -165,7 +165,7 @@ def theta (h : Setup I π p α) (hπ : Function.Surjective π) (β : B →ₐ[R]
     (hβ : ∀ b, α b - β b ∈ I.map (algebraMap R B')) : Ω[B₀⁄R₀] →+ B' where
   toFun w := ((der h hπ β hβ).liftKaehlerDifferential w).val
   map_zero' := by rw [map_zero]; rfl
-  map_add' x y := by rw [map_add]; rfl
+  map_add' x y := by rw [map_add (f := _)]; rfl
 
 theorem isTheta_theta (h : Setup I π p α) (hπ : Function.Surjective π) (β : B →ₐ[R] B')
     (hβ : ∀ b, α b - β b ∈ I.map (algebraMap R B')) : IsTheta I p α β (theta h hπ β hβ) where
@@ -187,7 +187,7 @@ theorem theta_unique (h : Setup I π p α) {β : B →ₐ[R] B'} {θ₁ θ₂ : 
     obtain ⟨b, rfl⟩ := h.surj y
     rw [h₁.der, h₂.der]
   · rw [map_zero, map_zero]
-  · intro y z _ _ hy hz; rw [map_add, map_add, hy, hz]
+  · intro y z _ _ hy hz; rw [map_add (f := _), map_add (f := _), hy, hz]
   · intro c z _ hz
     obtain ⟨b, rfl⟩ := h.surj c
     rw [h₁.smul, h₂.smul, hz]
@@ -197,12 +197,12 @@ def betaOf (h : Setup I π p α) (θ : Ω[B₀⁄R₀] →+ B') (hs : ∀ b w, �
   toFun b := α b - θ (D R₀ B₀ (p b))
   map_one' := by rw [map_one, map_one, Derivation.map_one_eq_zero, map_zero, sub_zero]
   map_mul' b c := by
-    rw [map_mul, map_mul, Derivation.leibniz, map_add, hs, hs]
+    rw [map_mul, map_mul, Derivation.leibniz, map_add (f := _), hs, hs]
     have := mul_eq_zero_of_mem h.sq (hm (D R₀ B₀ (p b))) (hm (D R₀ B₀ (p c)))
     linear_combination -this
   map_zero' := by rw [map_zero, map_zero, map_zero, map_zero, sub_zero]
   map_add' b c := by
-    rw [map_add, map_add, map_add, map_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _)]
     ring
   commutes' r := by
     rw [AlgHom.commutes, h.semi.map_algebraMap, Derivation.map_algebraMap, map_zero, sub_zero]

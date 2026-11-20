@@ -207,7 +207,7 @@ theorem fib_V_htDual : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] [I
     obtain ⟨d₀, hd₀, hval⟩ := exists_different_val E p μ (fun a => absT_nonneg p la T e _)
       (fun a => (hf4 _).2 ⟨σ a, hσ' a⟩)
       (fun a b => by
-        simp only [hμ, map_add]
+        simp only [hμ, map_add (f := _)]
         exact absT_add_le p la T e ho.1 hr _ _)
       (by
         rw [hμ, map_natCast]

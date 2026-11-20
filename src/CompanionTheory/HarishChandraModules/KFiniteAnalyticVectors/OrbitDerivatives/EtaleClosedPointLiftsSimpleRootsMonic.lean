@@ -99,7 +99,7 @@ theorem etaleClosed_point_lifts_simple_roots_monic : Lift := by
   have ht : ∀ c (v : X.2.R.smSub), t c v = f (Pi.single c v) := fun c v => dif_pos v.2
   have htw : TwInt (GG k r) (InLieHpk k r) X.2.R.σ T.R.σ (fun g c d => X.1.ρ g d c) t :=
     { lin := fun c => ⟨fun v w hv hw => by
-          rw [ht c ⟨v, hv⟩, ht c ⟨w, hw⟩, ← map_add, ← Pi.single_add]
+          rw [ht c ⟨v, hv⟩, ht c ⟨w, hw⟩, ← map_add (f := _), ← Pi.single_add]
           exact ht c (⟨v, hv⟩ + ⟨w, hw⟩), fun a v hv => by
           rw [ht c ⟨v, hv⟩, ← map_smul, ← Pi.single_smul]
           exact ht c (a • ⟨v, hv⟩)⟩
@@ -314,7 +314,7 @@ theorem exists_pr [(haar : Measure (GM k r)).IsInvInvariant] {X : Obj k r} (hX :
     { toFun := fun x => ∫ g : GM k r, cf X c w x g • T.R.σ g.mat y ∂haar
       map_add' := fun x x' => by
         rw [← integral_add (hI x) (hI x')]
-        simp only [cf, map_add, Pi.add_apply, Submodule.coe_add, inner_add_right, add_smul]
+        simp only [cf, map_add (f := _), Pi.add_apply, Submodule.coe_add, inner_add_right, add_smul]
       map_smul' := fun a x => by
         rw [RingHom.id_apply, ← integral_smul]
         simp only [cf, map_smul, Pi.smul_apply, Submodule.coe_smul, inner_smul_right, smul_smul] }
@@ -444,7 +444,7 @@ theorem injectivity_induction : InjStep := by
   obtain ⟨ε, μ, hDS⟩ := hσ
   let V : Submodule ℂ X.2.R.H :=
     { carrier := {z | ∀ g ∈ GG k r, ⟪w, X.2.R.σ g z⟫_ℂ = 0}
-      add_mem' := fun ha hb g hg => by rw [map_add, inner_add_right, ha g hg, hb g hg, add_zero]
+      add_mem' := fun ha hb g hg => by rw [map_add (f := _), inner_add_right, ha g hg, hb g hg, add_zero]
       zero_mem' := fun g _ => by simp
       smul_mem' := fun a z hz g hg => by rw [map_smul, inner_smul_right, hz g hg, mul_zero] }
   have hcl : IsClosed (V : Set X.2.R.H) := by

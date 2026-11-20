@@ -19,7 +19,7 @@ theorem smul_latTQuot_le_latT : ∀ {p : ℕ} [Fact p.Prime] {C : Type} [Field C
     obtain ⟨s, rfl⟩ := hx
     induction s using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact add_mem hx hy
     | tmul c t => exact ⟨c ⊗ₜ P.actT b t, by rw [P.inclT_tmul, P.inclT_tmul]; rfl⟩
   have e : d • idem (isSplitting_embO P.integers) φ =
       ∑ k, algebraMap O C (r k) ⊗ₜ[ℤ] a k := (isSplitting_embO P.integers).1 (by

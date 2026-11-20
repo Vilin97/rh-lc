@@ -309,7 +309,7 @@ theorem main :
   refine ⟨B, fun R x => e R (κ R x), fun R => (he R).comp (κ R).bijective, fun R x y => ?_, fun f x => ?_,
     b, J, hJ, h1, h2⟩
   · show e R (κ R (x + y)) = _
-    rw [map_add, hadd]
+    rw [map_add (f := _), hadd]
   · show e _ (κ _ (B.map f x)) = _
     rw [hκ, hnat]
 

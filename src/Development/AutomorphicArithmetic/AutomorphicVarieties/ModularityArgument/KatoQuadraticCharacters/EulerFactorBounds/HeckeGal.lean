@@ -147,7 +147,7 @@ private theorem cg_act (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (n : ℕ) (m :
 private theorem cg_add (X : Tower Ω ε) (l : ℕ) [Fact l.Prime] (n : ℕ) {a b a' b' : X.Fn l}
     (h : CgF X l n a b) (h' : CgF X l n a' b') : CgF X l n (a + a') (b + b') := by
   intro u
-  rw [Pi.add_apply, Pi.add_apply, add_sub_add_comm, map_add, h u, h' u, add_zero]
+  rw [Pi.add_apply, Pi.add_apply, add_sub_add_comm, map_add (f := _), h u, h' u, add_zero]
 
 end UpperTheory.V.Z.Kato.Nb.HG
 
@@ -161,7 +161,7 @@ theorem UpperTheory.V.Z.Kato.Nb.sHeckeGal :
   have hD : 0 < (!![(p : ℤ), 0; 0, 1] : Matrix (Fin 2) (Fin 2) ℤ).det := by simpa [Matrix.det_fin_two_of] using hp.pos
   have hS : ∀ γ : SL(2, ℤ), 0 < (γ : Matrix (Fin 2) (Fin 2) ℤ).det := fun γ => by rw [γ.det_coe]; exact one_pos
   unfold Tower.heckeT
-  rw [LinearMap.add_apply, LinearMap.add_apply, map_add]
+  rw [LinearMap.add_apply, LinearMap.add_apply, map_add (f := _)]
   refine cg_add X l n ?_ ?_
   · intro u
     set χ : ℤ_[l] := (cyclotomicCharacter Ω l s.toRingEquiv : ℤ_[l]) with hχ

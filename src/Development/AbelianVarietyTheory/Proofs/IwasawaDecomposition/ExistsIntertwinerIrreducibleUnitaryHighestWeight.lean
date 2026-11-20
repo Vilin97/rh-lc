@@ -58,7 +58,7 @@ theorem raising_eq_zero {k : ℕ} {W : Type} [NormedAddCommGroup W] [InnerProduc
       module
     have s1 := hskew (Z - Zᴴ) (by simp)
     have s2 := hskew (Complex.I • (Z + Zᴴ)) (by simp [conjTranspose_smul, add_comm])
-    rw [e, map_add, map_add, map_smul, map_smul (Ψ), s1, map_smul Φ (-Complex.I / 2), map_smul Ψ (-Complex.I / 2), s2]
+    rw [e, map_add (f := _), map_add (f := _), map_smul, map_smul (Ψ), s1, map_smul Φ (-Complex.I / 2), map_smul Ψ (-Complex.I / 2), s2]
   have h3 : Φ (Matrix.single a b 1) = E a b Δ := by
     show ∑ c, ∑ d, Matrix.single a b (1 : ℂ) c d • E c d Δ = _
     simp [Matrix.single_apply, ite_and, ite_smul]
@@ -113,7 +113,7 @@ theorem exists_lie_map {V₁ V₂ : Type} [AddCommGroup V₁] [Module ℂ V₁] 
     obtain ⟨y, hy, z, hz, hyz⟩ := K.exists_add_mem_mem_orthogonal v₂
     have hyw : ∀ a, E₂ a a y = ν a • y := fun a => by
       have e := hw₂.1 a
-      rw [hyz, map_add, smul_add] at e
+      rw [hyz, map_add (f := _), smul_add] at e
       have e' : E₂ a a y - ν a • y = -(E₂ a a z - ν a • z) := by
         rw [neg_sub, sub_eq_sub_iff_add_eq_add, e, add_comm]
       rw [← sub_eq_zero]

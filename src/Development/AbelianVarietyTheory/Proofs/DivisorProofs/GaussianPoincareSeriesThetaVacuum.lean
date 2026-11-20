@@ -133,7 +133,7 @@ theorem quad_identity {w : 𝓞 D.host.E} (hw : w + GlobalTheory.FinWeil.sgO D w
     -symplOH S T (intA D w • u) u + (symplOH S T y u + symplOH S T (intA D w • (y + u)) (y + u)) =
       symplOH S T (intA D w • y) y + symplO S T (intA D w • y) u := by
   have h1 : intA D w • y + cA D (intA D w) • y = y := by
-    rw [← add_smul, cA_intA, ← RingHom.map_add, hw, RingHom.map_one, one_smul]
+    rw [← add_smul, cA_intA, ← RingHom.map_add (f := _), hw, RingHom.map_one, one_smul]
   have h2 := congrArg (fun z => symplOH S T z u) h1
   simp only [symplOH_add_left] at h2
   have h3 := symplOH_smul (intA D w) u y

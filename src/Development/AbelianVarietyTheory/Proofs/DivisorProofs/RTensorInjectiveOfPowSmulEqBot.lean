@@ -22,10 +22,10 @@ theorem rTensor_injective_of_flat_baseChange {A C M N' N : Type} [CommRing A] [C
   have key : ∀ z, (ι.restrictScalars A).rTensor M (e' z) = e (ι.rTensor (C ⊗[A] M) z) := by
     intro z
     induction z with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul n t =>
       induction t with
-      | add a b ha hb => simp only [tmul_add, map_add, ha, hb]
+      | add a b ha hb => simp only [tmul_add, map_add (f := _), ha, hb]
       | tmul c b => simp [e, e']
   intro x y h
   obtain ⟨x, rfl⟩ := e'.surjective x
@@ -45,10 +45,10 @@ theorem lTensor_injective_of_flat {A C F N' N : Type} [CommRing A] [CommRing C] 
   have key : ∀ z, ι.lTensor F (e' z) = e ((ι.baseChange C).lTensor F z) := by
     intro z
     induction z with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul n t =>
       induction t with
-      | add a b ha hb => simp only [tmul_add, map_add, ha, hb]
+      | add a b ha hb => simp only [tmul_add, map_add (f := _), ha, hb]
       | tmul c b => simp [e, e']
   intro x y h
   obtain ⟨x, rfl⟩ := e'.surjective x

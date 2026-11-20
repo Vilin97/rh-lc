@@ -93,7 +93,7 @@ theorem mk_decomp (g : ℕ → ℂ) (m : ℕ) :
       + X ^ (m + 1) * PowerSeries.mk (fun i => g (i + (m + 1))) := by
   ext k
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, coeff_mk, coeff_X_pow_mul', LinearMap.map_smul, coeff_X_pow,
+    simp only [map_add (f := _), map_sum, coeff_mk, coeff_X_pow_mul', LinearMap.map_smul, coeff_X_pow,
     smul_eq_mul, mul_ite, mul_one, mul_zero]
   by_cases hk : m + 1 ≤ k
   · rw [if_pos hk, Nat.sub_add_cancel hk, sum_ite_eq]
@@ -115,7 +115,7 @@ theorem sum_of_subst (N : ℂ) (τ g : ℕ → ℂ) {w : PowerSeries ℂ} (hw : 
       + (-(X * w)) ^ (m + 1) * θ H := by
     conv_lhs => rw [mk_decomp g m]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_smul, map_mul, map_pow, hX, hH]
+      simp only [map_add (f := _), map_sum, map_smul, map_mul, map_pow, hX, hH]
   rw [hθ, map_sub, map_one, map_mul, hX, hG] at h
   have hterm : ∀ j, Q * (X * w) * (g j • (-(X * w)) ^ j)
       = (g j * (-1) ^ j) • (X * bser N τ j) := by
@@ -129,7 +129,7 @@ theorem sum_of_subst (N : ℂ) (τ g : ℕ → ℂ) {w : PowerSeries ℂ} (hw : 
     ring
   have hc := congrArg (coeff (m + 1)) hfin
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, LinearMap.map_smul, coeff_succ_X_mul, coeff_bser, coeff_X_pow_mul',
+    simp only [map_add (f := _), map_sum, LinearMap.map_smul, coeff_succ_X_mul, coeff_bser, coeff_X_pow_mul',
     smul_eq_mul, hQ, map_sub, coeff_mk, coeff_one] at hc
   simp at hc
   have e : ∑ j ∈ range (m + 1), bco N τ m j * ((-1) ^ j * g j)
@@ -149,13 +149,13 @@ theorem mul_subst_eq_one (n : ℕ) (cc : Fin n → ℂ) {w : PowerSeries ℂ}
       = w * (1 - C (cc i + ((n : ℂ) - 1) / 2 + 1) * X) := by
     intro i
     have hn : C (n : ℂ) = C (-cc i + ((n : ℂ) - 1) / 2) + C (cc i + ((n : ℂ) - 1) / 2 + 1) := by
-      rw [← map_add]; congr 1; ring
+      rw [← map_add (f := _)]; congr 1; ring
     linear_combination (-1 : PowerSeries ℂ) * hw - X * w * hn
   have e2 : ∀ i, 1 - C (-cc i + ((n : ℂ) - 1) / 2 + 1) * -(X * w)
       = w * (1 - C (cc i + ((n : ℂ) - 1) / 2) * X) := by
     intro i
     have hn : C (n : ℂ) = C (-cc i + ((n : ℂ) - 1) / 2 + 1) + C (cc i + ((n : ℂ) - 1) / 2) := by
-      rw [← map_add]; congr 1; ring
+      rw [← map_add (f := _)]; congr 1; ring
     linear_combination (-1 : PowerSeries ℂ) * hw - X * w * hn
   have h1 := GlobalTheory.T.gelfand_series_shift_identity n cc
   have h2 := congrArg θ (GlobalTheory.T.gelfand_series_shift_identity n (fun a => - cc a))

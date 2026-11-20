@@ -48,7 +48,7 @@ theorem locM_sandwich {e : R} (he : e * e = e) (A B J : Matrix n n R) :
 theorem cT_locM (σ : R →+* R) {e : R} (hσ : σ e = e) (M : Matrix n n R) :
     Formalism.UG.cT σ (locM e M) = locM e (Formalism.UG.cT σ M) := by
   ext i j
-  simp only [Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, locM_apply, map_add, map_mul, map_sub, map_one, hσ]
+  simp only [Formalism.UG.cT, Matrix.transpose_apply, Matrix.map_apply, locM_apply, map_add (f := _), map_mul, map_sub, map_one, hσ]
   congr 2
   rw [Matrix.one_apply, Matrix.one_apply]
   split_ifs with h1 h2 h2 <;> simp_all [eq_comm]
@@ -251,7 +251,7 @@ set_option synthInstance.maxHeartbeats 400000
 
 theorem hom_loc {A B : Type} [CommRing A] [CommRing B] (φ : A →+* B) (e a b : A) :
     φ (e * a + (1 - e) * b) = φ e * φ a + (1 - φ e) * φ b := by
-  simp only [map_add, map_mul, map_sub, map_one]
+  simp only [map_add (f := _), map_mul, map_sub, map_one]
 
 theorem hom_loc_one {A B : Type} [CommRing A] [CommRing B] (φ : A →+* B) {e : A} (he : φ e = 1) (a b : A) :
     φ (e * a + (1 - e) * b) = φ a := by

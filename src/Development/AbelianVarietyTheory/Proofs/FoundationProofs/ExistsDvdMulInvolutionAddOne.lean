@@ -122,7 +122,7 @@ theorem exists_norm_eq_neg_one : ∀ (D : D7) (m : ℕ), 0 < m → ∃ l b : �
         simpa using P.add_mem h h')
   refine ⟨l, b, ?_⟩
   have := congrArg (fun x : 𝓞 D.host.E => (x : D.host.E)) hb
-  simp only [map_add, map_mul, map_one, map_natCast] at this
+  simp only [map_add (f := _), map_mul, map_one, map_natCast] at this
   rw [← hs]
   linear_combination this
 

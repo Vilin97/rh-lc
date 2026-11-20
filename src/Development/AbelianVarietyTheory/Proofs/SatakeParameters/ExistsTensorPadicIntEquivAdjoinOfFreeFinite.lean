@@ -37,7 +37,7 @@ theorem tensor_padicInt_equiv_locOrder : ∀ (O : Type) [Ring O] [Module.Free �
           TensorProduct.AlgebraTensorModule.cancelBaseChange_symm_tmul, hf]
         rfl
       | add x y hx hy =>
-        simp only [Function.comp_apply, map_add] at hx hy ⊢
+        simp only [Function.comp_apply, map_add (f := _)] at hx hy ⊢
         rw [hx, hy]
     rw [heq]
     exact (LinearEquiv.injective _).comp ((LinearEquiv.injective _).comp hl)
@@ -54,7 +54,7 @@ theorem tensor_padicInt_equiv_locOrder : ∀ (O : Type) [Ring O] [Module.Free �
       rw [h1]
       refine Subalgebra.mul_mem _ (Subalgebra.algebraMap_mem _ a) (Algebra.subset_adjoin ?_)
       exact ⟨(1 : ℚ) ⊗ₜ[ℤ] o, ⟨o, rfl⟩, rfl⟩
-    | add x y hx hy => rw [map_add]; exact Subalgebra.add_mem _ hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact Subalgebra.add_mem _ hx hy
   let g : O ⊗[ℤ] ℤ_[ℓ] →+* locOrder ℓ (Algebra.TensorProduct.includeRight (R := ℤ) (A := ℚ) (B := O)).toRingHom.range :=
     (f.toRingHom).codRestrict _ hmem
   have hsurj : Function.Surjective g := by

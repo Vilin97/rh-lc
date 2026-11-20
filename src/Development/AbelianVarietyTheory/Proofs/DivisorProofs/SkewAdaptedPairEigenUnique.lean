@@ -32,7 +32,7 @@ theorem rho_add (M : Model σ X W) (ψ : AddChar (AF F) ℂ) (w l : Matrix (Fin 
     M.co.rho ψ (w + l) φ = M.co.rho ψ w (M.co.rho ψ l φ) := by
   have h' := (M.co.form w l).symm.trans h
   show schr ψ (M.co.e (w + l)) φ = schr ψ (M.co.e w) (schr ψ (M.co.e l) φ)
-  rw [map_add, schr_comp ψ _ _ h']
+  rw [map_add (f := _), schr_comp ψ _ _ h']
 
 theorem iota_orth (H' : Plane E d d₁) (hH : ∀ u, form σ W.J (H'.ι *ᵥ u) H'.x = 0) :
     (incM F H'.ι)ᵀ *ᵥ (incM F W.J *ᵥ fun l => cA σ (incV F H'.x l)) = 0 := by

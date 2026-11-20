@@ -99,7 +99,7 @@ theorem kTriv_of_lam_iso : ∀ (S : Scheme.{0}) (B : Over S) [GrpObj B] [IsCommM
     exact y.2.2
   refine (cls_eq_zero_iff (pull_isLB hP _)).1 ?_
   show pull _ (cls _ hP) = 0
-  rw [hcP, hC, map_add, map_sub, map_sub, ← pull_comp, ← pull_comp, ← pull_comp, ← pull_comp, ← Over.comp_left,
+  rw [hcP, hC, map_add (f := _), map_sub, map_sub, ← pull_comp, ← pull_comp, ← pull_comp, ← pull_comp, ← Over.comp_left,
     ← Over.comp_left, ← Over.comp_left, ← Over.comp_left, MonObj.comp_mul, lift_fst, lift_snd, MonObj.comp_one,
     e₂, e₃, e₄]
   abel

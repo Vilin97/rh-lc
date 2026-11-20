@@ -38,7 +38,7 @@ theorem dvd_form_sub {n : ℕ} {x x' y y' : D.La} (hx : D.ModN n (x - x')) (hy :
   have h2 : y = y' + n • b := by rw [← hb]; abel
   refine ⟨D.EF x' b + D.EF a y' + n * D.EF a b, ?_⟩
   rw [h1, h2]
-  simp only [map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul]
+  simp only [map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul]
   ring
 
 theorem exists_form_eq_one (h : 1 ≤ D.p + D.q) : ∃ a b : D.La, D.EF a b = 1 := by

@@ -132,7 +132,7 @@ theorem mark_unique : ∀ (D : D7) (H : ReciprocityTheory.ChartRestriction.G.Geo
       obtain ⟨w, hw, hw'⟩ := hmk a ha
       obtain ⟨b', hb'⟩ := hφ _ (sub_mem (add_mem hw ((hΛ _).1 (C.M.φ k e).2)) (C.M.φ k e).2)
       refine ⟨b', ?_⟩
-      rw [hb', map_add, map_nsmul, Submodule.coe_add, AddSubmonoidClass.coe_nsmul, Matrix.mulVec_add,
+      rw [hb', map_add (f := _), map_nsmul, Submodule.coe_add, AddSubmonoidClass.coe_nsmul, Matrix.mulVec_add,
         Matrix.mulVec_smul, hw', smul_sub, smul_add]
       abel
     · obtain ⟨b', hb'⟩ := hφ _ (sub_mem ((hΛ _).1 (C.M.φ k a).2) (C.M.φ k a).2)

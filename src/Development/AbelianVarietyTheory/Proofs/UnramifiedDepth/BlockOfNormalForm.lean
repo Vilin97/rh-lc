@@ -130,10 +130,10 @@ theorem diagCoord_subst {n : ℕ} {ι : Type} [Fintype ι] (w : Fin n → PVar n
       simp only [← Finset.sum_smul, mul_comm (B _), hE]
       simp
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [e1, ← coe_substAlgHom hs, map_add, map_sum, map_sum]
+      rw [e1, ← coe_substAlgHom hs, map_add (f := _), map_sum, map_sum]
     simp only [map_smul, substAlgHom_X]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [e2, map_add, map_sum, Finset.sum_eq_zero, zero_add]
+      rw [e2, map_add (f := _), map_sum, Finset.sum_eq_zero, zero_add]
     intro b _
     rw [coeff_smul, coe_substAlgHom, ordGE_subst _ ha (ht _) m (by omega), mul_zero]
 
@@ -277,7 +277,7 @@ theorem restr_rows {n0 n : ℕ} (hn : n0 ≤ n) (g : Fin 2) (E : Fin n → I g �
   funext w
   rw [← coe_substAlgHom hs]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [rowForm, map_add, map_sum, map_smul, substAlgHom_X, Sum.elim_inl, Sum.elim_inr]
+    simp only [rowForm, map_add (f := _), map_sum, map_smul, substAlgHom_X, Sum.elim_inl, Sum.elim_inr]
   congr 1
   · symm
     refine Fintype.sum_of_injective (Fin.castLE hn) (Fin.castLE_injective hn) _ _ (fun c hc => ?_) (fun c => ?_)

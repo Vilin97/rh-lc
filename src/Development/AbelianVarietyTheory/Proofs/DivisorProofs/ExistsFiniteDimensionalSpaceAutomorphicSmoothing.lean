@@ -97,7 +97,7 @@ theorem left_mem (hφ : IsAutForm φ) {w : Sm E a} (hw : w ∈ spanK E a φ) :
 theorem fixed_mem {k : GL (Fin a) (Af E)} (hk : k ∈ stabL φ) {w : Sm E a} (hw : w ∈ spanK E a φ) :
     finRep E a k w = w :=
   spanK_induction (p := fun w : Sm E a => finRep E a k w = w) (map_zero _)
-    (fun x y hx hy => by rw [map_add, hx, hy])
+    (fun x y hx hy => by rw [map_add (f := _), hx, hy])
     (fun c x hx => by rw [map_smul, hx])
     (fun c => by
       have hk' : finRep E a k φ = φ := hk
@@ -106,7 +106,7 @@ theorem fixed_mem {k : GL (Fin a) (Af E)} (hk : k ∈ stabL φ) {w : Sm E a} (hw
 theorem killed_mem {z : Module.End ℂ (Sm E a)} (hz : z ∈ Zalg E a) (h0 : z φ = 0) {w : Sm E a}
     (hw : w ∈ spanK E a φ) : z w = 0 :=
   spanK_induction (p := fun w : Sm E a => z w = 0) (map_zero _)
-    (fun x y hx hy => by rw [map_add, hx, hy, add_zero])
+    (fun x y hx hy => by rw [map_add (f := _), hx, hy, add_zero])
     (fun c x hx => by rw [map_smul, hx, smul_zero])
     (fun c => by
       rw [← Module.End.mul_apply, GlobalTheory.ZalgCpt.zalg_comm_cptRep E a c z hz, Module.End.mul_apply, h0, map_zero]) hw

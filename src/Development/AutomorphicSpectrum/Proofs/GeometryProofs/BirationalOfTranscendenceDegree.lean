@@ -57,7 +57,7 @@ theorem isArithVar_of_ratioField_eq_top [Nonempty K] [CharZero Ω] (y : (Σ k, J
   rw [Cmp.ringKrullDim_coord y c hc, htr]
   have h4 : (((d : Cardinal) + (Fintype.card K : Cardinal)).toENat + 1 : ℕ∞) =
       ((d + 1 + Fintype.card K : ℕ) : ℕ∞) := by
-    rw [map_add, Cardinal.toENat_nat, Cardinal.toENat_nat]
+    rw [map_add (f := _), Cardinal.toENat_nat, Cardinal.toENat_nat]
     push_cast
     ring
   rw [h4]

@@ -228,7 +228,7 @@ theorem burGapPos_of_bmu : CompanionTheory.Bmu.BesselMapUniqGap → UpperTheory.
     · have hv' := (hsm v).1 hv
       have hw' := (hsm w).1 hw
       have e0 := hBx (⟨v, hv'⟩ + ⟨w, hw'⟩)
-      rw [map_add, map_add, ← hBx, ← hBx] at e0
+      rw [map_add (f := _), map_add (f := _), ← hBx, ← hBx] at e0
       exact e0
     · have hv' := (hsm v).1 hv
       have e0 := hBx (a • ⟨v, hv'⟩)
@@ -318,7 +318,7 @@ theorem burGapPos_of_bmu : CompanionTheory.Bmu.BesselMapUniqGap → UpperTheory.
   ext w x
   have h0 := hz0 x ((hsm x).2 x.2)
   rw [e₁ x, e₂ x] at h0
-  have h1 : T (a • β₁.flip x + b • β₂.flip x) = 0 := by rw [map_add, map_smul, map_smul]; exact h0
+  have h1 : T (a • β₁.flip x + b • β₂.flip x) = 0 := by rw [map_add (f := _), map_smul, map_smul]; exact h0
   have := LinearMap.congr_fun (T.map_eq_zero_iff.1 h1) w
   simpa using this
 

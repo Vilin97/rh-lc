@@ -540,7 +540,7 @@ theorem symmetrization_equivariant (E : Fin n → Fin n → Module.End ℂ V) (h
   set_option synthInstance.maxHeartbeats 100000 in
     rw [theta_map_apply, theta_map_apply, map_sum]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [arr_operator_apply, map_add, map_sum, hder, Finset.sum_add_distrib]
+    simp only [arr_operator_apply, map_add (f := _), map_sum, hder, Finset.sum_add_distrib]
   rw [hkey]
   exact add_comm _ _
 

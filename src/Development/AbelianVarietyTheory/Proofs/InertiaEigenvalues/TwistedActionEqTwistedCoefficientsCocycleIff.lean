@@ -32,7 +32,7 @@ theorem actTw_eq_twCoef_and_isCoc_iff : ∀ {G : Type} [Group G] [TopologicalSpa
       simp only [tableLineDegreeTwo.actTw, LinearMap.smul_apply, LinearMap.rTensor_tmul]
       rw [coefRep_tmul, twistRep_apply]
       simp [latRep, smul_tmul', MonoidHom.inv_apply]
-    | add a b ha hb => rw [map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   refine ⟨h1, fun z => ?_⟩
   constructor
   · rintro ⟨hz, hc⟩

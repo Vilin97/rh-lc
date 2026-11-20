@@ -50,7 +50,7 @@ theorem jetOf_sum_coord {N : ℕ} (m : ℕ) {T : Type} (I : Finset T) (k : T →
   induction I using Finset.induction_on with
   | empty => simpa using jetOf_const (g := N) m 0
   | insert a s ha ih =>
-    simp only [Finset.sum_insert ha, map_add]
+    simp only [Finset.sum_insert ha, map_add (f := _)]
     rw [← ih, ← jetOf_coord, ← jetOf_add]
     · rfl
     · exact (contDiff_apply ℂ (fun _ => ℂ) _).contDiffAt

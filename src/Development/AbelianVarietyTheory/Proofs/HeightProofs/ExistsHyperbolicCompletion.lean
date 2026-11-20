@@ -109,7 +109,7 @@ theorem _root_.GlobalTheory.exists_hyperbolic_completion :
       intro a
       have := congrArg (h (e a)) hγ
       set_option synthInstance.maxHeartbeats 100000 in
-        simpa [map_add, map_sum, hfe, hu0] using this
+        simpa [map_add (f := _), map_sum, hfe, hu0] using this
     have hrest : ∑ k, γ (Sum.inr k) • u k = 0 := by simpa [hfst] using hγ
     intro k
     rcases k with a | k

@@ -71,7 +71,7 @@ theorem sig_add {B : FB R d O} {h : PS k 2 d} (hc : B.IsCanonGauge k h) (i : Fin
     CZ.cons (constantCoeff_add_first_second B) (CZ.cons (cc_pt 2) CZ.nil)
   have hH0 : constantCoeff (ev (n := 3) ![pt k d 0, pt k d 2] h + ev (n := 3) ![pt k d 1, pt k d 2] h -
       ev (n := 3) ![addOf (B.FK k) (pt k d 0) (pt k d 1), pt k d 2] h) = 0 := by
-    rw [map_sub, map_add, cc_ev' c02, cc_ev' c12, cc_ev' cA, cc_h hc]
+    rw [map_sub, map_add (f := _), cc_ev' c02, cc_ev' c12, cc_ev' cA, cc_h hc]
     simp
   have hH := ig_dlog B.ph1 (constantCoeff_first_factor B) _ hH0 hc.ph1 ((2 : Fin 3), i)
   have h2 := ig_ev czZ integral_family_pair_zero hH
@@ -79,7 +79,7 @@ theorem sig_add {B : FB R d O} {h : PS k 2 d} (hc : B.IsCanonGauge k h) (i : Fin
   have z1 : ∀ c, pderiv k ((2 : Fin 3), i) (pt k (n := 3) d 1 c) = 0 := fun c => by simp [pderiv_pt]
   have zA : ∀ c, pderiv k ((2 : Fin 3), i) (addOf (B.FK k) (pt k (n := 3) d 0) (pt k d 1) c) = 0 := fun c =>
     pderiv_ev_zero cz01 _ _ (fun j l => by fin_cases j <;> simp [pderiv_pt])
-  rw [map_sub, map_add, ev_sub czZ, ev_add czZ, zp h i _ (cc_pt 0) z0, zp h i _ (cc_pt 1) z1,
+  rw [map_sub, map_add (f := _), ev_sub czZ, ev_add czZ, zp h i _ (cc_pt 0) z0, zp h i _ (cc_pt 1) z1,
     zp h i _ (constantCoeff_add_first_second B) zA] at h2
   have f0 : (fun c => ev (n := 2) ![pt k d 0, pt k d 1, 0] (pt k (n := 3) d 0 c)) = pt k (n := 2) d 0 := by
     funext c; simp [pt_apply, ev_X czZ]

@@ -64,7 +64,7 @@ theorem val_polyToAway {P : Ideal (MvPolynomial (Σ k, ι k) ℂ)} (hP : IsMulti
       (Localization.Away (segreW P p)), ← Localization.mk_one_eq_algebraMap]
     rfl
   | add f g hf hg =>
-    simp only [map_add, HomogeneousLocalization.val_add, hf, hg, eval₂_add]
+    simp only [map_add (f := _), HomogeneousLocalization.val_add, hf, hg, eval₂_add]
   | mul_X f q hf =>
     rw [map_mul, HomogeneousLocalization.val_mul, hf, eval₂_mul, eval₂_X]
     congr 1

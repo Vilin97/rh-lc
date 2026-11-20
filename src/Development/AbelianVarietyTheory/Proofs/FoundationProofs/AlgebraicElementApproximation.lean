@@ -52,7 +52,7 @@ theorem exists_approx {p : ℕ} [Fact p.Prime] (P : ℤ_[p][X]) (N : ℕ) :
     · rw [Polynomial.map_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
     conv_lhs => rw [P.as_sum_range]
     refine Finset.sum_congr rfl fun i _ => ?_
-    rw [map_monomial, C_mul_monomial, ← map_add, eq_intCast, ← hmr]
+    rw [map_monomial, C_mul_monomial, ← map_add (f := _), eq_intCast, ← hmr]
 
 theorem exists_cong : ∀ (p : ℕ) [Fact p.Prime] (Ωl : Type) [Field Ωl] [Algebra (O0 p) Ωl], IsClo p Ωl → ∀ (Ω : Type) [Field Ω] [IsAlgClosed Ω] (j : Ω →+* Ωl) (k : ℕ) (e : Ωl), IsInt p e → IsAlgZp p e → ∃ a : Ω, IsInt p (j a) ∧ Cong p k e (j a) := by
   intro p hp Ωl _ _ hclo Ω _ _ j k e he ⟨P, hP0, hP⟩
@@ -79,7 +79,7 @@ theorem exists_cong : ∀ (p : ℕ) [Fact p.Prime] (Ωl : Type) [Field Ωl] [Alg
     exact mul_le_of_le_one_right zero_le hy
   have hco : φ P.leadingCoeff = (Q.coeff P.natDegree : Ωl) + (p : Ωl) ^ N * φ (R.coeff P.natDegree) := by
     have := congrArg (fun S => φ (coeff S P.natDegree)) hQR
-    simp only [coeff_add, coeff_C_mul, coeff_map, map_add, map_mul, eq_intCast, map_intCast] at this
+    simp only [coeff_add, coeff_C_mul, coeff_map, map_add (f := _), map_mul, eq_intCast, map_intCast] at this
     rw [map_pow, map_natCast] at this
     exact this
   have hvQ : v (Q.coeff P.natDegree : Ωl) = v (φ P.leadingCoeff) := by

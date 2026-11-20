@@ -37,7 +37,7 @@ private theorem mkQ_mem_span_of_mem_sup_lemma {R V ι : Type*} [CommRing R] [Add
   obtain ⟨a, ha, p, hp, rfl⟩ := Submodule.mem_sup.mp hx
   have hp0 : P.mkQ p = 0 := by
     rw [Submodule.mkQ_apply, Submodule.Quotient.mk_eq_zero]; exact hp
-  rw [map_add, hp0, add_zero]
+  rw [map_add (f := _), hp0, add_zero]
   have hle : (Submodule.span R (Set.range u)).map P.mkQ ≤
       Submodule.span R (Set.range fun i => P.mkQ (u i)) := by
     rw [Submodule.map_span_le]

@@ -33,7 +33,7 @@ theorem framepf_ι_add (g h : PowerSeries O) :
   let S : PowerSeries O →ₐ[O] PowerSeries O := PowerSeries.substAlgHom ha
   have hS : ∀ g, PowerSeries.subst (π' i) g = S g := fun g => by
     first | exact (congrFun (PowerSeries.coe_substAlgHom ha) g).symm | rfl
-  simp only [framepf_ι, hS, map_add, Pi.single_add]
+  simp only [framepf_ι, hS, map_add (f := _), Pi.single_add]
 
 theorem framepf_ι_sub (g h : PowerSeries O) :
     framepf_ι π' i (g - h) = framepf_ι π' i g - framepf_ι π' i h := by
@@ -103,7 +103,7 @@ private lemma powerSeries_algHom_eq_subst_X (ψ : PowerSeries O →ₐ[O] PowerS
     intro p
     refine Polynomial.induction_on' p ?_ ?_
     · intro p q hp hq
-      rw [Polynomial.coe_add, map_add, map_add, hp, hq]
+      rw [Polynomial.coe_add, map_add (f := _), map_add (f := _), hp, hq]
     · intro m a
       rw [← Polynomial.C_mul_X_pow_eq_monomial, Polynomial.coe_mul, Polynomial.coe_C,
         Polynomial.coe_pow, Polynomial.coe_X, map_mul, map_mul, map_pow, map_pow, hSX, hC]
@@ -118,7 +118,7 @@ private lemma powerSeries_algHom_eq_subst_X (ψ : PowerSeries O →ₐ[O] PowerS
     rw [← hq]; ring
   have hXd : PowerSeries.X ∣ ψ PowerSeries.X := PowerSeries.X_dvd_iff.mpr hψ
   have hdiff : PowerSeries.X ^ (k + 1) ∣ ψ f - S f := by
-    rw [hf, map_add, map_add, map_mul, map_mul, map_pow, map_pow, hSX, hpoly,
+    rw [hf, map_add (f := _), map_add (f := _), map_mul, map_mul, map_pow, map_pow, hSX, hpoly,
       add_sub_add_left_eq_sub, ← mul_sub]
     exact Dvd.dvd.mul_right (pow_dvd_pow_of_dvd hXd _) _
   have h0 := PowerSeries.X_pow_dvd_iff.mp hdiff k (Nat.lt_succ_self k)

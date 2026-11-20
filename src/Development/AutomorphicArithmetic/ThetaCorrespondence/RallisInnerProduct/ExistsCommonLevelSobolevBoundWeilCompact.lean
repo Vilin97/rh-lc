@@ -688,7 +688,7 @@ theorem sm_of_tendstoUniformly_words {G R A : Type} [AddCommGroup G] [NormedAddC
     rw [add_zero] at this
     have e2 : (fun y : R => g l j (w + ι x + ι y)) = fun y => g l j (w + ι (x + y)) := by
       funext y
-      rw [map_add, add_assoc]
+      rw [map_add (f := _), add_assoc]
     rw [← this, e2]
     ring
   rw [e]
@@ -1037,7 +1037,7 @@ theorem sobBdd_absThetaInt : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T 
     (fun f hf g hg => by
       rw [← lintegral_add_left' (hint f hf.1).1.enorm]
       refine lintegral_mono fun q => ?_
-      simp only [GlobalTheory.AutomorphicL2Unitary.descend, thetaKO, hadd f g hf.1 hg.1, map_add, Pi.add_apply]
+      simp only [GlobalTheory.AutomorphicL2Unitary.descend, thetaKO, hadd f g hf.1 hg.1, map_add (f := _), Pi.add_apply]
       exact enorm_add_le _ _)
     (fun c f hf => by
       rw [← lintegral_const_mul' _ _ enorm_ne_top]
@@ -1052,7 +1052,7 @@ theorem sobBdd_absThetaInt : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T 
       have e : u j - f = u j + (-1 : ℂ) • f := by rw [neg_one_smul, sub_eq_add_neg]
       have hf' : (-1 : ℂ) • f ∈ thetaLevel ψ S T U' := Submodule.smul_mem _ _ hf
       rw [e, hadd _ _ (hu j).1 hf'.1, hsm _ _ hf.1]
-      simp only [GlobalTheory.AutomorphicL2Unitary.descend, thetaKO, map_add, Pi.add_apply, neg_one_smul,
+      simp only [GlobalTheory.AutomorphicL2Unitary.descend, thetaKO, map_add (f := _), Pi.add_apply, neg_one_smul,
         sub_eq_add_neg, map_neg, Pi.neg_apply])
   obtain ⟨d', C', hb⟩ := hb d
   refine ⟨d', C * C', fun f hf x hx => ?_⟩

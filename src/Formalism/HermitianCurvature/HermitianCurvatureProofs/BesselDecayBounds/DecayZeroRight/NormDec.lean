@@ -73,7 +73,7 @@ theorem decBd_add_right {σ : Formalism.FourierDecayAlt.B.Mat k r → (H →L[�
   obtain ⟨C1, h1⟩ := h1
   obtain ⟨C2, h2⟩ := h2
   refine ⟨C1 + C2, fun x hx => ?_⟩
-  rw [map_add, inner_add_right, add_mul]
+  rw [map_add (f := _), inner_add_right, add_mul]
   exact (norm_add_le _ _).trans (add_le_add (h1 x hx) (h2 x hx))
 
 theorem decBd_add_left {σ : Formalism.FourierDecayAlt.B.Mat k r → (H →L[ℂ] H)} {a : ℝ} {u1 u2 u : H}

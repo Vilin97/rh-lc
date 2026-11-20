@@ -139,7 +139,7 @@ theorem rationalHecke_of_readsCusp : ∀ (D : D7) (G : Type) [Group G] [Fintype 
       rw [hLb]
       exact (fw.e i _).2
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     | smul a x _ hx =>
       rw [← algebraMap_smul D.what₂.LL a x, map_smul, algebraMap_smul]
       exact Submodule.smul_mem _ a hx

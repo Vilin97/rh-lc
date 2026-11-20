@@ -55,7 +55,7 @@ private theorem core {F R C : Type} {V : Type*} [Field F] [AddCommGroup V] [Modu
       induction y using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [← mul_assoc, hu']
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
     rw [← hl x, hx, map_zero]
   have hsc : ∀ (i : Fin (n + 1)) (x : R),
       u * (⇑φ)^[f * (n - i + N)] (c x * τ ^ r) =

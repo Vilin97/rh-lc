@@ -109,7 +109,7 @@ theorem GlobalTheory.PureFactor.exists_rest_factor : ∀ {F : Type} [Field F] [N
     · rw [Function.update_of_ne hv]
       congr 1
       funext i
-      rw [Pi.add_apply, map_add, (comp_add_of_at v₁ z hz i).2 v hv, add_zero]
+      rw [Pi.add_apply, map_add (f := _), (comp_add_of_at v₁ z hz i).2 v hv, add_zero]
   · intro ψ₀
     funext x
     unfold GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.tens GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.pure

@@ -139,7 +139,7 @@ theorem stab_iff (L : Submodule (𝓞 E) (Fin n → E)) {A : FractionalIdeal (�
       rw [map_smul, e]
       exact AddSubgroup.subset_closure ⟨a, ha, _, add_mem hy hz, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem cong_iff (L : Submodule (𝓞 E) (Fin n → E)) {A : FractionalIdeal (𝓞 E)⁰ E} (hA : A ≠ 0)
@@ -176,13 +176,13 @@ theorem cong_iff (L : Submodule (𝓞 E) (Fin n → E)) {A : FractionalIdeal (�
       | add x y _ _ hx hy =>
         obtain ⟨x', hx', e⟩ := hx
         obtain ⟨y', hy', e'⟩ := hy
-        exact ⟨x' + y', add_mem hx' hy', by rw [smul_add, map_add, e, e', smul_add]⟩
+        exact ⟨x' + y', add_mem hx' hy', by rw [smul_add, map_add (f := _), e, e', smul_add]⟩
       | neg x _ hx =>
         obtain ⟨x', hx', e⟩ := hx
         exact ⟨-x', neg_mem hx', by rw [smul_neg, map_neg, e, smul_neg]⟩
     · obtain ⟨x', hx', e⟩ := hx
       obtain ⟨y', hy', e'⟩ := hy
-      exact ⟨x' + y', add_mem hx' hy', by rw [fv_add, map_add, e, e', smul_add]⟩
+      exact ⟨x' + y', add_mem hx' hy', by rw [fv_add, map_add (f := _), e, e', smul_add]⟩
   · intro h b hb z hz
     induction hz using AddSubgroup.closure_induction with
     | mem z hz =>
@@ -208,7 +208,7 @@ theorem cong_iff (L : Submodule (𝓞 E) (Fin n → E)) {A : FractionalIdeal (�
     | add x y _ _ hx hy =>
       obtain ⟨x', hx', e⟩ := hx
       obtain ⟨y', hy', e'⟩ := hy
-      exact ⟨x' + y', add_mem hx' hy', by rw [smul_add, map_add, e, e', smul_add]⟩
+      exact ⟨x' + y', add_mem hx' hy', by rw [smul_add, map_add (f := _), e, e', smul_add]⟩
     | neg x _ hx =>
       obtain ⟨x', hx', e⟩ := hx
       exact ⟨-x', neg_mem hx', by rw [smul_neg, map_neg, e, smul_neg]⟩

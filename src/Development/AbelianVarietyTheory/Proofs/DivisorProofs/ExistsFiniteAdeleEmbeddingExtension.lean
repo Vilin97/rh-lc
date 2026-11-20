@@ -124,6 +124,6 @@ theorem exists_evOk : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
     induction y using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact zero_mem _
     | tmul a e => exact hmem a e
-    | add y z hy hz => rw [map_add]; exact add_mem hy hz
+    | add y z hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
 
 end GlobalTheory.EvExtend

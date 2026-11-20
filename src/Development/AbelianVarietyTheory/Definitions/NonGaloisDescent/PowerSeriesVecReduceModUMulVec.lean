@@ -484,7 +484,7 @@ theorem hat_coe_A (f : A O K) : hat O l e (f : K⟦X⟧) = algebraMap _ _ (ofA O
 
 theorem hat_add {f g : K⟦X⟧} (hf : f ∈ RpiE O K l e) (hg : g ∈ RpiE O K l e) :
     hat O l e (f + g) = hat O l e f + hat O l e g := by
-  rw [hat_of_mem l e hf, hat_of_mem l e hg, ← map_add, ← hat_coe]
+  rw [hat_of_mem l e hf, hat_of_mem l e hg, ← map_add (f := _), ← hat_coe]
   rfl
 
 theorem hat_mul {f g : K⟦X⟧} (hf : f ∈ RpiE O K l e) (hg : g ∈ RpiE O K l e) :

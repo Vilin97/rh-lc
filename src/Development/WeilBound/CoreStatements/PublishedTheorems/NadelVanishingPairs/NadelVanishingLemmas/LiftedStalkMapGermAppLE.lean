@@ -49,7 +49,7 @@ theorem isLifted_of_sncCharts : ∀ (p : ℕ) [Fact p.Prime] (Y X : Scheme.{0}) 
   refine ⟨Y.presheaf.stalk (π (genericPoint X)), inferInstance, πK, F, hflat, ?_, ?_, ?_⟩
   · intro i z
     obtain ⟨w, hw⟩ := hF1 i z
-    rw [hw, map_add, map_pow, map_mul, map_natCast, hpK, zero_mul, add_zero]
+    rw [hw, map_add (f := _), map_pow, map_mul, map_natCast, hpK, zero_mul, add_zero]
   · intro i l
     exact ⟨_, hlift i l, hF2 i l⟩
   intro y t hyt a ha

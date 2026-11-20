@@ -311,14 +311,14 @@ theorem weight_lie {D : D7} {O : Setup D} {c : O.s.Comp} {Bs : Scheme.{0}} {q : 
         rw [Category.assoc, e, Limits.comp_zero]
       have e1 : (gk ≫ fl.step i) ≫ fl.ι i.succ = fl.ι k.succ := by rw [Category.assoc, fl.step_ι, hgk]
       have := hsec (s i + (gk ≫ fl.step i).app W (s k)) (by
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_eq_left.2 (congr(($e0).app W (s k))))
       have e2 : (fl.ι i.succ).app W (s i + (gk ≫ fl.step i).app W (s k)) =
           (fl.ι i.succ).app W (s i) + (fl.ι k.succ).app W (s k) := by
-        rw [map_add]
+        rw [map_add (f := _)]
         exact congrArg _ (congr(($e1).app W (s k)))
       rw [e2] at this
-      simp only [map_add, Finsupp.add_apply] at this ⊢
+      simp only [map_add (f := _), Finsupp.add_apply] at this ⊢
       exact this) (Gm (embOf O.κ.e σ)) e4 (fun g' hg' => hM g' fun k => (hg' k).trans (congrFun hu'' k).symm)
   have ed' : (((r fun _ => cc i)⁻¹ : G.functionFieldˣ) : G.functionField) * φ (t τ i : (O.var c).Fn) = ψ d := by
     rw [ed, mul_comm]

@@ -103,11 +103,11 @@ theorem pairing_change (B : LinearMap.BilinForm F V) (hB : ∀ z, B z z = 0) (L 
       t ∈ FractionalIdeal.spanSingleton (𝓞 F)⁰ α * K + FractionalIdeal.spanSingleton (𝓞 F)⁰ β * I := by
   have hvw : B v w = -1 := by
     have := hB (v + w)
-    simp only [map_add, LinearMap.add_apply, hB, hw] at this
+    simp only [map_add (f := _), LinearMap.add_apply, hB, hw] at this
     linear_combination this
   have hval : ∀ a s : F, B (a • v + s • w) (α • v + β • w) = α * s + β * (-a) := by
     intro a s
-    simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hB, hw, hvw]
+    simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hB, hw, hvw]
     ring
   show _ ↔ t ∈ ((FractionalIdeal.spanSingleton (𝓞 F)⁰ α * K + FractionalIdeal.spanSingleton (𝓞 F)⁰ β * I :
     FractionalIdeal (𝓞 F)⁰ F) : Submodule (𝓞 F) F)
@@ -169,7 +169,7 @@ theorem exists_sympl_basis (hV : Module.finrank F V = 2) (L : Set V) (hL0 : (0 :
     rintro rfl; apply hP; rw [hPB 0 hx x' hx']; simp
   have hvw : ∀ v w : V, B w v = 1 → B v w = -1 := fun v w h => by
     have := hB (v + w)
-    simp only [map_add, LinearMap.add_apply, hB, h] at this
+    simp only [map_add (f := _), LinearMap.add_apply, hB, h] at this
     linear_combination this
 
   obtain ⟨K₀, hK₀, hK₀L⟩ := fracIdeal_pairing hV B hB L hL0 hLadd hLsmul _ hJ hvalB hspanB hx0
@@ -205,7 +205,7 @@ theorem exists_sympl_basis (hV : Module.finrank F V = 2) (L : Set V) (hL0 : (0 :
   refine ⟨v, w, hL, ?_⟩
   intro m hm b hb m' hm' b' hb'
   rw [hPB _ ((hL _).2 ⟨m, hm, b, hb, rfl⟩) _ ((hL _).2 ⟨m', hm', b', hb', rfl⟩)]
-  simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hB, hw, hvw v w hw]
+  simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hB, hw, hvw v w hw]
   ring
 
 end GlobalTheory.AltLattice

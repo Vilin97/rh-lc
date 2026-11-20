@@ -150,7 +150,7 @@ theorem ringAct_iff_relations : ∀ (O : Type) [Ring O] (r : ℕ) (e : Fin r →
       rw [← hmul, hcoef, hcoef]
     · rw [← prodPow_add]
       apply hwd hNj
-      rw [map_add, hcoef, hcoef, hcoef]
+      rw [map_add (f := _), hcoef, hcoef, hcoef]
     · show prodPow f (coef (e k)) = f k
       rw [hwd hNj (coef (e k)) (Pi.single k 1) (by rw [hcoef, hφ]; simp [Pi.single_apply]),
         prodPow_single]

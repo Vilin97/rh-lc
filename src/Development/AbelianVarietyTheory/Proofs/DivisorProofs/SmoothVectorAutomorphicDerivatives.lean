@@ -90,7 +90,7 @@ theorem exists_eval [μ.IsMulRightInvariant]
   let A₀ : K →ₗ[ℂ] K :=
     { toFun := fun v => ∫ t in Q, κ t • ρ (Θ t) v
       map_add' := fun v w => by
-        simp only [map_add, smul_add]
+        simp only [map_add (f := _), smul_add]
         exact integral_add (hi v) (hi w)
       map_smul' := fun a v => by
         simp only [map_smul, RingHom.id_apply, ← integral_smul]
@@ -101,7 +101,7 @@ theorem exists_eval [μ.IsMulRightInvariant]
   let E : Submodule ℂ K :=
     { carrier := {v | (∀ k ∈ H, ρ k v = v) ∧ ∃ φ : G → ℂ, Continuous φ ∧ ι v =ᵐ[μ] φ}
       zero_mem' := ⟨fun k _ => map_zero _, fun _ => 0, continuous_const, rep_zero hlin⟩
-      add_mem' := fun {v w} ⟨a1, φ, a2, a3⟩ ⟨b1, ψ, b2, b3⟩ => ⟨fun k hk => by rw [map_add, a1 k hk, b1 k hk],
+      add_mem' := fun {v w} ⟨a1, φ, a2, a3⟩ ⟨b1, ψ, b2, b3⟩ => ⟨fun k hk => by rw [map_add (f := _), a1 k hk, b1 k hk],
         fun x => φ x + ψ x, a2.add b2, by
           filter_upwards [rep_add hlin v w, a3, b3] with x e1 e2 e3
           rw [e1, e2, e3]⟩

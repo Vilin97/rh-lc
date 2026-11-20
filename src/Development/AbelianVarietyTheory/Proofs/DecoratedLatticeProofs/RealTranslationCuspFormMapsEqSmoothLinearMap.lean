@@ -80,7 +80,7 @@ theorem rTrans_eq_map : ∀ (D : D7) (θ : InfFam D) (V : HSp D) (S : D.what₂.
     funext h
     simp only [rTrans, map_smul, Pi.smul_apply, key, rTr]
   | add x y hx hy =>
-    rw [map_add, map_add, hx, hy]
+    rw [map_add (f := _), map_add (f := _), hx, hy]
     funext h
     simp [rTrans]
 

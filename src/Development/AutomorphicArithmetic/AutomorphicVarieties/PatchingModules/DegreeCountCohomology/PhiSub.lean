@@ -96,7 +96,7 @@ theorem UpperTheory.V.Pa.finZ :
   · intro k k'
     show Multiplicative.ofAdd (f (z.1 ((k * k' : N) : Γ))) =
       Multiplicative.ofAdd (f (z.1 k)) * Multiplicative.ofAdd (f (z.1 k'))
-    rw [Subgroup.coe_mul, zN _ z.2 _ _ k.2, map_add, ofAdd_add]
+    rw [Subgroup.coe_mul, zN _ z.2 _ _ k.2, map_add (f := _), ofAdd_add]
   · have hlc : IsLocallyConstant (fun k : N => Multiplicative.ofAdd (f (z.1 k))) :=
       (((mem_Zl ρ).1 z.2).1.comp_continuous continuous_subtype_val).comp _
     rw [MonoidHom.coe_ker]

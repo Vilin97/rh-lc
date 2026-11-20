@@ -110,7 +110,7 @@ theorem constantCoeff_linP (x : σ) : constantCoeff (linP L x) = 0 := by
 theorem constantCoeff_aeval_linP (F : MvPolynomial σ S) : constantCoeff (aeval (linP L) F) = constantCoeff F := by
   induction F using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p x _ => rw [map_mul, aeval_X, map_mul, map_mul, constantCoeff_linP, constantCoeff_X, mul_zero, mul_zero]
 
 theorem pderiv_aeval_linP (F : MvPolynomial σ S) (y : σ) :
@@ -118,10 +118,10 @@ theorem pderiv_aeval_linP (F : MvPolynomial σ S) (y : σ) :
   induction F using MvPolynomial.induction_on with
   | C a => simp
   | add p q hp hq =>
-    simp only [map_add, hp, hq, mul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), hp, hq, mul_add, Finset.sum_add_distrib]
   | mul_X p x0 hp =>
     rw [map_mul, aeval_X, pderiv_mul, hp, pderiv_linP]
-    simp only [pderiv_mul, map_add, map_mul, aeval_X, pderiv_X, mul_add, Finset.sum_add_distrib, Finset.sum_mul]
+    simp only [pderiv_mul, map_add (f := _), map_mul, aeval_X, pderiv_X, mul_add, Finset.sum_add_distrib, Finset.sum_mul]
     congr 1
     · exact Finset.sum_congr rfl fun x _ => by ring
     · rw [Finset.sum_eq_single x0]
@@ -139,7 +139,7 @@ theorem ap_sub (P : MvPolynomial σ S) : ∀ F : MvPolynomial σ S, ap P (aeval 
     rw [aeval_C, algebraMap_eq, ap_C, ap_C, ← constantCoeff_eq, constantCoeff_aeval_linP]
   | add p q hp hq =>
     intro F
-    rw [map_add, ap_add_left, ap_add_left, hp, hq]
+    rw [map_add (f := _), ap_add_left, ap_add_left, hp, hq]
   | mul_X p y hp =>
     intro F
     rw [ap_mul_X, pderiv_aeval_linP, ap_sum_right, map_mul, aeval_X]

@@ -34,7 +34,7 @@ theorem exists_mem_pow_sub_mem_pow_succ {A : Type u_1} [CommRing A] {B : Type u_
       obtain ⟨x2, hx2, e2⟩ := h2'
       refine ⟨x1 + x2, Ideal.add_mem _ hx1 hx2, ?_⟩
       have e : φ (x1 + x2) - (y1 + y2) = (φ x1 - y1) + (φ x2 - y2) := by
-        rw [map_add]
+        rw [map_add (f := _)]
         ring
       rw [e]
       exact Ideal.add_mem _ e1 e2

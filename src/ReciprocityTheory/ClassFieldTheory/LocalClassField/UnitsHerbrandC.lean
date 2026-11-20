@@ -42,7 +42,7 @@ variable (K L) in
 noncomputable def proj1 : L →+ L where
   toFun x := Phi K L x 1 • IsGalois.normalBasis K L 1
   map_zero' := by simp
-  map_add' x y := by rw [map_add, Pi.add_apply, add_smul]
+  map_add' x y := by rw [map_add (f := _), Pi.add_apply, add_smul]
 
 theorem norm_Phi_proj1 (x : L) : ‖Phi K L (proj1 K L x)‖ ≤ ‖Phi K L x‖ := by
   classical
@@ -94,7 +94,7 @@ def ball (t : ℝ) (ht : 0 ≤ t) : AddSubgroup L where
   zero_mem' := by simpa using ht
   add_mem' := fun {x y} hx hy => by
     show ‖Phi K L (x + y)‖ ≤ t
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
   neg_mem' := fun {x} hx => by
     show ‖Phi K L (-x)‖ ≤ t

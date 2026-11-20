@@ -109,7 +109,7 @@ theorem B0_fixedProj (hinv : ∀ g v w, B₀ (ρ g v) (ρ g w) = B₀ v w) {K : 
       show B₀ (ρ κ w - w) y = 0
       rw [map_sub, LinearMap.sub_apply, h1, sub_self]
     | zero => simp
-    | add x y' _ _ hx hy' => rw [map_add, LinearMap.add_apply, hx, hy', add_zero]
+    | add x y' _ _ hx hy' => rw [map_add (f := _), LinearMap.add_apply, hx, hy', add_zero]
     | smul a x _ hx => rw [map_smul, LinearMap.smul_apply, hx, smul_zero]
   have := hc _ (sub_fixedProj_mem hρ.1 hKc hKo z)
   rw [map_sub, LinearMap.sub_apply, sub_eq_zero] at this
@@ -189,7 +189,7 @@ theorem rN_add_C {K : Subgroup G} (hKc : IsCompact (K : Set G)) (hKo : IsOpen (K
   have s1 := rN_spec μ hρ hpos hKc hKo C₁ f x y
   have s2 := rN_spec μ hρ hpos hKc hKo C₂ f x y
   show B₀ ((rN μ hρ hpos hKc hKo C₁ f x : V) + (rN μ hρ hpos hKc hKo C₂ f x : V)) y = _
-  rw [map_add, LinearMap.add_apply, s1, s2, LinearMap.add_apply, LinearMap.add_apply]
+  rw [map_add (f := _), LinearMap.add_apply, s1, s2, LinearMap.add_apply, LinearMap.add_apply]
 
 theorem rN_smul_C {K : Subgroup G} (hKc : IsCompact (K : Set G)) (hKo : IsOpen (K : Set G)) (c : ℂ) (C : Sesq V)
     (f : locallyConstantCompactSupport G ℂ ℂ) :
@@ -207,7 +207,7 @@ theorem rN_add_f {K : Subgroup G} (hKc : IsCompact (K : Set G)) (hKo : IsOpen (K
   have s2 := rN_spec μ hρ hpos hKc hKo C f₂ x y
   show B₀ ((rN μ hρ hpos hKc hKo C f₁ x : V) + (rN μ hρ hpos hKc hKo C f₂ x : V)) y =
     C (heckeLin μ hρ.1 (f₁ + f₂) x) y
-  rw [map_add, LinearMap.add_apply, s1, s2, heckeLin_add μ hρ.1, LinearMap.add_apply, map_add, LinearMap.add_apply]
+  rw [map_add (f := _), LinearMap.add_apply, s1, s2, heckeLin_add μ hρ.1, LinearMap.add_apply, map_add (f := _), LinearMap.add_apply]
   rfl
 
 theorem rN_smul_f {K : Subgroup G} (hKc : IsCompact (K : Set G)) (hKo : IsOpen (K : Set G)) (C : Sesq V) (c : ℂ)
@@ -240,7 +240,7 @@ def formD (hinv : ∀ g v w, B₀ (ρ g v) (ρ g w) = B₀ v w) (Pr : (G → ℂ
   LinearMap.mk₂ ℂ (fun C g => DF μ hρ hpos C (Pr g))
     (fun C₁ C₂ g => by
       unfold DF DK
-      rw [rN_add_C, map_add])
+      rw [rN_add_C, map_add (f := _)])
     (fun c C g => by
       unfold DF DK
       rw [rN_smul_C, map_smul, smul_eq_mul])
@@ -253,10 +253,10 @@ def formD (hinv : ∀ g v w, B₀ (ρ g v) (ρ g w) = B₀ v w) (Pr : (G → ℂ
         rw [Subgroup.coe_inf]; exact K₁.isOpen.inter K₂.isOpen
       have b₁ := h₁.mono (inf_le_left : (K₁ : Subgroup G) ⊓ K₂ ≤ K₁)
       have b₂ := h₂.mono (inf_le_right : (K₁ : Subgroup G) ⊓ K₂ ≤ K₂)
-      rw [map_add, DF_eq μ hρ hpos hinv C _ hMc hMo (by exact b₁.add b₂), DF_eq μ hρ hpos hinv C _ hMc hMo b₁,
+      rw [map_add (f := _), DF_eq μ hρ hpos hinv C _ hMc hMo (by exact b₁.add b₂), DF_eq μ hρ hpos hinv C _ hMc hMo b₁,
         DF_eq μ hρ hpos hinv C _ hMc hMo b₂]
       unfold DK
-      rw [rN_add_f, map_add])
+      rw [rN_add_f, map_add (f := _)])
     (fun c C g => by
       obtain ⟨K₁, h₁c, h₁⟩ := exists_K (Pr g)
       rw [map_smul, DF_eq μ hρ hpos hinv C _ h₁c K₁.isOpen (by exact h₁.smul c), DF_eq μ hρ hpos hinv C _ h₁c K₁.isOpen h₁]

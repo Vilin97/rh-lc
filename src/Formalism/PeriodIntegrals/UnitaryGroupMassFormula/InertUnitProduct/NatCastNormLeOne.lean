@@ -11,7 +11,7 @@ lemma not_small_sq_add (d : ℕ) (hd : ¬ IsSquare (((-(d : ℤ) : ℤ) : ZMod p
   intro h
   have hmem : t ^ 2 + (d : ℤ_[p]) ∈ RingHom.ker (PadicInt.toZMod (p := p)) := by
     rw [PadicInt.ker_toZMod, IsLocalRing.mem_maximalIdeal, PadicInt.mem_nonunits]; exact h
-  rw [RingHom.mem_ker, map_add, map_pow, map_natCast] at hmem
+  rw [RingHom.mem_ker, map_add (f := _), map_pow, map_natCast] at hmem
   apply hd
   refine ⟨PadicInt.toZMod t, ?_⟩
   push_cast

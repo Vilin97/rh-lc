@@ -101,7 +101,7 @@ theorem one_op_fin (i : ι) (x : PiTensorProduct ℂ M) :
     obtain ⟨s, hs⟩ := hy
     obtain ⟨t, ht⟩ := hz
     refine ⟨s ∪ t, fun f g h => ?_⟩
-    rw [map_add, map_add, hs f g fun m hm => h m (Finset.mem_union_left _ hm),
+    rw [map_add (f := _), map_add (f := _), hs f g fun m hm => h m (Finset.mem_union_left _ hm),
       ht f g fun m hm => h m (Finset.mem_union_right _ hm)]
 
 theorem map_mem_of_one_op [Fintype ι] (N : Submodule ℂ (PiTensorProduct ℂ M))

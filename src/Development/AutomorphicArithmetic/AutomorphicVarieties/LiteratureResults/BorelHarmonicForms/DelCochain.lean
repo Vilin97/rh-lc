@@ -10,7 +10,7 @@ theorem UpperTheory.V.Lit.Bor.delCochain :
     LinearMap.mk₂ ℝ (fun Y Z => L (toL Y.1) (ω.curryLeft Z fun i => adHerm k (X i)))
       (fun Y Y' Z => LinearMap.congr_fun (map_add L (toL Y.1) (toL Y'.1)) _)
       (fun c Y Z => LinearMap.congr_fun (map_smul L c (toL Y.1)) _)
-      (fun Y Z Z' => by rw [map_add, AlternatingMap.add_apply, map_add])
+      (fun Y Z Z' => by rw [map_add (f := _), AlternatingMap.add_apply, map_add (f := _)])
       (fun c Y Z => by
         rw [map_smul, AlternatingMap.smul_apply]
         exact ((L (toL Y.1)).restrictScalars ℝ).map_smul c _)

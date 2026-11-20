@@ -172,7 +172,7 @@ theorem kU_symm (m n r : ℕ) (ε : Fin N → LinearMap.BilinForm ℤ (Fin r →
 
 theorem kU_add (m n r : ℕ) (ε : Fin N → LinearMap.BilinForm ℤ (Fin r → ℤ)) (a a' b : Fin r → ℤ) :
     kU W N m n r ε (a + a') b = kU W N m n r ε a b * kU W N m n r ε a' b := by
-  simp only [kU, ← Finset.prod_mul_distrib, ← zpow_add, map_add, LinearMap.add_apply, mul_add]
+  simp only [kU, ← Finset.prod_mul_distrib, ← zpow_add, map_add (f := _), LinearMap.add_apply, mul_add]
 
 end Periods
 

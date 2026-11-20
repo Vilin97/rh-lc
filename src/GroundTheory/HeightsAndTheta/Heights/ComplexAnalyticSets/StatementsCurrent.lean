@@ -219,7 +219,7 @@ theorem isFiniteProjection_point {n : ℕ} (p : Fin n → ℂ) (A : Matrix (Fin 
     intro a
     induction a using MvPolynomial.induction_on with
     | C c => simp
-    | add a b ha hb => rw [map_add, C_add, ← ha, ← hb]
+    | add a b ha hb => rw [map_add (f := _), C_add, ← ha, ← hb]
     | mul_X a i _ => exact i.elim0
   have hproj : ∀ c : ℂ, projHom (RingHom.ker (MvPolynomial.eval p)) A (C c) = algebraMap ℂ _ c := by
     intro c

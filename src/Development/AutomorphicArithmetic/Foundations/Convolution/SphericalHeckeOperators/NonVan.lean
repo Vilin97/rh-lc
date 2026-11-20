@@ -37,7 +37,7 @@ private lemma phi_anti (b : Fin n → ℕ) {i j : Fin n} (hij : i ≤ j) : phi b
 private def chi (w : Fin n → ℂˣ) : Multiplicative (Fin n → ℕ) →* ℂ where
   toFun b := monomialChar (phi (Multiplicative.toAdd b)) w
   map_one' := by simp
-  map_mul' b c := by simp [map_add, monomialChar_add]
+  map_mul' b c := by simp [map_add (f := _), monomialChar_add]
 
 private lemma chi_apply (w : Fin n → ℂˣ) (b : Fin n → ℕ) :
     chi w (Multiplicative.ofAdd b) = monomialChar (phi b) w := rfl

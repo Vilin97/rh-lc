@@ -270,7 +270,7 @@ theorem eps_eq_chiQ (g : Br.G D.nbr i w hw) :
     obtain ⟨y, hy⟩ := Ideal.mem_span_singleton'.1 hamod
     have hy0' : ψ y0 = (a : Formalism.BasicNotions.Loc.Om (D.nd.l i)) + ψ y * ((D.nd.l i : ℕ) : Formalism.BasicNotions.Loc.Om (D.nd.l i)) ^ m := by
       have : y0 = (a : D.nd.O i) + y * ((D.nd.l i : ℕ) : D.nd.O i) ^ m := by rw [hy]; ring
-      rw [this, map_add, map_mul, map_pow, map_natCast, map_natCast]
+      rw [this, map_add (f := _), map_mul, map_pow, map_natCast, map_natCast]
     have hq' : ((b : ℕ) : Formalism.BasicNotions.Loc.Om (D.nd.l i)) - (a : Formalism.BasicNotions.Loc.Om (D.nd.l i)) =
         ((D.nd.l i : ℕ) : Formalism.BasicNotions.Loc.Om (D.nd.l i)) ^ m * (q : Formalism.BasicNotions.Loc.Om (D.nd.l i)) := by
       have := congrArg (Int.cast : ℤ → Formalism.BasicNotions.Loc.Om (D.nd.l i)) hq

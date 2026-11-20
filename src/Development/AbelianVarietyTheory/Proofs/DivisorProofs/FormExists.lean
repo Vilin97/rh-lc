@@ -141,7 +141,7 @@ theorem formEx : GlobalTheory.RealLift.FormEx := by
     have := congrArg (fun t => t (e 1) g) h0
     simpa [hb, hκ1] using this
   · intro Z f g
-    rw [hb, hb, hb, hκeq, actS_full, ← map_add, ← map_add, act_sum P Q R S k k' x hkk hx, map_smul, map_smul,
+    rw [hb, hb, hb, hκeq, actS_full, ← map_add (f := _), ← map_add (f := _), act_sum P Q R S k k' x hkk hx, map_smul, map_smul,
       smul_eq_mul]
 
 end GlobalTheory.CharPair

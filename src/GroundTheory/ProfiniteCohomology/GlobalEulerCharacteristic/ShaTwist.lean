@@ -33,7 +33,7 @@ theorem sum_coordTensor_tmul (z : TensorProduct k H N) : ∑ i, coordTensor b i 
           rw [coordTensor_tmul, TensorProduct.smul_tmul, Module.Basis.coord_apply]
       _ = y ⊗ₜ[k] m := by rw [← TensorProduct.tmul_sum, b.sum_repr]
   | add z w hz hw =>
-    simp only [map_add, TensorProduct.add_tmul]
+    simp only [map_add (f := _), TensorProduct.add_tmul]
     rw [Finset.sum_add_distrib, hz, hw]
 
 omit [Fintype ι] in
@@ -43,7 +43,7 @@ theorem coordTensor_rTensor {X : Type*} [AddCommGroup X] [Module k X] (f : X →
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul x m => rw [LinearMap.rTensor_tmul, coordTensor_tmul, coordTensor_tmul, map_smul]
-  | add z w hz hw => simp only [map_add, hz, hw]
+  | add z w hz hw => simp only [map_add (f := _), hz, hw]
 
 theorem mem_range_rTensor_iff {X : Type*} [AddCommGroup X] [Module k X] (f : X →ₗ[k] H)
     (z : TensorProduct k H N) :
@@ -95,7 +95,7 @@ theorem cohomologyMap_resTensorFormMor_coord_twistResMap (n : ℕ) (i : ιb)
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul y m => rw [cohomologyMap_resTensorFormMor_twistResMap, coordTensor_tmul]
-  | add z w hz hw => rw [map_add, map_add, hz, hw, map_add]
+  | add z w hz hw => rw [map_add (f := _), map_add (f := _), hz, hw, map_add (f := _)]
 
 theorem twistResMap_mem_shaSubmodule_iff (n : ℕ)
     (z : TensorProduct k (cohomology (Rep.res Q.subtype T) n) M) :

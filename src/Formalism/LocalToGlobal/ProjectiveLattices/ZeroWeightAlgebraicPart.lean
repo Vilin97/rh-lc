@@ -326,8 +326,8 @@ def rdRg : RgR h hj hG Z →+* (Frame ((T.U j T.σ₀).X (κ Z)).Ψ D.R.r → �
     · rw [ZeroMemClass.coe_zero, map_zero]
   map_add' f g := by
     refine (thR_congr h hj hG hκ Z hx0 _ (preR h hj hG Z f + preR h hj hG Z g) ?_).trans ?_
-    · rw [map_add, preR_spec, preR_spec, preR_spec]; exact Subring.coe_add _ f g
-    · rw [Subring.coe_add, map_add]
+    · rw [map_add (f := _), preR_spec, preR_spec, preR_spec]; exact Subring.coe_add _ f g
+    · rw [Subring.coe_add, map_add (f := _)]
 
 theorem rdRg_apply (b : BcR h j) (hb : PsiC h hj hG Z b ∈ RgR h hj hG Z) :
     rdRg h hj hG hκ Z hx0 ⟨PsiC h hj hG Z b, hb⟩ = thR h hj hx0 b.1 :=

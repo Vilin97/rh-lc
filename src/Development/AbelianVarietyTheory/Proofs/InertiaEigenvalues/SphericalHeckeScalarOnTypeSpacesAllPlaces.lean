@@ -247,7 +247,7 @@ theorem tN_finset_sum {ρ : Representation ℂ (GQ L n) W} {S : Submodule ℂ (G
       have hyfix : ∀ κ ∈ Umax L n, TrivOutside {s.v} κ → NG.rt L n κ y = y := by
         intro κ hκ hκt
         have e := hfix κ hκ hκt
-        rw [map_add] at e
+        rw [map_add (f := _)] at e
         have hd : NG.rt L n κ y - y ∈ a ⊓ ⨆ i ∈ t, i := by
           refine ⟨Submodule.sub_mem _ (haF.1.1.stable κ y hy) hy, ?_⟩
           have h4 : NG.rt L n κ y - y = z - NG.rt L n κ z := by
@@ -260,7 +260,7 @@ theorem tN_finset_sum {ρ : Representation ℂ (GQ L n) W} {S : Submodule ℂ (G
       have hzfix : ∀ κ ∈ Umax L n, TrivOutside {s.v} κ → NG.rt L n κ z = z := by
         intro κ hκ hκt
         have e := hfix κ hκ hκt
-        rw [map_add, hyfix κ hκ hκt] at e
+        rw [map_add (f := _), hyfix κ hκ hκt] at e
         exact add_left_cancel e
       have e1 := tN_iso hS.1 haF.2 s ϖ k hfin c hc y hy hyfix
       have e2 := ih htF z hz hzfix

@@ -42,7 +42,7 @@ theorem frob_sum {σ ι : Type} (s : Finset ι) (f : ι → MvPowerSeries σ C) 
     have e : (f b + ∑ i ∈ s, f i) ^ V.l - (f b ^ V.l + ∑ i ∈ s, f i ^ V.l) =
         ((f b + ∑ i ∈ s, f i) ^ V.l - f b ^ V.l - (∑ i ∈ s, f i) ^ V.l) +
           ((∑ i ∈ s, f i) ^ V.l - ∑ i ∈ s, f i ^ V.l) := by ring
-    rw [e, map_add]
+    rw [e, map_add (f := _)]
     exact ValuationNonnegativity.mm_add (frob_mv (hf b) hS μ) ih
 
 theorem monomial_pow' {σ : Type} (β : σ →₀ ℕ) (a : C) :

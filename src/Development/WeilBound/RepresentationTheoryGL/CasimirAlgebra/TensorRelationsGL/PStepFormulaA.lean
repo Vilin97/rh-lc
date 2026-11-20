@@ -37,7 +37,7 @@ theorem lift_PiJ {m : ℕ} {P : Type} (E : Fin n → Fin n → Module.End ℂ M)
     (lift (PiJ m E u) : Module.End ℂ (TV n (TV n M (Fin m)) P)) =
       (List.ofFn fun i => algebraMap ℂ _ u + lift (xJ E i)).prod := by
   rw [← liftA_apply]
-  simp only [PiJ, map_list_prod, List.map_ofFn, Function.comp_def, map_add, AlgHom.commutes, liftA_apply]
+  simp only [PiJ, map_list_prod, List.map_ofFn, Function.comp_def, map_add (f := _), AlgHom.commutes, liftA_apply]
 
 theorem PiJ_one (E : Fin n → Fin n → Module.End ℂ M) (u : ℂ) :
     (PiJ 1 E u : Module.End ℂ (TV n M (Fin 1))) = algebraMap ℂ _ u + Om E 0 := by

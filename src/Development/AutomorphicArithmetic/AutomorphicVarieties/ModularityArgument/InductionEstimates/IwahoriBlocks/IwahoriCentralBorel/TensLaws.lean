@@ -60,7 +60,7 @@ private theorem prodMap_range {A B : Type} (X₁ : Submodule ℂ (A → ℂ)) (X
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul φ ψ => exact Submodule.subset_span ⟨φ.1, φ.2, ψ.1, ψ.2, prodMap_tmul X₁ X₂ φ ψ⟩
-    | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   · refine Submodule.span_le.2 ?_
     rintro _ ⟨φ, hφ, ψ, hψ, rfl⟩
     exact ⟨⟨φ, hφ⟩ ⊗ₜ ⟨ψ, hψ⟩, prodMap_tmul X₁ X₂ _ _⟩

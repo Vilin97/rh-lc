@@ -50,7 +50,7 @@ theorem pow_eig (y : Mat C N) (l : C) (w : Fin N → C) (h : y *ᵥ w = l • w)
 theorem aeval_eig (y : Mat C N) (l : C) (w : Fin N → C) (h : y *ᵥ w = l • w) (q : C[X]) :
     (aeval y q) *ᵥ w = q.eval l • w := by
   induction q using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, Matrix.add_mulVec, hp, hq, eval_add, add_smul]
+  | add p q hp hq => rw [map_add (f := _), Matrix.add_mulVec, hp, hq, eval_add, add_smul]
   | monomial n a =>
     rw [aeval_monomial, Algebra.algebraMap_eq_smul_one, smul_mul_assoc, one_mul, Matrix.smul_mulVec,
       pow_eig y l w h, smul_smul, eval_monomial]

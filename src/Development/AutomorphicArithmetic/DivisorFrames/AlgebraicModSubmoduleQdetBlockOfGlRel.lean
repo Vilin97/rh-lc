@@ -59,7 +59,7 @@ private theorem exists_poly {A : Type} [Ring A] [Algebra ℂ A] {R : Type} [Comm
   refine ⟨X ^ n + ∑ k : Fin n, C (d k) * X ^ (k : ℕ), monic_X_pow_add (degree_sum_fin_lt _), fun u => ?_⟩
   rw [hq u, ← Fin.sum_univ_eq_sum_range (fun k => u ^ k • c k)]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [eval_add, eval_pow, eval_X, eval_finsetSum, eval_mul, eval_C, map_add, map_sum]
+    simp only [eval_add, eval_pow, eval_X, eval_finsetSum, eval_mul, eval_C, map_add (f := _), map_sum]
   congr 1
   · rw [← map_pow, AlgHom.commutes]
   · refine Finset.sum_congr rfl fun k _ => ?_
@@ -74,7 +74,7 @@ private theorem factor_alg {V : Type} [AddCommGroup V] [Module ℂ V] {R : Type}
     { carrier := {a | φ a v ∈ M}
       add_mem' := fun {a b} ha hb => by
         show φ (a + b) v ∈ M
-        rw [map_add]; exact M.add_mem ha hb
+        rw [map_add (f := _)]; exact M.add_mem ha hb
       zero_mem' := by
         show φ 0 v ∈ M
         rw [map_zero]; exact M.zero_mem
@@ -118,7 +118,7 @@ private theorem aeval_congr {V : Type} [AddCommGroup V] [Module ℂ V] (W M : Su
   | add p q hp hq =>
     have e : aeval c (p + q) v - aeval D (p + q) v =
         (aeval c p v - aeval D p v) + (aeval c q v - aeval D q v) := by
-      simp only [map_add, LinearMap.add_apply]; abel
+      simp only [map_add (f := _), LinearMap.add_apply]; abel
     rw [e]; exact M.add_mem hp hq
   | monomial n a =>
     simp only [aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply]
@@ -193,7 +193,7 @@ private theorem block_congr {V : Type} [AddCommGroup V] [Module ℂ V] {r m : �
       obtain ⟨p, q, w, rfl⟩ := hy
       exact Submodule.subset_span ⟨p, q, w.1 x, w.2 x hx, rfl⟩
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
     | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
   have h3 := h2 _ h1
   rw [map_sub, map_mul, map_qdet, map_qdet, map_qdet] at h3
@@ -230,7 +230,7 @@ private theorem span_stable {V : Type} [AddCommGroup V] [Module ℂ V] {r m : �
         · exact Submodule.subset_span ⟨p, t, x, hx, rfl⟩
       · exact Submodule.zero_mem _
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+  | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
   | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
 
 end UpperTheory.QuantumDeterminantBlockAnnihilators
@@ -250,7 +250,7 @@ theorem UpperTheory.algebraicModSubmodule_qdet_block_of_glRel :
     intro a b hab x hx
     rw [hN'] at hx ⊢
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 hx
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (hN _ _ _ hy) (span_stable X hX W hW a b hab z hz)
   have hAM : ∀ p q : Fin r, ∀ x ∈ N', X (Fin.castAdd m p) (Fin.castAdd m q) x ∈ N' :=
     fun p q => hst _ _ (Or.inl ⟨p, q, rfl, rfl⟩)

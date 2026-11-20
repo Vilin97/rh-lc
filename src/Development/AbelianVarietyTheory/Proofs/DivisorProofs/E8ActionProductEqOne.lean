@@ -35,7 +35,7 @@ theorem lam_mul_left (M : RigLB B) (cub : CubicalStr B M) {T : Over S} (x x' y :
   have e' := congrArg (fun u => FreeAbelianGroup.lift (fun ψ => GlobalTheory.CechPic.pull ψ (GlobalTheory.CechPic.cls M.L M.isLB))
     (Multiplicative.toAdd u)) e
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [toAdd_prod, toAdd_zpow, toAdd_ofAdd, toAdd_mul, toAdd_inv, map_sum, map_zsmul, map_add, map_neg,
+    simp only [toAdd_prod, toAdd_zpow, toAdd_ofAdd, toAdd_mul, toAdd_inv, map_sum, map_zsmul, map_add (f := _), map_neg,
     FreeAbelianGroup.lift_apply_of] at e'
   have e'' := e'.symm.trans h0
   simp only [lam, pt]

@@ -90,7 +90,7 @@ theorem exists_olat (hG : H.Good) {O : Type} [CommRing O] (ι : O →+* K) (hι 
     | add x y _ _ hx hy =>
       obtain ⟨a, ha⟩ := hx
       obtain ⟨b, hb⟩ := hy
-      exact ⟨a + b, by rw [map_add, map_add, ha, hb, ← Finset.sum_add_distrib]; simp [add_smul]⟩
+      exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb, ← Finset.sum_add_distrib]; simp [add_smul]⟩
     | smul n x _ hx =>
       obtain ⟨a, ha⟩ := hx
       refine ⟨fun v => n * a v, ?_⟩
@@ -107,7 +107,7 @@ theorem exists_olat (hG : H.Good) {O : Type} [CommRing O] (ι : O →+* K) (hι 
         rw [ha]
         exact Submodule.sum_mem _ fun v hv => Submodule.smul_mem _ _ (Submodule.subset_span hv)
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add, map_add]; exact add_mem hx hy
+      | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _)]; exact add_mem hx hy
       | smul a x _ hx => rw [LinearMap.map_smulₛₗ, map_smul]; exact Submodule.smul_mem _ _ hx
     rw [eq_top_iff, ← (c.map e).span_eq, Submodule.span_le]
     rintro _ ⟨i, rfl⟩

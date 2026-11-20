@@ -71,7 +71,7 @@ theorem realGL_rat {θ : InfFam D} (hθ : IsInfFam θ) {V : HSp D} {γ : GQ V} {
 
 def series (F : Frame S T) (ω : PairRep S T) (f : WO S T → ℂ) (h : GA D S) : PolF D T.rank S.rank →ₗ[ℂ] (GA D T → ℂ) where
   toFun P g := thetaKO ω h g (F.fock f P)
-  map_add' P P' := by funext g; simp only [thetaKO, LinearMap.map_add, Pi.add_apply]
+  map_add' P P' := by funext g; simp only [thetaKO, LinearMap.map_add (f := _), Pi.add_apply]
   map_smul' c P := by funext g; simp only [thetaKO, LinearMap.map_smul, Pi.smul_apply, RingHom.id_apply]
 
 theorem series_apply (F : Frame S T) (ω : PairRep S T) (f : WO S T → ℂ) (h : GA D S) (P : PolF D T.rank S.rank) (g : GA D T) :
@@ -90,7 +90,7 @@ def lawForms {G Γ W : Type} [Group G] [Group Γ] [AddCommGroup W] [Module ℂ W
   carrier := {F | ∀ (γ : Γ) (h : G) (k : J), F (ι γ * h * k) = (χ k : ℂ) • ρ γ (F h)}
   add_mem' := by
     intro F F' hF hF' γ h k
-    simp only [Pi.add_apply, hF γ h k, hF' γ h k, map_add, smul_add]
+    simp only [Pi.add_apply, hF γ h k, hF' γ h k, map_add (f := _), smul_add]
   zero_mem' := by
     intro γ h k
     simp

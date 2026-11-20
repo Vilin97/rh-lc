@@ -72,7 +72,7 @@ theorem mem_frSpan {V : ℕ → Submodule K R} (hV : ∀ k, ∀ g ∈ V k, s * g
       obtain ⟨l, g', hg', rfl⟩ := hy
       refine ⟨k + l, s ^ l * g + s ^ k * g', Submodule.add_mem _ (hV' l k g hg) ?_, ?_⟩
       · rw [add_comm k l]; exact hV' k l g' hg'
-      · rw [map_add, frMap_pow_mul, add_comm k l, frMap_pow_mul]
+      · rw [map_add (f := _), frMap_pow_mul, add_comm k l, frMap_pow_mul]
     | smul a x _ hx =>
       obtain ⟨k, g, hg, rfl⟩ := hx
       exact ⟨k, a • g, Submodule.smul_mem _ _ hg, (map_smul _ _ _).symm⟩

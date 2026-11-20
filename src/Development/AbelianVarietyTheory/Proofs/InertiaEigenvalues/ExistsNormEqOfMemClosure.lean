@@ -37,7 +37,7 @@ theorem exists_lift {F : Type} [Field F] [NumberField F] (φ : F →+* ℂ_[p]) 
   · rw [hf, map_one, map_one]
   · simp only [map_mul, hf]
   · simp only [map_zero, hf]
-  · simp only [map_add, hf]
+  · simp only [map_add (f := _), hf]
 
 theorem exists_finite {F : Type} [Field F] [NumberField F] (ψ : F →+* PadicAlgCl p) :
     ∃ K : IntermediateField ℚ_[p] (PadicAlgCl p), FiniteDimensional ℚ_[p] K ∧ (∀ a, ψ a ∈ K) ∧

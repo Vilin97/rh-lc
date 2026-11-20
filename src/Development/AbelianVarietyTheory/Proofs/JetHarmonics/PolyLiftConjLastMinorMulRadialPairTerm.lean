@@ -23,7 +23,7 @@ def Der (μ : R →ₐ[ℂ] A) (a : A) (x x' : R) : Prop := a * μ x - μ x * a 
 theorem Der.mul {μ : R →ₐ[ℂ] A} {a : A} {x x' y y' : R} (h : Der μ a x x') (h' : Der μ a y y') :
     Der μ a (x * y) (x' * y + x * y') := by
   unfold Der at *
-  rw [map_add, map_mul, map_mul, map_mul, ← h, ← h']
+  rw [map_add (f := _), map_mul, map_mul, map_mul, ← h, ← h']
   noncomm_ring
 
 theorem der_intCast (μ : R →ₐ[ℂ] A) (a : A) (n : ℤ) : Der μ a n 0 := by
@@ -370,9 +370,9 @@ theorem b_top {r : ℕ} (L : LevelData A r) (st : Start A) (h : AHyp L st) (Y : 
     have q10 : cZb L (st.QQ Y 1 0) = st.QQ Y 1 0 := cj_fix _ _ _ _ b10.eq
     have q11 : cZb L (st.QQ Y 1 1) = st.QQ Y 1 1 := cj_fix _ _ _ _ b11.eq
     have n1 : cZb L (cDrb L (nP L st Y 1)) = nP L st Y 1 := by
-      simp only [nP, map_add, map_mul, (qq_Dr h Y _ _).2, (e2.P Y).1, (e2.P Y).2, (e4.P Y).1, (e4.P Y).2, add_zero, q10, q11]
+      simp only [nP, map_add (f := _), map_mul, (qq_Dr h Y _ _).2, (e2.P Y).1, (e2.P Y).2, (e4.P Y).1, (e4.P Y).2, add_zero, q10, q11]
     have n0 : cZb L (cDrb L (nP L st Y 0)) = nP L st Y 0 + bP L st Y := by
-      simp only [bP, nP, map_add, map_mul, (qq_Dr h Y _ _).2, (e2.P Y).1, (e2.P Y).2, (e4.P Y).1, (e4.P Y).2, add_zero,
+      simp only [bP, nP, map_add (f := _), map_mul, (qq_Dr h Y _ _).2, (e2.P Y).1, (e2.P Y).2, (e4.P Y).1, (e4.P Y).2, add_zero,
         q00, q01]
       noncomm_ring
     have nb : cZb L (cDrb L (bP L st Y)) = bP L st Y := by
@@ -383,7 +383,7 @@ theorem b_top {r : ℕ} (L : LevelData A r) (st : Start A) (h : AHyp L st) (Y : 
       have : L.Dbi ^ (s + 1) * cst L st Y * L.Db ^ (s + 1) = L.Dbi * (L.Dbi ^ s * cst L st Y * L.Db ^ s) * L.Db := by
         rw [pow_succ', pow_succ]; simp only [mul_assoc]
       rw [this, ih, ← hχ]
-      simp only [map_add, map_mul, e2.smul, e4.smul, n0, n1, nb, (e2.M _).1, (e2.M _).2, (e4.M _).1, (e4.M _).2, sub_zero]
+      simp only [map_add (f := _), map_mul, e2.smul, e4.smul, n0, n1, nb, (e2.M _).1, (e2.M _).2, (e4.M _).1, (e4.M _).2, sub_zero]
       push_cast
       rw [sub_sub, add_smul, one_smul]
       noncomm_ring

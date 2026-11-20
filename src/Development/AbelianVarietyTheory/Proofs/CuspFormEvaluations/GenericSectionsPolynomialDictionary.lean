@@ -143,7 +143,7 @@ theorem sp_span (R : Rdg X) (u : WeightFamilies.Wt D j) (s : Set (B.Cusp j u)) :
       simp only [map_zero]
       exact Submodule.zero_mem _
     | add x y _ _ hx hy =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact Submodule.add_mem _ hx hy
     | smul a x _ hx =>
       simp only [map_smul, R.ev_smul]

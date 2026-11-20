@@ -58,7 +58,7 @@ theorem derivClass_eq : ∀ (R : Type) [CommRing R] (C : Type) [Category.{0} C] 
   rw [hf φ, hf' φ] at key
   have e := congrArg (δ T') key
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sub, map_add, map_sum, LinearMap.map_smul, hnat, hδ, smul_eq_mul] at e
+    simp only [map_sub, map_add (f := _), map_sum, LinearMap.map_smul, hnat, hδ, smul_eq_mul] at e
   simp only [amitsur_d0_apply, map_sub, Submodule.coe_sub, Submodule.coe_sum, Submodule.coe_smul, Finset.sum_apply,
     Pi.sub_apply, Pi.smul_apply]
   simp only [Algebra.smul_def]

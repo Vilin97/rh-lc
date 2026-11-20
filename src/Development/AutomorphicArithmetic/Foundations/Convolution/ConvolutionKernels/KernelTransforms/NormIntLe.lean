@@ -33,7 +33,7 @@ private theorem int_add {G H : Type} [Group G] [TopologicalSpace G] [MeasurableS
     (μ : Measure G) [IsFiniteMeasureOnCompacts μ] (f g : CompactlySupportedContinuousMap G ℂ) :
     π.integrated μ (UnitaryRep.ccToL1 μ (f + g)) =
       π.integrated μ (UnitaryRep.ccToL1 μ f) + π.integrated μ (UnitaryRep.ccToL1 μ g) := by
-  rw [UnitaryRep.ccToL1_add, map_add]
+  rw [UnitaryRep.ccToL1_add, map_add (f := _)]
 
 private theorem int_smul {G H : Type} [Group G] [TopologicalSpace G] [MeasurableSpace G] [OpensMeasurableSpace G]
     [NormedAddCommGroup H] [InnerProductSpace ℂ H] [CompleteSpace H] (π : UnitaryRep G H)

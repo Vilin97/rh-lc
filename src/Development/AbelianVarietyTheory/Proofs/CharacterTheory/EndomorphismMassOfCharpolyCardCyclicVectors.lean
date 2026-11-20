@@ -42,7 +42,7 @@ theorem cyclic_one (D : F[X]) (U : Submodule F (AdjoinRoot D))
     have : AdjoinRoot.mk D (C a) = a • (1 : AdjoinRoot D) := by
       rw [Algebra.smul_def, mul_one]; rfl
     rw [this]; exact U.smul_mem _ h1
-  | add p q hp hq => rw [map_add]; exact U.add_mem (hp trivial) (hq trivial)
+  | add p q hp hq => rw [map_add (f := _)]; exact U.add_mem (hp trivial) (hq trivial)
   | monomial n a ih =>
     have : C a * X ^ (n + 1) = X * (C a * X ^ n) := by ring
     rw [this, map_mul, AdjoinRoot.mk_X]

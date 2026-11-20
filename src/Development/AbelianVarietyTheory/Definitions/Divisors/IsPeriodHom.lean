@@ -54,7 +54,7 @@ def IsPeriodHom (u : HolUnif A L g) (P : u.Λ →+ HdR A) : Prop :=
   ∀ c : primDR A, IsPeriod (fibUnif u) c.1
     { toFun x := algebraMap ℂ (Hol (fibFam u).V) (P x c)
       map_zero' := by rw [map_zero, LinearMap.zero_apply, map_zero]
-      map_add' x y := by rw [map_add, LinearMap.add_apply, map_add] }
+      map_add' x y := by rw [map_add (f := _), LinearMap.add_apply, map_add (f := _)] }
 
 end Fibre
 

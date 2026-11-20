@@ -52,7 +52,7 @@ theorem finite_root_near (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
     mul_mem hfO (sub_mem hx₁' hwO), ?_⟩
   · linear_combination e' * hy₀' + (1 - e') * hxy₁ + e' * y' * hww +
       (w * w' * y' - w * y₁ - x₁ * w' * y' + x₁ * y₁ - n * z * y') * hee'
-  · rw [map_add, map_mul _ (1 - e'), map_mul _ e', map_sub, map_one, hse]
+  · rw [map_add (f := _), map_mul _ (1 - e'), map_mul _ e', map_sub, map_one, hse]
     linear_combination e' * hw + (1 - e') * hr₁
   · linear_combination (x₁ - w) * hef'
 
@@ -106,7 +106,7 @@ theorem valued_sub_le (ι : (Af D.host.F ⊗[D.host.F] D.host.E) ≃+* FiniteAde
       simpa using this
     · simp
     · intro x y _ _ hx hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Valuation.map_add_le _ hx hy
     · intro c x _ hx
       rw [smul_eq_mul, map_mul, map_mul]
@@ -213,7 +213,7 @@ theorem swap_int {z : Af D.host.F ⊗[D.host.F] D.host.E} (hz : z ∈ intAE D) :
     obtain ⟨a, ha, x, rfl⟩ := hz
     exact GlobalTheory.PlaceDatum.tmul_mem_int ⟨x, rfl⟩ ha
   | zero => rw [RingHom.map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [RingHom.map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (f := _)]; exact add_mem ha hb
   | neg a _ ha => rw [RingHom.map_neg]; exact neg_mem ha
 
 theorem det_frGL {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
@@ -232,7 +232,7 @@ theorem det_reduced_block_eq_residue_det {F E : Type} [Field F] [NumberField F] 
 
 theorem root_sum {R : Type} [CommRing R] (σ : R →+* R) {a b u : R} (ha : σ a = b) (hb : σ b = a) (hu : u * σ u = 1) :
     a + b * u = u * σ (a + b * u) := by
-  rw [map_add, map_mul, ha, hb]
+  rw [map_add (f := _), map_mul, ha, hb]
   linear_combination (-a) * hu
 
 theorem root_sum_mul {R : Type} [CommRing R] {a b u u' m s s' : R} (hu : u * u' = 1) (e1 : a + b = 1 + m * s)
@@ -300,7 +300,7 @@ theorem exists_root_half (m : ℕ) (U : Formalism.L2.Herm.intAf D.host.F D.host.
     rw [hb, star_star]
   have hu := (hO _).2 (unswap_int U)
   have hu' := (hO _).2 (GlobalTheory.PlaceIdem.sig_mem D (unswap_int U))
-  have e1 : j a + j b = 1 + m * j s := by rw [← map_add, hs, map_add, map_one, map_mul, map_natCast]
+  have e1 : j a + j b = 1 + m * j s := by rw [← map_add (f := _), hs, map_add (f := _), map_one, map_mul, map_natCast]
   have e2 : j a * j b = m * j s' := by rw [← map_mul, hs', map_mul, map_natCast]
   have key := finite_root_near D.host.F D.host.E (GlobalTheory.Member.cF D) D.sp.cm.deg2 hc1 hP m
     (unswap D U) (j a + j b * unswap D U) (j a + j b * σ (unswap D U))
@@ -318,8 +318,8 @@ theorem resS_sum {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E
       Ideal.Quotient.mk P.asIdeal a + Ideal.Quotient.mk _ b = 1 := by
   have h0 := Ideal.Quotient.eq_zero_iff_mem.2 hm
   constructor
-  · rw [map_add, map_add, map_mul, map_mul, resS_oToS, resS_oToS, resS_oToS, h0, zero_mul, add_zero]
-  · rw [← map_add, hs, map_add, map_mul, h0, zero_mul, add_zero, map_one]
+  · rw [map_add (f := _), map_add (f := _), map_mul, map_mul, resS_oToS, resS_oToS, resS_oToS, h0, zero_mul, add_zero]
+  · rw [← map_add (f := _), hs, map_add (f := _), map_mul, h0, zero_mul, add_zero, map_one]
 
 theorem resS_sum_left {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] (P : Pl E) {a b s m : 𝓞 E}
     (U p : Formalism.L2.Herm.intAf F E) (hs : a + b = 1 + m * s) (hm : m ∈ P.asIdeal) (ha : a ∈ P.asIdeal) :
@@ -381,7 +381,7 @@ theorem exists_half_elements {E : Type} [Field E] [NumberField E] [IsCMField E] 
   have hb' : H.bar a' ∈ l.Mb := by
     obtain ⟨t, ht, rfl⟩ := (Ideal.mem_map_iff_of_surjective (H.bar : 𝓞 E →+* 𝓞 E) H.bar.surjective).1 ha'
     exact (hbb t).symm ▸ ht
-  have hbb' : H.bar a + H.bar a' = 1 := by rw [← map_add, haa, map_one]
+  have hbb' : H.bar a + H.bar a' = 1 := by rw [← map_add (f := _), haa, map_one]
   have h1 : a + H.bar a - 1 ∈ Ideal.span {(l.M : 𝓞 E)} := by
     rw [← l.prod, Ideal.mul_eq_inf_of_isCoprime (Ideal.isCoprime_iff_sup_eq.2 l.coprime)]
     refine ⟨?_, ?_⟩

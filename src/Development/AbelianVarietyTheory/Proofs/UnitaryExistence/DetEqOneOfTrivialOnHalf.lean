@@ -47,7 +47,7 @@ theorem det_baseChange_eq {E : Type} [Field E] [NumberField E] {r : ℕ} {L : Ty
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul c a => rw [LinearMap.baseChange_tmul, hF, hF, hg, Matrix.mulVec_smul]
-    | add x y hx hy => rw [map_add, map_add, map_add, Matrix.mulVec_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), Matrix.mulVec_add, hx, hy]
   rw [← LinearMap.det_conj (LinearMap.baseChange E f) e, ← LinearMap.det_toLin']
   congr 1
   refine LinearMap.ext fun v => ?_
@@ -83,6 +83,6 @@ theorem det_eq_one_of_trivial_on_half : ∀ (E : Type) [Field E] [NumberField E]
     simpa [Matrix.mulVec_mulVec] using h'.symm
   · rintro _ ⟨a, rfl⟩
     obtain ⟨e, he⟩ := hfull a
-    exact ⟨φ e, ⟨e, rfl⟩, by rw [← hg, he, map_add, map_nsmul]⟩
+    exact ⟨φ e, ⟨e, rfl⟩, by rw [← hg, he, map_add (f := _), map_nsmul]⟩
 
 end GlobalTheory.HalfLevelDet

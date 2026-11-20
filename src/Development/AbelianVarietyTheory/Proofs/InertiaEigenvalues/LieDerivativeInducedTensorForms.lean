@@ -169,7 +169,7 @@ theorem leviTensor_add {c N : ℕ} {n : Fin c → ℕ} {e : (Σ i, Fin (n i)) �
   have : (fun m => (lie E N (toL (A + B)) ψ).1 (leviEmb (Ad E) e m)) =
       (fun m => (lie E N (toL A) ψ).1 (leviEmb (Ad E) e m)) + (fun m => (lie E N (toL B) ψ).1 (leviEmb (Ad E) e m)) := by
     funext m
-    rw [show toL (A + B) = toL A + toL B from rfl, map_add]
+    rw [show toL (A + B) = toL A + toL B from rfl, map_add (f := _)]
     rfl
   unfold LeviTensor
   rw [this]

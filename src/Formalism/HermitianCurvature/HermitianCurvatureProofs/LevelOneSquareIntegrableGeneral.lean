@@ -15,7 +15,7 @@ theorem fsv_add (s s' t : ℂ) : fsv s t * fsv s' t = fsv (s + s') t := by
   unfold fsv
   rw [← Complex.exp_add]
   congr 1
-  simp only [map_add]
+  simp only [map_add (f := _)]
   ring
 
 theorem fsv_zero (t : ℂ) : fsv 0 t = 1 := by
@@ -51,7 +51,7 @@ theorem waveJ_wave {Wv : Module.End ℂ (RadSp P.k P.r z z' π π')} {s : ℂ} (
       exact ⟨U, hU, hcU, K, hKc, hKG, fun c' hc' g hg hgK => by rw [hW x c' g, hK0 c' hc' g hg hgK, smul_zero]⟩
     · rw [hW x y.1 y.2, hval y hy, smul_smul, fsv_add]
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx => rw [map_smul]; exact Submodule.smul_mem _ a hx
 
 end WaveJ
@@ -221,7 +221,7 @@ theorem rr_waveJ (P : M.Par) (z z' : Fin (2 * P.r + P.k + 1) → ℂ) (π : Mx P
     rw [hΨΦ, e]
     exact waveJ_wave P z z' π π' D l hWv _ hM
   | zero => rw [map_zero]; exact (waveJ P z z' π π' D l).zero_mem
-  | add x y _ _ hx hy => rw [map_add]; exact (waveJ P z z' π π' D l).add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact (waveJ P z z' π π' D l).add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact (waveJ P z z' π π' D l).smul_mem c hx
 
 theorem unwave (P : M.Par) (z z' : Fin (2 * P.r + P.k + 1) → ℂ) (π : Mx P.k P.r → (Wp →L[ℂ] Wp))
@@ -522,7 +522,7 @@ theorem contDens0_of (hL2 : LevelOneSquareIntegrableGeneral) (hC : ContLev1Gen) 
         have hu' := hgood u (Submodule.subset_span hu)
         refine ((h1.add h2)).congr fun t ht => ?_
         show fs μ l u (v1 + v2) c t = fs μ l u v1 c t + fs μ l u v2 c t
-        rw [fs_swap, fs_add_left μ hD.2.1 l c (hgood v1 hv1) (hgood v2 hv2) hu' ht, map_add, ← fs_swap, ← fs_swap]
+        rw [fs_swap, fs_add_left μ hD.2.1 l c (hgood v1 hv1) (hgood v2 hv2) hu' ht, map_add (f := _), ← fs_swap, ← fs_swap]
       | smul a v' _ h =>
         refine ((continuousOn_const (c := (starRingEnd ℂ) a)).mul h).congr fun t _ => ?_
         show fs μ l u (a • v') c t = conj a * fs μ l u v' c t

@@ -34,7 +34,7 @@ theorem isGlRep_tensV {n : ℕ} (E : Fin n → Fin n → Module.End ℂ M) (hE :
   refine LinearMap.ext fun f => funext fun e => ?_
   have h := LinearMap.congr_fun (hE a b c d) (f e)
   simp only [LinearMap.sub_apply, Module.End.mul_apply] at h
-  simp only [LinearMap.sub_apply, Module.End.mul_apply, tensV_apply', map_add, Pi.sub_apply]
+  simp only [LinearMap.sub_apply, Module.End.mul_apply, tensV_apply', map_add (f := _), Pi.sub_apply]
   by_cases hbc : b = c <;> by_cases hda : d = a <;>
     simp only [hbc, hda, if_true, if_false, LinearMap.zero_apply, Pi.zero_apply, tensV_apply'] at h ⊢ <;>
     split_ifs <;> simp_all <;> (rw [← sub_eq_zero] at h ⊢; convert h using 1; abel)
@@ -53,7 +53,7 @@ theorem isGlRep_tensVd {n : ℕ} (E : Fin n → Fin n → Module.End ℂ M) (hE 
 theorem casimir_tensV {n : ℕ} (E : Fin n → Fin n → Module.End ℂ M) (f : Fin n → M) :
     casimir (tensV E) f = (fun d => casimir E (f d)) + ((n : ℂ) • f + (2 : ℂ) • eeV E f) := by
   funext e
-  simp only [casimir, LinearMap.sum_apply, Finset.sum_apply, Module.End.mul_apply, tensV_apply', map_add,
+  simp only [casimir, LinearMap.sum_apply, Finset.sum_apply, Module.End.mul_apply, tensV_apply', map_add (f := _),
     Pi.add_apply, Pi.smul_apply, eeV_apply', Finset.sum_add_distrib]
   simp only [apply_ite (E _ _), map_zero, Finset.sum_ite_eq, Finset.mem_univ, if_true]
   have hx : ∀ g : Fin n → Fin n → M, (∑ x, ∑ x_1, if e = x then g x x_1 else 0) = ∑ x_1, g e x_1 := by

@@ -179,7 +179,7 @@ theorem fix_span (g : Fin (r + 1) → S.V) (h : S.GLV) (hfix : ∀ a, h (g a) = 
   induction hv using Submodule.span_induction with
   | mem x hx => obtain ⟨a, -, rfl⟩ := hx; exact hfix a
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | smul c x _ hx => rw [map_smul, hx]
 
 theorem perp_spanTo_iff (g : Fin (r + 1) → S.V) (h : S.GLV) (hI : h ∈ isomG L S.Hm)

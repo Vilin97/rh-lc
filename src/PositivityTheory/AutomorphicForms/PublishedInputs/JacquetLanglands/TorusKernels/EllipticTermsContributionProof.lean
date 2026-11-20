@@ -72,7 +72,7 @@ theorem fix_comm (h g : GL (Fin 2) ℝ) (hh : h.val.trace ^ 2 < 4 * h.val.det) (
 
 theorem tr_r {F I Gf : Type} [Field F] [Group Gf] (D : Dat F I Gf) (v : I) (g : GL (Fin 2) F) :
     (D.r v g).val.trace = D.σ v g.val.trace := by
-  rw [Matrix.trace_fin_two, Matrix.trace_fin_two, map_add]; rfl
+  rw [Matrix.trace_fin_two, Matrix.trace_fin_two, map_add (f := _)]; rfl
 
 theorem det_r {F I Gf : Type} [Field F] [Group Gf] (D : Dat F I Gf) (v : I) (g : GL (Fin 2) F) :
     (D.r v g).val.det = D.σ v g.val.det := by

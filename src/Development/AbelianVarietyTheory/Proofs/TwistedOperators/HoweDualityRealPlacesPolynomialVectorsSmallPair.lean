@@ -53,7 +53,7 @@ theorem acts_comb_eq (T : Module.End ℂ ((κ → AF F) → ℂ)) (c : ℂ) {f f
   have e : ∀ φ ψ : SInf F κ, tens (evI F) ⇑(c • φ + ψ) r₀ = c • tens (evI F) ⇑φ r₀ + tens (evI F) ⇑ψ r₀ := by
     intro φ ψ; funext y; simp [tens]; ring
   have key : tens (evI F) ⇑h r₀ = tens (evI F) ⇑(c • f₁ + g₁) r₀ := by
-    rw [← hh r₀ (hrest₀ _), e, map_add, map_smul, hf r₀ (hrest₀ f), hg r₀ (hrest₀ g), e]
+    rw [← hh r₀ (hrest₀ _), e, map_add (f := _), map_smul, hf r₀ (hrest₀ f), hg r₀ (hrest₀ g), e]
   ext a
   have := congrFun key (GlobalTheory.RealLift.ptAt a 0)
   rw [htens₀, htens₀, GlobalTheory.RealLift.pureA_ptAt, GlobalTheory.RealLift.pureA_ptAt, hg₀0, mul_one, mul_one] at this

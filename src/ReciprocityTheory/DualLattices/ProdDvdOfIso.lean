@@ -217,7 +217,7 @@ theorem hasLen_unique {C : Type} [Field C] {v : Valuation C NNReal} {R : Type} [
   haveI : IsLocalRing R := by
     refine IsLocalRing.of_nonunits_add fun a b ha hb hab => ?_
     have h1 := hv.isUnit_iff_valuation_eq_one.mp hab
-    rw [map_add] at h1
+    rw [map_add (f := _)] at h1
     have h2 := (v.map_add _ _).trans_lt (max_lt (hlt a ha) (hlt b hb))
     rw [h1] at h2
     exact lt_irrefl _ h2

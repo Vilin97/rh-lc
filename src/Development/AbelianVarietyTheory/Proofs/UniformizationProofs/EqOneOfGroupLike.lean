@@ -26,11 +26,11 @@ theorem coeff_inl_mul_inr {B X : Type} [CommRing B] [AddCommGroup X] (a b : AddM
   classical
   induction a using AddMonoidAlgebra.induction_linear with
   | zero => simp
-  | add a a' h h' => simp only [map_add, add_mul, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, h, h']
+  | add a a' h h' => simp only [map_add (f := _), add_mul, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, h, h']
   | single p r =>
     induction b using AddMonoidAlgebra.induction_linear with
     | zero => simp
-    | add b b' h h' => simp only [map_add, mul_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, h, h']
+    | add b b' h h' => simp only [map_add (f := _), mul_add, AddMonoidAlgebra.coeff_add, Finsupp.add_apply, h, h']
     | single q s =>
       simp only [AddMonoidAlgebra.mapDomainRingHom_apply, AddMonoidAlgebra.mapDomain_single,
         AddMonoidAlgebra.single_mul_single, AddMonoidAlgebra.coeff_single, Finsupp.single_apply]

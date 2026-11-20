@@ -50,7 +50,7 @@ theorem exists_lift (u : M' →ₗ[R] M) (hu : ∀ g m, u (ρ' g m) = ρ g (u m)
     exact hm g
   let z' : Z1 ρ' := ⟨fun g => Function.invFun u ((z - b).1 g),
     (continuous_of_discreteTopology (f := Function.invFun u)).comp (z - b).2.1, fun g h => hinj (by
-      rw [map_add, hu, h1, h1, h1]
+      rw [map_add (f := _), hu, h1, h1, h1]
       exact (z - b).2.2 g h)⟩
   refine ⟨Submodule.Quotient.mk z', ?_⟩
   have e : cocycles1MapOfEquivariant ρ' ρ u continuous_of_discreteTopology hu z' = z - b := Subtype.ext (funext h1)

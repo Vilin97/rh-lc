@@ -352,7 +352,7 @@ theorem span_prod_symOf : Submodule.span ℚ
     | tmul a g =>
       rw [← mul_one a, ← smul_eq_mul, ← smul_tmul', map_smul]
       exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨{g}, by simp [symOf_apply]⟩)
-    | add a b ha hb => rw [map_add]; exact add_mem ha hb
+    | add a b ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | mul a b ha hb =>
     have := Submodule.mul_mem_mul ha hb
     rw [Submodule.span_mul_span] at this
@@ -378,7 +378,7 @@ theorem exists_topForm (h : DiffVanish (d + 1) φ) : ∃ l : SymQ G →ₗ[ℚ] 
   let f : Multiset G → ℚ := fun s =>
     if s.card = d then (shiftAct G ℤ (s.map diffElt).prod φ 0 : ℚ) else 0
   have hf (a b : G) (s : Multiset G) : f (s + {a + b}) = f (s + {a}) + f (s + {b}) := by
-    simp only [f, Multiset.card_add, Multiset.card_singleton, Multiset.map_add,
+    simp only [f, Multiset.card_add, Multiset.card_singleton, Multiset.map_add (f := _),
       Multiset.map_singleton, Multiset.prod_add, Multiset.prod_singleton]
     split_ifs with hs
     · have : (s.map diffElt).prod * (diffElt a * diffElt b) ∈ diffIdeal G ^ (d + 1) := by
@@ -389,7 +389,7 @@ theorem exists_topForm (h : DiffVanish (d + 1) φ) : ∃ l : SymQ G →ₗ[ℚ] 
           have := prod_diffElt_mem Finset.univ s.get
           rw [← List.prod_ofFn, ← Function.comp_def, ← List.map_ofFn, List.ofFn_get] at this
           simpa using this
-      rw [diffElt_add, mul_sub, mul_add, map_sub, map_add, LinearMap.sub_apply,
+      rw [diffElt_add, mul_sub, mul_add, map_sub, map_add (f := _), LinearMap.sub_apply,
         h.shiftAct_eq_zero this]
       simp
     · simp
@@ -410,16 +410,16 @@ theorem exists_topForm (h : DiffVanish (d + 1) φ) : ∃ l : SymQ G →ₗ[ℚ] 
       | monomial m c =>
         rw [show MvPolynomial.monomial m c = c • MvPolynomial.monomial m (1 : ℚ) by
           simp [MvPolynomial.smul_monomial], smul_mul_assoc, map_smul]
-        simp only [mul_sub, mul_add, map_sub, map_add, MvPolynomial.X,
+        simp only [mul_sub, mul_add, map_sub, map_add (f := _), MvPolynomial.X,
           MvPolynomial.monomial_mul, mul_one, hl, Finsupp.toMultiset_single, one_nsmul, hf]
         simp
-      | add p q hp hq => rw [add_mul, map_add, hp, hq, add_zero]
+      | add p q hp hq => rw [add_mul, map_add (f := _), hp, hq, add_zero]
     | zero => simp
-    | add x y _ _ hx hy => intro r; rw [mul_add, map_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => intro r; rw [mul_add, map_add (f := _), hx, hy, add_zero]
     | smul a x _ hx => intro r; rw [smul_eq_mul, ← mul_assoc, hx]
   let c : G →+ MvPolynomial G ℚ ⧸ J := AddMonoidHom.mk' (fun g => Ideal.Quotient.mk J (.X g))
     fun a b => by
-      rw [← map_add, Ideal.Quotient.eq]
+      rw [← map_add (f := _), Ideal.Quotient.eq]
       exact Ideal.subset_span ⟨(a, b), rfl⟩
   refine ⟨(J.restrictScalars ℚ).liftQ l hJ ∘ₗ
     (Submodule.Quotient.restrictScalarsEquiv ℚ J).symm.toLinearMap ∘ₗ (symLift c).toLinearMap,

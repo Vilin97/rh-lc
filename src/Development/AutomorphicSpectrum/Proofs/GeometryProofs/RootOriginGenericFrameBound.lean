@@ -141,7 +141,7 @@ theorem aeval_mem {σ : Type} {z : σ → PadicAlgCl p} {L : IntermediateField �
     rw [MvPolynomial.aeval_C]
     simp [intCast_mem L a]
   | add f g hf hg =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact L.add_mem hf hg
   | mul_X f i hf =>
     rw [map_mul, MvPolynomial.aeval_X]
@@ -190,7 +190,7 @@ theorem exists_isIntPt : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] 
       map_one' := hinj (by rw [hf, map_one, map_one])
       map_mul' := fun a b => hinj (by rw [hf, map_mul, map_mul, hf, hf])
       map_zero' := hinj (by rw [hf, map_zero, map_zero])
-      map_add' := fun a b => hinj (by rw [hf, map_add, map_add, hf, hf]) }
+      map_add' := fun a b => hinj (by rw [hf, map_add (f := _), map_add (f := _), hf, hf]) }
   have hev₀ : ∀ x, j (ev₀ x) = ev x := hf
   let cA : c.F →+* A := Or.𝔐.cst.codRestrict A hc1
   let io₀ : c.F →+* T₀.Fr := ev₀.comp cA

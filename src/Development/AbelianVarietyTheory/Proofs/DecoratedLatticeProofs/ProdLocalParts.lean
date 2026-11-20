@@ -55,7 +55,7 @@ theorem pr_sum {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNon
   have ho : q.sec 1 = q.e := by rw [← q.pr.map_one, q.sec_pr, mul_one]
   have p1 : q.pr q.e = 1 := by rw [← ho, q.pr_sec]
   have p2 : q.pr (cA D q.e) = 0 := by rw [← one_mul (q.pr _), ← p1, ← RingHom.map_mul, h2, RingHom.map_zero]
-  rw [RingHom.map_add, p1, p2, add_zero]
+  rw [RingHom.map_add (f := _), p1, p2, add_zero]
 
 theorem exists_coord {k : Type} [Field k] {N : ℕ} {Y : Type} [Fintype Y] [DecidableEq Y] (F : GlobalTheory.LocMod.Frame k N Y)
     (A B : Matrix (Fin N) (Fin N) k) (h1 : A * B = 1) (h2 : B * A = 1) : ∃ x : GL Y k, A = F.β * x.val * F.γ := by

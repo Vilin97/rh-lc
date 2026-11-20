@@ -104,7 +104,7 @@ theorem span_image_span (i : Ω →+* Ω') (j : E →+ F) (hj : ∀ (a : Ω) (e 
     | mem y hy => exact Submodule.subset_span ⟨y, hy, rfl⟩
     | zero => simp
     | add y y' _ _ hy hy' =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hy hy'
     | smul a y _ hy =>
       have e1 : j (a • y) = (⟨i a, hA a a.2⟩ : A) • j y := by

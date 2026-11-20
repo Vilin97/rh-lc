@@ -240,7 +240,7 @@ theorem chartIdeal_eq (G : GenFibre inlV (graphIdeal P g))
     | add f₁ f₂ h₁ h₂ =>
       have : f₁ + f₂ - C (aeval (cpt G T) (f₁ + f₂)) =
           (f₁ - C (aeval (cpt G T) f₁)) + (f₂ - C (aeval (cpt G T) f₂)) := by
-        rw [map_add, C_add]
+        rw [map_add (f := _), C_add]
         ring
       rw [this]
       exact Ideal.add_mem _ h₁ h₂

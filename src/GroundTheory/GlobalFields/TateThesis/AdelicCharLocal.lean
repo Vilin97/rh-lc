@@ -319,7 +319,7 @@ theorem adelicChar_eq_prod (x : 𝔸[K]) :
         (by rintro rfl; exact hu hv) _), sub_zero]
       exact mem_localInvDifferent_of_mem (hmemS u hu)
   have hf : finiteAdeleInr f + finiteAdeleInr (x.2 - f) = finiteAdeleInr (K := K) x.2 := by
-    rw [← map_add, add_sub_cancel]
+    rw [← map_add (f := _), add_sub_cancel]
   have hx : x = infiniteAdeleInl x.1 + finiteAdeleInr f + finiteAdeleInr (x.2 - f) := by
     rw [add_assoc, hf, infiniteAdeleInl_add_finiteAdeleInr]
   have h1 : adelicChar K (finiteAdeleInr (x.2 - f)) = 1 := by

@@ -83,7 +83,7 @@ theorem prj_prj (y : VA X.B.I) : prj X u (prj X u y) = prj X u y := by
   rw [← hL (prj X u y)]
   conv_lhs => arg 2; rw [prj]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sub, map_add, map_sum, map_smul]
+    simp only [map_sub, map_add (f := _), map_sum, map_smul]
   simp only [hL, prj_eV, prj_fV, prj_zV]
   rfl
 

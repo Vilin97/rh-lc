@@ -120,7 +120,7 @@ def ordGE (R ι : Type) [CommRing R] (n : ℕ) : Ideal (MvPolynomial ι R) where
     intro c p hp e he
     rw [smul_eq_mul] at he
     obtain ⟨a, -, b, hb, rfl⟩ := Finset.mem_add.1 (MvPolynomial.support_mul c p he)
-    rw [map_add]
+    rw [map_add (f := _)]
     exact le_add_left (hp b hb)
 
 theorem mem_ordGE {R ι : Type} [CommRing R] {n : ℕ} {p : MvPolynomial ι R} :
@@ -148,7 +148,7 @@ theorem orig_pow_le (R ι : Type) [CommRing R] (n : ℕ) : orig R ι ^ n ≤ ord
       obtain ⟨d, hd, rfl⟩ := he
       have h1 := hp d hd
       have h2 : (d + Finsupp.single i 1).degree = d.degree + 1 := by
-        simp [map_add]
+        simp [map_add (f := _)]
       simp only [addRightEmbedding_apply, h2]
       omega
     | zero => simp

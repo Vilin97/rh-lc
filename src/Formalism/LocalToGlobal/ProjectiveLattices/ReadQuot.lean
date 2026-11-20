@@ -126,8 +126,8 @@ theorem aeDom_of {U : ∀ σ : c.F →+* ℂ, Unf Xo c σ r} {σ : c.F →+* ℂ
         fun k => ⟨fun x _ b _ => by simp, fun γ _ x _ => by simp⟩⟩
     | add Q₁ Q₂ _ _ h1 h2 =>
       refine ⟨⟨fun γ hγ g => ?_, ?_⟩, fun k => ⟨fun x hx b hb => ?_, fun γ hγ x hx => ?_⟩⟩
-      · rw [map_add, Pi.add_apply, Pi.add_apply, h1.1.1 γ hγ g, h2.1.1 γ hγ g]
-      · rw [map_add]
+      · rw [map_add (f := _), Pi.add_apply, Pi.add_apply, h1.1.1 γ hγ g, h2.1.1 γ hγ g]
+      · rw [map_add (f := _)]
         exact h1.1.2.add h2.1.2
       · simp only [Pi.add_apply]
         rw [(h1.2 k).1 x hx b hb, (h2.2 k).1 x hx b hb, mul_add]

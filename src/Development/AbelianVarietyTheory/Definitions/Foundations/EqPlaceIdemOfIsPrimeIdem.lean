@@ -64,8 +64,8 @@ theorem mul_idem_iff_mem_range_emb {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v :
   · rintro ⟨h1, h2⟩ i j
     rw [← sub_eq_zero, ← add_eq_right (b := 1)]
     refine adTens_eq_one' (fun w => ?_) fun u => ?_
-    · rw [map_add, map_sub, map_mul, h1, map_one]; simp
-    · rw [map_add, map_sub, map_mul, map_one]
+    · rw [map_add (f := _), map_sub, map_mul, h1, map_one]; simp
+    · rw [map_add (f := _), map_sub, map_mul, map_one]
       by_cases hu : u = v
       · subst hu; rw [c1]; simp
       · rw [h2 u hu]; simp
@@ -116,7 +116,7 @@ theorem sigR_singleTens (v : HeightOneSpectrum (𝓞 F)) (y : Fv F v ⊗[F] E) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Single
 
@@ -187,7 +187,7 @@ theorem splitAt_splitIdemAd (τ : D.host.E →ₐ[D.host.F] Fv D.host.F v) :
     exact congrArg _ (split_ext h τ (by simp [splitIdem]) (by simp [splitIdem]))
   · rw [splitIdemAd, cA, sigR_singleTens, ← map_mul, ← map_zero (singleTens D.host.E v)]
     exact congrArg _ (split_ext h τ (by simp [← splitProj_comp]) (by simp))
-  · rw [splitIdemAd, cA, sigR_singleTens, ← map_add, sigR_splitIdem, add_sub_cancel]
+  · rw [splitIdemAd, cA, sigR_singleTens, ← map_add (f := _), sigR_splitIdem, add_sub_cancel]
     rfl
 
 theorem isIdemAt_splitIdemAd (τ : D.host.E →ₐ[D.host.F] Fv D.host.F v) :
@@ -216,7 +216,7 @@ theorem exists_eq_splitIdemAd {e : AE D} (he : SplitAt D v e) :
   rw [← hy] at h0
   have inj : Function.Injective (singleTens D.host.E v) := Function.LeftInverse.injective (compFin_singleTens_self v)
   have h1 : y + Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR _ D.sp.cm.sig y = 1 := inj (by
-    rw [map_add, ← sigR_singleTens, ← h0]; exact he.2.2)
+    rw [map_add (f := _), ← sigR_singleTens, ← h0]; exact he.2.2)
   obtain ⟨d, hd⟩ := exists_cm_conj_ne h
   have h2 : y * (1 ⊗ₜ d) = (τ d ⊗ₜ 1) * y := inj (by
     rw [map_mul (singleTens D.host.E v) (τ d ⊗ₜ 1), ← h0]
@@ -229,7 +229,7 @@ theorem exists_eq_splitIdemAd {e : AE D} (he : SplitAt D v e) :
       ← sub_mul] at this
     exact (mul_eq_zero.1 this).resolve_left (sub_ne_zero.2 fun e => hd (τ.toRingHom.injective e))
   have h4 := congrArg (splitProj τ) h1
-  rw [map_add, ← splitProj_comp, h3, add_zero, map_one] at h4
+  rw [map_add (f := _), ← splitProj_comp, h3, add_zero, map_one] at h4
   rw [h0]
   exact congrArg _ (split_ext h τ (by simp [splitIdem, h4]) (by simp [splitIdem, h3]))
 
@@ -265,7 +265,7 @@ theorem finPart_fj_mem_iff (y : Fv D.host.F v) :
     induction hz using AddSubgroup.closure_induction with
     | mem z hz => obtain ⟨a, ha, x, rfl⟩ := hz; exact tmul_mem_intLoc (ha v) x
     | zero => rw [map_zero]; exact zero_mem _
-    | add _ _ _ _ h h' => rw [map_add]; exact add_mem h h'
+    | add _ _ _ _ h h' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem h h'
     | neg _ _ h => rw [map_neg]; exact neg_mem h
   have h2 := absFin_le_one_of_mem_intLoc (key _ h)
   change absFin _ v (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV D.host.F v (singleFin v y) ⊗ₜ (1 : D.host.E)) ≤ 1 at h2

@@ -34,7 +34,7 @@ theorem eq_xz {n : Fin 2 × Fin d →₀ ℕ} {l m : Fin d} (h0 : n (0, l) ≠ 0
     intro a b
     first
       | exact map_add _ a b
-      | simp [Finsupp.degree_eq_weight_one, map_add]
+      | simp [Finsupp.degree_eq_weight_one, map_add (f := _)]
       | simp [Finsupp.degree, Finsupp.sum_add_index']
   have hsg : ∀ x : Fin 2 × Fin d, (single x 1).degree = 1 := by
     intro x
@@ -156,7 +156,7 @@ theorem degree_xz (j i : Fin d) : (single ((0 : Fin 2), j) 1 + single ((1 : Fin 
     intro a b
     first
       | exact map_add _ a b
-      | simp [Finsupp.degree_eq_weight_one, map_add]
+      | simp [Finsupp.degree_eq_weight_one, map_add (f := _)]
       | simp [Finsupp.degree, Finsupp.sum_add_index']
   have hsg : ∀ x : Fin 2 × Fin d, (single x 1).degree = 1 := by
     intro x
@@ -319,7 +319,7 @@ theorem gauge_stable : ReciprocityTheory.ChartRestriction.G.TB.HStableSt := by
   have hφ₂ : (fun i => algebraMap R k (φ₂ i)) = (dAct k B (star a)).transpose.mulVec vφ +
       (S * dAct k B a - (dAct k B (star a)).transpose * S).mulVec vu := funext fun i => by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [φ₂, map_add, map_sum, map_mul, Matrix.mulVec, dotProduct, hA, hM, Matrix.transpose_apply,
+      simp only [φ₂, map_add (f := _), map_sum, map_mul, Matrix.mulVec, dotProduct, hA, hM, Matrix.transpose_apply,
       Pi.add_apply, vu, vφ]
   refine ⟨u₂, φ₂, Prod.ext ?_ ?_⟩
   · exact hu₂.symm

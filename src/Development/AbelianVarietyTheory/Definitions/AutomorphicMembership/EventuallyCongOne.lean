@@ -178,7 +178,7 @@ theorem swapAE_sig (z : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolume
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, ha, hb, RingHom.map_add, RingHom.map_add]
+  | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb, RingHom.map_add (f := _), RingHom.map_add (f := _)]
 
 theorem JR_one (hG : V.gram = 1) (A : Type) [CommRing A] [Algebra D.host.F A] : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.JR (F := D.host.F) A V.gram = 1 := by
   rw [hG, Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.JR, Matrix.map_one _ (map_zero _) (map_one _)]

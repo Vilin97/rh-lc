@@ -58,7 +58,7 @@ theorem splitAE_smul (u : AF F) (x : AE F E) :
     rw [TensorProduct.smul_tmul', splitAE_tmul, splitAE_tmul]
     simp [TensorProduct.smul_tmul']
   | add x y hx hy =>
-    rw [smul_add, map_add, hx, hy, map_add]
+    rw [smul_add, map_add (f := _), hx, hy, map_add (f := _)]
     simp [smul_add]
 
 theorem isArtinian_inf : IsArtinianRing (Ainf F) :=
@@ -101,7 +101,7 @@ theorem c₁_invol {σ : E →ₐ[F] E} (h : Formalism.MainNotions.GlobalTheoryT
   | tmul a e =>
     have h' : ∀ (a : Ainf F) (e : E), c₁ σ (a ⊗ₜ[F] e) = a ⊗ₜ[F] σ e := fun _ _ => rfl
     rw [h', h', sigma_invol h]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem at_iff (x : AE F E) : At (evI F) x ↔ (splitAE F E x).2 = 0 := by
   constructor

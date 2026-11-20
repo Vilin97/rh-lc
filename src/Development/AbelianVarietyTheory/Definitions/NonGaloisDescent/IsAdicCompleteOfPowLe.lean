@@ -25,7 +25,7 @@ def liftInj {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* C
     rw [map_mul g, (h _).choose_spec, (h _).choose_spec, (h _).choose_spec, map_mul])
   map_zero' := hg (by rw [(h 0).choose_spec, map_zero, map_zero])
   map_add' x y := hg (by
-    rw [map_add g, (h _).choose_spec, (h _).choose_spec, (h _).choose_spec, map_add])
+    rw [map_add g, (h _).choose_spec, (h _).choose_spec, (h _).choose_spec, map_add (f := _)])
 
 theorem liftInj_spec {A B C : Type} [CommRing A] [CommRing B] [CommRing C] (f : A →+* C) (g : B →+* C)
     (hg : Function.Injective g) (h : ∀ x, ∃ y, g y = f x) (x : A) : g (liftInj f g hg h x) = f x :=
@@ -493,7 +493,7 @@ theorem l_mem_eis : (l : (Wq l a)⟦X⟧) ∈
   obtain ⟨v, hv⟩ := hu.exists_left_inv
   obtain ⟨c, hc⟩ := sub_dvd_pow_sub_pow (X ^ e : (Wq l a)⟦X⟧) (-(l : (Wq l a)⟦X⟧)) l
   have h1 : frobS l a (eis l a e) = ((X : (Wq l a)⟦X⟧) ^ e) ^ l + l := by
-    rw [eis, map_add, map_pow, frobS_X, map_natCast, ← pow_mul, ← pow_mul, mul_comm]
+    rw [eis, map_add (f := _), map_pow, frobS_X, map_natCast, ← pow_mul, ← pow_mul, mul_comm]
   have h2 : (-(l : (Wq l a)⟦X⟧)) ^ l = -(l : (Wq l a)⟦X⟧) * (-(l : (Wq l a)⟦X⟧)) ^ (k + 1) := by
     rw [← pow_succ' (-(l : (Wq l a)⟦X⟧)), show k + 1 + 1 = l by omega]
   have h3 : (l : (Wq l a)⟦X⟧) = eis l a e * (-(v * c)) + v * frobS l a (eis l a e) := by
@@ -510,13 +510,13 @@ variable {l e} (ϖ : PiSys l e)
 omit [NeZero e] in
 
 theorem theta_ev_eis : Per.θ l (ϖ.ev a (eis l a e)) = 0 := by
-  rw [eis, map_add, map_pow, ev_X, map_natCast, map_add, map_pow, theta_teich, seqO_zero, map_natCast,
+  rw [eis, map_add (f := _), map_pow, ev_X, map_natCast, map_add (f := _), map_pow, theta_teich, seqO_zero, map_natCast,
     neg_add_cancel]
 
 theorem theta_ev_eq_zero_iff (x : (Wq l a)⟦X⟧) : Per.θ l (ϖ.ev a x) = 0 ↔ eis l a e ∣ x := by
   refine ⟨fun h => (dvd_or_unit l a e x).resolve_right ?_, ?_⟩
   · rintro ⟨m, v, y, hv, rfl⟩
-    simp only [map_add, map_mul, map_pow, ev_X, theta_teich, theta_ev_eis, zero_mul, add_zero] at h
+    simp only [map_add (f := _), map_mul, map_pow, ev_X, theta_teich, theta_ev_eis, zero_mul, add_zero] at h
     rcases mul_eq_zero.1 h with h | h
     · exact ((hv.map _).map _).ne_zero h
     · exact ϖ.seq_ne_zero 0 ((map_eq_zero (algebraMap (Om l) ℂ_[l])).1
@@ -564,7 +564,7 @@ theorem expand {l : ℕ} [Fact l.Prime] (F : IntermediateField ℚ_[l] (PadicAlg
   have h2 : aeval π (P %ₘ (X ^ e + C (l : F))) = x := by
     rw [← hP']
     conv_rhs => rw [← modByMonic_add_div P (X ^ e + C (l : F))]
-    rw [map_add, map_mul, hQ0, zero_mul, add_zero]
+    rw [map_add (f := _), map_mul, hQ0, zero_mul, add_zero]
   refine ⟨fun i => ((P %ₘ (X ^ e + C (l : F))).coeff i : F), fun i => Subtype.property _, ?_⟩
   rw [← h2, aeval_eq_sum_range' hdeg]
   rfl
@@ -659,7 +659,7 @@ theorem hom_padicInt {l : ℕ} [Fact l.Prime] (f : ℤ_[l] →+* ℂ_[l]) (hf : 
     have hz : z = (PadicInt.appr z k : ℤ_[l]) + y * (l : ℤ_[l]) ^ k := by rw [hy]; ring
     have : f z - g z = (f y - g y) * (l : ℂ_[l]) ^ k := by
       conv_lhs => rw [hz]
-      simp only [map_add, map_mul, map_pow, map_natCast]
+      simp only [map_add (f := _), map_mul, map_pow, map_natCast]
       ring
     rw [this, norm_mul, norm_pow]
     have h1 := norm_sub_le (f y) (g y)
@@ -702,7 +702,7 @@ theorem frac {l : ℕ} [hl : Fact l.Prime] {W : Type} [CommRing W] (g : ℤ_[l] 
     obtain ⟨n, w, hw⟩ := hx
     obtain ⟨m, v, hv⟩ := hy
     refine ⟨n + m, (l : W) ^ m * w + (l : W) ^ n * v, ?_⟩
-    simp only [map_add, map_mul, map_pow, map_natCast, hw, hv]
+    simp only [map_add (f := _), map_mul, map_pow, map_natCast, hw, hv]
     ring
   | mul x y _ _ hx hy =>
     obtain ⟨n, w, hw⟩ := hx
@@ -959,7 +959,7 @@ theorem span_ev_eis : Ideal.span {ϖ.ev a (eis l a e)} = RingHom.ker (Per.θ l) 
   rw [Ideal.map_span, Set.image_singleton, ← Ideal.span_insert, Ideal.mem_span_pair] at h2
   obtain ⟨x, y, hxy⟩ := h2
   have h3 := congrArg (fun z => Per.θ l (ϖ.ev a z)) hxy
-  simp only [map_add, map_mul, theta_ev_eis, mul_zero, zero_add, map_natCast] at h3
+  simp only [map_add (f := _), map_mul, theta_ev_eis, mul_zero, zero_add, map_natCast] at h3
   rw [show (deltaS l a).φ (eis l a e) = frobS l a (eis l a e) from rfl, ev_frobS, hc, map_mul, map_mul,
     h1] at h3
   have h4 : ϖ.ev a y * WittVector.frobenius c - 1 ∈ Ideal.span {ξ} := by

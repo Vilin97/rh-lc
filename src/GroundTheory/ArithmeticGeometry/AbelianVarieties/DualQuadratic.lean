@@ -43,7 +43,7 @@ theorem cross_eq (Q₁ Q₂ : isogHom E E') :
     homComp (homDual Q₁) Q₂ + homComp (homDual Q₂) Q₁ =
       (homDeg (Q₁ + Q₂) - homDeg Q₁ - homDeg Q₂) • homId := by
   have h := homComp_homDual_self (Q₁ + Q₂)
-  rw [map_add, homComp_add_left, homComp_add_right, homComp_add_right, homComp_homDual_self,
+  rw [map_add (f := _), homComp_add_left, homComp_add_right, homComp_add_right, homComp_homDual_self,
     homComp_homDual_self] at h
   rw [sub_smul, sub_smul, ← h]
   abel
@@ -59,7 +59,7 @@ theorem degBilin_add_left (Q₁ Q₁' Q₂ : isogHom E E') :
     degBilin (Q₁ + Q₁') Q₂ = degBilin Q₁ Q₂ + degBilin Q₁' Q₂ := by
   apply sub_eq_zero.mp
   apply eq_zero_of_zsmul_homId (E := E)
-  rw [sub_smul, add_smul, degBilin_smul_homId, degBilin_smul_homId, degBilin_smul_homId, map_add,
+  rw [sub_smul, add_smul, degBilin_smul_homId, degBilin_smul_homId, degBilin_smul_homId, map_add (f := _),
     homComp_add_left, homComp_add_right]
   abel
 

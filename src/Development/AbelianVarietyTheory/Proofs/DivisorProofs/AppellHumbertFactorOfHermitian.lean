@@ -163,7 +163,7 @@ theorem re_form_pos_of_relAmple :
         rw [MvPolynomial.eval₂Hom_C]
         exact (val_appLE _ (A.hom ∣_ ⊤) ⊤ _ _ a mt).trans
           ((congrArg (fun y => valAt' y ⊤ a) (hc _ 0)).trans (val_appLE _ (A.hom ∣_ ⊤) ⊤ _ _ a m0).symm)
-      | add Q Q' h h' => rw [map_add, val_add _ mt, val_add _ m0, h, h']
+      | add Q Q' h h' => rw [map_add (f := _), val_add _ mt, val_add _ m0, h, h']
       | mul_X Q j h =>
         rw [map_mul, val_mul _ mt, val_mul _ m0, h, MvPolynomial.eval₂Hom_X']
         congr 1

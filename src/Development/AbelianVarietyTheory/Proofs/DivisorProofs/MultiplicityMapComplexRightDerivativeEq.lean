@@ -38,7 +38,7 @@ theorem rderC_eq : ∀ (D : D7) (θ : InfFam D) (V : HSp D), IsInfFam θ → ∀
   rw [hy] at h
   refine Eq.trans ?_ h
   unfold RderC dRepC
-  rw [Pi.add_apply, Pi.smul_apply, key _ p1, key _ p2, map_add, map_smul]
+  rw [Pi.add_apply, Pi.smul_apply, key _ p1, key _ p2, map_add (f := _), map_smul]
   rfl
 
 end GlobalTheory.MultDer

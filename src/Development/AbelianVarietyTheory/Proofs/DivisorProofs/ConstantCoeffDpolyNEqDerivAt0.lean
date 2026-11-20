@@ -249,7 +249,7 @@ theorem constantCoeff_dpolyN_eq_derivAt0 : ∀ (C : Type) [Field C] [CharZero C]
       hsub Q1 (Q1.support ∪ Q2.support) f Finset.subset_union_left,
       hsub Q2 (Q1.support ∪ Q2.support) f Finset.subset_union_right, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun m _ => ?_
-    rw [MvPolynomial.coeff_add, map_add, add_mul]
+    rw [MvPolynomial.coeff_add, map_add (f := _), add_mul]
   have hC : ∀ (a : C) (f : PS C n d), DpolyN G.F cp u (MvPolynomial.C a) f = MvPowerSeries.C a * f := by
     intro a f
     rw [hsub (MvPolynomial.C a) {0} f (by rw [MvPolynomial.C_apply]; exact MvPolynomial.support_monomial_subset),
@@ -292,7 +292,7 @@ theorem constantCoeff_dpolyN_eq_derivAt0 : ∀ (C : Type) [Field C] [CharZero C]
     simp [mfact, hccs, MvPowerSeries.coeff_zero_eq_constantCoeff_apply]
   next P1 P2 h1 h2 =>
     intro g
-    rw [map_add, hadd, map_add, h1, h2,
+    rw [map_add (f := _), hadd, map_add (f := _), h1, h2,
       (derivAt0_linear C v Λ P1 P2 (subst (psi L β w) g) (subst (psi L β w) g) 0).2.2.1]
   next Q l h =>
     intro g

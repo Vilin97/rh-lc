@@ -94,7 +94,7 @@ theorem xi_det_eq_of_marked_isometry : ∀ {D : D7} {H : ReciprocityTheory.Chart
       refine ⟨-φL' z, ?_, ?_⟩
       · rw [← SetLike.mem_coe, ← hLg']
         exact ⟨-z, map_neg _ _⟩
-      · rw [Matrix.one_mulVec, ← hδ2, hz, map_add, map_nsmul, smul_neg]
+      · rw [Matrix.one_mulVec, ← hδ2, hz, map_add (f := _), map_nsmul, smul_neg]
         abel)
   have hδQ : δ ∈ GQ V := (r1 δ).2 ⟨δ', hδ⟩
   have h3' : (finHom V u).1.det * 1 - 1 ∈

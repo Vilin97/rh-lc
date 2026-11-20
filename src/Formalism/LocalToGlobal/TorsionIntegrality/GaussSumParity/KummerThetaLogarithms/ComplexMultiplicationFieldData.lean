@@ -65,7 +65,7 @@ theorem cW_map (g2 g3 : K) (k : ℕ) : φ (cW g2 g3 k) = cW (φ g2) (φ g3) k :=
     · rw [map_div₀, map_ofNat]
     · rw [map_div₀, map_ofNat]
     set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_mul, map_div₀, map_mul, map_add, map_sub, map_mul, map_natCast, map_one, map_sum]
+      · rw [map_mul, map_div₀, map_mul, map_add (f := _), map_sub, map_mul, map_natCast, map_one, map_sum]
       simp only [map_ofNat]
       congr 1
       refine Finset.sum_congr rfl fun m _ => ?_
@@ -127,7 +127,7 @@ theorem cc_phFF {l : ℕ} (hl : 2 ≤ l) (g2 g3 s2 ε : K) :
   have h3 : PowerSeries.constantCoeff (Formalism.L2.Th1.B.fLog (Formalism.L2.Th1.B.lU (lgF K l))) = 0 :=
     Pair.cc_ps (τ := Unit) h2 PowerSeries.constantCoeff_log
   unfold phFF
-  rw [map_sub, map_add, map_neg, map_mul, map_pow, h1, h3, cc_arg hl ε]
+  rw [map_sub, map_add (f := _), map_neg, map_mul, map_pow, h1, h3, cc_arg hl ε]
   simp
 
 end Maps

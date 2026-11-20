@@ -50,7 +50,7 @@ theorem TNorm.of_tower (F M E K : Type) [Field F] [Field M] [Field E] [Algebra F
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => rfl
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   refine ⟨π (∏ q : (E ≃ₐ[F] E) ⧸ φ.range,
     Algebra.TensorProduct.map (AlgHom.id K K) (((q.out)⁻¹ : E ≃ₐ[F] E) : E →ₐ[F] E) y), ?_⟩
   apply (algebraMap K (K ⊗[M] E)).injective

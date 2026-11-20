@@ -93,7 +93,7 @@ theorem cmpJ_mem_span (e : D.what₂.LL →+* G.Kf) (H : ∀ β, S.Core e β) (h
     apply Submodule.subset_span
     exact (cmpJ_lat e H hS w hw hloc y).2 (Submodule.subset_span hy)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add y z _ _ h1 h2 => rw [map_add]; exact Submodule.add_mem _ h1 h2
+  | add y z _ _ h1 h2 => rw [map_add (f := _)]; exact Submodule.add_mem _ h1 h2
   | smul a y _ h1 => rw [LinearMap.map_smulₛₗ]; exact Submodule.smul_mem _ _ h1
 
 theorem cmpJ_li (e : D.what₂.LL →+* G.Kf) (H : ∀ β, S.Core e β) (hS : BlockRationalityField) :

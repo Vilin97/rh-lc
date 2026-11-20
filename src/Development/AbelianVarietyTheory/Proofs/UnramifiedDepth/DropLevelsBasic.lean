@@ -60,7 +60,7 @@ lemma pivot {ι κ : Type} [DecidableEq ι] [Fintype κ] (s : Finset ι)
       linarith
     · have := mul_nonneg hc0 (not_lt.1 hi)
       linarith [hx i]
-  · rw [map_add, map_smul, smul_eq_mul]
+  · rw [map_add (f := _), map_smul, smul_eq_mul]
     have := mul_nonneg hc0 hvφ
     linarith
   · apply Finset.card_lt_card

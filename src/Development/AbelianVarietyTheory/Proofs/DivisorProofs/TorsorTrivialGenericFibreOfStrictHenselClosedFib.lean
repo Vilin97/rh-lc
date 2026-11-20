@@ -56,7 +56,7 @@ theorem torsorsTrivial_of_ringEquiv {B B' : Type} [CommRing B] [CommRing B'] (e 
     | zero => simp
     | tmul a b =>
       rfl
-    | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
   obtain ⟨σ⟩ := h D hfin' hproj' hff' act' (by
     convert hbij.comp s.bijective using 1
     exact funext hcomp)

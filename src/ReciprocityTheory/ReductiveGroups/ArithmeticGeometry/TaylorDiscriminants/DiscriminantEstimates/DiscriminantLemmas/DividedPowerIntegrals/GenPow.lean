@@ -17,9 +17,9 @@ theorem pderiv_comm (a b : I ⊕ J) (p : MvPolynomial (I ⊕ J) K) :
     split_ifs <;> simp
   induction p using MvPolynomial.induction_on with
   | C x => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n hp =>
-    simp only [Derivation.leibniz, pderiv_X, smul_eq_mul, map_add, hc, hp, mul_zero, zero_add]
+    simp only [Derivation.leibniz, pderiv_X, smul_eq_mul, map_add (f := _), hc, hp, mul_zero, zero_add]
     ring
 
 noncomputable abbrev pd (a : I ⊕ J) : Module.End K (MvPolynomial (I ⊕ J) K) :=
@@ -131,7 +131,7 @@ theorem gdelta_X_inr (κ : I → J → K) (j : J) (R : MvPolynomial (I ⊕ J) K)
       X (Sum.inr j) * pderiv (Sum.inl i') (pderiv (Sum.inr j') R) +
         if j' = j then pderiv (Sum.inl i') R else 0 := by
     intro i' j'
-    rw [h2, map_add, h1]
+    rw [h2, map_add (f := _), h1]
     split_ifs <;> simp
   rw [gdelta_apply, gdelta_apply, dR_apply, Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun i' _ => ?_
@@ -147,7 +147,7 @@ theorem powXL_holds : PowXL := by
   induction n with
   | zero => simp [gdelta_X_inl]
   | succ n ih =>
-    rw [gdelta_pow_succ_apply κ (n + 1), ih, map_add, map_nsmul, gdelta_X_inl, gdelta_dL_apply,
+    rw [gdelta_pow_succ_apply κ (n + 1), ih, map_add (f := _), map_nsmul, gdelta_X_inl, gdelta_dL_apply,
       ← gdelta_pow_succ_apply, ← gdelta_pow_succ_apply, add_assoc, ← succ_nsmul']
 
 theorem powXR_holds : PowXR := by
@@ -156,7 +156,7 @@ theorem powXR_holds : PowXR := by
   induction n with
   | zero => simp [gdelta_X_inr]
   | succ n ih =>
-    rw [gdelta_pow_succ_apply κ (n + 1), ih, map_add, map_nsmul, gdelta_X_inr, gdelta_dR_apply,
+    rw [gdelta_pow_succ_apply κ (n + 1), ih, map_add (f := _), map_nsmul, gdelta_X_inr, gdelta_dR_apply,
       ← gdelta_pow_succ_apply, ← gdelta_pow_succ_apply, add_assoc, ← succ_nsmul']
 
 section

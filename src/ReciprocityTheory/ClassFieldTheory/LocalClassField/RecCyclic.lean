@@ -19,7 +19,7 @@ def RecCyc.kerChar (χ : charGrp (GK p K)) : Subgroup (GK p K) where
   one_mem' := map_zero χ.1
   mul_mem' := fun {a b} ha hb => by
     show χ.1 (Additive.ofMul a + Additive.ofMul b) = 0
-    rw [map_add, show χ.1 (Additive.ofMul a) = 0 from ha, show χ.1 (Additive.ofMul b) = 0 from hb, add_zero]
+    rw [map_add (f := _), show χ.1 (Additive.ofMul a) = 0 from ha, show χ.1 (Additive.ofMul b) = 0 from hb, add_zero]
   inv_mem' := fun {a} ha => by
     show χ.1 (- Additive.ofMul a) = 0
     rw [map_neg, show χ.1 (Additive.ofMul a) = 0 from ha, neg_zero]
@@ -33,7 +33,7 @@ theorem normal_of_char (χ : charGrp (GK p K)) (hχ : ∀ g, χ.1 (Additive.ofMu
     (subG p K L).Normal := by
   refine ⟨fun n hn g => ?_⟩
   rw [← hχ] at hn ⊢
-  rw [ofMul_mul, ofMul_mul, ofMul_inv, map_add, map_add, map_neg, hn]
+  rw [ofMul_mul, ofMul_mul, ofMul_inv, map_add (f := _), map_add (f := _), map_neg, hn]
   abel
 
 noncomputable def RecCyc.charBar [(subG p K L).Normal] (χ : charGrp (GK p K)) (hχ : TrivOn p K L χ) :

@@ -39,7 +39,7 @@ theorem theta_conj {σ : E →ₐ[F] E} {τ : E →+* ℂ} (hτ : ∀ x, τ (σ 
     have e : cAF σ (a ⊗ₜ[F] x) = a ⊗ₜ[F] σ x := rfl
     rw [e, infPart_tmul, infPart_tmul, tmul_split _ (σ x), tmul_split _ x, map_mul, map_mul, h.1, h.1, star_mul',
       star_theta_one hτ h, hτ]
-  | add a b ha hb => simp only [map_add, ha, hb, star_add]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb, star_add]
 
 theorem continuous_theta {τ : E →+* ℂ} {θ : Ainf F ⊗[F] E →+* ℂ} (h : IsInfEmbF τ θ) :
     Continuous (θ.comp (infPartF F E)) := by
@@ -76,7 +76,7 @@ theorem trace_tens {σ : E →ₐ[F] E} (ht : ∀ x, algebraMap F E (Algebra.tra
     rw [e, ← TensorProduct.tmul_add, ← ht]
     conv_lhs => rw [h2, LinearMap.map_smul, h1, smul_eq_mul, mul_comm, ← Algebra.smul_def, TensorProduct.smul_tmul]
     rw [Algebra.algebraMap_eq_smul_one]
-  | add y y' hy hy' => simp only [map_add, TensorProduct.add_tmul, hy, hy']; abel
+  | add y y' hy hy' => simp only [map_add (f := _), TensorProduct.add_tmul, hy, hy']; abel
 
 theorem herm_map {σ : E →ₐ[F] E} {τ : E →+* ℂ} (hτ : ∀ x, τ (σ x) = star (τ x)) {n : ℕ}
     {J : Matrix (Fin n) (Fin n) E} (hJ : IsHermND σ J) : (J.map τ)ᴴ = J.map τ := by

@@ -45,7 +45,7 @@ theorem schr_eq_schrF {F : Type} [Field F] [NumberField F] [Invertible (2 : mixe
     norm_num
   have ht : Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (x ⬝ᵥ w.2 + ⅟(2 : mixedEmbedding.mixedSpace F) * (w.1 ⬝ᵥ w.2)) =
       trP F κ x w.2 + trP F κ w.1 w.2 / 2 := by
-    rw [map_add, h2, ← Algebra.smul_def, map_smul, smul_eq_mul]
+    rw [map_add (f := _), h2, ← Algebra.smul_def, map_smul, smul_eq_mul]
     simp only [trP, dotProduct]
     ring
   simp only [schr, schrF, hψ, ht]

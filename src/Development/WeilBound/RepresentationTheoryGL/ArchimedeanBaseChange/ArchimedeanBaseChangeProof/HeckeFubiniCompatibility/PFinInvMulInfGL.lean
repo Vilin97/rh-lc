@@ -303,7 +303,7 @@ theorem hasInf_span (S : Set (Sm E a)) (τ : E →+* ℂ) (m : Multiset ℂ) (hm
   induction hψ using Submodule.span_induction with
   | mem x hx => exact (h x hx).2 u x (Submodule.mem_span_singleton_self x)
   | zero => rw [map_zero, smul_zero]
-  | add x y _ _ hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | smul c x _ hx => rw [map_smul, hx, smul_comm]
 
 theorem isAutForm_of (hB : BridgeSt) (φ : Sm E a) (K : Subgroup (GL (Fin a) (Af E)))

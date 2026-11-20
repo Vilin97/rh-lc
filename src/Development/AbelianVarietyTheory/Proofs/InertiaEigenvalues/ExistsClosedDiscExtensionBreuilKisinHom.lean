@@ -80,8 +80,8 @@ theorem norm_toDisc_hf_le {K : FinExt l} (bk : BK K) (B : Obj l ↥(OL K)) (f g 
   have hE : ‖am (BK.hf f bk.E)‖ ≤ ρ := by
     obtain ⟨q, hq⟩ := E_eq bk
     have e1 : BK.hf f bk.E = u ^ bk.Ep.natDegree + (l : B.A) ^ 1 * u ^ 0 * BK.hf f q := by
-      rw [hq, map_add, map_pow, map_mul, map_natCast, hu]; ring
-    rw [e1, map_add, map_mul]
+      rw [hq, map_add (f := _), map_pow, map_mul, map_natCast, hu]; ring
+    rw [e1, map_add (f := _), map_mul]
     refine (um _ _).trans (max_le ?_ ?_)
     · have := gauge_mono_le (l := l) u ρ 0 bk.Ep.natDegree hρ
         (by simpa using pow_le_of_le_one hρ.le hρ1 bk.deg_pos.ne')
@@ -103,7 +103,7 @@ theorem norm_toDisc_hf_le {K : FinExt l} (bk : BK K) (B : Obj l ↥(OL K)) (f g 
   obtain ⟨c, hc⟩ := hmem
   have e2 : BK.hf g X = u + BK.hf f bk.E * c := by rw [← hc, hu]; ring
   show ‖ofPre l u ρ (am (BK.hf g X))‖ ≤ ρ
-  rw [norm_ofPre, ← norm_preDisc, e2, map_add, map_mul]
+  rw [norm_ofPre, ← norm_preDisc, e2, map_add (f := _), map_mul]
   refine (um _ _).trans (max_le hX ?_)
   refine (norm_mul_le _ _).trans ?_
   calc _ ≤ (ρ : ℝ) * 1 := mul_le_mul hE (norm_algebraMap_le _) (norm_nonneg _) hρ.le

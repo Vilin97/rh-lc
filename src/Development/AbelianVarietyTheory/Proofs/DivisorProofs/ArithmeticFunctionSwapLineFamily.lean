@@ -115,7 +115,7 @@ theorem mix_general (hC : ArCalc) {k : Type} [CommRing k] {Y : Scheme.{0}} [IsIn
     have e03 : ((L 0).restr i).Isometric ((L 3).restr i) := hiso _ hzs Z i rfl
     have e14 : ((L 1).restr i).icls = ((L 4).restr i).icls := by
       have h₁ := congrArg (HermLB.IsomClass.pull i rfl) hdet
-      rw [map_add, map_add, ← HermLB.icls_pull, ← HermLB.icls_pull, ← HermLB.icls_pull, ← HermLB.icls_pull,
+      rw [map_add (f := _), map_add (f := _), ← HermLB.icls_pull, ← HermLB.icls_pull, ← HermLB.icls_pull, ← HermLB.icls_pull,
         HermLB.icls_eq_iff.2 e03] at h₁
       exact add_left_cancel h₁
     have hdim : topologicalKrullDim Z = (d + 1 : ℕ) := GlobalTheory.T.arithmetic_variety_divisor_dimension k Y p (d + 1) hp Z i hz1

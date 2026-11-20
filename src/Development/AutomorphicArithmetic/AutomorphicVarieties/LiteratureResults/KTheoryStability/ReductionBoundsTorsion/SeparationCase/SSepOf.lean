@@ -25,7 +25,7 @@ theorem sSep : SSep := by
         φ (Finsupp.single (fun i : Fin (k + 1) => (y i.castSucc)⁻¹ * y i.succ) 1)) y
         = φ (bd G (k + 1) (Finsupp.single (fun i : Fin (k + 2) => (y i.castSucc)⁻¹ * y i.succ) 1)) := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [dC, bd, Finsupp.linearCombination_single, one_smul, map_add, map_sum, map_smul]
+        simp only [dC, bd, Finsupp.linearCombination_single, one_smul, map_add (f := _), map_sum, map_smul]
       rw [Fin.sum_univ_succ]
       congr 1
       · simp only [Fin.val_zero, pow_zero, one_mul, Fin.succAbove_zero, Fin.succ_castSucc]

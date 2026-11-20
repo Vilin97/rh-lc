@@ -81,7 +81,7 @@ theorem exists_isQuad (h : IsCMExt F E σ) : ∃ ξ : AE F E, IsQuad (cA σ) ξ 
     intro s u hsu
     simp only [Algebra.smul_def, mul_one] at hsu
     have h2 := congrArg σ hsu
-    simp only [map_add, map_mul, AlgHom.commutes, hξ, map_zero] at h2
+    simp only [map_add (f := _), map_mul, AlgHom.commutes, hξ, map_zero] at h2
     have h3 : algebraMap F E u * ξ = 0 := by linear_combination (hsu - h2) / 2
     have hu : u = 0 := (map_eq_zero (algebraMap F E)).mp ((mul_eq_zero.mp h3).resolve_right hξ0)
     subst hu
@@ -112,7 +112,7 @@ theorem chrW_comp (h : IsCMExt F E σ) (χ : Chr F E) {m : ℕ}
   have key : ∀ p q : Fv F v × Fv F v, p + q + p * q = 0 → (1 + L p) * (1 + L q) = 1 := by
     intro p q hpq
     have := congrArg L hpq
-    rw [map_add, map_add, map_mul, map_zero] at this
+    rw [map_add (f := _), map_add (f := _), map_mul, map_zero] at this
     linear_combination this
   have hx1 : ((x : Fv F v) - 1, (0 : Fv F v)) + (((x⁻¹ : (Fv F v)ˣ) : Fv F v) - 1, 0) +
       ((x : Fv F v) - 1, (0 : Fv F v)) * (((x⁻¹ : (Fv F v)ˣ) : Fv F v) - 1, 0) = 0 := by
@@ -221,11 +221,11 @@ theorem idl_val (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (x y : (Fv F v)ˣ)
     (idl h t (x, y) : AE F E) = 1 + liftPair h t ((x : Fv F v) - 1, (y : Fv F v) - 1) := rfl
 
 theorem piW_idl (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (x y : (Fv F v)ˣ) : piW t (idl h t (x, y) : AE F E) = x := by
-  rw [idl_val, map_add, map_one, piW_liftPair, add_sub_cancel]
+  rw [idl_val, map_add (f := _), map_one, piW_liftPair, add_sub_cancel]
 
 theorem piW_comp_idl (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (x y : (Fv F v)ˣ) :
     piW (t.comp σ) (idl h t (x, y) : AE F E) = y := by
-  rw [idl_val, map_add, map_one, piW_comp_liftPair, add_sub_cancel]
+  rw [idl_val, map_add (f := _), map_one, piW_comp_liftPair, add_sub_cancel]
 
 theorem at_idl (h : IsCMExt F E σ) (t : E →ₐ[F] Fv F v) (x y : (Fv F v)ˣ) :
     At (evFin F v) ((idl h t (x, y) : AE F E) - 1) := by

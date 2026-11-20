@@ -155,7 +155,7 @@ theorem symm_of_cocycle (g : ℕ) (Λ : Submodule ℤ (Fin g → ℂ)) (hd : Dis
     have hi : ∀ m, p i m (z + l) = p i m z - h m l := fun m => hper i m l z hz.1
     have hj : ∀ m, p j m (z + l) = p j m z - h m l := fun m => hper j m l z hz.2
     rw [hG, hG, hkp i j l z hz]
-    simp only [hi, hj, map_add, sub_sub_sub_cancel_right, add_mul, Finset.sum_add_distrib, mul_sub,
+    simp only [hi, hj, map_add (f := _), sub_sub_sub_cancel_right, add_mul, Finset.sum_add_distrib, mul_sub,
       Finset.sum_sub_distrib]
     ring
   have hGc : ∀ i j n, ∀ z ∈ U i ∩ U j ∩ U n, G i j z + G j n z = G i n z := by
@@ -234,7 +234,7 @@ theorem symm_of_cocycle (g : ℕ) (Λ : Submodule ℤ (Fin g → ℂ)) (hd : Dis
     have hd : dbar (b i) u (x + l) = dbar (b i) u x := by
       rw [← dbar_translate, dbar_congr hev]
     have hi : ∀ m, p i m (x + l) = p i m x - h m l := fun m => hper i m l x hx
-    simp only [hW, hd, hi, map_add]
+    simp only [hW, hd, hi, map_add (f := _)]
     congr 1
     exact Finset.sum_congr rfl fun m _ => by ring
   have hWd : ∀ i a c, ∀ x ∈ U i,

@@ -49,7 +49,7 @@ theorem exists_eq_pow_mul (n : ℕ) (u : 𝓞 D.host.K) (h1 : ‖homP D lam (u :
   have h' : (a : D.host.K) * s + b * (p : D.host.K) ^ n = 1 := by exact_mod_cast h
   refine ⟨a * z + b * u, ?_⟩
   rw [RingOfIntegers.coe_eq_algebraMap] at hz
-  simp only [RingOfIntegers.coe_eq_algebraMap, map_add, map_mul, map_intCast] at hz ⊢
+  simp only [RingOfIntegers.coe_eq_algebraMap, map_add (f := _), map_mul, map_intCast] at hz ⊢
   rw [← hz]
   field_simp
   linear_combination (-(u : D.host.K)) * h'
@@ -295,7 +295,7 @@ theorem exists_liftY (hE : ∀ m : ℕ, ∃ ε : 𝓞 D.host.K, IsIdem D lam m �
     | add x y _ _ hx hy =>
       obtain ⟨z, hz⟩ := hx
       obtain ⟨z', hz'⟩ := hy
-      exact ⟨z + z', by rw [map_add, smul_add, add_sub_add_comm]; exact add_mem hz hz'⟩
+      exact ⟨z + z', by rw [map_add (f := _), smul_add, add_sub_add_comm]; exact add_mem hz hz'⟩
     | neg x _ hx =>
       obtain ⟨z, hz⟩ := hx
       exact ⟨-z, by rw [map_neg, smul_neg, neg_sub_neg, ← neg_sub]; exact neg_mem hz⟩
@@ -320,7 +320,7 @@ theorem exists_liftY (hE : ∀ m : ℕ, ∃ ε : 𝓞 D.host.K, IsIdem D lam m �
     have hl : p ^ n • liftZ p n ε w (fun i => z i / ((p ^ n : ℕ) : ℤ)) ∈ La D (tor0 D cc δ) L L' := by
       rw [liftZ_apply, ← Nat.cast_smul_eq_nsmul ℂ, smul_smul, Nat.cast_pow, mul_div_cancel₀ _ (pow_ne_zero n hp0)]
       exact int_smul_mem_La D cc δ L L' _ (hwm _)
-    rw [hd, map_add, map_nsmul, smul_add, ← sub_sub] at hz
+    rw [hd, map_add (f := _), map_nsmul, smul_add, ← sub_sub] at hz
     simpa using add_mem hz (AddSubgroup.mem_map_of_mem (nsmulAddMonoidHom n₀) hl)
 
 theorem chi_mem {χ : IdE D → ℂ} (hχ : IsChi D χ) {𝔞 : IdE D} (ha : N1 D 𝔞) : χ 𝔞 ∈ Qbar := by
@@ -380,7 +380,7 @@ theorem exists_image {X Y : Type} [TopologicalSpace X] [CompactSpace X] [Topolog
     ∃ ν : C(Y, ℂ_[p]) →L[ℂ_[p]] ℂ_[p], ‖ν‖ ≤ 1 ∧ ∀ g, ν g = μ (g.comp f) := by
   let l : C(Y, ℂ_[p]) →ₗ[ℂ_[p]] ℂ_[p] :=
     { toFun := fun g => μ (g.comp f)
-      map_add' := fun g g' => by rw [ContinuousMap.add_comp, map_add]
+      map_add' := fun g g' => by rw [ContinuousMap.add_comp, map_add (f := _)]
       map_smul' := fun c g => by rw [ContinuousMap.smul_comp, map_smul]; rfl }
   have hl : ∀ g, ‖l g‖ ≤ 1 * ‖g‖ := fun g => (μ.le_opNorm _).trans
     (mul_le_mul hμ ((ContinuousMap.norm_le _ (norm_nonneg g)).2 fun x => g.norm_coe_le_norm _) (norm_nonneg _) zero_le_one)

@@ -108,7 +108,7 @@ theorem genusBasic_loc_dual (hinj : Function.Injective (algebraMap R K))
   | mem x hx => exact hall x hx
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add, LinearMap.add_apply, mul_add]
+    rw [map_add (f := _), LinearMap.add_apply, mul_add]
     exact Submodule.add_mem _ hx hy
   | smul r x _ hx =>
     rw [genusBasic_hsmul_left hinj hstar, mul_left_comm]

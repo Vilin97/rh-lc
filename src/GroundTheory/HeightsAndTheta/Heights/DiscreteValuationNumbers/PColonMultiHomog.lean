@@ -24,7 +24,7 @@ theorem component_mul_multiHomog {R : Type*} [CommRing R] {K : Type} [DecidableE
         apply hx1
         have hw := hf h2
         rw [Finset.HasAntidiagonal.mem_antidiagonal] at hx
-        rw [← hx, map_add, hw] at hd
+        rw [← hx, map_add (f := _), hw] at hd
         exact add_right_cancel hd
   · refine Finset.sum_eq_zero fun x hx => ?_
     rw [coeff_weightedHomogeneousComponent]
@@ -35,7 +35,7 @@ theorem component_mul_multiHomog {R : Type*} [CommRing R] {K : Type} [DecidableE
         apply hd
         have hw := hf h2
         rw [Finset.HasAntidiagonal.mem_antidiagonal] at hx
-        rw [← hx, map_add, hw, hx1]
+        rw [← hx, map_add (f := _), hw, hx1]
     · rw [zero_mul]
 
 theorem ColonMultiHomog.proof : ColonMultiHomog.Statement := by

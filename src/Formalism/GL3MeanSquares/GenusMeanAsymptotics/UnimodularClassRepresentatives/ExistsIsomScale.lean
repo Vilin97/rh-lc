@@ -170,14 +170,14 @@ theorem exists_isom_scale (hs : h.IsSymm) {z : V} (hz : h z z ≠ 0) {b : K} (hb
   have hf' : ∀ v, f' v = v + ((star b - 1) * (h z z)⁻¹ * h z v) • z := fun v => by simp [f']
   have c1 : f ∘ₗ f' = LinearMap.id := by
     refine LinearMap.ext fun v => ?_
-    rw [LinearMap.comp_apply, LinearMap.id_apply, hf, hf', map_add, map_smul, smul_eq_mul, add_assoc,
+    rw [LinearMap.comp_apply, LinearMap.id_apply, hf, hf', map_add (f := _), map_smul, smul_eq_mul, add_assoc,
       ← add_smul]
     apply hz0
     linear_combination ((h z z)⁻¹ * h z v) * hb +
       ((h z z)⁻¹ * h z v * (b - 1) * (star b - 1)) * hNi
   have c2 : f' ∘ₗ f = LinearMap.id := by
     refine LinearMap.ext fun v => ?_
-    rw [LinearMap.comp_apply, LinearMap.id_apply, hf, hf', map_add, map_smul, smul_eq_mul, add_assoc,
+    rw [LinearMap.comp_apply, LinearMap.id_apply, hf, hf', map_add (f := _), map_smul, smul_eq_mul, add_assoc,
       ← add_smul]
     apply hz0
     linear_combination ((h z z)⁻¹ * h z v) * hb +
@@ -185,7 +185,7 @@ theorem exists_isom_scale (hs : h.IsSymm) {z : V} (hz : h z z ≠ 0) {b : K} (hb
   refine ⟨LinearEquiv.ofLinear f f' c1 c2, fun a c => ?_, ?_, fun v hv => ?_⟩
   · change h (f a) (f c) = h a c
     rw [hf a, hf c]
-    simp only [map_add, LinearMap.add_apply, map_smul, LinearMap.map_smulₛₗ₂, LinearMap.smul_apply,
+    simp only [map_add (f := _), LinearMap.add_apply, map_smul, LinearMap.map_smulₛₗ₂, LinearMap.smul_apply,
       smul_eq_mul, map_mul, map_inv₀, map_sub, map_one, hN]
     rw [← hs.eq z a]
     simp only [starRingEnd_apply]

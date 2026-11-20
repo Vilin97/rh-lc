@@ -41,7 +41,7 @@ theorem evHom_apply (f : MvPowerSeries κ R) : evHom ha f = nEval f a := by
 include ha
 
 theorem nEval_add (f g : MvPowerSeries κ R) : nEval (f + g) a = nEval f a + nEval g a := by
-  simp only [← evHom_apply ha, map_add]
+  simp only [← evHom_apply ha, map_add (f := _)]
 
 theorem nEval_sub (f g : MvPowerSeries κ R) : nEval (f - g) a = nEval f a - nEval g a := by
   simp only [← evHom_apply ha, map_sub]

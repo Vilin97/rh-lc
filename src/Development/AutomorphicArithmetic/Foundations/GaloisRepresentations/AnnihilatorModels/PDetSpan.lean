@@ -19,7 +19,7 @@ theorem UpperTheory.Gal.crystallineComparison.detSpan_of :
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => rw [onB_tmul]; rfl
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hsumco : ∀ {k : ℕ} (Y : Fin k → (Fin a → ↥LL.1) ⊗[ℚ_[l]] Bst P) (m : Fin a),
       co (∑ j, Y j) m = ∑ j, co (Y j) m := by
     intro k Y m

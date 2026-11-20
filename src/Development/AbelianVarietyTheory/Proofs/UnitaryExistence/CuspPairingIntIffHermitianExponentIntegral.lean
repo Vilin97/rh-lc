@@ -185,7 +185,7 @@ theorem skew_iff (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E) {r ρ
       simp only [S, Matrix.of_apply, mul_add, Finset.sum_add_distrib, ite_and, mul_ite, mul_zero]
       rw [ccm, hχ a b]
       simp
-    rw [e, map_add, trace_cc] at hn
+    rw [e, map_add (f := _), trace_cc] at hn
     linarith
   · intro h β hβ hm
     have hreal : cc (∑ a, ∑ b, χ a b * (β a b / X.ξ0)) = ∑ a, ∑ b, χ a b * (β a b / X.ξ0) := by

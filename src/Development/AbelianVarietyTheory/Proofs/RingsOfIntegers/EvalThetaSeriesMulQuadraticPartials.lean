@@ -24,7 +24,7 @@ def noConst : AddSubgroup (PS K n d) where
   zero_mem' := map_zero _
   add_mem' := fun {f g} hf hg => by
     change MvPowerSeries.constantCoeff (f + g) = 0
-    rw [map_add, hf, hg, add_zero]
+    rw [map_add (f := _), hf, hg, add_zero]
   neg_mem' := fun {f} hf => by
     change MvPowerSeries.constantCoeff (-f) = 0
     rw [map_neg, hf, neg_zero]
@@ -144,7 +144,7 @@ theorem canonicalGauge_first_partial_law_eq (hh : B.IsCanonGauge K h) (a b c : z
     simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons,
       ← mp_mul_eq_addOf B K a b, toAdd_div, toAdd_mul, AddSubgroup.coe_sub, AddSubgroup.coe_add, negH_val B K hh]
     abel
-  · rw [map_sub, map_add, gt_const_ev _ (pair_points_zero_constant g0 g2) _ hc, gt_const_ev _ (pair_points_zero_constant g1 g2) _ hc,
+  · rw [map_sub, map_add (f := _), gt_const_ev _ (pair_points_zero_constant g0 g2) _ hc, gt_const_ev _ (pair_points_zero_constant g1 g2) _ hc,
       gt_const_ev _ (pair_points_zero_constant gs g2) _ hc]
     simp
 
@@ -174,7 +174,7 @@ theorem ph2_eq_subst_exp (hh : B.IsCanonGauge K h) (a b c : zeroPts B n) :
     simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two, Matrix.head_cons, Matrix.tail_cons,
       ← mp_mul_eq_addOf B K b c, toAdd_div, toAdd_mul, AddSubgroup.coe_sub, AddSubgroup.coe_add, negH_val B K hh]
     abel
-  · rw [map_sub, map_add, gt_const_ev _ (pair_points_zero_constant g0 g1) _ hc, gt_const_ev _ (pair_points_zero_constant g0 g2) _ hc,
+  · rw [map_sub, map_add (f := _), gt_const_ev _ (pair_points_zero_constant g0 g1) _ hc, gt_const_ev _ (pair_points_zero_constant g0 g2) _ hc,
       gt_const_ev _ (pair_points_zero_constant g0 gs) _ hc]
     simp
 

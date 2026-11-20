@@ -36,14 +36,14 @@ theorem sK_mul (hm : ∀ x y, s (x * y) = s y * s x) (u v : K ⊗[ℤ] C) :
     induction v using TensorProduct.induction_on with
     | zero => simp
     | tmul k' c' => simp [Algebra.TensorProduct.tmul_mul_tmul, hm, mul_comm]
-    | add v w hv hw => rw [mul_add, map_add, map_add, hv, hw, add_mul]
-  | add u w hu hw => rw [add_mul, map_add, map_add, hu, hw, mul_add]
+    | add v w hv hw => rw [mul_add, map_add (f := _), map_add (f := _), hv, hw, add_mul]
+  | add u w hu hw => rw [add_mul, map_add (f := _), map_add (f := _), hu, hw, mul_add]
 
 theorem sK_sK (hi : ∀ x, s (s x) = x) (u : K ⊗[ℤ] C) : sK s K (sK s K u) = u := by
   induction u using TensorProduct.induction_on with
   | zero => simp
   | tmul k c => simp [hi]
-  | add u w hu hw => rw [map_add, map_add, hu, hw]
+  | add u w hu hw => rw [map_add (f := _), map_add (f := _), hu, hw]
 
 end Ext
 

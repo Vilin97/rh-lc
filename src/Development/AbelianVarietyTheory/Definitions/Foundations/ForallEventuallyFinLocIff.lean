@@ -31,7 +31,7 @@ def kFinVec (ρ : Representation ℂ G X) (K : Subgroup G) : Submodule ℂ X whe
   carrier := {x | ∃ W : Submodule ℂ X, FiniteDimensional ℂ W ∧ ∀ k ∈ K, ρ k x ∈ W}
   zero_mem' := ⟨⊥, inferInstance, fun k _ => by simp⟩
   add_mem' := fun ⟨W, _, h⟩ ⟨W', _, h'⟩ =>
-    ⟨W ⊔ W', inferInstance, fun k hk => by rw [map_add]; exact Submodule.add_mem_sup (h k hk) (h' k hk)⟩
+    ⟨W ⊔ W', inferInstance, fun k hk => by rw [map_add (f := _)]; exact Submodule.add_mem_sup (h k hk) (h' k hk)⟩
   smul_mem' := fun c _ ⟨W, hW, h⟩ => ⟨W, hW, fun k hk => by rw [map_smul]; exact W.smul_mem c (h k hk)⟩
 
 variable [TopologicalSpace G] [IsTopologicalGroup G]

@@ -76,6 +76,6 @@ theorem exists_ne_zero_inclK : GlobalTheory.Published.HarishChandraModules → �
       rw [map_zero]
       exact (tensorLaw D V S M).sep _ fun w => key φ w Finset.univ v (by simp)
     rw [h0, smul_zero]
-  | add a b ha hb => rw [map_add, ha, hb, add_zero]
+  | add a b ha hb => rw [map_add (f := _), ha, hb, add_zero]
 
 end GlobalTheory.Chain.IoLift.ItNe

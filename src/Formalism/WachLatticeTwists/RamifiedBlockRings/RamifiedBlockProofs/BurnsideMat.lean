@@ -63,7 +63,7 @@ theorem burnsideMat : StatBurnsideMat := by
   rw [hB]
   exact MonoidAlgebra.induction_on (motive := fun a => L a ∈ Submodule.span k (Set.range ρ)) a
     (fun g => by rw [hof]; exact Submodule.subset_span ⟨g, rfl⟩)
-    (fun f g hf hg => by rw [map_add]; exact Submodule.add_mem _ hf hg)
+    (fun f g hf hg => by rw [map_add (f := _)]; exact Submodule.add_mem _ hf hg)
     (fun c f hf => by rw [map_smul]; exact Submodule.smul_mem _ _ hf)
 
 theorem ontoSpan : StatOntoSpan := by

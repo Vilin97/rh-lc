@@ -40,7 +40,7 @@ theorem cohTrivial_leftRegular [Fintype G] : CohTrivial (Rep.leftRegular k G) :=
   refine cohTrivial_of_sum_eq _ coeffOneProj fun m => ?_
   induction m using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add x y hx hy => simp only [map_add, Finset.sum_add_distrib, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finset.sum_add_distrib, hx, hy]
   | single h c =>
     rw [Fintype.sum_eq_single h]
     · simp [coeffOneProj_apply]
@@ -74,7 +74,7 @@ theorem cocycleLinear_ρ (f : cocycles₁ A) (s : G) (x : MonoidAlgebra k G) :
       A.ρ s (cocycleLinear f x) + augmentation k G x • f s := by
   induction x using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy, add_smul]; abel
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, add_smul]; abel
   | single g r =>
     have hf : f (s * g) = A.ρ s (f g) + f s := (mem_cocycles₁_iff _).1 f.2 s g
     rw [Representation.ofMulAction_single, smul_eq_mul, cocycleLinear_single, cocycleLinear_single,

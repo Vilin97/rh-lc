@@ -40,7 +40,7 @@ theorem cA_incA_natCast_inv {D : D7} (m : ℕ) : cA D (incA D ((m : D.host.E)⁻
 theorem cA_flipElt {D : D7} (e : AE D) (m : ℕ) :
     cA D (flipElt e m) = cA D e * (m : AE D) + e * incA D ((m : D.host.E)⁻¹) + (1 - cA D e - e) := by
   unfold flipElt
-  rw [map_add, map_add, map_mul, map_mul, map_sub, map_sub, map_one, map_natCast, cA_incA_natCast_inv, cA_cA]
+  rw [map_add (f := _), map_add (f := _), map_mul, map_mul, map_sub, map_sub, map_one, map_natCast, cA_incA_natCast_inv, cA_cA]
 
 theorem flipElt_mul_cA {D : D7} {e : AE D} (he : e * e = e) (hec : e * cA D e = 0) {m : ℕ} (hm : m ≠ 0) :
     flipElt e m * cA D (flipElt e m) = 1 := by
@@ -105,7 +105,7 @@ theorem flip_central_exists : ∀ (D : D7) (V : HSp D) (T : Finset (Formalism.L2
         rw [hsum, map_sum]
       exact Finset.sum_eq_zero fun PP hPP => (delta_of_isIdemAt hΦ (hes PP hPP)).1
     refine mem_GfC_of_suppF V (f := eT + cA D eT) ?_ ((suppF_iff V _ _).2 ?_)
-    · rw [map_add, hinf, (parts_cA eT).1, hinf, map_zero, add_zero]
+    · rw [map_add (f := _), hinf, (parts_cA eT).1, hinf, map_zero, add_zero]
     · rw [mt_scalU, smul_smul]
       unfold flipElt
       rw [complementIdempotent_mul_idempotentFlip he hcc hec]

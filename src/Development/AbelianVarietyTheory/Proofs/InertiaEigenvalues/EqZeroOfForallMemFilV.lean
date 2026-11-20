@@ -52,7 +52,7 @@ theorem sm_tmul_left (c : LL) (b : F) (x : V ⊗[Qp] F) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b' => simp [TensorProduct.smul_tmul']
-  | add x y hx hy => simp only [map_add, hx, hy, smul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add]
 
 theorem sm_one_tmul (b : F) (x : V ⊗[Qp] F) :
     sm Qp F LL V ((1 : LL) ⊗ₜ[Qp] b) x = mulR Qp F LL V b x := by
@@ -62,46 +62,46 @@ theorem sm_one_tmul (b : F) (x : V ⊗[Qp] F) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b' => simp [Algebra.TensorProduct.one_def]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem bil_sm_left (β : V →ₗ[LL] V' →ₗ[LL] V'') (r : LL ⊗[Qp] F) (x : V ⊗[Qp] F) (y : V' ⊗[Qp] F) :
     bil Qp F β (sm Qp F LL V r x) y = sm Qp F LL V'' r (bil Qp F β x y) := by
   induction r using TensorProduct.induction_on with
   | zero => simp
-  | add r s hr hs => simp only [map_add, LinearMap.add_apply, hr, hs]
+  | add r s hr hs => simp only [map_add (f := _), LinearMap.add_apply, hr, hs]
   | tmul c b =>
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add r s hr hs => simp only [map_add, LinearMap.add_apply, hr, hs]
+    | add r s hr hs => simp only [map_add (f := _), LinearMap.add_apply, hr, hs]
     | tmul v b' =>
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add r s hr hs => simp only [map_add, hr, hs]
+      | add r s hr hs => simp only [map_add (f := _), hr, hs]
       | tmul w b'' => simp [mul_assoc]
 
 theorem bil_sm_right (β : V →ₗ[LL] V' →ₗ[LL] V'') (r : LL ⊗[Qp] F) (x : V ⊗[Qp] F) (y : V' ⊗[Qp] F) :
     bil Qp F β x (sm Qp F LL V' r y) = sm Qp F LL V'' r (bil Qp F β x y) := by
   induction r using TensorProduct.induction_on with
   | zero => simp
-  | add r s hr hs => simp only [map_add, LinearMap.add_apply, hr, hs]
+  | add r s hr hs => simp only [map_add (f := _), LinearMap.add_apply, hr, hs]
   | tmul c b =>
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add r s hr hs => simp only [map_add, LinearMap.add_apply, hr, hs]
+    | add r s hr hs => simp only [map_add (f := _), LinearMap.add_apply, hr, hs]
     | tmul v b' =>
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add r s hr hs => simp only [map_add, hr, hs]
+      | add r s hr hs => simp only [map_add (f := _), hr, hs]
       | tmul w b'' => simp [mul_left_comm]
 
 theorem sm_self (r s : LL ⊗[Qp] F) : sm Qp F LL LL r s = r * s := by
   induction r using TensorProduct.induction_on with
   | zero => simp
-  | add r s hr hs => simp only [map_add, LinearMap.add_apply, hr, hs, add_mul]
+  | add r s hr hs => simp only [map_add (f := _), LinearMap.add_apply, hr, hs, add_mul]
   | tmul c b =>
     induction s using TensorProduct.induction_on with
     | zero => simp
-    | add r s hr hs => simp only [map_add, hr, hs, mul_add]
+    | add r s hr hs => simp only [map_add (f := _), hr, hs, mul_add]
     | tmul v b' => simp
 
 theorem sm_mul (r s : LL ⊗[Qp] F) (x : V ⊗[Qp] F) :
@@ -117,11 +117,11 @@ theorem ext_sm (f : V →ₗ[LL] V') (r : LL ⊗[Qp] F) (x : V ⊗[Qp] F) :
     ext Qp F f (sm Qp F LL V r x) = sm Qp F LL V' r (ext Qp F f x) := by
   induction r using TensorProduct.induction_on with
   | zero => simp
-  | add r s hr hs => simp only [map_add, LinearMap.add_apply, hr, hs]
+  | add r s hr hs => simp only [map_add (f := _), LinearMap.add_apply, hr, hs]
   | tmul c b =>
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add r s hr hs => simp only [map_add, hr, hs]
+    | add r s hr hs => simp only [map_add (f := _), hr, hs]
     | tmul v b' => simp
 
 theorem eq_zero_of_forall_ext (x : V ⊗[Qp] F) (h : ∀ φ : V →ₗ[LL] LL, ext Qp F φ x = 0) : x = 0 := by
@@ -136,7 +136,7 @@ theorem eq_zero_of_forall_ext (x : V ⊗[Qp] F) (h : ∀ φ : V →ₗ[LL] LL, e
       obtain ⟨s, hs⟩ := hx
       obtain ⟨s', hs'⟩ := hy
       refine ⟨s ∪ s', fun t ht => ?_⟩
-      simp only [map_add, LinearMap.add_apply, Finset.sum_add_distrib]
+      simp only [map_add (f := _), LinearMap.add_apply, Finset.sum_add_distrib]
       rw [← hs t (Finset.subset_union_left.trans ht), ← hs' t (Finset.subset_union_right.trans ht)]
     | tmul v b =>
       refine ⟨(bV.repr v).support, fun t ht => ?_⟩
@@ -154,7 +154,7 @@ theorem eq_sum_basis {ι : Type} [Fintype ι] (bV : Basis ι LL V) (x : V ⊗[Qp
   induction x using TensorProduct.induction_on with
   | zero => simp
   | add x y hx hy =>
-    simp only [map_add, LinearMap.add_apply, Finset.sum_add_distrib]
+    simp only [map_add (f := _), LinearMap.add_apply, Finset.sum_add_distrib]
     rw [← hx, ← hy]
   | tmul v b =>
     simp only [AlgebraTensorModule.map_tmul, LinearMap.id_apply, sm_tmul, mul_one,
@@ -180,7 +180,7 @@ theorem exists_idem [FiniteDimensional Qp K] [CharZero Qp] (τ : K →ₐ[Qp] LL
       intro t
       induction t using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul a b => simp
     rw [this, ht1, map_one]
   · have h := congrArg (Algebra.TensorProduct.map τ (AlgHom.id Qp K)) (ht c)
@@ -290,7 +290,7 @@ theorem FilV_induction {a : ℤ} {p : V ⊗[Qp] F → Prop} (h0 : p 0)
   induction y using TensorProduct.induction_on with
   | zero => simpa using h0
   | tmul v b => exact ht v b b.2
-  | add x y hx hy => rw [map_add]; exact ha _ _ hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact ha _ _ hx hy
 
 theorem FilV_antitone : Antitone (FilV PD (LL := LL) (V := V)) := fun a _ hab _ hx =>
   FilV_induction PD (p := fun x => x ∈ FilV PD (LL := LL) (V := V) a) (Submodule.zero_mem _)
@@ -315,7 +315,7 @@ theorem coord_mem_fil {ι : Type} [DecidableEq ι] (b : Basis ι Qp V) {a : ℤ}
   · intro v c hc
     simpa using ((PD.Fil a).restrictScalars Qp).smul_mem (b.repr v i) hc
   · intro x y hx hy
-    simpa only [map_add, Finsupp.add_apply] using Submodule.add_mem _ hx hy
+    simpa only [map_add (f := _), Finsupp.add_apply] using Submodule.add_mem _ hx hy
 
 theorem eq_zero_of_forall_mem_FilV (x : V ⊗[Qp] F) (hx : ∀ a, x ∈ FilV PD (LL := LL) (V := V) a) :
     x = 0 := by
@@ -335,9 +335,9 @@ theorem bil_mem_FilV (β : V →ₗ[LL] V' →ₗ[LL] V'') {a b : ℤ} {x : V �
       (by simp) (fun w d hd => ?_) (fun x x' h h' => ?_) hy
     · rw [bil_tmul]
       exact tmul_mem_FilV PD _ (PD.Fil_mul _ _ _ _ hc hd)
-    · rw [map_add]
+    · rw [map_add (f := _)]
       exact Submodule.add_mem _ h h'
-  · rw [map_add, LinearMap.add_apply]
+  · rw [map_add (f := _), LinearMap.add_apply]
     exact Submodule.add_mem _ h h'
 
 theorem sm_mem_FilV {a b : ℤ} {r : LL ⊗[Qp] F} {y : V ⊗[Qp] F}
@@ -354,7 +354,7 @@ theorem ext_mem_FilV (f : V →ₗ[LL] V') {a : ℤ} {x : V ⊗[Qp] F}
     (hx : x ∈ FilV PD (LL := LL) (V := V) a) : ext Qp F f x ∈ FilV PD (LL := LL) (V := V') a :=
   FilV_induction PD (p := fun x => ext Qp F f x ∈ FilV PD (LL := LL) (V := V') a) (by simp)
     (fun v _ hb => tmul_mem_FilV PD (f v) hb)
-    (fun _ _ h h' => by rw [map_add]; exact Submodule.add_mem _ h h') hx
+    (fun _ _ h h' => by rw [map_add (f := _)]; exact Submodule.add_mem _ h h') hx
 
 theorem mem_DdR (ρ : Representation LL G V) (x : V ⊗[Qp] F) :
     x ∈ DdR PD ρ ↔ ∀ g, actVdR PD ρ g x = x := by
@@ -376,11 +376,11 @@ theorem act_bil (ρ : Representation LL G V) (ρ' : Representation LL G V') (ρ'
     actVdR PD ρ'' g (bil Qp F β x y) = bil Qp F β (actVdR PD ρ g x) (actVdR PD ρ' g y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add r s hr hs => simp only [map_add, LinearMap.add_apply, hr, hs]
+  | add r s hr hs => simp only [map_add (f := _), LinearMap.add_apply, hr, hs]
   | tmul v b' =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add r s hr hs => simp only [map_add, hr, hs]
+    | add r s hr hs => simp only [map_add (f := _), hr, hs]
     | tmul w b'' => simp [hβ]
 
 variable (LL) in
@@ -400,7 +400,7 @@ theorem act_ext (ρ : Representation LL G V) (ρ' : Representation LL G V') (f :
     actVdR PD ρ' g (ext Qp F f x) = ext Qp F f (actVdR PD ρ g x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add r s hr hs => simp only [map_add, hr, hs]
+  | add r s hr hs => simp only [map_add (f := _), hr, hs]
   | tmul v b' => simp [hf]
 
 theorem exists_of_actR_fixed (x : LL ⊗[Qp] F) (hx : ∀ g, actR PD LL g x = x) :
@@ -416,7 +416,7 @@ theorem exists_of_actR_fixed (x : LL ⊗[Qp] F) (hx : ∀ g, actR PD LL g x = x)
       have : ∀ (q : Qp) (z : F), PD.actdR g (q • z) = q • PD.actdR g z := fun q z =>
         ((PD.actdR g).toLinearMap.restrictScalars Qp).map_smul q z
       simp [e, this]
-    | add a b ha hb => simp only [map_add, Finsupp.add_apply, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), Finsupp.add_apply, ha, hb]
   have hx' : x = (e x).sum fun i c => b i ⊗ₜ[Qp] c := by
     rw [← TensorProduct.equivFinsuppOfBasisLeft_symm_apply]
     exact (e.symm_apply_apply x).symm
@@ -463,7 +463,7 @@ theorem dual_family (ρ : Representation LL G V) (ρ' : Representation LL G V') 
       exact LinearMap.congr_fun h x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, LinearMap.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), LinearMap.add_apply, hx, hy]
     | tmul x b => simp [this]
   have hw : ∀ a (y : V' ⊗[Qp] F), bil Qp F β (v a ⊗ₜ[Qp] (1 : F)) y = ext Qp F (w.coord a) y := by
     intro a y
@@ -473,7 +473,7 @@ theorem dual_family (ρ : Representation LL G V) (ρ' : Representation LL G V') 
       exact LinearMap.congr_fun h y
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul x b => simp [this]
   have hx : ∀ x, sm Qp F LL V e x = ∑ i, sm Qp F LL V (bil Qp F β x (d' i)) (d i) := by
     intro x

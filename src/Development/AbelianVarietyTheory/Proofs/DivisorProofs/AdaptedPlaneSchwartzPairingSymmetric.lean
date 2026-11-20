@@ -50,7 +50,7 @@ theorem transfer {P M M' : Type} [AddCommGroup P] [Module ℂ P] [AddCommGroup M
   let g : S →ₗ[ℂ] P :=
     { toFun := fun φ => p (c φ)
       map_add' := fun φ ψ => by
-        rw [← map_add]
+        rw [← map_add (f := _)]
         have h := lin _ φ.2 _ ψ.2 _ _ (hc φ).2 (hc ψ).2 1 1
         simp only [one_smul] at h
         exact uniq _ (φ + ψ).2 _ (φ + ψ).2 _ (hc _).1 _ (S.add_mem (hc φ).1 (hc ψ).1) (hc _).2 h rfl

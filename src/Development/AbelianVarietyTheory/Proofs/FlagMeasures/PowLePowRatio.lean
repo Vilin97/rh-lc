@@ -177,7 +177,7 @@ theorem sp_skew (w : InfinitePlace I.E) (φ : Matrix (Fin I.n) (Fin I.n) I.E)
   refine span_inner _ _ _ _ ?_
   rintro _ ⟨s, hs, rfl⟩ _ ⟨y, hy, rfl⟩
   simp only [ContinuousLinearMap.comp_apply]
-  rw [op_pt, op_pt, sg, inner_opJ, ← sg, inner_pt, inner_pt, ← map_add, h s hs y hy, map_zero]
+  rw [op_pt, op_pt, sg, inner_opJ, ← sg, inner_pt, inner_pt, ← map_add (f := _), h s hs y hy, map_zero]
 
 def rho (G : ℕ → Submodule (𝓞 I.E) (Fin I.n → I.E)) (p : ℕ) : ℕ := rkK (G (p + 1)) - rkK (G p)
 

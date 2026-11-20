@@ -155,7 +155,7 @@ theorem limJ_tt_subst {σ τ : Type} [Finite σ] [Finite τ] (k : ℕ) (a : σ �
         first | rfl | (exfalso; exact h2 h1.symm) | (exfalso; exact h1 h2.symm)
     next p q hp hq =>
       rw [MvPolynomial.coe_add, ← MvPowerSeries.coe_substAlgHom has]
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [MvPowerSeries.coe_substAlgHom has, hp, hq]
     next p n hp =>
       rw [MvPolynomial.coe_mul, MvPolynomial.coe_X, ← MvPowerSeries.coe_substAlgHom has]

@@ -34,7 +34,7 @@ theorem e_smul_mem_range {k : ℕ} (c : FractionRing (D.ntw.O i)) {y : GA D (Wc 
   obtain ⟨x, rfl⟩ := hy
   induction x using TensorProduct.induction_on with
   | zero => rw [map_zero, smul_zero]; exact zero_mem_range hρ rd
-  | add x y hx hy => rw [map_add, smul_add]; exact add_mem_range hρ rd hx hy
+  | add x y hx hy => rw [map_add (f := _), smul_add]; exact add_mem_range hρ rd hx hy
   | tmul a f => exact ⟨a ⊗ₜ (c • f), by rw [rdK_tmul, rdK_tmul, LinearMap.map_smulₛₗ, smul_comm]⟩
 
 theorem ek_smul_mem_range {k : ℕ} (a : FractionRing (D.ntw.Ok i k)) {y : GA D (Wc D j) → ℂ} (hy : y ∈ Set.range (rdK rd hρ k)) :
@@ -101,7 +101,7 @@ theorem term_mem (hR : RatTwist hρ rd) {k Q ψ} (hψ : TwOK i k Q ψ) (hQ : Cls
   induction hspan using Submodule.span_induction with
   | mem P hP => exact series_datum hρ rd hR hψ hQ ⟨hs, hoff, hh', hsupp, hP⟩
   | zero => rw [map_zero]; exact zero_mem_range hρ rd
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem_range hρ rd hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem_range hρ rd hx hy
   | smul a x _ hx =>
     obtain ⟨_, u, rfl⟩ := a
     have h2 := ek_smul_mem_range hρ rd (algebraMap (D.ntw.Ok i k) _ u) hx
@@ -123,7 +123,7 @@ theorem sum_mem_range : ∀ (D : D7) (ρ : Setup D.ntw) (hρ : ρ.Good) (i : D.n
     rw [← map_natCast (ρ.ek i b k), ← map_inv₀]
     exact ek_smul_mem_range hρ rd _ (term_mem hρ rd hR hψ hQ hF (hc.fin c))
   | zero => rw [map_zero, map_zero]; exact zero_mem_range hρ rd
-  | add x y _ _ hx hy => rw [map_add, map_add]; exact add_mem_range hρ rd hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _)]; exact add_mem_range hρ rd hx hy
   | smul a x _ hx => rw [LinearMap.map_smulₛₗ, map_smul]; exact ek_smul_mem_range hρ rd a hx
 
 end GlobalTheory.ClassSumRat

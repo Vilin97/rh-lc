@@ -61,7 +61,7 @@ theorem GlobalTheory.Heat.ringOp_conj_pow : ∀ (Ω : Type) [CommRing Ω] [IsDom
         + (k : FractionRing Ω) ^ 2 * (δ a c / c) * (δ b c / c) * f) := by
       intro a b
       rw [e1, fractionField_derivation_pow_mul_logDeriv (δ a) hc]
-      simp only [map_add, Derivation.leibniz, Derivation.map_natCast, smul_eq_mul]
+      simp only [map_add (f := _), Derivation.leibniz, Derivation.map_natCast, smul_eq_mul]
       ring
     have e3 : d (c ^ k * f) = c ^ k * (d f + (k : FractionRing Ω) * (d c / c) * f) := fractionField_derivation_pow_mul_logDeriv d hc k f
     have hsym : ∑ a, ∑ b, Θ a b * ((δ b c / c) * δ a f) = ∑ a, ∑ b, Θ a b * ((δ a c / c) * δ b f) := by

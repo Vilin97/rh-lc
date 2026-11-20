@@ -1324,7 +1324,7 @@ theorem exists_shift {δ : ∀ p : PlF D, (D.s.atP p).Fp} (p : PlF D) (hδ : δ 
       have h1 := H ⟨n, hn⟩
       simp only at h1
       rw [← MulEquiv.isUnit_map sg.e.toRingEquiv.toMulEquiv] at h1
-      simp only [RingEquiv.toMulEquiv_eq_coe, RingEquiv.coe_toMulEquiv, AlgEquiv.coe_ringEquiv, map_add, map_natCast, Prod.isUnit_iff, Prod.fst_add, Prod.snd_add,
+      simp only [RingEquiv.toMulEquiv_eq_coe, RingEquiv.coe_toMulEquiv, AlgEquiv.coe_ringEquiv, map_add (f := _), map_natCast, Prod.isUnit_iff, Prod.fst_add, Prod.snd_add,
         Prod.fst_natCast, Prod.snd_natCast, isUnit_iff_ne_zero, not_and_or, not_not] at h1
       exact h1
     have h0 := key 0 (by norm_num)

@@ -52,11 +52,11 @@ theorem sum_frame {A : Type} [Ring A] [Algebra ℂ A] (L : Matrix (Fin n) (Fin n
     intro a b
     by_cases c : e a = e b
     · have := pair_sq (L (single a b 1)) (L (single b a 1)) (s := 1) (Or.inl rfl)
-      simp only [xv, yv, gv, c, sg, if_true, if_false, map_zero, mul_zero, map_smul, map_sub, map_add, Bool.false_eq_true]
+      simp only [xv, yv, gv, c, sg, if_true, if_false, map_zero, mul_zero, map_smul, map_sub, map_add (f := _), Bool.false_eq_true]
       rw [add_zero, zero_sub, this]
       module
     · have := pair_sq (L (single a b 1)) (L (single b a 1)) (s := -1) (Or.inr rfl)
-      simp only [xv, yv, gv, c, sg, if_true, if_false, map_zero, mul_zero, map_smul, map_sub, map_add, Bool.false_eq_true]
+      simp only [xv, yv, gv, c, sg, if_true, if_false, map_zero, mul_zero, map_smul, map_sub, map_add (f := _), Bool.false_eq_true]
       rw [add_zero, sub_zero, this]
       module
   rw [← Finset.sum_sub_distrib, Fintype.sum_prod_type]

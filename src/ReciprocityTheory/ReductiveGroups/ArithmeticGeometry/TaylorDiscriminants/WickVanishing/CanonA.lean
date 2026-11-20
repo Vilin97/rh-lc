@@ -34,15 +34,15 @@ theorem inner_of_derivation {O W : Type} [CommRing O] [Module.Free ℤ O] [Modul
     intro a u
     induction u using TensorProduct.induction_on with
     | zero => simp
-    | add u v hu hv => simp only [mul_add, map_add, hu, hv, LinearMap.add_apply]; abel
+    | add u v hu hv => simp only [mul_add, map_add (f := _), hu, hv, LinearMap.add_apply]; abel
     | tmul x y =>
       induction x using TensorProduct.induction_on with
       | zero => simp
-      | add x x' hx hx' => simp only [add_tmul, mul_add, map_add, hx, hx', LinearMap.add_apply]; abel
+      | add x x' hx hx' => simp only [add_tmul, mul_add, map_add (f := _), hx, hx', LinearMap.add_apply]; abel
       | tmul p x =>
         induction y using TensorProduct.induction_on with
         | zero => simp
-        | add y y' hy hy' => simp only [tmul_add, mul_add, map_add, hy, hy', LinearMap.add_apply]; abel
+        | add y y' hy hy' => simp only [tmul_add, mul_add, map_add (f := _), hy, hy', LinearMap.add_apply]; abel
         | tmul q y =>
           have c := LinearMap.congr_fun (hc x a) (D y)
           simp only [Module.End.mul_apply] at c
@@ -125,7 +125,7 @@ variable (k d) in
 
 def Q (n : ℕ) : AddSubgroup (Pt k n d) where
   carrier := {p | ∀ i, constantCoeff (p i) = 0}
-  add_mem' := fun ha hb i => by rw [Pi.add_apply, map_add, ha i, hb i, add_zero]
+  add_mem' := fun ha hb i => by rw [Pi.add_apply, map_add (f := _), ha i, hb i, add_zero]
   zero_mem' := fun _ => map_zero _
   neg_mem' := fun ha i => by rw [Pi.neg_apply, map_neg, ha i, neg_zero]
 
@@ -212,7 +212,7 @@ theorem dir_zero (j : Fin n) : Dir j (0 : Q k d n) 0 := by
 theorem Dir.add {j : Fin n} {p q : Q k d n} {s t : PS k n d} (h : Dir j p s) (h' : Dir j q t) : Dir j (p + q) (s + t) := by
   intro b c
   show pderiv (R := k) (j, b) (p.1 c + q.1 c) = _
-  rw [map_add, h b c, h' b c]
+  rw [map_add (f := _), h b c, h' b c]
   split_ifs <;> simp
 
 theorem pd_sb {m : ℕ} (a : Fin m → Q k d n) (t : Fin m → PS k n d) {j : Fin n} (h : ∀ i, Dir j (a i) (t i)) (b : Fin d)
@@ -352,7 +352,7 @@ private theorem d1_lemma_2 (α : PS k 3 d)
   have d2 : Dir (3 : Fin 4) (gen 2 : Q k d 4) 0 := dir_ne (by decide)
   have d3 : Dir (3 : Fin 4) (gen 3 : Q k d 4) 1 := dir_same 3
   have e := congrArg (pderiv (R := k) ((3 : Fin 4), b)) (coc (gen 0) (gen 1) (gen 3) (gen 2))
-  rw [map_add, map_add, pderiv_eval_three d0 d1 d2, pderiv_eval_three (d0.add d1) d3 d2, pderiv_eval_three d1 d3 d2,
+  rw [map_add (f := _), map_add (f := _), pderiv_eval_three d0 d1 d2, pderiv_eval_three (d0.add d1) d3 d2, pderiv_eval_three d1 d3 d2,
     pderiv_eval_three d0 (d1.add d3) d2] at e
   simp only [mul_zero, zero_add, add_zero, mul_one] at e
   have e' := congrArg (sb (![gen 0, gen 1, gen 2, 0] : Fin 4 → Q k d 3)) e
@@ -360,7 +360,7 @@ private theorem d1_lemma_2 (α : PS k 3 d)
   have s1 : sq (![gen 0, gen 1, gen 2, 0] : Fin 4 → Q k d 3) (gen 1) = gen 1 := sq_gen _ 1
   have s2 : sq (![gen 0, gen 1, gen 2, 0] : Fin 4 → Q k d 3) (gen 2) = gen 2 := sq_gen _ 2
   have s3 : sq (![gen 0, gen 1, gen 2, 0] : Fin 4 → Q k d 3) (gen 3) = 0 := sq_gen _ 3
-  rw [map_add, formalPointSubstitutionSeries_valueAtThreePoints, formalPointSubstitutionSeries_valueAtThreePoints, formalPointSubstitutionSeries_valueAtThreePoints, map_add, map_add, s0, s1, s2, s3, add_zero, formalSeriesValueAtThreePoints_genericPoints] at e'
+  rw [map_add (f := _), formalPointSubstitutionSeries_valueAtThreePoints, formalPointSubstitutionSeries_valueAtThreePoints, formalPointSubstitutionSeries_valueAtThreePoints, map_add (f := _), map_add (f := _), s0, s1, s2, s3, add_zero, formalSeriesValueAtThreePoints_genericPoints] at e'
   rw [hψ, hψ, e']
   ring
 
@@ -381,7 +381,7 @@ private theorem d0_lemma_4 (α : PS k 3 d) (sym : ∀ {n} (x y w : Q k d n), E3 
   rw [e]
   show sb ![gen 1, gen 0, gen 2] (pderiv (R := k) (1, b) α) = _
   conv_lhs => rw [h1]
-  rw [map_sub, formalPointSubstitutionSeries_valueAtTwoPoints, formalPointSubstitutionSeries_valueAtTwoPoints, map_add, sq_gen, sq_gen, sq_gen]
+  rw [map_sub, formalPointSubstitutionSeries_valueAtTwoPoints, formalPointSubstitutionSeries_valueAtTwoPoints, map_add (f := _), sq_gen, sq_gen, sq_gen]
   all_goals rfl
 
 private theorem closed_lemma_5 (α : PS k 3 d) (sym : ∀ {n} (x y w : Q k d n), E3 α x y w = E3 α y x w)
@@ -405,7 +405,7 @@ private theorem closed_lemma_5 (α : PS k 3 d) (sym : ∀ {n} (x y w : Q k d n),
   have t0 : sq (![gen 0, 0, gen 1] : Fin 3 → Q k d 2) (gen 0) = gen 0 := sq_gen _ 0
   have t1 : sq (![gen 0, 0, gen 1] : Fin 3 → Q k d 2) (gen 1) = 0 := sq_gen _ 1
   have t2 : sq (![gen 0, 0, gen 1] : Fin 3 → Q k d 2) (gen 2) = gen 1 := sq_gen _ 2
-  rw [formalPointSubstitutionSeries_valueAtTwoPoints, formalPointSubstitutionSeries_valueAtTwoPoints, map_add, map_add, t0, t1, t2, add_zero, zero_add, formalSeriesValueAtTwoPoints_genericPoints, formalSeriesValueAtTwoPoints_genericPoints] at e3
+  rw [formalPointSubstitutionSeries_valueAtTwoPoints, formalPointSubstitutionSeries_valueAtTwoPoints, map_add (f := _), map_add (f := _), t0, t1, t2, add_zero, zero_add, formalSeriesValueAtTwoPoints_genericPoints, formalSeriesValueAtTwoPoints_genericPoints] at e3
   exact e3.symm
 
 theorem split (α : PS k 3 d) (ax : ∀ {n} (y w : Q k d n), E3 α 0 y w = 0) (sym : ∀ {n} (x y w : Q k d n), E3 α x y w = E3 α y x w)
@@ -468,12 +468,12 @@ theorem split (α : PS k 3 d) (ax : ∀ {n} (y w : Q k d n), E3 α 0 y w = 0) (s
       have c0 : Dir (1 : Fin 3) (gen 0 : Q k d 3) 0 := dir_ne (by decide)
       have c1 : Dir (1 : Fin 3) (gen 1 : Q k d 3) 1 := dir_same 1
       have c2 : Dir (1 : Fin 3) (gen 2 : Q k d 3) 0 := dir_ne (by decide)
-      rw [map_sub, map_sub, map_add, pderiv_eval_two c0 c2, pderiv_eval_two c1 c2, pderiv_eval_two (c0.add c1) c2,
+      rw [map_sub, map_sub, map_add (f := _), pderiv_eval_two c0 c2, pderiv_eval_two c1 c2, pderiv_eval_two (c0.add c1) c2,
         d1_lemma_2 α coc b, hpd b]
       simp only [mul_zero, add_zero, zero_add, mul_one]
       rw [hneg, hneg]
       ring
-    · rw [update_three_one_zero, map_sub, map_sub, map_add, formalPointSubstitutionSeries_valueAtTwoPoints, formalPointSubstitutionSeries_valueAtTwoPoints, formalPointSubstitutionSeries_valueAtTwoPoints, map_add]
+    · rw [update_three_one_zero, map_sub, map_sub, map_add (f := _), formalPointSubstitutionSeries_valueAtTwoPoints, formalPointSubstitutionSeries_valueAtTwoPoints, formalPointSubstitutionSeries_valueAtTwoPoints, map_add (f := _)]
       have u0 : sq (![gen 0, 0, gen 2] : Fin 3 → Q k d 3) (gen 0) = gen 0 := sq_gen _ 0
       have u1 : sq (![gen 0, 0, gen 2] : Fin 3 → Q k d 3) (gen 1) = 0 := sq_gen _ 1
       have u2 : sq (![gen 0, 0, gen 2] : Fin 3 → Q k d 3) (gen 2) = gen 2 := sq_gen _ 2
@@ -484,7 +484,7 @@ theorem split (α : PS k 3 d) (ax : ∀ {n} (y w : Q k d n), E3 α 0 y w = 0) (s
   refine ⟨-primT T ω, ?_, hP1, ?_⟩
   · intro n x y w
     have e := congrArg (sb (![x, y, w] : Fin 3 → Q k d n)) hG
-    rw [map_sub, map_sub, map_add, formalPointSubstitutionSeries_valueAtTwoPoints, formalPointSubstitutionSeries_valueAtTwoPoints, formalPointSubstitutionSeries_valueAtTwoPoints, map_add, sq_gen, sq_gen, sq_gen, map_zero,
+    rw [map_sub, map_sub, map_add (f := _), formalPointSubstitutionSeries_valueAtTwoPoints, formalPointSubstitutionSeries_valueAtTwoPoints, formalPointSubstitutionSeries_valueAtTwoPoints, map_add (f := _), sq_gen, sq_gen, sq_gen, map_zero,
       sub_eq_zero] at e
     exact e
   · intro n b w
@@ -507,14 +507,14 @@ theorem zero_of_add (f : PS k 3 d) (add : ∀ {n} (x y v v' : Q k d n), E3 f x y
     have d1 : Dir (3 : Fin 4) (gen 1 : Q k d 4) 0 := dir_ne (by decide)
     have d2 : Dir (3 : Fin 4) (gen 2 : Q k d 4) 0 := dir_ne (by decide)
     have d3 : Dir (3 : Fin 4) (gen 3 : Q k d 4) 1 := dir_same 3
-    rw [map_add, pderiv_eval_three d0 d1 (d2.add d3), pderiv_eval_three d0 d1 d2, pderiv_eval_three d0 d1 d3] at e
+    rw [map_add (f := _), pderiv_eval_three d0 d1 (d2.add d3), pderiv_eval_three d0 d1 d2, pderiv_eval_three d0 d1 d3] at e
     simp only [mul_zero, zero_add, add_zero, mul_one] at e
     have e' := congrArg (sb (![gen 0, gen 1, gen 2, 0] : Fin 4 → Q k d 3)) e
     have s0 : sq (![gen 0, gen 1, gen 2, 0] : Fin 4 → Q k d 3) (gen 0) = gen 0 := sq_gen _ 0
     have s1 : sq (![gen 0, gen 1, gen 2, 0] : Fin 4 → Q k d 3) (gen 1) = gen 1 := sq_gen _ 1
     have s2 : sq (![gen 0, gen 1, gen 2, 0] : Fin 4 → Q k d 3) (gen 2) = gen 2 := sq_gen _ 2
     have s3 : sq (![gen 0, gen 1, gen 2, 0] : Fin 4 → Q k d 3) (gen 3) = 0 := sq_gen _ 3
-    rw [formalPointSubstitutionSeries_valueAtThreePoints, formalPointSubstitutionSeries_valueAtThreePoints, map_add, s0, s1, s2, s3, add_zero, h b (gen 0) (gen 1), formalSeriesValueAtThreePoints_genericPoints] at e'
+    rw [formalPointSubstitutionSeries_valueAtThreePoints, formalPointSubstitutionSeries_valueAtThreePoints, map_add (f := _), s0, s1, s2, s3, add_zero, h b (gen 0) (gen 1), formalSeriesValueAtThreePoints_genericPoints] at e'
     exact e'
   have hz : sb (Function.update gen 2 0) f = 0 := by
     rw [update_three_two_zero]

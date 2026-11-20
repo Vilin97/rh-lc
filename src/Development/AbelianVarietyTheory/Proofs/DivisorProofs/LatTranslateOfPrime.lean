@@ -138,7 +138,7 @@ def rdL : L ⊗[D.ntw.O i] D.nexp.Fm i ((j : ℕ) + 1) b →ₛₗ[e] (GA D (Wc 
     map_smul' := fun c x => by
       induction x using TensorProduct.induction_on with
       | zero => rw [smul_zero, map_zero, smul_zero]
-      | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+      | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
       | tmul a f =>
         change e (c • a) • rd f = e c • e a • rd f
         rw [smul_eq_mul, map_mul, mul_smul] }
@@ -228,7 +228,7 @@ theorem le_of_comb {ρ : Setup D.ntw} (hρ : ρ.Good) {ν : ℂ} {rd : Can p w j
       rdK (rdAt p w j hρ ν) hρ (ex.nch.k' w) y := fun y => by
     induction y using TensorProduct.induction_on with
     | zero => rw [map_zero, map_zero, map_zero]
-    | add x y hx hy => rw [map_add, map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
     | tmul a f => rw [rdK_tmul, ← h2]; rfl
   have a2 : ∀ G ∈ Submodule.span (imO ex.nch w e) (genFns ex.nch w j ρ), ∃ y ∈ twLat p w j hρ ν, Φ y = G := fun G hG => by
     induction hG using Submodule.span_induction with
@@ -277,7 +277,7 @@ theorem le_of_comb {ρ : Setup D.ntw} (hρ : ρ.Good) {ν : ℂ} {rd : Can p w j
       rw [ha, algebraMap_smul]
       exact Submodule.smul_mem _ b hy
   | zero => rw [map_zero]; exact zero_mem _
-  | add _ _ _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add _ _ _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul a x _ hx =>
     obtain ⟨b, hb⟩ := mem_of_ringOfIntegers (O := ex.nch.Oe w) (ex.nch.embW w) a
     rw [show a • x = (a : D.what₂.LL) • x from rfl, map_smulₛₗ, ← hb, algebraMap_smul]
@@ -426,7 +426,7 @@ theorem realTw_le (s1 : PlacesSt) (s2 : FlatSt) (s3 : TraceSt) (s4 : CoefSt) (s5
       rw [ea]
       exact Submodule.smul_mem _ (⟨_, ⟨algebraMap _ _ a, h2 a⟩⟩ : imO ex.nch w e) (Submodule.subset_span ⟨s, h', P', hd, hg⟩)
     | zero => rw [map_zero]; exact zero_mem _
-    | add _ _ _ _ a b => rw [map_add]; exact add_mem a b
+    | add _ _ _ _ a b => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem a b
     | smul a y _ hy =>
       rw [show a • y = (a : ℂ) • y from rfl, map_smul]
       exact Submodule.smul_mem _ a hy

@@ -188,9 +188,9 @@ theorem core (hF : IsTotallyReal F) (ρ : InfinitePlace F → (F →+* ℝ))
     rwa [h0, eR_zero, one_mul] at h1
   refine ⟨c1 + c2, fun w => ?_, ?_⟩
   · have := hc2 w
-    rw [map_add]
+    rw [map_add (f := _)]
     linarith
-  · rw [map_add]
+  · rw [map_add (f := _)]
     linear_combination hy0
 
 end Core

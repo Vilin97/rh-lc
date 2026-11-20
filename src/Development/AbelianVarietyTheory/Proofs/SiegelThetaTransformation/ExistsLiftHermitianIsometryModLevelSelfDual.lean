@@ -99,7 +99,7 @@ theorem exists_trace_one [Algebra.Unramified (𝓞 (maximalRealSubfield E)) (�
       add_mem' := by
         rintro x y ⟨a, ha⟩ ⟨b, hb⟩
         refine ⟨a + b + x * c y, ?_⟩
-        simp only [map_add, map_mul, hcc]
+        simp only [map_add (f := _), map_mul, hcc]
         linear_combination ha + hb
       smul_mem' := by
         rintro a x ⟨b, hb⟩
@@ -254,7 +254,7 @@ theorem exists_lift : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n 
   have hinv : (star A).map π * A.map π = 1 := by
     rw [← Matrix.map_mul, hB]
     ext i j
-    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add, map_mul, hπ,
+    simp only [Matrix.map_apply, Matrix.add_apply, Matrix.smul_apply, smul_eq_mul, map_add (f := _), map_mul, hπ,
       Matrix.one_apply, apply_ite π, map_one, map_zero, zero_mul, add_zero]
   have hinv' := mul_eq_one_comm.1 hinv
   have key : ∀ (v : Λ.La) (x : Fin n → 𝓞 E), (∀ j, (A.map π *ᵥ κ v) j = π (x j)) →
@@ -291,7 +291,7 @@ theorem exists_lift : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n 
     obtain ⟨b', hb'⟩ := form_congr (star_natCast _) hB x₀ y₀ r r'
     have h := congrArg (algebraMap (𝓞 E) E) hb'
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_sum, map_add, map_mul, hst, map_natCast] at h
+      simp only [map_sum, map_add (f := _), map_mul, hst, map_natCast] at h
     refine ⟨b - b', ?_⟩
     simp only [RingOfIntegers.coe_eq_algebraMap, map_sub] at h hb ⊢
     linear_combination hb - h

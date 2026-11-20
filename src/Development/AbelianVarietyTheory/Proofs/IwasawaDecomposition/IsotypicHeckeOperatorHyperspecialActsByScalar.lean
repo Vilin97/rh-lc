@@ -111,14 +111,14 @@ theorem isoTyp_scalar (a : NG.AlgWt L n) (J : Subgroup (GAf L n)) (χ : J →* �
       rw [Finset.iSup_insert]
       refine ⟨fun h f hf => ?_, fun f hf hfix => ?_⟩
       · obtain ⟨x, hx, y, hy, rfl⟩ := Submodule.mem_sup.1 hf
-        rw [map_add]
+        rw [map_add (f := _)]
         exact Submodule.add_mem_sup (h1.1.1.stable h x hx) (hst h y hy)
       · by_cases hd : S₁ ⊓ (⨆ S' ∈ t, S') = ⊥
         · obtain ⟨x, hx, y, hy, rfl⟩ := Submodule.mem_sup.1 hf
           have hxy : ∀ κ ∈ Umax L n, TrivOutside {s.v} κ → NG.rt L n κ x = x ∧ NG.rt L n κ y = y := by
             intro κ hκ hκ'
             have e := hfix κ hκ hκ'
-            rw [map_add] at e
+            rw [map_add (f := _)] at e
             have e1 : NG.rt L n κ x - x = y - NG.rt L n κ y := by
               rw [sub_eq_sub_iff_add_eq_add, e, add_comm]
             have hm : NG.rt L n κ x - x ∈ S₁ ⊓ (⨆ S' ∈ t, S') :=
@@ -127,7 +127,7 @@ theorem isoTyp_scalar (a : NG.AlgWt L n) (J : Subgroup (GAf L n)) (χ : J →* �
             refine ⟨sub_eq_zero.1 hm, ?_⟩
             rw [hm] at e1
             exact (sub_eq_zero.1 e1.symm).symm
-          simp only [map_add, Finset.sum_add_distrib, smul_add]
+          simp only [map_add (f := _), Finset.sum_add_distrib, smul_add]
           rw [hiso S₁ h1.2 x hx fun κ h h' => (hxy κ h h').1, hfx y hy fun κ h h' => (hxy κ h h').2]
         · have hsub : NG.IsSubrep a.ρ (S₁ ⊓ (⨆ S' ∈ t, S')) :=
             ⟨inf_le_left.trans h1.1.1.le, fun h f hf => ⟨h1.1.1.stable h f hf.1, hst h f hf.2⟩⟩

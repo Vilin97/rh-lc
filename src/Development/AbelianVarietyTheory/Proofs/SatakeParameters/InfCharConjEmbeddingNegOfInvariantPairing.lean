@@ -82,7 +82,7 @@ def adjPairs {M : Type} [AddCommGroup M] [Module ℂ M] (V W : Submodule ℂ M) 
     obtain ⟨h3, h4, e2⟩ := hy φ ψ
     refine ⟨add_mem h1 h3, add_mem h2 h4, ?_⟩
     change B (⟨_, h1⟩ + ⟨_, h3⟩) ψ = B φ (⟨_, h2⟩ + ⟨_, h4⟩)
-    rw [map_add, LinearMap.add_apply, map_add, e1, e2]
+    rw [map_add (f := _), LinearMap.add_apply, map_add (f := _), e1, e2]
   algebraMap_mem' c φ ψ := by
     refine ⟨V.smul_mem c φ.2, W.smul_mem c ψ.2, ?_⟩
     change B (c • φ) ψ = B φ (c • ψ)

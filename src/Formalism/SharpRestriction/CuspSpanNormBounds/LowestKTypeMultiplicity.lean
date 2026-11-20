@@ -2034,7 +2034,7 @@ def Tx {z : Fin (2 * r + k + 1) → ℂ} {ψ : Mx k r → ℂ} {π : Mx k r → 
   toFun u := B (σ x u)
   map_add' u v := by
     show B (σ x ((u : H) + v)) = _
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hB.1 _ (smooth_orbit hσ (hsm u u.2) hx) _ (smooth_orbit hσ (hsm v v.2) hx)
   map_smul' c u := by
     show B (σ x (c • (u : H))) = _
@@ -2279,7 +2279,7 @@ theorem smooth_add {v w : H} (hv : IsSmoothVec (k := k) (r := r) σ v) (hw : IsS
   refine ⟨U1 ∩ U2, fun g => F1 g + F2 g, hU1.inter hU2, ⟨h1, h2⟩,
     (hF1.mono Set.inter_subset_left).add (hF2.mono Set.inter_subset_right), fun g hg hgH => ?_⟩
   show σ g (v + w) = F1 g + F2 g
-  rw [map_add]
+  rw [map_add (f := _)]
   exact congrArg₂ (· + ·) (e1 g hg.1 hgH) (e2 g hg.2 hgH)
 
 end Sm

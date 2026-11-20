@@ -66,7 +66,7 @@ theorem uB_mem (c : ↥(Formalism.BasicNotions.Loc.MaximalUnramifiedExtension l)
     | add x y hx hy ihx ihy =>
       intro h
       have : (⟨x + y, h⟩ : ↥(Formalism.BasicNotions.Loc.MaximalUnramifiedExtension l)) = ⟨x, adj x hx⟩ + ⟨y, adj y hy⟩ := rfl
-      rw [this, map_add]
+      rw [this, map_add (f := _)]
       exact Subring.add_mem _ (ihx (adj x hx)) (ihy (adj y hy))
     | mul x y hx hy ihx ihy =>
       intro h

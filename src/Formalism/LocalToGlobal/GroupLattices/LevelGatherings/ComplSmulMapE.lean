@@ -42,7 +42,7 @@ def sgl (w : HeightOneSpectrum (𝓞 F)) : w.adicCompletion F →ₗ[F] FiniteAd
   map_add' a b := by
     apply adele_ext
     intro v
-    rw [map_add]
+    rw [map_add (f := _)]
     by_cases h : v = w
     · subst h; simp only [sgl_same]
     · simp only [sgl_ne F w _ h, add_zero]
@@ -83,28 +83,28 @@ theorem iE_mul (w : HeightOneSpectrum (𝓞 F)) (x y : E ⊗[F] w.adicCompletion
     induction y using TensorProduct.induction_on with
     | zero => simp only [mul_zero, map_zero]
     | tmul e' b => simp only [Algebra.TensorProduct.tmul_mul_tmul, iE_tmul, sgl_mul]
-    | add y y' hy hy' => simp only [mul_add, map_add, hy, hy']
-  | add x x' hx hx' => simp only [add_mul, map_add, hx, hx']
+    | add y y' hy hy' => simp only [mul_add, map_add (f := _), hy, hy']
+  | add x x' hx hx' => simp only [add_mul, map_add (f := _), hx, hx']
 
 theorem prV_iE_same (w : HeightOneSpectrum (𝓞 F)) (x : E ⊗[F] w.adicCompletion F) : prV (E := E) w (iE F E w x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul e a => simp [prV, iE_tmul, sgl_apply_same]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem prV_iE_ne (w : HeightOneSpectrum (𝓞 F)) (x : E ⊗[F] w.adicCompletion F) {v : HeightOneSpectrum (𝓞 F)} (h : v ≠ w) :
     prV (E := E) v (iE F E w x) = 0 := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul e a => simp [prV, iE_tmul, sgl_apply_ne F w a h]
-  | add x y hx hy => simp only [map_add, hx, hy, add_zero]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
 
 theorem sig_iE (σE : E →ₐ[F] E) (w : HeightOneSpectrum (𝓞 F)) (x : E ⊗[F] w.adicCompletion F) :
     sigR σE (FiniteAdeleRing (𝓞 F) F) (iE F E w x) = iE F E w (sigR σE (w.adicCompletion F) x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul e a => simp [sigR, iE_tmul]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def epsW (w : HeightOneSpectrum (𝓞 F)) : E ⊗[F] FiniteAdeleRing (𝓞 F) F := iE F E w 1
 

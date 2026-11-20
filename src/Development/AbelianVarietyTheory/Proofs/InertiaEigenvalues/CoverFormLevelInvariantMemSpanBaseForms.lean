@@ -478,7 +478,7 @@ theorem mem_span_baseForms : ∀ (D : D7) (T : CoreJ D), LawsJ T → ∀ j, Form
     rw [map_zero, smul_zero]
     exact Submodule.zero_mem _
   | add x y _ _ hx hy =>
-    rw [map_add, smul_add]
+    rw [map_add (f := _), smul_add]
     exact Submodule.add_mem _ hx hy
   | smul c x _ hx =>
     rw [map_smul, smul_comm]

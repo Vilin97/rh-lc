@@ -158,7 +158,7 @@ theorem con_mul (hc : ∀ r, c (c r) = r) (hJ : ∀ i j, c (J j i) = J i j) {ι 
     (a₁ + a₂ - hf c J (ι *ᵥ v₂) (ι *ᵥ v₁)) + c (a₁ + a₂ - hf c J (ι *ᵥ v₂) (ι *ᵥ v₁)) +
       hf c J (ι *ᵥ (v₁ + v₂)) (ι *ᵥ (v₁ + v₂)) = 0 := by
   have h := hf_herm c J hc hJ (ι *ᵥ v₂) (ι *ᵥ v₁)
-  simp only [Matrix.mulVec_add, hf_add_left, hf_add_right, map_add, map_sub]
+  simp only [Matrix.mulVec_add, hf_add_left, hf_add_right, map_add (f := _), map_sub]
   rw [← h]
   linear_combination h₁ + h₂
 

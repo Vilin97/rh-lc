@@ -19,7 +19,7 @@ theorem sigR_map {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Algebra
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [sigR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 def hermMap {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Algebra F R'] (f : R →ₐ[F] R')
     (σ : E →ₐ[F] E) {n : ℕ} (S : HermR R σ n) : HermR R' σ n :=
@@ -51,7 +51,7 @@ theorem sigR_hR (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) (hσ 
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [sigR, hσ]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   have h3 : ∀ i j, sigR R σ (JR R J i j) = JR R J j i := by
     intro i j
     simp [sigR, JR, inclR, hJ j i]

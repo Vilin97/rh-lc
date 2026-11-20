@@ -268,7 +268,7 @@ theorem pw_le_span {M : Type} [AddCommGroup M] [Module O M] (π : O) (P : Submod
   obtain ⟨p, hp, t, ht, hpt⟩ := Submodule.mem_sup.mp hx
   refine Submodule.mem_map.mpr ⟨t, ht, ?_⟩
   have hp0 : P.mkQ p = 0 := (Submodule.Quotient.mk_eq_zero P).mpr hp
-  rw [← map_smul, ← hpt, map_add, hp0, zero_add]
+  rw [← map_smul, ← hpt, map_add (f := _), hp0, zero_add]
 
 theorem allBut_zero {M : Type} [AddCommGroup M] [Module O M] (π : O) (P : Submodule O M)
     (E : ℕ) (h : AllButLE π ⊤ P 0 E) : ∀ y : M, π ^ E • y ∈ P := by

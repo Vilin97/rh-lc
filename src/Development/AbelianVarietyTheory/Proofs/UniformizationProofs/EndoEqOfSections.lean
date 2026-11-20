@@ -49,7 +49,7 @@ theorem hom_eq_of_sval {X X' Y B : Scheme.{0}} {L : LB Y} {K : Type} [Fintype K]
   obtain ⟨P, rfl⟩ := hsurj i a
   induction P using MvPolynomial.induction_on with
   | C c => rw [MvPolynomial.eval₂Hom_C, cst p hz, cst q hz', hf]
-  | add P Q hP hQ => rw [map_add, gs_add p z _ hz, gs_add q z _ hz', hP, hQ]
+  | add P Q hP hQ => rw [map_add (f := _), gs_add p z _ hz, gs_add q z _ hz', hP, hQ]
   | mul_X P j hP => rw [map_mul, MvPolynomial.eval₂Hom_X', gs_mul p z _ hz, gs_mul q z _ hz', hP, hrr]
 
 theorem eq_of_twistPull {S : Scheme.{0}} {A : Over S} [GrpObj A] {L : LB A.left} (hL : L.IsLB)

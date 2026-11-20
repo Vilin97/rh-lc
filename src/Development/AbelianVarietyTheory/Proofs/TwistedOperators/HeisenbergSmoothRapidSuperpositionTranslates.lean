@@ -179,7 +179,7 @@ theorem sm_superpos : ∀ (V Y : Type) [NormedAddCommGroup V] [NormedSpace ℝ V
   have skew : ∀ v w, om w v = -om v w := by
     intro v w
     have := hom (v + w)
-    simp only [map_add, ContinuousLinearMap.add_apply, hom] at this
+    simp only [map_add (f := _), ContinuousLinearMap.add_apply, hom] at this
     linarith
   have comm : ∀ v w b, ρ v (ρ w b) = cexp (2 * π * I * (om v w : ℂ)) • ρ w (ρ v b) := by
     intro v w b

@@ -78,7 +78,7 @@ theorem exists_P {K : Type} [Field K] {N m : ℕ} (g : Matrix (Fin N) (Fin m) K)
   have hφ : ∀ v, φ v = s (fun i => v (e.symm (Sum.inl i))) + (c (fun i => v (e.symm (Sum.inr i))) : Fin m → K) :=
     fun v => rfl
   have hgφ : ∀ v, g.mulVecLin (φ v) = fun i => v (e.symm (Sum.inl i)) := fun v => by
-    rw [hφ, map_add, hs2, LinearMap.mem_ker.1 (c _).2, add_zero]
+    rw [hφ, map_add (f := _), hs2, LinearMap.mem_ker.1 (c _).2, add_zero]
   refine ⟨r, e, LinearMap.toMatrix' φ, ?_, ?_⟩
   · intro h0
     obtain ⟨v, hv, hv0⟩ := Matrix.exists_mulVec_eq_zero_iff.2 h0

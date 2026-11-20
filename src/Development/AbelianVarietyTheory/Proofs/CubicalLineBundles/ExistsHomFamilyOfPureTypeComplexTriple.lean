@@ -150,7 +150,7 @@ theorem exists_isHomFamily (T : PAT H (Sp ℂ)) {g : ℕ} {ty : Fin g → (E →
     congr 2
     ring
   refine ⟨φ, fun v hv => ⟨hφ, fun a b => ext _ _ fun z => ?_, hlin, fun a => ?_, fun a _ => ?_⟩, hφz⟩
-  · rw [MonObj.comp_mul, hφz, hφz, hφz, ← u.ex_add, ← map_add, ← smul_add, ← map_add]
+  · rw [MonObj.comp_mul, hφz, hφz, hφz, ← u.ex_add, ← map_add (f := _), ← smul_add, ← map_add (f := _)]
     rfl
   · obtain ⟨w, hw, -⟩ := hD₀ v hv
     have := hφ a

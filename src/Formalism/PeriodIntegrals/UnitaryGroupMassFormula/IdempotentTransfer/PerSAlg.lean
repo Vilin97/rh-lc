@@ -111,7 +111,7 @@ theorem choose_gh (T : GoodSet K G) (s : T.S) (P0 P : Pair K G) (hM : nS T P0 s 
     intro a
     induction a using MonoidAlgebra.induction_on with
     | of y => exact Submodule.subset_span ⟨y, rfl⟩
-    | add x y hx hy => rw [mul_add, map_add, LinearMap.add_apply]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [mul_add, map_add (f := _), LinearMap.add_apply]; exact Submodule.add_mem _ hx hy
     | smul r x hx => rw [mul_smul_comm, map_smul, LinearMap.smul_apply]; exact Submodule.smul_mem _ _ hx
   have hspanu : Submodule.span K (Set.range u) = LinearMap.range (τ (eps P)) := by
     apply le_antisymm
@@ -158,7 +158,7 @@ theorem choose_gh (T : GoodSet K G) (s : T.S) (P0 P : Pair K G) (hM : nS T P0 s 
         have : ∑ i, lam i * cB (MonoidAlgebra.of K G h * eps P * MonoidAlgebra.of K G (g i)) = 0 := by
           rw [← hψr h]; refine Finset.sum_congr rfl fun i _ => ?_; rw [hr]; ring
         rw [this, zero_smul]
-      | add x y hx hy => rw [map_add, LinearMap.add_apply, map_add, hx, hy, add_zero]
+      | add x y hx hy => rw [map_add (f := _), LinearMap.add_apply, map_add (f := _), hx, hy, add_zero]
       | smul c x hx => rw [map_smul, LinearMap.smul_apply, map_smul, hx, smul_zero]
     have hu'0 : u' = 0 := by
       by_contra hne'

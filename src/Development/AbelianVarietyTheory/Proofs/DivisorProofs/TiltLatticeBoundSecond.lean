@@ -79,7 +79,7 @@ theorem exists_unique_wedge_map : ∀ (C : Type) [Field C] (V W : Type) [AddComm
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro x hx
     have e := congrArg β hx
-    rw [hφ, map_add, hσ', hβα, add_zero, map_zero] at e
+    rw [hφ, map_add (f := _), hσ', hβα, add_zero, map_zero] at e
     have e' : π x = 0 := Subtype.ext e
     rw [hφ, e', map_zero, zero_add, ← LinearMap.mem_ker, h1] at hx
     rw [← hπ' x hx, e]
@@ -433,7 +433,7 @@ theorem aeval_eigen {R C : Type} [CommRing R] [Field C] [Algebra R C] {h : ℕ}
     | zero => simp
     | succ n ih => rw [pow_succ, Matrix.toLin'_mul_apply, hu, map_smul, ih, smul_smul, pow_succ']
   induction Q using Polynomial.induction_on' with
-  | add q r hq hr => rw [map_add, map_add, LinearMap.add_apply, hq, hr, map_add, add_smul]
+  | add q r hq hr => rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, hq, hr, map_add (f := _), add_smul]
   | monomial n r =>
     rw [Polynomial.aeval_monomial, Polynomial.aeval_monomial, ← Algebra.smul_def,
       ← algebraMap_smul C r (M ^ n), map_smul, LinearMap.smul_apply, hp, smul_smul]
@@ -508,7 +508,7 @@ theorem exists_projector : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [Is
       map_one' := by simp [h1]
       map_mul' := fun x y => by simp [hmul, Matrix.map_mul]
       map_zero' := by simp [h0]
-      map_add' := fun x y => by simp [hadd, Matrix.map_add]
+      map_add' := fun x y => by simp [hadd, Matrix.map_add (f := _)]
       commutes' := fun c => by
         rw [hsc]
         ext i k
@@ -594,9 +594,9 @@ theorem iota_existsUnique_bijective : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [F
   obtain ⟨hkb, hka⟩ := hodgeTate_exact p C v O hv ε hε h Λ D
   obtain ⟨a, P, hP⟩ := exists_projector p C v O hv Λ τ hτ
   have hPT := hP h (actT D) (by simp [actT]) (by intro x y; simp [actT, Matrix.map_mul])
-    (by intro x y; simp [actT, Matrix.map_add]) hsT
+    (by intro x y; simp [actT, Matrix.map_add (f := _)]) hsT
   have hPH := hP h (actH D) (by simp [actH]) (by intro x y; simp [actH, Matrix.map_mul])
-    (by intro x y; simp [actH, Matrix.map_add]) hsH
+    (by intro x y; simp [actH, Matrix.map_add (f := _)]) hsH
   have memE : ∀ (ρ : Λ → Matrix (Fin h) (Fin h) O) (u : Fin h → C), u ∈ eig C ρ τ ↔
       ∀ b, Matrix.toLin' ((ρ b).map (algebraMap O C)) u = algebraMap O C (τ b) • u := by
     intro ρ u; simp [eig, Submodule.mem_iInf, Module.End.mem_eigenspace_iff]

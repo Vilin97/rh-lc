@@ -23,7 +23,7 @@ def conductor (R R' : Type) [CommRing R] [CommRing R'] [Algebra R R'] : Ideal R 
   add_mem' {x x'} hx hx' r := by
     obtain ⟨y, hy⟩ := hx r
     obtain ⟨y', hy'⟩ := hx' r
-    exact ⟨y + y', by rw [map_add, map_add, hy, hy', add_mul]⟩
+    exact ⟨y + y', by rw [map_add (f := _), map_add (f := _), hy, hy', add_mul]⟩
   zero_mem' r := ⟨0, by simp⟩
   smul_mem' b {x} hx r := by
     obtain ⟨y, hy⟩ := hx r

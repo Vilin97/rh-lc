@@ -32,7 +32,7 @@ private theorem ch_ker {n : ℕ} {A E : Type} [CommRing A] [Ring E] [Algebra A E
       simpa using hc
     | zero => simpa using TwoSidedIdeal.zero_mem _
     | add a b _ _ ha hb =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact TwoSidedIdeal.add_mem _ ha hb
     | smul a z _ hz =>
       rw [map_smul, Algebra.smul_def]
@@ -76,7 +76,7 @@ private theorem gDet_lam_map_comap_eq_lam_mapDomainRingHom {n : ℕ} {B S H G : 
     · simp [MonoidAlgebra.mapDomainRingHom]
     · induction z using MonoidAlgebra.induction_linear with
       | zero => simp
-      | add p q hp hq => simp only [map_add, hp, hq]
+      | add p q hp hq => simp only [map_add (f := _), hp, hq]
       | single h s =>
         simp [MonoidAlgebra.mapDomainRingHom, MonoidAlgebra.mapRingHom, MonoidAlgebra.mapDomain_single]
   unfold GDet.lam GDet.map GDet.comap GDet.chi

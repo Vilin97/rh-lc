@@ -42,7 +42,7 @@ theorem exists_isSharp_of_dense : Out.Laws → Out.Laws2 → (∀ (S : Scheme.{0
     (∏ i, pt i ^ bas.symm (Pi.single 0 x) i) ≫ pr 0
   have hadd : ∀ x y, lev (x + y) = lev x * lev y := fun x y => by
     have := hpr 0
-    simp only [lev, Pi.single_add, map_add, Pi.add_apply, zpow_add, Finset.prod_mul_distrib, MonObj.mul_comp]
+    simp only [lev, Pi.single_add, map_add (f := _), Pi.add_apply, zpow_add, Finset.prod_mul_distrib, MonObj.mul_comp]
   have hpt : ∀ i u, (t.pt i ≫ pr u).left = (lev (bas (Pi.single i 1) u)).left := fun i u => by
     have e₁ : ρ (Matrix.single 0 u 1) ≫ pr 0 = pr u := by
       rw [hρ, List.prod_ofFn, Finset.prod_eq_single u] <;> simp +contextual [Matrix.single_apply, eq_comm]

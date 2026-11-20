@@ -167,7 +167,7 @@ private theorem stdChar_finiteAdele_eq (E : Type) [Field E] [NumberField E]
     exact zero_ne_one h1
   have hmul : ∀ b c, h (b + c) = h b * h c := by
     intro b c
-    simp only [hh, map_add, AddChar.map_add_eq_mul, mul_inv]
+    simp only [hh, map_add (f := _), AddChar.map_add_eq_mul, mul_inv]
     ring
   have h0 : h 0 = 1 := by simp [hh]
   have hpow : ∀ (n : ℕ) b, h (n • b) = h b ^ n := by

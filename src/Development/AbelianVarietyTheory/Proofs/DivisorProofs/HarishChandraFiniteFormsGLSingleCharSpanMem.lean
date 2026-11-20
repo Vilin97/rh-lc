@@ -34,14 +34,14 @@ theorem isAutForm_add {φ ψ : Sm E a} (hφ : IsAutForm φ) (hψ : IsAutForm ψ)
       have h1 : finRep E a k φ = φ := hk.1
       have h2 : finRep E a k ψ = ψ := hk.2
       change finRep E a k (φ + ψ) = φ + ψ
-      rw [map_add, h1, h2]
+      rw [map_add (f := _), h1, h2]
   kfin := by
     have := hφ.kfin
     have := hψ.kfin
     refine Submodule.finiteDimensional_of_le (S₂ := Submodule.span ℂ (Set.range fun k => cptRep E a k φ) ⊔
       Submodule.span ℂ (Set.range fun k => cptRep E a k ψ)) (Submodule.span_le.2 ?_)
     rintro _ ⟨k, rfl⟩
-    simp only [SetLike.mem_coe, map_add]
+    simp only [SetLike.mem_coe, map_add (f := _)]
     exact Submodule.add_mem_sup (Submodule.subset_span ⟨k, rfl⟩) (Submodule.subset_span ⟨k, rfl⟩)
   zfin := by
     have := hφ.zfin
@@ -49,7 +49,7 @@ theorem isAutForm_add {φ ψ : Sm E a} (hφ : IsAutForm φ) (hψ : IsAutForm ψ)
     refine Submodule.finiteDimensional_of_le (S₂ := Submodule.span ℂ ((fun z : Module.End ℂ (Sm E a) => z φ) '' Zalg E a) ⊔
       Submodule.span ℂ ((fun z : Module.End ℂ (Sm E a) => z ψ) '' Zalg E a)) (Submodule.span_le.2 ?_)
     rintro _ ⟨z, hz, rfl⟩
-    simp only [SetLike.mem_coe, map_add]
+    simp only [SetLike.mem_coe, map_add (f := _)]
     exact Submodule.add_mem_sup (Submodule.subset_span ⟨z, hz, rfl⟩) (Submodule.subset_span ⟨z, hz, rfl⟩)
   growth g := by
     obtain ⟨C1, N1, h1⟩ := hφ.growth g
@@ -108,7 +108,7 @@ theorem foldr_lin (χ : Module.End ℂ (Sm E a) → ℂ) (c : ℂ) (φ ψ : Sm E
   | nil => rfl
   | cons z zs ih =>
     simp only [List.foldr_cons]
-    rw [ih, map_add, map_smul]
+    rw [ih, map_add (f := _), map_smul]
     module
 
 theorem foldr_zero (χ : Module.End ℂ (Sm E a) → ℂ) (zs : List (Module.End ℂ (Sm E a))) :
@@ -137,7 +137,7 @@ theorem GlobalTheory.HCF.formsGL_single_span : ∀ (E : Type) [Field E] [NumberF
         rw [Set.mem_singleton_iff] at e1 e2
         rw [e1] at d1
         rw [e2] at d2
-        refine ⟨isAutForm_add a1 a2, fun k hk => by rw [map_add, b1 k hk, b2 k hk], fun g => ?_, χ, rfl,
+        refine ⟨isAutForm_add a1 a2, fun k hk => by rw [map_add (f := _), b1 k hk, b2 k hk], fun g => ?_, χ, rfl,
           fun zs hl hz => ?_⟩
         · have : (fun k : Kinf E a => (cptRep E a k (φ + ψ)).1 g) =
               (fun k : Kinf E a => (cptRep E a k φ).1 g) + (fun k : Kinf E a => (cptRep E a k ψ).1 g) := by

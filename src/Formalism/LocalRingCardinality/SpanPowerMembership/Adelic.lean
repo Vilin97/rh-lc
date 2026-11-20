@@ -366,7 +366,7 @@ theorem adelNq_spec : 4 * adelNq H = (H.q : ℤ) + 1 := by
 theorem adelic_theta_conj : H.conj (adelTheta H) = 1 - adelTheta H := by
   unfold adelTheta
   first
-  | (rw [map_div₀, map_add, map_one, adel_conj_bE, map_ofNat]; ring)
+  | (rw [map_div₀, map_add (f := _), map_one, adel_conj_bE, map_ofNat]; ring)
   | (simp [adel_conj_bE]; ring)
 
 theorem adelic_theta_mul_one_sub : adelTheta H * (1 - adelTheta H) = ((adelNd H : ℤ) : H.E) := by
@@ -432,7 +432,7 @@ theorem adel_local (v : HeightOneSpectrum (𝓞 H.F)) :
       + algebraMap H.F (v.adicCompletion H.F) (adelBeta H) = 1 := by
     have h := congrArg (algebraMap H.F (v.adicCompletion H.F)) (adelic_alpha_beta_linear H)
     first
-    | (rw [map_add, map_mul, map_ofNat, map_one] at h; exact h)
+    | (rw [map_add (f := _), map_mul, map_ofNat, map_one] at h; exact h)
     | simpa using h
   have hI4 : algebraMap H.F (v.adicCompletion H.F) (adelAlpha H) ^ 2
       + algebraMap H.F (v.adicCompletion H.F) (adelAlpha H)
@@ -441,7 +441,7 @@ theorem adel_local (v : HeightOneSpectrum (𝓞 H.F)) :
       = ((adelNq H : ℤ) : v.adicCompletion H.F) := by
     have h := congrArg (algebraMap H.F (v.adicCompletion H.F)) (adelic_alpha_beta_norm H)
     first
-    | (rw [map_add, map_add, map_mul, map_mul, map_pow, map_pow, map_intCast, map_intCast] at h; exact h)
+    | (rw [map_add (f := _), map_add (f := _), map_mul, map_mul, map_pow, map_pow, map_intCast, map_intCast] at h; exact h)
     | simpa using h
   by_cases hdv : ((H.d : ℤ) : 𝓞 H.F) ∈ v.asIdeal
   · have hqv : ((H.q : ℤ) : 𝓞 H.F) ∉ v.asIdeal := fun h => adel_not_both H v ⟨hdv, h⟩
@@ -533,7 +533,7 @@ theorem adel_hom_key {A B : Type*} [CommRing A] [CommRing B] (f : A →+* B) (S 
 theorem adel_alg {B : Type*} [CommRing B] (τ : B →+* B) (s t u : B) (N : ℤ)
     (hs : τ s = s) (ht : τ t = t) (hτu : τ u = 1 - u) (hu : u * (1 - u) = N)
     (hk : s * s + s * t + (N : B) * (t * t) = -1) : τ (s + u * t) * (s + u * t) = -1 := by
-  rw [map_add, map_mul, hs, ht, hτu]
+  rw [map_add (f := _), map_mul, hs, ht, hτu]
   linear_combination hk + t * t * hu
 
 theorem exists_adelic_neg_one (σ : H.E →ₐ[H.F] H.E) (hσ : ∀ x, σ x = H.conj x) :

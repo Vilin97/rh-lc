@@ -21,7 +21,7 @@ theorem pfMapFl_map_comm (f : V₁ →ₗ[LL] V₂) (g : B₁ →ₗ[Qp] B₂) (
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end General
 
@@ -69,7 +69,7 @@ theorem pfMapFl_act (g : G) (z : T₁.V ⊗[Qp] B) :
   | zero => simp
   | tmul x b => simp [actVB, F.equiv]
   | add x y hx hy =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [hx, hy]
 
 theorem pfMapFl_dcris (z : T₁.V ⊗[Qp] B) (hz : z ∈ Dcris PD T₁.ρ) :

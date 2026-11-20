@@ -30,7 +30,7 @@ theorem dop_apply (a : V) (L : V →L[ℝ] ℝ) (f : 𝓢(V, ℂ)) (x : V) :
 theorem dop_add (a b : V) (L M : V →L[ℝ] ℝ) (f : 𝓢(V, ℂ)) :
     dop (a + b) (L + M) f = dop a L f + dop b M f := by
   ext x
-  simp only [SchwartzMap.add_apply, dop_apply, map_add, ContinuousLinearMap.add_apply]
+  simp only [SchwartzMap.add_apply, dop_apply, map_add (f := _), ContinuousLinearMap.add_apply]
   push_cast
   ring
 
@@ -133,7 +133,7 @@ theorem hl_line_deriv (a : V) (L : V →L[ℝ] ℝ) (f : 𝓢(V, ℂ)) :
     (lam.hasTemperateGrowth.mul L.hasTemperateGrowth).add
       ((Function.HasTemperateGrowth.const _).mul (lam.hasTemperateGrowth.mul lam.hasTemperateGrowth))
   have hdiff : ∀ (x : V) (t : ℝ), q (x + t • a) - q x = t * L x + t ^ 2 * (L a / 2) := fun x t => by
-    simp only [hq, map_add, map_smul, hla, smul_eq_mul]
+    simp only [hq, map_add (f := _), map_smul, hla, smul_eq_mul]
     ring
   have t1 := chirp_tg 1 hqt
   have t2 := chirp_tg (-1) hqt
@@ -200,15 +200,15 @@ variable {n d : ℕ} {X : Spc F E n} {W : Spc F E d}
 theorem aOf_add (M : Model σ X W) (u v : Matrix (Fin n) (Fin d) (AE F E)) :
     aOf M (u + v) = aOf M u + aOf M v := by
   funext i
-  simp [aOf, map_add, evI_add]
+  simp [aOf, map_add (f := _), evI_add]
 
 theorem lOf_add (M : Model σ X W) (u v : Matrix (Fin n) (Fin d) (AE F E)) :
     lOf M (u + v) = lOf M u + lOf M v := by
   ext y
-  simp only [lOf, ContinuousLinearMap.add_apply, linForm_apply, ← map_add, ← Finset.sum_add_distrib]
+  simp only [lOf, ContinuousLinearMap.add_apply, linForm_apply, ← map_add (f := _), ← Finset.sum_add_distrib]
   congr 1
   refine Finset.sum_congr rfl fun i _ => ?_
-  simp [map_add, evI_add, mul_add]
+  simp [map_add (f := _), evI_add, mul_add]
 
 theorem evI_half_trace (S : mixedEmbedding.mixedSpace F) :
     Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F ⅟(2 : AF F) * S) =
@@ -219,7 +219,7 @@ theorem evI_half_trace (S : mixedEmbedding.mixedSpace F) :
   have h2 : S = evI F ⅟(2 : AF F) * S + evI F ⅟(2 : AF F) * S := by
     rw [← add_mul, h1, one_mul]
   have h3 := congrArg (Algebra.trace ℝ (mixedEmbedding.mixedSpace F)) h2
-  rw [map_add] at h3
+  rw [map_add (f := _)] at h3
   linarith
 
 open scoped Classical in
@@ -363,7 +363,7 @@ theorem inter (hψ : IsStd ψ) (hs : IsSplitting (adeleClass F) ψ M.co (actAB (
       have huv : At (evI F) (u + v) := fun s hs => by rw [smul_add, hu s hs, hv s hs, add_zero]
       have h1 := inter_of_ne hψ hs hA huv (by rw [aOf_add, ha, zero_add]; exact hξ) f
       have h2 := inter_of_ne hψ hs hA hv hξ f
-      rw [aOf_add, lOf_add, dop_add, map_add, act_add, aOf_add, lOf_add, dop_add, h2] at h1
+      rw [aOf_add, lOf_add, dop_add, map_add (f := _), act_add, aOf_add, lOf_add, dop_add, h2] at h1
       exact add_right_cancel h1
   · exact inter_of_ne hψ hs hA hu ha f
 

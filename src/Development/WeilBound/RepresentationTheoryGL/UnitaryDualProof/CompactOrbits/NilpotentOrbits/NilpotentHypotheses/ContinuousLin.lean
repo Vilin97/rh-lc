@@ -60,7 +60,7 @@ theorem sig_sig {n : ℕ} (Z : Subalgebra k (Matrix (Fin n) (Fin n) k)) (hZ : CR
   have hLL : ∀ x, L (L x) = L x := fun x => hLc _ (hLZ x)
   simp only [sig_eq Z L hL]
   refine Prod.ext ?_ rfl
-  simp only [map_add, map_smul, map_sub, hLL, sub_self, smul_zero, add_zero, add_sub_cancel_left,
+  simp only [map_add (f := _), map_smul, map_sub, hLL, sub_self, smul_zero, add_zero, add_sub_cancel_left,
     Units.val_mul, mul_smul]
 
 theorem sig_one {n : ℕ} (Z : Subalgebra k (Matrix (Fin n) (Fin n) k)) (hZ : CR Z) (p : Sp k n) : sig Z 1 p = p := by

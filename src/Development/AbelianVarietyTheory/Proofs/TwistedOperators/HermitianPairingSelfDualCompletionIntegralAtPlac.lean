@@ -26,7 +26,7 @@ theorem intAt_zero (P : GlobalTheory.FinPl.Pl D → Prop) : (0 : AE D) ∈ intAt
 
 theorem intAt_add {P : GlobalTheory.FinPl.Pl D → Prop} {a b : AE D} (ha : a ∈ intAt D P) (hb : b ∈ intAt D P) :
     a + b ∈ intAt D P :=
-  ⟨add_mem ha.1 hb.1, by rw [map_add]; exact add_mem ha.2 hb.2⟩
+  ⟨add_mem ha.1 hb.1, by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha.2 hb.2⟩
 
 theorem intAt_neg {P : GlobalTheory.FinPl.Pl D → Prop} {a : AE D} (ha : a ∈ intAt D P) : -a ∈ intAt D P :=
   ⟨neg_mem ha.1, by rw [map_neg]; exact neg_mem ha.2⟩
@@ -72,7 +72,7 @@ theorem pairing_mem (S : HSp D) (L : GlobalTheory.FinPl.Lat S) (hL : IsSelfDualC
       simp only [Pi.zero_apply, map_zero, zero_mul, Finset.sum_const_zero]
       exact intAt_zero P
     | add w₁ w₂ _ _ h₁ h₂ =>
-      simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+      simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
       exact intAt_add h₁ h₂
     | neg w _ h =>
       simp only [Pi.neg_apply, map_neg, neg_mul, Finset.sum_neg_distrib]

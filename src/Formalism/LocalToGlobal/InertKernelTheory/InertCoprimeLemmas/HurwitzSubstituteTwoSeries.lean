@@ -102,7 +102,7 @@ private theorem hur_of_closed_under_pderiv [DecidableEq σ] (Q : MvPowerSeries �
       simp only [Finsupp.coe_tsub, Pi.sub_apply, Finsupp.single_eq_same] at e
       omega
     obtain ⟨a, b, ha, hb, hab⟩ := hd f hf i
-    rw [← sub_single_one_add_single_one_of_ne_zero n i hi, ← fc_coeff_pderiv, hab, map_add, mul_add]
+    rw [← sub_single_one_add_single_one_of_ne_zero n i hi, ← fc_coeff_pderiv, hab, map_add (f := _), mul_add]
     exact R.add_mem (ih _ hlt a ha) (ih _ hlt b hb)
 
 theorem hur_of_closed [DecidableEq σ] (S : Set (MvPowerSeries σ K))
@@ -124,7 +124,7 @@ theorem hur_zero : Hur R (0 : MvPowerSeries σ K) := by
 
 theorem hur_add {f g : MvPowerSeries σ K} (hf : Hur R f) (hg : Hur R g) : Hur R (f + g) := by
   intro n
-  rw [map_add, mul_add]
+  rw [map_add (f := _), mul_add]
   exact R.add_mem (hf n) (hg n)
 
 theorem hur_neg {f : MvPowerSeries σ K} (hf : Hur R f) : Hur R (-f) := by
@@ -284,7 +284,7 @@ theorem hur_subst {τ : Type*} [DecidableEq σ] [DecidableEq τ] [Fintype σ] [F
       rw [map_mul, cc_subst ha0]
       exact R.mul_mem (hur_cc R hg) (hur_cc R hb)
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact R.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact R.add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact R.neg_mem hx
   have hd : ∀ h ∈ S, ∀ i, pderiv (R := K) i h ∈ S := by
     intro h hh i
@@ -301,7 +301,7 @@ theorem hur_subst {τ : Type*} [DecidableEq σ] [DecidableEq τ] [Fintype σ] [F
       refine S.add_mem (AddSubgroup.subset_closure ⟨g, _, hg, hur_pderiv R hb i, rfl⟩) (S.sum_mem fun j _ => ?_)
       exact AddSubgroup.subset_closure ⟨_, _, hur_pderiv R hg j, hur_mul R (hur_pderiv R (ha j) i) hb, rfl⟩
     | zero => rw [map_zero]; exact S.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact S.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact S.add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact S.neg_mem hx
   have hmem : subst a g * 1 ∈ S :=
     AddSubgroup.subset_closure ⟨g, 1, hg, by rw [← map_one (C (σ := τ) (R := K))]; exact hur_C R R.one_mem, rfl⟩
@@ -657,7 +657,7 @@ theorem hur_of_simeq {ι : Type} [Fintype ι] [DecidableEq ι] {f g : MvPowerSer
       ← Formalism.MainNotions.FormalGroupSystem.Pf.en_inParamK_eq, ← expS_eq_mvExp hG0, ← inParam_eq, he]
   have hint : IntR (Wr p) (inParamK p (K0 p) (Formalism.L2.Th1.C.mvExp (f - g))) := by
     intro n
-    rw [hE, map_add, coeff_map, coeff_one]
+    rw [hE, map_add (f := _), coeff_map, coeff_one]
     refine (Wr p).add_mem ?_ (mem_Wr p _)
     split_ifs
     · exact (Wr p).one_mem
@@ -718,7 +718,7 @@ theorem second_deriv_additive_first (be : MvPowerSeries (Fin 2) KK) :
   unfold sub2
   simp only [sub_zero, map_sub]
   rw [pd2 _ h01 (constantCoeff_X_fin_three 2), pd2 _ (constantCoeff_X_fin_three 0) (constantCoeff_X_fin_three 2), pd2 _ (constantCoeff_X_fin_three 1) (constantCoeff_X_fin_three 2)]
-  simp only [map_add, pderiv_X_self, pderiv_X_of_ne (show (0 : Fin 3) ≠ 1 by decide),
+  simp only [map_add (f := _), pderiv_X_self, pderiv_X_of_ne (show (0 : Fin 3) ≠ 1 by decide),
     pderiv_X_of_ne (show (2 : Fin 3) ≠ 1 by decide), mul_zero, add_zero, mul_one, zero_add, sub_zero]
   rw [pd2 _ h01 (constantCoeff_X_fin_three 2), pd2 _ (constantCoeff_X_fin_three 1) (constantCoeff_X_fin_three 2)]
   simp [pderiv_X_self, pderiv_X_of_ne (show (1 : Fin 3) ≠ 0 by decide),
@@ -732,7 +732,7 @@ theorem second_deriv_additive_second (be : MvPowerSeries (Fin 2) KK) :
   unfold sub2
   simp only [sub_zero, map_sub]
   rw [pd2 _ (constantCoeff_X_fin_three 0) h12, pd2 _ (constantCoeff_X_fin_three 0) (constantCoeff_X_fin_three 1), pd2 _ (constantCoeff_X_fin_three 0) (constantCoeff_X_fin_three 2)]
-  simp only [map_add, pderiv_X_self, pderiv_X_of_ne (show (0 : Fin 3) ≠ 2 by decide),
+  simp only [map_add (f := _), pderiv_X_self, pderiv_X_of_ne (show (0 : Fin 3) ≠ 2 by decide),
     pderiv_X_of_ne (show (1 : Fin 3) ≠ 2 by decide), mul_zero, add_zero, mul_one, zero_add, sub_zero]
   rw [pd2 _ (constantCoeff_X_fin_three 0) h12, pd2 _ (constantCoeff_X_fin_three 0) (constantCoeff_X_fin_three 2)]
   simp [pderiv_X_self, pderiv_X_of_ne (show (0 : Fin 3) ≠ 1 by decide),

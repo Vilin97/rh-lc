@@ -53,8 +53,8 @@ theorem lg_int_of_loc (z : D.host.E) (h : ∀ p : PlF D, (D.s.atP p).ιE z ∈ (
   have hc : ∀ p : PlF D, (D.s.atP p).ιE (D.conjF z) ∈ (D.s.atP p).O := fun p => by
     rw [← (D.s.atP p).cj_ιE]
     exact lg_cj_mem p (h p)
-  have ht := hfix (z + D.conjF z) (by rw [map_add, Formalism.MainNotions.BridgeLemma.conjF_inv, add_comm])
-    fun p => by rw [map_add]; exact add_mem (h p) (hc p)
+  have ht := hfix (z + D.conjF z) (by rw [map_add (f := _), Formalism.MainNotions.BridgeLemma.conjF_inv, add_comm])
+    fun p => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (h p) (hc p)
   have hn := hfix (z * D.conjF z) (by rw [map_mul, Formalism.MainNotions.BridgeLemma.conjF_inv, mul_comm])
     fun p => by rw [map_mul]; exact mul_mem (h p) (hc p)
   have hz : IsIntegral (integralClosure ℤ D.host.E) z := by

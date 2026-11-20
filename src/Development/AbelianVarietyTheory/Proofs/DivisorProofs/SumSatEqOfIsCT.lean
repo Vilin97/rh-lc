@@ -49,7 +49,7 @@ theorem satEig_add {q r s N : ℕ} (hq : q ≠ 0) (h : r + s = N) {C B : Multise
   have hz : ∀ (A : Multiset ℂˣ) (k : ℕ), A.card < k → (A.map fun b : ℂˣ => (b : ℂ)).esymm k = 0 := fun A k hk => by
     rw [Multiset.esymm, Multiset.powersetCard_eq_empty _ (by simpa using hk)]
     simp
-  rw [satEig, Multiset.map_add, esymm_add, Finset.mul_sum]
+  rw [satEig, Multiset.map_add (f := _), esymm_add, Finset.mul_sum]
   symm
   refine Finset.sum_subset_zero_on_sdiff (fun i hi => ?_) (fun i hi => ?_) fun i hi => ?_
   · exact Finset.HasAntidiagonal.mem_antidiagonal.2 (Finset.mem_filter.1 hi).2

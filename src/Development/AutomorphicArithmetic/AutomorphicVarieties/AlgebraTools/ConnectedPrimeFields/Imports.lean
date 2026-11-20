@@ -19,7 +19,7 @@ theorem UpperTheory.V.AlgebraTools.Conn.level :
       rw [mul_comm, ← Algebra.smul_def, map_smul, smul_eq_mul]
       exact J.mul_mem_right _ hj
     | zero => intro r; simp
-    | add x y _ _ hx hy => intro r; rw [mul_add, map_add]; exact J.add_mem (hx r) (hy r)
+    | add x y _ _ hx hy => intro r; rw [mul_add, map_add (f := _)]; exact J.add_mem (hx r) (hy r)
     | smul s x _ hx => intro r; rw [smul_eq_mul, ← mul_assoc]; exact hx _
   have key : ∀ (y y' : A) (β γ β' γ' : R), β ∈ b → γ ∈ c → β' ∈ b → γ' ∈ c →
       algebraMap A R y = β + γ → algebraMap A R y' = β' + γ' → y' * l β - y * l β' ∈ J := by

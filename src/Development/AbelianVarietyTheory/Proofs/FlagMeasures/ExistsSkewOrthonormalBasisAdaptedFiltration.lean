@@ -219,7 +219,7 @@ theorem exists_skew_basis : ∀ (n d m : ℕ) (ε : Fin n → Bool) (A : ℕ →
       ∀ c X, X ∈ P c ↔ X ∈ A c ∧ negAdj ε X = X :=
     ⟨fun c =>
       { carrier := {X | X ∈ A c ∧ negAdj ε X = X}
-        add_mem' := fun {X Y} hX hY => ⟨(A c).add_mem hX.1 hY.1, by rw [map_add, hX.2, hY.2]⟩
+        add_mem' := fun {X Y} hX hY => ⟨(A c).add_mem hX.1 hY.1, by rw [map_add (f := _), hX.2, hY.2]⟩
         zero_mem' := ⟨(A c).zero_mem, map_zero _⟩
         smul_mem' := fun r X hX => ⟨(A c).smul_of_tower_mem r hX.1, by rw [hreal, hX.2]⟩ },
       fun c X => Iff.rfl⟩
@@ -261,7 +261,7 @@ theorem exists_skew_basis : ∀ (n d m : ℕ) (ε : Fin n → Bool) (A : ℕ →
     · intro X hX
       have hX1 : X + negAdj ε X ∈ P c := by
         rw [hPmem]
-        exact ⟨(A c).add_mem hX (hσA c X hX), by rw [map_add, negAdj_negAdj, add_comm]⟩
+        exact ⟨(A c).add_mem hX (hσA c X hX), by rw [map_add (f := _), negAdj_negAdj, add_comm]⟩
       have hX2 : Complex.I • (X - negAdj ε X) ∈ P c := by
         rw [hPmem]
         refine ⟨(A c).smul_mem _ ((A c).sub_mem hX (hσA c X hX)), ?_⟩

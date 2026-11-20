@@ -174,11 +174,11 @@ variable (F)
 
 theorem pairAt_add_left (v : InfinitePlace K) (x x' y : F.V) :
     F.pairAt v (x + x') y = F.pairAt v x y + F.pairAt v x' y := by
-  simp only [pairAt, map_add, Finsupp.add_apply, add_mul, Finset.sum_add_distrib]
+  simp only [pairAt, map_add (f := _), Finsupp.add_apply, add_mul, Finset.sum_add_distrib]
 
 theorem pairAt_add_right (v : InfinitePlace K) (x y y' : F.V) :
     F.pairAt v x (y + y') = F.pairAt v x y + F.pairAt v x y' := by
-  simp only [pairAt, map_add, Finsupp.add_apply, mul_add, Finset.sum_add_distrib]
+  simp only [pairAt, map_add (f := _), Finsupp.add_apply, mul_add, Finset.sum_add_distrib]
 
 theorem pairAt_smul_left (v : InfinitePlace K) (a : K) (x y : F.V) :
     F.pairAt v (a • x) y = starRingEnd ℂ (v.embedding a) * F.pairAt v x y := by

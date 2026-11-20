@@ -79,7 +79,7 @@ theorem coef {M : Type} [AddCommMonoid M] (u v : M) (n : ℕ) :
 theorem val_ev (Q : Poly Φ) (T : C) (u f : Φ.A.obj T) :
     (Q.X T + (Φ.A.map (Q.j T)).hom u) * (Φ.A.map (Q.j T)).hom f =
       GlobalTheory.CompanionTheory.PolySes.ev Q T (Finsupp.single 0 (u * f) + Finsupp.single 1 f) := by
-  rw [map_add, GlobalTheory.CompanionTheory.PolySes.ev_single, GlobalTheory.CompanionTheory.PolySes.ev_single, Φ.dp_zero (Q.X_mem T), Φ.dp_one (Q.X_mem T), map_mul]
+  rw [map_add (f := _), GlobalTheory.CompanionTheory.PolySes.ev_single, GlobalTheory.CompanionTheory.PolySes.ev_single, Φ.dp_zero (Q.X_mem T), Φ.dp_one (Q.X_mem T), map_mul]
   ring
 
 theorem lift_form (Q : Poly Φ) {Fil : ℤ → IdF Φ.A} (hF : IsFil Φ Fil) (E : Frame Φ (d + 1)) (σ : ∀ T : C, E.D ⟶ T)

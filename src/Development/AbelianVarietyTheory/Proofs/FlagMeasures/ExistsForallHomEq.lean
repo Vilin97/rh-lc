@@ -272,7 +272,7 @@ theorem _root_.GlobalTheory.NormOneSplit.card_norm_classes : ∀ (F E : Type) [F
     intro φ h0
     obtain ⟨a, b, hab⟩ := hcop
     have := congrArg φ hab
-    rw [map_add, map_mul, map_mul, h0, hT0, map_one] at this
+    rw [map_add (f := _), map_mul, map_mul, h0, hT0, map_one] at this
     simp at this
   have hτcc : τ c = c := Subtype.ext ((hτc c).trans hc)
   obtain ⟨m, hm, hcount⟩ := card_solutions_mul_involution_eq_pow (fun φ : 𝓞 E →+* ZMod T => φ.comp τ)

@@ -44,7 +44,7 @@ theorem isField_add {Z : Scheme.{0}} {W : Z.Opens} {d d' : Fld Z} (hd : IsField 
     IsField W (fun O f => d O f + d' O f) :=
   ⟨fun O hO f f' => by simp only [hd.1 O hO, hd'.1 O hO]; ring,
     fun O hO f f' => by simp only [hd.2.1 O hO, hd'.2.1 O hO]; ring,
-    fun O O' e hO f => by simp only [hd.2.2 O O' e hO, hd'.2.2 O O' e hO, map_add]⟩
+    fun O O' e hO f => by simp only [hd.2.2 O O' e hO, hd'.2.2 O O' e hO, map_add (f := _)]⟩
 
 theorem isField_sum {Z : Scheme.{0}} {W : Z.Opens} {I : Type} [Fintype I] {d : I → Fld Z}
     (hd : ∀ a, IsField W (d a)) : IsField W (fun O f => ∑ a, d a O f) :=
@@ -279,7 +279,7 @@ theorem isKS_add (hv : ∀ a, IsTanAtG t (chart U) (v a)) (h : IsKS t V U v D Θ
     simp only [Wp]
     simp only [← inf_iSup_eq, ← iSup_inf_eq, hcov, hcov', inf_idem]
   · beta_reduce
-    simp only [smulFld_of_le le_rfl, hd0, mul_zero, Finset.sum_const_zero, add_zero, map_add]
+    simp only [smulFld_of_le le_rfl, hd0, mul_zero, Finset.sum_const_zero, add_zero, map_add (f := _)]
     congr 1
     · rw [← resG_appLE U (hWU p.1) (inf_le_left : Wp p ≤ W p.1), (hF p.1).2.2 _ _ _ le_rfl, hD, resG_appLE]
     · rw [← resG_appLE U (hWU' p.2) (inf_le_right : Wp p ≤ W' p.2), (hF' p.2).2.2 _ _ _ le_rfl, hD', resG_appLE]
@@ -315,7 +315,7 @@ theorem isKS_add (hv : ∀ a, IsTanAtG t (chart U) (v a)) (h : IsKS t V U v D Θ
       valR_add _ _ hgO, valR_add _ _ hgO, e₁, e₂, GlobalTheory.CechInv.valR_sub _ _ hgO, hcf p hp, hcf q hq]
     simp only [← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
     refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun b _ => ?_
-    rw [Matrix.add_apply, map_add]
+    rw [Matrix.add_apply, map_add (f := _)]
     linear_combination (-(φ (Θ' a b) * (valR (w a) O f).snd)) * e₃ b
 
 theorem isKS_linear : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host E) (Dw : Datum H) (l : Geo.Tor.Level H) (Xo : Moduli Dw l) (c : Coeff l) (Y : Model Xo c (RingHom.id c.F)), ∀ (U : Y.X.affineOpens) (n : ℕ) (v : Fin n → (Sp (DualNumber Γ(Y.X, U.1)) ⟶ Y.t.G.left)) (A : 𝓞 E → Matrix (Fin n) (Fin n) Γ(Y.X, U.1)), (∀ i, IsTanAtG Y.t (chart U) (v i)) → (∀ w, IsTanAtG Y.t (chart U) w → ∃! cf : Fin n → Γ(Y.X, U.1), IsCombAtG Y.t (chart U) v cf w) → (∀ a i, IsCombAtG Y.t (chart U) v (A a i) (v i ≫ (Y.t.act.act a).left)) → ∀ (D D' : logDer Y.s (Scheme.IdealSheafData.vanishingIdeal (interior Y).compl) U) (r : Γ(Y.X, U.1)) (Θ Θ' : Matrix (Fin n) (Fin n) Γ(Y.X, U.1)), IsKS Y.t (interior Y) U v D.1 Θ → IsKS Y.t (interior Y) U v D'.1 Θ' → IsKS Y.t (interior Y) U v (D + D').1 (Θ + Θ') ∧ IsKS Y.t (interior Y) U v (r • D).1 (r • Θ) :=

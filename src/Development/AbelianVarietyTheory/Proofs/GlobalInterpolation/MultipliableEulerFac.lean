@@ -127,7 +127,7 @@ theorem scaling_unique (F : Type) [Field F] [NumberField F] [IsTotallyReal F]
         (algebraMap F (Ainf F) z w)).re + ((2 * n : ℕ) : ℝ)⁻¹ := by
       intro w
       have e : ∀ u : F, algebraMap F (Ainf F) u w = algebraMap F w.Completion u := fun u => rfl
-      rw [mult_eq_one, e, e, map_add, map_add, map_inv₀, map_natCast, map_inv₀, map_natCast,
+      rw [mult_eq_one, e, e, map_add (f := _), map_add (f := _), map_inv₀, map_natCast, map_inv₀, map_natCast,
         Complex.add_re, ← Complex.ofReal_natCast, ← Complex.ofReal_inv, Complex.ofReal_re]
       simp
     rw [Finset.sum_congr rfl fun w _ => this w, Finset.sum_add_distrib, Finset.sum_const,

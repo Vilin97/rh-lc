@@ -180,7 +180,7 @@ theorem exists_lift [Y.IsSeparated] (ht : EmbedsBy f t) (hj : Function.Injective
     | C a =>
       rw [MvPolynomial.eval₂Hom_C, ← valR_eq, hb, valR_spMap_comp j b ⊤ (le_preimage_top _)]
       exact ⟨_, rfl⟩
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | mul_X p l hp =>
       rw [map_mul, MvPolynomial.eval₂Hom_X']
       refine mul_mem hp ⟨c l * hm.unit⁻¹.val, (hm.map j).mul_right_cancel ?_⟩
@@ -217,7 +217,7 @@ theorem mem_awayRing {r : R} (hr : i r ≠ 0) {z : K} : z ∈ awayRing i r ↔ �
     | add z w _ _ hz hw =>
       obtain ⟨m, a, ha⟩ := hz
       obtain ⟨n, b, hb⟩ := hw
-      exact ⟨m + n, a * r ^ n + b * r ^ m, by simp only [map_add, map_mul, map_pow, ← ha, ← hb]; ring⟩
+      exact ⟨m + n, a * r ^ n + b * r ^ m, by simp only [map_add (f := _), map_mul, map_pow, ← ha, ← hb]; ring⟩
     | neg z _ hz =>
       obtain ⟨m, a, ha⟩ := hz
       exact ⟨m, -a, by rw [map_neg, ← ha, neg_mul]⟩

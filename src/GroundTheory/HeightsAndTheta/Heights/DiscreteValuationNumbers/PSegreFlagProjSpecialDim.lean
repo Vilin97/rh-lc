@@ -110,7 +110,7 @@ theorem SegreFlagProjSpecialDim.proof (hDim : PrimeDimLeTrdeg.Statement) (hTr : 
     have hPC := comap_C_pointIdeal hOΦ (flagProjPt j y w e φ φ' t k)
     refine relDim_specialIdeal_lt hϖ _ hPC (d + k) ((hDim O K' _ _ hP hPC).trans ?_)
     have ht : Cardinal.toENat _ ≤ Cardinal.toENat _ := OrderHomClass.mono Cardinal.toENat hle
-    simp only [map_add, map_natCast, hVt] at ht
+    simp only [map_add (f := _), map_natCast, hVt] at ht
     have : ((Algebra.trdeg O (MRing (fun o => bundleIdx (bundleIdx ι M) M' (j o)) O ⧸
         pointIdeal O (flagProjPt j y w e φ φ' t k))).toENat + 1 : ℕ∞) ≤ ((d + k + Fintype.card K' : ℕ) : ℕ∞) := by
       rw [hcard]

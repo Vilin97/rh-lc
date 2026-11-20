@@ -49,10 +49,10 @@ theorem exists_isQuad : ∀ (F : Type) [Field F] [NumberField F] (δ : F), ¬ Is
     refine ⟨(g %ₘ p).coeff 0, (g %ₘ p).coeff 1, ?_⟩
     have hmk : AdjoinRoot.mk p g = AdjoinRoot.mk p (g %ₘ p) := by
       conv_lhs => rw [← Polynomial.modByMonic_add_div g p]
-      rw [map_add, map_mul, AdjoinRoot.mk_self, zero_mul, add_zero]
+      rw [map_add (f := _), map_mul, AdjoinRoot.mk_self, zero_mul, add_zero]
     rw [hmk]
     conv_lhs => rw [hr]
-    rw [map_add, map_mul, AdjoinRoot.mk_C, AdjoinRoot.mk_C, AdjoinRoot.mk_X,
+    rw [map_add (f := _), map_mul, AdjoinRoot.mk_C, AdjoinRoot.mk_C, AdjoinRoot.mk_X,
       AdjoinRoot.algebraMap_eq, add_comm]
 
 end GlobalTheory.QNorm

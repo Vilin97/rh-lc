@@ -26,7 +26,7 @@ theorem gauge_superconn {E : Type} [NormedAddCommGroup E] [NormedSpace ℂ E] [F
     (hs : DifferentiableOn ℝ s (cov B g)) (P : Pt E g) (hP : P ∈ cov B g) :
     superconn τ (fun Q => h (reframe τ γ Q)) β u (gauge n τ γ s) P =
       frameAt n τ γ P.1 (superconn (fun b => moeb γ (τ b)) h β u s (reframe τ γ P)) := by
-  simp only [superconn, map_add, map_smul]
+  simp only [superconn, map_add (f := _), map_smul]
   rw [GlobalTheory.T.nabla_gauge_reframe_compat B τ γ h β s hτ hτ' hh hpos hs P hP, GlobalTheory.T.dbar_gauge_reframe_compat B τ γ s hτ hτ' hs P hP,
     GlobalTheory.T.dbar_adjoint_gauge_reframe_compat B τ γ h s hτ hτ' hh hpos hs P hP]
 

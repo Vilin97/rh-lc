@@ -55,7 +55,7 @@ theorem setLIntegral_comp_addEquiv {G : Type} [AddCommGroup G] [TopologicalSpace
   rw [← h3]
   refine hF.setLIntegral_eq hF' (fun w => φ (e w)) fun g x => ?_
   show φ (e ((g : G) + x)) = φ (e x)
-  rw [map_add, hφ _ ((hΓ _).2 g.2)]
+  rw [map_add (f := _), hφ _ ((hΓ _).2 g.2)]
 
 variable {D : D7} {S T : HSp D}
 

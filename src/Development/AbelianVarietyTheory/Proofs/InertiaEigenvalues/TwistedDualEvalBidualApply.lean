@@ -36,7 +36,7 @@ theorem cupH11_anticomm (rho : Representation R G M) (rho' : Representation R G 
   funext p
   obtain ⟨g, k⟩ := p
   change _ = b (rho g (x.1 k)) (y.1 g) + b (x.1 g) (rho' g (y.1 k))
-  simp only [d1_apply, map_neg, ← hbe, x.2.2 g k, y.2.2 g k, map_add, LinearMap.add_apply]
+  simp only [d1_apply, map_neg, ← hbe, x.2.2 g k, y.2.2 g k, map_add (f := _), LinearMap.add_apply]
   abel
 
 theorem mapH1_bijective (rho : Representation R G M) (rho' : Representation R G M')

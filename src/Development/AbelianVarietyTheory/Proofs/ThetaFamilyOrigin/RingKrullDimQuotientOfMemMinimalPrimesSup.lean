@@ -110,7 +110,7 @@ theorem decomposeExtend_coe (n : ℕ) (m : 𝒜 n) :
       | @homogeneous n m =>
         rw [LinearMap.comp_apply, decomposeExtend_coe]
         exact coeLinearMap_of (extendGradingByZero 𝒜) (n : ℤ) m
-      | add a b ha hb => rw [map_add, map_add, ha, hb])
+      | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb])
     (by
       ext1 i
       ext1 m

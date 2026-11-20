@@ -83,7 +83,7 @@ def quotDecomposition (hI : ∀ (n : ι) (a : A), a ∈ I → (decompose 𝒜 a 
       obtain ⟨q, a, ha, rfl⟩ := q
       rw [DirectSum.coeAddMonoidHom_of]
       exact quotientDecomposition_of_mem_piece ha
-    | add d e hd he => rw [map_add, map_add, hd, he]
+    | add d e hd he => rw [map_add (f := _), map_add (f := _), hd, he]
 
 theorem quotPieces_isInternal (hI : ∀ (n : ι) (a : A), a ∈ I → (decompose 𝒜 a n : A) ∈ I) :
     IsInternal (quotPieces 𝒜 I) :=

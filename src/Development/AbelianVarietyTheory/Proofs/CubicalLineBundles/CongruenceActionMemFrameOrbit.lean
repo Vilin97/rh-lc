@@ -130,7 +130,7 @@ theorem congr_lact_mem_orbit : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
     (fun a _ => by
       obtain ⟨y, hy, he⟩ := hM _ (φ k a).2
       refine ⟨(φ k).symm ⟨y, hy⟩, (φ k).injective (Subtype.ext ?_)⟩
-      rw [hgam, map_add, map_nsmul, LinearEquiv.apply_symm_apply, Submodule.coe_add, ← sub_eq_iff_eq_add', he,
+      rw [hgam, map_add (f := _), map_nsmul, LinearEquiv.apply_symm_apply, Submodule.coe_add, ← sub_eq_iff_eq_add', he,
         Nat.cast_smul_eq_nsmul]
       rfl)
     (fun a => ⟨gam a - a, by rw [hA, one_smul]; abel⟩)

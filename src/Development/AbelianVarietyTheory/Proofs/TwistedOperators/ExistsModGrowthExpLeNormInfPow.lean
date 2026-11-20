@@ -48,7 +48,7 @@ theorem htInf_eq_infMat {F E : Type} [Field F] [NumberField F] [Field E] [Number
         AlgHom.id_apply, GlobalTheory.AdelicU.infEmb_tmul]
       rw [e, map_mul, hre, hθ.1]
       rfl
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   have hm : ∀ k : HA (AF F) σ J, ((bc (compInf F E w) (GlobalTheory.AdelicU.matHom _ σ J k) : GL (Fin n) _) :
       Matrix (Fin n) (Fin n) _).map (GlobalTheory.AdelicU.infEmb t) = infMat σ J θ k := by
     intro k
@@ -79,7 +79,7 @@ private theorem htFin_eq_one_of_mem_GinfC {g : GA D V} (hg : g ∈ GinfC V) (v :
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => rfl
-    | add y z hy hz => rw [map_add, map_add, map_add, hy, hz]
+    | add y z hy hz => rw [map_add (f := _), map_add (f := _), map_add (f := _), hy, hz]
   have h1 : bc (compFin D.host.F D.host.E v) (Formalism.L2.Theta.matHom V g) = 1 := by
     apply Units.ext
     ext i j

@@ -165,7 +165,7 @@ theorem frow_le_col (n : ℕ) [ContinuousConstSMul (FractionRing (D.nd.O i)) (VT
     intro g g'
     have e := c.2.2 g g'
     simp only at e ⊢
-    rw [e, Submodule.Quotient.mk_add, map_add, hsym]
+    rw [e, Submodule.Quotient.mk_add, map_add (f := _), hsym]
   have hk : kRow (Dat n) ρM u hu ((Dat n).q (Submodule.mkQ _ c)) =
       Submodule.mkQ _ (⟨_, hcoc⟩ : coZ1s ρM) := by
     show ReciprocityTheory.ChartRestriction.T2.traceH1 (MulEquiv.refl _) u ρM (Dat n).ρA hu

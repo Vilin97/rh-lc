@@ -92,7 +92,7 @@ def liftSub : Submodule O (RHH O X) where
     rintro P Q ⟨r, h1, h2⟩ ⟨r', k1, k2⟩
     refine ⟨r + r', (cleanSub X O w 1 o).add_mem h1 k1, ?_⟩
     have e : lift1 X O w (r + r') - (P + Q) = (lift1 X O w r - P) + (lift1 X O w r' - Q) := by
-      rw [map_add]; abel
+      rw [map_add (f := _)]; abel
     rw [e]
     exact Submodule.add_mem _ h2 k2
   zero_mem' := ⟨0, (cleanSub X O w 1 o).zero_mem, by simp⟩

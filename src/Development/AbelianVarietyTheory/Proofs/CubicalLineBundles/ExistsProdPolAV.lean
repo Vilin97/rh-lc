@@ -73,14 +73,14 @@ theorem exists_prod_polAV : Out.Laws → ∀ (R : Type) [CommRing R] [IsNoetheri
     rw [add_comm]
     exact inferInstanceAs (SmoothOfRelativeDimension (P'.g + P.g) (pullback.fst P.A.hom P'.A.hom ≫ P.A.hom))
   have hrig : Out.Rigidified (P.A ⊗ P'.A) M := by
-    rw [rigidified_iff _ hM, eM, map_add, ← pull_comp, ← pull_comp, eSec_comp p, eSec_comp q,
+    rw [rigidified_iff _ hM, eM, map_add (f := _), ← pull_comp, ← pull_comp, eSec_comp p, eSec_comp q,
       (rigidified_iff _ P.isLB).1 P.rigid, (rigidified_iff _ P'.isLB).1 P'.rigid, add_zero]
   have hsym : Out.Sym (P.A ⊗ P'.A) M := by
     have h₁ := ((sym_iff _ P.isLB).1 P.sym).pull_over (π' := (P.A ⊗ P'.A).hom) p.left (Over.w p)
     have h₂ := ((sym_iff _ P'.isLB).1 P'.sym).pull_over (π' := (P.A ⊗ P'.A).hom) q.left (Over.w q)
     rw [sym_iff _ hM, eM]
     convert locZero_add h₁ h₂ using 1
-    rw [map_add, map_sub, map_sub, ← pull_comp, ← pull_comp, ← pull_comp, ← pull_comp, inv_comp_left p,
+    rw [map_add (f := _), map_sub, map_sub, ← pull_comp, ← pull_comp, ← pull_comp, ← pull_comp, inv_comp_left p,
       inv_comp_left q]
     abel
   have hamp : Out.RelAmple (P.A ⊗ P'.A) M :=

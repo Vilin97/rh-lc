@@ -172,7 +172,7 @@ private theorem discreteTopology_map_of_integral_bilinForm {V : Type} [AddCommGr
         induction hy using Submodule.span_induction with
         | mem s hs => exact hsT s hs
         | zero => simp
-        | add a c _ _ ha hc => rw [map_add, ha, hc, add_zero]
+        | add a c _ _ ha hc => rw [map_add (f := _), ha, hc, add_zero]
         | smul n a _ ha => rw [map_zsmul, ha, smul_zero]
       have hx0 := eq_zero_of_bilinForm_eq_zero_on_selfDual B L ⟨T, hT⟩ hL x hall
       apply Subtype.ext
@@ -282,7 +282,7 @@ theorem exists_eq_smul_of_isTheta1 : ∀ (E : Type) [Field E] [NumberField E] [I
     simp only [pv, per, Function.comp_apply, Pi.add_apply]
     split_ifs
     · simp only [Data.emb, hermC]
-      simp [map_add, Finset.sum_add_distrib, mul_add, add_mul, dotProduct_add]
+      simp [map_add (f := _), Finset.sum_add_distrib, mul_add, add_mul, dotProduct_add]
     · first | unfold Data.emb | skip
       simp [Matrix.mulVec, dotProduct, mul_add, Finset.sum_add_distrib]
   let p : (Fin r → E) →ₗ[ℤ] (Fin g → ℂ) := (AddMonoidHom.mk' (pv X idx x) hadd).toIntLinearMap

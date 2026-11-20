@@ -101,7 +101,7 @@ theorem snd_integer_smul (c : v.adicCompletionIntegers F) (x : Fv F v ⊗[F] E) 
 
 def pr1 : (Fin n → Fv F v ⊗[F] E) →ₗ[v.adicCompletionIntegers F] (Fin n → Fv F v) where
   toFun := c1 D
-  map_add' x y := by funext i; simp [c1, map_add]
+  map_add' x y := by funext i; simp [c1, map_add (f := _)]
   map_smul' c x := by
     funext i
     simp only [c1, Pi.smul_apply, RingHom.id_apply]
@@ -109,7 +109,7 @@ def pr1 : (Fin n → Fv F v ⊗[F] E) →ₗ[v.adicCompletionIntegers F] (Fin n 
 
 def pr2 : (Fin n → Fv F v ⊗[F] E) →ₗ[v.adicCompletionIntegers F] (Fin n → Fv F v) where
   toFun := c2 D
-  map_add' x y := by funext i; simp [c2, map_add]
+  map_add' x y := by funext i; simp [c2, map_add (f := _)]
   map_smul' c x := by
     funext i
     simp only [c2, Pi.smul_apply, RingHom.id_apply]
@@ -118,11 +118,11 @@ def pr2 : (Fin n → Fv F v ⊗[F] E) →ₗ[v.adicCompletionIntegers F] (Fin n 
 theorem mkV_split (y z : Fin n → Fv F v ⊗[F] E) :
     mkV D (c1 D y) (c2 D z) = D.e • y + (1 - D.e) • z := by
   refine D.extV (fun i => ?_) (fun i => ?_)
-  · simp only [mkV, c1, c2, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, map_sub,
+  · simp only [mkV, c1, c2, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, map_sub,
       map_one, D.he1]
     rw [fst_proj_split_element D.he1 D.hsc]
     ring
-  · simp only [mkV, c1, c2, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul, map_sub,
+  · simp only [mkV, c1, c2, Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add (f := _), map_mul, map_sub,
       map_one, D.he2]
     rw [snd_proj_split_element D.he2 D.hsc]
     ring
@@ -176,7 +176,7 @@ theorem span_first_projection {Λ : Set (Fin n → E)}
       add_mem' := fun {x y} hx hy => by
         have h1 : c1 D (x + y) = c1 D x + c1 D y := by
           funext i
-          simp [c1, map_add]
+          simp [c1, map_add (f := _)]
         show c1 D (x + y) ∈ T
         rw [h1]
         exact add_mem hx hy

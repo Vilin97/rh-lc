@@ -59,14 +59,14 @@ theorem contrLoc : ∀ (D : D7), GlobalTheory.LocFlat.ContrFactor → ContrLoc D
   refine ⟨Λ, ⟨fun Ξ₂ v => ?_, fun Ξ₁ u => ?_⟩, hΛ⟩
   · let T : SB (Matrix n n' k) →ₗ[ℂ] (WO B.A S → ℂ) :=
       { toFun := fun Ξ₁ u => Bm (colTens φ₀ Ξ₁) (rowTens φ₀' Ξ₂) u v
-        map_add' := fun a b => by funext u; simp only [map_add, LinearMap.add_apply, Pi.add_apply]
+        map_add' := fun a b => by funext u; simp only [map_add (f := _), LinearMap.add_apply, Pi.add_apply]
         map_smul' := fun c a => by funext u; simp only [map_smul, LinearMap.smul_apply, Pi.smul_apply, RingHom.id_apply] }
     refine ⟨T, hL D k p ψ hψ ρ σ B B' l S vL s hs n n' FA F₀ FS hF T₁ hT₁ φ₀ _ (hT₂.theta _) v T fun Ξ₁ u => rfl,
       fun Ξ₁ Ξ hq u => ?_⟩
     rw [hval Ξ₁ Ξ₂ Ξ hq]; rfl
   · let T : SB (Matrix n'' n k) →ₗ[ℂ] (WO S B'.A → ℂ) :=
       { toFun := fun Ξ₂ v => Bm (colTens φ₀ Ξ₁) (rowTens φ₀' Ξ₂) u v
-        map_add' := fun a b => by funext v; simp only [map_add, Pi.add_apply]
+        map_add' := fun a b => by funext v; simp only [map_add (f := _), Pi.add_apply]
         map_smul' := fun c a => by funext v; simp only [map_smul, Pi.smul_apply, RingHom.id_apply] }
     refine ⟨T, hR D k p ψ hψ ρ σ B B' l S vL (s * p.xi) ?_ n n'' FS FA' F₀' hF' T₂ hT₂ φ₀' _ (hT₁.theta _) u T
       fun Ξ₂ v => rfl, fun Ξ₂ Ξ hq v => ?_⟩

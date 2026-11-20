@@ -85,7 +85,7 @@ def locIdeal : Ideal (AE D) where
   zero_mem' := by simp
   add_mem' := fun {a b} ha hb => by
     change tensAt _ v _ = _
-    rw [map_add, map_add, ha, hb]
+    rw [map_add (f := _), map_add (f := _), ha, hb]
   smul_mem' := fun a z hz => by
     change tensAt _ v (compFin _ _ v (a * z)) = a * z
     rw [map_mul, mul_comm, ← GlobalTheory.EmbChart.tensAt_mul_right, hz, mul_comm]
@@ -101,11 +101,11 @@ theorem trace_of_mem {z : AE D} (hz : z ∈ locIdeal D v) :
   refine Algebra.TensorProduct.includeLeft_injective (S := AF D.host.F) (algebraMap D.host.F D.host.E).injective ?_
   change algebraMap (AF D.host.F) (AE D) _ = algebraMap (AF D.host.F) (AE D) _
   have h : cA D (tensAt D.host.E v y) = _ := GlobalTheory.EmbChart.sigR_tensAt v D.sp.cm.sig y
-  rw [GlobalTheory.FockCompare.SymplVal.trace_AE, h, ← map_add]
+  rw [GlobalTheory.FockCompare.SymplVal.trace_AE, h, ← map_add (f := _)]
   simp only [piW, RingHom.comp_apply, GlobalTheory.EmbChart.compFin_tensAt, RingHom.coe_coe]
   refine congrArg (tensAt D.host.E v) (a₂ := _ ⊗ₜ 1) (GlobalTheory.AdelicU.split_ext (isCMExt_host D) τ ?_ ?_)
   · simp
-  · rw [map_add, GlobalTheory.AdelicU.splitProj_comp_sigR (isCMExt_host D), GlobalTheory.AdelicU.splitProj_comp, add_comm]; simp
+  · rw [map_add (f := _), GlobalTheory.AdelicU.splitProj_comp_sigR (isCMExt_host D), GlobalTheory.AdelicU.splitProj_comp, add_comm]; simp
 
 def hQ (V : HSp D) (x y : Fin V.rank → D.host.E) : D.host.E := star y ⬝ᵥ V.gram *ᵥ x
 
@@ -681,7 +681,7 @@ theorem psiFlag_mul_locGL {σ : ℕ} (d : HypDec V V₀ (σ + 1)) {γ : LatFrame
     {g : GL (n ⊕ Fin (2 * (σ + 1))) (Fv D.host.F v)} (hg : g ∈ N _ n _ p) (b : D.host.E) :
     psiFlag ψ d (locGL V τ β g) * ψ (atPlace v (τ b * (t σ / t (σ + 1) * ent g σ))) =
       psiV _ ψ v (∑ i ∈ range (2 * (σ + 1) - 1), τ (coef (σ + 1) b i) * t i / t (i + 1) * ent g i) := by
-  rw [psiFlag, upSum_eq_sum_hA, psiE, (isSys_fj d).trace_sum hβ hg (by omega), ← AddChar.map_add_eq_mul, ← map_add,
+  rw [psiFlag, upSum_eq_sum_hA, psiE, (isSys_fj d).trace_sum hβ hg (by omega), ← AddChar.map_add_eq_mul, ← map_add (f := _),
     show 2 * (σ + 1) - 1 = σ + 1 + σ by omega, Finset.sum_range_add, Finset.sum_range_succ, Nat.add_sub_cancel,
     Nat.add_sub_cancel, sub_eq_add_neg, ← Finset.sum_neg_distrib, add_right_comm]
   refine congrArg (fun x => ψ (atPlace v x)) (congrArg₂ _ (congrArg₂ _ (Finset.sum_congr rfl fun i hi => ?_) ?_)

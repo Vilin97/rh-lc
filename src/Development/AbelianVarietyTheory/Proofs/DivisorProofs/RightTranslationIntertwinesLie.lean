@@ -128,7 +128,7 @@ theorem exists_rightTranslation : ∀ (n : ℕ) (G : Type) [Group G] (J : Matrix
       nonsing_inv_mul_cancel_right _ _ hd, nonsing_inv_mul_cancel_left _ _ hd, mul_assoc g]
   refine ⟨r, fun _ _ => rfl, fun Y => ?_⟩
   obtain ⟨A, B, hA, hB, rfl⟩ := exists_skew_add hH hJ Y
-  rw [mul_add u, add_mul, mul_smul_comm, smul_mul_assoc, map_add, map_add, map_smul, map_smul, mul_add, add_mul,
+  rw [mul_add u, add_mul, mul_smul_comm, smul_mul_assoc, map_add (f := _), map_add (f := _), map_smul, map_smul, mul_add, add_mul,
     mul_smul_comm, smul_mul_assoc, key A hA, key B hB]
 
 end GlobalTheory.TorFin.RightTr

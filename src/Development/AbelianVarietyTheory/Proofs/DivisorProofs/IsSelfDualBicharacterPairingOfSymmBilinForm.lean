@@ -83,7 +83,7 @@ theorem isPair_addChar_form : ∀ (F : Type) [Field F] [CharZero F] [ValuativeRe
     exact mem_box_of_forall_dot ψ hT s fun u hu => by rw [← key]; exact h u hu
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro x x' y
-    rw [map_add, LinearMap.add_apply, AddChar.map_add_eq_mul]
+    rw [map_add (f := _), LinearMap.add_apply, AddChar.map_add_eq_mul]
   · intro x y
     rw [hs]
   · intro x y

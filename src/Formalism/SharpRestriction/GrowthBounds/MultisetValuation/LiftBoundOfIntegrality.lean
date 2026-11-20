@@ -166,7 +166,7 @@ theorem lift_bound_of_integrality (D : Formalism.BasicNotions.D7) {Y : Pend X} (
     exact Submodule.zero_mem _
   | add x y _ _ hx hy =>
     unfold Sys.vGe at *
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
   | smul a x _ hx =>
     unfold Sys.vGe at *

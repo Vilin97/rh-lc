@@ -134,7 +134,7 @@ theorem main : ∀ {O X : Type} [CommRing O] (T : Subalgebra O (X → O)) (n : �
   set F : (X → O)[X] := Matrix.det ((Polynomial.X : (X → O)[X]) • M.map Polynomial.C +
     (1 : Matrix (Fin g × Fin n) (Fin g × Fin n) (X → O)).map Polynomial.C) with hF
   have hπ : (1 + π Polynomial.X • blk fun p q => (swapM (Θ p q)).map ι).det = π F := by
-    rw [hF, RingHom.map_det, Matrix.map_one _ (map_zero _) (map_one _), map_add, map_one, add_comm]
+    rw [hF, RingHom.map_det, Matrix.map_one _ (map_zero _) (map_one _), map_add (f := _), map_one, add_comm]
     congr 2
   rw [hπ] at key
   obtain ⟨t, ht⟩ := key

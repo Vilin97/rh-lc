@@ -23,7 +23,7 @@ theorem map_spec {F E K : Type} [CommRing F] [CommRing E] [CommRing K] [Algebra 
   unfold spec
   induction f using MvPolynomial.induction_on with
   | C a => simp [MvPolynomial.algebraMap_eq, ← IsScalarTower.algebraMap_apply, MvPolynomial.algebraMap_apply]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp =>
     simp only [map_mul, hp, aeval_X]
     congr 1

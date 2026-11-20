@@ -28,7 +28,7 @@ theorem exists_int_mul_eq_qmap (q : MvPolynomial σ ℚ) :
     obtain ⟨D₁, hD₁, p', hp'⟩ := hp
     obtain ⟨D₂, hD₂, q', hq'⟩ := hq
     refine ⟨D₁ * D₂, mul_ne_zero hD₁ hD₂, (D₂ : MvPolynomial σ ℤ) * p' + (D₁ : MvPolynomial σ ℤ) * q', ?_⟩
-    rw [map_add, map_mul, map_mul, map_intCast, map_intCast, ← hp', ← hq']
+    rw [map_add (f := _), map_mul, map_mul, map_intCast, map_intCast, ← hp', ← hq']
     push_cast
     ring
 
@@ -47,7 +47,7 @@ theorem exists_int_mul_mem_of_mem_qIdeal (P : Ideal (MvPolynomial σ ℤ)) {g : 
     obtain ⟨N₂, hN₂, h₂, hh₂, e₂⟩ := hy
     refine ⟨N₁ * N₂, mul_ne_zero hN₁ hN₂, (N₂ : MvPolynomial σ ℤ) * h₁ + (N₁ : MvPolynomial σ ℤ) * h₂,
       P.add_mem (P.mul_mem_left _ hh₁) (P.mul_mem_left _ hh₂), ?_⟩
-    rw [map_add, map_mul, map_mul, map_intCast, map_intCast, ← e₁, ← e₂]
+    rw [map_add (f := _), map_mul, map_mul, map_intCast, map_intCast, ← e₁, ← e₂]
     push_cast
     ring
   | smul a x _ hx =>

@@ -61,7 +61,7 @@ theorem heisOF_zero (f : WOF F E nS nT → ℂ) : heisOF σ JS JT xi0 ψ 0 f = f
 theorem cAF_cAF {e : AEF F E} (he : IsSplitIdemF σ e) : cAF σ (cAF σ e) = e := by
   obtain ⟨-, -, v, ε, -, h⟩ := he
   have h2 := congrArg (cAF σ) h
-  rw [map_add, GlobalTheory.HeisThetaF.cAF_algebraMap] at h2
+  rw [map_add (f := _), GlobalTheory.HeisThetaF.cAF_algebraMap] at h2
   linear_combination h2 - h
 
 theorem hOF_half {e : AEF F E} (he : IsSplitIdemF σ e) {x y : WOF F E nS nT} (hx : x ∈ conjHalf σ e nS nT)

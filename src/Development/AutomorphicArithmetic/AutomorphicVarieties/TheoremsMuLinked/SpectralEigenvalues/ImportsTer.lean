@@ -32,10 +32,10 @@ theorem UpperTheory.V.Th.Sp.kill :
         rw [TensorProduct.tmul_smul]
         exact key i hi _
       · intro y1 y2 k1 k2
-        rw [TensorProduct.tmul_add, map_add]
+        rw [TensorProduct.tmul_add, map_add (f := _)]
         exact add_mem k1 k2
     | add z1 z2 k1 k2 =>
-      rw [smul_add, map_add]
+      rw [smul_add, map_add (f := _)]
       exact add_mem k1 k2
   have gen : ∀ y ∈ Ideal.map (algebraMap B (MSplitAlg P n)) (RingHom.ker x), ∀ z : MSplitAlg P n ⊗[B] M,
       φ ((algebraMap B (MSplitAlg P n) (β t₀) * y) • z) ∈ (I • ⊤ : Submodule R V) := by
@@ -50,7 +50,7 @@ theorem UpperTheory.V.Th.Sp.kill :
     | zero => intro z; simp
     | add y1 y2 _ _ k1 k2 =>
       intro z
-      rw [mul_add, add_smul, map_add]
+      rw [mul_add, add_smul, map_add (f := _)]
       exact add_mem (k1 z) (k2 z)
     | smul r y _ k =>
       intro z

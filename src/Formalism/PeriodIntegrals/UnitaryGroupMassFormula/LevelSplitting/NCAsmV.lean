@@ -62,7 +62,7 @@ theorem map_eq_of_split (p : V →+ V) (hp : Continuous p) (hpp : ∀ v, p (p v)
   have hΨΦ : ∀ x, Ψ (Φ x) = x := by
     rintro ⟨w, u⟩
     have hu : p u = 0 := u.2
-    have hpx : p (Φ (w, u)) = w := by rw [hΦ, map_add, hpW, hu, add_zero]
+    have hpx : p (Φ (w, u)) = w := by rw [hΦ, map_add (f := _), hpW, hu, add_zero]
     apply Prod.ext
     · apply Subtype.ext
       show p (Φ (w, u)) = w
@@ -84,7 +84,7 @@ theorem map_eq_of_split (p : V →+ V) (hp : Continuous p) (hpp : ∀ v, p (p v)
   have hgΦ : (g : V → V) ∘ Φ = Φ ∘ Prod.map f id := by
     funext x
     obtain ⟨w, u⟩ := x
-    simp only [Function.comp, Prod.map, id, hΦ, map_add, hgU u u.2, hf]
+    simp only [Function.comp, Prod.map, id, hΦ, map_add (f := _), hgU u u.2, hf]
   have hfm : Measurable f := hfc.measurable
   have hPm : Measurable (Prod.map f (id : U → U)) := hfm.prodMap measurable_id
   rw [Measure.map_map hg.measurable hΦc.measurable, hgΦ,
@@ -186,7 +186,7 @@ theorem fix_of_pL_zero {S : (n → A) →ₗ[A] (n → A)} (hSe : ∀ a, S (D.e 
   have hu' : u = D.pX u + D.pXv u := by
     rw [pL_apply, sub_sub, sub_eq_zero] at hu
     exact hu
-  rw [hu', map_add]
+  rw [hu', map_add (f := _)]
   congr 1
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [Dat.pX, LinearMap.sum_apply, LinearMap.smulRight_apply, map_sum, map_smul, hSe]

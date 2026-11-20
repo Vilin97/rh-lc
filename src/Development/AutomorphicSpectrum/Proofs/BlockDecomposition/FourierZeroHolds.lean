@@ -38,7 +38,7 @@ def pr (a : Matrix (Fin n) (Fin n) D.host.E) (x : Mx D n n) : AF D.host.F :=
   halfTr (Matrix.trace (HMul.hMul (a.map (incA D)) x : Mx D n n))
 
 theorem halfTr_add (z w : AE D) : halfTr (z + w) = halfTr z + halfTr w := by
-  simp only [halfTr, map_add, mul_add]
+  simp only [halfTr, map_add (f := _), mul_add]
 
 theorem halfTr_zero : halfTr (0 : AE D) = 0 := by
   simp only [halfTr, map_zero, mul_zero]
@@ -80,10 +80,10 @@ theorem trA_cA (z : AE D) : trA (cA D z) = trA z := by
   | tmul a e =>
     show Algebra.trace (AF D.host.F) (AE D) (a ⊗ₜ[D.host.F] (D.sp.cm.sig e)) = Algebra.trace (AF D.host.F) (AE D) (a ⊗ₜ[D.host.F] e)
     rw [GlobalTheory.LatVac.trace_tmul, GlobalTheory.LatVac.trace_tmul, ht]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem halfTr_add_cA (z : AE D) : halfTr (z + cA D z) = trA z := by
-  simp only [halfTr, map_add, trA_cA]
+  simp only [halfTr, map_add (f := _), trA_cA]
   rw [← two_mul, ← mul_assoc, ← map_ofNat (algebraMap D.host.F (AF D.host.F)) 2, ← map_mul]
   norm_num
 
@@ -106,7 +106,7 @@ theorem pr_sym (γ : Matrix (Fin n) (Fin n) D.host.E) {x : Mx D n n} (hx : adj x
 theorem mem_hermSub_sym (γ : Matrix (Fin n) (Fin n) D.host.E) : γ + γᴴ ∈ hermSub D n := by
   show ((γ + γᴴ).map (D.sp.cm.sig : D.host.E → D.host.E)).transpose = γ + γᴴ
   ext i j
-  simp only [Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, Matrix.conjTranspose_apply, map_add]
+  simp only [Matrix.transpose_apply, Matrix.map_apply, Matrix.add_apply, Matrix.conjTranspose_apply, map_add (f := _)]
   have hs : ∀ e : D.host.E, D.sp.cm.sig e = star e := fun e => rfl
   simp only [hs, star_add, star_star]
   rw [add_comm]
@@ -173,7 +173,7 @@ theorem sym_add (x y : Mx D n n) : sym (x + y) = sym x + sym y := by
 
 theorem sym_herm {x : Mx D n n} (hx : adj x = x) : sym x = x := by
   have e : incA D (2⁻¹ : D.host.E) + incA D 2⁻¹ = 1 := by
-    rw [← map_add, show (2⁻¹ : D.host.E) + 2⁻¹ = 1 by norm_num, map_one]
+    rw [← map_add (f := _), show (2⁻¹ : D.host.E) + 2⁻¹ = 1 by norm_num, map_one]
   rw [sym, hx, smul_add, ← add_smul, e, one_smul]
 
 theorem sym_rat (η : Matrix (Fin n) (Fin n) D.host.E) : sym (rat η) ∈ ratMx D n n := by

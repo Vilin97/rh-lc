@@ -58,7 +58,7 @@ private theorem finSupp_comp_lift (k : ℕ) (χ : ℕ → Qbar l) (P : FreeAlgeb
     exact hb _ (ha lam h)
   | add a b ha hb =>
     intro lam h
-    rw [map_add, LinearMap.comp_add]
+    rw [map_add (f := _), LinearMap.comp_add]
     exact FinSupp.add (ha lam h) (hb lam h)
 
 private theorem exists_pow_mul_le (x : Qbar l) : ∃ k : ℕ, ‖((l : ℕ) : Qbar l) ^ k * x‖ ≤ 1 := by

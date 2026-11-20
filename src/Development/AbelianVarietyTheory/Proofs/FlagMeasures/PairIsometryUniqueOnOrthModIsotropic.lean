@@ -100,7 +100,7 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [StarRing E] (S : HSpace
     intro x hx
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hx
     obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.1 hb
-    rw [map_add, map_smul]
+    rw [map_add (f := _), map_smul]
     refine (Xplus A).add_mem (Submodule.mem_sup_left (hδX a ha)) ?_
     have e : c • δ A.fl.z = c • (δ A.fl.z - A.fl.z) + c • A.fl.z := by rw [← smul_add]; congr 1; abel
     rw [e]
@@ -134,7 +134,7 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [StarRing E] (S : HSpace
         obtain ⟨l, hlΛ, rfl⟩ := exists_of_mem_gsmul ha
         obtain ⟨t, ht⟩ := Submodule.mem_one.1 (hint x hxΛ l hlΛ)
         refine Submodule.mem_one.2 ⟨t, ?_⟩
-        rw [LinearMap.map_smulₛₗ S.hT, LinearMap.smul_apply, map_add, map_smul,
+        rw [LinearMap.map_smulₛₗ S.hT, LinearMap.smul_apply, map_add (f := _), map_smul,
           hrad' x hxU b (Submodule.mem_inf.1 hb).2, add_zero, starRingEnd_apply, star_inv₀, star_natCast,
           smul_eq_mul, smul_eq_mul, ht, inv_mul_cancel_left₀ hg0])
     set l : S.V := x - (g : E) • l' with hl_def

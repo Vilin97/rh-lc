@@ -43,7 +43,7 @@ def chartEval (i : L.ι) {V : X.Opens} (h : V ≤ L.U i) : MvPolynomial ι R →
     (p : MvPolynomial ι R) : resG X h' (chartEval R x i h p) = chartEval R x i (h'.trans h) p := by
   induction p using MvPolynomial.induction_on with
   | C r => rw [chartEval_C, chartEval_C, resG_resG]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p j hp => simp only [map_mul, hp, chartEval_X, resG_resG]
 
 variable {R} in
@@ -165,13 +165,13 @@ theorem gammaCoord_smul (i : L.ι) (p : MvPolynomial ι R) (y : GammaStar R x F 
   | C r =>
     rw [chartEval_C, ← algebraMap_eq, algebraMap_smul, map_smul]
     rfl
-  | add p q hp hq => simp only [add_smul, map_add, hp, hq]
+  | add p q hp hq => simp only [add_smul, map_add (f := _), hp, hq]
   | mul_X p j hp =>
     rw [mul_smul, hp, map_mul, mul_smul, chartEval_X]
     congr 1
     induction y using Decomposition.inductionOn (gammaGrading R x F V) with
     | zero => simp only [smul_zero, map_zero]
-    | add a b ha hb => simp only [smul_add, map_add, ha, hb]
+    | add a b ha hb => simp only [smul_add, map_add (f := _), ha, hb]
     | homogeneous a =>
       obtain ⟨_, a, rfl⟩ := a
       rw [GrSum.X_smul_of, gammaCoord_gammaOf, gammaCoord_gammaOf, gammaOp, sectionsOn.toΓ_map,
@@ -239,7 +239,7 @@ theorem eventually_exists_gammaRes_eq {I : Finset ι} (h : V ≤ W)
   induction z using Decomposition.inductionOn (gammaGrading R x F V) with
   | zero => exact .of_forall fun k => ⟨0, by rw [smul_zero, map_zero]⟩
   | add y z hy hz =>
-    exact (hy.and hz).mono fun k ⟨⟨a, ha⟩, ⟨b, hb⟩⟩ => ⟨a + b, by rw [smul_add, map_add, ha, hb]⟩
+    exact (hy.and hz).mono fun k ⟨⟨a, ha⟩, ⟨b, hb⟩⟩ => ⟨a + b, by rw [smul_add, map_add (f := _), ha, hb]⟩
   | homogeneous b =>
     obtain ⟨_, b, rfl⟩ := b
     refine (eventually_exists_resM_eq_mulSecOfEq_zpowSec hL (prodSec x I) hW hW' h

@@ -152,7 +152,7 @@ theorem exists_rep {W : Ideal (MRing ι)} (hW : W.IsPrime) {x : FractionRing (MR
     refine ⟨u * v' + u' * v, v * v', a + a',
       isMultiHomog_add' (AvoidRing.isMultiHomog_mul hu hv') (by rw [add_comm]; exact AvoidRing.isMultiHomog_mul hu' hv),
       AvoidRing.isMultiHomog_mul hv hv', fun h => (hW.mem_or_mem h).elim hvW hvW', ?_⟩
-    rw [map_mul, map_add, map_mul, map_mul, ← e, ← e']
+    rw [map_mul, map_add (f := _), map_mul, map_mul, ← e, ← e']
     ring
   | neg x _ hx =>
     obtain ⟨u, v, a, hu, hv, hvW, e⟩ := hx

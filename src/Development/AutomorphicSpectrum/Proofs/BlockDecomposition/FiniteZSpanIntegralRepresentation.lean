@@ -49,7 +49,7 @@ theorem exists_aeval_lapOp_eq_zero_of_finite (φ : Sm E a)
     · rintro _ ⟨z, hz, rfl⟩
       exact Submodule.subset_span ⟨Ω * z, Subalgebra.mul_mem _ hZ hz, rfl⟩
     · rw [map_zero]; exact Submodule.zero_mem _
-    · intro x y _ _ hx hy; rw [map_add]; exact Submodule.add_mem _ hx hy
+    · intro x y _ _ hx hy; rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
     · intro c x _ hx; rw [map_smul]; exact Submodule.smul_mem _ c hx
   have hφV : φ ∈ Vz := Submodule.subset_span ⟨1, Subalgebra.one_mem _, rfl⟩
   obtain ⟨q, hqm, -, hq⟩ := AutomorphicForm.exists_monic_aeval_apply_eq_zero Ω Vz hVs hφV
@@ -64,7 +64,7 @@ theorem exists_aeval_lapOp_eq_zero_of_finite (φ : Sm E a)
       rw [hq, map_zero] at this
       exact this.symm
     · rw [map_zero]
-    · intro x y _ _ hx hy; rw [map_add, hx, hy, add_zero]
+    · intro x y _ _ hx hy; rw [map_add (f := _), hx, hy, add_zero]
     · intro c x _ hx; rw [map_smul, hx, smul_zero]
   have hlap : Commute Ω (lapOp (⇑b)) := by
     simp only [lapOp, Commute, SemiconjBy]

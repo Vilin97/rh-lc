@@ -142,7 +142,7 @@ theorem bm_whc_shift {R σ B : Type*} [CommRing R] [AddCommMonoid B] [IsRightCan
       rw [bm_whcSame_lemma hDa, bm_whcSame_lemma hma]
     · rw [bm_whcNe_lemma_2 hDa (fun h' => h (add_right_cancel h').symm), bm_whcNe_lemma_2 hma (Ne.symm h),
         map_zero]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 theorem bm_isWH_of_comm {R σ B : Type*} [CommRing R] [AddCommMonoid B] (w : σ → B) (β : B)
     (x : Module.End R (MvPolynomial σ R))
@@ -166,7 +166,7 @@ theorem bm_deriv_monomial_WH {R σ B : Type*} [CommRing R] [AddCommMonoid B] (w 
     simp [Finsupp.weight_apply]
   have e : Finsupp.weight w m + δ = Finsupp.weight w (m - Finsupp.single i 1) + (w i + δ) := by
     conv_lhs => rw [hsplit]
-    rw [map_add, hw1, add_assoc]
+    rw [map_add (f := _), hw1, add_assoc]
   rw [e, smul_eq_mul]
   exact (isWeightedHomogeneous_monomial _ _ _ rfl).mul (hf i)
 
@@ -213,7 +213,7 @@ theorem commute_weightedComponent_of_monomial {R σ B : Type*} [CommRing R] [Add
     · subst h
       rw [bm_whcSame_lemma hDa, bm_whcSame_lemma hma]
     · rw [bm_whcNe_lemma_2 hDa (Ne.symm h), bm_whcNe_lemma_2 hma (Ne.symm h), map_zero]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
 
 theorem elemDeriv_monomial_weighted (R : Type*) [CommRing R] (n : ℕ) {B : Type*} [AddCommMonoid B]
     (w : Fin (n + 1) × Fin n → B) (hw : ∀ (a : Fin (n + 1)) (s t : Fin n), a ≠ Fin.last n → w (a, s) = w (a, t))
@@ -393,8 +393,8 @@ theorem bm_rowAct_comm_bmEL (R : Type*) [CommRing R] (n : ℕ) (g : Matrix (Fin 
   show rowAct R (extM R g) (bmE R n s t F) = bmE R n s t (rowAct R (extM R g) F)
   induction F using MvPolynomial.induction_on
   next a => simp [rowAct, MvPolynomial.derivation_C]
-  next p q hp hq => simp only [map_add, hp, hq]
-  next p v hp => simp only [Derivation.leibniz, map_mul, map_add, smul_eq_mul, hp, rowAction_ext_elemDeriv_X]
+  next p q hp hq => simp only [map_add (f := _), hp, hq]
+  next p v hp => simp only [Derivation.leibniz, map_mul, map_add (f := _), smul_eq_mul, hp, rowAction_ext_elemDeriv_X]
 
 theorem lastRowDeriv_eq_X_mul_pderiv (R : Type*) [CommRing R] (n : ℕ) (s t : Fin n) (F : BP R n) :
     bmZ R n s t F = X (Fin.last n, s) * pderiv (Fin.last n, t) F := by
@@ -490,12 +490,12 @@ theorem elemDeriv_embed_comm (R : Type*) [CommRing R] (n : ℕ) (s t : Fin n) (f
     bmE R n s t (emb R n f) = emb R n (ndE R n n s t f) := by
   induction f using MvPolynomial.induction_on
   next a => simp [emb, MvPolynomial.derivation_C]
-  next p q hp hq => simp only [map_add, hp, hq]
+  next p q hp hq => simp only [map_add (f := _), hp, hq]
   next p v hp =>
     have hX : bmE R n s t (emb R n (X v)) = emb R n (ndE R n n s t (X v)) := by
       simp only [emb, rename_X, elemDeriv_X, ndE, mkDerivation_X]
       by_cases h : v.2 = t <;> simp [h, Fin.castSucc_ne_last]
-    simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add, hp, hX]
+    simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add (f := _), hp, hX]
 
 theorem bmE_lead (R : Type*) [CommRing R] (n : ℕ) (s t : Fin n) (b : Fin n → ℕ)
     (f : MvPolynomial (Fin n × Fin n) R) :
@@ -930,8 +930,8 @@ theorem bmC_pderiv_colAddGen {R : Type*} [CommRing R] {r n : ℕ} {l j : Fin n} 
     pderiv none (colAddGen R l j g) = colAddGen R l j (ndE R r n l j g) := by
   induction g using MvPolynomial.induction_on
   next a => simp [colAddGen, MvPolynomial.derivation_C]
-  next p q hp hq => simp only [map_add, hp, hq]
-  next p v hp => simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add, hp, bmC_pderiv_colAddGen_X hlj]
+  next p q hp hq => simp only [map_add (f := _), hp, hq]
+  next p v hp => simp only [map_mul, Derivation.leibniz, smul_eq_mul, map_add (f := _), hp, bmC_pderiv_colAddGen_X hlj]
 
 theorem bmC_ndEv_rename {R : Type*} [CommRing R] {r n : ℕ} (q : MvPolynomial (Fin r × Fin n) R) :
     ndEv R r n (rename some q) = q := by
@@ -1414,7 +1414,7 @@ theorem bmD_raise {R : Type} [CommRing R] [IsDomain R] [CharZero R] {n : ℕ} (l
   have hG' := (bm_mem_dualWeyl_iff.mp hG).2 l j hlj
   rw [bm_ndE_eq, Derivation.add_apply] at hG'
   have h1 := congrArg (zcomp R n β) hG'
-  rw [map_add, bmD_zcomp_bmE, bmD_zcomp_bmZ, map_zero] at h1
+  rw [map_add (f := _), bmD_zcomp_bmE, bmD_zcomp_bmZ, map_zero] at h1
   have h0 : zcomp R n (β - (Pi.single l 1 - Pi.single j 1)) G = 0 := by
     apply bmD_zero_of_gt G β hmax
     rw [bmD_omg_sub, bmD_omg_sub, bmD_omg_single, bmD_omg_single]
@@ -1429,7 +1429,7 @@ theorem bmD_weight {R : Type} [CommRing R] [IsDomain R] [CharZero R] {n : ℕ} (
   have hG' := (bm_mem_dualWeyl_iff.mp hG).1 s
   rw [bm_ndEul_eq, Derivation.add_apply] at hG'
   have h1 := congrArg (zcomp R n β) hG'
-  rw [map_add, bmD_zcomp_bmE, map_smul] at h1
+  rw [map_add (f := _), bmD_zcomp_bmE, map_smul] at h1
   have h2 : zcomp R n β (bmZ R n s s G) = ((β s : ℤ) : R) • zcomp R n β G := by
     rw [bmD_zcomp_bmZ, sub_self, sub_zero]
     exact bmZ_euler R n β s _ (bmD_zcomp_isWH β G)
@@ -1496,7 +1496,7 @@ theorem bmD_top {R : Type} [CommRing R] {n : ℕ} (G : BP R n) (β : Fin n → �
           bmZ R n j l (zcomp R n (β' - (Pi.single j 1 - Pi.single l 1))
             ((ndF R (n + 1) n l j)^[k] G)) := by
       intro β'
-      rw [Function.iterate_succ_apply', bm_ndF_eq, Derivation.add_apply, map_add, bmD_zcomp_bmE,
+      rw [Function.iterate_succ_apply', bm_ndF_eq, Derivation.add_apply, map_add (f := _), bmD_zcomp_bmE,
         bmD_zcomp_bmZ]
     have h2 : omg (β + (k + 1) • (Pi.single j 1 - Pi.single l 1)) = omg β + ((k + 1 : ℕ) : ℤ) := by
       rw [succ_nsmul, ← add_assoc, bmD_omg_add, ih2, hδ]
@@ -1652,7 +1652,7 @@ theorem bmF_fil_mul_low {R : Type*} [CommRing R] {n : ℕ} {D D' : ℤ} {F L : B
     (hL : IsLow D' L) : IsLow (D + D') (F * L) := by
   intro m hm
   obtain ⟨a, ha, b, hb, rfl⟩ := Finset.mem_add.mp (support_mul F L hm)
-  rw [map_add, bmD_omg_add]
+  rw [map_add (f := _), bmD_omg_add]
   exact add_lt_add_of_le_of_lt (hF a ha) (hL b hb)
 
 theorem bmF_zmon_WH (R : Type*) [CommRing R] (n : ℕ) (b : Fin n → ℕ) :
@@ -1673,7 +1673,7 @@ theorem bmF_emb_WH {R : Type*} [CommRing R] {n : ℕ} {B : Type*} [AddCommMonoid
     rw [emb, rename_C]
     apply isWeightedHomogeneous_C
   next p q hp hq =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hp.add hq
   next p v hp =>
     rw [map_mul]
@@ -1700,7 +1700,7 @@ theorem bmLift_add {R : Type*} [CommRing R] {n : ℕ} {lam b : Fin n → ℕ} {f
   refine ⟨Submodule.add_mem _ h1 h1', h2.add h2', ?_⟩
   have e : G + G' - zmon R n b * emb R n (f + f') =
       (G - zmon R n b * emb R n f) + (G' - zmon R n b * emb R n f') := by
-    rw [map_add]
+    rw [map_add (f := _)]
     ring
   rw [e]
   exact bmF_low_add h3 h3'
@@ -2419,10 +2419,10 @@ theorem bmK_mem {R : Type} [CommRing R] [IsDomain R] [CharZero R] {n : ℕ} (lam
   obtain ⟨h1, h2⟩ := hG
   refine ⟨fun s => ?_, fun l j hlj => ?_⟩
   · have e : ndEul R (n + 1) n s (bmCap R n u G) = bmCap R n u (ndEul R (n + 1) n s G) := by
-      rw [bm_ndEul_eq, Derivation.add_apply, Derivation.add_apply, bmK_bmE, bmK_bmZ, map_add]
+      rw [bm_ndEul_eq, Derivation.add_apply, Derivation.add_apply, bmK_bmE, bmK_bmZ, map_add (f := _)]
     rw [e, h1 s, map_smul]
   · have e : ndE R (n + 1) n l j (bmCap R n u G) = bmCap R n u (ndE R (n + 1) n l j G) := by
-      rw [bm_ndE_eq, Derivation.add_apply, Derivation.add_apply, bmK_bmE, bmK_bmZ, map_add]
+      rw [bm_ndE_eq, Derivation.add_apply, Derivation.add_apply, bmK_bmE, bmK_bmZ, map_add (f := _)]
     rw [e, h2 l j hlj, map_zero]
 
 theorem bmK_list_comm {A : Type*} [Ring A] (C : ℤ → A) (x : A) (hx : ∀ u, Commute x (C u)) (ℓ : List ℤ) :
@@ -2583,7 +2583,7 @@ theorem bmK_lin {R M N P : Type*} [CommRing R] [AddCommGroup M] [Module R M] [Ad
   refine ⟨{ toFun := fun f => Z (g f), map_add' := ?_, map_smul' := ?_ }, ?_⟩
   · intro f f'
     show Z (g (f + f')) = Z (g f) + Z (g f')
-    rw [hkey (f + f') (g (f + f')) (g f + g f') (hg _) (hadd _ _ _ _ (hg f) (hg f')), map_add]
+    rw [hkey (f + f') (g (f + f')) (g f + g f') (hg _) (hadd _ _ _ _ (hg f) (hg f')), map_add (f := _)]
   · intro c f
     show Z (g (c • f)) = (RingHom.id R) c • Z (g f)
     rw [hkey (c • f) (g (c • f)) (c • g f) (hg _) (hsmul c f _ (hg f)), map_smul, RingHom.id_apply]

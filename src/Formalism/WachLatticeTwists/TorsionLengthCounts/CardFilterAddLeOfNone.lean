@@ -25,7 +25,7 @@ theorem jumpsRow : Formalism.RepresentationBoundsCohomology.StatJumpsRow := by
   intro ι _ cloud lows m j h0 hc hl hj hh
   have hτ : ∀ τ, negCount ((cloud τ + lows τ).map (fun u => -u - 1)) ≤ m := fun τ => by
     unfold negCount
-    rw [Multiset.map_add]
+    rw [Multiset.map_add (f := _)]
     refine (card_filter_add_le_of_none _ _ _ ?_).trans ?_
     · intro v hv
       obtain ⟨u, hu, rfl⟩ := Multiset.mem_map.1 hv

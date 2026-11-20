@@ -73,7 +73,7 @@ theorem conjBy_mem_Zalg (C : Sm E a ≃ₗ⋆[ℂ] Sm E a) (hC : ∀ o φ, act o
       mul_mem' := fun {x y} hx hy => by
         simp only [Set.mem_setOf_eq, map_mul] at *; exact Subalgebra.mul_mem _ hx hy
       add_mem' := fun {x y} hx hy => by
-        simp only [Set.mem_setOf_eq, map_add] at *; exact Subalgebra.add_mem _ hx hy
+        simp only [Set.mem_setOf_eq, map_add (f := _)] at *; exact Subalgebra.add_mem _ hx hy
       algebraMap_mem' := fun c => by
         simp only [Set.mem_setOf_eq, conjBy_algebraMap]; exact Subalgebra.algebraMap_mem _ _ }
   refine (Algebra.adjoin_le (S := S) ?_) hz

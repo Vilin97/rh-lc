@@ -159,7 +159,7 @@ def jacHom {n s : ℕ} (b : Fin n → Fin s) (lam : ∀ c : Fin s, FDRep ℂ (GL
     rintro φ ψ ⟨hφ, hφ'⟩ ⟨hψ, hψ'⟩
     refine ⟨fun m₁ m₂ => ?_, fun x u hu => ?_⟩
     · rw [LinearMap.add_comp, LinearMap.comp_add, hφ, hψ]
-    · simp only [LinearMap.add_apply, map_add, hφ' x u hu, hψ' x u hu]
+    · simp only [LinearMap.add_apply, map_add (f := _), hφ' x u hu, hψ' x u hu]
   zero_mem' := ⟨fun _ _ => by simp, fun _ _ _ => by simp⟩
   smul_mem' := by
     rintro r φ ⟨hφ, hφ'⟩

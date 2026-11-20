@@ -136,7 +136,7 @@ theorem pairingSum_add_left (b₁ b₂ : W) (ũ : smoothVectors (Representation.
   rw [← finsum_add_distrib (finite_support_pairingSum hπ hsc hKo b₁ ũ)
     (finite_support_pairingSum hπ hsc hKo b₂ ũ)]
   refine finsum_congr fun q => ?_
-  simp only [map_add, add_mul]
+  simp only [map_add (f := _), add_mul]
 
 omit hωπ hωσ hω hψ hv in
 theorem pairingSum_smul_left (c : ℂ) (b : W) (ũ : smoothVectors (Representation.dual π)) :

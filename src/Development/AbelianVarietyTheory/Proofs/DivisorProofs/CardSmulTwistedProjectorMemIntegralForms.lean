@@ -23,7 +23,7 @@ theorem card_smul_eOp_mem_Mall : ∀ {LL Ks : Type} [Field LL] [NumberField LL] 
     induction hy using Submodule.span_induction with
     | mem z hz => exact Submodule.subset_span (hMK g z hz)
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+    | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
     | smul r a _ ha =>
         rw [← algebraMap_smul LL r a, LinearMap.map_smul, algebraMap_smul]
         exact Submodule.smul_mem _ r ha

@@ -20,7 +20,7 @@ theorem norm_add_le_max_disc (x y : Disc l u ρ) : ‖x + y‖ ≤ max ‖x‖ �
   · exact isClosed_le (continuous_norm.comp (continuous_fst.add continuous_snd))
       ((continuous_norm.comp continuous_fst).max (continuous_norm.comp continuous_snd))
   · intro a b
-    rw [← map_add, norm_ofPre, norm_ofPre, norm_ofPre]
+    rw [← map_add (f := _), norm_ofPre, norm_ofPre, norm_ofPre]
     exact gauge_add_le_max l u ρ a b
 
 def unitBall (l : ℕ) (u : A) (ρ : ℝ≥0) : Subring (Disc l u ρ) where
@@ -220,7 +220,7 @@ theorem norm_locMap_acris0 (hL : ∀ y : bk.DA bk.ρ₀, ‖(l : bk.DA bk.ρ₀)
         rw [map_mul]; exact (norm_mul_le _ _).trans (mul_le_one₀ a (norm_nonneg _) b)
       add_mem' := fun {x y} a b => by
         change ‖locMap bk (x + y)‖ ≤ 1
-        rw [map_add]; exact (norm_add_le_max_disc _ _).trans (max_le a b)
+        rw [map_add (f := _)]; exact (norm_add_le_max_disc _ _).trans (max_le a b)
       algebraMap_mem' := fun r => by
         change ‖locMap bk (algebraMap (Ainf l) (Per.AinfP l) r)‖ ≤ 1
         rw [locMap_alg]; exact norm_toDisc_le r }

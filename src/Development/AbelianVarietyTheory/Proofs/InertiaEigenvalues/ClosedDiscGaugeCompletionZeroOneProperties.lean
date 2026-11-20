@@ -77,7 +77,7 @@ theorem ball_lt_one {r : ℝ} (hr : r < 1) {y : Pk} (hy : y ∈ ball l (0 : 𝕎
   | add x y _ _ hx hy =>
     obtain ⟨w, rfl⟩ := hx
     obtain ⟨w', rfl⟩ := hy
-    exact ⟨w + w', by rw [mul_add, map_add]⟩
+    exact ⟨w + w', by rw [mul_add, map_add (f := _)]⟩
   | smul c x _ hx =>
     obtain ⟨w, rfl⟩ := hx
     exact ⟨c * w, by rw [Algebra.smul_def, ← map_mul, mul_left_comm]⟩

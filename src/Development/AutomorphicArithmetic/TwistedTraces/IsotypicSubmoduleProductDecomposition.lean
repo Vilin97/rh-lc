@@ -59,7 +59,7 @@ theorem UpperTheory.isotypic_submodule_product_decomposition :
       obtain ⟨q, hq⟩ := h2
       refine ⟨X.add_mem p q, ?_⟩
       show ρ (c i a (⟨u, p⟩ + ⟨v, q⟩)) = c i b (ρ (⟨u, p⟩ + ⟨v, q⟩))
-      rw [map_add, map_add, map_add, map_add, hp, hq]
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
     | smul k u _ h1 =>
       obtain ⟨p, hp⟩ := h1
       refine ⟨X.smul_mem k p, ?_⟩

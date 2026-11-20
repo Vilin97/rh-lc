@@ -21,7 +21,7 @@ theorem riemLat_basis_periods_linearIndependent : ∀ (E : Type) [Field E] [Numb
       exact Submodule.subset_span ⟨j, rfl⟩
     | zero => simp
     | add y z _ _ hy hz =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hy hz
     | smul c y _ hy =>
       rw [map_zsmul]

@@ -19,7 +19,7 @@ variable {C O : Type} [Field C] [CommRing O] [Algebra O C] {E : Type} [Field E] 
 
 theorem pt_swap (P : HTPoint C O c κ N V Ω') (x y : V) : P.e x y = -P.e y x := by
   have h := P.alt (x + y)
-  simp only [map_add, LinearMap.add_apply, P.alt, zero_add, add_zero] at h
+  simp only [map_add (f := _), LinearMap.add_apply, P.alt, zero_add, add_zero] at h
   linear_combination h
 
 theorem pt_tate (P : HTPoint C O c κ N V Ω') (m : Ix E N) :
@@ -210,7 +210,7 @@ theorem chart_matrices {A K : Type} [CommRing A] [IsDomain A] [Field K] [Algebra
       apply Subtype.ext
       rw [Submodule.coe_add, Submodule.coe_smul, ← Nat.cast_pow, Nat.cast_smul_eq_nsmul]
       exact hz
-    rw [hk, hio, this, map_add, map_smul, Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul, sub_add_cancel_left]
+    rw [hk, hio, this, map_add (f := _), map_smul, Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul, sub_add_cancel_left]
     exact neg_mem (hpR _)
 
 end PositivityTheory.Xgn.TestGroupPoint

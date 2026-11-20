@@ -56,7 +56,7 @@ theorem lattice_comap_finite_projective_span : ∀ (B : Type) [CommRing B] [IsDo
     { toFun := σ
       map_add' := fun x y => funext fun i => hg (by
         have : G (x + y) = G x + G y := Subtype.ext (map_add (piMap g (Fin h)) x.1 y.1)
-        rw [Pi.add_apply, map_add, hσ, hσ, hσ, this, map_add, Pi.add_apply])
+        rw [Pi.add_apply, map_add (f := _), hσ, hσ, hσ, this, map_add (f := _), Pi.add_apply])
       map_smul' := fun r x => funext fun i => hg (by
         have : G (r • x) = g r • G x := Subtype.ext (map_smulₛₗ (piMap g (Fin h)) r x.1)
         rw [RingHom.id_apply, Pi.smul_apply, smul_eq_mul, map_mul, hσ, hσ, this, map_smul, Pi.smul_apply, smul_eq_mul]) }

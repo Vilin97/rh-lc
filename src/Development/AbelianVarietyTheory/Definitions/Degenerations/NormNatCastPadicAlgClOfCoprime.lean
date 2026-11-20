@@ -690,11 +690,11 @@ def heisSys : ThetaSys o Ω :=
       ext i j
       simp [heisMat_zero_apply, Matrix.one_apply, eq_comm]
     ρ_mul := fun a b => ⟨_, by
-      rw [heisMat_mul _ hh, AddChar.zmodChar_apply, ← pow_mul, Pi.add_apply, Pi.add_apply, map_add, map_add]⟩
+      rw [heisMat_mul _ hh, AddChar.zmodChar_apply, ← pow_mul, Pi.add_apply, Pi.add_apply, map_add (f := _), map_add (f := _)]⟩
     ρ_add := fun a b h => by
       have h2 := (nsmul_eq_zero_iff_castHom _).1 h
       rw [eStd, Fin.sum_univ_one, map_sub, map_mul, map_mul] at h2
-      rw [heisMat_mul _ hh, h2, mul_zero, AddChar.map_zero_eq_one, one_smul, Pi.add_apply, Pi.add_apply, map_add,
+      rw [heisMat_mul _ hh, h2, mul_zero, AddChar.map_zero_eq_one, one_smul, Pi.add_apply, Pi.add_apply, map_add (f := _),
         map_add]
     th := fun x => algebraMap o Ω (ϖ ^ (x (.inl 0)).valMinAbs.natAbs ^ 2)
     ev := fun _ j => algebraMap o Ω (ϖ ^ (r ^ 2 * N * j.valMinAbs.natAbs ^ 2))

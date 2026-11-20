@@ -30,7 +30,7 @@ def evHom : AF F →+* mixedEmbedding.mixedSpace F :=
 def trForm (c : κ → mixedEmbedding.mixedSpace F) : (κ → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ :=
   LinearMap.toContinuousLinearMap
     { toFun := fun y => Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (y ⬝ᵥ c)
-      map_add' := fun y y' => by rw [add_dotProduct, map_add]
+      map_add' := fun y y' => by rw [add_dotProduct, map_add (f := _)]
       map_smul' := fun r y => by rw [smul_dotProduct, map_smul]; rfl }
 
 theorem evHom_apply (a : AF F) : evHom F a = evI F a := rfl
@@ -64,7 +64,7 @@ theorem schr_pureA [Invertible (2 : AF F)] {ψ : AddChar (AF F) ℂ} (hψ : IsSt
   have htr : Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F (x ⬝ᵥ q + ⅟(2 : AF F) * (p ⬝ᵥ q))) =
       trForm (fun i => evI F (q i)) (fun i => evI F (x i)) +
         Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (evI F (⅟(2 : AF F) * (p ⬝ᵥ q))) := by
-    rw [← evHom_apply, map_add, map_add, RingHom.map_dotProduct, trForm_apply]
+    rw [← evHom_apply, map_add (f := _), map_add (f := _), RingHom.map_dotProduct, trForm_apply]
     rfl
   simp only [schr, pureA]
   rw [hψ.2.2 _ hAt, htr, hfin, harch, ← mul_assoc, ← hg]

@@ -35,7 +35,7 @@ theorem eval_close {C : Type} [Field C] (v : AddValuation C (WithTop ℝ)) {ι :
     have e : MvPolynomial.eval x (p + q) - MvPolynomial.eval x' (p + q) =
         (MvPolynomial.eval x p - MvPolynomial.eval x' p) +
           (MvPolynomial.eval x q - MvPolynomial.eval x' q) := by
-      simp only [map_add]; ring
+      simp only [map_add (f := _)]; ring
     rw [e]
     refine le_trans (le_min (h₁ x' fun i => le_trans ?_ (hx' i))
       (h₂ x' fun i => le_trans ?_ (hx' i))) (v.map_add _ _)

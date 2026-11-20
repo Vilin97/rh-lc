@@ -24,7 +24,7 @@ variable {D : D7} (X : HidaSetting D) (u : D.what₂.Word) (hK : X.LevelSubgroup
 
 theorem sharp_add (T T' : Cu X u hK) : sharp hK cs (T + T') = sharp hK cs T + sharp hK cs T' := by
   ext ρ
-  simp [sharp, LinearMap.comp_add, map_add]
+  simp [sharp, LinearMap.comp_add, map_add (f := _)]
 
 theorem sharp_smul (c : ℂ) (T : Cu X u hK) : sharp hK cs (c • T) = (starRingEnd ℂ c) • sharp hK cs T := by
   ext ρ
@@ -129,7 +129,7 @@ variable {D : D7} {X : HidaSetting D} {u u' : D.what₂.Word} {hK : X.LevelSubgr
 
 def trL (A : CM cs' →L[ℂ] CM cs) : ColT hinj' →ₗ[ℂ] ColT hinj where
   toFun T' := shInv hb (A (shT hinj' T'))
-  map_add' T T' := by rw [shT_add, map_add, shInv_add]
+  map_add' T T' := by rw [shT_add, map_add (f := _), shInv_add]
   map_smul' c T := by
     rw [shT_smul, map_smul, shInv_smul, starRingEnd_self_apply]
     rfl

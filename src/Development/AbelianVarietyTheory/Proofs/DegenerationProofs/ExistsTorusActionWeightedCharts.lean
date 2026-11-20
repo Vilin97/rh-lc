@@ -77,7 +77,7 @@ theorem cf_mul {A R X : Type} [CommRing A] [CommRing R] [AddCommGroup X]
   obtain ⟨a, rfl⟩ := hb.2 s
   induction a using AddMonoidAlgebra.induction_linear with
   | zero => simp only [map_zero, mul_zero, WtPart.cf_zero]
-  | add x y hx hy => simp only [map_add, mul_add, WtPart.cf_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), mul_add, WtPart.cf_add, hx, hy]
   | single ψ c =>
     rw [AddMonoidAlgebra.liftNCRingHom_single, ← _root_.mul_assoc, ← map_mul, WtPart.cf_mono, WtPart.cf_mono,
       mul_ite, mul_zero]

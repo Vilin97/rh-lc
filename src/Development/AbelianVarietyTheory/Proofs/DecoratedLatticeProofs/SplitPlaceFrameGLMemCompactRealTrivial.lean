@@ -20,7 +20,7 @@ theorem gl_mem_GfC : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topolog
   have he := p.split
   refine Units.ext (Matrix.ext fun i j => ?_)
   have h : infPart D ((mt S (β.gl g) - 1) i j) = 0 := by
-    rw [← hg i j, RingHom.map_mul, RingHom.map_add, GlobalTheory.SplitScalar.infPart_splitIdem he,
+    rw [← hg i j, RingHom.map_mul, RingHom.map_add (f := _), GlobalTheory.SplitScalar.infPart_splitIdem he,
       GlobalTheory.SplitScalar.infPart_splitIdem (GlobalTheory.SplitScalar.isSplitIdem_conj he), add_zero, zero_mul]
   rw [Matrix.sub_apply, RingHom.map_sub, sub_eq_zero] at h
   show infPart D (mt S (β.gl g) i j) = (1 : Matrix _ _ _) i j

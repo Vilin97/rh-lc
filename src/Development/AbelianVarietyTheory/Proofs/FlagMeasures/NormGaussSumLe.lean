@@ -166,7 +166,7 @@ theorem norm_gauss_sum_le : ∀ {F : Type} [Field F] [ValuativeRel F] [Topologic
     obtain ⟨b, hb⟩ := not_forall.1 fun h' => h1 (hdual _ h')
     obtain ⟨hb, hb'⟩ := Classical.not_imp.1 hb
     obtain ⟨s, hs⟩ := (L.cj_fix (algebraMap F E t * z * L.cj b
-      + L.cj (algebraMap F E t * z * L.cj b))).1 (by rw [map_add, L.cj_cj, add_comm])
+      + L.cj (algebraMap F E t * z * L.cj b))).1 (by rw [map_add (f := _), L.cj_cj, add_comm])
     have hs' : s ∉ 𝒪[F] := fun h' => hb' ⟨⟨s, h'⟩, hs.symm⟩
     obtain ⟨y, hy⟩ := not_forall.1 fun h' => hs' ((hψ s).1 h')
     let v : UU := ⟨(algebraMap F E y * b) • e a, hsm _ (L.O.mul_mem (hO y) hb) _ (heU a)⟩

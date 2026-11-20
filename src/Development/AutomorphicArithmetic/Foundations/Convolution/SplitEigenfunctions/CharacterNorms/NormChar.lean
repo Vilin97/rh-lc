@@ -118,7 +118,7 @@ theorem exists_galois_quotient_of_ideleNorm_eq_one_quadratic (hE : Module.finran
       rw [map_mul, ← mul_assoc, h2, one_mul]
       exact ha.symm
     · have := hun.map am
-      simpa only [map_add, map_mul, map_sub, map_one] using this
+      simpa only [map_add (f := _), map_mul, map_sub, map_one] using this
   obtain ⟨x, hx⟩ := key
   refine ⟨c, x, ?_⟩
   have hcx : (((c • x : IdeleGroup E)) : 𝔸[E]) = σ x := coe_smul_idele c x

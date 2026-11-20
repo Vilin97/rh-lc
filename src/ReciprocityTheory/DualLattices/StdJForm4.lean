@@ -59,7 +59,7 @@ theorem btP_facts (hS : HodgeTateSetting p v R O σ cp) (H : HodgeTateDatum p g 
     rw [Fin.sum_univ_castSucc]
     simp only [hTc, hTl]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [← map_sum F (fun i => H.ρ (e i)), ← map_add, hsT, map_one]
+      rw [← map_sum F (fun i => H.ρ (e i)), ← map_add (f := _), hsT, map_one]
   have h4 : ∀ i j, εL i * εL j = if i = j then εL i else 0 := by
     intro i j
     refine Fin.lastCases ?_ (fun i => ?_) i <;> refine Fin.lastCases ?_ (fun j => ?_) j

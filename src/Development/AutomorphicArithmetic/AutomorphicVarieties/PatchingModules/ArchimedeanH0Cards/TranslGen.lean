@@ -28,7 +28,7 @@ theorem urLift {l : ℕ} {J : Subgroup Γ} (H : UrAx l J) (M : FRep A Γ) (hl : 
   obtain ⟨b, hb, h1, h2⟩ := (H A M hl hJ).2 M' S.mkQ (fun _ _ => rfl) S.mkQ_surjective (fun g => S.mkQ (x g))
     ⟨(continuous_of_discreteTopology (f := S.mkQ)).comp hx, fun g h => by
       show S.mkQ (x (g * h)) = S.mkQ (x g) + S.mkQ (M.ρ g (x h))
-      rw [← map_add]
+      rw [← map_add (f := _)]
       refine (Submodule.Quotient.eq S).2 ?_
       convert S.neg_mem (hd (g, h)) using 1
       rw [d1_apply]; abel⟩
@@ -59,16 +59,16 @@ theorem translGen {P : Pl Γ} (D : Dat A P) (M : FRep A Γ) (ι : D.M.X →ₗ[A
     intro i
     refine ⟨⟨(continuous_of_discreteTopology (f := r)).comp (continuous_differential_one M (hx i)), fun g h k => hi ?_⟩,
       fun w => ⟨?_, fun g h => ?_⟩⟩
-    · simp only [map_add, map_sub, map_zero, he, hr']
-      simp only [d1_apply, map_add, map_sub, map_mul, Module.End.mul_apply, mul_assoc]
+    · simp only [map_add (f := _), map_sub, map_zero, he, hr']
+      simp only [d1_apply, map_add (f := _), map_sub, map_mul, Module.End.mul_apply, mul_assoc]
       abel
     · exact (continuous_of_discreteTopology (f := fun s => D.π w (σ w s))).comp
         (((hx i).comp (P.cont w)).sub (hb i w))
     · simp only [d1_apply (D.Q w).ρ, ← D.equiv]
-      rw [← map_sub, ← map_add, ← sub_eq_zero, ← map_sub, hk]
-      simp only [map_add, map_sub, he, hr']
+      rw [← map_sub, ← map_add (f := _), ← sub_eq_zero, ← map_sub, hk]
+      simp only [map_add (f := _), map_sub, he, hr']
       convert add_mem (sub_mem (hN w g _ (hτ i w h)) (hτ i w (g * h))) (hτ i w g) using 1
-      simp only [d1_apply, map_add, map_sub, map_mul, hb']
+      simp only [d1_apply, map_add (f := _), map_sub, map_mul, hb']
       abel
   refine ⟨fun i => ⟨_, mem i⟩, fun c hB => ?_⟩
   obtain ⟨x0, c1, e1, e2⟩ := hB
@@ -79,7 +79,7 @@ theorem translGen {P : Pl Γ} (D : Dat A P) (M : FRep A Γ) (ι : D.M.X →ₗ[A
     refine ⟨(continuous_finset_sum _ fun i _ => (hx i).const_smul _).sub
       ((continuous_of_discreteTopology (f := ι)).comp c1), fun g h => ?_⟩
     have := e1' (g, h)
-    simp only [d1_apply, map_add, map_sub, he, smul_add, smul_sub, Finset.sum_add_distrib,
+    simp only [d1_apply, map_add (f := _), map_sub, he, smul_add, smul_sub, Finset.sum_add_distrib,
       Finset.sum_sub_distrib] at this
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sub, map_sum, map_smul]
@@ -114,7 +114,7 @@ theorem translGen {P : Pl Γ} (D : Dat A P) (M : FRep A Γ) (ι : D.M.X →ₗ[A
     rw [hk] at a1
     convert add_mem a1 (Submodule.sum_mem _ fun i (_ : i ∈ Finset.univ) => (N w).smul_mem (c i) (hτ i w g)) using 1
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Pi.add_apply, amitsur_d0_apply, map_sub, map_add, map_sum, he, smul_sub, Finset.sum_sub_distrib, map_smul ι (c _)]
+      simp only [Pi.add_apply, amitsur_d0_apply, map_sub, map_add (f := _), map_sum, he, smul_sub, Finset.sum_sub_distrib, map_smul ι (c _)]
     abel
 
 end UpperTheory.V.Pa.B2

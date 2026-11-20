@@ -212,7 +212,7 @@ theorem main (hS : SiteLaws) (hL : RelLift) (hI : RelInj) (hK : RelKill) (K : Ty
           (by omega) r ((grOk (smFun Y (π ≫ q)) (rfl : a₀ + a' = a₀ + a')).pair.cupC rfl w₀ (pullC π rfl a' n' z)))
         (cupC_heq _ (by omega) _ _ _ _) hk
       refine ⟨b₁ + b₂, add_mem hb₁r hb₂r, ?_⟩
-      rw [map_add, hb₁, hb₂]
+      rw [map_add (f := _), hb₁, hb₂]
       have ea := cupC_assoc (grOk (smFun Y (π ≫ q)) (rfl : 1 + a₀ = 1 + a₀))
         (grOk (smFun Y (π ≫ q)) hA) (grOk (smFun Y (π ≫ q)) (rfl : a₀ + a' = a₀ + a'))
         (grOk (smFun Y (π ≫ q)) (rfl : 1 + (a₀ + a') = 1 + (a₀ + a'))) hn hN (rfl : n₀ + n' = n₀ + n') (by omega)
@@ -220,7 +220,7 @@ theorem main (hS : SiteLaws) (hL : RelLift) (hI : RelInj) (hK : RelKill) (K : Ty
       show _ + _ = cupC (π ≫ q) hA hN (pullC π rfl (1 + a₀) (m + 1) c₀) (pullC π rfl a' n' z)
       conv_rhs => rw [show pullC π rfl (1 + a₀) (m + 1) c₀ =
         (pullC π rfl (1 + a₀) (m + 1) c₀ - cupC (π ≫ q) rfl hn r w₀) + cupC (π ≫ q) rfl hn r w₀ by abel]
-      rw [map_add, LinearMap.add_apply]
+      rw [map_add (f := _), LinearMap.add_apply]
       exact congrArg₂ (· + ·) rfl ea.symm
 
 end Main2

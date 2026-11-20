@@ -68,7 +68,7 @@ def mlin (σ : R →+* R) :
     have e : ∀ v, (fun τ => onFactor σ N N (Formalism.CohomologicalDescent.LD.res N (mu τ)) (Function.update x i v τ)) =
         Function.update (fun τ => onFactor σ N N _ (x τ)) i (onFactor σ N N _ v) := fun v =>
       funext fun τ => Function.apply_update (fun τ => onFactor σ N N (Formalism.CohomologicalDescent.LD.res N (mu τ))) x i v τ
-    simp only [e, map_add]
+    simp only [e, map_add (f := _)]
     exact (PiTensorProduct.tprod R).map_update_add _ i _ _
   map_update_smul' := by
     intro _ x i c a
@@ -110,7 +110,7 @@ theorem semi_left_inv (g : R ≃+* R) (y : NablaT R N mu) :
       funext τ
       ext1
       simp [onFactor, map_map, MvPolynomial.map_id]
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 theorem fix_inv (g : R ≃+* R) (u : GL (Fin N) R)
     (hu : ∀ a b, g ((u : Matrix (Fin N) (Fin N) R) a b) = (u : Matrix (Fin N) (Fin N) R) a b) (a b : Fin N) :
@@ -153,7 +153,7 @@ theorem semi_grp [DecidableEq ι] (g : R ≃+* R) (h : ι → GL (Fin N) R)
     congr 2
     funext τ
     exact onFactor_rep N g (h τ) (hh τ) _ (x τ)
-  | add a b ha hb => rw [map_add, map_add, ha, hb, map_add, map_add]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), map_add (f := _)]
 
 end GlobalTheory.SemilinTransport
 

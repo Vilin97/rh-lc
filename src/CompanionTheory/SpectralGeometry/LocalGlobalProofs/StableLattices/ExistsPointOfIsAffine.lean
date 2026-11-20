@@ -154,7 +154,7 @@ theorem exists_additive_level (hA : IsAbelianScheme A) {C D : Type} [CommRing C]
     exact Over.w y)
   have hg : g ≫ c₁ = y := Over.OverMorphism.ext (pullback.lift_fst _ _ _)
   have K' := congrArg (CechPic.pull g.left) K
-  rw [map_add, pull_evc, pull_evc, pull_evc, MonObj.comp_mul, ← Category.assoc g, ← Category.assoc g,
+  rw [map_add (f := _), pull_evc, pull_evc, pull_evc, MonObj.comp_mul, ← Category.assoc g, ← Category.assoc g,
     ← Category.assoc g, hg, y₁, y₂, y₃] at K'
   exact K'
 

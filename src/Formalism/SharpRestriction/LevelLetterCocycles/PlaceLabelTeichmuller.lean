@@ -326,7 +326,7 @@ theorem onC_eGood (hid : ∀ i p, E i p * E i p = E i p) (hcen : ∀ i p a, E i 
       have h2 : ∑ p ∈ s, f p ∈ Subalgebra.center ℂ (MonoidAlgebra ℂ (∀ i, G i)) :=
         sum_mem (fun p _ => hf p)
       unfold onC
-      rw [dif_pos (add_mem h1 h2), dif_pos h1, dif_pos h2, ← LinearMap.add_apply, ← map_add]
+      rw [dif_pos (add_mem h1 h2), dif_pos h1, dif_pos h2, ← LinearMap.add_apply, ← map_add (f := _)]
       rfl
   have hone : ∑ p : (∀ i, P i), tens (fun i => E i (p i)) = 1 := by
     rw [sum_tens]

@@ -21,7 +21,7 @@ private theorem injTest_smul {R S G : Type} [CommRing R] [CommRing S] [Group G] 
     MonoidAlgebra.mapRingHom G φ (r • z) = φ r • MonoidAlgebra.mapRingHom G φ z := by
   induction z using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [smul_add, map_add, ha, hb]
+  | add a b ha hb => simp only [smul_add, map_add (f := _), ha, hb]
   | single g s => simp
 
 private theorem injTest_comp {R S T G : Type} [CommRing R] [CommRing S] [CommRing T] [Group G]
@@ -29,7 +29,7 @@ private theorem injTest_comp {R S T G : Type} [CommRing R] [CommRing S] [CommRin
     MonoidAlgebra.mapRingHom G ψ (MonoidAlgebra.mapRingHom G φ z) = MonoidAlgebra.mapRingHom G (ψ.comp φ) z := by
   induction z using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | single g s => simp
 
 theorem UpperTheory.V.AlgebraTools.Det.injTest :
@@ -48,7 +48,7 @@ theorem UpperTheory.V.AlgebraTools.Det.injTest :
       1 + GDet.gen (fun j => MonoidAlgebra.single (g j) (1 : A)) * MonoidAlgebra.mapRingHom G MvPolynomial.C y with hz
     have h1 : D.D (MvPolynomial (Fin m) A) z = 1 := by
       refine injTest_mvInj K f hf _ _ fun x => ?_
-      rw [← (UpperTheory.V.AlgebraTools.Det.mapApi D (f x)).2.2.2.1, map_one, hz, map_add, map_one, map_mul, injTest_comp]
+      rw [← (UpperTheory.V.AlgebraTools.Det.mapApi D (f x)).2.2.2.1, map_one, hz, map_add (f := _), map_one, map_mul, injTest_comp]
       have e : (MvPolynomial.map (f x) : MvPolynomial (Fin m) A →+* _).comp MvPolynomial.C =
           (algebraMap (K x) (MvPolynomial (Fin m) (K x))).comp (f x) := by
         ext a : 1
@@ -61,6 +61,6 @@ theorem UpperTheory.V.AlgebraTools.Det.injTest :
       ext a : 1
       simp
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [h1, map_one, hz, map_add, map_one, map_mul, injTest_comp, e, GDet.gen, map_sum] at h2
+      rw [h1, map_one, hz, map_add (f := _), map_one, map_mul, injTest_comp, e, GDet.gen, map_sum] at h2
     simp only [injTest_smul, injTest_comp, e] at h2
     simpa only [RingHom.coe_coe, MvPolynomial.aeval_X] using h2

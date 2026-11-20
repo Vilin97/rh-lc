@@ -202,10 +202,10 @@ theorem red_iO (a : 𝓞 F) : red v (iO v a) = Ideal.Quotient.mk _ a := (red_eq_
 theorem red_add {x y : Fv F v} (hx : x ∈ v.adicCompletionIntegers F)
     (hy : y ∈ v.adicCompletionIntegers F) : red v (x + y) = red v x + red v y := by
   have hxy : x + y ∈ v.adicCompletionIntegers F := add_mem hx hy
-  rw [show red v x + red v y = Ideal.Quotient.mk _ (appr v x + appr v y) by simp only [red, map_add]]
+  rw [show red v x + red v y = Ideal.Quotient.mk _ (appr v x + appr v y) by simp only [red, map_add (f := _)]]
   rw [red_eq_mk_iff v hxy]
   have e : x + y - iO v (appr v x + appr v y) = (x - iO v (appr v x)) + (y - iO v (appr v y)) := by
-    simp only [iO, map_add]
+    simp only [iO, map_add (f := _)]
     ring
   rw [e]
   exact Valuation.map_add_lt _ (appr_spec v hx) (appr_spec v hy)

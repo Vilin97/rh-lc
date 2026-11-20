@@ -75,7 +75,7 @@ theorem lattice_of_conj_unif : GlobalTheory.Published.PeriodComparison → Globa
     refine ⟨{ carrier := lattice c y₁, add_mem' := ?_, zero_mem' := ?_, neg_mem' := ?_ }, rfl⟩
     · intro a b ha hb
       show _ ∈ hatO c
-      rw [map_add, add_mul]
+      rw [map_add (f := _), add_mul]
       exact add_mem ha hb
     · show _ ∈ hatO c
       rw [map_zero, zero_mul]

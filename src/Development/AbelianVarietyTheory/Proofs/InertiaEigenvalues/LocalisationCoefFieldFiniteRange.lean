@@ -51,7 +51,7 @@ theorem exists_coefField {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] [IsDom
       induction hy using Submodule.span_induction with
       | mem x hx => exact IntermediateField.subset_adjoin _ _ ⟨x, hx, rfl⟩
       | zero => simp
-      | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+      | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
       | smul a x _ hx =>
         rw [Algebra.smul_def, map_mul, hφ]
         exact mul_mem (IntermediateField.algebraMap_mem _ _) hx

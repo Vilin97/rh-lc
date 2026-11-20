@@ -98,7 +98,7 @@ theorem map_mem_adjoin (φ : MvPolynomial σ ℤ →+* L) (g : MvPolynomial σ �
     φ g ∈ adjoin ℚ (Set.range fun v ↦ φ (X v)) := by
   induction g using MvPolynomial.induction_on with
   | C a => rw [map_C_int]; exact Subalgebra.algebraMap_mem _ _
-  | add p q hp hq => rw [map_add]; exact add_mem hp hq
+  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
   | mul_X p v hp => rw [map_mul]; exact mul_mem hp (subset_adjoin ⟨v, rfl⟩)
 
 theorem ringKrullDim_quotient_ker (φ : MvPolynomial σ ℤ →+* L) :
@@ -185,7 +185,7 @@ theorem optionEquivLeft_rename_some {K κ : Type} [CommRing K] (a : MvPolynomial
     optionEquivLeft K κ (rename some a) = Polynomial.C a := by
   induction a using MvPolynomial.induction_on with
   | C k => rw [rename_C, optionEquivLeft_C]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, Polynomial.C_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, Polynomial.C_add]
   | mul_X p v hp => rw [map_mul, map_mul, hp, rename_X, optionEquivLeft_X_some, Polynomial.C_mul]
 
 theorem transcendental_C_mul_X_none {K κ : Type} [Field K] [Algebra ℚ K]

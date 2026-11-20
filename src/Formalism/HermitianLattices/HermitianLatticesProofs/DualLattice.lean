@@ -140,7 +140,7 @@ theorem dualLattice_repr {ι : Type*} [Fintype ι] [DecidableEq ι] (h : V →�
     | add x y hx hy ihx ihy =>
       intro hxy
       have e : (⟨x + y, hxy⟩ : L) = ⟨x, hspL hx⟩ + ⟨y, hspL hy⟩ := rfl
-      rw [e, map_add, map_add, map_add, ihx (hspL hx), ihy (hspL hy)]
+      rw [e, map_add (f := _), map_add (f := _), map_add (f := _), ihx (hspL hx), ihy (hspL hy)]
     | smul r x hx ih =>
       intro hrx
       have e1 : h w (r • x) = algebraMap R K r * h w x := by
@@ -193,7 +193,7 @@ theorem dualLattice : DualLattice := by
       intro j
       obtain ⟨r1, hr1⟩ := ihx j
       obtain ⟨r2, hr2⟩ := ihy j
-      exact ⟨r1 + r2, by rw [map_add, hr1, hr2, map_add, LinearMap.add_apply]⟩
+      exact ⟨r1 + r2, by rw [map_add (f := _), hr1, hr2, map_add (f := _), LinearMap.add_apply]⟩
     | smul r x _ ih =>
       intro j
       obtain ⟨r1, hr1⟩ := ih j

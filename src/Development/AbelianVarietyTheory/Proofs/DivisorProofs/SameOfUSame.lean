@@ -34,7 +34,7 @@ theorem cm_symm {N : ℕ} {x y : Y} (h : CongMod N x y) : CongMod N y x := by
 theorem cm_map {Y' : Type} [AddCommGroup Y'] (f : Y →+ Y') {N : ℕ} {x y : Y} (h : CongMod N x y) :
     CongMod N (f x) (f y) := by
   obtain ⟨w, rfl⟩ := h
-  exact ⟨f w, by rw [map_add, map_nsmul]⟩
+  exact ⟨f w, by rw [map_add (f := _), map_nsmul]⟩
 
 theorem cm_of_mk {N : ℕ} {x y : Y} (h : (QuotientAddGroup.mk x : ModN N Y) = QuotientAddGroup.mk y) : CongMod N x y := by
   rw [QuotientAddGroup.eq] at h
@@ -241,7 +241,7 @@ theorem GLab.norms [ArithBase o Ω] (hM : ReciprocityTheory.ChartRestriction.G.G
         have e : S.N • v₀ = m • m • v₀ := by rw [← mul_smul, ← sq, ← hm]
         show _ ≤ l.q (m • ν + S.N • v₀)
         rw [e, ← smul_add, hqm, hqm, hq, hq]
-        exact mul_le_mul_of_nonneg_left (hmin _ ⟨j v₀, by rw [map_add, map_nsmul]⟩) hN.le) h (hker ▸ hh) ρ'.i₀
+        exact mul_le_mul_of_nonneg_left (hmin _ ⟨j v₀, by rw [map_add (f := _), map_nsmul]⟩) hN.le) h (hker ▸ hh) ρ'.i₀
     replace this := (key h ξ n hn hξ).trans_le this
     rw [mul_comm, mul_le_mul_iff_right₀ hδ, hqm, hq] at this
     refine this.trans (le_of_eq ?_)
@@ -249,7 +249,7 @@ theorem GLab.norms [ArithBase o Ω] (hM : ReciprocityTheory.ChartRestriction.G.G
     exact mul_div_cancel_left₀ _ hN.ne'
   · obtain ⟨h, hh, hk0, he⟩ := GlobalTheory.T.weightPart_attains_bound_unique_shortest_vector u l hint m k hm hk hkm ν (fun χ hχ => by
       rw [hq, hq]
-      exact hmin _ ⟨j χ, by rw [map_add, map_nsmul]⟩ fun e => hχ (by simpa using j.injective e))
+      exact hmin _ ⟨j χ, by rw [map_add (f := _), map_nsmul]⟩ fun e => hχ (by simpa using j.injective e))
     refine ⟨h, hker ▸ hh, hk0, fun ξ n hn hξ => ?_⟩
     have := (key h ξ n hn hξ).trans he
     rwa [mul_comm, mul_right_inj' hδ.ne', hq] at this

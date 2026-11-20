@@ -25,7 +25,7 @@ theorem coeff_mul_charIdem (W : FDRep ℂ G) (x : MonoidAlgebra ℂ G) (h : G) :
     simp only [one_smul, mul_inv_rev, inv_inv, one_mul]
     rw [← map_mul, FDRep.character]
   | add x y hx hy =>
-    rw [add_mul, map_add, mul_add, map_add, mul_add, ← hx, ← hy]
+    rw [add_mul, map_add (f := _), mul_add, map_add (f := _), mul_add, ← hx, ← hy]
     rfl
   | smul r x hx =>
     rw [smul_mul_assoc, map_smul, mul_smul_comm, map_smul, smul_eq_mul, mul_left_comm, ← hx]

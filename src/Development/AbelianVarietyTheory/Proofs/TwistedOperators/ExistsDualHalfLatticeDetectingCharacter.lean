@@ -44,7 +44,7 @@ theorem local_dual (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsStdChar D ψ (-1)) 
 theorem psi_trace_split (ψ : AddChar (AF D.host.F) ℂ) (a Z Z₁ : AE D) :
     ψ (Algebra.trace (AF D.host.F) (AE D) (a * Z)) =
       ψ (Algebra.trace (AF D.host.F) (AE D) (a * Z₁)) * ψ (Algebra.trace (AF D.host.F) (AE D) (a * (Z - Z₁))) := by
-  rw [← AddChar.map_add_eq_mul, ← map_add, ← mul_add, add_sub_cancel Z₁ Z]
+  rw [← AddChar.map_add_eq_mul, ← map_add (f := _), ← mul_add, add_sub_cancel Z₁ Z]
 
 theorem redM_apply_of_mem (PP : Pl D.host.E) {b a : ℕ} (N : Matrix (Fin b) (Fin a) (Datum.EAf D)) (i : Fin b) (j : Fin a)
     (h : N i j ∈ Formalism.L2.Herm.intAf D.host.F D.host.E) : redM PP N i j = resS D.host.F PP ⟨N i j, h⟩ := by

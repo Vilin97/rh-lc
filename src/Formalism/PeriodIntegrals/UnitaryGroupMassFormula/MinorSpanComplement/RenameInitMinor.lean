@@ -66,7 +66,7 @@ theorem span_map_le {σ : Type*} (R : Type) [CommRing R] {A B : Set (MvPolynomia
   | mem x hx => exact Submodule.subset_span ⟨x, hx, rfl⟩
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem _ hx hy
   | smul z x _ hx =>
     rw [map_zsmul, ← Int.cast_smul_eq_zsmul R]

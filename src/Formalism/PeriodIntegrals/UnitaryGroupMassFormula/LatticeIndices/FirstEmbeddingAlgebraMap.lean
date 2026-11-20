@@ -77,12 +77,12 @@ theorem approx_of (hθ : IsSplitEquiv X p θ) (hD : DenseF X p) (hE : EpsLat X p
     add_mem (mul_mem (mul_mem hd1 hd2) (ho j)) (mul_mem (ho' j) hδ2)
   have e1 : (fun j => iota1 X p θ (x j)) = ε • u1 := by
     funext j
-    simp only [hx, hu1, map_add, map_mul, firstEmbedding_algebraMap, Pi.smul_apply, smul_eq_mul]
+    simp only [hx, hu1, map_add (f := _), map_mul, firstEmbedding_algebraMap, Pi.smul_apply, smul_eq_mul]
     rw [← hα1]
     linear_combination hb j + α1 * hb' j
   have e2 : (fun j => iota2 X p θ (x j)) = z + ε • u2 := by
     funext j
-    simp only [hx, hu2, map_add, map_mul, secondEmbedding_algebraMap, Pi.smul_apply, Pi.add_apply, smul_eq_mul]
+    simp only [hx, hu2, map_add (f := _), map_mul, secondEmbedding_algebraMap, Pi.smul_apply, Pi.add_apply, smul_eq_mul]
     rw [← hα2]
     linear_combination hb j + α2 * hb' j + z j * hwa
   have M1mem : ε • u1 ∈ Mlat1 X p θ := (hε u1 hu1m).1

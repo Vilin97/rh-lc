@@ -25,7 +25,7 @@ theorem tensCoord_mulV (c : ↥(MaximalUnramifiedExtension l)) (x : V' ⊗[ℚ_[
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => rfl
-  | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]
 
 variable (hE : ∀ g x i, E (ρ' g x) i = ρ g (E x i))
 include hE
@@ -35,7 +35,7 @@ theorem tensCoord_stRep (g : ↥(GK K)) (x : V' ⊗[ℚ_[l]] Bst P) (i : ι) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [hE]
-  | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]
 
 theorem mem_Dpst_coord (x : V' ⊗[ℚ_[l]] Bst P) :
     x ∈ Dpst P ρ' ↔ ∀ i, tensCoord E (Bst P) x i ∈ Dpst P ρ := by

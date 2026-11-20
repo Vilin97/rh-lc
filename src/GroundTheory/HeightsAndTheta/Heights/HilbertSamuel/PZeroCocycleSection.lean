@@ -112,7 +112,7 @@ theorem aeval_eq_eval_mConeMap (f : MRing ι) :
     aeval y f = MvPolynomial.eval (fun _ : K => (1 : Ω)) (mConeMap y f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [mConeMap]
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p n hp => rw [map_mul, map_mul, map_mul, hp]; simp [mConeMap]
 
 theorem aeval_eq_zero_of_mem {f : MRing ι} (hf : f ∈ idealOver y ℤ) : aeval y f = 0 := by

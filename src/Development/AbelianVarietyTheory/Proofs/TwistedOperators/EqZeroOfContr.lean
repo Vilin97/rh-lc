@@ -25,7 +25,7 @@ theorem dual_contr (ι : V →ₗ[ℂ] H) (y : V) (l : A →ₗ[ℂ] ℂ) (t : A
   | tmul a v =>
     rw [contr_tmul, map_smul, LinearMap.rTensor_tmul, TensorProduct.lid_tmul, map_smul, inner_smul_right,
       smul_eq_mul, mul_comm]
-  | add s u hs hu => simp only [map_add, inner_add_right, hs, hu]
+  | add s u hs hu => simp only [map_add (f := _), inner_add_right, hs, hu]
 
 theorem eq_zero_of_contr (ι : V →ₗ[ℂ] H) (hι : Function.Injective ι) (t : A ⊗[ℂ] V)
     (h : ∀ y, contr ι y t = 0) : t = 0 := by

@@ -26,7 +26,7 @@ private theorem idem_core {A : Type} [CommRing A] (bar : A ≃+* A) (ω : A) (tr
   obtain ⟨v, hv⟩ : ∃ v : Ideal A, v = Ideal.span {(q : A), bar ω - (r : A)} := ⟨_, rfl⟩
   have hbb : bar (bar ω) = ω := by
     have := congrArg bar h1
-    rw [map_add, map_intCast] at this
+    rw [map_add (f := _), map_intCast] at this
     linear_combination this - h1
   have Mu : Ideal.map bar u = v := by
     rw [hu, hv, Ideal.map_span, Set.image_pair, map_natCast, map_sub, map_intCast]

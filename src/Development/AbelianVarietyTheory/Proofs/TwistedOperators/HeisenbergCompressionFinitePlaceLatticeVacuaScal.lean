@@ -28,13 +28,13 @@ theorem exists_half_idem (v : FinPl D) (h : (2 : 𝓞 D.host.F) ∉ v.asIdeal) :
     GlobalTheory.LatVac.half_mem_adicCompletionIntegers D.host.F v h
   have hsum : algebraMap D.host.F (Fv D.host.F v) (2 : D.host.F)⁻¹ +
       algebraMap D.host.F (Fv D.host.F v) (2 : D.host.F)⁻¹ = 1 := by
-    rw [← map_add, ← two_mul, mul_inv_cancel₀ two_ne_zero, map_one]
+    rw [← map_add (f := _), ← two_mul, mul_inv_cancel₀ two_ne_zero, map_one]
   refine ⟨algebraMap (AF D.host.F) (AE D) (GlobalTheory.SplitIdem.placeHom D.host.F v
       (algebraMap D.host.F (Fv D.host.F v) (2 : D.host.F)⁻¹)), ?_, ?_⟩
   · unfold intAE finPart
     refine AddSubgroup.subset_closure ⟨_, GlobalTheory.SplitIdem.singleV_mem_intAf D.host.F v ⟨_, h2⟩, 1, ?_⟩
     simp [GlobalTheory.SplitIdem.placeHom, Algebra.TensorProduct.algebraMap_apply] <;> rfl
-  · rw [← map_add, ← map_add, hsum]
+  · rw [← map_add (f := _), ← map_add (f := _), hsum]
     rfl
 
 variable {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D}

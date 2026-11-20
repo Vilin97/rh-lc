@@ -108,7 +108,7 @@ theorem span_famZ : Submodule.span ℝ (Set.range (famZ (E := E) (a := a))) = �
     set_option synthInstance.maxHeartbeats 100000 in
       rw [sum_atEmb x, map_sum]
     refine S.sum_mem fun w _ => ?_
-    rw [map_add, map_smul, map_smul]
+    rw [map_add (f := _), map_smul, map_smul]
     exact S.add_mem (S.smul_mem _ (hE w i j)) (S.smul_mem _ (hF w i j))
   refine eq_top_iff.2 fun L _ => ?_
   have e : L = ∑ i, ∑ j, sgl i j (L i j) := Matrix.matrix_eq_sum_single (Matrix.of L)

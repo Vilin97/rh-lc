@@ -94,12 +94,12 @@ theorem exists_free_H2_twist : ∀ {p : ℕ} [Fact p.Prime] {K : IntermediateFie
     intro g h k
     rw [← PadicInt.ext_of_toZModPow]
     intro n
-    simpa only [map_sub, map_add, map_mul, map_zero] using (hG n).1.2 g h k
+    simpa only [map_sub, map_add (f := _), map_mul, map_zero] using (hG n).1.2 g h k
   let z0 : G × G → O := fun q => φ (cG q)
   have hz0 : z0 ∈ Z2 (twist ε O) := by
     refine (mem_cocycles2 _ _).2 ⟨hφ.comp hcc, fun g h k => ?_⟩
     simp only [twist_apply, smul_eq_mul, z0, hεφ]
-    rw [← map_mul, ← map_sub, ← map_add, ← map_sub, hcoc, map_zero]
+    rw [← map_mul, ← map_sub, ← map_add (f := _), ← map_sub, hcoc, map_zero]
   let Z : H2 (twist ε O) := Submodule.Quotient.mk ⟨z0, hz0⟩
   refine ⟨Z, fun a b hab => ?_, fun y => ?_⟩
   · have h0 : (a - b) • Z = 0 := by

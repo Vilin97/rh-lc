@@ -190,7 +190,7 @@ def fixedBy (μ : Measure (GA E a)) [μ.IsHaarMeasure] [μ.IsMulRightInvariant] 
     Submodule ℂ (L2 (latticeGL E a) μ) where
   carrier := {v | ∀ u ∈ U, R (latticeGL E a) μ (finGL E a u) v = v}
   zero_mem' := fun _ _ => map_zero _
-  add_mem' := fun {x y} hx hy u hu => by rw [map_add, hx u hu, hy u hu]
+  add_mem' := fun {x y} hx hy u hu => by rw [map_add (f := _), hx u hu, hy u hu]
   smul_mem' := fun c x hx u hu => by rw [map_smul, hx u hu]
 
 theorem span_inf_le {H : Submodule ℂ (L2 (latticeGL E a) μ)} (hH : ∀ g, ∀ v ∈ H, R (latticeGL E a) μ g v ∈ H)

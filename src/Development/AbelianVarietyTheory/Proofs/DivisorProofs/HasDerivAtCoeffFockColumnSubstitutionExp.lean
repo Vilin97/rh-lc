@@ -61,7 +61,7 @@ theorem hasDerivAt_coeff_colSub_of_curve [Fintype ι] {d a : ℕ} (τ : ι) (S :
     simp only [h1, algHom_C, coeff_zero]
     exact hasDerivAt_const _ _
   | add P Q hP hQ =>
-    simp only [map_add, MvPolynomial.coeff_add]
+    simp only [map_add (f := _), MvPolynomial.coeff_add]
     exact (hP m).add (hQ m)
   | mul_X P v hP =>
     have e1 : ∀ h, AddMonoidAlgebra.coeff (colSub (g h) (P * X v)) m =

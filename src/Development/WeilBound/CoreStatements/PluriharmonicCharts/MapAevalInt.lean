@@ -12,7 +12,7 @@ theorem PositivityTheory.Xgp.c_algsq.LC.map_aeval_int {σ S T : Type} [CommRing 
     (θ : S →+* T) (w : σ → S) (f : MvPolynomial σ ℤ) : θ (aeval w f) = aeval (fun q => θ (w q)) f := by
   induction f using MvPolynomial.induction_on with
   | C a => rw [aeval_C, aeval_C, eq_intCast, eq_intCast, map_intCast]
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
   | mul_X p q hp => rw [map_mul, map_mul, hp, aeval_X, map_mul, aeval_X]
 
 open PositivityTheory.Xgp.c_algsq.LC GlobalTheory.CompanionTheory.Ar.PB.WSq.Pts GlobalTheory.CompanionTheory.Ar.PB.CPts GlobalTheory.CompanionTheory.Ar.PB.ValRing in

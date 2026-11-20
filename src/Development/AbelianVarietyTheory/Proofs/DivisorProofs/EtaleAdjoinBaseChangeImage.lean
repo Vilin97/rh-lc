@@ -48,7 +48,7 @@ theorem etale_adjoin_baseChange_image (R S B : Type) [CommRing R] [CommRing S] [
       rw [htmul]
       exact C.mul_mem (Algebra.subset_adjoin (Or.inl ⟨s, s.2, rfl⟩))
         (Algebra.subset_adjoin (Or.inr ⟨b, rfl⟩))
-    | add x y hx hy => rw [map_add]; exact C.add_mem hx hy
+    | add x y hx hy => rw [map_add (f := _)]; exact C.add_mem hx hy
   have hsurj : (C : Set B) ⊆ Set.range Ψ := by
     have := Algebra.adjoin_eq_ring_closure (R := R)
       ((algebraMap S B) '' (S' : Set S) ∪ Set.range (fun b : B₀ => e.symm (1 ⊗ₜ b)))

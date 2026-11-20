@@ -67,7 +67,7 @@ theorem exists_symplectic {τ τ' : Matrix (Fin g) (Fin g) ℂ} (hτ : τ ∈ Si
           (((((hd _).comp hφd).const_mul _).add_const _).cexp.mul (he.comp (differentiable_id.add_const _))))
         (differentiable_theta hτ' _ _) (fun z => by
           have h1 := h (z + p s)
-          rw [map_add, hp] at h1
+          rw [map_add (f := _), hp] at h1
           simp only [p] at h1 ⊢
           rw [add_comm (ofIntVec (m' s)), add_comm (ofIntVec (m s)), ← add_assoc, ← add_assoc,
             thetaQuasiPeriod_holds _ _ _ _ _ _ _ hτ.1, thetaQuasiPeriod_holds _ _ _ _ _ _ _ hτ'.1, hc, hc'] at h1

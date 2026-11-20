@@ -214,7 +214,7 @@ theorem inf_res_exact (M : TRep R G) (N : Subgroup G) [N.Normal] (Q : TRep R (G 
       obtain ⟨b, rfl⟩ := QuotientGroup.mk_surjective δ
       apply hemb.injective
       show P.u (F (↑a * ↑b)) = P.u (F ↑a + Q.rho ↑a (F ↑b))
-      rw [← QuotientGroup.mk_mul, hF, hF, hF, map_add, ← hφa, P.equiv, hF0, hF0, hF0, hcoc]
+      rw [← QuotientGroup.mk_mul, hF, hF, hF, map_add (f := _), ← hφa, P.equiv, hF0, hF0, hF0, hcoc]
     refine ⟨Submodule.Quotient.mk ⟨w, (memZ _).2 hw⟩, ?_⟩
     rw [H_mk, Submodule.Quotient.eq, Submodule.mem_comap]
     have hwx : P.hom.f 1 w = x' := Subtype.ext (funext fun g => by

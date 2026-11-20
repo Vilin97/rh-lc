@@ -16,7 +16,7 @@ theorem ringHom_ext_padicInt {p : ℕ} [Fact p.Prime] {S : Type*} [CommRing S]
   obtain ⟨c, hc⟩ := mem_span_singleton.1 (PadicInt.appr_spec n x)
   have hx : x = (x.appr n : ℤ_[p]) + (p : ℤ_[p]) ^ n * c := by rw [← hc]; ring
   have h : f x - g x = (p : S) ^ n * (f c - g c) := by
-    rw [hx, map_add, map_add, map_mul, map_mul, map_pow, map_pow, map_natCast, map_natCast,
+    rw [hx, map_add (f := _), map_add (f := _), map_mul, map_mul, map_pow, map_pow, map_natCast, map_natCast,
       map_natCast, map_natCast]
     ring
   rw [SModEq.zero, smul_eq_mul, mul_top, h, span_singleton_pow]

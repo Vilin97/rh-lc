@@ -83,11 +83,11 @@ theorem smul_mem_latHat {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E)) {x : (�
 theorem trace_field (h2 : Module.finrank F E = 2)
     (σ : E →ₐ[F] E) (hσ : ∀ e, σ (σ e) = e) (hf : ∀ e, σ e = e → ∃ f, algebraMap F E f = e) (e : E) :
     algebraMap F E (Algebra.trace F E e) = e + σ e := by
-  obtain ⟨a, ha⟩ := hf (e + σ e) (by rw [map_add, hσ, add_comm])
+  obtain ⟨a, ha⟩ := hf (e + σ e) (by rw [map_add (f := _), hσ, add_comm])
   have h1 : Algebra.trace F E (σ e) = Algebra.trace F E e :=
     Algebra.trace_eq_of_algEquiv (AlgEquiv.ofAlgHom σ σ (AlgHom.ext hσ) (AlgHom.ext hσ)) e
   have h3 := congrArg (Algebra.trace F E) ha
-  rw [Algebra.trace_algebraMap, h2, map_add, h1, two_smul, ← two_mul, ← two_mul] at h3
+  rw [Algebra.trace_algebraMap, h2, map_add (f := _), h1, two_smul, ← two_mul, ← two_mul] at h3
   rw [← ha, mul_left_cancel₀ two_ne_zero h3]
 
 theorem trace_tmul (R : Type) [CommRing R] [Algebra F R] (a : R) (e : E) :
@@ -103,7 +103,7 @@ theorem trace_tensor (h2 : Module.finrank F E = 2)
     algebraMap R (R ⊗[F] E) (Algebra.trace R (R ⊗[F] E) z) = z + sigR R σ z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]; ring
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]; ring
   | tmul a e =>
     have h4 : sigR R σ (a ⊗ₜ[F] e) = a ⊗ₜ[F] σ e := rfl
     rw [trace_tmul, h4, ← TensorProduct.tmul_add, ← trace_field h2 σ hσ hf, Algebra.TensorProduct.algebraMap_apply,
@@ -120,7 +120,7 @@ theorem trace_mem_intAf {z : (𝔸 F) ⊗[F] E} (hz : z ∈ intA F E) (v : Heigh
     have hi : IsIntegral ℤ (Algebra.trace F E (u : E)) := Algebra.isIntegral_trace u.isIntegral_coe
     exact HeightOneSpectrum.coe_mem_adicCompletionIntegers v (⟨_, hi⟩ : 𝓞 F)
   | zero => rw [map_zero, map_zero]; exact zero_mem _
-  | add y z _ _ h1 h2 => rw [map_add, map_add]; exact add_mem h1 h2
+  | add y z _ _ h1 h2 => rw [map_add (f := _), map_add (f := _)]; exact add_mem h1 h2
   | neg y _ h => rw [map_neg, map_neg]; exact neg_mem h
 
 theorem exists_component (h2 : Module.finrank F E = 2)
@@ -159,7 +159,7 @@ theorem exists_component (h2 : Module.finrank F E = 2)
         rw [RingHom.map_mul, ht, ht, ht, map_mul]
         linear_combination (-(x * y)) * h1 - (c x * c y) * hcc - (x * c y + c x * y) * h0
       map_zero' := by rw [mul_zero, map_zero, map_zero]
-      map_add' := fun x y => by rw [mul_add, map_add, map_add] }
+      map_add' := fun x y => by rw [mul_add, map_add (f := _), map_add (f := _)] }
   refine ⟨φ, fun x y => ⟨fun h => ?_, fun h => ?_⟩, fun a => ?_, fun x hx => trace_mem_intAf hx v⟩
   · change evalV F v (tr (e * x)) = evalV F v (tr (e * y))
     rw [h]
@@ -422,7 +422,7 @@ theorem finPart_cA (D : D7) (x : Formalism.L2.Theta.AE D) :
     finPart D (cA D x) = sigR (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F) D.sp.cm.sig (finPart D x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
-  | add a b ha hb => simp only [RingHom.map_add, ha, hb]
+  | add a b ha hb => simp only [RingHom.map_add (f := _), ha, hb]
   | tmul a e => rfl
 
 theorem finPart_det {D : D7} (V : HSp D) (α : GA D V) (e u : Formalism.L2.Theta.AE D) (p : D.host.E) (k : ℕ)
@@ -448,7 +448,7 @@ theorem divAt_inv {D : D7} (V : HSp D) (e : Formalism.L2.Theta.AE D) (P : Height
   have key := exists_divisor_basis D.sp.cm.deg2 D.sp.cm.sig (fun e => star_star e)
     (fun e he => (D.sp.cm.fixed e).1 he) v (finPart D e) a (by rw [← RingHom.map_mul, h1])
     (by rw [← finPart_cA, ← RingHom.map_mul, h0, RingHom.map_zero])
-    (by rw [← finPart_cA, ← RingHom.map_add, hs]; rfl) hv hw P
+    (by rw [← finPart_cA, ← RingHom.map_add (f := _), hs]; rfl) hv hw P
     (fun x hx => by rw [hP x hx, RingHom.map_mul, hinc]; rfl) ϖ hϖ hϖ2 hk L hfg hsp _ _ hm
     (by rw [hL]; exact hin) (by rw [hL]; exact hout) (finPart D u) (finPart D u') hu hu'
     (by rw [← RingHom.map_mul, ← RingHom.map_mul, huu])

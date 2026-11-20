@@ -59,7 +59,7 @@ private theorem split_level {a b : ℕ} {w : Pl E} (hs : IsSplitAt w) {φ : GLw 
 
 private theorem inv_un {μ : HChar E} {w : Pl E} (hm : μ.val (cPl w) = (μ.val w)⁻¹) (a b : ℕ)
     (B₁ B₂ : Multiset ℂˣ) : inv (un μ a b (cPl w) B₁ B₂) = un μ a b w (inv B₁) (inv B₂) := by
-  simp only [inv, un, Multiset.map_add, Multiset.map_map, Function.comp_def, hm, mul_inv, inv_pow, inv_inv]
+  simp only [inv, un, Multiset.map_add (f := _), Multiset.map_map, Function.comp_def, hm, mul_inv, inv_pow, inv_inv]
 
 private theorem match_inert {n a b : ℕ} {w : Pl E} (hs : ¬ IsSplitAt w) (μ : (w.adicCompletion E)ˣ →* ℂˣ)
     {f : UL n w → ℂ} {φ : GLw a w × GLw b w → ℂ} (H : Match n a b w 1 f φ) : Match n a b w μ f φ := by

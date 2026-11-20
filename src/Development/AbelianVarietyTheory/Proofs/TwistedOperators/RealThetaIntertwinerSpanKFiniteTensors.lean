@@ -67,7 +67,7 @@ theorem span_eq_top
       have hz : PiTensorProduct.tprod ℂ (Function.update y τ (a' τ Y z)) =
           intersection_update_fsHerm_neg_one τ (a' τ Y) (PiTensorProduct.tprod ℂ (Function.update y τ z)) := by
         rw [position_tprod]; simp
-      rw [hq, multi_apply, multi_apply, ← tgtOp_glue, hz, ← map_add, hIt τ Y hY, map_zero]
+      rw [hq, multi_apply, multi_apply, ← tgtOp_glue, hz, ← map_add (f := _), hIt τ Y hY, map_zero]
   have key := (exists_factor (P := fun _ : D.what₂.Tau => LPol W.rank V.rank) (Y := fun τ => kFin M' τ)
     (K := fun τ => kFin M τ) (Z := ℂ) (G := fun τ => lieAt V τ)
     (fun τ X => sOp M M' τ (aT τ) X) (fun τ X => a τ X) hirr (multi I) 0 hne
@@ -197,13 +197,13 @@ theorem itW_onto_kFin : ∀ (hD : GlobalTheory.Published.DiscreteSeriesCover) (h
     refine ⟨LinearMap.mk₂ ℂ (fun φ y => e.symm ⟨It φ (inclK h' y), hK φ y⟩) ?_ ?_ ?_ ?_, fun φ y => he _⟩
     · intro φ₁ φ₂ y
       apply inclK_injective h
-      simp only [map_add, he, LinearMap.add_apply]
+      simp only [map_add (f := _), he, LinearMap.add_apply]
     · intro c φ y
       apply inclK_injective h
       simp only [map_smul, he, LinearMap.smul_apply]
     · intro φ y₁ y₂
       apply inclK_injective h
-      simp only [map_add, he]
+      simp only [map_add (f := _), he]
     · intro c φ y
       apply inclK_injective h
       simp only [map_smul, he]

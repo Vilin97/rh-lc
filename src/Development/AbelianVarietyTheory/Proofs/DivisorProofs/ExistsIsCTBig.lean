@@ -237,7 +237,7 @@ theorem heis_coords_form {n n₁ : ℕ} (X : Spc F E n) (X₁ : Spc F E n₁) (H
   have hmemK : ∀ g : unip σ X H, K (mat (g : UA σ X.J)) ∈ imA σ := by
     intro g
     obtain ⟨b, c, hc, hg⟩ := unip_eq_hmat σ hσ X H hJ hxx hyy hxy horth hdec _ g.2
-    rw [hg, hK_h, mem_imA, map_add, map_mul, hσhalf, hself]
+    rw [hg, hK_h, mem_imA, map_add (f := _), map_mul, hσhalf, hself]
     linear_combination hc + hA σ X.J (incM F H.ι *ᵥ b) (incM F H.ι *ᵥ b) * hhalf
   let invf : unip σ X H → (Fin n₁ → AE F E) × imA σ := fun g =>
     (A (mat (g : UA σ X.J)), ⟨K (mat (g : UA σ X.J)), hmemK g⟩)

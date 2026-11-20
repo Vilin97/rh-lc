@@ -14,7 +14,7 @@ theorem coefwise_add_of {T : (V n → ℂ) → ℂ} {F G : V n → Alt n}
     (h : ∀ S, T (fun x => (bas n).repr (F x) S + (bas n).repr (G x) S) =
       T (fun x => (bas n).repr (F x) S) + T (fun x => (bas n).repr (G x) S)) :
     coefwise T (fun x => F x + G x) = coefwise T F + coefwise T G := by
-  simp only [coefwise, map_add, Finsupp.add_apply, h, add_smul, Finset.sum_add_distrib]
+  simp only [coefwise, map_add (f := _), Finsupp.add_apply, h, add_smul, Finset.sum_add_distrib]
 
 theorem coefwise_const_smul_of {T : (V n → ℂ) → ℂ} {F : V n → Alt n} (c : ℂ)
     (h : ∀ S, T (fun x => c • (bas n).repr (F x) S) = c • T (fun x => (bas n).repr (F x) S)) :

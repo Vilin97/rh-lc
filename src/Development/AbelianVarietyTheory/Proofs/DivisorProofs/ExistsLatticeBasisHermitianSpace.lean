@@ -198,7 +198,7 @@ theorem mem_hat_iff {n : ℕ} (L : Submodule (𝓞 E) (Fin n → E)) (z : Fin n 
           simp [hc]
       | zero => intro w _; rw [map_zero, zero_smul]; exact zero_mem _
       | one => intro w hw; rw [map_one, one_smul]; exact hw
-      | add s t _ _ hs ht => intro w hw; rw [map_add, add_smul]; exact add_mem (hs w hw) (ht w hw)
+      | add s t _ _ hs ht => intro w hw; rw [map_add (f := _), add_smul]; exact add_mem (hs w hw) (ht w hw)
       | neg s _ hs => intro w hw; rw [map_neg, neg_smul]; exact neg_mem (hs w hw)
       | mul s t _ _ hs ht => intro w hw; rw [map_mul, mul_smul]; exact hs _ (ht w hw)
     have main : ∀ y ∈ Submodule.span (Formalism.L2.Herm.intAf F E)

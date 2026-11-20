@@ -79,7 +79,7 @@ theorem FlZIdealEqCoord.proof : FlZIdealEqCoord.Statement := by
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp [IndefiniteRowSideFullHecke.LowerBoundFree.Nine.flZMap, mConeMap]
-    | add f g hf hg => simp only [map_add, hf, hg]
+    | add f g hf hg => simp only [map_add (f := _), hf, hg]
     | mul_X f p hf =>
       simp only [map_mul, hf]
       congr 1
@@ -93,7 +93,7 @@ theorem FlZIdealEqCoord.proof : FlZIdealEqCoord.Statement := by
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp [IndefiniteRowSideFullHecke.LowerBoundFree.Nine.flZMap, mConeMap]
-    | add f g hf hg => simp only [map_add, hf, hg]
+    | add f g hf hg => simp only [map_add (f := _), hf, hg]
     | mul_X f p hf =>
       simp only [map_mul, hf]
       congr 1

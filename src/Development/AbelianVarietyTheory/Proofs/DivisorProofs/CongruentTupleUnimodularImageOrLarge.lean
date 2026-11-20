@@ -53,7 +53,7 @@ theorem dichDetCongr {X₀ X : Type} [AddCommGroup X₀] [Module.Free ℤ X₀] 
     simp [hh, hw j, Module.Basis.constr_basis, natCast_zsmul]
   have e : ε.toLinearMap ∘ₗ g = ε.toLinearMap ∘ₗ k + (N : ℤ) • (ε.toLinearMap ∘ₗ hh) := by
     rw [hg, LinearMap.comp_add, LinearMap.comp_smul]
-  rw [e, ← LinearMap.det_toMatrix b, ← LinearMap.det_toMatrix b, map_add, map_smul]
+  rw [e, ← LinearMap.det_toMatrix b, ← LinearMap.det_toMatrix b, map_add (f := _), map_smul]
   set A := LinearMap.toMatrix b b (ε.toLinearMap ∘ₗ k)
   set B := LinearMap.toMatrix b b (ε.toLinearMap ∘ₗ hh)
   have hm : (Int.castRingHom (ZMod N)).mapMatrix (A + (N : ℤ) • B) = (Int.castRingHom (ZMod N)).mapMatrix A := by
@@ -129,7 +129,7 @@ private theorem cm_sum {ι : Type} [Fintype ι] (c : ι → ℤ) {x y : ι → X
 private theorem quad_sub_le (β : LinearMap.BilinForm ℤ X) (hs : ∀ x y, β x y = β y x) (hp : ∀ y, 0 ≤ β y y)
     (u v : X) : β (u - v) (u - v) ≤ 2 * β u u + 2 * β v v := by
   have h := hp (u + v)
-  simp only [map_add, map_sub, LinearMap.add_apply, LinearMap.sub_apply] at h ⊢
+  simp only [map_add (f := _), map_sub, LinearMap.add_apply, LinearMap.sub_apply] at h ⊢
   rw [hs v u] at h ⊢; linarith
 
 private theorem quad_nsmul (β : LinearMap.BilinForm ℤ X) (w : X) :
@@ -264,7 +264,7 @@ theorem dichotomy : ∀ (O : Type) [CommRing O] [Module.Finite ℤ O] (bar : O �
     induction this using Submodule.span_induction with
     | mem o ho => exact hlinT' o ho
     | zero => intro x; simp
-    | add o o' _ _ h h' => intro x; rw [add_smul, map_add, h, h', add_smul]
+    | add o o' _ _ h h' => intro x; rw [add_smul, map_add (f := _), h, h', add_smul]
     | smul n o _ h => intro x; rw [smul_assoc, map_zsmul, h, smul_assoc]
   let gO : X₀ →ₗ[O] X := { toFun := g, map_add' := g.map_add, map_smul' := fun o x => hlin o x }
 

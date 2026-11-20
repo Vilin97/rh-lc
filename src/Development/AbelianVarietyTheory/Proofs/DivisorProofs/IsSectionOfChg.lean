@@ -128,7 +128,7 @@ theorem isSection_of_chg {σ : Rule t π p q}
       refine RingHom.ext fun z => ?_
       have e : z = algebraMap R _ z.fst + algebraMap R _ z.snd * DualNumber.eps := by
         ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
-      rw [e, map_add, map_mul, h1, h1, h2]
+      rw [e, map_add (f := _), map_mul, h1, h1, h2]
       ext <;> simp [Chart.dualMapR, TrivSqZeroExt.algebraMap_eq_inl]
     have := hσ R R' g j j' x v w x' v' w' 1 1 h h' ⟨hx, fun i => ?_, fun i => ?_⟩
     · simpa using this.symm

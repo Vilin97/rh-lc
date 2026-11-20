@@ -26,7 +26,7 @@ theorem finComp_eq_toAd {D : D7} (z : AE D) :
     | tmul a x =>
       rw [GlobalTheory.LFun.toFinAd_tmul, mul_comm]
       exact (GlobalTheory.StdFrames.toAd_spec D x a).symm
-    | add a b ha hb => rw [RingHom.map_add, RingHom.map_add, RingHom.map_add, ha, hb]
+    | add a b ha hb => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), RingHom.map_add (f := _), ha, hb]
   exact key _
 
 theorem iota_add_eq_locIdele {D : D7} {w : Pl D.host.E} {p : Place D (Kw w)} (hp : IsPlc w p) (x : (Kw w)ˣ) :

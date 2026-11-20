@@ -87,14 +87,14 @@ theorem isCanonGauge_map {h : PS k 2 d} (H : B.IsCanonGauge k h) :
     rwa [map_ev_two _ _ _ (gp_pt 0) gp_zero₂, baseChange_zero₂, baseChange_pt, map_zero] at this
   · have := congrArg (MvPowerSeries.map (β : k →+* k')) H.ph1
     rw [map_map_alg, map_expS _ _ (by
-      rw [map_sub, map_add, c2 _ _ (gp_pt _) (gp_pt _), c2 _ _ (gp_pt _) (gp_pt _),
+      rw [map_sub, map_add (f := _), c2 _ _ (gp_pt _) (gp_pt _), c2 _ _ (gp_pt _) (gp_pt _),
         c2 _ _ (gA _ _) (gp_pt _), add_zero, sub_zero]), map_sub, map_add,
       map_ev_two _ _ _ (gp_pt _) (gp_pt _), map_ev_two _ _ _ (gp_pt _) (gp_pt _),
       map_ev_two _ _ _ (gA _ _) (gp_pt _), baseChange_addOf _ _ _ _ (gp_pt _) (gp_pt _), mapP_FK] at this
     simpa only [baseChange_pt] using this
   · have := congrArg (MvPowerSeries.map (β : k →+* k')) H.ph2
     rw [map_map_alg, map_expS _ _ (by
-      rw [map_sub, map_add, c2 _ _ (gp_pt _) (gp_pt _), c2 _ _ (gp_pt _) (gp_pt _),
+      rw [map_sub, map_add (f := _), c2 _ _ (gp_pt _) (gp_pt _), c2 _ _ (gp_pt _) (gp_pt _),
         c2 _ _ (gp_pt _) (gA _ _), add_zero, sub_zero]), map_sub, map_add,
       map_ev_two _ _ _ (gp_pt _) (gp_pt _), map_ev_two _ _ _ (gp_pt _) (gp_pt _),
       map_ev_two _ _ _ (gp_pt _) (gA _ _), baseChange_addOf _ _ _ _ (gp_pt _) (gp_pt _), mapP_FK] at this

@@ -60,7 +60,7 @@ theorem swapReg_swapG : ArCalc → SwapReg swapG := by
   set m : MvPolynomial (Fin 3) ℝ := C c * (X 0 + X 1) + X 2 with hm
   set u : MvPolynomial (Fin 3) ℝ := X 1 - X 0 with hu
   have hCa : (C (a : ℝ) : MvPolynomial (Fin 3) ℝ) = C c - C t := by rw [← map_sub]; congr 1; rw [hc, ht]; ring
-  have hCb : (C (b : ℝ) : MvPolynomial (Fin 3) ℝ) = C c + C t := by rw [← map_add]; congr 1; rw [hc, ht]; ring
+  have hCb : (C (b : ℝ) : MvPolynomial (Fin 3) ℝ) = C c + C t := by rw [← map_add (f := _)]; congr 1; rw [hc, ht]; ring
   have l1 : lin ![(a : ℝ), b, 1] = m + C t * u := by
     simp only [lin, Fin.sum_univ_three, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
       Matrix.head_cons, Matrix.tail_cons, map_one, one_mul, hCa, hCb, hm, hu]
@@ -78,7 +78,7 @@ theorem swapReg_swapG : ArCalc → SwapReg swapG := by
       ((isHomogeneous_X _ _).C_mul _).add (isHomogeneous_X _ _)
     simpa using h1.pow e
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [← map_add, l1, l2, add_pow_add_sub_pow_even, map_sum, swapG, map_sum]
+    rw [← map_add (f := _), l1, l2, add_pow_add_sub_pow_even, map_sum, swapG, map_sum]
   refine Finset.sum_congr rfl fun j _ => ?_
   by_cases hj : 2 * j ≤ d + 2
   · have e := key j hj _ (hhom (d + 2 - 2 * j))

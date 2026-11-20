@@ -52,7 +52,7 @@ theorem zspan_stable {a : ℕ} {k : ℕ} (b : Fin k → Sm E a) {z : Module.End 
     obtain ⟨_, ⟨i, rfl⟩, z', hz', rfl⟩ := hx
     exact Submodule.subset_span (Set.mem_iUnion.2 ⟨i, z * z', Subalgebra.mul_mem _ hz hz', rfl⟩)
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem tensor_span_left_slice {U₁ : Submodule ℂ (Sm E r)} {U₂ : Submodule ℂ (Sm E s)} {F : GA E r × GA E s → ℂ}

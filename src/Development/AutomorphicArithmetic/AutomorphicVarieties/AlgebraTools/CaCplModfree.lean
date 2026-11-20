@@ -27,11 +27,11 @@ private theorem mult_operator_shifts_twist {Λ R B M : Type} [CommRing Λ] [Comm
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul y n =>
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [TensorProduct.add_tmul, map_add, hx, hy]
+      | add x y hx hy => simp only [TensorProduct.add_tmul, map_add (f := _), hx, hy]
       | tmul b m => simp
   intro x y hxy
   apply (TensorProduct.AlgebraTensorModule.assoc Λ R R B M N).injective

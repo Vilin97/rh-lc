@@ -70,7 +70,7 @@ theorem isFrobLin_of_modIso : ∀ (p k : ℕ) [Fact p.Prime] (A R : Type) [CommR
     (AddMonoidHom.mk' (fun b : XA => ((TensorProduct.mk R XR M' (kR (ι (jA b)))).toAddMonoidHom).comp Φ.toAddMonoidHom)
       fun b b' => AddMonoidHom.ext fun x => by
         change kR (ι (jA (b + b'))) ⊗ₜ[R] Φ x = kR (ι (jA b)) ⊗ₜ[R] Φ x + kR (ι (jA b')) ⊗ₜ[R] Φ x
-        rw [map_add, map_add, map_add, TensorProduct.add_tmul])
+        rw [map_add (f := _), map_add (f := _), map_add (f := _), TensorProduct.add_tmul])
     fun a b x => by
       change kR (ι (f a * jA b)) ⊗ₜ[R] Φ x = kR (ι (jA b)) ⊗ₜ[R] Φ (a • x)
       rw [Φ.map_smulₛₗ, ← TensorProduct.smul_tmul, hsR, hfRa, map_mul]
@@ -81,16 +81,16 @@ theorem isFrobLin_of_modIso : ∀ (p k : ℕ) [Fact p.Prime] (A R : Type) [CommR
       fun b b' => AddMonoidHom.ext fun x => by
         change kA (ιe.symm (jR (b + b'))) ⊗ₜ[A] ΦE.symm x =
           kA (ιe.symm (jR b)) ⊗ₜ[A] ΦE.symm x + kA (ιe.symm (jR b')) ⊗ₜ[A] ΦE.symm x
-        rw [map_add, map_add, map_add, TensorProduct.add_tmul])
+        rw [map_add (f := _), map_add (f := _), map_add (f := _), TensorProduct.add_tmul])
     fun s b x' => by
       obtain ⟨t, s', hs'⟩ := hmod.1 s
       have hs : s = algebraMap A R t + algebraMap A R (p : A) * s' := by rw [← hs']; ring
       have e1 : ιe.symm (fR s * jR b) = f t * ιe.symm (jR b) := by
-        rw [hs, map_add, map_mul fR, hfRa, hfRa, hfp, map_zero, zero_mul, add_zero, map_mul]
+        rw [hs, map_add (f := _), map_mul fR, hfRa, hfRa, hfp, map_zero, zero_mul, add_zero, map_mul]
         congr 1
         exact ιe.symm_apply_apply (f t)
       change kA (ιe.symm (fR s * jR b)) ⊗ₜ[A] ΦE.symm x' = kA (ιe.symm (jR b)) ⊗ₜ[A] ΦE.symm (s • x')
-      rw [e1, hs, add_smul, mul_smul, map_add, hΦi, hΦi, TensorProduct.tmul_add, ← TensorProduct.smul_tmul,
+      rw [e1, hs, add_smul, mul_smul, map_add (f := _), hΦi, hΦi, TensorProduct.tmul_add, ← TensorProduct.smul_tmul,
         ← TensorProduct.smul_tmul, hsA, hsA, hfp, zero_mul, map_zero, TensorProduct.zero_tmul, add_zero]
   have hU : ∀ (b : R ⧸ Ideal.span {(p : R)}) (x : M'), U (kR b ⊗ₜ[R] x) = kA (ιe.symm b) ⊗ₜ[A] ΦE.symm x :=
     fun _ _ => rfl
@@ -98,7 +98,7 @@ theorem isFrobLin_of_modIso : ∀ (p k : ℕ) [Fact p.Prime] (A R : Type) [CommR
     intro t
     induction t using TensorProduct.induction_on with
     | zero => rw [map_zero, map_zero]
-    | add s t hs ht => rw [map_add, map_add, hs, ht]
+    | add s t hs ht => rw [map_add (f := _), map_add (f := _), hs, ht]
     | tmul b x =>
       change U (T (kA (jA b) ⊗ₜ[A] x)) = kA (jA b) ⊗ₜ[A] x
       rw [hT, hU, show ιe.symm (ι (jA b)) = jA b from ιe.symm_apply_apply _,
@@ -107,7 +107,7 @@ theorem isFrobLin_of_modIso : ∀ (p k : ℕ) [Fact p.Prime] (A R : Type) [CommR
     intro t
     induction t using TensorProduct.induction_on with
     | zero => rw [map_zero, map_zero]
-    | add s t hs ht => rw [map_add, map_add, hs, ht]
+    | add s t hs ht => rw [map_add (f := _), map_add (f := _), hs, ht]
     | tmul b x =>
       change T (U (kR (jR b) ⊗ₜ[R] x)) = kR (jR b) ⊗ₜ[R] x
       rw [hU, hT, show ι (ιe.symm (jR b)) = jR b from ιe.apply_symm_apply _,

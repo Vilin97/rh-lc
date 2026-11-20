@@ -139,7 +139,7 @@ theorem exists_chart_cm (hc : CMData (maximalRealSubfield E) E)
     congr 1
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a x => rfl
   · rw [GlobalTheory.T.mem_integralFiniteAdelesTensor_iff_localOrders]
     refine Iff.trans ⟨fun h => hev a ▸ h v, fun h w => ?_⟩ (hO _)

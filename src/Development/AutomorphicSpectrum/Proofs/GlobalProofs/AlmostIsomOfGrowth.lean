@@ -63,7 +63,7 @@ theorem integrable_sq (x : H) : Integrable (fun g => φ g * ‖ρ g x‖ ^ 2) μ
 
 theorem avg_add (x y z : H) :
     avgForm μ φ ρ x (y + z) = avgForm μ φ ρ x y + avgForm μ φ ρ x z := by
-  simp only [avgForm, map_add, inner_add_right, mul_add]
+  simp only [avgForm, map_add (f := _), inner_add_right, mul_add]
   exact integral_add (integrable_avg hφ hφ0 hρ hB hb x y) (integrable_avg hφ hφ0 hρ hB hb x z)
 
 theorem avg_norm_le (x y : H) : ‖avgForm μ φ ρ x y‖ ≤ (∫ g, B g ∂μ) * ‖x‖ * ‖y‖ := by

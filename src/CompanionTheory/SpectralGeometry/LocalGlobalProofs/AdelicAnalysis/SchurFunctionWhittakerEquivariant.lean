@@ -182,7 +182,7 @@ theorem integrable_of_periodic [MeasurableSpace (A F)] [BorelSpace (A F)] (lf : 
     have h3 : q.out = b' + (N : F) * (r : F) := by rw [← hr]; ring
     have h4 := hs_neg (hs_add hb' h2)
     convert h4 using 1
-    rw [h3, map_add]; ring
+    rw [h3, map_add (f := _)]; ring
   have hconst : ∀ b : s, ∀ y ∈ T b, f y = f (algebraMap F (A F) (b : F)) := by
     intro b y hy
     obtain ⟨u, hu, he⟩ := hy

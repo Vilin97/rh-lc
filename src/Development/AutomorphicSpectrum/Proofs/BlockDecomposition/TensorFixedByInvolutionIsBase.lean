@@ -35,7 +35,7 @@ theorem sigR_fixed_eq_algebraMap : ∀ {F E : Type} [Field F] [NumberField F] [F
   generalize C.repr a 0 = x at hz
   generalize C.repr a 1 = y at hz
   subst hz
-  rw [map_add, map_mul, hsK, hsK, hsT] at ha
+  rw [map_add (f := _), map_mul, hsK, hsK, hsT] at ha
   have h2 : algebraMap K (K ⊗[F] E) 0 + algebraMap K (K ⊗[F] E) (2 * y) * ((1 : K) ⊗ₜ[F] θ) = 0 := by
     rw [map_zero, map_mul, map_ofNat]
     linear_combination -ha

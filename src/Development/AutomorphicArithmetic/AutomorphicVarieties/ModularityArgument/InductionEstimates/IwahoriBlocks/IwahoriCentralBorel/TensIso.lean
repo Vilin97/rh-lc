@@ -31,7 +31,7 @@ private theorem tensIso_dens {κ : Type} (ρ : Representation ℂ P V) (σ : P �
         add_mem' := by
           rintro u u' ⟨v, hv⟩ ⟨v', hv'⟩
           refine ⟨v + v', ?_⟩
-          simp only [Pi.add_apply, map_add, Finset.sum_add_distrib]
+          simp only [Pi.add_apply, map_add (f := _), Finset.sum_add_distrib]
           rw [add_add_add_comm, hv, hv', add_zero]
         zero_mem' := ⟨0, by simp⟩
         smul_mem' := by
@@ -44,7 +44,7 @@ private theorem tensIso_dens {κ : Type} (ρ : Representation ℂ P V) (σ : P �
       intro p u v hv
       simp only [hbe]
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [← map_sum, ← map_add, hv, map_zero]
+        rw [← map_sum, ← map_add (f := _), hv, map_zero]
     have huniq : ∀ (u : V) (v v' : κ → V), b a u + ∑ j ∈ s, b j (v j) = 0 →
         b a u + ∑ j ∈ s, b j (v' j) = 0 → ∀ j ∈ s, v j = v' j := by
       intro u v v' h1 h2 j hj
@@ -79,7 +79,7 @@ private theorem tensIso_dens {κ : Type} (ρ : Representation ℂ P V) (σ : P �
         · let T : V →ₗ[ℂ] V :=
             { toFun := fun u => g u j
               map_add' := fun u u' => huniq (u + u') _ (g u + g u') (hg _) (by
-                simp only [Pi.add_apply, map_add, Finset.sum_add_distrib]
+                simp only [Pi.add_apply, map_add (f := _), Finset.sum_add_distrib]
                 rw [add_add_add_comm, hg, hg, add_zero]) j hj
               map_smul' := fun c u => huniq (c • u) _ (c • g u) (hg _) (by
                 simp only [Pi.smul_apply, map_smul]
@@ -233,7 +233,7 @@ theorem UpperTheory.V.Z.InvariantSubmoduleMonicPolynomial.IwahoriBlocks.tensIso 
   · intro p c x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul v b =>
       have : extTensor ρ (tensIso_m ρ y) (p, c) (v ⊗ₜ b) = ρ p v ⊗ₜ tensIso_m ρ y c b := rfl
       rw [this, he, he]

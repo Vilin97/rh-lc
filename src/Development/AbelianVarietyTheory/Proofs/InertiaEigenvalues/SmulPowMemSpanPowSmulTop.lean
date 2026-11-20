@@ -63,7 +63,7 @@ theorem successive_approximation : ∀ {O Y Z : Type} [CommRing O] [AddCommGroup
     | succ n ih =>
       rw [s_succ]
       simp only
-      rw [map_add, map_smul, ← sub_sub, ih, hL', hg, map_neg, smul_neg, smul_add, smul_smul,
+      rw [map_add (f := _), map_smul, ← sub_sub, ih, hL', hg, map_neg, smul_neg, smul_add, smul_smul,
         smul_smul, smul_smul, ← pow_add, ← pow_add, ← pow_add]
       have e : n * d + k = (n + 1) * d + c := by
         rw [hk, add_mul, one_mul, add_assoc]

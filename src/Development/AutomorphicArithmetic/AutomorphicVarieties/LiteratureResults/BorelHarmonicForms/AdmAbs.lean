@@ -148,7 +148,7 @@ theorem UpperTheory.V.Lit.Bor.admissible_abs_bound :
     eq_neg_of_add_eq_zero_left (conjTranspose_D_mul_add_mul_D_eq_zero_of_skew hR G hinv V hV)
   have hDZ : D Z = D X + Complex.I • D V := by
     conv_lhs => rw [hZ]
-    rw [map_add, map_smul]
-  rw [hDZ, hsZ, map_add, map_neg, map_smul, Matrix.conjTranspose_add, Matrix.conjTranspose_smul,
+    rw [map_add (f := _), map_smul]
+  rw [hDZ, hsZ, map_add (f := _), map_neg, map_smul, Matrix.conjTranspose_add, Matrix.conjTranspose_smul,
     Matrix.add_mul, Matrix.smul_mul, eX, eV, Matrix.mul_add, Matrix.mul_neg, Matrix.mul_smul]
   simp [Complex.star_def]

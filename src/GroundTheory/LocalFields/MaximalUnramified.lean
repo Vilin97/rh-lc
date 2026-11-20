@@ -215,7 +215,7 @@ def unramifiedDegree : (Ω ≃ₐ[K] Ω) →* Multiplicative ℤ̂ where
     congr 1
     ext n
     show unramifiedCoord K (σ * τ) n = proj n (_ + _)
-    rw [map_add, unramifiedCoord_mul]
+    rw [map_add (f := _), unramifiedCoord_mul]
     rfl
 
 theorem proj_toAdd_unramifiedDegree (σ : Ω ≃ₐ[K] Ω) (n : ℕ+) :

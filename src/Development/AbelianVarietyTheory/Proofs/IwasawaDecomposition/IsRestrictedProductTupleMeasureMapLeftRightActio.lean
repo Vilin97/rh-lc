@@ -187,7 +187,7 @@ def intVAdd {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {d : 
   carrier := intV b v
   zero_mem' := fun k => by simp
   add_mem' := fun {x y} hx hy k => by
-    rw [map_add, Finsupp.add_apply]
+    rw [map_add (f := _), Finsupp.add_apply]
     exact add_mem (hx k) (hy k)
 
 theorem isProd_map_lrAct : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E], ∀ (d : ℕ) (b : Module.Basis (Fin d) F E) (n M : ℕ) (ν : Measure (Fin n → Fin M → AF F ⊗[F] E)) (mi : Measure (Fin n → Fin M → Ainf F ⊗[F] E)) (mv : ∀ v : HeightOneSpectrum (𝓞 F), Measure (Fin n → Fin M → Fv F v ⊗[F] E)) (g : GL (Fin M) (AF F ⊗[F] E)) (γ : GL (Fin n) (AF F ⊗[F] E)), IsProd b ν mi mv → IsProd b (ν.map (lrAct g.val γ.val)) (mi.map (lrAct (g.val.map prInf) (γ.val.map prInf))) (fun v => (mv v).map (lrAct (g.val.map (prV v)) (γ.val.map (prV v)))) := by

@@ -116,7 +116,7 @@ theorem cube_symm {c : CechPic.Pic G.left} (hc : cubeCls (x3 G) c = 0) :
   have h₂ := cube_pts hc ![(x3 G 0)⁻¹, (x3 G 1)⁻¹, (x3 G 2)⁻¹]
   rw [cubeCls_three] at h₁ h₂
   rw [e, cubeCls_three]
-  simp only [map_add, pull_inv, mul_inv, inv_one]
+  simp only [map_add (f := _), pull_inv, mul_inv, inv_one]
   rw [← add_zero (0 : CechPic.Pic _)]
   refine Eq.trans ?_ (congrArg₂ (· + ·) h₁ h₂)
   abel
@@ -205,7 +205,7 @@ theorem exists_ampleCub [IsAlgClosed k] [LocallyOfFiniteType H.hom] [IsIntegral 
       (TopologicalSpace.Opens.isOpen _) hne (nonempty_preimage _ hne))⟩
   rw [cls_linComb hL, Fin.sum_univ_two]
   show (1 : ℤ) • CechPic.pull (ι[H]).left (cls L hL) + (-1 : ℤ) • CechPic.pull (𝟙 H.left) (cls L hL) = 0
-  rw [pull_id, e, map_add, ← pull_comp, ← Over.comp_left, GrpObj.inv_comp_inv, Over.id_left, pull_id]
+  rw [pull_id, e, map_add (f := _), ← pull_comp, ← Over.comp_left, GrpObj.inv_comp_inv, Over.id_left, pull_id]
   abel
 
 end Field

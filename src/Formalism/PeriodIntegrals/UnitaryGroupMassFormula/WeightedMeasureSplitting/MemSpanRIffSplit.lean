@@ -50,7 +50,7 @@ theorem mapV_mem_spanR {m : ℕ} (Y : Fin m → Fin n → E) (s : Set (Fin m)) (
     rw [mapV_ratV]
     exact Submodule.subset_span ⟨a, ha, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [mapV_smul]; exact Submodule.smul_mem _ _ hx
 
 theorem hR_mapV (x y : Fin n → R ⊗[F] E) :

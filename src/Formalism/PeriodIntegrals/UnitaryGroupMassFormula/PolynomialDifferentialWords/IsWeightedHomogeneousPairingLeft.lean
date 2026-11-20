@@ -25,7 +25,7 @@ theorem homog_of_mul {σ : Type} (w : σ → ℕ) {s g : MvPolynomial σ K} {n :
       · have hx0 := hs h0
         have hsum : x.1 + x.2 = d := by simpa using hx
         have hw : Finsupp.weight w x.2 = j := by
-          rw [← hsum, map_add, hx0] at hd
+          rw [← hsum, map_add (f := _), hx0] at hd
           omega
         rw [if_pos hw]
     · symm
@@ -36,7 +36,7 @@ theorem homog_of_mul {σ : Type} (w : σ → ℕ) {s g : MvPolynomial σ K} {n :
       · have hx0 := hs h0
         have hsum : x.1 + x.2 = d := by simpa using hx
         have hw : Finsupp.weight w x.2 ≠ j := by
-          rw [← hsum, map_add, hx0] at hd
+          rw [← hsum, map_add (f := _), hx0] at hd
           omega
         rw [if_neg hw, mul_zero]
   intro m hm

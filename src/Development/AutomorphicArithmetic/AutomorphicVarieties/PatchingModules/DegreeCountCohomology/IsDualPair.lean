@@ -29,7 +29,7 @@ def Zl : Submodule R (Γ → M) where
   add_mem' := by
     rintro x y ⟨a1, a2⟩ ⟨b1, b2⟩
     refine ⟨a1.add b1, fun g h => ?_⟩
-    simp only [Pi.add_apply, a2, b2, map_add]; abel
+    simp only [Pi.add_apply, a2, b2, map_add (f := _)]; abel
   zero_mem' := ⟨IsLocallyConstant.const 0, by simp⟩
   smul_mem' := by
     rintro c x ⟨a1, a2⟩

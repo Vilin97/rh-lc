@@ -71,7 +71,7 @@ theorem intS_X' {τ : Type} (s : τ) : IntS V (MvPowerSeries.X s : MvPowerSeries
   · exact VF.Ge.zero 0
 
 theorem intS_add' {τ : Type} {F G : MvPowerSeries τ C} (hF : IntS V F) (hG : IntS V G) : IntS V (F + G) := fun e => by
-  rw [map_add]; exact (hF e).add (hG e)
+  rw [map_add (f := _)]; exact (hF e).add (hG e)
 
 theorem intS_sub' {τ : Type} {F G : MvPowerSeries τ C} (hF : IntS V F) (hG : IntS V G) : IntS V (F - G) := fun e => by
   rw [map_sub]; exact (hF e).sub (hG e)
@@ -87,7 +87,7 @@ theorem formalAdd_const (H : RLaw Y V) {τ : Type} {a b : κ → MvPowerSeries �
     (ha : ∀ i, MvPowerSeries.constantCoeff (a i) = 0) (hb : ∀ i, MvPowerSeries.constantCoeff (b i) = 0) (i : κ) :
     MvPowerSeries.constantCoeff (addP Y a b i) = 0 :=
   constantCoeff_subst_zero (fun x => by
-    rw [map_add, constantCoeff_subst_zero ha (lg_const H x), constantCoeff_subst_zero hb (lg_const H x), add_zero])
+    rw [map_add (f := _), constantCoeff_subst_zero ha (lg_const H x), constantCoeff_subst_zero hb (lg_const H x), add_zero])
     (H.exc i)
 
 theorem cob_root (H : RLaw Y V) {c : MvPowerSeries (Fin 2 × κ) C} (hc : IntS V c) {b : MvPowerSeries κ C}
@@ -125,7 +125,7 @@ theorem cob_root (H : RLaw Y V) {c : MvPowerSeries (Fin 2 × κ) C} (hc : IntS V
   have k2 := (hfr _ _ hB hD μ).1
   have := mm_add (mm_add (mm_sub (mm_sub (mm_sub (h μ) k1) k2) (mA μ)) (mB μ)) (mD μ)
   convert this using 1
-  simp only [cob, map_sub, map_add]
+  simp only [cob, map_sub, map_add (f := _)]
   ring
 
 theorem ex_along (H : RLaw Y V) {τ : Type} {a : κ → MvPowerSeries τ C}
@@ -179,7 +179,7 @@ theorem additive_low (H : RLaw Y V) {N : ℕ} {γ : κ → PowerSeries C}
   have c1 : MvPowerSeries.constantCoeff (MvPowerSeries.X 1 : MvPowerSeries (Fin 2) C) = 0 :=
     MvPowerSeries.constantCoeff_X _
   have cs : MvPowerSeries.constantCoeff (MvPowerSeries.X 0 + MvPowerSeries.X 1 : MvPowerSeries (Fin 2) C) = 0 := by
-    rw [map_add, c0, c1, add_zero]
+    rw [map_add (f := _), c0, c1, add_zero]
   have hL : ∀ x, PowerSeries.constantCoeff (alongCv γ (Y.lg x)) = 0 := fun x =>
     constantCoeff_subst_zero (τ := Unit) hγ (lg_const H x)
   rw [← ex_along H (a := fun j => cvAt (MvPowerSeries.X 0 + MvPowerSeries.X 1) (γ j))
@@ -188,7 +188,7 @@ theorem additive_low (H : RLaw Y V) {N : ℕ} {γ : κ → PowerSeries C}
   simp only [subst_cvAt c0 hγ, subst_cvAt c1 hγ, subst_cvAt cs hγ]
   refine subst_congr_ord (MvPowerSeries.hasSubst_of_constantCoeff_zero fun x => ?_)
     (MvPowerSeries.hasSubst_of_constantCoeff_zero fun x => cvAt_const cs (hL x)) (fun x => ?_) _
-  · rw [map_add, cvAt_const c0 (hL x), cvAt_const c1 (hL x), add_zero]
+  · rw [map_add (f := _), cvAt_const c0 (hL x), cvAt_const c1 (hL x), add_zero]
   · have := Submodule.sub_mem _ (Submodule.add_mem _ (cvAt_lin c0 (hL x) (h x)) (cvAt_lin c1 (hL x) (h x)))
       (cvAt_lin cs (hL x) (h x))
     convert this using 1
@@ -316,7 +316,7 @@ theorem tangent_mm_of_nonDeg : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [Ne
     intro q
     have e := congrArg (PowerSeries.coeff V.l) (h2 q)
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [tl, map_add, map_sub, map_sum, Finset.sum_eq_zero, add_zero] at e
+      rw [tl, map_add (f := _), map_sub, map_sum, Finset.sum_eq_zero, add_zero] at e
     · have := mm_sub (mm_l_mul ((hlam q).2 V.l)) (hc0 q)
       convert this using 1
       unfold Cart.c0'

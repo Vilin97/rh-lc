@@ -114,7 +114,7 @@ theorem exists_strictHenselian_absolutely_closed_local_ring (V : Submodule ℂ (
             ctSm_val r (hV _ ψ.2)]
           exact ctn_add r (ContAut.continuous_of_isOpen_stab E N _ (hV _ φ.2).level)
             (ContAut.continuous_of_isOpen_stab E N _ (hV _ ψ.2).level)
-        simp only [Submodule.coe_add, e, map_add]
+        simp only [Submodule.coe_add, e, map_add (f := _)]
       map_smul' := fun c φ => by
         have e : ctSm r (c • φ.1) = c • ctSm r φ.1 := by
           refine Subtype.ext ?_

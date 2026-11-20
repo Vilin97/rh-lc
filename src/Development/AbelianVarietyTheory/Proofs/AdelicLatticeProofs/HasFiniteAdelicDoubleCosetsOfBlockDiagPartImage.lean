@@ -34,7 +34,7 @@ private lemma exists_nat_mul_ev_mem {R : Type} [CommRing R] [Algebra ℚ R]
     have h : ((N₁ * N₂ : ℕ) : R) * _root_.GlobalTheory.ClassFin.ev (f + g) u =
         (N₂ : R) * ((N₁ : R) * _root_.GlobalTheory.ClassFin.ev f u) +
           (N₁ : R) * ((N₂ : R) * _root_.GlobalTheory.ClassFin.ev g u) := by
-      simp only [_root_.GlobalTheory.ClassFin.ev, map_add]
+      simp only [_root_.GlobalTheory.ClassFin.ev, map_add (f := _)]
       push_cast
       ring
     rw [h]
@@ -227,7 +227,7 @@ private lemma blk_map_algebraMap_eq_map_blk {R : Type} [CommRing R] [Algebra ℚ
     _root_.GlobalTheory.ClassFin.blk e (g.map (algebraMap ℚ R)) =
       (_root_.GlobalTheory.ClassFin.blk e g).map (algebraMap ℚ R) := by
   unfold _root_.GlobalTheory.ClassFin.blk
-  simp [Matrix.map_mul, Matrix.map_add, Matrix.map_sub, Matrix.map_one]
+  simp [Matrix.map_mul, Matrix.map_add (f := _), Matrix.map_sub, Matrix.map_one]
 
 open Matrix in
 open scoped Kronecker ComplexOrder TensorProduct in

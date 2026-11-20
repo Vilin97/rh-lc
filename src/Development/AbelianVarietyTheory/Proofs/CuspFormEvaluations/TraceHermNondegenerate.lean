@@ -96,7 +96,7 @@ theorem transference_rat {M : ℕ} (b : Basis (Fin M) ℚ V)
     | add x y _ _ hx hy =>
       obtain ⟨k1, h1⟩ := hx
       obtain ⟨k2, h2⟩ := hy
-      exact ⟨k1 + k2, by rw [map_add, LinearMap.add_apply, h1, h2]; push_cast; ring⟩
+      exact ⟨k1 + k2, by rw [map_add (f := _), LinearMap.add_apply, h1, h2]; push_cast; ring⟩
     | smul a x _ hx =>
       obtain ⟨k, h⟩ := hx
       exact ⟨a * k, by rw [map_zsmul, LinearMap.smul_apply, h, zsmul_eq_mul]; push_cast; ring⟩
@@ -334,7 +334,7 @@ theorem exists_short_vectors {n : ℕ} (Λ : Submodule (𝓞 E) (Fin n → E)) (
       | add x z _ _ hx hz =>
         obtain ⟨k1, h1⟩ := hx
         obtain ⟨k2, h2⟩ := hz
-        exact ⟨k1 + k2, by rw [map_add, h1, h2]; push_cast; ring⟩
+        exact ⟨k1 + k2, by rw [map_add (f := _), h1, h2]; push_cast; ring⟩
       | smul a x _ hx =>
         obtain ⟨k, h⟩ := hx
         exact ⟨a * k, by rw [map_zsmul, h, zsmul_eq_mul]; push_cast; ring⟩

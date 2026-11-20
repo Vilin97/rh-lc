@@ -34,7 +34,7 @@ theorem exists_idem {LL U D R : Type} [Field LL] [Field U] [AddCommGroup D] [Mod
   have hΛm : ∀ r f, Λ (π r * f) = r * Λ f := fun r f => Λ.map_smul r f
   let β : F →ₗ[LL] End LL D :=
     { toFun := fun f => α (Λ f)
-      map_add' := fun f g => by rw [map_add, map_add]
+      map_add' := fun f g => by rw [map_add (f := _), map_add (f := _)]
       map_smul' := fun a f => by
         rw [Algebra.smul_def, ← h3, hΛm, map_mul, h1, ← Algebra.smul_def]; rfl }
   have hβ : ∀ f x, TensorProduct.lift β (f ⊗ₜ x) = α (Λ f) x := fun _ _ => rfl
@@ -48,10 +48,10 @@ theorem exists_idem {LL U D R : Type} [Field LL] [Field U] [AddCommGroup D] [Mod
         rw [LinearMap.sub_apply, map_sub, LinearMap.baseChange_tmul, LinearMap.smul_apply,
           LinearMap.id_apply, smul_tmul', hβ, hβ, smul_eq_mul, ← h4, hΛm, mul_comm, map_mul, h2,
           End.mul_apply, sub_self]
-      | add y z hy hz => rw [map_add, map_add, hy, hz, add_zero]
+      | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz, add_zero]
     · exact map_zero _
     · intro y z hy hz
-      rw [map_add, hy, hz, add_zero]
+      rw [map_add (f := _), hy, hz, add_zero]
   refine ⟨e, hπe, fun x hx => ?_⟩
   rw [letterMk, ← LinearMap.mem_ker, ker_letterQ] at hx
   rw [← hΛ1, ← hβ]
@@ -77,7 +77,7 @@ theorem exists_level_tensor (r : ↥(MaximalUnramifiedExtension l) ⊗[ℚ_[l]] 
     obtain ⟨m, hm, hlm, ha⟩ := hx
     obtain ⟨n, hn, hln, hb⟩ := hy
     refine ⟨m * n, Nat.mul_pos hm hn, fun hd => ((hl.out.dvd_mul).1 hd).elim hlm hln, fun f H => ?_⟩
-    rw [map_add, ha f fun ζ hζ => H ζ (by rw [pow_mul, hζ, one_pow]),
+    rw [map_add (f := _), ha f fun ζ hζ => H ζ (by rw [pow_mul, hζ, one_pow]),
       hb f fun ζ hζ => H ζ (by rw [mul_comm, pow_mul, hζ, one_pow])]
 
 theorem exists_algHom_ker (U R Ω : Type) [Field U] [CommRing R] [Algebra U R] [Module.Finite U R] [Field Ω]
@@ -124,7 +124,7 @@ theorem exists_translate (I : Ideal (↥(MaximalUnramifiedExtension l) ⊗[ℚ_[
       rw [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, e1, map_smul, ← hg,
         Algebra.TensorProduct.productMap_apply_tmul, map_mul]
       exact congrArg (· * g a) (ht c)
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   obtain ⟨m, hm, hlm, H⟩ := exists_level_tensor LL e
   obtain ⟨n, hn⟩ := MemLoc.FrobLaws.gal_root g⁻¹ hm hlm
   refine ⟨n, Algebra.TensorProduct.map t (AlgHom.id ℚ_[l] ↥LL.1) e, fun h => he ?_, ?_⟩
@@ -160,7 +160,7 @@ theorem eq_zero_of_translate {k L U D : Type} [Field k] [Field L] [Field U] [Alg
   let I : Ideal (U ⊗[k] L) :=
     { carrier := {r | α r x = 0}
       add_mem' := fun {a b} (ha : α a x = 0) (hb : α b x = 0) => show α (a + b) x = 0 by
-        rw [map_add, LinearMap.add_apply, ha, hb, add_zero]
+        rw [map_add (f := _), LinearMap.add_apply, ha, hb, add_zero]
       zero_mem' := show α 0 x = 0 by rw [map_zero, LinearMap.zero_apply]
       smul_mem' := fun a b (hb : α b x = 0) => show α (a * b) x = 0 by
         rw [map_mul, End.mul_apply, hb, map_zero] }
@@ -176,7 +176,7 @@ theorem eq_zero_of_translate {k L U D : Type} [Field k] [Field L] [Field U] [Alg
     | tmul c a =>
       rw [Algebra.TensorProduct.map_tmul, AlgHom.id_apply, hα, hα, ← mul_assoc, hφ, mul_assoc,
         mul_assoc, Algebra.commutes]
-    | add y z hy hz => rw [map_add, map_add, map_add, mul_add, add_mul, hy, hz]
+    | add y z hy hz => rw [map_add (f := _), map_add (f := _), map_add (f := _), mul_add, add_mul, hy, hz]
   refine hr (?_ : α r x = 0)
   have h1 := LinearMap.congr_fun (semi r) x
   rw [End.mul_apply, End.mul_apply, hre] at h1

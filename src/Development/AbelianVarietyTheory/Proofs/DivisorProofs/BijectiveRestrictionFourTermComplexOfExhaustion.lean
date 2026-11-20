@@ -25,8 +25,8 @@ theorem cx_D1_D0_eq_zero (K : Cx C₁) (g : K.M0.c0) : K.D1 (K.D0 g) = 0 := by
 
 theorem first_diagonal_phase_mem_unitary (K : Cx C₁) (c : K.T1) : K.D1 c ∈ K.Z2 := by
   refine ⟨fun T T' T'' T''' φ ψ χ ↦ ?_, fun T T' T'' φ ψ ↦ ?_, fun T T' φ ↦ ?_, fun T ↦ ?_⟩
-  · simp [Cx.D1, Coef.map_comp, map_sub, map_add]; abel
-  · simp [Cx.D1, Coef.map_comp, map_sub, map_add, Cx.diffZero_natural]; abel
+  · simp [Cx.D1, Coef.map_comp, map_sub, map_add (f := _)]; abel
+  · simp [Cx.D1, Coef.map_comp, map_sub, map_add (f := _), Cx.diffZero_natural]; abel
   · simp [Cx.D1, map_sub, Cx.diffOne_natural, Cx.diffOne_diffZero]
   · simp [Cx.D1, Cx.diffTwo_comp_diffOne]
 

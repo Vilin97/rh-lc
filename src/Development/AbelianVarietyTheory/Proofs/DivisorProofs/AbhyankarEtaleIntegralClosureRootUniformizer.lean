@@ -18,7 +18,7 @@ theorem GlobalTheory.AbhyankarBC.nonempty_tensor_algEquiv_of_isFractionRing : �
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul k l => simp [g, IsBaseChange.equiv_tmul, Algebra.smul_def]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   let e0 : K ⊗[S] L ≃ₐ[K] L := AlgEquiv.ofBijective g (by rw [hg]; exact hb.equiv.bijective)
   exact ⟨(Algebra.TensorProduct.cancelBaseChange S K F F L).symm.trans
     (Algebra.TensorProduct.congr AlgEquiv.refl e0)⟩
@@ -67,7 +67,7 @@ theorem GlobalTheory.AbhyankarBC.tensor_map_val_bijective_of_smul_mem : ∀ (D B
     | tmul f n =>
       simp [E, eι, ι, Algebra.TensorProduct.cancelBaseChange_tmul,
         Algebra.TensorProduct.cancelBaseChange_symm_tmul]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   rw [hE]
   exact E.bijective
 

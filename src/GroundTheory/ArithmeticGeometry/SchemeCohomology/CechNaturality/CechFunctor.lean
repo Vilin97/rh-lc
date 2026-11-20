@@ -70,7 +70,7 @@ lemma cechHMap_add (φ ψ : P ⟶ P') (n : ℕ) (x : cechH P U n) :
   obtain ⟨σ, hσ, rfl⟩ := exists_cls x
   rw [cechHMap_cls, cechHMap_cls, cechHMap_cls]
   refine (cls_congr U (push_add U φ ψ n σ) _ ?_).trans (cls_add _ _ _ _ _)
-  rw [map_add, ← push_d, ← push_d, hσ, map_zero, map_zero, add_zero]
+  rw [map_add (f := _), ← push_d, ← push_d, hσ, map_zero, map_zero, add_zero]
 
 lemma cechHMap_zero (n : ℕ) (x : cechH P U n) : cechHMap U (0 : P ⟶ P') n x = 0 := by
   obtain ⟨σ, hσ, rfl⟩ := exists_cls x

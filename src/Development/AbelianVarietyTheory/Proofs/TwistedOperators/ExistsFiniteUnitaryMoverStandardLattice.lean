@@ -155,7 +155,7 @@ theorem GlobalTheory.LiftLevel.exists_mover : ∀ (D : D7) (S T : HSp D) (C : Ct
       simp only [Algebra.TensorProduct.map_tmul, AlgHom.id_apply]
       congr 1
       exact star_star y
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hfc : ∀ z : AE D, finPart D (cA D z) = σ (finPart D z) := fun z =>
     GlobalTheory.UnitaryGlue.map_sigR (sndA D.host.F) D.sp.cm.sig z
   set ε := finPart D e with hεdef

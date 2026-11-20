@@ -27,7 +27,7 @@ theorem twZrMap_apply (g : (Fin n → k) →ₗ[k] (Fin n → k)) (v : Fin (n + 
     twZrMap g v = Loc.inX k n c (g (twZrPr v)) + (v - Loc.inX k n c (twZrPr v)) := rfl
 
 theorem twZrPr_map (g : (Fin n → k) →ₗ[k] (Fin n → k)) (v : Fin (n + c) → k) : twZrPr (twZrMap g v) = g (twZrPr v) := by
-  rw [twZrMap_apply, map_add, map_sub, twZrPr_inX, twZrPr_inX, sub_self, add_zero]
+  rw [twZrMap_apply, map_add (f := _), map_sub, twZrPr_inX, twZrPr_inX, sub_self, add_zero]
 
 theorem twZrMap_comp (g g' : (Fin n → k) →ₗ[k] (Fin n → k)) (v : Fin (n + c) → k) :
     twZrMap g (twZrMap g' v) = twZrMap (g ∘ₗ g') v := by

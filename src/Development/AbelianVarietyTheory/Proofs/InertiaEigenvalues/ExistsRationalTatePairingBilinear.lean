@@ -69,18 +69,18 @@ theorem exists_pair : Formalism.GaloisCohomology.LocalTateDualityK → ∀ (l : 
       exact (cont_bil m).comp ((ha.comp continuous_fst).prodMk h1)
     · simp only [cupL]
       rw [← hm.1 g (a.1 h) (A'.ρ h (b.1 k)), ha', hb', map_mul, Module.End.mul_apply]
-      simp only [map_add, LinearMap.add_apply]
+      simp only [map_add (f := _), LinearMap.add_apply]
       ring
   refine ⟨LinearMap.mk₂ LL (fun a b => inv ⟨cupL A'.ρ m a.1 b.1, hmem a b⟩) ?_ ?_ ?_ ?_,
     fun a b => ?_⟩
   · intro a a' b
-    rw [← map_add]; congr 1; apply Subtype.ext; funext p
+    rw [← map_add (f := _)]; congr 1; apply Subtype.ext; funext p
     simp [cupL]
   · intro c a b
     rw [← map_smul]; congr 1; apply Subtype.ext; funext p
     simp [cupL]
   · intro a b b'
-    rw [← map_add]; congr 1; apply Subtype.ext; funext p
+    rw [← map_add (f := _)]; congr 1; apply Subtype.ext; funext p
     simp [cupL]
   · intro c a b
     rw [← map_smul]; congr 1; apply Subtype.ext; funext p

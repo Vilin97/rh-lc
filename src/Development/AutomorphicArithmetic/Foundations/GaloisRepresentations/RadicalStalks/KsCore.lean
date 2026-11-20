@@ -82,7 +82,7 @@ private theorem ks_core {k H C : Type*} [Field k] [AddCommGroup H] [Module k H] 
       φ u α • σ e h₀ + φ u (σ e h₀) • α := fun u => rfl
   refine ⟨(φ.flip α).smulRight (σ e h₀) + (φ.flip (σ e h₀)).smulRight α, ?_, ?_, ?_, ?_⟩
   · intro c u hu
-    rw [happ, happ, map_add, map_smul, map_smul, hα c u, hadj c u (σ e h₀), hwfl c u hu, hαc c]
+    rw [happ, happ, map_add (f := _), map_smul, map_smul, hα c u, hadj c u (σ e h₀), hwfl c u hu, hαc c]
     have key : (χ c * φ u α) • σ e h₀ + (χ (bar c) * φ u (σ e h₀)) • α -
         (φ u α • σ c (σ e h₀) + φ u (σ e h₀) • χ (bar c) • α) =
         -(φ u α • (σ c (σ e h₀) - χ c • σ e h₀)) := by
@@ -103,7 +103,7 @@ private theorem ks_core {k H C : Type*} [Field k] [AddCommGroup H] [Module k H] 
         mul_zero, Finset.sum_const_zero]
     rw [h1, h2, zero_smul, zero_smul, add_zero]
   · intro u _ v _
-    rw [happ, happ, map_add, map_smul, map_smul, LinearMap.add_apply, LinearMap.smul_apply,
+    rw [happ, happ, map_add (f := _), map_smul, map_smul, LinearMap.add_apply, LinearMap.smul_apply,
       LinearMap.smul_apply, map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul, smul_eq_mul,
       smul_eq_mul, hskew (σ e h₀) v, hskew α v]
     ring
@@ -140,7 +140,7 @@ theorem UpperTheory.Gal.Ord.ks :
   have hT : ∀ v, σ D.ω v + σ (D.bar D.ω) v = (D.tr : k) • v := by
     intro v
     have e1 : σ D.ω + σ (D.bar D.ω) = σ (D.tr : 𝓞 D.F) := by
-      rw [← map_add, D.tr_eq]
+      rw [← map_add (f := _), D.tr_eq]
     have e2 := LinearMap.congr_fun e1 v
     rw [LinearMap.add_apply, map_intCast] at e2
     rw [e2]
@@ -150,7 +150,7 @@ theorem UpperTheory.Gal.Ord.ks :
     haveI : CharP k p := (CharP.charP_iff_prime_eq_zero (Fact.out)).2 hk
     intro h0
     have hr := congrArg β b.ρ_root
-    simp only [map_add, map_sub, map_pow, map_mul, map_intCast, map_zero] at hr
+    simp only [map_add (f := _), map_sub, map_pow, map_mul, map_intCast, map_zero] at hr
     have e3 : ((D.tr ^ 2 - 4 * D.nm : ℤ) : k) = 0 := by
       push_cast
       linear_combination (2 * β b.ρ - D.tr) * h0 - 4 * hr

@@ -107,7 +107,7 @@ private theorem intAt_add_of_starRing {E : Type} [Field E] [NumberField E] [Star
   obtain ⟨r1, s1, hs1, h1⟩ := ha
   obtain ⟨r2, s2, hs2, h2⟩ := hb
   refine ⟨s2 * r1 + s1 * r2, s1 * s2, mul_not_mem_of_not_mem hs1 hs2, ?_⟩
-  simp only [map_add, map_mul]
+  simp only [map_add (f := _), map_mul]
   rw [← h1, ← h2]
   ring
 
@@ -160,7 +160,7 @@ private theorem redP_add_twisted_eisenstein_coset {E : Type} [Field E] [NumberFi
   obtain ⟨r2, s2, hs2, h2⟩ := hb
   have hs := mul_not_mem_of_not_mem hs1 hs2
   have e3 := mk_mul_redP_eq_of_mul_eq (a := a + b) (s2 * r1 + s1 * r2) (s1 * s2) hs (by
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     rw [← h1, ← h2]
     ring)
   have e1 := mk_mul_redP_eq_of_mul_eq r1 s1 hs1 h1
@@ -169,7 +169,7 @@ private theorem redP_add_twisted_eisenstein_coset {E : Type} [Field E] [NumberFi
     rwa [Ne, Ideal.Quotient.eq_zero_iff_mem]
   apply mul_left_cancel₀ hs0
   rw [e3]
-  simp only [map_add, map_mul]
+  simp only [map_add (f := _), map_mul]
   rw [← e1, ← e2]
   ring
 

@@ -210,7 +210,7 @@ private theorem galOf_mul {A B : Type*} [CommRing A] [Algebra F A] [CommRing B] 
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a c => simp
-    | add a c ha hc => simp only [map_add, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), ha, hc]
   simp [galOf, h]
 
 open scoped TensorProduct in
@@ -221,7 +221,7 @@ private theorem galOf_one {A B : Type*} [CommRing A] [Algebra F A] [CommRing B] 
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a c => simp
-    | add a c ha hc => simp only [map_add, ha, hc]
+    | add a c ha hc => simp only [map_add (f := _), ha, hc]
   simp [galOf, h]
 
 private theorem mapGL_iter (σ : E ≃ₐ[F] E) (v : Pl F) {n : ℕ} (k : ℕ) (Y : GL (Fin n) (CompletionsOver E v)) :

@@ -42,7 +42,7 @@ theorem eq_or_eq_conj (σ σ' : E →+* ℂ) (h : ∀ x : FR E, σ' (x : E) = σ
   have dec : ∀ z, ∃ a b, c a = a ∧ c b = b ∧ z = a + b * α ∧ c z = a - b * α := by
     intro z
     refine ⟨(z + c z) / 2, (z - c z) / (2 * α), ?_, ?_, ?_, ?_⟩
-    · rw [map_div₀, map_add, cc, map_ofNat]; ring
+    · rw [map_div₀, map_add (f := _), cc, map_ofNat]; ring
     · rw [map_div₀, map_sub, cc, map_mul, map_ofNat, hcα]
       field_simp
       ring
@@ -53,7 +53,7 @@ theorem eq_or_eq_conj (σ σ' : E →+* ℂ) (h : ∀ x : FR E, σ' (x : E) = σ
   · left
     ext z
     obtain ⟨a, b, ha, hb, hz, -⟩ := dec z
-    rw [hz, map_add, map_add, map_mul, map_mul, mem a ha, mem b hb, sub_eq_zero.1 h1]
+    rw [hz, map_add (f := _), map_add (f := _), map_mul, map_mul, mem a ha, mem b hb, sub_eq_zero.1 h1]
   · right
     ext z
     obtain ⟨a, b, ha, hb, hz, hcz⟩ := dec z

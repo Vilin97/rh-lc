@@ -104,10 +104,10 @@ theorem rE_emb (n : ℕ) (i j : Fin n) (f : MvPolynomial (Fin n × Fin n) K) :
   unfold rE
   induction f using MvPolynomial.induction_on with
   | C a => simp [emb, rowE_C]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     obtain ⟨a, s⟩ := v
-    rw [map_mul, rowE_mul, rowE_mul, hp, map_add, map_mul, map_mul, bmF_emb_X, rowE_X, rowE_X]
+    rw [map_mul, rowE_mul, rowE_mul, hp, map_add (f := _), map_mul, map_mul, bmF_emb_X, rowE_X, rowE_X]
     by_cases h : j = a <;> simp [h, bmF_emb_X]
 
 theorem rE_zmon (n : ℕ) (i j : Fin n) (b : Fin n → ℕ) : rE K n n i j (zmon K n b) = 0 := by
@@ -138,11 +138,11 @@ theorem rE_incl (n : ℕ) (i j : Fin n) (f : BP K n) :
   unfold rE
   induction f using MvPolynomial.induction_on with
   | C a => simp [incl, rowE_C]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     obtain ⟨a, s⟩ := v
     have hX : ∀ a s, incl K n (X (a, s)) = X (a, s.castSucc) := fun a s => rename_X _ _
-    rw [map_mul, rowE_mul, rowE_mul, hp, map_add, map_mul, map_mul, hX, rowE_X, rowE_X]
+    rw [map_mul, rowE_mul, rowE_mul, hp, map_add (f := _), map_mul, map_mul, hX, rowE_X, rowE_X]
     by_cases h : j.castSucc = a <;> simp [h, hX]
 
 theorem rCap_incl (n : ℕ) (u : ℤ) (f : BP K n) : rCap K n (n + 1) u (incl K n f) = incl K n (rCap K n n u f) :=
@@ -153,7 +153,7 @@ theorem rowE_eq_deriv {r m : ℕ} (a b : Fin r) (f : MvPolynomial (Fin r × Fin 
       if v.1 = b then (X (a, v.2) : MvPolynomial (Fin r × Fin m) K) else 0) f := by
   induction f using MvPolynomial.induction_on with
   | C c => rw [rowE_C, derivation_C]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     obtain ⟨c, s⟩ := v
     rw [rowE_mul, hp, Derivation.leibniz, mkDerivation_X, rowE_X]
@@ -236,7 +236,7 @@ theorem fockB_rename {σ τ : Type} {e : σ → τ} (he : Function.Injective e) 
     have h1 : ∀ {σ : Type} (g : MvPolynomial σ K), fockB (C a) g = a * constantCoeff g :=
       fun g => @fockL_C_left K _ starRingOfComm _ a g
     rw [rename_C, h1, h1, constantCoeff_rename]
-  | add p q hp hq => simp only [← fockBL_apply, map_add, LinearMap.add_apply] at *; rw [hp, hq]
+  | add p q hp hq => simp only [← fockBL_apply, map_add (f := _), LinearMap.add_apply] at *; rw [hp, hq]
   | mul_X p v hp => rw [mul_comm, map_mul, rename_X, fockB_X_mul, fockB_X_mul, pderiv_rename he, hp]
 
 theorem fockB_incl (n : ℕ) (f g : BP K n) : fockB (incl K n f) (incl K n g) = fockB f g :=

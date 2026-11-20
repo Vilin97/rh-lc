@@ -124,14 +124,14 @@ theorem IsLogP.add {a b : Per.AinfP l} {y y' z : Per.BdRp l} (ha : a ∈ Per.ker
     have := (GlobalTheory.RingBasics.isUnit_nat l m hm).map q
     rwa [map_natCast] at this
   apply (hR _ n.factorial_ne_zero).mul_left_cancel
-  rw [map_add, mul_add, hy n, hy' n, hz n]
+  rw [map_add (f := _), mul_add, hy n, hy' n, hz n]
   have hI : ((Per.kerP l).map q) ^ n = ⊥ := by
     rw [← Ideal.map_pow]
     exact Ideal.map_quotient_self _
   have key := LogAdd.trunc_add hR n _ hI _ _ (Ideal.mem_map_of_mem q ha) (Ideal.mem_map_of_mem q hb)
   change q _ = q _ + q _
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_sum, map_mul, map_pow, map_neg, map_one, map_natCast, map_add]
+    simp only [map_sum, map_mul, map_pow, map_neg, map_one, map_natCast, map_add (f := _)]
   exact key
 
 theorem IsLogP.gal {a : Per.AinfP l} {y : Per.BdRp l} (hy : IsLogP a y) (g : GQ l) :
@@ -263,7 +263,7 @@ theorem exists_period_acris (C : Core l) (μ : ℕ → Om l) (hs : ∀ m, μ (m 
   obtain ⟨y, -, hy, -⟩ := exists_isLogA l e he1
   rw [← log_eq C e d y he hy]
   apply crisP_injective l C.j C.j_cris
-  rw [map_add, CrisUnique.equivariant C.j_cris]
+  rw [map_add (f := _), CrisUnique.equivariant C.j_cris]
   refine IsLogP.add ((ThetaD.fontaineTheta_eq_zero l _).1 (by rw [ThetaD.fontaineTheta_algebraMap₂, hz]; rfl)) (LogFun.mu_mem he1) hY
     (GlobalTheory.CrisIncl.factorial_mul_ev l e _ he1 (LogFun.isLog_map he1 hy C.j_cris)) ?_
   have h := IsLogP.gal hY g
@@ -284,7 +284,7 @@ theorem exists_unit_period {P : LocPrime l} {AI : LocAinf l P} (T : LocTied l P 
     rwa [zero_add] at this
   · apply T.eB.injective
     rw [map_sub, T.actB, RingEquiv.apply_symm_apply, (ActLaws.act_laws l).2.2.2.2.2.2.2.2.2.2.2.1,
-      hY g (d g) (by rw [hC.ζ]; exact hd g), Algebra.smul_def, map_mul, T.zB, hC.t, map_add, map_mul,
+      hY g (d g) (by rw [hC.ζ]; exact hd g), Algebra.smul_def, map_mul, T.zB, hC.t, map_add (f := _), map_mul,
       add_sub_cancel_left, GlobalTheory.RingIface.zB_alg]
     rfl
 
@@ -294,7 +294,7 @@ theorem exists_phi_eq (P : LocPrime l) (b : P.R.B) (c : GQ l → ℚ_[l])
     (h : ∀ g : GQ l, P.actQ g b - b = c g • P.tB) :
     ∃ b' : P.R.B, P.φB b' = (l : ℚ_[l]) • b' ∧ ∀ g : GQ l, P.actQ g b' - b' = c g • P.tB := by
   obtain ⟨k, hk⟩ := (P.PD (botExt l)).invB (P.φB b - (l : ℚ_[l]) • b) fun g => by
-    rw [P.PD_actB, map_sub, map_smul, ← phiB_actQ, sub_eq_iff_eq_add.1 (h g), map_add, map_smul, localPrime_frobenius_periodT,
+    rw [P.PD_actB, map_sub, map_smul, ← phiB_actQ, sub_eq_iff_eq_add.1 (h g), map_add (f := _), map_smul, localPrime_frobenius_periodT,
       smul_add, smul_comm]
     abel
   obtain ⟨a, ha⟩ := IntermediateField.mem_bot.1 k.2.1
@@ -302,12 +302,12 @@ theorem exists_phi_eq (P : LocPrime l) (b : P.R.B) (c : GQ l → ℚ_[l])
   rw [hka, ← IsScalarTower.algebraMap_apply] at hk
   have hl : (l : ℚ_[l]) - 1 ≠ 0 := sub_ne_zero.2 (by exact_mod_cast (Fact.out : l.Prime).ne_one)
   refine ⟨b + algebraMap ℚ_[l] _ (a / ((l : ℚ_[l]) - 1)), ?_, fun g => ?_⟩
-  · rw [map_add, AlgHom.commutes, smul_add, eq_sub_iff_add_eq.1 hk |>.symm, Algebra.smul_def (l : ℚ_[l]) (algebraMap _ _ _),
+  · rw [map_add (f := _), AlgHom.commutes, smul_add, eq_sub_iff_add_eq.1 hk |>.symm, Algebra.smul_def (l : ℚ_[l]) (algebraMap _ _ _),
       ← map_mul, add_comm (algebraMap _ _ a), add_assoc, ← map_add]
     congr 2
     field_simp
     ring
-  · rw [map_add, AlgEquiv.commutes, ← h g]; abel
+  · rw [map_add (f := _), AlgEquiv.commutes, ← h g]; abel
 
 theorem eq_smul_t (P : LocPrime l) (b : P.R.B) (h : P.φB b = (l : ℚ_[l]) • b)
     (hf : P.ιB (b * tInv P) ∈ (P.PD (botExt l)).Fil 0) : ∃ r : ℚ_[l], b = r • P.tB := by
@@ -332,21 +332,21 @@ theorem kummer_not_coboundary : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (A
   have key : ∀ α β : ℚ_[l], α * a + β * s = 0 → α = 0 ∧ β = 0 := by
     intro α β hαβ
     obtain ⟨r, hr⟩ := eq_smul_t P (α • b + β • y) (by
-      rw [map_add, map_smul, map_smul, hφb, hφy, smul_add, smul_comm α, smul_comm β]) (by
+      rw [map_add (f := _), map_smul, map_smul, hφb, hφy, smul_add, smul_comm α, smul_comm β]) (by
       have e : (α • b + β • y) * tInv P = α • ((b - algebraMap ℚ_[l] P.R.B a) * tInv P) +
           β • ((y - algebraMap ℚ_[l] P.R.B s) * tInv P) := by
         have := congrArg (algebraMap ℚ_[l] P.R.B) hαβ
-        rw [map_add, map_mul, map_mul, map_zero] at this
+        rw [map_add (f := _), map_mul, map_mul, map_zero] at this
         simp only [Algebra.smul_def]
         linear_combination tInv P * this
-      rw [e, map_add, map_smul, map_smul]
+      rw [e, map_add (f := _), map_smul, map_smul]
       exact add_mem (smul_mem_Fil P α ha) (smul_mem_Fil P β hs))
     refine GlobalTheory.Pst.KummerIndep.kummer_indep l P μ d hμ hd α β r fun g => ?_
     refine smul_left_injective ℚ_[l] (isUnit_tB P).ne_zero ?_
     have e := congrArg (fun x => P.actQ g x - x) hr
-    simp only [map_add, map_smul, localPrime_galoisAction_periodT] at e
+    simp only [map_add (f := _), map_smul, localPrime_galoisAction_periodT] at e
     rw [sub_eq_iff_eq_add.1 (hb g), sub_eq_iff_eq_add.1 (hy g)] at e
-    simp only [Algebra.smul_def, map_add, map_mul, map_sub, map_one] at e ⊢
+    simp only [Algebra.smul_def, map_add (f := _), map_mul, map_sub, map_one] at e ⊢
     linear_combination e
   obtain ⟨h1, -⟩ := key s (-a) (by ring)
   exact one_ne_zero (key 0 1 (by rw [h1]; ring)).2

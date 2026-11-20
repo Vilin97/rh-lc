@@ -188,7 +188,7 @@ theorem transport {r t : ℕ} {c : kˣ} (hc : valuation k (c : k) < 1) {x : Matr
   let M : Matrix (Fin (r + t)) (Fin (r + t)) 𝒪[k] := 1 + D'
   have hres : M.map (IsLocalRing.residue 𝒪[k]) = 1 := by
     ext i j
-    simp only [M, Matrix.map_apply, Matrix.add_apply, map_add]
+    simp only [M, Matrix.map_apply, Matrix.add_apply, map_add (f := _)]
     have h0 : IsLocalRing.residue 𝒪[k] (D' i j) = 0 := by
       rw [IsLocalRing.residue_eq_zero_iff, IsLocalRing.mem_maximalIdeal, mem_nonunits_iff,
         Valuation.Integer.not_isUnit_iff_valuation_lt_one]
@@ -206,7 +206,7 @@ theorem transport {r t : ℕ} {c : kˣ} (hc : valuation k (c : k) < 1) {x : Matr
   have hgv : (Matrix.GeneralLinearGroup.map (algebraMap 𝒪[k] k) g).val = 1 + D := by
     ext i j
     change algebraMap 𝒪[k] k ((1 + D') i j) = (1 + D) i j
-    rw [Matrix.add_apply, Matrix.add_apply, map_add]
+    rw [Matrix.add_apply, Matrix.add_apply, map_add (f := _)]
     congr 1
     by_cases hij : i = j
     · subst hij

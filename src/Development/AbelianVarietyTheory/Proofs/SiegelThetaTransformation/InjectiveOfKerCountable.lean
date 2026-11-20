@@ -67,7 +67,7 @@ theorem exists_isometry [Algebra c.F ℂ] {r g g' : ℕ} {X : Data E r} {bas : (
       rw [← hh, ← hh]; exact A.ex_lin a v
   let gam₁ : L →ₗ[𝓞 E] (F.Di i).La :=
     { toFun := gam
-      map_add' := fun a b => hP.2.1 (by rw [map_add, hgam, hgam, hgam, ← map_add, ← hadd]; rfl)
+      map_add' := fun a b => hP.2.1 (by rw [map_add (f := _), hgam, hgam, hgam, ← map_add (f := _), ← hadd]; rfl)
       map_smul' := fun a b => hP.2.1 (funext fun k => by
         rw [RingHom.id_apply, hP.1, hgam, hgam, ← hlin]
         exact congrArg (fun z => h z k) (hsm a b)) }
@@ -115,7 +115,7 @@ theorem exists_isometry [Algebra c.F ℂ] {r g g' : ℕ} {X : Data E r} {bas : (
     obtain ⟨w, hw⟩ := (F.ex_ker i P hP _).1 h2
     refine ⟨w, hP.2.1 ?_⟩
     change P (gam _) = _
-    rw [map_add, map_nsmul, hw, ← Nat.cast_smul_eq_nsmul ℂ, ← smul_sub, smul_inv_smul₀ hM, add_sub_cancel]
+    rw [map_add (f := _), map_nsmul, hw, ← Nat.cast_smul_eq_nsmul ℂ, ← smul_sub, smul_inv_smul₀ hM, add_sub_cancel]
 
 theorem exists_const {σ : c.F →+* ℂ} {r : ℕ} {U : Formalism.L2.PjFree.Unf Xo c σ r} (hU : Formalism.L2.PjFree.IsUnf U) (W : UW U) {f : Rul Xo c}
     (hf : f ∈ sec Xo c 0 0) (h1 : ∀ y : FrPt Xo c (CAt σ), ‖Formalism.L2.PjFree.toC (evR Xo c f y)‖ = 1) :

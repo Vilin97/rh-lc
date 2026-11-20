@@ -72,7 +72,7 @@ theorem ratCoord : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberF
     ext (j | j) <;> simp [ratP]
   choose D0 hD0 using key
   have hadd : ∀ u v, D0 (u + v) = D0 u + D0 v := fun u v => diagonalEmbedding_injective (by
-    rw [diagonalEmbedding_add, ← hD0, ← hD0, ← hD0, incM_add, map_add])
+    rw [diagonalEmbedding_add, ← hD0, ← hD0, ← hD0, incM_add, map_add (f := _)])
   have hsmul : ∀ (c : F) u, D0 (c • u) = (RingHom.id F) c • D0 u := fun c u => diagonalEmbedding_injective (by
     rw [RingHom.id_apply, diagonalEmbedding_smul, ← hD0, ← hD0, incM_smul, map_smul])
   refine ⟨{ toFun := D0, map_add' := hadd, map_smul' := hsmul }, ?_, fun u => hD0 u⟩

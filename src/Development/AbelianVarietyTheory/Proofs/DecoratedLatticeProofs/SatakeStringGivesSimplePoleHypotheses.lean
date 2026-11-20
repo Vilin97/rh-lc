@@ -72,7 +72,7 @@ theorem GlobalTheory.Core.Rk.StringPole.string_pole_hyp : ∀ (D : D7) (G : Type
   have hsplit : B w = c w + GlobalTheory.LFun.segFam x D.R.t w := (tsub_add_cancel_of_le hle).symm
   have hc' : (c w).map (fun a : ℂˣ => (a : ℂ)) = B' := by
     have := congrArg (Multiset.map fun a : ℂˣ => (a : ℂ)) hsplit
-    rw [Multiset.map_add, hB', hseg] at this
+    rw [Multiset.map_add (f := _), hB', hseg] at this
     exact (add_right_cancel this).symm
   refine ⟨?_, ?_, GlobalTheory.LFun.norm_val _ _, GlobalTheory.LFun.norm_val _ _, ?_⟩
   · have := congrArg Multiset.card hsplit

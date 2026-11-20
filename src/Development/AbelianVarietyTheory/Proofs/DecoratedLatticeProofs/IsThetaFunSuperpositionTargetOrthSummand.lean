@@ -48,7 +48,7 @@ theorem superpos_target : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdCh
   set e := o.resT S with he
   have hsplit : ∀ (u u' : WO S A) (v : WO S B), e.symm (u + u', v) = e.symm (u, v) + e.symm (u', 0) := by
     intro u u' v
-    rw [← map_add, Prod.mk_add_mk, add_zero]
+    rw [← map_add (f := _), Prod.mk_add_mk, add_zero]
   have hmeas : ∀ (F' : WO S T → ℂ), Continuous F' → ∀ (c : WO S T) (u : WO S A),
       AEStronglyMeasurable (fun ξ => F' (e.symm (u, k ξ) + c)) μ := by
     intro F' hF' c u

@@ -17,15 +17,15 @@ theorem hasCuspImage_of_disjoint (π : CuspSub E a) {N : Submodule ℂ (Sm E a)}
   obtain ⟨C, hC, hc⟩ := hd.exists_isCompl
   let p := π.V.projectionOnto C hc.symm
   have hp : ∀ (x : π.V) n, n ∈ N → p (x.1 + n) = x := fun x n hn => by
-    rw [map_add, Submodule.projectionOnto_apply_left, (Submodule.projectionOnto_apply_eq_zero_iff _).2 (hC hn), add_zero]
+    rw [map_add (f := _), Submodule.projectionOnto_apply_left, (Submodule.projectionOnto_apply_eq_zero_iff _).2 (hC hn), add_zero]
   refine ⟨π.V ⊔ N, π, p, Submodule.mem_sup.2 ⟨ψ, hψ, _, hf, add_sub_cancel _ _⟩, fun o g hg => ?_, ?_, fun o g hg => ?_⟩
   · obtain ⟨x, hx, n, hn, rfl⟩ := Submodule.mem_sup.1 hg
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (π.stable o x hx) (hN o n hn)
   · rw [← add_sub_cancel ψ f, hp ⟨ψ, hψ⟩ _ hf]
     exact fun e => h0 (congrArg Subtype.val e)
   · obtain ⟨x, hx, n, hn, rfl⟩ := Submodule.mem_sup.1 hg
-    rw [map_add, hp ⟨x, hx⟩ n hn]
+    rw [map_add (f := _), hp ⟨x, hx⟩ n hn]
     exact hp (π.op o ⟨x, hx⟩) _ (hN o n hn)
 
 variable {μ : Measure (GA E a)} [μ.IsHaarMeasure] [μ.IsMulRightInvariant]

@@ -21,7 +21,7 @@ theorem twEval_of_isTwG {O : Type} [CommRing O] {w0 : O} {ψ : InvFun O}
     { toFun := fun x => τ.symm (s fun i => σ (x i))
       map_add' := fun x x' => by
         have : (fun i => σ ((x + x') i)) = (fun i => σ (x i)) + fun i => σ (x' i) := by ext i; simp
-        rw [this, map_add, map_add]
+        rw [this, map_add (f := _), map_add (f := _)]
       map_smul' := fun c x => by
         have : (fun i => σ ((c • x) i)) = σ c • fun i => σ (x i) := by ext i; simp
         rw [this, map_smul, hsy]

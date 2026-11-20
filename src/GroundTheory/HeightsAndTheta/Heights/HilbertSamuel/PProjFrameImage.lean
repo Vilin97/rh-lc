@@ -33,7 +33,7 @@ theorem coneEval_graphMap (x : Ix κ → Ω) (e : Fin (D + 1) → Ix κ) (f : MR
       coneMap ℤ (x ∘ e) (rename (fun q : Σ _ : Unit, Fin (D + 1) => q.2) f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [graphMap, coneEval, coneMap]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p q hp =>
     obtain ⟨⟨⟩, k⟩ := q
     simp only [map_mul, hp, rename_X]

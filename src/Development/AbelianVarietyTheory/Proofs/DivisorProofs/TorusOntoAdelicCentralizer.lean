@@ -25,14 +25,14 @@ theorem flat_centralizer (R B L : Type) [CommRing R] [Algebra ℚ R] [Ring B] [A
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul t a => simp
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have had : ∀ y : R ⊗[ℚ] B, y * ((1 : R) ⊗ₜ[ℚ] γ) - ((1 : R) ⊗ₜ[ℚ] γ) * y = LinearMap.lTensor R ad y := by
     intro y
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul t b =>
       simp [ad, Algebra.TensorProduct.tmul_mul_tmul, TensorProduct.tmul_sub]
-    | add x y hx hy => rw [map_add, ← hx, ← hy]; noncomm_ring
+    | add x y hx hy => rw [map_add (f := _), ← hx, ← hy]; noncomm_ring
   have hex' := Module.Flat.lTensor_exact R hex
   refine ⟨?_, fun y => ?_⟩
   · have h := Module.Flat.lTensor_preserves_injective_linearMap (M := R) f.toLinearMap hf
@@ -104,7 +104,7 @@ theorem incl_extC (R : Type) [CommRing R] [Algebra ℚ R] {G : HTGroup p} (P : P
     rw [incl_tmul, starT_tmul]
     simp only [extC, Algebra.TensorProduct.map_tmul, AlgHom.id_apply, incl_tmul, hc, inC, RingHom.coe_coe,
       Algebra.TensorProduct.includeRight_apply, Algebra.TensorProduct.tmul_mul_tmul, one_mul, mul_one, sh]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add, MulOpposite.unop_add, mul_add, add_mul]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _), MulOpposite.unop_add, mul_add, add_mul]
 
 theorem incl_sim (R : Type) [CommRing R] [Algebra ℚ R] {G : HTGroup p} (P : Pair G) (c : algF P →ₐ[ℚ] algF P)
     (hc : ∀ m : algF P, ((c m : algF P) : G.C) = (P.β : G.C) * sh G (m : G.C) * ((P.β⁻¹ : G.Cˣ) : G.C))

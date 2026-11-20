@@ -73,7 +73,7 @@ theorem translate_add_of_fixed {Λ : AddSubgroup ℂ} (hA : area Λ ≠ 0) (G : 
   congr 1
   rw [Complex.exp_eq_exp_iff_exists_int]
   refine ⟨k, ?_⟩
-  rw [map_add]
+  rw [map_add (f := _)]
   field_simp
   linear_combination hs
 

@@ -68,7 +68,7 @@ theorem psi_funct {ε : Fin n → Bool} {lam : Fin n → ℝ} {T : S7.KType ε (
       hσ.1.2 _ hg _ (fct_toMK_mem k)]
     simp only [ContinuousLinearMap.comp_apply]
     have hsplit : rreg ε x (uniformisationL2 ε Ψ T.w v) = uniformisationL2 ε Ψ T.w a + r := by rw [hr]; abel
-    rw [hsplit, map_add, map_add, inner_add_right, rightRegular_datumEmbedding hP, hF hg, hy, hb,
+    rw [hsplit, map_add (f := _), map_add (f := _), inner_add_right, rightRegular_datumEmbedding hP, hF hg, hy, hb,
       ContinuousLinearMap.adjoint_inner_left, ContinuousLinearMap.adjoint_inner_left]
   have hI1 : Integrable (fun k : S7.KG ε => star (LinearMap.trace ℂ T.V (T.op k).toLinearMap) *
       ⟪b, T.op k a⟫_ℂ) (S7.muK ε) :=

@@ -19,7 +19,7 @@ theorem baseChangeTensorConjugation_involutive_of_involution {F E : Type} [Field
     (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) (e : R ⊗[F] E) : sigR R σ (sigR R σ e) = e := by
   induction e using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | tmul a x => simp [sigR, hσ]
 
 theorem infinitePlaceComponent_tensorConjugation {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] (σ : E →ₐ[F] E)
@@ -27,7 +27,7 @@ theorem infinitePlaceComponent_tensorConjugation {F E : Type} [Field F] [NumberF
     compInf F E w (sigR (AF F) σ z) = sigR w.Completion σ (compInf F E w z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
   | tmul a x => simp [compInf, sigR]
 
 theorem mul_eq_conj_mul_of_invertible_cancel {R : Type*} [Ring R] {P Pi F X K : R} (h1 : P * Pi = 1)

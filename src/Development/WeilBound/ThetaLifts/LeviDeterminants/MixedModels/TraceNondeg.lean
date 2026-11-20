@@ -49,7 +49,7 @@ def loc (T : ((κ → AF F) × (κ → AF F)) →ₗ[AF F] ((κ → AF F) × (κ
   toFun y := pr (T (lf y))
   map_add' y z := by
     have e : lf (y + z) = lf y + lf z := Prod.ext (funext fun _ => li_add _ _) (funext fun _ => li_add _ _)
-    rw [e, map_add]
+    rw [e, map_add (f := _)]
     exact Prod.ext (funext fun _ => map_add _ _ _) (funext fun _ => map_add _ _ _)
   map_smul' c y := by
     have e : lf (c • y) = li c • lf y := Prod.ext (funext fun _ => li_mul _ _) (funext fun _ => li_mul _ _)
@@ -81,8 +81,8 @@ theorem trace_nondeg (a : mixedSpace F) (h : ∀ b, Algebra.trace ℝ (mixedSpac
   rwa [h5, h1, Submodule.mem_bot] at h6
 
 def betaL (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ] : (κ → mixedSpace F) →ₗ[ℝ] (κ → mixedSpace F) →ₗ[ℝ] ℝ :=
-  LinearMap.mk₂ ℝ (beta F κ) (fun x y z => by simp only [beta, add_dotProduct, map_add]) (fun c x y => by simp [beta, smul_dotProduct])
-    (fun x y z => by simp only [beta, dotProduct_add, map_add]) fun c x y => by simp [beta, dotProduct_smul]
+  LinearMap.mk₂ ℝ (beta F κ) (fun x y z => by simp only [beta, add_dotProduct, map_add (f := _)]) (fun c x y => by simp [beta, smul_dotProduct])
+    (fun x y z => by simp only [beta, dotProduct_add, map_add (f := _)]) fun c x y => by simp [beta, dotProduct_smul]
 
 end Inf
 

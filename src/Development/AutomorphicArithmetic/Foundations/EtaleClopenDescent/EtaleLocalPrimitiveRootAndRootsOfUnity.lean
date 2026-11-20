@@ -153,7 +153,7 @@ private theorem unit_deriv_cyclotomic {A : Type} [CommRing A] (q : ℕ) [NeZero 
     IsUnit (AdjoinRoot.mk (cyclotomic q A) (derivative (cyclotomic q A))) := by
   obtain ⟨g, hg⟩ := cyclotomic.dvd_X_pow_sub_one q A
   have hm := congrArg (AdjoinRoot.mk (cyclotomic q A)) (congrArg derivative hg)
-  rw [derivative_mul, map_add, map_mul, map_mul, AdjoinRoot.mk_self, zero_mul, add_zero] at hm
+  rw [derivative_mul, map_add (f := _), map_mul, map_mul, AdjoinRoot.mk_self, zero_mul, add_zero] at hm
   have hX : IsUnit (AdjoinRoot.mk (cyclotomic q A) (X : A[X])) := by
     have h1 := congrArg (AdjoinRoot.mk (cyclotomic q A)) hg
     rw [map_mul, AdjoinRoot.mk_self, zero_mul, map_sub, map_pow, map_one, sub_eq_zero] at h1

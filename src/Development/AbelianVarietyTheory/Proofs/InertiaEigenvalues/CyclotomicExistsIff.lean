@@ -340,7 +340,7 @@ theorem image_sh_pull (ψ : k⸨X⸩ →ₗ[k] k⸨X⸩) (f Ψ : V →ₗ[k] V) 
         rw [← coe_smul, ← mul_smul, h1, ← hc, coe_smul]
         exact M₀.smul_mem c hm
       | zero => intro b; simp
-      | add x y _ _ hx hy => intro b; rw [smul_add, smul_add, map_add]; exact M₀.add_mem (hx b) (hy b)
+      | add x y _ _ hx hy => intro b; rw [smul_add, smul_add, map_add (f := _)]; exact M₀.add_mem (hx b) (hy b)
       | smul c x _ hx => intro b; rw [← mul_smul b]; exact hx _
     simpa using key 1
   · intro hm

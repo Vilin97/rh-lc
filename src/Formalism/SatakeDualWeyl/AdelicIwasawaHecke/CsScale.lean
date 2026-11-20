@@ -16,7 +16,7 @@ variable {A : Type} [CommRing A] {n : Type} [Fintype n]
 
 theorem csScale_hform_add_left (σ : A →+* A) (J : Matrix n n A) (x x' y : n → A) :
     hform σ J (x + x') y = hform σ J x y + hform σ J x' y := by
-  simp only [hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem csScale_hform_add_right (σ : A →+* A) (J : Matrix n n A) (x y y' : n → A) :
     hform σ J x (y + y') = hform σ J x y + hform σ J x y' := by

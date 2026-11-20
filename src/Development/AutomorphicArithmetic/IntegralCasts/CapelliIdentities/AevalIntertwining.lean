@@ -19,7 +19,7 @@ theorem UpperTheory.Reformulated.B.AevalIntertwining.aeval_intertwine :
   induction p using Polynomial.induction_on' with
   | add p q hp hq =>
     intro x
-    simp only [map_add, LinearMap.add_apply, hp, hq]
+    simp only [map_add (f := _), LinearMap.add_apply, hp, hq]
   | monomial n a =>
     intro x
     simp only [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply,

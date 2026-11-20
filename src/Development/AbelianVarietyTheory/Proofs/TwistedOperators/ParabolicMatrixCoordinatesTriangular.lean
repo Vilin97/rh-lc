@@ -36,7 +36,7 @@ theorem act_mem_of_mem_span {S : Set V.V} {A : Submodule E V.V} {g : HA R hc.sig
   | mem x hx => exact h x hx
   | zero => rw [show coordR V R 0 = 0 from funext fun _ => by simp [coordR], map_zero]; exact zero_mem _
   | add x y _ _ h1 h2 =>
-    rw [show coordR V R (x + y) = coordR V R x + coordR V R y from funext fun _ => by simp [coordR], map_add]
+    rw [show coordR V R (x + y) = coordR V R x + coordR V R y from funext fun _ => by simp [coordR], map_add (f := _)]
     exact add_mem h1 h2
   | smul a x _ h1 =>
     rw [show coordR V R (a • x) = inclR (F := F) R a • coordR V R x from funext fun _ => by simp [coordR], map_smul]

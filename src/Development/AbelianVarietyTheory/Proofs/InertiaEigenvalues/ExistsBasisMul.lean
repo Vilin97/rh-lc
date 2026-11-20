@@ -75,7 +75,7 @@ theorem isCrys_tensor [IsFractionRing O LL] (hq : QuotCrys PD LL) (ht : TensorCr
       exact h1
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul x y => simpa using LinearMap.congr_fun₂ this x y
   · rw [← LinearMap.range_eq_top, eq_top_iff, ← T''.L.span, Submodule.span_le]
     intro z hz
@@ -85,7 +85,7 @@ theorem isCrys_tensor [IsFractionRing O LL] (hq : QuotCrys PD LL) (ht : TensorCr
     clear hw hz' hz
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, Submodule.coe_add]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [map_add (f := _), Submodule.coe_add]; exact Submodule.add_mem _ hx hy
     | tmul x y => exact ⟨(x : T.V) ⊗ₜ[LL] (y : T'.V), by simp [hf]⟩
 
 theorem exists_mul (hm : ∀ m : Ideal W.EE, m.IsMaximal → m.map E.ioE.toRingHom ≠ ⊤)
@@ -154,7 +154,7 @@ theorem exists_basis_mul (hm : ∀ m : Ideal W.EE, m.IsMaximal → m.map E.ioE.t
       obtain ⟨w, rfl⟩ := m.surjective u
       induction w using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => rw [map_add, TensorProduct.tmul_add]; exact S.add_mem hx hy
+      | add x y hx hy => rw [map_add (f := _), TensorProduct.tmul_add]; exact S.add_mem hx hy
       | tmul x y =>
         have := h1 (r ⊗ₜ[O] x) ((1 : RW) ⊗ₜ[O] y)
         rwa [mulL_tmul, mul_one] at this
@@ -210,7 +210,7 @@ theorem tensorFor [IsFractionRing O LL]
     rintro g _ ⟨w, rfl⟩
     induction w using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
     | tmul x y => rw [hν₀, hγμ]; exact hmem _ (W.N_Γ T g x x.2) _ (W.N_Γ T' g y y.2)
   have hN : LinearMap.range ν₀ = W.N T'' := by
     refine hU T'' (isCrys_tensor hq ht hT hT' m hmt) _ ?_ ?_ ?_ ?_
@@ -230,7 +230,7 @@ theorem tensorFor [IsFractionRing O LL]
         obtain ⟨u, hu, hu'⟩ := hx
         obtain ⟨u', hv, hv'⟩ := hy
         refine ⟨u + u', Submodule.add_mem _ hu hv, ?_⟩
-        rw [map_add, map_add, smul_add, ← hu', ← hv']
+        rw [map_add (f := _), map_add (f := _), smul_add, ← hu', ← hv']
         abel
       | tmul x y =>
         obtain ⟨x', hx', h1⟩ := W.N_π T W.gam x x.2
@@ -246,7 +246,7 @@ theorem tensorFor [IsFractionRing O LL]
         rintro _ ⟨_, ⟨w, rfl⟩, rfl⟩
         induction w using TensorProduct.induction_on with
         | zero => simp
-        | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
+        | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
         | tmul x y =>
           obtain ⟨k, hk⟩ := W.N_φ T x x.2
           obtain ⟨k', hk'⟩ := W.N_φ T' y y.2
@@ -257,7 +257,7 @@ theorem tensorFor [IsFractionRing O LL]
         rintro _ ⟨w, rfl⟩
         induction w using TensorProduct.induction_on with
         | zero => simp
-        | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+        | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
         | tmul x y =>
           obtain ⟨k, hk⟩ := W.N_φinv T x x.2
           obtain ⟨k', hk'⟩ := W.N_φinv T' y y.2
@@ -269,12 +269,12 @@ theorem tensorFor [IsFractionRing O LL]
             intro u hu u' hu'
             induction hu using Submodule.span_induction with
             | zero => simp
-            | add x y _ _ hx hy => rw [map_add, LinearMap.add_apply]; exact Submodule.add_mem _ hx hy
+            | add x y _ _ hx hy => rw [map_add (f := _), LinearMap.add_apply]; exact Submodule.add_mem _ hx hy
             | smul a x _ hx => rw [hA₁]; exact Submodule.smul_mem _ _ hx
             | mem u hu =>
               induction hu' using Submodule.span_induction with
               | zero => simp
-              | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+              | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
               | smul a x _ hx => rw [hA₂]; exact Submodule.smul_mem _ _ hx
               | mem u' hu' =>
                 obtain ⟨x, hx, rfl⟩ := hu

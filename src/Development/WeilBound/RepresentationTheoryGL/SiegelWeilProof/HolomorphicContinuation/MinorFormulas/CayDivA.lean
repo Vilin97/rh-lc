@@ -137,7 +137,7 @@ theorem pderiv_false_AT {Q : Fm n} (hQ : Q ∈ AT n) (a d : Fin n) : pderiv (fal
     obtain ⟨v, rfl⟩ := hx
     exact pderiv_X_of_ne (by simp)
   | algebraMap r => rw [MvPolynomial.algebraMap_eq, pderiv_C]
-  | add x y _ _ hx hy => rw [map_add, hx, hy, add_zero]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy, add_zero]
   | mul x y _ _ hx hy => rw [Derivation.leibniz, hx, hy, smul_zero, smul_zero, add_zero]
 
 theorem pderiv_true_AT {Q : Fm n} (hQ : Q ∈ AT n) (a d : Fin n) : pderiv (true, a, d) Q ∈ AT n := by
@@ -150,7 +150,7 @@ theorem pderiv_true_AT {Q : Fm n} (hQ : Q ∈ AT n) (a d : Fin n) : pderiv (true
     · exact Subalgebra.one_mem _
     · exact Subalgebra.zero_mem _
   | algebraMap r => rw [MvPolynomial.algebraMap_eq, pderiv_C]; exact Subalgebra.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Subalgebra.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Subalgebra.add_mem _ hx hy
   | mul x y hx' hy' hx hy =>
     rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
     exact Subalgebra.add_mem _ (Subalgebra.mul_mem _ hx' hy) (Subalgebra.mul_mem _ hy' hx)

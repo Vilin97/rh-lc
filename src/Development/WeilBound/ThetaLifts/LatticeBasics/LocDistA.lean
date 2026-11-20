@@ -110,7 +110,7 @@ theorem kill_loc {V : Type} [AddCommGroup V] [TopologicalSpace V] [Nonarchimedea
     · rintro s t hst ⟨A, h1, h2, h3⟩; exact ⟨A, h1, hst.trans h2, h3⟩
     · rintro s t ⟨A, h1, h2, h3⟩ ⟨B, k1, k2, k3⟩
       refine ⟨A ∪ B, h1.union k1, Set.union_subset_union h2 k2, fun ψ hψ h => ?_⟩
-      rw [← Set.indicator_self_add_compl A ψ, map_add, h3 _ (sb_cut h1 hψ) (fun y hy => Set.indicator_of_notMem hy _),
+      rw [← Set.indicator_self_add_compl A ψ, map_add (f := _), h3 _ (sb_cut h1 hψ) (fun y hy => Set.indicator_of_notMem hy _),
         k3 _ (sb_cut h1.compl hψ), add_zero]
       intro y hy
       by_cases hA : y ∈ A

@@ -97,7 +97,7 @@ theorem exists_sameCoset {X : Fields} {Pr : Primes X} (sel : HeightOneSpectrum (
     field_simp
     ring
   have hdiff : (fr P).symm yl - y0 P = algebraMap (𝓞 X.E) X.E (m P) • (fr P).symm z := by
-    rw [hy, map_add, map_smul, LinearEquiv.symm_apply_apply, add_sub_cancel_left]
+    rw [hy, map_add (f := _), map_smul, LinearEquiv.symm_apply_apply, add_sub_cancel_left]
   have key := hd P P.1 z (fun l => hyl l P) l
   show IntAt P.1 (((qOf P.1 : X.E) ^ e P)⁻¹ * ((fr P).symm yl - y0 P) l)
   rw [hdiff, Pi.smul_apply, smul_eq_mul, hmE]

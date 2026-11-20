@@ -58,7 +58,7 @@ theorem modN_of_dvd {H : Host E} (D : Datum H) (N : ℕ) (a : D.La)
     (h : ∀ b, (N : ℤ) ∣ D.EF a b) : D.ModN N a := by
   let φ : D.La →ₗ[ℤ] ℤ :=
     { toFun := fun b => D.EF a b / N
-      map_add' := fun x y => by simp only [map_add]; rw [Int.add_ediv_of_dvd_left (h x)]
+      map_add' := fun x y => by simp only [map_add (f := _)]; rw [Int.add_ediv_of_dvd_left (h x)]
       map_smul' := fun k x => by
         simp only [map_zsmul, smul_eq_mul, RingHom.id_apply]; rw [Int.mul_ediv_assoc _ (h x)] }
   obtain ⟨a', ha'⟩ := D.unimod.2 φ
@@ -114,7 +114,7 @@ theorem frame (H : Host E) (D : Datum H) (N : ℕ) (hN : 0 < N) (T : 𝓞 E →+
     intro x hx; rw [hπ]; exact hperf x (fun d => by rw [mul_comm]; exact hx d)
   have hskEF : ∀ x y, D.EF x y = - D.EF y x := by
     intro x y; have := D.alt (x + y)
-    simp only [map_add, LinearMap.add_apply, D.alt] at this; linarith
+    simp only [map_add (f := _), LinearMap.add_apply, D.alt] at this; linarith
   have hrep := fun (a b : D.La) => represent N hN T hperf
       (AddMonoidHom.mk' (fun c : 𝓞 E => D.EF (c • a) b) (fun c c' => by simp [add_smul]))
   choose h hh using hrep
@@ -122,14 +122,14 @@ theorem frame (H : Host E) (D : Datum H) (N : ℕ) (hN : 0 < N) (T : 𝓞 E →+
     have := hh a b c; rwa [AddMonoidHom.mk'_apply] at this
   have Hadd : ∀ a a' b, π (h (a + a') b) = π (h a b) + π (h a' b) := by
     intro a a' b
-    rw [← map_add, ← sub_eq_zero, ← map_sub]
+    rw [← map_add (f := _), ← sub_eq_zero, ← map_sub]
     apply perf
     intro c
     have e1 := hh' (a + a') b c; have e2 := hh' a b c; have e3 := hh' a' b c
     have : T (c * (h (a + a') b - (h a b + h a' b))) =
         -((D.EF (c • (a + a')) b - T (c * h (a + a') b)) - (D.EF (c • a) b - T (c * h a b)) -
           (D.EF (c • a') b - T (c * h a' b))) := by
-      rw [smul_add, map_add, LinearMap.add_apply, mul_sub, mul_add, map_sub, map_add]; ring
+      rw [smul_add, map_add (f := _), LinearMap.add_apply, mul_sub, mul_add, map_sub, map_add (f := _)]; ring
     rw [this]; exact ((e1.sub e2).sub e3).neg_right
   have Hsmul : ∀ (x : 𝓞 E) a b, π (h (x • a) b) = π x * π (h a b) := by
     intro x a b
@@ -164,7 +164,7 @@ theorem frame (H : Host E) (D : Datum H) (N : ℕ) (hN : 0 < N) (T : 𝓞 E →+
     intro a b hb; rw [Hherm b a, Hzero b a hb, map_zero]
   have Hadd_right : ∀ a b b', π (h a (b + b')) = π (h a b) + π (h a b') := by
     intro a b b'
-    rw [Hherm (b + b') a, Hadd, map_add, ← Hherm b a, ← Hherm b' a]
+    rw [Hherm (b + b') a, Hadd, map_add (f := _), ← Hherm b a, ← Hherm b' a]
   have Hsum_left : ∀ (c : Fin r → 𝓞 E) (v : Fin r → D.La) b,
       π (h (∑ i, c i • v i) b) = ∑ i, π (c i) * π (h (v i) b) := by
     intro c v b
@@ -215,7 +215,7 @@ theorem frame (H : Host E) (D : Datum H) (N : ℕ) (hN : 0 < N) (T : 𝓞 E →+
     have := key (x - y) (by rw [Matrix.sub_vecMul, hxy', sub_self])
     exact sub_eq_zero.mp this
   have hτ : ∃ τ, τ + s τ = 1 := ⟨π H.w0, by
-    rw [hs, GlobalTheory.HostModel.cmHost_bar_halfIntegerGenerator, ← map_add, add_sub_cancel, map_one]⟩
+    rw [hs, GlobalTheory.HostModel.cmHost_bar_halfIntegerGenerator, ← map_add (f := _), add_sub_cancel, map_one]⟩
   have hnorm : ∀ u, IsUnit u → s u = u → ∃ x, s x * x = u := by
     intro u hu hsu
     obtain ⟨ul, rfl⟩ := Ideal.Quotient.mk_surjective (I := I) u
@@ -276,7 +276,7 @@ theorem frame (H : Host E) (D : Datum H) (N : ℕ) (hN : 0 < N) (T : 𝓞 E →+
       rw [map_mul, hs]
     obtain ⟨z, hz⟩ := (hπ (h (∑ i, c i • e i) (∑ i, d i • e i) - ∑ i, c i * H.bar (d i))).1 (by rw [map_sub, h2, sub_self])
     have hT' : T (h (∑ i, c i • e i) (∑ i, d i • e i)) = T (N • z) + T (∑ i, c i * H.bar (d i)) := by
-      rw [← map_add, ← hz, sub_add_cancel]
+      rw [← map_add (f := _), ← hz, sub_add_cancel]
     set_option synthInstance.maxHeartbeats 100000 in
       rw [map_sum, map_nsmul, nsmul_eq_mul] at hT'
     rw [hT'] at h1

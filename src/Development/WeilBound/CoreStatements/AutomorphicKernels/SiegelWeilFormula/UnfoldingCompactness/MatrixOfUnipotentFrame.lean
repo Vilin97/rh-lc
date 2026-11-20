@@ -109,7 +109,7 @@ theorem mem_nF_iff {ν : nA σ Y b} : ν ∈ nF σ Y b ↔ ∃ T : Matrix (Fin n
   | add _ _ _ _ h h' =>
     obtain ⟨T, hT⟩ := h
     obtain ⟨T', hT'⟩ := h'
-    exact ⟨T + T', by rw [AddSubgroup.coe_add, hT, hT']; simp [incM, Matrix.map_add]⟩
+    exact ⟨T + T', by rw [AddSubgroup.coe_add, hT, hT']; simp [incM, Matrix.map_add (f := _)]⟩
   | neg _ _ h =>
     obtain ⟨T, hT⟩ := h
     exact ⟨-T, by rw [AddSubgroup.coe_neg, hT]; simp [incM, Matrix.map_neg]⟩

@@ -180,7 +180,7 @@ theorem split_prod (hF : ∀ x : F, star (algebraMap F E x) = algebraMap F E x) 
     exact ⟨a, ha, b, hb, hab⟩
   have hs1 : P.valuation E (algebraMap (𝓞 E) E b - 1) < 1 := by
     have : algebraMap (𝓞 E) E b - 1 = algebraMap (𝓞 E) E (-a) := by
-      rw [map_neg, ← map_one (algebraMap (𝓞 E) E), ← hab, map_add]; ring
+      rw [map_neg, ← map_one (algebraMap (𝓞 E) E), ← hab, map_add (f := _)]; ring
     rw [this, HeightOneSpectrum.valuation_lt_one_iff_mem]
     exact P.asIdeal.neg_mem ha
   have hs2 : P.valuation E (star (algebraMap (𝓞 E) E b)) < 1 := by
@@ -428,7 +428,7 @@ theorem valued_lt_of_mem {P : HeightOneSpectrum (𝓞 E)} {w : RInt F E} (h : w 
       exact (IsDedekindDomain.HeightOneSpectrum.valuation_lt_one_iff_mem P p).mpr hp
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [Subring.coe_add, map_add]
+      rw [Subring.coe_add, map_add (f := _)]
       exact lt_of_le_of_lt (Valued.v.map_add _ _) (max_lt hx hy)
     | smul r x _ hx =>
       rw [smul_eq_mul, Subring.coe_mul, map_mul, map_mul]

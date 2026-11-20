@@ -71,13 +71,13 @@ theorem finPart_liftFin (x : Af D.host.F ⊗[D.host.F] D.host.E) : finPart D (li
   induction x using TensorProduct.induction_on with
   | zero => rw [LinearMap.map_zero, RingHom.map_zero]
   | tmul a m => rfl
-  | add x y hx hy => rw [LinearMap.map_add, RingHom.map_add, hx, hy]
+  | add x y hx hy => rw [LinearMap.map_add (f := _), RingHom.map_add (f := _), hx, hy]
 
 theorem finPart_cA (x : AE D) : finPart D (cA D x) = sigR (Af D.host.F) D.sp.cm.sig (finPart D x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [RingHom.map_zero]
   | tmul a m => rfl
-  | add x y hx hy => simp only [RingHom.map_add, hx, hy]
+  | add x y hx hy => simp only [RingHom.map_add (f := _), hx, hy]
 
 def rk (S T : HSp D) (a : D.host.E) (s : Fin S.rank → Af D.host.F ⊗[D.host.F] D.host.E)
     (t : Fin T.rank → Af D.host.F ⊗[D.host.F] D.host.E) : WO S T :=
@@ -88,10 +88,10 @@ def rkHom (S T : HSp D) (a : D.host.E) : (Fin S.rank → Af D.host.F ⊗[D.host.
     (Fin T.rank → Af D.host.F ⊗[D.host.F] D.host.E) →+ WO S T :=
   AddMonoidHom.mk' (fun s => AddMonoidHom.mk' (fun t => rk S T a s t) fun t t' => by
       ext i j
-      simp only [rk, Matrix.of_apply, Matrix.add_apply, Pi.add_apply, LinearMap.map_add, add_mul, mul_add])
+      simp only [rk, Matrix.of_apply, Matrix.add_apply, Pi.add_apply, LinearMap.map_add (f := _), add_mul, mul_add])
     (fun s s' => AddMonoidHom.ext fun t => by
       ext i j
-      simp only [rk, Matrix.of_apply, Matrix.add_apply, Pi.add_apply, LinearMap.map_add, RingHom.map_add, add_mul,
+      simp only [rk, Matrix.of_apply, Matrix.add_apply, Pi.add_apply, LinearMap.map_add (f := _), RingHom.map_add (f := _), add_mul,
         mul_add, Finset.sum_add_distrib, AddMonoidHom.mk'_apply, AddMonoidHom.add_apply])
 
 theorem rk_mem (S T : HSp D) {a : D.host.E} (ha : a ∈ D.host.AA)
@@ -114,10 +114,10 @@ theorem rk_mem (S T : HSp D) {a : D.host.E} (ha : a ∈ D.host.AA)
         simp only [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
         rw [← TensorProduct.tmul_sum, Algebra.TensorProduct.tmul_mul_tmul]
     | zero => rw [map_zero]; exact zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
     | neg y _ hy => rw [map_neg]; exact neg_mem hy
   | zero => rw [map_zero]; exact zero_mem _
-  | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+  | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
   | neg y _ hy => rw [map_neg]; exact neg_mem hy
 
 section Chart
@@ -173,7 +173,7 @@ theorem exists_generator (he : IsSplitIdem D e) (hπ : Chart e v π) :
     induction ha using Submodule.span_induction with
     | mem a ha => exact hmax a ha
     | zero => simp only [map_zero, zero_le]
-    | add x y _ _ hx hy => rw [RingHom.map_add, RingHom.map_add]; exact Valuation.map_add_le _ hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _)]; exact Valuation.map_add_le _ hx hy
     | smul o x _ hx =>
       have ho : Valued.v (π (incA D (o : D.host.E))) ≤ 1 :=
         isInt_Ov.1 ((hπ.2.2.2 _).1 (by rw [finPart_mul_incA]; exact mul_int_mem (idem_int he) o))
@@ -234,7 +234,7 @@ theorem mem_latO_iff_intM : ∀ {D : D7} (e : AE D) (v : HeightOneSpectrum (𝓞
       rw [Matrix.map_zero _ π.map_zero, Matrix.mul_zero, Matrix.zero_mul, smul_zero]
       exact fun i j => ⟨0, map_zero _⟩
     | add x y _ _ hx hy =>
-      rw [Matrix.map_add _ π.map_add, Matrix.mul_add, Matrix.add_mul, smul_add]
+      rw [Matrix.map_add _ π.map_add (f := _), Matrix.mul_add, Matrix.add_mul, smul_add]
       exact hx.add hy
     | neg x _ hx =>
       rw [Matrix.map_neg _ π.map_neg, Matrix.mul_neg, Matrix.neg_mul, smul_neg]

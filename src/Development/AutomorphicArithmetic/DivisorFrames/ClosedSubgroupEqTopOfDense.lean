@@ -28,7 +28,7 @@ private theorem UpperTheory.exists_character_nontrivial_off {G : Type} [CommGrou
   have hfm : ∀ a b, f (a * b) = f a + f b := by
     intro a b
     show e (χ (Additive.ofMul (a : G ⧸ H) + Additive.ofMul (b : G ⧸ H))) = _
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
   let ψ : G →* Circle :=
     { toFun := fun x => AddCircle.toCircle (f x)
       map_one' := by rw [hf1, AddCircle.toCircle_zero]

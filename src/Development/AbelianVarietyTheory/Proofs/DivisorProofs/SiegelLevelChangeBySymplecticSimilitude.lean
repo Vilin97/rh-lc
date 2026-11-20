@@ -139,7 +139,7 @@ theorem part_one (h N : ℕ) (B : Type) [CommRing B] (b : TBase B N) (hN : Odd N
   have lev_mod : ∀ a c, C.lev (a + N • c) = C.lev a := by
     intro a c; rw [C.lev_add, lev_nsmul, C.lev_tors, _root_.mul_one]
   refine ⟨{ C with
-      lev := fun a => C.lev (T a), lev_add := fun a c => (by rw [map_add]; exact C.lev_add _ _),
+      lev := fun a => C.lev (T a), lev_add := fun a c => (by rw [map_add (f := _)]; exact C.lev_add _ _),
       lev_tors := fun a => C.lev_tors _, geom := ?_ }, 𝟙 _, 𝟙 _, ?_, ⟨by simp, by simp⟩,
       GlobalTheory.ThetaAffineGlue.lbIso_pull_id C.isLB, fun x => Category.comp_id _⟩
   · intro k _ _ x β z hx hz
@@ -191,7 +191,7 @@ theorem part_two (h N : ℕ) (B : Type) [CommRing B] (b : TBase B N) (hN : Odd N
       AddMonoidHom.mk' (fun a => Additive.ofMul (ψ (p a))) (fun a c => by rw [p_add, map_mul]; rfl)
     let f₂ : (Fin h ⊕ Fin h → ℤ) →+ Additive (Tx ⟶ C.A) :=
       AddMonoidHom.mk' (fun a => Additive.ofMul (toUnit Tx ≫ C.lev (T a)))
-        (fun a c => by rw [map_add, C.lev_add, MonObj.comp_mul]; rfl)
+        (fun a c => by rw [map_add (f := _), C.lev_add, MonObj.comp_mul]; rfl)
     have hext : f₁ = f₂ := by
       refine AddMonoidHom.functions_ext _ _ _ fun i k => ?_
       rw [show (Pi.single i k : Fin h ⊕ Fin h → ℤ) = k • Pi.single i 1 by

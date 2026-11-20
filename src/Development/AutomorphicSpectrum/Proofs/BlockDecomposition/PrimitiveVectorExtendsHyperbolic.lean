@@ -251,7 +251,7 @@ theorem orbit_ring {A : Type} [CommRing A] (σ : A →+* A) (hσ : ∀ a, σ (σ
   obtain ⟨μ, hμ⟩ := exists_mu P₁ P₂ hmax h2 a (δ * x 1) hab
   set t : A := -(q * i2) + (μ : A) * δ with ht
   have hst : σ t = -(q * i2) - (μ : A) * δ := by
-    rw [ht, map_add, map_neg, map_mul, map_mul, hsq, hsi2, hδs, map_intCast]
+    rw [ht, map_add (f := _), map_neg, map_mul, map_mul, hsq, hsi2, hδs, map_intCast]
     ring
   let z : Fin (M + 2) → A := Fin.cons t (Fin.cons 1 u)
   let e : Fin (M + 2) → A := Fin.cons 1 fun _ => 0

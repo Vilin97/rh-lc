@@ -137,7 +137,7 @@ theorem not_linearIndependent : ∀ (U : Type) [NormedAddCommGroup U] [NormedSpa
   · intro k v hv z
     have h1 : (om (e.symm z) (p v) : ℂ) = -((z ⬝ᵥ Hm.mulVec (star (P v))).im : ℂ) := by
       rw [him, hP, e.symm_apply_apply]; simp
-    have h2 : e.symm (z + P v) = e.symm z + p v := by rw [map_add, hP, e.symm_apply_apply]
+    have h2 : e.symm (z + P v) = e.symm z + p v := by rw [map_add (f := _), hP, e.symm_apply_apply]
     have h3 : (Real.pi / 2 * ((z + P v) ⬝ᵥ Hm.mulVec (star (z + P v))) : ℂ) +
         -(Real.pi * Complex.I) * (om (e.symm z) (p v) : ℂ) =
         (Real.pi * (z ⬝ᵥ Hm.mulVec (star (P v))) +

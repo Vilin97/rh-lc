@@ -42,7 +42,7 @@ theorem main : PI.ProdUnitInert := by
   have hsub : (⟨∏ s, emb s z, hPmem⟩ : Qbar) = (x : Qbar) + (y : Qbar) * ⟨φ₀ (b : E), hβmem⟩ := by
     apply Subtype.ext
     simp [hPxy]
-  rw [hsub, map_add, map_mul, map_ratCast, map_ratCast]
+  rw [hsub, map_add (f := _), map_mul, map_ratCast, map_ratCast]
   apply norm_conic_eq_one d hns x y hconic
   have hsq : (⟨φ₀ (b : E), hβmem⟩ : Qbar) ^ 2 = -(d : Qbar) := by
     apply Subtype.ext

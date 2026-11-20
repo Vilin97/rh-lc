@@ -61,7 +61,7 @@ theorem good_add {P P' : PolF D (Wc D j).rank (Vc D j).rank} (hP : Good Y i j b 
     · rw [Fin.append_right]; exact hm' k
   · rw [Fin.sum_univ_add]
     simp only [Fin.append_left, Fin.append_right]
-    rw [xi_eq_lin, map_add, smul_add, ← xi_eq_lin, ← xi_eq_lin]
+    rw [xi_eq_lin, map_add (f := _), smul_add, ← xi_eq_lin, ← xi_eq_lin]
     congr 1
     · rw [show (((D.ntw.l i : ℕ) : ℂ) ^ (c + c') * u) = ((D.ntw.l i : ℕ) : ℂ) ^ c' * (((D.ntw.l i : ℕ) : ℂ) ^ c * u) by ring,
         mul_smul, he, Finset.smul_sum]

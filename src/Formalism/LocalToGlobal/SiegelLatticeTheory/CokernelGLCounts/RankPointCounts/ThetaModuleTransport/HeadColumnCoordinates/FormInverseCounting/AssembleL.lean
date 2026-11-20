@@ -50,7 +50,7 @@ theorem card_of_constr (hO : ∀ x ∈ O, cj x ∈ O) (t t' : O)
     intro x
     obtain ⟨v, rfl⟩ := Submodule.Quotient.mk_surjective _ x
     have hv : v = Sum.elim (v ∘ Sum.inl) (v ∘ Sum.inr) := (Sum.elim_comp_inl_inr v).symm
-    rw [hv, mk_elim O cj hO Z₁ t t', map_add, map_add, (hF θ.1 θ.2).1, (hF θ.1 θ.2).2,
+    rw [hv, mk_elim O cj hO Z₁ t t', map_add (f := _), map_add (f := _), (hF θ.1 θ.2).1, (hF θ.1 θ.2).2,
       (hF θ'.1 θ'.2).1, (hF θ'.1 θ'.2).2]
     change f θ = f θ' at hθ
     simp only [f] at hθ

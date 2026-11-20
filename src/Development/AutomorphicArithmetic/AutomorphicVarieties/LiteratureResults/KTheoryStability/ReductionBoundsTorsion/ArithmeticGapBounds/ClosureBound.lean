@@ -16,7 +16,7 @@ section One
 variable (W : Submodule ℝ H) [W.HasOrthogonalProjection]
 
 lemma q_add (x y : H) : q W (x + y) = q W x + q W y := by
-  simp only [q, map_add]; abel
+  simp only [q, map_add (f := _)]; abel
 
 lemma q_smul (c : ℝ) (x : H) : q W (c • x) = c • q W x := by
   simp only [q, map_smul, smul_sub]
@@ -126,7 +126,7 @@ lemma form_cs (D : H →L[ℝ] H) (hsym : ∀ x y, ⟪D x, y⟫_ℝ = ⟪x, D y�
   have h : ∀ t : ℝ, 0 ≤ ⟪D y, y⟫_ℝ * (t * t) + (2 * ⟪D x, y⟫_ℝ) * t + ⟪D x, x⟫_ℝ := by
     intro t
     have := hpos (x + t • y)
-    simp only [map_add, map_smul, inner_add_left, inner_add_right, real_inner_smul_left,
+    simp only [map_add (f := _), map_smul, inner_add_left, inner_add_right, real_inner_smul_left,
       real_inner_smul_right] at this
     rw [e] at this
     nlinarith [this]

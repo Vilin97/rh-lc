@@ -91,7 +91,7 @@ theorem mappingCoconeNatD_comp (n : ℕ) :
   change shiftNegOneSucc L (n + 1) ((f.f (n + 1)).hom ((K.d n (n + 1)).hom x)) +
     (shiftNegOneD L (n + 1)).hom (shiftNegOneSucc L n ((f.f n).hom x) +
       (shiftNegOneD L n).hom y) = 0
-  rw [map_add, shiftNegOneD_shiftNegOneD_apply, add_zero, shiftNegOneSucc_apply,
+  rw [map_add (f := _), shiftNegOneD_shiftNegOneD_apply, add_zero, shiftNegOneSucc_apply,
     shiftNegOneSucc_apply, shiftNegOneD_succ_apply]
   change ((f.f (n + 1)).hom ((K.d n (n + 1)).hom x) : L.X (n + 1)) +
     -(L.d n (n + 1)).hom ((f.f n).hom x) = 0

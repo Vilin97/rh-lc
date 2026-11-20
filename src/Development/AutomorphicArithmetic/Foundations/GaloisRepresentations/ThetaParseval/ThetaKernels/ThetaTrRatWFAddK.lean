@@ -29,7 +29,7 @@ theorem thetaTr_ratWF_add_k : ∀ (F E : Type) [Field F] [NumberField F] [Field 
   have hform := co.form (incM F γ) w
   rw [symp_eq_symplOF' σ JS JT ξ₀ JA JB ξ hA hB, hyz] at hform
   unfold GlobalTheory.WeilSchrodinger.thetaTr GlobalTheory.WeilM.Darboux.rho
-  rw [map_add, hγ, hyz]
+  rw [map_add (f := _), hγ, hyz]
   set u : (κ → AF F) × (κ → AF F) :=
     (fun i => algebraMap F (AF F) (y i), fun i => algebraMap F (AF F) (z i)) with hu
   set v := co.e w

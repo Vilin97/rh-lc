@@ -36,7 +36,7 @@ private theorem sum_mem_fil_iff (a : ℤ) (c : Fin d → BdR) :
       have := ((PD.Fil a).restrictScalars Qp).smul_mem (e.coord i v) x.2
       simpa using this
     | add x y hx hy =>
-      simp only [map_add]
+      simp only [map_add (f := _)]
       exact Submodule.add_mem _ hx hy
   · intro h
     exact Submodule.sum_mem _ fun j _ => ⟨e j ⊗ₜ ⟨c j, h j⟩, rfl⟩

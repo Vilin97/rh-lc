@@ -26,7 +26,7 @@ theorem isSplit_injective_and_exists (O k S : Type) [CommRing O] [Field k] [Fint
       induction y using TensorProduct.induction_on with
       | zero => simp
       | tmul a x => rw [hv, hv, hst]
-      | add u v hu hv' => simp [map_add, hu, hv']
+      | add u v hu hv' => simp [map_add (f := _), hu, hv']
     have h1 := key y
     rw [hy] at h1
     simp [Pi.single_apply, Ne.symm hne] at h1

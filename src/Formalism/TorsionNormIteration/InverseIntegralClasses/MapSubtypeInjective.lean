@@ -18,7 +18,7 @@ variable {K : Type u} [NormedField K] [IsUltrametricDist K]
 theorem integralMv_add {ι : Type*} {a b : MvPowerSeries ι K} (ha : IntegralMv a)
     (hb : IntegralMv b) : IntegralMv (a + b) := by
   intro d
-  rw [map_add]
+  rw [map_add (f := _)]
   exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (ha d) (hb d))
 
 theorem integralMv_sub {ι : Type*} {a b : MvPowerSeries ι K} (ha : IntegralMv a)
@@ -40,7 +40,7 @@ theorem funEqMv_add {ι : Type*} {p q : ℕ} (hq : q ≠ 0) (σ : K →+* K) {a 
     IsFunEqTypeMv p q hq σ (a + b) := by
   unfold IsFunEqTypeMv at *
   convert integralMv_add ha hb using 1
-  simp only [map_add, smul_add]
+  simp only [map_add (f := _), smul_add]
   abel
 
 theorem funEqMv_sub {ι : Type*} {p q : ℕ} (hq : q ≠ 0) (σ : K →+* K) {a b : MvPowerSeries ι K}
@@ -81,7 +81,7 @@ theorem FunEqGroup_of' (h1 : SolveExists.{u, 0}) (h2 : InvIntegralOfClass.{u, 0}
   intro K _ _ _ p q σ hS f hf0 hf1 hfE
   have hq := q_ne_zero hS
   have hG0 : MvPowerSeries.constantCoeff (atX f + atY f) = 0 := by
-    rw [map_add, atX, atY, PowerSeries.constantCoeff_subst_eq_zero (by simp) f hf0,
+    rw [map_add (f := _), atX, atY, PowerSeries.constantCoeff_subst_eq_zero (by simp) f hf0,
       PowerSeries.constantCoeff_subst_eq_zero (by simp) f hf0, add_zero]
   have hGE : IsFunEqTypeMv p q hq σ (atX f + atY f) :=
     funEqMv_add hq σ (hk K p q hq σ hS f hf0 hfE (Fin 2) _ (by simp) (integralMv_X 0))

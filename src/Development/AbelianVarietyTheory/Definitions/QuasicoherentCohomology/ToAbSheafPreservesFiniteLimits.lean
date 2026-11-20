@@ -66,7 +66,7 @@ def smulHom (F : X.Modules) (r : Γ(X, ⊤)) : F ⟶ F :=
 
 lemma smulHom_add (F : X.Modules) (r s : Γ(X, ⊤)) :
     smulHom F (r + s) = smulHom F r + smulHom F s := by
-  ext U x; rw [smulHom_app_apply, map_add, add_smul]; rfl
+  ext U x; rw [smulHom_app_apply, map_add (f := _), add_smul]; rfl
 
 lemma smulHom_mul (F : X.Modules) (r s : Γ(X, ⊤)) :
     smulHom F (r * s) = smulHom F s ≫ smulHom F r := by
@@ -116,7 +116,7 @@ lemma smulHom_eq_smul_id (F : X.Modules) (r : Γ(X, ⊤)) : smulHom F r = r • 
       rw [map_zero, map_zero]; rfl
     zsmul_succ' := fun n x ↦ by
       change ρ (algebraMap ℤ A (n + 1 : ℕ)) x = ρ (algebraMap ℤ A n) x + x
-      rw [Nat.cast_succ, map_add, map_add, map_one, map_one]; rfl
+      rw [Nat.cast_succ, map_add (f := _), map_add (f := _), map_one, map_one]; rfl
     zsmul_neg' := fun n x ↦ by
       change ρ (algebraMap ℤ A (Int.negSucc n)) x = -ρ (algebraMap ℤ A (n + 1 : ℕ)) x
       rw [show Int.negSucc n = -((n + 1 : ℕ) : ℤ) from rfl, map_neg, map_neg]; rfl }
@@ -148,7 +148,7 @@ instance instModule : Module R (WithAction ρ) where
   smul_add r := map_add (ρ (algebraMap R A r))
   add_smul r s x := by
     change ρ (algebraMap R A (r + s)) x = _
-    rw [map_add, map_add]; rfl
+    rw [map_add (f := _), map_add (f := _)]; rfl
   zero_smul x := by
     change ρ (algebraMap R A 0) x = _
     rw [map_zero, map_zero]; rfl
@@ -219,7 +219,7 @@ lemma map_comp_apply (f : F ⟶ G) (g : G ⟶ H) (x : F.H' n U) :
 
 lemma map_add_apply (f g : F ⟶ G) (x : F.H' n U) :
     map (f + g) n U x = map f n U x + map g n U x := by
-  simp only [map, Functor.map_add]; rfl
+  simp only [map, Functor.map_add (f := _)]; rfl
 
 lemma map_zero_apply (x : F.H' n U) : map (0 : F ⟶ G) n U x = 0 := by
   simp only [map, Functor.map_zero]; rfl

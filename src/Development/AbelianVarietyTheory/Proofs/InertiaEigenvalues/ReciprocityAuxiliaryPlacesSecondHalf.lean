@@ -138,7 +138,7 @@ def cupZ (hK : IsRes i K) (hρ : IsDual i s ρ) (lam : K →+ ZMod (X.l i ^ 1)) 
       dsimp only
       rw [charRep_apply, ← lam_natCast_mul, ← eps_eq hK, ← red_dot hρ, x.2.2 g h, y.2.2 h k, map_mul,
         Module.End.mul_apply]
-      simp only [map_add, dotProduct_add, add_dotProduct]
+      simp only [map_add (f := _), dotProduct_add, add_dotProduct]
       abel⟩
 
 omit [TopologicalSpace K] [DiscreteTopology K] in
@@ -218,7 +218,7 @@ theorem loc_eq_zero_of_subsingleton (hK : IsRes i K) (hρ : IsDual i s ρ) (lam 
   change ((cycMod D.host.E N.Om (X.l i) 1 g : (ZMod (X.l i ^ 1))ˣ) : ZMod (X.l i ^ 1)) * lam (m ⬝ᵥ y.1 h) -
     lam (m ⬝ᵥ y.1 (g * h)) + lam (m ⬝ᵥ y.1 g) = lam (x.1 g ⬝ᵥ red i K ρ g (y.1 h))
   rw [← lam_natCast_mul, ← eps_eq hK, ← red_dot hρ, e, y.2.2]
-  simp only [map_add, map_sub, dotProduct_add, sub_dotProduct]
+  simp only [map_add (f := _), map_sub, dotProduct_add, sub_dotProduct]
   abel
 
 theorem continuous_cConj : Continuous (cConj X) := by

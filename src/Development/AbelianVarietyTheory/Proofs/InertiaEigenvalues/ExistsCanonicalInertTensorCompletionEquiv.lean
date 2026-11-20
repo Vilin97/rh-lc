@@ -64,14 +64,14 @@ theorem exists_canonical_equiv : ∀ (L : Type) [Field L] [NumberField L] [IsCMF
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   · intro x
     rw [GlobalTheory.InertDatumExist.mem_tensInt_iff, GlobalTheory.LFun.InertChart.mem_intLoc_iff hw hunder, hO]
     exact Iff.rfl
   · intro z
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, hx, hy]; rfl
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]; rfl
     | tmul x a =>
       have hk : F.κ (x ⊗ₜ a) = F.κ (x ⊗ₜ 1) * F.κ (1 ⊗ₜ a) := by
         rw [← map_mul, Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]

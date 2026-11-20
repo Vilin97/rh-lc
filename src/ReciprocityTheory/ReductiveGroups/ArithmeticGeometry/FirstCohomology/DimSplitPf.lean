@@ -40,7 +40,7 @@ theorem torus_std (A X : Type) [CommRing A] [Nontrivial A] [AddCommGroup X] [Mod
         obtain ⟨n, a, ha⟩ := hs
         obtain ⟨m, c, hc⟩ := ht
         refine ⟨n + m, a * MvPolynomial.monomial one 1 ^ m + c * MvPolynomial.monomial one 1 ^ n, ?_⟩
-        rw [map_add, map_mul, map_mul, map_pow, map_pow, ← ha, ← hc]; ring
+        rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, ← ha, ← hc]; ring
       | single x a =>
         let n : ℕ := ∑ i, (b.repr x i).natAbs
         refine ⟨n, MvPolynomial.monomial (Finsupp.equivFunOnFinite.symm fun i => (b.repr x i + n).toNat) a, ?_⟩

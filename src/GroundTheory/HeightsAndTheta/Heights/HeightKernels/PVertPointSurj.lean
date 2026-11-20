@@ -109,7 +109,7 @@ theorem formSet_add (y : (Σ _ : Unit, T) → K') (t : T) (Q : Ideal (MRing (fun
   have H3 := HilbertSamuel.SectionBounded.homog_add H1 H2
   rw [formSet, Set.mem_ofPred_eq]
   refine ⟨e1 + e2, _, H3, ?_, Q.add_mem (Q.mul_mem_right _ hQ1) (Q.mul_mem_right _ hQ2)⟩
-  rw [map_add, map_mul, map_mul, map_pow, map_pow, aeval_X, hv1, hv2, Subring.coe_add]
+  rw [map_add (f := _), map_mul, map_mul, map_pow, map_pow, aeval_X, hv1, hv2, Subring.coe_add]
   ring
 
 theorem formSet_zero (y : (Σ _ : Unit, T) → K') (t : T) (Q : Ideal (MRing (fun _ : Unit => T))) :

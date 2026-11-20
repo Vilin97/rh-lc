@@ -31,7 +31,7 @@ theorem toChart_rename (p : MvPolynomial (Fin n) D) :
     toChart k P j (rename Sum.inl p) = C (toBase P j p) := by
   induction p using MvPolynomial.induction_on with
   | C d => simp [toChart]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p m hp => simp only [map_mul, hp, rename_X]; simp [toChart]
 
 theorem incIdeal_le_ker : incIdeal P k ≤ RingHom.ker (toChart k P j) := by
@@ -101,7 +101,7 @@ theorem back_toChart (g : MvPolynomial (Fin n ⊕ (Fin k × Fin n)) D) :
         have hinc : toLoc k P m (∑ l, X (Sum.inr (i, l)) * X (Sum.inl l)) = 0 :=
           toLoc_mem k P m (Ideal.mem_sup_right (Ideal.subset_span ⟨i, rfl⟩))
         set_option synthInstance.maxHeartbeats 100000 in
-          rw [← Finset.add_sum_erase _ _ (Finset.mem_univ m), map_add, map_sum] at hinc
+          rw [← Finset.add_sum_erase _ _ (Finset.mem_univ m), map_add (f := _), map_sum] at hinc
         have hinv : baseToLoc k P m (IsLocalization.Away.invSelf (Ideal.Quotient.mk P (X m))) *
             toLoc k P m (X (Sum.inl m)) = 1 := by
           have e := baseToLoc_toBase k P m (X m)

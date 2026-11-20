@@ -85,7 +85,7 @@ theorem exists_idealLattice_of_cmRing_le (hK : finrank ℚ K = 2) [IsTotallyComp
   let M : Submodule (𝓞 K) K :=
     { carrier := {x | σ x * L.ω₁ ∈ L.lattice}
       add_mem' := fun {a b} ha hb ↦ by
-        simp only [Set.mem_ofPred_eq, map_add, add_mul] at *
+        simp only [Set.mem_ofPred_eq, map_add (f := _), add_mul] at *
         exact add_mem ha hb
       zero_mem' := by simp
       smul_mem' := fun a x hx ↦ by
@@ -100,7 +100,7 @@ theorem exists_idealLattice_of_cmRing_le (hK : finrank ℚ K = 2) [IsTotallyComp
     obtain ⟨a, b, hab⟩ := PeriodPair.mem_lattice.1 ((hmem x).1 hx)
     refine ⟨a, b, σ.injective ?_⟩
     apply mul_right_cancel₀ hω
-    rw [← hab, map_add, map_mul, map_intCast, map_intCast, add_mul, mul_assoc, hy]
+    rw [← hab, map_add (f := _), map_mul, map_intCast, map_intCast, add_mul, mul_assoc, hy]
   have hspan : M = Submodule.span (𝓞 K) {1, y} := by
     apply le_antisymm
     · intro x hx
@@ -137,7 +137,7 @@ theorem exists_idealLattice_of_cmRing_le (hK : finrank ℚ K = 2) [IsTotallyComp
         exact Submodule.smul_of_tower_mem _ a (Submodule.subset_span (by simp))
       · rw [← zsmul_eq_mul]
         exact Submodule.smul_of_tower_mem _ b (Submodule.subset_span (by simp))
-    · rw [map_add, map_mul, map_intCast, map_intCast]
+    · rw [map_add (f := _), map_mul, map_intCast, map_intCast]
       linear_combination (b : ℂ) * hy
   · rintro ⟨w, hw, rfl⟩
     obtain ⟨x, hx, rfl⟩ := (mem_idealLattice σ).1 hw

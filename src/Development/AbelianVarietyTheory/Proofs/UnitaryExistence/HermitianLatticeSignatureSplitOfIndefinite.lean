@@ -251,9 +251,9 @@ theorem exists_projector (D₀ : Datum H) (G : Matrix (Fin r) (Fin r) E) (φ₀ 
       rintro _ ⟨x, rfl⟩ _ ⟨y, rfl⟩
       rw [one_mulVec, one_mulVec, hπ', hπ']
       have e1 : FD.herm G (φ₀ (P x)) (φ₀ y) = FD.herm G (φ₀ (P x)) (φ₀ (P y)) := by
-        conv_lhs => rw [← add_sub_cancel (P y) y, map_add, herm_add_right, o1 _ (hP1 x) _ (hP4 y), add_zero]
+        conv_lhs => rw [← add_sub_cancel (P y) y, map_add (f := _), herm_add_right, o1 _ (hP1 x) _ (hP4 y), add_zero]
       have e2 : FD.herm G (φ₀ x) (φ₀ (P y)) = FD.herm G (φ₀ (P x)) (φ₀ (P y)) := by
-        conv_lhs => rw [← add_sub_cancel (P x) x, map_add, herm_add_left, o2 _ (hP1 y) _ (hP4 x), add_zero]
+        conv_lhs => rw [← add_sub_cancel (P x) x, map_add (f := _), herm_add_left, o2 _ (hP1 y) _ (hP4 x), add_zero]
       rw [e1, e2]) v w
     rwa [one_mulVec, one_mulVec] at this
   · rw [hπ'] at h

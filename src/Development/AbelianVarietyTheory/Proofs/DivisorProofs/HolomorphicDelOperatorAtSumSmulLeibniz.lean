@@ -28,7 +28,7 @@ theorem coefwise_del_sum_smul {n : ℕ} {ι : Type} [Fintype ι] {v : V n} (g : 
     del_sum (A := fun k x => g k x * (bas n).repr (Q k x) S) (fun k _ => (hg k).mul (hQ k S)),
     ContinuousLinearMap.sum_apply, map_sum, Finsupp.finsetSum_apply]
   refine Finset.sum_congr rfl fun k _ => ?_
-  rw [del_mul (hg k) (hQ k S), map_add, map_smul, map_smul, Finsupp.add_apply, Finsupp.smul_apply, Finsupp.smul_apply,
+  rw [del_mul (hg k) (hQ k S), map_add (f := _), map_smul, map_smul, Finsupp.add_apply, Finsupp.smul_apply, Finsupp.smul_apply,
     FormMul.repr_coefwise, smul_eq_mul, smul_eq_mul, add_comm]
 
 theorem delAt_sum_smul : ∀ {n : ℕ} {ι : Type} [Fintype ι] {v : ReciprocityTheory.L2DbarEstimates.V n} (g : ι → ReciprocityTheory.L2DbarEstimates.V n → ℂ)

@@ -115,7 +115,7 @@ theorem idx_free {ι : Type} [Fintype ι] [DecidableEq ι] (x x' : ι → V) (hx
           rw [pu]
           exact Submodule.mem_one.2 ⟨_, rfl⟩
         | zero => rw [map_zero]; exact zero_mem _
-        | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+        | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
         | smul a b _ hb =>
           rw [← algebraMap_smul K a b, LinearMap.map_smulₛₗ]
           exact Submodule.smul_mem _ (sig K a) hb
@@ -270,10 +270,10 @@ theorem iso_Xa (F : FlagD H r) (l : ℕ) {v w : V} (hv : v ∈ F.Xa l) (hw : w �
     induction hw using Submodule.span_induction with
     | mem x hx => obtain ⟨b, -, rfl⟩ := hx; exact F.iso a b
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add, ha, hb, add_zero]
+    | add a b _ _ ha hb => rw [map_add (f := _), ha, hb, add_zero]
     | smul a b _ hb => rw [LinearMap.map_smulₛₗ, hb, smul_zero]
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add, LinearMap.add_apply, ha, hb, add_zero]
+  | add a b _ _ ha hb => rw [map_add (f := _), LinearMap.add_apply, ha, hb, add_zero]
   | smul a b _ hb => rw [map_smul, LinearMap.smul_apply, hb, smul_zero]
 
 theorem exists_vectors (N : NF H r) (F : FlagD H r) {Λ : Submodule (𝓞 K) V} (h : IsFrame F Λ N.aa) {l : ℕ}

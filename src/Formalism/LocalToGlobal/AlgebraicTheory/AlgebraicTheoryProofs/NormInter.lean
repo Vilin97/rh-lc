@@ -118,7 +118,7 @@ theorem inter_isom (H : Sesq V) (H' : Sesq W) (hH : IsHerm H) (hH' : IsHerm H') 
     have h1 := hα'.2 _ (hmem B x hx) _ (hmem B y hy)
     have h2 : altE H' (g x) (g y) = altE H x y := by
       simp only [altE]; rw [show H' (g x) (g y) = H x y from hg x y]
-    simp only [map_add]
+    simp only [map_add (f := _)]
     rw [h1, h2]
   have hGV : (fun v => G (g v)) ∈ fixedBy H (fun x => α' (g x)) A := by
     intro x hx z

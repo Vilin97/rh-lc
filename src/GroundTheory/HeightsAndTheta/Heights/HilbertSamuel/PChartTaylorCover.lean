@@ -61,7 +61,7 @@ theorem taylor_le {E : Type*} [NormedAddCommGroup E] [NormedSpace ℝ E] {f : E 
     fun w hw => ((hd1 w hw).hasFDerivAt.sub ℓ.hasFDerivAt).hasFDerivWithinAt
   have h2 := hconv.norm_image_sub_le_of_norm_hasFDerivWithin_le hh h1 hys hyzs
   have h3 := (Real.le_norm_self _).trans h2
-  rw [map_add, add_sub_cancel_left] at h3
+  rw [map_add (f := _), add_sub_cancel_left] at h3
   have h4 : M * ‖z‖ * ‖z‖ = M * ‖z‖ ^ 2 := by ring
   linarith
 

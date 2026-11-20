@@ -82,7 +82,7 @@ theorem latOmega_fg (κ : Γ.baseChange K ⟶ 𝒜) (hκ : Function.Bijective (o
     [Module.Finite R Γ.omega] : (latOmega κ).FG := by
   let e := LinearEquiv.ofBijective _ hκ
   refine fg_of_forall_iff _ (fun w₀ : Γ.omega => 𝒜.rigOfOmega (e.symm ((Γ.toBase K).omega w₀)))
-    (fun x y => by rw [map_add, map_add, map_add])
+    (fun x y => by rw [map_add (f := _), map_add (f := _), map_add (f := _)])
     (fun r x => by rw [map_smulₛₗ, map_smul, map_smul, algebraMap_smul]) fun x => ⟨?_, ?_⟩
   · rintro ⟨w, w₀, rfl, h⟩
     refine ⟨w₀, ?_⟩
@@ -94,7 +94,7 @@ theorem latOmega_fg (κ : Γ.baseChange K ⟶ 𝒜) (hκ : Function.Bijective (o
 theorem latExt_fg {Δ : PDivGroup p R} (π : 𝒜 ⟶ Δ.baseChange K) [Module.Finite R Δ.RigExt] :
     (latExt π).FG :=
   fg_of_forall_iff _ (fun y : Δ.RigExt => rigExtMap π ((Δ.toBase K).rig y))
-    (fun x y => by rw [map_add, map_add]) (fun r x => by rw [map_smulₛₗ, map_smul, algebraMap_smul])
+    (fun x y => by rw [map_add (f := _), map_add (f := _)]) (fun r x => by rw [map_smulₛₗ, map_smul, algebraMap_smul])
     fun _ => exists_congr fun _ => eq_comm
 
 theorem lattice_inf_range [IsDomain R] [IsFractionRing R K] (hR : (p : R) = 0) (hK : (p : K) = 0)

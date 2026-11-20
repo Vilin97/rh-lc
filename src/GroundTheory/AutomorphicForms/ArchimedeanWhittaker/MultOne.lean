@@ -177,7 +177,7 @@ theorem inner_wProj_of_mem {j : ℤ} {y : H} (hy : y ∈ weightSpace σ j) (u : 
   rw [inv_mul_cancel₀ hπ, one_mul]
 
 theorem wProj_add (j : ℤ) (x y : H) : wProj σ j (x + y) = wProj σ j x + wProj σ j y := by
-  simp only [wProj, map_add, smul_add]
+  simp only [wProj, map_add (f := _), smul_add]
   rw [intervalIntegral.integral_add ((continuous_wIntegrand σ j x).intervalIntegrable _ _)
     ((continuous_wIntegrand σ j y).intervalIntegrable _ _), smul_add]
 

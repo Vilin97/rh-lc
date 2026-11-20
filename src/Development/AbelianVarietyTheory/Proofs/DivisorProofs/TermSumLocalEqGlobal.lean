@@ -115,7 +115,7 @@ theorem powerSum_mul_vertical (hP : Hypotheses2) (M : TrueGeo.Model Y) {ι : Typ
   obtain ⟨num, hn, -⟩ := GlobalTheory.T.arith_intersection_form_exists hC _ _ V'.p _ V'.ar
   obtain ⟨rt, rd, -, -⟩ := GlobalTheory.T.arith_class_form_properties hC _ _ V'.p _ V'.ar num hn
   induction g using MvPolynomial.induction_on' with
-  | add P Q hP hQ => rw [mul_add, mul_add, map_add, hP, hQ, add_zero]
+  | add P Q hP hQ => rw [mul_add, mul_add, map_add (f := _), hP, hQ, add_zero]
   | monomial u a =>
     obtain ⟨n, ν, hν⟩ := exists_monomial_eq_prod u
     have e₁ : (monomial u a : MvPolynomial ι ℝ) = a • ∏ j, X (ν j) := by rw [← hν, smul_monomial, smul_eq_mul, mul_one]
@@ -385,7 +385,7 @@ theorem neg_cancel (h2 : Hypotheses2) (hH : HypothesesH) (hO : O.Core)
       · exact (isHomogeneous_X _ _).neg
       · exact isHomogeneous_X _ _
     rwa [one_mul] at this
-  · rw [LinearMap.comp_apply, AlgHom.toLinearMap_apply, map_mul, map_add]
+  · rw [LinearMap.comp_apply, AlgHom.toLinearMap_apply, map_mul, map_add (f := _)]
     simp [σ, hne]
 
 end Comp
@@ -399,7 +399,7 @@ theorem exists_monomial_eq_prod' {K α : Type} [CommSemiring K] (u : α →₀ �
   | add u v hu hv =>
     obtain ⟨n, ν, e, h⟩ := hu
     obtain ⟨n', ν', e', h'⟩ := hv
-    refine ⟨n + n', Fin.append ν ν', by rw [map_add, e, e'], ?_⟩
+    refine ⟨n + n', Fin.append ν ν', by rw [map_add (f := _), e, e'], ?_⟩
     rw [Fin.prod_univ_add]
     simp only [Fin.append_left, Fin.append_right, ← h, ← h', monomial_mul, mul_one]
   | single a n => exact ⟨n, fun _ => a, by simp, by simp [X_pow_eq_monomial]⟩
@@ -421,12 +421,12 @@ theorem map_rename_sub {α β : Type} (f g : α → β) (φ : MvPolynomial β �
     φ ((rename f P - rename g P) * G) = 0 := by
   induction P using MvPolynomial.induction_on generalizing G with
   | C a => simp
-  | add P Q hP hQ => rw [map_add, map_add, add_sub_add_comm, add_mul, map_add, hP, hQ, add_zero]
+  | add P Q hP hQ => rw [map_add (f := _), map_add (f := _), add_sub_add_comm, add_mul, map_add (f := _), hP, hQ, add_zero]
   | mul_X P v hP =>
     have e : (rename f (P * X v) - rename g (P * X v)) * G =
         (rename f P - rename g P) * (X (f v) * G) + (X (f v) - X (g v)) * (rename g P * G) := by
       simp only [map_mul, rename_X]; ring
-    rw [e, map_add, hP, h, add_zero]
+    rw [e, map_add (f := _), hP, h, add_zero]
 
 open Formalism.DegreeFormula Formalism.BasicNotions.DV GlobalTheory.MixedLocalChains GlobalTheory.BundleChernComparison in
 
@@ -637,9 +637,9 @@ theorem sum_capDeg_eq_zero (hL : LocalW (mdlOf z jc)) {m : ℕ} (hm : 1 + m + 2 
   rw [e] at h
   rw [← h, Fintype.sum_sum_type, ck, ck]
   refine congrArg₂ (· + ·) (Finset.sum_congr rfl fun k _ => ?_) (Finset.sum_congr rfl fun k _ => ?_)
-  · rw [dv_lie, map_mul, aeval_rename, map_add, aeval_X, aeval_X, (lb_lie O z jc k).1, (lb_lie O z jc k).2]
+  · rw [dv_lie, map_mul, aeval_rename, map_add (f := _), aeval_X, aeval_X, (lb_lie O z jc k).1, (lb_lie O z jc k).2]
     simp [Gk, Finset.sum_range_succ, add_comm, Function.comp_def]
-  · rw [dv_om, map_mul, aeval_rename, map_add, aeval_X, aeval_X, (lb_om O z jc k).1, (lb_om O z jc k).2]
+  · rw [dv_om, map_mul, aeval_rename, map_add (f := _), aeval_X, aeval_X, (lb_om O z jc k).1, (lb_om O z jc k).2]
     simp [Gk, Finset.sum_range_succ, add_comm, Function.comp_def]
 
 end Model
@@ -665,7 +665,7 @@ theorem dr_sub_ht (hX : HypothesesXH) (h2 : Hypotheses2) (hH : HypothesesH) (hRA
     ∑ c, cNum O c (rename (fb O S p R) ((rename (Prod.mk false) (pw O) - rename (Prod.mk true) (pw O)) *
       rename (Prod.mk false) (dl O ℝ * G))) = 0 := by
   induction G using MvPolynomial.induction_on' with
-  | add P Q hP hQ => simp only [mul_add, map_add, Finset.sum_add_distrib, hP, hQ, add_zero]
+  | add P Q hP hQ => simp only [mul_add, map_add (f := _), Finset.sum_add_distrib, hP, hQ, add_zero]
   | monomial u a =>
     have e₁ : (monomial u a : MvPolynomial (Vr O) ℝ) = a • map (algebraMap ℚ ℝ) (monomial u 1) := by
       rw [map_monomial, map_one, smul_monomial, smul_eq_mul, mul_one]
@@ -678,7 +678,7 @@ theorem dr_sub_ht (hX : HypothesesXH) (h2 : Hypotheses2) (hH : HypothesesH) (hRA
         rename (Prod.mk false) (dl O ℝ * map (algebraMap ℚ ℝ) G) = ∑ l, (X (false, .inr l) - X (true, .inr l)) *
           map (algebraMap ℚ ℝ) ((X (false, .inr l) + X (true, .inr l)) * rename (Prod.mk false) (dl O ℚ * G)) := by
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [pw, map_sum, map_pow, rename_X, map_mul, map_add, map_X, map_rename, map_dl, ← Finset.sum_sub_distrib,
+        simp only [pw, map_sum, map_pow, rename_X, map_mul, map_add (f := _), map_X, map_rename, map_dl, ← Finset.sum_sub_distrib,
         Finset.sum_mul]
       exact Finset.sum_congr rfl fun l _ => by ring
     have hQ (l : Fin (D.R.f * O.N) ⊕ Fin (D.R.f * O.N)) : ((X (false, .inr l) + X (true, .inr l)) *
@@ -786,7 +786,7 @@ theorem sum_kill (hX : HypothesesXH) (h2 : Hypotheses2) (hH : HypothesesH) (hRA 
     nth_rewrite 3 [← h]
     nth_rewrite 2 [← hB]
     nth_rewrite 1 [← hA]
-    simp only [← Finset.sum_add_distrib, ← map_add]
+    simp only [← Finset.sum_add_distrib, ← map_add (f := _)]
     refine Finset.sum_congr rfl fun c _ => congrArg _ (congrArg _ ?_)
     rw [map_mul (rename (Prod.mk false)) (pw O), map_mul (rename (Prod.mk true)) (pw O)]
     ring

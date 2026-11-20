@@ -174,7 +174,7 @@ lemma level_lt_of_mem (F : FlagD H r) {x : V} {a : Fin r} {al : K} (h : F.HasLev
   exact (level_notMem F) h ((Xa_mono F) hlt hx)
 
 private theorem HermSpace_B_add_left (H : Formalism.HermitianLatticeCounting.S6.HermSpace K V) (x y z : V) : H.B (x + y) z = H.B x z + H.B y z := by
-  rw [map_add, LinearMap.add_apply]
+  rw [map_add (f := _), LinearMap.add_apply]
 
 private theorem HermSpace_B_sub_left (H : Formalism.HermitianLatticeCounting.S6.HermSpace K V) (x y z : V) : H.B (x - y) z = H.B x z - H.B y z := by
   rw [map_sub, LinearMap.sub_apply]
@@ -1224,7 +1224,7 @@ lemma negperp_gen (σ : K →+* ℂ) (h : U →ₗ[K] U →ₗ⋆[K] K) (hσ : �
     obtain ⟨b, hb_def⟩ : ∃ b : K, b = -h z z₀ := ⟨_, rfl⟩
     have hp : a • z + b • w ∈ A := A.add_mem (A.smul_mem _ hz) (A.smul_mem _ hw)
     have hpz0 : h (a • z + b • w) z₀ = 0 := by
-      simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
+      simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul]
       rw [ha_def, hb_def]
       ring
     have hb : b ≠ 0 := by
@@ -1233,7 +1233,7 @@ lemma negperp_gen (σ : K →+* ℂ) (h : U →ₗ[K] U →ₗ⋆[K] K) (hσ : �
     have hpN : a • z + b • w ∉ N := by
       intro hpN
       have h1 : h (a • z + b • w) z = 0 := hN _ hpN z hz
-      simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hwz, mul_zero,
+      simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hwz, mul_zero,
         add_zero] at h1
       have ha : a = 0 := (mul_eq_zero.1 h1).resolve_right hzz
       apply hwN
@@ -1243,10 +1243,10 @@ lemma negperp_gen (σ : K →+* ℂ) (h : U →ₗ[K] U →ₗ⋆[K] K) (hσ : �
       exact N.smul_mem _ hpN
     have hpos := pos _ hp hpz0 hpN
     have hpp : h (a • z + b • w) (a • z + b • w) = a * star a * h z z + b * star b * h w w := by
-      simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, map_smulₛₗ,
+      simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, map_smulₛₗ,
         starRingEnd_apply, hwz, hwz']
       ring
-    rw [hpp, map_add, Complex.add_re, sig_norm σ hσ, sig_norm σ hσ] at hpos
+    rw [hpp, map_add (f := _), Complex.add_re, sig_norm σ hσ, sig_norm σ hσ] at hpos
     have h1 := Complex.normSq_nonneg (σ a)
     have h2 := Complex.normSq_nonneg (σ b)
     nlinarith [mul_nonneg h1 (neg_nonneg.2 hzn.le), mul_nonneg h2 (neg_nonneg.2 hneg)]
@@ -1426,7 +1426,7 @@ theorem existsNormalForm : Formalism.HermitianLatticeCounting.S6.NormalForm := b
   have hμ : ∃ μ : K, μ + star μ ≠ 0 := by
     refine ⟨F.T, fun h0 => ?_⟩
     have h1 := congrArg (fun t => (σ t).re) h0
-    simp only [map_add, hσ, map_zero, Complex.add_re, Complex.zero_re] at h1
+    simp only [map_add (f := _), hσ, map_zero, Complex.add_re, Complex.zero_re] at h1
     rw [show star (σ F.T) = (starRingEnd ℂ) (σ F.T) from rfl, Complex.conj_re] at h1
     linarith
   by_cases hm : Formalism.HermitianLatticeCounting.S6.II F F' = ⊥

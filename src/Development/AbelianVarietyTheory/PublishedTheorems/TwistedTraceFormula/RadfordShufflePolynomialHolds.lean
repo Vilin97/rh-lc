@@ -545,7 +545,7 @@ theorem repr_sum_word (s : Multiset (List A)) (w : List A) :
   induction s using Multiset.induction_on with
   | empty => simp
   | cons x s ih =>
-    rw [Multiset.map_cons, Multiset.sum_cons, map_add, Finsupp.add_apply, ih,
+    rw [Multiset.map_cons, Multiset.sum_cons, map_add (f := _), Finsupp.add_apply, ih,
       ← wordBasis_apply, Module.Basis.repr_self, Multiset.count_cons, Finsupp.single_apply]
     by_cases h : x = w
     · simp [h, add_comm]
@@ -610,7 +610,7 @@ theorem monomial_eq_prod {σ : Type} (d : σ →₀ ℕ) :
   induction d using Finsupp.induction_linear with
   | zero => simp
   | add f g hf hg =>
-    rw [map_add, Multiset.map_add, Multiset.prod_add, ← hf, ← hg, MvPolynomial.monomial_mul,
+    rw [map_add (f := _), Multiset.map_add (f := _), Multiset.prod_add, ← hf, ← hg, MvPolynomial.monomial_mul,
       one_mul]
   | single a n =>
     rw [Finsupp.toMultiset_single, ← MvPolynomial.X_pow_eq_monomial]

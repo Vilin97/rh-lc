@@ -336,7 +336,7 @@ theorem adelic_involution_involutive {D : D7} (z : AF D.host.F ⊗[D.host.F] D.h
       AlgHom.coe_id, id_eq]
     congr 1
     exact star_star y
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem cT_map_incA {D : D7} {m p : ℕ} (M : Matrix (Fin m) (Fin p) D.host.E) :
     cT (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (AF D.host.F) D.sp.cm.sig) (M.map (incA D)) =

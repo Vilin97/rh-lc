@@ -56,9 +56,9 @@ theorem add_assoc' {l ex : PowerSeries ℂ_[p]}
   show PowerSeries.subst (PowerSeries.subst (add l ex a b) l + PowerSeries.subst c l) ex =
     PowerSeries.subst (PowerSeries.subst a l + PowerSeries.subst (add l ex b c) l) ex
   rw [show add l ex a b = PowerSeries.subst (PowerSeries.subst a l + PowerSeries.subst b l) ex from rfl,
-    subst_subst_log hex h _ (by rw [map_add, hla, hlb, add_zero]),
+    subst_subst_log hex h _ (by rw [map_add (f := _), hla, hlb, add_zero]),
     show add l ex b c = PowerSeries.subst (PowerSeries.subst b l + PowerSeries.subst c l) ex from rfl,
-    subst_subst_log hex h _ (by rw [map_add, hlb, hlc, add_zero]), add_assoc]
+    subst_subst_log hex h _ (by rw [map_add (f := _), hlb, hlc, add_zero]), add_assoc]
 
 theorem simeq_of_sub_eq {f g f' g' : MvPowerSeries σ ℂ_[p]} (e : f - g = f' - g')
     (hs : Simeq f' g') : Simeq f g := by

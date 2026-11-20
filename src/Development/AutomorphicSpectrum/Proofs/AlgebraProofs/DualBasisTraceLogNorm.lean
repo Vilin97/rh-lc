@@ -106,7 +106,7 @@ theorem trace_coord (H : Host E) (x : Kf H) (u v : ℚ) (hx : (x : E) = u + v * 
     apply Subtype.ext
     rw [hx]
     simp [Algebra.smul_def]
-  rw [h, map_add, map_smul, trace_rtL, Algebra.trace_algebraMap, finrank_Kf]
+  rw [h, map_add (f := _), map_smul, trace_rtL, Algebra.trace_algebraMap, finrank_Kf]
   simp
 
 theorem trace_div_rt (H : Host E) (x : Kf H) (u v : ℚ) (hx : (x : E) = u + v * (H.rt : E)) :
@@ -329,7 +329,7 @@ theorem exists_basis (H : Host E) (ℓ f : ℕ) (b : Fin f → 𝓞 E) (h : IsLo
         exact Submodule.subset_span ⟨k, rfl⟩
       | zero => simp
       | add x y _ _ hx hy =>
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_mem hx hy
       | smul a x _ hx =>
         have : algebraMap (𝓞 E) E (a • x) = (⟨_, mem_Kf_of_ord H a.2⟩ : Kf H) • algebraMap (𝓞 E) E x := by
@@ -416,7 +416,7 @@ theorem agree_on_Kf (H : Host E) {K : Type} [Field K] (σ σ' : E →+* K)
     (h : σ (H.rt : E) = σ' (H.rt : E)) (l : Kf H) : σ (l : E) = σ' (l : E) := by
   obtain ⟨u, v, hx⟩ := exists_coord H l
   rw [hx]
-  simp only [map_add, map_mul, map_ratCast, h]
+  simp only [map_add (f := _), map_mul, map_ratCast, h]
 
 theorem trace_dual_apply (H : Host E) {f : ℕ} (B : Module.Basis (Fin f) (Kf H) E) (i k : Fin f) :
     Algebra.trace (Kf H) E (B.traceDual i * B k) = if i = k then 1 else 0 := by

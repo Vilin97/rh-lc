@@ -165,7 +165,7 @@ theorem isAddFundamentalDomain_levelDomain :
     fun _ => rfl
   refine ⟨⟨algebraMap ℚ 𝔸[ℚ] q, q, rfl⟩, ⟨?_, ?_⟩, ?_⟩
   · change RationalIdeles.realEquiv ((algebraMap ℚ 𝔸[ℚ] q + a : 𝔸[ℚ]).1) ∈ Set.Ico (0 : ℝ) N
-    rw [hreal, map_add, realEquiv_algebraMap]
+    rw [hreal, map_add (f := _), realEquiv_algebraMap]
     have h1 : (m : ℝ) ≤ r / N := Int.floor_le _
     have h2 : r / N < m + 1 := Int.lt_floor_add_one _
     rw [le_div_iff₀ hN] at h1
@@ -181,7 +181,7 @@ theorem isAddFundamentalDomain_levelDomain :
     exact sub_mem_levelIdeal hq₀ (natCast_mul_intCast_mem_levelIdeal N m)
   · rintro ⟨_, q', rfl⟩ ⟨hr', hf'⟩
     have hr : RationalIdeles.realEquiv ((algebraMap ℚ 𝔸[ℚ] q + a : 𝔸[ℚ]).1) ∈ Set.Ico (0 : ℝ) N := by
-      rw [hreal, map_add, realEquiv_algebraMap]
+      rw [hreal, map_add (f := _), realEquiv_algebraMap]
       have h1 : (m : ℝ) ≤ r / N := Int.floor_le _
       have h2 : r / N < m + 1 := Int.lt_floor_add_one _
       rw [le_div_iff₀ hN] at h1
@@ -197,7 +197,7 @@ theorem isAddFundamentalDomain_levelDomain :
       exact sub_mem_levelIdeal hq₀ (natCast_mul_intCast_mem_levelIdeal N m)
     change RationalIdeles.realEquiv ((algebraMap ℚ 𝔸[ℚ] q' + a : 𝔸[ℚ]).1) ∈ Set.Ico (0 : ℝ) N at hr'
     change (algebraMap ℚ 𝔸[ℚ] q' + a : 𝔸[ℚ]).2 ∈ levelIdeal N at hf'
-    rw [hreal, map_add, realEquiv_algebraMap] at hr hr'
+    rw [hreal, map_add (f := _), realEquiv_algebraMap] at hr hr'
     rw [hfin] at hf hf'
     have hdiff := sub_mem_levelIdeal hf' hf
     rw [add_sub_add_right_eq_sub, ← map_sub] at hdiff

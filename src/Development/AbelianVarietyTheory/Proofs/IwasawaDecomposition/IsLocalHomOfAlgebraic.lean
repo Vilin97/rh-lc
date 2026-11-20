@@ -164,7 +164,7 @@ theorem isLocalHom_of_algebraic {R F k : Type} [CommRing R] [IsLocalRing R] [Fie
     (Polynomial.aeval_algHom_apply ψ' a _).symm.trans (minpoly.aeval ℚ (ψ a))
   have h2 : ¬ IsUnit (Polynomial.aeval a (minpoly ℚ (ψ a))) := fun h => (h.map ψ).ne_zero h1
   by_contra hna
-  rw [← Polynomial.X_mul_divX_add (minpoly ℚ (ψ a)), map_add, map_mul, Polynomial.aeval_X, Polynomial.aeval_C] at h2
+  rw [← Polynomial.X_mul_divX_add (minpoly ℚ (ψ a)), map_add (f := _), map_mul, Polynomial.aeval_X, Polynomial.aeval_C] at h2
   have h3 : algebraMap ℚ R ((minpoly ℚ (ψ a)).coeff 0) ∈ IsLocalRing.maximalIdeal R := by
     have := Ideal.sub_mem (IsLocalRing.maximalIdeal R) h2
       (Ideal.mul_mem_right (Polynomial.aeval a (minpoly ℚ (ψ a)).divX) _ hna)

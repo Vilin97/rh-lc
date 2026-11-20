@@ -32,7 +32,7 @@ private theorem tr_bc {n : ℕ} {B E : Type} [CommRing B] [Ring E] [Algebra B E]
   obtain ⟨t', ht'⟩ := (d_tr (D.baseChange C)).1 hn
   rw [← ht']
   induction y with
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | tmul c z =>
     have : c ⊗ₜ[B] z = c • ((1 : C) ⊗ₜ[B] z) := by rw [TensorProduct.smul_tmul', smul_eq_mul, mul_one]
     rw [this, map_smul, map_smul, ht, ht']

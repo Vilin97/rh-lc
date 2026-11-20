@@ -131,7 +131,7 @@ theorem map_hs {T : Type} [CommRing T] (f : R →+* T) (N : ℕ) (hx : ∀ i < N
     induction a with
     | zero => exact base _ _
     | succ a iha =>
-      rw [hs_succ, map_add, map_add, map_mul, iha, ih', hN]
+      rw [hs_succ, map_add (f := _), map_add (f := _), map_mul, iha, ih', hN]
       have e1 : N + 1 + a - 1 = N + a := by omega
       have e2 : N + (a + 1) - 1 = N + a := by omega
       have e3 : N + 1 + (a + 1) - 1 = N + a + 1 := by omega

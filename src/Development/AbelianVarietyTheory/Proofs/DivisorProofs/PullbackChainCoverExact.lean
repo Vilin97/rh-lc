@@ -194,8 +194,8 @@ theorem crd_mem_imJ [Lie.V.IsQuasicoherent] (hC : IsCov f g) (hQ : IsQuot M ι (
     | add s s' hs hs' =>
       obtain ⟨x', h1, h2⟩ := hs
       obtain ⟨x'', h1', h2'⟩ := hs'
-      refine ⟨x' + x'', ((appLinear j.hom _).map_add s s').trans (by rw [map_add]; exact congrArg₂ _ h1 h1'), ?_⟩
-      rw [map_add, map_add]
+      refine ⟨x' + x'', ((appLinear j.hom _).map_add s s').trans (by rw [map_add (f := _)]; exact congrArg₂ _ h1 h1'), ?_⟩
+      rw [map_add (f := _), map_add (f := _)]
       exact add_mem h2 h2'
   obtain ⟨z, hz⟩ := ((exact_coker j (hC.isAffineOpen U)).1 (t.app _ x)).1 hx
   obtain ⟨x', h1, h2⟩ := H z

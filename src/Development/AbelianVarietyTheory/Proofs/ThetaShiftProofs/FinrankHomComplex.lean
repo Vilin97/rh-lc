@@ -138,7 +138,7 @@ theorem exists_compl [FiniteDimensional ℂ W] (Q : ∀ n : ℕ, (O →+* Module
       map_add' := fun w w' => Subtype.ext (map_add p₀ w w')
       map_smul' := fun c w => Subtype.ext (by
         show p₀ (c • w) = c • p₀ w
-        rw [hsm c w, hsm c (p₀ w), map_add, map_smul, map_smul, hpI]) }
+        rw [hsm c w, hsm c (p₀ w), map_add (f := _), map_smul, map_smul, hpI]) }
   have hb0 : ∀ u ∈ U, b u = 0 := fun u hu => imPart_eq hpos hb hb' R.zero_mem fun r hr => by simp [hu r hr]
   have hpu : ∀ u : U, p u = u := fun u => Subtype.ext (by
     show p₀ u = u
@@ -177,7 +177,7 @@ theorem sub_swap {w w' u u' : W} (hu : ∀ r ∈ R, S u r = 0) (hu' : ∀ r ∈ 
   generalize b w = c, hb w = hc at h ⊢
   generalize b w' = c', hb w' = hc' at h' ⊢
   subst h h'
-  simp only [map_add, LinearMap.map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hu _ ha', hu _ hc',
+  simp only [map_add (f := _), LinearMap.map_smulₛₗ, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul, hu _ ha', hu _ hc',
     hu' _ hc, hv _ ha, hv _ hc, AnArc.div_two_I]
   apply Complex.ext <;>
     simp [hR _ ha _ ha', hR _ ha _ hc', hR _ hc _ ha', hR _ hc _ hc', hR _ ha' _ hc, hR _ hc' _ hc, hre a' c, hre c' c,

@@ -59,7 +59,7 @@ def blockOp (s : ι → Bool) (F : ι → ι → Module.End ℂ M) (U : Submodul
     · exact U.zero_mem⟩
   map_add' y z := by
     ext a
-    simp only [Submodule.coe_add, Pi.add_apply, map_add, Finset.sum_add_distrib]
+    simp only [Submodule.coe_add, Pi.add_apply, map_add (f := _), Finset.sum_add_distrib]
     split_ifs <;> simp
   map_smul' r y := by
     ext a

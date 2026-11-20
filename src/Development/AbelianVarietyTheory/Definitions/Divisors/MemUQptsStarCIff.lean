@@ -28,21 +28,21 @@ theorem Datum.EFQ_tmul (q q' : ℚ) (x y : D.La) : D.EFQ (q ⊗ₜ x) (q' ⊗ₜ
 theorem Datum.EFQ_swap (x y : D.VQ) : D.EFQ y x = - D.EFQ x y := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' h h' => simp only [map_add, LinearMap.add_apply, h, h']; ring
+  | add x x' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']; ring
   | tmul q x =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' h h' => simp only [map_add, LinearMap.add_apply, h, h']; ring
+    | add y y' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']; ring
     | tmul q' y => rw [D.EFQ_tmul, D.EFQ_tmul, D.EF_swap x y]; push_cast; ring
 
 theorem Datum.EFQ_actQ (b : D.O) (x y : D.VQ) : D.EFQ (D.actQ b x) y = D.EFQ x (D.actQ (D.star b).unop y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+  | add x x' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
   | tmul q x =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' h h' => simp only [map_add, h, h']
+    | add y y' h h' => simp only [map_add (f := _), h, h']
     | tmul q' y => rw [D.actQ_tmul, D.actQ_tmul, D.EFQ_tmul, D.EFQ_tmul, D.adj]
 
 theorem Datum.exists_tmul (v : D.VQ) : ∃ (q : ℚ) (x : D.La), q ≠ 0 ∧ v = q ⊗ₜ x := by
@@ -97,7 +97,7 @@ theorem Datum.adjE_mul (g h : Module.End ℚ D.VQ) : D.adjE (g * h) = D.adjE h *
   D.end_ext fun x y => by simp only [D.EFQ_adjE_left, Module.End.mul_apply]
 
 theorem Datum.adjE_add (g h : Module.End ℚ D.VQ) : D.adjE (g + h) = D.adjE g + D.adjE h :=
-  D.end_ext fun x y => by simp only [D.EFQ_adjE_left, LinearMap.add_apply, map_add]
+  D.end_ext fun x y => by simp only [D.EFQ_adjE_left, LinearMap.add_apply, map_add (f := _)]
 
 theorem Datum.adjE_smul (q : ℚ) (g : Module.End ℚ D.VQ) : D.adjE (q • g) = q • D.adjE g :=
   D.end_ext fun x y => by simp only [D.EFQ_adjE_left, LinearMap.smul_apply, map_smul]
@@ -183,7 +183,7 @@ theorem Datum.starC_algebraMap (x : D.F) :
     (D.starC (algebraMap D.F D.endO x)).unop = algebraMap D.F D.endO (IsCMField.complexConj D.F x) := by
   let L : D.endO →ₗ[ℚ] D.endO :=
     { toFun := fun g => (D.starC g).unop
-      map_add' := fun g h => by rw [map_add, MulOpposite.unop_add]
+      map_add' := fun g h => by rw [map_add (f := _), MulOpposite.unop_add]
       map_smul' := fun q g => Subtype.ext (D.adjE_smul q g) }
   have h : L.comp D.actFL = D.actFL.comp (GlobalTheory.LKTrip.conjQ D.F).toLinearMap := by
     refine (integralBasis D.F).ext fun i => ?_

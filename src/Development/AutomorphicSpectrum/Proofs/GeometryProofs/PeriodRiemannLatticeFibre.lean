@@ -16,7 +16,7 @@ namespace GlobalTheory.CompanionTheory.Ar.Cusp.FamEx.PeriodConj
 def conjEnd (g : ℕ) : Module.End ℂ (Fin g → ℂ) →+* Module.End ℂ (Fin g → ℂ) where
   toFun f :=
     { toFun := fun x => star (f (star x))
-      map_add' := fun x y => by simp only [star_add, map_add]
+      map_add' := fun x y => by simp only [star_add, map_add (f := _)]
       map_smul' := fun c x => by simp only [star_smul, map_smul, star_star, RingHom.id_apply] }
   map_one' := by ext x; simp
   map_mul' f f' := by ext x; simp

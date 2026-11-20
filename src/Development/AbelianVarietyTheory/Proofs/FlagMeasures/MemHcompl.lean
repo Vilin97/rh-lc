@@ -106,8 +106,8 @@ theorem abs_main {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : h.IsSymm) {Λ : AddSub
       by_cases a : h w y ∈ M
       · by_cases b : h w' x ∈ M
         · refine ⟨w + w', Λ.add_mem hw hw', ?_, ?_⟩
-          · rw [map_add, LinearMap.add_apply, e]; exact uadd h1 b
-          · rw [map_add, LinearMap.add_apply, e', add_comm]; exact uadd h1 a
+          · rw [map_add (f := _), LinearMap.add_apply, e]; exact uadd h1 b
+          · rw [map_add (f := _), LinearMap.add_apply, e', add_comm]; exact uadd h1 a
         · exact ⟨w', hw', b, e' ▸ h1⟩
       · exact ⟨w, hw, e ▸ h1, a⟩
     obtain ⟨c, cA, cM, ce⟩ : ∃ c ∈ A, c ∉ M ∧ c + star c = h w w := by
@@ -208,7 +208,7 @@ theorem main : ∀ (K V : Type) [Field K] [NumberField K] [StarRing K] [AddCommG
       add_mem' := by
         rintro a b ⟨s, hs, r, hr, e⟩ ⟨s', hs', r', hr', e'⟩
         exact ⟨s * s', nm hs hs', s' * r + s * r', P.add_mem (P.mul_mem_left _ hr) (P.mul_mem_left _ hr'),
-          by simp only [map_add, map_mul, e, e']; ring⟩
+          by simp only [map_add (f := _), map_mul, e, e']; ring⟩
       neg_mem' := by
         rintro a ⟨s, hs, r, hr, e⟩
         exact ⟨s, hs, -r, P.neg_mem hr, by rw [map_neg, e]; ring⟩ }

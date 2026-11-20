@@ -30,7 +30,7 @@ theorem span_image_eq {V : Type} [AddCommGroup V] [Module LL V] (A : Subring LL)
     induction hx using Submodule.span_induction with
     | mem z hz => exact Submodule.subset_span ⟨z, hz, rfl⟩
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add y z _ _ h1 h2 => rw [map_add]; exact Submodule.add_mem _ h1 h2
+    | add y z _ _ h1 h2 => rw [map_add (f := _)]; exact Submodule.add_mem _ h1 h2
     | smul a y _ h1 =>
       obtain ⟨o, ho⟩ := hA a.1 a.2
       have : (phi (a • y)).1 = o • (phi y).1 := by
@@ -59,7 +59,7 @@ variable {c Tw u w h Lv}
 def UpData.cmpI (X : UpData c Tw u w h Lv) (j : ℕ) (hj : j + 1 ≤ D.R.m) :
     ((Tw.fm u (D.what₂.muAt w)).lat (j + 1)).V →ₛₗ[c.embW u w h] Lv.Fm (j + 1) where
   toFun x := (X.phi j hj x).1
-  map_add' x y := by rw [map_add]; rfl
+  map_add' x y := by rw [map_add (f := _)]; rfl
   map_smul' a x := by rw [map_smul]; rfl
 
 open Classical in

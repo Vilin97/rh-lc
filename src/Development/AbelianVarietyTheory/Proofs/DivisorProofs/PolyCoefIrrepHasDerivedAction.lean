@@ -100,7 +100,7 @@ lemma conj_single (g : KG ε) {a b : Fin n} (hab : ε a = ε b) :
   have e : toMK g * (kp1 a b + Complex.I • kp2 a b) * star (toMK g) =
       toMK g * kp1 a b * star (toMK g) + Complex.I • (toMK g * kp2 a b * star (toMK g)) := by
     rw [Matrix.mul_add, Matrix.add_mul, Matrix.mul_smul, Matrix.smul_mul]
-  rw [e, map_add, map_smul, map_add, map_smul, ← conj τ dτ hder g (inK_hermitian_unit hab),
+  rw [e, map_add (f := _), map_smul, map_add (f := _), map_smul, ← conj τ dτ hder g (inK_hermitian_unit hab),
     ← conj τ dτ hder g (inK_skew_hermitian_unit hab), mul_add, add_mul, mul_smul_comm, smul_mul_assoc]
 
 include hder hσ in

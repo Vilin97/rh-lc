@@ -158,7 +158,7 @@ theorem GlobalTheory.Mum.TensAct.qkAct_tens : ∀ (R : Type) [CommRing R] [IsDom
       · apply Multiplicative.toAdd.injective
         apply ν.eX.injective
         change ν.eX cq.1.1.toAdd = ν.eX ((qv b).1.1.toAdd + (qv c).1.1.toAdd)
-        rw [map_add, (hqv b).1, (hqv c).1, hcq.1, hqy]
+        rw [map_add (f := _), (hqv b).1, (hqv c).1, hcq.1, hqy]
       · exact (hB.2.2.1 _ _ _ _ _ _ (hqv b).2 (hqv c).2 hcq.2).1 hqadd
     rw [← e1]
     exact ((hB.2.2.2.2 n).2.2 q (ev n (b + c)) cq (qv (b + c)) hcq (hqv _)).1 hqeq

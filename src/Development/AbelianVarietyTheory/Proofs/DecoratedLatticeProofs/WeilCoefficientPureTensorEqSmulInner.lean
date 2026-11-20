@@ -59,14 +59,14 @@ theorem wcoef_pure_eq_smul_inner : ∀ (D : D7) (G : Type) [Group G] [Fintype G]
   let B : (R.cV i).W →ₗ⋆[ℂ] (R.cV i).W →ₗ[ℂ] ℂ :=
     LinearMap.mk₂'ₛₗ (starRingEnd ℂ) (RingHom.id ℂ) (fun x y => ∫ w in 𝓕, J y w * conj (J x w) ∂ν)
       (fun x x' y => by
-        simp only [map_add, Pi.add_apply, mul_add]
+        simp only [map_add (f := _), Pi.add_apply, mul_add]
         exact integral_add (hint x y) (hint x' y))
       (fun a x y => by
         simp only [map_smul, Pi.smul_apply, smul_eq_mul, map_mul]
         rw [← integral_const_mul]
         congr 1; funext w; ring)
       (fun x y y' => by
-        simp only [map_add, Pi.add_apply, add_mul]
+        simp only [map_add (f := _), Pi.add_apply, add_mul]
         exact integral_add (hint x y) (hint x y'))
       (fun a x y => by
         simp only [map_smul, Pi.smul_apply, smul_eq_mul, RingHom.id_apply]

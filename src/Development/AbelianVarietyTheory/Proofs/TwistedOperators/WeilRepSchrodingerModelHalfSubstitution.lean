@@ -173,7 +173,7 @@ theorem om_placeModel : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp
   | add Ψ₁ Ψ₂ _ _ ih₁ ih₂ =>
     rw [show (fun x => (Ψ₁ + Ψ₂) (actO S T g⁻¹ h⁻¹ x)) =
       (fun x => Ψ₁ (actO S T g⁻¹ h⁻¹ x)) + (fun x => Ψ₂ (actO S T g⁻¹ h⁻¹ x)) from rfl]
-    simp only [map_add, ih₁, ih₂, smul_add]
+    simp only [map_add (f := _), ih₁, ih₂, smul_add]
   | smul r Ψ _ ih =>
     rw [show (fun x => (r • Ψ) (actO S T g⁻¹ h⁻¹ x)) = r • (fun x => Ψ (actO S T g⁻¹ h⁻¹ x)) from rfl]
     simp only [map_smul, ih]

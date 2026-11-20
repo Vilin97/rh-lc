@@ -52,7 +52,7 @@ theorem comm_mem_intAf_iff {D : D7} (z : Af D.host.F ⊗[D.host.F] D.host.E) :
         simp
     | zero => rw [map_zero]; exact zero_mem _
     | one => rw [map_one]; exact AddSubgroup.subset_closure ⟨1, hone, 1, by simp [Algebra.TensorProduct.one_def]⟩
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
     | mul x y _ _ hx hy => rw [map_mul]; exact intAE_mul hx hy
   · intro hz
@@ -67,13 +67,13 @@ theorem comm_mem_intAf_iff {D : D7} (z : Af D.host.F ⊗[D.host.F] D.host.E) :
       exact mul_mem (Subring.subset_closure (Or.inl ⟨⟨(x : D.host.E), ⟨x, rfl⟩⟩, rfl⟩))
         (Subring.subset_closure (Or.inr ⟨⟨a, fun v => ha v⟩, rfl⟩))
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | neg x _ hx => rw [map_neg]; exact neg_mem hx
 
 theorem toEAf_finEmb {D : D7} (t : EAf D) : toEAf D (GlobalTheory.AdelicLatMove.finEmb D t) = t := by
   induction t using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   | tmul x α => rfl
 
 theorem latHat_iff_hatL {D : D7} {n : ℕ} (Λ : Submodule (𝓞 D.host.E) (Fin n → D.host.E))
@@ -87,7 +87,7 @@ theorem latHat_iff_hatL {D : D7} {n : ℕ} (Λ : Submodule (𝓞 D.host.E) (Fin 
       obtain ⟨a, ha, x, hx, rfl⟩ := hz
       exact GlobalTheory.AdelicLatMove.pure_mem_hatL Λ a (fun w => ha w) x hx
     | zero => simp only [Pi.zero_apply, map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => simp only [Pi.add_apply, map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => simp only [Pi.add_apply, map_add (f := _)]; exact add_mem hx hy
     | neg x _ hx => simp only [Pi.neg_apply, map_neg]; exact neg_mem hx
   · intro hz
     have key : ∀ w ∈ AddSubgroup.closure (GlobalTheory.AdelicLatMove.pureSet (D := D) Λ),
@@ -99,7 +99,7 @@ theorem latHat_iff_hatL {D : D7} {n : ℕ} (Λ : Submodule (𝓞 D.host.E) (Fin 
         obtain ⟨α, hα, x, hx, rfl⟩ := hw
         exact AddSubgroup.subset_closure ⟨α, fun u => hα u, x, hx, rfl⟩
       | zero => simp only [Pi.zero_apply, map_zero]; exact zero_mem _
-      | add x y _ _ hx hy => simp only [Pi.add_apply, map_add]; exact add_mem hx hy
+      | add x y _ _ hx hy => simp only [Pi.add_apply, map_add (f := _)]; exact add_mem hx hy
       | neg x _ hx => simp only [Pi.neg_apply, map_neg]; exact neg_mem hx
     have := key _ (GlobalTheory.AdelicLatMove.mem_closure_of_mem_hatL Λ _ hz)
     simpa only [AlgEquiv.symm_apply_apply] using this

@@ -49,7 +49,7 @@ theorem pointIdeal_comp (y : (Σ b, ι' b) → Ω) (κ : K → K') (hκ : Functi
     intro f
     induction f using MvPolynomial.induction_on with
     | C a => simp [pointConeMap]
-    | add p q hp hq => simp only [map_add, hp, hq]
+    | add p q hp hq => simp only [map_add (f := _), hp, hq]
     | mul_X p n hp =>
       rw [map_mul, map_mul, hp, map_mul, map_mul]
       congr 1
@@ -79,7 +79,7 @@ private theorem aeval_div_mem_fnField_of_multiHomog {k : Type} [Field k] {Ω : T
       rw [aeval_C]
       exact IntermediateField.algebraMap_mem _ a
     | add p q hp hq =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hp hq
     | mul_X p n hp =>
       rw [map_mul, aeval_X]

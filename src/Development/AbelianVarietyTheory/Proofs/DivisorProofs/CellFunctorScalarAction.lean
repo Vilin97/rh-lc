@@ -32,7 +32,7 @@ theorem detTensor_apply {k : Type} [Field k] {a b : Type} [Fintype a] [Decidable
       ((χ₁ (GeneralLinearGroup.det (l false)) * χ₂ (GeneralLinearGroup.det (l true)) : ℂˣ) : ℂ) • x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
   | tmul x y =>
     rw [MonoidHom.comp_apply, extTensor_tmul]
     simp only [detRep, ofChar_apply, detChar_apply, Units.val_mul]

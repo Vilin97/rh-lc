@@ -21,7 +21,7 @@ theorem pairing_eps_eq_zero {k : Type} [Field k] {M : Type*} [AddCommGroup M] [M
     (h₃ : χ Z X' = algebraMap k (DualNumber k) c) (h₄ : χ Z Z' = algebraMap k (DualNumber k) e)
     (ha : a = 0) (hbc : b + c = 0) :
     χ (X + (DualNumber.eps : DualNumber k) • Z) (X' + (DualNumber.eps : DualNumber k) • Z') = 0 := by
-  simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, h₁, h₂, h₃, h₄, smul_eq_mul]
+  simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, h₁, h₂, h₃, h₄, smul_eq_mul]
   subst ha
   ext
   · simp [TrivSqZeroExt.algebraMap_eq_inl]
@@ -62,7 +62,7 @@ theorem graphFil_isotropic : ∀ (k : Type) [Field k] (A₀ : Over (Sp k)) [GrpO
     ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
   have h₁ : φ x x' = 0 := iso x hx x' hx'
   have h₂ : φ x (f x' + y') + φ (f x + y) x' = 0 := by
-    rw [map_add, map_add, LinearMap.add_apply, iso x hx y' hy', iso y hy x' hx', add_zero, add_zero, add_comm]
+    rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, iso x hx y' hy', iso y hy x' hx', add_zero, add_zero, add_comm]
     exact hf x hx x' hx'
   rw [dE, dE']
   exact pairing_eps_eq_zero χ (hk _ _ _ _ hX hX') (hk _ _ _ _ hX hZ') (hk _ _ _ _ hZ hX') (hk _ _ _ _ hZ hZ') h₁ h₂

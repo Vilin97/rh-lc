@@ -108,7 +108,7 @@ theorem HolomorphicKernelFibre.proof : HolomorphicKernelFibre.Statement := by
       intro t ht
       have h1 : Φ (H.symm (aff t)) = c + E t := H.right_inv ht.1.1
       have h2 := congrArg P h1
-      simp only [Φ, map_add, hPE, add_zero, hPP] at h2
+      simp only [Φ, map_add (f := _), hPE, add_zero, hPP] at h2
       rw [h2, hc, hPP]
     intro s hs t ht hst
     have hq : C.projectionOnto W hWC.symm (f (H.symm (aff s))) =

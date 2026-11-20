@@ -91,7 +91,7 @@ theorem sand_exps [Nontrivial O] (E : EtTie W RA RW inclR φR gR πA)
       rw [E.jD_smul]
       exact Submodule.smul_mem _ _ hz
     · intro z z' hz hz'
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hz hz'
   have hli : LinearIndependent RW fun i => E.jD T (b i : W.DD T) := by
     have hs := hsp
@@ -148,7 +148,7 @@ theorem sand_exps [Nontrivial O] (E : EtTie W RA RW inclR φR gR πA)
       rw [e, smul_comm]
       exact NAinf_smul E T a _ (h1t t)
     | add w w' h1 h2 =>
-      rw [map_add, smul_add]; exact Submodule.add_mem _ h1 h2
+      rw [map_add (f := _), smul_add]; exact Submodule.add_mem _ h1 h2
   ·
     choose P hP using fun i => hexp _ (hM _ (b i).2)
     have hup := GlobalTheory.Sandwich.upper tb inclR φR hA _ _ hx M (fun i => E.jD T (b i : W.DD T))

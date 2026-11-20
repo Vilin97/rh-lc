@@ -21,7 +21,7 @@ theorem sigR_sigR (hs : ∀ x, σ (σ x) = x) (z : R ⊗[F] E) : sigR R σ (sigR
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r y => simp [sigR, hs]
-  | add a c ha hc => rw [map_add, map_add, ha, hc]
+  | add a c ha hc => rw [map_add (f := _), map_add (f := _), ha, hc]
 
 theorem sigR_inclR (y : E) : sigR R σ (inclR R y) = inclR R (σ y) := by
   simp [sigR, inclR]

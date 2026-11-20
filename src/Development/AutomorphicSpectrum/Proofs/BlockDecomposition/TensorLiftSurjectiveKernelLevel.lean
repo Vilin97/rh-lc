@@ -22,7 +22,7 @@ theorem tensor_ringHom_ext {R S T B : Type*} [CommRing R] [CommRing S] [CommRing
   induction z using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
   | tmul a b => exact h a b
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem mem_span_pow_of_compatible {T : Type*} [CommRing T] (p : ℕ) {B : ℕ → Type*} [∀ n, CommRing (B n)]
     (f : ∀ n, T →+* B n) (red : ∀ n, B (n + 1) →+* B n) (r : ∀ n, B (n + 1) →+* B 1)
@@ -59,7 +59,7 @@ theorem surjective_of_span {Wr C B T : Type*} [CommRing Wr] [CommRing C] [CommRi
   induction hy using Submodule.span_induction with
   | mem x hx => exact hS x hx
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [hg]; exact mul_mem (hgr c) hx
 
 end Generic

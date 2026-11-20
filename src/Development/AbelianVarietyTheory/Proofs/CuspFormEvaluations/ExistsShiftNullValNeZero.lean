@@ -97,7 +97,7 @@ theorem exists_shift_nullVal_ne_zero : Laws → ∀ (E : Type) [Field E] [Number
     have hq : R • q = 0 := hev.2.2 K (RingHom.id K) _ _ (by rw [es, hz, e₀])
     obtain ⟨u, hu⟩ := exists_shift hR₀ (g.symm q) (by rw [← map_nsmul, hq, map_zero])
     refine ⟨u, h _ _ (hw _) ?_⟩
-    rw [← es, ← es, ← hev.1, ← g.apply_symm_apply q, ← hu, ← map_nsmul, ← map_nsmul, ← map_add]
+    rw [← es, ← es, ← hev.1, ← g.apply_symm_apply q, ← hu, ← map_nsmul, ← map_nsmul, ← map_add (f := _)]
     congr 2
     show (Submodule.Quotient.mk (R ^ 2 • (x + R • qRep u)) : LatMod Dw (R ^ 4)) =
       Submodule.Quotient.mk (R ^ 2 • x + R ^ 3 • qRep u)

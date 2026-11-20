@@ -57,7 +57,7 @@ theorem smul_eq_zero_of_fst (F E : Type) [Field F] [NumberField F] [Field E] [Nu
       refine Prod.ext ?_ ?_
       · exact one_mul _
       · exact zero_mul _
-    | add y z hy hz => rw [smul_add, hy, hz, map_add, map_add]
+    | add y z hy hz => rw [smul_add, hy, hz, map_add (f := _), map_add (f := _)]
   rw [hu', mul_comm, mul_smul, key, hx, map_zero, smul_zero]
 
 theorem gfc_arch : ∀ (D : D7) (X : HSp D) {k : ℕ} (e : Fin k ≃ Fin X.rank) {J : Matrix (Fin k) (Fin k) D.host.E}

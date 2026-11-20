@@ -36,7 +36,7 @@ theorem stepSat_of (hP : ProjZ) : StepSat := by
       rw [hk]
       simp only [map_zsmul]
       rw [MvPolynomial.map_monomial, map_one, hS1]
-    | add p q hp hq => rw [map_add, map_add, hp, hq, map_add, map_add]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
   have hle : Submodule.span ℂ_[l] (Set.range fun J : ColChoice N0 nu =>
       MvPolynomial.map (Int.castRingHom ℂ_[l]) (nablaX N0 nu J)) ≤ LinearMap.eqLocus S LinearMap.id := by
     rw [Submodule.span_le]

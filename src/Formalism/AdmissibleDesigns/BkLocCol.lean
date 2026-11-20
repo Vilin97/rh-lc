@@ -60,7 +60,7 @@ theorem bkLoc_col (n : ℕ) (hw : plOf i dc n ∈ placesOver D.host.E (D.nd.l i)
       intro x
       have e := congrFun hab x
       change qV (z x) + (uRep (D.nd.O i) (M := M) r χ (x : GE D.nd) m - m) = φ.symm (f.1 x) at e
-      rw [← hφ, ← map_sub, ← map_add, e, LinearEquiv.apply_symm_apply]
+      rw [← hφ, ← map_sub, ← map_add (f := _), e, LinearEquiv.apply_symm_apply]
     have h1 : (fun g => Submodule.Quotient.mk (Ψ (z (Br.iota D.nbr i _ hw g))) :
         ↥(GK (D.nbr i _ hw).Kw) → (Fin D.R.r → Br.LLw (D.nbr i _ hw)) ⧸
           (Br.lat (D.nbr i _ hw) ((WpO D.nd i ρ π).comp (decS D.nd (plOf i dc n)))).T) ∈
@@ -88,7 +88,7 @@ theorem bkLoc_col (n : ℕ) (hw : plOf i dc n ∈ placesOver D.host.E (D.nd.l i)
             (Br.phi (D.nbr i _ hw) D.R.r (φ m)) :=
         phi_act D i (plOf i dc n) hw ((WpO D.nd i ρ π).comp (decS D.nd (plOf i dc n))) g (φ m)
       show Br.phi (D.nbr i _ hw) D.R.r (f.1 (Br.ι (D.nbr i _ hw) g)) = _
-      rw [hpt, map_add, map_sub, hcomp]
+      rw [hpt, map_add (f := _), map_sub, hcomp]
       exact congrArg (fun t => Submodule.Quotient.mk (Ψ (z (Br.iota D.nbr i _ hw g))) +
         (t - Br.phi (D.nbr i _ hw) D.R.r (φ m))) hact
     have hmem : f ∈ (HfD ((D.loc (D.nd.l i)).PD (D.nbr i _ hw).Kw)

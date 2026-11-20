@@ -57,7 +57,7 @@ theorem exists_global_near_idempotent (E E' : Type) [Field E] [NumberField E] [F
         (Algebra.leftMulMatrix B (p - q * e) + Algebra.leftMulMatrix B q *
           Algebra.leftMulMatrix B (Φ t)).det := by
       funext t
-      rw [Algebra.norm_eq_matrix_det B, ← map_mul, ← map_add]
+      rw [Algebra.norm_eq_matrix_det B, ← map_mul, ← map_add (f := _)]
       congr 2
       ring
     have : Continuous fun t => Algebra.norm K (p + q * (Φ t - e)) := by

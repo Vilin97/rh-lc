@@ -40,7 +40,7 @@ theorem add_conj (h : IsCMExt F E σ) (z : E) : z + σ z = algebraMap F E (Algeb
   apply (τ : E →+* AlgebraicClosure E).injective
   rw [show (Finset.univ : Finset (E →ₐ[F] AlgebraicClosure E)) = {τ, τ.comp σ} from
     Finset.ext fun ρ => by simpa using eq_or_eq_comp_conj h τ ρ, Finset.sum_pair (comp_conj_ne h τ).symm] at this
-  rw [map_add]
+  rw [map_add (f := _)]
   exact this.symm.trans (τ.commutes _).symm
 
 theorem inD_mem {B : Base F E} (hB : B.IsGood σ) {w : Pl E} (hw : Formalism.UG.IsInertAt F E v w) {z : E} (hz : InD z) :
@@ -48,7 +48,7 @@ theorem inD_mem {B : Base F E} (hB : B.IsGood σ) {w : Pl E} (hw : Formalism.UG.
   set Z := inclR (F := F) (Fv F v) z
   have key : ∀ y ∈ intLoc F E v, y * Z + sigR _ σ (y * Z) ∈ intLoc F E v := fun y hy => by
     refine intLoc_induction (p := fun y => y * Z + sigR _ σ (y * Z) ∈ intLoc F E v) (fun a ha x => ?_) (by simp)
-      (fun _ _ h h' => by convert add_mem h h' using 1; simp only [add_mul, map_add]; ring)
+      (fun _ _ h h' => by convert add_mem h h' using 1; simp only [add_mul, map_add (f := _)]; ring)
       (fun _ h => by convert neg_mem h using 1; simp only [neg_mul, map_neg]; ring) hy
     convert tmul_mem_intLoc (mul_mem ha (trace_mem hB.std (hB.inert v w hw).2.2 (hz.mul x))) 1 using 1
     rw [show a ⊗ₜ[F] (x : E) * Z = a ⊗ₜ[F] (z * x) from (Algebra.TensorProduct.tmul_mul_tmul a 1 _ z).trans (by rw [mul_one, mul_comm])]

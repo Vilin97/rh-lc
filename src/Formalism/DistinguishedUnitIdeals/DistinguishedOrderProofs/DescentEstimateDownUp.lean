@@ -245,7 +245,7 @@ theorem extF_mem_of_levelCond {ϖ : O} (hϖ : Irreducible ϖ) {r : ℕ} (φ : (F
   | up =>
     obtain ⟨N, c, z, hc, hz⟩ := h
     have e := congrArg (extF φ) hz
-    simp only [map_smul, map_sub, map_add, extF_cst, smul_eq_mul] at e
+    simp only [map_smul, map_sub, map_add (f := _), extF_cst, smul_eq_mul] at e
     rw [if_pos rfl]
     have hH : q ^ H = q ^ (H - bb) * q ^ bb := by rw [← pow_add, Nat.sub_add_cancel (hkb rfl)]
     apply mem_span_pow_of_uniformizer_mul O ϖ hϖ dd q hq _ (N + k)
@@ -256,7 +256,7 @@ theorem extF_mem_of_levelCond {ϖ : O} (hϖ : Irreducible ϖ) {r : ℕ} (φ : (F
   | down =>
     obtain ⟨N, c, z, hc, hz⟩ := h
     have e := congrArg (extF φ) hz
-    simp only [map_smul, map_sub, map_add, extF_cst, smul_eq_mul] at e
+    simp only [map_smul, map_sub, map_add (f := _), extF_cst, smul_eq_mul] at e
     rw [if_neg (by decide)]
     apply mem_span_pow_of_uniformizer_mul O ϖ hϖ dd q hq _ (N + k)
     rw [Ideal.mem_span_singleton]
@@ -304,7 +304,7 @@ theorem down_scalar {ϖ : O} (hϖ : Irreducible ϖ) {ℓ ell r : ℕ} {p : ℕ �
   rw [hk₁] at h₁
   obtain ⟨N, c, z, hc, hz⟩ := h₁
   have e := congrArg (extF φ) hz
-  simp only [map_smul, map_sub, map_add, extF_cst, smul_eq_mul, extF_eq_zero φ hφ hc, mul_zero,
+  simp only [map_smul, map_sub, map_add (f := _), extF_cst, smul_eq_mul, extF_eq_zero φ hφ hc, mul_zero,
     zero_add] at e
   rw [← hw, hΛ, hPE] at e
   have hne : p s₁ ^ H s₁ ≠ 0 := pow_ne_zero _ (unitDist_ne_zero (hP.1 s₁ hs₁))

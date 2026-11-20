@@ -77,7 +77,7 @@ theorem Gen1.princ (L : IsLoc O Δ) (hτ : τ ^ 2 - 4 ≠ 0) {x : Etau K τ} (h 
   · obtain ⟨a, b, e⟩ := (h.int_iff L _).1 hw
     refine ⟨_, Submodule.mem_span_pair.2 ⟨a + b * p, b * q, rfl⟩, ?_⟩
     have : (a + b * p) • (1 : Etau K τ) + (b * q) • x' = ((y⁻¹ : (Etau K τ)ˣ) : Etau K τ) * w := by
-      rw [e, ← e']; simp only [Algebra.smul_def, map_add, map_mul]; ring
+      rw [e, ← e']; simp only [Algebra.smul_def, map_add (f := _), map_mul]; ring
     change (y : Etau K τ) * _ = w
     rw [this, Units.mul_inv_cancel_left]
 

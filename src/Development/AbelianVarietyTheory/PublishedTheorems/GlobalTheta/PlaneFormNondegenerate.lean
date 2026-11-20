@@ -284,7 +284,7 @@ instance {A : Type} [AddCommGroup A] (b : A →+ A →+ Additive ℂˣ) (hb : �
   { AddGroup.ofLeftAxioms (G := Tw b hb)
       (fun x y z => Tw.ext (add_assoc _ _ _) (by
         show x.sc + y.sc + b x.pt y.pt + z.sc + b (x.pt + y.pt) z.pt = x.sc + (y.sc + z.sc + b y.pt z.pt) + b x.pt (y.pt + z.pt)
-        simp only [map_add, AddMonoidHom.add_apply]; abel))
+        simp only [map_add (f := _), AddMonoidHom.add_apply]; abel))
       (fun x => Tw.ext (zero_add _) (by
         show 0 + x.sc + b 0 x.pt = x.sc
         simp))
@@ -333,7 +333,7 @@ theorem exists_splits (h : Alt c) {L A : AddSubgroup W} (hLA : L ≤ A) (hL : �
         show 0 + 0 + b ⟨a, ha⟩ ⟨a', ha'⟩ = b ⟨a, ha⟩ ⟨a', ha'⟩ + 0 + b 0 _
         simp)
     have h2 := congrArg (fun t => ((g t).toMul : ℂ)) h1
-    simpa only [map_add, toMul_add, Units.val_mul, hg', hbv] using h2
+    simpa only [map_add (f := _), toMul_add, Units.val_mul, hg', hbv] using h2
   · beta_reduce
     rw [dif_pos (hLA hx)]
     exact congrArg (fun t : Additive ℂˣ => (t.toMul : ℂ)) (hg' (⟨x, hx⟩, 0))
@@ -612,7 +612,7 @@ theorem irr_of_span (hψ : Continuous ψ) (hπ : ∀ t v, π ⟨0, t⟩ v = ψ t
       beta_reduce at this ⊢
       rw [this, hu', he u hu.1, hu.2, one_smul, one_smul]
     | zero => simp
-    | add a b _ _ ha hb => filter_upwards [ha, hb] with u ha hb using by rw [map_add, ha, hb]
+    | add a b _ _ ha hb => filter_upwards [ha, hb] with u ha hb using by rw [map_add (f := _), ha, hb]
     | smul r a _ ha => filter_upwards [ha] with u ha using by rw [map_smul, ha]
   refine ⟨hs, ?_, hπ⟩
   have : Nontrivial (Subrepresentation π) := ⟨⊥, ⊤, fun h => he0 (by
@@ -709,7 +709,7 @@ theorem exists_char (F : Type) [Field F] [ValuativeRel F] [TopologicalSpace F] [
         have : ((k : ℚ) : ℝ) = q := by simpa using hk
         simpa using (by exact_mod_cast this : (k : ℚ) = q)
     refine ⟨AddMonoidHom.mk' (fun x => Additive.ofMul (Circle.toUnits (AddCircle.toCircle (j (χ x))))) fun a b => by
-      rw [map_add, map_add, AddCircle.toCircle_add, map_mul, ofMul_mul], fun h => hχ (hj _ ?_)⟩
+      rw [map_add (f := _), map_add (f := _), AddCircle.toCircle_add, map_mul, ofMul_mul], fun h => hχ (hj _ ?_)⟩
     refine AddCircle.injective_toCircle one_ne_zero (Subtype.ext ?_)
     rw [AddCircle.toCircle_zero]
     exact congrArg (fun t : Additive ℂˣ => (t.toMul : ℂ)) h

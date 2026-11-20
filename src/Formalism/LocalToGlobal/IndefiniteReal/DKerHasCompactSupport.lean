@@ -31,7 +31,7 @@ theorem gvS_add {τ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} (hτ : IsU
   rw [← integral_add (gvS_integrable hτ hΦ hΦc x) (gvS_integrable hτ hΦ hΦc y)]
   congr 1
   funext h
-  rw [map_add, smul_add]
+  rw [map_add (f := _), smul_add]
 
 theorem gvS_smul {τ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)}
     {Φ : Matrix (Fin n) (Fin n) ℂ → ℂ} (c : ℂ) (x : H) :

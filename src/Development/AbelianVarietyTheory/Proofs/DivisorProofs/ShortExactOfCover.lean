@@ -76,10 +76,10 @@ theorem exists_star_sec {V : X.Opens} (s : Γ(P, V)) (t : ∀ i, Γ(P' i, V))
   obtain ⟨t', ht'⟩ := (pi_sections (P' := P') V).2 t
   let y : Γ(P ⊞ ∏ᶜ P', V) := (biprod.inl : P ⟶ _).app V s + (biprod.inr : _ ⟶ P ⊞ _).app V t'
   have h1 : (biprod.fst : _ ⟶ P).app V y = s := by
-    simp only [y, map_add, app_app, biprod.inl_fst, biprod.inr_fst]
+    simp only [y, map_add (f := _), app_app, biprod.inl_fst, biprod.inr_fst]
     exact add_zero s
   have h2 : (biprod.snd : P ⊞ _ ⟶ _).app V y = t' := by
-    simp only [y, map_add, app_app, biprod.inl_snd, biprod.inr_snd]
+    simp only [y, map_add (f := _), app_app, biprod.inl_snd, biprod.inr_snd]
     exact zero_add t'
   have hy : (biprod.fst ≫ Pi.lift p - biprod.snd ≫ Limits.Pi.map q : P ⊞ ∏ᶜ P' ⟶ ∏ᶜ Q).app V y = 0 := by
     refine (pi_sections V).1 (funext fun i => ?_)

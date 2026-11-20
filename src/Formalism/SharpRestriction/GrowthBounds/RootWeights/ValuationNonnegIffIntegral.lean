@@ -155,7 +155,7 @@ theorem valuation_add_ge_min (p : ℕ) (x y : KK O) : min (vK p x) (vK p y) ≤ 
   have e2 : y * algebraMap O (KK O) (b * d) = algebraMap O (KK O) (c * b) := by
     rw [map_mul, map_mul, ← hcd]; ring
   have e3 : (x + y) * algebraMap O (KK O) (b * d) = algebraMap O (KK O) (a * d + c * b) := by
-    rw [map_add, ← e1, ← e2]; ring
+    rw [map_add (f := _), ← e1, ← e2]; ring
   have hs0 : a * d + c * b ≠ 0 := by
     intro h0
     rw [h0, map_zero] at e3

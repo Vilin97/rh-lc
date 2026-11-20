@@ -135,7 +135,7 @@ theorem hbound : ∀ (D : D7) (S T : HSp D) (ΛS : Submodule (𝓞 D.host.E) (Fi
     intro i j
     have hxy : mapCo φ S T (frCo φ βS) (frCo φ βT) (x + y) =
         mapCo φ S T (frCo φ βS) (frCo φ βT) x + mapCo φ S T (frCo φ βS) (frCo φ βT) y := by
-      simp [mapCo, Matrix.map_add, Matrix.mul_add, Matrix.add_mul]
+      simp [mapCo, Matrix.map_add (f := _), Matrix.mul_add, Matrix.add_mul]
     rw [hxy, Matrix.add_apply]
     exact (Valuation.map_add _ _ _).trans (max_le (hx i j) (hy i j))
   | neg x _ hx =>

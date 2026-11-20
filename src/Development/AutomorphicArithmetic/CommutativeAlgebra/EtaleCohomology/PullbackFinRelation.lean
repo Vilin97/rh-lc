@@ -132,7 +132,7 @@ private theorem wexp {k : Type} [Field k] [CharP k l] [PerfectRing k l] (τ : Wi
       have h1 := hAN x
       have h2 : τ (E x) = τ (WittVector.teichmuller l (A x)) + (l : OC l) * τ (E (N x)) := by
         conv_lhs => rw [hE x]
-        rw [map_add, map_mul, map_natCast]
+        rw [map_add (f := _), map_mul, map_natCast]
       rw [h2, h1, pow_succ']
       linear_combination (l : OC l) * hy
   intro x hx
@@ -297,7 +297,7 @@ private theorem hK [FiniteDimensional ℚ_[l] K] (r : Res l K) {k : PadicAlgCl l
     rw [tau_teich]
     change (x : ℂ_[l]) = ((PreTilt.untilt (r.s (r.ρ xo)) : OC l) : ℂ_[l]) +
       (l : ℂ_[l]) * clToC l ((k - k₀) / (l : PadicAlgCl l))
-    rw [hx, ← hk₀τ, ← map_natCast (clToC l) l, ← map_mul, ← map_add]
+    rw [hx, ← hk₀τ, ← map_natCast (clToC l) l, ← map_mul, ← map_add (f := _)]
     congr 1
     field_simp
     ring

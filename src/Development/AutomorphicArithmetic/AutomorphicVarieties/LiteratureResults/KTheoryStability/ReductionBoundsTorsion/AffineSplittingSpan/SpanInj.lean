@@ -143,9 +143,9 @@ theorem WData.inj (m : ℕ) (c : (Fin (m + 2) → P) → ℝ) (hc : InvS Set.uni
       rw [prism_inv W.pr S W.pr_mul v hvS g hg y]
     set lev : P → ℤ := fun z => W.ℓ (Additive.ofMul z) with hlevdef
     have hlev : ∀ z, lev (W.t * z) = lev z + 1 := by
-      intro z; simp only [hlevdef, ofMul_mul, map_add, W.ℓt]; ring
+      intro z; simp only [hlevdef, ofMul_mul, map_add (f := _), W.ℓt]; ring
     have hlevS : ∀ g ∈ S, ∀ z, lev (g * z) = lev z := by
-      rintro g ⟨g', rfl⟩ z; simp only [hlevdef, ofMul_mul, map_add, W.ℓι, zero_add]
+      rintro g ⟨g', rfl⟩ z; simp only [hlevdef, ofMul_mul, map_add (f := _), W.ℓι, zero_add]
     set w' := levSum W.t lev w with hw'def
     have hw'S : InvS S w' := levSum_inv W.t lev S hlevS W.comm_range w hwS
     have hw'w : (fun y => w' (fun i => W.t * y i)) - w' = w := by

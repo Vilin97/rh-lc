@@ -24,7 +24,7 @@ theorem hasVal_subst_poly : ∀ (p : ℕ) [Fact p.Prime] (B O Q : Type) [CommRin
     · rw [MvPowerSeries.smul_eq_C_mul]; rfl
     · rw [hEp]; simp [Finsupp.prod, map_prod, map_pow]
   | add f g hf hg =>
-    rw [MvPolynomial.coe_add, subst_add ha, map_add]
+    rw [MvPolynomial.coe_add, subst_add ha, map_add (f := _)]
     exact (GlobalTheory.T.hasPAdicPowerSeriesValue_add_smul_map p B O Q θ hF σ z _ _ _ _ hf).1 hg
 
 end GlobalTheory.QLog

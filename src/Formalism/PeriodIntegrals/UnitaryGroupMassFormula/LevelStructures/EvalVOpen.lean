@@ -43,8 +43,8 @@ theorem Jt_mul (hj : ∀ x y, j (x * y) = j x * j y) (x y : R' ⊗[F] E) :
     | zero => rw [mul_zero, map_zero, mul_zero]
     | tmul b e' =>
       rw [Algebra.TensorProduct.tmul_mul_tmul, Jt_tmul, Jt_tmul, Jt_tmul, hj, Algebra.TensorProduct.tmul_mul_tmul]
-    | add y y' hy hy' => rw [mul_add, map_add, hy, hy', map_add, mul_add]
-  | add x x' hx hx' => rw [add_mul, map_add, hx, hx', map_add, add_mul]
+    | add y y' hy hy' => rw [mul_add, map_add (f := _), hy, hy', map_add (f := _), mul_add]
+  | add x x' hx hx' => rw [add_mul, map_add (f := _), hx, hx', map_add (f := _), add_mul]
 
 def eps (j : R' →ₗ[F] R) : R ⊗[F] E := Jt j 1
 
@@ -69,7 +69,7 @@ theorem sigR_Jt (σ : E →ₐ[F] E) (x : R' ⊗[F] E) : sigR R σ (Jt j x) = Jt
       Jt j (Algebra.TensorProduct.map (AlgHom.id F R') σ (a ⊗ₜ e))
     rw [Jt_tmul, Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.map_tmul, Jt_tmul]
     rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem tensMap_Jt (φ : R →ₐ[F] R') (hφ : ∀ x, φ (j x) = x) (x : R' ⊗[F] E) :
     tensMap (E := E) φ (Jt j x) = x := by
@@ -79,7 +79,7 @@ theorem tensMap_Jt (φ : R →ₐ[F] R') (hφ : ∀ x, φ (j x) = x) (x : R' ⊗
     show Algebra.TensorProduct.map φ (AlgHom.id F E) (Jt j (a ⊗ₜ e)) = a ⊗ₜ e
     rw [Jt_tmul, Algebra.TensorProduct.map_tmul, hφ]
     rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 section Mat
 
@@ -260,7 +260,7 @@ theorem Jt_smul (v : HeightOneSpectrum (𝓞 F)) (a : Fv F v) (z : Fv F v ⊗[F]
   | tmul b e =>
     rw [TensorProduct.smul_tmul', EvalVW.Jt_tmul, EvalVW.Jt_tmul, TensorProduct.smul_tmul', smul_eq_mul, smul_eq_mul,
       uHom_mul_single]
-  | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), smul_add]
 
 theorem continuous_Jt_single (v : HeightOneSpectrum (𝓞 F)) :
     Continuous (EvalVW.Jt (E := E) (singleL v)) := by

@@ -52,7 +52,7 @@ theorem UpperTheory.ConvolutionTheory.L1.matImage :
     refine UpperTheory.ConvolutionTheory.L1.simple_of_prime _ fun I hI r hr => ?_
     let P : Submodule ℂ W :=
       { carrier := {w | ∀ x ∈ I, (x : Module.End ℂ W) w = 0}
-        add_mem' := fun {a b} ha hb x hx => by rw [map_add, ha x hx, hb x hx, add_zero]
+        add_mem' := fun {a b} ha hb x hx => by rw [map_add (f := _), ha x hx, hb x hx, add_zero]
         zero_mem' := fun x _ => map_zero _
         smul_mem' := fun c w hw x hx => by rw [map_smul, hw x hx, smul_zero] }
     rcases hirr P (fun a w hw x hx => hw (x * ⟨ρ a, a, rfl⟩) (I.mul_mem_right _ hx))

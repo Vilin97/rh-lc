@@ -27,7 +27,7 @@ theorem decomp (E : Type) [Field E] [NumberField E] [IsCMField E] (s : E) (hs0 :
       z = algebraMap (maximalRealSubfield E) E a + s * algebraMap (maximalRealSubfield E) E b := by
   have h2 : (2 : E) ≠ 0 := two_ne_zero
   have ha : (z + IsCMField.complexConj E z) / 2 ∈ maximalRealSubfield E := by
-    rw [← IsCMField.complexConj_eq_self_iff, map_div₀, map_add, IsCMField.complexConj_apply_apply, map_ofNat,
+    rw [← IsCMField.complexConj_eq_self_iff, map_div₀, map_add (f := _), IsCMField.complexConj_apply_apply, map_ofNat,
       add_comm]
   have hb : (z - IsCMField.complexConj E z) / (2 * s) ∈ maximalRealSubfield E := by
     rw [← IsCMField.complexConj_eq_self_iff, map_div₀, map_sub, map_mul, IsCMField.complexConj_apply_apply, map_ofNat,

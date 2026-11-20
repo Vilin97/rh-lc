@@ -51,7 +51,7 @@ theorem baseChangeHom_top_bijective [Module.Flat R R'] [CompactSpace Y] [IsSepar
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a x =>
       funext I
       exact (SecOnR.baseChangeHom_restrict H.w le_top le_top le_top (preimage_biInf D π I.1).ge (a ⊗ₜ x)).symm

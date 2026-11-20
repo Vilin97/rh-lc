@@ -68,7 +68,7 @@ private theorem exists_nil {ρ : Representation ℂ G V} (hl : HasFiniteLength �
   by_contra hv
   let L : Subrepresentation ρ := ⟨N.toSubmodule ⊔ LinearMap.range (E ^ (J + 1)), fun g w hw => by
     obtain ⟨n, hn, y, ⟨u, rfl⟩, rfl⟩ := Submodule.mem_sup.1 hw
-    rw [map_add, ← hc]
+    rw [map_add (f := _), ← hc]
     exact Submodule.add_mem_sup (N.apply_mem_toSubmodule g hn) ⟨ρ g u, rfl⟩⟩
   have hlt : N < L := lt_of_le_of_ne (le_sup_left : N.toSubmodule ≤ _) (fun h => hv (by
     have h5 : (E ^ (J + 1)) v ∈ L.toSubmodule := Submodule.mem_sup_right ⟨v, rfl⟩
@@ -82,7 +82,7 @@ private theorem exists_nil {ρ : Representation ℂ G V} (hl : HasFiniteLength �
     rw [pow_succ, Module.End.mul_apply, hEx, map_zero]
   have h2 : (E ^ (J + 1)) ((E ^ (J + 1)) u) ∈ N.toSubmodule := by
     have h6 := congrArg (E ^ (J + 1)) hxe
-    rw [map_add, h1] at h6
+    rw [map_add (f := _), h1] at h6
     rw [eq_neg_of_add_eq_zero_right h6]
     exact N.toSubmodule.neg_mem (hm _ n hn)
   have h3 : u ∈ (M (2 * J + 2)).toSubmodule := by

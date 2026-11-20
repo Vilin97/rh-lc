@@ -39,7 +39,7 @@ theorem ev_invForm (j : ℕ) (al be : ι → ℝ) (lam : ι → Fin N → ℝ) :
     ev lam (invForm j al be) = ∑ τ, ((al τ - be τ) *
       ∑ i ∈ Finset.univ.filter (fun i : Fin N => (i : ℕ) < j), lam τ i + be τ * ∑ i, lam τ i) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [ev, invForm, pLow, pHigh, map_sum, map_add, map_mul, eval_C, pow_one, eval_X]
+    simp only [ev, invForm, pLow, pHigh, map_sum, map_add (f := _), map_mul, eval_C, pow_one, eval_X]
   refine Finset.sum_congr rfl fun τ _ => ?_
   rw [← Finset.sum_filter_add_sum_filter_not Finset.univ (fun i : Fin N => (i : ℕ) < j) (lam τ)]
   simp only [not_lt]

@@ -117,7 +117,7 @@ theorem ιV_inj : Function.Injective (ιV PD (LL := LL) (V := V)) := by
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul x b => simp [ιV]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hi : Function.Injective (PD.ι.toLinearMap.restrictScalars Qp) := PD.ι_inj
   intro a b hab
   rw [h, h] at hab
@@ -133,7 +133,7 @@ theorem ιV_act (g : G) (y : V ⊗[Qp] B) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul x b => simp [ιV, actVB, actVdR, PD.ι_comm]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem ιV_mul (c : K₀) (y : V ⊗[Qp] B) :
     ιV PD (LL := LL) (V := V) (mulVB (K₀ := K₀) (B := B) (V := V) (LL := LL) c y) =
@@ -143,7 +143,7 @@ theorem ιV_mul (c : K₀) (y : V ⊗[Qp] B) :
   | zero => simp
   | tmul x b =>
     simp [ιV, mulVB, mulVdR, ← IsScalarTower.algebraMap_apply K₀ K BdR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Fil
 
@@ -276,7 +276,7 @@ theorem localization_quotient_separated_dvd (τ : K →ₐ[Qp] LL) (P : (K →�
         simp only [hA, LinearMap.sub_apply, LinearMap.smul_apply, LinearMap.id_apply, hP τ₁ e₁ he₁ c,
           sub_self]
       have key : (τ c - τ₁ c) • d = (τ c - τ₁ c) • f + A e' := by
-        rw [← hAd, ← hAf, hde, map_add, map_add, hAe, zero_add]
+        rw [← hAd, ← hAf, hde, map_add (f := _), map_add (f := _), hAe, zero_add]
       have hd' := ih ((τ c - τ₁ c) • d) ((τ c - τ₁ c) • f) (A e')
         (fun c' => by rw [map_smul, hd c', smul_comm]) (F.smul_mem _ hf) hAS key
       have := F.smul_mem (τ c - τ₁ c)⁻¹ hd'
@@ -433,7 +433,7 @@ theorem transport
     exact laurent_mem F hFm hx _ k
   have gA : ∀ x y : ↥(W.N T), Good x → Good y → Good (x + y) := fun x y hx hy k => by
     show W.levN T c ζ (x + y) k ∈ F k
-    rw [map_add, Pi.add_apply]
+    rw [map_add (f := _), Pi.add_apply]
     exact (F k).add_mem (hx k) (hy k)
   have g0 : Good 0 := fun k => by
     show W.levN T c ζ 0 k ∈ F k
@@ -567,10 +567,10 @@ theorem cc_lev_q (c : ZMod n) (ζ : LL) (hζ : ∃ j : ℕ, IsPrimitiveRoot ζ (
     simp only [Pi.mul_apply, Pi.sub_apply, Pi.pow_apply, Pi.add_apply, Pi.one_apply, letπ,
       LocWach.q, W.q₀_def]
   have h := congrArg (fun a => PowerSeries.constantCoeff (W.lev c ζ a)) hq
-  simp only [map_mul, map_sub, map_pow, map_add, map_one] at h
+  simp only [map_mul, map_sub, map_pow, map_add (f := _), map_one] at h
   have hπ : PowerSeries.constantCoeff (W.lev c ζ letπ) = ζ - 1 := by
     have := congrArg PowerSeries.constantCoeff hE
-    rw [map_add, map_one, map_mul, PowerSeries.constantCoeff_C, hE0, mul_one] at this
+    rw [map_add (f := _), map_one, map_mul, PowerSeries.constantCoeff_C, hE0, mul_one] at this
     linear_combination this
   intro h0
   rw [hπ, h0, mul_zero] at h

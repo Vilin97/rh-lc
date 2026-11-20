@@ -22,10 +22,10 @@ theorem heisComm_coset (hπ : ∀ x, π (ι x) = x)
     (fun x : R => hD ι π om v f (w + ι x)) = fun x : R =>
       -(Real.pi * Complex.I) * (om (π w + x) v : ℝ) * f (w + ι x) + fderiv ℝ (fun y : R => f (w + ι y)) x v := by
   funext x
-  rw [hf f h, map_add, hπ]
+  rw [hf f h, map_add (f := _), hπ]
   congr 2
   have e : (fun y : R => f (w + ι x + ι y)) = fun y : R => (fun z : R => f (w + ι z)) (x + y) := by
-    funext y; simp only [map_add, add_assoc]
+    funext y; simp only [map_add (f := _), add_assoc]
   rw [e, fderiv_comp_add_left (f := fun z : R => f (w + ι z)), add_zero]
 
 theorem heisComm_hasFDerivAt_om (a v x : R) :

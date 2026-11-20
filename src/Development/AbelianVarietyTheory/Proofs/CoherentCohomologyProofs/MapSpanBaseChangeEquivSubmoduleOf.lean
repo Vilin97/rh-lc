@@ -160,7 +160,7 @@ theorem baseChangeToField_injective : Function.Injective (baseChangeToField R K 
       (baseChangeToField R K S L V x) = (IsScalarTower.toAlgHom R S L).toLinearMap.rTensor V x := by
     intro x
     induction x with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul s v => rw [baseChangeToField_tmul]; rfl
   intro x y hxy
   apply h1

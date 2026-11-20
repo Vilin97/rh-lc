@@ -184,17 +184,17 @@ private theorem locq (hU : UnramifiedOrthogonality) (hr : 0 < r) {A : ValuationS
   have hc' : IsLocallyConstant fun g : Dec (F := F) A => c g := hc.comp_continuous continuous_subtype_val
   have hn' : IsLocallyConstant fun g : Dec (F := F) A => n g := hn.comp_continuous continuous_subtype_val
   refine gen hA hσ (fun g => lam (n τ * c g)) (hc'.comp fun z => lam (n τ * z))
-    (fun g h => by rw [← map_add, ← mul_add, ← cc]; rfl) (fun g hg => by rw [hI _ hg, mul_zero, map_zero]) ?_ ⟨g, hg⟩
+    (fun g h => by rw [← map_add (f := _), ← mul_add, ← cc]; rfl) (fun g hg => by rw [hI _ hg, mul_zero, map_zero]) ?_ ⟨g, hg⟩
   refine loc hU hr hA hl (fun g => lam (n g * c σ)) (hn'.comp fun z => lam (z * c σ)).continuous (fun g h => ?_)
     (fun x hx hm hxI => ?_) ⟨τ, Ine_le_Dec A hτ⟩ hτ
-  · rw [← hlam, hχ _ g.2, one_mul, ← map_add, ← add_mul, ← cn]
+  · rw [← hlam, hχ _ g.2, one_mul, ← map_add (f := _), ← add_mul, ← cn]
     rfl
   · have hd := gen hA hσ (fun h => φ (x h) * c σ - φ (x ⟨σ, hσ.1⟩) * c h)
       ((((IsLocallyConstant.iff_continuous x).2 hx).comp fun z => φ z * c σ).sub
         (hc'.comp fun z => φ (x ⟨σ, hσ.1⟩) * z))
       (fun g h => by
         have e : c ((g * h : Dec (F := F) A) : G F Ω) = c g + c h := cc g h
-        rw [hm, e, map_add]; ring)
+        rw [hm, e, map_add (f := _)]; ring)
       (fun g hg => by rw [hxI g hg, hI _ hg, map_zero, zero_mul, mul_zero, sub_zero]) (sub_self _)
     refine ⟨fun g => x ⟨σ, hσ.1⟩ * b g, continuous_const.mul hb, fun g h => ?_⟩
     have e : φ (x h) * (n g * c σ) = φ (x ⟨σ, hσ.1⟩) * (n g * c h) := by
@@ -268,7 +268,7 @@ private theorem core (hPT : PoitouTateDuality) (hU : UnramifiedOrthogonality) {�
     (((hn.comp_continuous continuous_fst).mul ((hα.comp_continuous continuous_fst).mul
       (hc.comp_continuous continuous_snd))).comp lam).continuous
     (fun g h k => by
-      rw [hχ, ← map_sub, ← map_add, ← map_sub, cn g h, cc h k, map_mul α, ← map_zero lam]
+      rw [hχ, ← map_sub, ← map_add (f := _), ← map_sub, cn g h, cc h k, map_mul α, ← map_zero lam]
       congr 1
       ring)
     (fun g h u hu u' hu' => by
@@ -281,7 +281,7 @@ private theorem core (hPT : PoitouTateDuality) (hU : UnramifiedOrthogonality) {�
         (((hn.mul (hα.comp (· * m))).comp fun z => -lam z).comp_continuous continuous_subtype_val).continuous,
         fun g h => ?_⟩
       beta_reduce
-      rw [mul_neg, hχ, ← map_neg, ← map_neg, ← map_neg, ← map_sub, ← map_add, hm h h.2, Subgroup.coe_mul, cn, map_mul α]
+      rw [mul_neg, hχ, ← map_neg, ← map_neg, ← map_neg, ← map_sub, ← map_add (f := _), hm h h.2, Subgroup.coe_mul, cn, map_mul α]
       congr 1
       ring
   rw [hA0] at hG
@@ -357,8 +357,8 @@ theorem UpperTheory.V.ML.recip :
   refine hlam (core hPT hU hl (hr ▸ r₀.succ_pos) φ lam.toAddMonoidHom (fun k z => map_smul lam k z) α' β' hαβ hlc hN hlN
     hq hql c' n' (IsLocallyConstant.desc _ ι (by rw [show ι ∘ c' = c from funext hc']; exact hc.1) hinj)
     (IsLocallyConstant.desc _ ι (by rw [show ι ∘ n' = n from funext hn']; exact hn.1) hinj)
-    (fun g h => hinj (by rw [map_add, hα', hιm, hc', hc', hc', hc.2]))
-    (fun g h => hinj (by rw [map_add, hβ', hιm, hn', hn', hn', hn.2]))
+    (fun g h => hinj (by rw [map_add (f := _), hα', hιm, hc', hc', hc', hc.2]))
+    (fun g h => hinj (by rw [map_add (f := _), hβ', hιm, hn', hn', hn', hn.2]))
     (fun A hA g hg => ⟨hmk1 _ (hun A hA g hg).1, h0 (hc' g) (hun A hA g hg).2.1, h0 (hn' g) (hun A hA g hg).2.2⟩)
     (fun A h1 h2 => ?_) A₀ hA₀ (fun g hg => ⟨hmk1 _ (htr g hg).1, hmk1 _ (htr g hg).2⟩)
     (fun g hg => h0 (hc' g) (hI g hg)) g hg τ hτ)

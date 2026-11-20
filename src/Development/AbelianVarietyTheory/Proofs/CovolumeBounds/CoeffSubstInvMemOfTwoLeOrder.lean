@@ -17,7 +17,7 @@ def weightGe (w : σ → ℕ) (n : ℕ) : Ideal (MvPowerSeries σ R) where
     rw [smul_eq_mul, coeff_mul]
     refine Finset.sum_eq_zero fun p hp => ?_
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
-    rw [hf p.2 (by rw [← hp, map_add] at hd; omega), mul_zero]
+    rw [hf p.2 (by rw [← hp, map_add (f := _)] at hd; omega), mul_zero]
 
 theorem mem_weightGe {w : σ → ℕ} {n : ℕ} {f : MvPowerSeries σ R} :
     f ∈ weightGe w n ↔ ∀ d, weight w d < n → coeff d f = 0 := Iff.rfl
@@ -49,7 +49,7 @@ theorem prod_pow_mem_weightGe {w : τ → ℕ} {w' : σ → ℕ} {a : σ → MvP
   induction d using Finsupp.induction_linear with
   | zero => simpa using mem_weightGe_zero _
   | add f g hf hg =>
-    rw [Finsupp.prod_add_index' (by simp) (by simp [pow_add]), map_add]
+    rw [Finsupp.prod_add_index' (by simp) (by simp [pow_add]), map_add (f := _)]
     exact mul_mem_weightGe hf hg
   | single s n =>
     rw [Finsupp.prod_single_index (by simp), weight_single]
@@ -98,7 +98,7 @@ theorem prod_pow_sub_mem_degGe {a b : σ → MvPowerSeries τ R} {k : ℕ}
   | zero => simp
   | add f g hf hg =>
     rw [Finsupp.prod_add_index' (by simp) (by simp [pow_add]),
-      Finsupp.prod_add_index' (by simp) (by simp [pow_add]), map_add]
+      Finsupp.prod_add_index' (by simp) (by simp [pow_add]), map_add (f := _)]
     refine key _ _ _ _ _ _ ?_ ?_ hf hg
     · rw [hd]; exact prod_pow_mem_weightGe ha f
     · rw [hd]; exact prod_pow_mem_weightGe hb g
@@ -141,7 +141,7 @@ theorem subst_mem_weightGe {w : τ → ℕ} {w' : σ → ℕ} {a : σ → MvPowe
 def coeffsIn {κ : Type*} (S : Subring R) (w : κ → σ → ℕ) (g : κ → ℕ) :
     Subring (MvPowerSeries σ R) where
   carrier := {f | ∀ d, (∀ k, weight (w k) d < g k) → coeff d f ∈ S}
-  add_mem' hf hg d hd := by rw [map_add]; exact S.add_mem (hf d hd) (hg d hd)
+  add_mem' hf hg d hd := by rw [map_add (f := _)]; exact S.add_mem (hf d hd) (hg d hd)
   zero_mem' d _ := by simp
   neg_mem' hf d hd := by rw [map_neg]; exact S.neg_mem (hf d hd)
   one_mem' d _ := by
@@ -154,7 +154,7 @@ def coeffsIn {κ : Type*} (S : Subring R) (w : κ → σ → ℕ) (g : κ → �
     rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
     refine S.mul_mem (hf _ fun k => ?_) (hf' _ fun k => ?_) <;>
     · have := hd k
-      rw [← hp, map_add] at this
+      rw [← hp, map_add (f := _)] at this
       omega
 
 theorem mem_coeffsIn {κ : Type*} {S : Subring R} {w : κ → σ → ℕ} {g : κ → ℕ}
@@ -247,7 +247,7 @@ theorem linearPart_subst [Fintype σ] {u : ι → MvPowerSeries σ R} {v : σ �
   have hv' := hasSubst_of_constantCoeff_zero hv
   have := (mem_degGe_two.1 (subst_mem_weightGe hv' (fun s => mem_degGe_one.2 (hv s))
     (higherPart_mem_degGe (hu i)))).2 l
-  rw [linearPart_apply, subst_eq_linearPart_add u i hv', map_add, this]
+  rw [linearPart_apply, subst_eq_linearPart_add u i hv', map_add (f := _), this]
   simp [Matrix.mul_apply]
 
 section Approx

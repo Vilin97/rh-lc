@@ -113,7 +113,7 @@ theorem cup_congruence : ∀ (p : ℕ) [Fact p.Prime], p ≠ 2 → ∀ (Ω : Typ
     refine ⟨_, ?_, Eq.trans ?_
       ((congrArg (fun t => ((p : Ω) ^ c) ^ 2 * t) main).trans (mul_left_comm _ _ _))⟩
     swap
-    · simp only [map_sub, map_add, map_mul, map_pow, map_natCast, map_intCast, fA, fB, fA', fB',
+    · simp only [map_sub, map_add (f := _), map_mul, map_pow, map_natCast, map_intCast, fA, fB, fA', fB',
         AlgEquiv.mul_apply]
       ring
     · rw [key] at ie₁ ie₂ ⊢

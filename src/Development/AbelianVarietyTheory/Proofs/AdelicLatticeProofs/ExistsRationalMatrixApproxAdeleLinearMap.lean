@@ -20,7 +20,7 @@ theorem GlobalTheory.UnRep.exists_rational_approx_after_adele_linear : ∀ (F E 
     obtain ⟨u, hu, hu'⟩ := hA z hz
     obtain ⟨w, hw, hw'⟩ := hB z hz
     refine ⟨u + w, add_mem hu hw, ?_⟩
-    rw [smul_add, ← hu', ← hw', ← Matrix.add_mulVec, fm_add, ← map_add, add_sub_add_comm]
+    rw [smul_add, ← hu', ← hw', ← Matrix.add_mulVec, fm_add, ← map_add (f := _), add_sub_add_comm]
   have hzero : P 0 := ⟨0, fun z _ => ⟨0, zero_mem _, by simp [fm_zero]⟩⟩
   have hgen : ∀ (a : FiniteAdeleRing (𝓞 F) F) (B : Matrix (Fin n) (Fin n) E),
       P ((a ⊗ₜ[F] (1 : E) : RA F E) • fm F B) := by

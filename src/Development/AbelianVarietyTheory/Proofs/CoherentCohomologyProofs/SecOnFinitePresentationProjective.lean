@@ -16,7 +16,7 @@ variable {Y : Scheme.{0}} {M : LB Y} {V : Y.Opens}
 noncomputable def SecOn.chartBasicOpen (hM : M.IsLB) (i : M.ι) (a : Γ(Y, V))
     (h : Y.basicOpen a ≤ M.U i) : SecOn M V →ₗ[Γ(Y, V)] Γ(Y, Y.basicOpen a) where
   toFun s := SecOn.chart hM i h (SecOn.restrict M (Y.basicOpen_le a) s)
-  map_add' s t := by rw [map_add, map_add]
+  map_add' s t := by rw [map_add (f := _), map_add (f := _)]
   map_smul' r s := by
     rw [map_smulₛₗ, map_smul, RingHom.id_apply, Algebra.smul_def r]
     rfl

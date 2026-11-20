@@ -45,7 +45,7 @@ theorem tgt_bidet (hDB : DualBases) (hFP : FockProd) (hRe : Reorder) (c : B → 
       add_mem' := by
         rintro Z Z' ⟨a, ha, h1⟩ ⟨a', ha', h2⟩
         refine ⟨a + a', M.add_mem ha ha', ?_⟩
-        rw [map_add, fockR_comm, fockR_add_left, fockR_comm _ y, fockR_comm _ y, h1, h2, add_mul]
+        rw [map_add (f := _), fockR_comm, fockR_add_left, fockR_comm _ y, fockR_comm _ y, h1, h2, add_mul]
       zero_mem' := ⟨0, M.zero_mem, by rw [map_zero, fockR_comm, fockR_zero_left, zero_mul]⟩
       smul_mem' := by
         rintro o Z ⟨a, ha, h1⟩

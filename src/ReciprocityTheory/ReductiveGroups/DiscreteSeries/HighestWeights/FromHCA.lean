@@ -93,7 +93,7 @@ lemma fh_diff_eval (P : MvPolynomial (Fin k × Fin k) ℂ) (A : Matrix (Fin k) (
     simp only [MvPolynomial.eval_C]
     exact differentiableAt_const _
   next p q hp hq =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact hp.add hq
   next p i hp =>
     simp only [map_mul, MvPolynomial.eval_X]

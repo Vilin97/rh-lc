@@ -67,7 +67,7 @@ theorem exists_large_sq {F : Type} [Field F] [NumberField F] (v : HeightOneSpect
       rw [add_sub_cancel_left, map_div₀, map_pow]
       exact (div_lt_iff₀ (zero_lt_iff.2 ((Valuation.ne_zero_iff _).2 (hA i)))).2 (hk2 i))
   refine ⟨c, ?_⟩
-  rw [← hc, map_add, map_natCast]
+  rw [← hc, map_add (f := _), map_natCast]
   have := hA i
   push_cast
   field_simp
@@ -219,7 +219,7 @@ theorem stDefinite : StDefinite := by
       (Finset.single_le_sum (f := fun i => ∑ τ : E →+* ℂ, |(τ (d i)).re|)
         (fun _ _ => Finset.sum_nonneg fun _ _ => abs_nonneg _) (Finset.mem_univ i))
     have h3 := neg_abs_le (τ (d i)).re
-    rw [map_add, map_add, ha i, map_natCast, map_natCast, Complex.add_re, Complex.natCast_re]
+    rw [map_add (f := _), map_add (f := _), ha i, map_natCast, map_natCast, Complex.add_re, Complex.natCast_re]
     linarith
   have he0 : ∀ i, a i + N ≠ 0 := by
     intro i h

@@ -295,7 +295,7 @@ theorem isHTAt_of_isHT : ∀ (X : Scheme.{0}) [IsLocallyNoetherian X] (Ω : Type
     obtain ⟨c, hc', hr⟩ := hcore e' v hv'.1 hv'.2
     obtain ⟨r, hr⟩ := hr h
     refine ⟨genMap ξ q r, ⟨r, rfl⟩, ?_⟩
-    rw [hc', hr, map_add, map_mul, map_natCast]
+    rw [hc', hr, map_add (f := _), map_mul, map_natCast]
     rfl
 
 end GlobalTheory.CompanionTheory.Ar.HTChart

@@ -93,7 +93,7 @@ theorem UpperTheory.V.KernelIndexFullLattice.homFin_holds :
         intro hs y hy
         rw [Finset.sup_insert] at hy
         obtain ⟨y1, hy1, y2, hy2, rfl⟩ := Submodule.mem_sup.1 hy
-        rw [map_add]
+        rw [map_add (f := _)]
         exact add_mem (one a (hs (Finset.mem_insert_self a s)) y1 hy1)
           (ih ((Finset.subset_insert a s).trans hs) y2 hy2)
     have hx : (show τ.asModule from x) ∈ t.sup id := htop ▸ Submodule.mem_top

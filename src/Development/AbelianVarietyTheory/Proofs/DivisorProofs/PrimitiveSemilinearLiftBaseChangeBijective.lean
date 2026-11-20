@@ -23,7 +23,7 @@ theorem counit_comp_cartierBaseChange :
       AugCot.baseChangeAug R' (counitAlgHom R (CartierDual R A)) := by
   refine AlgHom.ext fun x => ?_
   induction x with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul r φ =>
     simp [Algebra.TensorProduct.one_def, Algebra.smul_def, mul_comm]
 
@@ -47,7 +47,7 @@ theorem cotBaseChange_hom_ext {N : Type} [AddCommGroup N] [Module R' N]
   refine AugCot.hom_ext fun ψ => ?_
   obtain ⟨x, rfl⟩ := EquivLike.surjective (CartierDual.baseChange R R' A) ψ
   induction x with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul r φ =>
     have e : r ⊗ₜ[R] φ = r • ((1 : R') ⊗ₜ[R] φ) := by simp [smul_tmul']
     rw [e, map_smul, map_smul, map_smul, map_smul]
@@ -69,7 +69,7 @@ theorem liftSemi_prim_toBaseChange_bijective {R A : Type} (R' : Type) [CommRing 
         ⇑(LinearMap.lTensor R' u) := by
     funext x
     induction x with
-    | add x y hx hy => simp only [Function.comp_apply, map_add] at hx hy ⊢; rw [hx, hy]
+    | add x y hx hy => simp only [Function.comp_apply, map_add (f := _)] at hx hy ⊢; rw [hx, hy]
     | tmul r b =>
       refine cotBaseChange_hom_ext R' fun φ => ?_
       have h1 : primTangent R' (R' ⊗[R] A) (liftSemi (toBaseChange R R' A).prim (r ⊗ₜ b))

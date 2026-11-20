@@ -374,7 +374,7 @@ variable {D : D7}
 def Linf (D : D7) : Ainf D.host.F →+ ℝ where
   toFun a := -∑ τ : D.what₂.Tau, (Eqv.gW D (Eqv.plW D τ) a).re
   map_zero' := by simp
-  map_add' a b := by simp only [map_add, Complex.add_re, Finset.sum_add_distrib, neg_add]
+  map_add' a b := by simp only [map_add (f := _), Complex.add_re, Finset.sum_add_distrib, neg_add]
 
 theorem continuous_Linf : Continuous (Linf D) := by
   have hg : ∀ τ, Continuous fun a : Ainf D.host.F => Eqv.gW D (Eqv.plW D τ) a := fun τ =>
@@ -442,7 +442,7 @@ theorem exists_stdChar : ∃ ψ : AddChar (AF D.host.F) ℂ, IsStdChar D ψ (-1)
   let ψ : AddChar (AF F) ℂ :=
     { toFun := fun x => ((AddCircle.toCircle (h x) : Circle) : ℂ),
       map_zero_eq_one' := by simp,
-      map_add_eq_mul' := fun x y => by simp [map_add, AddCircle.toCircle_add] }
+      map_add_eq_mul' := fun x y => by simp [map_add (f := _), AddCircle.toCircle_add] }
   have hval : ∀ t : Ainf F, ψ (pairA F t 0) = Complex.exp (2 * Real.pi * Complex.I * (Linf D t : ℂ)) := by
     intro t
     have hx0 : pairA F t 0 ∈ PI.GaugeCharW.intSub F := fun v => by

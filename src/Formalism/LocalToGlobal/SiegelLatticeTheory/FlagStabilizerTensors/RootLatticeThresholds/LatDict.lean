@@ -176,7 +176,7 @@ theorem hT_left_span {S : Set (VS D).V} {w : (VS D).V} (hS : ∀ s ∈ S, (VS D)
   induction hx using Submodule.span_induction with
   | mem s hs => exact hS s hs
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add, LinearMap.add_apply, ha, hb, add_zero]
+  | add a b _ _ ha hb => rw [map_add (f := _), LinearMap.add_apply, ha, hb, add_zero]
   | smul c a _ ha => rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, ha, smul_zero]
 
 theorem hT_right_span {S : Set (VS D).V} {w : (VS D).V} (hS : ∀ s ∈ S, (VS D).hT w s = 0) {x : (VS D).V}
@@ -184,7 +184,7 @@ theorem hT_right_span {S : Set (VS D).V} {w : (VS D).V} (hS : ∀ s ∈ S, (VS D
   induction hx using Submodule.span_induction with
   | mem s hs => exact hS s hs
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add, ha, hb, add_zero]
+  | add a b _ _ ha hb => rw [map_add (f := _), ha, hb, add_zero]
   | smul c a _ ha => rw [map_smul, ha, smul_zero]
 
 theorem hT_Xs_prV {x : (VS D).V} (hx : x ∈ Xs X) (w : (VS D).V) : (VS D).hT x (prV X w) = 0 :=
@@ -206,7 +206,7 @@ theorem sub_prV_mem_Xs {v : (VS D).V} (hv : ∀ a, (VS D).hT (X.eX a) v = 0) : v
 
 theorem hT_sub_prV_prV (x y : (VS D).V) : (VS D).hT (x - prV X x) (prV X y) = 0 := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [sub_prV_eq, map_add, LinearMap.add_apply, map_sum, map_sum, LinearMap.sum_apply, LinearMap.sum_apply]
+    rw [sub_prV_eq, map_add (f := _), LinearMap.add_apply, map_sum, map_sum, LinearMap.sum_apply, LinearMap.sum_apply]
   simp [LinearMap.map_smulₛₗ, hT_e_prV, hT_f_prV]
 
 theorem hT_prV_sub_prV (x y : (VS D).V) : (VS D).hT (prV X x) (y - prV X y) = 0 := by
@@ -215,7 +215,7 @@ theorem hT_prV_sub_prV (x y : (VS D).V) : (VS D).hT (prV X x) (y - prV X y) = 0 
 theorem hT_decomp (x y : (VS D).V) :
     (VS D).hT x y = (VS D).hT (x - prV X x) (y - prV X y) + (VS D).hT (prV X x) (prV X y) := by
   conv_lhs => rw [← sub_add_cancel x (prV X x), ← sub_add_cancel y (prV X y)]
-  simp only [map_add, LinearMap.add_apply, hT_sub_prV_prV, hT_prV_sub_prV, add_zero, zero_add]
+  simp only [map_add (f := _), LinearMap.add_apply, hT_sub_prV_prV, hT_prV_sub_prV, add_zero, zero_add]
 
 end VProj
 
@@ -255,7 +255,7 @@ theorem gW_apply (γ : (VS D).V ≃ₗ[D.host.E] (VS D).V) (y : (VS D).V) :
 
 theorem prV_gW (γ : (VS D).V ≃ₗ[D.host.E] (VS D).V) (y : (VS D).V) :
     prV X (gW X γ y) = prV X (γ (prV X y)) := by
-  rw [gW_apply, map_add, prV_sub_self, prV_prV, zero_add]
+  rw [gW_apply, map_add (f := _), prV_sub_self, prV_prV, zero_add]
 
 theorem sub_prV_gW (γ : (VS D).V ≃ₗ[D.host.E] (VS D).V) (y : (VS D).V) :
     gW X γ y - prV X (gW X γ y) = y - prV X y := by
@@ -644,7 +644,7 @@ theorem coef_span1 (a : Fin D.R.rS) {y : (VS D).V} (hy : y ∈ latSpanS (fun a =
     rw [map_smul, hT_f_e, smul_eq_mul]
     exact aa_mem_of_eq hx
   | zero => rw [map_zero]; exact zero_mem _
-  | add w w' _ _ hw hw' => rw [map_add]; exact add_mem hw hw'
+  | add w w' _ _ hw hw' => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hw hw'
   | smul o w _ hw =>
     rw [← IsScalarTower.algebraMap_smul D.host.E o w, map_smul, smul_eq_mul, ← Algebra.smul_def]
     exact Submodule.smul_mem _ o hw
@@ -656,7 +656,7 @@ theorem coef_span3 (a : Fin D.R.rS) {y : (VS D).V} (hy : y ∈ latSpanS (fun a =
     obtain ⟨b, x, hx, rfl⟩ := hw
     rw [map_smul, X.ff, smul_zero]
   | zero => rw [map_zero]
-  | add w w' _ _ hw hw' => rw [map_add, hw, hw', add_zero]
+  | add w w' _ _ hw hw' => rw [map_add (f := _), hw, hw', add_zero]
   | smul o w _ hw =>
     rw [← IsScalarTower.algebraMap_smul D.host.E o w, map_smul, hw, smul_zero]
 
@@ -666,7 +666,7 @@ theorem coefficient_mem_fractional_ideal (a : Fin D.R.rS) {y : (VS D).V} (hy : y
   rw [X.Lam_split] at hy
   obtain ⟨y12, hy12, y3, hy3, rfl⟩ := Submodule.mem_sup.1 hy
   obtain ⟨y1, hy1, y2, hy2, rfl⟩ := Submodule.mem_sup.1 hy12
-  rw [map_add, map_add, (X.Lb_perp y2 hy2 a).2, coef_span3 X a hy3, add_zero, add_zero]
+  rw [map_add (f := _), map_add (f := _), (X.Lb_perp y2 hy2 a).2, coef_span3 X a hy3, add_zero, add_zero]
   exact coef_span1 X a hy1
 
 theorem XS_eq : XS D (X.Fu u) = latSpanS (fun a => aaD D a) X.eX := by
@@ -720,7 +720,7 @@ theorem fixedConv_latOf (h : Hfin X u) (Λ : Submodule (𝓞 D.host.E) (VS D).V)
     have hcz : c • X.zu u ∈ latOf X u h := by
       have e : c • X.zu u = prV X a := by
         have h1 : prV X (c • X.zu u) = c • X.zu u := by rw [map_smul, prV_zu]
-        rw [← h1, ← hab, map_add, prV_Xs X hbX, add_zero]
+        rw [← h1, ← hab, map_add (f := _), prV_Xs X hbX, add_zero]
       rw [e]
       exact ((mem_latOf_split X u h a).1 haΛ).2
     have hL0 := (line_mem_iff X u h c).1 hcz
@@ -871,7 +871,7 @@ theorem hT_hyp (α β α' β' : Fin D.R.rS → D.host.E) (p p' : (VS D).V)
   have hpe : ∀ a, (VS D).hT p (e a) = 0 := fun a => by rw [hT_herm, (hp a).1, star_zero]
   have hpg : ∀ a, (VS D).hT p (g a) = 0 := fun a => by rw [hT_herm, (hp a).2, star_zero]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_sum, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
+    simp only [map_add (f := _), map_sum, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.map_smulₛₗ,
     LinearMap.smul_apply, smul_eq_mul, hee, heg, hgg, hT_g_e hee hgg heg, (hp' _).1, (hp' _).2, hpe, hpg,
     mul_zero, Finset.sum_const_zero, add_zero, zero_add, mul_ite, mul_one,
     Finset.sum_ite_eq, Finset.sum_ite_eq', Finset.mem_univ, if_true, starRingEnd_apply]
@@ -990,7 +990,7 @@ theorem latSpan_map (φ : (VS D).V →ₗ[D.host.E] (VS D).V) {r : ℕ} (v w : F
     rw [map_smul, h]
     exact Submodule.subset_span ⟨b, x, hx, rfl⟩
   | zero => rw [map_zero]; exact zero_mem _
-  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   | smul o z _ hz =>
     rw [← IsScalarTower.algebraMap_smul D.host.E o z, map_smul, IsScalarTower.algebraMap_smul]
     exact Submodule.smul_mem _ o hz
@@ -1150,7 +1150,7 @@ theorem lattice_surjective_of_orbit (hZ : LatDictZ.ZOrbit) : LatSurj X u := by
       δ.symm c, latSpan_map (δ.symm : (VS D).V →ₗ[D.host.E] (VS D).V) f' X.fY hδf _ hc, ?_⟩
     calc y = δ.symm (δ y) := (δ.symm_apply_apply y).symm
       _ = δ.symm (a + l + c) := by rw [he]
-      _ = δ.symm a + δ.symm l + δ.symm c := by rw [map_add, map_add]
+      _ = δ.symm a + δ.symm l + δ.symm c := by rw [map_add (f := _), map_add (f := _)]
   have hprA : ∀ a ∈ latSpanS (fun a => aaD D a) X.eX, prV X a = 0 :=
     fun a ha => prV_span_e X (latSpan_le_span X.eX _ ha)
   have hprC : ∀ c ∈ latSpanS (fun a => (aaD D a)⁻¹) X.fY, prV X c = 0 :=
@@ -1170,7 +1170,7 @@ theorem lattice_surjective_of_orbit (hZ : LatDictZ.ZOrbit) : LatSurj X u := by
     intro y hy
     obtain ⟨a, ha, l, hl, c, hc, rfl⟩ := hdec y hy
     have hp : prV X (a + δ.symm l + c) = δ.symm l := by
-      rw [map_add, map_add, hprA a ha, hprC c hc, hperpL l hl, zero_add, add_zero]
+      rw [map_add (f := _), map_add (f := _), hprA a ha, hprC c hc, hperpL l hl, zero_add, add_zero]
     rw [hp]
     refine ⟨(hmem2 _).2 (by rw [δ.apply_symm_apply]; exact hLΛ l hl), ?_⟩
     rw [show a + δ.symm l + c - δ.symm l = a + c by abel]
@@ -1187,10 +1187,10 @@ theorem lattice_surjective_of_orbit (hZ : LatDictZ.ZOrbit) : LatSurj X u := by
       obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hy12
       have hb0 : b = 0 := by
         have h1 := hy0
-        rw [map_add, map_add, hprA a ha, prV_Lb X b hb, hprC c hc, zero_add, add_zero] at h1
+        rw [map_add (f := _), map_add (f := _), hprA a ha, prV_Lb X b hb, hprC c hc, zero_add, add_zero] at h1
         exact h1
       subst hb0
-      rw [hmem2, add_zero, map_add]
+      rw [hmem2, add_zero, map_add (f := _)]
       exact add_mem (hA _ (latSpan_map (δ : (VS D).V →ₗ[D.host.E] (VS D).V) X.eX X.eX
           (fun b => by rw [LinearEquiv.coe_coe, hδap, dlt_e]) _ ha))
         (hC _ (latSpan_map (δ : (VS D).V →ₗ[D.host.E] (VS D).V) X.fY f'
@@ -1296,7 +1296,7 @@ theorem lattice_surjective_of_orbit (hZ : LatDictZ.ZOrbit) : LatSurj X u := by
     | mem x hx => obtain ⟨i, rfl⟩ := hx; exact hsV i
     | zero => have : toV X 0 = 0 := by simp [toV]
               rw [this, map_zero]
-    | add x y _ _ hx hy => rw [toV_add, map_add, hx, hy, add_zero]
+    | add x y _ _ hx hy => rw [toV_add, map_add (f := _), hx, hy, add_zero]
     | smul c x _ hx => rw [toV_smul, map_smul, hx, smul_zero]
   have hsz : ∀ a, LatDictZ.hE X.B.I (s a) (X.zR u) = 0 := by
     intro i

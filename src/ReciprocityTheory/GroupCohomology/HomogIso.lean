@@ -89,7 +89,7 @@ def eIso (M : TRep R G) (n : ℕ) : M.coch.X n ≃ₗ[R] hcoch M G n where
   toFun f := ⟨eFun M n f.1, eFun_mem M n f.1 f.2⟩
   map_add' f f' := Subtype.ext (funext fun x => by
     show M.rho (x 0) ((f.1 + f'.1) fun i => _) = _
-    rw [Pi.add_apply, map_add]; rfl)
+    rw [Pi.add_apply, map_add (f := _)]; rfl)
   map_smul' r f := Subtype.ext (funext fun x => by
     show M.rho (x 0) ((r • f.1) fun i => _) = _
     rw [Pi.smul_apply, map_smul]; rfl)
@@ -138,7 +138,7 @@ theorem eFun_dn (M : TRep R G) (n : ℕ) (f : (Fin n → G) → M.V) :
   simp only [eFun_succ, Fin.val_zero, pow_zero, one_smul, Fin.val_succ]
   show M.rho (x 0) (dn M.rho n f _) = _
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [dn_apply, map_add, map_sum]
+    rw [dn_apply, map_add (f := _), map_sum]
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_
   rw [hgi_negpow, map_zsmul]

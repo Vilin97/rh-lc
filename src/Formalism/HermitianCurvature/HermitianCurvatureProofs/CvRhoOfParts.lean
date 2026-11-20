@@ -125,7 +125,7 @@ theorem fold_trn (L : E →L[ℂ] E') {a b : Mat k r} (ha : a ∈ GV k r) (hb : 
         ((ts.map fun t => Top Eop' t.1 t.2.1 t.2.2).foldr (fun T h => T h) f)) g
     rw [top_apply, hX g hg, hC t.2.1 t.2.2 _ _ hX g hg, hI t.2.1 t.2.2 _ hY g hg]
     simp only [trn, top_apply]
-    split_ifs <;> simp [map_add, map_smul]
+    split_ifs <;> simp [map_add (f := _), map_smul]
 
 theorem qminor_trn (L : E →L[ℂ] E') {a b : Mat k r} (ha : a ∈ GV k r) (hb : b ∈ GV k r)
     (Eop : Fin (2 * r + k + 1) → Fin (2 * r + k + 1) → (Mat k r → E') → (Mat k r → E'))
@@ -209,7 +209,7 @@ theorem EH_trn (L : E →L[ℂ] E') {a b : Mat k r} (ha : a ∈ GV k r) (hb : b 
   rw [EH_eq, EHc_eq]
   simp only
   rw [Dx_trn L ha hb (X := Xa k r c d) (Xa_lie c d) hf1 g hg, Dx_trn L ha hb (X := Xb k r c d) (Xb_lie c d) hf1 g hg]
-  simp only [trn, map_add, map_smul]
+  simp only [trn, map_add (f := _), map_smul]
 
 theorem EHc_one (c d : Fin (2 * r + k + 1)) (f : Mat k r → E) : EHc k r 1 c d f = Q.EH k r c d f := by
   rw [EHc_eq, EH_eq]

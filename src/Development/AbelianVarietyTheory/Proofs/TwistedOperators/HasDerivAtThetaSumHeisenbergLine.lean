@@ -109,7 +109,7 @@ theorem e_smul (d : Darboux B κ) (r : AF F) (u : W) : d.e (r • u) = (r • (d
   rfl
 
 theorem realAd_add (s h : ℝ) : realAd F (s + h) = realAd F s + realAd F h := by
-  simp only [realAd, map_add]
+  simp only [realAd, map_add (f := _)]
   rfl
 
 theorem realAd_zero : realAd F 0 = 0 := by
@@ -180,7 +180,7 @@ theorem pureA_add (f : (κ → mixedEmbedding.mixedSpace F) → ℂ) (g : (κ �
         g (fun i => algebraMap F (FiniteAdeleRing (𝓞 F) F) (ξ i) + Prod.snd (y i)) := by
   unfold pureA
   congr 2
-  rw [show ((algebraMap F (AF F) (ξ i) + y i) : AF F).1 = (algebraMap F (AF F) (ξ i)).1 + (y i).1 from rfl, map_add,
+  rw [show ((algebraMap F (AF F) (ξ i) + y i) : AF F).1 = (algebraMap F (AF F) (ξ i)).1 + (y i).1 from rfl, map_add (f := _),
     InfiniteAdeleRing.mixedEmbedding_eq_algebraMap_comp]
   rfl
 
@@ -283,7 +283,7 @@ variable {F : Type} [Field F] [NumberField F]
 
 theorem evI_add_realAd_mul (t : ℝ) (x z : AF F) : evI F (x + realAd F t * z) = evI F x + t • evI F z := by
   unfold evI
-  rw [show Prod.fst (x + realAd F t * z) = Prod.fst x + Prod.fst (realAd F t) * Prod.fst z from rfl, map_add, map_mul,
+  rw [show Prod.fst (x + realAd F t * z) = Prod.fst x + Prod.fst (realAd F t) * Prod.fst z from rfl, map_add (f := _), map_mul,
     show Prod.fst (realAd F t) = (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (algebraMap ℝ _ t) from rfl,
     RingEquiv.apply_symm_apply, Algebra.smul_def]
 

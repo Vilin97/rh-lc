@@ -94,7 +94,7 @@ theorem sigmaCount_basis [hFF : Fact (IsFixF K F)] (h : V →ₗ⋆[K] V →ₗ[
     have h2 := form_congr hF b hH (inA 𝔭 b (cmb b c)).2 y'.2 hc hy
     have h3 : InP 𝔭 j (h (inA 𝔭 b (cmb b (Y *ᵥ c)) : V) (inA 𝔭 b (cmb b c') : V) +
         h (inA 𝔭 b (cmb b c) : V) (inA 𝔭 b (cmb b (Y *ᵥ c')) : V)) := by
-      rw [coe_inA, coe_inA, coe_inA, coe_inA, form_cmb b hH, form_cmb b hH, ← map_add, skew_mulVec,
+      rw [coe_inA, coe_inA, coe_inA, coe_inA, form_cmb b hH, form_cmb b hH, ← map_add (f := _), skew_mulVec,
         inP_jK_iff h𝔭]
       exact form_mem hY _ _
     have := (h1.add h2).add h3

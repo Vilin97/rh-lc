@@ -134,7 +134,7 @@ theorem cm_restrict_inj (E : Type) [Field E] [NumberField E] [IsCMField E] (I : 
       ((x - IsCMField.complexConj E x) / δ) * δ) / 2 := by
     intro x; field_simp; ring
   have hs : ∀ x, IsCMField.complexConj E (x + IsCMField.complexConj E x) = x + IsCMField.complexConj E x := by
-    intro x; rw [map_add, IsCMField.complexConj_apply_apply]; ring
+    intro x; rw [map_add (f := _), IsCMField.complexConj_apply_apply]; ring
   have ht : ∀ x, IsCMField.complexConj E ((x - IsCMField.complexConj E x) / δ) =
       (x - IsCMField.complexConj E x) / δ := by
     intro x
@@ -150,7 +150,7 @@ theorem cm_restrict_inj (E : Type) [Field E] [NumberField E] [IsCMField E] (I : 
       have ht' := ht x
       set s := x + IsCMField.complexConj E x
       set t := (x - IsCMField.complexConj E x) / δ
-      simp only [map_div₀, map_add, map_mul, map_ofNat]
+      simp only [map_div₀, map_add (f := _), map_mul, map_ofNat]
       rw [← hF _ hs', ← hF _ ht', h1]
     exact (hk i (Or.inl hij)).trans (hk j (Or.inl rfl)).symm
   · have hij : φ j = ComplexEmbedding.conjugate (φ i) := by
@@ -161,7 +161,7 @@ theorem cm_restrict_inj (E : Type) [Field E] [NumberField E] [IsCMField E] (I : 
       have ht' := ht x
       set s := x + IsCMField.complexConj E x
       set t := (x - IsCMField.complexConj E x) / δ
-      simp only [map_div₀, map_add, map_sub, map_mul, map_ofNat]
+      simp only [map_div₀, map_add (f := _), map_sub, map_mul, map_ofNat]
       rw [← hF _ hs', ← hF _ ht', h1]
       ring
     exact (hk i (Or.inr hij)).trans (hk j (Or.inl rfl)).symm
@@ -337,7 +337,7 @@ theorem exists_signed_generator : ∀ (E : Type) [Field E] [NumberField E] [IsCM
     have hc := ha i
     have hx := hreal i
     have hφξ : φ i ξ = (1 + (l : ℂ) * φ i (algebraMap (OF E) E a)) * φ i ξ₀ := by
-      rw [hξdef]; simp [map_mul, map_add, map_one, map_natCast]
+      rw [hξdef]; simp [map_mul, map_add (f := _), map_one, map_natCast]
     rw [hφξ, Complex.mul_im]
     simp only [Complex.add_re, Complex.one_re, Complex.mul_re, Complex.natCast_re, Complex.natCast_im,
       Complex.add_im, Complex.one_im, Complex.mul_im, hx, mul_zero, sub_zero, zero_mul, add_zero, zero_add]
@@ -359,7 +359,7 @@ theorem exists_signed_generator : ∀ (E : Type) [Field E] [NumberField E] [IsCM
       have hm : (l : OF E) • (a • ξ₀) ∈ Ideal.span {(l : OF E)} • M :=
         Submodule.smul_mem_smul (Ideal.mem_span_singleton_self _) (M.smul_mem a hξ₀M)
       have heq : ξ₀ = ξ + -((l : OF E) • (a • ξ₀)) := by
-        rw [hξdef, Algebra.smul_def, Algebra.smul_def]; simp [map_add, map_mul]; ring
+        rw [hξdef, Algebra.smul_def, Algebra.smul_def]; simp [map_add (f := _), map_mul]; ring
       rw [heq]
       exact Submodule.add_mem_sup (Submodule.mem_span_singleton_self ξ) (Submodule.neg_mem _ hm)
     exact hgen₀.trans (sup_le hsub le_sup_right)

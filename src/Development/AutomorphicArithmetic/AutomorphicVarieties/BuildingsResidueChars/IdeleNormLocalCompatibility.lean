@@ -23,7 +23,7 @@ private theorem ideleNorm_eq (E : Type) [Field E] [NumberField E] [IsCMField E] 
     | tmul a l =>
       rw [GlobalTheory.UnitaryHeckeBaseChange.toAdele_tmul, GroundTheory.Global.AdeleBaseChange.adeleTensorAlgEquivLeft_tmul,
         adeleMap_eq, mul_comm]
-    | add a b ha hb => rw [map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   change adeleNorm E (x : AdeleRing (𝓞 E) E) = _
   rw [GroundTheory.Global.coe_ideleNorm, ← hz, h]
   have h3 : GlobalTheory.UnitaryHeckeBaseChange.adeleEquiv (isCMExt_real E) z = _ := h2 z

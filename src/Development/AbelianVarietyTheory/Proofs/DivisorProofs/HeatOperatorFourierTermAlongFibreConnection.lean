@@ -158,7 +158,7 @@ theorem heat_term_fibre : ∀ {R : Type} [CommRing R] [IsDomain R] {Q : DegPre R
     rw [gs_unit a z _ ha.2]; exact Units.isUnit _
   rw [Sb σ', gs_eq_gsH b z U hz]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_mul, map_add, map_sum, map_natCast, map_ofNat, map_intCast]
+    simp only [map_mul, map_add (f := _), map_sum, map_natCast, map_ofNat, map_intCast]
   simp only [← gs_eq_gsH b z U hz]
   rw [Ed, Sb σ, Cc, Fin.sum_univ_four, P 0, P 1, P 2, P 3]
   rw [T0, Category.comp_id] at hop ⊢

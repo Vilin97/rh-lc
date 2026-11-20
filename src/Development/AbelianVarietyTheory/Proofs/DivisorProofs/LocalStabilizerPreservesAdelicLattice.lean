@@ -42,7 +42,7 @@ theorem putAt_mul (v : Pl F) (t : Fv F v ⊗[F] E) (a : AF F) (y : E) :
   | zero => simp
   | tmul b e =>
     rw [putAt_tmul, Algebra.TensorProduct.tmul_mul_tmul, Algebra.TensorProduct.tmul_mul_tmul, putAt_tmul, single_mul_eq]
-  | add x y hx hy => rw [map_add, add_mul, hx, hy, add_mul, map_add]
+  | add x y hx hy => rw [map_add (f := _), add_mul, hx, hy, add_mul, map_add (f := _)]
 
 end GlobalTheory.LatHatStab
 
@@ -57,10 +57,10 @@ theorem mat_emb (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) (v
     induction t using TensorProduct.induction_on with
     | zero => simp only [map_zero]; rfl
     | tmul b e => rfl
-    | add x y hx hy => simp only [map_add, hx, hy]; rfl
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]; rfl
   change (HA.mat (AF F) σ J (ofFin σ J (embLocFin σ J v k))).1 r s = _
   erw [GlobalTheory.AutFunCompare.mat_extH]
-  rw [embLocFin, GlobalTheory.AutFunCompare.mat_extH, map_add]
+  rw [embLocFin, GlobalTheory.AutFunCompare.mat_extH, map_add (f := _)]
   erw [e1]
   by_cases h : r = s
   · subst h

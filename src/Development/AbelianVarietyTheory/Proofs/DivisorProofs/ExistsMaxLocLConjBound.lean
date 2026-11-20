@@ -37,7 +37,7 @@ theorem sum_pow_product (x : ℂ) (n : ℕ) (s t : Multiset ℂˣ) :
   induction s using Multiset.induction_on with
   | empty => simp
   | cons a s ih =>
-    rw [Multiset.cons_product, Multiset.map_add, Multiset.sum_add, ih, Multiset.map_map]
+    rw [Multiset.cons_product, Multiset.map_add (f := _), Multiset.sum_add, ih, Multiset.map_map]
     simp only [Function.comp_def, mul_pow]
     rw [Multiset.sum_map_mul_right, Multiset.sum_map_mul_left, Multiset.map_cons, Multiset.sum_cons]
     ring

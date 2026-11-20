@@ -65,12 +65,12 @@ theorem smooth_iff {A B V W : HSp D} {κ : WA A B ≃+ WA V W} {σ} (hκ : IsCha
     convert this using 1
     funext p
     change f (κ (w + P p)) = f (κ w + κ (P (e.symm (e p))))
-    rw [e.symm_apply_apply, map_add]
+    rw [e.symm_apply_apply, map_add (f := _)]
   · intro h k L hL h0 w
     obtain ⟨co, hc, -, h2⟩ := DualPairCompare.exists_co D
     let q : (Fin k → ℝ) →+ R := AddMonoidHom.mk' (fun t i j => co (κ.symm (L t) i j)) fun s t => by
       funext i j
-      rw [map_add, map_add, Matrix.add_apply, map_add]
+      rw [map_add (f := _), map_add (f := _), Matrix.add_apply, map_add (f := _)]
       rfl
     have hq : Continuous q := continuous_pi fun i => continuous_pi fun j =>
       hc.comp ((continuous_apply j).comp ((continuous_apply i).comp (hκ.2.1.comp hL)))
@@ -81,7 +81,7 @@ theorem smooth_iff {A B V W : HSp D} {κ : WA A B ≃+ WA V W} {σ} (hκ : IsCha
       rw [← hκ.map_zero_iff, κ.apply_symm_apply]; exact h0 t
     have e : P (q t) = κ.symm (L t) := Matrix.ext fun i j => h2 _ (congrFun (congrFun z i) j)
     change _ = f (κ (κ.symm w + P (q t)))
-    rw [e, map_add, κ.apply_symm_apply, κ.apply_symm_apply]
+    rw [e, map_add (f := _), κ.apply_symm_apply, κ.apply_symm_apply]
 
 theorem theta_iff {A B V W : HSp D} {κ : WA A B ≃+ WA V W} {σ} (hκ : IsChange κ σ) {ψ : AddChar (AF D.host.F) ℂ}
     (hψ : Continuous ψ) (f : WA V W → ℂ) : IsThetaFun ψ V W f ↔ HeisenbergWeilMatrices.IsTheta ψ (f ∘ κ) := by
@@ -98,7 +98,7 @@ theorem theta_iff {A B V W : HSp D} {κ : WA A B ≃+ WA V W} {σ} (hκ : IsChan
       (lv u).1 (h2 _ hu ((hκ.map_zero_iff _ _).2 h0))⟩
     obtain ⟨δ, hδ⟩ := (hκ.2.2.2.1 γ).2 hγ
     have := h1 δ (κ w)
-    rw [show ratW V W δ = κ γ from hδ, sk, ← map_add] at this
+    rw [show ratW V W δ = κ γ from hδ, sk, ← map_add (f := _)] at this
     exact this
   · rintro ⟨h1, h2, U, hU, h3⟩
     have l : ∃ U : AddSubgroup (WA V W), IsOpen (U : Set (WA V W)) ∧
@@ -114,7 +114,7 @@ theorem theta_iff {A B V W : HSp D} {κ : WA A B ≃+ WA V W} {σ} (hκ : IsChan
       (((FockCompare.smooth_iff_sm_and_real_lines D θ s' hs' V W).1 f).1 s), s⟩
     obtain ⟨γ, hγ⟩ := κ.surjective (ratW V W δ)
     obtain ⟨w, rfl⟩ := κ.surjective w
-    rw [← hγ, sk, ← map_add]
+    rw [← hγ, sk, ← map_add (f := _)]
     exact h1 γ ((hκ.2.2.2.1 γ).1 ⟨δ, hγ.symm⟩) w
 
 theorem stdChar_iff (ψ : AddChar (AF D.host.F) ℂ) : IsStdChar D ψ (-1) ↔ HeisenbergWeilMatrices.IsStdChar D (-1) ψ := by

@@ -75,7 +75,7 @@ theorem complexConj_eq_conj (D : D7) (x : D.host.E) : IsCMField.complexConj D.ho
 theorem rankOne_base_weight_eq_cmTheta (A : Amb D) : A.H.w0 = w0 D := by
   apply RingOfIntegers.ext
   have h := congrArg (algebraMap (𝓞 D.host.E) D.host.E) A.H.two_weight_eq_one_add_root
-  rw [map_mul, map_add, map_one, map_ofNat] at h
+  rw [map_mul, map_add (f := _), map_one, map_ofNat] at h
   have h₂ : algebraMap (𝓞 D.host.E) D.host.E A.H.rt = D.host.sqrtMinusD := A.rt_eq
   change algebraMap (𝓞 D.host.E) D.host.E A.H.w0 = (1 + D.host.sqrtMinusD) / 2
   rw [← h₂, ← h]
@@ -117,10 +117,10 @@ theorem isTauVal_mulConst (a b : ct.Ylat y) :
   Exists.choose_spec (p := fun t : (↥y.C.S)ˣ => Per.IsTauVal (ct.dat y).f ((ct.evidence y).e a b) (t : ↥y.C.S)) _
 
 theorem mulFst_eq (a b : ct.Ylat y) : ct.mulFst y a b = ct.phi y b := by
-  rw [mulFst, lineShift, lineShift, map_add, add_sub_cancel_left]
+  rw [mulFst, lineShift, lineShift, map_add (f := _), add_sub_cancel_left]
 
 theorem mulSnd_eq (a b : ct.Ylat y) : ct.mulSnd y a b = ct.phi y a := by
-  rw [mulSnd, lineShift, lineShift, map_add, add_sub_cancel_right]
+  rw [mulSnd, lineShift, lineShift, map_add (f := _), add_sub_cancel_right]
 
 theorem mulConst_eq (a b : ct.Ylat y) : ct.mulConst y a b = ct.tauVal y a (ct.phi y b) :=
   Units.ext ((ct.evidence y).eq_of_isTauVal (ct.isTauVal_mulConst y a b))

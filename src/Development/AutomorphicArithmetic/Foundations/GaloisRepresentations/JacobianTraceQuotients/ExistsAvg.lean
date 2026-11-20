@@ -71,7 +71,7 @@ private theorem mean_lin {W : Type} [AddCommGroup W] [Module ℂ W] (T : Subgrou
 
 private theorem mean_add (T : Subgroup H) [T.FiniteIndex] (x y : V) :
     mean ρ T (x + y) = mean ρ T x + mean ρ T y := by
-  simp only [mean, map_add, Finset.sum_add_distrib, smul_add]
+  simp only [mean, map_add (f := _), Finset.sum_add_distrib, smul_add]
 
 private theorem mean_smul (T : Subgroup H) [T.FiniteIndex] (c : ℂ) (x : V) :
     mean ρ T (c • x) = c • mean ρ T x := by

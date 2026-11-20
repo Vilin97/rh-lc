@@ -182,7 +182,7 @@ theorem isAutFunSm_pair (hθ : IsInfFam θ)
     GlobalTheory.Mem.Col2.valC_finiteDimensional (embT D) (RingHom.id ℂ) (sgT u)
   let l : (FrP D → ℂ) →ₗ[ℂ] ℂ :=
     { toFun := fun F => star (Bf F f)
-      map_add' := fun F F' => by rw [map_add, LinearMap.add_apply, star_add]
+      map_add' := fun F F' => by rw [map_add (f := _), LinearMap.add_apply, star_add]
       map_smul' := fun c F => by simp }
   have h1 := isAutFunDef_of θ (rankP D) (Equiv.refl _) hθ (gramC (gramP D) (embT D)) (sgT u) (fun h => g (finPt h))
     (fun h => hg.2 _ (Set.mem_univ _)) (fun γ hγ h => form_left θ hθ hg hγ h) (form_locally hK hg)

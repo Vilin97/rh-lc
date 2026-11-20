@@ -60,7 +60,7 @@ theorem trace_swap_pr (b₀ : HermE D ρ) {b : Mx D p p} (hb : adj b = b) (u v :
   rw [← trace_adj, adj_mul, hb, adj_pr, Matrix.trace_mul_comm]
 
 theorem halfTr_add'' (a c : AE D) : halfTr (a + c) = halfTr a + halfTr c := by
-  simp only [halfTr, trA, map_add, mul_add]
+  simp only [halfTr, trA, map_add (f := _), mul_add]
 
 theorem halfTr_neg'' (a : AE D) : halfTr (-a) = -halfTr a := by
   simp only [halfTr, trA, map_neg, mul_neg]

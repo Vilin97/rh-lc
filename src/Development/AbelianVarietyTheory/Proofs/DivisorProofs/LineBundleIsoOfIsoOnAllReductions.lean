@@ -49,7 +49,7 @@ theorem mem_basicOpen_loc₀ {R : Type} [CommRing R] {I : Ideal R} {X : Scheme.{
     simp only [loc₀, map_sub, sub_mul, Finset.sum_sub_distrib, add_sub_cancel]
   refine (IsLocalRing.notMem_maximalIdeal.2 hx) ?_
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [e, map_add, map_sum]
+    rw [e, map_add (f := _), map_sum]
   refine Ideal.add_mem _ ((IsLocalRing.mem_maximalIdeal _).2 hw) (Ideal.sum_mem _ fun k _ => ?_)
   rw [map_mul]
   refine Ideal.mul_mem_right _ _ ((IsLocalRing.mem_maximalIdeal _).2 fun hu => ?_)

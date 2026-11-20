@@ -110,7 +110,7 @@ theorem regularAt_add_mul {f f' : T → FractionRing R} {g : Γ.G.left} (h : Γ.
   have hb : ∀ t h, valAt (Γ.pt t).left (U ⊓ V) h b = f' t := fun t h =>
     (valAt_restrict _ _ h (top_le_of_le _ inf_le_right h) _).trans (hs' t _)
   refine ⟨⟨U ⊓ V, ⟨hU, hV⟩, a + b, fun t h => ?_⟩, ⟨U ⊓ V, ⟨hU, hV⟩, a * b, fun t h => ?_⟩⟩
-  · rw [← SubOrder.valHom_apply, map_add, SubOrder.valHom_apply, SubOrder.valHom_apply, ha, hb]
+  · rw [← SubOrder.valHom_apply, map_add (f := _), SubOrder.valHom_apply, SubOrder.valHom_apply, ha, hb]
   · rw [← SubOrder.valHom_apply, map_mul, SubOrder.valHom_apply, SubOrder.valHom_apply, ha, hb]
 
 def btSub (U : Γ.G.left.Opens) : Subalgebra R (T → R) where
@@ -118,7 +118,7 @@ def btSub (U : Γ.G.left.Opens) : Subalgebra R (T → R) where
   mul_mem' hf hf' t g hg := by
     simpa only [Pi.mul_apply, map_mul] using (regularAt_add_mul Γ (hf t g hg) (hf' t g hg)).2
   add_mem' hf hf' t g hg := by
-    simpa only [Pi.add_apply, map_add] using (regularAt_add_mul Γ (hf t g hg) (hf' t g hg)).1
+    simpa only [Pi.add_apply, map_add (f := _)] using (regularAt_add_mul Γ (hf t g hg) (hf' t g hg)).1
   algebraMap_mem' r _ g _ := regularAt_const Γ r g
 
 end ops

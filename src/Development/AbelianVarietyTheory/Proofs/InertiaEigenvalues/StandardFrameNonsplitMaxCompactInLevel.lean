@@ -37,7 +37,7 @@ theorem comp_swapCast {E : Type} [Field E] [NumberField E] {F1 F2 : Subfield E} 
     induction z using TensorProduct.induction_on with
     | zero => simp only [map_zero]
     | tmul a b => rfl
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   rw [key, key, e]
 
 variable {D : D7}

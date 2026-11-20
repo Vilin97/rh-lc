@@ -183,7 +183,7 @@ theorem sub_closed : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClo
   · rintro _ ⟨g, hg, rfl⟩
     refine ⟨h1 g hg, fun x k hk => ?_⟩
     change g (j (x + k)) = g (j x)
-    rw [map_add, AddMonoidHom.mem_ker.1 hk, add_zero]
+    rw [map_add (f := _), AddMonoidHom.mem_ker.1 hk, add_zero]
   have : Fintype (N ⧸ j.ker) := Fintype.ofFinite _
   obtain ⟨-, ⟨AQ, hAQ⟩, -⟩ := h2 C R v hv N j.ker AA
   obtain ⟨f, hf, hfree⟩ := exists_coset_basis hv AA j.ker
@@ -213,7 +213,7 @@ theorem sub_closed : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClo
       rfl
     · rintro _ _ ⟨a, ha, rfl⟩ ⟨b, hb, rfl⟩
       refine ⟨a + b, fun k => J.add_mem (ha k) (hb k), ?_⟩
-      simp only [Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+      simp only [Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
   have hmain := pull_eq hv.hom_inj AQ A' (QuotientAddGroup.kerLift j) hi1 (by
     intro g hg hg0
     have hg' : pullQ (R := R) j.ker g ∈ AA.carrier := by rw [hAQ] at hg; exact hg

@@ -114,7 +114,7 @@ theorem exists_coprime_nsmul_map_mem : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p
       rw [this, map_zero, smul_zero]; exact zero_mem _
     | add y z _ _ hy hz =>
       have : inAf D (y + z) = inAf D y + inAf D z := by simp only [inAf, TensorProduct.tmul_add]
-      rw [this, map_add, smul_add]; exact add_mem hy hz
+      rw [this, map_add (f := _), smul_add]; exact add_mem hy hz
     | smul c y _ hy =>
       have : inAf D (c • y) = c • inAf D y := by
         simp only [inAf, TensorProduct.tmul_smul]
@@ -128,7 +128,7 @@ theorem exists_coprime_nsmul_map_mem : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p
     rw [e, map_smul, smul_comm]
     exact smul_mem D ha (hbase x)
   | zero => rw [map_zero, smul_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add, smul_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _), smul_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg, smul_neg]; exact neg_mem hx
 
 end GlobalTheory.LKGeo.DenEnd

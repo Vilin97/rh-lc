@@ -26,8 +26,8 @@ def bnd (I : FractionalIdeal (𝓞 D.host.E)⁰ D.host.E) : AddSubgroup (AE D) w
     (∀ s ∈ I, Q.valuation D.host.E (d * s) ≤ 1) → Valued.v (cpt (D := D) Q (toEAf D (incA D d * t))) ≤ 1}
   zero_mem' := ⟨RingHom.map_zero _, fun Q d _ => by
     rw [mul_zero, RingHom.map_zero, RingHom.map_zero, Valuation.map_zero]; exact zero_le⟩
-  add_mem' := fun {a b} ha hb => ⟨by rw [RingHom.map_add, ha.1, hb.1, add_zero], fun Q d h => by
-    rw [mul_add, RingHom.map_add, RingHom.map_add]
+  add_mem' := fun {a b} ha hb => ⟨by rw [RingHom.map_add (f := _), ha.1, hb.1, add_zero], fun Q d h => by
+    rw [mul_add, RingHom.map_add (f := _), RingHom.map_add (f := _)]
     exact Valuation.map_add_le _ (ha.2 Q d h) (hb.2 Q d h)⟩
   neg_mem' := fun {a} ha => ⟨by rw [RingHom.map_neg, ha.1, neg_zero], fun Q d h => by
     rw [mul_neg, RingHom.map_neg, RingHom.map_neg, Valuation.map_neg]
@@ -62,7 +62,7 @@ theorem psiE_eq_one {ψ : AddChar (AF D.host.F) ℂ} (hψ : IsStdChar D ψ (-1))
       rw [RingHom.map_mul (incA D), mul_assoc, RingHom.map_mul (finPart D), GlobalTheory.LatVac.finPart_incA]
       exact h2
     · intro x y hx hy
-      rw [RingHom.map_add, add_mul, RingHom.map_add, GlobalTheory.FinPl.Conductor.chi_add, hx, hy, one_mul]
+      rw [RingHom.map_add (f := _), add_mul, RingHom.map_add (f := _), GlobalTheory.FinPl.Conductor.chi_add, hx, hy, one_mul]
   rw [GlobalTheory.FinPl.Conductor.psiE_eq_chi ψ h0]
   rwa [RingHom.map_one, one_mul] at key
 

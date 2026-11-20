@@ -31,7 +31,7 @@ theorem schr_law : ∀ {R : Type} [CommRing R] [TopologicalSpace R] [IsTopologic
     continuous_finsetSum _ fun i _ => (continuous_apply i).mul continuous_const
   refine ⟨?_, ?_, ?_, ?_⟩
   · funext x
-    simp only [Darboux.rho, schr, Pi.smul_apply, smul_eq_mul, map_add, Prod.fst_add, Prod.snd_add, d.form]
+    simp only [Darboux.rho, schr, Pi.smul_apply, smul_eq_mul, map_add (f := _), Prod.fst_add, Prod.snd_add, d.form]
     rw [← mul_assoc, ← mul_assoc, ← AddChar.map_add_eq_mul, ← AddChar.map_add_eq_mul, add_assoc x]
     congr 2
     simp only [add_dotProduct, dotProduct_add]

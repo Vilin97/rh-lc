@@ -107,7 +107,7 @@ private theorem valR_point_chart_aeval_ratio {o : Type} [CommRing o] [Algebra o 
     refine (valR_appLE (point o t ht) (PSpace.str o n) _ htop _).trans ?_
     rw [point_str, ← preimage_apply, Spec.preimage_map, CommRingCat.hom_ofHom]
   | add p q hp hq =>
-    rw [map_add, map_add, valR_add _ _ htop, hp, hq]
+    rw [map_add (f := _), map_add (f := _), valR_add _ _ htop, hp, hq]
   | mul_X p j hp =>
     rw [map_mul, map_mul, valR_mul _ _ htop, hp, MvPolynomial.aeval_X, MvPolynomial.aeval_X,
       valR_point_ratio hc j]

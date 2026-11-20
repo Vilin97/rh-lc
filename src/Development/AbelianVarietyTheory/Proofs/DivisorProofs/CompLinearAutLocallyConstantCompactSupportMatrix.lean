@@ -22,7 +22,7 @@ theorem comp_linearAut_smooth_compact : ∀ (E : Type) [Field E] [NumberField E]
   refine ⟨⟨U.comap L.toAddMonoidHom, ?_, ?_⟩, ?_, hLC⟩
   · exact hUo.preimage (IsModuleTopology.continuous_of_linearMap L)
   · intro x y hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hU (L x) (L y) hy
   · exact hcs.comp_homeomorph h
 

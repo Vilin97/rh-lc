@@ -21,7 +21,7 @@ def cmMax (K : Type) [Field K] [StarRing K] : Subfield K where
   one_mem' := by intro σ; simp
   add_mem' := by
     intro a b ha hb σ
-    rw [star_add, map_add, map_add, map_add, ha σ, hb σ]
+    rw [star_add, map_add (f := _), map_add (f := _), map_add (f := _), ha σ, hb σ]
   zero_mem' := by intro σ; simp
   neg_mem' := by
     intro a ha σ

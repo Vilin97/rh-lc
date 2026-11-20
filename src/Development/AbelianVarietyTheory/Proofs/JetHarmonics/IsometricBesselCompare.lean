@@ -80,7 +80,7 @@ theorem bessel_orth_of_param_ne : Hyps → ∀ (k r : ℕ) (ε : Fin (2 * r + k 
       rw [← integral_add (integrable_inner (hL' y hy) (hL w hw)) (integrable_inner (hL' y hy) (hL w' hw'))]
       refine integral_congr_ae ?_
       filter_upwards [hae] with x hx
-      rw [map_add, ha _ (ht w hw _ hx) _ (ht w' hw' _ hx), inner_add_right]
+      rw [map_add (f := _), ha _ (ht w hw _ hx) _ (ht w' hw' _ hx), inner_add_right]
     · intro a w hw y hy
       beta_reduce
       rw [← integral_const_mul]
@@ -92,7 +92,7 @@ theorem bessel_orth_of_param_ne : Hyps → ∀ (k r : ℕ) (ε : Fin (2 * r + k 
       rw [← integral_add (integrable_inner (hL' y hy) (hL w hw)) (integrable_inner (hL' y' hy') (hL w hw))]
       refine integral_congr_ae ?_
       filter_upwards [hae] with x hx
-      rw [map_add, ha' _ (ht' y hy _ hx) _ (ht' y' hy' _ hx), inner_add_left]
+      rw [map_add (f := _), ha' _ (ht' y hy _ hx) _ (ht' y' hy' _ hx), inner_add_left]
     · intro a w hw y hy
       beta_reduce
       rw [← integral_const_mul]

@@ -80,7 +80,7 @@ variable {X bas idx x}
 def anFibRen [Algebra c.F ℂ] {e : Fin g ≃ Lt1 Dw} {L : Lt E r} {y : FrPt Xo c ℂ}
     (A : AnFib X bas (π.trans idx) (π.trans e) x L y) : AnFib X bas idx e x L y where
   ex z := A.ex (ren π z)
-  ex_add z w := by rw [map_add, A.ex_add]
+  ex_add z w := by rw [map_add (f := _), A.ex_add]
   ex_onto := A.ex_onto.comp (ren π).surjective
   ex_ker z := by simp only [A.ex_ker, pv_ren, (ren π).injective.eq_iff]
   ex_lin a z := A.ex_lin a (ren π z)
@@ -101,7 +101,7 @@ def anFibRen [Algebra c.F ℂ] {e : Fin g ≃ Lt1 Dw} {L : Lt E r} {y : FrPt Xo 
   χ := A.χ
   χ_norm := A.χ_norm
   fr_per v hv j z h := by
-    rw [A.fr_per v hv j _ h, pv_ren, hx_ren, hx_ren, map_add]
+    rw [A.fr_per v hv j _ h, pv_ren, hx_ren, hx_ren, map_add (f := _)]
 
 end Rename₂
 

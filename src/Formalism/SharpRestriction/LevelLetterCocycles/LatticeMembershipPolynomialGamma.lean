@@ -54,7 +54,7 @@ theorem ιV_act (g : G) (y : V ⊗[Qp] B) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul x b => simp [ιV, actVB, actVdR, PD.ι_comm]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem ιV_mul (c : K₀) (y : V ⊗[Qp] B) :
     ιV PD (LL := LL) (V := V) (mulVB (K₀ := K₀) (B := B) (V := V) (LL := LL) c y) =
@@ -64,7 +64,7 @@ theorem ιV_mul (c : K₀) (y : V ⊗[Qp] B) :
   | zero => simp
   | tmul x b =>
     simp [ιV, mulVB, mulVdR, ← IsScalarTower.algebraMap_apply K₀ K BdR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem ι_DdRE (τ₀ : K₀ →ₐ[Qp] LL) (τ : K →ₐ[Qp] LL)
     (hover : ∀ x : K₀, τ (algebraMap K₀ K x) = τ₀ x)
@@ -133,7 +133,7 @@ theorem uniformizer_mem_delta_invariants : W.π₀ ∈ W.AΔ := by
     exact (W.DelF_def _).2 ⟨a, ha, by rw [inv_pow, hxa, inv_one]⟩
   unfold LocWach.π₀₁
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sub, map_one, map_natCast, map_sum]
+    rw [map_add (f := _), map_sub, map_one, map_natCast, map_sum]
   congr 1
   have key : ∀ y : W.Gam, W.γ₀ δ (W.γ₀ y (1 + PowerSeries.X)) = W.γ₀ (δ * y) (1 + PowerSeries.X) := by
     intro y; rw [map_mul, AlgHom.mul_apply]
@@ -153,7 +153,7 @@ theorem actVB_φVB (T : LocLat G Qp LL O) (g : G) (y : T.V ⊗[Qp] B) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul x b => simp [actVB, φVB, PD.φ_comm]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem mulVB_φVB (T : LocLat G Qp LL O) (c : K₀) (y : T.V ⊗[Qp] B) :
     mulVB (K₀ := K₀) (B := B) (V := T.V) (LL := LL) (PD.σ c) (φVB PD (LL := LL) (V := T.V) y) =
@@ -161,7 +161,7 @@ theorem mulVB_φVB (T : LocLat G Qp LL O) (c : K₀) (y : T.V ⊗[Qp] B) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul x b => simp [mulVB, φVB, map_mul, PD.φ_K₀]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem φVB_letter (T : LocLat G Qp LL O) (i : ZMod n) {y : T.V ⊗[Qp] B}
     (hy : y ∈ DcrisL PD T.ρ (W.emb i)) :
@@ -523,7 +523,7 @@ theorem γE_aeval (P : Polynomial O) : ∀ x : W.EE,
     exact map_smul (W.γE W.gam) c x
   | add p q hp hq =>
     intro x
-    simp only [map_add, LinearMap.add_apply, hp, hq]
+    simp only [map_add (f := _), LinearMap.add_apply, hp, hq]
   | monomial k c ih =>
     intro x
     have e : ∀ y, Polynomial.aeval ((W.γE W.gam).toLinearMap : Module.End O W.EE)
@@ -551,7 +551,7 @@ theorem lattice_membership_polynomial_gamma (hS : PsStable W) (hP : ∀ g : W.Ga
     obtain ⟨g₁, h₁, e₁⟩ := hp g hg
     obtain ⟨g₂, h₂, e₂⟩ := hq g hg
     refine ⟨g₁ + g₂, inNL_add W T A a e b h₁ h₂, fun k => ?_⟩
-    simp only [map_add, LinearMap.add_apply, e₁, e₂, Pi.add_apply, mul_add]
+    simp only [map_add (f := _), LinearMap.add_apply, e₁, e₂, Pi.add_apply, mul_add]
   | monomial k c ih =>
     intro g hg
     obtain ⟨u, hu, hγ⟩ := hP W.gam

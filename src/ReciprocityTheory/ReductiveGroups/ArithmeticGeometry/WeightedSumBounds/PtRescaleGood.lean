@@ -218,7 +218,7 @@ private theorem mu_lemma_16 {τ : Type*} {f f' g g' : MvPowerSeries τ C} (n : �
   apply Finset.sum_congr rfl
   intro p hp
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
-  have hd : p.1.degree + p.2.degree = e.degree := by rw [← hp, map_add]
+  have hd : p.1.degree + p.2.degree = e.degree := by rw [← hp, map_add (f := _)]
   rw [hf p.1 (by omega), hg p.2 (by omega)]
 
 private theorem m1_lemma_17 {τ : Type*} {f f' g g' : MvPowerSeries τ C} (n : ℕ)
@@ -232,7 +232,7 @@ private theorem m1_lemma_17 {τ : Type*} {f f' g g' : MvPowerSeries τ C} (n : �
   apply Finset.sum_congr rfl
   intro p hp
   rw [Finset.HasAntidiagonal.mem_antidiagonal] at hp
-  have hd : p.1.degree + p.2.degree = e.degree := by rw [← hp, map_add]
+  have hd : p.1.degree + p.2.degree = e.degree := by rw [← hp, map_add (f := _)]
   by_cases h1 : p.1 = 0
   · rw [h1, MvPowerSeries.coeff_zero_eq_constantCoeff_apply,
       MvPowerSeries.coeff_zero_eq_constantCoeff_apply, hf0, hf0', zero_mul, zero_mul]
@@ -315,7 +315,7 @@ theorem pt_agree_of_lg (G : LogFGL v d) {τ : Type*} {x y : Fin d → MvPowerSer
         fun s e' he' => ih _ he' s e' rfl (by omega)
       have h1 := h i e (by omega)
       have hlg : G.lg i = X i + (G.lg i - X i) := by ring
-      rw [hlg, subst_add hsx, subst_add hsy, subst_X hsx, subst_X hsy, map_add, map_add,
+      rw [hlg, subst_add hsx, subst_add hsy, subst_X hsx, subst_X hsy, map_add (f := _), map_add (f := _),
         ag_lemma_15 hx hy n hlow _ (hr0 i) (hr1 i) e (le_of_eq hen)] at h1
       exact add_right_cancel h1
   intro i e he

@@ -20,7 +20,7 @@ theorem ev_symm_of_nonneg (ev : V →ₗ[ℂ] E) (T : Module.End ℂ V) (h : ∀
   have h2 := hd (v + Complex.I • w)
   have h3 := hd v
   have h4 := hd w
-  simp only [map_add, map_smul, inner_add_left, inner_add_right, inner_smul_left, inner_smul_right,
+  simp only [map_add (f := _), map_smul, inner_add_left, inner_add_right, inner_smul_left, inner_smul_right,
     Complex.conj_I] at h1 h2
   have hI : Complex.I * Complex.I = -1 := Complex.I_mul_I
   linear_combination (1 / 2 : ℂ) * h1 + (Complex.I / 2) * h2 - (1 / 2 + Complex.I / 2) * h3
@@ -39,7 +39,7 @@ theorem ev_symm_single (ev : V →ₗ[ℂ] E) (K : (ι → ℂ) →ₐ[ℂ] Modu
       simpa using add_pos (zero_lt_one' ℂ) (zero_lt_one' ℂ)
     · simp [hj]
   have h1 := ev_symm_of_nonneg ev _ (h _ hp) v w
-  simp only [map_add, map_one, LinearMap.add_apply, Module.End.one_apply, inner_add_left, inner_add_right] at h1
+  simp only [map_add (f := _), map_one, LinearMap.add_apply, Module.End.one_apply, inner_add_left, inner_add_right] at h1
   linear_combination h1
 
 theorem algHom_apply_eq_sum (ev : V →ₗ[ℂ] E) (K : (ι → ℂ) →ₐ[ℂ] Module.End ℂ V) (f : ι → ℂ) (v : V) :

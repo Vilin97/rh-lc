@@ -433,7 +433,7 @@ theorem cyclic_mem_adm (hext : GlobalTheory.IndefiniteRowSideFullHecke.Crystalli
     (fun y => Prod.ext (smul_tensor_eq_zero hX y.1) (hX y.2))
   change (q (e (latRep T.L g x)).1, Ideal.Quotient.mk _ (e (latRep T.L g x)).2) =
     Ea Γ.W₀ Γ.χ₁ hX _ g (q (e x).1, Ideal.Quotient.mk _ (e x).2)
-  rw [Ea_apply, hg, map_add, map_smul]
+  rw [Ea_apply, hg, map_add (f := _), map_smul]
   rfl
 
 theorem finite_subset_adm (hO : IsOpen (Set.range (algebraMap O LL)))
@@ -456,7 +456,7 @@ theorem finite_subset_adm (hO : IsOpen (Set.range (algebraMap O LL)))
     clear hy
     induction y using TensorProduct.induction_on with
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add _ _ h1 h2 => rw [map_add]; exact Submodule.add_mem _ h1 h2
+    | add _ _ h1 h2 => rw [map_add (f := _)]; exact Submodule.add_mem _ h1 h2
     | tmul κ x =>
       obtain ⟨_, z, hz, rfl⟩ := κ
       have hY : ∀ x : O ⧸ Ideal.span {Γ.lam ^ a}, Γ.lam ^ a • x = 0 := fun x => by

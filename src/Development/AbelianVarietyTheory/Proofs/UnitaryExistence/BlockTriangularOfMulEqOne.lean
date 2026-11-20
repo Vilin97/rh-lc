@@ -79,9 +79,9 @@ theorem fibTri : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Rec
         apply (Matrix.mulVec_injective_of_isUnit γ.isUnit)
         rw [hγ, LinearEquiv.apply_symm_apply, hv]
     · obtain ⟨b, hb⟩ := hhalf a ha
-      exact ⟨b, by rw [← hφe, ← hφe, hγ, hb, map_add, map_nsmul]⟩
+      exact ⟨b, by rw [← hφe, ← hφe, hγ, hb, map_add (f := _), map_nsmul]⟩
     · obtain ⟨b, hb⟩ := hA a
-      exact ⟨b, by rw [← hφe, ← hφe, hγ, hb, map_add, map_nsmul]⟩
+      exact ⟨b, by rw [← hφe, ← hφe, hγ, hb, map_add (f := _), map_nsmul]⟩
   have hγx := FrameFibre.lact_mem_GG hun hx
   obtain ⟨Pg, hPg⟩ := ((FramePeriod.isPeriod_frame E H (F.Di k) r _ _ _ _ hΨ g idx _ hty hξ hpos hlat hr).2 _ hγx).1
   have hP1 := fun a j => (hP a j).trans (hfr x.1 _ j)

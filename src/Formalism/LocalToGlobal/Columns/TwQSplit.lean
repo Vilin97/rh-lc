@@ -50,7 +50,7 @@ theorem qsp_exists (P : Pl E) (hP : conjPrime₂ P ≠ P) :
     rw [hsig0]; exact this
   have ht' : algebraMap F E (t : F) = (ϖ : E) + hc.sig (ϖ : E) := by
     have := congrArg (algebraMap (𝓞 E) E) ht
-    rw [map_add, ← IsScalarTower.algebraMap_apply, IsScalarTower.algebraMap_apply (𝓞 F) F E] at this
+    rw [map_add (f := _), ← IsScalarTower.algebraMap_apply, IsScalarTower.algebraMap_apply (𝓞 F) F E] at this
     rw [hsig0]; exact this
   have hNv : N ∈ (underPl F P).asIdeal := by
     show algebraMap (𝓞 F) (𝓞 E) N ∈ P.asIdeal

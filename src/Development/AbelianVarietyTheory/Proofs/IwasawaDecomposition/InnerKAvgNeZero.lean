@@ -119,7 +119,7 @@ theorem exists_clm_kAvg (hσ : IsURepOn (UJset ε) σ) {e : KG ε → ℂ} (he :
   let L : H →ₗ[ℂ] H :=
     { toFun := kAvg ε σ e
       map_add' := fun x y => by
-        simp only [kAvg, map_add, smul_add]
+        simp only [kAvg, map_add (f := _), smul_add]
         exact integral_add (integrable_avg hσ he x) (integrable_avg hσ he y)
       map_smul' := fun c x => by
         simp only [kAvg, map_smul, RingHom.id_apply, smul_comm _ c]

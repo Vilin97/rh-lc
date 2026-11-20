@@ -231,7 +231,7 @@ theorem _root_.GlobalTheory.BorelUMod.exists_trace_one {ϖ : L} {σ : L →+* L}
     refine ⟨x / (x + σ x), ?_, ?_⟩
     · rw [map_div₀, ht, div_one]
       exact hx1
-    · rw [map_div₀, map_add, hinv, add_comm (σ x) x, ← add_div, div_self ht0]
+    · rw [map_div₀, map_add (f := _), hinv, add_comm (σ x) x, ← add_div, div_self ht0]
   · refine ⟨1 / 2, ?_, ?_⟩
     · rw [map_div₀, Valuation.map_one, h2, div_one]
     · rw [map_div₀, map_one, map_ofNat]

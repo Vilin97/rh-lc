@@ -325,7 +325,7 @@ theorem pairH_gauge (B : FB R d O) (h : PS k 2 d) (hc : B.IsCanonGauge k h) (y y
     algebraMap R k (pairH B y y') = betaH k (toHk k h y) (toHk k h y') := by
   rw [toHk, toHk, betaH_expand]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [← bil_sy_gauge k B h hc, pairH, dotProduct, Matrix.mulVec, map_add, map_sub, map_sum, map_mul,
+    simp only [← bil_sy_gauge k B h hc, pairH, dotProduct, Matrix.mulVec, map_add (f := _), map_sub, map_sum, map_mul,
     Finset.sum_sub_distrib, Finset.mul_sum]
   congr 1
   exact Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => by ring
@@ -383,7 +383,7 @@ example (G : FGLaw R d) (A : OAct O G) (p : ℕ) (hp : p ≠ 0) (y : (Fin d → 
 example (c : R) : bil (1 + C c * X ((0 : Fin 2), (0 : Fin 1)) * X ((1 : Fin 2), (0 : Fin 1)) : PS R 2 1) 1 1 0 0 = c := by
   have := congrFun (congrFun (bil_one_eq_zero (R := R) (d := 1) one_ne_zero 1) 0) 0
   rw [bil] at this ⊢
-  rw [map_add, this, mul_assoc, coeff_C_mul, X_def, X_def, monomial_mul_monomial, coeff_monomial_same]
+  rw [map_add (f := _), this, mul_assoc, coeff_C_mul, X_def, X_def, monomial_mul_monomial, coeff_monomial_same]
   simp
 
 end GlobalTheory.CompanionTheory.Ar.Conj

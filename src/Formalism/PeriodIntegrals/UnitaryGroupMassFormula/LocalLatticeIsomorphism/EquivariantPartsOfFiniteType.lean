@@ -33,7 +33,7 @@ def conjK (cj : E ≃ₐ[ℚ] E) (h : ∀ k : K, ∃ k' : K, cj (algebraMap K E 
       algebraMap K E (Classical.choose (h x) + Classical.choose (h y))
     have hs : ∀ k, algebraMap K E (Classical.choose (h k)) = cj (algebraMap K E k) :=
       fun k => (Classical.choose_spec (h k)).symm
-    rw [hs (x + y), map_add (algebraMap K E) (Classical.choose (h x)), hs x, hs y, map_add, map_add]
+    rw [hs (x + y), map_add (algebraMap K E) (Classical.choose (h x)), hs x, hs y, map_add (f := _), map_add (f := _)]
 
 theorem conjK_spec (cj : E ≃ₐ[ℚ] E)
     (h : ∀ k : K, ∃ k' : K, cj (algebraMap K E k) = algebraMap K E k') (k : K) :

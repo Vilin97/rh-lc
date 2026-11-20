@@ -167,7 +167,7 @@ theorem kq_split : ∀ (p : ℕ) [Fact p.Prime] (K : IntermediateField ℚ_[p] (
         have e1 : comp p K hq r (Nat.gcd f r) (y + z) =
             comp p K hq r (Nat.gcd f r) y + comp p K hq r (Nat.gcd f r) z := map_add _ _ _
         have e2 : comp p K hq r 0 (y + z) = comp p K hq r 0 y + comp p K hq r 0 z := map_add _ _ _
-        rw [e1, e2, map_add, hy, hz]
+        rw [e1, e2, map_add (f := _), hy, hz]
     exact h
   refine ⟨e0.toRingEquiv, τ, hτK, hτm, ?_, ?_, ?_, ?_⟩
   · intro a i

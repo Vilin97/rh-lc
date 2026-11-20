@@ -35,7 +35,7 @@ theorem pairV_inclT_mem {u : P.V} (hu : u ∈ P.latT) (y : O ⊗[ℤ_[p]] P.T) :
   | add y z hy hz =>
     obtain ⟨a, ha⟩ := hy
     obtain ⟨b, hb⟩ := hz
-    exact ⟨a + b, by rw [map_add, map_add, map_add, ha, hb]⟩
+    exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), map_add (f := _), ha, hb]⟩
   | tmul c t =>
     obtain ⟨b, hb⟩ := (P.mem_latT_iff u).1 hu t
     refine ⟨c * b, ?_⟩

@@ -16,7 +16,7 @@ private theorem der_satSq {O A : Type} [CommRing O] [IsDomain O] [CommRing A] [A
       have hb' : x b = 0 := hb
       rw [hD', ha', hb']; simp
     · intro a b ha hb
-      rw [map_add, ha, hb, add_zero]
+      rw [map_add (f := _), ha, hb, add_zero]
   have := key _ hcf
   rw [map_smul, smul_eq_mul] at this
   exact (mul_eq_zero.1 this).resolve_left hc
@@ -70,7 +70,7 @@ theorem UpperTheory.V.Alg.M.mprime_holds :
       by_cases hij : i = j
       · subst hij; exact hj _ m.2
       · rw [hi μ i hij _ m.2, hi ν i hij _ m.2]
-    | add a b ha hb => rw [map_add, map_add, ha, hb]
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
   obtain ⟨p, hp⟩ := IsDiscreteValuationRing.exists_irreducible O
   obtain ⟨k, hk⟩ := IsDiscreteValuationRing.associated_pow_irreducible hc hp
   have hQ : Module.length O ((O ⧸ maximalIdeal O) →ₗ[O] (O ⧸ Ideal.span {c})) ≤ 1 := by

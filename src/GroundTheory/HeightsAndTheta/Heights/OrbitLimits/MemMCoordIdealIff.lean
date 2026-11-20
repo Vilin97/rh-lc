@@ -73,7 +73,7 @@ def formIdeal {Ω : Type} [Field Ω] (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k)
       homog_add (homog_mul hg₁ (homog_chartMon c e₂))
         (homogD (homog_mul hg₂ (homog_chartMon c e₁)) (add_comm _ _)), ?_,
       Q.add_mem (Q.mul_mem_right _ hQ₁) (Q.mul_mem_right _ hQ₂)⟩
-    rw [map_add, map_mul, map_mul, aeval_chartMon, aeval_chartMon, hv₁, hv₂, prod_pow_add,
+    rw [map_add (f := _), map_mul, map_mul, aeval_chartMon, aeval_chartMon, hv₁, hv₂, prod_pow_add,
       Subring.coe_add]
     ring
   zero_mem' := ⟨0, 0, homog_zero _, by simp, Q.zero_mem⟩

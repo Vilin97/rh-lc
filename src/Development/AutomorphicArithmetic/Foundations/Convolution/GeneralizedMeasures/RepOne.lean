@@ -187,7 +187,7 @@ private theorem comm_ev (𝔞 : Amp μ) {ev : PR K n →+* (LL μ →L[ℂ] LL �
     rw [hev.const a]
     exact (Commute.one_right B).smul_right a
   | add p q hp hq =>
-    simp only [atPl, map_add] at hp hq ⊢
+    simp only [atPl, map_add (f := _)] at hp hq ⊢
     exact hp.add_right hq
   | mul_X p i hp =>
     simp only [atPl, map_mul, rename_X, map_X] at hp ⊢

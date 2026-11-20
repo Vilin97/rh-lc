@@ -40,7 +40,7 @@ theorem exists_unitLat_eq : ∀ (E : Type) [Field E] [NumberField E] [IsCMField 
   intro E _ _ _ _ w hns K e he hint n B ψ x hσx hH L hLat hdual
   have hadd : ∀ y y' z, B.herm x (y + y') z = B.herm x y z + B.herm x y' z := by
     intro y y' z
-    simp only [InvAlg.herm, mul_add, add_mul, map_add]
+    simp only [InvAlg.herm, mul_add, add_mul, map_add (f := _)]
   have hsmul : ∀ (a : K.E) y z, B.herm x (a • y) z = a * B.herm x y z := by
     intro a y z
     simp only [InvAlg.herm, mul_smul_comm, smul_mul_assoc, map_smul, smul_eq_mul]

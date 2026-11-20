@@ -16,7 +16,7 @@ def cocR (x y : Formalism.L2.Col.HomE E a b) : ℝ :=
 
 theorem cocR_add_left (x y z : Formalism.L2.Col.HomE E a b) :
     cocR emb δ d sc (x + y) z = cocR (ι := ι) emb δ d sc x z + cocR emb δ d sc y z := by
-  simp only [cocR, Formalism.L2.Th1.H.altE, map_add, LinearMap.add_apply, Complex.add_re, Complex.add_im]; ring
+  simp only [cocR, Formalism.L2.Th1.H.altE, map_add (f := _), LinearMap.add_apply, Complex.add_re, Complex.add_im]; ring
 
 theorem cocR_zero_left (z : Formalism.L2.Col.HomE E a b) : cocR (ι := ι) emb δ d sc 0 z = 0 := by
   simp [cocR, Formalism.L2.Th1.H.altE]

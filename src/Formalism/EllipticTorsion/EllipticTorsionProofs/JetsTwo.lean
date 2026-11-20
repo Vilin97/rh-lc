@@ -88,7 +88,7 @@ theorem Q_phi (φ : PowerSeries K) {S : MvPowerSeries (Fin 2) K}
         PowerSeries.constantCoeff (PowerSeries.derivative (R := K) φ) * Q S := by
   unfold Q ccd
   rw [pderiv_psubst hS, Derivation.leibniz, pderiv_psubst hS]
-  simp only [smul_eq_mul, map_add, map_mul, cc_psubst hS]
+  simp only [smul_eq_mul, map_add (f := _), map_mul, cc_psubst hS]
   ring
 
 theorem hv {x y : MvPowerSeries (Fin 2) K} (hx : MvPowerSeries.constantCoeff x = 0)
@@ -117,9 +117,9 @@ theorem Q_F (F : MvPowerSeries (Fin 2) K) {x y : MvPowerSeries (Fin 2) K}
   unfold Q
   set_option synthInstance.maxHeartbeats 100000 in
     rw [pderiv_subst (hv hx hy), map_sum, Fin.sum_univ_two]
-  simp only [Derivation.leibniz, smul_eq_mul, map_add, map_mul]
+  simp only [Derivation.leibniz, smul_eq_mul, map_add (f := _), map_mul]
   rw [pderiv_subst (hv hx hy), pderiv_subst (hv hx hy)]
-  simp only [Fin.sum_univ_two, map_add, map_mul, Formalism.G.LogP.constantCoeff_subst_of_zero _ (hv hx hy),
+  simp only [Fin.sum_univ_two, map_add (f := _), map_mul, Formalism.G.LogP.constantCoeff_subst_of_zero _ (hv hx hy),
     Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, ccd]
   ring
 
@@ -174,7 +174,7 @@ theorem cc_domega (F : FormalGroup (Formalism.G.unitBall K)) :
   change MvPowerSeries.constantCoeff (MvPowerSeries.pderiv (R := K) () (Formalism.ELL.omegaF F)) = _
   unfold Formalism.ELL.omegaF
   rw [pderiv_subst hb, Fin.sum_univ_two]
-  simp only [map_add, map_mul, Formalism.G.LogP.constantCoeff_subst_of_zero _ hb, Matrix.cons_val_zero,
+  simp only [map_add (f := _), map_mul, Formalism.G.LogP.constantCoeff_subst_of_zero _ hb, Matrix.cons_val_zero,
     Matrix.cons_val_one, Matrix.head_cons, pd_unit_X, map_zero, mul_zero, add_zero, map_one, mul_one]
   rfl
 
@@ -189,7 +189,7 @@ theorem constantCoeff_second_derivative_law (F : FormalGroup (Formalism.G.unitBa
   show PowerSeries.constantCoeff (Formalism.ELL.omegaF F * PowerSeries.derivative (R := K)
       (Formalism.ELL.omegaF F * PowerSeries.derivative (R := K) φ)) = _
   rw [map_mul, Derivation.leibniz]
-  simp only [map_add, map_mul, smul_eq_mul, cc_omega, cc_domega]
+  simp only [map_add (f := _), map_mul, smul_eq_mul, cc_omega, cc_domega]
   ring
 
 theorem linearCoeff_zero_formal_group_law (F : FormalGroup (Formalism.G.unitBall K)) : ccd 0 (FK F).toPowerSeries = 1 := by

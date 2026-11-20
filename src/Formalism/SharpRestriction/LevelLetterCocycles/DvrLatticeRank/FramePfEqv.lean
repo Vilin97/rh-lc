@@ -150,7 +150,7 @@ theorem framepf_toLA_smul {a : LetA O n} (ha : a ∈ W.AΔ) {x : LA W T π' c}
       (algebraMap (LetA O n) W.EE a * algebraMap (LetA O n) W.EE ((letE c : LetA O n) * b)) ⊗ₜ[O]
         (s : LcQ W T π' c)
     rw [← map_mul, mul_left_comm]
-  | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
 
 theorem framepf_JLA_smul {a : LetA O n} (ha : a ∈ W.AΔ) {x : LA W T π' c}
     (hx : x ∈ JLA W T π' Eπ h' M c) : smulLA W T π' c a x ∈ JLA W T π' Eπ h' M c := by
@@ -168,7 +168,7 @@ theorem framepf_γLA_smulLA (a : LetA O n) (x : LA W T π' c) :
       (algebraMap (LetA O n) W.EE (W.γA W.gamK a) * W.γE W.gamK e) ⊗ₜ[O] ℓ
     rw [map_mul, W.γE_ext]
     rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem framepf_γLA_toLA {x : LA W T π' c} (hx : x ∈ LinearMap.range (toLA W T π' c ⊤)) :
     γLA W T π' c x ∈ LinearMap.range (toLA W T π' c ⊤) := by
@@ -181,7 +181,7 @@ theorem framepf_γLA_toLA {x : LA W T π' c} (hx : x ∈ LinearMap.range (toLA W
       W.γE W.gamK (algebraMap (LetA O n) W.EE ((letE c : LetA O n) * b)) ⊗ₜ[O] (s : LcQ W T π' c)
     rw [W.γE_ext, ← Formalism.MainNotions.LiftingTheory.wmap_γA_letE W W.gamK c, ← map_mul, Formalism.MainNotions.LiftingTheory.wmap_γA_letE]
     rfl
-  | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
 
 theorem framepf_γD_PcS (g : W.Gam) {p : W.DD T} (hp : p ∈ PcS W T c) : W.γD T g p ∈ PcS W T c := by
   obtain ⟨⟨h1, h2⟩, h3⟩ := hp
@@ -195,7 +195,7 @@ theorem framepf_γD_PcS (g : W.Gam) {p : W.DD T} (hp : p ∈ PcS W T c) : W.γD 
     rw [← W.φγ_comm]
     exact Submodule.subset_span ⟨_, ⟨W.γD T g z, W.N_Γ T g z hz, (γD_letE W T g _ z).symm⟩, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul s x _ hx => rw [gradNPf_γD_smul]; exact Submodule.smul_mem _ _ hx
 
 variable {f t t' : LetA O n} (hfΔ : f ∈ W.AΔ) (hf : W.γA W.gamK π' = π' * f)
@@ -284,7 +284,7 @@ theorem framepf_Ψα_γ (hu : IsUnit (algebraMap (LetA O n) W.EE π'))
       obtain ⟨q, hq, hqe⟩ := hy
       refine ⟨p + q, Submodule.add_mem _ hp hq, ?_⟩
       rw [smul_add, ← hpe, ← hqe]
-      simp only [map_add]
+      simp only [map_add (f := _)]
       abel
   obtain ⟨p, hp, hpe⟩ := key z
   refine ⟨t' ^ h' • p, framepf_PcS_smul c (W.AΔ.pow_mem ht'Δ _) hp, ?_⟩

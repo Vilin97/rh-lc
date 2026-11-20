@@ -49,7 +49,7 @@ theorem coeff_ren (k : ι →₀ ℕ) (P : MvPolynomial ι ℂ) :
     · subst hm
       simp
     · rw [if_neg hm, if_neg (fun h => hm (Finsupp.mapDomain_injective σ.injective h)), mul_zero]
-  | add P Q hP hQ => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hP, hQ, mul_add]
+  | add P Q hP hQ => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hP, hQ, mul_add]
 
 theorem isHomogeneous_ren {ι κ : Type} (f : ι → κ) (s : ι → ℂ) (d : ℕ) (P : MvPolynomial ι ℂ) (h : P.IsHomogeneous d) :
     (aeval (fun v => s v • (X (f v) : MvPolynomial κ ℂ)) P).IsHomogeneous d := by

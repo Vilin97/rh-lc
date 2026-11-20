@@ -47,13 +47,13 @@ theorem finrank_eq_sum_emb (hcard : Fintype.card (K →ₐ[Qp] LL) = finrank Qp 
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a c => rw [hΨ]; exact U.smul_mem _ (hU c x hx)
-    | add y z hy hz => rw [map_add]; exact U.add_mem hy hz
+    | add y z hy hz => rw [map_add (f := _)]; exact U.add_mem hy hz
   have hΨE : ∀ τ z, ∀ x ∈ E τ, Ψ z x = Φ z τ • x := by
     intro τ z x hx
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a c => rw [hΨ, hΦ, ((hE τ x).1 hx).2 c, smul_smul]
-    | add y z hy hz => simp only [map_add, LinearMap.add_apply, Pi.add_apply, hy, hz, add_smul]
+    | add y z hy hz => simp only [map_add (f := _), LinearMap.add_apply, Pi.add_apply, hy, hz, add_smul]
   choose e he using fun τ : K →ₐ[Qp] LL => hsurj (Pi.single τ 1)
   have he1 : ∑ τ, e τ = 1 := hinj (by
     set_option synthInstance.maxHeartbeats 100000 in
@@ -151,7 +151,7 @@ theorem filV_sep (x : V ⊗[Qp] BdR) (hx : ∀ a, x ∈ FilV PD (LL := LL) (V :=
       rw [equivFinsuppOfBasisLeft_apply_tmul_apply]
       exact ((PD.Fil a).restrictScalars Qp).smul_mem _ c.2
     exact this
-  | add y z hy hz => rw [map_add, map_add, Finsupp.add_apply]; exact Submodule.add_mem _ hy hz
+  | add y z hy hz => rw [map_add (f := _), map_add (f := _), Finsupp.add_apply]; exact Submodule.add_mem _ hy hz
 
 theorem finrank_ddR_of_one_jump [FiniteDimensional Qp K] (hcard : Fintype.card (K →ₐ[Qp] LL) = finrank Qp K)
     (ρ : Representation LL G V)
@@ -186,7 +186,7 @@ theorem finrank_ddR_of_one_jump [FiniteDimensional Qp K] (hcard : Fintype.card (
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp [m, hm, actVdR]
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   rw [finrank_eq_sum_emb hcard m (DdR PD ρ) (fun c x hx => (hD _).2 fun g => by rw [hc, (hD x).1 hx g])
     (DdRE PD ρ) (fun τ x => by
       simp only [DdRE, Submodule.mem_inf, Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply,

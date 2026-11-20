@@ -71,7 +71,7 @@ theorem prod_factor_eq_one {g : ℕ} {Ix K : Type} [Fintype K] {S : Set (Fin g �
         Real.pi / 2 * ∑ k, (ε k : ℂ) * hermForm Hm (lam k l) (lam k l)) * ψ z := fun l hl z => by
     obtain ⟨j, hj⟩ := hcov z
     have hj' : z + l ∈ D j := fun k => by
-      rw [map_add]
+      rw [map_add (f := _)]
       exact hWp _ (hΛ l hl k) _ _ (hj k)
     have c1 : F j z = (∏ k, χ (lam k l) ^ ε k) *
         Complex.exp (Real.pi * ∑ k, (ε k : ℂ) * hermForm Hm (lam k z) (lam k l) +
@@ -80,7 +80,7 @@ theorem prod_factor_eq_one {g : ℕ} {Ix K : Type} [Fintype K] {S : Set (Fin g �
       rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib, Complex.exp_sum,
         ← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib]
       refine Finset.prod_congr rfl fun k _ => ?_
-      rw [hf _ (hΛ l hl k) (j k) (lam k z) (hj k), map_add, mul_zpow, mul_zpow,
+      rw [hf _ (hΛ l hl k) (j k) (lam k z) (hj k), map_add (f := _), mul_zpow, mul_zpow,
         ← Complex.exp_int_mul]
       congr 3
       ring
@@ -94,7 +94,7 @@ theorem prod_factor_eq_one {g : ℕ} {Ix K : Type} [Fintype K] {S : Set (Fin g �
     (fun z w => ∑ k, (ε k : ℂ) * hermForm Hm (lam k z) (lam k w))
     (continuous_finset_sum _ fun k _ => continuous_const.mul
       ((continuous_hermForm_self Hm).comp (hld k).continuous))
-    (fun z z' w => by simp only [map_add, hermForm_add_left, mul_add, Finset.sum_add_distrib])
+    (fun z z' w => by simp only [map_add (f := _), hermForm_add_left, mul_add, Finset.sum_add_distrib])
     (fun c z w => by
       simp only [map_smul, hermForm_smul_left, Finset.mul_sum]
       exact Finset.sum_congr rfl fun k _ => by ring)
@@ -277,7 +277,7 @@ theorem GlobalTheory.ahFrame_factor_eq_negOnePow : ∀ (E : Type) [Field E] [Num
     have hj' : ⊤ ≤ (Fu.ex i Pm (Pm b)).left ⁻¹ᵁ Xo.univ.t.PP.L.U j := by
       rw [← zero_add (Pm b), hex]; exact hj
     have h3 := (hf (b + b') j 0).2 hj
-    rw [map_add] at h3 ⊢
+    rw [map_add (f := _)] at h3 ⊢
     exact factor_add hH (fr j) _ _ _ _ _ _ (him b b') (hne j 0 hj) ((hf b j 0).2 hj) ((hf b' j _).2 hj') h3
   have hn : ∀ b, χl (Pm b) ≠ 0 := fun b => by
     obtain ⟨j, -⟩ := hch 0

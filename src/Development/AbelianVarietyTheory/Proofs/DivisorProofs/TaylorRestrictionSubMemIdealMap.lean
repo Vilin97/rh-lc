@@ -39,7 +39,7 @@ theorem sub_redCoef_mem (π : R →ₐ[ℂ] ℂ) (x : R ⊗[ℂ] H) :
     simp
   | add x y hx hy =>
     have e : x + y - 1 ⊗ₜ[ℂ] redCoef π (x + y) = (x - 1 ⊗ₜ[ℂ] redCoef π x) + (y - 1 ⊗ₜ[ℂ] redCoef π y) := by
-      rw [map_add, TensorProduct.tmul_add]; abel
+      rw [map_add (f := _), TensorProduct.tmul_add]; abel
     rw [e]; exact Ideal.add_mem _ hx hy
 
 end General

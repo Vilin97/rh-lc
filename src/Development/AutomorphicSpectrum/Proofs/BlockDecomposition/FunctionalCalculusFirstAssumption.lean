@@ -184,7 +184,7 @@ theorem cpt_add {f f' : Mat n → V} (h : Cpt f) (h' : Cpt f') : Cpt (f + f') :=
 end Bop
 
 theorem CE_add (E : KMod n) {f f' : Mat n → E.V} (h : f ∈ CE E) (h' : f' ∈ CE E) : f + f' ∈ CE E :=
-  ⟨h.1.add h'.1, fun g hg k => by rw [Pi.add_apply, Pi.add_apply, h.2 g hg k, h'.2 g hg k, map_add]⟩
+  ⟨h.1.add h'.1, fun g hg k => by rw [Pi.add_apply, Pi.add_apply, h.2 g hg k, h'.2 g hg k, map_add (f := _)]⟩
 
 theorem CE_smul (E : KMod n) (a : ℂ) {f : Mat n → E.V} (h : f ∈ CE E) : a • f ∈ CE E :=
   ⟨h.1.const_smul a, fun g hg k => by rw [Pi.smul_apply, Pi.smul_apply, h.2 g hg k, map_smul]⟩

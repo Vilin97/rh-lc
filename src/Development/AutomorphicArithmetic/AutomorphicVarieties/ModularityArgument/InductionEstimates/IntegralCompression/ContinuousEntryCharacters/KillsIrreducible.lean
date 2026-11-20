@@ -21,7 +21,7 @@ private lemma kills_irreducible {G H : Type*} [Group G] [TopologicalSpace G] [No
     (P : H →L[ℂ] H) (v : H) (hv : v ∈ τ) (hv0 : v ≠ 0) (hall : ∀ g, P (π g v) = 0) (u : H) (hu : u ∈ τ) : P u = 0 := by
   let ρ : Submodule ℂ H :=
     { carrier := {x | x ∈ τ ∧ ∀ g, P (π g x) = 0}
-      add_mem' := fun {a b} ha hb => ⟨τ.add_mem ha.1 hb.1, fun g => by rw [map_add, map_add, ha.2 g, hb.2 g, add_zero]⟩
+      add_mem' := fun {a b} ha hb => ⟨τ.add_mem ha.1 hb.1, fun g => by rw [map_add (f := _), map_add (f := _), ha.2 g, hb.2 g, add_zero]⟩
       zero_mem' := ⟨τ.zero_mem, fun g => by rw [map_zero, map_zero]⟩
       smul_mem' := fun c x hx => ⟨τ.smul_mem c hx.1, fun g => by rw [map_smul, map_smul, hx.2 g, smul_zero]⟩ }
   have hmem : ∀ x, x ∈ ρ ↔ x ∈ τ ∧ ∀ g, P (π g x) = 0 := fun x => Iff.rfl

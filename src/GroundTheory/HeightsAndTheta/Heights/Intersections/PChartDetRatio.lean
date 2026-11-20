@@ -22,7 +22,7 @@ theorem ChartDetRatio.mem_adjoin_of_mem_chartRing {Ω : Type} [Field Ω] [CharZe
 theorem ChartDetRatio.detE_sum {Ω : Type*} [Field Ω] {E : Type*} [AddCommGroup E] [Module Ω E]
     (e : Module.Basis (Fin 2) Ω E) (b : Fin 2 → E) (a a' : Fin 2 → Ω) :
     T.detE e (∑ q, a q • b q) (∑ q, a' q • b q) = (a 0 * a' 1 - a 1 * a' 0) * T.detE e (b 0) (b 1) := by
-  simp only [T.detE, Fin.sum_univ_two, map_add, map_smul, Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul]
+  simp only [T.detE, Fin.sum_univ_two, map_add (f := _), map_smul, Finsupp.add_apply, Finsupp.smul_apply, smul_eq_mul]
   ring
 
 theorem ChartDetRatio.detE_ne_zero {Ω : Type*} [Field Ω] {E : Type*} [AddCommGroup E] [Module Ω E]

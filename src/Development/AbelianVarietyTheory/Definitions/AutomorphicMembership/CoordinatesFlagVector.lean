@@ -53,7 +53,7 @@ theorem isUnimod_latV (h : SelfDual (starRingEnd E) S.gram Λ) : IsUnimod (ofHSp
         refine Submodule.mem_one.2 ⟨c, hc.trans ?_⟩
         rw [(ofHSpace S).herm, LinearMap.map_smulₛₗ, starRingEnd_apply, star_star]; rfl
       | zero => simp
-      | add a b _ _ ha hb => rw [map_add, LinearMap.add_apply]; exact add_mem ha hb
+      | add a b _ _ ha hb => rw [map_add (f := _), LinearMap.add_apply]; exact add_mem ha hb
       | smul c a _ ha =>
         rw [int_smul_eq, map_smul (ofHSpace S).B, LinearMap.smul_apply]
         exact Submodule.smul_mem _ c ha

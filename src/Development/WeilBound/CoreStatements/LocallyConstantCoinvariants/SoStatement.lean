@@ -163,7 +163,7 @@ theorem so_stable (h : IsCMExt F E σ) (hψ : IsStd ψ) (hX : X.J.det ≠ 0) (hW
     { toFun := fun φ' => ι (fun y => om γ (tens (evFin F v) φ' r) (repl v z y)) (coB σ X W t x)
       map_add' := fun a b => by
         have e : tens (evFin F v) (a + b) r = tens (evFin F v) a r + tens (evFin F v) b r := funext fun _ => add_mul _ _ _
-        rw [e, map_add]
+        rw [e, map_add (f := _)]
         exact congrFun (map_add ι _ _) _
       map_smul' := fun c a => by
         have e : tens (evFin F v) (c • a) r = c • tens (evFin F v) a r := funext fun _ => mul_assoc _ _ _

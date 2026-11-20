@@ -79,14 +79,14 @@ theorem fst_conj_bis (x : (R1 × R2) ⊗[F] E) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem snd_conj_alt (x : (R1 × R2) ⊗[F] E) :
     p2 R1 R2 (sigR (R1 × R2) σ x) = sigR R2 σ (p2 R1 R2 x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem fst_inclusion (e : E) : p1 R1 R2 (inclR (F := F) (R1 × R2) e) = inclR (F := F) R1 e := rfl
 

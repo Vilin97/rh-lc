@@ -20,21 +20,21 @@ private theorem actVB_tr (g : G) (x : V ⊗[ℚ_[l]] Bcr l) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB, actC, tr_apply, (PP l).PD_actB]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 private theorem actVdR_tr (g : G) (x : V ⊗[ℚ_[l]] Bdr l) :
     actVdR ((PP l).PD K) (tr e ρ) (e g) x = actD ((GK K).subtype.comp e.toMonoidHom) ρ g x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVdR, actD, tr_apply, (PP l).PD_actdR]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 private theorem actD_res (φ : G →* GQ l) (g : G) (x : V ⊗[ℚ_[l]] Bdr l) :
     actD φ (resCoef ℚ_[l] ρ) g x = actD φ ρ g x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actD, resCoef]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 private theorem Ddr_res (φ : G →* GQ l) :
     Ddr φ (resCoef ℚ_[l] ρ) = (Ddr φ ρ).restrictScalars ℚ_[l] := by
@@ -68,7 +68,7 @@ private theorem FilV_eq (a : ℤ) :
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v b => simp
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   ext x
   rw [FilV, hF]
   simp only [FilT, Submodule.restrictScalars_mem, LinearMap.mem_range, h]

@@ -25,7 +25,7 @@ private theorem second_cohomology_transfer {k Γ M : Type} [Field k] [Group Γ] 
     have e2 : ρ (σ g) (ρ ((σ g)⁻¹ * g) (a0 h)) = ρ g (a0 h) := by
       rw [← Module.End.mul_apply, ← map_mul, mul_inv_cancel_left]
     rw [mul_inv_cancel_left] at e
-    rw [← mul_assoc, hd _ (hσ g) h hh, map_sub, map_add, e2, eq_sub_of_add_eq' e]
+    rw [← mul_assoc, hd _ (hσ g) h hh, map_sub, map_add (f := _), e2, eq_sub_of_add_eq' e]
     abel
   have hfv : ∀ g, ∀ v ∈ V, f (g * v) = f g := by
     intro g v hv
@@ -34,14 +34,14 @@ private theorem second_cohomology_transfer {k Γ M : Type} [Field k] [Group Γ] 
   let D : Γ → Γ → M := fun s g => ρ s (f g) + κ (s, g) - f (s * g)
   have hD : ∀ s t g, ρ s (D t g) + D s (t * g) = κ (s, t) + D (s * t) g := by
     intro s t g
-    simp only [D, map_sub, map_add, map_mul, Module.End.mul_apply, mul_assoc]
+    simp only [D, map_sub, map_add (f := _), map_mul, Module.End.mul_apply, mul_assoc]
     rw [eq_sub_of_add_eq (hκ s t g)]
     abel
   have hDh : ∀ s g, ∀ h ∈ H, D s (g * h) = D s g := by
     intro s g h hh
     simp only [D]
     rw [← mul_assoc, hf g h hh, hf _ h hh]
-    simp only [map_sub, map_add, map_mul, Module.End.mul_apply]
+    simp only [map_sub, map_add (f := _), map_mul, Module.End.mul_apply]
     rw [eq_sub_of_add_eq (hκ s g h)]
     abel
   have hDσ : ∀ s g, D s (σ g) = D s g := by
@@ -91,7 +91,7 @@ private theorem cocycle_sequence_add {k Γ M : Type} [Field k] [Group Γ] [AddCo
     simp [cocycleTrivializationOnPowers, e]
   | succ i ih =>
     rw [show i + 1 + j = (i + j) + 1 by ring]
-    simp only [cocycleTrivializationOnPowers, ih, map_sub, map_add, pow_succ', map_mul, Module.End.mul_apply, pow_add]
+    simp only [cocycleTrivializationOnPowers, ih, map_sub, map_add (f := _), pow_succ', map_mul, Module.End.mul_apply, pow_add]
     rw [eq_sub_of_add_eq (hκ x (x ^ i) (x ^ j))]
     abel
 

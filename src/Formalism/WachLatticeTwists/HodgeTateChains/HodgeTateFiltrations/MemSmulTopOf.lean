@@ -173,7 +173,7 @@ theorem w3Um : GammaIterateMatrixCongruence := by
     have := congrFun hyz j
     simp only [Pi.sub_apply, Pi.add_apply, Pi.smul_apply] at this
     rw [this, nsmul_eq_mul]; push_cast; ring
-  rw [hc, map_add, map_mul, map_pow, map_natCast]
+  rw [hc, map_add (f := _), map_mul, map_pow, map_natCast]
   apply dvd_add
   · apply Dvd.dvd.mul_right
     rw [pow_two]

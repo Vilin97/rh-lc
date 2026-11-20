@@ -54,7 +54,7 @@ theorem bessel_add {k r : ℕ} {H Wp : Type} [NormedAddCommGroup H] [InnerProduc
     fun W hW => (List.mem_append.1 hW).elim (hWs W) (hWs' W), fun v hv => ?_⟩
   · simp only [a1 v hv w hw, b1 v hv w hw]; abel
   · simp only [a2 c v hv, b2 c v hv, smul_add]
-  · simp only [a3 g hg m hm v hv, b3 g hg m hm v hv, map_add, smul_add]
+  · simp only [a3 g hg m hm v hv, b3 g hg m hm v hv, map_add (f := _), smul_add]
   · have hnn : ∀ L : List (List (Mx k r)),
         0 ≤ (L.map fun W => ‖PI.UpqRep.dsigW (k := k) (r := r) σ W v‖).sum := fun L =>
       List.sum_nonneg fun t ht => by

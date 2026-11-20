@@ -38,13 +38,13 @@ def qpair : (↥LA.T ⧸ I) →ₗ[O] (↥LA'.T ⧸ I') →ₗ[O] (LL ⧸ L1.T) 
       (fun (t : ↥LA.T) (t' : ↥LA'.T) =>
         (Submodule.Quotient.mk (s * m (t : A.V) (t' : A'.V)) : LL ⧸ L1.T))
       (fun t u t' => by
-        simp only [Submodule.coe_add, map_add, LinearMap.add_apply, mul_add,
+        simp only [Submodule.coe_add, map_add (f := _), LinearMap.add_apply, mul_add,
           Submodule.Quotient.mk_add])
       (fun c t t' => by
         rw [Submodule.coe_smul, ← algebraMap_smul LL c (t : A.V), map_smul, LinearMap.smul_apply,
           smul_eq_mul, mul_left_comm, ← Algebra.smul_def, Submodule.Quotient.mk_smul])
       (fun t t' u' => by
-        simp only [Submodule.coe_add, map_add, mul_add, Submodule.Quotient.mk_add])
+        simp only [Submodule.coe_add, map_add (f := _), mul_add, Submodule.Quotient.mk_add])
       (fun c t t' => by
         rw [Submodule.coe_smul, ← algebraMap_smul LL c (t' : A'.V), map_smul, smul_eq_mul,
           mul_left_comm, ← Algebra.smul_def, Submodule.Quotient.mk_smul]))
@@ -91,7 +91,7 @@ theorem cup_cocycle_d2_eq_zero (hI : StableSub LA I) (hI' : StableSub LA' I')
     + zq m L1 I I' s hsI hsI' hI' c c' (g, h * k) - zq m L1 I I' s hsI hsI' hI' c c' (g, h) = 0
   simp only [zq]
   rw [← qpair_equiv m L1 I I' s hsI hsI' hI hI' hm, hc.2 g h, hc'.2 h k, GlobalTheory.TateFin.actQ_mul]
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   abel
 
 theorem lc_act (hI' : StableSub LA' I') (hlc' : ∀ y, IsLocallyConstant fun g => actQ LA' I' hI' g y)
@@ -130,7 +130,7 @@ theorem cup_coboundary_left_mem_B2 (hI : StableSub LA I) (hI' : StableSub LA' I'
       + qpair m L1 I I' s hsI hsI' x (c' g) =
     qpair m L1 I I' s hsI hsI' (c g) (actQ LA' I' hI' g (c' h))
   rw [hcg, ← qpair_equiv m L1 I I' s hsI hsI' hI hI' hm, hc'.2 g h]
-  simp only [map_add, map_sub, LinearMap.sub_apply]
+  simp only [map_add (f := _), map_sub, LinearMap.sub_apply]
   abel
 
 theorem cup_coboundary_right_mem_B2 (hI : StableSub LA I) (hI' : StableSub LA' I')
@@ -149,7 +149,7 @@ theorem cup_coboundary_right_mem_B2 (hI : StableSub LA I) (hI' : StableSub LA' I
       + -qpair m L1 I I' s hsI hsI' (c g) (actQ LA' I' hI' g y) =
     qpair m L1 I I' s hsI hsI' (c g) (actQ LA' I' hI' g (c' h))
   rw [hcg, map_neg, ← qpair_equiv m L1 I I' s hsI hsI' hI hI' hm, hc.2 g h, GlobalTheory.TateFin.actQ_mul]
-  simp only [map_add, map_sub, LinearMap.add_apply]
+  simp only [map_add (f := _), map_sub, LinearMap.add_apply]
   abel
 
 end Gen
@@ -183,7 +183,7 @@ def cupH2Level : ↥(quotientCocycles LA' I' hI') →ₗ[O] ↥(quotientCocycles
       congr 1
       apply Subtype.ext
       funext x
-      simp [zq, map_add])
+      simp [zq, map_add (f := _)])
     (fun r a c => by
       rw [← Submodule.Quotient.mk_smul]
       congr 1
@@ -195,7 +195,7 @@ def cupH2Level : ↥(quotientCocycles LA' I' hI') →ₗ[O] ↥(quotientCocycles
       congr 1
       apply Subtype.ext
       funext x
-      simp [zq, map_add])
+      simp [zq, map_add (f := _)])
     (fun r c' a => by
       rw [← Submodule.Quotient.mk_smul]
       congr 1

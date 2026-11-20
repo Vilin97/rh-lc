@@ -48,7 +48,7 @@ theorem finRep_mem_orbitSpan {L : Subgroup (GL (Fin N) (Af E))} {ψ : Sm E N} {l
     refine ⟨l' * l, L.mul_mem hl' hl, k, ?_⟩
     rw [map_mul (finRep E N), Module.End.mul_apply]
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem cptRep_mem_orbitSpan {L : Subgroup (GL (Fin N) (Af E))} {ψ : Sm E N} (k' : Kinf E N)
@@ -60,7 +60,7 @@ theorem cptRep_mem_orbitSpan {L : Subgroup (GL (Fin N) (Af E))} {ψ : Sm E N} (k
     refine ⟨l, hl, k' * k, ?_⟩
     rw [map_mul (cptRep E N), Module.End.mul_apply, finRep_cptRep l k' (cptRep E N k ψ)]
   | zero => rw [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ c hx
 
 theorem orbitSpan_finiteDimensional (L : Subgroup (GL (Fin N) (Af E))) (hL : IsCompact (L : Set (GL (Fin N) (Af E))))
@@ -88,7 +88,7 @@ def typePart (L : Subgroup (GL (Fin N) (Af E))) {U : Type} [AddCommGroup U] [Mod
     (ρ : Representation ℂ (Kinf E N) U) : Submodule ℂ (Sm E N) where
   carrier := {φ | (∀ k ∈ L, finRep E N k φ = φ) ∧
     ∀ g : GA E N, (fun k : Kinf E N => (cptRep E N k φ).1 g) ∈ AutFin.coeffSpan ρ}
-  add_mem' := fun hx hy => ⟨fun k hk => by rw [map_add, hx.1 k hk, hy.1 k hk],
+  add_mem' := fun hx hy => ⟨fun k hk => by rw [map_add (f := _), hx.1 k hk, hy.1 k hk],
     fun g => add_mem (hx.2 g) (hy.2 g)⟩
   zero_mem' := ⟨fun _ _ => map_zero _, fun _ => by
     simp only [map_zero, ZeroMemClass.coe_zero, Pi.zero_apply]

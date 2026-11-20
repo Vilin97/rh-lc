@@ -32,7 +32,7 @@ theorem exists_archimedean_theta_family : _root_.GlobalTheory.FunPr.ThetaLocalIn
     intro c f; funext x; simp [tens, mul_assoc]
   let T : ℝ → SInf F (Fin n × Fin d) →ₗ[ℂ] SInf F (Fin n × Fin d) := fun t =>
     { toFun := S t
-      map_add' := fun f g => hinj _ _ (by rw [← key, tadd, map_add, key, key, tadd])
+      map_add' := fun f g => hinj _ _ (by rw [← key, tadd, map_add (f := _), key, key, tadd])
       map_smul' := fun c f => hinj _ _ (by rw [← key, tsmul, map_smul, key, RingHom.id_apply, tsmul]) }
   refine ⟨T, fun t f => hS t f, fun s t f => hinj _ _ ?_, fun f => hinj _ _ ?_⟩
   · show tens (evI F) ⇑(S (s + t) f) r₀ = tens (evI F) ⇑(S s (S t f)) r₀

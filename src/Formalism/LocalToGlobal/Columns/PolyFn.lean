@@ -140,7 +140,7 @@ theorem eval_aeval_poly {σ ρ : Type} (f : σ → MvPolynomial ρ ℂ) (d : ρ 
     eval d (aeval f P) = eval (fun x => eval d (f x)) P := by
   induction P using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p i hp => simp only [map_mul, hp, MvPolynomial.aeval_X, MvPolynomial.eval_X]
 
 theorem circle_infinite : {z : ℂ | star z * z = 1}.Infinite := by

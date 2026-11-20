@@ -81,7 +81,7 @@ theorem GlobalTheory.AdelicFourierUniq.eq_zero : ∀ (F E : Type) [Field F] [Num
   have hp0 : p 0 = 0 := by simpa using hp 0 0
   refine GlobalTheory.CharFourierInj.eq_zero (fun a u => ψ (p a u))
     (fun a => hψ.1.comp (IsModuleTopology.continuous_of_linearMap (R := AF F) (p a)))
-    (fun a x y => by simp only [map_add, AddChar.map_add_eq_mul])
+    (fun a x y => by simp only [map_add (f := _), AddChar.map_add_eq_mul])
     (fun a b x => by simp only [hp, LinearMap.add_apply, AddChar.map_add_eq_mul])
     (fun x => by simp only [hp0, LinearMap.zero_apply, AddChar.map_zero_eq_one])
     (fun a x => GlobalTheory.StdCharFromIsStd.norm_psi hψ _) hsep μ N hN hi h

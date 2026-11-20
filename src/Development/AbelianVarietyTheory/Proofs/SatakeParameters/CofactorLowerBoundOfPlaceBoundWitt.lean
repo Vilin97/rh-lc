@@ -32,7 +32,7 @@ noncomputable def applyDL {σ τ : Type} (K : Type) [Field K] (P : MvPolynomial 
     MvPowerSeries σ K →ₗ[K] MvPolynomial τ K where
   toFun := applyD P
   map_add' f g := by
-    simp only [applyD, map_add, mul_add, add_smul, Finset.sum_add_distrib]
+    simp only [applyD, map_add (f := _), mul_add, add_smul, Finset.sum_add_distrib]
   map_smul' c f := by
     simp only [applyD, RingHom.id_apply, Finset.smul_sum, smul_smul, MvPowerSeries.coeff_smul]
     refine Finset.sum_congr rfl fun n _ => ?_
@@ -132,7 +132,7 @@ theorem cofactor_lower_bound_of_place_bound_witt : ∀ (p : ℕ) [Fact p.Prime] 
   have hval : AddMonoidAlgebra.coeff (applyD P (X.ThZA Y.Kc j (MvPowerSeries.map φ E * U))) m =
       (p : Y.Kc) ^ ⌈g⌉ * ∑ n ∈ S, c n * φ (algebraMap (WW p) (K0 p) (a n)) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hU', hTh, map_add, ← hTh, hz, zero_add, map_sum, MvPolynomial.coeff_sum, Finset.mul_sum]
+      rw [hU', hTh, map_add (f := _), ← hTh, hz, zero_add, map_sum, MvPolynomial.coeff_sum, Finset.mul_sum]
     refine Finset.sum_congr rfl fun n _ => ?_
     rw [map_smul, ← hTh, hφ, ThZA_map, applyD_map, MvPolynomial.coeff_smul, MvPolynomial.coeff_map, ha n, map_mul,
       map_zpow₀, map_natCast, smul_eq_mul]

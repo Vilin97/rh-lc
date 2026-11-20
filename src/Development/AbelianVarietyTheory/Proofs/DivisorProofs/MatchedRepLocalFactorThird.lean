@@ -77,7 +77,7 @@ theorem types_transport : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] [Nu
           have h := hlin _ (hT₁D w) _ (hT₁D w') 1
           simp only [one_smul] at h
           show G.M'.I om' (T₁ (w + w')) (e y) = G.M'.I om' (T₁ w) (e y) + G.M'.I om' (T₁ w') (e y)
-          rw [map_add, h]
+          rw [map_add (f := _), h]
           rfl
         map_smul' := fun c w => by
           funext y

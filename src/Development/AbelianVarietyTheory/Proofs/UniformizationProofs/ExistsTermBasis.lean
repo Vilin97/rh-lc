@@ -24,7 +24,7 @@ theorem exists_class_reps (X : Type) [AddCommGroup X] [Module.Free ℤ X] [Modul
   refine ⟨fun q => B.symm (fun i => ((q i : ℕ) : ℤ)), fun q q' mu h => ?_, fun β => ?_, fun a b h => ?_⟩
   · funext i
     have e := congrFun (congrArg B h) i
-    simp only [map_add, map_nsmul, LinearEquiv.apply_symm_apply, Pi.add_apply, Pi.smul_apply] at e
+    simp only [map_add (f := _), map_nsmul, LinearEquiv.apply_symm_apply, Pi.add_apply, Pi.smul_apply] at e
     rw [nsmul_eq_mul] at e
     have e2 := congrArg (· % (k : ℤ)) e
     simp only [Int.add_mul_emod_self_left] at e2
@@ -37,7 +37,7 @@ theorem exists_class_reps (X : Type) [AddCommGroup X] [Module.Free ℤ X] [Modul
       omega
     · apply B.injective
       funext i
-      simp only [map_add, map_nsmul, LinearEquiv.apply_symm_apply, Pi.add_apply, Pi.smul_apply]
+      simp only [map_add (f := _), map_nsmul, LinearEquiv.apply_symm_apply, Pi.add_apply, Pi.smul_apply]
       rw [nsmul_eq_mul, Int.toNat_of_nonneg (Int.emod_nonneg _ hk'.ne')]
       exact Int.emod_add_mul_ediv _ _
   · apply B.injective

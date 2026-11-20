@@ -90,7 +90,7 @@ theorem mr_aeval {σ τ' A : Type} [CommRing A] [Algebra k A] (L : A →ₗ[k] k
     rw [h2, map_mul, aeval_C, h1, algebraMap_eq, mr_C_mul_map, ← h2, mr_monomial,
       show (monomial u (L a) : MvPolynomial σ k) = L a • monomial u 1 by rw [smul_monomial, smul_eq_mul, mul_one],
       map_smul]
-  | add p q hp hq => rw [map_add, mr_add, hp, hq, mr_add, map_add]
+  | add p q hp hq => rw [map_add (f := _), mr_add, hp, hq, mr_add, map_add (f := _)]
 
 theorem colAddGen_eq_aeval (A : Type) [CommRing A] [Algebra k A] {r n : ℕ} (l j : Fin n) :
     colAddGen A (r := r) l j = aeval (fun v => map (algebraMap k A)

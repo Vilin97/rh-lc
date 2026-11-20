@@ -165,7 +165,7 @@ theorem tau_box (a b : D'.X) :
     (rig_val pD hJ hJ' (𝟙 (TF (R := R) F).left ≫ jFK (R := R) F))
   have b₃ := (b₁ (a + b)).trans (Finset.prod_congr rfl fun i _ => congrArg
     (fun χ => val (D.psi χ) (𝟙 (TF (R := R) F).left ≫ jFK (R := R) F) y J)
-    (show pD.xe (a + b) i = pD.xe a i + pD.xe b i by rw [map_add]; rfl))
+    (show pD.xe (a + b) i = pD.xe a i + pD.xe b i by rw [map_add (f := _)]; rfl))
   have e : ∀ (E : DegPre R) (I), Good E.P.L y I → ∀ a b : E.X,
       val (E.tau a b) (𝟙 (TF (R := R) F).left ≫ jFK (R := R) F) y I =
       val (E.psi (a + b)) (𝟙 (TF (R := R) F).left ≫ jFK (R := R) F) y I *
@@ -220,7 +220,7 @@ theorem exists_boxGt (hG : GlobalFnsSt) (g : Fin j → GtPtF D F) : ∃ g' : GtP
       (maps_val pD hJ hJ' _ _ _ (hm (χ + χ'))) e ?_
     rw [← Finset.prod_mul_distrib, ← Finset.prod_mul_distrib]
     refine Finset.prod_congr rfl fun i _ => ?_
-    have z : pD.xe (χ + χ') i = pD.xe χ i + pD.xe χ' i := by rw [map_add]; rfl
+    have z : pD.xe (χ + χ') i = pD.xe χ i + pD.xe χ' i := by rw [map_add (f := _)]; rfl
     have e₂ := gt_mul (𝟙 (TF (R := R) F)) hJ (g i) (pD.xe χ i) (pD.xe χ' i)
     rw [Category.id_comp, Over.id_left] at e₂
     rw [cPoint_pr, cPoint_pr, hb]

@@ -64,7 +64,7 @@ theorem eventually_mem_intLoc_iff {d : ℕ} (bs : Module.Basis (Fin d) F E) :
       rw [map_zsmul, Finsupp.smul_apply, map_zsmul]
       exact zsmul_mem (hv1 i k) _
     · intro k; simp
-    · intro y z hy hz k; rw [map_add, Finsupp.add_apply]; exact add_mem (hy k) (hz k)
+    · intro y z hy hz k; rw [map_add (f := _), Finsupp.add_apply]; exact add_mem (hy k) (hz k)
     · intro y hy k; rw [map_neg, Finsupp.neg_apply]; exact neg_mem (hy k)
   · intro hz
     rw [← B.sum_repr z]

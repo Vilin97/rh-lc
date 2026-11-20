@@ -41,7 +41,7 @@ theorem exists_quotient (hΩ : Ω ≠ 0) {f : ℂ → ℂ} (hf : IsEllipticFunct
   have ht : ∀ p, e (t p) = p.eval (Λ.weierstrassP z) := fun p => by
     have h3 : e.comp (algebraMap ℂ _) = RingHom.id ℂ := RingHom.ext e0
     rw [hom_eval₂, h3, map_mul, e0, ex, mul_div_cancel₀ _ (pow_ne_zero 2 hΩ), eval₂_id]
-  simp only [map_add, map_mul, ht, e0, ey, hz]
+  simp only [map_add (f := _), map_mul, ht, e0, ey, hz]
   refine ⟨mul_ne_zero h1 h2, ?_⟩
   field_simp
 

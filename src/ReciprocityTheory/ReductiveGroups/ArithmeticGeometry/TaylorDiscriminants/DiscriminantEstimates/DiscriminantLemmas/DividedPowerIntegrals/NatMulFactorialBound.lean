@@ -22,7 +22,7 @@ theorem dpow_zero (κ : I → J → K) (R : MvPolynomial (I ⊕ J) K) : dpow κ 
 
 theorem dpow_add (κ : I → J → K) (n : ℕ) (p q : MvPolynomial (I ⊕ J) K) :
     dpow κ n (p + q) = dpow κ n p + dpow κ n q := by
-  simp [dpow, map_add, smul_add]
+  simp [dpow, map_add (f := _), smul_add]
 
 theorem gdelta_C (κ : I → J → K) (c : K) : gdelta κ (C c) = 0 := by
   simp [gdelta]
@@ -115,7 +115,7 @@ theorem integ (h1 : PowXL) (h2 : PowXR) (L : Submodule A K) (κ : I → J → K)
       rw [MvPolynomial.coeff_zero]
       exact Submodule.zero_mem _
   · intro p q hp hq n m
-    rw [map_add, dpow_add, MvPolynomial.coeff_add]
+    rw [map_add (f := _), dpow_add, MvPolynomial.coeff_add]
     exact Submodule.add_mem _ (hp n m) (hq n m)
   · intro p s hp n
     cases n with

@@ -40,7 +40,7 @@ theorem asAlg_comm (τ : Representation K G W) (f : W →ₗ[K] W) (hf : ∀ g :
     (a : MonoidAlgebra K G) : f * τ.asAlgebraHom a = τ.asAlgebraHom a * f := by
   induction a using MonoidAlgebra.induction_on with
   | of g => simpa [Representation.asAlgebraHom_of, Module.End.mul_eq_comp] using hf g
-  | add a b ha hb => simp [map_add, mul_add, add_mul, ha, hb]
+  | add a b ha hb => simp [map_add (f := _), mul_add, add_mul, ha, hb]
   | smul r a ha => simp [map_smul, ha]
 
 theorem irr_of_surj (τ : Representation K G W) (hs : Function.Surjective τ.asAlgebraHom)

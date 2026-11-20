@@ -339,13 +339,13 @@ theorem sigV_invol (v : HeightOneSpectrum (𝓞 ℚ)) (x : Kv GaussQ v) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sigV, Algebra.TensorProduct.map_tmul, conj_conj]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem sigA_invol (x : AE ℚ GaussQ) : sigA (conj ℚ GaussQ) (sigA (conj ℚ GaussQ) x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [sigA, Algebra.TensorProduct.map_tmul, conj_conj]
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem sigV_inclV (v : HeightOneSpectrum (𝓞 ℚ)) (x : GaussQ) :
     sigV (conj ℚ GaussQ) v (inclV GaussQ v x) = inclV GaussQ v (conj ℚ GaussQ x) := by

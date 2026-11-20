@@ -61,7 +61,7 @@ theorem _root_.GlobalTheory.K4.TopSpec.continuous_res [Algebra.IsAlgebraic K Ω]
         obtain ⟨i, rfl⟩ := hu
         exact hfix i
       | zero => simp
-      | add u v _ _ hu hv => rw [IntermediateField.coe_add, map_add, hu, hv]
+      | add u v _ _ hu hv => rw [IntermediateField.coe_add, map_add (f := _), hu, hv]
       | smul a u _ hu => rw [IntermediateField.coe_smul, map_smul, hu]
     exact key ⟨y, hy⟩
 

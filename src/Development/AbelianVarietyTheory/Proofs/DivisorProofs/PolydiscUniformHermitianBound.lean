@@ -133,8 +133,8 @@ theorem lim_span {Z : Type} (F : Filter Z) {g g' : ℕ} (G : Z → Matrix (Fin g
     rw [← hz, ← Complex.add_im, add_assoc, ← hf_add_right, sub_add_cancel, ← hf_add_left, sub_add_cancel]
   | zero_left => simpa [hermForm] using tendsto_const_nhds
   | zero_right => simpa [hermForm] using tendsto_const_nhds
-  | add_left x y z _ _ _ h1 h2 => simpa only [map_add, hf_add_left, Complex.add_im] using h1.add h2
-  | add_right x y z _ _ _ h1 h2 => simpa only [map_add, hf_add_right, Complex.add_im] using h1.add h2
+  | add_left x y z _ _ _ h1 h2 => simpa only [map_add (f := _), hf_add_left, Complex.add_im] using h1.add h2
+  | add_right x y z _ _ _ h1 h2 => simpa only [map_add (f := _), hf_add_right, Complex.add_im] using h1.add h2
   | smul_left c x y _ _ h1 =>
     simpa only [rs, map_smul, hf_smul_left, Complex.im_ofReal_mul] using h1.const_mul c
   | smul_right c x y _ _ h1 =>

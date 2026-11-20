@@ -91,7 +91,7 @@ def quotGradedAlgebra : GradedAlgebra (quotGrading 𝒜 I) where
       obtain ⟨q, a, ha, rfl⟩ := q
       rw [DirectSum.coeAddMonoidHom_of]
       exact quotDecomposeHom_of_mem_grading ha
-    | add d e hd he => rw [map_add, map_add, hd, he]
+    | add d e hd he => rw [map_add (f := _), map_add (f := _), hd, he]
 
 end QuotientGrading
 

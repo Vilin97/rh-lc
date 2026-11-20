@@ -99,7 +99,7 @@ theorem psiSmooth_holds : PsiSmoothU := by
     have hre : reLin n (A (x, y) + Bm (x, y)) = (L₀ x : EuclideanSpace ℝ (Fin n × Fin n × Bool)) + (L₁ y : _) := by
       show reLin n (unrLin n (L₀ x : EuclideanSpace ℝ (Fin n × Fin n × Bool)) +
         unrLin n (L₁ y : EuclideanSpace ℝ (Fin n × Fin n × Bool))) = _
-      rw [map_add, re_unr, re_unr]
+      rw [map_add (f := _), re_unr, re_unr]
     have h1 : (L₁ y : EuclideanSpace ℝ (Fin n × Fin n × Bool)) ∈ mᗮ := by
       rw [Submodule.mem_orthogonal]; intro u hu; exact horth u hu _ (L₁ y).2
     have h2 : (L₀ x : EuclideanSpace ℝ (Fin n × Fin n × Bool)) ∈ hᗮ := by
@@ -109,10 +109,10 @@ theorem psiSmooth_holds : PsiSmoothU := by
     rw [hre]
     refine Prod.ext ?_ ?_
     · show L₀.symm (m.orthogonalProjectionOnto ((L₀ x : EuclideanSpace ℝ (Fin n × Fin n × Bool)) + (L₁ y : _))) = x
-      rw [map_add, Submodule.orthogonalProjectionOnto_mem_subspace_eq_self,
+      rw [map_add (f := _), Submodule.orthogonalProjectionOnto_mem_subspace_eq_self,
         Submodule.orthogonalProjectionOnto_apply_of_mem_orthogonal h1, add_zero, LinearIsometryEquiv.symm_apply_apply]
     · show L₁.symm (h.orthogonalProjectionOnto ((L₀ x : EuclideanSpace ℝ (Fin n × Fin n × Bool)) + (L₁ y : _))) = y
-      rw [map_add, Submodule.orthogonalProjectionOnto_mem_subspace_eq_self,
+      rw [map_add (f := _), Submodule.orthogonalProjectionOnto_mem_subspace_eq_self,
         Submodule.orthogonalProjectionOnto_apply_of_mem_orthogonal h2, zero_add, LinearIsometryEquiv.symm_apply_apply]
   refine ⟨?_, by rw [hall.fderiv, hid]⟩
 

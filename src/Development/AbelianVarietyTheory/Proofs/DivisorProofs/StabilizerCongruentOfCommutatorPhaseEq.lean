@@ -26,7 +26,7 @@ def skewCoef (D : D7) (𝔪 : Ideal (𝓞 D.host.E)) : Submodule (𝓞 D.host.E)
     rintro e f he hf b hb c hc
     obtain ⟨m, hm, h1⟩ := he b hb c hc
     obtain ⟨n, hn, h2⟩ := hf b hb c hc
-    exact ⟨m + n, add_mem hm hn, by rw [map_add, h1, h2]; ring⟩
+    exact ⟨m + n, add_mem hm hn, by rw [map_add (f := _), h1, h2]; ring⟩
   smul_mem' := by
     rintro s e he b hb c hc
     obtain ⟨m, hm, h1⟩ := he b hb c hc
@@ -118,10 +118,10 @@ theorem mem_of_int {𝔪 : Ideal (𝓞 D.host.E)} (h1 : IsCoprime 𝔪 (D.host.c
   have ho : algebraMap (𝓞 D.host.E) D.host.E o = e := rfl
   refine ⟨o * μ + o * β * μ' + m, add_mem (add_mem (Ideal.mul_mem_left _ _ hμ) (Ideal.mul_mem_left _ _ hμ')) hm, ?_⟩
   have ea : algebraMap (𝓞 D.host.E) D.host.E μ + algebraMap (𝓞 D.host.E) D.host.E β = 1 := by
-    rw [← map_add, hμβ, map_one]
+    rw [← map_add (f := _), hμβ, map_one]
   have eb : algebraMap (𝓞 D.host.E) D.host.E μ' + algebraMap (𝓞 D.host.E) D.host.E ν = 1 := by
-    rw [← map_add, hμν, map_one]
-  rw [map_add, map_add, hme, map_mul, map_mul, map_mul, ho]
+    rw [← map_add (f := _), hμν, map_one]
+  rw [map_add (f := _), map_add (f := _), hme, map_mul, map_mul, map_mul, ho]
   linear_combination e * ea + e * algebraMap (𝓞 D.host.E) D.host.E β * eb
 
 theorem im_int_of_kap_eq (T : Tor D) {N N' : ℕ} (u u' y : VC D N N')

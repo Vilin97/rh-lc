@@ -25,7 +25,7 @@ def Pm (v : PlX X) (c : Fv X.B.I.F v) (w : (VS D).V) : Submodule (𝓞 D.host.E)
     simp only [Set.mem_ofPred_eq, map_zero, mul_zero]; exact Submodule.zero_mem _
   add_mem' := by
     intro y y' hy hy'
-    simp only [Set.mem_ofPred_eq, map_add, mul_add] at *
+    simp only [Set.mem_ofPred_eq, map_add (f := _), mul_add] at *
     exact Submodule.add_mem _ hy hy'
   smul_mem' := by
     intro o y hy

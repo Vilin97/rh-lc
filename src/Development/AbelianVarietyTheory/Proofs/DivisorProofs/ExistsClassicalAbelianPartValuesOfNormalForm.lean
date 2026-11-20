@@ -87,7 +87,7 @@ theorem eq_dualMap {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (F : D
   refine RingHom.ext fun z => ?_
   have hz : z = algebraMap A _ z.fst + algebraMap A _ z.snd * DualNumber.eps := by
     ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
-  rw [hz, map_add, map_mul, h1, h1, h2]
+  rw [hz, map_add (f := _), map_mul, h1, h1, h2]
   ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl, dualMap]
 
 theorem eu_gen (x : KeyIn ℂ) (g : ℕ) (hg : x.P.g = g) (u : HolUnif x.P.A x.P.L g) :

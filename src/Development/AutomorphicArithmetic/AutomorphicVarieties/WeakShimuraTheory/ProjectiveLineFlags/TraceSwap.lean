@@ -29,7 +29,7 @@ private theorem trace_swap {K V : Type} [Field K] [AddCommGroup V] [Module K V] 
     have hv : v ∈ N ⊔ M := by rw [hc.sup_eq_top]; trivial
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hv
     simp [hpN a ha, hpM b hb]
-  rw [key, map_add, LinearMap.trace_mul_comm K (p * T), LinearMap.trace_mul_comm K ((1 - p) * T),
+  rw [key, map_add (f := _), LinearMap.trace_mul_comm K (p * T), LinearMap.trace_mul_comm K ((1 - p) * T),
     ← mul_assoc, ← mul_assoc, sub_mul, mul_sub, hpp]
   simp
 

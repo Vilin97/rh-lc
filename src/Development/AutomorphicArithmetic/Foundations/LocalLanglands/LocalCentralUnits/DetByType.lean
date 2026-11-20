@@ -65,7 +65,7 @@ private theorem equiv_of_typeMaps [Nontrivial W] {T : Representation ℂ (GL (Fi
       exact ⟨γ * γ', w, by rw [map_mul]; rfl⟩
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact U.add_mem hx hy
     | smul c x _ hx =>
       rw [map_smul]

@@ -262,7 +262,7 @@ theorem im_HM (x y : Ix S T → ℂ) : (star y ⬝ᵥ HM S T *ᵥ x).im = -Globa
 
 theorem iotaV_add (x y : Ix S T → ℂ) : iotaV σ S T (x + y) = iotaV σ S T x + iotaV σ S T y := by
   unfold iotaV
-  rw [map_add, AddMonoidHom.map_add]
+  rw [map_add (f := _), AddMonoidHom.map_add (f := _)]
 
 theorem real_iotaV (h : Chart θ σ) (x : Ix S T → ℂ) : (iotaV σ S T x).map (finPart D) = 0 := h.real_iota T S _
 

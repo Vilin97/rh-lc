@@ -177,7 +177,7 @@ theorem proportional_field {F : Type} [Field F] {A : Type} [CommGroup A] [Finite
   let P : K → E →ₗ[F] E := fun k =>
     { toFun := p k
       map_add' := fun v v' => hext _ _ fun β => by
-        rw [map_add, hp', hp', hp']; split_ifs <;> simp
+        rw [map_add (f := _), hp', hp', hp']; split_ifs <;> simp
       map_smul' := fun c v => hext _ _ fun β => by
         rw [map_smul, hp', hp']; split_ifs <;> simp }
   have hP : ∀ k v β, ex β (P k v) = if cl β = k then ex β v else 0 := hp'
@@ -224,7 +224,7 @@ theorem proportional_field {F : Type} [Field F] {A : Type} [CommGroup A] [Finite
   choose q hq hq' using fun v => (finrank_le_of_inj _ f₁ hW₁ b hb₁).2 hge _ (hb₂ v)
   let φ : E →ₗ[F] E :=
     { toFun := q
-      map_add' := fun v v' => hext₁ _ (hq _) _ (add_mem (hq _) (hq _)) (by rw [map_add, hq', hq', hq', map_add])
+      map_add' := fun v v' => hext₁ _ (hq _) _ (add_mem (hq _) (hq _)) (by rw [map_add (f := _), hq', hq', hq', map_add (f := _)])
       map_smul' := fun c v => hext₁ _ (hq _) _ (Submodule.smul_mem _ _ (hq _)) (by
         rw [map_smul, hq', hq', map_smul]; rfl) }
   obtain ⟨c, hc⟩ := commutant_eq_sum e Φ hdim hmul hcomm hnd m hm hc P hP0 hP1 hP2 hPΦ φ fun h v =>

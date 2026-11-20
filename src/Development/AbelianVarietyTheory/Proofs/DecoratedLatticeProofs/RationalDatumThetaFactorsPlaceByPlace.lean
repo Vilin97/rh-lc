@@ -60,7 +60,7 @@ theorem ratDatum_factor : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] [To
       unfold Place.down
       congr 2
       ext i j
-      simp only [Matrix.map_apply, map_mul, map_add, hπe, pi_e_self, zero_add, one_mul, Place.pr]
+      simp only [Matrix.map_apply, map_mul, map_add (f := _), hπe, pi_e_self, zero_add, one_mul, Place.pr]
     have hs : (γ.map fun a => (e + p.e) * incA D a) - p.up FS FT (p.down FS FT (γ.map fun a => (e + p.e) * incA D a)) =
         γ.map fun a => e * incA D a := by
       rw [up_down_eq]

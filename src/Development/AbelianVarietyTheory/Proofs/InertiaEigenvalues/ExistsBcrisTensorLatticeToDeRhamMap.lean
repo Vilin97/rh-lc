@@ -30,7 +30,7 @@ def gb (o : ↥(OL LL)) : Per.Bcris l →+ (↥T.L.T →+ T.V ⊗[ℚ_[l]] Pl.R.
   AddMonoidHom.mk' (fun b => gx Td T o b)
     (fun b c => by
       ext x
-      simp only [gx, AddMonoidHom.mk'_apply, AddMonoidHom.add_apply, map_add, TensorProduct.tmul_add])
+      simp only [gx, AddMonoidHom.mk'_apply, AddMonoidHom.add_apply, map_add (f := _), TensorProduct.tmul_add])
 
 def g : ↥(OL LL) →+ Per.Bcris l →+ (↥T.L.T →+ T.V ⊗[ℚ_[l]] Pl.R.BdR) :=
   AddMonoidHom.mk' (fun o => gb Td T o)

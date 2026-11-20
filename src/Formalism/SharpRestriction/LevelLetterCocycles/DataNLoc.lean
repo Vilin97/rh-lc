@@ -359,7 +359,7 @@ def AΔ : Subalgebra O (LetA O n) where
     rw [map_mul, ha δ hδ, hb δ hδ]
   add_mem' := by
     intro a b ha hb δ hδ
-    rw [map_add, ha δ hδ, hb δ hδ]
+    rw [map_add (f := _), ha δ hδ, hb δ hδ]
   algebraMap_mem' := by
     intro r δ _
     exact AlgHom.commutes _ r
@@ -369,7 +369,7 @@ def NΔ (T : LocLat G Qp LL O) : Submodule O (W.DD T) where
   zero_mem' := ⟨(W.N T).zero_mem, fun δ _ => map_zero _⟩
   add_mem' := by
     rintro a b ⟨ha, ha'⟩ ⟨hb, hb'⟩
-    exact ⟨(W.N T).add_mem ha hb, fun δ hδ => by rw [map_add, ha' δ hδ, hb' δ hδ]⟩
+    exact ⟨(W.N T).add_mem ha hb, fun δ hδ => by rw [map_add (f := _), ha' δ hδ, hb' δ hδ]⟩
   smul_mem' := by
     rintro c a ⟨ha, ha'⟩
     refine ⟨?_, fun δ hδ => by rw [map_smul, ha' δ hδ]⟩

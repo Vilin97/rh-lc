@@ -155,8 +155,8 @@ theorem sh_aeval (G : HTGroup p) (x : G.C) (P : G.F[X]) :
     sh G (aeval x P) = aeval (sh G x) (P.map (IsCMField.complexConj G.F : G.F →+* G.F)) := by
   induction P using Polynomial.induction_on' with
   | add P Q hP hQ =>
-    rw [Polynomial.map_add, map_add, map_add, ← hP, ← hQ]
-    simp only [sh, map_add, MulOpposite.unop_add]
+    rw [Polynomial.map_add (f := _), map_add (f := _), map_add (f := _), ← hP, ← hQ]
+    simp only [sh, map_add (f := _), MulOpposite.unop_add]
   | monomial k a =>
     rw [Polynomial.map_monomial, aeval_monomial, aeval_monomial]
     simp only [sh, map_mul, MulOpposite.unop_mul, map_pow, MulOpposite.unop_pow]
@@ -248,7 +248,7 @@ theorem liesOver_or_conj (G : HTGroup p) (τ : G.F →+* PadicAlgCl p) :
     have e : ((((a' : G.Kq) + (b' : G.Kq) * k0 : G.Kq)) : G.F) = (a' : G.F) + (b' : G.F) * x0 := by
       simp [hk0]
     rw [e]
-    simp only [map_add, map_mul, map_ratCast]
+    simp only [map_add (f := _), map_mul, map_ratCast]
     linear_combination (b' : PadicAlgCl p) * h
   · right
     intro k
@@ -257,7 +257,7 @@ theorem liesOver_or_conj (G : HTGroup p) (τ : G.F →+* PadicAlgCl p) :
     have e : ((((a' : G.Kq) + (b' : G.Kq) * k0 : G.Kq)) : G.F) = (a' : G.F) + (b' : G.F) * x0 := by
       simp [hk0]
     rw [RingHom.comp_apply, e]
-    simp only [map_add, map_mul, map_ratCast, hcx, map_sub]
+    simp only [map_add (f := _), map_mul, map_ratCast, hcx, map_sub]
     linear_combination (-(b' : PadicAlgCl p)) * h
 
 theorem isRoot_inv (G : HTGroup p) (i : Fin G.m) (β y : G.Cˣ) (c : ℚˣ)

@@ -37,7 +37,7 @@ theorem algHom_ext_of_sub_mem_jacobson {R A B : Type*} [CommRing R] [CommRing A]
       rw [this]
       exact Ideal.mul_mem_left _ _ (h b)
     | add x y hx hy =>
-      rw [map_add, map_add, map_add, add_sub_add_comm]
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), add_sub_add_comm]
       exact add_mem hx hy
   have hu : IsUnit (φ t) := by
     have h1 := key t
@@ -389,7 +389,7 @@ theorem surjective_algebraMap_localization_of_henselian (R : Type*) {S : Type*} 
   refine ⟨a * v, ?_⟩
   rw [IsLocalization.eq_mk'_iff_mul_eq]
   have := congr(algebraMap S (Localization.AtPrime q) $hv)
-  simp only [map_mul, map_add, map_sub, map_one, he1, one_mul, sub_self, add_zero] at this
+  simp only [map_mul, map_add (f := _), map_sub, map_one, he1, one_mul, sub_self, add_zero] at this
   rw [map_mul, mul_assoc, this, mul_one]
 
 theorem finite_localization_of_henselian (R : Type*) {S : Type*} [CommRing R]

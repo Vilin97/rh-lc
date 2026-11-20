@@ -129,7 +129,7 @@ theorem pairLoc_of (hB : ThetaBasic) (hE : EpsOf) (hV : FinVolU) (hU : Positivit
   obtain ⟨⟨t1, t2⟩, t3⟩ := hT i
   obtain ⟨L, hLP⟩ := exists_ext (SB _) (schA F (Fin n × Fin d)) (fun a x => th om μ D (T i a) x g)
     (fun a ha b hb x hx => by
-      simp only [th, pet, map_add, Pi.add_apply, add_mul]
+      simp only [th, pet, map_add (f := _), Pi.add_apply, add_mul]
       exact integral_add (th_int hB hE hV hp hμ hD (t1 a ha) hx g) (th_int hB hE hV hp hμ hD (t1 b hb) hx g))
     (fun c a x => by simp only [th, pet, map_smul, Pi.smul_apply, smul_eq_mul, mul_assoc, integral_const_mul])
     (fun a ha x hx y hy => th_add hB hE hV hp hμ hD (t1 a ha) hx hy g) fun c a x hx => th_smul hp μ D _ c hx g

@@ -26,7 +26,7 @@ theorem line_functional_eq_period_mul : ∀ (l : ℕ) [Fact l.Prime] (M S : Type
     have hv : v = v 0 • ![1, 0] + v 1 • ![0, 1] := by
       ext j; fin_cases j <;> simp
     calc L (σ i v) = L (σ i (v 0 • ![1, 0] + v 1 • ![0, 1])) := by rw [← hv]
-      _ = _ := by rw [map_add, map_smul, map_smul, map_add, map_smul, map_smul, hσ0, smul_zero,
+      _ = _ := by rw [map_add (f := _), map_smul, map_smul, map_add (f := _), map_smul, map_smul, hσ0, smul_zero,
           zero_add, hsm]
   by_cases hall : ∀ i, y i = 0
   · refine ⟨0, 1, norm_one, fun i v => ?_⟩

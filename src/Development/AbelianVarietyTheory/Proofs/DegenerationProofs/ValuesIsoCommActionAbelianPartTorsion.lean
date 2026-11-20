@@ -100,9 +100,9 @@ theorem main : GlobalTheory.UT.LL → BrGtSt → AllS fun {E} _ _ _ {H} {_} {_} 
   change ν'.eX (e s₂) = x • ν'.eX (e s₁) + k • z₂ at d₂
   change ν'.eA (φ β₂) = ν'.eA (φ β₁) ≫ _ * _ at e₂
   change ν'.eA (φ y') = ν'.eA (φ y) ≫ _
-  have g₁ : s₂ = act s₁ + k • w₁ := A.ν.eX.injective (by rw [d₁, map_add, map_nsmul, ha])
+  have g₁ : s₂ = act s₁ + k • w₁ := A.ν.eX.injective (by rw [d₁, map_add (f := _), map_nsmul, ha])
   have g₂ : z₂ = ν'.eX (e w₁) := by
-    rw [g₁, map_add, map_add, map_nsmul, map_nsmul, hl, add_right_inj, ← natCast_zsmul, ← natCast_zsmul] at d₂
+    rw [g₁, map_add (f := _), map_add (f := _), map_nsmul, map_nsmul, hl, add_right_inj, ← natCast_zsmul, ← natCast_zsmul] at d₂
     exact (smul_right_injective _ (Int.natCast_ne_zero.2 hk.ne') d₂).symm
   have g₀ : y = β₁ * A.N.c w₀ := A.ν.eA.injective (by rw [map_mul, A.ν.c_eq, ← e₀, hγ])
   have g₃ : y' * A.N.c w₁ = β₂ * A.N.c (act w₀) := A.ν.eA.injective (by

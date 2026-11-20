@@ -37,7 +37,7 @@ theorem archPart_finIncl (τ : ∀ w : InfinitePlace F, EmbOver E w) (y : E ⊗[
     archPart τ (finIncl F E y) = 0 := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
   | tmul x a =>
     funext w
     show InfinitePlace.Completion.extensionEmbedding w (0 : w.Completion) * (τ w).1 x = 0
@@ -46,7 +46,7 @@ theorem archPart_finIncl (τ : ∀ w : InfinitePlace F, EmbOver E w) (y : E ⊗[
 theorem finPart_finIncl (y : E ⊗[F] FiniteAdeleRing (𝓞 F) F) : finPart F E (finIncl F E y) = y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   | tmul x a => rfl
 
 end GlobalTheory.ArchFinSplit

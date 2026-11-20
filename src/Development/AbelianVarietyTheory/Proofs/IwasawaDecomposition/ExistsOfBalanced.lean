@@ -184,7 +184,7 @@ theorem vl_sgA_le {w w' : HeightOneSpectrum (𝓞 D.host.E)} (h : ConjPl D.host.
   have h4 : vl D w' (sgA D (inc D a)) = vl D w (inc D a) := by
     rw [sgA_inc, vl_inc, vl_inc]
     exact h a
-  have h5 : sgA D x = sgA D (inc D a) + n * sgA D r := by rw [e, map_add, map_mul, map_natCast]
+  have h5 : sgA D x = sgA D (inc D a) + n * sgA D r := by rw [e, map_add (f := _), map_mul, map_natCast]
   have h6 := Valuation.map_add_lt (vl D w') (h4 ▸ h3) h2
   rw [← h5] at h6
   exact lt_irrefl _ h6

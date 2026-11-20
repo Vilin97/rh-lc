@@ -15,7 +15,7 @@ theorem continuous_lin_mvZ {T : Type} [TopologicalSpace T] (g : T → ι → Mat
     ∀ Λ : FP ι a b →ₗ[ℂ] ℂ, Continuous fun x => Λ (mvZ (g x) h P) := by
   induction P using MvPolynomial.induction_on with
   | C c => intro Λ; simp only [mvZ, aeval_C, algebraMap_eq]; exact continuous_const
-  | add p q hp hq => intro Λ; simp only [map_add]; exact (hp Λ).add (hq Λ)
+  | add p q hp hq => intro Λ; simp only [map_add (f := _)]; exact (hp Λ).add (hq Λ)
   | mul_X p v hp =>
     intro Λ
     have key : ∀ x, Λ (mvZ (g x) h (p * X v)) = ∑ i, ∑ j, (h v.1 i v.2.1 * g x v.1 v.2.2 j) *

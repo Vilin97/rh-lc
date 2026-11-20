@@ -50,7 +50,7 @@ theorem GlobalTheory.WeylFour.weyl_hasOp : ∀ (F : Type) [Field F] [NumberField
   let ev : ∀ v : Pl F, ((κ → Fv F v) → ℂ) →ₗ[ℂ] ((κ → Fv F v) → ℂ) := fun v =>
     { toFun := fun φ => fourV ψ v (P v φ)
       map_add' := fun φ χ => by
-        rw [map_add]; exact (hSB v).2.1 _ (hPmem v φ) _ (hPmem v χ)
+        rw [map_add (f := _)]; exact (hSB v).2.1 _ (hPmem v φ) _ (hPmem v χ)
       map_smul' := fun c φ => by
         rw [map_smul, RingHom.id_apply]; exact hsmV v c _ }
   have hev : ∀ v, ∀ φ ∈ SB (κ → Fv F v), ev v φ = fourV ψ v φ := fun v φ hφ => by
@@ -163,7 +163,7 @@ theorem GlobalTheory.WeylFour.weyl_hasOp : ∀ (F : Type) [Field F] [NumberField
     congrArg Subtype.val (Submodule.linearProjOfIsCompl_apply_left hD ⟨Φ, hΦ⟩)
   let e : ((κ → AF F) → ℂ) →ₗ[ℂ] (κ → AF F) → ℂ :=
     { toFun := fun Φ => fA (Q Φ)
-      map_add' := fun Φ Ψ => by rw [map_add]; exact hadd _ (hQmem Φ) _ (hQmem Ψ)
+      map_add' := fun Φ Ψ => by rw [map_add (f := _)]; exact hadd _ (hQmem Φ) _ (hQmem Ψ)
       map_smul' := fun c Φ => by rw [map_smul, RingHom.id_apply]; exact hsmul c _ }
   have he : ∀ Φ ∈ schA F κ, e Φ = fA Φ := fun Φ hΦ => by
     show fA (Q Φ) = _

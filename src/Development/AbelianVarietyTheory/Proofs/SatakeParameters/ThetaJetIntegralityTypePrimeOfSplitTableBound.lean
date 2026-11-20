@@ -212,7 +212,7 @@ theorem isQInt_piG {D : D7} (EX : ErrX D) (i : Fin 2) :
   obtain ⟨m, n, hm, hn⟩ := half_coords hh.2.1 (by have := hh.2.2.2.1; omega) (t := t) (by simpa using ht.symm) hn'
   have hφ : D.host.φ₀ D.host.sqrtMinusD = Complex.I * (Real.sqrt D.host.d : ℂ) := D.host.φ₀_mem
   refine ⟨m, n, ?_⟩
-  rw [hab, map_add, map_mul, map_ratCast, map_ratCast, hφ, hm, hn, Formalism.L2.Th1.CM.omegaK]
+  rw [hab, map_add (f := _), map_mul, map_ratCast, map_ratCast, hφ, hm, hn, Formalism.L2.Th1.CM.omegaK]
   push_cast
   ring
 

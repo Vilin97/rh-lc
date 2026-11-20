@@ -44,7 +44,7 @@ theorem cobTwo_cobOne (b : A) : cobTwo O A (cobOne O A b) = 0 := by
       ((TensorProduct.mk O A A).flip 1).lTensor A t := fun t => by
     induction t with
     | tmul a b => simp
-    | add x y hx hy => simp only [add_tmul, map_add, hx, hy]
+    | add x y hx hy => simp only [add_tmul, map_add (f := _), hx, hy]
   have h2 : comul (R := O) (1 : A) = 1 ⊗ₜ 1 := by simp [Algebra.TensorProduct.one_def]
   simp only [cobTwo_apply, cobOne_apply, map_sub, tmul_sub, coassoc_apply, LinearMap.rTensor_tmul,
     LinearMap.lTensor_tmul, h1, h2, LinearMap.flip_apply, mk_apply]
@@ -68,7 +68,7 @@ theorem pullTwo_cobOne (f : A →ₐc[O] B) (b : A) :
 theorem cobTwo_pullTwo (f : A →ₐc[O] B) (c : A ⊗[O] A) :
     cobTwo O B (pullbackTwo f c) = TensorProduct.map (f : A →ₗ[O] B) (pullbackTwo f) (cobTwo O A c) := by
   induction c with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a b =>
     have h := TensorProduct.map_map_assoc (f : A →ₗ[O] B) (f : A →ₗ[O] B) (f : A →ₗ[O] B)
       (comul a ⊗ₜ b)
@@ -82,12 +82,12 @@ theorem pullTwo_mem (f : A →ₐc[O] B) {c : A ⊗[O] A} (hc : c ∈ symCocycle
 theorem pullTwo_comp {D : Type} [CommRing D] [Bialgebra O D] (g : B →ₐc[O] D) (f : A →ₐc[O] B)
     (c : A ⊗[O] A) : pullbackTwo (g.comp f) c = pullbackTwo g (pullbackTwo f c) := by
   induction c with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a b => simp
 
 theorem pullTwo_id (c : A ⊗[O] A) : pullbackTwo (BialgHom.id O A) c = c := by
   induction c with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a b => simp
 
 theorem mulBy_of_cobOne_eq_zero [IsCocomm O A] {b : A} (hb : cobOne O A b = 0) (k : ℕ) :
@@ -116,14 +116,14 @@ variable {p : ℕ} {O : Type} [CommRing O] (G H K : PDivGroup p O)
 def funs : Submodule O (∀ n, G.A n) where
   carrier := {b | ∀ n, G.res n (b (n + 1)) = b n}
   zero_mem' _ := map_zero _
-  add_mem' {v w} hv hw n := by rw [Pi.add_apply, map_add, hv n, hw n, Pi.add_apply]
+  add_mem' {v w} hv hw n := by rw [Pi.add_apply, map_add (f := _), hv n, hw n, Pi.add_apply]
   smul_mem' c w hw n := by rw [Pi.smul_apply, map_smul, hw n, Pi.smul_apply]
 
 def cocycles : Submodule O (∀ n, G.A n ⊗[O] G.A n) where
   carrier := {c | ∀ n, c n ∈ symCocycles O (G.A n) ∧ pullbackTwo (G.res n) (c (n + 1)) = c n}
   zero_mem' _ := ⟨zero_mem _, map_zero _⟩
   add_mem' {v w} hv hw n := ⟨add_mem (hv n).1 (hw n).1, by
-    rw [Pi.add_apply, map_add, (hv n).2, (hw n).2, Pi.add_apply]⟩
+    rw [Pi.add_apply, map_add (f := _), (hv n).2, (hw n).2, Pi.add_apply]⟩
   smul_mem' c w hw n := ⟨Submodule.smul_mem _ c (hw n).1, by
     rw [Pi.smul_apply, map_smul, (hw n).2, Pi.smul_apply]⟩
 

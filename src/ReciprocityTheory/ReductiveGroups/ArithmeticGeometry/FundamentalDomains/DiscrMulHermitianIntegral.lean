@@ -210,7 +210,7 @@ theorem freq_to_beta (χ : X.Ψ → Fin 2 → Fin 2 → ℂ) (hχ : IsHermFam χ
       · simp
       · intro i _ hi; apply Finset.sum_eq_zero; intro k _; simp [hi]
       · simp
-    rw [hs, map_add, emb_cc]
+    rw [hs, map_add (f := _), emb_cc]
     simp only [Complex.mul_re, Complex.add_re, Complex.add_im, Complex.conj_re, Complex.conj_im, hreal]
     ring
   obtain ⟨ω00, hω00, hi00⟩ := hdiag 0

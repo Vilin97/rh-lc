@@ -16,7 +16,7 @@ theorem piScalarRight_lTensor_mulVec {R O : Type} [CommRing R] [CommRing O] [Alg
       (A.map (algebraMap R O)).mulVec (TensorProduct.piScalarRight R O O n x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy, Matrix.mulVec_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, Matrix.mulVec_add]
   | tmul o v =>
     ext i
     simp [Matrix.mulVec, dotProduct, Algebra.smul_def, Finset.sum_mul, mul_assoc]

@@ -196,13 +196,13 @@ def derDual : B →+* DualNumber (Localization S) where
     refine Eq.trans ?_ (DualNumber.snd_mul _ _).symm
     show algebraMap B (Localization S) (d (a * b)) = algebraMap B (Localization S) a * algebraMap B (Localization S) (d b) +
       algebraMap B (Localization S) (d a) * algebraMap B (Localization S) b
-    rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add, map_mul, map_mul]; ring)
+    rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul, map_add (f := _), map_mul, map_mul]; ring)
   map_zero' := TrivSqZeroExt.ext (map_zero _) (by
     show algebraMap B (Localization S) (d 0) = 0
     rw [map_zero, map_zero])
   map_add' a b := TrivSqZeroExt.ext (map_add _ a b) (by
     show algebraMap B (Localization S) (d (a + b)) = algebraMap B (Localization S) (d a) + algebraMap B (Localization S) (d b)
-    rw [map_add, map_add])
+    rw [map_add (f := _), map_add (f := _)])
 
 theorem derDual_isUnit (s : S) : IsUnit (derDual d S s) := by
   refine TrivSqZeroExt.isUnit_iff_isUnit_fst.mpr ?_

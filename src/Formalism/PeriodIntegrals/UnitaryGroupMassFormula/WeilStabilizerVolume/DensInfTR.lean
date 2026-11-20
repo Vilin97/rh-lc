@@ -19,7 +19,7 @@ theorem exists_coord_pi {X : Type} [AddCommGroup X] [TopologicalSpace X] {k : �
     (F := Fin (Module.finrank ℝ (κ → Fin k → ℝ)) → ℝ) (Module.finrank_fin_fun ℝ).symm
   refine ⟨_, e1.trans L.toHomeomorph, fun x y => ?_⟩
   show L (e1 (x + y)) = L (e1 x) + L (e1 y)
-  rw [h1, map_add]
+  rw [h1, map_add (f := _)]
 
 theorem exists_coord_Ainf (F : Type) [Field F] [NumberField F] [IsTotallyReal F] :
     ∃ (k : ℕ) (e : Ainf F ≃ₜ (Fin k → ℝ)), ∀ x y, e (x + y) = e x + e y := by
@@ -33,7 +33,7 @@ theorem exists_coord_Ainf (F : Type) [Field F] [NumberField F] [IsTotallyReal F]
     (F := Fin (Module.finrank ℝ (InfinitePlace F → ℝ)) → ℝ) (Module.finrank_fin_fun ℝ).symm
   refine ⟨_, e1.trans L.toHomeomorph, fun x y => ?_⟩
   show L (e1 (x + y)) = L (e1 x) + L (e1 y)
-  rw [h1, map_add]
+  rw [h1, map_add (f := _)]
 
 theorem exists_coord_tens (F E : Type) [Field F] [NumberField F] [IsTotallyReal F] [Field E]
     [NumberField E] [Algebra F E] :
@@ -92,6 +92,6 @@ theorem exists_coord_sub {X : Type} [AddCommGroup X] [TopologicalSpace X] {N : �
     (F := Fin (Module.finrank ℝ W) → ℝ) (Module.finrank_fin_fun ℝ).symm
   refine ⟨_, e0.trans L.toHomeomorph, fun x y => ?_⟩
   show L (e0 (x + y)) = L (e0 x) + L (e0 y)
-  rw [show e0 (x + y) = e0 x + e0 y from Subtype.ext (he x y), map_add]
+  rw [show e0 (x + y) = e0 x + e0 y from Subtype.ext (he x y), map_add (f := _)]
 
 end PI.VolStabW

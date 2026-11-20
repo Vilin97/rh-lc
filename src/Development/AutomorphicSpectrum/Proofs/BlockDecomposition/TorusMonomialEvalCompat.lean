@@ -231,7 +231,7 @@ theorem aeval_mem_torusS {K : Type} [Field K] {X : Scheme.{0}} {N d e : ℕ} (i 
       have hrest : ∑ α ∈ s, MvPolynomial.C (AddMonoidAlgebra.coeff c α) * ∏ k, y k ^ α k ∈ grK K N (j • (S.card * e)) :=
         Submodule.sum_mem _ fun α hα => hCm _ _ (hmono α (hs' hα))
       simp only [Finset.sum_insert ha]
-      rw [mk_add' _ (hCm _ _ (hmono a hA)) hrest, map_add]
+      rw [mk_add' _ (hCm _ _ (hmono a hA)) hrest, map_add (f := _)]
       refine add_mem ?_ (ih hs' hrest)
       rw [mk_C_mul _ _ (hC _) (hmono a hA), map_mul, evV_const i q hq]
       refine mul_mem ?_ ?_

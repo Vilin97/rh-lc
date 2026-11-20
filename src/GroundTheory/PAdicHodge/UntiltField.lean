@@ -100,7 +100,7 @@ theorem exists_eq_untilt_add_p_mul {N : IntermediateField K♭ C♭} [FiniteDime
   refine ⟨a0, a0.2, _, ⟨v, rfl⟩, ?_⟩
   have hu : u = WittVector.teichmuller p a0 + v * p := by rw [hv]; ring
   conv_lhs => rw [hu]
-  rw [RingHom.comp_apply, map_add, map_mul, map_natCast, map_add, map_mul, map_natCast,
+  rw [RingHom.comp_apply, map_add (f := _), map_mul, map_natCast, map_add (f := _), map_mul, map_natCast,
     WittVector.map_teichmuller, WittVector.fontaineTheta_teichmuller, RingHom.comp_apply, mul_comm]
   rfl
 
@@ -128,7 +128,7 @@ theorem exists_untilt_sum_eq {N : IntermediateField K♭ C♭} [FiniteDimensiona
       ∑ i ∈ s, WittVector.teichmuller p (a i) + v * p := by rw [hv]; ring
   have := congrArg (RingHom.comp θ (WittVector.map (integerTilt K C p N).subtype)) hx
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [RingHom.comp_apply, map_add, map_sum, map_mul, map_natCast,
+    simp only [RingHom.comp_apply, map_add (f := _), map_sum, map_mul, map_natCast,
     WittVector.map_teichmuller, WittVector.fontaineTheta_teichmuller, map_sum] at this
   rw [mul_comm] at this
   convert this using 2 <;> rfl

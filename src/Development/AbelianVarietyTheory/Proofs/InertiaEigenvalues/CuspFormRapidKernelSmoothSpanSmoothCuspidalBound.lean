@@ -177,7 +177,7 @@ theorem kerOp_mem_dSub {π : CuspSub E a} {φ : Sm E a} (hφ : φ ∈ dSub π) {
     | add f f' hf hf' ihf ihf' =>
       intro h Y
       have : (⟨f + f', h⟩ : Sm E a) = ⟨f, hspan hf⟩ + ⟨f', hspan hf'⟩ := rfl
-      rw [this, map_add]
+      rw [this, map_add (f := _)]
       exact Submodule.add_mem _ (ihf _ Y) (ihf' _ Y)
     | smul c f hf ihf =>
       intro h Y

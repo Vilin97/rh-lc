@@ -15,7 +15,7 @@ theorem evFin_realAd (F : Type) [Field F] [NumberField F] (v : Pl F) (x : ℝ) :
 
 theorem evFin_tAd (F : Type) [Field F] [NumberField F] (v : Pl F) (s : ℝ) :
     evFin F v (tAd F s) = 1 := by
-  rw [tAd, map_add, evFin_realAd, map_one, add_zero]
+  rw [tAd, map_add (f := _), evFin_realAd, map_one, add_zero]
 
 theorem integral_of_evFin_mem (F : Type) [Field F] [NumberField F] {κ : Type} [Fintype κ] [DecidableEq κ] {q : ℕ}
     (blk : Fin q → Finset κ) (t : Fin q → ℝ) (m : ℕ) (ξ : κ → F) (j : κ)

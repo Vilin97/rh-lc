@@ -68,14 +68,14 @@ def redMap (M : ℕ) {n m : ℕ} (r : (Fin n → ℤ) →ₗ[ℤ] (Fin m → ℤ
     set c := (redV_surjective M n (y + y')).choose
     obtain ⟨d, hd⟩ := exists_eq_add_of_redV_eq (M := M) (a := c) (a' := a + b)
       (by rw [h2, redV_add, h0, h1])
-    rw [hd, map_add, map_smul, redV_add_smul, map_add, redV_add]
+    rw [hd, map_add (f := _), map_smul, redV_add_smul, map_add (f := _), redV_add]
 
 theorem redMap_redV (M : ℕ) {n m : ℕ} (r : (Fin n → ℤ) →ₗ[ℤ] (Fin m → ℤ)) (a : Fin n → ℤ) :
     redMap M r (redV M a) = redV M (r a) := by
   have h0 := (redV_surjective M n (redV M a)).choose_spec
   obtain ⟨d, hd⟩ := exists_eq_add_of_redV_eq h0
   change redV M (r (redV_surjective M n (redV M a)).choose) = _
-  rw [hd, map_add, map_smul, redV_add_smul]
+  rw [hd, map_add (f := _), map_smul, redV_add_smul]
 
 theorem redMap_surjective (M : ℕ) {n m : ℕ} {r : (Fin n → ℤ) →ₗ[ℤ] (Fin m → ℤ)} (hr : Function.Surjective r) :
     Function.Surjective (redMap M r) := fun y => by
@@ -98,7 +98,7 @@ theorem classMin_comp (M : ℕ) {n m : ℕ} {r : (Fin n → ℤ) →ₗ[ℤ] (Fi
     obtain ⟨d, hd⟩ := exists_eq_add_of_redV_eq hb
     obtain ⟨e, rfl⟩ := hr d
     refine ⟨a + ((M : ℤ) + 1) • e, redV_add_smul _ _, ?_⟩
-    simp only [map_add, map_smul, ← hd]
+    simp only [map_add (f := _), map_smul, ← hd]
 
 theorem mean_comp {A A' : Type} [AddCommGroup A] [AddCommGroup A'] [Fintype A] [Fintype A'] (f : A →+ A')
     (hf : Function.Surjective f) (g : A' → ℝ) :

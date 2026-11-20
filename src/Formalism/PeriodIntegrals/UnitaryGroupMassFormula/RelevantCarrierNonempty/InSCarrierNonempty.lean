@@ -46,7 +46,7 @@ theorem coefX_single_add {T : E} (G : FlagG S r T) (i : Fin r) (c : E) {w : S.V}
   rw [dif_pos hmem]
   have hrepr : G.e_indep.repr ⟨c • G.e i + w, hmem⟩ = Finsupp.single i c + l := by
     apply G.e_indep.repr_eq
-    rw [map_add, Finsupp.linearCombination_single, hlw]
+    rw [map_add (f := _), Finsupp.linearCombination_single, hlw]
   rw [hrepr, Finsupp.add_apply, Finsupp.single_eq_same]
   have hli : l i = 0 := by
     by_contra hne

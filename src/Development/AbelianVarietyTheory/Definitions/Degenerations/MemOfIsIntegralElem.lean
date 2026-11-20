@@ -144,7 +144,7 @@ theorem arcForm_symm (y z : 𝓞 E) : arcForm l y z = arcForm l z y := congrArg 
 theorem halfSq_add (y z : 𝓞 E) (m : ℕ) :
     halfSq l (y + m • z) = halfSq l y + m * arcForm l y z + m ^ 2 * halfSq l z := by
   have h := two_halfSq l (y + m • z)
-  simp only [map_add, LinearMap.add_apply, map_nsmul, LinearMap.smul_apply, arcForm_symm l z y,
+  simp only [map_add (f := _), LinearMap.add_apply, map_nsmul, LinearMap.smul_apply, arcForm_symm l z y,
     two_halfSq l y, two_halfSq l z] at h
   simp only [nsmul_eq_mul (α := ℤ)] at h
   linarith
@@ -274,7 +274,7 @@ theorem exists_coord (hc : ∀ n m, 0 < n → 0 < m → r (n * m) ^ m = r n) (m 
     thTerm, ← hc _ j hm2 hj, ← hc j _ hj hm2, mul_comm j]
   congr 1
   apply Additive.ofMul.injective
-  simp only [map_mul, map_zpow, map_pow, ofMul_mul, ofMul_pow, ofMul_zpow, e, map_add, map_nsmul]
+  simp only [map_mul, map_zpow, map_pow, ofMul_mul, ofMul_pow, ofMul_zpow, e, map_add (f := _), map_nsmul]
   simp only [nsmul_eq_mul (α := ℤ)]
   match_scalars <;> ring
 

@@ -38,7 +38,7 @@ theorem avatar_comm {C W M I : Type} [Field C] [AddCommGroup W] [Module ℂ W] [
     obtain ⟨i, rfl⟩ := hx
     exact h i
   | zero => simp only [map_zero]
-  | add x y _ _ hx hy => simp only [map_add, hx, hy]
+  | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy]
   | smul a x _ hx => simp only [map_smul, hs, hx]
 
 theorem exists_reading_lat {E K : Type} [Field E] [NumberField E] [Field K] [NumberField K] [StarRing K] {T : Type} [Fintype T]

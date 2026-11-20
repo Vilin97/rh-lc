@@ -134,7 +134,7 @@ theorem gen_iff {X : Data E r} {x : Frame X.Ψ r} (hx : x ∈ X.dom) (A : TorusA
         ∑ j, act (c j) (((5 : ℂ) ^ 2) • A.φ (t j)) + (5 : ℂ) • A.φ y := by
     intro c y
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, map_five]
+      rw [map_add (f := _), map_sum, map_five]
     congr 1
     exact Finset.sum_congr rfl fun j _ => by rw [A.act_eq, map_twentyfive]
   refine and_congr (forall_congr' fun j => by rw [← map_twentyfive, map_mem_iff hx]) ⟨fun h z hz => ?_, fun h u hu => ?_⟩

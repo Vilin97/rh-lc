@@ -309,7 +309,7 @@ private theorem rel_model {A : Type} [CommRing A] {P : Polynomial (LaurentPolyno
     exact Submodule.subset_span ⟨b, i, hi', hb, rfl⟩
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add, add_mul]
+    rw [map_add (f := _), add_mul]
     exact add_mem hx hy
   | smul c x _ hx =>
     rw [hof, smul_mul_assoc]

@@ -221,7 +221,7 @@ theorem step (hGr : RuleGr) (X : HidaSetting k) (F : X.Mod) (hF : F.IsGr X.𝒜)
     obtain ⟨a, rfl⟩ := Submodule.mem_span_singleton.1 hz
     refine ⟨a, ?_⟩
     show a • N.mkQ x = N.mkQ (n + a • x)
-    rw [map_add, map_smul, (Submodule.Quotient.mk_eq_zero N).2 hn |> (show N.mkQ n = 0 from ·),
+    rw [map_add (f := _), map_smul, (Submodule.Quotient.mk_eq_zero N).2 hn |> (show N.mkQ n = 0 from ·),
       zero_add]
   let g : N' →ₗ[X.R] X.R ⧸ LinearMap.ker φ :=
     (φ.quotKerEquivRange.symm : LinearMap.range φ →ₗ[X.R] X.R ⧸ LinearMap.ker φ) ∘ₗ

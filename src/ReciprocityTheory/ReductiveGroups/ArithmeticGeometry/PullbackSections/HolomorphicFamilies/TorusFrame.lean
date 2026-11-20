@@ -63,7 +63,7 @@ theorem l2_norm_fundamental_domain (T : PT E) (s : (Fin 1 → Vsp T.dim) → ℂ
   have hFd2 : IsAddFundamentalDomain ↥(lat T.b) (em.toEquiv '' Fd) volume :=
     hFd.image_of_equiv em.toEquiv hqmp eq (fun γ z => by
       show L (L.symm γ + z) = (γ : Vsp T.dim) + L z
-      rw [map_add, LinearEquiv.apply_symm_apply])
+      rw [map_add (f := _), LinearEquiv.apply_symm_apply])
   have himg : em.toEquiv '' Fd = Fd' := by
     ext v
     constructor

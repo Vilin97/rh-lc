@@ -22,7 +22,7 @@ theorem at_liftT (v : Pl F) (t : Fv F v ⊗[F] E) : At (evFin F v) (liftT v t) :
   | zero => rw [map_zero, smul_zero]
   | tmul a e =>
     rw [liftT, LinearMap.rTensor_tmul, TensorProduct.smul_tmul', GlobalTheory.LatVac.at_liftV v a u hu, TensorProduct.zero_tmul]
-  | add x y hx hy => rw [map_add, smul_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), smul_add, hx, hy, add_zero]
 
 theorem at_uAt (H : Plane E n n₁) (H' : Plane E d d₁) (v : Pl F) (t : Fv F v ⊗[F] E) : At (evFin F v) (uAt H H' v t) := by
   intro u hu

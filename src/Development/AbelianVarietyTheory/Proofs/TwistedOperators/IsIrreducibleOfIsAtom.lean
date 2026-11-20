@@ -67,7 +67,7 @@ def proj {π : Representation ℂ G V} {S T : Subrepresentation π} (h : IsCompl
       have hv : v ∈ S.toSubmodule ⊔ T.toSubmodule := by
         rw [(isCompl_toSubmodule h).sup_eq_top]; exact Submodule.mem_top
       obtain ⟨s, hs, t, ht, rfl⟩ := Submodule.mem_sup.1 hv
-      rw [map_add, map_add, map_add, proj_left h _ (S.apply_mem_toSubmodule g hs),
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), proj_left h _ (S.apply_mem_toSubmodule g hs),
         proj_right h _ (T.apply_mem_toSubmodule g ht), proj_left h s hs, proj_right h t ht, add_zero, add_zero]
       rfl)
 

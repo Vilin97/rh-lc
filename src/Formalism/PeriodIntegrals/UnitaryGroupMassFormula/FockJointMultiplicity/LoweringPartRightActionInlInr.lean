@@ -307,7 +307,7 @@ theorem hc_pderiv (l : σ) (e : ℕ) (P : MvPolynomial σ ℂ) :
     homogeneousComponent e (pderiv l P) = pderiv l (homogeneousComponent (e + 1) P) := by
   induction P using MvPolynomial.induction_on' with
   | monomial u c => exact homogeneousComponent_pderiv_monomial_eq_pderiv_succ l e u c
-  | add P Q hP hQ => simp only [map_add, hP, hQ]
+  | add P Q hP hQ => simp only [map_add (f := _), hP, hQ]
 
 theorem pderiv_comm (i j : σ) (P : MvPolynomial σ ℂ) :
     pderiv i (pderiv j P) = pderiv j (pderiv i P) := by
@@ -371,7 +371,7 @@ theorem minusPart_eq_sum (A : Module.End ℂ (MvPolynomial σ ℂ)) (P : MvPolyn
 
 theorem minusPart_add (A B : Module.End ℂ (MvPolynomial σ ℂ)) (P : MvPolynomial σ ℂ) :
     minusPart (A + B) P = minusPart A P + minusPart B P := by
-  simp only [minusPart_eq_sum, LinearMap.add_apply, map_add, Finset.sum_add_distrib]
+  simp only [minusPart_eq_sum, LinearMap.add_apply, map_add (f := _), Finset.sum_add_distrib]
 
 theorem minusPart_smul (c : ℂ) (A : Module.End ℂ (MvPolynomial σ ℂ)) (P : MvPolynomial σ ℂ) :
     minusPart (c • A) P = c • minusPart A P := by
@@ -607,7 +607,7 @@ theorem coeff_fockAct1_diag (a : Ix p q) (P : Pol p q r s) (m : Ln p q r s →�
     split_ifs with h
     · rw [h]
     · simp
-  | add P Q hP hQ => simp only [map_add, MvPolynomial.coeff_add, hP, hQ, mul_add]
+  | add P Q hP hQ => simp only [map_add (f := _), MvPolynomial.coeff_add, hP, hQ, mul_add]
 
 theorem coeff_fockAct2_diag (c : Ix r s) (P : Pol p q r s) (m : Ln p q r s →₀ ℕ) :
     AddMonoidAlgebra.coeff (fockAct2 p q r s (Eab c c) P) m =
@@ -618,7 +618,7 @@ theorem coeff_fockAct2_diag (c : Ix r s) (P : Pol p q r s) (m : Ln p q r s →�
     split_ifs with h
     · rw [h]
     · simp
-  | add P Q hP hQ => simp only [map_add, MvPolynomial.coeff_add, hP, hQ, mul_add]
+  | add P Q hP hQ => simp only [map_add (f := _), MvPolynomial.coeff_add, hP, hQ, mul_add]
 
 theorem mem_wtSub1 (μ : Ix p q → ℚ) (P : Pol p q r s) :
     P ∈ wtSub (fockAct1 p q r s) μ ↔ ∀ m ∈ P.support, ∀ a, (wt1 m a : ℚ) + sh1 p q r s a = μ a := by

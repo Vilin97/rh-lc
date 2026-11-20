@@ -55,7 +55,7 @@ private theorem dvd_EF_cSep_of_mem_Mb_right {E : Type} [Field E] [NumberField E]
     exact dvd_EF_M_mul_smul_right Dw l.M γ u y
   · intro a b ha hb
     show (l.M : ℤ) ∣ Dw.EF u (cSep l • (a + b))
-    rw [smul_add, map_add]
+    rw [smul_add, map_add (f := _)]
     exact dvd_add ha hb
 
 private theorem dvd_EF_cSep_of_mem_Mfr_left {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
@@ -71,7 +71,7 @@ private theorem dvd_EF_cSep_of_mem_Mfr_left {E : Type} [Field E] [NumberField E]
     exact dvd_EF_M_mul_smul_right Dw l.M γ y v
   · intro a b ha hb
     show (l.M : ℤ) ∣ Dw.EF (a + b) (cSep l • v)
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact dvd_add ha hb
 
 private theorem sim_f_sub_mem_Mb_of_inGam_dvd {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
@@ -119,7 +119,7 @@ private theorem dvd_EF_add_nsmul_sub {E : Type} [Field E] [NumberField E] [IsCMF
     (M : ℤ) ∣ Dw.EF (x + M • c) (y + M • c') - Dw.EF x y := by
   have e : Dw.EF (x + M • c) (y + M • c') - Dw.EF x y =
       Dw.EF x (M • c') + (Dw.EF (M • c) y + Dw.EF (M • c) (M • c')) := by
-    simp only [map_add, LinearMap.add_apply]
+    simp only [map_add (f := _), LinearMap.add_apply]
     abel
   rw [e]
   refine dvd_add ?_ (dvd_add ?_ ?_)
@@ -195,7 +195,7 @@ theorem datEq_of_phiHat : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E]
         obtain ⟨b, rfl⟩ := Submodule.Quotient.mk_surjective _ y
         show σq (Submodule.Quotient.mk a + Submodule.Quotient.mk b) =
           σq (Submodule.Quotient.mk a) + σq (Submodule.Quotient.mk b)
-        rw [← Submodule.Quotient.mk_add, hσq, hσq, hσq, map_add, Submodule.Quotient.mk_add]
+        rw [← Submodule.Quotient.mk_add, hσq, hσq, hσq, map_add (f := _), Submodule.Quotient.mk_add]
       map_smul' := by
         intro r x
         obtain ⟨a, rfl⟩ := Submodule.Quotient.mk_surjective _ x

@@ -122,7 +122,7 @@ theorem exists_levPt : ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] {H
       ε k (e a') (H.w0 • e a') + ε k (e b) (H.w0 • e b) = ε k (e (a + a')) (H.w0 • e (a + a')) +
       ε k (e (a + b)) (H.w0 • e (a + b)) + ε k (e (a' + b)) (H.w0 • e (a' + b)) := by
     intro k a a' b
-    simp only [map_add, smul_add, LinearMap.add_apply]
+    simp only [map_add (f := _), smul_add, LinearMap.add_apply]
     ring
   have hP : ∀ y, ((g y : (FractionRing V)ˣ) : FractionRing V) =
       (∏ k, algebraMap V (FractionRing V) (s k) ^ ((l.M' : ℤ) * ε k (e y) (H.w0 • e y)))⁻¹ := fun y => by

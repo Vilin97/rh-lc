@@ -219,7 +219,7 @@ theorem aeval_act (T : Module.End ℂ (RadSp k r z z' π π')) (C : Module.End �
   induction p using Polynomial.induction_on' with
   | add p q hp hq =>
     intro Ψ v
-    rw [map_add, LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, Pi.add_apply, ContinuousLinearMap.add_apply,
+    rw [map_add (f := _), LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, Pi.add_apply, ContinuousLinearMap.add_apply,
       hp, hq, map_add, LinearMap.add_apply, map_add]
   | monomial m a =>
     intro Ψ v

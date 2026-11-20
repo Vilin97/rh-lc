@@ -63,7 +63,7 @@ theorem tensor_eq_zero_of_forall_geometric_point :
     induction s using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => simp [L, TensorProduct.piLeft]
-    | add s s' h h' => rw [map_add, map_add, Pi.add_apply, h, h', map_add]
+    | add s s' h h' => rw [map_add (f := _), map_add (f := _), Pi.add_apply, h, h', map_add (f := _)]
   rw [key, ht]
   rfl
 

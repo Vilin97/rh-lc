@@ -18,7 +18,7 @@ private def eta (f : RingAut K) (ψ : Multiplicative K →* ℂˣ) (π : Ine (F 
   toFun t := ψ (ofAdd ((f ^ j) (toAdd (π t))))
   map_one' := by simp
   map_mul' s t := by
-    rw [map_mul, toAdd_mul, map_add, ofAdd_add, map_mul]
+    rw [map_mul, toAdd_mul, map_add (f := _), ofAdd_add, map_mul]
 
 private theorem eta_apply (f : RingAut K) (ψ : Multiplicative K →* ℂˣ) (π : Ine (F := E) A →* Multiplicative K) (j : ℤ)
     (t : Ine (F := E) A) : eta f ψ π j t = ψ (ofAdd ((f ^ j) (toAdd (π t)))) := rfl

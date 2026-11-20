@@ -281,7 +281,7 @@ theorem cop_local (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) (t t' ca
     push_cast at this
     linear_combination this
   have e2 := congrArg (inclE (F := F) (E := E) (v.adicCompletion F)) e
-  rw [RingHom.map_add, RingHom.map_mul, RingHom.map_mul, RingHom.map_one] at e2
+  rw [RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_mul, RingHom.map_one] at e2
   rw [← ht']
   exact e2
 

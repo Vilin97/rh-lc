@@ -34,7 +34,7 @@ theorem isEquivariant_mapV (h : ∀ a, P.oA.act a ≫ α = α ≫ P'.oA.act a) :
     IsEquivariant P.actV P'.actV (mapV P P' α) := fun a x => by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul c t => exact congrArg (c ⊗ₜ ·) (mapT_actT α h a t)
 
 theorem mapV_mem_eigV (h : ∀ a, P.oA.act a ≫ α = α ≫ P'.oA.act a) (τ : Λ →+* O) {x : P.V}
@@ -47,7 +47,7 @@ theorem mapV_mem_latT {x : P.V} (hx : x ∈ P.latT) : mapV P P' α x ∈ P'.latT
   obtain ⟨x, rfl⟩ := hx
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add a b ha hb => rw [map_add, map_add]; exact Submodule.add_mem _ ha hb
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ ha hb
   | tmul c t => exact ⟨c ⊗ₜ mapT P P' α t, by rw [Point.inclT_tmul, Point.inclT_tmul]; rfl⟩
 
 theorem mapV_mem_latTSub (h : ∀ a, P.oA.act a ≫ α = α ≫ P'.oA.act a) (τ : Λ →+* O) {x : P.V}
@@ -62,11 +62,11 @@ theorem pairV_mapV [Algebra ℤ_[p] C] (x : P.V) (y : P'.V) :
     P'.pairV (mapV P P' α x) y = P.pairV x (adjV P P' α y) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
   | tmul c s =>
     induction y using TensorProduct.induction_on with
     | zero => simp
-    | add y y' hy hy' => simp only [map_add, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), hy, hy']
     | tmul d t => exact congrArg (· • (c * d)) (pairT_mapT P P' α s t)
 
 theorem weil_adjT (he : P'.eps = P.eps) (t : P'.T) {n : ℕ} {z : ChTor.Pts P.A.A} (hz : z ^ p ^ n = 1) :

@@ -197,7 +197,7 @@ theorem lead_target : ∀ (l : ℕ) [Fact l.Prime] (x : Formalism.Per.Acris l) (
       = algebraMap (Formalism.Per.Ainf l) (Formalism.Per.Acris l) b + (l : Formalism.Per.Acris l) ^ (j + r) * z := by
     rw [hjx, hmt, tc]
     conv_lhs => rw [hab]
-    rw [map_add, map_mul, map_pow, map_natCast]
+    rw [map_add (f := _), map_mul, map_pow, map_natCast]
     ring
   let d : ℕ → ℝ := fun n => if n = m then 0 else cc n
   have hbd : ∀ n, ‖(((b.coeff n).untilt : Formalism.Per.OC l) : ℂ_[l])‖ ^ ((1 : ℝ) / (l : ℝ) ^ n) = d n := by

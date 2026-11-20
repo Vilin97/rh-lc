@@ -70,9 +70,9 @@ theorem onto_of_denom (p : ℕ) {A B : Type} [CommRing A] [CommRing B] (f : A �
     have e1 := congrArg ψ hb'
     rw [map_mul, map_pow, hψT, hψ, mul_pow] at e1
     have e2 := congrArg f hz
-    simp only [map_mul, map_add, map_sub, map_pow, map_natCast] at e2
+    simp only [map_mul, map_add (f := _), map_sub, map_pow, map_natCast] at e2
     refine ⟨b - f β * s + q * y, ?_⟩
-    rw [map_add, map_sub, map_mul, map_mul, eq, hψ]
+    rw [map_add (f := _), map_sub, map_mul, map_mul, eq, hψ]
     apply ((hp.pow (r + 1)).mul (hT.pow r)).mul_left_cancel
     linear_combination -(p : B) * e1 - e2 - (p : B) ^ (r + 1) * f β * hs + (p : B) * f (φ β) * hψs
       + f t ^ r * (y - ψ y) * hq + f t ^ r * hy + f z * f t * hs

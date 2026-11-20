@@ -59,7 +59,7 @@ theorem exists_comb {O : Type} [CommRing O] [IsDomain O] (p : X ⟶ Sp O) {U : X
     { carrier := {β | ∃ c : ι → Γ(X, U), fnOf U h β * f = ∑ i, fnOf U h (c i) * s i}
       zero_mem' := ⟨0, by simp⟩
       add_mem' := fun ⟨c, hc⟩ ⟨c', hc'⟩ => ⟨c + c', by
-        simp only [map_add, add_mul, hc, hc', Pi.add_apply, Finset.sum_add_distrib]⟩
+        simp only [map_add (f := _), add_mul, hc, hc', Pi.add_apply, Finset.sum_add_distrib]⟩
       smul_mem' := fun a β ⟨c, hc⟩ => ⟨a • c, by
         simp only [smul_eq_mul, map_mul, mul_assoc, hc, Pi.smul_apply, Finset.mul_sum]⟩ }
   by_contra H
@@ -127,7 +127,7 @@ theorem eventually_generates {R : Type} [CommRing R] (q : X ⟶ Sp R) [IsProper 
   filter_upwards [AmpleDominates.eventually_isGenerated q hL (isLB_toLB (-E))] with N hN
   have P := presents_toLB (E + N • A)
   obtain ⟨m, u, hu⟩ := hN.of_lbIso P.isLB ((cls_eq_iff P.isLB hN.isLB).1 (by
-    rw [cls_div (isLB_lbPow hL.isLB N) (isLB_toLB _), cls_lbPow hL.isLB, ← toPic_apply, ← toPic_apply, map_add,
+    rw [cls_div (isLB_lbPow hL.isLB N) (isLB_toLB _), cls_lbPow hL.isLB, ← toPic_apply, ← toPic_apply, map_add (f := _),
       map_nsmul, map_neg, hA]
     abel))
   refine ⟨m, fun a => P.rat (u a), fun a => CartierDiv.mem_sections.1 (P.rat_mem _), fun x => ?_⟩

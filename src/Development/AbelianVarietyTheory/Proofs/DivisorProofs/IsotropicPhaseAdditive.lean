@@ -72,6 +72,6 @@ theorem phase_mul : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Number
     rw [mul_inv_rev, GlobalTheory.UnipCT.mat_mul', ← Matrix.mulVec_mulVec, e1, Matrix.mulVec_add, GlobalTheory.UnipMass.hA_add_right,
       hvt, GlobalTheory.UnipMass.hA_add_right, haY, zero_add, add_comm]
   unfold GlobalTheory.IsoPhase.phase
-  rw [← ha, key, map_add, neg_add]
+  rw [← ha, key, map_add (f := _), neg_add]
 
 end GlobalTheory.IsoPhaseAdd

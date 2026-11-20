@@ -52,7 +52,7 @@ theorem tan_der {X : Scheme.{0}} {x : Sp ℂ ⟶ X} {v : Sp (DualNumber ℂ) ⟶
       ∀ f f', D (f * f') = valAt' x V f * D f' + valAt' x V f' * D f := by
   have hv := (le_preimage_dual_iff h V).2 hx
   refine ⟨AddMonoidHom.mk' (fun f => TrivSqZeroExt.snd (valR v V f)) fun a b => ?_, fun _ => rfl, fun f f' => ?_⟩
-  · simp only [valR_eq _ _ hv, map_add, TrivSqZeroExt.snd_add]
+  · simp only [valR_eq _ _ hv, map_add (f := _), TrivSqZeroExt.snd_add]
   · have e1 := fst_valR h hx f
     have e2 := fst_valR h hx f'
     simp only [AddMonoidHom.mk'_apply]

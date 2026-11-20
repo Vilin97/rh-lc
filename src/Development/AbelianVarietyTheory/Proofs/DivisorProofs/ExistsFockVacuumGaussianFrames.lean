@@ -50,9 +50,9 @@ theorem exists_siegel {V C : Type} [AddCommGroup V] [Module ℝ V] [FiniteDimens
     simp only [he1, he2, map_zero, LinearMap.zero_apply] at h
     rw [hY]; linarith
   · have : e.symm (p c, 0) + e.symm (0, p (J c)) = c := by
-      rw [← map_add, LinearEquiv.symm_apply_eq]
+      rw [← map_add (f := _), LinearEquiv.symm_apply_eq]
       exact Prod.ext (add_zero _) (zero_add _)
-    rw [hX, hY, sub_neg_eq_add, ← map_add, ← map_add, this]
+    rw [hX, hY, sub_neg_eq_add, ← map_add (f := _), ← map_add (f := _), this]
 
 theorem exists_gaussian {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V]
     (X Y : V →ₗ[ℝ] V →ₗ[ℝ] ℝ) (hX : ∀ x y, X x y = X y x) (hY : ∀ x y, Y x y = Y y x) (hp : ∀ x, x ≠ 0 → 0 < Y x x) :
@@ -127,9 +127,9 @@ theorem mul_infAd (u : AF F) (hu : evI F u = 0) (t : mixedEmbedding.mixedSpace F
 def trPair (F : Type) [Field F] [NumberField F] (κ : Type) [Fintype κ] :
     (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] (κ → mixedEmbedding.mixedSpace F) →ₗ[ℝ] ℝ :=
   LinearMap.mk₂ ℝ (fun x y => Algebra.trace ℝ (mixedEmbedding.mixedSpace F) (∑ i, x i * y i))
-    (fun x x' y => by simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add])
+    (fun x x' y => by simp only [Pi.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _)])
     (fun c x y => by simp only [Pi.smul_apply, smul_mul_assoc, ← Finset.smul_sum, map_smul])
-    (fun x y y' => by simp only [Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add])
+    (fun x y y' => by simp only [Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)])
     (fun c x y => by simp only [Pi.smul_apply, mul_smul_comm, ← Finset.smul_sum, map_smul])
 
 theorem trPair_apply {κ : Type} [Fintype κ] (x y : κ → mixedEmbedding.mixedSpace F) :
@@ -228,7 +228,7 @@ theorem exists_vacuum : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Nu
     { toFun := fun c i => evI F ((d.e (U c)).1 i)
       map_add' := fun c c' => by
         funext i
-        rw [hadd, map_add]
+        rw [hadd, map_add (f := _)]
         exact map_add (evR F) _ _
       map_smul' := fun r c => by
         funext i
@@ -238,7 +238,7 @@ theorem exists_vacuum : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Nu
     { toFun := fun c i => evI F ((d.e (U c)).2 i)
       map_add' := fun c c' => by
         funext i
-        rw [hadd, map_add]
+        rw [hadd, map_add (f := _)]
         exact map_add (evR F) _ _
       map_smul' := fun r c => by
         funext i

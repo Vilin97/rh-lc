@@ -55,7 +55,7 @@ theorem PiQuotCokerFiniteLength.proof : PiQuotCokerFiniteLength.Statement := by
     funext Q
     set_option synthInstance.maxHeartbeats 100000 in
       rw [hfac, Pi.smul_apply, ← hx Q, map_sum, Finset.sum_eq_single Q]
-    · rw [← hab Q, Algebra.smul_def, Ideal.Quotient.algebraMap_eq, map_add, map_mul,
+    · rw [← hab Q, Algebra.smul_def, Ideal.Quotient.algebraMap_eq, map_add (f := _), map_mul,
         Ideal.Quotient.eq_zero_iff_mem.mpr (hb Q), add_zero]
     · intro P _ hPQ
       have hle : IP P ≤ (Q : Ideal B) :=

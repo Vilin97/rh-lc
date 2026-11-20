@@ -43,7 +43,7 @@ theorem UpperTheory.Gal.W2.rigid_of :
     · obtain ⟨i, f, rfl⟩ := hfull a
       obtain ⟨e₀, he₀⟩ := hmark i
       refine ⟨e₀ + w f - f, ?_⟩
-      have h3 : w (t i + N • f) = w (t i) + N • w f := by rw [map_add, map_nsmul]
+      have h3 : w (t i + N • f) = w (t i) + N • w f := by rw [map_add (f := _), map_nsmul]
       rw [hσ, h3, he₀, smul_sub, smul_add]
       abel
   intro u

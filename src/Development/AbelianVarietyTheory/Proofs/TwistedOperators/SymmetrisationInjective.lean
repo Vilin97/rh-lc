@@ -254,7 +254,7 @@ theorem symmetrisation_injective (act : Mat p q →ₗ[ℂ] Module.End ℂ V) (h
       exact hsym P.1 P.2 v
     | add w w' hw hw' =>
       have h5 := Submodule.add_mem _ hw hw'
-      simp only [map_add]
+      simp only [map_add (f := _)]
       rw [add_sub_add_comm]
       exact h5
   have hz0 : z ∈ degLt ℂ (PIx p q) V k := by

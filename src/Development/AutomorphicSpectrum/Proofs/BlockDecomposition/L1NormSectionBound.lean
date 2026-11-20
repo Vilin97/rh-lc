@@ -150,7 +150,7 @@ def secL (hβ : Continuous β) : E.V →ₗ[ℂ] (Mat n → E.V) where
   toFun := sec E β
   map_add' v w := by
     funext y
-    simp only [sec, map_add, smul_add, Pi.add_apply]
+    simp only [sec, map_add (f := _), smul_add, Pi.add_apply]
     exact integral_add (integrable_avg hβ y _ (continuous_orbit E v)) (integrable_avg hβ y _ (continuous_orbit E w))
   map_smul' c v := by
     funext y

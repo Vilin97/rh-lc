@@ -38,7 +38,7 @@ def transp {I J K K' : Cx R} (μ : Pair I J K) (ψ : K ≅ K') : Pair I J K' whe
     change Sec.map (K'.d w (w + 1)) (Sec.map (ψ.hom.f w) _) =
       Sec.map (ψ.hom.f (w + 1)) _ + s.negOnePow • Sec.map (ψ.hom.f (w + 1)) _
     rw [sec_map_comp, ψ.hom.comm w (w + 1), ← sec_map_comp, μ.leibniz]
-    simp only [Sec.map, map_add, map_zsmul_unit]
+    simp only [Sec.map, map_add (f := _), map_zsmul_unit]
 
 theorem transp_lift {I J K K' : Cx R} (μ : Pair I J K) (ψ : K ≅ K') (U : Scheme.{0}) (w : ℤ)
     (x : Tens I J U w) : (transp μ ψ).lift U w x = Sec.map (ψ.hom.f w) (μ.lift U w x) := by

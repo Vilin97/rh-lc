@@ -109,7 +109,7 @@ theorem UpperTheory.Gal.W2.fTrace_of :
   intro hE p _ G x
   apply (algebraMap ℚ_[p] (PadicAlgCl p)).injective
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum, map_sum]
+    rw [map_add (f := _), map_sum, map_sum]
   have hl : algebraMap ℚ_[p] (PadicAlgCl p) ((Algebra.trace ℚ G.F x : ℚ) : ℚ_[p])
       = algebraMap ℚ (PadicAlgCl p) (Algebra.trace ℚ G.F x) := by
     simp only [map_ratCast, eq_ratCast]

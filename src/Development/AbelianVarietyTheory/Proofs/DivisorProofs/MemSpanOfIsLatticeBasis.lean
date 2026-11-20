@@ -35,7 +35,7 @@ theorem exists_eq_sum_of_mem {p q : ℕ} (F : Submodule C (Fin (p + q) → C))
     have hm : ∑ k, γ (Fin.natAdd p k) • F.mkQ (m0 k) = 0 :=
       Finset.sum_eq_zero fun k _ => by simp [hm0 k]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [hf0, map_add, map_sum, map_sum] at h1
+      rw [hf0, map_add (f := _), map_sum, map_sum] at h1
     simp only [map_smul] at h1
     rw [hm, add_zero] at h1
     exact h1.symm

@@ -120,7 +120,7 @@ theorem heckeIdem_comm [Finite H] (hm : ∀ x ∈ U, ∀ y ∈ U, χ (x * y) = �
       congrArg Subrepresentation.toSubmodule hW'.sup_eq_top
     have hv : v ∈ W.toSubmodule ⊔ W'.toSubmodule := hsup ▸ Submodule.mem_top
     obtain ⟨a, ha, b, hb', rfl⟩ := Submodule.mem_sup.mp hv
-    simp only [map_add, sub W ht a ha, sub W' ht' b hb']
+    simp only [map_add (f := _), sub W ht a ha, sub W' ht' b hb']
 
 end
 

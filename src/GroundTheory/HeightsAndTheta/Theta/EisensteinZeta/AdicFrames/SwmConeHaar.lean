@@ -311,7 +311,7 @@ theorem conjBaseAlgEquiv_apply (z : R ⊗[K] E) : conjBaseAlgEquiv K E R z = con
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem norm_conjBase (z : R ⊗[K] E) :
     Algebra.norm R (conjBase K E R z) = Algebra.norm R z := by
@@ -586,7 +586,7 @@ def sPartM (X : Matrix (Fin n) (Fin n) (R ⊗[K] E)) : Matrix (Fin n) (Fin n) (R
 theorem hPartM_mem (X : Matrix (Fin n) (Fin n) (R ⊗[K] E)) : hPartM X ∈ hermSub K E R n := by
   show cTr K E R (hPartM X) = hPartM X
   ext i j
-  simp only [hPartM, cTr_apply, Matrix.smul_apply, Matrix.add_apply, smul_eq_mul, map_mul, map_add,
+  simp only [hPartM, cTr_apply, Matrix.smul_apply, Matrix.add_apply, smul_eq_mul, map_mul, map_add (f := _),
     conjBase_halfA, Chart.conjBase_conjBase]
   ring
 
@@ -607,7 +607,7 @@ def splitHom : (HermSp K E R n × HermSp K E R n) ≃ₜ+ FrameSp K E R (Fin n) 
     refine Prod.ext (HermSp.ext' ?_) (HermSp.ext' ?_)
     · ext i j
       show hPartM (p.1.mat + (epsU K E R : R ⊗[K] E) • p.2.mat) i j = p.1.mat i j
-      simp only [hPartM, cTr_apply, Matrix.smul_apply, Matrix.add_apply, smul_eq_mul, map_add,
+      simp only [hPartM, cTr_apply, Matrix.smul_apply, Matrix.add_apply, smul_eq_mul, map_add (f := _),
         map_mul, conjBase_epsU, HermSp.mat_apply_swap]
       linear_combination (p.1.mat i j) * (two_mul_halfA (K := K) (E := E) (R := R))
     · ext i j
@@ -669,7 +669,7 @@ def congrPair (g : GL (Fin n) (R ⊗[K] E)) :
   invFun p := ((congrHom K E R n g).symm p.1, (congrHom K E R n g).symm p.2)
   left_inv p := by simp
   right_inv p := by simp
-  map_add' p q := by simp [map_add]
+  map_add' p q := by simp [map_add (f := _)]
   continuous_toFun := (congrHom K E R n g).continuous.prodMap (congrHom K E R n g).continuous
   continuous_invFun :=
     (congrHom K E R n g).symm.continuous.prodMap (congrHom K E R n g).symm.continuous

@@ -215,7 +215,7 @@ theorem exists_away_two (hv : ∀ i, IsTangent (v i)) (p q : PrimeSpectrum R) {a
     fun h => hb ((Ideal.add_mem_iff_right _ haq).1 h), isLieBasisOver_of_expBij ?_⟩
   refine expBij_of_span (s := {algebraMap R _ a, algebraMap R _ b}) ?_ ?_
   · refine Ideal.eq_top_of_isUnit_mem _ (x := algebraMap R _ (a + b)) ?_ ?_
-    · rw [map_add]
+    · rw [map_add (f := _)]
       exact add_mem (Ideal.subset_span (by simp)) (Ideal.subset_span (by simp))
     · have := ((isAway_awayHom (R := R) (a + b)).unit).map (inlS R (Localization.Away (a + b)))
       simpa only [IsScalarTower.coe_toAlgHom', AlgHom.commutes] using this

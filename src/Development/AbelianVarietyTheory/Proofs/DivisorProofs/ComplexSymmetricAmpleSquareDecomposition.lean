@@ -38,7 +38,7 @@ theorem frame_power_identity : ∀ (A : Over (Sp ℂ)) [GrpObj A] (L M : LB A.le
   have hM1 : ∀ k, uM.fr (j k) (F k z) = χM ⟨F k l, hF k l l.2⟩ *
       Complex.exp (Real.pi * (F k z ⬝ᵥ HM.mulVec (star (F k l))) +
         Real.pi / 2 * (F k l ⬝ᵥ HM.mulVec (star (F k l)))) * uM.fr (j k) (F k (z + l)) := fun k => by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact hfM.2.2 ⟨F k l, hF k l l.2⟩ (j k) (F k z) (hj k)
   have hcL : χL l ^ N = 1 := by
     rcases hχL l with h | h <;> rw [h]

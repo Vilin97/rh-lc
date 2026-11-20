@@ -199,7 +199,7 @@ theorem cech_top_cup_power : ∀ {R : Type} [CommRing R] {C : Type 1} [Category.
     rw [h]
     change (rM Φ.A hU).pullC (n + 1) ((KK Φ.A W).dh n (n + 1) ω tp + (-1 : ℤ) ^ (n + 1) • CH.d _ n (f tp)) = _
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [dh_apply, map_add, map_sum, map_zsmul]
+      rw [dh_apply, map_add (f := _), map_sum, map_zsmul]
     refine congrArg₂ (· + ·) (Finset.sum_congr rfl fun k _ => ?_) ?_
     · rw [map_zsmul]; rfl
     · rw [d_resB]; rfl

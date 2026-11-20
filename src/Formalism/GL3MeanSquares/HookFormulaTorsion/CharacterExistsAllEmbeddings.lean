@@ -61,7 +61,7 @@ def integralPowerSeriesSubring (W : Subring K) (ι : Type) : Subring (MvPowerSer
     rw [coeff_one]
     split_ifs
     exacts [W.one_mem, W.zero_mem]
-  add_mem' := by intro a b ha hb m; rw [map_add]; exact W.add_mem (ha m) (hb m)
+  add_mem' := by intro a b ha hb m; rw [map_add (f := _)]; exact W.add_mem (ha m) (hb m)
   zero_mem' := by intro m; rw [map_zero]; exact W.zero_mem
   neg_mem' := by intro a ha m; rw [map_neg]; exact W.neg_mem (ha m)
 

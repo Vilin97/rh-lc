@@ -26,7 +26,7 @@ variable {R : Type} [CommRing R] {C : Type 1} [Category.{0} C] {Φ : PDF R C} {d
   (E : Frame Φ d) (σ : ∀ T : C, E.D ⟶ T) (I : Fin j → Fin d) (u : ComposableArrows C j)
 
 theorem form_add_fun (x x' : Φ.A.obj E.D) : E.form σ I (x + x') u = E.form σ I x u + E.form σ I x' u := by
-  simp only [Frame.form, map_add, mul_add]
+  simp only [Frame.form, map_add (f := _), mul_add]
 
 theorem form_sub_fun (x x' : Φ.A.obj E.D) : E.form σ I (x - x') u = E.form σ I x u - E.form σ I x' u := by
   simp only [Frame.form, map_sub, mul_sub]
@@ -77,7 +77,7 @@ theorem coef_map : ∀ {K : Type} [Field K] [CharZero K] {X : Scheme.{0}} (q : X
     have h2 := rep_add (hφ c) (hφ c')
     have e : (fun u => E.form σ id (ε (φ c)) u + E.form σ id (ε (φ c')) u) = E.form σ id (ε (φ c + φ c')) := by
       funext u
-      rw [map_add, form_add_fun]
+      rw [map_add (f := _), form_add_fun]
     rwa [e] at h2
   · intro a c
     refine uniq _ _ (a • c) (hφ _) ?_

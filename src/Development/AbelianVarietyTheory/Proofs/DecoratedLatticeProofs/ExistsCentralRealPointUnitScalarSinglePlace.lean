@@ -25,10 +25,10 @@ theorem exists_unit {θ : InfFam D} (hθ : IsInfFam θ) (τ : D.what₂.Tau) {ζ
   let v : D.what₂.Tau → ℂ := fun ρ => if ρ = τ then ζ - 1 else 0
   let a : AE D := 1 + σ v
   have a1 : finPart D a = 1 := by
-    simp only [a]; rw [RingHom.map_add, hσ.fin, RingHom.map_one, add_zero]
+    simp only [a]; rw [RingHom.map_add (f := _), hσ.fin, RingHom.map_one, add_zero]
   have a2 : ∀ ρ, θ ρ (infPart D a) = if ρ = τ then ζ else 1 := by
     intro ρ
-    simp only [a]; rw [RingHom.map_add, RingHom.map_add, hσ.comp, RingHom.map_one, RingHom.map_one]
+    simp only [a]; rw [RingHom.map_add (f := _), RingHom.map_add (f := _), hσ.comp, RingHom.map_one, RingHom.map_one]
     simp only [v]
     split_ifs <;> ring
   refine ⟨a, a1, a2, sub_eq_zero.1 (hσ.ext _ ?_ fun ρ => ?_)⟩

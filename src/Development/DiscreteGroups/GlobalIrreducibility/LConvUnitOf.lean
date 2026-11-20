@@ -28,7 +28,7 @@ theorem unitOfUnif : UnitOfUnif := by
   obtain ⟨N, hN⟩ := hUnif k m K hKo
   let F : Submodule ℂ H :=
     { carrier := {x | ∀ κ ∈ K, π κ x = x}
-      add_mem' := fun {a b} ha hb κ hκ => by rw [map_add, ha κ hκ, hb κ hκ]
+      add_mem' := fun {a b} ha hb κ hκ => by rw [map_add (f := _), ha κ hκ, hb κ hκ]
       zero_mem' := fun κ _ => map_zero _
       smul_mem' := fun c x hx κ hκ => by rw [map_smul, hx κ hκ] }
   have hF : IsClosed (F : Set H) := by

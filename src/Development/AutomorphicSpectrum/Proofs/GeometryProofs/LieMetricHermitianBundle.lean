@@ -26,13 +26,13 @@ def coreOfEquiv {V W : Type} [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [M
   inner x y := c.inner (Φ x) (Φ y)
   conj_inner_symm x y := c.conj_inner_symm (Φ x) (Φ y)
   re_inner_nonneg x := c.re_inner_nonneg (Φ x)
-  add_left x y z := by simp only [map_add]; exact c.add_left _ _ _
+  add_left x y z := by simp only [map_add (f := _)]; exact c.add_left _ _ _
   smul_left x y r := by simp only [map_smul]; exact c.smul_left _ _ _
   definite x hx := Φ.injective (by rw [map_zero]; exact c.definite _ hx)
 
 theorem core_add_right {V : Type} [AddCommGroup V] [Module ℂ V] (c : InnerProductSpace.Core ℂ V) (x y z : V) :
     c.inner x (y + z) = c.inner x y + c.inner x z := by
-  rw [← c.conj_inner_symm x (y + z), c.add_left, map_add, c.conj_inner_symm, c.conj_inner_symm]
+  rw [← c.conj_inner_symm x (y + z), c.add_left, map_add (f := _), c.conj_inner_symm, c.conj_inner_symm]
 
 theorem core_smul_right {V : Type} [AddCommGroup V] [Module ℂ V] (c : InnerProductSpace.Core ℂ V) (x y : V) (r : ℂ) :
     c.inner x (r • y) = r * c.inner x y := by
@@ -68,12 +68,12 @@ theorem exists_fibreLift {L : Type} [Field L] {E : Type} [AddCommGroup E] [Modul
   letI : Module (𝓞 L) Q := Module.compHom Q (σ.comp (algebraMap (𝓞 L) L))
   let B : ComplexAt σ →ₗ[𝓞 L] E →ₗ[𝓞 L] Q := LinearMap.mk₂ (𝓞 L)
     (fun a e => ((ComplexAt.ofComplex σ).symm a : ℂ) • j e)
-    (fun a b e => by rw [map_add, add_smul])
+    (fun a b e => by rw [map_add (f := _), add_smul])
     (fun r a e => by
       change ((ComplexAt.ofComplex σ).symm (r • a) : ℂ) • j e = (σ (r : L) : ℂ) • _
       rw [ComplexAt.smul_def, map_mul, mul_smul]
       simp)
-    (fun a e e' => by rw [map_add, smul_add])
+    (fun a e e' => by rw [map_add (f := _), smul_add])
     (fun r a e => by
       have hr : j (r • e) = (σ (r : L) : ℂ) • j e := j.map_smulₛₗ r e
       change ((ComplexAt.ofComplex σ).symm a : ℂ) • j (r • e) =
@@ -88,7 +88,7 @@ theorem exists_fibreLift {L : Type} [Field L] {E : Type} [AddCommGroup E] [Modul
       change ((ComplexAt.ofComplex σ).symm (c • a) : ℂ) • j e = c • ((ComplexAt.ofComplex σ).symm a : ℂ) • j e
       rw [ComplexAt.complex_smul_def, map_mul, mul_smul]
       simp
-    | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+    | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
   · change TensorProduct.lift B _ = _
     rw [TensorProduct.lift.tmul]
     change ((ComplexAt.ofComplex σ).symm 1 : ℂ) • j e = j e
@@ -168,7 +168,7 @@ theorem exists_fibreEquiv (MB : LieModel G z E) (σ : L →+* ℂ) :
       change _ • g (f _) = _
       rw [hf, hg]
       rfl
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   refine ⟨V, iA, iM, Mz, LinearEquiv.ofLinear f g hfg hgf, fun e => ?_⟩
   change MB.Lifts _ _ e (Mz.pt (f _))
   rw [hf]
@@ -221,11 +221,11 @@ theorem form_conj_of_pure (core : ∀ σ : L →+* ℂ, InnerProductSpace.Core �
     rw [conjMap_tmul, map_one]
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero, core_zero_left]
-  | add x x' hx hx' => simp only [map_add, (core _).add_left, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), (core _).add_left, hx, hx']
   | tmul a e =>
     induction y using TensorProduct.induction_on with
     | zero => simp only [map_zero, core_zero_right]
-    | add y y' hy hy' => simp only [map_add, core_add_right, hy, hy']
+    | add y y' hy hy' => simp only [map_add (f := _), core_add_right, hy, hy']
     | tmul b f =>
       rw [pure_smul σ a e, pure_smul σ b f, conjMap_smul, conjMap_smul, h1, h1, (core _).smul_left, core_smul_right,
         (core _).smul_left, core_smul_right, h]

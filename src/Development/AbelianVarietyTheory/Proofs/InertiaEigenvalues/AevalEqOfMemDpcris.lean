@@ -85,13 +85,13 @@ theorem actVB_mul (g g' : G) (x : V ⊗[Qp] B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem actVB_one (x : V ⊗[Qp] B) : actVB PD ρ 1 x = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem actVB_pow (g : G) (n : ℕ) (x : V ⊗[Qp] B) :
     actVB PD ρ (g ^ n) x = (actVB PD ρ g ^ n) x := by

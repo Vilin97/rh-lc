@@ -49,7 +49,7 @@ theorem exists_change_one (q : SplitPt D k) (h : D.host.E) (hh : h ≠ 0) (hs : 
   have hf : ∀ b ∈ idAt D (· = q.v), f * b = b := fun b hb => by rw [hfdef]; exact (idem_iff q b).1 hb
   have hfm : f ∈ idAt D (· = q.v) := by rw [hfdef]; exact sum_mem_idAt q
   have hff : f * f = f := hf _ hfm
-  have hcf : cA D f = f := by rw [hfdef, map_add, cA_cA, add_comm]
+  have hcf : cA D f = f := by rw [hfdef, map_add (f := _), cA_cA, add_comm]
   have hec : q.e * cA D q.e = 0 := q.split.2.1
   have hce : cA D q.e * q.e = 0 := cAe_mul_e q
   have hcee : cA D q.e * cA D q.e = cA D q.e := by rw [← map_mul, q.split.1]
@@ -61,7 +61,7 @@ theorem exists_change_one (q : SplitPt D k) (h : D.host.E) (hh : h ≠ 0) (hs : 
   have hu : u ∈ idAt D (· = q.v) := by rw [hudef]; exact add_mem (sec_mem_idAt q _) hcem
   have hu' : u' ∈ idAt D (· = q.v) := by rw [hu'def]; exact add_mem (sec_mem_idAt q _) hcem
   have hcu : cA D u ∈ idAt D (· = q.v) := by
-    rw [hudef, map_add, cA_cA]; exact add_mem (csec_mem_idAt (p := q) _) (e_mem_idAt q)
+    rw [hudef, map_add (f := _), cA_cA]; exact add_mem (csec_mem_idAt (p := q) _) (e_mem_idAt q)
   have hst : q.sec s * q.sec t = q.e := by rw [← sec_mul, hsdef, inv_mul_cancel₀ ht0, sec_one]
   have huu : u * u' = f := by
     have h1 := hsc s
@@ -77,7 +77,7 @@ theorem exists_change_one (q : SplitPt D k) (h : D.host.E) (hh : h ≠ 0) (hs : 
     rw [hw, hw']
     linear_combination (1 - f) ^ 2 * hmm + hff - (m : AE D) * hf _ hu' - mi * hf _ hu + huu
   have hcw : cA D w = cA D (m : AE D) * (1 - f) + cA D u := by
-    rw [hw, map_add, map_mul, map_sub, map_one, hcf]
+    rw [hw, map_add (f := _), map_mul, map_sub, map_one, hcf]
   refine ⟨Units.mkOfMulEqOne w w' hww, fun x hx a ha => ?_, fun a ha => ?_⟩
   · have hfa : f * a = 0 := mul_eq_zero_of_ne (Ne.symm hx) hfm ha
     have hua : u * a = 0 := mul_eq_zero_of_ne (Ne.symm hx) hu ha
@@ -103,7 +103,7 @@ theorem exists_change_one (q : SplitPt D k) (h : D.host.E) (hh : h ≠ 0) (hs : 
     have hC1 : cA D q.e * cA D (q.sec s) = cA D (q.sec s) := by rw [← map_mul, e_mul_sec]
     have hD : q.sec s * q.e = q.sec s := by rw [mul_comm, e_mul_sec]
     have hkey : u * cA D u * incA D h = f := by
-      rw [hudef, hfdef, map_add, cA_cA]
+      rw [hudef, hfdef, map_add (f := _), cA_cA]
       linear_combination (incA D h) * ((-(q.sec s)) * hC1 + (cA D (q.sec s)) * hsc s + hD + hce + hC1) + hA + hB
     calc w * cA D w * incA D h * a = w * (cA D w * (incA D h * a)) := by ring
       _ = u * (cA D u * (incA D h * a)) := by rw [hcwa _ hb, hwa _ hc2]

@@ -63,8 +63,8 @@ variable {Ks L0 L WL}
 
 def jBil (jj : ∀ τ : L0 →+* ℂ, WL →ₛₗ[τ] W τ) (σ : L →+* ℂ) : L →+ WL →+ W (σ.comp (algebraMap L0 L)) :=
   AddMonoidHom.mk' (fun a => AddMonoidHom.mk' (fun x => σ a • jj (σ.comp (algebraMap L0 L)) x)
-    (fun x y => by simp only [map_add, smul_add]))
-    (fun a b => by ext x; simp only [map_add, add_smul, AddMonoidHom.mk'_apply, AddMonoidHom.add_apply])
+    (fun x y => by simp only [map_add (f := _), smul_add]))
+    (fun a b => by ext x; simp only [map_add (f := _), add_smul, AddMonoidHom.mk'_apply, AddMonoidHom.add_apply])
 
 theorem jBil_apply (jj : ∀ τ : L0 →+* ℂ, WL →ₛₗ[τ] W τ) (σ : L →+* ℂ) (a : L) (x : WL) :
     jBil jj σ a x = σ a • jj (σ.comp (algebraMap L0 L)) x := rfl
@@ -91,7 +91,7 @@ def jbc (jj : ∀ τ : L0 →+* ℂ, WL →ₛₗ[τ] W τ) (σ : L →+* ℂ) :
     | tmul a x =>
       rw [TensorProduct.smul_tmul', jAdd_tmul, jAdd_tmul, smul_eq_mul, map_mul, mul_smul]
       try rfl
-    | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem jbc_tmul (jj : ∀ τ : L0 →+* ℂ, WL →ₛₗ[τ] W τ) (σ : L →+* ℂ) (a : L) (x : WL) :
     jbc (Ks := Ks) jj σ (a ⊗ₜ[L0] x : L ⊗[L0] WL) = (σ a • jj (σ.comp (algebraMap L0 L)) x : W _) :=
@@ -128,7 +128,7 @@ def bc : Arith.FormsL L Ks (BCW Ks L0 L WL) (Wbc L0 L W) G0 where
   nrm lp y f := A.nrm lp y ((wkEquiv L A).symm f)
   nrm_nonneg lp y f := A.nrm_nonneg lp y _
   nrm_zero lp y := by rw [map_zero]; exact A.nrm_zero lp y
-  nrm_add lp y f g := by rw [map_add]; exact A.nrm_add lp y _ _
+  nrm_add lp y f g := by rw [map_add (f := _)]; exact A.nrm_add lp y _ _
   nrm_smul lp y a f := by rw [map_smul]; exact A.nrm_smul lp y a _
   towKs := inferInstance
   ρ := ((Module.End.baseChangeHom L0 L WL).toMonoidHom.comp A.ρ : G0 →* Module.End L (L ⊗[L0] WL))

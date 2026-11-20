@@ -105,7 +105,7 @@ theorem exists_cmIn : Known → ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
   have tor : ∀ τ : E →+* ℂ, ∃ ν : Out.GtPt a.D₀ (epsR K₁), GtTanR ν ∧ ν.b = Out.DegPre.zeroT a.D₀ (epsR K₁) ∧
       ∀ x, DlogTan ν x (labK c K₁ τ (cc (pairE ξ x))) := fun τ =>
     ((GlobalTheory.TorusTangent.main hK.laws.globalFns K₁ a.D₀).1 (AddMonoidHom.mk' (fun x => labK c K₁ τ (cc (pairE ξ x)))
-      fun x y => by rw [(pairE_properties E a.D₀.X ξ).2.1, cc, map_add, map_add]; rfl)).exists
+      fun x y => by rw [(pairE_properties E a.D₀.X ξ).2.1, cc, map_add (f := _), map_add (f := _)]; rfl)).exists
   have ab : ∀ m : Fin a.D₀.P.g, ∃ ν : Out.GtPt a.D₀ (epsR K₁), GtTanR ν ∧ ∃ w : epsR K₁ ⟶ a.D₀.P.A, L.IsLetter m w ∧
       Out.GtPt.IsPull (spMap (epsScaleR ((n' : K₁)⁻¹))) (sB (epsR K₁) w) ν := fun m => by
     obtain ⟨w, hw, hc⟩ := hL.2.2.1 m

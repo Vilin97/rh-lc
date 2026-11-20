@@ -45,7 +45,7 @@ private theorem scl_st_pow (T : TrInv B E) {z : E} (hz : T.st z = z) (n : ℕ) :
 private theorem scl_st_aeval (T : TrInv B E) {z : E} (hz : T.st z = z) (q : B[X]) :
     T.st (aeval z q) = aeval z q := by
   induction q using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq]
   | monomial n b => rw [aeval_monomial, ← Algebra.smul_def, map_smul, scl_st_pow T hz]
 
 private theorem scl_idem_zero (I : Ideal B) [IsAdicComplete I E] {g : E} (hg : IsIdempotentElem g) {M : ℕ}
@@ -85,13 +85,13 @@ private theorem scl_step (T : TrInv B E) (I : Ideal B) [IsAdicComplete I E] {F :
     · intro a ha n _
       rw [map_smul, ← algebraMap_smul F a (r n), RingHom.mem_ker.1 (hI ha), zero_smul]
     · intro x y hx hy
-      rw [map_add, hx, hy, add_zero]
+      rw [map_add (f := _), hx, hy, add_zero]
   obtain ⟨c, hc⟩ : ∃ c : B, c * 2 = 1 := ⟨((h2.unit⁻¹ : Bˣ) : B), h2.val_inv_mul⟩
   let u : E := c • (y + T.st y)
   have hsu : T.st u = u := by
-    simp only [u, map_smul, map_add, T.st_st, add_comm]
+    simp only [u, map_smul, map_add (f := _), T.st_st, add_comm]
   have hru : r u = r y := by
-    simp only [u, map_smul, map_add, hst, hyt]
+    simp only [u, map_smul, map_add (f := _), hst, hyt]
     rw [← two_smul B (r y), smul_smul, hc, one_smul]
   let z : E := e * u * e
   have hsz : T.st z = z := by
@@ -133,7 +133,7 @@ private theorem scl_step (T : TrInv B E) (I : Ideal B) [IsAdicComplete I E] {F :
     rw [map_sub, sub_eq_zero] at h0
     have h3 : r ((z * z - z) * aeval z q) = 0 := by
       rw [map_mul, map_sub, map_mul, hrz, hy.eq, sub_self, zero_mul]
-    rw [h0, map_add, h3, add_zero, hrz]
+    rw [h0, map_add (f := _), h3, add_zero, hrz]
 
 end aux
 

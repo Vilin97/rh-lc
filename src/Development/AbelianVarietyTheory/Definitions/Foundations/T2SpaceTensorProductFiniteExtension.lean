@@ -29,7 +29,7 @@ theorem norm_map (φ : R →ₐ[F] R') (x : R ⊗[F] E) :
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [Algebra.TensorProduct.basis_repr_tmul]
-    | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
   rw [Algebra.norm_eq_matrix_det (Algebra.TensorProduct.basis R' b),
     Algebra.norm_eq_matrix_det (Algebra.TensorProduct.basis R b), AlgHom.map_det]
   congr 1

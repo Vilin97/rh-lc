@@ -74,7 +74,7 @@ theorem exists_nat_smul_mem_nabAtr {E K : Type} [Field E] [NumberField E] [Field
     obtain ⟨j, hj, y, hy, hjy⟩ := Submodule.mem_sup.1 h1mem
     obtain ⟨c, rfl⟩ := Ideal.mem_span_singleton'.1 hy
     have h1 : Ideal.Quotient.mk J (c * (p : 𝓞 K)) = 1 := by
-      rw [← map_one (Ideal.Quotient.mk J), ← hjy, map_add, Ideal.Quotient.eq_zero_iff_mem.2 hj, zero_add]
+      rw [← map_one (Ideal.Quotient.mk J), ← hjy, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 hj, zero_add]
     have hpz : p • z = 0 := hz ▸ addOrderOf_nsmul_eq_zero z
     have hz0 : z = 0 := by
       calc z = Ideal.Quotient.mk J (c * (p : 𝓞 K)) * z := by rw [h1, one_mul]
@@ -106,7 +106,7 @@ theorem coeff_aeval_scale {σ K : Type} [Field K] (t : K) (P : MvPolynomial σ K
     by_cases h : d = m
     · subst h; simp
     · simp [h]
-  | add p q hp hq => rw [map_add, MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
+  | add p q hp hq => rw [map_add (f := _), MvPolynomial.coeff_add, MvPolynomial.coeff_add, hp, hq, mul_add]
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host E} {Dw : Datum H}
   {l : Level H} (c : Coeff l)

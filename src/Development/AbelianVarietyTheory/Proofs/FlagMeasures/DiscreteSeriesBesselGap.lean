@@ -232,7 +232,7 @@ theorem nzOn_of_mass (hy : Hyps) {k r : ℕ} {ε : Fin (2 * r + k + 1) → Bool}
       rw [← (hsq (a + b) (Submodule.add_mem _ ha hb)).2]
       apply integral_congr_ae
       filter_upwards [hνae] with y hy
-      rw [map_add, hB.1 _ (hsm _ hy a (DDsm a ha)) _ (hsm _ hy b (DDsm b hb))]
+      rw [map_add (f := _), hB.1 _ (hsm _ hy a (DDsm a ha)) _ (hsm _ hy b (DDsm b hb))]
     rw [(hsq a ha).2, (hsq b hb).2] at i2 i3
     rw [e, norm_add_sq (𝕜 := ℂ)] at i3
     refine ⟨i1, i2, ?_⟩

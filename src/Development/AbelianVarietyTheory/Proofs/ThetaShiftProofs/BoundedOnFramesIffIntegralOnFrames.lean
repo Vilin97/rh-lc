@@ -53,7 +53,7 @@ theorem norm_discEval_le_one [IsUltrametricDist K] (f : O⟦X⟧) : ‖discEval 
 theorem norm_discEval_sub_le [IsUltrametricDist K] (f : O⟦X⟧) :
     ‖discEval i hi ht f - i (PowerSeries.constantCoeff f)‖ ≤ ‖t‖ := by
   have h := congrArg (discEval i hi ht) (PowerSeries.eq_X_mul_shift_add_const f)
-  rw [map_add, map_mul, discEval_X, discEval_C] at h
+  rw [map_add (f := _), map_mul, discEval_X, discEval_C] at h
   rw [h, add_sub_cancel_right, norm_mul]
   exact mul_le_of_le_one_right (norm_nonneg _) (norm_discEval_le_one i hi ht _)
 
@@ -426,7 +426,7 @@ theorem ringHom_padicInt_eq (g : ℤ_[p] →+* ℂ_[p]) (hg : ∀ z, ‖g z‖ �
     have hz : z = y * p ^ n + (z.appr n : ℕ) := by rw [hy]; ring
     have : g z - h z = (g y + -h y) * p ^ n := by
       conv_lhs => rw [hz]
-      simp only [map_add, map_mul, map_pow, map_natCast]
+      simp only [map_add (f := _), map_mul, map_pow, map_natCast]
       ring
     rw [this, norm_mul, norm_pow]
     refine mul_le_of_le_one_left (by positivity) ((IsUltrametricDist.norm_add_le_max _ _).trans
@@ -549,7 +549,7 @@ theorem fieldRange_genField {T : Set ℂ_[p]} (hT : T ⊆ algField p) :
       rw [← IsScalarTower.algebraMap_apply, map_div₀]
       exact div_mem (Subfield.subset_closure (Or.inl ⟨_, map_algebraMap_padicInt i hi a⟩))
         (Subfield.subset_closure (Or.inl ⟨_, map_algebraMap_padicInt i hi b⟩))
-    | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
     | inv y _ hy => rw [map_inv₀]; exact inv_mem hy
     | mul y z _ _ hy hz => rw [map_mul]; exact mul_mem hy hz
   · obtain ⟨y, rfl⟩ : x ∈ algField p := by
@@ -581,7 +581,7 @@ theorem finiteDimensional_genField {T : Set ℂ_[p]} (hT : T.Finite) :
     induction hb using Submodule.span_induction with
     | mem x hx => exact IntermediateField.subset_adjoin _ _ (Or.inl ⟨x, hx, rfl⟩)
     | zero => rw [map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul a x _ hx =>
       have : i₀ (algebraMap ℤ_[p] O a) = algebraMap ℚ_[p] (PadicAlgCl p) a := hinj (by
         rw [hi₀, map_algebraMap_padicInt i hi, ← IsScalarTower.algebraMap_apply])

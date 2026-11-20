@@ -49,7 +49,7 @@ theorem framepf_map_φspan (i : ZMod n) {x : W.DD T₁} (hx : x ∈ Formalism.Ma
     rw [W.map_φ]
     exact Submodule.subset_span ⟨_, ⟨W.map f z, hfN z hz, (map_letA_smul W T₁ f _ z).symm⟩, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul s x _ hx => rw [map_letA_smul]; exact Submodule.smul_mem _ _ hx
 
 include hfN in
@@ -87,7 +87,7 @@ theorem framepf_Lmap_smulLA (a : LetA O n) (x : LA W T₁ π' c) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul e ℓ => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem framepf_Lmap_toLA {x : LA W T₁ π' c} (hx : x ∈ LinearMap.range (toLA W T₁ π' c ⊤)) :
     (framepf_Lmap f hfN π' c).lTensor W.EE x ∈ LinearMap.range (toLA W T₂ π' c ⊤) := by
@@ -95,7 +95,7 @@ theorem framepf_Lmap_toLA {x : LA W T₁ π' c} (hx : x ∈ LinearMap.range (toL
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul a s => exact ⟨a ⊗ₜ ⟨framepf_Lmap f hfN π' c s, trivial⟩, rfl⟩
-  | add x y hx hy => rw [map_add, map_add]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
 
 theorem framepf_Lmap_LamLA (Eπ : LetA O n) (h' : ℕ) {x : LA W T₁ π' c}
     (hx : x ∈ LamLA W T₁ π' Eπ h' c ⊤) :
@@ -144,7 +144,7 @@ theorem framepf_Ψ_smulLA {T' : LocLat G Qp LL O} (Ψ : W.EE ⊗[O] LcQ W T π' 
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul e ℓ => rfl
-    | add x y hx hy => rw [map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
   rw [this, map_smul, algebraMap_smul]
 
 theorem framepf_smulLA_alg (b : LetA O n) (t : LA W T π' c) :
@@ -152,7 +152,7 @@ theorem framepf_smulLA_alg (b : LetA O n) (t : LA W T π' c) :
   induction t using TensorProduct.induction_on with
   | zero => simp
   | tmul e ℓ => rfl
-  | add x y hx hy => rw [map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
 
 theorem framepf_mem_toLA {r : ℕ} (bL : Module.Basis (Fin r) O (LcQ W T π' c)) (x : LA W T π' c) :
     x ∈ LinearMap.range (toLA W T π' c ⊤) ↔ ∀ k, ∃ a ∈ W.AΔ,
@@ -173,7 +173,7 @@ theorem framepf_mem_toLA {r : ℕ} (bL : Module.Basis (Fin r) O (LcQ W T π' c))
       obtain ⟨a, ha, hae⟩ := hx
       obtain ⟨b, hb, hbe⟩ := hy
       refine ⟨a + b, W.AΔ.add_mem ha hb, ?_⟩
-      rw [map_add, map_add, Finsupp.add_apply, hae, hbe, mul_add, map_add]
+      rw [map_add (f := _), map_add (f := _), Finsupp.add_apply, hae, hbe, mul_add, map_add (f := _)]
   · intro h
     choose a ha hae using h
     refine ⟨∑ k, (⟨a k, ha k⟩ : ↥W.AΔ) ⊗ₜ ⟨bL k, trivial⟩, ?_⟩
@@ -300,7 +300,7 @@ theorem framepf_Ψα_nat (hu : IsUnit (algebraMap (LetA O n) W.EE π'))
       obtain ⟨q, hq, hqe⟩ := hy
       refine ⟨p + q, Submodule.add_mem _ hp hq, ?_⟩
       rw [smul_add, ← hpe, ← hqe]
-      simp only [map_add]
+      simp only [map_add (f := _)]
       abel
   obtain ⟨p, hp, hpe⟩ := key t
   refine ⟨p, hp, ?_⟩

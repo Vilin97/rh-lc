@@ -28,7 +28,7 @@ theorem repM_add (s : Lt) (p : ℕ) {x y : MvPolynomial (KM.XZ Lt N0 N1) ℤ}
   obtain ⟨d, rfl⟩ := hx
   obtain ⟨e, rfl⟩ := hy
   refine ⟨d + e, ?_⟩
-  simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem repM_single (s : Lt) (p : ℕ) (J : Fin p ↪o Fin N0) (c : MvPolynomial (Lt × Fin N0 × Fin N1) ℤ) :
     RepM N0 N1 s p (MvPolynomial.rename Sum.inl (minX N0 s p J) * MvPolynomial.rename Sum.inr c) := by

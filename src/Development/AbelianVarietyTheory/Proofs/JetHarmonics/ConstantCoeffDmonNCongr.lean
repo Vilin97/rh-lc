@@ -25,7 +25,7 @@ theorem coeff_mul_congr (N : ℕ) (f g E : PS k n d)
   rw [coeff_mul, coeff_mul]
   refine Finset.sum_congr rfl fun p hp => ?_
   have hp' : p.1 + p.2 = a := Finset.HasAntidiagonal.mem_antidiagonal.1 hp
-  have hd : p.1.degree + p.2.degree = a.degree := by rw [← hp', map_add]
+  have hd : p.1.degree + p.2.degree = a.degree := by rw [← hp', map_add (f := _)]
   rw [h p.1 (by omega)]
 
 theorem coeff_DofN_congr (F : Fin d → PS k 2 d) (b : Fin n) (v : Fin d → k) (N : ℕ) (f g : PS k n d)
@@ -40,9 +40,9 @@ theorem coeff_DofN_congr (F : Fin d → PS k 2 d) (b : Fin n) (v : Fin d → k) 
   rw [coeff_mul, coeff_mul]
   refine Finset.sum_congr rfl fun p hp => ?_
   have hp' : p.1 + p.2 = mo := Finset.HasAntidiagonal.mem_antidiagonal.1 hp
-  have hd : p.1.degree + p.2.degree = mo.degree := by rw [← hp', map_add]
+  have hd : p.1.degree + p.2.degree = mo.degree := by rw [← hp', map_add (f := _)]
   rw [coeff_pderiv, coeff_pderiv, h]
-  rw [map_add, Finsupp.degree_single]
+  rw [map_add (f := _), Finsupp.degree_single]
   omega
 
 theorem coeff_iterate_DofN_congr (F : Fin d → PS k 2 d) (b : Fin n) (v : Fin d → k) (r : ℕ) :
@@ -87,7 +87,7 @@ theorem isLinearMap_DofN (F : Fin d → PS k 2 d) (b : Fin n) (v : Fin d → k) 
   constructor
   · intro f g
     unfold DofN
-    simp only [map_add, mul_add, Finset.sum_add_distrib]
+    simp only [map_add (f := _), mul_add, Finset.sum_add_distrib]
   · intro c f
     unfold DofN
     simp only [Derivation.map_smul, mul_smul_comm, Finset.smul_sum]
@@ -99,7 +99,7 @@ theorem isLinearMap_iterate {M : Type} [AddCommGroup M] [Module k M] (φ : M →
   | succ r ih =>
     constructor
     · intro f g
-      simp only [Function.iterate_succ_apply, hφ.map_add, ih.map_add]
+      simp only [Function.iterate_succ_apply, hφ.map_add (f := _), ih.map_add (f := _)]
     · intro c f
       simp only [Function.iterate_succ_apply, hφ.map_smul, ih.map_smul]
 
@@ -113,7 +113,7 @@ theorem isLinearMap_DmonN (F : Fin d → PS k 2 d) {Ix : Type} [Fintype Ix] (cp 
     constructor
     · intro f g
       simp only [List.foldr_cons]
-      rw [ih.map_add, hl.map_add]
+      rw [ih.map_add (f := _), hl.map_add (f := _)]
     · intro c f
       simp only [List.foldr_cons]
       rw [ih.map_smul, hl.map_smul]

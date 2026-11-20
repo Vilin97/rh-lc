@@ -40,20 +40,20 @@ theorem sc_exists_emb {K : Type} [Field K] [Algebra F K] (sig : E →ₐ[F] E) (
   have hd : algebraMap F E D = b ^ 2 := hb2.symm
   have h2E : (2 : E) ≠ 0 := two_ne_zero
   have hα : ∀ x, ∃ a, algebraMap F E a = (x + sig x) / 2 := fun x =>
-    hfix _ (by rw [map_div₀, map_add, hsig, map_ofNat, add_comm])
+    hfix _ (by rw [map_div₀, map_add (f := _), hsig, map_ofNat, add_comm])
   have hβ : ∀ x, ∃ a, algebraMap F E a = (x - sig x) / (2 * b) := fun x =>
     hfix _ (by rw [map_div₀, map_sub, hsig, map_mul, map_ofNat, hb]; field_simp; ring)
   choose α hα using hα
   choose β hβ using hβ
   have inj := (algebraMap F E).injective
   have αm : ∀ x y, α (x * y) = α x * α y + D * (β x * β y) := fun x y => inj (by
-    simp only [map_add, map_mul, hα, hβ, hd]; field_simp; ring)
+    simp only [map_add (f := _), map_mul, hα, hβ, hd]; field_simp; ring)
   have βm : ∀ x y, β (x * y) = α x * β y + β x * α y := fun x y => inj (by
-    simp only [map_add, map_mul, hα, hβ]; field_simp; ring)
+    simp only [map_add (f := _), map_mul, hα, hβ]; field_simp; ring)
   have αa : ∀ x y, α (x + y) = α x + α y := fun x y => inj (by
-    simp only [map_add, hα]; ring)
+    simp only [map_add (f := _), hα]; ring)
   have βa : ∀ x y, β (x + y) = β x + β y := fun x y => inj (by
-    simp only [map_add, hβ]; ring)
+    simp only [map_add (f := _), hβ]; ring)
   have αc : ∀ a, α (algebraMap F E a) = a := fun a => inj (by rw [hα, sig.commutes]; ring)
   have βc : ∀ a, β (algebraMap F E a) = 0 := fun a => inj (by rw [hβ, sig.commutes]; simp)
   have αb : α b = 0 := inj (by rw [hα, hb]; simp)
@@ -65,9 +65,9 @@ theorem sc_exists_emb {K : Type} [Field K] [Algebra F K] (sig : E →ₐ[F] E) (
             map_zero' := by simpa using hc 0
             map_mul' := fun x y => by
               rw [αm, βm]
-              simp only [map_add, map_mul]
+              simp only [map_add (f := _), map_mul]
               linear_combination (-(algebraMap F K (β x) * algebraMap F K (β y))) * hr
-            map_add' := fun x y => by rw [αa, βa, map_add, map_add]; ring
+            map_add' := fun x y => by rw [αa, βa, map_add (f := _), map_add (f := _)]; ring
             commutes' := hc }, ?_⟩
   show algebraMap F K (α b) + algebraMap F K (β b) * r = r
   rw [αb, βb]; simp
@@ -85,7 +85,7 @@ theorem sc_exists_iso {K : Type} [Field K] [Algebra F K] (sig : E →ₐ[F] E)
     rintro ⟨x, y⟩
     refine ⟨((x + y) / 2) ⊗ₜ 1 + ((x - y) / (2 * ψ b)) ⊗ₜ b, ?_⟩
     have h2K : (2 : K) ≠ 0 := two_ne_zero
-    rw [map_add, he, he, hb, map_one sig, map_one ψ, map_neg]
+    rw [map_add (f := _), he, he, hb, map_one sig, map_one ψ, map_neg]
     have aux : ∀ r : K, r ≠ 0 → ((x + y) / 2 * 1 + (x - y) / (2 * r) * r = x ∧
         (x + y) / 2 * 1 + (x - y) / (2 * r) * -r = y) := fun r hr => by
       have h1 : (x - y) / (2 * r) * r = (x - y) / 2 := by
@@ -198,7 +198,7 @@ theorem sc_core (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x)
   refine ⟨⟨φ, fun x => ?_, fun c => ?_, fun x => ⟨fun hx => ?_, fun hx => ?_⟩⟩⟩
   · induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add, map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
     | tmul x c =>
       have : sigR σ (v.adicCompletion F) (x ⊗ₜ[F] c) = σ x ⊗ₜ[F] c := rfl
       rw [this, hφ, hφ, hσ]; rfl
@@ -242,7 +242,7 @@ theorem sc_core (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x)
     obtain ⟨e₁, he1, hφe⟩ : ∃ e₁, e₁ ∈ intV E v ∧ φ e₁ = (1, 0) := ⟨_, he1, hφe⟩
     have hx : x = (1 : E) ⊗ₜ[F] (φ x).1 * e₁ + (1 : E) ⊗ₜ[F] (φ x).2 * (1 - e₁) := by
       apply φ.injective
-      rw [map_add, map_mul, map_mul, map_sub, map_one, hφe, hφ, hφ]
+      rw [map_add (f := _), map_mul, map_mul, map_sub, map_one, hφe, hφ, hφ]
       refine Prod.ext ?_ ?_
       · show (φ x).1 = (φ x).1 * ψ 1 * 1 + (φ x).2 * ψ 1 * (1 - 1)
         rw [map_one]; ring
@@ -344,7 +344,7 @@ theorem hs_elt (p : ℕ) (hp : p.Prime)
   have hfix1 : (((a + H.conj • a : 𝓞 H.E)) : H.E) ∈ H.F := by
     rw [mem_F_iff]
     show H.conj ((a : H.E) + H.conj (a : H.E)) = (a : H.E) + H.conj (a : H.E)
-    rw [map_add, conj_conj, add_comm]
+    rw [map_add (f := _), conj_conj, add_comm]
   have hfix2 : (((a * H.conj • a : 𝓞 H.E)) : H.E) ∈ H.F := by
     rw [mem_F_iff]
     show H.conj ((a : H.E) * H.conj (a : H.E)) = (a : H.E) * H.conj (a : H.E)
@@ -708,7 +708,7 @@ def fm_pr {σ : E →ₐ[F] E} {v : HeightOneSpectrum (𝓞 F)} (s : SplitCore �
       rw [map_zero]; rfl)
     map_add' := fun x y => Subtype.ext (by
       show (s.φ ((x : E ⊗[F] v.adicCompletion F) + y)).1 = (s.φ x).1 + (s.φ y).1
-      rw [map_add]; rfl) }
+      rw [map_add (f := _)]; rfl) }
 
 theorem fm_pr_coe {σ : E →ₐ[F] E} {v : HeightOneSpectrum (𝓞 F)} (s : SplitCore σ v) (x : intV E v) :
     ((fm_pr s x : v.adicCompletionIntegers F) : v.adicCompletion F) = (s.φ x).1 := rfl

@@ -44,7 +44,7 @@ theorem evForm_secPull : ∀ (A : Over (Sp ℂ)) [GrpObj A] (g : ℕ) (L : LB A.
     rw [e.fderiv_eq, fderiv_comp z ((hdiff _ b).differentiableAt ((hopen _).mem_nhds (hpre z hz)))
       M.differentiableAt, M.fderiv]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, map_add, hx, hy, map_add, ContinuousLinearMap.add_comp]
+  | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), ContinuousLinearMap.add_comp]
   | smul a x _ hx => rw [SemiHom.oneFormMap_smul_semilinear, hsm', hsm, hx, hval z hz a, ContinuousLinearMap.smul_comp]
 
 end GlobalTheory.CechPer

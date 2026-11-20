@@ -20,7 +20,7 @@ variable {R S G M M' : Type} [CommRing R] [CommRing S] [Algebra S R] [Group G]
 def cocycleMap : coZ1s ρ →ₗ[S] coZ1s ρ' where
   toFun c := ⟨fun g => φ ((c : G → M) g), fun g h => by
     show φ ((c : G → M) (g * h)) = φ ((c : G → M) g) + ρ' g (φ ((c : G → M) h))
-    rw [c.2 g h, map_add, hφ]⟩
+    rw [c.2 g h, map_add (f := _), hφ]⟩
   map_add' a b := Subtype.ext <| funext fun g => map_add φ ((a : G → M) g) ((b : G → M) g)
   map_smul' r a := Subtype.ext <| funext fun g => map_smul φ r ((a : G → M) g)
 
@@ -226,7 +226,7 @@ variable {ι : Type} [Fintype ι] (b : Module.Basis ι ℤ_[l] O)
 
 def psiQ (j : ι) : ℚ_[l] →ₗ[ℤ_[l]] KO O where
   toFun x := Submodule.Quotient.mk (iotaK l O x * algebraMap O (FractionRing O) (b j))
-  map_add' x y := by rw [map_add, add_mul, Submodule.Quotient.mk_add]
+  map_add' x y := by rw [map_add (f := _), add_mul, Submodule.Quotient.mk_add]
   map_smul' a x := by
     rw [RingHom.id_apply, ← Submodule.Quotient.mk_smul, smulK, Algebra.smul_def a x, map_mul, iotaK_alg,
       mul_assoc]

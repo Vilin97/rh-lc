@@ -53,7 +53,7 @@ private theorem transport {n : ℕ} {F E A B k : Type} [Field F] [NumberField F]
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul x a => simp [hψ, D.ext]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   refine ⟨mapGL n p δ, ?_⟩
   rw [← map_twNorm p _ _ h1, hδ, cp, cp, ← Matrix.charpoly_map]
   congr 1

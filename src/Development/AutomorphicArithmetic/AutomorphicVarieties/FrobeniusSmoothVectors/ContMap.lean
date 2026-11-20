@@ -52,7 +52,7 @@ private theorem mono {l : ℕ} [Fact l.Prime] {O : Type} [CommRing O] {k : Type}
     refine ⟨b' * b, D.mul_mem hb' hb, x' * x, ?_, ?_⟩
     · have hw : Finsupp.weight W.wt (Finsupp.single a e) = e • W.wt a := by
         simp [Finsupp.weight_apply, Finsupp.sum_single_index]
-      rw [map_add, hw]
+      rw [map_add (f := _), hw]
       exact mono_lemma ρ hx' hx
     · have hm : MvPowerSeries.monomial (Finsupp.single a e + f) (1 : O) =
           MvPowerSeries.X a ^ e * MvPowerSeries.monomial f 1 := by

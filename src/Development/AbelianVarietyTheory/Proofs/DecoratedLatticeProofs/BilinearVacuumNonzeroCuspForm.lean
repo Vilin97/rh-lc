@@ -150,7 +150,7 @@ theorem isBiSmooth_avg (ha : IsWeilDatumO ψ A S χA χS oma) (hb : IsWeilDatumO
       show (inlH d S (L t) + inrH d S (L' t)).map (finPart D) = 0
       rw [Matrix.map_add _ (RingHom.map_add _), map_inlH d S _ (h0 t), fin_inrH d S (h0' t), add_zero]) (inlH d S u + inrH d S v)
   convert this using 4 with t k
-  simp only [Pi.smul_apply, join_apply, smul_eq_mul, AddMonoidHom.add_apply, AddMonoidHom.comp_apply, map_add, fst_inl, fst_inr,
+  simp only [Pi.smul_apply, join_apply, smul_eq_mul, AddMonoidHom.add_apply, AddMonoidHom.comp_apply, map_add (f := _), fst_inl, fst_inr,
     snd_inl, snd_inr, add_zero, zero_add]
 
 end Smooth

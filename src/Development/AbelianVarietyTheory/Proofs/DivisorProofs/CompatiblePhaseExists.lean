@@ -28,7 +28,7 @@ theorem st_one' (hm : ∀ x y, st (x * y) = st y * st x) (hi : ∀ x, st (st x) 
 theorem half_add (hh : h + h = 1) (x : S) : h • x + h • x = x := by rw [← add_smul, hh, one_smul]
 
 theorem st_smul (hh : h + h = 1) (x : S) : st (h • x) = h • st x := by
-  conv_rhs => rw [← half_add hh x, map_add, smul_add, half_add hh]
+  conv_rhs => rw [← half_add hh x, map_add (f := _), smul_add, half_add hh]
 
 theorem cube_zero {f x y w : S} (hx : x * e = 0) (hy : (1 - e) * y * (1 - f) = 0) (hw : f * w = 0) : x * y * w = 0 := by
   have : x * y * w = x * ((1 - e) * y * (1 - f)) * w + x * e * (y * w) + x * y * (f * w) - x * e * (y * (f * w)) := by
@@ -39,7 +39,7 @@ theorem ex_unitary (hm : ∀ x y, st (x * y) = st y * st x) (hi : ∀ x, st (st 
     (hs : st x = -x) (h3 : x * x * x = 0) : st (ex h x) * ex h x = 1 := by
   have h4 : x * x * (x * x) = 0 := by rw [← mul_assoc, h3, zero_mul]
   have h3' : x * (x * x) = 0 := by rw [← mul_assoc, h3]
-  simp only [ex, map_add, st_one' hm hi, st_smul hh, hm, hs, add_mul, mul_add, smul_mul_assoc, mul_smul_comm, neg_mul, mul_neg,
+  simp only [ex, map_add (f := _), st_one' hm hi, st_smul hh, hm, hs, add_mul, mul_add, smul_mul_assoc, mul_smul_comm, neg_mul, mul_neg,
     neg_neg, h3, h3', h4, one_mul, mul_one, smul_zero, add_zero, neg_zero]
   have := half_add hh (x * x)
   generalize h • (x * x) = y at this ⊢
@@ -75,7 +75,7 @@ theorem exists_log (hm : ∀ x y, st (x * y) = st y * st x) (hi : ∀ x, st (st 
     have a : (1 + m) * (1 - m + m * m) = 1 := by
       rw [show (1 + m) * (1 - m + m * m) = 1 + m * m * m by noncomm_ring, m3, add_zero]
     have := left_inv_eq_right_inv hu a
-    rw [map_add, s1] at this
+    rw [map_add (f := _), s1] at this
     rw [← add_right_inj 1, this]; abel
   have sx : st (m - h • (m * m)) = -(m - h • (m * m)) := by
     simp only [map_sub, st_smul hh, hm, sm, mul_sub, sub_mul, m3, m3', m4, sub_zero, zero_sub, neg_neg, sub_self]
@@ -111,7 +111,7 @@ theorem map_ex_skw {T : Type} [Ring T] (π : S →+* T) {a y : S} (h1 : π (y - 
   rw [map_sub, map_sub, sub_eq_zero] at h2
   have q : π (skw st e h y) = π (skw st e h a) := by
     simp only [skw, map_sub π, hm, map_mul, h1, h2]
-  simp only [ex, Algebra.smul_def, map_add, map_mul, q]
+  simp only [ex, Algebra.smul_def, map_add (f := _), map_mul, q]
 
 theorem ex_skw_mem (S₀ : Subring S) (h0 : ∀ x ∈ S₀, st x ∈ S₀) (he : e ∈ S₀) (hh : algebraMap R S h ∈ S₀) {a : S} (ha : a ∈ S₀) :
     ex h (skw st e h a) ∈ S₀ := by
@@ -177,7 +177,7 @@ theorem sndT_sigR (σ : E →ₐ[F] E) (x : AF F ⊗[F] E) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a x => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Dense
 
@@ -193,7 +193,7 @@ theorem sndT_adj {b : Matrix (Fin V.rank) (Fin V.rank) (AF D.host.F ⊗[D.host.F
   ext i j
   exact (sndT_sigR _ (b j i)).trans ((congrArg _ (congrFun (congrFun hb j) i)).trans (map_zero _))
 
-theorem half_adele : incA D (1 / 2) + incA D (1 / 2) = 1 := by rw [← map_add, add_halves, map_one]
+theorem half_adele : incA D (1 / 2) + incA D (1 / 2) = 1 := by rw [← map_add (f := _), add_halves, map_one]
 
 def exA (V : HSp D) (e : Matrix (Fin V.rank) (Fin V.rank) D.host.E)
     (z : Matrix (Fin V.rank) (Fin V.rank) (AF D.host.F ⊗[D.host.F] D.host.E)) :

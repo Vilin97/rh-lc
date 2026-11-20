@@ -87,7 +87,7 @@ theorem DT_one_add_pow (c : ℂ_[q]) (j : ℕ) :
   | zero => simp [DT]
   | succ j =>
     have hd : derivative ℂ_[q] (1 + X : ℂ_[q]⟦X⟧) = 1 := by
-      rw [map_add, derivative_X, Derivation.map_one_eq_zero, zero_add]
+      rw [map_add (f := _), derivative_X, Derivation.map_one_eq_zero, zero_add]
     rw [DT, ← smul_eq_C_mul, Derivation.map_smul, Derivation.leibniz_pow, hd, smul_eq_C_mul,
       map_mul, map_natCast]
     simp only [Nat.add_sub_cancel, smul_eq_mul, nsmul_eq_mul]

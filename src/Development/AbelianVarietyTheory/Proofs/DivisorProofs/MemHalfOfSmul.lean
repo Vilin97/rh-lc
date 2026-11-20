@@ -92,7 +92,7 @@ theorem dvd_pairing (d : DeltaDat Xo c n) (h : d.IsLev) (x z y : Dw.La) :
   have h4 : (d.l₂.M : ℤ) ∣ _ := hM ▸ mul_dvd_mul_right h2 (d.pd : ℤ)
   have h5 : (d.l₂.M : ℤ) ∣ _ := hM ▸ mul_dvd_mul_left (l.M : ℤ) h3
   have h6 := dvd_add (dvd_add h1 h4) h5
-  simp only [map_sub, map_add, map_nsmul, sub_smul, LinearMap.sub_apply, LinearMap.add_apply, LinearMap.smul_apply,
+  simp only [map_sub, map_add (f := _), map_nsmul, sub_smul, LinearMap.sub_apply, LinearMap.add_apply, LinearMap.smul_apply,
     nsmul_eq_mul] at h6
   refine h6.trans (dvd_of_eq ?_)
   ring

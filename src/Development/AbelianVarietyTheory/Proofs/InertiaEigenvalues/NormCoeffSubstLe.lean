@@ -100,7 +100,7 @@ theorem Ex.mul {u f g e e' : K⟦X⟧} (hu : ‖constantCoeff u‖ < 1) (hf : �
   have := h1.add h2
   rw [add_zero] at this
   refine this.congr fun m => ?_
-  rw [← map_add, ← map_add, add_sub_cancel]
+  rw [← map_add (f := _), ← map_add (f := _), add_sub_cancel]
 
 theorem Ex.aeval {u f e : K⟦X⟧} (hu : ‖constantCoeff u‖ < 1) (hf : ∀ m, ‖coeff m f‖ ≤ 1)
     (he : Ex u f e) (p : Polynomial K) : Ex u (Polynomial.aeval f p) (Polynomial.aeval e p) := by
@@ -262,7 +262,7 @@ variable {K : Type} [NormedField K] [IsUltrametricDist K] in
 private lemma aeval_rescale_eq_rescale_aeval (c : K) (v : K⟦X⟧) (p : Polynomial K) :
     Polynomial.aeval (rescale c v) p = rescale c (Polynomial.aeval v p) := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
   | monomial n b =>
     simp only [Polynomial.aeval_monomial, map_mul, map_pow]
     congr 1
@@ -349,7 +349,7 @@ variable {K : Type} [NormedField K] [IsUltrametricDist K] in
 private lemma ex_add_inertia_eigenvalues {u f g e e' : K⟦X⟧} (h₁ : _root_.GlobalTheory.HWL.ExpSub.Ex u f e)
     (h₂ : _root_.GlobalTheory.HWL.ExpSub.Ex u g e') : _root_.GlobalTheory.HWL.ExpSub.Ex u (f + g) (e + e') := by
   intro k
-  simp_rw [map_add]
+  simp_rw [map_add (f := _)]
   exact (h₁ k).add (h₂ k)
 
 open PowerSeries Filter Topology in
@@ -452,7 +452,7 @@ private lemma ex_aeval_of_norm_constantCoeff_lt_one {u f e : K⟦X⟧} (hu : ‖
     (hf : ∀ m, ‖coeff m f‖ ≤ 1) (he : _root_.GlobalTheory.HWL.ExpSub.Ex u f e) (p : Polynomial K) :
     _root_.GlobalTheory.HWL.ExpSub.Ex u (Polynomial.aeval f p) (Polynomial.aeval e p) := by
   induction p using Polynomial.induction_on' with
-  | add p q hp hq => rw [map_add, map_add]; exact ex_add_inertia_eigenvalues hp hq
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _)]; exact ex_add_inertia_eigenvalues hp hq
   | monomial n a =>
     rw [Polynomial.aeval_monomial, Polynomial.aeval_monomial]
     exact ex_C_mul a (ex_pow_of_norm_coeff_le_one hu hf he n)

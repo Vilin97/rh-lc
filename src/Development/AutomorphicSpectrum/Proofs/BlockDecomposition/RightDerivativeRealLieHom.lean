@@ -32,7 +32,7 @@ theorem Rd_DR (X Y : Mat n) (h : SmF n) {g : Mat n} (hg : g ∈ GLs n) :
 
 theorem DR_add (X Y : Mat n) : DR (X + Y) = DR X + DR Y := by
   refine LinearMap.ext fun h => SmF_ext fun g hg => ?_
-  simp only [LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, DR_apply _ _ hg, Rd, Matrix.mul_add, map_add]
+  simp only [LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, DR_apply _ _ hg, Rd, Matrix.mul_add, map_add (f := _)]
 
 theorem DR_smul (r : ℝ) (X : Mat n) : DR ((r : ℂ) • X) = (r : ℂ) • DR X := by
   refine LinearMap.ext fun h => SmF_ext fun g hg => ?_

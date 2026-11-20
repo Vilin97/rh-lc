@@ -21,7 +21,7 @@ theorem leibniz_eq_zero {O C σ : Type} [CommRing O] [CommRing C]
     intro P
     induction P using MvPolynomial.induction_on with
     | C c => rw [MvPolynomial.coe_C]; exact hC c
-    | add p q hp hq => rw [MvPolynomial.coe_add, map_add, hp, hq, add_zero]
+    | add p q hp hq => rw [MvPolynomial.coe_add, map_add (f := _), hp, hq, add_zero]
     | mul_X p j hp => rw [MvPolynomial.coe_mul, MvPolynomial.coe_X, hmul, hp, hX]; simp
   have h2 : ∀ h ∈ Ideal.span (Set.range fun j =>
       (X j - MvPowerSeries.C (a j) : MvPowerSeries σ O)), φ₀ h = 0 ∧ E h = 0 := by
@@ -80,7 +80,7 @@ theorem algHom_dualNumber_ext : ∀ (C : Type) [Field C] [IsAlgClosed C] [CharZe
   let K : Ideal (MvPowerSeries σ O) :=
     { carrier := {g | v (φ₀ g) < 1}
       add_mem' := fun {x y} hx hy => by
-        simp only [Set.mem_setOf_eq, map_add] at hx hy ⊢
+        simp only [Set.mem_setOf_eq, map_add (f := _)] at hx hy ⊢
         exact v.map_add_lt hx hy
       zero_mem' := by simp
       smul_mem' := fun s x hx => by
@@ -131,7 +131,7 @@ theorem algHom_dualNumber_ext : ∀ (C : Type) [Field C] [IsAlgClosed C] [CharZe
     { toFun := fun g => (ψ' g).snd - (ψ g).snd - ∑ j, φ₀ (pderiv (R := O) (e j) g) * d j
       map_zero' := by simp
       map_add' := fun x y => by
-        simp only [map_add, TrivSqZeroExt.snd_add, add_mul, Finset.sum_add_distrib]; ring }
+        simp only [map_add (f := _), TrivSqZeroExt.snd_add, add_mul, Finset.sum_add_distrib]; ring }
   have hE : ∀ g, E g = (ψ' g).snd - (ψ g).snd - ∑ j, φ₀ (pderiv (R := O) (e j) g) * d j :=
     fun g => rfl
   have hE0 : ∀ g, E g = 0 := by

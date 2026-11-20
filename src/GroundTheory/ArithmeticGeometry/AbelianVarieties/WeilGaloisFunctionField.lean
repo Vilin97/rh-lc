@@ -229,7 +229,7 @@ theorem galConj_translate (σ : L ≃ₐ[K] L) (R : (W₀.baseChange L).toAffine
     galConj W₀ σ (translate (W₀.baseChange L) R) =
       translate (W₀.baseChange L) (galPointsHom K L W₀ σ R) := by
   apply algHom_eq_of_map_genericPoint
-  rw [map_galConj_genericPoint, map_translate_genericPoint, map_add, galFFPoint_genericPoint,
+  rw [map_galConj_genericPoint, map_translate_genericPoint, map_add (f := _), galFFPoint_genericPoint,
     galFFPoint_constPoint, map_translate_genericPoint]
 
 theorem galFF_translate (σ : L ≃ₐ[K] L) (R : (W₀.baseChange L).toAffine.Point)

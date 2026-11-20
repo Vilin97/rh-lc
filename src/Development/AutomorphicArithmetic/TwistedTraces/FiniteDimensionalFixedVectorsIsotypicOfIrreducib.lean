@@ -96,10 +96,10 @@ theorem UpperTheory.finiteDimensional_fixedVectors_isotypic_of_irreducible :
       exact D.add_mem (a3 D hD hinv v hv) (b3 D hD hinv v hv)
     · intro G' _ _ π' hc h v
       show T₁ (π' h v) + T₂ (π' h v) = π' h (T₁ v + T₂ v)
-      rw [a4 G' π' hc, b4 G' π' hc, map_add]
+      rw [a4 G' π' hc, b4 G' π' hc, map_add (f := _)]
     · intro f hf x
       show T₁ (f x) + T₂ (f x) = f (A₁ x + A₂ x)
-      rw [a5 f hf, b5 f hf, map_add]
+      rw [a5 f hf, b5 f hf, map_add (f := _)]
     · intro x
       show A₁ x + A₂ x = _
       rw [a6 x, b6 x]

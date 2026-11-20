@@ -33,7 +33,7 @@ theorem ratio_adjoin {k Ω B D : Type} [Field k] [Field Ω] [Algebra k Ω] [Comm
     obtain ⟨a, b, hb, e⟩ := hz
     obtain ⟨a', b', hb', e'⟩ := hw
     refine ⟨a * b' + a' * b, b * b', hmul _ _ hb hb', ?_⟩
-    simp only [map_add, map_mul, e, e']
+    simp only [map_add (f := _), map_mul, e, e']
     ring
   | inv z _ hz =>
     obtain ⟨a, b, hb, e⟩ := hz

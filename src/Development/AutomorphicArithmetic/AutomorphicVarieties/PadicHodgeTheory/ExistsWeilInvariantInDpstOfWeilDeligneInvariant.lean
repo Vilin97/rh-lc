@@ -54,7 +54,7 @@ private theorem UpperTheory.fixed_vector_descends_weil_group {Γ I K D W : Type}
       obtain ⟨t, ht⟩ := hn s
       rw [← Module.End.mul_apply, ← map_mul, ht, map_mul, Module.End.mul_apply, hE]
     have h2 := congrArg E hx
-    rw [hS, map_sub, map_add, map_sub, map_nsmul, hE1 _ h1, hE1 _ (hE x), map_zero, add_sub_cancel_right,
+    rw [hS, map_sub, map_add (f := _), map_sub, map_nsmul, hE1 _ h1, hE1 _ (hE x), map_zero, add_sub_cancel_right,
       ← smul_sub] at h2
     have h3 : a φ (E x) = E x := sub_eq_zero.mp (hcan _ h2)
     have h4 : E x = 0 := by
@@ -71,7 +71,7 @@ private theorem UpperTheory.fixed_vector_descends_weil_group {Γ I K D W : Type}
     rintro _ ⟨x, rfl⟩
     obtain ⟨z, rfl⟩ := hsur x
     refine ⟨mk z, ?_⟩
-    rw [hS, hS', hEE, hc, map_sub, map_add, map_sub, map_nsmul]
+    rw [hS, hS', hEE, hc, map_sub, map_add (f := _), map_sub, map_nsmul]
   refine hy (LinearMap.injective_iff_surjective.mpr hsur' ?_)
   rw [hS', hE2, map_nsmul, hi, map_zero, sub_self, zero_add, sub_self]
 

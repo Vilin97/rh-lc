@@ -177,7 +177,7 @@ def eqv (ρ : Multiplicative G →* (M →ₗ[R] M)) (S : Set G) (n : ℕ) : Sub
   carrier := {f | ∀ g ∈ S, ∀ x : Fin (n + 1) → G, f (fun i => g + x i) = ρ (Multiplicative.ofAdd g) (f x)}
   add_mem' {a b} ha hb g hg x := by
     change a _ + b _ = ρ _ (a x + b x)
-    rw [ha g hg, hb g hg, map_add]
+    rw [ha g hg, hb g hg, map_add (f := _)]
   zero_mem' g hg x := (map_zero _).symm
   smul_mem' c a ha g hg x := by
     change c • a _ = ρ _ (c • a x)

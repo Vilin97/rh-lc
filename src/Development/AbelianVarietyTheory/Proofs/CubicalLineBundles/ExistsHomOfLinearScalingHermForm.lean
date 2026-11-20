@@ -29,7 +29,7 @@ lemma val_mul {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) (f f' : Γ(X, U)) :
 lemma val_add {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) (f f' : Γ(X, U)) :
     valAt' x U (f + f') = valAt' x U f + valAt' x U f' := by
   obtain ⟨e, he⟩ := (valueRules X x).2.1 U h
-  simp only [he, map_add]
+  simp only [he, map_add (f := _)]
 
 lemma val_one {U : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ U) : valAt' x U 1 = 1 := by
   obtain ⟨e, he⟩ := (valueRules X x).2.1 U h
@@ -201,7 +201,7 @@ lemma isThetaFn_comp {Hm : Matrix (Fin g) (Fin g) ℂ} {χ : u.Λ → ℂ}
     rw [← Complex.exp_nat_mul]
     congr 1
     ring
-  simp only [map_add]
+  simp only [map_add (f := _)]
   rw [k₁, k₂, e]
   generalize Complex.exp _ = E
   have a₁ : χ l ^ (2 * (n * N)) = 1 := by rw [pow_mul, hχ, one_pow]
@@ -333,7 +333,7 @@ lemma exists_hom [Smooth A.hom] [Smooth A'.hom] [IsSeparated A'.hom] (hL : L.IsL
     obtain ⟨a, ha⟩ := h
     obtain ⟨a', ha'⟩ := h'
     refine ⟨a + a', fun w hw => ?_⟩
-    rw [map_add, val_add _ hw, val_add _ ((hmem i _).2 (hne w hw)), ha w hw, ha' w hw]
+    rw [map_add (f := _), val_add _ hw, val_add _ ((hmem i _).2 (hne w hw)), ha w hw, ha' w hw]
   | mul_X Q j h =>
     obtain ⟨a, ha⟩ := h
     obtain ⟨b, hb⟩ := exists_quot u (ht i j) (ht i i) fun _ => ch z

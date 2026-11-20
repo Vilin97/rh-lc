@@ -178,7 +178,7 @@ theorem pairFiveR_surj (bd : LeafBd) (q : ℕ) {J : Type} [SmallCategory J] [IsF
   obtain ⟨l, w, hw⟩ := (hS n).1 s
   refine ⟨IsFiltered.max k l, pull _ (F.map (IsFiltered.leftToMax k l).op).right (tw q i) n z +
     pull _ (F.map (IsFiltered.rightToMax k l).op).right (tw q i) n (Hs.fgt q _ n i w), ?_⟩
-  rw [map_add, ← GlobalTheory.EtC.pull_comp, ← GlobalTheory.EtC.pull_comp, ← Arrow.comp_right, ← Arrow.comp_right, hc, hc, ← Hs.fgt_pull, hw, hs,
+  rw [map_add (f := _), ← GlobalTheory.EtC.pull_comp, ← GlobalTheory.EtC.pull_comp, ← Arrow.comp_right, ← Arrow.comp_right, hc, hc, ← Hs.fgt_pull, hw, hs,
     add_sub_cancel]
 
 theorem pairFiveR_inj (bd : LeafBd) (q : ℕ) {J : Type} [SmallCategory J] [IsFiltered J] (F : Jᵒᵖ ⥤ Arrow Spc)

@@ -27,7 +27,7 @@ theorem mulVec_mem {B n : Type} [CommRing B] [Fintype n] (S : Subring B) {a : Ma
 
 theorem map_mix_one {A B : Type} [CommRing A] [CommRing B] (φ : A →+* B) {f : A} (hf : φ f = 1) (a b : A) :
     φ a = φ (f * a + (1 - f) * b) := by
-  rw [map_add, map_mul, map_mul, map_sub, map_one, hf, sub_self, zero_mul, one_mul, add_zero]
+  rw [map_add (f := _), map_mul, map_mul, map_sub, map_one, hf, sub_self, zero_mul, one_mul, add_zero]
 
 variable {D : D7}
 

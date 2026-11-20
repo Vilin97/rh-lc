@@ -59,10 +59,10 @@ private theorem opCore {Λ : Type} [CommRing Λ] [IsLocalRing Λ] [IsNoetherianR
   have hi : ∀ t x, i (ev t • x) = act1 t (i x) := fun t => by
     induction t using MvPolynomial.induction_on with
     | C c => intro x; rw [evC, hC]; exact (LinearMap.congr_fun (act1.commutes c) _).symm
-    | add b c hb hc => intro x; rw [map_add, add_smul, map_add, hb, hc, map_add, LinearMap.add_apply]
+    | add b c hb hc => intro x; rw [map_add (f := _), add_smul, map_add (f := _), hb, hc, map_add (f := _), LinearMap.add_apply]
     | mul_X b p hb =>
       intro x
-      rw [map_mul, mul_smul, hb, evX, add_smul, map_add, hC, hX, map_mul, Module.End.mul_apply]
+      rw [map_mul, mul_smul, hb, evX, add_smul, map_add (f := _), hC, hX, map_mul, Module.End.mul_apply]
       simp
   have hcomm : ∀ t t' m, act1 t (act1 t' m) = act1 t' (act1 t m) := fun t t' m =>
     LinearMap.congr_fun ((Commute.all t t').map act1).eq m
@@ -75,16 +75,16 @@ private theorem opCore {Λ : Type} [CommRing Λ] [IsLocalRing Λ] [IsNoetherianR
       show i (pr (ρ _ m)) = ρ _ (i (pr m))
       rw [hρ p.1 p.2, hρ p.1 p.2, hpr, hi]) g _ rfl)
   obtain ⟨rk, e, he⟩ := freePart ρ hl hlm hP i pr hpi hρc s fun p x => by
-    rw [hρ p.1 p.2, ← hi, map_add, map_add, map_one, map_one, evy]
+    rw [hρ p.1 p.2, ← hi, map_add (f := _), map_add (f := _), map_one, map_one, evy]
   obtain ⟨j, κ, hj, hκ, hκj, hjr⟩ := quotPart act1 actw tr hsurj hker (fun p => hu p.1 p.2) ut ev i pr hpi hi hpr hr
     (fun p => s (MvPowerSeries.X p)) evy
   obtain ⟨_, hnS, η, φ, ψ, ηC, ηX, hφ, hψ, hψφ, hφn, hφψ⟩ := spPart (Λ := Λ) P hm hd β hβ ut ub hub actw f two
   have hη : ∀ t, θ (ev (MvPolynomial.rename Sum.inl t)) = η t := fun t => by
     induction t using MvPolynomial.induction_on with
     | C c => rw [MvPolynomial.rename_C, evC, θC, ηC]
-    | add b c hb hc => simp only [map_add, hb, hc]
+    | add b c hb hc => simp only [map_add (f := _), hb, hc]
     | mul_X b p hb =>
-      rw [map_mul, map_mul, map_mul, map_mul, hb, MvPolynomial.rename_X, evX, map_add, θC, θl, ηX p.1 p.2, Sp.u, map_add,
+      rw [map_mul, map_mul, map_mul, map_mul, hb, MvPolynomial.rename_X, evX, map_add (f := _), θC, θl, ηX p.1 p.2, Sp.u, map_add (f := _),
         Sum.elim_inl, ← hub p.1 p.2]
       rfl
   haveI : Module.Finite Λ N := Module.Finite.of_surjective pr fun x => ⟨_, hpi x⟩
@@ -272,7 +272,7 @@ theorem UpperTheory.V.Pa.Lev.opToTW :
     rw [hθ, hs, kill_ren, MvPowerSeries.map_C, MvPowerSeries.constantCoeff_map, ← hβ]
     rfl
   · show θ (ev _) = _
-    rw [evX, map_add, θC, θl, Sum.elim_inl, A.β.commutes, Sp.u, map_add]
+    rw [evX, map_add (f := _), θC, θl, Sum.elim_inl, A.β.commutes, Sp.u, map_add (f := _)]
     rfl
   · have := hk _ (rel.rel1 j g) m
     rwa [map_pow, map_mul, fEl_map, htr, mapRingHom_single_mul_charpoly_of_roots] at this

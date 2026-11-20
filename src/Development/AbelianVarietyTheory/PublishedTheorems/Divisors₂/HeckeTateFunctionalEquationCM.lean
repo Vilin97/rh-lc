@@ -94,7 +94,7 @@ theorem gaussTerm_congr' {χ : HChar E} {w : HeightOneSpectrum (𝓞 E)} {a : �
     rw [map_mul, map_inv, map_mul, map_inv, mul_inv_eq_one] at h1
     exact congrArg (fun u : ℂˣ => ((u⁻¹ : ℂˣ) : ℂ)) h1
   · have e : y / c = y' / c + (y - y') / c := by ring
-    rw [e, map_add, psiAt_add, psiAt_eq_one (t := algebraMap E _ ((y - y') / c)), mul_one]
+    rw [e, map_add (f := _), psiAt_add, psiAt_eq_one (t := algebraMap E _ ((y - y') / c)), mul_one]
     rw [hval, map_div₀, hc, div_le_iff₀ (zero_lt_iff.2 WithZero.exp_ne_zero), ← WithZero.exp_add]
     convert hd using 2
     push_cast

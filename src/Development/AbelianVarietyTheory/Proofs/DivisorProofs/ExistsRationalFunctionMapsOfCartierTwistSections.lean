@@ -55,7 +55,7 @@ def ratOn (D : CartierDiv Y) (W : Y.Opens) :
     · rfl
   map_add' a b := by
     split_ifs with h
-    · rw [coordFn_add, map_add, add_div]
+    · rw [coordFn_add, map_add (f := _), add_div]
     · rw [add_zero]
 
 theorem ratOn_apply (D : CartierDiv Y) {W : Y.Opens} (h : genericPoint Y ∈ W)

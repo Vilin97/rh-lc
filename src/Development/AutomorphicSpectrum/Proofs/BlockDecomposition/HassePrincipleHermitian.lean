@@ -39,7 +39,7 @@ theorem exists_pure (hCM : IsCMExt F E σ) : ∃ e : E, e ≠ 0 ∧ σ e = -e :=
 theorem coord_E (hCM : IsCMExt F E σ) {e : E} (he : e ≠ 0) (hσ : σ e = -e) (z : E) :
     ∃ c d : F, z = algebraMap F E c + algebraMap F E d * e := by
   obtain ⟨c, hc⟩ := GoodMass.fixed_mem hCM ((z + σ z) / 2) (by
-    rw [map_div₀, map_add, invol hCM, map_ofNat]
+    rw [map_div₀, map_add (f := _), invol hCM, map_ofNat]
     ring)
   obtain ⟨d, hd⟩ := GoodMass.fixed_mem hCM ((z - σ z) / (2 * e)) (by
     rw [map_div₀, map_sub, invol hCM, map_mul, map_ofNat, hσ]
@@ -80,7 +80,7 @@ theorem local_form (hCM : IsCMExt F E σ) {J : Matrix (Fin 1) (Fin 1) E} {j : F}
   refine ⟨a, b, ?_⟩
   have h00 : hR R σ J (Y 0) (Y 0) = algebraMap F R β ⊗ₜ[F] (1 : E) := congrFun (congrFun hY 0) 0
   have hsig : sigR R σ (Y 0 0) = a ⊗ₜ[F] (1 : E) - b ⊗ₜ[F] e := by
-    rw [hab, map_add]
+    rw [hab, map_add (f := _)]
     simp [sigR, hσ, TensorProduct.tmul_neg, sub_eq_add_neg]
   have hJ : inclR R (J 0 0) = algebraMap F R j ⊗ₜ[F] (1 : E) := by
     rw [hj]
@@ -173,7 +173,7 @@ theorem hasse : Hasse := by
   have hb : β = j * (a ^ 2 - δ * c ^ 2) := by
     rw [← hac]
     field_simp
-  simp only [gramE, hE, hform, Fin.sum_univ_one, ← hj, RingHom.coe_coe, map_add, map_mul, hσ, AlgHom.commutes]
+  simp only [gramE, hE, hform, Fin.sum_univ_one, ← hj, RingHom.coe_coe, map_add (f := _), map_mul, hσ, AlgHom.commutes]
   rw [hb, map_mul, map_sub, map_mul, map_pow, map_pow, ← hδ']
   ring
 

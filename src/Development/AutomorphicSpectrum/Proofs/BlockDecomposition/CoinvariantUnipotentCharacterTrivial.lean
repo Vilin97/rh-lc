@@ -34,7 +34,7 @@ theorem qO_extTensor_unip : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologic
     intro w
     induction w using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a b =>
       rw [e]
       exact congrArg (fun x => TensorProduct.tmul ℂ x b) (hq a)

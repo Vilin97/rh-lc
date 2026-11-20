@@ -64,7 +64,7 @@ def levSub (X : Tower Ω ε) (M : ℕ) : Subfield X.K where
     rw [map_one]
   add_mem' := by
     intro a b ha hb γ hγ
-    rw [map_add, ha γ hγ, hb γ hγ]
+    rw [map_add (f := _), ha γ hγ, hb γ hγ]
   zero_mem' := by
     intro γ _
     rw [map_zero]
@@ -93,7 +93,7 @@ def actE (X : Tower Ω ε) (M : ℕ) (g : SL(2, ℤ)) : levSub X M ≃+* levSub 
   map_add' a b := by
     apply Subtype.ext
     show X.sl (ofSL g⁻¹) ((a : X.K) + b) = X.sl (ofSL g⁻¹) a + X.sl (ofSL g⁻¹) b
-    rw [map_add]
+    rw [map_add (f := _)]
 
 theorem actE_apply (X : Tower Ω ε) (M : ℕ) (g : SL(2, ℤ)) (f : levSub X M) :
     ((actE X M g f : levSub X M) : X.K) = X.sl (ofSL g⁻¹) f := rfl
@@ -155,7 +155,7 @@ private lemma exists_differentiableOn_an_aeval_jK
     exact X.an_c a
   · rintro p q ⟨φ, hφ, hφe⟩ ⟨ψ, hψ, hψe⟩
     refine ⟨φ + ψ, hφ.add hψ, ?_⟩
-    rw [map_add, map_add, hφe, hψe]
+    rw [map_add (f := _), map_add (f := _), hφe, hψe]
     rfl
   · rintro n a ⟨φ, hφ, hφe⟩
     obtain ⟨ψ, hψe, hψ⟩ := X.j_hol
@@ -340,7 +340,7 @@ private lemma mem_adjoin_jK_of_sl_invariant [IsAlgClosure ℚ Ω]
     have h0 : Polynomial.aeval h p = 0 := minpoly.aeval F h
     rw [hmon.as_sum] at h0
     set_option synthInstance.maxHeartbeats 100000 in
-      simpa [map_add, map_sum, Polynomial.aeval_C, Polynomial.aeval_X_pow,
+      simpa [map_add (f := _), map_sum, Polynomial.aeval_C, Polynomial.aeval_X_pow,
       IntermediateField.algebraMap_apply] using h0
   set c : ℕ → X.K := fun i => Polynomial.aeval X.jK (s ^ (d - i - 1) * r i) with hc
   have hrel : (ℓ * h) ^ d + ∑ i ∈ Finset.range d, c i * (ℓ * h) ^ i = 0 := by
@@ -364,7 +364,7 @@ private lemma mem_adjoin_jK_of_sl_invariant [IsAlgClosure ℚ Ω]
       (C i : _root_.GlobalTheory.KZ.Mero) * X.an (ℓ * h) ^ i = 0 := by
     have e := congrArg X.an hrel
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_pow, map_sum, map_zero] at e
+      rw [map_add (f := _), map_pow, map_sum, map_zero] at e
     simpa only [map_mul, map_pow, hCe] using e
   obtain ⟨φ, hφ, hφe⟩ := exists_differentiableOn_eq_of_monic_root_Mero
     (X.an_mero (ℓ * h)) hC hgerm

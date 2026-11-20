@@ -117,7 +117,7 @@ theorem GlobalTheory.exists_letter_vector_exact_degree : ∀ (l : ℕ) [Fact l.P
       induction s using TensorProduct.induction_on with
       | zero => simp
       | tmul a b => simp [Mv, AlgebraTensorModule.map_tmul]
-      | add s t hs ht => simp only [map_add, hs, ht]
+      | add s t hs ht => simp only [map_add (f := _), hs, ht]
     have hE : Mv (ιV (P.PD K) (LL := ↥LL.1) (V := ↥LL.1) w) = ∑ i, cc i ⊗ₜ[ℚ_[l]] algebraMap ↥(K0 K) P.R.BdR (kk i) := by
       set_option synthInstance.maxHeartbeats 100000 in
         rw [hιw, map_sum]
@@ -145,7 +145,7 @@ theorem GlobalTheory.exists_letter_vector_exact_degree : ∀ (l : ℕ) [Fact l.P
       | tmul a b =>
         simp only [AlgebraTensorModule.map_tmul, LinearMap.id_apply, LinearMap.lTensor_tmul]
         rw [show q ((((P.PD K).Fil 1).restrictScalars ℚ_[l]).subtype b) = 0 from (Submodule.Quotient.mk_eq_zero _).2 b.2, tmul_zero]
-      | add s t hs ht => rw [map_add, map_add, hs, ht, add_zero]
+      | add s t hs ht => rw [map_add (f := _), map_add (f := _), hs, ht, add_zero]
     have hzero : LinearMap.lTensor ↥LL.1 h0 (∑ i, cc i ⊗ₜ[ℚ_[l]] kk i) = 0 := by
       have := hq _ hF1
       set_option synthInstance.maxHeartbeats 100000 in

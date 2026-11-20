@@ -49,7 +49,7 @@ theorem sigR_invol {F E : Type} [Field F] [Field E] [Algebra F E] (σ : E →ₐ
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [Formalism.UG.sigR, hσ]
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 theorem sigR_inclE {F E : Type} [Field F] [Field E] [Algebra F E] (σ : E →ₐ[F] E)
     (R : Type) [CommRing R] [Algebra F R] (e : E) :

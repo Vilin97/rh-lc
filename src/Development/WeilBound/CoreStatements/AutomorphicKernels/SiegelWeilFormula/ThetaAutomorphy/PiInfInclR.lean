@@ -130,7 +130,7 @@ theorem gram_mem (d : SD σ) (X : Matrix (Fin d.m) (Fin d.n) E) (T : nF σ d.Y d
     (2⁻¹ : E) • (Xᵀ * d.A.J * X.map σ) + T₀, ?_⟩
   rw [gram_incM, hT₀]
   ext i j
-  simp only [incM, Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, map_add, map_mul]
+  simp only [incM, Matrix.add_apply, Matrix.smul_apply, Matrix.map_apply, smul_eq_mul, map_add (f := _), map_mul]
   rw [Algebra.smul_def, ← half_eq]
 
 theorem exists_twist (d : SD σ) (ε : ℤˣ) (S₀ : Matrix (Fin d.n) (Fin d.n) E) (hS : incM F S₀ ∈ nCond σ d.n ε)
@@ -236,7 +236,7 @@ theorem orth (d : SD σ) {nb : nA σ d.Y d.b → d.G} {lam : Measure (nA σ d.Y 
     obtain ⟨β₀, hβ₀, hne⟩ := exists_twist d ε S₀ ((mem_nA_iff hσ hb _).1 hS) hS0
     let h : nA σ d.Y d.b → ℂ := fun β => d.B.ψ (-(d.tt (incM F S₀ * β.1)))
     have hadd : ∀ β β' : nA σ d.Y d.b, h (β + β') = h β * h β' := fun β β' => by
-      simp only [h, AddSubgroup.coe_add, Matrix.mul_add, SD.tt, Matrix.trace_add, map_add, neg_add,
+      simp only [h, AddSubgroup.coe_add, Matrix.mul_add, SD.tt, Matrix.trace_add, map_add (f := _), neg_add,
         AddChar.map_add_eq_mul]
     have hper : ∀ g ∈ nF σ d.Y d.b, ∀ y, h (g + y) = h y := fun g hg y => by
       obtain ⟨T₀, hT₀⟩ := (mem_nF_iff g).1 hg

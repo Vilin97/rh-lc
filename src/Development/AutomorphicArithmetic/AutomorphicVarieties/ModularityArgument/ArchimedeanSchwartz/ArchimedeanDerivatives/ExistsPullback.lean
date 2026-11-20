@@ -22,8 +22,8 @@ private theorem exists_pullback {V C L G : Type*} [AddCommGroup V] [Module ℂ V
     ∃ Bf : V →ₗ⋆[ℂ] V →ₗ[ℂ] ℂ, (∀ x y, Bf y x = starRingEnd ℂ (Bf x y)) ∧ (∀ x, x ≠ 0 → 0 < (Bf x x).re) ∧
       ∀ g x y, Bf (T g x) (T g y) = Bf x y := by
   refine ⟨LinearMap.mk₂'ₛₗ (starRingEnd ℂ) (RingHom.id ℂ) (fun φ ψ => inner ℂ (p (j φ)) (p (j ψ)))
-    (fun _ _ _ => by rw [map_add, map_add, inner_add_left]) (fun _ _ _ => by rw [map_smul, map_smul, inner_smul_left]; rfl)
-    (fun _ _ _ => by rw [map_add, map_add, inner_add_right]) (fun _ _ _ => by rw [map_smul, map_smul, inner_smul_right]; rfl),
+    (fun _ _ _ => by rw [map_add (f := _), map_add (f := _), inner_add_left]) (fun _ _ _ => by rw [map_smul, map_smul, inner_smul_left]; rfl)
+    (fun _ _ _ => by rw [map_add (f := _), map_add (f := _), inner_add_right]) (fun _ _ _ => by rw [map_smul, map_smul, inner_smul_right]; rfl),
     fun x y => (inner_conj_symm (p (j y)) (p (j x))).symm,
     fun x hx => re_inner_self_pos (𝕜 := ℂ).2 fun h => hx (hj x (h1 _ (hP x) (by rw [h, inner_zero_left]))), fun g x y => ?_⟩
   change inner ℂ (p (j (T g x))) (p (j (T g y))) = inner ℂ (p (j x)) (p (j y))

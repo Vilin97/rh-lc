@@ -26,7 +26,7 @@ theorem tensMap_smul {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Alg
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [tensMap, TensorProduct.smul_tmul', smul_eq_mul, map_mul]
-  | add x y hx hy => rw [smul_add, map_add, hx, hy, map_add, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), hx, hy, map_add (f := _), smul_add]
 
 theorem tensMap_inclR {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Algebra F R']
     (φ : R →ₐ[F] R') (e : E) : tensMap φ (inclR R e) = inclR R' e := by
@@ -102,7 +102,7 @@ theorem coord_mem {n : ℕ} (b : Module.Basis (Fin n) F E) (W : Spc F E d) (v : 
     exact zero_mem _
   | add y z _ _ hy hz =>
     intro i l
-    simp only [Pi.add_apply, map_add, mul_add]
+    simp only [Pi.add_apply, map_add (f := _), mul_add]
     exact add_mem (hy i l) (hz i l)
   | neg y _ hy =>
     intro i l

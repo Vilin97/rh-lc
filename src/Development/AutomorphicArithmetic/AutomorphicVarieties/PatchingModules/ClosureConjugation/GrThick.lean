@@ -62,7 +62,7 @@ private theorem quot_ss {B Bh E κ Γ : Type} [CommRing B] [CommRing Bh] [Algebr
   | add u v hu hv =>
     obtain ⟨a, ha⟩ := hu
     obtain ⟨b, hb⟩ := hv
-    exact ⟨a + b, by rw [map_add, map_add, ha, hb]⟩
+    exact ⟨a + b, by rw [map_add (f := _), map_add (f := _), ha, hb]⟩
   | single m a =>
     refine ⟨a ⊗ₜ ι (MonoidAlgebra.single m 1), ?_⟩
     change Φ _ = _

@@ -21,7 +21,7 @@ theorem coeff_sum_pderiv_eq_zero {ι : Type} [Fintype ι] (c : ι → ℂ) (Q : 
   rw [MvPolynomial.coeff_sum]
   refine Finset.sum_eq_zero fun i _ => ?_
   rw [MvPolynomial.coeff_smul, MvPolynomial.coeff_pderiv,
-    hQ _ (by rw [map_add, Finsupp.degree_single]; omega), zero_mul, smul_zero]
+    hQ _ (by rw [map_add (f := _), Finsupp.degree_single]; omega), zero_mul, smul_zero]
 
 theorem fock_of_vac : ∀ (D : D7) (V W : HSp D) (S S' : D.what₂.Tau → SPar) (M : DSModel V S) (M' : DSModel W S') (θ : InfFam D) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → IsInfFam θ → ∀ f, IsVacVec ψ θ M M' f → ∀ P, GlobalTheory.IndefiniteRowSideFullHecke.SphericalVolumeLift.IsFockVec ψ θ V W (cart M) (cart M') (ptOf ψ θ M M' f P) := by
   intro D V W S S' M M' θ ψ hψ hθ f hf P

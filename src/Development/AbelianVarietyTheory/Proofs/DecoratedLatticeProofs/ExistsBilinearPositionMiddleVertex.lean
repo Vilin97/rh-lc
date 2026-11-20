@@ -29,7 +29,7 @@ theorem exists_bilPos_mid : ∀ (k : Type) [Field k] [ValuativeRel k] [Topologic
     have hf : (fun h => a * tInt ψ ν μ₂ ρ σ (T Ψ) F Φ.1 h + tInt ψ ν μ₂ ρ σ (T Ψ') F Φ.1 h) =
         tInt ψ ν μ₂ ρ σ (T (a • Ψ + Ψ')) F Φ.1 := by
       funext h
-      simp only [tInt, app, map_add, map_smul]
+      simp only [tInt, app, map_add (f := _), map_smul]
       split_ifs <;> simp
     rw [hf] at h
     exact uniq _ _ _ (hQ _ Φ) h

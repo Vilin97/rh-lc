@@ -59,7 +59,7 @@ theorem exists_dual_family [NumberField K] [NumberField K'] (φ : K →+* K') :
       change φ s * _ = _
       ring
     | add x y hx hy =>
-      simp only [map_add, mul_add, Finset.sum_add_distrib]
+      simp only [map_add (f := _), mul_add, Finset.sum_add_distrib]
       rw [← hx, ← hy]
 
 theorem map_mulVec' (φ : K →+* K') {n d : ℕ} (E : Matrix (Fin n) (Fin d) K) (x : Fin d → K) :

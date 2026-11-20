@@ -35,7 +35,7 @@ theorem theta_eq' (M : Module.End K (T.W s)) : theta T s M =
 theorem mul_eS (z : MonoidAlgebra K G) : z * eS T s = theta T s ((T.tau s).asAlgebraHom z) := by
   induction z using MonoidAlgebra.induction_linear with
   | zero => simp [theta_zero]
-  | add x y hx hy => rw [add_mul, hx, hy, map_add, theta_add]
+  | add x y hx hy => rw [add_mul, hx, hy, map_add (f := _), theta_add]
   | single g r =>
     rw [Representation.asAlgebraHom_single, theta_smul, eS, Finset.mul_sum, theta, Finset.smul_sum]
     refine Fintype.sum_equiv (Equiv.mulLeft g) _ _ (fun x => ?_)
@@ -50,8 +50,8 @@ theorem eS_mul (z : MonoidAlgebra K G) : eS T s * z = theta T s ((T.tau s).asAlg
   induction z using MonoidAlgebra.induction_linear with
   | zero => simp
   | add x y hx hy =>
-    rw [mul_add, hx, hy, map_add]
-    simp only [add_mul, map_add, mul_add, add_smul, Finset.sum_add_distrib]
+    rw [mul_add, hx, hy, map_add (f := _)]
+    simp only [add_mul, map_add (f := _), mul_add, add_smul, Finset.sum_add_distrib]
   | single g r =>
     rw [Representation.asAlgebraHom_single, eS, Finset.sum_mul]
     refine Fintype.sum_equiv (Equiv.mulRight g) _ _ (fun x => ?_)

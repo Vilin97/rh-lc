@@ -32,7 +32,7 @@ private lemma T_zero (wd : WData Tw K) : wd.T 0 = 0 := by
   rw [Finset.univ_eq_empty, Finset.sum_empty, Finset.sum_empty] at h
   apply wd.T_kill
   have h2 := congrArg wd.πW.1 h
-  rw [map_zero, map_add, π_pmul, add_zero] at h2
+  rw [map_zero, map_add (f := _), π_pmul, add_zero] at h2
   exact h2.symm
 
 private lemma πT_add (wd : WData Tw K) (a b : wd.Rb) :
@@ -40,7 +40,7 @@ private lemma πT_add (wd : WData Tw K) (a b : wd.Rb) :
   have h := wd.witt_add 2 ![a, b]
   rw [Fin.sum_univ_two, Fin.sum_univ_two] at h
   have h2 := congrArg wd.πW.1 h
-  rw [map_add, map_add, π_pmul, add_zero] at h2
+  rw [map_add (f := _), map_add (f := _), π_pmul, add_zero] at h2
   simpa using h2.symm
 
 private def φW (wd : WData Tw K) : wd.Rb →+* (Tw.R 0 : Type) where
@@ -129,7 +129,7 @@ theorem wFrob :
   intro y hy a ha
   choose η s hy' using fun i => wd.decomp (y i)
   have hπy : ∀ i, wd.πW.1 (y i) = φW wd (η i) := fun i => by
-    rw [hy' i, map_add, π_pmul, add_zero, φW_apply]
+    rw [hy' i, map_add (f := _), π_pmul, add_zero, φW_apply]
   have hw := wd.witt_add n (fun j => d (μ j) * ∏ i, η i ^ μ j i)
   have hev : MvPolynomial.eval y G = ∑ j, wd.T (d (μ j) * ∏ i, η i ^ μ j i) +
       p * ∑ j, e (μ j) * ∏ i, y i ^ μ j i := by
@@ -143,11 +143,11 @@ theorem wFrob :
     have h1 : wd.πW.1 (MvPolynomial.eval y G) = 0 := by
       rw [← wd.ker_πW] at hy
       exact hy
-    rw [hev, map_add, π_pmul, add_zero] at h1
+    rw [hev, map_add (f := _), π_pmul, add_zero] at h1
     exact h1
   rw [hev, h0, zero_add]
   apply pmul_congr
-  rw [ha, map_add, map_add, ← φW_apply, MvPolynomial.eval₂_comp_left,
+  rw [ha, map_add (f := _), map_add (f := _), ← φW_apply, MvPolynomial.eval₂_comp_left,
     MvPolynomial.eval₂_comp_left]
   congr 1
   · congr 1

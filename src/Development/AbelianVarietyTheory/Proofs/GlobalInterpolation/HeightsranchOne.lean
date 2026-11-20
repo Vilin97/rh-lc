@@ -282,7 +282,7 @@ private theorem toUnit_symm_mem_nablaSq_of_mem_VV {n : ℕ} (s : DomWeight n) (P
     exact hF ()
   | zero => simp
   | add x y _ _ hx hy =>
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hx hy
   | smul a x _ hx =>
     rw [map_smul]

@@ -104,7 +104,7 @@ theorem pair_int (p : SplitPt D k) {w : HeightOneSpectrum (𝓞 D.host.E)} (he :
   | zero => simp
   | add x y _ _ hx hy =>
     convert add_mem hx hy using 1
-    simp only [Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
   | neg x _ hx =>
     convert neg_mem hx using 1
     simp only [Pi.neg_apply, map_neg, mul_neg, Finset.sum_neg_distrib]
@@ -127,7 +127,7 @@ def rowVal {A R : Type} [CommRing A] [CommRing R] (f : A →+* R) {a b : ℕ} {n
   toFun u := ((fun j => f (∑ m, u j m * ε m)) ᵥ* M) i
   map_zero' := by simp [vecMul, dotProduct]
   map_add' x y := by
-    simp only [vecMul, dotProduct, Matrix.add_apply, add_mul, Finset.sum_add_distrib, map_add]
+    simp only [vecMul, dotProduct, Matrix.add_apply, add_mul, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem vecMul_const_mul {R : Type} [CommRing R] {a : ℕ} {n : Type} (x : R) (g : Fin a → R) (M : Matrix (Fin a) n R) (i : n) :
     ((fun j => x * g j) ᵥ* M) i = x * (g ᵥ* M) i := by

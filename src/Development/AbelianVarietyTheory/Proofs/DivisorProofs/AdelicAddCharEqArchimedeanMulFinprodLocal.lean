@@ -133,7 +133,7 @@ theorem psi_prod : ∀ (F : Type) [Field F] [NumberField F] (ψ : AddChar (AF F)
   have hdec : xf = ∑ v ∈ S, GlobalTheory.AdelicU.singleFin v (evalV F v xf) + intFin r := by
     refine GlobalTheory.AdelicU.af_ext fun w => ?_
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, evalV_intFin]
+      rw [map_add (f := _), map_sum, evalV_intFin]
     by_cases hw : w ∈ S
     · rw [Finset.sum_eq_single w (fun b _ hb => GlobalTheory.AdelicU.evalV_singleFin_ne (Ne.symm hb) _)
         (fun h => absurd hw h), GlobalTheory.AdelicU.evalV_singleFin_self]

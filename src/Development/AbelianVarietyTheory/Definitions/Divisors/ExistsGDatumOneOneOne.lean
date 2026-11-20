@@ -134,7 +134,7 @@ def actF {A : Over S} [GrpObj A] (act : OActN G.O A) : OAct (𝓞 G.F) A where
   hom c := act.hom _
   one := by rw [map_one]; exact act.one
   mul b c := by rw [← act.mul, ← map_mul, mul_comm]
-  add b c := by rw [map_add]; exact act.add _ _
+  add b c := by rw [map_add (f := _)]; exact act.add _ _
 
 structure GObj (b : GBase G R) (N : ℕ) (s : S ⟶ Sp R) where
   A : Over S

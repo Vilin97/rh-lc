@@ -33,7 +33,7 @@ theorem htCmp_of_tie (D : D7) (Y : ShimX D.what₂.Tau) (T : Real0 Y) (A : Slope
   have hsm : ∀ c, (T.M c).Smooth ((T.F c).phS (A.sh u s) s) := fun c σ => (hfam c σ).1
   obtain ⟨ta, tb⟩ := t5 B hB
   have hht := tb u s hu hs hd hsm y
-  rw [map_add, map_add, map_smul, ← ta y, t1 B y _ (hsm _), smul_eq_mul] at hht
+  rw [map_add (f := _), map_add (f := _), map_smul, ← ta y, t1 B y _ (hsm _), smul_eq_mul] at hht
   have hlB : 1 / 2 ≤ Real.log B := by
     have := Real.log_two_gt_d9
     have := Real.log_le_log two_pos hB

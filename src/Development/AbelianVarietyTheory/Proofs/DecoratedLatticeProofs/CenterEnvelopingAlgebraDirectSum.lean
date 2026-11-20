@@ -99,7 +99,7 @@ noncomputable def decomp (j₁ : L₁ →ₗ⁅ℂ⁆ M) (j₂ : L₂ →ₗ⁅�
       ext z
       simp only [LieHom.comp_apply, AlgHom.coe_toLieHom, AlgHom.comp_apply, lift_ι_apply,
         bwdLie_apply, map_add, fwd_tmul, map_one, mul_one, one_mul, AlgHom.id_apply]
-      rw [← map_add, hs])
+      rw [← map_add (f := _), hs])
     (by
       apply Algebra.TensorProduct.ext
       · ext x
@@ -181,19 +181,19 @@ noncomputable def splitOff (a : σ) :
       induction y using DirectSum.induction_on with
       | zero => rw [map_zero, lie_zero]
       | of k y => rw [inclRest_of]; exact lie_of_of_ne L k.2.symm x y
-      | add y z hy hz => rw [map_add, lie_add, hy, hz, add_zero])
+      | add y z hy hz => rw [map_add (f := _), lie_add, hy, hz, add_zero])
     (fun x => comp_of_same L a x)
     (fun x => (projRest_of L a a x).trans (projRestAt_self L a x))
     (fun y => by
       induction y using DirectSum.induction_on with
       | zero => rw [map_zero, map_zero]
       | of k y => rw [inclRest_of]; exact comp_of_ne L a k.1 k.2 y
-      | add y z hy hz => rw [map_add, map_add, hy, hz, add_zero])
+      | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz, add_zero])
     (fun y => by
       induction y using DirectSum.induction_on with
       | zero => rw [map_zero, map_zero]
       | of k y => rw [inclRest_of, projRest_of, projRestAt_ne L a k.1 k.2]
-      | add y z hy hz => rw [map_add, map_add, hy, hz])
+      | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz])
     (fun z => by
       induction z using DirectSum.induction_on with
       | zero => simp only [map_zero, add_zero]
@@ -204,7 +204,7 @@ noncomputable def splitOff (a : σ) :
         · rw [comp_of_ne L a i h, projRest_of, projRestAt_ne L a i h, map_zero, zero_add]
           exact inclRest_of L a ⟨i, h⟩ y
       | add y z hy hz =>
-        simp only [map_add]
+        simp only [map_add (f := _)]
         rw [add_add_add_comm, hy, hz])
 
 end Sum

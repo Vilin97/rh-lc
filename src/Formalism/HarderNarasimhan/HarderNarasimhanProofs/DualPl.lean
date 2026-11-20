@@ -831,7 +831,7 @@ theorem dualLat_span [FiniteDimensional K V] (A : Submodule (𝓞 K) V) (hA : A.
     | add z w _ _ hz hw =>
       obtain ⟨a, ha⟩ := hz
       obtain ⟨c, hc⟩ := hw
-      exact ⟨a + c, by rw [map_add, map_add, ha, hc]⟩
+      exact ⟨a + c, by rw [map_add (f := _), map_add (f := _), ha, hc]⟩
     | smul r z _ hz =>
       obtain ⟨a, ha⟩ := hz
       refine ⟨r * a, ?_⟩

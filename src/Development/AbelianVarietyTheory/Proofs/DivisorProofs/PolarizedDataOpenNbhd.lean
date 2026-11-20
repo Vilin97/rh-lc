@@ -54,7 +54,7 @@ theorem near_pair (hA : ActsEx) {B : Base F E} {n d : ℕ} {Y : Spc F E n} {W : 
   classical
   induction hΨ using Submodule.span_induction with
   | zero => exact Eventually.of_forall fun h => map_zero _
-  | add x y _ _ hx hy => exact (hx.and hy).mono fun h hh => by rw [map_add, hh.1, hh.2]
+  | add x y _ _ hx hy => exact (hx.and hy).mono fun h hh => by rw [map_add (f := _), hh.1, hh.2]
   | smul c x _ hx => exact hx.mono fun h hh => by rw [map_smul, hh]
   | mem x hx =>
     obtain ⟨f, -, φ, hSB, hcof, rfl⟩ := hx

@@ -49,7 +49,7 @@ theorem eab_vec (hm : ∀ a b, inUJ ε a → inUJ ε b → σ (a * b) = (σ a).c
     EabV ε a b (fun x => σ x v) g = σ g (dsigC ε σ (unitM (a, b)) v) := by
   obtain ⟨h1, h2, -, -⟩ := cpartMem n ε (Matrix.single a b 1)
   unfold EabV EcV dsigC
-  rw [rd_vec hm hv h1 hg, rd_vec hm hv h2 hg, map_add, map_smul]
+  rw [rd_vec hm hv h1 hg, rd_vec hm hv h2 hg, map_add (f := _), map_smul]
   simp only [cpart1, cpart2, thetaJ, unitM, sub_neg_eq_add, ← sub_eq_add_neg]
 
 theorem word_rep (hm : ∀ a b, inUJ ε a → inUJ ε b → σ (a * b) = (σ a).comp (σ b)) {v : Hs} {x : ioS ε Hs}

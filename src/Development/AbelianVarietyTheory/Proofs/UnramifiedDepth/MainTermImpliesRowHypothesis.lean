@@ -56,7 +56,7 @@ theorem kill_hPullW {I : Fin 2 → Type} [∀ g, Fintype (I g)] {n0 n : ℕ} (hn
   congr 1
   funext w
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum, map_sum, sum_castLE hn (fun b => killCompl (eps hn) (e' b w • X (Sum.inr b)))]
+    rw [map_add (f := _), map_sum, map_sum, sum_castLE hn (fun b => killCompl (eps hn) (e' b w • X (Sum.inr b)))]
   · simp only [map_smul, kill_inl, kill_inr]
   · intro b hb
     rw [map_smul, kill_inr_zero hn b hb, smul_zero]
@@ -168,7 +168,7 @@ theorem GlobalTheory.mainTerm_to_rowHypothesis :
   refine ⟨?_, ?_, ?_, ?_⟩
   · rw [h1, hRows_eq, hP, ← rows_main, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun ρ _ => ?_
-    rw [← map_add, hH, add_sub_cancel]
+    rw [← map_add (f := _), hH, add_sub_cancel]
   · intro m
     set_option synthInstance.maxHeartbeats 100000 in
       rw [h1, le_add_iff, map_sum]

@@ -270,7 +270,7 @@ theorem exists_range_le_gen {R R₁ L Ω : Type} [CommRing R] [CommRing R₁] [I
     induction hr using Submodule.span_induction with
     | mem x hx => exact subset_gen β le_rfl (Finset.mem_coe.2 (Finset.mem_image_of_mem _ hx))
     | zero => rw [map_zero, map_zero]; exact zero_mem _
-    | add x y _ _ hx hy => rw [map_add, map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _), map_add (f := _)]; exact add_mem hx hy
     | smul a x _ hx =>
       rw [Algebra.smul_def, map_mul, map_mul, RingHom.algebraMap_toAlgebra, h]
       exact mul_mem (mem_gen β _ _) hx
@@ -295,7 +295,7 @@ theorem exists_restrict {R R₁ W : Type} [CommRing R] [IsLocalRing R] [CommRing
       map_one' := inj (by simp only [hf, map_one])
       map_mul' := fun a b => inj (by simp only [hf, map_mul])
       map_zero' := inj (by simp only [hf, map_zero])
-      map_add' := fun a b => inj (by simp only [hf, map_add]) }
+      map_add' := fun a b => inj (by simp only [hf, map_add (f := _)]) }
   have hc : φ.comp ρ = χ := RingHom.ext fun r => inj ((hf _).trans (h r))
   refine ⟨φ, fun r => (hf r).symm, hc, fun a b e => ?_, ?_⟩
   · exact IsFractionRing.injective R₁ (FractionRing R₁)

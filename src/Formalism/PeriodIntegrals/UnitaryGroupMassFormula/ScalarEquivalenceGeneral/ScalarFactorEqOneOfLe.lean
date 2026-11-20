@@ -61,7 +61,7 @@ theorem memOrthXplusQ {r : ℕ} {T : E} (F : LFlag S r T) {v : S.V} :
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.mp hx
     obtain ⟨c, rfl⟩ := Submodule.mem_span_singleton.mp hb
     have ha' : a ∈ Xsp F := ha
-    rw [map_add, LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, h2, smul_zero,
+    rw [map_add (f := _), LinearMap.add_apply, LinearMap.map_smulₛₗ, LinearMap.smul_apply, h2, smul_zero,
       memOrthQ.mp h1 a ha', add_zero]
 
 section Maps

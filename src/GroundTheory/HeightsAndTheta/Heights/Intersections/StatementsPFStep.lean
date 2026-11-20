@@ -40,7 +40,7 @@ theorem aeval_algebraMap_X_eq {σ : Type} {Φ : Type} [CommRing Φ] [Algebra (Mv
   | C a =>
     rw [aeval_C, eq_intCast (algebraMap ℤ Φ) a]
     exact (eq_intCast ((algebraMap (MvPolynomial σ ℤ) Φ).comp C) a).symm
-  | add p q hp hq => rw [map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p n hp => rw [map_mul, map_mul, hp, aeval_X]
 
 abbrev lineAlgBase : Algebra (MRing (PBlk 1)) (FractionRing (MRing PointLineBlocks)) :=

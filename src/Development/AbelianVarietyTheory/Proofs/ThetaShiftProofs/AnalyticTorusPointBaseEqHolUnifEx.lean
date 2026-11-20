@@ -152,7 +152,7 @@ theorem isIota (la : A.La) : Out.GtPtF.IsIota (ε la.y) (ex0 (A.P0 la)) := by
       (DVR.invGen_isGen _ _ _ _ (D.psi_gen _)))
       (DVR.invGen_isGen _ _ _ _ (DVR.pullGen_isGen _ _ _ _ D.rig_gen _))) _
   · rintro (((k | k) | k) | k)
-    · exact (by rw [map_add]; rfl : _ = 𝟙 (Sp ℂ) ≫ Out.jFK (R := ℂ) ℂ ≫ D.xK (ε (la.y + x))).trans (hc _)
+    · exact (by rw [map_add (f := _)]; rfl : _ = 𝟙 (Sp ℂ) ≫ Out.jFK (R := ℂ) ℂ ≫ D.xK (ε (la.y + x))).trans (hc _)
     · exact hc _
     · exact hc _
     · change 𝟙 (Sp ℂ) ≫ Out.jFK (R := ℂ) ℂ ≫ Out.jK ℂ ≫ eSec D.P.A = (u.ex 0).left
@@ -342,7 +342,7 @@ theorem isLift_tau (x y : A.X) :
       (fun _ : PUnit => D.xK (ε y))) (fun _ : PUnit => (toUnit (Out.TK ℂ)).left ≫ eSec D.P.A))
       (Out.jFK (R := ℂ) ℂ) (tauLift A x y) := by
   rintro (((_ | _) | _) | _)
-  · exact (by rw [map_add]; rfl : _ = Out.jFK (R := ℂ) ℂ ≫ D.xK (ε (x + y))).trans (jFK_xK hct _)
+  · exact (by rw [map_add (f := _)]; rfl : _ = Out.jFK (R := ℂ) ℂ ≫ D.xK (ε (x + y))).trans (jFK_xK hct _)
   · exact jFK_xK hct _
   · exact jFK_xK hct _
   · exact jFK_eSec
@@ -463,7 +463,7 @@ theorem genVal_prim (hw : w + star w = 1)
       (fun k => by fin_cases k <;> simp <;> fun_prop) (fun z => by rw [id, Category.comp_id]; exact isLift_prim hf z)
     simpa only [id, Category.comp_id] using this
   have key : ∀ z m, A.H (A.F w z) m = A.H z m - A.H z (A.F w m) := fun z m => by
-    rw [A.H_F, eq_sub_iff_add_eq, ← A.H_add_right, ← LinearMap.add_apply, ← map_add, add_comm, hw, map_one]
+    rw [A.H_F, eq_sub_iff_add_eq, ← A.H_add_right, ← LinearMap.add_apply, ← map_add (f := _), add_comm, hw, map_one]
     rfl
   have hc := const_of_norm_periodic u hd (fun l z => by
     let m : A.abelian₂ := ⟨l, lam.le l.2⟩
@@ -610,7 +610,7 @@ def degPre : Out.DegPre ℂ where
   sym_rig := sym_rig
   X := A.X
   c y := u.ex (A.ct y)
-  c_add a b := by rw [map_add, u.ex_add]; rfl
+  c_add a b := by rw [map_add (f := _), u.ex_add]; rfl
   psi y := LB.pullGen P.L _ _ (exists_psiGen A P u y).choose (Out.jK ℂ)
   psi_gen y := DVR.pullGen_isGen _ _ _ _ (exists_psiGen A P u y).choose_spec.1 _
 

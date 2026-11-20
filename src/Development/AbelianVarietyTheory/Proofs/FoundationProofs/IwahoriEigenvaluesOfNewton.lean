@@ -114,7 +114,7 @@ theorem exists_root_of_side {O : Type*} [CommRing O] [IsLocalRing O] (ϖ : O)
       have : eval (y₀ : O) (derivative (X ^ i * (C (u : O) + C (w : O) * X) + C ϖ * R)) =
           (y₀ : O) ^ i * w + ϖ * eval (y₀ : O) (derivative R) := by
         simp [derivative_mul, hy, mul_comm (w : O) ((y₀ : O) ^ i)]
-      rw [this, map_add, Ideal.Quotient.eq_zero_iff_mem.2 (hm _), add_zero]
+      rw [this, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 (hm _), add_zero]
       exact ((y₀.isUnit.pow i).mul w.isUnit).map _)
   refine ⟨y, ?_, ?_⟩
   · by_contra hn

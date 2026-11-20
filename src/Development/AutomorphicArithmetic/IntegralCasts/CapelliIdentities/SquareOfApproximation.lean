@@ -122,11 +122,11 @@ private theorem core {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
   have hσσ : ∀ x, σ (σ x) = x := by
     intro x
     obtain ⟨u, w, rfl⟩ := hsp' x
-    simp only [map_add, map_mul, AlgHom.commutes, hσ, map_neg, mul_neg, neg_neg]
+    simp only [map_add (f := _), map_mul, AlgHom.commutes, hσ, map_neg, mul_neg, neg_neg]
   have hfix : ∀ x, σ x = x → ∃ u : F, x = algebraMap F E u := by
     intro x hx
     obtain ⟨u, w, rfl⟩ := hsp' x
-    simp only [map_add, map_mul, AlgHom.commutes, hσ, mul_neg] at hx
+    simp only [map_add (f := _), map_mul, AlgHom.commutes, hσ, mul_neg] at hx
     have h2 : (2 : E) * (algebraMap F E w * θ) = 0 := by
       have h3 := add_left_cancel hx
       linear_combination -h3
@@ -153,7 +153,7 @@ private theorem core {F E : Type} [Field F] [NumberField F] [Field E] [NumberFie
     apply RingOfIntegers.ext
     exact hu.symm
   have htr : ∀ y, ∃ r : 𝓞 F, algebraMap (𝓞 F) (𝓞 E) r = y + s y := fun y =>
-    hfixO _ (by rw [map_add, hss, add_comm])
+    hfixO _ (by rw [map_add (f := _), hss, add_comm])
   have hnm : ∀ y, ∃ r : 𝓞 F, algebraMap (𝓞 F) (𝓞 E) r = y * s y := fun y =>
     hfixO _ (by rw [map_mul, hss, mul_comm])
   have hint : IsIntegral ℤ θ := by

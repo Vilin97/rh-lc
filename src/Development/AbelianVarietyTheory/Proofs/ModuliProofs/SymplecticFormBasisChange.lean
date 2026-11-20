@@ -344,7 +344,7 @@ theorem exists_siegPre : Out.Laws → Out.Laws2 → (∀ (S : Scheme.{0}) (P : O
     rig₂ := ?_
     symm := ?_
     lev := fun a => ∏ i, p i ^ e a i
-    lev_add := fun a a' => by simp only [map_add, Pi.add_apply, zpow_add, Finset.prod_mul_distrib]
+    lev_add := fun a a' => by simp only [map_add (f := _), Pi.add_apply, zpow_add, Finset.prod_mul_distrib]
     lev_tors := fun a => ?_
     geom := fun K _ _ x β' z hx hz => ?_ }, ⟨?_, ?_⟩, Iso.refl _, (inferInstance : IsMonHom (𝟙 t.A)), ?_, fun i => ?_⟩
   · rw [← cls_eq_zero_iff (pull_isLB hΛ _), cls_pull hΛ, pull_lam t.isLB t.rigid, pull_one t.isLB t.rigid,

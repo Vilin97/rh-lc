@@ -133,7 +133,7 @@ theorem exists_par : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
   have hx : (1 - h * A) * (1 + A) = 1 := by linear_combination (-h) * hA - A * h2h
   have hy : (1 + A') * (1 - h * A') = 1 := by linear_combination (-h) * hA'A' - A' * h2h
   have cx : cA σ (1 - h * A) = 1 - h * A' := by rw [map_sub, map_one, map_mul, ch]
-  have cy : cA σ (1 + A') = 1 + A := by rw [map_add, map_one, cA']
+  have cy : cA σ (1 + A') = 1 + A := by rw [map_add (f := _), map_one, cA']
   have Mh : GlobalTheory.SplitConj.Mult W v h := GlobalTheory.SplitConj.mult_algebraMap W v _ (evFin_half_mem v h2)
   have Me : GlobalTheory.SplitConj.Mult W v e := GlobalTheory.SplitConj.mult_algebraMap W v _ (by
     rw [GlobalTheory.LatVac.evFin_liftV]; exact one_mem _)
@@ -166,7 +166,7 @@ theorem exists_par : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numbe
     linear_combination i1
   have i4 : h * (x' + y') * (h * (x - y)) + h * (x' - y') * (h * (x + y)) = 0 := by
     linear_combination i2
-  have ca : cA σ (h * (x + y)) = h * (x' + y') := by rw [map_mul, map_add, ch, cx, cy, add_comm]
+  have ca : cA σ (h * (x + y)) = h * (x' + y') := by rw [map_mul, map_add (f := _), ch, cx, cy, add_comm]
   have cb : cA σ (h * (x - y)) = -(h * (x' - y')) := by rw [map_mul, map_sub, ch, cx, cy]; ring
   have hmem : (blk2 d (h * (x + y)) (h * (x - y)))ᵀ * dbl (incM F W.J) *
       (blk2 d (h * (x + y)) (h * (x - y))).map (cA σ) = dbl (incM F W.J) := by

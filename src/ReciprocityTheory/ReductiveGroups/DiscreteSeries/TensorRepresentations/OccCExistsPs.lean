@@ -87,7 +87,7 @@ theorem occC_exists_ps (dual : Bool) (hgap : StdGap ε lam) (hP : IsPsiFor ε la
     { toFun := fun f => ⟨(Hlam ε Ψ' v₀').starProjection (occC2phi dual ε η f.1), hsmP f.1 f.2⟩
       map_add' := fun f f' => Subtype.ext (by
         show (Hlam ε Ψ' v₀').starProjection (occC2phi dual ε η (f.1 + f'.1)) = _
-        rw [occurrence_phi_add dual hW hη f.2 f'.2, map_add]
+        rw [occurrence_phi_add dual hW hη f.2 f'.2, map_add (f := _)]
         rfl)
       map_smul' := fun a f => Subtype.ext (by
         show (Hlam ε Ψ' v₀').starProjection (occC2phi dual ε η (a • f.1)) = _

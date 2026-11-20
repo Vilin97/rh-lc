@@ -92,7 +92,7 @@ theorem rid_lTensor_map {K D : Type} [CommRing K] [CommRing D] [Algebra K D] (a 
   induction u using TensorProduct.induction_on with
   | zero => simp
   | tmul s t => simp
-  | add s t hs ht => simp only [map_add, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), hs, ht]
 
 theorem map_comp_weilHom : GlobalTheory.Published.CubeTheorem → ∀ (p : ℕ) [Fact p.Prime] (K : Type) [Field K] (A : Over (Sp K)) [GrpObj A], IsAbelianScheme A → ∀ (P : LB (A ⊗ A).left), IsDual A A P → ∀ (𝒜 : PDivGroup p K) (t : 𝒜.TorsionTower A) (w : 𝒜 ⟶ 𝒜.dual), IsWeilHom t t P w → ∀ (f f' : A ⟶ A) [IsMonHom f] [IsMonHom f'], LBIso (ev P (fst A A ≫ f) (snd A A)) (ev P (fst A A) (snd A A ≫ f')) → t.map t f ≫ w = w ≫ dualHom _ _ (t.map t f') := by
   intro _ p _ K _ A _ hA P hP 𝒜 t w hw f f' _ _ h

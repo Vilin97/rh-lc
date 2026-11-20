@@ -103,8 +103,8 @@ theorem trace_integral' : TraceInt := by
     | tmul a e =>
       have h1 : ∀ e' : I.E, I.cm.sig e' = star e' := fun _ => rfl
       simp [sigV, h1]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
-  obtain ⟨τ, hτ⟩ := fixed_incL I v hv (α + sigV I v α) (by rw [map_add, hinv, add_comm])
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
+  obtain ⟨τ, hτ⟩ := fixed_incL I v hv (α + sigV I v α) (by rw [map_add (f := _), hinv, add_comm])
   by_cases hτi : τ ∈ v.adicCompletionIntegers I.F
   · exact ⟨τ, hτi, hτ⟩
 
@@ -118,7 +118,7 @@ theorem trace_integral' : TraceInt := by
       rcases ValuationSubring.mem_or_inv_mem (v.adicCompletionIntegers I.F) r₀ with h | h
       · exact h
       · rwa [inv_eq_of_mul_eq_one_right hr0] at h
-    exact ⟨r₀ + r₀, add_mem hmem hmem, by rw [sigV_incL, map_add]⟩
+    exact ⟨r₀ + r₀, add_mem hmem hmem, by rw [sigV_incL, map_add (f := _)]⟩
   have hdom : ∀ x y : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Fv I.F v ⊗[I.F] I.E, x * y = 0 → x = 0 ∨ y = 0 := by
     intro x y hxy
     by_cases hx : x = 0
@@ -162,7 +162,7 @@ theorem trace_integral' : TraceInt := by
   have ha2 : a ^ 2 + (s - a) = 0 := by simpa using ha
   have haK : (a : v.adicCompletion I.F) ^ 2 + (τ⁻¹ * τ⁻¹ - a) = 0 := by
     have h := congrArg (v.adicCompletionIntegers I.F).subtype ha2
-    rw [map_add, map_pow, map_sub, map_zero] at h
+    rw [map_add (f := _), map_pow, map_sub, map_zero] at h
     exact h
   have hr : (τ * a) * (τ - τ * a) = 1 := by
     have e1 : (a : v.adicCompletion I.F) - a ^ 2 = τ⁻¹ * τ⁻¹ := by linear_combination -haK
@@ -172,7 +172,7 @@ theorem trace_integral' : TraceInt := by
   have e2 : incL I v (τ * a) * incL I v (τ - τ * a) = 1 := by
     rw [← map_mul, hr, map_one]
   have e3 : incL I v (τ * a) + incL I v (τ - τ * a) = α + sigV I v α := by
-    rw [← map_add, show τ * a + (τ - τ * a) = τ by ring, hτ]
+    rw [← map_add (f := _), show τ * a + (τ - τ * a) = τ by ring, hτ]
   have hprod : (α - incL I v (τ * a)) * (α - incL I v (τ - τ * a)) = 0 := by
     linear_combination (-α) * e3 + e2 - hα
   rcases hdom _ _ hprod with h | h

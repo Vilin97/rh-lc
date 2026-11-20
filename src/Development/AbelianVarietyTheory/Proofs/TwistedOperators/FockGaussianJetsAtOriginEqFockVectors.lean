@@ -26,7 +26,7 @@ theorem list_prod_toMultiset {ι : Type} (m : ι →₀ ℕ) (g : ι → ℂ) :
   induction m using Finsupp.induction with
   | zero => simp
   | single_add a n g' ha hn ih =>
-    rw [map_add, Multiset.map_add, Multiset.prod_add, ih, Finsupp.toMultiset_single, Finsupp.prod_add_index']
+    rw [map_add (f := _), Multiset.map_add (f := _), Multiset.prod_add, ih, Finsupp.toMultiset_single, Finsupp.prod_add_index']
     · simp [Multiset.map_nsmul, Multiset.prod_nsmul]
     · simp
     · intro a b c; rw [pow_add]

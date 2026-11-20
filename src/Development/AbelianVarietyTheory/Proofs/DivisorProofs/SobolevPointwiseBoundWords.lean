@@ -121,7 +121,7 @@ theorem contDiff_slice {Φ : (κ → AF F) → ℂ} (hΦ : Φ ∈ schA F κ) (x 
       · funext i
         change (InfiniteAdeleRing.ringEquiv_mixedSpace F) ((x i).1 +
           (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (y i)) = _
-        rw [map_add, RingEquiv.apply_symm_apply]; rfl
+        rw [map_add (f := _), RingEquiv.apply_symm_apply]; rfl
       · funext i
         change (x i).2 + (archInc F y i).2 = _
         rw [archInc_snd, add_zero]

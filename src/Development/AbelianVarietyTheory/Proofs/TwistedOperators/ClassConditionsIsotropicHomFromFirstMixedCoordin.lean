@@ -44,7 +44,7 @@ theorem GlobalTheory.ClassFromMixed.main : ∀ (D : D7) (ψ : AddChar (AF D.host
         (hp.dualA _ (hp.a₁.fin _ hx')).1 hx' a ha
       have hsplit : x' = x + r + (x' - (x + r)) := by abel
       have key : ψ (symplO V W (dV.extX W x') (dV.extY W a)) = ψ (symplO V W (dV.extX W x) (dV.extY W a)) := by
-        rw [hsplit, map_add, map_add, GlobalTheory.PlaceModel.symplO_add_left, GlobalTheory.PlaceModel.symplO_add_left,
+        rw [hsplit, map_add (f := _), map_add (f := _), GlobalTheory.PlaceModel.symplO_add_left, GlobalTheory.PlaceModel.symplO_add_left,
           GlobalTheory.SplitScalar.symplO_real_fin V W hXr hYa, AddChar.map_add_eq_mul, AddChar.map_add_eq_mul, h1,
           AddChar.map_zero_eq_one, mul_one, mul_one]
       rw [key]

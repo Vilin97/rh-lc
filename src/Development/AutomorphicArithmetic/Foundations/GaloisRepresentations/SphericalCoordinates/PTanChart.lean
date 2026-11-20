@@ -44,7 +44,7 @@ theorem UpperTheory.Gal.W2.tanChart_of :
       abel
     conv_lhs => rw [hω]
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, hψω', zero_add, map_sum]
+      rw [map_add (f := _), hψω', zero_add, map_sum]
     simp only [map_smul]
   let τ : E →ₗ[ℂ] Fin d → ℂ :=
     LinearMap.pi (fun l => ((ψ (KaehlerDifferential.D ℂ (Sec s' W) (e₁ l)) : E →L[ℂ] ℂ) : E →ₗ[ℂ] ℂ))

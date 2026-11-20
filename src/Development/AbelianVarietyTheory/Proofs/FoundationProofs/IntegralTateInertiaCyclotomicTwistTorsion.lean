@@ -172,7 +172,7 @@ theorem bound (hW : IntVal W) (n m : ℕ) (z : PadicAlgCl l) (hz : IsPrimitiveRo
     have a2 : Q.coeff N = 0 := by by_contra h; have := (h2 N h).1; omega
     simp [a1, a2]
   have hz1 : ‖z‖ = 1 := norm_root_eq_one (pow_pos hl.out.pos _).ne' hz.pow_eq_one
-  rw [← map_add]
+  rw [← map_add (f := _)]
   conv_lhs => rw [aeval_eq_sum_range]
   refine IsUltrametricDist.norm_sum_le_of_forall_le_of_nonneg (by positivity) ?_
   intro j _
@@ -309,7 +309,7 @@ theorem sp_stable (n m : ℕ) (z : PadicAlgCl l) (hz : IsPrimitiveRoot z (l ^ (n
     refine Submodule.subset_span ⟨a * k, fun h => hk (hac'.dvd_of_dvd_mul_left h), ?_⟩
     rw [map_pow, ← ha, pow_mul]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
   | smul c x _ hx => rw [gal_smul]; exact Submodule.smul_mem _ c hx
 
 theorem sp_fixed (N : ℕ) (z : PadicAlgCl l) (g : PadicAlgCl l ≃ₐ[W] PadicAlgCl l) (hg : g (z ^ N) = z ^ N)
@@ -319,7 +319,7 @@ theorem sp_fixed (N : ℕ) (z : PadicAlgCl l) (g : PadicAlgCl l ≃ₐ[W] PadicA
     obtain ⟨k, ⟨t, rfl⟩, rfl⟩ := hw
     rw [pow_mul, map_pow, hg]
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add, hx, hy]
+  | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
   | smul c x _ hx => rw [gal_smul, hx]
 
 theorem sp_pow_le (N : ℕ) (z : PadicAlgCl l) : (sp W (z ^ N) fun _ => True) ≤ sp W z fun k => N ∣ k := by
@@ -340,7 +340,7 @@ theorem estimate (hW : IntVal W) (n m : ℕ) (z : PadicAlgCl l) (hz : IsPrimitiv
       (sub_mem (sp_stable n m z hz g w hw) (Submodule.smul_mem _ (⟨_, emb_mem c⟩ : W) hw))
     rw [norm_mul, norm_emb] at this
     convert this using 3
-    rw [map_add, sp_fixed _ z g hg b hb, map_sub, map_one]
+    rw [map_add (f := _), sp_fixed _ z g hg b hb, map_sub, map_one]
     ring
 
 theorem ax (z x : PadicAlgCl l) (r : ℝ)

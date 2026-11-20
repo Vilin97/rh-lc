@@ -27,7 +27,7 @@ theorem hY_ent [IsTotallyComplex E] (τ τ' : E →+* ℂ) (h : τ' ≠ barE E �
         (if j = i' ∧ i = j' then star (coord τ' (atEmb τ z)) else 0) := by
     intro z
     simp only [hY, Matrix.add_apply, Matrix.star_apply, Matrix.single_apply]
-    rw [map_add]
+    rw [map_add (f := _)]
     congr 1
     · split_ifs <;> simp
     · split_ifs <;> simp [PositivityTheory.Rg.Cz.J.coord_star]

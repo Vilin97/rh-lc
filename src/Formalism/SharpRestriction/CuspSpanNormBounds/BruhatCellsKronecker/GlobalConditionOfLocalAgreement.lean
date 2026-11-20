@@ -45,7 +45,7 @@ theorem mem_iff_forall_atP (I : FractionalIdeal (𝓞 E)⁰ E) (t : E) :
           have ha' : algebraMap F E (a : F) * t ∈ I := ha
           have hb' : algebraMap F E (b : F) * t ∈ I := hb
           change algebraMap F E ((a : F) + (b : F)) * t ∈ I
-          rw [map_add, add_mul]
+          rw [map_add (f := _), add_mul]
           exact Submodule.add_mem (I : Submodule (𝓞 E) E) ha' hb'
         zero_mem' := by
           change algebraMap F E (0 : F) * t ∈ I
@@ -218,7 +218,7 @@ private theorem exists_integer_eq_algebraMap_integer (b : 𝓞 F) : ∃ z : 𝓞
 
 theorem int_iff (hinv : ∀ x, sig (sig x) = x) (hfix : ∀ x : E, sig x = x → ∃ a : F, algebraMap F E a = x) (x : E) :
     A.ιE x ∈ A.O ↔ atP p 1 x := by
-  obtain ⟨tr, htr⟩ := hfix (x + sig x) (by rw [map_add, hinv, add_comm])
+  obtain ⟨tr, htr⟩ := hfix (x + sig x) (by rw [map_add (f := _), hinv, add_comm])
   obtain ⟨nm, hnm⟩ := hfix (x * sig x) (by rw [map_mul, hinv, mul_comm])
   have hq : x * x - algebraMap F E tr * x + algebraMap F E nm = 0 := by
     rw [htr, hnm]
@@ -230,7 +230,7 @@ theorem int_iff (hinv : ∀ x, sig (sig x) = x) (hfix : ∀ x : E, sig x = x →
       exact cj_mem A _ hx
     have htrO : A.ιF tr ∈ 𝒪[A.Fp] := by
       apply mem_OF_of_alg A
-      rw [← A.compat, htr, map_add]
+      rw [← A.compat, htr, map_add (f := _)]
       exact A.O.add_mem hx hsx
     have hnmO : A.ιF nm ∈ 𝒪[A.Fp] := by
       apply mem_OF_of_alg A

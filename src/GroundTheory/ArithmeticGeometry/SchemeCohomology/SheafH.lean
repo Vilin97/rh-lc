@@ -41,7 +41,7 @@ noncomputable def freeYonedaTerminalIso {T : C} (hT : IsTerminal T) :
       | zero => simp
       | of a => simp
       | neg a h => simp only [map_neg, h]
-      | add a b ha hb => simp only [map_add, ha, hb])
+      | add a b ha hb => simp only [map_add (f := _), ha, hb])
 
 variable [HasSheafify J AddCommGrpCat.{v}]
 

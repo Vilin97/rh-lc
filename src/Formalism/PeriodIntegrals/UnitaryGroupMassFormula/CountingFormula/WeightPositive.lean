@@ -128,7 +128,7 @@ theorem isotropic_zero (D : Formalism.BasicNotions.D7) (w : (VS D).V) (hE : ∀ 
         ring
       have e2 : (τ ((VS D).hT v v)).re =
           -(2 * n * Complex.normSq (τ x)) + (τ ((VS D).hT y' y')).re := by
-        rw [e1, map_add, map_mul, hxx, map_neg, map_mul, map_ofNat, map_natCast, Complex.add_re]
+        rw [e1, map_add (f := _), map_mul, hxx, map_neg, map_mul, map_ofNat, map_natCast, Complex.add_re]
         congr 1
         have : -(2 * (n : ℂ)) * ((Complex.normSq (τ x) : ℝ) : ℂ) =
             ((-(2 * n * Complex.normSq (τ x)) : ℝ) : ℂ) := by push_cast; ring
@@ -149,20 +149,20 @@ theorem isotropic_zero (D : Formalism.BasicNotions.D7) (w : (VS D).V) (hE : ∀ 
   have hWE : ∀ b, (VS D).hT (D.sp.hypE b) xW = 0 := by
     intro b
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [hxW, map_sub, map_sum, map_add, map_smul, D.sp.hyp_ee, D.sp.hyp_ef, hEz]
+      simp [hxW, map_sub, map_sum, map_add (f := _), map_smul, D.sp.hyp_ee, D.sp.hyp_ef, hEz]
   have hWF : ∀ b, (VS D).hT (D.sp.hypF b) xW = 0 := by
     intro b
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [hxW, map_sub, map_sum, map_add, map_smul, D.sp.hyp_ff, hFE, hFz]
+      simp [hxW, map_sub, map_sum, map_add (f := _), map_smul, D.sp.hyp_ff, hFE, hFz]
   have hWz : (VS D).hT D.sp.zm xW = 0 := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp [hxW, map_sub, map_sum, map_add, map_smul, (D.sp.hyp_orthz _).1, (D.sp.hyp_orthz _).2, hzz]
+      simp [hxW, map_sub, map_sum, map_add (f := _), map_smul, (D.sp.hyp_orthz _).1, (D.sp.hyp_orthz _).2, hzz]
   have h1 := orthW xW hWE hWF hWz
   have hwE : ∀ a, (VS D).hT w (D.sp.hypE a) = 0 := fun a => hzero_swap D (hE a)
   have hwF : ∀ a, (VS D).hT w (D.sp.hypF a) = 0 := fun a => hzero_swap D (hF a)
   have hwz : (VS D).hT w D.sp.zm = 0 := hzero_swap D hz
   set_option synthInstance.maxHeartbeats 100000 in
-    simpa [hxW, map_sub, map_sum, map_add, map_smul, hwE, hwF, hwz] using h1
+    simpa [hxW, map_sub, map_sum, map_add (f := _), map_smul, hwE, hwF, hwz] using h1
 
 theorem weights_are_positive : WPos := by
   intro D w hE hF hz hw

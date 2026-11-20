@@ -163,7 +163,7 @@ theorem d_phiT {N : ℕ} {U : Scheme.{0}} (x : Sx E N U) (s t : ℤ) (hst : s + 
       ((k.negOnePow : ℤˣ) : ℤ) • Finsupp.linearCombination ℤ (phiT μ hk α.1 β.1 x t)
         (z.d₁ + (-1 : ℤ) ^ z.1 • z.d₂) := by
   obtain ⟨p, r, a, b⟩ := z
-  rw [phiT_Fm, secmap_zsmul, d_Fm μ α β U s t hst, smul_add, map_add, smul_add, part1 μ hk α β, part2 μ hk α β]
+  rw [phiT_Fm, secmap_zsmul, d_Fm μ α β U s t hst, smul_add, map_add (f := _), smul_add, part1 μ hk α β, part2 μ hk α β]
 
 theorem d_phi {N : ℕ} {U : Scheme.{0}} (x : Sx E N U) (s t : ℤ) (hst : s + 1 = t) (c : Pr N →₀ ℤ) :
     Sec.map (K.d s t) (phi μ hk α.1 β.1 x s c) = ((k.negOnePow : ℤˣ) : ℤ) • phi μ hk α.1 β.1 x t (Pr.d N c) := by
@@ -171,7 +171,7 @@ theorem d_phi {N : ℕ} {U : Scheme.{0}} (x : Sx E N U) (s t : ℤ) (hst : s + 1
   refine Finsupp.induction_linear c ?_ ?_ ?_
   · simp only [map_zero, secmap_zero', smul_zero]
   · intro f g hf hg
-    rw [map_add, map_add, map_add, secmap_add', hf, hg, smul_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), secmap_add', hf, hg, smul_add]
   · intro z a
     rw [Finsupp.linearCombination_single, secmap_zsmul, d_phiT μ hk α β x s t hst]
     unfold Pr.d
@@ -179,7 +179,7 @@ theorem d_phi {N : ℕ} {U : Scheme.{0}} (x : Sx E N U) (s t : ℤ) (hst : s + 1
 
 theorem phi_add {N : ℕ} {U : Scheme.{0}} (x : Sx E N U) (w : ℤ) (c d : Pr N →₀ ℤ) :
     phi μ hk α.1 β.1 x w (c + d) = phi μ hk α.1 β.1 x w c + phi μ hk α.1 β.1 x w d := by
-  simp only [phi_eq, map_add]
+  simp only [phi_eq, map_add (f := _)]
 
 theorem phi_sub {N : ℕ} {U : Scheme.{0}} (x : Sx E N U) (w : ℤ) (c d : Pr N →₀ ℤ) :
     phi μ hk α.1 β.1 x w (c - d) = phi μ hk α.1 β.1 x w c - phi μ hk α.1 β.1 x w d := by

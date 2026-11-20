@@ -224,7 +224,7 @@ theorem invDer_monomial (μ : Fin d → MvPowerSeries (Fin d ⊕ Fin d) R)
         · simp
     refine ⟨G * X i + monomial α' 1 * Ri, ?_, ?_⟩
     · intro β hβ
-      rw [map_add, X_def, coeff_mul_monomial, coeff_monomial_mul]
+      rw [map_add (f := _), X_def, coeff_mul_monomial, coeff_monomial_mul]
       have h1 : (if Finsupp.single i 1 ≤ β then coeff (β - Finsupp.single i 1) G * 1 else 0) = 0 := by
         split_ifs with h
         · have := degree_add' (β - Finsupp.single i 1) (Finsupp.single i 1)
@@ -317,7 +317,7 @@ theorem constantCoeff_iterate_invDer_monomial : ∀ (R : Type) [CommRing R] (d :
         rw [hp]
         ring
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [Function.iterate_succ_apply, hD, hL, map_add, map_sum, ← hL, map_add, map_sum]
+      rw [Function.iterate_succ_apply, hD, hL, map_add (f := _), map_sum, ← hL, map_add (f := _), map_sum]
     simp only [← hL]
     rw [hG0, add_zero, Finset.sum_congr rfl (fun j _ => hterm j), ← Finset.sum_mul]
     have hs : (∑ j, (α j : R)) = ((n + 1 : ℕ) : R) := by

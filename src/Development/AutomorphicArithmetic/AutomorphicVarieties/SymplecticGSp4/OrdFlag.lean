@@ -15,7 +15,7 @@ private theorem UpperTheory.V.GradeZeroInterpolatingElement.ordFlag_aeval {K : T
     ext i j
     simp [Matrix.mul_diagonal, Algebra.algebraMap_eq_smul_one, mul_comm]
   | add p q hp hq =>
-    rw [map_add, add_mul, hp, hq, ← mul_add, Matrix.diagonal_add]
+    rw [map_add (f := _), add_mul, hp, hq, ← mul_add, Matrix.diagonal_add]
     simp
   | monomial n a hn =>
     rw [pow_succ, ← mul_assoc, map_mul, Polynomial.aeval_X, mul_assoc, h, ← mul_assoc, hn, mul_assoc,

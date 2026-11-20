@@ -56,7 +56,7 @@ def symmetricLaurent : Subalgebra ℂ (LaurentRing n) where
     rw [map_mul, ha σ, hb σ]
   add_mem' {a b} ha hb σ := by
     change permAct σ (a + b) = a + b
-    rw [map_add, ha σ, hb σ]
+    rw [map_add (f := _), ha σ, hb σ]
   algebraMap_mem' c σ := AlgHom.commutes _ c
 
 theorem mem_symmetricLaurent {p : LaurentRing n} :

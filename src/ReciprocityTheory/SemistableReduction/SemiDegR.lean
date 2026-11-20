@@ -141,7 +141,7 @@ theorem relIndex_sup_proj {G : Type} [AddCommGroup G] (π : G →+ G) (A X C : A
         exact hx
     · rintro z ⟨hzX, hz⟩
       obtain ⟨a, ha, w, hw, rfl⟩ := AddSubgroup.mem_sup.1 hz
-      have hπ : π (a + w) = w := by rw [map_add, hA a ha, hC w hw, zero_add]
+      have hπ : π (a + w) = w := by rw [map_add (f := _), hA a ha, hC w hw, zero_add]
       have hwX : w ∈ X := by
         have : π (a + w) ∈ X := hzX
         rwa [hπ] at this

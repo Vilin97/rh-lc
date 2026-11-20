@@ -14,11 +14,11 @@ theorem gaussInt_stable_of_dual : ∀ (F E : Type) [NontriviallyNormedField F] [
   haveI : IsTopologicalRing A.L := IsModuleTopology.isTopologicalRing F A.L
   have hpsi : ∀ u v : A.K, A.psiK ψ (u + v) = A.psiK ψ u * A.psiK ψ v := by
     intro u v
-    simp only [Et.psiK, map_add, AddChar.map_add_eq_mul]
+    simp only [Et.psiK, map_add (f := _), AddChar.map_add_eq_mul]
   have hNadd : ∀ y m : A.L, A.NL (y + m) = A.NL y + Algebra.trace A.K A.L (star y * m) + A.NL m := by
     intro y m
     apply hinj
-    simp only [map_add, hNL, hTr, star_add, star_mul, star_star]
+    simp only [map_add (f := _), hNL, hTr, star_add, star_mul, star_star]
     ring
   set g : A.L → ℂ := fun y => A.psiK ψ (t * x * A.NL y) with hg
   have hgadd : ∀ y m : A.L, g (y + m) = g y * A.kerL ψ (t * x) y m * A.psiK ψ (t * x * A.NL m) := by
@@ -28,7 +28,7 @@ theorem gaussInt_stable_of_dual : ∀ (F E : Type) [NontriviallyNormedField F] [
     ring
   have hkadd : ∀ y y' m : A.L, A.kerL ψ (t * x) (y + y') m = A.kerL ψ (t * x) y m * A.kerL ψ (t * x) y' m := by
     intro y y' m
-    simp only [Et.kerL, ← hpsi, star_add, add_mul, map_add, mul_add]
+    simp only [Et.kerL, ← hpsi, star_add, add_mul, map_add (f := _), mul_add]
   have hmemD : ∀ y, y ∈ D ↔ ∀ m ∈ M, A.kerL ψ (t * x) y m = 1 := fun y => Set.ext_iff.1 hD y
   have hMD : M ≤ D := by
     intro m hm

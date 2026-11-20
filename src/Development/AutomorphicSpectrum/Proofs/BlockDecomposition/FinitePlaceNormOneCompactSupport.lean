@@ -25,7 +25,7 @@ theorem proj_glue_mem (S : Finset (Pl F)) (c : F) (a : ∀ s : S, Kp s.1) {u : P
       exact proj_inc_ne (fun e => hb (Subtype.ext e.symm)) _
     · intro h
       exact absurd (Finset.mem_univ _) h
-  rw [glue, map_add, h, AlgHom.commutes, add_sub_cancel]
+  rw [glue, map_add (f := _), h, AlgHom.commutes, add_sub_cancel]
 
 theorem proj_glue_notMem (S : Finset (Pl F)) (c : F) (a : ∀ s : S, Kp s.1) {u : Pl F}
     (hu : u ∉ S) : proj u (glue S c a) = algebraMap F (Kp u) c := by
@@ -35,7 +35,7 @@ theorem proj_glue_notMem (S : Finset (Pl F)) (c : F) (a : ∀ s : S, Kp s.1) {u 
     refine Finset.sum_eq_zero fun b _ => proj_inc_ne (fun e => hu ?_) _
     rw [e]
     exact b.2
-  rw [glue, map_add, h, AlgHom.commutes, add_zero]
+  rw [glue, map_add (f := _), h, AlgHom.commutes, add_zero]
 
 theorem continuous_glue {X : Type*} [TopologicalSpace X] (S : Finset (Pl F)) (c : F)
     {f : X → ∀ s : S, Kp s.1} (hf : ∀ s : S, Continuous fun x => f x s) :

@@ -88,7 +88,7 @@ theorem ev_mul (f g : Γ(Y, U)) (y : CxPts p σ) :
 theorem ev_add (f g : Γ(Y, U)) (y : CxPts p σ) :
     ev p σ U (f + g) y = ev p σ U f y + ev p σ U g y := by
   by_cases h : y ∈ ptsIn p σ U
-  · simp only [ev_eq h, map_add]
+  · simp only [ev_eq h, map_add (f := _)]
   · simp only [ev_of_notMem h, add_zero]
 
 theorem ev_algX (h : y ∈ ptsIn p σ U) (a : k) : ev p σ U (algX p U a) y = σ a :=

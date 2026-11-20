@@ -32,7 +32,7 @@ private theorem ot_tr_comap {n : ℕ} {A G H : Type} [CommRing A] [Group G] [Gro
     · simp
     · induction y using MonoidAlgebra.induction_linear with
       | zero => simp
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
       | single g r => simp
   unfold GDet.tr GDet.lam
   rw [this]
@@ -45,7 +45,7 @@ private theorem ot_comap_comap {n : ℕ} {A G H K : Type} [CommRing A] [Group G]
   congr 1
   induction x using MonoidAlgebra.induction_linear with
   | zero => simp
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
   | single g r => simp
 
 private theorem ot_single {A G H : Type} [CommRing A] [Group G] [Group H] (φ : H →* G) (g : H) (a : A) :

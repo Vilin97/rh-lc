@@ -20,8 +20,8 @@ theorem isQ_qv : QForm.IsQ D.toPre ϖ (qv D hϖ) := fun χ => (QForm.exists_QVal
 
 def beF : LinearMap.BilinForm ℤ D.toPre.X :=
   LinearMap.mk₂ ℤ (fun a b => QForm.bHom hϖ D (isQ_qv D hϖ) a b)
-    (fun a a' b => by simp [map_add]) (fun n a b => by simp [map_zsmul])
-    (fun a b b' => by simp [map_add]) (fun n a b => by simp [map_zsmul])
+    (fun a a' b => by simp [map_add (f := _)]) (fun n a b => by simp [map_zsmul])
+    (fun a b b' => by simp [map_add (f := _)]) (fun n a b => by simp [map_zsmul])
 
 theorem beF_symm (a b : D.toPre.X) : beF D hϖ a b = beF D hϖ b a := QForm.bOf_comm D a b
 
@@ -51,7 +51,7 @@ include oD in
 theorem isScalarForm_tF : letI := H.starRing; IsScalarForm (𝓞 E) (tF D hϖ) := by
   letI := H.starRing
   refine ⟨fun a b b' => ?_, fun a b => ?_, fun x a b => ?_⟩
-  · simp only [tF, map_add, neg_add, zpow_add]
+  · simp only [tF, map_add (f := _), neg_add, zpow_add]
   · rw [tF, tF, beF_symm]
   · rw [tF, tF, beF_adj D oD]; rfl
 
@@ -74,7 +74,7 @@ theorem isRootForm_rF {k : ℕ} (hk : ∀ a b, (k : ℤ) ∣ beF D hϖ a b) :
     letI := H.starRing; IsRootForm (𝓞 E) k (tF D hϖ) (rF D hϖ k) := by
   letI := H.starRing
   refine ⟨⟨fun a b b' => ?_, fun a b => ?_, fun x a b => ?_⟩, fun a b => ?_⟩
-  · simp only [rF, map_add]
+  · simp only [rF, map_add (f := _)]
     rw [Int.add_ediv_of_dvd_left (hk a b), neg_add, zpow_add]
   · rw [rF, rF, beF_symm]
   · rw [rF, rF, beF_adj D oD]; rfl

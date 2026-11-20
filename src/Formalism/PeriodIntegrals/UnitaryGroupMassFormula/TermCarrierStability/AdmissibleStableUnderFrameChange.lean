@@ -155,7 +155,7 @@ theorem admissible_stable_under_frame_change {T T' : E} (Λ : Submodule (𝓞 E)
   have e1 : n (frE (frE (frame F) Ξ) A b) = frE (frame F) M b := by
     rw [frE_mul, frE_map, show (fun a => n (frame F a)) = frE (frame F) B from funext hBf, frE_mul]
   have key : frame F₂ b = frE (frame F) M b + n (frE ε A b) := by
-    rw [hfr, hAf, hxε, frE_add, map_add, e1]
+    rw [hfr, hAf, hxε, frE_add, map_add (f := _), e1]
   have hdiff : frame F₂ b - frameAct (frame F) ξ' b =
       n (frE ε A b) + ∑ a, (M a b - (ξ' a b : E)) • frame F a := by
     rw [key]

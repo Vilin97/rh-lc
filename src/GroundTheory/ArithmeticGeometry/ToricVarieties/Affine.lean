@@ -94,7 +94,7 @@ noncomputable def semigroupAlgebraEquiv (S : AddSubmonoid G) :
       · rintro _ ⟨f, rfl⟩
         induction f using AddMonoidAlgebra.induction_linear with
         | zero => simp
-        | add f g hf hg => rw [map_add]; exact Subalgebra.add_mem _ hf hg
+        | add f g hf hg => rw [map_add (f := _)]; exact Subalgebra.add_mem _ hf hg
         | single s a =>
           have e : mapDomainAlgHom k k S.subtype (single s a) = single (s : G) a := by simp
           change mapDomainAlgHom k k S.subtype (single s a) ∈ _

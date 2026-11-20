@@ -77,7 +77,7 @@ theorem UpperTheory.exists_CM_extension :
       fun y => real_val (φ.comp (algebraMap F (QuadraticAlgebra F (-1) 0))) y
     rw [hsx]
     conv_rhs => rw [hx]
-    simp only [map_add, map_sub, map_mul, hreal, hφω]
+    simp only [map_add (f := _), map_sub, map_mul, hreal, hφω]
     ring
   · intro x
     rw [RingHom.mem_range]

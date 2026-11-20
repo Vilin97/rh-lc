@@ -217,7 +217,7 @@ theorem typ_inner_pres (hu : ∀ h ∈ UWset k r z, ∀ v, ‖π h v‖ = ‖v�
   first
     | exact (⟨(π h).toLinearMap, hu h hh⟩ : W →ₗᵢ[ℂ] W).inner_map_map v v'
     | (have key := (⟨(π h).toLinearMap, hu h hh⟩ : W →ₗᵢ[ℂ] W).inner_map_map v v'; simpa using key)
-    | (rw [inner_eq_sum_norm_sq_div_four, inner_eq_sum_norm_sq_div_four]; simp only [← map_add, ← map_sub, ← map_smul, hu h hh]; done)
+    | (rw [inner_eq_sum_norm_sq_div_four, inner_eq_sum_norm_sq_div_four]; simp only [← map_add (f := _), ← map_sub, ← map_smul, hu h hh]; done)
 
 theorem typ_dOp_skew (hπ : IsCRepOn (UWset k r z) π) (hc : ContinuousOn π (UWset k r z))
     (hu : ∀ h ∈ UWset k r z, ∀ v, ‖π h v‖ = ‖v‖) {X : Mx k r} (hX : QrD.InLieW k r z X) (v v' : W) :
@@ -1174,7 +1174,7 @@ theorem vecw_main : Formalism.FourierDecayAlt.Top.VecVTypes := by
     rw [vecw_capRep_intertwine S hbase F p hB₀' w v, heig' σ w v hv, map_smul]
   · simp
   · intro a b ha hb
-    simp only [map_add, Finset.sum_add_distrib, ha, hb]
+    simp only [map_add (f := _), Finset.sum_add_distrib, ha, hb]
 
 end Formalism.FourierDecayAlt.P.Topx1
 

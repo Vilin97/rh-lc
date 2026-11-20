@@ -62,7 +62,7 @@ theorem annihilator_baseChange : ∀ {R R' : Type} [CommRing R] [CommRing R'] [A
       obtain ⟨z, rfl⟩ := hf.2 w
       induction z using TensorProduct.induction_on with
       | zero => simp
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul x c =>
         rw [liftSemi_tmul, map_smul, map_smul]
         congr 1

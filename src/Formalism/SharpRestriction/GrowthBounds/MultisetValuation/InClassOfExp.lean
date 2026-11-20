@@ -68,7 +68,7 @@ theorem low_expK_sub {f : MvPowerSeries ι K} (hf : MvPowerSeries.constantCoeff 
 theorem expK_add [CharZero K] {a b : MvPowerSeries ι K}
     (ha : MvPowerSeries.constantCoeff a = 0) (hb : MvPowerSeries.constantCoeff b = 0) :
     expK (a + b) = expK a * expK b := by
-  have hab : MvPowerSeries.constantCoeff (a + b) = 0 := by rw [map_add, ha, hb, add_zero]
+  have hab : MvPowerSeries.constantCoeff (a + b) = 0 := by rw [map_add (f := _), ha, hb, add_zero]
   have la := (low_one_iff _).2 ha
   have lb := (low_one_iff _).2 hb
   refine eq_of_low fun M => ?_

@@ -112,7 +112,7 @@ theorem eword_coef (hσ : IsURepOn (UJset ε) σ) (hD : IsDer ε σ V E) (w : Li
         (Formalism.REAL.Eword ε w (fun x => ⟪y, σ x (v : H)⟫_ℂ)) g +
       Complex.I * Formalism.REAL.Rd (Formalism.REAL.cpart2 ε (Matrix.single p.1 p.2 1))
         (Formalism.REAL.Eword ε w (fun x => ⟪y, σ x (v : H)⟫_ℂ)) g = _
-    rw [r1, r2, key, Submodule.coe_add, Submodule.coe_smul, map_add, map_smul, inner_add_right,
+    rw [r1, r2, key, Submodule.coe_add, Submodule.coe_smul, map_add (f := _), map_smul, inner_add_right,
       inner_smul_right]
 
 theorem exp_zero_smul (X : Matrix (Fin n) (Fin n) ℂ) : NormedSpace.exp (((0 : ℝ) : ℂ) • X) = 1 := by

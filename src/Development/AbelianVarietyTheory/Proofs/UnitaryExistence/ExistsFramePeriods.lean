@@ -32,9 +32,9 @@ theorem exists_framePeriods : ∀ (E : Type) [Field E] [NumberField E] [IsCMFiel
     AddMonoidHom.mk' (fun a j => perFr (M.X k) x (φ a) (relab c σ (e j).1) (e j).2) (by
       intro a b
       funext j
-      simp only [Pi.add_apply, hper, map_add, hemb]
+      simp only [Pi.add_apply, hper, map_add (f := _), hemb]
       split_ifs
-      · simp only [hermC, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+      · simp only [hermC, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
       · rw [Matrix.mulVec_add, Pi.add_apply])
   have hPf : IsPerFr e F M k Pf := fun x a j => rfl
   have hPf' : ∀ x v j, Pf x v j = if ((idx j).2 : ℕ) < (F.Di k).q then

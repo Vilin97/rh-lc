@@ -26,7 +26,7 @@ theorem rename_swap_colAdd {n n' : ℕ} (l j : Fin n) (c : ℂ) (v : MvPolynomia
       Polynomial.eval (C c) (rowGen ℂ l j (rename Prod.swap v)) := by
   induction v using MvPolynomial.induction_on with
   | C a => simp [colAdd, rowGen]
-  | add p q hp hq => simp only [map_add, hp, hq, Polynomial.eval_add]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, Polynomial.eval_add]
   | mul_X p v hp =>
     obtain ⟨a, s⟩ := v
     simp only [map_mul, hp, Polynomial.eval_mul]
@@ -38,7 +38,7 @@ theorem rowGen_coeff_zero_eq {r n : ℕ} (a b : Fin r) (f : MvPolynomial (Fin r 
   rw [Polynomial.coeff_zero_eq_eval_zero]
   induction f using MvPolynomial.induction_on with
   | C a => simp [rowGen]
-  | add p q hp hq => simp only [map_add, hp, hq, Polynomial.eval_add]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq, Polynomial.eval_add]
   | mul_X p v hp =>
     simp only [map_mul, hp, Polynomial.eval_mul]
     congr 1

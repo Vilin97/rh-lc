@@ -104,7 +104,7 @@ private theorem span_fixed_eq_whole_of_semilinear_injective {K E : Type} [Field 
     apply hmin s (by omega)
     have key : ψ (w s) = ψ (u' + ∑ i : Fin s, b i.succ • w i) := by
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [← hwsucc, ← hsum, map_add, hu', map_sum, Fin.sum_univ_succ, ha, zero_smul, zero_add]
+        rw [← hwsucc, ← hsum, map_add (f := _), hu', map_sum, Fin.sum_univ_succ, ha, zero_smul, zero_add]
       congr 1
       refine Finset.sum_congr rfl (fun i _ => ?_)
       rw [hψs, hb, ← hwsucc]
@@ -213,7 +213,7 @@ private theorem span_fixed_eq_whole_of_semilinear_injective {K E : Type} [Field 
     rw [hz]
     abel
   have hfix : ψ (y + z) = y + z := by
-    rw [map_add, hψy, hz']
+    rw [map_add (f := _), hψy, hz']
     abel
   apply hyU
   have hyz : y + z ∈ U := Submodule.subset_span hfix

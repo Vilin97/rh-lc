@@ -49,10 +49,10 @@ theorem isUnitarisable_extTensor {ρ : Representation ℂ G V} {σ : Representat
   · exact (re_inner_self_pos (𝕜 := ℂ)).2 hv
   · show inner ℂ (extTensor ρ σ g w) (extTensor ρ σ g v) = inner ℂ w v
     induction v with
-    | add x y hx hy => simp only [map_add, inner_add_right, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), inner_add_right, hx, hy]
     | tmul v v' =>
       induction w with
-      | add x y hx hy => simp only [map_add, inner_add_left, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), inner_add_left, hx, hy]
       | tmul w w' =>
         rw [extTensor_tmul, extTensor_tmul, TensorProduct.inner_tmul, TensorProduct.inner_tmul]
         exact congrArg₂ _ (b3 _ _ _) (c3 _ _ _)
@@ -406,7 +406,7 @@ theorem form_eq_of_diag {V : Type} [AddCommGroup V] [Module ℂ V] (B C : V →�
     (h : ∀ v, B v v = C v v) (v w : V) : B v w = C v w := by
   have h1 := h (v + w)
   have h2 := h (v + Complex.I • w)
-  simp only [map_add, LinearMap.add_apply, map_smul, LinearMap.smul_apply, LinearMap.map_smulₛₗ, h v, h w,
+  simp only [map_add (f := _), LinearMap.add_apply, map_smul, LinearMap.smul_apply, LinearMap.map_smulₛₗ, h v, h w,
     Complex.conj_I, smul_eq_mul, RingHom.id_apply] at h1 h2
   linear_combination (1 / 2 : ℂ) * h1 + (Complex.I / 2) * h2 +
     ((1 / 2 : ℂ) * (B v w - C v w - B w v + C w v)) * Complex.I_mul_I

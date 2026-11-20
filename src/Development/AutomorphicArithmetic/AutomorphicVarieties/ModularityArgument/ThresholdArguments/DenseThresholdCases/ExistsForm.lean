@@ -46,7 +46,7 @@ private theorem exists_nil {ρ : Representation ℂ G V} (hl : HasFiniteLength �
   obtain ⟨a, ha⟩ := WellFoundedGT.monotone_chain_condition K
   let R : Subrepresentation ρ := ⟨N.toSubmodule ⊔ LinearMap.range (f ^ a), fun g v hv => by
     obtain ⟨y, hy, _, ⟨z, rfl⟩, rfl⟩ := Submodule.mem_sup.1 hv
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (N.apply_mem_toSubmodule g hy) ⟨ρ g z, by rw [hf, pow_comm]⟩⟩
   have hR : x ∉ R.toSubmodule := fun hv => by
     obtain ⟨y, hy, _, ⟨z, rfl⟩, h⟩ := Submodule.mem_sup.1 hv

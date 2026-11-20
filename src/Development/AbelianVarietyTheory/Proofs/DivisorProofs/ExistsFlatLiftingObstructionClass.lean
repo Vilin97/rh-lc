@@ -32,7 +32,7 @@ theorem exists_bock : ∀ (R R' R₀ : Type) [CommRing R] [CommRing R'] [CommRin
     intro U V W a b
     have nat := (preCoef h.w).naturality b (f U V a)
     have cc := c.2 a b
-    rw [d1_apply, map_add, map_sub, hf, hf]
+    rw [d1_apply, map_add (f := _), map_sub, hf, hf]
     erw [nat, hf]
     rw [cc]; ring
   choose w hw using fun (U V W : AffOp X) (a : U ⟶ V) (b : V ⟶ W) ↦ ((sec W).2.1 _).1 (hd U V W a b)
@@ -50,7 +50,7 @@ theorem exists_bock : ∀ (R R' R₀ : Type) [CommRing R] [CommRing R'] [CommRin
     intro U V W Y a b e
     have h1 := ((sec Y).2.2.2 _).2 (hw2 a b e)
     have nat := (preCoef h₀.w).naturality e (w U V W a b)
-    simp only [map_add, map_sub] at h1
+    simp only [map_add (f := _), map_sub] at h1
     erw [nat] at h1
     dsimp only
     exact sub_eq_zero.1 h1

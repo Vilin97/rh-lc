@@ -192,7 +192,7 @@ theorem smFam_orbit (hu : IsUnit Hm.det) (hσ : IsURepOn (Formalism.QuantumDeter
 theorem smooth_zero : SmoothVec (lieH Hm) σ 0 := fun k Xs _ => by simpa only [map_zero] using contDiff_const
 
 theorem smooth_add {v w : H} (hv : SmoothVec (lieH Hm) σ v) (hw : SmoothVec (lieH Hm) σ w) :
-    SmoothVec (lieH Hm) σ (v + w) := fun k Xs h => by simpa only [map_add] using (hv k Xs h).add (hw k Xs h)
+    SmoothVec (lieH Hm) σ (v + w) := fun k Xs h => by simpa only [map_add (f := _)] using (hv k Xs h).add (hw k Xs h)
 
 theorem smooth_smul (a : ℂ) {v : H} (hv : SmoothVec (lieH Hm) σ v) :
     SmoothVec (lieH Hm) σ (a • v) := fun k Xs h => by simpa only [map_smul] using (hv k Xs h).const_smul a

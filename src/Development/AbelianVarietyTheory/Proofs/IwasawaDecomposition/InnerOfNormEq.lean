@@ -45,7 +45,7 @@ lemma abstract {ι K : Type} [CompleteSpace H] [NormedAddCommGroup K] [InnerProd
     ∃ c : ℝ, ∀ γ : K, ‖J γ‖ ^ 2 = c * ‖γ‖ ^ 2 := by
   classical
   have hadd : ∀ a b : D, s (a + b) = s a + s b := fun a b =>
-    hJ (by rw [map_add, hJs, hJs, hJs, Submodule.coe_add])
+    hJ (by rw [map_add (f := _), hJs, hJs, hJs, Submodule.coe_add])
   have hsmul : ∀ (c : ℂ) (a : D), s (c • a) = c • s a := fun c a =>
     hJ (by rw [map_smul, hJs, hJs, Submodule.coe_smul])
   let sl : D →ₗ[ℂ] K := { toFun := s, map_add' := hadd, map_smul' := hsmul }

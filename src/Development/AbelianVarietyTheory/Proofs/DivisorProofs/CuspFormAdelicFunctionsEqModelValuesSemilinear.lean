@@ -34,13 +34,13 @@ theorem jEvExists : GlobalTheory.Published.CuspRapidDecay → GlobalTheory.Mem.V
   refine evEx_of_range _ _ _ (GlobalTheory.EvalAtUnitVector.evInj T R v₀ hmod.HW htie.hv₀ i σ hσ) (fun x y => ?_) (fun a x => ?_)
     (fun f g => ?_) (fun a f => ?_) (fun f => ?_)
   · unfold evAt
-    rw [map_add]
+    rw [map_add (f := _)]
     rfl
   · unfold evAt
     rw [map_smul]
     rfl
   · simp only [phiC_eq]
-    rw [Submodule.coe_add, map_add, smul_add, map_add]
+    rw [Submodule.coe_add, map_add (f := _), smul_add, map_add (f := _)]
   · simp only [phiC_eq]
     rw [Submodule.coe_smul, map_smulₛₗ (rdU _), smul_comm, map_smul]
   · rw [hr, phiC_eq]

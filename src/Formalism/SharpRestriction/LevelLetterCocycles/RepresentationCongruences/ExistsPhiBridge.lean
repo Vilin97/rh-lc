@@ -247,12 +247,12 @@ theorem exists_phiBridge [IsAdicComplete (IsLocalRing.maximalIdeal O) O] (W : Lo
     rw [_root_.map_sub, hτX, hτC']; ring
   set u := τ.symm W'
   have hφX0 : φX (X - C ((PD.p : ℕ) : O)) = u * (X - C ((PD.p : ℕ) : O)) * X ^ (PD.p - 1) := by
-    rw [hφXapp, hτXl, hφYX, _root_.map_mul, _root_.map_mul, _root_.map_pow, _root_.map_add, hτsX, hτC]
+    rw [hφXapp, hτXl, hφYX, _root_.map_mul, _root_.map_mul, _root_.map_pow, _root_.map_add (f := _), hτsX, hτC]
     ring
   have hφXX : φX X = u * (X - C ((PD.p : ℕ) : O)) * X ^ (PD.p - 1) + C ((PD.p : ℕ) : O) := by
     have : X = (X - C ((PD.p : ℕ) : O)) + C ((PD.p : ℕ) : O) := by ring
     conv_lhs => rw [this]
-    rw [_root_.map_add, hφX0, PB.algC]
+    rw [_root_.map_add (f := _), hφX0, PB.algC]
   have hφred : ∀ f : PowerSeries O, (φX f).map (IsLocalRing.residue O) =
       PowerSeries.subst ((u * X ^ PD.p).map (IsLocalRing.residue O)) (f.map (IsLocalRing.residue O)) := by
     have hc0 : constantCoeff ((u * X ^ PD.p).map (IsLocalRing.residue O)) = 0 := by
@@ -304,7 +304,7 @@ theorem exists_phiBridge [IsAdicComplete (IsLocalRing.maximalIdeal O) O] (W : Lo
     P := P
     ι := ι
     inj := hσinj.comp τ.injective
-    ι_X := by rw [hιapp, hτX, _root_.map_add, hσX, PB.algC]
+    ι_X := by rw [hιapp, hτX, _root_.map_add (f := _), hσX, PB.algC]
     ι_φ := fun F => by
       rw [hιapp, hιapp]
       show σ (τ (τ.symm (φY (τ F)))) = W.φ₀ (σ (τ F))

@@ -62,7 +62,7 @@ private theorem levelX_sch {r s r' s' : ℕ} (hp : IsPair B M χX χW om r s r' 
     obtain ⟨U, hU, h⟩ := UpperTheory.weil_representation_smooth_vectors F E σ B n d X W M χX χW om r s r' s' hp g hg
     exact mem_of_superset hU fun u hu k => h u hu k f
   | zero => exact Eventually.of_forall fun _ _ => map_zero _
-  | add x y _ _ hx hy => filter_upwards [hx, hy] with u h1 h2 k using by rw [map_add, h1 k, h2 k]
+  | add x y _ _ hx hy => filter_upwards [hx, hy] with u h1 h2 k using by rw [map_add (f := _), h1 k, h2 k]
   | smul a x _ hx => filter_upwards [hx] with u h1 k using by rw [map_smul, h1 k]
 
 private theorem polStab (T : Tools) (hp : IsPair B M χX χW om n 0 d 0) (x : UA σ X.J) (y : UA σ W.J) :
@@ -194,7 +194,7 @@ theorem _root_.UpperTheory.TP.liftAut :
         have := congrFun (l3 Φ.1 (sch Φ) _ _ (fn _ (p1 ψ)) (fn _ (p1 ψ'))) (e' h)
         refine Eq.trans ?_ this
         show lift M om Φ.1 (Pj (ψ + ψ') ∘ e.symm) (e' h) = _
-        rw [map_add]
+        rw [map_add (f := _)]
         rfl)
       (fun c Φ ψ => funext fun h => by
         have := congrFun (l4 c Φ.1 (sch Φ) _ (fn _ (p1 ψ))) (e' h)

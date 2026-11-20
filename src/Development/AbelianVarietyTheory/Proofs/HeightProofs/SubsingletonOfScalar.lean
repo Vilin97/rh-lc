@@ -217,13 +217,13 @@ theorem subsingleton_of_scalar {X k : Type} [AddCommGroup X] [Module.Free ℤ X]
     rw [Polynomial.aeval_map_algebraMap, Polynomial.aeval_def, hp0, Polynomial.eval_map] at e
     exact (smul_eq_zero.1 e.symm).resolve_right hv.2
   have hUv : ψ U v = ((l : ℂ) * z + n) • v := by
-    rw [hUB, map_add, map_mul, map_natCast, map_intCast, LinearMap.add_apply, Module.End.mul_apply, hv.apply_eq_smul,
+    rw [hUB, map_add (f := _), map_mul, map_natCast, map_intCast, LinearMap.add_apply, Module.End.mul_apply, hv.apply_eq_smul,
       Module.End.natCast_apply, Module.End.intCast_apply, add_smul, mul_smul, Nat.cast_smul_eq_nsmul,
       Int.cast_smul_eq_zsmul]
   set y : ℂ := (l : ℂ) * z + n with hy
   have hy2 : y * y + m = y := by
     have e := congrArg (fun M => ψ M v) hU
-    simp only [map_add, map_mul, map_natCast, LinearMap.add_apply, Module.End.mul_apply, hUv, map_smul,
+    simp only [map_add (f := _), map_mul, map_natCast, LinearMap.add_apply, Module.End.mul_apply, hUv, map_smul,
       Module.End.natCast_apply] at e
     rw [smul_smul, ← Nat.cast_smul_eq_nsmul ℂ, ← add_smul] at e
     exact smul_left_injective ℂ hv.2 e
@@ -349,7 +349,7 @@ theorem actsBy_of_detCond {k : Type} [Field k] [CharZero k] [IsAlgClosed k] {S :
     · rw [EigenSplit.mem_eigenSub.1 hz]
       congr 1
       have e := congrArg τ H.two_weight_eq_one_add_root
-      rw [map_mul, map_add, map_one, map_ofNat, hτ, ← hc] at e
+      rw [map_mul, map_add (f := _), map_one, map_ofNat, hτ, ← hc] at e
       exact mul_left_cancel₀ two_ne_zero e
     · obtain ⟨_, h0⟩ := (DetCompare.hasEigenDim_iff a t τ _).1 ((DetCompare.lieMult_iff a t τ _).1 ((h τ).2 hτ))
       rw [hq, Submodule.finrank_eq_zero] at h0
@@ -494,7 +494,7 @@ theorem abLocus_eq_univ (hq : D.q = 0) (V : ValuationSubring c.F) (Y : Model Xo 
   have hdet := (Y.oF.geom L y (ga.hom.comp inc) (by
     rw [pullback.condition, ← Category.assoc, ← hga, ← sp_comp]; rfl)).1
   have h₁ := actsBy_of_detCond D hq _ y _ (ga.hom z)
-    (by rw [← map_ofNat ga.hom 2, ← map_mul, hz2, map_add, map_one]; rfl) hdet
+    (by rw [← map_ofNat ga.hom 2, ← map_mul, hz2, map_add (f := _), map_one]; rfl) hdet
   have h₂ : ActsBy Y.t.G (Y.t.act.act H.w0) (spMap i ≫ χ) (i (b.hom ⟨z, hzV⟩)) := by
     rw [hiy, show i (b.hom ⟨z, hzV⟩) = ga.hom z from RingHom.congr_fun hbga ⟨z, hzV⟩]
     exact (actsBy_pull Y.m.cart (Y.m.act H.w0) y _).1 h₁

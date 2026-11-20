@@ -75,7 +75,7 @@ theorem exists_continuous_character :
     rw [map_intCast, ← Int.cast_natCast, ZMod.val_intCast, Int.cast_smul_eq_zsmul, Int.cast_smul_eq_zsmul,
       ← natCast_zsmul, smul_smul, ← add_smul, Int.emod_add_mul_ediv]
   simp only [F]
-  rw [hs, ← vecHom_apply cc δ (_ + _), map_add, map_nsmul, vecHom_apply, vecHom_apply,
+  rw [hs, ← vecHom_apply cc δ (_ + _), map_add (f := _), map_nsmul, vecHom_apply, vecHom_apply,
     kap_add_nsmul _ hI _ _ hw hx]
 
 end GlobalTheory.CommutatorCharacter

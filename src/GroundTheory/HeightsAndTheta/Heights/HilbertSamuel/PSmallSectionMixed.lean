@@ -141,7 +141,7 @@ theorem exists_form_of_mem_chartRingZ {Ω : Type} [Field Ω] (y : (Σ k, ι k) �
     rw [add_comm δ₂ δ₁] at hB'
     refine ⟨δ₁ + δ₂, e₁ * ∏ k, (X ⟨k, c k⟩ : MRing ι) ^ δ₂ k + e₂ * ∏ k, (X ⟨k, c k⟩ : MRing ι) ^ δ₁ k,
       isMultiHomog_add hA hB', ?_⟩
-    · rw [map_add, map_mul, map_mul, v₁, v₂, aeval_coordProd, aeval_coordProd, hpow]
+    · rw [map_add (f := _), map_mul, map_mul, v₁, v₂, aeval_coordProd, aeval_coordProd, hpow]
       ring
   | mul x z _ _ hx hz =>
     obtain ⟨δ₁, e₁, h₁, v₁⟩ := hx

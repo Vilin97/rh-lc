@@ -61,7 +61,7 @@ theorem exists_form (c : ∀ k, ι k) (G : MRing ι) :
     obtain ⟨n₁, f₁⟩ := e₁ L w hw
     obtain ⟨n₂, f₂⟩ := e₂ L w hw
     refine ⟨by rw [map_mul]; exact mul_ne_zero n₁ n₂, ?_⟩
-    simp only [map_add, map_mul, f₁, f₂]
+    simp only [map_add (f := _), map_mul, f₁, f₂]
     ring
   | mul_X p i hp =>
     obtain ⟨D, H, M, h, m, e⟩ := hp

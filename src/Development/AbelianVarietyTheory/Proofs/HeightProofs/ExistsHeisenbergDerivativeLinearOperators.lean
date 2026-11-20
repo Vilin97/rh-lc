@@ -43,7 +43,7 @@ theorem _root_.GlobalTheory.FockCompare.exists_heisenberg_operators : ∀ (G R :
     simp only [LinearMap.coe_mk, AddHom.coe_mk, LinearMap.add_apply, Submodule.coe_add,
       Pi.add_apply]
     rw [hform _ (hSm _ f.2), hform _ (hSm _ f.2), hform _ (hSm _ f.2)]
-    simp only [map_add]
+    simp only [map_add (f := _)]
     push_cast
     ring
   · intro c u

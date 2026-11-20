@@ -40,7 +40,7 @@ variable {k AA M : Type} [CommRing k] [Algebra ℚ k] [Ring AA] [Algebra k AA] [
 theorem ordEval_add (h1 : OrdLin) (a : Fin r → AA) (a' : Fin s → AA) (P Q : MvPolynomial (Fin r ⊕ Fin s) k) :
     ordEval a a' (P + Q) = ordEval a a' P + ordEval a a' Q := by
   obtain ⟨f, hf⟩ := h1 k AA r s a a'
-  rw [← hf, ← hf, ← hf, map_add]
+  rw [← hf, ← hf, ← hf, map_add (f := _)]
 
 theorem ordEval_zero (h1 : OrdLin) (a : Fin r → AA) (a' : Fin s → AA) :
     ordEval a a' (0 : MvPolynomial (Fin r ⊕ Fin s) k) = 0 := by
@@ -58,7 +58,7 @@ theorem phiH_apply (h1 : OrdLin) (a b : Fin r → AA) (a' b' : Fin s → AA) (σ
 noncomputable def tH (h1 : OrdLin) (a : Fin r → AA) (a' : Fin s → AA) (κ : Fin r → Fin s → k) (σ₀ : M)
     (n : ℕ) : MvPolynomial (Fin r ⊕ Fin s) k →+ M :=
   AddMonoidHom.mk' (fun R => ordEval a a' ((n.factorial : ℚ)⁻¹ • (delta κ ^ n) R) • σ₀)
-    (fun P Q => by rw [map_add, smul_add, ordEval_add h1, add_smul])
+    (fun P Q => by rw [map_add (f := _), smul_add, ordEval_add h1, add_smul])
 
 theorem tH_apply (h1 : OrdLin) (a : Fin r → AA) (a' : Fin s → AA) (κ : Fin r → Fin s → k) (σ₀ : M)
     (n : ℕ) (R : MvPolynomial (Fin r ⊕ Fin s) k) :

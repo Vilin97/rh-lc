@@ -43,7 +43,7 @@ theorem exists_extend {N : Submodule R W} (hN : Indep N) (s : N →ₗ[R] V) : �
       obtain ⟨a, ha, rfl⟩ := h
       exact h2 ⟨a, ha⟩
     | zero => simp
-    | add _ _ _ _ e1 e2 => rw [Submodule.coe_add, map_add, map_add, e1, e2]
+    | add _ _ _ _ e1 e2 => rw [Submodule.coe_add, map_add (f := _), map_add (f := _), e1, e2]
     | smul a x _ e =>
       rw [map_smul, ← e]
       exact s'.map_smul (a : ℂ) (x : W)
@@ -89,7 +89,7 @@ theorem mem_span_ker [IsDedekindDomain R] {L : Submodule R V} (hL : L.FG) {M : S
       exact sub_eq_zero.2 h2.symm
   | zero => simp
   | add y z _ _ h1 h2 =>
-    rw [map_add, map_add, add_sub_add_comm]
+    rw [map_add (f := _), map_add (f := _), add_sub_add_comm]
     exact add_mem h1 h2
   | smul a y _ h1 =>
     have := Submodule.smul_mem _ a h1

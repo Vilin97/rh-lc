@@ -178,7 +178,7 @@ theorem exists_basis_of_image {𝔞 : FractionalIdeal (𝓞 K)⁰ K} {ω : ℂ} 
     rw [LinearIndependent.pair_iff]
     intro m n e
     have e1 := congrArg (fun x : (𝔞 : Submodule (𝓞 K) K) => σ x) e
-    simp only [Submodule.coe_add, Submodule.coe_smul_of_tower, zsmul_eq_mul, map_add, map_mul,
+    simp only [Submodule.coe_add, Submodule.coe_smul_of_tower, zsmul_eq_mul, map_add (f := _), map_mul,
       map_intCast, eα, eβ, Submodule.coe_zero, map_zero] at e1
     have e2 : (m * τ + n : ℂ) = 0 := mul_left_cancel₀ hω (by linear_combination e1)
     have e3 : m = 0 := by simpa [τ.im_ne_zero] using congrArg Complex.im e2

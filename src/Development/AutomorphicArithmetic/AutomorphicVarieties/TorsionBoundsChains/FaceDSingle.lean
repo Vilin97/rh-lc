@@ -73,12 +73,12 @@ noncomputable def faceCx (G : Type) [Group G] (X : ℕ → Type) [∀ p, MulActi
   d_equiv p g f := by
     induction f using Finsupp.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single x c => simp only [perm_single, faceD_single, map_sum, map_smul, h]
   ε_equiv g f := by
     induction f using Finsupp.induction_linear with
     | zero => simp
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | single x c => simp
 
 def Chain (P : Type) [Preorder P] (p : ℕ) : Type := {f : Fin (p + 1) → P // StrictMono f}

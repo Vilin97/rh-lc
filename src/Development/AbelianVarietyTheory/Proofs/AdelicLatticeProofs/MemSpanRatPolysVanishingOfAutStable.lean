@@ -11,7 +11,7 @@ theorem evC_map_ringEquiv {ι : Type} (σ : ℂ ≃+* ℂ) (f : MvPolynomial (ι
   unfold evC
   induction f using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p n hp => simp only [map_mul, hp]; simp
 
 theorem evC_map_rat {ι : Type} (f : MvPolynomial (ι × ι) ℚ) (g : Matrix ι ι ℂ) :
@@ -28,7 +28,7 @@ theorem mem_span_vanI_of_vanish : ∀ (ι : Type) [Fintype ι] [DecidableEq ι] 
         have h1 := ha g hg
         have h2 := hb g hg
         unfold evC at *
-        rw [map_add, h1, h2, add_zero]
+        rw [map_add (f := _), h1, h2, add_zero]
       zero_mem' := by
         intro g hg
         simp [evC]

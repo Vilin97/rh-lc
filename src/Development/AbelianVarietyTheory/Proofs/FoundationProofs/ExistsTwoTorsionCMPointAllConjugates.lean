@@ -40,7 +40,7 @@ theorem isTwoTorsionCMPoint_of_odd_multiple (D : D7) (Λ : AddSubgroup ℂ) {δ 
       rw [← e]; ring
     refine not_integral_half hN hx ?_
     rw [e']
-    simp only [map_mul, map_div₀, map_add, map_one, Complex.conj_I, Complex.conj_ofReal,
+    simp only [map_mul, map_div₀, map_add (f := _), map_one, Complex.conj_I, Complex.conj_ofReal,
       map_natCast, map_ofNat]
     ring
   · intro h

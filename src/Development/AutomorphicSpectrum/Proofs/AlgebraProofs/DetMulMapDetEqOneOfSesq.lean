@@ -70,11 +70,11 @@ theorem det_mul_complexConj_det_eq_one : ∀ (E : Type) [Field E] [NumberField E
   have hσ : ∀ a, σ a = IsCMField.complexConj E a := fun _ => rfl
   let H : V →ₗ[E] V →ₛₗ[σ] E := LinearMap.mk₂'ₛₗ (RingHom.id E) σ h
     (fun x x' y => hext _ _ fun a => by
-      rw [add_mul, map_add, hh, hh, hh, smul_add, map_add, LinearMap.add_apply])
+      rw [add_mul, map_add (f := _), hh, hh, hh, smul_add, map_add (f := _), LinearMap.add_apply])
     (fun c x y => hext _ _ fun a => by
       rw [RingHom.id_apply, smul_eq_mul, mul_comm c, mul_assoc, hh, hh, smul_smul, mul_comm])
     (fun x y y' => hext _ _ fun a => by
-      rw [add_mul, map_add, hh, hh, hh, map_add])
+      rw [add_mul, map_add (f := _), hh, hh, hh, map_add (f := _)])
     (fun c x y => hext _ _ fun a => by
       rw [smul_eq_mul, mul_comm (σ c), mul_assoc, hh, hh, mul_smul, hc (σ c), hσ,
         IsCMField.complexConj_apply_apply])

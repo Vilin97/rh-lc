@@ -89,7 +89,7 @@ theorem smulS_add_left {m : ℤ} {f : ℤ → V} (hf : LB m f) (g h : PowerSerie
   rw [Pi.add_apply, smulS_eq_sum hf (g + h) k N hN, smulS_eq_sum hf g k N hN,
     smulS_eq_sum hf h k N hN, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
-  simp only [map_add, add_smul]
+  simp only [map_add (f := _), add_smul]
 
 private theorem smulS_C_eq_smul_of_LB {m : ℤ} {f : ℤ → V} (hf : LB m f) (c : LL) :
     smulS (PowerSeries.C c) f = c • f := by

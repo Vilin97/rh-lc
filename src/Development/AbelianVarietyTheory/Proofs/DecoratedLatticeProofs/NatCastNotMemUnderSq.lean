@@ -50,8 +50,8 @@ theorem psiE_sec_pr_eq_exp : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k] 
   have hxs : x = (x - (b : D.host.E) / (p : D.host.E)) + algebraMap D.host.F D.host.E c := by
     rw [hc]; ring
   have hadd : ∀ u w : AE D, psiE ψ (u + w) = psiE ψ u * psiE ψ w := by
-    intro u w; simp only [GlobalTheory.MixPer.psiE, map_add, AddChar.map_add_eq_mul]
-  rw [hxs, hpr, map_add, map_add, map_add, hadd]
+    intro u w; simp only [GlobalTheory.MixPer.psiE, map_add (f := _), AddChar.map_add_eq_mul]
+  rw [hxs, hpr, map_add (f := _), map_add (f := _), map_add (f := _), hadd]
 
   have hy : q.pr (incA D (x - (b : D.host.E) / (p : D.host.E))) ∈ 𝒪[k] := by
     rw [← hpr]; exact (hint _).2 hx

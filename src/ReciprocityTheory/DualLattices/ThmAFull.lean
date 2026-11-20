@@ -25,7 +25,7 @@ private lemma ev_expand (B : BX R₀) {O : LAlg R₀} {g : ℕ} (gb : Module.Bas
     rw [map_smul, Algebra.smul_def]
     ring
   | add a b ha hb =>
-    simp only [BX.ev, map_add] at *
+    simp only [BX.ev, map_add (f := _)] at *
     rw [ha, hb, ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun _ _ => by ring
 

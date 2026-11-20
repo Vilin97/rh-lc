@@ -28,7 +28,7 @@ private theorem coef_smul {N : ℕ} {k : ℤ} (c : ℂ) (f : CuspForm (Gamma1 N)
 private theorem coef_add {N : ℕ} {k : ℤ} (f g : CuspForm (Gamma1 N) k) (n : ℕ) :
     coef (f + g : CuspForm (Gamma1 N) k) n = coef f n + coef g n := by
   unfold coef
-  rw [← map_add]
+  rw [← map_add (f := _)]
   congr 1
   exact ModularForm.qExpansion_add one_pos (one_mem_per N) f g
 
@@ -178,7 +178,7 @@ private theorem main (M N k : ℕ) (hN : 0 < N) (hNM : N ∣ M) (hk : 1 ≤ k) (
   let T : J → Module.End ℂ (chSub N k χ) := fun p =>
     { toFun := fun f => ⟨t p f, ht1 p f⟩
       map_add' := fun f f' => Subtype.ext (hinj (by
-        simp only [Submodule.coe_add, map_add, ht]))
+        simp only [Submodule.coe_add, map_add (f := _), ht]))
       map_smul' := fun a f => Subtype.ext (hinj (by
         simp only [Submodule.coe_smul, map_smul, ht, RingHom.id_apply])) }
   have hT : ∀ p (f : chSub N k χ), (T p f).1 = t p f := fun _ _ => rfl

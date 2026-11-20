@@ -177,7 +177,7 @@ lemma glAct_aeval_freezeSub (LL : Letters N) (n : ℕ) (ρ c : Fin r) (hc : c �
       refine Finset.sum_eq_zero fun i _ => ?_
       split_ifs <;> simp
     rw [MvPolynomial.aeval_C, MvPolynomial.algebraMap_eq, MvPolynomial.C_eq_smul_one, map_smul, h1, smul_zero]
-  | add f g hf hg => rw [map_add, map_add, hf, hg, add_zero]
+  | add f g hf hg => rw [map_add (f := _), map_add (f := _), hf, hg, add_zero]
   | mul_X f v hf =>
     rw [map_mul, MvPolynomial.aeval_X, glAct_mul, hf, glAct_freezeSub LL n ρ c hc v, mul_zero, mul_zero,
       add_zero]

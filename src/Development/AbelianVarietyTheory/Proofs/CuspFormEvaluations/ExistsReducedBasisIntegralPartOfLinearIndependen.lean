@@ -52,7 +52,7 @@ theorem exists_short_basis_of_ratSpan {V E ι : Type*} [AddCommGroup V] [Module 
       induction hy using span_induction with
       | mem y hy => obtain ⟨j, rfl⟩ := hy; exact subset_span ⟨j, rfl⟩
       | zero => simp
-      | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+      | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
       | smul q y _ hy =>
         rw [show φ (q • y) = (q : ℝ) • φ y by simpa using map_ratCast_smul φ ℚ ℝ q y]
         exact smul_mem _ _ hy

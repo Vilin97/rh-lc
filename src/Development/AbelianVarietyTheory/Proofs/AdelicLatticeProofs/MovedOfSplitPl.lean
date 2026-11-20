@@ -158,7 +158,7 @@ noncomputable def conjLat (H : ReciprocityTheory.ChartRestriction.G.Geo.Tor.Host
   ⟨{ carrier := {v | (fun j => IsCMField.complexConj E (v j)) ∈ Λ}
      add_mem' := fun {x y} hx hy => by
        have := Λ.add_mem hx hy
-       simp only [Set.mem_setOf_eq, Pi.add_apply, map_add]
+       simp only [Set.mem_setOf_eq, Pi.add_apply, map_add (f := _)]
        exact this
      zero_mem' := by
        simp only [Set.mem_setOf_eq, Pi.zero_apply, map_zero]

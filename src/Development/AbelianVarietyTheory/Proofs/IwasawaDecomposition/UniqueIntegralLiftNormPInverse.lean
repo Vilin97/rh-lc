@@ -178,7 +178,7 @@ theorem mem_latHT_iff : HTBoundSt → ∀ (E : Type) [Field E] [NumberField E] [
     have h3 : ∑ i, D i * b i = (s + ∑ i, δ i * b i) * (p : ↥(intO C)) ^ 1 := by
       apply (intO C).subtype_injective
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [map_mul, map_pow, map_natCast, map_sum, map_add, Subring.subtype_apply, s, b]
+        simp only [map_mul, map_pow, map_natCast, map_sum, map_add (f := _), Subring.subtype_apply, s, b]
       rw [← Finset.sum_add_distrib, Finset.sum_mul]
       refine Finset.sum_congr rfl fun i _ => ?_
       have := congrArg (intO C).subtype (hδ i)

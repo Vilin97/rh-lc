@@ -57,10 +57,10 @@ theorem exists_lift_pow (β : X' ⟶ X) [IsClosedImmersion β] [Surjective β]
   refine ⟨n + l + 1, fun k hk => ?_⟩
   obtain ⟨j, rfl⟩ : ∃ j, k = (n + l + j) + 1 := ⟨k - (n + l + 1), by omega⟩
   refine ⟨t ^ (n + l + j + 1) + ((n + l + j + 1 : ℕ) : Γ(X, V)) * (t ^ j * (t ^ l * w)), ?_, ?_⟩
-  · simp only [map_add, map_mul, map_pow, hl, mul_zero, add_zero]
+  · simp only [map_add (f := _), map_mul, map_pow, hl, mul_zero, add_zero]
   · have e := add_pow_succ_of_mul_self (rs X hO t) (τ - rs X hO t) (hsq _ _ _ hε hε) (n + l + j)
     rw [add_sub_cancel] at e
-    rw [e, map_add, map_mul, map_mul, map_mul, map_pow, map_pow, map_pow, map_natCast, hw]
+    rw [e, map_add (f := _), map_mul, map_mul, map_mul, map_pow, map_pow, map_pow, map_natCast, hw]
     ring
 
 theorem exists_pow_eq {W O : X.Opens} (hW : IsCompact (W : Set X)) (hO : O ≤ W) (x y : Γ(X, W))

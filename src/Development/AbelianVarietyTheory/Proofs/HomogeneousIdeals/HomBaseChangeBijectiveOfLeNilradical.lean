@@ -269,7 +269,7 @@ theorem coeff_mul_coeff {u : AddMonoidAlgebra A X} (hu : IsGroupLikeElem A u) (x
     intro v
     induction v using AddMonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => rw [map_add, map_add, ha, hb]; split_ifs <;> simp
+    | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]; split_ifs <;> simp
     | single a r =>
       simp [hc, Finsupp.single_apply]
       aesop
@@ -282,7 +282,7 @@ theorem sum_coeff {u : AddMonoidAlgebra A X} (hu : IsGroupLikeElem A u) :
     intro v
     induction v using AddMonoidAlgebra.induction_linear with
     | zero => simp
-    | add a b ha hb => rw [map_add, ha, hb]; simp [Finsupp.sum_add_index']
+    | add a b ha hb => rw [map_add (f := _), ha, hb]; simp [Finsupp.sum_add_index']
     | single a r => simp
   rw [← hu.counit_eq_one, hL]; rfl
 

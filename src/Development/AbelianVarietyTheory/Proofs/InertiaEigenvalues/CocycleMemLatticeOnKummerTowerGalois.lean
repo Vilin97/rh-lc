@@ -32,13 +32,13 @@ theorem isCrisVal_add (P : PhiMod O K l e a ι) (jB : (ι → OB l O) ≃ₗ[OB 
   obtain ⟨m', c', hm', hw', hb'⟩ := h'
   refine ⟨m * m', m' • c + m • c', ?_, ?_, ?_⟩
   · rw [map_mul]; exact hm.mul hm'
-  · rw [map_add, inclL_smul, inclL_smul, ← hw, ← hw', smul_smul, smul_smul, smul_add, map_mul,
+  · rw [map_add (f := _), inclL_smul, inclL_smul, ← hw, ← hw', smul_smul, smul_smul, smul_add, map_mul,
       mul_comm (inclO l O m) (inclO l O m')]
   · have e1 : (fun i => toB l O ((m' • c + m • c') i)) =
         toB l O m' • (fun i => toB l O (c i)) + toB l O m • (fun i => toB l O (c' i)) := by
       ext1 i
-      simp [map_add, map_mul]
-    rw [e1, map_add, map_smul, map_smul, ← hb, ← hb', map_mul, smul_add, smul_smul, smul_smul,
+      simp [map_add (f := _), map_mul]
+    rw [e1, map_add (f := _), map_smul, map_smul, ← hb, ← hb', map_mul, smul_add, smul_smul, smul_smul,
       mul_comm (toB l O m') (toB l O m)]
 
 theorem cocycle_mem_lattice_of_mem_GKinf : ∀ (l : ℕ) [Fact l.Prime] (a e : ℕ) [NeZero a] [NeZero e] (O K : Type) [CommRing O] [Algebra ℤ_[l] O] [Module.Free ℤ_[l] O] [Module.Finite ℤ_[l] O] [NormedField K] [IsUltrametricDist K] [Algebra O K] [IsUnitBall O K] [NormedAlgebra ℚ_[l] K] [TameDescentExponentData K l e a] (t : Wq l a →ₐ[ℤ_[l]] O) (ϖ : PiSys l e) (ι : Type) [Fintype ι] [DecidableEq ι] (η H : ℕ) (D : BKDat O K l e a ι η H) (T : LocLat (Gl l) ℚ_[l] K O) (R : GalDat t ϖ (sQ l) D T), ∀ y ∈ D.Y, ∀ b, R.IsPotential y b → ∀ g : Gl l, sQ l g ∈ ϖ.GKinf → ∃ x : ↥T.L.T, actB (sQ l) T g b - b = (1 : OB l O) ⊗ₜ[O] x := by

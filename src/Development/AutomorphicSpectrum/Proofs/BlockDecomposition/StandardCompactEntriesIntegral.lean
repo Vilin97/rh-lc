@@ -25,7 +25,7 @@ theorem compFin_finOne_smul' (v : HeightOneSpectrum (𝓞 F)) (z : AE F E) :
   | tmul x e =>
     rw [TensorProduct.smul_tmul']
     simp [GlobalTheory.AdelicU.compFin, h1]
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy]
 
 theorem absFin_compFin_le_one {z : AE F E} (hz : z ∈ intHat F E) (v : HeightOneSpectrum (𝓞 F)) :
     absFin F v (compFin F E v z) ≤ 1 := by

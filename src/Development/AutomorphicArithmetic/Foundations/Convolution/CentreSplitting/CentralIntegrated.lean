@@ -55,7 +55,7 @@ theorem kernel_uAction (u : UniversalEnvelopingAlgebra ℝ h.lieSubalgebra) (f :
   | add a b ha hb =>
     obtain ⟨h1, h2⟩ := hb f hf
     obtain ⟨h3, h4⟩ := ha f hf
-    rw [map_add, map_add, map_add, LinearMap.add_apply]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), LinearMap.add_apply]
     refine ⟨h3.add h1, fun w => ?_⟩
     rw [LinearMap.add_apply, Submodule.coe_add, h2, h4]
     exact (h.integrated_add_kernel μ π h3 h1 w).symm

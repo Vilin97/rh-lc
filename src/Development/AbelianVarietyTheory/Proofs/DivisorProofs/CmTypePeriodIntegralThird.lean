@@ -13,7 +13,7 @@ variable {H : Type} [AddCommGroup H] [Module O H]
 
 def tensAct (ρ : orderC c →+* Module.End O H) : orderC c ⊗[ℤ] O →ₗ[ℤ] Module.End O H :=
   TensorProduct.lift (LinearMap.mk₂ ℤ (fun (a : orderC c) (x : O) => x • ρ a)
-    (fun a b x => by simp [map_add, smul_add])
+    (fun a b x => by simp [map_add (f := _), smul_add])
     (fun n a x => by rw [map_zsmul, smul_comm])
     (fun a x y => by simp [add_smul])
     (fun n a x => smul_assoc n x (ρ a)))
@@ -34,7 +34,7 @@ theorem tensAct_eig (ρ : orderC c →+* Module.End O H) (σ : E →+* K) (v : K
     show x • ((σ a : K) • v) = (σ a * algebraMap O K x) • v
     rw [mul_smul, algebraMap_smul, smul_comm]
   | add t₁ t₂ h₁ h₂ =>
-    rw [map_add, LinearMap.baseChange_add, LinearMap.add_apply, h₁, h₂, map_add, add_smul]
+    rw [map_add (f := _), LinearMap.baseChange_add, LinearMap.add_apply, h₁, h₂, map_add (f := _), add_smul]
 
 theorem inK_apply_map (f : Module.End O H) (h : H) :
     inK (O := O) K H (f h) = (f.baseChange K) (inK K H h) := by
@@ -81,7 +81,7 @@ theorem iSupIndep_and_smul_mem_iSup : ∀ (E : Type) [Field E] [NumberField E] [
         simp
       · simp
       · intro x y hx hy
-        simp only [map_add, Finset.sum_add_distrib, smul_add] at hx hy ⊢
+        simp only [map_add (f := _), Finset.sum_add_distrib, smul_add] at hx hy ⊢
         rw [hx, hy]
     have hmem : ∀ σ v, ((tensAct ρ (t σ)).baseChange K) v ∈ eigK ρ σ := by
       intro σ v
@@ -94,7 +94,7 @@ theorem iSupIndep_and_smul_mem_iSup : ∀ (E : Type) [Field E] [NumberField E] [
         · exact zero_mem _
       · simp
       · intro x y hx hy
-        simp only [map_add] at hx hy ⊢
+        simp only [map_add (f := _)] at hx hy ⊢
         exact add_mem hx hy
     intro h
     have key : ∑ σ, tensAct ρ (t σ) h = D • h := by

@@ -117,7 +117,7 @@ theorem inv_field_ex {a : Fin dd → MvPowerSeries τ C} (ha : Zc a) (i j : Fin 
   have z0 : Zc (pt C (n := 2) dd 0) := zc_pt 0
   have z1 : Zc (pt C (n := 2) dd 1) := zc_pt 1
   have zs : Zc (pt C (n := 2) dd 0 + pt C (n := 2) dd 1) := fun x => by
-    rw [Pi.add_apply, map_add, z0 x, z1 x, add_zero]
+    rw [Pi.add_apply, map_add (f := _), z0 x, z1 x, add_zero]
   have d0 : ∀ l, pderiv C ((1 : Fin 2), i) (pt C (n := 2) dd 0 l) = 0 := fun l =>
     pderiv_X_of_ne (by simp)
   have d1 : ∀ l, pderiv C ((1 : Fin 2), i) (pt C (n := 2) dd 1 l) = if l = i then 1 else 0 := fun l => by
@@ -126,7 +126,7 @@ theorem inv_field_ex {a : Fin dd → MvPowerSeries τ C} (ha : Zc a) (i j : Fin 
     · rw [if_neg h]; exact pderiv_X_of_ne (by simpa using h)
   have e := congrArg (pderiv C ((1 : Fin 2), i)) (law_ex Y z0 z1 j)
   rw [pderiv_substPointsPowerSeries_two (zc_ex Y z0) (zc_ex Y z1), pderiv_substPointsPowerSeries_one zs] at e
-  simp only [pderiv_substPointsPowerSeries_one z0, pderiv_substPointsPowerSeries_one z1, Pi.add_apply, map_add, d0, d1, mul_zero, Finset.sum_const_zero,
+  simp only [pderiv_substPointsPowerSeries_one z0, pderiv_substPointsPowerSeries_one z1, Pi.add_apply, map_add (f := _), d0, d1, mul_zero, Finset.sum_const_zero,
     zero_add, mul_ite, mul_one, Finset.sum_ite_eq', Finset.mem_univ, if_true] at e
   have h2 := zc2 ha (zc_zero (C := C) (dd := dd) (τ := τ))
   have s1 : ∀ {b : Pt C 2 dd} (_ : Zc b) (f : PS C 1 dd),

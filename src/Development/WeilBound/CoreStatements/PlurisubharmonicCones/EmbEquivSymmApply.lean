@@ -179,7 +179,7 @@ theorem proj_apply (s : 𝓞 E →+* ℂ) (x : W) :
   simp only [proj, LinearMap.sum_apply, LinearMap.smul_apply]
 
 theorem act_apply (a : 𝓞 E) (x : W) : ρ a x = ∑ s : 𝓞 E →+* ℂ, s a • proj ρ s x := by
-  have h0 := dec_spec (AddMonoidHom.mk' (fun b => ρ b x) (fun b c => by rw [map_add, LinearMap.add_apply])) a
+  have h0 := dec_spec (AddMonoidHom.mk' (fun b => ρ b x) (fun b c => by rw [map_add (f := _), LinearMap.add_apply])) a
   simpa only [AddMonoidHom.mk'_apply, proj_apply] using h0
 
 theorem sum_proj (x : W) : ∑ s : 𝓞 E →+* ℂ, proj ρ s x = x := by
@@ -515,7 +515,7 @@ theorem proj_indep {I : Submodule (𝓞 E) Λ} (hI : IsIsoSub R.form I) (s : �
       have e2 : ((starRingEnd ℂ).comp t = (starRingEnd ℂ).comp s) ↔ (t = s) :=
         ⟨fun h => by rw [← cj_cj t, h, cj_cj], fun h => by rw [h]⟩
       simp only [γ]
-      rw [if_congr e1 rfl rfl, if_congr e2 rfl rfl, map_add, apply_ite (starRingEnd ℂ),
+      rw [if_congr e1 rfl rfl, if_congr e2 rfl rfl, map_add (f := _), apply_ite (starRingEnd ℂ),
         apply_ite (starRingEnd ℂ), map_zero, Complex.conj_conj, add_comm]
     have hzero : ∑ a, ∑ t, γ a t • proj R.B t (R.P (v a)) = 0 := by
       simp only [γ, add_smul, ite_smul, zero_smul, Finset.sum_add_distrib, Finset.sum_ite_eq',

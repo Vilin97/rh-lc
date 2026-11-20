@@ -85,7 +85,7 @@ theorem exists_kTie : ∀ (D : D7) (V : HSp D) (S : D.what₂.Tau → SPar) (M :
     rw [hT.grp, smul_smul, ← zpow_add₀ (Units.ne_zero _), add_neg_cancel, zpow_zero, one_smul]
   refine ⟨u, hpar, hord, fun x y => R.ι_inj ?_, fun z x => R.ι_inj ?_, ⟨fun x y h => ?_, fun y => ?_⟩, ?_,
     fun Z hZ v v' => ?_, fun v => hhi _ _ (hu v).symm, fun m' hm' g v w => ?_⟩
-  · rw [map_add, hu, hu, hu, Submodule.coe_add, hT.add]
+  · rw [map_add (f := _), hu, hu, hu, Submodule.coe_add, hT.add]
   · rw [map_smul, hu, hu, Submodule.coe_smul, hT.smul]
   · exact Subtype.ext (hT.bij.1 (by rw [← hu, ← hu, h]))
   · obtain ⟨x, hx⟩ := hT.bij.2 (R.ι y)

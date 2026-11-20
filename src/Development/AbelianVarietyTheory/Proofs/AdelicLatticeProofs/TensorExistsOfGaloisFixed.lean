@@ -26,7 +26,7 @@ theorem tensor_exists_of_galois_fixed :
       obtain ⟨za, ha⟩ := ha
       obtain ⟨zb, hb⟩ := hb
       refine ⟨za + zb, ?_⟩
-      simp only [map_add, Finset.sum_add_distrib, ha, hb]
+      simp only [map_add (f := _), Finset.sum_add_distrib, ha, hb]
   obtain ⟨z, hz⟩ := key y
   simp only [hy, Finset.sum_const, Finset.card_univ] at hz
   have hm : ((Fintype.card (E ≃ₐ[M] E) : ℕ) : F) ≠ 0 := Nat.cast_ne_zero.mpr Fintype.card_ne_zero

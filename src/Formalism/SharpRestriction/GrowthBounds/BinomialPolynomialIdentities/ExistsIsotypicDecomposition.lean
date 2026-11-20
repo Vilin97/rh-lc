@@ -59,7 +59,7 @@ theorem span_inter_eq_span_image {O Kf : Type} [CommRing O] [Field Kf] [Algebra 
       exact this.2
     | zero => exact ⟨Submodule.zero_mem _, by rw [map_zero]; exact Submodule.zero_mem _⟩
     | add x y _ _ hx hy =>
-      exact ⟨Submodule.add_mem _ hx.1 hy.1, by rw [map_add]; exact Submodule.add_mem _ hx.2 hy.2⟩
+      exact ⟨Submodule.add_mem _ hx.1 hy.1, by rw [map_add (f := _)]; exact Submodule.add_mem _ hx.2 hy.2⟩
     | smul a x _ hx =>
       exact ⟨Submodule.smul_mem _ _ hx.1, by
         rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]

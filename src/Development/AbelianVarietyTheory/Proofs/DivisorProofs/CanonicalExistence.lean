@@ -161,7 +161,7 @@ theorem canEx_at (p : PtAt ex Csz) (w : D.what₂.places.Pl) (j : Fin D.R.m) :
   have hβ : ∀ k, β k = b k := fun k => Module.Basis.mk_apply _ _ _
   let rd : Can p w j :=
     { toFun := fun x => ∑ k, ex.nch.embW w (β.equivFun x k) • t k
-      map_add' := fun x y => by simp only [map_add, Pi.add_apply, add_smul, Finset.sum_add_distrib]
+      map_add' := fun x y => by simp only [map_add (f := _), Pi.add_apply, add_smul, Finset.sum_add_distrib]
       map_smul' := fun c x => by
         simp only [map_smul, Pi.smul_apply, smul_eq_mul, map_mul, mul_smul, Finset.smul_sum] }
   have hrd : ∀ x, rd x = ∑ k, ex.nch.embW w (β.equivFun x k) • t k := fun _ => rfl

@@ -61,7 +61,7 @@ theorem exists_lift {n d : ℕ} (X : Spc F E n) (Y : Spc F E d) (v : GlobalTheor
   · intro y z hy hz
     obtain ⟨e, he, he'⟩ := hy
     obtain ⟨f, hf, hf'⟩ := hz
-    exact ⟨e + f, by rw [map_add, he, hf], fun γ hγ => by rw [add_smul]; exact add_mem (he' γ hγ) (hf' γ hγ)⟩
+    exact ⟨e + f, by rw [map_add (f := _), he, hf], fun γ hγ => by rw [add_smul]; exact add_mem (he' γ hγ) (hf' γ hγ)⟩
   · intro y hy
     obtain ⟨e, he, he'⟩ := hy
     exact ⟨-e, by rw [map_neg, he], fun γ hγ => by rw [neg_smul]; exact neg_mem (he' γ hγ)⟩

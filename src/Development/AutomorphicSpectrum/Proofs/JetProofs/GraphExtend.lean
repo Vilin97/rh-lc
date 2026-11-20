@@ -43,7 +43,7 @@ theorem graph_extend {n : ℕ} {ε : Fin n → Bool} {V V' : Type} [NormedAddCom
   have key : ∀ g ∈ G, ∀ z ∈ Uᗮ, T (g.1 + z) = g.2 := by
     intro g hg z hz
     have h1 : U.orthogonalProjectionOnto (g.1 + z) = e ⟨g, hg⟩ := by
-      rw [map_add, Submodule.orthogonalProjectionOnto_eq_zero_iff.2 hz, add_zero]
+      rw [map_add (f := _), Submodule.orthogonalProjectionOnto_eq_zero_iff.2 hz, add_zero]
       exact Submodule.orthogonalProjectionOnto_mem_subspace_eq_self (e ⟨g, hg⟩)
     show ((e.symm (U.orthogonalProjectionOnto (g.1 + z)) : G) : V × V').2 = g.2
     rw [h1, e.symm_apply_apply]
@@ -59,7 +59,7 @@ theorem graph_extend {n : ℕ} {ε : Fin n → Bool} {V V' : Type} [NormedAddCom
   have h1 := key _ (hst a b hab _ g.2) _ hz'
   have h2 := key _ g.2 _ hz
   have h3 : A g = g.1.1 := rfl
-  rw [h3, h2, map_add]
+  rw [h3, h2, map_add (f := _)]
   exact h1
 
 theorem hwmap : ∀ (n : ℕ) (ε : Fin n → Bool) (V V' : Type) [NormedAddCommGroup V] [InnerProductSpace ℂ V] [FiniteDimensional ℂ V] [NormedAddCommGroup V'] [InnerProductSpace ℂ V'] (D : Fin n → Fin n → Module.End ℂ V) (D' : Fin n → Fin n → Module.End ℂ V') (μ : Fin n → ℝ) (v : V) (v' : V'), KRel ε D → KRel ε D' → KAdj ε D → KAdj ε D' → Formalism.REAL.KHighest ε D μ v → Formalism.REAL.KHighest ε D' μ v' → v ≠ 0 → ∃ T : V →ₗ[ℂ] V', T v = v' ∧ KMap ε D D' T := by

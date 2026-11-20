@@ -26,7 +26,7 @@ private theorem evaluation_baseChange_entry {E : Type} [Field E] [NumberField E]
     rw [LinearMap.baseChange_tmul, realTensorEvalAlgHom_tmul, evM_tmul]
     change r • σ (x i j) = _
     simp
-  | add a b ha hb => simp only [map_add, ha, hb, Matrix.add_apply]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb, Matrix.add_apply]
 
 private theorem evM_sg {E : Type} [Field E] [NumberField E] {n : ℕ} (σ : E →+* ℂ) (i j : Fin n)
     (w : ℝ ⊗[ℚ] E) :
@@ -38,7 +38,7 @@ private theorem evM_sg {E : Type} [Field E] [NumberField E] {n : ℕ} (σ : E �
     ext a b
     simp [sgL, Matrix.single_apply]
   | add a b ha hb =>
-    rw [map_add, map_add, ha, hb, map_add, Matrix.single_add]
+    rw [map_add (f := _), map_add (f := _), ha, hb, map_add (f := _), Matrix.single_add]
 
 private theorem sum_sg_ent {E : Type} [Field E] [NumberField E] {n : ℕ}
     (z : ℝ ⊗[ℚ] Matrix (Fin n) (Fin n) E) :
@@ -52,7 +52,7 @@ private theorem sum_sg_ent {E : Type} [Field E] [NumberField E] {n : ℕ}
     rfl
   | add a b ha hb =>
     conv_lhs => rw [ha, hb]
-    simp only [map_add, ← Finset.sum_add_distrib]
+    simp only [map_add (f := _), ← Finset.sum_add_distrib]
 
 theorem UpperTheory.cmField_real_tensor_matrix_bijective_cmType :
     TraceType → ∀ {E : Type} [Field E] [NumberField E] [IsCMField E] (A : Arith E) (n : ℕ), Function.Bijective (fun (z : ℝ ⊗[ℚ] Matrix (Fin n) (Fin n) E) (τ : Phi A) => evM τ.1 z) := by

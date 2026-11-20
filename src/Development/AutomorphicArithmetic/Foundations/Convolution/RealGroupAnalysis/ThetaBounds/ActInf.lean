@@ -67,7 +67,7 @@ private theorem r_mk (τ : E →+* ℂ) (u t : A F) :
     coord τ (pInf E (D.mkE u t)) = ((TR.pInf F u (UpperTheory.ConvolutionTheory.R2.Fo.pl F τ) : ℝ) : ℂ) +
       τ D.θ * ((TR.pInf F t (UpperTheory.ConvolutionTheory.R2.Fo.pl F τ) : ℝ) : ℂ) := by
   have e : coord τ (pInf E (rt D.θ)) = τ D.θ := coord_algebraMap τ _
-  rw [D.mkE_def, map_add, map_add, map_mul, map_mul, r_am, r_am, e, mul_comm]
+  rw [D.mkE_def, map_add (f := _), map_add (f := _), map_mul, map_mul, r_am, r_am, e, mul_comm]
 
 private theorem conj_θ (τ : E →+* ℂ) : starRingEnd ℂ (τ D.θ) = -τ D.θ := by
   have hv := IsTotallyReal.isReal (UpperTheory.ConvolutionTheory.R2.Fo.pl F τ)
@@ -93,7 +93,7 @@ private theorem conj_θ (τ : E →+* ℂ) : starRingEnd ℂ (τ D.θ) = -τ D.�
 private theorem r_bar (τ : E →+* ℂ) (z : A E) :
     coord τ (pInf E (D.bar z)) = starRingEnd ℂ (coord τ (pInf E z)) := by
   obtain ⟨u, t, rfl⟩ := D.exists_mkE z
-  rw [D.bar_mkE, r_mk, r_mk, map_add, map_mul, conj_θ, Complex.conj_ofReal, Complex.conj_ofReal, map_neg, Pi.neg_apply]
+  rw [D.bar_mkE, r_mk, r_mk, map_add (f := _), map_mul, conj_θ, Complex.conj_ofReal, Complex.conj_ofReal, map_neg, Pi.neg_apply]
   push_cast
   ring
 

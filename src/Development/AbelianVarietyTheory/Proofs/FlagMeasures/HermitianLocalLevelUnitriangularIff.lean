@@ -165,7 +165,7 @@ theorem columns_iff (sp : A ≃+* K × K) (I : Subring A) (Λ : Submodule I (Fin
       have h2 : φ (s a) = (fr *ᵥ (fun b => if b < i then M b i else 0)) a := congrFun hs1 a
       have h3 : φ (z a) = (fr *ᵥ W) a := by simp [hz, hφa]
       show φ (((y - 1) *ᵥ c i) a) = φ (s a + (g : A) * z a)
-      rw [map_add, map_mul, map_natCast, h1, h2, h3]
+      rw [map_add (f := _), map_mul, map_natCast, h1, h2, h3]
     · have h1 : ψ (((y - 1) *ᵥ c i) a) = 0 := by
         rw [RingHom.map_mulVec]
         have : ψ ∘ c i = 0 := by
@@ -174,7 +174,7 @@ theorem columns_iff (sp : A ≃+* K × K) (I : Subring A) (Λ : Submodule I (Fin
         rw [this, Matrix.mulVec_zero]
         rfl
       show ψ (((y - 1) *ᵥ c i) a) = ψ (s a + (g : A) * z a)
-      rw [h1, map_add, map_mul, hs2 a, hz0 a, mul_zero, add_zero]
+      rw [h1, map_add (f := _), map_mul, hs2 a, hz0 a, mul_zero, add_zero]
 
 end Abstract
 

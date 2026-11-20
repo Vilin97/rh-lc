@@ -138,7 +138,7 @@ theorem exists_normal_local_between : ∀ (T : Type) [CommRing T] [IsDomain T] [
       map_one' := hinjT (by rw [hct]; simp)
       map_mul' := fun x y => hinjT (by rw [hct, map_mul, hct, hct]; simp)
       map_zero' := hinjT (by rw [hct]; simp)
-      map_add' := fun x y => hinjT (by rw [hct, map_add, hct, hct]; simp) }
+      map_add' := fun x y => hinjT (by rw [hct, map_add (f := _), hct, hct]; simp) }
   have hc : ∀ x, algebraMap T (FractionRing T) (c x) = σ (x : L) := hct
   have hcinj : Function.Injective c := by
     intro x y h

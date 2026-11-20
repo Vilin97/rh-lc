@@ -56,7 +56,7 @@ def ball {C S : Type} [NormedField C] [IsUltrametricDist C] [CommRing S] (f : S 
   zero_mem' := by simpa using ht
   add_mem' := fun {a b} ha hb => by
     show ‖f (a + b)‖ ≤ t
-    rw [map_add]
+    rw [map_add (f := _)]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le ha hb)
   smul_mem' := fun c x hx => by
     show ‖f (c * x)‖ ≤ t

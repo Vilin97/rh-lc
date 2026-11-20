@@ -20,7 +20,7 @@ theorem rowGen_diag_monomial_one (R : Type) [CommRing R] {r n : ℕ} (a : Fin r)
   | add f g hf hg =>
     have e : (monomial (f + g) (1 : R) : MvPolynomial (Fin r × Fin n) R) = monomial f 1 * monomial g 1 := by
       rw [monomial_mul, one_mul]
-    rw [e, map_mul, hf, hg, map_add, Pi.add_apply, pow_add, map_mul]
+    rw [e, map_mul, hf, hg, map_add (f := _), Pi.add_apply, pow_add, map_mul]
     ring
   | single v c =>
     obtain ⟨b, s⟩ := v

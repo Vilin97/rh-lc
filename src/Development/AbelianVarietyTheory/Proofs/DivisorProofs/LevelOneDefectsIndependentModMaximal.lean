@@ -122,11 +122,11 @@ theorem QL_comb' (O E : Type) [CommRing O] [CommRing E] [Algebra O E] (d : ℕ)
     obtain ⟨y, -, hy⟩ := hg.2.1 i
     refine ⟨x + a * y, trivial, ?_⟩
     simp only [lin] at hx hy ⊢
-    rw [map_add, coeff_smul, hx, hy, map_add, map_mul]
+    rw [map_add (f := _), coeff_smul, hx, hy, map_add (f := _), map_mul]
   · obtain ⟨x, -, hx⟩ := hf.2.2 α
     obtain ⟨y, -, hy⟩ := hg.2.2 α
     refine ⟨x + a * y, trivial, ?_⟩
-    rw [formalCoboundary_add hμE, formalCoboundary_smul hμE, map_add, coeff_smul, hx, hy, map_add, map_mul]
+    rw [formalCoboundary_add hμE, formalCoboundary_smul hμE, map_add (f := _), coeff_smul, hx, hy, map_add (f := _), map_mul]
 
 theorem isLie_comb (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed C] [CharZero C]
     (v : Valuation C NNReal) (O : Type) [CommRing O] [Algebra O C] [Fact ¬IsUnit (p : O)]

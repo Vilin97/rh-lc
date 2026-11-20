@@ -62,11 +62,11 @@ theorem comb_surj {ι : Type} [Fintype ι] (e : ι → E) (he : Submodule.span F
 
 def crd {ι : Type} (b : Module.Basis ι F E) (i : ι) : E ⊗[F] R →ₗ[R] R where
   toFun x := TensorProduct.lid F R ((b.coord i).rTensor R x)
-  map_add' x y := by rw [map_add, map_add]
+  map_add' x y := by rw [map_add (f := _), map_add (f := _)]
   map_smul' a x := by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, map_add, map_add, smul_add]
+    | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _), smul_add]
     | tmul e r =>
       rw [rsmul_tmul, LinearMap.rTensor_tmul, LinearMap.rTensor_tmul, TensorProduct.lid_tmul,
         TensorProduct.lid_tmul, RingHom.id_apply, smul_eq_mul, mul_smul_comm]
@@ -83,7 +83,7 @@ theorem comb_crd {ι : Type} [Fintype ι] (b : Module.Basis ι F E) (x : E ⊗[F
   | add x y hx hy =>
     have : (fun i => crd R b i (x + y)) = (fun i => crd R b i x) + (fun i => crd R b i y) := by
       ext i; simp
-    rw [this, map_add, hx, hy]
+    rw [this, map_add (f := _), hx, hy]
   | tmul e r =>
     rw [comb_apply]
     simp only [crd_tmul]
@@ -377,7 +377,7 @@ theorem crd_prV {ι : Type} (b : Module.Basis ι F E) (l : ι) (v : HeightOneSpe
     (x : E ⊗[F] 𝔸) : crd (v.adicCompletion F) b l (prV (E := E) v x) = (crd 𝔸 b l x) v := by
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]; rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add]; rfl
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]; rfl
   | tmul e a =>
     rw [Formalism.UG.P.afsplit_prV_tmul, crd_tmul, crd_tmul, Formalism.UG.P.afsplit_smul_apply]
 
@@ -820,10 +820,10 @@ theorem cong_iw {a : E} (s : SplitAt P.σ v a) {p : ℕ} (hp : (p : 𝓞 F) ∈ 
       show ι ((1 : Matrix (Fin k) (Fin k) (v.adicCompletionIntegers F)) i j +
         ((p : ℕ) : v.adicCompletionIntegers F) * ⟨ψ (t i j), hint _ (ht i j)⟩) =
         ψ ((g : Matrix (Fin k) (Fin k) (E ⊗[F] v.adicCompletion F)) i j)
-      rw [h1, map_add, map_add, map_mul, map_mul, map_one_apply, map_one_apply, map_natCast,
+      rw [h1, map_add (f := _), map_add (f := _), map_mul, map_mul, map_one_apply, map_one_apply, map_natCast,
         map_natCast]
       rfl
-    · rw [map_add, map_mul, Ideal.Quotient.eq_zero_iff_mem.2 (natCast_mem_max v hp), zero_mul,
+    · rw [map_add (f := _), map_mul, Ideal.Quotient.eq_zero_iff_mem.2 (natCast_mem_max v hp), zero_mul,
         add_zero, map_one_apply]
   obtain ⟨A, hA, hA1⟩ := key g hg
   obtain ⟨B, hB, _⟩ := key g⁻¹ hg'

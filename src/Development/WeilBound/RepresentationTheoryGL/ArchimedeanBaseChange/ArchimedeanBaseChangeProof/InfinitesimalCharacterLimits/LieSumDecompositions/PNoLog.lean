@@ -27,7 +27,7 @@ def Vsp : Submodule ℂ (Sm E (r + s)) where
     ∀ τ u, cap τ u Φ = ((m τ).map (u + ·)).prod • Φ}
   add_mem' := fun {Φ Ψ} hΦ hΨ => ⟨fun x g => by
       simp only [Submodule.coe_add, Pi.add_apply, hΦ.1 x g, hΨ.1 x g], fun τ u => by
-      rw [map_add, hΦ.2, hΨ.2, smul_add]⟩
+      rw [map_add (f := _), hΦ.2, hΨ.2, smul_add]⟩
   zero_mem' := ⟨fun _ _ => rfl, fun τ u => by simp⟩
   smul_mem' := fun c Φ hΦ => ⟨fun x g => by
       simp only [Submodule.coe_smul, Pi.smul_apply, hΦ.1 x g], fun τ u => by
@@ -240,7 +240,7 @@ theorem key (hm : ∀ τ, (m τ).Nodup ∧ Multiset.card (m τ) = r + s) :
     (commute_val r s m (by rw [hTP1, hTP1]; exact Tr1_comm r s τ τ')).map π
   have hss : IsSS (π LZ) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [LZ, map_sum, map_add]
+      simp only [LZ, map_sum, map_add (f := _)]
     refine IsSS.sum _ _ (fun w _ => (hTP2 _).add (hTP2 _) (hc _ _)) (fun w _ w' _ => ?_)
     exact ((hc _ _).add_left (hc _ _)).add_right ((hc _ _).add_left (hc _ _))
   obtain ⟨S, hS⟩ := hss

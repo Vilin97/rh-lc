@@ -21,7 +21,7 @@ def plc : Ideal (𝓞 E) where
   carrier := {a | ‖ρ (a : E)‖ < 1}
   add_mem' {a b} ha hb := by
     show ‖ρ (algebraMap (𝓞 E) E (a + b))‖ < 1
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ha hb)
   zero_mem' := by
     show ‖ρ ((0 : 𝓞 E) : E)‖ < 1

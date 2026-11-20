@@ -33,7 +33,7 @@ private theorem tm_vec {Q k r : ℕ} [NeZero Q] [NeZero r] (hQ : Q = k * r) (h :
   funext i
   have : (x ᵥ* A.map (ZMod.castHom h (ZMod r))) i =
       ZMod.castHom h (ZMod r) (((x 0).val : ZMod Q) * A 0 i + ((x 1).val : ZMod Q) * A 1 i) := by
-    rw [map_add, map_mul, map_mul, map_natCast, map_natCast, ZMod.natCast_zmod_val, ZMod.natCast_zmod_val]
+    rw [map_add (f := _), map_mul, map_mul, map_natCast, map_natCast, ZMod.natCast_zmod_val, ZMod.natCast_zmod_val]
     simp [Matrix.vecMul, dotProduct, Fin.sum_univ_two]
   rw [this, tm_key hQ]
   simp only [Matrix.vecMul, dotProduct, Fin.sum_univ_two, Nat.cast_mul]

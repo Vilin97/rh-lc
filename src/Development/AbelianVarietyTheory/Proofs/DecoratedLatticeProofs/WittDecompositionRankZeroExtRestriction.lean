@@ -45,7 +45,7 @@ theorem theta_restrict_j_zero {S S₀ T : HSp D} (e : HypDec S S₀ 0) {ψ : Add
     have hr : ratW T S₀ (γ ⬝ e.i₀) = wittCoreRestrictionHom e T (ratW T S γ) := by
       rw [ratW_eq, ratW_eq, rat_mul, wittCoreRestrictionHom_apply]; rfl
     rw [hr] at h
-    rw [map_add, symplectic_restrict_j_zero e T]
+    rw [map_add (f := _), symplectic_restrict_j_zero e T]
     exact h
   level := by
     obtain ⟨U, hU, hfix⟩ := hΦ.level
@@ -56,14 +56,14 @@ theorem theta_restrict_j_zero {S S₀ T : HSp D} (e : HypDec S S₀ 0) {ψ : Add
     funext w
     have hw := congrFun hf (wittCoreRestrictionHom e T w)
     simp only [heisO] at hw ⊢
-    rw [symplectic_restrict_j_zero e T, map_add]
+    rw [symplectic_restrict_j_zero e T, map_add (f := _)]
     exact hw
   cont := hΦ.cont.comp (continuous_restrict_j_zero e T)
   smooth k L hL hLf w := by
     have h := hΦ.smooth k ((wittCoreRestrictionHom e T).comp L) ((continuous_restrict_j_zero e T).comp hL) (fun t => by
       show (wittCoreRestrictionHom e T (L t)).map (finPart D) = 0
       rw [wittCoreRestrictionHom_apply, Matrix.map_mul, hLf t, Matrix.zero_mul]) (wittCoreRestrictionHom e T w)
-    simpa only [AddMonoidHom.comp_apply, map_add] using h
+    simpa only [AddMonoidHom.comp_apply, map_add (f := _)] using h
 
 theorem om_core_eq_rankZero (ψ : AddChar (AF D.host.F) ℂ) {S S₀ T : HSp D} (e : HypDec S S₀ 0)
     (χS χT χS' χT' : (AE D)ˣ →* Circle) (om : Om S T) (om₁ om₂ : Om S₀ T)

@@ -52,7 +52,7 @@ private theorem extTensor_detRep_apply {n n' : Type} [Fintype n] [DecidableEq n]
     rw [extTensor_tmul]
     simp only [detRep, ofChar_apply, detChar_apply, Units.val_mul]
     rw [← smul_eq_mul, ← smul_eq_mul (a := ((ψ _ : ℂˣ) : ℂ)), TensorProduct.smul_tmul_smul]
-  | add u w hu hw => rw [map_add, hu, hw, smul_add]
+  | add u w hu hw => rw [map_add (f := _), hu, hw, smul_add]
 
 private def equivOfBij {G V W : Type} [Group G] [AddCommGroup V] [Module ℂ V] [AddCommGroup W] [Module ℂ W]
     {ρ : Representation ℂ G V} {σ : Representation ℂ G W} (f : ρ.IntertwiningMap σ)

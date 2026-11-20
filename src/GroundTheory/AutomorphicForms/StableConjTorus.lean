@@ -51,7 +51,7 @@ noncomputable def adjoint (A : Module.End E V) : Module.End E V where
   toFun y := (Equiv.ofBijective _ h.nonsingular).symm ((h.toSesq y).comp A)
   map_add' x y := by
     apply h.nonsingular.1
-    simp only [Equiv.ofBijective_apply_symm_apply, map_add, LinearMap.add_comp]
+    simp only [Equiv.ofBijective_apply_symm_apply, map_add (f := _), LinearMap.add_comp]
   map_smul' c x := by
     apply h.nonsingular.1
     simp only [Equiv.ofBijective_apply_symm_apply, LinearMap.map_smulₛₗ, LinearMap.smul_comp,

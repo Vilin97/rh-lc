@@ -74,12 +74,12 @@ theorem GlobalTheory.SymBirig.diag_form_two_smul_and_ker : ∀ (A : Over (Sp ℂ
   have hadd : ∀ a a' b, N (a + a') b = N a b + N a' b := by
     intro a a' b
     have h := key (a + a') b
-    rw [map_add, LinearMap.add_apply, key, key] at h
+    rw [map_add (f := _), LinearMap.add_apply, key, key] at h
     omega
   have hadd' : ∀ a b b', N a (b + b') = N a b + N a b' := by
     intro a b b'
     have h := key a (b + b')
-    rw [map_add, key, key] at h
+    rw [map_add (f := _), key, key] at h
     omega
   have hsm : ∀ (c : ℤ) a b, N (c • a) b = c * N a b := by
     intro c a b

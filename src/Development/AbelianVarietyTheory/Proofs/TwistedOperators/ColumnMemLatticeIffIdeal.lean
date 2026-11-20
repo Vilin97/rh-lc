@@ -109,7 +109,7 @@ theorem mem_idV_of_mem {D : D7} {A B : HSp D} {c : ℕ} {ε : D.host.E} (d : Glo
       rw [e]
       exact AddSubgroup.subset_closure ⟨α, hα, hαv, u q, hu q, rfl⟩
     | zero => rw [map_zero]; exact zero_mem _
-    | add Y Z _ _ hY hZ => rw [map_add]; exact add_mem hY hZ
+    | add Y Z _ _ hY hZ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hY hZ
     | neg Y _ hY => rw [map_neg]; exact neg_mem hY
   have key := hΦ _ h
   have e : Φ (fun k => b * incA D (d.a k q)) = b := by

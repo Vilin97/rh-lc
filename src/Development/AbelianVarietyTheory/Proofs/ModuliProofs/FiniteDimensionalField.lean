@@ -156,10 +156,10 @@ theorem exists_semiTwist (hpq : 1 ≤ D.p + D.q) (Xo : Moduli D l) (σ : KA l �
       ample := Xo.univ.ample
       ktriv := Xo.univ.ktriv
       eta := fun a => Xo.univ.eta (g.f l.M a)
-      eta_add := fun a c => by simp only [map_add, Xo.univ.eta_add]
+      eta_add := fun a c => by simp only [map_add (f := _), Xo.univ.eta_add]
       eta_ker := fun a ha => Xo.univ.eta_ker _ (GlobalTheory.LevelTwist.map_mem_smul_top _ _ ha)
       etaA := fun a => Xo.univ.etaA (g.f l.A a)
-      etaA_add := fun a c => by simp only [map_add, Xo.univ.etaA_add]
+      etaA_add := fun a c => by simp only [map_add (f := _), Xo.univ.etaA_add]
       etaA_ker := fun a => by simp only [map_nsmul, Xo.univ.etaA_ker]
       geom := fun k _ _ x β hx => by
         obtain ⟨hdet, I, hI1, hI2, hI3⟩ := Xo.univ.geom k x β hx
@@ -222,7 +222,7 @@ theorem exists_semiTwist_iso (hpq : 1 ≤ D.p + D.q) (l₀ : Level H) (hA : l₀
     refine ⟨D.EF a (t • b), ?_⟩
     simp only [fc, LinearMap.smul_apply, LinearMap.id_apply]
     rw [D.adj, smul_smul, hc', add_smul, mul_smul]
-    simp only [map_add, Int.cast_smul_eq_zsmul, Nat.cast_smul_eq_nsmul, map_zsmul, map_nsmul, zsmul_eq_mul,
+    simp only [map_add (f := _), Int.cast_smul_eq_zsmul, Nat.cast_smul_eq_nsmul, map_zsmul, map_nsmul, zsmul_eq_mul,
       nsmul_eq_mul]
     push_cast
     ring

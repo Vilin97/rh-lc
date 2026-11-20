@@ -39,7 +39,7 @@ theorem rule_eq_on_extend_chart : ∀ (F : Type) [Field F] [NumberField F] (𝔠
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [τ']
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   change LinearMap.rTensor R₀ ρ.toAddMonoidHom.toIntLinearMap _ = 0
   rw [hswap]
   suffices hτ : τ' d = 0 by rw [hτ, map_zero]

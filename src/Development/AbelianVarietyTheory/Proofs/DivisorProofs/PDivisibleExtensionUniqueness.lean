@@ -148,7 +148,7 @@ variable {p : ℕ} [Fact p.Prime] {La : Type} [AddCommGroup La]
 theorem tatePt_add {R : Type} [CommRing R] {G : PDivGroup p R} (τ : La →+ G.Tate) (n : ℕ) (B : Type) [CommRing B] [Algebra R B]
     (x : La) : toConv (tatePt (τ (-x)) n B) * toConv (tatePt (τ x) n B) = 1 := by
   have h := map_mul (ptsPush (G.A n) (Algebra.ofId R B)) ((τ (-x)).conv n) ((τ x).conv n)
-  rw [← TateOver.add_conv, ← map_add, neg_add_cancel, map_zero, TateOver.zero_conv, map_one] at h
+  rw [← TateOver.add_conv, ← map_add (f := _), neg_add_cancel, map_zero, TateOver.zero_conv, map_one] at h
   exact h.symm
 
 theorem exists_pt_eq {R : Type} [CommRing R] {T : Over (Sp R)} [GrpObj T] {G : PDivGroup p R} {θ : TorsionMap T G}
@@ -239,7 +239,7 @@ theorem local_step (L C : Type) [CommRing L] [IsLocalRing L] [Algebra R₁ L] [A
     obtain ⟨y, rfl⟩ := hs y
     induction y using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul r a => rw [SemiHom.lift_app, map_smul, map_smul, hu, ← e₁]; rfl
   rw [e₃] at e₂
   exact ⟨_, e₂ a⟩
@@ -259,7 +259,7 @@ theorem global_step (S : Type) [CommRing S] [IsDomain S] [IsIntegrallyClosed S] 
       zero_mem' := ⟨0, by simp⟩
       add_mem' := by
         rintro b b' ⟨c, hc⟩ ⟨c', hc'⟩
-        exact ⟨c + c', by rw [map_add, map_add, hc, hc', add_mul]⟩
+        exact ⟨c + c', by rw [map_add (f := _), map_add (f := _), hc, hc', add_mul]⟩
       smul_mem' := by
         rintro r b ⟨c, hc⟩
         exact ⟨r * c, by rw [smul_eq_mul, map_mul, map_mul, hc, _root_.mul_assoc]⟩ }
@@ -332,7 +332,7 @@ theorem two_injective [Module.Flat S A'] (hK : Function.Injective (algebraMap S 
   have h3 : ∀ c, s.two c = TensorProduct.map g g (TensorProduct.AlgebraTensorModule.distribBaseChange S K A' A' (1 ⊗ₜ c)) :=
     fun c => by
       induction c with
-      | add x y hx hy => simp only [map_add, TensorProduct.tmul_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), TensorProduct.tmul_add, hx, hy]
       | tmul a b => simp [g]
   intro x y h
   rw [h3, h3] at h
@@ -348,7 +348,7 @@ theorem exists_semi [Module.Flat S A'] (hK : Function.Injective (algebraMap S K)
       map_one' := hi (by rw [hf, map_one, map_one])
       map_mul' := fun a b => hi (by rw [hf, map_mul, map_mul, hf, hf])
       map_zero' := hi (by rw [hf, map_zero, map_zero])
-      map_add' := fun a b => hi (by rw [hf, map_add, map_add, hf, hf]) }
+      map_add' := fun a b => hi (by rw [hf, map_add (f := _), map_add (f := _), hf, hf]) }
   have hg : ∀ a, s' (g a) = s a := hf
   refine ⟨⟨g, fun r a => hi ?_, fun a => hK ?_, fun a => two_injective hK s' hs ?_⟩, hf⟩
   · rw [hg, s.smul_map, s'.smul_map, hg, ← IsScalarTower.algebraMap_apply R S K]
@@ -356,7 +356,7 @@ theorem exists_semi [Module.Flat S A'] (hK : Function.Injective (algebraMap S K)
   · rw [s'.two_comul, hg, ← s.two_comul]
     generalize Coalgebra.comul (R := R) a = c
     induction c with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul a b => simp [hg]
 
 end Descent
@@ -421,7 +421,7 @@ theorem exists_iso (hθ₁ : θ₁.IsOpenNearZero) (hθ₂ : θ₂.IsOpenNearZer
       AlgHom.comp { (s₂.app n).toRingHom with commutes' := (s₂.app n).map_algebraMap } (V.lift.app n)
     have hj1 : ∀ y, j y = s₁.lift.app n (LinearMap.rTensor _ (IsScalarTower.toAlgHom R S K).toLinearMap y) := fun y => by
       induction y with
-      | add x y hx hy => simp only [map_add, hx, hy]
+      | add x y hx hy => simp only [map_add (f := _), hx, hy]
       | tmul r a =>
         refine (congrArg (s₂.app n) (V.lift_app n r a)).trans ?_
         rw [(s₂.app n).smul_map, LinearMap.rTensor_tmul, SemiHom.lift_app]
@@ -531,7 +531,7 @@ theorem isRestr_of_isRestr {E : Type} [Field E] [NumberField E] [IsCMField E] {H
     rw [i₁]
     induction y using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul r a =>
       have k : ψ (e.hom.app n (1 ⊗ₜ a)) = algebraMap R S (φ a) := by
         change CartierDual.baseChange R S (GG.A n) (1 ⊗ₜ φ) (e.inv.app n (e.hom.app n (1 ⊗ₜ a))) = _

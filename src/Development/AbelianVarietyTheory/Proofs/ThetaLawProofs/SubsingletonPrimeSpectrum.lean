@@ -125,7 +125,7 @@ theorem isDiff_mul {w w' : Fin g → ℂ} {v v' : epsR ℂ ⟶ A} (hv : IsTan v)
     (h : u.IsDiff w v) (h' : u.IsDiff w' v') : u.IsDiff (w + w') (v * v') := by
   intro U hU f
   obtain ⟨h₁, h₂, e⟩ := snd_pullFn_mul hv hv' U hU
-  rw [map_add, ← h U h₁ f, ← h' U h₂ f]
+  rw [map_add (f := _), ← h U h₁ f, ← h' U h₂ f]
   exact e f
 
 theorem isDiff_scale {w : Fin g → ℂ} {v : epsR ℂ ⟶ A} (h : u.IsDiff w v) (c : ℂ) :

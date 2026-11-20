@@ -48,7 +48,7 @@ theorem equiv_trans {p p' p'' : QkPt D F k} (h : QkPt.Equiv D F p p') (h' : QkPt
     QkPt.Equiv D F p p'' := by
   obtain ⟨z, hy, hg⟩ := (equiv_iff hB _ _).1 h
   obtain ⟨z', hy', hg'⟩ := (equiv_iff hB _ _).1 h'
-  exact (equiv_iff hB _ _).2 ⟨z + z', by rw [hy', hy, smul_add, add_assoc], by rw [hg', hg, map_add, add_assoc]⟩
+  exact (equiv_iff hB _ _).2 ⟨z + z', by rw [hy', hy, smul_add, add_assoc], by rw [hg', hg, map_add (f := _), add_assoc]⟩
 
 include hB in
 theorem equiv_equivalence : Equivalence (QkPt.Equiv D F (k := k)) :=
@@ -61,13 +61,13 @@ def qkZero (F : Type) [Field F] [Algebra (FractionRing R) F] (k : ℕ) : QkPt D 
   qkMk hB 0 0 (by rw [nsmul_zero, map_zero])
 
 def qkAdd (p p' : QkPt D F k) : QkPt D F k :=
-  qkMk hB (p.y + p'.y) (p.g + p'.g) (by rw [nsmul_add, qk_nsmul hB, qk_nsmul hB, map_add])
+  qkMk hB (p.y + p'.y) (p.g + p'.g) (by rw [nsmul_add, qk_nsmul hB, qk_nsmul hB, map_add (f := _)])
 
 def qkNeg (p : QkPt D F k) : QkPt D F k :=
   qkMk hB (-p.y) (-p.g) (by rw [smul_neg, qk_nsmul hB, map_neg])
 
 def qkShift (p : QkPt D F k) (z : D.X) : QkPt D F k :=
-  qkMk hB (p.y + k • z) (p.g + iota hB F z) (by rw [nsmul_add, qk_nsmul hB, map_add, map_nsmul])
+  qkMk hB (p.y + k • z) (p.g + iota hB F z) (by rw [nsmul_add, qk_nsmul hB, map_add (f := _), map_nsmul])
 
 theorem equiv_qkShift (p : QkPt D F k) (z : D.X) : QkPt.Equiv D F p (qkShift hB p z) :=
   (equiv_iff hB _ _).2 ⟨z, rfl, rfl⟩
@@ -86,7 +86,7 @@ theorem qkAdd_congr {p p' q q' : QkPt D F k} (h : QkPt.Equiv D F p q) (h' : QkPt
   · show q.y + q'.y = p.y + p'.y + k • (z + z')
     rw [hy, hy', smul_add, add_add_add_comm]
   · show q.g + q'.g = p.g + p'.g + iota hB F (z + z')
-    rw [hg, hg', map_add, add_add_add_comm]
+    rw [hg, hg', map_add (f := _), add_add_add_comm]
 
 include hB in
 
@@ -154,7 +154,7 @@ theorem qkExt_congr {p q : QkPt D F k} (h : QkPt.Equiv D F p q) :
   obtain ⟨z, hy, hg⟩ := (equiv_iff hB _ _).1 h
   refine (equiv_iff hB _ _).2 ⟨z, hy, ?_⟩
   show gtExt D f hf q.g = gtExt D f hf p.g + iota hB F' z
-  rw [hg, map_add, gtExt_iota]
+  rw [hg, map_add (f := _), gtExt_iota]
 
 theorem qkExt_qkAdd (p q : QkPt D F k) :
     qkExt hB f hf (qkAdd hB p q) = qkAdd hB (qkExt hB f hf p) (qkExt hB f hf q) :=

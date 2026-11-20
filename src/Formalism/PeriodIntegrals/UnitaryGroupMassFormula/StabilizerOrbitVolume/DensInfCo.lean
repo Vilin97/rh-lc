@@ -82,7 +82,7 @@ def gramB (σ : E →ₐ[F] E) {M n : ℕ} (J : Matrix (Fin M) (Fin M) E)
 
 theorem hR_add_left (σ : E →ₐ[F] E) {M : ℕ} (J : Matrix (Fin M) (Fin M) E)
     (x y z : Fin M → R ⊗[F] E) : hR R σ J (x + y) z = hR R σ J x z + hR R σ J y z := by
-  simp only [hR, Formalism.UG.hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib]
+  simp only [hR, Formalism.UG.hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib]
 
 theorem hR_add_right (σ : E →ₐ[F] E) {M : ℕ} (J : Matrix (Fin M) (Fin M) E)
     (x y z : Fin M → R ⊗[F] E) : hR R σ J x (y + z) = hR R σ J x y + hR R σ J x z := by
@@ -96,7 +96,7 @@ theorem hR_herm (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {M : ℕ} (J :
     induction a using TensorProduct.induction_on with
     | zero => simp
     | tmul r e => simp [sigR, hσ]
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
   have hJ' : ∀ i j, sigR R σ (JR R J i j) = JR R J j i := by
     intro i j
     simp [JR, inclR, sigR, hJ]
@@ -111,7 +111,7 @@ theorem gramB_mem (σ : E →ₐ[F] E) (hσ : ∀ x, σ (σ x) = x) {M n : ℕ}
     (X Y : Fin n → Fin M → R ⊗[F] E) : gramB R σ J X Y ∈ HermR R σ n := by
   show ∀ a b, sigR R σ (gramB R σ J X Y b a) = gramB R σ J X Y a b
   intro a b
-  simp only [gramB, map_add, hR_herm R σ hσ J hJ]
+  simp only [gramB, map_add (f := _), hR_herm R σ hσ J hJ]
   ring
 
 end B

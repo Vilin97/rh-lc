@@ -103,7 +103,7 @@ omit [StarRing E] in
 theorem mem_of_fixed [CharZero E] {P N : Submodule E M} (hc : IsCompl P N) (s : Module.End E M)
     (hP : ∀ x ∈ P, s x = x) (hN : ∀ x ∈ N, s x = -x) (x : M) (hx : s x = x) : x ∈ P := by
   obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.1 (hc.sup_eq_top ▸ Submodule.mem_top : x ∈ P ⊔ N)
-  rw [map_add, hP y hy, hN z hz, add_right_inj] at hx
+  rw [map_add (f := _), hP y hy, hN z hz, add_right_inj] at hx
   have : (2 : E) • z = 0 := by rw [two_smul]; nth_rewrite 1 [← hx]; exact neg_add_cancel z
   rw [(smul_eq_zero.1 this).resolve_left two_ne_zero, add_zero]
   exact hy

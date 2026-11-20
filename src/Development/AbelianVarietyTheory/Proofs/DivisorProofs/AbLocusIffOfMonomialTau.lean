@@ -31,7 +31,7 @@ theorem exists_pos_of_ne_zero {X : Type} [AddCommGroup X] (d : LinearMap.BilinFo
   have h3 : d b b = 0 := le_antisymm (hc b) (hn b)
   have h4 := hn (a + b)
   have h5 : d (a + b) (a + b) = 0 := le_antisymm h1 h4
-  simp only [map_add, LinearMap.add_apply, h2, h3, hs b a] at h5
+  simp only [map_add (f := _), LinearMap.add_apply, h2, h3, hs b a] at h5
   simp only [LinearMap.zero_apply]
   omega
 

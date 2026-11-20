@@ -29,7 +29,7 @@ theorem norm_le_of_mem_span (h1 : ∀ o : O, ‖algebraMap O C o‖ ≤ 1) (f : 
   | mem x hx => exact h x hx
   | zero => simpa using hr
   | add x y _ _ hx hy =>
-    rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
+    rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
   | smul o x _ hx => rw [map_smul]; exact (norm_smul_le h1 _ _).trans hx
 
 theorem bddAbove_norm (h1 : ∀ o : O, ‖algebraMap O C o‖ ≤ 1) [Module.Finite O M] (f : M →ₗ[O] C) :
@@ -82,7 +82,7 @@ theorem supN_le_of_tmul {f : WithConv (M ⊗[O] M →ₗ[O] C)} {r : ℝ}
   | zero => simpa using hr
   | tmul a b => exact h a b
   | add x y hx hy =>
-    rw [map_add]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
+    rw [map_add (f := _)]; exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le hx hy)
 
 theorem supN_eq_mul (h1 : ∀ o : O, ‖algebraMap O C o‖ ≤ 1) [Module.Finite O M]
     [Module.Finite O (M ⊗[O] M)] (f g : WithConv (M →ₗ[O] C))
@@ -384,7 +384,7 @@ theorem dvd_mul_of_dvd_dlog (hv : v.Integers O) (hp : v (p : C) < 1) (G : PDivGr
   have hDa : ∀ a, I.mkQ (D a) = ψ (dUnit O a) := fun a => LinearMap.congr_fun hD a
   have hdm : ∀ a b, ψ (dUnit O (a * b)) =
       counit (R := O) a • ψ (dUnit O b) + counit (R := O) b • ψ (dUnit O a) := fun a b => by
-    rw [dUnit, AugCot.d_mul, map_add, map_smul, map_smul]
+    rw [dUnit, AugCot.d_mul, map_add (f := _), map_smul, map_smul]
     rfl
   have key := dvd_mul_of_groupLike_val v p O hv hp (G.A n) q hq D
     (fun a b => hz _ (by
@@ -456,7 +456,7 @@ theorem coker_dlog_killed : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [I
       exact hk k
     | zero => simp
     | add x y _ _ hx hy =>
-      rw [map_add, map_add]
+      rw [map_add (f := _), map_add (f := _)]
       exact dvd_add hx hy
     | smul a x _ hx =>
       rw [dlog_smul (algebraMap ℤ_[p] O), map_smul, smul_eq_mul]

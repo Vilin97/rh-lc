@@ -252,7 +252,7 @@ theorem exists_complementary_theta_of_linear_map :
           = N * d * (((l : Fin g → ℂ) ⬝ᵥ H.mulVec (star (m : Fin g → ℂ))).im : ℂ)
             - N * ((F l ⬝ᵥ H.mulVec (star (F m))).im : ℂ) := by
         rw [hform]; simp
-      rw [h2, Submodule.coe_add, map_add, hk, hk']
+      rw [h2, Submodule.coe_add, map_add (f := _), hk, hk']
       push_cast
       ring) z₀
   refine ⟨fun z => θ z * cexp ((N : ℂ) * d * Q z - N * Q (F z)),
@@ -269,7 +269,7 @@ theorem exists_complementary_theta_of_linear_map :
     simp only [hform] at e2
     rw [← hp] at e1
     generalize τ *ᵥ ofIntVec n + ofIntVec n' = l at *
-    rw [map_add, e1, e2]
+    rw [map_add (f := _), e1, e2]
     unfold eC
     have key : ∀ a b c e a' e' x y : ℂ, a + b + c + e = a' + e' →
         cexp a * x * (cexp b * cexp c * y * cexp e) = cexp a' * (x * (y * cexp e')) := by

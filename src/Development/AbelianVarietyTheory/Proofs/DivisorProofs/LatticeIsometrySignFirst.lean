@@ -123,9 +123,9 @@ theorem approx_mod {LS : Set (Fin S.rank → D.host.E)} {LT : Set (Fin T.rank �
     refine ⟨_, smul_mem_latRat (algebraMap (𝓞 D.host.F) (𝓞 D.host.E) x) hM, _, finTens_mem_latO (α := β) hβ hM, ?_⟩
     ext i j
     refine GlobalTheory.SplitScalar.adele_ext ?_ ?_
-    · rw [Matrix.add_apply, RingHom.map_add, Matrix.smul_apply, map_nsmul]
+    · rw [Matrix.add_apply, RingHom.map_add (f := _), Matrix.smul_apply, map_nsmul]
       simp only [finTens, Matrix.map_apply, infPart_pair, smul_zero, add_zero]
-    · rw [Matrix.add_apply, RingHom.map_add, Matrix.smul_apply, map_nsmul]
+    · rw [Matrix.add_apply, RingHom.map_add (f := _), Matrix.smul_apply, map_nsmul]
       simp only [finTens, Matrix.map_apply, finPart_pair]
       rw [hx, approx_tmul, TensorProduct.tmul_smul k, Algebra.smul_def]
       rfl
@@ -337,7 +337,7 @@ theorem int_of_mem_latO {βS : GL (Fin S.rank) (EAf D)} {βT : GL (Fin T.rank) (
     rw [frMapAdj_half]
     exact mul_mem (Subring.subset_closure (Or.inr ⟨⟨α, hα⟩, rfl⟩)) (h M hM i j)
   · rw [smul_zero, map_zero]; exact fun _ _ => zero_mem _
-  · intro x y hx hy; rw [smul_add, map_add]; exact fun i j => add_mem (hx i j) (hy i j)
+  · intro x y hx hy; rw [smul_add, map_add (f := _)]; exact fun i j => add_mem (hx i j) (hy i j)
   · intro x hx; rw [smul_neg, map_neg]; exact fun i j => neg_mem (hx i j)
 
 theorem idemSum_unique (V : HSp D) {e e' : AE D} {P : Finset (Formalism.L2.DIV.Pl D.host.E)} (h : IsIdemSum e P)

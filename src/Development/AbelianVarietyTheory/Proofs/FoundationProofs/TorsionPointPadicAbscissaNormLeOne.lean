@@ -30,7 +30,7 @@ theorem Rel.map_iff {K L : Type*} [CommRing K] [CommRing L] {f : K →+* L} (hf 
     (W : WeierstrassCurve K) (X₁ Z₁ X₂ Z₂ X₃ Z₃ X₄ Z₄ : K) :
     Rel (W.map f) (f X₁) (f Z₁) (f X₂) (f Z₂) (f X₃) (f Z₃) (f X₄) (f Z₄) ↔
       Rel W X₁ Z₁ X₂ Z₂ X₃ Z₃ X₄ Z₄ := by
-  simp only [Rel, prodF, sumF, ← hf.eq_iff, map_mul, map_add, map_sub, map_pow, map_ofNat,
+  simp only [Rel, prodF, sumF, ← hf.eq_iff, map_mul, map_add (f := _), map_sub, map_pow, map_ofNat,
     WeierstrassCurve.map_b₂, WeierstrassCurve.map_b₄, WeierstrassCurve.map_b₆, WeierstrassCurve.map_b₈]
 
 theorem Rel.variableChange {K : Type*} [CommRing K] {W : WeierstrassCurve K}

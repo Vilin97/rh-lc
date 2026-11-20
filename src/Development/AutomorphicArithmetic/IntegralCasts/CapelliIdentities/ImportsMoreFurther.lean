@@ -34,13 +34,13 @@ theorem UpperTheory.Reformulated.B.Qh12.ell :
   induction a using MonoidAlgebra.induction_linear with
   | zero => simp
   | add a a' ha ha' =>
-    simp only [add_mul, map_add, ha, ha', add_smul, smul_add]
+    simp only [add_mul, map_add (f := _), ha, ha', add_smul, smul_add]
     abel
   | single g a =>
     induction b using MonoidAlgebra.induction_linear with
     | zero => simp
     | add b b' hb hb' =>
-      simp only [mul_add, map_add, hb, hb', add_smul, smul_add]
+      simp only [mul_add, map_add (f := _), hb, hb', add_smul, smul_add]
       abel
     | single h b =>
       rw [MonoidAlgebra.single_mul_single, hell, hell, hell, hth, hth, hd, map_mul, map_mul,

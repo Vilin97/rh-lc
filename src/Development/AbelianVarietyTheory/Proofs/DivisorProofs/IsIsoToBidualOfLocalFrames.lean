@@ -121,7 +121,7 @@ theorem toOmega_bijective (O : Type) [CommRing O] (G : Over (Sp O)) [GrpObj G]
         map_add' := fun l l' => by
           obtain ⟨x, rfl⟩ := ht.2 l
           obtain ⟨y, rfl⟩ := ht.2 l'
-          rw [← tangent_mul x y (fst_mul x y), ht' x, ht' y, ← map_add, ← hf₁ x y (fst_mul x y)]
+          rw [← tangent_mul x y (fst_mul x y), ht' x, ht' y, ← map_add (f := _), ← hf₁ x y (fst_mul x y)]
           exact congrArg (fun y => cst O (f y)) (ht' _)
         map_smul' := fun a l => by
           obtain ⟨x, rfl⟩ := ht.2 l

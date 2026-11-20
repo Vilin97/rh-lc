@@ -68,7 +68,7 @@ theorem stair (K : DCx.{w} R) (s : R) (N : ℕ)
     · have hsq : ((-1 : ℤ) ^ k * (-1) ^ k) = 1 := by rw [← mul_pow]; simp
       have e : s ^ (k + 1) • x - K.D (s • y + (-1 : ℤ) ^ k • K.sgl k r w) =
           s • x' - (-1 : ℤ) ^ k • K.sgl (k + 1) r (K.dh k r w) - K.sgl k (r + 1) (s • x' k (r + 1)) := by
-        rw [map_add, map_smul, map_zsmul, K.D_sgl, hw, hx', smul_add, smul_smul ((-1 : ℤ) ^ k), hsq, one_smul,
+        rw [map_add (f := _), map_smul, map_zsmul, K.D_sgl, hw, hx', smul_add, smul_smul ((-1 : ℤ) ^ k), hsq, one_smul,
           pow_succ', mul_smul, smul_sub]
         abel
       rw [e]

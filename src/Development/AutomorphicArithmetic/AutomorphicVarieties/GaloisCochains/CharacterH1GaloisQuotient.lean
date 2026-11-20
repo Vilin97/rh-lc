@@ -187,7 +187,7 @@ theorem UpperTheory.V.GC.character_H1_galois_quotient :
   let f : (H1C loc (chRep κ) fun _ => ⊤) → Z1 (twDual μ ρ) := fun x => ⟨fun g => τ ((s x).1.1 (p g)),
     (((s x).2.1.comp_continuous hp).comp τ).continuous, fun a b => by
       beta_reduce
-      rw [map_mul p, (s x).2.2.1, map_add, hτe, chRep_apply]⟩
+      rw [map_mul p, (s x).2.2.1, map_add (f := _), hτe, chRep_apply]⟩
   obtain ⟨hfin, hle⟩ := gwTame P l h.odd S S' h.above hS' A' hA' _ ho hi k ρ hρ μ hμ
     (fun g hg => ⟨LinearMap.ext fun m => by rw [hρa, hK1 g hg, Units.val_one, one_mul]; rfl, (hμ' g).trans hg.2⟩) c hc _ f
     (fun a b hab => by

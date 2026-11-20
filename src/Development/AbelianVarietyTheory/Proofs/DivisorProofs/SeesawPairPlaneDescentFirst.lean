@@ -48,7 +48,7 @@ theorem twist_plain : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [Numb
         add_assoc, add_dotProduct, dotProduct_add]
       congr 2
       linear_combination (-(v.1 ⬝ᵥ v'.2)) * invOf_mul_self (2 : AF F)
-    rw [hlaw, ← M.co.form, h0, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add]
+    rw [hlaw, ← M.co.form, h0, mul_zero, AddChar.map_zero_eq_one, one_smul, ← map_add (f := _)]
   have hcol : ∀ m, ∑ i, ∑ k, H.ι i m * (X.J i k * σ (H.x k)) = 0 := by
     intro m
     have h := (horth (Pi.single m 1)).1

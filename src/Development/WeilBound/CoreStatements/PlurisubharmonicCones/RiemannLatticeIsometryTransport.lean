@@ -24,7 +24,7 @@ theorem exists_equiv (h1 : φ '' Set.range R.P = Set.range R'.P) (h3 : ∀ a x, 
   choose f hf using h4
   let α : Λ →ₗ[𝓞 E] Λ' :=
     { toFun := f
-      map_add' := fun v w => precomp_injective R' (by rw [map_add, hf, hf, hf, map_add, map_add])
+      map_add' := fun v w => precomp_injective R' (by rw [map_add (f := _), hf, hf, hf, map_add (f := _), map_add (f := _)])
       map_smul' := fun a v => precomp_injective R' (by rw [RingHom.id_apply, R'.act, hf, hf, R.act, h3]) }
   refine ⟨LinearEquiv.ofBijective α ⟨fun v w h => ?_, fun v' => ?_⟩, hf⟩
   · have h' : f v = f w := h

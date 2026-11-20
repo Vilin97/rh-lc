@@ -26,7 +26,7 @@ theorem constantCoeff_subst_of {σ τ : Type} [Finite σ] {a : σ → MvPowerSer
   have hs : HasSubst a := hasSubst_of_constantCoeff_zero ha
   have h1 : f = (f - C (constantCoeff f)) + C (constantCoeff f) := by ring
   conv_lhs => rw [h1]
-  rw [subst_add hs, map_add, constantCoeff_subst_eq_zero hs ha (by simp), subst_C, zero_add]
+  rw [subst_add hs, map_add (f := _), constantCoeff_subst_eq_zero hs ha (by simp), subst_C, zero_add]
   simp
 
 theorem constantCoeff_pderiv {σ : Type} (i : σ) (f : MvPowerSeries σ O) :
@@ -134,7 +134,7 @@ theorem isLocalRing_of_integers {C : Type} [Field C] (v : Valuation C NNReal) (O
   have h2 : v (algebraMap O C (1 - a)) < 1 :=
     lt_of_le_of_ne (hv.map_le_one _) (fun e => h.2 (hv.isUnit_of_one' e))
   have h3 := v.map_add (algebraMap O C a) (algebraMap O C (1 - a))
-  have h4 : algebraMap O C a + algebraMap O C (1 - a) = 1 := by rw [← map_add]; simp
+  have h4 : algebraMap O C a + algebraMap O C (1 - a) = 1 := by rw [← map_add (f := _)]; simp
   rw [h4, v.map_one] at h3
   exact lt_irrefl _ (lt_of_le_of_lt h3 (max_lt h1 h2))
 

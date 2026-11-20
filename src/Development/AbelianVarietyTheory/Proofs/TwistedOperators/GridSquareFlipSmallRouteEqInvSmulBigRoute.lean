@@ -66,7 +66,7 @@ theorem isNatDatum_two (hS : Γ.IsTensor ϖ e γ S) {b₁ b₂ : Edge} (h1 : b�
     · exact hS.2.1 _ _ h1 (by rwa [Function.update_of_ne hne, Function.update_self])
     · exact hS.2.1 _ _ h2 (by rwa [Function.update_self])
   · beta_reduce
-    rw [map_add, map_add, ← hS.2.2 (Function.update (Function.update x b₁ (f₁ Z)) b₂ (f₂ Z)) _
+    rw [map_add (f := _), map_add (f := _), ← hS.2.2 (Function.update (Function.update x b₁ (f₁ Z)) b₂ (f₂ Z)) _
       (mem_update_two (z := 0) (fun _ => zero_mem _) ((hf _ _).1 hZ₀).1 ((hf _ _).1 hZ₀).2), ← update_two_add, add_zero]
 
 theorem mem_matLat_cols {A B₁ B₂ : Type} (c : kˣ) (Z : Matrix A (B₁ ⊕ B₂) k) :

@@ -45,7 +45,7 @@ theorem ringEquiv_mem_pow (e : E ≃+* E) (M : Submodule (𝓞 E) E) (hM : ∀ x
     rw [pow_succ] at hx ⊢
     refine Submodule.mul_induction_on hx (fun m hm n hn => ?_) (fun a b ha hb => ?_)
     · rw [map_mul]; exact Submodule.mul_mem_mul (ih m hm) (hM n hn)
-    · rw [map_add]; exact Submodule.add_mem _ ha hb
+    · rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
 
 theorem ringEquiv_mem_dInv (e : E ≃+* E) (j : ℕ) (x : E) (hx : x ∈ dInv E j) : e x ∈ dInv E j := by
   have hd : ((differentIdeal ℤ (𝓞 E) : FractionalIdeal (𝓞 E)⁰ E))⁻¹ =

@@ -40,10 +40,10 @@ theorem chr_mem_of_idemSum {K : Type} [Field K] {σ : K →+* ℂ} {D : D7} {c :
       rw [map_sum]
     exact Finset.sum_eq_zero (fun PP hPP => GlobalTheory.FlipCharFormula.infPart_of_isIdemAt (hes PP hPP))
   have hinf : infPart D (x : AE D) = 1 := by
-    rw [hx, map_add, map_mul, map_sub, hinfT, map_one, zero_mul, zero_add, sub_zero]
+    rw [hx, map_add (f := _), map_mul, map_sub, hinfT, map_one, zero_mul, zero_add, sub_zero]
   have hout : ∀ P, P ∉ S → ι (finPart D (x : AE D)) P = 1 := by
     intro P hP
-    rw [hx, map_add, map_mul, map_sub, map_one, map_add, map_mul, map_sub, map_one, GlobalTheory.FlipCharFormula.fa_add,
+    rw [hx, map_add (f := _), map_mul, map_sub, map_one, map_add (f := _), map_mul, map_sub, map_one, GlobalTheory.FlipCharFormula.fa_add,
       GlobalTheory.FlipCharFormula.fa_mul, GlobalTheory.FlipCharFormula.fa_sub, GlobalTheory.FlipCharFormula.fa_one, heT, if_neg hP]
     simp
   have hne : ∀ P, ι (finPart D (x : AE D)) P ≠ 0 := by

@@ -66,7 +66,7 @@ private theorem red_chi (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosure �
   show red (algebraMap ℤ_[l] O x) = a
   rw [← (CharP.natCast_eq_natCast k l).2 h3]
   conv_lhs => rw [h5]
-  simp only [map_add, map_mul, map_natCast, pow_one, CharP.cast_eq_zero, mul_zero, zero_add]
+  simp only [map_add (f := _), map_mul, map_natCast, pow_one, CharP.cast_eq_zero, mul_zero, zero_add]
 
 private theorem red_ne_one {O k : Type} [CommRing O] [IsDomain O] [Field k] (l : ℕ) [CharP k l] (red : O →+* k) (x : O) (n : ℕ)
     (hn : ¬ l ∣ n) (hx : x ^ n = 1) (h1 : x ≠ 1) : red x ≠ 1 := by

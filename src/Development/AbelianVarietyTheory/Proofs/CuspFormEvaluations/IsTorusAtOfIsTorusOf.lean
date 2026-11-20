@@ -35,7 +35,7 @@ theorem perFr_add (v w : Fin r → E) (τ : E →+* ℂ) (i : ℕ) :
   split_ifs
   · simp [Matrix.mulVec_add]
   · simp
-  · simp only [hermC, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  · simp only [hermC, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
   · simp
   · simp
 
@@ -193,7 +193,7 @@ theorem isTorusAt_of_isTorusOf : ∀ (E : Type) [Field E] [NumberField E] [IsCMF
   let φ : (Fin r → E) →+ I2.Vsp T.dim := AddMonoidHom.mk' (fun v => ψ (per v)) (by
     intro v w
     show ψ (per (v + w)) = ψ (per v) + ψ (per w)
-    rw [per_add, map_add])
+    rw [per_add, map_add (f := _)])
   have hφa : ∀ a, φ (W.φ k a : Fin r → E) = ψ (W.Pm a) := by
     intro a
     show ψ (per _) = _

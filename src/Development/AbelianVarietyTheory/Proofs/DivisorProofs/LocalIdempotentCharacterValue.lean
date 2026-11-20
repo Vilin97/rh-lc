@@ -36,7 +36,7 @@ theorem smul_eq_map (v : Pl F) (a : AE F E) :
       TensorProduct.map (GlobalTheory.LatVac.liftV v) LinearMap.id (compFin F E v a) := by
   induction a using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [smul_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]
   | tmul x b =>
     rw [TensorProduct.smul_tmul', smul_eq_mul, liftV_one_mul]
     simp [compFin, Algebra.TensorProduct.map_tmul]
@@ -97,7 +97,7 @@ theorem swap_at_acts : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Num
       intro u hu h0
       have := smul_eq_of_piW h t hu (f + 1)
         (fun i j => by rw [show piW t (u i j) = 0 from congrFun (congrFun h0 i) j, mul_zero])
-        (fun i j => by rw [map_add, htσ, map_one, neg_add_cancel, zero_mul])
+        (fun i j => by rw [map_add (f := _), htσ, map_one, neg_add_cancel, zero_mul])
       rwa [add_smul, one_smul, add_eq_zero_iff_eq_neg] at this
     have hpos : ∀ u : Matrix (Fin d) (Fin a') (AE F E), At (evFin F v) u → u.map (piW (t.comp σ)) = 0 → f • u = u := by
       intro u hu h0

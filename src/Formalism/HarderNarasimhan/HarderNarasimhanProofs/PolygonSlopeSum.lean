@@ -30,7 +30,7 @@ theorem hnSum_zl_sup (A B : Submodule R V) : zl ρ (A ⊔ B) = zl ρ A ⊔ zl ρ
   · intro y hy
     obtain ⟨x, hx, rfl⟩ := (hnSum_mem_zl ρ _ y).1 hy
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hx
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup ((hnSum_mem_zl ρ A _).2 ⟨a, ha, rfl⟩)
       ((hnSum_mem_zl ρ B _).2 ⟨b, hb, rfl⟩)
   · exact sup_le (hnSum_zl_mono ρ le_sup_left) (hnSum_zl_mono ρ le_sup_right)
@@ -67,7 +67,7 @@ theorem hnSum_orth {A B : Submodule R V} (hA : IsLat ρ A) (hB : IsLat ρ B)
     obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 (show x ∈ A ⊔ B from hx)
     obtain ⟨a', ha', b', hb', rfl⟩ := Submodule.mem_sup.1 (show x' ∈ A ⊔ B from hx')
     have e : ρ (a - a') = ρ (b' - b) := by
-      rw [map_add, map_add] at hxx
+      rw [map_add (f := _), map_add (f := _)] at hxx
       rw [map_sub, map_sub, sub_eq_sub_iff_add_eq_add, hxx, add_comm]
     have hu : a - a' = 0 := by
       apply hnSum_orth_zero ρ hA (A.sub_mem ha ha')

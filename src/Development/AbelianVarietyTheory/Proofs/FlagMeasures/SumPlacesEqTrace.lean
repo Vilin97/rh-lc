@@ -167,7 +167,7 @@ theorem exists_isStdChar (F : Type) [Field F] [NumberField F] [IsTotallyReal F] 
     fun a b => by
       rw [← Complex.ofReal_add, ← Finset.sum_add_distrib]
       refine congrArg _ (Finset.sum_congr rfl fun w _ => ?_)
-      rw [← Complex.add_re, ← map_add]
+      rw [← Complex.add_re, ← map_add (f := _)]
       rfl
   have hL : Continuous L := Complex.continuous_ofReal.comp (continuous_finset_sum _ fun w _ =>
     Complex.continuous_re.comp

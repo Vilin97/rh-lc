@@ -159,7 +159,7 @@ theorem wildProP (E Ω : Type) [Field E] [Field Ω] [Algebra E Ω] : Formalism.M
     | mem s hs => exact ha s _ (Finset.le_sup hs)
     | zero => simp
     | add u v _ _ hu hv =>
-      rw [IntermediateField.coe_add, map_add, hu, hv]
+      rw [IntermediateField.coe_add, map_add (f := _), hu, hv]
     | smul c u _ hu =>
       rw [IntermediateField.coe_smul, map_smul, hu]
   exact key ⟨x, hx⟩ hx'

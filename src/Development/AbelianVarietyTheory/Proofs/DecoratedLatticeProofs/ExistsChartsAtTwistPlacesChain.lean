@@ -30,7 +30,7 @@ variable {D : D7}
 theorem isIdemOf_idem {v : HeightOneSpectrum (𝓞 D.host.F)} (φ : SplitProj D v) :
     IsIdemOf φ (GlobalTheory.EmbChart.idem (GlobalTheory.SplitProjChart.emb φ)) := by
   refine ⟨GlobalTheory.EmbChart.isSplitIdem_idem _, ?_, GlobalTheory.SplitProjChart.rdA_idem φ⟩
-  rw [GlobalTheory.EmbChart.cA_idem, GlobalTheory.EmbChart.idem, ← LinearMap.map_add, add_sub_cancel]
+  rw [GlobalTheory.EmbChart.cA_idem, GlobalTheory.EmbChart.idem, ← LinearMap.map_add (f := _), add_sub_cancel]
   rfl
 
 theorem exists_unif (v : HeightOneSpectrum (𝓞 D.host.F)) :
@@ -53,7 +53,7 @@ theorem unit_section {v : HeightOneSpectrum (𝓞 D.host.F)} (φ : SplitProj D v
   have hf1 : ∀ y, (1 - e) * ((1 - e) + e * sec y) = 1 - e := fun y => by
     linear_combination (1 - sec y) * hee
   have hf2 : ∀ y, rdA φ ((1 - e) + e * sec y) = y := fun y => by
-    rw [map_add, map_sub, map_mul, map_one, he.2.2, hsec]; ring
+    rw [map_add (f := _), map_sub, map_mul, map_one, he.2.2, hsec]; ring
   have key : ∀ x y, (1 - e) * x = 1 - e → rdA φ x = y → x = (1 - e) + e * sec y := by
     intro x y h1 h2
     have h3 : e * (x - sec y) = 0 := (hπ.2.1 _).1 (by rw [map_sub, h2, hsec, sub_self])

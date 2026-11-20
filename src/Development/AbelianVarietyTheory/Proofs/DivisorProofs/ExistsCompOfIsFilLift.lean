@@ -58,7 +58,7 @@ theorem Comp.ext (hm : (constMor A).IsBC) (h : Comp d f k) (h' : Comp d' f k) : 
 theorem Comp.corr (hm : (constMor A).IsBC) (h : Comp d f k) : (redMor A).Corr d f := fun c ↦ by
   obtain ⟨z, rfl⟩ := hm.2 c
   induction z with
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul r c =>
     rw [liftSemi_tmul, LinearMap.map_smul, h, LinearMap.map_smulₛₗ, redMor_constMor, LinearMap.map_smul]
     simp
@@ -81,11 +81,11 @@ def graph (κ : Fil A →ₗ[R] Serre.Lie a) : Submodule (DualNumber R) (Crys (e
   zero_mem' := ⟨0, 0, comp_zero, by simp⟩
   add_mem' := by
     rintro _ _ ⟨f, k, h, e⟩ ⟨f', k', h', e'⟩
-    exact ⟨f + f', k + k', h.add h', by rw [map_add, map_add, e, e']⟩
+    exact ⟨f + f', k + k', h.add h', by rw [map_add (f := _), map_add (f := _), e, e']⟩
   smul_mem' := by
     rintro r _ ⟨f, k, h, e⟩
     have z : hL.toLie a f = 0 := (hL.ker_toLie a).ge f.2
-    exact ⟨r.fst • f, _, h.smul r, by rw [map_add, map_smul, map_smul, map_smul, e, z, smul_zero, add_zero]⟩
+    exact ⟨r.fst • f, _, h.smul r, by rw [map_add (f := _), map_smul, map_smul, map_smul, e, z, smul_zero, add_zero]⟩
 
 variable (κ : Fil A →ₗ[R] Serre.Lie a)
 

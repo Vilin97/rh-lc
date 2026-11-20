@@ -49,7 +49,7 @@ theorem proj_surj (h : localization₂ P.asIdeal A = localization₂ P.asIdeal M
   refine ⟨⟨(t * s) • x, by rw [mul_smul]; exact A.smul_mem _ hsx⟩, ?_⟩
   show redL M P ((t * s) • x) = _
   have e2 : (Ideal.Quotient.mk P.asIdeal (t * s) : Res P) = 1 := by
-    rw [← map_one (Ideal.Quotient.mk P.asIdeal), ← e, map_add, Ideal.Quotient.eq_zero_iff_mem.2 hp, add_zero]
+    rw [← map_one (Ideal.Quotient.mk P.asIdeal), ← e, map_add (f := _), Ideal.Quotient.eq_zero_iff_mem.2 hp, add_zero]
   rw [redL_osmul _ hx', e2, one_smul]
 
 theorem proj_ker (h : localization₂ P.asIdeal A = localization₂ P.asIdeal M) {J : Ideal (𝓞 E)} (hJ : J = P.asIdeal) (z : A) :

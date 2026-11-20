@@ -100,7 +100,7 @@ theorem inf_fixS_eq_map (S : VecSplit h h') (M : Submodule (𝓞 K) V) :
     have e : extHom S (SplitBAux.res S g hg.1 hx') = g := by
       ext v
       obtain ⟨c, a, rfl⟩ := S.cover v
-      rw [extHom_apply, SplitBAux.extOf_apply, SplitBAux.res_spec, map_add, map_smul, hx']
+      rw [extHom_apply, SplitBAux.extOf_apply, SplitBAux.res_spec, map_add (f := _), map_smul, hx']
     refine ⟨SplitBAux.res S g hg.1 hx', ?_, e⟩
     change extHom S _ ∈ autSub h M
     rw [e]

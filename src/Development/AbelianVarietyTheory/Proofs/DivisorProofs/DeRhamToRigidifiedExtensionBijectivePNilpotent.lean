@@ -66,6 +66,6 @@ theorem bijective_of_isCan_of_isNilpotent_of_hodgeDeRham : GlobalTheory.Publishe
     obtain ⟨w, hw⟩ := (G.exact_rigOfOmega_rigToExt (x - L c)).1 hd
     obtain ⟨c₁, rfl⟩ := hψs w
     refine ⟨c + c₁.1, ?_⟩
-    rw [map_add, hLF c₁, hw, add_sub_cancel]
+    rw [map_add (f := _), hLF c₁, hw, add_sub_cancel]
 
 end GlobalTheory.PtExt

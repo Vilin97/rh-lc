@@ -25,7 +25,7 @@ theorem dualLat_finite_free {O : Type} [CommRing O] [IsDomain O] [IsDiscreteValu
     { toFun := g0
       map_add' := fun f f' => by
         funext x; apply hinj
-        rw [Pi.add_apply, map_add, hg0, hg0, hg0, Submodule.coe_add, map_add]
+        rw [Pi.add_apply, map_add (f := _), hg0, hg0, hg0, Submodule.coe_add, map_add (f := _)]
       map_smul' := fun c f => by
         funext x; apply hinj
         rw [Pi.smul_apply, smul_eq_mul, map_mul, hg0, hg0, Submodule.coe_smul, map_smul,

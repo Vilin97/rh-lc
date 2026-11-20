@@ -16,7 +16,7 @@ private theorem capp {a b : Module.End ℂ U} (h : Commute a b) (x : U) : a (b x
 
 private def fixS (e : ι → Module.End ℂ U) (s : Finset ι) : Submodule ℂ U where
   carrier := {x | ∀ i ∈ s, e i x = x}
-  add_mem' {x y} hx hy i hi := by rw [map_add, hx i hi, hy i hi]
+  add_mem' {x y} hx hy i hi := by rw [map_add (f := _), hx i hi, hy i hi]
   zero_mem' i _ := map_zero _
   smul_mem' c x hx i hi := by rw [map_smul, hx i hi]
 
@@ -36,7 +36,7 @@ private theorem compress [Nontrivial U] (A : ι → Subalgebra ℂ (Module.End �
     intro i y hy
     let K : Submodule ℂ U :=
       { carrier := {z | ∀ a ∈ A i, e i (a z) = 0}
-        add_mem' := fun {x z} hx hz a ha => by rw [map_add, map_add, hx a ha, hz a ha, add_zero]
+        add_mem' := fun {x z} hx hz a ha => by rw [map_add (f := _), map_add (f := _), hx a ha, hz a ha, add_zero]
         zero_mem' := fun a _ => by rw [map_zero, map_zero]
         smul_mem' := fun c x hx a ha => by rw [map_smul, map_smul, hx a ha, smul_zero] }
     have hKs := hs K (fun j b hb x hx a ha => by

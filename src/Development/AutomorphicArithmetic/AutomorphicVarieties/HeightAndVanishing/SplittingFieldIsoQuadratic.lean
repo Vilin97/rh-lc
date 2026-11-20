@@ -13,7 +13,7 @@ private theorem splitting_field_iso_quadratic (p : ℕ) (hp : 0 < p) (K : Type) 
   have hsK : (f.map (algebraMap ℚ K)).Splits := by
     have hfac : f.map (algebraMap ℚ K) = (X + C δ) * (X + C (-δ)) := by
       have hpK : (p : K) = -(δ ^ 2) := by rw [hδ]; ring
-      rw [hf, Polynomial.map_add, Polynomial.map_pow, Polynomial.map_X, Polynomial.map_C,
+      rw [hf, Polynomial.map_add (f := _), Polynomial.map_pow, Polynomial.map_X, Polynomial.map_C,
         map_natCast, hpK]
       simp only [map_neg, map_pow]
       ring

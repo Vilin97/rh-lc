@@ -36,7 +36,7 @@ theorem isUnit_mk_pow {R : Type} [CommRing R] {P : Ideal R} (hP : P.IsMaximal) {
   have hnil : IsNilpotent (Ideal.Quotient.mk (P ^ n) i) :=
     ⟨n, by rw [← map_pow, Ideal.Quotient.eq_zero_iff_mem]; exact Ideal.pow_mem_pow hi n⟩
   have h1 : Ideal.Quotient.mk (P ^ n) y * Ideal.Quotient.mk (P ^ n) a = 1 - Ideal.Quotient.mk (P ^ n) i := by
-    rw [← map_mul, eq_sub_iff_add_eq, ← map_add, e, map_one]
+    rw [← map_mul, eq_sub_iff_add_eq, ← map_add (f := _), e, map_one]
   exact isUnit_of_mul_isUnit_right (h1 ▸ hnil.isUnit_one_sub)
 
 theorem exists_pow_sub_one_mem_pow {L : Type} [Field L] [NumberField L] (S : Finset (HeightOneSpectrum (𝓞 L))) (a : 𝓞 L)

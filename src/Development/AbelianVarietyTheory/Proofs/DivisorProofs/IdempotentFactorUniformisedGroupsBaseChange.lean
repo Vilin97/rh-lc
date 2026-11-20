@@ -27,7 +27,7 @@ def ringActPull {S S' : Scheme.{0}} (f : S' ⟶ S) {G : Over S} [GrpObj G] [IsCo
   map_one := by rw [o.map_one, CategoryTheory.Functor.map_id]
   map_mul a b := by rw [o.map_mul, CategoryTheory.Functor.map_comp]
   map_add a b := by
-    rw [o.map_add]
+    rw [o.map_add (f := _)]
     exact CategoryTheory.Functor.map_mul (Over.pullback f) (o.act a) (o.act b)
 
 open ReciprocityTheory.ChartRestriction.G.DVR in
@@ -56,7 +56,7 @@ theorem polAct_pull : ∀ (S S' : Scheme.{0}) (f : S' ⟶ S) (P : Out.PolAV S) (
   · rw [← Category.id_comp (act 1), pa, o.map_one, Category.comp_id]
   · rw [← Category.id_comp (act (a * b)), pa, pa, ← Category.id_comp (act b), pa, o.map_mul, Category.assoc]
   · refine Eq.trans ?_ (pm (act a) (act b)).symm
-    rw [← Category.id_comp (act (a + b)), ← Category.id_comp (act a), ← Category.id_comp (act b), pa, pa, pa, o.map_add]
+    rw [← Category.id_comp (act (a + b)), ← Category.id_comp (act a), ← Category.id_comp (act b), pa, pa, pa, o.map_add (f := _)]
     exact MonObj.comp_mul _ _ _
   · obtain ⟨U, hU, t, ht⟩ := o.rosati a (f s)
     let V : (P'.A ⊗ P'.A).left.Opens := (P'.A ⊗ P'.A).hom ⁻¹ᵁ (f ⁻¹ᵁ U)

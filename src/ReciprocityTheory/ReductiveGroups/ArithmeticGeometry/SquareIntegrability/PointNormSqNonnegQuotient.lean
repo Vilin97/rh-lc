@@ -199,7 +199,7 @@ theorem YB_cube (hI : IsSplit P I) (hP : Ext.PackingCount) {s : (Fin 1 → Vsp X
   have hgper : ∀ (x : Fin (2 * Fintype.card (Fin (gB (IR I)))) → ℝ)
       (n : Fin (2 * Fintype.card (Fin (gB (IR I)))) → ℤ), g (x + fun i => (n i : ℝ)) = g x := by
     intro x n
-    simp only [hgdef, map_add]
+    simp only [hgdef, map_add (f := _)]
     apply hper
     rw [hBsymm]
     refine Submodule.sum_mem _ fun i _ => ?_
@@ -209,7 +209,7 @@ theorem YB_cube (hI : IsSplit P I) (hP : Ext.PackingCount) {s : (Fin 1 → Vsp X
   have hshift : ∀ x, (Col.YB hI hP 1).ptN2 1 (zmB hI s) (A0 + (Col.bB hI hP).equivFun.symm x) =
       g (x + a0) := by
     intro x
-    simp only [hgdef, map_add, ha0, LinearEquiv.symm_apply_apply]
+    simp only [hgdef, map_add (f := _), ha0, LinearEquiv.symm_apply_apply]
     rw [add_comm]
   have hbox : ∫ x in {x : Fin (2 * Fintype.card (Fin (gB (IR I)))) → ℝ | ∀ i, x i ∈ Set.Ioc (0 : ℝ) 1},
       g (x + a0) = ∫ x in {x : Fin (2 * Fintype.card (Fin (gB (IR I)))) → ℝ | ∀ i, x i ∈ Set.Ioc (0 : ℝ) 1},

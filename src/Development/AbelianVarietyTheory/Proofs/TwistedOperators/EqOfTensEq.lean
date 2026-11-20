@@ -43,7 +43,7 @@ theorem eq_of_tens_eq : ∀ (F : Type) [Field F] [NumberField F] {κ : Type} [Fi
     funext i
     show InfiniteAdeleRing.ringEquiv_mixedSpace F ((x₀ i).1 +
       (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (y i - GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F (x₀ i))) = y i
-    rw [map_add, RingEquiv.apply_symm_apply]
+    rw [map_add (f := _), RingEquiv.apply_symm_apply]
     show GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F (x₀ i) + (y i - GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels.evI F (x₀ i)) = y i
     exact add_sub_cancel _ _
   have h2 := congrFun h (x₀ + z)

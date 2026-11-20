@@ -49,7 +49,7 @@ private theorem exists_proj {M : Type*} [AddCommGroup M] [Module ℂ M] {C V D :
     have e1 : Submodule.projectionOnto _ _ hc v = ⟨v, hv⟩ := Submodule.projectionOnto_apply_left hc ⟨v, hv⟩
     have e2 : Submodule.projectionOnto _ _ hc d = 0 := Submodule.projectionOnto_apply_right hc ⟨d, hd⟩
     have : (p (v + d)).1 = v.1 := by
-      simp only [p, LinearMap.comp_apply, map_add, e1, e2, map_zero, add_zero]
+      simp only [p, LinearMap.comp_apply, map_add (f := _), e1, e2, map_zero, add_zero]
       rfl
     rw [this]
     simpa using hd

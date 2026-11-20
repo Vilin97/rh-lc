@@ -91,7 +91,7 @@ theorem nabla_eq_dual_weyl_holds : NablaEqDualWeyl := by
     | add x y _ _ hx hy =>
       obtain ⟨a, ha⟩ := hx
       obtain ⟨b, hb⟩ := hy
-      exact ⟨a + b, by rw [map_add, we_fock_add_right, ha, hb]; push_cast; ring⟩
+      exact ⟨a + b, by rw [map_add (f := _), we_fock_add_right, ha, hb]; push_cast; ring⟩
     | smul c x _ hx =>
       obtain ⟨a, ha⟩ := hx
       refine ⟨c * a, ?_⟩

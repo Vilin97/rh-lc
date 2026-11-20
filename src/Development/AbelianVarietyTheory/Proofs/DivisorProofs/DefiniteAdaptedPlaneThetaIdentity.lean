@@ -162,7 +162,7 @@ private theorem lift_right_inv' (hK : KP) {B : Base F E} {a a' : ℕ} {G : Geo �
     intro u hu Ψ hΨ Ψ' hΨ' g
     simp only [GlobalTheory.ThKLiftConst.lift_apply]
     rw [← integral_add (hu.2 Ψ hΨ g) (hu.2 Ψ' hΨ' g)]
-    simp only [hθl _ (add_mem hΨ hΨ'), hθl _ hΨ, hθl _ hΨ', map_add, mul_add]
+    simp only [hθl _ (add_mem hΨ hΨ'), hθl _ hΨ, hθl _ hΨ', map_add (f := _), mul_add]
   have hsmul : ∀ (u : UA σ G.W.J → ℂ) (t : ℂ), ∀ Ψ ∈ schA F (Fin a' × Fin (a + a')), ∀ g,
       GlobalTheory.ThKLiftConst.lift om' u (t • Ψ) μ 𝓕 g = (starRingEnd ℂ) t * GlobalTheory.ThKLiftConst.lift om' u Ψ μ 𝓕 g := by
     intro u t Ψ hΨ g
@@ -190,7 +190,7 @@ private theorem lift_right_inv' (hK : KP) {B : Base F E} {a a' : ℕ} {G : Geo �
       (fun χ₁ χ₁' χ₂ => by
         simp only [GlobalTheory.ThKLiftConst.lift_apply]
         rw [← integral_add ((hTN _).2 _ (hrs _ χ₂.2) g) ((hTN _).2 _ (hrs _ χ₂.2) g)]
-        simp only [Submodule.coe_add, map_add, Pi.add_apply, add_mul])
+        simp only [Submodule.coe_add, map_add (f := _), Pi.add_apply, add_mul])
       (fun t χ₁ χ₂ => by
         simp only [GlobalTheory.ThKLiftConst.lift_apply, RingHom.id_apply, smul_eq_mul]
         rw [← integral_const_mul]

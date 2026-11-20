@@ -70,31 +70,31 @@ theorem E_d₁ (z : Pr N) : E N z.d₁ = -((-1 : ℤ) ^ z.1 • z.d₁) := by
 theorem d_eq (c : Pr N →₀ ℤ) : Pr.d N c = D₁ N c + E N (D₂ N c) := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => simp only [map_add, hf, hg]; abel
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]; abel
   | single z c => simp [d_single, D₁_single, D₂_single, E_d₂]
 
 theorem E_E (c : Pr N →₀ ℤ) : E N (E N c) = c := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
   | single z c => rw [E_single, map_zsmul, E_single, smul_smul, ← mul_pow]; simp
 
 theorem D₂_E (c : Pr N →₀ ℤ) : D₂ N (E N c) = E N (D₂ N c) := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
   | single z c => rw [E_single, map_zsmul, D₂_single, map_zsmul, E_d₂, smul_comm]
 
 theorem D₁_E (c : Pr N →₀ ℤ) : D₁ N (E N c) = -E N (D₁ N c) := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => simp only [map_add, hf, hg]; abel
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]; abel
   | single z c => rw [E_single, map_zsmul, D₁_single, map_zsmul, E_d₁, smul_neg, smul_comm, neg_neg]
 
 theorem D₁_D₁ (c : Pr N →₀ ℤ) : D₁ N (D₁ N c) = 0 := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => simp only [map_add, hf, hg, add_zero]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg, add_zero]
   | single z c =>
     rw [D₁_single, map_zsmul]
     suffices D₁ N (Pr.d₁ z) = 0 by rw [this, smul_zero]
@@ -115,7 +115,7 @@ theorem D₁_D₁ (c : Pr N →₀ ℤ) : D₁ N (D₁ N c) = 0 := by
 theorem D₂_D₂ (c : Pr N →₀ ℤ) : D₂ N (D₂ N c) = 0 := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => simp only [map_add, hf, hg, add_zero]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg, add_zero]
   | single z c =>
     rw [D₂_single, map_zsmul]
     suffices D₂ N (Pr.d₂ z) = 0 by rw [this, smul_zero]
@@ -136,7 +136,7 @@ theorem D₂_D₂ (c : Pr N →₀ ℤ) : D₂ N (D₂ N c) = 0 := by
 theorem D₁_D₂ (c : Pr N →₀ ℤ) : D₁ N (D₂ N c) = D₂ N (D₁ N c) := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
   | single z c =>
     rw [D₁_single, D₂_single, map_zsmul, map_zsmul]
     congr 1
@@ -155,7 +155,7 @@ theorem D₁_D₂ (c : Pr N →₀ ℤ) : D₁ N (D₂ N c) = D₂ N (D₁ N c) 
 
 theorem d_d (c : Pr N →₀ ℤ) : Pr.d N (Pr.d N c) = 0 := by
   rw [d_eq (Pr.d N c), d_eq c]
-  simp only [map_add, D₁_E, D₂_E, D₁_D₁, D₂_D₂, D₁_D₂, E_E, map_zero, map_neg]
+  simp only [map_add (f := _), D₁_E, D₂_E, D₁_D₁, D₂_D₂, D₁_D₂, E_E, map_zero, map_neg]
   abel
 
 end GlobalTheory.EtC.PrCx
@@ -188,16 +188,16 @@ theorem d_push {N M : ℕ} (θ : SimplexCategory.mk N ⟶ SimplexCategory.mk M) 
     Pr.d M (Pr.push θ c) = Pr.push θ (Pr.d N c) := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
   | single z c =>
-    rw [push_single, d_single, d_single, map_zsmul, map_add, map_zsmul, push_d₁, push_d₂]
+    rw [push_single, d_single, d_single, map_zsmul, map_add (f := _), map_zsmul, push_d₁, push_d₂]
 
 theorem push_push {N M K : ℕ} (θ : SimplexCategory.mk N ⟶ SimplexCategory.mk M)
     (θ' : SimplexCategory.mk M ⟶ SimplexCategory.mk K) (c : Pr N →₀ ℤ) :
     Pr.push θ' (Pr.push θ c) = Pr.push (θ ≫ θ') c := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
   | single z c => simp [push_single, Category.assoc]
 
 theorem bd_bd {N : ℕ} (c : Pr N →₀ ℤ) : Pr.bd (Pr.bd c) = 0 := by

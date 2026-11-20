@@ -70,7 +70,7 @@ theorem cayDiv_of : CayDivOf := by
     rw [show Matrix.det (fun p q : Fin n => (X (false, p, q) + X (true, p, q) : PAB n)) =
         Matrix.det (Matrix.of fun p q : Fin n => (X (false, p, q) + X (true, p, q) : PAB n)) from rfl,
       AlgHom.map_det, hcoe_det]
-    simp only [AlgHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, map_add, Subalgebra.coe_add, hφX]
+    simp only [AlgHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, map_add (f := _), Subalgebra.coe_add, hφX]
     rfl
   have hpow : ∀ (x : Algebra.adjoin ℂ (Sop s m n)) (N : ℕ) (Q : Fm n),
       ((x ^ N : Algebra.adjoin ℂ (Sop s m n)) : Module.End ℂ (Fm n)) Q = (x : Module.End ℂ (Fm n))^[N] Q := by
@@ -108,7 +108,7 @@ theorem cayDiv_of : CayDivOf := by
   case zero => simp [divZ_zero]
   case add =>
     intro x y _ _ hx hy
-    rw [map_add, Subalgebra.coe_add, LinearMap.add_apply]
+    rw [map_add (f := _), Subalgebra.coe_add, LinearMap.add_apply]
     exact divZ_add hx hy
   case smul =>
     intro a x _ hx

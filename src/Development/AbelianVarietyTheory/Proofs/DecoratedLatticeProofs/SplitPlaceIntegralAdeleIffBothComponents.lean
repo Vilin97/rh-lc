@@ -32,7 +32,7 @@ theorem intAt_iff_pr (D : D7) (k : Type) [Field k] [ValuativeRel k] [Topological
     have h3 : finPart D (cA D (q.e * cA D a)) ∈ intAE D := by
       apply GlobalTheory.IdemSupport.finPart_cA_mem
       rw [map_mul]; exact h2
-    rw [hsum, (finPart D).map_add, (finPart D).map_mul]
+    rw [hsum, (finPart D).map_add (f := _), (finPart D).map_mul]
     exact add_mem h1 h3
 
 end GlobalTheory.SplitInt

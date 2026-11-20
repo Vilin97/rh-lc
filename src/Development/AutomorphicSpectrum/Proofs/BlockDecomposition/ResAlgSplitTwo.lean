@@ -78,7 +78,7 @@ theorem zero_right (v : V) : B.h v 0 = 0 := by
   rw [B.symm 0 v, B.zero_left, map_zero]
 
 theorem add_right (v u w : V) : B.h v (u + w) = B.h v u + B.h v w := by
-  rw [B.symm (u + w) v, B.add_left, map_add, ← B.symm, ← B.symm]
+  rw [B.symm (u + w) v, B.add_left, map_add (f := _), ← B.symm, ← B.symm]
 
 theorem smul_right (a : E) (v w : V) : B.h v (a • w) = τ a * B.h v w := by
   rw [B.symm (a • w) v, B.smul_left, map_mul, ← B.symm]

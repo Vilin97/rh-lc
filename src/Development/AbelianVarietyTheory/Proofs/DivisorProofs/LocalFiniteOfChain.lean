@@ -39,7 +39,7 @@ private theorem pull_cDQ {Zn : NModel O} (C : Zn.Comp) {B : GlobalTheory.Vert.Mo
     rw [h, map_smul, map_smul, map_smul, map_smul, map_smul, map_smul, NModel.cDQ_toQ, NModel.vResQ_toQ,
       GlobalTheory.Vert.Model.vPullQ_toQ, GlobalTheory.Vert.Model.cDQ_toQ, picSymPull_c1Pic, picSymPull_c1Pic,
       GlobalTheory.Vert.Model.vCls_vPull, NModel.vCls_vRes]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 variable (p : ℕ) [Fact p.Prime] [CharZero O] [CharP (ResidueField O) p]
 

@@ -55,7 +55,7 @@ private theorem unipotent_cochain_add {k Γ M : Type} [Field k] [Group Γ] [AddC
   | zero => simp [powerCocycleSum]
   | succ i ih =>
     rw [show i + 1 + j = (i + j) + 1 by ring]
-    simp only [powerCocycleSum, ih, map_add, pow_succ', map_mul, Module.End.mul_apply, pow_add]
+    simp only [powerCocycleSum, ih, map_add (f := _), pow_succ', map_mul, Module.End.mul_apply, pow_add]
     abel
 
 private theorem unipotent_cochain_periodic {l : ℕ} {k Γ M : Type} [Field k] [CharP k l] [Group Γ] [AddCommGroup M] [Module k M]
@@ -118,7 +118,7 @@ private theorem unipotent_restriction_surjective (l : ℕ) [hl : Fact l.Prime] {
     intro n
     induction n with
     | zero => intro i _; simp [powerCocycleSum]
-    | succ n ih => intro i hi; simp only [powerCocycleSum, map_add, hm i hi, invariants_of_normal_stable ρ I _ ih fr i hi]
+    | succ n ih => intro i hi; simp only [powerCocycleSum, map_add (f := _), hm i hi, invariants_of_normal_stable ρ I _ ih fr i hi]
   let V1 : Subgroup Γ := I ⊔ ρ.ker
   have hV1 : IsOpen (V1 : Set Γ) := Subgroup.isOpen_mono le_sup_right hker
   have hV1b : ∀ v ∈ V1, ∀ n, ρ v (powerCocycleSum ρ fr m n) = powerCocycleSum ρ fr m n := by
@@ -193,7 +193,7 @@ theorem UpperTheory.cohomology_of_finite_representation :
       simp only [ReciprocityTheory.Gal.amitsur_d0_apply, map_mul, map_sub, Module.End.mul_apply]; abel⟩
   let P : Submodule k M :=
     { carrier := {m | ∀ i ∈ I, ρ i m = m}
-      add_mem' := fun {a b} ha hb i hi => by rw [map_add, ha i hi, hb i hi]
+      add_mem' := fun {a b} ha hb i hi => by rw [map_add (f := _), ha i hi, hb i hi]
       zero_mem' := fun i _ => map_zero _
       smul_mem' := fun c a ha i hi => by rw [map_smul, ha i hi] }
   let Z : Submodule k (ReciprocityTheory.Gal.Z1 ρ) :=

@@ -226,9 +226,9 @@ theorem nonsplit_conj (p : ℕ) [Fact p.Prime] (hs : ¬ SplitK D p) (ι : ℂ �
       simp
     rw [h, map_neg, map_natCast]
   have e1 : ι (D.host.φ₀ (x : D.host.E)) = (a : ℂ_[p]) + b * ι (Complex.I * (Real.sqrt D.host.d : ℂ)) := by
-    rw [hx, map_add, map_mul, phi_b, map_ratCast, map_ratCast, map_add, map_mul, map_ratCast, map_ratCast]
+    rw [hx, map_add (f := _), map_mul, phi_b, map_ratCast, map_ratCast, map_add (f := _), map_mul, map_ratCast, map_ratCast]
   have e2 : ι (D.host.φ₀ (D.host.conj (x : D.host.E))) = (a : ℂ_[p]) - b * ι (Complex.I * (Real.sqrt D.host.d : ℂ)) := by
-    rw [hx, map_add, map_mul, conj_b, map_ratCast, map_ratCast, mul_neg, ← sub_eq_add_neg, map_sub, map_mul, phi_b,
+    rw [hx, map_add (f := _), map_mul, conj_b, map_ratCast, map_ratCast, mul_neg, ← sub_eq_add_neg, map_sub, map_mul, phi_b,
       map_ratCast, map_ratCast, map_sub, map_mul, map_ratCast, map_ratCast]
   rw [e1, e2]
   exact (core_rat p D.host.d D.host.hyp.2.1 hJ (norm_int_unit p) (norm_p_lt p) _ hr a b).symm

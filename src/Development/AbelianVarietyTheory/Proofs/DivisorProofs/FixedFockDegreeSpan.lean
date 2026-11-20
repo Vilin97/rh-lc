@@ -46,7 +46,7 @@ theorem isKFix_add {B : Base F E} {om : Rep σ Y W} {f g : SInf F (Fin n × Fin 
   intro k hk r hr
   by_cases h0 : f + g = 0
   · rw [h0, tens_zero, map_zero]
-  · rw [tens_add, map_add, hf k hk r (rest_of_rest_ne_zero h0 hr f), hg k hk r (rest_of_rest_ne_zero h0 hr g)]
+  · rw [tens_add, map_add (f := _), hf k hk r (rest_of_rest_ne_zero h0 hr f), hg k hk r (rest_of_rest_ne_zero h0 hr g)]
 
 theorem isKFix_smul {B : Base F E} {om : Rep σ Y W} (c : ℂ) {f : SInf F (Fin n × Fin d)} (hf : IsKFix B om f) :
     IsKFix B om (c • f) := by

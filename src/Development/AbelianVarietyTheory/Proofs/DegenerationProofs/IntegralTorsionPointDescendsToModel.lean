@@ -35,7 +35,7 @@ theorem exists_point_of_inter {V K O C : Type} [CommRing V] [Field K] [CommRing 
       map_one' := hi (by simp only [hg, map_one])
       map_mul' := fun a c => hi (by simp only [hg, map_mul])
       map_zero' := hi (by simp only [hg, map_zero])
-      map_add' := fun a c => hi (by simp only [hg, map_add]) }
+      map_add' := fun a c => hi (by simp only [hg, map_add (f := _)]) }
   have e1 : (CommRingCat.ofHom ψ : Γ(X, U) ⟶ CommRingCat.of V) ≫ CommRingCat.ofHom i = valMap x U hx := by
     ext f
     exact hg f

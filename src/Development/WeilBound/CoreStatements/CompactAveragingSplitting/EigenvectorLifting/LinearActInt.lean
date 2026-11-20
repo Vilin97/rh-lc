@@ -106,7 +106,7 @@ theorem exists_section (large₂ : Submodule k ((κ → k) × (κ → k)))
   classical
   let B : (ι → k) →ₗ[k] large₂ →ₗ[k] k :=
     LinearMap.mk₂ k (fun x a => (X x).1 ⬝ᵥ a.1.2 - a.1.1 ⬝ᵥ (X x).2)
-      (fun a b c => by simp only [map_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]; ring)
+      (fun a b c => by simp only [map_add (f := _), Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]; ring)
       (fun a b c => by
         simp only [map_smul, Prod.smul_fst, Prod.smul_snd, smul_dotProduct, dotProduct_smul, smul_eq_mul]; ring)
       (fun a b c => by simp only [Submodule.coe_add, Prod.fst_add, Prod.snd_add, add_dotProduct, dotProduct_add]; ring)
@@ -139,7 +139,7 @@ theorem coeff_mem (hc : Continuous ψ) (h1 : ψ ≠ 1) (l : ((κ → k) → ℂ)
     have ht : Tendsto (fun y => X (y - x)) (𝓝 x) (𝓝 0) :=
       (cX.comp (continuous_id.sub continuous_const)).tendsto' _ _ (by simp)
     filter_upwards [ht.eventually hf] with y hy
-    conv_rhs => rw [← hy, schr_add (hX _ _), ← map_add, add_sub_cancel]
+    conv_rhs => rw [← hy, schr_add (hX _ _), ← map_add (f := _), add_sub_cancel]
   · obtain ⟨C, hC, h⟩ := exists_compact_ann (ι := ι) hc h1 ((cS.tendsto' 0 0 (map_zero S)).eventually hf)
     refine HasCompactSupport.intro hC fun x hx => ?_
     by_contra hne
@@ -178,7 +178,7 @@ theorem exists_avg [DecidableEq ι] (hc : Continuous ψ) (h1 : ψ ≠ 1) (large�
   let P : ((κ → k) → ℂ) →ₗ[ℂ] ((ι → k) → ℂ) :=
     { toFun := fun φ x => l (schr ψ (X x) φ)
       map_add' := fun a b => funext fun x => by
-        rw [Pi.add_apply, ← map_add]; congr 1; funext z; simp [schr, mul_add]
+        rw [Pi.add_apply, ← map_add (f := _)]; congr 1; funext z; simp [schr, mul_add]
       map_smul' := fun c a => funext fun x => by
         rw [RingHom.id_apply, Pi.smul_apply, ← map_smul]; congr 1; funext z; simp [schr, mul_left_comm] }
   have hL : ∀ φ ∈ SB (κ → k), (I ∘ₗ P) φ = ∫ x, l (schr ψ (X x) φ) ∂μ := fun φ hφ => hI' _ (hF φ hφ)
@@ -194,7 +194,7 @@ theorem exists_avg [DecidableEq ι] (hc : Continuous ψ) (h1 : ψ ≠ 1) (large�
           ψ (⅟(2 : k) * (w.1 ⬝ᵥ w.2)) • P (schr ψ (S w.2) (schr ψ (X w.1) φ)) := by
         funext x
         show _ = ψ _ * l (schr ψ (X x) (schr ψ (S w.2) (schr ψ (X w.1) φ)))
-        rw [schr_comm, map_smul, hS _ _ (schr_mem hc _ (schr_mem hc _ hφ)), hXS, schr_add (hX _ _), ← map_add, schr,
+        rw [schr_comm, map_smul, hS _ _ (schr_mem hc _ (schr_mem hc _ hφ)), hXS, schr_add (hX _ _), ← map_add (f := _), schr,
           AddChar.map_add_eq_mul, smul_eq_mul]
         ring
       rw [e2, map_smul]
@@ -210,7 +210,7 @@ theorem exists_avg [DecidableEq ι] (hc : Continuous ψ) (h1 : ψ ≠ 1) (large�
     · by_cases ht : t ∈ U <;> simp [ht]
     · simp [U.zero_mem]
   · rw [hL _ (schr_mem hc _ hφ), hL _ hφ]
-    simp only [schr_add (hX _ _), ← map_add]
+    simp only [schr_add (hX _ _), ← map_add (f := _)]
     exact integral_add_right_eq_self (fun t => l (schr ψ (X t) φ)) x
   · rw [hL _ (schr_mem hc _ hφ), hL _ hφ]
     refine integral_congr_ae (Eventually.of_forall fun x => ?_)

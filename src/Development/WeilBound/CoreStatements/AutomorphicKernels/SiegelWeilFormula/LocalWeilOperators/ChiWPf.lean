@@ -53,7 +53,7 @@ theorem uW_mul (w : InfinitePlace F) (z z' : ℂ) : d.uW w (z * z') = d.uW w z *
 theorem uW_one (w : InfinitePlace F) : d.uW w 1 = 1 := by
   apply d.ae_ext
   · intro w'
-    rw [uW_eq, map_add, (sec_spec d).2.1, Place.piInf_finOne, map_one]
+    rw [uW_eq, map_add (f := _), (sec_spec d).2.1, Place.piInf_finOne, map_one]
     simp [Function.update_apply]
   · rw [uW_eq, smul_add, (sec_spec d).2.2.1, smul_smul, finOne_mul_self, zero_add]
 
@@ -114,7 +114,7 @@ theorem chiW_pos_pf (w : InfinitePlace F) : ∀ r : ℝ, 0 < r → d.chiW w (r :
   have hc : cA σ (d.uW w t) = d.uW w t := by
     apply d.ae_ext
     · intro w'
-      rw [Place.piInf_cA d.cm, KC.uW_eq, map_add, (KC.sec_spec d).2.1, Place.piInf_finOne, add_zero]
+      rw [Place.piInf_cA d.cm, KC.uW_eq, map_add (f := _), (KC.sec_spec d).2.1, Place.piInf_finOne, add_zero]
       by_cases h : w' = w
       · subst h; simp
       · simp [Function.update_apply, h]

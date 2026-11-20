@@ -37,7 +37,7 @@ noncomputable def liftEquiv (φ : Ω ≃+* Ω) (h1 : ∀ x : K, ∃ y : K, algeb
   map_mul' x y := (algebraMap K Ω).injective (by
     rw [(h1 _).choose_spec, map_mul, map_mul, map_mul, (h1 x).choose_spec, (h1 y).choose_spec])
   map_add' x y := (algebraMap K Ω).injective (by
-    rw [(h1 _).choose_spec, map_add, map_add, map_add, (h1 x).choose_spec, (h1 y).choose_spec])
+    rw [(h1 _).choose_spec, map_add (f := _), map_add (f := _), map_add (f := _), (h1 x).choose_spec, (h1 y).choose_spec])
 
 theorem liftEquiv_spec (φ : Ω ≃+* Ω) (h1 : ∀ x : K, ∃ y : K, algebraMap K Ω y = φ (algebraMap K Ω x))
     (h2 : ∀ x : K, ∃ y : K, algebraMap K Ω y = φ.symm (algebraMap K Ω x)) (x : K) :

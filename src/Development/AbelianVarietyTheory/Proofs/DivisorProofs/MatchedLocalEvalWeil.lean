@@ -120,7 +120,7 @@ theorem admissible_mod_ker : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field F] 
             obtain ⟨g, rfl⟩ := hy
             rw [← hmul, hlc g.1 g.2, hmul, hΦL l hlL]
           | zero => exact map_zero _
-          | add x y _ _ hx hy => rw [map_add, hx, hy]
+          | add x y _ _ hx hy => rw [map_add (f := _), hx, hy]
           | smul c x _ hx => rw [map_smul, hx]
         exact hgen Ψ hΨ
     exact fun l hl => hle hl

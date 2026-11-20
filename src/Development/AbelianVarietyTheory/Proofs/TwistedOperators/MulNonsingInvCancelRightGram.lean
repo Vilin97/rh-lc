@@ -104,7 +104,7 @@ theorem exists_der {ι : Type} [Fintype ι] [DecidableEq ι] (H : Matrix ι ι �
   choose d₀ hd₀ using hk
   let d : (ι → ℂ) → Module.End ℂ Θ := fun v =>
     { toFun := d₀ v
-      map_add' := fun f g => hJ (by rw [map_add, hd₀, hd₀, hd₀, map_add, dH_add v (hs f) (hs g)])
+      map_add' := fun f g => hJ (by rw [map_add (f := _), hd₀, hd₀, hd₀, map_add (f := _), dH_add v (hs f) (hs g)])
       map_smul' := fun c f => hJ (by rw [RingHom.id_apply, map_smul, hd₀, hd₀, map_smul, dH_smul v c (hs f)]) }
   have hd : ∀ v f, J (d v f) = dH ρ v (J f) := hd₀
   clear_value d
@@ -114,18 +114,18 @@ theorem exists_der {ι : Type} [Fintype ι] [DecidableEq ι] (H : Matrix ι ι �
   have hsm : ∀ (r : ℝ) u, d ((r : ℂ) • u) = (r : ℂ) • d u := fun r u => LinearMap.ext fun f => hJ (by
     rw [LinearMap.smul_apply, map_smul, hd, hd, Complex.coe_smul, Complex.coe_smul, dH_smul_left])
   obtain ⟨x, y, hx, hy, c1, c2, c3⟩ := exists_parts H d
-    (fun u v => LinearMap.ext fun f => hJ (by rw [LinearMap.add_apply, map_add, hd, hd, hd, dH_add_left])) hsm
+    (fun u v => LinearMap.ext fun f => hJ (by rw [LinearMap.add_apply, map_add (f := _), hd, hd, hd, dH_add_left])) hsm
     (fun u v => LinearMap.ext fun f => hJ (by
       have := (C _ (hs f)).2.2.2.2 u v
       rw [sub_eq_iff_eq_add', hom] at this
-      simpa only [LinearMap.add_apply, map_add, Module.End.mul_apply, hd, LinearMap.smul_apply, map_smul,
+      simpa only [LinearMap.add_apply, map_add (f := _), Module.End.mul_apply, hd, LinearMap.smul_apply, map_smul,
         Module.End.one_apply] using this))
   refine ⟨d, x, y, hd, fun v => by simpa using hsm (-1) v, hx, hy, c1, c2, c3, fun X f => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     simp only [nOp, xOp, dOp, LinearMap.sum_apply, LinearMap.smul_apply, Module.End.mul_apply, map_sum, hx, hy,
     LinearMap.sub_apply, LinearMap.add_apply]
   refine Finset.sum_congr rfl fun k _ => Finset.sum_congr rfl fun l _ => ?_
-  simp only [← hd, ← map_smul, ← map_add, ← map_sub]
+  simp only [← hd, ← map_smul, ← map_add (f := _), ← map_sub]
 
 theorem ccr_of_sign {κ A : Type} [DecidableEq κ] [Ring A] [Algebra ℂ A] (x y : κ → A) (p : κ → Prop) [DecidablePred p]
     (s : κ → ℂ) (hs : ∀ k, s k ≠ 0) (c1 : ∀ k l, x k * x l = x l * x k) (c2 : ∀ k l, y k * y l = y l * y k)
@@ -176,7 +176,7 @@ theorem exists_lift {ι X : Type} [DecidableEq ι] (M : Submodule ℂ (X → ℂ
       rw [hA j ⟨g, hg⟩, hA i ⟨g, hg⟩, hA, hA]
       exact congrArg Subtype.val (LinearMap.congr_fun (haa i j) ⟨g, hg⟩))
     (fun i g g' hg hg' => by
-      rw [hA i ⟨g, hg⟩, hA i ⟨g', hg'⟩, ← Submodule.coe_add, ← map_add, ← hA]; rfl)
+      rw [hA i ⟨g, hg⟩, hA i ⟨g', hg'⟩, ← Submodule.coe_add, ← map_add (f := _), ← hA]; rfl)
     (fun i c g hg => by rw [hA i ⟨g, hg⟩, ← Submodule.coe_smul, ← map_smul, ← hA]; rfl) f.2
   let E : MvPolynomial ι ℂ →ₗ[ℂ] M := (pureTensorL A (f : X → ℂ)).codRestrict M hm
   have hE : ∀ v Q, E (MvPolynomial.X v * Q) = a v (E Q) := fun v Q => Subtype.ext ((hX Q v).trans (hA v (E Q)))
@@ -185,7 +185,7 @@ theorem exists_lift {ι X : Type} [DecidableEq ι] (M : Submodule ℂ (X → ℂ
   clear_value E
   induction Q using MvPolynomial.induction_on with
   | C r => rw [MvPolynomial.pderiv_C, map_zero, MvPolynomial.C_eq_smul_one, map_smul, map_smul, h0, hf, smul_zero]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p j hp =>
     rw [mul_comm, hE, ← Module.End.mul_apply, hba, LinearMap.add_apply, Module.End.mul_apply, hp,
       MvPolynomial.pderiv_mul, map_add, hE, add_comm]
@@ -527,7 +527,7 @@ theorem lieFockUpTo : ∀ D : D7, GlobalTheory.ChainFr.LieFockUpTo D := by
       rw [Matrix.map_apply, lie_entry (fr_det A τ) (A.fr_gram τ) hX]
       simp only [hw, ← Finset.smul_sum]
       module
-    rw [h1, h1, map_add, map_smul, fockS, lift_quad E (fun j i => raiO τ (A.ε τ) (B.ε τ) i j)
+    rw [h1, h1, map_add (f := _), map_smul, fockS, lift_quad E (fun j i => raiO τ (A.ε τ) (B.ε τ) i j)
       (fun j i => lowO τ (A.ε τ) (B.ε τ) i j) (fun j i => R i j) (fun j i => L i j) (fun j i => h2 i j)
       (fun j i => h3 i j), add_assoc, ← add_smul, add_sub_cancel, ← e]
     exact hl (E P) z
@@ -558,7 +558,7 @@ theorem lieFockUpTo : ∀ D : D7, GlobalTheory.ChainFr.LieFockUpTo D := by
         ∑ i, ∑ k, (B.fr τ * Y * (B.fr τ)⁻¹) i k • ∑ j, R i j * L k j := by
       rw [WeylAction.sum_left]
       simp only [hw, sgn_mul_self, one_smul]
-    rw [h1, h1, map_add, map_smul, fockT, lift_quad E _ _ R L h2 h3, add_assoc, ← add_smul, add_sub_cancel, ← e]
+    rw [h1, h1, map_add (f := _), map_smul, fockT, lift_quad E _ _ R L h2 h3, add_assoc, ← add_smul, add_sub_cancel, ← e]
     exact hl (E P) z
   choose κS hS using hS
   choose κT hT using hT

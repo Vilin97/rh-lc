@@ -54,7 +54,7 @@ lemma blk_IntSpan_of {D : D7} {u : D.what₂.Word}
     funext τ
     exact hg2 τ
   | zero => rw [map_zero]; exact AddSubgroup.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact AddSubgroup.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact AddSubgroup.add_mem _ hx hy
   | neg x _ hx => rw [map_neg]; exact AddSubgroup.neg_mem _ hx
 
 variable {D : D7} {T : TwForms D} {u : D.what₂.Word} {μ : D.what₂.Tup}
@@ -91,7 +91,7 @@ theorem PRat_ofT (P : PendTw D T u μ) (h4 : ∀ τ, Formalism.MainNotions.Prime
   | zero => exact ⟨0, by simp⟩
   | add x y _ _ hx hy =>
     obtain ⟨a1, h1⟩ := hx; obtain ⟨a2, h2⟩ := hy
-    exact ⟨a1 + a2, by rw [map_add, map_add, map_add, h1, h2]⟩
+    exact ⟨a1 + a2, by rw [map_add (f := _), map_add (f := _), map_add (f := _), h1, h2]⟩
   | smul r x _ hx =>
     obtain ⟨a1, h1⟩ := hx
     exact ⟨r • a1, by rw [LinearMap.map_smulₛₗ, LinearMap.map_smulₛₗ, h1, LinearMap.map_smul]⟩

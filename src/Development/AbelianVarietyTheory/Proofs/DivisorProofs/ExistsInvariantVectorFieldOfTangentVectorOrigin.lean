@@ -28,7 +28,7 @@ theorem valR_of' (x : Sp A ⟶ Y) (V : Y.Opens) (h : ⊤ ≤ x ⁻¹ᵁ V) (f : 
 
 theorem valR_add' (x : Sp A ⟶ Y) (V : Y.Opens) (h : ⊤ ≤ x ⁻¹ᵁ V) (f g : Γ(Y, V)) :
     valR x V (f + g) = valR x V f + valR x V g := by
-  simp only [valR_of' x V h, map_add]
+  simp only [valR_of' x V h, map_add (f := _)]
 
 theorem valR_mul' (x : Sp A ⟶ Y) (V : Y.Opens) (h : ⊤ ≤ x ⁻¹ᵁ V) (f g : Γ(Y, V)) :
     valR x V (f * g) = valR x V f * valR x V g := by
@@ -223,7 +223,7 @@ theorem real_part (O : G.left.Opens) (f a b : Γ(G.left, O))
       (fst (Over.mk (𝟙 (Sp R))) G).left ≫ (redPt R).left := by
     rw [← Over.comp_left, whiskerRight_fst, Over.comp_left]
   have k := congrArg ((redPt R ▷ G).left.appLE _ _ hjO).hom h
-  simp only [map_add, map_mul, Scheme.Hom.app_eq_appLE, appLE_appLE', appLE_constFn'] at k
+  simp only [map_add (f := _), map_mul, Scheme.Hom.app_eq_appLE, appLE_appLE', appLE_constFn'] at k
   rw [appLE_eq_of_eq' (transl_left_red G v) _ _ _ le_rfl, appLE_eq_of_eq' (snd_left_red G) _ _ _ le_rfl, ef] at k
   have hr : (redPt R).left = spMap (TrivSqZeroExt.fstHom R R R).toRingHom := rfl
   have h0 : (TrivSqZeroExt.fstHom R R R).toRingHom DualNumber.eps = 0 := by simp
@@ -258,20 +258,20 @@ theorem exists_isInv : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [GrpObj G] 
   refine ⟨fun O f => (ab O f).2, ⟨?_, ?_, ?_⟩, ?_⟩
   · intro W _ f f'
     refine huniq W _ (f + f') _ ?_
-    rw [map_add, hab W f, hab W f', hre, hre]
-    simp only [map_add]
+    rw [map_add (f := _), hab W f, hab W f', hre, hre]
+    simp only [map_add (f := _)]
     ring
   · intro W _ f f'
     refine huniq W _ (f * f') _ ?_
     rw [map_mul, hab W f, hab W f', hre, hre]
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     linear_combination (((snd (tEpsG (𝟙 (Sp R))) G).left.app W).hom (ab W f).2 *
       ((snd (tEpsG (𝟙 (Sp R))) G).left.app W).hom (ab W f').2) * hee W
   · intro W W' h _ f
     refine huniq W' _ (resG _ h f) _ ?_
     have h' : (snd (tEpsG (𝟙 (Sp R))) G).left ⁻¹ᵁ W' ≤ (snd (tEpsG (𝟙 (Sp R))) G).left ⁻¹ᵁ W :=
       (snd (tEpsG (𝟙 (Sp R))) G).left.preimage_mono h
-    rw [appLE_res' _ h h' (preimage_transl G v W).ge, hab W f, hre, map_add, map_mul, res_app' _ h h',
+    rw [appLE_res' _ h h' (preimage_transl G v W).ge, hab W f, hre, map_add (f := _), map_mul, res_app' _ h h',
       res_app' _ h h', res_constFn']
   · intro S _ φ g w O f hg hgO htr
     symm

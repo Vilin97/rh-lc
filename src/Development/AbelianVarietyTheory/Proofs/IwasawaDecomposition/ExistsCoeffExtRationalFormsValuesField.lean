@@ -34,7 +34,7 @@ theorem exists_ext_pol {K K' I W : Type} [Field K] [Field K'] [AddCommGroup W] [
         rw [MvPolynomial.smul_monomial, smul_eq_mul, mul_one]
       rw [e1, f.map_smul, hf, e2, π.map_smul, map_smulₛₗ, ← RingHom.congr_fun hσ a]
       rfl
-    | add p q hp hq => rw [map_add, map_add, hp, hq, map_add, map_add]
+    | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _), map_add (f := _)]
   refine ⟨{ toFun := f, map_add' := f.map_add, map_smul' := fun a p => f.map_smul a p }, fun v => (key v).trans ?_⟩
   exact congrArg c (LinearMap.congr_fun hπ v)
 

@@ -50,7 +50,7 @@ theorem mem_smul_top_iff_repr {R M ι : Type} [CommRing R] [AddCommGroup M] [Mod
     refine Submodule.smul_induction_on (p := fun x => b.repr x i ∈ J) hx (fun r hr m _ => ?_) (fun x y hx hy => ?_)
     · simp only [map_smul, Finsupp.smul_apply, smul_eq_mul]
       exact J.mul_mem_right _ hr
-    · simp only [map_add, Finsupp.add_apply]
+    · simp only [map_add (f := _), Finsupp.add_apply]
       exact J.add_mem hx hy
   · intro h
     rw [← b.sum_repr x]

@@ -328,7 +328,7 @@ theorem mem_refl {N : ℕ} (hN : 0 < N) (hroot : ∀ g ∈ GfC V, ∀ m : ℕ, 0
     rw [add_sub_cancel_left, ← mul_assoc (1 - fj D e), hs1]
   rw [hy']
   have hinf : infPart D (1 + fj D (1 - e) * (incA D u - 1)) = 1 := by
-    rw [map_add, map_one, map_mul, inf_fj, zero_mul, add_zero]
+    rw [map_add (f := _), map_one, map_mul, inf_fj, zero_mul, add_zero]
   have hG : rfA hP hJ _ hn ∈ GfC V := by
     refine MonoidHom.mem_ker.2 (Units.ext ?_)
     change (Formalism.L2.Theta.mt V (rfA hP hJ _ hn)).map (infPart D) = 1

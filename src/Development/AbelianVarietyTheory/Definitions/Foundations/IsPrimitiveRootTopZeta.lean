@@ -29,7 +29,7 @@ theorem mem_fixMu_iff {M : ℕ} (s : Ω ≃ₐ[ℚ] Ω) : s ∈ fixMu Ω M ↔ �
   induction hz using IntermediateField.adjoin_induction with
   | mem z hz => exact h z hz
   | algebraMap q => exact s.commutes q
-  | add a b _ _ ha hb => rw [map_add, ha, hb]
+  | add a b _ _ ha hb => rw [map_add (f := _), ha, hb]
   | inv a _ ha => rw [map_inv₀, ha]
   | mul a b _ _ ha hb => rw [map_mul, ha, hb]
 

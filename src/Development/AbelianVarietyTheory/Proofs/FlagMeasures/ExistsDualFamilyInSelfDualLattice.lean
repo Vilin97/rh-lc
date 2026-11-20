@@ -132,7 +132,7 @@ theorem ideal_eq_top_of_inv [IsNonarchimedeanLocalField F] [CharZero F] (L : Loc
         linear_combination (algebraMap F E t * k) * hs]
       exact L.O.zero_mem)
     have hs1 : s ∈ L.O := by simpa using hts 1
-    obtain ⟨u, hu'⟩ := (L.cj_fix (s + L.cj s)).1 (by rw [map_add, L.cj_cj, add_comm])
+    obtain ⟨u, hu'⟩ := (L.cj_fix (s + L.cj s)).1 (by rw [map_add (f := _), L.cj_cj, add_comm])
     obtain ⟨m, hm⟩ := (L.cj_fix (s * L.cj s)).1 (by rw [map_mul, L.cj_cj, mul_comm])
     have hu0 : u = 0 := hz u (fun t => by
       have h4 := L.O.add_mem (hts t) (hcj _ (hts t))

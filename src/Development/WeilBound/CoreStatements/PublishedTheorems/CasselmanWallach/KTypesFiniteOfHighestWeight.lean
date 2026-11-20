@@ -30,7 +30,7 @@ theorem exists_hull (hL : LocFin ε E) (W : Submodule ℂ V) [FiniteDimensional 
       exact (le_iSup (fun i => S (bW i : V)) i) (hSk _ a b hab x hx)
     · simp
     · intro x y hx hy
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hx hy
   · intro w hw
     have hrep := bW.sum_repr ⟨w, hw⟩

@@ -48,20 +48,20 @@ theorem exists_bk_iff (D : D7) : (∃ B, (withBk D B).BuRational) ↔ ValuesRati
     refine ⟨fun u => LinearMap.mk₂ D.what₂.LL (b u) ?_ ?_ ?_ ?_, fun u φ x => (hb u φ x).symm⟩
     · intro a a' x
       apply inj
-      rw [map_add, hb, hb, hb, map_add, (D.Bu_linL u _).map_add]
+      rw [map_add (f := _), hb, hb, hb, map_add (f := _), (D.Bu_linL u _).map_add (f := _)]
     · intro c a x
       apply inj
       rw [smul_eq_mul, map_mul, hb, hb, map_smulₛₗ, (D.Bu_linL u _).map_smul, smul_eq_mul]
     · intro a x x'
       apply inj
-      rw [map_add, hb, hb, hb, map_add, (D.Bu_linR u _).map_add]
+      rw [map_add (f := _), hb, hb, hb, map_add (f := _), (D.Bu_linR u _).map_add (f := _)]
     · intro c a x
       apply inj
       rw [smul_eq_mul, map_mul, hb, hb, map_smulₛₗ, (D.Bu_linR u _).map_smul, smul_eq_mul]
 
 def rot (D : D7) (c : ℂ) : D.div.RR.V →ₛₗ[D.what₂.embLL] D.what₂.EE where
   toFun x := c • D.jEE x
-  map_add' x y := by rw [map_add, smul_add]
+  map_add' x y := by rw [map_add (f := _), smul_add]
   map_smul' a x := by rw [map_smulₛₗ, smul_comm]
 
 def withRot (D : D7) (c : ℂ) (hc : ‖c‖ = 1) : D7 :=

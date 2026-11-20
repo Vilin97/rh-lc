@@ -148,7 +148,7 @@ def lvlAct (k : Fin D.R.m) (s : T) (a : MonoidAlgebra D.what₂.LL G) (x : Fin (
 def adForm (μ : D.what₂.Tup) (h : Used0 D μ) (k : Fin D.R.m) :
     D.what₂.Mt μ ((k : ℕ) + 1) →ₗ[ℂ] (GA D (Vc D k) → (R.cV k).W) where
   toFun x := (Y.IL.jMt μ h k x).1
-  map_add' x y := by rw [map_add]; rfl
+  map_add' x y := by rw [map_add (f := _)]; rfl
   map_smul' c x := by rw [map_smul]; rfl
 
 def CenRat : Prop :=
@@ -201,7 +201,7 @@ theorem cenLoc_of (M : MtFam D) (ad : MtAd Y M) (h1 : CenRat Y cG) (h2 : ActRead
         (D.ntypes.cenMt (Y.tup s) ((k : ℕ) + 1) ⟨avgC g₁, avgC_mem g₁⟩))
     let F2 : D.what₂.Mt (Y.tup s) ((k : ℕ) + 1) →ₗ[ℂ] (R.cV k).W :=
       { toFun := fun y => ∑ g₀ : G0g D.nd, (avgC g₁).coeff g₀ • adForm Y (Y.tup s) hμ k y ((ad.PV k).ψ (g * L g₀))
-        map_add' := fun y y' => by simp only [map_add, Pi.add_apply, smul_add, Finset.sum_add_distrib]
+        map_add' := fun y y' => by simp only [map_add (f := _), Pi.add_apply, smul_add, Finset.sum_add_distrib]
         map_smul' := fun c y => by
           simp only [map_smul, Pi.smul_apply, RingHom.id_apply, Finset.smul_sum]
           exact Finset.sum_congr rfl fun _ _ => smul_comm _ _ _ }
@@ -223,7 +223,7 @@ theorem cenLoc_of (M : MtFam D) (ad : MtAd Y M) (h1 : CenRat Y cG) (h2 : ActRead
     rw [ad.read, map_sum]
   let Φ : ↥(Subalgebra.center ℂ (MonoidAlgebra ℂ (G0g D.nd))) →ₗ[ℂ] (R.cV k).W :=
     { toFun := fun z' => adForm Y (Y.tup s) hμ k (D.ntypes.cenMt (Y.tup s) ((k : ℕ) + 1) z' x) ((ad.PV k).ψ g)
-      map_add' := fun y y' => by simp only [map_add, LinearMap.add_apply, Pi.add_apply]
+      map_add' := fun y y' => by simp only [map_add (f := _), LinearMap.add_apply, Pi.add_apply]
       map_smul' := fun c y => by simp only [map_smul, LinearMap.smul_apply, Pi.smul_apply, RingHom.id_apply] }
   refine (lin_center Φ (fun g₀ => adForm Y (Y.tup s) hμ k x ((ad.PV k).ψ (g * L g₀))) key z).trans ?_
   refine Finset.sum_congr rfl fun g₀ _ => ?_

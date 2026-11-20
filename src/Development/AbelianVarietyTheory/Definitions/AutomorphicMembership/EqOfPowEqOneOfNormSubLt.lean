@@ -202,7 +202,7 @@ theorem exists_monV_pow_eq_zero (x : V ⊗[ℚ_[l]] Bst P) : ∃ n : ℕ, (monV 
     obtain ⟨m, hm⟩ := hx
     obtain ⟨n, hn⟩ := hy
     refine ⟨m + n, ?_⟩
-    rw [map_add]
+    rw [map_add (f := _)]
     nth_rewrite 1 [add_comm m n]
     rw [pow_add, pow_add, End.mul_apply, End.mul_apply, hm, hn, map_zero, map_zero, add_zero]
 
@@ -221,7 +221,7 @@ theorem stRep_crisIncl (g : ↥(GK K)) (x : V ⊗[ℚ_[l]] P.R.B) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => simp [actVB, P.PD_actB]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem phiV_stRep (g : ↥(GK K)) : phiV P LL V * stRep P ρ g = stRep P ρ g * phiV P LL V :=
   end_ext P fun v b => by simp only [End.mul_apply, phiV_tmul, stRep_tmul, phiSt_actSt]
@@ -256,7 +256,7 @@ def Dpst : Submodule LL (V ⊗[ℚ_[l]] Bst P) where
     rintro x y ⟨K₁, h₁, hx⟩ ⟨K₂, h₂, hy⟩
     rw [mem_Dst_resTo] at hx hy
     refine ⟨supExt K₁ K₂, h₁.trans le_sup_left, (mem_Dst_resTo P ρ _).mpr fun g hg => ?_⟩
-    rw [map_add, hx g (GK_le (K' := supExt K₁ K₂) le_sup_left hg),
+    rw [map_add (f := _), hx g (GK_le (K' := supExt K₁ K₂) le_sup_left hg),
       hy g (GK_le (K' := supExt K₁ K₂) le_sup_right hg)]
   smul_mem' := by
     rintro c x ⟨K₁, h₁, hx⟩
@@ -368,7 +368,7 @@ theorem smul_toUr (c : ↥(MaximalUnramifiedExtension l)) (x : ↥(Dpst P ρ)) :
 def urEnd (T : End LL ↥(Dpst P ρ)) (hT : ∀ c, T * mulD P ρ c = mulD P ρ c * T) :
     End ↥(MaximalUnramifiedExtension l) (DpstUr P ρ) where
   toFun x := toUr P ρ (T ((toUr P ρ).symm x))
-  map_add' x y := by simp only [map_add]
+  map_add' x y := by simp only [map_add (f := _)]
   map_smul' c x := LinearMap.congr_fun (hT c) x
 
 def IsPst : Prop := Module.rank ↥(MaximalUnramifiedExtension l) (DpstUr P ρ) = Module.rank ℚ_[l] V

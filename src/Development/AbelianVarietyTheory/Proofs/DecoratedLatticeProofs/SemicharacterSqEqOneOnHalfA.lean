@@ -119,7 +119,7 @@ theorem symplO_split {S T : HSp D} {e : AE D} (h1 : e * e = e) (h2 : e * cA D e 
     have hs : e + cA D e + (1 - e - cA D e) = 1 := by ring
     rw [k1, k2, k3, ← add_mul, ← add_mul, hs, one_mul]
   unfold symplO
-  rw [k, mul_add, mul_add, map_add, map_add]
+  rw [k, mul_add, mul_add, map_add (f := _), map_add (f := _)]
 
 theorem halfA_smul_mem_locP {E : Type} [Field E] [NumberField E] [StarRing E] {a b : ℕ}
     {SS : Finset (HeightOneSpectrum (𝓞 E))} {M : Submodule (𝓞 E) (Formalism.L2.Col.HomE E a b)} {c : ℕ} (hc : 0 < c)

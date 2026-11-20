@@ -74,7 +74,7 @@ theorem dRho_laws (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) {f : WO S T �
     ring
   · have sk : ∀ u v, omO S T v u = -omO S T u v := fun u v => by
       have h1 := omO_self h (S := S) (T := T) (u + v)
-      simp only [LinearMap.map_add, LinearMap.add_apply, omO_self h] at h1
+      simp only [LinearMap.map_add (f := _), LinearMap.add_apply, omO_self h] at h1
       linarith
     rw [hE, hE, hE, hE, heisenberg_derivative_commutator _ _ _ _ _ (h.pi_iota T S)
       (fun g hg u w => hD_eq_fderiv _ _ _ g hg u w) sk f hs]
@@ -89,7 +89,7 @@ theorem om_cplx (hθ : IsInfFam θ) {sS : D.what₂.Tau → Matrix (Fin S.rank) 
   obtain ⟨σ, h⟩ := GlobalTheory.RealLineAt.exists_inverse_chart hθ
   have sk : ∀ u v, omO S T v u = -omO S T u v := fun u v => by
     have h1 := omO_self h (S := S) (T := T) (u + v)
-    simp only [LinearMap.map_add, LinearMap.add_apply, omO_self h] at h1
+    simp only [LinearMap.map_add (f := _), LinearMap.add_apply, omO_self h] at h1
     linarith
   have key := fun τ => GlobalTheory.CartanTrace.cplxO_pos T.rank S.rank (gramAt D S τ) (sS τ) (gramAt D T τ) (sT τ)
     (tauE D τ D.host.xi0) (GlobalTheory.OrientedRealForm.realPlace_imaginaryGenerator_re_eq_zero τ) (xi_zero_im_pos D τ) (hS τ) (hT τ)

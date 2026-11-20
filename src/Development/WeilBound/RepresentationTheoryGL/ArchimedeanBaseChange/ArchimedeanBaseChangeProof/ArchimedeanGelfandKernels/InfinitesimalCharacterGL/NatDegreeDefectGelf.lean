@@ -156,7 +156,7 @@ theorem natDegree_defect_op (V : Type) [AddCommGroup V] [Module ℂ V] (m : ℕ)
       refine sum_congr rfl fun k _ => ?_
       rw [Module.End.mul_apply, ht k, Module.algebraMap_end_apply, smul_smul, map_smul]
     rw [h2] at h1
-    simp only [LinearMap.add_apply, Module.End.mul_apply, Module.algebraMap_end_apply, map_add, map_smul,
+    simp only [LinearMap.add_apply, Module.End.mul_apply, Module.algebraMap_end_apply, map_add (f := _), map_smul,
       LinearMap.sub_apply, map_sub, smul_eq_mul] at h1
     rw [← GlobalTheory.CapelliNewton.polyOf_eval, ← hRp] at h1
     simp only [defect, eval_sub, eval_mul, eval_pow, eval_X, eval_C, eval_comp, eval_add, eval_one, eval_finsetSum,

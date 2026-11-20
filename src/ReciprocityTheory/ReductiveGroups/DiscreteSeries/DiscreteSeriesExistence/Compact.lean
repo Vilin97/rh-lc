@@ -182,7 +182,7 @@ theorem cmpt_pair (he : ∀ a b, ε a = ε b) {a b : Fin n} (hab : a < b) :
   have key : ∀ X : T.V →L[ℂ] T.V, (Complex.I • X) * (Complex.I • X) = -(X * X) := by
     intro X
     rw [smul_mul_assoc, mul_smul_comm, smul_smul, Complex.I_mul_I, neg_one_smul]
-  rw [h1, h2, w1, w2, g1, g2, map_sub, map_smul, map_add, key]
+  rw [h1, h2, w1, w2, g1, g2, map_sub, map_smul, map_add (f := _), key]
   simp only [mul_sub, sub_mul, mul_add, add_mul]
   module
 

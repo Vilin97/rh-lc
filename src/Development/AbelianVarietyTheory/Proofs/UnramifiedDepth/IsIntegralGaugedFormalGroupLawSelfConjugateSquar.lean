@@ -34,7 +34,7 @@ def intSer (V : VF C) (σ : Type) : Subring (MvPowerSeries σ C) where
     split_ifs
     · exact VF.Ge.one
     · exact VF.Ge.zero 0
-  add_mem' := fun hf hg μ => by rw [map_add]; exact (hf μ).add (hg μ)
+  add_mem' := fun hf hg μ => by rw [map_add (f := _)]; exact (hf μ).add (hg μ)
   zero_mem' := fun μ => by rw [map_zero]; exact VF.Ge.zero 0
   neg_mem' := fun hf μ => by rw [map_neg]; exact (hf μ).neg
 
@@ -278,7 +278,7 @@ theorem exp_gauge_cocycle_first_variable {a b c : Fin dd → MvPowerSeries τ C}
   have e := Y.gauge.ph1
   rw [FB.toK, map_self, FK_self] at e
   rw [e, sb_exp h3 (by
-      rw [map_sub, map_add, cc_hev Y (zc_pt _) (zc_pt _), cc_hev Y (zc_pt _) (zc_pt _),
+      rw [map_sub, map_add (f := _), cc_hev Y (zc_pt _) (zc_pt _), cc_hev Y (zc_pt _) (zc_pt _),
         cc_hev Y (zc_addOf Y _ _) (zc_pt _)]
       simp),
     sb_sub h3, sb_add h3, substPointsPowerSeries_eval_two h3 (zc_pt _) (zc_pt _), substPointsPowerSeries_eval_two h3 (zc_pt _) (zc_pt _),
@@ -292,7 +292,7 @@ theorem exp_gauge_cocycle_second_variable {a b c : Fin dd → MvPowerSeries τ C
   have e := Y.gauge.ph2
   rw [FB.toK, map_self, FK_self] at e
   rw [e, sb_exp h3 (by
-      rw [map_sub, map_add, cc_hev Y (zc_pt _) (zc_pt _), cc_hev Y (zc_pt _) (zc_pt _),
+      rw [map_sub, map_add (f := _), cc_hev Y (zc_pt _) (zc_pt _), cc_hev Y (zc_pt _) (zc_pt _),
         cc_hev Y (zc_pt _) (zc_addOf Y _ _)]
       simp),
     sb_sub h3, sb_add h3, substPointsPowerSeries_eval_two h3 (zc_pt _) (zc_pt _), substPointsPowerSeries_eval_two h3 (zc_pt _) (zc_pt _),
@@ -448,7 +448,7 @@ theorem rlaw_rawSelf (C : Type) [Field C] [CharZero C] (V : VF C) (O : Type) [Co
       col_addP Y p (zc_gp _) (zc_gp _), add_add_add_comm, add_sub_add_comm]
     refine intS_exp_add ?_ ?_ ?_ ?_
     iterate 2
-      rw [map_sub, map_add, cc_hsb Y (z _ _) (z _ _), cc_hsb Y (z _ _) (z _ _),
+      rw [map_sub, map_add (f := _), cc_hsb Y (z _ _) (z _ _), cc_hsb Y (z _ _) (z _ _),
         cc_hsb Y (zc_law Y (z _ _) (z _ _)) (z _ _), add_zero, sub_zero]
     all_goals
       rw [exp_gauge_cocycle_first_variable Y (z _ _) (z _ _) (z _ _)]
@@ -462,7 +462,7 @@ theorem rlaw_rawSelf (C : Type) [Field C] [CharZero C] (V : VF C) (O : Type) [Co
       col_addP Y p (zc_gp _) (zc_gp _), add_add_add_comm, add_sub_add_comm]
     refine intS_exp_add ?_ ?_ ?_ ?_
     iterate 2
-      rw [map_sub, map_add, cc_hsb Y (z _ _) (z _ _), cc_hsb Y (z _ _) (z _ _),
+      rw [map_sub, map_add (f := _), cc_hsb Y (z _ _) (z _ _), cc_hsb Y (z _ _) (z _ _),
         cc_hsb Y (z _ _) (zc_law Y (z _ _) (z _ _)), add_zero, sub_zero]
     all_goals
       rw [exp_gauge_cocycle_second_variable Y (z _ _) (z _ _) (z _ _)]

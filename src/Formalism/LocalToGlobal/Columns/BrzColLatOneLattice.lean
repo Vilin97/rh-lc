@@ -21,8 +21,8 @@ variable {K : Type} [Field K] [NumberField K] [StarRing K] {V ι : Type} [AddCom
 theorem isSesq_formAt : IsSesq (formAt b P) := by
   intro v
   refine ⟨fun x x' y => ?_, fun x y y' => ?_, fun a x y => ?_, fun a x y => ?_⟩
-  · simp only [formAt, map_add, Finsupp.add_apply, add_mul, Finset.sum_add_distrib]
-  · simp only [formAt, map_add, Finsupp.add_apply, mul_add, Finset.sum_add_distrib]
+  · simp only [formAt, map_add (f := _), Finsupp.add_apply, add_mul, Finset.sum_add_distrib]
+  · simp only [formAt, map_add (f := _), Finsupp.add_apply, mul_add, Finset.sum_add_distrib]
   · simp only [formAt, map_smul, Finsupp.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum, mul_assoc]
   · simp only [formAt, map_smul, Finsupp.smul_apply, smul_eq_mul, map_mul, Finset.mul_sum]
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_

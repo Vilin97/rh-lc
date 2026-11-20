@@ -113,7 +113,7 @@ theorem eq_zero_of_dirDer_ratio [IsClosedImmersion i] (hy : y ∈ c.e.source) {j
     refine dirDer_const hy hW (a := σ a) fun z hz => ?_
     rw [← ev_of_comp hm, MvPolynomial.aeval_C]
     exact ev_algX ((mem_ptsIn_preimage hm).1 hz) a
-  | add P Q hP hQ => rw [map_add, map_add, dirDer_add hy hW, hP, hQ, add_zero]
+  | add P Q hP hQ => rw [map_add (f := _), map_add (f := _), dirDer_add hy hW, hP, hQ, add_zero]
   | mul_X P a hP => rw [map_mul, map_mul, dirDer_mul hy hW, hP, MvPolynomial.aeval_X, h0, mul_zero, mul_zero, add_zero]
 
 theorem fubiniStudy_weight_pullback_chart_formula (j : Fin (N + 1)) (z : CxPts p σ) :

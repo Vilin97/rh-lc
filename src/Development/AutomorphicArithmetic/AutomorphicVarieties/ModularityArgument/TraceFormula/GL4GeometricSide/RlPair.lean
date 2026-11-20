@@ -13,7 +13,7 @@ private theorem adj_of_skew {M : Type} [AddCommGroup M] [Module ℂ M] (H : M �
     (φ ψ : M) : H (A φ) ψ = - H φ (B ψ) := by
   have h1 := h 1 φ ψ
   have hI := h Complex.I φ ψ
-  simp only [LinearMap.add_apply, LinearMap.smul_apply, map_add, map_smulₛₗ, one_smul, star_one,
+  simp only [LinearMap.add_apply, LinearMap.smul_apply, map_add (f := _), map_smulₛₗ, one_smul, star_one,
     Complex.star_def, Complex.conj_I, map_neg, neg_smul, map_one, RingHom.id_apply, smul_eq_mul,
     Complex.conj_conj, LinearMap.neg_apply] at h1 hI
   linear_combination (1 / 2 : ℂ) * h1 + (Complex.I / 2) * hI +
@@ -108,7 +108,7 @@ theorem UpperTheory.V.Z.GSp4Splitting.rlPair :
   · intro a b x y
     simp only [kF, LinearMap.add_apply]
     rw [D.inner_eq, D.inner_eq]
-    simp only [map_add, iE1, iE2, map_neg, LinearMap.add_apply, LinearMap.neg_apply, adjA, adjB]
+    simp only [map_add (f := _), iE1, iE2, map_neg, LinearMap.add_apply, LinearMap.neg_apply, adjA, adjB]
     ring
   · intro a b x y
     simp only [pF, LinearMap.sub_apply]

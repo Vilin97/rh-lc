@@ -227,7 +227,7 @@ theorem lineDerivOp_smulLeftCLM (v : E) (ψ : 𝓢(E, ℂ)) (u : 𝓢'(E, ℂ)) 
       smulLeftCLM ℂ ((∂_{v} ψ : 𝓢(E, ℂ)) : E → ℂ) u + smulLeftCLM ℂ (ψ : E → ℂ) (∂_{v} u) := by
   ext φ
   simp only [lineDerivOp_apply_apply, smulLeftCLM_apply_apply, add_apply, map_neg]
-  rw [lineDerivOp_smulLeftCLM_schwartz, map_add]
+  rw [lineDerivOp_smulLeftCLM_schwartz, map_add (f := _)]
   ring
 
 def comm (T : 𝓢'(E, ℂ) →L[ℂ] 𝓢'(E, ℂ)) (ψ : 𝓢(E, ℂ)) : 𝓢'(E, ℂ) →L[ℂ] 𝓢'(E, ℂ) :=
@@ -257,7 +257,7 @@ theorem comm_smulLeft_comp {g : E → ℂ} (hg : g.HasTemperateGrowth) (A : 𝓢
 
 theorem comm_add (A B : 𝓢'(E, ℂ) →L[ℂ] 𝓢'(E, ℂ)) (ψ : 𝓢(E, ℂ)) :
     comm (A + B) ψ = comm A ψ + comm B ψ := by
-  ext1 u; simp only [comm_apply, add_apply, map_add]; abel
+  ext1 u; simp only [comm_apply, add_apply, map_add (f := _)]; abel
 
 theorem comm_sum {ι : Type*} (S : Finset ι) (A : ι → 𝓢'(E, ℂ) →L[ℂ] 𝓢'(E, ℂ)) (ψ : 𝓢(E, ℂ)) :
     comm (∑ i ∈ S, A i) ψ = ∑ i ∈ S, comm (A i) ψ := by

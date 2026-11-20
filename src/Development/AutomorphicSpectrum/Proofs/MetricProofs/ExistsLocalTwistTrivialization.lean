@@ -64,7 +64,7 @@ theorem frame_values :
       split_ifs
       exacts [one_mem _, zero_mem _]
     | zero => simp [zero_mem]
-    | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | smul a e _ he =>
       have h4 : w l (a • e) = (a : Ω) * w l e := by rw [Subring.smul_def, map_smul, smul_eq_mul]
       rw [h4]; exact mul_mem a.2 he

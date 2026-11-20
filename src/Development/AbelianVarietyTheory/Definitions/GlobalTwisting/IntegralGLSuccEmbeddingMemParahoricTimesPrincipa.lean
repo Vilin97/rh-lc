@@ -42,7 +42,7 @@ theorem exists_int_approx (c : ℕ) {a : E} (ha : IntAt P a) :
   refine ⟨r * t, r * z, s * s', fun hm => (P.isPrime.mem_or_mem hm).elim hs hs', ?_⟩
   have e1 := congrArg (algebraMap (𝓞 E) E) hxy
   have e2 := congrArg (algebraMap (𝓞 E) E) hz
-  simp only [map_mul, map_add, map_one, map_pow, map_natCast] at e1 e2 ⊢
+  simp only [map_mul, map_add (f := _), map_one, map_pow, map_natCast] at e1 e2 ⊢
   field_simp
   linear_combination (algebraMap (𝓞 E) E s') * h - (algebraMap (𝓞 E) E r) * e2 -
     (algebraMap (𝓞 E) E r) * (algebraMap (𝓞 E) E s') * e1

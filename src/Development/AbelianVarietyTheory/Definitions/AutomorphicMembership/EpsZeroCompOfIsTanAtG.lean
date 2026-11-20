@@ -37,7 +37,7 @@ def tanEv (hv : IsTanAtG t x v) {V : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ V) (s : Γ
 
 theorem tanEv_add (hv : IsTanAtG t x v) {V : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ V) (s s' : Γ(omega t.G, V)) :
     tanEv t hv h (s + s') = tanEv t hv h s + tanEv t hv h s' := by
-  simp only [tanEv, map_add]
+  simp only [tanEv, map_add (f := _)]
   exact map_add (Scheme.ΓSpecIso (.of k)).hom.hom _ _
 
 theorem tanEv_smul (hv : IsTanAtG t x v) {V : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ V) (a : Γ(X, V)) (s : Γ(omega t.G, V)) :
@@ -91,7 +91,7 @@ theorem tanEv_dUnit (hv : IsTanAtG t x v) {V : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ 
   set D := (Scheme.ΓSpecIso (.of (DualNumber k))).hom F with hD
   have hdec : F = (specO k (DualNumber k)).hom.appLE ⊤ ⊤ (le_preimage_top _ ⊤) (cst k D.fst) +
       (specO k (DualNumber k)).hom.appLE ⊤ ⊤ (le_preimage_top _ ⊤) (cst k D.snd) * epsFn k := by
-    rw [hB, hB, epsFn, ← map_mul, ← map_add]
+    rw [hB, hB, epsFn, ← map_mul, ← map_add (f := _)]
     have e : algebraMap k (DualNumber k) D.fst + algebraMap k (DualNumber k) D.snd * DualNumber.eps = D := by
       ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
     rw [e, hD, Iso.hom_inv_id_apply]
@@ -99,7 +99,7 @@ theorem tanEv_dUnit (hv : IsTanAtG t x v) {V : X.Opens} (h : ⊤ ≤ x ⁻¹ᵁ 
       (sec (epsZero k)).appLE ⊤ ⊤ (le_preimage_top _ ⊤)
           ((specO k (DualNumber k)).hom.appLE ⊤ ⊤ (le_preimage_top _ ⊤) (cst k D.snd)) •
         d (sec_hom (epsZero k)) (le_preimage_top _ ⊤) (epsFn k) := by
-    rw [hdec, map_add, h3, h2, h3, smul_zero, add_zero, zero_add]
+    rw [hdec, map_add (f := _), h3, h2, h3, smul_zero, add_zero, zero_add]
   have h4 : (tanForm t hv).app ⊤ (pullbackSections x (omega t.G) h (dUnit t.G hW f)) =
       (epsIso k).hom.app ⊤ (d (sec_hom (epsZero k)) (le_preimage_top _ ⊤) F) := by
     rw [← h1]

@@ -184,11 +184,11 @@ theorem offE_insert {S : Finset (HeightOneSpectrum (𝓞 D.host.F))} {v : Height
       offE D (insert v S) * algebraMap (AF D.host.F) (AE D) ε = 0 := by
   obtain ⟨α, rfl, h1, h0⟩ := hε
   constructor
-  · rw [offE, offE, ← map_add]
+  · rw [offE, offE, ← map_add (f := _)]
     congr 1
     refine Prod.ext (add_zero (0 : Ainf D.host.F)).symm
       (show offS D S = offS D (insert v S) + α from af_ext fun w => ?_)
-    rw [map_add, evalV_offS, evalV_offS]
+    rw [map_add (f := _), evalV_offS, evalV_offS]
     by_cases hw : w = v
     · subst hw; rw [h1]; simp [hv]
     · rw [h0 w hw]; simp [hw]
@@ -232,7 +232,7 @@ theorem exists_place (v : HeightOneSpectrum (𝓞 D.host.F)) : ∃ ε, IsPlaceId
 
 theorem cut_int {v : HeightOneSpectrum (𝓞 D.host.F)} {ε : AF D.host.F} (hε : IsPlaceIdem D v ε) {y : AE D}
     (hy : finPart D y ∈ intAE D) : finPart D (1 + algebraMap (AF D.host.F) (AE D) ε * (y - 1)) ∈ intAE D := by
-  rw [RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
+  rw [RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one]
   exact add_mem one_mem_int (GlobalTheory.IdemPrime.mul_mem_int (place_int hε) (sub_mem hy one_mem_int))
 
 theorem local_eq_one {χ : (AE D)ˣ →* Circle} (h : RealPointEmbeddings.UnramInert χ) {x : (AE D)ˣ}

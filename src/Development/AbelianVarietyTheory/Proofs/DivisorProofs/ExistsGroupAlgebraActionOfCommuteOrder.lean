@@ -43,7 +43,7 @@ theorem exists_actOn_eq {C V : Type} [Ring C] [Algebra ℚ C] [AddCommGroup V] [
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a v => simp [he]
-    | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
   have hcomm : ∀ k b, Ak k * S b = S b * Ak k := by
     intro k b; ext v
     simp only [Module.End.mul_apply, hAk]

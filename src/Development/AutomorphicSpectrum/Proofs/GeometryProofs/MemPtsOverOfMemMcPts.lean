@@ -66,11 +66,11 @@ theorem hasVal_add {a : K → ℤ} {s s' : Ω} {w w' : 𝕜} (h : Small.HasVal y
     simp only [Pi.add_apply]
     push_cast
     omega
-  · simp only [map_add, map_mul, e, e']
+  · simp only [map_add (f := _), map_mul, e, e']
     ring
   · rw [map_mul]
     exact mul_ne_zero hz0 hz0'
-  · simp only [map_add, map_mul, ez, ez']
+  · simp only [map_add (f := _), map_mul, ez, ez']
     ring
 
 theorem hasVal_zsmul {a : K → ℤ} {s : Ω} {w : 𝕜} (n : ℤ) (h : Small.HasVal y a s z w) :
@@ -327,7 +327,7 @@ def linAt (σ : c.F →+* ℂ) (U₀ : Unf Xo c (goodOf c σ) r) (k : U₀.Comp)
     Rul Xo c →ₛₗ[σ] ℂ where
   toFun f := Small.goodTwist c σ (rdU U₀ f k y)
   map_add' f g := by
-    rw [map_add]
+    rw [map_add (f := _)]
     exact map_add (Small.goodTwist c σ) _ _
   map_smul' a f := by
     rw [map_smulₛₗ]

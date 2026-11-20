@@ -18,11 +18,11 @@ def coordT (x y : Y) : ι × ι → ℤ := fun p => b.repr x p.1 * b.repr y p.2
 
 theorem coordT_add_left (x x' y : Y) : coordT b (x + x') y = coordT b x y + coordT b x' y := by
   funext p
-  simp only [coordT, map_add, Finsupp.add_apply, Pi.add_apply, add_mul]
+  simp only [coordT, map_add (f := _), Finsupp.add_apply, Pi.add_apply, add_mul]
 
 theorem coordT_add_right (x y y' : Y) : coordT b x (y + y') = coordT b x y + coordT b x y' := by
   funext p
-  simp only [coordT, map_add, Finsupp.add_apply, Pi.add_apply, mul_add]
+  simp only [coordT, map_add (f := _), Finsupp.add_apply, Pi.add_apply, mul_add]
 
 theorem coordT_smul_left (k : ℤ) (x y : Y) : coordT b (k • x) y = k • coordT b x y := by
   funext p

@@ -186,7 +186,7 @@ theorem Test.shear {S S' : Set (E × E)} (h : Test S) (b : E →ₗ[ℝ] E) (hb 
   refine h.map (ph _) (ph_surj ht) (fun w => (w.1, w.2 + b w.1)) (fun w f g hr z => ?_) hS
   simp only [ph_apply ht, hr z, ← mul_assoc, ← ec_add]
   congr 2
-  simp only [map_add, inner_add_left, inner_add_right, hb w.1 z]
+  simp only [map_add (f := _), inner_add_left, inner_add_right, hb w.1 z]
   ring
 
 theorem test_lag (P : Submodule ℝ E) (b : E →ₗ[ℝ] E) (hb : ∀ x y, ⟪x, b y⟫ = ⟪y, b x⟫) :
@@ -226,7 +226,7 @@ theorem realTest : RealTest := by
     rw [real_inner_comm, InnerProductSpace.toDual_symm_apply, hb]; rfl
   let B : E →ₗ[ℝ] E :=
     { toFun := β
-      map_add' := fun u u' => ext_inner_left ℝ fun v => by simp only [hβ, inner_add_right, map_add]
+      map_add' := fun u u' => ext_inner_left ℝ fun v => by simp only [hβ, inner_add_right, map_add (f := _)]
       map_smul' := fun c u => ext_inner_left ℝ fun v => by
         simp only [hβ, inner_smul_right, map_smul, RingHom.id_apply, smul_eq_mul] }
   have hB : ∀ u v, ⟪v, B u⟫ = b (e.symm v) (e.symm u) := hβ

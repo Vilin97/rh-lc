@@ -65,7 +65,7 @@ theorem transfer {E : Type} [NormedAddCommGroup E] [NormedSpace ℝ E] [FiniteDi
     intro y
     rw [hC, hC, hg]
     congr 1
-    rw [ContinuousLinearEquiv.map_add, ← hΦ]
+    rw [ContinuousLinearEquiv.map_add (f := _), ← hΦ]
     simp
   have t2 : ∀ m : Fin n → ℤ, ∀ g g' : SchwartzMap (Fin n → ℝ) ℂ,
       (∀ x, g' x = Complex.exp (2 * Real.pi * Complex.I * ((∑ i, (m i : ℝ) * x i : ℝ) : ℂ)) * g x) →

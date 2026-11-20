@@ -40,7 +40,7 @@ theorem detIm_ne_k (d : _root_.PositivityTheory.SiegelWeilFormula.SD_k σ) (w : 
       τ (algebraMap F E (d.bs.repr e 1)) * τ (d.bs 1) := by
     intro e
     conv_lhs => rw [← d.bs.sum_repr e]
-    simp [Fin.sum_univ_two, Algebra.smul_def, map_add, map_mul]
+    simp [Fin.sum_univ_two, Algebra.smul_def, map_add (f := _), map_mul]
   obtain ⟨e, he⟩ : ∃ e : E, (τ e).im ≠ 0 := by
     by_contra hne
     push_neg at hne

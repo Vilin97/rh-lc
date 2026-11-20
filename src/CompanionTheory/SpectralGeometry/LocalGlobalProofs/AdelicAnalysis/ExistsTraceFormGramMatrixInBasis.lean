@@ -105,7 +105,7 @@ theorem sigR_smul (R : Type) [CommRing R] [Algebra F R] (σ : E →ₐ[F] E) (r 
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [sigR, TensorProduct.smul_tmul']
-  | add a c ha hc => simp only [smul_add, map_add, ha, hc]
+  | add a c ha hc => simp only [smul_add, map_add (f := _), ha, hc]
 
 theorem trace_one_tmul (R : Type) [CommRing R] [Algebra F R] [Module.Finite F E] (e : E) :
     Algebra.trace R (R ⊗[F] E) ((1 : R) ⊗ₜ[F] e) = algebraMap F R (Algebra.trace F E e) := by

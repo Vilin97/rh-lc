@@ -72,7 +72,7 @@ theorem GlobalTheory.AffCxPts.homeomorph_zeroSet : ∀ (X : Scheme.{0}) (p : X �
     obtain ⟨P, rfl⟩ := hφ' f
     induction P using MvPolynomial.induction_on with
     | C a => exact Subring.subset_closure (Or.inl ⟨a, (hC a).symm⟩)
-    | add P Q hP hQ => rw [map_add]; exact add_mem hP hQ
+    | add P Q hP hQ => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hP hQ
     | mul_X P i hP =>
       rw [map_mul]; exact mul_mem hP (Subring.subset_closure (Or.inr ⟨i, rfl⟩))
   have hsc : Continuous s := by

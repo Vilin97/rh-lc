@@ -32,7 +32,7 @@ theorem compRed_of_unitary (H : Type) [Group H] (G₀ : Subgroup H) (S : Submodu
   have b0r : ∀ χ ∈ S, b χ 0 = 0 := fun χ hχ => by
     rw [hher χ hχ 0 S.zero_mem, b0l χ hχ, map_zero]
   have bar : ∀ χ ∈ S, ∀ φ ∈ S, ∀ ψ ∈ S, b χ (φ + ψ) = b χ φ + b χ ψ := fun χ hχ φ hφ ψ hψ => by
-    rw [hher χ hχ _ (S.add_mem hφ hψ), bal φ hφ ψ hψ χ hχ, map_add, ← hher χ hχ φ hφ, ← hher χ hχ ψ hψ]
+    rw [hher χ hχ _ (S.add_mem hφ hψ), bal φ hφ ψ hψ χ hχ, map_add (f := _), ← hher χ hχ φ hφ, ← hher χ hχ ψ hψ]
   have bsr : ∀ χ ∈ S, ∀ φ ∈ S, ∀ c : ℂ, b χ (c • φ) = starRingEnd ℂ c * b χ φ := fun χ hχ φ hφ c => by
     rw [hher χ hχ _ (S.smul_mem c hφ), bsl φ hφ χ hχ c, map_mul, ← hher χ hχ φ hφ]
   have bsumr : ∀ χ ∈ S, ∀ {ι : Type} (s : Finset ι) (f : ι → H → ℂ), (∀ x ∈ s, f x ∈ S) →

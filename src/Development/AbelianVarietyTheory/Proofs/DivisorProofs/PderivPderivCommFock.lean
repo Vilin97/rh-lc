@@ -18,9 +18,9 @@ theorem pderiv_pderiv_comm_fock {σ : Type} (i j : σ) (P : MvPolynomial σ ℂ)
   · intro a
     simp
   · intro p q hp hq
-    rw [map_add, map_add, map_add, map_add, hp, hq]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   · intro p k hp
-    simp only [pderiv_mul, map_add, hc, mul_zero, add_zero]
+    simp only [pderiv_mul, map_add (f := _), hc, mul_zero, add_zero]
     rw [hp]
     ring
 

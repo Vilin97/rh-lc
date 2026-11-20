@@ -41,7 +41,7 @@ theorem algebraic_vectors_kInfty_stable : _root_.GlobalTheory.FunPr.ThetaLocalIn
     rw [key]
     exact Submodule.subset_span ⟨Dop f, φ, hDP _ hf, hSB, hcof, rfl⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul c x _ hx => rw [map_smul]; exact Submodule.smul_mem _ _ hx
 end GlobalTheory.SquareAgree.CompactStableD
 end

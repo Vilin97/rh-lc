@@ -33,14 +33,14 @@ def lie (G : Matrix (Fin n) (Fin n) ℂ) : Submodule ℝ (Matrix (Fin n) (Fin n)
 
 def smooth (G : Matrix (Fin n) (Fin n) ℂ) (ρ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)) : Submodule ℂ H where
   carrier := {w | SmoothVec (lie G) ρ w}
-  add_mem' := fun h h' k Xs hX => by simpa only [map_add] using (h k Xs hX).add (h' k Xs hX)
+  add_mem' := fun h h' k Xs hX => by simpa only [map_add (f := _)] using (h k Xs hX).add (h' k Xs hX)
   zero_mem' := fun k Xs hX => by simpa only [map_zero] using contDiff_const
   smul_mem' := fun c _ h k Xs hX => by simpa only [map_smul] using (h k Xs hX).const_smul c
 
 def smoothAll (G : Matrix (Fin n) (Fin n) ℂ) (ρ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)) : Submodule ℂ H where
   carrier := {w | ∀ (k : ℕ) (x : (Fin k → ℝ) → Matrix (Fin n) (Fin n) ℂ), ContDiff ℝ ∞ x →
     (∀ t, x t ∈ Formalism.QuantumDeterminants.UH G) → ContDiff ℝ ∞ fun t => ρ (x t) w}
-  add_mem' := fun h h' k x hx hG => by simpa only [map_add] using (h k x hx hG).add (h' k x hx hG)
+  add_mem' := fun h h' k x hx hG => by simpa only [map_add (f := _)] using (h k x hx hG).add (h' k x hx hG)
   zero_mem' := fun k x hx hG => by simpa only [map_zero] using contDiff_const
   smul_mem' := fun c _ h k x hx hG => by simpa only [map_smul] using (h k x hx hG).const_smul c
 
@@ -100,7 +100,7 @@ def dOp (hG : IsUnit G) (hρ : IsURepOn (Formalism.QuantumDeterminants.UH G) ρ)
   map_add' v w := Subtype.ext <| by
     have := ((hasDerivAt_dRep v.2 hX).add (hasDerivAt_dRep w.2 hX)).deriv
     show dRep ρ X ((v : H) + w) = dRep ρ X v + dRep ρ X w
-    rw [← this]; unfold dRep; simp only [map_add]; rfl
+    rw [← this]; unfold dRep; simp only [map_add (f := _)]; rfl
   map_smul' c w := Subtype.ext <| by
     have := ((hasDerivAt_dRep w.2 hX).const_smul c).deriv
     show dRep ρ X (c • (w : H)) = c • dRep ρ X w

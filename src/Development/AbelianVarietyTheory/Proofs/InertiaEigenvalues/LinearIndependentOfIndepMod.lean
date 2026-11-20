@@ -39,7 +39,7 @@ theorem exists_ext {k G : Type} [Field k] [Group G] (A : Ob k G) (z : G → Fin 
     have := e.injective hx
     simp at this
   · rw [← he']
-    simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, ← map_add]
+    simp only [LinearMap.comp_apply, LinearEquiv.coe_coe, ← map_add (f := _)]
     simp
 
 theorem exists_resEquiv {O k : Type} [CommRing O] [Field k] [Algebra O k] {c : O}
@@ -64,7 +64,7 @@ theorem exists_ext_Ea {M : Type} [AddCommGroup M] [Module O M] (W : Representati
       ∀ σ x, e (twistRep (Ea W χ hc z) χ⁻¹ σ x) = E.ρ σ (e x) := by
   obtain ⟨r, hr⟩ := exists_resEquiv hs hk
   obtain ⟨E, e, hE, he⟩ := exists_ext A (fun g => q ((z : G → M ⊗[O] X) g)) (by simp [cocycle_one])
-    (fun g h => by rw [cocycle_mul z g h, map_add, hq])
+    (fun g h => by rw [cocycle_mul z g h, map_add (f := _), hq])
   refine ⟨E, (q.prodCongr r).trans (e.restrictScalars O), hE, ?_⟩
   rintro σ ⟨m, y⟩
   obtain ⟨y, rfl⟩ := Ideal.Quotient.mk_surjective y
@@ -73,7 +73,7 @@ theorem exists_ext_Ea {M : Type} [AddCommGroup M] [Module O M] (W : Representati
     rw [Ea, twistRep_apply, twistRep_apply, smul_smul, extRep_apply]
     simp
   rw [this]
-  simp only [LinearEquiv.trans_apply, LinearEquiv.prodCongr_apply, LinearEquiv.restrictScalars_apply, map_add,
+  simp only [LinearEquiv.trans_apply, LinearEquiv.prodCongr_apply, LinearEquiv.restrictScalars_apply, map_add (f := _),
     map_smul, hq, hr]
   rw [← he, algebraMap_smul]
 

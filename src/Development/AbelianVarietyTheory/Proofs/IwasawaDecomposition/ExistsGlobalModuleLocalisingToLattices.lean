@@ -73,7 +73,7 @@ theorem step {F : Type} [Field F] [NumberField F] (w : HeightOneSpectrum (𝓞 F
   obtain ⟨z, hz⟩ := (heW (e.symm _)).2 (by rw [e.apply_symm_apply]; exact hz')
   refine ⟨z, ?_⟩
   apply e.injective
-  rw [e.apply_symm_apply, map_add, map_add, map_mul, hz, map_mul, e.apply_symm_apply, map_pow, map_pow, map_natCast,
+  rw [e.apply_symm_apply, map_add (f := _), map_add (f := _), map_mul, hz, map_mul, e.apply_symm_apply, map_pow, map_pow, map_natCast,
     map_natCast]
   have hcc' : algebraMap F (w.adicCompletion F) ((p : F) ^ N) = (p : w.adicCompletion F) ^ N := by
     rw [map_pow, map_natCast]

@@ -81,7 +81,7 @@ theorem gp_deriv_add {τ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} (hτ 
     intro Ψ hΨ hΨc x
     have e : dKer (-(Z₁ + Z₂)) Ψ = fun m => dKer (-Z₁) Ψ m + dKer (-Z₂) Ψ m := by
       funext m
-      simp only [dKer, neg_neg, Matrix.add_mul, map_add]
+      simp only [dKer, neg_neg, Matrix.add_mul, map_add (f := _)]
     have hc1 := dKer_contDiff (Z := -Z₁) hΨ
     have hc2 := dKer_contDiff (Z := -Z₂) hΨ
     rw [inner_sub_right, inner_add_right, gp_pair_deriv hτ hΨ hΨc h12 x v d hd,
@@ -172,7 +172,7 @@ theorem gp_sv_add {M : DSModel V S} {τ : D.what₂.Tau} {v w : M.H τ}
     (hv : SmoothVec (lieAt V τ) (M.rep τ) v) (hw : SmoothVec (lieAt V τ) (M.rep τ) w) :
     SmoothVec (lieAt V τ) (M.rep τ) (v + w) := by
   intro k Xs hXs
-  simpa only [map_add] using (hv k Xs hXs).add (hw k Xs hXs)
+  simpa only [map_add (f := _)] using (hv k Xs hXs).add (hw k Xs hXs)
 
 theorem gp_sv_smul {M : DSModel V S} {τ : D.what₂.Tau} (c : ℂ) {v : M.H τ}
     (hv : SmoothVec (lieAt V τ) (M.rep τ) v) : SmoothVec (lieAt V τ) (M.rep τ) (c • v) := by
@@ -309,7 +309,7 @@ theorem gp_dRep_add {M : DSModel V S} {τ : D.what₂.Tau} {v w : M.H τ}
     {X : Matrix (Fin V.rank) (Fin V.rank) ℂ} (hX : X ∈ lieAt V τ) :
     dRep (M.rep τ) X (v + w) = dRep (M.rep τ) X v + dRep (M.rep τ) X w := by
   show deriv (fun t : ℝ => M.rep τ (NormedSpace.exp (t • X)) (v + w)) 0 = _
-  simp only [map_add]
+  simp only [map_add (f := _)]
   exact deriv_add (gp_sv_diffAt hv hX) (gp_sv_diffAt hw hX)
 
 theorem gp_dRep_smul {M : DSModel V S} {τ : D.what₂.Tau} (c : ℂ) {v : M.H τ}

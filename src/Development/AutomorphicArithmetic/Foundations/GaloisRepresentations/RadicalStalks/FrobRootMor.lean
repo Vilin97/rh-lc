@@ -36,7 +36,7 @@ private def rtHom (h : (p : Γ(X, ⊤)) = 0) (U : Y.Opens) : Γ(Y, U) →+* Γ(X
     have := map_add (GlobalTheory.SS.FrobField.powHom Γ(X, ψ ⁻¹ᵁ U) p 1 hp.out hU) (rt ψ H U a) (rt ψ H U b)
     have e : (rt ψ H U a + rt ψ H U b) ^ p = rt ψ H U a ^ p + rt ψ H U b ^ p := by
       simpa [GlobalTheory.SS.FrobField.powHom] using this
-    rw [e, rt_pow, rt_pow, rt_pow, map_add])
+    rw [e, rt_pow, rt_pow, rt_pow, map_add (f := _)])
 
 private def rootPre (h : (p : Γ(X, ⊤)) = 0) : X.toPresheafedSpace.Hom Y.toPresheafedSpace where
   base := ψ.base

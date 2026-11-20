@@ -88,7 +88,7 @@ theorem srLift_field (A : Matrix (Fin (n + 1)) (Fin (n + 1)) k) (K : Submodule k
       rw [← Matrix.mulVecLin_apply]
       exact LinearMap.mem_ker.1 hx
     have hproj : (LinearMap.ker A.mulVecLin).projectionOnto C hC (x + c) = ⟨x, hx⟩ := by
-      rw [map_add, Submodule.linearProjOfIsCompl_apply_left hC ⟨x, hx⟩,
+      rw [map_add (f := _), Submodule.linearProjOfIsCompl_apply_left hC ⟨x, hx⟩,
         Submodule.linearProjOfIsCompl_apply_right hC ⟨c, hc⟩, add_zero]
     have hv' : A *ᵥ c + (φ ⟨x, hx⟩ : Fin (n + 1) → k) = 0 := by
       have e : h (x + c) = (φ ⟨x, hx⟩ : Fin (n + 1) → k) := by
@@ -175,7 +175,7 @@ theorem exists_local (m : Ideal R) [hm : m.IsMaximal] (A : Matrix (Fin (n + 1)) 
       rw [RingHom.map_det, RingHom.mapMatrix_apply]
       congr 1
       ext i j
-      simp only [Matrix.map_apply, Matrix.add_apply, map_add, Ab]
+      simp only [Matrix.map_apply, Matrix.add_apply, map_add (f := _), Ab]
       congr 1
       by_cases hj : j = Fin.last n
       · subst hj
@@ -240,7 +240,7 @@ theorem srLift_of_finite (hfin : {m : Ideal R | m.IsMaximal}.Finite) (A : Matrix
     rw [RingHom.map_det, RingHom.mapMatrix_apply] at hdetM ⊢
     convert hdetM using 2
     ext i j
-    simp only [Matrix.map_apply, Matrix.add_apply, map_add]
+    simp only [Matrix.map_apply, Matrix.add_apply, map_add (f := _)]
     congr 1
     set_option synthInstance.maxHeartbeats 100000 in
       rw [Matrix.sum_apply, map_sum, Finset.sum_eq_single M]

@@ -36,7 +36,7 @@ theorem rep_reflect (f w : m → ℂ) (hz : stdH L m (f - w) (f - w) ≠ 0) :
   have hconj : conj (t : ℂ) = t := Complex.conj_ofReal t
   have e1 : H (w + (t : ℂ) • (f - w)) (w + (t : ℂ) • (f - w)) =
       H w w + t * (H w f - H w w) + t * (H f w - H w w) + t * t * H (f - w) (f - w) := by
-    simp only [map_add, map_smul, map_sub, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.sub_apply,
+    simp only [map_add (f := _), map_smul, map_sub, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.sub_apply,
       map_smulₛₗ, smul_eq_mul, hconj]
     ring
   have hNz : H (f - w) (f - w) = H f f - H f w - H w f + H w w := by

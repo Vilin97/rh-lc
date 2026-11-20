@@ -61,7 +61,7 @@ def adjSub {μ : Measure (Mt k r)} (hμ : B.IsHaarOn (Q.Glev k r (Fin.last r)) �
     have h2 := pairAt_add_smul_left μ ((star a).1 Ψ) ((star b).1 Ψ) Φ c 1 (int_right hμ hc hKc hKG _ _ hΦ)
       (int_right hμ hc hKc hKG _ _ hΦ)
     simp only [one_smul, one_mul] at h1 h2
-    rw [h1, pairAt_swap μ _ Φ, h2, map_add, ← pairAt_swap, ← pairAt_swap]
+    rw [h1, pairAt_swap μ _ Φ, h2, map_add (f := _), ← pairAt_swap, ← pairAt_swap]
     exact congrArg₂ _ ha hb
   smul_mem' := by
     intro s b hb

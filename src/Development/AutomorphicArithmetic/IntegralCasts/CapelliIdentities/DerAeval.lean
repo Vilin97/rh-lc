@@ -19,7 +19,7 @@ theorem UpperTheory.Reformulated.B.Qf29.der_aeval :
       Finset.sum_const_zero]
     exact hE a
   | add p q hp hq =>
-    simp only [map_add, add_mul, Finset.sum_add_distrib]
+    simp only [map_add (f := _), add_mul, Finset.sum_add_distrib]
     rw [hδ.add, hp, hq]
   | mul_X p n hp =>
     have h : ∀ i : σ,
@@ -31,7 +31,7 @@ theorem UpperTheory.Reformulated.B.Qf29.der_aeval :
       by_cases hi : i = n
       · subst hi
         rw [MvPolynomial.pderiv_X_self, if_pos rfl]
-        simp only [map_add, map_mul, MvPolynomial.aeval_X, mul_one]
+        simp only [map_add (f := _), map_mul, MvPolynomial.aeval_X, mul_one]
         ring
       · rw [MvPolynomial.pderiv_X_of_ne (Ne.symm hi), if_neg hi]
         simp only [map_mul, MvPolynomial.aeval_X, mul_zero, add_zero]

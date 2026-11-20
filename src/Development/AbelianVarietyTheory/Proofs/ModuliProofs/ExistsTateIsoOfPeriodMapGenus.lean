@@ -43,7 +43,7 @@ theorem exists_tateIso_of_periodMap_genus : Out.Laws → Out.Laws2 → (∀ (S :
   have hcong : ∀ (n : ℕ) (a b c d : D'.La), (n : ℤ) ∣ D'.EF (a + n • c) (b + n • d) - D'.EF a b := by
     intro n a b c d
     refine ⟨D'.EF a d + D'.EF c b + n * D'.EF c d, ?_⟩
-    simp only [map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul]
+    simp only [map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul]
     ring
   have hcop : ∀ n : ℕ, 0 < n → IsCoprime (ν n) n := by
     intro n hn
@@ -77,12 +77,12 @@ theorem exists_tateIso_of_periodMap_genus : Out.Laws → Out.Laws2 → (∀ (S :
     rw [smul_comm, hsm n hn]
   have hshift : ∀ n : ℕ, 0 < n → ∀ a c : D'.La, e ((n : ℂ)⁻¹ • P (a + n • c)) = e ((n : ℂ)⁻¹ • P a) := by
     intro n hn a c
-    rw [map_add, smul_add, hadd, map_nsmul, hsm' n hn, (hker _).2 ⟨c, rfl⟩, _root_.mul_one]
+    rw [map_add (f := _), smul_add, hadd, map_nsmul, hsm' n hn, (hker _).2 ⟨c, rfl⟩, _root_.mul_one]
   refine ⟨{ ζ := fun n => Units.map β.toMonoidHom (rt n (ν n))
             ζ_prim := fun n hn => (rt_prim hn (hcop n hn)).map_of_injective (Units.map_injective β.injective)
             ζ_pow := fun n m hn hm => by rw [← map_pow, rt_pow hm, rt_congr hn (hνt n m hn hm)]
             ev := fun n a => ρ (e ((n : ℂ)⁻¹ • P (f n a)))
-            add := fun n a b => by rw [map_add, map_add, smul_add, hadd, map_mul]
+            add := fun n a b => by rw [map_add (f := _), map_add (f := _), smul_add, hadd, map_mul]
             lin := fun n c a => ?_
             ker := fun n hn a => ?_
             onto := fun n hn x => ?_

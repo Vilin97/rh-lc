@@ -40,7 +40,7 @@ theorem tensorHom_dualRepPost_dualEvalPairing :
   induction x using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul a b => rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem bijective_dualRepPost {N q : ℕ} [NeZero N] [NeZero q] (hD : Nonempty (D ≃+ ZMod N))
     (hDq : Nonempty (Dq ≃+ ZMod q)) (hj : Function.Injective j.hom) [Finite M]

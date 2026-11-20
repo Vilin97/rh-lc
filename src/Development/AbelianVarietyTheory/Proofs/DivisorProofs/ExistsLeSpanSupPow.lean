@@ -130,7 +130,7 @@ theorem exists_le_span_sup_pow (A : Type) [CommRing A] [IsLocalRing A] [IsNoethe
     exact hle ht
   obtain ⟨c', hc'⟩ := Ideal.Quotient.mk_surjective (ψ c)
   have h3 := congrArg ψ hut
-  rw [map_add, map_mul, ht0, add_zero, hψ, hψ, ← hc', ← map_mul, Ideal.Quotient.eq] at h3
+  rw [map_add (f := _), map_mul, ht0, add_zero, hψ, hψ, ← hc', ← map_mul, Ideal.Quotient.eq] at h3
   have : a = c' * f + (a - c' * f) := by ring
   rw [this]
   exact Submodule.add_mem_sup (Ideal.mul_mem_left _ _ (Ideal.mem_span_singleton_self f)) (by rw [← neg_sub]; exact neg_mem h3)

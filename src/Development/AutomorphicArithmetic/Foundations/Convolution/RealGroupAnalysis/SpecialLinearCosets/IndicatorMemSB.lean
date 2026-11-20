@@ -94,7 +94,7 @@ theorem UpperTheory.ConvolutionTheory.R2.I.loc :
         apply Subtype.ext
         funext x
         by_cases hx : x ∈ C <;> simp [hx]
-      rw [e, map_add, hb _ (fun x hx => by by_contra hc; exact hx (by simp [hc])), hb', add_zero]
+      rw [e, map_add (f := _), hb _ (fun x hx => by by_contra hc; exact hx (by simp [hc])), hb', add_zero]
       intro x hx
       have hxC : x ∉ C := by
         intro hc

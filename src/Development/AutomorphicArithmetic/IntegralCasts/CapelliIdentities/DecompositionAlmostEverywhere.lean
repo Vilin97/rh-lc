@@ -33,8 +33,8 @@ theorem UpperTheory.Reformulated.B.DecompositionAlmostEverywhere.decomp_AE :
   induction hz using Algebra.adjoin_induction with
   | mem x hx => exact ⟨0, 1, by rw [map_zero, map_one, zero_add, one_mul]; exact hx⟩
   | algebraMap r => exact ⟨r, 0, by simp⟩
-  | add x y _ _ hx hy => obtain ⟨⟨a, b, rfl⟩, c, e, rfl⟩ := And.intro hx hy; exact ⟨a + c, b + e, by rw [map_add, map_add]; ring⟩
+  | add x y _ _ hx hy => obtain ⟨⟨a, b, rfl⟩, c, e, rfl⟩ := And.intro hx hy; exact ⟨a + c, b + e, by rw [map_add (f := _), map_add (f := _)]; ring⟩
   | mul x y _ _ hx hy =>
     obtain ⟨⟨a, b, rfl⟩, c, e, rfl⟩ := And.intro hx hy
     exact ⟨a * c - D.host.d * (b * e), a * e + b * c, by
-      simp only [map_add, map_sub, map_mul, map_natCast]; linear_combination (algebraMap _ _ b * algebraMap _ _ e) * hs⟩
+      simp only [map_add (f := _), map_sub, map_mul, map_natCast]; linear_combination (algebraMap _ _ b * algebraMap _ _ e) * hs⟩

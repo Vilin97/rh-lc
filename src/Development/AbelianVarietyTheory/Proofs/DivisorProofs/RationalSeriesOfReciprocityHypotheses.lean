@@ -60,7 +60,7 @@ theorem theta_eq_zero {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what
   have hK : ∀ x, evK YS v₀ hρ i j b x = 0 := fun x => by
     induction x using TensorProduct.induction_on with
     | zero => exact map_zero _
-    | add x y hx hy => rw [map_add, hx, hy, add_zero]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, add_zero]
     | tmul a g => rw [evK_tmul, hW, smul_zero]
   obtain ⟨f, hf⟩ := hR s h P hd
   rw [← hf]

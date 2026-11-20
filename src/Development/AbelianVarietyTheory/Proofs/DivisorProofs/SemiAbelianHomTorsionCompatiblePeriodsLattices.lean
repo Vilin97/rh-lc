@@ -47,7 +47,7 @@ theorem periods_of_key : ∀ (R : Type) [CommRing R] [IsDomain R] [CharZero R] (
   choose φ₀ hφ₀ using ex₁
   let φ : D₁.toPre.X →+ D₂.toPre.X := AddMonoidHom.mk' φ₀ fun y y' => inj₂ _ _ _ (hφ₀ (y + y'))
     ((isIota_iff_eq hB₂ _ _).2 (by
-      rw [map_add, map_add, map_add, ← (isIota_iff_eq hB₂ _ _).1 (hφ₀ y), ← (isIota_iff_eq hB₂ _ _).1 (hφ₀ y')]))
+      rw [map_add (f := _), map_add (f := _), map_add (f := _), ← (isIota_iff_eq hB₂ _ _).1 (hφ₀ y), ← (isIota_iff_eq hB₂ _ _).1 (hφ₀ y')]))
   have hφ : ∀ y, GtPtF.IsIota (φ y) (m (iota hB₁ F y)) := hφ₀
   refine ⟨φ, fun y g hg => ⟨m g, (hm _ _).2 rfl, ?_⟩, fun y => ?_⟩
   · rw [(isIota_iff_eq hB₁ _ _).1 hg]; exact hφ y

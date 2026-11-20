@@ -92,7 +92,7 @@ theorem lat_even {O : ValuationSubring k} {φ : R ≃+* k × k} {c : R →+* R} 
     · rw [h𝔬]
       simpa using O.mul_mem _ _ hx hy
     · apply φ.injective
-      rw [phi_h hh φ hc r r w δ hd, map_add, hc]
+      rw [phi_h hh φ hc r r w δ hd, map_add (f := _), hc]
       simp only [RingEquiv.apply_symm_apply]
       ext
       · simpa using hxy

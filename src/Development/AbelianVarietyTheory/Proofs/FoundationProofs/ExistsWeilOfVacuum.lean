@@ -45,7 +45,7 @@ theorem exists_weil_of_vacuum (D : D7) (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) (
     exact Subtype.property _
   · intro g g' F hF F' hF'
     have := hO g g' (⟨F, hF⟩ + ⟨F', hF'⟩)
-    rw [map_add, smul_add, Submodule.coe_add, Submodule.coe_add, ← hO, ← hO] at this
+    rw [map_add (f := _), smul_add, Submodule.coe_add, Submodule.coe_add, ← hO, ← hO] at this
     exact this
   · intro g g' a F hF
     have := hO g g' (a • ⟨F, hF⟩)

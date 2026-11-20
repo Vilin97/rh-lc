@@ -79,7 +79,7 @@ def phiPF (R : Type) [CommRing R] : Shv R ⥤ (Scheme.{0}ᵒᵖ ⥤ ModuleCat.{1
 instance (R : Type) [CommRing R] : (phiPF p R).Additive where
   map_add {G G' f g} := NatTrans.ext (funext fun U => ModuleCat.hom_ext (DS.hom_ext p fun u a => by
     change DS.map p (f + g) _ (inc p G u a) = DS.map p f _ (inc p G u a) + DS.map p g _ (inc p G u a)
-    rw [DS.map_inc, DS.map_inc, DS.map_inc, ← map_add]
+    rw [DS.map_inc, DS.map_inc, DS.map_inc, ← map_add (f := _)]
     rfl))
 
 def phi (R : Type) [CommRing R] : Shv R ⥤ Shv R := phiPF p R ⋙ presheafToSheaf _ _

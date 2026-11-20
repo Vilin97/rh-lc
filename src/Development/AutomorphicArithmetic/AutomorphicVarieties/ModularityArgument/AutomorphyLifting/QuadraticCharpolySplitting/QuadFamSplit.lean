@@ -20,7 +20,7 @@ private theorem fix_root {Ω : Type} [Field Ω] [Algebra ℚ Ω] (A : ValuationS
   exfalso
   set u : Ω := (1 + δ) / 2 with hu
   have hgu : g u = 1 - u := by
-    rw [hu, map_div₀, map_add, map_one, h, map_ofNat]
+    rw [hu, map_div₀, map_add (f := _), map_one, h, map_ofNat]
     ring
   have hg1u : g (1 - u) = u := by
     rw [map_sub, map_one, hgu]

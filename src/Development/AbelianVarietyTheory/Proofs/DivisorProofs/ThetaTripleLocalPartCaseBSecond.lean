@@ -20,7 +20,7 @@ theorem rho_add_of_form {R : Type} [CommRing R] [Invertible (2 : R)] {V : Type} 
     (φ : (κ → R) → ℂ) : d.rho ψ (u + v) φ = d.rho ψ u (d.rho ψ v φ) := by
   have h := (d.form u v).symm.trans h0
   funext x
-  simp only [Darboux.rho, schr, map_add, Prod.fst_add, Prod.snd_add]
+  simp only [Darboux.rho, schr, map_add (f := _), Prod.fst_add, Prod.snd_add]
   rw [← mul_assoc, ← AddChar.map_add_eq_mul, add_assoc x]
   congr 2
   have h2 : ⅟(2 : R) * 2 = 1 := invOf_mul_self 2
@@ -103,7 +103,7 @@ theorem rest_vac {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {M : Model σ X W} 
     change evFin F v (u * z i) = 0 at h3
     rw [map_mul, h2, one_mul] at h3
     exact h3
-  simp only [Pi.add_apply, map_add, hz0, add_zero]
+  simp only [Pi.add_apply, map_add (f := _), hz0, add_zero]
 
 theorem eq_of_pure_vac {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {M : Model σ X W} {ψ : AddChar (AF F) ℂ}
     (hM : M.IsGood ψ) {A C : SInf F (Fin n × Fin d)} (h : pure A M.vac = pure C M.vac) : A = C := by

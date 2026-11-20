@@ -136,7 +136,7 @@ theorem gP_mul_le_gP_add (π : ι → V →L[ℝ] ℂ) (c u : V) : gP π c * gP 
   apply inv_anti₀ (by positivity)
   apply pow_le_pow_left₀ (by positivity)
   have := norm_add_le (π v c) (π v u)
-  rw [map_add]
+  rw [map_add (f := _)]
   nlinarith [norm_nonneg (π v c), norm_nonneg (π v u), mul_nonneg (norm_nonneg (π v c)) (norm_nonneg (π v u))]
 
 theorem le_gP_of_norm_le (π : ι → V →L[ℝ] ℂ) (R : ℝ) (x : V) (hx : ‖x‖ ≤ R) :

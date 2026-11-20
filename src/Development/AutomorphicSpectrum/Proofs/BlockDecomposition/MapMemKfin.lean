@@ -19,7 +19,7 @@ def kfin (π : G n →* (U →L[ℂ] U)) : Submodule ℂ U where
     rintro a b ⟨S, hS, ha, hk⟩ ⟨S', hS', hb, hk'⟩
     refine ⟨S ⊔ S', inferInstance, Submodule.add_mem_sup ha hb, fun k w hw => ?_⟩
     obtain ⟨x, hx, y, hy, rfl⟩ := Submodule.mem_sup.1 hw
-    rw [map_add]
+    rw [map_add (f := _)]
     exact Submodule.add_mem_sup (hk k x hx) (hk' k y hy)
   zero_mem' := ⟨⊥, inferInstance, Submodule.zero_mem _, fun k w hw => by
     rw [Submodule.mem_bot] at hw ⊢; simp [hw]⟩

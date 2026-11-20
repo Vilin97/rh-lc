@@ -108,7 +108,7 @@ theorem bar_mem_of_mem (H : Host E) {n : ℕ} (hn : AuxiliaryInertOddPrime H n) 
   obtain ⟨v', rfl⟩ := hv
   have : H.bar (((n * u' : ℤ) : 𝓞 E) + ((n * v' : ℤ) : 𝓞 E) * H.w0) =
       ((u' : 𝓞 E) + v' * H.bar H.w0) * n := by
-    simp only [map_add, map_mul, map_intCast]
+    simp only [map_add (f := _), map_mul, map_intCast]
     push_cast
     ring
   rw [this]

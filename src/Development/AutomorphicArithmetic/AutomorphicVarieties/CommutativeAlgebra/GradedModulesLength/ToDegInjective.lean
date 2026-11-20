@@ -225,7 +225,7 @@ def posW {τ : Type} (wt : τ → ℤ) (i : τ) : ℕ := (wt i).toNat
 
 def fil (E : Type) [CommRing E] {τ : Type} (wt : τ → ℤ) (n : ℕ) : Submodule E (MvPowerSeries τ E) where
   carrier := {g | ∀ ν, Finsupp.weight (negW wt) ν < n → MvPowerSeries.coeff ν g = 0}
-  add_mem' ha hb ν hν := by rw [map_add, ha ν hν, hb ν hν, add_zero]
+  add_mem' ha hb ν hν := by rw [map_add (f := _), ha ν hν, hb ν hν, add_zero]
   zero_mem' _ _ := map_zero _
   smul_mem' c g hg ν hν := by rw [map_smul, hg ν hν, smul_zero]
 

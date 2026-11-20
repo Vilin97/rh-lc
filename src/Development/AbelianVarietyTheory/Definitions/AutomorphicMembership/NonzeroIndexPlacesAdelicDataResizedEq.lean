@@ -103,7 +103,7 @@ theorem ExtModel.below_exists (D D' : D7) (h : Set.range D.what₂.embLL ⊆ Set
       map_one' := inj (by rw [hg, map_one, map_one])
       map_mul' := fun a b => inj (by rw [hg, map_mul, map_mul, hg, hg])
       map_zero' := inj (by rw [hg, map_zero, map_zero])
-      map_add' := fun a b => inj (by rw [hg, map_add, map_add, hg, hg]) }
+      map_add' := fun a b => inj (by rw [hg, map_add (f := _), map_add (f := _), hg, hg]) }
   letI : Algebra D.what₂.LL D'.what₂.LL := ι.toAlgebra
   have key : ∀ (x : 𝓞 D.what₂.LL) (x' : 𝓞 D'.what₂.LL), D.what₂.embLL (x : D.what₂.LL) = D'.what₂.embLL (x' : D'.what₂.LL) ↔
       algebraMap (𝓞 D.what₂.LL) (𝓞 D'.what₂.LL) x = x' := fun x x' => by

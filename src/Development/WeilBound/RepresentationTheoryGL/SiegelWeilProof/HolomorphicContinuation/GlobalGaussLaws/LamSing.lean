@@ -199,7 +199,7 @@ theorem gLsing_core (hFZ : FourierZeroN) (hTS : TwoSided) (hD : DenseTau) (hCD :
         with hχ
       have hχadd : ∀ u v, χ (u + v) = χ u * χ v := by
         intro u v
-        simp only [hχ, AddSubgroup.coe_add, Matrix.mul_add, Matrix.trace_add, halfTr, map_add, mul_add, neg_add]
+        simp only [hχ, AddSubgroup.coe_add, Matrix.mul_add, Matrix.trace_add, halfTr, map_add (f := _), mul_add, neg_add]
         exact AddChar.map_add_eq_mul ψ _ _
       have hχper : ∀ l ∈ ratHerm D n, ∀ b, χ (l + b) = χ b := by
         intro l hl b

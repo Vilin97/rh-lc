@@ -99,7 +99,7 @@ private def u4K (F : A) (b : 𝒜 0) (J : Ideal (rees (mN 𝒜 F))) (μ : Fin 3 
     refine ⟨n + n', b ^ n' • p + b ^ n • p',
       J.add_mem (Submodule.smul_of_tower_mem _ _ hp) (Submodule.smul_of_tower_mem _ _ hp'), ?_⟩
     show b ^ n' • p.1 + b ^ n • p'.1 = _
-    rw [e, e', MvPolynomial.smul_monomial, MvPolynomial.smul_monomial, ← map_add]
+    rw [e, e', MvPolynomial.smul_monomial, MvPolynomial.smul_monomial, ← map_add (f := _)]
     congr 1
     show ((b ^ n' : 𝒜 0) : A) * _ + ((b ^ n : 𝒜 0) : A) * _ = _
     simp only [SetLike.GradeZero.coe_pow]

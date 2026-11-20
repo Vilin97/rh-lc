@@ -89,7 +89,7 @@ theorem coord_toCone (k : Fin d) (f : E n d →₀ ℕ) (e : E n d) :
   induction f using Finsupp.induction_linear with
   | zero => simp [coord_zero]
   | add f g hf hg =>
-    rw [map_add, AddSubmonoid.coe_add, coord_add, Pi.add_apply, hf, hg]
+    rw [map_add (f := _), AddSubmonoid.coe_add, coord_add, Pi.add_apply, hf, hg]
     simp
   | single a b =>
     induction b with

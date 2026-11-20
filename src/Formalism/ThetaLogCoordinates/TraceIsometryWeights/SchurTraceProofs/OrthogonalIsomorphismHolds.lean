@@ -314,7 +314,7 @@ theorem projection_lattice_holds : ProjP := by
     have e2 : A.projectionOnto B hcompl h2 = 0 :=
       Submodule.linearProjOfIsCompl_apply_right hcompl ⟨h2, hh2⟩
     refine ⟨h1, hh1, h2, hh2, rfl, ?_⟩
-    rw [LinearMap.comp_apply, map_add, e1, e2, add_zero]
+    rw [LinearMap.comp_apply, map_add (f := _), e1, e2, add_zero]
     rfl
   refine ⟨A.subtype ∘ₗ A.projectionOnto B hcompl, ⟨?_, ?_, ?_⟩, ?_⟩
   · ext x

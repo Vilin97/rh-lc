@@ -38,7 +38,7 @@ theorem dual_of_dualL {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)}
       obtain ⟨w, hw⟩ := hb y hy
       refine ⟨u + w, ?_⟩
       simp only [Formalism.UG.hform, Pi.add_apply, mul_add, Finset.sum_add_distrib] at hu hw ⊢
-      rw [map_add, hu, hw]
+      rw [map_add (f := _), hu, hw]
     | smul c a _ ha =>
       intro y hy
       obtain ⟨u, hu⟩ := ha y hy
@@ -224,7 +224,7 @@ theorem natCast_kP_eq_zero_of_mem (PP : Formalism.L2.DIV.Pl D.host.E) (M : ℕ) 
 theorem map_res_one (PP : Formalism.L2.DIV.Pl D.host.E) (M : ℕ) (hP : ((M : 𝓞 D.host.E)) ∈ PP.asIdeal)
     (S : Matrix (Fin V.rank) (Fin V.rank) (Formalism.L2.Herm.intAf D.host.F D.host.E)) :
     (RingHom.mapMatrix (Formalism.L2.DIV.resS D.host.F PP)) (1 + M • S) = 1 := by
-  rw [map_add, map_one, map_nsmul, ← Nat.cast_smul_eq_nsmul (Formalism.L2.DIV.kP PP), natCast_kP_eq_zero_of_mem PP M hP, zero_smul,
+  rw [map_add (f := _), map_one, map_nsmul, ← Nat.cast_smul_eq_nsmul (Formalism.L2.DIV.kP PP), natCast_kP_eq_zero_of_mem PP M hP, zero_smul,
     add_zero]
 
 theorem redFn_yOf (hF : Formalism.L2.DIV.IsFrame β Λ) (g : GL (Fin V.rank) (Lev.EAf D)) (hg : Stabs Λ g) (hgi : Stabs Λ g⁻¹)

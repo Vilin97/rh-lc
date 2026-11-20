@@ -78,7 +78,7 @@ theorem bc_mem_diag {f : A →+* B} (hf : Function.Injective f) (x : GL ι A) :
     bc f x ∈ stabGL (diagSub B e) ↔ x ∈ stabGL (diagSub A e) := by
   rw [mem_stabGL_diagSub, mem_stabGL_diagSub]
   refine ⟨fun hx => (keepsDiag_iff e).2 fun i j => hf ?_, fun hx => hx.map e f⟩
-  rw [map_add, map_add]
+  rw [map_add (f := _), map_add (f := _)]
   exact (keepsDiag_iff e).1 hx i j
 
 theorem det_leviMat_conj (a : GL n A) {x : GL ι A} (hx : x ∈ stabGL (diagSub A e)) :

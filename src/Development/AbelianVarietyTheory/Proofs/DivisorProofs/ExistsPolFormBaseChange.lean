@@ -83,7 +83,7 @@ theorem lower_eq [Module.Free O H] (ρ : orderC c →+* Module.End O H) (B : Lin
           exact horth σ (bar τ) (fun h' ↦ hσ (by rw [← bar_bar σ, ← h', bar_bar])) _ hh _ hf)
         simp [h1, h2]
     | zero => simp
-    | add x y _ _ hx hy => simp only [map_add, LinearMap.add_apply, smul_add, mul_add, add_smul, hx, hy]
+    | add x y _ _ hx hy => simp only [map_add (f := _), LinearMap.add_apply, smul_add, mul_add, add_smul, hx, hy]
   have h := key _ (hsup x)
   apply smul_right_injective H hD
   simp only [map_smul, LinearMap.smul_apply, smul_eq_mul] at h ⊢

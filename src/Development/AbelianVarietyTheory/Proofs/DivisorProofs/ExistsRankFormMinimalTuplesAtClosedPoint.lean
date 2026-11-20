@@ -53,13 +53,13 @@ theorem congMod_iff {X A B : Type} [AddCommGroup X] (φ : X ≃+ (A → B → �
     CongMod N y y' ↔ ∀ u i, (N : ℤ) ∣ φ y u i - φ y' u i := by
   constructor
   · rintro ⟨w, rfl⟩ u i
-    exact ⟨φ w u i, by simp [map_add, map_nsmul]⟩
+    exact ⟨φ w u i, by simp [map_add (f := _), map_nsmul]⟩
   · intro h
     choose d hd using h
     refine ⟨φ.symm d, φ.injective ?_⟩
     funext u i
     have := hd u i
-    simp only [map_add, map_nsmul, AddEquiv.apply_symm_apply]
+    simp only [map_add (f := _), map_nsmul, AddEquiv.apply_symm_apply]
     change φ y u i = φ y' u i + N • d u i
     rw [nsmul_eq_mul]
     linarith

@@ -22,7 +22,7 @@ theorem SyS_of_span (hW2 : GeneratorImageIsSymbol) (j : ℤ) {P : SegRing O r K}
     obtain ⟨o, ho⟩ := hW2 p n' r K O X j x h
     exact SyS_of_Sy ho
   | zero => simp only [map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => simp only [map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => simp only [map_add (f := _)]; exact add_mem hx hy
   | smul a x _ hx =>
     rw [map_smul, MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C]
     exact SyS_mul (SyS_of_Sy (Sy_IT (IT_C a))) hx
@@ -39,7 +39,7 @@ theorem good_of_span (hW1 : GeneratorSpanInclusion) (hW2 : GeneratorImageIsSymbo
   | add x y _ _ hx hy =>
     obtain ⟨x', a1, a2⟩ := hx
     obtain ⟨y', b1, b2⟩ := hy
-    exact ⟨x' + y', by rw [a1, b1, mul_add], by simp only [map_add]; exact add_mem a2 b2⟩
+    exact ⟨x' + y', by rw [a1, b1, mul_add], by simp only [map_add (f := _)]; exact add_mem a2 b2⟩
   | smul a x _ hx =>
     obtain ⟨x', a1, a2⟩ := hx
     refine ⟨a • x', by rw [a1, mul_smul_comm], ?_⟩

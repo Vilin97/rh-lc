@@ -22,7 +22,7 @@ private theorem aeval_restriction_commute {F L M : Type} [Field F] [Field L] [Al
     ((aeval S (q.map (algebraMap F L)) x : D) : M) = aeval T q (x : M) := by
   induction q using Polynomial.induction_on' with
   | add p r hp hr =>
-    simp only [Polynomial.map_add, map_add, LinearMap.add_apply, Submodule.coe_add, hp, hr]
+    simp only [Polynomial.map_add (f := _), map_add (f := _), LinearMap.add_apply, Submodule.coe_add, hp, hr]
   | monomial n a =>
     rw [Polynomial.map_monomial, aeval_monomial, aeval_monomial, Module.End.mul_apply,
       Module.End.mul_apply, Module.algebraMap_end_apply, Module.algebraMap_end_apply, Submodule.coe_smul,
@@ -57,7 +57,7 @@ private theorem frobenius_preserves_crystalline : ∀ x ∈ Dcris (P.PD K) ρ,
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul v c => simp [actVB, φVB, (P.PD K).φ_comm]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [this, hx]
 
 private theorem crystalline_mem_potentially_semistable : ∀ x ∈ Dcris (P.PD K) ρ, crisIncl P ↥LL.1 V x ∈ Dpst P ρ := by
@@ -86,7 +86,7 @@ private theorem coe_frobenius_restriction_pow_base (n : ℕ) (x : ↥(Dcris (P.P
     (φVB (P.PD K) (LL := ℚ_[l]) (V := V) : Module.End ℚ_[l] (V ⊗[ℚ_[l]] P.R.B)) (fun _ => rfl) n x
 
 private noncomputable def crystallineToWeilDeligne (ι : Om l ≃+* ℂ) : ↥(Dcris (P.PD K) ρ) →+ WDSpace P ι ρ :=
-  AddMonoidHom.mk' (fun x => wdMk P ι ρ (crystallineInclusion P ρ x)) fun x y => by rw [map_add, wdMk_add]
+  AddMonoidHom.mk' (fun x => wdMk P ι ρ (crystallineInclusion P ρ x)) fun x y => by rw [map_add (f := _), wdMk_add]
 
 private theorem crystalline_to_weil_deligne_apply (ι : Om l ≃+* ℂ) (x : ↥(Dcris (P.PD K) ρ)) :
     crystallineToWeilDeligne P ρ ι x = wdMk P ι ρ (crystallineInclusion P ρ x) := rfl

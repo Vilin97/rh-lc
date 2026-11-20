@@ -96,7 +96,7 @@ private theorem exists_expK_neg_eq_map_of_expK_eq_one_add {ι : Type} (z : MvPow
   calc expK (-z) = expK (-z) * (MvPowerSeries.map (algebraMap (WW p) (K0 p)) ((1 + h) *
         MvPowerSeries.invOfUnit (1 + h) 1)) := by rw [h1, map_one, mul_one]
     _ = (expK (-z) * expK z) * MvPowerSeries.map (algebraMap (WW p) (K0 p))
-        (MvPowerSeries.invOfUnit (1 + h) 1) := by rw [map_mul, map_add, map_one, ← hz, mul_assoc]
+        (MvPowerSeries.invOfUnit (1 + h) 1) := by rw [map_mul, map_add (f := _), map_one, ← hz, mul_assoc]
     _ = _ := by rw [h2, one_mul]
 
 theorem ea_reduce {σ τ A : Type} [Finite σ] [Fintype A] (a b : A → σ) (be : MvPowerSeries (Fin 2) (K0 p))
@@ -224,7 +224,7 @@ theorem ea_reduce {σ τ A : Type} [Finite σ] [Fintype A] (a b : A → σ) (be 
     change MvPowerSeries.subst (tOf vp μ L)
       (MvPowerSeries.map (algebraMap (K0 p) K') (inParam p (expK (-Ph)))) = _
     rw [hinExp _ (hneg0 _ hPh0), hdecomp,
-      expK_add (hneg0 _ hGs0) (hneg0 _ (by rw [map_add, hE0, hY0, add_zero])),
+      expK_add (hneg0 _ hGs0) (hneg0 _ (by rw [map_add (f := _), hE0, hY0, add_zero])),
       neg_add, expK_add (hneg0 _ hE0) (hneg0 _ hY0), hwE, hwY, ← map_mul,
       map_mul, MvPowerSeries.subst_mul hT, th_map_expK, map_neg]
 

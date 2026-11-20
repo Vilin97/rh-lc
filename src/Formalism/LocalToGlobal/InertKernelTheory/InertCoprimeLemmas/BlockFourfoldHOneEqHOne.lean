@@ -30,7 +30,7 @@ theorem lamOf_mem (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) :
       add_mem' := fun {a b} ha hb => by
         obtain ⟨c, hc, rfl⟩ := ha
         obtain ⟨c', hc', rfl⟩ := hb
-        exact ⟨c + c', cc.add_mem hc hc', by push_cast; rw [map_add]; ring⟩
+        exact ⟨c + c', cc.add_mem hc hc', by push_cast; rw [map_add (f := _)]; ring⟩
       zero_mem' := ⟨0, cc.zero_mem, by simp⟩
       neg_mem' := fun {a} ha => by
         obtain ⟨c, hc, rfl⟩ := ha
@@ -61,7 +61,7 @@ theorem lamMM_mem (cc : Ideal (𝓞 D.host.K)) (δ : ℂ) :
         obtain ⟨a, ha, rfl⟩ := hx
         obtain ⟨a', ha', rfl⟩ := hy
         refine ⟨a + a', Submodule.add_mem _ ha ha', ?_⟩
-        funext τ; simp only [Pi.add_apply, map_add]; ring
+        funext τ; simp only [Pi.add_apply, map_add (f := _)]; ring
       zero_mem' := ⟨0, Submodule.zero_mem _, by funext τ; simp⟩
       neg_mem' := fun {x} hx => by
         obtain ⟨a, ha, rfl⟩ := hx

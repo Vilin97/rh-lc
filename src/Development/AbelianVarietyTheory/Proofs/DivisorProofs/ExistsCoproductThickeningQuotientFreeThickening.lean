@@ -38,7 +38,7 @@ theorem exists_cop : ∀ (D : Data) (Λ : Lift D) (n : ℕ) (U : AffOp D.X) (T :
         have hC : MvPolynomial.C r = algebraMap D.R (MvPolynomial (Fin m) D.R) r := rfl
         rw [hC, AlgHom.commutes, AlgHom.commutes, hgR, u.comm, u.φ.commutes]
       · intro i
-        simp only [RingHom.coe_comp, Function.comp_apply, RingHom.coe_coe, hψX, map_add]
+        simp only [RingHom.coe_comp, Function.comp_apply, RingHom.coe_coe, hψX, map_add (f := _)]
         rw [(F.ker _).2 (hfree.2.1 i), add_zero, ← hbl i, u.comm]
     exact fun p ↦ RingHom.congr_fun e p
   have hker : ∀ k ∈ RingHom.ker pres, ψ k ∈ F.J := fun k hk ↦
@@ -96,7 +96,7 @@ theorem exists_cop : ∀ (D : Data) (Λ : Lift D) (n : ℕ) (U : AffOp D.X) (T :
     have e : g'.φ.comp ψ = b.φ.comp ((Λ.e U).toAlgHom.comp pres) := by
       apply MvPolynomial.algHom_ext
       intro i
-      simp only [AlgHom.comp_apply, hψX, map_add, AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_coe]
+      simp only [AlgHom.comp_apply, hψX, map_add (f := _), AlgEquiv.toAlgHom_eq_coe, AlgHom.coe_coe]
       rw [hg'τ i, ← Thick.comp_φ, hg'u]
       simp only [c]
       abel

@@ -25,7 +25,7 @@ theorem crd_mulLeft (bV : Module.Basis (Fin d) F V) (r : Fin d) (β : B) (z : V 
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul v x => simp [crd_tmul, mul_smul_comm]
-  | add x y hx hy => simp only [map_add, hx, hy, mul_add]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, mul_add]
 
 theorem crd_map (bV : Module.Basis (Fin d) F V) (r : Fin d) (f : V →ₗ[F] V) (σ : B →ₗ[F] B)
     (z : V ⊗[F] B) :
@@ -38,7 +38,7 @@ theorem crd_map (bV : Module.Basis (Fin d) F V) (r : Fin d) (f : V →ₗ[F] V) 
     simp only [Matrix.mulVec, dotProduct] at h
     simp only [AlgebraTensorModule.map_tmul, crd_tmul, Module.Basis.coord_apply, map_smul, smul_smul]
     rw [← Finset.sum_smul, ← h]
-  | add x y hx hy => simp only [map_add, hx, hy, smul_add, Finset.sum_add_distrib]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, smul_add, Finset.sum_add_distrib]
 
 theorem crd_basis (bV : Module.Basis (Fin d) F V) (r j : Fin d) :
     crd bV r ((bV j) ⊗ₜ[F] (1 : B)) = if r = j then 1 else 0 := by

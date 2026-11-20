@@ -61,7 +61,7 @@ private theorem mem_BSet {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* 
     obtain ⟨⟨c, hc, ex⟩, ix⟩ := hx
     obtain ⟨⟨d, hd, ey⟩, iy⟩ := hy
     refine ⟨⟨c + d, fun i => Submodule.add_mem _ (hc i) (hd i), fun u => ?_⟩,
-      fun γ hγ => by rw [map_add, ix γ hγ, iy γ hγ]⟩
+      fun γ hγ => by rw [map_add (f := _), ix γ hγ, iy γ hγ]⟩
     simp only [Pi.add_apply, ex u, ey u, smul_add, Finset.sum_add_distrib]
   | smul r x _ hx =>
     obtain ⟨⟨c, hc, ex⟩, ix⟩ := hx

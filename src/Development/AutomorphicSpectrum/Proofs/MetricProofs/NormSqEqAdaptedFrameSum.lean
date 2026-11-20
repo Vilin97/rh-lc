@@ -41,12 +41,12 @@ theorem conj_eq_complexConj (x : E) : conj (maximalRealSubfield E) E x = IsCMFie
     intro a ha
     obtain ⟨b, rfl⟩ := conj_eq_self_iff.1 ha
     exact (IsCMField.complexConj_eq_self_iff E _).2 b.2
-  have ha : t (x + y) = x + y := fix _ (by rw [map_add, hyy, ← hy, add_comm])
+  have ha : t (x + y) = x + y := fix _ (by rw [map_add (f := _), hyy, ← hy, add_comm])
   have hb : t (x * y) = x * y := fix _ (by rw [map_mul, hyy, ← hy, mul_comm])
   have hz : (t x - x) * (t x - y) = 0 := by
     have h0 : x * x - (x + y) * x + x * y = 0 := by ring
     have h1 := congrArg t h0
-    rw [map_add, map_sub, map_mul, map_mul, ha, hb, map_zero] at h1
+    rw [map_add (f := _), map_sub, map_mul, map_mul, ha, hb, map_zero] at h1
     linear_combination h1
   rcases mul_eq_zero.1 hz with h | h
   · have hx : t x = x := sub_eq_zero.1 h
@@ -253,7 +253,7 @@ theorem perExt_single_tw (h : C.IsAdapted R A) (τ : Ψ) (v : Sg j j' → ℂ) :
     rw [hp, hq, ← mulVec_smul, ← mulVec_smul, ← mulVec_neg, ← mulVec_add]
     congr 1
     ext (i | i) <;> simp [tw]
-  rw [hl', hl', hv, hw, map_add, map_add, map_neg, smul_add]
+  rw [hl', hl', hv, hw, map_add (f := _), map_add (f := _), map_neg, smul_add]
   have e1 : Complex.I • l p = -l (Complex.I • p) := by rw [h1, hII]
   have e2 : Complex.I • l q = l (Complex.I • q) := by
     rw [h2, smul_neg, hII, neg_neg]

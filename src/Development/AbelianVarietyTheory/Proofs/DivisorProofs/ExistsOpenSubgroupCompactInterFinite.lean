@@ -112,7 +112,7 @@ theorem eq_finIdem_mul_add (x : AE F E) :
     rfl
   | add x y hx hy =>
     conv_lhs => rw [hx, hy]
-    rw [mul_add, map_add, map_add]
+    rw [mul_add, map_add (f := _), map_add (f := _)]
     abel
 
 theorem infPartE_finIdem_mul (y : AE F E) : infPartE F E ((finIdem F ⊗ₜ[F] (1 : E)) * y) = 0 := by

@@ -107,7 +107,7 @@ theorem lattice_transfer (φ : V ≃ₗ[K] W) (L : Submodule (𝓞 K) V) (L' : S
     L'.FG ∧ Submodule.span K (L' : Set W) = ⊤ ∧ Formalism.HN.rkK L' = Formalism.HN.rkK L := by
   let ψ : V →ₗ[𝓞 K] W :=
     { toFun := fun f => a⁻¹ • φ f
-      map_add' := fun f f' => by rw [map_add, smul_add]
+      map_add' := fun f f' => by rw [map_add (f := _), smul_add]
       map_smul' := fun m f => by
         rw [RingHom.id_apply, ← algebraMap_smul K m f, map_smul, ← algebraMap_smul K m (a⁻¹ • φ f),
           smul_smul, smul_smul, mul_comm] }

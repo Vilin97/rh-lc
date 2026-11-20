@@ -32,7 +32,7 @@ theorem diff_pow {A R V : Type} [CommRing A] [CommRing R] [IsLocalRing R] [CommR
       | zero => simp
       | add y z _ _ hy hz =>
         have := add_mem hy hz
-        simpa [map_add, sub_add_sub_comm] using this
+        simpa [map_add (f := _), sub_add_sub_comm] using this
       | smul a y hy' hy =>
         have hyM : y ∈ maximalIdeal R := hψ.2.2.2.1 ▸ hy'
         have e : θ₁ (a • y) - θ₂ (a • y) = θ₁ a * (θ₁ y - θ₂ y) + (θ₁ a - θ₂ a) * θ₂ y := by

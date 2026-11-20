@@ -114,9 +114,9 @@ theorem EF_sub_left (X : Data E r) (u v w : Fin r → E) : EF X (u - v) w = EF X
   simp only [herm, Pi.sub_apply, sub_mul, Finset.sum_sub_distrib, mul_sub]
 
 theorem EF_add_right (X : Data E r) (u v w : Fin r → E) : EF X u (v + w) = EF X u v + EF X u w := by
-  simp only [EF_def, ← map_add]
+  simp only [EF_def, ← map_add (f := _)]
   congr 1
-  simp only [herm, cc, Pi.add_apply, map_add, Finset.sum_add_distrib, mul_add]
+  simp only [herm, cc, Pi.add_apply, map_add (f := _), Finset.sum_add_distrib, mul_add]
 
 theorem EF_nat_left (X : Data E r) (N : ℕ) (u w : Fin r → E) : EF X ((N : E) • u) w = N * EF X u w := by
   simp only [EF_def]
@@ -135,7 +135,7 @@ theorem selfD_of_unimod {H : Host E} (X : Data E r) (D : Datum H) (f : D.La →�
   · choose k hk using fun b => hx (f b) ((hf _).2 ⟨b, rfl⟩)
     let φ : D.La →+ ℤ := AddMonoidHom.mk' k fun b b' => by
       apply Int.cast_injective (α := ℚ)
-      rw [Int.cast_add, ← hk, ← hk, ← hk, map_add, EF_add_right]
+      rw [Int.cast_add, ← hk, ← hk, ← hk, map_add (f := _), EF_add_right]
     obtain ⟨a, ha⟩ := D.unimod.2 φ.toIntLinearMap
     have h0 : ∀ b, EF X (x - f a) (f b) = 0 := fun b => by
       rw [EF_sub_left, ← hE, ha, hk]
@@ -178,11 +178,11 @@ theorem isMark_of {H : Host E} (Dw D : Datum H) (l : Geo.Tor.Level H) (L : Lt E 
     · obtain ⟨b, rfl⟩ := (hf w).1 hw
       obtain ⟨a, e, rfl⟩ := hs b
       refine ⟨s • a, Submodule.smul_mem_smul hs' Submodule.mem_top, f (s • m • e), (hf _).2 ⟨_, rfl⟩, ?_⟩
-      rw [LinearMap.comp_apply, ← map_nsmul, ← map_add, ← map_smul, map_smul t, smul_add, hm, mul_smul,
+      rw [LinearMap.comp_apply, ← map_nsmul, ← map_add (f := _), ← map_smul, map_smul t, smul_add, hm, mul_smul,
         smul_comm s l.M]
     · rintro x y ⟨a, ha, u, hu, rfl⟩ ⟨a', ha', u', hu', rfl⟩
       refine ⟨a + a', add_mem ha ha', u + u', add_mem hu hu', ?_⟩
-      rw [map_add, smul_add]; abel
+      rw [map_add (f := _), smul_add]; abel
 
 end GlobalTheory.Dict.UWLat
 

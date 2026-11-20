@@ -53,7 +53,7 @@ theorem levM_mul_fix {ι : Matrix n m R} (haι : a ᵥ* ι = 0) (hbι : b ᵥ* �
 theorem levM_map {S : Type*} [CommRing S] (f : R →+* S) (t s : R) :
     (levM x y a b t s).map f = levM (f ∘ x) (f ∘ y) (f ∘ a) (f ∘ b) (f t) (f s) := by
   ext i j
-  simp [levM, Matrix.one_apply, vecMulVec_apply, map_add, map_mul, map_sub]
+  simp [levM, Matrix.one_apply, vecMulVec_apply, map_add (f := _), map_mul, map_sub]
 
 theorem levM_unitary (c : R →+* R) (hc : ∀ r, c (c r) = r) {J : Matrix n n R}
     (ha : J *ᵥ (c ∘ y) = a) (hb : J *ᵥ (c ∘ x) = -b) (hxJ : x ᵥ* J = c ∘ b) (hyJ : y ᵥ* J = -(c ∘ a))
@@ -94,7 +94,7 @@ theorem cA_cA {σ : E →ₐ[F] E} (hσ : ∀ e, σ (σ e) = e) (z : AE F E) : c
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [cA, hσ]
-  | add u v hu hv => rw [map_add, map_add, hu, hv]
+  | add u v hu hv => rw [map_add (f := _), map_add (f := _), hu, hv]
 
 def homOf (σ : E →ₐ[F] E) {N : ℕ} (J : Matrix (Fin N) (Fin N) E) (M : (AE F E)ˣ → Matrix (Fin N) (Fin N) (AE F E))
     (hone : M 1 = 1) (hmul : ∀ t t', M (t * t') = M t * M t')

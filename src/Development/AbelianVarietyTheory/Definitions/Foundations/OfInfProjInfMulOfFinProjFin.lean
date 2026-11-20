@@ -592,7 +592,7 @@ theorem infEmb_sigR (h : IsCMExt F E σ) (τ : EmbOver E w) (y : w.Completion �
     starRingEnd ℂ (infEmb τ y) = infEmb τ (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR _ σ y) := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a e =>
     have := h.1
     have h2 := InfinitePlace.Completion.extensionEmbeddingOfIsReal_apply (IsTotallyReal.isReal w) a
@@ -616,7 +616,7 @@ theorem infEmb_bijective (h : IsCMExt F E σ) (τ : EmbOver E w) : Function.Bije
   have hsurj : Function.Surjective (infEmb τ) := by
     intro z
     refine ⟨e.symm (z.re - z.im / (τ.1 x).im * (τ.1 x).re) ⊗ₜ[F] 1 + e.symm (z.im / (τ.1 x).im) ⊗ₜ[F] x, ?_⟩
-    rw [map_add, infEmb_tmul, infEmb_tmul, he, he, e.apply_symm_apply, e.apply_symm_apply, map_one]
+    rw [map_add (f := _), infEmb_tmul, infEmb_tmul, he, he, e.apply_symm_apply, e.apply_symm_apply, map_one]
     apply Complex.ext
     · simp only [mul_one, Complex.add_re, Complex.ofReal_re, Complex.re_ofReal_mul]; ring
     · simp only [mul_one, Complex.add_im, Complex.ofReal_im, Complex.im_ofReal_mul]; field_simp; ring

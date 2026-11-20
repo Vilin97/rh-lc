@@ -55,7 +55,7 @@ theorem exists_lift_to_complete_dvr_of_finite : ∀ (A R : Type) [CommRing A] [C
     induction hr using Submodule.span_induction with
     | mem x hx => exact IntermediateField.subset_adjoin K _ ⟨x, hx, rfl⟩
     | zero => simp
-    | add x y _ _ hx hy => rw [map_add]; exact M.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact M.add_mem hx hy
     | smul a x _ hx => rw [Algebra.smul_def, map_mul, hρ1]; exact M.mul_mem (M.algebraMap_mem _) hx
   let ψ : R →+* M := ρ1.codRestrict M hmem
   have hψ : (algebraMap V M).comp h = ψ.comp (algebraMap A R) := by

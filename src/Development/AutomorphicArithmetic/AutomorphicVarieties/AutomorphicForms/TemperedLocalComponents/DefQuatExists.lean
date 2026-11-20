@@ -98,7 +98,7 @@ private theorem isUnit_of_neg (τ : F →+* ℝ) (ha : τ a < 0) (hb : τ b < 0)
   have hn0 : n ≠ 0 := by
     intro h
     have h1 := congrArg τ h
-    simp only [hn, map_add, map_sub, map_mul, map_pow, map_zero] at h1
+    simp only [hn, map_add (f := _), map_sub, map_mul, map_pow, map_zero] at h1
     have p1 := sq_nonneg (τ x.re)
     have p2 := mul_nonneg (neg_pos.2 ha).le (sq_nonneg (τ x.imI))
     have p3 := mul_nonneg (neg_pos.2 hb).le (sq_nonneg (τ x.imJ))
@@ -193,7 +193,7 @@ private theorem arith (F : Type) [Field F] [NumberField F] [IsTotallyReal F] (h 
     refine (InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hw _).trans (Complex.ofReal_injective ?_)
     rw [InfinitePlace.embedding_of_isReal_apply, InfinitePlace.embedding_mk_eq_of_isReal hr]
     rfl
-  simp only [map_mul, map_neg, map_one, map_add, map_pow, e3] at e2
+  simp only [map_mul, map_neg, map_one, map_add (f := _), map_pow, e3] at e2
   refine lt_of_le_of_ne ?_ ((map_ne_zero τ).2 (Units.ne_zero _))
   nlinarith [sq_nonneg (InfinitePlace.Completion.extensionEmbeddingOfIsReal hw (x.1 w)),
     sq_nonneg (InfinitePlace.Completion.extensionEmbeddingOfIsReal hw (y.1 w))]

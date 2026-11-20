@@ -15,7 +15,7 @@ theorem UpperTheory.V.Z.IntegralApplyAeEq.cobLaws :
   have hs : ∀ (c : ℂ) h, F.Cob h → F.Cob (c • h) := fun c h ⟨k, hk⟩ =>
     ⟨c • k, fun t => by simp only [map_smul]; rw [intervalIntegral.integral_smul, hk, smul_sub]⟩
   have ha : ∀ h h', F.Cob h → F.Cob h' → F.Cob (h + h') := fun h h' ⟨k, hk⟩ ⟨k', hk'⟩ =>
-    ⟨k + k', fun t => by simp only [map_add]; rw [intervalIntegral.integral_add (ii _ _ _) (ii _ _ _), hk, hk']; abel⟩
+    ⟨k + k', fun t => by simp only [map_add (f := _)]; rw [intervalIntegral.integral_add (ii _ _ _) (ii _ _ _), hk, hk']; abel⟩
   have hr : ∀ (F : Flow H) h, F.Cob h → F.rev.Cob h := fun F h ⟨k, hk⟩ => ⟨-k, fun t => by
     show ∫ s in (0 : ℝ)..t, F.U (-s) h = F.U (-t) (-k) - -k
     rw [intervalIntegral.integral_comp_neg fun s => F.U s h, neg_zero, intervalIntegral.integral_symm, hk, map_neg]; abel⟩

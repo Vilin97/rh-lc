@@ -65,7 +65,7 @@ theorem rightUAction_orbitL (u : UniversalEnvelopingAlgebra ℝ h.lieSubalgebra)
   | mul a b ha hb =>
     rw [map_mul, map_mul, map_mul, Module.End.mul_apply, Module.End.mul_apply, hb, ha]
   | add a b ha hb =>
-    rw [map_add, map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, ha, hb, map_add]
+    rw [map_add (f := _), map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, ha, hb, map_add (f := _)]
 
 def dualComp (l : StrongDual ℂ E) : h.smoothFuns (F := E) →ₗ[ℂ] h.smoothFuns (F := ℂ) where
   toFun f := ⟨fun g => l ((f : G → E) g), by

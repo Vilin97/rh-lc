@@ -39,7 +39,7 @@ theorem UpperTheory.isoSum_of_injective_equivariant_family :
         rw [LinearMap.comp_apply, f.2.1, hs]; rfl⟩ ⟨s, rfl⟩
     · rw [map_zero]; exact zero_mem _
     · intro a b ha hb
-      rw [map_add]; exact add_mem ha hb
+      rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
   have key := UpperTheory.V.PiLin.iso_sub τ.ρ π P τ.irred j hj (fun g y => funext fun i => he i g y y.2) (fun y => by
     rw [← Finset.univ_sum_single (j y)]
     exact Submodule.sum_mem _ fun i _ => hsing i _ (hφ i y y.2))

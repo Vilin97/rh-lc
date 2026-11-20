@@ -36,7 +36,7 @@ theorem mDR_mDR {R R' R'' B B' B'' : Type} [CommRing R] [CommRing B] [Algebra R 
   | h b => simp [e]
   | hd b => simp [e]
   | hm x y hx hy => simp only [map_mul, hx, hy]
-  | ha x y hx hy => simp only [map_add, hx, hy]
+  | ha x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end GlobalTheory.PDForm.Poincare
 

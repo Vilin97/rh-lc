@@ -19,7 +19,7 @@ theorem liftSemi_toBaseChange_cot_bijective (R R' A : Type) [CommRing R] [CommRi
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
     | tmul r m =>
       obtain ⟨a, rfl⟩ := AugCot.d_surjective (counitAlgHom R A) m
       have h1 := SemiBialgHom.cot_d (toBaseChange R R' A) a
@@ -49,7 +49,7 @@ theorem omega_baseChange_bijective {p : ℕ} {R : Type} [CommRing R] (G : PDivGr
     intro x
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => rw [map_add, map_add, map_add, map_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hx, hy]
     | tmul r w =>
       simp only [liftSemi_tmul, map_smul, e, LinearEquiv.baseChange_tmul, LinearEquiv.ofBijective_apply]
       congr 1

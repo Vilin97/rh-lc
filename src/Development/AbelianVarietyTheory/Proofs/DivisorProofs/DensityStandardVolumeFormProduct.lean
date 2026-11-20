@@ -52,7 +52,7 @@ theorem wl_mul_ι (x : Fin (1 + 1) ⊕ Fin (1 + 1) → ℂ) : wl * ExteriorAlgeb
       x (Sum.inr 0) • Pi.single (Sum.inr 0) 1 + x (Sum.inr (Fin.last 1)) • Pi.single (Sum.inr (Fin.last 1)) 1 := by
     ext (i | i) <;> fin_cases i <;> simp
   rw [hx]
-  simp only [map_add, map_smul, mul_add, mul_smul_comm]
+  simp only [map_add (f := _), map_smul, mul_add, mul_smul_comm]
   have d0 : ExteriorAlgebra.ι ℂ (Pi.single (Sum.inl (0 : Fin (1 + 1))) 1) = dz 0 := rfl
   have d1 : ExteriorAlgebra.ι ℂ (Pi.single (Sum.inl (Fin.last 1)) 1) = dz (Fin.last 1) := rfl
   have b0 : ExteriorAlgebra.ι ℂ (Pi.single (Sum.inr (0 : Fin (1 + 1))) 1) = dzb 0 := rfl
@@ -66,7 +66,7 @@ theorem wl_mul_rho (a : Alt (1 + 1)) : wl * a = wl * rho a := by
   | ι x => exact wl_mul_ι x
   | mul a b ha hb =>
     rw [map_mul, ← mul_assoc, ha, ← wl_central, mul_assoc, hb, ← mul_assoc, wl_central, mul_assoc]
-  | add a b ha hb => rw [map_add, mul_add, mul_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), mul_add, mul_add, ha, hb]
 
 theorem dens_mul_eq_dens_pull (a : Alt (1 + 1)) :
     dens (((Complex.I / 2) • (dz (Fin.last 1) * dzb (Fin.last 1))) * a) = dens (pull headIn a) := by

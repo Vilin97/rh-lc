@@ -81,7 +81,7 @@ def red₂ (V : WeierstrassCurve 𝒪)
 theorem red₂_add (V : WeierstrassCurve 𝒪) [V.IsElliptic]
     (P Q : ((V.baseChange K).baseChange (liftField₂ K W W')).toAffine.Point) :
     red₂ K W W' V (P + Q) = red₂ K W W' V P + red₂ K W W' V Q := by
-  rw [red₂, red₂, red₂, map_add, reducePoint_add]
+  rw [red₂, red₂, red₂, map_add (f := _), reducePoint_add]
 
 theorem red₂_zero (V : WeierstrassCurve 𝒪) : red₂ K W W' V 0 = 0 := by
   rw [red₂, map_zero, reducePoint_zero]

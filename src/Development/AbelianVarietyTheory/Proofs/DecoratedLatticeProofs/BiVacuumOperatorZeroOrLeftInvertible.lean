@@ -48,7 +48,7 @@ theorem symplOH_add_r (T T' : HSp D) (x y y' : WO T T') :
 
 theorem symplOH_two (T T' : HSp D) (x y : WO T T') : symplOH T T' x y + symplOH T T' x y = symplO T T' x y := by
   unfold symplOH
-  rw [← add_mul, ← RingHom.map_add, add_halves, RingHom.map_one, one_mul]
+  rw [← add_mul, ← RingHom.map_add (f := _), add_halves, RingHom.map_one, one_mul]
 
 theorem symplO_skew' (T T' : HSp D) (x y : WO T T') : symplO T T' y x = -symplO T T' x y := by
   rw [← symplOH_two, ← symplOH_two, symplOH_skew, neg_add]

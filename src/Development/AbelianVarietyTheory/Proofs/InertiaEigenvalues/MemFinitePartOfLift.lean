@@ -65,6 +65,6 @@ theorem descHf : ∀ (D : D7) (i : D.nd.Loc) (w : HeightOneSpectrum (𝓞 D.host
   have h3 := congrFun (hp g m) j
   change p ((n j : ↥C.LL.1)) = p (IntermediateField.inclusion C.le (u j) - (c g j + ((mapM (algebraMap ↥(OL C.LL) ↥C.LL.1) (locOC C M) g).mulVec m j - m j))) at h2
   change (p (n j) : Br.LL D.nbr i w hw) = u j - (p (c g j) + ((Br.loc D.nbr i w hw M g).mulVec (fun j => p (m j)) j - p (m j)))
-  rw [h2, map_sub, map_add, map_sub, hp1, ← h3]
+  rw [h2, map_sub, map_add (f := _), map_sub, hp1, ← h3]
 
 end GlobalTheory.UseLoc.DescHf

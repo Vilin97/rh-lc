@@ -92,7 +92,7 @@ theorem idem_facts (B : Base S T) {Q : Finset (Pl D.host.E)} (hQ : B.admitted Q)
   rw [hid] at h3
   have h1 := (hQ.1.mono hsub).isOrthSum.1.idem
   have h4 := hQ.1.isOrthSum.2
-  rw [e1, map_add] at h4
+  rw [e1, map_add (f := _)] at h4
   have h6 : cA D (halfIdem B.G.Pg (B.de.Q ∪ Q.erase P)) * cA D (idemAt P) = 0 := by rw [← map_mul, h2, map_zero]
   have h7 : cA D (idemAt P) * cA D (idemAt P) = cA D (idemAt P) := by rw [← map_mul, h3]
   have hPs : PlacesOK ∅ ({P} : Finset (Pl D.host.E)) := by
@@ -299,12 +299,12 @@ theorem unram_at {χ : (AE D)ˣ →* Circle} {Q S' : Finset (Pl D.host.E)} (hχ 
   have key : ∀ z : AE D, (1 - idemAt P) * z = 1 - idemAt P → finPart D (idemAt P * z) ∈ intAE D → finPart D z ∈ intAE D :=
     fun z a b => by
       have : z = idemAt P * z + 1 - idemAt P := by linear_combination a
-      rw [this, RingHom.map_sub, RingHom.map_add, RingHom.map_one]
+      rw [this, RingHom.map_sub, RingHom.map_add (f := _), RingHom.map_one]
       exact sub_mem (add_mem b (GlobalTheory.SplitDivisors.one_mem_int D)) (finPart_idem_mem he)
   have hinf : infPart D (y : AE D) = 1 := by
     have h0 : infPart D (idemAt P) = 0 := GlobalTheory.StepVec.infPart_idemAt he
     have : (y : AE D) = idemAt P * (y : AE D) + (1 - idemAt P) := by linear_combination h1
-    rw [this, RingHom.map_add, RingHom.map_mul, RingHom.map_sub, RingHom.map_one, h0]
+    rw [this, RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, RingHom.map_one, h0]
     ring
   refine hχ y hinf (key _ h1 h2) (key _ h1' h3) ?_
   have h0 : idemAt P * (idem Q + cA D (idem Q)) = 0 := by
@@ -411,7 +411,7 @@ theorem vec_rel (B : Base S T) (hB : B.Good) (hbT : Lev.IsBaseFrame T B.F.βT B.
   have hv : B.vecAt Q (fun PP y => if PP.1 = P then ((prim y : ℚ) : ℂ) else φ PP.1 y) =
       Tm (B.F.datumFn B.G (B.de.Q ∪ Q) (B.locFn Q fun PP y => if PP.1 = P then ((prim y : ℚ) : ℂ) else φ PP.1 y)) := rfl
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [hv, hfun, map_add, map_sum, hv1]
+    rw [hv, hfun, map_add (f := _), map_sum, hv1]
   congr 1
   refine Finset.sum_congr rfl fun k hk => ?_
   set_option synthInstance.maxHeartbeats 100000 in

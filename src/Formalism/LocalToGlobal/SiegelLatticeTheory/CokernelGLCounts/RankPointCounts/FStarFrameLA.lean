@@ -37,12 +37,12 @@ theorem gram_comb_right {l m n : Type*} [Fintype m] (u : l → S.V) (v : m → S
 theorem gram_add_left {m n : Type*} (u₁ u₂ : n → S.V) (v : m → S.V) :
     gram S (u₁ + u₂) v = gram S u₁ v + gram S u₂ v := by
   ext i j
-  simp [gram, map_add]
+  simp [gram, map_add (f := _)]
 
 theorem gram_add_right {m n : Type*} (u : n → S.V) (v₁ v₂ : m → S.V) :
     gram S u (v₁ + v₂) = gram S u v₁ + gram S u v₂ := by
   ext i j
-  simp [gram, map_add, LinearMap.add_apply]
+  simp [gram, map_add (f := _), LinearMap.add_apply]
 
 theorem gram_swap {m n : Type*} (u : n → S.V) (v : m → S.V) : gram S v u = (gram S u v)ᴴ := by
   ext i j

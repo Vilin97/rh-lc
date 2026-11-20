@@ -24,7 +24,7 @@ theorem polData_le_schA {B : Base F E} {M : Model σ X W} (hM : M.IsGood B.ψ) :
 theorem theta_add (om : Rep σ X W) (hpres : ∀ p, ∀ Φ ∈ schA F (Fin n × Fin d), om p Φ ∈ schA F (Fin n × Fin d))
     {Φ Ψ : (Fin n × Fin d → AF F) → ℂ} (hΦ : Φ ∈ schA F _) (hΨ : Ψ ∈ schA F _) (g : UA σ X.J) (h : UA σ W.J) :
     theta om (Φ + Ψ) g h = theta om Φ g h + theta om Ψ g h := by
-  simp only [theta, thetaSum, map_add, Pi.add_apply]
+  simp only [theta, thetaSum, map_add (f := _), Pi.add_apply]
   exact (summable_of_mem_schA F (hpres _ _ hΦ)).tsum_add (summable_of_mem_schA F (hpres _ _ hΨ))
 
 theorem theta_smul (om : Rep σ X W) (z : ℂ) (Φ : (Fin n × Fin d → AF F) → ℂ) (g : UA σ X.J) (h : UA σ W.J) :
@@ -59,7 +59,7 @@ theorem continuous_I (M : Model σ X W) (om : Rep σ X W) (hcont : IsContOn (ade
       fun f => Submodule.subset_span ⟨f, φ, hφ, rfl⟩
     refine ⟨{ toFun := fun f => L (pureA F f φ), map_add' := ?_, map_smul' := ?_, cont := ?_ }, fun f => rfl⟩
     · intro f f'
-      rw [← map_add]
+      rw [← map_add (f := _)]
       congr 1
       funext x
       simp [pureA, add_mul]

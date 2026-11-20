@@ -140,7 +140,7 @@ theorem hasDerivAt_locEval (hΩ : Ω ≠ 0) (r : OriginRing (curve Λ Ω)) :
       locEval Λ Ω t (a + b) = locEval Λ Ω t a + locEval Λ Ω t b ∧
       locEval Λ Ω t (-a) = - locEval Λ Ω t a := by
     filter_upwards [hev] with t ht a b
-    simp only [locEval, dif_pos ht, map_mul, map_add, map_neg, and_self]
+    simp only [locEval, dif_pos ht, map_mul, map_add (f := _), map_neg, and_self]
   have hE0 : ∀ a, locEval Λ Ω 0 a = (epsEval Λ Ω 1 a).fst := fun a => by
     rw [locEval, dif_pos h0, epsEval_fst Λ Ω 1 a h0]
   have hconst : ∀ a : ℂ, HasDerivAt (fun t => locEval Λ Ω t (algebraMap ℂ _ a))
@@ -161,7 +161,7 @@ theorem hasDerivAt_locEval (hΩ : Ω ≠ 0) (r : OriginRing (curve Λ Ω)) :
       one_mem' := by simpa using hconst 1
       add_mem' := fun {a b} ha hb => by
         refine ((ha.add hb).congr_deriv ?_).congr_of_eventuallyEq ?_
-        · simp only [map_add, TrivSqZeroExt.snd_add]
+        · simp only [map_add (f := _), TrivSqZeroExt.snd_add]
           ring
         · filter_upwards [hE] with t ht
           exact (ht a b).2.1
@@ -189,7 +189,7 @@ theorem hasDerivAt_locEval (hΩ : Ω ≠ 0) (r : OriginRing (curve Λ Ω)) :
     intro a
     induction a using Polynomial.induction_on with
     | C b => exact hC b
-    | add p q hp hq => rw [Polynomial.C_add, map_add]; exact S.add_mem hp hq
+    | add p q hp hq => rw [Polynomial.C_add, RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact S.add_mem hp hq
     | monomial n b _ =>
       rw [Polynomial.C_mul, Polynomial.C_pow, map_mul, map_pow]
       exact S.mul_mem (hC b) (S.pow_mem hW _)
@@ -198,7 +198,7 @@ theorem hasDerivAt_locEval (hΩ : Ω ≠ 0) (r : OriginRing (curve Λ Ω)) :
     refine AdjoinRoot.induction_on (f := originPolynomial (curve Λ Ω)) x fun p => ?_
     induction p using Polynomial.induction_on with
     | C a => exact hCa a
-    | add p q hp hq => rw [map_add]; exact S.add_mem hp hq
+    | add p q hp hq => rw [map_add (f := _)]; exact S.add_mem hp hq
     | monomial n a _ =>
       rw [map_mul, map_pow]
       exact S.mul_mem (hCa a) (S.pow_mem hZ _)

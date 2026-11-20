@@ -17,7 +17,7 @@ theorem UpperTheory.Gal.crystallineComparison.ptsProd_of :
     classical
     refine Finset.induction_on s (by simp) ?_
     intro j s hj ih
-    rw [Finset.sum_insert hj, Finset.prod_insert hj, Multiset.map_add, Multiset.prod_add, ih,
+    rw [Finset.sum_insert hj, Finset.prod_insert hj, Multiset.map_add (f := _), Multiset.prod_add, ih,
       Multiset.map_nsmul, Multiset.prod_nsmul]
   simp only [pts, mapP]
   rw [key, Polynomial.map_prod]

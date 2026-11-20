@@ -146,7 +146,7 @@ theorem bar_mem {I : Ideal (𝓞 E)} {a : 𝓞 E} (ha : a ∈ I.map (H.bar : �
 
 theorem ef_swap (x y : Dw.La) : Dw.EF y x = -Dw.EF x y := by
   have := Dw.alt (x + y)
-  simp only [map_add, LinearMap.add_apply, Dw.alt] at this
+  simp only [map_add (f := _), LinearMap.add_apply, Dw.alt] at this
   linarith
 
 theorem dvd_of_mem (N : ℕ) (x y : Dw.La) {a : 𝓞 E} (ha : a ∈ Ideal.span {(N : 𝓞 E)}) :
@@ -177,13 +177,13 @@ theorem exists_adjoint_halves (N : ℕ) (hN : N ≠ 0) (I : Ideal (𝓞 E))
     rw [hKI] at hy
     refine Submodule.smul_induction_on hy (fun a ha z _ => ?_) (fun u v hu hv => ?_)
     · rw [← mul_smul, mul_comm]; exact dvd_of_mem _ _ _ (hmul a ha)
-    · rw [smul_add, map_add]; exact dvd_add hu hv
+    · rw [smul_add, map_add (f := _)]; exact dvd_add hu hv
   have hleft : ∀ x ∈ KJ, ∀ y, (N : ℤ) ∣ Dw.EF x (c • y) := by
     intro x hx y
     rw [hKJ] at hx
     refine Submodule.smul_induction_on hx (fun a ha z _ => ?_) (fun u v hu hv => ?_)
     · rw [Dw.adj, ← mul_smul]; exact dvd_of_mem _ _ _ (hmul _ (bar_mem ha))
-    · rw [map_add, LinearMap.add_apply]; exact dvd_add hu hv
+    · rw [map_add (f := _), LinearMap.add_apply]; exact dvd_add hu hv
   let B : (Dw.La ⧸ KJ) → (Dw.La ⧸ KI) → ZMod N := fun p q => ((Dw.EF (qRep p) (c • qRep q) : ℤ) : ZMod N)
   have hB : ∀ u v, B (Submodule.Quotient.mk u) (Submodule.Quotient.mk v) = ((Dw.EF u (c • v) : ℤ) : ZMod N) := by
     intro u v
@@ -197,13 +197,13 @@ theorem exists_adjoint_halves (N : ℕ) (hN : N ≠ 0) (I : Ideal (𝓞 E))
     obtain ⟨u, rfl⟩ := Submodule.Quotient.mk_surjective _ u
     obtain ⟨v, rfl⟩ := Submodule.Quotient.mk_surjective _ v
     obtain ⟨w, rfl⟩ := Submodule.Quotient.mk_surjective _ w
-    rw [← Submodule.Quotient.mk_add, hB, hB, hB, smul_add, map_add, Int.cast_add]
+    rw [← Submodule.Quotient.mk_add, hB, hB, hB, smul_add, map_add (f := _), Int.cast_add]
   have haddl : ∀ u u' v, B (u + u') v = B u v + B u' v := by
     intro u v w
     obtain ⟨u, rfl⟩ := Submodule.Quotient.mk_surjective _ u
     obtain ⟨v, rfl⟩ := Submodule.Quotient.mk_surjective _ v
     obtain ⟨w, rfl⟩ := Submodule.Quotient.mk_surjective _ w
-    rw [← Submodule.Quotient.mk_add, hB, hB, hB, map_add, LinearMap.add_apply, Int.cast_add]
+    rw [← Submodule.Quotient.mk_add, hB, hB, hB, map_add (f := _), LinearMap.add_apply, Int.cast_add]
   have hbal : ∀ (a : 𝓞 E) u v, B u (a • v) = B (H.bar a • u) v := by
     intro a u v
     obtain ⟨u, rfl⟩ := Submodule.Quotient.mk_surjective _ u
@@ -236,7 +236,7 @@ theorem exists_adjoint_halves (N : ℕ) (hN : N ≠ 0) (I : Ideal (𝓞 E))
       exact Module.Projective.of_split (s.restrictScalars ℤ) (p.restrictScalars ℤ)
         (LinearMap.ext fun x => LinearMap.congr_fun hps x)
     let f : Dw.La →+ ZMod N := AddMonoidHom.mk' (fun u => B (g (Submodule.Quotient.mk u)) v) (fun u u' => by
-      simp only [Submodule.Quotient.mk_add, map_add, haddl])
+      simp only [Submodule.Quotient.mk_add, map_add (f := _), haddl])
     obtain ⟨F, hF⟩ := Module.projective_lifting_property (Int.castAddHom (ZMod N)).toIntLinearMap f.toIntLinearMap
       (ZMod.intCast_surjective)
     obtain ⟨w, hw⟩ := Dw.unimod.2 F

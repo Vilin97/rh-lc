@@ -22,7 +22,7 @@ theorem UpperTheory.ConvolutionTheory.FX.abs_growth :
       c (MvPolynomial.aeval Z G • ψ) = c (MvPolynomial.aeval ξ (MvPolynomial.aeval blockE G) • ψ) := fun G => by
     induction G using MvPolynomial.induction_on with
     | C a => intro ψ; simp
-    | add p q hp hq => intro ψ; simp only [map_add, add_smul, hp, hq]
+    | add p q hp hq => intro ψ; simp only [map_add (f := _), add_smul, hp, hq]
     | mul_X p j hp =>
       intro ψ
       rw [map_mul, map_mul, map_mul, MvPolynomial.aeval_X, MvPolynomial.aeval_X, mul_smul, hp, smul_comm, S.cen, mul_comm, mul_smul]
@@ -41,7 +41,7 @@ theorem UpperTheory.ConvolutionTheory.FX.abs_growth :
       obtain ⟨B, hB, h1⟩ := hp
       obtain ⟨B', hB', h2⟩ := hq
       refine ⟨B + B', by positivity, fun α x hx => ?_⟩
-      rw [map_add, mul_add, add_smul, map_add, Pi.add_apply, add_mul]
+      rw [map_add (f := _), mul_add, add_smul, map_add (f := _), Pi.add_apply, add_mul]
       exact (norm_add_le _ _).trans (add_le_add (h1 α x hx) (h2 α x hx))
   choose B hB0 hB using fun β : τ × Fin n → Fin n => L (∏ u, (MvPolynomial.C (Λ u) + MvPolynomial.X (idx u.2)) ^ (β u : ℕ))
   refine ⟨∑ β, B β, fun α x hx => ?_⟩

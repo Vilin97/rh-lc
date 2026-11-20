@@ -101,7 +101,7 @@ def dYt (P : PowerSeries K) (j : Fin 3) : A3 :=
 
 theorem pd_Xt_self (P : PowerSeries K) (j : Fin 3) :
     MvPowerSeries.pderiv (R := K) j (Xt P j) = dXt P j := by
-  simp only [Xt, dXt, map_add, Derivation.leibniz, Derivation.leibniz_pow, Derivation.map_one_eq_zero,
+  simp only [Xt, dXt, map_add (f := _), Derivation.leibniz, Derivation.leibniz_pow, Derivation.map_one_eq_zero,
     MvPowerSeries.pderiv_X_self, partialDeriv_inVar_self, smul_eq_mul, nsmul_eq_mul]
   push_cast
   ring
@@ -118,7 +118,7 @@ theorem pd_neg_two (i : Fin 3) : MvPowerSeries.pderiv (R := K) i (-2 : A3) = 0 :
 
 theorem pd_Yt_self (P : PowerSeries K) (j : Fin 3) :
     MvPowerSeries.pderiv (R := K) j (Yt P j) = dYt P j := by
-  simp only [Yt, dYt, map_add, Derivation.leibniz, Derivation.leibniz_pow, pd_neg_two,
+  simp only [Yt, dYt, map_add (f := _), Derivation.leibniz, Derivation.leibniz_pow, pd_neg_two,
     MvPowerSeries.pderiv_X_self, partialDeriv_inVar_self, smul_eq_mul, nsmul_eq_mul]
   push_cast
   ring
@@ -152,7 +152,7 @@ theorem curve_eq {g2 g3 : K} {P : PowerSeries K} (hP : IsWp g2 g3 P) (j : Fin 3)
     Yt P j ^ 2 = 4 * Xt P j ^ 3 - 2 * MvPowerSeries.C (g2 / 2) * MvPowerSeries.X j ^ 4 * Xt P j -
       MvPowerSeries.C g3 * MvPowerSeries.X j ^ 6 := by
   have h' := congrArg (PowerSeries.substAlgHom (R := K) (PowerSeries.HasSubst.X (S := K) (τ := Fin 3) j)) hP.2.2
-  simp only [map_add, map_sub, map_mul, map_pow, map_neg, map_ofNat, map_one, PowerSeries.coe_substAlgHom,
+  simp only [map_add (f := _), map_sub, map_mul, map_pow, map_neg, map_ofNat, map_one, PowerSeries.coe_substAlgHom,
     PowerSeries.subst_X (R := K) (PowerSeries.HasSubst.X (S := K) j), PowerSeries.subst_C] at h'
   have hc : (MvPowerSeries.C g2 : A3) = 2 * MvPowerSeries.C (g2 / 2) := by
     conv_lhs => rw [show g2 = 2 * (g2 / 2) by ring]
@@ -164,7 +164,7 @@ theorem X_mul_dYt {g2 g3 : K} {P : PowerSeries K} (hP : IsWp g2 g3 P) (j : Fin 3
     MvPowerSeries.X j * dYt P j =
       6 * Xt P j ^ 2 - MvPowerSeries.C (g2 / 2) * MvPowerSeries.X j ^ 4 + 3 * Yt P j := by
   have h' := congrArg (PowerSeries.substAlgHom (R := K) (PowerSeries.HasSubst.X (S := K) (τ := Fin 3) j)) (wpReduced K g2 g3 P hP).2
-  simp only [map_add, map_sub, map_mul, map_pow, map_neg, map_ofNat, map_one, PowerSeries.coe_substAlgHom,
+  simp only [map_add (f := _), map_sub, map_mul, map_pow, map_neg, map_ofNat, map_one, PowerSeries.coe_substAlgHom,
     PowerSeries.subst_X (R := K) (PowerSeries.HasSubst.X (S := K) j), PowerSeries.subst_C] at h'
   simp only [dYt, Xt, Yt, Formalism.InvariantFactorPaths.G7.at1]
   linear_combination MvPowerSeries.X j ^ 2 * h'
@@ -195,7 +195,7 @@ theorem pderiv_one_det_three_points (P : PowerSeries K) :
   have h0 : (0 : Fin 3) ≠ 1 := by decide
   have h2 : (2 : Fin 3) ≠ 1 := by decide
   rw [det_three_points_eq_expansion]
-  simp only [map_add, map_sub, Derivation.leibniz, Derivation.leibniz_pow, MvPowerSeries.pderiv_X_self,
+  simp only [map_add (f := _), map_sub, Derivation.leibniz, Derivation.leibniz_pow, MvPowerSeries.pderiv_X_self,
     MvPowerSeries.pderiv_X, Pi.single_eq_of_ne h0, Pi.single_eq_of_ne h2, pd_Xt_self, pd_Xt_ne P h0,
     pd_Xt_ne P h2, pd_Yt_self, pd_Yt_ne P h0, pd_Yt_ne P h2, smul_eq_mul, nsmul_eq_mul]
   push_cast
@@ -211,7 +211,7 @@ theorem pderiv_two_det_three_points (P : PowerSeries K) :
   have h0 : (0 : Fin 3) ≠ 2 := by decide
   have h1 : (1 : Fin 3) ≠ 2 := by decide
   rw [det_three_points_eq_expansion]
-  simp only [map_add, map_sub, Derivation.leibniz, Derivation.leibniz_pow, MvPowerSeries.pderiv_X_self,
+  simp only [map_add (f := _), map_sub, Derivation.leibniz, Derivation.leibniz_pow, MvPowerSeries.pderiv_X_self,
     MvPowerSeries.pderiv_X, Pi.single_eq_of_ne h0, Pi.single_eq_of_ne h1, pd_Xt_self, pd_Xt_ne P h0,
     pd_Xt_ne P h1, pd_Yt_self, pd_Yt_ne P h0, pd_Yt_ne P h1, smul_eq_mul, nsmul_eq_mul]
   push_cast

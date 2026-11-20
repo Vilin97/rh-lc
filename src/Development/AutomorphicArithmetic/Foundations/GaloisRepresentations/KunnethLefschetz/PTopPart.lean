@@ -70,7 +70,7 @@ theorem topPart_holds : TopPart := by
     refine ⟨b1 + b2, ?_, ?_⟩
     · simp [Finset.sum_add_distrib, hb1, hb2]
     · convert Submodule.add_mem _ hm1 hm2 using 1
-      simp only [ext2, Pi.add_apply, map_add, Finset.sum_add_distrib]
+      simp only [ext2, Pi.add_apply, map_add (f := _), Finset.sum_add_distrib]
       abel
   | smul c x _ hx =>
     obtain ⟨b, hb, hm⟩ := hx

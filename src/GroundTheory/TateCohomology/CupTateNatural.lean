@@ -24,8 +24,8 @@ theorem augTensorRight_comm₁₂ {A A' B B' : Rep.{u} k G} (φ : A ⟶ A') (ψ 
     induction t using TensorProduct.induction_on with
     | zero => simp [TensorProduct.zero_tmul]
     | tmul i a => rfl
-    | add s t hs ht => simp only [TensorProduct.add_tmul, map_add] at hs ht ⊢; rw [hs, ht]
-  | add s t hs ht => rw [map_add, map_add, hs, ht]
+    | add s t hs ht => simp only [TensorProduct.add_tmul, map_add (f := _)] at hs ht ⊢; rw [hs, ht]
+  | add s t hs ht => rw [map_add (f := _), map_add (f := _), hs, ht]
 
 omit [Fintype G] in
 
@@ -46,8 +46,8 @@ theorem augTensorLeft_comm₁₂ {A A' B B' : Rep.{u} k G} (φ : A ⟶ A') (ψ :
     induction t using TensorProduct.induction_on with
     | zero => simp [TensorProduct.tmul_zero]
     | tmul i b => rfl
-    | add s t hs ht => simp only [TensorProduct.tmul_add, map_add] at hs ht ⊢; rw [hs, ht]
-  | add s t hs ht => rw [map_add, map_add, hs, ht]
+    | add s t hs ht => simp only [TensorProduct.tmul_add, map_add (f := _)] at hs ht ⊢; rw [hs, ht]
+  | add s t hs ht => rw [map_add (f := _), map_add (f := _), hs, ht]
 
 omit [Fintype G] in
 
@@ -63,8 +63,8 @@ theorem augTensorLeft_comm₂₃ {A A' B B' : Rep.{u} k G} (φ : A ⟶ A') (ψ :
       change φ.hom a ⊗ₜ[k] (augX B').hom (x ⊗ₜ[k] ψ.hom b) =
         φ.hom a ⊗ₜ[k] ψ.hom ((augX B).hom (x ⊗ₜ[k] b))
       rw [augX_tmul, augX_tmul, map_smul]
-    | add s t hs ht => simp only [TensorProduct.tmul_add, map_add] at hs ht ⊢; rw [hs, ht]
-  | add s t hs ht => rw [map_add, map_add, hs, ht]
+    | add s t hs ht => simp only [TensorProduct.tmul_add, map_add (f := _)] at hs ht ⊢; rw [hs, ht]
+  | add s t hs ht => rw [map_add (f := _), map_add (f := _), hs, ht]
 
 noncomputable def augTensorRightMap {A A' B B' : Rep.{u} k G} (φ : A ⟶ A') (ψ : B ⟶ B') :
     ((augSES k G).obj A).map (tensorRight B) ⟶ ((augSES k G).obj A').map (tensorRight B') where

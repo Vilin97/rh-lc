@@ -112,7 +112,7 @@ def dualAct : O →+* End (dual F) where
   map_one' := by rw [act, map_one]; exact dualMap_id
   map_mul' a b := by rw [act, mul_comm, map_mul]; exact dualMap_comp _ _
   map_zero' := by rw [act, map_zero]; exact dualMap_zero
-  map_add' a b := by rw [act, map_add]; exact dualMap_add _ _
+  map_add' a b := by rw [act, map_add (f := _)]; exact dualMap_add _ _
 
 @[simp] theorem act_dualAct (a : O) : act (dualAct ρ) a = dualMap (act ρ a) := rfl
 
@@ -144,7 +144,7 @@ def pullAct (f : Y ⟶ X) : O →+* End ((Scheme.Modules.pullback f).obj F) wher
   map_one' := by rw [act, map_one]; exact CategoryTheory.Functor.map_id _ _
   map_mul' a b := by rw [act, map_mul]; exact Functor.map_comp _ _ _
   map_zero' := by rw [act, map_zero]; exact Functor.map_zero _ _ _
-  map_add' a b := by rw [act, map_add]; exact Functor.map_add _
+  map_add' a b := by rw [act, map_add (f := _)]; exact Functor.map_add _
 
 @[simp] theorem act_pullAct (f : Y ⟶ X) (a : O) :
     act (pullAct ρ f) a = (Scheme.Modules.pullback f).map (act ρ a) := rfl
@@ -264,7 +264,7 @@ theorem eigenι_tensorAct (j : ι) (x : k ⊗[ℤ] O) :
   | tmul c a => rw [act_tensorAct_tmul, Linear.comp_smul, eigenι_act, splitMap_tmul, map_mul,
       mul_smul]; rfl
   | add x y hx hy =>
-    rw [map_add, Pi.add_apply, map_add, add_smul, ← hx, ← hy, ← Preadditive.comp_add, act, map_add]
+    rw [map_add (f := _), Pi.add_apply, map_add (f := _), add_smul, ← hx, ← hy, ← Preadditive.comp_add, act, map_add (f := _)]
 
 namespace IsSplitBy
 
@@ -323,7 +323,7 @@ theorem isIso_eigenι_eigenπ (h : IsSplitBy σ) [Fintype ι] (j : ι) :
     | tmul c a => rw [act_tensorAct_tmul, Linear.smul_comp, act_eigenπ, splitMap_tmul, map_mul,
         mul_smul]; rfl
     | add x y hx hy =>
-      rw [map_add, Pi.add_apply, map_add, add_smul, ← hx, ← hy, ← Preadditive.add_comp, act,
+      rw [map_add (f := _), Pi.add_apply, map_add (f := _), add_smul, ← hx, ← hy, ← Preadditive.add_comp, act,
         map_add]
   rw [← cancel_epi (eigenπ ρ (scal X (σ j))), eigenπ_desc_assoc, ← Category.assoc, proj_ι, key]
   simp

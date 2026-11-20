@@ -154,7 +154,7 @@ theorem lift_khw (hU : IsKUnitary ε A) {Y : Type*} [AddCommGroup Y] [Module ℂ
     rw [e]
     exact S.sub_mem hx₀ hyS.1
   have hfx : f x = f x₀ := by
-    rw [hsum, map_add, hyS.2, zero_add]
+    rw [hsum, map_add (f := _), hyS.2, zero_add]
   have hperp : ∀ z ∈ K, inner ℂ z x = 0 := fun z hz => (Submodule.mem_orthogonal K x).1 hxo z hz
   have hKst : ∀ a b, ε a = ε b → ∀ z ∈ K, A a b z ∈ K := by
     intro a b hab z hz

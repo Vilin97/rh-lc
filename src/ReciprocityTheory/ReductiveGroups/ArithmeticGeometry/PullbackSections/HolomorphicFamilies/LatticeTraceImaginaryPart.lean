@@ -179,13 +179,13 @@ theorem pin2 (hx : (U.X k).IsOrtho x.1) (Wu : UnitAt W) (z z' : Fin W.g → ℂ)
         (A.sg : ℂ) * star (hermForm Wu.Hm (star z) (star z')))
       (Set.range W.Pm) W.per.2.2.2.1 ?_ ?_ ?_ ?_ ?_ z z'
     · intro z z' w
-      simp only [map_add, Pin2.hf_add_left, star_add, Pin2.hm_add_left]
+      simp only [map_add (f := _), Pin2.hf_add_left, star_add, Pin2.hm_add_left]
       ring
     · intro t z w
       simp only [map_smul, Pin2.hf_smul_left, star_smul, Pin2.hm_smul_left, star_mul', star_star]
       ring
     · intro z w w'
-      simp only [map_add, Pin2.hf_add_right, star_add, Pin2.hm_add_right]
+      simp only [map_add (f := _), Pin2.hf_add_right, star_add, Pin2.hm_add_right]
       ring
     · intro t z w
       simp only [map_smul, Pin2.hf_real_smul_right, Pin2.star_real_smul, Pin2.hm_real_smul_right, star_mul',

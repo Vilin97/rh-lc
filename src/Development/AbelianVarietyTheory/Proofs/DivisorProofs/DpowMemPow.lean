@@ -274,7 +274,7 @@ def π : B R I n →+* R where
   map_mul' y z := IsFractionRing.injective R (K R) (by rw [map_mul (algebraMap R (K R)), coord_eq, coord_eq, coord_eq,
     Subalgebra.coe_mul, map_mul])
   map_zero' := by rw [LinearEquiv.map_zero, Finsupp.zero_apply]
-  map_add' y z := by rw [LinearEquiv.map_add, Finsupp.add_apply]
+  map_add' y z := by rw [LinearEquiv.map_add (f := _), Finsupp.add_apply]
 
 theorem π_apply (y : B R I n) : algebraMap R (K R) (π R I n y) = εC R I n y := coord_eq R I n y
 

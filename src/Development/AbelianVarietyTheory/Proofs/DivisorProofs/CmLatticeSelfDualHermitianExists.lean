@@ -37,7 +37,7 @@ theorem smul_eq_zero_of_tauF (I : Formalism.MainNotions.S.AutInst) (z : AF I.F �
       simp only [Φ, LinearMap.coe_comp, Function.comp_apply, LinearMap.lTensor_tmul, LinearEquiv.coe_coe,
         TensorProduct.comm_tmul, LinearMap.mulLeft_apply]
       rw [TensorProduct.smul_tmul', smul_eq_mul, hb]
-    | add x y hx hy => rw [smul_add, hx, hy, map_add, map_add]
+    | add x y hx hy => rw [smul_add, hx, hy, map_add (f := _), map_add (f := _)]
   rw [key, hz, map_zero]
 
 theorem thetaV_eq (I : Formalism.MainNotions.S.AutInst) (v : InfinitePlace I.F) (τ : EmbOver I.E v) (hτ : I.φ v = τ.1)
@@ -50,7 +50,7 @@ theorem thetaV_eq (I : Formalism.MainNotions.S.AutInst) (v : InfinitePlace I.F) 
     show _ = infEmb τ (compInf I.F I.E v (a ⊗ₜ[I.F] x))
     rw [h, infEmb_tmul]
     rfl
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem commute_of_conj {n : ℕ} (P M T : Matrix (Fin n) (Fin n) ℂ) (hP : IsUnit P)
     (h : Commute (P⁻¹ * M * P) (P⁻¹ * T * P)) : Commute M T := by

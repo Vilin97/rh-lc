@@ -123,7 +123,7 @@ theorem eq_of_tens (v : Pl F) {κ : Type} {φ₁ φ₂ : (κ → Fv F v) → ℂ
     intro u hu; funext i; exact GlobalTheory.LatVac.at_liftV v _ u hu
   have hev : (fun i => evFin F v ((x₀ + z) i)) = y := by
     funext i
-    simp only [Pi.add_apply, z, map_add, GlobalTheory.LatVac.evFin_liftV]
+    simp only [Pi.add_apply, z, map_add (f := _), GlobalTheory.LatVac.evFin_liftV]
     abel
   have e := congrFun h (x₀ + z)
   simp only [tens, hev, hr x₀ z hz] at e

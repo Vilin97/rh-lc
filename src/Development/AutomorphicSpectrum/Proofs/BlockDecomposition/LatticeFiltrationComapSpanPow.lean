@@ -84,7 +84,7 @@ theorem push {m j : ℕ} (h : Lat.Hyp f ξ l m) (hl : l ≠ 0) (hj : j < m) (c :
     refine Finset.sum_congr rfl fun i hi => ?_
     rw [Function.update_of_ne (by have := (Finset.mem_Ico.1 hi).1; omega)]
   rw [hs, Function.update_self, hd, map_mul, mul_assoc, mul_left_comm (f ξ) (f d), GlobalTheory.CompanionTheory.LatDp.mul_divPow_eq f ξ l M hl j]
-  simp only [map_add, map_mul, map_pow, map_natCast, map_one]
+  simp only [map_add (f := _), map_mul, map_pow, map_natCast, map_one]
   ring
 
 theorem exists_rep {m : ℕ} (hm : f ξ ^ m = 0) {y : B} (hy : y ∈ Lat.sub f ξ l M) :

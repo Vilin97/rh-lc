@@ -31,7 +31,7 @@ theorem evalZeroTwo_pullTwo (f : A →ₐc[O] B) (c : A ⊗[O] A) :
   induction c using TensorProduct.induction_on with
   | zero => simp
   | tmul a b => simp [pullbackTwo, evalZeroTwo_tmul]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _)]
 
 theorem evalZeroTwo_comul (b : A) : evalZeroTwo O A (comul b) = counit (R := O) b := by
   have key : TensorProduct.map (counit (R := O)) (counit (R := O)) (comul (R := O) b) =
@@ -67,7 +67,7 @@ theorem map_mk_pullTwo (f : A →ₐc[O] B) (c : A ⊗[O] A) :
       Algebra.TensorProduct.map_tmul, mk_kerIdeal_apply, evalZeroTwo_tmul,
       Algebra.TensorProduct.one_def, TensorProduct.smul_tmul', TensorProduct.tmul_smul, smul_smul]
     rw [mul_comm]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, add_smul]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), add_smul]
 
 theorem map_mk_cobOne_eq_zero (f : A →ₐc[O] B) {c : A ⊗[O] A} {b : B}
     (hb : counit (R := O) b = 0) (hc : cobOne O B b = pullbackTwo f c) :
@@ -135,7 +135,7 @@ theorem ker_rigExtMap_relFrob_le_range_rigOfOmega (p : ℕ) [Fact p.Prime] (K : 
     rw [← cocyclesMap_cob, hc₁, hcomp, verschiebung_comp_relFrob]
   set B₀ : (frobTwist h G).funs := B' + t • oneFun (frobTwist h G) with hB₀
   have hc0 : (frobTwist h G).cob B₀ = c := by
-    rw [hB₀, map_add, map_smul, hB', hc₁def, sub_add_cancel]
+    rw [hB₀, map_add (f := _), map_smul, hB', hc₁def, sub_add_cancel]
   refine ⟨w - (frobTwist h G).dFun B₀, ?_⟩
   show Submodule.Quotient.mk ((0 : (frobTwist h G).cocycles), w - (frobTwist h G).dFun B₀) =
     Submodule.Quotient.mk (c, w)

@@ -32,7 +32,7 @@ def locSpan {V : X.Opens} (η : Fin r → Γ(F, V)) : Sub F where
         obtain ⟨W, h, h', hW, k⟩ := hs z hz hz'
         obtain ⟨W', g, g', hW', k'⟩ := ht z hz hz'
         refine ⟨W ⊓ W', inf_le_left.trans h, inf_le_left.trans h', ⟨hW, hW'⟩, ?_⟩
-        rw [map_add]
+        rw [map_add (f := _)]
         refine add_mem ?_ ?_
         · simpa only [resM_resM] using resM_mem_spanOn η h' (inf_le_left : W ⊓ W' ≤ W) k
         · simpa only [resM_resM] using resM_mem_spanOn η g' (inf_le_right : W ⊓ W' ≤ W') k'

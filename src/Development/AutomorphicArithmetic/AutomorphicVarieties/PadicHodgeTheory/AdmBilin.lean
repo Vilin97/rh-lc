@@ -25,12 +25,12 @@ private theorem sig_smul (ρ : G → V →ₗ[Q] V) (g : G) (b : B) (w : B ⊗[Q
   induction w using TensorProduct.induction_on with
   | zero => simp
   | tmul c v => simp [sig_tmul, TensorProduct.smul_tmul']
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 private def DD (ρ : G → V →ₗ[Q] V) : Submodule F (B ⊗[Q] V) where
   carrier := {w | ∀ g, sig a ρ g w = w}
   zero_mem' := fun g => map_zero _
-  add_mem' := fun hx hy g => by rw [map_add, hx g, hy g]
+  add_mem' := fun hx hy g => by rw [map_add (f := _), hx g, hy g]
   smul_mem' := fun c x hx g => by rw [← algebraMap_smul B, sig_smul, ha, hx g]
 
 private theorem finrank_swap (ρ : G → V →ₗ[Q] V) (D : Submodule Q (V ⊗[Q] B))
@@ -42,7 +42,7 @@ private theorem finrank_swap (ρ : G → V →ₗ[Q] V) (D : Submodule Q (V ⊗[
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul c v => simp [sig_tmul]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   let e : ↥(DD F a ha ρ) ≃ₗ[Q] ↥D :=
     { toFun := fun x => ⟨TensorProduct.comm Q B V x, (hD _).2 fun g => by rw [← hc, x.2 g]⟩
       invFun := fun y => ⟨(TensorProduct.comm Q B V).symm y, fun g => by
@@ -70,11 +70,11 @@ private theorem span_bilin (ρ : G → V →ₗ[Q] V) (ρ' : G → V' →ₗ[Q] 
     intro g x y
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x x' hx hx' => simp only [map_add, LinearMap.add_apply, hx, hx']
+    | add x x' hx hx' => simp only [map_add (f := _), LinearMap.add_apply, hx, hx']
     | tmul c v =>
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add x x' hx hx' => simp only [map_add, hx, hx']
+      | add x x' hx hx' => simp only [map_add (f := _), hx, hx']
       | tmul c' v' => simp only [sig_tmul, hm, map_mul, hb]
   set S := Submodule.span B (DD F a ha π : Set (B ⊗[Q] W))
   have key : ∀ x y, m x y ∈ S := by

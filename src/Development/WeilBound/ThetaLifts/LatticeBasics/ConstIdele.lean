@@ -22,7 +22,7 @@ theorem cA_eq (z : AE F E) : cA σ z = sigR (AF F) σ z := by
   induction z using TensorProduct.induction_on with
   | zero => rw [map_zero, map_zero]
   | tmul a x => rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem cA_cA (h : IsCMExt F E σ) (z : AE F E) : cA σ (cA σ z) = z := by
   rw [cA_eq, cA_eq]; exact GlobalTheory.UnitaryHeckeBaseChange.cA_cA h z

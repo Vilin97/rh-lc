@@ -246,7 +246,7 @@ theorem phaseLoc_L (hA : ∀ p, Agree δ M p) {γ : TermDef.Term D u u' F0 what�
       algebraMap (D.s.atP p).Fp (D.s.atP p).Ep (yP ⟨δ, M, hA⟩ p) * (D.s.atP p).ιE (Formalism.DoubleCosetMeasures.sUp U)) *
         algebraMap (D.s.atP p).Fp (D.s.atP p).Ep (δ p)⁻¹ =
       (D.s.atP p).ιE ((Formalism.DoubleCosetMeasures.sLow L + Formalism.DoubleCosetMeasures.sUp U) / ((gS D : ℕ) : D.host.E)) := by
-    rw [div_eq_mul_one_div, ← hup, map_mul, map_add, ← hyP]
+    rw [div_eq_mul_one_div, ← hup, map_mul, map_add (f := _), ← hyP]
     ring
   simp only [sgLo_eq, sgUp_eq, map_neg]
   exact congrArg Neg.neg key

@@ -18,7 +18,7 @@ theorem eq_dualMapR {R R' : Type} [CommRing R] [CommRing R'] {f : R →+* R'} {F
   refine RingHom.ext fun x => ?_
   have e : x = algebraMap R _ x.fst + algebraMap R _ x.snd * DualNumber.eps := by
     ext <;> simp [TrivSqZeroExt.algebraMap_eq_inl]
-  rw [e, map_add, map_mul, h₁, h₁, h₂, ← e]
+  rw [e, map_add (f := _), map_mul, h₁, h₁, h₂, ← e]
   ext <;> simp [Chart.dualMapR, TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem det_gram {g : ℕ} (Hm W : Matrix (Fin g) (Fin g) ℂ) :

@@ -37,7 +37,7 @@ theorem UpperTheory.V.Lit.Bor.kugaSucc :
       (LinearMap.mk₂ ℝ (fun Z Y => (B - A) (toL Z) (ω (Function.update X i Y)))
         (fun Z Z' Y => LinearMap.congr_fun (map_add (B - A) (toL Z) (toL Z')) _)
         (fun c Z Y => LinearMap.congr_fun (map_smul (B - A) c (toL Z)) _)
-        (fun Z Y Y' => by rw [AlternatingMap.map_update_add, map_add])
+        (fun Z Y Y' => by rw [AlternatingMap.map_update_add, map_add (f := _)])
         (fun c Z Y => by rw [AlternatingMap.map_update_smul, LinearMap.map_smul_of_tower])) (X i) hs
   have h1 : dCo (A + B) (del (B - A) e ω) X =
       ∑ j, ∑ i, (A + B) (toL (X i).1) ((B - A) (toL (e j).1) (ω (Function.update X i (e j)))) := by

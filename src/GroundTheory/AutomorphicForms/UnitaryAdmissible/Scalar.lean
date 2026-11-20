@@ -206,7 +206,7 @@ def toSub (M : h.GKModule K V) (m : Submodule (MonoidAlgebra ℂ K) M.σ.asModul
   carrier := {v | M.σ.asModuleEquiv.symm v ∈ m}
   add_mem' {x y} hx hy := by
     show M.σ.asModuleEquiv.symm (x + y) ∈ m
-    rw [map_add]
+    rw [map_add (f := _)]
     exact m.add_mem hx hy
   zero_mem' := by
     show M.σ.asModuleEquiv.symm 0 ∈ m
@@ -230,7 +230,7 @@ def ofStable (M : h.GKModule K V) (O : Submodule ℂ V) (hO : ∀ k, ∀ v ∈ O
   carrier := {x | M.σ.asModuleEquiv x ∈ O}
   add_mem' {x y} hx hy := by
     show M.σ.asModuleEquiv (x + y) ∈ O
-    rw [map_add]
+    rw [map_add (f := _)]
     exact O.add_mem hx hy
   zero_mem' := by
     show M.σ.asModuleEquiv 0 ∈ O
@@ -245,7 +245,7 @@ def ofStable (M : h.GKModule K V) (O : Submodule ℂ V) (hO : ∀ k, ∀ v ∈ O
     | add a b ha hb =>
       rw [add_smul]
       show M.σ.asModuleEquiv (a • x + b • x) ∈ O
-      rw [map_add]
+      rw [map_add (f := _)]
       exact O.add_mem ha hb
     | smul r a ha =>
       rw [smul_assoc]
@@ -280,7 +280,7 @@ theorem aeval_eq_zero_of_equiv (M : h.GKModule K V) {ι : Type*} [Fintype ι]
         have e : (⟨M.σ.asModuleEquiv.symm ((w + w' : toSub M S) : V), (w + w').2⟩ : S) =
             ⟨M.σ.asModuleEquiv.symm (w : V), w.2⟩ + ⟨M.σ.asModuleEquiv.symm (w' : V), w'.2⟩ :=
           Subtype.ext (map_add _ _ _)
-        rw [e, map_add, Submodule.coe_add, map_add]
+        rw [e, map_add (f := _), Submodule.coe_add, map_add (f := _)]
       map_smul' := fun a w => by
         have e : (⟨M.σ.asModuleEquiv.symm ((a • w : toSub M S) : V), (a • w).2⟩ : S) =
             a • (⟨M.σ.asModuleEquiv.symm (w : V), w.2⟩ : S) :=
@@ -350,7 +350,7 @@ theorem finiteDimensional_toSub_of_isSimpleModule (M : h.GKModule K V)
       rw [← Module.End.mul_apply, ← map_mul]
       exact Submodule.subset_span ⟨k * k', rfl⟩
     | zero => rw [map_zero]; exact O.zero_mem
-    | add x y _ _ hx hy => rw [map_add]; exact O.add_mem hx hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact O.add_mem hx hy
     | smul a x _ hx => rw [map_smul]; exact O.smul_mem a hx
   have hs₀O : M.σ.asModuleEquiv (s₀ : M.σ.asModule) ∈ O :=
     Submodule.subset_span ⟨1, show M.σ 1 _ = _ by rw [map_one, Module.End.one_apply]⟩
@@ -406,7 +406,7 @@ theorem exists_aeval_eq_zero_of_mem_isotypic (M : h.GKModule K V) {ι : Type*} [
     Polynomial.aeval (∑ i, M.ρ (Z i) * M.ρ (Z i)) A.charpoly (M.σ.asModuleEquiv x) = 0) hv'
     (fun m x hx => aeval_eq_zero_of_equiv M Z hZ m.2.some A.charpoly hvanF hx)
     (by rw [map_zero, map_zero])
-    (fun x y hx hy => by rw [map_add, map_add, hx, hy, add_zero])
+    (fun x y hx hy => by rw [map_add (f := _), map_add (f := _), hx, hy, add_zero])
   rwa [LinearEquiv.apply_symm_apply] at key
 
 end KType

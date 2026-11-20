@@ -136,7 +136,7 @@ private theorem sht_pi {Ω : Type} [Field Ω] [Algebra ℚ Ω] [IsAlgClosure ℚ
   refine kum hl hζ (fun g => (n g : ZMod l)) (fun g => f (c' g)) (fun g => ?_) (hlc.comp f) (fun g h => ?_)
     (fun q hq => ?_) t ht1 (z0 t h3) g
   · rw [hn g ζ hζ.pow_eq_one, ZMod.val_natCast, ← pow_eq_pow_mod _ hζ.pow_eq_one]
-  · rw [hcc, map_add, map_nsmul, nsmul_eq_mul]
+  · rw [hcc, map_add (f := _), map_nsmul, nsmul_eq_mul]
   · by_cases e : q = l
     · exact ⟨A₀, e ▸ hA₀, fun g hg => z0 g (by rw [hm g hg.1, hm0, smul_zero, sub_zero])⟩
     · obtain ⟨A, hA⟩ := (placeBasic Ω).1 q hq

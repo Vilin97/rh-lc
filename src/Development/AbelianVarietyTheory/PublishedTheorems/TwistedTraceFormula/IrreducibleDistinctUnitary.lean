@@ -37,7 +37,7 @@ theorem eval_matRep {n n' : ℕ} (g : GL (Fin n) ℂ) (h : GL (Fin n') ℂ) (x :
   rw [matRep_apply]
   induction f using MvPolynomial.induction_on with
   | C a => simp [sub]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p v hp =>
     obtain ⟨a, s⟩ := v
     simp only [map_mul, hp, eval_X]

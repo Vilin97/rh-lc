@@ -53,7 +53,7 @@ def csGlobN : Submodule (𝓞 F) E where
   carrier := {e | ι e ∈ 𝒮}
   add_mem' := by
     intro a b ha hb
-    simp only [Set.mem_ofPred_eq, map_add] at *
+    simp only [Set.mem_ofPred_eq, map_add (f := _)] at *
     exact add_mem ha hb
   zero_mem' := by simp only [Set.mem_ofPred_eq, map_zero]; exact zero_mem _
   smul_mem' := by
@@ -195,7 +195,7 @@ theorem csGlob_one (hA : Formalism.UG.CS.IntAdApprox) (Λ : Submodule (𝓞 E) (
       obtain ⟨y', hy', s', hs', rfl⟩ := hw
       refine ⟨y + y', add_mem hy hy', s + s', fun i => add_mem (hs i) (hs' i), ?_⟩
       ext i
-      simp only [Pi.add_apply, map_add]
+      simp only [Pi.add_apply, map_add (f := _)]
       ring
     | smul a u _ hu =>
       obtain ⟨y, hy, s, hs, rfl⟩ := hu

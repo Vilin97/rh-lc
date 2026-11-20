@@ -78,7 +78,7 @@ def intF : AddSubgroup (AF F) where
   add_mem' := fun {a b} ha hb => ⟨evI_eq_zero.2 (by
       change a.1 + b.1 = 0
       rw [evI_eq_zero.1 ha.1, evI_eq_zero.1 hb.1, add_zero]),
-    fun v => by rw [map_add]; exact add_mem (ha.2 v) (hb.2 v)⟩
+    fun v => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha.2 v) (hb.2 v)⟩
   neg_mem' := fun {a} ha => ⟨evI_eq_zero.2 (by
       change -a.1 = 0
       rw [evI_eq_zero.1 ha.1, neg_zero]),
@@ -228,11 +228,11 @@ theorem exists_section (h : IsCMExt F E σ) (τ : ∀ w : InfinitePlace F, EmbOv
     exact ((h3 1).comp h1).add ((h3 a).comp h2)
   · refine Levi.ad_ext h τ (fun w => ?_) fun v => ?_
     · have e0 : (eF F).1 w = 0 := rfl
-      rw [map_add, map_add, piInf_smul, piInf_smul, piInf_smul, eρ, eρ, ha, e0, map_zero, map_one, zero_mul, mul_one,
+      rw [map_add (f := _), map_add (f := _), piInf_smul, piInf_smul, piInf_smul, eρ, eρ, ha, e0, map_zero, map_one, zero_mul, mul_one,
         add_zero, Complex.re_add_im]
     · have e0 : compFin F E v ((1 - eF F) • z) = 0 := compFin_smul v (sub_self (1 : Af F)) z
       rw [sub_smul, one_smul, map_sub, sub_eq_zero] at e0
-      rw [map_add, map_add, compFin_smul v rfl, compFin_smul v rfl, zero_add, zero_add, e0]
+      rw [map_add (f := _), map_add (f := _), compFin_smul v rfl, compFin_smul v rfl, zero_add, zero_add, e0]
 
 theorem exists_compact_mat {B : Base F E} {X : Spc F E n} {r s : ℕ} (hB : B.IsGood σ) (hX : X.IsHerm σ B r s) :
     ∃ S : Set (Matrix (Fin n) (Fin n) (AE F E)), IsCompact S ∧ ∀ k ∈ stabK (σ := σ) B X, mat k ∈ S := by

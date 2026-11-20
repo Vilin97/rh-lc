@@ -28,7 +28,7 @@ theorem finPart_finIn' (z : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVo
     unfold finPart
     rw [AlgHom.toRingHom_eq_coe, RingHom.coe_coe, Algebra.TensorProduct.map_tmul]
     rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem finIn_mem_idAt (z : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F ⊗[D.host.F] D.host.E) :
     GlobalTheory.FinPlLoc.finIn D z ∈ idAt D (fun _ => True) := by

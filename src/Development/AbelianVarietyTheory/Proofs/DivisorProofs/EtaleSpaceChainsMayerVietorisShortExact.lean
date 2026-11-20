@@ -151,7 +151,7 @@ private theorem moduleCat_free_pullback_exact {S : Type u} [Ring S] {W A B C : T
           ConcreteCategory.hom (-(ModuleCat.free S).map l) z :=
       fun z => by rw [← ConcreteCategory.comp_apply, biprod.lift_snd]
     dsimp only at x₂ hx₂ ⊢
-    rw [← htot x₂, map_add, e1, e2] at hx₂
+    rw [← htot x₂, map_add (f := _), e1, e2] at hx₂
     obtain ⟨z, hz1, hz2⟩ := exists_mapDomain_eq_of_pullback_square (S := S) _ _ _ _ hr hb hcomm ht hex _ _ hx₂
     refine ⟨z, ?_⟩
     rw [← htot x₂, ← htot (ConcreteCategory.hom (biprod.lift ((ModuleCat.free S).map t) (-(ModuleCat.free S).map l)) z)]

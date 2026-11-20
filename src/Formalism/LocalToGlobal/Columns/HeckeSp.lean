@@ -170,7 +170,7 @@ theorem sub_eigProj_mem [FiniteDimensional K V] (hc : PairComm op) (hs : SplitOv
     (C : (I → K) → Prop) (v : V) : v - eigProj hc hs C v ∈ eigSum op fun x => ¬ C x := by
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1
     ((isCompl_eigSum hc hs C).sup_eq_top ▸ (Submodule.mem_top : v ∈ (⊤ : Submodule K V)))
-  rw [map_add, eigProj_apply_of_mem hc hs ha, eigProj_apply_of_mem_not hc hs hb, add_zero,
+  rw [map_add (f := _), eigProj_apply_of_mem hc hs ha, eigProj_apply_of_mem_not hc hs hb, add_zero,
     add_sub_cancel_left]
   exact hb
 
@@ -193,7 +193,7 @@ theorem commute_eigProj [FiniteDimensional K V] (hc : PairComm op) (hs : SplitOv
   ext v
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1
     ((isCompl_eigSum hc hs C).sup_eq_top ▸ (Submodule.mem_top : v ∈ (⊤ : Submodule K V)))
-  simp only [Module.End.mul_apply, map_add]
+  simp only [Module.End.mul_apply, map_add (f := _)]
   rw [eigProj_apply_of_mem hc hs ha, eigProj_apply_of_mem_not hc hs hb,
     eigProj_apply_of_mem hc hs (eigSum_le_comap hg C ha),
     eigProj_apply_of_mem_not hc hs (eigSum_le_comap hg _ hb), map_zero]
@@ -252,7 +252,7 @@ theorem W_pt_eq_eigAt (hc : PairComm op) (ψ : hAlg O op →ₐ[O] O) :
     | add x y hx hy ihx ihy =>
       have e : pt ψ ⟨x + y, add_mem hx hy⟩ = pt ψ ⟨x, hx⟩ + pt ψ ⟨y, hy⟩ := by
         rw [show (⟨x + y, add_mem hx hy⟩ : hAlg O op) = ⟨x, hx⟩ + ⟨y, hy⟩ from rfl]
-        simp only [pt, map_add]
+        simp only [pt, map_add (f := _)]
       rw [e]
       exact mem_maxGen_add (commute_hAlg hc hx hy) ihx ihy
     | mul x y hx hy ihx ihy =>
@@ -424,7 +424,7 @@ theorem baseChange_sup_eq_top {p p' : Submodule K V} (h : p ⊔ p' = ⊤) :
   rw [eq_top_iff, ← Submodule.baseChange_top, ← h, Submodule.baseChange_eq_span, Submodule.span_le]
   rintro _ ⟨v, hv, rfl⟩
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hv
-  rw [map_add]
+  rw [map_add (f := _)]
   exact add_mem (Submodule.mem_sup_left (Submodule.tmul_mem_baseChange_of_mem 1 ha))
     (Submodule.mem_sup_right (Submodule.tmul_mem_baseChange_of_mem 1 hb))
 
@@ -549,7 +549,7 @@ theorem heckePolyOf_gaussBin (q n : ℕ) (ν : L) :
       simp only [T]
       rw [Nat.triangle_succ, gaussBin]
       push_cast
-      simp only [map_mul, map_add, map_pow, map_neg, map_one]
+      simp only [map_mul, map_add (f := _), map_pow, map_neg, map_one]
       ring
     have h0 : C ((-1) ^ 0 * (q : L) ^ (0 * (0 - 1) / 2) * (ν ^ 0 * (gaussBin q (n + 1) 0 : L))) * X ^ 0 =
         T 0 := by simp [T, gaussBin]

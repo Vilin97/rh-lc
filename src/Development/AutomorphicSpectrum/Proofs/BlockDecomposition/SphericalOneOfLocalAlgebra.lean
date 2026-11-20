@@ -45,7 +45,7 @@ theorem finrank_fixed_eq_one (π : Representation ℂ G V) (K : Subgroup G) (hc 
       obtain ⟨c, hc₁⟩ := ha
       obtain ⟨d, hd⟩ := hb
       have : orbitMap π x₀ (a + b) = orbitMap π x₀ a + orbitMap π x₀ b := map_add _ _ _
-      exact ⟨c + d, by rw [this, map_add, hc₁, hd, add_smul]⟩
+      exact ⟨c + d, by rw [this, map_add (f := _), hc₁, hd, add_smul]⟩
     | smul r a ha =>
       obtain ⟨c, hc₁⟩ := ha
       have : orbitMap π x₀ (r • a) = r • orbitMap π x₀ a := map_smul _ _ _

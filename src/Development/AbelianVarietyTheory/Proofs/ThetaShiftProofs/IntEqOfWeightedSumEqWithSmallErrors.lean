@@ -141,7 +141,7 @@ theorem pairE_ne_zero [Module.Finite ℤ X] [Module.Free ℤ X] (hξ : ξ ≠ 0)
   have : (c * a) • x + n • y = 0 := by
     rw [← Int.cast_smul_eq_zsmul (𝓞 E), ← hc, mul_smul, mul_smul, ← smul_add, hab, smul_zero]
   have h2 := congrArg ξ this
-  rw [map_add, hz, map_zsmul, map_zero, zero_add, smul_eq_mul] at h2
+  rw [map_add (f := _), hz, map_zsmul, map_zero, zero_add, smul_eq_mul] at h2
   simpa [hn] using h2
 
 end Tr
@@ -173,7 +173,7 @@ theorem exists_sym (a : 𝓞 E) : ∃ t : 𝓞 E, cc (t : E) = t ∧ ∀ μ : E,
   · change cc ((a : E) + cc (a : E)) = (a : E) + cc (a : E)
     rw [cc_add', cc_cc', add_comm]
   · change Algebra.trace ℚ E (μ * ((a : E) + cc (a : E))) = _
-    rw [mul_add, map_add, ← trace_cc (μ * cc (a : E)), cc_mul', hμ, cc_cc']; ring
+    rw [mul_add, map_add (f := _), ← trace_cc (μ * cc (a : E)), cc_mul', hμ, cc_cc']; ring
 
 theorem exists_sep (S : Finset E) (hS : ∀ μ ∈ S, μ ≠ 0 ∧ cc μ = μ) :
     ∃ t : 𝓞 E, cc (t : E) = t ∧ ∀ μ ∈ S, Algebra.trace ℚ E (μ * t) ≠ 0 := by
@@ -220,7 +220,7 @@ theorem slice_finite (J : ℚ) : {ν : E | Freq ν ∧ Algebra.trace ℚ E ν = 
     · obtain ⟨t, ht, ht'⟩ := exists_sym a
       obtain ⟨m, hm⟩ := h3 t ht
       refine ⟨m, ?_⟩
-      rw [← hm, ht' ν h1, mul_assoc, two_mul, map_add, two_mul]
+      rw [← hm, ht' ν h1, mul_assoc, two_mul, map_add (f := _), two_mul]
     · have e1 : ‖φ ν‖ = (φ ν).re := by
         rw [← Complex.abs_re_eq_norm.mpr (im_zero h1 φ), abs_of_nonneg (h2 φ)]
       have e2 : (φ ν).re ≤ J := by
@@ -290,10 +290,10 @@ theorem exists_isolating (ν₀ : E) (h₀ : Freq ν₀) : ∃ u : 𝓞 E, cc (u
   have hu : (((R : 𝓞 E) + t : 𝓞 E) : E) = R + (t : E) := by simp
   have htr : ∀ ν : E, Algebra.trace ℚ E (ν * (R + (t : E))) = R * Algebra.trace ℚ E ν + Algebra.trace ℚ E (ν * t) := by
     intro ν
-    rw [mul_add, map_add, mul_comm ν R, ← nsmul_eq_mul, map_nsmul, nsmul_eq_mul]
+    rw [mul_add, map_add (f := _), mul_comm ν R, ← nsmul_eq_mul, map_nsmul, nsmul_eq_mul]
   refine ⟨R + t, ?_, fun τ => ?_, fun ν hν h => ?_⟩
   · rw [hu, cc_add', cc_nat, ht]
-  · rw [hu, map_add, map_natCast, Complex.add_re, Complex.natCast_re]
+  · rw [hu, map_add (f := _), map_natCast, Complex.add_re, Complex.natCast_re]
     have h1 := (abs_le.mp (hle τ)).1
     nlinarith [mul_nonneg hM0 hj0]
   · rw [hu, htr, htr] at h
@@ -353,14 +353,14 @@ theorem exists_form_isolating : ∀ (E : Type) [Field E] [NumberField E] [IsCMFi
   let be : LinearMap.BilinForm ℤ X := LinearMap.mk₂ ℤ f
     (fun x x' y => by
       apply Int.cast_injective (α := ℚ)
-      rw [Int.cast_add, ← hf, ← hf, ← hf, hp, pairE_add, ← map_add]; congr 1; ring)
+      rw [Int.cast_add, ← hf, ← hf, ← hf, hp, pairE_add, ← map_add (f := _)]; congr 1; ring)
     (fun n x y => by
       apply Int.cast_injective (α := ℚ)
       rw [smul_eq_mul, Int.cast_mul n, ← hf, ← hf, hp, pairE_zsmul, ← zsmul_eq_mul (Algebra.trace ℚ E _) n, ← map_zsmul]
       congr 1; rw [zsmul_eq_mul]; ring)
     (fun x y y' => by
       apply Int.cast_injective (α := ℚ)
-      rw [Int.cast_add, ← hf, ← hf, ← hf, hp, pairE_add, cc_add', ← map_add]; congr 1; ring)
+      rw [Int.cast_add, ← hf, ← hf, ← hf, hp, pairE_add, cc_add', ← map_add (f := _)]; congr 1; ring)
     (fun n x y => by
       apply Int.cast_injective (α := ℚ)
       rw [smul_eq_mul, Int.cast_mul n, ← hf, ← hf, hp, pairE_zsmul, cc_mul', cc_int,

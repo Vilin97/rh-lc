@@ -93,7 +93,7 @@ theorem eq_of_act (h : IsCMExt F E σ) (hJ : IsHermND σ J) {X Y : Matrix (Fin n
   have h1 : (1 : Matrix (Fin n) (Fin n) ℂ) = X.map τ * Ay.map τ + Y.map τ * Ax.map τ + P.map τ := by
     have : (1 : Matrix (Fin n) (Fin n) E) = X * Ay + Y * Ax + P := by simp [hP]
     have e := congrArg (fun A : Matrix (Fin n) (Fin n) E => A.map τ) this
-    simpa [Matrix.map_add, Matrix.map_mul, Matrix.map_one] using e
+    simpa [Matrix.map_add (f := _), Matrix.map_mul, Matrix.map_one] using e
   calc M = M * 1 := (Matrix.mul_one _).symm
     _ = _ := by
       rw [h1, Matrix.mul_add, Matrix.mul_add, ← Matrix.mul_assoc, ← Matrix.mul_assoc, hX, hY, hMP]

@@ -174,7 +174,7 @@ theorem key (hl : ((l : ℕ) : R) ∈ maximalIdeal R)
     (hs : e * s = s) (h0 : chi (em 0) s = 0) : ∃ w, s = ((l : ℕ) : ℤ_[l] ⊗[ℤ] OE) * w := by
   obtain ⟨x, s', hs'⟩ := decomp s
   have hx0 : em 0 x ∈ maximalIdeal R := by
-    rw [hs', map_add, chi_one_tmul, chi_l hl, add_zero, residue_eq_zero_iff] at h0
+    rw [hs', map_add (f := _), chi_one_tmul, chi_l hl, add_zero, residue_eq_zero_iff] at h0
     exact h0
   obtain ⟨y, hy⟩ := hε x (mem_all em hfrob hx0)
   have hkey : (1 : ℤ_[l]) ⊗ₜ[ℤ] ε * (1 ⊗ₜ x) = ((l : ℕ) : ℤ_[l] ⊗[ℤ] OE) * (1 ⊗ₜ y) := by

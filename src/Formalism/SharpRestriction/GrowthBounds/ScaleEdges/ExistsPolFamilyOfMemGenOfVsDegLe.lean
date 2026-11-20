@@ -177,7 +177,7 @@ theorem exists_pol_family_of_mem_gen_of_vsDeg_le (D : Formalism.BasicNotions.D7)
     rw [hTt, sb_SPtrue] at hm
     have hm' := MvPolynomial.support_mul _ _ hm
     obtain ⟨m1, h1, m2, h2, rfl⟩ := Finset.mem_add.1 hm'
-    rw [map_add, IT_hom hH0 (mem_support_iff.1 h2), add_zero, weight_eq_normal_degree, normDeg_eq_vsDeg]
+    rw [map_add (f := _), IT_hom hH0 (mem_support_iff.1 h2), add_zero, weight_eq_normal_degree, normDeg_eq_vsDeg]
     exact hT m1 (support_map_subset _ _ h1)
 
   have hreal : ∀ o, Realisable p n' X.S.w n' r X.g c' o (weightedHomogeneousComponent (normalVariableWeight n' (r + K) r) o Tt) := by

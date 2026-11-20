@@ -357,7 +357,7 @@ theorem UpperTheory.Reformulated.B.QuantumMinorsCasimir.casimir :
   have z (a b : Fin 2) := congrArg (E a b) h1
   have w (a b : Fin 2) := congrArg (E a b) h2
   have g (a b : Fin 2) := congrArg (E a b) h3
-  simp only [map_add, map_sub, map_smul, map_zero] at z w g
+  simp only [map_add (f := _), map_sub, map_smul, map_zero] at z w g
   have hI : Complex.I * Complex.I = -1 := Complex.I_mul_I
   rw [hq]
   linear_combination (norm := skip) u • h1 + (1 / 4 : ℂ) • (z 0 0 + z 1 1 - (g 0 0 - g 1 1)

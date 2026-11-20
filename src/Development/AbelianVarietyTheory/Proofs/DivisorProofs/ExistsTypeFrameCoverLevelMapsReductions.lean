@@ -174,10 +174,10 @@ theorem typeFrame_cover : ∀ (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 
         (hκa (w • a) (Submodule.smul_mem_smul hw Submodule.mem_top))
       have h2 : φ v (w • a) = φ v a := by
         conv_rhs => rw [ha]
-        rw [map_add, hkill v u hu, zero_add]
+        rw [map_add (f := _), hkill v u hu, zero_add]
       have h3 : φ v (lev g a) = φ v (lev g (w • a)) := by
         conv_lhs => rw [ha]
-        rw [map_add, map_add, map_smul, hkill v u hu, zero_add]
+        rw [map_add (f := _), map_add (f := _), map_smul, hkill v u hu, zero_add]
       rw [h3, h1, h2]
     have hliftφ : ∀ v, φ v (liftLa γ a) = φ v (lev g a) := by
       intro v

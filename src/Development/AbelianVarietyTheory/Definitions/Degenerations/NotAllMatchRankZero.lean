@@ -26,7 +26,7 @@ theorem _root_.GlobalTheory.Ex.NumD.Form.half_add {N : _root_.GlobalTheory.Ex.Nu
         β.be x y := by
   have hsum : β.be (x + y) (x + y) = β.be x x +
       β.be y y + 2 * β.be x y := by
-    simp only [map_add, LinearMap.add_apply, β.symm y x]
+    simp only [map_add (f := _), LinearMap.add_apply, β.symm y x]
     ring
   have hx : (2 : ℤ) ∣ β.be x x :=
     dvd_trans (dvd_mul_right 2 (k : ℤ)) (β.dvd x x)
@@ -54,7 +54,7 @@ theorem _root_.GlobalTheory.Ex.NumD.Form.div_add {N : _root_.GlobalTheory.Ex.Num
     (x y z : N.X) :
     β.be x (y + z) / j =
       β.be x y / j + β.be x z / j := by
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Int.add_ediv_of_dvd_left (dvd_trans (Int.natCast_dvd_natCast.2 hj)
     (dvd_trans (dvd_mul_left (k : ℤ) 2) (β.dvd x y)))
 
@@ -70,7 +70,7 @@ def twist {k : ℕ} (β : N.Form k) (u : Oˣ) : NumD O :=
                rw [β.half_add, zpow_add, zpow_add]
                apply Additive.ofMul.injective
                simp only [ofMul_mul, ofMul_div]; abel
-             rw [e, e, e, mul_right_comm, h, map_add, LinearMap.add_apply, zpow_add]
+             rw [e, e, e, mul_right_comm, h, map_add (f := _), LinearMap.add_apply, zpow_add]
              exact mul_mul_mul_comm _ _ _ _ }
 
 open scoped BigOperators in
@@ -305,7 +305,7 @@ theorem txT_twist (N : NumD O) {k : ℕ} (β : N.Form k) (u : Oˣ) (m : ℕ) (hm
   have hm0 : (m : ℤ) ≠ 0 := by exact_mod_cast ho.pos.ne'
   have hr' : (m : ℤ) ^ 2 = 2 * r + 1 := by exact_mod_cast hr
   have e0 : β.be (y + m • χ) (y + m • χ) / (2 * m ^ 2) = a + 2 * b * m + c * m ^ 2 := by
-    simp only [map_add, LinearMap.add_apply, map_nsmul, LinearMap.smul_apply, β.symm χ y, ha, hb, hc, nsmul_eq_mul]
+    simp only [map_add (f := _), LinearMap.add_apply, map_nsmul, LinearMap.smul_apply, β.symm χ y, ha, hb, hc, nsmul_eq_mul]
     exact Int.ediv_eq_of_eq_mul_right (by positivity) (by ring)
   have e1 : β.be y y / 2 = a * (2 * r + 1) := Int.ediv_eq_of_eq_mul_right two_ne_zero (by rw [ha, hr']; ring)
   have e2 : β.be χ χ / 2 = c * m ^ 2 := Int.ediv_eq_of_eq_mul_right two_ne_zero (by rw [hc]; ring)

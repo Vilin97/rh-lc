@@ -62,8 +62,8 @@ private lemma eq_lr_take_drop_of_map_fst_eq_replicate {D : D7} : ∃ Ψ : AE D �
   | tmul a b => exact ⟨rfl, rfl⟩
   | add z z' h1 h2 =>
     constructor
-    · simp only [map_add, Prod.fst_add, h1.1, h2.1]
-    · simp only [map_add, Prod.snd_add, h1.2, h2.2]
+    · simp only [map_add (f := _), Prod.fst_add, h1.1, h2.1]
+    · simp only [map_add (f := _), Prod.snd_add, h1.2, h2.2]
 
 private lemma units_eq_of_res_eq_of_le_iSup {D : D7} {z z' : AE D} (hi : infPart D z = infPart D z') (ht : toEAf D z = toEAf D z') :
     z = z' := by

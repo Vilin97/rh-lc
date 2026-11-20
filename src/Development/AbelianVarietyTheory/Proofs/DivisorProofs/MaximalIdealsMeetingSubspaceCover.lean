@@ -23,7 +23,7 @@ private theorem latD_of {l : ℕ} [Fact l.Prime] {ι : Type} [Fintype ι] [Decid
     exact AddSubgroup.subset_closure ⟨r, fun τ => GlobalTheory.LatBC.dwMap F.emb N _ (m τ),
       fun τ => ⟨((m τ : Formalism.GradedWeylDivisibility.dualWeyl F.O N N (res N (lam τ))) : MvPolynomial (Fin N × Fin N) F.O), (m τ).2, rfl⟩, rfl⟩
   | add a b ha hb =>
-    rw [map_add, map_add]
+    rw [map_add (f := _), map_add (f := _)]
     exact add_mem ha hb
 
 end GlobalTheory.ExpCover
@@ -87,7 +87,7 @@ private theorem isForm_of_span {l : ℕ} [Fact l.Prime] {ι : Type} [DecidableEq
   | zero => exact ⟨fun _ _ _ => rfl, fun κ g => by rw [Pi.zero_apply, Pi.zero_apply, map_zero, smul_zero]⟩
   | add f f' _ _ h h' =>
     refine ⟨fun γ hγ g => by rw [Pi.add_apply, Pi.add_apply, h.1 γ hγ, h'.1 γ hγ], fun κ g => ?_⟩
-    rw [Pi.add_apply, Pi.add_apply, map_add, smul_add, h.2, h'.2]
+    rw [Pi.add_apply, Pi.add_apply, map_add (f := _), smul_add, h.2, h'.2]
   | smul a f _ h =>
     refine ⟨fun γ hγ g => by rw [Pi.smul_apply, Pi.smul_apply, h.1 γ hγ], fun κ g => ?_⟩
     rw [Pi.smul_apply, Pi.smul_apply, map_smul, smul_comm, h.2]
@@ -103,7 +103,7 @@ private theorem span_stable {l : ℕ} [Fact l.Prime] {ι : Type} [DecidableEq ι
     obtain ⟨f, hf, rfl⟩ := hu
     exact Submodule.subset_span ⟨B.op (R.ix i) f, hZ (R.ix i) hf, funext fun g => R.hecke i f g⟩
   | zero => rw [map_zero]; exact Submodule.zero_mem _
-  | add _ _ _ _ h h' => rw [map_add]; exact Submodule.add_mem _ h h'
+  | add _ _ _ _ h h' => rw [map_add (f := _)]; exact Submodule.add_mem _ h h'
   | smul a _ _ h => rw [map_smul]; exact Submodule.smul_mem _ a h
 
 private theorem forms_fin : ∀ (l : ℕ) [Fact l.Prime] (ι : Type) [Fintype ι] [DecidableEq ι] (N : ℕ) (F : Frame l ι N) (lam : ι → ℕ → ℕ)

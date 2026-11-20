@@ -188,7 +188,7 @@ theorem coeff_gaugeSquare_low_degree (X : RawChart C d I κ)
     (he : zdeg e < 2) : coeff e (h2 X) = 0 := by
   unfold h2
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sum]
+    rw [map_add (f := _), map_sum]
   by_cases h0 : ∀ i, e (1, i) = 0
   · rw [Finset.sum_eq_zero fun i _ => coeff_X_mul_rho i _ e (h0 i), add_zero]
     apply hax

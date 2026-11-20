@@ -16,7 +16,7 @@ theorem liftX_one : liftX k (1 : PS k 1 d) = 1 := by
   rw [liftX, ← MvPowerSeries.coe_substAlgHom (liftX_hs k), map_one]
 
 theorem liftX_add (f g : PS k 1 d) : liftX k (f + g) = liftX k f + liftX k g := by
-  rw [liftX, liftX, liftX, ← MvPowerSeries.coe_substAlgHom (liftX_hs k), map_add]
+  rw [liftX, liftX, liftX, ← MvPowerSeries.coe_substAlgHom (liftX_hs k), map_add (f := _)]
 
 theorem liftX_sub (f g : PS k 1 d) : liftX k (f - g) = liftX k f - liftX k g := by
   rw [liftX, liftX, liftX, ← MvPowerSeries.coe_substAlgHom (liftX_hs k), map_sub]

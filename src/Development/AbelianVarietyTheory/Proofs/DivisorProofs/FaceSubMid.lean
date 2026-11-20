@@ -148,7 +148,7 @@ theorem pv_δ_left {n₁ : ℤ} (hn : n + 1 = n₁) (a : Cochain ((chains R).obj
   | zero => rw [ev_δ_zero hn a U s s' hs, bdL, smul_zero, sub_zero]
   | succ p =>
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [ev_δ_succ hn a U p s s' hs, bdL, map_add, LinearMap.add_apply, sg_smul, map_zsmul, LinearMap.smul_apply, map_sum,
+      rw [ev_δ_succ hn a U p s s' hs, bdL, map_add (f := _), LinearMap.add_apply, sg_smul, map_zsmul, LinearMap.smul_apply, map_sum,
       LinearMap.sum_apply, eq_sub_iff_add_eq]
     refine congrArg₂ (· + ·) rfl (congrArg _ (Finset.sum_congr rfl fun i _ => ?_))
     rw [map_zsmul, LinearMap.smul_apply, pv_eq μ a b w p r _ z s' t (by omega) ht h]
@@ -163,7 +163,7 @@ theorem pv_δ_right {m₁ : ℤ} (hm : m + 1 = m₁) (a : Cochain ((chains R).ob
   | zero => rw [ev_δ_zero hm b U t t' ht, bdR, smul_zero, sub_zero]
   | succ r =>
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [ev_δ_succ hm b U r t t' ht, bdR, map_add, sg_smul, map_zsmul, map_sum, eq_sub_iff_add_eq]
+      rw [ev_δ_succ hm b U r t t' ht, bdR, map_add (f := _), sg_smul, map_zsmul, map_sum, eq_sub_iff_add_eq]
     refine congrArg₂ (· + ·) rfl (congrArg _ (Finset.sum_congr rfl fun i _ => ?_))
     rw [map_zsmul, pv_eq μ a b w p r y _ s t' hs (by omega) h]
 

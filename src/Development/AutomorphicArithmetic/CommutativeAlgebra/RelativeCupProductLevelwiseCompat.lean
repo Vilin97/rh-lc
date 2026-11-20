@@ -28,7 +28,7 @@ private theorem colEx_transfer {C C' D D' : DC} (Φ : C.Hom C') (Ψ : D.Hom D') 
     have h4 : e' (s - 1) (η • (e' (s - 1)).symm y') = η • y' := by
       have := units_map_smul (e' (s - 1)).toAddMonoidHom η ((e' (s - 1)).symm y')
       simpa using this
-    rw [h3, map_add, hΦ, hd', AddEquiv.apply_symm_apply, h4, units_map_smul, smul_add]
+    rw [h3, map_add (f := _), hΦ, hd', AddEquiv.apply_symm_apply, h4, units_map_smul, smul_add]
 
 private def lvl {R : Type} [CommRing R] {E : Spc} {p : ℕ} (Z : Sub E)
     (Z' : Sub (disc.obj (E.obj (op (SimplexCategory.mk p)))))

@@ -55,7 +55,7 @@ theorem isAlgebraic_of_closure_eq_top (y : Fin N → Ω) (hy : y ≠ 0)
     exact mul_mem (hA _ (hXy j)) (hC _)
   have hall : ∀ p, ι p ∈ L := fun p => by
     induction p using Polynomial.induction_on' with
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | monomial n c =>
       rw [← Polynomial.C_mul_X_pow_eq_monomial, map_mul, map_pow]
       exact mul_mem (hC c) (pow_mem hX n)

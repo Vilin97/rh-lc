@@ -63,7 +63,7 @@ theorem compAt_conjAL (x : AL L) :
   | zero => simp
   | tmul a b =>
     simp [conjAL, compAt, Formalism.UG.sigR, Algebra.TensorProduct.map_tmul]
-  | add a b ha hb => simp only [map_add, ha, hb]
+  | add a b ha hb => simp only [map_add (f := _), ha, hb]
 
 theorem loc_mem_GU (Dv : InertDatum L n v w) (z : GAf L n) : Dv.loc z ∈ Formalism.UG.GU Dv.σw n := by
   set φ : AL L →+* w.adicCompletion L :=

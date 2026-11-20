@@ -25,7 +25,7 @@ omit [IsScalarTower ℂ (FractionRing ℂ) ℂ] in
 
 theorem ex_add_nsmul (Λ : GtAn a) (j : ℕ) (α mu : Λ.A.X) :
     Λ.u.ex (Λ.A.ct α + j • Λ.A.ct mu) = a.D₀.c (Λ.ε α + j • Λ.ε mu) := by
-  rw [← map_nsmul, ← map_add, ← map_nsmul, ← map_add, Λ.ct]
+  rw [← map_nsmul, ← map_add (f := _), ← map_nsmul, ← map_add (f := _), Λ.ct]
 
 omit [IsScalarTower ℂ (FractionRing ℂ) ℂ] in
 
@@ -48,7 +48,7 @@ theorem secVal_mul_genVal (Λ : GtAn a) (j : ℕ) (α mu : Λ.A.X) (s₀ : a.D�
     exact Λ.psi y
   refine (congrArg₂ (· * ·) (secVal_feTranslate Λ.ah Λ.rig j (Λ.ct α) (Λ.ct mu) (Λ.psi α) (Λ.psi mu)
     (h₂ (mu + α) _ _ (map_add _ _ _).symm (map_add _ _ _).symm) s₀ v.2)
-    (h₁ (α + j • mu) _ _ (by rw [map_add, map_nsmul]) (by rw [map_add, map_nsmul]))).trans ?_
+    (h₁ (α + j • mu) _ _ (by rw [map_add (f := _), map_nsmul]) (by rw [map_add (f := _), map_nsmul]))).trans ?_
   change Λ.fn j α s₀ (v.2 + Λ.A.ct mu) * _ * _ = _
   have n₁ := (Λ.A.psi mu).ne_zero
   have n₂ := (Λ.A.psi α).ne_zero

@@ -224,7 +224,7 @@ theorem DiffVanish.multiDiff_update_add {d : ℕ} {φ : G → M} (h : DiffVanish
     exact Ideal.mul_mem_mul (diffElt_mem a)
       (by simpa using prod_diffElt_mem univ (Function.update g i b))
   simp only [multiDiff_eq_shiftAct, key]
-  rw [diffElt_add, sub_mul, add_mul, mul_assoc, map_sub, map_add, LinearMap.sub_apply,
+  rw [diffElt_add, sub_mul, add_mul, mul_assoc, map_sub, map_add (f := _), LinearMap.sub_apply,
     h.shiftAct_eq_zero hm, sub_zero, LinearMap.add_apply]
 
 def DiffVanish.form {d : ℕ} {φ : G → M} (h : DiffVanish (d + 1) φ) :
@@ -305,7 +305,7 @@ theorem diffElt_sub_sum_mem {ι : Type*} (s : Finset ι) (g : ι → G) (x : G) 
     diffElt (x - ∑ i ∈ s, g i) - (diffElt x - ∑ i ∈ s, diffElt (g i)) ∈ diffIdeal G ^ 2 := by
   let f : G →+ AddMonoidAlgebra ℤ G ⧸ diffIdeal G ^ 2 :=
     AddMonoidHom.mk' (fun g ↦ Ideal.Quotient.mk _ (diffElt g)) fun a b ↦ by
-      rw [← map_add, Ideal.Quotient.eq, diffElt_add, sub_sub_cancel_left, neg_mem_iff, sq]
+      rw [← map_add (f := _), Ideal.Quotient.eq, diffElt_add, sub_sub_cancel_left, neg_mem_iff, sq]
       exact Ideal.mul_mem_mul (diffElt_mem a) (diffElt_mem b)
   have hf : ∀ g, Ideal.Quotient.mk _ (diffElt g) = f g := fun _ ↦ rfl
   rw [← Ideal.Quotient.eq]
@@ -389,8 +389,8 @@ theorem exists_mvPolynomial_of_iteratedBackwardDifferenceVanish {ι : Type*} [Fi
     have h0 := isHomogeneous_diffTopPoly (d + 1) g φ 0
     refine ⟨Q + diffTopPoly (d + 1) g φ 0, (MvPolynomial.totalDegree_add _ _).trans
       (max_le (by omega) h0.totalDegree_le), fun n ↦ ?_, ?_⟩
-    · rw [map_add, hQ', h.eval_diffTopPoly]; simp
-    · rw [map_add, MvPolynomial.homogeneousComponent_of_mem h0, if_pos rfl,
+    · rw [map_add (f := _), hQ', h.eval_diffTopPoly]; simp
+    · rw [map_add (f := _), MvPolynomial.homogeneousComponent_of_mem h0, if_pos rfl,
         MvPolynomial.homogeneousComponent_eq_zero _ _ (by omega), zero_add]
 
 theorem DiffVanish.exists_mvPolynomial {d : ℕ} {φ : G → K} (h : DiffVanish (d + 1) φ)

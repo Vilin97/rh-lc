@@ -95,7 +95,7 @@ theorem G_wv {W : WeierstrassCurve ℂ_[p]} {wq : PowerSeries ℂ_[p]} (h : IsWq
     rw [hφ, PowerSeries.coe_substAlgHom]; rfl
   rw [hX, hw]
   have : G W (φ PowerSeries.X) (φ (wser wq)) = φ (G W PowerSeries.X (wser wq)) := by
-    simp only [G, map_add, map_sub, map_mul, map_pow, AlgHom.commutes]
+    simp only [G, map_add (f := _), map_sub, map_mul, map_pow, AlgHom.commutes]
   rw [this, G_wser h, map_zero]
 
 end PI.AddIntG.Wk

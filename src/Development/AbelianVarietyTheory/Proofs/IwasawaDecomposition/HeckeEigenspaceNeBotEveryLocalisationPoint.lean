@@ -102,8 +102,8 @@ theorem mem_heckeEig_of_gen {O X M : Type} [CommRing O] [IsDomain O] [AddCommGro
     have m1 : g1 ∈ T := hT ▸ h1
     have m2 : g2 ∈ T := hT ▸ h2
     have e1 : (⟨g1 + g2, hgT⟩ : T) = ⟨g1, m1⟩ + ⟨g2, m2⟩ := rfl
-    rw [e1, map_add, LinearMap.baseChange_add, LinearMap.add_apply, ih1 m1, ih2 m2]
-    simp only [Subalgebra.coe_add, Pi.add_apply, map_add, add_smul]
+    rw [e1, map_add (f := _), LinearMap.baseChange_add, LinearMap.add_apply, ih1 m1, ih2 m2]
+    simp only [Subalgebra.coe_add, Pi.add_apply, map_add (f := _), add_smul]
   | mul g1 g2 h1 h2 ih1 ih2 =>
     have m1 : g1 ∈ T := hT ▸ h1
     have m2 : g2 ∈ T := hT ▸ h2

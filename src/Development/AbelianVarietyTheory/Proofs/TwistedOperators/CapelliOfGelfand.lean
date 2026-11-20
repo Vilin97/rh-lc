@@ -106,7 +106,7 @@ theorem main_succ (V : Type) [AddCommGroup V] [Module ℂ V] (m : ℕ)
       simp only [Module.End.mul_apply, Module.algebraMap_end_apply, etr_apply_all m E χ hetr, smul_smul]
       rw [← sum_smul, map_smul]
     rw [h2] at h1
-    simp only [LinearMap.add_apply, Module.End.mul_apply, Module.algebraMap_end_apply, map_add, map_smul, LinearMap.sub_apply, map_sub, smul_eq_mul] at h1
+    simp only [LinearMap.add_apply, Module.End.mul_apply, Module.algebraMap_end_apply, map_add (f := _), map_smul, LinearMap.sub_apply, map_sub, smul_eq_mul] at h1
     rw [← polyOf_eval] at h1
     simp only [hP] at h1
     simp only [eval_mul, eval_neg, eval_pow, eval_C]

@@ -89,7 +89,7 @@ theorem latHT_torus {C : Type} [NontriviallyNormedField C] [IsUltrametricDist C]
     exact Ideal.mem_span_singleton.1 (Ideal.Quotient.eq_zero_iff_mem.1 h)
   choose d hdd using hdiv
   have hp' : (p : O) ^ m ≠ 0 := pow_ne_zero _ fun h => hp (by simpa using congrArg (intO C).subtype h)
-  let c' : 𝓞 E →+ O := AddMonoidHom.mk' d fun a b => mul_left_cancel₀ hp' (by rw [mul_add, ← hdd, ← hdd, ← hdd, map_add])
+  let c' : 𝓞 E →+ O := AddMonoidHom.mk' d fun a b => mul_left_cancel₀ hp' (by rw [mul_add, ← hdd, ← hdd, ← hdd, map_add (f := _)])
   let w' : Over.mk (spMap (algebraMap O (DualNumber O)) ≫ xO) ⟶ splitTorus X (𝓞 E) := GlobalTheory.Diag.epsVec _ c'
   refine ⟨xO, hx, w'.left, ⟨Over.w w', (GlobalTheory.Diag.reduces_iff hb w').2 ((GlobalTheory.Diag.exists_epsVec_iff w').1 ⟨_, rfl⟩)⟩, ?_⟩
   have h1 : vO = spMap (epsMul ((p : O) ^ m)) ≫ w'.left := by

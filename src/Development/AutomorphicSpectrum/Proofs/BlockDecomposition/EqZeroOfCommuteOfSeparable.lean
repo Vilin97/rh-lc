@@ -105,9 +105,9 @@ theorem map_shear (ν : Measure E) [ν.IsAddHaarMeasure] (F : Submodule ℝ E) (
     rw [← e.apply_symm_apply (P (e (y, 0))), he] at this
     exact this
   have hshear : ∀ p, e.symm (e p + P (e p)) = (p.1, p.2 + g p.1) := fun p => by
-    have h1 : e p = e (p.1, 0) + e (0, p.2) := by rw [← map_add]; simp
+    have h1 : e p = e (p.1, 0) + e (0, p.2) := by rw [← map_add (f := _)]; simp
     have h2 : P (e p) = P (e (p.1, 0)) := by rw [h1]; exact hinv _ _ (hF0 _)
-    rw [map_add, e.symm_apply_apply, h2]
+    rw [map_add (f := _), e.symm_apply_apply, h2]
     ext1
     · simp [hg0]
     · simp [g]
@@ -163,13 +163,13 @@ theorem exists_homeo_map_eq_smul (ν : Measure E) [ν.IsAddHaarMeasure] (F : Sub
   have hPc : Continuous P := hc.comp hLsc
   have hPF : ∀ x, P x ∈ F := fun x => hF _
   have hPinv : ∀ x, ∀ y ∈ F, P (x + y) = P x := fun x y hy => by
-    simp only [P, map_add]; exact hinv _ _ (hL' y hy)
+    simp only [P, map_add (f := _)]; exact hinv _ _ (hL' y hy)
   let Φ : E ≃ₜ E :=
     { toFun := fun x => L x + Q x
       invFun := fun z => L.symm (z - P z)
       left_inv := fun x => by
         have h1 : P (L x + Q x) = Q x := by
-          simp only [P, map_add, LinearEquiv.symm_apply_apply]
+          simp only [P, map_add (f := _), LinearEquiv.symm_apply_apply]
           exact hinv _ _ (hL' _ (hF x))
         simp [h1]
       right_inv := fun z => by

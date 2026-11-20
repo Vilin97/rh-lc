@@ -161,7 +161,7 @@ theorem TySet_repar {V : VF C} {g : Fin 2} (τ : PowerSeries C) (hτ : PowerSeri
   · intro q
     rw [hxx, h2 q, alongCv_repar hγ0 hτ]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [hxx, hs, map_add, map_sub, map_sum]
+      simp only [hxx, hs, map_add (f := _), map_sub, map_sum]
     congr 1
     refine Finset.sum_congr rfl fun c _ => ?_
     split_ifs <;> simp

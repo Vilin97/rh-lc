@@ -46,7 +46,7 @@ theorem inFr_add {a : ZMod n} {num den : LetA O n} {f g : W.EE} (hf : InFr W a n
   unfold InFr at *
   obtain ⟨u, hu, e1⟩ := hf
   obtain ⟨u', hu', e2⟩ := hg
-  exact ⟨u + u', add_mem hu hu', by rw [mul_add, e1, e2, mul_add, map_add]⟩
+  exact ⟨u + u', add_mem hu hu', by rw [mul_add, e1, e2, mul_add, map_add (f := _)]⟩
 
 theorem inFr_zero (a : ZMod n) (num den : LetA O n) : InFr W a num den 0 := by
   unfold InFr
@@ -327,7 +327,7 @@ theorem inIdπ_add {a : ZMod n} {e : ℕ} {α : ℕ → ℤ} {f g : W.EE} (hf : 
   unfold InIdπ at *
   obtain ⟨u, hu, e1⟩ := hf
   obtain ⟨u', hu', e2⟩ := hg
-  exact ⟨u + u', add_mem hu hu', by rw [mul_add, e1, e2, ← map_add]; congr 1; ring⟩
+  exact ⟨u + u', add_mem hu hu', by rw [mul_add, e1, e2, ← map_add (f := _)]; congr 1; ring⟩
 
 theorem inIdπ_smul {a : ZMod n} {e : ℕ} {α : ℕ → ℤ} {f : W.EE} (hf : InIdπ W a e α f) (c : O) :
     InIdπ W a e α (c • f) := by
@@ -342,7 +342,7 @@ theorem inIdπ_aeval [IsDomain O] [NeZero n] (hR : RingP W) (hS : PsStable W) {a
   intro f hf
   induction P using Polynomial.induction_on' generalizing f with
   | add p q hp hq =>
-    rw [map_add, LinearMap.add_apply]
+    rw [map_add (f := _), LinearMap.add_apply]
     exact inIdπ_add W (hp f hf) (hq f hf)
   | monomial k c =>
     rw [Polynomial.aeval_monomial, Module.End.mul_apply, Module.algebraMap_end_apply]

@@ -140,7 +140,7 @@ private theorem coeff_coeffη_eq_coeff_comb (b : Fin r →₀ ℕ) (m : Fin N ×
     · rw [if_neg h, coeff_zero, coeff_monomial, if_neg]
       rintro rfl
       exact h (etaPart_comb b m)
-  · simp only [map_add, MvPolynomial.coeff_add, hp, hq]
+  · simp only [map_add (f := _), MvPolynomial.coeff_add, hp, hq]
 
 theorem coeff_coeffη (m : Fin (N + 1) × Fin r →₀ ℕ) (F : MvPolynomial (Fin (N + 1) × Fin r) K) :
     AddMonoidAlgebra.coeff (coeffη (etaPart m) F) (llPart m) = AddMonoidAlgebra.coeff F m := by
@@ -177,7 +177,7 @@ theorem coeffη_X_castSucc_mul (b : Fin r →₀ ℕ) (i : Fin N) (c : Fin r)
   · rw [X_mul_monomial', coeffη_monomial, coeffη_monomial, etaPart_add,
       etaPart_single_castSucc, add_zero, llPart_add, llPart_single_castSucc]
     split_ifs <;> simp [X_mul_monomial']
-  · simp only [mul_add, map_add, hp, hq]
+  · simp only [mul_add, map_add (f := _), hp, hq]
 
 theorem coeffη_pderiv_castSucc (b : Fin r →₀ ℕ) (i : Fin N) (c : Fin r)
     (G : MvPolynomial (Fin (N + 1) × Fin r) K) :
@@ -186,7 +186,7 @@ theorem coeffη_pderiv_castSucc (b : Fin r →₀ ℕ) (i : Fin N) (c : Fin r)
   · rw [pderiv_monomial, coeffη_monomial, coeffη_monomial, etaPart_tsub,
       etaPart_single_castSucc, tsub_zero, llPart_tsub, llPart_single_castSucc]
     split_ifs <;> simp [pderiv_monomial]
-  · simp only [map_add, hp, hq]
+  · simp only [map_add (f := _), hp, hq]
 
 theorem coeffη_Xlast_pow_mul_monomial (b : Fin r →₀ ℕ) (ρ : Fin r) (k : ℕ) (m : Fin (N + 1) × Fin r →₀ ℕ)
     (a : K) :
@@ -200,7 +200,7 @@ theorem coeffη_shift (b : Fin r →₀ ℕ) (ρ : Fin r) (k : ℕ) (G : MvPolyn
   refine MvPolynomial.induction_on' G (fun n a => ?_) (fun p q hp hq => ?_)
   · rw [coeffη_Xlast_pow_mul_monomial, coeffη_monomial]
     simp only [add_left_inj]
-  · simp only [mul_add, map_add, hp, hq]
+  · simp only [mul_add, map_add (f := _), hp, hq]
 
 theorem coeffη_shift_zero (b : Fin r →₀ ℕ) (ρ : Fin r) (k : ℕ) (hb : ¬ Finsupp.single ρ k ≤ b)
     (G : MvPolynomial (Fin (N + 1) × Fin r) K) :
@@ -209,7 +209,7 @@ theorem coeffη_shift_zero (b : Fin r →₀ ℕ) (ρ : Fin r) (k : ℕ) (hb : �
   · rw [coeffη_Xlast_pow_mul_monomial, if_neg]
     intro h
     exact hb (by rw [← h]; exact le_add_self)
-  · simp only [mul_add, map_add, hp, hq, add_zero]
+  · simp only [mul_add, map_add (f := _), hp, hq, add_zero]
 
 theorem coeffη_pderiv_last (b : Fin r →₀ ℕ) (c : Fin r) (G : MvPolynomial (Fin (N + 1) × Fin r) K) :
     coeffη b (pderiv (Fin.last N, c) G) = ((b c + 1 : ℕ) : K) • coeffη (b + Finsupp.single c 1) G := by
@@ -233,7 +233,7 @@ theorem coeffη_pderiv_last (b : Fin r →₀ ℕ) (c : Fin r) (G : MvPolynomial
             omega
           rw [← h2, tsub_add_cancel_of_le hle]
       · rfl
-  · simp only [map_add, smul_add, hp, hq]
+  · simp only [map_add (f := _), smul_add, hp, hq]
 
 end Coeff2
 
@@ -272,7 +272,7 @@ theorem coeffη_glAct (LL : Letters N) (n j : ℕ) (hj : j ≤ N) (c d : Fin r) 
     (F : MvPolynomial (Fin (N + 1) × Fin r) ℚ_[p]) :
     coeffη b (glAct p (LL.snoc n) j c d F) = glAct p LL j c d (coeffη b F) := by
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [glAct_apply, glAct_apply, Fin.sum_univ_castSucc, map_add, map_sum,
+    rw [glAct_apply, glAct_apply, Fin.sum_univ_castSucc, map_add (f := _), map_sum,
     if_neg (show ¬ ((Fin.last N : ℕ) < j) by rw [Fin.val_last]; omega), map_zero, add_zero]
   refine Finset.sum_congr rfl (fun i _ => ?_)
   simp only [Fin.coe_castSucc, snoc_vec_castSucc]
@@ -427,7 +427,7 @@ theorem pderiv_comm (a b : σ) (F : MvPolynomial σ K) :
       rw [Finsupp.tsub_apply, Finsupp.tsub_apply, Finsupp.single_apply, Finsupp.single_apply, if_neg hab,
         if_neg (Ne.symm hab), tsub_zero, tsub_zero]
       ring
-  · simp only [map_add, hp, hq]
+  · simp only [map_add (f := _), hp, hq]
 
 private theorem mvPolynomial_pderiv_X_eq_ite [DecidableEq σ] (x y : σ) :
     pderiv x (X y : MvPolynomial σ K) = if x = y then 1 else 0 := by
@@ -458,7 +458,7 @@ private theorem degree_add_single_one_eq (s : σ →₀ ℕ) (x y : σ) :
     (s + Finsupp.single x 1).degree = (s + Finsupp.single y 1).degree := by
   first
   | simp [Finsupp.degree_add, Finsupp.degree_single]
-  | simp [map_add]
+  | simp [map_add (f := _)]
 
 theorem op_hc (x y : σ) (t : ℕ) (F : MvPolynomial σ K) :
     homogeneousComponent t (X x * pderiv y F) = X x * pderiv y (homogeneousComponent t F) := by
@@ -480,7 +480,7 @@ theorem op_hc (x y : σ) (t : ℕ) (F : MvPolynomial σ K) :
       split_ifs
       · rw [pderiv_monomial, add_tsub_cancel_right, X_mul_monomial']
       · simp
-  · simp only [map_add, mul_add, hp, hq]
+  · simp only [map_add (f := _), mul_add, hp, hq]
 
 end Ops
 
@@ -669,7 +669,7 @@ theorem diff_id (LL : Letters N) (ρ c : Fin r) (hc : c ≠ ρ) (f : MvPolynomia
     rw [glAct_full_C, map_zero, aeval_C]
     simp
   · rename_i f g hf hg
-    simp only [map_add, mul_add, hf, hg]
+    simp only [map_add (f := _), mul_add, hf, hg]
   · rename_i f x hf
     have e1 := diff_gen p LL ρ c hc x
     rw [map_mul (aeval (Formalism.GM.M.freezeSub p LL ρ)) f (X x), Derivation.leibniz, smul_eq_mul, smul_eq_mul,
@@ -734,7 +734,7 @@ theorem coeffη_kill (ρ : Fin r) (t : ℕ) (G : MvPolynomial (Fin (N + 1) × Fi
       intro c hc
       have := DFunLike.congr_fun hm c
       simpa [Finsupp.single_apply, Ne.symm hc] using this
-  · simp only [map_add, hf, hg]
+  · simp only [map_add (f := _), hf, hg]
 
 theorem kill_freezeSub (LL : Letters N) (ρ : Fin r) :
     (kill p ρ).comp (aeval (freezeSub p LL ρ)) =
@@ -797,7 +797,7 @@ theorem coeffη_base (LL : Letters N) (ρ : Fin r) (t : ℕ) (f : MvPolynomial (
     have key : (Finsupp.single ρ m.degree = Finsupp.single ρ t) ↔ t = m.degree :=
       ⟨fun h' => (Finsupp.single_injective ρ h').symm, fun h' => by rw [h']⟩
     exact if_congr key rfl rfl
-  · simp only [map_add, hf, hg]
+  · simp only [map_add (f := _), hf, hg]
 
 variable [NeZero r]
 

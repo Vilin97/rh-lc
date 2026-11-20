@@ -21,7 +21,7 @@ theorem vhE_of_globalArtinReciprocity (hA : GlobalTheory.Published.GlobalArtinRe
   let ψ : (Additive (ClassGroup (𝓞 E)) →+ M) →ₗ[O] coZ1s ρ :=
     { toFun := fun f => ⟨fun g => f (Additive.ofMul (art g)), fun g h => by
         show f (Additive.ofMul (art (g * h))) = f (Additive.ofMul (art g)) + ρ g (f (Additive.ofMul (art h)))
-        rw [hρ, map_mul, ofMul_mul, map_add]⟩
+        rw [hρ, map_mul, ofMul_mul, map_add (f := _)]⟩
       map_add' := fun f f' => rfl
       map_smul' := fun r f => rfl }
   let Φ := (Submodule.mkQ ((coB1 ρ).comap (coZ1s ρ).subtype)) ∘ₗ ψ

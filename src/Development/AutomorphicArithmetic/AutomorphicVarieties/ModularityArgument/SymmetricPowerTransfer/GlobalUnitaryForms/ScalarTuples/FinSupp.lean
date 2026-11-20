@@ -53,7 +53,7 @@ private theorem tr_map {K K' : Type} [Field K] [Field K'] (f : K →+* K') {Δ �
   refine ⟨γ', ?_, ?_⟩
   · rw [e, Matrix.det_fin_two_of]
     linear_combination hd'
-  · rw [e, Matrix.trace_fin_two_of, ← lmap_star', ← map_add, ht]
+  · rw [e, Matrix.trace_fin_two_of, ← lmap_star', ← map_add (f := _), ht]
     ext <;> simp [lmap]
 
 private theorem conj_tr {K : Type} [Field K] {Δ τ : K} {γ : DX Δ} (h : HasTr γ τ) (y : DX Δ) :

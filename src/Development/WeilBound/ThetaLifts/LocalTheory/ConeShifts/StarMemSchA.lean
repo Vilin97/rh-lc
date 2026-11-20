@@ -151,7 +151,7 @@ theorem lDiag_ne {κ : Type} [Fintype κ] {Φ : (κ → AF F) → ℂ} (h : Φ �
       exact ((compD F κ f).continuous.comp continuous_fst).mul (hg.1.continuous.comp
         (continuous_pi fun i => by cases i <;> exact (continuous_apply _).comp continuous_snd))
     | zero => rw [map_zero]; exact continuous_zero
-    | add x y _ _ hx hy => rw [map_add]; exact hx.add hy
+    | add x y _ _ hx hy => rw [map_add (f := _)]; exact hx.add hy
     | smul c x _ hx => rw [map_smul]; exact hx.const_smul c
   have e : resD F κ (boxFun Φ (star Φ)) = fun p => ((Complex.normSq (Φ (glue p)) : ℝ) : ℂ) := funext fun p =>
     Complex.mul_conj _

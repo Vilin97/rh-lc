@@ -84,7 +84,7 @@ theorem exists_toSpec [IsLocallyNoetherian X] (hall : ∀ q : X, genPt ξ ⤳ q)
       map_one' := hinj (by rw [hφ', map_one, map_one])
       map_mul' := fun a b => hinj (by rw [hφ', map_mul, map_mul, hφ', hφ'])
       map_zero' := hinj (by rw [hφ', map_zero, map_zero])
-      map_add' := fun a b => hinj (by rw [hφ', map_add, map_add, hφ', hφ']) }
+      map_add' := fun a b => hinj (by rw [hφ', map_add (f := _), map_add (f := _), hφ', hφ']) }
   refine ⟨X.toSpecΓ ≫ Spec.map (CommRingCat.ofHom φ), ?_, fun p ρ hρ => ?_⟩
   · have h0 : Spec.map (CoordExtend.gpC ξ) ≫ X.fromSpecStalk (genPt ξ) = ξ :=
       Scheme.Spec_stalkClosedPointTo_fromSpecStalk ξ

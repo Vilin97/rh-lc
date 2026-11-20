@@ -17,7 +17,7 @@ theorem HermitianDetMono.one_le_det_one_add {n : ℕ} {M : Matrix (Fin n) (Fin n
       rw [dotProduct_comm, ← EuclideanSpace.inner_eq_star_dotProduct, inner_self_eq_norm_sq_to_K,
         hH.eigenvectorBasis.orthonormal.1 i]
       simp
-    rw [add_mulVec, one_mulVec, dotProduct_add, map_add, hv, RCLike.one_re]
+    rw [add_mulVec, one_mulVec, dotProduct_add, map_add (f := _), hv, RCLike.one_re]
     linarith [hM.re_dotProduct_nonneg (hH.eigenvectorBasis i)]
   rw [hH.det_eq_prod_eigenvalues]
   have hprod : (1 : ℝ) ≤ ∏ i, hH.eigenvalues i := by

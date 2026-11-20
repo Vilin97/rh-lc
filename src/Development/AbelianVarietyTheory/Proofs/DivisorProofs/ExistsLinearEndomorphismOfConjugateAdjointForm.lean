@@ -17,7 +17,7 @@ theorem exists_endo_of_adjoint :
     intro x x'
     apply D.unimod.1
     ext y
-    simp only [map_add, LinearMap.add_apply, key, hl]
+    simp only [map_add (f := _), LinearMap.add_apply, key, hl]
   refine ⟨AddMonoidHom.mk' (fun x => e.symm (f x)) hadd, ?_, ?_⟩
   · intro s x
     show e.symm (f (s • x)) = s • e.symm (f x)

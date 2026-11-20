@@ -48,12 +48,12 @@ theorem integ_pair {ι : Type} [Fintype ι] {E : ι → Type} [∀ i, AddCommGro
       have e : (fun x => f (a + b) x * conj (g (PiTensorProduct.tprod ℂ v') x)) =
           fun x => f a x * conj (g (PiTensorProduct.tprod ℂ v') x) + f b x * conj (g (PiTensorProduct.tprod ℂ v') x) := by
         funext x
-        simp only [map_add, Pi.add_apply, add_mul]
+        simp only [map_add (f := _), Pi.add_apply, add_mul]
       refine ⟨?_, ?_⟩
       · rw [e]
         exact Integrable.add ha1 hb1
       · rw [e, integral_add ha1 hb1, ha2, hb2]
-        simp only [map_add, LinearMap.add_apply, mul_add]
+        simp only [map_add (f := _), LinearMap.add_apply, mul_add]
 
   intro w w'
   induction w' using PiTensorProduct.induction_on with
@@ -76,12 +76,12 @@ theorem integ_pair {ι : Type} [Fintype ι] {E : ι → Type} [∀ i, AddCommGro
     have e : (fun x => f w x * conj (g (a + b) x)) =
         fun x => f w x * conj (g a x) + f w x * conj (g b x) := by
       funext x
-      simp only [map_add, Pi.add_apply, mul_add]
+      simp only [map_add (f := _), Pi.add_apply, mul_add]
     refine ⟨?_, ?_⟩
     · rw [e]
       exact Integrable.add ha1 hb1
     · rw [e, integral_add ha1 hb1, ha2, hb2]
-      simp only [map_add, mul_add]
+      simp only [map_add (f := _), mul_add]
 
 variable {D : D7}
 
@@ -157,13 +157,13 @@ theorem metEx : GlobalTheory.Published.CuspRapidDecay → ∀ D : D7, MetEx D :=
       (fun x y : s.CC c => ipM s.M s.ν s.fd (PiTensorProduct.lift.symm (y : SmT s.M →ₗ[ℂ] (GA D s.V → ℂ)))
         (PiTensorProduct.lift.symm (x : SmT s.M →ₗ[ℂ] (GA D s.V → ℂ)))) ?_ ?_ ?_ ?_, ?_⟩
     · intro x x' y
-      simp only [Submodule.coe_add, map_add]
+      simp only [Submodule.coe_add, map_add (f := _)]
       exact hadd _ (hmem y) _ (hmem x) _ (hmem x')
     · intro a x y
       simp only [Submodule.coe_smul, map_smul, RingHom.id_apply, smul_eq_mul]
       exact hsmul _ (hmem y) _ (hmem x) a
     · intro x y y'
-      simp only [Submodule.coe_add, map_add]
+      simp only [Submodule.coe_add, map_add (f := _)]
       rw [hherm _ (hmem x) _ (add_mem (hmem y) (hmem y')), hadd _ (hmem x) _ (hmem y) _ (hmem y'), star_add,
         ← hherm _ (hmem x) _ (hmem y), ← hherm _ (hmem x) _ (hmem y')]
     · intro a x y

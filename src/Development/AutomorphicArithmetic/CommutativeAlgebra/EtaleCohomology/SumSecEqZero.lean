@@ -43,7 +43,7 @@ private theorem locSum_zero (Pa : Parts C) (T : Theory C) (F : Coef C) (hF : Pa.
   funext A y
   let E : T.H Q F 0 →+ F.obj A := AddMonoidHom.mk' (fun z => (T.zero Q F z).1 A y) (by
     intro z w
-    simp [map_add])
+    simp [map_add (f := _)])
   show E (∑ i, a i • T.pull (u i) F 0 x) = 0
   set_option synthInstance.maxHeartbeats 100000 in
     rw [map_sum]

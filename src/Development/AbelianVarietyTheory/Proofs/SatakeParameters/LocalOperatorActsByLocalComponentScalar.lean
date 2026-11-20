@@ -105,7 +105,7 @@ theorem GlobalTheory.Cong.opOf_locU_eq_smul : ∀ (E : Type) [Field E] [NumberFi
       · exact ⟨⊤, by simp, fun N' _ _ => by simp⟩
       · rintro x y ⟨N₁, h₁, hx⟩ ⟨N₂, h₂, hy⟩
         refine ⟨N₁ ⊓ N₂, by rw [Subgroup.coe_inf]; exact h₁.inter h₂, fun N' hN' hle => ?_⟩
-        rw [map_add, map_add, hx N' hN' (hle.trans inf_le_left), hy N' hN' (hle.trans inf_le_right), add_zero]
+        rw [map_add (f := _), map_add (f := _), hx N' hN' (hle.trans inf_le_left), hy N' hN' (hle.trans inf_le_right), add_zero]
     obtain ⟨N, hN, hNφ⟩ := hC
     haveI := hfin N hN
     haveI := Fintype.ofFinite (Kw ⧸ N.subgroupOf Kw)

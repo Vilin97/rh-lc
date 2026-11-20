@@ -166,7 +166,7 @@ theorem Om_Kset_homog : ∀ (p q r s : ℕ) (T0 : GrpData (p * r + q * s) (p * s
   have h0 : ∀ R, inner ℂ (F.ι R) w' = 0 := by
     intro R
     induction R using MvPolynomial.induction_on' with
-    | add R S hR hS => rw [map_add, inner_add_left, hR, hS, add_zero]
+    | add R S hR hS => rw [map_add (f := _), inner_add_left, hR, hS, add_zero]
     | monomial α c =>
       have hm : MvPolynomial.monomial α c ∈ homog (Ix p q × Ix r s) α.degree :=
         MvPolynomial.isHomogeneous_monomial c rfl

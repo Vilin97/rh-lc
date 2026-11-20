@@ -109,7 +109,7 @@ def FinGradedSub.embedC (n : ℕ) :
   map_add' s t := by
     funext K
     by_cases h : K.1.1 ⊆ support x
-    · simp only [dif_pos h, Pi.add_apply, map_add]
+    · simp only [dif_pos h, Pi.add_apply, map_add (f := _)]
     · simp only [dif_neg h, Pi.add_apply, add_zero]
   map_smul' a s := by
     funext K

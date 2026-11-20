@@ -96,7 +96,7 @@ def ringOf {σ : E →ₐ[F] E} {d : ℕ} {bs : Module.Basis (Fin d) F E} {v : H
     exact one_int h k
   add_mem' := by
     intro x y hx hy k
-    rw [map_add, Finsupp.add_apply]
+    rw [map_add (f := _), Finsupp.add_apply]
     exact add_mem (hx k) (hy k)
   zero_mem' := by
     intro k

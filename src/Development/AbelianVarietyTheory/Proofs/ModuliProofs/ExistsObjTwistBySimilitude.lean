@@ -95,7 +95,7 @@ def twist (I : TateIso D k Q act e) (g : Sim D)
     rw [← zpow_natCast, ← zpow_mul, mul_comm (g.ν _), zpow_mul, zpow_natCast, I.ζ_pow n m hn hm]
     exact zeta_zpow_congr I hn (hν n m hn hm).1
   ev n a := I.ev n (g.f n a)
-  add n a b := by rw [map_add, I.add]
+  add n a b := by rw [map_add (f := _), I.add]
   lin n c a := by rw [map_smul, I.lin]
   ker n hn a := by
     rw [I.ker n hn]
@@ -146,10 +146,10 @@ def objTwist (o : Obj D l b s) (g : Sim D)
   ample := o.ample
   ktriv := o.ktriv
   eta a := o.eta (g.f l.M a)
-  eta_add a c := by rw [map_add, o.eta_add]
+  eta_add a c := by rw [map_add (f := _), o.eta_add]
   eta_ker a ha := o.eta_ker _ (map_mem_smul_top _ _ ha)
   etaA a := o.etaA (g.f l.A a)
-  etaA_add a c := by rw [map_add, o.etaA_add]
+  etaA_add a c := by rw [map_add (f := _), o.etaA_add]
   etaA_ker a := by rw [map_nsmul, o.etaA_ker]
   geom k _ _ x β hx := by
     obtain ⟨hd, I, hζ, hA', hM⟩ := o.geom k x β hx

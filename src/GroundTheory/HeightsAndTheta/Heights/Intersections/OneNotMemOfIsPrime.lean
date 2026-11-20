@@ -139,7 +139,7 @@ theorem mem_locRing_iff (hPW : P ≤ W) {x : FractionRing (MRing ι ⧸ P)} :
       · rw [add_comm a a']
         exact homog_mul hu' hv
       · exact fun h => (Ideal.IsPrime.mem_or_mem ‹_› h).elim hvW hvW'
-      · simp only [map_add, map_mul]
+      · simp only [map_add (f := _), map_mul]
         rw [← hx, ← hy]
         ring
     | neg x _ hx =>
@@ -221,7 +221,7 @@ theorem isLocalRing (hPW : P ≤ W) : IsLocalRing (locRing P W) := by
   have heq : ((x + y : locRing P W) : FractionRing (MRing ι ⧸ P)) * fracHom P (v * v') =
       fracHom P (u * v' + u' * v) := by
     change ((x : FractionRing (MRing ι ⧸ P)) + y) * _ = _
-    simp only [map_add, map_mul]
+    simp only [map_add (f := _), map_mul]
     rw [← hx', ← hy']
     ring
   exact (isUnit_iff hPW (x + y) hnum (homog_mul hv hv') hden heq).mp hxy

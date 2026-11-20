@@ -50,7 +50,7 @@ variable {R : Type*} [CommRing R]
 def rowDivL {n : ℕ} (a b : Fin n) (k : ℕ) :
     MvPolynomial (Fin n × Fin n) R →ₗ[R] MvPolynomial (Fin n × Fin n) R where
   toFun := rowDiv R a b k
-  map_add' f g := by simp only [rowDiv, map_add, Polynomial.coeff_add]
+  map_add' f g := by simp only [rowDiv, map_add (f := _), Polynomial.coeff_add]
   map_smul' c f := by simp only [rowDiv, map_smul, Polynomial.coeff_smul, RingHom.id_apply]
 
 theorem rowDiv_span {n : ℕ} (a b : Fin n) (k : ℕ) (S : Set (MvPolynomial (Fin n × Fin n) R))
@@ -228,7 +228,7 @@ theorem g_weight {n : ℕ} (d : Fin r × Fin n →₀ ℕ) :
   induction d using Finsupp.induction_linear with
   | zero => simp
   | add f g hf hg =>
-    simp only [map_add, Pi.add_apply, Nat.cast_add, mul_add, Finset.sum_add_distrib, hf, hg]
+    simp only [map_add (f := _), Pi.add_apply, Nat.cast_add, mul_add, Finset.sum_add_distrib, hf, hg]
   | single v c =>
     simp [Finsupp.weight_apply, htW, rowW, Pi.single_apply, Finsupp.sum_single_index, mul_comm]
 
@@ -515,7 +515,7 @@ theorem detX_even (a b : Fin n) (hab : a ≠ b) :
         (Matrix.of fun a i : Fin n => gX R n a i.val) = Xm.updateRow a (Xm a + (C (Polynomial.X : Polynomial (MvPolynomial (Fin n × Fin n) R)) :
           MvPolynomial (ℕ × Fin n) (Polynomial (MvPolynomial (Fin n × Fin n) R))) • Xm b) := by
     refine Matrix.ext fun a' i => ?_
-    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, gX, eval₂Hom_X', psiE, map_add, map_X, hXm]
+    simp only [RingHom.mapMatrix_apply, Matrix.map_apply, Matrix.of_apply, gX, eval₂Hom_X', psiE, map_add (f := _), map_X, hXm]
     by_cases h : a' = a
     · subst h
       rw [Matrix.updateRow_self, if_pos rfl, map_mul, map_C, map_X, Polynomial.coe_mapRingHom, Polynomial.map_X]
@@ -704,7 +704,7 @@ theorem catM_odd (a b : Fin n) (hab : a ≠ b) (l : ℕ) :
       (gX R n a₁ i)) = mulC (Matrix.transvection b a (-(C Polynomial.X))) X' := by
     funext a' i
     rw [mulC_tv_apply]
-    simp only [gX, eval₂Hom_X', psiO, map_add, map_X, hX']
+    simp only [gX, eval₂Hom_X', psiO, map_add (f := _), map_X, hX']
     by_cases h : a' = b
     · subst h; rw [if_pos rfl, if_pos rfl, map_mul, map_neg, map_C, map_X, Polynomial.coe_mapRingHom, Polynomial.map_X]
     · rw [if_neg h, if_neg h, map_zero]

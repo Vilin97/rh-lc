@@ -121,7 +121,7 @@ theorem dsig_add_left (R : Rep k r) {X Y : Mx k r} (hX : InLieHpk k r X) (hY : I
     (hv : v ∈ R.sm) : dsig (k := k) (r := r) R.σ (X + Y) v =
       dsig (k := k) (r := r) R.σ X v + dsig (k := k) (r := r) R.σ Y v := by
   obtain ⟨L, hL⟩ := exists_lin hv
-  rw [(hL _ hX).1, (hL _ hY).1, (hL _ (lie_add hX hY)).1, map_add]
+  rw [(hL _ hX).1, (hL _ hY).1, (hL _ (lie_add hX hY)).1, map_add (f := _)]
 
 theorem dsig_smul_left (R : Rep k r) (a : ℝ) {X : Mx k r} (hX : InLieHpk k r X) {v : R.H}
     (hv : v ∈ R.sm) : dsig (k := k) (r := r) R.σ (a • X) v = (a : ℂ) • dsig (k := k) (r := r) R.σ X v := by

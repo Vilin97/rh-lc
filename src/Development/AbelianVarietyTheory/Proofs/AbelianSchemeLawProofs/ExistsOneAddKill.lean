@@ -16,7 +16,7 @@ def Reg (V : Z.Opens) : Subring (Fn Z) where
   carrier := {F | ∃ a : Γ(Z, V), ∀ z (hz : z ∈ V), (Z.presheaf.germ V z hz).hom a = F z}
   mul_mem' := fun ⟨a, ha⟩ ⟨b, hb⟩ => ⟨a * b, fun z hz => by rw [map_mul, ha, hb]; rfl⟩
   one_mem' := ⟨1, fun z hz => by rw [map_one]; rfl⟩
-  add_mem' := fun ⟨a, ha⟩ ⟨b, hb⟩ => ⟨a + b, fun z hz => by rw [map_add, ha, hb]; rfl⟩
+  add_mem' := fun ⟨a, ha⟩ ⟨b, hb⟩ => ⟨a + b, fun z hz => by rw [map_add (f := _), ha, hb]; rfl⟩
   zero_mem' := ⟨0, fun z hz => by rw [map_zero]; rfl⟩
   neg_mem' := fun ⟨a, ha⟩ => ⟨-a, fun z hz => by rw [map_neg, ha]; rfl⟩
 
@@ -172,7 +172,7 @@ theorem local_global {W : Z.Opens} (B : Subring (Fn Z)) (hB : B ≤ Reg W) {T : 
       map_one' := sec_ext fun z hz => by rw [hr, map_one]; rfl
       map_mul' := fun a b => sec_ext fun z hz => by rw [map_mul, hr, hr, hr]; rfl
       map_zero' := sec_ext fun z hz => by rw [hr, map_zero]; rfl
-      map_add' := fun a b => sec_ext fun z hz => by rw [map_add, hr, hr, hr]; rfl }
+      map_add' := fun a b => sec_ext fun z hz => by rw [map_add (f := _), hr, hr, hr]; rfl }
   have hW : IsAffineOpen W := by
     refine isAffineOpen_of_isAffineOpen_basicOpen W (Set.range fun t => ρ (w t)) ?_ ?_
     · have := congrArg (Ideal.map ρ) hw

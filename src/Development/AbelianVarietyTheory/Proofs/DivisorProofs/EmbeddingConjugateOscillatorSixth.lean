@@ -229,7 +229,7 @@ theorem exists_ideal_conj (V : HSp D) (hg : V.gram = 1) (hL : Bridge.hLat V 1 = 
     refine GlobalTheory.ClassScalarValue.det_supp (ev Q) hs ?_
     have a := hcj e (GlobalTheory.IdemSupport.cP Q)
     rw [e2 _ hQ', map_zero, GlobalTheory.ClassScalarValue.cP_cP, map_eq_zero] at a
-    rw [map_add, e2 Q hQ, a, add_zero]
+    rw [map_add (f := _), e2 Q hQ, a, add_zero]
   have d2 : ∀ Q, Valued.v (ev Q d) * Valued.v (ev (GlobalTheory.IdemSupport.cP Q) d) = 1 := fun Q => by
     rw [← hcj, ← map_mul, ← map_mul, hd, GlobalTheory.ClassScalarValue.det_unitary V hg h, map_one, map_one]
   have d3 : ∀ Q, Valued.v (ev Q d) ≠ 0 := fun Q => left_ne_zero_of_mul_eq_one (d2 Q)
@@ -253,12 +253,12 @@ theorem exists_ideal_conj (V : HSp D) (hg : V.gram = 1) (hL : Bridge.hLat V 1 = 
   obtain ⟨cc, c0, c1, c2, c3, c4⟩ := GlobalTheory.T.exists_numeratorIdeal_of_antiInvariant_divisor D.host.E (GlobalTheory.IdemSupport.cO D) GlobalTheory.IdemSupport.cP GlobalTheory.IdemSupport.cO_cO GlobalTheory.IdemSupport.mem_cP δ hfin δ1
   have hy' : (y : AE D) = e * d + (1 - e) := hd ▸ hy
   have y0 : infPart D (y : AE D) = 1 := by
-    rw [hy', RingHom.map_add, RingHom.map_mul, RingHom.map_sub, e0, RingHom.map_one, zero_mul, zero_add, sub_zero]
+    rw [hy', RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, e0, RingHom.map_one, zero_mul, zero_add, sub_zero]
   have y1 : ∀ Q ∈ P, Valued.v (ι (finPart D (y : AE D)) Q) = WithZero.exp (-δ Q) := fun Q hQ => by
-    rw [← hev, ← hδ, hy', RingHom.map_add, RingHom.map_mul, RingHom.map_sub, e1 Q hQ, RingHom.map_one, one_mul, sub_self,
+    rw [← hev, ← hδ, hy', RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, e1 Q hQ, RingHom.map_one, one_mul, sub_self,
       add_zero]
   have y2 : ∀ Q, Q ∉ P → ι (finPart D (y : AE D)) Q = 1 := fun Q hQ => by
-    rw [← hev, hy', RingHom.map_add, RingHom.map_mul, RingHom.map_sub, e2 Q hQ, RingHom.map_one, zero_mul, zero_add,
+    rw [← hev, hy', RingHom.map_add (f := _), RingHom.map_mul, RingHom.map_sub, e2 Q hQ, RingHom.map_one, zero_mul, zero_add,
       sub_zero]
   refine ⟨cc, c0, c1, c3 _ fun Q hQ hm => ?_, c4 _ fun x => ?_, ?_, ?_, y0⟩
   · exact hQ (δ0 Q (fun h' => hb Q h' hm) fun h' => hb _ h' ((hbc Q).2 hm))

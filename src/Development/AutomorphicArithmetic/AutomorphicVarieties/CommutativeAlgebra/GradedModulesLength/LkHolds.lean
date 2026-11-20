@@ -28,7 +28,7 @@ theorem UpperTheory.V.Alg.M.lk_holds :
     { carrier := leadKer Q wt φ
       add_mem' := fun {p q} hp hq μ => by
         show φ (AddMonoidAlgebra.coeff (p.1 + q.1) μ) ∈ _
-        rw [MvPolynomial.coeff_add, map_add]
+        rw [MvPolynomial.coeff_add, map_add (f := _)]
         exact add_mem (hp μ) (hq μ)
       zero_mem' := fun μ => by
         show φ 0 ∈ _

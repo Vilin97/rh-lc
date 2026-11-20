@@ -43,7 +43,7 @@ theorem sc_of_le {a : K⟦X⟧} (n : ℕ) (h : ∀ k, ‖coeff k a‖ ≤ ((k : 
 theorem SC.add {a b : K⟦X⟧} (ha : SC a) (hb : SC b) : SC (a + b) := by
   intro r hr0 hr1
   refine Summable.of_nonneg_of_le (fun k => by positivity) (fun k => ?_) ((ha r hr0 hr1).add (hb r hr0 hr1))
-  rw [← add_mul, map_add]
+  rw [← add_mul, map_add (f := _)]
   exact mul_le_mul_of_nonneg_right (norm_add_le _ _) (by positivity)
 
 theorem SC.mul {a b : K⟦X⟧} (ha : SC a) (hb : SC b) : SC (a * b) := by
@@ -65,7 +65,7 @@ theorem Ev.unique {y a e f : K⟦X⟧} (he : Ev y a e) (hf : Ev y a f) : e = f :
   PowerSeries.ext fun k => (he k).unique (hf k)
 
 theorem Ev.add {y a b e f : K⟦X⟧} (he : Ev y a e) (hf : Ev y b f) : Ev y (a + b) (e + f) := fun k => by
-  simpa only [map_add, add_mul] using (he k).add (hf k)
+  simpa only [map_add (f := _), add_mul] using (he k).add (hf k)
 
 theorem Ev.smul {y a e : K⟦X⟧} (c : K) (he : Ev y a e) : Ev y (c • a) (c • e) := fun k => by
   simpa only [map_smul, smul_eq_mul, mul_assoc] using (he k).mul_left c
@@ -193,7 +193,7 @@ theorem Ev.derivative_log {y e : K⟦X⟧} (hy : ‖constantCoeff y‖ < 1) (he 
   have h1 : g * (1 + y) = 1 := by
     have h := Ev.mul hy sc_geo (sc_coe (1 + Polynomial.X)) hg (ev_coe y (1 + Polynomial.X))
     have h' := ev_coe y 1
-    simp only [Polynomial.coe_add, Polynomial.coe_one, Polynomial.coe_X, geo_mul, map_add, map_one,
+    simp only [Polynomial.coe_add, Polynomial.coe_one, Polynomial.coe_X, geo_mul, map_add (f := _), map_one,
       Polynomial.aeval_X] at h h'
     exact h.unique h'
   have h2 : derivative K e = g * derivative K y := by
@@ -237,7 +237,7 @@ theorem exists_log_factor (hn : ∀ m : ℕ, ‖(m : K)⁻¹‖ ≤ m) (n : ℕ)
   · have hone : ∀ i ≤ k, ‖coeff i (1 : K⟦X⟧)‖ ≤ 1 := fun i _ => by
       rw [coeff_one]; split_ifs <;> simp
     have hb : ∀ i ≤ k, ‖coeff i (1 + X : K⟦X⟧)‖ ≤ 1 * 1 ^ i := fun i hi => by
-      rw [map_add, one_pow, one_mul]
+      rw [map_add (f := _), one_pow, one_mul]
       refine (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (hone i hi) ?_)
       rw [coeff_X]; split_ifs <;> simp
     have hb2 : ∀ i ≤ k, ‖coeff i y‖ ≤ 1 * 1 ^ i := fun i hi => by

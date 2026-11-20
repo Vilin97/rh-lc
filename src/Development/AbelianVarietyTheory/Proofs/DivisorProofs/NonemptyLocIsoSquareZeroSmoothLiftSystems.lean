@@ -24,7 +24,7 @@ theorem fix_of_mem {R B B₀ : Type} [CommRing R] [CommRing B] [Algebra R B] [Co
     simpa using this
   let T : Ideal B :=
     { carrier := {x | ∀ y, e (x * y) = x * y}
-      add_mem' := fun {a b} ha hb y ↦ by simp only [Set.mem_setOf_eq] at *; rw [add_mul, map_add, ha, hb]
+      add_mem' := fun {a b} ha hb y ↦ by simp only [Set.mem_setOf_eq] at *; rw [add_mul, map_add (f := _), ha, hb]
       zero_mem' := fun y ↦ by simp
       smul_mem' := fun c {a} ha y ↦ by
         simp only [Set.mem_setOf_eq, smul_eq_mul] at *

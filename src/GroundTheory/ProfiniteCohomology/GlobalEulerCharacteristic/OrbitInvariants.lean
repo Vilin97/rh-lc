@@ -217,7 +217,7 @@ theorem funTensorEquiv_tprod (g : Γ) (t : (X → k) ⊗[k] N) (x : X) :
     rw [Representation.tprod_apply, TensorProduct.map_tmul, funTensorEquiv_tmul, funTensorEquiv_tmul,
       GroundTheory.Global.funPermRep_apply, map_smul]
   | add s t hs ht =>
-    rw [map_add, map_add, Pi.add_apply, hs, ht, map_add, Pi.add_apply, map_add]
+    rw [map_add (f := _), map_add (f := _), Pi.add_apply, hs, ht, map_add (f := _), Pi.add_apply, map_add (f := _)]
 
 theorem map_invariants_funTensorEquiv :
     ((GroundTheory.Global.funPermRep k Γ X).tprod σ).invariants.map

@@ -46,7 +46,7 @@ theorem eq_zero_of_unitCell (I : (GL (Fin m) k → ℂ) →ₗ[ℂ] ℂ) (hI : I
     exact ⟨K, hKO, hKc, hKo.preimage continuous_subtype_val, hKU, hnorm⟩
   · intro F _ F' _ c c'
     have : (fun g => c * F g + c' * F' g) = c • F + c' • F' := rfl
-    rw [this, map_add, map_smul, map_smul, smul_eq_mul, smul_eq_mul]
+    rw [this, map_add (f := _), map_smul, map_smul, smul_eq_mul, smul_eq_mul]
   · intro F hF x _
     exact hI F hF x
 

@@ -32,7 +32,7 @@ theorem map_rowShift {T : Type} (r : T → ℕ) (n : ℕ) {k k' : Type} [Field k
     rowShift r n k' σ i i' (f t) (MvPolynomial.map f P) = MvPolynomial.map f (rowShift r n k σ i i' t P) := by
   induction P using MvPolynomial.induction_on with
   | C a => simp [rowShift]
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p s hp =>
     simp only [map_mul, hp, map_X]
     congr 1

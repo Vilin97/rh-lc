@@ -93,7 +93,7 @@ theorem exists_dRho_pure_all (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ)
     rw [Datum.aPlus, smul_smul, mul_inv_cancel₀ (fockScale_ne_zero τ), one_smul, Datum.annih, Datum.crea]
     module
   change Datum.dRho (heisO ψ S T) θ τ z (pureTensorL A f P) = pureTensorL A f _
-  rw [h3, h1, h2, ← map_smul, ← map_add, ← map_smul]
+  rw [h3, h1, h2, ← map_smul, ← map_add (f := _), ← map_smul]
   congr 1
   simp only [LinearMap.smul_apply, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.mulLeft_apply]
   rfl

@@ -31,7 +31,7 @@ theorem matRep_diagGL_monomial {n n' : ℕ} (t : Fin n → ℂˣ) (d : Fin n' ×
     have he' := he 1
     rw [matRep_apply] at hd' he'
     rw [h1, matRep_apply, map_mul, hd', he', smul_mul_smul_comm, ← Finset.prod_mul_distrib]
-    simp only [map_add, Pi.add_apply, pow_add]
+    simp only [map_add (f := _), Pi.add_apply, pow_add]
   | single v k =>
     have h1 := hX v
     rw [matRep_apply] at h1

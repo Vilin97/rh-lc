@@ -65,14 +65,14 @@ theorem idem_eq_add [DecidableEq (InfinitePlace F)] [DecidableEq (HeightOneSpect
     (ha : IsPlacesIdem A₁ A₂ a) (hb : IsPlacesIdem B₁ B₂ b) (h₁ : Disjoint A₁ B₁) (h₂ : Disjoint A₂ B₂)
     (hδ : IsPlacesIdem (A₁ ∪ B₁) (A₂ ∪ B₂) δ) : δ = a + b := by
   refine adele_ext (funext fun w => ?_) (finAdele_ext fun v => ?_)
-  · rw [map_add]
+  · rw [map_add (f := _)]
     change fstA F δ w = fstA F a w + fstA F b w
     by_cases h : w ∈ A₁
     · rw [hδ.1 w (Finset.mem_union_left _ h), ha.1 w h, hb.2.1 w (Finset.disjoint_left.1 h₁ h), add_zero]
     · by_cases h' : w ∈ B₁
       · rw [hδ.1 w (Finset.mem_union_right _ h'), ha.2.1 w h, hb.1 w h', zero_add]
       · rw [hδ.2.1 w (by simp [h, h']), ha.2.1 w h, hb.2.1 w h', add_zero]
-  · rw [map_add, map_add]
+  · rw [map_add (f := _), map_add (f := _)]
     by_cases h : v ∈ A₂
     · rw [hδ.2.2.1 v (Finset.mem_union_left _ h), ha.2.2.1 v h, hb.2.2.2 v (Finset.disjoint_left.1 h₂ h), add_zero]
     · by_cases h' : v ∈ B₂
@@ -106,7 +106,7 @@ theorem supp_split (σ : E →ₐ[F] E) {M : ℕ} (J : Matrix (Fin M) (Fin M) E)
     (by rw [← map_mul, hab, map_zero]) ?_).symm
   ext i j
   have := hg.2 i j
-  rw [map_add] at this
+  rw [map_add (f := _)] at this
   rw [Matrix.smul_apply, smul_eq_mul]
   exact this
 

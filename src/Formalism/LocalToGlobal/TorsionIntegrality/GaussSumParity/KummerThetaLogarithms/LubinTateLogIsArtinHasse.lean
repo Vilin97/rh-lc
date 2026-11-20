@@ -83,7 +83,7 @@ theorem theta_homomorphism : ThetaHom := by
   have hsum : MvPowerSeries.constantCoeff
       (PowerSeries.subst (Formalism.L2.Th1.A.U₁ : MvPowerSeries (Fin 2) K) (logSer (shortW g2 g3)) +
         PowerSeries.subst (Formalism.L2.Th1.A.U₂ : MvPowerSeries (Fin 2) K) (logSer (shortW g2 g3))) = 0 := by
-    rw [map_add, Pair.cc_ps (by simp) hL0, Pair.cc_ps (by simp) hL0, add_zero]
+    rw [map_add (f := _), Pair.cc_ps (by simp) hL0, Pair.cc_ps (by simp) hL0, add_zero]
   have hFl : PowerSeries.subst F (lgF K l) = at1 0 (lgF K l) + at1 1 (lgF K l) := by
     unfold cob at hFc
     rw [sub_sub, sub_eq_zero] at hFc

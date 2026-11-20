@@ -55,7 +55,7 @@ private theorem natCast_le_order_iff_coeff_eq_zero {f : MvPowerSeries τ R} {n :
 private theorem natCast_le_order_add {f g : MvPowerSeries τ R} {n : ℕ}
     (hf : (n : ℕ∞) ≤ f.order) (hg : (n : ℕ∞) ≤ g.order) : (n : ℕ∞) ≤ (f + g).order :=
   natCast_le_order_iff_coeff_eq_zero.2 fun d hd => by
-    rw [map_add, natCast_le_order_iff_coeff_eq_zero.1 hf d hd, natCast_le_order_iff_coeff_eq_zero.1 hg d hd, add_zero]
+    rw [map_add (f := _), natCast_le_order_iff_coeff_eq_zero.1 hf d hd, natCast_le_order_iff_coeff_eq_zero.1 hg d hd, add_zero]
 
 private theorem natCast_add_le_order_mul {f g : MvPowerSeries τ R} {a b : ℕ}
     (hf : (a : ℕ∞) ≤ f.order) (hg : (b : ℕ∞) ≤ g.order) : ((a + b : ℕ) : ℕ∞) ≤ (f * g).order :=

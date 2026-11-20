@@ -109,7 +109,7 @@ theorem exists_cob_of_limit {l : ℕ} [Fact l.Prime] {ι : Type} (M : ι → Mat
       (M s - 1) i 1 • ((Pi.single 1 1, 0) : (Fin 2 → Qbar l) × Qbar l) + f s i • ((0, 1) : (Fin 2 → Qbar l) × Qbar l) := by
     refine Prod.ext (funext fun k => ?_) (by simp [row])
     fin_cases k <;> simp [row]
-  rw [e, map_add, map_add, map_smul, map_smul, map_smul, smul_eq_mul, smul_eq_mul, smul_eq_mul] at h0
+  rw [e, map_add (f := _), map_add (f := _), map_smul, map_smul, map_smul, smul_eq_mul, smul_eq_mul, smul_eq_mul] at h0
   conv_rhs => rw [← Matrix.one_mulVec (fun k => -(g (Pi.single k 1, 0) / g (0, 1))), Matrix.mulVec_mulVec, mul_one, ← Matrix.sub_mulVec]
   simp only [Matrix.mulVec, dotProduct, Fin.sum_univ_two]
   field_simp

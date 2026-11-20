@@ -26,7 +26,7 @@ theorem ev_single (Q : Poly Φ) (T : C) (k : ℕ) (y : Φ.A.obj T) :
 theorem ev_smul (Q : Poly Φ) (T : C) (s : R) (c : ℕ →₀ Φ.A.obj T) : ev Q T (s • c) = s • ev Q T c := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => rw [smul_add, map_add, map_add, hf, hg, smul_add]
+  | add f g hf hg => rw [smul_add, map_add (f := _), map_add (f := _), hf, hg, smul_add]
   | single k y => rw [Finsupp.smul_single, ev_single, ev_single, map_smul, smul_mul_assoc]
 
 def sh {M : Type} [AddCommMonoid M] : (ℕ →₀ M) →+ (ℕ →₀ M) where
@@ -61,7 +61,7 @@ theorem sh_tr {T T' : C} (φ : T ⟶ T') (t : Φ.A.obj T') (c : ℕ →₀ Φ.A.
     sh (tr φ t c) = tr φ t (sh c) := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
   | single n y =>
     cases n with
     | zero =>
@@ -78,7 +78,7 @@ theorem ev_tr (Q : Poly Φ) {T T' : C} (φ : T ⟶ T') (ψ : Q.P T ⟶ Q.P T') (
     (Φ.A.map ψ).hom (ev Q T c) = ev Q T' (tr φ t c) := by
   induction c using Finsupp.induction_linear with
   | zero => simp
-  | add f g hf hg => simp only [map_add, hf, hg]
+  | add f g hf hg => simp only [map_add (f := _), hf, hg]
   | single n y =>
     have hy : (Φ.A.map ψ).hom ((Φ.A.map (Q.j T)).hom y) = (Φ.A.map (Q.j T')).hom ((Φ.A.map φ).hom y) := by
       rw [← Cut.mapA_comp, ← Cut.mapA_comp, hj]
@@ -139,10 +139,10 @@ def dX (h₁ : Q.Crit a r) (h₂ : Q.Crit a (r - 1)) (h₃ : Q.Crit b r) (h₄ :
   map_add' x y := Subtype.ext (by
     have e : Ideal.Quotient.mk ((b r).S (Q.P T)) (ev Q T (rep Q _ _ (x + y))) =
         Ideal.Quotient.mk _ (ev Q T (rep Q _ _ x + rep Q _ _ y)) := by
-      rw [← rep_eq, map_add, map_add, ← rep_eq, ← rep_eq]
+      rw [← rep_eq, map_add (f := _), map_add (f := _), ← rep_eq, ← rep_eq]
       rfl
     have := wd Q h₃ h₄ e
-    rw [map_add, map_add, map_add] at this
+    rw [map_add (f := _), map_add (f := _), map_add (f := _)] at this
     exact this)
   map_smul' s x := Subtype.ext (by
     have e : Ideal.Quotient.mk ((b r).S (Q.P T)) (ev Q T (rep Q _ _ (s • x))) =

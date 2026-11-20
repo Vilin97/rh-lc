@@ -632,7 +632,7 @@ theorem dual_vector_norm_sq : Formalism.HermitianLatticeCounting.ExpansionTerms.
     · simp
   have n2 : h x' x' = al * conj al * -(T' : ℂ) + h om om := by
     rw [hx]
-    simp only [map_add, LinearMap.add_apply, map_smul, LinearMap.smul_apply, map_smulₛₗ, e00, e0f, ef0,
+    simp only [map_add (f := _), LinearMap.add_apply, map_smul, LinearMap.smul_apply, map_smulₛₗ, e00, e0f, ef0,
       eo0, e0o, eof, efo, eff, smul_eq_mul]
     ring
   have hT'c : (T' : ℂ) ≠ 0 := by exact_mod_cast hT'

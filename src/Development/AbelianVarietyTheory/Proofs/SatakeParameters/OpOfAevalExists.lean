@@ -19,7 +19,7 @@ theorem opOf_single (g : G) (c : ℂ) (v : V) : opOf ρ (Finsupp.single g c) v =
   simp [opOf, Finsupp.sum_single_index]
 
 theorem opOf_add (F F' : G →₀ ℂ) (v : V) : opOf ρ (F + F') v = opOf ρ F v + opOf ρ F' v := by
-  simp only [← opHom_apply, map_add]
+  simp only [← opHom_apply, map_add (f := _)]
 
 theorem opOf_smul (F : G →₀ ℂ) (c : ℂ) (v : V) : opOf ρ F (c • v) = c • opOf ρ F v := by
   simp [opOf, Finsupp.smul_sum, smul_comm c]

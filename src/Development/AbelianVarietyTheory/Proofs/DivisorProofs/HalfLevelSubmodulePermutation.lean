@@ -177,7 +177,7 @@ theorem fnRule_mul (a b : Γ(Xo.XF c, ⊤)) : fnRule (a * b) = fnRule a * fnRule
 theorem fnRule_add (a b : Γ(Xo.XF c, ⊤)) : fnRule (a + b) = fnRule a + fnRule b := by
   funext p y
   show fnAt (basePt y) _ = fnAt (basePt y) _ + fnAt (basePt y) _
-  simp only [fnAt, map_add]
+  simp only [fnAt, map_add (f := _)]
 
 theorem fnRule_one : fnRule (1 : Γ(Xo.XF c, ⊤)) = 1 := by
   funext p y

@@ -183,7 +183,7 @@ variable (X : PJ D B P j) (la : HeightOneSpectrum (𝓞 B.KO)) (N : ℕ) (ka : W
 def uV : B.Cusp j ka →+ ↥(Vw X la N ka) where
   toFun F := ⟨emb X la N (X.inc ka F), emb_mem_Vw X la N ka F⟩
   map_zero' := Subtype.ext (by simp only [map_zero]; rfl)
-  map_add' F F' := Subtype.ext (by simp only [map_add]; rfl)
+  map_add' F F' := Subtype.ext (by simp only [map_add (f := _)]; rfl)
 
 theorem coe_uV (F : B.Cusp j ka) : (uV X la N ka F : Rp X la N) = emb X la N (X.inc ka F) := rfl
 
@@ -225,7 +225,7 @@ theorem integralForms_eq_span_image : M1 X la N ka = Submodule.span (Op X la N) 
         obtain ⟨F', ⟨F, hF, rfl⟩, rfl⟩ := hy
         exact ⟨uV X la N ka F, Submodule.subset_span ⟨F, hF, rfl⟩, rfl⟩
       | zero => rw [map_zero]; exact Submodule.zero_mem _
-      | add y y' _ _ hy hy' => rw [map_add]; exact Submodule.add_mem _ hy hy'
+      | add y y' _ _ hy hy' => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hy'
       | smul a y _ hy =>
         rw [← algebraMap_smul (X.Kl la) a y, map_smul, algebraMap_smul, ← algebraMap_smul (Op X la N) a]
         exact Submodule.smul_mem _ _ hy

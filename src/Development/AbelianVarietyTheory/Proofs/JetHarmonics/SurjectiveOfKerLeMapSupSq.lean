@@ -55,7 +55,7 @@ theorem surjective_of_ker_le_map_sup_sq {V : Type} [CommRing V] {A B : Type} [Co
       obtain ⟨c, hc⟩ := hz b
       refine ⟨a + c, ?_⟩
       have e : b * (y + z) - f (a + c) = (b * y - f a) + (b * z - f c) := by
-        rw [map_add]; ring
+        rw [map_add (f := _)]; ring
       rw [e]
       exact Ideal.add_mem _ ha hc
     | smul c y _ hy =>
@@ -71,7 +71,7 @@ theorem surjective_of_ker_le_map_sup_sq {V : Type} [CommRing V] {A B : Type} [Co
       obtain ⟨a, ha⟩ := ih b
       obtain ⟨c, hc⟩ := step n _ ha 1
       refine ⟨a + c, ?_⟩
-      have e : b - f (a + c) = 1 * (b - f a) - f c := by rw [map_add]; ring
+      have e : b - f (a + c) = 1 * (b - f a) - f c := by rw [map_add (f := _)]; ring
       rw [e]
       exact hc
   intro b

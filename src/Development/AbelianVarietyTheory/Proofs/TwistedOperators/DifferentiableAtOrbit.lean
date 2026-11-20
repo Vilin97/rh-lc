@@ -101,7 +101,7 @@ theorem dRep_add_vec {ρ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} {v w 
     (hv : SmoothVec (lieSet ε) ρ v) (hw : SmoothVec (lieSet ε) ρ w) {X : Matrix (Fin n) (Fin n) ℂ}
     (hX : X ∈ lieSet ε) : dRep ρ X (v + w) = dRep ρ X v + dRep ρ X w := by
   unfold dRep
-  simp_rw [map_add]
+  simp_rw [map_add (f := _)]
   exact deriv_add (differentiableAt_orbit hv hX) (differentiableAt_orbit hw hX)
 
 theorem dRep_smul_vec {ρ : Matrix (Fin n) (Fin n) ℂ → (H →L[ℂ] H)} {v : H}
@@ -303,7 +303,7 @@ theorem gAct_decomp (hρ : Formalism.QuantumDeterminants.IsCRepOn (UJset ε) ρ)
     (X : Matrix (Fin n) (Fin n) ℂ) :
     gAct hρ hV X = gAct hρ hV (cre ε X) + Complex.I • gAct hρ hV (cim ε X) := by
   conv_lhs => rw [← cre_add_cim (ε := ε) X]
-  rw [map_add, map_smul]
+  rw [map_add (f := _), map_smul]
 
 theorem gAct_bracket_of_mem (hρ : Formalism.QuantumDeterminants.IsCRepOn (UJset ε) ρ) (hV : IsGKSub ε ρ (kFinVec ε ρ))
     {X Y : Matrix (Fin n) (Fin n) ℂ} (hX : X ∈ lieSet ε) (hY : Y ∈ lieSet ε) :
@@ -327,7 +327,7 @@ theorem gAct_bracket (hρ : Formalism.QuantumDeterminants.IsCRepOn (UJset ε) ρ
     module
   have h := hm (cre ε X) (cim ε X) (cre ε Y) (cim ε Y)
   rw [cre_add_cim, cre_add_cim] at h
-  rw [h, map_sub, map_add, map_add, map_smul, map_smul, gAct_bracket_of_mem hρ hV (cre_mem X) (cre_mem Y),
+  rw [h, map_sub, map_add (f := _), map_add (f := _), map_smul, map_smul, gAct_bracket_of_mem hρ hV (cre_mem X) (cre_mem Y),
     gAct_bracket_of_mem hρ hV (cre_mem X) (cim_mem Y), gAct_bracket_of_mem hρ hV (cim_mem X) (cre_mem Y),
     gAct_bracket_of_mem hρ hV (cim_mem X) (cim_mem Y), gAct_decomp hρ hV X, gAct_decomp hρ hV Y]
   simp only [add_mul, mul_add, smul_mul_assoc, mul_smul_comm, smul_smul, Complex.I_mul_I, neg_one_smul,

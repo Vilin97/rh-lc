@@ -135,7 +135,7 @@ private theorem adjugate_subst_mem_dualWeyl_of_mem {R : Type} [CommRing R] [IsDo
       simp only [colAdd, aeval_X]
       by_cases h : v.2 = l.rev
       · have h' : v.2.rev = l := by rw [h, Fin.rev_rev]
-        simp [h, h', map_add, map_mul, aeval_X, aeval_C, Fin.rev_rev]
+        simp [h, h', map_add (f := _), map_mul, aeval_X, aeval_C, Fin.rev_rev]
       · have h' : v.2.rev ≠ l := fun e => h (by rw [← e, Fin.rev_rev])
         simp [h, h']
     have hl : j.rev < l.rev := Fin.rev_lt_rev.mpr hlj
@@ -164,7 +164,7 @@ private theorem map_aeval_adjugate_subst_eq_aeval_map {A B : Type} [CommRing A] 
   next a =>
     simp [aeval_C, map_C]
   next p q hp hq =>
-    simp only [map_add, hp, hq]
+    simp only [map_add (f := _), hp, hq]
   next p v hp =>
     simp only [map_mul, hp, aeval_X, map_X, hadj]
 

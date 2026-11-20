@@ -30,7 +30,7 @@ def box [IsUltrametricDist F] {ι : Type} (e : Module.Basis ι F V) (r : ℝ) (h
   zero_mem' := by intro i; simpa using hr
   add_mem' := by
     intro a b ha hb i
-    rw [map_add, Finsupp.add_apply]
+    rw [map_add (f := _), Finsupp.add_apply]
     exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (ha i) (hb i))
   neg_mem' := by
     intro a ha i

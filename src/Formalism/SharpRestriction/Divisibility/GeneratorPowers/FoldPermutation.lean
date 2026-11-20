@@ -28,7 +28,7 @@ theorem cc_ev {m n : ℕ} {a : Fin m → Pt k n d} (ha : LogPf.CZ a) (f : PS k m
   have h0 : constantCoeff (f - C (constantCoeff f)) = 0 := by simp
   have e1 : f = C (constantCoeff f) + (f - C (constantCoeff f)) := by ring
   conv_lhs => rw [e1]
-  rw [LogPf.ev_add ha, LogPf.ev_C ha, map_add, LogPf.constantCoeff_ev ha h0, add_zero, constantCoeff_C]
+  rw [LogPf.ev_add ha, LogPf.ev_C ha, map_add (f := _), LogPf.constantCoeff_ev ha h0, add_zero, constantCoeff_C]
 
 theorem pderiv_embP {n' n : ℕ} (e : Fin n' → Fin n) (he : Function.Injective e) (g : PS k n' d) (b : Fin n')
     (j : Fin d) : pderiv k (e b, j) (ev (embP e) g) = ev (embP e) (pderiv k (b, j) g) := by

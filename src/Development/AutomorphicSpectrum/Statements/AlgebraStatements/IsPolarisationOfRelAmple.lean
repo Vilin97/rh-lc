@@ -107,14 +107,14 @@ theorem exists_prod {R : Type} [CommRing R] (P P' : Out.PolAV (Sp R)) :
   haveI := P'.isAb.proper
   haveI := hB.proper
   refine ⟨M, hM, ?_, ?_, ?_, GlobalTheory.TripleProd.kTriv_prod hM P.isLB P'.isLB eM P.ktriv P'.ktriv⟩
-  · rw [PolProd.rigidified_iff _ hM, eM, map_add, ← pull_comp, ← pull_comp, PolProd.eSec_comp p,
+  · rw [PolProd.rigidified_iff _ hM, eM, map_add (f := _), ← pull_comp, ← pull_comp, PolProd.eSec_comp p,
       PolProd.eSec_comp q, (PolProd.rigidified_iff _ P.isLB).1 P.rigid,
       (PolProd.rigidified_iff _ P'.isLB).1 P'.rigid, add_zero]
   · have h₁ := ((PolProd.sym_iff _ P.isLB).1 P.sym).pull_over (π' := (P.A ⊗ P'.A).hom) p.left (Over.w p)
     have h₂ := ((PolProd.sym_iff _ P'.isLB).1 P'.sym).pull_over (π' := (P.A ⊗ P'.A).hom) q.left (Over.w q)
     rw [PolProd.sym_iff _ hM, eM]
     convert PolProd.locZero_add h₁ h₂ using 1
-    rw [map_add, map_sub, map_sub, ← pull_comp, ← pull_comp, ← pull_comp, ← pull_comp, PolProd.inv_comp_left p,
+    rw [map_add (f := _), map_sub, map_sub, ← pull_comp, ← pull_comp, ← pull_comp, ← pull_comp, PolProd.inv_comp_left p,
       PolProd.inv_comp_left q]
     abel
   · exact (relAmple_iff_isAmpleLB_of_isAffine _ hM).2 (IsAmpleLB.box

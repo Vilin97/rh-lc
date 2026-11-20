@@ -172,7 +172,7 @@ lemma isLocal_of_integers {C : Type} [Field C] {v : Valuation C NNReal} {R : Typ
   rw [mem_nonunits_iff, hv.isUnit_iff_valuation_eq_one] at ha hb ⊢
   have ha' : v (algebraMap R C a) < 1 := lt_of_le_of_ne (hv.map_le_one a) ha
   have hb' : v (algebraMap R C b) < 1 := lt_of_le_of_ne (hv.map_le_one b) hb
-  rw [map_add]
+  rw [map_add (f := _)]
   exact ne_of_lt (lt_of_le_of_lt (v.map_add _ _) (max_lt ha' hb'))
 
 theorem prod_le_of_gen {C : Type} [Field C] {v : Valuation C NNReal} {R : Type} [CommRing R]

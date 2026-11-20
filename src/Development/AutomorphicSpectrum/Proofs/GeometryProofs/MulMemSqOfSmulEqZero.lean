@@ -47,7 +47,7 @@ theorem augIdeal_fg {A : Subalgebra R (T → R)} (hA : IsHopfOrder A) : (augIdea
       induction hx using Submodule.span_induction with
       | mem x h => exact Ideal.subset_span (Finset.mem_coe.2 (Finset.mem_image_of_mem π (Finset.mem_coe.1 h)))
       | zero => simp
-      | add x x' _ _ h h' => rw [map_add]; exact Ideal.add_mem _ h h'
+      | add x x' _ _ h h' => rw [map_add (f := _)]; exact Ideal.add_mem _ h h'
       | smul c x _ h =>
         rw [map_smul, ← algebraMap_smul A c]
         exact Submodule.smul_mem _ _ h
@@ -312,7 +312,7 @@ theorem th_clauses {C : Type} [AddCommGroup C] [Module R C] (toN : W → T) (fro
       · have h3 := hf t
         have h4 := hf' t
         simp only [Submodule.coe_add, Pi.add_apply, Prod.fst_add, Subalgebra.coe_add, h3, h4]
-      · rw [map_add, map_add, hu, hu']
+      · rw [map_add (f := _), map_add (f := _), hu, hu']
       · simp [hev, hev']
     | neg z _ h =>
       obtain ⟨hz, hz0, f, u, hf, hu, hev⟩ := h

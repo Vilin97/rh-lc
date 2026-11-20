@@ -78,8 +78,8 @@ def bMap : (↥(Dcris PD ρ) × ↥(DdR PD ρ ⊓ FilV PD (LL := LL) (V := V) 0)
     ⟨ιV PD (LL := LL) (V := V) p.1 - p.2, Submodule.sub_mem _ (GlobalTheory.DRFil.ιV_mem_DdR PD ρ p.1.2) p.2.2.1⟩)
   map_add' p q := by
     ext
-    · simp only [Prod.fst_add, Submodule.coe_add, map_add]; abel
-    · simp only [Prod.fst_add, Prod.snd_add, Submodule.coe_add, map_add]; abel
+    · simp only [Prod.fst_add, Submodule.coe_add, map_add (f := _)]; abel
+    · simp only [Prod.fst_add, Prod.snd_add, Submodule.coe_add, map_add (f := _)]; abel
   map_smul' c p := by
     ext
     · simp [smul_sub]
@@ -96,9 +96,9 @@ def relR : Submodule LL ((↥(Dcris PD ρ) × ↥(DdR PD ρ)) × FiniteCohomolog
   add_mem' := by
     rintro p q ⟨x, y, c, hy, h1, h2, h3, h4⟩ ⟨x', y', c', hy', h1', h2', h3', h4'⟩
     refine ⟨x + x', y + y', c + c', add_mem hy hy', ?_, ?_, fun g => ?_, ?_⟩
-    · simp only [Prod.fst_add, Submodule.coe_add, map_add, ← h1, ← h1']; abel
-    · simp only [Prod.fst_add, Prod.snd_add, Submodule.coe_add, map_add, ← h2, ← h2']; abel
-    · simp only [Submodule.coe_add, Pi.add_apply, add_tmul, h3, h3', map_add]; abel
+    · simp only [Prod.fst_add, Submodule.coe_add, map_add (f := _), ← h1, ← h1']; abel
+    · simp only [Prod.fst_add, Prod.snd_add, Submodule.coe_add, map_add (f := _), ← h2, ← h2']; abel
+    · simp only [Submodule.coe_add, Pi.add_apply, add_tmul, h3, h3', map_add (f := _)]; abel
     · simp only [Prod.snd_add, ← h4, ← h4']; rfl
   zero_mem' := ⟨0, 0, 0, zero_mem _, by simp, by simp, by simp, rfl⟩
   smul_mem' := by

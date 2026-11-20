@@ -137,7 +137,7 @@ theorem sum_mem_integralPart_iff {ι : Type} [Fintype ι] (b : Basis ι ℤ (�
         obtain ⟨y, hy, hy'⟩ := hs
         obtain ⟨z, hz, hz'⟩ := ht
         refine ⟨y + z, fun i => R.add_mem (hy i) (hz i), ?_⟩
-        rw [map_add, hy', hz', ← Finset.sum_add_distrib]
+        rw [map_add (f := _), hy', hz', ← Finset.sum_add_distrib]
         simp [TensorProduct.tmul_add]
     obtain ⟨y, hy, hy'⟩ := key t
     have ht' : ∑ i, ratBasis b i ⊗ₜ[ℚ] y i = ∑ i, ratBasis b i ⊗ₜ[ℚ] x i := by
@@ -217,7 +217,7 @@ theorem val_pow_le (O : ValuationSubring C) (τ : E →+* C) (I : Ideal (𝓞 E)
       calc _ = O.valuation (τ (x : E)) * u ^ n * (O.valuation (τ (y : E)) * u) := by
             rw [pow_succ]; ac_rfl
         _ ≤ 1 := this
-    · simp only [map_add]
+    · simp only [map_add (f := _)]
       rcases le_max_iff.1 (O.valuation.map_add (τ (x : E)) (τ (y : E))) with h1 | h1
       · exact (mul_le_mul_left h1 _).trans hx
       · exact (mul_le_mul_left h1 _).trans hy

@@ -74,7 +74,7 @@ theorem exists_of_locally {R : Type} [CommRing R] [IsDomain R] (J : Ideal R)
       zero_mem' := ⟨0, Ideal.zero_mem _, by simp⟩
       add_mem' := by
         rintro a a' ⟨b, hb, e⟩ ⟨b', hb', e'⟩
-        exact ⟨b + b', Ideal.add_mem _ hb hb', by rw [map_add, map_add, e, e', add_mul]⟩
+        exact ⟨b + b', Ideal.add_mem _ hb hb', by rw [map_add (f := _), map_add (f := _), e, e', add_mul]⟩
       smul_mem' := by
         rintro c a ⟨b, hb, e⟩
         exact ⟨c * b, Ideal.mul_mem_left _ _ hb, by rw [smul_eq_mul, map_mul, map_mul, e, _root_.mul_assoc]⟩ }

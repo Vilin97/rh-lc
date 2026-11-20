@@ -190,7 +190,7 @@ private theorem qInf_ge (δ : ℚ) (hδ : δ < 0) : ∃ c : ℝ, 0 < c ∧ ∀ v
   have hd : TR.pInf ℚ (rt δ) w = (δ : ℝ) := by
     exact (congrFun (GlobalTheory.HilbertThetaSeries.RatPts.pInf_algebraMap ℚ δ) w).trans
       (eq_ratCast (InfinitePlace.embedding_of_isReal (IsTotallyReal.isReal w)) δ)
-  simp only [map_add, map_mul, map_pow, map_sub, Pi.add_apply, Pi.mul_apply, Pi.pow_apply, Pi.sub_apply,
+  simp only [map_add (f := _), map_mul, map_pow, map_sub, Pi.add_apply, Pi.mul_apply, Pi.pow_apply, Pi.sub_apply,
     map_ofNat, Pi.ofNat_apply, hd, Fin.sum_univ_four, xc]
   have h1 : min 1 (-(2 * (δ : ℝ))) ≤ 1 := min_le_left _ _
   have h2 : min 1 (-(2 * (δ : ℝ))) ≤ -(2 * (δ : ℝ)) := min_le_right _ _

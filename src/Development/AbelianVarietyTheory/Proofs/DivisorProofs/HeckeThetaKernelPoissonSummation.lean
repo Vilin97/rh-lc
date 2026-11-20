@@ -301,7 +301,7 @@ theorem theta_poisson : ∀ (K : Type) [Field K] [NumberField K] [NumberField.Is
           show φ i ((Quotient.out c + μ : 𝓞 K) : K) = (embA φ μ + embA φ (Quotient.out c)) i
           rw [PiLp.add_apply, embA_apply, embA_apply]
           push_cast
-          rw [map_add, add_comm]
+          rw [map_add (f := _), add_comm]
         rw [hx]
       rw [tsum_congr h1, tsum_mul_left,
         e.tsum_eq (fun x : L => gauss n (dil y (WithLp.ofLp ((x : EuclideanSpace ℂ I) + u c)))),

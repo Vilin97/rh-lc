@@ -27,19 +27,19 @@ lemma d_tau_single {N : ℕ} (z : Pr N) :
     | zero => simp [swap, Pr.d₁, Pr.d₂]
     | succ r =>
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [swap, Pr.d₁, Pr.d₂, map_add, map_smul, map_sum, tau_single, Finset.smul_sum,
+        simp only [swap, Pr.d₁, Pr.d₂, map_add (f := _), map_smul, map_sum, tau_single, Finset.smul_sum,
         Finsupp.smul_single, smul_eq_mul]
       simp
   | succ p =>
     cases r with
     | zero =>
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [swap, Pr.d₁, Pr.d₂, map_add, map_smul, map_sum, tau_single, Finset.smul_sum,
+        simp only [swap, Pr.d₁, Pr.d₂, map_add (f := _), map_smul, map_sum, tau_single, Finset.smul_sum,
         Finsupp.smul_single, smul_eq_mul]
       simp
     | succ r =>
       set_option synthInstance.maxHeartbeats 100000 in
-        simp only [swap, Pr.d₁, Pr.d₂, map_add, map_sum, tau_single, Finset.smul_sum,
+        simp only [swap, Pr.d₁, Pr.d₂, map_add (f := _), map_sum, tau_single, Finset.smul_sum,
         Finsupp.smul_single, smul_eq_mul, smul_add]
       rw [add_comm]
       congr 1

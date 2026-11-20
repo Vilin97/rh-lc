@@ -569,7 +569,7 @@ def Sub.iInf {κ : Type*} (N : κ → Sub F) : Sub F where
 def Sub.ofStalks (N : ∀ x : X, Submodule (X.presheaf.stalk x) (F.presheaf.stalk x :)) : Sub F where
   sec V :=
     { carrier := {s | ∀ (x : X) (hx : x ∈ V), F.presheaf.germ V x hx s ∈ N x}
-      add_mem' := fun hs ht x hx => by rw [map_add]; exact add_mem (hs x hx) (ht x hx)
+      add_mem' := fun hs ht x hx => by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (hs x hx) (ht x hx)
       zero_mem' := fun x hx => by rw [map_zero]; exact zero_mem _
       smul_mem' := fun a s hs x hx => by
         rw [QCoh.germ_smul]; exact (N x).smul_mem _ (hs x hx) }

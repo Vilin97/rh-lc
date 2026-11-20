@@ -28,7 +28,7 @@ private theorem conj_mem {N : ℕ} {k u : G.GAf} (hk : k ∈ L.KN 1) (hu : u ∈
       simp only [map_mul, Module.End.mul_apply]
     have h2 : L.actG k (L.actG k⁻¹ v) = v := by
       rw [← Module.End.mul_apply, ← map_mul, mul_inv_cancel, map_one, Module.End.one_apply]
-    rw [h1, e, map_add, map_nsmul, h2]
+    rw [h1, e, map_add (f := _), map_nsmul, h2]
   refine ⟨key _ hu.1, ?_⟩
   have : (k * u * k⁻¹)⁻¹ = k * u⁻¹ * k⁻¹ := by group
   rw [this]
@@ -50,8 +50,8 @@ private theorem mulF_nat (n : ℕ) (y : 𝓞 D.F) {v : AfP p ⊗[ℚ] VQ D} (hv 
   | zero => simp
   | add x y _ _ hx hy =>
     refine ⟨?_, ?_⟩
-    · rw [map_add, map_add, hx.1, hy.1, smul_add]
-    · rw [map_add]; exact add_mem hx.2 hy.2
+    · rw [map_add (f := _), map_add (f := _), hx.1, hy.1, smul_add]
+    · rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx.2 hy.2
   | neg x _ hx =>
     refine ⟨?_, ?_⟩
     · rw [map_neg, map_neg, hx.1, smul_neg]

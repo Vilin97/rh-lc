@@ -36,7 +36,7 @@ theorem integral_of_factor {V P Q : Type} [AddCommGroup V] [MeasurableSpace V] [
       · have hx' : r x = 0 := hx
         simp [hx', hs]
       · have hxy' : ι x = -ι (s c) + y := hxy
-        rw [map_add, hxy']
+        rw [map_add (f := _), hxy']
         abel
   have hPm : ∀ c, MeasurableSet (Pc c) := fun c => by
     rw [hPc]

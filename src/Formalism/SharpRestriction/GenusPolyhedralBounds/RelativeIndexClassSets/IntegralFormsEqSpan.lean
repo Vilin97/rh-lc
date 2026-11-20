@@ -44,7 +44,7 @@ theorem isBaseChange_span {K K' V : Type*} [Field K] [Field K'] [Algebra K K'] [
       rw [LinearMap.liftBaseChange_tmul, LinearMap.baseChange_tmul, Submodule.coe_smul, hf, TensorProduct.smul_tmul',
         smul_eq_mul, mul_one]
       rfl
-    | add x y hx hy => rw [map_add, map_add, Submodule.coe_add, hx, hy]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), Submodule.coe_add, hx, hy]
   have hbij : Function.Bijective (f.liftBaseChange K') := by
     constructor
     · intro x y hxy

@@ -51,7 +51,7 @@ theorem eq_zero_of_mem_finset (ρ : O →+* Module.End k V) (σ : O →+* k)
     have hkey : (σ a - τ.1 a) • x = ρ a z - τ.1 a • z := by
       have e1 := eigSp_apply hx a
       have e2 := eigSp_apply hy a
-      rw [← hyz, map_add, e2] at e1
+      rw [← hyz, map_add (f := _), e2] at e1
       have e3 : ρ a z = σ a • (y + z) - τ.1 a • y := by rw [← e1]; abel
       rw [e3, ← hyz, sub_smul]
       simp only [smul_add]

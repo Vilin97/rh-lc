@@ -37,7 +37,7 @@ private theorem lossLe_add {D : D7} (w : PlL D) {x y : ℂ} {a : ℝ}
     (hx : LossLe w x a) (hy : LossLe w y a) : LossLe w (x + y) a := by
   obtain ⟨s, hs, hs'⟩ := hx
   obtain ⟨t, ht, ht'⟩ := hy
-  refine ⟨s + t, by rw [map_add, hs, ht], ?_⟩
+  refine ⟨s + t, by rw [map_add (f := _), hs, ht], ?_⟩
   by_cases hs0 : s = 0
   · subst hs0; simpa using ht'
   by_cases ht0 : t = 0

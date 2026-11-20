@@ -14,7 +14,7 @@ theorem UpperTheory.V.CA.d_unit :
     rw [← h1, Det.lam, Nat.sub_self] at h
     have hc : IsUnit ((D.chi x).coeff 0) := isUnit_of_mul_isUnit_right h
     have h2 := h0 x
-    rw [← Polynomial.X_mul_divX_add (D.chi x), map_add, map_mul, Polynomial.aeval_X,
+    rw [← Polynomial.X_mul_divX_add (D.chi x), map_add (f := _), map_mul, Polynomial.aeval_X,
       Polynomial.aeval_C] at h2
     have h3 : IsUnit (x * Polynomial.aeval x (D.chi x).divX) := by
       rw [eq_neg_of_add_eq_zero_left h2]

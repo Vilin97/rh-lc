@@ -37,7 +37,7 @@ omit [NumberField E] in
 theorem compFin_cA (v : Pl F) (z : AE F E) : compFin F E v (cA σ z) = sigR (Fv F v) σ (compFin F E v z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x => rfl
 
 omit [NumberField E] in
@@ -45,7 +45,7 @@ theorem compInf_cA (w : InfinitePlace F) (z : AE F E) :
     compInf F E w (cA σ z) = sigR w.Completion σ (compInf F E w z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul a x => rfl
 
 omit [NumberField E] in

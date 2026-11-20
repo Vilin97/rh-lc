@@ -41,7 +41,7 @@ theorem UpperTheory.V.ConeExtensionAcyclic.simp_span :
     rw [← hconst]
     exact Finset.sum_le_sum fun j _ => hxt j _ hmem
   have hexp : x (c + (-ε) • k) = x c - ε * x k := by
-    rw [map_add, map_smul, smul_eq_mul]
+    rw [map_add (f := _), map_smul, smul_eq_mul]
     ring
   have hxc : N * x c = ∑ j, x (t j).1 := by
     rw [hlin x, ← mul_assoc, mul_inv_cancel₀ hNpos.ne', one_mul]

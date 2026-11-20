@@ -41,7 +41,7 @@ theorem _root_.GlobalTheory.ev_starProjection_eigenspace_eq_residue :
     · simp [hP]
     · intro x₁ x₂ h₁ h₂
       simp only [hP] at h₁ h₂ ⊢
-      simp only [map_add, smul_add, Finset.sum_add_distrib, h₁, h₂]
+      simp only [map_add (f := _), smul_add, Finset.sum_add_distrib, h₁, h₂]
   have hgen : ∀ u, ∏ k, (u + m k) ≠ 0 → q u • v = ∑ j, c j u • ev (P j y) := by
     intro u hu
     rw [← hKy]

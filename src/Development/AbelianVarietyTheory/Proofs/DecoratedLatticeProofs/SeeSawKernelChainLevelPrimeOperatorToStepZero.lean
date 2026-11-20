@@ -23,8 +23,8 @@ def sOpLin (β : Frame p S n) (P : Pair k n) (q : Unif k) (χ : AddChar 𝓀[k] 
   toFun := sOp β P q χ ε
   map_add' a b := by
     have h : formAt β P (a + b) = formAt β P a + formAt β P b := by
-      funext P₁; simp [formAt, map_add]
-    simp only [sOp, h, map_add, Pi.add_apply]
+      funext P₁; simp [formAt, map_add (f := _)]
+    simp only [sOp, h, map_add (f := _), Pi.add_apply]
   map_smul' c a := by
     have h : formAt β P (c • a) = c • formAt β P a := by
       funext P₁; simp [formAt, map_smul]

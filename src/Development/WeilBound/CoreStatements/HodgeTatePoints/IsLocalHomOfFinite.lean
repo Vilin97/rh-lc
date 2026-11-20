@@ -304,7 +304,7 @@ theorem htd_tie : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [IsAlgClosed
       haveI hRl : IsLocalRing Rg := by
         refine { isUnit_or_isUnit_of_add_one := fun {a b} hab => ?_ }
         have hab' : algebraMap Rg (D.fin.AAx i).carrier a + algebraMap Rg (D.fin.AAx i).carrier b = 1 := by
-          rw [← map_add, hab, map_one]
+          rw [← map_add (f := _), hab, map_one]
         rcases IsLocalRing.isUnit_or_isUnit_of_add_one hab' with hu | hu
         · exact Or.inl (isUnit_of_map_unit _ _ hu)
         · exact Or.inr (isUnit_of_map_unit _ _ hu)

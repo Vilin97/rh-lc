@@ -117,7 +117,7 @@ private theorem dvr_lemma_4 (Cr Dr : Type) [CommRing Cr] [CommRing Dr] [IsDomain
       rw [hQb] at h1
       exact Ideal.mem_bot.mp h1
     have h2 := congrArg φ hyi
-    rw [map_add, map_mul, hφi, add_zero, map_one] at h2
+    rw [map_add (f := _), map_mul, hφi, add_zero, map_one] at h2
     rw [mul_comm]
     exact h2
   let LQ := Localization.AtPrime (Pm.map φ)

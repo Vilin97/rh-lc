@@ -125,7 +125,7 @@ theorem exp_embed (A : Matrix (Fin k) (Fin k) ℂ) :
         abel
       map_zero' := by simp
       map_add' := fun x y => by
-        simp only [Prod.fst_add, Prod.snd_add, map_add, add_smul]; abel }
+        simp only [Prod.fst_add, Prod.snd_add, map_add (f := _), add_smul]; abel }
   have hf : Continuous f :=
     ((emb0 k r).continuous_of_finiteDimensional.comp continuous_fst).add (continuous_snd.smul continuous_const)
   have h := NormedSpace.map_exp f hf (A, (0 : ℂ))

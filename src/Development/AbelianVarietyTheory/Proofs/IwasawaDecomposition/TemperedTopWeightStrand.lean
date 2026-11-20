@@ -100,7 +100,7 @@ theorem GlobalTheory.WeilDeligne.PrimDecomp.mk_restrict_strand_eq : ∀ (E Ω : 
   refine WD.sound (WDRep.Iso.symm ⟨eT, fun σ t => Subtype.ext ?_, fun t => Subtype.ext ?_⟩)
   · induction t using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, Submodule.coe_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Submodule.coe_add, hx, hy]
     | tmul x c =>
       set_option synthInstance.maxHeartbeats 100000 in
         rw [WDRep.tensor_ρ, TensorProduct.map_tmul, heT, restrict_ρ_apply, heT, map_sum]
@@ -116,7 +116,7 @@ theorem GlobalTheory.WeilDeligne.PrimDecomp.mk_restrict_strand_eq : ∀ (E Ω : 
       ring
   · induction t using TensorProduct.induction_on with
     | zero => simp
-    | add x y hx hy => simp only [map_add, Submodule.coe_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Submodule.coe_add, hx, hy]
     | tmul x c =>
       have hNs : ∀ (k : ℕ) (y : V), a.N ((a.N ^ k) y) = (a.N ^ (k + 1)) y := fun k y => by
         rw [pow_succ', End.mul_apply]

@@ -97,7 +97,7 @@ theorem exists_form_of_mem_chartRingZ (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k
     refine ⟨N₁ + N₂, H₁ * ∏ k, (X ⟨k, c k⟩ : MRing ι) ^ N₂ k + H₂ * ∏ k, (X ⟨k, c k⟩ : MRing ι) ^ N₁ k,
       isMultiHomog_add (isMultiHomog_mul h₁ (isMultiHomog_chartMono c N₂))
         (add_comm N₂ N₁ ▸ isMultiHomog_mul h₂ (isMultiHomog_chartMono c N₁)), ?_⟩
-    simp only [map_add, map_mul, map_prod, map_pow, aeval_X, e₁, e₂, Pi.add_apply, pow_add,
+    simp only [map_add (f := _), map_mul, map_prod, map_pow, aeval_X, e₁, e₂, Pi.add_apply, pow_add,
       Finset.prod_mul_distrib]
     ring
   | mul u v _ _ hu hv =>

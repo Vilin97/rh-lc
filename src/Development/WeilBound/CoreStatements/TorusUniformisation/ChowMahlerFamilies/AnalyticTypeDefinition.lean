@@ -329,11 +329,11 @@ theorem level_of_marking {D : Datum H} {l : Level H} {Xo : Moduli D l} {σ : KA 
     obtain ⟨e, he⟩ := hgam (r • a') (Submodule.smul_mem_smul hr Submodule.mem_top)
     obtain ⟨k, hk⟩ : l.M ∣ l.M' := Nat.dvd_lcm_left _ _
     refine ⟨e + k • r • (gam e' - e'), ?_⟩
-    rw [smul_add, ← map_smul, map_add, he, hk, smul_comm r, map_nsmul, map_smul gam, mul_smul, mul_smul, smul_add,
+    rw [smul_add, ← map_smul, map_add (f := _), he, hk, smul_comm r, map_nsmul, map_smul gam, mul_smul, mul_smul, smul_add,
       smul_sub, smul_sub, smul_sub]
     abel
   · rintro x y ⟨e, he⟩ ⟨e', he'⟩
-    exact ⟨e + e', by rw [map_add, he, he', smul_add]; abel⟩
+    exact ⟨e + e', by rw [map_add (f := _), he, he', smul_add]; abel⟩
 
 end PositivityTheory.Xgn.AnalyticTypeDefinition
 

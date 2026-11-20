@@ -114,7 +114,7 @@ theorem mem_locId_iff_count_le_ordV : ∀ {F E : Type} [Field F] [NumberField F]
           (HeightOneSpectrum.mem_adicCompletionIntegers _ _ _).1 (complMap_mem hw hc)
         exact (mul_le_mul' h3 (GlobalTheory.UnrTate.valuation_le_of_mem w.1 hx)).trans_eq (one_mul _)
       | zero => rw [map_zero, map_zero]; exact zero_le'
-      | add y z _ _ hy hz => rw [map_add]; exact Valuation.map_add_le _ hy hz
+      | add y z _ _ hy hz => rw [map_add (f := _)]; exact Valuation.map_add_le _ hy hz
       | neg y _ hy => rw [map_neg, Valuation.map_neg]; exact hy
     have h1 := h0 _ hY
     rw [hval, WithZero.exp_le_exp] at h1

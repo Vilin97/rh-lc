@@ -84,7 +84,7 @@ theorem normSq_pullB : ∀ (D : D7) (T : Tor D) (N N' r : ℕ) (b : Fin r → Ma
         · simpa using hw
         · simp
       | zero => simp
-      | add y z _ _ hy hz => rw [map_add]; exact add_mem hy hz
+      | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
       | neg y _ hy => rw [map_neg]; exact neg_mem hy
     · intro hx
       rw [h2 x]

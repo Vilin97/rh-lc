@@ -295,8 +295,8 @@ theorem unitOfNorm : UnitOfNorm := by
   refine sesq_ext (F := fun x y => Formalism.HermitianLatticesTheory.majAt b X v (ρ g x) (ρ g y))
     (G := Formalism.HermitianLatticesTheory.majAt b X v) (σ := v.embedding) (exists_im_ne_zero v)
     ⟨?_, ?_, ?_, ?_⟩ ⟨?_, ?_, ?_, ?_⟩ ?_ x y
-  · intro x x' y; simp only [map_add]; exact maj_add_left b X v _ _ _
-  · intro x y y'; simp only [map_add]; exact maj_add_right b X v _ _ _
+  · intro x x' y; simp only [map_add (f := _)]; exact maj_add_left b X v _ _ _
+  · intro x y y'; simp only [map_add (f := _)]; exact maj_add_right b X v _ _ _
   · intro a x y; simp only [map_smul]; exact maj_smul_left b X v _ _ _
   · intro a x y; simp only [map_smul]; exact maj_smul_right b X v _ _ _
   · exact fun x x' y => maj_add_left b X v _ _ _

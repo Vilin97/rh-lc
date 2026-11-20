@@ -48,7 +48,7 @@ theorem id_cong : ScalarCongruentOne := by
   have hze : ∀ a : Fin r, S.hT F.fl.z (F.fl.e a) = 0 := fun a => hzX _ (Submodule.subset_span ⟨a, rfl⟩)
   have h1 : S.hT F.fl.z F'.fl.z = (o : E) * (-(T : E)) := by
     have e : F'.fl.z = (F'.fl.z - (o : E) • F.fl.z) + (o : E) • F.fl.z := by abel
-    rw [e, map_add, hzX _ hz, zero_add, map_smul, smul_eq_mul, F.fl.z_norm]
+    rw [e, map_add (f := _), hzX _ hz, zero_add, map_smul, smul_eq_mul, F.fl.z_norm]
   have h2 : S.hT F.fl.z (frameAct (frame F) ξ (Fin.last r)) = -(T : E) := by
     unfold frameAct
     set_option synthInstance.maxHeartbeats 100000 in

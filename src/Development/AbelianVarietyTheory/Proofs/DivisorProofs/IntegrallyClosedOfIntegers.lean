@@ -127,7 +127,7 @@ theorem exists_lieSplit (h₁ : i₁ ≫ q₁ = 𝟙 _) (h₂ : i₂ ≫ q₂ = 
       rw [h₂₁, map_zero] at this; exact this.symm)
     (fun x => by
       have := LinearMap.congr_fun (congrArg (lieMap G G) h) x
-      rw [map_add, lieMap_comp, lieMap_comp, lieMap_id] at this; exact this),
+      rw [map_add (f := _), lieMap_comp, lieMap_comp, lieMap_id] at this; exact this),
     fun _ => rfl⟩
 
 include i₁ i₂ in
@@ -152,7 +152,7 @@ theorem exists_omegaDualSplit (h₁ : i₁ ≫ q₁ = 𝟙 _) (h₂ : i₂ ≫ q
       rw [h₂₁, map_zero] at this; exact this.symm)
     (fun x => by
       have := LinearMap.congr_fun (congrArg (omegaDualMap G G) h) x
-      rw [map_add, omegaDualMap_comp, omegaDualMap_comp, omegaDualMap_id] at this; exact this),
+      rw [map_add (f := _), omegaDualMap_comp, omegaDualMap_comp, omegaDualMap_id] at this; exact this),
     fun _ => rfl⟩
 
 end Groups
@@ -309,7 +309,7 @@ theorem hasDatum_of_isSum : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field C] [I
       rw [hx, bQuot_symm hbb Q hQ, pairingO_append hε i₁ i₂ e e₁ e₂ hes, hb₁, hb₂,
         lieMap_apply, lieMap_apply, dlog_tateMap, dlog_tateMap, ← map_add]
       have hw := LinearMap.congr_fun (congrArg (omegaMap G G) h) (dlog G χ)
-      rw [map_add, omegaMap_comp, omegaMap_comp, omegaMap_id] at hw
+      rw [map_add (f := _), omegaMap_comp, omegaMap_comp, omegaMap_id] at hw
       exact congrArg x hw
   unfold HasDatum
   rw [hh]

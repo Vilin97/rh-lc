@@ -21,7 +21,7 @@ theorem repr_map {F E A B : Type} [Field F] [Field E] [Algebra F E] [CommRing A]
   | zero => simp
   | tmul a e =>
     simp [Algebra.TensorProduct.basis_repr_tmul, Algebra.TensorProduct.map_tmul]
-  | add x y hx hy => simp [map_add, hx, hy]
+  | add x y hx hy => simp [map_add (f := _), hx, hy]
 
 section Cont
 

@@ -115,7 +115,7 @@ theorem weight_add (p : ℕ) [Fact p.Prime] (c : ℝ) (hc : 0 ≤ c) (x y : Witt
   obtain ⟨Y, hY⟩ := key y hy
   have h : WittVector.map (weightRing a hb h0 h1 hm ha c hc).subtype (X + Y) =
       scaleCoeff p Polynomial.X (WittVector.map Polynomial.C (x + y)) := by
-    rw [← teichmuller_mul_eq, map_add, map_add, mul_add, hX, hY]
+    rw [← teichmuller_mul_eq, map_add (f := _), map_add (f := _), mul_add, hX, hY]
   have h2 := congrArg (fun z => WittVector.coeff z n) h
   simp only [WittVector.map_coeff, scaleCoeff, WittVector.coeff_mk] at h2
   have h3 := ((X + Y).coeff n).2 (p ^ n)
@@ -140,7 +140,7 @@ theorem weight_add_trunc (p : ℕ) [Fact p.Prime] (c : ℝ) (hc : 0 ≤ c) (x y 
   obtain ⟨x', hx1, hx2⟩ := key x hx
   obtain ⟨y', hy1, hy2⟩ := key y hy
   have h : truncate (n + 1) (x + y) = truncate (n + 1) (x' + y') := by
-    rw [map_add, map_add, hx1, hy1]
+    rw [map_add (f := _), map_add (f := _), hx1, hy1]
   have h2 := congrArg (TruncatedWittVector.coeff (Fin.last n)) h
   rw [coeff_truncate, coeff_truncate, Fin.val_last] at h2
   rw [h2]

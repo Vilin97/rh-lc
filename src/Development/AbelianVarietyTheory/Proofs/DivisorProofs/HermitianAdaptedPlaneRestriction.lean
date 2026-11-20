@@ -130,7 +130,7 @@ theorem cA_invol {σ : E →ₐ[F] E} (h : ∀ x, σ (σ x) = x) (a : AE F E) : 
   induction a using TensorProduct.induction_on with
   | zero => simp
   | tmul r e => simp [cA, h]
-  | add a b ha hb => simp [map_add, ha, hb]
+  | add a b ha hb => simp [map_add (f := _), ha, hb]
 
 theorem cA_incl (σ : E →ₐ[F] E) (e : E) : cA σ (inclR (F := F) (AF F) e) = inclR (F := F) (AF F) (σ e) := by
   simp [cA, inclR]

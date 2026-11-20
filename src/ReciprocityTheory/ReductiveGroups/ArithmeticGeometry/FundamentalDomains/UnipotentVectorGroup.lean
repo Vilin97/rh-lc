@@ -84,7 +84,7 @@ private theorem hermC_sub_sum_smul_expand {r : ℕ} (τ : E →+* ℂ) (G : Matr
       hermC τ G w w' - ∑ i, starRingEnd ℂ (β i) * hermC τ G w (v i) -
         ∑ i, α i * hermC τ G (v i) w' +
           ∑ i, ∑ k, α i * starRingEnd ℂ (β k) * hermC τ G (v i) (v k) := by
-  simp only [hermC, Fin.sum_univ_two, map_sub, map_add, map_mul, Finset.mul_sum,
+  simp only [hermC, Fin.sum_univ_two, map_sub, map_add (f := _), map_mul, Finset.mul_sum,
     ← Finset.sum_add_distrib, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun c _ => ?_
   ring

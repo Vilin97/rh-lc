@@ -174,7 +174,7 @@ theorem UpperTheory.ConvolutionTheory.FX.abs_taylor :
     | empty => intro ψ y; simpa using hasDerivAt_const (0 : ℝ) (c ψ y)
     | insert j S hj ih =>
       intro ψ y
-      rw [Finset.sum_insert hj, Finset.sum_insert hj, add_smul, map_add, Pi.add_apply]
+      rw [Finset.sum_insert hj, Finset.sum_insert hj, add_smul, map_add (f := _), Pi.add_apply]
       exact line_add (c ψ) _ _ _ _ _ _ (hone j ψ) (ih ψ) (hone j _) (ih _) (hb _) (hb _) y
   set T : A := ∑ j, (v j : ℂ) • I j with hT
   have hv : ∀ (ψ : V) (y : Fin r → ℝ), HasDerivAt (fun s : ℝ => c ψ (y + s • v)) (c (T • ψ) y) 0 := by
@@ -212,7 +212,7 @@ theorem UpperTheory.ConvolutionTheory.FX.abs_taylor :
         Pi.smul_apply, Complex.norm_real, Real.norm_eq_abs, ← hM]
       have i1 := ih (α + Finsupp.single (τ0, σ j) 1)
       have i2 := mul_le_mul_of_nonneg_left (ih α) (norm_nonneg (Λ (τ0, σ j)))
-      rw [map_add, Finsupp.degree_single, pow_succ] at i1
+      rw [map_add (f := _), Finsupp.degree_single, pow_succ] at i1
       rw [← norm_smul] at i2
       have i3 := mul_le_mul_of_nonneg_left ((norm_sub_le _ _).trans (add_le_add i1 i2)) (abs_nonneg (v j))
       refine i3.trans (le_of_eq ?_)

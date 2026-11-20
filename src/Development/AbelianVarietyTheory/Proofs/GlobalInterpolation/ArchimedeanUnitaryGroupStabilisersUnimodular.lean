@@ -449,7 +449,7 @@ theorem isUnimodularLC_of_artinian [LocallyCompactSpace R] [SecondCountableTopol
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a e => simp [sigR]
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   have hs'c : Continuous (sigR R σ) := by
     rw [hsig]
     exact IsModuleTopology.continuous_of_linearMap _

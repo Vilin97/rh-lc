@@ -128,7 +128,7 @@ theorem expand (h : DualFr e f) (c d c' d' : Fin r → E) (w w' : S.V)
   have h1 := perp_e' hwe
   have h2 := perp_e' (e := f) hwf
   set_option synthInstance.maxHeartbeats 100000 in
-    simp [map_add, map_sum, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.map_smulₛₗ₂, map_smul,
+    simp [map_add (f := _), map_sum, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.map_smulₛₗ₂, map_smul,
     h.1, h.2.1, h.2.2, fe h, hwe, hwf, hwe', hwf', h1, h2, Finset.sum_add_distrib]
   rw [add_comm]
   congr 1 <;> refine Finset.sum_congr rfl fun x _ => ?_ <;> simp [starRingEnd_apply, mul_comm]
@@ -160,7 +160,7 @@ theorem pr_sig_isom (hb : DualFr e fb) {u u' : S.V} (hu : ∀ a, S.hT (e a) u = 
     intro x hx x' hx'
     have p1 := sig_perp σ hσ hσX' hu
     have p2 := sig_perp σ hσ hσX' hu'
-    simp only [map_add, LinearMap.add_apply, hσ, (perpX p2 hx).1, (perpX p1 hx').2, isoX hb hx hx']
+    simp only [map_add (f := _), LinearMap.add_apply, hσ, (perpX p2 hx).1, (perpX p1 hx').2, isoX hb hx hx']
     simp
   have := k _ (pr_sub_mem (f := fb) _ (sig_perp σ hσ hσX' hu)) _ (pr_sub_mem (f := fb) _ (sig_perp σ hσ hσX' hu'))
   simpa using this
@@ -289,7 +289,7 @@ theorem split_perp {f : Fin r → S.V} (hd : DualFr F0.e f) {aa aa' : Fin r → 
   have ht0 : t = 0 := by
     refine spanF_zero hd ht' fun a => ?_
     have := hp a
-    simp only [map_add, isoX hd (Submodule.subset_span ⟨a, rfl⟩) hs', (hL l hl a).1, zero_add] at this
+    simp only [map_add (f := _), isoX hd (Submodule.subset_span ⟨a, rfl⟩) hs', (hL l hl a).1, zero_add] at this
     exact this
   exact ⟨s, hs', l, hl, by simp [ht0]⟩
 
@@ -329,7 +329,7 @@ theorem map_G_eq {aa : Fin r → FractionalIdeal (nonZeroDivisors (𝓞 E)) E} {
     have e1 : σ l = l' + ((σ l - (s + l')) + s) := by abel
     rw [G_w σ hle (fun a => (hLa l hl a).2)]
     try simp only [LinearEquiv.coe_coe]
-    rw [e1, map_add, pr_spanE hb (Submodule.add_mem _ hmx hs), add_zero,
+    rw [e1, map_add (f := _), pr_spanE hb (Submodule.add_mem _ hmx hs), add_zero,
       pr_of_perp l' (fun a => (hLb l' hl' a).1) (fun a => (hLb l' hl' a).2)]
     exact hl'
   have hB : ∀ l' ∈ Lb, ∃ l ∈ La, G F0.e fa fb σ l = l' := by
@@ -347,7 +347,7 @@ theorem map_G_eq {aa : Fin r → FractionalIdeal (nonZeroDivisors (𝓞 E)) E} {
       exact (perpX hmp (hσX _ (Submodule.subset_span ⟨a, rfl⟩))).1
     obtain ⟨s, hs, l, hl, rfl⟩ := split_perp F0 ha hLa hΛa hm0 hm0p
     refine ⟨l, hl, ?_⟩
-    have e1 : σ l = l' - ((l' - σ (s + l)) + σ s) := by rw [map_add]; abel
+    have e1 : σ l = l' - ((l' - σ (s + l)) + σ s) := by rw [map_add (f := _)]; abel
     rw [G_w σ (fun a => (hLa l hl a).1) (fun a => (hLa l hl a).2)]
     try simp only [LinearEquiv.coe_coe]
     rw [e1, map_sub, pr_spanE hb (Submodule.add_mem _ hmx (hσX _ hs)), sub_zero,

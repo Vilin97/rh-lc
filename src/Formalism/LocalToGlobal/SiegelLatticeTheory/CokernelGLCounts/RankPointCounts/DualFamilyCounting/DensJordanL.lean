@@ -50,7 +50,7 @@ theorem jl_latP_span (hA : Agree δ M p) (S : Set (VS D).V) :
     · rw [map_zero]
       exact zero_mem _
     · intro y z _ _ hy hz
-      rw [map_add]
+      rw [map_add (f := _)]
       exact add_mem hy hz
     · intro o y _ hy
       rw [jl_bc_smulO L p o y]

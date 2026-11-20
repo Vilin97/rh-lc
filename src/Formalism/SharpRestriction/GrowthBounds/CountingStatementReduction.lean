@@ -1112,7 +1112,7 @@ theorem setProj_eq_sum (E : GLOps n K V) (hT : (⨆ mu : Fin n → ℤ, isoSub E
     obtain ⟨A1, h1⟩ := hx
     obtain ⟨A2, h2⟩ := hy
     refine ⟨A1 ∪ A2, fun B hB => ?_⟩
-    rw [map_add, h1 B (Finset.union_subset_left hB), h2 B (Finset.union_subset_right hB), ← Finset.sum_add_distrib]
+    rw [map_add (f := _), h1 B (Finset.union_subset_left hB), h2 B (Finset.union_subset_right hB), ← Finset.sum_add_distrib]
     exact Finset.sum_congr rfl fun mu _ => (map_add _ _ _).symm
 
 end Abs
@@ -1292,7 +1292,7 @@ theorem iso_indep_abs (E : GLOps n K V) (hT : (⨆ mu : Fin n → ℤ, isoSub E 
       rwa [LinearMap.mem_ker, LinearMap.flip_apply] at this
     · exact hB i mu (Ne.symm h) x hx y hy
   | zero => simp
-  | add y z _ _ hy hz => rw [map_add, hy, hz, add_zero]
+  | add y z _ _ hy hz => rw [map_add (f := _), hy, hz, add_zero]
 
 theorem isoProjSet_exists_abs (E : GLOps n K V) (hT : (⨆ mu : Fin n → ℤ, isoSub E mu) = ⊤)
     (hI : iSupIndep (isoSub E)) (T : Set (Fin n → ℤ)) : ∃ e, IsIsoProjSet E T e := by
@@ -1324,7 +1324,7 @@ theorem isoProjSet_comm_abs (E : GLOps n K V) (hT : (⨆ mu : Fin n → ℤ, iso
     · rw [he.1 mu h x hx, he.1 mu h _ (hX _ x hx)]
     · rw [he.2 mu h x hx, he.2 mu h _ (hX _ x hx), map_zero]
   | zero => simp
-  | add x y _ _ hx hy => simp only [map_add, hx, hy]
+  | add x y _ _ hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem isoProjSet_selfadj_abs (E : GLOps n K V) (hT : (⨆ mu : Fin n → ℤ, isoSub E mu) = ⊤) (T : Set (Fin n → ℤ))
     (e : Module.End K V) (he : IsIsoProjSet E T e) (B : V →ₗ[K] V →ₗ[K] K)
@@ -1348,9 +1348,9 @@ theorem isoProjSet_selfadj_abs (E : GLOps n K V) (hT : (⨆ mu : Fin n → ℤ, 
           rw [he.1 nu h' y hy, hB mu nu hne x hx y hy]
         · rw [he.2 nu h' y hy, map_zero]
     | zero => simp
-    | add y z _ _ hy hz => simp only [map_add, hy, hz]
+    | add y z _ _ hy hz => simp only [map_add (f := _), hy, hz]
   | zero => simp
-  | add x z _ _ hx hz => simp only [map_add, LinearMap.add_apply, hx, hz]
+  | add x z _ _ hx hz => simp only [map_add (f := _), LinearMap.add_apply, hx, hz]
 
 end abs
 
@@ -2035,9 +2035,9 @@ theorem ext_abs {r n : ℕ} (E : GLOps r K V) (φ : Fin n → Fin r) (hE : IsGLR
     intro x
     obtain ⟨a, ha, b, hb, rfl⟩ := wt_split hE la x
     have h1 : wtProj hE la (a + b) = a := by
-      rw [map_add, wtProj_same hE la ha, wtProj_other hE la hb, add_zero]
+      rw [map_add (f := _), wtProj_same hE la ha, wtProj_other hE la hb, add_zero]
     have h2 : wtProj hE la (e' (a + b)) = e' a := by
-      rw [map_add, map_add, wtProj_same hE la (hewt la a ha), wtProj_other hE la (heoth b hb), add_zero]
+      rw [map_add (f := _), map_add (f := _), wtProj_same hE la (hewt la a ha), wtProj_other hE la (heoth b hb), add_zero]
     rw [h1, h2]
   have hran : ∀ y, e' y ∈ isoSub E' la' := by
     intro y
@@ -2048,7 +2048,7 @@ theorem ext_abs {r n : ℕ} (E : GLOps r K V) (φ : Fin n → Fin r) (hE : IsGLR
       · subst h; rw [hiso.1 y hy]; exact hy
       · rw [hiso.2 mu h y hy]; exact Submodule.zero_mem _
     | zero => rw [map_zero]; exact Submodule.zero_mem _
-    | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
   have hwt' : ∀ x ∈ weightSp E la, x ∈ weightSp E' la' := by
     intro x hx
     rw [mem_weightSpace_iff_diagonal_rep] at hx ⊢
@@ -2080,7 +2080,7 @@ theorem ext_abs {r n : ℕ} (E : GLOps r K V) (φ : Fin n → Fin r) (hE : IsGLR
         exact Submodule.mem_iSup_of_mem mu (Submodule.mem_iSup_of_mem h hy)
     | zero => simp
     | add y z _ _ hy hz =>
-      have : y + z - e' (y + z) = (y - e' y) + (z - e' z) := by rw [map_add]; abel
+      have : y + z - e' (y + z) = (y - e' y) + (z - e' z) := by rw [map_add (f := _)]; abel
       rw [this]; exact Submodule.add_mem _ hy hz
   have hlow : (⨆ (mu : Fin n → ℤ) (_ : mu ≠ la'), isoSub E' mu) ≤ (lowIm E').comap (wtProj hE' la') := by
     refine iSup₂_le fun mu hmu x hx => ?_
@@ -2121,8 +2121,8 @@ theorem ext_abs {r n : ℕ} (E : GLOps r K V) (φ : Fin n → Fin r) (hE : IsGLR
             iSup₂_le fun ν hν z hz => wt_orth B hB hν hx2 hz
           exact this hb
         have h1 : wtProj hE la (a + b) = a := by
-          rw [map_add, wtProj_same hE la ha, wtProj_other hE la hb, add_zero]
-        rw [h1, map_add, hb0, add_zero]
+          rw [map_add (f := _), wtProj_same hE la ha, wtProj_other hE la hb, add_zero]
+        rw [h1, map_add (f := _), hb0, add_zero]
       rw [hpr, ← hcomm]
       have hh : e' (wtProj hE la y) ∈ hwK E' := (hmem y).2
       have : lowIm E' ≤ LinearMap.ker (B.flip (e' (wtProj hE la y))) := by

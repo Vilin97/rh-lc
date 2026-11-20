@@ -36,7 +36,7 @@ theorem mult_eval_eq_adel_holSub0 : GlobalTheory.Published.CuspRapidDecay → Gl
     | add P Q _ _ hP hQ =>
       obtain ⟨T, hT, hTv⟩ := hP
       obtain ⟨T', hT', hTv'⟩ := hQ
-      exact ⟨T + T', Submodule.add_mem _ hT hT', by rw [map_add, _root_.add_apply, hTv, hTv']⟩
+      exact ⟨T + T', Submodule.add_mem _ hT hT', by rw [map_add (f := _), _root_.add_apply, hTv, hTv']⟩
     | smul a P _ hP =>
       obtain ⟨T, hT, hTv⟩ := hP
       exact ⟨a • T, Submodule.smul_mem _ a hT, by rw [map_smul, _root_.smul_apply, hTv]⟩

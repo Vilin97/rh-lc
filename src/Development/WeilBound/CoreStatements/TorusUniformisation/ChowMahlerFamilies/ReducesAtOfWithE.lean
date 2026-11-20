@@ -188,7 +188,7 @@ theorem point_data (hF : HT.FarguesHodgeTate) (E : Type) [Field E] [NumberField 
     chart_matrices (le_trans (by norm_num) (𝔐.R_ge p hpS)) P.Dh hint Pt io₀ hr
   let f : 𝔐.Li → (P.Dh.om →ₛₗ[algebraMap (CR O y c') RC] C) := fun x =>
     { toFun := fun u => algebraMap Ω C (u.1 x)
-      map_add' := fun a b => by rw [Submodule.coe_add, LinearMap.add_apply, map_add]
+      map_add' := fun a b => by rw [Submodule.coe_add, LinearMap.add_apply, map_add (f := _)]
       map_smul' := fun r a => by
         change algebraMap Ω C ((r : Ω) * a.1 x) = algebraMap Ω C (r : Ω) * algebraMap Ω C (a.1 x)
         rw [map_mul] }

@@ -427,7 +427,7 @@ variable {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarT
 
 def invSub : Submodule K V where
   carrier := {v | ∀ γ, ρ γ v = v}
-  add_mem' := fun {a b} ha hb γ => by rw [map_add, ha γ, hb γ]
+  add_mem' := fun {a b} ha hb γ => by rw [map_add (f := _), ha γ, hb γ]
   zero_mem' := fun γ => map_zero _
   smul_mem' := fun c v hv γ => by rw [map_smul, hv γ]
 

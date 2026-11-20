@@ -87,7 +87,7 @@ theorem theta_facts {E : Type} [Field E] [NumberField E] [IsCMField E] (ψ : E �
     · simp only [Polynomial.eval₂_add, Polynomial.eval₂_pow, Polynomial.eval₂_X, Polynomial.eval₂_C, Polynomial.eval₂_X_pow]
       simp only [eq_intCast, Int.cast_natCast, algebraMap_int_eq]
       linear_combination (1 / 4 : E) * hw - (1 / 4 : E) * hm'
-    · rw [map_div₀, map_add, map_neg, map_one, hc, map_ofNat]
+    · rw [map_div₀, map_add (f := _), map_neg, map_one, hc, map_ofNat]
       linear_combination hw
   · subst hθ
     refine ⟨⟨Polynomial.X ^ 2 + Polynomial.C (d : ℤ), by monicity!, ?_⟩, ?_⟩

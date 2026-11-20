@@ -94,7 +94,7 @@ theorem eq_neg_of_commute {R : Type} [AddCommGroup R] (J j : R →+ R) (hJ : ∀
     (hc : ∀ z, J (j z) = j (J z)) (h0 : ∀ y, J y = j y → y = 0) (z : R) : J z = -j z := by
   rw [eq_neg_iff_add_eq_zero]
   apply h0
-  rw [map_add, map_add, hJ, hj, hc, add_comm]
+  rw [map_add (f := _), map_add (f := _), hJ, hj, hc, add_comm]
 
 section Cx
 
@@ -262,7 +262,7 @@ def nilSub (a : I → Module.End ℂ M) : Submodule ℂ M where
     have h1 := hN.mono (le_max_left N N') l hl
     have h2 := hN'.mono (le_max_right N N') l hl
     rw [foldr_lin] at h1 h2 ⊢
-    rw [map_add, h1, h2, add_zero]⟩
+    rw [map_add (f := _), h1, h2, add_zero]⟩
   smul_mem' := fun c x ⟨N, hN⟩ => ⟨N, fun l hl => by
     have h1 := hN l hl
     rw [foldr_lin] at h1 ⊢
@@ -336,7 +336,7 @@ theorem Chart.bounded (h : Chart θ σ) (hψ : IsStdChar D ψ (-1)) {f : WA V W 
     (GlobalTheory.T.span_realProjection_rationalPoints_eq_top D θ σ h V W) ?_
   rintro _ ⟨γ, rfl⟩
   obtain ⟨N, hN, e⟩ := GlobalTheory.T.norm_thetaFunction_periodic_real_variables D θ σ h ψ hψ.1.2.1 (GlobalTheory.T.exists_pos_nat_mem_open_adele_subgroup D.host.F) V W f hf γ
-  exact ⟨N, hN, fun x => by rw [map_add, ← add_assoc, e]⟩
+  exact ⟨N, hN, fun x => by rw [map_add (f := _), ← add_assoc, e]⟩
 
 theorem Chart.killed_iff (h : Chart θ σ) (hψ : IsStdChar D ψ (-1)) {M : Submodule ℂ (WA V W → ℂ)}
     {Dop : RW V W → Module.End ℂ M}

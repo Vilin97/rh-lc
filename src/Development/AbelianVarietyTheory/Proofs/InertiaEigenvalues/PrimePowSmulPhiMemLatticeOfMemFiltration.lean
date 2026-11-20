@@ -60,7 +60,7 @@ theorem exists_frob_E_eq (e : ℕ) [NeZero e] : ∃ d ∈ S O K e, frob K l (E K
     have h0 : 0 < ‖(l : K)‖ := norm_pos_iff.2 (l_ne_zero l)
     rw [inv_mul_le_one₀ h0]
     exact norm_natCast_le_of_dvd (Nat.dvd_factorial (Fact.out : l.Prime).pos le_rfl)
-  · rw [E, map_add, map_pow, frob_X, map_natCast, monomial_eq_C_mul_X_pow, mul_add, mul_one,
+  · rw [E, map_add (f := _), map_pow, frob_X, map_natCast, monomial_eq_C_mul_X_pow, mul_add, mul_one,
       ← mul_assoc, ← map_mul, mul_inv_cancel₀ (l_ne_zero l), map_one, one_mul, ← pow_mul,
       mul_comm l e, add_comm, map_natCast]
 
@@ -92,14 +92,14 @@ theorem exists_frob_eq_of_mem_Fil (e : ℕ) [NeZero e] {j : ℕ} (hjl : j < l) {
     | add x y _ _ hx hy =>
       obtain ⟨s, hs, h1⟩ := hx
       obtain ⟨t, ht, h2⟩ := hy
-      exact ⟨s + t, add_mem hs ht, by rw [Subalgebra.coe_add, map_add, h1, h2, mul_add]⟩
+      exact ⟨s + t, add_mem hs ht, by rw [Subalgebra.coe_add, map_add (f := _), h1, h2, mul_add]⟩
     | smul c x _ hx =>
       obtain ⟨s, hs, h1⟩ := hx
       exact ⟨frob K l c * s, mul_mem (frob_mem_S l c.2) hs, by
         rw [smul_eq_mul, Subalgebra.coe_mul, map_mul, h1]; ring⟩
   obtain ⟨s, hs, h1⟩ := key g hg
   refine ⟨s + frob K l h, add_mem hs (frob_mem_S l h.2), ?_⟩
-  rw [Subalgebra.coe_add, Subalgebra.coe_mul, map_add, map_mul, h1, mul_add]
+  rw [Subalgebra.coe_add, Subalgebra.coe_mul, map_add (f := _), map_mul, h1, mul_add]
   congr 2
   simp
 
@@ -116,6 +116,6 @@ theorem phi_FilMM_mem : ∀ (O K : Type) [CommRing O] [NormedField K] [IsUltrame
       smul_comm ((l : K) ^ η) ((l : K) ^ j), smul_comm ((l : K) ^ η) s]
   · obtain ⟨v₁, h₁, e₁⟩ := hx
     obtain ⟨v₂, h₂, e₂⟩ := hy
-    exact ⟨v₁ + v₂, add_mem h₁ h₂, by rw [map_add, smul_add, e₁, e₂, smul_add]⟩
+    exact ⟨v₁ + v₂, add_mem h₁ h₂, by rw [map_add (f := _), smul_add, e₁, e₂, smul_add]⟩
 
 end GlobalTheory.BK

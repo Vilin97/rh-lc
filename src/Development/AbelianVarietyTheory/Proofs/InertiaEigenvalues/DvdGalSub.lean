@@ -73,7 +73,7 @@ theorem GlobalTheory.BKLim.Frame.isCr_of_wSeed : ∀ (l : ℕ) [Fact l.Prime] (K
       conv_lhs => rw [eq_X_mul_shift_add_const bk.E]
       rw [← coeff_zero_eq_constantCoeff_apply, Polynomial.coeff_coe, hw]
     rw [e1]
-    simp only [map_add, map_mul, map_natCast, hu0, zero_mul, zero_add]
+    simp only [map_add (f := _), map_mul, map_natCast, hu0, zero_mul, zero_add]
     exact (hl.map q).mul ((w.isUnit.map (C : Wq l bk.a →+* bk.S)).map (q.comp bk.iS))
   have hsm : ∀ (c : bk.DA bk.ρ₀) (M : Matrix (Fin d) (Fin d) (bk.DA bk.ρ₀)), (c • M).map q = q c • M.map q :=
     fun c M => by ext a b; simp

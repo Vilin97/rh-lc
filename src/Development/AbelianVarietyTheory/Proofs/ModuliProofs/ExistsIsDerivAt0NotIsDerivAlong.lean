@@ -58,7 +58,7 @@ theorem trace_eq_of_pos {W : Type} [AddCommGroup W] [Module ℝ W] [FiniteDimens
     have h1 := hp x h0
     have h2 := hp' x h0
     have h3 : B ((J + J') x) x = 0 := by rw [hx]; simp
-    simp only [LinearMap.add_apply, map_add] at h3
+    simp only [LinearMap.add_apply, map_add (f := _)] at h3
     linarith
   let T := LinearEquiv.ofInjectiveEndo _ hinj
   have hT : ∀ x, T x = J x + J' x := fun _ => rfl
@@ -69,7 +69,7 @@ theorem trace_eq_of_pos {W : Type} [AddCommGroup W] [Module ℝ W] [FiniteDimens
   refine LinearMap.ext fun y => ?_
   obtain ⟨x, rfl⟩ := T.surjective y
   rw [LinearEquiv.conj_apply_apply, T.symm_apply_apply, hT, hT]
-  simp only [LinearMap.comp_apply, map_add, ← hA1, ← hA2, hJ, hJ']
+  simp only [LinearMap.comp_apply, map_add (f := _), ← hA1, ← hA2, hJ, hJ']
   abel
 
 theorem mem_domain (D : Datum H) {J : ℝ ⊗[ℤ] D.La →ₗ[ℝ] ℝ ⊗[ℤ] D.La} (h1 : ∀ x, J (J x) = -x)
@@ -145,11 +145,11 @@ theorem exists_presents {D : Datum H} {g : ℕ} {ty : Fin g → (E →+* ℂ)} {
   have hB : ∀ x y, D.EF.baseChange ℝ x y = imForm Hm (φ x) (φ y) := fun x y => by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x x' h h' => simp only [map_add, LinearMap.add_apply, h, h']
+    | add x x' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']
     | tmul r x =>
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add y y' h h' => simp only [map_add, h, h']
+      | add y y' h h' => simp only [map_add (f := _), h, h']
       | tmul r' y =>
         have : imForm Hm (P x) (P y) = D.EF x y := hE x y
         simp only [hφ, map_smul, LinearMap.smul_apply, this, LinearMap.BilinForm.baseChange_tmul, smul_eq_mul,
@@ -199,16 +199,16 @@ theorem isPeriod_of_presents {D : Datum H} {g : ℕ} {ty : Fin g → (E →+* �
     exact ⟨b i, (hc i).symm⟩
   · have halt0 : ∀ x y, D.EF x y = -D.EF y x := fun x y => by
       have := D.alt (x + y)
-      simp only [map_add, LinearMap.add_apply, D.alt] at this
+      simp only [map_add (f := _), LinearMap.add_apply, D.alt] at this
       linarith
     have halt : ∀ x y, D.EF.baseChange ℝ x y = -D.EF.baseChange ℝ y x := fun x y => by
       induction x using TensorProduct.induction_on with
       | zero => simp
-      | add x x' h h' => simp only [map_add, LinearMap.add_apply, h, h']; ring
+      | add x x' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']; ring
       | tmul r x =>
         induction y using TensorProduct.induction_on with
         | zero => simp
-        | add y y' h h' => simp only [map_add, LinearMap.add_apply, h, h']; ring
+        | add y y' h h' => simp only [map_add (f := _), LinearMap.add_apply, h, h']; ring
         | tmul r' y => simp [halt0 x y, mul_comm]
     have hs : ∀ z, e.symm (Complex.I • z) = J (e.symm z) := fun z => by
       rw [e.symm_apply_eq, heJ, e.apply_symm_apply]

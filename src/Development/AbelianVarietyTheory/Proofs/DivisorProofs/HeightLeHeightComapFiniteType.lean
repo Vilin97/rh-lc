@@ -58,7 +58,7 @@ theorem height_le_height_comap : ∀ (R S : Type) [CommRing R] [IsDomain R] [IsN
         | add y z _ _ hy hz =>
           obtain ⟨p, hp⟩ := hy
           obtain ⟨q, hq⟩ := hz
-          exact ⟨p + q, by rw [map_add, hp, hq]; rfl⟩
+          exact ⟨p + q, by rw [map_add (f := _), hp, hq]; rfl⟩
         | mul y z _ _ hy hz =>
           obtain ⟨p, hp⟩ := hy
           obtain ⟨q, hq⟩ := hz

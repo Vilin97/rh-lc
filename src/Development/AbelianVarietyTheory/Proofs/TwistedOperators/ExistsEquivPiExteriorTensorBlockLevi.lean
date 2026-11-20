@@ -258,7 +258,7 @@ theorem exists_piTensor_fin : ∀ (n : ℕ) (Γ : Fin n → Type) [∀ j, Group 
       intro g z
       induction z using TensorProduct.induction_on with
       | zero => simp only [map_zero]
-      | add a b ha hb => simp only [map_add, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), ha, hb]
       | tmul a b =>
         rw [extTensor_tmul]
         show c (e' (σ.ρ g.1 a) ⊗ₜ ρ.ρ g.2 b) = _
@@ -288,7 +288,7 @@ theorem exists_piTensor {β : Type} [Fintype β] (Γ : β → Type) [∀ j, Grou
       piTensor (fun i => (s (ε.symm i)).ρ) (χ g) (r z) := by
     intro g z
     induction z using PiTensorProduct.induction_on with
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | smul_tprod c x =>
       simp only [map_smul, r, piTensor_tprod, PiTensorProduct.reindex_tprod]
       rfl

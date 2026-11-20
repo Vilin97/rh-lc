@@ -165,7 +165,7 @@ theorem exists_over (hle : c.F ≤ c'.F) {n : ℕ} {Ix : Type} [Fintype Ix] (lam
     rw [map_prod]
     exact Finset.prod_congr rfl fun s _ => MvPolynomial.map_rename _ _ _
   | zero => simp
-  | add x y _ _ hx hy => rw [map_add]; exact Submodule.add_mem _ hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ hx hy
   | smul a x _ hx =>
     rw [MvPolynomial.smul_eq_C_mul, map_mul, MvPolynomial.map_C, ← MvPolynomial.smul_eq_C_mul]
     exact Submodule.smul_mem _ _ hx

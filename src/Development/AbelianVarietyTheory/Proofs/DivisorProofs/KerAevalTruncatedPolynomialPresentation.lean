@@ -65,7 +65,7 @@ theorem ker_aeval_truncated : ∀ (n : ℕ), 0 < n → ∀ (B A : Type) [CommRin
         rw [← MvPolynomial.algebraMap_eq, q.commutes, Algebra.algebraMap_eq_smul_one]
         simp [v]
       rw [this]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨_, rfl⟩)
-    | add p r hp hr => rw [map_add]; exact add_mem hp hr
+    | add p r hp hr => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hr
     | mul_X p i hp => rw [map_mul]; exact hmulX i _ hp
   intro F hF
   rw [RingHom.mem_ker] at hF

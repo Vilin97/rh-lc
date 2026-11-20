@@ -62,7 +62,7 @@ theorem IsAlgebraicData.baseChange (h : T.IsAlgebraicData) : (T.baseChange E).Is
     induction hu using Submodule.span_induction with
     | mem _ h => obtain ⟨k, rfl⟩ := h; exact Submodule.subset_span ⟨k, rfl⟩
     | zero => simp only [Pi.zero_apply, map_zero]; exact zero_mem _
-    | add a b _ _ ha hb => simp only [Pi.add_apply, map_add]; exact add_mem ha hb
+    | add a b _ _ ha hb => simp only [Pi.add_apply, map_add (f := _)]; exact add_mem ha hb
     | smul c a _ ha => simp only [Pi.smul_apply, smul_eq_mul, map_mul]; exact Submodule.smul_mem _ _ ha
   refine top_le_iff.1 fun (u : Fin T.N → E) _ => ?_
   rw [pi_eq_sum_univ' u]

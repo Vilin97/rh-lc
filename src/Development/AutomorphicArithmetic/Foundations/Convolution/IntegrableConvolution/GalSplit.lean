@@ -72,7 +72,7 @@ private theorem phi_bij (σ : E ≃ₐ[F] E) (hσ : ∀ τ : E ≃ₐ[F] E, τ �
     intro t
     induction t using TensorProduct.induction_on with
     | zero => simp [Ψ]
-    | add s t hs ht => rw [map_add, hadd, hs, ht]
+    | add s t hs ht => rw [map_add (f := _), hadd, hs, ht]
     | tmul x a =>
       let c : Fin (m + 1) → E := fun l => algebraMap F E (b.repr x l)
       have hx : (fun i : Fin (m + 1) => (σ ^ (i : ℕ)) x) = M.mulVec c := by
@@ -103,7 +103,7 @@ private theorem phi_shift (σ : E ≃ₐ[F] E) (hσ : ∀ τ : E ≃ₐ[F] E, τ
   have hv : ((i + 1 : Fin (m + 1)) : ℕ) = ((i : ℕ) + 1) % (m + 1) := by simp [Fin.val_add]
   induction t using TensorProduct.induction_on with
   | zero => simp
-  | add s t hs ht => simp only [map_add, Pi.add_apply, hs, ht]
+  | add s t hs ht => simp only [map_add (f := _), Pi.add_apply, hs, ht]
   | tmul x a =>
     rw [Algebra.TensorProduct.map_tmul, phi_tmul, phi_tmul, hv, ← pow_eq_pow_mod _ h1, pow_succ]
     rfl

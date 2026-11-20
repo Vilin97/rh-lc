@@ -82,7 +82,7 @@ theorem exact_of_tie_lattice (hm : ∀ m : Ideal W.EE, m.IsMaximal → m.map E.i
       rw [hmap, Submodule.comap_top, sup_eq_left.2 hk] at this
       exact this.symm
     obtain ⟨_, ⟨t, rfl⟩, _, ⟨z, rfl⟩, rfl⟩ := Submodule.mem_sup.1 (htop ▸ Submodule.mem_top (x := y))
-    rw [map_add, hcomp, hs', zero_add] at hy
+    rw [map_add (f := _), hcomp, hs', zero_add] at hy
     exact ⟨t, by rw [hy, map_zero, add_zero]⟩
   · rintro ⟨x, rfl⟩
     exact hcomp x

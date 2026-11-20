@@ -33,7 +33,7 @@ theorem exists_char_form {G V : Type} [AddCommGroup G] [AddCommGroup V] [Module 
     { carrier := {a | π a g = 0}
       add_mem' := fun {a b} ha hb => by
         simp only [Set.mem_setOf_eq] at *
-        rw [map_add, LinearMap.add_apply, ha, hb, add_zero]
+        rw [map_add (f := _), LinearMap.add_apply, ha, hb, add_zero]
       zero_mem' := by simp
       smul_mem' := fun c a ha => by
         simp only [Set.mem_setOf_eq] at *
@@ -58,7 +58,7 @@ theorem exists_char_form {G V : Type} [AddCommGroup G] [AddCommGroup V] [Module 
       change IsIntegral ℂ (Ideal.Quotient.mk m (x u) ^ N)
       rw [this]
       exact isIntegral_one
-    | add a b ha hb => rw [map_add]; exact ha.add hb
+    | add a b ha hb => rw [map_add (f := _)]; exact ha.add hb
     | smul r a ha => exact ha.smul r⟩
   let φ : ℂ ≃ₐ[ℂ] (A ⧸ m) := AlgEquiv.ofBijective (Algebra.ofId ℂ (A ⧸ m))
     IsAlgClosed.algebraMap_bijective_of_isIntegral
@@ -80,7 +80,7 @@ theorem exists_char_form {G V : Type} [AddCommGroup G] [AddCommGroup V] [Module 
         rintro f f' ⟨a, ha, haf⟩ ⟨b, hb, hbf⟩
         refine ⟨a * b, by rw [map_mul]; exact mul_ne_zero ha hb, ?_⟩
         have h1 : π (a * b) f = 0 := by rw [mul_comm, map_mul, Module.End.mul_apply, haf, map_zero]
-        rw [map_add, h1, map_mul, Module.End.mul_apply, hbf, map_zero, add_zero]
+        rw [map_add (f := _), h1, map_mul, Module.End.mul_apply, hbf, map_zero, add_zero]
       zero_mem' := ⟨1, by rw [map_one]; exact one_ne_zero, map_zero _⟩
       smul_mem' := by
         rintro r f ⟨a, ha, haf⟩
@@ -252,7 +252,7 @@ theorem heisO_comm (u t : WO S T) (f : WO S T → ℂ) :
   rw [GlobalTheory.OrientedHeis.heisO_heisO, GlobalTheory.OrientedHeis.heisO_heisO, smul_smul, ← AddChar.map_add_eq_mul, add_comm t u]
   congr 2
   have h : algebraMap D.host.F (AF D.host.F) (1 / 2) + algebraMap D.host.F (AF D.host.F) (1 / 2) = 1 := by
-    rw [← map_add, add_halves, map_one]
+    rw [← map_add (f := _), add_halves, map_one]
   rw [symplOH, symplOH, (GlobalTheory.SymplecticOrthogonalSesquilinear.symplO_alt D S T).2.2.1 t u]
   linear_combination symplO S T u t * h
 
@@ -287,12 +287,12 @@ theorem eq_zero_of_invariant_forms : ∀ (D : D7) (ψ : AddChar (AF D.host.F) �
   have : ProperSpace (Fv D.host.F v) := GlobalTheory.AdelicUnitaryTop.properSpace_adicCompletion D.host.F v
   let sg : Fv D.host.F v →+ Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F := AddMonoidHom.ofMapSub (singleV D.host.F v) (singleV_sub D v)
   let ι : Fv D.host.F v →+ AF D.host.F := AddMonoidHom.mk' (fun y => pairA D.host.F 0 (sg y)) fun a b => by
-    rw [map_add]; exact Prod.ext (add_zero _).symm rfl
+    rw [map_add (f := _)]; exact Prod.ext (add_zero _).symm rfl
   have hι : Continuous ι := Continuous.prodMk continuous_const (GlobalTheory.SplitAnnihilator.continuous_singleV D.host.F v)
   let G := Fin T.rank × Fin S.rank → Fv D.host.F v
   let J : G →+ WO S T := AddMonoidHom.mk' (fun y => Matrix.of fun i k => fj D (sg (y (i, k))) * cA D e) fun a b => by
     ext i k
-    simp only [G, Matrix.of_apply, Matrix.add_apply, Pi.add_apply, map_add, add_mul]
+    simp only [G, Matrix.of_apply, Matrix.add_apply, Pi.add_apply, map_add (f := _), add_mul]
   have hJ : Continuous J := continuous_matrix fun i k =>
     ((IsModuleTopology.continuous_of_linearMap (Algebra.linearMap (AF D.host.F) (AE D))).comp
       (hι.comp (continuous_apply (i, k)))).mul continuous_const

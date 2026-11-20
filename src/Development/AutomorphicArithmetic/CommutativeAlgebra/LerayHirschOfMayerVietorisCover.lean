@@ -65,7 +65,7 @@ private theorem lhmv_phi_add (q : ℕ) {X E : Spc} (π : X ⟶ E) {m : ℕ} (d e
   unfold UpperTheory.LHMV.Phi
   rw [← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun j _ => ?_
-  simp only [Pi.add_apply, map_add, AddMonoidHom.add_apply]
+  simp only [Pi.add_apply, map_add (f := _), AddMonoidHom.add_apply]
   exact UpperTheory.LHMV.cast_add' _ _ _ _
 
 private theorem lhmv_phi_sub (q : ℕ) {X E : Spc} (π : X ⟶ E) {m : ℕ} (d e : Fin m → ℤ) (c : ∀ j, Ht q X (d j) (e j))

@@ -82,7 +82,7 @@ theorem symb_two {n : ℕ} (δ : Fin n → Derivation ℤ F F) (δ₀ : Derivati
 theorem tsum_add_one {n : ℕ} (δ : Fin n → Derivation ℤ F F) (Λ : Matrix (Fin n) (Fin n) F) (x y : F) :
     derivationBracketSum δ Λ (x + 1) y - derivationBracketSum δ Λ x y = ∑ a, ∑ e, Λ a e * δ a x * δ e y := by
   unfold derivationBracketSum
-  simp only [map_add, Derivation.map_one_eq_zero, add_zero, ← Finset.sum_sub_distrib]
+  simp only [map_add (f := _), Derivation.map_one_eq_zero, add_zero, ← Finset.sum_sub_distrib]
   refine Finset.sum_congr rfl fun a _ => Finset.sum_congr rfl fun e _ => ?_
   ring
 

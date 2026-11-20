@@ -172,7 +172,7 @@ lemma hwmf_rdc (ε : Fin n → Bool) (m : Fin n → ℤ) (Z : Matrix (Fin n) (Fi
   rw [show Complex.I * fderiv ℂ (f0 ε m) (toMK x) (toMK x * cpart2 ε (bdPart ε Z)) =
       fderiv ℂ (f0 ε m) (toMK x) (Complex.I • (toMK x * cpart2 ε (bdPart ε Z))) from
       ((fderiv ℂ (f0 ε m) (toMK x)).map_smul Complex.I _).symm]
-  rw [← map_add, ← Matrix.mul_smul, ← Matrix.mul_add, hwmf_cpart_sum]
+  rw [← map_add (f := _), ← Matrix.mul_smul, ← Matrix.mul_add, hwmf_cpart_sum]
 
 lemma hwmf_line (ε : Fin n → Bool) (m : Fin n → ℤ) (x W : Matrix (Fin n) (Fin n) ℂ) :
     HasDerivAt (fun s : ℂ => f0 ε m (x * (1 + s • W))) (fderiv ℂ (f0 ε m) x (x * W)) 0 := by

@@ -100,7 +100,7 @@ theorem finrank_quot_frobKerIdeal_le : ∀ (q : ℕ) (K H : Type) [Field K] [Com
           have h0 : y i ^ u i = 0 := pow_eq_zero_of_le hi (hyq i)
           rw [Finset.prod_eq_zero (i := i) (Finset.mem_univ i) h0]
           exact Submodule.zero_mem _
-      | add P Q hP hQ => rw [map_add]; exact Submodule.add_mem _ hP hQ
+      | add P Q hP hQ => rw [map_add (f := _)]; exact Submodule.add_mem _ hP hQ
     refine eq_top_iff.2 fun z _ => ?_
     obtain ⟨P, rfl⟩ := hsurj z
     exact hall P

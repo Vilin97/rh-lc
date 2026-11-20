@@ -151,7 +151,7 @@ theorem dRho_eq (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) (hV : V.gram = 1
     have a1 := congrFun (congrFun hw i) j
     have a2 := congrFun (congrFun h2 i) j
     simp only [Matrix.map_apply, Matrix.zero_apply] at a1 a2 ⊢
-    rw [Matrix.add_apply, (finPart D).map_add, a1, a2, add_zero]
+    rw [Matrix.add_apply, (finPart D).map_add (f := _), a1, a2, add_zero]
   rw [heisO, hsym w _ hw, hG _ hreal, hadd, hz, Complex.im_sum]
 
 theorem crea_eq (hψ : IsStdChar D ψ (-1)) (hθ : IsInfFam θ) (hV : V.gram = 1) (hn : Even V.rank)
@@ -252,7 +252,7 @@ theorem pureTensorO_zero_eq_thP : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) 
     intro Q
     induction Q using MvPolynomial.induction_on' with
     | add P P' hP hP' =>
-      rw [map_add, map_add, I2.polyDeriv_add, ← hP, ← hP']
+      rw [map_add (f := _), map_add (f := _), I2.polyDeriv_add, ← hP, ← hP']
       rfl
     | monomial m a =>
       have e : MvPolynomial.monomial m a = a • MvPolynomial.monomial m (1 : ℂ) := by

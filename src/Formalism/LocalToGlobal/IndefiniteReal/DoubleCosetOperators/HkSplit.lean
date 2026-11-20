@@ -131,11 +131,11 @@ def inrT : Af F ⊗[F] E →ₙ+* AF F ⊗[F] E where
   map_mul' x y := by
     induction x using TensorProduct.induction_on with
     | zero => simp
-    | add x x' hx hx' => simp only [add_mul, map_add, hx, hx']
+    | add x x' hx hx' => simp only [add_mul, map_add (f := _), hx, hx']
     | tmul a b =>
       induction y using TensorProduct.induction_on with
       | zero => simp
-      | add y y' hy hy' => simp only [mul_add, map_add, hy, hy']
+      | add y y' hy hy' => simp only [mul_add, map_add (f := _), hy, hy']
       | tmul c d =>
         simp only [Algebra.TensorProduct.tmul_mul_tmul, LinearMap.rTensor_tmul, inrL_mul]
 
@@ -150,7 +150,7 @@ theorem jv_sig (σ : E →ₐ[F] E) (v : HeightOneSpectrum (𝓞 F)) (x : E ⊗[
     jv v (Formalism.UG.sigR σ (v.adicCompletion F) x) = Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.sigR (AF F) σ (jv v x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), hx, hx']
   | tmul a b => rfl
 
 theorem jv_inclE (v : HeightOneSpectrum (𝓞 F)) (e : E) :
@@ -162,7 +162,7 @@ theorem jv_fst (v : HeightOneSpectrum (𝓞 F)) (x : E ⊗[F] v.adicCompletion F
     Algebra.TensorProduct.map (fstA F) (AlgHom.id F E) (jv v x) = 0 := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => rw [map_add, map_add, hx, hx', add_zero]
+  | add x x' hx hx' => rw [map_add (f := _), map_add (f := _), hx, hx', add_zero]
   | tmul a b =>
     rw [jv_tmul, Algebra.TensorProduct.map_tmul]
     exact TensorProduct.zero_tmul _ _
@@ -175,7 +175,7 @@ theorem backT_jv (v : HeightOneSpectrum (𝓞 F)) (x : E ⊗[F] v.adicCompletion
     backT (jv v x) = Formalism.UG.P.afsplitIE v x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | add x x' hx hx' => simp only [map_add, hx, hx']
+  | add x x' hx hx' => simp only [map_add (f := _), hx, hx']
   | tmul a b => rfl
 
 theorem prV_backT_jv (v : HeightOneSpectrum (𝓞 F)) (x : E ⊗[F] v.adicCompletion F) :
@@ -198,7 +198,7 @@ theorem jv_one_mul (v : HeightOneSpectrum (𝓞 F)) (z : AF F ⊗[F] E) :
     jv v 1 * z = jv v (Formalism.UG.prV (E := E) v (backT z)) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => rw [mul_add, hx, hy, map_add, map_add, map_add]
+  | add x y hx hy => rw [mul_add, hx, hy, map_add (f := _), map_add (f := _), map_add (f := _)]
   | tmul x a =>
     rw [Algebra.TensorProduct.one_def, jv_tmul, Algebra.TensorProduct.tmul_mul_tmul, one_mul]
     show (inrL (Formalism.UG.P.afsplitI v 1) * x) ⊗ₜ[F] a = jv v (a ⊗ₜ[F] (sndA F x) v)

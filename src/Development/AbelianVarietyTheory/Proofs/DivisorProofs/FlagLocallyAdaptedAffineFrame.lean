@@ -41,7 +41,7 @@ theorem isFrame_snoc_of_exact {X : Scheme.{0}} {U : X.Opens}
   refine ⟨(injective_iff_map_eq_zero _).2 fun c hc => ?_, fun s => ?_⟩
   · rw [hlc] at hc
     have h1 := congrArg (appLinear S.g V) hc
-    rw [map_add, appLinear_apply S.f, appLinear_apply S.g, hex.apply_apply_eq_zero, zero_add,
+    rw [map_add (f := _), appLinear_apply S.f, appLinear_apply S.g, hex.apply_apply_eq_zero, zero_add,
       map_zero, ← hb1] at h1
     have h2 : (fun _ : Fin 1 => c (Fin.last m)) = 0 :=
       (injective_iff_map_eq_zero _).1 (hb V h).1 _ h1

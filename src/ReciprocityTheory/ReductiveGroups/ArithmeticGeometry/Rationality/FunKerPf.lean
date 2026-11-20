@@ -21,7 +21,7 @@ theorem lTensor_mkQ_galAct {K₂ : Type*} [Field K₂] [Algebra K K₂] (U : Sub
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a v => rfl
-  | add y z hy hz => simp only [map_add, hy, hz]
+  | add y z hy hz => simp only [map_add (f := _), hy, hz]
 
 theorem galAct_mem_baseSpan {K₂ : Type*} [Field K₂] [Algebra K K₂] (U : Submodule K V)
     (σ : K₂ ≃ₐ[K] K₂) {x : K₂ ⊗[K] V} (hx : x ∈ baseSpan K₂ U) : galAct σ x ∈ baseSpan K₂ U := by
@@ -183,7 +183,7 @@ theorem funKer_holds : FunKerStatement := by
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul a v => rfl
-    | add y z hy hz => simp only [map_add, hy, hz]
+    | add y z hy hz => simp only [map_add (f := _), hy, hz]
   have hK1W : ∀ x : K₁ ⊗[K] V, inclT K₁ V x ∈ Wc ↔ x ∈ baseSpan K₁ W := by
     intro x
     constructor

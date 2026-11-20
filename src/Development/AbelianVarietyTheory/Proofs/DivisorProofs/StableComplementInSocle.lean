@@ -14,7 +14,7 @@ theorem opStable_sup' {T : Set (Module.End ℂ V)} {A B : Submodule ℂ V} (hA :
     OpStable T (A ⊔ B) := by
   intro t ht x hx
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hx
-  rw [map_add]
+  rw [map_add (f := _)]
   exact Submodule.add_mem_sup (hA t ht a ha) (hB t ht b hb)
 
 theorem opStable_inf' {T : Set (Module.End ℂ V)} {A B : Submodule ℂ V} (hA : OpStable T A) (hB : OpStable T B) :

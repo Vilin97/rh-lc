@@ -65,8 +65,8 @@ def intertwiningRelation : SRel (Q.Pr V) (MA.A P (MA.DQ P)) where
     · rw [star_one, star_one, jdh_actA_one]; rfl
   add {a a' b b'} h h' := by
     refine ⟨fun Φ => ?_, fun Φ => ?_⟩
-    · rw [Gauge.actA_add, ← h.1, ← h'.1, ← map_add]; rfl
-    · rw [star_add, star_add, Gauge.actA_add, ← h.2, ← h'.2, ← map_add]; rfl
+    · rw [Gauge.actA_add, ← h.1, ← h'.1, ← map_add (f := _)]; rfl
+    · rw [star_add, star_add, Gauge.actA_add, ← h.2, ← h'.2, ← map_add (f := _)]; rfl
   mul {a a' b b'} h h' := by
     refine ⟨fun Φ => ?_, fun Φ => ?_⟩
     · rw [Gauge.actA_mul, ← h'.1, ← h.1]; rfl

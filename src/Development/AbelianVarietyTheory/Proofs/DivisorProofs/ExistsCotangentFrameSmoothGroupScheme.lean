@@ -147,7 +147,7 @@ theorem ofAugCot_bijective (c : IsChart π e U W) : Function.Bijective (c.ofAugC
       exact key _
     · rw [map_smul, map_smul, hy]
       rfl
-    · rw [map_add, map_add, hy, hz]
+    · rw [map_add (f := _), map_add (f := _), hy, hz]
       rfl
 
 include he in

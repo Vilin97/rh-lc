@@ -34,7 +34,7 @@ theorem conj_mem_orderC {E : Type} [Field E] [NumberField E] [IsCMField E] {c : 
       rw [Ideal.mem_comap, Ideal.mem_comap, AlgEquiv.commutes]
       exact Ideal.mem_map_of_mem _ hz
     exact this hb
-  · rw [map_add]
+  · rw [map_add (f := _)]
     congr 1
     exact (IsCMField.complexConj E).commutes (a : FR E)
 
@@ -50,7 +50,7 @@ theorem span_bcMap {R R' : Type} [CommRing R] [IsLocalRing R] [CommRing R'] [Alg
     refine LinearMap.ext fun c ↦ ?_
     obtain ⟨z, rfl⟩ := hm.2 c
     induction z with
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
     | tmul x c =>
       rw [liftSemi_tmul, map_smul, map_smul]
       congr 1

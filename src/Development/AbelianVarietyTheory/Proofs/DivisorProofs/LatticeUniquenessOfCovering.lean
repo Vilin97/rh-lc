@@ -80,7 +80,7 @@ theorem exists_hom (hG : GlobalTheory.VB.IsVB G r') (hU : (U : Set X).Nonempty) 
   choose u hu using ex
   refine ⟨GlobalTheory.LB.homOfLinear (fun V =>
     { toFun := u V
-      map_add' := fun a b => resM_inj hG hU (by simp only [map_add, hu])
+      map_add' := fun a b => resM_inj hG hU (by simp only [map_add (f := _), hu])
       map_smul' := fun a b => resM_inj hG hU (by simp only [resM_smul, map_smul, hu, RingHom.id_apply]) })
     fun h σ => resM_inj hG hU ((hu _ _).trans (nat h (hu _ σ)).symm), fun i => resM_inj hG hU ?_⟩
   exact (hu U (s i)).trans (hs.equiv_resM_frame hs' _ i)

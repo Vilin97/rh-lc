@@ -127,7 +127,7 @@ theorem tendsto_arFun (h : M.Converges II) (F : RPA Ψ N) :
     obtain ⟨L, hL⟩ := h m
     simp only [e, map_smul, RootModel.arFun, RootModel.PP, Module.Basis.constr_basis, hL.limUnder_eq]
     exact hL.const_smul a
-  | add p q hp hq => simpa only [map_add] using hp.add hq
+  | add p q hp hq => simpa only [map_add (f := _)] using hp.add hq
 
 theorem test_factor' [DecidableEq Ψ] {p q n r : ℕ} (e : Fin r ≃ PairIx Ψ p q) (hq : q ≤ p) (hn : n = Fintype.card Ψ * p * q) :
     (testPoly p : RP Ψ (p + q)) =

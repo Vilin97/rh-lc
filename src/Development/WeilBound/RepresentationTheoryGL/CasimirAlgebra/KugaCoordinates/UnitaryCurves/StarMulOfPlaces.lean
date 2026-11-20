@@ -128,9 +128,9 @@ theorem lieOp_atEmb (π : CuspSub E a) (τ : E →+* ℂ) (X : Matrix (Fin a) (F
   have key : ∀ (z : ℂ) (i j : Fin a), lieS E a i j (atEmb τ z) =
       z • Eop τ i j + star z • Eop (barE E τ) i j := by
     intro z i j
-    rw [atEmb_eq τ z, map_add, map_smul, map_smul, lieS_atEmb_one, lieS_atEmb_I]
+    rw [atEmb_eq τ z, map_add (f := _), map_smul, map_smul, lieS_atEmb_one, lieS_atEmb_I]
     conv_rhs => rw [← Complex.re_add_im z]
-    simp only [Complex.star_def, map_add, map_mul, Complex.conj_ofReal, Complex.conj_I]
+    simp only [Complex.star_def, map_add (f := _), map_mul, Complex.conj_ofReal, Complex.conj_I]
     rw [← Complex.coe_smul, ← Complex.coe_smul]
     match_scalars <;> ring
   refine LinearMap.ext fun φ => Subtype.ext ?_

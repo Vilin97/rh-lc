@@ -32,7 +32,7 @@ theorem sig2 (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (r : RV I v) :
     simp only [sigV, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, Algebra.TensorProduct.map_tmul,
       AlgHom.id_apply]
     rw [spl_sig_sig]
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 theorem alg_eq (I : AutInst) (v : HeightOneSpectrum (𝓞 I.F)) (c : KV I v) :
     algebraMap (KV I v) (RV I v) c = c ⊗ₜ[I.F] (1 : I.E) := by
@@ -277,7 +277,7 @@ theorem adaptedProjection_psiV_mem_integers_of_mem_intAf (I : AutInst) (v : Heig
       exact ⟨hy, hy⟩
   | zero => simp
   | one => simp
-  | add a b _ _ ha hb => simp only [map_add]; exact ⟨add_mem ha.1 hb.1, add_mem ha.2 hb.2⟩
+  | add a b _ _ ha hb => simp only [map_add (f := _)]; exact ⟨add_mem ha.1 hb.1, add_mem ha.2 hb.2⟩
   | neg a _ ha => simp only [map_neg]; exact ⟨neg_mem ha.1, neg_mem ha.2⟩
   | mul a b _ _ ha hb => simp only [map_mul]; exact ⟨mul_mem ha.1 hb.1, mul_mem ha.2 hb.2⟩
 

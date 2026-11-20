@@ -34,7 +34,7 @@ theorem theta_half_rs {θ : InfFam D} {σ : (D.what₂.Tau → ℂ) →+ AE D} (
   have hs : θ ρ (infPart D (rs σ s)) = (s : ℂ) := hσ.comp _ ρ
   have hb : tauE D ρ (algebraMap D.host.F D.host.E α) =
       tauE D ρ (algebraMap D.host.F D.host.E β) + tauE D ρ (algebraMap D.host.F D.host.E β) := by
-    rw [← map_add, ← map_add, hβ]
+    rw [← map_add (f := _), ← map_add (f := _), hβ]
   rw [map_mul (infPart D), map_mul (θ ρ), hi, map_mul (infPart D), map_mul (θ ρ), hs,
     map_mul (infPart D), map_mul (θ ρ), hi, hb]
   push_cast

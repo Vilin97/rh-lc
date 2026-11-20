@@ -116,7 +116,7 @@ theorem laws_of_formulas {ψ : AddChar (AF D.host.F) ℂ} {A B : HSp D} {χB : (
 
 theorem chr_add (ψ : AddChar (AF D.host.F) ℂ) {n : ℕ} (T : Mx D n n) (c c' : skewA D n) :
     chr ψ T (c + c') = chr ψ T c * chr ψ T c' := by
-  rw [chr, chr, chr, ← AddChar.map_add_eq_mul, AddSubgroup.coe_add, Matrix.mul_add, Matrix.trace_add, map_add, neg_add]
+  rw [chr, chr, chr, ← AddChar.map_add_eq_mul, AddSubgroup.coe_add, Matrix.mul_add, Matrix.trace_add, map_add (f := _), neg_add]
 
 theorem nsAt_of_norm {par : LFun.Fam D.host.E} (χ : (AE D)ˣ →* Circle) {t : ℕ} {q : FinPl D}
     (h : ∀ w : HeightOneSpectrum (𝓞 D.host.E), w.under (𝓞 D.host.F) = q → ∀ β ∈ par w, ∃ j : ℤ, |j| < (t : ℤ) - 1 ∧

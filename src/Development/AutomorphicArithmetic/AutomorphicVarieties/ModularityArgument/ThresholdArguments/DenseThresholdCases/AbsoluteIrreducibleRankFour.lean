@@ -216,7 +216,7 @@ theorem UpperTheory.V.Hi.nonempty_unitary_hecke_parts :
     { carrier := {F | (∀ i, F i ∈ σ ⊓ fixd (RU L n) (neK n Q)) ∧
         ∀ (k : KT n (wt s)) i, ∑ a, τ₁ k i a • RU L n (J k) (F a) = F i}
       add_mem' := fun {a b} ha hb => ⟨fun i => add_mem (ha.1 i) (hb.1 i), fun k i => by
-        simp only [Pi.add_apply, map_add, smul_add, Finset.sum_add_distrib, ha.2, hb.2]⟩
+        simp only [Pi.add_apply, map_add (f := _), smul_add, Finset.sum_add_distrib, ha.2, hb.2]⟩
       zero_mem' := ⟨fun i => zero_mem _, fun k i => by simp⟩
       smul_mem' := fun z a ha => ⟨fun i => Submodule.smul_mem _ z (ha.1 i), fun k i => by
         simp only [Pi.smul_apply, map_smul, smul_comm _ z, ← Finset.smul_sum, ha.2]⟩ }

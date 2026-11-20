@@ -31,7 +31,7 @@ theorem ip_smul_right' (R : RiemLat E g Λ) (c : ℂ) (x y : Fin g → ℂ) : R.
   simp [RiemLat.ip, smul_dotProduct]
 
 theorem ip_add_left' (R : RiemLat E g Λ) (x x' y : Fin g → ℂ) : R.ip (x + x') y = R.ip x y + R.ip x' y := by
-  rw [← ip_conj' R y, ip_add_right', map_add, ip_conj', ip_conj']
+  rw [← ip_conj' R y, ip_add_right', map_add (f := _), ip_conj', ip_conj']
 
 theorem ip_smul_left' (R : RiemLat E g Λ) (c : ℂ) (x y : Fin g → ℂ) :
     R.ip (c • x) y = starRingEnd ℂ c * R.ip x y := by

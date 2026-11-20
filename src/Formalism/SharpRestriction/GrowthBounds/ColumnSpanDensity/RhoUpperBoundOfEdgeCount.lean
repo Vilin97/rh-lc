@@ -79,7 +79,7 @@ theorem be_smulK_left (c : R.Kf) (F : Vsp R.Kf lam0) (G : Module.Dual R.Kf (Vsp 
 theorem be_add_left (F F' : Vsp R.Kf lam0) (G : Module.Dual R.Kf (Vsp R.Kf lam0)) :
     be p 1 lam0 (F + F') G = be p 1 lam0 F G + be p 1 lam0 F' G := by
   unfold be
-  rw [smul_add, map_add]
+  rw [smul_add, map_add (f := _)]
 
 theorem be_sum_left {ι : Type*} (s : Finset ι) (c : ι → R.Kf) (F : ι → Vsp R.Kf lam0)
     (G : Module.Dual R.Kf (Vsp R.Kf lam0)) :

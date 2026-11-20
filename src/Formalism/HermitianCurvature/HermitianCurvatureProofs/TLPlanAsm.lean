@@ -48,7 +48,7 @@ theorem topLiftOfParts : TopLiftOfParts := by
           | zero => rw [pow_zero]; exact f1
           | succ n ih => rw [pow_succ]; simpa using cmul _ _ _ _ _ _ ih (hx Y)
         refine Polynomial.induction_on' p (fun p q hp hq => ?_) (fun n a => ?_)
-        · rw [map_add]; exact ca _ _ _ _ hp hq
+        · rw [map_add (f := _)]; exact ca _ _ _ _ hp hq
         · rw [Polynomial.aeval_monomial, ← Algebra.smul_def]; exact cs _ _ _ a (hpow n)
       cap := fun Y hY => by rw [← hcst Y hY]; exact hCap Wp Wq P Bs X μ L st l0 hD Y }
   have key : ∀ w : List C.Letter, KB.CutWord P l0 w → ∀ e : Wd.Ix (Fin w.length),

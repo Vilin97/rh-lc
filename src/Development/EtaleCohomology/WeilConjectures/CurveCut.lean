@@ -66,8 +66,8 @@ def Z1 (h : k[X]) (ρ : Representation ℚ_[l] (Gal k) V) : Submodule ℚ_[l] (g
   carrier := {c | (∀ μ : Module.Dual ℚ_[l] V, Continuous fun g => μ (c g)) ∧
     (∀ g g', c (g * g') = c g + ρ g (c g')) ∧ ∀ g, g.1 ∈ ram h → c g = 0}
   zero_mem' := ⟨fun μ => by simpa using continuous_const, by simp, by simp⟩
-  add_mem' {a b} ha hb := ⟨fun μ => by simp only [Pi.add_apply, map_add]; exact (ha.1 μ).add (hb.1 μ),
-    fun g g' => by simp only [Pi.add_apply, ha.2.1, hb.2.1, map_add]; abel,
+  add_mem' {a b} ha hb := ⟨fun μ => by simp only [Pi.add_apply, map_add (f := _)]; exact (ha.1 μ).add (hb.1 μ),
+    fun g g' => by simp only [Pi.add_apply, ha.2.1, hb.2.1, map_add (f := _)]; abel,
     fun g hg => by simp [ha.2.2 g hg, hb.2.2 g hg]⟩
   smul_mem' r a ha := ⟨fun μ => by simpa using ha.1 (r • μ),
     fun g g' => by simp only [Pi.smul_apply, ha.2.1, map_smul, smul_add], fun g hg => by simp [ha.2.2 g hg]⟩
@@ -83,7 +83,7 @@ theorem rho_cj (ρ : Representation ℚ_[l] (Gal k) V) (σ : Gal k) (g : geo k) 
 def actZ (h : k[X]) (ρ : Representation ℚ_[l] (Gal k) V) (σ : Gal k) : Z1 h ρ →ₗ[ℚ_[l]] Z1 h ρ where
   toFun c := ⟨fun g => ρ σ (c.1 (cj σ g)),
     fun μ => (c.2.1 (μ.comp (ρ σ))).comp (Continuous.subtype_mk (by fun_prop) _),
-    fun g g' => by beta_reduce; rw [cj_mul, c.2.2.1, map_add, rho_cj],
+    fun g g' => by beta_reduce; rw [cj_mul, c.2.2.1, map_add (f := _), rho_cj],
     fun g hg => by beta_reduce; rw [c.2.2.2 (cj σ g) ((ram_normal h).conj_mem' _ hg σ), map_zero]⟩
   map_add' a b := Subtype.ext (funext fun g => map_add (ρ σ) _ _)
   map_smul' r a := Subtype.ext (funext fun g => map_smul (ρ σ) _ _)
@@ -93,7 +93,7 @@ def B1 (h : k[X]) (ρ : Representation ℚ_[l] (Gal k) V) : Submodule ℚ_[l] (Z
   zero_mem' := ⟨0, by simp⟩
   add_mem' := by
     rintro a b ⟨v, hv⟩ ⟨w, hw⟩
-    exact ⟨v + w, fun g => by change a.1 g + b.1 g = _; rw [hv, hw, map_add]; abel⟩
+    exact ⟨v + w, fun g => by change a.1 g + b.1 g = _; rw [hv, hw, map_add (f := _)]; abel⟩
   smul_mem' := by
     rintro r a ⟨v, hv⟩
     exact ⟨r • v, fun g => by change r • a.1 g = _; rw [hv, map_smul, smul_sub]⟩

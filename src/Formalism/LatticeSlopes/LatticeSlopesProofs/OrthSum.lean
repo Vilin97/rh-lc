@@ -126,7 +126,7 @@ theorem slope_le_max_maxSlope (L₁ L₂ : Submodule ℤ E) (h1 : DiscreteTopolo
   have hP3 : ∀ x ∈ L₁ ⊔ L₂, P x ∈ L₂ ∧ x - P x ∈ L₁ := by
     intro x hx
     obtain ⟨y, hy, z, hz, rfl⟩ := Submodule.mem_sup.mp hx
-    rw [map_add, hP1 y hy, hP2 z hz, zero_add, add_sub_cancel_right]
+    rw [map_add (f := _), hP1 y hy, hP2 z hz, zero_add, add_sub_cancel_right]
     exact ⟨hz, hy⟩
   have hPnorm : ∀ x, ‖P x‖ ≤ ‖x‖ := fun x => by
     rw [hPdef]; exact Submodule.norm_starProjection_apply_le _ x

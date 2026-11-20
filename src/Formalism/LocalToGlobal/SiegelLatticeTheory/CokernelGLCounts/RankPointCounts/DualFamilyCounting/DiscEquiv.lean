@@ -18,7 +18,7 @@ local notation "jK" => algebraMap (𝓞 K) K
 def phi {n : ℕ} (b : Fin n → V) (a : Fin n → 𝓞 F) : (Fin n → 𝓞 K) →ₗ[𝓞 K] V where
   toFun z := ∑ i, (jK (z i) / jK (ι (a i))) • b i
   map_add' z z' := by
-    simp only [Pi.add_apply, map_add, add_div, add_smul, Finset.sum_add_distrib]
+    simp only [Pi.add_apply, map_add (f := _), add_div, add_smul, Finset.sum_add_distrib]
   map_smul' c z := by
     simp only [Pi.smul_apply, smul_eq_mul, map_mul, RingHom.id_apply, Finset.smul_sum]
     refine Finset.sum_congr rfl fun i _ => ?_

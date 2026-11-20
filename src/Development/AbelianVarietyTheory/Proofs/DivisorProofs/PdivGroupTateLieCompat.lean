@@ -107,7 +107,7 @@ theorem cokernelBound_of_group : ∀ (p : ℕ) [Fact p.Prime] (C : Type) [Field 
     | add m n _ _ hm hn =>
       obtain ⟨g, hg, h⟩ := hm
       obtain ⟨g', hg', h'⟩ := hn
-      exact ⟨g + g', add_mem hg hg', fun x => by rw [map_add, h, h']; rfl⟩
+      exact ⟨g + g', add_mem hg hg', fun x => by rw [map_add (f := _), h, h']; rfl⟩
     | smul a m _ hm =>
       obtain ⟨g, hg, h⟩ := hm
       exact ⟨a • g, Submodule.smul_mem _ a hg, fun x => by rw [map_smul, h]; rfl⟩

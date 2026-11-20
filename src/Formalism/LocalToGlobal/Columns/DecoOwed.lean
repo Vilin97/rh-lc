@@ -52,7 +52,7 @@ theorem FunAt.exists_ext (N : Submodule (𝓞 E) (Sp E n)) (P : HeightOneSpectru
     have m2 : (s * t) • y ∈ N := by rw [mul_smul]; exact N.smul_mem _ h'
     have m3 : (s * t) • (x + y) ∈ N := by rw [smul_add]; exact N.add_mem m1 m2
     apply mul_left_cancel₀ (mk_ne_zero hst)
-    rw [mul_add, hF _ hx _ hst m1, hF _ hy _ hst m2, hF _ (Submodule.add_mem _ hx hy) _ hst m3, ← map_add]
+    rw [mul_add, hF _ hx _ hst m1, hF _ hy _ hst m2, hF _ (Submodule.add_mem _ hx hy) _ hst m3, ← map_add (f := _)]
     congr 1
     exact Subtype.ext (smul_add _ _ _)
   · intro a x hx

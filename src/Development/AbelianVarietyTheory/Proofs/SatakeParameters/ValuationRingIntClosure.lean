@@ -57,7 +57,7 @@ def primeOf : Ideal (𝓞 K) where
     intro a b ha hb
     simp only [Set.mem_setOf_eq] at *
     have : ((a + b : 𝓞 K) : K) = (a : K) + (b : K) := rfl
-    rw [this, map_add]
+    rw [this, map_add (f := _)]
     exact lt_of_le_of_lt (IsUltrametricDist.norm_add_le_max _ _) (max_lt ha hb)
   zero_mem' := by simp
   smul_mem' := by
@@ -103,7 +103,7 @@ theorem inv_mem_of_not_mem {b : 𝓞 K} (hb : b ∉ primeOf ρ) : (ρ (b : K))�
   have h2 : ρ (y : K) * ρ (b : K) = 1 - ρ (p : K) := by
     have := congrArg (fun a : 𝓞 K => ρ (a : K)) h
     have e : ((y * b + p : 𝓞 K) : K) = (y : K) * (b : K) + (p : K) := rfl
-    simp only [e, map_add, map_mul] at this
+    simp only [e, map_add (f := _), map_mul] at this
     have e1 : ((1 : 𝓞 K) : K) = 1 := rfl
     rw [e1, map_one] at this
     linear_combination this

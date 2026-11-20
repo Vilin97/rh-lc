@@ -101,7 +101,7 @@ theorem cupQ_cobO_of_bkA : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (K : Fi
   refine ⟨o * (u1 + u2 + ϖ ^ r * u3), ?_⟩
   show _ = s * m (Formalism.MainNotions.LocalSituation.liftQ LA _ (c g)) (A'.ρ g (Formalism.MainNotions.LocalSituation.liftQ LA' _ (c' h))) - s * m (a g) (A'.ρ g (b h))
   rw [hcg, hch, ht, ht']
-  simp only [Algebra.linearMap_apply, map_mul, map_add, map_pow, map_smul, LinearMap.add_apply,
+  simp only [Algebra.linearMap_apply, map_mul, map_add (f := _), map_pow, map_smul, LinearMap.add_apply,
     LinearMap.smul_apply, smul_eq_mul]
   rw [← hu1, ← hu2, ← hu3, ho]
   ring

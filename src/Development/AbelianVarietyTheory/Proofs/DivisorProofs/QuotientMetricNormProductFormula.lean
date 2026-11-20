@@ -39,7 +39,7 @@ theorem quotGram_pyth_rankTwo (G : Matrix (Fin 1 ⊕ Fin 1) (Fin 1 ⊕ Fin 1) �
     rw [Complex.mul_conj, Complex.ofReal_re, Complex.normSq_eq_norm_sq]
   rw [hB, Complex.ofReal_re, hn, ← Complex.re_mul_ofReal, ← Complex.re_mul_ofReal, ← Complex.sub_re]
   congr 1
-  simp only [Complex.ofReal_mul, ← Complex.mul_conj, map_add, map_mul, Complex.conj_ofReal,
+  simp only [Complex.ofReal_mul, ← Complex.mul_conj, map_add (f := _), map_mul, Complex.conj_ofReal,
     Complex.conj_conj]
   field_simp
   ring

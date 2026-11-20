@@ -498,7 +498,7 @@ private lemma level (ρ : G →* R ≃+* R)
     intro k hk
     exact WittVector.mul_pow_charP_coeff_zero _ hk
   simp only [Mw, Matrix.map_apply]
-  rw [e, map_add, map_mul, map_pow, map_natCast, map_add, z, add_zero]
+  rw [e, map_add (f := _), map_mul, map_pow, map_natCast, map_add (f := _), z, add_zero]
   by_cases hij : i = j
   · subst hij; simp
   · simp [hij]

@@ -58,7 +58,7 @@ private theorem zc_split {l : ℕ} [hl : Fact l.Prime] (c c' : Coef l) (hcc : c.
       rw [Subalgebra.coe_add, AddSubmonoidClass.coe_finset_sum]
       exact congrFun (hc g h) i)
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [e, map_add, map_sum, map_smul, Pi.add_apply, Matrix.mulVec, dotProduct, smul_eq_mul]
+      simp only [e, map_add (f := _), map_sum, map_smul, Pi.add_apply, Matrix.mulVec, dotProduct, smul_eq_mul]
   · have e := congrArg Subtype.val (b.sum_repr (f g i))
     rw [AddSubmonoidClass.coe_finset_sum] at e
     refine e.symm.trans (Finset.sum_congr rfl fun k _ => ?_)
@@ -77,7 +77,7 @@ theorem UpperTheory.V.Th.Det.finite_cocycles_colRep_of_phiCond :
     { carrier := {z | (∀ i, AdicCont (maximalIdeal c.O) fun g => z g i) ∧
           ∀ g h, z (g * h) = z g + W.mat σ₀ g *ᵥ z h}
       add_mem' := fun {a b} ha hb => ⟨fun i N => by
-          simp only [Pi.add_apply, map_add]; exact (ha.1 i N).add (hb.1 i N),
+          simp only [Pi.add_apply, map_add (f := _)]; exact (ha.1 i N).add (hb.1 i N),
         fun g h => by simp only [Pi.add_apply, Matrix.mulVec_add, ha.2 g h, hb.2 g h]; abel⟩
       zero_mem' := ⟨fun i N => by
           simp only [Pi.zero_apply, map_zero]; exact IsLocallyConstant.const _, fun g h => by simp⟩

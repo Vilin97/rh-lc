@@ -66,12 +66,12 @@ theorem schr_slice (co : Darboux B κ) (ψ : AddChar (AF F) ℂ) {v : HeightOneS
     rw [← hl _ hat]
     refine congrArg (fun z => ψ (liftV v z)) ?_
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [dotProduct, map_add, map_sum, map_mul, GlobalTheory.VacAny.evFin_invOf_two, Pi.add_apply, hy, zero_add,
+      simp only [dotProduct, map_add (f := _), map_sum, map_mul, GlobalTheory.VacAny.evFin_invOf_two, Pi.add_apply, hy, zero_add,
       GlobalTheory.LatVac.evFin_liftV]
     rfl
   · congr 1
     funext k
-    simp only [Pi.add_apply, map_add, add_assoc]
+    simp only [Pi.add_apply, map_add (f := _), add_assoc]
     congr 2
     exact hl _ (h1 k)
 

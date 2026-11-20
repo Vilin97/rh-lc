@@ -21,7 +21,7 @@ theorem onto_of_cpl' {l : ℕ} {M : Type} [AddCommGroup M] (hM : Cpl l M) (f : M
     obtain ⟨u, hu⟩ := mem_Dv.1 hx
     obtain ⟨a, z, haz⟩ := h (-u)
     refine ⟨x + l ^ r • a, mem_Dv.2 ⟨z, ?_⟩, mem_Dv.2 ⟨a, by abel⟩⟩
-    rw [pow_succ, mul_smul, ← haz, map_add, map_nsmul, add_sub_right_comm, ← hu, sub_neg_eq_add,
+    rw [pow_succ, mul_smul, ← haz, map_add (f := _), map_nsmul, add_sub_right_comm, ← hu, sub_neg_eq_add,
       smul_add, add_comm]
   choose nx hnx using hstep
   let g : (r : ℕ) → {x // f x - y ∈ Dv l r M} := fun r =>

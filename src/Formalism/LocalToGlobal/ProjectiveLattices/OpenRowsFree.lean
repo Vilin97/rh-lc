@@ -18,9 +18,9 @@ theorem perFr_add {r : ℕ} (X : ReciprocityTheory.ChartRestriction.G.FD.Data E 
     (i : ℕ) : perFr X x (v + w) τ i = perFr X x v τ i + perFr X x w τ i := by
   have he : ∀ τ' : E →+* ℂ, ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ' (v + w) =
       ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ' v + ReciprocityTheory.ChartRestriction.G.FD.Data.emb τ' w := fun τ' => by
-    funext a; simp [ReciprocityTheory.ChartRestriction.G.FD.Data.emb, map_add]
+    funext a; simp [ReciprocityTheory.ChartRestriction.G.FD.Data.emb, map_add (f := _)]
   unfold perFr
-  split_ifs <;> simp [he, Matrix.mulVec_add, hermC, map_add, mul_add, Finset.sum_add_distrib]
+  split_ifs <;> simp [he, Matrix.mulVec_add, hermC, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem perFr_zero {r : ℕ} (X : ReciprocityTheory.ChartRestriction.G.FD.Data E r) (x : Frame X.Ψ r) (τ : E →+* ℂ) (i : ℕ) :
     perFr X x 0 τ i = 0 := by

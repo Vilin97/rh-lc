@@ -139,7 +139,7 @@ theorem exists_form_basis {L : Type} [Field L] (y : (Σ k, ι k) → Ω) (φ : L
     intro g
     induction g using MvPolynomial.induction_on with
     | C a => simpa using intCast_mem B a
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | mul_X p i hp =>
       rw [map_mul, aeval_X]
       exact mul_mem hp (Algebra.subset_adjoin ⟨i, rfl⟩)
@@ -253,7 +253,7 @@ theorem eq_zero_of_trace {L : Type} [Field L] [CharZero L] (φ : L →+* Ω) (d 
       obtain ⟨i, rfl⟩ := hw
       simpa using hx i
     | zero => simp
-    | add a b _ _ ha hb => rw [map_add, ha, hb, add_zero]
+    | add a b _ _ ha hb => rw [map_add (f := _), ha, hb, add_zero]
     | smul t a _ ha => rw [map_smul, ha, smul_zero]
   exact (traceForm_nondegenerate L Ω).1 x hall
 

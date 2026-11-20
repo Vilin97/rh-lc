@@ -19,7 +19,7 @@ def DD (F : Pt k 2 d) (a : Fin 2) (u : Fin d → k) (G : PS k 2 d) : PS k 2 d :=
 
 theorem dd_add (F : Pt k 2 d) (a : Fin 2) (u : Fin d → k) (G H : PS k 2 d) :
     DD F a u (G + H) = DD F a u G + DD F a u H := by
-  simp only [DD, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [DD, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem dd_sub (F : Pt k 2 d) (a : Fin 2) (u : Fin d → k) (G H : PS k 2 d) :
     DD F a u (G - H) = DD F a u G - DD F a u H := by
@@ -139,7 +139,7 @@ theorem thirdPointDerivativeAtZeroSeries_mem_integral {v : Fin d → k} (hv : �
 
 theorem thirdPointDerivativeAtZeroSeries_add_sub (v : Fin d → k) (f g h : PS k 3 d) :
     dz3 v (f + g - h) = dz3 v f + dz3 v g - dz3 v h := by
-  simp only [dz3, map_add, map_sub, gt_ev_add _ hDown, gt_ev_sub _ hDown, mul_add, mul_sub,
+  simp only [dz3, map_add (f := _), map_sub, gt_ev_add _ hDown, gt_ev_sub _ hDown, mul_add, mul_sub,
     Finset.sum_add_distrib, Finset.sum_sub_distrib]
 
 theorem thirdPointDerivativeAtZeroSeries_twoPointLift (v : Fin d → k) (g : PS k 2 d) :
@@ -327,7 +327,7 @@ theorem dmon_div {F : Pt k 2 d} (iF : IP φ F) (hU : evP (n := 1) ![pt k d 0, 0]
     rw [e, gt_const_ev_eq _ hV, ← gt_const_ev_eq _ hX0, h1]
     simp
   · refine ⟨r, ?_⟩
-    rw [e, gt_const_ev_eq _ hV, map_add, ← gt_const_ev_eq _ hX0 A, h0]
+    rw [e, gt_const_ev_eq _ hV, map_add (f := _), ← gt_const_ev_eq _ hX0 A, h0]
     simp [hr]
 
 end GlobalTheory.GaugeDiv
@@ -373,14 +373,14 @@ theorem canonGauge_dmonOf_hL_natCast_mul :
   have hl : DI (algebraMap R k) (defL (B.FK k) g) := by
     refine di_of_exp B.ph1 ?_ _ ?_ hg.ph1
     · rw [← gt_const_ev_eq _ (triple_points_zero_constant (n := 2) gp_zero₂ (gp_pt 0) (gp_pt 1)), B.cocycleLeft_zero_fst, map_one]
-    · rw [defL, map_sub, map_add, gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
+    · rw [defL, map_sub, map_add (f := _), gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
         gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
         gt_const_ev _ (pair_points_zero_constant (gp_addOf _ hF _ _ (hp _) (hp _)) (hp _)) _ c0]
       simp
   have hr : DI (algebraMap R k) (defR (B.FK k) g) := by
     refine di_of_exp B.ph2 ?_ _ ?_ hg.ph2
     · rw [← gt_const_ev_eq _ (triple_points_zero_constant (n := 2) gp_zero₂ (gp_pt 0) (gp_pt 1)), B.cocycleRight_zero_fst, map_one]
-    · rw [defR, map_sub, map_add, gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
+    · rw [defR, map_sub, map_add (f := _), gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
         gt_const_ev _ (pair_points_zero_constant (hp _) (hp _)) _ c0,
         gt_const_ev _ (pair_points_zero_constant (hp _) (gp_addOf _ hF _ _ (hp _) (hp _))) _ c0]
       simp

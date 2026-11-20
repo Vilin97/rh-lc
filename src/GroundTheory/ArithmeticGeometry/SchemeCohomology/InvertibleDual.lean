@@ -26,7 +26,7 @@ variable {P : PMod X} {U : X.Opens}
 
 instance : Zero (DualSec P U) := ⟨⟨fun _ _ => 0, fun _ _ _ _ _ => (map_zero _).symm⟩⟩
 instance : Add (DualSec P U) := ⟨fun φ ψ => ⟨fun V h => φ.app V h + ψ.app V h,
-  fun V W h i m => by simp only [LinearMap.add_apply]; rw [φ.compat, ψ.compat, map_add]⟩⟩
+  fun V W h i m => by simp only [LinearMap.add_apply]; rw [φ.compat, ψ.compat, map_add (f := _)]⟩⟩
 instance : Neg (DualSec P U) := ⟨fun φ => ⟨fun V h => -φ.app V h,
   fun V W h i m => by simp only [LinearMap.neg_apply]; rw [φ.compat, map_neg]⟩⟩
 instance : Sub (DualSec P U) := ⟨fun φ ψ => ⟨fun V h => φ.app V h - ψ.app V h,
@@ -188,7 +188,7 @@ noncomputable def glueLin {V : X.Opens} (hV : V ≤ iSup U) : P.obj (op V) →�
   toFun := glueFun hsf hV
   map_add' m m' := by
     refine glue_unique hV _ _ _ (glueFun_spec hsf hV _) (fun i => ?_)
-    rw [map_add, glueFun_spec, glueFun_spec, glueLocal, glueLocal, glueLocal, resM_add, map_add]
+    rw [map_add (f := _), glueFun_spec, glueFun_spec, glueLocal, glueLocal, glueLocal, resM_add, map_add (f := _)]
   map_smul' r m := by
     refine glue_unique hV _ _ _ (glueFun_spec hsf hV _) (fun i => ?_)
     rw [RingHom.id_apply, smul_eq_mul, map_mul, glueFun_spec, glueLocal, glueLocal, resM_smul,

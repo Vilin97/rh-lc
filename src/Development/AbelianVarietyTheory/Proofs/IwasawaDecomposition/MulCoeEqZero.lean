@@ -34,7 +34,7 @@ def incl (hJ : J ^ 2 = ⊥) : TrivSqZeroExt S J →ₐ[S] A where
       Submodule.coe_smul_of_tower, Algebra.smul_def]
     linear_combination (-1 : A) * h
   map_zero' := by simp
-  map_add' x y := by simp only [TrivSqZeroExt.fst_add, TrivSqZeroExt.snd_add, map_add, Submodule.coe_add]; ring
+  map_add' x y := by simp only [TrivSqZeroExt.fst_add, TrivSqZeroExt.snd_add, map_add (f := _), Submodule.coe_add]; ring
   commutes' s := by simp [TrivSqZeroExt.algebraMap_eq_inl]
 
 theorem incl_apply (hJ : J ^ 2 = ⊥) (x : TrivSqZeroExt S J) : incl J hJ x = algebraMap S A x.fst + (x.snd : A) := rfl

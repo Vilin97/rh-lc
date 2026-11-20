@@ -45,7 +45,7 @@ theorem evalF_C {ι : Type} (w : ι → A.Pt → Ev n) (r : ℝ) : evalF A w (C 
 
 theorem evalF_add {ι : Type} (w : ι → A.Pt → Ev n) (P Q : MvPolynomial ι ℝ) :
     evalF A w (P + Q) = evalF A w P + evalF A w Q := by
-  simp only [evalF_eq, map_add]
+  simp only [evalF_eq, map_add (f := _)]
 
 theorem evalF_mul {ι : Type} (w : ι → A.Pt → Ev n) (P Q : MvPolynomial ι ℝ) :
     evalF A w (P * Q) = evalF A w P * evalF A w Q := by
@@ -217,7 +217,7 @@ theorem fibre_integral_eq : ∀ (k : Type) [CommRing k] (B Y : Scheme.{0}) [IsIn
     refine (pullback_evalF _ _ _ hol f4 g4 hpull4 ((X 1 + X 2) ^ (m i - j) * aeval ![X 0, X 1, X 2] (W i))).trans ?_
     rw [evalF_eq]
     congr 1
-    simp only [map_mul, map_pow, map_add, aeval_X]
+    simp only [map_mul, map_pow, map_add (f := _), aeval_X]
     rw [aeval_aeval']
     have e : (fun t : Fin 3 => aeval g4 ((![X 0, X 1, X 2] : Fin 3 → MvPolynomial (Fin 4) ℝ) t)) =
         ![x 2, x 3, x 4] := by
@@ -227,10 +227,10 @@ theorem fibre_integral_eq : ∀ (k : Type) [CommRing k] (B Y : Scheme.{0}) [IsIn
   have hT' : ∀ i j, T i j =
       fldA _ (ω * (x 0 + ω) ^ (m i + j) * ((x 3 + x 4) ^ (m i - j) * aeval ![x 2, x 3, x 4] (W i))) := by
     intro i j
-    simp only [hT, hpT, fld_eq, map_mul, map_pow, map_add]
+    simp only [hT, hpT, fld_eq, map_mul, map_pow, map_add (f := _)]
   have hup : aeval x (upperParabolic s m W) = ∑ i ∈ s, (x 0 * (x 3 + x 4 - x 0)) ^ m i * aeval ![x 2, x 3, x 4] (W i) := by
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [upperParabolic, map_sum, map_mul, map_pow, map_add, map_sub, aeval_X]
+      simp only [upperParabolic, map_sum, map_mul, map_pow, map_add (f := _), map_sub, aeval_X]
     refine Finset.sum_congr rfl fun i _ => ?_
     rw [aeval_aeval']
     have e : (fun t : Fin 3 => aeval x ((![X 2, X 3, X 4] : Fin 3 → MvPolynomial (Fin 5) ℝ) t)) =

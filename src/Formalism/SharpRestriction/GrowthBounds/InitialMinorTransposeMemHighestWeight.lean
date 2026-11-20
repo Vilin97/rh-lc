@@ -213,7 +213,7 @@ theorem proj_eq_sum {N : ℕ} (W : Fin N → I → Submodule K V) (e : Fin N →
     · rw [h0 t ht y hy]
       exact (Finset.sum_eq_zero fun t' ht' => hdiff t' (fun hh => ht (hh ▸ ht'))).symm
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add, map_add, ha, hb]
+  | add a b _ _ ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 end Abstract
 
@@ -282,7 +282,7 @@ theorem ellWt_le (D : Formalism.BasicNotions.D7) (S : Set ι) (e : (Fin n → �
         obtain ⟨u, hu, v, hv, rfl⟩ := hy
         rw [umon_comm _ (polProj K d) hcomm u hu v, hcon v hv, map_zero]
       | zero => rw [map_zero]
-      | add y z _ _ hy hz => rw [map_add, hy, hz, add_zero]
+      | add y z _ _ hy hz => rw [map_add (f := _), hy, hz, add_zero]
       | smul c y _ hy => rw [map_smul, hy, smul_zero]
     exact hne (by rw [← polProj_of_mem d _ hy1]; exact hz _ hy2)
   obtain ⟨v, hv, hw0⟩ := hex
@@ -1459,7 +1459,7 @@ theorem hbLin : HBLin := by
   · intro A _ _ b g u hg hbg _ _
     simp
   · intro f hf f' hf' A _ _ b g u hg hbg h1 h2
-    rw [map_add, map_add, hf A b g u hg hbg h1 h2, hf' A b g u hg hbg h1 h2, mul_add]
+    rw [map_add (f := _), map_add (f := _), hf A b g u hg hbg h1 h2, hf' A b g u hg hbg h1 h2, mul_add]
   · intro a f hf A _ _ b g u hg hbg h1 h2
     rw [map_mul, map_mul, hf A b g u hg hbg h1 h2, evaluation_algebraMap_eq, evaluation_algebraMap_eq]
     ring
@@ -1804,8 +1804,8 @@ theorem residue_span_lift_bideterminant (hB1 : BideterminantInHighestWeight) (hB
   | add x y _ _ hx hy =>
     obtain ⟨x', hx1, hx2⟩ := hx
     obtain ⟨y', hy1, hy2⟩ := hy
-    refine ⟨x' + y', ?_, by rw [map_add, hx2, hy2]⟩
-    rw [map_add, map_add]
+    refine ⟨x' + y', ?_, by rw [map_add (f := _), hx2, hy2]⟩
+    rw [map_add (f := _), map_add (f := _)]
     exact (hB2 O r _ _).2.1 _ hx1 _ hy1
   | smul a x _ hx =>
     obtain ⟨x', hx1, hx2⟩ := hx

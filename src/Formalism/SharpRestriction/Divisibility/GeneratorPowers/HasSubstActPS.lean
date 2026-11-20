@@ -44,7 +44,7 @@ theorem φa_one {d : ℕ} (φ : Fin d → MvPowerSeries (Fin 1 × Fin (dL Dw)) S
 
 theorem actPS_add (u v : 𝓞 E) (q : Fin 1 × Fin (dL Dw)) :
     actPS (Dw := Dw) (S := S) c u q + actPS (Dw := Dw) (S := S) c v q = actPS (Dw := Dw) (S := S) c (u + v) q := by
-  simp only [actPS, map_add, add_smul]
+  simp only [actPS, map_add (f := _), add_smul]
 
 theorem const_φa {d : ℕ} (φ : Fin d → MvPowerSeries (Fin 1 × Fin (dL Dw)) S) (hφ : ∀ j, constantCoeff (φ j) = 0)
     (u : 𝓞 E) (j : Fin d) : constantCoeff (φa c φ u j) = 0 :=

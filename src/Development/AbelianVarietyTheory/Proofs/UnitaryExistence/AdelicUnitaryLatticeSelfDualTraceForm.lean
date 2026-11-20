@@ -45,7 +45,7 @@ theorem frameForm_add_left (V : HSp D) (v w y : Fin V.rank → D.host.E) :
 
 theorem frameForm_add_right (V : HSp D) (v w y : Fin V.rank → D.host.E) :
     frameForm V v (w + y) = frameForm V v w + frameForm V v y := by
-  simp only [frameForm, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib]
+  simp only [frameForm, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib]
 
 theorem frameForm_int_smul_left (V : HSp D) (c : 𝓞 D.host.E) (v y : Fin V.rank → D.host.E) :
     frameForm V (c • v) y = c • frameForm V v y := by

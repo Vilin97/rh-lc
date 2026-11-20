@@ -13,7 +13,7 @@ theorem aeval_scale {σ K R A : Type} [Fintype K] [CommRing R] [CommRing A] [Alg
     aeval (fun p => (∏ k, c k ^ w p k) * z p) f = (∏ k, c k ^ d k) * aeval z f := by
   induction hf using IsWeightedHomogeneous.induction_on with
   | zero => simp
-  | add p q _ _ hp hq => rw [map_add, map_add, hp, hq, mul_add]
+  | add p q _ _ hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, mul_add]
   | monomial m r hm =>
     rw [aeval_monomial, aeval_monomial, ← hm]
     have e : (∏ k, c k ^ (Finsupp.weight w m) k) = m.prod fun p n => (∏ k, c k ^ w p k) ^ n := by

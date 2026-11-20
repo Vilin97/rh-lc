@@ -24,7 +24,7 @@ def glue (hj : ∀ x y, j (x * y) = j x * j y) : (R' ⊗[F] E) × (R ⊗[F] E) �
   toFun p := Jt j p.1 + (1 - eps (E := E) j) * p.2
   map_one' := by simp [eps]
   map_zero' := by simp
-  map_add' p q := by simp only [Prod.fst_add, Prod.snd_add, map_add]; ring
+  map_add' p q := by simp only [Prod.fst_add, Prod.snd_add, map_add (f := _)]; ring
   map_mul' p q := by
     simp only [Prod.fst_mul, Prod.snd_mul, Jt_mul hj]
     have h1 := eps_mul_Jt (E := E) hj p.1
@@ -60,8 +60,8 @@ theorem Jt_mul_right (φ : R →ₐ[F] R') (hφ : ∀ x y, j x * y = j (x * φ y
       rw [Algebra.TensorProduct.map_tmul, Algebra.TensorProduct.tmul_mul_tmul, Jt_tmul, Jt_tmul,
         Algebra.TensorProduct.tmul_mul_tmul, hφ]
       rfl
-    | add y z hy hz => rw [mul_add, hy, hz, map_add, mul_add, map_add]
-  | add x z hx hz => rw [add_mul, map_add, add_mul, hx, hz, map_add]
+    | add y z hy hz => rw [mul_add, hy, hz, map_add (f := _), mul_add, map_add (f := _)]
+  | add x z hx hz => rw [add_mul, map_add (f := _), add_mul, hx, hz, map_add (f := _)]
 
 theorem secM_sub_one (hj : ∀ x y, j (x * y) = j x * j y) (A : Matrix (Fin n) (Fin n) (R' ⊗[F] E)) :
     secM j A - 1 = (A - 1).map (Jt j) := by
@@ -88,7 +88,7 @@ theorem genLat_map (f : R' →ₗ[F] R) (S' : Set R') (S : Set R) (hS : ∀ a �
     obtain ⟨a, ha, x, hx, rfl⟩ := hz
     exact AddSubgroup.subset_closure ⟨f a, hS a ha, x, hx, rfl⟩
   | zero => simp only [Pi.zero_apply, map_zero]; exact zero_mem _
-  | add x y _ _ hx hy => simp only [Pi.add_apply, map_add]; exact add_mem hx hy
+  | add x y _ _ hx hy => simp only [Pi.add_apply, map_add (f := _)]; exact add_mem hx hy
   | neg x _ hx => simp only [Pi.neg_apply, map_neg]; exact neg_mem hx
 
 theorem map_eq_Jt (φ : R →ₐ[F] R') (y : R ⊗[F] E) :
@@ -96,7 +96,7 @@ theorem map_eq_Jt (φ : R →ₐ[F] R') (y : R ⊗[F] E) :
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x z hx hz => rw [map_add, map_add, hx, hz]
+  | add x z hx hz => rw [map_add (f := _), map_add (f := _), hx, hz]
 
 end Gen
 
@@ -133,7 +133,7 @@ theorem snd_Jt (v : HeightOneSpectrum (𝓞 F)) (x : Fv F v ⊗[F] E) :
   induction x using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => rfl
-  | add x z hx hz => rw [map_add, map_add, hx, hz, map_add]
+  | add x z hx hz => rw [map_add (f := _), map_add (f := _), hx, hz, map_add (f := _)]
 
 theorem map_snd_secM (v : HeightOneSpectrum (𝓞 F)) (A : Matrix (Fin M) (Fin M) (Fv F v ⊗[F] E)) :
     (secM (singleA v) A).map (Algebra.TensorProduct.map (sndA F) (AlgHom.id F E)) = secM (singleL v) A := by

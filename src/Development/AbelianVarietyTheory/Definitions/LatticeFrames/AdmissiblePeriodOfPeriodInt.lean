@@ -137,7 +137,7 @@ theorem per_smul (a : D.what₂.LL) (φ : (D.div.Nu u).V) (F : D.what₂.Amb D.w
 theorem per_add (φ ψ : (D.div.Nu u).V) (F : D.what₂.Amb D.what₂.mu0) :
     D.what₂.perCol u D.what₂.mu0 (D.jN u (φ + ψ)) F =
       D.what₂.perCol u D.what₂.mu0 (D.jN u φ) F + D.what₂.perCol u D.what₂.mu0 (D.jN u ψ) F := by
-  simp only [D.perCol_base_eq_PtilCol, PeriodMap.PtilCol, PeriodMap.Ptil, map_add, Submodule.coe_add, Examples₂.NZ.col_add]
+  simp only [D.perCol_base_eq_PtilCol, PeriodMap.PtilCol, PeriodMap.Ptil, map_add (f := _), Submodule.coe_add, Examples₂.NZ.col_add]
   simp
 
 theorem int_of_valGe {z : ℂ} (h : ∀ w, ValGe D w z 0) (w0 : D.what₂.places.Pl) :
@@ -344,7 +344,7 @@ theorem le_zero_of_functional {V : Type} [AddCommGroup V] [Module D.what₂.LL V
       rw [hc]; exact valGe_of_int w c
     | zero => exact ⟨0, by simp, Or.inl rfl⟩
     | add x y _ _ hx hy =>
-      rw [map_add, map_add]; exact valGe_add hx hy
+      rw [map_add (f := _), map_add (f := _)]; exact valGe_add hx hy
     | smul b x _ hx =>
       have := valGe_mul (valGe_of_mem_intW b) hx
       rw [show b • x = (b : D.what₂.LL) • x from rfl, map_smul, smul_eq_mul, map_mul]

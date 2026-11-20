@@ -13,7 +13,7 @@ private theorem star_mapRingHom_eq_mapRingHom_star {l : ℕ} [Fact l.Prime] (F :
   induction y using MonoidAlgebra.induction_linear with
   | zero => simp [GFrame.star]
   | add a b ha hb =>
-    simp only [map_add, GFrame.star, MulOpposite.unop_add] at *
+    simp only [map_add (f := _), GFrame.star, MulOpposite.unop_add] at *
     rw [ha, hb]
   | single g b =>
     simp only [GFrame.star, GFrame.starOp, MonoidAlgebra.lift_single, GFrame.eps, MonoidAlgebra.mapRingHom_single]

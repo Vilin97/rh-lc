@@ -143,7 +143,7 @@ theorem rot_rel
   have h3 := hU _ hR (single a a 1) (single c c 1)
   rw [rot_conj_aa a c hac] at h1 h3
   rw [rot_conj_cc a c hac] at h2 h3
-  simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul] at h1 h2 h3
+  simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, smul_eq_mul] at h1 h2 h3
   simp (disch := simp [hac, hac.symm]) only [hv, mul_zero, add_zero, zero_add] at h1 h2 h3
   refine ⟨?_, ?_, ?_⟩
   · linear_combination -h1
@@ -207,11 +207,11 @@ theorem eq_trace_form : ∀ (r : ℕ) (B : Matrix (Fin r) (Fin r) ℂ →ₗ[ℂ
   intro F F'
   induction F using Matrix.induction_on' with
   | h_zero => simp
-  | h_add P Q hP hQ => simp only [map_add, LinearMap.add_apply, add_mul, trace_add, hP, hQ]; ring
+  | h_add P Q hP hQ => simp only [map_add (f := _), LinearMap.add_apply, add_mul, trace_add, hP, hQ]; ring
   | h_std_basis i j x =>
     induction F' using Matrix.induction_on' with
     | h_zero => simp
-    | h_add P Q hP hQ => simp only [map_add, mul_add, trace_add, hP, hQ]; ring
+    | h_add P Q hP hQ => simp only [map_add (f := _), mul_add, trace_add, hP, hQ]; ring
     | h_std_basis s t y =>
       rw [single_eq_smul i j x, single_eq_smul s t y]
       simp only [map_smul, LinearMap.smul_apply, smul_eq_mul, Matrix.smul_mul, Matrix.mul_smul,

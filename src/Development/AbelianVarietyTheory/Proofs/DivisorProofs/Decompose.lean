@@ -67,7 +67,7 @@ theorem decompose : ∀ {F E : Type} [Field F] [NumberField F] [Field E] [Number
           Matrix.vecMulVec (incV F t) (incV F H'.y) := by
       ext i j
       set_option synthInstance.maxHeartbeats 100000 in
-        simp [incM, incV, Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum, map_add, map_mul]
+        simp [incM, incV, Matrix.vecMulVec_apply, Matrix.mul_apply, map_sum, map_add (f := _), map_mul]
     rw [e1, e2] at hI'
     rw [e1n, Matrix.one_mul]
     conv_lhs => rw [← Matrix.mul_one w, hI']

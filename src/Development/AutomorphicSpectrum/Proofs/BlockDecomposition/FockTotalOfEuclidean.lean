@@ -170,7 +170,7 @@ theorem exists_conj_polyV (q : MvPolynomial (D.what₂.Tau × Fin m × Fin n × 
     refine ⟨p' + q', fun z => ?_⟩
     have h1 := hp z
     have h2 := hq z
-    simp only [polyV_eq, map_add] at h1 h2 ⊢
+    simp only [polyV_eq, map_add (f := _)] at h1 h2 ⊢
     rw [h1, h2]
   | mul_X p k hp =>
     obtain ⟨p', hp⟩ := hp

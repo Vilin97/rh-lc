@@ -145,7 +145,7 @@ theorem tauCoord_of_dataFrom (T : TautBase o W) (iw : W →+* V) {I : Type} [Fin
     have m := congrArg (fun q => q.left) (map_mul (pushHom hpb (𝟙_ (Over (Sp V)))) (Q.c a) (Q.c b))
     refine m.symm.trans ?_
     show (Q.c a * Q.c b).left ≫ β = _
-    rw [← Q.c_add, hc, ← T.c₀_add, ← smul_add, ← map_add]
+    rw [← Q.c_add, hc, ← T.c₀_add, ← smul_add, ← map_add (f := _)]
   have p1 : (1 : Over.mk ((𝟙_ (Over (Sp V))).hom ≫ spMap iw) ⟶ T.B).left = h ≫ (1 : 𝟙_ (Over (Sp W)) ⟶ T.B).left := by
     have m := congrArg (fun q => q.left) (map_one (pushHom hpb (𝟙_ (Over (Sp V)))))
     refine m.symm.trans ?_

@@ -98,10 +98,10 @@ theorem span_mod_equations_lift (O : Type) [CommRing O] [IsDomain O] [IsDiscrete
     have h1 := congrArg (fun s => μ (MvPowerSeries.coeff d s)) (eq_sub_iff_add_eq.1 (hH y))
     have h2 : MvPowerSeries.coeff d (G' y) = f (G (y, d)) := rfl
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, MvPowerSeries.coeff_mul, MvPowerSeries.coeff_map,
+      simp only [map_add (f := _), map_sum, MvPowerSeries.coeff_mul, MvPowerSeries.coeff_map,
       MvPowerSeries.coeff_smul, hμ, hμ1, h2] at h1
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [Φ, LinearMap.coe_mk, AddHom.coe_mk, map_sub, map_add, map_sum, map_mul, Sum.elim_inl,
+      simp only [Φ, LinearMap.coe_mk, AddHom.coe_mk, map_sub, map_add (f := _), map_sum, map_mul, Sum.elim_inl,
       Sum.elim_inr, hl]
     rw [← h1, add_comm, sub_self]
   obtain ⟨x, hx⟩ := hΦ fun j => MvPowerSeries.coeff j.2 (G j.1)

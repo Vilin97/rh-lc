@@ -93,7 +93,7 @@ theorem sub_mem_pdP (c : Chart γ p q κ V d) {T : Thick (nlFun γ p X q κ)} (h
   · rw [map_zero, map_zero, sub_zero]
     exact Ideal.zero_mem _
   · intro y z _ _ hy hz
-    rw [map_add, map_add, add_sub_add_comm]
+    rw [map_add (f := _), map_add (f := _), add_sub_add_comm]
     exact Ideal.add_mem _ hy hz
   · intro a y hy ih
     have e : f.φ (a • y) - g.φ (a • y) = f.φ a * (f.φ y - g.φ y) + (f.φ a - g.φ a) * g.φ y := by

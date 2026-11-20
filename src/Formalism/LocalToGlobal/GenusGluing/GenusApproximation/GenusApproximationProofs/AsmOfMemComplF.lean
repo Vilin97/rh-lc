@@ -278,7 +278,7 @@ theorem genusToPoint_of (hLoc : LocEq) (hMem : MemLocFStd) (hCof : IdemCof) (hI 
         add_mem' := by
           intro a b ha hb
           show algebraMap (𝓞 F) (𝓞 E) (a + b) • y ∈ N
-          rw [map_add, add_smul]
+          rw [map_add (f := _), add_smul]
           exact N.add_mem ha hb
         zero_mem' := by
           show algebraMap (𝓞 F) (𝓞 E) 0 • y ∈ N

@@ -102,7 +102,7 @@ theorem pairLin_equivariant (g : ∀ a, Γ a) (t : ⨂[ℂ] a, smoothPart (ρ a)
     refine PiTensorProduct.ext (MultilinearMap.ext fun v => ?_)
     simp only [LinearMap.compMultilinearMap_apply, piTensor_tprod, pairLin_tprod, Representation.dual_apply,
       Module.Dual.transpose_apply, LinearMap.comp_apply, contra_apply, Pi.inv_apply]
-  | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 
 theorem pairLin_mem (t : ⨂[ℂ] a, smoothPart (ρ a).dual) : pairLin ρ t ∈ smoothPart (piTensor ρ).dual := by
   induction t using PiTensorProduct.induction_on with
@@ -116,7 +116,7 @@ theorem pairLin_mem (t : ⨂[ℂ] a, smoothPart (ρ a).dual) : pairLin ρ t ∈ 
     congr 2
     funext a
     exact hg a (Set.mem_univ a)
-  | add x y hx hy => rw [map_add]; exact add_mem hx hy
+  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
 
 def pairMap : (piTensor fun a => contra (ρ a)).IntertwiningMap (contra (piTensor ρ)) where
   toLinearMap := (pairLin ρ).codRestrict _ (pairLin_mem ρ)

@@ -110,7 +110,7 @@ private def SS (E : Type) [Field E] [NumberField E] [Algebra F E] (v : Pl F) : S
   mul_mem' := fun {x y} hx hy => ⟨by rw [sgE_mul]; exact oh_mul hx.1 hy.1, RingHom.IsIntegralElem.mul _ hx.2 hy.2⟩
   one_mem' := ⟨by rw [sgE_one]; exact gen_mem 1 (one_mem _), by
     simpa using (phi E v).isIntegralElem_map (x := 1)⟩
-  add_mem' := fun {x y} hx hy => ⟨by rw [map_add]; exact add_mem hx.1 hy.1, RingHom.IsIntegralElem.add _ hx.2 hy.2⟩
+  add_mem' := fun {x y} hx hy => ⟨by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx.1 hy.1, RingHom.IsIntegralElem.add _ hx.2 hy.2⟩
   zero_mem' := ⟨by rw [map_zero]; exact zero_mem _, RingHom.isIntegralElem_zero _⟩
   neg_mem' := fun {x} hx => ⟨by rw [map_neg]; exact neg_mem hx.1, RingHom.IsIntegralElem.neg _ hx.2⟩
 
@@ -144,7 +144,7 @@ private theorem comp_mem {v : Pl F} {x : AE F E} (hx : x ∈ Oh E v) : compFin F
     rw [hh]
     exact (Polynomial.hom_eval₂ P (algebraMap ℤ E) incl (o : E)).symm.trans (by rw [h0, map_zero])
   · rw [map_zero]; exact RingHom.isIntegralElem_zero _
-  · intro x y hx hy; rw [map_add]; exact RingHom.IsIntegralElem.add _ hx hy
+  · intro x y hx hy; rw [map_add (f := _)]; exact RingHom.IsIntegralElem.add _ hx hy
   · intro x hx; rw [map_neg]; exact RingHom.IsIntegralElem.neg _ hx
 
 private theorem smul_comp {v : Pl F} (a : AF F) (z : AE F E) : compFin F E v (a • z) = evFin F v a • compFin F E v z := by
@@ -154,7 +154,7 @@ private theorem smul_comp {v : Pl F} (a : AF F) (z : AE F E) : compFin F E v (a 
     rw [TensorProduct.smul_tmul', smul_eq_mul]
     change evFin F v (a * b) ⊗ₜ[F] x = evFin F v a • (evFin F v b ⊗ₜ[F] x)
     rw [TensorProduct.smul_tmul', smul_eq_mul, map_mul]
-  | add x y hx hy => simp only [smul_add, map_add, hx, hy]
+  | add x y hx hy => simp only [smul_add, map_add (f := _), hx, hy]
 
 private theorem at_entry {v : Pl F} {ι κ : Type} {A : Matrix ι κ (AE F E)} (h : At (evFin F v) A) (i : ι) (j : κ) :
     At (evFin F v) (A i j) := fun u hu => congrFun (congrFun (h u hu) i) j
@@ -219,7 +219,7 @@ theorem UpperTheory.latticeOrder_exists_inverse_one_add_uniformizer_smul :
         ext i j
         exact Algebra.smul_def ϖ (Φ (c * p * b) i j)
       change Φ _ = Φ _
-      rw [map_mul, map_add, he, hN2, hsm, PositivityTheory.ThKH.Iwas.ev_sg, hs]
+      rw [map_mul, map_add (f := _), he, hN2, hsm, PositivityTheory.ThKH.Iwas.ev_sg, hs]
       exact hQ
   have hb1 : b * eM v n = b := mul_eM hX.at_b
   have hb2 : eM v n * b = b := eM_mul hX.at_b

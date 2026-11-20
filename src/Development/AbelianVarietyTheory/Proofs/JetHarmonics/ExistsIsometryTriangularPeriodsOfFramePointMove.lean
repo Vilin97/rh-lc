@@ -20,7 +20,7 @@ theorem apply_of_cols {α : Type} {m : α → ℕ} {g : ℕ} (e : Fin g ≃ Σ �
     h z (e.symm ⟨τ, i⟩) = ∑ j, cf τ j i * z (e.symm ⟨τ, j⟩) := by
   classical
   refine Pi.single_induction (p := fun z => h z (e.symm ⟨τ, i⟩) = ∑ j, cf τ j i * z (e.symm ⟨τ, j⟩)) z (by simp)
-    (fun z w hz hw => by simp only [map_add, Pi.add_apply, hz, hw, mul_add, Finset.sum_add_distrib]) fun n a => ?_
+    (fun z w hz hw => by simp only [map_add (f := _), Pi.add_apply, hz, hw, mul_add, Finset.sum_add_distrib]) fun n a => ?_
   · beta_reduce
     obtain ⟨⟨τ', i'⟩, rfl⟩ := e.symm.surjective n
     have h1 : (Pi.single (e.symm ⟨τ', i'⟩) a : Fin g → ℂ) = a • (Pi.single (e.symm ⟨τ', i'⟩) 1 : Fin g → ℂ) := by

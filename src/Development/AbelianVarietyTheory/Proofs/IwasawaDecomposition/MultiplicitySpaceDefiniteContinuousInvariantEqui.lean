@@ -56,8 +56,8 @@ theorem multT_cont_left_equiv :
     obtain ⟨a, b, c⟩ := hx
     obtain ⟨a', b', c'⟩ := hy
     refine ⟨?_, fun γ hγ h => ?_, fun τ u => ?_⟩
-    · rw [map_add]; exact a.add a'
-    · simp only [map_add, Pi.add_apply, b γ hγ h, b' γ hγ h]
-    · rw [map_add, map_add, map_add, c, c']; rfl
+    · rw [map_add (f := _)]; exact a.add a'
+    · simp only [map_add (f := _), Pi.add_apply, b γ hγ h, b' γ hγ h]
+    · rw [map_add (f := _), map_add (f := _), map_add (f := _), c, c']; rfl
 
 end GlobalTheory

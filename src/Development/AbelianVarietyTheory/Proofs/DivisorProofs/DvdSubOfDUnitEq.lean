@@ -11,7 +11,7 @@ theorem dvd_counit (O A : Type) [CommRing O] [CommRing A] [HopfAlgebra O A] [Mod
     q ∣ Coalgebra.counit (R := O) a := by
   have h1 := CartierDual.mul_apply (R := O) (C := A) 1 1 a
   rw [one_mul, h] at h1
-  simp only [map_add, map_smul, CartierDual.pair_tmul_tmul, CartierDual.one_apply, Bialgebra.counit_one] at h1
+  simp only [map_add (f := _), map_smul, CartierDual.pair_tmul_tmul, CartierDual.one_apply, Bialgebra.counit_one] at h1
   exact ⟨-(CartierDual.pair O A A (1 ⊗ₜ 1) t), by rw [smul_eq_mul] at h1; linear_combination -h1⟩
 
 theorem dvd_of_mem_sq (O A : Type) [CommRing O] [CommRing A] [HopfAlgebra O A] [Coalgebra.IsCocomm O A] [Module.Finite O A]
@@ -24,7 +24,7 @@ theorem dvd_of_mem_sq (O A : Type) [CommRing O] [CommRing A] [HopfAlgebra O A] [
   · have hx1 : x 1 = 0 := hx
     have hy1 : y 1 = 0 := hy
     rw [CartierDual.mul_apply, h]
-    simp only [map_add, map_smul, CartierDual.pair_tmul_tmul, hx1, hy1, mul_zero, zero_mul, zero_add, smul_eq_mul]
+    simp only [map_add (f := _), map_smul, CartierDual.pair_tmul_tmul, hx1, hy1, mul_zero, zero_mul, zero_add, smul_eq_mul]
     exact dvd_mul_right _ _
   · have e : (x + y) a = x a + y a := rfl
     rw [e]; exact dvd_add hx hy

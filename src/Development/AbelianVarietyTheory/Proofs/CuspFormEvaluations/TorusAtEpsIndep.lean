@@ -58,11 +58,11 @@ theorem B_adj (X : Data E r) (a : E) (u v : Fin r → E) : B X (a • u) v = B X
 
 theorem B_add_left (X : Data E r) (u u' v : Fin r → E) : B X (u + u') v = B X u v + B X u' v := by
   unfold B
-  rw [herm_add_left, mul_add, map_add]
+  rw [herm_add_left, mul_add, map_add (f := _)]
 
 theorem B_add_right (X : Data E r) (u v v' : Fin r → E) : B X u (v + v') = B X u v + B X u v' := by
   unfold B
-  rw [herm_add_right, mul_add, map_add]
+  rw [herm_add_right, mul_add, map_add (f := _)]
 
 theorem B_sub_smul (X : Data E r) (a b : E) (u v : Fin r → E) :
     B X u ((a - b) • v) = B X u (a • v) - B X u (b • v) := by
@@ -164,7 +164,7 @@ theorem par_of_torusAt (X : DataX E r) {x : Frame X.Ψ r} (A : TorusAt X.toData 
   have h := A.T.eps_add (A.φ u) ((A.lat _).2 ⟨u, hu, rfl⟩) (A.φ v) ((A.lat _).2 ⟨v, hv, rfl⟩)
   have hd' := hd
   unfold B at hd'
-  rw [← map_add, eps_val A hu ha, eps_val A hv hb, eps_val A huv hc, A.im_eq u hu v hv, hd',
+  rw [← map_add (f := _), eps_val A hu ha, eps_val A hv hb, eps_val A huv hc, A.im_eq u hu v hv, hd',
     cos_sign A.sg_pm] at h
   have h1 : c.negOnePow = (a + b + d).negOnePow := by
     rw [Int.negOnePow_add, Int.negOnePow_add]

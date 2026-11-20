@@ -109,7 +109,7 @@ theorem adapted_bases_exist : Adapted := by
       induction hx' using Submodule.span_induction with
       | mem a ha => exact key a ha
       | zero => simp
-      | add a b _ _ ha hb => rw [map_add]; exact Submodule.add_mem _ ha hb
+      | add a b _ _ ha hb => rw [map_add (f := _)]; exact Submodule.add_mem _ ha hb
       | smul c a _ ha => rw [map_smul]; exact Submodule.smul_mem _ c ha
   have hspanS : Submodule.span K (S : Set A.V) = U := by
     apply le_antisymm
@@ -187,7 +187,7 @@ theorem adapted_bases_exist : Adapted := by
       | add a c _ _ ha hc =>
         obtain ⟨r1, hr1⟩ := ha
         obtain ⟨r2, hr2⟩ := hc
-        exact ⟨r1 + r2, by rw [map_add, hr1, hr2, map_add, mul_add]⟩
+        exact ⟨r1 + r2, by rw [map_add (f := _), hr1, hr2, map_add (f := _), mul_add]⟩
       | smul c a _ ha =>
         obtain ⟨r1, hr1⟩ := ha
         refine ⟨c * r1, ?_⟩

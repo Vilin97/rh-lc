@@ -59,7 +59,7 @@ theorem UpperTheory.formal_group_coeff_mem :
       ring
     have e' := congrArg (PowerSeries.coeff n) e
     rw [e']
-    simp only [map_add, PowerSeries.coeff_C_mul]
+    simp only [map_add (f := _), PowerSeries.coeff_C_mul]
     exact S.add_mem (S.add_mem (S.add_mem (S.add_mem (S.add_mem hX3
       (S.mul_mem h₁ (coeff_mul_mem_step S n _ _ hX0 h0 hX ih)))
       (S.mul_mem h₂ (coeff_mul_mem_step S n _ _ hX0 hXw0 hX hXw)))

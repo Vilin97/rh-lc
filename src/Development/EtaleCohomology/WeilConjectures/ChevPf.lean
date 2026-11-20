@@ -55,6 +55,6 @@ theorem Chev_of : LateralTheory.EWeil.ContinCut.Chev := by
   choose u hu using hu
   refine ⟨π u, ?_⟩
   have : w = (l : ℤ_[l]) ^ N • u := funext fun i => by simp [hu i]
-  rw [map_add, hc0, zero_add, this, map_smul]
+  rw [map_add (f := _), hc0, zero_add, this, map_smul]
 
 end LateralTheory.EWeil.ChevPf

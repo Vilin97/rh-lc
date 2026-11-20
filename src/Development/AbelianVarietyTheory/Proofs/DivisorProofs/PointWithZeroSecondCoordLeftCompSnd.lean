@@ -181,7 +181,7 @@ theorem alg {D D' : Type} [CommRing D] [Algebra R D] [CommRing D'] [Algebra R D'
     (X1 * Bτ - X2 * Bs' - X3 * Bτ + X4 * Bi').snd + -fvt =
       ((Ae' * Bi').snd - algebraMap R D' t * C') - φ ((Ae * Bi).snd - algebraMap R D t * C) := by
   subst hX1 hX2 hX3 hX4 hY1 hY2 hW hZ hfvt
-  have h1 : epsHom φ As = epsHom φ Ae + epsHom φ Ai := by rw [hAs, map_add]
+  have h1 : epsHom φ As = epsHom φ Ae + epsHom φ Ai := by rw [hAs, map_add (f := _)]
   have key : epsHom φ As * Bτ - TrivSqZeroExt.inl Aa * Bs' - epsHom φ Ai * Bτ + Ab * Bi' =
       Ae' * Bi' - epsHom φ (Ae * Bi) - TrivSqZeroExt.inl Aa * TrivSqZeroExt.inr (algebraMap R D' t) := by
     rw [map_mul]

@@ -125,7 +125,7 @@ theorem exists_coords (π : MvPolynomial (Fin g) O →ₐ[O] B) (hπ : π.toRing
     have h3 : (TrivSqZeroExt.fstHom O O O).comp φ = e := by
       refine GlobalTheory.NilCoord.ext_of_nil π hπ _ _ (fun b => ?_) (fun i => ?_)
       · simpa [Algebra.ofId_apply, TrivSqZeroExt.algebraMap_eq_inl] using (h1 b).map (TrivSqZeroExt.fstHom O O O)
-      · rw [AlgHom.comp_apply, h2, map_add]
+      · rw [AlgHom.comp_apply, h2, map_add (f := _)]
         exact add_zero _
     obtain ⟨v, hv⟩ := exists_lift_atPrime e S φ (fun b hb => by
       rw [TrivSqZeroExt.isUnit_iff_isUnit_fst]

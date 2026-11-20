@@ -161,7 +161,7 @@ theorem cc_add (τ : D.what₂.Tau) (z : Matrix (Fin T.rank) (Fin S.rank) ℂ) (
   have e : compAt θ τ (u + v) = compAt θ τ u + compAt θ τ v := by
     ext i j
     show θ τ (infPart D (u i j + v i j)) = θ τ (infPart D (u i j)) + θ τ (infPart D (v i j))
-    rw [RingHom.map_add, RingHom.map_add]
+    rw [RingHom.map_add (f := _), RingHom.map_add (f := _)]
   simp only [cc, GlobalTheory.IndefiniteRowSideFullHecke.HermitianSymplecticScalars.symplAt, GlobalTheory.IndefiniteRowSideFullHecke.HermitianSymplecticScalars.hermAt, e, conjTranspose_add, Matrix.mul_add, Matrix.add_mul,
     trace_add, mul_add, Complex.add_re, Complex.ofReal_add]
 

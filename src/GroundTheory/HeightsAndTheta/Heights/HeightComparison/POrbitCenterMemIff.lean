@@ -24,7 +24,7 @@ theorem weightedHomogeneousComponent_X_mul (j : Coord n) (G : MvPolynomial (Coor
         Finsupp.weight (coordDeg n) (m - Finsupp.single j 1) + coordDeg n j := by
       conv_lhs => rw [← tsub_add_cancel_of_le (Finsupp.single_le_iff.mpr
         (Nat.one_le_iff_ne_zero.mpr (Finsupp.mem_support_iff.mp hj)))]
-      rw [map_add, Finsupp.weight_single, one_smul]
+      rw [map_add (f := _), Finsupp.weight_single, one_smul]
     rw [coeff_weightedHomogeneousComponent, coeff_X_mul', if_pos hj]
     by_cases h2 : coordDeg n j ≤ e
     · rw [if_pos h2, coeff_X_mul', if_pos hj, coeff_weightedHomogeneousComponent]
@@ -62,7 +62,7 @@ theorem OrbitCenterMemIff.proof : OrbitCenterMemIff.Statement := by
   let P : MvPolynomial (Coord n) ℤ → Prop := fun G ↦ ∀ e : ι → ℕ,
     v (evalCone (coordVec x) (weightedHomogeneousComponent (coordDeg n) e G)) < ∏ k, M k ^ e k
   have hadd : ∀ G H, P G → P H → P (G + H) := fun G H hG hH e ↦ by
-    rw [map_add, evalCone, eval₂_add]
+    rw [map_add (f := _), evalCone, eval₂_add]
     exact (FinitePlace.add_le v _ _).trans_lt (max_lt (hG e) (hH e))
   have hC : ∀ (m : ℤ) G, P G → P (C m * G) := fun m G hG e ↦ by
     rw [weightedHomogeneousComponent_C_mul, evalCone, eval₂_mul, eval₂_C, map_mul]

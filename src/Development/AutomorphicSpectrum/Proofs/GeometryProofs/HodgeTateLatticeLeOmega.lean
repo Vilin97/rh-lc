@@ -57,7 +57,7 @@ theorem natCast_smul_isHTFormOver (M : LieModel G ξ E) (N : ℕ) {x : Spec (Com
   choose f hf using hreg
   let u : Module.Dual R L :=
     { toFun := f
-      map_add' := fun a b => hk (by rw [map_add, hf, hf, hf, map_add_of_compat M hx M₀ j hj, map_add])
+      map_add' := fun a b => hk (by rw [map_add (f := _), hf, hf, hf, map_add_of_compat M hx M₀ j hj, map_add (f := _)])
       map_smul' := fun c e => hk (by
         simp only [RingHom.id_apply, smul_eq_mul, map_mul]
         rw [hf, hf, map_smul_of_compat M M₀ j hj, map_smul, smul_eq_mul]) }

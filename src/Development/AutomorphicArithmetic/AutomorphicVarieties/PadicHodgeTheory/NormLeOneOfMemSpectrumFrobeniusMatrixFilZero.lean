@@ -13,7 +13,7 @@ private noncomputable def filS {l : ℕ} [Fact l.Prime] (K : FinExt l) : Subring
   one_mem' := fun k => by
     rw [map_one, map_one]; exact ((PP l).PD K).one_mem
   add_mem' := fun {a b} ha hb k => by
-    rw [map_add, map_add]; exact Submodule.add_mem _ (ha k) (hb k)
+    rw [map_add (f := _), map_add (f := _)]; exact Submodule.add_mem _ (ha k) (hb k)
   zero_mem' := fun k => by
     rw [map_zero, map_zero]; exact Submodule.zero_mem _
   neg_mem' := fun {a} ha k => by

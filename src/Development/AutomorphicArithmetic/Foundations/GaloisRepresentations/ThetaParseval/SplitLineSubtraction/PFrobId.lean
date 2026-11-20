@@ -34,7 +34,7 @@ theorem UpperTheory.Gal.TP.Sub.frobId_holds :
     intro s e hs
     have h := (hs A hA).2 g⁻¹ hF
     rw [inv_inv] at h
-    rw [cp, h, Multiset.map_add, Multiset.prod_add, Multiset.map_map]
+    rw [cp, h, Multiset.map_add (f := _), Multiset.prod_add, Multiset.map_map]
     rfl
   apply Polynomial.map_injective ι.toRingHom ι.injective
   rw [Polynomial.map_mul, Polynomial.map_mul, cp_map r c h1, cp_map r' c' h2, lin_map a' c' h4,

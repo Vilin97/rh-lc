@@ -18,7 +18,7 @@ private theorem lie_bound {φ : Sm E a} (h : BddDer φ) :
     Finset.sum_nonneg fun k _ => mul_nonneg (norm_nonneg _) (h0 k), fun X g => ?_⟩
   let L : Lie E a →ₗ[ℝ] ℂ :=
     { toFun := fun X => (lie E a X φ).1 g
-      map_add' := fun X X' => by rw [map_add]; rfl
+      map_add' := fun X X' => by rw [map_add (f := _)]; rfl
       map_smul' := fun r X => by rw [map_smul]; rfl }
   have e : L X = ∑ k, b.repr X k • L (b k) := by
     conv_lhs => rw [← b.sum_repr X]

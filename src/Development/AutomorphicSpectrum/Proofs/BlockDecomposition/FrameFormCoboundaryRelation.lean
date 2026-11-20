@@ -34,7 +34,7 @@ theorem Pmap_shift {T₀ T T' : C} (ψ : T₀ ⟶ T) (φ : T ⟶ T') :
   have h : (Φ.A.map (Cut.Pmap Q (X := (Pt.Sσ σ).obj T) (Y := (Pt.Sσ σ).obj T') φ)).hom (Q.X T) =
       Q.X T' + (Φ.A.map (Q.j T')).hom (E.a σ 0 φ) :=
     Cut.Pmap_X Q (X := (Pt.Sσ σ).obj T) (Y := (Pt.Sσ σ).obj T') φ
-  rw [map_add, Pmap_j_apply, a_comp, map_add, h]
+  rw [map_add (f := _), Pmap_j_apply, a_comp, map_add (f := _), h]
   abel
 
 def Bv {n : ℕ} (s : ComposableArrows C n) (p : Fin (n + 1)) : Φ.A.obj (Q.P (s.obj (Fin.last n))) :=
@@ -73,7 +73,7 @@ theorem Bv_zero {n : ℕ} (s : ComposableArrows C (n + 1)) :
       s.map (homOfLE (Fin.zero_le (1 : Fin (n + 2)))) ≫ s.map (homOfLE (Fin.le_last (1 : Fin (n + 2)))) := by
     rw [← s.map_comp]; rfl
   unfold Bv ga
-  rw [e, a_comp, map_add]
+  rw [e, a_comp, map_add (f := _)]
   abel
 
 theorem form_cons {j : ℕ} (I : Fin j → Fin d) (x : Φ.A.obj E.D) (s : ComposableArrows C (j + 1)) :

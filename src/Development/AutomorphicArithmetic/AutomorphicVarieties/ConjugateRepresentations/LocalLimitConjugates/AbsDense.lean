@@ -38,7 +38,7 @@ theorem UpperTheory.V.Cj.H.absDense :
     · intro g x hx v
       show inner ℂ (R g x) (u v) = 0
       have key : R g⁻¹ (u v) = u ⟨R g⁻¹ v, hD g⁻¹ v v.2⟩ := by
-        simp only [hu, map_add, map_smul]
+        simp only [hu, map_add (f := _), map_smul]
         rw [hA g⁻¹ v]
       rw [← hinv g (u v), hinner, key]
       exact hx _

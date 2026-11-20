@@ -42,7 +42,7 @@ def S : Subring (ℚ_[ℓ] ⊗[ℚ] K) where
     simp
   add_mem' := by
     intro a b ha hb i
-    rw [map_add, Finsupp.add_apply]
+    rw [map_add (f := _), Finsupp.add_apply]
     exact add_mem (ha i) (hb i)
   neg_mem' := by
     intro a ha i

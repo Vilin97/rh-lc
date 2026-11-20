@@ -264,7 +264,7 @@ private theorem up_δ {I : Cx R} {n m : ℤ} (hm : n + 1 = m) (α : Cochain ((ch
   | succ p =>
     have hs : -((p + 1 : ℕ) : ℤ) + n = t - 1 := by omega
     refine ((GlobalTheory.T.etaleCochainEvalOnSimplex_differential_values R hm (up α) T).2 p (t - 1) t hs ht y).trans ?_
-    rw [(GlobalTheory.T.etaleCochainEvalOnSimplex_differential_values R hm α T).2 p (t - 1) t hs ht (sndE y), map_add, ev_up, upL_d]
+    rw [(GlobalTheory.T.etaleCochainEvalOnSimplex_differential_values R hm α T).2 p (t - 1) t hs ht (sndE y), map_add (f := _), ev_up, upL_d]
     congr 1
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [Units.smul_def, map_zsmul, map_sum, ev_up, fst_face, snd_face]

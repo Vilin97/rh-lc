@@ -151,7 +151,7 @@ theorem Hf_add_left (x y z : VC D N N') : Hf D T (x + y) z = Hf D T x z + Hf D T
   simp only [Hf, Pi.add_apply, add_mul, Finset.sum_add_distrib, add_div]
 
 theorem Hf_add_right (x y z : VC D N N') : Hf D T z (x + y) = Hf D T z x + Hf D T z y := by
-  simp only [Hf, Pi.add_apply, map_add, mul_add, Finset.sum_add_distrib, add_div]
+  simp only [Hf, Pi.add_apply, map_add (f := _), mul_add, Finset.sum_add_distrib, add_div]
 
 def Wl (T : Tor D) (x : VC D N N') : Module.End ℂ (VC D N N' → ℂ) where
   toFun := Wd D T x
@@ -339,7 +339,7 @@ def TTs (T : Tor D) (N N' : ℕ) : Submodule ℂ (VC D N N' → ℂ) where
     have b := h' _ (AddSubgroup.nsmul_mem _ hx m)
     rw [smul_smul] at a b
     rw [mul_comm] at b
-    rw [← Wl_apply, map_add, Wl_apply, Wl_apply, a, b]
+    rw [← Wl_apply, map_add (f := _), Wl_apply, Wl_apply, a, b]
   smul_mem' := by
     rintro c F ⟨hF, m, hm, h⟩
     refine ⟨hF.const_smul c, m, hm, fun x hx => ?_⟩
@@ -553,14 +553,14 @@ theorem exists_trivial_inert {e : AE D} (h1 : e * e = e) (h2 : sgA D e = e)
     ring
   · rw [Units.val_mul, det_cutG, ← hdef]
     change e * x + (1 - e) * 1 = _ * sgA D (e * x + (1 - e) * 1)
-    rw [map_add, map_mul, map_mul, map_sub, map_one, h2]
+    rw [map_add (f := _), map_mul, map_mul, map_sub, map_one, h2]
     linear_combination e * hxv + (d - 1) * h1
   · have hsplit : x = Units.map (cut e h1) x * Units.map (cut (1 - e) (compl_idem h1)) x :=
       Units.ext (cut_mul_cut e h1 (x : AE D)).1.symm
     have hfix : sgU D (Units.map (cut (1 - e) (compl_idem h1)) x) = Units.map (cut (1 - e) (compl_idem h1)) x := by
       refine Units.ext ?_
       change sgA D ((1 - e) * x + (1 - (1 - e)) * 1) = (1 - e) * x + (1 - (1 - e)) * 1
-      simp only [map_add, map_mul, map_sub, map_one, h2]
+      simp only [map_add (f := _), map_mul, map_sub, map_one, h2]
       linear_combination -(1 - e) * hxv + (d - 1) * sgA D x * h1
     conv_rhs => rw [hsplit, map_mul, mul_pow, χ.sq_AF _ hfix, mul_one]
 
@@ -577,7 +577,7 @@ theorem exists_solution {ε : AE D} (a1 : ε * ε = ε) (a2 : ε * sgA D ε = 0)
   · rw [Units.val_mul, det_cutG, ← hdef]
     have a3 : sgA D ε * sgA D ε = sgA D ε := by rw [← map_mul, a1]
     change (1 - ε) + ε * d = _ * sgA D ((1 - ε) + ε * d)
-    rw [map_add, map_mul, map_sub, map_one]
+    rw [map_add (f := _), map_mul, map_sub, map_one]
     linear_combination (-(1 - d - sgA D d + d * sgA D d)) * (a3 + a2) - sgA D ε * hn
   · convert zeroAt_mul D hq h (ε * (d - 1)) using 1
     change (1 - ε) + ε * d - 1 = _
@@ -622,7 +622,7 @@ theorem vacuum_scalar : ∀ D : D7, odd4 D := by
   have h1 : (ε + sgA D ε) * (ε + sgA D ε) = ε + sgA D ε := by
     have a3 : sgA D ε * sgA D ε = sgA D ε := by rw [← map_mul, a1]
     linear_combination a1 + a3 + 2 * a2
-  have h2 : sgA D (ε + sgA D ε) = ε + sgA D ε := by rw [map_add, sgA_sgA, add_comm]
+  have h2 : sgA D (ε + sgA D ε) = ε + sgA D ε := by rw [map_add (f := _), sgA_sgA, add_comm]
   refine ⟨fun z z' x x' hz hz' hx hx' => ?_, fun p hp lam hg hg' => ?_⟩
   · obtain ⟨y, b1, b2, b3⟩ := exists_trivial_inert h1 h2 h3 g hz hx
     obtain ⟨y', c1, c2, c3⟩ := exists_trivial_inert h1 h2 h3 g' hz' hx'

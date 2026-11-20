@@ -17,7 +17,7 @@ private lemma UpperTheory.Reformulated.B.LatticeCoordinatesCommonDenominator.den
   | add x y _ _ hx hy =>
     obtain ⟨c, hc⟩ := hx
     obtain ⟨d, hd⟩ := hy
-    exact ⟨c + d, by rw [map_add, hc, hd, Pi.add_apply, mul_add]⟩
+    exact ⟨c + d, by rw [map_add (f := _), hc, hd, Pi.add_apply, mul_add]⟩
   | smul a x _ hx =>
     obtain ⟨c, hc⟩ := hx
     exact ⟨a * c, by rw [map_mul, hc, Pi.smul_apply, Algebra.smul_def]; ring⟩

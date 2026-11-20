@@ -198,8 +198,8 @@ theorem lowPart_le_tw_sup_off : GlobalTheory.ThK.KP → ∀ (F E : Type) [Field 
     choose g hgP hgx using onto'
     refine ⟨{ toFun := fun x => R.p' (A' (g x)), map_add' := ?_, map_smul' := ?_ }, ?_⟩
     · intro x y
-      rw [← map_add, ← map_add]
-      exact wd _ (hgP _) _ (add_mem (hgP x) (hgP y)) (by rw [hgx, map_add, hgx, hgx])
+      rw [← map_add (f := _), ← map_add (f := _)]
+      exact wd _ (hgP _) _ (add_mem (hgP x) (hgP y)) (by rw [hgx, map_add (f := _), hgx, hgx])
     · intro c x
       rw [RingHom.id_apply, ← map_smul, ← map_smul]
       exact wd _ (hgP _) _ (Submodule.smul_mem _ c (hgP x)) (by rw [hgx, map_smul, hgx])

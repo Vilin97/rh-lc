@@ -301,7 +301,7 @@ theorem exists_pow_mem_span [FiniteDimensional ℚ_[p] K] (hb : b ≠ 0) :
         hnd (by obtain ⟨y, hy⟩ := ((𝓣).annEval_eq_zero_iff P.2 (ptRadBig P hrP) _).1 h0; exact ⟨y, hy⟩)
       obtain ⟨α, α', hαα'⟩ := (𝓣).exists_bezout_ann P.2 (ptRadBig P hrP) hne
       have h1 := congrArg resS hαα'
-      rw [map_add, map_mul, map_mul, map_one, resS, annRes_ξAnn] at h1
+      rw [map_add (f := _), map_mul, map_mul, map_one, resS, annRes_ξAnn] at h1
       refine ⟨m, resS α * c, ?_⟩
       have e : t' ^ m - resS α * c * ((𝓣).ξAnn P.1 * (l.map fun P => (𝓣).ξAnn P.1).prod) =
           (t' ^ m - c * (l.map fun P => (𝓣).ξAnn P.1).prod) +

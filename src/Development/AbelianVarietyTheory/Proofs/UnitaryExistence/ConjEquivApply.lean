@@ -141,7 +141,7 @@ theorem bc_mem_HR (σ : E →ₐ[F] E) {n : ℕ} (J : Matrix (Fin n) (Fin n) E) 
     induction t using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [hψ, sigR]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have h2 : (JR R J).map ψ = JR R' J := by
     ext i j
     simp [hψ, JR, inclR]

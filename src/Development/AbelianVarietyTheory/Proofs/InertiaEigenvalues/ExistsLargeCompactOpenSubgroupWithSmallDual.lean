@@ -66,7 +66,7 @@ theorem main : ∀ (F E : Type) [NontriviallyNormedField F] [NontriviallyNormedF
     { carrier := {y | ∀ i, ‖Φ y i‖ ≤ R}
       add_mem' := by
         intro a c ha hc i
-        simp only [Set.mem_setOf_eq, map_add, Pi.add_apply] at *
+        simp only [Set.mem_setOf_eq, map_add (f := _), Pi.add_apply] at *
         exact (IsUltrametricDist.norm_add_le_max _ _).trans (max_le (ha i) (hc i))
       zero_mem' := by intro i; simp [hR0.le]
       neg_mem' := by

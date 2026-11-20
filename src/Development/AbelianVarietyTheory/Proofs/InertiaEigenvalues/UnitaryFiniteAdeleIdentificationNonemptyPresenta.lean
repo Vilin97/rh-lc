@@ -24,7 +24,7 @@ theorem nonempty_finIso (L : Type) [Field L] [NumberField L] [IsCMField L] (n : 
     intro y
     induction y using TensorProduct.induction_on with
     | zero => simp only [map_zero]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
     | tmul x a =>
       change κ ((IsCMField.complexConj L x) ⊗ₜ a) = _
       rw [hκ, hκ, map_mul, conjFin_adMap (cc L) (fun k => IsCMField.complexConj_apply_eq_self L k), conjFin_algebraMap]

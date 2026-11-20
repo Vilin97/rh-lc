@@ -23,7 +23,7 @@ theorem exists_addEquiv_of_coord {L L' R R' : Type} [Field L] [Field L'] [Semiri
     { toFun := F
       map_zero' := Subtype.ext (funext fun k => by rw [hF']; simp)
       map_add' := fun a b => Subtype.ext (funext fun k => by
-        simp only [Submodule.coe_add, Pi.add_apply, hF', map_add]) }
+        simp only [Submodule.coe_add, Pi.add_apply, hF', map_add (f := _)]) }
   have hb : Function.Bijective ψ := by
     constructor
     · intro a b hab

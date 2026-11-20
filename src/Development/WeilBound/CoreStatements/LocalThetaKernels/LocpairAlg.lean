@@ -20,7 +20,7 @@ theorem repr_map (f : R →ₐ[F] R') (y : R ⊗[F] E) (i) : (Algebra.TensorProd
   induction y using TensorProduct.induction_on with
   | zero => simp
   | tmul a e => simp [Algebra.TensorProduct.basis_repr_tmul]
-  | add x y hx hy => simp only [map_add, Finsupp.add_apply, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), Finsupp.add_apply, hx, hy]
 
 theorem lmm_map (f : R →ₐ[F] R') (y : R ⊗[F] E) :
     Algebra.leftMulMatrix (Algebra.TensorProduct.basis R' (Module.finBasis F E))
@@ -76,7 +76,7 @@ omit [NumberField E] in
 theorem aw_tensAt (y : Ev E v) : aw E v (tensAt E v y) = 0 := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy, add_zero]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy, add_zero]
   | tmul a x =>
     change awF v (atPlace v a) ⊗ₜ[F] x = 0
     rw [awF_at, TensorProduct.zero_tmul]
@@ -85,7 +85,7 @@ omit [NumberField E] in
 theorem smul_tensAt (a : Fv F v) (y : Ev E v) : tensAt E v (a • y) = atPlace v a • tensAt E v y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
   | tmul b x =>
     rw [TensorProduct.smul_tmul', tensAt_tmul, tensAt_tmul, TensorProduct.smul_tmul', smul_eq_mul, smul_eq_mul,
       atPlace_mul_right, evFin_atPlace]
@@ -94,7 +94,7 @@ omit [NumberField E] in
 theorem tensAt_comp (z : AE F E) : tensAt E v (compFin F E v z) = atPlace v (1 : Fv F v) • z := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, smul_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), smul_add, hx, hy]
   | tmul b x =>
     change atPlace v (evFin F v b) ⊗ₜ[F] x = _
     rw [TensorProduct.smul_tmul', smul_eq_mul, atPlace_mul_right, one_mul]
@@ -115,7 +115,7 @@ omit [NumberField E] in
 theorem comp_cA (z : AE F E) : compFin F E v (cA σ z) = cV σ v (compFin F E v z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul b x => rfl
 
 variable (σ) in
@@ -126,7 +126,7 @@ omit [NumberField E] in
 theorem aw_cA (z : AE F E) : aw E v (cA σ z) = cQ σ v (aw E v z) := by
   induction z using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
   | tmul b x => rfl
 
 variable (E) in
@@ -310,7 +310,7 @@ theorem exists_locD (hA : JA.map (compFin F E v) = JAv) (hB : JB.map (compFin F 
              invFun := fun p => (co.e.symm (inA κ v p.1, inA κ v p.2)).map (compFin F E v)
              left_inv := fun w => ?_
              right_inv := fun p => ?_ }, fun w w' => ?_⟩, key⟩
-  · rw [Matrix.map_add _ (map_add _), map_add]
+  · rw [Matrix.map_add _ (map_add _), map_add (f := _)]
     exact Prod.ext (map_add _ _ _) (map_add _ _ _)
   · rw [show (a • w).map (tensAt E v) = atPlace v a • w.map (tensAt E v) from Matrix.ext fun _ _ => smul_tensAt v _ _,
       map_smul, locW_smul]

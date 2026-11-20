@@ -48,7 +48,7 @@ theorem smul_eq_of_hatC_ne_zero_of (D : D7) (G : Type) [Group G] [Fintype G] (Pl
             fun b' => ι (x b') + ((H.bar s : 𝓞 D.host.E) : D.host.E) •
               ι ((Pi.single b w : Fin (Vc D i).rank → Dw.La) b') := by
           funext b'
-          rw [map_add, map_smul]
+          rw [map_add (f := _), map_smul]
           rfl
         rw [e4, GlobalTheory.HatInt.uMat_add_smul, GlobalTheory.HatInt.sig_bar]
         exact GlobalTheory.HatInt.redM_add_smul PP _ _ (he x).1 (he _).1 s (hs PP hP)
@@ -61,7 +61,7 @@ theorem smul_eq_of_hatC_ne_zero_of (D : D7) (G : Type) [Group G] [Fintype G] (Pl
     · simp
   obtain ⟨z, hz⟩ := LevelPairing.exists_eq_smul_of_dvd (s • (cSep l₂ • levRep (q b))) l₂.M hM (fun y => by
     have h2 := Dw.alt (y + s • (cSep l₂ • levRep (q b)))
-    simp only [map_add, LinearMap.add_apply, Dw.alt, zero_add, add_zero] at h2
+    simp only [map_add (f := _), LinearMap.add_apply, Dw.alt, zero_add, add_zero] at h2
     have h3 := hdvd y
     have : Dw.EF (s • (cSep l₂ • levRep (q b))) y = -Dw.EF y (s • (cSep l₂ • levRep (q b))) := by linarith
     rw [this]; exact h3.neg_right)

@@ -30,7 +30,7 @@ theorem fockVac_om_fin {D : D7} {ψ : AddChar (AF D.host.F) ℂ} {S T : HSp D} {
   intro z
   have h := congrArg (om (1, γ)) (hv z)
   unfold annih at h ⊢
-  rw [map_add, map_smul, GlobalTheory.OrientedHeis.om_dRho hom hθ 1 γ τ z hf, GlobalTheory.OrientedHeis.om_dRho hom hθ 1 γ τ (J z) hf,
+  rw [map_add (f := _), map_smul, GlobalTheory.OrientedHeis.om_dRho hom hθ 1 γ τ z hf, GlobalTheory.OrientedHeis.om_dRho hom hθ 1 γ τ (J z) hf,
     e, e, map_zero] at h
   exact h
 

@@ -41,7 +41,7 @@ theorem continuous_evI_arch : Continuous (evI F) := (continuous_mixed F).comp co
   simp [evI, infAd]
 
 theorem infAd_add (a b : mixedEmbedding.mixedSpace F) : infAd F (a + b) = infAd F a + infAd F b := by
-  unfold infAd; rw [map_add, map_add]; rfl
+  unfold infAd; rw [map_add (f := _), map_add (f := _)]; rfl
 
 theorem infAd_zero : infAd F 0 = 0 := by unfold infAd; rw [map_zero, map_zero]; rfl
 
@@ -67,7 +67,7 @@ theorem norm_ubasis (j : Fin (dimA F κ)) : ‖ubasis F κ j‖ = 1 := by
 def archIn : (Fin (dimA F κ) → ℝ) →+ (κ → AF F) where
   toFun t := fun i => infAd F ((ubasis F κ).equivFun.symm t i)
   map_zero' := by funext i; rw [map_zero]; exact infAd_zero F
-  map_add' s t := by funext i; rw [map_add]; exact infAd_add F _ _
+  map_add' s t := by funext i; rw [map_add (f := _)]; exact infAd_add F _ _
 
 def archOut : (κ → AF F) →+ (Fin (dimA F κ) → ℝ) where
   toFun x := (ubasis F κ).equivFun (arch F x)
@@ -76,7 +76,7 @@ def archOut : (κ → AF F) →+ (Fin (dimA F κ) → ℝ) where
     rw [this, map_zero]
   map_add' x y := by
     have : arch F (x + y) = arch F x + arch F y := by funext i; exact evI_add' F _ _
-    rw [this, map_add]
+    rw [this, map_add (f := _)]
 
 theorem archIn_apply (t : Fin (dimA F κ) → ℝ) (i : κ) :
     archIn F κ t i = infAd F ((ubasis F κ).equivFun.symm t i) := rfl

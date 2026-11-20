@@ -1111,7 +1111,7 @@ theorem twKer_charFst_extProd (χ χ' : A →* ℂˣ) (π : Representation ℂ H
     intro a v
     induction v with
     | tmul x w => simp [TensorProduct.smul_tmul']
-    | add x y hx hy => rw [map_add, hx, hy, smul_add]
+    | add x y hx hy => rw [map_add (f := _), hx, hy, smul_add]
   constructor
   · rintro rfl
     rw [eq_bot_iff, ← LinearMap.ker_id, twKer_charFst_le_ker]

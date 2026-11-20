@@ -32,7 +32,7 @@ theorem mem_of_semiBC {A B M N Q : Type} [CommRing A] [CommRing B] [AddCommGroup
       exact H.zero_mem
     | add z w _ _ hz hw =>
       intro r
-      rw [smul_add, map_add]
+      rw [smul_add, map_add (f := _)]
       exact add_mem (hz r) (hw r)
     | smul s z _ hz =>
       intro r
@@ -46,7 +46,7 @@ def divSub {R σ ι : Type} [CommRing R] (S : Subring R) (τ : σ) (i : ι) (k :
   carrier := {v | (k.factorial : R) * coeff k (v τ i) ∈ S}
   add_mem' {v w} hv hw := by
     change (k.factorial : R) * coeff k (v τ i + w τ i) ∈ S
-    rw [map_add, mul_add]
+    rw [map_add (f := _), mul_add]
     exact add_mem hv hw
   zero_mem' := by
     change (k.factorial : R) * coeff k (0 : R⟦X⟧) ∈ S

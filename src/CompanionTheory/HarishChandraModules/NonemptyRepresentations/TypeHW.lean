@@ -41,7 +41,7 @@ theorem res_capRep {z : Fin (2 * r + k + 1) → ℂ} {S : Submodule ℂ W} {π :
   have hU := Qx8.frame_InU hB (z := z) (by simp) a b
   show S.subtypeL (dRep (res S π) _ v + Complex.I • dRep (res S π) _ v) =
     dRep π _ (S.subtypeL v) + Complex.I • dRep π _ (S.subtypeL v)
-  rw [map_add, map_smul]
+  rw [map_add (f := _), map_smul]
   congr 1
   · exact Qx8.dRep_intertwine S.subtypeL (Qx8.rep_hasDeriv hR.1 hR.2 hU.1 v) fun t => res_coe (hS _ (hU.1 t)) v
   · congr 1
@@ -64,7 +64,7 @@ theorem exists_type {z : Fin (2 * r + k + 1) → ℂ} (hz : inWb k r z) (hT : 0 
   let c : ℂ → ℂ := fun w => ∏ j : Fin k, (w - (j : ℂ) + ν j)
   let K : Submodule ℂ W :=
     { carrier := {v | ∀ w, qdet (EB π B0) w v = c w • v}
-      add_mem' := fun ha hb w => by rw [map_add, ha w, hb w, smul_add]
+      add_mem' := fun ha hb w => by rw [map_add (f := _), ha w, hb w, smul_add]
       zero_mem' := fun w => by simp
       smul_mem' := fun s v hv w => by rw [map_smul, hv w, smul_comm] }
   have hKs : Stab (EB π B0) K := by

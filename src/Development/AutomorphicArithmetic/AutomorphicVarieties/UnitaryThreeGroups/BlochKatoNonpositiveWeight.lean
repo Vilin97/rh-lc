@@ -66,14 +66,14 @@ private theorem desc {l : ℕ} [Fact l.Prime] {H : Type} [Group H] [TopologicalS
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [Loc.actC, Loc.chRep, f, hπ2]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have key' : ∀ g (y : E ⊗[ℚ_[l]] Loc.Bcr l), LinearMap.rTensor (Loc.Bcr l) i (Loc.actC φ (Loc.chRep κ') g y) =
       Loc.actC φ (Loc.chRep κ) g (LinearMap.rTensor (Loc.Bcr l) i y) := by
     intro g y
     induction y using TensorProduct.induction_on with
     | zero => simp
     | tmul a b => simp [Loc.actC, Loc.chRep, i, hκ']
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   set x := ∑ p ∈ S, p.1 ⊗ₜ[ℚ_[l]] p.2 with hxd
   have hix : LinearMap.rTensor (Loc.Bcr l) i (LinearMap.rTensor (Loc.Bcr l) f x) = x := by
     set_option synthInstance.maxHeartbeats 100000 in
@@ -390,7 +390,7 @@ theorem UpperTheory.V.U3.bloch_kato_nonpositive_weight :
     rw [hab]
     refine hch θ (hs.imp And.right And.right) (fun g => f (γ g)) ⟨hfc.comp hγ.1, fun g h => ?_⟩
       ⟨fun w hw => ?_, fun τ => ?_⟩
-    · exact (congrArg f (hγ.2 g h)).trans (by rw [map_add, hfe])
+    · exact (congrArg f (hγ.2 g h)).trans (by rw [map_add (f := _), hfe])
     · obtain ⟨A, hA, x, hx⟩ := hb.away w hw
       exact ⟨A, hA, f x, fun s hs => by rw [hx s hs, map_sub, hfe]⟩
     · obtain ⟨i, hi, hx⟩ := hb.above τ

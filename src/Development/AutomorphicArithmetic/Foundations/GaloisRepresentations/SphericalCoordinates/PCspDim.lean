@@ -37,7 +37,7 @@ private theorem diag_one {F : Type} [Field F] [NumberField F] {O : Type} [Ring O
   have hadd : ∀ c c', e (c + c') = e c + e c' := by
     intro c c'
     apply hinj
-    rw [← he, map_add, map_add, add_mul, he, he, ← mul_add, Matrix.diagonal_add]
+    rw [← he, map_add (f := _), map_add (f := _), add_mul, he, he, ← mul_add, Matrix.diagonal_add]
     try rfl
   have hmul : ∀ c c', e (c * c') = e c * e c' := by
     intro c c'

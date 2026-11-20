@@ -46,7 +46,7 @@ theorem _root_.GlobalTheory.DiscrJacobian.mem_span_of_mu_eq_zero {ι : Type} [Fi
   have hxI : ∀ j, x j ⊗ₜ[R] (1 : B) ∈ I := fun j =>
     Ideal.mem_map_of_mem _ (Ideal.subset_span ⟨j, rfl⟩)
   have hadd : ∀ a b, δ (a + b) = δ a + δ b := by
-    intro a b; simp only [δ, map_add, TensorProduct.add_tmul, TensorProduct.tmul_add]; abel
+    intro a b; simp only [δ, map_add (f := _), TensorProduct.add_tmul, TensorProduct.tmul_add]; abel
   have hmul : ∀ a b, δ (a * b) =
       δ a * (b ⊗ₜ[R] (1 : B)) + (a ⊗ₜ[R] (1 : B)) * δ b - δ a * δ b := by
     intro a b
@@ -78,7 +78,7 @@ theorem _root_.GlobalTheory.DiscrJacobian.mem_span_of_mu_eq_zero {ι : Type} [Fi
       induction t using TensorProduct.induction_on with
       | zero => simp
       | add a b ha hb =>
-        rw [map_add, TensorProduct.tmul_add]
+        rw [map_add (f := _), TensorProduct.tmul_add]
         convert Ideal.add_mem _ ha hb using 1
         abel
       | tmul s w =>
@@ -135,11 +135,11 @@ theorem _root_.GlobalTheory.DiscrJacobian.der_mul (D : Derivation R S S) (y z : 
         _root_.GlobalTheory.DiscrJacobian.mu R S B z * _root_.GlobalTheory.DiscrJacobian.der D y := by
   induction y using TensorProduct.induction_on with
   | zero => simp
-  | add y y' hy hy' => rw [add_mul, map_add, hy, hy', map_add, map_add]; ring
+  | add y y' hy hy' => rw [add_mul, map_add (f := _), hy, hy', map_add (f := _), map_add (f := _)]; ring
   | tmul s w =>
     induction z using TensorProduct.induction_on with
     | zero => simp
-    | add z z' hz hz' => rw [mul_add, map_add, hz, hz', map_add, map_add]; ring
+    | add z z' hz hz' => rw [mul_add, map_add (f := _), hz, hz', map_add (f := _), map_add (f := _)]; ring
     | tmul t v =>
       rw [Algebra.TensorProduct.tmul_mul_tmul]
       simp only [_root_.GlobalTheory.DiscrJacobian.der_tmul, _root_.GlobalTheory.DiscrJacobian.mu_tmul,
@@ -447,7 +447,7 @@ theorem _root_.GlobalTheory.DiscrJacobian.associated_discr_norm_jacobian (R : Ty
       intro t
       induction t using TensorProduct.induction_on with
       | zero => simp
-      | add y z hy hz => rw [map_add, map_add, hy, hz, map_add]
+      | add y z hy hz => rw [map_add (f := _), map_add (f := _), hy, hz, map_add (f := _)]
       | tmul s w => simp
     have hentry : ∀ i j, Ideal.Quotient.mk (Ideal.span (Set.range f)) (pderiv (R := R) j (f i)) =
         _root_.GlobalTheory.DiscrJacobian.mu R (MvPowerSeries (Fin g) R)
@@ -523,7 +523,7 @@ theorem _root_.GlobalTheory.DiscrJacobian.associated_discr_norm_jacobian (R : Ty
       obtain ⟨c, u, hu⟩ := hgen s
       refine ⟨c, ?_⟩
       set_option synthInstance.maxHeartbeats 100000 in
-        rw [hu, map_add, Ideal.Quotient.mk_algebraMap, add_sub_cancel_left, map_sum]
+        rw [hu, map_add (f := _), Ideal.Quotient.mk_algebraMap, add_sub_cancel_left, map_sum]
       exact Ideal.sum_mem _ fun j _ => by
         rw [map_mul]; exact Ideal.mul_mem_right _ _ (Ideal.subset_span ⟨j, rfl⟩)
     have hmB : ∀ w ∈ (maximalIdeal R).map
@@ -562,7 +562,7 @@ theorem _root_.GlobalTheory.DiscrJacobian.associated_discr_norm_jacobian (R : Ty
       intro t
       induction t using TensorProduct.induction_on with
       | zero => simp
-      | add y z hy hz => simp only [map_add, hy, hz]
+      | add y z hy hz => simp only [map_add (f := _), hy, hz]
       | tmul s w =>
         simp [Φ, ρ, ιk, Ideal.Quotient.algebraMap_eq, Algebra.ofId_apply]
         rfl

@@ -33,7 +33,7 @@ theorem subst_subst {A : Matrix T T₂ ℤ} {B : Matrix T₂ T ℤ} (hAB : A * B
   | C a =>
     show intCoordSubst A (intCoordSubst B (algebraMap ℤ _ a)) = algebraMap ℤ _ a
     rw [AlgHom.commutes, AlgHom.commutes]
-  | add f g hf hg => rw [map_add, map_add, hf, hg]
+  | add f g hf hg => rw [map_add (f := _), map_add (f := _), hf, hg]
   | mul_X f p hf =>
     rw [map_mul, map_mul, hf]
     congr 1

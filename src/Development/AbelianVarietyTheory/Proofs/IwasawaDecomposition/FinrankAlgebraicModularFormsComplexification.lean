@@ -40,7 +40,7 @@ variable {K W W' ι : Type} [Field K] [AddCommGroup W] [Module K W] [AddCommGrou
 def coordCx (e : K →+* ℂ) (b : Module.Basis ι K W) (b' : Module.Basis ι ℂ W') : W →ₛₗ[e] W' where
   toFun w := b'.equivFun.symm fun i => e (b.equivFun w i)
   map_add' x y := b'.equivFun.injective (by
-    simp only [map_add, LinearEquiv.apply_symm_apply]; funext i; simp only [Pi.add_apply, map_add])
+    simp only [map_add (f := _), LinearEquiv.apply_symm_apply]; funext i; simp only [Pi.add_apply, map_add (f := _)])
   map_smul' a x := b'.equivFun.injective (by
     simp only [map_smul, LinearEquiv.apply_symm_apply]; funext i; simp only [Pi.smul_apply, smul_eq_mul, map_mul, RingHom.id_apply])
 

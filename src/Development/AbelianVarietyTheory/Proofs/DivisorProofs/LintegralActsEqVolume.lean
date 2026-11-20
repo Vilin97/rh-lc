@@ -91,7 +91,7 @@ theorem actAB_one (g : UA σ X.J) (u : Matrix (Fin n) (Fin d) (AE F E)) :
 
 theorem isLinearMap_archActX (M : Model σ X W) (g : UA σ X.J) : IsLinearMap ℝ (archActX M g) where
   map_add v w := by
-    simp only [archActX, actAB_one, Prod.fst_add, Prod.snd_add, lift_add, ← Prod.mk_add_mk, map_add,
+    simp only [archActX, actAB_one, Prod.fst_add, Prod.snd_add, lift_add, ← Prod.mk_add_mk, map_add (f := _),
       Matrix.mul_add, coordI_add]
   map_smul c v := by
     simp only [archActX, actAB_one, Prod.smul_fst, Prod.smul_snd, lift_smul, ← Prod.smul_mk, map_smul,

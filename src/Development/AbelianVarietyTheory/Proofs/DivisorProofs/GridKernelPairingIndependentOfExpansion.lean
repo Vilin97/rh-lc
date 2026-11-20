@@ -64,7 +64,7 @@ theorem fockComp_lin (W : G.Weil) (B : VertexFrames G) (p : Pair T) (x : FinPt G
     funext k
     simp only [jetTab, kerFin, fockIn, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
     rw [GlobalTheory.FockFiniteHeis.pureTensorO_lin _ _ _ _ W.ψ_std W.θ_is _ _ _ _ c hf hg]
-    simp only [GridData.Weil.ker, thetaKO, map_add, map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
+    simp only [GridData.Weil.ker, thetaKO, map_add (f := _), map_smul, Pi.add_apply, Pi.smul_apply, smul_eq_mul]
   have := (GlobalTheory.JetIdentity.jetOpL (K := ℂ) (wt G p.small) (wt G p.big) (nuEnd G p)).map_add
     (c • jetTab W B p f x y) (jetTab W B p g x y)
   rw [LinearMap.map_smul] at this
@@ -186,7 +186,7 @@ theorem colOf_add (j₀ : Fin D.R.m) (a b : aSub S t e (.inl j₀)) (x : ∀ j, 
         hj (congrArg Fin.val (Sum.inl_injective h'))
       rw [Function.update_of_ne hne, Function.update_of_ne hne]
     · rfl
-  · rw [dif_pos hj₀, dif_pos hj₀, dif_pos hj₀, Function.update_self, Function.update_self, Function.update_self, map_add]
+  · rw [dif_pos hj₀, dif_pos hj₀, dif_pos hj₀, Function.update_self, Function.update_self, Function.update_self, map_add (f := _)]
 
 theorem colOf_smul (j₀ : Fin D.R.m) (c : ℂ) (a : aSub S t e (.inl j₀)) (x : ∀ j, FinPt G (.top j)) :
     colOf S t e (Function.update g (.inl j₀) (c • a)) x = c • colOf S t e (Function.update g (.inl j₀) a) x := by
@@ -220,7 +220,7 @@ theorem rowOf_add (i₀ : Fin D.R.m) (a b : aSub S t e (.inr i₀)) (y : ∀ i, 
         hj (congrArg Fin.val (Sum.inr_injective h'))
       rw [Function.update_of_ne hne, Function.update_of_ne hne]
     · rfl
-  · rw [dif_pos hi₀, dif_pos hi₀, dif_pos hi₀, Function.update_self, Function.update_self, Function.update_self, map_add]
+  · rw [dif_pos hi₀, dif_pos hi₀, dif_pos hi₀, Function.update_self, Function.update_self, Function.update_self, map_add (f := _)]
 
 theorem rowOf_smul (i₀ : Fin D.R.m) (c : ℂ) (a : aSub S t e (.inr i₀)) (y : ∀ i, FinPt G (.grid i D.R.m)) :
     rowOf S t e (Function.update g (.inr i₀) (c • a)) y = c • rowOf S t e (Function.update g (.inr i₀) a) y := by

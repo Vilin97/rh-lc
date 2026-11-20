@@ -134,7 +134,7 @@ theorem scal_add {R : Type} [CommRing R] [IsDomain R] (Q : DegPre R) (z : (DegPr
       gs (𝟙 _) z ⊤ (ReciprocityTheory.ChartRestriction.G.Out.scal (DegPre.BF Q (FractionRing R)).hom a) +
         gs (𝟙 _) z ⊤ (ReciprocityTheory.ChartRestriction.G.Out.scal (DegPre.BF Q (FractionRing R)).hom b) := by
   unfold ReciprocityTheory.ChartRestriction.G.Out.scal
-  rw [map_add, map_add]
+  rw [map_add (f := _), map_add (f := _)]
   exact gs_add (𝟙 _) z ⊤ trivial _ _
 
 theorem scal_zero {R : Type} [CommRing R] [IsDomain R] (Q : DegPre R) (z : (DegPre.BF Q (FractionRing R)).left) :

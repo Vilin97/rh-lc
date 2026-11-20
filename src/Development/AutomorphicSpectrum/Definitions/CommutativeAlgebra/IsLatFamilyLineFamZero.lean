@@ -261,7 +261,7 @@ theorem dvd_of_overlap {t : Ω} (ht0 : t ≠ 0) (ht : Function.Injective (aeval 
   rw [invOf_eq_inv, inv_inv, ← aeval_def, ← aeval_def] at hr
   have hp : reflect k G * X ^ m = D * X ^ (m + k + 1) + C ϖ * (Z * X ^ k) := by
     apply ht
-    simp only [map_mul, map_add, map_pow, aeval_X, aeval_C]
+    simp only [map_mul, map_add (f := _), map_pow, aeval_X, aeval_C]
     have : aeval t (reflect k G) = aeval t⁻¹ G * t ^ k := by
       rw [← hr, mul_assoc, ← mul_pow, inv_mul_cancel₀ ht0, one_pow, mul_one]
     rw [this]

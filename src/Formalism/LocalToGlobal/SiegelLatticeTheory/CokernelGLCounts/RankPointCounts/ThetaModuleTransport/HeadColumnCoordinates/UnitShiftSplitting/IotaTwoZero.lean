@@ -147,7 +147,7 @@ def splitQ : DG g Zh T T' ≃+ DD1 hs Z TT × DD1 hs Zσ TT where
     obtain ⟨x, y⟩ := p
     obtain ⟨l, rfl⟩ := QuotientAddGroup.mk_surjective x
     obtain ⟨w, rfl⟩ := QuotientAddGroup.mk_surjective y
-    rw [ofP_mk, toP_mk, map_add, map_add, firstComponent_iotaOne, secondComponent_iotaOne, firstComponent_iotaTwo, secondComponent_iotaTwo, add_zero, zero_add]
+    rw [ofP_mk, toP_mk, map_add (f := _), map_add (f := _), firstComponent_iotaOne, secondComponent_iotaOne, firstComponent_iotaTwo, secondComponent_iotaTwo, add_zero, zero_add]
   map_add' := (toP hs hTT hZ hZσ).map_add
 
 theorem splitQ_mk (Y : Ix r → M.L.O) :

@@ -43,7 +43,7 @@ def intLog (hi : Function.Injective (algebraMap V K)) (n d : ℕ) : AddSubgroup 
   zero_mem' := ⟨map_zero _, 1, by rw [expS_zero']; exact map_one _⟩
   add_mem' := by
     rintro f g ⟨hf, u, hu⟩ ⟨hg, v, hv⟩
-    refine ⟨by rw [map_add, hf, hg, add_zero], u * v, ?_⟩
+    refine ⟨by rw [map_add (f := _), hf, hg, add_zero], u * v, ?_⟩
     rw [gt_expS_add f g hf hg, ← hu, ← hv]
     exact map_mul _ _ _
   neg_mem' := by
@@ -151,12 +151,12 @@ theorem hq_add_left (hh : B.IsCanonGauge K h) {n : ℕ} {x y z : Pt V n d} (hx :
   have pa := gp_addOf _ (GP_FK B K) _ _ p0 p1
   have hA : ∀ j, GP ((fun j => mp K (![x, y, z] j)) j) := fun j => constantCoeff_baseChange_eq_zero K (triple_points_zero_constant hx hy hz j)
   have m := ev_mem K hi ![x, y, z] (triple_points_zero_constant hx hy hz) _ (by
-    rw [map_sub, map_add, gt_const_ev _ (pair_points_zero_constant p0 p2) _ h0, gt_const_ev _ (pair_points_zero_constant p1 p2) _ h0,
+    rw [map_sub, map_add (f := _), gt_const_ev _ (pair_points_zero_constant p0 p2) _ h0, gt_const_ev _ (pair_points_zero_constant p1 p2) _ h0,
       gt_const_ev _ (pair_points_zero_constant pa p2) _ h0]; simp) _ hh.ph1
   rw [gt_ev_sub _ hA, gt_ev_add _ hA, germEv_germEv_two_points K _ hA p0 p2, germEv_germEv_two_points K _ hA p1 p2, germEv_germEv_two_points K _ hA pa p2,
     evP_addOf _ hA _ _ _ p0 p1, evP_pt _ hA, evP_pt _ hA, evP_pt _ hA] at m
   unfold hq
-  rw [← map_add, mp_addOf K _ hx hy, eq_comm, ← sub_eq_zero, ← map_sub, QuotientAddGroup.mk'_apply,
+  rw [← map_add (f := _), mp_addOf K _ hx hy, eq_comm, ← sub_eq_zero, ← map_sub, QuotientAddGroup.mk'_apply,
     QuotientAddGroup.eq_zero_iff]
   exact m
 
@@ -169,12 +169,12 @@ theorem hq_add_right (hh : B.IsCanonGauge K h) {n : ℕ} {x y z : Pt V n d} (hx 
   have pa := gp_addOf _ (GP_FK B K) _ _ p1 p2
   have hA : ∀ j, GP ((fun j => mp K (![x, y, z] j)) j) := fun j => constantCoeff_baseChange_eq_zero K (triple_points_zero_constant hx hy hz j)
   have m := ev_mem K hi ![x, y, z] (triple_points_zero_constant hx hy hz) _ (by
-    rw [map_sub, map_add, gt_const_ev _ (pair_points_zero_constant p0 p1) _ h0, gt_const_ev _ (pair_points_zero_constant p0 p2) _ h0,
+    rw [map_sub, map_add (f := _), gt_const_ev _ (pair_points_zero_constant p0 p1) _ h0, gt_const_ev _ (pair_points_zero_constant p0 p2) _ h0,
       gt_const_ev _ (pair_points_zero_constant p0 pa) _ h0]; simp) _ hh.ph2
   rw [gt_ev_sub _ hA, gt_ev_add _ hA, germEv_germEv_two_points K _ hA p0 p1, germEv_germEv_two_points K _ hA p0 p2, germEv_germEv_two_points K _ hA p0 pa,
     evP_addOf _ hA _ _ _ p1 p2, evP_pt _ hA, evP_pt _ hA, evP_pt _ hA] at m
   unfold hq
-  rw [← map_add, mp_addOf K _ hy hz, eq_comm, ← sub_eq_zero, ← map_sub, QuotientAddGroup.mk'_apply,
+  rw [← map_add (f := _), mp_addOf K _ hy hz, eq_comm, ← sub_eq_zero, ← map_sub, QuotientAddGroup.mk'_apply,
     QuotientAddGroup.eq_zero_iff]
   exact m
 

@@ -19,6 +19,6 @@ theorem dnRingHom_ext {R S : Type} [CommRing R] [CommRing S] {f f' : DualNumber 
   refine RingHom.ext fun x => ?_
   have hx : x = TrivSqZeroExt.inl x.fst + TrivSqZeroExt.inl x.snd * DualNumber.eps := by
     ext <;> simp
-  rw [hx, map_add, map_add, map_mul, map_mul, h1, h1, h2]
+  rw [hx, map_add (f := _), map_add (f := _), map_mul, map_mul, h1, h1, h2]
 
 end GlobalTheory.KeyExtLie

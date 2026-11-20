@@ -79,7 +79,7 @@ theorem valAt_add {f g : Z.functionField} (hf : RegAt (below y) f) (hg : RegAt (
     valAt y (f + g) = valAt y f + valAt y g := by
   obtain ⟨a, rfl⟩ := hf
   obtain ⟨b, rfl⟩ := hg
-  rw [← map_add, SmallSec.valAt_algebraMap, SmallSec.valAt_algebraMap, SmallSec.valAt_algebraMap, map_add]
+  rw [← map_add (f := _), SmallSec.valAt_algebraMap, SmallSec.valAt_algebraMap, SmallSec.valAt_algebraMap, map_add (f := _)]
 
 theorem valAt_sum {ι : Type} (s : Finset ι) (f : ι → Z.functionField) (h : ∀ i ∈ s, RegAt (below y) (f i)) :
     valAt y (∑ i ∈ s, f i) = ∑ i ∈ s, valAt y (f i) := by

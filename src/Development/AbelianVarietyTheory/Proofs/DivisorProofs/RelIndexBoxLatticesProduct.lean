@@ -83,7 +83,7 @@ theorem isIntB_sum_leftBasis_iff_eventually : ∀ (L : Type) [Field L] [NumberFi
       · subst h; simp [repr_tmul_apply]
       · simp [h]
     | add x y hx hy =>
-      rw [map_add, add_mul, LinearEquiv.map_add, Finsupp.add_apply, hx, hy, Pi.single_add, Pi.add_apply,
+      rw [map_add (f := _), add_mul, LinearEquiv.map_add (f := _), Finsupp.add_apply, hx, hy, Pi.single_add, Pi.add_apply,
         LinearEquiv.map_add, Finsupp.add_apply]
   obtain ⟨S, hS⟩ := isIntB_iff_eventually b b'
   refine ⟨S, fun v hv β => ?_⟩

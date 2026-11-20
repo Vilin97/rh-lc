@@ -129,7 +129,7 @@ theorem padicPow_add (η : tateModule p R) (a b : ℤ_[p]) :
   ext_seq fun n => by
     rw [Submonoid.coe_mul, map_mul, seq_padicPow η a, seq_padicPow η b, ← pow_add]
     apply seq_padicPow_of_eq
-    rw [Nat.cast_add, cast_val_toZModPow, cast_val_toZModPow, map_add]
+    rw [Nat.cast_add, cast_val_toZModPow, cast_val_toZModPow, map_add (f := _)]
 
 theorem padicPow_mul (η : tateModule p R) (a b : ℤ_[p]) :
     padicPow η (a * b) = padicPow (padicPow η a) b :=

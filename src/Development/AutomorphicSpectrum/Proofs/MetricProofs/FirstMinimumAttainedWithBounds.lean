@@ -326,7 +326,7 @@ theorem form_all_eq_zero (R : RiemLat E g Λ) {vr : ℝ} (hvr : 0 < vr)
       obtain ⟨N₁, b₁, hN₁, hb₁, hf₁⟩ := h₁
       obtain ⟨N₂, b₂, hN₂, hb₂, hf₂⟩ := h₂
       refine ⟨N₁ * N₂, (N₂ : 𝓞 E) * b₁ + (N₁ : 𝓞 E) * b₂, mul_ne_zero hN₁ hN₂, ?_, ?_⟩
-      · rw [map_add, map_mul, map_mul, map_intCast, map_intCast, hb₁, hb₂]
+      · rw [map_add (f := _), map_mul, map_mul, map_intCast, map_intCast, hb₁, hb₂]
         push_cast
         ring
       · rw [add_smul, mul_smul, mul_smul, Int.cast_smul_eq_zsmul, Int.cast_smul_eq_zsmul]
@@ -419,7 +419,7 @@ theorem exists_subspace (R : RiemLat E g Λ) {Ψ : Type} [Fintype Ψ] [Nonempty 
     | zero => simp
     | add y₁ y₂ _ _ h₁ h₂ =>
       intro a
-      rw [smul_add, map_add]
+      rw [smul_add, map_add (f := _)]
       exact W.add_mem (h₁ a) (h₂ a)
     | smul c y _ h =>
       intro a

@@ -142,7 +142,7 @@ theorem Om_mem_CE (hR : RCalc) (E : KMod n) {f : Mat n → E.V} (hf : f ∈ CE E
   intro g hg k
   have h1 := ((hR n).2.1 E f hf true 2).2 g hg k
   have h2 := ((hR n).2.1 E f hf false 2).2 g hg k
-  simp only [Om, Pi.smul_apply, Pi.add_apply, h1, h2, map_add, map_smul]
+  simp only [Om, Pi.smul_apply, Pi.add_apply, h1, h2, map_add (f := _), map_smul]
 
 theorem zLin : ZLin := by
   intro hR n

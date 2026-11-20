@@ -198,7 +198,7 @@ theorem exists_logPeriods_range_eq : ∀ (n a g : ℕ) (_h : a ≤ n) (Λ : Type
   have ladd : ∀ x y, l (x + y) = l x + l y := by
     intro x y
     apply (hP w₀ hw₀).1
-    rw [← hl _ w₀ hw₀, map_add, ← hl _ w₀ hw₀, ← hl _ w₀ hw₀, hadd]
+    rw [← hl _ w₀ hw₀, map_add (f := _), ← hl _ w₀ hw₀, ← hl _ w₀ hw₀, hadd]
   let lam : Γ₀ →ₗ[ℤ] Λ := (AddMonoidHom.mk' l ladd).toIntLinearMap
   have lam_apply : ∀ x, lam x = l x := fun _ => rfl
   have hcont : ∀ x : Γ₀, ContinuousAt (S x) 0 := fun x =>

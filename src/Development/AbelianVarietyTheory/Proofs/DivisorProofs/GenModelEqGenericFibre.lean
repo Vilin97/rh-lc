@@ -234,7 +234,7 @@ theorem pow_eq_one_geom {gb : GBase D.toG R'} {N : ℕ} {t : S ⟶ Sp R'} (o : G
   let f : D.La →ₗ[ℤ] ℤ :=
     { toFun := fun z => D.EF y z / M
       map_add' := fun u v => by
-        rw [map_add, Int.add_ediv_of_dvd_left (key u)]
+        rw [map_add (f := _), Int.add_ediv_of_dvd_left (key u)]
       map_smul' := fun r u => by
         rw [map_smul, smul_eq_mul, smul_eq_mul, RingHom.id_apply, Int.mul_ediv_assoc _ (key u)] }
   have hf : ∀ z, (M : ℤ) * f z = D.EF y z := fun z => Int.mul_ediv_cancel' (key z)

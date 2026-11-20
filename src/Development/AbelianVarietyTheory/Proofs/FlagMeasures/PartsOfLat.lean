@@ -49,7 +49,7 @@ theorem xlam_split (u : D.what₂.Word) (M : Submodule (𝓞 D.host.E) (VS D).V)
       intro c
       have h1 := orth_span (fun d => X.ee c d) hyX'
       have h2 := orth_span (fun d => X.ee c d) haX
-      rw [map_add, map_add, h2, (hM m hm c).1, zero_add, zero_add] at h1
+      rw [map_add (f := _), map_add (f := _), h2, (hM m hm c).1, zero_add, zero_add] at h1
       exact h1
     rw [coord X.ef hbY]
     simp [hpair]

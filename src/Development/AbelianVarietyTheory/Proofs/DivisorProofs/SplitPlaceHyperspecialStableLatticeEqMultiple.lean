@@ -73,7 +73,7 @@ theorem half (V : HSp D) (e : Formalism.L2.Theta.AE D) (he : IsSplitIdem D e)
       map_add' := by
         intro x y
         have : (fun k => φ ((x + y) k)) = (fun k => φ (x k)) + fun k => φ (y k) :=
-          funext fun k => by rw [Pi.add_apply, map_add, Pi.add_apply]
+          funext fun k => by rw [Pi.add_apply, map_add (f := _), Pi.add_apply]
         simp only [this, Matrix.mulVec_add] }
   have hT : ∀ z, T z = (β⁻¹).1 *ᵥ fun k => φ (z k) := fun z => rfl
   have hTs : ∀ (x : Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F ⊗[D.host.F] D.host.E) z, T (x • z) = φ x • T z := by
@@ -117,7 +117,7 @@ theorem half (V : HSp D) (e : Formalism.L2.Theta.AE D) (he : IsSplitIdem D e)
   have hN' : ((N : ℕ) : Fv D.host.F v) ≠ 0 := Nat.cast_ne_zero.2 hN.ne'
   have hφN : φ ((N : ℕ) : (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F ⊗[D.host.F] D.host.E)) = (N : Fv D.host.F v) := map_natCast φ N
   have hf' : finPart D (e + cA D e) * finPart D e = finPart D e := by
-    rw [(finPart D).map_add, add_mul, hpp, mul_comm (finPart D (cA D e)), hpq, add_zero]
+    rw [(finPart D).map_add (f := _), add_mul, hpp, mul_comm (finPart D (cA D e)), hpq, add_zero]
   obtain ⟨t, ht, hSt⟩ := GlobalTheory.LatticeBetweenMultiples.eq_multiple_of_standard_lattice v S (by
       intro o ho w hw
       obtain ⟨m, hm, rfl⟩ := hw

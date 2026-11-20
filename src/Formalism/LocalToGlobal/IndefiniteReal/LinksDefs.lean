@@ -70,7 +70,7 @@ instance : InnerProductSpace ℂ (Tw s E) where
     rw [← cj_conj, inner_conj_symm]
   add_left x y z := by
     show cj s (inner ℂ (out x + out y) (out z)) = cj s (inner ℂ (out x) (out z)) + cj s (inner ℂ (out y) (out z))
-    rw [inner_add_left, map_add]
+    rw [inner_add_left, map_add (f := _)]
   smul_left x y r := by
     show cj s (inner ℂ (cj s r • out x) (out y)) = starRingEnd ℂ r * cj s (inner ℂ (out x) (out y))
     rw [inner_smul_left, map_mul, cj_conj, cj_cj]

@@ -127,11 +127,11 @@ theorem main : ∀ (k : Type) [Field k] [ValuativeRel k] [TopologicalSpace k] [I
     rw [hnorm]
     rfl
   have hadd1 : ∀ v v' w, Φ (v + v') w = fun x => Φ v w x + Φ v' w x := fun v v' w => funext fun x => by
-    simp only [Φ, f, map_add, add_mul]
+    simp only [Φ, f, map_add (f := _), add_mul]
   have hsmul1 : ∀ (a : ℂ) v w, Φ (a • v) w = fun x => a * Φ v w x := fun a v w => funext fun x => by
     simp only [Φ, f, map_smul, smul_eq_mul, mul_assoc]
   have hadd2 : ∀ v w w', Φ v (w + w') = fun x => Φ v w x + Φ v w' x := fun v w w' => funext fun x => by
-    simp only [Φ, f, map_add, mul_add]
+    simp only [Φ, f, map_add (f := _), mul_add]
   have hsmul2 : ∀ (a : ℂ) v w, Φ v (a • w) = fun x => conj a * Φ v w x := fun a v w => funext fun x => by
     simp only [Φ, f, map_smul, smul_eq_mul, map_mul]
     ring

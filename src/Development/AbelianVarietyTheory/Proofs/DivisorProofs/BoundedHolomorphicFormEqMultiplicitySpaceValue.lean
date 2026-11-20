@@ -234,7 +234,7 @@ theorem eig_closure {K : Type} [NormedAddCommGroup K] [InnerProductSpace ℂ K] 
     | zero => simp
     | add x y _ _ hx hy =>
       simp only [Set.mem_setOf_eq] at hx hy ⊢
-      rw [map_add, hx, hy, smul_add]
+      rw [map_add (f := _), hx, hy, smul_add]
     | smul a x _ hx =>
       simp only [Set.mem_setOf_eq] at hx ⊢
       rw [map_smul, hx, smul_comm]

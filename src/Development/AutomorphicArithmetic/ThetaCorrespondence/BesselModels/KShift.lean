@@ -38,7 +38,7 @@ def annSub (E : Fin n → Fin n → Module.End ℂ V) (x : V) : Submodule ℂ V 
   add_mem' := by
     rintro s t ⟨h1, h2⟩ ⟨h3, h4⟩
     exact ⟨by rw [inner_add_right, h1, h3, add_zero], fun a b => by
-      rw [map_add, inner_add_right, h2, h4, add_zero]⟩
+      rw [map_add (f := _), inner_add_right, h2, h4, add_zero]⟩
   zero_mem' := ⟨by simp, fun a b => by simp⟩
   smul_mem' := by
     rintro c s ⟨h1, h2⟩

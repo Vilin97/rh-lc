@@ -260,7 +260,7 @@ theorem orthogonal_iSup_iInf_eigenspaces_eq_bot {ι : Type*} (T : ι → E →L[
     refine Submodule.iSup_induction _ (motive := fun v => T i v ∈ M) hv
       (fun χ x hx => Submodule.mem_iSup_of_mem χ (hJinv χ i x hx)) (by simp) ?_
     intro x y hx hy
-    simpa only [map_add] using add_mem hx hy
+    simpa only [map_add (f := _)] using add_mem hx hy
   have hNinv : ∀ i, ∀ v ∈ Mᗮ, T i v ∈ Mᗮ := by
     intro i v hv
     rw [Submodule.mem_orthogonal] at hv ⊢

@@ -22,7 +22,7 @@ namespace GlobalTheory.ConjHalfSplitInt
 theorem frMapAdj_int_iff : ∀ (D : D7) (S T : HSp D) (βS : GL (Fin S.rank) (EAf D)) (βT : GL (Fin T.rank) (EAf D)) (Pg Q : Finset (Pl D.host.E)) (eg eQ : AE D), IsIdemSum eg Pg → IsIdemSum eQ Q → Disjoint Pg Q → IsIdemSum (eg + eQ) (Pg ∪ Q) → ∀ x : WO S T, IsHalf (cA D (eg + eQ)) x → (IsIntM (frMapAdj S T βS βT x) ↔ IsIntM (frMapAdj S T βS βT (cA D eg • x)) ∧ IsIntM (frMapAdj S T βS βT (cA D eQ • x))) := by
   intro D S T βS βT Pg Q eg eQ hg hQ _ _ x hx
   have hx' : cA D (eg + eQ) • x = x := (GlobalTheory.ExportSeries.RestrictHalfModel.isHalf_iff' _ _).1 hx
-  have hsplit : x = cA D eg • x + cA D eQ • x := by rw [← add_smul, ← map_add, hx']
+  have hsplit : x = cA D eg • x + cA D eQ • x := by rw [← add_smul, ← map_add (f := _), hx']
   have hA : ∀ e : AE D, frMapAdj S T βS βT (cA D e • x) = toEAf D e • frMapAdj S T βS βT x := fun e => by
     rw [GlobalTheory.RedHalfDrop.frMapAdj_smul_eq, Formalism.L2.Theta.cA_cA]
   have hint : ∀ (e : AE D) (P : Finset (Pl D.host.E)), IsIdemSum e P →

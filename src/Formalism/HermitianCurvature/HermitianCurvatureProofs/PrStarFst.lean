@@ -43,7 +43,7 @@ theorem polyAction_one₂ (X : Ix S → V) : actP (1 : SlopeTestRemainingChoices
 
 theorem blockMulVec_add (M : SlopeTestRemainingChoices S (Q.Pr V)) (X Y : Ix S → V) : actP M (X + Y) = actP M X + actP M Y := by
   funext a
-  simp only [actP, Pi.add_apply, map_add, Finset.sum_add_distrib]
+  simp only [actP, Pi.add_apply, map_add (f := _), Finset.sum_add_distrib]
 
 theorem actP_smul (M : SlopeTestRemainingChoices S (Q.Pr V)) (c : ℂ) (X : Ix S → V) : actP M (c • X) = c • actP M X := by
   funext a

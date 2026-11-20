@@ -119,16 +119,16 @@ theorem phi_d (hf : CH.d F₁ p f = 0) (hg : CH.d F₂ q g = 0) {N : ℕ} (s : C
     phi P f g s (Pr.d N c) = 0 := by
   induction c using Finsupp.induction_linear with
   | zero => rw [map_zero, map_zero]
-  | add c c' hc hc' => rw [map_add, map_add, hc, hc', add_zero]
+  | add c c' hc hc' => rw [map_add (f := _), map_add (f := _), hc, hc', add_zero]
   | single z t =>
-    rw [Pr.d, Finsupp.linearCombination_single, map_smul, map_add, map_smul, phi_d₁ P f g hf, phi_d₂ P f g hg,
+    rw [Pr.d, Finsupp.linearCombination_single, map_smul, map_add (f := _), map_smul, phi_d₁ P f g hf, phi_d₂ P f g hg,
       smul_zero, add_zero, smul_zero]
 
 theorem phi_face {N : ℕ} (s : ComposableArrows C (N + 1)) (i : Fin (N + 2)) (c : Pr N →₀ ℤ) :
     (F₃.map (GlobalTheory.CatH.toLast i s)).hom (phi P f g (GlobalTheory.CatH.face i s) c) = phi P f g s (Pr.push (SimplexCategory.δ i) c) := by
   induction c using Finsupp.induction_linear with
   | zero => simp only [map_zero]
-  | add c c' hc hc' => simp only [map_add, hc, hc']
+  | add c c' hc hc' => simp only [map_add (f := _), hc, hc']
   | single z t =>
     obtain ⟨a, r, α, β⟩ := z
     rw [phi_single, Pr.push, Finsupp.lmapDomain_apply, Finsupp.mapDomain_single, phi_single, map_zsmul]
@@ -199,7 +199,7 @@ theorem key (P' : CH.Pairing F₂ F₁ F₃) (hP : ∀ T x y, P'.μ T y x = P.μ
     exact zero_mem _
   | succ N =>
     refine ⟨hc P f g (hh N), funext fun s => ?_⟩
-    rw [ev, ← hds N, map_add, phi_d P f g hf hg, zero_add]
+    rw [ev, ← hds N, map_add (f := _), phi_d P f g hf hg, zero_add]
     exact d_hc P f g (hh N) s
 
 end Gen

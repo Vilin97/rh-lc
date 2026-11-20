@@ -45,7 +45,7 @@ theorem tensNU_mul_one_tmul {F E R R' : Type} [Field F] [Field E] [Algebra F E] 
     tensNU j hj u * ((1 : R') ⊗ₜ[F] e) = tensNU j hj (u * ((1 : R) ⊗ₜ[F] e)) := by
   induction u using TensorProduct.induction_on with
   | zero => simp
-  | add x y hx hy => simp only [add_mul, map_add, hx, hy]
+  | add x y hx hy => simp only [add_mul, map_add (f := _), hx, hy]
   | tmul a e' => simp [Algebra.TensorProduct.tmul_mul_tmul]
 
 theorem mat_extH_eq {F E R R' : Type} [Field F] [Field E] [Algebra F E] [CommRing R] [Algebra F R]

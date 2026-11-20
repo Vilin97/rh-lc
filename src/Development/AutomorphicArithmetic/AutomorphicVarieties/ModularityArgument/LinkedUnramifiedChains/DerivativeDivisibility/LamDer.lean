@@ -78,7 +78,7 @@ private theorem eq_top_of_mod {O M : Type} [CommRing O] (π : O) [IsPrecomplete 
 private theorem aeval_split {O R : Type} [CommRing O] [CommRing R] [Algebra O R] (a : R) (Q : O[X]) :
     aeval a Q = algebraMap O R (Q.coeff 0) + a * aeval a Q.divX := by
   have h := congrArg (aeval a) (Polynomial.divX_mul_X_add Q)
-  simp only [map_add, map_mul, aeval_X, aeval_C] at h
+  simp only [map_add (f := _), map_mul, aeval_X, aeval_C] at h
   linear_combination (-1 : R) * h
 
 private theorem pow_mem_of_poly {O R : Type} [CommRing O] [CommRing R] [IsLocalRing R] [Algebra O R] (π : O) (a : R)
@@ -183,7 +183,7 @@ private theorem exists_pair_of_der {O Λ K : Type} [CommRing O] [IsDomain O] [Is
       exact this
     | zero => exact ⟨map_zero p, by rw [map_zero]; exact zero_mem _⟩
     | add x y _ _ hx hy =>
-      exact ⟨by rw [map_add, hx.1, hy.1, add_zero], by rw [map_add]; exact add_mem hx.2 hy.2⟩
+      exact ⟨by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)), hx.1, hy.1, add_zero], by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx.2 hy.2⟩
     | smul b y _ hy =>
       refine ⟨by rw [smul_eq_mul, map_mul, hy.1, mul_zero], ?_⟩
       rw [smul_eq_mul, hd, hy.1, zero_mul, add_zero]
@@ -196,7 +196,7 @@ private theorem exists_pair_of_der {O Λ K : Type} [CommRing O] [IsDomain O] [Is
     | add x y _ _ hx hy =>
       obtain ⟨g, rfl, hg⟩ := hx
       obtain ⟨g', rfl, hg'⟩ := hy
-      exact ⟨g + g', map_add _ _ _, by rw [map_add]; exact add_mem hg hg'⟩
+      exact ⟨g + g', RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n)) _ _ _, by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hg hg'⟩
     | smul c y _ hy =>
       obtain ⟨g, rfl, hg⟩ := hy
       refine ⟨c • g, map_smul _ _ _, ?_⟩

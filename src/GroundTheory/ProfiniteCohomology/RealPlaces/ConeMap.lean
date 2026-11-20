@@ -198,7 +198,7 @@ theorem tateCompactRes_naturality :
         (((localRes ψ A Aᵣ ar).f n).hom x.1 + ((normCochains Aᵣ).f n).hom x.2) =
       ((localRes ψ B Bᵣ br).f n).hom (((cochainsMap g).f n).hom x.1) +
         ((normCochains Bᵣ).f n).hom (((degZeroMap (piRepHom gᵣ)).f n).hom x.2)
-    rw [map_add]
+    rw [map_add (f := _)]
     exact congrArg₂ (· + ·)
       (hom_apply_hom_apply_eq_of_comp_eq (congrArg (·.f n) (localRes_naturality ψ g gᵣ hgr)) x.1)
       (hom_apply_hom_apply_eq_of_comp_eq (congrArg (·.f n) (normCochains_naturality gᵣ)) x.2)

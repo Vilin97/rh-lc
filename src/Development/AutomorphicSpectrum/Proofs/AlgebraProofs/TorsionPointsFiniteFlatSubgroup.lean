@@ -102,7 +102,7 @@ theorem _root_.GlobalTheory.CompanionTheory.Relay.torsion_points_finite_flat_sub
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul x y => simp [hΛt, TensorProduct.piScalarRight_apply, mul_comm]
-    | add x y hx hy => simp only [map_add, Pi.add_apply, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), Pi.add_apply, hx, hy]
   have hsep2 : ∀ w : TensorProduct R (T.A ⧸ I) (T.A ⧸ I), (∀ k1 k2 : K, Λ k1 k2 w = 0) → w = 0 := by
     intro w hw
     have h1 : TensorProduct.piScalarRight R R (T.A ⧸ I) K

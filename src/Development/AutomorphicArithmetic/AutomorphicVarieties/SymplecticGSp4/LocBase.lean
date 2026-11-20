@@ -227,7 +227,7 @@ private theorem prj_hom {A A' : Type} [CommRing A] [CommRing A'] (f : A →+* A'
     prj (fun a => f (c a)) (F X) i = F (prj c X i) := by
   have key : ∀ p : Polynomial A, Polynomial.aeval (F X) (p.map f) = F (Polynomial.aeval X p) := fun p => by
     induction p using Polynomial.induction_on' with
-    | add p q hp hq => rw [Polynomial.map_add, map_add, map_add, map_add, hp, hq]
+    | add p q hp hq => rw [Polynomial.map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
     | monomial n a =>
       rw [Polynomial.map_monomial, Polynomial.aeval_monomial, Polynomial.aeval_monomial, ← Algebra.smul_def,
         ← Algebra.smul_def, hF, map_pow]

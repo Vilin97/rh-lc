@@ -81,7 +81,7 @@ theorem omega_norm_identity : C7.OmNorm := by
   have hωx : B ω x = 0 := by rw [hH x ω, hxω, map_zero]
   have hzx : B z x = 0 := by rw [hH x z, hxz, map_zero]
   have hzω : B z ω = 0 := by rw [hH ω z, hωz, map_zero]
-  simp only [map_add, map_smul, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.map_smulₛₗ, smul_eq_mul,
+  simp only [map_add (f := _), map_smul, LinearMap.add_apply, LinearMap.smul_apply, LinearMap.map_smulₛₗ, smul_eq_mul,
     hxx, hxω, hxz, hωx, hωz, hzx, hzω, hzz] at hv
   have hT0 : (T : ℂ) ≠ 0 := by exact_mod_cast hT.ne'
   have hc : (-D / T) * (starRingEnd ℂ) (-D / T) = (Complex.normSq D : ℂ) / T ^ 2 := by

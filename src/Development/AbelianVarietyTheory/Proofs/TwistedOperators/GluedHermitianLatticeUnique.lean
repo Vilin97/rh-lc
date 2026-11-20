@@ -40,10 +40,10 @@ theorem exists_lattice {O K : Type} [CommRing O] [Field K] [Algebra O K] {n : �
       · rintro _ ⟨j, rfl⟩
         exact h3 _
       · intro x y _ _ hx hy
-        rw [map_add, hx, hy]
+        rw [map_add (f := _), hx, hy]
       · intro c x _ hx
         rw [← algebraMap_smul K c x, map_smul, hx]
-    rw [map_add, h1 a (Submodule.subset_span ha), h4, zero_add] at h0
+    rw [map_add (f := _), h1 a (Submodule.subset_span ha), h4, zero_add] at h0
     rwa [h0, add_zero]
 
 theorem map_mulVec_gen {K A : Type} [CommRing K] [CommRing A] (f : K →+* A) {n : ℕ}

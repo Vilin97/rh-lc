@@ -46,7 +46,7 @@ private theorem fock_cen_polIncl {P Q R S : ℕ} (r₀ : Fin (R + 1)) (s₀ : Fi
   have hz : ∀ v : Ln P Q (R + 1) (S + 1), (∀ m, Prod.map id (skipIx r₀ s₀) m ≠ v) →
       MvPolynomial.pderiv v (polIncl P Q r₀ s₀ f) = 0 := fun v hv =>
     GlobalTheory.FockSplit.pderiv_rename_eq_zero _ v hv f
-  rw [cen, map_add, fockAct2_Eab, fockAct2_Eab, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.sum_apply,
+  rw [cen, map_add (f := _), fockAct2_Eab, fockAct2_Eab, LinearMap.add_apply, LinearMap.sum_apply, LinearMap.sum_apply,
     ← Finset.sum_add_distrib]
   refine Finset.sum_eq_zero fun a _ => ?_
   have hs : sameBlock a a := by rcases a with a | a <;> simp [sameBlock]
@@ -66,7 +66,7 @@ private theorem atPl_cen_tensIncl {F : Type} [Field F] [NumberField F] {P Q R S 
       MultilinearMap.map_coord_zero _ w, smul_zero]
     rw [Function.update_self]
     exact fock_cen_polIncl r₀ s₀ (f w)
-  | add x y hx hy => rw [map_add, map_add, hx, hy, add_zero]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, add_zero]
 
 end GlobalTheory.LeviBeta
 

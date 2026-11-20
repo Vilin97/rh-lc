@@ -62,7 +62,7 @@ theorem stepDatum_eq_mul : ∀ (D : D7) (S T : HSp D) (βS : GL (Fin S.rank) (Le
   · rw [if_neg hx, if_neg (fun h => hx h.1), mul_zero]
   have hxx : (eG + eQ) • x = x := funext fun a => funext fun b => hx a b
   have hNs := hsm (eG + eQ)
-  rw [hxx, RingHom.map_add, add_smul] at hNs
+  rw [hxx, RingHom.map_add (f := _), add_smul] at hNs
   rw [if_pos hx, hsm, hsm]
   generalize frMapO S T βS βT x = N at hNs ⊢
   by_cases hI : IsIntM N

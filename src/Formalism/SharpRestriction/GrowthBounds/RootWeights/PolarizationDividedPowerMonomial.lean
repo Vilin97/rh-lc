@@ -78,7 +78,7 @@ theorem polarization_commute (v w v' w' : σ) (h1 : w ≠ v') (h2 : w ≠ w') (h
     congr 1
     ring
   | add p q hp hq =>
-    rw [map_add, map_add, hp, hq]
+    rw [map_add (f := _), map_add (f := _), hp, hq]
 
 end ops
 

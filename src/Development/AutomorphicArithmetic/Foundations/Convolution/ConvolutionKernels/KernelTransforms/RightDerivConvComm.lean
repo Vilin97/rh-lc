@@ -126,7 +126,7 @@ private theorem UpperTheory.ConvolutionTheory.Tf.commute_uAction {T : Module.End
     simp only [map_mul]
     exact ha.mul_right hb
   | add a b ha hb =>
-    simp only [map_add]
+    simp only [map_add (f := _)]
     exact ha.add_right hb
 
 variable [MeasurableSpace G] [BorelSpace G] (μ : Measure G) [μ.IsHaarMeasure]
@@ -228,11 +228,11 @@ private theorem UpperTheory.ConvolutionTheory.Tf.exists_transpose
     obtain ⟨Tb, hb1, hb2, hb3, hb4, hb5⟩ := hb
     refine ⟨Ta + Tb, fun Y => (ha1 Y).add_left (hb1 Y), fun x => (ha2 x).add_left (hb2 x),
       fun Ψ => ?_, fun Ψ hΨ => ?_, fun Ψ κ hΨ hκ => ?_⟩
-    · simp only [map_add, LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, ha3, hb3]
+    · simp only [map_add (f := _), LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, ha3, hb3]
     · exact (ha4 Ψ hΨ).add (hb4 Ψ hΨ)
     · have hcont : ∀ f : h.smoothFuns (F := ℂ), Continuous (f : G → ℂ) :=
         fun f => continuous_of_isSmoothFun f.2
-      simp only [map_add, LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, add_mul, mul_add]
+      simp only [map_add (f := _), LinearMap.add_apply, Submodule.coe_add, Pi.add_apply, add_mul, mul_add]
       rw [integral_add (UpperTheory.ConvolutionTheory.Tf.integrable_mul_inv μ (hcont _) (hcont κ) (ha4 Ψ hΨ))
           (UpperTheory.ConvolutionTheory.Tf.integrable_mul_inv μ (hcont _) (hcont κ) (hb4 Ψ hΨ)),
         integral_add (UpperTheory.ConvolutionTheory.Tf.integrable_mul_inv μ (hcont Ψ) (hcont _) hΨ)

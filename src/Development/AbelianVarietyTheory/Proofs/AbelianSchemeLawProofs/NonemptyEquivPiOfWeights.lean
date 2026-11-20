@@ -351,7 +351,7 @@ theorem Descends.weight (hL : L.IsLB) {q : Y ⟶ Y} {τ : G → (Y ⟶ Y)} (H : 
     ∃ f : Sg L p D →ₗ[Γ(B, ⊤)] Vals L p, Function.Injective f ∧
       ∀ v, (∃ x, f x = v) ↔ v ∈ Sg L p F ∧ ∀ g, pl L (τ g) (hτ g) v = (χ g).val • v := by
   refine ⟨⟨⟨fun x => pl L q hq x.1 * u.val, fun x y => ?_⟩, fun c x => ?_⟩, ?_, fun v => ⟨?_, ?_⟩⟩
-  · rw [Submodule.coe_add, map_add, add_mul]
+  · rw [Submodule.coe_add, map_add (f := _), add_mul]
   · show pl L q hq (c • x.1) * u.val = c • (pl L q hq x.1 * u.val)
     rw [map_smul, smul_mul_assoc]
   · set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]

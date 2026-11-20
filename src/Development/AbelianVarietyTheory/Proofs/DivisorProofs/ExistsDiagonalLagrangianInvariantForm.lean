@@ -130,7 +130,7 @@ theorem integrable_resD {φ : (κ ⊕ κ → AdeleRing (𝓞 F) F) → ℂ} (hφ
     obtain ⟨f, g, hg, rfl⟩ := hx
     exact integrable_resD_pureA f hg
   | zero => rw [map_zero]; exact integrable_zero _ _ _
-  | add x y _ _ hx hy => rw [map_add]; exact hx.add hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact hx.add hy
   | smul c x _ hx => rw [map_smul]; exact hx.smul c
 
 theorem lDiag_pureA (f : SchwartzMap (κ ⊕ κ → mixedEmbedding.mixedSpace F) ℂ)
@@ -164,7 +164,7 @@ theorem glue_add_shiftOf (p : Vi F κ × Vf F κ) (x : κ → AF F) : glue (p + 
   refine Prod.ext ?_ ?_
   · show (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (eI F κ (p.1 + (eI F κ).symm _) i) =
       (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (eI F κ p.1 i) + (x i).1
-    rw [map_add, ContinuousLinearEquiv.apply_symm_apply, Pi.add_apply, map_add, RingEquiv.symm_apply_apply]
+    rw [map_add (f := _), ContinuousLinearEquiv.apply_symm_apply, Pi.add_apply, map_add (f := _), RingEquiv.symm_apply_apply]
   · rfl
 
 theorem resD_schr (ψ : AddChar (AF F) ℂ) (x y : κ → AF F) (φ : (κ ⊕ κ → AF F) → ℂ) :

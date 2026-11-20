@@ -95,10 +95,10 @@ theorem homog_eq (C : Core l) (a b : Per.Acris l) (y : Om l) (hy : ‖y‖ ≤ 1
   rw [hq.as_sum, Polynomial.eval₂_add, Polynomial.eval₂_X_pow, Polynomial.eval₂_finset_sum] at h0
   have h1 := congrArg (fun z => C.o z * C.j b ^ q.natDegree) h0
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_pow, map_sum, map_zero, zero_mul, add_mul, Finset.sum_mul,
+    simp only [map_add (f := _), map_pow, map_sum, map_zero, zero_mul, add_mul, Finset.sum_mul,
     Polynomial.eval₂_mul, Polynomial.eval₂_C, Polynomial.eval₂_X_pow, map_mul] at h1
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [map_add, map_pow, map_sum, map_zero, map_mul, h, j_alg]
+    simp only [map_add (f := _), map_pow, map_sum, map_zero, map_mul, h, j_alg]
   rw [← h1, mul_pow]
   congr 1
   refine Finset.sum_congr rfl fun i hi => ?_

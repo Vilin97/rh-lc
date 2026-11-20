@@ -24,7 +24,7 @@ private theorem eop_mem {U : Submodule ℂ (TR.Sm ℚ 2)} (hU : TR.IsStable U) (
 private theorem eop_one (v : InfinitePlace ℚ) (φ : TR.Sm ℚ 2) :
     TR.Eop v 0 0 φ + TR.Eop v 1 1 φ = TR.lie ℚ 2 (TR.oneL ℚ 2) φ := by
   classical
-  rw [TR.Eop, TR.Eop, ← LinearMap.add_apply, ← map_add]
+  rw [TR.Eop, TR.Eop, ← LinearMap.add_apply, ← map_add (f := _)]
   congr 2
   ext i j w
   obtain rfl : w = v := Subsingleton.elim _ _

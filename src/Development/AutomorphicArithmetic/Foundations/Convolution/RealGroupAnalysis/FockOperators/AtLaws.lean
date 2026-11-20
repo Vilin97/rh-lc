@@ -24,7 +24,7 @@ theorem UpperTheory.ConvolutionTheory.R2.Fo.atLaws :
     · intro h
       exact absurd (Finset.mem_univ w) h
   · refine TR.ad_ext ?_ ?_
-    · rw [map_add, hp, hp, hp, Pi.single_add]
+    · rw [map_add (f := _), hp, hp, hp, Pi.single_add]
     · change (at1 w (s + t)).2 = (at1 w s + at1 w t).2
       rw [hfin, h2, h2, h2, add_zero]
   · refine TR.ad_ext ?_ ?_

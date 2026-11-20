@@ -36,7 +36,7 @@ theorem fm_inner_add (x : α) (g₁ g₂ : α →₀ ℂ) :
 
 theorem fm_add_left (f₁ f₂ g : α →₀ ℂ) : P.fm (f₁ + f₂) g = P.fm f₁ g + P.fm f₂ g := by
   unfold fm
-  exact Finsupp.sum_add_index' (fun _ => by simp) (fun _ _ _ => by simp [map_add]; ring)
+  exact Finsupp.sum_add_index' (fun _ => by simp) (fun _ _ _ => by simp [map_add (f := _)]; ring)
 
 theorem fm_smul_left (f g : α →₀ ℂ) (r : ℂ) : P.fm (r • f) g = conj r * P.fm f g := by
   unfold fm

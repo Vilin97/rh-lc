@@ -40,7 +40,7 @@ theorem UpperTheory.ConvolutionTheory.R2.H.stdOm :
       simp only [q4]
       ring
     rw [e, pa, pa, pa, pa, k1 _ _ _ (hy 2), k1 _ _ _ (hy 3), k1 _ _ _ (hy 0), k1 _ _ _ (hy 1), mul_one, mul_one, mul_one, mul_one]
-    all_goals simp only [map_neg, map_mul, map_add, map_ofNat, sc]
+    all_goals simp only [map_neg, map_mul, map_add (f := _), map_ofNat, sc]
     · exact ineg (im hb (ia (hx 0) (hy 0)))
     · exact ineg (im hb (hx 1))
     · exact ineg (im hb (im iδ (ia (im i2 (hx 3)) (hy 3))))

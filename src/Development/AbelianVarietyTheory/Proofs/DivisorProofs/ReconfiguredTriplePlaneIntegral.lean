@@ -54,7 +54,7 @@ variable {B : Base F E} {n d : ℕ} {X : Spc F E n} {W : Spc F E d} {M : Model �
 
 theorem theta_add (hPair : IsPair B M χX χW om r s r' s') {Φ Ψ : Fn F n d} (hΦ : Φ ∈ schA F _) (hΨ : Ψ ∈ schA F _) (g h) :
     theta om (Φ + Ψ) g h = theta om Φ g h + theta om Ψ g h := by
-  simp only [theta, map_add]
+  simp only [theta, map_add (f := _)]
   exact thetaSum_add F (hPair.weil.isUSplitting.pres _ _ hΦ) (hPair.weil.isUSplitting.pres _ _ hΨ)
 
 theorem theta_smul (c : ℂ) (Φ : Fn F n d) (g h) : theta om (c • Φ) g h = c * theta om Φ g h := by

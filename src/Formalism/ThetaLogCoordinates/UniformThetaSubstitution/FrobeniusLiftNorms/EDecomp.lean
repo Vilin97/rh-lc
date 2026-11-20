@@ -40,7 +40,7 @@ theorem lowGe_add {m : ℕ} {f g : MvPowerSeries (Tp ⊕ Lw) K} (hf : LowGe m f)
     by_contra h1; exact hlt (hf n h1)
   have h2 : MvPowerSeries.coeff n g = 0 := by
     by_contra h2; exact hlt (hg n h2)
-  rw [map_add, h1, h2, add_zero]
+  rw [map_add (f := _), h1, h2, add_zero]
 
 theorem lowGe_sum {α : Type} {m : ℕ} (s : Finset α) (F : α → MvPowerSeries (Tp ⊕ Lw) K)
     (h : ∀ a ∈ s, LowGe m (F a)) : LowGe m (∑ a ∈ s, F a) := by
@@ -223,7 +223,7 @@ theorem zSub_eq (TT : Finset (ZMod (2 * ν))) (ξ : ZMod (2 * ν) → Fin r0 →
 
 theorem constantCoeff_zSub (TT : Finset (ZMod (2 * ν))) (ξ : ZMod (2 * ν) → Fin r0 → K)
     (x : ZV ν r0 r1) : MvPowerSeries.constantCoeff (zSub TT ξ x) = 0 := by
-  rw [zSub, map_add, MvPowerSeries.constantCoeff_X, zero_add]
+  rw [zSub, map_add (f := _), MvPowerSeries.constantCoeff_X, zero_add]
   split_ifs <;> simp
 
 theorem subst_sT [NeZero ν] (TT : Finset (ZMod (2 * ν))) (ξ : ZMod (2 * ν) → Fin r0 → K) (p E : ℕ)

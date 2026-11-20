@@ -369,7 +369,7 @@ abbrev provS : WeightFamilies.Prov D where
   supN_smul := fun _ _ σ a F => by
     rw [Submodule.coe_smul, smul_eq_mul, map_mul, norm_mul]
   supN_add := fun _ _ σ F G => by
-    rw [Submodule.coe_add, map_add]; exact norm_add_le _ _
+    rw [Submodule.coe_add, map_add (f := _)]; exact norm_add_le _ _
   l2NormAlt := fun _ _ σ F => ‖σ (F : K)‖
   l2Norm_nonneg_bis := fun _ _ _ _ => norm_nonneg _
   l2Norm_eq_zero_iff := fun _ _ σ F => by
@@ -377,7 +377,7 @@ abbrev provS : WeightFamilies.Prov D where
   l2Norm_smul_alt := fun _ _ σ a F => by
     rw [Submodule.coe_smul, smul_eq_mul, map_mul, norm_mul]
   l2Norm_add_le' := fun _ _ σ F G => by
-    rw [Submodule.coe_add, map_add]; exact norm_add_le _ _
+    rw [Submodule.coe_add, map_add (f := _)]; exact norm_add_le _ _
   l2Norm_le_supNorm_alt := fun _ _ _ _ => le_rfl
   Cu := fun _ => Empty
   Xc := fun _ c => c.elim
@@ -514,7 +514,7 @@ def pjS (hadd : ∀ j w w', Sg j w → Sg j w' → Sg j (wadd w w')) (P : Moduli
   vAt := fun la _ F => vE la (evS (D := D) (K := K) j F)
   vAt_zero := fun la _ => by rw [map_zero, vE_zero]
   vAt_ne_bot := fun la _ F => vE_ne_bot la _
-  vAt_add := fun la _ F G => by rw [map_add]; exact vE_add la _ _
+  vAt_add := fun la _ F G => by rw [map_add (f := _)]; exact vE_add la _ _
   vAt_smul := fun la _ a F ha => by
     rw [map_smul, smul_eq_mul, vE_mul, vE_of_ne la ha]
   vAt_mul := fun la _ w w' F G => by rw [map_mul, vE_mul]

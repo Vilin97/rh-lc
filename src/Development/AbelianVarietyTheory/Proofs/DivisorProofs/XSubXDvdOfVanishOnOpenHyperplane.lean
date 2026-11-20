@@ -25,7 +25,7 @@ theorem X_sub_X_dvd_of_vanish_on_open_hyperplane (σ : Type) [Fintype σ] [Decid
     induction Q using MvPolynomial.induction_on with
     | C c => simp
     | add p q hp hq =>
-      rw [map_add, add_sub_add_comm]
+      rw [map_add (f := _), add_sub_add_comm]
       exact dvd_add hp hq
     | mul_X p i hp =>
       rw [map_mul, bind₁_X_right]

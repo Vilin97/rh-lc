@@ -124,10 +124,10 @@ theorem exists_line (D : D7) (S X : HSp D) {d : ℕ} (e : Fin d ≃ Fin X.rank)
         Bs.ψ (⅟(2 : AF D.host.F) * ((M.co.e u).1 ⬝ᵥ (M.co.e u').2 - (M.co.e u').1 ⬝ᵥ (M.co.e u).2)) *
           M.co.rho Bs.ψ (u + u') Φ x := by
       intro x
-      simp only [GlobalTheory.WeilM.Darboux.rho, map_add]
+      simp only [GlobalTheory.WeilM.Darboux.rho, map_add (f := _)]
       exact schr_comp_apply Bs.ψ _ _ _ x
     simp only [heisO]
-    rw [← map_add, hth]
+    rw [← map_add (f := _), hth]
     simp only [GlobalTheory.WeilM.thetaSum, e1, tsum_mul_left]
     rw [symplOH, hform, h2]
   rw [hth]

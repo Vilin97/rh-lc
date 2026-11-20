@@ -333,7 +333,7 @@ theorem EmbedsBy.affine_and_surjective {f : X ⟶ Y} [IsAffine Y] [UniversallyCl
           obtain ⟨n, a, ha⟩ := hp
           obtain ⟨m, b, hb⟩ := hq
           refine ⟨n + m, lam j ^ m * a + lam j ^ n * b, ?_⟩
-          rw [map_add, map_add, map_add, map_mul, map_mul, map_pow, map_pow, ← ha, ← hb]
+          rw [map_add (f := _), map_add (f := _), map_add (f := _), map_mul, map_mul, map_pow, map_pow, ← ha, ← hb]
           ring
         | mul_X p i hp =>
           obtain ⟨n, a, ha⟩ := hp

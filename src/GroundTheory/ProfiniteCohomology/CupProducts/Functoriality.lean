@@ -143,7 +143,7 @@ def invariantsTensorLinearMap :
       intro s
       exact congrArg₂ (TensorProduct.tmul k) (a.2 s) (b.2 s)
     | add x y hx hy =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ hx hy
 
 omit [TopologicalSpace G] [IsTopologicalGroup G] in

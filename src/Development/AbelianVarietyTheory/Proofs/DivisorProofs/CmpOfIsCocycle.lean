@@ -64,7 +64,7 @@ theorem fc_mem {c : ∀ i i' : J, Γ(Z, W i ⊓ W i')} (hc : IsCocycle W c) : fc
     le_inf (le_inf ((le_of_hom b).trans ((le_of_hom a).trans (le_idx V.unop)))
       ((le_of_hom b).trans (le_idx V'.unop))) (le_idx V''.unop)
   have e := congrArg (resG Z hV'') (hc (idx V.unop) (idx V'.unop) (idx V''.unop))
-  simp only [map_add, resG_resG'] at e
+  simp only [map_add (f := _), resG_resG'] at e
   have key : resG Z (le_inf ((le_of_hom (a ≫ b)).trans (le_idx V.unop)) (le_idx V''.unop))
       (c (idx V.unop) (idx V''.unop)) =
       resG Z (le_of_hom b) (resG Z (le_inf ((le_of_hom a).trans (le_idx V.unop)) (le_idx V'.unop))

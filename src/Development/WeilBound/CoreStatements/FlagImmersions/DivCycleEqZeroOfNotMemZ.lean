@@ -157,7 +157,7 @@ theorem chart_form (y : (Σ k, ι k) → Ω) (c : ∀ k, ι k) (hc : ∀ k, y �
     refine ⟨e₁ + e₂, fun e he => ?_⟩
     obtain ⟨f, hf, ef⟩ := h₁ e (le_trans le_self_add he)
     obtain ⟨g, hg, eg⟩ := h₂ e (le_trans le_add_self he)
-    exact ⟨f + g, LowerBoundFree.isMultiHomog_add hf hg, by rw [map_add, ef, eg, add_mul]⟩
+    exact ⟨f + g, LowerBoundFree.isMultiHomog_add hf hg, by rw [map_add (f := _), ef, eg, add_mul]⟩
   | mul a b _ _ ha hb =>
     obtain ⟨e₁, h₁⟩ := ha
     obtain ⟨e₂, h₂⟩ := hb
@@ -214,7 +214,7 @@ theorem div_le_of_integral (y : (Σ k, ι k) → Ω) (hP : (mCoordIdeal y).IsPri
       show _ = _ * ((p.coeff j : Ω) * t ^ j)
       ring
     set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_add, map_sum, Finset.sum_congr rfl hsum, ← Finset.mul_sum, map_mul, map_pow, ht, mul_pow]
+      rw [map_add (f := _), map_sum, Finset.sum_congr rfl hsum, ← Finset.mul_sum, map_mul, map_pow, ht, mul_pow]
     simp only [map_prod, map_pow, aeval_X]
     linear_combination ((∏ k, y ⟨k, c k⟩ ^ e k) * aeval y b ^ n) * hp
 

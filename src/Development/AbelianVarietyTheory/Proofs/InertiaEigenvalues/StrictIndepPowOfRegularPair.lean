@@ -20,7 +20,7 @@ theorem sum_decomp (s : S →+* A) {ι : Type} (b : ι → A) (T : Finset ι) (u
       = s P * ∑ i ∈ T, s (u i) * b i + s Q * ∑ i ∈ T, s (v i) * b i := by
   rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
   refine Finset.sum_congr rfl fun i _ => ?_
-  simp only [map_add, map_mul]
+  simp only [map_add (f := _), map_mul]
   ring
 
 theorem indep_finset (s : S →+* A) (p q : S) {ι : Type} (b : ι → A)

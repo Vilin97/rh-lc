@@ -80,7 +80,7 @@ variable {b v}
 
 theorem intA_add {z w : Fv F v ⊗[F] E} (hz : intA b v z) (hw : intA b v w) : intA b v (z + w) := by
   intro k
-  rw [map_add, Finsupp.add_apply]
+  rw [map_add (f := _), Finsupp.add_apply]
   exact add_mem (hz k) (hw k)
 
 theorem intA_sum {ι : Type} (t : Finset ι) (f : ι → Fv F v ⊗[F] E) (hf : ∀ i ∈ t, intA b v (f i)) :
@@ -130,7 +130,7 @@ theorem sigR_smul (σ : E →ₐ[F] E) (c : Fv F v) (z : Fv F v ⊗[F] E) :
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul x y => simp [sigR, TensorProduct.smul_tmul', Algebra.TensorProduct.map_tmul]
-  | add x y hx hy => rw [smul_add, map_add, map_add, hx, hy, smul_add]
+  | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
 theorem intA_sig (σ : E →ₐ[F] E)
     (hg : ∀ k m, algebraMap F (Fv F v) (b.repr (σ (b k)) m) ∈ v.adicCompletionIntegers F)
@@ -272,7 +272,7 @@ theorem hensAA_holds : HensAA := by
   have hTii : ∀ i j, intA b v (Ti i j) := fun i j => intA_incl _ (g5 i j)
 
   set h : Fv F v ⊗[F] E := inclR (Fv F v) (1 / 2 : E) with hhdef
-  have hh : h + h = 1 := by rw [hhdef, ← map_add, add_halves, map_one]
+  have hh : h + h = 1 := by rw [hhdef, ← map_add (f := _), add_halves, map_one]
   have hsh : s h = h := by
     rw [hsdef, hhdef, sigR_incl]
     congr 1

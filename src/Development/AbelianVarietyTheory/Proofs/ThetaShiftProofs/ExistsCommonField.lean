@@ -294,14 +294,14 @@ theorem exists_gtRel (hG : GlobalFnsSt) (u : D.X → Fˣ) (hu : ∀ a b, u (a + 
       have e₁ : vS (g₀.s (χ + χ')) y J * thS D y J (cP D _ χ) (cP D _ χ') g₀.b = vS (g₀.s χ) y J * vS (g₀.s χ') y J := e₀
       show vS (t (e.symm (e χ + e χ'))) y J' * thS D' y J' (cP D' _ (e χ)) (cP D' _ (e χ')) b =
         vS (t (e.symm (e χ))) y J' * vS (t (e.symm (e χ'))) y J'
-      rw [← map_add, AddEquiv.symm_apply_apply, AddEquiv.symm_apply_apply, AddEquiv.symm_apply_apply]
+      rw [← map_add (f := _), AddEquiv.symm_apply_apply, AddEquiv.symm_apply_apply, AddEquiv.symm_apply_apply]
       have c := thS_push gp hT hw hG hJ hJ' (cP D' _ (e χ)) (cP D' _ (e χ')) b
       rw [pushF_cP gp hT hc, pushF_cP gp hT hc, hb] at c
       rw [c] at e₁
       have v₁ := vt χ y J J' hJ hJ'
       have v₂ := vt χ' y J J' hJ hJ'
       have v₃ := vt (χ + χ') y J J' hJ hJ'
-      rw [show cP D' (TF (R := R') F) (e (χ + χ')) = cP D' _ (e χ) * cP D' _ (e χ') by rw [map_add, cPoint_add], hu,
+      rw [show cP D' (TF (R := R') F) (e (χ + χ')) = cP D' _ (e χ) * cP D' _ (e χ') by rw [map_add (f := _), cPoint_add], hu,
         map_mul] at v₃
       apply Additive.ofMul.injective
       have a₁ := congrArg Additive.ofMul e₁
@@ -472,11 +472,11 @@ theorem GtRel.isIota {u v : D.X → Fˣ} (hψ : ∀ χ, GenRel w (LB.pullGen _ _
   show vS (g.s (e χ)) y J' = vK (D'.tau (e x) (e χ)) y J'
   have c₀ := v₁ χ y J J' hJ hJ'
   rw [ι₁, tau_val D _ _ hJ, rig_val gp hT hr hJ hJ',
-    show cP D' (TF (R := R') F) (e χ) * g.b = cP D' _ (e (x + χ)) by rw [hb, map_add, cPoint_add, mul_comm],
+    show cP D' (TF (R := R') F) (e χ) * g.b = cP D' _ (e (x + χ)) by rw [hb, map_add (f := _), cPoint_add, mul_comm],
     show wVal w y J J' g.b = wVal w y J J' (cP D' _ (e x)) by rw [hb]] at c₀
   have c₃ := psi_val hw (hψ (x + χ)) hJ hJ'
   rw [hu, map_mul, map_mul] at c₃
-  rw [tau_val D' _ _ hJ', ← map_add]
+  rw [tau_val D' _ _ hJ', ← map_add (f := _)]
   apply Additive.ofMul.injective
   have a₀ := congrArg Additive.ofMul c₀
   have a₁ := congrArg Additive.ofMul (psi_val hw (hψ x) hJ hJ')
@@ -505,7 +505,7 @@ theorem be_half (x χ : a.D₀.X) : a.be (x + χ) (x + χ) / 2 = a.be x χ + a.b
   have h₁ : (2 : ℤ) ∣ a.be x x := (Dvd.intro _ rfl).trans (a.be_dvd x x)
   have h₂ : (2 : ℤ) ∣ a.be χ χ := (Dvd.intro _ rfl).trans (a.be_dvd χ χ)
   have h₃ := a.be_symm χ x
-  simp only [map_add, LinearMap.add_apply]
+  simp only [map_add (f := _), LinearMap.add_apply]
   omega
 
 variable {a w e uF}
@@ -548,7 +548,7 @@ theorem exists_transport (hG : GlobalFnsSt) {n : ℕ} (hn : n ∣ l.M') (q₀ : 
   have ex : ∀ (i : ℕ) (g₀ : GtPtF a.D₀ F), ∃ g : GtPtF P.toPre F,
       GtRel w e.toAddEquiv (fun z => Units.mk0 uF (u_ne_zero hu) ^ ((i : ℤ) * (a.be q₀.y z / n))) g₀ g :=
     fun i g₀ => exists_gtRel gp hT (e := e.toAddEquiv) hc hw' hG _ (fun x y => by
-      rw [map_add, Int.add_ediv_of_dvd_left (dvd_be a hn _ _), mul_add, zpow_add]) g₀
+      rw [map_add (f := _), Int.add_ediv_of_dvd_left (dvd_be a hn _ _), mul_add, zpow_add]) g₀
   choose dn hdn using ex
   obtain ⟨h, ⟨gs, g₀, gst, gl⟩, hι⟩ := q₀.eq
   refine ⟨⟨e q₀.y, dn 1 q₀.g, dn n h, ⟨fun i => dn i (gs i), ?_, fun i => ?_, congrArg (dn n) gl⟩, hι' _ h _ ?_ hι⟩,
@@ -590,11 +590,11 @@ theorem IsTransport.equiv (hG : GlobalFnsSt) {n : ℕ} (hn₀ : 0 < n) (hn : n �
   have hw' := (isGen_iff w).1 hw
   obtain ⟨z, hy, g₀, hι, hadd⟩ := H
   obtain ⟨g, hg⟩ := exists_gtRel gp hT (e := e.toAddEquiv) hc hw' hG
-    (fun χ => Units.mk0 uF (u_ne_zero hu) ^ a.be z χ) (fun x y => by rw [map_add, zpow_add]) g₀
-  refine ⟨e z, by rw [h'.1, h.1, hy, map_add, map_nsmul], g, hι' z g₀ g hg hι, ?_⟩
+    (fun χ => Units.mk0 uF (u_ne_zero hu) ^ a.be z χ) (fun x y => by rw [map_add (f := _), zpow_add]) g₀
+  refine ⟨e z, by rw [h'.1, h.1, hy, map_add (f := _), map_nsmul], g, hι' z g₀ g hg hι, ?_⟩
   refine GtRel.isAdd gp hT (e := e.toAddEquiv) hc hw' hG (fun χ => ?_) ((gtRel_zpow (u_ne_zero hu) _ _ _).2 h.2) hg
     ((gtRel_zpow (u_ne_zero hu) _ _ _).2 h'.2) hadd
-  rw [← zpow_add, hy, map_add, map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul,
+  rw [← zpow_add, hy, map_add (f := _), map_nsmul, LinearMap.add_apply, LinearMap.smul_apply, nsmul_eq_mul,
     Int.add_mul_ediv_left _ _ (Int.natCast_ne_zero.2 hn₀.ne')]
 
 theorem IsTransport.torus {n : ℕ} {q₀ : QkPt a.D₀ F n} {q : QkPt P.toPre F n} (h : IsTransport a w e uF q₀ q)

@@ -60,7 +60,7 @@ theorem pair_periodic (hψ : IsStdChar D ψ (-1)) (o : OrthDec B.V₀ B.A B.L) (
   obtain ⟨g₀, hg₀⟩ := hmem
   have hg : ratW B.V₀ J.W₀ g₀ = (o.resT J.W₀).symm (0, rat γ₀) := hg₀
   have hsplit : (o.resT J.W₀).symm (0, rat γ₀ + v) = ratW B.V₀ J.W₀ g₀ + (o.resT J.W₀).symm (0, v) := by
-    rw [hg, ← map_add, Prod.mk_add_mk, zero_add]
+    rw [hg, ← map_add (f := _), Prod.mk_add_mk, zero_add]
   have hsym : symplOH J.W₀ B.V₀ (ratW B.V₀ J.W₀ g₀) ((o.resT J.W₀).symm (0, v)) =
       symplOH J.W₀ B.L (ratW B.L J.W₀ γ₀) v := by
     rw [hg, o.symplOH_resT, AddEquiv.apply_symm_apply, AddEquiv.apply_symm_apply, symplOH_zero_left, zero_add]

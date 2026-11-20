@@ -90,7 +90,7 @@ def spl : ((κ → mixedSpace F) × (κ → Af F)) ≃+ (κ → AF F) where
   invFun x := (fun i => evI F (x i), fun i => (x i).2)
   left_inv p := Prod.ext (funext fun i => by simp only [evI_add, evI_re, evI_fi, add_zero]) (funext fun i => zero_add _)
   right_inv x := funext fun i => re_add_fi _
-  map_add' p q := funext fun i => by simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add]; abel
+  map_add' p q := funext fun i => by simp only [Prod.fst_add, Prod.snd_add, Pi.add_apply, map_add (f := _)]; abel
 
 theorem spl_cont : Continuous (spl F κ) := by
   show Continuous (fun p : (κ → mixedSpace F) × (κ → Af F) => fun i => re F (p.1 i) + fi F (p.2 i))
@@ -147,15 +147,15 @@ theorem coef_split [IsTotallyReal F] (hR : CoefReal) {ψ : AddChar (AF F) ℂ} (
   haveI : BorelSpace (κ → mixedSpace F) := ⟨rfl⟩
   let β : (κ → mixedSpace F) →ₗ[ℝ] (κ → mixedSpace F) →ₗ[ℝ] ℝ :=
     LinearMap.mk₂ ℝ (fun y u => -Algebra.trace ℝ (mixedSpace F) (u ⬝ᵥ y))
-      (fun _ _ _ => by rw [dotProduct_add, map_add, neg_add]) (fun _ _ _ => by rw [dotProduct_smul, map_smul, smul_neg])
-      (fun _ _ _ => by rw [add_dotProduct, map_add, neg_add]) (fun _ _ _ => by rw [smul_dotProduct, map_smul, smul_neg])
+      (fun _ _ _ => by rw [dotProduct_add, map_add (f := _), neg_add]) (fun _ _ _ => by rw [dotProduct_smul, map_smul, smul_neg])
+      (fun _ _ _ => by rw [add_dotProduct, map_add (f := _), neg_add]) (fun _ _ _ => by rw [smul_dotProduct, map_smul, smul_neg])
   obtain ⟨ν, hν, hb⟩ := real_bound hR _ β fun y hy => trace_nondeg y fun u => by
     rw [dotProduct_comm, ← neg_eq_zero]
     exact LinearMap.congr_fun hy u
   obtain ⟨p, hp, hb⟩ := hb N
   let ν' : Measure (κ → Af F) := Measure.addHaar
   obtain ⟨C, K, hK, hC⟩ := fin_bound ν' (fun y u : κ → Af F => ψ (fi F (u ⬝ᵥ y))) (fun _ _ => hψ.2.1 _)
-    (fun _ _ _ => by rw [add_dotProduct, map_add, AddChar.map_add_eq_mul]) (dual_cpt hψ) h₁ h₂
+    (fun _ _ _ => by rw [add_dotProduct, map_add (f := _), AddChar.map_add_eq_mul]) (dual_cpt hψ) h₁ h₂
   haveI : (ν.prod ν').IsAddHaarMeasure := Measure.prod.instIsAddHaarMeasure _ _
   haveI : (Measure.map (spl F κ) (ν.prod ν')).IsAddHaarMeasure :=
     (spl F κ).isAddHaarMeasure_map (ν.prod ν') spl_cont spl_symm_cont
@@ -173,7 +173,7 @@ theorem coef_split [IsTotallyReal F] (hR : CoefReal) {ψ : AddChar (AF F) ℂ} (
     refine integral_congr_ae (.of_forall fun u => ?_)
     show ψ (spl F κ u ⬝ᵥ spl F κ y + _) * pureA F f₁ φ₁ (spl F κ u + spl F κ x) *
       (starRingEnd ℂ) (pureA F f₂ φ₂ (spl F κ u)) = _
-    rw [← map_add, pureA_spl, pureA_spl, spl_dot u y, AddChar.map_add_eq_mul, AddChar.map_add_eq_mul, psi_re hstd,
+    rw [← map_add (f := _), pureA_spl, pureA_spl, spl_dot u y, AddChar.map_add_eq_mul, AddChar.map_add_eq_mul, psi_re hstd,
       map_mul (starRingEnd ℂ)]
     simp only [β, LinearMap.mk₂_apply, Prod.fst_add, Prod.snd_add, Complex.ofReal_neg, mul_neg, neg_mul]
     ring
@@ -201,7 +201,7 @@ theorem lin_cont (m : ((κ → AF F) × (κ → AF F)) →ₗ[AF F] Ten F E n d)
       ext j <;> simp [Prod.fst_sum, Prod.snd_sum, Finset.sum_apply, Pi.single_apply]
     conv_lhs => rw [hx]
     set_option synthInstance.maxHeartbeats 100000 in
-      simp only [map_add, map_sum, map_smul]
+      simp only [map_add (f := _), map_sum, map_smul]
   have hc : Continuous fun x : (κ → AF F) × (κ → AF F) =>
       (∑ i, x.1 i • m (Pi.single i 1, 0) + ∑ i, x.2 i • m (0, Pi.single i 1) : Matrix (Fin n) (Fin d) (AE F E)) := by
     fun_prop
@@ -235,8 +235,8 @@ theorem sz_le (τ : ∀ w : InfinitePlace F, EmbOver E w) (m : ((κ → AF F) ×
           Prod.mk_zero_zero, Matrix.zero_apply]
       map_add' := fun p q => by
         have e : ∀ a b : κ → mixedSpace F, spl F κ (a + b, 0) = spl F κ (a, 0) + spl F κ (b, 0) := fun a b => by
-          rw [← map_add, Prod.mk_add_mk, add_zero]
-        rw [Prod.fst_add, Prod.snd_add, e, e, ← Prod.mk_add_mk, map_add, Matrix.add_apply, map_add] }
+          rw [← map_add (f := _), Prod.mk_add_mk, add_zero]
+        rw [Prod.fst_add, Prod.snd_add, e, e, ← Prod.mk_add_mk, map_add (f := _), Matrix.add_apply, map_add (f := _)] }
   have hL : ∀ w i j, Continuous (L w i j) := fun w i j =>
     (LatticeQuotientCompactness.continuous_piInf (τ w)).comp ((continuous_apply j).comp ((continuous_apply i).comp ((lin_cont m).comp
       ((spl_cont.comp (continuous_fst.prodMk continuous_const)).prodMk
@@ -252,7 +252,7 @@ theorem sz_le (τ : ∀ w : InfinitePlace F, EmbOver E w) (m : ((κ → AF F) ×
   have h1 : sz τ (m (spl F κ x, spl F κ y)) ≤ K * (‖x.1‖ + ‖y.1‖) := by
     simp only [sz, K, Finset.sum_mul]
     refine Finset.sum_le_sum fun w _ => Finset.sum_le_sum fun i _ => Finset.sum_le_sum fun j _ => ?_
-    rw [e, map_add, map_smul, Matrix.add_apply, Matrix.smul_apply, map_add, piInf_fi, add_zero]
+    rw [e, map_add (f := _), map_smul, Matrix.add_apply, Matrix.smul_apply, map_add (f := _), piInf_fi, add_zero]
     refine (((L w i j).toRealLinearMap (hL w i j)).le_opNorm (x.1, y.1)).trans ?_
     gcongr
     exact max_le (le_add_of_nonneg_right (norm_nonneg _)) (le_add_of_nonneg_left (norm_nonneg _))

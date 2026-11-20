@@ -30,7 +30,7 @@ theorem infEmb_comp_compInf (I : AutInst) (v : InfinitePlace I.F) :
   | tmul a x =>
     rw [Formalism.L2.SG.AdBridge.thetaV_tmul]
     rfl
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem archMat_bridge (I : AutInst) (x : I.GA) (v : InfinitePlace I.F) :
     GlobalTheory.Orb.archMat I.cm.sig I.J (tauOf I v) (projArch I.cm.sig I.J v (GlobalTheory.HCFinU.bridgeS I I.cm.sig rfl x)) =

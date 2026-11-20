@@ -134,7 +134,7 @@ theorem trdeg_eq {O : Type} [CommRing O] [IsDomain O] [Algebra.IsAlgebraic ℤ O
         (Algebra.IsAlgebraic.isAlgebraic a : IsAlgebraic ℤ a).algebraMap
       exact h1.extendScalars hZ
     | add f g hf hg =>
-      rw [map_add]
+      rw [map_add (f := _)]
       exact hf.add hg
     | mul_X f i hf =>
       rw [map_mul]

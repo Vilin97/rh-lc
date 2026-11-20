@@ -43,7 +43,7 @@ theorem π₀_mem : W.π₀ ∈ W.AΔ := by
   show W.γ₀ δ W.π₀₁ = W.π₀₁
   unfold LocWach.π₀₁
   set_option synthInstance.maxHeartbeats 100000 in
-    rw [map_add, map_sub, map_one, map_natCast, map_sum]
+    rw [map_add (f := _), map_sub, map_one, map_natCast, map_sum]
   congr 1
   refine Finset.sum_equiv (Equiv.mulLeft δ) (fun g => ?_) (fun g _ => ?_)
   · rw [delF_iff, delF_iff]
@@ -171,7 +171,7 @@ theorem isUnit_qA (hR : RD W) : IsUnit (algebraMap (LetA O n) W.EE (qA W)) := by
   obtain ⟨u, hu⟩ := isUnit_π₀ hR
   have e : algebraMap (LetA O n) W.EE (qA W) =
       (u : W.EE) * (((PD.p : ℕ) : W.EE) * ((u⁻¹ : W.EEˣ) : W.EE) + 1) := by
-    rw [mul_add, mul_one, mul_left_comm, Units.mul_inv, mul_one, hu, qA, lA, map_add, map_natCast,
+    rw [mul_add, mul_one, mul_left_comm, Units.mul_inv, mul_one, hu, qA, lA, map_add (f := _), map_natCast,
       add_comm]
   rw [e]
   exact u.isUnit.mul (isUnit_p_add W _)
@@ -247,7 +247,7 @@ theorem φpow_π₀ (hR : RD W) (t : ℕ) :
 theorem γqA {w : LetA O n} (hw : W.γA W.gam W.π₀ = W.π₀ * (1 + w * qA W)) :
     W.γA W.gam (qA W) = qA W * (1 + w * W.π₀) := by
   have : W.γA W.gam (qA W) = W.γA W.gam W.π₀ + lA W := by
-    simp only [qA, lA, map_add, map_natCast]
+    simp only [qA, lA, map_add (f := _), map_natCast]
   rw [this, hw]
   simp only [qA]
   ring
@@ -260,7 +260,7 @@ theorem gam_ps_core (hR : RD W) (s : ℕ) (hs : 1 ≤ s) :
   have hγ : W.γA W.gam (ps W (t + 1)) =
       ps W (t + 1) * (1 + (W.φA ^ (t + 1)) (w : LetA O n) * (W.φA ^ (t + 1)) W.π₀) := by
     show W.γA W.gam ((W.φA ^ (t + 1)) (qA W)) = (W.φA ^ (t + 1)) (qA W) * _
-    rw [← φpow_γA, γqA hw, map_mul, map_add, map_one, map_mul]
+    rw [← φpow_γA, γqA hw, map_mul, map_add (f := _), map_one, map_mul]
   refine ⟨(W.φA ^ (t + 1)) (w : LetA O n) * h, quot_mem W π₀qA_mem (isUnit_π₀qA hR) ?_, ?_⟩
   · have : W.π₀ * qA W * ((W.φA ^ (t + 1)) (w : LetA O n) * h) =
         (W.φA ^ (t + 1)) (w : LetA O n) * (W.φA ^ (t + 1)) W.π₀ := by rw [hh]; ring
@@ -295,7 +295,7 @@ theorem exists_inverse_in_S1 (hR : RD W) {r : LetA O n} (hr : r ∈ S1 W) : ∃ 
     intro i
     rw [PowerSeries.isUnit_iff_constantCoeff]
     show IsUnit (constantCoeff (1 + W.π₀₁ * y i))
-    rw [map_add, map_mul, hcc, zero_mul, add_zero, map_one]
+    rw [map_add (f := _), map_mul, hcc, zero_mul, add_zero, map_one]
     exact isUnit_one
   set z : LetA O n := ((hu.unit⁻¹ : (LetA O n)ˣ) : LetA O n) with hzdef
   have hz : (1 + W.π₀ * y) * z = 1 := hu.mul_val_inv
@@ -325,7 +325,7 @@ theorem psγ (hR : RD W) (t : ℕ) :
   obtain ⟨r', hr', hrr⟩ := exists_inverse_in_S1 hR hS
   refine ⟨_, hS, r', hr', hrr, ?_⟩
   show W.γA W.gam ((W.φA ^ t) (qA W)) = _ * (W.φA ^ t) (qA W)
-  rw [← φpow_γA, γqA hw, map_mul, map_add, map_one, map_mul, ha]
+  rw [← φpow_γA, γqA hw, map_mul, map_add (f := _), map_one, map_mul, ha]
   ring
 
 theorem γ_prod (r : ℕ → LetA O n) (hγ : ∀ t, W.γA W.gam (ps W t) = r t * ps W t) (e : ℕ)

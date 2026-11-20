@@ -16,9 +16,9 @@ theorem pderiv_comm' {σ : Type} (i j : σ) (p : MvPolynomial σ ℂ) :
   classical
   induction p using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p s hp =>
-    simp only [Derivation.leibniz, pderiv_X, map_add, smul_eq_mul, hp]
+    simp only [Derivation.leibniz, pderiv_X, map_add (f := _), smul_eq_mul, hp]
     simp only [Pi.single_apply]
     split_ifs <;> simp [Derivation.leibniz] <;> ring
 

@@ -85,7 +85,7 @@ theorem exists_lift {M : Type} [AddCommGroup M] [Module R M] (g : V →ₛₗ[e]
       zero_mem' := ⟨0, by rw [map_zero, map_zero]⟩
       add_mem' := by
         rintro _ _ ⟨x, hx⟩ ⟨y, hy⟩
-        exact ⟨x + y, by rw [map_add, map_add, hx, hy]⟩
+        exact ⟨x + y, by rw [map_add (f := _), map_add (f := _), hx, hy]⟩
       smul_mem' := by
         rintro c v ⟨x, hx⟩
         obtain ⟨a, d, hd, rfl⟩ := IsFractionRing.div_surjective (A := R) c
@@ -98,7 +98,7 @@ theorem exists_lift {M : Type} [AddCommGroup M] [Module R M] (g : V →ₛₗ[e]
   choose s hs using fun u : U => u.2
   let ψ : U →ₗ[R] M :=
     { toFun := s
-      map_add' := fun u u' => hr (by rw [map_add, hs, hs, hs, Submodule.coe_add, map_add])
+      map_add' := fun u u' => hr (by rw [map_add (f := _), hs, hs, hs, Submodule.coe_add, map_add (f := _)])
       map_smul' := fun c u => hr (by
         rw [RingHom.id_apply, map_smulₛₗ, hs, hs, Submodule.coe_smul_of_tower, ← algebraMap_smul (FractionRing R) c,
           map_smulₛₗ]; rfl) }

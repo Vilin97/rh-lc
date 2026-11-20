@@ -93,6 +93,6 @@ theorem exists_equivariant_proj : ∀ (p q r s : ℕ) (W : Submodule ℂ (Pol p 
   refine ⟨π, hmem, hπW, fun Z f => ?_⟩
   have hf : f = π f + (f - π f) := (add_sub_cancel _ _).symm
   conv_lhs => rw [hf]
-  rw [map_add, map_add, hπW _ (hst Z _ (hmem f)), hπC _ (hCst Z _ (hsub f)), add_zero]
+  rw [map_add (f := _), map_add (f := _), hπW _ (hst Z _ (hmem f)), hπC _ (hCst Z _ (hsub f)), add_zero]
 
 end GlobalTheory.FockProj

@@ -92,7 +92,7 @@ theorem unitary_map {R R' : Type} [CommRing R] [Algebra F R] [CommRing R'] [Alge
     induction x using TensorProduct.induction_on with
     | zero => simp
     | tmul r e => simp [tensMap, sigR, Algebra.TensorProduct.map_tmul]
-    | add x y hx hy => simp only [map_add, hx, hy]
+    | add x y hx hy => simp only [map_add (f := _), hx, hy]
   rw [Matrix.map_mul, Matrix.map_mul]
   congr 2
   ext i j

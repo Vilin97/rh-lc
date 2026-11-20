@@ -18,7 +18,7 @@ def hermO {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {d : ‚Ñ
     intro x y hx hy
     simp only [Set.mem_setOf_eq] at hx hy ‚ä¢
     intro i j k
-    simp only [AddSubgroup.coe_add, Matrix.add_apply, map_add, Finsupp.add_apply]
+    simp only [AddSubgroup.coe_add, Matrix.add_apply, map_add (f := _), Finsupp.add_apply]
     exact add_mem (hx i j k) (hy i j k)
   zero_mem' := by
     simp only [Set.mem_setOf_eq]

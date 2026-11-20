@@ -92,7 +92,7 @@ theorem exists_vector_annihilator_dvd {K : Type} [Field K] {n : ℕ}
     obtain ⟨a, b, hab⟩ := hcop
     apply (hw p hp).1
     have hval := congrArg (fun t => aeval γ t *ᵥ w p) hab
-    simp only [map_add, map_mul, map_one, Matrix.one_mulVec, Matrix.add_mulVec] at hval
+    simp only [map_add (f := _), map_mul, map_one, Matrix.one_mulVec, Matrix.add_mulVec] at hval
     rw [← hval, ← Matrix.mulVec_mulVec, (hw p hp).2, ← Matrix.mulVec_mulVec (M := aeval γ b),
       ← map_mul, hker]
     simp

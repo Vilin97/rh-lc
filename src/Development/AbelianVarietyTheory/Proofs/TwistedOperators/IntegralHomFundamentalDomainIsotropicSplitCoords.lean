@@ -113,7 +113,7 @@ theorem integral_fundamentalDomain_eq_iterated : ∀ (D : D7) (V V' W : HSp D) (
     · exact Subtype.ext (e.symm.injective (congrArg Subtype.val hgh))
     · exact ⟨⟨e g, (hmem g).2 g.2⟩, Subtype.ext (by simp)⟩
     · change e (e.symm g + x) = (g : WO V W) + e x
-      rw [map_add, ContinuousAddEquiv.apply_symm_apply]
+      rw [map_add (f := _), ContinuousAddEquiv.apply_symm_apply]
   have hfin : μ' 𝓕' ≠ ⊤ := (GlobalTheory.Size.measure_dom hμ' hF').2
   have : IsFiniteMeasure (μ.restrict 𝓨) := ⟨by rw [Measure.restrict_apply_univ, hY.2.2]; exact ENNReal.one_lt_top⟩
   have : IsFiniteMeasure (μ'.restrict 𝓕') := ⟨by rw [Measure.restrict_apply_univ]; exact hfin.lt_top⟩
@@ -128,7 +128,7 @@ theorem integral_fundamentalDomain_eq_iterated : ∀ (D : D7) (V V' W : HSp D) (
   have step3 : ∫ p in e ⁻¹' 𝓕V, H (e p) ∂P = ∫ p in 𝓨 ×ˢ (𝓨 ×ˢ 𝓕'), H (e p) ∂P :=
     hpre.setIntegral_eq hT (f := fun p => H (e p)) fun g p => by
       change H (e ((g : Mx D W.rank r × Mx D W.rank r × WO V' W) + p)) = H (e p)
-      rw [map_add]
+      rw [map_add (f := _)]
       exact hper _ ((hmem g).2 g.2) _
   have r1 : (μ.prod (μ.prod μ')).restrict (𝓨 ×ˢ (𝓨 ×ˢ 𝓕')) =
       (μ.restrict 𝓨).prod ((μ.restrict 𝓨).prod (μ'.restrict 𝓕')) :=

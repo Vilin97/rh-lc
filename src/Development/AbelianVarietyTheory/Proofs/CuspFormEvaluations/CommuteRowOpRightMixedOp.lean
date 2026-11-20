@@ -13,7 +13,7 @@ theorem pderiv_swap (u v : σ) (P : MvPolynomial σ K) :
   | C a => simp
   | add p q hp hq => simp [hp, hq]
   | mul_X p i hp =>
-    simp only [Derivation.leibniz, map_add, smul_eq_mul, pderiv_X, Pi.single_apply, hp]
+    simp only [Derivation.leibniz, map_add (f := _), smul_eq_mul, pderiv_X, Pi.single_apply, hp]
     split_ifs <;> simp <;> ring
 
 theorem pderiv_X_mul' [DecidableEq σ] (v w : σ) (Q : MvPolynomial σ K) :

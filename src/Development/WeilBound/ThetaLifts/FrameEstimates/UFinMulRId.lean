@@ -132,7 +132,7 @@ theorem piInf_rId {w : InfinitePlace F} (τ : EmbOver E w) (t : ℝ) :
       ((fun _ => Real.exp t), (fun _ => ((Real.exp t : ℝ) : ℂ))) := by
     show InfiniteAdeleRing.ringEquiv_mixedSpace F (1 + (InfiniteAdeleRing.ringEquiv_mixedSpace F).symm
       (algebraMap ℝ (mixedEmbedding.mixedSpace F) (Real.exp t - 1))) = _
-    rw [map_add, map_one, RingEquiv.apply_symm_apply]
+    rw [map_add (f := _), map_one, RingEquiv.apply_symm_apply]
     refine Prod.ext ?_ ?_ <;> funext v <;> simp
   by_cases hw : w.IsReal
   · have h1 := congrArg (fun z => z.1 ⟨w, hw⟩) hy

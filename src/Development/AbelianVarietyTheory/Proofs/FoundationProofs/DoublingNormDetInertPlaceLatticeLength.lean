@@ -53,7 +53,7 @@ theorem coord_add (h : w.under (𝓞 F) = v) (a : GL (Fin n) (w.adicCompletion E
   simp only [coord, ← Matrix.mulVec_add]
   congr 1
   funext i
-  simp [map_add]
+  simp [map_add (f := _)]
 
 theorem coord_smul (h : w.under (𝓞 F) = v) (a : GL (Fin n) (w.adicCompletion E)) (c : Fv F v ⊗[F] E)
     (y : Fin n → Fv F v ⊗[F] E) :

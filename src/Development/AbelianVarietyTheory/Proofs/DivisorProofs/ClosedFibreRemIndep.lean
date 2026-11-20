@@ -57,7 +57,7 @@ theorem rsT_op (k : ℕ) (i : h.J) (O : G.left.Opens) (hO : O ≤ h.W i) (f : Γ
     rw [← rsT_of_le hO, rsT_rsT le_rfl hO]
   rw [rsT_of_le hO, rsT_of_le hO]
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [op, map_add, map_sub, map_mul, map_sum, map_pow, map_natCast, map_ofNat, hd, hdd', hc, hp]
+    simp only [op, map_add (f := _), map_sub, map_mul, map_sum, map_pow, map_natCast, map_ofNat, hd, hdd', hc, hp]
 
 theorem rem_eq (k : ℕ) (i : h.J) (O : G.left.Opens) (hO : O ≤ h.W i) {A : Type} [CommRing A] (π : Γ(G.left, O) →+* A)
     (hΘ : ∀ a b, π (constFn G.hom O (h.Θ a b)) = 0) (F T g : Γ(G.left, O)) (hT : IsUnit T)
@@ -69,12 +69,12 @@ theorem rem_eq (k : ℕ) (i : h.J) (O : G.left.Opens) (hO : O ≤ h.W i) {A : Ty
       π F * ∑ a, π (constFn G.hom O (h.u a)) * π (dd a O T) + π T * ∑ a, π (constFn G.hom O (h.u a)) * π (dd a O F) := by
     rw [Finset.mul_sum, Finset.mul_sum, ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun a _ => ?_
-    rw [(hdd a).2.1 O le_top, map_add, map_mul, map_mul]
+    rw [(hdd a).2.1 O le_top, map_add (f := _), map_mul, map_mul]
     ring
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [op, map_add, map_sub, map_mul, map_sum, hΘ, zero_mul, Finset.sum_const_zero, sub_zero, map_ofNat, map_pow,
+    simp only [op, map_add (f := _), map_sub, map_mul, map_sum, hΘ, zero_mul, Finset.sum_const_zero, sub_zero, map_ofNat, map_pow,
     map_natCast] at e₁
-  rw [hs, (h.lift i).1.2.1 O hO, map_add, map_mul, map_mul] at e₁
+  rw [hs, (h.lift i).1.2.1 O hO, map_add (f := _), map_mul, map_mul] at e₁
   refine (hT.map π).mul_left_cancel ?_
   linear_combination -e₁
 

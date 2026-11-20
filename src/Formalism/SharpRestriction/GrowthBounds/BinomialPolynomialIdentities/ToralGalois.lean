@@ -23,7 +23,7 @@ theorem weight_projector_mem_weight_space {n : ℕ} {K V : Type*} [Field K] [Add
   · rw [map_zero]
     exact zero_mem _
   · intro a b ha hb
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem ha hb
 
 theorem adm_eleven (D : Formalism.BasicNotions.D7) : GradedLatticeStable D := by

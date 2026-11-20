@@ -37,7 +37,7 @@ theorem eval_adjPol {n : ℕ} (Q : MvPolynomial (GL3Theta.FrV D n) ℂ) (x : D.w
   unfold adjPol
   induction Q using MvPolynomial.induction_on with
   | C a => simp
-  | add p q hp hq => rw [map_add, map_add, hp, hq, map_add]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), hp, hq, map_add (f := _)]
   | mul_X q k hq =>
     rw [map_mul, map_mul, hq, map_mul]
     congr 1

@@ -46,7 +46,7 @@ def baseMap : TrivSqZeroExt R M →+* TrivSqZeroExt B M where
   map_add' x y := by
     ext
     · change algebraMap R B (x + y).fst = algebraMap R B x.fst + algebraMap R B y.fst
-      rw [TrivSqZeroExt.fst_add, map_add]
+      rw [TrivSqZeroExt.fst_add, map_add (f := _)]
     · rfl
 
 theorem baseMap_isSum : IsSum (baseMap R B M) (algebraMap R B) id :=
@@ -185,7 +185,7 @@ theorem cotangentAtUnit_tangentBijection_naturality (α : B →ₐ[R] B') (f : M
   have hc : (baseMap R B' M').comp g = β.comp (baseMap R B M) := by
     refine RingHom.ext fun x => ?_
     rw [← TrivSqZeroExt.inl_fst_add_inr_snd_eq x]
-    simp only [RingHom.comp_apply, map_add, hg.1, hg.2, (baseMap_isSum R B M).1, (baseMap_isSum R B M).2,
+    simp only [RingHom.comp_apply, map_add (f := _), hg.1, hg.2, (baseMap_isSum R B M).1, (baseMap_isSum R B M).2,
       (baseMap_isSum R B' M').1, (baseMap_isSum R B' M').2, hβ.1, hβ.2, id, AlgHom.commutes]
   have e : spMap β ≫ spMap (baseMap R B M) ≫ v.left = spMap (baseMap R B' M') ≫ v'.left := by
     change _ = spMap (baseMap R B' M') ≫ spMap g ≫ v.left

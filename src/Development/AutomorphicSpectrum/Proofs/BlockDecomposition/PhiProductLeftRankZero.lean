@@ -38,7 +38,7 @@ theorem twKer_trT (ρ : Representation ℂ G V) (N : Subgroup G) (θ : N →* �
     | add x y hx hy =>
       have : trT ρ W (n : G) (x + y) - ((θ n : ℂˣ) : ℂ) • (x + y) =
           (trT ρ W (n : G) x - ((θ n : ℂˣ) : ℂ) • x) + (trT ρ W (n : G) y - ((θ n : ℂˣ) : ℂ) • y) := by
-        rw [map_add, smul_add]; abel
+        rw [map_add (f := _), smul_add]; abel
       rw [this]
       exact add_mem hx hy
     | tmul v w =>
@@ -46,7 +46,7 @@ theorem twKer_trT (ρ : Representation ℂ G V) (N : Subgroup G) (θ : N →* �
       simp [TensorProduct.sub_tmul, TensorProduct.smul_tmul']
   · rintro _ ⟨y, rfl⟩
     induction y with
-    | add x y hx hy => rw [map_add]; exact add_mem hx hy
+    | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
     | tmul a w =>
       obtain ⟨a, ha⟩ := a
       simp only [TensorProduct.map_tmul, Submodule.subtype_apply, LinearMap.id_apply]
@@ -70,7 +70,7 @@ theorem nonempty_twAct_trT (ρ : Representation ℂ G V) (N : Subgroup G) (θ : 
   | H x =>
     induction x with
     | add x y hx hy =>
-      rw [Submodule.Quotient.mk_add, map_add, map_add, hx, hy]
+      rw [Submodule.Quotient.mk_add, map_add (f := _), map_add (f := _), hx, hy]
     | tmul v w =>
       show E (Submodule.Quotient.mk (ρ (s m) v ⊗ₜ[ℂ] w)) = trT (twAct ρ N θ s hs') W m (E (Submodule.Quotient.mk (v ⊗ₜ[ℂ] w)))
       rw [hE, hE]

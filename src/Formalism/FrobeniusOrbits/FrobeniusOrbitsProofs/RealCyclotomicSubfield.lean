@@ -23,7 +23,7 @@ lemma real_theta {K : Type*} [Field K] {m : ℕ} (hm : m ≠ 0) {ζ : K} (hζ : 
     (ψ : K →+* ℂ) : starRingEnd ℂ (ψ (ζ + ζ⁻¹)) = ψ (ζ + ζ⁻¹) := by
   have h1 : (ψ ζ) ^ m = 1 := by rw [← map_pow, hζ.pow_eq_one, map_one]
   have hc := conj_root hm h1
-  simp only [map_add, map_inv₀]
+  simp only [map_add (f := _), map_inv₀]
   rw [hc, inv_inv, add_comm]
 
 lemma not_real_zeta {K : Type*} [Field K] {m : ℕ} (hm : m ≠ 0) (h2 : ¬ m ∣ 2) {ζ : K}
@@ -150,7 +150,7 @@ private lemma finrank_adjoin_add_inv_eq_two_of_isPrimitiveRoot {M : Type*} [Fiel
     have hdeg : (X ^ 2 - C θK * X + 1 : (ℚ⟮z + z⁻¹⟯)[X]).natDegree = 2 := by compute_degree!
     have hroot : aeval z (X ^ 2 - C θK * X + 1 : (ℚ⟮z + z⁻¹⟯)[X]) = 0 := by
       have hz0 : z ≠ 0 := hz.ne_zero hm
-      simp only [map_add, map_sub, map_mul, map_pow, aeval_X, aeval_C, map_one]
+      simp only [map_add (f := _), map_sub, map_mul, map_pow, aeval_X, aeval_C, map_one]
       show z ^ 2 - (z + z⁻¹) * z + 1 = 0
       rw [add_mul, inv_mul_cancel₀ hz0]
       ring

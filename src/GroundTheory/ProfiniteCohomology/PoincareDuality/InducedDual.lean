@@ -92,7 +92,7 @@ theorem res_coindDualPairing_comp_coindEvalOne :
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul f μ => rfl
-  | add z z' hz hz' => simp only [map_add, hz, hz']
+  | add z z' hz hz' => simp only [map_add (f := _), hz, hz']
 
 def coindDualRestrict :
     Rep.res W.subtype (dualRep D (Rep.coind W.subtype (Rep.trivial k W V))) ⟶
@@ -198,7 +198,7 @@ theorem tensorHom_coindDualHom_evalPairing :
   induction z using TensorProduct.induction_on with
   | zero => simp only [map_zero]
   | tmul f μ => rfl
-  | add z z' hz hz' => simp only [map_add, hz, hz']
+  | add z z' hz hz' => simp only [map_add (f := _), hz, hz']
 
 theorem coindDualInv_comp_coindDualHom :
     coindDualInv W V D ≫ coindDualHom W V D = 𝟙 _ := by

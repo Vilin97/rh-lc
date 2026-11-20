@@ -38,7 +38,7 @@ theorem evKD_tD (s : ℕ) (D : Type) [AddCommGroup D] [Module LL D] (b : (ZMod (
   | zero => simp
   | tmul f d =>
     simp [evKD, tD, LinearMap.rTensor_tmul, TensorProduct.piScalarRightHom_tmul, precomp_apply]
-  | add z z' hz hz' => rw [map_add, map_add, Pi.add_apply, hz, hz', map_add, Pi.add_apply]
+  | add z z' hz hz' => rw [map_add (f := _), map_add (f := _), Pi.add_apply, hz, hz', map_add (f := _), Pi.add_apply]
 
 theorem tD_toKsD (s : ℕ) (D : Type) [AddCommGroup D] [Module LL D] (b : (ZMod (PD.p ^ (s + 1)))ˣ)
     (F : Rs LL PD.p s → D) :

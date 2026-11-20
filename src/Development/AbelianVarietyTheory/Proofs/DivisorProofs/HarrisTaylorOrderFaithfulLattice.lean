@@ -206,7 +206,7 @@ theorem GlobalTheory.HTFaith.faithful : ∀ (p : ℕ) [Fact p.Prime] (D : Global
     obtain ⟨a, z, hz⟩ := GlobalTheory.HTFaith.approx p D.O (φ.symm (Matrix.of B))
     refine ⟨a, ?_⟩
     have h1 : φ (a ⊗ₜ 1) = Matrix.of B - (p : ℤ) • φ z := by
-      rw [← map_zsmul, ← φ.apply_symm_apply (Matrix.of B), hz, map_add]; abel
+      rw [← map_zsmul, ← φ.apply_symm_apply (Matrix.of B), hz, map_add (f := _)]; abel
     ext i j
     rw [hΦ, h1, Matrix.map_apply, Matrix.sub_apply, Matrix.smul_apply, map_sub, hπ, sub_zero, Matrix.of_apply]
     exact hB i j
@@ -214,7 +214,7 @@ theorem GlobalTheory.HTFaith.faithful : ∀ (p : ℕ) [Fact p.Prime] (D : Global
     intro r
     obtain ⟨s, rfl⟩ := Ideal.Quotient.mk_surjective r
     obtain ⟨c, z, hz⟩ := GlobalTheory.HTFaith.approx p (𝓞 D.F) s
-    exact ⟨c, by rw [hz, map_add, hπ, add_zero]⟩
+    exact ⟨c, by rw [hz, map_add (f := _), hπ, add_zero]⟩
   have hscal : ∀ c : 𝓞 D.F, Φ (algebraMap _ _ c) = Matrix.scalar _ (π (c ⊗ₜ 1)) := by
     intro c
     rw [hΦ]

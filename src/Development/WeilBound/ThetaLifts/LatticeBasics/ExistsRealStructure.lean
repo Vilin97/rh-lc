@@ -88,7 +88,7 @@ theorem phase_line (ψ : AddChar (AF F) ℂ) (hψ : IsStd ψ) (a b x : κ → AF
     congr 1
     · exact Finset.sum_congr rfl fun i _ => by ring
     · exact Finset.sum_congr rfl fun i _ => by ring
-  rw [ev, map_add, map_smul, map_smul, linForm_apply]
+  rw [ev, map_add (f := _), map_smul, map_smul, linForm_apply]
   simp [smul_eq_mul]
 
 def pt (x : κ → mixedEmbedding.mixedSpace F) (y : κ → FiniteAdeleRing (𝓞 F) F) : κ → AF F :=
@@ -184,7 +184,7 @@ theorem exists_real_structure (σ : E →ₐ[F] E) (h : IsCMExt F E σ) (emb : �
   have es : ∀ p, e (s p) = (fun i => lift (p.1 i), fun i => lift (p.2 i)) := fun p => e.apply_symm_apply _
   have sAdd : ∀ p q, s (p + q) = s p + s q := fun p q => by
     show e.symm _ = e.symm _ + e.symm _
-    rw [← map_add]
+    rw [← map_add (f := _)]
     congr 1
     refine Prod.ext (funext fun i => lift_add _ _) (funext fun i => lift_add _ _)
   have sSmul : ∀ (t : ℝ) p, s (t • p) = realAd F t • s p := fun t p => by

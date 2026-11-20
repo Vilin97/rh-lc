@@ -46,7 +46,7 @@ private theorem gauss_step (δ : F) (v : V4 F) (i : Fin 4) (w : InfinitePlace F)
       ← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun w' _ => ?_
     have h2 : TR.pInf F (2 : A F) = 2 := by rw [map_ofNat]
-    simp only [map_add, map_mul, hp, h2, Pi.add_apply]
+    simp only [map_add (f := _), map_mul, hp, h2, Pi.add_apply]
   have hg : ∀ u : V4 F, gauss δ u =
       Complex.exp (-(Real.pi : ℂ) * ((∑ w', TR.pInf F (qG δ u) w' : ℝ) : ℂ)) := by
     intro u

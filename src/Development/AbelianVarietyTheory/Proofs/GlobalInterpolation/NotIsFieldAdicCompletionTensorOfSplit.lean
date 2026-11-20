@@ -120,11 +120,11 @@ theorem _root_.GlobalTheory.SplitPlace.not_isField_of_split : ∀ (F E : Type) [
   have hβF : (β : v.adicCompletion F) ^ 2 + algebraMap F (v.adicCompletion F) (b : F) * β
       + algebraMap F (v.adicCompletion F) (c : F) = 0 := by
     have h := congrArg (v.adicCompletionIntegers F).subtype hβ
-    rw [map_add, map_add, map_mul, map_pow, map_zero] at h
+    rw [map_add (f := _), map_add (f := _), map_mul, map_pow, map_zero] at h
     exact h
   have hαE : (α : E) ^ 2 + algebraMap F E (b : F) * α + algebraMap F E (c : F) = 0 := by
     have h := congrArg (algebraMap (𝓞 E) E) hα2
-    rw [map_add, map_add, map_mul, map_pow, map_zero] at h
+    rw [map_add (f := _), map_add (f := _), map_mul, map_pow, map_zero] at h
     exact h
   set x : v.adicCompletion F ⊗[F] E :=
     Algebra.TensorProduct.includeLeft (S := F) (B := E) (β : v.adicCompletion F) with hx
@@ -132,11 +132,11 @@ theorem _root_.GlobalTheory.SplitPlace.not_isField_of_split : ∀ (F E : Type) [
     Algebra.TensorProduct.includeRight (A := v.adicCompletion F) (α : E) with hy
   have hxeq : x ^ 2 + algebraMap F _ (b : F) * x + algebraMap F _ (c : F) = 0 := by
     have h := congrArg (Algebra.TensorProduct.includeLeft (R := F) (S := F) (B := E)) hβF
-    rw [map_add, map_add, map_mul, map_pow, AlgHom.commutes, AlgHom.commutes, map_zero] at h
+    rw [map_add (f := _), map_add (f := _), map_mul, map_pow, AlgHom.commutes, AlgHom.commutes, map_zero] at h
     exact h
   have hyeq : y ^ 2 + algebraMap F _ (b : F) * y + algebraMap F _ (c : F) = 0 := by
     have h := congrArg (Algebra.TensorProduct.includeRight (R := F) (A := v.adicCompletion F)) hαE
-    rw [map_add, map_add, map_mul, map_pow, AlgHom.commutes, AlgHom.commutes, map_zero] at h
+    rw [map_add (f := _), map_add (f := _), map_mul, map_pow, AlgHom.commutes, AlgHom.commutes, map_zero] at h
     exact h
   have hprod : (x - y) * (x + y + algebraMap F _ (b : F)) = 0 := by
     linear_combination hxeq - hyeq

@@ -170,7 +170,7 @@ theorem dense : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFiel
     induction r using TensorProduct.induction_on with
     | zero => simp
     | tmul a z => simp [cA, Algebra.TensorProduct.map_tmul, hinv]
-    | add a b ha hb => simp only [map_add, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), ha, hb]
   have hcF : ∀ t : F, (cA σ).toRingHom (algebraMap F (AE F E) t) = algebraMap F (AE F E) t := fun t => by
     change cA σ _ = _
     rw [IsScalarTower.algebraMap_apply F (AF F) (AE F E), AlgHom.commutes]

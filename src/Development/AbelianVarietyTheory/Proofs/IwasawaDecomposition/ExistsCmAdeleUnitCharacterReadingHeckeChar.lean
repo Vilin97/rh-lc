@@ -71,7 +71,7 @@ theorem isDelta_of_isPlIdem {D : D7} {Φ : AE D →+* FiniteAdeleRing (𝓞 D.ho
 
 theorem map_loc {A B : Type} [Ring A] [Ring B] (f : A →+* B) (e k : A) :
     f (1 + e * (k - 1)) = 1 + f e * (f k - 1) := by
-  rw [map_add, map_mul, map_sub, map_one]
+  rw [map_add (f := _), map_mul, map_sub, map_one]
 
 set_option maxHeartbeats 800000 in
 
@@ -88,7 +88,7 @@ theorem exists_hom (D : D7) : ∃ Θ : AE D →+* AdeleRing (𝓞 D.host.E) D.ho
   have hfin : ∀ z, (Θ z).2 = Φ z := fun z => by
     induction z using TensorProduct.induction_on with
     | zero => rw [RingHom.map_zero, RingHom.map_zero]; rfl
-    | add x y hx hy => rw [RingHom.map_add, RingHom.map_add, ← hx, ← hy]; rfl
+    | add x y hx hy => rw [RingHom.map_add (f := _), RingHom.map_add (f := _), ← hx, ← hy]; rfl
     | tmul a x =>
       have e : (a ⊗ₜ[D.host.F] x : AE D) = algebraMap (AF D.host.F) (AE D) a * incA D x := by
         change _ = (a ⊗ₜ[D.host.F] (1 : D.host.E)) * ((1 : AF D.host.F) ⊗ₜ[D.host.F] x)

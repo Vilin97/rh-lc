@@ -80,7 +80,7 @@ theorem exists_cut (O : Subring R) {f f' : R} (hf : f ∈ O) (hf' : f' ∈ O) (h
       this]
     rfl
   show ρ (Ym i j) = _
-  rw [split, map_add, map_add, map_mul, map_sub, map_add, hρ, hz, hz', map_one]
+  rw [split, map_add (f := _), map_add (f := _), map_mul, map_sub, map_add (f := _), hρ, hz, hz', map_one]
   simp
 
 end General

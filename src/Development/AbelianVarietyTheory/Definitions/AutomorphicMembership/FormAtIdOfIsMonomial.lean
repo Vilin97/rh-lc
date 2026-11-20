@@ -208,7 +208,7 @@ theorem inCone_of_isMonomial {m : ℕ} {t : Fin m → R} {γ : Fin m → LinearM
   refine ⟨fun i => c i, fun i => (c i).cast_nonneg, LinearMap.ext₂ fun a b => ?_⟩
   have e : be a b = ∑ i, (c i : ℤ) * γ i a b := by
     have h1 := diag (a + b)
-    simp only [map_add, LinearMap.add_apply, diag a, diag b, hbe b a, mul_add, Finset.sum_add_distrib, hs _ b a] at h1
+    simp only [map_add (f := _), LinearMap.add_apply, diag a, diag b, hbe b a, mul_add, Finset.sum_add_distrib, hs _ b a] at h1
     linarith
   simp [LinearMap.sum_apply, e]
 

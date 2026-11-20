@@ -122,7 +122,7 @@ theorem conj_extE_cong {n c q j : ℕ} (hq : (q : E) ≠ 0) (ex : ℕ → ℕ) (
   convert h1 using 1
   have e : (h⁻¹ * extE c κ * h) x - x = h⁻¹ (Loc.inX E n c (κ (resX c (h x)) - resX c (h x))) := by
     show h⁻¹ (extE c κ (h x)) - x = _
-    rw [extE_apply, map_add, show h⁻¹ (h x) = x from LinearEquiv.symm_apply_apply _ x, add_sub_cancel_left]
+    rw [extE_apply, map_add (f := _), show h⁻¹ (h x) = x from LinearEquiv.symm_apply_apply _ x, add_sub_cancel_left]
   rw [e]
   simp only [map_smul, ← smul_sub, smul_smul]
   congr 1

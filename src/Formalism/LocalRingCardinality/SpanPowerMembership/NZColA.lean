@@ -67,7 +67,7 @@ def toCmp (hstd : ∀ u, ((D.fm u).lat 0).L = Submodule.span (𝓞 D.what₂.LL)
         obtain ⟨a, rfl⟩ := hy
         rw [B.cmp_basis]; exact Submodule.subset_span ⟨a, rfl⟩
       | zero => rw [map_zero]; exact Submodule.zero_mem _
-      | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+      | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
       | smul r y _ hy =>
         obtain ⟨o, ho⟩ := B.int_mem u w hg r
         have h1 : r • y = (r : D.what₂.LL) • y := (algebraMap_smul D.what₂.LL r y).symm

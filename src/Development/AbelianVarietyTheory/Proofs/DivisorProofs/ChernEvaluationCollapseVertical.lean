@@ -77,7 +77,7 @@ theorem evC_sub_collapseQ_mem : ∀ (D : D7) (A : Amb D) (N j : ℕ) (S : Sig A 
       Ideal.Quotient.mk I ((mdlOf z jc).Z.c1 (rootOf z jc (false, e' l))) ∨
       Ideal.Quotient.mk I ((mdlOf z jc).Z.c1 ((mdlOf z jc).lieW.x l)) =
       -Ideal.Quotient.mk I ((mdlOf z jc).Z.c1 (rootOf z jc (false, e' l))) := fun l => by
-    rw [hV l, map_add, hI, add_zero]
+    rw [hV l, map_add (f := _), hI, add_zero]
     split_ifs
     · left
       rw [one_smul]

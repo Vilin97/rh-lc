@@ -400,7 +400,7 @@ theorem exists_transports (h2 : Module.finrank ℚ K = 2) (σ : ℂ ≃ₐ[K] �
       ((hα _).2 (by convert h1 using 1; field_simp))
     exact ⟨x, by simp only [R]; rwa [hx, mul_div_cancel₀ _ hα0]⟩
   have Radd : ∀ {x y x' y'}, R x y → R x' y' → R (x + x') (y + y') := fun a b => by
-    simpa only [R, map_add, mul_add] using a.add g2 g3 b
+    simpa only [R, map_add (f := _), mul_add] using a.add g2 g3 b
   have Rsmul : ∀ (r : 𝓞 K) {x y}, R x y → R (r • x) (r • y) := fun r x y a => by
     have := hmul r a
     rw [mul_left_comm, mul_left_comm (f r)] at this

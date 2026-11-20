@@ -69,7 +69,7 @@ def fixSp (F F' F'' : FlagD H r) (β : V ≃ₗ[K] V) : Submodule K V where
     rintro x y ⟨hx, a, ha, h1, h2⟩ ⟨hy, b, hb, h3, h4⟩
     refine ⟨add_mem hx hy, a + b, add_mem ha hb, ?_, ?_⟩
     · rw [add_sub_add_comm]; exact add_mem h1 h3
-    · rw [map_add, add_sub_add_comm]; exact add_mem h2 h4
+    · rw [map_add (f := _), add_sub_add_comm]; exact add_mem h2 h4
   smul_mem' := by
     rintro c x ⟨hx, a, ha, h1, h2⟩
     refine ⟨Submodule.smul_mem _ c hx, c • a, Submodule.smul_mem _ c ha, ?_, ?_⟩
@@ -86,7 +86,7 @@ theorem perp_sup (S S' : Submodule K V) : perp H (S ⊔ S') = perp H S ⊓ perp 
   refine le_antisymm (le_inf (perp_anti le_sup_left) (perp_anti le_sup_right)) fun y hy => ?_
   refine (mem_perp_iff H _ y).2 fun x hx => ?_
   obtain ⟨a, ha, b, hb, rfl⟩ := Submodule.mem_sup.1 hx
-  rw [map_add, (mem_perp_iff H _ y).1 hy.1 a ha, (mem_perp_iff H _ y).1 hy.2 b hb, add_zero]
+  rw [map_add (f := _), (mem_perp_iff H _ y).1 hy.1 a ha, (mem_perp_iff H _ y).1 hy.2 b hb, add_zero]
 
 theorem mem_perp_span (s : Set V) (y : V) :
     y ∈ perp H (Submodule.span K s) ↔ ∀ x ∈ s, H.B y x = 0 := by
@@ -95,7 +95,7 @@ theorem mem_perp_span (s : Set V) (y : V) :
   induction hx using Submodule.span_induction with
   | mem x hx => exact h x hx
   | zero => simp
-  | add a b _ _ ha hb => rw [map_add, ha, hb, add_zero]
+  | add a b _ _ ha hb => rw [map_add (f := _), ha, hb, add_zero]
   | smul c a _ ha => rw [LinearMap.map_smulₛₗ, ha, smul_zero]
 
 theorem X_eq_span (F : FlagD H r) :
@@ -426,7 +426,7 @@ theorem isPairMap_of_aut (hc : IsCong F F'' Λ g) (hβ : β ∈ isomGrp H) (hΛ 
     simp only [k1, hB]
   refine isPairMap_of_mem_iff k1 k2 (fun x _ y _ => hB x y) (fun x => ?_) hz fun l hl l' hl' e => ?_
   · rw [mem_redLat, mem_redLat, k2, β.surjective.exists]
-    simp only [k1, ← map_add, k0]
+    simp only [k1, ← map_add (f := _), k0]
   · have h1 : β l - l' ∈ latX F Λ ⊔ smulLat g Λ :=
       hc.1 ▸ Submodule.mem_sup_left ⟨sub_mem ((k0 l).2 hl.1) hl'.1, e⟩
     simpa using sub_mem (hι l hl) h1

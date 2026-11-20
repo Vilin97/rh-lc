@@ -26,9 +26,9 @@ theorem eq_one_of_isOpen_ker {θ : InfFam D} (hθ : IsInfFam θ) {χ : (AE D)ˣ 
   obtain ⟨σ, hσ⟩ := GlobalTheory.FockCompare.exists_chart hθ
   let a : (D.what₂.Tau → ℂ) → AE D := fun z => 1 + σ fun τ => Complex.exp (z τ) - 1
   have a1 : ∀ z, finPart D (a z) = 1 := fun z => by
-    simp only [a]; rw [RingHom.map_add, hσ.fin, RingHom.map_one, add_zero]
+    simp only [a]; rw [RingHom.map_add (f := _), hσ.fin, RingHom.map_one, add_zero]
   have a2 : ∀ z τ, θ τ (infPart D (a z)) = Complex.exp (z τ) := fun z τ => by
-    simp only [a]; rw [RingHom.map_add, RingHom.map_add, hσ.comp, RingHom.map_one, RingHom.map_one]; ring
+    simp only [a]; rw [RingHom.map_add (f := _), RingHom.map_add (f := _), hσ.comp, RingHom.map_one, RingHom.map_one]; ring
   have a3 : ∀ z, a z * a (-z) = 1 := fun z => adele_ext hθ
     (by rw [RingHom.map_mul, a1, a1, RingHom.map_one, one_mul]) fun τ => by
       rw [RingHom.map_mul, RingHom.map_mul, a2, a2, RingHom.map_one, RingHom.map_one, ← Complex.exp_add]

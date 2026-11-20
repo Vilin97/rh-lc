@@ -33,7 +33,7 @@ theorem holUnif_transport_linearEquiv : ∀ (h : ℕ) (A : Over (Sp ℂ)) [GrpOb
     rw [h1, ← Submodule.map_span, u.full, Submodule.map_top, LinearMap.range_eq_top]
     exact (T.symm.restrictScalars ℝ).surjective
   refine ⟨{ ex := fun z => u.ex (T z)
-            ex_add := fun z w => by rw [map_add, u.ex_add]
+            ex_add := fun z w => by rw [map_add (f := _), u.ex_add]
             ex_onto := u.ex_onto.comp T.surjective
             Λ := Λ'
             ker := fun z => u.ker (T z)

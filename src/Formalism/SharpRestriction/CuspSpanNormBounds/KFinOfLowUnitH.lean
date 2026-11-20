@@ -82,7 +82,7 @@ theorem kFin_of_lowUnitH' {ε : Fin (2 * r + k + 1) → Bool} {lam : Fin (2 * r 
     | insert S t hS ih =>
       rw [Finset.sup_insert] at hx ⊢
       obtain ⟨y, hy, y', hy', rfl⟩ := Submodule.mem_sup.1 hx
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem_sup (hK S y hy) (ih y' hy')
 
 end Low

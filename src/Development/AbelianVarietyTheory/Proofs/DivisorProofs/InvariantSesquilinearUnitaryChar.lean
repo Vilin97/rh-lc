@@ -69,7 +69,7 @@ theorem GlobalTheory.FullRankCoinv.form_diag_right_invariant : ∀ (k : Type) [F
       simp
     | add x y _ _ hx hy =>
       change (m : ℂ) * Λ ((fun Y => x (Y * h.1)) + (fun Y => y (Y * h.1))) = Λ (x + y)
-      rw [map_add, map_add, mul_add, hx, hy]
+      rw [map_add (f := _), map_add (f := _), mul_add, hx, hy]
     | smul c x _ hx =>
       change (m : ℂ) * Λ (c • (fun Y => x (Y * h.1))) = Λ (c • x)
       rw [map_smul, map_smul, smul_eq_mul, smul_eq_mul, mul_left_comm, hx]

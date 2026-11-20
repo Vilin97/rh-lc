@@ -78,7 +78,7 @@ theorem gauge_one (D : ModPG R n (Vc k m)) (Dt : TopData n m) (N : Lats k n m)
     push_cast; nlinarith
   have hc : D.γ i (b i - D.φ i (y (i - 1)) + x i) - (b i - D.φ i (y (i - 1)) + x i) =
       D.φ i (g (i - 1) - (D.γ (i - 1) (y (i - 1)) - y (i - 1))) - (g i - (D.γ i (x i) - x i)) := by
-    simp only [map_sub, map_add, D.comm]
+    simp only [map_sub, map_add (f := _), D.comm]
     linear_combination (norm := module) h0
   have hsh : ∀ (a : ℤ) (P : Submodule k⟦X⟧ (Vc k m)), 0 ≤ a → P ≤ sh (-a) P := fun a P ha => by
     simpa [sh_zero_eq] using sh_le_sh_of_le (a := 0) (b := -a) (by omega) P

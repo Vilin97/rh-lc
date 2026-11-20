@@ -157,6 +157,6 @@ theorem riemBasic : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (g : 
   refine ⟨Riem.inj R, Riem.span_top R, fun s => ?_, Riem.sum_eigComp R.B, Riem.orth R⟩
   obtain ⟨p, h₁, h₂, h₃, h₄⟩ := Riem.exists_proj R.B s
   simp only [h₁]
-  exact ⟨h₂, h₃, fun c x y => by rw [map_add, map_smul], h₄⟩
+  exact ⟨h₂, h₃, fun c x y => by rw [map_add (f := _), map_smul], h₄⟩
 
 end SheetDecomposition

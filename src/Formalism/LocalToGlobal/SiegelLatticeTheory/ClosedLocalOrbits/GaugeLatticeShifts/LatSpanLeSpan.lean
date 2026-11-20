@@ -165,7 +165,7 @@ theorem hT_pj_left (v w : S.V) : S.hT (pj e f v) w = S.hT (pj e f v) (pj e f w) 
   have h2 : S.hT (pj e f v) (pY e f w) = 0 := by
     set_option synthInstance.maxHeartbeats 100000 in
       simp [pY_apply, map_sum, h0']
-  simp [map_add, h1, h2]
+  simp [map_add (f := _), h1, h2]
 
 include hee hff hef in
 
@@ -173,7 +173,7 @@ theorem hT_coord (v w : S.V) :
     S.hT v w = ∑ a, starRingEnd E (S.hT (f a) v) * S.hT (e a) w +
       ∑ a, starRingEnd E (S.hT (e a) v) * S.hT (f a) w + S.hT (pj e f v) (pj e f w) := by
   conv_lhs => rw [decomp (e := e) (f := f) v]
-  rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, hT_pX_left, hT_pY_left,
+  rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, hT_pX_left, hT_pY_left,
     hT_pj_left hee hff hef]
 
 end Levi
@@ -189,16 +189,16 @@ variable (hee : ∀ a b, S.hT (e a) (e b) = 0) (hff : ∀ a b, S.hT (f a) (f b) 
 include hff hef in
 theorem lmap_coordX (v : S.V) (b : Fin r) : S.hT (f b) (lmap e f δ v) = S.hT (f b) (δ (pX e f v)) := by
   rw [lmap_apply]
-  simp [map_add, hT_f_pj hff hef, hT_f_pY hff]
+  simp [map_add (f := _), hT_f_pj hff hef, hT_f_pY hff]
 
 include hee hef hX in
 theorem lmap_coordY (v : S.V) (b : Fin r) : S.hT (e b) (lmap e f δ v) = S.hT (e b) (δ (pY e f v)) := by
   rw [lmap_apply]
-  simp [map_add, hT_e_pj hee hef, hT_e_pY hef, perpX_of_X hee _ (hX _ (pX_mem v))]
+  simp [map_add (f := _), hT_e_pj hee hef, hT_e_pY hef, perpX_of_X hee _ (hX _ (pX_mem v))]
 
 include hee hff hef hX in
 theorem pj_lmap (v : S.V) : pj e f (lmap e f δ v) = pj e f v := by
-  rw [lmap_apply, map_add, map_add, pj_pj hee hff hef, pj_of_memX hee hef _ (hX _ (pX_mem v)),
+  rw [lmap_apply, map_add (f := _), map_add (f := _), pj_pj hee hff hef, pj_of_memX hee hef _ (hX _ (pX_mem v)),
     pj_pY hff hef]
   abel
 
@@ -217,7 +217,7 @@ theorem lmap_isom (v w : S.V) : S.hT (lmap e f δ v) (lmap e f δ w) = S.hT v w 
     rw [← hT_pY_left]
     have h0 : S.hT (pY e f (δ (pY e f v))) (δ (pX e f w)) = S.hT (δ (pY e f v)) (δ (pX e f w)) := by
       conv_rhs => rw [decomp (e := e) (f := f) (δ (pY e f v))]
-      rw [map_add, map_add, LinearMap.add_apply, LinearMap.add_apply, hT_pX_left,
+      rw [map_add (f := _), map_add (f := _), LinearMap.add_apply, LinearMap.add_apply, hT_pX_left,
         hT_pj_left hee hff hef, pj_of_memX hee hef _ (hx w)]
       simp [perpX_of_X hee _ (hx w)]
     rw [h0, isom_apply hδ, hT_pY_left]
@@ -300,7 +300,7 @@ theorem lmap_mem (v : S.V) (hv : v ∈ Λ) : lmap e f δ v ∈ Λ := by
   have hpXw : ∀ x ∈ latSpan aa e, ∀ l ∈ L, ∀ y ∈ latSpan (fun a => (aa a)⁻¹) f, pX e f (x + l + y) = x := by
     intro x hx l hl y hy
     have hl0 : pX e f l = 0 := by rw [pX_apply]; simp [(hLp l hl _).2]
-    rw [map_add, map_add, pX_of_mem hef _ (latSpan_le_span aa e x hx), hl0,
+    rw [map_add (f := _), map_add (f := _), pX_of_mem hef _ (latSpan_le_span aa e x hx), hl0,
       pX_of_memY hff _ (latSpan_le_span _ f y hy)]
     abel
   obtain ⟨x, hx, l, hl, y, hy, rfl⟩ := hdec v hv
@@ -311,7 +311,7 @@ theorem lmap_mem (v : S.V) (hv : v ∈ Λ) : lmap e f δ v ∈ Λ := by
   have el : lmap e f δ l = l := lmap_perp l (hLp l hl)
   have ey : lmap e f δ y = pY e f (δ y) := by
     rw [lmap_apply, pj_of_memY hff hef _ hyE, pX_of_memY hff _ hyE, pY_of_mem hef _ hyE]; simp
-  rw [map_add, map_add, ex, el, ey]
+  rw [map_add (f := _), map_add (f := _), ex, el, ey]
   refine Λ.add_mem (Λ.add_mem (hδ1 x hx) (hLΛ hl)) ?_
   have hd : pY e f (δ y) ∈ Formalism.HermitianLatticesTheory.dual S.hT Λ := by
     refine mem_dual'.2 fun w hw => ?_

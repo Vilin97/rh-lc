@@ -76,7 +76,7 @@ theorem weil_comm_sliceSum_target : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ
       funext u
       simp only [Pi.add_apply, add_mul]
       exact integral_add (intF _ h₁.1 u) (intF _ h₂.1 u)
-    rw [e1, map_add, Pi.add_apply, h₁.2, h₂.2]
+    rw [e1, map_add (f := _), Pi.add_apply, h₁.2, h₂.2]
     simp only [Pi.add_apply, add_mul]
     exact (integral_add (intG _ h₁.1) (intG _ h₂.1)).symm
   have Psmul : ∀ (z : ℂ) c, P c → P (fun w => z * c w) := by

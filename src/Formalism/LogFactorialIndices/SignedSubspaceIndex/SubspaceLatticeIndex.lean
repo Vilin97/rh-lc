@@ -126,7 +126,7 @@ theorem subspace_lattice_index : SubspaceIndex := by
     induction hx using Submodule.span_induction with
     | mem y hy => exact hNle ⟨q y, Submodule.mem_map_of_mem hy⟩
     | zero => simp
-    | add y z _ _ hy hz => rw [map_add]; exact Submodule.add_mem _ hy hz
+    | add y z _ _ hy hz => rw [map_add (f := _)]; exact Submodule.add_mem _ hy hz
     | smul a y _ hy => rw [map_smul]; exact Submodule.smul_mem _ a hy
   have hd : Module.finrank K X - Module.finrank K W ≤ n := by
     have e1 := Submodule.finrank_quotient_add_finrank W
@@ -153,7 +153,7 @@ theorem subspace_lattice_index : SubspaceIndex := by
     rw [Submodule.mem_comap] at hm
     obtain ⟨θ, hθ, w, hw, hsum⟩ := Submodule.mem_sup.mp hm
     have hm' : m = ⟨θ, hΘM hθ⟩ + ⟨w, hMW hw⟩ := Subtype.ext (by simp [hsum])
-    rw [LinearMap.mem_ker, hm', map_add]
+    rw [LinearMap.mem_ker, hm', map_add (f := _)]
     have hw0 : φ ⟨w, hMW hw⟩ = 0 := by
       apply Subtype.ext
       simp only [φ, ZeroMemClass.coe_zero]

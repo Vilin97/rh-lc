@@ -26,7 +26,7 @@ theorem hom_aeval {R S : Type} [CommRing R] [CommRing S] (φ : R →+* S) (v : (
     φ (MvPolynomial.aeval v F) = MvPolynomial.aeval (fun p => φ (v p)) F := by
   induction F using MvPolynomial.induction_on with
   | C r => simp
-  | add p q hp hq => simp only [map_add, hp, hq]
+  | add p q hp hq => simp only [map_add (f := _), hp, hq]
   | mul_X p q hp => simp only [map_mul, hp, MvPolynomial.aeval_X]
 
 theorem aeval_eq_ratio {y : (Σ k, ι k) → Ω} {c : ∀ k, ι k} (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {F : MRing ι}

@@ -33,7 +33,7 @@ theorem cA_cA_self (z : AE D) : cA D (cA D z) = z := by
     show a ⊗ₜ[D.host.F] D.sp.cm.sig (D.sp.cm.sig x) = a ⊗ₜ[D.host.F] x
     congr 1
     exact star_star x
-  | add x y hx hy => rw [map_add, map_add, hx, hy]
+  | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy]
 
 theorem infPart_cA_of_zero {z : AE D} (h : infPart D z = 0) : infPart D (cA D z) = 0 := by
   have key : ∀ w : AE D, infPart D (cA D w) =
@@ -42,12 +42,12 @@ theorem infPart_cA_of_zero {z : AE D} (h : infPart D z = 0) : infPart D (cA D z)
     induction w using TensorProduct.induction_on with
     | zero => simp
     | tmul a x => rfl
-    | add x y hx hy => rw [map_add, map_add, hx, hy, map_add, map_add]
+    | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
   rw [key, h, map_zero]
 
 theorem symplO_add_right' (S T : HSp D) (x y y' : WO S T) :
     symplO S T x (y + y') = symplO S T x y + symplO S T x y' := by
-  unfold symplO; rw [hO_add_right, mul_add, map_add]
+  unfold symplO; rw [hO_add_right, mul_add, map_add (f := _)]
 
 theorem hO_eq_zero_of {f g : AE D} (hfg : cA D g * f = 0) {S T : HSp D} {x y' : WO S T} (hx : IsHalf f x) :
     hO S T x (g • y') = 0 := by

@@ -105,7 +105,7 @@ theorem _root_.GlobalTheory.CharValueLength.injOn_and_lenUnit : ∀ (l : ℕ) [F
     intro k hk
     obtain ⟨w', hw', h'⟩ := principalUnit_pow_eq_one_add_pow_add_padicValNat hs hs2 v.isUnit huv hk
     refine ⟨(hw'.map (algebraMap ℤ_[l] O)).unit, ?_⟩
-    rw [IsUnit.unit_spec, ← map_pow, h', map_add, map_one, map_mul, map_pow, map_natCast]
+    rw [IsUnit.unit_spec, ← map_pow, h', map_add (f := _), map_one, map_mul, map_pow, map_natCast]
     ring
   have hrel : ∀ c, 1 ≤ c → c ≤ t → (χ c : O) * algebraMap ℤ_[l] O u ^ (c - 1) = χ 1 := by
     intro c h1 h2

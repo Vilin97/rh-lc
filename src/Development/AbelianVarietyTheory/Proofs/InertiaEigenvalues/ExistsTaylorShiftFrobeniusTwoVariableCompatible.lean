@@ -46,7 +46,7 @@ theorem iterate_derivative_add (n : ℕ) (f g : K⟦X⟧) :
       (⇑(PowerSeries.derivative (R := K)))^[n] f + (⇑(PowerSeries.derivative (R := K)))^[n] g := by
   induction n generalizing f g with
   | zero => rfl
-  | succ n ih => rw [Function.iterate_succ_apply, Function.iterate_succ_apply, Function.iterate_succ_apply, map_add, ih]
+  | succ n ih => rw [Function.iterate_succ_apply, Function.iterate_succ_apply, Function.iterate_succ_apply, map_add (f := _), ih]
 
 def shift : K⟦X⟧ →+* K⟦X⟧⟦X⟧ where
   toFun := shiftFun
@@ -80,7 +80,7 @@ def shift : K⟦X⟧ →+* K⟦X⟧⟦X⟧ where
     rw [coeff_shiftFun, iterate_derivative_zero, smul_zero, map_zero]
   map_add' f g := by
     ext i : 1
-    rw [coeff_shiftFun, map_add, coeff_shiftFun, coeff_shiftFun, iterate_derivative_add, smul_add]
+    rw [coeff_shiftFun, map_add (f := _), coeff_shiftFun, coeff_shiftFun, iterate_derivative_add, smul_add]
 
 theorem coeff_shift (f : K⟦X⟧) (i : ℕ) :
     coeff i (shift f) = ((i.factorial : K)⁻¹) • (⇑(PowerSeries.derivative (R := K)))^[i] f :=
@@ -96,7 +96,7 @@ theorem shift_C (c : K) : shift (C c) = C (C c : K⟦X⟧) := by
 
 theorem shift_X : shift (X : K⟦X⟧) = C (X : K⟦X⟧) + X := by
   ext i : 1
-  rw [coeff_shift, map_add, coeff_C, coeff_X]
+  rw [coeff_shift, map_add (f := _), coeff_C, coeff_X]
   rcases i with _ | _ | i
   · simp
   · simp
@@ -193,7 +193,7 @@ theorem ringHom_eq_of (α β : K⟦X⟧ →+* K⟦X⟧⟦X⟧) (hC : ∀ c : K, 
     intro k hk
     simp [coeff_trunc, hk]
   have hf : f = (trunc N f : K⟦X⟧) + X ^ N * g := by rw [← hg]; ring
-  rw [hf, map_add, map_add, hpoly, map_mul, map_mul, map_pow, map_pow, ← hX, hs, add_sub_add_left_eq_sub,
+  rw [hf, map_add (f := _), map_add (f := _), hpoly, map_mul, map_mul, map_pow, map_pow, ← hX, hs, add_sub_add_left_eq_sub,
     ← mul_sub, ← pow_mul]
   exact small_mono (small_pow_mul _ _) (Nat.le_mul_of_pos_left N hm)
 
@@ -217,7 +217,7 @@ theorem shift_frob_exists : ∀ (l : ℕ) [Fact l.Prime] (K : Type) [NormedField
       · simp only [RingHom.comp_apply, AlgHom.toRingHom_eq_coe, RingHom.coe_coe, shift_X, frob_X, map_pow,
           map_add, frobeniusTwoVariablePowerSeries_C, frobeniusTwoVariablePowerSeries_X, frobW, frob_X]
         ring
-      · simp only [RingHom.comp_apply, shift_X, map_add, frobeniusTwoVariablePowerSeries_C, frobeniusTwoVariablePowerSeries_X, frobW, frob_X]
+      · simp only [RingHom.comp_apply, shift_X, map_add (f := _), frobeniusTwoVariablePowerSeries_C, frobeniusTwoVariablePowerSeries_X, frobW, frob_X]
         ring
     exact RingHom.congr_fun key f
 

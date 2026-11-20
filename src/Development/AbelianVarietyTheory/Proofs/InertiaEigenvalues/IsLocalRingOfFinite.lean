@@ -23,7 +23,7 @@ theorem precomplete_of_finite (O : Type) [CommRing O] (I : Ideal O) [IsPrecomple
   | add a b ha hb =>
     obtain ⟨x, hx⟩ := ha
     obtain ⟨y, hy⟩ := hb
-    exact ⟨x + y, by rw [map_add, map_add, hx, hy]⟩
+    exact ⟨x + y, by rw [map_add (f := _), map_add (f := _), hx, hy]⟩
 
 theorem exists_pow_idem (M : Type) [Monoid M] [Finite M] (x : M) :
     ∃ n : ℕ, 0 < n ∧ x ^ n * x ^ n = x ^ n := by
@@ -109,7 +109,7 @@ theorem odd_of_involution (k : Type) [Field k] [Finite k] (τ : k →+* k) (hτ 
     · rintro ⟨⟨u, hu⟩, ⟨v, hv⟩⟩ ⟨⟨u', hu'⟩, ⟨v', hv'⟩⟩ h
       have h1 : u + v * a = u' + v' * a := h
       have h2 := congrArg τ h1
-      rw [map_add, map_add, map_mul, map_mul, (hF _).1 hu, (hF _).1 hv, (hF _).1 hu',
+      rw [map_add (f := _), map_add (f := _), map_mul, map_mul, (hF _).1 hu, (hF _).1 hv, (hF _).1 hu',
         (hF _).1 hv'] at h2
       have h3 : (v - v') * (a - τ a) = 0 := by linear_combination h1 - h2
       have h4 : v = v' := sub_eq_zero.1 ((mul_eq_zero.1 h3).resolve_right hδ)
@@ -192,7 +192,7 @@ theorem exists_conj_int (K : UQ) :
   · rw [← hc]; simp
   · simp only [map_mul, ← hc]
   · simp only [← hc]; simp
-  · simp only [map_add, ← hc]
+  · simp only [map_add (f := _), ← hc]
 
 theorem exists_fixed_odd (K : UQ) (L : Type) [Field L] [Algebra K.E L] [Algebra K.O L]
     [IsScalarTower K.O K.E L] [Module.Finite K.E L] (τ : L →+* L) (hτ : ∀ x, τ (τ x) = x)
@@ -248,7 +248,7 @@ theorem exists_fixed_odd (K : UQ) (L : Type) [Field L] [Algebra K.E L] [Algebra 
     have key : ∀ s : R, s + t s * u ∉ IsLocalRing.maximalIdeal R →
         ∃ p : R, t p = p ∧ IsLocalRing.maximalIdeal R = Ideal.span {p} := by
       intro s hs
-      refine ⟨s * p + t (s * p), by rw [map_add, htt, add_comm], ?_⟩
+      refine ⟨s * p + t (s * p), by rw [map_add (f := _), htt, add_comm], ?_⟩
       have : s * p + t (s * p) = (s + t s * u) * p := by rw [map_mul, ← hu]; ring
       rw [this, hm, Ideal.span_singleton_mul_left_unit (IsLocalRing.notMem_maximalIdeal.1 hs)]
     by_cases h1 : 1 + t 1 * u ∈ IsLocalRing.maximalIdeal R
@@ -355,7 +355,7 @@ theorem exists_plus_eta_norm (K : UQ) (B : InvAlg K) (f : B.A) (hf : IsIdempoten
   refine ⟨f * y + (1 - f), ⟨?_, ?_⟩, ?_, ?_⟩
   · refine IsUnit.of_mul_eq_one (f * z + (1 - f)) ?_
     linear_combination (y * z - y - z + 1) * hff + hz
-  · rw [map_add, map_mul, map_sub, map_one, hσ]
+  · rw [map_add (f := _), map_mul, map_sub, map_one, hσ]
     linear_combination hy2
   · linear_combination (1 - y) * hff
   · let e := AlgEquiv.prodQuotientOfIsIdempotentElem K.E (e := 1 - f) (f := f) hf.one_sub hf

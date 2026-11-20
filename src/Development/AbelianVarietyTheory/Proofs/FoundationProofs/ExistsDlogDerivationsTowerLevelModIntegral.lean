@@ -61,9 +61,9 @@ theorem exists_levDer : ∀ (p : ℕ) [Fact p.Prime] (Ω : Type) [Field Ω] [Alg
     intro D
     refine ⟨fun x hx y hy => ?_, fun x hx y hy => ?_, fun c => ?_⟩
     · have e : g (x + y) = g x + g y :=
-        hgm _ (add_mem hx hy) _ (by rw [map_add, hg x hx, hg y hy])
+        hgm _ (add_mem hx hy) _ (by rw [map_add (f := _), hg x hx, hg y hy])
       refine int_congr (hdiv (lift (D (g (x + y))) - lift (D (g x)) - lift (D (g y))) ?_) ?_
-      · rw [map_sub, map_sub, hlift, hlift, hlift, e, map_add]; ring
+      · rw [map_sub, map_sub, hlift, hlift, hlift, e, map_add (f := _)]; ring
       · push_cast; ring
     · have e : g (x * y) = g x * g y :=
         hgm _ (mul_mem hx hy) _ (by rw [map_mul, hg x hx, hg y hy])

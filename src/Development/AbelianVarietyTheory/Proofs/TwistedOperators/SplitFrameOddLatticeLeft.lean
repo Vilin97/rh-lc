@@ -80,7 +80,7 @@ theorem val_le_of_mem_pow (p : SplitPt D k) {w : HeightOneSpectrum (𝓞 D.host.
       rw [e1, map_mul, map_mul, map_mul, pow_succ]
       exact mul_le_mul' (ih x hx) (SplitPt.val_le_unif ⟨ϖ, hϖ⟩ h1)
     · have e1 : ((x + y : 𝓞 D.host.E) : D.host.E) = x + y := rfl
-      rw [e1, map_add, map_add]
+      rw [e1, map_add (f := _), map_add (f := _)]
       exact Valuation.map_add_le _ hx hy
 
 variable {T : Type} {L : LevCh D T} {sc : Consts}

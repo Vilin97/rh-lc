@@ -76,7 +76,7 @@ theorem exists_tensor_equiv (A : Subalgebra R (X → R)) (B : Subalgebra R (Y �
       rw [hC]
       simp only [hm]
       exact mul_mem_pspan a.2 b.2
-    | add a b ha hb => rw [map_add]; exact C.add_mem ha hb
+    | add a b ha hb => rw [map_add (f := _)]; exact C.add_mem ha hb
   have hinj : Function.Injective m := by
     set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]
     intro w hw
@@ -87,18 +87,18 @@ theorem exists_tensor_equiv (A : Subalgebra R (X → R)) (B : Subalgebra R (Y �
     have h1 : ∀ y x w, (s y w).1 x = m w (E (x, y)) := fun y x w => by
       induction w with
       | tmul a b => rw [hm]; simp [s, mul_comm]
-      | add a b ha hb => simp only [map_add, AddMemClass.coe_add, Pi.add_apply, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), AddMemClass.coe_add, Pi.add_apply, ha, hb]
     have h2 : ∀ l y w, (c l w).1 y = l (s y w) := fun l y w => by
       induction w with
       | tmul a b => simp [s, c, mul_comm]
-      | add a b ha hb => simp only [map_add, AddMemClass.coe_add, Pi.add_apply, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), AddMemClass.coe_add, Pi.add_apply, ha, hb]
     have h3 : ∀ w, ∑ i, b i ⊗ₜ c (l i) w = w := fun w => by
       induction w with
       | tmul a b' =>
         conv_rhs => rw [← h a, TensorProduct.sum_tmul]
         refine Finset.sum_congr rfl fun i _ => ?_
         simp [c, TensorProduct.smul_tmul]
-      | add a b ha hb => simp only [map_add, tmul_add, Finset.sum_add_distrib, ha, hb]
+      | add a b ha hb => simp only [map_add (f := _), tmul_add, Finset.sum_add_distrib, ha, hb]
     have h4 : ∀ y, s y w = 0 := fun y => Subtype.ext (funext fun x => by rw [h1, hw]; rfl)
     have h5 : ∀ l, c l w = 0 := fun l => Subtype.ext (funext fun y => by rw [h2, h4, map_zero]; rfl)
     rw [← h3 w]

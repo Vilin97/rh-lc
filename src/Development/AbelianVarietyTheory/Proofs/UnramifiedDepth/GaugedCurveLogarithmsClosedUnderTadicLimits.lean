@@ -84,7 +84,7 @@ theorem cv_closed_under_limits : ∀ (C : Type) [Field C] (V : VF C) (d : ℕ) [
       rw [hγeq]
       exact coeff_alongCv_congr (ha0 n) hb0 _ k fun j k' hk' => (hn k' (hk'.trans hk)).1 j
     refine ⟨n, h1, fun q => ?_⟩
-    rw [map_add, ← (hn m le_rfl).2 q, hsg n q, map_sub,
+    rw [map_add (f := _), ← (hn m le_rfl).2 q, hsg n q, map_sub,
       coeff_alongCv_congr (fun i => (hγ n i).1) hΓ0 _ m h1, sub_add_cancel]
   refine ⟨Γ, fun q => b.2 q + alongCv Γ (X.sg (X.u (1 - g) q)), fun i => ⟨hΓ0 i, fun m => ?_⟩,
     fun q => ⟨?_, fun m => ?_⟩, fun i => ?_, fun q => by simp⟩

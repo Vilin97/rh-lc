@@ -46,7 +46,7 @@ theorem polyChartHom_range :
     | C a =>
       rw [polyChartHom_C]
       exact Algebra.subset_adjoin (Or.inl ⟨a, a.2, rfl⟩)
-    | add p q hp hq => rw [map_add]; exact add_mem hp hq
+    | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
     | mul_X p v hp =>
       rw [map_mul, polyChartHom_X]
       exact mul_mem hp (Algebra.subset_adjoin (Or.inr ⟨v, rfl⟩))
@@ -69,7 +69,7 @@ theorem polyChart_clear (h : ∀ x : F₀, ∃ a ∈ R₀, ∃ b ∈ R₀, b ≠
     obtain ⟨b, hb, p', e⟩ := hp
     obtain ⟨c, hc, q', f⟩ := hq
     refine ⟨b * c, mul_ne_zero hb hc, p' * C c + q' * C b, ?_⟩
-    rw [map_add, map_mul, map_mul, MvPolynomial.map_C, MvPolynomial.map_C, ← e, ← f]
+    rw [map_add (f := _), map_mul, map_mul, MvPolynomial.map_C, MvPolynomial.map_C, ← e, ← f]
     change (p + q) * C ((b : F₀) * c) = p * C (b : F₀) * C (c : F₀) + q * C (c : F₀) * C (b : F₀)
     rw [map_mul]
     ring

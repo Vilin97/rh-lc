@@ -12,7 +12,7 @@ variable (p : ℕ) [Fact p.Prime] (K : IntermediateField ℚ_[p] (PadicAlgCl p))
 
 def entries : PolyAlg p K n γ →ₗ[ℚ_[p]] (Fin n × Fin n → K) where
   toFun b ij := val p K n γ b ij.1 ij.2
-  map_add' a b := by funext ij; simp [map_add]
+  map_add' a b := by funext ij; simp [map_add (f := _)]
   map_smul' c b := by funext ij; simp [map_smul]
 
 theorem entries_injective : Function.Injective (entries p K n γ) := by
@@ -29,7 +29,7 @@ theorem eq_zero_of_proj {ι : Type} [Fintype ι] [DecidableEq ι] (y : (ι → K
     induction z using TensorProduct.induction_on with
     | zero => simp
     | tmul a q => simp
-    | add a b ha hb => simp only [map_add, Pi.add_apply, ha, hb]
+    | add a b ha hb => simp only [map_add (f := _), Pi.add_apply, ha, hb]
   have h0 : TensorProduct.piRight ℚ_[p] ℚ_[p] (Qr p r) (fun _ : ι => K) (TensorProduct.comm _ _ _ y) = 0 := by
     funext i
     rw [e, h i, map_zero]
@@ -49,7 +49,7 @@ theorem phi_apply_entry (x : PolyAlg p K n γ ⊗[ℚ_[p]] Qr p r) (j k : Fin n)
     show ((val p K n γ b j k) ⊗ₜ[ℚ_[p]] (1 : Qr p r) : K ⊗[ℚ_[p]] Qr p r) * ((1 : K) ⊗ₜ[ℚ_[p]] q) = _
     rw [Algebra.TensorProduct.tmul_mul_tmul, mul_one, one_mul]
     rfl
-  | add a b ha hb => rw [map_add, Matrix.add_apply, ha, hb, map_add]; rfl
+  | add a b ha hb => rw [map_add (f := _), Matrix.add_apply, ha, hb, map_add (f := _)]; rfl
 
 theorem phi_injective_any : Function.Injective (phi p K n γ r) := by
   set_option backward.isDefEq.respectTransparency.instanceSearchTypes false in rw [injective_iff_map_eq_zero]

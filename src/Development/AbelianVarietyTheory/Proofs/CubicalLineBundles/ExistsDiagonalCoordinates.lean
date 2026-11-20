@@ -73,7 +73,7 @@ theorem tensor_unif {X Y V : Type} [AddCommGroup X] [Module O X]
   · obtain ⟨t, rfl⟩ := hsurj v
     induction t with
     | tmul z a => rw [hΦ]; exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
-    | add x y hx hy => rw [map_add]; exact Submodule.add_mem _ (hx trivial) (hy trivial)
+    | add x y hx hy => rw [map_add (f := _)]; exact Submodule.add_mem _ (hx trivial) (hy trivial)
   · obtain ⟨t, rfl⟩ := hsurj v
     obtain ⟨a, rfl⟩ := hker t hv
     exact ⟨a, by rw [hΦ, one_smul]⟩

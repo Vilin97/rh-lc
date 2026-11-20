@@ -30,7 +30,7 @@ theorem exists_abs_apply_le (ha : Submodule.span ℤ (Set.range a) = ⊤) (x y :
       refine ⟨1, fun β hs hp => ?_⟩
       have h1 := hp (a i + a j)
       have h2 := hp (a i - a j)
-      simp only [map_add, map_sub, LinearMap.add_apply, LinearMap.sub_apply, hs (a j) (a i)] at h1 h2
+      simp only [map_add (f := _), map_sub, LinearMap.add_apply, LinearMap.sub_apply, hs (a j) (a i)] at h1 h2
       have h3 := Finset.single_le_sum (f := fun i => β (a i) (a i)) (fun i _ => hp _) (Finset.mem_univ i)
       have h4 := Finset.single_le_sum (f := fun i => β (a i) (a i)) (fun i _ => hp _) (Finset.mem_univ j)
       rw [abs_le]
@@ -40,7 +40,7 @@ theorem exists_abs_apply_le (ha : Submodule.span ℤ (Set.range a) = ⊤) (x y :
       obtain ⟨C, hC⟩ := h1
       obtain ⟨C', hC'⟩ := h2
       refine ⟨C + C', fun β hs hp => ?_⟩
-      rw [map_add, Nat.cast_add, add_mul]
+      rw [map_add (f := _), Nat.cast_add, add_mul]
       exact (abs_add_le _ _).trans (add_le_add (hC β hs hp) (hC' β hs hp))
     | smul n y _ h1 =>
       obtain ⟨C, hC⟩ := h1
@@ -52,7 +52,7 @@ theorem exists_abs_apply_le (ha : Submodule.span ℤ (Set.range a) = ⊤) (x y :
     obtain ⟨C, hC⟩ := h1
     obtain ⟨C', hC'⟩ := h2
     refine ⟨C + C', fun β hs hp => ?_⟩
-    rw [map_add, LinearMap.add_apply, Nat.cast_add, add_mul]
+    rw [map_add (f := _), LinearMap.add_apply, Nat.cast_add, add_mul]
     exact (abs_add_le _ _).trans (add_le_add (hC β hs hp) (hC' β hs hp))
   | smul n x _ h1 =>
     obtain ⟨C, hC⟩ := h1

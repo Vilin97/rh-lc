@@ -54,7 +54,7 @@ theorem dual_lattice_bidual (σ : E →+* E) (hσ : ∀ x, σ (σ x) = x) (J : M
   letI : StarRing E := starOf σ hσ
   let h : (Fin n → E) →ₗ⋆[E] (Fin n → E) →ₗ[E] E :=
     LinearMap.mk₂'ₛₗ (starRingEnd E) (RingHom.id E) (hform σ J)
-      (fun x x' y => by simp only [hform, Pi.add_apply, map_add, add_mul, Finset.sum_add_distrib])
+      (fun x x' y => by simp only [hform, Pi.add_apply, map_add (f := _), add_mul, Finset.sum_add_distrib])
       (fun a x y => hform_smul_left σ J a x y)
       (fun x y y' => by simp only [hform, Pi.add_apply, mul_add, Finset.sum_add_distrib])
       (fun a x y => hform_smul_right σ J a x y)

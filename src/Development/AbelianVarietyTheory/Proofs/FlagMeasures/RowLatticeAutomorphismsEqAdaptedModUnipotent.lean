@@ -242,7 +242,7 @@ theorem lift_fix (hΛ : IsRowLat D F0 Λ) {a : GV D} (ha : a ∈ A0 F0 Λ) :
   have hσz' : (hS D).hT σ F0.z = 1 := hσz
   have hnz : n (a F0.z) = F0.z := by
     have e : a F0.z = F0.z + (a F0.z - F0.z) := by abel
-    rw [e, map_add, hnX _ hx0X, hnf F0.z, hσz', hx0z]
+    rw [e, map_add (f := _), hnX _ hx0X, hnf F0.z, hσz', hx0z]
     simp
   have hnA := (mem_NLam_iff F0 Λ n).1 hn
   refine ⟨n * a, ⟨Subgroup.mul_mem _ hnA.1.1.1 ha.1.1, fun j => ?_, by rw [mul_apply', hnz]⟩, ?_, ?_⟩

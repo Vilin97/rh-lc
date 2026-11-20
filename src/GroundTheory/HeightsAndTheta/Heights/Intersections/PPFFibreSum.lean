@@ -88,7 +88,7 @@ theorem baseSubst_isMultiHomog (G : GenFibre v P') {s : MRing ι'} {a : K' → �
       exact isWeightedHomogeneous_X G.Φ _ (⟨⟨q.1, h⟩, q.2⟩ : Σ k : FibreBlock κ, ι' k.1)
   induction hs using IsWeightedHomogeneous.induction_on with
   | zero => rw [map_zero]; exact isWeightedHomogeneous_zero _ _ _
-  | add p q hp hq ihp ihq => rw [map_add]; exact ihp.add ihq
+  | add p q hp hq ihp ihq => rw [map_add (f := _)]; exact ihp.add ihq
   | monomial d r hr =>
     unfold baseSubst
     rw [coe_eval₂Hom, eval₂_monomial, MvPolynomial.algebraMap_apply, Finsupp.prod]

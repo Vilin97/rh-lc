@@ -438,7 +438,7 @@ theorem poissonGauss : PoissonGauss := by
   have hGcont : Continuous G := Complex.continuous_ofReal.comp (hPcont.comp φ.symm.continuous)
   have hGper : ∀ (s : ι → ℝ) (k : ι → ℤ), G (s + fun i => (k i : ℝ)) = G s := by
     intro s k
-    simp only [hGdef, map_add, ← hB k]
+    simp only [hGdef, map_add (f := _), ← hB k]
     rw [hPper]
   obtain ⟨F, hF⟩ := exists_continuous_torus_lift_of_periodic G hGcont hGper
   set h : (ι → ℝ) → ℂ := fun s => (Real.exp (-π * t * ‖φ.symm s‖ ^ 2) : ℂ) with hhdef

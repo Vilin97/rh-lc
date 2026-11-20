@@ -32,7 +32,7 @@ theorem exists_place (τ : E →+* ℂ_[ℓ]) :
     { carrier := {a | ‖τ (a : E)‖ < 1}
       add_mem' := fun {a b} ha hb => by
         change ‖τ ((a + b : 𝓞 E) : E)‖ < 1
-        rw [RingOfIntegers.coe_eq_algebraMap, map_add, map_add]
+        rw [RingOfIntegers.coe_eq_algebraMap, map_add (f := _), map_add (f := _)]
         exact (IsUltrametricDist.norm_add_le_max _ _).trans_lt (max_lt ha hb)
       zero_mem' := by simp
       smul_mem' := fun c a ha => by

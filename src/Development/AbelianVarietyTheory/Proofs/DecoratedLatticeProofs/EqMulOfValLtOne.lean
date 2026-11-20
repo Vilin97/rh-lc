@@ -128,7 +128,7 @@ theorem eq_mul_of_val_lt_one : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k
     | add a b _ _ ha hb =>
       obtain ⟨c, hc, ea⟩ := ha
       obtain ⟨d, hd, eb⟩ := hb
-      exact ⟨c + d, add_mem hc hd, by rw [Subring.coe_add, map_add, ea, eb, mul_add]⟩
+      exact ⟨c + d, add_mem hc hd, by rw [Subring.coe_add, map_add (f := _), ea, eb, mul_add]⟩
     | smul r a _ ha =>
       obtain ⟨c, hc, ea⟩ := ha
       exact ⟨Formalism.UG.prV (E := D.host.E) p.v r * c, mul_mem (Formalism.UG.P.afsplit_prV_int p.v _ r.2) hc, by

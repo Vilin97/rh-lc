@@ -154,7 +154,7 @@ theorem gen_mem (D : Idem R ι) (l : Matrix (Fin n) (Fin n) R →ₗ[ℝ] A) (τ
   induction D.e τ with
   | zero => rw [map_zero]; exact P.zero_mem
   | tmul c x => rw [unitMap_tmul]; exact P.smul_mem c (h x)
-  | add x y hx hy => rw [map_add]; exact P.add_mem hx hy
+  | add x y hx hy => rw [map_add (f := _)]; exact P.add_mem hx hy
 
 theorem gen_inter {m : ℕ} {B : Type} [Ring B] [Algebra ℂ B] [Algebra ℝ B] [IsScalarTower ℝ ℂ B] {N : Type}
     [AddCommGroup N] [Module ℂ N] (D : Idem R ι) (l : Matrix (Fin n) (Fin n) R →ₗ[ℝ] A)
@@ -165,7 +165,7 @@ theorem gen_inter {m : ℕ} {B : Type} [Ring B] [Algebra ℂ B] [Algebra ℝ B] 
   induction D.e τ with
   | zero => simp only [map_zero]
   | tmul c x => simp only [unitMap_tmul, map_smul, h]
-  | add x y hx hy => simp only [map_add, hx, hy]
+  | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 end Gen
 

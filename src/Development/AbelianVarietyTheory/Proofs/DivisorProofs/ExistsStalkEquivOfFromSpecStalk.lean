@@ -224,7 +224,7 @@ theorem exists_meet_point : ∀ (Y : Scheme.{0}) [IsIntegral Y] [IsLocallyNoethe
             s • ⟨Y.presheaf.germ U w hwU (z j'), hm j' hj'J⟩ := by
         ext; simp [← hrs, smul_eq_mul]
       show (maximalIdeal _).toCotangent ⟨_, _⟩ ∈ _
-      rw [hsum, map_add, map_smul, map_smul]
+      rw [hsum, map_add (f := _), map_smul, map_smul]
       exact Submodule.add_mem _
         (Submodule.smul_of_tower_mem _ r (Submodule.subset_span ⟨⟨j, hjJ⟩, by simp, rfl⟩))
         (Submodule.smul_of_tower_mem _ s (Submodule.subset_span ⟨⟨j', hj'J⟩, by simp, rfl⟩))

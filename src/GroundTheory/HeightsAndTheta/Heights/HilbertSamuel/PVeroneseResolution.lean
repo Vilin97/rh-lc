@@ -46,7 +46,7 @@ theorem algebraMap_subst (f : MvPolynomial (Ix (Veronese.Idx D)) ℤ) :
   | C a =>
     rw [subst, eval₂_C]
     simp [coneMap]
-  | add p q hp hq => simp only [subst, eval₂_add, map_add, Polynomial.eval_add] at hp hq ⊢; rw [hp, hq]
+  | add p q hp hq => simp only [subst, eval₂_add, map_add (f := _), Polynomial.eval_add] at hp hq ⊢; rw [hp, hq]
   | mul_X p n hp =>
     simp only [subst, eval₂_mul, eval₂_X, map_mul, Polynomial.eval_mul] at hp ⊢
     rw [hp]
@@ -58,7 +58,7 @@ theorem eval_veronese (w : Fin (D + 1) → ℂ) (f : MvPolynomial (Ix (Veronese.
   | C a =>
     rw [subst, eval₂_C, eq_intCast, ← coe_eval₂Hom, map_intCast]
     simp
-  | add p q hp hq => simp only [subst, eval₂_add, map_add] at hp hq ⊢; rw [hp, hq]
+  | add p q hp hq => simp only [subst, eval₂_add, map_add (f := _)] at hp hq ⊢; rw [hp, hq]
   | mul_X p n hp =>
     simp only [subst, eval₂_mul, eval₂_X, map_mul, map_X, eval_X] at hp ⊢
     rw [hp]

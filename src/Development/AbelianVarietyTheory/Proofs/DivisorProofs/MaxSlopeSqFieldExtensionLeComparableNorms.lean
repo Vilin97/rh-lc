@@ -64,7 +64,7 @@ theorem map_mem_of_mem_span {s : Set V} {P : Submodule (𝓞 K') V'} (hs : ∀ x
   induction hx using Submodule.span_induction with
   | mem x hx => exact hs x hx
   | zero => rw [map_zero]; exact P.zero_mem
-  | add x y _ _ hx hy => rw [map_add]; exact P.add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add (f := _)]; exact P.add_mem hx hy
   | smul a x _ hx =>
     have : ι (a • x) = algebraMap (𝓞 K) (𝓞 K') a • ι x := by
       rw [← algebraMap_smul K a, map_smulₛₗ, ← algebraMap_smul K' (algebraMap (𝓞 K) (𝓞 K') a)]

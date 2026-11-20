@@ -29,7 +29,7 @@ theorem isPrecomplete_of_bounded {A D : Type*} [CommRing A] [CommRing D] (p c : 
     induction k with
     | zero => simp [s]
     | succ k ih =>
-      simp only [s, Finset.sum_range_succ, map_add] at ih ⊢
+      simp only [s, Finset.sum_range_succ, map_add (f := _)] at ih ⊢
       rw [ih, ← ha, Nat.add_right_comm k 1 c]; ring
   obtain ⟨L, hL⟩ := IsPrecomplete.prec' (I := span {(p : A)}) s (by
     intro m n hmn
@@ -117,7 +117,7 @@ theorem exists_p_pow_mul_sub_mem (n : ℕ) {x : AinfInv p R} (hx : x ∈ acrisZe
   | add x y _ _ hx hy =>
     obtain ⟨a, ha⟩ := hx
     obtain ⟨b, hb⟩ := hy
-    exact ⟨a + b, by convert add_mem ha hb using 1; rw [map_add]; ring⟩
+    exact ⟨a + b, by convert add_mem ha hb using 1; rw [map_add (f := _)]; ring⟩
   | smul c x _ hx =>
     obtain ⟨a, ha⟩ := hx
     exact ⟨c * a, by
@@ -370,7 +370,7 @@ variable (p R) in
 
 def toBdR : Bst p R →+* BdR p R :=
   lift (Bcris.toBdR p R) (fun ϖ => algebraMap _ _ (BdRPlus.logFlat ϖ)) (fun η ϖ => by
-    rw [BdRPlus.logFlat_twist, map_add, Bcris.toBdR_logTeich])
+    rw [BdRPlus.logFlat_twist, map_add (f := _), Bcris.toBdR_logTeich])
 
 @[simp] theorem toBdR_algebraMap (x : Bcris p R) :
     toBdR p R (algebraMap _ _ x) = Bcris.toBdR p R x := lift_algebraMap _ _ _ x

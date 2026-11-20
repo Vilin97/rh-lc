@@ -342,7 +342,7 @@ theorem polyTopLocal {n : ℕ} (L : Fin n → ℝ) (hL : StrictAnti L) (lev : Fi
       have e2 : (Q' j).coeff ((blk lev j).card - 1) = ψ (∑ a ∈ univ.filter (fun a => π' a = j), (L a : ℂ)) := by
         set_option synthInstance.maxHeartbeats 100000 in
           rw [hQ' j hj, hcj', coeff_prod_top _ hne2, map_sum]
-      rw [e1, e2, ← map_add] at h
+      rw [e1, e2, ← map_add (f := _)] at h
       have h2 := hψ h
       apply Complex.ofReal_injective
       push_cast
@@ -376,18 +376,18 @@ theorem polyTop {n : ℕ} (L : Fin n → ℝ) (hL : StrictAnti L) (lev : Fin n �
       rw [(hm' j hj).1.natDegree_map φ]; exact (hm' j hj).2⟩)
     (by
       rw [← Polynomial.map_prod, hp, Polynomial.map_prod]
-      simp [Polynomial.map_add])
+      simp [Polynomial.map_add (f := _)])
     (by
       rw [← Polynomial.map_prod, hp', Polynomial.map_prod]
-      simp [Polynomial.map_add])
+      simp [Polynomial.map_add (f := _)])
     (fun j hj => by
-      rw [coeff_map, coeff_map, ← map_add, ht j hj]; rfl) j hj
+      rw [coeff_map, coeff_map, ← map_add (f := _), ht j hj]; rfl) j hj
   have h2 := congrArg (fun p => p.coeff k) key
   simp only [coeff_map] at h2
   rw [map_sub, sub_eq_zero]
   have h3 : (∏ a ∈ blk lev j, (X + C ((φ.comp (algebraMap ℂ B)) (L a : ℂ))) : A[X]) =
       (∏ a ∈ blk lev j, (X + C (algebraMap ℂ B (L a : ℂ)))).map φ := by
-    rw [Polynomial.map_prod]; simp [Polynomial.map_add]
+    rw [Polynomial.map_prod]; simp [Polynomial.map_add (f := _)]
   rw [h3, coeff_map] at h2
   exact h2
 
@@ -488,7 +488,7 @@ theorem capPoly {R : Type} [CommRing R] [Nontrivial R] [Algebra ℂ R] {A : Type
     intro m hm
     rw [hcoef, if_neg (by omega)]
   refine ⟨X ^ t + r, monic_X_pow_add hdeg, by rw [natDegree_add_eq_left_of_degree_lt (by rwa [degree_X_pow]), natDegree_X_pow], fun u => ?_, fun k hk => ?_⟩
-  · rw [hq u, Finset.sum_range_succ, h1, eval_add, eval_pow, eval_X, map_add, map_pow, add_comm]
+  · rw [hq u, Finset.sum_range_succ, h1, eval_add, eval_pow, eval_X, map_add (f := _), map_pow, add_comm]
     congr 1
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [hr, eval_finsetSum, map_sum]
@@ -557,7 +557,7 @@ theorem core {R : Type} [CommRing R] [Algebra ℂ R] (ι : R →ₐ[ℂ] Module.
     { carrier := {r | ι r c = 0}
       add_mem' := fun {a b} ha hb => by
         simp only [Set.mem_setOf_eq] at ha hb ⊢
-        rw [map_add, LinearMap.add_apply, ha, hb, add_zero]
+        rw [map_add (f := _), LinearMap.add_apply, ha, hb, add_zero]
       zero_mem' := by simp
       smul_mem' := fun a b hb => by
         simp only [Set.mem_setOf_eq, smul_eq_mul] at hb ⊢
@@ -582,7 +582,7 @@ theorem core {R : Type} [CommRing R] [Algebra ℂ R] (ι : R →ₐ[ℂ] Module.
     have a2 : ∀ a, (X + C (algebraMap ℂ (R ⧸ I) (L a : ℂ))).eval (algebraMap ℂ (R ⧸ I) u) =
         mk (algebraMap ℂ R (u + (L a : ℂ))) := by
       intro a
-      simp only [eval_add, eval_X, eval_C, AlgHom.commutes, map_add]
+      simp only [eval_add, eval_X, eval_C, AlgHom.commutes, map_add (f := _)]
     simp only [a1, a2]
     rw [← map_prod, ← map_prod, ← sub_eq_zero, ← map_sub, hmk, hI, map_sub, LinearMap.sub_apply, sub_eq_zero,
       ι_prod_levs, ← map_prod, hscal]
@@ -596,7 +596,7 @@ theorem core {R : Type} [CommRing R] [Algebra ℂ R] (ι : R →ₐ[ℂ] Module.
     intro j hj
     rw [coeff_map, coeff_map, ← mk.commutes]
     show mk _ + mk _ = mk _
-    rw [← map_add, ← sub_eq_zero, ← map_sub, hmk, hI, map_sub, map_add, LinearMap.sub_apply, LinearMap.add_apply,
+    rw [← map_add (f := _), ← sub_eq_zero, ← map_sub, hmk, hI, map_sub, map_add (f := _), LinearMap.sub_apply, LinearMap.add_apply,
       hp4 j hj, hp4' j hj, hscal, ← hsh j]
     have hs : ∑ a ∈ blk lev j, (F1 a a c + F2 a a c) = ∑ a ∈ blk lev j, (ν a : ℂ) • c :=
       Finset.sum_congr rfl fun a _ => by simpa using hsemi a a rfl
@@ -620,7 +620,7 @@ theorem core {R : Type} [CommRing R] [Algebra ℂ R] (ι : R →ₐ[ℂ] Module.
       mk (algebraMap ℂ R (∏ a ∈ blk lev j, (u + σ1 j + (L a : ℂ)))) := by
     rw [eval_prod, map_prod, map_prod]
     refine Finset.prod_congr rfl fun a _ => ?_
-    simp only [eval_add, eval_X, eval_C, AlgHom.commutes, map_add]
+    simp only [eval_add, eval_X, eval_C, AlgHom.commutes, map_add (f := _)]
   have h3 : mk ((p j).eval (algebraMap ℂ R (u + σ1 j))) =
       mk (algebraMap ℂ R (∏ a ∈ blk lev j, (u + σ1 j + (L a : ℂ)))) := by
     rw [← a1, ← a2]

@@ -23,7 +23,7 @@ def hl (y : V) : V →ₗ[E] E where
   map_smul' a x := by simp only [H.h_smul_left, smul_eq_mul, RingHom.id_apply]
 
 theorem h_add_right (x y y' : V) : H.h x (y + y') = H.h x y + H.h x y' := by
-  rw [h_swap H x (y + y'), H.h_add_left, map_add, ← h_swap H x y, ← h_swap H x y']
+  rw [h_swap H x (y + y'), H.h_add_left, map_add (f := _), ← h_swap H x y, ← h_swap H x y']
 
 theorem h_smul_right (a : E) (x y : V) : H.h x (a • y) = M.L.cj a * H.h x y := by
   rw [h_swap H x (a • y), H.h_smul_left, map_mul, ← h_swap H x y]

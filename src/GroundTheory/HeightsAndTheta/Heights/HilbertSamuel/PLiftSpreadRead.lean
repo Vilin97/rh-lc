@@ -20,7 +20,7 @@ theorem aeval_eq_eval_mConeMap (f : MRing ι) :
     aeval y f = MvPolynomial.eval (fun _ : K => (1 : Ω)) (mConeMap y f) := by
   induction f using MvPolynomial.induction_on with
   | C a => simp [mConeMap]
-  | add p q hp hq => rw [map_add, map_add, map_add, hp, hq]
+  | add p q hp hq => rw [map_add (f := _), map_add (f := _), map_add (f := _), hp, hq]
   | mul_X p n hp => rw [map_mul, map_mul, map_mul, hp]; simp [mConeMap]
 
 theorem genIdeal_le_ker : KH.genIdeal y ≤ RingHom.ker (aeval y : MRingOver ℚ ι →ₐ[ℚ] Ω) := by
@@ -95,7 +95,7 @@ def evLHom {T : Submonoid (MRingOver ℚ ι)} (hT : ∀ t ∈ T, aeval y t ≠ 0
     induction x' using LocalizedModule.induction_on with
     | h m' s' =>
     rw [LocalizedModule.mk_add_mk, evL_mk hT, evL_mk hT, evL_mk hT]
-    simp only [Submonoid.coe_mul, map_add, Submonoid.smul_def, evQ_smul, map_mul]
+    simp only [Submonoid.coe_mul, map_add (f := _), Submonoid.smul_def, evQ_smul, map_mul]
     field_simp [hT s s.2, hT s' s'.2]
 
 theorem evLHom_apply {T : Submonoid (MRingOver ℚ ι)} (hT : ∀ t ∈ T, aeval y t ≠ 0)
@@ -165,7 +165,7 @@ theorem quotPart_mem (c : ∀ k, ι k) {d : K → ℤ} {m : MRingOver ℚ ι ⧸
     rw [e, ← div_eq_mul_inv]
     exact aeval_div_mem y c hg
   | zero => simp
-  | add x x' _ _ hx hx' => rw [map_add, add_mul]; exact add_mem hx hx'
+  | add x x' _ _ hx hx' => rw [map_add (f := _), add_mul]; exact add_mem hx hx'
   | smul r x _ hx => rw [map_smul, smul_mul_assoc]; exact Subalgebra.smul_mem _ hx r
 
 def chartCell (c : ∀ k, ι k) : KH.Cell K ι 0 :=
@@ -228,7 +228,7 @@ theorem locPart_mem {c : ∀ k, ι k} (hc : ∀ k, y ⟨k, c k⟩ ≠ 0) {a : K 
       (evLHom hT).map_zero]
     simp
   | add x x' _ _ hx hx' =>
-    rw [← evLHom_apply hT, map_add, add_mul]
+    rw [← evLHom_apply hT, map_add (f := _), add_mul]
     exact add_mem hx hx'
   | smul r x _ hx =>
     rw [evL_smul hT, smul_mul_assoc]

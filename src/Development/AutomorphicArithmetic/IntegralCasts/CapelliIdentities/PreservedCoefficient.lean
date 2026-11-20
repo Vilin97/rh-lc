@@ -36,10 +36,10 @@ theorem UpperTheory.Reformulated.B.PreservedCoefficient.pres_new_coeff :
       rw [MvPowerSeries.coeff_mul]
       refine Submodule.sum_mem _ fun p hp => ?_
       have hsum : Finsupp.degree p.1 + Finsupp.degree p.2 = Finsupp.degree a := by
-        rw [← map_add, Finset.HasAntidiagonal.mem_antidiagonal.1 hp]
+        rw [← map_add (f := _), Finset.HasAntidiagonal.mem_antidiagonal.1 hp]
       have hmul := Ideal.mul_mem_mul (ih f hf p.1) (coeff_mem_of_mem_maximalIdeal hg p.2)
       rw [← pow_add] at hmul
       exact Ideal.pow_le_pow_right (by omega) hmul
     · intro f g hf hg a
-      rw [map_add]
+      rw [map_add (f := _)]
       exact Submodule.add_mem _ (hf a) (hg a)

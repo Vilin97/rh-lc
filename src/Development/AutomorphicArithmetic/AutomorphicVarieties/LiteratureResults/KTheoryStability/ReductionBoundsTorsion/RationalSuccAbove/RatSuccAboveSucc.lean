@@ -276,7 +276,7 @@ theorem homotopy (a : G) (m : ℕ) (z : HC G (m + 1)) :
     ibd G (m + 1) (hI a (m + 1) z) + hI a m (ibd G m z) =
       z - icmap (MulAut.conj a⁻¹).toMonoidHom (m + 1) z := by
   have hz : z = ph (m + 1) (ps (m + 1) z) := (ph_ps _ z).symm
-  rw [hz, ← ph_hD, ibd_ph, ibd_ph, ← ph_hD, ← map_add, hD_spec, map_sub, ph_rho]
+  rw [hz, ← ph_hD, ibd_ph, ibd_ph, ← ph_hD, ← map_add (f := _), hD_spec, map_sub, ph_rho]
 
 theorem ibd_ibd (m : ℕ) (z : HC G (m + 2)) : ibd G m (ibd G (m + 1) z) = 0 := by
   rw [← ph_ps _ z, ibd_ph, ibd_ph, hbd_hbd, map_zero]
@@ -285,7 +285,7 @@ theorem ibd_icmap {H : Type} [Group H] (f : G →* H) (m : ℕ) (z : HC G (m + 1
     ibd H m (icmap f (m + 1) z) = icmap f m (ibd G m z) := by
   refine eq_of_single (ibd H m ∘ₗ icmap f (m + 1)) (icmap f m ∘ₗ ibd G m) (fun x => ?_) z
   set_option synthInstance.maxHeartbeats 100000 in
-    simp only [LinearMap.comp_apply, icmap_single, ibd_single, map_add, map_sum, map_smul]
+    simp only [LinearMap.comp_apply, icmap_single, ibd_single, map_add (f := _), map_sum, map_smul]
   congr 1
   refine Finset.sum_congr rfl fun j _ => ?_
   congr 2

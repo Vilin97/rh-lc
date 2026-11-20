@@ -133,10 +133,10 @@ theorem isTayF_tay {θ : (Fin g → ℂ) → ℂ} (hθ : ContDiffAt ℂ ω θ 0)
     intro k q
     unfold dirs
     first
-      | (rw [map_add, Finsupp.toMultiset_single, Multiset.map_add, one_nsmul, Multiset.map_singleton, add_comm,
+      | (rw [map_add (f := _), Finsupp.toMultiset_single, Multiset.map_add (f := _), one_nsmul, Multiset.map_singleton, add_comm,
           Multiset.singleton_add])
       | (simp [Finsupp.toMultiset_add, Finsupp.toMultiset_single, add_comm, Multiset.singleton_add])
-      | (simp [map_add, Finsupp.toMultiset_single]; rw [add_comm, Multiset.singleton_add])
+      | (simp [map_add (f := _), Finsupp.toMultiset_single]; rw [add_comm, Multiset.singleton_add])
   have hf : ∀ (k : Fin 1 × Fin g →₀ ℕ) (q : Fin 1 × Fin g),
       fct (k + Finsupp.single q 1) = fct k * ((k q : ℂ) + 1) := by
     intro k q
@@ -203,10 +203,10 @@ private theorem pderiv_tay_eq_tay_cons_single (θ : (Fin g → ℂ) → ℂ) (s 
     intro k q
     unfold dirs
     first
-      | (rw [map_add, Finsupp.toMultiset_single, Multiset.map_add, one_nsmul, Multiset.map_singleton, add_comm,
+      | (rw [map_add (f := _), Finsupp.toMultiset_single, Multiset.map_add (f := _), one_nsmul, Multiset.map_singleton, add_comm,
           Multiset.singleton_add])
       | (simp [Finsupp.toMultiset_add, Finsupp.toMultiset_single, add_comm, Multiset.singleton_add])
-      | (simp [map_add, Finsupp.toMultiset_single]; rw [add_comm, Multiset.singleton_add])
+      | (simp [map_add (f := _), Finsupp.toMultiset_single]; rw [add_comm, Multiset.singleton_add])
   have hf : ∀ (k : Fin 1 × Fin g →₀ ℕ) (q : Fin 1 × Fin g),
       fct (k + Finsupp.single q 1) = fct k * ((k q : ℂ) + 1) := by
     intro k q

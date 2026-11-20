@@ -226,7 +226,7 @@ theorem Realises.exists_liftEq (h : Realises B Wf Tw Rc) (hE : Wf.EqRank) (hL : 
   refine ⟨(T.petC V : ℂ) • LinearMap.mk₂ ℂ G ?_ ?_ ?_ ?_, fun h' => absurd ha h', fun _ _ μ' 𝓕' hμ' Φ F x => ?_⟩
   · intro Φ Φ' F
     refine T.ev_inj V' (funext fun x => ?_)
-    rw [map_add, Pi.add_apply, hG, hG, hG, ← integral_add ((k Φ F).1 x) ((k Φ' F).1 x)]
+    rw [map_add (f := _), Pi.add_apply, hG, hG, hG, ← integral_add ((k Φ F).1 x) ((k Φ' F).1 x)]
     simp [add_mul]
   · intro c Φ F
     refine T.ev_inj V' (funext fun x => ?_)
@@ -234,7 +234,7 @@ theorem Realises.exists_liftEq (h : Realises B Wf Tw Rc) (hE : Wf.EqRank) (hL : 
     simp [mul_assoc]
   · intro Φ F F'
     refine T.ev_inj V' (funext fun x => ?_)
-    rw [map_add, Pi.add_apply, hG, hG, hG, ← integral_add ((k Φ F).1 x) ((k Φ F').1 x)]
+    rw [map_add (f := _), Pi.add_apply, hG, hG, hG, ← integral_add ((k Φ F).1 x) ((k Φ F').1 x)]
     simp [mul_add]
   · intro c Φ F
     refine T.ev_inj V' (funext fun x => ?_)

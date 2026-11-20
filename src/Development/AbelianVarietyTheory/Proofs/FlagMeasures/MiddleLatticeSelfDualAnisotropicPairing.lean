@@ -74,7 +74,7 @@ theorem GlobalTheory.St.G.midLat_selfDual_pairing : ∀ (D : D7) (X : HidaSettin
     obtain ⟨s, hs, l, hl, rfl⟩ := Submodule.mem_sup.1 hy1
     have hs' := latSpanS_le_span _ _ hs
     have ht' := latSpanS_le_span _ _ ht
-    rw [map_add, map_add, prj_spanE X.ee X.ef hs', prj_spanF X.ff X.ef ht', zero_add, add_zero,
+    rw [map_add (f := _), map_add (f := _), prj_spanE X.ee X.ef hs', prj_spanF X.ff X.ef ht', zero_add, add_zero,
       prj_perp (fun a => X.Lb_perp l hl a)]
     exact hl
   have hLbL : X.Lb ≤ (VS D).L0 := by

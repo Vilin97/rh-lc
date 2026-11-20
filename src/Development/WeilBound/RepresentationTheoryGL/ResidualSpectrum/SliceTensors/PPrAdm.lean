@@ -51,7 +51,7 @@ theorem zalg_comm_act {z : Module.End ℂ (Sm E N)} (hz : z ∈ Zalg E N) (o : O
 
 def SupSpansPsiPart (W : Submodule ℂ (Sm E N)) (ψ : Sm E N) : Submodule ℂ (Sm E N) where
   carrier := {φ | φ ∈ W ∧ ∀ z ∈ annZ ψ, z φ = 0}
-  add_mem' := fun {φ φ'} h h' => ⟨W.add_mem h.1 h'.1, fun z hz => by rw [map_add, h.2 z hz, h'.2 z hz, add_zero]⟩
+  add_mem' := fun {φ φ'} h h' => ⟨W.add_mem h.1 h'.1, fun z hz => by rw [map_add (f := _), h.2 z hz, h'.2 z hz, add_zero]⟩
   zero_mem' := ⟨W.zero_mem, fun z _ => map_zero z⟩
   smul_mem' := fun c φ h => ⟨W.smul_mem c h.1, fun z hz => by rw [map_smul, h.2 z hz, smul_zero]⟩
 

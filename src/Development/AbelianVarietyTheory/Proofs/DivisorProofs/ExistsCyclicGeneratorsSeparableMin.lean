@@ -91,6 +91,6 @@ theorem semisimple_charpoly_pow_generators (κ : Type) [Field κ] [IsAlgClosed �
     refine ⟨p + q, ?_⟩
     rw [← Finset.sum_add_distrib]
     refine Finset.sum_congr rfl fun j _ => ?_
-    simp [map_add, Finset.sum_add_distrib]
+    simp [map_add (f := _), Finset.sum_add_distrib]
 
 end GlobalTheory

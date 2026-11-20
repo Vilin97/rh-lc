@@ -77,7 +77,7 @@ lemma resF_mem_pow (F : X.Modules) {U V : X.Opens} (h : V ≤ U) (n : ℕ) (m : 
     rw [← map_toFunctions_res h]
     exact Ideal.mem_map_of_mem _ ha
   · intro x y hx hy
-    rw [map_add]
+    rw [map_add (f := _)]
     exact add_mem hx hy
 
 end GlobalTheory.CompanionTheory.GE.ArtinRees
@@ -97,7 +97,7 @@ lemma sat_add (F : X.Modules) {V : X.Opens} (f : Γ(X, V)) (P : Submodule Γ(X, 
   obtain ⟨e₁, z₁, hz₁, hr₁⟩ := h₁
   obtain ⟨e₂, z₂, hz₂, hr₂⟩ := h₂
   refine ⟨e₁ + e₂, f ^ e₂ • z₁ + f ^ e₁ • z₂, add_mem (P.smul_mem _ hz₁) (P.smul_mem _ hz₂), ?_⟩
-  rw [map_add, resF_smul, resF_smul, hr₁, hr₂, smul_smul, smul_smul, smul_add, map_pow, map_pow,
+  rw [map_add (f := _), resF_smul, resF_smul, hr₁, hr₂, smul_smul, smul_smul, smul_add, map_pow, map_pow,
     pow_add, mul_comm (resO (X.basicOpen_le f) f ^ e₂)]
 
 lemma exists_res_eq_of_mem_pow (F : X.Modules) [F.IsQuasicoherent] {V : X.Opens} (hV : IsAffineOpen V)

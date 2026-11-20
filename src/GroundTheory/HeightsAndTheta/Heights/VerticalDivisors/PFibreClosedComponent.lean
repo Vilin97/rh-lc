@@ -117,7 +117,7 @@ theorem FibreClosedComponent.proof : FibreClosedComponent.Statement := by
     obtain ⟨p, rfl⟩ := Ideal.Quotient.mk_surjective x
     induction p using MvPolynomial.induction_on with
     | C a => exact isIntegral_algebraMap
-    | add p q hp hq => rw [map_add]; exact hp.add hq
+    | add p q hp hq => rw [map_add (f := _)]; exact hp.add hq
     | mul_X p i hp => rw [map_mul]; exact hp.mul (hX i)
   have : Algebra.IsIntegral F (MvPolynomial (Fin n) F ⧸ I) := ⟨hint⟩
   have hfield : IsField (MvPolynomial (Fin n) F ⧸ I) :=

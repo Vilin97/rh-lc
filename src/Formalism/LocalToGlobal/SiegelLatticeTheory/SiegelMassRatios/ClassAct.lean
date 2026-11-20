@@ -61,7 +61,7 @@ def AMFChi (k : Type) [CommRing k] {W : Type} [AddCommGroup W] [Module k W] (Γ 
   zero_mem' := by intro γ g κ; simp
   add_mem' := by
     intro f f' hf hf' γ g κ
-    simp only [Pi.add_apply, hf γ g κ, hf' γ g κ, map_add, smul_add]
+    simp only [Pi.add_apply, hf γ g κ, hf' γ g κ, map_add (f := _), smul_add]
   smul_mem' := by
     intro c f hf γ g κ
     simp only [Pi.smul_apply, hf γ g κ, map_smul]

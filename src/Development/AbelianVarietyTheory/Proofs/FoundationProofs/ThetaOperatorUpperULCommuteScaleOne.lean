@@ -43,7 +43,7 @@ theorem eval_sum_kmap {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ
     simp only [Finset.sum_empty, map_zero, Finset.prod_empty]
     simp [Tower.cls]
   | insert j s hj ih =>
-    rw [Finset.sum_insert hj, Finset.prod_insert hj, map_add, ih, cls_mul, eval_kmap X l n _ x f h]
+    rw [Finset.sum_insert hj, Finset.prod_insert hj, map_add (f := _), ih, cls_mul, eval_kmap X l n _ x f h]
 
 theorem isThB_zero {Ω : Type} [Field Ω] [Algebra ℚ Ω] {ε : Ω →+* ℂ} (X : Tower Ω ε) (A : ValuationSubring Ω)
     (N l : ℕ) [Fact l.Prime] (b : X.Fn l) (ψ : HahnSeries ℚ Ω) (hψ : ∀ r, ψ.coeff r ∈ A) : IsThB X A N l 0 b ψ := by

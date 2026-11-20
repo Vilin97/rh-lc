@@ -23,7 +23,7 @@ private theorem mDR_alg_eq_mapDR (k K L : Type) [Field k] [Field K] [Field L] [A
     simp only [GlobalTheory.W1.mapDR, ExteriorAlgebra.lift_ι_apply, GlobalTheory.W1.map1, LinearMap.coe_comp,
       LinearMap.coe_restrictScalars, Function.comp_apply, ι1]
   | mul a b ha hb => rw [map_mul, map_mul, ha, hb]
-  | add a b ha hb => rw [map_add, map_add, ha, hb]
+  | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
 
 private theorem mDR_square {k B B' K L : Type} [Field k] [Field K] [Field L] [CommRing B] [CommRing B']
     [Algebra k K] [Algebra k L] [Algebra K L] [IsScalarTower k K L] [Algebra k B] [Algebra k B']
@@ -62,7 +62,7 @@ theorem UpperTheory.functionField_of_finite_etale_cover :
     GlobalTheory.W1.trDR ℂ _ _ ((semiHom_germSec p' hη').mDR (z : DR ℂ (Sec p' (c ⁻¹ᵁ V))))) hc hV ?_ ?_ ?_ z
   · simp only [map_zero, ZeroMemClass.coe_zero]
   · intro y z hy hz
-    simp only [map_add, Submodule.coe_add, hy, hz]
+    simp only [map_add (f := _), Submodule.coe_add, hy, hz]
   · intro b' x
     have e : ((formPull hc V a x : OmU p' (c ⁻¹ᵁ V) a) : DR ℂ (Sec p' (c ⁻¹ᵁ V))) =
         (semiHom_appSec hc V).mDR (x : DR ℂ (Sec p V)) := SemiHom.coe_mOm _ x

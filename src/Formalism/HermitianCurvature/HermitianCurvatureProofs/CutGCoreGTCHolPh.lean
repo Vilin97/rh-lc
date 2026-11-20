@@ -43,7 +43,7 @@ theorem im_conj_dZ_mul {TT : ℝ} {u : ℂ → ℂ} (hu : ContDiffOn ℝ ((⊤ :
     apply Complex.ext <;> simp
   have hlin : fderiv ℝ u ζ h = h.re • fderiv ℝ u ζ 1 + h.im • fderiv ℝ u ζ Complex.I := by
     conv_lhs => rw [hh]
-    rw [map_add, map_smul, map_smul]
+    rw [map_add (f := _), map_smul, map_smul]
   rw [hlin]
   simp only [NF.dZ]
   simp [Complex.mul_re, Complex.mul_im, Complex.star_def] at hr1 hrI ⊢
