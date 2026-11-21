@@ -31,7 +31,7 @@ theorem GlobalTheory.RawLift.vacFin_off : ∀ (D : D7) (G : Type) [Group G] [Fin
   refine ⟨hth, ?_⟩
   obtain ⟨hf₀, e, he, hthA⟩ := hL.thP.vP i t
   obtain ⟨ε, hε, rfl⟩ := hf
-  have hoff : ∀ PP ∈ R.Pg ∪ R.Q t, PP.under (𝓞 D.host.F) ≠ v := by
+  have hoff : ∀ PP ∈ R.Pg ∪ R.Q t, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v := by
     intro PP hPP h0
     obtain ⟨Φ, hΦ⟩ := GlobalTheory.IdemSupport.exists_comp D
     obtain ⟨e', f', hp⟩ := GlobalTheory.IdemSupport.exists_isPrimeIdem hΦ PP

@@ -97,7 +97,7 @@ theorem good_of_offS (R : RealDat D A Ks) (hL : R.toLevCh.Is A.μ0) (P : Pl D.ho
     · exact h1
     · rw [GlobalTheory.LiftLower.Q_base hL] at h1
       simp at h1
-  obtain ⟨x, hx, hy⟩ := h (PP.under (𝓞 D.host.F)) (Finset.mem_image_of_mem _ hPg)
+  obtain ⟨x, hx, hy⟩ := h ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) (Finset.mem_image_of_mem _ hPg)
   have hx' : algebraMap (𝓞 D.host.F) (𝓞 D.host.E) x ∈ PP.asIdeal := hx
   have hcoe : ((algebraMap (𝓞 D.host.F) (𝓞 D.host.E) x : 𝓞 D.host.E) : D.host.E) =
       algebraMap D.host.F D.host.E (x : D.host.F) := by

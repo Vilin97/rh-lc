@@ -39,7 +39,9 @@ theorem mem_per_of_frequently : ∀ (R : Type) [CommRing R] (G : Over (Sp R)) [G
   have hη : IsClosedImmersion η[G].left := by
     have : IsClosedImmersion (η[G].left ≫ G.hom) := by rw [hid]; infer_instance
     exact IsClosedImmersion.of_comp _ G.hom
-  let V : G.left.Opens := ⟨(Set.range η[G].left)ᶜ, hη.base_closed.isClosed_range.isOpen_compl⟩
+  let V : G.left.Opens := ⟨(Set.range η[G].left)ᶜ, by
+    letI := hη
+    exact η[G].left.isClosedEmbedding.isClosed_range.isOpen_compl⟩
   have hV₀ : ⊤ ≤ (e.ex b₀ (s b₀)).left ⁻¹ᵁ V := by
     intro p _
     show (e.ex b₀ (s b₀)).left p ∉ Set.range η[G].left

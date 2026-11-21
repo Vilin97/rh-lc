@@ -67,7 +67,7 @@ theorem placeIdem_smul_offP {S T : HSp D} {LS : Set (Fin S.rank → D.host.E)} {
 
 theorem idemSum_mul_offP {S T : HSp D} {LS : Set (Fin S.rank → D.host.E)} {LT : Set (Fin T.rank → D.host.E)}
     {P : HeightOneSpectrum (𝓞 D.host.F) → Prop} {e : AE D} {Pset : Finset (Formalism.L2.DIV.Pl D.host.E)}
-    (he : IsIdemSum e Pset) (hv : ∀ PP ∈ Pset, ¬ P (PP.under (𝓞 D.host.F))) {u : WO S T}
+    (he : IsIdemSum e Pset) (hv : ∀ PP ∈ Pset, ¬ P ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))) {u : WO S T}
     (hu : u ∈ latO S T LS LT P) (a b) : e * u a b = 0 ∧ cA D e * u a b = 0 := by
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := he
   have key : ∀ PP ∈ Pset, es PP * u a b = 0 ∧ cA D (es PP) * u a b = 0 := by
@@ -107,7 +107,7 @@ theorem om_fock_fix (ψ : AddChar (AF D.host.F) ℂ) (θ : InfFam D) (S T : HSp 
     (hP : ∀ v, P v → IsSelfDualC S LS ∧ IsSelfDualC T LT ∧ Tame D v ∧ GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedCharacter.CharUnramAt D χS v ∧
       GlobalTheory.IndefiniteRowSideFullHecke.UnramifiedCharacter.CharUnramAt D χT v)
     (e : AE D) (Pset : Finset (Formalism.L2.DIV.Pl D.host.E)) (he : IsIdemSum e Pset)
-    (hoff : ∀ PP ∈ Pset, ¬ P (PP.under (𝓞 D.host.F)))
+    (hoff : ∀ PP ∈ Pset, ¬ P ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)))
     (f₀ φ f : WO S T → ℂ) (h₀ : IsThetaFunO ψ S T f₀)
     (hlat : IsLatVac (heisO ψ S T) (latO S T (LS : Set _) (LT : Set _) fun _ => True) f₀)
     (hth : IsThetaAt ψ (symplO S T) (heisO ψ S T) e (latO S T (LS : Set _) (LT : Set _) fun _ => True) 1 f₀ φ f)
@@ -168,15 +168,15 @@ theorem kerSmall_inv : GlobalTheory.FunPr.Hypotheses₂ → GlobalTheory.Indefin
     exact ⟨⟨h0.1, Or.inl h0.2⟩, h1, h2, h3, h4⟩
   have hfin : {v | ¬ good v}.Finite := Filter.eventually_cofinite.1 hev
   classical
-  refine ⟨G.Λ (.grid i j), hfin.toFinset ∪ (locPl G t).image (fun PP => PP.under (𝓞 D.host.F)),
+  refine ⟨G.Λ (.grid i j), hfin.toFinset ∪ (locPl G t).image (fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)),
     s0.1.fg, s0.1.span_eq_top, ?_⟩
   intro κ hκ u
-  have hgd : ∀ v, v ∉ hfin.toFinset ∪ (locPl G t).image (fun PP => PP.under (𝓞 D.host.F)) → good v := by
+  have hgd : ∀ v, v ∉ hfin.toFinset ∪ (locPl G t).image (fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) → good v := by
     intro v hv
     by_contra h
     exact hv (Finset.mem_union_left _ (hfin.mem_toFinset.2 h))
   have hoff : ∀ PP ∈ locPl G t,
-      ¬ (PP.under (𝓞 D.host.F) ∉ hfin.toFinset ∪ (locPl G t).image (fun PP => PP.under (𝓞 D.host.F))) :=
+      ¬ ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∉ hfin.toFinset ∪ (locPl G t).image (fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))) :=
     fun PP hPP h => h (Finset.mem_union_right _ (Finset.mem_image_of_mem _ hPP))
   unfold kerSmall
   refine Finsupp.sum_congr fun d hd => ?_

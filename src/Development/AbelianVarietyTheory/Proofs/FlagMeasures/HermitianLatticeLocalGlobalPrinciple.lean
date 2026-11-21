@@ -24,11 +24,7 @@ theorem isLattice_map {E V W : Type} [Field E] [NumberField E] [AddCommGroup V] 
     [IsScalarTower (𝓞 E) E V] [AddCommGroup W] [Module E W] [Module (𝓞 E) W] [IsScalarTower (𝓞 E) E W]
     (f : V ≃ₗ[E] W) (Λ : Submodule (𝓞 E) V) (h : Submodule.IsLattice E Λ) :
     Submodule.IsLattice E (Λ.map ((f : V →ₗ[E] W).restrictScalars (𝓞 E))) := by
-  refine ⟨h.fg.map _, ?_⟩
-  rw [Submodule.map_coe]
-  have e1 : (⇑((f : V →ₗ[E] W).restrictScalars (𝓞 E)) : V → W) = ⇑(f : V →ₗ[E] W) := rfl
-  rw [e1, Submodule.span_image, h.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
-  exact f.surjective
+  exact Submodule.IsLattice.of_fg E (h.fg.map _)
 
 variable {D : D7}
 

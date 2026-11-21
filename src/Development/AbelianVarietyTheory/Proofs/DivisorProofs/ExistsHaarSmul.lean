@@ -106,15 +106,15 @@ theorem kerSmall_inv {μ₀ : T} (hL : L.Is μ₀) (W : G.Weil) (B : Frames G) (
     exact ⟨⟨h0.1, Or.inl h0.2⟩, h1, h2, h3, h4⟩
   have hfin : {v | ¬ good v}.Finite := Filter.eventually_cofinite.1 hev
   classical
-  refine ⟨G.Λ (.grid i j), hfin.toFinset ∪ (locPl G t).image (fun PP => PP.under (𝓞 D.host.F)),
+  refine ⟨G.Λ (.grid i j), hfin.toFinset ∪ (locPl G t).image (fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)),
     s0.1.fg, s0.1.span_eq_top, ?_⟩
   intro κ hκ u
-  have hgd : ∀ v, v ∉ hfin.toFinset ∪ (locPl G t).image (fun PP => PP.under (𝓞 D.host.F)) → good v := by
+  have hgd : ∀ v, v ∉ hfin.toFinset ∪ (locPl G t).image (fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) → good v := by
     intro v hv
     by_contra h
     exact hv (Finset.mem_union_left _ (hfin.mem_toFinset.2 h))
   have hoff : ∀ PP ∈ locPl G t,
-      ¬ (PP.under (𝓞 D.host.F) ∉ hfin.toFinset ∪ (locPl G t).image (fun PP => PP.under (𝓞 D.host.F))) :=
+      ¬ ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∉ hfin.toFinset ∪ (locPl G t).image (fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))) :=
     fun PP hPP h => h (Finset.mem_union_right _ (Finset.mem_image_of_mem _ hPP))
   unfold kerSmall
   refine Finsupp.sum_congr fun d hd => ?_

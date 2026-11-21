@@ -121,7 +121,7 @@ namespace GlobalTheory.Mem.R3.LiftBrg.SplitLoc
 theorem mem_levJ_iff {D : D7} (V : HSp D) (β : GL (Fin V.rank) (Formalism.IndefR.Lev.EAf D)) (L : LevDat D.host.E ℂ V.rank)
     (x : Bridge.Gf V) (v : HeightOneSpectrum (𝓞 D.host.F)) (hloc : GlobalTheory.IndefiniteRowSideFullHecke.HeckeIntertwinersInert.LocAt V v x)
     (hU : Formalism.UG.bc (swapAE D) (x : GL (Fin V.rank) _) ∈ UA D.sp.cm V.gram)
-    (hoff : ∀ PP, PP ∈ L.Pg ∨ PP ∈ L.Q → PP.under (𝓞 D.host.F) ≠ v) :
+    (hoff : ∀ PP, PP ∈ L.Pg ∨ PP ∈ L.Q → (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v) :
     x ∈ (levEnv V β L).J ↔ Formalism.UG.bc (swapAE D) (x : GL (Fin V.rank) _) ∈ Formalism.L2.DIV.St β := by
   constructor
   · intro h

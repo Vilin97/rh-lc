@@ -43,9 +43,9 @@ theorem exists_setIntegral_norm_le (hS : IsCompact S) :
   have h2 : eLpNorm (lift Γ F) 2 (μ.restrict S) ≤ a ^ (1 / 2 : ℝ) * eLpNorm F 2 (quotMeasure Γ μ) := by
     refine (eLpNorm_map_measure (Lp.stronglyMeasurable F).aestronglyMeasurable measurable_mk.aemeasurable).ge.trans
       ((eLpNorm_mono_measure _ hle).trans (le_of_eq ?_))
-    rw [eLpNorm_smul_measure_of_ne_top (by norm_num)]
+    rw [eLpNorm_smul_measure_of_ne_top (by norm_num) _ _ (Lp.stronglyMeasurable F).aestronglyMeasurable]
     norm_num
-  rw [integral_norm_eq_lintegral_enorm hm, ← eLpNorm_one_eq_lintegral_enorm, Lp.norm_def, ← ENNReal.toReal_mul]
+  rw [integral_norm_eq_lintegral_enorm hm, ← eLpNorm_one_eq_lintegral_enorm hm, Lp.norm_def, ← ENNReal.toReal_mul]
   refine ENNReal.toReal_mono (by have := Lp.eLpNorm_ne_top F; finiteness) (h1.trans ?_)
   rw [mul_right_comm, Measure.restrict_apply_univ]
   norm_num
@@ -62,7 +62,7 @@ theorem setIntegral_norm_mul_left_le (hi : LocallyIntegrable φ μ) (hS : IsComp
     (hp.integrableOn_comp_preimage he).2 (hi.integrableOn_isCompact hC)
   refine ⟨h1.mono_set hk, ?_⟩
   rw [← hp.setIntegral_preimage_emb he (fun y => ‖φ y‖) C]
-  exact setIntegral_mono_set h1.norm (.of_forall fun _ => norm_nonneg _) (HasSubset.Subset.eventuallyLE hk)
+  exact setIntegral_mono_set h1.norm (.of_forall fun _ => norm_nonneg _) (.of_forall hk)
 
 
 omit [SecondCountableTopology G] [LocallyCompactSpace G] [DiscreteTopology Γ] in
@@ -87,9 +87,21 @@ theorem integrable_prod (hc : Cocompact Γ N) (hφ : LeftInv Γ φ) (hm : Strong
   have e : (fun p : Quot (Γ.subgroupOf N) × G => φ ((p.1.out : N) * p.2)) =
       fun p => φ ((sec (Γ.subgroupOf N) p.1 : N) * p.2) := funext fun p =>
     (leftInv_integrand hφ p.2).eq_of_mk_eq ((Quotient.out_eq _).trans (mk_sec _).symm)
+  have hsec : Measurable (sec (Γ.subgroupOf N)) := by
+    intro s hs
+    have h : mk (Γ.subgroupOf N) ⁻¹' (sec (Γ.subgroupOf N) ⁻¹' s) =
+        ⋃ γ : Γ.subgroupOf N, (fun x : N => (γ : N) * x) ⁻¹' (s ∩ stdDom (Γ.subgroupOf N)) := by
+      ext x
+      simp only [mem_preimage, mem_iUnion, mem_inter_iff]
+      refine ⟨fun h => ?_, fun ⟨γ, h1, h2⟩ => by rwa [sec_eq h2 (mk_mul γ x)]⟩
+      obtain ⟨γ, e⟩ := mk_eq_iff.1 (mk_sec (mk (Γ.subgroupOf N) x)).symm
+      exact ⟨γ, e ▸ h, e ▸ sec_mem _⟩
+    change MeasurableSet (mk (Γ.subgroupOf N) ⁻¹' (sec (Γ.subgroupOf N) ⁻¹' s))
+    rw [h]
+    exact .iUnion fun γ => measurable_const_mul _ (hs.inter (measurableSet_stdDom _))
   have hm' : StronglyMeasurable fun p : Quot (Γ.subgroupOf N) × G => φ ((p.1.out : N) * p.2) :=
     e ▸ hm.comp_measurable
-      ((measurable_subtype_coe.comp (measurableEmbedding_sec.measurable.comp measurable_fst)).mul measurable_snd)
+      ((measurable_subtype_coe.comp (hsec.comp measurable_fst)).mul measurable_snd)
   refine (integrable_prod_iff hm'.aestronglyMeasurable).2 ⟨.of_forall fun q => (hC φ hφ hi q.out).1, ?_⟩
   refine .of_bound hm'.norm.integral_prod_right'.aestronglyMeasurable (∫ y in C, ‖φ y‖ ∂μ) (.of_forall fun q => ?_)
   rw [Real.norm_of_nonneg (integral_nonneg fun _ => norm_nonneg _)]

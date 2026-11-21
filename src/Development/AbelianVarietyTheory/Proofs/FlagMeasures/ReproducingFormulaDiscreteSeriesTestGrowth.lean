@@ -63,7 +63,7 @@ theorem inv_tau_pow_le (I : AutInst) (hn : 1 ≤ I.n) (x g : I.GA) (hg : g.2 ∈
 theorem isContRep_sum (B : RowsAut) {m : ℕ} (y : Fin m → B.I.L2 B.μf B.fund) (F : Fin m → B.I.GA → ℂ)
     (hF : ∀ i, IsContRep B (y i) (F i)) (c : Fin m → ℂ) :
     IsContRep B (∑ i, c i • y i) (fun x => ∑ i, c i * F i x) := by
-  refine ⟨continuous_finset_sum _ fun i _ => continuous_const.mul (hF i).1, fun γ hγ x => ?_, ?_⟩
+  refine ⟨continuous_finsetSum _ fun i _ => continuous_const.mul (hF i).1, fun γ hγ x => ?_, ?_⟩
   · exact Finset.sum_congr rfl fun i _ => by rw [(hF i).2.1 γ hγ]
   · have h1 := Lp.coeFn_finsetSum (univ : Finset (Fin m)) (fun i => c i • y i)
     have h2 : ∀ᵐ x ∂((B.I.muA B.μf).restrict B.fund), ∀ i, (c i • y i : B.I.L2 B.μf B.fund) x = c i * F i x :=

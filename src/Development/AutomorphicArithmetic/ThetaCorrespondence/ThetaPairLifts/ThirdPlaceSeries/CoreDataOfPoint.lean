@@ -75,8 +75,8 @@ theorem core_data_of_point (hD : GlobalTheory.Published.DiscreteSeriesCover) (hH
   obtain ⟨m, hm₀, hlast⟩ := _root_.GlobalTheory.T.exists_yMeas_geoMeas_volLast W u hPk a y (fun _ => 1) hx
   have hc₀ := _root_.GlobalTheory.Fam.commOf_is_of_geoMeas_of_coords_is hD hH W u hPk _ hm₀ hx
   obtain ⟨tP, htP⟩ := exists_places D _ hT0
-  obtain ⟨gP, hgP⟩ : ∃ s : Finset (GlobalTheory.FinPl.Pl D), ∀ p, p ∈ s ↔ ∃ PP ∈ (_root_.GlobalTheory.Fam.pk_z W).Pg, p = PP.under (𝓞 D.host.F) :=
-    ⟨(_root_.GlobalTheory.Fam.pk_z W).Pg.image fun PP => PP.under (𝓞 D.host.F), fun p => by simp only [Finset.mem_image, eq_comm]⟩
+  obtain ⟨gP, hgP⟩ : ∃ s : Finset (GlobalTheory.FinPl.Pl D), ∀ p, p ∈ s ↔ ∃ PP ∈ (_root_.GlobalTheory.Fam.pk_z W).Pg, p = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) :=
+    ⟨(_root_.GlobalTheory.Fam.pk_z W).Pg.image fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP), fun p => by simp only [Finset.mem_image, eq_comm]⟩
   have hdisj : Disjoint gP tP := Finset.disjoint_left.2 fun p h1 h2 => by
     obtain ⟨PP, hP, rfl⟩ := (hgP p).1 h1
     refine hGT PP hP ?_

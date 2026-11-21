@@ -138,7 +138,7 @@ private theorem internal_of {O R : Type} [CommRing O] [CommRing R] [Algebra O R]
   subst e
   exact gr_internal O ℤ R W
 
-private theorem gg_ext {R : Type} [CommRing R] {x y : GG 3 R} (h1 : x.right = y.right) (h2 : x.mat = y.mat) :
+private theorem gg_ext {R : Type} [CommRing R] {x y : GG (m := 3) (R := R)} (h1 : x.right = y.right) (h2 : x.mat = y.mat) :
     x = y := SemidirectProduct.ext (Units.ext h2) h1
 
 section Push
@@ -146,7 +146,7 @@ section Push
 variable {O A B D : Type} [CommRing O] [IsLocalRing O] [CommRing A] [CommRing B] [Algebra O A] [Algebra O B] [Group D]
 
 omit [IsLocalRing O] in
-private theorem conj_push (f : A →ₐ[O] B) (r : D →* GG 3 A) (h : GL (Fin 3) A) (g : D) (a b : Fin 3) :
+private theorem conj_push (f : A →ₐ[O] B) (r : D →* GG (m := 3) (R := A)) (h : GL (Fin 3) A) (g : D) (a b : Fin 3) :
     (conjBy (GeneralLinearGroup.map (f : A →+* B) h)⁻¹ (push f r) g).mat a b = f ((conjBy h⁻¹ r g).mat a b) := by
   have e : ∀ k : GL (Fin 3) A, GG.map (f : A →+* B) (GG.ofGL k) = GG.ofGL (GeneralLinearGroup.map (f : A →+* B) k) :=
     fun k => rfl
@@ -156,24 +156,24 @@ private theorem conj_push (f : A →ₐ[O] B) (r : D →* GG 3 A) (h : GL (Fin 3
   rw [this]
   rfl
 
-private theorem triIn_push {η : D →* ℤˣ} {Ψ : D →* Oˣ} {I : Subgroup D} (f : A →ₐ[O] B) {r : D →* GG 3 A}
+private theorem triIn_push {η : D →* ℤˣ} {Ψ : D →* Oˣ} {I : Subgroup D} (f : A →ₐ[O] B) {r : D →* GG (m := 3) (R := A)}
     {h : GL (Fin 3) A} (H : TriIn η Ψ I r h) : TriIn η Ψ I (push f r) (GeneralLinearGroup.map (f : A →+* B) h) where
   tri g hg a b hab := by rw [conj_push, H.tri g hg a b hab, map_zero]
   ine s hs h1 a := by rw [conj_push, H.ine s hs h1 a, AlgHom.commutes]
 
-private theorem diagIn_push {η : D →* ℤˣ} {Ψ : D →* Oˣ} {I : Subgroup D} (f : A →ₐ[O] B) {r : D →* GG 3 A}
+private theorem diagIn_push {η : D →* ℤˣ} {Ψ : D →* Oˣ} {I : Subgroup D} (f : A →ₐ[O] B) {r : D →* GG (m := 3) (R := A)}
     {h : GL (Fin 3) A} (H : DiagIn η Ψ I r h) : DiagIn η Ψ I (push f r) (GeneralLinearGroup.map (f : A →+* B) h) where
   toTriIn := triIn_push f H.toTriIn
   low g hg a b hab := by rw [conj_push, H.low g hg a b hab, map_zero]
 
 private theorem triIn_pull {η : D →* ℤˣ} {Ψ : D →* Oˣ} {I : Subgroup D} (f : A →ₐ[O] B) (hf : Function.Injective f)
-    {r : D →* GG 3 A} {h : GL (Fin 3) A} (H : TriIn η Ψ I (push f r) (GeneralLinearGroup.map (f : A →+* B) h)) :
+    {r : D →* GG (m := 3) (R := A)} {h : GL (Fin 3) A} (H : TriIn η Ψ I (push f r) (GeneralLinearGroup.map (f : A →+* B) h)) :
     TriIn η Ψ I r h where
   tri g hg a b hab := hf (by rw [← conj_push, H.tri g hg a b hab, map_zero])
   ine s hs h1 a := hf (by rw [← conj_push, H.ine s hs h1 a, AlgHom.commutes])
 
 private theorem diagIn_pull {η : D →* ℤˣ} {Ψ : D →* Oˣ} {I : Subgroup D} (f : A →ₐ[O] B) (hf : Function.Injective f)
-    {r : D →* GG 3 A} {h : GL (Fin 3) A} (H : DiagIn η Ψ I (push f r) (GeneralLinearGroup.map (f : A →+* B) h)) :
+    {r : D →* GG (m := 3) (R := A)} {h : GL (Fin 3) A} (H : DiagIn η Ψ I (push f r) (GeneralLinearGroup.map (f : A →+* B) h)) :
     DiagIn η Ψ I r h where
   toTriIn := triIn_pull f hf H.toTriIn
   low g hg a b hab := hf (by rw [← conj_push, H.low g hg a b hab, map_zero])
@@ -193,7 +193,7 @@ private theorem exists_gl (S : Subalgebra O A) (h : GL (Fin 3) A) (h1 : ∀ a b,
 
 end Push
 
-private theorem adFun_map {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (x : GG 3 A)
+private theorem adFun_map {A B : Type} [CommRing A] [CommRing B] (f : A →+* B) (x : GG (m := 3) (R := A))
     (X : Matrix (Fin 3) (Fin 3) A) : (GG.map f x).adFun (X.map f) = (x.adFun X).map f := by
   have e : (((GG.map f x).left⁻¹ : GL (Fin 3) B) : Matrix (Fin 3) (Fin 3) B) =
       ((x.left⁻¹ : GL (Fin 3) A) : Matrix (Fin 3) (Fin 3) A).map f := rfl
@@ -203,7 +203,7 @@ private theorem adFun_map {A B : Type} [CommRing A] [CommRing B] (f : A →+* B)
   · rfl
   · simp only [thetaLie, Matrix.map_neg _ (map_neg f), Matrix.map_mul, Jmat_map, Matrix.transpose_map]
 
-private theorem exists_coc {K Γ : Type} [CommRing K] [Group Γ] (r : Γ →* GG 3 K) (r' : Γ →* GG 3 (DualNumber K))
+private theorem exists_coc {K Γ : Type} [CommRing K] [Group Γ] (r : Γ →* GG (m := 3) (R := K)) (r' : Γ →* GG (m := 3) (R := DualNumber K))
     (h1 : ∀ g, (r' g).right = (r g).right) (h2 : ∀ g a b, ((r' g).mat a b).fst = (r g).mat a b) :
     ∃ y : Γ → Matrix (Fin 3) (Fin 3) K, IsCoc r y ∧
       IsDeform ((GG.map (algebraMap K (DualNumber K))).comp r)
@@ -242,7 +242,7 @@ private theorem exists_coc {K Γ : Type} [CommRing K] [Group Γ] (r : Γ →* GG
     have : ∀ c, (γ g a c).fst = 0 := hγ g a
     simp [Matrix.mul_apply, Fin.sum_univ_three, TrivSqZeroExt.algebraMap_eq_inl, this, Matrix.add_mul, mul_comm]
 
-private theorem cob_lie {K Γ : Type} [CommRing K] [Group Γ] (r : Γ →* GG 3 K) (a : K) (g : Γ) (hg : (r g).right = 1)
+private theorem cob_lie {K Γ : Type} [CommRing K] [Group Γ] (r : Γ →* GG (m := 3) (R := K)) (a : K) (g : Γ) (hg : (r g).right = 1)
     (i j : Fin 3) : (cob r (a • Matrix.diagonal fun i => ((wt1 i : ℤ) : K)) g * (r g).mat) i j =
       a * (wt i j : ℤ) * (r g).mat i j := by
   have e : ∀ X, cob r X g * (r g).mat = X * (r g).mat - (r g).mat * X := fun X => by
@@ -255,7 +255,7 @@ private theorem cob_lie {K Γ : Type} [CommRing K] [Group Γ] (r : Γ →* GG 3 
   ring
 
 private theorem inv_wpart {O R Γ : Type} [CommRing O] [IsLocalRing O] [CommRing R] [Algebra O R] [Group Γ]
-    (u : Γ →* GG 3 R) {x y : R} (hx : x ∈ wpart O u 0) (h : x * y = 1) : y ∈ wpart O u 0 :=
+    (u : Γ →* GG (m := 3) (R := R)) {x y : R} (hx : x ∈ wpart O u 0) (h : x * y = 1) : y ∈ wpart O u 0 :=
   fun R' _ _ _ f f' t e => by
     have h1 := hx R' f f' t e
     simp only [zpow_zero, Units.val_one, one_mul] at h1 ⊢
@@ -268,8 +268,8 @@ theorem UpperTheory.V.UnitaryThreeInertia.tangent_eq_orbit :
       [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [Algebra O (PadicAlgCl l)] [IsScalarTower ℤ_[l] O (PadicAlgCl l)] [FaithfulSMul O (PadicAlgCl l)]
       {G Γ ι : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
       [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] [CompactSpace Γ] [T2Space Γ] [TotallyDisconnectedSpace Γ] [Finite ι] (F : Frame O G Γ ι), F.Ok →
-    ∀ (g₁ : Γ), F.Marked g₁ → ∀ {R : Type} [CommRing R] [Algebra O R] [IsCO O R] (u : Γ →* GG 3 R), F.IsUniv g₁ u →
-    Module.Finite O (wpart O u 0) → ∀ (ξ : Sring O u →ₐ[O] (PadicAlgCl l)) (r : Γ →* GG 3 (PadicAlgCl l)), IsPtHom u ξ r → F.Rigid r → ∀ D ∈ PtDer ξ (PadicAlgCl l), ∃ a : (PadicAlgCl l), ∀ (j : ℤ) x (hx : x ∈ wpart O u j), D ⟨x, mem_Sring u hx⟩ = a * j * ξ ⟨x, mem_Sring u hx⟩ := by
+    ∀ (g₁ : Γ), F.Marked g₁ → ∀ {R : Type} [CommRing R] [Algebra O R] [IsCO O R] (u : Γ →* GG (m := 3) (R := R)), F.IsUniv g₁ u →
+    Module.Finite O (wpart O u 0) → ∀ (ξ : Sring O u →ₐ[O] (PadicAlgCl l)) (r : Γ →* GG (m := 3) (R := PadicAlgCl l)), IsPtHom u ξ r → F.Rigid r → ∀ D ∈ PtDer ξ (PadicAlgCl l), ∃ a : (PadicAlgCl l), ∀ (j : ℤ) x (hx : x ∈ wpart O u j), D ⟨x, mem_Sring u hx⟩ = a * j * ξ ⟨x, mem_Sring u hx⟩ := by
   intro l _ O _ _ _ _ _ _ _ _ _ _ _ G Γ ι _ _ _ _ _ _ _ _ _ _ _ _ _ F hF g₁ hg R _ _ _ u hu hfin ξ r hr hrig D hD
   obtain ⟨hadj, hfinj⟩ := sring_eq_adjoin F hF g₁ hg u hu hfin
   obtain ⟨W, hW, -⟩ := exists_adapted F hF g₁ hg u hu

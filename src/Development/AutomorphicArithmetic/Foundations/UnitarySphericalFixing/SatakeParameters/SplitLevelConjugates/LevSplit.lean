@@ -93,7 +93,7 @@ private theorem red_one {V : TH.HSp D} {n : ℕ} (hn : V.rank = n) {hF : D.host.
       rw [e']
       exact red_of_comp hn hP hB _ hU fun y hy φ hφ => map_eq_one_conj s hU hk hy φ hφ
   · have hS := (GlobalTheory.FinZeta.LevelOff.finE_mem_St_iff hB (P.into κ)).2 ((hP.2 κ).1 hU)
-    refine GlobalTheory.FinZeta.LevelOff.redFn_eq_one_of_proj β {PP.under (𝓞 D.host.F)} hS (fun u hu => ?_) (Finset.mem_singleton_self _)
+    refine GlobalTheory.FinZeta.LevelOff.redFn_eq_one_of_proj β {(_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)} hS (fun u hu => ?_) (Finset.mem_singleton_self _)
     rw [Finset.mem_singleton.1 hu]
     exact GlobalTheory.NonSplitLevel.projV_eq_one hP κ PP (hT _ fun e => ho (congrArg HeightOneSpectrum.asIdeal e))
 

@@ -406,7 +406,7 @@ private theorem grid_ramification_characterised {D : D7} {T : Type} {Lc : LevCh 
       · exact Or.inl h
       · exact Or.inr (Or.inl h))
   have hxi : ∀ P : HeightOneSpectrum (𝓞 D.host.E),
-      (∀ PP ∈ Lc.Q t, PP.under (𝓞 D.host.F) ≠ P.under (𝓞 D.host.F)) → (Lc.xiH t).UnrAt P := fun P hP => by
+      (∀ PP ∈ Lc.Q t, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ P.under (𝓞 D.host.F)) → (Lc.xiH t).UnrAt P := fun P hP => by
     by_contra hc
     rcases (hL.Q_ram t P).1 hc with h | ⟨PP', h, hc'⟩
     · exact hP P h rfl
@@ -417,7 +417,7 @@ private theorem grid_ramification_characterised {D : D7} {T : Type} {Lc : LevCh 
     fun P => unramified_pow (Lc.C.isEta.unr P) _
   constructor
   · rintro ⟨w, hw, hv⟩ hu
-    have hS : v ∈ G.pl.S0 ∨ ∃ PP ∈ Lc.Q t, PP.under (𝓞 D.host.F) = v := by
+    have hS : v ∈ G.pl.S0 ∨ ∃ PP ∈ Lc.Q t, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = v := by
       rcases Finset.mem_union.1 hw with hw | hw
       · obtain ⟨u, hu, rfl⟩ := Finset.mem_image.1 hw
         exact Or.inl (hv ▸ (G.pl.under_w hu).symm ▸ hu)
@@ -446,7 +446,7 @@ private theorem grid_ramification_characterised {D : D7} {T : Type} {Lc : LevCh 
   · intro h
     have hS0 : v ∉ G.pl.S0 := fun h0 =>
       h _ (Finset.mem_union_left _ (Finset.mem_image_of_mem _ h0)) (G.pl.under_w h0)
-    have hQ : ∀ PP ∈ Lc.Q t, PP.under (𝓞 D.host.F) ≠ v := fun w hw => h w (Finset.mem_union_right _ hw)
+    have hQ : ∀ PP ∈ Lc.Q t, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v := fun w hw => h w (Finset.mem_union_right _ hw)
     have hS1 : v ∉ S1 D := fun h => hS0 (G.pl.mem_S0_of_sum_eq.2 (Or.inr h))
     refine ⟨GlobalTheory.T.isUnramifiedAtPlaceIdempotent_of_heckeChar_unramified_above D _ _ hα v e he fun P hP => ?_, GlobalTheory.T.isUnramifiedAtPlaceIdempotent_of_heckeChar_unramified_above D _ _ hβ v e he fun P hP => ?_⟩
     · exact ((hmu P (by rw [hP]; exact hS1)).mul (hxi P fun PP hPP h => hQ PP hPP (h.trans hP))).mul (heta P)

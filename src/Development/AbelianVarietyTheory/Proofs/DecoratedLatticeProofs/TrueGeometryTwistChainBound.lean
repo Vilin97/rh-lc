@@ -54,7 +54,7 @@ theorem moves_at {V : HSp D} {g : GA D V} {M : Lat V} {P : Pl D → Prop} (h : M
 theorem conj_mem_levG (V : HSp D) (β : GL (Fin V.rank) (Lev.EAf D)) (Λ M : Lat V) (Ld : LevDat D.host.E ℂ V.rank)
     (P : Pl D → Prop) (t κ : GA D V) (hβ : IsFrame β Λ) (hΛ : IsSelfDualC V Λ) (ht : t ∈ GfC V)
     (hm : ∀ v, P v → Moves V t Λ M (· = v)) (hQ : Ld.Q = ∅)
-    (hPg : ∀ PP ∈ Ld.Pg, ¬ P (PP.under (𝓞 D.host.F))) (hκ : InK V M P κ) :
+    (hPg : ∀ PP ∈ Ld.Pg, ¬ P ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))) (hκ : InK V M P κ) :
     t⁻¹ * κ * t ∈ Lev.levG V β Ld := by
   haveI : Submodule.IsLattice D.host.E Λ := hΛ.1
   have hfg : Λ.FG := Submodule.IsLattice.fg (A := D.host.E)

@@ -15,6 +15,8 @@ namespace Formalism.L2
 
 variable {D : D7}
 
+local notation "cO" => IsCMField.ringOfIntegersComplexConj D.host.E
+
 theorem cO_cO (x : 𝓞 D.host.E) : cO (cO x) = x := by
   apply RingOfIntegers.ext
   rw [IsCMField.coe_ringOfIntegersComplexConj, IsCMField.coe_ringOfIntegersComplexConj]
@@ -137,6 +139,9 @@ end Formalism.L2
 namespace Formalism.L2
 
 variable {D : D7}
+
+local notation "cO" => IsCMField.ringOfIntegersComplexConj D.host.E
+local notation "Fp" => maximalRealSubfield D.host.E
 
 def belowE (v : PlE D.host) : HeightOneSpectrum (𝓞 Fp) where
   asIdeal := v.asIdeal.comap (algebraMap (𝓞 Fp) (𝓞 D.host.E))

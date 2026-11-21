@@ -200,7 +200,7 @@ variable (L' : LevDat D.host.E ℂ V.rank) (SG : Finset (Pl D.host.E)) (hsub : �
 
 include hsub hoffP
 
-theorem under_ne : ∀ PP, PP ∈ L'.Pg ∨ PP ∈ L'.Q → PP.under (𝓞 D.host.F) ≠ (pl x.1).under (𝓞 D.host.F) := by
+theorem under_ne : ∀ PP, PP ∈ L'.Pg ∨ PP ∈ L'.Q → (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ (pl x.1).under (𝓞 D.host.F) := by
   intro PP hPP hu
   have hm := hsub PP hPP
   rcases GlobalTheory.GoodPrimes.eq_or_conj_of_under_eq hu with e | e
@@ -275,7 +275,7 @@ theorem loc_iff_std (v : HeightOneSpectrum (𝓞 D.host.F)) (hv : Formalism.L2.C
     obtain ⟨κ, hκ⟩ := g.2
     rw [← hκ]
     exact GlobalTheory.LevFinCong.finE_mem_UA V κ
-  have hoff : ∀ PP, PP ∈ L'.Pg ∨ PP ∈ L'.Q → PP.under (𝓞 D.host.F) ≠ v := by
+  have hoff : ∀ PP, PP ∈ L'.Pg ∨ PP ∈ L'.Q → (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v := by
     rw [← hunder]
     exact under_ne V L' SG hsub pl ok x hoffP
   rw [mem_levJ_iff V 1 L' g v hL1 hU hoff, mem_mhlKv_iff_St u hu1, ← castGL_mem_St h.symm, hg]

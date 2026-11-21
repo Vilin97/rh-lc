@@ -27,7 +27,7 @@ theorem isLattice_coordLat (V : Formalism.BasicNotions.HSpace E) (L : Submodule 
     ReciprocityTheory.MultiplicativeHeights.IsLattice (coordLat V L) := by
   refine ⟨h.fg.map _, ?_⟩
   have : (coordLat V L : Set (Fin V.rank → E)) = V.frame.equivFun.toLinearMap '' (L : Set V.V) := rfl
-  rw [this, ← Submodule.map_span, (Submodule.IsLattice.span_eq_top (self := h)), Submodule.map_top, LinearEquiv.range]
+  rw [this, ← Submodule.map_span, h.span_eq_top, Submodule.map_top, LinearEquiv.range]
 
 theorem herm_coord (V : Formalism.BasicNotions.HSpace E) (x y : V.V) :
     herm V.gramᵀ (V.frame.equivFun x) (V.frame.equivFun y) = V.hT y x := by

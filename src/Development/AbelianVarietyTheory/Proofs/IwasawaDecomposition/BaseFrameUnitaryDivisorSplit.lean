@@ -53,7 +53,7 @@ theorem stdFrame_stab_red : ∀ (D : D7) (V : HSp D) (n : ℕ) (hF : D.host.F = 
   have hSt : finE V (P.ψ κ) ∈ Formalism.L2.DIV.St β :=
     (GlobalTheory.FinZeta.LevelOff.finE_mem_St_iff hB (P.into κ)).2 ((hP.2 κ).1 hκ)
   refine ⟨hSt, fun A v PP hA hPP hv => ?_⟩
-  have hu : PP.under (𝓞 D.host.F) = v := HeightOneSpectrum.ext hPP
+  have hu : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = v := HeightOneSpectrum.ext hPP
   refine GlobalTheory.ChainOnto.RedOne.redFn_eq_one D V β _ PP hSt ?_
   rw [GlobalTheory.FinPl.KOpen.proj_eq_one_iff, hu]
   obtain ⟨⟨b, b', hbb, -, hmat⟩, -⟩ := hP

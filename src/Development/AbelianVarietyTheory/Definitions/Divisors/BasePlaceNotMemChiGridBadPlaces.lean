@@ -59,9 +59,9 @@ structure Places (L : LevCh D T) where
   w_de : ∀ p ∈ ({D.host.pde, D.host.pde'} : Set ℕ), ∃ 𝔭 : HeightOneSpectrum (𝓞 D.host.K),
     ∀ v : Pl D.host.F, ((p : ℕ) : 𝓞 D.host.F) ∈ v.asIdeal → (w v).under (𝓞 D.host.K) = 𝔭
 
-  w_Q : ∀ t, ∀ PP ∈ L.Q t, PP.under (𝓞 D.host.F) ∈ S1 D → PP = w (PP.under (𝓞 D.host.F))
+  w_Q : ∀ t, ∀ PP ∈ L.Q t, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∈ S1 D → PP = w ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))
 
-  levelPlace_ne_basePlace : ∀ t, ∀ PP ∈ L.Q t, PP.under (𝓞 D.host.F) ≠ v0
+  levelPlace_ne_basePlace : ∀ t, ∀ PP ∈ L.Q t, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v0
 
 namespace Places
 
@@ -115,16 +115,16 @@ structure Chars {L : LevCh D T} (P : Places L) (C : ℝ) where
 
   inf : ∀ i, 1 ≤ i → i ≤ D.R.m → (chiH i).HasInf (embTau D) fun τ => 2 * cen D C τ i
 
-  unr : ∀ i, 1 ≤ i → i ≤ D.R.m → ∀ PP : Pl D.host.E, PP.under (𝓞 D.host.F) ∉ P.S0 → (chiH i).UnrAt PP
+  unr : ∀ i, 1 ≤ i → i ≤ D.R.m → ∀ PP : Pl D.host.E, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∉ P.S0 → (chiH i).UnrAt PP
 
-  lev1 : ∀ i, 1 ≤ i → i ≤ D.R.m → ∀ PP : Pl D.host.E, PP.under (𝓞 D.host.F) ∈ S1 D →
+  lev1 : ∀ i, 1 ≤ i → i ≤ D.R.m → ∀ PP : Pl D.host.E, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∈ S1 D →
     (chiH i).LevelLe PP 2 ∧ ¬ (chiH i).LevelLe PP 1
 
   wild : ∀ i, 1 ≤ i → i ≤ D.R.m → ∀ PP : Pl D.host.E,
     ((D.host.pde : ℕ) : 𝓞 D.host.E) ∈ PP.asIdeal ∨ ((D.host.pde' : ℕ) : 𝓞 D.host.E) ∈ PP.asIdeal →
     ∀ x : (PP.adicCompletion D.host.E)ˣ, x ^ (Nat.card (kP PP) - 1) = 1 → (chiH i).loc PP x = 1
 
-  lev0 : ∀ i, 1 ≤ i → i ≤ D.R.m → ∀ PP : Pl D.host.E, PP.under (𝓞 D.host.F) = P.v0 →
+  lev0 : ∀ i, 1 ≤ i → i ≤ D.R.m → ∀ PP : Pl D.host.E, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = P.v0 →
     (chiH i).LevelLe PP 1 ∧ ¬ (chiH i).UnrAt PP
 
 theorem Chars.basePlace_not_mem_chiGridBadPlaces {L : LevCh D T} {P : Places L} {C : ℝ} (X : Chars P C) : P.v0 ∉ S1 D := fun h => by

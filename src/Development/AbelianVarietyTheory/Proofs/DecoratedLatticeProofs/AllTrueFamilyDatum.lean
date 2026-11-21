@@ -116,8 +116,8 @@ theorem core (hD : GlobalTheory.Published.DiscreteSeriesCover) (hH : GlobalTheor
   obtain ⟨m, hm₀, hlast⟩ := GlobalTheory.T.exists_geometric_measure_volume W u hPk a y (fun _ => 1) hx
   have hc₀ := GlobalTheory.Fam.commOf_is hD hH W u hPk _ hm₀ hx
   obtain ⟨tP, htP⟩ := exists_places D _ hT0
-  obtain ⟨gP, hgP⟩ : ∃ s : Finset (GlobalTheory.FinPl.Pl D), ∀ p, p ∈ s ↔ ∃ PP ∈ (pk W).Pg, p = PP.under (𝓞 D.host.F) :=
-    ⟨(pk W).Pg.image fun PP => PP.under (𝓞 D.host.F), fun p => by simp only [Finset.mem_image, eq_comm]⟩
+  obtain ⟨gP, hgP⟩ : ∃ s : Finset (GlobalTheory.FinPl.Pl D), ∀ p, p ∈ s ↔ ∃ PP ∈ (pk W).Pg, p = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) :=
+    ⟨(pk W).Pg.image fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP), fun p => by simp only [Finset.mem_image, eq_comm]⟩
   have hdisj : Disjoint gP tP := Finset.disjoint_left.2 fun p h1 h2 => by
     obtain ⟨PP, hP, rfl⟩ := (hgP p).1 h1
     refine hGT PP hP ?_

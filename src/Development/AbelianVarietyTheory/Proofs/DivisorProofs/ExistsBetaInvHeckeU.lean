@@ -39,7 +39,7 @@ theorem exists_betaInv_heckeU {D : D7} {T : Type} {L : LevCh D T} {sc : Consts} 
   have hlev : ∀ v, (G.ch.chiH (D.R.m - i)).UnrAt v ∨ ∃ q ∈ G.pl.S0.image qf, Formalism.L2.Host.OverP D.host q v ∧
       (G.ch.chiH (D.R.m - i)).LevelLe v 2 := by
     intro PP
-    by_cases h : PP.under (𝓞 D.host.F) ∈ G.pl.S0
+    by_cases h : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∈ G.pl.S0
     · refine Or.inr ⟨qf _, Finset.mem_image_of_mem _ h, ?_, ?_⟩
       · have := (hqf _ h).2.2
         simpa [HeightOneSpectrum.under, Formalism.L2.Host.OverP] using this

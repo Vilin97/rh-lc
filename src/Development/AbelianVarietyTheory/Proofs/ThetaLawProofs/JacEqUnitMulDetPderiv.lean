@@ -36,11 +36,11 @@ omit [IsLocalRing O] in
 def dirPt {n : ℕ} (e : MvPowerSeries (Fin n) O →ₐ[O] O) (c : Fin n → O) :
     MvPowerSeries (Fin n) O →ₐ[O] DualNumber O :=
   addDer ((inlS O O).comp e) (TrivSqZeroExt.inrHom O O ∘ₗ
-      ∑ j, c j • (e.toLinearMap ∘ₗ (pderiv O j : Derivation O _ _).toLinearMap))
+      ∑ j, c j • (e.toLinearMap ∘ₗ (pderiv (R := O) j).toLinearMap))
     (fun a b => by
       ext
       · simp [TrivSqZeroExt.fst_sum]
-      · simp [TrivSqZeroExt.snd_sum, Finset.mul_sum, ← Finset.sum_add_distrib, mul_add, mul_left_comm]
+      · simp [TrivSqZeroExt.snd_sum, Finset.mul_sum, ← Finset.sum_add_distrib, mul_add]
         exact Finset.sum_congr rfl fun _ _ => by ring)
     (fun _ _ => TrivSqZeroExt.inr_mul_inr _ _ _)
 
@@ -50,7 +50,7 @@ theorem dirPt_fst {n : ℕ} (e : MvPowerSeries (Fin n) O →ₐ[O] O) (c : Fin n
 
 omit [IsLocalRing O] in
 theorem dirPt_snd {n : ℕ} (e : MvPowerSeries (Fin n) O →ₐ[O] O) (c : Fin n → O) (a : MvPowerSeries (Fin n) O) :
-    (dirPt e c a).snd = ∑ j, c j * e (pderiv O j a) :=
+    (dirPt e c a).snd = ∑ j, c j * e (pderiv (R := O) j a) :=
   (zero_add _).trans ((TrivSqZeroExt.snd_inr _ _).trans (by simp))
 
 omit [IsLocalRing O] in
@@ -62,7 +62,7 @@ variable [IsNoetherianRing O] [IsAdicComplete (maximalIdeal O) O]
 
 theorem snd_eq_sum {n : ℕ} (e : MvPowerSeries (Fin n) O →ₐ[O] O) (he : ∀ i, e (X i) ∈ maximalIdeal O)
     (ψ : MvPowerSeries (Fin n) O →ₐ[O] DualNumber O) (hψ : ∀ a, (ψ a).fst = e a) (a : MvPowerSeries (Fin n) O) :
-    (ψ a).snd = ∑ j, (ψ (X j)).snd * e (pderiv O j a) := by
+    (ψ a).snd = ∑ j, (ψ (X j)).snd * e (pderiv (R := O) j a) := by
   have := isLocalRing_trivSqZeroExt (O := O) O
   have : Module.Finite O (DualNumber O) := inferInstanceAs (Module.Finite O (O × O))
   have := GlobalTheory.FormalIsogeny.isAdicComplete_maximalIdeal_of_finite O (DualNumber O)
@@ -106,7 +106,7 @@ theorem exists_matrix (hv : IsLieBasis v) (j : sp (R₀ := O) (MvPowerSeries (Fi
       (fun _ => TrivSqZeroExt.inr_mul_inr _ _ _)) :
     ∃ C : Matrix (Fin n) (Fin n) O, IsUnit C.det ∧
       ∀ k, ∃ φ : MvPowerSeries (Fin n) O →ₐ[O] DualNumber O, spMap φ ≫ j = (toUnit _ ≫ z) * v k ∧
-        ∀ a, (φ a).snd = ∑ i, u (pderiv O i a) * C i k := by
+        ∀ a, (φ a).snd = ∑ i, u (pderiv (R := O) i a) * C i k := by
   have hz : ∀ {T T' : Type} [CommRing T] [Algebra O T] [CommRing T'] [Algebra O T'] (φ : T →ₐ[O] T'),
       spMap φ ≫ toUnit _ ≫ z = toUnit _ ≫ z := fun φ => by
     rw [← Category.assoc, comp_toUnit]

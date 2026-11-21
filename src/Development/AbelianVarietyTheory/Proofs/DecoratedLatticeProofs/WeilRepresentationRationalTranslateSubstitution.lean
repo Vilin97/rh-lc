@@ -19,9 +19,10 @@ theorem om_rat_mul : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (S T : HSp D)
   have h1 := GlobalTheory.WeilRat.om_rat_actO D ψ H.std S T χ χ' om H γ hγ γ' hγ' _ (H.om_pres (g, h) f hf)
     (mt T γ'⁻¹ * w * mt S γ)
   have h2 : actO S T γ γ' (mt T γ'⁻¹ * w * mt S γ) = w := by
-    rw [actO_eq, Matrix.mul_assoc, Matrix.mul_assoc, mt_mul_inv, Matrix.mul_one, ← Matrix.mul_assoc, mt_mul_inv,
+    change mt T γ' * (mt T γ'⁻¹ * w * mt S γ) * mt S γ⁻¹ = w
+    rw [Matrix.mul_assoc, Matrix.mul_assoc, mt_mul_inv, Matrix.mul_one, ← Matrix.mul_assoc, mt_mul_inv,
       Matrix.one_mul]
   rw [h2] at h1
-  rw [← h1, ← Prod.mk_mul_mk, map_mul, Module.End.mul_apply]
+  rw [← h1, ← Prod.mk_mul_mk, map_mul, mul_apply_eq_comp]
 
 end GlobalTheory.Unf

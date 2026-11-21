@@ -16,7 +16,7 @@ public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsFinOpenSub
 @[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj TensorProduct
-open GlobalTheory.CompanionTheory.Ar.BT GroundTheory.PAdicHodge
+open GlobalTheory.CompanionTheory.Ar.BT
 
 namespace PositivityTheory.HtPt.Htat.HopfOrderEqTop
 

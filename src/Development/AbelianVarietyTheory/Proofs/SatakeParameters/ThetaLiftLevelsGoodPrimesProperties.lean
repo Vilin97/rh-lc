@@ -111,13 +111,13 @@ theorem good_primes : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Typ
     · intro h PP hPP
       rw [hQ] at hPP
       have hPP' := hPP.resolve_right (Finset.notMem_empty _)
-      have key : PP.under (𝓞 D.host.F) ≠ P.under (𝓞 D.host.F) := fun e =>
+      have key : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ P.under (𝓞 D.host.F) := fun e =>
         h ((hSF _).2 ⟨PP, hPP', by rw [← e]; rfl⟩)
       exact ⟨fun e => key (by rw [e]), fun e => key (GlobalTheory.LevelPlaces.under_eq_of_isConjPl e)⟩
     · intro h hm
       obtain ⟨PP, hPP, e⟩ := (hSF _).1 hm
       obtain ⟨h1, h2⟩ := h PP (Or.inl hPP)
-      have e' : P.under (𝓞 D.host.F) = PP.under (𝓞 D.host.F) := HeightOneSpectrum.ext e.symm
+      have e' : P.under (𝓞 D.host.F) = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) := HeightOneSpectrum.ext e.symm
       rcases eq_or_conj_of_under_eq e' with h3 | h3
       · exact h1 h3.symm
       · exact h2 (isConjPl_iff.2 h3)

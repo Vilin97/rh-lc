@@ -8,15 +8,15 @@ public import Development.AutomorphicArithmetic.AutomorphicVarieties.UnitaryThre
 
 open Matrix IsLocalRing ReciprocityTheory.Gal UpperTheory.V.HV UpperTheory.V.U3 UpperTheory.V.Alg UpperTheory.V.UnitaryThreeInertia
 
-private def eGb {k : Type} [CommRing k] (a : k) : Gb k (-2) :=
+private def eGb {k : Type} [CommRing k] (a : k) : Gb (k := k) (-2) :=
   (⟨Matrix.single 2 0 a, by
     intro i j h
-    fin_cases i <;> fin_cases j <;> first | (exfalso; revert h; decide) | simp⟩ : gw k (-2))
+    fin_cases i <;> fin_cases j <;> first | (exfalso; revert h; decide) | simp⟩ : gw (R := k) (-2))
 
 private theorem eGb_val {k : Type} [CommRing k] (a : k) : (eGb a).val 2 0 = a := by
   simp [eGb, Gb.val]
 
-private theorem gb_ext {k : Type} [CommRing k] {X Y : Gb k (-2)} (h : X.val 2 0 = Y.val 2 0) : X = Y := by
+private theorem gb_ext {k : Type} [CommRing k] {X Y : Gb (k := k) (-2)} (h : X.val 2 0 = Y.val 2 0) : X = Y := by
   apply Subtype.ext
   ext i j
   by_cases e : wt i j = -2
@@ -26,11 +26,11 @@ private theorem gb_ext {k : Type} [CommRing k] {X Y : Gb k (-2)} (h : X.val 2 0 
     exact h
   · exact (X.2 i j e).trans (Y.2 i j e).symm
 
-private theorem gb_add {k : Type} [CommRing k] (X Y : Gb k (-2)) : (X + Y).val 2 0 = X.val 2 0 + Y.val 2 0 := rfl
-private theorem gb_sub {k : Type} [CommRing k] (X Y : Gb k (-2)) : (X - Y).val 2 0 = X.val 2 0 - Y.val 2 0 := rfl
-private theorem gb_zero {k : Type} [CommRing k] : (0 : Gb k (-2)).val 2 0 = 0 := rfl
+private theorem gb_add {k : Type} [CommRing k] (X Y : Gb (k := k) (-2)) : (X + Y).val 2 0 = X.val 2 0 + Y.val 2 0 := rfl
+private theorem gb_sub {k : Type} [CommRing k] (X Y : Gb (k := k) (-2)) : (X - Y).val 2 0 = X.val 2 0 - Y.val 2 0 := rfl
+private theorem gb_zero {k : Type} [CommRing k] : (0 : Gb (k := k) (-2)).val 2 0 = 0 := rfl
 
-private theorem gb_rep {k D : Type} [CommRing k] [Group D] (η : D →* ℤˣ) (Ψ : D →* kˣ) (g : D) (X : Gb k (-2)) :
+private theorem gb_rep {k D : Type} [CommRing k] [Group D] (η : D →* ℤˣ) (Ψ : D →* kˣ) (g : D) (X : Gb (k := k) (-2)) :
     (gRep η Ψ (-2) g X).val 2 0 = ((η g : ℤ) : k) * (((Ψ g)⁻¹ : kˣ) : k) ^ 2 * X.val 2 0 := by
   rw [gRep_val, adRep_baseLift_apply]
   have hw : wt 2 0 = -2 := by decide
@@ -56,9 +56,9 @@ private theorem coc_zero {O : Type} [CommRing O] [IsLocalRing O] {G Γ ι : Type
     simp only [P, map_mul, Units.val_mul, Int.cast_mul, mul_inv, mul_pow]
     ring
   have hPone : P 1 = 1 := by simp [P]
-  let X : Γ → Gb (ResidueField O) (-2) := fun g => eGb (x g)
+  let X : Γ → Gb (k := ResidueField O) (-2) := fun g => eGb (x g)
   have hX20 : ∀ g, (X g).val 2 0 = x g := fun g => eGb_val _
-  have hrep : ∀ g (Y : Gb (ResidueField O) (-2)), (F.gbar (-2) g Y).val 2 0 = P g * Y.val 2 0 :=
+  have hrep : ∀ g (Y : Gb (k := ResidueField O) (-2)), (F.gbar (-2) g Y).val 2 0 = P g * Y.val 2 0 :=
     fun g Y => gb_rep _ _ _ _
   have hcoc : ∀ g h, X (g * h) = X g + F.gbar (-2) g (X h) := by
     intro g h
@@ -170,7 +170,7 @@ private theorem coc_zero {O : Type} [CommRing O] [IsLocalRing O] {G Γ ι : Type
 section Int
 
 variable {O A D : Type} [CommRing O] [IsLocalRing O] [CommRing A] [IsLocalRing A] [Algebra O A] [Group D]
-  {η : D →* ℤˣ} {Ψ : D →* Oˣ} {r : D →* GG 3 A}
+  {η : D →* ℤˣ} {Ψ : D →* Oˣ} {r : D →* GG (m := 3) (R := A)}
 
 private theorem pq (g : D) :
     residue A (algebraMap O A (Ψ g)) * residue A (algebraMap O A ((Ψ g)⁻¹ : Oˣ)) = 1 := by
@@ -188,7 +188,7 @@ private theorem ent_ofSL_eq_coe (hr : Red η Ψ r) (g : D) (a b : Fin 3) :
   split_ifs <;> simp
 
 private theorem mat_mul_eq_ite_of_hasMult (hm : HasMult η r) (g h : D) :
-    (r (g * h)).mat = (r g).mat * (if η g = 1 then (r h).mat else Jmat A 3 * ((r h).mat)⁻¹ᵀ * Jmat A 3) := by
+    (r (g * h)).mat = (r g).mat * (if η g = 1 then (r h).mat else Jmat (R := A) 3 * ((r h).mat)⁻¹ᵀ * Jmat (R := A) 3) := by
   rw [map_mul]
   change ((((r g) * (r h)).left : GL (Fin 3) A) : Matrix (Fin 3) (Fin 3) A) = _
   rw [SemidirectProduct.mul_left, hm g, Units.val_mul]
@@ -200,7 +200,7 @@ private theorem mat_mul_eq_ite_of_hasMult (hm : HasMult η r) (g h : D) :
     rfl
 
 private theorem jmat_mul_mul_jmat_apply {R : Type} [CommRing R] (N : Matrix (Fin 3) (Fin 3) R) (a b : Fin 3) :
-    (Jmat R 3 * N * Jmat R 3) a b = N a.rev b.rev := by
+    (Jmat (R := R) 3 * N * Jmat (R := R) 3) a b = N a.rev b.rev := by
   simp only [Matrix.mul_apply, Jmat, Fin.sum_univ_three]
   fin_cases a <;> fin_cases b <;> simp [Fin.rev]
 
@@ -363,7 +363,7 @@ private theorem lc_div {A D : Type} [CommRing A] [IsDomain A] [IsDiscreteValuati
 private theorem ent_zero {O A : Type} [CommRing O] [IsLocalRing O] [CommRing A] [IsDomain A] [IsDiscreteValuationRing A]
     [Algebra O A] [IsLocalHom (algebraMap O A)] {G Γ ι : Type} [Group G] [TopologicalSpace G]
     [IsTopologicalGroup G] [Group Γ] [TopologicalSpace Γ] (F : Frame O G Γ ι) (hF : F.Ok) (hX : F.Xpp) (g₁ : Γ)
-    (r : Γ →* GG 3 A) (hr : F.IsPt g₁ r) (h21 : ∀ g ∈ F.η.ker, (r g).mat 2 1 = 0) : ∀ g, (r g).mat 2 0 = 0 := by
+    (r : Γ →* GG (m := 3) (R := A)) (hr : F.IsPt g₁ r) (h21 : ∀ g ∈ F.η.ker, (r g).mat 2 1 = 0) : ∀ g, (r g).mat 2 0 = 0 := by
   classical
   have hred : Red F.η F.Ψ r := hr.toCondN.toCond.toRed
   have hm : HasMult F.η r := hred.mult
@@ -482,7 +482,7 @@ theorem UpperTheory.V.UnitaryThreeInertia.typeI_of_twoSigned :
       [Algebra ℤ_[l] O] [Module.Finite ℤ_[l] O] [Algebra O (PadicAlgCl l)] [IsScalarTower ℤ_[l] O (PadicAlgCl l)] [FaithfulSMul O (PadicAlgCl l)]
       {G Γ ι : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
       [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ] [CompactSpace Γ] [T2Space Γ] [TotallyDisconnectedSpace Γ] [Finite ι] (F : Frame O G Γ ι), F.Ok →
-    F.LocVan → F.Xpp → ∀ g₁, F.Marked g₁ → ∀ (r : Γ →* GG 3 (PadicAlgCl l)), F.IsCharZeroPt g₁ r → ¬ Upper F.η r → ¬ Lower F.η r → TypeI F.η r := by
+    F.LocVan → F.Xpp → ∀ g₁, F.Marked g₁ → ∀ (r : Γ →* GG (m := 3) (R := PadicAlgCl l)), F.IsCharZeroPt g₁ r → ¬ Upper F.η r → ¬ Lower F.η r → TypeI F.η r := by
   intro l _ O _ _ _ _ _ _ _ _ _ _ _ G Γ ι _ _ _ _ _ _ _ _ _ _ _ _ _ F hF hLV hX g₁ hM r hcz hU hL
   obtain ⟨A, hA, hAf, t, r', hpt, hpush⟩ := hcz
   have hinj : Function.Injective (A.val : A → PadicAlgCl l) := Subtype.val_injective

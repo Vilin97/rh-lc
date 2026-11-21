@@ -336,7 +336,7 @@ theorem thetaVecLocal : ∀ D : D7, ThetaVecLocal D := by
     fun PP => if PP ∈ Pg then locK else locQ (ξ PP)
   have ω1 : ∀ PP ∈ Pg, ω PP = locK := fun PP h => if_pos h
   have ω2 : ∀ PP ∈ Q, ω PP = locQ (ξ PP) := fun PP h => if_neg fun h' => Finset.disjoint_left.1 hdis h' h
-  let v : Formalism.L2.DIV.Pl D.host.E → FinPl D := fun PP => PP.under (𝓞 D.host.F)
+  let v : Formalism.L2.DIV.Pl D.host.E → FinPl D := fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)
   have hvφ : ∀ {w : FinPl D} {φ : SplitProj D w} {PP}, IsProjAt φ PP → w = v PP := fun h =>
     HeightOneSpectrum.ext (d2 _ _ _ h).1.symm
   have hφ : ∀ PP ∈ Pg ∪ Q, ∃ φ : SplitProj D (v PP), IsIdemOf φ (es PP) ∧ IsProjAt φ PP := fun PP h => by

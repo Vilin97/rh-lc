@@ -129,7 +129,7 @@ theorem quot_unique (Γ : Subgroup H) [Countable Γ]
     rw [Measure.inv_inv] at this
     rw [this]
     conv_rhs => rw [← Measure.inv_inv μ]
-    exact Measure.map_smul _ _ _
+    exact Measure.map_smul _ measurable_inv.aemeasurable
   refine ⟨c, fun f hf hi => ?_⟩
   have e : ν.map f = (κ.restrict D).map f := by
     ext B hB

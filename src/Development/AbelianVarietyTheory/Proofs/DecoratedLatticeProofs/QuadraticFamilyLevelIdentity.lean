@@ -59,7 +59,7 @@ theorem rightTranslate_level_conj_acts_by_character_finite {D : D7} {θ : InfFam
 
 theorem conj_mem_off {D : D7} {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {Λ N : GlobalTheory.FinPl.Lat V} {M : ℕ}
     (hβ : IsSDFrame V β Λ M) (hN : IsSelfDualC V N) (L : LevDat D.host.E ℂ V.rank) {P : GlobalTheory.FinPl.Pl D → Prop}
-    (hP : ∀ PP, PP ∈ L.Pg ∨ PP ∈ L.Q → ¬ P (PP.under (𝓞 D.host.F))) {b κ : GA D V} (hb : b ∈ GfC V)
+    (hP : ∀ PP, PP ∈ L.Pg ∨ PP ∈ L.Q → ¬ P ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))) {b κ : GA D V} (hb : b ∈ GfC V)
     (hmv : ∀ p, P p → GlobalTheory.FinPl.Moves V b Λ N (· = p)) (hκ : GlobalTheory.FinPl.InK V N P κ) :
     b⁻¹ * κ * b ∈ levS V β L ∧ levChi V β L (b⁻¹ * κ * b) = 1 := by
   have hΛ := GlobalTheory.SDFrameLattice.isSelfDualC_of_isSDFrame D V β Λ M hβ

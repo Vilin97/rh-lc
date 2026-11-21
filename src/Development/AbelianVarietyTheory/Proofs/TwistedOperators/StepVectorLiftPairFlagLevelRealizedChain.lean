@@ -110,15 +110,15 @@ theorem om_vac (hW : IsWeilDatumO ψ S T χS χT om) (kS : S.SigOK) (kT : T.SigO
   set φ : Pl D.host.E → ℂˣ := fun PP => (aT PP (Matrix.GeneralLinearGroup.det (redFn βS PP (finE S g))))⁻¹ *
       aS PP (Matrix.GeneralLinearGroup.det (redFn βT PP (finE T h))) with hφ
   have cross := GlobalTheory.PlaceDatum.cross_eq_zero (R := AE D) GlobalTheory.PlaceDatum.isUnit_natCast (cA D) es P (fun i hi => (hes i hi).1.1) hec
-  have hsum : ∀ PP ∈ P, ∀ ε, IsPlaceIdem D (PP.under (𝓞 D.host.F)) ε →
+  have hsum : ∀ PP ∈ P, ∀ ε, IsPlaceIdem D ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) ε →
       es PP + cA D (es PP) = algebraMap (AF D.host.F) (AE D) ε := fun PP hP ε hε => by
     obtain ⟨v', ε', h1, h2⟩ := (hes PP hP).1.2.2
     have := GlobalTheory.T.placeIdempotent_under_eq_of_lies_over D _ PP v' ε' (hes PP hP) h1 h2
     subst this
     rw [h2, GlobalTheory.PlaceDatum.placeIdem_eq h1 hε]
-  have key := GlobalTheory.T.eigen_of_local_components_finiteAdelic_pair D S T om f₀ (hW.om_cont f₀ hf.2.theta) g hg h hh (P.image fun PP => PP.under (𝓞 D.host.F))
-    (fun v => ∏ PP ∈ P with PP.under (𝓞 D.host.F) = v, (φ PP : ℂ)) (fun v hv => ?_) (fun v ε hε g' h' hg' hh' => ?_)
-  · exact key.trans (congrArg (· • f₀) (prod_fiber P (fun PP => PP.under (𝓞 D.host.F)) φ))
+  have key := GlobalTheory.T.eigen_of_local_components_finiteAdelic_pair D S T om f₀ (hW.om_cont f₀ hf.2.theta) g hg h hh (P.image fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))
+    (fun v => ∏ PP ∈ P with (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = v, (φ PP : ℂ)) (fun v hv => ?_) (fun v ε hε g' h' hg' hh' => ?_)
+  · exact key.trans (congrArg (· • f₀) (prod_fiber P (fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) φ))
   · refine Finset.prod_eq_one fun PP hP => absurd ?_ hv
     rw [Finset.mem_filter] at hP
     exact Finset.mem_image.2 ⟨PP, hP.1, hP.2⟩
@@ -141,10 +141,10 @@ theorem om_vac (hW : IsWeilDatumO ψ S T χS χT om) (kS : S.SigOK) (kT : T.SigO
       a * ((x : AE D) - 1) = (x : AE D) - 1 := fun {V k a x} ha hx => by
     rw [show (x : AE D) = _ from hx]
     linear_combination ((Formalism.L2.Theta.mt V k).det - 1) * ha
-  by_cases hv : ∃ PP ∈ P, PP.under (𝓞 D.host.F) = v
+  by_cases hv : ∃ PP ∈ P, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = v
   · obtain ⟨PP, hP, rfl⟩ := hv
     have ha := (hes PP hP).1
-    have hfil : (P.filter fun Q => Q.under (𝓞 D.host.F) = PP.under (𝓞 D.host.F)) = {PP} := by
+    have hfil : (P.filter fun Q => Q.under (𝓞 D.host.F) = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) = {PP} := by
       refine Finset.eq_singleton_iff_unique_mem.2 ⟨Finset.mem_filter.2 ⟨hP, rfl⟩, fun Q hQ => ?_⟩
       rw [Finset.mem_filter] at hQ
       by_contra hne
@@ -165,7 +165,7 @@ theorem om_vac (hW : IsWeilDatumO ψ S T χS χT om) (kS : S.SigOK) (kT : T.SigO
       hT PP hP _ (hes PP hP) x (sup ha.1 hx) hxi _ (hxr PP (hes PP hP)),
       hS PP hP _ (hes PP hP) y (sup ha.1 hy) hyi _ (hyr PP (hes PP hP)), hφ]
     simp only [Units.val_mul, Units.val_inv_eq_inv_val]
-  · have hv' : ∀ PP ∈ P, PP.under (𝓞 D.host.F) ≠ v := fun PP hP h => hv ⟨PP, hP, h⟩
+  · have hv' : ∀ PP ∈ P, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v := fun PP hP h => hv ⟨PP, hP, h⟩
     rw [Finset.filter_eq_empty_iff.2 hv', Finset.prod_empty, one_smul]
     by_cases hs : ∃ a : AE D, IsSplitIdem D a ∧ a + cA D a = algebraMap (AF D.host.F) (AE D) ε
     · obtain ⟨a, ha, hae⟩ := hs

@@ -71,8 +71,8 @@ variable {e : AE D} {Z : Finset (Pl D.host.E)} {P : GlobalTheory.FinPl.Pl D → 
 theorem grpOff_of_suppAt (he : IsIdemSum e Z) (hP : ∀ v, P v ↔ ∀ w ∈ Z, w.under (𝓞 D.host.F) ≠ v) {V : HSp D} {g : GA D V}
     (hg : SuppAt e V g) : g ∈ grpOff V P := by
   have h1 := GlobalTheory.StepComb.idemSum_mem_idAt he
-  obtain ⟨ε, -, hc, -, hAt, -⟩ := (GlobalTheory.T.adelicPoint_components_atPlaces_lattices_vacua D fun p => ∃ PP ∈ Z, p = PP.under (𝓞 D.host.F)).1
-  have h2 : cA D e ∈ idAt D fun p => ∃ PP ∈ Z, p = PP.under (𝓞 D.host.F) := by
+  obtain ⟨ε, -, hc, -, hAt, -⟩ := (GlobalTheory.T.adelicPoint_components_atPlaces_lattices_vacua D fun p => ∃ PP ∈ Z, p = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)).1
+  have h2 : cA D e ∈ idAt D fun p => ∃ PP ∈ Z, p = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) := by
     rw [hAt, ← hc, ← map_mul, (hAt e).1 h1]
   refine (GlobalTheory.FinPl.SetCut.mem_grpOff_iff_parts V P g).2 fun i j w hw => ?_
   rw [← hg i j, map_mul, ((GlobalTheory.FinPl.mem_supportedOnPlacesIdeal_iff_components_zero_elsewhere D _ _).1 (add_mem h1 h2)).2 w, zero_mul]

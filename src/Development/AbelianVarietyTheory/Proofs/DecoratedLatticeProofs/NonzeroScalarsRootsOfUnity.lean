@@ -105,7 +105,7 @@ theorem step {χS χT : (AE D)ˣ →* Circle} {om : Om S T} (hθ : IsInfFam θ) 
 end Gen
 
 theorem under_ne {D : D7} {T : Type} (L : LevCh D T) {μ0 : T} (hL : L.Is μ0) (t : T) {PP PP' : Pl D.host.E} (h : PP ∈ L.Pg)
-    (h' : PP' ∈ L.Q t) : PP.under (𝓞 D.host.F) ≠ PP'.under (𝓞 D.host.F) := by
+    (h' : PP' ∈ L.Q t) : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP') := by
   intro e
   obtain ⟨i, hi⟩ := (hL.Pg PP).1 h
   obtain ⟨⟨q, hq, hcard, -, hqg⟩, -⟩ := hL.Q_pl t PP' h'
@@ -118,7 +118,7 @@ theorem under_ne {D : D7} {T : Type} (L : LevCh D T) {μ0 : T} (hL : L.Is μ0) (
     have h1 : Nat.card (kP PP') • (1 : kP PP') = 0 := card_nsmul_eq_zero'
     rw [hcard, nsmul_one] at h1
     exact Ideal.Quotient.eq_zero_iff_mem.1 ((map_natCast _ q).trans h1)
-  have hqF : (q : 𝓞 D.host.F) ∈ (PP'.under (𝓞 D.host.F)).asIdeal := by
+  have hqF : (q : 𝓞 D.host.F) ∈ ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP')).asIdeal := by
     show algebraMap (𝓞 D.host.F) (𝓞 D.host.E) q ∈ PP'.asIdeal
     rwa [map_natCast]
   rw [← e] at hqF

@@ -62,7 +62,7 @@ theorem good_of_ne {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.
     {w : HeightOneSpectrum (𝓞 D.host.E)} (hw : w.under (𝓞 D.host.F) = v) : GlobalTheory.Hk3.Good R t w := by
   obtain ⟨Φ, hΦ⟩ := exists_comp D
   intro PP hPP
-  have key : PP.under (𝓞 D.host.F) ≠ v := by
+  have key : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v := by
     intro hu
     obtain ⟨e, f', hp⟩ := exists_isPrimeIdem hΦ PP
     obtain ⟨-, ε, hε, hf'⟩ := of_isPrimeIdem hΦ hp

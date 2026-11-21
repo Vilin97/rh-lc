@@ -154,7 +154,7 @@ section Comparison₂
 variable {D : D7} {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNonarchimedeanLocalField k]
 
 theorem psi_tie (q : GlobalTheory.FinPl.SplitPt D k) {PP : Formalism.L2.DIV.Pl D.host.E}
-    (hv : q.v = PP.under (𝓞 D.host.F)) (hi : ∀ x, (ofSplit q).pr x ∈ 𝒪[k] ↔ IntAt PP x) (hd : DenseRange (ofSplit q).pr)
+    (hv : q.v = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) (hi : ∀ x, (ofSplit q).pr x ∈ 𝒪[k] ↔ IntAt PP x) (hd : DenseRange (ofSplit q).pr)
     (hp : (qOf PP).Prime) (hsq : ((qOf PP : ℕ) : 𝓞 D.host.E) ∉ PP.asIdeal ^ 2)
     (hxi : IntAt PP D.host.xi0) (ψ : AddChar (AF D.host.F) ℂ) (hψ : IsStdChar D ψ (-1))
     {K : Type} [Field K] (σ₀ : K →+* ℂ) (ψ₀ : AddChar (𝓞 D.host.E ⧸ PP.asIdeal) K)

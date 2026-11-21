@@ -21,7 +21,7 @@ namespace GlobalTheory.HeckeOffLevel
 variable {D : D7}
 
 theorem sep_of_offS {S : Finset (HeightOneSpectrum (𝓞 D.host.F))} {Q PP : HeightOneSpectrum (𝓞 D.host.E)}
-    (hS : OffS D S Q) (hP : PP.under (𝓞 D.host.F) ∈ S) : PP ≠ Q ∧ ¬ Lev.IsConjPl PP Q := by
+    (hS : OffS D S Q) (hP : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∈ S) : PP ≠ Q ∧ ¬ Lev.IsConjPl PP Q := by
   obtain ⟨x, hx, hQ⟩ := hS _ hP
   have hx' : algebraMap (𝓞 D.host.F) (𝓞 D.host.E) x ∈ PP.asIdeal := hx
   refine ⟨fun h => hQ (algebraMap (𝓞 D.host.F) (𝓞 D.host.E) x) rfl (h ▸ hx'), fun h => ?_⟩

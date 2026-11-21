@@ -67,8 +67,8 @@ theorem finE_gAt_mem_St {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {Λ : Sub
 theorem red_local {V : HSp D} {β : GL (Fin V.rank) (Lev.EAf D)} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)}
     (hfr : Formalism.L2.DIV.IsFrame β Λ) (g : GA D V) (hg : Lev.finE V g ∈ Formalism.L2.DIV.St β) (PP : Pl D.host.E) :
     Formalism.L2.DIV.redFn β PP (Lev.finE V g) =
-      Formalism.L2.DIV.redFn β PP (Lev.finE V (gAt V (.inl (PP.under (𝓞 D.host.F))) g)) := by
-  set v := PP.under (𝓞 D.host.F)
+      Formalism.L2.DIV.redFn β PP (Lev.finE V (gAt V (.inl ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))) g)) := by
+  set v := (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)
   set k := gAt V (.inl v) g with hkdef
   have hk : Lev.finE V k ∈ Formalism.L2.DIV.St β := finE_gAt_mem_St hfr g v ((GlobalTheory.T.finitePart_mem_frameStabilizer_iff_local_stabilizer D V β Λ hfr g).1 hg v)
   have hpk : GlobalTheory.AdelicU.proj D.sp.cm.sig V.gram v k = GlobalTheory.AdelicU.proj D.sp.cm.sig V.gram v g := by
@@ -96,7 +96,7 @@ theorem levLoc : ∀ D : D7, ForStageQ D fun c w _ s => MeasurableSet (levSet s)
   haveI : s.ν.IsHaarMeasure := hfl.haar
   have hsd : IsSelfDualC s.V s.Λ := hfl.selfDual
   have hP : s.L.P.H = ⊥ := by rw [hL]; rfl
-  have hPl : ∀ PP, PP ∈ s.L.Pg ∨ PP ∈ s.L.Q → PP.under (𝓞 D.host.F) ∈ c.S := by
+  have hPl : ∀ PP, PP ∈ s.L.Pg ∨ PP ∈ s.L.Q → (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∈ c.S := by
     intro PP hPP
     have h1 : PP ∈ c.Pg := by
       rw [hw.union, Finset.mem_union]
@@ -125,7 +125,7 @@ theorem levLoc : ∀ D : D7, ForStageQ D fun c w _ s => MeasurableSet (levSet s)
       have hkS := finE_gAt_mem_St hfr g v ((GlobalTheory.T.finitePart_mem_frameStabilizer_iff_local_stabilizer D V s.β s.Λ hfr g).1 hS v)
       refine ⟨GlobalTheory.ChainOnto.LevelFacts.emb_mem_GfC V v _, ?_⟩
       refine (mem_lev_iff V.gram s.β s.L hP _).2 ⟨GlobalTheory.LevSplit.finE_mem_UA V _, hkS, fun PP => ?_⟩
-      by_cases e : PP.under (𝓞 D.host.F) = v
+      by_cases e : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = v
       · subst e
         rw [← red_local hfr g hS PP]
         exact hl PP

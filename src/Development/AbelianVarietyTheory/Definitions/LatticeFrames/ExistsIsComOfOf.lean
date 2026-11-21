@@ -93,7 +93,7 @@ variable {a : XPart D u} {ζ₀ : Fin a.Lz.rank → D.host.E} {PP : Pl D.host.E}
 def GX.emb : D.host.E →+* G.k := G.q.pr.comp (incA D)
 
 structure GX.Frames (fr : ∀ i, i ≤ D.R.m → Matrix (Fin (D.sp.X i).rank) (Fin (D.R.N i)) D.host.E) : Prop where
-  under : G.q.v = PP.under (𝓞 D.host.F)
+  under : G.q.v = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)
   frX : ∀ i (hi : i ≤ G.s + 1) (hm : i ≤ D.R.m), ∃ e : XIx (Fin D.R.k) (Fin D.R.t) i ≃ Fin (D.R.N i), IsOrd xPos e ∧
     ∀ r c, (G.FX i hi).β r c = G.emb (fr i hm r (e c))
   frM : ∀ hm : G.s + 1 + 1 ≤ D.R.m,

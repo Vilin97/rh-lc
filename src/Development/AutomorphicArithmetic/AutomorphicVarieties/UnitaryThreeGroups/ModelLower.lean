@@ -46,7 +46,7 @@ section Base
 variable {O : Type} [CommRing O] {Γ : Type} [Group Γ] (η : Γ →* ℤˣ) (Ψ : Γ →* Oˣ)
   (R : Type) [CommRing R] [Algebra O R]
 
-private abbrev rb : Γ →* GG 3 R := (GG.map (algebraMap O R)).comp (r0 η Ψ)
+private abbrev rb : Γ →* GG (m := 3) (R := R) := (GG.map (algebraMap O R)).comp (r0 η Ψ)
 
 private theorem rb_mat (g : Γ) :
     (rb η Ψ R g).mat = Matrix.diagonal fun i => algebraMap O R ((Ψ g ^ wt1 i : Oˣ) : O) := by
@@ -74,7 +74,7 @@ private theorem mul_rb (g : Γ) (X : Matrix (Fin 3) (Fin 3) R) (a b : Fin 3) :
 
 variable {η Ψ R}
 
-private theorem deform_mat {γ : Γ → Matrix (Fin 3) (Fin 3) R} {r : Γ →* GG 3 R} (h : IsDeform (rb η Ψ R) γ r)
+private theorem deform_mat {γ : Γ → Matrix (Fin 3) (Fin 3) R} {r : Γ →* GG (m := 3) (R := R)} (h : IsDeform (rb η Ψ R) γ r)
     (g : Γ) (a b : Fin 3) :
     (r g).mat a b = algebraMap O R ((r0 η Ψ g).mat a b) + ((Ψ g ^ wt1 b : Oˣ) : O) • γ g a b := by
   rw [(h g).2, Matrix.add_mul, Matrix.one_mul, Matrix.add_apply, mul_rb]

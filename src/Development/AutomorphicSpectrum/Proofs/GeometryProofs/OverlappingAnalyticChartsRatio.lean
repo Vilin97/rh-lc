@@ -60,13 +60,13 @@ theorem eq_val_mul : ∀ (X : Scheme.{0}) (s : X ⟶ Sp ℂ) (Ω : Type) [Field 
     exact hgd
   have hOo : IsOpen (S ∩ Metric.ball b₁ ε) := hSo.inter Metric.isOpen_ball
   have h1 : ContinuousOn H (S ∩ Metric.ball b₁ ε) :=
-    (hC.hol.mono fun b hb => ((hmemS b).mp hb.1).1).continuousOn
+    (hC.hol.mono fun b (hb : b ∈ S ∩ Metric.ball b₁ ε) => ((hmemS b).mp hb.1).1).continuousOn
   have h2 : ContinuousOn (fun b => ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt' (Y b) N v) (S ∩ Metric.ball b₁ ε) :=
-    (hSg.mono fun b hb => hb.1).continuousOn
+    (hSg.mono fun b (hb : b ∈ S ∩ Metric.ball b₁ ε) => hb.1).continuousOn
   have h3 : ContinuousOn (fun b => H' (κ b)) (S ∩ Metric.ball b₁ ε) := by
     have hc : DifferentiableOn ℂ (H' ∘ κ) (Metric.ball b₁ ε) :=
       hC'.hol.comp hκd (fun b hb => (hκ b hb).1)
-    exact (hc.mono fun b hb => hb.2).continuousOn
+    exact (hc.mono fun b (hb : b ∈ S ∩ Metric.ball b₁ ε) => hb.2).continuousOn
   have hcont : ContinuousOn (fun b => H b - ReciprocityTheory.ChartRestriction.G.Geo.Tor.valAt' (Y b) N v * H' (κ b))
       (S ∩ Metric.ball b₁ ε) := h1.sub (h2.mul h3)
   have hzero : ∀ b ∈ S ∩ Metric.ball b₁ ε, GlobalTheory.CompanionTheory.Ar.centre (Y b) ∈ W →

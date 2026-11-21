@@ -340,7 +340,7 @@ private theorem wcoef_off (hX : IsBottomTri W i j X) (t : T) {ν : Measure (WO (
   have hW : IsWeilDatumO W.ψ (GlobalTheory.Grid.neg A) WW (betaB G i j) (betaB G i j / alphaB L i j t) ((X.ω t).toSgn true) := h.weil t
   have sdA : IsSelfDualC (GlobalTheory.Grid.neg A) X.rA.Λ := GlobalTheory.RowTest.isSelfDualC_neg' h.rigA.1
   have he := h.idem t
-  have hint : ∀ v, (∀ PP ∈ locPl G t, PP.under (𝓞 D.host.F) ≠ v) →
+  have hint : ∀ v, (∀ PP ∈ locPl G t, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v) →
       proj D.sp.cm.sig (GlobalTheory.Grid.neg A).gram v g ∈ stabLoc D.sp.cm.sig (GlobalTheory.Grid.neg A).gram X.rA.Λ v := fun v hv =>
     hg v fun hm => by
       obtain ⟨w, hw, e⟩ := Finset.mem_image.1 hm

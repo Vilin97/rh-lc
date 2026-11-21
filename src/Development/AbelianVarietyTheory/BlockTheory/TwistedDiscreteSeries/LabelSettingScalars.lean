@@ -26,7 +26,7 @@ abbrev EigSys (D : D7) : Type := HeightOneSpectrum (𝓞 D.host.E) → List ℤ 
 
 open Classical in
 def badPl (t : T) : Finset (HeightOneSpectrum (𝓞 D.host.F)) :=
-  (R.Pg ∪ R.Q t).image fun PP => PP.under (𝓞 D.host.F)
+  (R.Pg ∪ R.Q t).image fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)
 
 def rowPart (Sb : Finset (HeightOneSpectrum (𝓞 D.host.F))) (c : EigSys D) : Submodule ℂ (MMap (R.MY 0)) :=
   partDual R.θ (R.MY 0) (levS _ (R.βY 0) (R.dat0 R.triv)) (levChi _ (R.βY 0) (R.dat0 R.triv)) Sb c ⊓ R.EEat R.triv

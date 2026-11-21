@@ -59,8 +59,15 @@ theorem mem_localLattice_inf_orthogonal : ∀ (D : D7) (Z : LocDat D) (U : Submo
     refine ⟨ht, ?_⟩
     have htop : Submodule.span (D.s.atP p).Ep (baseChange₂ D p '' (orth (VS D) U : Set (VS D).V)) ⊔
         Submodule.span (D.s.atP p).Ep (baseChange₂ D p '' (U : Set (VS D).V)) = ⊤ := by
-      intro s hs hli
-      exact (LinearIndependent.iff_fractionRing _ _).mp hli
+      apply top_unique
+      rw [← span_baseChange_eq_top p]
+      apply Submodule.span_le.mpr
+      rintro _ ⟨x, rfl⟩
+      obtain ⟨a, ha, b, hb, rfl⟩ := hdec x
+      rw [map_add]
+      exact Submodule.add_mem _
+        (Submodule.mem_sup_left (Submodule.subset_span ⟨a, ha, rfl⟩))
+        (Submodule.mem_sup_right (Submodule.subset_span ⟨b, hb, rfl⟩))
     have ht' : t ∈ Submodule.span (D.s.atP p).Ep (baseChange₂ D p '' (orth (VS D) U : Set (VS D).V)) ⊔
         Submodule.span (D.s.atP p).Ep (baseChange₂ D p '' (U : Set (VS D).V)) := htop ▸ Submodule.mem_top
     obtain ⟨α, hα, β, hβ, hαβ⟩ := Submodule.mem_sup.1 ht'

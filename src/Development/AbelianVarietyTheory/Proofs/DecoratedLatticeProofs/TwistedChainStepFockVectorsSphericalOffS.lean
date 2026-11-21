@@ -46,7 +46,7 @@ theorem fock_sph_tw : ∀ D : D7, ForStepQ D fun c _ k s s' p => (∀ φ, Global
   have hsd : IsSelfDualC s.V s.Λ := hfl.selfDual
   have hsd' : IsSelfDualC s'.V s'.Λ := hfl'.selfDual
   obtain ⟨hfθ, -, hfv⟩ := GlobalTheory.Chain.StepVac.stepVec_vac hsd hsd' hrk hvec
-  have hPS : ∀ PP ∈ s.L.Pg ∪ w.Q, PP.under (𝓞 D.host.F) ∈ c.S := by
+  have hPS : ∀ PP ∈ s.L.Pg ∪ w.Q, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∈ c.S := by
     intro PP hPP
     rw [hL] at hPP
     have hPP' : PP ∈ c.Pg := by rw [hw.union]; exact hPP
@@ -73,7 +73,7 @@ theorem fock_sph_tw : ∀ D : D7, ForStepQ D fun c _ k s s' p => (∀ φ, Global
       · exact h1 h
       · exact h2 h
     have hle := GlobalTheory.ChainOnto.VacOffS.latO_at_le hNS.2.2.2.1 hNT.2.2.2.1 hM
-    have hoff : ∀ PP ∈ s.L.Pg ∪ w.Q, PP.under (𝓞 D.host.F) ≠ v := by
+    have hoff : ∀ PP ∈ s.L.Pg ∪ w.Q, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v := by
       intro PP hPP h0
       exact hv (h0 ▸ hPS PP hPP)
     have hfix : ∀ u ∈ latO s.V s'.V (GlobalTheory.AdelicU.frameLat s.V : Set (Fin s.V.rank → D.host.E))

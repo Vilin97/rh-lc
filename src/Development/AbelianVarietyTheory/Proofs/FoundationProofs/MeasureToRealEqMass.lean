@@ -237,14 +237,11 @@ theorem latStab_compact_open : IsCompact (latStab V : Set (HA (Af D.host.F) D.sp
       rw [Module.Basis.equivFun_symm_apply]
       exact hv
   have hsp : Submodule.span D.host.E (L : Set (Fin V.rank → D.host.E)) = ⊤ := by
-    rw [eq_top_iff]
-    intro v _
-    obtain ⟨x, rfl⟩ := V.frame.equivFun.surjective v
-    have hx : x ∈ Submodule.span D.host.E (V.L0 : Set V.V) := by
-      rw [V.standardTuple_isLattice.span_eq_top]; trivial
-    have := Submodule.mem_map_of_mem (f := f) hx
-    rw [Submodule.map_span] at this
-    exact this
+    obtain ⟨M, _, hm, hM⟩ := GlobalTheory.Mem.VolExists.exists_lattice V
+    have : (L : Set (Fin V.rank → D.host.E)) = M := by
+      rw [hL, hM]
+      rfl
+    rw [this, hm]
   obtain ⟨S, hS, ho, hc⟩ := GlobalTheory.Mem.Vol.StabGroup.exists_compact_open_stab D.host.F D.host.E D.sp.cm.sig V.rank
     V.gram L (V.standardTuple_isLattice.fg.map _) hsp
   rw [hL] at hS

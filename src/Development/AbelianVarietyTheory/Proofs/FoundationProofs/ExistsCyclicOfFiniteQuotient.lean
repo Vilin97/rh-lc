@@ -237,7 +237,6 @@ theorem eventually_conj_of_charpoly_eq (h : IsCMExt F E σ) (hJ : IsHermND σ J)
       rw [map_one]; rfl
     · change sigR _ σ (sigR _ σ y.1) = y.1
       induction y.1 with
-      | zero => simp
       | tmul a b => simp [sigR, hσ]
       | add a b ha hb => rw [map_add (f := _), map_add (f := _), ha, hb]
     · change (inclR (Fv F v) (ω : E) - inclR (Fv F v) (σ ω)) * inclR (Fv F v) (2 * ω : E)⁻¹ = 1
@@ -296,7 +295,29 @@ theorem isProperOrbit_GAd_of_local (L : Submodule (𝓞 E) (Fin n → E)) [Submo
   obtain ⟨S, hS⟩ := GlobalTheory.RestrMeas.exists_finset_of_eventually (hK.and (eventually_forall_proj_mem L hc))
   choose A hA hA' using fun w => ha w _ (hc.image (continuous_projArch σ J w))
   choose B hB hB' using fun v => hf v _ (hc.image (continuous_proj σ J v))
-  refine ⟨_, (isRestrGroup_GAd σ J L).isCompact_cyl S A B hA fun v _ => hB v, fun x hx => ?_⟩
+  have hcyl : IsCompact {g : GAd σ J | (∀ w, projArch σ J w g ∈ A w) ∧
+      (∀ v ∈ S, proj σ J v g ∈ B v) ∧ ∀ v ∉ S, proj σ J v g ∈ stabLoc σ J L v} := by
+    have hc := ((((isCompact_univ_pi hA).image (continuous_embArchPi σ J)).image (continuous_ofInf σ J)).mul
+      ((isCompact_univ_pi fun v : S => hB v).image (continuous_embAt σ J S))).mul (isCompact_levelOff σ J L S)
+    convert hc using 1
+    ext g
+    constructor
+    · rintro ⟨h1, h2, h3⟩
+      obtain ⟨e1, e2, e3⟩ := comp_glue (fun w => projArch σ J w g) (projAt σ J S g)
+      refine ⟨_, ⟨_, ⟨_, ⟨fun w => projArch σ J w g, fun w _ => h1 w, rfl⟩, rfl⟩, _,
+        ⟨projAt σ J S g, fun v _ => h2 v v.2, rfl⟩, rfl⟩, _⁻¹ * g,
+        mem_levelOff.2 ⟨mem_finPts_iff_forall.2 fun w => ?_, fun v hv => ?_, fun v hv => ?_⟩, mul_inv_cancel_left _ _⟩
+      · rw [map_mul, map_inv, e1, inv_mul_cancel]
+      · rw [map_mul, map_inv, e2 ⟨v, hv⟩, projAt_apply, inv_mul_cancel]
+      · rw [map_mul, map_inv, e3 v hv, inv_one, one_mul]; exact h3 v hv
+    · rintro ⟨_, ⟨_, ⟨_, ⟨a, ha, rfl⟩, rfl⟩, _, ⟨b, hb, rfl⟩, rfl⟩, k, hk, rfl⟩
+      obtain ⟨e1, e2, e3⟩ := comp_glue a b
+      obtain ⟨k1, k2, k3⟩ := mem_levelOff.1 hk
+      refine ⟨fun w => ?_, fun v hv => ?_, fun v hv => ?_⟩
+      · rw [map_mul, e1, mem_finPts_iff_forall.1 k1, mul_one]; exact ha w trivial
+      · rw [map_mul, e2 ⟨v, hv⟩, k2 v hv, mul_one]; exact hb ⟨v, hv⟩ trivial
+      · rw [map_mul, e3 v hv, one_mul]; exact k3 v hv
+  refine ⟨_, hcyl, fun x hx => ?_⟩
   choose a ha1 ha2 using fun w => hA' w (projArch σ J w x) ⟨_, hx, by simp⟩
   have : ∀ v, ∃ t ∈ cent (proj σ J v γ), (v ∈ S → t * proj σ J v x ∈ B v) ∧
       (v ∉ S → t * proj σ J v x ∈ stabLoc σ J L v) := fun v => by

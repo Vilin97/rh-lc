@@ -32,7 +32,9 @@ def incl (k' : Type) [Field k'] [Algebra k k'] (n : ℕ) : GL (Fin n) k →* GL 
     (incl k' n γ : Matrix (Fin n) (Fin n) k') i j = algebraMap k k' ((γ : Matrix (Fin n) (Fin n) k) i j) := rfl
 
 @[simp] theorem galAct_incl (s : k' ≃ₐ[k] k') {n : ℕ} (γ : GL (Fin n) k) : galAct s n (incl k' n γ) = incl k' n γ := by
-  ext i j; simp
+  ext i j
+  change s (algebraMap k k' ((γ : Matrix (Fin n) (Fin n) k) i j)) = _
+  exact s.commutes _
 
 
 variable (k) in

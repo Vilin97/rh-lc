@@ -28,7 +28,7 @@ variable {D : D7}
 
 
 open Classical in
-def under (Z : Finset (Formalism.L2.DIV.Pl D.host.E)) : Finset (FinPl D) := Z.image fun PP => PP.under (𝓞 D.host.F)
+def under (Z : Finset (Formalism.L2.DIV.Pl D.host.E)) : Finset (FinPl D) := Z.image fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)
 
 def prinDat (A : HSp D) (Z : Finset (Formalism.L2.DIV.Pl D.host.E)) : Formalism.L2.DIV.LevDat D.host.E ℂ A.rank :=
   Formalism.IndefR.Lev.datW A.rank Z (Formalism.L2.DIV.LevelP.triv _ _ _) Formalism.IndefR.Lev.Frm.B

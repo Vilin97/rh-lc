@@ -166,7 +166,7 @@ theorem exists_monic (t : Wq l a) : ∃ f : Polynomial ℤ_[l], f.Monic ∧ f.na
     rw [Polynomial.lifts_iff_coeff_lifts]
     intro n
     obtain ⟨y, hy⟩ := GlobalTheory.ArtinSchreierWitt.fixed_frob l (Fq l a) (P.coeff n)
-      ((Polynomial.coeff_map _ n).symm.trans (congrArg (Polynomial.coeff · n) hPσ))
+      ((Polynomial.coeff_map _ n).symm.trans (congrArg (AddMonoidAlgebra.coeff · n) hPσ))
     exact ⟨y, hy.symm⟩
   obtain ⟨f, hf, hfd, hfm⟩ := Polynomial.lifts_and_natDegree_eq_and_monic hPl hPm
   have hroot : ∀ τ, Polynomial.aeval (sigmaNeg l a τ t) f = 0 := fun τ => by

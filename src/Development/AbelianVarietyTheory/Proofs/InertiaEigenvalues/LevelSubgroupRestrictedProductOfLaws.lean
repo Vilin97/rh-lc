@@ -174,13 +174,13 @@ theorem phi_idem' (v : HeightOneSpectrum (𝓞 D.host.F)) :
     (phi D v : Formalism.IndefR.Lev.EAf D) * (phi D v : Formalism.IndefR.Lev.EAf D) = (phi D v : Formalism.IndefR.Lev.EAf D) :=
   congrArg Subtype.val (phi_idem v)
 
-theorem resS_phi_pos {PP : Pl D.host.E} {v : HeightOneSpectrum (𝓞 D.host.F)} (h : PP.under (𝓞 D.host.F) = v) :
+theorem resS_phi_pos {PP : Pl D.host.E} {v : HeightOneSpectrum (𝓞 D.host.F)} (h : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = v) :
     resS D.host.F PP (phi D v) = 1 :=
-  resS_idemAd_pos PP (PP.under (𝓞 D.host.F)) rfl h
+  resS_idemAd_pos PP ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) rfl h
 
-theorem resS_phi_neg {PP : Pl D.host.E} {v : HeightOneSpectrum (𝓞 D.host.F)} (h : ¬ PP.under (𝓞 D.host.F) = v) :
+theorem resS_phi_neg {PP : Pl D.host.E} {v : HeightOneSpectrum (𝓞 D.host.F)} (h : ¬ (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = v) :
     resS D.host.F PP (phi D v) = 0 :=
-  resS_idemAd_neg PP (PP.under (𝓞 D.host.F)) rfl h
+  resS_idemAd_neg PP ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) rfl h
 
 def epsF (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F)) : AF D.host.F := (exists_placeIdem (D := D) v).choose
 
@@ -327,7 +327,7 @@ variable {D : D7} {V : HSp D} {β : GL (Fin V.rank) (Formalism.IndefR.Lev.EAf D)
 
 theorem red_cases {x : GL (Fin V.rank) (Formalism.IndefR.Lev.EAf D)} (hS : x ∈ St β) (v : HeightOneSpectrum (𝓞 D.host.F))
     (PP : Pl D.host.E) : redFn β PP (piece (phi_idem' v) x) = redFn β PP x ∨ redFn β PP (piece (phi_idem' v) x) = 1 := by
-  by_cases h : PP.under (𝓞 D.host.F) = v
+  by_cases h : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = v
   · exact Or.inl (redFn_piece (phi_idem v) _ hS PP (resS_phi_pos h))
   · exact Or.inr (redFn_piece_eq_one _ (piece_mem_St (phi_idem v) _ hS) PP (resS_phi_neg h))
 
@@ -376,7 +376,7 @@ theorem mem_of_cmp_mem (hH : L.P.H = ⊥) {g : GA D V} (hf : g ∈ GfC V) (h : �
       rw [piece_inv', piece_conj'] at this
       exact this
   have hr : ∀ PP : Pl D.host.E, redFn β PP (finE V g) =
-      redFn β PP (piece (phi_idem' (PP.under (𝓞 D.host.F))) (finE V g)) := fun PP =>
+      redFn β PP (piece (phi_idem' ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))) (finE V g)) := fun PP =>
     (redFn_piece (phi_idem _) _ hS PP (resS_phi_pos rfl)).symm
   refine ⟨hf, mem_lev.2 ⟨mem_parLev.2 ⟨finE_mem_UA V g, hS, fun PP hP => ?_, fun PP hP => ?_⟩, ?_⟩⟩
   · rw [hr PP]

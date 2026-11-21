@@ -150,7 +150,7 @@ theorem range_le_span_blockSum {K V H E Pl ι : Type} [Field K] [AddCommGroup V]
 theorem range_adjoint_le_span : ∀ {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks] [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) (F : Face D A) {s : ℕ}, GlobalTheory.Chain.LiftInteg D → A.fam.Ok s → Core R F → SchurAll R → ∀ t, LinearMap.range (LinearMap.adjoint (R.Th t)) ≤ Submodule.span ℂ (R.jX t '' ((A.fam.R t).ZH : Set (A.fam.R t).S.Forms)) := by
   intro D G _ _ Pl0 T A Ks _ _ _ R F s hI hOk hC hS t
   classical
-  have hSF : IsSF R (R.Pg.image fun PP => PP.under (𝓞 D.host.F)) := by
+  have hSF : IsSF R (R.Pg.image fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) := by
     intro v
     simp only [Finset.mem_image, HeightOneSpectrum.ext_iff]
     rfl

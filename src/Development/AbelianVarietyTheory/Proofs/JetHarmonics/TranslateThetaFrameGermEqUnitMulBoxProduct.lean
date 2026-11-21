@@ -81,8 +81,15 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host 
   obtain ⟨gm₁, -, hgm₁⟩ := PairingLinear.exists_germ_linearMap hL hL2 hL4 hT T.V P.D P.A C.I.G.G P.U _ _ hz₁ τ hτ
     (hT₀ hTr) F (1 * N) hk
   choose σ₁ hσ₁ hf using fun i => hgm₁ (ζ₁ i • Φ₁ i θα₁)
-  obtain ⟨bx₁, hbx₁⟩ := exists_boxFam_multilinear hG T.V n P.D.toPre D'.toPre pD F 1
-  obtain ⟨bx, hbx⟩ := exists_boxFam_multilinear hG T.V n P.D.toPre D'.toPre pD F (1 * N)
+  have exists_boxFam_multilinear : ∀ k : ℕ, ∃ bx : ((i : Fin n) → Fam P.D.toPre F k) →ₘₗ[F] Fam D'.toPre F k, ∀ (s : Fin n → Fam P.D.toPre F k) (S : Fam D'.toPre F k), IsBoxFam pD F k S s ↔ S = bx s := by
+    intro k
+    choose bx hbx using BoxFamily.exists_isBoxFam hG T.V n P.D.toPre D'.toPre pD F k
+    refine ⟨⟨bx, fun s i a b => BoxLinear.box_add pD (hbx _) (hbx _) (hbx _),
+      fun s i c a => BoxLinear.box_smul pD (hbx _) (hbx _)⟩, fun s S => ⟨fun h => ?_, fun h => ?_⟩⟩
+    · exact BoxLinear.box_unique pD h (hbx s)
+    · rw [h]; exact hbx s
+  obtain ⟨bx₁, hbx₁⟩ := exists_boxFam_multilinear 1
+  obtain ⟨bx, hbx⟩ := exists_boxFam_multilinear (1 * N)
   obtain ⟨u₀, hu₀, hθu⟩ := GlobalTheory.T.thetaFrameFamilies_differ_by_valuationZero_unit T.V ϖ hϖ D' F v hv _ θ
     (BoxFrame.main T.V ϖ hϖ n P.D D' pD F θ₁ _ hθ₁ ((hbx₁ _ _).2 rfl)) hθ
   have hw0 : TraceFormTwistIso D'.toPre oD' H.w0 := GlobalTheory.PsiWZeroProd.main T.V n P.D.toPre D'.toPre pD (𝓞 E)
@@ -101,6 +108,7 @@ theorem main : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (H : Host 
   have ht : t = (u₁ * u₀) • bx fun i => ζ₁ i • Φ₁ i θα₁ := by
     rw [(isSmul_iff _ _ _).1 (hu₁ θα _ _ t₀ t ((hΦ' _ _).2 rfl) ((isSmul_iff _ _ _).2 rfl) hΦt hsm), hθα', map_smul,
       MultilinearMap.map_smul_univ, hbΦ, smul_comm (∏ i, ζ₁ i) u₀, smul_smul]
+    rfl
   obtain ⟨τn, hτn, hτT, hiff⟩ := frameNSt_holds E H T.V C.I.G P _ C.FT C.actT C.ph1T C.ph2T C.syT C.adT C.tgT C.xT C.eT
     C.wPT C.chartT C.frameT C.primT n D' A' G' pD pA pG U' PU
   have hz := GlobalTheory.T.universalJets_power_product T.V C.I.G.G G' n _ pG C.xT hz₁

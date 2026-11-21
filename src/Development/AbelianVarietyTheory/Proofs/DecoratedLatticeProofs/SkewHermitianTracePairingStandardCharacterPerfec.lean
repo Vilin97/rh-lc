@@ -26,8 +26,7 @@ theorem trace_incA (x : D.host.E) :
   trace_one_tmul x
 
 theorem cA_smul (c : AF D.host.F) (a : AE D) : cA D (c • a) = c • cA D a := by
-  induction a using TensorProduct.induction_on with
-  | zero => simp
+  induction a using TensorProduct.inductionOn with
   | tmul x y => rfl
   | add x y hx hy => rw [smul_add, map_add (f := _), map_add (f := _), hx, hy, smul_add]
 
@@ -60,7 +59,9 @@ theorem skew_perfect : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar 
       rw [← trace_conjTranspose, conjTranspose_mul, hM, Matrix.mul_neg, trace_neg, trace_mul_comm Aᴴ, Matrix.mul_sub,
         trace_sub, sub_eq_add_neg]
     have e2 : ((rat M : Mx D ρ ρ) * (t • (rat (A - Aᴴ) : Mx D ρ ρ))).trace = t • incA D (M * (A - Aᴴ)).trace := by
-      rw [Matrix.mul_smul, trace_smul, ← rat_mul, AddMonoidHom.map_trace (incA D)]
+      have hmul : (rat (M * (A - Aᴴ)) : Mx D ρ ρ) = rat M * rat (A - Aᴴ) :=
+        Matrix.map_mul
+      rw [Matrix.mul_smul, trace_smul, ← hmul, AddMonoidHom.map_trace (incA D)]
       rfl
     have e3 : algebraMap D.host.F (AF D.host.F) (1 / 2) * Algebra.trace (AF D.host.F) (AE D)
         ((rat M : Mx D ρ ρ) * (t • (rat (A - Aᴴ) : Mx D ρ ρ))).trace =

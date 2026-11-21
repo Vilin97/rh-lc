@@ -190,8 +190,9 @@ theorem exists_iota {Γ : Type} [Group Γ] (χ : Γ →* ℤ_[l]ˣ) (e : ℤ) (r
       rw [smul_eq_mul, mul_one, smul_eq_mul] at this
       exact this
   have hev : Function.Bijective ev := by
-    refine ⟨fun φ ψ h => TDual.ext fun m => ?_, fun y => ⟨y • TDual.mk LinearMap.id, ?_⟩⟩
-    · rw [hlin φ, hlin ψ]; exact congrArg _ h
+    refine ⟨fun φ ψ h => LinearMap.ext fun m => ?_, fun y => ⟨y • TDual.mk LinearMap.id, ?_⟩⟩
+    · change φ m = ψ m
+      rw [hlin φ, hlin ψ]; exact congrArg _ h
     · exact mul_one y
   refine ⟨ι.comp ev, h1.comp hev.1, fun a => ?_, fun g n => ?_⟩
   · rw [h2, AddMonoidHom.coe_comp, hev.2.range_comp]
@@ -220,7 +221,8 @@ theorem finite_cohomology_and_card_H2_eq_card_H0_dual (hF : LocalFinitenessK) (h
   refine ⟨Finite.of_equiv _ e1, Finite.of_equiv _ e2, e3 (f3 3 le_rfl), ?_⟩
   have hfin : Finite (TDual (ZMod (l ^ r)) M) := DFunLike.finite _
   have hH : H0 τ = H0 ((twDual (cycK l K r) ρK).comp (MonoidHom.id _)) := by
-    have key : ∀ g φ, τ g φ = twDual (cycK l K r) ρK (e g) φ := fun g φ => TDual.ext fun m => by
+    have key : ∀ g φ, τ g φ = twDual (cycK l K r) ρK (e g) φ := fun g φ => LinearMap.ext fun m => by
+      change τ g φ m = twDual (cycK l K r) ρK (e g) φ m
       rw [hτ, twDual_apply, hc]
       simp [ρK]
     ext φ

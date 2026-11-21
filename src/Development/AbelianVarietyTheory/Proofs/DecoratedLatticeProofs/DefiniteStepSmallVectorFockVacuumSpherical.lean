@@ -39,7 +39,7 @@ theorem smallVec_vac_sph : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (θ : I
       latO A H (frameLat A) (frameLat H) fun _ => True :=
     GlobalTheory.PlaceTensor.latO_mono fun _ _ => trivial
   have hlat := hvac.2.lat
-  have hZu : ∀ PP ∈ (prinDat A Z).Pg ∪ ∅, PP.under (𝓞 D.host.F) ∈ under Z := by
+  have hZu : ∀ PP ∈ (prinDat A Z).Pg ∪ ∅, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∈ under Z := by
     intro PP hPP
     rw [Finset.union_empty] at hPP
     unfold under

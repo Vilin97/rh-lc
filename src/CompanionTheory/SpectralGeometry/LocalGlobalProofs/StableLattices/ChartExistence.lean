@@ -201,11 +201,16 @@ theorem contDiff_prodEx : ∀ {d : ℕ} (X : Fin d → Mat n), ContDiff ℝ ∞ 
 theorem exists_fields {Hm : Mat n} (h : Hm * Hm = 1) : ∀ {d : ℕ} (X : Fin d → Mat n),
     (∀ j, Lie Hm (X j)) → ∃ Z : Fin d → (Fin d → ℝ) → Mat n, (∀ j t, Lie Hm (Z j t)) ∧
       (∀ j t (τ : ℝ), prodEx X (t + τ • (Pi.single j 1 : Fin d → ℝ)) = prodEx X t * ex (Z j t) τ) ∧
-      (∀ j, ContDiff ℝ ∞ (Z j)) ∧ ∀ j, Z j 0 = X j
-  | 0, X, _ => ⟨fun j => j.elim0, fun j => j.elim0, fun j => j.elim0, fun j => j.elim0,
+      (∀ j, ContDiff ℝ ∞ (Z j)) ∧ ∀ j, Z j 0 = X j := by
+  intro d
+  induction d with
+  | zero =>
+    intro X hX
+    exact ⟨fun j => j.elim0, fun j => j.elim0, fun j => j.elim0, fun j => j.elim0,
       fun j => j.elim0⟩
-  | d + 1, X, hX => by
-    obtain ⟨Z, h1, h2, h3, h4⟩ := exists_fields h (fun j : Fin d => X j.succ) (fun j => hX j.succ)
+  | succ d ih =>
+    intro X hX
+    obtain ⟨Z, h1, h2, h3, h4⟩ := ih (fun j : Fin d => X j.succ) (fun j => hX j.succ)
     have hm := prodEx_mem (fun j : Fin d => X j.succ) (fun j => hX j.succ)
     refine ⟨Fin.cons (α := fun _ => (Fin (d + 1) → ℝ) → Mat n)
       (fun t => (prodEx (fun j : Fin d => X j.succ) (fun j => t j.succ))⁻¹ * X 0 *

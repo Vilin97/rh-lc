@@ -33,7 +33,7 @@ theorem coefSupp : ∀ D : D7, CoefSupp D := by
     rw [hs.rank, hs'.rank]
     show D.R.r + k * D.R.t ≤ D.R.r + (k + 1) * D.R.t
     exact Nat.add_le_add_left (Nat.mul_le_mul_right _ (Nat.le_succ k)) _
-  have hint : ∀ v, (∀ PP ∈ s.L.Pg, PP.under (𝓞 D.host.F) ≠ v) →
+  have hint : ∀ v, (∀ PP ∈ s.L.Pg, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v) →
       GlobalTheory.AdelicU.proj D.sp.cm.sig s.V.gram v g ∈ GlobalTheory.AdelicU.stabLoc D.sp.cm.sig s.V.gram s.Λ v := by
     intro v hv
     apply hg v

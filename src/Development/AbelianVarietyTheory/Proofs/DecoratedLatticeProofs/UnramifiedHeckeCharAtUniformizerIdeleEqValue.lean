@@ -69,7 +69,7 @@ theorem valued_eq_of_unif {D : D7} {v : HeightOneSpectrum (𝓞 D.host.F)} (ϖ :
 theorem value_eq_val : ∀ (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F)) (φ : SplitProj D v) (PP : Pl D.host.E), IsProjAt φ PP → ∀ (x : (AE D)ˣ) (ϖ : (Fv D.host.F v)ˣ), IsLocUnif φ x ϖ → ∀ χ : (AE D)ˣ →* Circle, GlobalTheory.LFun.UnrAt (F := D.host.F) χ PP → Circle.toUnits (χ x) = GlobalTheory.LFun.val (F := D.host.F) χ PP := by
   intro D v φ PP hφ x ϖ hloc χ hχ
   obtain ⟨e, he, hx1, hx2, hx3⟩ := hloc
-  have h : PP.under (𝓞 D.host.F) = v := (GlobalTheory.PlaceProjAt.under_resCard D v φ PP hφ).1.symm
+  have h : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = v := (GlobalTheory.PlaceProjAt.under_resCard D v φ PP hφ).1.symm
   have hAt : Formalism.L2.NTheta.IsIdemAt e PP := (((GlobalTheory.SplitIdemDict.idem_dictionary D).2 v φ PP hφ).2.2 e he).1
   have hP : IsPrimeIdem PP e (e + cA D e) := Or.inl ⟨hAt, rfl⟩
   have hxe : e * ((x : AE D) - 1) = (x : AE D) - 1 := by linear_combination -hx1

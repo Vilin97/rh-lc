@@ -70,7 +70,7 @@ structure LocX (a : XGeo D) (βT : GL (Fin D.sp.X'.rank) (Lev.EAf D)) (PP : Pl D
   [bor : BorelSpace k]
   q : GlobalTheory.FinPl.SplitPt D k
   idem : Formalism.L2.NTheta.IsIdemAt q.e PP
-  under : q.v = PP.under (𝓞 D.host.F)
+  under : q.v = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)
   unit : q.UnitAA
   s : ℕ
   hs : s + 1 + 1 = D.R.m
@@ -122,7 +122,7 @@ structure PkHyp : Prop where
   gap : GlobalTheory.IndefiniteRowSideFullHecke.ThetaSourceAction.NodeGap D
   fin : Finite W.P.T
 
-  sel : ∀ PP PP', QAll W PP → QAll W PP' → PP.under (𝓞 D.host.F) = PP'.under (𝓞 D.host.F) → PP = PP'
+  sel : ∀ PP PP', QAll W PP → QAll W PP' → (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP') → PP = PP'
 
   aa : ∀ PP : Pl D.host.E, (QAll W PP ∨ PP ∈ (pk W).Pg ∨ ∃ u, (((D.mem u).A.T : ℕ) : 𝓞 D.host.E) ∈ PP.asIdeal) →
     ((Ideal.absNorm D.host.ccK : ℕ) : 𝓞 D.host.E) ∉ PP.asIdeal
@@ -132,7 +132,7 @@ variable {W} {u : D.what₂.Word} (f : FamCh W u)
 structure VTie (v : VCom f.c) : Prop where
   b : ∀ j, v.b j = f.g.b j
   bT : v.bT = f.g.bT ∧ v.NT = f.g.LT
-  gP : ∀ p, p ∈ v.gP ↔ ∃ PP ∈ (pk W).Pg, p = PP.under (𝓞 D.host.F)
+  gP : ∀ p, p ∈ v.gP ↔ ∃ PP ∈ (pk W).Pg, p = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)
   tP : ∀ p, p ∈ v.tP ↔ (((D.mem u).A.T : ℕ) : 𝓞 D.host.F) ∈ p.asIdeal
   moves : ∀ j, j < D.R.m → ∀ P : GlobalTheory.FinPl.Pl D → Prop, (∀ p, P p → p ∉ v.gP) →
     GlobalTheory.FinPl.Moves (Yc D j) (f.g.b j) ((pk W).ΛY j) (v.N j) P

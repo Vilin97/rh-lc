@@ -42,7 +42,7 @@ theorem twist_ram_prime_dvd_Qn : ∀ {D : D7} {T : Type} {Lc : LevCh D T} {sc : 
     rcases (hL.Q_ram t w).1 hxi with h | ⟨PP, h, hc⟩
     · exact ⟨w, h, Or.inl rfl⟩
     · exact ⟨PP, h, Or.inr hc⟩
-  have hunder : PP.under (𝓞 D.host.F) = w.under (𝓞 D.host.F) := by
+  have hunder : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = w.under (𝓞 D.host.F) := by
     rcases hw with rfl | hc
     · rfl
     · exact GlobalTheory.LevelPlaces.under_eq_of_isConjPl hc

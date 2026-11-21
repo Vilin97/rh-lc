@@ -135,8 +135,9 @@ theorem exists_divIdeal (hD : IsMultiHomogIdeal D)
     (hzero : ∀ z ∈ conePts P, eval z f = 0 → z ∈ conePts D) :
     ∃ G : w.W.IdealSheafData, FinalTheorems.EffCartier G ∧ (G.support : Set w.W) ⊆ w.Zb.support ∧
       ∀ (c : w.Idx) (x : w.M) (hx : x.1 ∈ (w.pres c.1 c.2).V),
-        FinalTheorems.stalkId G x.1 = Ideal.span {w.W.presheaf.germ (w.pres c.1 c.2).V x.1 hx
-          ((w.pres c.1 c.2).secHom (bind₁ (w.lift c) f))} := by
+        FinalTheorems.stalkId G x.1 = Ideal.span (Set.singleton
+          (w.W.presheaf.germ (w.pres c.1 c.2).V x.1 hx
+            ((w.pres c.1 c.2).secHom (bind₁ (w.lift c) f)))) := by
   obtain ⟨G, hG⟩ := exists_idealSheaf_of_locGen (fun c : w.Idx => (w.pres c.1 c.2).V)
     w.exists_mem_pres_V (fun c => (w.pres c.1 c.2).secHom (bind₁ (w.lift c) f))
     (fun c c' x hx hx' => w.germ_lift_ratio f a hf c c' x hx hx')

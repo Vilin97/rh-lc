@@ -150,7 +150,7 @@ theorem hecke_level : ∀ D : D7, ForStageQ D fun c w j s => ∀ PP ∈ w.Q, ∀
     have hkS := LevLoc.finE_gAt_mem_St hfr κ v ((GlobalTheory.T.finitePart_mem_frameStabilizer_iff_local_stabilizer D s.V s.β s.Λ hfr κ).1 hS v)
     refine ⟨GlobalTheory.ChainOnto.LevelFacts.emb_mem_GfC s.V v _, ?_⟩
     refine (LevLoc.mem_lev_iff s.V.gram s.β s.L hP _).2 ⟨GlobalTheory.LevSplit.finE_mem_UA s.V _, hkS, fun PP' => ?_⟩
-    by_cases e' : PP'.under (𝓞 D.host.F) = v
+    by_cases e' : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP') = v
     · subst e'
       rw [← LevLoc.red_local hfr κ hS PP']
       exact hl PP'

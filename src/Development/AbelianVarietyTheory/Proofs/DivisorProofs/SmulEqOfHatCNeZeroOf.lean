@@ -125,7 +125,7 @@ theorem isPair_tw (D : D7) (G : Type) [Group G] [Fintype G] (Pl0 T0 : Type)
     rw [e]
     exact h3
   · obtain ⟨⟨es, hes, -⟩, -⟩ := he
-    have hne : ∀ PP ∈ R.Pg ∪ Q, PP.under (𝓞 D.host.F) ≠ v := fun PP hPP =>
+    have hne : ∀ PP ∈ R.Pg ∪ Q, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v := fun PP hPP =>
       GlobalTheory.AdTh.RecPair.under_ne (hes PP hPP) hv
     have kx : ∀ P : HeightOneSpectrum (𝓞 D.host.E), P.under (𝓞 D.host.F) = v → ξ.UnrAt P := fun P hP => by
       by_contra hc

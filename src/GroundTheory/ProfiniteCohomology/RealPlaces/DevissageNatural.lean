@@ -129,6 +129,8 @@ end CupNatural
 
 section DualityNatural
 
+open GlobalTheory.CompanionTheory.Ar (dualMap)
+
 variable {k G : Type u} [CommRing k] [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   {ι : Type u} {H : ι → Type u} [∀ v, Group (H v)] [∀ v, TopologicalSpace (H v)]
   [∀ v, IsTopologicalGroup (H v)] (φ : ∀ v, H v →ₜ* G)

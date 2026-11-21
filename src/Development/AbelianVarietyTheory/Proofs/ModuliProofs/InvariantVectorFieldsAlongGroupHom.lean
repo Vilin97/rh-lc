@@ -152,12 +152,17 @@ theorem inv_sc {v : epsR K ⟶ A} (hv : IsTangent v) {d} (hd : IsInvDer v d) (c 
 theorem inv_prod : ∀ {n : ℕ} (u : Fin n → (epsR K ⟶ A))
     (d : Fin n → ∀ O : A.left.Opens, Γ(A.left, O) → Γ(A.left, O)), (∀ i, IsTangent (u i)) →
     (∀ i, IsInvDer (u i) (d i)) →
-      IsTangent (List.ofFn u).prod ∧ IsInvDer (List.ofFn u).prod (fun W f => ∑ i, d i W f)
-  | 0, u, d, _, _ => by
+      IsTangent (List.ofFn u).prod ∧ IsInvDer (List.ofFn u).prod (fun W f => ∑ i, d i W f) := by
+  intro n
+  induction n with
+  | zero =>
+    intro u d _ _
     simp only [List.ofFn_zero, List.prod_nil, Finset.univ_eq_empty, Finset.sum_empty]
     exact ⟨tan_one, inv_one⟩
-  | n + 1, u, d, hu, hd => by
-    obtain ⟨h₁, h₂⟩ := inv_prod (fun i => u i.succ) (fun i => d i.succ) (fun i => hu _) (fun i => hd _)
+  | succ n ih =>
+    intro u d hu hd
+    obtain ⟨h₁, h₂⟩ := ih (fun i => u i.succ) (fun i => d i.succ)
+      (fun i => hu i.succ) (fun i => hd i.succ)
     simp only [List.ofFn_succ, List.prod_cons, Fin.sum_univ_succ]
     exact ⟨tan_mul (hu 0) h₁, inv_mul (hu 0) h₁ (hd 0) h₂⟩
 

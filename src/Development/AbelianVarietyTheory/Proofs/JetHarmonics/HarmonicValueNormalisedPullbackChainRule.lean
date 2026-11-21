@@ -214,8 +214,13 @@ theorem val_norm (wP : PrimTy H Xo) (hwP : IsPrim wP) (β : 𝓞 E) (N k : ℕ) 
   have o : ∀ b, (1 : T ⟶ Xo.univ.t.G) ≫ Xo.univ.t.act.act b = 1 := fun b => by
     haveI := Xo.univ.t.act.hom b
     exact MonObj.one_comp _
+  have face (x y : T ⟶ Xo.univ.t.G) : cubV Xo.univ.t.cub z J 1 x y = 1 := by
+    have e := val_corr hJ (Xo.univ.t.cub.face 0) (lift x y).left
+    rw [val_one] at e
+    refine (Eq.trans ?_ (val_cub Xo.univ.t.cub (lift x y) hJ (pzero Xo.univ.t.G _) (x2 Xo.univ.t.G 0) (x2 Xo.univ.t.G 1)).symm).trans e
+    congr 1 <;> simp [x2, pzero, Hom.one_def]
   have v₁ := hv T 1 z J hJ
-  simp only [o, h1, (isCub_cubV Xo.univ.t.cub hJ).face, Finset.prod_const_one, _root_.mul_one] at v₁
+  simp only [o, h1, face, Finset.prod_const_one, _root_.mul_one] at v₁
   have v₂ := (val_pull hJ _ _ _).symm.trans (val_corr hJ hwP.2 (toUnit T).left)
   have v₃ := (val_pull hJ _ _ _).symm.trans (val_corr hJ hn (toUnit T).left)
   rw [val_mul hJ, ExpGE.val_rigPow, ExpGE.val_rigPow, ← v₂, ← one_left] at v₃
@@ -454,8 +459,13 @@ theorem frame_eq (β : 𝓞 E) (N : ℕ) (hN : β * H.bar β = (N : 𝓞 E)) (wL
       simp only [Units.val_mul] at ih ⊢
       linear_combination (cubV Xo.univ.t.cub (T := jO y C.d m 1) z J (px C m ((n : 𝓞 E) * H.w0))
         (px C m H.w0) (px C m 1)).val * (ea C z J 1 H.w0).val * ih
+  have face (x x' : jO y C.d m 1 ⟶ Xo.univ.t.G) : cubV Xo.univ.t.cub z J 1 x x' = 1 := by
+    have e := val_corr hJ (Xo.univ.t.cub.face 0) (lift x x').left
+    rw [val_one] at e
+    refine (Eq.trans ?_ (val_cub Xo.univ.t.cub (lift x x') hJ (pzero Xo.univ.t.G _) (x2 Xo.univ.t.G 0) (x2 Xo.univ.t.G 1)).symm).trans e
+    congr 1 <;> simp [x2, pzero, Hom.one_def]
   have h3 := cub_eq C hJ 1 0 0
-  rw [show px C m 0 = 1 by rw [px, ExpGC.act_zero, MonObj.comp_one], (isCub_cubV _ hJ).face, _root_.one_mul, add_zero,
+  rw [show px C m 0 = 1 by rw [px, ExpGC.act_zero, MonObj.comp_one], face, _root_.one_mul, add_zero,
     Units.val_mul, Units.mul_left_inj] at h3
   rw [h1, ← Units.mul_left_inj (ea C z J 1 0), _root_.mul_assoc (jv C m z w), ← Units.val_mul, h2, ← _root_.mul_assoc,
     ← map_mul, hw, map_mul, ← h3]

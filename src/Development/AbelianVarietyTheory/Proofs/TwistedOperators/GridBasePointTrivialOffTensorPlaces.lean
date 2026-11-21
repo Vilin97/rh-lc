@@ -44,7 +44,7 @@ theorem base_mt_mulVec_off : ∀ {D : D7} {T : Type} {L : LevCh D T} {sc : Const
   have hkill : ∀ PP ∈ locPl G t, ∀ a ∈ idAt D (· = v), (es PP + cA D (es PP)) * a = 0 := by
     intro PP hPP a ha
     obtain ⟨-, -, v', ε, hε, hs⟩ := (hes PP hPP).1
-    have hv' : v' = PP.under (𝓞 D.host.F) := placeIdem_eq_under_of_idemAt (hes PP hPP) hε hs
+    have hv' : v' = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) := placeIdem_eq_under_of_idemAt (hes PP hPP) hε hs
     rw [hs]
     apply (GlobalTheory.FinPl.placeIdem_acts D v' ε hε).2
     rw [GlobalTheory.FinPl.mem_supportedOnPlacesIdeal_iff_components_zero_elsewhere] at ha ⊢

@@ -201,7 +201,7 @@ theorem postOn_sum {V : HSp D} {S : D.what₂.Tau → SPar} (M : DSModel V S) (s
 theorem exists_isSF {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL G Pl0 T D.R.m} {Ks : Type} [Field Ks]
     [NumberField Ks] [Algebra Ks D.what₂.LL] (R : RealDat D A Ks) : ∃ SF, IsSF R SF := by
   classical
-  refine ⟨R.Pg.image fun PP => PP.under (𝓞 D.host.F), fun v => ?_⟩
+  refine ⟨R.Pg.image fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP), fun v => ?_⟩
   rw [Finset.mem_image]
   refine exists_congr fun PP => and_congr_right fun _ => ?_
   rw [HeightOneSpectrum.ext_iff]

@@ -148,7 +148,7 @@ theorem eval_relation (c : Com D) (w : Twist D) (hw : w.Is c) {i j : ℕ} (hi : 
   classical
   obtain ⟨hS, hQS, hinj, hpair, -⟩ := GlobalTheory.T.chainTwistPlaces_split_unramifiedQuotients D c w hw
   have hpair' : ∀ PP ∈ w.Q, ∃ PP' : Pl D.host.E, PP' ≠ PP ∧
-      (∀ P : Pl D.host.E, P.under (𝓞 D.host.F) = PP.under (𝓞 D.host.F) ↔ P = PP ∨ P = PP') ∧
+      (∀ P : Pl D.host.E, P.under (𝓞 D.host.F) = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ↔ P = PP ∨ P = PP') ∧
       Ideal.absNorm PP'.asIdeal = Ideal.absNorm PP.asIdeal ∧
       val (F := D.host.F) (c.μ i * (c.μ j)⁻¹) PP' = (val (F := D.host.F) (c.μ i * (c.μ j)⁻¹) PP)⁻¹ :=
     fun PP hPP => by
@@ -174,7 +174,7 @@ theorem eval_relation (c : Com D) (w : Twist D) (hw : w.Is c) {i j : ℕ} (hi : 
       (1 - (val (F := D.host.F) χ PP : ℂ)⁻¹ * npow PP (-z)) ≠ 0 := fun z hz PP =>
     mul_ne_zero (one_sub_ne_zero PP (hu PP) hz) (one_sub_ne_zero PP (hu' PP) hz)
 
-  let A : Finset (HeightOneSpectrum (𝓞 D.host.F)) := w.Q.image fun PP => PP.under (𝓞 D.host.F)
+  let A : Finset (HeightOneSpectrum (𝓞 D.host.F)) := w.Q.image fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)
   have hS' : ∀ v, v ∈ (c.S : Set (HeightOneSpectrum (𝓞 D.host.F))) ↔ v ∈ w.S₀ ∨ v ∈ A := fun v =>
     (hS v).trans (or_congr_right Finset.mem_image.symm)
   have hA : ∀ v ∈ A, v ∉ w.S₀ := fun v hv => by

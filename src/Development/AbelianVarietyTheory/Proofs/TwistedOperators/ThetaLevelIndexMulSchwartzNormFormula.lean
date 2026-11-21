@@ -40,7 +40,7 @@ theorem levelIndexNormC : GlobalTheory.IndefiniteRowSideFullHecke.LocalIntegralG
     obtain ⟨hdis, hinj, hsp⟩ := GlobalTheory.T.levelAndTwistPlaces_split_distinct R F hC t
     have hrank : (Vc D i).rank = D.R.nV := D.sp.V_rank _ (Nat.le_add_left _ _) i.2
     have hrt : (Vc D i).rank = D.R.r + D.R.t := D.sp.V_rank _ (Nat.le_add_left _ _) i.2
-    have key : ∀ PP ∈ R.Pg ∪ R.Q t, (dLoc D (PP.under (𝓞 D.host.F)))⁻¹ =
+    have key : ∀ PP ∈ R.Pg ∪ R.Q t, (dLoc D ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)))⁻¹ =
         (Nat.card (GL (Fin (Vc D i).rank) (kP PP)) : ℝ) / ((Nat.card (GL (Fin D.R.t) (kP PP)) : ℝ) *
           (Nat.card (kP PP) : ℝ) ^ (D.R.r * D.R.t)) * ((Nat.card (kP PP) : ℝ) ^ (D.R.r ^ 2 + D.R.r * D.R.t))⁻¹ := by
       intro PP hPP

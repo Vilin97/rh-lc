@@ -25,15 +25,59 @@ theorem lieModel_liftBaseChange : ∀ (X : Scheme.{0}) (G : Over X) [GrpObj G] [
   haveI tower : IsScalarTower R R' T :=
     ⟨fun a b t => by rw [Algebra.smul_def, hsm, mul_smul]⟩
   have hφ : Spec.map (CommRingCat.ofHom (algebraMap R R')) ≫ x = spMap (algebraMap R R') ≫ x := rfl
-  have ex : ∀ e, ∃ t, M'.pt t = LieTangent.epsBase (algebraMap R R') hφ ≫ M.pt e :=
-    fun e => M'.onto _ (LieTangent.isTanAt_base _ hφ (M.tan e))
+  have spec_comp {A B C : Type} [CommRing A] [CommRing B] [CommRing C]
+      (f : A →+* B) (g : B →+* C) :
+      Spec.map (CommRingCat.ofHom g) ≫ Spec.map (CommRingCat.ofHom f) =
+        Spec.map (CommRingCat.ofHom (g.comp f)) := by
+    rw [← Spec.map_comp, ← CommRingCat.ofHom_comp]
+  have spec_dual_alg :
+      Spec.map (CommRingCat.ofHom (dualMap (algebraMap R R'))) ≫
+        Spec.map (CommRingCat.ofHom (algebraMap R (DualNumber R))) =
+      Spec.map (CommRingCat.ofHom (algebraMap R' (DualNumber R'))) ≫
+        Spec.map (CommRingCat.ofHom (algebraMap R R')) := by
+    rw [spec_comp, spec_comp]
+    congr 2
+    ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl]
+  have spec_fst_dual :
+      Spec.map (CommRingCat.ofHom (TrivSqZeroExt.fstHom R' R' R').toRingHom) ≫
+        Spec.map (CommRingCat.ofHom (dualMap (algebraMap R R'))) =
+      Spec.map (CommRingCat.ofHom (algebraMap R R')) ≫
+        Spec.map (CommRingCat.ofHom (TrivSqZeroExt.fstHom R R R).toRingHom) := by
+    rw [spec_comp, spec_comp]
+    congr 2
+    ext a <;> simp [dualMap, TrivSqZeroExt.algebraMap_eq_inl']
+  have spec_dual_eps (c : R) :
+      Spec.map (CommRingCat.ofHom (dualMap (algebraMap R R'))) ≫
+        Spec.map (CommRingCat.ofHom (epsMul c)) =
+      Spec.map (CommRingCat.ofHom (epsMul ((algebraMap R R') c))) ≫
+        Spec.map (CommRingCat.ofHom (dualMap (algebraMap R R'))) := by
+    rw [spec_comp, spec_comp]
+    congr 2
+    ext a <;> simp [dualMap, epsMul, TrivSqZeroExt.algebraMap_eq_inl']
+  let b : epsAt (spMap (algebraMap R R') ≫ x) ⟶ epsAt x :=
+    Over.homMk (Spec.map (CommRingCat.ofHom (dualMap (algebraMap R R')))) (by
+      change _ ≫ _ ≫ x = _ ≫ (spMap (algebraMap R R') ≫ x)
+      rw [← Category.assoc, spec_dual_alg, Category.assoc])
+  have hb : ∀ {v : epsAt x ⟶ G}, IsTanAt G x v →
+      IsTanAt G (spMap (algebraMap R R') ≫ x) (b ≫ v) := by
+    intro v hv
+    change _ ≫ Spec.map _ ≫ v.left = _
+    rw [← Category.assoc, spec_fst_dual, Category.assoc, hv]
+    exact congrArg (·.left)
+      (comp_one (M := G) (Over.homMk (Spec.map (CommRingCat.ofHom (algebraMap R R'))) hφ :
+        Over.mk (spMap (algebraMap R R') ≫ x) ⟶ Over.mk x))
+  have hs (c : R) : b ≫ LieTangent.epsScale x c =
+      LieTangent.epsScale (spMap (algebraMap R R') ≫ x) (algebraMap R R' c) ≫ b :=
+    Over.OverMorphism.ext (spec_dual_eps c)
+  have ex : ∀ e, ∃ t, M'.pt t = b ≫ M.pt e :=
+    fun e => M'.onto _ (hb (M.tan e))
   choose f hf using ex
   let j : V →ₗ[R] T :=
     { toFun := f
       map_add' := fun a b => M'.inj (by rw [M'.add, hf, hf, hf, M.add, comp_mul])
       map_smul' := fun c e => M'.inj (by
         rw [RingHom.id_apply, hsm, LieModel.pt_smul, hf, hf, LieModel.pt_smul, ← Category.assoc,
-          LieTangent.base_scale, Category.assoc]) }
+          hs, Category.assoc]) }
   have hl : ∀ e, ((M'.pt (j e)).left ≫ (𝟙 G.left) = ReciprocityTheory.ChartRestriction.G.Geo.Tor.spMap (GlobalTheory.CompanionTheory.Ar.dualMap (algebraMap R R')) ≫ (M.pt e).left) := fun e => by
     change (M'.pt (f e)).left ≫ 𝟙 G.left = _
     rw [hf, Category.comp_id]

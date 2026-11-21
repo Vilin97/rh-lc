@@ -172,7 +172,7 @@ theorem placeIdem_smul_of {P : HeightOneSpectrum (𝓞 D.host.F) → Prop} {w : 
   | neg x _ h => rw [smul_neg, h, neg_zero]
 
 theorem idemSum_mul_of {P : HeightOneSpectrum (𝓞 D.host.F) → Prop} {e : AE D} {Pset : Finset (Pl D.host.E)}
-    (he : IsIdemSum e Pset) (hv : ∀ PP ∈ Pset, ¬ P (PP.under (𝓞 D.host.F))) {u : WO S T}
+    (he : IsIdemSum e Pset) (hv : ∀ PP ∈ Pset, ¬ P ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))) {u : WO S T}
     (hu : u ∈ latO S T LS LT P) (a : Fin T.rank) (b : Fin S.rank) :
     e * u a b = 0 ∧ cA D e * u a b = 0 := by
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := he
@@ -199,7 +199,7 @@ theorem isLatVac_pureTensorO_off {ψ : AddChar (AF D.host.F) ℂ} {θ : InfFam D
     (BS : D.what₂.Tau → Matrix (Fin S.rank) (Fin S.rank) ℂ) (BT : D.what₂.Tau → Matrix (Fin T.rank) (Fin T.rank) ℂ)
     {f₀ Φ f : WO S T → ℂ} (hvac : IsVacO ψ θ S T sS sT LS LT f₀) {e : AE D} {Pset : Finset (Pl D.host.E)}
     (he : IsIdemSum e Pset) (hth : IsThetaAt ψ (symplO S T) (heisO ψ S T) e (latO S T LS LT fun _ => True) 1 f₀ Φ f)
-    (Sf : Finset (HeightOneSpectrum (𝓞 D.host.F))) (hP : ∀ PP ∈ Pset, PP.under (𝓞 D.host.F) ∈ Sf)
+    (Sf : Finset (HeightOneSpectrum (𝓞 D.host.F))) (hP : ∀ PP ∈ Pset, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∈ Sf)
     (hpt : ∀ φ, IsThetaFunO ψ S T (pureTensorO ψ θ S T sS sT BS BT f φ)) (φ : MvPolynomial (FVar D T.rank S.rank) ℂ) :
     IsLatVac (heisO ψ S T) (latO S T LS LT fun v => v ∉ Sf) (pureTensorO ψ θ S T sS sT BS BT f φ) := by
   have hle : latO S T LS LT (fun v => v ∉ Sf) ≤ latO S T LS LT fun _ => True :=

@@ -340,8 +340,8 @@ lemma ten_monomial {n : ℕ} (v : ι → ((Fin n × Fin n) →₀ ℕ)) :
   simp only [MvPolynomial.rename_monomial]
   rw [MvPolynomial.monomial_sum_one]
 
-def tenM (n : ℕ) : MultilinearMap ℂ (fun _ : ι => MvPolynomial (Fin n × Fin n) ℂ)
-    (MvPolynomial (ι × Fin n × Fin n) ℂ) :=
+def tenM (n : ℕ) : (ι → MvPolynomial (Fin n × Fin n) ℂ) →ₘₗ[ℂ]
+    MvPolynomial (ι × Fin n × Fin n) ℂ :=
   (MultilinearMap.mkPiAlgebra ℂ ι (MvPolynomial (ι × Fin n × Fin n) ℂ)).compLinearMap
     (fun τ => (MvPolynomial.rename (Prod.mk τ) : MvPolynomial (Fin n × Fin n) ℂ →ₐ[ℂ] _).toLinearMap)
 

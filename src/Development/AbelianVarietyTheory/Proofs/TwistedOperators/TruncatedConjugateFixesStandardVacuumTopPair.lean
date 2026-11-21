@@ -38,7 +38,7 @@ theorem pg_near_locPl {T : Type} {L : LevCh D T} {sc : Consts} (G : GridData L s
   classical
   obtain ⟨k, hk⟩ := (hL.Pg PP).1 h
   have hm := GlobalTheory.LevelRamif.typePrime_mem hk
-  set v := PP.under (𝓞 D.host.F) with hv
+  set v := (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) with hv
   have hvk : ((D.host.g k : ℕ) : 𝓞 D.host.F) ∈ v.asIdeal := by
     show algebraMap (𝓞 D.host.F) (𝓞 D.host.E) ((D.host.g k : ℕ) : 𝓞 D.host.F) ∈ PP.asIdeal
     rwa [map_natCast]

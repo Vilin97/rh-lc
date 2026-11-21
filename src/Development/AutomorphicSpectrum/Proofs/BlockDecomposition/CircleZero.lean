@@ -17,12 +17,13 @@ structure Fam {X : Type*} [TopologicalSpace X] (U : Set ℂ) (f : ℂ → X → 
 
 variable {X Y Z : Type*} [TopologicalSpace X] [TopologicalSpace Y] [TopologicalSpace Z] {U : Set ℂ}
 
-theorem Fam.comp {f : ℂ → X → ℂ} (h : Fam U f) {φ : Z → X} (hφ : Continuous φ) : Fam U (fun w z => f w (φ z)) where
-  cont := h.cont.comp (continuous_fst.prodMk (hφ.comp continuous_snd)).continuousOn (fun q hq => ⟨hq.1, mem_univ _⟩)
-  hol z := h.hol (φ z)
-  bd K hK hc := by
+theorem Fam.comp {f : ℂ → X → ℂ} (h : Fam U f) {φ : Z → X} (hφ : Continuous φ) : Fam U (fun w z => f w (φ z)) := by
+  refine ⟨?_, fun z => h.hol (φ z), ?_⟩
+  · exact h.cont.comp (continuous_fst.prodMk (hφ.comp continuous_snd)).continuousOn
+      (fun q hq => ⟨hq.1, mem_univ _⟩)
+  · intro K hK hc
     obtain ⟨B, hB⟩ := h.bd K hK hc
-    exact ⟨B, fun w hw z => hB w hw _⟩
+    exact ⟨B, fun w hw z => hB w hw (φ z)⟩
 
 theorem Fam.slice {f : ℂ → X → ℂ} (h : Fam U f) {w : ℂ} (hw : w ∈ U) : Continuous (f w) :=
   h.cont.comp_continuous (f := fun x => (w, x)) (by fun_prop) (fun _ => ⟨hw, mem_univ _⟩)

@@ -119,7 +119,7 @@ theorem _root_.GlobalTheory.T.towerStage_finitePlaces_unramified_or_split : GBig
       · exact Or.inl h
       · exact Or.inr (Or.inl h))
   have hxi : ∀ P : HeightOneSpectrum (𝓞 D.host.E),
-      (∀ PP ∈ Lc.Q t, PP.under (𝓞 D.host.F) ≠ P.under (𝓞 D.host.F)) → (Lc.xiH t).UnrAt P := fun P hP => by
+      (∀ PP ∈ Lc.Q t, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ P.under (𝓞 D.host.F)) → (Lc.xiH t).UnrAt P := fun P hP => by
     by_contra hc
     rcases (hL.Q_ram t P).1 hc with h | ⟨PP', h, hc'⟩
     · exact hP P h rfl
@@ -128,7 +128,7 @@ theorem _root_.GlobalTheory.T.towerStage_finitePlaces_unramified_or_split : GBig
       (G.ch.chiH (D.R.m - i)).UnrAt P := fun P hP => G.ch.unr _ hm1 hm2 P hP
   have heta : ∀ P : HeightOneSpectrum (𝓞 D.host.E), (Lc.C.eta ^ (rankV D i j % 2)).UnrAt P :=
     fun P => unrAt_pow (Lc.C.isEta.unr P) _
-  by_cases hS : v ∈ G.pl.S0 ∨ ∃ PP ∈ Lc.Q t, PP.under (𝓞 D.host.F) = v
+  by_cases hS : v ∈ G.pl.S0 ∨ ∃ PP ∈ Lc.Q t, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = v
   · right
     obtain ⟨w, hw, hwv⟩ : ∃ w ∈ locPl G t, w.under (𝓞 D.host.F) = v := by
       rcases hS with h | ⟨PP, hP, hPv⟩

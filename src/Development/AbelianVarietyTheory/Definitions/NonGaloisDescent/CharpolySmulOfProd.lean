@@ -207,12 +207,12 @@ theorem shiftChar_unr (v : PlE D.host) : (shiftChar C).UnrAt v := fun x hx => by
 theorem shiftChar_val (v : PlE D.host) : (((shiftChar C).val v : ℂˣ) : ℂ) =
     ((C.eta.val v : ℂˣ) : ℂ)⁻¹ * ((normV v : ℕ) : ℂ) ^ (((D.R.t : ℝ) / 2 : ℝ) : ℂ) := by
   rw [shiftChar, GlobalTheory.GalChar.block_val, one_mul, HChar.val_inv, Units.val_inv_eq_inv_val]
-  rfl
+  rw [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
 
 theorem blockChar_val (l : ℕ) (j : Fin D.R.m) (v : PlE D.host) : (((blockChar C l j).val v : ℂˣ) : ℂ) =
     (((muBase C l j).val v : ℂˣ) : ℂ) * ((C.eta.val v : ℂˣ) : ℂ)⁻¹ * ((normV v : ℕ) : ℂ) ^ (((D.R.r : ℝ) / 2 : ℝ) : ℂ) := by
   rw [blockChar, GlobalTheory.GalChar.block_val, HChar.val_mul, HChar.val_inv, Units.val_mul, Units.val_inv_eq_inv_val]
-  rfl
+  rw [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
 
 variable {C} {X : NTw D.R D.host D.what₂ D.LL0 D.nd} {i : X.Tw} {b : Bool} {art : Ideles D.host.E →* Gab D.host.E D.nd.Om}
 
@@ -253,7 +253,10 @@ theorem two_mul_half (R : Ranks) {k : ℕ} (hk : k ≤ R.r) : 2 * (k * (R.r - k)
   · exact h.mul_right _
   · exact (Nat.Odd.sub_odd (GlobalTheory.GalChar.odd_r R) h).mul_left _
 
-theorem normV_ne_zero (P : PlE D.host) : ((normV P : ℕ) : ℂ) ≠ 0 := GlobalTheory.GalChar.absNorm_ne_zero P
+theorem normV_ne_zero (P : PlE D.host) : ((normV P : ℕ) : ℂ) ≠ 0 := by
+  have h := GlobalTheory.GalChar.absNorm_ne_zero P
+  rw [Ideal.absNorm_apply, Submodule.cardQuot_apply] at h
+  exact h
 
 variable (μ : HChar D.host.E) (π : D.naut.CG D.R.r) (P : PlE D.host)
 

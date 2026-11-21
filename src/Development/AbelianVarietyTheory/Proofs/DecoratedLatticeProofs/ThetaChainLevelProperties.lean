@@ -69,7 +69,7 @@ namespace GlobalTheory.ChainOnto.LevelFacts
 theorem levFacts : ∀ D : D7, LevFacts D := by
   intro D c _ j _ s hs
   have hfr := hs.frame
-  have hPS : ∀ PP ∈ c.Pg, PP.under (𝓞 D.host.F) ∈ c.S := fun PP hPP => by
+  have hPS : ∀ PP ∈ c.Pg, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∈ c.S := fun PP hPP => by
     classical
     unfold Com.S
     exact Finset.mem_image_of_mem _ hPP
@@ -87,7 +87,7 @@ theorem levFacts : ∀ D : D7, LevFacts D := by
         exact one_mem _
     refine mem_levG_of_red hs (emb_mem_GfC s.V v k) hSt fun PP hPP => ?_
     · refine GlobalTheory.T.latticeReduction_eq_one_of_local_component_one D s.V s.β _ PP hSt ?_
-      have hne : PP.under (𝓞 D.host.F) ≠ v := fun e => hv (e ▸ hPS PP hPP)
+      have hne : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v := fun e => hv (e ▸ hPS PP hPP)
       exact GlobalTheory.AdelicU.proj_emb_ne _ _ hne k
   · intro k hk v
     exact (GlobalTheory.T.finitePart_mem_frameStabilizer_iff_local_stabilizer D s.V s.β s.Λ hfr k).1 (finE_mem_St hk) v

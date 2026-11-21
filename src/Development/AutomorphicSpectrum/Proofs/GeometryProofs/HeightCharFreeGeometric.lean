@@ -209,7 +209,8 @@ theorem numeric {p : ℕ} [Fact p.Prime] {n N ρ₀ r d d' D A M : ℕ} (hn : 0 
     rw [zero_pow hn.ne'] at hA
     exact pow_ne_zero _ hM hA.symm
   have h3 : n * padicValNat p A = 2 * d' * padicValNat p M := by
-    rw [← padicValNat.pow, hA, padicValNat.pow]
+    simpa only [Nat.padicValNat_def, Nat.multiplicity_pow] using
+      congrArg (_root_.multiplicity p) hA
   have h4 : D ≤ padicValNat p A := ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) hA0).1 hD
   have h5 : n * (ρ₀ * padicValNat p M + D + ρ₀ * padicValNat p M) ≤ n * (r * padicValNat p M) := by
     have e : n * r = 2 * d' + 2 * (n * ρ₀) := by rw [← h2, hdd, hN]; ring

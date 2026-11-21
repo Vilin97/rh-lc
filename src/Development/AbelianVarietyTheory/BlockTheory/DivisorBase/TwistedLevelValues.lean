@@ -117,7 +117,7 @@ variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL
 
 
 open Classical in
-def finS (t : T) : Finset (HeightOneSpectrum (𝓞 D.host.F)) := (R.Pg ∪ R.Q t).image fun PP => PP.under (𝓞 D.host.F)
+def finS (t : T) : Finset (HeightOneSpectrum (𝓞 D.host.F)) := (R.Pg ∪ R.Q t).image fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)
 
 def PrimeToHost (t : T) : Prop :=
   ∀ PP : Pl D.host.E, PP ∈ R.Pg ∨ PP ∈ R.Q t →

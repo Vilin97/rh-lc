@@ -101,7 +101,7 @@ theorem GlobalTheory.ChainOnto.fock_vacFin_off :
     · exact h1 h
     · exact h2 h
   have hle := latO_at_le hNS.2.2.2.1 hNT.2.2.2.1 hM
-  have hoff : ∀ PP ∈ s.L.Pg ∪ ∅, PP.under (𝓞 D.host.F) ≠ v := by
+  have hoff : ∀ PP ∈ s.L.Pg ∪ ∅, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v := by
     intro PP hPP h0
     rw [Finset.union_empty, hL] at hPP
     exact hv (Finset.mem_image.2 ⟨PP, hPP, h0⟩)

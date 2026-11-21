@@ -50,7 +50,7 @@ theorem placeIdem_smul_off {S T : HSp D} {LS : Set (Fin S.rank → D.host.E)} {L
 
 theorem idemSum_mul_off {S T : HSp D} {LS : Set (Fin S.rank → D.host.E)} {LT : Set (Fin T.rank → D.host.E)}
     {v : HeightOneSpectrum (𝓞 D.host.F)} {e : AE D} {Pset : Finset (Pl D.host.E)} (he : IsIdemSum e Pset)
-    (hv : ∀ PP ∈ Pset, PP.under (𝓞 D.host.F) ≠ v) {u : WO S T} (hu : u ∈ latO S T LS LT fun x => x = v) (a b) :
+    (hv : ∀ PP ∈ Pset, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v) {u : WO S T} (hu : u ∈ latO S T LS LT fun x => x = v) (a b) :
     e * u a b = 0 ∧ cA D e * u a b = 0 := by
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := he
   have key : ∀ PP ∈ Pset, es PP * u a b = 0 ∧ cA D (es PP) * u a b = 0 := by
@@ -100,7 +100,7 @@ theorem GlobalTheory.FinZeta.levVec_vacFin : ∀ {D : D7} {G : Type} [Group G] [
       latO (Vc D i) (Wc D i) (R.ΛV i) (R.ΛW i) fun _ => True := by
     rw [hV, hW]
     exact GlobalTheory.PlaceTensor.latO_mono fun _ _ => trivial
-  have hoff : ∀ PP ∈ (R.datWp i P).Pg ∪ R.Q t, PP.under (𝓞 D.host.F) ≠ v := fun PP hPP h0 =>
+  have hoff : ∀ PP ∈ (R.datWp i P).Pg ∪ R.Q t, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v := fun PP hPP h0 =>
     hv (Finset.mem_image.2 ⟨PP, hPP, h0⟩)
   have hz : ∀ u ∈ latO (Vc D i) (Wc D i) (frameLat (Vc D i) : Set _) (frameLat (Wc D i) : Set _) (fun u => u = v),
       ∀ a b, cA D e * u a b = 0 ∧ cA D (cA D e) * u a b = 0 := fun u hu a b => by

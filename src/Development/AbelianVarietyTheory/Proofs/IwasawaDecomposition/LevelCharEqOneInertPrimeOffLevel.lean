@@ -25,12 +25,12 @@ open GlobalTheory.FinZeta.LevelOff in
 theorem redFn_eq_one_of_locAt {D : D7} {V : HSp D} (β : GL (Fin V.rank) (Formalism.IndefR.Lev.EAf D)) (x : Bridge.Gf V)
     (hS : Formalism.UG.bc (swapAE D) (x : GL (Fin V.rank) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F ⊗[D.host.F] D.host.E)) ∈ Formalism.L2.DIV.St β)
     (v : HeightOneSpectrum (𝓞 D.host.F)) (hx : GlobalTheory.IndefiniteRowSideFullHecke.HeckeIntertwinersInert.LocAt V v x) (PP : Formalism.L2.DIV.Pl D.host.E)
-    (hPP : PP.under (𝓞 D.host.F) ≠ v) :
+    (hPP : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v) :
     Formalism.L2.DIV.redFn β PP (Formalism.UG.bc (swapAE D) (x : GL (Fin V.rank) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F ⊗[D.host.F] D.host.E))) = 1 := by
   classical
   set M : Matrix (Fin V.rank) (Fin V.rank) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F ⊗[D.host.F] D.host.E) :=
     (x : GL (Fin V.rank) (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.Af D.host.F ⊗[D.host.F] D.host.E)).val with hM
-  set Sb : Finset (HeightOneSpectrum (𝓞 D.host.F)) := {PP.under (𝓞 D.host.F)} with hSb
+  set Sb : Finset (HeightOneSpectrum (𝓞 D.host.F)) := {(_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)} with hSb
   set b : FiniteAdeleRing (𝓞 D.host.F) D.host.F := 1 - GlobalTheory.AdeleIdem.ind Sb with hbdef
   have hb : b ∈ Formalism.UG.intAd D.host.F := sub_mem (one_mem _) (GlobalTheory.AdeleIdem.ind_mem Sb)
   have hz : ∀ (i j : Fin V.rank), ∀ w ∈ Sb, Algebra.TensorProduct.map (Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes.evalV D.host.F w)
@@ -38,12 +38,12 @@ theorem redFn_eq_one_of_locAt {D : D7} {V : HSp D} (β : GL (Fin V.rank) (Formal
     intro i j w hw
     rw [Finset.mem_singleton] at hw
     subst hw
-    have h1 := congrFun (congrFun (hx (PP.under (𝓞 D.host.F)) hPP) i) j
+    have h1 := congrFun (congrFun (hx ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) hPP) i) j
     rw [Matrix.map_apply] at h1
     rw [Matrix.sub_apply, map_sub, h1, Matrix.one_apply, Matrix.one_apply]
     split_ifs <;> simp
   refine GlobalTheory.LevSplit.redFn_eq_one β PP _ hS ⟨_, GlobalTheory.AdeleIdem.one_tmul_mem hb⟩ ?_ ?_
-  · refine GlobalTheory.AdeleIdem.resS_eq_zero PP (PP.under (𝓞 D.host.F)) rfl hb ?_
+  · refine GlobalTheory.AdeleIdem.resS_eq_zero PP ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) rfl hb ?_
     simp [hbdef, GlobalTheory.AdeleIdem.ind_apply, hSb]
   · ext i j
     have h2 := one_sub_ind_tmul_mul Sb _ (hz i j)

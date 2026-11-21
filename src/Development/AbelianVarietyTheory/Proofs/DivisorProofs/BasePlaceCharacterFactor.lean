@@ -82,7 +82,7 @@ theorem levelLe_mono {L : Type} [Field L] [NumberField L] {a : HChar L} {w : Hei
   ha x hx (h.trans (WithZero.exp_le_exp.2 (by omega)))
 
 theorem nuH_levelLe_two {D : D7} {T : Type} {Lc : LevCh D T} {sc : Consts} (G : GridData Lc sc) {μ₀ : T} (hL : Lc.Is μ₀)
-    (i j : Fin D.R.m) (t : T) (PP : HeightOneSpectrum (𝓞 D.host.E)) (hPP : PP.under (𝓞 D.host.F) ∈ S1 D) :
+    (i j : Fin D.R.m) (t : T) (PP : HeightOneSpectrum (𝓞 D.host.E)) (hPP : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∈ S1 D) :
     (nuH G t i j).LevelLe PP 2 ∧ ¬ (nuH G t i j).LevelLe PP 1 := by
   have hm : 1 ≤ D.R.m - (i : ℕ) ∧ D.R.m - (i : ℕ) ≤ D.R.m := ⟨by omega, by omega⟩
   have hchi := G.ch.lev1 _ hm.1 hm.2 PP hPP

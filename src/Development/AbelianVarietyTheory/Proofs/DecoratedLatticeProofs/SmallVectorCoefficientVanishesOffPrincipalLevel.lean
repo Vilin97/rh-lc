@@ -42,7 +42,7 @@ theorem wcoef_eq_zero_off_prin : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ) (
   obtain ⟨_hvac, e, he, hth⟩ := hvec
   have hQ : (prinDat A Z).Q = ∅ := rfl
   have hPg : (prinDat A Z).Pg = Z := rfl
-  have hint : ∀ v, (∀ PP ∈ (prinDat A Z).Pg, PP.under (𝓞 D.host.F) ≠ v) →
+  have hint : ∀ v, (∀ PP ∈ (prinDat A Z).Pg, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ v) →
       GlobalTheory.AdelicU.proj D.sp.cm.sig A.gram v g ∈ GlobalTheory.AdelicU.stabLoc D.sp.cm.sig A.gram (frameLat A) v := by
     intro v hv
     apply hg v

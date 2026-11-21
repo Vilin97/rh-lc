@@ -36,7 +36,7 @@ theorem exists_hodgeInnerProduct_form : ∀ (E : Type) [Field E] [NumberField E]
     (by simpa only [hex] using hc)
   obtain ⟨w₀, hw₀, -⟩ := m.lin
   have hL := t'.PP.isLB
-  have hM := pull_isLB t.PP.isLB m.φ
+  have hM := LB.isLB_pull t.PP.isLB m.φ
   let u₁ : HolUnif t'.G (t.PP.L.pull m.φ) g := GlobalTheory.ArchMetricCompare.carry u hL hM hw₀
   have hAH₁ : u₁.IsAH Hm χ := GlobalTheory.ArchMetricCompare.carry_isAH hL hM hw₀ hAH
   have ht₁' : ∀ v, IsTangent v → ∃! w, u₁.IsDiff w v := ht₁

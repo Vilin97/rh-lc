@@ -60,7 +60,7 @@ theorem not_mem_badPl {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {
   have hle : w.asIdeal ≤ PP.asIdeal := by
     rw [← hin, Ideal.map_le_iff_le_comap]
     intro a ha
-    have : (PP.under (𝓞 D.host.F)).asIdeal = PP.asIdeal.comap (algebraMap (𝓞 D.host.F) (𝓞 D.host.E)) := rfl
+    have : ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)).asIdeal = PP.asIdeal.comap (algebraMap (𝓞 D.host.F) (𝓞 D.host.E)) := rfl
     rw [← this, he]
     exact ha
   exact (HeightOneSpectrum.ext (w.isMaximal.eq_of_le PP.isPrime.ne_top hle)).symm

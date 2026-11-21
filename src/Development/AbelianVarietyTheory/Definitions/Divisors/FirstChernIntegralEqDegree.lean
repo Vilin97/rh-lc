@@ -68,15 +68,16 @@ theorem VInfAt.prodMk {f' : CxPts p σ → G} (h : VInfAt f y) (h' : VInfAt f' y
     contDiff_pi.2 fun a => contDiff_apply _ _ _
   have cr : ContDiff ℝ ∞ fun (v : ι ⊕ ι' → ℂ) a => v (.inr a) :=
     contDiff_pi.2 fun a => contDiff_apply _ _ _
+  let S : Set (ι ⊕ ι' → ℂ) :=
+    (fun v a => v (.inl a)) ⁻¹' O ∩ (fun v a => v (.inr a)) ⁻¹' O'
   refine ⟨W ⊓ W', ι ⊕ ι', inferInstance,
     Sum.elim (fun a => resG X inf_le_left (g a)) fun a => resG X inf_le_right (g' a),
-    fun v => (F fun a => v (.inl a), F' fun a => v (.inr a)),
-    (fun v a => v (.inl a)) ⁻¹' O ∩ (fun v a => v (.inr a)) ⁻¹' O', hW,
+    fun v => (F fun a => v (.inl a), F' fun a => v (.inr a)), S, hW,
     (h₂.preimage cl.continuous).inter (h₂'.preimage cr.continuous), ⟨?_, ?_⟩,
-    (h₄.comp cl.contDiffOn fun _ hv => hv.1).prodMk
-      (h₄'.comp cr.contDiffOn fun _ hv => hv.2), ?_⟩
-  · simpa only [mem_preimage, Sum.elim_inl, ev_res _ hW] using h₃
-  · simpa only [mem_preimage, Sum.elim_inr, ev_res _ hW] using h₃'
+    (h₄.comp (s := S) cl.contDiffOn fun _ hv => hv.1).prodMk
+      (h₄'.comp (s := S) cr.contDiffOn fun _ hv => hv.2), ?_⟩
+  · simpa only [S, mem_preimage, Sum.elim_inl, ev_res _ hW] using h₃
+  · simpa only [S, mem_preimage, Sum.elim_inr, ev_res _ hW] using h₃'
   · filter_upwards [h₅, h₅', (isOpen_ptsIn _).mem_nhds hW] with z e e' hz
     simp only [Sum.elim_inl, Sum.elim_inr, ev_res _ hz, e, e']
 
@@ -199,7 +200,7 @@ theorem tr_mul (h' : y ∈ ptsIn p σ c'.U) (h'' : y ∈ ptsIn p σ c''.U) :
 
 theorem tr_self (h : y ∈ ptsIn p σ c.U) : c.tr p σ c y = 1 := by
   ext a b
-  rw [tr, of_apply, c.crd_frame h, Pi.single_apply, one_apply]
+  rw [tr, of_apply, c.crd_frame h, Pi.single_apply, Matrix.one_apply]
 
 theorem isUnit_tr (h : y ∈ ptsIn p σ c.U) (h' : y ∈ ptsIn p σ c'.U) : IsUnit (c.tr p σ c' y) :=
   IsUnit.of_mul_eq_one _ ((c.tr_mul c' c h' h).trans (c.tr_self h))
@@ -244,15 +245,61 @@ theorem crd_pull (hE : IsVB E r) {q : Y ⟶ Sp k} (π : Y ⟶ X) (hπ : π ≫ p
     ((QCoh.res_pullbackSections π E hT inf_le_left s).trans
       (QCoh.pullbackSections_res π E hle inf_le_left s).symm)
 
-def dual : Chart (VB.dual E) r := ⟨c.U, _, c.isFrame.dual⟩
+theorem dualApp_chart_sum (h : V ≤ c.U) (d : Fin r → Γ(VB.dual E, V))
+    (hd : ∀ i j, dualApp (d i) le_rfl (resM E h (c.e j)) =
+      (c.isFrame.basis h).repr (resM E h (c.e j)) i)
+    (a : Fin r → Γ(X, V)) (j : Fin r) :
+    dualApp (∑ i, a i • d i) le_rfl (resM E h (c.e j)) = a j := by
+  classical
+  have hcoord (i : Fin r) : dualApp (d i) le_rfl (resM E h (c.e j)) =
+      if j = i then 1 else 0 := by
+    rw [hd, ← c.isFrame.basis_apply h j, Module.Basis.repr_self_apply]
+  simp only [dualApp_sum, LinearMap.sum_apply, dualApp_smul, resG_self,
+    LinearMap.smul_apply, smul_eq_mul, hcoord, mul_ite, mul_one, mul_zero,
+    Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+
+def dual : Chart (VB.dual E) r := by
+  let d (i : Fin r) : Γ(VB.dual E, c.U) :=
+    homMk (G := SheafOfModules.unit X.ringCatSheaf) (fun _ h => (c.isFrame.basis h).coord i)
+      (fun _ _ h h' s => c.isFrame.repr_resM h h' s i)
+  refine ⟨c.U, d, fun V h => ?_⟩
+  have hsum (a : Fin r → Γ(X, V)) (j : Fin r) :
+      dualApp (Fintype.linearCombination Γ(X, V) (fun i => resM (VB.dual E) h (d i)) a)
+        le_rfl (resM E h (c.e j)) = a j := by
+    rw [Fintype.linearCombination_apply]
+    apply dualApp_chart_sum c h
+    intro i j
+    rw [dualApp_res]
+    rfl
+  refine ⟨fun a a' e => funext fun j => ?_, fun l => ?_⟩
+  · rw [← hsum a j, ← hsum a' j, e]
+  · refine ⟨fun j => dualApp l le_rfl (resM E h (c.e j)), ?_⟩
+    exact c.isFrame.dual_ext h fun j => hsum _ j
 
 theorem tr_dual (h : y ∈ ptsIn p σ c.U) (h' : y ∈ ptsIn p σ c'.U) :
     c.dual.tr p σ c'.dual y = (c'.tr p σ c y)ᵀ := by
   have hW := mem_ptsIn_inf.2 ⟨h, h'⟩
   ext a b
   rw [tr, tr, transpose_apply, of_apply, of_apply, c'.crd_eq _ inf_le_left inf_le_right hW]
-  exact (c.dual.crd_eq (c'.dual.e b) inf_le_right inf_le_left hW a).trans
-    (congrArg (ev p σ _ · y) (c.isFrame.dual_basis_repr _ _ a))
+  refine (c.dual.crd_eq (c'.dual.e b) inf_le_right inf_le_left hW a).trans
+    (congrArg (ev p σ _ · y) ?_)
+  let hV : c.U ⊓ c'.U ≤ c.U := inf_le_left
+  let hV' : c.U ⊓ c'.U ≤ c'.U := inf_le_right
+  let l := resM (VB.dual E) hV' (c'.dual.e b)
+  let B := c.dual.isFrame.basis hV
+  change B.repr l a = _
+  have hl := c.dual.isFrame.basis_equivFun_symm hV (B.equivFun l)
+  change B.equivFun.symm (B.equivFun l) = _ at hl
+  rw [LinearEquiv.symm_apply_apply] at hl
+  have he := dualApp_chart_sum c hV (fun i => resM (VB.dual E) hV (c.dual.e i))
+    (fun i j => (LinearMap.congr_fun (dualApp_res (c.dual.e i) hV le_rfl) _).trans rfl)
+    (B.equivFun l) a
+  calc
+    B.repr l a = B.equivFun l a := (congrFun (Module.Basis.equivFun_apply B l) a).symm
+    _ = _ := he.symm
+    _ = dualApp l le_rfl (resM E hV (c.e a)) :=
+      congrArg (fun m => dualApp m le_rfl (resM E hV (c.e a))) hl.symm
+    _ = _ := (LinearMap.congr_fun (dualApp_res (c'.dual.e b) hV' le_rfl) _).trans rfl
 
 def map {E' : X.Modules} (φ : E ≅ E') : Chart E' r := ⟨c.U, _, c.isFrame.map_iso φ.hom⟩
 

@@ -38,7 +38,7 @@ theorem smooth_tensor {A B : HermLine ι} (hA : IsSmoothHerm A) (hB : IsSmoothHe
   hA.mul hB
 
 def segreLine (m : ℕ) : HermLine ι :=
-  HermLine.ofMetrics (fun k => fsMetric (ι k)) (fun _ => (m : ℤ))
+  HermLine.ofMetrics (fun k => fsMetric (ι := ι k)) (fun _ => (m : ℤ))
 
 theorem segreLine_a (m : ℕ) : (segreLine m : HermLine ι).a = fun _ => (m : ℤ) := rfl
 

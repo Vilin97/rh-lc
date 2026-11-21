@@ -25,7 +25,7 @@ theorem sup_eq_top_of_mem_hcompl (hK : Formalism.HermitianLatticesTheory.IsCMUnr
   have hpQ : P.comap (algebraMap (𝓞 F) (𝓞 K)) ≤ Q.comap (algebraMap (𝓞 F) (𝓞 K)) :=
     Ideal.map_le_iff_le_comap.1 hext
   have hmax : (P.comap (algebraMap (𝓞 F) (𝓞 K))).IsMaximal :=
-    Ideal.isMaximal_comap_of_isIntegral_of_isMaximal P
+    Ideal.isMaximal_under_of_isIntegral_of_isMaximal P
   haveI := hQ.isPrime
   have heq : P.comap (algebraMap (𝓞 F) (𝓞 K)) = Q.comap (algebraMap (𝓞 F) (𝓞 K)) :=
     hmax.eq_of_le (inferInstance : (Q.comap (algebraMap (𝓞 F) (𝓞 K))).IsPrime).ne_top hpQ
@@ -54,8 +54,10 @@ theorem exists_orth_basis (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (
     have := hd x hx0 (Classical.arbitrary (NumberField.InfinitePlace K)).embedding
     rw [hx, map_zero, Complex.zero_re] at this
     exact lt_irrefl 0 this
-  obtain ⟨x, hxM, hxo, hxu⟩ := Formalism.HermitianLattices.Ext.L3.LocF.exists_orth_unit_frame
-    (Formalism.HermitianLattices.Ext.L3.WA.isHermSemilocal_locRing hK hP)
+  have hS : WA.IsHermSemilocal (WA.locRing P) :=
+    ⟨fun _ ha => WA.star_mem_locRing hP.isPrime ha, WA.frac_locRing P, WA.unram_locRing hK hP,
+      WA.principal_locRing hK hP, WA.unit_or_locRing hP.isPrime⟩
+  obtain ⟨x, hxM, hxo, hxu⟩ := Formalism.HermitianLattices.Ext.L3.LocF.exists_orth_unit_frame hS
     (Formalism.HermitianLattices.Ext.L3.LocF.locRing_local hP.isPrime) hs hdd hSD
   have hx' : ∀ i, ∃ s ∈ Formalism.HermitianLatticesTheory.hcompl (K := K) P, s • x i ∈ L := fun i => hxM i
   choose s hsP hsL using hx'

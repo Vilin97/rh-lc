@@ -79,12 +79,12 @@ theorem g_lev_alt {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.
     exact ⟨Y, hY⟩
   have hQ : ∀ PP ∈ (_root_.GlobalTheory.Fam.pk_z W).Q t, redFn ((_root_.GlobalTheory.Fam.pk_z W).βY j) PP (Lev.finE (Yc D j) ((f.g.b j)⁻¹ * k * f.g.b j)) = 1 := fun PP hPP => by
     refine GlobalTheory.ChainOnto.RedOne.redFn_eq_one D _ _ _ PP hSt ?_
-    have hn : PP.under (𝓞 D.host.F) ∉ v.gP := fun hm => by
+    have hn : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∉ v.gP := fun hm => by
       obtain ⟨PP', hP', e'⟩ := (hV.gP _).1 hm
       obtain ⟨i, hi⟩ := (hlev.Pg PP').1 hP'
       obtain ⟨⟨q, hq, hcard, -, hqg⟩, -⟩ := hlev.Q_pl t PP hPP
       have g1 := Formalism.IndefR.Fin.g_mem_of_div _ hi
-      have g2 : ((D.host.g i : ℕ) : 𝓞 D.host.F) ∈ (PP'.under (𝓞 D.host.F)).asIdeal := by
+      have g2 : ((D.host.g i : ℕ) : 𝓞 D.host.F) ∈ ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP')).asIdeal := by
         change algebraMap (𝓞 D.host.F) (𝓞 D.host.E) _ ∈ PP'.asIdeal
         rwa [map_natCast]
       rw [← e'] at g2

@@ -31,7 +31,7 @@ theorem squareNuHeckeCharacter_not_unramified_at_chosenPlace {μ₀ : T} (hL : L
   have hnotS1 : G.pl.v0 ∉ S1 D := G.ch.basePlace_not_mem_chiGridBadPlaces
 
   have hoff : ∀ PP, PP ∈ L.Pg ∨ PP ∈ L.Q t →
-      PP.under (𝓞 D.host.F) ≠ (G.pl.w G.pl.v0).under (𝓞 D.host.F) := by
+      (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ≠ (G.pl.w G.pl.v0).under (𝓞 D.host.F) := by
     intro PP hPP
     rw [hunder]
     rcases hPP with hP | hP
@@ -39,7 +39,7 @@ theorem squareNuHeckeCharacter_not_unramified_at_chosenPlace {μ₀ : T} (hL : L
       apply hnotS1
       obtain ⟨k, hk⟩ := (hL.Pg PP).1 hP
       have hmem := GlobalTheory.LevelPlaces.mem_of_div L.C.P k PP hk
-      have hF : ((D.host.g k : ℕ) : 𝓞 D.host.F) ∈ (PP.under (𝓞 D.host.F)).asIdeal := by
+      have hF : ((D.host.g k : ℕ) : 𝓞 D.host.F) ∈ ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)).asIdeal := by
         simpa using hmem
       rw [← heq, S1_mem_OmF]
       fin_cases k

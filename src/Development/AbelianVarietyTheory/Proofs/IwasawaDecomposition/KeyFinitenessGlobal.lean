@@ -61,7 +61,7 @@ theorem levelLe_one_two {L : Type} [Field L] [NumberField L] {χ : Formalism.L2.
   h x hx (hle.trans (WithZero.exp_le_exp.2 (by norm_num)))
 
 def Sv (D : D7) (v : HeightOneSpectrum (𝓞 D.host.F)) : Set (HeightOneSpectrum (𝓞 D.host.E)) :=
-  {PP | PP.under (𝓞 D.host.F) = v ∨ PP.under (𝓞 D.host.F) ∈ GlobalTheory.ChiGrid.S1 D}
+  {PP | (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = v ∨ (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∈ GlobalTheory.ChiGrid.S1 D}
 
 def CS (D : D7) (c : ℝ) (v : HeightOneSpectrum (𝓞 D.host.F)) (a : Fin D.R.m) : Set (Formalism.L2.Host.HChar D.host.E) :=
   {χ | χ.HasInf (Formalism.L2.Host.embTau D) (fun τ => 2 * GlobalTheory.ChiGrid.cen D c τ (a.1 + 1)) ∧

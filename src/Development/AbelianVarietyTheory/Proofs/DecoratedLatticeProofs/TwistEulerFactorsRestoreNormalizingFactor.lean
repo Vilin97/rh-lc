@@ -51,21 +51,21 @@ theorem dSfun_twist_restore : ∀ (D : D7) (c : Com D) (w : Twist D), w.Is c →
     linarith
   set s : ℂ := (D.R.t : ℂ) / 2 with hs_def
   set f : HeightOneSpectrum (𝓞 D.host.F) → ℂ := fun v => GlobalTheory.LFun.dv D.host.E a (a + D.R.t) v s with hf
-  set Qv : Finset (HeightOneSpectrum (𝓞 D.host.F)) := w.Q.image fun PP => PP.under (𝓞 D.host.F) with hQv
+  set Qv : Finset (HeightOneSpectrum (𝓞 D.host.F)) := w.Q.image fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) with hQv
   have h0 := (hasProd_subtype_iff_mulIndicator (s := {v | v ∉ w.S₀}) (f := f)).1
     (GlobalTheory.LFun.hasProd_dv w.S₀ a (a + D.R.t) ht).multipliable.hasProd
   have h1 := (hasProd_subtype_iff_mulIndicator (s := {v | v ∉ (c.S : Set (HeightOneSpectrum (𝓞 D.host.F)))}) (f := f)).1
     (GlobalTheory.LFun.hasProd_dv (c.S : Set (HeightOneSpectrum (𝓞 D.host.F))) a (a + D.R.t) ht).multipliable.hasProd
   have h2 := (hasProd_subtype_iff_mulIndicator (s := (Qv : Set (HeightOneSpectrum (𝓞 D.host.F)))) (f := f)).1
     (Finset.hasProd Qv f)
-  have hmem : ∀ v, v ∈ Qv ↔ ∃ PP ∈ w.Q, PP.under (𝓞 D.host.F) = v := fun v => by simp [hQv]
+  have hmem : ∀ v, v ∈ Qv ↔ ∃ PP ∈ w.Q, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = v := fun v => by simp [hQv]
   have hsplitf : Set.mulIndicator {v | v ∉ w.S₀} f =
       Set.mulIndicator {v | v ∉ (c.S : Set (HeightOneSpectrum (𝓞 D.host.F)))} f * Set.mulIndicator (Qv : Set _) f := by
     funext v
     simp only [Pi.mul_apply, Set.mulIndicator_apply, Set.mem_ofPred_eq, Finset.mem_coe]
     by_cases hq : v ∈ Qv
     · obtain ⟨PP, hPP, rfl⟩ := (hmem _).1 hq
-      have hc : PP.under (𝓞 D.host.F) ∈ c.S := (hS _).2 (Or.inr ⟨PP, hPP, rfl⟩)
+      have hc : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∈ c.S := (hS _).2 (Or.inr ⟨PP, hPP, rfl⟩)
       simp [hQS₀ PP hPP, hc, hq]
     · by_cases h0' : v ∈ w.S₀
       · have hc : v ∈ c.S := (hS _).2 (Or.inl h0')
@@ -76,10 +76,10 @@ theorem dSfun_twist_restore : ∀ (D : D7) (c : Com D) (w : Twist D), w.Is c →
   have key : GlobalTheory.LFun.dSfun D.host.E w.S₀ a (a + D.R.t) s =
       GlobalTheory.LFun.dSfun D.host.E (c.S : Set (HeightOneSpectrum (𝓞 D.host.F))) a (a + D.R.t) s * ∏ v ∈ Qv, f v :=
     h0.unique (h1.mul h2)
-  have hloc : ∀ PP ∈ w.Q, f (PP.under (𝓞 D.host.F)) = ((zinv PP D.R.t (a + D.R.t) : ℝ) : ℂ)⁻¹ := by
+  have hloc : ∀ PP ∈ w.Q, f ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) = ((zinv PP D.R.t (a + D.R.t) : ℝ) : ℂ)⁻¹ := by
     intro PP hPP
     obtain ⟨hsp, hN, -⟩ := hsplit PP hPP
-    show GlobalTheory.LFun.dv D.host.E a (a + D.R.t) (PP.under (𝓞 D.host.F)) ((D.R.t : ℂ) / 2) = _
+    show GlobalTheory.LFun.dv D.host.E a (a + D.R.t) ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) ((D.R.t : ℂ) / 2) = _
     rw [dv_center_of_isSplit D.sp.cm.deg2 hsp, hN, zinv]
     push_cast
     rfl

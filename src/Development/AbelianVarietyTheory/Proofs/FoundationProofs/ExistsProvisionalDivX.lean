@@ -66,7 +66,9 @@ theorem wtL_eq_ramIdx_mul (D : D7) (p : ℕ) [hp : Fact p.Prime] (la : Formalism
   have := liesOver_of_mem p hp.out la.1 la.2
   have hN := Ideal.pow_inertiaDeg p la.1.asIdeal
   have hlog : Real.log (p : ℝ) ≠ 0 := (Real.log_pos (by exact_mod_cast hp.out.one_lt)).ne'
-  rw [D.ram_eq, he, Formalism.L2.Geo.wtL, ← hN, padicValNat.prime_pow]
+  have hval : padicValNat p (p ^ la.1.asIdeal.inertiaDeg ℤ) = la.1.asIdeal.inertiaDeg ℤ := by
+    rw [Nat.padicValNat_def, Nat.multiplicity_prime_pow]
+  rw [D.ram_eq, he, Formalism.L2.Geo.wtL, ← hN, hval]
   push_cast
   rw [Real.log_pow]
   field_simp

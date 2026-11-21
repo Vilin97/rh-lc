@@ -75,6 +75,10 @@ theorem normSq_U_of_fd (T : Tor D) (La' : AddSubgroup (VC D N N')) [Countable La
     (hfd : ∃ Fd : Set (VC D N N'), IsAddFundamentalDomain La' Fd volume)
     (G : VC D N N' → ℂ) (hG : G ∈ ThSp D T La') (x : VC D N N') :
     normSq D T La' (U D T x G) = normSq D T La' G := by
+  have : (volume : Measure (VC D N N')).IsAddLeftInvariant :=
+    (instHaarVC D N N').toIsAddLeftInvariant
+  have : VAddInvariantMeasure (VC D N N') (VC D N N') volume :=
+    Measure.IsAddLeftInvariant.vaddInvariantMeasure
   have hF := Classical.epsilon_spec hfd
   show (⨍ z in _, dens D T (U D T x G) z) = ⨍ z in _, dens D T G z
   simp_rw [dens_U]
@@ -453,11 +457,9 @@ theorem hom_lower {N N' : ℕ} (L : Submodule (𝓞 D.host.E) (Fin N → D.host.
     intro i
     simp only [Matrix.mulVec, dotProduct]
     exact IsIntegral.sum _ fun k _ => (hA i k).mul (hLi x hx k)
-  have h1 := hL'o _ hz
-  convert h1 using 1
-  refine Finset.sum_congr rfl fun k _ => ?_
-  push_cast
-  ring
+  change (((m * m' : ℤ) : D.host.E) • A).mulVec x ∈ L'
+  rw [mul_comm m m', Int.cast_mul, Matrix.smul_mulVec, mul_smul, ← Matrix.mulVec_smul]
+  exact hL'o _ hz
 
 theorem YY_upper {N N' : ℕ} (L : Submodule (𝓞 D.host.E) (Fin N → D.host.E))
     (L' : Submodule (𝓞 D.host.E) (Fin N' → D.host.E))
@@ -706,10 +708,10 @@ theorem La_zero {N N' : ℕ} (L : Submodule (𝓞 D.host.E) (Fin N → D.host.E)
   simp
 
 theorem fd_bot {V : Type*} [AddGroup V] [MeasurableSpace V] (μ : Measure V) :
-    IsAddFundamentalDomain (⊥ : AddSubgroup V) Set.univ μ where
-  nullMeasurableSet := nullMeasurableSet_univ
-  ae_covers := Filter.Eventually.of_forall fun _ => ⟨0, Set.mem_univ _⟩
-  aedisjoint := fun a b hab => absurd (Subtype.ext ((AddSubgroup.mem_bot.mp a.2).trans
+    IsAddFundamentalDomain (⊥ : AddSubgroup V) Set.univ μ := by
+  refine ⟨nullMeasurableSet_univ, Filter.Eventually.of_forall fun _ => ⟨0, Set.mem_univ _⟩, ?_⟩
+  intro a b hab
+  exact absurd (Subtype.ext ((AddSubgroup.mem_bot.mp a.2).trans
     (AddSubgroup.mem_bot.mp b.2).symm)) hab
 
 end Formalism.L2.GlobalTheoryTheory.IntegralLatticeDensity.FL

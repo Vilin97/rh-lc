@@ -105,13 +105,38 @@ theorem weil_value {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host 
   have := tB.semi.smooth
   have := tB.semi.geomConnected
   have hAb : IsAbelianScheme tB.G := ⟨tB.semi.comm, tB.semi.smooth, hP.1, tB.semi.geomConnected⟩
-  have hA : IsAbelianScheme A := GlobalTheory.PolPull.isAbelianScheme_of_isGrpPullback hAb hpb
+  have hA : IsAbelianScheme A := by
+    refine ⟨?_, ?_, ?_, ?_⟩
+    · have := hAb.comm
+      rw [isCommMonObj_iff_isMulCommutative]
+      intro T
+      refine ⟨⟨fun x y => Over.OverMorphism.ext (hpb.1.hom_ext ?_ (by rw [Over.w, Over.w]))⟩⟩
+      rw [← hpb.2 T x y (pushPt hpb.1.w x) (pushPt hpb.1.w y) rfl rfl,
+        ← hpb.2 T y x (pushPt hpb.1.w y) (pushPt hpb.1.w x) rfl rfl, _root_.mul_comm]
+    · exact MorphismProperty.of_isPullback (P := @Smooth) hpb.1 hAb.smooth
+    · exact MorphismProperty.of_isPullback (P := @IsProper) hpb.1 hAb.proper
+    · exact MorphismProperty.of_isPullback (P := @GeometricallyConnected) hpb.1 hAb.geomConnected
   have : ConnectedSpace tB.G.left :=
     GeometricallyConnected.geometrically_connectedSpace (f := tB.G.hom) (𝟙 _) (𝟙 _) tB.G.hom
       (IsPullback.of_horiz_isIso ⟨by simp⟩)
   obtain ⟨d, hd⟩ := exists_dim_of_preconnected tB.G.hom (eSec tB.G (default : PrimeSpectrum ℂ))
   obtain ⟨-, ws, gs', -⟩ := tB.sym
-  have hL' := pull_isLB tB.PP.isLB φ
+  have hL' : (tB.PP.L.pull φ).IsLB := by
+    refine ⟨top_le_iff.1 ?_, ?_, ?_⟩
+    · intro y _
+      obtain ⟨j, hj⟩ := exists_chart tB.PP.isLB (φ y)
+      exact TopologicalSpace.Opens.mem_iSup.2 ⟨fun _ => j, mem_pull.2 hj⟩
+    · intro J
+      refine unit_ext fun y hy => ?_
+      rw [gm_res (𝟙 _) y _ hy, map_one, gm_pull_g tB.PP.L φ (𝟙 _) y J J hy hy]
+      exact gm_self tB.PP.isLB φ y (mem_pull.1 hy)
+    · intro I J K
+      refine unit_ext fun y hy => ?_
+      rw [map_mul, gm_res (𝟙 _) y _ hy, gm_res (𝟙 _) y _ hy, gm_res (𝟙 _) y _ hy,
+        gm_pull_g tB.PP.L φ (𝟙 _) y I J hy.1.1 hy.1.2,
+        gm_pull_g tB.PP.L φ (𝟙 _) y J K hy.1.2 hy.2,
+        gm_pull_g tB.PP.L φ (𝟙 _) y I K hy.1.1 hy.2]
+      exact gm_cocycle tB.PP.isLB φ y (mem_pull.1 hy.1.1) (mem_pull.1 hy.1.2) (mem_pull.1 hy.2)
   have hw := (isGen_iff _).1 (ReciprocityTheory.ChartRestriction.G.Geo.Tor.idIso_isGen hL')
   let Q : Out.PolAV (Sp ℂ) :=
     { A := A, isAb := hA, g := d

@@ -85,7 +85,11 @@ theorem main : ∀ (D : D7) (X : HidaSetting D) (Y : Full X) (u u' : D.what₂.W
   have hξu : Uni ξ := ⟨hξ.1, hξ.2.1⟩
   have hξi : Uni ξ⁻¹ := inv_unitri _ hξu.1 hξu.2
   have hξ0w : AdmWit t₀.lam (gS D) (lf D (X.Fu u)) t₀.frame ξ0 := by
-    rw [hξ0]; unfold admXi; rw [dite_eq_left hPD.2.1]; exact hPD.2.1.choose_spec
+    have he : admXi D t₀.lam (lf D (X.Fu u)) t₀.frame = hPD.2.1.choose := by
+      unfold admXi
+      exact dite_eq_left hPD.2.1
+    rw [hξ0, he]
+    exact hPD.2.1.choose_spec
   set alg := algebraMap (𝓞 D.host.E) D.host.E with halg
   set B0 := U' * (ξ0⁻¹).map alg with hB0
   set B1 := U' * (ξ.map alg)⁻¹ with hB1

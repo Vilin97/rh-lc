@@ -29,7 +29,7 @@ theorem conjPl_eq_cP (P : HeightOneSpectrum (𝓞 D.host.E)) : Formalism.Divisio
   (GlobalTheory.IdemSupport.isConjPl_iff P _).1 (GlobalTheory.GoodPrimes.isConjPl_iff.2 rfl)
 
 theorem under_injOn {P : Finset (Formalism.L2.DIV.Pl D.host.E)} {e : AE D} (h : Formalism.IndefR.Datum.IsIdemSum e P) :
-    Set.InjOn (fun PP : Formalism.L2.DIV.Pl D.host.E => PP.under (𝓞 D.host.F)) (P : Set (Formalism.L2.DIV.Pl D.host.E)) := by
+    Set.InjOn (fun PP : Formalism.L2.DIV.Pl D.host.E => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) (P : Set (Formalism.L2.DIV.Pl D.host.E)) := by
   classical
   obtain ⟨⟨es, hes, rfl⟩, h0⟩ := h
   obtain ⟨Φ, hΦ⟩ := GlobalTheory.IdemSupport.exists_comp D
@@ -54,7 +54,7 @@ theorem under_injOn {P : Finset (Formalism.L2.DIV.Pl D.host.E)} {e : AE D} (h : 
       rwa [← hc] at this
     · intro Q hQ hQP
       refine (delta_conj hΦ (hd Q hQ)).2.2 PP fun hQc => ?_
-      have hv : Q.under (𝓞 D.host.F) = PP.under (𝓞 D.host.F) := by rw [← under_cP Q, ← hQc]
+      have hv : Q.under (𝓞 D.host.F) = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) := by rw [← under_cP Q, ← hQc]
       rcases GlobalTheory.GoodPrimes.eq_or_conj_of_under_eq (D := D) hv with h1 | h1
       · rw [h1] at hQc
         exact hne (hc'.trans hQc.symm).symm

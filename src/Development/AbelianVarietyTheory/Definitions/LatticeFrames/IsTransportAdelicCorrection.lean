@@ -29,7 +29,7 @@ def IsTransportAdelicCorrection {X : HidaSetting D} {F : Formalism.L2.Forms.Form
 def IsTypePlaces (Pg : Finset (Pl D.host.E)) : Prop :=
   (∀ PP ∈ Pg, ((D.host.g 0 * D.host.g 1 : ℕ) : 𝓞 D.host.E) ∈ PP.asIdeal) ∧
     ∀ v : HeightOneSpectrum (𝓞 D.host.F), ((D.host.g 0 * D.host.g 1 : ℕ) : 𝓞 D.host.F) ∈ v.asIdeal →
-      ∃! PP, PP ∈ Pg ∧ PP.under (𝓞 D.host.F) = v
+      ∃! PP, PP ∈ Pg ∧ (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = v
 
 variable {F₀ : ∀ u, Formalism.L2.Forms.Forms0 D u} (S : STrue D F₀) (d : GlobalTheory.SeeSaw.Dat D u)
 

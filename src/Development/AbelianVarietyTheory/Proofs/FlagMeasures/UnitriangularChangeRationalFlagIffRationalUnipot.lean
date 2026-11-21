@@ -72,7 +72,7 @@ theorem z_orth_X (F : FlagG S r T) {x : S.V} (hx : x ∈ F.X) : S.hT F.z x = 0 :
 
 theorem fvec_indep (F : FlagG S r T) (hT : T ≠ 0) : LinearIndependent E F.fvec := by
   unfold FlagG.fvec
-  refine linearIndependent_fin_snoc.2 ⟨F.e_indep, fun hz => ?_⟩
+  refine linearIndependent_finSnoc.2 ⟨F.e_indep, fun hz => ?_⟩
   have h := isotropicSpan_orthogonal_anisotropicVector F (x := F.z) hz
   rw [F.z_norm] at h
   exact hT (neg_eq_zero.1 h)

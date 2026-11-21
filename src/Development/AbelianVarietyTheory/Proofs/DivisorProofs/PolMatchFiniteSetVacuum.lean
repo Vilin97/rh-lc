@@ -37,7 +37,7 @@ theorem padFam_update (T S : Finset ι) (hTS : T ⊆ S) (c : ∀ i, M i) [Decida
     simp only [padFam, h, dif_neg, not_false_eq_true, Function.update_of_ne h2]
 
 def padMultilinear (T S : Finset ι) (hTS : T ⊆ S) (c : ∀ i, M i) :
-    MultilinearMap ℂ (fun u : T => M u) (⨂[ℂ] u : S, M u) where
+    (∀ u : T, M u) →ₘₗ[ℂ] (⨂[ℂ] u : S, M u) where
   toFun x := PiTensorProduct.tprod ℂ (padFam T S c x)
   map_update_add' x i y z := by
     simp only [padFam_update T S hTS c]

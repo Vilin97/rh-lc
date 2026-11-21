@@ -117,8 +117,8 @@ theorem mem_frameSub {G : Type} [Group G] {k : Type} [Field k] {N : ℕ} {Y : Ty
     exact h _ ((conj_iff F _ _).2 rfl)
 
 theorem under_inj {Pg : Finset (Formalism.L2.DIV.Pl D.host.E)} (hT : GlobalTheory.Core.Mi.IsTypePlaces Pg) {PP PP' : Formalism.L2.DIV.Pl D.host.E}
-    (h : PP ∈ Pg) (h' : PP' ∈ Pg) (e : PP.under (𝓞 D.host.F) = PP'.under (𝓞 D.host.F)) : PP = PP' := by
-  have hm : ((D.host.g 0 * D.host.g 1 : ℕ) : 𝓞 D.host.F) ∈ (PP.under (𝓞 D.host.F)).asIdeal := by
+    (h : PP ∈ Pg) (h' : PP' ∈ Pg) (e : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP')) : PP = PP' := by
+  have hm : ((D.host.g 0 * D.host.g 1 : ℕ) : 𝓞 D.host.F) ∈ ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)).asIdeal := by
     have := hT.1 PP h
     simpa [IsDedekindDomain.HeightOneSpectrum.under] using this
   obtain ⟨Q, _, hu⟩ := hT.2 _ hm

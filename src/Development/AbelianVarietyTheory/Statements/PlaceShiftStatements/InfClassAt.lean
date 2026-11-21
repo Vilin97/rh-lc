@@ -52,7 +52,7 @@ def bOne (C b : ℝ) : ℝ := C * D.R.f * D.R.m * (bigN D : ℝ) ^ 2 * (Real.log
 def aOne (C b : ℝ) : ℝ := C * D.R.f * bigN D * b * Real.log b + C * D.R.m * (bigN D : ℝ) ^ 2 * sig G
 
 def Away (t : T) (w : PlL D) : Prop :=
-  ∀ PP ∈ L.Q t, PP.under (𝓞 D.host.F) ∈ G.pl.S0 ∨ ∀ l : ℕ, l.Prime → (l : 𝓞 D.host.E) ∈ PP.asIdeal → (l : 𝓞 D.what₂.LL) ∉ w.asIdeal
+  ∀ PP ∈ L.Q t, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∈ G.pl.S0 ∨ ∀ l : ℕ, l.Prime → (l : 𝓞 D.host.E) ∈ PP.asIdeal → (l : 𝓞 D.what₂.LL) ∉ w.asIdeal
 
 
 open Classical in

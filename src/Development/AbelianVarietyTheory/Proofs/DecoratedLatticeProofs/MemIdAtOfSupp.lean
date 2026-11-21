@@ -55,7 +55,7 @@ theorem mem_idAt_of_supp {a : AE D} (h : (q.e + cA D q.e) * a = a) : a ∈ idAt 
   exact ((GlobalTheory.T.placeIdempotent_acts_on_supportedAndOff D q.v ε hε).1 a).2 (hs ▸ h)
 
 theorem place_facts {PP : Formalism.L2.DIV.Pl D.host.E} (h : IsIdemAt q.e PP) :
-    q.v = PP.under (𝓞 D.host.F) ∧ (∀ a, (ofSplit q).pr a ∈ 𝒪[k] ↔ IntAt PP a) ∧ DenseRange (ofSplit q).pr := by
+    q.v = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∧ (∀ a, (ofSplit q).pr a ∈ 𝒪[k] ↔ IntAt PP a) ∧ DenseRange (ofSplit q).pr := by
   obtain ⟨k₀, _, _, _, _, q₀, he, hv, hi, hd⟩ := GlobalTheory.LocMod.SplitCompl.exists_place D PP q.e h
   refine ⟨?_, fun a => ?_, ?_⟩
   · rw [← hv]

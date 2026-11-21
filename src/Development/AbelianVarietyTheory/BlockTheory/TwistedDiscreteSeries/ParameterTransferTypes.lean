@@ -47,7 +47,7 @@ variable {G : Type} [Group G] [Fintype G] {Pl0 T : Type} {A : FamIn D.what₂.LL
 
 open Classical in
 def badS (t : T) : Finset (HeightOneSpectrum (𝓞 D.host.F)) :=
-  (R.Pg ∪ R.Q t).image fun PP => PP.under (𝓞 D.host.F)
+  (R.Pg ∪ R.Q t).image fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)
 
 variable (i : Fin D.R.m) (t : T) (P : LevelP R.Pg D.R.r ℂ)
 

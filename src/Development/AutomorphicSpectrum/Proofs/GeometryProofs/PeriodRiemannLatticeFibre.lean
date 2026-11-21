@@ -56,7 +56,10 @@ theorem finrank_eigSp_conj {g : ℕ} {O : Type} [CommRing O] (ρ : O →+* Modul
       right_inv := fun y => Subtype.ext (star_star _)
       map_add' := fun x y => Subtype.ext (star_add _ _) }
   have hr := rank_eq_of_equiv_equiv (R := ℂ) (R' := ℂ) (starRingEnd ℂ) j
-    (Function.Involutive.bijective (f := starRingEnd ℂ) (fun z => by simp)) (fun r m => Subtype.ext (by simp [j, star_smul]))
+    (Function.Involutive.bijective (f := starRingEnd ℂ) (fun z => by simp)) (fun r m => by
+      apply Subtype.ext
+      change star (r • m.1) = star r • star m.1
+      exact star_smul r m.1)
   exact congrArg Cardinal.toNat hr
 
 theorem star_herm {g : ℕ} (Hm : Matrix (Fin g) (Fin g) ℂ) (z w : Fin g → ℂ) :

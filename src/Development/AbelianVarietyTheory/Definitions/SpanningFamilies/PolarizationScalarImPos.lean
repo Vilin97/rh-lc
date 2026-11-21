@@ -47,7 +47,7 @@ theorem int_sub {a b : Af F} (ha : a ∈ intAf F) (hb : b ∈ intAf F) : a - b �
   rw [map_sub]; exact sub_mem (ha v) (hb v)
 
 theorem int_add {a b : Af F} (ha : a ∈ intAf F) (hb : b ∈ intAf F) : a + b ∈ intAf F := fun v => by
-  rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem (ha v) (hb v)
+  rw [map_add]; exact add_mem (ha v) (hb v)
 
 theorem int_zero : (0 : Af F) ∈ intAf F := fun v => by
   rw [map_zero]; exact zero_mem _
@@ -143,7 +143,7 @@ theorem exists_stdChar (D : D7) : ∃ ψ, IsStdChar D ψ (-1) := by
   let t : Ainf D.host.F →+ ℂ := AddMonoidHom.mk' (fun x => ∑ ρ, θ ρ (x ⊗ₜ[D.host.F] (1 : D.host.E)))
     fun x y => by simp only [TensorProduct.add_tmul, map_add (f := _), Finset.sum_add_distrib]
   have hts : ∀ x, t x = (GlobalTheory.IndefiniteRowSideFullHecke.HeisenbergWeilMatrices.trInf D x : ℂ) := GlobalTheory.DualPairCompare.sum_infFam θ hθ
-  obtain ⟨ψ, h1, h2⟩ := exists_char t (continuous_finset_sum _ fun ρ _ => (hθ ρ).2)
+  obtain ⟨ψ, h1, h2⟩ := exists_char t (continuous_finsetSum _ fun ρ _ => (hθ ρ).2)
     (fun x => by rw [hts, Complex.ofReal_im]) (fun a => by
       show ∑ ρ, θ ρ _ = _
       rw [GlobalTheory.StdRat.tmul_one_eq, Finset.sum_congr rfl fun ρ _ => (hθ ρ).1 _, GlobalTheory.StdRat.sum_tauE_eq_trace])

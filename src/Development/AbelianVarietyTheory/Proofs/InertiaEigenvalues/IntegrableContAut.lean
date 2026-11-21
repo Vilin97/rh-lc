@@ -403,7 +403,7 @@ set_option maxHeartbeats 1000000 in
 theorem paramFun_definite {V : HSp D} (c : CoefA V) (hc : c.Is)
     {β : GL (Fin V.rank) (Formalism.IndefR.Lev.EAf D)} {Λ : Submodule (𝓞 D.host.E) (Fin V.rank → D.host.E)} (hβ : IsSDFrame V β Λ 1)
     {L : LevDat D.host.E ℂ V.rank} {S : Finset (HeightOneSpectrum (𝓞 D.host.F))}
-    (hS : ∀ PP, PP ∈ L.Pg ∨ PP ∈ L.Q → PP.under (𝓞 D.host.F) ∈ S) {f : Formalism.IndefR.Bridge.Gf V → c.W}
+    (hS : ∀ PP, PP ∈ L.Pg ∨ PP ∈ L.Q → (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∈ S) {f : Formalism.IndefR.Bridge.Gf V → c.W}
     (hf : f ∈ Formalism.IndefR.Bridge.AdForms (Formalism.IndefR.Bridge.ratF V) c.coef.ρ (levEnv V β L).J (levEnv V β L).χ) (s : GlobalTheory.DownLift.Sys D)
     (he : ∀ P d, P.under (𝓞 D.host.F) ∉ S → GlobalTheory.Hk3.IsLab V P d → GlobalTheory.Hk3.hkF V P (Finsupp.single d 1) f = s P d • f)
     (B : GlobalTheory.LFun.Fam D.host.E) (hB : GlobalTheory.LFun.IsSysParamD D S V.rank s B)

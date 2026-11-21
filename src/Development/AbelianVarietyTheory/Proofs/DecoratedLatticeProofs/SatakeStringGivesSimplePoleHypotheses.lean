@@ -32,7 +32,7 @@ theorem good_of_not_mem_above {D : D7} {G : Type} [Group G] [Fintype G] {Pl0 T :
     (hw : w ∉ GlobalTheory.LFun.above D.host.E (GlobalTheory.IndefiniteRowSideFullHecke.LabelSettingScalars.badPl R t : Set (HeightOneSpectrum (𝓞 D.host.F)))) :
     GlobalTheory.Hk3.Good R t w := by
   intro PP hPP
-  have hmem : PP.under (𝓞 D.host.F) ∈ GlobalTheory.IndefiniteRowSideFullHecke.LabelSettingScalars.badPl R t := by
+  have hmem : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∈ GlobalTheory.IndefiniteRowSideFullHecke.LabelSettingScalars.badPl R t := by
     unfold GlobalTheory.IndefiniteRowSideFullHecke.LabelSettingScalars.badPl
     exact Finset.mem_image.2 ⟨PP, Finset.mem_union.2 hPP, rfl⟩
   refine ⟨?_, ?_⟩

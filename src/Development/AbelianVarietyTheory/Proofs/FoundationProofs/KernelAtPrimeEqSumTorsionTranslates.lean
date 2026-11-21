@@ -260,6 +260,9 @@ theorem Cmb.iop (hn : n ≠ 0) (hB : ∀ x ∈ B, ∀ y ∈ B, ∃ m : ℤ, (Hf 
     Cmb.smul (h2 ((Quotient.out q : A₂) : VC D N N')) (Cmb.transl hn hB (hx _ (Quotient.out q : A₂).2) hG))
   rw [one_mul, one_mul] at h3
   convert h3 using 1
+  funext z
+  unfold Iop
+  rw [finsum_eq_sum_of_fintype]
 
 theorem Cmb.out {C : ℝ} {G : VC D N N' → ℂ} (hG : Cmb D T lam B F₀ n C G) :
     ∃ (k : ℕ) (r : Fin k → Qbar) (s : Fin k → VC D N N'), (∀ i, n • s i ∈ B) ∧ (∀ i, ‖lam (r i)‖ ≤ C) ∧

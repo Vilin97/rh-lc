@@ -147,7 +147,27 @@ theorem num_sub_num : Inputs → ∀ (II : IntersectionSystem), IsFullIntersecti
   intro hIn II hII K _ ι _ D σ _ S P Re t t' w ht ht0 ht' ht'0
   have hF := hII.1
   have hP := Re.arith
-  have hpot := (GlobalTheory.T.realisation_potential_degree_compatibility hIn.resExists K ι D σ S P Re).1
+  have hpot : ∀ a t, 0 < t → t ≤ S.t₀ → SamePot Re.R.A Set.univ
+      (potOf Re.R (Re.line a t)) ((S.potT a t).pullback Re.π Re.holo.1) := by
+    intro a s hs hs0 x _
+    obtain ⟨V, hV, hxV, G, hG, hVG⟩ := Re.ref_pot a x (Set.mem_univ x)
+    refine ⟨V ∩ Re.R.U x, hV.inter (Re.R.isOpen_U x), ⟨hxV, Re.R.mem_U x⟩, G, ?_, ?_⟩
+    · intro j
+      exact (hG j).mono fun y hy => ⟨hy.1, hy.2.1⟩
+    · rintro y ⟨hyV, hyU⟩
+      have hm := Re.R.mem x y hyU
+      obtain ⟨c, hc, e⟩ := Re.R.compat y x y ⟨Re.R.mem_U y, hyU⟩
+      have h := Re.line_eq a s hs hs0 y
+      rw [e, (Re.line a s).smul c _ hc, (Re.ref a).smul c _ hc, Re.line_deg] at h
+      have hp : (∏ k, ‖c k‖ ^ (Re.ref a).a k) ≠ 0 :=
+        Finset.prod_ne_zero_iff.2 fun k _ => zpow_ne_zero _ (norm_ne_zero_iff.2 (hc k))
+      rw [Real.log_mul hp ((Re.line a s).pos _ hm.1).ne',
+        Real.log_mul hp ((Re.ref a).pos _ hm.1).ne'] at h
+      have hvg : Real.log ((Re.ref a).h (Re.R.lift x y)) -
+          (S.th a).φ (Re.π x) (Re.π y) = (G y).re := hVG y hyV
+      show Real.log ((Re.line a s).h (Re.R.lift x y)) -
+        ((S.th a).φ (Re.π x) (Re.π y) + S.phT a s (Re.π y)) = (G y).re
+      linarith
   have hbasic := (anSys_open_basics D σ S).2.2.2.1
   have hsc : ∀ (b : Prop) [Decidable b], 0 < (if b then t else t') ∧ (if b then t else t') ≤ S.t₀ := by
     intro b _

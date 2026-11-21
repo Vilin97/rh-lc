@@ -92,7 +92,7 @@ theorem lie_lift {S : Scheme.{0}} {G : Over S} [GrpObj G] [IsCommMonObj G] [Smoo
   · have := hl e
     show (M'.pt (f (j e))).left = _
     rw [hf]
-    simpa [LieModel.Lifts] using this
+    simpa using this
   · show f (j (c • e)) = g c • f (j e)
     rw [j.map_smul, ← algebraMap_smul R' c (j e), f.map_smul]
     rfl
@@ -187,8 +187,7 @@ theorem frame_transfer {E : Type} [Field E] [NumberField E] [IsCMField E] {H : H
 
 theorem exists_sab {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E} {S S' : Scheme.{0}} (f : S' ⟶ S)
     (t : SAB H S) : ∃ t' : SAB H S', Nonempty (SABMap t' t f) := by
-  obtain ⟨PP', cub, sym, adj, prim, m₁, -⟩ := sabPull Out.proved_CubePullSt f t
-  exact ⟨_, ⟨m₁⟩⟩
+  exact ⟨_, ⟨ReciprocityTheory.ChartRestriction.G.PullbackSections.sabM Out.proved_CubePullSt f t⟩⟩
 
 theorem exists_point {X : Scheme.{0}} {F : Type} [Field F] (s : X ⟶ Sp F) [LocallyOfFiniteType s] (U : Set X)
     (hU : IsOpen U) (hne : U.Nonempty) : ∃ (L : Type) (_ : Field L) (β : F →+* L) (y : Sp L ⟶ X),

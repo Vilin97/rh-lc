@@ -39,12 +39,12 @@ theorem compFin_tensAt_ne {u v : HeightOneSpectrum (𝓞 D.host.F)} (h : u ≠ v
 set_option maxHeartbeats 1000000 in
 open Classical in
 theorem compFin_add_cA_eq_one : ∀ {D : D7} (Z : Finset (Pl D.host.E)) (e : AE D), IsIdemSum e Z → ∀ PP ∈ Z,
-    compFin D.host.F D.host.E (PP.under (𝓞 D.host.F)) (e + cA D e) = 1 := by
+    compFin D.host.F D.host.E ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) (e + cA D e) = 1 := by
   intro D Z e he PP hPP
   classical
   obtain ⟨⟨es, hes, rfl⟩, hcc⟩ := he
   obtain ⟨v0, τ0, -, hPP0⟩ := GlobalTheory.SplitIdemDict.exists_emb (hes PP hPP)
-  have hu : PP.under (𝓞 D.host.F) = v0 := by rw [hPP0]; exact splitPrime_under τ0
+  have hu : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = v0 := by rw [hPP0]; exact splitPrime_under τ0
   rw [hu]
   have key : ∀ Q ∈ Z, compFin D.host.F D.host.E v0 (es Q) =
       (if Q = PP then splitIdem (isCMExt_host D) τ0 else 0) +

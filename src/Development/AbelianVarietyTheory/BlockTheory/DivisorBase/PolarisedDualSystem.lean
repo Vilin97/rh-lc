@@ -20,7 +20,7 @@ abbrev Sys (D : D7) : Type := HeightOneSpectrum (𝓞 D.host.E) → List ℤ →
 
 open Classical in
 def badF (R : RealDat D A Ks) : Finset (HeightOneSpectrum (𝓞 D.host.F)) :=
-  R.Pg.image fun PP => PP.under (𝓞 D.host.F)
+  R.Pg.image fun PP => (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)
 
 variable {X : DivX D}
 

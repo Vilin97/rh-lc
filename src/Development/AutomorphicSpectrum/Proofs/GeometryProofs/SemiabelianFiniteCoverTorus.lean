@@ -41,7 +41,25 @@ theorem core (hE : GlobalTheory.Published.SemiAbelianHomExtension) (Z : Scheme.{
     ∃ (Z' : Scheme.{0}) (_ : IsIntegral Z') (π : Z' ⟶ Z) (G' : Over Z') (_ : GrpObj G') (φ : G'.left ⟶ G.left) (X : Type) (_ : AddCommGroup X) (_ : Module.Free ℤ X) (_ : Module.Finite ℤ X) (u : splitTorus Z' X ⟶ G') (U : Z.Opens), IsFinite π ∧ Surjective π ∧ ReciprocityTheory.ChartRestriction.G.Geo.Tor.IsNormalScheme Z' ∧ IsGrpPullback G' G π φ ∧ IsMonHom u ∧ (U : Set Z).Nonempty ∧ ∀ (k : Type) [Field k] (x : Sp k ⟶ Z'), ⊤ ≤ (x ≫ π) ⁻¹ᵁ U → (∀ (A : Type) [CommRing A] (g : k →+* A) (t : Over.mk (spMap g ≫ x) ⟶ splitTorus Z' X), t ≫ u = 1 → t = 1) ∧ ∀ (Gk : Over (Sp k)) [GrpObj Gk] (ψ : Gk.left ⟶ G'.left), IsGrpPullback Gk G' x ψ → ∀ τ : TorusExtension Gk, letI := τ.grpB; ∀ (A : Type) [CommRing A] (g : k →+* A) (p : Over.mk (spMap g) ⟶ Gk), p ≫ τ.q = 1 ↔ ∃ t : Over.mk (spMap g ≫ x) ⟶ splitTorus Z' X, (t ≫ u).left = p.left ≫ ψ := by
   have hsm := hG.smooth
   have hsep := hG.separated
-  have hG' : IsSemiAbelian ((Over.pullback π).obj G) := IsSemiAbelian.pullback π G hG
+  have hG' : IsSemiAbelian ((Over.pullback π).obj G) := by
+    refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩
+    · have := hG.comm
+      infer_instance
+    · have := hG.smooth
+      change Smooth (pullback.snd G.hom π)
+      infer_instance
+    · have := hG.separated
+      change IsSeparated (pullback.snd G.hom π)
+      infer_instance
+    · have := hG.quasiCompact
+      change QuasiCompact (pullback.snd G.hom π)
+      infer_instance
+    · have := hG.geomConnected
+      change GeometricallyConnected (pullback.snd G.hom π)
+      infer_instance
+    · intro Ω _ _ q
+      obtain ⟨E⟩ := hG.fibres Ω (q ≫ π)
+      exact ⟨torusExtOfIso (pullCompIso q π G) E⟩
   have hsep' := hG'.separated
   have hLN : IsLocallyNoetherian Z' := LocallyOfFiniteType.isLocallyNoetherian π
   have hCS : CompactSpace Z' := QuasiCompact.compactSpace_of_compactSpace π

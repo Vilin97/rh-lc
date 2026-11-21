@@ -32,15 +32,15 @@ attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalDat
 variable {D : D7}
 
 theorem mxAt_of_idemAt {es : AE D} {PP : Pl D.host.E} (h : Formalism.L2.NTheta.IsIdemAt es PP) {Q : GlobalTheory.FinPl.Pl D → Prop}
-    (hQ : Q (PP.under (𝓞 D.host.F))) {m n : ℕ} {w : Mx D m n} (hw : IsHalf (es + cA D es) w) : GlobalTheory.FinPl.MxAt Q w := by
+    (hQ : Q ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))) {m n : ℕ} {w : Mx D m n} (hw : IsHalf (es + cA D es) w) : GlobalTheory.FinPl.MxAt Q w := by
   obtain ⟨v, ε, hε, hsum⟩ := h.1.2.2
   obtain ⟨q, hqe, -⟩ := GlobalTheory.FinPl.SplitPoint.exists_splitPt D v es ε h.1 hε hsum
-  have hv : q.v = PP.under (𝓞 D.host.F) := GlobalTheory.LocMod.LevelPlaces.splitPt_v_eq_under q (hqe ▸ h)
+  have hv : q.v = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) := GlobalTheory.LocMod.LevelPlaces.splitPt_v_eq_under q (hqe ▸ h)
   exact GlobalTheory.LevPin.mxAt_of_half q (hv ▸ hQ) w (hqe ▸ hw)
 
 theorem mxAt_of_idemSum {e : AE D} {Pg : Finset (Pl D.host.E)} (hs : IsIdemSum e Pg) {m n : ℕ} {x : Mx D m n}
     (hx : IsHalf e x ∨ IsHalf (cA D e) x) :
-    GlobalTheory.FinPl.MxAt (fun p => ∃ PP ∈ Pg, p = PP.under (𝓞 D.host.F)) x := by
+    GlobalTheory.FinPl.MxAt (fun p => ∃ PP ∈ Pg, p = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) x := by
   obtain ⟨⟨es, hes, rfl⟩, -⟩ := hs
   intro i j
   rcases hx with hx | hx
@@ -50,7 +50,7 @@ theorem mxAt_of_idemSum {e : AE D} {Pg : Finset (Pl D.host.E)} (hs : IsIdemSum e
       obtain ⟨h1, h2, -⟩ := (hes PP hPP).1
       rw [Matrix.smul_apply, smul_eq_mul, add_mul, ← mul_assoc, h1, ← mul_assoc, mul_comm (cA D (es PP)), h2,
         zero_mul, add_zero]
-    have := mxAt_of_idemAt (Q := fun p => ∃ PP ∈ Pg, p = PP.under (𝓞 D.host.F)) (hes PP hPP) ⟨PP, hPP, rfl⟩ hw i j
+    have := mxAt_of_idemAt (Q := fun p => ∃ PP ∈ Pg, p = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) (hes PP hPP) ⟨PP, hPP, rfl⟩ hw i j
     rwa [Matrix.smul_apply, smul_eq_mul] at this
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [← hx i j, map_sum, Finset.sum_mul]
@@ -58,15 +58,15 @@ theorem mxAt_of_idemSum {e : AE D} {Pg : Finset (Pl D.host.E)} (hs : IsIdemSum e
     have hw : IsHalf (es PP + cA D (es PP)) (cA D (es PP) • x) := fun a b => by
       obtain ⟨h1, h2, -⟩ := (hes PP hPP).1
       rw [Matrix.smul_apply, smul_eq_mul, add_mul, ← mul_assoc, h2, zero_mul, zero_add, ← mul_assoc, ← map_mul, h1]
-    have := mxAt_of_idemAt (Q := fun p => ∃ PP ∈ Pg, p = PP.under (𝓞 D.host.F)) (hes PP hPP) ⟨PP, hPP, rfl⟩ hw i j
+    have := mxAt_of_idemAt (Q := fun p => ∃ PP ∈ Pg, p = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) (hes PP hPP) ⟨PP, hPP, rfl⟩ hw i j
     rwa [Matrix.smul_apply, smul_eq_mul] at this
 
-theorem main : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (S T : HSp D) (Λ : AddSubgroup (WO S T)) (e : AE D) (Pg : Finset (Pl D.host.E)) (P' : GlobalTheory.FinPl.Pl D → Prop), IsIdemSum e Pg → (∀ PP ∈ Pg, ¬ P' (PP.under (𝓞 D.host.F))) → ∀ (d : WO S T →₀ ℂ), GlobalTheory.FinPl.CombAt P' d → ∀ (f₁ : WO S T → ℂ) (T₁ T₂ : (WO S T → ℂ) →ₗ[ℂ] (WO S T → ℂ)), IsPlaceModel ψ (symplO S T) (heisO ψ S T) e Λ 1 f₁ T₁ → (∀ Φ, T₂ Φ = comb ψ S T d (T₁ Φ)) → IsPlaceModel ψ (symplO S T) (heisO ψ S T) e Λ 1 (comb ψ S T d f₁) T₂ := by
+theorem main : ∀ (D : D7) (ψ : AddChar (AF D.host.F) ℂ), IsStdChar D ψ (-1) → ∀ (S T : HSp D) (Λ : AddSubgroup (WO S T)) (e : AE D) (Pg : Finset (Pl D.host.E)) (P' : GlobalTheory.FinPl.Pl D → Prop), IsIdemSum e Pg → (∀ PP ∈ Pg, ¬ P' ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))) → ∀ (d : WO S T →₀ ℂ), GlobalTheory.FinPl.CombAt P' d → ∀ (f₁ : WO S T → ℂ) (T₁ T₂ : (WO S T → ℂ) →ₗ[ℂ] (WO S T → ℂ)), IsPlaceModel ψ (symplO S T) (heisO ψ S T) e Λ 1 f₁ T₁ → (∀ Φ, T₂ Φ = comb ψ S T d (T₁ Φ)) → IsPlaceModel ψ (symplO S T) (heisO ψ S T) e Λ 1 (comb ψ S T d f₁) T₂ := by
   intro D ψ hψ S T Λ e Pg P' hs hd d hdc f₁ T₁ T₂ hT₁ hT₂
-  have hd' : ∀ p, (∃ PP ∈ Pg, p = PP.under (𝓞 D.host.F)) → ¬ P' p := by
+  have hd' : ∀ p, (∃ PP ∈ Pg, p = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) → ¬ P' p := by
     rintro p ⟨PP, hPP, rfl⟩
     exact hd PP hPP
-  have hcomm : ∀ x : WO S T, GlobalTheory.FinPl.MxAt (fun p => ∃ PP ∈ Pg, p = PP.under (𝓞 D.host.F)) x → ∀ f,
+  have hcomm : ∀ x : WO S T, GlobalTheory.FinPl.MxAt (fun p => ∃ PP ∈ Pg, p = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) x → ∀ f,
       heisO ψ S T x (comb ψ S T d f) = comb ψ S T d (heisO ψ S T x f) := by
     intro x hx f
     have h := (GlobalTheory.DisjComb.main D ψ hψ S T _ P' hd').1 (Finsupp.single x 1) d (fun u hu => by

@@ -24,7 +24,7 @@ open GlobalTheory.LiftRows
 namespace GlobalTheory.UnderConj
 open Formalism.L2.Col Formalism.HermitianLatticesTheory GlobalTheory.SplitOffPlaces
 
-theorem isConjPl_of_under_eq_of_ne : ∀ (D : D7) (PP PP' : Pl D.host.E), PP.under (𝓞 D.host.F) = PP'.under (𝓞 D.host.F) →
+theorem isConjPl_of_under_eq_of_ne : ∀ (D : D7) (PP PP' : Pl D.host.E), (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP') →
     PP ≠ PP' → Formalism.IndefR.Lev.IsConjPl PP PP' := by
   intro D PP PP' hu hne
   have key : PP' = conjSpec PP := by
@@ -38,7 +38,7 @@ theorem isConjPl_of_under_eq_of_ne : ∀ (D : D7) (PP PP' : Pl D.host.E), PP.und
       rw [← isIntegral_algebraMap_iff , ha]
       exact (x * Formalism.L2.Col.cO D.host.E x).isIntegral_coe
     have e : algebraMap (𝓞 D.host.F) (𝓞 D.host.E) ⟨a, hint⟩ = x * Formalism.L2.Col.cO D.host.E x := RingOfIntegers.ext ha
-    have h1 : (⟨a, hint⟩ : 𝓞 D.host.F) ∈ (PP'.under (𝓞 D.host.F)).asIdeal := by
+    have h1 : (⟨a, hint⟩ : 𝓞 D.host.F) ∈ ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP')).asIdeal := by
       change algebraMap (𝓞 D.host.F) (𝓞 D.host.E) ⟨a, hint⟩ ∈ PP'.asIdeal
       rw [e]
       exact Ideal.mul_mem_right _ _ hx

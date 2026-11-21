@@ -78,7 +78,7 @@ theorem arrAgree_withMeas {G : GridPre R} {m00 mV mP mX} {G' : GridData R.toLevC
   exact ⟨a, b, c, d, e, f⟩
 
 theorem pg_under_inj {F : Face D A} (hR : GlobalTheory.Hk3.Core R F) :
-    ∀ PP ∈ R.Pg, ∀ PP' ∈ R.Pg, PP.under (𝓞 D.host.F) = PP'.under (𝓞 D.host.F) → PP = PP' := by
+    ∀ PP ∈ R.Pg, ∀ PP' ∈ R.Pg, (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) = (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP') → PP = PP' := by
   intro P hP P' hP' e
   rcases GlobalTheory.GoodPrimes.eq_or_conj_of_under_eq e with h | h
   · exact h

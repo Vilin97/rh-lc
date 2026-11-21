@@ -166,7 +166,7 @@ theorem hgt_one {k : Type} [Field k] [ValuativeRel k] [TopologicalSpace k] [IsNo
 
 
 set_option maxHeartbeats 1600000 in
-theorem local_factor : GlobalTheory.Published.UnramifiedDoublingGL → GlobalTheory.Published.CuspRapidDecay → ∀ D : D7, ForStepQ D fun c w k s s' p => ∀ m X, IsCovolOne (ratL s'.V s.V) m X → ∀ a, IsMajOf c s a → ∀ (u₁ u₂ : s.CC c) φ, IsQ w k u₁ → ∀ v₁ ∈ s.KF, ∀ v₂ ∈ s.KF, ∀ z : ℝ, (D.R.t : ℝ) / 2 - 1 < z → ∀ PP ∈ w.Q, ∃ (J : Subgroup (GlobalTheory.FinZeta.Gv s.V (PP.under (𝓞 D.host.F)))) (μ : Measure (GlobalTheory.FinZeta.Gv s.V (PP.under (𝓞 D.host.F)))) (ζ : GlobalTheory.FinZeta.Gv s.V (PP.under (𝓞 D.host.F)) → ℂ), IsOpen (J : Set (GlobalTheory.FinZeta.Gv s.V (PP.under (𝓞 D.host.F)))) ∧ μ.IsHaarMeasure ∧ μ J = 1 ∧ Integrable ζ μ ∧ (∀ y ∈ J, ζ y = 1) ∧ (∀ g, gAt s.V (.inl (PP.under (𝓞 D.host.F))) g ∈ Lev.levG s.V s.β s.L ↔ GlobalTheory.AdelicU.proj D.sp.cm.sig s.V.gram (PP.under (𝓞 D.host.F)) g ∈ J) ∧ (z = (D.R.t : ℝ) / 2 → ∫ y, ζ y ∂μ = blockL c k PP * (zinv PP D.R.t ((k + 1) * D.R.t) : ℂ)) ∧ ∀ x ∈ intOff c s, GlobalTheory.AdelicU.proj D.sp.cm.sig s.V.gram (PP.under (𝓞 D.host.F)) x = 1 → ∀ y, flatInt p m X a φ (PiLocalization₂.val u₁ v₁) (PiLocalization₂.val u₂ v₂) z (x * GlobalTheory.AdelicU.emb D.sp.cm.sig s.V.gram (PP.under (𝓞 D.host.F)) y) = ζ y * flatInt p m X a φ (PiLocalization₂.val u₁ v₁) (PiLocalization₂.val u₂ v₂) z x := by
+theorem local_factor : GlobalTheory.Published.UnramifiedDoublingGL → GlobalTheory.Published.CuspRapidDecay → ∀ D : D7, ForStepQ D fun c w k s s' p => ∀ m X, IsCovolOne (ratL s'.V s.V) m X → ∀ a, IsMajOf c s a → ∀ (u₁ u₂ : s.CC c) φ, IsQ w k u₁ → ∀ v₁ ∈ s.KF, ∀ v₂ ∈ s.KF, ∀ z : ℝ, (D.R.t : ℝ) / 2 - 1 < z → ∀ PP ∈ w.Q, ∃ (J : Subgroup (GlobalTheory.FinZeta.Gv s.V ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)))) (μ : Measure (GlobalTheory.FinZeta.Gv s.V ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)))) (ζ : GlobalTheory.FinZeta.Gv s.V ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) → ℂ), IsOpen (J : Set (GlobalTheory.FinZeta.Gv s.V ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)))) ∧ μ.IsHaarMeasure ∧ μ J = 1 ∧ Integrable ζ μ ∧ (∀ y ∈ J, ζ y = 1) ∧ (∀ g, gAt s.V (.inl ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))) g ∈ Lev.levG s.V s.β s.L ↔ GlobalTheory.AdelicU.proj D.sp.cm.sig s.V.gram ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) g ∈ J) ∧ (z = (D.R.t : ℝ) / 2 → ∫ y, ζ y ∂μ = blockL c k PP * (zinv PP D.R.t ((k + 1) * D.R.t) : ℂ)) ∧ ∀ x ∈ intOff c s, GlobalTheory.AdelicU.proj D.sp.cm.sig s.V.gram ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) x = 1 → ∀ y, flatInt p m X a φ (PiLocalization₂.val u₁ v₁) (PiLocalization₂.val u₂ v₂) z (x * GlobalTheory.AdelicU.emb D.sp.cm.sig s.V.gram ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)) y) = ζ y * flatInt p m X a φ (PiLocalization₂.val u₁ v₁) (PiLocalization₂.val u₂ v₂) z x := by
   intro hU hC D hgap c w hw k hk s s' hs hs' p hp m X hX a ha u₁ u₂ φ hQ v₁ hv₁ v₂ hv₂ z hz PP hPP
   obtain ⟨⟨v, pr, hpr⟩, hch⟩ := GlobalTheory.T.exists_charts_at_twist_places_chain D c w hw k hk.le s hs PP hPP
   obtain ⟨-, ⟨x₀, ϖ, hxϖ⟩, ⟨ι, hι⟩, hchi⟩ := hch v pr hpr
@@ -186,15 +186,15 @@ theorem local_factor : GlobalTheory.Published.UnramifiedDoublingGL → GlobalThe
   obtain ⟨hbd, hval⟩ := hα α hαe
   obtain ⟨e₀, he₁, he₂, he₃, hϖ⟩ := id hxϖ
   have hμϖ : μT ϖ = Circle.toUnits (c.chT (k + 1) x₀) := hμT x₀ ϖ ⟨e₀, he₁, he₂, he₃⟩
-  letI : MeasurableSpace (Fv D.host.F (PP.under (𝓞 D.host.F))) := borel _
-  haveI : BorelSpace (Fv D.host.F (PP.under (𝓞 D.host.F))) := ⟨rfl⟩
-  letI : MeasurableSpace (GL (Fin D.R.r ⊕ Blocks k D.R.t) (Fv D.host.F (PP.under (𝓞 D.host.F)))) := borel _
-  haveI : BorelSpace (GL (Fin D.R.r ⊕ Blocks k D.R.t) (Fv D.host.F (PP.under (𝓞 D.host.F)))) := ⟨rfl⟩
-  obtain ⟨ν, hν⟩ := GlobalTheory.SplitWeil.exists_isUnitVol (Fv D.host.F (PP.under (𝓞 D.host.F)))
-  obtain ⟨hPo, hPc⟩ := GlobalTheory.ParahoricOpenCompact.isOpen_isCompact_parahoric (Fv D.host.F (PP.under (𝓞 D.host.F)))
+  letI : MeasurableSpace (Fv D.host.F ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))) := borel _
+  haveI : BorelSpace (Fv D.host.F ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))) := ⟨rfl⟩
+  letI : MeasurableSpace (GL (Fin D.R.r ⊕ Blocks k D.R.t) (Fv D.host.F ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)))) := borel _
+  haveI : BorelSpace (GL (Fin D.R.r ⊕ Blocks k D.R.t) (Fv D.host.F ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)))) := ⟨rfl⟩
+  obtain ⟨ν, hν⟩ := GlobalTheory.SplitWeil.exists_isUnitVol (Fv D.host.F ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)))
+  obtain ⟨hPo, hPc⟩ := GlobalTheory.ParahoricOpenCompact.isOpen_isCompact_parahoric (Fv D.host.F ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP)))
     (Fin D.R.r) (Blocks k D.R.t)
   obtain ⟨m₀, hm₀, hm₁⟩ := exists_haar _ hPo hPc
-  obtain ⟨cf, hcf⟩ : ∃ cf : GL (Fin D.R.r ⊕ Blocks k D.R.t) (Fv D.host.F (PP.under (𝓞 D.host.F))) → ℂ, ∀ g, cf g =
+  obtain ⟨cf, hcf⟩ : ∃ cf : GL (Fin D.R.r ⊕ Blocks k D.R.t) (Fv D.host.F ((_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP))) → ℂ, ∀ g, cf g =
       GlobalTheory.SplitWeil.ip ν (GlobalTheory.SplitWeil.om μT g (1 : GL (Fin D.R.r ⊕ Blocks (k + 1) D.R.t) _) (datum μT)) (datum μT) :=
     ⟨_, fun _ => rfl⟩
   have hcoef := GlobalTheory.T.weilCoefficient_splits_localFactor_twistPlace D hgap c w hw k hk s s' hs hs' p hp m X hX PP hPP _ pr hpr ι hι μT hμT ν hν cf hcf φ
@@ -232,7 +232,7 @@ theorem local_factor : GlobalTheory.Published.UnramifiedDoublingGL → GlobalThe
     have h3 := hζ V π u ℓ hg hco y
     rw [hℓ, hℓ1] at h3
     have h2 := hcoef x (by simp only [gAt, hxv, map_one]) y
-    have hS : PP.under (𝓞 D.host.F) ∈ c.S := by
+    have hS : (_root_.IsDedekindDomain.HeightOneSpectrum.under (𝓞 D.host.F) PP) ∈ c.S := by
       classical
       refine Finset.mem_image.2 ⟨PP, ?_, rfl⟩
       rw [hw.union]
