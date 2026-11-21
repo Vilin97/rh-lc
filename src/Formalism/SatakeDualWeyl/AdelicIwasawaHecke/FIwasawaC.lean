@@ -167,24 +167,27 @@ theorem fIwasawa_perm (ρ a : Fin n) (hρ : ρ < Fin.rev ρ) (ha1 : ρ ≤ a) (h
       (∀ i, (i < ρ ∨ Fin.rev ρ < i) → π i = i) := by
   have hρn := ρ.isLt
   have han := a.isLt
+  have haa' : a.val ≠ (Fin.rev a).val := fun h => haa (Fin.ext h)
+  clear haa
+  have harn := (Fin.rev a).isLt
   by_cases haρ : a = Fin.rev ρ
   · subst haρ
     refine ⟨Equiv.swap ρ (Fin.rev ρ), Equiv.swap_apply_left _ _, fun i => ?_, fun i hi => ?_⟩
     · have hin := i.isLt
       simp only [Equiv.swap_apply_def]
-      split_ifs <;> fIwasawa_omega
+      split_ifs <;> (simp only [Fin.rev_rev, Fin.ext_iff, Fin.val_rev, Fin.lt_def, Fin.le_def] at * <;> omega)
     · have hin := i.isLt
       simp only [Equiv.swap_apply_def]
-      split_ifs <;> fIwasawa_omega
+      split_ifs <;> (simp only [Fin.rev_rev, Fin.ext_iff, Fin.val_rev, Fin.lt_def, Fin.le_def] at * <;> omega)
   · refine ⟨Equiv.swap ρ a * Equiv.swap (Fin.rev ρ) (Fin.rev a), ?_, fun i => ?_, fun i hi => ?_⟩
     · simp only [Equiv.Perm.mul_apply, Equiv.swap_apply_def]
-      split_ifs <;> fIwasawa_omega
+      split_ifs <;> (simp only [Fin.rev_rev, Fin.ext_iff, Fin.val_rev, Fin.lt_def, Fin.le_def] at * <;> (try simp only [not_true_eq_false] at *) <;> omega)
     · have hin := i.isLt
       simp only [Equiv.Perm.mul_apply, Equiv.swap_apply_def]
-      split_ifs <;> fIwasawa_omega
+      split_ifs <;> (simp only [Fin.rev_rev, Fin.ext_iff, Fin.val_rev, Fin.lt_def, Fin.le_def] at * <;> omega)
     · have hin := i.isLt
       simp only [Equiv.Perm.mul_apply, Equiv.swap_apply_def]
-      split_ifs <;> fIwasawa_omega
+      split_ifs <;> (simp only [Fin.rev_rev, Fin.ext_iff, Fin.val_rev, Fin.lt_def, Fin.le_def] at * <;> omega)
 
 end FIwasawaRed
 

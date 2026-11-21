@@ -163,8 +163,12 @@ theorem aeval_eq_zero_of_mem_incIdeal (h₁ : FGNullstellensatz.Statement) {F : 
     fun ij => w ij - (∑ l, w (ij.1, l) * x l) * cx ij.2
   have hφC : ∀ s : F, φ (C (algebraMap F D s)) = algebraMap F (AlgebraicClosure F) s := fun s => by
     rw [← MvPolynomial.algebraMap_apply, AlgHom.commutes]
+  set_option synthInstance.maxHeartbeats 200000 in
   have key : ∑ l, cx l * x l = 1 := by
-    calc ∑ l, cx l * x l = φ (C (∑ l, cD l * ξD l)) := by simp [cx, x, map_sum]
+    calc
+      ∑ l, cx l * x l = φ (C (∑ l, cD l * ξD l)) := by
+        rw [map_sum (C : D →+* MvPolynomial (Fin k × Fin n) D), map_sum φ]
+        simp only [map_mul (C : D →+* MvPolynomial (Fin k × Fin n) D), map_mul φ, cx, x]
       _ = 1 := by rw [hD, map_one, map_one]
   have hφr : φ r = aeval v g := by
     rw [show φ r = φ.toRingHom r from rfl,

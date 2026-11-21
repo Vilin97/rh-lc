@@ -52,8 +52,8 @@ theorem ClassFormation.exists_cupH_quot (U : OpenSubgroup G) (N : Subgroup (U : 
     Subgroup.finite_quotient_of_finiteIndex
   let : Fintype ((U : Subgroup G) ⧸ (V : Subgroup G).subgroupOf U) := Fintype.ofFinite _
   exact ⟨_, GroundTheory.GroupCoh.exists_cupH_of_tate _ (F.groupFundamentalClass U V)
-    (fun S => (F.tate_hypotheses hVU S).1) (fun S => (F.tate_hypotheses hVU S).2.1)
-    (fun S => (F.tate_hypotheses hVU S).2.2) n w⟩
+    (fun S => (F.tate_hypotheses (U := U) (V := V) hVU S).1) (fun S => (F.tate_hypotheses (U := U) (V := V) hVU S).2.1)
+    (fun S => (F.tate_hypotheses (U := U) (V := V) hVU S).2.2) n w⟩
 
 def trivialToInvariantsHom {k H : Type} [CommRing k] [Group H] (N : Subgroup H) [N.Normal] :
     Rep.trivial k (H ⧸ N) k ⟶ (Rep.trivial k H k).quotientToInvariants N :=
@@ -140,7 +140,7 @@ variable {C : Rep.{0} (ULift.{0} ℤ) G} [IsDiscreteRep C] (F : ClassFormation C
 include F in
 theorem ClassFormation.subsingleton_cohomology_of_three_le (U : OpenSubgroup G) {r : ℕ}
     (hr : 3 ≤ r) : Subsingleton (cohomology (Rep.res (U : Subgroup G).subtype C) r) := by
-  have := (ClassFormation.toInt C F).subsingleton_cohomology_of_three_le_int U hr
+  let _ := (ClassFormation.toInt C F).subsingleton_cohomology_of_three_le_int U hr
   exact (cohomologyULiftIntAddEquiv (Rep.res (U : Subgroup G).subtype C) r).injective.subsingleton
 
 

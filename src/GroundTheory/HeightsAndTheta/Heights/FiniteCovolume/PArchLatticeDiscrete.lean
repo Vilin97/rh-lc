@@ -38,7 +38,7 @@ theorem ArchLatticeDiscrete.proof (h : HermitianForm F E W) (v : Basis ι E W) :
   classical
   intro La hLa
   obtain ⟨S, hS⟩ := hLa.fg
-  have hSLa : ∀ s ∈ S, s ∈ La := fun s hs => hS ▸ AddSubgroup.subset_closure hs
+  have hSLa : ∀ s ∈ S, (s : W) ∈ La := fun s _ => s.property
 
   obtain ⟨d, hd0, hd⟩ := exists_integral_multiples ℤ ℚ
     (S.biUnion fun s => Finset.univ.image fun i => v.repr s i)
@@ -51,9 +51,15 @@ theorem ArchLatticeDiscrete.proof (h : HermitianForm F E W) (v : Basis ι E W) :
       neg_mem' := fun {a} ha i => by
         simpa only [map_neg, Finsupp.neg_apply, smul_neg] using (ha i).neg }
   have hLaT : La ≤ T := by
-    rw [← hS, AddSubgroup.closure_le]
-    intro s hs i
-    exact hd _ (Finset.mem_biUnion.2 ⟨s, hs, Finset.mem_image.2 ⟨i, Finset.mem_univ _, rfl⟩⟩)
+    intro x hx
+    suffices h : ∀ y : La, (y : W) ∈ T from h ⟨x, hx⟩
+    intro y
+    have hy : y ∈ AddSubsemigroup.closure (↑S : Set La) := by rw [hS]; trivial
+    induction hy using AddSubsemigroup.closure_induction with
+    | mem s hs =>
+      intro i
+      exact hd _ (Finset.mem_biUnion.2 ⟨s, hs, Finset.mem_image.2 ⟨i, Finset.mem_univ _, rfl⟩⟩)
+    | add a b _ _ ha hb => exact T.add_mem ha hb
   have hdE : (d : E) ≠ 0 := Int.cast_ne_zero.2 hd0
 
   have key : ∀ y ∈ La, (∀ (w : InfinitePlace E) (i : ι),
@@ -127,7 +133,8 @@ theorem ArchLatticeDiscrete.proof (h : HermitianForm F E W) (v : Basis ι E W) :
         rw [map_mul, norm_mul]
         exact mul_le_mul_of_nonneg_right (entry j).le (norm_nonneg _)
       have hsB : ∑ j, ‖w.embedding (v.repr s j)‖ ≤ B := by
-        refine le_trans ?_ (Finset.single_le_sum (f := fun s => ∑ w : InfinitePlace E, ∑ j,
+        dsimp only [B]
+        refine le_trans ?_ (Finset.single_le_sum (f := fun s : La => ∑ w : InfinitePlace E, ∑ j,
           ‖w.embedding (v.repr s j)‖) (fun _ _ => Finset.sum_nonneg fun _ _ =>
             Finset.sum_nonneg fun _ _ => norm_nonneg _) hs)
         exact Finset.single_le_sum (f := fun w : InfinitePlace E => ∑ j,
@@ -141,12 +148,12 @@ theorem ArchLatticeDiscrete.proof (h : HermitianForm F E W) (v : Basis ι E W) :
         _ < 1 := hdδB
     have hfixLa : ∀ x ∈ La, (γ : W ≃ₗ[E] W) x = x := by
       intro x hx
-      rw [← hS] at hx
-      induction hx using AddSubgroup.closure_induction with
+      suffices h : ∀ y : La, (γ : W ≃ₗ[E] W) y = y from h ⟨x, hx⟩
+      intro y
+      have hy : y ∈ AddSubsemigroup.closure (↑S : Set La) := by rw [hS]; trivial
+      induction hy using AddSubsemigroup.closure_induction with
       | mem x hx => exact hfix x hx
-      | zero => simp
       | add x y _ _ hx hy => simp [map_add (f := _), hx, hy]
-      | neg x _ hx => simp [map_neg, hx]
     have hlin : ((γ : W ≃ₗ[E] W) : W →ₗ[E] W) = LinearMap.id :=
       LinearMap.ext_on hLa.span_eq_top fun x hx => hfixLa x hx
     apply Subtype.ext

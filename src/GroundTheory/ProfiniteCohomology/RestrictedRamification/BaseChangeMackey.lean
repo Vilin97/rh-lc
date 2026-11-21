@@ -302,7 +302,7 @@ theorem mackeyPlace_injective : Function.Injective (mackeyPlace S hL ιs) := by
     rw [AlgEquiv.mul_apply, AlgEquiv.mul_apply, ← hinj, ← AlgEquiv.mul_apply, mul_inv_cancel,
       AlgEquiv.one_apply]
   have hd : d = d' := by
-    rw [← DoubleCoset.out_eq' _ _ d, ← DoubleCoset.out_eq' _ _ d', DoubleCoset.eq]
+    rw [← DoubleCoset.out_eq' d, ← DoubleCoset.out_eq' d', DoubleCoset.eq]
     refine ⟨_, hmem, gsFinFamily S ιs v g⁻¹, ⟨g⁻¹, rfl⟩, ?_⟩
     rw [map_inv]
     group
@@ -317,7 +317,7 @@ theorem mackeyPlace_surjective : Function.Surjective (mackeyPlace S hL ιs) := b
       (gsFinFamily S ιs v).toMonoidHom :=
     DoubleCoset.mk _ _ x
   refine ⟨⟨v, d⟩, ?_⟩
-  obtain ⟨a, b, ha, hb, hab⟩ := DoubleCoset.mk_out_eq_mul
+  obtain ⟨a, ha, b, hb, hab⟩ := DoubleCoset.mk_out_eq_mul
     (gsOpenSubgroup S hL : Subgroup (galUnramifiedOutside F Ω S)) (gsFinFamily S ιs v).toMonoidHom.range x
   obtain ⟨h, rfl⟩ := MonoidHom.mem_range.1 hb
   apply Subtype.ext

@@ -258,7 +258,8 @@ theorem EmbeddingWeight.proof : EmbeddingWeight.Statement := by
     simp only [u, projPt_smul c hc, h2]
   refine ⟨HermLine.ofWeight (fun z => -u z) hu_smul, rfl, ?_, ?_, ?_⟩
   · have h1 := hg.comp_contDiffOn (contDiffOn_projPt (ι := ι))
-    have h2 := hg.comp_contDiffOn ((contDiffOn_projPt (ι := ι)).comp contDiff_conjVec.contDiffOn
+    have h2 := hg.comp_contDiffOn ((contDiffOn_projPt (ι := ι)).comp
+      (contDiff_conjVec.contDiffOn (s := {z | ∀ k, ∃ i, z ⟨k, i⟩ ≠ 0}))
       fun z hz => conjVec_mem_blockNonzero hz)
     have hu := ((h1.add h2).div_const (2 : ℝ)).neg.neg
     exact Real.contDiff_exp.comp_contDiffOn hu

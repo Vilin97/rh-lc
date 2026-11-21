@@ -12,7 +12,6 @@ public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.Sha
 @[expose] public section
 
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.DIV Formalism.L2.Col Formalism.L2.Ker GlobalTheory.IndefiniteRowSideFullHecke.PlaceLogThetaBounds GlobalTheory.ColNorms
-open GlobalTheory.CoreHt
 open GlobalTheory.Core.Ht2
 open scoped ComplexOrder
 
@@ -55,7 +54,10 @@ theorem kernel_le_sharp (hB : GlobalTheory.IndefiniteRowSideFullHecke.PaddedLast
   have hE0 := hT D _ dl B χ hadm hpsi tcc hAn.1 hAn.2.1 hY _ B.t0 _ _ _ _ hAdm
   rw [hbase] at hE0
   have hgpos : 0 < Pr.g 0 * Pr.g 1 := Nat.mul_pos (hPr.g_prime 0).pos (hPr.g_prime 1).pos
-  have hfpos : 0 < N.R.f := by unfold Ranks.f Ranks.n; positivity
+  have hfpos : 0 < N.R.f := by
+    unfold Ranks.f Ranks.n
+    have := N.R.ord_pos
+    omega
   have hBpos := hI.cst_ok.B_pos
   have hcA : cAof sel mu cst = (Pr.g 0 * Pr.g 1) ^ (N.R.f * cst.A) := by unfold cAof; rw [hprod, pow_mul]
   have hcB : cBof sel mu cst u = Pr.T u * (Pr.g 0 * Pr.g 1) * (Pr.g 0 * Pr.g 1) ^ (N.R.f * cst.B - 1) := by

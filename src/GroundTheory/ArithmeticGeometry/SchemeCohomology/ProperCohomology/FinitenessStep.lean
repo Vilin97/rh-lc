@@ -95,6 +95,7 @@ theorem finiteH_step
   have hG' : IsCoherent ((Scheme.Modules.pullback ψ).obj F) := isCoherent_pullback ψ hF
   set G' := (Scheme.Modules.pullback ψ).obj F
   obtain ⟨n₀, hn₀⟩ := ProjScheme.exists_relativeSerre i ψ G' hG'
+  letI : (𝟙_ Z'.Modules).IsQuasicoherent := isQuasicoherent_unit Z'
   obtain ⟨n₁, hn₁⟩ := ProjScheme.exists_generatingSections_twist i (𝟙_ Z'.Modules)
     (isCoherent_unit Z')
   set n := max n₀ n₁
@@ -102,7 +103,6 @@ theorem finiteH_step
   set L := ProjScheme.twistingSheaf i (n : ℤ)
   have eL : ProjScheme.twist i (𝟙_ Z'.Modules) (n : ℤ) ≅ L := λ_ L
   obtain ⟨σL, hσL⟩ := exists_generatingSections_of_iso eL ⟨σ, hσ⟩
-  have := isQuasicoherent_unit Z'
   have : L.IsQuasicoherent :=
     (SheafOfModules.isQuasicoherent Z'.ringCatSheaf).prop_of_iso eL
       (ProjScheme.isQuasicoherent_twist i (𝟙_ Z'.Modules) (n : ℤ))

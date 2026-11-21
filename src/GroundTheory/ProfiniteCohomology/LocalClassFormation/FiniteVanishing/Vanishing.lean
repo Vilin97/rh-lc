@@ -53,7 +53,7 @@ theorem subsingleton_cohomology_three_galUnits_open (U : OpenSubgroup Gal(Ksep/K
 theorem subsingleton_cohomology_three_rootsOfUnity {n : ℕ} (hn : (n : K) ≠ 0)
     (U : OpenSubgroup Gal(Ksep/K)) :
     Subsingleton (cohomology (Rep.res (U : Subgroup Gal(Ksep/K)).subtype (galRootsOfUnity.{0} K Ksep n)) 3) :=
-  subsingleton_cohomology_three_rootsOfUnity_open K Ksep hn U
+  subsingleton_cohomology_three_rootsOfUnity_open K Ksep (V := U) hn
     (subsingleton_cohomology_three_galUnits_open K Ksep U)
 
 end Local
@@ -173,8 +173,8 @@ theorem cdp_galois_le_two {ℓ : ℕ} (hℓ : ℓ.Prime) (hℓK : (ℓ : K) ≠ 
         rw [hfix]⟩
   have hcomp : ψ ≫ ψ' = 𝟙 _ := by
     ext x
-    change e.symm (e x.down) = x.down
-    exact e.symm_apply_apply x.down
+    simp [ψ, ψ', Rep.Hom.hom, uliftIntLinearEquivAddHom]
+    exact congrArg ULift.up (e.symm_apply_apply x.down)
   have hinj : Function.Injective (cohomologyMap ψ 3).hom := fun x y h => by
     have h' := congrArg (cohomologyMap ψ' 3).hom h
     rwa [← ModuleCat.comp_apply, ← ModuleCat.comp_apply, ← cohomologyMap_comp, hcomp,

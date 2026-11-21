@@ -113,11 +113,13 @@ theorem eq_famExt_of_position (Q : HermLine ι → Prop) (e : Fin 2 → HermLine
       congrArg (Function.update (fun j => if j ∈ T then w else (Pi.single (t j) 1 : Fin 2 → ℝ)) a) hw,
       MultilinearMap.map_update_add, MultilinearMap.map_update_smul, MultilinearMap.map_update_smul, hV0, hV1,
       smul_eq_mul, smul_eq_mul]
+    rfl
 
 theorem famExt_const_smul (e : Fin 2 → HermLine ι) (c : ℝ) (w : Fin 2 → ℝ) :
     famExt J P n e (fun _ => c • w) = c ^ n * famExt J P n e (fun _ => w) := by
   rw [show (fun _ : Fin n => c • w) = fun i => (fun _ : Fin n => c) i • (fun _ : Fin n => w) i from rfl,
     MultilinearMap.map_smul_univ, smul_eq_mul, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
+  rfl
 
 theorem exists_delta (e : Fin 2 → HermLine ι) (k : ℕ) (ε : ℝ) (hε : 0 < ε) :
     ∃ δ : ℝ, 0 < δ ∧ ∀ t : ℝ, |t| < δ →

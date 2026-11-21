@@ -295,7 +295,8 @@ theorem exists_siegelSet (n : ℕ) :
   have hdiag : δA * diagUnits n dU = diagUnits n σ * diagUnits n (fun i => posIdele (r i) (hrpos i)) := by
     rw [hδA, ← map_mul, ← map_mul]
     congr 1
-    group
+    ext i
+    simp [hσ, he, mul_assoc]
   refine ⟨νGL * diagUnits n c * γ, unitriangularGL n p * diagUnits n σ,
     ⟨_, ⟨p, hpD, rfl⟩, _, ⟨σ, fun i _ => hc i, rfl⟩, rfl⟩,
     diagUnits n (fun i => posIdele (r i) (hrpos i)), ⟨r, hrpos, fun i j hij => ?_, rfl⟩, k, hk, ?_⟩

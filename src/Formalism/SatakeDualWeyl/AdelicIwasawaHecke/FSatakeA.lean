@@ -25,22 +25,13 @@ theorem fSatake_nontriv {ϖ : L} {σ : L →+* L} {q : ℕ} (hU : IsUnramInv ϖ 
 
 theorem isCommensurated_integral_unitary_of_unramified {ϖ : L} {σ : L →+* L} {q : ℕ} (hU : IsUnramInv ϖ σ q) (n : ℕ) :
     IsCommensurated (KU σ n) := by
+  haveI : (Valued.v : Valuation L (WithZero (Multiplicative ℤ))).IsNontrivial :=
+    fSatake_nontriv hU
   obtain ⟨-, -, -, hvϖ, -, hq2, hq⟩ := hU
   set A := (Valued.v : Valuation L (WithZero (Multiplicative ℤ))).valuationSubring with hA
   haveI : IsCyclic (WithZero (Multiplicative ℤ))ˣ :=
     isCyclic_of_surjective (WithZero.unitsWithZeroEquiv (α := Multiplicative ℤ)).symm.toMonoidHom
       (MulEquiv.surjective _)
-  have h0 : Valued.v ϖ ≠ 0 := by rw [hvϖ]; exact WithZero.coe_ne_zero
-  haveI : Nontrivial ↥(MonoidWithZeroHom.ofClass
-      (Valued.v : Valuation L (WithZero (Multiplicative ℤ)))).valueGroup := by
-    refine ⟨⟨1, ⟨Units.mk0 (Valued.v ϖ) h0, MonoidWithZeroHom.mem_valueGroup _ ⟨ϖ, rfl⟩⟩, ?_⟩⟩
-    intro h
-    have h1 := congrArg (fun u : ↥(MonoidWithZeroHom.ofClass
-      (Valued.v : Valuation L (WithZero (Multiplicative ℤ)))).valueGroup =>
-        ((u : (WithZero (Multiplicative ℤ))ˣ) : WithZero (Multiplicative ℤ))) h
-    simp only [OneMemClass.coe_one, Units.val_one, Units.val_mk0, hvϖ] at h1
-    have h2 := WithZero.coe_injective (h1.symm.trans WithZero.coe_one.symm)
-    exact absurd (Multiplicative.ofAdd.injective (h2.trans ofAdd_zero.symm)) (by norm_num)
   haveI hD : IsDiscreteValuationRing ↥A.toSubring := Valuation.valuationSubring_isDiscreteValuationRing _
   have hRes : Finite (IsLocalRing.ResidueField ↥A.toSubring) := by
     apply Nat.finite_of_card_ne_zero

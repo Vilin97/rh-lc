@@ -175,6 +175,8 @@ theorem rightDeriv_eq_integral_convDeriv [MeasurableSpace G] [BorelSpace G]
       (fun y => f (g * y) * κ (y⁻¹ * h.expG (t • X))⁻¹) (h.expG (t • X))
     rw [← this]
     congr 1
+    funext y
+    simp [mul_assoc, mul_inv_rev]
 
   have hderiv : ∀ (y : G) (t : ℝ), HasDerivAt (fun s : ℝ => κ (y⁻¹ * h.expG (s • X))⁻¹)
       (h.rightDeriv X (fun w : G => κ w⁻¹) (y⁻¹ * h.expG (t • X))) t := by

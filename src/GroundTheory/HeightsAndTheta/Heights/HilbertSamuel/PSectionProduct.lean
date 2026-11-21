@@ -24,13 +24,20 @@ theorem isMultiHomog_pow {g : MRing ι} {d : K → ℕ} (hg : IsMultiHomog g d) 
     IsMultiHomog (g ^ j) (j • d) := by
   induction j with
   | zero =>
-    have h := SectionBoundedMul.isMultiHomog_monomial (ι := ι) 0 1
-    have h1 : IsMultiHomog (1 : MRing ι) (fun _ => 0) := by simpa using h
     rw [pow_zero, zero_smul]
-    exact h1
+    classical
+    intro m hm k
+    have h : (1 : MRing ι) = monomial 0 1 := by simp
+    rw [h] at hm
+    rw [Finset.mem_singleton.mp (support_monomial_subset hm)]
+    simp
   | succ j ih =>
     rw [pow_succ, succ_nsmul]
-    exact SectionBoundedMul.isMultiHomog_mul ih hg
+    classical
+    intro m hm k
+    obtain ⟨m₁, hm₁, m₂, hm₂, rfl⟩ := Finset.mem_add.mp (support_mul _ _ hm)
+    simp only [Finsupp.add_apply, Finset.sum_add_distrib, Pi.add_apply]
+    rw [ih m₁ hm₁ k, hg m₂ hm₂ k]
 
 end SectionProduct
 

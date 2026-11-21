@@ -23,11 +23,12 @@ def conjCME (k : G) : G ≃ₜ* G :=
 
 theorem conjCME_mul (a b : G) : conjCME (a * b) = (conjCME b).trans (conjCME a) := by
   ext x
+  change (a * b) * x * (a * b)⁻¹ = a * (b * x * b⁻¹) * a⁻¹
   simp [mul_assoc]
 
 theorem conjCME_one : conjCME (1 : G) = ContinuousMulEquiv.refl G := by
   ext x
-  simp
+  simp [conjCME]
 
 variable [LocallyCompactSpace G] [MeasurableSpace G] [BorelSpace G]
 

@@ -365,12 +365,15 @@ theorem exists_map_val_withDensity [NeZero m] (μ : Measure (GL (Fin m) F)) [μ.
     congr 1
     conv_rhs => rw [← withDensity_one (μ := μ₀.comap C.toFun)]
     congr 1
-    rw [← ENNReal.coe_mul, inv_mul_cancel₀ (C.leftModulus_pos g).ne', ENNReal.coe_one]
+    funext g
+    change (((C.leftModulus g)⁻¹ : ℝ≥0) : ℝ≥0∞) * (detModulusPow g : ℝ≥0∞) = 1
+    rw [detModulusPow_eq_leftModulus, ← ENNReal.coe_mul,
+      inv_mul_cancel₀ (C.leftModulus_pos g).ne', ENNReal.coe_one]
   refine ⟨c, hc, ?_⟩
-  rw [hwd, Measure.map_smul]
-  congr 1
   have hv : MeasurableEmbedding (Units.val : GL (Fin m) F → Matrix (Fin m) (Fin m) F) :=
     (Measures.isOpenEmbedding_val F m).measurableEmbedding
+  rw [hwd, Measure.map_smul c hv.measurable.aemeasurable]
+  congr 1
   have hE : MeasurableEmbedding C.toFun := C.measurableEmbedding
   ext S hS
   rw [Measure.map_apply hv.measurable hS, hE.comap_apply]
@@ -393,7 +396,7 @@ theorem exists_map_val_withDensity [NeZero m] (μ : Measure (GL (Fin m) F)) [μ.
     exact hX ⟨((Matrix.isUnit_iff_isUnit_det X).2 (isUnit_iff_ne_zero.2 hdet)).unit, rfl⟩
   have h3 : (S ∩ Set.range (Units.val : GL (Fin m) F → Matrix (Fin m) (Fin m) F) :
       Set (Matrix (Fin m) (Fin m) F)) =ᵐ[matrixMeasure (n := Fin m) μ₁] S := by
-    have := (ae_eq_refl S).inter (ae_eq_univ.2 hnull)
+    have := (Filter.EventuallyEqSet.rfl (s := S)).inter (ae_eq_univ.2 hnull)
     rwa [Set.inter_univ] at this
   exact h3
 

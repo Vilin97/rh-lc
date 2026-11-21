@@ -29,7 +29,7 @@ theorem ramified_dvd_differentIdeal {w : HeightOneSpectrum (𝓞 L)}
       v.map (algebraMap (𝓞 K) (𝓞 L)) := by
     rw [he]
     exact pow_multiplicity_dvd _ _
-  have := pow_sub_one_dvd_differentIdeal_aux (𝓞 K) K L w.asIdeal (by omega) hv0 hdvd
+  have := pow_sub_one_dvd_differentIdeal_aux (𝓞 K) K L w.asIdeal hv0 hdvd
   exact (dvd_pow_self _ (by omega)).trans this
 
 

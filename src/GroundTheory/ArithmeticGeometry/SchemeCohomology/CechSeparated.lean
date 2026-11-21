@@ -138,7 +138,7 @@ theorem cechAcyclic_of_isBasicCover (F : X.Modules) [F.IsQuasicoherent] {V : X.O
   let e : tildeAb M ≅ modulesAb F' :=
     (SheafOfModules.toSheaf _).mapIso (@asIso _ _ _ _ F'.fromTildeΓ hiso)
   have hF' : CechAcyclic (modulesAb F').obj U' :=
-    CechAcyclic.of_retract (modulesAb F').obj U' e.inv.hom e.hom.hom
+    CechAcyclic.of_retract U' e.inv.hom e.hom.hom
       (congrArg (fun f => f.hom) e.inv_hom_id) hM
   have key := cechAcyclic_of_transport (P := (modulesAb F).obj) (P' := (modulesAb F').obj)
     (fun W => hV.fromSpec ''ᵁ W) (fun _ _ hle => hV.fromSpec.image_mono hle)

@@ -154,10 +154,10 @@ theorem dnVal : DnVal := by
     · exact absurd h hF
     · exact h
   rw [padicValInt.of_nat, padicValNat.pow] at h2
-  have h3 := sub_one_mul_padicValNat_factorial (p := l) (w + q - m - 1)
+  have h3 := Nat.Prime.sub_one_mul_multiplicity_factorial (n := w + q - m - 1) hl
   calc (l - 1) * padicValInt l (Dn p w i lam2)
-      ≤ (l - 1) * (p * padicValNat l (w + q - m - 1).factorial) := Nat.mul_le_mul_left _ h2
-    _ = p * ((l - 1) * padicValNat l (w + q - m - 1).factorial) := by ring
+      ≤ (l - 1) * (p * multiplicity l (w + q - m - 1).factorial) := Nat.mul_le_mul_left _ h2
+    _ = p * ((l - 1) * multiplicity l (w + q - m - 1).factorial) := by ring
     _ ≤ p * (w + q - m - 1) := Nat.mul_le_mul_left _ (by rw [h3]; exact Nat.sub_le _ _)
 
 theorem ld_blockWt_anti (p q w : ℕ) (lam2 : Fin q → ℕ) (ha : Antitone lam2) (hb : ∀ b, lam2 b ≤ w) :

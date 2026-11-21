@@ -10,7 +10,7 @@ theorem padicValNat_finset_prod {ι : Type} (p : ℕ) [Fact p.Prime] (s : Finset
     (h : ∀ i ∈ s, f i ≠ 0) : padicValNat p (∏ i ∈ s, f i) = ∑ i ∈ s, padicValNat p (f i) := by
   classical
   revert h
-  refine Finset.induction_on s (fun _ => by simp) ?_
+  refine Finset.induction_on s (fun _ => by simp [Nat.padicValNat_def]) ?_
   intro a t ha ih h
   have hrest : ∀ i ∈ t, f i ≠ 0 := fun i hi => h i (Finset.mem_insert_of_mem hi)
   rw [Finset.prod_insert ha, Finset.sum_insert ha,
@@ -44,7 +44,7 @@ theorem padicValNat_prod_pow_sub (g q r : ℕ) [Fact g.Prime] (hq : 2 ≤ q) :
       i * padicValNat g q + padicValNat g (q ^ (r - i) - 1) := by
     intro i hi
     rw [pow_sub_pow_eq_pow_mul_pow_sub_one_of_lt q r i hq0 (Finset.mem_range.mp hi),
-      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hq0.ne') (hbig i hi), padicValNat.pow]
+      (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (pow_ne_zero _ hq0.ne') (hbig i hi), Nat.padicValNat_def, Nat.multiplicity_pow, ← Nat.padicValNat_def]
   rw [padicValNat_finset_prod g _ _ hne, Finset.sum_congr rfl term, Finset.sum_add_distrib,
     ← Finset.sum_mul]
   congr 1
@@ -66,10 +66,11 @@ theorem padicValCardGeneralLinear : GLCardVal := by
   have hg : g.Prime := instg.out
   have hg' : g'.Prime := instg'.out
   constructor
-  · rw [card_GL_zmod, padicValNat_prod_pow_sub g g r hg.two_le, padicValNat_self,
+  · rw [card_GL_zmod, padicValNat_prod_pow_sub g g r hg.two_le, Nat.padicValNat_def, Nat.Prime.multiplicity_self,
       mul_one, Finset.sum_range_id, Finset.sum_eq_zero, add_zero]
     intro a ha
-    apply padicValNat.eq_zero_of_not_dvd
+    rw [Nat.padicValNat_def]
+    apply multiplicity_eq_zero_of_not_dvd
     intro hd
     have ha1 : 1 ≤ a := (Finset.mem_Icc.mp ha).1
     have h1 : g ∣ g ^ a := dvd_pow_self g (by omega)
@@ -82,7 +83,9 @@ theorem padicValCardGeneralLinear : GLCardVal := by
     exact hg.one_lt.ne' (Nat.dvd_one.mp h3)
   · rw [card_GL_zmod, padicValNat_prod_pow_sub g g' r hg'.two_le]
     have h0 : padicValNat g g' = 0 :=
-      padicValNat.eq_zero_of_not_dvd fun hd => hne ((Nat.prime_dvd_prime_iff_eq hg hg').mp hd)
+      by
+        rw [Nat.padicValNat_def]
+        exact multiplicity_eq_zero_of_not_dvd fun hd => hne ((Nat.prime_dvd_prime_iff_eq hg hg').mp hd)
     rw [h0, mul_zero, zero_add]
 
 end Formalism.IrreducibleCountingLemmas.WindowSums

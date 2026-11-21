@@ -191,27 +191,28 @@ def pointVar {σ : Type*} (i : σ) : F.Point σ :=
 
 theorem evalPoint_pointVar {σ : Type*} [Finite σ] (x : σ → MaxIdealPoint F) (i : σ) :
     evalPoint x (pointVar i) = x i :=
-  ext (psEvalAt_X _ i)
+  Subtype.ext (psEvalAt_X _ i)
 
 theorem evalPoint_zero {σ : Type*} [Finite σ] (x : σ → MaxIdealPoint F) :
     evalPoint x (0 : F.Point σ) = 0 := by
-  apply ext
+  apply Subtype.ext
   change psEvalAt 0 _ = 0
   rw [← evAlgHom_apply _ (fun i => (x i).val_mem), map_zero]
 
 theorem evalPoint_add {σ : Type*} [Finite σ] (x : σ → MaxIdealPoint F) (p q : F.Point σ) :
     evalPoint x (p + q) = evalPoint x p + evalPoint x q := by
-  apply ext
-  change psEvalAt (p + q).val _ = _
+  apply Subtype.ext
+  change psEvalAt (p + q).val _ = psEvalAt F.toPowerSeries
+    ![(evalPoint x p).val, (evalPoint x q).val]
   rw [FormalGroup.add_apply, psEvalAt_subst (GroundTheory.LocalField.FormalGroup.point_hasSubst_pair p q)
-    _ fun i => (x i).val_mem, val_add]
+    _ fun i => (x i).val_mem]
   congr 1
   funext i
   fin_cases i <;> rfl
 
 theorem evalPoint_neg {σ : Type*} [Finite σ] (x : σ → MaxIdealPoint F) (p : F.Point σ) :
     evalPoint x (-p) = -evalPoint x p := by
-  apply ext
+  apply Subtype.ext
   change psEvalAt (-p).val _ = _
   rw [GroundTheory.LocalField.FormalGroup.neg_point_val,
     psEvalAt_powerSeries_subst p.prop _ fun i => (x i).val_mem]

@@ -42,12 +42,14 @@ theorem hermValue_baseMap (f : R →ₐ[K] R') (x : ι → R ⊗[K] E) :
   rw [RingHom.map_dotProduct]
   congr 1
   · funext i
-    simp [tensorMap_conjBase]
+    exact tensorMap_conjBase f (x i)
   · funext i
     rw [Function.comp_apply, RingHom.map_mulVec]
     congr 1
     ext a c
-    simp [baseMatrix]
+    change tensorMap E f (Algebra.TensorProduct.includeRight (H a c)) =
+      Algebra.TensorProduct.includeRight (H a c)
+    exact tensorMap_includeRight f (H a c)
 
 variable (R)
 

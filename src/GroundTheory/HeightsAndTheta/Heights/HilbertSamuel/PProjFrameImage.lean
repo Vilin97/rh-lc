@@ -36,9 +36,10 @@ theorem coneEval_graphMap (x : Ix κ → Ω) (e : Fin (D + 1) → Ix κ) (f : MR
     coneEval x (graphMap (coordIdeal ℤ x) (linForm (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1))) (projMat e))
         (rename (inrV (ι := GlobalTheory κ) (ι₂ := GlobalTheory (Fin (D + 1)))) f)) =
       coneMap ℤ (x ∘ e) (rename (fun q : Σ _ : Unit, Fin (D + 1) => q.2) f) := by
+  set_option synthInstance.maxHeartbeats 200000 in
   induction f using MvPolynomial.induction_on with
   | C a => simp [graphMap, coneEval, coneMap]
-  | add p q hp hq => simp only [map_add (f := _), hp, hq]
+  | add p q hp hq => simp only [map_add, hp, hq]
   | mul_X p q hp =>
     obtain ⟨⟨⟩, k⟩ := q
     simp only [map_mul, hp, rename_X]

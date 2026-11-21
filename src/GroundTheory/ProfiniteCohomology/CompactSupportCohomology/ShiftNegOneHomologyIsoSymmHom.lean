@@ -218,19 +218,19 @@ theorem homology_exact₁ (n : ℕ) :
     (ShortComplex.mk _ _ (homologyMap_homologyδ f n)).Exact := by
   refine (ShortComplex.exact_iff_of_iso ?_).2 ((shortExact f).homology_exact₁ n (n + 1) rfl)
   exact ShortComplex.isoMk (Iso.refl _) (shiftNegOneHomologyIso L n).symm (Iso.refl _)
-    (by simp [δ_eq]) (by simp [homologyδ])
+    (by simp [δ_eq, shiftNegOneHomologyIso]) (by simp [homologyδ, shiftNegOneHomologyIso])
 
 theorem homology_exact₂ (n : ℕ) :
     (ShortComplex.mk _ _ (homologyδ_homologyMap_fst f n)).Exact := by
   refine (ShortComplex.exact_iff_of_iso ?_).2 ((shortExact f).homology_exact₂ (n + 1))
   exact ShortComplex.isoMk (shiftNegOneHomologyIso L n).symm (Iso.refl _) (Iso.refl _)
-    (by simp [homologyδ]) (by simp)
+    (by simp [homologyδ, shiftNegOneHomologyIso]) (by simp)
 
 theorem homology_exact₃ (n : ℕ) :
     (ShortComplex.mk _ _ (homologyMap_fst_homologyMap f n)).Exact := by
   refine (ShortComplex.exact_iff_of_iso ?_).2 ((shortExact f).homology_exact₃ n (n + 1) rfl)
   exact ShortComplex.isoMk (Iso.refl _) (Iso.refl _) (shiftNegOneHomologyIso L n).symm
-    (by simp) (by simp [δ_eq])
+    (by simp) (by simp [δ_eq, shiftNegOneHomologyIso])
 
 theorem mono_homologyMap_fst_zero : Mono (HomologicalComplex.homologyMap (fst f) 0) := by
   have hz : IsZero ((shiftNegOne L).homology 0) :=

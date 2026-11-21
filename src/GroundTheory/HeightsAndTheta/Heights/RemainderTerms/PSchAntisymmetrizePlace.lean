@@ -50,8 +50,8 @@ theorem SchAntisymmetrizePlace.proof : SchAntisymmetrizePlace.Statement := by
     rfl
   rw [hs]
   congr 3
-  rw [← he]
-  simp
+  funext x
+  simp [smallBlockPlace_eq, ← he]
 
 end
 

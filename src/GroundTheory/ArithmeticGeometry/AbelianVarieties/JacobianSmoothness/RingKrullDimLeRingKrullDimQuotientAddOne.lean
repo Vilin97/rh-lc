@@ -273,7 +273,7 @@ theorem ringKrullDim_le_height_add_ringKrullDim_quotient : ∀ (n : ℕ) (A : Ty
     _ = (((p.map (Ideal.Quotient.mk p₁)).height + 1 : ℕ∞) : WithBot ℕ∞) + ringKrullDim (A ⧸ p) := by
       push_cast
       ring
-    _ ≤ p.height + ringKrullDim (A ⧸ p) := by gcongr; exact_mod_cast hh
+    _ ≤ p.height + ringKrullDim (A ⧸ p) := by gcongr
 
 
 include k in

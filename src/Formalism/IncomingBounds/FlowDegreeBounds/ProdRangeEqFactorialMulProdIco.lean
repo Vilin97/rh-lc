@@ -12,7 +12,8 @@ namespace Formalism.IncomingBounds
 theorem padicValFactorialBounds : FactValBounds := by
   intro l hl N hN
   haveI := Fact.mk hl
-  have key := sub_one_mul_padicValNat_factorial (p := l) N
+  have key := Nat.Prime.sub_one_mul_multiplicity_factorial (n := N) hl
+  rw [← Nat.padicValNat_def] at key
   have hsN : (l.digits N).sum ≤ N := Nat.digit_sum_le l N
   have hne : l.digits N ≠ [] := Nat.digits_ne_nil_iff_ne_zero.2 (by omega)
   have hs1 : 1 ≤ (l.digits N).sum := by

@@ -165,7 +165,6 @@ theorem not_isUnitAt_pow (hy : IsArithVar (mCoordIdeal y) 1) {P : HeightOneSpect
     have := not_isUnitAt_mul y hy ih hga
     rw [← pow_succ] at this
     convert this using 2
-    ring
 
 theorem isUnitAt_add (hy : IsArithVar (mCoordIdeal y) 1) {P : HeightOneSpectrum (𝓞 K')} {d : ℕ}
     {g h : K'} (hg : IsUnitAt y P d g) (hh : ¬IsUnitAt y P d h) : IsUnitAt y P d (g + h) := by

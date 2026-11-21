@@ -278,7 +278,9 @@ theorem discreteTopology_rationalGL : DiscreteTopology (rationalGL K n) := by
 
 theorem isClosed_rationalGL : IsClosed (rationalGL K n : Set (AdelicGL K n)) :=
   have := discreteTopology_rationalGL K n
-  Subgroup.isClosed_of_discrete
+  by
+    set_option synthInstance.maxHeartbeats 200000 in
+      exact Subgroup.isClosed_of_discrete
 
 end AdelicGLn
 

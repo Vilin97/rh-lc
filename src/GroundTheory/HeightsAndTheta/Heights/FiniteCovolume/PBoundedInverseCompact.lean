@@ -170,7 +170,7 @@ theorem BoundedInverseCompact.proof (h : HermitianForm F E W) (v : Basis ι E W)
 
   have hGiU : ∀ j a, (Gi * U w) j a = invApply g (vecAt v (e a)) w j := by
     intro j a
-    simp [Gi, U, invApply, mul_apply, mulVec, dotProduct]
+    simp [Gi, U, invApply, Matrix.mul_apply, mulVec, dotProduct]
   have hGi_eq : Gi = Gi * U w * R w := by
     rw [Matrix.mul_assoc, hc w, Matrix.mul_one]
   have hGi_le : ∀ j i, ‖Gi j i‖ ≤ r1 w j i := by

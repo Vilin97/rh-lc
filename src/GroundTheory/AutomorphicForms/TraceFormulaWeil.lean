@@ -65,6 +65,7 @@ theorem inv_eq_self_of_isMulRightInvariant (ν : Measure H) [ν.IsHaarMeasure]
   have hc : ν.inv = c • ν := Measure.isMulLeftInvariant_eq_smul _ _
   have h2 : Measure.map Inv.inv (Measure.map Inv.inv ν) = (c ^ 2 : ℝ≥0) • ν := by
     rw [← Measure.inv_def ν, hc, Measure.map_smul, ← Measure.inv_def ν, hc, smul_smul, pow_two]
+    exact continuous_inv.measurable.aemeasurable
   have hν : ν = (c ^ 2 : ℝ≥0) • ν := by
     rw [Measure.map_map continuous_inv.measurable continuous_inv.measurable] at h2
     simpa only [inv_involutive, Involutive.comp_self, Measure.map_id] using h2

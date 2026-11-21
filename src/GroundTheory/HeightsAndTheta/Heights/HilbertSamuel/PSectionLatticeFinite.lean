@@ -27,9 +27,9 @@ theorem fg_of_le_fg {H H' : AddSubgroup G} (h : H ≤ H') (hH' : H'.FG) : H.FG :
   exact Module.Finite.iff_fg.mp inferInstance
 
 theorem fg_map (f : G →+ G') {H : AddSubgroup G} (hH : H.FG) : (H.map f).FG := by
-  classical
-  obtain ⟨S, hS⟩ := hH
-  exact ⟨S.image f, by rw [Finset.coe_image, ← AddMonoidHom.map_closure, hS]⟩
+  rw [← AddSubgroup.toIntSubmodule_toAddSubgroup H, ← Submodule.fg_iff_addSubgroup_fg] at hH
+  rw [← AddSubgroup.toIntSubmodule_toAddSubgroup (H.map f), ← Submodule.fg_iff_addSubgroup_fg]
+  simpa using hH.map f.toIntLinearMap
 
 end Groups
 

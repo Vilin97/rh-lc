@@ -64,7 +64,10 @@ theorem congruence_lift_of_basis {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin
       exact ⟨Qi *ᵥ y, hy, by rw [mulVec_mulVec, hQQi, one_mulVec]⟩
   set X0r := ratTup (F := F) (Fv F v) (F0 P) with hX0r
   set Y0 := locF v X0r with hY0
-  have hYdef : locF v (k • X0r) = k • Y0 := locF_smul σ J v k X0r
+  have hloc (a : HA (Fv F v) σ J) : locF v (a • X0r) = a • locF v X0r := by
+    funext b
+    exact locF_act a X0r b
+  have hYdef : locF v (k • X0r) = k • Y0 := hloc k
 
   have hPrk : IsPrim v Λ (k • Y0) := by
     refine ⟨fun a => kv_lat hkK (hPr.1 a), fun c hc => hPr.2 c ?_⟩
@@ -264,7 +267,7 @@ theorem congruence_lift_of_basis {σ : E →ₐ[F] E} {n : ℕ} {J : Matrix (Fin
     rw [memΛ, memΛ, hkx, mulVec_mulVec, hQiQ, one_mulVec, hkI]
   have hkHX : kH • X0r = k • X0r := by
     apply locF_injective v
-    rw [locF_smul σ J v kH X0r, hYdef]
+    rw [hloc kH, hYdef]
     funext a
     show kM *ᵥ Y0 a = (k • Y0) a
     rw [hkx]
@@ -300,7 +303,7 @@ theorem congruence_lift_of_split (hS : SplitR) : CongruenceSubgroupLift := by
   intro F E _ _ _ _ _ σ n J ψ v r g P Λ T μS0 hyp k hk
   obtain ⟨hStd, -, hSD, hUn, -, hgv, -, hEta, hPr, hLat, -⟩ := hyp
   obtain ⟨D⟩ := exists_SD hS σ J ψ v hStd hUn hEta
-  obtain ⟨Q, hQΛ, hQh⟩ := latStd_SD D hStd.2.1 hSD hLat
+  obtain ⟨Q, hQΛ, hQh⟩ := latStd_SD (D := D) hStd.2.1 hSD hLat
   exact congruence_lift_of_basis D Q hQΛ hQh saturated_split_lattice hPr hgv k hk
 
 end PI.LocMassTypL

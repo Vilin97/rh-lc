@@ -162,7 +162,7 @@ theorem afsplit_prV_int (x : E ⊗[F] 𝔸ᶠ[F]) (hx : x ∈ tensInt (F := F) �
       simp [prV_tmul_lemma_12]
   | zero => rw [map_zero]; exact zero_mem _
   | one => rw [map_one]; exact one_mem _
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 
@@ -186,7 +186,7 @@ theorem afsplit_IE_int (x : E ⊗[F] v.adicCompletion F)
   | one =>
     rw [show afsplitIE v 1 = afsplitEps E v from rfl, eps_eq_lemma_2]
     exact Subring.subset_closure (Set.mem_union_right _ ⟨⟨afsplitF v 1, F_int_lemma_9 v 1 (one_mem _)⟩, rfl⟩)
-  | add x y _ _ hx hy => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hy
+  | add x y _ _ hx hy => rw [map_add]; exact add_mem hx hy
   | neg x _ hx => rw [map_neg]; exact neg_mem hx
   | mul x y _ _ hx hy => rw [map_mul]; exact mul_mem hx hy
 

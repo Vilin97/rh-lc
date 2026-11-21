@@ -109,7 +109,7 @@ theorem sd_test (ι : Type) [Fintype ι] (μ : Measure (ι → Fv F v ⊗[F] E))
   have hT : ∀ y, ∫ x, Φ x * chi (E := E) v ψ ι x y ∂μ =
       (Dbox (E := E) v ψ ι).indicator (fun _ => ((μ.real (Obox (E := E) v ι) : ℝ) : ℂ)) y := by
     intro y
-    have h := transform_indicator μ (chi (E := E) v ψ ι) hχ L hLo y
+    have h := PI.VolStabSW.SdUniqW.transform_indicator μ (chi (E := E) v ψ ι) hχ L hLo y
     rw [coe_ObS, ann_obox] at h
     exact h
   have hI : Integrable (fun y => ∫ x, Φ x * chi (E := E) v ψ ι x y ∂μ) μ := by

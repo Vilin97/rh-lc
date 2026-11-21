@@ -64,6 +64,9 @@ theorem exists_units_neg_iff_mem (S : Set {v : InfinitePlace K // v.IsReal}) :
 omit [NumberField K] in
 theorem extensionEmbeddingOfIsReal_algebraMap {v : InfinitePlace K} (hv : v.IsReal) (x : K) :
     Completion.extensionEmbeddingOfIsReal hv (algebraMap K v.Completion x) = embedding_of_isReal hv x :=
-  Completion.extensionEmbeddingOfIsReal_coe hv (WithAbs.toAbs v.1 x)
+  by
+    rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+      Algebra.algebraMap_self_apply]
+    simpa using Completion.extensionEmbeddingOfIsReal_coe hv (WithAbs.toAbs v.1 x)
 
 end GroundTheory.ProfCoh

@@ -244,10 +244,10 @@ theorem norm_ofSchwartz_smulLeft_fourierMultiplier_le (χ : 𝓢(E, ℂ)) {g : E
       _ ≤ ENNReal.ofReal (∫ x, ‖χ x‖) * (eLpNorm (fun ξ ↦ g ξ * weight (-t) ξ) 2 volume *
             eLpNorm (fun ξ ↦ weight t ξ * (𝓕 φ : 𝓢(E, ℂ)) ξ) 2 volume) := by
           gcongr
-          exact lintegral_mul_le_eLpNorm_mul _ _ hB.1.enorm
+          exact lintegral_mul_le_eLpNorm_mul _ _ hB.aestronglyMeasurable.enorm
             (measurable_weight_mul_fourier t φ).enorm.aemeasurable
       _ = Cst := by rw [← mul_assoc]
-  have hle := eLpNorm_mono_enorm hpt (p := 2) (μ := (volume : Measure E))
+  have hle := eLpNorm_mono_eNorm (measurable_weight_mul_fourier t _).aestronglyMeasurable hpt (p := 2) (μ := (volume : Measure E))
   rw [show (fun ξ ↦ (Cst.toReal : ℂ) * weight t ξ) = (Cst.toReal : ℂ) • (weight t : E → ℂ) from rfl,
     eLpNorm_const_smul, ← ofReal_norm, Complex.norm_real, Real.norm_of_nonneg ENNReal.toReal_nonneg,
     ENNReal.ofReal_toReal hCst] at hle

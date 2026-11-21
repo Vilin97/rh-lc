@@ -262,6 +262,8 @@ theorem map_vecMul_adelicBorel {b : GL (Fin 2) 𝔸[K]}
     ← map_map hshear (hdiag.comp e.measurable), ← map_map hdiag e.measurable, he.map_eq,
     hmapdiag, Measure.map_smul, (measurePreserving_shear t).map_eq, Measure.map_smul,
     he.symm.map_eq, hconst]
+  · exact e.symm.measurable.aemeasurable
+  · exact hshear.aemeasurable
 
 theorem map_vecMul_adeleMeasure2 (g : GL (Fin 2) 𝔸[K]) :
     (adeleMeasure2 K).map (fun x => x ᵥ* (g : Matrix (Fin 2) (Fin 2) 𝔸[K])) =
@@ -277,6 +279,7 @@ theorem map_vecMul_adeleMeasure2 (g : GL (Fin 2) 𝔸[K]) :
   rw [hcomp, ← map_map (measurable_vecMul k) (measurable_vecMul b), map_vecMul_adelicBorel hb,
     Measure.map_smul, map_vecMul_maxCompact hk, map_mul, map_mul,
     ideleModule_det_of_mem_maxCompact hk, mul_one]
+  exact (measurable_vecMul k).aemeasurable
 
 theorem integral_comp_vecMul (g : GL (Fin 2) 𝔸[K]) (f : (Fin 2 → 𝔸[K]) → ℂ) :
     ∫ x, f (x ᵥ* (g : Matrix (Fin 2) (Fin 2) 𝔸[K])) ∂adeleMeasure2 K =

@@ -34,12 +34,17 @@ theorem exists_proj (ψ : AddChar k Circle) (n : ℕ) : ∀ (j : ℕ) (τ : MRep
     ∃ p : τ.V →ₗ[ℂ] (iterPhi k ψ j τ).V, Function.Surjective p ∧
       (∀ (m : Mir k n) (v : τ.V), p (τ.ρ (embM k n j m) v) = (iterPhi k ψ j τ).ρ m (p v)) ∧
       (twKer τ.ρ (derUnipM k (n + j) n) (derCharM k ψ (n + j) n)).map p ≤
-        twKer (iterPhi k ψ j τ).ρ (MirUin k n) 1
-  | 0, τ => ⟨LinearMap.id, Function.surjective_id, fun _ _ => rfl, by
-      rintro _ ⟨y, hy, rfl⟩
-      exact (GlobalTheory.T.mirabolic_twisted_kernel_derivative_zero k ψ n τ.V τ.ρ).ge hy⟩
-  | j + 1, τ => by
-    obtain ⟨p, hp, hq, hk⟩ := exists_proj ψ n j (MRep.phiM k ψ τ)
+        twKer (iterPhi k ψ j τ).ρ (MirUin k n) 1 := by
+  intro j
+  induction j with
+  | zero =>
+    intro τ
+    refine ⟨LinearMap.id, Function.surjective_id, fun _ _ => rfl, ?_⟩
+    rintro _ ⟨y, hy, rfl⟩
+    exact (GlobalTheory.T.mirabolic_twisted_kernel_derivative_zero k ψ n τ.V τ.ρ).ge hy
+  | succ j ih =>
+    intro τ
+    obtain ⟨p, hp, hq, hk⟩ := ih (MRep.phiM k ψ τ)
     have hnm : n ≤ n + j := Nat.le_add_right n j
     obtain ⟨e, -⟩ := GlobalTheory.CompanionTheory.BZMirStep.twKer_twAct_eq_map τ.ρ (MirUin k (n + j + 1)) (mirChar k ψ (n + j)) _
       (levi_stab ψ (n + j)) (derUnipM k (n + j) n) (derCharM k ψ (n + j) n) (derUnipM k (n + j + 1) n)

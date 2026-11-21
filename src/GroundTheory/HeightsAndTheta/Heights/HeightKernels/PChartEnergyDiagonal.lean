@@ -32,6 +32,8 @@ theorem diag_congr {e : ℕ} (s d : Fin (e + 1) → ℝ) :
       Matrix.diagonal fun j => ((s j * d j * s j : ℝ) : ℂ) := by
   rw [diagonal_conjTranspose, diagonal_mul_diagonal, diagonal_mul_diagonal]
   congr 1
+  funext j
+  simp only [Pi.star_apply, Complex.star_def, Complex.conj_ofReal]
   push_cast
   ring
 

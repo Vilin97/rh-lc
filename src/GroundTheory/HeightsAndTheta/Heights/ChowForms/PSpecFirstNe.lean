@@ -53,7 +53,8 @@ theorem exists_specFirst_ne_zero [Infinite F] {f : MvPolynomial (Fin (k + 1) × 
   obtain ⟨t, ht⟩ := ht
   refine ⟨t, fun h0 => ht ?_⟩
   have := congr_arg (AddMonoidAlgebra.coeff · β) h0
-  rwa [specFirst_eq_map_eval, ← hg_def, coeff_map, coeff_zero] at this
+  simpa only [specFirst_eq_map_eval, ← hg_def, coeff_map, AddMonoidAlgebra.coeff_zero,
+    Finsupp.zero_apply] using this
 
 end Choice
 

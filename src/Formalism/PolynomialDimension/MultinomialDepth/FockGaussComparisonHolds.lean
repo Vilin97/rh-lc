@@ -25,7 +25,7 @@ theorem fock_mult_fact_le {α : Type*} (p : ℕ) (f : α → ℕ) (s : Finset α
 
 theorem fock_mult_val_le {α : Type*} (p : ℕ) [hp : Fact p.Prime] (f : α → ℕ) (s : Finset α) :
     padicValNat p (Nat.multinomial s f) ≤ s.card * Nat.log p (∑ i ∈ s, f i) := by
-  rw [← Nat.factorization_def _ hp.out]
+  rw [Nat.padicValNat_def, ← Nat.factorization_def _ hp.out]
   exact fock_mult_fact_le p f s
 
 theorem fock_val_prod {ι : Type*} (p : ℕ) [Fact p.Prime] (s : Finset ι) (f : ι → ℕ)
@@ -33,7 +33,7 @@ theorem fock_val_prod {ι : Type*} (p : ℕ) [Fact p.Prime] (s : Finset ι) (f :
     padicValNat p (∏ i ∈ s, f i) = ∑ i ∈ s, padicValNat p (f i) := by
   classical
   induction s using Finset.induction_on with
-  | empty => simp
+  | empty => simp [Nat.padicValNat_def]
   | insert a s ha ih =>
     rw [Finset.prod_insert ha, Finset.sum_insert ha]
     have h1 : f a ≠ 0 := hf a (Finset.mem_insert_self a s)

@@ -212,6 +212,7 @@ theorem exists_archBump (μ : Measure (AdelicGLn.InfiniteAdelicGL K n)) [μ.IsHa
     fun x ↦ archEntries K n (x : Matrix (Fin n) (Fin n) (InfiniteAdeleRing K)) with hJdef
   have hJ : IsOpenEmbedding J :=
     (archEntries K n).isOpenEmbedding.comp (isOpenEmbedding_val_infiniteAdelicGL K n)
+  letI : R1Space (AdelicGLn.InfiniteAdelicGL K n) := hJ.isEmbedding.isInducing.r1Space
   set c₀ : ℂ := f x₀ with hc₀
   set W : Set (AdelicGLn.InfiniteAdelicGL K n) := {x | 0 < (starRingEnd ℂ c₀ * f x).re} with hWdef
   have hWo : IsOpen W := isOpen_lt continuous_const (Complex.continuous_re.comp (continuous_const.mul hf))

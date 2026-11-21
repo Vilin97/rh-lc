@@ -29,8 +29,10 @@ theorem aeval_smul_of_isHomogeneous {F σ S : Type*} [Field F] [CommRing S] [Alg
 theorem map_eq_zero_iff_of_ker_eq {A B B' σ : Type*} [CommRing A] [CommRing B] [CommRing B']
     {f : A →+* B} {f' : A →+* B'} (h : RingHom.ker f = RingHom.ker f') (x : MvPolynomial σ A) :
     map f x = 0 ↔ map f' x = 0 := by
-  simp only [MvPolynomial.ext_iff, coeff_map, coeff_zero]
-  exact forall_congr' fun s => by rw [← RingHom.mem_ker, ← RingHom.mem_ker, h]
+  simp only [MvPolynomial.ext_iff, coeff_map]
+  exact forall_congr' fun s => by
+    change f (x.coeff s) = 0 ↔ f' (x.coeff s) = 0
+    rw [← RingHom.mem_ker, ← RingHom.mem_ker, h]
 
 variable {F : Type} [Field F] {n : ℕ}
 

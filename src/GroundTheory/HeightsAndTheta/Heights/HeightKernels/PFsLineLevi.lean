@@ -50,16 +50,16 @@ theorem FsLineLevi.proof : FsLineLevi.Statement := by
   intro K _ ι _ z w hz
   classical
   set F : K → ((Σ k, ι k) → ℂ) → ℝ :=
-    fun k y => Real.log ((fsMetric (ι k)).ρ (fun i => y ⟨k, i⟩)) with hF
+    fun k y => Real.log ((fsMetric (ι := ι k)).ρ (fun i => y ⟨k, i⟩)) with hF
   have hev : (fun y => Real.log ((fsMulti ι).h y)) =ᶠ[𝓝 z] fun y => ∑ k ∈ Finset.univ, F k y := by
     have hopen : ∀ k, ∀ᶠ y in 𝓝 z, ∃ i, y ⟨k, i⟩ ≠ 0 := fun k => by
       obtain ⟨i, hi⟩ := hz k
       exact Filter.mem_of_superset (((continuous_apply _).isOpen_preimage _ isOpen_ne).mem_nhds hi)
         fun y hy => ⟨i, hy⟩
     filter_upwards [Filter.eventually_all.mpr hopen] with y hy
-    have hpos : ∀ k, 0 < (fsMetric (ι k)).ρ (fun i => y ⟨k, i⟩) := fun k => by
+    have hpos : ∀ k, 0 < (fsMetric (ι := ι k)).ρ (fun i => y ⟨k, i⟩) := fun k => by
       obtain ⟨i, hi⟩ := hy k
-      exact (fsMetric (ι k)).pos _ fun h0 => hi (congrFun h0 i)
+      exact (fsMetric (ι := ι k)).pos _ fun h0 => hi (congrFun h0 i)
     simp only [fsMulti, HermLine.ofMetrics, zpow_one, hF]
     exact Real.log_prod fun k _ => (hpos k).ne'
   have hblock : ∀ k, ContDiffAt ℝ 2 (F k) z ∧ ∀ v, 0 ≤ ReciprocityTheory.AnForm.levi (F k) z v := by
@@ -69,7 +69,7 @@ theorem FsLineLevi.proof : FsLineLevi.Statement := by
       exact fun h0 => hi (congrFun h0 i)
     have hφ := ReciprocityTheory.ChartRestriction.G.ArakelovGeometry.adens_contDiffAt_logρ_id
       (HilbertSamuel.ProjLine.isSmoothMetric_fs (J := ι k)) hk0
-    have hFk : F k = (fun u => Real.log ((fsMetric (ι k)).ρ u)) ∘ blockProj ι k := rfl
+    have hFk : F k = (fun u => Real.log ((fsMetric (ι := ι k)).ρ u)) ∘ blockProj ι k := rfl
     refine ⟨hFk ▸ hφ.comp z ((blockProj ι k).restrictScalars ℝ).contDiff.contDiffAt, fun v => ?_⟩
     rw [hFk, ReciprocityTheory.AnForm.levi_comp v ((blockProj ι k).analyticAt z) hφ]
     exact HilbertSamuel.ProjLine.leviForm_log_fs_nonneg hk0 _

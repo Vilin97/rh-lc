@@ -32,16 +32,21 @@ theorem ptEntryL_eq' {S : Type} [CommRing S] (L : List (Sˣ × ℕ+)) : ∀ i j 
 
 theorem modBlocks_map' {A S : Type} [CommRing S] (f : ℕ → ℕ → A → S) :
     ∀ (l : List (A × ℕ)) (a : ℕ) (L : List (Sˣ × ℕ+)),
-    modBlocks f a l = some L → L.map (fun b => ((b.1 : S), (b.2 : ℕ))) = mapBlocks f a l
-  | [], a, L, h => by
+    modBlocks f a l = some L → L.map (fun b => ((b.1 : S), (b.2 : ℕ))) = mapBlocks f a l := by
+  intro l
+  induction l with
+  | nil =>
+    intro a L h
     simp only [modBlocks, Option.some.injEq] at h
-    subst h; rfl
-  | (t, s) :: l, a, L, h => by
+    subst L
+    rfl
+  | cons b l ih =>
+    obtain ⟨t, s⟩ := b
+    intro a L h
     simp only [modBlocks] at h
     split_ifs at h with hu
-    rw [Option.map_eq_some_iff] at h
-    obtain ⟨L1, hL1, rfl⟩ := h
-    simp only [List.map_cons, mapBlocks, modBlocks_map' f l (a + s) L1 hL1]
+    obtain ⟨L1, hL1, rfl⟩ := Option.map_eq_some_iff.mp h
+    simp only [List.map_cons, mapBlocks, ih (a + s) L1 hL1]
     rfl
 
 theorem mapBlocks_snd' {A B : Type} (f : ℕ → ℕ → A → B) : ∀ (l : List (A × ℕ)) (a : ℕ),
@@ -51,13 +56,17 @@ theorem mapBlocks_snd' {A B : Type} (f : ℕ → ℕ → A → B) : ∀ (l : Lis
 
 theorem modBlocks_some {A S : Type} [CommRing S] (f : ℕ → ℕ → A → S) :
     ∀ (l : List (A × ℕ)) (a : ℕ), (∀ b ∈ l, 0 < b.2) → (∀ b ∈ l, ∀ a' s, IsUnit (f a' s b.1)) →
-      ∃ L, modBlocks f a l = some L
-  | [], a, _, _ => ⟨[], rfl⟩
-  | (t, s) :: l, a, h1, h2 => by
-    have htail : ∃ L1, modBlocks f (a + s) l = some L1 :=
-      modBlocks_some f l (a + s) (fun b hb => h1 b (List.mem_cons_of_mem _ hb))
+      ∃ L, modBlocks f a l = some L := by
+  intro l
+  induction l with
+  | nil =>
+    intro a _ _
+    exact ⟨[], rfl⟩
+  | cons b l ih =>
+    obtain ⟨t, s⟩ := b
+    intro a h1 h2
+    obtain ⟨L1, hL1⟩ := ih (a + s) (fun b hb => h1 b (List.mem_cons_of_mem _ hb))
         (fun b hb => h2 b (List.mem_cons_of_mem _ hb))
-    obtain ⟨L1, hL1⟩ := htail
     have hu : IsUnit (f a s t) ∧ 0 < s := ⟨h2 (t, s) List.mem_cons_self a s, h1 (t, s) List.mem_cons_self⟩
     rw [modBlocks, dite_eq_left hu, hL1]
     exact ⟨_, rfl⟩

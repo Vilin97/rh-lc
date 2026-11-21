@@ -74,6 +74,7 @@ theorem famExt_expand (e : Fin 2 → HermLine ι) (hs : IsSymmForm (famExt J P n
     split_ifs <;> rfl
   rw [hmix, MultilinearMap.map_piecewise_smul, Finset.prod_const, hcard, hbasis, famExt_basis, hlist,
     smul_eq_mul, Nat.choose_symm hin]
+  simp only [RingHom.id_apply]
   ring
 
 end ZCombExpand

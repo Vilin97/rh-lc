@@ -134,17 +134,17 @@ theorem isIdF_of (D : D7) (hθ : TraceOne D) {u u' : D.what₂.Word}
     rw [← hXS]
     exact ⟨hy, hyX⟩
   have hXΛ' : ∀ y ∈ Λ, y ∈ F0.X → y ∈ XS D F'.fl := fun y hy hyX => by
-    rw [← hXS']
-    refine ⟨hy, ?_⟩
-    show y ∈ F'.fl.X
-    rw [hXX]
-    exact hyX
+    have hy' : y ∈ XLam Λ F' := ⟨hy, by
+      show y ∈ F'.fl.X
+      rw [hXX]
+      exact hyX⟩
+    exact hXS' ▸ hy'
   have hXSΛ : ∀ y ∈ XS D F0, y ∈ Λ := fun y hy => by
     rw [← hXS] at hy
     exact hy.1
   have hXSΛ' : ∀ y ∈ XS D F'.fl, y ∈ Λ := fun y hy => by
-    rw [← hXS'] at hy
-    exact hy.1
+    have hy' : y ∈ XLam Λ F' := hXS'.symm ▸ hy
+    exact hy'.1
   have he' : ∀ a, F'.fl.e a ∈ F0.X := fun a => hXX ▸ e_mem_X F'.fl a
   obtain ⟨n, hnisom, hngmap, hne, hnperp⟩ :=
     core (VS D).hT (VS D).herm (VS D).nondeg Λ hlat.fg hlat.span_eq_top hU F0.X (X_iso F0)

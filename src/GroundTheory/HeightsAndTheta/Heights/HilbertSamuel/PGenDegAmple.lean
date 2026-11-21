@@ -92,6 +92,7 @@ theorem GenDegAmple.proof (hVar : GenericFibreVar.Statement) (hPos : MultiDegree
       rw [hsum b, f.map_sum]
     refine Finset.sum_congr rfl fun r _ => ?_
     rw [f.map_smul_univ (fun j => b (r j)) (fun j => unitDeg (r j)), smul_eq_mul]
+    simp only [RingHom.id_apply]
   rw [hg, expand d]
   have hH' := hH
   rw [expand (fun _ => (1 : ℤ))] at hH'

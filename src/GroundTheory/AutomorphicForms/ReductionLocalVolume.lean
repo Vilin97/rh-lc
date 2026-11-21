@@ -36,7 +36,8 @@ theorem mem_unitaryGroup_of_euclidNorm {M : Matrix (Fin n) (Fin n) 𝕜}
   have h := L.inner_map_map (WithLp.toLp 2 (Pi.single j (1 : 𝕜))) (WithLp.toLp 2 (Pi.single i (1 : 𝕜)))
   simp only [L, LinearIsometry.coe_mk, LinearMap.coe_mk, AddHom.coe_mk,
     EuclideanSpace.inner_toLp_toLp, single_one_vecMul] at h
-  rw [Matrix.mul_apply, one_apply]
+  rw [Matrix.mul_apply]
+  change (∑ k, M i k * star M k j) = if i = j then 1 else 0
   have h2 : ∑ k, M i k * star M k j = M.row i ⬝ᵥ star (M.row j) := by
     simp [dotProduct, Matrix.row, Matrix.star_apply]
   rw [h2, h, single_one_dotProduct, Pi.star_apply, Pi.single_apply]

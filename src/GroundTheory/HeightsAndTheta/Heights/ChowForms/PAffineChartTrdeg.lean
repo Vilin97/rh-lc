@@ -158,13 +158,15 @@ theorem proof : AffineChartTrdeg.Statement := by
     | add f g hf hg => rw [map_add (f := _)]; exact S.add_mem hf hg
     | mul_X f i hf => rw [map_mul, aeval_X]; exact S.mul_mem hf (hξS i)
 
+  letI : CommRing A' := Subalgebra.toCommRing A'
+  letI : CommRing S := Subalgebra.toCommRing S
   have halg : Algebra.IsAlgebraic S K := by
     refine ⟨fun x => ?_⟩
     obtain ⟨a, b, hb, rfl⟩ := IsFractionRing.div_surjective (A := R) x
     have hb0 : algebraMap R K b ≠ 0 :=
       IsFractionRing.to_map_ne_zero_of_mem_nonZeroDivisors hb
-    refine ⟨Polynomial.C ⟨_, hRS b⟩ * Polynomial.X - Polynomial.C ⟨_, hRS a⟩, fun h => hb0 ?_, ?_⟩
-    · have := congrArg (Polynomial.coeff · 1) h
+    refine ⟨Polynomial.C (⟨_, hRS b⟩ : S) * Polynomial.X - Polynomial.C (⟨_, hRS a⟩ : S), fun h => hb0 ?_, ?_⟩
+    · have := congrArg (AddMonoidAlgebra.coeff · 1) h
       simp only [Polynomial.coeff_sub, Polynomial.coeff_C_mul_X, Polynomial.coeff_C, ↓reduceIte,
         one_ne_zero, Polynomial.coeff_zero] at this
       have h' := congrArg Subtype.val this

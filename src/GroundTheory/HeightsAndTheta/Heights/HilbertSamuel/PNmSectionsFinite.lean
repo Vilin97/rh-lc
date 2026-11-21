@@ -81,7 +81,7 @@ theorem mConeMap_mem_formRing (y : (Σ κ, ι κ) → Ω) (f : MRing ι) : mCone
   | C n =>
     rw [← MvPolynomial.algebraMap_eq, AlgHom.commutes]
     exact Subalgebra.algebraMap_mem _ n
-  | add p q hp hq => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp hq
+  | add p q hp hq => rw [map_add]; exact add_mem hp hq
   | mul_X p q hp =>
     rw [map_mul]
     refine Subalgebra.mul_mem _ hp fun m => ?_
@@ -102,7 +102,7 @@ theorem monomial_mem_range (y : (Σ κ, ι κ) → Ω) {d : K → ℕ} {v : Ω} 
     obtain ⟨g, hg, rfl⟩ := hx
     exact ⟨g, mConeMap_of_homog y hg⟩
   | zero => simp
-  | add x z _ _ hx hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hx hz
+  | add x z _ _ hx hz => rw [map_add]; exact add_mem hx hz
   | smul n x _ hx => rw [map_zsmul]; exact zsmul_mem hx n
 
 theorem proof (h : KH.CondStatement) : NmSectionsFinite.Statement := by
@@ -136,8 +136,7 @@ theorem proof (h : KH.CondStatement) : NmSectionsFinite.Statement := by
     refine Submodule.fg_of_fg_map_injective _ hinj ?_
     have := isNoetherian_of_fg_of_noetherian (Submodule.span R {(1 : MvPolynomial K Ω)})
       (Submodule.fg_span_singleton 1)
-    have := isNoetherian_of_le hmap
-    exact Module.Finite.iff_fg.mp inferInstance
+    exact isNoetherian_submodule.mp inferInstance _ hmap
   obtain ⟨t, htG, hspan⟩ := (Submodule.fg_span_iff_fg_span_finset_subset G).mp hfg
   choose d hd e he hte using fun j : t => htG j.2
   refine ⟨t, inferInstance, d, e, max τ₂ (Finset.univ.sup d), fun j => ⟨hd j,

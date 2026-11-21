@@ -149,7 +149,9 @@ theorem algebraMap_surjective (hinj : Function.Injective (algebraMap A B)) (θ :
       obtain ⟨Q, hQ, hQI⟩ := Ideal.exists_ideal_over_maximal_of_isIntegral I hk
       intro htop
       apply hQ.ne_top
-      rw [eq_top_iff, ← htop, Ideal.map_le_iff_le_comap, hQI]
+      rw [eq_top_iff, ← htop, Ideal.map_le_iff_le_comap]
+      change I ≤ Ideal.under A Q
+      rw [hQI]
     have hsmul : (⊤ : Submodule A (B ⧸ N)) ≤ I • ⊤ := by
       rintro x -
       obtain ⟨b, rfl⟩ := Submodule.Quotient.mk_surjective N x

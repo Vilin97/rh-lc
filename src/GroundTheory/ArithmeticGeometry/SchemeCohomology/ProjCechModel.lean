@@ -81,10 +81,14 @@ lemma res_theta {p q : ℕ} {i : Fin (p + 1) → Fin (n + 1)} {i' : Fin (q + 1) 
     (h : Set.range i ⊆ Set.range i') (hle : inter (cover A n) i' ≤ inter (cover A n) i) (k : ℤ)
     (ℓ : LDeg A (Set.range i) k) :
     res (twistAb A n k) hle (theta i k ℓ) = theta i' k ⟨ℓ.1, LDeg_mono h k ℓ.2⟩ := by
-  apply ProjTwist.ext
+  apply Subtype.ext
   funext x
-  change ProjTwist.val (theta i k ℓ) ⟨x.1, hle x.2⟩ = _
-  rw [val_theta, val_theta]
+  change ProjTwist.val (theta i k ℓ) ⟨x.1, hle x.2⟩ =
+    ProjTwist.val (theta i' k ⟨ℓ.1, LDeg_mono h k ℓ.2⟩) x
+  change ProjTwist.locMap x.1 (nmem_of_mem_inter ⟨x.1, hle x.2⟩)
+      ((awayDegEquiv i k).symm ℓ).1 =
+    ProjTwist.locMap x.1 (nmem_of_mem_inter x)
+      ((awayDegEquiv i' k).symm ⟨ℓ.1, LDeg_mono h k ℓ.2⟩).1
   apply locMap_eq_of_awayToLaurent_eq h
   rw [← awayDegEquiv_apply, ← awayDegEquiv_apply, AddEquiv.apply_symm_apply,
     AddEquiv.apply_symm_apply]

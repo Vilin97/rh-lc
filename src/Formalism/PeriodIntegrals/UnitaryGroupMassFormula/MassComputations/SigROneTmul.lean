@@ -197,7 +197,7 @@ theorem dvd_smul {P : Submodule (IntAf I.F I.E) (VA I)} {c d : ℕ} (h : c ∣ d
 theorem close {P : Submodule (IntAf I.F I.E) (VA I)} {m : ℕ} (hmP : mL I m ≤ P) {v w r : VA I}
     (hv : v ∈ I.Lf) (hvr : v = w + r) {c k : ℕ} (hc : Nat.Coprime c m) (hk : Nat.Coprime k m)
     (hw : (k : I.E ⊗[I.F] Af I.F) • w ∈ P) (hr : (c : I.E ⊗[I.F] Af I.F) • r ∈ mL I m) : v ∈ P := by
-  refine bezout I (hk.mul hc) hmP hv ?_
+  refine bezout I (Nat.coprime_mul_iff_left.mpr ⟨hk, hc⟩) hmP hv ?_
   rw [hvr, smul_add, Nat.cast_mul]
   refine add_mem ?_ ?_
   · rw [mul_comm, mul_smul]; exact sm I (natCast_int I c) hw

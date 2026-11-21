@@ -46,18 +46,18 @@ theorem PowerSeries.log_subst_one_add_X_pow_sub_one (q : ℕ) :
     rwa [subst_X hs] at h
   have h1U : 1 + U = (1 + X) ^ q := by rw [hU]; ring
   apply derivative.ext
-  · have hd : d⁄dX ℚ ((log ℚ).subst U) = d⁄dX ℚ ((q : ℚ⟦X⟧) * log ℚ) := by
+  · have hd : d⁄dX ((log ℚ).subst U) = d⁄dX ((q : ℚ⟦X⟧) * log ℚ) := by
       have hunit : IsUnit (1 + X : ℚ⟦X⟧) := by
         rw [isUnit_iff_constantCoeff]; simp
       apply hunit.mul_left_cancel
       rw [derivative_subst hs, deriv_log, Derivation.leibniz, deriv_log]
       rcases q with _ | q
       · simp [hU]
-      · have hdU : d⁄dX ℚ U = ((q + 1 : ℕ) : ℚ⟦X⟧) * (1 + X) ^ q := by
+      · have hdU : d⁄dX U = ((q + 1 : ℕ) : ℚ⟦X⟧) * (1 + X) ^ q := by
           rw [hU, map_sub, derivative_pow, Derivation.map_one_eq_zero, sub_zero, map_add (f := _),
             Derivation.map_one_eq_zero, derivative_X, zero_add, mul_one, Nat.add_sub_cancel]
         rw [hdU]
-        have hc : d⁄dX ℚ ((q + 1 : ℕ) : ℚ⟦X⟧) = 0 := by
+        have hc : d⁄dX ((q + 1 : ℕ) : ℚ⟦X⟧) = 0 := by
           rw [← map_natCast (C (R := ℚ)), derivative_C]
         rw [hc, smul_zero, add_zero, smul_eq_mul]
         calc (1 + X) * (G.subst U * (((q + 1 : ℕ) : ℚ⟦X⟧) * (1 + X) ^ q))

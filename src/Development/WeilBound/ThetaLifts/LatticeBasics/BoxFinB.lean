@@ -36,17 +36,17 @@ def D (w : (κ → AF F) × (κ → AF F)) : ((κ → AF F) → ℂ) → (κ →
 
 theorem linForm_add (b b' : κ → mixedEmbedding.mixedSpace F) : linForm (b + b') = linForm b + linForm b' := by
   ext y
-  simp only [ContinuousLinearMap.add_apply, linForm_apply, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
+  simp only [add_apply, linForm_apply, Pi.add_apply, mul_add, Finset.sum_add_distrib, map_add (f := _)]
 
 theorem DP_add_left (a a' L L') (Φ : (κ → AF F) → ℂ) : DP (a + a') (L + L') Φ = DP a L Φ + DP a' L' Φ := by
   funext z
-  simp only [DP, map_add (f := _), ContinuousLinearMap.add_apply, Pi.add_apply]
+  simp only [DP, map_add (f := _), add_apply, Pi.add_apply]
   push_cast
   ring
 
 theorem DP_smul_left (t : ℝ) (a L) (Φ : (κ → AF F) → ℂ) : DP (t • a) (t • L) Φ = (t : ℂ) • DP a L Φ := by
   funext z
-  simp only [DP, map_smul, ContinuousLinearMap.smul_apply, Pi.smul_apply, smul_eq_mul, Complex.real_smul]
+  simp only [DP, map_smul, smul_apply, Pi.smul_apply, smul_eq_mul, Complex.real_smul]
   push_cast
   ring
 

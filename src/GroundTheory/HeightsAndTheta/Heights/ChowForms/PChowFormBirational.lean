@@ -63,7 +63,7 @@ theorem not_dvd_pderiv_of_degreeOf_pos {F σ : Type*} [Field F] [CharZero F] {g 
     have hle : Finsupp.single i 1 ≤ s := Finsupp.single_le_iff.2 (by omega)
     intro h0
     have := congrArg (AddMonoidAlgebra.coeff · (s - Finsupp.single i 1)) h0
-    rw [coeff_pderiv, coeff_zero, tsub_add_cancel_of_le hle] at this
+    simp only [coeff_pderiv, AddMonoidAlgebra.coeff_zero, tsub_add_cancel_of_le hle] at this
     have hcs : AddMonoidAlgebra.coeff g s ≠ 0 := mem_support_iff.1 hs
     have hsi : (((s - Finsupp.single i 1 : σ →₀ ℕ) i : ℕ) : F) + 1 ≠ 0 := by
       exact Nat.cast_add_one_ne_zero _
@@ -124,9 +124,9 @@ theorem ChowFormBirational.proof (h₁ : IncidenceGeneric.Statement)
     exact not_dvd_pderiv_of_degreeOf_pos hg.1 hdeg
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [map_sum, map_mul, aeval_C, MvPolynomial.algebraMap_apply, hρ]
-    simp only [Finset.sum_mul, Finset.mul_sum]
-    refine Finset.sum_congr rfl fun l' _ => ?_
-    ring
+      simp only [Finset.sum_mul, Finset.mul_sum]
+      refine Finset.sum_congr rfl fun l' _ => ?_
+      ring
 
 end
 

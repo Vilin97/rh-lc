@@ -24,7 +24,7 @@ theorem genIndex_comap {G G' : Type*} [AddCommGroup G] [AddCommGroup G'] (f : G'
     AddSubgroup.map_comap_eq_self hB]
 
 theorem absNorm_eq_index {L : Type*} [Field L] [NumberField L] (A : Ideal (𝓞 L)) :
-    A.absNorm = A.toAddSubgroup.index := rfl
+    A.absNorm = A.toAddSubgroup.index := Ideal.absNorm_eq_index A
 
 theorem genIndex_ideal {L : Type*} [Field L] [NumberField L] {A B : Ideal (𝓞 L)} (hA : A ≠ ⊥)
     (hB : B ≠ ⊥) : genIndex A.toAddSubgroup B.toAddSubgroup = (B.absNorm : ℝ) / A.absNorm := by

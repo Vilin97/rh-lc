@@ -267,7 +267,7 @@ theorem primary_coindCokernel_of_primary (A : Rep.{u} k G) [IsDiscreteRep A]
 theorem IsPrimePowGenerator.mem_range_sub_one_discreteCoind (hℓ : ℓ.Prime) (hσ : IsPrimePowGenerator ℓ σ)
     (A : Rep.{u} k G) [IsDiscreteRep A] (hA : ∀ a : A, ∃ e : ℕ, ℓ ^ e • a = 0) (c : LocallyConstant G A) :
     c ∈ LinearMap.range ((discreteCoind k G A).ρ σ - 1) := by
-  have hz := isZero_cohomology_discreteCoind k G A 0
+  have hz := isZero_cohomology_discreteCoind (k := k) (G := G) (X := A) 0
   have hs : Subsingleton (cohomology (discreteCoind k G A) 1) :=
     ModuleCat.subsingleton_of_isZero hz
   obtain ⟨x, hx⟩ := hσ.H1Eval_surjective hℓ (discreteCoind k G A)

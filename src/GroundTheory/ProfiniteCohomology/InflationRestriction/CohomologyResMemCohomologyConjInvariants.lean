@@ -103,7 +103,11 @@ theorem cohomologyConj_π_eq_iff (z : cocycles (Rep.res N.subtype A) 1) (g : G) 
     (cohomologyConj A N 1 g).hom ((cohomologyπ _ 1).hom z) = (cohomologyπ _ 1).hom z ↔
       ∃ a : A, ∀ n : N, A.ρ g (cocycleOneApply A N z (GroundTheory.GroupCoh.conjHom N g n)) -
         cocycleOneApply A N z n = A.ρ n a - a := by
-  rw [cohomologyConj, cohomologyπ_cohomologyMapAlong_apply, ← sub_eq_zero, ← map_sub]
+  rw [cohomologyConj, cohomologyMapAlong]
+  erw [homologyMap_homologyπ_apply]
+  change ((cochainsComplex (Rep.res N.subtype A)).homologyπ 1).hom _ =
+    ((cochainsComplex (Rep.res N.subtype A)).homologyπ 1).hom z ↔ _
+  rw [← sub_eq_zero, ← map_sub]
   change ((cochainsComplex (Rep.res N.subtype A)).homologyπ (0 + 1)).hom _ = 0 ↔ _
   rw [homologyπ_succ_eq_zero_iff, map_sub, iCycles_cyclesMap_apply]
   constructor

@@ -219,15 +219,15 @@ theorem heckeAct_add_left {f₁ f₂ : G → ℂ} (hf₁ : f₁ ∈ locallyConst
     (hf₂ : f₂ ∈ locallyConstantCompactSupport G ℂ ℂ) {v : V} (hv : v ∈ smoothVectors ρ) :
     heckeAct μ ρ (f₁ + f₂) v = heckeAct μ ρ f₁ v + heckeAct μ ρ f₂ v := by
   refine eq_of_forall_dual fun φ => ?_
-  rw [map_add (f := _), dual_heckeAct (add_mem hf₁ hf₂) hv, dual_heckeAct hf₁ hv,
-    dual_heckeAct hf₂ hv, ← integral_add (integrable_mul_of_mem hf₁ (continuous_dual_orbit hv φ))
+  rw [map_add (f := _), dual_heckeAct (μ := μ) (add_mem hf₁ hf₂) hv, dual_heckeAct (μ := μ) hf₁ hv,
+    dual_heckeAct (μ := μ) hf₂ hv, ← integral_add (integrable_mul_of_mem hf₁ (continuous_dual_orbit hv φ))
       (integrable_mul_of_mem hf₂ (continuous_dual_orbit hv φ))]
   simp only [Pi.add_apply, add_mul]
 
 theorem heckeAct_smul_left (c : ℂ) {f : G → ℂ} (hf : f ∈ locallyConstantCompactSupport G ℂ ℂ)
     {v : V} (hv : v ∈ smoothVectors ρ) : heckeAct μ ρ (c • f) v = c • heckeAct μ ρ f v := by
   refine eq_of_forall_dual fun φ => ?_
-  rw [map_smul, dual_heckeAct (Submodule.smul_mem _ c hf) hv, dual_heckeAct hf hv, smul_eq_mul,
+  rw [map_smul, dual_heckeAct (μ := μ) (Submodule.smul_mem _ c hf) hv, dual_heckeAct (μ := μ) hf hv, smul_eq_mul,
     ← integral_const_mul]
   simp only [Pi.smul_apply, smul_eq_mul, mul_assoc]
 
@@ -239,7 +239,7 @@ theorem heckeAct_add_right {f : G → ℂ} (hf : f ∈ locallyConstantCompactSup
     {v w : V} (hv : v ∈ smoothVectors ρ) (hw : w ∈ smoothVectors ρ) :
     heckeAct μ ρ f (v + w) = heckeAct μ ρ f v + heckeAct μ ρ f w := by
   refine eq_of_forall_dual fun φ => ?_
-  rw [map_add (f := _), dual_heckeAct hf (add_mem hv hw), dual_heckeAct hf hv, dual_heckeAct hf hw,
+  rw [map_add (f := _), dual_heckeAct (μ := μ) hf (add_mem hv hw), dual_heckeAct (μ := μ) hf hv, dual_heckeAct (μ := μ) hf hw,
     ← integral_add (integrable_mul_of_mem hf (continuous_dual_orbit hv φ))
       (integrable_mul_of_mem hf (continuous_dual_orbit hw φ))]
   simp only [map_add (f := _), mul_add]
@@ -247,7 +247,7 @@ theorem heckeAct_add_right {f : G → ℂ} (hf : f ∈ locallyConstantCompactSup
 theorem heckeAct_smul_right {f : G → ℂ} (hf : f ∈ locallyConstantCompactSupport G ℂ ℂ) (c : ℂ)
     {v : V} (hv : v ∈ smoothVectors ρ) : heckeAct μ ρ f (c • v) = c • heckeAct μ ρ f v := by
   refine eq_of_forall_dual fun φ => ?_
-  rw [map_smul, dual_heckeAct hf (Submodule.smul_mem _ c hv), dual_heckeAct hf hv,
+  rw [map_smul, dual_heckeAct (μ := μ) hf (Submodule.smul_mem _ c hv), dual_heckeAct (μ := μ) hf hv,
     smul_eq_mul, ← integral_const_mul]
   simp only [map_smul, smul_eq_mul]
   congr 1
@@ -268,7 +268,7 @@ theorem map_heckeAct {W : Type*} [AddCommGroup W] [Module ℂ W] {σ : Represent
   refine eq_of_forall_dual fun φ => ?_
   have := dual_heckeAct (μ := μ) hf hv (φ ∘ₗ T.toLinearMap)
   simp only [LinearMap.comp_apply, Representation.IntertwiningMap.toLinearMap_apply] at this
-  rw [this, dual_heckeAct hf hTv]
+  rw [this, dual_heckeAct (μ := μ) hf hTv]
   simp only [T.isIntertwining]
 
 variable [μ.IsMulLeftInvariant]
@@ -278,7 +278,7 @@ theorem heckeAct_ltrans (g : G) {f : G → ℂ} (hf : f ∈ locallyConstantCompa
   refine eq_of_forall_dual fun φ => ?_
   have := dual_heckeAct (μ := μ) hf hv (φ ∘ₗ ρ g)
   simp only [LinearMap.comp_apply] at this
-  rw [this, dual_heckeAct (ltrans_mem g hf) hv,
+  rw [this, dual_heckeAct (μ := μ) (ltrans_mem g hf) hv,
     ← integral_mul_left_eq_self (fun y => ltrans g f y * φ (ρ y v)) g]
   simp only [ltrans_apply, inv_mul_cancel_left, map_mul, Module.End.mul_apply]
 
@@ -310,10 +310,10 @@ theorem heckeAct_groupConv {f₁ f₂ : G → ℂ} (hf₁ : f₁ ∈ locallyCons
   have m₂ : ∀ k ∈ K, k ∈ K₂ := fun k hk => (OpenSubgroup.mem_inf.1 (OpenSubgroup.mem_inf.1 hk).1).2
   have m₃ : ∀ k ∈ K, k ∈ K₃ := fun k hk => (OpenSubgroup.mem_inf.1 hk).2
   refine eq_of_forall_dual fun φ => ?_
-  rw [dual_heckeAct (groupConv_mem (μ := μ) hf₁ hf₂) hv,
-    dual_heckeAct hf₁ (heckeAct_mem_smoothVectors hf₂ hv)]
+  rw [dual_heckeAct (μ := μ) (groupConv_mem (μ := μ) hf₁ hf₂) hv,
+    dual_heckeAct (μ := μ) hf₁ (heckeAct_mem_smoothVectors hf₂ hv)]
   have inner : ∀ y, φ (ρ y (heckeAct μ ρ f₂ v)) = ∫ z, f₂ (y⁻¹ * z) * φ (ρ z v) ∂μ := fun y => by
-    rw [heckeAct_ltrans y hf₂ hv, dual_heckeAct (ltrans_mem y hf₂) hv]
+    rw [heckeAct_ltrans y hf₂ hv, dual_heckeAct (μ := μ) (ltrans_mem y hf₂) hv]
     rfl
   simp_rw [inner, groupConv, ← integral_mul_const, ← integral_const_mul, ← mul_assoc]
   refine (integral_integral_swap_of_coset μ K hKc hf₁.2 (hf₁.2.mul hf₂.2) ?_ ?_ ?_).symm
@@ -432,7 +432,7 @@ theorem heckeAct_leftReg [IsFiniteMeasureOnCompacts μ] (f φ : HeckeAlgebra μ)
     heckeAct μ (leftReg (μ := μ)) f φ = f * φ := by
   apply HeckeAlgebra.ext
   intro x
-  exact dual_heckeAct f.mem (isSmooth_leftReg φ) (evalₗ x)
+  exact dual_heckeAct (μ := μ) f.mem (isSmooth_leftReg φ) (evalₗ μ x)
 
 variable [μ.IsHaarMeasure]
 

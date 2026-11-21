@@ -103,7 +103,7 @@ theorem OneBlockPointDeg.proof : OneBlockPointDeg.Statement := by
     rw [RingHom.mem_ker, ← aeval_homog hK hc (homogeneousComponent_isHomogeneous n f)]
     by_cases hn : n < f.totalDegree + 1
     · have h1 := congrArg (fun q : Polynomial L => q.coeff n) hP0
-      simp only [P, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial, Finset.sum_ite_eq',
+      simp only [P, Polynomial.finsetSum_coeff, Polynomial.coeff_monomial_apply, Finset.sum_ite_eq',
         Finset.mem_range, hn, if_true, Polynomial.coeff_zero] at h1
       rw [show aeval r (homogeneousComponent n f) = ((⟨_, hmem _⟩ : L) : Φ') from rfl, h1]
       simp

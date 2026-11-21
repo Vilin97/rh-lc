@@ -51,7 +51,8 @@ omit [NumberField K] [Module.Finite (𝓞 K) E] [Module.Projective (𝓞 K) E]
 theorem conjMap_fibreMap (σ : K →+* ℂ) (f : E' →ₗ[𝓞 K] E) (x : Fibre σ E') :
     conjMap σ E (fibreMap σ f x) = fibreMap (conjugate σ) f (conjMap σ E' x) := by
   induction x using TensorProduct.induction_on with
-  | zero => simp only [map_zero]
+  | zero => rw [(fibreMap σ f).map_zero, (conjMap σ E).map_zero,
+      (conjMap σ E').map_zero, (fibreMap (conjugate σ) f).map_zero]
   | tmul z e => rfl
   | add x y hx hy => rw [map_add (f := _), map_add (f := _), hx, hy, map_add (f := _), map_add (f := _)]
 

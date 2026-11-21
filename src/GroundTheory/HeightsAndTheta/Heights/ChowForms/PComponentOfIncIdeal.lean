@@ -87,7 +87,7 @@ theorem ComponentOfIncIdeal.proof (h₁ : IncIdealDim.Statement) (h₂ : IncIdea
   have hS : ringKrullDim (MvPolynomial (Fin e × Fin n) F) = ((e * n : ℕ) : WithBot ℕ∞) := by
     rw [MvPolynomial.ringKrullDim_of_isNoetherianRing, ringKrullDim_eq_zero_of_isField (Field.toIsField F)]
     simp [Nat.card_eq_fintype_card]
-  have hsum := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient F (incIdeal W e)
+  have hsum := GroundTheory.Arith.Abelian.Jacobian.height_add_ringKrullDim_quotient (k := F) (incIdeal W e)
   rw [hdimInc, hS] at hsum
   have hqle : (Ideal.span {q}).height ≤ 1 := Ideal.height_span_singleton_le_one hq.not_isUnit
   have hht : (incIdeal W e).height ≤ 1 := (Ideal.height_mono hinc).trans hqle

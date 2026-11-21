@@ -60,7 +60,8 @@ lemma ldlat_linInd_field {F K : Type*} [Field F] [Field K] [Algebra F K] {σ ι 
   have key : ∑ i ∈ s, (B.repr (c i) j) • v i = 0 := by
     ext m
     have h1 := congrArg (AddMonoidAlgebra.coeff · m) hsum
-    simp only [coeff_sum, coeff_smul, coeff_map, smul_eq_mul, coeff_zero] at h1 ⊢
+    simp only [coeff_sum, coeff_smul, coeff_map, smul_eq_mul] at h1 ⊢
+    change _ = 0 at h1 ⊢
     have h2 := congrArg (fun x => B.repr x j) h1
     set_option synthInstance.maxHeartbeats 100000 in
       simp only [map_sum, map_zero, Finsupp.coe_finsetSum, Finset.sum_apply, Finsupp.coe_zero,

@@ -122,7 +122,9 @@ lemma gram_posDef (W : Weight L) (dV : SmoothVolume A) {n : ℕ}
     simp only [Matrix.conjTranspose_apply, gram, Matrix.of_apply, Complex.star_def]
     rw [← integral_conj]
     congr 1
-    ring
+    funext x
+    simp only [ptInner, map_mul, starRingEnd_self_apply, Complex.conj_ofReal]
+    ac_rfl
   · set v : V := ∑ a, conj (y a) • e a with hv
     have hv0 : v ≠ 0 := by
       intro h0
@@ -159,6 +161,7 @@ lemma trace_eq (W : Weight L) (dV : SmoothVolume A) {n : ℕ} {V : Submodule ℂ
       map_add' := fun s t ↦ by simp
       map_smul' := fun r s ↦ by simp }
   let c : InnerProductSpace.Core ℂ V := l2InnerCore W dV n V hV
+  let _ : Inner ℂ V := ⟨c.inner⟩
   let _ : NormedAddCommGroup V := c.toNormedAddCommGroup
   let _ : InnerProductSpace ℂ V := InnerProductSpace.ofCore c.toCore
   let b := stdOrthonormalBasis ℂ V

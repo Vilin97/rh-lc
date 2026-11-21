@@ -107,7 +107,7 @@ theorem map_minor {R S : Type*} [CommRing R] [CommRing S] (φ : R →+* S) {j m 
   simp only [RingHom.mapMatrix_apply, map_apply, colsOf, submatrix_apply, onePipe, of_apply, id]
   generalize I.1.orderEmbOfFin I.2 c = x
   refine Fin.addCases (fun c' => ?_) (fun b => ?_) x
-  · simp only [Fin.append_left, one_apply]; split_ifs <;> simp
+  · simp [Fin.append_left, Matrix.one_apply]
   · simp [Fin.append_right]
 
 end RootPointConjugation

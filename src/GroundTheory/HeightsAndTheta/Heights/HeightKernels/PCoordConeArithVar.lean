@@ -75,7 +75,8 @@ theorem component_mem [DecidableEq K] (y : (Σ k, ι k) → Ω) (f : MRing ι)
   have hzero : φ f = 0 := (RingHom.mem_ker).1 hf
   rw [mCoordIdeal, RingHom.mem_ker]
   show φ _ = 0
-  rw [himg, ← hcoeff, hzero, coeff_zero, monomial_zero]
+  rw [himg, ← hcoeff, hzero]
+  simp [AddMonoidAlgebra.coeff]
 
 theorem isMultiHomogIdeal (y : (Σ k, ι k) → Ω) : IsMultiHomogIdeal (mCoordIdeal y) := by
   classical

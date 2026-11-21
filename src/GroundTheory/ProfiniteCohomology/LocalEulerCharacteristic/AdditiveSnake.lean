@@ -253,7 +253,8 @@ theorem exact_torsNMap_connecting : Function.Exact (torsNMap n h) (connecting hh
   · rintro ⟨a₁, ha₁⟩
     have hb₁ : n • (b - f a₁) = 0 := by rw [smul_sub, ← ha, ← map_nsmul, ha₁, sub_self]
     refine ⟨⟨b - f a₁, (mem_ker_lsmul_iff n _).2 hb₁⟩, Subtype.ext ?_⟩
-    simp [hb, (hfh _).2 ⟨a₁, rfl⟩]
+    change h (b - f a₁) = (c : C)
+    rw [map_sub, (hfh _).2 ⟨a₁, rfl⟩, sub_zero, hb]
   · rintro ⟨t, rfl⟩
     have h₀ := connecting_spec hh hfh hf (torsNMap n h t) t 0 rfl
       (by rw [map_zero, (mem_ker_lsmul_iff n (t : B)).1 t.2])

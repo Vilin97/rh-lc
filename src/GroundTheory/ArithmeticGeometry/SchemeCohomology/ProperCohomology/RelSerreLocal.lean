@@ -108,6 +108,7 @@ lemma pasteIso_hom_fst {V : X.Opens} (hV : IsAffineOpen V) :
     letI := baseAlgebra A hV
     (pasteIso (N := N) A hV).hom ≫ pullback.fst _ _ = pullback.fst _ _ ≫ pullback.fst _ _ := by
   simp only [pasteIso, Iso.trans_hom, Category.assoc, pullback.congrHom, asIso_hom, pullback.map]
+  erw [pullback.lift_fst]
   rw [Category.comp_id, pullbackLeftPullbackSndIso_hom_fst]
 
 variable (A) in

@@ -167,7 +167,7 @@ theorem subsingleton_cohomology_of_normal (W : Subgroup Γ) [W.Normal] (hW : IsC
     exact (H0Iso A).toLinearEquiv.toEquiv.subsingleton
   · have hz : ∀ j, 0 < j → j < i → IsZero (cohomology (Rep.res W.subtype A) j) := fun j hj hji =>
       (ModuleCat.isZero_iff_subsingleton).2 (hq j hj (by omega))
-    have hex := infRes_exact A W hW (Nat.pos_iff_ne_zero.1 hpos) hz
+    have hex := infRes_exact A W (hN := hW) (Nat.pos_iff_ne_zero.1 hpos) hz
     have : Subsingleton (A.quotientToInvariants W) := ⟨fun a b => Subtype.ext <| by
       rw [hinv a (fun w => a.2 w), hinv b (fun w => b.2 w)]⟩
     have hs := subsingleton_cohomology_of_subsingleton (A.quotientToInvariants W) i

@@ -112,12 +112,38 @@ theorem partialFourierPi_schwartzBruhatTensorPi (φ : 𝓢((ι ⊕ κ) → mixed
     partialFourierPi (schwartzBruhatTensorPi φ g) =
       schwartzBruhatTensorPi (mixedPartialFourierSchwartz φ) (finitePartialFourier g) := by
   funext z
+  let c := infPartPi fun i ↦ z (.inl i)
+  let L : (κ → mixedSpace K) →L[ℝ] ((ι ⊕ κ) → mixedSpace K) :=
+    ContinuousLinearMap.pi fun s ↦
+      Sum.elim (fun _ ↦ (0 : (κ → mixedSpace K) →L[ℝ] mixedSpace K))
+        (fun j ↦ ContinuousLinearMap.proj j) s
+  have hL (u : κ → mixedSpace K) : L u = Sum.elim (0 : ι → mixedSpace K) u := by
+    funext s
+    cases s <;> rfl
+  have hgrowth : (fun u : κ → mixedSpace K ↦ (Sum.elim c u : (ι ⊕ κ) → mixedSpace K)).HasTemperateGrowth := by
+    have h : (fun u : κ → mixedSpace K ↦ (Sum.elim c u : (ι ⊕ κ) → mixedSpace K)) =
+        fun u ↦ L u + Sum.elim c 0 := by
+      funext u s
+      rw [hL]
+      cases s <;> simp
+    rw [h]
+    exact L.hasTemperateGrowth.add (Function.HasTemperateGrowth.const _)
+  have hupper : ∃ (k : ℕ) (C : ℝ), ∀ u : κ → mixedSpace K,
+      ‖u‖ ≤ C * (1 + ‖(Sum.elim c u : (ι ⊕ κ) → mixedSpace K)‖) ^ k := by
+    refine ⟨1, 1, fun u ↦ ?_⟩
+    have hle : ‖u‖ ≤ ‖(Sum.elim c u : (ι ⊕ κ) → mixedSpace K)‖ :=
+      (pi_norm_le_iff_of_nonneg (norm_nonneg _)).mpr fun j ↦ by
+        simpa using norm_le_pi_norm (Sum.elim c u : (ι ⊕ κ) → mixedSpace K) (Sum.inr j)
+    rw [pow_one, one_mul]
+    linarith
+  let slice : 𝓢(κ → mixedSpace K, ℂ) :=
+    SchwartzMap.compCLM ℝ hgrowth hupper φ
   have hslice : (fun y : κ → 𝔸[K] ↦ schwartzBruhatTensorPi φ g (Sum.elim (fun i ↦ z (.inl i)) y)) =
-      schwartzBruhatTensorPi (schwartzMapSliceSumElim (infPartPi fun i ↦ z (.inl i)) φ)
+      schwartzBruhatTensorPi slice
         (fun t ↦ g (Sum.elim (finPartPi fun i ↦ z (.inl i)) t)) := by
     funext y
     simp only [schwartzBruhatTensorPi, infPartPi_sumElim, finPartPi_sumElim,
-      schwartzMapSliceSumElim_apply]
+      slice, SchwartzMap.compCLM_apply, Function.comp_apply, c]
   rw [partialFourierPi, hslice, adelicFourierPi_schwartzBruhatTensorPi, schwartzBruhatTensorPi,
     schwartzBruhatTensorPi, mixedPartialFourierSchwartz_apply, mixedFourierPiSchwartz_apply]
   rfl

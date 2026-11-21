@@ -286,8 +286,8 @@ theorem setIntegral_vecDomain_eq {g : (ι → 𝔸[K]) → ℂ}
     simp only [e, infDomain, finDomain, vecDomain, GroundTheory.Global.fundamentalSet,
       MeasurableEquiv.arrowProdEquivProdArrow, Equiv.arrowProdEquivProdArrow, Set.mem_preimage,
       Set.mem_prod, Set.mem_pi, Set.mem_univ, true_implies, SetLike.mem_coe]
-    exact ⟨fun ⟨h1, h2⟩ i _ => ⟨h1 i, h2 i⟩,
-      fun h => ⟨fun i => (h i (mem_univ i)).1, fun i => (h i (mem_univ i)).2⟩⟩
+    exact ⟨fun ⟨h1, h2⟩ i => ⟨h1 i, h2 i⟩,
+      fun h => ⟨fun i => (h i).1, fun i => (h i).2⟩⟩
   have hsymm : ∀ p : (ι → InfiniteAdeleRing K) × (ι → FiniteAdeleRing (𝓞 K) K),
       (e.symm p : ι → 𝔸[K]) = (fun i => GroundTheory.Global.infiniteAdeleInl (p.1 i)) +
         fun i => GroundTheory.Global.finiteAdeleInr (p.2 i) := by
@@ -483,6 +483,8 @@ theorem IsIntegralPeriodic.hasSum_vecCoeff {f : (ι → 𝔸[K]) → ℂ} (hf : 
       (GroundTheory.Global.adelicChar K (pair (dualVec n) x) : ℂ)) (f x) := by
     rw [hfx]
     convert h2 using 1
+    funext n
+    simp [Function.comp_def, hcoeff, hchar, smul_eq_mul]
   refine (dualVec_injective.hasSum_iff fun ξ hξ => ?_).1 h3
   have hnd : ¬ IsDual ξ := fun hd => hξ (exists_dualVec_eq hd)
   rw [vecCoeff_eq_zero_of_not_isDual hf.periodic hf.finite hnd, zero_mul]

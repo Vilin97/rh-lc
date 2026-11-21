@@ -81,9 +81,9 @@ theorem det_gram_sumElim {m n : Type*} [Fintype m] [Fintype n] [DecidableEq m] [
   have h1 : Sum.elim a q = fun k ↦ ∑ l, T l k • Sum.elim a b l := by
     funext k
     rcases k with i | j
-    · simp [T, Fintype.sum_sum_type, one_apply, ite_smul]
+    · simp [T, Fintype.sum_sum_type, Matrix.one_apply, ite_smul]
     · simp only [T, Fintype.sum_sum_type, Sum.elim_inr, Sum.elim_inl, fromBlocks_apply₁₂,
-        fromBlocks_apply₂₂, one_apply, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq',
+        fromBlocks_apply₂₂, Matrix.one_apply, ite_smul, one_smul, zero_smul, Finset.sum_ite_eq',
         Finset.mem_univ, if_true, hq j]
       simp only [Matrix.neg_apply, neg_smul, Finset.sum_neg_distrib, sub_eq_add_neg]
       exact add_comm _ _

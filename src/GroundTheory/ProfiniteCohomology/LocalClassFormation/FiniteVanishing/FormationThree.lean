@@ -43,8 +43,8 @@ theorem ClassFormation.subsingleton_groupCohomology_three_quot (U : OpenSubgroup
     Subgroup.finite_quotient_of_finiteIndex
   let : Fintype ((U : Subgroup G) ⧸ (V : Subgroup G).subgroupOf U) := Fintype.ofFinite _
   exact subsingleton_groupCohomology_three_of_tate _ (F.groupFundamentalClass U V)
-    (fun S => (F.tate_hypotheses hVU S).1) (fun S => (F.tate_hypotheses hVU S).2.1)
-    (fun S => (F.tate_hypotheses hVU S).2.2)
+    (fun S => (F.tate_hypotheses (U := U) (V := V) hVU S).1) (fun S => (F.tate_hypotheses (U := U) (V := V) hVU S).2.1)
+    (fun S => (F.tate_hypotheses (U := U) (V := V) hVU S).2.2)
 
 
 include F in

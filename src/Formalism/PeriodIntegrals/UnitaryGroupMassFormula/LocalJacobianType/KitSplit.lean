@@ -128,7 +128,7 @@ theorem tens_iff (x : Fv F v ⊗[F] E) :
       left
       exact ⟨⟨(a : E), ⟨a, rfl⟩⟩, by simp [inclR]⟩
     | zero => simpa using zero_mem _
-    | add y z _ _ hy hz => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hy hz
+    | add y z _ _ hy hz => simpa only [map_add] using add_mem hy hz
     | smul t y _ hy =>
       have h1 : t • y = ((t : Fv F v) ⊗ₜ[F] (1 : E)) * y := by
         rw [show t • y = (t : Fv F v) • y from rfl, Algebra.smul_def]
@@ -211,7 +211,7 @@ theorem exists_SD (hS : SplitHyp σ v) : Nonempty (SD σ v) := by
     have hfix : ∀ z, sigR (Fv F v) σ z = z := by
       intro z
       conv_lhs => rw [dec z]
-      rw [(sigR (Fv F v) σ).map_add (f := _), sigR_smul, sigR_smul, (sigR (Fv F v) σ).map_sub,
+      rw [map_add, sigR_smul, sigR_smul, (sigR (Fv F v) σ).map_sub,
         (sigR (Fv F v) σ).map_one, ← hfdef, hfe, ← dec z]
     ext x
     have h1 := hfix ((1 : Fv F v) ⊗ₜ[F] x)

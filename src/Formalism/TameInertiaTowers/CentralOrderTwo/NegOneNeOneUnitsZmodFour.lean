@@ -10,8 +10,9 @@ namespace Formalism.TwoAdicCyclotomicDecomposition
 
 lemma pv24 : padicValInt 2 ((5:ℤ) ^ 2 - 1) = 3 := by
   have h : ((5:ℤ) ^ 2 - 1) = ((2 ^ 3 * 3 : ℕ) : ℤ) := by norm_num
-  rw [h, padicValInt.of_nat, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (show 2 ^ 3 ≠ 0 by norm_num) (show 3 ≠ 0 by norm_num),
-    padicValNat.prime_pow, padicValNat.eq_zero_of_not_dvd (show ¬ 2 ∣ 3 by norm_num)]
+  rw [h, padicValInt.of_nat, Nat.multiplicity_mul (show 2 ^ 3 ≠ 0 by norm_num)
+    (show 3 ≠ 0 by norm_num), Nat.multiplicity_prime_pow,
+    multiplicity_eq_zero_of_not_dvd (show ¬ 2 ∣ 3 by norm_num), add_zero]
 
 lemma five_unit_coe_int (n : ℕ) : ((u5 n : (ZMod (2 ^ n))ˣ) : ZMod (2 ^ n)) = ((5 : ℤ) : ZMod (2 ^ n)) := by simp [u5, ZMod.coe_unitOfCoprime]
 

@@ -74,7 +74,15 @@ theorem cohomologyInnerConj_zero (A : Rep.{u} k Γ) [IsDiscreteRep A] (g : Γ) :
   intro x
   obtain ⟨z, rfl⟩ := homologyπ_surjective (cochainsComplex A) 0 x
   change (cohomologyInnerConj A 0 g).hom ((cohomologyπ A 0).hom z) = (cohomologyπ A 0).hom z
-  rw [cohomologyInnerConj, cohomologyπ_cohomologyMapAlong_apply]
+  rw [cohomologyInnerConj]
+  have h := ConcreteCategory.congr_hom
+    (cohomologyπ_cohomologyMapAlong (innerConjHom g) (continuous_innerConjHom g)
+      (innerConjMor A g) 0) z
+  change (cohomologyMapAlong (innerConjHom g) (continuous_innerConjHom g)
+    (innerConjMor A g) 0).hom ((cohomologyπ A 0).hom z) =
+    (cohomologyπ A 0).hom ((cocyclesMapAlong (innerConjHom g)
+      (continuous_innerConjHom g) (innerConjMor A g) 0).hom z) at h
+  rw [h]
   congr 1
   apply iCycles_injective (cochainsComplex A) 0
   rw [iCycles_cyclesMap_apply]

@@ -284,7 +284,7 @@ theorem symMeasure_compl_pts (d : HSMDatum D Ω κ) : symMeasure d (pts (coordId
 theorem map_conjPt_symMeasure (d : HSMDatum D Ω κ) : (symMeasure d).map conjPt = symMeasure d := by
   have hm := measurable_symPt d
   have hcj : Measurable (conjPt : (Ix κ → ℂ) → Ix κ → ℂ) := continuous_conjPt.measurable
-  rw [symMeasure, Measure.map_smul, Measure.map_add _ _ hcj, Measure.map_map hcj hm,
+  rw [symMeasure, Measure.map_smul _ hcj.aemeasurable, Measure.map_add _ _ hcj, Measure.map_map hcj hm,
     Measure.map_map hcj (hcj.comp hm)]
   have : conjPt ∘ (conjPt ∘ symPt d) = symPt d := by
     funext y

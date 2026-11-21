@@ -208,6 +208,9 @@ theorem awayImageS_eq_smul {g : (FiniteAdeleRing (𝓞 K) K)ˣ → ℝ≥0∞}
     awayImageS S g = awayImageS S g (intUnitsAtS S) • multHaarS S := by
   have := isMulLeftInvariant_awayImageS hinv
   have := isFiniteMeasureOnCompacts_awayImageS hinv hc
+  haveI : (multHaarS S).IsHaarMeasure := by
+    unfold multHaarS
+    infer_instance
   have h := Measure.isMulLeftInvariant_eq_smul (awayImageS S g) (multHaarS S)
   set c := Measure.haarScalarFactor (awayImageS S g) (multHaarS S)
   have hU : awayImageS S g (intUnitsAtS S) = (c : ℝ≥0∞) := by

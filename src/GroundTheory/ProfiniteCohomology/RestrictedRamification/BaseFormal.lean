@@ -167,7 +167,10 @@ theorem cohomologyMapAlong_h0Class {G : Type u} [Group G] [TopologicalSpace G] [
   apply cocycles_ext
   rw [cochainOf_cocycleι_cocyclesMapAlong, cochainOf_cocycleι_cyclesMap, cochainOf_cocycleι_cyclesMap]
   funext σ
-  simp only [cochainOf_cocycleι_unitCocycle]
+  have hG := congrFun (cochainOf_cocycleι_unitCocycle (k := k) (G := G)) (ψ ∘ σ)
+  have hK := congrFun (cochainOf_cocycleι_unitCocycle (k := k) (G := K)) σ
+  dsimp only
+  rw [hG, hK]
   rfl
 
 variable {A B C : Rep.{u} k K} [IsDiscreteRep A] [IsDiscreteRep B] [IsDiscreteRep C]

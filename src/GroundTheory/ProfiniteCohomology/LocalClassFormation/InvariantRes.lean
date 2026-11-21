@@ -206,7 +206,7 @@ theorem brauerInv_brauerRes (x : galoisBrauerGroup F Ω) :
         IsScalarTower.algebraMap_apply F F' Ω a]
       rfl
   have : ValuativeExtension (unramifiedLevel F Ω n) (unramifiedLevel F' Ω n) :=
-    ⟨fun a b => by
+    ⟨fun {a b} => by
       rw [← IntermediateField.coe_vle_coe_iff (L := Ω) a b,
         ← IntermediateField.coe_vle_coe_iff (L := Ω)]
       rfl⟩

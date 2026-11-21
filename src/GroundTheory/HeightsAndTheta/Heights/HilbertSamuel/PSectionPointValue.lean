@@ -148,7 +148,7 @@ theorem val_continuousOn {y : (Σ k, ι k) → Ω} {A : HermLine ι}
     fun f => MvPolynomial.continuous_eval _
   have hAc : ContinuousWithinAt (fun z => (A.h z : ℂ) ^ n) (mcPts (mCoordIdeal y)) z₀ :=
     (Complex.continuous_ofReal.continuousAt.comp_continuousWithinAt
-      ((hA z₀ hz₀.1).mono fun z hz => hz.1)).pow n
+      ((hA z₀ hz₀.1).mono fun z (hz : z ∈ mcPts (mCoordIdeal y)) => hz.1)).pow n
   have hF : ContinuousWithinAt (fun z => eval z (map (Int.castRingHom ℂ) g) /
       (eval z (map (Int.castRingHom ℂ) h) * (A.h z : ℂ) ^ n)) (mcPts (mCoordIdeal y)) z₀ :=
     (hcont g).continuousWithinAt.div ((hcont h).continuousWithinAt.mul hAc)

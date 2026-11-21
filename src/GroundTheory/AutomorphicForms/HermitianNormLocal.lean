@@ -49,7 +49,7 @@ noncomputable def quadTensorHom :
 theorem quadTensorHom_tmul (r : R) (z : QuadraticAlgebra L d 0) :
     quadTensorHom d R (r ⊗ₜ z) = ⟨r * algebraMap L R z.re, r * algebraMap L R z.im⟩ := by
   simp only [quadTensorHom, Algebra.TensorProduct.lift_tmul, Algebra.ofId_apply, quadMap_apply]
-  ext <;> simp [QuadraticAlgebra.algebraMap_eq]
+  ext <;> simp [QuadraticAlgebra.algebraMap_eq, -QuadraticAlgebra.C_eq_algebraMap]
 
 noncomputable def quadTensorInv (z : QuadraticAlgebra R (algebraMap L R d) 0) :
     R ⊗[L] QuadraticAlgebra L d 0 :=

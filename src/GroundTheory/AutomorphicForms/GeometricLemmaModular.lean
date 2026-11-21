@@ -261,7 +261,7 @@ theorem inv_apply_of_diagonal {g : GL (Fin n) F}
   have : ((g⁻¹ : GL (Fin n) F) : Matrix (Fin n) (Fin n) F) i j =
       ((g : Matrix (Fin n) (Fin n) F) i i)⁻¹ * (1 : Matrix (Fin n) (Fin n) F) i j := by
     rw [← h, ← mul_assoc, inv_mul_cancel₀ h0, one_mul]
-  rw [this, one_apply]
+  rw [this, Matrix.one_apply]
   split_ifs <;> simp
 
 theorem det_adLeviPar_of_diagonal (l : leviPar F n γ δ)

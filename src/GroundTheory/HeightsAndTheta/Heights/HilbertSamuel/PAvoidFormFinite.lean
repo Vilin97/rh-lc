@@ -154,7 +154,8 @@ theorem cmp_of_homog {h : MRingOver ℂ ι} {b : K → ℕ} (hh : IsMultiHomog h
   · by_cases hb : b = D
     · subst hb
       simp [hh m hm]
-    · rw [if_neg hb, coeff_zero, if_neg (by rw [hh m hm]; exact hb)]
+    · rw [if_neg hb, AddMonoidAlgebra.coeff_zero, if_neg (by rw [hh m hm]; exact hb)]
+      rfl
 
 
 open Classical in
@@ -198,7 +199,7 @@ theorem cmp_mul {q : MRingOver ℂ ι} {d : K → ℕ} (hq : IsMultiHomog q d) (
       simp only [Pi.add_apply, Pi.sub_apply] at h3 ⊢
       rw [h3]
       exact Nat.sub_add_cancel h4
-  · rw [coeff_zero, coeff_mul]
+  · rw [AddMonoidAlgebra.coeff_zero, coeff_mul]
     refine Finset.sum_eq_zero fun x hx => ?_
     by_cases hq0 : AddMonoidAlgebra.coeff q x.2 = 0
     · simp [hq0]
@@ -212,7 +213,8 @@ theorem cmp_mul {q : MRingOver ℂ ι} {d : K → ℕ} (hq : IsMultiHomog q d) (
       simp only [Pi.add_apply] at h3
       rw [← h3]
       exact Nat.le_add_left _ _
-  · rw [coeff_zero]
+  · rw [AddMonoidAlgebra.coeff_zero]
+    rfl
 
 theorem eval_cmp_eq_zero {S : Set (MRingOver ℂ ι)} (hS : ∀ s ∈ S, ∃ a, IsMultiHomog s a)
     {z : (Σ k, ι k) → ℂ} (hz : ∀ s ∈ S, eval z s = 0) {x : MRingOver ℂ ι} (hx : x ∈ Ideal.span S) :

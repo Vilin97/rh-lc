@@ -97,7 +97,7 @@ theorem indep_int {n : ℕ} (B : Module.Basis (Fin n) ℚ K) (q : Fin n → MvPo
   intro k
   ext m
   have hm := congrArg (AddMonoidAlgebra.coeff · m) h'
-  rw [coeff_sum, coeff_zero] at hm
+  rw [coeff_sum, AddMonoidAlgebra.coeff_zero] at hm
   simp only [coeff_C_mul, coeff_map, eq_intCast] at hm
   have := Fintype.linearIndependent_iff.mp hB (fun k => AddMonoidAlgebra.coeff (q k) m) (by simpa [zsmul_eq_mul, mul_comm] using hm) k
   simpa using this

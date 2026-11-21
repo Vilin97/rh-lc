@@ -97,8 +97,8 @@ theorem finiteDiagonal_mem_Gamma0Level_of_int {γ : GL (Fin 2) ℚ} (A B : Matri
   · rw [← map_inv, finiteDiagonal_apply, ← hB, map_intCast]
     exact intCast_mem_integralFiniteAdeles _
   · obtain ⟨m, hm⟩ := hN
-    refine ⟨(m : 𝔸f), intCast_mem_integralFiniteAdeles m, ?_⟩
-    change algebraMap ℚ 𝔸f (γ 1 0) = _
+    refine ⟨(m : FiniteAdeleRing (𝓞 ℚ) ℚ), intCast_mem_integralFiniteAdeles m, ?_⟩
+    change algebraMap ℚ (FiniteAdeleRing (𝓞 ℚ) ℚ) (γ 1 0) = _
     rw [← hA, hm, Int.cast_mul, map_mul, map_intCast, map_intCast, Int.cast_natCast]
 
 @[simp]

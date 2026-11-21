@@ -273,8 +273,8 @@ theorem exists_indep {F E : Type} [Field F] [Field E] [Algebra F E] {N : ℕ} (�
   have h1 : AlgebraicIndependent F (fun l => ((e l : t) : D)) := hb.1.comp e e.injective
   have h2 := h1.map' (f := D.val) Subtype.val_injective
   convert h2 using 1
-  rw [← hj l]
-  rfl
+  funext l
+  exact congrArg Subtype.val (hj l)
 
 end GenericLinearTrdeg
 
