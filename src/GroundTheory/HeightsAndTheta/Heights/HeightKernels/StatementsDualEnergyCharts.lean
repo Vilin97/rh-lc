@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergy
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.ScaledExample
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergy
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.ScaledExample
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

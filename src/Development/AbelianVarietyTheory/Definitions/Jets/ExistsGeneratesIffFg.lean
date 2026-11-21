@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.IntegralExtensionOfRegR1
-import Development.AbelianVarietyTheory.Definitions.ThetaValues.SWEqSOf
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.IntegralExtensionOfRegR1
+public import Development.AbelianVarietyTheory.Definitions.ThetaValues.SWEqSOf
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

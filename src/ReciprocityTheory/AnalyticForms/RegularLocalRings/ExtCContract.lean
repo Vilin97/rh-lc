@@ -1,4 +1,8 @@
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.BaseChangeC
+module
+
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.BaseChangeC
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.R
 

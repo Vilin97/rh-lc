@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.HeightProofs.PageOKRun
-import Development.AbelianVarietyTheory.Proofs.HeightProofs.XLeOfSqLeFMulR
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.PageOKRun
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.XLeOfSqLeFMulR
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,4 +1,8 @@
-import Development.AbelianVarietyTheory.Definitions.Divisors.DatumEquiv
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Divisors.DatumEquiv
+
+@[expose] public section
 
 section
 

@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.DiscriminantColengthStatement
+module
+
+public import ReciprocityTheory.DualLattices.DiscriminantColengthStatement
+
+@[expose] public section
 
 noncomputable section
 

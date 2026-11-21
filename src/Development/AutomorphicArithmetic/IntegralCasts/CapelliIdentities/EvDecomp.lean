@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qf39.ev_decomp :
     ∀ {O σ : Type} [inst : CommRing O] [inst_1 : Fintype σ]

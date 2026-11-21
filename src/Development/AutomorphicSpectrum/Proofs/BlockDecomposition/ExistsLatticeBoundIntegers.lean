@@ -1,8 +1,12 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.PerfectoidPullbacks.LevelChainValuations.LatCDefs
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IntegerMemLatticeSubBoundStatement
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsFinsetGenerators
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PadicIntMemSub
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.PerfectoidPullbacks.LevelChainValuations.LatCDefs
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IntegerMemLatticeSubBoundStatement
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsFinsetGenerators
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PadicIntMemSub
+
+@[expose] public section
 
 open GroundTheory.PAdicHodge Formalism.Per6 DividedPowers CrystallineSemistableComparison CrystallineSemistableComparison.Pb CrystallineSemistableComparison.Pb.Lat
 

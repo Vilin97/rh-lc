@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RealPlaces.VanishingMackeyPlaces
-import GroundTheory.ProfiniteCohomology.RealPlaces.VanishingUnitsTwo
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RealPlaces.VanishingMackeyPlaces
+public import GroundTheory.ProfiniteCohomology.RealPlaces.VanishingUnitsTwo
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

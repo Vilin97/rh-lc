@@ -1,4 +1,8 @@
-import ReciprocityTheory.AnalyticForms.LeviForms.ProjectiveLineSecondChartSymmOfNe
+module
+
+public import ReciprocityTheory.AnalyticForms.LeviForms.ProjectiveLineSecondChartSymmOfNe
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.P
 

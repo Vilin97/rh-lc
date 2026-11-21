@@ -1,14 +1,18 @@
-import Formalism.PadicSubsetSums.CentralIdempotents.WindowSums
-import Formalism.WindowSums.PowerSeriesRelationList
-import Formalism.FrobeniusContraction.FrobeniusContractionProofs.ContractBij
-import Formalism.EisensteinCokernelLengths.FactorialValuationBounds.ToolsB
-import Formalism.EisensteinCokernelLengths.FactorialValuationBounds.FactorialValuationBoundsProofFact
-import Formalism.EisensteinCokernelLengths.FactorialValuationBounds.LagrangeIdealSgProof
-import Mathlib
-import Formalism.GaloisIrreducibility.NoSolvableTransitive
-import Formalism.ResultantValuation.ResultantAdjugateProofs.Window
-import Formalism.ResultantValuation.ResultantAdjugateProofs.Laplace
-import Formalism.CyclotomicNorms.StatementI
+module
+
+public import Formalism.PadicSubsetSums.CentralIdempotents.WindowSums
+public import Formalism.WindowSums.PowerSeriesRelationList
+public import Formalism.FrobeniusContraction.FrobeniusContractionProofs.ContractBij
+public import Formalism.EisensteinCokernelLengths.FactorialValuationBounds.ToolsB
+public import Formalism.EisensteinCokernelLengths.FactorialValuationBounds.FactorialValuationBoundsProofFact
+public import Formalism.EisensteinCokernelLengths.FactorialValuationBounds.LagrangeIdealSgProof
+public import Mathlib
+public import Formalism.GaloisIrreducibility.NoSolvableTransitive
+public import Formalism.ResultantValuation.ResultantAdjugateProofs.Window
+public import Formalism.ResultantValuation.ResultantAdjugateProofs.Laplace
+public import Formalism.CyclotomicNorms.StatementI
+
+@[expose] public section
 
 namespace Formalism.IrreducibleCountingLemmas.WindowSums
 

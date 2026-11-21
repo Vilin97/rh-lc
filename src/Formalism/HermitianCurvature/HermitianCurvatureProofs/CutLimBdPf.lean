@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLimE
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLimE
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP
 

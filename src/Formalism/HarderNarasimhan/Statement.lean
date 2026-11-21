@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LatticeSlopes.Statement
+module
+
+public import Mathlib
+public import Formalism.LatticeSlopes.Statement
+
+@[expose] public section
 
 open Module Submodule
 

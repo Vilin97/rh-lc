@@ -1,7 +1,11 @@
-import Formalism.AdmissibleDesigns.RowDROfWpIso
-import Formalism.AdmissibleDesigns.RhoContOf
-import Formalism.AdmissibleDesigns.RowTopOf
-import Formalism.AdmissibleDesigns.LocRepTriv
+module
+
+public import Formalism.AdmissibleDesigns.RowDROfWpIso
+public import Formalism.AdmissibleDesigns.RhoContOf
+public import Formalism.AdmissibleDesigns.RowTopOf
+public import Formalism.AdmissibleDesigns.LocRepTriv
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core] [hH0Fin : Fact Formalism.MainNotions.N.K.H0.FinCore]
 

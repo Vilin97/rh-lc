@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataTheta
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.AbsSubOfDisjoint
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LineMatrixKroneckerLeftFactorEqZeroOfIsPC
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockActDualPairCommutingLieActions
-import Development.AbelianVarietyTheory.Definitions.Foundations.HarmonicAllOfCompact
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataTheta
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.AbsSubOfDisjoint
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LineMatrixKroneckerLeftFactorEqZeroOfIsPC
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockActDualPairCommutingLieActions
+public import Development.AbelianVarietyTheory.Definitions.Foundations.HarmonicAllOfCompact
+
+@[expose] public section
 
 noncomputable section
 

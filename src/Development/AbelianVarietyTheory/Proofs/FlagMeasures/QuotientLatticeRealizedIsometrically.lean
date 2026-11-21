@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HarderNarasimhan.ShiftInvariance
-import Formalism.RealPlaceAnalysis.Complexify
+module
+
+public import Mathlib
+public import Formalism.HarderNarasimhan.ShiftInvariance
+public import Formalism.RealPlaceAnalysis.Complexify
+
+@[expose] public section
 
 open Formalism.HN Formalism.HermitianLatticesTheory Matrix NumberField Finset
 

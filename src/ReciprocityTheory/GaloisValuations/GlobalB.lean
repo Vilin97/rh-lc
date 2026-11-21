@@ -1,4 +1,8 @@
-import ReciprocityTheory.GaloisValuations.GlobalA
+module
+
+public import ReciprocityTheory.GaloisValuations.GlobalA
+
+@[expose] public section
 
 set_option linter.style.haveILetI false
 

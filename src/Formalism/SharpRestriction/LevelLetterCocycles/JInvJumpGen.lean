@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.JsetEmb
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.JsetEmb
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.SaturationChartsHolds
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.SaturationChartsHolds
+
+@[expose] public section
 
 set_option autoImplicit false
 

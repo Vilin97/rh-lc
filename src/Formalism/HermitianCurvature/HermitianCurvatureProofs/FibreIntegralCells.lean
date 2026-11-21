@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RearrSymm
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RearrSymm
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.StabilizerDisintegration.FK
 

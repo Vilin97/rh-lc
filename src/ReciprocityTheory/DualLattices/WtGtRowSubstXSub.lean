@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.ConstantCoeffRowSubst
+module
+
+public import ReciprocityTheory.DualLattices.ConstantCoeffRowSubst
+
+@[expose] public section
 
 noncomputable section
 

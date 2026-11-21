@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.IntAllProofFree
-import Formalism.LocalToGlobal.ProjectiveLattices.IntFrames
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.WtFieldPfA
-import Formalism.LocalToGlobal.ProjectiveLattices.CoreProofs
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.IntAllProofFree
+public import Formalism.LocalToGlobal.ProjectiveLattices.IntFrames
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.WtFieldPfA
+public import Formalism.LocalToGlobal.ProjectiveLattices.CoreProofs
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 400000
 

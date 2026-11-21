@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HeckeAlgebra
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HeckeAlgebra
+
+@[expose] public section
 
 noncomputable section
 

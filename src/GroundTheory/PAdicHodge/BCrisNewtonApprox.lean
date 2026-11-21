@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.BCrisNewtonNorm
-import GroundTheory.PAdicHodge.ACrisBdRInj
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.BCrisNewtonNorm
+public import GroundTheory.PAdicHodge.ACrisBdRInj
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

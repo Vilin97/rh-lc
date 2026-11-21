@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.BrzoPairAtZeroRight
-import Formalism.LocalToGlobal.Columns.BrzColLatOneLattice
-import Formalism.LocalToGlobal.Columns.SliceIntegralDeltaNeBot
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.BrzoPairAtZeroRight
+public import Formalism.LocalToGlobal.Columns.BrzColLatOneLattice
+public import Formalism.LocalToGlobal.Columns.SliceIntegralDeltaNeBot
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module MvPolynomial
 open scoped Matrix ComplexOrder

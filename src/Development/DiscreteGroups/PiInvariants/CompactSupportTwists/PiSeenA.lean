@@ -1,4 +1,8 @@
-import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.PiVecExHolds
+module
+
+public import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.PiVecExHolds
+
+@[expose] public section
 
 set_option linter.all false
 

@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
-import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
+public import Mathlib.RingTheory.Ideal.KrullsHeightTheorem
+
+@[expose] public section
 
 open IsLocalRing UpperTheory.V.Alg
 

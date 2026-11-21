@@ -1,7 +1,11 @@
-import ReciprocityTheory.DualLattices.EigenLengthFrobeniusStatement
-import ReciprocityTheory.DualLattices.FrobEqOfLe
-import ReciprocityTheory.DualLattices.StdJForm
-import ReciprocityTheory.DualLattices.UnramifiedCokernelLowerBoundOf
+module
+
+public import ReciprocityTheory.DualLattices.EigenLengthFrobeniusStatement
+public import ReciprocityTheory.DualLattices.FrobEqOfLe
+public import ReciprocityTheory.DualLattices.StdJForm
+public import ReciprocityTheory.DualLattices.UnramifiedCokernelLowerBoundOf
+
+@[expose] public section
 
 noncomputable section
 

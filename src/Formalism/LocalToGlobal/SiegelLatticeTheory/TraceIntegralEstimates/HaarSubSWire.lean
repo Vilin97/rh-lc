@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.TraceIntegralEstimates.HaarSubSF
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.LocalRingCardinality.IntCastDvdOfDvdIntegers
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.NMeasInv
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QuotNuSigma
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.TraceIntegralEstimates.HaarSubSF
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.LocalRingCardinality.IntCastDvdOfDvdIntegers
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.NMeasInv
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QuotNuSigma
+
+@[expose] public section
 
 noncomputable section
 

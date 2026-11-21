@@ -1,12 +1,16 @@
-import Development.WeilBound.ThetaLifts.TowerModels.TowerCodimensionTwoOf
-import Development.WeilBound.ThetaLifts.TowerModels.LeviEx
-import Development.WeilBound.ThetaLifts.TowerModels.PlaneSkew
-import Development.WeilBound.ThetaLifts.TowerModels.StabEx
-import Development.WeilBound.ThetaLifts.TowerModels.ModelEx
-import Development.WeilBound.ThetaLifts.TowerModels.DetHerm
-import Development.WeilBound.ThetaLifts.TowerModels.TwistedSums.StandardTraceAdelicAddCharLocalComponentNeOne
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
+module
+
+public import Development.WeilBound.ThetaLifts.TowerModels.TowerCodimensionTwoOf
+public import Development.WeilBound.ThetaLifts.TowerModels.LeviEx
+public import Development.WeilBound.ThetaLifts.TowerModels.PlaneSkew
+public import Development.WeilBound.ThetaLifts.TowerModels.StabEx
+public import Development.WeilBound.ThetaLifts.TowerModels.ModelEx
+public import Development.WeilBound.ThetaLifts.TowerModels.DetHerm
+public import Development.WeilBound.ThetaLifts.TowerModels.TwistedSums.StandardTraceAdelicAddCharLocalComponentNeOne
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
+
+@[expose] public section
 
 noncomputable section
 

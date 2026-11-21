@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemSupportQuotientIff
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemSupportQuotientIff
+
+@[expose] public section
+
 open CategoryTheory CategoryTheory.Limits TensorProduct
 
 namespace GlobalTheory.SupportBC

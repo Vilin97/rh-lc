@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.PairsStable
-import Development.WeilBound.ThetaLifts.LatticeBasics.LeviEx
-import Development.WeilBound.ThetaLifts.LatticeBasics.UnfoldA
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.PairsStable
+public import Development.WeilBound.ThetaLifts.LatticeBasics.LeviEx
+public import Development.WeilBound.ThetaLifts.LatticeBasics.UnfoldA
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.CharacterTheory.ImportsAlt
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.CharacterTheory.ImportsAlt
+
+@[expose] public section
 
 namespace GlobalTheory.IndefiniteRowSideFullHecke.CuspidalCharacters
 

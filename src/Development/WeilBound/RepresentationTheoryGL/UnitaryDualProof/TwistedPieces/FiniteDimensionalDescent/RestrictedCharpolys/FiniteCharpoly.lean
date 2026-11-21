@@ -1,7 +1,11 @@
-import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.TwistedPieces.FiniteDimensionalDescent.RestrictedCharpolys.PullPieces
-import Mathlib
-import GroundTheory.AutomorphicForms.StableConjTorus
-import GroundTheory.LocalFields.Interface
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.TwistedPieces.FiniteDimensionalDescent.RestrictedCharpolys.PullPieces
+public import Mathlib
+public import GroundTheory.AutomorphicForms.StableConjTorus
+public import GroundTheory.LocalFields.Interface
+
+@[expose] public section
 
 noncomputable section
 

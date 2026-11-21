@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.TangentPairingStatement
+module
+
+public import ReciprocityTheory.DualLattices.TangentPairingStatement
+
+@[expose] public section
 
 noncomputable section
 

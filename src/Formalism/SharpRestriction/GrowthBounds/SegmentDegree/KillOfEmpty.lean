@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.CardIcutFilter
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.CardIcutFilter
+
+@[expose] public section
 
 noncomputable section
 

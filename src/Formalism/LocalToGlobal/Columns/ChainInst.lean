@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.FiniteSumNonzeroLargeDepth
-import Formalism.LocalToGlobal.Columns.NonDeg
-import Formalism.LocalToGlobal.Columns.CyclotomicIsCyclotomicExtension
-import Formalism.LocalToGlobal.Columns.AtTOwedC
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.FiniteSumNonzeroLargeDepth
+public import Formalism.LocalToGlobal.Columns.NonDeg
+public import Formalism.LocalToGlobal.Columns.CyclotomicIsCyclotomicExtension
+public import Formalism.LocalToGlobal.Columns.AtTOwedC
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

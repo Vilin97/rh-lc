@@ -1,4 +1,8 @@
-import Formalism.ThetaLogCoordinates.FockResolutionOnto.StatementG
+module
+
+public import Formalism.ThetaLogCoordinates.FockResolutionOnto.StatementG
+
+@[expose] public section
 
 namespace Formalism.InvariantFactorPaths.L4
 

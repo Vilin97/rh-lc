@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataHost
-import Development.AutomorphicArithmetic.WeightCongruences.ProdNegOneZpow
-import Development.AutomorphicArithmetic.WeightCongruences.ExistsShiftWeightCongruenceLtTorsionOrder
-import Development.AutomorphicArithmetic.WeightCongruences.ProdCmTypeEqNormAndWeightCongruenceOne
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataHost
+public import Development.AutomorphicArithmetic.WeightCongruences.ProdNegOneZpow
+public import Development.AutomorphicArithmetic.WeightCongruences.ExistsShiftWeightCongruenceLtTorsionOrder
+public import Development.AutomorphicArithmetic.WeightCongruences.ProdCmTypeEqNormAndWeightCongruenceOne
+
+@[expose] public section
 
 open NumberField Formalism.BasicNotions
 

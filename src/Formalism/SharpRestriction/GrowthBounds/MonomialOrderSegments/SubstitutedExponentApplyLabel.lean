@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.GlobalTheory
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.GlobalTheory
+
+@[expose] public section
 
 noncomputable section
 

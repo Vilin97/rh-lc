@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.LinksChar
-import Formalism.LocalRingCardinality.KernelPlaceMeanBound
-import Formalism.LocalToGlobal.BesselHermitianTheta.LemmasSign
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.LinksChar
+public import Formalism.LocalRingCardinality.KernelPlaceMeanBound
+public import Formalism.LocalToGlobal.BesselHermitianTheta.LemmasSign
+
+@[expose] public section
 
 noncomputable section
 

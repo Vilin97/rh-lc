@@ -1,9 +1,13 @@
-import Development.WeilBound.CoreStatements.MultihomogeneousSquares.SingSt
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.DominatingRegularPushStatement
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.DominatingCoordsReindexedStatement
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ComplexPointsIffCentresStatement
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ValAtIffValueAtStatement
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.MemAbLocusIff
+module
+
+public import Development.WeilBound.CoreStatements.MultihomogeneousSquares.SingSt
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.DominatingRegularPushStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.DominatingCoordsReindexedStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ComplexPointsIffCentresStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ValAtIffValueAtStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.MemAbLocusIff
+
+@[expose] public section
 
 noncomputable section
 

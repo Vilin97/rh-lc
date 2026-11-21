@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.FiltrationSaturationKiller
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.FiltrationSaturationKiller
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,10 +1,14 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.LatticeBasics.HgtWitt
-import Development.WeilBound.CoreStatements.LocalThetaKernels.IwasFrame
-import Development.AutomorphicSpectrum.Proofs.AdelicProofs.MemKFinOfFrameIntegral
-import Development.AutomorphicSpectrum.Proofs.AdelicProofs.HasSatOfFamily
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PlaceSplitOrInert
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIntAddConjEqOneOfBaseGood
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.LatticeBasics.HgtWitt
+public import Development.WeilBound.CoreStatements.LocalThetaKernels.IwasFrame
+public import Development.AutomorphicSpectrum.Proofs.AdelicProofs.MemKFinOfFrameIntegral
+public import Development.AutomorphicSpectrum.Proofs.AdelicProofs.HasSatOfFamily
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PlaceSplitOrInert
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIntAddConjEqOneOfBaseGood
+
+@[expose] public section
 
 noncomputable section
 

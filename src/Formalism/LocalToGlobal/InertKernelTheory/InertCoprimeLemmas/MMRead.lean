@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.InertKernelTheory.OneCopyTh1
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.IntBasis
-import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.BinomialSeriesCoefficients.CoeffPowEqZeroOfCc
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.OneCopyTh1
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.IntBasis
+public import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.BinomialSeriesCoefficients.CoeffPowEqZeroOfCc
+
+@[expose] public section
 
 noncomputable section
 

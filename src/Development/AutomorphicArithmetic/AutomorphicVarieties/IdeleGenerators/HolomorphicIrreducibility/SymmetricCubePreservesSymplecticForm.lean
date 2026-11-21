@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.IdeleGenerators.ShapeFacts
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.IdeleGenerators.ShapeFacts
+
+@[expose] public section
 
 open Polynomial UpperTheory.V.Af Formalism.ConjugateSelfDual
 open scoped Matrix

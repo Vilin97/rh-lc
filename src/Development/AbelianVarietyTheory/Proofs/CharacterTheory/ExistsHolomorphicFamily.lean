@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ChainRuleAndJacobianCriterion
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsHolomorphicSections
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DegenerationProofs.ChainRuleAndJacobianCriterion
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsHolomorphicSections
+
+@[expose] public section
 
 open Topology
 

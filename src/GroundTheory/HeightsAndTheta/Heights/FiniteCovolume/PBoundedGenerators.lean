@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.SecondCountableTopologyArchUnitary
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StBoundedGenerators
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StReducedBasisBound
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StArchCovolumeBound
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StMajorantTransport
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.SecondCountableTopologyArchUnitary
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StBoundedGenerators
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StReducedBasisBound
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StArchCovolumeBound
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StMajorantTransport
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights.FiniteCovolume
 

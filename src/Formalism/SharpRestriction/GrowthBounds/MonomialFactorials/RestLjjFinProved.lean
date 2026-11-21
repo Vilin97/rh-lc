@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BePhiAddLeft
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.FinrankLjjSpan
-import Formalism.MahlerMeasure.MahlerMeasureProofs.TheoremM
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BePhiAddLeft
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.FinrankLjjSpan
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.TheoremM
+
+@[expose] public section
 
 noncomputable section
 

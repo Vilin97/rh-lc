@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinHomIffLinEnd
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CFxi
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PsumLeftPull
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinHomIffLinEnd
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CFxi
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PsumLeftPull
+
+@[expose] public section
 
 noncomputable section
 

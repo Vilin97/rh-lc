@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.PNeZeroOL
-import Formalism.LocalToGlobal.GroupLattices.LevelCharts.LevelWithoutExtraPlaces
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.PNeZeroOL
+public import Formalism.LocalToGlobal.GroupLattices.LevelCharts.LevelWithoutExtraPlaces
+
+@[expose] public section
 
 noncomputable section
 

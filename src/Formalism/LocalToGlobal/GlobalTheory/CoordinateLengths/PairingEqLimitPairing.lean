@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL6.LocalBasisChangeDecompCompatible
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PBwLocGlob
-import Formalism.LocalToGlobal.GlobalTheory.CoordinateLengths.PairingContinuityBound
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.LocalBasisChangeDecompCompatible
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PBwLocGlob
+public import Formalism.LocalToGlobal.GlobalTheory.CoordinateLengths.PairingContinuityBound
+
+@[expose] public section
 
 noncomputable section
 

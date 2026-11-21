@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.TensorProductTheorem.GKMain
-import GroundTheory.AutomorphicForms.TensorProductTheorem.GeneralLinearIntegers
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.GKStable
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.GKMain
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.GeneralLinearIntegers
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.GKStable
+
+@[expose] public section
 
 noncomputable section
 

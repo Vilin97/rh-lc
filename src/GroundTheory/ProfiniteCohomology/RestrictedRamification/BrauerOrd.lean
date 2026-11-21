@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BrauerDefs
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.SDivisor
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalLimits.LiesOver
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.Splitting
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BrauerDefs
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.SDivisor
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalLimits.LiesOver
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.Splitting
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

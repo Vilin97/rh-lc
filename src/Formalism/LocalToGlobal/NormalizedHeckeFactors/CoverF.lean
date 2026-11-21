@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverThm
-import Formalism.SharpRestriction.LevelLetterCocycles.ThetaScalarFamilyOfEigenvalue
+module
+
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverThm
+public import Formalism.SharpRestriction.LevelLetterCocycles.ThetaScalarFamilyOfEigenvalue
+
+@[expose] public section
 
 open Formalism.BasicNotions
 

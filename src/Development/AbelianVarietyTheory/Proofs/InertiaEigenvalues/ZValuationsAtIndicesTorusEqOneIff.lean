@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ValsAtApply
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ValsAtApply
+
+@[expose] public section
+
 open GlobalTheory.UnitLemma
 
 namespace GlobalTheory.TorusKer

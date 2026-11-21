@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.GelfandTransference.EnergyIdentity
+module
+
+public import Mathlib
+public import Formalism.GelfandTransference.EnergyIdentity
+
+@[expose] public section
 
 namespace Formalism.SA.P
 

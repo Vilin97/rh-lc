@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LatAtLattice
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.JetsInIffStepField
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TopPlaceLogTheta
-import Formalism.LocalToGlobal.Columns.ToHLat
-import Formalism.HarderNarasimhan.QuotRealize
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.PairLeIffPairHtLe
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LatAtLattice
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.JetsInIffStepField
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TopPlaceLogTheta
+public import Formalism.LocalToGlobal.Columns.ToHLat
+public import Formalism.HarderNarasimhan.QuotRealize
+public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.PairLeIffPairHtLe
+
+@[expose] public section
 
 noncomputable section
 

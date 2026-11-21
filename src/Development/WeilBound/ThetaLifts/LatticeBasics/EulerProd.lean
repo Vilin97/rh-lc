@@ -1,7 +1,11 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.HodgeTateFromSandwich
-import Development.WeilBound.ThetaLifts.LatticeBasics.FdEqZero
-import Development.WeilBound.ThetaLifts.LatticeBasics.EulerA
-import Development.WeilBound.ThetaLifts.LatticeBasics.EulerB
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.HodgeTateFromSandwich
+public import Development.WeilBound.ThetaLifts.LatticeBasics.FdEqZero
+public import Development.WeilBound.ThetaLifts.LatticeBasics.EulerA
+public import Development.WeilBound.ThetaLifts.LatticeBasics.EulerB
+
+@[expose] public section
 
 noncomputable section
 

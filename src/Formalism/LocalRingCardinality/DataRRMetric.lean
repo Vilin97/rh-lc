@@ -1,6 +1,10 @@
-import Formalism.LocalRingCardinality.DataAmbForm
-import Formalism.LocalRingCardinality.DataDIV
-import Formalism.LocalRingCardinality.DataParams₂
+module
+
+public import Formalism.LocalRingCardinality.DataAmbForm
+public import Formalism.LocalRingCardinality.DataDIV
+public import Formalism.LocalRingCardinality.DataParams₂
+
+@[expose] public section
 
 noncomputable section
 

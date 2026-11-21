@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.RegConst
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SquareConstantProportionalRegular
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RealMatchingTiedRegularizationConstant
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StageFactorNonvanishingScalars
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.RegConst
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SquareConstantProportionalRegular
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RealMatchingTiedRegularizationConstant
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StageFactorNonvanishingScalars
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.RealGroupsLie
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.RealGroupsLie
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

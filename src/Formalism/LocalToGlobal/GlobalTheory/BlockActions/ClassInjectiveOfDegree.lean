@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.InJSymRestrict
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.ClassMapEstimateOfPartial
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.InJSymRestrict
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.ClassMapEstimateOfPartial
+
+@[expose] public section
 
 noncomputable section
 

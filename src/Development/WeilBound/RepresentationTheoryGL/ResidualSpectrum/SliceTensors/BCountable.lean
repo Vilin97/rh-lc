@@ -1,4 +1,8 @@
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.GKStableParabolic
+module
+
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.GKStableParabolic
+
+@[expose] public section
 
 noncomputable section
 

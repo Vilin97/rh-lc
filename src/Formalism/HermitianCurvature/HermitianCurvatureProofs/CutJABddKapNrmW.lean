@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJABddKapTP
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.NFRadRedLocSec
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJABddKapTP
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NFRadRedLocSec
+
+@[expose] public section
 
 open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt NumberField
 open scoped ComplexConjugate Matrix

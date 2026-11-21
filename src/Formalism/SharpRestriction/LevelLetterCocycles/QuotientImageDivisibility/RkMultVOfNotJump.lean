@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.WeaklyAdmissibleFiltrations.Statement
-import Formalism.WeaklyAdmissibleFiltrations.CocyclesFunctorial
+module
+
+public import Mathlib
+public import Formalism.WeaklyAdmissibleFiltrations.Statement
+public import Formalism.WeaklyAdmissibleFiltrations.CocyclesFunctorial
+
+@[expose] public section
 
 noncomputable section
 

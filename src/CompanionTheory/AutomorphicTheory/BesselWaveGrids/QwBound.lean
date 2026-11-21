@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.StatementD
+module
+
+public import Formalism.HermitianCurvature.StatementD
+
+@[expose] public section
 
 namespace CompanionTheory.WaveGrid
 

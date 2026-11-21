@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.ColumnsProofs.HFSLin
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.ColumnsProofs.HFSLin
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain Polynomial
 

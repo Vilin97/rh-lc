@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.RankCover
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.LocalEmbeddings.RankCover
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 400000
 

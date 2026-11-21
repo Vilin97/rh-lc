@@ -1,9 +1,13 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.LogInv
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.LogPoinc
-import Mathlib.RingTheory.Unramified.Field
-import Mathlib.RingTheory.Unramified.Pi
-import Mathlib.RingTheory.Unramified.Finite
-import Mathlib.RingTheory.LocalProperties.Reduced
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.LogInv
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.LogPoinc
+public import Mathlib.RingTheory.Unramified.Field
+public import Mathlib.RingTheory.Unramified.Pi
+public import Mathlib.RingTheory.Unramified.Finite
+public import Mathlib.RingTheory.LocalProperties.Reduced
+
+@[expose] public section
 
 noncomputable section
 

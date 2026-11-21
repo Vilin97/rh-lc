@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.KummerTheory.KummerIndexLemma.PowerPlaces
-import GroundTheory.GlobalFields.SUnits
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.KummerTheory.KummerIndexLemma.PowerPlaces
+public import GroundTheory.GlobalFields.SUnits
+
+@[expose] public section
 
 noncomputable section
 

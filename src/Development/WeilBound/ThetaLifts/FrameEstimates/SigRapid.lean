@@ -1,7 +1,11 @@
-import Development.WeilBound.ThetaLifts.FrameEstimates.TowerRallisLemma
-import Development.WeilBound.ThetaLifts.FrameEstimates.ThickFrames
-import Development.WeilBound.ThetaLifts.FrameEstimates.IsCompactIntV
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.OrthogonalDecomposition.SigThConst
+module
+
+public import Development.WeilBound.ThetaLifts.FrameEstimates.TowerRallisLemma
+public import Development.WeilBound.ThetaLifts.FrameEstimates.ThickFrames
+public import Development.WeilBound.ThetaLifts.FrameEstimates.IsCompactIntV
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.OrthogonalDecomposition.SigThConst
+
+@[expose] public section
 
 noncomputable section
 

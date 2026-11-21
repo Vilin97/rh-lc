@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.GlobalTheory.SmallShareWeightExists
-import Formalism.SharpRestriction.GlobalSchurBounds.WeightVectorSmallSharesEight
-import Formalism.LocalToGlobal.GlobalTheory.PowFourLtCeilThresholdPrime
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.DiscriminantSettingSatisfied
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.SmallShareWeightExists
+public import Formalism.SharpRestriction.GlobalSchurBounds.WeightVectorSmallSharesEight
+public import Formalism.LocalToGlobal.GlobalTheory.PowFourLtCeilThresholdPrime
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.DiscriminantSettingSatisfied
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StIsolatedPointsCountPrime
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StIsolatedFibreOpenPoly
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StDominantFibreBound
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StImageDimLe
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.Assembly
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StIsolatedPointsCountPrime
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StIsolatedFibreOpenPoly
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StDominantFibreBound
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StImageDimLe
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.Assembly
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.SelfDualCovolume
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.RepsProd
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.SelfDualCovolume
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.RepsProd
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators ComplexConjugate

@@ -1,9 +1,13 @@
-import Formalism.PadicSubsetSums.CentralIdempotents.PrimitiveRootFifteenSubOneUnit
-import Mathlib
-import Formalism.GaloisIrreducibility.NoSolvableTransitive
-import Formalism.ResultantValuation.ResultantAdjugateProofs.Window
-import Formalism.ResultantValuation.ResultantAdjugateProofs.Laplace
-import Formalism.CyclotomicNorms.StatementI
+module
+
+public import Formalism.PadicSubsetSums.CentralIdempotents.PrimitiveRootFifteenSubOneUnit
+public import Mathlib
+public import Formalism.GaloisIrreducibility.NoSolvableTransitive
+public import Formalism.ResultantValuation.ResultantAdjugateProofs.Window
+public import Formalism.ResultantValuation.ResultantAdjugateProofs.Laplace
+public import Formalism.CyclotomicNorms.StatementI
+
+@[expose] public section
 
 open Polynomial
 

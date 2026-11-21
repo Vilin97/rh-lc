@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.ModelIdentificationHolds
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.PbSmithLam
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.TauP
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.ModelIdentificationHolds
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.PbSmithLam
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.TauP
+
+@[expose] public section
 
 namespace Formalism.MainNotions.flipOneThree.Pf
 

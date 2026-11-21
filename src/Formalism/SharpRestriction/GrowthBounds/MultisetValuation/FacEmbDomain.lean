@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.EnGePProdRat
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.EnGePProdRat
+
+@[expose] public section
 
 noncomputable section
 

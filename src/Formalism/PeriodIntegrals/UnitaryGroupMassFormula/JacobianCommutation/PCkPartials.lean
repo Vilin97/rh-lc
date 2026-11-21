@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JacobianCommutation.CkDefs
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JacobianCommutation.CkDefs
+
+@[expose] public section
 
 open Filter Topology Asymptotics
 

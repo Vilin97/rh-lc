@@ -1,8 +1,12 @@
-import Formalism.PeriodIntegrals.JetsPhW
-import Mathlib
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.UnitBall
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IntMvPderiv
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IntegralPolynomialSecond
+module
+
+public import Formalism.PeriodIntegrals.JetsPhW
+public import Mathlib
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.UnitBall
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IntMvPderiv
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IntegralPolynomialSecond
+
+@[expose] public section
 
 noncomputable section
 

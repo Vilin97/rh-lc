@@ -1,7 +1,11 @@
-import ReciprocityTheory.DualLattices.PrimeHopfOrderStatement
-import ReciprocityTheory.DualLattices.ImportsAlt
-import ReciprocityTheory.DualLattices.VdetLeOfSpanLe
-import ReciprocityTheory.DualLattices.FourierMapSmulLambdaWeight
+module
+
+public import ReciprocityTheory.DualLattices.PrimeHopfOrderStatement
+public import ReciprocityTheory.DualLattices.ImportsAlt
+public import ReciprocityTheory.DualLattices.VdetLeOfSpanLe
+public import ReciprocityTheory.DualLattices.FourierMapSmulLambdaWeight
+
+@[expose] public section
 
 noncomputable section
 

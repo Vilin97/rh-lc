@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.LatticeHerglotzBound
+module
+
+public import Formalism.HermitianCurvature.LatticeHerglotzBound
+
+@[expose] public section
 
 open MeasureTheory Set
 

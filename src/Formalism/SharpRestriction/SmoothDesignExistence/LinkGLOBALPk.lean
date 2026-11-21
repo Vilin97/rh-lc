@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.LinkPk
-import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLbud
-import Formalism.SharpRestriction.SmoothDesignExistence.DGamSmooth
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.LinkPk
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLbud
+public import Formalism.SharpRestriction.SmoothDesignExistence.DGamSmooth
+
+@[expose] public section
 
 noncomputable section
 

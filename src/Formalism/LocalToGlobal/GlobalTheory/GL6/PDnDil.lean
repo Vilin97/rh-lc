@@ -1,11 +1,15 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PSplitT
-import Formalism.LocalToGlobal.GlobalTheory.GL6.DiamondPreservesRationalFormZero
-import Formalism.LocalToGlobal.GlobalTheory.GL6.AdelicFunctionRightTranslateDiamond
-import Formalism.LocalToGlobal.GlobalTheory.GL6.DiamondCommDistinctPlaces
-import Formalism.LocalToGlobal.GlobalTheory.GL6.Statement
-import Formalism.LocalToGlobal.GlobalTheory.GL6.FrameTranslate
-import Formalism.LocalToGlobal.GlobalTheory.GL6.EqOneOfCoprimeTorsionTwoPrimes
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PRLocV
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PSplitT
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.DiamondPreservesRationalFormZero
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.AdelicFunctionRightTranslateDiamond
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.DiamondCommDistinctPlaces
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.Statement
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.FrameTranslate
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.EqOneOfCoprimeTorsionTwoPrimes
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PRLocV
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.MemPolData
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.MemPolData
+
+@[expose] public section
 
 noncomputable section
 

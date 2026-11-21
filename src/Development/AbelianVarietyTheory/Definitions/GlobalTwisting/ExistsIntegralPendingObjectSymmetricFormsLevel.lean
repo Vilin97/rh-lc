@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalRingCardinality.Lemmas
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LClosedeqLemmas
-import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.ExistsBranchingCoordinatesIff
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsMemberFormsNonempty
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.Lemmas
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LClosedeqLemmas
+public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.ExistsBranchingCoordinatesIff
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsMemberFormsNonempty
+
+@[expose] public section
 
 noncomputable section
 

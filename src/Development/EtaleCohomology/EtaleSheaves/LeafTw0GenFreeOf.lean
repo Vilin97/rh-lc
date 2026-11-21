@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafTw0LocSplitOf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafTw0LocSplitOf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex GlobalTheory.EtC

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.ThetaSupremumBounds.StatementA
+module
+
+public import Mathlib
+public import Formalism.ThetaSupremumBounds.StatementA
+
+@[expose] public section
 
 open Finset MeasureTheory Filter Topology
 open scoped ComplexConjugate Real Nat

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.LocalArtinMap
-import GroundTheory.LocalFields.KroneckerWeber
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LocalArtinMap
+public import GroundTheory.LocalFields.KroneckerWeber
+
+@[expose] public section
 
 noncomputable section
 

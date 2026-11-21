@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleTrace.LTwoEpiPf
-import Development.EtaleCohomology.EtaleTrace.LDblPf
+module
+
+public import Development.EtaleCohomology.EtaleTrace.LTwoEpiPf
+public import Development.EtaleCohomology.EtaleTrace.LDblPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC

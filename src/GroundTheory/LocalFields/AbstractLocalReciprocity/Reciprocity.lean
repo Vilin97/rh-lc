@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.LocalFields.AbstractLocalReciprocity.UniqueQuotientSubgroupOfSelf
-import GroundTheory.LocalFields.AbstractLocalReciprocity.Frobenius
-import GroundTheory.LocalFields.AbstractLocalReciprocity.Unramified
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.UniqueQuotientSubgroupOfSelf
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.Frobenius
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.Unramified
+
+@[expose] public section
 
 namespace GroundTheory.LocalField.Abstract
 

@@ -1,9 +1,13 @@
-import Formalism.ConjugateSelfDual.StatementRest
-import Mathlib
-import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LiftInvariantsFinrankEq
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.ScaledValuations.ValuationApplyLtOneIff
-import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.ScaledValuations.ScaleEps
+module
+
+public import Formalism.ConjugateSelfDual.StatementRest
+public import Mathlib
+public import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LiftInvariantsFinrankEq
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.ScaledValuations.ValuationApplyLtOneIff
+public import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.ScaledValuations.ScaleEps
+
+@[expose] public section
 
 noncomputable section
 

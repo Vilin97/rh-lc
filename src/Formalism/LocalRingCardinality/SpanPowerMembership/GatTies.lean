@@ -1,7 +1,11 @@
-import Formalism.LocalRingCardinality.DataGatTies
-import Formalism.LocalRingCardinality.HostCls
-import Formalism.FrobeniusOrbits.HostCorollaries
-import Formalism.LocalRingCardinality.SpanPowerMembership.GatSetting
+module
+
+public import Formalism.LocalRingCardinality.DataGatTies
+public import Formalism.LocalRingCardinality.HostCls
+public import Formalism.FrobeniusOrbits.HostCorollaries
+public import Formalism.LocalRingCardinality.SpanPowerMembership.GatSetting
+
+@[expose] public section
 
 noncomputable section
 

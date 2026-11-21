@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.Cut_BPEq
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BetaCongrRight
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutFpmDecay
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.Cut_BPEq
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BetaCongrRight
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutFpmDecay
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBPEq
 

@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.MeanHeightDescent.MuMaxMinkowski
-import Formalism.MeanHeightDescent.BadRowsNumeric
-import Formalism.HarderNarasimhan.HarderNarasimhanProofs.SizeMu
-import Formalism.HarderNarasimhan.HarderNarasimhanProofs.DiscreteSpanOfLinIndep
+module
+
+public import Mathlib
+public import Formalism.MeanHeightDescent.MuMaxMinkowski
+public import Formalism.MeanHeightDescent.BadRowsNumeric
+public import Formalism.HarderNarasimhan.HarderNarasimhanProofs.SizeMu
+public import Formalism.HarderNarasimhan.HarderNarasimhanProofs.DiscreteSpanOfLinIndep
+
+@[expose] public section
 
 open Module NumberField
 

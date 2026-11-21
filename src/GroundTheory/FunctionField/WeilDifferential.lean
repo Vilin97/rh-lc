@@ -1,11 +1,15 @@
-import Mathlib
-import GroundTheory.FunctionField.PlaceDefs
-import GroundTheory.FunctionField.PlaceBasic
-import GroundTheory.FunctionField.Approximation
-import GroundTheory.FunctionField.Divisor
-import GroundTheory.FunctionField.DivisorDegree
-import GroundTheory.FunctionField.Repartition
-import GroundTheory.FunctionField.ExistsBoundDegSubFinrankL
+module
+
+public import Mathlib
+public import GroundTheory.FunctionField.PlaceDefs
+public import GroundTheory.FunctionField.PlaceBasic
+public import GroundTheory.FunctionField.Approximation
+public import GroundTheory.FunctionField.Divisor
+public import GroundTheory.FunctionField.DivisorDegree
+public import GroundTheory.FunctionField.Repartition
+public import GroundTheory.FunctionField.ExistsBoundDegSubFinrankL
+
+@[expose] public section
 
 namespace GroundTheory.FunctionField
 

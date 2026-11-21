@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.HermitianColumns.StarConj
-import Formalism.LocalToGlobal.HermitianColumns.SymAll
-import Formalism.LocalToGlobal.HermitianColumns.BaseModelLevelEq
+module
+
+public import Formalism.LocalToGlobal.HermitianColumns.StarConj
+public import Formalism.LocalToGlobal.HermitianColumns.SymAll
+public import Formalism.LocalToGlobal.HermitianColumns.BaseModelLevelEq
+
+@[expose] public section
 
 noncomputable section
 

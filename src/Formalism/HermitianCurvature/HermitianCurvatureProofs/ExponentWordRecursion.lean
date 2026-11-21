@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DerivativeRulesA1
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DerivativeRulesA1
+
+@[expose] public section
 
 open Matrix Filter Topology
 open scoped ComplexConjugate

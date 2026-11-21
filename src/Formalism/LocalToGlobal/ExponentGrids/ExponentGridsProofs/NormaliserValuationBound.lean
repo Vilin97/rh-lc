@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.Complement2Normaliser
-import Formalism.TranslateCocycles.StatementHC
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.SecondComplementParameterBounds
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.Complement2Normaliser
+public import Formalism.TranslateCocycles.StatementHC
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.SecondComplementParameterBounds
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain Finset
 open Formalism.DivisionValues (vw conjPl lw PlOver IsConjAt)

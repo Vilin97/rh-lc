@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.IntFrames
-import Formalism.LocalToGlobal.ProjectiveLattices.LieAlg
-import Formalism.LocalToGlobal.ProjectiveLattices.LieRel
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.UniversalCharts.UnivChartLoc
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.IntFrames
+public import Formalism.LocalToGlobal.ProjectiveLattices.LieAlg
+public import Formalism.LocalToGlobal.ProjectiveLattices.LieRel
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.ChartPullbacks.UniversalCharts.UnivChartLoc
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 400000
 

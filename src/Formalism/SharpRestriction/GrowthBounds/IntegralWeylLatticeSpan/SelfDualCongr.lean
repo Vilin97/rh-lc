@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan.GramInvIntV
-import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan.RestGramW
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PBwLcInt
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PBwLocGlob
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePtOneRec
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan.GramInvIntV
+public import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan.RestGramW
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PBwLcInt
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PBwLocGlob
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePtOneRec
+
+@[expose] public section
 
 noncomputable section
 

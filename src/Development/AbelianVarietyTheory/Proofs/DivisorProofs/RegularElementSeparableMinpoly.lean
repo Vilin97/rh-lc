@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.PointsNonemptyUnitaryRankOne
-import GroundTheory.Brauer.IsBrauerEquivalentIffNonemptyAlgEquiv
-import GroundTheory.Brauer.BaseChangeCSA
-import GroundTheory.Brauer.DoubleCentralizer
-import GroundTheory.Brauer.Degree
-import Development.AbelianVarietyTheory.Definitions.Divisors.NormSub
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.PointsNonemptyUnitaryRankOne
+public import GroundTheory.Brauer.IsBrauerEquivalentIffNonemptyAlgEquiv
+public import GroundTheory.Brauer.BaseChangeCSA
+public import GroundTheory.Brauer.DoubleCentralizer
+public import GroundTheory.Brauer.Degree
+public import Development.AbelianVarietyTheory.Definitions.Divisors.NormSub
+
+@[expose] public section
 
 open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKCount GlobalTheory.LKCx
 open scoped TensorProduct Classical

@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.ThProps
-import Formalism.LocalToGlobal.ProjectiveLattices.CuspFree
-import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.JetRangeLevelFactor
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.MinorsDisjointColumnsHarmonic
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.ThProps
+public import Formalism.LocalToGlobal.ProjectiveLattices.CuspFree
+public import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.JetRangeLevelFactor
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.MinorsDisjointColumnsHarmonic
+
+@[expose] public section
 
 set_option autoImplicit false
 

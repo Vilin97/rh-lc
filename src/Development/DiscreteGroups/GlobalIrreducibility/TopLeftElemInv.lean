@@ -1,4 +1,8 @@
-import Development.DiscreteGroups.GlobalIrreducibility.TopLeftXAInv
+module
+
+public import Development.DiscreteGroups.GlobalIrreducibility.TopLeftXAInv
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.RankGapBounds.RandomSubsetCounterexample
+module
+
+public import Formalism.RankGapBounds.RandomSubsetCounterexample
+
+@[expose] public section
 
 namespace Formalism.RankGapBounds.LocalQuadraticParts
 

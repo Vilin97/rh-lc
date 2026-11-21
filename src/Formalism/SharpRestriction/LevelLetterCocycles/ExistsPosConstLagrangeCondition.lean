@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.RamifiedCoefficientChains
-import Formalism.JumpKernelCokernel.LengthTheoremsWithEarlier
-import Formalism.EisensteinCokernelLengths.FactorialValuationBounds.LagrangeIdealSgProof
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.RamifiedCoefficientChains
+public import Formalism.JumpKernelCokernel.LengthTheoremsWithEarlier
+public import Formalism.EisensteinCokernelLengths.FactorialValuationBounds.LagrangeIdealSgProof
+
+@[expose] public section
 
 noncomputable section
 

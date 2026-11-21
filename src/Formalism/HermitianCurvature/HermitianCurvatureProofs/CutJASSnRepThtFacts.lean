@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJASSnRepCut
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ExistsFrameTwo
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.cut_TypeNormMeas_TC
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DifferentialOperatorBracket
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJASSnRepCut
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ExistsFrameTwo
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.cut_TypeNormMeas_TC
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DifferentialOperatorBracket
+
+@[expose] public section
 
 open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt NumberField
 open scoped ComplexConjugate Matrix

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.GlobalTheory.GL3.PHfGen
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.PHfGen
+
+@[expose] public section
 
 noncomputable section
 

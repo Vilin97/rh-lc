@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.RowsOneGenusOfCyclic
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RowsOneGenusOfCyclic
+
+@[expose] public section
 
 noncomputable section
 

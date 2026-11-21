@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
-import Formalism.SharpRestriction.CuspSpanNormBounds.GlobAut
-import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.ProjRows
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
+public import Formalism.SharpRestriction.CuspSpanNormBounds.GlobAut
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.ProjRows
+
+@[expose] public section
 
 noncomputable section
 

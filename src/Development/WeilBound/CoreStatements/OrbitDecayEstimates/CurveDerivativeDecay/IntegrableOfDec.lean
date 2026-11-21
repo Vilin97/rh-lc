@@ -1,8 +1,12 @@
-import Development.WeilBound.CoreStatements.OrbitDecayEstimates.CurveDerivativeDecay.KFiniteWordBoundIndefUnitary
-import Development.WeilBound.CoreStatements.OrbitDecayEstimates.CurveDerivativeDecay.OneLeHsG
-import Formalism.SharpRestriction.CuspSpanNormBounds.GlobAut
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.CoefDec
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.SigZeroDecay
+module
+
+public import Development.WeilBound.CoreStatements.OrbitDecayEstimates.CurveDerivativeDecay.KFiniteWordBoundIndefUnitary
+public import Development.WeilBound.CoreStatements.OrbitDecayEstimates.CurveDerivativeDecay.OneLeHsG
+public import Formalism.SharpRestriction.CuspSpanNormBounds.GlobAut
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.CoefDec
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.SigZeroDecay
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.IntFrames
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.AmplePt
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.IntFrames
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.AmplePt
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 400000
 

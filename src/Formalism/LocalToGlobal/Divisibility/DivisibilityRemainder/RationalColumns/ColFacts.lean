@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.IndefiniteRealisationChoice
-import Formalism.LocalToGlobal.IndefiniteReal.PrimitivePackageFullHecke
-import Formalism.LocalToGlobal.GroupLattices.JointServices.LevelOperatorFixesImage
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.SecondStepGluing
-import Formalism.LocalToGlobal.Divisibility.DivisibilityRemainder.RationalColumns.Descent
-import Formalism.LocalToGlobal.IndefiniteReal.IsometricPeriodsOfUnitHypotheses
+module
+
+public import Formalism.LocalToGlobal.IndefiniteRealisationChoice
+public import Formalism.LocalToGlobal.IndefiniteReal.PrimitivePackageFullHecke
+public import Formalism.LocalToGlobal.GroupLattices.JointServices.LevelOperatorFixesImage
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.SecondStepGluing
+public import Formalism.LocalToGlobal.Divisibility.DivisibilityRemainder.RationalColumns.Descent
+public import Formalism.LocalToGlobal.IndefiniteReal.IsometricPeriodsOfUnitHypotheses
+
+@[expose] public section
 
 noncomputable section
 

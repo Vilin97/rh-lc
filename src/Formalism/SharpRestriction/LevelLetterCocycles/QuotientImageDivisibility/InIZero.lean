@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.MemPreG
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.MemPreG
+
+@[expose] public section
 
 set_option linter.unusedVariables false
 

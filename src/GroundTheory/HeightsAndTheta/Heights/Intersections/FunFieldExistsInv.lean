@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsMoreFurther
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsMoreAlt
-import GroundTheory.HeightsAndTheta.Heights.Intersections.IntCastMemRegMaxAt
-import GroundTheory.HeightsAndTheta.Heights.Intersections.LeOfHeightMapEqZero
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsMoreFurther
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsMoreAlt
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.IntCastMemRegMaxAt
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.LeOfHeightMapEqZero
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter

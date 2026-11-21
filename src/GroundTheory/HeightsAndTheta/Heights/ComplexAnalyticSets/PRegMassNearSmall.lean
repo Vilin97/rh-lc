@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StRegMassNearSmall
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StRegFormCompare
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StRegBallMass
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSmallSetBallCover
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PVarIntAdd
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StRegMassNearSmall
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StRegFormCompare
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StRegBallMass
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StSmallSetBallCover
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PVarIntAdd
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

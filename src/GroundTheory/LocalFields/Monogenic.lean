@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.Eisenstein
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.Eisenstein
+
+@[expose] public section
 
 noncomputable section
 

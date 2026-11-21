@@ -1,4 +1,8 @@
-import CompanionTheory.ThickeningEstimates.InnerProductFactorization.EqOfInner
+module
+
+public import CompanionTheory.ThickeningEstimates.InnerProductFactorization.EqOfInner
+
+@[expose] public section
 
 noncomputable section
 

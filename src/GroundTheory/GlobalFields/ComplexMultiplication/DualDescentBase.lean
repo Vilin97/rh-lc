@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.DualDescentField
-import GroundTheory.GlobalFields.ComplexMultiplication.BaseChangeDegree
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualQuadratic
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.DualDescentField
+public import GroundTheory.GlobalFields.ComplexMultiplication.BaseChangeDegree
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualQuadratic
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

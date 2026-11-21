@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.StatementF
-import Formalism.LocalToGlobal.TorsionIntegrality.RamifiedCurveKernels.FinalA
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.StatementF
+public import Formalism.LocalToGlobal.TorsionIntegrality.RamifiedCurveKernels.FinalA
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

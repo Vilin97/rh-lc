@@ -1,13 +1,17 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.ToHLat
-import Formalism.LocalToGlobal.Divisibility.FramesLemmas
-import Formalism.LocalToGlobal.Divisibility.ProjLemmas
-import Formalism.LocalToGlobal.GlobalTheory.HLatOpsP
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ClassSumDualGeOfFamily
-import Formalism.LocalToGlobal.Columns.AtTRank
-import Formalism.LocalToGlobal.Columns.RowFormsGood
-import Formalism.LocalToGlobal.Columns.ColFormsLemmas
-import Formalism.LocalToGlobal.Columns.BaseInst
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.ToHLat
+public import Formalism.LocalToGlobal.Divisibility.FramesLemmas
+public import Formalism.LocalToGlobal.Divisibility.ProjLemmas
+public import Formalism.LocalToGlobal.GlobalTheory.HLatOpsP
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ClassSumDualGeOfFamily
+public import Formalism.LocalToGlobal.Columns.AtTRank
+public import Formalism.LocalToGlobal.Columns.RowFormsGood
+public import Formalism.LocalToGlobal.Columns.ColFormsLemmas
+public import Formalism.LocalToGlobal.Columns.BaseInst
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 open scoped Matrix ComplexOrder

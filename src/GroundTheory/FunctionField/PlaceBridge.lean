@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.FunctionField.PlaceSum
+module
+
+public import Mathlib
+public import GroundTheory.FunctionField.PlaceSum
+
+@[expose] public section
 
 namespace GroundTheory.FunctionField
 

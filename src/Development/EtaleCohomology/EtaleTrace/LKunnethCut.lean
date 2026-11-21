@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleTrace.LadicH0LocallyConstant
-import Development.EtaleCohomology.KummerTheory.InjSlice
+module
+
+public import Development.EtaleCohomology.EtaleTrace.LadicH0LocallyConstant
+public import Development.EtaleCohomology.KummerTheory.InjSlice
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC

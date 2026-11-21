@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.VLetZeroNear
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelZeroPointOver
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.EmbeddingMapApplyFirstBlock
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.OpApplyZeroNear
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.VLetZeroNear
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelZeroPointOver
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.EmbeddingMapApplyFirstBlock
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OpApplyZeroNear
+
+@[expose] public section
 
 open Matrix Finset MeasureTheory
 open scoped ComplexConjugate

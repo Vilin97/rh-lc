@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.LocVol
-import Formalism.LocalRingCardinality.SpanPowerMembership.Adelic
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.LocVol
+public import Formalism.LocalRingCardinality.SpanPowerMembership.Adelic
+
+@[expose] public section
 
 noncomputable section
 

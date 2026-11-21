@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.GlobalReciprocity.NormSquare
-import GroundTheory.GlobalFields.CyclotomicCharacters.DegreeDecomposition
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.GlobalReciprocity.NormSquare
+public import GroundTheory.GlobalFields.CyclotomicCharacters.DegreeDecomposition
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

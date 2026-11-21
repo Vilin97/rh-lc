@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.TermDef
-import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.PtCellUniq
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellInv
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellGeo
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellFin
-import Formalism.SharpRestriction.CuspSpanNormBounds.FlagEEqHyperbolic
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.TermDef
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.GaugeLatticeShifts.PtCellUniq
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellInv
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellGeo
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellFin
+public import Formalism.SharpRestriction.CuspSpanNormBounds.FlagEEqHyperbolic
+
+@[expose] public section
 
 noncomputable section
 

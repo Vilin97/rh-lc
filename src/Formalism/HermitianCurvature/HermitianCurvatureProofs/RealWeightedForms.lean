@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DualKernelLemmas
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DualKernelLemmas
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.RealWeightedForms
 

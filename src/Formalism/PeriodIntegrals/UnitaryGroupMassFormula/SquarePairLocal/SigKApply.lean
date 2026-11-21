@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SquarePairLocal.MemFixSub
-import Formalism.LocalRingCardinality.SpanPowerMembership.Adelic
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SquarePairLocal.MemFixSub
+public import Formalism.LocalRingCardinality.SpanPowerMembership.Adelic
+
+@[expose] public section
 
 noncomputable section
 open NumberField IsDedekindDomain HeightOneSpectrum WithZero IsLocalRing Topology Filter

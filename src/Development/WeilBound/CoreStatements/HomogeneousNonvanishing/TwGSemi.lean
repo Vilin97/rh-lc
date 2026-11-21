@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.HermitianLattices.HermitianLatticesProofs.UnimodUnramUnique
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.HermitianLatticesProofs.UnimodUnramUnique
+
+@[expose] public section
+
 open NumberField TensorProduct
 
 namespace PositivityTheory.UnitarySelfGeneration

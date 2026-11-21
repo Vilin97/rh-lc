@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.DatumLemmas
-import Formalism.LocalToGlobal.IndefiniteReal.PHeisThA
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.StdCharExists
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.DatumLemmas
+public import Formalism.LocalToGlobal.IndefiniteReal.PHeisThA
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.StdCharExists
+
+@[expose] public section
 
 noncomputable section
 

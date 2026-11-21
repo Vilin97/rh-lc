@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.IsOrthCo
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.IsOrthCo
+
+@[expose] public section
+
 open NumberField Formalism.BasicNotions Formalism.L2.PairingIndexBounds.F
 
 noncomputable section

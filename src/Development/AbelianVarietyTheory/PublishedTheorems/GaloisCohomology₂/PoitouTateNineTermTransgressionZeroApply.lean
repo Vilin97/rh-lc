@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.Hypotheses.GalCoh
+module
+
+public import Mathlib
+public import ReciprocityTheory.Hypotheses.GalCoh
+
+@[expose] public section
 
 noncomputable section
 

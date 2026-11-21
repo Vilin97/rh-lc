@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.Statement
-import Formalism.QuotientMetricDivisors.StatementACE
-import Formalism.HarderNarasimhan.QuotRealize
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.Statement
+public import Formalism.QuotientMetricDivisors.StatementACE
+public import Formalism.HarderNarasimhan.QuotRealize
+
+@[expose] public section
 
 open Module NumberField
 open scoped Matrix ComplexOrder InnerProductSpace

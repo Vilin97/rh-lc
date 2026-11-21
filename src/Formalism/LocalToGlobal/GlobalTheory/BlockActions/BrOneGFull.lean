@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.BlockActEqBlkRow
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.BlockActEqBlkRow
+
+@[expose] public section
 
 noncomputable section
 

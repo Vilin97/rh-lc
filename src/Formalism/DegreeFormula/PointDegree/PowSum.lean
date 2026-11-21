@@ -1,5 +1,9 @@
-import Formalism.DegreeFormula.FlagDegFormula
-import Formalism.DegreeFormula.PointDegree.PermExpInj
+module
+
+public import Formalism.DegreeFormula.FlagDegFormula
+public import Formalism.DegreeFormula.PointDegree.PermExpInj
+
+@[expose] public section
 
 open MvPolynomial
 

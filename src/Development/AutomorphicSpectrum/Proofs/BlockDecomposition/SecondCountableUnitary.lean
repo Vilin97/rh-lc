@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.ComplexMatrixCalculus.SwapLaws
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HeightBoundFacts
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContinuousCoeffRowAct
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.ComplexMatrixCalculus.SwapLaws
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HeightBoundFacts
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContinuousCoeffRowAct
+
+@[expose] public section
 
 noncomputable section
 

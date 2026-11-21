@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnitaryApproximation.SkewApprox
-import Lemmata.GeneralBFactRightTer.Imports
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnitaryApproximation.SkewApprox
+public import Lemmata.GeneralBFactRightTer.Imports
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.LocalBaseChange.ElementaryCosets.CosetMap
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsExtraExtra
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.LocalBaseChange.ElementaryCosets.CosetMap
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsExtraExtra
+
+@[expose] public section
 
 noncomputable section
 

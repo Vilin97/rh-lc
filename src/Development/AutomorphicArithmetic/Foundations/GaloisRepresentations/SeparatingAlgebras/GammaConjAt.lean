@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.MacdonaldWhittakerHecke
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.MacdonaldWhittakerHecke
+
+@[expose] public section
 
 noncomputable section
 

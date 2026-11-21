@@ -1,5 +1,10 @@
-import Mathlib
-import Development.ResolutionOfSingularities.Foundations.Schemes.IdealSheafData
+module
+
+public import Mathlib
+public import Development.ResolutionOfSingularities.Foundations.Schemes.IdealSheafData
+
+@[expose] public section
+
 universe u
 
 open CategoryTheory AlgebraicGeometry TensorProduct

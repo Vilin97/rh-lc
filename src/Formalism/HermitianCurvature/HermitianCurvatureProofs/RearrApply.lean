@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasurePreservingProdRearrange
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasurePreservingProdRearrange
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.StabilizerDisintegration.RE
 

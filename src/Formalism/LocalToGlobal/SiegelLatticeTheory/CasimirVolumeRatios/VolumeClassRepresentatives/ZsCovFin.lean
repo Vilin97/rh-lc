@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.MeasLev
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.MeasLev
+
+@[expose] public section
 
 noncomputable section
 

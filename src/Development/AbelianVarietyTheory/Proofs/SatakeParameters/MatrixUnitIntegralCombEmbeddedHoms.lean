@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.SharpRestriction.GlobalSchurBounds.GL3Columns
-import Formalism.LocalToGlobal.KernelLattices.ThDistC
-import Formalism.GaussJetBounds.StatementN
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.DerivationCoordinateChange
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsRBasisOfLocBasis
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.GlobalSchurBounds.GL3Columns
+public import Formalism.LocalToGlobal.KernelLattices.ThDistC
+public import Formalism.GaussJetBounds.StatementN
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.DerivationCoordinateChange
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsRBasisOfLocBasis
+
+@[expose] public section
 
 open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G Formalism.MainNotions.TaylorLogMetric Classical
 open Formalism.DworkPowerSeriesWeights (JetsIntegral)

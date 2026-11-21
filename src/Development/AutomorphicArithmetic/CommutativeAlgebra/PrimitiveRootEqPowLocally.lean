@@ -1,5 +1,9 @@
-import Mathlib
-import Development.EtaleCohomology.EtaleSheaves.DerivUnit
+module
+
+public import Mathlib
+public import Development.EtaleCohomology.EtaleSheaves.DerivUnit
+
+@[expose] public section
 
 open CategoryTheory AlgebraicGeometry GlobalTheory.EtC
 

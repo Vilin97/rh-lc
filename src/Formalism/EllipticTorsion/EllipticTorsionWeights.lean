@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.EllipticTorsion.JetsCube
+module
+
+public import Mathlib
+public import Formalism.EllipticTorsion.JetsCube
+
+@[expose] public section
 
 open PowerSeries
 

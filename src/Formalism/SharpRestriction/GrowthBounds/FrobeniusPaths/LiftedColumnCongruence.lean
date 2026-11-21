@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.FrobeniusPaths.ColStepFactor
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.FrobeniusPaths.ColStepFactor
+
+@[expose] public section
 
 noncomputable section
 

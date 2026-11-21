@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.TwistSubEqMatrixSubst
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.GenericMatrixEvaluationDet
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.TwistSubEqMatrixSubst
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.GenericMatrixEvaluationDet
+
+@[expose] public section
 
 noncomputable section
 

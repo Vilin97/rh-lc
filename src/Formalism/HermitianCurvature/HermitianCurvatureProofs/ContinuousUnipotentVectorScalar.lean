@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PosCoreQ
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PosCoreQ
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 open scoped ContDiff

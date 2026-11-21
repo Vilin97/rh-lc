@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.FormalGroupLog.FormalGroupLogProofs.ChainRule
-import Formalism.LocalToGlobal.InertKernelTheory.StatementZ
-import Formalism.LocalToGlobal.InertKernelTheory.Adm11OfBeProp
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.EnInParamKProd
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.WittTeichmullerRoot
-import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.BinomialSeriesCoefficients.CoeffPowEqZeroOfCc
-import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.BinomialSeriesCoefficients.DegreeLeOfMemAntidiagonal
+module
+
+public import Mathlib
+public import Formalism.FormalGroupLog.FormalGroupLogProofs.ChainRule
+public import Formalism.LocalToGlobal.InertKernelTheory.StatementZ
+public import Formalism.LocalToGlobal.InertKernelTheory.Adm11OfBeProp
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.EnInParamKProd
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.WittTeichmullerRoot
+public import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.BinomialSeriesCoefficients.CoeffPowEqZeroOfCc
+public import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.BinomialSeriesCoefficients.DegreeLeOfMemAntidiagonal
+
+@[expose] public section
 
 noncomputable section
 

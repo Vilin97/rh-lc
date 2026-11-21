@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StValCentreZ
-import GroundTheory.HeightsAndTheta.Heights.Intersections.KerIsMultiHomogIdeal
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StValCentreZ
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.KerIsMultiHomogIdeal
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter

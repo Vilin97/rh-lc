@@ -1,5 +1,9 @@
-import Formalism.SizeWindowBrackets.FirstPrimeNeSecondPrime
-import Formalism.FrobeniusOrbits.Statement
+module
+
+public import Formalism.SizeWindowBrackets.FirstPrimeNeSecondPrime
+public import Formalism.FrobeniusOrbits.Statement
+
+@[expose] public section
 
 open Finset
 

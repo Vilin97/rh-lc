@@ -1,5 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.TCNumDef
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.PolyUpperBoundDelta
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.TCNumDef
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.PolyUpperBoundDelta
+
+@[expose] public section
+
 set_option maxHeartbeats 4000000
 
 noncomputable section

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.KappaOffDiagonal
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.TermAttrConst
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.KappaOffDiagonal
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.TermAttrConst
+
+@[expose] public section
 
 noncomputable section
 

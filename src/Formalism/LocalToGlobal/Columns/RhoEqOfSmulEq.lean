@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.ClassSumLemmas
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.ClassSumLemmas
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsLineEigenvalue
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PVecAtNeZero
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsLineEigenvalue
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PVecAtNeZero
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights.FiniteCovolume
 

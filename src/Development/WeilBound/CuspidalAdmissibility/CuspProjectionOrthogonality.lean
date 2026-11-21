@@ -1,9 +1,13 @@
-import GroundTheory.AutomorphicForms.L2LocalComponents
-import GroundTheory.AutomorphicForms.MultiplicityOne.FiniteLevelGroups
-import GroundTheory.AutomorphicForms.StrongApproximationSLDense
-import GroundTheory.AutomorphicForms.SmoothRep
-import GroundTheory.AutomorphicForms.TensorProductTheorem.Smooth
-import Development.WeilBound.CuspidalAdmissibility.OccLocSpan
+module
+
+public import GroundTheory.AutomorphicForms.L2LocalComponents
+public import GroundTheory.AutomorphicForms.MultiplicityOne.FiniteLevelGroups
+public import GroundTheory.AutomorphicForms.StrongApproximationSLDense
+public import GroundTheory.AutomorphicForms.SmoothRep
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.Smooth
+public import Development.WeilBound.CuspidalAdmissibility.OccLocSpan
+
+@[expose] public section
 
 noncomputable section
 

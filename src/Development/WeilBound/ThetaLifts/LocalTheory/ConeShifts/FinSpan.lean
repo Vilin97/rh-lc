@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.ArchCone
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqOfComponentTensorAdelicFunctionEq
-import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.IdeleCongruenceUnitCriterion
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.ArchCone
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqOfComponentTensorAdelicFunctionEq
+public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.IdeleCongruenceUnitCriterion
+
+@[expose] public section
 
 noncomputable section
 

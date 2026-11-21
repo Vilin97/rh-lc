@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HermitianLattices.StatementMass
-import Formalism.FlagUnipotentLattices.CardSubmodulesAndLinearEquivBounds
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.StatementMass
+public import Formalism.FlagUnipotentLattices.CardSubmodulesAndLinearEquivBounds
+
+@[expose] public section
 
 noncomputable section
 

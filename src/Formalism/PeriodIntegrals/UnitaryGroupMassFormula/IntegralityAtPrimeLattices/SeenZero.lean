@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.UnitaryNorms.UnramT
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PBwLocInd
+module
+
+public import Formalism.LocalToGlobal.UnitaryNorms.UnramT
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PBwLocInd
+
+@[expose] public section
 
 noncomputable section
 

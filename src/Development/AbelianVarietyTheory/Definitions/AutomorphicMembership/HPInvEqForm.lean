@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.DegreeFormula.Statement
+module
+
+public import Mathlib
+public import Formalism.DegreeFormula.Statement
+
+@[expose] public section
 
 noncomputable section
 

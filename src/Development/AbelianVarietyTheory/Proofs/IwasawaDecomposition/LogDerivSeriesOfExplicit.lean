@@ -1,13 +1,17 @@
-import Mathlib
-import Formalism.GL3MeanSquares.PrimeCountAsymptoticInProgressions
-import Formalism.SharpRestriction.InertJacobiLevels.AsmIface
-import Formalism.CyclotomicNorms.StatementI
-import Development.AbelianVarietyTheory.Definitions.Foundations.RayPrimes
-import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExplZeta
-import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExplChi
-import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.LogDerOne
-import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ZeroCount
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.Psi0ZeroFreeRegionBound
+module
+
+public import Mathlib
+public import Formalism.GL3MeanSquares.PrimeCountAsymptoticInProgressions
+public import Formalism.SharpRestriction.InertJacobiLevels.AsmIface
+public import Formalism.CyclotomicNorms.StatementI
+public import Development.AbelianVarietyTheory.Definitions.Foundations.RayPrimes
+public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExplZeta
+public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExplChi
+public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.LogDerOne
+public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ZeroCount
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.Psi0ZeroFreeRegionBound
+
+@[expose] public section
 
 open Finset ArithmeticFunction Filter Topology
 

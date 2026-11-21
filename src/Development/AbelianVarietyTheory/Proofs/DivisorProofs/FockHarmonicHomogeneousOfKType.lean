@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.SchurIrreducible
-import Development.AbelianVarietyTheory.Definitions.Foundations.IsFockIPOfFockData
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ContinuousOfDense
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.AbsSubOfDisjoint
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.SchurIrreducible
+public import Development.AbelianVarietyTheory.Definitions.Foundations.IsFockIPOfFockData
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ContinuousOfDense
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.AbsSubOfDisjoint
+
+@[expose] public section
 
 open Formalism.BasicNotions.TH Formalism.MainNotions.SchurIrreducible GlobalTheory.FockAlg MvPolynomial
 

@@ -1,5 +1,9 @@
-import ReciprocityTheory.DualLattices.CokernelLengthComparisonStatement
-import ReciprocityTheory.DualLattices.UnramifiedCokernelLengthStatement
+module
+
+public import ReciprocityTheory.DualLattices.CokernelLengthComparisonStatement
+public import ReciprocityTheory.DualLattices.UnramifiedCokernelLengthStatement
+
+@[expose] public section
 
 noncomputable section
 

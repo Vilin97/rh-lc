@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BlockKWaveC
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ModuleFormPosCompactSupport
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SizeStandardCompact
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.VectorIsomorphismCompactSupport
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BlockKWaveC
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ModuleFormPosCompactSupport
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SizeStandardCompact
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.VectorIsomorphismCompactSupport
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBL
 

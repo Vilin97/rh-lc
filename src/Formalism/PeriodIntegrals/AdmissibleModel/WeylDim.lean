@@ -1,8 +1,12 @@
-import Formalism.GradedWeylDivisibility.FinalD
-import Formalism.ThetaLogCoordinates.ResidueClassEstimates.FinalT
-import Formalism.SharpRestriction.GrowthBounds.TableLineDegreeFive
-import Formalism.SharpRestriction.GrowthBounds.ProjectionLemmaBaseLevel
-import Formalism.SharpRestriction.GrowthBounds.ColumnSystems
+module
+
+public import Formalism.GradedWeylDivisibility.FinalD
+public import Formalism.ThetaLogCoordinates.ResidueClassEstimates.FinalT
+public import Formalism.SharpRestriction.GrowthBounds.TableLineDegreeFive
+public import Formalism.SharpRestriction.GrowthBounds.ProjectionLemmaBaseLevel
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSystems
+
+@[expose] public section
 
 open Finset
 

@@ -1,4 +1,8 @@
-import Formalism.LagrangeIdealLifts.Statement
+module
+
+public import Formalism.LagrangeIdealLifts.Statement
+
+@[expose] public section
 
 namespace Formalism.LIFT
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.RestRawTail1Of
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.RestRawTail1Of
+
+@[expose] public section
 
 noncomputable section
 

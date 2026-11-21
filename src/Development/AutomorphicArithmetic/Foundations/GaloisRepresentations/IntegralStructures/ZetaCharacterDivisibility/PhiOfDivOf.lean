@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.InsideRefl
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCommonModel
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.ZetaCharacterDivisibility.InsideRefl
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCommonModel
+
+@[expose] public section
 
 noncomputable section
 

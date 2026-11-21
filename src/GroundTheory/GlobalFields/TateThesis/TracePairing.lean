@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.Adele.IntegersLattice
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.Adele.IntegersLattice
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

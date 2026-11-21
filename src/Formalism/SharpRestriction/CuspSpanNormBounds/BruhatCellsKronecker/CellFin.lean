@@ -1,10 +1,14 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellDef
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellInv
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellBru
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellMono
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellPt
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellGeo
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.SplittingAdmissibleOfTermData
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellDef
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellInv
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellBru
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellMono
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellPt
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.CellGeo
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.SplittingAdmissibleOfTermData
+
+@[expose] public section
 
 noncomputable section
 namespace Formalism.MainNotions.BridgeLemma

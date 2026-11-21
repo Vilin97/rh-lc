@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.ModuliIntegralCharts
-import Formalism.SharpRestriction.Divisibility.WeightFamilies
-import Development.AbelianVarietyTheory.BlockTheory.JetGauges.TraceFormDualSystem
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IsPosHermOfPositive
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.ModuliIntegralCharts
+public import Formalism.SharpRestriction.Divisibility.WeightFamilies
+public import Development.AbelianVarietyTheory.BlockTheory.JetGauges.TraceFormDualSystem
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IsPosHermOfPositive
+
+@[expose] public section
 
 set_option autoImplicit false
 

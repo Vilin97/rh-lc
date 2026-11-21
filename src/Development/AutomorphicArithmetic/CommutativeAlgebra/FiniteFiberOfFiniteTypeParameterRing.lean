@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.TcoMem
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FibFiniteAndSep
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.TcoMem
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FibFiniteAndSep
+
+@[expose] public section
 
 open GlobalTheory GlobalTheory.PD
 

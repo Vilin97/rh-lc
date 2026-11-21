@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSy
-import Formalism.SharpRestriction.SmoothDesignExistence.SumOverPrimesHypotheses
-import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLs
-import Formalism.SharpRestriction.Divisibility.ChainOperators.PerCol
-import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSaj
+module
+
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSy
+public import Formalism.SharpRestriction.SmoothDesignExistence.SumOverPrimesHypotheses
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLs
+public import Formalism.SharpRestriction.Divisibility.ChainOperators.PerCol
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSaj
+
+@[expose] public section
 
 noncomputable section
 

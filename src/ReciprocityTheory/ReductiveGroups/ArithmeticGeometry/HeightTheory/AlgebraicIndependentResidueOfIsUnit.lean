@@ -1,8 +1,12 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.TheoremA
-import ReciprocityTheory.SemistableReduction.GaussValExists
-import Mathlib
-import ReciprocityTheory.SemistableReduction.GaussIndepOfLeTrdeg
-import ReciprocityTheory.SemistableReduction.IntegralClosureRankAndResidueTrdegLe
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.TheoremA
+public import ReciprocityTheory.SemistableReduction.GaussValExists
+public import Mathlib
+public import ReciprocityTheory.SemistableReduction.GaussIndepOfLeTrdeg
+public import ReciprocityTheory.SemistableReduction.IntegralClosureRankAndResidueTrdegLe
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.T0
 

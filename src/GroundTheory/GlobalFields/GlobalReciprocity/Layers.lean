@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.GlobalReciprocity.InfKerDegreeLeOfLeSupZhatField
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.GlobalReciprocity.InfKerDegreeLeOfLeSupZhatField
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

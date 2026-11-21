@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.AdelicGLn
-import GroundTheory.GlobalFields.IdeleGroups.IdeleNorms
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.AdelicGLn
+public import GroundTheory.GlobalFields.IdeleGroups.IdeleNorms
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter Set Matrix
 open scoped NumberField.AdeleRing RestrictedProduct

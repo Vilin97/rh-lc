@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.ModelShortOf
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.BiaddOfCube
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.AddIntG
-import Mathlib
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.ModelShortOf
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.BiaddOfCube
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.AddIntG
+public import Mathlib
+
+@[expose] public section
 
 namespace Formalism.MainNotions.Ext
 

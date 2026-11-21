@@ -1,4 +1,8 @@
-import ReciprocityTheory.GaloisValuations.SymplecticRankFourModularity
+module
+
+public import ReciprocityTheory.GaloisValuations.SymplecticRankFourModularity
+
+@[expose] public section
 
 noncomputable section
 

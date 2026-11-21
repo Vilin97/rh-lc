@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.UnramifiedTrace.DUAllOfPt
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.UnramifiedTrace.DUAllOfPt
+
+@[expose] public section
 
 noncomputable section
 

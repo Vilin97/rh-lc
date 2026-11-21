@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.IsOpenBigCellSet
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.IsOpenBigCellSet
+
+@[expose] public section
 
 open Matrix MvPolynomial Set
 open scoped ComplexConjugate ContDiff Topology

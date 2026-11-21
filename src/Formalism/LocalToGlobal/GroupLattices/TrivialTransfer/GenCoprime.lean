@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.OneAddPowOfSq
-import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.FiniteStabAtOfLocal
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.OneAddPowOfSq
+public import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.FiniteStabAtOfLocal
+
+@[expose] public section
 
 noncomputable section
 

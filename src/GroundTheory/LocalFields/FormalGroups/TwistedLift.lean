@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.FormalGroups.LubinTateGroup
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.FormalGroups.LubinTateGroup
+
+@[expose] public section
 
 namespace GroundTheory.LocalField.FormalGroup
 

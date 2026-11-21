@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
+
+@[expose] public section
 
 noncomputable section
 

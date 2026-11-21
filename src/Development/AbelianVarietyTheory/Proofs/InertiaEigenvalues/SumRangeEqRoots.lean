@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.GreenRegularCharacters
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CuspidalCharExistsOfGreen
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FixedMemRange
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.GreenRegularCharacters
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CuspidalCharExistsOfGreen
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FixedMemRange
+
+@[expose] public section
 
 set_option autoImplicit false
 

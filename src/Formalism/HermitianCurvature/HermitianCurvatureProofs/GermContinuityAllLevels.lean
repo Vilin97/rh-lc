@@ -1,9 +1,13 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.GermContinuity
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGInt
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGCongr
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGSlice
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutEX_UwTop
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLimE
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GermContinuity
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGInt
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGCongr
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGSlice
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutEX_UwTop
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLimE
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP
 

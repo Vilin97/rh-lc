@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.LevelCharts.LevelsOfCh
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.CastGLSymmApply
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.LevelCharts.LevelsOfCh
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.CastGLSymmApply
+
+@[expose] public section
 
 noncomputable section
 

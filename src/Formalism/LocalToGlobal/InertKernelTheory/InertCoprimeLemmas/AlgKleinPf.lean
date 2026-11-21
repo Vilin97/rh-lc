@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.AlgKlein
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.AlgKlein
+
+@[expose] public section
 
 noncomputable section
 

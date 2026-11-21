@@ -1,4 +1,8 @@
-import Formalism.SmithDeterminants.StatementGram
+module
+
+public import Formalism.SmithDeterminants.StatementGram
+
+@[expose] public section
 
 open Finset Matrix MvPolynomial
 

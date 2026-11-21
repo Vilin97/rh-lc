@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitKron
-import Formalism.PeriodIntegrals.PowBddInt
-import Formalism.PeriodIntegrals.AdCpctDen
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitKron
+public import Formalism.PeriodIntegrals.PowBddInt
+public import Formalism.PeriodIntegrals.AdCpctDen
+
+@[expose] public section
 
 noncomputable section
 

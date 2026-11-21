@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.ThDistC
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.ThDistC
+
+@[expose] public section
+
 open Formalism.L2.Ker MvPolynomial
 
 noncomputable section

@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.LocalArtinTransport
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LocalArtinTransport
+
+@[expose] public section
 
 noncomputable section
 

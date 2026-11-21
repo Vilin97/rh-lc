@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.Archimedean
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.LeftTranslate
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.Height
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.Archimedean
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.LeftTranslate
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.Height
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter Set
 open scoped NumberField.AdeleRing

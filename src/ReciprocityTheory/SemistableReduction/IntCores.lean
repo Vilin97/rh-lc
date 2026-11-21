@@ -1,4 +1,8 @@
-import ReciprocityTheory.SemistableReduction.IntCoresB
+module
+
+public import ReciprocityTheory.SemistableReduction.IntCoresB
+
+@[expose] public section
 
 noncomputable section
 

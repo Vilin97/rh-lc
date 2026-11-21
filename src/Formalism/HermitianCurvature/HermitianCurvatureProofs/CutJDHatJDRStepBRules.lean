@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJDHatJDCapRGrpPTop
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.QminorZero
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.WeylCellMulVecBasis
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.NFRadRedLocSec
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJDHatJDCapRGrpPTop
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.QminorZero
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WeylCellMulVecBasis
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NFRadRedLocSec
+
+@[expose] public section
 
 open Matrix
 

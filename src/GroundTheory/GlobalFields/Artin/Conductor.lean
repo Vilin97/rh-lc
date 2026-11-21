@@ -1,13 +1,17 @@
-import Mathlib
-import GroundTheory.GlobalFields.SemilocalAlgebras.Galois
-import GroundTheory.GlobalFields.CompletionAtPlace.Inertia
-import GroundTheory.GlobalFields.Artin.LogCharpoly
-import GroundTheory.GlobalFields.TateThesis.ChebotarevAbelian
-import GroundTheory.GlobalFields.TateThesis.ConductorIdeal
-import GroundTheory.LocalFields.DifferentGalois
-import GroundTheory.LocalFields.ConductorTransport
-import GroundTheory.LocalFields.ArtinConductorAbelian
-import GroundTheory.LocalFields.BrauerInductionClifford
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Galois
+public import GroundTheory.GlobalFields.CompletionAtPlace.Inertia
+public import GroundTheory.GlobalFields.Artin.LogCharpoly
+public import GroundTheory.GlobalFields.TateThesis.ChebotarevAbelian
+public import GroundTheory.GlobalFields.TateThesis.ConductorIdeal
+public import GroundTheory.LocalFields.DifferentGalois
+public import GroundTheory.LocalFields.ConductorTransport
+public import GroundTheory.LocalFields.ArtinConductorAbelian
+public import GroundTheory.LocalFields.BrauerInductionClifford
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.NoPiHk
+module
+
+public import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.NoPiHk
+
+@[expose] public section
 
 noncomputable section
 

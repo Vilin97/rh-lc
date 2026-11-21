@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.StdCharExists
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.ThetaSquareIntegrable
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.StdCharExists
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.ThetaSquareIntegrable
+
+@[expose] public section
 
 noncomputable section
 

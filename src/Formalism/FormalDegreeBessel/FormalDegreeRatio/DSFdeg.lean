@@ -1,4 +1,8 @@
-import Formalism.FormalDegreeBessel.StatementDS
+module
+
+public import Formalism.FormalDegreeBessel.StatementDS
+
+@[expose] public section
 
 open Finset
 

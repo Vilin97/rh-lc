@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.SatDVR
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.SatDVR
+
+@[expose] public section
 
 noncomputable section
 

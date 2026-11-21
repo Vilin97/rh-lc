@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.OEOsInjective
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.OEOsInjective
+
+@[expose] public section
 
 noncomputable section
 

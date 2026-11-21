@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.FontaineLemmaPhi
-import GroundTheory.PAdicHodge.FontaineLemmaPeriod
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.FontaineLemmaPhi
+public import GroundTheory.PAdicHodge.FontaineLemmaPeriod
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.PAdicHodge

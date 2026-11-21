@@ -1,5 +1,9 @@
-import Development.WeilBound.RepresentationTheoryGL.JacquetShalikaBounds.AbsoluteRigidity.CauchyLoc
-import GroundTheory.GlobalFields.TateThesis.PrimeZetaPole
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.JacquetShalikaBounds.AbsoluteRigidity.CauchyLoc
+public import GroundTheory.GlobalFields.TateThesis.PrimeZetaPole
+
+@[expose] public section
 
 noncomputable section
 

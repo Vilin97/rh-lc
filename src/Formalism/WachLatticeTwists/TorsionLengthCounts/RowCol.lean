@@ -1,4 +1,8 @@
-import Formalism.WachLatticeTwists.Statement
+module
+
+public import Formalism.WachLatticeTwists.Statement
+
+@[expose] public section
 
 noncomputable section
 

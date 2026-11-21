@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.PosULeIff
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.PosULeIff
+
+@[expose] public section
 
 noncomputable section
 

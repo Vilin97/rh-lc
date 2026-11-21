@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.DivisionHeightBoundStatement
-import Formalism.LocalToGlobal.Divisibility.Numbers
-import Formalism.LocalToGlobal.Columns.FiniteSumNonzeroLargeDepth
-import Formalism.LocalToGlobal.Columns.ToHLat
-import Formalism.LocalToGlobal.Columns.RowFormsLemmas
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.DivisionHeightBoundStatement
+public import Formalism.LocalToGlobal.Divisibility.Numbers
+public import Formalism.LocalToGlobal.Columns.FiniteSumNonzeroLargeDepth
+public import Formalism.LocalToGlobal.Columns.ToHLat
+public import Formalism.LocalToGlobal.Columns.RowFormsLemmas
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

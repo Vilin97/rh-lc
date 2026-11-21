@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsHodgeFlagSpan
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PPlueckerSpan
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsHodgeFlagSpan
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PPlueckerSpan
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

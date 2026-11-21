@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.BadElt
-import Formalism.LocalRingCardinality.SpanPowerMembership.NZTypeD
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.BadElt
+public import Formalism.LocalRingCardinality.SpanPowerMembership.NZTypeD
+
+@[expose] public section
 
 noncomputable section
 

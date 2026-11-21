@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.UnramifiedMultiplicityOneProportional
-import Development.WeilBound.ThetaLifts.LocalTheory.UnramifiedCohomology.MemLatWIff
-import Development.WeilBound.ThetaLifts.TowerModels.LeviAd
-import Development.WeilBound.CoreStatements.LocalThetaKernels.Locrep
-import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.Vaceigen
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.UnramifiedMultiplicityOneProportional
+public import Development.WeilBound.ThetaLifts.LocalTheory.UnramifiedCohomology.MemLatWIff
+public import Development.WeilBound.ThetaLifts.TowerModels.LeviAd
+public import Development.WeilBound.CoreStatements.LocalThetaKernels.Locrep
+public import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.Vaceigen
+
+@[expose] public section
 
 noncomputable section
 

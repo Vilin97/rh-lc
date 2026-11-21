@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.TateCohomology.PGroupCohTrivial
-import GroundTheory.TateCohomology.TateAddEquivAbelianizationTateClass
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.PGroupCohTrivial
+public import GroundTheory.TateCohomology.TateAddEquivAbelianizationTateClass
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.GroupCoh

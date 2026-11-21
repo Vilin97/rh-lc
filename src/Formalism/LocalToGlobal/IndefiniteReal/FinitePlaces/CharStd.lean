@@ -1,12 +1,16 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IntegrableOnOfPeriodic
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.InfFam
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.PHeisFCA
-import Formalism.LocalToGlobal.IndefiniteReal.PHeisThC
-import ReciprocityTheory.AdeleApproximation.AdeleIntA
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IntegerSubgroupIntersection.IsOpenIntSub
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IntegerSubgroupIntersection.Imports
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IntegerSubgroupIntersection.IntInterAlt
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IntegrableOnOfPeriodic
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.InfFam
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.PHeisFCA
+public import Formalism.LocalToGlobal.IndefiniteReal.PHeisThC
+public import ReciprocityTheory.AdeleApproximation.AdeleIntA
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IntegerSubgroupIntersection.IsOpenIntSub
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IntegerSubgroupIntersection.Imports
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IntegerSubgroupIntersection.IntInterAlt
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.AdmissibleDesigns.GlobalIndexTheoremPlacesOfRNAdm
-import Formalism.AdmissibleDesigns.DesignOfAdmittedObjects
+module
+
+public import Formalism.AdmissibleDesigns.GlobalIndexTheoremPlacesOfRNAdm
+public import Formalism.AdmissibleDesigns.DesignOfAdmittedObjects
+
+@[expose] public section
 
 noncomputable section
 

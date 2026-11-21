@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.CoefficientMapHeightBound
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.CoefficientMapHeightBound
+
+@[expose] public section
 
 open MvPolynomial
 open scoped Matrix ComplexOrder

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.SecondRankCount
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.SecondRankCount
+
+@[expose] public section
 
 noncomputable section
 

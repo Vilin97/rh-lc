@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.CartanFactorisation.ActsComp
-import Development.WeilBound.ThetaLifts.CartanFactorisation.UnitDef
+module
+
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.ActsComp
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.UnitDef
+
+@[expose] public section
 
 noncomputable section
 

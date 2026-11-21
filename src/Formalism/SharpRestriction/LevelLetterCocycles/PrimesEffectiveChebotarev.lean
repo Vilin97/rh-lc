@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.ArithmeticCylinders
-import Formalism.SharpRestriction.LevelLetterCocycles.ResidualIrreducibleOfTheoremThreePrime
-import Formalism.CyclotomicNorms.IrreducibilityOfGoodTuple
-import Formalism.PadicSubsetSums.CentralIdempotents.GaloisIrreducibility
-import Formalism.GaloisIrreducibility.NoSolvableTransitive
-import Formalism.PadicSubsetSums.StableGradedCounts.LocalEstimateIVOfTypeSetWeight
-import Formalism.PadicSubsetSums.StableGradedCounts.TWCentralIdempotentIntegral
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.ArithmeticCylinders
+public import Formalism.SharpRestriction.LevelLetterCocycles.ResidualIrreducibleOfTheoremThreePrime
+public import Formalism.CyclotomicNorms.IrreducibilityOfGoodTuple
+public import Formalism.PadicSubsetSums.CentralIdempotents.GaloisIrreducibility
+public import Formalism.GaloisIrreducibility.NoSolvableTransitive
+public import Formalism.PadicSubsetSums.StableGradedCounts.LocalEstimateIVOfTypeSetWeight
+public import Formalism.PadicSubsetSums.StableGradedCounts.TWCentralIdempotentIntegral
+
+@[expose] public section
 
 noncomputable section
 

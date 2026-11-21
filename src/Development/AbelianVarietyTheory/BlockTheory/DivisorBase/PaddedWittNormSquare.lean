@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.ThDistC
-import Formalism.LocalToGlobal.Divisibility.CoefMod
-import Formalism.LogFactorialIndices.StatementSize
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.ThDistC
+public import Formalism.LocalToGlobal.Divisibility.CoefMod
+public import Formalism.LogFactorialIndices.StatementSize
+
+@[expose] public section
 
 noncomputable section
 

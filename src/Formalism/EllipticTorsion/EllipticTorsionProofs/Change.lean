@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.EllipticTorsion.ChangeIntegral
+module
+
+public import Mathlib
+public import Formalism.EllipticTorsion.ChangeIntegral
+
+@[expose] public section
 
 open Formalism.ELL Formalism.G
 

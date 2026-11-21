@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.WaveOperatorLeL2Subspace
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DecayPairEstimate
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WaveOperatorLeL2Subspace
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DecayPairEstimate
+
+@[expose] public section
 
 open MeasureTheory Filter Topology
 open scoped Matrix ComplexConjugate

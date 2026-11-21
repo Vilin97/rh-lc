@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.SharpRestriction.GlobalSchurBounds.ShortIntervalPrimes
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.GlobalSchurBounds.ShortIntervalPrimes
+
+@[expose] public section
 
 set_option autoImplicit false
 

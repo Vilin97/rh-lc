@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ToralCohomology.SumPlSingle
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ToralCohomology.SumPlSingle
+
+@[expose] public section
 
 noncomputable section
 

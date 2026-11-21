@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.TwQSplit
-import Formalism.LocalToGlobal.Columns.AlgebraMapMemMaximalIdealPowIff
+module
+
+public import Formalism.LocalToGlobal.Columns.TwQSplit
+public import Formalism.LocalToGlobal.Columns.AlgebraMapMemMaximalIdealPowIff
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

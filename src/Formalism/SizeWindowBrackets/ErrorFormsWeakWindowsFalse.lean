@@ -1,5 +1,9 @@
-import Formalism.SizeWindowBrackets.QuotientSlopeBoundsWith
-import Formalism.SizeWindowBrackets.GrowthBoundGivesRiemannHypothesis
+module
+
+public import Formalism.SizeWindowBrackets.QuotientSlopeBoundsWith
+public import Formalism.SizeWindowBrackets.GrowthBoundGivesRiemannHypothesis
+
+@[expose] public section
 
 open Real
 

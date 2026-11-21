@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.HermitianCurvature.StatementU
-import Formalism.HermitianCurvature.StatementQ
-import Formalism.HermitianCurvature.LetterProductDoubleDegreeCount
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelFormSesquilinearFiniteClass
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CovectorMultiplierShift
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.EhInvEntry
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CapelliModuleModel
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.StatementU
+public import Formalism.HermitianCurvature.StatementQ
+public import Formalism.HermitianCurvature.LetterProductDoubleDegreeCount
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelFormSesquilinearFiniteClass
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CovectorMultiplierShift
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.EhInvEntry
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CapelliModuleModel
+
+@[expose] public section
 
 open Formalism.FourierDecayAlt Formalism.REAL Formalism.QuantumDeterminants Finset
 

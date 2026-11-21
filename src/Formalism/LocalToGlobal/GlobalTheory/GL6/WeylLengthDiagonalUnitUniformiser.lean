@@ -1,12 +1,16 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL6.BwAValIntegralNonneg
-import Mathlib
-import Formalism.GL3MeanSquares.FourierTransformKernelSurjective
-import Formalism.GL3MeanSquares.HookFormulaTorsion.FourierCommutesHeckeScalar
-import Formalism.GL3MeanSquares.HookFormulaTorsion.LengthQuotientBoundGeneral
-import Formalism.GL3MeanSquares.HookFormulaTorsion.LemmaCTwistRamified
-import Formalism.GL3MeanSquares.HookFormulaTorsion.DoubleCosetDecompositionAll
-import Formalism.GL3MeanSquares.HookFormulaTorsion.InvariantKernelTraceVanishes
-import Formalism.LocalToGlobal.HermitianForms.IsLocBasis
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.BwAValIntegralNonneg
+public import Mathlib
+public import Formalism.GL3MeanSquares.FourierTransformKernelSurjective
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.FourierCommutesHeckeScalar
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.LengthQuotientBoundGeneral
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.LemmaCTwistRamified
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.DoubleCosetDecompositionAll
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.InvariantKernelTraceVanishes
+public import Formalism.LocalToGlobal.HermitianForms.IsLocBasis
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.PickVal
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.PickVal
+
+@[expose] public section
 
 noncomputable section
 

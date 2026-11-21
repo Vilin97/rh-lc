@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.LeviCartan
-import GroundTheory.AutomorphicForms.LeviStagesInduction
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.LeviCartan
+public import GroundTheory.AutomorphicForms.LeviStagesInduction
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

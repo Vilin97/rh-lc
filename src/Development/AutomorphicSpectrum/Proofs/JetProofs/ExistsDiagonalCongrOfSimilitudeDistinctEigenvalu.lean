@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.JetCones.KTypePosCone
-import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.EigenspaceCyclicDensity.TopUniq
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.JetCones.KTypePosCone
+public import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.EigenspaceCyclicDensity.TopUniq
+
+@[expose] public section
 
 open GroundTheory.Automorphic.HarishChandra Finset GlobalTheory.CompanionTheory.DS
 open scoped InnerProductSpace

@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
-import Formalism.LocalRingCardinality.DataKerI
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsRationalFrame
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
+public import Formalism.LocalRingCardinality.DataKerI
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsRationalFrame
+
+@[expose] public section
 
 noncomputable section
 

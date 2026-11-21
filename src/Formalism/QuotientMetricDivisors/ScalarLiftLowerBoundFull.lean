@@ -1,13 +1,17 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.StatementK
-import Formalism.QuotientMetricDivisors.RatHermLcvTwist
-import Formalism.QuotientMetricDivisors.EigenRatHermLcv
-import Formalism.QuotientMetricDivisors.ClassSumDualLe
-import Formalism.QuotientMetricDivisors.ClassSumDualGeF
-import Formalism.QuotientMetricDivisors.UntwistedChoice
-import Formalism.QuotientMetricDivisors.HeightBoundExactNorms
-import Formalism.QuotientMetricDivisors.Complement2Normaliser
-import Formalism.QuotientMetricDivisors.ScalarLiftLowerBoundRows
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.StatementK
+public import Formalism.QuotientMetricDivisors.RatHermLcvTwist
+public import Formalism.QuotientMetricDivisors.EigenRatHermLcv
+public import Formalism.QuotientMetricDivisors.ClassSumDualLe
+public import Formalism.QuotientMetricDivisors.ClassSumDualGeF
+public import Formalism.QuotientMetricDivisors.UntwistedChoice
+public import Formalism.QuotientMetricDivisors.HeightBoundExactNorms
+public import Formalism.QuotientMetricDivisors.Complement2Normaliser
+public import Formalism.QuotientMetricDivisors.ScalarLiftLowerBoundRows
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder InnerProductSpace

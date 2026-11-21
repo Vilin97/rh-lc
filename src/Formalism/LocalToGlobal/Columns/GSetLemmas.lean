@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.Columns.RhoEqOfSmulEq
-import Formalism.ThetaLiftIndependence.Statement
-import Formalism.GL3MeanSquares.HookFormulaTorsion.DoubleCosetDecompositionAll
+module
+
+public import Formalism.LocalToGlobal.Columns.RhoEqOfSmulEq
+public import Formalism.ThetaLiftIndependence.Statement
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.DoubleCosetDecompositionAll
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

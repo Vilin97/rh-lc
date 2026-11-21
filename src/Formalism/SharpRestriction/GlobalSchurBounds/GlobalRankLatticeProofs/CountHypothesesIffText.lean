@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.AdmittedWeylDimension
-import Formalism.SharpRestriction.CuspSpanNormBounds.StandingHypothesesHoldFamily
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.AdmittedWeylDimension
+public import Formalism.SharpRestriction.CuspSpanNormBounds.StandingHypothesesHoldFamily
+
+@[expose] public section
 
 noncomputable section
 

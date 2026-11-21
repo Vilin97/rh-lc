@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.FirstChernIntegralEqDegree
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsIsoGenResMapSmulHom
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.FirstChernIntegralEqDegree
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsIsoGenResMapSmulHom
+
+@[expose] public section
 
 set_option autoImplicit false
 

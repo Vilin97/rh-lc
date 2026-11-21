@@ -1,6 +1,10 @@
-import Formalism.LocalRingCardinality.Params
-import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
-import Formalism.LocalToGlobal.GaloisLevelStructure.DefsAut
+module
+
+public import Formalism.LocalRingCardinality.Params
+public import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
+public import Formalism.LocalToGlobal.GaloisLevelStructure.DefsAut
+
+@[expose] public section
 
 noncomputable section
 

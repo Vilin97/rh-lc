@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataDIV
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FinrankRiemannRochNsmulHyperplane
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.MemEqnSetOmegaCoeff
-import Development.AbelianVarietyTheory.Definitions.Divisors.NefFibOfIsNef
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataDIV
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FinrankRiemannRochNsmulHyperplane
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.MemEqnSetOmegaCoeff
+public import Development.AbelianVarietyTheory.Definitions.Divisors.NefFibOfIsNef
+
+@[expose] public section
 
 set_option autoImplicit false
 

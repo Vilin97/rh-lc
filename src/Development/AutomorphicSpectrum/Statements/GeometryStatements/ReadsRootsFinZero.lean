@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.CrudeVal
-import Development.AutomorphicSpectrum.Definitions.MetricPeriods.HasMultiplier
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ConjEmbRtOfNe
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.OverLaUnique
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IntegralClosureHeightEqOneOfLiesOver
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.CrudeVal
+public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.HasMultiplier
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ConjEmbRtOfNe
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.OverLaUnique
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IntegralClosureHeightEqOneOfLiesOver
+
+@[expose] public section
 
 noncomputable section
 

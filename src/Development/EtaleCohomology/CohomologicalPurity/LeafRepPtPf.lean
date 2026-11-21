@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.CohomologicalPurity.LeafTailRep0OfVec
+module
+
+public import Development.EtaleCohomology.CohomologicalPurity.LeafTailRep0OfVec
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite

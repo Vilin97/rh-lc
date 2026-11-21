@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.GTLower
-import Formalism.LocalRingCardinality.FactDelDualNabla
-import Formalism.SharpRestriction.Divisibility.PrimeDegreeVariant
-import Formalism.SharpRestriction.GlobalSchurBounds.ProductFirstZerothParts
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LClosedeqLemmas
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDlatLemmas
-import Formalism.GradedWeylDivisibility.FinalC
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.GTLower
+public import Formalism.LocalRingCardinality.FactDelDualNabla
+public import Formalism.SharpRestriction.Divisibility.PrimeDegreeVariant
+public import Formalism.SharpRestriction.GlobalSchurBounds.ProductFirstZerothParts
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LClosedeqLemmas
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDlatLemmas
+public import Formalism.GradedWeylDivisibility.FinalC
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.UnifLeaves
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.UnifLeaves
+
+@[expose] public section
 
 noncomputable section
 

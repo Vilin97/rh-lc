@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.JInvariant
-import GroundTheory.GlobalFields.ComplexMultiplication.UniformizationEisenstein
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.JInvariant
+public import GroundTheory.GlobalFields.ComplexMultiplication.UniformizationEisenstein
+
+@[expose] public section
 
 open Complex Filter Topology Set
 open scoped PeriodPair

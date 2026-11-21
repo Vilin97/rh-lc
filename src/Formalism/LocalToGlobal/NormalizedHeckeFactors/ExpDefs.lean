@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.AlgebraicWeights.IsAlgWeight
+module
+
+public import Mathlib
+public import Formalism.AlgebraicWeights.IsAlgWeight
+
+@[expose] public section
 
 noncomputable section
 

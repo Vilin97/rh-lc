@@ -1,4 +1,8 @@
-import Formalism.PieriBlockIdeals.LatticeInclusionRealSettingAlt
+module
+
+public import Formalism.PieriBlockIdeals.LatticeInclusionRealSettingAlt
+
+@[expose] public section
 
 noncomputable section
 

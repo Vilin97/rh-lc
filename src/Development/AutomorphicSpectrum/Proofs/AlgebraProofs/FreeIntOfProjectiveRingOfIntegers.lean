@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.ProIsoAt
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ProIsometryOfLocalIsometriesStatement
-import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGPadic
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.PadicIsometryEquivarianceStatement
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.ProIsoAt
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ProIsometryOfLocalIsometriesStatement
+public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGPadic
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.PadicIsometryEquivarianceStatement
+
+@[expose] public section
 
 open NumberField TensorProduct GlobalTheory.CompanionTheory.Ar
 

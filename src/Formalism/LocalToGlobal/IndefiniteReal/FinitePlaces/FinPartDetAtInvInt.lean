@@ -1,10 +1,14 @@
-import Formalism.LocalToGlobal.IndefiniteReal.DatumVec
-import Formalism.LocalToGlobal.IndefiniteReal.SubgroupCharExtensionOneApply
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.TameAtOne
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceS
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemUniq
-import Formalism.LocalToGlobal.Divisibility.DefGroupLemmas
-import Mathlib.NumberTheory.NumberField.ClassNumber
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.DatumVec
+public import Formalism.LocalToGlobal.IndefiniteReal.SubgroupCharExtensionOneApply
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.TameAtOne
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceS
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemUniq
+public import Formalism.LocalToGlobal.Divisibility.DefGroupLemmas
+public import Mathlib.NumberTheory.NumberField.ClassNumber
+
+@[expose] public section
 
 noncomputable section
 

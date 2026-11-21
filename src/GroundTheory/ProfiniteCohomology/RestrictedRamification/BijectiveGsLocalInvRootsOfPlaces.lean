@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseLevel
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseFixed
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseInputs
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.Dimension
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseLevel
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseFixed
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseInputs
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.Dimension
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

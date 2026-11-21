@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MinorCellOfParts
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RadJFExists
-import Formalism.FormalDegreeBessel.FinalWR
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MinorCellOfParts
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RadJFExists
+public import Formalism.FormalDegreeBessel.FinalWR
+
+@[expose] public section
 
 open Matrix
 

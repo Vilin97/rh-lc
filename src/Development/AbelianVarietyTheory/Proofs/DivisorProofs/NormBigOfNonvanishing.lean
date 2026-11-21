@@ -1,11 +1,15 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.NormSmall
-import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeriesHermitianUnique
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeckeLFunctionBottomPair
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SquareBottomHalfRankSumLeHalfRank
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StdMassNeZero
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockIpSelfRePos
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.VacNormNeZero
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.NormSmall
+public import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeriesHermitianUnique
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeckeLFunctionBottomPair
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SquareBottomHalfRankSumLeHalfRank
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StdMassNeZero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockIpSelfRePos
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.VacNormNeZero
+
+@[expose] public section
 
 open Finset
 open GlobalTheory.SqTop GlobalTheory.FunObj.SqNum

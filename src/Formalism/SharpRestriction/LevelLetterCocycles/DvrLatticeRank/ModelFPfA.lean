@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.ExpansionFormAll
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.ExpansionFormAll
+
+@[expose] public section
 
 noncomputable section
 

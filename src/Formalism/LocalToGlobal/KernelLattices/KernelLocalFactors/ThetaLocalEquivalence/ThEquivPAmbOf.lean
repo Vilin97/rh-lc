@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ThetaLocalEquivalence.ChiLawAmbOf
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.VacEntire
-import Formalism.PeriodIntegrals.VacEntire
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.FourthTensorThetaEqKernel
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ThetaLocalEquivalence.ChiLawAmbOf
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.VacEntire
+public import Formalism.PeriodIntegrals.VacEntire
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.FourthTensorThetaEqKernel
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

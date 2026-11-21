@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.GenericUnipotentCharacter
-import Formalism.GL3MeanSquares.HookFormulaTorsion.DimensionMassJointBound
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.GenericUnipotentCharacter
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.DimensionMassJointBound
+
+@[expose] public section
 
 noncomputable section
 

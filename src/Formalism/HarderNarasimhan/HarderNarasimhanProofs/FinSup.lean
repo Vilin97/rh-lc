@@ -1,4 +1,8 @@
-import Formalism.HarderNarasimhan.DegSupermodZ
+module
+
+public import Formalism.HarderNarasimhan.DegSupermodZ
+
+@[expose] public section
 
 open Module Submodule
 

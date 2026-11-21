@@ -1,6 +1,10 @@
-import Formalism.PieriBlockIdeals.LemmaDSkeletonUnit
-import Formalism.PieriBlockIdeals.PieriColumnMinors.Symmetrization
-import Formalism.PieriBlockIdeals.PieriColumnMinors.DividedPowerZeroZeroVector
+module
+
+public import Formalism.PieriBlockIdeals.LemmaDSkeletonUnit
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.Symmetrization
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.DividedPowerZeroZeroVector
+
+@[expose] public section
 
 open Polynomial
 

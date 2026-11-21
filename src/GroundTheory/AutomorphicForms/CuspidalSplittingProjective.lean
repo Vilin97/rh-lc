@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.CuspidalSplittingPositivity
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.CuspidalSplittingPositivity
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

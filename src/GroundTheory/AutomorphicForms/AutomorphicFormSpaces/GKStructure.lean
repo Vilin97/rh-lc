@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.SmoothKZ
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.SmoothKZ
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter Set
 open scoped NumberField.AdeleRing

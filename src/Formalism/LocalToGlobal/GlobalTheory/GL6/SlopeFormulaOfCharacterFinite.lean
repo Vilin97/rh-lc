@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL6.SlopeRamifiedInducedPrimeField
-import Formalism.LocalToGlobal.GlobalTheory.GL6.MetricDisjointSupportOrthogonal
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PolynomialFunctionFrameTranslate
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PSplitT
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.SlopeRamifiedInducedPrimeField
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.MetricDisjointSupportOrthogonal
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PolynomialFunctionFrameTranslate
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PSplitT
+
+@[expose] public section
 
 noncomputable section
 

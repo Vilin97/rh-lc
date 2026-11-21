@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.TensorProductTheorem.GenWindow
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.GenWindow
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.SymbolBridgeSum
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.OpenSubgroups
-import GroundTheory.GlobalFields.GlobalArtinMap.Kernel
-import GroundTheory.GlobalFields.NormResidueSymbol.RestrictNormalInfiniteLocalSymbol
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.SymbolBridgeSum
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.OpenSubgroups
+public import GroundTheory.GlobalFields.GlobalArtinMap.Kernel
+public import GroundTheory.GlobalFields.NormResidueSymbol.RestrictNormalInfiniteLocalSymbol
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global

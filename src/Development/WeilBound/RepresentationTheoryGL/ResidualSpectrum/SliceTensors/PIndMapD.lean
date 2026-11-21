@@ -1,6 +1,10 @@
-import Development.WeilBound.RepresentationTheoryGL.ResidualSpectrum.SliceTensors.PIndMapC
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsEvalSum
-import GroundTheory.PAdicHodge.ACrisBdR
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.ResidualSpectrum.SliceTensors.PIndMapC
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsEvalSum
+public import GroundTheory.PAdicHodge.ACrisBdR
+
+@[expose] public section
 
 noncomputable section
 

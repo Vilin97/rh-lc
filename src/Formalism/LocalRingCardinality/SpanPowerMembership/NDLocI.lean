@@ -1,9 +1,13 @@
-import Formalism.LocalRingCardinality.DataTies
-import Formalism.LocalRingCardinality.SpanPowerMembership.RankRecordRowDimensionZero
-import Formalism.LocalRingCardinality.SpanPowerMembership.SignSplitEquivInl
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.DataN
-import Formalism.LocalRingCardinality.SpanPowerMembership.NDLocG
+module
+
+public import Formalism.LocalRingCardinality.DataTies
+public import Formalism.LocalRingCardinality.SpanPowerMembership.RankRecordRowDimensionZero
+public import Formalism.LocalRingCardinality.SpanPowerMembership.SignSplitEquivInl
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataN
+public import Formalism.LocalRingCardinality.SpanPowerMembership.NDLocG
+
+@[expose] public section
 
 noncomputable section
 

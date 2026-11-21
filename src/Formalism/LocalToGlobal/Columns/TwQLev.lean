@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.Columns.RecLevelStep
-import Formalism.LocalToGlobal.Columns.RecLevelTop
-import Formalism.LocalToGlobal.Columns.TwQDefs
-import Formalism.LocalToGlobal.Columns.TwQThetaOpen
+module
+
+public import Formalism.LocalToGlobal.Columns.RecLevelStep
+public import Formalism.LocalToGlobal.Columns.RecLevelTop
+public import Formalism.LocalToGlobal.Columns.TwQDefs
+public import Formalism.LocalToGlobal.Columns.TwQThetaOpen
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix
 open scoped TensorProduct

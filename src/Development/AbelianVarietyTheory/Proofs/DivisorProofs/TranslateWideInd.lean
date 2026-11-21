@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.SiegelKlingenDeligneRibet
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.SiegelKlingenDeligneRibet
+
+@[expose] public section
 
 noncomputable section
 open NumberField Formalism.MainNotions.ShortIntervalPrimes GlobalTheory.RayZeta

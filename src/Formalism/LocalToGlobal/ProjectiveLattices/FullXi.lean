@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.FullExists
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.FullExists
+
+@[expose] public section
 
 noncomputable section
 

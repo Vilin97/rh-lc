@@ -1,5 +1,9 @@
-import ReciprocityTheory.L2DbarEstimates.LeviForms.HoloClosedNeed
-import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.Imports
+module
+
+public import ReciprocityTheory.L2DbarEstimates.LeviForms.HoloClosedNeed
+public import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.Imports
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.I
 

@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.LatticeBoundsOfThreeParts
-import Formalism.JumpKernelCokernel.LengthTheoremsWithEarlier
-import Formalism.TruncatedSeriesCounting.EtaDeterminantPolynomialIdentities
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.LemmaDN0
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.LatticeBoundsOfThreeParts
+public import Formalism.JumpKernelCokernel.LengthTheoremsWithEarlier
+public import Formalism.TruncatedSeriesCounting.EtaDeterminantPolynomialIdentities
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.LemmaDN0
+
+@[expose] public section
 
 noncomputable section
 

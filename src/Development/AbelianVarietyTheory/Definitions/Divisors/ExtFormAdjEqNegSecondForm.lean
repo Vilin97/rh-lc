@@ -1,7 +1,11 @@
-import Mathlib
-import ReciprocityTheory.AnalyticForms.MaIntEmpty
-import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.EventuallyDifferentiableAtOfContDiffAtTwo
-import Development.AbelianVarietyTheory.Definitions.Divisors.LeTwoMulOfForallScale
+module
+
+public import Mathlib
+public import ReciprocityTheory.AnalyticForms.MaIntEmpty
+public import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.EventuallyDifferentiableAtOfContDiffAtTwo
+public import Development.AbelianVarietyTheory.Definitions.Divisors.LeTwoMulOfForallScale
+
+@[expose] public section
 
 open Matrix Complex ComplexConjugate Filter Topology
 open scoped ComplexOrder ContDiff

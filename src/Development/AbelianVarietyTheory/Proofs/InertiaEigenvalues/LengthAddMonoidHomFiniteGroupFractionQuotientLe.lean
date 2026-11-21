@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.CharacterColumnKernels.StatementRho
+module
+
+public import Mathlib
+public import Formalism.CharacterColumnKernels.StatementRho
+
+@[expose] public section
+
 open Formalism.NG
 
 namespace GlobalTheory.HomLen

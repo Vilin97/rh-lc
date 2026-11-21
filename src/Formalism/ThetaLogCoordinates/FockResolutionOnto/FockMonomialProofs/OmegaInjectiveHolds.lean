@@ -1,8 +1,12 @@
-import Formalism.ThetaLogCoordinates.FockResolutionOnto.StatementD
-import Formalism.ThetaLogCoordinates.FockResolutionOnto.FockMonomialProofs.RaisingKeepsEarlyLetters
-import Formalism.ThetaLogCoordinates.FockResolutionOnto.FockMonomialProofs.Sl2RaisePowSuccLowerApplyEq
-import Formalism.ThetaLogCoordinates.FockResolutionOnto.FockMonomialProofs.EArith
-import Formalism.ThetaLogCoordinates.FockResolutionOnto.FockMonomialProofs.TypesLELeYcondC
+module
+
+public import Formalism.ThetaLogCoordinates.FockResolutionOnto.StatementD
+public import Formalism.ThetaLogCoordinates.FockResolutionOnto.FockMonomialProofs.RaisingKeepsEarlyLetters
+public import Formalism.ThetaLogCoordinates.FockResolutionOnto.FockMonomialProofs.Sl2RaisePowSuccLowerApplyEq
+public import Formalism.ThetaLogCoordinates.FockResolutionOnto.FockMonomialProofs.EArith
+public import Formalism.ThetaLogCoordinates.FockResolutionOnto.FockMonomialProofs.TypesLELeYcondC
+
+@[expose] public section
 
 namespace Formalism.InvariantFactorPaths.L4
 

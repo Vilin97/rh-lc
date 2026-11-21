@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.CuspidalSplittingIsotypic
-import GroundTheory.AutomorphicForms.LeviStagesProduct
-import GroundTheory.AutomorphicForms.LeviStagesExact
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.CuspidalSplittingIsotypic
+public import GroundTheory.AutomorphicForms.LeviStagesProduct
+public import GroundTheory.AutomorphicForms.LeviStagesExact
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

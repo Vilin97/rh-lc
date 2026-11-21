@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.SheafH
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.OverShriek
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.SheafH
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.OverShriek
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh

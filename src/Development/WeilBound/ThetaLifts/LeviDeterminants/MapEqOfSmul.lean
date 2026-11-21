@@ -1,9 +1,13 @@
-import Development.WeilBound.ThetaLifts.LeviDeterminants.EvChange
-import Development.WeilBound.ThetaLifts.LeviDeterminants.EvStmt
-import Development.WeilBound.ThetaLifts.LeviDeterminants.ExistsAdaptedModelTwoPlanes
-import Development.WeilBound.ThetaLifts.LeviDeterminants.EigenIntertwinerTwoPlanes
-import Development.WeilBound.ThetaLifts.LeviDeterminants.EigenIntertwinerSkewPlaneUnique
-import Development.WeilBound.ThetaLifts.TowerModels.PlaneHerm
+module
+
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.EvChange
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.EvStmt
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.ExistsAdaptedModelTwoPlanes
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.EigenIntertwinerTwoPlanes
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.EigenIntertwinerSkewPlaneUnique
+public import Development.WeilBound.ThetaLifts.TowerModels.PlaneHerm
+
+@[expose] public section
 
 noncomputable section
 

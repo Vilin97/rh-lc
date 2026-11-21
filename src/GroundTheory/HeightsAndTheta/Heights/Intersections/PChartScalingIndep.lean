@@ -1,6 +1,11 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.CurvePt
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StChartScalingIndep
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.CurvePt
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StChartScalingIndep
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

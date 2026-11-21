@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.QuotientRightRegular
-import GroundTheory.AutomorphicForms.HilbertSchmidtKernel
-import GroundTheory.AutomorphicForms.HilbertSchmidtCompact
-import GroundTheory.AutomorphicForms.DiscreteSpectrumAbstract
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.QuotientRightRegular
+public import GroundTheory.AutomorphicForms.HilbertSchmidtKernel
+public import GroundTheory.AutomorphicForms.HilbertSchmidtCompact
+public import GroundTheory.AutomorphicForms.DiscreteSpectrumAbstract
+
+@[expose] public section
 
 open MeasureTheory Topology Filter Set Function
 open scoped ENNReal InnerProductSpace ComplexConjugate Pointwise

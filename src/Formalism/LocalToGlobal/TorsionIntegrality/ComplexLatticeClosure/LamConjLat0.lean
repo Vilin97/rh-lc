@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.ComplexLatticeClosure.IsLatClosure
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.ComplexLatticeClosure.IsLatClosure
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,13 +1,17 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.SchurIrreducible
-import Formalism.LocalToGlobal.BesselHermitianTheta.DefsReal
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.PderivEqZeroOfColOp
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ColumnDegrees
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.DerivationProdPow
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsEqMulMinorPoly
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.RowColWeightsAgree
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FnShapeOfJointShape
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LengthAddLeOfDisjoint
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.SchurIrreducible
+public import Formalism.LocalToGlobal.BesselHermitianTheta.DefsReal
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.PderivEqZeroOfColOp
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ColumnDegrees
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.DerivationProdPow
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsEqMulMinorPoly
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.RowColWeightsAgree
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FnShapeOfJointShape
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LengthAddLeOfDisjoint
+
+@[expose] public section
 
 noncomputable section
 

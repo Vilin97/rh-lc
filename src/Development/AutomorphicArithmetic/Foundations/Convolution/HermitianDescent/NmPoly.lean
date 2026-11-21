@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.HermitianDescent.NormAlmostAll
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.HermitianDescent.NormAlmostAll
+
+@[expose] public section
 
 open Matrix Polynomial NumberField IsDedekindDomain UpperTheory.ConvolutionTheory.D
 open scoped TensorProduct

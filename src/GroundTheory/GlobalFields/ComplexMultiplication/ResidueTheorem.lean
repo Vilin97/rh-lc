@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.Residue
-import GroundTheory.GlobalFields.ComplexMultiplication.RectangleIntegral
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.Residue
+public import GroundTheory.GlobalFields.ComplexMultiplication.RectangleIntegral
+
+@[expose] public section
 
 open Complex Filter Topology Set
 open scoped Interval Real

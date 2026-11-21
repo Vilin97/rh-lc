@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.FockGram.StatementFock
+module
+
+public import Mathlib
+public import Formalism.FockGram.StatementFock
+
+@[expose] public section
 
 open MvPolynomial
 

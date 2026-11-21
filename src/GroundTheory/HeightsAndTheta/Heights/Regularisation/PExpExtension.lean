@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Regularisation.Statements
-import GroundTheory.HeightsAndTheta.Heights.Regularisation.StRiemannSlices
-import GroundTheory.HeightsAndTheta.Heights.Regularisation.StPuncturedExpOrder
-import GroundTheory.HeightsAndTheta.Heights.Regularisation.StLogCoverDescent
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Regularisation.Statements
+public import GroundTheory.HeightsAndTheta.Heights.Regularisation.StRiemannSlices
+public import GroundTheory.HeightsAndTheta.Heights.Regularisation.StPuncturedExpOrder
+public import GroundTheory.HeightsAndTheta.Heights.Regularisation.StLogCoverDescent
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Regular

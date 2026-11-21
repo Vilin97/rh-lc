@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.PlaneCoeffOneTTens
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.ThresholdGeOddPosition
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.PlaneCoeffOneTTens
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.ThresholdGeOddPosition
+
+@[expose] public section
 
 noncomputable section
 

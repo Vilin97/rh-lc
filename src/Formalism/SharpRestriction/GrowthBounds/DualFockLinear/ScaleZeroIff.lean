@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.PairFormula
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.PairFormula
+
+@[expose] public section
 
 noncomputable section
 

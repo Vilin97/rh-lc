@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.FglGram
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CubeFormalIdentities.CoeffPowMulPowEqZero
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.FglGram
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CubeFormalIdentities.CoeffPowMulPowEqZero
+
+@[expose] public section
 
 noncomputable section
 

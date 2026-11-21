@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GlobalTheory.LinkTiesTh
-import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.CMQuasiPeriodConst
-import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.ThetaZeroTranslateProduct
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.LinkTiesTh
+public import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.CMQuasiPeriodConst
+public import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.ThetaZeroTranslateProduct
+
+@[expose] public section
 
 noncomputable section
 

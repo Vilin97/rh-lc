@@ -1,13 +1,17 @@
-import Mathlib
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.RecPairDefs
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.RecPair
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.RecUnr
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.RecCyclic
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.RecFunct
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.GabLim
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.NormOpen
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.RecAbC
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.RecAbA
+module
+
+public import Mathlib
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.RecPairDefs
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.RecPair
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.RecUnr
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.RecCyclic
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.RecFunct
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.GabLim
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.NormOpen
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.RecAbC
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.RecAbA
+
+@[expose] public section
 
 namespace ReciprocityTheory.DiscreteGroups.LocalClassField
 

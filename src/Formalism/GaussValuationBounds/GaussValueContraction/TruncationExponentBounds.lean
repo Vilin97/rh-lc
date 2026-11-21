@@ -1,5 +1,9 @@
-import Formalism.GaussValuationBounds.Statement
-import Mathlib
+module
+
+public import Formalism.GaussValuationBounds.Statement
+public import Mathlib
+
+@[expose] public section
 
 namespace Formalism.NOK
 

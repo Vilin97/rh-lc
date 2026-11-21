@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataHost
-import Formalism.LocalToGlobal.UnitaryNorms.RealCyclotomicTwoPower
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.HostFacts
-import Development.AutomorphicArithmetic.PrimeDiscriminants.CycImage
-import Development.AutomorphicArithmetic.PrimeDiscriminants.RamDiscr
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataHost
+public import Formalism.LocalToGlobal.UnitaryNorms.RealCyclotomicTwoPower
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.HostFacts
+public import Development.AutomorphicArithmetic.PrimeDiscriminants.CycImage
+public import Development.AutomorphicArithmetic.PrimeDiscriminants.RamDiscr
+
+@[expose] public section
 
 open NumberField
 

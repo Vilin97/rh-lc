@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.HermFlagUnipotentAnisotropicVectorSubMem
-import Formalism.SharpRestriction.LevelLetterCocycles.IsTruncIff
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.HermFlagUnipotentAnisotropicVectorSubMem
+public import Formalism.SharpRestriction.LevelLetterCocycles.IsTruncIff
+
+@[expose] public section
 
 open Classical
 

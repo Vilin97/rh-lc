@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.ComplSmulMapE
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.ComplSmulMapE
+
+@[expose] public section
 
 noncomputable section
 

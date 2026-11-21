@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.FunctionField.PlaceBridge
+module
+
+public import Mathlib
+public import GroundTheory.FunctionField.PlaceBridge
+
+@[expose] public section
 
 namespace GroundTheory.Arith.SchemeCoh
 

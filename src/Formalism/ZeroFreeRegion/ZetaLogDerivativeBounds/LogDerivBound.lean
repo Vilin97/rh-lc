@@ -1,7 +1,11 @@
-import Formalism.ZeroFreeRegion.SmallHeightLogDeriv
-import Mathlib.Analysis.Complex.BorelCaratheodory
-import Mathlib.Analysis.Complex.HasPrimitives
-import Mathlib.Analysis.Complex.Liouville
+module
+
+public import Formalism.ZeroFreeRegion.SmallHeightLogDeriv
+public import Mathlib.Analysis.Complex.BorelCaratheodory
+public import Mathlib.Analysis.Complex.HasPrimitives
+public import Mathlib.Analysis.Complex.Liouville
+
+@[expose] public section
 
 open Complex Metric
 

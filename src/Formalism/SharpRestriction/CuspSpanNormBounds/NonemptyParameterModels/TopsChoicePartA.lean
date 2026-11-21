@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.DiagonalEntryIdentity
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.DiagonalEntryIdentity
+
+@[expose] public section
 
 noncomputable section
 

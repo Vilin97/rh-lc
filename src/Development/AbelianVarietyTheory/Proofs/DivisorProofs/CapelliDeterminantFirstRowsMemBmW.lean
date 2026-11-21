@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.BranchSandwichDivisors.BranchIsometryProofs.BranchMap
-import Formalism.LocalToGlobal.Columns.PolyFnLemmas
-import Development.AbelianVarietyTheory.Definitions.Foundations.TracePowApply
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SplitLastBlockActX
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.ZetaPhiBranchOperator
+module
+
+public import Mathlib
+public import Formalism.BranchSandwichDivisors.BranchIsometryProofs.BranchMap
+public import Formalism.LocalToGlobal.Columns.PolyFnLemmas
+public import Development.AbelianVarietyTheory.Definitions.Foundations.TracePowApply
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SplitLastBlockActX
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.ZetaPhiBranchOperator
+
+@[expose] public section
 
 open MvPolynomial Formalism.GradedWeylDivisibility Formalism.BranchingDeterminantCap Formalism.BasicNotions Formalism.L2.DIV GlobalTheory.Mem.Gelf GlobalTheory.Mem.GelfCheck
 

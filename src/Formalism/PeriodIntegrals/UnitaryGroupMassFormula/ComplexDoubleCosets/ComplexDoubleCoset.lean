@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ComplexDoubleCosets.CplxDC
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FoldDCUnfold
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ComplexDoubleCosets.CplxDC
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FoldDCUnfold
+
+@[expose] public section
 
 open MeasureTheory
 open scoped ENNReal NNReal

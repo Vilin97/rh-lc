@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.AdelicUnitaryGroups
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.AdelicUnitaryGroups
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights.FiniteCovolume
 

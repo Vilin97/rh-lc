@@ -1,8 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NatCastMemPlaceAt
-import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.HeckeValueIntegrality
-import Formalism.SharpRestriction.LevelLetterCocycles.GaloisEquivariantKeyFunction
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FiniteAndIntegral
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.NatCastMemPlaceAt
+public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.HeckeValueIntegrality
+public import Formalism.SharpRestriction.LevelLetterCocycles.GaloisEquivariantKeyFunction
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FiniteAndIntegral
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.L2.Pj GlobalTheory.GeoTie GlobalTheory.GoodPts
 
 set_option autoImplicit false

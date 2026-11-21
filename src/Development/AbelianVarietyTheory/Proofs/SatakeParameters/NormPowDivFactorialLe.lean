@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.SolveV
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.EqSingleOfDegreeEqOne
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.Cobdry
-import Formalism.LocalRingCardinality.DataJet
+module
+
+public import Mathlib
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.SolveV
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.EqSingleOfDegreeEqOne
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.Cobdry
+public import Formalism.LocalRingCardinality.DataJet
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.LocalRingCardinality.DataNChoice
-import Formalism.LocalToGlobal.UnitaryNorms.AdjoinCycZeta
+module
+
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.LocalRingCardinality.DataNChoice
+public import Formalism.LocalToGlobal.UnitaryNorms.AdjoinCycZeta
+
+@[expose] public section
 
 noncomputable section
 

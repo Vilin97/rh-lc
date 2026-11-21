@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.VolumeEquality.DegPushVal
-import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PIntNumBaseChange
+module
+
+public import Development.WeilBound.CoreStatements.VolumeEquality.DegPushVal
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PIntNumBaseChange
+
+@[expose] public section
 
 noncomputable section
 

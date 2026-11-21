@@ -1,5 +1,9 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.SesquilinearFractions.ExistsIntegerNearConjVector
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.SesquilinearFractions.ExistsIntegerNearConjVector
+
+@[expose] public section
 
 open NumberField Matrix GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Fl
 open scoped ComplexOrder

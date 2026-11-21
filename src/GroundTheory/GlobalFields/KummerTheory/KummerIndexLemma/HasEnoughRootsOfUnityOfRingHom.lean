@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.KummerTheory.LocalIndexAtPlace
-import GroundTheory.GlobalFields.IdeleGroups.IndexProductFormula
-import GroundTheory.ProfiniteCohomology.KummerBasic
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.KummerTheory.LocalIndexAtPlace
+public import GroundTheory.GlobalFields.IdeleGroups.IndexProductFormula
+public import GroundTheory.ProfiniteCohomology.KummerBasic
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.OneSidedLemma4Realisable
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.OneSidedLemma4Realisable
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.EisensteinSeries.SiegelEisensteinHalfPlane.UnitTestFunctions.LiftUnit
-import GroundTheory.GlobalFields.TateThesis.GlobalZetaInfinite
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.EisensteinSeries.SiegelEisensteinHalfPlane.UnitTestFunctions.LiftUnit
+public import GroundTheory.GlobalFields.TateThesis.GlobalZetaInfinite
+
+@[expose] public section
 
 noncomputable section
 

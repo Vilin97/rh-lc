@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RedivisionStructureEq
-import Formalism.LocalToGlobal.GroupLattices.Joint0
-import Lean
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RedivisionStructureEq
+public import Formalism.LocalToGlobal.GroupLattices.Joint0
+public import Lean
+
+@[expose] public section
 
 noncomputable section
 

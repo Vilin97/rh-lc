@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.CloudBAtOfRho
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.CloudBAtOfRho
+
+@[expose] public section
 
 noncomputable section
 

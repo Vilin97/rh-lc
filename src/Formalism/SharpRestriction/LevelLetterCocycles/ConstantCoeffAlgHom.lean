@@ -1,7 +1,11 @@
-import Mathlib.RingTheory.PowerSeries.Substitution
-import Mathlib.RingTheory.PowerSeries.Derivative
-import Mathlib.RingTheory.PowerSeries.Binomial
-import Mathlib.NumberTheory.Padics.MahlerBasis
+module
+
+public import Mathlib.RingTheory.PowerSeries.Substitution
+public import Mathlib.RingTheory.PowerSeries.Derivative
+public import Mathlib.RingTheory.PowerSeries.Binomial
+public import Mathlib.NumberTheory.Padics.MahlerBasis
+
+@[expose] public section
 
 noncomputable section
 

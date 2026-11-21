@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.IsVolData
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HaarLieNilpotentCoordinatesStatement
-import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.CountStA
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.IsVolData
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HaarLieNilpotentCoordinatesStatement
+public import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.CountStA
+
+@[expose] public section
 
 noncomputable section
 

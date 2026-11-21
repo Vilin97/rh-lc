@@ -1,4 +1,8 @@
-import Formalism.SatakeDualWeyl.StatementB
+module
+
+public import Formalism.SatakeDualWeyl.StatementB
+
+@[expose] public section
 
 noncomputable section
 

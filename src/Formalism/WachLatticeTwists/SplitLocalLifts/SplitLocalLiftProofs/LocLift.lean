@@ -1,6 +1,10 @@
-import Formalism.WachLatticeTwists.SplitLocalLifts.Cocycles1MapOfEquivariant
-import Formalism.WachLatticeTwists.CoprimeLiftBounds.CoprimeLiftProofs.SelmerInjColumnPlace
-import Formalism.WachLatticeTwists.TorsionLengthCounts.RowCol
+module
+
+public import Formalism.WachLatticeTwists.SplitLocalLifts.Cocycles1MapOfEquivariant
+public import Formalism.WachLatticeTwists.CoprimeLiftBounds.CoprimeLiftProofs.SelmerInjColumnPlace
+public import Formalism.WachLatticeTwists.TorsionLengthCounts.RowCol
+
+@[expose] public section
 
 open Finset Classical
 

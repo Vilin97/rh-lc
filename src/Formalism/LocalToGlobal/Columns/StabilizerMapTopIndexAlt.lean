@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.RecChainYKmap
-import Formalism.LocalToGlobal.Columns.StabilizerMapMaximalIndex
+module
+
+public import Formalism.LocalToGlobal.Columns.RecChainYKmap
+public import Formalism.LocalToGlobal.Columns.StabilizerMapMaximalIndex
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

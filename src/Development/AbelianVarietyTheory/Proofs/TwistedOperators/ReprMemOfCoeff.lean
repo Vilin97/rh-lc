@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.CoefMod
-import Formalism.LocalToGlobal.Columns.CoefficientsModP.FkMapInitMinor
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.CoefMod
+public import Formalism.LocalToGlobal.Columns.CoefficientsModP.FkMapInitMinor
+
+@[expose] public section
 
 noncomputable section
 

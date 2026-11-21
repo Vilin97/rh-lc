@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapProofs.ClsRowVOfMem
-import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapProofs.RowChiReal
+module
+
+public import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapProofs.ClsRowVOfMem
+public import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapProofs.RowChiReal
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

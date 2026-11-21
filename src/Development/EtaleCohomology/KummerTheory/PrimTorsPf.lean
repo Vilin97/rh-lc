@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.KummerTheory.TwSecPf
+module
+
+public import Development.EtaleCohomology.KummerTheory.TwSecPf
+
+@[expose] public section
 
 noncomputable section
 open Polynomial IsLocalRing GlobalTheory.EtC

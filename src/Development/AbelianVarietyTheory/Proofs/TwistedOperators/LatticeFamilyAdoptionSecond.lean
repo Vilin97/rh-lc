@@ -1,15 +1,19 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.RealTB
-import Formalism.LocalToGlobal.IndefiniteReal.RealPins
-import Formalism.LocalToGlobal.IndefiniteReal.RealRec
-import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.NMjT
-import Formalism.LocalRingCardinality.DataNChTie
-import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.SemilinearExtensionBases
-import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.FractionalBaseInclusion
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsBasisTensor
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FractionFieldEmbeddingCompat
-import Formalism.LocalRingCardinality.DataIdx
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ImportsFurther
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.RealTB
+public import Formalism.LocalToGlobal.IndefiniteReal.RealPins
+public import Formalism.LocalToGlobal.IndefiniteReal.RealRec
+public import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.NMjT
+public import Formalism.LocalRingCardinality.DataNChTie
+public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.SemilinearExtensionBases
+public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.FractionalBaseInclusion
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsBasisTensor
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FractionFieldEmbeddingCompat
+public import Formalism.LocalRingCardinality.DataIdx
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ImportsFurther
+
+@[expose] public section
 
 namespace GroupAverageFixedPoints
 section

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.DualMu
-import Formalism.QuotientMetricDivisors.StatementK
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.DualMu
+public import Formalism.QuotientMetricDivisors.StatementK
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix

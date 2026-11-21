@@ -1,4 +1,8 @@
-import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.Circle
+module
+
+public import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.Circle
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.C
 

@@ -1,4 +1,8 @@
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.KoszulLowersPower
+module
+
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.KoszulLowersPower
+
+@[expose] public section
 
 open MeasureTheory
 

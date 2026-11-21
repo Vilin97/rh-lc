@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.DataDIV
-import Formalism.LocalRingCardinality.DataNChoice
+module
+
+public import Formalism.LocalRingCardinality.DataDIV
+public import Formalism.LocalRingCardinality.DataNChoice
+
+@[expose] public section
 
 noncomputable section
 

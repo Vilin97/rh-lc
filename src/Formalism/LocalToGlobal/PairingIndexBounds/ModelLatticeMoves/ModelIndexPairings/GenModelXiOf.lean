@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.PairingIndexBounds.ModelLatticeMoves.ModelIndexPairings.MovesU
+module
+
+public import Formalism.LocalToGlobal.PairingIndexBounds.ModelLatticeMoves.ModelIndexPairings.MovesU
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

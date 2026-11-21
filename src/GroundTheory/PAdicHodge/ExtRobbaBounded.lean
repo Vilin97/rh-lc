@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.ExtRobbaTeich
-import GroundTheory.PAdicHodge.RobbaSeries
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.ExtRobbaTeich
+public import GroundTheory.PAdicHodge.RobbaSeries
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

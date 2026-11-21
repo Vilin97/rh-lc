@@ -1,5 +1,9 @@
-import Formalism.GaussJetBounds.FrameJetEval
-import Formalism.GaussJetBounds.GaussJetProofs.ConstantCoeffAevalLinP
+module
+
+public import Formalism.GaussJetBounds.FrameJetEval
+public import Formalism.GaussJetBounds.GaussJetProofs.ConstantCoeffAevalLinP
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

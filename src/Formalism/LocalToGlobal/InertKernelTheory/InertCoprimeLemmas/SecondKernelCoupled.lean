@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.InertKernelTheory.SecondKernelCoupledLastLift
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.SecondKernelInstances
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.CoupledSumOfEntries
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.OrbitSumStabilizer
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.SecondKernelCoupledLastLift
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.SecondKernelInstances
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.CoupledSumOfEntries
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.OrbitSumStabilizer
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualIsogeny
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilFixedField
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualIsogeny
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilFixedField
+
+@[expose] public section
 
 namespace GroundTheory.Arith.Abelian
 

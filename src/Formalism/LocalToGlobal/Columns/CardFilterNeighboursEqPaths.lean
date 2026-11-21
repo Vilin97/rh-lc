@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.WmpNatCardQuotEqPowFinrank
+module
+
+public import Formalism.LocalToGlobal.Columns.WmpNatCardQuotEqPowFinrank
+
+@[expose] public section
 
 noncomputable section
 

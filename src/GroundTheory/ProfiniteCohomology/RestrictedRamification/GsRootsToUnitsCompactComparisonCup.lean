@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseCupFormula
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseCupGlobal
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.IsDiscreteRepResIntRepTrivGs
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseClassIdele
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseKummerDelta
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseCupFormula
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseCupGlobal
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.IsDiscreteRepResIntRepTrivGs
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseClassIdele
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseKummerDelta
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

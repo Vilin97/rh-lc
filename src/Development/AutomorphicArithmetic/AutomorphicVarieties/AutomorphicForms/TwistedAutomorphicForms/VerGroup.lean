@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TwistedAutomorphicForms.EqOneOfMemLev
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TwistedAutomorphicForms.EqOneOfMemLev
+
+@[expose] public section
 
 theorem UpperTheory.V.Af.Tw.verGroup :
     UpperTheory.V.Af.Tw.VerGroup := by

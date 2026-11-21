@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.PeriodIntegrals.LocLatEq
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalLatticeEquality.Development
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalLatticeEquality.Imports
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalLatticeEquality.CoreGenIdeal
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.LocLatEq
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalLatticeEquality.Development
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalLatticeEquality.Imports
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalLatticeEquality.CoreGenIdeal
+
+@[expose] public section
 
 noncomputable section
 

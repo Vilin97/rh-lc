@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.CompleteTrivial
-import GroundTheory.LocalFields.NormalLattice
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.CompleteTrivial
+public import GroundTheory.LocalFields.NormalLattice
+
+@[expose] public section
 
 noncomputable section
 

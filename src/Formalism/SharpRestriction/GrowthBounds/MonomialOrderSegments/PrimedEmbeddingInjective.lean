@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.CgeZeroIffIntegral
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.AddMemSupportOfMemSupportCoefOut
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.SlopeOfBinomCombGen
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.CollapseExponent
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.CgeZeroIffIntegral
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.AddMemSupportOfMemSupportCoefOut
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.SlopeOfBinomCombGen
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.CollapseExponent
+
+@[expose] public section
 
 noncomputable section
 

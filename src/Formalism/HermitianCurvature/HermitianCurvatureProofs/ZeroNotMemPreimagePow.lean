@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.AestronglyMeasurableMainD
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegralNormCvecSq
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.GermFibreKernels
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.AestronglyMeasurableMainD
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegralNormCvecSq
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GermFibreKernels
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBK
 

@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFFibreSum
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFFibreBij
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFFibreMult
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFFibreSum
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFFibreBij
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFFibreMult
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter

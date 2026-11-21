@@ -1,11 +1,15 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HermitianDisc
-import GroundTheory.AutomorphicForms.HermitianWitt
-import GroundTheory.AutomorphicForms.UnitarySplit
-import GroundTheory.AutomorphicForms.HermitianSpaces
-import GroundTheory.LocalFields.HerbrandLocal
-import GroundTheory.LocalFields.FiniteExtension
-import GroundTheory.LocalFields.UnramifiedHensel
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HermitianDisc
+public import GroundTheory.AutomorphicForms.HermitianWitt
+public import GroundTheory.AutomorphicForms.UnitarySplit
+public import GroundTheory.AutomorphicForms.HermitianSpaces
+public import GroundTheory.LocalFields.HerbrandLocal
+public import GroundTheory.LocalFields.FiniteExtension
+public import GroundTheory.LocalFields.UnramifiedHensel
+
+@[expose] public section
 
 noncomputable section
 

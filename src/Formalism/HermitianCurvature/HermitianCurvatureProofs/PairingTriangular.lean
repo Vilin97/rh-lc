@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.LatticeHerglotzBound
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.HerglotzLowerSemicontinuous
+module
+
+public import Formalism.HermitianCurvature.LatticeHerglotzBound
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.HerglotzLowerSemicontinuous
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PairingConjugationLemmas
 

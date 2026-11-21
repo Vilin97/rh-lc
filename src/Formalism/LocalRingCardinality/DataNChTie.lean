@@ -1,4 +1,8 @@
-import Formalism.LocalRingCardinality.DataNChoice
+module
+
+public import Formalism.LocalRingCardinality.DataNChoice
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.DegreeOnePrimes
-import GroundTheory.GlobalFields.TateThesis.PrimeZetaPole
-import GroundTheory.GlobalFields.KummerTheory.Splitting
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.DegreeOnePrimes
+public import GroundTheory.GlobalFields.TateThesis.PrimeZetaPole
+public import GroundTheory.GlobalFields.KummerTheory.Splitting
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

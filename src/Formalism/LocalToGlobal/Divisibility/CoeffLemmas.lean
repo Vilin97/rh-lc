@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Divisibility.ConjugationAtDistinguishedPlace
-import Formalism.LocalToGlobal.UnitaryNorms.PowValCast
+module
+
+public import Formalism.LocalToGlobal.Divisibility.ConjugationAtDistinguishedPlace
+public import Formalism.LocalToGlobal.UnitaryNorms.PowValCast
+
+@[expose] public section
 
 open NumberField IntermediateField
 

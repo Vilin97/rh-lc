@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.FamilyDoubleCosetBesselBoundOfGap
-import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeLitG
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.FamilyDoubleCosetBesselBoundOfGap
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeLitG
+
+@[expose] public section
 
 noncomputable section
 

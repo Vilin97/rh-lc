@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.AlgebraicTheory.StatementEig
-import Formalism.LocalToGlobal.AlgebraicTheory.StatementNorm
+module
+
+public import Formalism.LocalToGlobal.AlgebraicTheory.StatementEig
+public import Formalism.LocalToGlobal.AlgebraicTheory.StatementNorm
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

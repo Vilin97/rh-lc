@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GroupLattices.LevelCharts.FiniteCompG
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.CompletionIntegersIff
-import Formalism.SharpRestriction.GrowthBounds.DataGChain
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.LevelCharts.FiniteCompG
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.CompletionIntegersIff
+public import Formalism.SharpRestriction.GrowthBounds.DataGChain
+
+@[expose] public section
 
 noncomputable section
 

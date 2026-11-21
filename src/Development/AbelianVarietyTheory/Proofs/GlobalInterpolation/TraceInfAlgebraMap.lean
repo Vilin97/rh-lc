@@ -1,4 +1,8 @@
-import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.LocalDualIndex
+module
+
+public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.LocalDualIndex
+
+@[expose] public section
 
 namespace GlobalTheory.TraceSumRealEmbeddings
 

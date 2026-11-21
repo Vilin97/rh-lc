@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.HeckeChar
-import GroundTheory.GlobalFields.IdeleGroups.IdeleNorms
-import GroundTheory.GlobalFields.IdeleGroups.NormOneCompact
-import GroundTheory.GlobalFields.TateThesis.IdeleMeasureNormOne
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.HeckeChar
+public import GroundTheory.GlobalFields.IdeleGroups.IdeleNorms
+public import GroundTheory.GlobalFields.IdeleGroups.NormOneCompact
+public import GroundTheory.GlobalFields.TateThesis.IdeleMeasureNormOne
+
+@[expose] public section
 
 open Topology NumberField
 open scoped NumberField.AdeleRing

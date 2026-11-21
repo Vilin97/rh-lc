@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ExplicitFormula.GoodHeightExists
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ExplicitFormula.LStructA
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ExplicitFormula.LStructB
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ExplicitFormula.GoodHeightExists
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ExplicitFormula.LStructA
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ExplicitFormula.LStructB
+
+@[expose] public section
 
 noncomputable section
 

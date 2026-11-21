@@ -1,6 +1,10 @@
-import Formalism.FlagUnipotentLattices.MemOfOrthogonalAnisotropic
-import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.ExistsHasLeadingCoeffOfMemSpanBelow
-import Formalism.HyperbolicPlaceProducts.SecondLevelArithmeticNorm
+module
+
+public import Formalism.FlagUnipotentLattices.MemOfOrthogonalAnisotropic
+public import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.ExistsHasLeadingCoeffOfMemSpanBelow
+public import Formalism.HyperbolicPlaceProducts.SecondLevelArithmeticNorm
+
+@[expose] public section
 
 open Formalism.HermitianLatticeCounting.S6
 open scoped BigOperators

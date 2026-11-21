@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.MemMapAugmentationIdealComapPullbackQuotient
+module
+
+public import ReciprocityTheory.DualLattices.MemMapAugmentationIdealComapPullbackQuotient
+
+@[expose] public section
 
 noncomputable section
 

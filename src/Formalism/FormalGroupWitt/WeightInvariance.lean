@@ -1,14 +1,18 @@
-import Formalism.FormalGroupWitt.Statement
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.FunctionalEquationHomVector
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.EqSingleOfDegreeEqOne
-import Formalism.FormalGroupLog.FormalGroupLogProofs.ChainRule
-import Formalism.FormalGroupLog.FormalGroupLogProofs.ConstantCoeffSubstOfZero
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.SolveV
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.CoeffV
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.IntegralSubstVector
-import Formalism.TorsionNormIteration.InverseIntegralClasses.SigmaNormLeOne
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.FrobSqV
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.WittTeichmullerRoot
+module
+
+public import Formalism.FormalGroupWitt.Statement
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.FunctionalEquationHomVector
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.EqSingleOfDegreeEqOne
+public import Formalism.FormalGroupLog.FormalGroupLogProofs.ChainRule
+public import Formalism.FormalGroupLog.FormalGroupLogProofs.ConstantCoeffSubstOfZero
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.SolveV
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.CoeffV
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.IntegralSubstVector
+public import Formalism.TorsionNormIteration.InverseIntegralClasses.SigmaNormLeOne
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.FrobSqV
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.WittTeichmullerRoot
+
+@[expose] public section
 
 namespace Formalism.FG
 

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.InertKernelTheory.StatementKap
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.StatementKap
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.ExpCritPOf
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.LemKD
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.ExpCritPOf
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.LemKD
+
+@[expose] public section
 
 noncomputable section
 open Classical

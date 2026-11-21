@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.DimYOvr
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.DimYOvr
+
+@[expose] public section
 
 noncomputable section
 

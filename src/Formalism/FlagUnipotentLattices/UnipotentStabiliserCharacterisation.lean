@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.FormalDegreeBessel.StatementDS
-import Formalism.FormalDegreeBessel.StatementG
+module
+
+public import Mathlib
+public import Formalism.FormalDegreeBessel.StatementDS
+public import Formalism.FormalDegreeBessel.StatementG
+
+@[expose] public section
 
 namespace Formalism.HermitianLatticeCounting.ExpansionTerms
 

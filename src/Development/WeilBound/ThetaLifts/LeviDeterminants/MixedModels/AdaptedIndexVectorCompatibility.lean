@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.PlaneC
-import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.Vaceigen
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfActs
+module
+
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.PlaneC
+public import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.Vaceigen
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfActs
+
+@[expose] public section
 
 noncomputable section
 

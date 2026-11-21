@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HyperbolicPlaceProducts.Statement
-import Formalism.HyperbolicPlaceProducts.DetIndexProductHyperbolicInequality
+module
+
+public import Mathlib
+public import Formalism.HyperbolicPlaceProducts.Statement
+public import Formalism.HyperbolicPlaceProducts.DetIndexProductHyperbolicInequality
+
+@[expose] public section
 
 open Module NumberField
 

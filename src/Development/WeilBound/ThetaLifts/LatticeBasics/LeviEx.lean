@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.SchToPol
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.SchToPol
+
+@[expose] public section
 
 noncomputable section
 

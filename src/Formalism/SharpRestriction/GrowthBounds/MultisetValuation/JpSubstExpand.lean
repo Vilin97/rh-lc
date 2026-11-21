@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.CoeffProdRename
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.CoeffProdRename
+
+@[expose] public section
 
 noncomputable section
 

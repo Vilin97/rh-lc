@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PieriBlockIdeals.StatementLD
+module
+
+public import Mathlib
+public import Formalism.PieriBlockIdeals.StatementLD
+
+@[expose] public section
 
 open Polynomial
 

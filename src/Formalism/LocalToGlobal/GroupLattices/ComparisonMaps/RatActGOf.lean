@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.MRatSpanOf
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.MapNatActR
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.MRatSpanOf
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.MapNatActR
+
+@[expose] public section
 
 open MvPolynomial
 

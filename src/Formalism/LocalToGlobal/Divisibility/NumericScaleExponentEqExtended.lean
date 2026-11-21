@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.ZscOfNum
-import Formalism.LocalToGlobal.Divisibility.HeckeRI
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.ZscOfNum
+public import Formalism.LocalToGlobal.Divisibility.HeckeRI
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

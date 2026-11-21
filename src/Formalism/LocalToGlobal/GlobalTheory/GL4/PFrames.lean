@@ -1,12 +1,16 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL4.PFrLoc
-import Mathlib
-import Formalism.SharpRestriction.GlobalSchurBounds.FlipTwoThree
-import Formalism.LocalToGlobal.HermitianColumns.ColsHerm
-import Formalism.LocalToGlobal.HermitianForms.FormsTied
-import Formalism.GradedWeylDivisibility.StatementE
-import Formalism.SuccessiveMinima.StatementMink
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.CsScale
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.PFrLoc
+public import Mathlib
+public import Formalism.SharpRestriction.GlobalSchurBounds.FlipTwoThree
+public import Formalism.LocalToGlobal.HermitianColumns.ColsHerm
+public import Formalism.LocalToGlobal.HermitianForms.FormsTied
+public import Formalism.GradedWeylDivisibility.StatementE
+public import Formalism.SuccessiveMinima.StatementMink
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.CsScale
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+
+@[expose] public section
 
 noncomputable section
 

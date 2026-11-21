@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.ParConsts
-import Formalism.SharpRestriction.ParamsHeightRankConstant
+module
+
+public import Formalism.SharpRestriction.ParConsts
+public import Formalism.SharpRestriction.ParamsHeightRankConstant
+
+@[expose] public section
 
 noncomputable section
 

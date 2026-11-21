@@ -1,9 +1,13 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.StandardValuations.ConeVal
-import Development.WeilBound.ThetaLifts.LocalTheory.StandardValuations.SmallFSing
-import Development.WeilBound.ThetaLifts.LocalTheory.UnramifiedDeterminedBySpherical
-import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.SplitCharacterFacts
-import Development.AutomorphicSpectrum.Proofs.MembershipProofs.ResCardAndUniformizer
-import Development.AbelianVarietyTheory.Definitions.Foundations.SecondCountableAndT2LocalField
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.StandardValuations.ConeVal
+public import Development.WeilBound.ThetaLifts.LocalTheory.StandardValuations.SmallFSing
+public import Development.WeilBound.ThetaLifts.LocalTheory.UnramifiedDeterminedBySpherical
+public import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.SplitCharacterFacts
+public import Development.AutomorphicSpectrum.Proofs.MembershipProofs.ResCardAndUniformizer
+public import Development.AbelianVarietyTheory.Definitions.Foundations.SecondCountableAndT2LocalField
+
+@[expose] public section
 
 noncomputable section
 

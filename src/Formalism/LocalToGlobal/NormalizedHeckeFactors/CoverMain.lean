@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverStdL
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverSplit
+module
+
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverStdL
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverSplit
+
+@[expose] public section
 
 open Formalism.BasicNotions NumberField
 

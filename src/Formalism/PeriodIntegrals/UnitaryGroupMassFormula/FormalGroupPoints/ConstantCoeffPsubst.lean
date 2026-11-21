@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.FglPtW
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdditiveIntegralGroups.SubstMem
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.FglPtW
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdditiveIntegralGroups.SubstMem
+
+@[expose] public section
 
 noncomputable section
 

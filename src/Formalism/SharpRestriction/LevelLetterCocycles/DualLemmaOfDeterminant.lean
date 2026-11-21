@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.ExpRules
-import Formalism.SharpRestriction.LevelLetterCocycles.LengthCokerLe
-import Formalism.SharpRestriction.LevelLetterCocycles.LemmaDN0OfAdmits
-import Formalism.SharpRestriction.LevelLetterCocycles.WachQuotientCyclicDecomposition
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.ExpRules
+public import Formalism.SharpRestriction.LevelLetterCocycles.LengthCokerLe
+public import Formalism.SharpRestriction.LevelLetterCocycles.LemmaDN0OfAdmits
+public import Formalism.SharpRestriction.LevelLetterCocycles.WachQuotientCyclicDecomposition
+
+@[expose] public section
 
 noncomputable section
 

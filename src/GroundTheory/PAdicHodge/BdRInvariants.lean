@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.ThetaBDeRhamPlusFieldCycloUnitBdRZpow
-import GroundTheory.PAdicHodge.ExistsGalFixCyclotomicLayerCycloCharNeOne
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.ThetaBDeRhamPlusFieldCycloUnitBdRZpow
+public import GroundTheory.PAdicHodge.ExistsGalFixCyclotomicLayerCycloCharNeOne
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

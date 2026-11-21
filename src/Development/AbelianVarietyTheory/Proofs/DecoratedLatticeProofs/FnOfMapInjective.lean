@@ -1,16 +1,21 @@
-import Mathlib
-import Formalism.LocalToGlobal.HermitianForms.FormsTied
-import Formalism.LocalToGlobal.Columns.TiedValLatG
-import Formalism.LocalToGlobal.Columns.TiedVal
-import Formalism.LocalToGlobal.Columns.CoefficientsModP.FkMapInitMinor
-import Formalism.LocalToGlobal.Columns.TiedValRat
-import Formalism.LocalToGlobal.Columns.CoefModAt
-import Formalism.LocalRingCardinality.PosOfIsomEmb
-import Formalism.QuotientMetricDivisors.ReductionLemmaZero
-import Formalism.QuotientMetricDivisors.FinalW
-import Formalism.LocalToGlobal.Divisibility.FramesLemmas
-import Formalism.LocalRingCardinality.DataArith
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.HtPsiLeIffExists
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.HermitianForms.FormsTied
+public import Formalism.LocalToGlobal.Columns.TiedValLatG
+public import Formalism.LocalToGlobal.Columns.TiedVal
+public import Formalism.LocalToGlobal.Columns.CoefficientsModP.FkMapInitMinor
+public import Formalism.LocalToGlobal.Columns.TiedValRat
+public import Formalism.LocalToGlobal.Columns.CoefModAt
+public import Formalism.LocalRingCardinality.PosOfIsomEmb
+public import Formalism.QuotientMetricDivisors.ReductionLemmaZero
+public import Formalism.QuotientMetricDivisors.FinalW
+public import Formalism.LocalToGlobal.Divisibility.FramesLemmas
+public import Formalism.LocalRingCardinality.DataArith
+public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.HtPsiLeIffExists
+
+@[expose] public section
+
 open Module NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.DIV Formalism.L2.Forms
 open scoped Matrix ComplexOrder
 

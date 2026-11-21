@@ -1,9 +1,13 @@
-import Formalism.HermitianCurvature.StatementJC
-import Formalism.HermitianCurvature.LowerBlockNormalisedBoundFromComponents
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BlockEstimatesSumForm
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BigCellZetaMinors
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RegularisedPairingViaPhase
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelSizesJointMean
+module
+
+public import Formalism.HermitianCurvature.StatementJC
+public import Formalism.HermitianCurvature.LowerBlockNormalisedBoundFromComponents
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BlockEstimatesSumForm
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BigCellZetaMinors
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RegularisedPairingViaPhase
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelSizesJointMean
+
+@[expose] public section
 
 open Formalism.FourierDecayAlt
 

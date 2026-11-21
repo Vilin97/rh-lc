@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.NumberFieldFamilies.JMtInjective
+module
+
+public import Formalism.LocalToGlobal.NumberFieldFamilies.JMtInjective
+
+@[expose] public section
 
 noncomputable section
 

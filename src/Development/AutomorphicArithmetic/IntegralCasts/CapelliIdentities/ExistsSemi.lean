@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Ra9.exists_semi :
     ∀ {A K : Type} [inst : CommRing A]

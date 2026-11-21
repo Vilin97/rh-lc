@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
-import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OneMemKAtAlt
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CompactFixesVacuumNonsplitStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OneMemKAtAlt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CompactFixesVacuumNonsplitStatement
+
+@[expose] public section
 
 noncomputable section
 

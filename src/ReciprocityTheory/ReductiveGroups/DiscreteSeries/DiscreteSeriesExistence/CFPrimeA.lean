@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TensorRepresentations.InhabCAR
-import Mathlib.LinearAlgebra.ExteriorAlgebra.Basis
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TensorRepresentations.InhabCAR
+public import Mathlib.LinearAlgebra.ExteriorAlgebra.Basis
+
+@[expose] public section
 
 noncomputable section
 

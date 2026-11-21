@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.GlobalFields.SUnits
-import GroundTheory.GlobalFields.KummerTheory.Unramified
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.IsUnramifiedOutsideIffLeMaxUnramifiedOutside
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.SUnitsDefs
-import GroundTheory.ProfiniteCohomology.GaloisCohomology.Kummer
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SUnits
+public import GroundTheory.GlobalFields.KummerTheory.Unramified
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.IsUnramifiedOutsideIffLeMaxUnramifiedOutside
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.SUnitsDefs
+public import GroundTheory.ProfiniteCohomology.GaloisCohomology.Kummer
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

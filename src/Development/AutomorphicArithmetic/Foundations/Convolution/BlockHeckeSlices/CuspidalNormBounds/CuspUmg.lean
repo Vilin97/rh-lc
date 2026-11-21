@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.BlockHeckeSlices.SliceShift
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.CuspFormsDiff
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.BlockHeckeSlices.SliceShift
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.CuspFormsDiff
+
+@[expose] public section
 
 noncomputable section
 

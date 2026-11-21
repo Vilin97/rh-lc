@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.SlopeBoundOfConditionsWithErrorForFrames
-import Formalism.SharpRestriction.Divisibility.WeightThresholdDefs
-import Formalism.LocalRingCardinality.DataParams₂
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsLimDeg
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.SlopeBoundOfConditionsWithErrorForFrames
+public import Formalism.SharpRestriction.Divisibility.WeightThresholdDefs
+public import Formalism.LocalRingCardinality.DataParams₂
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsLimDeg
+
+@[expose] public section
 
 open Formalism.BasicNotions Formalism.BasicNotions.DV Formalism.MainNotions Formalism.L2.Indef.Tree NumberField
 

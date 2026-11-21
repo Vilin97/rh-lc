@@ -1,6 +1,10 @@
-import Development.WeilBound.CoreStatements.VolumeEquality.RootBranches
-import Development.WeilBound.CoreStatements.VolumeEquality.LocInjA
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.BallAutomorphismInverseExists
+module
+
+public import Development.WeilBound.CoreStatements.VolumeEquality.RootBranches
+public import Development.WeilBound.CoreStatements.VolumeEquality.LocInjA
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.BallAutomorphismInverseExists
+
+@[expose] public section
 
 noncomputable section
 

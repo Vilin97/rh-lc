@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.HermitianForms.IsLocBasis
-import Formalism.SharpRestriction.GrowthBounds.DataG
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.IsLocBasis
+public import Formalism.SharpRestriction.GrowthBounds.DataG
+
+@[expose] public section
 
 noncomputable section
 

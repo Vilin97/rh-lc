@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.CurveLocInst
-import Development.AbelianVarietyTheory.Proofs.GenericRegularity.FinrankHostDivTwo
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.CurveLocInst
+public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.FinrankHostDivTwo
+
+@[expose] public section
 
 namespace GlobalTheory.SecCount
 

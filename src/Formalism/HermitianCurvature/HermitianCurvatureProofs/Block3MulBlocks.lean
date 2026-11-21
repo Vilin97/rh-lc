@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.StatementU
-import Formalism.FormalDegreeBessel.FormalDegreeRatio.GBasic
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DetNormLe
+module
+
+public import Formalism.HermitianCurvature.StatementU
+public import Formalism.FormalDegreeBessel.FormalDegreeRatio.GBasic
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DetNormLe
+
+@[expose] public section
 
 open Matrix Formalism.FourierDecayAlt Formalism.FourierDecayAlt.U Formalism.QuantumDeterminants
 

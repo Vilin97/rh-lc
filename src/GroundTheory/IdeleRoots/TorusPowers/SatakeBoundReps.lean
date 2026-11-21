@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.IdeleRoots.TorusPowers.SatakeBoundGroup
+module
+
+public import Mathlib
+public import GroundTheory.IdeleRoots.TorusPowers.SatakeBoundGroup
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

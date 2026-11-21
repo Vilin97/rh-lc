@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.HermitianForms.DefsSym
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.DefsSym
+
+@[expose] public section
 
 noncomputable section
 

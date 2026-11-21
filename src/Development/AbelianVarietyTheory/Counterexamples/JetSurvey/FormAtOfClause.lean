@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ETExSt
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ETPointStatement
-import Formalism.LocalToGlobal.ProjectiveLattices.Adm3OfExtension
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ETExSt
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ETPointStatement
+public import Formalism.LocalToGlobal.ProjectiveLattices.Adm3OfExtension
+
+@[expose] public section
 
 set_option autoImplicit false
 

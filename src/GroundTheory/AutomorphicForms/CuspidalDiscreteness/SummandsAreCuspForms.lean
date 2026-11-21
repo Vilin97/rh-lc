@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SummandsContinuous
-import GroundTheory.AutomorphicForms.GKModules.KernelCalculus
-import GroundTheory.AutomorphicForms.DiscreteSpectrumAbstract
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SummandsContinuous
+public import GroundTheory.AutomorphicForms.GKModules.KernelCalculus
+public import GroundTheory.AutomorphicForms.DiscreteSpectrumAbstract
+
+@[expose] public section
 
 open MeasureTheory Set Filter Topology Function
 

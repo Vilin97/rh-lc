@@ -1,17 +1,21 @@
-import Formalism.LatticeSlopes.LatticeSlopesProofs.CovolEqGram
-import Formalism.LatticeSlopes.LatticeSlopesProofs.CovolPos
-import Formalism.LatticeSlopes.LatticeSlopesProofs.CovolEqCovolume
-import Formalism.LatticeSlopes.LatticeSlopesProofs.GramDetLe
-import Formalism.LatticeSlopes.LatticeSlopesProofs.SlopesBdd
-import Formalism.LatticeSlopes.LatticeSlopesProofs.SlopeLeMuMaxOf
-import Formalism.LatticeSlopes.LatticeSlopesProofs.SlopeInequality
-import Formalism.LatticeSlopes.LatticeSlopesProofs.DegQuot
-import Formalism.LatticeSlopes.LatticeSlopesProofs.SaturationProperties
-import Formalism.LatticeSlopes.LatticeSlopesProofs.ShortVector
-import Formalism.LatticeSlopes.LatticeSlopesProofs.FiniteSaturated
-import Formalism.LatticeSlopes.LatticeSlopesProofs.MuMaxAttained
-import Formalism.LatticeSlopes.LatticeSlopesProofs.MuMaxLeMin
-import Formalism.LatticeSlopes.LatticeSlopesProofs.OrthSum
+module
+
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.CovolEqGram
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.CovolPos
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.CovolEqCovolume
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.GramDetLe
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.SlopesBdd
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.SlopeLeMuMaxOf
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.SlopeInequality
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.DegQuot
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.SaturationProperties
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.ShortVector
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.FiniteSaturated
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.MuMaxAttained
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.MuMaxLeMin
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.OrthSum
+
+@[expose] public section
 
 namespace Formalism.F
 

@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2Classical.KFinite
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2Classical.KFinite
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix Set Filter Topology CongruenceSubgroup
 open UpperHalfPlane hiding I I_re I_im

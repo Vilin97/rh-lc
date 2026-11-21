@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.HxiTZeroComb
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.HxiTZeroComb
+
+@[expose] public section
 
 noncomputable section
 namespace GlobalTheory.KS

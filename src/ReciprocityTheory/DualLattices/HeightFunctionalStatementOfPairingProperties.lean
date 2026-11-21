@@ -1,6 +1,10 @@
-import ReciprocityTheory.DualLattices.IsFibreSq
-import ReciprocityTheory.DualLattices.ToSigmaAddFstZeroFst
-import ReciprocityTheory.DualLattices.SeriesState
+module
+
+public import ReciprocityTheory.DualLattices.IsFibreSq
+public import ReciprocityTheory.DualLattices.ToSigmaAddFstZeroFst
+public import ReciprocityTheory.DualLattices.SeriesState
+
+@[expose] public section
 
 noncomputable section
 

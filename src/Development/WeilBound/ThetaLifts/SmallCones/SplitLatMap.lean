@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.SmallCones.WittOf
-import Development.WeilBound.ThetaLifts.TowerModels.PlaneMain
+module
+
+public import Development.WeilBound.ThetaLifts.SmallCones.WittOf
+public import Development.WeilBound.ThetaLifts.TowerModels.PlaneMain
+
+@[expose] public section
 
 noncomputable section
 

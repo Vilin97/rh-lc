@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AutomorphicArithmetic.CMTraceForms.CmDatumDiscriminantDepthBounds
-import Development.AbelianVarietyTheory.Statements.ShortVectorBound.ScaledLatticesInSupLattices
-import Formalism.LocalToGlobal.ProjectiveLattices.CrudeVal
-import Formalism.LocalToGlobal.ProjectiveLattices.RecPJThAllNeBot
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.CMTraceForms.CmDatumDiscriminantDepthBounds
+public import Development.AbelianVarietyTheory.Statements.ShortVectorBound.ScaledLatticesInSupLattices
+public import Formalism.LocalToGlobal.ProjectiveLattices.CrudeVal
+public import Formalism.LocalToGlobal.ProjectiveLattices.RecPJThAllNeBot
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

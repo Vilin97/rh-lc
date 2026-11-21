@@ -1,6 +1,10 @@
-import Formalism.FlagUnipotentLattices.IdealCountLeW
-import Formalism.HyperbolicPlaceProducts.SecondLevelArithmeticNorm
-import Lemmata.GeneralBFactSecondMore.Imports
+module
+
+public import Formalism.FlagUnipotentLattices.IdealCountLeW
+public import Formalism.HyperbolicPlaceProducts.SecondLevelArithmeticNorm
+public import Lemmata.GeneralBFactSecondMore.Imports
+
+@[expose] public section
 
 open Formalism.HermitianLatticeCounting.S6
 open scoped BigOperators

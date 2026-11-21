@@ -1,6 +1,10 @@
-import ReciprocityTheory.L2DbarEstimates.Localization.UnweightBackStatement
-import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.Imports
-import ReciprocityTheory.L2DbarEstimates.Localization.IntegrableOnCompactOfLocL2
+module
+
+public import ReciprocityTheory.L2DbarEstimates.Localization.UnweightBackStatement
+public import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.Imports
+public import ReciprocityTheory.L2DbarEstimates.Localization.IntegrableOnCompactOfLocL2
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.F
 

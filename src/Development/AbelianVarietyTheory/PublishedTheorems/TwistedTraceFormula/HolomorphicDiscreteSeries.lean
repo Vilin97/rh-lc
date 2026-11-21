@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.HeckeThetaElements.IsHeckeElt
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EqZeroOfInnerSmooth
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.HeckeThetaElements.IsHeckeElt
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EqZeroOfInnerSmooth
+
+@[expose] public section
 
 noncomputable section
 

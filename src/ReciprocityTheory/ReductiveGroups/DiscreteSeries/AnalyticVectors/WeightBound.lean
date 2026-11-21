@@ -1,6 +1,10 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.AnalyticVectors.LayerSpan
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.BochnerInequality.Numerics
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.BochnerInequality.KUnitB
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.AnalyticVectors.LayerSpan
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.BochnerInequality.Numerics
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.BochnerInequality.KUnitB
+
+@[expose] public section
 
 noncomputable section
 

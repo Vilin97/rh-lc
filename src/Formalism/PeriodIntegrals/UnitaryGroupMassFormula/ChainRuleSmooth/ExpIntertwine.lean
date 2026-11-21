@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.FiniteOrderIntersectionInSmooth
+module
+
+public import Formalism.HermitianCurvature.FiniteOrderIntersectionInSmooth
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexConjugate Nat

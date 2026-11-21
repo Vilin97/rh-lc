@@ -1,5 +1,9 @@
-import Formalism.RealPlaceAnalysis.StatementE
-import Formalism.FormalDegreeBessel.StatementDS
+module
+
+public import Formalism.RealPlaceAnalysis.StatementE
+public import Formalism.FormalDegreeBessel.StatementDS
+
+@[expose] public section
 
 noncomputable section
 

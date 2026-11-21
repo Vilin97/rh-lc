@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.CharacterGerms.SelfConjugateRowData
-import Formalism.LocalToGlobal.CharacterGerms.RowTieLab
-import Formalism.LocalToGlobal.CharacterGerms.RowTieTop
-import Formalism.LocalToGlobal.CharacterGerms.NondegenerateCharts
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.SelfConjugateRowData
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieLab
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieTop
+public import Formalism.LocalToGlobal.CharacterGerms.NondegenerateCharts
+
+@[expose] public section
 
 set_option autoImplicit false
 

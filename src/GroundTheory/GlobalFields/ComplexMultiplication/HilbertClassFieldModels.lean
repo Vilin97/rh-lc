@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimes
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimes
+
+@[expose] public section
 
 namespace GroundTheory.Global
 namespace Elliptic

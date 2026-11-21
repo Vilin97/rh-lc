@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.PairValDefs
-import Formalism.PeriodIntegrals.NormRepChange
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.NormRepresentationChange.IsLoUniConjTranspose
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.PairValDefs
+public import Formalism.PeriodIntegrals.NormRepChange
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.NormRepresentationChange.IsLoUniConjTranspose
+
+@[expose] public section
 
 noncomputable section
 

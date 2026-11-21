@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicArithmetic.OrbitLabellings.RowDefs
-import Formalism.LocalToGlobal.CharacterGerms.RowTieMemCHarm
-import Formalism.LocalToGlobal.CharacterGerms.RowTieFlagS
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.OrbitLabellings.RowDefs
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieMemCHarm
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieFlagS
+
+@[expose] public section
 
 noncomputable section
 

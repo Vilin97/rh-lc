@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GLnLattice
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GLnLattice
+
+@[expose] public section
 
 noncomputable section
 

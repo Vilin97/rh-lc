@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.TateCohomology.PullbackExtension
-import GroundTheory.TateCohomology.AugTrivial
-import GroundTheory.TateCohomology.DeltaMap
-import GroundTheory.TateCohomology.DimensionShift
-import GroundTheory.TateCohomology.TateConnecting
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.PullbackExtension
+public import GroundTheory.TateCohomology.AugTrivial
+public import GroundTheory.TateCohomology.DeltaMap
+public import GroundTheory.TateCohomology.DimensionShift
+public import GroundTheory.TateCohomology.TateConnecting
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open CategoryTheory Limits groupCohomology Rep

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.DegSubSingle
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.DegSubSingle
+
+@[expose] public section
 
 noncomputable section
 

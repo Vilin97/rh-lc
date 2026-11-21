@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.StatementX
-import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.CMQuasiPeriodConst
-import Formalism.EllipticTorsion.FormalGroupPointsTorsionFree
-import Formalism.LocalToGlobal.TorsionIntegrality.FrobeniusFibreCurves.StatementI
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.StatementX
+public import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.CMQuasiPeriodConst
+public import Formalism.EllipticTorsion.FormalGroupPointsTorsionFree
+public import Formalism.LocalToGlobal.TorsionIntegrality.FrobeniusFibreCurves.StatementI
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators ComplexConjugate

@@ -1,6 +1,10 @@
-import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.EigenspaceCyclicDensity.LowKMultOneP
-import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.KummerLiftedCocycleImageEqPicardClass
-import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.WordMonomial
+module
+
+public import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.EigenspaceCyclicDensity.LowKMultOneP
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.KummerLiftedCocycleImageEqPicardClass
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.WordMonomial
+
+@[expose] public section
 
 open Finset MvPolynomial
 open scoped TensorProduct

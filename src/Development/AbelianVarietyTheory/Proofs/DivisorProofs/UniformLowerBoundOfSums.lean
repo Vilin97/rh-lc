@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.CovolXOfCovol
-import Development.AbelianVarietyTheory.Definitions.Divisors.ToKnownTheoremsOf
-import Formalism.MeanHeightDescent.DivisionInequalityWithCovolume
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CovolXOfCovol
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ToKnownTheoremsOf
+public import Formalism.MeanHeightDescent.DivisionInequalityWithCovolume
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 400000
 

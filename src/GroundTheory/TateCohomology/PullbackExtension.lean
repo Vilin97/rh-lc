@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.TateCohomology.AugmentationSES
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.AugmentationSES
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open CategoryTheory

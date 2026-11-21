@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.DualWeylZeroConst
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.DualWeylZeroConst
+
+@[expose] public section
 
 noncomputable section
 

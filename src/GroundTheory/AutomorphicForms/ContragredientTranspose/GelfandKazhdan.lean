@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.WhittakerOrbit
-import GroundTheory.AutomorphicForms.WhittakerCriterion
-import GroundTheory.AutomorphicForms.WhittakerGroups
-import GroundTheory.AutomorphicForms.WhittakerDistribution
-import GroundTheory.AutomorphicForms.ContragredientTranspose.MatrixSimilarity
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.WhittakerOrbit
+public import GroundTheory.AutomorphicForms.WhittakerCriterion
+public import GroundTheory.AutomorphicForms.WhittakerGroups
+public import GroundTheory.AutomorphicForms.WhittakerDistribution
+public import GroundTheory.AutomorphicForms.ContragredientTranspose.MatrixSimilarity
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.ContragredientTranspose
 

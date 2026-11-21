@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.ToricVarieties.Dimension
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.ToricVarieties.Dimension
+
+@[expose] public section
 
 namespace GroundTheory.Arith.Abelian.Jacobian
 

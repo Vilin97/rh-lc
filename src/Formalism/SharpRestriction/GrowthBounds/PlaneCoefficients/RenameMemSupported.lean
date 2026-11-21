@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.TensZeroRight
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.MembVB
-import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.FrameZeroLe
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.TensZeroRight
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.MembVB
+public import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.FrameZeroLe
+
+@[expose] public section
 
 noncomputable section
 

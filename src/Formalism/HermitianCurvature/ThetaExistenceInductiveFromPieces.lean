@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.BlockKernelPropertiesOfSteps
+module
+
+public import Formalism.HermitianCurvature.BlockKernelPropertiesOfSteps
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FrameInduction.NonposCount
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FrameInduction.NonposCount
+
+@[expose] public section
 
 open Matrix Formalism.QuantumDeterminants Formalism.FourierDecayAlt Formalism.FourierDecayAlt.C2
 

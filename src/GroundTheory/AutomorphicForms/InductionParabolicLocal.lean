@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.InductionParabolicGroups
-import GroundTheory.AutomorphicForms.MeasuresParabolic
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.InductionParabolicGroups
+public import GroundTheory.AutomorphicForms.MeasuresParabolic
+
+@[expose] public section
 
 noncomputable section
 

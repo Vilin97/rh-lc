@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.TameInertiaTowers.StatementField
-import Formalism.TameInertiaTowers.InvLength
-import Formalism.TameInertiaTowers.CentralOrderTwo.NormalOrderTwoCentral
+module
+
+public import Mathlib
+public import Formalism.TameInertiaTowers.StatementField
+public import Formalism.TameInertiaTowers.InvLength
+public import Formalism.TameInertiaTowers.CentralOrderTwo.NormalOrderTwoCentral
+
+@[expose] public section
 
 open NumberField Ideal
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.UnramifiedTrace.DuFormulaOfFibreCount
-import Formalism.LocalToGlobal.GlobalTheory.UnramifiedTrace.CardFilterSubtype
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.UnramifiedTrace.DuFormulaOfFibreCount
+public import Formalism.LocalToGlobal.GlobalTheory.UnramifiedTrace.CardFilterSubtype
+
+@[expose] public section
 
 noncomputable section
 

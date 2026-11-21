@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsCliff
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.CasKHW
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsCliff
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.CasKHW
+
+@[expose] public section
 
 noncomputable section
 

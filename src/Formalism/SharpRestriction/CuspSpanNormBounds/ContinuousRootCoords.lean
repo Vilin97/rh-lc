@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.SpanMemOfImage
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.SpanMemOfImage
+
+@[expose] public section
 
 open MeasureTheory Matrix Finset
 

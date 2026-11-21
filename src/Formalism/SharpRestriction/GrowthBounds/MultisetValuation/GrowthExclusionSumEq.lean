@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.NcIotaInj
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.NcIotaInj
+
+@[expose] public section
 
 noncomputable section
 

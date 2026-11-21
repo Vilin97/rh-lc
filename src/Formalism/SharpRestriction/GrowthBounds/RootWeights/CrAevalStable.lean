@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.CrRootMem
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.CrRootMem
+
+@[expose] public section
 
 noncomputable section
 

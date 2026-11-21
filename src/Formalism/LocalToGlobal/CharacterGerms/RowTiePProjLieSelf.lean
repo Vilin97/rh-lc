@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePKeyGlue
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePKeyDelta
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePSplitLA
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePKeyRes2
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePStartSelf
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePKeyGlue
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePKeyDelta
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePSplitLA
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePKeyRes2
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePStartSelf
+
+@[expose] public section
 
 noncomputable section
 

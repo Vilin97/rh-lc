@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.CharLem
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.SmulFinsum
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceS
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.CharLem
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.SmulFinsum
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceS
+
+@[expose] public section
 
 noncomputable section
 

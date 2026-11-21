@@ -1,5 +1,9 @@
-import Formalism.FrobeniusOrbits.HostOrbitsPlaces
-import Formalism.FrobeniusOrbits.HostDiffSupport
+module
+
+public import Formalism.FrobeniusOrbits.HostOrbitsPlaces
+public import Formalism.FrobeniusOrbits.HostDiffSupport
+
+@[expose] public section
 
 open NumberField IntermediateField Ideal
 open scoped Pointwise

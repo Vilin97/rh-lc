@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.TorsTransport
-import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.HasSumLocallyUniformlyWeierstrassZetaExcept
-import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsValuedHeckeCharRamified
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.TorsTransport
+public import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.HasSumLocallyUniformlyWeierstrassZetaExcept
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsValuedHeckeCharRamified
+
+@[expose] public section
 
 noncomputable section
 

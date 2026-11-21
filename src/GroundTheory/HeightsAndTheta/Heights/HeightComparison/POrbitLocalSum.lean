@@ -1,13 +1,18 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitLocalSum
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitChartRing
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitChartMax
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitChartResidue
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitChartMult
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightLocalLengthPlaces
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitCenterChart
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightPlaceCentredSum
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitChartTerm
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitLocalSum
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitChartRing
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitChartMax
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitChartResidue
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitChartMult
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightLocalLengthPlaces
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitCenterChart
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightPlaceCentredSum
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitChartTerm
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

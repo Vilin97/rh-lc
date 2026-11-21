@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.ReductionLocalVolume
-import Development.WeilBound.RepresentationTheoryGL.ResidualSpectrum.ExponentialNegativity.BoxVolumes.MeasureBoxGLLe
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.ReductionLocalVolume
+public import Development.WeilBound.RepresentationTheoryGL.ResidualSpectrum.ExponentialNegativity.BoxVolumes.MeasureBoxGLLe
+
+@[expose] public section
 
 open MeasureTheory Measure Set Matrix NumberField
 open scoped NNReal ENNReal

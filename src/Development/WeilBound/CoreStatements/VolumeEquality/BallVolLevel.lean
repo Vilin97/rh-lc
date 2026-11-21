@@ -1,6 +1,10 @@
-import Development.WeilBound.CoreStatements.VolumeEquality.BallVolDefs
-import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.RmulScalOne
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.ExistsLatticeEmbedding
+module
+
+public import Development.WeilBound.CoreStatements.VolumeEquality.BallVolDefs
+public import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.RmulScalOne
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.ExistsLatticeEmbedding
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBundles
-import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.XSFlagindep
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.VerticalDivisorsCommute
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.PairNumberPullbackStatement
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ExistsHeckeCorrespondenceOnIntegralShimuraModelStatement
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.StatementsBundles
+public import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.XSFlagindep
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.VerticalDivisorsCommute
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.PairNumberPullbackStatement
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ExistsHeckeCorrespondenceOnIntegralShimuraModelStatement
+
+@[expose] public section
 
 namespace GlobalTheory.CompanionTheory.CommAlg.FlagIndependence
 

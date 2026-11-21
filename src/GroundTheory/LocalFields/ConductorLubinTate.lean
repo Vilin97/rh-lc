@@ -1,12 +1,16 @@
-import Mathlib
-import GroundTheory.LocalFields.ConductorFormalGroup
-import GroundTheory.LocalFields.LubinTatePrimitive
-import GroundTheory.LocalFields.LubinTateTowerMaps
-import GroundTheory.LocalFields.LubinTateLimitGalois
-import GroundTheory.LocalFields.SeparableClosureValuation
-import GroundTheory.LocalFields.Monogenic
-import GroundTheory.LocalFields.Different
-import GroundTheory.LocalFields.UpperNumbering
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.ConductorFormalGroup
+public import GroundTheory.LocalFields.LubinTatePrimitive
+public import GroundTheory.LocalFields.LubinTateTowerMaps
+public import GroundTheory.LocalFields.LubinTateLimitGalois
+public import GroundTheory.LocalFields.SeparableClosureValuation
+public import GroundTheory.LocalFields.Monogenic
+public import GroundTheory.LocalFields.Different
+public import GroundTheory.LocalFields.UpperNumbering
+
+@[expose] public section
 
 noncomputable section
 

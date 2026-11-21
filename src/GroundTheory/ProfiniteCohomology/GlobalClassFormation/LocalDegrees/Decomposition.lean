@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.CyclotomicCharacters.DegreeDecomposition
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalDegrees.Layers
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.CyclotomicCharacters.DegreeDecomposition
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalDegrees.Layers
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

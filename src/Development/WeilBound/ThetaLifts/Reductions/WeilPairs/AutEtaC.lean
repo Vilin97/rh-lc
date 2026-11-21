@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.AutEtaB
+module
+
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.AutEtaB
+
+@[expose] public section
 
 noncomputable section
 

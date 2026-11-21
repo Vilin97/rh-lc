@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.KernelLattices.KerMemPin
+module
+
+public import Formalism.LocalToGlobal.KernelLattices.KerMemPin
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

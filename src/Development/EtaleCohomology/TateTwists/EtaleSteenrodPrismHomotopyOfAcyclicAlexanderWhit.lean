@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.TateTwists.SteenrodPrismChainDifferentialSquaredEqZeroOfEta
-import Development.EtaleCohomology.TateTwists.PrismBoundaryMapSquareZeroHolds
+module
+
+public import Development.EtaleCohomology.TateTwists.SteenrodPrismChainDifferentialSquaredEqZeroOfEta
+public import Development.EtaleCohomology.TateTwists.PrismBoundaryMapSquareZeroHolds
+
+@[expose] public section
 
 open LateralTheory.EtaleFoundations.SteenPf in
 

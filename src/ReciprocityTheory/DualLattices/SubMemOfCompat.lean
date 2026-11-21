@@ -1,5 +1,9 @@
-import ReciprocityTheory.DualLattices.AinfTower
-import ReciprocityTheory.DualLattices.HtLinStatement
+module
+
+public import ReciprocityTheory.DualLattices.AinfTower
+public import ReciprocityTheory.DualLattices.HtLinStatement
+
+@[expose] public section
 
 noncomputable section
 

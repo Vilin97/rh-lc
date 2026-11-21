@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.HeckeJ
-import Formalism.LocalToGlobal.IndefiniteReal.FWExist
-import Formalism.LocalToGlobal.IndefiniteReal.LinksChar
-import Formalism.LocalToGlobal.IndefiniteReal.OneMapEq
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.HeckeJ
+public import Formalism.LocalToGlobal.IndefiniteReal.FWExist
+public import Formalism.LocalToGlobal.IndefiniteReal.LinksChar
+public import Formalism.LocalToGlobal.IndefiniteReal.OneMapEq
+
+@[expose] public section
 
 noncomputable section
 

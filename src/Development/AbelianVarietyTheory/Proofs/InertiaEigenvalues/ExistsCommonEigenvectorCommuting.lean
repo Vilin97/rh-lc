@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ImportsBis
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ImportsBisFurther
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ImportsBis
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ImportsBisFurther
+
+@[expose] public section
+
 open scoped BigOperators
 
 namespace GlobalTheory.CommTriang

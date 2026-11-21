@@ -1,5 +1,9 @@
-import ReciprocityTheory.DualLattices.LinPairStatement
-import ReciprocityTheory.DualLattices.IsPairingValueAddRight
+module
+
+public import ReciprocityTheory.DualLattices.LinPairStatement
+public import ReciprocityTheory.DualLattices.IsPairingValueAddRight
+
+@[expose] public section
 
 noncomputable section
 

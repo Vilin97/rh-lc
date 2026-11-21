@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GeometricLemmaModular
-import GroundTheory.AutomorphicForms.GeometricLemmaCharacters
-import GroundTheory.AutomorphicForms.JacquetAdmissible
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GeometricLemmaModular
+public import GroundTheory.AutomorphicForms.GeometricLemmaCharacters
+public import GroundTheory.AutomorphicForms.JacquetAdmissible
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

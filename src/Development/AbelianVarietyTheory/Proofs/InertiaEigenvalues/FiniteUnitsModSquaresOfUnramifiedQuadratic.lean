@@ -1,8 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.UnitLemmaGroup
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsIsNonarchimedeanLocalField
-import GroundTheory.LocalFields.FiniteExtension
-import GroundTheory.LocalFields.UnitsPowers
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.UnitLemmaGroup
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsIsNonarchimedeanLocalField
+public import GroundTheory.LocalFields.FiniteExtension
+public import GroundTheory.LocalFields.UnitsPowers
+
+@[expose] public section
+
 open GlobalTheory.UnitLemma
 
 namespace GlobalTheory.UnitLemma

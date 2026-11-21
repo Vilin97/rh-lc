@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.ThetaQuasiPeriods.PeriodLattice
+module
+
+public import Mathlib
+public import ReciprocityTheory.ThetaQuasiPeriods.PeriodLattice
+
+@[expose] public section
 
 open Complex Matrix Filter Topology MeasureTheory
 open scoped Real

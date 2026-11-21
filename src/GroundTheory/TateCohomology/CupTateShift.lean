@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.TateCohomology.AugmentationSES
-import GroundTheory.TateCohomology.TateConnecting
-import GroundTheory.TateCohomology.TateLow
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.AugmentationSES
+public import GroundTheory.TateCohomology.TateConnecting
+public import GroundTheory.TateCohomology.TateLow
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open CategoryTheory MonoidalCategory groupCohomology

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.UnramifiedTrace.TripMem
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnramifiedSameDiagonal.SameCommon
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.UnramifiedTrace.TripMem
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnramifiedSameDiagonal.SameCommon
+
+@[expose] public section
 
 noncomputable section
 

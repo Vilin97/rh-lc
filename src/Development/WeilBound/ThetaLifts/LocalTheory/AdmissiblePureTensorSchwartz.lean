@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.Cross
-import Development.WeilBound.ThetaLifts.LocalTheory.UnramifiedMultiplicityOneProportional
-import Development.WeilBound.ThetaLifts.LocalTheory.SplitInv2
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.Cross
+public import Development.WeilBound.ThetaLifts.LocalTheory.UnramifiedMultiplicityOneProportional
+public import Development.WeilBound.ThetaLifts.LocalTheory.SplitInv2
+
+@[expose] public section
 
 noncomputable section
 

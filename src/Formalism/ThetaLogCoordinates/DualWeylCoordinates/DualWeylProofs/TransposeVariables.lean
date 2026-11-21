@@ -1,5 +1,9 @@
-import Formalism.ThetaLogCoordinates.DualWeylCoordinates.StatementH
-import Formalism.GradedWeylDivisibility.StatementE
+module
+
+public import Formalism.ThetaLogCoordinates.DualWeylCoordinates.StatementH
+public import Formalism.GradedWeylDivisibility.StatementE
+
+@[expose] public section
 
 open MvPolynomial
 

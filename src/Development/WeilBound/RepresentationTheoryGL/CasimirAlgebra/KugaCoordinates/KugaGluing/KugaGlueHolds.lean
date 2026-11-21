@@ -1,8 +1,12 @@
-import Development.WeilBound.RepresentationTheoryGL.CasimirAlgebra.KugaCoordinates.KugaGluing.KgCxDmatConj
-import Development.WeilBound.RepresentationTheoryGL.CasimirAlgebra.KugaCoordinates.KugaGluing.KgCasDiff
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactCurveDerivative
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorCompactActionDerivative
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CompactDerivativeSeparatingDual
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.CasimirAlgebra.KugaCoordinates.KugaGluing.KgCxDmatConj
+public import Development.WeilBound.RepresentationTheoryGL.CasimirAlgebra.KugaCoordinates.KugaGluing.KgCasDiff
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactCurveDerivative
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorCompactActionDerivative
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CompactDerivativeSeparatingDual
+
+@[expose] public section
 
 noncomputable section
 

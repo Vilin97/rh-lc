@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.TopDefs
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.Window
+module
+
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.TopDefs
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.Window
+
+@[expose] public section
 
 noncomputable section
 

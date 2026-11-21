@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StGenericFibreTor
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StGenericFreeness
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StGenericFibreTor
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StGenericFreeness
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

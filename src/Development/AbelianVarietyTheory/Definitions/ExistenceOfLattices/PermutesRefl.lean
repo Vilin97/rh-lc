@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Statements.PrincipalLattices.FiniteDimensionalBase
-import Formalism.LocalToGlobal.ProjectiveLattices.CompHt
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Statements.PrincipalLattices.FiniteDimensionalBase
+public import Formalism.LocalToGlobal.ProjectiveLattices.CompHt
+
+@[expose] public section
 
 noncomputable section
 

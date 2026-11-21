@@ -1,7 +1,11 @@
-import Formalism.FormalDegreeBessel.FormalDegreeRatio.WRPres
-import Formalism.FormalDegreeBessel.FormalDegreeRatio.WRWeyl
-import Formalism.FormalDegreeBessel.FormalDegreeRatio.AdjointFunctionalHolds
-import Formalism.YangianSpanCharacter.StatementT
+module
+
+public import Formalism.FormalDegreeBessel.FormalDegreeRatio.WRPres
+public import Formalism.FormalDegreeBessel.FormalDegreeRatio.WRWeyl
+public import Formalism.FormalDegreeBessel.FormalDegreeRatio.AdjointFunctionalHolds
+public import Formalism.YangianSpanCharacter.StatementT
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.ContinuousAtOfClosedRel
-import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.GMonomial
-import ReciprocityTheory.AnalyticForms.LeviForms.IsRegFamilyInhabitStatement
+module
+
+public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.ContinuousAtOfClosedRel
+public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.GMonomial
+public import ReciprocityTheory.AnalyticForms.LeviForms.IsRegFamilyInhabitStatement
+
+@[expose] public section
 
 namespace PositivityTheory.UnitarySelfGeneration.CSnc
 

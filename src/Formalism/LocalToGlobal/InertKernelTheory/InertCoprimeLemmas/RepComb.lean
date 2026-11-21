@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.InertKernelTheory.DefsRepComb
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.IntEasy
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.PeriodLatticeFinitelyGenerated
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ExistsIntegralMulOrderElement
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.StdOK
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsRepComb
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.IntEasy
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.PeriodLatticeFinitelyGenerated
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ExistsIntegralMulOrderElement
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.StdOK
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.DiscreteSpectrumAbstract
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.DiscreteSpectrumAbstract
+
+@[expose] public section
 
 open MeasureTheory Set Filter Topology Function
 

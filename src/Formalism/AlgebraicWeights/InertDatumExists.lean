@@ -1,5 +1,9 @@
-import Formalism.AlgebraicWeights.IsAlgWeight
-import Formalism.SatakeDualWeyl.StatementG
+module
+
+public import Formalism.AlgebraicWeights.IsAlgWeight
+public import Formalism.SatakeDualWeyl.StatementG
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,9 +1,13 @@
-import Formalism.PolynomialDimension.MultinomialDepth.SecondParameterSizeBoundsHolds
-import Formalism.PolynomialDimension.MultinomialDepth.SecondParameterSlackBoundsHolds
-import Formalism.PolynomialDimension.MultinomialDepth.FrameMultinomialBoundHolds
-import Mathlib
-import Formalism.PolynomialDimension.StatementNum
-import Formalism.PolynomialDimension.WeylDim
+module
+
+public import Formalism.PolynomialDimension.MultinomialDepth.SecondParameterSizeBoundsHolds
+public import Formalism.PolynomialDimension.MultinomialDepth.SecondParameterSlackBoundsHolds
+public import Formalism.PolynomialDimension.MultinomialDepth.FrameMultinomialBoundHolds
+public import Mathlib
+public import Formalism.PolynomialDimension.StatementNum
+public import Formalism.PolynomialDimension.WeylDim
+
+@[expose] public section
 
 namespace Formalism.CountingSumsFrames.Top
 

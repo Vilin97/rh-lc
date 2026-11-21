@@ -1,6 +1,10 @@
-import Formalism.AdmissibleDesigns.SelmerInequalityOfInputs
-import Formalism.AdmissibleDesigns.TheoremN5OfNormalizedItems
-import Formalism.AdmissibleDesigns.DesignNormalizedOfAdmitted
+module
+
+public import Formalism.AdmissibleDesigns.SelmerInequalityOfInputs
+public import Formalism.AdmissibleDesigns.TheoremN5OfNormalizedItems
+public import Formalism.AdmissibleDesigns.DesignNormalizedOfAdmitted
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core] [hH0Fin : Fact Formalism.MainNotions.N.K.H0.FinCore]
 

@@ -1,7 +1,12 @@
-import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.ValCount
-import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsValuationSubringDominatingSubring
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.JGenSpecializes
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.LocalEmbeddings.ValCount
+public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsValuationSubringDominatingSubring
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.JGenSpecializes
+
+@[expose] public section
+
 open CategoryTheory AlgebraicGeometry IsLocalRing GlobalTheory GlobalTheory.ValCount GlobalTheory.TrueGeo
 open scoped Classical
 

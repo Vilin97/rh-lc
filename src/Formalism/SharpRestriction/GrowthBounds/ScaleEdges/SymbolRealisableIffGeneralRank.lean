@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.ExistsPolFamilyOfMemGenOfVsDegLe
-import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.MultidegreeBoundLeA
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.ExistsPolFamilyOfMemGenOfVsDegLe
+public import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.MultidegreeBoundLeA
+
+@[expose] public section
 
 noncomputable section
 

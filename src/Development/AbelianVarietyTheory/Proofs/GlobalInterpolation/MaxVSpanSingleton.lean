@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.CharacterValuation
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.CharacterValuation
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseKummer
-import GroundTheory.ProfiniteCohomology.PoincarePairs.Natural
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseKummer
+public import GroundTheory.ProfiniteCohomology.PoincarePairs.Natural
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

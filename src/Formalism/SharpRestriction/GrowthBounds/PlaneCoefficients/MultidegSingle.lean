@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.RestPlOf
-import Formalism.SharpRestriction.GrowthBounds.PolynomialLevels.FrRevInj
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.RestPlOf
+public import Formalism.SharpRestriction.GrowthBounds.PolynomialLevels.FrRevInj
+
+@[expose] public section
 
 noncomputable section
 

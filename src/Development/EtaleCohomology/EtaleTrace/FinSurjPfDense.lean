@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleTrace.FinSurjPf
+module
+
+public import Development.EtaleCohomology.EtaleTrace.FinSurjPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry MvPolynomial

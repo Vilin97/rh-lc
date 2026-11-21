@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.SymInt
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.WittPNe
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.PairLift
-import Formalism.LocalToGlobal.GroupLattices.FockModels.TestSideEdge
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.SymInt
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.WittPNe
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.PairLift
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.TestSideEdge
+
+@[expose] public section
 
 noncomputable section
 

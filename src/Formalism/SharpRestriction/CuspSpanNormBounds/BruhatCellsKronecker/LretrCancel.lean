@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdLiftDef
-import Lemmata.GeneralBFactRightAltForm.Imports
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdLiftDef
+public import Lemmata.GeneralBFactRightAltForm.Imports
+
+@[expose] public section
 
 noncomputable section
 

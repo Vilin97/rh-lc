@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicArithmetic.CyclotomicBounds.RootsOfUnity.MassNumeric
-import Development.AutomorphicArithmetic.CyclotomicBounds.RootsOfUnity.HostTorsionOrderLe
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormOfClassSums
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.CyclotomicBounds.RootsOfUnity.MassNumeric
+public import Development.AutomorphicArithmetic.CyclotomicBounds.RootsOfUnity.HostTorsionOrderLe
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormOfClassSums
+
+@[expose] public section
 
 noncomputable section
 

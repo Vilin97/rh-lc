@@ -1,9 +1,13 @@
-import Formalism.SizeWindowBrackets.SecondKindBucket
-import Formalism.LogFactorialBounds.LogFactorialProofs.PrimeSum
-import Mathlib
-import Formalism.RankGapBounds.RandomSubsetCounterexample
-import Formalism.RankGapBounds.RankGapProofs.PmModulusFacts
-import Formalism.RankGapBounds.RankGapProofs.FourNotDvdOddSqAddOne
+module
+
+public import Formalism.SizeWindowBrackets.SecondKindBucket
+public import Formalism.LogFactorialBounds.LogFactorialProofs.PrimeSum
+public import Mathlib
+public import Formalism.RankGapBounds.RandomSubsetCounterexample
+public import Formalism.RankGapBounds.RankGapProofs.PmModulusFacts
+public import Formalism.RankGapBounds.RankGapProofs.FourNotDvdOddSqAddOne
+
+@[expose] public section
 
 namespace Formalism.LFunctionChainParameters.DeficitSplitLemmas
 

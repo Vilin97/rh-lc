@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataAmbForm
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataAmbForm
+
+@[expose] public section
 
 noncomputable section
 

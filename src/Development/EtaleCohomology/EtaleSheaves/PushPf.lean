@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.AlgResPropsPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.AlgResPropsPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits Polynomial

@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.SphericalLaurent
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.SphericalLaurent
+
+@[expose] public section
 
 noncomputable section
 

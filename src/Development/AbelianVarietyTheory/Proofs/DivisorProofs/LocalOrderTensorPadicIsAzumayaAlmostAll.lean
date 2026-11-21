@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentreCompat
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsScalarTowerCenAlgebra
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CycleListPermInvariant
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BijectiveIffIsUnitDet
-import GroundTheory.Brauer.IsBrauerEquivalentIffNonemptyAlgEquiv
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentreCompat
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsScalarTowerCenAlgebra
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CycleListPermInvariant
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BijectiveIffIsUnitDet
+public import GroundTheory.Brauer.IsBrauerEquivalentIffNonemptyAlgEquiv
+
+@[expose] public section
 
 noncomputable section
 open scoped TensorProduct

@@ -1,8 +1,12 @@
-import Formalism.HermitianCurvature.StatementM
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FirstEmbeddingOne
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MultiplicationOpHom
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelNablaStarRelations
-import Formalism.YangianSpanCharacter.YangianRelationFirst
+module
+
+public import Formalism.HermitianCurvature.StatementM
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FirstEmbeddingOne
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MultiplicationOpHom
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelNablaStarRelations
+public import Formalism.YangianSpanCharacter.YangianRelationFirst
+
+@[expose] public section
 
 open Formalism.FourierDecayAlt.M Formalism.FourierDecayAlt.Fr Formalism.FourierDecayAlt.Wd Formalism.FourierDecayAlt.R Formalism.FourierDecayAlt.W Formalism.YangianSpanCharacter.T Formalism.FourierDecayAlt Matrix Finset
 

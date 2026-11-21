@@ -1,5 +1,9 @@
-import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.ArchInt
-import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.LibFresh
+module
+
+public import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.ArchInt
+public import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.LibFresh
+
+@[expose] public section
 
 noncomputable section
 

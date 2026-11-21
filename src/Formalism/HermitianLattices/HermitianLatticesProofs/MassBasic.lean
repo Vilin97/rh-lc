@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.HermitianLattices.StatementMass
-import Formalism.ThetaLiftIndependence.ThetaOrbitSums.ClassRepsDefinite
-import Formalism.ThetaLiftIndependence.ThetaOrbitSums.LatLiftIndep
-import Formalism.HermitianLattices.HermitianLatticesProofs.GenusBasic
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.StatementMass
+public import Formalism.ThetaLiftIndependence.ThetaOrbitSums.ClassRepsDefinite
+public import Formalism.ThetaLiftIndependence.ThetaOrbitSums.LatLiftIndep
+public import Formalism.HermitianLattices.HermitianLatticesProofs.GenusBasic
+
+@[expose] public section
 
 open NumberField
 

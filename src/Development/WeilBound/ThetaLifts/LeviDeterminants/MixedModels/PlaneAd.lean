@@ -1,5 +1,9 @@
-import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.PlaneGen
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.PlaneGen
+
+@[expose] public section
 
 noncomputable section
 

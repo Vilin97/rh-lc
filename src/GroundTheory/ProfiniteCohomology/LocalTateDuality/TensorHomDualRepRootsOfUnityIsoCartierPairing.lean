@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.LocalTateDuality.MainDefs
-import GroundTheory.ProfiniteCohomology.CohomologicalDimension.SubsingletonCohomologyOfPrimaryOfFinite
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.LocalTateDuality.MainDefs
+public import GroundTheory.ProfiniteCohomology.CohomologicalDimension.SubsingletonCohomologyOfPrimaryOfFinite
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.NegMem
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.NegMem
+
+@[expose] public section
 
 noncomputable section
 

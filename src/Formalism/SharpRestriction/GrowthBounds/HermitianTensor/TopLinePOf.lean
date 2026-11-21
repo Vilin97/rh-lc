@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.DPsiMonomialIwh
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.BlockSubstitutionBlockEmb
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.QaNuNextAdd
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.DPsiMonomialIwh
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.BlockSubstitutionBlockEmb
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.QaNuNextAdd
+
+@[expose] public section
 
 noncomputable section
 

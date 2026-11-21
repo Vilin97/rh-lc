@@ -1,13 +1,18 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.GlueApplyOfNotInFibre
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IsGenericFlag
-import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.LatNormGrLatNeZeroOfSpan
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
-import Development.WeilBound.CoreStatements.HodgeTatePoints.MbLCentre
-import Development.WeilBound.CoreStatements.HodgeTatePoints.McCramer
-import Development.WeilBound.CoreStatements.HodgeTatePoints.MbLPulllocCentre
-import Development.WeilBound.CoreStatements.HodgeTatePoints.MaBase
-import Development.WeilBound.CoreStatements.HodgeTatePoints.MaSerre
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.GlueApplyOfNotInFibre
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IsGenericFlag
+public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.LatNormGrLatNeZeroOfSpan
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.MbLCentre
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.McCramer
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.MbLPulllocCentre
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.MaBase
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.MaSerre
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory GlobalTheory.CompanionTheory.Ar NumberField
 
 noncomputable section

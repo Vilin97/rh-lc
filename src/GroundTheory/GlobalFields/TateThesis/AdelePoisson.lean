@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.SchwartzBruhat
-import GroundTheory.GlobalFields.TateThesis.TraceLatticePoisson
-import GroundTheory.GlobalFields.IdeleGroups.ClassGroup
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.SchwartzBruhat
+public import GroundTheory.GlobalFields.TateThesis.TraceLatticePoisson
+public import GroundTheory.GlobalFields.IdeleGroups.ClassGroup
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

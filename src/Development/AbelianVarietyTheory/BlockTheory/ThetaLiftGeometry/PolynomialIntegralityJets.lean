@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataKerI
-import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
-import Formalism.LocalToGlobal.KernelLattices.LateralTheory
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataKerI
+public import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
+public import Formalism.LocalToGlobal.KernelLattices.LateralTheory
+
+@[expose] public section
 
 open NumberField
 

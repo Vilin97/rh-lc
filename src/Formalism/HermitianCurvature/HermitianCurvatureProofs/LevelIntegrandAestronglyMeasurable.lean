@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.CompositeFormulaOfDensities
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.HsInnerAddSmulRight
+module
+
+public import Formalism.HermitianCurvature.CompositeFormulaOfDensities
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.HsInnerAddSmulRight
+
+@[expose] public section
 
 open MeasureTheory
 open scoped ComplexConjugate

@@ -1,19 +1,23 @@
-import Mathlib
-import ReciprocityTheory.GroupCohomology.FiveTerm
-import ReciprocityTheory.GroupCohomology.CupCor
-import ReciprocityTheory.GroupCohomology.CupConnRightStatement
-import ReciprocityTheory.GroupCohomology.DEqZeroOfMemB
-import ReciprocityTheory.GroupCohomology.ConnNatHolds
-import ReciprocityTheory.GroupCohomology.LowLES
-import ReciprocityTheory.GroupCohomology.RankLen
-import ReciprocityTheory.GroupCohomology.Localise
-import ReciprocityTheory.GroupCohomology.CardLenStatement
-import ReciprocityTheory.GroupCohomology.ResNormalHolds
-import ReciprocityTheory.GroupCohomology.InnerHolds
-import ReciprocityTheory.GroupCohomology.PairHomFCoeOfId
-import ReciprocityTheory.GroupCohomology.InfRes
-import ReciprocityTheory.GroupCohomology.FiniteLevel
-import ReciprocityTheory.GroupCohomology.Shapiro
-import ReciprocityTheory.GroupCohomology.Section
-import ReciprocityTheory.GroupCohomology.LengthKerEqCoker
-import ReciprocityTheory.GroupCohomology.IsLowExists
+module
+
+public import Mathlib
+public import ReciprocityTheory.GroupCohomology.FiveTerm
+public import ReciprocityTheory.GroupCohomology.CupCor
+public import ReciprocityTheory.GroupCohomology.CupConnRightStatement
+public import ReciprocityTheory.GroupCohomology.DEqZeroOfMemB
+public import ReciprocityTheory.GroupCohomology.ConnNatHolds
+public import ReciprocityTheory.GroupCohomology.LowLES
+public import ReciprocityTheory.GroupCohomology.RankLen
+public import ReciprocityTheory.GroupCohomology.Localise
+public import ReciprocityTheory.GroupCohomology.CardLenStatement
+public import ReciprocityTheory.GroupCohomology.ResNormalHolds
+public import ReciprocityTheory.GroupCohomology.InnerHolds
+public import ReciprocityTheory.GroupCohomology.PairHomFCoeOfId
+public import ReciprocityTheory.GroupCohomology.InfRes
+public import ReciprocityTheory.GroupCohomology.FiniteLevel
+public import ReciprocityTheory.GroupCohomology.Shapiro
+public import ReciprocityTheory.GroupCohomology.Section
+public import ReciprocityTheory.GroupCohomology.LengthKerEqCoker
+public import ReciprocityTheory.GroupCohomology.IsLowExists
+
+@[expose] public section

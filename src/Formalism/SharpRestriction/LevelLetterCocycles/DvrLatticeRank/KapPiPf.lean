@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.FirstFrameStepImplication
-import Formalism.SharpRestriction.LevelLetterCocycles.MapCompZero
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.SumIocPadicValNatAddFactorial
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.FirstFrameStepImplication
+public import Formalism.SharpRestriction.LevelLetterCocycles.MapCompZero
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.SumIocPadicValNatAddFactorial
+
+@[expose] public section
 
 noncomputable section
 

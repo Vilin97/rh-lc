@@ -1,5 +1,9 @@
-import Formalism.AdmissibleDesigns.SelFSOfNormAt
-import Formalism.AdmissibleDesigns.RankFfNormAt
+module
+
+public import Formalism.AdmissibleDesigns.SelFSOfNormAt
+public import Formalism.AdmissibleDesigns.RankFfNormAt
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core] [hH0Fin : Fact Formalism.MainNotions.N.K.H0.FinCore]
 

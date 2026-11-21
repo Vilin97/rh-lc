@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.DplusLeBeA
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.TypicalPathOrdersSmall
-import Formalism.ThetaLogCoordinates.ResidueClassEstimates.FinalT
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.DplusLeBeA
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.TypicalPathOrdersSmall
+public import Formalism.ThetaLogCoordinates.ResidueClassEstimates.FinalT
+
+@[expose] public section
 
 noncomputable section
 

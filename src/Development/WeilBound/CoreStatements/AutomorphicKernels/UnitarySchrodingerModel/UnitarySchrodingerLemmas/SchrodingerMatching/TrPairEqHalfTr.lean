@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.AutomorphicKernels.UnitarySchrodingerModel.UnitarySchrodingerLemmas.SchrodingerMatching.HaarFam
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralMulRight
+module
+
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.UnitarySchrodingerModel.UnitarySchrodingerLemmas.SchrodingerMatching.HaarFam
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralMulRight
+
+@[expose] public section
 
 noncomputable section
 

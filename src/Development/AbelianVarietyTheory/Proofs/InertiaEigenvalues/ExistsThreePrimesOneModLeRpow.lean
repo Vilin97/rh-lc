@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AutomorphicArithmetic.CyclotomicBounds.ZmodTwoQuadraticNeZero
-import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
-import Formalism.FrobeniusOrbits.HostCorollaries
-import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.GoodPairSystems
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ValuationComapLtOne
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.CyclotomicBounds.ZmodTwoQuadraticNeZero
+public import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
+public import Formalism.FrobeniusOrbits.HostCorollaries
+public import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.GoodPairSystems
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ValuationComapLtOne
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.VanIdealHomog
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ProjectiveCharts
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.VanIdealHomog
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ProjectiveCharts
+
+@[expose] public section
 
 noncomputable section
 

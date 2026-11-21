@@ -1,6 +1,10 @@
-import Development.WeilBound.CoreStatements.VolumeEquality.BaseUnifEx2
-import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
-import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
+module
+
+public import Development.WeilBound.CoreStatements.VolumeEquality.BaseUnifEx2
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Statements
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.BundleObjects
+
+@[expose] public section
 
 noncomputable section
 

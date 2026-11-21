@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.CoefficientMapHeightBound
-import Formalism.LocalToGlobal.Columns.FactorialSumLePowMulProd
-import Formalism.LocalToGlobal.Columns.CoefColLemmas
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.CoefficientMapHeightBound
+public import Formalism.LocalToGlobal.Columns.FactorialSumLePowMulProd
+public import Formalism.LocalToGlobal.Columns.CoefColLemmas
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module MvPolynomial
 open scoped Matrix ComplexOrder

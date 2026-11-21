@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.RealDescent.RealLeviDescent.InjectiveDecompositionAction
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SgMulSelf
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.RealDescent.RealLeviDescent.InjectiveDecompositionAction
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SgMulSelf
+
+@[expose] public section
 
 open Finset
 

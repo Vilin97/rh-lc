@@ -1,10 +1,14 @@
-import Formalism.CharacterColumnKernels.CharacterColumnKernelEqualityForm
-import Formalism.CharacterColumnKernels.StatementGC
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.GlobalModuleOf
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.CupKillAdm
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.GlobalConcreteOf
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.BlockRhoFull
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.BlockChiOneFullOf
+module
+
+public import Formalism.CharacterColumnKernels.CharacterColumnKernelEqualityForm
+public import Formalism.CharacterColumnKernels.StatementGC
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.GlobalModuleOf
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.CupKillAdm
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.GlobalConcreteOf
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.BlockRhoFull
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.BlockChiOneFullOf
+
+@[expose] public section
 
 open Finset Classical
 

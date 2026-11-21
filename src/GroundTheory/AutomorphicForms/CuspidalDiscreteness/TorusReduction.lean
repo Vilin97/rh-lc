@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.ExistsLintegralConstantTermL2SqLe
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.TorusDifference
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SmoothingFinite
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.ExistsLintegralConstantTermL2SqLe
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.TorusDifference
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SmoothingFinite
+
+@[expose] public section
 
 open MeasureTheory Set Filter Topology Function
 open NumberField IsDedekindDomain

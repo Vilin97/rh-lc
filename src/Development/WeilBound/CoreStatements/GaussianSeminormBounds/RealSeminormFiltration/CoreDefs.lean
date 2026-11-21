@@ -1,9 +1,13 @@
-import Development.WeilBound.CoreStatements.GaussianSeminormBounds.RealSeminormFiltration.TensorIrr
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FockHarmSplit
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FockJointMult
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FockOneDeg
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FockWtDeg
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FockRaiseLow
+module
+
+public import Development.WeilBound.CoreStatements.GaussianSeminormBounds.RealSeminormFiltration.TensorIrr
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FockHarmSplit
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FockJointMult
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FockOneDeg
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FockWtDeg
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FockRaiseLow
+
+@[expose] public section
 
 noncomputable section
 

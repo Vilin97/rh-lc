@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.NumberFieldFamilies.NPartCNd
-import Formalism.SharpRestriction.LevelLetterCocycles.DataN
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.TypesDefs
+module
+
+public import Formalism.LocalToGlobal.NumberFieldFamilies.NPartCNd
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataN
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.TypesDefs
+
+@[expose] public section
 
 noncomputable section
 

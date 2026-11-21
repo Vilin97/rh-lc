@@ -1,16 +1,20 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.MatrixKernelDiamondCommutation
-import Formalism.GL3MeanSquares.HookFormulaTorsion.DoubleCosetDecompositionAll
-import Formalism.LocalToGlobal.Columns.GSetLemmas
-import Formalism.LocalToGlobal.Columns.BtExistsSmulLeOfFg
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ColInst
-import Formalism.LocalToGlobal.Columns.RowFormsSel
-import Formalism.LocalToGlobal.Columns.ChainInstY
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.MemGoodPrimesOfNoExceptional
-import Formalism.LocalToGlobal.Columns.TiedUpDnA
-import Formalism.LocalToGlobal.Columns.DecoFin
-import Formalism.LocalToGlobal.Columns.SmulMemTrpSet
-import Formalism.HermitianLattices.HermitianLatticesProofs.NeighbourConstruct
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.MatrixKernelDiamondCommutation
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.DoubleCosetDecompositionAll
+public import Formalism.LocalToGlobal.Columns.GSetLemmas
+public import Formalism.LocalToGlobal.Columns.BtExistsSmulLeOfFg
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ColInst
+public import Formalism.LocalToGlobal.Columns.RowFormsSel
+public import Formalism.LocalToGlobal.Columns.ChainInstY
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.MemGoodPrimesOfNoExceptional
+public import Formalism.LocalToGlobal.Columns.TiedUpDnA
+public import Formalism.LocalToGlobal.Columns.DecoFin
+public import Formalism.LocalToGlobal.Columns.SmulMemTrpSet
+public import Formalism.HermitianLattices.HermitianLatticesProofs.NeighbourConstruct
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

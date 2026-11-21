@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.FlagUnipotentLattices.UnipotentStabiliserCharacterisation
+module
+
+public import Mathlib
+public import Formalism.FlagUnipotentLattices.UnipotentStabiliserCharacterisation
+
+@[expose] public section
 
 namespace Formalism.HermitianLatticeCounting.ExpansionTerms
 

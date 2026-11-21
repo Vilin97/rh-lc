@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.JFDFree
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.MaxBoundPf
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.SiegelSpaceAlgebraHolds
-import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsNetOfThickPoints
-import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.NetSizeCubic
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.JFDFree
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.MaxBoundPf
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.SiegelSpaceAlgebraHolds
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsNetOfThickPoints
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.NetSizeCubic
+
+@[expose] public section
 
 open NumberField ReciprocityTheory.ChartRestriction.G.FD Formalism.L2.PjFree
 

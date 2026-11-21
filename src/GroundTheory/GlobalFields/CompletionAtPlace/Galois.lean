@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.CompletionAtPlace.Degree
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.CompletionAtPlace.Degree
+
+@[expose] public section
 
 noncomputable section
 

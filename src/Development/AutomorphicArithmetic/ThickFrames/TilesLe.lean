@@ -1,7 +1,11 @@
-import Development.AutomorphicArithmetic.ThickFrames.MarkedLow
-import Development.AutomorphicArithmetic.ThickFrames.expectationSpec
-import Development.AutomorphicArithmetic.ThickFrames.MarkedGe
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ChoiceOfTops
+module
+
+public import Development.AutomorphicArithmetic.ThickFrames.MarkedLow
+public import Development.AutomorphicArithmetic.ThickFrames.expectationSpec
+public import Development.AutomorphicArithmetic.ThickFrames.MarkedGe
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ChoiceOfTops
+
+@[expose] public section
 
 open Finset UpperTheory.BernoulliSumsFrobeniusOrbits Formalism.G0
 open GlobalTheory.RandomTops (tile tile_disjoint marked_congr)

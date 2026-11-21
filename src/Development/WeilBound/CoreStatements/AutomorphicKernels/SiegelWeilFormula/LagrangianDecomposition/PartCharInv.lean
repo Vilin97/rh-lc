@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.LagrangianDecomposition.SDarb
-import Development.AbelianVarietyTheory.Definitions.Divisors.DblActId
+module
+
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.LagrangianDecomposition.SDarb
+public import Development.AbelianVarietyTheory.Definitions.Divisors.DblActId
+
+@[expose] public section
 
 noncomputable section
 

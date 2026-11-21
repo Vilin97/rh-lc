@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.HodgeTatePoints.FirstPowerEqProdAt
-import Development.WeilBound.CoreStatements.HodgeTatePoints.CoeffEvPowOne
+module
+
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.FirstPowerEqProdAt
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.CoeffEvPowOne
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.BesselHermitianTheta.IsAutFunDef
-import Development.AbelianVarietyTheory.Definitions.Foundations.OfInfProjInfMulOfFinProjFin
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.BesselHermitianTheta.IsAutFunDef
+public import Development.AbelianVarietyTheory.Definitions.Foundations.OfInfProjInfMulOfFinProjFin
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.HyperbolicPlaceProducts.DetIndexProductHyperbolicInequality
-import Formalism.HyperbolicPlaceProducts.SubgroupIndexCounts.DetIndexProductHyperbolicInequality
+module
+
+public import Formalism.HyperbolicPlaceProducts.DetIndexProductHyperbolicInequality
+public import Formalism.HyperbolicPlaceProducts.SubgroupIndexCounts.DetIndexProductHyperbolicInequality
+
+@[expose] public section
 
 namespace Formalism.SLP.GlobalBoundRefinements.Final
 

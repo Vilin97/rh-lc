@@ -1,6 +1,10 @@
-import Formalism.FlagUnipotentLattices.StabiliserComplementDecomposition
-import Formalism.FlagUnipotentLattices.AlgebraicIdentityHigherDegree
-import Formalism.FormalDegreeBessel.FinalG
+module
+
+public import Formalism.FlagUnipotentLattices.StabiliserComplementDecomposition
+public import Formalism.FlagUnipotentLattices.AlgebraicIdentityHigherDegree
+public import Formalism.FormalDegreeBessel.FinalG
+
+@[expose] public section
 
 open Finset Matrix
 open scoped ComplexConjugate TensorProduct

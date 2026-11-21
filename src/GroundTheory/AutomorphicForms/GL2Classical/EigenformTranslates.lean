@@ -1,22 +1,26 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2Classical.Adelic
-import GroundTheory.AutomorphicForms.GL2Classical.ConstantTerm
-import GroundTheory.AutomorphicForms.GL2Classical.Smooth
-import GroundTheory.AutomorphicForms.HarishChandraCentre
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.SmoothKZ
-import GroundTheory.AutomorphicForms.GL2Classical.CuspConverse
-import GroundTheory.AutomorphicForms.GL2Classical.GrowthReduction
-import GroundTheory.AutomorphicForms.GL2Classical.KFinite
-import GroundTheory.AutomorphicForms.HeckeAlgebraLevel
-import GroundTheory.AutomorphicForms.GL2Classical.HeckeCommute
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.Unimodular
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.Uniform
-import GroundTheory.AutomorphicForms.Satake
-import GroundTheory.AutomorphicForms.MacdonaldWhittakerHecke
-import GroundTheory.AutomorphicForms.StrongApproximationSLDense
-import GroundTheory.GlobalFields.LocalAtPlace
-import GroundTheory.AutomorphicForms.HeckeIrreducible
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.CuspFormsDecay
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2Classical.Adelic
+public import GroundTheory.AutomorphicForms.GL2Classical.ConstantTerm
+public import GroundTheory.AutomorphicForms.GL2Classical.Smooth
+public import GroundTheory.AutomorphicForms.HarishChandraCentre
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.SmoothKZ
+public import GroundTheory.AutomorphicForms.GL2Classical.CuspConverse
+public import GroundTheory.AutomorphicForms.GL2Classical.GrowthReduction
+public import GroundTheory.AutomorphicForms.GL2Classical.KFinite
+public import GroundTheory.AutomorphicForms.HeckeAlgebraLevel
+public import GroundTheory.AutomorphicForms.GL2Classical.HeckeCommute
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.Unimodular
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.Uniform
+public import GroundTheory.AutomorphicForms.Satake
+public import GroundTheory.AutomorphicForms.MacdonaldWhittakerHecke
+public import GroundTheory.AutomorphicForms.StrongApproximationSLDense
+public import GroundTheory.GlobalFields.LocalAtPlace
+public import GroundTheory.AutomorphicForms.HeckeIrreducible
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.CuspFormsDecay
+
+@[expose] public section
 
 open NumberField Matrix CongruenceSubgroup ModularForm Complex Filter
 open UpperHalfPlane hiding I I_re I_im

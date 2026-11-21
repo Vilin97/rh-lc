@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.PullTotMemBTot
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.PullTotMemBTot
+
+@[expose] public section
 
 set_option autoImplicit false
 

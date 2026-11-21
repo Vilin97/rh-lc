@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.DataTheta
-import Formalism.LocalToGlobal.UnitaryNorms.CharUniq
+module
+
+public import Formalism.LocalRingCardinality.DataTheta
+public import Formalism.LocalToGlobal.UnitaryNorms.CharUniq
+
+@[expose] public section
 
 noncomputable section
 

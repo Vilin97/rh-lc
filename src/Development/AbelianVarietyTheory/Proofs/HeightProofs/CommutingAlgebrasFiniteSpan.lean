@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.HeightProofs.IsLieDataCircle
-import Development.AbelianVarietyTheory.Proofs.HeightProofs.MulApply
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.IsLieDataCircle
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.MulApply
+
+@[expose] public section
+
 open GlobalTheory.SmoothForms NumberField Matrix
 open scoped ContDiff Topology
 

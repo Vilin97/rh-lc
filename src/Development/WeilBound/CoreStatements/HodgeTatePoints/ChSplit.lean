@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.EigenProjectorsSplitActionStatement
-import Development.WeilBound.CoreStatements.HodgeTatePoints.DegLeOfEquiv
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.EigenProjectorsSplitActionStatement
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.DegLeOfEquiv
+
+@[expose] public section
 
 open GlobalTheory.CompanionTheory.Ar.Crv
 

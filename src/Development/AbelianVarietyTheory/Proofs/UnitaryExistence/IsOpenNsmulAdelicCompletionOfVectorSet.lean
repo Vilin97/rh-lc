@@ -1,9 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.Hat1
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsNatMulMem
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ImportsBis
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ImportsTer
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.NsmulIntegralMemNhdsZero
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.Hat1
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsNatMulMem
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ImportsBis
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ImportsTer
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.NsmulIntegralMemNhdsZero
+
+@[expose] public section
+
 open NumberField IsDedekindDomain GlobalTheory.AdLat
 open scoped TensorProduct Topology Matrix
 

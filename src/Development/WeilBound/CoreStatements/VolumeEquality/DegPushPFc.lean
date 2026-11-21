@@ -1,7 +1,11 @@
-import Development.WeilBound.CoreStatements.VolumeEquality.DegPushPFa
-import Development.WeilBound.CoreStatements.VolumeEquality.DegPushPFb
-import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.ImageCoord
+module
+
+public import Development.WeilBound.CoreStatements.VolumeEquality.DegPushPFa
+public import Development.WeilBound.CoreStatements.VolumeEquality.DegPushPFb
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.ImageCoord
+
+@[expose] public section
 
 noncomputable section
 

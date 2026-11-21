@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.PartialDifferential.SobolevRellich
-import GroundTheory.AutomorphicForms.PartialDifferential.SobolevEmbedding
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.PartialDifferential.SobolevRellich
+public import GroundTheory.AutomorphicForms.PartialDifferential.SobolevEmbedding
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.Sobolev
 

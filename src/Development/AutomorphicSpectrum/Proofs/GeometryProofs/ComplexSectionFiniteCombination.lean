@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.NoCommonZeroCombVal
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsResidueEval
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LinIndepDescent
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.NoCommonZeroCombVal
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsResidueEval
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LinIndepDescent
+
+@[expose] public section
 
 set_option autoImplicit false
 

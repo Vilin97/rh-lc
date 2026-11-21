@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ArelStar
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FrameTransport
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ArelStar
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FrameTransport
+
+@[expose] public section
 
 open Matrix MeasureTheory
 open scoped ContDiff

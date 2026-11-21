@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.LEtaleLiftPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LEtaleLiftPf
+
+@[expose] public section
 
 noncomputable section
 

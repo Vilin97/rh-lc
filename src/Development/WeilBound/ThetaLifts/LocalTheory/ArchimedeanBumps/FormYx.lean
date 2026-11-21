@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.HeisenbergActionAddOfOrthogonal
-import Development.WeilBound.ThetaLifts.FrameEstimates.GrpTop
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.HeisenbergActionAddOfOrthogonal
+public import Development.WeilBound.ThetaLifts.FrameEstimates.GrpTop
+
+@[expose] public section
 
 noncomputable section
 

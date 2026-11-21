@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.UnitaryNorms.AdjoinCycZeta
-import Formalism.LocalToGlobal.UnitaryNorms.IotaABijective
-import Formalism.QuotientMetricDivisors.RatHermLcvTwist
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.UnitaryNorms.AdjoinCycZeta
+public import Formalism.LocalToGlobal.UnitaryNorms.IotaABijective
+public import Formalism.QuotientMetricDivisors.RatHermLcvTwist
+
+@[expose] public section
 
 open NumberField IntermediateField
 

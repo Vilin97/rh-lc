@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.ExistsIntegralWeightProjections
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.ExistsIntegralWeightProjections
+
+@[expose] public section
 
 noncomputable section
 

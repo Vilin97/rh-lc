@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.FinPartPhiE
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.TwoSplit
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.FinPartPhiE
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.TwoSplit
+
+@[expose] public section
 
 noncomputable section
 

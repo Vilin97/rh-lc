@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.StatementKB
-import Formalism.HermitianCurvature.PositionExpansionTopCoefficients
-import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
+module
+
+public import Formalism.HermitianCurvature.StatementKB
+public import Formalism.HermitianCurvature.PositionExpansionTopCoefficients
+public import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.KB
 

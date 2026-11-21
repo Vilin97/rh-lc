@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.FontaineLemma
-import GroundTheory.PAdicHodge.BCrisRegular
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.FontaineLemma
+public import GroundTheory.PAdicHodge.BCrisRegular
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

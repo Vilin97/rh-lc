@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsFurtherRest
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PBlockRatioAlg
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PLocRingPow
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PProjBundleMultiHomogGrad
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsFurtherRest
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PBlockRatioAlg
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PLocRingPow
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PProjBundleMultiHomogGrad
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

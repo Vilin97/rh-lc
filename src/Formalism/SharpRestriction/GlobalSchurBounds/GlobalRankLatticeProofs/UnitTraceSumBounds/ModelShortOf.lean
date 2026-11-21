@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
-import Mathlib
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.SharpRestriction.GlobalSchurBounds.TaylorLogMetric
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
+public import Mathlib
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.SharpRestriction.GlobalSchurBounds.TaylorLogMetric
+
+@[expose] public section
 
 open Formalism.MainNotions.FormalGroupJets
 

@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.GlobalFields.HerbrandQuotients.CycTate
-import GroundTheory.GlobalFields.CompletionAtPlace.Galois
-import GroundTheory.LocalFields.HerbrandLocal
-import GroundTheory.LocalFields.UnramifiedNorms
-import GroundTheory.LocalFields.HerbrandCyclic
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.HerbrandQuotients.CycTate
+public import GroundTheory.GlobalFields.CompletionAtPlace.Galois
+public import GroundTheory.LocalFields.HerbrandLocal
+public import GroundTheory.LocalFields.UnramifiedNorms
+public import GroundTheory.LocalFields.HerbrandCyclic
+
+@[expose] public section
 
 noncomputable section
 

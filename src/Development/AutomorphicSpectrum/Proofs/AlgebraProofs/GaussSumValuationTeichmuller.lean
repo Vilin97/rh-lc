@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.SumInvMulTrace
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CardLe
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.SumInvMulTrace
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CardLe
+
+@[expose] public section
 
 open scoped Matrix TensorProduct
 open Matrix

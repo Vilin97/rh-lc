@@ -1,6 +1,10 @@
-import ReciprocityTheory.DualLattices.UnramifiedCokernelLowerBoundOf
-import ReciprocityTheory.DualLattices.UpSmith
-import ReciprocityTheory.DualLattices.ExistsSmulMemOfMemSpan
+module
+
+public import ReciprocityTheory.DualLattices.UnramifiedCokernelLowerBoundOf
+public import ReciprocityTheory.DualLattices.UpSmith
+public import ReciprocityTheory.DualLattices.ExistsSmulMemOfMemSpan
+
+@[expose] public section
 
 noncomputable section
 

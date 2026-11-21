@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BaseLengthBound.HasseVan
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.HassePresH
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.BaseLengthBound.HasseVan
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.HassePresH
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.DistinguishedUnitIdeals.ExistsConstOfInvariantMod
-import Formalism.DistinguishedUnitIdeals.FrobeniusCoboundedArc
-import Formalism.DistinguishedUnitIdeals.GammaCongruentArcFromStart
-import Formalism.DistinguishedUnitIdeals.PhiFreeOfBasis
+module
+
+public import Mathlib
+public import Formalism.DistinguishedUnitIdeals.ExistsConstOfInvariantMod
+public import Formalism.DistinguishedUnitIdeals.FrobeniusCoboundedArc
+public import Formalism.DistinguishedUnitIdeals.GammaCongruentArcFromStart
+public import Formalism.DistinguishedUnitIdeals.PhiFreeOfBasis
+
+@[expose] public section
 
 noncomputable section
 

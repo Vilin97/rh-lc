@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GKModules.RightRegular
-import GroundTheory.AutomorphicForms.DixmierMalliavinBasic
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GKModules.RightRegular
+public import GroundTheory.AutomorphicForms.DixmierMalliavinBasic
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Development.AutomorphicSpectrum.Definitions.MetricPeriods.HeBranching
-import Development.WeilBound.CoreStatements.BranchingTraces.ExistsIntertwiner
+module
+
+public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.HeBranching
+public import Development.WeilBound.CoreStatements.BranchingTraces.ExistsIntertwiner
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.CountingStatementReduction
-import Formalism.MahlerMeasure.LevelLattice
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CountingStatementReduction
+public import Formalism.MahlerMeasure.LevelLattice
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.LetterRowOperator
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.LetterRowOperator
+
+@[expose] public section
 
 open MvPolynomial
 

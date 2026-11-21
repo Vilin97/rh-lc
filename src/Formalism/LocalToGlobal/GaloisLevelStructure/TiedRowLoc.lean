@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GaloisLevelStructure.NGalTied
-import Formalism.LocalToGlobal.GaloisLevelStructure.DefsRowLoc
+module
+
+public import Formalism.LocalToGlobal.GaloisLevelStructure.NGalTied
+public import Formalism.LocalToGlobal.GaloisLevelStructure.DefsRowLoc
+
+@[expose] public section
 
 noncomputable section
 

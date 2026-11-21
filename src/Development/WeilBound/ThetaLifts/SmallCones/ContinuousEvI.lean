@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.SmallCones.SliceSummable
-import Development.AbelianVarietyTheory.Proofs.HeightProofs.ExistsCompactAdeleRingModNumberField
+module
+
+public import Development.WeilBound.ThetaLifts.SmallCones.SliceSummable
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.ExistsCompactAdeleRingModNumberField
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

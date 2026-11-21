@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.TieUpA
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.TieUpA
+
+@[expose] public section
 
 noncomputable section
 

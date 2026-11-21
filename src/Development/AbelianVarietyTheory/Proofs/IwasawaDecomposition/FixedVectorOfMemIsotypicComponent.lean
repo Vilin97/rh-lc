@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.GaloisLevelStructure.DefsAut
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GaloisLevelStructure.DefsAut
+
+@[expose] public section
+
 open Formalism.L2 Formalism.AUTREP ReciprocityTheory.Aut NumberField
 
 namespace GlobalTheory.IsoFix

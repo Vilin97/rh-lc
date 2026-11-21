@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.LatticeBasics.FrameB
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsSiegelHProjArchEq
-import Development.WeilBound.ThetaLifts.LatticeBasics.HypothesesE
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.LatticeBasics.FrameB
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsSiegelHProjArchEq
+public import Development.WeilBound.ThetaLifts.LatticeBasics.HypothesesE
+
+@[expose] public section
 
 noncomputable section
 

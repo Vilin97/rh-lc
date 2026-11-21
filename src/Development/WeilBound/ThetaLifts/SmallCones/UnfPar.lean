@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.ThetaDilations.ContinuousPm
+module
+
+public import Development.WeilBound.CoreStatements.ThetaDilations.ContinuousPm
+
+@[expose] public section
 
 open HeckeCharacterZeroLocus.SiegelWeilU GlobalTheory.CompanionTheory.SW NumberField IsDedekindDomain MeasureTheory Topology PositivityTheory.PlacePermOperatorBicommutantSpan
 open scoped TensorProduct ENNReal NNReal Matrix

@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergyDiagonal
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergyInvariant
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergyCocycle
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergyDiagonal
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergyInvariant
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergyCocycle
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

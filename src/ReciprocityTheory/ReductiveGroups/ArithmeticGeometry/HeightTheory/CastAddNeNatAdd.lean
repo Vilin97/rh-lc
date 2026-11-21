@@ -1,4 +1,8 @@
-import ReciprocityTheory.SemistableReduction.AeBlockSphereEvalNeZero
+module
+
+public import ReciprocityTheory.SemistableReduction.AeBlockSphereEvalNeZero
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.T0.NPB
 

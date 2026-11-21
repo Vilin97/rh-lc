@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HermitianCurvature.StatementPB
-import Formalism.HermitianCurvature.StatementB
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.StatementPB
+public import Formalism.HermitianCurvature.StatementB
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.C
 

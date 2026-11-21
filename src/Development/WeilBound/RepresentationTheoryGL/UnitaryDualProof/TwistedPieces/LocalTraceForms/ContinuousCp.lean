@@ -1,7 +1,11 @@
-import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.TwistedPieces.LocalTraceForms.LocChi
-import GroundTheory.AutomorphicForms.WhittakerDistribution
-import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.CompactOrbits.LocalContinuity.LocalDescentHolds
-import GroundTheory.AutomorphicForms.ContragredientTranspose.MatrixSimilarity
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.TwistedPieces.LocalTraceForms.LocChi
+public import GroundTheory.AutomorphicForms.WhittakerDistribution
+public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.CompactOrbits.LocalContinuity.LocalDescentHolds
+public import GroundTheory.AutomorphicForms.ContragredientTranspose.MatrixSimilarity
+
+@[expose] public section
 
 noncomputable section
 

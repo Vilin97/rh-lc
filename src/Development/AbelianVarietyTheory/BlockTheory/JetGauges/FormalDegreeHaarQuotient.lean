@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UpqRep
-import Formalism.PeriodIntegrals.IsLowUnitH
-import Formalism.PeriodIntegrals.BesselMapUniq
-import Formalism.FormalDegreeBessel.StatementG
-import Formalism.FormalDegreeBessel.StatementDS
-import Formalism.FormalDegreeBessel.StatementBF
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UpqRep
+public import Formalism.PeriodIntegrals.IsLowUnitH
+public import Formalism.PeriodIntegrals.BesselMapUniq
+public import Formalism.FormalDegreeBessel.StatementG
+public import Formalism.FormalDegreeBessel.StatementDS
+public import Formalism.FormalDegreeBessel.StatementBF
+
+@[expose] public section
 
 open MeasureTheory Matrix
 open scoped InnerProductSpace ENNReal

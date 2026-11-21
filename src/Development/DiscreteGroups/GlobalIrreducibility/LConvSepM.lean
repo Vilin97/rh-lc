@@ -1,7 +1,11 @@
-import Mathlib
-import Development.DiscreteGroups.GlobalIrreducibility.LConvCut
-import GroundTheory.AutomorphicForms.GLnLocal
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AlgebraMapIntertwiningMapBijectiveOfIsSmooth
+module
+
+public import Mathlib
+public import Development.DiscreteGroups.GlobalIrreducibility.LConvCut
+public import GroundTheory.AutomorphicForms.GLnLocal
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AlgebraMapIntertwiningMapBijectiveOfIsSmooth
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

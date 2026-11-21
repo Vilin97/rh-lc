@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IwahoriGlValuedDatum
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IwahoriGlValuedDatum
+
+@[expose] public section
 
 noncomputable section
 

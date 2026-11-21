@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.DataParams₂
-import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
+module
+
+public import Formalism.LocalRingCardinality.DataParams₂
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
+
+@[expose] public section
 
 noncomputable section
 

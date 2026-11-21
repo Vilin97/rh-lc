@@ -1,5 +1,9 @@
-import Formalism.AlgebraicWeights.InertDatumExists
-import Formalism.LocalToGlobal.GaloisLevelStructure.DefsAut
+module
+
+public import Formalism.AlgebraicWeights.InertDatumExists
+public import Formalism.LocalToGlobal.GaloisLevelStructure.DefsAut
+
+@[expose] public section
 
 noncomputable section
 

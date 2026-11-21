@@ -1,8 +1,12 @@
-import Development.AutomorphicArithmetic.PrimeDiscriminants.RamDiscr
-import Development.AutomorphicArithmetic.FrobeniusLocalisation.halfSupp
-import Development.AutomorphicArithmetic.FrobeniusLocalisation.CondRd
-import Development.AutomorphicArithmetic.FrobeniusLocalisation.RamEq
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.HostFacts
+module
+
+public import Development.AutomorphicArithmetic.PrimeDiscriminants.RamDiscr
+public import Development.AutomorphicArithmetic.FrobeniusLocalisation.halfSupp
+public import Development.AutomorphicArithmetic.FrobeniusLocalisation.CondRd
+public import Development.AutomorphicArithmetic.FrobeniusLocalisation.RamEq
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.HostFacts
+
+@[expose] public section
 
 open UpperTheory.HF
 

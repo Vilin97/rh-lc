@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.MatrixSubstTransvectionX
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.MatrixSubstTransvectionX
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.SegreIdealIsHomogeneous
+module
+
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.SegreIdealIsHomogeneous
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.R
 

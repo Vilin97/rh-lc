@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.HodgeTatePoints.TwpdivHopf
-import Development.WeilBound.CoreStatements.HodgeTatePoints.TwhopfInd
+module
+
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.TwpdivHopf
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.TwhopfInd
+
+@[expose] public section
 
 open GlobalTheory.CompanionTheory.Ar.BT
 

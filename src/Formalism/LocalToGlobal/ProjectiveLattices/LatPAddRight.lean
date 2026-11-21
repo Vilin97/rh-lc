@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.BetaAddRight
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.BetaAddRight
+
+@[expose] public section
 
 noncomputable section
 

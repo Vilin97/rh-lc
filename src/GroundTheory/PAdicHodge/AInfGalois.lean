@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.PAdicHodge.KerFontaineThetaCompFrobeniusEquivSymmPow
-import GroundTheory.PAdicHodge.AInfTopology
-import GroundTheory.PAdicHodge.TiltMap
-import GroundTheory.PAdicHodge.TiltAlgebra
-import GroundTheory.PAdicHodge.GaloisOnCp
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.KerFontaineThetaCompFrobeniusEquivSymmPow
+public import GroundTheory.PAdicHodge.AInfTopology
+public import GroundTheory.PAdicHodge.TiltMap
+public import GroundTheory.PAdicHodge.TiltAlgebra
+public import GroundTheory.PAdicHodge.GaloisOnCp
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

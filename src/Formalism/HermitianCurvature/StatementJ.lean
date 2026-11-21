@@ -1,12 +1,16 @@
-import Formalism.LatticeRigidity.StatementC
-import Formalism.HermitianCurvature.StatementK
-import Formalism.HermitianCurvature.StatementTA
-import Formalism.HermitianCurvature.StatementTB
-import Formalism.HermitianCurvature.LevelRecursionCondNeeded
-import Formalism.HermitianCurvature.PrimeToDifferent
-import Formalism.HermitianCurvature.StatementSz
-import Formalism.HermitianCurvature.MemParahoricTimesPrincipalCongruenceIff
-import Formalism.HermitianCurvature.BlockKernelPropertiesOfSteps
+module
+
+public import Formalism.LatticeRigidity.StatementC
+public import Formalism.HermitianCurvature.StatementK
+public import Formalism.HermitianCurvature.StatementTA
+public import Formalism.HermitianCurvature.StatementTB
+public import Formalism.HermitianCurvature.LevelRecursionCondNeeded
+public import Formalism.HermitianCurvature.PrimeToDifferent
+public import Formalism.HermitianCurvature.StatementSz
+public import Formalism.HermitianCurvature.MemParahoricTimesPrincipalCongruenceIff
+public import Formalism.HermitianCurvature.BlockKernelPropertiesOfSteps
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.J
 

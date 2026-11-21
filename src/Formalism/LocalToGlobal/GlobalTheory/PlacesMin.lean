@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.PlacesP
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.PlacesP
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 

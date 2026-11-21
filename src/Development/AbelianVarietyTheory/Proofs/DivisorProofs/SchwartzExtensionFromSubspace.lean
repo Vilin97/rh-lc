@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormIteratedFDerivSchwartzCompClmLe
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormIteratedFDerivSchwartzCompClmLe
+
+@[expose] public section
 
 open scoped SchwartzMap ContDiff
 

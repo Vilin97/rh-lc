@@ -1,9 +1,13 @@
-import CompanionTheory.AutomorphicTheory.NumberFieldModels.StepCpt
-import CompanionTheory.AutomorphicTheory.JacobiDiagonalBounds.ModelLoc
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFLeibMain
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopDomEmpty
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJALocOpAdj
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CellSmoothness
+module
+
+public import CompanionTheory.AutomorphicTheory.NumberFieldModels.StepCpt
+public import CompanionTheory.AutomorphicTheory.JacobiDiagonalBounds.ModelLoc
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFLeibMain
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopDomEmpty
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJALocOpAdj
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CellSmoothness
+
+@[expose] public section
 
 open Formalism.QuantumDeterminants Formalism.FourierDecayAlt Formalism.FourierDecayAlt.P Formalism.FourierDecayAlt.P.CutBP Formalism.FourierDecayAlt.P.CutMP Formalism.FourierDecayAlt.P.CutMP.Gauge Formalism.MainStatements.NFTie
 

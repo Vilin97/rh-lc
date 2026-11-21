@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Theta.Weil.PartialFourierSchwartz
-import GroundTheory.HeightsAndTheta.Theta.Weil.PartialFourierCoordinates
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Theta.Weil.PartialFourierSchwartz
+public import GroundTheory.HeightsAndTheta.Theta.Weil.PartialFourierCoordinates
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Theta
 

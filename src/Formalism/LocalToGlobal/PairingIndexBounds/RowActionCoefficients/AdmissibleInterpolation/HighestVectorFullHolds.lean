@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.PairingIndexBounds.RowActionCoefficients.UnitColsZero
-import Formalism.LocalToGlobal.PairingIndexBounds.RowActionCoefficients.AdmissibleInterpolation.EvalIdFrameRowAct
+module
+
+public import Formalism.LocalToGlobal.PairingIndexBounds.RowActionCoefficients.UnitColsZero
+public import Formalism.LocalToGlobal.PairingIndexBounds.RowActionCoefficients.AdmissibleInterpolation.EvalIdFrameRowAct
+
+@[expose] public section
 
 open MvPolynomial
 

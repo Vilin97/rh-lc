@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsExtraAlt
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.EqOneOfNear
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsExtraBis
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FinitelyGeneratedModPow
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsExtraAlt
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.EqOneOfNear
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsExtraBis
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FinitelyGeneratedModPow
+
+@[expose] public section
 
 namespace UpperTheory.V.Lib.Small
 

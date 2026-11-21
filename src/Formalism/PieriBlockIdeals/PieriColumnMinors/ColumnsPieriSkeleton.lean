@@ -1,6 +1,10 @@
-import Formalism.PieriBlockIdeals.LemmaDGradedOfPieriReal
-import Formalism.PieriBlockIdeals.PieriColumnMinors.LemmaDSkeletonFour
-import Formalism.PieriBlockIdeals.PieriColumnMinors.PieriGenerated
+module
+
+public import Formalism.PieriBlockIdeals.LemmaDGradedOfPieriReal
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.LemmaDSkeletonFour
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.PieriGenerated
+
+@[expose] public section
 
 namespace Formalism.CohomologicalDescent.ColumnMinorsFromPieri
 

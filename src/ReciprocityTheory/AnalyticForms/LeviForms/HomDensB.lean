@@ -1,4 +1,8 @@
-import ReciprocityTheory.AnalyticForms.LeviForms.HomDensA
+module
+
+public import ReciprocityTheory.AnalyticForms.LeviForms.HomDensA
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.P
 

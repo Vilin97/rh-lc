@@ -1,7 +1,11 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.ChartChg
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ConstantCoeffDmonOfSubMem
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.NabValColumnsCongr
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.ChartChg
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ConstantCoeffDmonOfSubMem
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.NabValColumnsCongr
+
+@[expose] public section
 
 set_option autoImplicit false
 

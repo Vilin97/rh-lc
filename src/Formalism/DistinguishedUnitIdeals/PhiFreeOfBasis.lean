@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.DistinguishedUnitIdeals.FrobeniusDiffBijective
-import Formalism.DistinguishedUnitIdeals.ExistsConstOfInvariantMod
+module
+
+public import Mathlib
+public import Formalism.DistinguishedUnitIdeals.FrobeniusDiffBijective
+public import Formalism.DistinguishedUnitIdeals.ExistsConstOfInvariantMod
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.EqVolSDOf
+module
+
+public import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.EqVolSDOf
+
+@[expose] public section
 
 noncomputable section
 

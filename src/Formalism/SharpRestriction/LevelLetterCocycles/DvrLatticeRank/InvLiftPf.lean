@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.ClassMapStep
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.InvLiftPfA
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.GradNPfB
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.NinLamPf
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.ClassMapStep
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.InvLiftPfA
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.GradNPfB
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.NinLamPf
+
+@[expose] public section
 
 noncomputable section
 

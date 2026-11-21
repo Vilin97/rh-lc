@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafProjModelPf
-import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.IsProjOverCompOfIsClosedImmersion
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafProjModelPf
+public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.IsProjOverCompOfIsClosedImmersion
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory AlgebraicGeometry TopologicalSpace MvPolynomial

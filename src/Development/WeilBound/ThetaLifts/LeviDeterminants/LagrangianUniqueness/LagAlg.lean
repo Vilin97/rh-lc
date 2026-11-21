@@ -1,4 +1,8 @@
-import Development.AutomorphicSpectrum.Proofs.MembershipProofs.RationalUnitsHaarCharacterOne
+module
+
+public import Development.AutomorphicSpectrum.Proofs.MembershipProofs.RationalUnitsHaarCharacterOne
+
+@[expose] public section
 
 open Matrix GlobalTheory.WeilM GlobalTheory.CompanionTheory.ThetaAvg
 open scoped Classical

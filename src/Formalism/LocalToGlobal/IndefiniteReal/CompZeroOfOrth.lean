@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.ConjSubConjSub
-import Formalism.LocalToGlobal.IndefiniteReal.FixNLeMulRight
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.ConjSubConjSub
+public import Formalism.LocalToGlobal.IndefiniteReal.FixNLeMulRight
+
+@[expose] public section
 
 noncomputable section
 

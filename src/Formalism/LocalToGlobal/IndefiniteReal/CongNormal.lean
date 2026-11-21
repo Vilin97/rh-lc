@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.PrincipalLevelFrame
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.PrincipalLevelFrame
+
+@[expose] public section
 
 noncomputable section
 

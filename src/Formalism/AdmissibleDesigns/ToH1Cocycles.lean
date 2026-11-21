@@ -1,8 +1,12 @@
-import Formalism.AdmissibleDesigns.BkLocCol
-import Formalism.AdmissibleDesigns.InvariantsMapEquivariant
-import Formalism.AdmissibleDesigns.RankReductionIdempotentOne
-import Formalism.AdmissibleDesigns.CoboundaryMemFiniteClasses
-import Formalism.AdmissibleDesigns.FgTopContinuousLinearMap
+module
+
+public import Formalism.AdmissibleDesigns.BkLocCol
+public import Formalism.AdmissibleDesigns.InvariantsMapEquivariant
+public import Formalism.AdmissibleDesigns.RankReductionIdempotentOne
+public import Formalism.AdmissibleDesigns.CoboundaryMemFiniteClasses
+public import Formalism.AdmissibleDesigns.FgTopContinuousLinearMap
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core] [hH0Fin : Fact Formalism.MainNotions.N.K.H0.FinCore]
 

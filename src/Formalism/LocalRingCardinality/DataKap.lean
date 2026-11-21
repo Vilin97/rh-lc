@@ -1,6 +1,10 @@
-import Formalism.LocalRingCardinality.DataDIV
-import Formalism.LocalRingCardinality.DataDIVDefs
-import Formalism.LocalRingCardinality.PrincipalHermitianLattice
+module
+
+public import Formalism.LocalRingCardinality.DataDIV
+public import Formalism.LocalRingCardinality.DataDIVDefs
+public import Formalism.LocalRingCardinality.PrincipalHermitianLattice
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,16 +1,20 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.CurveComp
-import Development.AbelianVarietyTheory.Definitions.Foundations.IsProbabilityMeasureMuPart
-import Development.AbelianVarietyTheory.Definitions.Divisors.AevalEqZeroOfMemConeIdeal
-import Development.AbelianVarietyTheory.Proofs.GenericRegularity.GenFrExAndGenFromTest
-import Formalism.LocalRingCardinality.DataDIV
-import Formalism.LocalRingCardinality.DataParams₂
-import Formalism.SharpRestriction.Divisibility.PrinLevClass
-import Formalism.SharpRestriction.Divisibility.WeightThresholdDefs
-import Formalism.SharpRestriction.ParamsHeightRankConstant
-import Formalism.DegreeFormula.FlagDegFormula
-import Development.AbelianVarietyTheory.Definitions.Foundations.CurveCl
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsLimDeg
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.CurveComp
+public import Development.AbelianVarietyTheory.Definitions.Foundations.IsProbabilityMeasureMuPart
+public import Development.AbelianVarietyTheory.Definitions.Divisors.AevalEqZeroOfMemConeIdeal
+public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.GenFrExAndGenFromTest
+public import Formalism.LocalRingCardinality.DataDIV
+public import Formalism.LocalRingCardinality.DataParams₂
+public import Formalism.SharpRestriction.Divisibility.PrinLevClass
+public import Formalism.SharpRestriction.Divisibility.WeightThresholdDefs
+public import Formalism.SharpRestriction.ParamsHeightRankConstant
+public import Formalism.DegreeFormula.FlagDegFormula
+public import Development.AbelianVarietyTheory.Definitions.Foundations.CurveCl
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsLimDeg
+
+@[expose] public section
 
 set_option autoImplicit false
 

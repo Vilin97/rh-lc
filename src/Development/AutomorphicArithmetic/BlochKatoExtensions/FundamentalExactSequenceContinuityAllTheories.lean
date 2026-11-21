@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.CuspSpanNormBounds.ChainLength
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SimpLemmas
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.CuspSpanNormBounds.ChainLength
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SimpLemmas
+
+@[expose] public section
 
 open NumberField IsDedekindDomain ValuativeRel Formalism.MainNotions.S.Loc
 

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.AdelicGLn
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.BlochKatoSelmerVanishes
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.AdelicGLn
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.BlochKatoSelmerVanishes
+
+@[expose] public section
 
 noncomputable section
 

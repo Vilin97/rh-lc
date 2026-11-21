@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HermitianLattices.StatementTheta
-import Formalism.HermitianLattices.GenusCovolBound
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.StatementTheta
+public import Formalism.HermitianLattices.GenusCovolBound
+
+@[expose] public section
 
 open Module Formalism.K
 

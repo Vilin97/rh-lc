@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HermitianOrthogonal
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StUnipotentCoordProper
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PHermAtPlace
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HermitianOrthogonal
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StUnipotentCoordProper
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PHermAtPlace
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights.FiniteCovolume
 

@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSpanStepHomog
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSpanStepLocal
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSpanStepHomog
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSpanStepLocal
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ValRat
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ValRat
+
+@[expose] public section
 
 noncomputable section
 

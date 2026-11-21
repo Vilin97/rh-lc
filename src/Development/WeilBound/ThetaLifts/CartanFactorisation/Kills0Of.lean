@@ -1,9 +1,13 @@
-import Development.WeilBound.ThetaLifts.CartanFactorisation.UpdSelf
-import Development.WeilBound.ThetaLifts.CartanFactorisation.ActsComp
-import Development.WeilBound.ThetaLifts.CartanFactorisation.RinfZero
-import Development.WeilBound.ThetaLifts.CartanFactorisation.TensOfEval
-import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsMaximalCompactInfinite
-import Development.WeilBound.ThetaLifts.LocalTheory.SplitInv
+module
+
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.UpdSelf
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.ActsComp
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.RinfZero
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.TensOfEval
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsMaximalCompactInfinite
+public import Development.WeilBound.ThetaLifts.LocalTheory.SplitInv
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.GrowthBounds.DataGChain
-import Formalism.LocalToGlobal.Columns.HeckeSp
-import Formalism.LocalToGlobal.Columns.ColFormsLemmas
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.GrowthBounds.DataGChain
+public import Formalism.LocalToGlobal.Columns.HeckeSp
+public import Formalism.LocalToGlobal.Columns.ColFormsLemmas
+
+@[expose] public section
 
 noncomputable section
 

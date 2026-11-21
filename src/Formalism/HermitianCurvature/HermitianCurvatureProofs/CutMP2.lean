@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.StatementJCT
-import Formalism.HermitianCurvature.StatementNF
+module
+
+public import Formalism.HermitianCurvature.StatementJCT
+public import Formalism.HermitianCurvature.StatementNF
+
+@[expose] public section
 
 open Formalism.FourierDecayAlt
 

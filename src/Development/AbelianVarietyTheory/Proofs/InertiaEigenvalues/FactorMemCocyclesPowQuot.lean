@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.WachLatticeTwists.LatticeDualFibres.FibreDualStable
+module
+
+public import Mathlib
+public import Formalism.WachLatticeTwists.LatticeDualFibres.FibreDualStable
+
+@[expose] public section
+
 open Formalism.RepresentationBoundsCohomology.LOC ReciprocityTheory.Gal
 open Formalism.NG (KO)
 

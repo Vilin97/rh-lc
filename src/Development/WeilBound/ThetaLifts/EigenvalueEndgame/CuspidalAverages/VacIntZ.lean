@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.CuspidalAverages.KeyThree
-import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.PsiUnrOfNotLe
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfDictAd
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.LmOfLinBar
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfDictSec
+module
+
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.CuspidalAverages.KeyThree
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.PsiUnrOfNotLe
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfDictAd
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.LmOfLinBar
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfDictSec
+
+@[expose] public section
 
 noncomputable section
 

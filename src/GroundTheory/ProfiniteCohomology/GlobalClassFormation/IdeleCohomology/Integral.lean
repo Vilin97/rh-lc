@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.SIdeleGroups.IntegerUnits
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.Finite
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.Unramified
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.SIdeleGroups.IntegerUnits
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.Finite
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.Unramified
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

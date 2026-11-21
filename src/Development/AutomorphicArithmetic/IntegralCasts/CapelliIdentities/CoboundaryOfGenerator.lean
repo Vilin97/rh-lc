@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 noncomputable def UpperTheory.Reformulated.B.CoboundaryOfGenerator.ContAction.{u_1, u_2, u_3} :
     {R : Type u_1} →

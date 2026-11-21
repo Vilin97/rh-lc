@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsFurtherAlt
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsEvalKerKrullDim
-import GroundTheory.HeightsAndTheta.Heights.Intersections.IsMultiProjPrimeImageZ
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsFurtherAlt
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsEvalKerKrullDim
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.IsMultiProjPrimeImageZ
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

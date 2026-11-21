@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.MultiFactorialEqTripleProd
+module
+
+public import Formalism.LocalToGlobal.Columns.MultiFactorialEqTripleProd
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module MvPolynomial
 open scoped Matrix ComplexOrder

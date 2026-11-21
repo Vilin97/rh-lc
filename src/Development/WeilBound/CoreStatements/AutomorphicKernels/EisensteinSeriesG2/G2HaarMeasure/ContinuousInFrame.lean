@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.AutomorphicKernels.EisensteinSeriesG2.G2HaarMeasure.CountableRationalPointsDoubled
-import Development.WeilBound.ThetaLifts.LatticeBasics.HypothesesE
+module
+
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.EisensteinSeriesG2.G2HaarMeasure.CountableRationalPointsDoubled
+public import Development.WeilBound.ThetaLifts.LatticeBasics.HypothesesE
+
+@[expose] public section
 
 noncomputable section
 

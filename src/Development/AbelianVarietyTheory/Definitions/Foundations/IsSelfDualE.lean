@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Divisibility.CoefMod
-import Formalism.QuotientMetricDivisors.RatHermLcvTwist
+module
+
+public import Formalism.LocalToGlobal.Divisibility.CoefMod
+public import Formalism.QuotientMetricDivisors.RatHermLcvTwist
+
+@[expose] public section
 
 open NumberField
 open Formalism.BasicNotions Formalism.L2.DIV

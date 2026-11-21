@@ -1,6 +1,10 @@
-import Formalism.AdmissibleDesigns.ColumnUnramifiedCharacter
-import Formalism.AdmissibleDesigns.IsDROfWpIso
-import Formalism.AdmissibleDesigns.MemIntegralSpanIffImage
+module
+
+public import Formalism.AdmissibleDesigns.ColumnUnramifiedCharacter
+public import Formalism.AdmissibleDesigns.IsDROfWpIso
+public import Formalism.AdmissibleDesigns.MemIntegralSpanIffImage
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core] [hH0Fin : Fact Formalism.MainNotions.N.K.H0.FinCore]
 

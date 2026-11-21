@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.FirstVanishingAt
-import Formalism.LocalToGlobal.CharacterGerms.CoeffLMulCvFrob
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.FirstVanishingAt
+public import Formalism.LocalToGlobal.CharacterGerms.CoeffLMulCvFrob
+
+@[expose] public section
 
 set_option autoImplicit false
 

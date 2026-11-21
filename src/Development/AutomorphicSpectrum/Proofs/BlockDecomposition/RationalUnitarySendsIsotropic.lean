@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RatVInjective
-import CompanionTheory.AutomorphicTheory.SiegelWeilFiniteness.Bridge
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.Assembly
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RatVInjective
+public import CompanionTheory.AutomorphicTheory.SiegelWeilFiniteness.Bridge
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.Assembly
+
+@[expose] public section
 
 open NumberField MeasureTheory Matrix Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet PositivityTheory.ThKR GlobalTheory.CompanionTheory.RedCov
 open Formalism.UG (cT)

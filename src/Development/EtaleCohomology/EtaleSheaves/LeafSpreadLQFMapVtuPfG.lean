@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.SpreadingOutLocallyQuasiFinite
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.SpreadingOutLocallyQuasiFinite
+
+@[expose] public section
 
 namespace LateralTheory.E.LeafSpreadLQFMap_vtuPfG
 

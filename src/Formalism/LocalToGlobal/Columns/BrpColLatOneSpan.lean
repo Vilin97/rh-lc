@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.BrpAevalScaleMonomial
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ImageLcv
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.BrpAevalScaleMonomial
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ImageLcv
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 open scoped Matrix

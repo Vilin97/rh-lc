@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.SmallCones.ExpAlg
-import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.PlaneAd
+module
+
+public import Development.WeilBound.ThetaLifts.SmallCones.ExpAlg
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.PlaneAd
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

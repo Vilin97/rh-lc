@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.MixedPositionHypothesis
-import Formalism.SharpRestriction.LevelLetterCocycles.MapCompZero
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.MixedPositionHypothesis
+public import Formalism.SharpRestriction.LevelLetterCocycles.MapCompZero
+
+@[expose] public section
 
 noncomputable section
 

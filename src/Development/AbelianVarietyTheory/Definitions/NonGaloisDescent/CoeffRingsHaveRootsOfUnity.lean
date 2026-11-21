@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.FourthHypothesisOfLifting
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.StepJumpDirect
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.RowsExhaust
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.FourthHypothesisOfLifting
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.StepJumpDirect
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.RowsExhaust
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.UnitaryDeterminantRoot
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.CoefChangeTypingsEquivOfValueWD
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.TransvectionEq
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.UnitaryDeterminantRoot
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.CoefChangeTypingsEquivOfValueWD
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.TransvectionEq
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 200000
 set_option linter.unusedSectionVars false

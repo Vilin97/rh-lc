@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LeviDeterminants.EvFrame
+module
+
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.EvFrame
+
+@[expose] public section
 
 noncomputable section
 

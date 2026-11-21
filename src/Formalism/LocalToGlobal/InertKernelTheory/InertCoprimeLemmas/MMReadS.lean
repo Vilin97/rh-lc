@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.InertKernelTheory.OneCopyTh1S
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.MMRead
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.OneCopyTh1S
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.MMRead
+
+@[expose] public section
 
 noncomputable section
 

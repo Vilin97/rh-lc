@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.RatioInvLeFrameFactor
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RatioInvLeFrameFactor
+
+@[expose] public section
 
 open MeasureTheory Matrix Finset
 

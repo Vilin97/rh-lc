@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FrameExistence.NormalisedAdaptedVectorZero
-import Formalism.LocalRingCardinality.SpanPowerMembership.RankRecordRowDimensionZero
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FrameExistence.NormalisedAdaptedVectorZero
+public import Formalism.LocalRingCardinality.SpanPowerMembership.RankRecordRowDimensionZero
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleTrace.TwZeroPf
+module
+
+public import Development.EtaleCohomology.EtaleTrace.TwZeroPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC Opposite

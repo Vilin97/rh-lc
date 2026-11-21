@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.KernelProductForm
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.ExpansionAllPlacesOfPlace
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.KernelProductForm
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.ExpansionAllPlacesOfPlace
+
+@[expose] public section
 
 noncomputable section
 

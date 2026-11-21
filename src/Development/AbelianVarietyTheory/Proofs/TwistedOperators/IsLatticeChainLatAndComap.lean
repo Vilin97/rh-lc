@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ScaledBasisMemChainLattice
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.Imports
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ImportsAlt
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ScaledBasisMemChainLattice
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.Imports
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ImportsAlt
+
+@[expose] public section
 
 open MeasureTheory ValuativeRel Matrix
 open scoped Pointwise

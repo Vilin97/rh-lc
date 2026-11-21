@@ -1,7 +1,12 @@
-import Development.AbelianVarietyTheory.Definitions.Divisors.BadElt
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankRangeMulLeftIdempotentGroupAlgebra
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.UnitriSubOnePow
-import Formalism.LocalToGlobal.Divisibility.ProjLemmas
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Divisors.BadElt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankRangeMulLeftIdempotentGroupAlgebra
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.UnitriSubOnePow
+public import Formalism.LocalToGlobal.Divisibility.ProjLemmas
+
+@[expose] public section
+
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.ArithmeticCylinders GlobalTheory.BadCount Module
 
 noncomputable section

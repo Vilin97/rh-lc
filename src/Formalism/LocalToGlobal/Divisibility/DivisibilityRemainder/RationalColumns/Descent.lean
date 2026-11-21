@@ -1,4 +1,8 @@
-import Formalism.LocalRingCardinality.DataBu
+module
+
+public import Formalism.LocalRingCardinality.DataBu
+
+@[expose] public section
 
 noncomputable section
 

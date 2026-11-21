@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.KerTheta
-import GroundTheory.PAdicHodge.TiltValuation
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.KerTheta
+public import GroundTheory.PAdicHodge.TiltValuation
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

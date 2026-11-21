@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.SumRepresentations
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.SumRepresentations
+
+@[expose] public section
 
 noncomputable section
 

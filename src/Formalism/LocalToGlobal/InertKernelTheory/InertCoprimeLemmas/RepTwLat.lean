@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.InertKernelTheory.FrameLatMap
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.RepFrob
-import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.FdOfCharts
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.FrameLatMap
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.RepFrob
+public import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.FdOfCharts
+
+@[expose] public section
 
 noncomputable section
 

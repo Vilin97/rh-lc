@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.Examples
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.Examples
+
+@[expose] public section
 
 open scoped LaurentSeries
 

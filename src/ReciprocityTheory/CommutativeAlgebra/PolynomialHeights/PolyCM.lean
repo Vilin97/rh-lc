@@ -1,5 +1,9 @@
-import ReciprocityTheory.CommutativeAlgebra.PolynomialHeights.PolySeq
-import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.RingKrullDimLocalizationQuotientEqHeight
+module
+
+public import ReciprocityTheory.CommutativeAlgebra.PolynomialHeights.PolySeq
+public import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.RingKrullDimLocalizationQuotientEqHeight
+
+@[expose] public section
 
 namespace ReciprocityTheory.CA
 

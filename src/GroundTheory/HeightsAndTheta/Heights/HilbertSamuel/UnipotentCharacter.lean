@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsEuclideanSections
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PLatticeCount
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSmallBallVolume
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsEuclideanSections
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PLatticeCount
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSmallBallVolume
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

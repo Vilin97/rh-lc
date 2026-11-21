@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HyperbolicPlaceProducts.Statement
-import Formalism.FlagUnipotentLattices.IdealCountLeW
+module
+
+public import Mathlib
+public import Formalism.HyperbolicPlaceProducts.Statement
+public import Formalism.FlagUnipotentLattices.IdealCountLeW
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.Restricted
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.Restricted
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

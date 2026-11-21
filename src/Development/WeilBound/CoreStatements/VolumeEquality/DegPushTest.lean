@@ -1,7 +1,11 @@
-import Development.WeilBound.CoreStatements.VolumeEquality.DegPushTestA
-import Development.WeilBound.CoreStatements.VolumeEquality.DegPushTestB
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PLiftBirationalNef
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.DegreeGenericOfDegree
+module
+
+public import Development.WeilBound.CoreStatements.VolumeEquality.DegPushTestA
+public import Development.WeilBound.CoreStatements.VolumeEquality.DegPushTestB
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PLiftBirationalNef
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.DegreeGenericOfDegree
+
+@[expose] public section
 
 noncomputable section
 

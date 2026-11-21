@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.NormEDS
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.NormEDS
+
+@[expose] public section
 
 namespace GroundTheory.Arith.Abelian
 

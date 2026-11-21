@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.SobolevIteration.TotalDegreeBindLe
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.SobolevIteration.TotalDegreeBindLe
+
+@[expose] public section
 
 noncomputable section
 

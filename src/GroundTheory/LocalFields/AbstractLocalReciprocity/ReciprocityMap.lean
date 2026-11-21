@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.AbstractLocalReciprocity.Multiplicative
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.Multiplicative
+
+@[expose] public section
 
 namespace GroundTheory.LocalField.Abstract
 

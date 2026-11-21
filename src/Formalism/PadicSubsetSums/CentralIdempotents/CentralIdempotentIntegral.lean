@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.CyclotomicNorms.StatementTW
+module
+
+public import Mathlib
+public import Formalism.CyclotomicNorms.StatementTW
+
+@[expose] public section
 
 open Finset Polynomial Formalism.CyclotomicNorms Formalism.ResultantValuation
 

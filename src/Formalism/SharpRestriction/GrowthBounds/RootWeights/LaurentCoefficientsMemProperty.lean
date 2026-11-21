@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.BinomialStableContainsComponents
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.BinomialStableContainsComponents
+
+@[expose] public section
 
 noncomputable section
 

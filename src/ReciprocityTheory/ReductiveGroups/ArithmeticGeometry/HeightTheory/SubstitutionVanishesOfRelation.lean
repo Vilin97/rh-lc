@@ -1,6 +1,10 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.AevalElimEqRenameLinearSubstitution
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.FZEqConstMulIrreduciblePow
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.SubstitutionSplitIrreducibleOf
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.AevalElimEqRenameLinearSubstitution
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.FZEqConstMulIrreduciblePow
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.SubstitutionSplitIrreducibleOf
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.T0
 

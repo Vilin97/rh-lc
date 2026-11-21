@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DpsiIsDerivation
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DpsiIsDerivation
+
+@[expose] public section
 
 open Matrix Finset
 

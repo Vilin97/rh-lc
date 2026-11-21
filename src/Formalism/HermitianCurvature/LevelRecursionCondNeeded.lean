@@ -1,6 +1,10 @@
-import Formalism.LatticeRigidity.StatementC
-import Formalism.YangianSpanCharacter.StatementT
-import Formalism.LatticeTheta.Statement
+module
+
+public import Formalism.LatticeRigidity.StatementC
+public import Formalism.YangianSpanCharacter.StatementT
+public import Formalism.LatticeTheta.Statement
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.F7
 

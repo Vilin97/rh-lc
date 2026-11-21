@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.Differential
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.Differential
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

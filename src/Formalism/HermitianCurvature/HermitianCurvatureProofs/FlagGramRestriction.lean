@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentUpperFacts
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentUpperFacts
+
+@[expose] public section
 
 open Matrix Formalism.FourierDecayAlt Formalism.QuantumDeterminants
 open scoped ComplexConjugate

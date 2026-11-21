@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PtEntryAppendStart
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.AeNeZeroComplex
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PtEntryAppendStart
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.AeNeZeroComplex
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBL
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.CoeffSubstEqSum
-import Formalism.LocalToGlobal.CharacterGerms.RowTieFB
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.CoeffSubstEqSum
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieFB
+
+@[expose] public section
 
 noncomputable section
 

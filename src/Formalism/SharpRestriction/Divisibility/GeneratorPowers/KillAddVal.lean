@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndExp
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ConstantCoeffPolyAdd
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PartialDerivativeExponent
-import ReciprocityTheory.ReductiveGroups.Models.FiniteGeneration.FiniteGenerationProofs.SolveV
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.KillAddFin
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndExp
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ConstantCoeffPolyAdd
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PartialDerivativeExponent
+public import ReciprocityTheory.ReductiveGroups.Models.FiniteGeneration.FiniteGenerationProofs.SolveV
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.KillAddFin
+
+@[expose] public section
 
 set_option autoImplicit false
 

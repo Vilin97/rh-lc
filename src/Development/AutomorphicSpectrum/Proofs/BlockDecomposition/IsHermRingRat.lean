@@ -1,5 +1,9 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.Reductions.SiegelCore
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.Reductions.SiegelCore
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

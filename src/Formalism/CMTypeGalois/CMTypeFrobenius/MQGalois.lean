@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.CMTypeGalois.StatementField
+module
+
+public import Mathlib
+public import Formalism.CMTypeGalois.StatementField
+
+@[expose] public section
 
 open Polynomial
 

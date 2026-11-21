@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
-import Formalism.LocalToGlobal.ProjectiveLattices.GenSpecSep
-import Formalism.LocalToGlobal.ProjectiveLattices.FrameCharts
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
+public import Formalism.LocalToGlobal.ProjectiveLattices.GenSpecSep
+public import Formalism.LocalToGlobal.ProjectiveLattices.FrameCharts
+
+@[expose] public section
 
 noncomputable section
 

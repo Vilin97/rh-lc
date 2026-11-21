@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.FrobeniusOrbits.HostThickExists
-import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.Galois
+module
+
+public import Mathlib
+public import Formalism.FrobeniusOrbits.HostThickExists
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.Galois
+
+@[expose] public section
 
 open NumberField IntermediateField Polynomial
 

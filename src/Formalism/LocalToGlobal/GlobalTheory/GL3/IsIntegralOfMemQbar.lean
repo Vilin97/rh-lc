@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.GlobalTheory.GL3.PFamily
-import Formalism.LocalToGlobal.GlobalTheory.GL3.ProvisionExtensionLink
-import Formalism.LocalToGlobal.PairingIndexBounds.SplitPairEquations.EqPAll
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.SplitPairGen
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.IsAdmissibleFlagPairOfUnitriangularLeftAutomorph
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.PFamily
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.ProvisionExtensionLink
+public import Formalism.LocalToGlobal.PairingIndexBounds.SplitPairEquations.EqPAll
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.SplitPairGen
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.IsAdmissibleFlagPairOfUnitriangularLeftAutomorph
+
+@[expose] public section
 
 noncomputable section
 

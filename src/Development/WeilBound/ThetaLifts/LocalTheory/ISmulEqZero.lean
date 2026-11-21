@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.UatClosure
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.UatClosure
+
+@[expose] public section
 
 noncomputable section
 

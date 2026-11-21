@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.MooreNorm
-import GroundTheory.PAdicHodge.SemilinearResidue
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.MooreNorm
+public import GroundTheory.PAdicHodge.SemilinearResidue
+
+@[expose] public section
 
 noncomputable section
 

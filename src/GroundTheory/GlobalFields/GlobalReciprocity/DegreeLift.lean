@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.GlobalReciprocity.PrimesAbove
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.GlobalReciprocity.PrimesAbove
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.DworkExponentialRestrictions
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.PositivityConditionHolds
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FinalS
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.DworkExponentialRestrictions
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.PositivityConditionHolds
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FinalS
+
+@[expose] public section
 
 noncomputable section
 

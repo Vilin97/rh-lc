@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.SemilocalAlgebras.Infinite
-import GroundTheory.GlobalFields.KummerTheory.Splitting
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Infinite
+public import GroundTheory.GlobalFields.KummerTheory.Splitting
+
+@[expose] public section
 
 noncomputable section
 

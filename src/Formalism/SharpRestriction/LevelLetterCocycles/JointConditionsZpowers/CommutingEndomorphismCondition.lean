@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.RhoFam
-import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.LocalErrorBoundPlaces
-import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.RhoFam
+public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.LocalErrorBoundPlaces
+public import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
+
+@[expose] public section
 
 noncomputable section
 

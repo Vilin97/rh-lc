@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.PrimitiveCosets.WindowInequalityOfArtinInputs
-import Formalism.SharpRestriction.GlobalSchurBounds.TieGlobal
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.FrameFacts
+module
+
+public import Development.AutomorphicArithmetic.PrimitiveCosets.WindowInequalityOfArtinInputs
+public import Formalism.SharpRestriction.GlobalSchurBounds.TieGlobal
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.FrameFacts
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimes
-import GroundTheory.GlobalFields.ComplexMultiplication.DegreeOneAutomorphismPoints
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.TateCharpoly
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimes
+public import GroundTheory.GlobalFields.ComplexMultiplication.DegreeOneAutomorphismPoints
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.TateCharpoly
+
+@[expose] public section
 
 private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
   carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}

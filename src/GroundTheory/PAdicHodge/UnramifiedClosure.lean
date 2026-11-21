@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.GaloisOnCp
-import GroundTheory.PowerSubgroups.CountableNeighbourhoods.UnramifiedClosureCountableNeighbourhoods
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.GaloisOnCp
+public import GroundTheory.PowerSubgroups.CountableNeighbourhoods.UnramifiedClosureCountableNeighbourhoods
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

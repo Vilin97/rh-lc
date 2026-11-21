@@ -1,6 +1,10 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnipotentCorrectionU1.CoreStar
-import Mathlib
-import Lemmata.B110.ExistsMoved
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnipotentCorrectionU1.CoreStar
+public import Mathlib
+public import Lemmata.B110.ExistsMoved
+
+@[expose] public section
 
 open Matrix
 

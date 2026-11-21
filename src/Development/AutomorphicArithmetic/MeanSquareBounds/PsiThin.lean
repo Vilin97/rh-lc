@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.MeanSquareBounds.PrimeSetTwoBounds
-import Formalism.PeriodIntegrals.ExplicitFormulaCounts.ExplicitFormula
-import Formalism.LandauZeroFreeBounds.NoZeroComplex
+module
+
+public import Development.AutomorphicArithmetic.MeanSquareBounds.PrimeSetTwoBounds
+public import Formalism.PeriodIntegrals.ExplicitFormulaCounts.ExplicitFormula
+public import Formalism.LandauZeroFreeBounds.NoZeroComplex
+
+@[expose] public section
 
 open Finset Formalism.HermitianLattices.ZeroFreeRegionGL2 Formalism.HermitianLattices.Ext.LogarithmicIntegralBounds
 

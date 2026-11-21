@@ -1,10 +1,14 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.ExistsRosatiGen
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ETPointStatement
-import Development.AbelianVarietyTheory.BlockTheory.JetGauges.SpansOverField
-import Development.AbelianVarietyTheory.BlockTheory.JetGauges.BalancedHermitianSpace
-import Development.AbelianVarietyTheory.Counterexamples.JetSurvey.PremisesInhabited
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.SumPosOfTensorPos
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.ExistsRosatiGen
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ETPointStatement
+public import Development.AbelianVarietyTheory.BlockTheory.JetGauges.SpansOverField
+public import Development.AbelianVarietyTheory.BlockTheory.JetGauges.BalancedHermitianSpace
+public import Development.AbelianVarietyTheory.Counterexamples.JetSurvey.PremisesInhabited
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.SumPosOfTensorPos
+
+@[expose] public section
 
 set_option autoImplicit false
 

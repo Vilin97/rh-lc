@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypLift
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypLift
+
+@[expose] public section
 
 noncomputable section
 

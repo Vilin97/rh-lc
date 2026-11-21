@@ -1,4 +1,8 @@
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjHyp
+module
+
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjHyp
+
+@[expose] public section
 
 open AlgebraicGeometry CategoryTheory MvPolynomial
 

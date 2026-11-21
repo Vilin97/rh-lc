@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LeftRuleLevelPoint
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LeftRuleLevelPoint
+
+@[expose] public section
 
 open Matrix Filter Topology
 open scoped ComplexConjugate

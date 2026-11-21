@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.TiedGlLoc
-import Formalism.LocalToGlobal.Columns.LevGCount
+module
+
+public import Formalism.LocalToGlobal.Columns.TiedGlLoc
+public import Formalism.LocalToGlobal.Columns.LevGCount
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix
 open scoped TensorProduct

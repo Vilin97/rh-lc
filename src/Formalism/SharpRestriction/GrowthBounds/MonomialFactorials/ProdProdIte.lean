@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.ValFactSumLe
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.ValFactSumLe
+
+@[expose] public section
 
 noncomputable section
 

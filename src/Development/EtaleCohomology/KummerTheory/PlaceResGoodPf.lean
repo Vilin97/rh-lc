@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.KummerTheory.PlaceStepPf
+module
+
+public import Development.EtaleCohomology.KummerTheory.PlaceStepPf
+
+@[expose] public section
 
 noncomputable section
 

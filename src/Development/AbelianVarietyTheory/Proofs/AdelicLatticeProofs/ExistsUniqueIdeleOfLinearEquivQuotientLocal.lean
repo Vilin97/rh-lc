@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ValuationAlgebraMapEqCount
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ValuationAlgebraMapEqCount
+
+@[expose] public section
 
 open IsDedekindDomain IsDedekindDomain.HeightOneSpectrum WithZero
 open scoped nonZeroDivisors IsDedekindDomain.FiniteAdeleRing

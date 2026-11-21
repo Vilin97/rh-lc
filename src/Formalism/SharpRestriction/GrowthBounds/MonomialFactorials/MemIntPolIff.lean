@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.StructureSheafH2BaseChange
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.PadicIntegersEmbeddingMapPrime
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.StructureSheafH2BaseChange
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.PadicIntegersEmbeddingMapPrime
+
+@[expose] public section
 
 noncomputable section
 

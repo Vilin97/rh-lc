@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.LocalReciprocityFinite
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LocalReciprocityFinite
+
+@[expose] public section
 
 namespace GroundTheory.LocalField
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CountPositivity.HermFormAnisotropicOrthSecond
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CountPositivity.HermFormAnisotropicOrthSecond
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapTheorem
-import Formalism.WachLatticeTwists.RealClassMaps.StatClassMapReal
+module
+
+public import Formalism.WachLatticeTwists.RealClassMaps.RealClassMapTheorem
+public import Formalism.WachLatticeTwists.RealClassMaps.StatClassMapReal
+
+@[expose] public section
 
 open Finset Classical
 

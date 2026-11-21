@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.ClassMapStep
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.ClassMapStep
+
+@[expose] public section
 
 noncomputable section
 

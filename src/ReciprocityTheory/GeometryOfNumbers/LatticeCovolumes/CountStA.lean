@@ -1,7 +1,11 @@
-import Mathlib
-import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.ConjSymm
-import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.EllipsoidSt
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MeasurePreservingSwapPi
+module
+
+public import Mathlib
+public import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.ConjSymm
+public import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.EllipsoidSt
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MeasurePreservingSwapPi
+
+@[expose] public section
 
 namespace ReciprocityTheory.GeometryOfNumbersTheory
 

@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.PAdicHodge.ACrisFrobFixed
-import GroundTheory.PAdicHodge.BCrisGalois
-import GroundTheory.PAdicHodge.BdRInvariants
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.ACrisFrobFixed
+public import GroundTheory.PAdicHodge.BCrisGalois
+public import GroundTheory.PAdicHodge.BdRInvariants
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.CoeffSingleSubstOfLowDegree
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.CoeffSingleSubstOfLowDegree
+
+@[expose] public section
 
 noncomputable section
 

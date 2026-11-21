@@ -1,15 +1,19 @@
-import Development.AbelianVarietyTheory.Definitions.Divisors.TCoefMInMMul
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeightedDetDivergenceMemIdeal
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TDualProd
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BarMSingle
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DMBlockEntries
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DMDetbPEqZero
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LambdaCoeffCommutesModeDerivation
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LambdaMonomialCoeffDualNumberProductEq
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DMuEqExtDerivation
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MuCoeffPartialDerivMuEqSuccMul
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoefMPencil
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Divisors.TCoefMInMMul
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeightedDetDivergenceMemIdeal
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TDualProd
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BarMSingle
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DMBlockEntries
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DMDetbPEqZero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LambdaCoeffCommutesModeDerivation
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LambdaMonomialCoeffDualNumberProductEq
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DMuEqExtDerivation
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MuCoeffPartialDerivMuEqSuccMul
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoefMPencil
+
+@[expose] public section
 
 section
 

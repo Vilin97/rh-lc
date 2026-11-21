@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelTransport
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.HermMulVecMulVec
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelTransport
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.HermMulVecMulVec
+
+@[expose] public section
 
 open Matrix MeasureTheory
 open scoped ENNReal NNReal

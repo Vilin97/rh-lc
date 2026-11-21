@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.SobDer
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.AdlEqZeroOfMemNbhd
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.GrowthNorm
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.SobDer
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.AdlEqZeroOfMemNbhd
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.GrowthNorm
+
+@[expose] public section
 
 noncomputable section
 

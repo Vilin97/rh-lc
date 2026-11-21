@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.RecChainCUnfPol
+module
+
+public import Formalism.LocalToGlobal.Columns.RecChainCUnfPol
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 open scoped TensorProduct

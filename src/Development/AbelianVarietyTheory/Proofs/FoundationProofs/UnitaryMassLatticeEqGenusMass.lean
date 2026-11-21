@@ -1,11 +1,15 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Foundations.ClassMassEqSumOfBijective
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsUnitaryClassRepTrivialAtCm
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.ClassSet
-import Formalism.HermitianLattices.HermitianLatticesProofs.LocBasic
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.AlgebraMapApply
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.UnitaryTranspose
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.EpsMemLatSIff
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.ClassMassEqSumOfBijective
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsUnitaryClassRepTrivialAtCm
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.ClassSet
+public import Formalism.HermitianLattices.HermitianLatticesProofs.LocBasic
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.AlgebraMapApply
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.UnitaryTranspose
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.EpsMemLatSIff
+
+@[expose] public section
 
 noncomputable section
 

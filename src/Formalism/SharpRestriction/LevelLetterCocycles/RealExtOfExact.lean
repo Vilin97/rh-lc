@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.SecondComparisonInCoordinates
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.SecondComparisonInCoordinates
+
+@[expose] public section
 
 noncomputable section
 

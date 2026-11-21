@@ -1,4 +1,8 @@
-import CompanionTheory.AutomorphicTheory.ThetaDilations.IsOpenCoset
+module
+
+public import CompanionTheory.AutomorphicTheory.ThetaDilations.IsOpenCoset
+
+@[expose] public section
 
 open MeasureTheory Topology Set Matrix
 open scoped ENNReal ComplexConjugate MatrixGroups

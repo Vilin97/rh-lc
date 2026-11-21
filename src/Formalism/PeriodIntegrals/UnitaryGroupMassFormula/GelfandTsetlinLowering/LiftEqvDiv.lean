@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GelfandTsetlinLowering.LiftDefs
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Wlocal
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GelfandTsetlinLowering.LiftDefs
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Wlocal
+
+@[expose] public section
 
 noncomputable section
 

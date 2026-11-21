@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.ContinuousFc
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.ContinuousFc
+
+@[expose] public section
 
 noncomputable section
 

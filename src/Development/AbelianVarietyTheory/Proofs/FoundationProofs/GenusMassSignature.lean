@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.GlobalTheory.GL5.Statement
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GapAtLeast
-import Formalism.HermitianLattices.StatementMass
-import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.MassFormulaPositivity
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GlobalTheory.GL5.Statement
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GapAtLeast
+public import Formalism.HermitianLattices.StatementMass
+public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.MassFormulaPositivity
+
+@[expose] public section
 
 noncomputable section
 

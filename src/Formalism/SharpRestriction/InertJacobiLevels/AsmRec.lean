@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.InertJacobiLevels.ExistsLarge
-import Formalism.SharpRestriction.InertJacobiLevels.AsmIface
-import Formalism.SharpRestriction.InertJacobiLevels.TiesView
-import Formalism.SharpRestriction.InertJacobiLevels.TiesLat
-import Formalism.SharpRestriction.InertJacobiLevels.TwoPrimeFieldMemLevelOfCoprime
+module
+
+public import Formalism.SharpRestriction.InertJacobiLevels.ExistsLarge
+public import Formalism.SharpRestriction.InertJacobiLevels.AsmIface
+public import Formalism.SharpRestriction.InertJacobiLevels.TiesView
+public import Formalism.SharpRestriction.InertJacobiLevels.TiesLat
+public import Formalism.SharpRestriction.InertJacobiLevels.TwoPrimeFieldMemLevelOfCoprime
+
+@[expose] public section
 
 noncomputable section
 

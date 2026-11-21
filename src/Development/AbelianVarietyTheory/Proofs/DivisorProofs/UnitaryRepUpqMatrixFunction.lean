@@ -1,5 +1,9 @@
-import Development.AbelianVarietyTheory.Definitions.Divisors.DatumEquiv
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.KoszulLowersPower
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Divisors.DatumEquiv
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.KoszulLowersPower
+
+@[expose] public section
 
 section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HermitianLattices.StatementLat
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.IdxChange
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.StatementLat
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.IdxChange
+
+@[expose] public section
 
 open Module IsDedekindDomain Formalism.HermitianLatticesTheory Formalism.DivisionValues
 open scoped nonZeroDivisors

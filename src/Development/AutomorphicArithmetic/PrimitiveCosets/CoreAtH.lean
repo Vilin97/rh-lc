@@ -1,8 +1,12 @@
-import Development.AutomorphicArithmetic.DedekindLFunctions.SplitInertia
-import Development.AutomorphicArithmetic.PrimitiveCosets.RecH
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.GaloisMapComplexConjugation
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.Window
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.HostFacts
+module
+
+public import Development.AutomorphicArithmetic.DedekindLFunctions.SplitInertia
+public import Development.AutomorphicArithmetic.PrimitiveCosets.RecH
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.GaloisMapComplexConjugation
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.Window
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.HostFacts
+
+@[expose] public section
 
 noncomputable section
 

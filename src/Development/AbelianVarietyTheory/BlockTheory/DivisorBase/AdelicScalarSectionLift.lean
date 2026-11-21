@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.OneMapT
-import Formalism.LocalToGlobal.IndefiniteReal.FWTie
-import Formalism.LogFactorialIndices.StatementSize
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.OneMapT
+public import Formalism.LocalToGlobal.IndefiniteReal.FWTie
+public import Formalism.LogFactorialIndices.StatementSize
+
+@[expose] public section
 
 noncomputable section
 

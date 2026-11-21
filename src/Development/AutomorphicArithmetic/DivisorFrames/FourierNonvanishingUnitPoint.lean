@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.ConeBDefs
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.LocalEmbeddings.ConeBDefs
+
+@[expose] public section
+
 open MeasureTheory FreeSingleHomotopyEquivDiscreteChains.UpperTheory.Dv.ConeB
 
 private theorem exists_rep {ι : Type} [Fintype ι] (l : (ι → ℂ) →ₗ[ℝ] ℝ) :

@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.TateTwists.CupflipAwFlipPf
+module
+
+public import Development.EtaleCohomology.TateTwists.CupflipAwFlipPf
+
+@[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
 

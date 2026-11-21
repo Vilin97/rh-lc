@@ -1,7 +1,11 @@
-import Development.WeilBound.CoreStatements.AbelianHeightsDuality.UnitaryDensity.Cayley
-import Development.WeilBound.ThetaLifts.LatticeBasics.ConstOfGood
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.UniqPlugPl
-import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.UnitaryMatrixEqProdQuasiReflectionsStatement
+module
+
+public import Development.WeilBound.CoreStatements.AbelianHeightsDuality.UnitaryDensity.Cayley
+public import Development.WeilBound.ThetaLifts.LatticeBasics.ConstOfGood
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.UniqPlugPl
+public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.UnitaryMatrixEqProdQuasiReflectionsStatement
+
+@[expose] public section
 
 noncomputable section
 

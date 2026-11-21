@@ -1,5 +1,9 @@
-import ReciprocityTheory.AnalyticForms.PotentialTheory.IsCompatChartChart
-import ReciprocityTheory.AnalyticForms.PotentialTheory.SNCAtlas
+module
+
+public import ReciprocityTheory.AnalyticForms.PotentialTheory.IsCompatChartChart
+public import ReciprocityTheory.AnalyticForms.PotentialTheory.SNCAtlas
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.M.PLAux
 

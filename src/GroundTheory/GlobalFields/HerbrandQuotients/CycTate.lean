@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.TateCohomology.HerbrandAbstract
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.HerbrandAbstract
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

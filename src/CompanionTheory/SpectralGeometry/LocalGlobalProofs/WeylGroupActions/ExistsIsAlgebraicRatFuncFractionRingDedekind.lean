@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutMP2
-import Formalism.FormalDegreeBessel.FormalDegreeRatio.CapelliHighestWeightConjugated
-import CompanionTheory.HarishChandraModules.NonemptyRepresentations.ExpEntry
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.OperatorRepresentations
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DifferentialOperatorBracket
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutMP2
+public import Formalism.FormalDegreeBessel.FormalDegreeRatio.CapelliHighestWeightConjugated
+public import CompanionTheory.HarishChandraModules.NonemptyRepresentations.ExpEntry
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OperatorRepresentations
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DifferentialOperatorBracket
+
+@[expose] public section
 
 open Formalism.REAL Formalism.FourierDecayAlt Formalism.QuantumDeterminants
 

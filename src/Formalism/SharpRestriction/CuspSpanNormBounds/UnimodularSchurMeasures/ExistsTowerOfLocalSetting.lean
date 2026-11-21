@@ -1,9 +1,13 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.CayleySignature
-import Mathlib
-import Formalism.RealPlaceAnalysis.StatementC
-import Formalism.FormalDegreeBessel.StatementDS
-import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
-import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.AntisymmetrizedProductEqFactorialSmulQdet
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.CayleySignature
+public import Mathlib
+public import Formalism.RealPlaceAnalysis.StatementC
+public import Formalism.FormalDegreeBessel.StatementDS
+public import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
+public import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.AntisymmetrizedProductEqFactorialSmulQdet
+
+@[expose] public section
 
 noncomputable section
 

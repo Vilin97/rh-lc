@@ -1,9 +1,14 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WBMemLatS
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LatSFiniteSpan
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AdicSumExists
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TchNeMulOfPowEq
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDiscreteValuationRingIntegralClosurePadicInt
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WBMemLatS
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LatSFiniteSpan
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AdicSumExists
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TchNeMulOfPowEq
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDiscreteValuationRingIntegralClosurePadicInt
+
+@[expose] public section
+
 noncomputable section
 open NumberField IsDedekindDomain Neutral.B1 Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.L2.Host Formalism.BasicNotions Formalism.BasicNotions.Loc Formalism.WeaklyAdmissibleFiltrations
 open GlobalTheory.HeckeGal GlobalTheory.Pst GlobalTheory.TripleGal GlobalTheory.CompanionTheory.LTHodge GlobalTheory.CompanionTheory.LTPer

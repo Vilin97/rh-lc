@@ -1,11 +1,16 @@
-import Mathlib
-import GroundTheory.LocalFields.Examples
-import GroundTheory.LocalFields.Interface
-import GroundTheory.LocalFields.Uniqueness
-import GroundTheory.LocalFields.FiniteExtension
-import GroundTheory.LocalFields.DifferentGalois
-import GroundTheory.LocalFields.UpperNumbering
-import GroundTheory.PAdicHodge.PerfectoidField
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.Examples
+public import GroundTheory.LocalFields.Interface
+public import GroundTheory.LocalFields.Uniqueness
+public import GroundTheory.LocalFields.FiniteExtension
+public import GroundTheory.LocalFields.DifferentGalois
+public import GroundTheory.LocalFields.UpperNumbering
+public import GroundTheory.PAdicHodge.PerfectoidField
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

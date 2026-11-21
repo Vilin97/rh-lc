@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.stupidPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.stupidPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits ZeroObject

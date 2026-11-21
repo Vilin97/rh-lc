@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ProjectiveAutomorphicHecke.CyclotomicConjugation.QuadConjAlt
-import GroundTheory.AutomorphicForms.StrongApproximationSLDense
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.Conjugation
+module
+
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ProjectiveAutomorphicHecke.CyclotomicConjugation.QuadConjAlt
+public import GroundTheory.AutomorphicForms.StrongApproximationSLDense
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.Conjugation
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix GlobalTheory.CuspRep GlobalTheory.UnitaryBC GlobalTheory.DefU Formalism.L2.Host GlobalTheory.HeckeGal
 open GlobalTheory.SplitPts (conjE)

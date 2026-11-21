@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.LocalFields.IntermediateField
-import GroundTheory.LocalFields.Integers
-import GroundTheory.LocalFields.LowerIndex
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.IntermediateField
+public import GroundTheory.LocalFields.Integers
+public import GroundTheory.LocalFields.LowerIndex
+
+@[expose] public section
 
 namespace UpperTheory.Reformulated.B.RamificationLowerIndex
 

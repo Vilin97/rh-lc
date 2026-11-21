@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.LatticeDualFibres.FibreDualStable
-import ReciprocityTheory.ReductiveGroups.TraceFormulas.LatDefs
+module
+
+public import Formalism.WachLatticeTwists.LatticeDualFibres.FibreDualStable
+public import ReciprocityTheory.ReductiveGroups.TraceFormulas.LatDefs
+
+@[expose] public section
 
 open Formalism.NG (KO annih)
 open ReciprocityTheory.Gal Formalism.RepresentationBoundsCohomology.LOC Formalism.RepresentationBoundsCohomology.JT

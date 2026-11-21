@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.FunctionField.PlaceDefs
+module
+
+public import Mathlib
+public import GroundTheory.FunctionField.PlaceDefs
+
+@[expose] public section
 
 namespace GroundTheory.FunctionField
 

@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
-import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewAdaptedPlanePairDualStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenIntertwinerGoodModelsStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewAdaptedPlanePairEigenStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewAdaptedPlanePairConstantStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewAdaptedPlanePairDualStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenIntertwinerGoodModelsStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewAdaptedPlanePairEigenStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewAdaptedPlanePairConstantStatement
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.DivisorCycles.OpenCoset
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CosetOfCover
+module
+
+public import Development.EtaleCohomology.DivisorCycles.OpenCoset
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CosetOfCover
+
+@[expose] public section
 
 open Matrix PositivityTheory.AutomorphicGaloisHodgeTate.Div
 

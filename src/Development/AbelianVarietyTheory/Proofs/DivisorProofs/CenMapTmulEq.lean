@@ -1,4 +1,8 @@
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentreCompat
+module
+
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentreCompat
+
+@[expose] public section
 
 open scoped TensorProduct
 

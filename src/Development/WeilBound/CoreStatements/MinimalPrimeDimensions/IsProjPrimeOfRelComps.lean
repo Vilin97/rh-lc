@@ -1,6 +1,10 @@
-import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.MemMinimalPrimesIff
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LowerBoundConditional
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+module
+
+public import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.MemMinimalPrimesIff
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LowerBoundConditional
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+
+@[expose] public section
 
 set_option autoImplicit false
 

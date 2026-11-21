@@ -1,4 +1,8 @@
-import ReciprocityTheory.SemistableReduction.ExistsTorusPointOneLeNormSum
+module
+
+public import ReciprocityTheory.SemistableReduction.ExistsTorusPointOneLeNormSum
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.FreeQuotientRank.UnitPointLiftBall
 

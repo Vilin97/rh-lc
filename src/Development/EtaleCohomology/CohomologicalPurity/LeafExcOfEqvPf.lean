@@ -1,6 +1,10 @@
-import Development.EtaleCohomology.CohomologicalPurity.LeafExcLevelPf
-import Development.EtaleCohomology.CohomologicalPurity.LeafExcIdentPf
-import Development.EtaleCohomology.CohomologicalPurity.LeafChPushPf
+module
+
+public import Development.EtaleCohomology.CohomologicalPurity.LeafExcLevelPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafExcIdentPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafChPushPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC

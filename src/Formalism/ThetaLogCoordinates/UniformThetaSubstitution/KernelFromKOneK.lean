@@ -1,9 +1,13 @@
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.KernelFromKOne
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.WModel
-import Mathlib
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementGK
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.EGaussK
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementC
+module
+
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.KernelFromKOne
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.WModel
+public import Mathlib
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementGK
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.EGaussK
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementC
+
+@[expose] public section
 
 namespace Formalism.InvariantFactorPaths.G7.Top
 

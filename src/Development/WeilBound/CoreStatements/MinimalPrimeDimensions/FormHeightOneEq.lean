@@ -1,11 +1,15 @@
-import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.GenIdeal
-import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TotalDegreeLinSubstLe
-import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.FormHeightGen
-import Development.WeilBound.CoreStatements.NefModelVolumes.ChowFormOfIntegralVersion
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.SphereMeanEqMahler
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BlockSphereMeanEqOfFrameNormEq
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsImageHeightUnique
-import ReciprocityTheory.SemistableReduction.SJCoreD
+module
+
+public import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.GenIdeal
+public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TotalDegreeLinSubstLe
+public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.FormHeightGen
+public import Development.WeilBound.CoreStatements.NefModelVolumes.ChowFormOfIntegralVersion
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.SphereMeanEqMahler
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BlockSphereMeanEqOfFrameNormEq
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsImageHeightUnique
+public import ReciprocityTheory.SemistableReduction.SJCoreD
+
+@[expose] public section
 
 set_option autoImplicit false
 

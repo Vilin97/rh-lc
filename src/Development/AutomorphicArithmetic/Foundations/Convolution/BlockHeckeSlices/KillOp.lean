@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.TensFun
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TensFun
+
+@[expose] public section
 
 noncomputable section
 

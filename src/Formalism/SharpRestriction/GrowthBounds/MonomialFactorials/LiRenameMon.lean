@@ -1,4 +1,8 @@
-import Formalism.MahlerMeasure.MahlerMeasureProofs.SSDirect
+module
+
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.SSDirect
+
+@[expose] public section
 
 noncomputable section
 

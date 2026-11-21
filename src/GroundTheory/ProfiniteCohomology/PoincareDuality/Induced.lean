@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.PoincareDuality.InducedDual
-import GroundTheory.ProfiniteCohomology.PoincareDuality.TensorHomZmodDualIsoZmodMulPairing
-import GroundTheory.ProfiniteCohomology.CupProducts.CohomologyMapRightUnitorCupUnitClass
-import GroundTheory.ProfiniteCohomology.Characters
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.PoincareDuality.InducedDual
+public import GroundTheory.ProfiniteCohomology.PoincareDuality.TensorHomZmodDualIsoZmodMulPairing
+public import GroundTheory.ProfiniteCohomology.CupProducts.CohomologyMapRightUnitorCupUnitClass
+public import GroundTheory.ProfiniteCohomology.Characters
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

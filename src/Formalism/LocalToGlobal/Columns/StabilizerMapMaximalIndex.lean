@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.Columns.DilYStab
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.PenultimateKernelDiamondInvariant
-import Formalism.LocalToGlobal.Columns.WithTopLevGTop
-import Formalism.LocalToGlobal.Columns.StabMapRLInjective
+module
+
+public import Formalism.LocalToGlobal.Columns.DilYStab
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.PenultimateKernelDiamondInvariant
+public import Formalism.LocalToGlobal.Columns.WithTopLevGTop
+public import Formalism.LocalToGlobal.Columns.StabMapRLInjective
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

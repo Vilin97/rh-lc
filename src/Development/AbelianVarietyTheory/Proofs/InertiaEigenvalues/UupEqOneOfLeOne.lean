@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.ExpDefs
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.ExpDefs
+
+@[expose] public section
 
 noncomputable section
 

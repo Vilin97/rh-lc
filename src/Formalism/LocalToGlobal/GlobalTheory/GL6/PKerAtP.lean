@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.UnitaryNorms.UnramT
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PDnDil
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PBwLcInt
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PRLocW
-import Formalism.LocalToGlobal.GlobalTheory.GL4.PFrames
+module
+
+public import Formalism.LocalToGlobal.UnitaryNorms.UnramT
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PDnDil
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PBwLcInt
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PRLocW
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.PFrames
+
+@[expose] public section
 
 noncomputable section
 

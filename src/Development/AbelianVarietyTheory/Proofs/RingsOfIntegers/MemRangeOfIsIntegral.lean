@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.PlaceAdaptation.AdaptStd
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.PushMemHarmK
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ColumnMapShift
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.FFVMap
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.PlaceAdaptation.AdaptStd
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.PushMemHarmK
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ColumnMapShift
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.FFVMap
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

@@ -1,8 +1,13 @@
-import Mathlib
-import Development.ResolutionOfSingularities.Foundations.Blowup.AffineBlowup
-import Development.ResolutionOfSingularities.Foundations.Blowup.AffineBlowupUniversalLift
-import Development.ResolutionOfSingularities.Foundations.Blowup.AffineBlowupChartPreimages
-import Development.ResolutionOfSingularities.Foundations.Blowup.ReesGrading
+module
+
+public import Mathlib
+public import Development.ResolutionOfSingularities.Foundations.Blowup.AffineBlowup
+public import Development.ResolutionOfSingularities.Foundations.Blowup.AffineBlowupUniversalLift
+public import Development.ResolutionOfSingularities.Foundations.Blowup.AffineBlowupChartPreimages
+public import Development.ResolutionOfSingularities.Foundations.Blowup.ReesGrading
+
+@[expose] public section
+
 open CategoryTheory AlgebraicGeometry
 
 noncomputable section

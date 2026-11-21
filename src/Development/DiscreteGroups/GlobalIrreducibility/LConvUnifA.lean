@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.SmoothRep
-import GroundTheory.AutomorphicForms.HeckeIrreducible
-import ReciprocityTheory.BurnsideSurjectivity.Burnside
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.SmoothRep
+public import GroundTheory.AutomorphicForms.HeckeIrreducible
+public import ReciprocityTheory.BurnsideSurjectivity.Burnside
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.MahlerMeasure.MahlerMeasureProofs.GamInt
-import Formalism.ThetaLogCoordinates.PartnerMeanCoordinates.TheoremMCB
+module
+
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.GamInt
+public import Formalism.ThetaLogCoordinates.PartnerMeanCoordinates.TheoremMCB
+
+@[expose] public section
 
 namespace Formalism.InvariantFactorPaths.MC.GI
 

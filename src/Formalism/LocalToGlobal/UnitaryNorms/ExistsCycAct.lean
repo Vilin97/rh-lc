@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.UnitaryNorms.MemFIffReal
-import Formalism.LocalToGlobal.UnitaryNorms.PowValCast
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.HostRam
+module
+
+public import Formalism.LocalToGlobal.UnitaryNorms.MemFIffReal
+public import Formalism.LocalToGlobal.UnitaryNorms.PowValCast
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.HostRam
+
+@[expose] public section
 
 noncomputable section
 

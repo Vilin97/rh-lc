@@ -1,5 +1,9 @@
-import Formalism.IncomingBounds.IndexLastStep
-import Formalism.LogFactorialIndices.SignedSubspaceIndex.SubspaceLatticeIndexSigned
+module
+
+public import Formalism.IncomingBounds.IndexLastStep
+public import Formalism.LogFactorialIndices.SignedSubspaceIndex.SubspaceLatticeIndexSigned
+
+@[expose] public section
 
 noncomputable section
 

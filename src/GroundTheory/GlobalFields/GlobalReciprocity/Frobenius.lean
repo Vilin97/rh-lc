@@ -1,12 +1,16 @@
-import Mathlib
-import GroundTheory.GlobalFields.NormResidueSymbol.FunctorialLocal
-import GroundTheory.GlobalFields.NormResidueSymbol.RangeIdeleNormLeKerIdeleSymbol
-import GroundTheory.GlobalFields.CompletionAtPlace.Inertia
-import GroundTheory.LocalFields.MaximalUnramifiedIntegers
-import GroundTheory.LocalFields.TameExtension
-import GroundTheory.LocalFields.LocalArtinTransport
-import GroundTheory.LocalFields.LocalArtinMap
-import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.NormResidueSymbol.FunctorialLocal
+public import GroundTheory.GlobalFields.NormResidueSymbol.RangeIdeleNormLeKerIdeleSymbol
+public import GroundTheory.GlobalFields.CompletionAtPlace.Inertia
+public import GroundTheory.LocalFields.MaximalUnramifiedIntegers
+public import GroundTheory.LocalFields.TameExtension
+public import GroundTheory.LocalFields.LocalArtinTransport
+public import GroundTheory.LocalFields.LocalArtinMap
+public import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

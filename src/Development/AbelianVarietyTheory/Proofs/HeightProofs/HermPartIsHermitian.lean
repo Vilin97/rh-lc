@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.WeightFamilies
-import Formalism.LocalToGlobal.LatticeGeometry.CmTypeMeetsConjugatePair
-import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.TotallyPositiveExponents
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.WeightFamilies
+public import Formalism.LocalToGlobal.LatticeGeometry.CmTypeMeetsConjugatePair
+public import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.TotallyPositiveExponents
+
+@[expose] public section
 
 noncomputable section
 

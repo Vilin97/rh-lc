@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PadicSubsetSums.CentralIdempotents.WindowSums
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.DvdOfCoeffSubstXPowNeZero
+module
+
+public import Mathlib
+public import Formalism.PadicSubsetSums.CentralIdempotents.WindowSums
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.DvdOfCoeffSubstXPowNeZero
+
+@[expose] public section
 
 namespace DualFramesAlt.eigenRingInvariants
 

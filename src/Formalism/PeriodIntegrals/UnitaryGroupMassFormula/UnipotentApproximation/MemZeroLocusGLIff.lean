@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.UnipotentAdelicQuotients.ClassNumberFinite
+module
+
+public import Mathlib
+public import Formalism.UnipotentAdelicQuotients.ClassNumberFinite
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

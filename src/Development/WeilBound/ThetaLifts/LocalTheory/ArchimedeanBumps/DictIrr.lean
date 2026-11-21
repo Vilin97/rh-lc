@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.ExistsDensity
-import Development.WeilBound.ThetaLifts.SchwartzMoments.DenseC
-import Development.AutomorphicSpectrum.Proofs.MembershipProofs.ThetaDistributionNonzeroAdmissible
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.ExistsDensity
+public import Development.WeilBound.ThetaLifts.SchwartzMoments.DenseC
+public import Development.AutomorphicSpectrum.Proofs.MembershipProofs.ThetaDistributionNonzeroAdmissible
+
+@[expose] public section
 
 noncomputable section
 

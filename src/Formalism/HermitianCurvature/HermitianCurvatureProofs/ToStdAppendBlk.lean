@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RatioBound
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RatioBound
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.LiftDegreeLemmas
 

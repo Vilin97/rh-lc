@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.OkpInertOf
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.StmtEndIntWOfOkp
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.OkpInert
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.InertPrime
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.OkpInertOf
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.StmtEndIntWOfOkp
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.OkpInert
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.InertPrime
+
+@[expose] public section
 
 namespace Formalism.MainNotions.Ext
 

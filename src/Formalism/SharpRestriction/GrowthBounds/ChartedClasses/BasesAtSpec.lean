@@ -1,10 +1,14 @@
-import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.MovDXiAtRecStep
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.PStabEq
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.InTwSt
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ToLEInvApply
-import Formalism.SharpRestriction.GrowthBounds.DataGChain
-import Formalism.LocalRingCardinality.SpanPowerMembership.GatSetting
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.RepTwLat
+module
+
+public import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.MovDXiAtRecStep
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.PStabEq
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.InTwSt
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ToLEInvApply
+public import Formalism.SharpRestriction.GrowthBounds.DataGChain
+public import Formalism.LocalRingCardinality.SpanPowerMembership.GatSetting
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.RepTwLat
+
+@[expose] public section
 
 noncomputable section
 

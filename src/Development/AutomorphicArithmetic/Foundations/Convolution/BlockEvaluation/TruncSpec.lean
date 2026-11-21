@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.ASmooth
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.ASmooth
+
+@[expose] public section
 
 noncomputable section
 

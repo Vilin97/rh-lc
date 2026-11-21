@@ -1,18 +1,22 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.RegXInst
-import Formalism.LocalToGlobal.ProjectiveLattices.CurveLocInst
-import Formalism.LocalToGlobal.ProjectiveLattices.LocRingPf
-import Formalism.LocalToGlobal.ProjectiveLattices.TieInst
-import Formalism.LocalToGlobal.ProjectiveLattices.RealPtPf
-import Formalism.LocalToGlobal.ProjectiveLattices.CurveSec
-import Formalism.LocalToGlobal.ProjectiveLattices.LiftSec
-import Formalism.LocalToGlobal.ProjectiveLattices.LiftModelHolds
-import Formalism.LocalToGlobal.ProjectiveLattices.SecPtRed
-import Development.AbelianVarietyTheory.Proofs.GenericRegularity.CurveModelExistsAllPrimesAllPoints
-import Development.AbelianVarietyTheory.Proofs.GenericRegularity.CurveSectionStatement
-import Development.AbelianVarietyTheory.Proofs.GenericRegularity.LocStructStRecord
-import Development.AbelianVarietyTheory.Proofs.GenericRegularity.SectionRatiosIntegral
-import Development.AbelianVarietyTheory.Proofs.GenericRegularity.RealPtNZOfCurveHyp
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.RegXInst
+public import Formalism.LocalToGlobal.ProjectiveLattices.CurveLocInst
+public import Formalism.LocalToGlobal.ProjectiveLattices.LocRingPf
+public import Formalism.LocalToGlobal.ProjectiveLattices.TieInst
+public import Formalism.LocalToGlobal.ProjectiveLattices.RealPtPf
+public import Formalism.LocalToGlobal.ProjectiveLattices.CurveSec
+public import Formalism.LocalToGlobal.ProjectiveLattices.LiftSec
+public import Formalism.LocalToGlobal.ProjectiveLattices.LiftModelHolds
+public import Formalism.LocalToGlobal.ProjectiveLattices.SecPtRed
+public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.CurveModelExistsAllPrimesAllPoints
+public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.CurveSectionStatement
+public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.LocStructStRecord
+public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.SectionRatiosIntegral
+public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.RealPtNZOfCurveHyp
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 400000
 set_option maxHeartbeats 4000000

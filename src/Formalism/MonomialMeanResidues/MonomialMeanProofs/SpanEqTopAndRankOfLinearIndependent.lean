@@ -1,6 +1,10 @@
-import Formalism.MonomialMeanResidues.FilteredDegree
-import Formalism.HarderNarasimhan.ShiftInvariance
-import Formalism.HarderNarasimhan.HarderNarasimhanProofs.DualPl
+module
+
+public import Formalism.MonomialMeanResidues.FilteredDegree
+public import Formalism.HarderNarasimhan.ShiftInvariance
+public import Formalism.HarderNarasimhan.HarderNarasimhanProofs.DualPl
+
+@[expose] public section
 
 open Module NumberField Finset
 

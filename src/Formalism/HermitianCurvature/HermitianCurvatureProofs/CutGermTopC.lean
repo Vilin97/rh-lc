@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGermTop
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegralBoundOfParts
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGermTop
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegralBoundOfParts
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP.GT
 

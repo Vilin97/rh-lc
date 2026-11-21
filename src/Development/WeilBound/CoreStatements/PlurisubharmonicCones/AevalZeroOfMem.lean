@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.HodgeTatePoints.GfForms
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PCoordConeArithVar
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsSideRest
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.GfForms
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PCoordConeArithVar
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsSideRest
+
+@[expose] public section
 
 open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo PositivityTheory.HtPt
 open GroundTheory.Heights₂.Heights.CoordinateConeArithVar

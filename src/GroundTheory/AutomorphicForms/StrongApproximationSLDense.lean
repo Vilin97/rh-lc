@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.AdelicGLn
-import GroundTheory.AutomorphicForms.StrongApproximationSLElementary
-import GroundTheory.GlobalFields.Adele.Approximation
-import GroundTheory.GlobalFields.TateThesis.AdelicCharDual
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.AdelicGLn
+public import GroundTheory.AutomorphicForms.StrongApproximationSLElementary
+public import GroundTheory.GlobalFields.Adele.Approximation
+public import GroundTheory.GlobalFields.TateThesis.AdelicCharDual
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter Set Matrix
 open scoped RestrictedProduct

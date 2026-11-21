@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.NormResidueSymbol.RestrictNormalInfiniteLocalSymbol
-import GroundTheory.GlobalFields.FirstInequality
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.NormResidueSymbol.RestrictNormalInfiniteLocalSymbol
+public import GroundTheory.GlobalFields.FirstInequality
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

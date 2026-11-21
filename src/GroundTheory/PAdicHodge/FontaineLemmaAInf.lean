@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.AInfXi
-import GroundTheory.PAdicHodge.AInfTopology
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.AInfXi
+public import GroundTheory.PAdicHodge.AInfTopology
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.PAdicHodge

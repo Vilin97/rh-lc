@@ -1,14 +1,18 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.WeakStable
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.SatDict
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.UnlSph
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.UnrNorm
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.WeakStableAlt
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.NormRam
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.Unlinked
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.SmoEq
-import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.Places
-import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.NormCharSplit
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.WeakStable
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.SatDict
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.UnlSph
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.UnrNorm
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.WeakStableAlt
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.NormRam
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.Unlinked
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.SmoEq
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.Places
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.NormCharSplit
+
+@[expose] public section
 
 noncomputable section
 

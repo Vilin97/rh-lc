@@ -1,11 +1,15 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ZeroMemUnrHom
-import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ActEx
-import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ActFacts
-import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ActConj
-import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ZKill
-import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.AdjKill
-import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.DetVal
-import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.BdxLog
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ZeroMemUnrHom
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ActEx
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ActFacts
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ActConj
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.ZKill
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.AdjKill
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.DetVal
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.OddResidueBounds.BdxLog
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.GaloisCohomology UpperTheory.V UpperTheory.V.LDataCardLeFinrank UpperTheory.V.Base UpperTheory.V.Kum UpperTheory.V.Bern UpperTheory.V.B4 UpperTheory.V.B5 UpperTheory.V.Odd
 

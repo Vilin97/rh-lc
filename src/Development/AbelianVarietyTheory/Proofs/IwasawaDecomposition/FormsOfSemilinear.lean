@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BlockBaseChange
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BlockBaseChange
+
+@[expose] public section
+
 open Module NumberField Formalism.L2.DIV Formalism.DivisionValues
 open scoped Matrix
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.ClosedProperAlt
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.GalSplit
-import GroundTheory.GlobalFields.SemilocalAlgebras.InfiniteAdeleTopology
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.ClosedProperAlt
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.GalSplit
+public import GroundTheory.GlobalFields.SemilocalAlgebras.InfiniteAdeleTopology
+
+@[expose] public section
 
 open NumberField GroundTheory.Global.InfinitePlace
 open scoped TensorProduct

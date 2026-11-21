@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaC
-import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCI
-import Formalism.LocalToGlobal.JointCharacters.SameChr
+module
+
+public import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaC
+public import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCI
+public import Formalism.LocalToGlobal.JointCharacters.SameChr
+
+@[expose] public section
 
 noncomputable section
 

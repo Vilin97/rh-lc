@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.ProdDvdOfIso
+module
+
+public import ReciprocityTheory.DualLattices.ProdDvdOfIso
+
+@[expose] public section
 
 noncomputable section
 

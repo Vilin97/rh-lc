@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.XiIndCClass
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IntegralDensEqZero
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.XiIndCClass
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IntegralDensEqZero
+
+@[expose] public section
 
 open Formalism.L2.Ker Formalism.L2.Th1.H GlobalTheory.ThetaInter
 

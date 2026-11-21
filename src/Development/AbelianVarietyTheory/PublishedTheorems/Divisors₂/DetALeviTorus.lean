@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.LeviCentreInducedUnitary
-import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ExistsInhabitant
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.LeviCentreInducedUnitary
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.ExistsInhabitant
+
+@[expose] public section
 
 noncomputable section
 

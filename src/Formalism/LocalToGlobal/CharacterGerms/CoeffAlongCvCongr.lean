@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.GeOfPowEqOne
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.GeOfPowEqOne
+
+@[expose] public section
 
 noncomputable section
 

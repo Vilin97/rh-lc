@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.PrimeSumBounded
-import GroundTheory.GlobalFields.TateThesis.HeckeCharRayClass
-import GroundTheory.GlobalFields.TateThesis.DegreeOneDensity
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.PrimeSumBounded
+public import GroundTheory.GlobalFields.TateThesis.HeckeCharRayClass
+public import GroundTheory.GlobalFields.TateThesis.DegreeOneDensity
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter Set
 

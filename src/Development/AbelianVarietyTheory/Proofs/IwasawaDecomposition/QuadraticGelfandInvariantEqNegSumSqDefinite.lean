@@ -1,7 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.HeightProofs.UnitaryLieGeneratorsRep
-import Formalism.SatakeDualWeyl.Statement
-import Formalism.FormalDegreeBessel.StatementG
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.UnitaryLieGeneratorsRep
+public import Formalism.SatakeDualWeyl.Statement
+public import Formalism.FormalDegreeBessel.StatementG
+
+@[expose] public section
+
 open Matrix
 attribute [local instance 100] LieRing.ofAssociativeRing
 

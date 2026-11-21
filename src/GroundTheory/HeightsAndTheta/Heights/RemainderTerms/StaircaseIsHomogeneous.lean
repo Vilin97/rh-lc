@@ -1,17 +1,22 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.Statements
-import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.StatementsFlag
-import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.IsFlagIntegralOne
-import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.FlagIntegralRealEqMulDdConst
-import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PCoinvAtTop
-import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PCoinvPolynomialReduction
-import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PCoinvMonomialReduction
-import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PCoinvStepReduction
-import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PCoinvIdealComponent
-import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PCoinvIdealRepresentation
-import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PHomogeneousComponentMul
-import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PCoinvStaircaseComponent
-import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PCoinvStaircaseDegree
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.Statements
+public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.StatementsFlag
+public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.IsFlagIntegralOne
+public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.FlagIntegralRealEqMulDdConst
+public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PCoinvAtTop
+public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PCoinvPolynomialReduction
+public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PCoinvMonomialReduction
+public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PCoinvStepReduction
+public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PCoinvIdealComponent
+public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PCoinvIdealRepresentation
+public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PHomogeneousComponentMul
+public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PCoinvStaircaseComponent
+public import GroundTheory.HeightsAndTheta.Heights.RemainderTerms.PCoinvStaircaseDegree
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.RestTerms

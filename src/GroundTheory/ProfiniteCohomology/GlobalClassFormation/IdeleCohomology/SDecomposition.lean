@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.SIdeleGroups.Decomposition
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.Infinite
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.Integral
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.ExistsSIdelesCohomologyEqZero
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.SIdeleGroups.Decomposition
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.Infinite
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.Integral
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.ExistsSIdelesCohomologyEqZero
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

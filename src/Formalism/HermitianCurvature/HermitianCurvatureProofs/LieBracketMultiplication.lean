@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.FrameExists2
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LeftDerivativeCurves
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FrameEntries
+module
+
+public import Formalism.HermitianCurvature.FrameExists2
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LeftDerivativeCurves
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FrameEntries
+
+@[expose] public section
 
 open Matrix Finset Filter Topology
 

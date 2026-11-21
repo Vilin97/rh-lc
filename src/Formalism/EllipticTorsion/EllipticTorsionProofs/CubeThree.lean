@@ -1,8 +1,12 @@
-import Formalism.EllipticTorsion.CoeffRing
-import Formalism.EllipticTorsion.EllipticTorsionProofs.WChord
-import Formalism.EllipticTorsion.EllipticTorsionProofs.ExistsUnitFactor
-import Formalism.EllipticTorsion.EllipticTorsionProofs.WSubst
-import Formalism.EllipticTorsion.EllipticTorsionProofs.WSeries
+module
+
+public import Formalism.EllipticTorsion.CoeffRing
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.WChord
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.ExistsUnitFactor
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.WSubst
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.WSeries
+
+@[expose] public section
 
 open PowerSeries
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Development.DiscreteGroups.GlobalIrreducibility.DzMatchCut
-import Development.DiscreteGroups.GlobalIrreducibility.DzIsoRes
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.EmbedsLevelZeroDepthZero
+module
+
+public import Mathlib
+public import Development.DiscreteGroups.GlobalIrreducibility.DzMatchCut
+public import Development.DiscreteGroups.GlobalIrreducibility.DzIsoRes
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.EmbedsLevelZeroDepthZero
+
+@[expose] public section
 
 noncomputable section
 

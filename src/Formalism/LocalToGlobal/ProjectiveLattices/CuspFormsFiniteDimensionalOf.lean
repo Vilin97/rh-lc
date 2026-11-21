@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.CuspFDOf
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.CuspFDOf
+
+@[expose] public section
 
 noncomputable section
 

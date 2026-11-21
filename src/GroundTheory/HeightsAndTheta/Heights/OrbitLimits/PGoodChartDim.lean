@@ -1,14 +1,19 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StGoodChartDim
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StConeVanishingHomog
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StConeSliceIdeal
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDehomogPrime
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreChartDim
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PGoodChartZeroSet
-import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChartHomogenise
-import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChartDehomog
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.KleimanNefness.AlgDim
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StGoodChartDim
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StConeVanishingHomog
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StConeSliceIdeal
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDehomogPrime
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreChartDim
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PGoodChartZeroSet
+public import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChartHomogenise
+public import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChartDehomog
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.KleimanNefness.AlgDim
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

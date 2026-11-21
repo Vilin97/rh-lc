@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJFELeviMulti
-import GroundTheory.AutomorphicForms.InductionParabolic
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJFELeviMulti
+public import GroundTheory.AutomorphicForms.InductionParabolic
+
+@[expose] public section
 
 noncomputable section
 

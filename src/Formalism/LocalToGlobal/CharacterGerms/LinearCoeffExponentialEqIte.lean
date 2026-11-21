@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.LinearCoeffSubstChainRule
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.LinearCoeffSubstChainRule
+
+@[expose] public section
 
 noncomputable section
 

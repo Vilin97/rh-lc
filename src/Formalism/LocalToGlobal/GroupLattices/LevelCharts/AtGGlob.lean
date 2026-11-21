@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.LevelCharts.SignBlockDeterminant
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.LevelCharts.SignBlockDeterminant
+
+@[expose] public section
 
 noncomputable section
 

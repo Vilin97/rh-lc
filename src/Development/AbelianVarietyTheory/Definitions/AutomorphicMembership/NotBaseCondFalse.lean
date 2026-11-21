@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RationalRootsDef
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RecExGOfRecAtG
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SpreadLamOfLe
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ToMapSurj
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RationalRootsDef
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RecExGOfRecAtG
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SpreadLamOfLe
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ToMapSurj
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,12 @@
-import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.ValCount
-import Development.AutomorphicArithmetic.LocalEmbeddings.VertCmp
-import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.OrdFracEqValuationInvOfIsLocalization
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.LocalEmbeddings.ValCount
+public import Development.AutomorphicArithmetic.LocalEmbeddings.VertCmp
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.OrdFracEqValuationInvOfIsLocalization
+
+@[expose] public section
+
 open IsLocalRing NumberField IsDedekindDomain GlobalTheory.ValCount GlobalTheory.VertCmp
 open scoped Classical
 

@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.NotIsCompactUnivFv
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HermitianPlaneStrongApprox
-import GroundTheory.GlobalFields.Adele.Compact
-import GroundTheory.AutomorphicForms.StrongApproximationSLDense
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsSupported
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.NotIsCompactUnivFv
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HermitianPlaneStrongApprox
+public import GroundTheory.GlobalFields.Adele.Compact
+public import GroundTheory.AutomorphicForms.StrongApproximationSLDense
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsSupported
+
+@[expose] public section
 
 noncomputable section
 

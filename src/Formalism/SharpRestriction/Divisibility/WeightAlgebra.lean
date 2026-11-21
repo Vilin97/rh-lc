@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.LocalRingCardinality.DataParams₂
-import Formalism.LocalRingCardinality.DataParams
-import Formalism.SharpRestriction.ParamsHeightRankConstant
-import Formalism.SharpRestriction.Divisibility.WeightFamilies
-import Formalism.SharpRestriction.Divisibility.ModuliIntegralCharts
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.LocalRingCardinality.DataParams₂
+public import Formalism.LocalRingCardinality.DataParams
+public import Formalism.SharpRestriction.ParamsHeightRankConstant
+public import Formalism.SharpRestriction.Divisibility.WeightFamilies
+public import Formalism.SharpRestriction.Divisibility.ModuliIntegralCharts
+
+@[expose] public section
 
 noncomputable section
 

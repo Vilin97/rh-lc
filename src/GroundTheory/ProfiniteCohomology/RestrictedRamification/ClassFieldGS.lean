@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.ClassFieldGSUnram
-import GroundTheory.GlobalFields.GlobalArtinMap.Kernel
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.ClassFieldGSUnram
+public import GroundTheory.GlobalFields.GlobalArtinMap.Kernel
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

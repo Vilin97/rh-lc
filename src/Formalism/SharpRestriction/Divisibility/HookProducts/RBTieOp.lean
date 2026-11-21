@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HarderNarasimhan.ShiftInvariance
-import Formalism.SharpRestriction.Divisibility.HookProducts.RBTieFrame
+module
+
+public import Mathlib
+public import Formalism.HarderNarasimhan.ShiftInvariance
+public import Formalism.SharpRestriction.Divisibility.HookProducts.RBTieFrame
+
+@[expose] public section
 
 open Matrix NumberField Module
 

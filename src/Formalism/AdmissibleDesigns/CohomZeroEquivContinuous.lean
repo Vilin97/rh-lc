@@ -1,5 +1,9 @@
-import Formalism.AdmissibleDesigns.FiniteClassesContinuousLattice
-import Formalism.WeaklyAdmissibleFiltrations.PhtGalois
+module
+
+public import Formalism.AdmissibleDesigns.FiniteClassesContinuousLattice
+public import Formalism.WeaklyAdmissibleFiltrations.PhtGalois
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

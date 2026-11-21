@@ -1,4 +1,8 @@
-import PositivityTheory.AutomorphicForms.PublishedInputs.CyclicBaseChange.IsGalAd
+module
+
+public import PositivityTheory.AutomorphicForms.PublishedInputs.CyclicBaseChange.IsGalAd
+
+@[expose] public section
 
 noncomputable section
 

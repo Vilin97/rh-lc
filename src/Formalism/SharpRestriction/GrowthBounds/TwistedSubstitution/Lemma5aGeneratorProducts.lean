@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.TwistedSubstitution.Lemma5aMonomial
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.TwistedSubstitution.Lemma5aMonomial
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.GL3MeanSquares.PrimeCountAsymptoticInProgressions
-import Formalism.GL3MeanSquares.InvariantSeriesBidegreeOneOne
-import Formalism.GL3MeanSquares.ConcavityEquidistribution
-import Formalism.GL3MeanSquares.RankMulPowThreeHalvesLeFourthPower
-import Formalism.GL3MeanSquares.RationalMatrixPrimeOrderBound
+module
+
+public import Mathlib
+public import Formalism.GL3MeanSquares.PrimeCountAsymptoticInProgressions
+public import Formalism.GL3MeanSquares.InvariantSeriesBidegreeOneOne
+public import Formalism.GL3MeanSquares.ConcavityEquidistribution
+public import Formalism.GL3MeanSquares.RankMulPowThreeHalvesLeFourthPower
+public import Formalism.GL3MeanSquares.RationalMatrixPrimeOrderBound
+
+@[expose] public section
 
 open Finset Filter Topology ArithmeticFunction
 

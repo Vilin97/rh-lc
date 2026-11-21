@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.FullExists
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.ThValDescIn
-import Formalism.LocalToGlobal.ProjectiveLattices.RecPJThAllNeBot
-import Formalism.LocalToGlobal.ProjectiveLattices.ChartDirectionsIntegral
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.FullExists
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.ThValDescIn
+public import Formalism.LocalToGlobal.ProjectiveLattices.RecPJThAllNeBot
+public import Formalism.LocalToGlobal.ProjectiveLattices.ChartDirectionsIntegral
+
+@[expose] public section
 
 set_option autoImplicit false
 

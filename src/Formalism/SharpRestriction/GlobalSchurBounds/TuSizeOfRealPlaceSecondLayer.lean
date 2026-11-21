@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.RamifiedLevelZeroHolds
-import Formalism.SharpRestriction.GlobalSchurBounds.TheoremThreeFamilyOfGappedMultiplicity
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.RamifiedLevelZeroHolds
+public import Formalism.SharpRestriction.GlobalSchurBounds.TheoremThreeFamilyOfGappedMultiplicity
+
+@[expose] public section
 
 noncomputable section
 

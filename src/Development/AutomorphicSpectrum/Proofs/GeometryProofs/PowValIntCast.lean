@@ -1,11 +1,15 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsHTAtIff
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsDualBC
-import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatPar
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.OverZpOfInFibre
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.HTChartExistsHoldsStatement
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.HodgeTateChartIntegralStatement
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LieModelExistsUniqueAct
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsHTAtIff
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsDualBC
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatPar
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.OverZpOfInFibre
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.HTChartExistsHoldsStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.HodgeTateChartIntegralStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LieModelExistsUniqueAct
+
+@[expose] public section
 
 noncomputable section
 

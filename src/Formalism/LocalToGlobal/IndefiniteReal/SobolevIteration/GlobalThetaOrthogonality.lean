@@ -1,13 +1,17 @@
-import Formalism.LocalToGlobal.IndefiniteReal.ScalarOnPartsFull
-import Formalism.LocalToGlobal.IndefiniteReal.RealSeparation.ParabSt
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.FuncSt
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.BaseSt
-import Formalism.LocalToGlobal.IndefiniteReal.OrthogonalComplementCharacterisation
-import Formalism.LocalToGlobal.IndefiniteReal.FockTheta.UnitBracket
-import Formalism.LocalToGlobal.IndefiniteReal.DatumVec
-import Formalism.SharpRestriction.Divisibility.SchurIrreducible
-import Formalism.LocalToGlobal.BesselHermitianTheta.MinfDensity
-import Formalism.SharpRestriction.CuspSpanNormBounds.PlaceDegreeData
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.ScalarOnPartsFull
+public import Formalism.LocalToGlobal.IndefiniteReal.RealSeparation.ParabSt
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.FuncSt
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.BaseSt
+public import Formalism.LocalToGlobal.IndefiniteReal.OrthogonalComplementCharacterisation
+public import Formalism.LocalToGlobal.IndefiniteReal.FockTheta.UnitBracket
+public import Formalism.LocalToGlobal.IndefiniteReal.DatumVec
+public import Formalism.SharpRestriction.Divisibility.SchurIrreducible
+public import Formalism.LocalToGlobal.BesselHermitianTheta.MinfDensity
+public import Formalism.SharpRestriction.CuspSpanNormBounds.PlaceDegreeData
+
+@[expose] public section
 
 noncomputable section
 

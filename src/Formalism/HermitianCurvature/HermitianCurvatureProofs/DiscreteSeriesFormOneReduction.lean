@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.L2NormScaling
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.L2NormScaling
+
+@[expose] public section
 
 open MeasureTheory Matrix
 open scoped InnerProductSpace ENNReal ComplexConjugate

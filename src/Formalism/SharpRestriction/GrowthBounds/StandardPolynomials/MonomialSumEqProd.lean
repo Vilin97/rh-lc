@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.ColsS
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.ColXRen
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.ColXSeg
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.ColsS
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.ColXRen
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.ColXSeg
+
+@[expose] public section
 
 noncomputable section
 

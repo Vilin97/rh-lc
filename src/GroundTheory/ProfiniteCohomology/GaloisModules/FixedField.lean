@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GaloisModules.CoeGalRootsOfUnityHomApply
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GaloisModules.CoeGalRootsOfUnityHomApply
+
+@[expose] public section
 
 namespace GroundTheory.ProfCoh
 

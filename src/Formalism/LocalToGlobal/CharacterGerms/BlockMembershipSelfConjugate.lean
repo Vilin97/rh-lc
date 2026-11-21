@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.CharacterGerms.MemVarsProdAll
-import Formalism.LocalToGlobal.CharacterGerms.ContentZeroAt
-import Formalism.LocalToGlobal.CharacterGerms.CartesianBoundOnCurves
-import Formalism.LocalToGlobal.CharacterGerms.CoeffIterateZero
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.MemVarsProdAll
+public import Formalism.LocalToGlobal.CharacterGerms.ContentZeroAt
+public import Formalism.LocalToGlobal.CharacterGerms.CartesianBoundOnCurves
+public import Formalism.LocalToGlobal.CharacterGerms.CoeffIterateZero
+
+@[expose] public section
 
 noncomputable section
 

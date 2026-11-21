@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.UpSmith
+module
+
+public import ReciprocityTheory.DualLattices.UpSmith
+
+@[expose] public section
 
 noncomputable section
 

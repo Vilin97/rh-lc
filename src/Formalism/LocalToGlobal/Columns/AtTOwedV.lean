@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.AtTOwedU
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.AtTOwedU
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

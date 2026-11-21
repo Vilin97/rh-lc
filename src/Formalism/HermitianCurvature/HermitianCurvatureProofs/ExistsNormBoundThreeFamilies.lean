@@ -1,8 +1,12 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.WaveLocalBuiltPlaces
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FormZeroEqSlotPairingOfLe
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGWaveMain
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.GramLocSetCApp
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBFCstmt
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WaveLocalBuiltPlaces
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FormZeroEqSlotPairingOfLe
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGWaveMain
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GramLocSetCApp
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBFCstmt
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBL
 

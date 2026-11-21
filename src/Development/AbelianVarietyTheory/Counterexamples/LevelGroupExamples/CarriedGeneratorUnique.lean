@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.IsLevMove
-import Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.LevelGroupEqTopOfCoprime
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.LevelActionOverlapLeSourceChart
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.IsLevMove
+public import Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.LevelGroupEqTopOfCoprime
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.LevelActionOverlapLeSourceChart
+
+@[expose] public section
 
 noncomputable section
 

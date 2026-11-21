@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.FactorsOfPerturb
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.FactorsOfPerturb
+
+@[expose] public section
 
 noncomputable section
 

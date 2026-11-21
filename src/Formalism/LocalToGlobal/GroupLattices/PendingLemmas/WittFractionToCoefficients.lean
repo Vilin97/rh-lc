@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.ConditionIffAdditiveMaps
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.CoeffOneLNe
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.ConditionIffAdditiveMaps
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.CoeffOneLNe
+
+@[expose] public section
 
 noncomputable section
 

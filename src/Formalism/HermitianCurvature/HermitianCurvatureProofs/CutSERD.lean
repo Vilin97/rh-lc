@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSE2
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBFVnice
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBFVpic
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BigCellZetaMinors
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSE2
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBFVnice
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBFVpic
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BigCellZetaMinors
+
+@[expose] public section
 
 open MeasureTheory Filter Topology
 open scoped Matrix

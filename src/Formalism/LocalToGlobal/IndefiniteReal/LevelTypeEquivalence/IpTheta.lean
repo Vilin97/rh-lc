@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.ThetaSquareIntegrable
-import Formalism.LocalToGlobal.IndefiniteReal.PHeisFC
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.ThetaSquareIntegrable
+public import Formalism.LocalToGlobal.IndefiniteReal.PHeisFC
+
+@[expose] public section
 
 noncomputable section
 

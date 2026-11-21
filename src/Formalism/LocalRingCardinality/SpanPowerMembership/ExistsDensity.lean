@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.SpanPowerMembership.LeOfEventuallyDown
-import Formalism.LocalRingCardinality.SpanPowerMembership.HasStrictFDerivAtExpZero
+module
+
+public import Formalism.LocalRingCardinality.SpanPowerMembership.LeOfEventuallyDown
+public import Formalism.LocalRingCardinality.SpanPowerMembership.HasStrictFDerivAtExpZero
+
+@[expose] public section
 
 noncomputable section
 

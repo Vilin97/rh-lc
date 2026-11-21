@@ -1,5 +1,9 @@
-import Formalism.GradedWeylDivisibility.StatementC
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LBidetLemmas
+module
+
+public import Formalism.GradedWeylDivisibility.StatementC
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LBidetLemmas
+
+@[expose] public section
 
 open MvPolynomial
 

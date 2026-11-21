@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.BesselHermitianTheta.DefsReal
-import Formalism.LocalToGlobal.BesselHermitianTheta.MinfDensity
-import Formalism.LocalToGlobal.Divisibility.DefGroup
+module
+
+public import Formalism.LocalToGlobal.BesselHermitianTheta.DefsReal
+public import Formalism.LocalToGlobal.BesselHermitianTheta.MinfDensity
+public import Formalism.LocalToGlobal.Divisibility.DefGroup
+
+@[expose] public section
 
 noncomputable section
 

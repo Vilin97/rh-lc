@@ -1,6 +1,10 @@
-import Formalism.MahlerMeasure.LevelLattice
-import Formalism.MahlerMeasure.MahlerMeasureProofs.PhiInt
-import Formalism.ThetaLogCoordinates.BihomogeneousPairs.LetterChainEmbeddings.TieFPowMulFree
+module
+
+public import Formalism.MahlerMeasure.LevelLattice
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.PhiInt
+public import Formalism.ThetaLogCoordinates.BihomogeneousPairs.LetterChainEmbeddings.TieFPowMulFree
+
+@[expose] public section
 
 namespace Formalism.InvariantFactorPaths.KP.LL
 

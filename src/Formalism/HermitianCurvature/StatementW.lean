@@ -1,4 +1,8 @@
-import Formalism.YangianSpanCharacter.ExchangeGen
+module
+
+public import Formalism.YangianSpanCharacter.ExchangeGen
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.W
 

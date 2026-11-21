@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.IsogenyPoints
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.KernelCard
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.KaehlerPlace
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.IsogenyPoints
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.KernelCard
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.KaehlerPlace
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

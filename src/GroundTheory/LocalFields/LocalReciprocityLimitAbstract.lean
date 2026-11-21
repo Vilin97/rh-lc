@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.AbstractLocalReciprocity.ReciprocityAbelianizationRestrictReciprocityLimi
-import GroundTheory.LocalFields.AbstractLocalReciprocity.Functoriality
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.ReciprocityAbelianizationRestrictReciprocityLimi
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.Functoriality
+
+@[expose] public section
 
 namespace GroundTheory.LocalField.Abstract
 

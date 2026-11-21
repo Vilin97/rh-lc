@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PolynomialDimension.DigitClassSize
+module
+
+public import Mathlib
+public import Formalism.PolynomialDimension.DigitClassSize
+
+@[expose] public section
 
 noncomputable section
 

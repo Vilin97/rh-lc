@@ -1,8 +1,12 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.StSchurW
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.UnitaryGroupStructuralFacts
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.JSchurG
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.StSInt
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.JBePosB
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.StSchurW
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.UnitaryGroupStructuralFacts
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.JSchurG
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.StSInt
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.JBePosB
+
+@[expose] public section
 
 noncomputable section
 

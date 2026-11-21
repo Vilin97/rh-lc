@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.LemCStep
-import Formalism.SharpRestriction.LevelLetterCocycles.ModelKStep
-import Formalism.SharpRestriction.LevelLetterCocycles.DdRFull
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.LemCStep
+public import Formalism.SharpRestriction.LevelLetterCocycles.ModelKStep
+public import Formalism.SharpRestriction.LevelLetterCocycles.DdRFull
+
+@[expose] public section
 
 noncomputable section
 

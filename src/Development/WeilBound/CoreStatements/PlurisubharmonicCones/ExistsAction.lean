@@ -1,8 +1,12 @@
-import Development.WeilBound.CoreStatements.PlurisubharmonicCones.ExistsSmulMemOfEig
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ValuesOfFrame
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.AbelianPartIntegralPointAltBis
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SemiabelianHomLieExtends
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LieModelExistsUniqueAct
+module
+
+public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.ExistsSmulMemOfEig
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ValuesOfFrame
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.AbelianPartIntegralPointAltBis
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SemiabelianHomLieExtends
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LieModelExistsUniqueAct
+
+@[expose] public section
 
 open AlgebraicGeometry CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj NumberField Matrix Filter Topology
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi

@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.WeilConjectures.ContinCut
+module
+
+public import Development.EtaleCohomology.WeilConjectures.ContinCut
+
+@[expose] public section
 
 namespace LateralTheory.EWeil.AbsContPf
 

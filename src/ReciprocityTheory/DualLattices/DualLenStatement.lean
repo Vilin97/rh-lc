@@ -1,5 +1,9 @@
-import ReciprocityTheory.DualLattices.ExistsFromRowsMulVecIff
-import ReciprocityTheory.DualLattices.HasLenCokerDet
+module
+
+public import ReciprocityTheory.DualLattices.ExistsFromRowsMulVecIff
+public import ReciprocityTheory.DualLattices.HasLenCokerDet
+
+@[expose] public section
 
 noncomputable section
 

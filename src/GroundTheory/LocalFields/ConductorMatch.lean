@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.ConductorReciprocity
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.ConductorReciprocity
+
+@[expose] public section
 
 noncomputable section
 

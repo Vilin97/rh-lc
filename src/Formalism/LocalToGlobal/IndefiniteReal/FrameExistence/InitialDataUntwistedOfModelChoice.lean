@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.WeakCharacterisationWithError
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.BaseSt
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.WeakCharacterisationWithError
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.BaseSt
+
+@[expose] public section
 
 noncomputable section
 

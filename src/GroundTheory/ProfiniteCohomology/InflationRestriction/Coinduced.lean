@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.InflationRestriction.Section
-import GroundTheory.ProfiniteCohomology.CoinducedModules.Acyclic
-import GroundTheory.ProfiniteCohomology.CohomologyFunctoriality
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.InflationRestriction.Section
+public import GroundTheory.ProfiniteCohomology.CoinducedModules.Acyclic
+public import GroundTheory.ProfiniteCohomology.CohomologyFunctoriality
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

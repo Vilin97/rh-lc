@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.IsWeilDatum
-import Formalism.LocalToGlobal.Columns.RecLevelTop
-import Formalism.LocalToGlobal.GlobalTheory.GL1.CompactFixesLattice.ExistsDenOfIsCompactAdele
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.IsWeilDatum
+public import Formalism.LocalToGlobal.Columns.RecLevelTop
+public import Formalism.LocalToGlobal.GlobalTheory.GL1.CompactFixesLattice.ExistsDenOfIsCompactAdele
+
+@[expose] public section
 
 noncomputable section
 

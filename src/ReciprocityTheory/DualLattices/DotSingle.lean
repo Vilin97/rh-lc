@@ -1,6 +1,10 @@
-import ReciprocityTheory.DualLattices.BlockOneMulMulBlockOne
-import ReciprocityTheory.DualLattices.ProdDvdOfIso
-import ReciprocityTheory.DualLattices.ExistsSmulMemOfMemSpan
+module
+
+public import ReciprocityTheory.DualLattices.BlockOneMulMulBlockOne
+public import ReciprocityTheory.DualLattices.ProdDvdOfIso
+public import ReciprocityTheory.DualLattices.ExistsSmulMemOfMemSpan
+
+@[expose] public section
 
 noncomputable section
 

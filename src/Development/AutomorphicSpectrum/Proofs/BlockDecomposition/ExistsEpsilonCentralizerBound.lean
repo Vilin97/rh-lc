@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MulEqOfRangeLe
-import GroundTheory.AutomorphicForms.AnisotropicHeight
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsFactor
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MulEqOfRangeLe
+public import GroundTheory.AutomorphicForms.AnisotropicHeight
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsFactor
+
+@[expose] public section
 
 noncomputable section
 

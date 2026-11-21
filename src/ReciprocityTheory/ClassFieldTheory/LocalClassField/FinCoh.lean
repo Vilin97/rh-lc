@@ -1,7 +1,11 @@
-import Mathlib
-import ReciprocityTheory.GroupCohomology.IsLowExists
-import ReciprocityTheory.GroupCohomology.LowNat
-import ReciprocityTheory.NeutralLocalFields.Duality
+module
+
+public import Mathlib
+public import ReciprocityTheory.GroupCohomology.IsLowExists
+public import ReciprocityTheory.GroupCohomology.LowNat
+public import ReciprocityTheory.NeutralLocalFields.Duality
+
+@[expose] public section
 
 namespace ReciprocityTheory.DiscreteGroups.LocalClassField
 

@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.TateTwists.EtaleMayerVietorisChainsShortExact
+module
+
+public import Development.EtaleCohomology.TateTwists.EtaleMayerVietorisChainsShortExact
+
+@[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
 

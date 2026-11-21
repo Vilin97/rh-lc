@@ -1,8 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HyperbolicPlaneFormSkew
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteModuleGradedQuantumDet
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MonicFactorFiniteMod
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MonicFactorFinite
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HyperbolicPlaneFormSkew
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteModuleGradedQuantumDet
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MonicFactorFiniteMod
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MonicFactorFinite
+
+@[expose] public section
+
 open Matrix GlobalTheory.LeviHC
 open Formalism.REAL (GlRel qdet)
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
-import Formalism.LocalToGlobal.Columns.ColumnsProofs.HFSSplit
-import Formalism.LocalToGlobal.Columns.ColumnsProofs.HFSData
+module
+
+public import Mathlib
+public import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
+public import Formalism.LocalToGlobal.Columns.ColumnsProofs.HFSSplit
+public import Formalism.LocalToGlobal.Columns.ColumnsProofs.HFSData
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain Polynomial
 

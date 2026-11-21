@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteForms.IndefSide
-import Formalism.QuotientMetricDivisors.Statement
-import Formalism.JacquetSubsetSums.JacquetSubsetSum
-import Formalism.DivisorInequality.StatementObj
-import Formalism.QuotientMetricDivisors.DivIntoDualShift
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteForms.IndefSide
+public import Formalism.QuotientMetricDivisors.Statement
+public import Formalism.JacquetSubsetSums.JacquetSubsetSum
+public import Formalism.DivisorInequality.StatementObj
+public import Formalism.QuotientMetricDivisors.DivIntoDualShift
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder InnerProductSpace

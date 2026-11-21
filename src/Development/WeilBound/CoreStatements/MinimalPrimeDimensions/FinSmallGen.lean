@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.NvalLeOfMul
-import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.ExistsPointOfValGen
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.NvalLeOfMul
+public import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.ExistsPointOfValGen
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj Formalism.BasicNotions.TH Formalism.L2.Theta ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD GlobalTheory.AllWt GlobalTheory.CompHt GlobalTheory.CovTop GlobalTheory.CovHt GlobalTheory.Mean4 GlobalTheory.Mean4O
 open scoped ENNReal Classical
 open GlobalTheory GlobalTheory.CompanionTheory GlobalTheory.CompanionTheory.SmallFin

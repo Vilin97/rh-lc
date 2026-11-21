@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.ThetaDilations.IsOpenCoset
+module
+
+public import Development.WeilBound.CoreStatements.ThetaDilations.IsOpenCoset
+
+@[expose] public section
 
 open MeasureTheory Topology Set Matrix
 open scoped ENNReal ComplexConjugate MatrixGroups

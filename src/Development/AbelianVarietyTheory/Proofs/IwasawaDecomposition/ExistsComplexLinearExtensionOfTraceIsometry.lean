@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.LateralTheory
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.LateralTheory
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.L2.Ker Matrix
 open scoped BigOperators
 

@@ -1,9 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsNsmulFix
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntAFSmulMemLatOF
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqZeroOfTraceMul
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousPlaceAt
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactShellNsmul
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsNsmulFix
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntAFSmulMemLatOF
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqZeroOfTraceMul
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousPlaceAt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactShellNsmul
+
+@[expose] public section
+
 open scoped TensorProduct Matrix
 open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
 open GlobalTheory.WeilM GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels

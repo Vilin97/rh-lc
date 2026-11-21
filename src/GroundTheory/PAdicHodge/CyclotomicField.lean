@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.PAdicHodge.NormalizedTrace
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.NormalizedTrace
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.PAdicHodge

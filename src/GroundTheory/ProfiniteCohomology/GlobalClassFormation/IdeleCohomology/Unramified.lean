@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.LocalHerbrand
-import GroundTheory.ProfiniteCohomology.LocalClassFormation.Unramified
-import GroundTheory.ProfiniteCohomology.ContinuousCochains.Functoriality
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.LocalHerbrand
+public import GroundTheory.ProfiniteCohomology.LocalClassFormation.Unramified
+public import GroundTheory.ProfiniteCohomology.ContinuousCochains.Functoriality
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

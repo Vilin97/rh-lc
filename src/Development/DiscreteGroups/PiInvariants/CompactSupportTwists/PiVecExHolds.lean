@@ -1,5 +1,9 @@
-import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.SplitCentreMulTor
-import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.CuspPairD
+module
+
+public import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.SplitCentreMulTor
+public import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.CuspPairD
+
+@[expose] public section
 
 set_option linter.all false
 

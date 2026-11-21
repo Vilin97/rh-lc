@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.LatticeGeometry.GeometryDefinitions.PClassD
+module
+
+public import Formalism.LocalToGlobal.LatticeGeometry.GeometryDefinitions.PClassD
+
+@[expose] public section
 
 noncomputable section
 

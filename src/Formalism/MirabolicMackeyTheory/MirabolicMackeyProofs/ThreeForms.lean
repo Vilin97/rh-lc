@@ -1,10 +1,14 @@
-import Formalism.MirabolicMackeyTheory.StatementL
-import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.IdxRules
-import Formalism.HermitianLattices.HermitianLatticesProofs.LocBasic
-import Formalism.HermitianLattices.HermitianLatticesProofs.IndexBasic
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ImageLcv
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.IdxChange
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ValBasic
+module
+
+public import Formalism.MirabolicMackeyTheory.StatementL
+public import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.IdxRules
+public import Formalism.HermitianLattices.HermitianLatticesProofs.LocBasic
+public import Formalism.HermitianLattices.HermitianLatticesProofs.IndexBasic
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ImageLcv
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.IdxChange
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ValBasic
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain Formalism.HermitianLatticesTheory
 

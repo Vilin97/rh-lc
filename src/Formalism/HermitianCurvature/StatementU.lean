@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.StatementB
-import Formalism.HermitianCurvature.StatementG
+module
+
+public import Formalism.HermitianCurvature.StatementB
+public import Formalism.HermitianCurvature.StatementG
+
+@[expose] public section
 
 open Matrix MeasureTheory
 open scoped ComplexConjugate

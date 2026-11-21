@@ -1,4 +1,8 @@
-import Formalism.LocalRingCardinality.HostCls
+module
+
+public import Formalism.LocalRingCardinality.HostCls
+
+@[expose] public section
 
 open Formalism.HC
 

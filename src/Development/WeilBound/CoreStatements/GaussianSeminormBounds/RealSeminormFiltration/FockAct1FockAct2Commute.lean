@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.JointBlockShapes.JointShape
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.JointBlockShapes.JointShape
+
+@[expose] public section
 
 noncomputable section
 

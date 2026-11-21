@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PairingDivisors.StatementN
+module
+
+public import Mathlib
+public import Formalism.PairingDivisors.StatementN
+
+@[expose] public section
 
 open Finset
 

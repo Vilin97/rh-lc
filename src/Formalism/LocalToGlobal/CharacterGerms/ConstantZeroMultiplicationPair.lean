@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.FirstVanishingCore
-import Formalism.LocalToGlobal.CharacterGerms.PderivDoubleMultiplicationJacobian
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.FirstVanishingCore
+public import Formalism.LocalToGlobal.CharacterGerms.PderivDoubleMultiplicationJacobian
+
+@[expose] public section
 
 set_option autoImplicit false
 

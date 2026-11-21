@@ -1,4 +1,8 @@
-import CompanionTheory.ThickeningEstimates.LieGroupReduction.LocalLift
+module
+
+public import CompanionTheory.ThickeningEstimates.LieGroupReduction.LocalLift
+
+@[expose] public section
 
 noncomputable section
 

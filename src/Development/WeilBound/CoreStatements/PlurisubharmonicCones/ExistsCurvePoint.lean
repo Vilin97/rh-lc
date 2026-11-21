@@ -1,13 +1,17 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.PlurisubharmonicCones.AevalZeroOfMem
-import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PFunctionFieldFinite
-import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PMChartTrdeg
-import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PMChartHomog
-import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PMChartDehomog
-import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PNefAddBlock
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.ProjContract
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PBlockRatioAlg
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ProjectionFormulaDegree
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.AevalZeroOfMem
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PFunctionFieldFinite
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PMChartTrdeg
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PMChartHomog
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PMChartDehomog
+public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PNefAddBlock
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.ProjContract
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PBlockRatioAlg
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ProjectionFormulaDegree
+
+@[expose] public section
 
 open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo PositivityTheory.HtPt GroundTheory.Heights₂.Heights
 open GroundTheory.Heights₂.Heights.CoordinateConeArithVar

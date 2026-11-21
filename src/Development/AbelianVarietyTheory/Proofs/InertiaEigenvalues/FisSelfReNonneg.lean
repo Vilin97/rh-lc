@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.FischerSelfNeZero
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.FischerSelfNeZero
+
+@[expose] public section
 
 noncomputable section
 

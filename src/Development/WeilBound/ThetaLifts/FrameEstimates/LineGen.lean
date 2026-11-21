@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.FrameEstimates.TowerRallisLemma
+module
+
+public import Development.WeilBound.ThetaLifts.FrameEstimates.TowerRallisLemma
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.CoreDesc
-import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.ParEx
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TraceSplitting.CoreDesc
+public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.ParEx
+
+@[expose] public section
 
 noncomputable section
 

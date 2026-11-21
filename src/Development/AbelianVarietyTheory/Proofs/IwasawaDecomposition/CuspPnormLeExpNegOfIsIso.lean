@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsPosLowerBoundNearMax
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsPosLowerBoundNearMax
+
+@[expose] public section
 
 open NumberField Complex Filter ReciprocityTheory.ChartRestriction.G.FD
 open scoped ComplexConjugate Topology Real

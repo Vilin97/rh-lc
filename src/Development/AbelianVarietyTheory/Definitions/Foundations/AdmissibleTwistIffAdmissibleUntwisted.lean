@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Foundations.ChiK
-import Development.AbelianVarietyTheory.Statements.CuspidalUnitaryTwists.ZetaUr
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.ChiK
+public import Development.AbelianVarietyTheory.Statements.CuspidalUnitaryTwists.ZetaUr
+
+@[expose] public section
 
 noncomputable section
 

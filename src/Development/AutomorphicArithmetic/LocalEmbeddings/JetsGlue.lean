@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.JetsChain
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.LocalEmbeddings.JetsChain
+
+@[expose] public section
 
 noncomputable section
 

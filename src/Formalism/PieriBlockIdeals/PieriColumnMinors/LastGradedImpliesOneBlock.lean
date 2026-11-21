@@ -1,5 +1,9 @@
-import Formalism.PieriBlockIdeals.BranchingBoundLastGradedOneRow
-import Formalism.PieriBlockIdeals.PieriColumnMinors.DividedPowerZeroZeroVector
+module
+
+public import Formalism.PieriBlockIdeals.BranchingBoundLastGradedOneRow
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.DividedPowerZeroZeroVector
+
+@[expose] public section
 
 open MvPolynomial
 

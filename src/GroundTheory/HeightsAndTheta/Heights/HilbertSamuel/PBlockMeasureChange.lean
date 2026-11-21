@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockMeasureChange
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSupBoundBlock
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.SupBoundCountLattice
-import GroundTheory.HeightsAndTheta.Heights.MatrixCharts.DetIneq
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockMeasureChange
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSupBoundBlock
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.SupBoundCountLattice
+public import GroundTheory.HeightsAndTheta.Heights.MatrixCharts.DetIneq
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

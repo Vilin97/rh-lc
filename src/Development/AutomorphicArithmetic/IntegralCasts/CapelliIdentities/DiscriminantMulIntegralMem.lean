@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 private theorem int_of_rat {K : Type} [Field K] [CharZero K] (r : ℚ)
     (h : IsIntegral ℤ (r : K)) : ∃ a : ℤ, (a : ℚ) = r := by

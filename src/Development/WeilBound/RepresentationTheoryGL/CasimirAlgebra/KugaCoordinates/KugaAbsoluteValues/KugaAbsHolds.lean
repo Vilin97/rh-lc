@@ -1,10 +1,14 @@
-import Development.WeilBound.RepresentationTheoryGL.CasimirAlgebra.KugaCoordinates.KugaAbsoluteValues.KSumApply
-import Development.WeilBound.RepresentationTheoryGL.CasimirAlgebra.KugaCoordinates.KugaSt
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CompInsertNthEq
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RemoveNthSuccVecCons
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KDKDelApply
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InvarianceContraction
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AlternatingMapEqZeroOfSpan
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.CasimirAlgebra.KugaCoordinates.KugaAbsoluteValues.KSumApply
+public import Development.WeilBound.RepresentationTheoryGL.CasimirAlgebra.KugaCoordinates.KugaSt
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CompInsertNthEq
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RemoveNthSuccVecCons
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KDKDelApply
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InvarianceContraction
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AlternatingMapEqZeroOfSpan
+
+@[expose] public section
 
 noncomputable section
 

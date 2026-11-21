@@ -1,16 +1,20 @@
-import Mathlib
-import Formalism.PadicSubsetSums.CentralIdempotents.EigenbasisOfDistinctRoots
-import Formalism.PadicSubsetSums.CentralIdempotents.GaloisIrreducibility
-import Formalism.GaloisIrreducibility.NoSolvableTransitive
-import Formalism.PadicSubsetSums.StableGradedCounts.IRRCycleProbSum
-import Formalism.PadicSubsetSums.StableGradedCounts.IRRPrimeRecipSum
-import Formalism.PadicSubsetSums.StableGradedCounts.IRRPrimeToPartEqIff
-import Formalism.PadicSubsetSums.StableGradedCounts.IRRPrimeToPartSpec
-import Formalism.PadicSubsetSums.StableGradedCounts.IRRLemmaP
-import Formalism.PadicSubsetSums.StableGradedCounts.IRRIrredCountUpper
-import Formalism.PadicSubsetSums.StableGradedCounts.IRRSquarefreeCount
-import Formalism.PadicSubsetSums.StableGradedCounts.IRRTypeCountExact
-import Formalism.PadicSubsetSums.StableGradedCounts.IRRCycleTypeProb
+module
+
+public import Mathlib
+public import Formalism.PadicSubsetSums.CentralIdempotents.EigenbasisOfDistinctRoots
+public import Formalism.PadicSubsetSums.CentralIdempotents.GaloisIrreducibility
+public import Formalism.GaloisIrreducibility.NoSolvableTransitive
+public import Formalism.PadicSubsetSums.StableGradedCounts.IRRCycleProbSum
+public import Formalism.PadicSubsetSums.StableGradedCounts.IRRPrimeRecipSum
+public import Formalism.PadicSubsetSums.StableGradedCounts.IRRPrimeToPartEqIff
+public import Formalism.PadicSubsetSums.StableGradedCounts.IRRPrimeToPartSpec
+public import Formalism.PadicSubsetSums.StableGradedCounts.IRRLemmaP
+public import Formalism.PadicSubsetSums.StableGradedCounts.IRRIrredCountUpper
+public import Formalism.PadicSubsetSums.StableGradedCounts.IRRSquarefreeCount
+public import Formalism.PadicSubsetSums.StableGradedCounts.IRRTypeCountExact
+public import Formalism.PadicSubsetSums.StableGradedCounts.IRRCycleTypeProb
+
+@[expose] public section
 
 namespace Bl.CyclicComponents
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.LevelGatherings
-import Formalism.SharpRestriction.GrowthBounds.DataGChain
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.LevelGatherings
+public import Formalism.SharpRestriction.GrowthBounds.DataGChain
+
+@[expose] public section
 
 noncomputable section
 

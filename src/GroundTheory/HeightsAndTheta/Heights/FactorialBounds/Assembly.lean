@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.FactorialBounds.Statements
-import GroundTheory.HeightsAndTheta.Heights.FactorialBounds.PTorsionEquidistribution
-import GroundTheory.HeightsAndTheta.Heights.FactorialBounds.PSupOfOrthonormalSum
-import GroundTheory.HeightsAndTheta.Heights.FactorialBounds.PSlopeParameterChoice
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.FactorialBounds.Statements
+public import GroundTheory.HeightsAndTheta.Heights.FactorialBounds.PTorsionEquidistribution
+public import GroundTheory.HeightsAndTheta.Heights.FactorialBounds.PSupOfOrthonormalSum
+public import GroundTheory.HeightsAndTheta.Heights.FactorialBounds.PSlopeParameterChoice
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

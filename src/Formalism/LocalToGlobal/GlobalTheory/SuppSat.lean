@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.FrameCodeOfAdditive
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.FrameCodeOfAdditive
+
+@[expose] public section
 
 noncomputable section
 

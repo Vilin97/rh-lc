@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.KillWinFromCut
-import Formalism.SharpRestriction.LevelLetterCocycles.PsCoprimeOf
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.KillWinFromCut
+public import Formalism.SharpRestriction.LevelLetterCocycles.PsCoprimeOf
+
+@[expose] public section
 
 noncomputable section
 

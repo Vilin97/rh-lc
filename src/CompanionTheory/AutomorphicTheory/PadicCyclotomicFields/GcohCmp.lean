@@ -1,4 +1,8 @@
-import CompanionTheory.AutomorphicTheory.PadicCyclotomicFields.GcohCmpA
+module
+
+public import CompanionTheory.AutomorphicTheory.PadicCyclotomicFields.GcohCmpA
+
+@[expose] public section
 
 open CategoryTheory GroundTheory.ProfCoh ReciprocityTheory.Gal ValuativeRel
 

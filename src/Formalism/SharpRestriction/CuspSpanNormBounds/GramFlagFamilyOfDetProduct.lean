@@ -1,7 +1,11 @@
-import Formalism.HermitianLattices.StatementMass
-import Formalism.HermitianLattices.StatementLat
-import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.DifferentIdealMapNeBot
-import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.RowsCnt
+module
+
+public import Formalism.HermitianLattices.StatementMass
+public import Formalism.HermitianLattices.StatementLat
+public import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.DifferentIdealMapNeBot
+public import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.RowsCnt
+
+@[expose] public section
 
 noncomputable section
 

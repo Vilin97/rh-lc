@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GKModules.SmoothVectors
-import GroundTheory.AutomorphicForms.GKModules.ParametricIntegral
-import GroundTheory.AutomorphicForms.DixmierMalliavinBasic
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GKModules.SmoothVectors
+public import GroundTheory.AutomorphicForms.GKModules.ParametricIntegral
+public import GroundTheory.AutomorphicForms.DixmierMalliavinBasic
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

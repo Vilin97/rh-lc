@@ -1,19 +1,23 @@
-import Formalism.HermitianCurvature.StatementQ
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmBorderES
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmBorderFull
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmMove
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmSandwich
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnLevBasics
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnGlevImage
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnLevTransfer
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnRuleLeft
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnRuleTorus
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnTInv
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnTPres
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmCapComm
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnHermHaar
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.WeylCellRange.ReflectionMultiplicationOnBigCell
+module
+
+public import Formalism.HermitianCurvature.StatementQ
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmBorderES
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmBorderFull
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmMove
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmSandwich
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnLevBasics
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnGlevImage
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnLevTransfer
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnRuleLeft
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnRuleTorus
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnTInv
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnTPres
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmCapComm
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnHermHaar
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.WeylCellRange.ReflectionMultiplicationOnBigCell
+
+@[expose] public section
 
 theorem Formalism.FourierDecayAlt.P.border_first_expansion : Formalism.FourierDecayAlt.Q.BorderE := by
   exact quantum_minor_border_es.1

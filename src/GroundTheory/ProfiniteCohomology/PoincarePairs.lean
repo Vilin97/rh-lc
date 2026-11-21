@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.PoincarePairs.Devissage
-import GroundTheory.ProfiniteCohomology.PoincarePairs.MackeyCup
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.PoincarePairs.Devissage
+public import GroundTheory.ProfiniteCohomology.PoincarePairs.MackeyCup
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

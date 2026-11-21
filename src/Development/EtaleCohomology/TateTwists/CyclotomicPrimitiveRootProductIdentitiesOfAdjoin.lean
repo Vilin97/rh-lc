@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.TateTwists.PrimitiveRootsOfUnityBasicIdentities
+module
+
+public import Development.EtaleCohomology.TateTwists.PrimitiveRootsOfUnityBasicIdentities
+
+@[expose] public section
 
 open Polynomial Finset GlobalTheory.EtC
 

@@ -1,21 +1,25 @@
-import Formalism.WeightedDeltaMeans.LowerBoundLinearPower
-import Mathlib
-import Formalism.LocalToGlobal.LatticeGeometry.ShimuraSheafOfIndefiniteSubspace
-import Formalism.LocalToGlobal.LatticeGeometry.CompNe
-import Formalism.LocalToGlobal.LatticeGeometry.LevPrPrime
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.LocalRingCardinality.DataDIV
-import Formalism.SharpRestriction.ParConsts
-import Formalism.SharpRestriction.ParamsHeightRankConstant
-import Formalism.SharpRestriction.Divisibility.ModuliIntegralCharts
-import Formalism.SharpRestriction.Divisibility.BoundaryLocalData
-import Formalism.SharpRestriction.Divisibility.WeightThresholdDefs
-import Formalism.SharpRestriction.Divisibility.WeightAlgebra
-import Formalism.LocalRingCardinality.DataParams₂
-import Formalism.DegreeFormula.FlagDegFormula
-import Formalism.SharpRestriction.Divisibility.LatticeTransfer
-import Formalism.SharpRestriction.Divisibility.PrinLevClass
-import Formalism.LocalRingCardinality.HeightBoundGeFourthPowerRank
+module
+
+public import Formalism.WeightedDeltaMeans.LowerBoundLinearPower
+public import Mathlib
+public import Formalism.LocalToGlobal.LatticeGeometry.ShimuraSheafOfIndefiniteSubspace
+public import Formalism.LocalToGlobal.LatticeGeometry.CompNe
+public import Formalism.LocalToGlobal.LatticeGeometry.LevPrPrime
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.LocalRingCardinality.DataDIV
+public import Formalism.SharpRestriction.ParConsts
+public import Formalism.SharpRestriction.ParamsHeightRankConstant
+public import Formalism.SharpRestriction.Divisibility.ModuliIntegralCharts
+public import Formalism.SharpRestriction.Divisibility.BoundaryLocalData
+public import Formalism.SharpRestriction.Divisibility.WeightThresholdDefs
+public import Formalism.SharpRestriction.Divisibility.WeightAlgebra
+public import Formalism.LocalRingCardinality.DataParams₂
+public import Formalism.DegreeFormula.FlagDegFormula
+public import Formalism.SharpRestriction.Divisibility.LatticeTransfer
+public import Formalism.SharpRestriction.Divisibility.PrinLevClass
+public import Formalism.LocalRingCardinality.HeightBoundGeFourthPowerRank
+
+@[expose] public section
 
 noncomputable section
 

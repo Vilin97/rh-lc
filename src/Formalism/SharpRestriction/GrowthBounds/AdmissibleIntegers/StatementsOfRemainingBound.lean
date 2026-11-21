@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.WeilJacquetShalikaLaw
-import Formalism.SharpRestriction.GrowthBounds.TopChoiceBounds
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.WeilJacquetShalikaLaw
+public import Formalism.SharpRestriction.GrowthBounds.TopChoiceBounds
+
+@[expose] public section
 
 noncomputable section
 

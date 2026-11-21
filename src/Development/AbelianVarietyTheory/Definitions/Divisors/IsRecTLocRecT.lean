@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsIrreducibleFixed
-import CompanionTheory.EightfoldTheory.ZeroLevelTheory.LocalLanglands.Imports
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsIrreducibleFixed
+public import CompanionTheory.EightfoldTheory.ZeroLevelTheory.LocalLanglands.Imports
+
+@[expose] public section
 
 noncomputable section
 

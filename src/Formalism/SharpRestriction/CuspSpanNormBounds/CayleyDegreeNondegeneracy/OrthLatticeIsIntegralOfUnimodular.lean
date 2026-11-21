@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.ForPrimeFlagLattice
-import Formalism.SharpRestriction.CuspSpanNormBounds.LatticeGluingRadicals
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.ForPrimeFlagLattice
+public import Formalism.SharpRestriction.CuspSpanNormBounds.LatticeGluingRadicals
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Development.AbelianVarietyTheory.Statements.EllipticCurveLevels.IsQg
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.RestrictsSelf
+module
+
+public import Development.AbelianVarietyTheory.Statements.EllipticCurveLevels.IsQg
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.RestrictsSelf
+
+@[expose] public section
 
 noncomputable section
 

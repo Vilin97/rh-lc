@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.DataTheta
-import Formalism.LocalRingCardinality.SpanPowerMembership.Spaces
+module
+
+public import Formalism.LocalRingCardinality.DataTheta
+public import Formalism.LocalRingCardinality.SpanPowerMembership.Spaces
+
+@[expose] public section
 
 noncomputable section
 

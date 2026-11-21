@@ -1,5 +1,9 @@
-import Formalism.AdmissibleDesigns.RowDROfWpIso
-import Formalism.AdmissibleDesigns.RhoContOf
+module
+
+public import Formalism.AdmissibleDesigns.RowDROfWpIso
+public import Formalism.AdmissibleDesigns.RhoContOf
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core] [hH0Fin : Fact Formalism.MainNotions.N.K.H0.FinCore]
 

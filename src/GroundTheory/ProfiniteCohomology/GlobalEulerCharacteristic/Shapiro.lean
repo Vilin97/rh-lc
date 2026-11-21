@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.ShapiroRatio
-import GroundTheory.ProfiniteCohomology.RealPlaces.VanishingMackeyTransfer
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.ShapiroRatio
+public import GroundTheory.ProfiniteCohomology.RealPlaces.VanishingMackeyTransfer
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

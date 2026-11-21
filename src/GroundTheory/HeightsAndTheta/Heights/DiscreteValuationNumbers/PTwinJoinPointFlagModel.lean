@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTerTer
-import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsBisRest
-import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTerMore
-import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTerExtra
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTerTer
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsBisRest
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTerMore
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTerExtra
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

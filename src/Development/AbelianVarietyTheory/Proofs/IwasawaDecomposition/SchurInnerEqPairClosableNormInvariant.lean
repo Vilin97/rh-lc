@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.InnerOfNormEq
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.InnerOfNormEq
+
+@[expose] public section
+
 open Filter
 open scoped InnerProductSpace Topology
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.UnipotentAdelicQuotients.EllReg
+module
+
+public import Mathlib
+public import Formalism.UnipotentAdelicQuotients.EllReg
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.Divisibility.OrbitPlaces
-import Formalism.LocalRingCardinality.HostCls
+module
+
+public import Formalism.SharpRestriction.Divisibility.OrbitPlaces
+public import Formalism.LocalRingCardinality.HostCls
+
+@[expose] public section
 
 noncomputable section
 

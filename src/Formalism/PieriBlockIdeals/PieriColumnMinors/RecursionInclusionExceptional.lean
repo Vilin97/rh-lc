@@ -1,10 +1,14 @@
-import Formalism.PieriBlockIdeals.StatementE
-import Formalism.PieriBlockIdeals.PieriColumnMinors.WeightBounds
-import Formalism.PieriBlockIdeals.PieriColumnMinors.LargeParameterEstimates
-import Formalism.PieriBlockIdeals.PieriColumnMinors.CorollaryOfParamsSevenLinkageAlt
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.AuxStatement14
-import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.RamBasic
-import Formalism.PieriBlockIdeals.PieriColumnMinors.ProdInitialMinorsMemDetSpan
+module
+
+public import Formalism.PieriBlockIdeals.StatementE
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.WeightBounds
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.LargeParameterEstimates
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.CorollaryOfParamsSevenLinkageAlt
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.AuxStatement14
+public import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.RamBasic
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.ProdInitialMinorsMemDetSpan
+
+@[expose] public section
 
 noncomputable section
 

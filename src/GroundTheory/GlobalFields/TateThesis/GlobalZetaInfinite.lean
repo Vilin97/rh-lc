@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.IdeleMeasure
-import GroundTheory.GlobalFields.TateThesis.SchwartzBruhat
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.IdeleMeasure
+public import GroundTheory.GlobalFields.TateThesis.SchwartzBruhat
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter MeasureTheory NumberField.mixedEmbedding
 open scoped NumberField.AdeleRing ENNReal NNReal SchwartzMap Classical

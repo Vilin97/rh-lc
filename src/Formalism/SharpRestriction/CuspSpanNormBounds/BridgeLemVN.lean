@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeLemVC
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeLemVC
+
+@[expose] public section
 
 noncomputable section
 

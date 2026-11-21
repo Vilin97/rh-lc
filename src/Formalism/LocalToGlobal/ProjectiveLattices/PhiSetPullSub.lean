@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.ResChPrime
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.ResChPrime
+
+@[expose] public section
 
 noncomputable section
 

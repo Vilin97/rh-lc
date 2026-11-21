@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.IndependenceBoundRaw
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.IndependenceBoundRaw
+
+@[expose] public section
 
 open scoped BigOperators
 open Classical

@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.WhittakerDistribution
-import GroundTheory.AutomorphicForms.WhittakerCriterion
-import GroundTheory.AutomorphicForms.MeasuresGL
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.WhittakerDistribution
+public import GroundTheory.AutomorphicForms.WhittakerCriterion
+public import GroundTheory.AutomorphicForms.MeasuresGL
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

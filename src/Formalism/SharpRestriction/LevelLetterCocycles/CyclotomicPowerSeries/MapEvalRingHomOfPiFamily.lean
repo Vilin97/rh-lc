@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.ConstantCoeffAeval
-import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.CycloSimple
-import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.CycloDist
-import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.PiSeries
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.ConstantCoeffAeval
+public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.CycloSimple
+public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.CycloDist
+public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.PiSeries
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.HeckeChar
-import GroundTheory.GlobalFields.TateThesis.ArchCharsUnitary
-import GroundTheory.GlobalFields.IdeleGroups.UnitBound
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.HeckeChar
+public import GroundTheory.GlobalFields.TateThesis.ArchCharsUnitary
+public import GroundTheory.GlobalFields.IdeleGroups.UnitBound
+
+@[expose] public section
 
 open Topology Filter NumberField IsDedekindDomain Function Complex
 open scoped NumberField.AdeleRing

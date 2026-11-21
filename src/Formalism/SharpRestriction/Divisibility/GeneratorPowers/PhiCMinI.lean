@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinB
-import Mathlib
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinB
+public import Mathlib
+
+@[expose] public section
 
 set_option autoImplicit false
 

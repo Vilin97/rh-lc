@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.ColForms
-import Formalism.LocalToGlobal.Columns.ColFormsLemmas
-import Formalism.LocalToGlobal.Columns.ScaledRamifiedLattice
-import Formalism.LocalToGlobal.Columns.RowForms
-import Formalism.LocalToGlobal.Columns.RowFormsSym
-import Formalism.LocalToGlobal.Columns.CoefModB
-import Formalism.SizeWindowBrackets.SlopesHypothesisFinitePlaces
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.ColForms
+public import Formalism.LocalToGlobal.Columns.ColFormsLemmas
+public import Formalism.LocalToGlobal.Columns.ScaledRamifiedLattice
+public import Formalism.LocalToGlobal.Columns.RowForms
+public import Formalism.LocalToGlobal.Columns.RowFormsSym
+public import Formalism.LocalToGlobal.Columns.CoefModB
+public import Formalism.SizeWindowBrackets.SlopesHypothesisFinitePlaces
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module MvPolynomial
 

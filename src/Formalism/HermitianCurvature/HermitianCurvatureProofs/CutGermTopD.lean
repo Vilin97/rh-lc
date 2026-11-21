@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGermTopVec
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormSumLeOfGram
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.OneSubPowLe
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGermTopVec
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormSumLeOfGram
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OneSubPowLe
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP.GT
 

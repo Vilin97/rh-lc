@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FixedPointsGramVector
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FixedPointsGramVector
+
+@[expose] public section
 
 open Matrix Formalism.FourierDecayAlt Formalism.QuantumDeterminants
 open scoped ComplexConjugate

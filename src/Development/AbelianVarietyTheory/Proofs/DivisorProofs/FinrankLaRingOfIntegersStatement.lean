@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankLaRingOfIntegers
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSplittingFw
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankLaRingOfIntegers
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSplittingFw
+
+@[expose] public section
+
 open NumberField GlobalTheory.UPel.HT
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.finrank_La_ringOfIntegers' : ∀ {p : ℕ} [Fact p.Prime] (D : GlobalTheory.UPel.HT.Datum p), letI : Module (𝓞 D.F) D.La := Module.compHom D.La (algebraMap (𝓞 D.F) D.O); Module.finrank (𝓞 D.F) D.La = D.m * D.n := by

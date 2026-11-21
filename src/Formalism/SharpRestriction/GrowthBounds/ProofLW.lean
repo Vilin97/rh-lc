@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.StmtNumFEx
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.StmtNumFEx
+
+@[expose] public section
 
 noncomputable section
 

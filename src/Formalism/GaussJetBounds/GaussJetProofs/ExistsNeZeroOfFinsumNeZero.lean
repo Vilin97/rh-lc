@@ -1,5 +1,9 @@
-import Formalism.GaussJetBounds.GenLogInverse
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.HomWProd
+module
+
+public import Formalism.GaussJetBounds.GenLogInverse
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.HomWProd
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

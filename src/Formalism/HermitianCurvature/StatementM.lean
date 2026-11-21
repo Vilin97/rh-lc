@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.StatementFr
+module
+
+public import Formalism.HermitianCurvature.StatementFr
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.M
 

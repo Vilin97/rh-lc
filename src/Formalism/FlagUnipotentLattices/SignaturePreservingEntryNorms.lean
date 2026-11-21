@@ -1,8 +1,12 @@
-import Formalism.FlagUnipotentLattices.DetIndexProductHyperbolicInequality
-import Formalism.FlagUnipotentLattices.DetIndexProductPlacesInequalitySq
-import Mathlib
-import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.LocalIntegralStructure
-import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.ComplexMultiplicationRoot
+module
+
+public import Formalism.FlagUnipotentLattices.DetIndexProductHyperbolicInequality
+public import Formalism.FlagUnipotentLattices.DetIndexProductPlacesInequalitySq
+public import Mathlib
+public import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.LocalIntegralStructure
+public import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.ComplexMultiplicationRoot
+
+@[expose] public section
 
 namespace Formalism.HermitianLatticeCounting.Final.LocalIntegralStructure
 

@@ -1,10 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsLineStabHaar
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsSemidirectHaar
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsUnitsInvHaar
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsTorusEmbedding
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsLineEigenvalue
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsTorusModulus
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsLineStabHaar
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsSemidirectHaar
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsUnitsInvHaar
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsTorusEmbedding
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsLineEigenvalue
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsTorusModulus
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights.FiniteCovolume
 

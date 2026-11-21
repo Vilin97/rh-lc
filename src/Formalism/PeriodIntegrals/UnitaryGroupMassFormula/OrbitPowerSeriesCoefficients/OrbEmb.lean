@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.OrbRestr
+module
+
+public import Formalism.PeriodIntegrals.OrbRestr
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.DivisorCycles.CycleCount
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.NormalizedMatrixSpan
+module
+
+public import Development.EtaleCohomology.DivisorCycles.CycleCount
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.NormalizedMatrixSpan
+
+@[expose] public section
 
 open Matrix
 

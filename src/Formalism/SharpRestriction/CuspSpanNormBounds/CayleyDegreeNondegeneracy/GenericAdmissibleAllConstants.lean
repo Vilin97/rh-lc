@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.MassAndBranchingHypotheses
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.FamilyPacketOfEquivalentStatement
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.MinkowskiDividesFactorialOfBound
-import Formalism.FlagUnipotentLattices.CardSubgroupsOfIndexLe
-import Formalism.SharpRestriction.CuspSpanNormBounds.AutLzFiniteOfLoop
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.MassAndBranchingHypotheses
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.FamilyPacketOfEquivalentStatement
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.MinkowskiDividesFactorialOfBound
+public import Formalism.FlagUnipotentLattices.CardSubgroupsOfIndexLe
+public import Formalism.SharpRestriction.CuspSpanNormBounds.AutLzFiniteOfLoop
+
+@[expose] public section
 
 noncomputable section
 

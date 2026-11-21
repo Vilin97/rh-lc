@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.HilbertRowConditions.ColumnsFunctionAtSubspaces
-import Formalism.LocalToGlobal.IndefiniteForms.IndefUse
-import Formalism.LocalToGlobal.Divisibility.TrivialExtensionSideWellFormed
-import Formalism.SharpRestriction.LevelLetterCocycles.ThetaScalarFamilyOfEigenvalue
-import Mathlib
+module
+
+public import Formalism.LocalToGlobal.HilbertRowConditions.ColumnsFunctionAtSubspaces
+public import Formalism.LocalToGlobal.IndefiniteForms.IndefUse
+public import Formalism.LocalToGlobal.Divisibility.TrivialExtensionSideWellFormed
+public import Formalism.SharpRestriction.LevelLetterCocycles.ThetaScalarFamilyOfEigenvalue
+public import Mathlib
+
+@[expose] public section
 
 noncomputable section
 

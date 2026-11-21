@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
-import Formalism.SharpRestriction.LevelLetterCocycles.LocCoh
-import GroundTheory.PAdicHodge.BCrisRegularFinal
-import GroundTheory.PAdicHodge.FundamentalSeqBCris
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.NonemptyThetaLOfTied
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.FilQuot
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.InvRestrictScalarsMem
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocCoh
+public import GroundTheory.PAdicHodge.BCrisRegularFinal
+public import GroundTheory.PAdicHodge.FundamentalSeqBCris
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.NonemptyThetaLOfTied
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.FilQuot
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.InvRestrictScalarsMem
+
+@[expose] public section
 
 noncomputable section
 

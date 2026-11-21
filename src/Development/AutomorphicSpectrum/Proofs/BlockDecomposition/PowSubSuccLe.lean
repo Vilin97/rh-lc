@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.FormalFunctions
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.FinitenessStep
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperFiniteness
-import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.FormalAlgebraisation.GEClosedProj
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.FormalFunctions
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.FinitenessStep
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperFiniteness
+public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.FormalAlgebraisation.GEClosedProj
+
+@[expose] public section
 
 set_option autoImplicit false
 

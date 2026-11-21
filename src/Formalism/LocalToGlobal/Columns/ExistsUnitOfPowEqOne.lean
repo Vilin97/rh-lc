@@ -1,17 +1,21 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.AbelianHostFieldConditions
-import Formalism.LocalToGlobal.Columns.RowForms
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.TypesDefs
-import Formalism.LocalToGlobal.Divisibility.GoodPartHermitianSpec
-import Formalism.LocalToGlobal.Columns.GoodXgFin
-import Formalism.LocalToGlobal.Divisibility.ProjLemmas
-import Formalism.PadicSubsetSums.StableGradedCounts.IRRFrobOrbitIrred
-import Formalism.PadicSubsetSums.StableGradedCounts.IRRPrimeRecipSum
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IrreducibleCharacterSeries.CharacterEqOfRepIso
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IrreducibleCharacterSeries.ConjugateCharacterFormula
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IrreducibleCharacterSeries.FrobeniusSumFormula
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GreenLabelSurjective.Simple
-import Formalism.PadicSubsetSums.CentralIdempotents.IsConstituent
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.AbelianHostFieldConditions
+public import Formalism.LocalToGlobal.Columns.RowForms
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.TypesDefs
+public import Formalism.LocalToGlobal.Divisibility.GoodPartHermitianSpec
+public import Formalism.LocalToGlobal.Columns.GoodXgFin
+public import Formalism.LocalToGlobal.Divisibility.ProjLemmas
+public import Formalism.PadicSubsetSums.StableGradedCounts.IRRFrobOrbitIrred
+public import Formalism.PadicSubsetSums.StableGradedCounts.IRRPrimeRecipSum
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IrreducibleCharacterSeries.CharacterEqOfRepIso
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IrreducibleCharacterSeries.ConjugateCharacterFormula
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IrreducibleCharacterSeries.FrobeniusSumFormula
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GreenLabelSurjective.Simple
+public import Formalism.PadicSubsetSums.CentralIdempotents.IsConstituent
+
+@[expose] public section
 
 open Polynomial CategoryTheory NumberField
 

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.Analytic
-import Formalism.StatementOC
+module
+
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.Analytic
+public import Formalism.StatementOC
+
+@[expose] public section
 
 noncomputable section
 

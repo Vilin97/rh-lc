@@ -1,13 +1,17 @@
-import Formalism.SizeWindowBrackets.GrowthBoundGivesRiemannHypothesis
-import Formalism.StatementOC
-import Mathlib.NumberTheory.LSeries.RiemannZeta
-import Formalism.ZetaNonvanishing.ZetaLandau
-import Formalism.ZetaRealNonvanish
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.StronglyIrreducible
-import Formalism.ThickAverageLoss.ThickAverageProofs.Balance
-import Formalism.ThickAverageLoss.ThickAverageProofs.ThickAverage
-import Formalism.ZetaNonvanishing.GzLipschitz
-import Mathlib.NumberTheory.Chebyshev
+module
+
+public import Formalism.SizeWindowBrackets.GrowthBoundGivesRiemannHypothesis
+public import Formalism.StatementOC
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+public import Formalism.ZetaNonvanishing.ZetaLandau
+public import Formalism.ZetaRealNonvanish
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.StronglyIrreducible
+public import Formalism.ThickAverageLoss.ThickAverageProofs.Balance
+public import Formalism.ThickAverageLoss.ThickAverageProofs.ThickAverage
+public import Formalism.ZetaNonvanishing.GzLipschitz
+public import Mathlib.NumberTheory.Chebyshev
+
+@[expose] public section
 
 open Finset ArithmeticFunction
 

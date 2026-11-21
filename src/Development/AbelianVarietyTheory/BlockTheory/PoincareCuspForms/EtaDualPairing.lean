@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.SeriesState
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.SeriesState
+
+@[expose] public section
 
 noncomputable section
 

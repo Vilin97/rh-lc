@@ -1,4 +1,8 @@
-import Formalism.FilteredPoleLength.ReducedBasisBounds.ReductionQuotient
+module
+
+public import Formalism.FilteredPoleLength.ReducedBasisBounds.ReductionQuotient
+
+@[expose] public section
 
 namespace Formalism.LatticeBaseChangeAlt
 

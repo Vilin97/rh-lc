@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.Columns.TiedRec
-import Formalism.LocalToGlobal.Columns.Record
-import Formalism.LocalToGlobal.Columns.RecLevelStep
-import Formalism.LocalToGlobal.Columns.RowFormsLemmas
+module
+
+public import Formalism.LocalToGlobal.Columns.TiedRec
+public import Formalism.LocalToGlobal.Columns.Record
+public import Formalism.LocalToGlobal.Columns.RecLevelStep
+public import Formalism.LocalToGlobal.Columns.RowFormsLemmas
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 open scoped TensorProduct

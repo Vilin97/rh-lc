@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.ExpFactIoExp
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.ExpFactIoExp
+
+@[expose] public section
 
 noncomputable section
 

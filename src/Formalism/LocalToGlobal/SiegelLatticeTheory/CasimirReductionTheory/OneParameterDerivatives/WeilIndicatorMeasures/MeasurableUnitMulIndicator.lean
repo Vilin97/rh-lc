@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 open MeasureTheory Measure Topology Set Filter
 open scoped ENNReal NNReal Pointwise

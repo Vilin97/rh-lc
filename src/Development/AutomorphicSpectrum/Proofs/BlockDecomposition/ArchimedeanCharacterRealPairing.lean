@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LastRowMulRowGLInv
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContinuousSInf
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LastRowMulRowGLInv
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContinuousSInf
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL6.EqOneOfCoprimeTorsionTwoPrimes
-import Formalism.LocalToGlobal.GlobalTheory.GL6.RamifiedRankEqFinrank
-import Formalism.LocalToGlobal.GlobalTheory.GL6.Statement
-import Formalism.HarderNarasimhan.ShiftInvariance
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ClearDenominatorsLattice
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.EqOneOfCoprimeTorsionTwoPrimes
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.RamifiedRankEqFinrank
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.Statement
+public import Formalism.HarderNarasimhan.ShiftInvariance
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ClearDenominatorsLattice
+
+@[expose] public section
 
 noncomputable section
 

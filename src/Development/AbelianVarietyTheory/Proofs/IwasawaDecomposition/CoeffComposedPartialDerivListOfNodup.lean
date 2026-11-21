@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.InterPolyProdSum
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BlockSymApply
-import ReciprocityTheory.DualLattices.DetPolyMulCayleyOmegaPow
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BlockGraph
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.InterPolyProdSum
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BlockSymApply
+public import ReciprocityTheory.DualLattices.DetPolyMulCayleyOmegaPow
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BlockGraph
+
+@[expose] public section
 
 set_option autoImplicit false
 

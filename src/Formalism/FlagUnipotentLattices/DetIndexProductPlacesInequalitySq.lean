@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.HyperbolicPlaceProducts.Statement
-import Formalism.HyperbolicPlaceProducts.DetIndexProductHyperbolicInequality
-import Formalism.FlagUnipotentLattices.DetIndexProductHyperbolicInequality
+module
+
+public import Mathlib
+public import Formalism.HyperbolicPlaceProducts.Statement
+public import Formalism.HyperbolicPlaceProducts.DetIndexProductHyperbolicInequality
+public import Formalism.FlagUnipotentLattices.DetIndexProductHyperbolicInequality
+
+@[expose] public section
 
 open Module NumberField nonZeroDivisors
 

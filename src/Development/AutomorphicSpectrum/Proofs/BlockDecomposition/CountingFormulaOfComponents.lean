@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.BaseOneSide.PsiSide
-import Development.WeilBound.CoreStatements.ThetaDilations.SdTransport
-import Formalism.SharpRestriction.Divisibility.SlopeExcess.SummableAbsNormRpow
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.BaseOneSide.PsiSide
+public import Development.WeilBound.CoreStatements.ThetaDilations.SdTransport
+public import Formalism.SharpRestriction.Divisibility.SlopeExcess.SummableAbsNormRpow
+
+@[expose] public section
 
 noncomputable section
 

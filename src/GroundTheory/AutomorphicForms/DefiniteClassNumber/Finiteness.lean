@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.DefiniteClassNumber.IsIntegralVecCoordsOfRatCoordsSingle
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.DefiniteClassNumber.IsIntegralVecCoordsOfRatCoordsSingle
+
+@[expose] public section
 
 noncomputable section
 

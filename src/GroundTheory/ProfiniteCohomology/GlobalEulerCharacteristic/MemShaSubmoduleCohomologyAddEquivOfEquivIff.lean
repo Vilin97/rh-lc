@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.ShaTwist
-import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.KummerShaOpen
-import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.Kummer
-import GroundTheory.ProfiniteCohomology.LocalEulerCharacteristic.Coprime
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.Finite
-import GroundTheory.ProfiniteCohomology.PoitouTate.ZmodToQZCompactCohomologyResMapOfLocalInv
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.ShaTwist
+public import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.KummerShaOpen
+public import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.Kummer
+public import GroundTheory.ProfiniteCohomology.LocalEulerCharacteristic.Coprime
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.Finite
+public import GroundTheory.ProfiniteCohomology.PoitouTate.ZmodToQZCompactCohomologyResMapOfLocalInv
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

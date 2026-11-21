@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.RestrictedHaarProduct
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.RestrictedHaarProduct
+
+@[expose] public section
 
 open MeasureTheory Filter Set Topology
 open scoped ENNReal RestrictedProduct

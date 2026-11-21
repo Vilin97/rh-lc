@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.NsmulKerZero
+module
+
+public import ReciprocityTheory.DualLattices.NsmulKerZero
+
+@[expose] public section
 
 noncomputable section
 

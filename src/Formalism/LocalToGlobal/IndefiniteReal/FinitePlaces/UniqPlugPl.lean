@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.SecondCharacterFact
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.SecondCharacterFact
+
+@[expose] public section
 
 noncomputable section
 

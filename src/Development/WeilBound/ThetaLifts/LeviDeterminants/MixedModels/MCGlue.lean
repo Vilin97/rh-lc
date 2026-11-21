@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.PureSt
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.IndicatorMem
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfActs
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfDictAd
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfDictMod
+module
+
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.PureSt
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.IndicatorMem
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfActs
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfDictAd
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfDictMod
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.ExistsGaugeMeasureForEachRank
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CircleGaugeAction.DglApplyOff
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CircleGaugeAction.OfRealCoordsSmulCenterCoord
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.ExistsGaugeMeasureForEachRank
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CircleGaugeAction.DglApplyOff
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CircleGaugeAction.OfRealCoordsSmulCenterCoord
+
+@[expose] public section
 
 noncomputable section
 

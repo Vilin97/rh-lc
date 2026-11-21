@@ -1,5 +1,9 @@
-import Mathlib
-import Lemmata.PowerApplication.PowApp
+module
+
+public import Mathlib
+public import Lemmata.PowerApplication.PowApp
+
+@[expose] public section
 
 noncomputable section
 

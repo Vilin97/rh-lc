@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsResolutionImageSup
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsChartSup
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PResolutionSupBound
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsResolutionImageSup
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsChartSup
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PResolutionSupBound
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

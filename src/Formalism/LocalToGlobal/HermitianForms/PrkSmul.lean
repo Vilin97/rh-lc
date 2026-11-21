@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.HermitianForms.TiedStep
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.TiedStep
+
+@[expose] public section
 
 noncomputable section
 

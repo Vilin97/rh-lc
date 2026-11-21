@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.ScalarOnPartsFull
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.ScalarOnPartsFull
+
+@[expose] public section
 
 noncomputable section
 

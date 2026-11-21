@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ExistsIsCGBases
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ExistsIsCGBases
+
+@[expose] public section
 
 noncomputable section
 

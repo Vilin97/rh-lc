@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.BlockKernelPropertiesOfSteps
+module
+
+public import Formalism.HermitianCurvature.BlockKernelPropertiesOfSteps
+
+@[expose] public section
 
 open Formalism.DoubleCosetMeasures Formalism.FourierDecayAlt.A5 Matrix
 open scoped ComplexConjugate

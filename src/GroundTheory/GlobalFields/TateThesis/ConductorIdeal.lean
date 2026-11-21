@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.Conductor
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.Conductor
+
+@[expose] public section
 
 open Topology Filter NumberField IsDedekindDomain Function
 open scoped NumberField.AdeleRing

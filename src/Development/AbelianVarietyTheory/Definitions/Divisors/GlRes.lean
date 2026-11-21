@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExpoConjOfIsCsd
-import GroundTheory.AutomorphicForms.GKModules.RightRegular
-import GroundTheory.AutomorphicForms.HarishChandraRegularity.CartanBasis
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExpoConjOfIsCsd
+public import GroundTheory.AutomorphicForms.GKModules.RightRegular
+public import GroundTheory.AutomorphicForms.HarishChandraRegularity.CartanBasis
+
+@[expose] public section
 
 noncomputable section
 

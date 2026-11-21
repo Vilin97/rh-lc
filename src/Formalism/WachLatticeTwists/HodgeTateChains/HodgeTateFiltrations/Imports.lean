@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.HodgeTateChains.InvariantsCohomologyData
-import Formalism.WachLatticeTwists.HodgeTateChains.HodgeTateFiltrations.InverseOperatorFromInjectivity
+module
+
+public import Formalism.WachLatticeTwists.HodgeTateChains.InvariantsCohomologyData
+public import Formalism.WachLatticeTwists.HodgeTateChains.HodgeTateFiltrations.InverseOperatorFromInjectivity
+
+@[expose] public section
 
 noncomputable section
 

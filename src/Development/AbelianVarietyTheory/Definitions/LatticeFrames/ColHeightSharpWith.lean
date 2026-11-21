@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CosetRefinement
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TopPlaceLogTheta
-import Formalism.LocalToGlobal.Columns.ToHLat
-import Formalism.HarderNarasimhan.QuotRealize
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CosetRefinement
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TopPlaceLogTheta
+public import Formalism.LocalToGlobal.Columns.ToHLat
+public import Formalism.HarderNarasimhan.QuotRealize
+
+@[expose] public section
 
 noncomputable section
 

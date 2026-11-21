@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSERDSOpRGrp
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSERDSPolyProp
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSERDSOpRGrp
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSERDSPolyProp
+
+@[expose] public section
 
 open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt Formalism.FourierDecayAlt.B Formalism.FourierDecayAlt.P.BetaSesquilinearity
 

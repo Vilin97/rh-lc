@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualStackedExcLead
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DenominatorOfSpan
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsExtraLast
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualStackedExcLead
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DenominatorOfSpan
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsExtraLast
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open GroundTheory.Heights₂.Heights ReciprocityTheory.ChartRestriction.G.Geo MvPolynomial NumberField

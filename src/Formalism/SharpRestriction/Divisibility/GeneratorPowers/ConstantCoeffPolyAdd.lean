@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndEncPf
-import Formalism.LocalToGlobal.ProjectiveLattices.IsExpChart
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.KillAdd
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndEncPf
+public import Formalism.LocalToGlobal.ProjectiveLattices.IsExpChart
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.KillAdd
+
+@[expose] public section
 
 set_option autoImplicit false
 

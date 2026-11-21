@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.ProductFirstZerothParts
-import Formalism.SharpRestriction.Divisibility.LocalQuadraticParts
-import Formalism.LocalRingCardinality.Lemmas
-import Formalism.LocalRingCardinality.DataForced
-import Formalism.LocalRingCardinality.DataParams
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.ProductFirstZerothParts
+public import Formalism.SharpRestriction.Divisibility.LocalQuadraticParts
+public import Formalism.LocalRingCardinality.Lemmas
+public import Formalism.LocalRingCardinality.DataForced
+public import Formalism.LocalRingCardinality.DataParams
+
+@[expose] public section
 
 noncomputable section
 

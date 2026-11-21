@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalRingCardinality.Params
-import Formalism.ThetaLiftIndependence.Statement
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.Params
+public import Formalism.ThetaLiftIndependence.Statement
+
+@[expose] public section
 
 namespace Formalism.BasicNotions
 

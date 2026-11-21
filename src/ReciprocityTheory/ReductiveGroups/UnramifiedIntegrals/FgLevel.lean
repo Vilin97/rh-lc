@@ -1,9 +1,13 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgAnLat
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgTorInt
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgAnTwo
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.KapUnit
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.NormNatCastClOfNotDvd
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgAnLat
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgTorInt
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgAnTwo
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.KapUnit
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.NormNatCastClOfNotDvd
+
+@[expose] public section
 
 noncomputable section
 

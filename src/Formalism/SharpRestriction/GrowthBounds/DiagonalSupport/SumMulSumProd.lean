@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.RestValBdG
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.RestValBdG
+
+@[expose] public section
 
 noncomputable section
 

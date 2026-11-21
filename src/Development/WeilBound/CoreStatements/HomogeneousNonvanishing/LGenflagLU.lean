@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IsGenericFlag
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IsGenericFlag
+
+@[expose] public section
+
 open GlobalTheory.CompanionTheory.Ar Matrix
 
 namespace PositivityTheory.UnitarySelfGeneration.GF

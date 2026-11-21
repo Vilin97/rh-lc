@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ActsLinOfSplitLin
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemUniq
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.TendstoCut
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ActsLinOfSplitLin
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemUniq
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.TendstoCut
+
+@[expose] public section
 
 noncomputable section
 

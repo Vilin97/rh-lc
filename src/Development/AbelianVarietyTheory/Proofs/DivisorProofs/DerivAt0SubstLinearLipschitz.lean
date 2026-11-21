@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Foundations.IsSatFrame
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.IsSatFrame
+
+@[expose] public section
 
 open MvPowerSeries ReciprocityTheory.PGsh GlobalTheory.FGDepth
 

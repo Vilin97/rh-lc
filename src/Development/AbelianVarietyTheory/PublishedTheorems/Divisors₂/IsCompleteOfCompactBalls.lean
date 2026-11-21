@@ -1,8 +1,12 @@
-import Mathlib
-import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.GROWCountStatement
-import ReciprocityTheory.L2DbarEstimates.LeviForms.LogNormSq
-import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.AApproxF
-import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.CommFderivApply
+module
+
+public import Mathlib
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.GROWCountStatement
+public import ReciprocityTheory.L2DbarEstimates.LeviForms.LogNormSq
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.AApproxF
+public import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.CommFderivApply
+
+@[expose] public section
 
 namespace GlobalTheory.L2Kaehler
 

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.IntegrableOnIntegrand
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.IntegrableOnIntegrand
+
+@[expose] public section
 
 set_option autoImplicit false
 

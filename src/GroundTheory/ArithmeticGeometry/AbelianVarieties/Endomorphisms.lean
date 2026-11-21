@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualQuadratic
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualQuadratic
+
+@[expose] public section
 
 namespace GroundTheory.Arith.Abelian
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataParams
-import Formalism.LocalToGlobal.ProjectiveLattices.FullExists
-import Formalism.LocalToGlobal.ProjectiveLattices.RecPJThAllNeBot
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataParams
+public import Formalism.LocalToGlobal.ProjectiveLattices.FullExists
+public import Formalism.LocalToGlobal.ProjectiveLattices.RecPJThAllNeBot
+
+@[expose] public section
 
 noncomputable section
 

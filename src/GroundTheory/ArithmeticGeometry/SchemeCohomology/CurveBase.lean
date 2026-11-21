@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechNaturality.Linear
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.WeilDivisorSheaf
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechNaturality.Linear
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.WeilDivisorSheaf
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open CategoryTheory AlgebraicGeometry Order Topology

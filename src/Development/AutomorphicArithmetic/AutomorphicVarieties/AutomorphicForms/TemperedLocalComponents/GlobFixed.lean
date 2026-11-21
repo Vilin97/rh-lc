@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.Hypotheses2
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.LocIsotypic
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SubgroupFixed
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.Hypotheses2
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.LocIsotypic
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SubgroupFixed
+
+@[expose] public section
 
 open NumberField IsDedekindDomain GlobalTheory.CuspRep Filter Topology Matrix
 

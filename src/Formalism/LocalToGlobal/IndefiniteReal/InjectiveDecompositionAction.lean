@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.IsWeilDatum
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.IsWeilDatum
+
+@[expose] public section
 
 noncomputable section
 

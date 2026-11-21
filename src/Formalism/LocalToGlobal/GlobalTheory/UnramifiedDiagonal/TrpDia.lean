@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.UnramifiedDiagonal.DiaSame
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.UnramifiedDiagonal.DiaSame
+
+@[expose] public section
 
 noncomputable section
 

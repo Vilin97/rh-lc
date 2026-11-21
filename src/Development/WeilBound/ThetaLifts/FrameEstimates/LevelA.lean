@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.FrameEstimates.LatMeas
-import Development.WeilBound.ThetaLifts.LeviDeterminants.GrowFin
+module
+
+public import Development.WeilBound.ThetaLifts.FrameEstimates.LatMeas
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.GrowFin
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.PolynomialDimension.DigitSumValuationBound
-import Formalism.PolynomialDimension.MultinomialDepth.SegmentBoundThreeHolds
+module
+
+public import Formalism.PolynomialDimension.DigitSumValuationBound
+public import Formalism.PolynomialDimension.MultinomialDepth.SegmentBoundThreeHolds
+
+@[expose] public section
 
 namespace Formalism.CountingSumsFrames.Top
 

@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ResidueEqZeroIffV
-import Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.FlatGenInjective
-import Development.AbelianVarietyTheory.Counterexamples.JetSurvey.BilLActRight
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.HolomorphicFamilies.EigDirInt
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.FrTanDir
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ResidueEqZeroIffV
+public import Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.FlatGenInjective
+public import Development.AbelianVarietyTheory.Counterexamples.JetSurvey.BilLActRight
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.HolomorphicFamilies.EigDirInt
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.FrTanDir
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.LocalFields.Different
-import GroundTheory.LocalFields.LowerIndexQuotient
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MinpolyProductMap
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.Different
+public import GroundTheory.LocalFields.LowerIndexQuotient
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MinpolyProductMap
+
+@[expose] public section
 
 noncomputable section
 

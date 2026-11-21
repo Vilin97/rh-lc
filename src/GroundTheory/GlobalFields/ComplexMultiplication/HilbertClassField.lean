@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.HilbertClassFieldArtin
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.HilbertClassFieldArtin
+
+@[expose] public section
 
 private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
   carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}

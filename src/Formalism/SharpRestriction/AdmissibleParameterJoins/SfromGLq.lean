@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLp
-import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLe
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLp
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLe
+
+@[expose] public section
 
 noncomputable section
 

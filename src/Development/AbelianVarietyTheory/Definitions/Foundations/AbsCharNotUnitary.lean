@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.UnitaryNorms.MemFIffReal
-import Development.AbelianVarietyTheory.Definitions.Foundations.ValuedAlgebraMapEqOne
-import Development.AbelianVarietyTheory.Definitions.Foundations.DiagUnitsEqLocalIdele
-import Development.AbelianVarietyTheory.Definitions.Foundations.IsUnitaryOfOrder
-import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ExistsUniqueIdeleOfLinearEquivQuotientLocal
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.UnitaryNorms.MemFIffReal
+public import Development.AbelianVarietyTheory.Definitions.Foundations.ValuedAlgebraMapEqOne
+public import Development.AbelianVarietyTheory.Definitions.Foundations.DiagUnitsEqLocalIdele
+public import Development.AbelianVarietyTheory.Definitions.Foundations.IsUnitaryOfOrder
+public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.ExistsUniqueIdeleOfLinearEquivQuotientLocal
+
+@[expose] public section
 
 noncomputable section
 

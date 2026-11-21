@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.LubinTateTowerMaps
-import GroundTheory.LocalFields.ExamplesLaurent
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LubinTateTowerMaps
+public import GroundTheory.LocalFields.ExamplesLaurent
+
+@[expose] public section
 
 noncomputable section
 

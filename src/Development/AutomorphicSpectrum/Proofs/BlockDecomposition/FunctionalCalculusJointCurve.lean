@@ -1,9 +1,13 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.FriedrichsKernels.Friedrichs
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContDiffOnUncurryOfFrame
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WordSmooth
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContinuousOnFderivApply
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DerivativeAsRightWords
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.FriedrichsKernels.Friedrichs
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContDiffOnUncurryOfFrame
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.WordSmooth
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContinuousOnFderivApply
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DerivativeAsRightWords
+
+@[expose] public section
 
 noncomputable section
 

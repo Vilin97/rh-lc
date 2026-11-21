@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.JetGauges.BalancedHermitianSpace
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.JetGauges.BalancedHermitianSpace
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

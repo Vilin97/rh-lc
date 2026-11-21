@@ -1,5 +1,9 @@
-import PositivityTheory.AutomorphicForms.PublishedInputs.JacquetLanglands.RealArchimedeanBounds.ATrans
-import Mathlib.NumberTheory.NumberField.ProductFormula
+module
+
+public import PositivityTheory.AutomorphicForms.PublishedInputs.JacquetLanglands.RealArchimedeanBounds.ATrans
+public import Mathlib.NumberTheory.NumberField.ProductFormula
+
+@[expose] public section
 
 noncomputable section
 

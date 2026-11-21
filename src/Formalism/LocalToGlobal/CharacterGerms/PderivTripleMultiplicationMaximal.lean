@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.TripleMultiplicationConstantCoeff
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.TripleMultiplicationConstantCoeff
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,7 +1,11 @@
-import Formalism.SizeWindowBrackets.SChain
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.LevelOfCongruence
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.LipschitzWeightAndMinimum
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.SubThreeMulLogTwoLe
+module
+
+public import Formalism.SizeWindowBrackets.SChain
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.LevelOfCongruence
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.LipschitzWeightAndMinimum
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.SubThreeMulLogTwoLe
+
+@[expose] public section
 
 open Finset
 

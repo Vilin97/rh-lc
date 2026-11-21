@@ -1,6 +1,10 @@
-import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.LatticeSumBounds
-import Formalism.HyperbolicPlaceProducts.SecondLevelArithmeticNorm
-import Formalism.HyperbolicPlaceProducts.ArithmeticCountRevised
+module
+
+public import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.LatticeSumBounds
+public import Formalism.HyperbolicPlaceProducts.SecondLevelArithmeticNorm
+public import Formalism.HyperbolicPlaceProducts.ArithmeticCountRevised
+
+@[expose] public section
 
 open Module Matrix Formalism.HermitianLatticeCounting.LatticeSumBounds
 open scoped BigOperators ComplexConjugate

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.DataS
-import Formalism.SharpRestriction.GrowthBounds.DataG
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.DataS
+public import Formalism.SharpRestriction.GrowthBounds.DataG
+
+@[expose] public section
 
 noncomputable section
 

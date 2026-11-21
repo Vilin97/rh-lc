@@ -1,6 +1,10 @@
-import Formalism.GradedWeylDivisibility.StatementE
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LCassemLemmas
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDlatLemmas
+module
+
+public import Formalism.GradedWeylDivisibility.StatementE
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LCassemLemmas
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDlatLemmas
+
+@[expose] public section
 
 open MvPolynomial
 

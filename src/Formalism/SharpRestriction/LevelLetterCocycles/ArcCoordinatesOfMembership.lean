@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.ArcCoordinatesOfFrame
-import Formalism.SharpRestriction.LevelLetterCocycles.RelayGeneralCaseOfAdmissible
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.ArcCoordinatesOfFrame
+public import Formalism.SharpRestriction.LevelLetterCocycles.RelayGeneralCaseOfAdmissible
+
+@[expose] public section
 
 noncomputable section
 

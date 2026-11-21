@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.TheoremThreeOfExplicitAndCompact
-import Formalism.SharpRestriction.GlobalSchurBounds.ThickPlacesCorollaryOfAnyTranslate
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.TheoremThreeOfExplicitAndCompact
+public import Formalism.SharpRestriction.GlobalSchurBounds.ThickPlacesCorollaryOfAnyTranslate
+
+@[expose] public section
 
 noncomputable section
 namespace Formalism.MainNotions.StandardLattice

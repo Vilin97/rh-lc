@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.FrameProofs
-import Formalism.LocalToGlobal.ProjectiveLattices.ChartWD
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.FrameProofs
+public import Formalism.LocalToGlobal.ProjectiveLattices.ChartWD
+
+@[expose] public section
 
 noncomputable section
 

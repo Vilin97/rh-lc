@@ -1,12 +1,16 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.KOneCharacterTrivialNearOne
-import Formalism.LocalToGlobal.Columns.ChainInstY
-import Formalism.LocalToGlobal.Columns.XtSumSingle
-import Formalism.LocalToGlobal.Columns.LastRowColLevSym
-import Formalism.LocalToGlobal.Columns.ChainTopLawB
-import Formalism.LocalToGlobal.Columns.ChainLawPhiTop
-import Formalism.LocalToGlobal.Columns.ChainTopLawTw
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.TopLawQ
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.KOneCharacterTrivialNearOne
+public import Formalism.LocalToGlobal.Columns.ChainInstY
+public import Formalism.LocalToGlobal.Columns.XtSumSingle
+public import Formalism.LocalToGlobal.Columns.LastRowColLevSym
+public import Formalism.LocalToGlobal.Columns.ChainTopLawB
+public import Formalism.LocalToGlobal.Columns.ChainLawPhiTop
+public import Formalism.LocalToGlobal.Columns.ChainTopLawTw
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.TopLawQ
+
+@[expose] public section
 
 open Formalism.BasicNotions Formalism.HermitianLatticesTheory Formalism.L2.DIV Formalism.L2.Col Formalism.L2.Ker NumberField IsDedekindDomain Classical
 

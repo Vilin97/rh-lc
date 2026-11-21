@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.PolynomialLevels.TlNonempty
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.PolynomialLevels.TlNonempty
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import CompanionTheory.AutomorphicTheory.BesselWaveGrids.CoefOfOfWsp
+module
+
+public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.CoefOfOfWsp
+
+@[expose] public section
 
 noncomputable section
 

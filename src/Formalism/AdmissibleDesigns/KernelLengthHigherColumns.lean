@@ -1,5 +1,9 @@
-import Formalism.AdmissibleDesigns.H1MapMemLcH1
-import Formalism.AdmissibleDesigns.HigherColumnInvariantsBound
+module
+
+public import Formalism.AdmissibleDesigns.H1MapMemLcH1
+public import Formalism.AdmissibleDesigns.HigherColumnInvariantsBound
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

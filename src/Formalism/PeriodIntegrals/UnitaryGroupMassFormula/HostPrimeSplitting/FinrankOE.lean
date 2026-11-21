@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.EtaHostFacts
+module
+
+public import Formalism.PeriodIntegrals.EtaHostFacts
+
+@[expose] public section
 
 noncomputable section
 

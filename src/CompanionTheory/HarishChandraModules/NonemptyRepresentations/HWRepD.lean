@@ -1,4 +1,8 @@
-import CompanionTheory.HarishChandraModules.NonemptyRepresentations.NonemptyOfAntitone
+module
+
+public import CompanionTheory.HarishChandraModules.NonemptyRepresentations.NonemptyOfAntitone
+
+@[expose] public section
 
 open Matrix
 

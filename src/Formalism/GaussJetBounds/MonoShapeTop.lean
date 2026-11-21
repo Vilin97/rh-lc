@@ -1,6 +1,10 @@
-import Formalism.GaussJetBounds.GaussJetProofs.LemmaRA
-import Formalism.GaussJetBounds.GaussJetProofs.TheoremAOneMonomialLogLoss
-import Formalism.GaussJetBounds.GaussJetProofs.MinorProductSupportTop
+module
+
+public import Formalism.GaussJetBounds.GaussJetProofs.LemmaRA
+public import Formalism.GaussJetBounds.GaussJetProofs.TheoremAOneMonomialLogLoss
+public import Formalism.GaussJetBounds.GaussJetProofs.MinorProductSupportTop
+
+@[expose] public section
 
 universe u v
 

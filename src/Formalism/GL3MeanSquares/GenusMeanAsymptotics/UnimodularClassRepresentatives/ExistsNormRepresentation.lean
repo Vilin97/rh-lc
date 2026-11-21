@@ -1,5 +1,9 @@
-import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.ExistsIsomFrame
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AddMulInvMem
+module
+
+public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.ExistsIsomFrame
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AddMulInvMem
+
+@[expose] public section
 
 noncomputable section
 

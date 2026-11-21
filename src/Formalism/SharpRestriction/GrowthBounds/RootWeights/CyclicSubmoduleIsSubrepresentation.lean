@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.OperatorsKillInvariantProjection
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.OperatorsKillInvariantProjection
+
+@[expose] public section
 
 noncomputable section
 

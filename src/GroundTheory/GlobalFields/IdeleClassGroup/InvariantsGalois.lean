@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleClassGroup.Invariants
-import GroundTheory.LocalFields.CompleteTrivial
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleClassGroup.Invariants
+public import GroundTheory.LocalFields.CompleteTrivial
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

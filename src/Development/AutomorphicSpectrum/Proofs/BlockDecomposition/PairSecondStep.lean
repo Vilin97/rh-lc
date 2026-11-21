@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RankPosOfLeaves
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FiniteDimensionalProdSpan
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LimitBlockTypes
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RankPosOfLeaves
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.FiniteDimensionalProdSpan
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LimitBlockTypes
+
+@[expose] public section
 
 noncomputable section
 

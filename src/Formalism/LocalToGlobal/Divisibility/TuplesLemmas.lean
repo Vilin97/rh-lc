@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.Tuples
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.Tuples
+
+@[expose] public section
 
 noncomputable section
 

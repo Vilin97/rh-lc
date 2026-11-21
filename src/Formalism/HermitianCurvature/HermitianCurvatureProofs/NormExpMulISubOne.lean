@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBFVnice
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBFVnice
+
+@[expose] public section
 
 noncomputable section
 

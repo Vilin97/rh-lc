@@ -1,6 +1,10 @@
-import Formalism.ThetaLogCoordinates.DualWeylCoordinates.DefsMod
-import Formalism.GradedWeylDivisibility.StatementD
-import Lemmata.GeneralBFactSecondTer.Imports
+module
+
+public import Formalism.ThetaLogCoordinates.DualWeylCoordinates.DefsMod
+public import Formalism.GradedWeylDivisibility.StatementD
+public import Lemmata.GeneralBFactSecondTer.Imports
+
+@[expose] public section
 
 noncomputable section
 

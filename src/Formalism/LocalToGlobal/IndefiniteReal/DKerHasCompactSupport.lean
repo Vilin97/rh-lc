@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.SchurOrthogonality
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.SchurOrthogonality
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HermitianLattices.StatementLat
-import Formalism.SizeWindowBrackets.SlopesHypothesisFinitePlaces
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.StatementLat
+public import Formalism.SizeWindowBrackets.SlopesHypothesisFinitePlaces
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.GaloisOnAdeles
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.GaloisOnAdeles
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

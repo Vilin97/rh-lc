@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.CoprimeFrobeniusUniformizerPowers
-import Formalism.SharpRestriction.LevelLetterCocycles.PsCoprimeOf
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.CoprimeFrobeniusUniformizerPowers
+public import Formalism.SharpRestriction.LevelLetterCocycles.PsCoprimeOf
+
+@[expose] public section
 
 noncomputable section
 

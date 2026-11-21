@@ -1,14 +1,18 @@
-import Formalism.LocalToGlobal.UnitaryNorms.CharDiv
-import Formalism.LocalToGlobal.UnitaryNorms.DefsDatum
-import Formalism.SharpRestriction.Divisibility.ZetaProductPairs
-import Formalism.LocalRingCardinality.DataIdx
-import Formalism.LocalRingCardinality.SpanPowerMembership.DivXExample
-import Formalism.LocalRingCardinality.DataAmbForm
-import Formalism.LocalRingCardinality.DataKap
-import Formalism.LocalRingCardinality.DataDIVDefs
-import Formalism.LocalRingCardinality.DataRows
-import Formalism.LocalRingCardinality.DataForms
-import Formalism.LocalRingCardinality.SpanPowerMembership.NZRowC
+module
+
+public import Formalism.LocalToGlobal.UnitaryNorms.CharDiv
+public import Formalism.LocalToGlobal.UnitaryNorms.DefsDatum
+public import Formalism.SharpRestriction.Divisibility.ZetaProductPairs
+public import Formalism.LocalRingCardinality.DataIdx
+public import Formalism.LocalRingCardinality.SpanPowerMembership.DivXExample
+public import Formalism.LocalRingCardinality.DataAmbForm
+public import Formalism.LocalRingCardinality.DataKap
+public import Formalism.LocalRingCardinality.DataDIVDefs
+public import Formalism.LocalRingCardinality.DataRows
+public import Formalism.LocalRingCardinality.DataForms
+public import Formalism.LocalRingCardinality.SpanPowerMembership.NZRowC
+
+@[expose] public section
 
 noncomputable section
 

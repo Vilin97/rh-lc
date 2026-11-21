@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.ResultantValuation.WindowValuation
+module
+
+public import Mathlib
+public import Formalism.ResultantValuation.WindowValuation
+
+@[expose] public section
 
 open Finset
 

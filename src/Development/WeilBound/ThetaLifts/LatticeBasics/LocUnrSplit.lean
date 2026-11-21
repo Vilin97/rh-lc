@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.LocUnr
-import Development.WeilBound.ThetaLifts.LatticeBasics.LocUnrSplitA
-import Development.WeilBound.ThetaLifts.LatticeBasics.LocUnrSplitL
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NormSatakeLeOfUnitarySphericalGL
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.NormUniformiserEqInvAbsNorm
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.LocUnr
+public import Development.WeilBound.ThetaLifts.LatticeBasics.LocUnrSplitA
+public import Development.WeilBound.ThetaLifts.LatticeBasics.LocUnrSplitL
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NormSatakeLeOfUnitarySphericalGL
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.NormUniformiserEqInvAbsNorm
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.PAdicHodge.PerfectoidField
-import GroundTheory.PAdicHodge.TiltValuation
-import GroundTheory.PAdicHodge.TiltField
-import GroundTheory.PAdicHodge.KerTheta
-import GroundTheory.PAdicHodge.TiltMap
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.PerfectoidField
+public import GroundTheory.PAdicHodge.TiltValuation
+public import GroundTheory.PAdicHodge.TiltField
+public import GroundTheory.PAdicHodge.KerTheta
+public import GroundTheory.PAdicHodge.TiltMap
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

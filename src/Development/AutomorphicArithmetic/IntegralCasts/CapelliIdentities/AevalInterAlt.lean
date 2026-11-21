@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qi58.aeval_inter :
     ∀ {L M N : Type} [inst : Field L]

@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.FlagUnipotentLattices.UnipotentStabiliserCharacterisation
-import Formalism.FormalDegreeBessel.FormalDegreeRatio.DSFdeg
-import Formalism.FormalDegreeBessel.StatementDS
+module
+
+public import Mathlib
+public import Formalism.FlagUnipotentLattices.UnipotentStabiliserCharacterisation
+public import Formalism.FormalDegreeBessel.FormalDegreeRatio.DSFdeg
+public import Formalism.FormalDegreeBessel.StatementDS
+
+@[expose] public section
 
 open Finset
 open scoped ENNReal

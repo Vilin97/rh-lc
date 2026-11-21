@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.ProEqvPfA
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.ProEqvPfA
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC LateralTheory.E.t_E2Cut LateralTheory.E.CoverCut LateralTheory.E.ProEqvPf

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.SharpRestriction.CuspSpanNormBounds.LatticeIndexAndWeightTheory
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.CuspSpanNormBounds.LatticeIndexAndWeightTheory
+
+@[expose] public section
 
 noncomputable section
 

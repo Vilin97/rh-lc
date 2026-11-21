@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.ClassFormations.Quotient
-import GroundTheory.ProfiniteCohomology.ContinuousCochains.Functoriality
-import GroundTheory.ProfiniteCohomology.InflationRestriction.Higher
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.ClassFormations.Quotient
+public import GroundTheory.ProfiniteCohomology.ContinuousCochains.Functoriality
+public import GroundTheory.ProfiniteCohomology.InflationRestriction.Higher
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

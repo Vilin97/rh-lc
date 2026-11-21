@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.RealEmbeddingCharacters
-import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.FourSum
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.RealEmbeddingCharacters
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.FourSum
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.FD.FlowMeanContinuity
 

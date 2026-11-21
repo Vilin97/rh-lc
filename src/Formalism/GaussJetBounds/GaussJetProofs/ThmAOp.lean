@@ -1,6 +1,10 @@
-import Formalism.GaussJetBounds.GenLogInverse
-import Formalism.GaussJetBounds.StatementI
-import Formalism.GaussJetBounds.MonoShapeTop
+module
+
+public import Formalism.GaussJetBounds.GenLogInverse
+public import Formalism.GaussJetBounds.StatementI
+public import Formalism.GaussJetBounds.MonoShapeTop
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

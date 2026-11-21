@@ -1,5 +1,9 @@
-import Formalism.AdmissibleDesigns.BlockTwistedCyclotomic
-import Formalism.AdmissibleDesigns.SmulEval
+module
+
+public import Formalism.AdmissibleDesigns.BlockTwistedCyclotomic
+public import Formalism.AdmissibleDesigns.SmulEval
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

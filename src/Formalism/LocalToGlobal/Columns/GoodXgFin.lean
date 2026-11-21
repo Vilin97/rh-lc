@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.GoodPartHermitianSpec
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.GoodPartHermitianSpec
+
+@[expose] public section
 
 open Module
 

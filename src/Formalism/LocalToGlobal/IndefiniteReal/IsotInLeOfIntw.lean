@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.CompZeroOfOrth
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.CompZeroOfOrth
+
+@[expose] public section
 
 noncomputable section
 

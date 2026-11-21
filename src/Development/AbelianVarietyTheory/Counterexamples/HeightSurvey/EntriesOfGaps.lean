@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.OEOsInjective
-import Development.AbelianVarietyTheory.Counterexamples.JetSurvey.ThetaMemLattice
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.OEOsInjective
+public import Development.AbelianVarietyTheory.Counterexamples.JetSurvey.ThetaMemLattice
+
+@[expose] public section
 
 set_option autoImplicit false
 

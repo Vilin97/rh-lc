@@ -1,9 +1,13 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.JointsF
-import Formalism.SharpRestriction.GlobalSchurBounds.QuadraticLogDerivCongr
-import Formalism.SharpRestriction.GlobalSchurBounds.Chosen
-import Formalism.LocalRingCardinality.Lemmas
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.SharpRestriction.ParamsHeightRankConstant
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.JointsF
+public import Formalism.SharpRestriction.GlobalSchurBounds.QuadraticLogDerivCongr
+public import Formalism.SharpRestriction.GlobalSchurBounds.Chosen
+public import Formalism.LocalRingCardinality.Lemmas
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.SharpRestriction.ParamsHeightRankConstant
+
+@[expose] public section
 
 noncomputable section
 

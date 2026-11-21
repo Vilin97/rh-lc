@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.SeparatingAlgebras.GroupDetAlt
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.SeparatingAlgebras.GroupDetAlt
+
+@[expose] public section
+
 open UpperTheory.Gal.Gen
 
 private lemma repr_sum_mul {k X ι : Type*} [Field k] [Fintype X] [DecidableEq X]

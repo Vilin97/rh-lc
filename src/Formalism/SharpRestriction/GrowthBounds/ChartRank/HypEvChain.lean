@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.NuOfAntiEv
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypLiftInv
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.NuOfAntiEv
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypLiftInv
+
+@[expose] public section
 
 noncomputable section
 

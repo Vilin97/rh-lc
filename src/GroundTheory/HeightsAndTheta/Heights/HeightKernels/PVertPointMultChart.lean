@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsVertPointNagata
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PVertPointResidue
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsVertPointNagata
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PVertPointResidue
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

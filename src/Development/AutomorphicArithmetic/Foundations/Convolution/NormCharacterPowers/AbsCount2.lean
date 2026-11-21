@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.AnalyticSeries.NeZeroOne
-import Development.AutomorphicArithmetic.Foundations.Convolution.NormCharacterPowers.OrderAsym
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.AnalyticSeries.NeZeroOne
+public import Development.AutomorphicArithmetic.Foundations.Convolution.NormCharacterPowers.OrderAsym
+
+@[expose] public section
 
 noncomputable section
 

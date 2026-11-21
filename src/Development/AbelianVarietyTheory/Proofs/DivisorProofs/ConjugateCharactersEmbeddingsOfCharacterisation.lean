@@ -1,11 +1,15 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.OfCore
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReadingsExistRow
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoefMapNormEquivariantBasisOfFive
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HvMemOfInert
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsEtaConj
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsConjWeil
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LUnifOfRhoGeoEquivAll
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.OfCore
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReadingsExistRow
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CoefMapNormEquivariantBasisOfFive
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HvMemOfInert
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsEtaConj
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsConjWeil
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LUnifOfRhoGeoEquivAll
+
+@[expose] public section
 
 noncomputable section
 

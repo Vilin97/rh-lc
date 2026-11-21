@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.Columns.ChainTwAux
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.KerHypAll
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ThDistC
-import Formalism.LocalToGlobal.Columns.ChainLawXiQF
+module
+
+public import Formalism.LocalToGlobal.Columns.ChainTwAux
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.KerHypAll
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ThDistC
+public import Formalism.LocalToGlobal.Columns.ChainLawXiQF
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

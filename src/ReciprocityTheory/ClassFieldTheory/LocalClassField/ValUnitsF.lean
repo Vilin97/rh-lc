@@ -1,4 +1,8 @@
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.ValUnitsE
+module
+
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.ValUnitsE
+
+@[expose] public section
 
 namespace ReciprocityTheory.DiscreteGroups.LocalClassField
 

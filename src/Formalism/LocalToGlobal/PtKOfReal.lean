@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.Divisibility.RecBridgeSel
-import Formalism.LocalToGlobal.HilbertRowConditions.ColumnsFunctionAtSubspaces
-import Formalism.LocalToGlobal.IndefiniteReal.TrISepWith
-import Formalism.LocalToGlobal.GroupLattices.BrTied3Hold
-import Formalism.LocalToGlobal.Divisibility.ConstantGeTwentyEightAlt
+module
+
+public import Formalism.LocalToGlobal.Divisibility.RecBridgeSel
+public import Formalism.LocalToGlobal.HilbertRowConditions.ColumnsFunctionAtSubspaces
+public import Formalism.LocalToGlobal.IndefiniteReal.TrISepWith
+public import Formalism.LocalToGlobal.GroupLattices.BrTied3Hold
+public import Formalism.LocalToGlobal.Divisibility.ConstantGeTwentyEightAlt
+
+@[expose] public section
 
 noncomputable section
 

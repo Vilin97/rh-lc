@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ArchimedeanSchwartz.ShiftOf
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ArchimedeanSchwartz.ShiftOf
+
+@[expose] public section
 
 open NumberField MeasureTheory Matrix Polynomial GlobalTheory.CuspRep
 open scoped ContDiff

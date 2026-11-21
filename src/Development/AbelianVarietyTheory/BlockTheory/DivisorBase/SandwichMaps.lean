@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.XiMulNu
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.XiMulNu
+
+@[expose] public section
 
 noncomputable section
 

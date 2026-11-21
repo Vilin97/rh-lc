@@ -1,7 +1,11 @@
-import Formalism.AdmissibleDesigns.BKaClause
-import Formalism.SharpRestriction.LevelLetterCocycles.JumpAndLengthOfAdmitted
-import Formalism.AdmissibleDesigns.ColLx
-import Formalism.AdmissibleDesigns.UnramifiedInputOfAdmitted
+module
+
+public import Formalism.AdmissibleDesigns.BKaClause
+public import Formalism.SharpRestriction.LevelLetterCocycles.JumpAndLengthOfAdmitted
+public import Formalism.AdmissibleDesigns.ColLx
+public import Formalism.AdmissibleDesigns.UnramifiedInputOfAdmitted
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core] [hH0Fin : Fact Formalism.MainNotions.N.K.H0.FinCore]
 

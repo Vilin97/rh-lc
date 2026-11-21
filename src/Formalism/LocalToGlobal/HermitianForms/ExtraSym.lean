@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.HermitianForms.BothSym
-import Formalism.LocalToGlobal.HermitianColumns.FullSym
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.BothSym
+public import Formalism.LocalToGlobal.HermitianColumns.FullSym
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.ScaleSCoeffZero
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.ScaleSCoeffZero
+
+@[expose] public section
 
 noncomputable section
 

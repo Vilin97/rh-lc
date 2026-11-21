@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.LatticeMapsOfFunctorComparison
-import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.Tensor
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.LatticeMapsOfFunctorComparison
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.Tensor
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,12 @@
-import Mathlib
-import Formalism.DegreeFormula.PointDegree.PowSum
-import Formalism.DegreeFormula.PointDegree.PermExpInj
-import Development.AbelianVarietyTheory.Definitions.Foundations.CurveCl
+module
+
+public import Mathlib
+public import Formalism.DegreeFormula.PointDegree.PowSum
+public import Formalism.DegreeFormula.PointDegree.PermExpInj
+public import Development.AbelianVarietyTheory.Definitions.Foundations.CurveCl
+
+@[expose] public section
+
 open MvPolynomial Formalism.DegreeFormula GlobalTheory.FlagPoly
 
 namespace GlobalTheory

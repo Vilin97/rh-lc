@@ -1,9 +1,13 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.FinOrbit
-import Development.WeilBound.ThetaLifts.LatticeBasics.FdEqZero
-import Development.WeilBound.ThetaLifts.LatticeBasics.NonZero
-import Development.WeilBound.ThetaLifts.ConeHypotheses.PureEqPureA
-import Development.WeilBound.ThetaLifts.CartanFactorisation.IntegrableOnRight
-import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.CountableCompactOpen
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.FinOrbit
+public import Development.WeilBound.ThetaLifts.LatticeBasics.FdEqZero
+public import Development.WeilBound.ThetaLifts.LatticeBasics.NonZero
+public import Development.WeilBound.ThetaLifts.ConeHypotheses.PureEqPureA
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.IntegrableOnRight
+public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.CountableCompactOpen
+
+@[expose] public section
 
 noncomputable section
 

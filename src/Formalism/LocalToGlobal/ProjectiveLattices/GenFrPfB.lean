@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.GenFrPfV
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.GenFrPfV
+
+@[expose] public section
 
 set_option autoImplicit false
 

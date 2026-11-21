@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSEJSliceCut
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSEPairAtDeriv
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.HermMulVecMulVec
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FsvMulFsvNeg
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSEJSliceCut
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSEPairAtDeriv
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.HermMulVecMulVec
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FsvMulFsvNeg
+
+@[expose] public section
 
 open MeasureTheory Filter Topology
 open scoped ComplexConjugate

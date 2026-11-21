@@ -1,5 +1,9 @@
-import ReciprocityTheory.SemistableReduction.UnipotentA
-import ReciprocityTheory.SemistableReduction.UnipotentB
+module
+
+public import ReciprocityTheory.SemistableReduction.UnipotentA
+public import ReciprocityTheory.SemistableReduction.UnipotentB
+
+@[expose] public section
 
 namespace ReciprocityTheory.MultiplicativeHeights
 

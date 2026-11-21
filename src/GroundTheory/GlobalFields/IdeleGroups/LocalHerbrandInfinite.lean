@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.LocalHerbrand
-import GroundTheory.GlobalFields.InfiniteNormIndex.LocalSymbol
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.LocalHerbrand
+public import GroundTheory.GlobalFields.InfiniteNormIndex.LocalSymbol
+
+@[expose] public section
 
 noncomputable section
 

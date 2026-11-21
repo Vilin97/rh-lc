@@ -1,15 +1,19 @@
-import Mathlib
-import Formalism.LocalToGlobal.InertKernelTheory.StatementAlg
-import Formalism.LocalToGlobal.InertKernelTheory.KerTransAll
-import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.GoodModelLattice
-import Formalism.LocalToGlobal.TorsionIntegrality.FrobeniusFibreCurves.LogarithmicSubstitution.BaseChangeCompatible
-import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.QuadraticSemicharacterIdentityReformulated2
-import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.NonsingularJetNorms.GeneralIntegrality
-import Formalism.LocalToGlobal.GlobalTheory.GL3.IsIntegralOfMemQbar
-import Formalism.LocalToGlobal.GlobalTheory.GL3.PStdOK
-import Formalism.LocalToGlobal.InertKernelTheory.DefsInt
-import Formalism.LocalToGlobal.InertKernelTheory.DefsMM
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.IntStd
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.InertKernelTheory.StatementAlg
+public import Formalism.LocalToGlobal.InertKernelTheory.KerTransAll
+public import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.GoodModelLattice
+public import Formalism.LocalToGlobal.TorsionIntegrality.FrobeniusFibreCurves.LogarithmicSubstitution.BaseChangeCompatible
+public import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.QuadraticSemicharacterIdentityReformulated2
+public import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.NonsingularJetNorms.GeneralIntegrality
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.IsIntegralOfMemQbar
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.PStdOK
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsInt
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsMM
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.IntStd
+
+@[expose] public section
 
 noncomputable section
 

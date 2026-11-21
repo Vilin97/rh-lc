@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.ZeroPull
-import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.SplitRules
-import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.AcrisKummerUnits.GalOCOkToOC
+module
+
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.ZeroPull
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.SplitRules
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.AcrisKummerUnits.GalOCOkToOC
+
+@[expose] public section
 
 set_option backward.isDefEq.respectTransparency false
 

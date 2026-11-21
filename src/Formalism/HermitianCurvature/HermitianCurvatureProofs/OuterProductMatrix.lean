@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LinearFormRadicalRankOne
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LinearFormRadicalRankOne
+
+@[expose] public section
 
 open Matrix MeasureTheory Formalism.QuantumDeterminants Formalism.FourierDecayAlt
 open scoped ComplexConjugate

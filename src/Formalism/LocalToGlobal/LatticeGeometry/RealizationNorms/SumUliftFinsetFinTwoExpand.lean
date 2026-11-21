@@ -1,6 +1,10 @@
-import Formalism.HarderNarasimhan.HarderNarasimhanProofs.DiscreteSpanOfLinIndep
-import Formalism.GelfandTransference.EnergyIdentity
-import Mathlib
+module
+
+public import Formalism.HarderNarasimhan.HarderNarasimhanProofs.DiscreteSpanOfLinIndep
+public import Formalism.GelfandTransference.EnergyIdentity
+public import Mathlib
+
+@[expose] public section
 
 open NumberField NumberField.InfinitePlace Module Matrix
 

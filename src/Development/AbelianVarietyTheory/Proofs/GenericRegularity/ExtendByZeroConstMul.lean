@@ -1,7 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.IsAlgebraicOfTrdegEq
-import Formalism.LocalToGlobal.ProjectiveLattices.FreeBridge
-import Development.AbelianVarietyTheory.Proofs.GenericRegularity.ExistsCuspOfIntegralAll
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.IsAlgebraicOfTrdegEq
+public import Formalism.LocalToGlobal.ProjectiveLattices.FreeBridge
+public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.ExistsCuspOfIntegralAll
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.WeightAlgebra Formalism.MainNotions.Gaps.EtaleWeightGaps ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj
 
 namespace GlobalTheory.Reg

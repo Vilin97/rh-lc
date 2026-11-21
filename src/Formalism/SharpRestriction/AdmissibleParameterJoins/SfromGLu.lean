@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLq
-import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLt
-import Formalism.SharpRestriction.ElevenLe
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLq
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLt
+public import Formalism.SharpRestriction.ElevenLe
+
+@[expose] public section
 
 noncomputable section
 

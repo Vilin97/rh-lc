@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LiftInvariantsFinrankEq
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.NoethLocalHausdorff
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.Imports
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.MemPowOfCoeffMem
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.LiftInvariantsFinrankEq
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.NoethLocalHausdorff
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.Imports
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.MemPowOfCoeffMem
+
+@[expose] public section
 
 noncomputable section
 

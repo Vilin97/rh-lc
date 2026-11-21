@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.TraceOfDiag
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.TraceOfDiag
+
+@[expose] public section
 
 open Module NumberField Matrix
 

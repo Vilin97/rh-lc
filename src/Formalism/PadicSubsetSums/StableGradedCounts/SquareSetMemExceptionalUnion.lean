@@ -1,4 +1,8 @@
-import Formalism.PadicSubsetSums.StableGradedCounts.CrossFactorCount
+module
+
+public import Formalism.PadicSubsetSums.StableGradedCounts.CrossFactorCount
+
+@[expose] public section
 
 open Finset Polynomial
 

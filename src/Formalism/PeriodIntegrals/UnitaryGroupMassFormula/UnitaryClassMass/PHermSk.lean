@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnitaryClassMass.PSurjS
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.UnitaryApproxFin
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnitaryClassMass.PSurjS
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.UnitaryApproxFin
+
+@[expose] public section
 
 open NumberField PI.UJClassFin PI.UJClassMass Formalism.HermitianLatticesTheory IsDedekindDomain
 open scoped TensorProduct

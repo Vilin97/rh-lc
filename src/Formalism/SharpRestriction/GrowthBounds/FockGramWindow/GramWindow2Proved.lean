@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.FockGramWindow.GramWindow2
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.FockGramWindow.GramWindow2
+
+@[expose] public section
 
 noncomputable section
 

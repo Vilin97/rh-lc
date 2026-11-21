@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.TaIntOfRename
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.TaIntOfRename
+
+@[expose] public section
 
 noncomputable section
 

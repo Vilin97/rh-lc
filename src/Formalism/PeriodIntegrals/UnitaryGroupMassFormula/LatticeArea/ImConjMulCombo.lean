@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.AreaLat
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.AreaLat
+
+@[expose] public section
 
 namespace PI.AreaLatWork
 

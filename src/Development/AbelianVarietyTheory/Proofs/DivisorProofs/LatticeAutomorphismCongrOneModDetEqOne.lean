@@ -1,4 +1,9 @@
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsChartMemberP
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsChartMemberP
+
+@[expose] public section
+
 open GlobalTheory.Poinc
 
 namespace GlobalTheory.Poinc

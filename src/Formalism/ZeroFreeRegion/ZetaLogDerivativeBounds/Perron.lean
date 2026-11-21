@@ -1,5 +1,9 @@
-import Formalism.ZeroFreeRegion.SmallHeightLogDeriv
-import Formalism.ZetaNonvanishing.MellinSgen
+module
+
+public import Formalism.ZeroFreeRegion.SmallHeightLogDeriv
+public import Formalism.ZetaNonvanishing.MellinSgen
+
+@[expose] public section
 
 open Complex MeasureTheory Set Filter Topology ArithmeticFunction
 open scoped LSeries.notation

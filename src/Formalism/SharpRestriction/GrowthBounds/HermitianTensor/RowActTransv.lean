@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.BlockSubstitutionEmbedding
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.BlockSubstitutionEmbedding
+
+@[expose] public section
 
 noncomputable section
 

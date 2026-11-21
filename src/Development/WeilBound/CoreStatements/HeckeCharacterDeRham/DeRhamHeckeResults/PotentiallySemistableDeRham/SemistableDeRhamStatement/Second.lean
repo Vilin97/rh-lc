@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.InstCommRingBcris
-import GroundTheory.PAdicHodge.BStPeriod
-import GroundTheory.PAdicHodge.BdRAlg
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.InstCommRingBcris
+public import GroundTheory.PAdicHodge.BStPeriod
+public import GroundTheory.PAdicHodge.BdRAlg
+
+@[expose] public section
 
 noncomputable section
 

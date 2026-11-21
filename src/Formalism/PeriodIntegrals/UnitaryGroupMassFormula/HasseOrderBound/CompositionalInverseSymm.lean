@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HasseOrderBound.Development
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.TayInvPow
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HasseOrderBound.Development
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.TayInvPow
+
+@[expose] public section
 
 noncomputable section
 

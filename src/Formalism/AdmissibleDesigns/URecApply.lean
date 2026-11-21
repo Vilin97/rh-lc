@@ -1,7 +1,11 @@
-import Formalism.AdmissibleDesigns.KoEquivSmul
-import Formalism.AdmissibleDesigns.H1MapMemLcH1
-import Formalism.AdmissibleDesigns.FiniteClassesContinuousLattice
-import Formalism.AdmissibleDesigns.DisplayForms
+module
+
+public import Formalism.AdmissibleDesigns.KoEquivSmul
+public import Formalism.AdmissibleDesigns.H1MapMemLcH1
+public import Formalism.AdmissibleDesigns.FiniteClassesContinuousLattice
+public import Formalism.AdmissibleDesigns.DisplayForms
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

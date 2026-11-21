@@ -1,6 +1,10 @@
-import Formalism.MahlerMeasure.MahlerMeasureProofs.TheoremM
-import Formalism.MahlerMeasure.MahlerMeasureProofs.FockBlocks
-import Formalism.MahlerMeasure.MahlerMeasureProofs.RemoveS
+module
+
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.TheoremM
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.FockBlocks
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.RemoveS
+
+@[expose] public section
 
 namespace Formalism.CountingSumsFrames
 

@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleSheaves.TruncationPieces
-import Development.EtaleCohomology.EtaleSheaves.LeafConeZeroPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.TruncationPieces
+public import Development.EtaleCohomology.EtaleSheaves.LeafConeZeroPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC LateralTheory.E.TruncationPieces

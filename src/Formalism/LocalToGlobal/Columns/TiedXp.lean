@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.Columns.TiedCls
-import Formalism.LocalToGlobal.Columns.TiedCG
-import Formalism.LocalToGlobal.Columns.RowFormsAdelic
+module
+
+public import Formalism.LocalToGlobal.Columns.TiedCls
+public import Formalism.LocalToGlobal.Columns.TiedCG
+public import Formalism.LocalToGlobal.Columns.RowFormsAdelic
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 open scoped TensorProduct

@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.LocPackC
-import Formalism.LocalToGlobal.GroupLattices.TiedRec
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.LatticeComparisonCompatible
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.LocPackC
+public import Formalism.LocalToGlobal.GroupLattices.TiedRec
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.LatticeComparisonCompatible
+
+@[expose] public section
 
 noncomputable section
 

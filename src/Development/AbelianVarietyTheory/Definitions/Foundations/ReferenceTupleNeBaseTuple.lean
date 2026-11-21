@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataTheta
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Development.AbelianVarietyTheory.Definitions.Foundations.TrueColumnChoicesHeckeCharReferenceEqOne
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataTheta
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Development.AbelianVarietyTheory.Definitions.Foundations.TrueColumnChoicesHeckeCharReferenceEqOne
+
+@[expose] public section
 
 noncomputable section
 

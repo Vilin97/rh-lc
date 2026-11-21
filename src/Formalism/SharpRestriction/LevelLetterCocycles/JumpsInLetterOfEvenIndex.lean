@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.UniformizerUnitAndQFactor
-import Formalism.SharpRestriction.LevelLetterCocycles.GCoordProp
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.UniformizerUnitAndQFactor
+public import Formalism.SharpRestriction.LevelLetterCocycles.GCoordProp
+
+@[expose] public section
 
 noncomputable section
 

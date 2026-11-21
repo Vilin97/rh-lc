@@ -1,5 +1,9 @@
-import Formalism.FlagUnipotentLattices.LatticeDeterminantIndexSq
-import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.IntegerGroupLocalParametrization
+module
+
+public import Formalism.FlagUnipotentLattices.LatticeDeterminantIndexSq
+public import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.IntegerGroupLocalParametrization
+
+@[expose] public section
 
 namespace Formalism.HermitianLatticeCounting.Final.LocalIntegralStructure
 

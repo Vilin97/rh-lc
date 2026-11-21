@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Foundations.CyclotomicDvdExpandOfCoprime
-import Development.AbelianVarietyTheory.Definitions.Foundations.FrobLiftWittClosure
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.CyclotomicDvdExpandOfCoprime
+public import Development.AbelianVarietyTheory.Definitions.Foundations.FrobLiftWittClosure
+
+@[expose] public section
 
 noncomputable section
 open GlobalTheory.Col PowerSeries

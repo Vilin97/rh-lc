@@ -1,11 +1,15 @@
-import Formalism.LocalToGlobal.PtKOfReal
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.RecBridge
-import Formalism.SharpRestriction.Divisibility.PrimeDegreeVariant
-import Formalism.SharpRestriction.ElevenLe
-import Formalism.SharpRestriction.Divisibility.SlopeExcess.FamilyStatementOfScaledLemmas
-import Formalism.SharpRestriction.Divisibility.HookProducts.NormAtEqSqrtMajAt
-import Formalism.SharpRestriction.Divisibility.HookProducts.LambdaZeroLeFourB
+module
+
+public import Formalism.LocalToGlobal.PtKOfReal
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.RecBridge
+public import Formalism.SharpRestriction.Divisibility.PrimeDegreeVariant
+public import Formalism.SharpRestriction.ElevenLe
+public import Formalism.SharpRestriction.Divisibility.SlopeExcess.FamilyStatementOfScaledLemmas
+public import Formalism.SharpRestriction.Divisibility.HookProducts.NormAtEqSqrtMajAt
+public import Formalism.SharpRestriction.Divisibility.HookProducts.LambdaZeroLeFourB
+
+@[expose] public section
 
 noncomputable section
 

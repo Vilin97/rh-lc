@@ -1,10 +1,14 @@
-import Mathlib
-import GroundTheory.LocalFields.HerbrandCyclic
-import GroundTheory.LocalFields.HilbertCyclic
-import GroundTheory.LocalFields.UnitsGalois
-import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeAndRangePowLe
-import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
-import GroundTheory.GlobalFields.HerbrandQuotients.Cyclic
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.HerbrandCyclic
+public import GroundTheory.LocalFields.HilbertCyclic
+public import GroundTheory.LocalFields.UnitsGalois
+public import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeAndRangePowLe
+public import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
+public import GroundTheory.GlobalFields.HerbrandQuotients.Cyclic
+
+@[expose] public section
 
 noncomputable section
 

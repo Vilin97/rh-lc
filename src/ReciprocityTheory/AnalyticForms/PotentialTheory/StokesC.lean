@@ -1,4 +1,8 @@
-import ReciprocityTheory.AnalyticForms.PotentialTheory.StokesB
+module
+
+public import ReciprocityTheory.AnalyticForms.PotentialTheory.StokesB
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.M
 

@@ -1,12 +1,16 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HarishChandraRegularity.ContDiffCompCoordEquiv
-import GroundTheory.AutomorphicForms.HarishChandraRegularity.ExpChart
-import GroundTheory.AutomorphicForms.HarishChandraRegularity.ExpHaar
-import GroundTheory.AutomorphicForms.HarishChandraRegularity.TupleOp
-import GroundTheory.AutomorphicForms.GKModules.Casimir
-import GroundTheory.AutomorphicForms.PartialDifferential.AnalyticHypoelliptic
-import GroundTheory.AutomorphicForms.PartialDifferential.EllipticParametrix
-import GroundTheory.AutomorphicForms.HarishChandraRegularity.CartanBasis
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HarishChandraRegularity.ContDiffCompCoordEquiv
+public import GroundTheory.AutomorphicForms.HarishChandraRegularity.ExpChart
+public import GroundTheory.AutomorphicForms.HarishChandraRegularity.ExpHaar
+public import GroundTheory.AutomorphicForms.HarishChandraRegularity.TupleOp
+public import GroundTheory.AutomorphicForms.GKModules.Casimir
+public import GroundTheory.AutomorphicForms.PartialDifferential.AnalyticHypoelliptic
+public import GroundTheory.AutomorphicForms.PartialDifferential.EllipticParametrix
+public import GroundTheory.AutomorphicForms.HarishChandraRegularity.CartanBasis
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

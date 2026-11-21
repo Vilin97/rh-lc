@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.ConstantGeTwentyEight
-import Formalism.LocalToGlobal.Divisibility.HeckeCSDICommTrRep
-import Formalism.LocalToGlobal.IndefiniteReal.FaceOf3
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.ConstantGeTwentyEight
+public import Formalism.LocalToGlobal.Divisibility.HeckeCSDICommTrRep
+public import Formalism.LocalToGlobal.IndefiniteReal.FaceOf3
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

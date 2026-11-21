@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.ChainTwOk
+module
+
+public import Formalism.LocalToGlobal.Columns.ChainTwOk
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

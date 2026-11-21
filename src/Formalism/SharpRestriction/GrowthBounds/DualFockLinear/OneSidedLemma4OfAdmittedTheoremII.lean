@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.PathWeight
-import Formalism.SharpRestriction.GrowthBounds.TableLineDegreeFive
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.PathWeight
+public import Formalism.SharpRestriction.GrowthBounds.TableLineDegreeFive
+
+@[expose] public section
 
 noncomputable section
 

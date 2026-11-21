@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.MemVarsProdAll
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.MemVarsProdAll
+
+@[expose] public section
 
 noncomputable section
 

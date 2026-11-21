@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.HermitianSquareIntegrableAll
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevTransportHer
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.HermitianSquareIntegrableAll
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevTransportHer
+
+@[expose] public section
 
 open MeasureTheory
 

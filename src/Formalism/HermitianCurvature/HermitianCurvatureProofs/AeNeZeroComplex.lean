@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FormPos
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FormPos
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBL
 

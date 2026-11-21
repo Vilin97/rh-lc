@@ -1,5 +1,9 @@
-import CompanionTheory.AutomorphicTheory.CompactTopologicalForms.FinalC
-import CompanionTheory.AutomorphicTheory.JacobiDiagonalBounds.NormalFormHatCompact
+module
+
+public import CompanionTheory.AutomorphicTheory.CompactTopologicalForms.FinalC
+public import CompanionTheory.AutomorphicTheory.JacobiDiagonalBounds.NormalFormHatCompact
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP.CompactFormNormalFormDomination
 

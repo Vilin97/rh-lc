@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.BranchingTraces.HeBranching
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.LaplaceFoundations.IsHWSmooth
+module
+
+public import Development.WeilBound.CoreStatements.BranchingTraces.HeBranching
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.LaplaceFoundations.IsHWSmooth
+
+@[expose] public section
 
 noncomputable section
 

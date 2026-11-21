@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.BridgeCol
-import Formalism.LocalToGlobal.Columns.RowFormsAdelic
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.BridgeCol
+public import Formalism.LocalToGlobal.Columns.RowFormsAdelic
+
+@[expose] public section
 
 open NumberField
 

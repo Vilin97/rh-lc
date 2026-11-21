@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.SmoothRep
-import GroundTheory.AutomorphicForms.TensorProductTheorem.Operators
-import GroundTheory.AutomorphicForms.TensorProductTheorem.MatrixCoeff
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.SmoothRep
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.Operators
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.MatrixCoeff
+
+@[expose] public section
 
 noncomputable section
 

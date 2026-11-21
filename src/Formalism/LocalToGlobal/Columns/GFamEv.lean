@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.Record
-import Formalism.LocalToGlobal.Columns.FiniteDimensionalForms
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.Record
+public import Formalism.LocalToGlobal.Columns.FiniteDimensionalForms
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 open scoped TensorProduct

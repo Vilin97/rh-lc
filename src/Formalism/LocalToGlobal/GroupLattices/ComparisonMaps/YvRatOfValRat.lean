@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.FockModels.OperatorsPreserveLattices
-import Formalism.LocalRingCardinality.DataLatDefs
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.OperatorsPreserveLattices
+public import Formalism.LocalRingCardinality.DataLatDefs
+
+@[expose] public section
 
 open MvPolynomial
 

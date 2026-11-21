@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SmoothReal
-import Development.AbelianVarietyTheory.Counterexamples.TwistSurvey.ConjModelCast
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SmoothReal
+public import Development.AbelianVarietyTheory.Counterexamples.TwistSurvey.ConjModelCast
+
+@[expose] public section
 
 noncomputable section
 

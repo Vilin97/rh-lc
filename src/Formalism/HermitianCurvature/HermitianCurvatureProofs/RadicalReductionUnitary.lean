@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.NFRadRedL
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NFRadRedL
+
+@[expose] public section
 
 open Matrix Filter Topology Set
 open scoped ContDiff

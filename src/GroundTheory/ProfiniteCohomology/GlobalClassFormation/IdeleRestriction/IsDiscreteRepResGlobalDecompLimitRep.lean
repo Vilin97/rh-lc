@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleRestriction
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalResConj
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleRestriction
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalResConj
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

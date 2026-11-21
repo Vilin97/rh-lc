@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.LatticeGeometry.Inhabited
-import Formalism.LocalToGlobal.LatticeGeometry.GeometryDefinitions.ClsSum
+module
+
+public import Formalism.LocalToGlobal.LatticeGeometry.Inhabited
+public import Formalism.LocalToGlobal.LatticeGeometry.GeometryDefinitions.ClsSum
+
+@[expose] public section
 
 noncomputable section
 

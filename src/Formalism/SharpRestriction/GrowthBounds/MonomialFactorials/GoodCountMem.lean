@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BlockBoundUniformiser
-import Formalism.MahlerMeasure.MahlerMeasureProofs.FockBlocks
-import Formalism.ThetaLogCoordinates.BihomogeneousPairs.FinalLL
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BlockBoundUniformiser
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.FockBlocks
+public import Formalism.ThetaLogCoordinates.BihomogeneousPairs.FinalLL
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.FrobeniusOrbits.HostCorollaries
-import Formalism.LocalRingCardinality.DataHost
-import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
+module
+
+public import Formalism.FrobeniusOrbits.HostCorollaries
+public import Formalism.LocalRingCardinality.DataHost
+public import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
+
+@[expose] public section
 
 noncomputable section
 

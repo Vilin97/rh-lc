@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StChartVelLift
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StProjHoloLocal
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.MCoordIdealGenericPointEq
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StChartVelLift
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StProjHoloLocal
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.MCoordIdealGenericPointEq
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

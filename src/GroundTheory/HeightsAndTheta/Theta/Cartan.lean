@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.RealGroupsPolar
-import GroundTheory.AutomorphicForms.HarishChandraInvariance.Compact
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.RealGroupsPolar
+public import GroundTheory.AutomorphicForms.HarishChandraInvariance.Compact
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Theta
 

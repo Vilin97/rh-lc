@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.TwQBridge
-import Formalism.LocalToGlobal.Columns.TwQLev
+module
+
+public import Formalism.LocalToGlobal.Columns.TwQBridge
+public import Formalism.LocalToGlobal.Columns.TwQLev
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 open scoped TensorProduct

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.HomCompRename
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.HomCompRename
+
+@[expose] public section
 
 noncomputable section
 

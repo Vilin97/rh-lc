@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.UnramifiedWhittaker.CProps
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CardHermitianMatricesModPow
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.UnramifiedWhittaker.CProps
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CardHermitianMatricesModPow
+
+@[expose] public section
 
 open PositivityTheory.PfSWUS.Loc
 

@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.StatementWd
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PositionInsertionDiagonalCompat
-import Formalism.YangianSpanCharacter.YangianRelationFirst
+module
+
+public import Formalism.HermitianCurvature.StatementWd
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PositionInsertionDiagonalCompat
+public import Formalism.YangianSpanCharacter.YangianRelationFirst
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.Wd11
 

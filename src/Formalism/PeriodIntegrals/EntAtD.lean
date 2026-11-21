@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataErr
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataErr
+
+@[expose] public section
 
 noncomputable section
 

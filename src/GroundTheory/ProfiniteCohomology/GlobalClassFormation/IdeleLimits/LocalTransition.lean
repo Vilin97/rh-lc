@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleLimits.Levels
-import GroundTheory.GlobalFields.IdeleGroups.LocalHerbrandInfinite
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleLimits.Levels
+public import GroundTheory.GlobalFields.IdeleGroups.LocalHerbrandInfinite
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegrableUnipotentRankOne
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegrableSliceAppendSingle
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegrableUnipotentRankOne
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegrableSliceAppendSingle
+
+@[expose] public section
 
 open Matrix MeasureTheory
 open scoped ComplexConjugate

@@ -1,5 +1,9 @@
-import Formalism.AdmissibleDesigns.FinDimOfLat
-import Formalism.AdmissibleDesigns.LenComapSurj
+module
+
+public import Formalism.AdmissibleDesigns.FinDimOfLat
+public import Formalism.AdmissibleDesigns.LenComapSurj
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

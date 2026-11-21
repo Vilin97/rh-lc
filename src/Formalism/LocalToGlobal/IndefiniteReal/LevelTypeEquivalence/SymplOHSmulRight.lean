@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.SobFrame
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.SobFrame
+
+@[expose] public section
 
 noncomputable section
 

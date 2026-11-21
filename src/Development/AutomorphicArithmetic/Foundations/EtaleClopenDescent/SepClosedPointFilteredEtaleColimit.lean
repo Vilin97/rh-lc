@@ -1,5 +1,9 @@
-import Mathlib
-import Development.EtaleCohomology.EtaleSheaves.LeafSHSysPf
+module
+
+public import Mathlib
+public import Development.EtaleCohomology.EtaleSheaves.LeafSHSysPf
+
+@[expose] public section
 
 open CategoryTheory Limits TensorProduct
 

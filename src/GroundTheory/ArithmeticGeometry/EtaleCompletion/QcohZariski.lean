@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.EtaleCompletion.ModulesPullback
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.EtaleCompletion.ModulesPullback
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.Etale

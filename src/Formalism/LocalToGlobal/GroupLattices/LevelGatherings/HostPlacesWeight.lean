@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.SecPsiMulPow
-import Formalism.SharpRestriction.GrowthBounds.DataG
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.SecPsiMulPow
+public import Formalism.SharpRestriction.GrowthBounds.DataG
+
+@[expose] public section
 
 noncomputable section
 

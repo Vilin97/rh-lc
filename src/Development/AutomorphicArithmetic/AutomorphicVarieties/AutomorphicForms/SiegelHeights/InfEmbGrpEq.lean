@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.RealCusp
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.RealCusp
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces
+
+@[expose] public section
 
 noncomputable section
 

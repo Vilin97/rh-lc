@@ -1,7 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RegularLocalRingNormalDomain
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleOfEtaleHeightOneOfRegularLocalRingStatement
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsIntegralPi
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RegularLocalRingNormalDomain
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleOfEtaleHeightOneOfRegularLocalRingStatement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsIntegralPi
+
+@[expose] public section
+
 open IsLocalRing
 
 namespace GlobalTheory.PurityProd

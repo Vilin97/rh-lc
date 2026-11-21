@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.InId0OfMem
-import Formalism.SharpRestriction.LevelLetterCocycles.DvOZeroHigh
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.InId0OfMem
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvOZeroHigh
+
+@[expose] public section
 
 noncomputable section
 

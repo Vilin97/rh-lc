@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.Brauer.IsBrauerEquivalentIffNonemptyAlgEquiv
-import GroundTheory.Brauer.BaseChangeCSA
-import GroundTheory.Brauer.DoubleCentralizer
-import GroundTheory.Brauer.Degree
-import GroundTheory.Brauer.SkolemNoether
+module
+
+public import Mathlib
+public import GroundTheory.Brauer.IsBrauerEquivalentIffNonemptyAlgEquiv
+public import GroundTheory.Brauer.BaseChangeCSA
+public import GroundTheory.Brauer.DoubleCentralizer
+public import GroundTheory.Brauer.Degree
+public import GroundTheory.Brauer.SkolemNoether
+
+@[expose] public section
+
 open NumberField
 open scoped TensorProduct
 

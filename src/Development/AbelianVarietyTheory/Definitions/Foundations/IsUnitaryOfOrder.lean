@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.UnitaryNorms.MemFIffReal
-import Development.AbelianVarietyTheory.Definitions.Foundations.ValuedAlgebraMapEqOne
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.UnitaryNorms.MemFIffReal
+public import Development.AbelianVarietyTheory.Definitions.Foundations.ValuedAlgebraMapEqOne
+
+@[expose] public section
 
 noncomputable section
 section

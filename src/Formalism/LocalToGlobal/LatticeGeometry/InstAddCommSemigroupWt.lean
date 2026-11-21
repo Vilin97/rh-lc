@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.LatticeGeometry.DegFlLApply
-import Formalism.LocalToGlobal.LatticeGeometry.ArVolEqOfNef
-import Formalism.SharpRestriction.Divisibility.WeightAlgebra
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.LatticeGeometry.DegFlLApply
+public import Formalism.LocalToGlobal.LatticeGeometry.ArVolEqOfNef
+public import Formalism.SharpRestriction.Divisibility.WeightAlgebra
+
+@[expose] public section
 
 noncomputable section
 

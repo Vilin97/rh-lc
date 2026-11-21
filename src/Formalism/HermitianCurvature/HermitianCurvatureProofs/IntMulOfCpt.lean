@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ExistsFderivChiBound
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ExistsFderivChiBound
+
+@[expose] public section
 
 open MeasureTheory Filter Topology
 open scoped ComplexConjugate ContDiff

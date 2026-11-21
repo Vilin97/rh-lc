@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HermitianLocalSplit
-import GroundTheory.GlobalFields.Adele.WeakApprox
-import GroundTheory.GlobalFields.Adele.BaseChange.FiniteMap
-import GroundTheory.GlobalFields.LocalFieldAtPlace
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HermitianLocalSplit
+public import GroundTheory.GlobalFields.Adele.WeakApprox
+public import GroundTheory.GlobalFields.Adele.BaseChange.FiniteMap
+public import GroundTheory.GlobalFields.LocalFieldAtPlace
+
+@[expose] public section
 
 noncomputable section
 

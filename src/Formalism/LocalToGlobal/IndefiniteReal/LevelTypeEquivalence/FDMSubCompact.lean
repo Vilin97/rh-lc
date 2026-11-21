@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.RedLem
-import Formalism.LocalToGlobal.IndefiniteReal.PHeisFC
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.RedLem
+public import Formalism.LocalToGlobal.IndefiniteReal.PHeisFC
+
+@[expose] public section
 
 noncomputable section
 

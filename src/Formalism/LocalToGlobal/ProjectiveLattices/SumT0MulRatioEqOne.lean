@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.PowMapMemOfPowMulMem
-import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.RestrictionEqZeroIffMemVanishingFiltration
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.PowMapMemOfPowMulMem
+public import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.RestrictionEqZeroIffMemVanishingFiltration
+
+@[expose] public section
 
 set_option autoImplicit false
 

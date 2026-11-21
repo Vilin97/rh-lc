@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.NormResidueSymbol.Abstract
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.NormResidueSymbol.Abstract
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

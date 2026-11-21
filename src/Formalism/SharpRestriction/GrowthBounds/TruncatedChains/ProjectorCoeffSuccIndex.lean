@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.TruncatedChains.PfTrunc
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.TruncatedChains.PfTrunc
+
+@[expose] public section
 
 noncomputable section
 

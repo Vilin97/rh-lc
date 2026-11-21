@@ -1,8 +1,13 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.AutomorphicKernels.EisensteinSeriesG2.HeisenbergTheta.HeisenbergThetaConstant.ThetaC
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SchwartzBruhatUniformSummableMajorant
-import GroundTheory.AutomorphicForms.GL2.GJMatrixAdelic
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SummableProdCoord
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.EisensteinSeriesG2.HeisenbergTheta.HeisenbergThetaConstant.ThetaC
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SchwartzBruhatUniformSummableMajorant
+public import GroundTheory.AutomorphicForms.GL2.GJMatrixAdelic
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SummableProdCoord
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GlobalTheory.CompanionTheory.EisRkNBound

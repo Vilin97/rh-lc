@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.DropLevelBounds.Statement
-import Formalism.IncomingBounds.FlowDegreeBounds.ThmPExp
+module
+
+public import Mathlib
+public import Formalism.DropLevelBounds.Statement
+public import Formalism.IncomingBounds.FlowDegreeBounds.ThmPExp
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

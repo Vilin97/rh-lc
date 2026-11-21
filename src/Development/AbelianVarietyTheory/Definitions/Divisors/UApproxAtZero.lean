@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsRatPointOfFiniteType
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsRatPointOfFiniteType
+
+@[expose] public section
 
 noncomputable section
 open AlgebraicGeometry CategoryTheory Limits IsLocalRing NumberField

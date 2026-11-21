@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.ClassesLevelZeroNonempty
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.ClassesLevelZeroNonempty
+
+@[expose] public section
 
 noncomputable section
 

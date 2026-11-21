@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypTwA
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypVin
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypTwA
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypVin
+
+@[expose] public section
 
 noncomputable section
 

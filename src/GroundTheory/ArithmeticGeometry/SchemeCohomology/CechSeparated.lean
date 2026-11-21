@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechLeray
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.AffineVanishing
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechLeray
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.AffineVanishing
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh

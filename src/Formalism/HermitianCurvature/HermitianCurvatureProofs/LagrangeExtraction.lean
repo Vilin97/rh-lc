@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.LevelRecursionCondNeeded
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ChebyshevExtremalPolynomials
-import Mathlib
+module
+
+public import Formalism.HermitianCurvature.LevelRecursionCondNeeded
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ChebyshevExtremalPolynomials
+public import Mathlib
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.LagrangeExtraction
 

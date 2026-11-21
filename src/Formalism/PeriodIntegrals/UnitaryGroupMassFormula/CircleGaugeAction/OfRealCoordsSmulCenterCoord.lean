@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.ExistsGaugeMeasureForEachRank
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CircleGaugeAction.DglApplyOff
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.ExistsGaugeMeasureForEachRank
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CircleGaugeAction.DglApplyOff
+
+@[expose] public section
 
 noncomputable section
 

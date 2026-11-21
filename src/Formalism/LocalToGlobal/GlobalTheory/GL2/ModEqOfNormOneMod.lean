@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL2.Statement
-import Formalism.SharpRestriction.GlobalSchurBounds.TopDensityNGeSixteen
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
-import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.EqZeroOfNegEq
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL2.Statement
+public import Formalism.SharpRestriction.GlobalSchurBounds.TopDensityNGeSixteen
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.EqZeroOfNegEq
+
+@[expose] public section
 
 noncomputable section
 

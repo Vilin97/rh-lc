@@ -1,7 +1,12 @@
-import Development.AutomorphicSpectrum.Definitions.AdelicLattices.FactPrimes
-import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.LatNormGrLatNeZeroOfSpan
-import Development.WeilBound.CoreStatements.SesquilinearFractions.NIdeal
-import Development.WeilBound.CoreStatements.SesquilinearFractions.RatProductFormula
+module
+
+public import Development.AutomorphicSpectrum.Definitions.AdelicLattices.FactPrimes
+public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.LatNormGrLatNeZeroOfSpan
+public import Development.WeilBound.CoreStatements.SesquilinearFractions.NIdeal
+public import Development.WeilBound.CoreStatements.SesquilinearFractions.RatProductFormula
+
+@[expose] public section
+
 open NumberField Matrix GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Fl
 open scoped ComplexOrder
 

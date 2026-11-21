@@ -1,4 +1,8 @@
-import Formalism.EllipticTorsion.VeluIntegralModel
+module
+
+public import Formalism.EllipticTorsion.VeluIntegralModel
+
+@[expose] public section
 
 open PowerSeries
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.FunctionalLowerBoundOfConditionsNumeric
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.ScaledValuationFormula
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.FunctionalLowerBoundOfConditionsNumeric
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.ScaledValuationFormula
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix nonZeroDivisors

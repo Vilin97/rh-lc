@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.FrameConj
-import Development.AbelianVarietyTheory.Definitions.Foundations.EqPlaceIdemOfIsPrimeIdem
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ValuationAlgebraMapEqOfInertPlace
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.FrameConj
+public import Development.AbelianVarietyTheory.Definitions.Foundations.EqPlaceIdemOfIsPrimeIdem
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ValuationAlgebraMapEqOfInertPlace
+
+@[expose] public section
 
 noncomputable section
 

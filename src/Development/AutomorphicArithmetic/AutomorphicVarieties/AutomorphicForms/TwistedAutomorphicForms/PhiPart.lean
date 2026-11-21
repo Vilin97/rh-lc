@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TwistedAutomorphicForms.EqOneOfMemLev
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TwistedAutomorphicForms.SplitIso
-import Development.AbelianVarietyTheory.Definitions.Foundations.DiagUnitsEqLocalIdele
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TwistedAutomorphicForms.EqOneOfMemLev
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TwistedAutomorphicForms.SplitIso
+public import Development.AbelianVarietyTheory.Definitions.Foundations.DiagUnitsEqLocalIdele
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Neutral.B1 GlobalTheory.Mem.Chr.Model
 open GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele (ideleMap finiteCompletionMap)

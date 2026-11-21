@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.KummerBasic
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.KummerBasic
+
+@[expose] public section
 
 namespace GroundTheory.ProfCoh
 

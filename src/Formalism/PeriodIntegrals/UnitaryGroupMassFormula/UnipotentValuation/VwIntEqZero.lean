@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnipVal
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnipVal
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

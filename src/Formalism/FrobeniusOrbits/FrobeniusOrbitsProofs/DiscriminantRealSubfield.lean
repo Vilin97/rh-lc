@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.FrobeniusOrbits.DiscrMaximalRealCyclotomic
+module
+
+public import Mathlib
+public import Formalism.FrobeniusOrbits.DiscrMaximalRealCyclotomic
+
+@[expose] public section
 
 open NumberField IntermediateField Polynomial
 

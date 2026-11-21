@@ -1,10 +1,14 @@
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.CloudADef
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.CloudIso
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.MemInvariantSectionsTwoWeightIff
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.CcDualWtAnti
-import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.Tensor
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDrowLemmas
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LClosedeqLemmas
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.CloudADef
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.CloudIso
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.MemInvariantSectionsTwoWeightIff
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.CcDualWtAnti
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.Tensor
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDrowLemmas
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LClosedeqLemmas
+
+@[expose] public section
 
 noncomputable section
 

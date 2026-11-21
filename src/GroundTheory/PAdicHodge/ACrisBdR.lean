@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.FactorizationFactorialLe
-import GroundTheory.PAdicHodge.BdRLattice
-import GroundTheory.PowerSubgroups.CountableNeighbourhoods.PrecompleteOfSurjective
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.FactorizationFactorialLe
+public import GroundTheory.PAdicHodge.BdRLattice
+public import GroundTheory.PowerSubgroups.CountableNeighbourhoods.PrecompleteOfSurjective
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.WeylForK
+module
+
+public import Formalism.PeriodIntegrals.WeylForK
+
+@[expose] public section
 
 open PI PI.UpqRep Matrix
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.DegFactNeZero
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.DegFactNeZero
+
+@[expose] public section
 
 noncomputable section
 

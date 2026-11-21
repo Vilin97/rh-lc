@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HarishChandraCentre.RepBase
-import GroundTheory.AutomorphicForms.HarishChandraCentre.FischerForm
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HarishChandraCentre.RepBase
+public import GroundTheory.AutomorphicForms.HarishChandraCentre.FischerForm
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.HarishChandra
 

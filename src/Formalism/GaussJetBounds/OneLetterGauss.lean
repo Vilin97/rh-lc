@@ -1,7 +1,11 @@
-import Formalism.GaussJetBounds.GaussJetProofs.OneGauss
-import Formalism.GaussJetBounds.GaussJetProofs.CoefficientBoundMembership
-import Formalism.GaussJetBounds.StatementS
-import Formalism.GaussJetBounds.ThmAGauss
+module
+
+public import Formalism.GaussJetBounds.GaussJetProofs.OneGauss
+public import Formalism.GaussJetBounds.GaussJetProofs.CoefficientBoundMembership
+public import Formalism.GaussJetBounds.StatementS
+public import Formalism.GaussJetBounds.ThmAGauss
+
+@[expose] public section
 
 namespace Formalism.DworkPowerSeriesWeights
 

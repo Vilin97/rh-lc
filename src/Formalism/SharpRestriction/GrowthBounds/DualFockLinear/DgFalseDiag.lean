@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.IsMultiHom
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.IsMultiHom
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.PolyImgSuccAbove
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.TorusHaarMeasure.PolyImgSuccAbove
+
+@[expose] public section
 
 noncomputable section
 

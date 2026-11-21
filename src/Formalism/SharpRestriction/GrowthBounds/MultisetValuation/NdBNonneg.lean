@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.NdLszLe
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.NdLszLe
+
+@[expose] public section
 
 noncomputable section
 

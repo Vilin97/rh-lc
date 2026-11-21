@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.SummandSlopeOfThreeLemmas
-import Formalism.LocalToGlobal.Columns.MaxSlopeOrthogonalNegLog
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.SummandSlopeOfThreeLemmas
+public import Formalism.LocalToGlobal.Columns.MaxSlopeOrthogonalNegLog
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module MvPolynomial
 open scoped Matrix ComplexOrder

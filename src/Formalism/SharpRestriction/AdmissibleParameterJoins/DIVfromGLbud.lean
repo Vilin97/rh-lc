@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLl
-import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLo
+module
+
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLl
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLo
+
+@[expose] public section
 
 noncomputable section
 

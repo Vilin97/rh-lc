@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TranslationInvariantFunctionalRestrict
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TrPApply
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TranslationInvariantFunctionalRestrict
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TrPApply
+
+@[expose] public section
+
 open GlobalTheory.ArchSch
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.translation_invariant_functional_restrict : ∀ {Y : Type} [NormedAddCommGroup Y] [NormedSpace ℝ Y] [FiniteDimensional ℝ Y] (P : Submodule ℝ Y)

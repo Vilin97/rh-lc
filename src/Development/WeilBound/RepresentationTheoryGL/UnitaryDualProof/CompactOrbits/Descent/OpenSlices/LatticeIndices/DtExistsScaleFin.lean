@@ -1,5 +1,9 @@
-import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.CompactOrbits.Descent.OpenSlices.LatticeIndices.ValuationPiNeZero
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.DualCountBound.MatIdxB
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.CompactOrbits.Descent.OpenSlices.LatticeIndices.ValuationPiNeZero
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.DualCountBound.MatIdxB
+
+@[expose] public section
 
 noncomputable section
 

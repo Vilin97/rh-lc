@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.LeviDeterminants.LagrangianUniqueness.RealTest
-import Development.AutomorphicSpectrum.Proofs.MembershipProofs.DenseHasCompactSupport
+module
+
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.LagrangianUniqueness.RealTest
+public import Development.AutomorphicSpectrum.Proofs.MembershipProofs.DenseHasCompactSupport
+
+@[expose] public section
 
 open Complex MeasureTheory
 open scoped Real ContDiff RealInnerProductSpace FourierTransform

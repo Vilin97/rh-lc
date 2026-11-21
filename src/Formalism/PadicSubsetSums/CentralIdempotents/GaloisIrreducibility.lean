@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.GaloisIrreducibility.Statement
+module
+
+public import Mathlib
+public import Formalism.GaloisIrreducibility.Statement
+
+@[expose] public section
 
 open Finset Polynomial
 open scoped ComplexOrder

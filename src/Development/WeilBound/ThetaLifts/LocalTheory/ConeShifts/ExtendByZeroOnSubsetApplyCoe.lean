@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.ArchCone
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.FubGen
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.ArchCone
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.FubGen
+
+@[expose] public section
 
 noncomputable section
 

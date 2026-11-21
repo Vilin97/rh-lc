@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.Columns.TiedXp
-import Formalism.LocalToGlobal.Columns.TiedVal
-import Formalism.LocalToGlobal.Columns.TiedValRat
-import Formalism.LocalToGlobal.Columns.TiedValLatG
-import Formalism.LocalToGlobal.Columns.CoefficientsModP.FkMapInitMinor
-import Formalism.LocalToGlobal.Columns.BaseLemmas
+module
+
+public import Formalism.LocalToGlobal.Columns.TiedXp
+public import Formalism.LocalToGlobal.Columns.TiedVal
+public import Formalism.LocalToGlobal.Columns.TiedValRat
+public import Formalism.LocalToGlobal.Columns.TiedValLatG
+public import Formalism.LocalToGlobal.Columns.CoefficientsModP.FkMapInitMinor
+public import Formalism.LocalToGlobal.Columns.BaseLemmas
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 open scoped TensorProduct

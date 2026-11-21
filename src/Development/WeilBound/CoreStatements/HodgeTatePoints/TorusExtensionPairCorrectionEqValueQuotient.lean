@@ -1,8 +1,12 @@
-import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.OmStable
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.DifferentGeneratorDualIntegral
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ExistsDiffGenerator
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.EigSubEqDifferentSmulEigQuot
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.TwoMulFinrank
+module
+
+public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.OmStable
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.DifferentGeneratorDualIntegral
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ExistsDiffGenerator
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.EigSubEqDifferentSmulEigQuot
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.TwoMulFinrank
+
+@[expose] public section
 
 open Module NumberField GlobalTheory.CompanionTheory.Ar.HT
 

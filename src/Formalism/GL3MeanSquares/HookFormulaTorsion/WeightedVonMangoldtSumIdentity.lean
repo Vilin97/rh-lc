@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.GL3MeanSquares.SecondEstimateOfIntervalHypothesis
+module
+
+public import Mathlib
+public import Formalism.GL3MeanSquares.SecondEstimateOfIntervalHypothesis
+
+@[expose] public section
 
 open Finset ArithmeticFunction
 

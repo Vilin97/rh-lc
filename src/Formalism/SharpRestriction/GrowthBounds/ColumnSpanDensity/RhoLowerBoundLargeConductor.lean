@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.ProjectionLemmaBaseLevel
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ProjectionLemmaBaseLevel
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.EvActStatement
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.EvActStatement
+
+@[expose] public section
 
 noncomputable section
 

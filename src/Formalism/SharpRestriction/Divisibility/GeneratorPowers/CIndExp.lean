@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ThExprUniqOfChartIndep2
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpTie
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpUniqSt
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.GaugeUniq
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndNab
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ThExprUniqOfChartIndep2
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpTie
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpUniqSt
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.GaugeUniq
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndNab
+
+@[expose] public section
 
 set_option autoImplicit false
 

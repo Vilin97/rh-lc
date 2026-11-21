@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.CountLoc
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.FormValuationGeNegDegree
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.CountLoc
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.FormValuationGeNegDegree
+
+@[expose] public section
 
 noncomputable section
 

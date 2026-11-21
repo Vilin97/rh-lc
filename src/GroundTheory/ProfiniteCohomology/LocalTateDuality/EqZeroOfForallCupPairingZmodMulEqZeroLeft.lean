@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.LocalTateDuality.KummerCup
-import GroundTheory.ProfiniteCohomology.LocalTateDuality.NormCharacters
-import GroundTheory.LocalFields.SeparableClosure
-import GroundTheory.LocalFields.IntermediateField
-import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeAndRangePowLe
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.LocalTateDuality.KummerCup
+public import GroundTheory.ProfiniteCohomology.LocalTateDuality.NormCharacters
+public import GroundTheory.LocalFields.SeparableClosure
+public import GroundTheory.LocalFields.IntermediateField
+public import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeAndRangePowLe
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

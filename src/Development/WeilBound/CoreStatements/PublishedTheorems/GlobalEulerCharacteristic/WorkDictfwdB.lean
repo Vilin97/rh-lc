@@ -1,8 +1,12 @@
-import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.DefsForms
-import ReciprocityTheory.GaloisValuations.SeparatedDvrSecondCohomologyMem
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.LocalMaps
-import Development.WeilBound.CoreStatements.PublishedTheorems.GlobalEulerCharacteristic.RatioOneKilled
-import Development.WeilBound.CoreStatements.PublishedTheorems.GlobalFiniteness.Transport
+module
+
+public import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.DefsForms
+public import ReciprocityTheory.GaloisValuations.SeparatedDvrSecondCohomologyMem
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.LocalMaps
+public import Development.WeilBound.CoreStatements.PublishedTheorems.GlobalEulerCharacteristic.RatioOneKilled
+public import Development.WeilBound.CoreStatements.PublishedTheorems.GlobalFiniteness.Transport
+
+@[expose] public section
 
 open NumberField IsDedekindDomain CategoryTheory GroundTheory.ProfCoh GroundTheory.Global
 

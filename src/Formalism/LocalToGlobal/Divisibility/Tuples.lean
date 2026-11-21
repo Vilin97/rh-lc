@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SatakeDualWeyl.StatementC
-import Formalism.QuotientMetricDivisors.RatHermLcvTwist
-import Formalism.MirabolicMackeyTheory.StatementT
+module
+
+public import Mathlib
+public import Formalism.SatakeDualWeyl.StatementC
+public import Formalism.QuotientMetricDivisors.RatHermLcvTwist
+public import Formalism.MirabolicMackeyTheory.StatementT
+
+@[expose] public section
 
 noncomputable section
 

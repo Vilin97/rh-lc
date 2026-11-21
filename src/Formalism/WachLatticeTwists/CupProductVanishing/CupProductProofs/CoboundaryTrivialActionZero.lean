@@ -1,4 +1,8 @@
-import Formalism.WachLatticeTwists.CupProductVanishing.StatVhEInChi
+module
+
+public import Formalism.WachLatticeTwists.CupProductVanishing.StatVhEInChi
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

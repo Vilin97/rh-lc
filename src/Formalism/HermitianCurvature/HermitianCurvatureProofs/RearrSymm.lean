@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasurableCoordinateMap
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RearrApply
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasurableCoordinateMap
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RearrApply
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.StabilizerDisintegration.OJ
 

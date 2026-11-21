@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTieMemCInv
-import Formalism.LocalToGlobal.CharacterGerms.NormOneRowDegrees
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieMemCInv
+public import Formalism.LocalToGlobal.CharacterGerms.NormOneRowDegrees
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.MeanHeightDescent.CombinedAverageDegreeBound
-import Formalism.MonomialMeanResidues.FilteredDegree
-import Formalism.MeanHeightDescent.DivisionInequalityWithCovolume
-import Formalism.HarderNarasimhan.ShiftInvariance
-import Formalism.MeanHeightDescent.AverageDegreeBounds.GoodBadCut
-import Formalism.MeanHeightDescent.AverageDegreeBounds.SpanMuMin
-import Formalism.MonomialMeanResidues.MonomialMeanProofs.SpanEqTopAndRankOfLinearIndependent
+module
+
+public import Mathlib
+public import Formalism.MeanHeightDescent.CombinedAverageDegreeBound
+public import Formalism.MonomialMeanResidues.FilteredDegree
+public import Formalism.MeanHeightDescent.DivisionInequalityWithCovolume
+public import Formalism.HarderNarasimhan.ShiftInvariance
+public import Formalism.MeanHeightDescent.AverageDegreeBounds.GoodBadCut
+public import Formalism.MeanHeightDescent.AverageDegreeBounds.SpanMuMin
+public import Formalism.MonomialMeanResidues.MonomialMeanProofs.SpanEqTopAndRankOfLinearIndependent
+
+@[expose] public section
 
 namespace Formalism.HermiteSiegelSlopes
 

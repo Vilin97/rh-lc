@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.GPowSt
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.GPowSt
+
+@[expose] public section
 
 set_option autoImplicit false
 

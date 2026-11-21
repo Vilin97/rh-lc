@@ -1,5 +1,9 @@
-import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.MeasurableEmbeddingRotAbout
-import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.RegConv
+module
+
+public import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.MeasurableEmbeddingRotAbout
+public import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.RegConv
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.C
 

@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.CharacterGerms.IndependenceBoundRaw
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePHStab
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePGerm
-import Formalism.DropLevelBounds.ConstantCoeffVanishing.UbintConstantCoeffEqZero
-import Formalism.LocalToGlobal.CharacterGerms.CoeffPowCharFrobenius
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.IndependenceBoundRaw
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePHStab
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePGerm
+public import Formalism.DropLevelBounds.ConstantCoeffVanishing.UbintConstantCoeffEqZero
+public import Formalism.LocalToGlobal.CharacterGerms.CoeffPowCharFrobenius
+
+@[expose] public section
 
 noncomputable section
 

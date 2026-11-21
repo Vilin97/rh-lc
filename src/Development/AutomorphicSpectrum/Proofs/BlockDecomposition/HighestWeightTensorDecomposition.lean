@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsCliff
-import Development.AutomorphicSpectrum.Definitions.JetCones.SymCapRev
-import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
-import Formalism.RealPlaceAnalysis.FinalF
-import Development.AutomorphicSpectrum.Proofs.JetProofs.EvFirst
-import Development.AutomorphicSpectrum.Proofs.JetProofs.GraphExtend
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsCliff
+public import Development.AutomorphicSpectrum.Definitions.JetCones.SymCapRev
+public import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
+public import Formalism.RealPlaceAnalysis.FinalF
+public import Development.AutomorphicSpectrum.Proofs.JetProofs.EvFirst
+public import Development.AutomorphicSpectrum.Proofs.JetProofs.GraphExtend
+
+@[expose] public section
 
 open Matrix Finset
 open scoped InnerProductSpace

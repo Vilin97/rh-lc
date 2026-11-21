@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.MaximalOfValuationGeOne
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.MaximalOfValuationGeOne
+
+@[expose] public section
 
 set_option autoImplicit false
 

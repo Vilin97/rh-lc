@@ -1,6 +1,10 @@
-import Mathlib
-import Lemmata.FirstBlockLemmaH.Imports
-import Lemmata.GeneralBFactThirdVariant.Imports
+module
+
+public import Mathlib
+public import Lemmata.FirstBlockLemmaH.Imports
+public import Lemmata.GeneralBFactThirdVariant.Imports
+
+@[expose] public section
 
 noncomputable section
 

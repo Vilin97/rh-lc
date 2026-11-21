@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.BrOneGFull
-import Formalism.LocalToGlobal.GroupLattices.FockModels.SwRowGenMonomial
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.BrOneGFull
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.SwRowGenMonomial
+
+@[expose] public section
 
 noncomputable section
 

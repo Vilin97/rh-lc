@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.GaussianSeminormBounds.RealSeminormFiltration.TraceBlocks
-import Development.WeilBound.ThetaLifts.Reductions.SymplOfMem
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.GaussianSeminormBounds.RealSeminormFiltration.TraceBlocks
+public import Development.WeilBound.ThetaLifts.Reductions.SymplOfMem
+
+@[expose] public section
 
 noncomputable section
 

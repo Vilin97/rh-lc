@@ -1,7 +1,11 @@
-import CompanionTheory.AutomorphicTheory.NumberFieldModels.NFTieProv
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGaugeGVsTr
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGaugeGTrChain
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ActualAdjointnessFromHermitian
+module
+
+public import CompanionTheory.AutomorphicTheory.NumberFieldModels.NFTieProv
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGaugeGVsTr
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGaugeGTrChain
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ActualAdjointnessFromHermitian
+
+@[expose] public section
 
 open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt Formalism.FourierDecayAlt.P.CutMP.Gauge Formalism.FourierDecayAlt.P.CutMP.Gauge.VLem
 

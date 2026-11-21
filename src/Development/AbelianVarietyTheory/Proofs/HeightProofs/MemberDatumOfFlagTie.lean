@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.BesselHermitianTheta.TiedBessel
-import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.BesselDatum
-import Formalism.LocalToGlobal.BesselHermitianTheta.AllTied
-import Formalism.SharpRestriction.CuspSpanNormBounds.CayleySignature
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.BesselHermitianTheta.TiedBessel
+public import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.BesselDatum
+public import Formalism.LocalToGlobal.BesselHermitianTheta.AllTied
+public import Formalism.SharpRestriction.CuspSpanNormBounds.CayleySignature
+
+@[expose] public section
 
 noncomputable section
 

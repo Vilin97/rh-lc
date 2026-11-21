@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.TorusExt
-import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.AbsoluteSiegel
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsLeastHermLength
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SemiFibLieLatticeFullStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianFamilyConjInvariantStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.TorusExt
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.AbsoluteSiegel
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsLeastHermLength
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SemiFibLieLatticeFullStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HermitianFamilyConjInvariantStatement
+
+@[expose] public section
 
 open NumberField MeasureTheory ReciprocityTheory.GeometryOfNumbersTheory ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.LieHt
 open scoped ComplexOrder

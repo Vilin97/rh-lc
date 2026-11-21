@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.WeberFunction
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.WeberFunction
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.CoeffOneAlongCvLg
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CoeffOneAlongCvLg
+
+@[expose] public section
 
 noncomputable section
 

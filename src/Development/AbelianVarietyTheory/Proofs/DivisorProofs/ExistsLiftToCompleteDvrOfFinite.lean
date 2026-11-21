@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.GroupLattices.PerfectRings.IsLocalRingOfComplete
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GroupLattices.PerfectRings.IsLocalRingOfComplete
+
+@[expose] public section
+
 open IsLocalRing
 
 namespace GlobalTheory

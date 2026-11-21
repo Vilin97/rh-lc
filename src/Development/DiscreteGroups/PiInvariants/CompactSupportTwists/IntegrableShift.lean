@@ -1,8 +1,12 @@
-import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.ExistsBumpOne
-import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.PiClosT
-import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.CuspPairD
-import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.LogAbsEqLogIdeleNorm
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ContinuousSplitCentre
+module
+
+public import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.ExistsBumpOne
+public import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.PiClosT
+public import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.CuspPairD
+public import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.LogAbsEqLogIdeleNorm
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ContinuousSplitCentre
+
+@[expose] public section
 
 set_option linter.all false
 

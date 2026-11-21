@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.MapEqOfProdEq
-import Formalism.SharpRestriction.LevelLetterCocycles.SecondPropositionEveryLocalisation
-import Formalism.SharpRestriction.LevelLetterCocycles.IdempotentChoiceDepthZero
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.MapEqOfProdEq
+public import Formalism.SharpRestriction.LevelLetterCocycles.SecondPropositionEveryLocalisation
+public import Formalism.SharpRestriction.LevelLetterCocycles.IdempotentChoiceDepthZero
+
+@[expose] public section
 
 noncomputable section
 

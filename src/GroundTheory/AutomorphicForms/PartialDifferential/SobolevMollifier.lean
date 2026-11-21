@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.PartialDifferential.Sobolev
-import GroundTheory.AutomorphicForms.PartialDifferential.SobolevDuality
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.PartialDifferential.Sobolev
+public import GroundTheory.AutomorphicForms.PartialDifferential.SobolevDuality
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.Sobolev
 

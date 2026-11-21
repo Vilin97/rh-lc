@@ -1,12 +1,16 @@
-import ReciprocityTheory.SemistableReduction.LemmaH
-import ReciprocityTheory.SemistableReduction.TorsionNonvanishStatement
-import ReciprocityTheory.SemistableReduction.ApproxGraph
-import ReciprocityTheory.SemistableReduction.ApproxBasis
-import ReciprocityTheory.SemistableReduction.Unipotent
-import ReciprocityTheory.SemistableReduction.DegAddHolds
-import ReciprocityTheory.SemistableReduction.OnePolyGrowth
-import ReciprocityTheory.SemistableReduction.BWPoly
-import ReciprocityTheory.L2DbarEstimates.NormFibrations.MvBlowup
+module
+
+public import ReciprocityTheory.SemistableReduction.LemmaH
+public import ReciprocityTheory.SemistableReduction.TorsionNonvanishStatement
+public import ReciprocityTheory.SemistableReduction.ApproxGraph
+public import ReciprocityTheory.SemistableReduction.ApproxBasis
+public import ReciprocityTheory.SemistableReduction.Unipotent
+public import ReciprocityTheory.SemistableReduction.DegAddHolds
+public import ReciprocityTheory.SemistableReduction.OnePolyGrowth
+public import ReciprocityTheory.SemistableReduction.BWPoly
+public import ReciprocityTheory.L2DbarEstimates.NormFibrations.MvBlowup
+
+@[expose] public section
 
 namespace ReciprocityTheory.MultiplicativeHeights.Closed
 

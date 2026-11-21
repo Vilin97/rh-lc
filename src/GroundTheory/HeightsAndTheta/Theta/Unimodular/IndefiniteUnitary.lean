@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Theta.Cartan
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Theta.Cartan
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Theta
 

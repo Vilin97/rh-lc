@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.Bridge
-import Formalism.LocalToGlobal.Divisibility.HeckeRI
-import Formalism.LocalToGlobal.IndefiniteReal.BridgeTie
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.Bridge
+public import Formalism.LocalToGlobal.Divisibility.HeckeRI
+public import Formalism.LocalToGlobal.IndefiniteReal.BridgeTie
+
+@[expose] public section
 
 noncomputable section
 

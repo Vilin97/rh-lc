@@ -1,11 +1,15 @@
-import Formalism.SuccessiveMinima.SuccessiveMinimaProofs.MinkCore
-import Formalism.SuccessiveMinima.SuccessiveMinimaProofs.GjLevel
-import Formalism.SuccessiveMinima.SuccessiveMinimaProofs.GjScale
-import Formalism.SuccessiveMinima.SuccessiveMinimaProofs.SuccMin
-import Formalism.SuccessiveMinima.SuccessiveMinimaProofs.AdaptedBasis
-import Formalism.SuccessiveMinima.SuccessiveMinimaProofs.MeasureEqCovolumeMulVolumeImage
-import Mathlib
-import Formalism.SuccessiveMinima.DefsMink
+module
+
+public import Formalism.SuccessiveMinima.SuccessiveMinimaProofs.MinkCore
+public import Formalism.SuccessiveMinima.SuccessiveMinimaProofs.GjLevel
+public import Formalism.SuccessiveMinima.SuccessiveMinimaProofs.GjScale
+public import Formalism.SuccessiveMinima.SuccessiveMinimaProofs.SuccMin
+public import Formalism.SuccessiveMinima.SuccessiveMinimaProofs.AdaptedBasis
+public import Formalism.SuccessiveMinima.SuccessiveMinimaProofs.MeasureEqCovolumeMulVolumeImage
+public import Mathlib
+public import Formalism.SuccessiveMinima.DefsMink
+
+@[expose] public section
 
 namespace Formalism.FN
 

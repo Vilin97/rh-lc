@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.Objects
-import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.Examples
-import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.DualModel
-import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.Reading
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.Objects
+public import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.Examples
+public import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.DualModel
+public import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.Reading
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

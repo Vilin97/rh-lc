@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutBPEqShift
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentCoordinatesMeasurePreserving
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutBPEqShift
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentCoordinatesMeasurePreserving
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBPEq
 

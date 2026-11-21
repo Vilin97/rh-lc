@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndFrFix
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndFrFix
+
+@[expose] public section
 
 set_option autoImplicit false
 

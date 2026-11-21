@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.StandardDeltaIntegralCoeffs
-import Formalism.LocalToGlobal.Columns.CoefficientsModP
-import Formalism.LocalToGlobal.LatticeGeometry.OperatorNormFibers.PDescentCutA
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.StandardDeltaIntegralCoeffs
+public import Formalism.LocalToGlobal.Columns.CoefficientsModP
+public import Formalism.LocalToGlobal.LatticeGeometry.OperatorNormFibers.PDescentCutA
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module MvPolynomial
 open scoped Matrix ComplexOrder

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LogVandermondeBounds.GaussOperatorProductFormula
+module
+
+public import Mathlib
+public import Formalism.LogVandermondeBounds.GaussOperatorProductFormula
+
+@[expose] public section
 
 namespace Formalism.HermitianLattices.LocalLatticeBases
 

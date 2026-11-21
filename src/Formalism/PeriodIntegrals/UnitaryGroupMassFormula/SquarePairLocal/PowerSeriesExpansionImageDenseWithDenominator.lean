@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SquarePairLocal.SigKApply
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SquarePairLocal.SigKApply
+
+@[expose] public section
 
 noncomputable section
 open NumberField IsDedekindDomain HeightOneSpectrum WithZero IsLocalRing Topology Filter

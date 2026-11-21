@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.Adelic
-import Formalism.LocalToGlobal.Columns.Inputs
+module
+
+public import Formalism.LocalToGlobal.Columns.Adelic
+public import Formalism.LocalToGlobal.Columns.Inputs
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix
 open scoped TensorProduct

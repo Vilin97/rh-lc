@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TameInvariantLevelAction
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.LevelLiftConditions
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TameInvariantLevelAction
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.LevelLiftConditions
+
+@[expose] public section
 
 set_option autoImplicit false
 

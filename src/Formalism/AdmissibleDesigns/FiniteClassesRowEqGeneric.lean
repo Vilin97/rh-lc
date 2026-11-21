@@ -1,4 +1,8 @@
-import Formalism.AdmissibleDesigns.LiftMapEquivariant
+module
+
+public import Formalism.AdmissibleDesigns.LiftMapEquivariant
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

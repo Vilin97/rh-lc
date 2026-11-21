@@ -1,5 +1,9 @@
-import Formalism.ThetaLogCoordinates.FockResolutionOnto.StatementH
-import Formalism.ThetaLogCoordinates.FockResolutionOnto.FockMonomialProofs.HighestVectorProjection
+module
+
+public import Formalism.ThetaLogCoordinates.FockResolutionOnto.StatementH
+public import Formalism.ThetaLogCoordinates.FockResolutionOnto.FockMonomialProofs.HighestVectorProjection
+
+@[expose] public section
 
 namespace Formalism.InvariantFactorPaths.L4
 

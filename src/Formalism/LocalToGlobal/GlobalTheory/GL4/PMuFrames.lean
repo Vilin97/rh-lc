@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalRingCardinality.CoeNeZeroOfNotMem
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.TruncatedLatticeHolds
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.CoeNeZeroOfNotMem
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.TruncatedLatticeHolds
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix

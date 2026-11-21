@@ -1,10 +1,14 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.GL3Columns
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MonomialFrameSpan.DetSubmatrixFun
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IsometryDerivative.ExistsOePerm
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WwCauchyBinet
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WwMain
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WwInjective
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.GL3Columns
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MonomialFrameSpan.DetSubmatrixFun
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IsometryDerivative.ExistsOePerm
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WwCauchyBinet
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WwMain
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WwInjective
+
+@[expose] public section
 
 namespace Formalism.MainNotions.GL3Columns
 

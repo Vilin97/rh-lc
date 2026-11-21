@@ -1,4 +1,8 @@
-import ReciprocityTheory.GeometryOfNumbers.SphericalMonomials.ChiPSt
+module
+
+public import ReciprocityTheory.GeometryOfNumbers.SphericalMonomials.ChiPSt
+
+@[expose] public section
 
 noncomputable section
 

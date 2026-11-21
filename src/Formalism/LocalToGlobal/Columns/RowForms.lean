@@ -1,14 +1,18 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.RhoEqOfSmulEq
-import Formalism.LocalToGlobal.Columns.GenericUnipotentCharacter
-import Formalism.LocalToGlobal.Columns.LevGCount
-import Formalism.LocalToGlobal.Columns.AbelianHostFieldConditions
-import Formalism.LocalToGlobal.Columns.StdLatUnimodular
-import Formalism.LocalToGlobal.Columns.DecoFin
-import Formalism.LocalToGlobal.Columns.CoefCol
-import Formalism.LocalToGlobal.Columns.ColForms
-import Formalism.LocalToGlobal.Divisibility.Tuples
-import Formalism.LocalToGlobal.Divisibility.GoodPartHermitianSpec
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.RhoEqOfSmulEq
+public import Formalism.LocalToGlobal.Columns.GenericUnipotentCharacter
+public import Formalism.LocalToGlobal.Columns.LevGCount
+public import Formalism.LocalToGlobal.Columns.AbelianHostFieldConditions
+public import Formalism.LocalToGlobal.Columns.StdLatUnimodular
+public import Formalism.LocalToGlobal.Columns.DecoFin
+public import Formalism.LocalToGlobal.Columns.CoefCol
+public import Formalism.LocalToGlobal.Columns.ColForms
+public import Formalism.LocalToGlobal.Divisibility.Tuples
+public import Formalism.LocalToGlobal.Divisibility.GoodPartHermitianSpec
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

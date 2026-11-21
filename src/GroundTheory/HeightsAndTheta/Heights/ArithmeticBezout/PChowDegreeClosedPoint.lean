@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsClosedPointChartField
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsClosedPointConeCoord
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PIntChowFormExists
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PChowFormHomog
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PNormFormIrreducible
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsClosedPointChartField
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsClosedPointConeCoord
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PIntChowFormExists
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PChowFormHomog
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PNormFormIrreducible
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

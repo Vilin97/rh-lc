@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.HermitianForms.TiedTwSame
-import Formalism.LocalToGlobal.HermitianForms.TiedTwJSym
-import Formalism.LocalToGlobal.HermitianForms.BothSym
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.TiedTwSame
+public import Formalism.LocalToGlobal.HermitianForms.TiedTwJSym
+public import Formalism.LocalToGlobal.HermitianForms.BothSym
+
+@[expose] public section
 
 noncomputable section
 

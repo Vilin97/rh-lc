@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.PoitouTate.RealEvenCoind
-import GroundTheory.ProfiniteCohomology.PoitouTate.RealEvenLevel
-import GroundTheory.ProfiniteCohomology.PoitouTate.RealTraceMap
-import GroundTheory.ProfiniteCohomology.RealPlaces.Vanishing
-import GroundTheory.ProfiniteCohomology.RealPlaces.Devissage
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseMain
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.PoitouTate.RealEvenCoind
+public import GroundTheory.ProfiniteCohomology.PoitouTate.RealEvenLevel
+public import GroundTheory.ProfiniteCohomology.PoitouTate.RealTraceMap
+public import GroundTheory.ProfiniteCohomology.RealPlaces.Vanishing
+public import GroundTheory.ProfiniteCohomology.RealPlaces.Devissage
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseMain
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

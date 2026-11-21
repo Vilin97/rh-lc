@@ -1,4 +1,8 @@
-import ReciprocityTheory.GaloisValuations.GlobalEA
+module
+
+public import ReciprocityTheory.GaloisValuations.GlobalEA
+
+@[expose] public section
 
 noncomputable section
 

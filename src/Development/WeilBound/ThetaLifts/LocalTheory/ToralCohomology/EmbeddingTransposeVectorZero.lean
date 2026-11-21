@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ToralCohomology.PiInfUnitNe
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ToralCohomology.PiInfUnitNe
+
+@[expose] public section
 
 noncomputable section
 

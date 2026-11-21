@@ -1,9 +1,13 @@
-import Development.WeilBound.ThetaLifts.Reductions.SiegelCore
-import Development.WeilBound.ThetaLifts.Reductions.SiegelAbs
-import Development.WeilBound.ThetaLifts.Reductions.SiegelParMod
-import Development.WeilBound.ThetaLifts.Reductions.SiegelGood
-import Development.WeilBound.ThetaLifts.FrameEstimates.LintegralLeOfCover
-import Development.WeilBound.ThetaLifts.FrameEstimates.LeHeightOfIsTorusElt
+module
+
+public import Development.WeilBound.ThetaLifts.Reductions.SiegelCore
+public import Development.WeilBound.ThetaLifts.Reductions.SiegelAbs
+public import Development.WeilBound.ThetaLifts.Reductions.SiegelParMod
+public import Development.WeilBound.ThetaLifts.Reductions.SiegelGood
+public import Development.WeilBound.ThetaLifts.FrameEstimates.LintegralLeOfCover
+public import Development.WeilBound.ThetaLifts.FrameEstimates.LeHeightOfIsTorusElt
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

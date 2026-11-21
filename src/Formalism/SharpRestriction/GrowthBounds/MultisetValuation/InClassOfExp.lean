@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.PrimeCastNeZero
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.TopsChoicePartB
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.PrimeCastNeZero
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.TopsChoicePartB
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualWeil
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualWeil
+
+@[expose] public section
 
 namespace GroundTheory.Arith.Abelian
 

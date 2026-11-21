@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GaloisLevelStructure.DefsLevel
-import Mathlib
+module
+
+public import Formalism.LocalToGlobal.GaloisLevelStructure.DefsLevel
+public import Mathlib
+
+@[expose] public section
 
 namespace Formalism.L2.Props
 

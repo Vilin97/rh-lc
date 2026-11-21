@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TailIntegrals.XiIntH
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TailIntegrals.TLeftH
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TailIntegrals.XiIntH
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TailIntegrals.TLeftH
+
+@[expose] public section
 
 noncomputable section
 

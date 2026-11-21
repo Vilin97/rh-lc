@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.LengthBoundOfHypotheses
-import Formalism.SharpRestriction.LevelLetterCocycles.SemisimpleLetterIffForallMem
-import Formalism.SharpRestriction.LevelLetterCocycles.LatticeMembershipPolynomialGamma
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.LengthBoundOfHypotheses
+public import Formalism.SharpRestriction.LevelLetterCocycles.SemisimpleLetterIffForallMem
+public import Formalism.SharpRestriction.LevelLetterCocycles.LatticeMembershipPolynomialGamma
+
+@[expose] public section
 
 noncomputable section
 open Classical

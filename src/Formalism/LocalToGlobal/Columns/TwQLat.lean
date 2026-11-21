@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.TwQRec
-import Formalism.LocalToGlobal.Columns.MemLocPOfSmul
+module
+
+public import Formalism.LocalToGlobal.Columns.TwQRec
+public import Formalism.LocalToGlobal.Columns.MemLocPOfSmul
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix
 open scoped TensorProduct

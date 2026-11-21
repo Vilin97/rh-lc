@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.FullOfSoLoc
+module
+
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.FullOfSoLoc
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.SInvariantToInvariantsEqZeroIff
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.SPicFinite
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.Brauer
-import GroundTheory.GlobalFields.SUnits
-import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing.Devissage
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.SInvariantToInvariantsEqZeroIff
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.SPicFinite
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.Brauer
+public import GroundTheory.GlobalFields.SUnits
+public import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing.Devissage
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

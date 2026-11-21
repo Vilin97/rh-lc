@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Foundations.EeProd
-import Development.AbelianVarietyTheory.Definitions.Foundations.AdmissibleTwistIffAdmissibleUntwisted
-import Development.AbelianVarietyTheory.Definitions.Foundations.KumValUnique
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.EeProd
+public import Development.AbelianVarietyTheory.Definitions.Foundations.AdmissibleTwistIffAdmissibleUntwisted
+public import Development.AbelianVarietyTheory.Definitions.Foundations.KumValUnique
+
+@[expose] public section
 
 noncomputable section
 

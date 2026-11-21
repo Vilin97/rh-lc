@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.GrowthBounds.SourceCleaning
-import Formalism.PolynomialDimension.DetMulEqSumAdjugate
-import Formalism.SubspaceCounting.ChoiceOfTopsRefined
-import Formalism.GrowthSums.LemmaATwoFactList
-import Formalism.PolynomialDimension.FinalNum
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SourceCleaning
+public import Formalism.PolynomialDimension.DetMulEqSumAdjugate
+public import Formalism.SubspaceCounting.ChoiceOfTopsRefined
+public import Formalism.GrowthSums.LemmaATwoFactList
+public import Formalism.PolynomialDimension.FinalNum
+
+@[expose] public section
 
 noncomputable section
 

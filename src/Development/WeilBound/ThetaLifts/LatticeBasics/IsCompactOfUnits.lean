@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.TowerModels.LeviAd
+module
+
+public import Development.WeilBound.ThetaLifts.TowerModels.LeviAd
+
+@[expose] public section
 
 noncomputable section
 

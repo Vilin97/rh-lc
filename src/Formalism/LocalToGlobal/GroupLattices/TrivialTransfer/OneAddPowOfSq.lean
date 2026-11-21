@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataLevel
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ClosureUpperUni
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.OneAddPowOfMulSelfEqZero
-import Lemmata.GeneralBFactLeftTail.Imports
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataLevel
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ClosureUpperUni
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.OneAddPowOfMulSelfEqZero
+public import Lemmata.GeneralBFactLeftTail.Imports
+
+@[expose] public section
 
 noncomputable section
 

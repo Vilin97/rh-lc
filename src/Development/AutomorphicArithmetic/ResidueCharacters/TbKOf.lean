@@ -1,12 +1,16 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.EmbeddingTypeJumps
-import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.CrysOnCond
-import Formalism.LocalRingCardinality.SpanPowerMembership.NDLocE
-import Development.AutomorphicArithmetic.ResidueCharacters.LocNum
-import Development.AutomorphicArithmetic.ResidueCharacters.LocRes
-import Development.AutomorphicArithmetic.ResidueCharacters.TransferMemBlochKatoCocycles
-import Development.AutomorphicArithmetic.ResidueCharacters.TbTop
-import Development.AutomorphicArithmetic.ResidueCharacters.TwistDef
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.EmbeddingTypeJumps
+public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.CrysOnCond
+public import Formalism.LocalRingCardinality.SpanPowerMembership.NDLocE
+public import Development.AutomorphicArithmetic.ResidueCharacters.LocNum
+public import Development.AutomorphicArithmetic.ResidueCharacters.LocRes
+public import Development.AutomorphicArithmetic.ResidueCharacters.TransferMemBlochKatoCocycles
+public import Development.AutomorphicArithmetic.ResidueCharacters.TbTop
+public import Development.AutomorphicArithmetic.ResidueCharacters.TwistDef
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.ThConstMatch
-import Development.WeilBound.ThetaLifts.LatticeBasics.ThConstAn
-import Development.WeilBound.ThetaLifts.FrameEstimates.SquareIntegrableWeilRange
-import Development.WeilBound.ThetaLifts.CartanFactorisation.CartanConj
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.ThConstMatch
+public import Development.WeilBound.ThetaLifts.LatticeBasics.ThConstAn
+public import Development.WeilBound.ThetaLifts.FrameEstimates.SquareIntegrableWeilRange
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.CartanConj
+
+@[expose] public section
 
 noncomputable section
 

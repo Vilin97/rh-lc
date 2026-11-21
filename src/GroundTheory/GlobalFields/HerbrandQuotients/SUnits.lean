@@ -1,10 +1,14 @@
-import Mathlib
-import GroundTheory.GlobalFields.SUnits
-import GroundTheory.GlobalFields.HerbrandQuotients.Lattice
-import GroundTheory.GlobalFields.HerbrandQuotients.SUnitsExact
-import GroundTheory.GlobalFields.HerbrandQuotients.SUnitsPerm
-import GroundTheory.GlobalFields.HerbrandQuotients.SUnitsRep
-import GroundTheory.GlobalFields.HerbrandQuotients.UnitsHerbrandValue
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SUnits
+public import GroundTheory.GlobalFields.HerbrandQuotients.Lattice
+public import GroundTheory.GlobalFields.HerbrandQuotients.SUnitsExact
+public import GroundTheory.GlobalFields.HerbrandQuotients.SUnitsPerm
+public import GroundTheory.GlobalFields.HerbrandQuotients.SUnitsRep
+public import GroundTheory.GlobalFields.HerbrandQuotients.UnitsHerbrandValue
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

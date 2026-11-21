@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.VolumeEquality.ChartMeetsForm
+module
+
+public import Development.WeilBound.CoreStatements.VolumeEquality.ChartMeetsForm
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.HodgeTatePoints.ReBase
-import ReciprocityTheory.DualLattices.CharTableIsUnit
+module
+
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.ReBase
+public import ReciprocityTheory.DualLattices.CharTableIsUnit
+
+@[expose] public section
 
 noncomputable section
 

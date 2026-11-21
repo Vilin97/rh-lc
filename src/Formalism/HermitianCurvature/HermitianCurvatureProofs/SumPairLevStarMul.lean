@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FormSplit
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CoordinateSplitAssocMeasurePreserving
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FormSplit
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CoordinateSplitAssocMeasurePreserving
+
+@[expose] public section
 
 open Matrix MeasureTheory
 open scoped ComplexConjugate

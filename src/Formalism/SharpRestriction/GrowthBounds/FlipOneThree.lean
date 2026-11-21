@@ -1,9 +1,13 @@
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.SharpRestriction.ParConsts
-import Formalism.SharpRestriction.GrowthBounds.ObjSeg
-import Formalism.SharpRestriction.GrowthBounds.ObjBridge
-import Formalism.SharpRestriction.GrowthBounds.ColumnSystems
-import Formalism.MahlerMeasure.WithMargin
+module
+
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.SharpRestriction.ParConsts
+public import Formalism.SharpRestriction.GrowthBounds.ObjSeg
+public import Formalism.SharpRestriction.GrowthBounds.ObjBridge
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSystems
+public import Formalism.MahlerMeasure.WithMargin
+
+@[expose] public section
 
 noncomputable section
 

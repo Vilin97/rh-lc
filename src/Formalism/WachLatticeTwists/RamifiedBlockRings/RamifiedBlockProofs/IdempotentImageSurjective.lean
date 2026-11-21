@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.RamifiedBlockRings.RightIdealImageOfSurjective
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.GlobalModuleOf
+module
+
+public import Formalism.WachLatticeTwists.RamifiedBlockRings.RightIdealImageOfSurjective
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.GlobalModuleOf
+
+@[expose] public section
 
 open Finset Classical
 

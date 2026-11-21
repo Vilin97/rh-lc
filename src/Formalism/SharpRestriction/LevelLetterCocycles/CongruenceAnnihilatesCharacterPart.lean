@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.TypePrimeCongruences
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.InSpanAdd
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.TypePrimeCongruences
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.InSpanAdd
+
+@[expose] public section
 
 noncomputable section
 

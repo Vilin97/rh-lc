@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePKeyTeichDef
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePKeyTeichDef
+
+@[expose] public section
 
 noncomputable section
 

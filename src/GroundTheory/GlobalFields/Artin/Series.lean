@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.Artin.LogCharpoly
-import GroundTheory.GlobalFields.TateThesis.HeckeLFunction
-import GroundTheory.GlobalFields.TateThesis.NonvanishingPrimes
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.Artin.LogCharpoly
+public import GroundTheory.GlobalFields.TateThesis.HeckeLFunction
+public import GroundTheory.GlobalFields.TateThesis.NonvanishingPrimes
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

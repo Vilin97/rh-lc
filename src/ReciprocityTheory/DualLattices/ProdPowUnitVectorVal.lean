@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.LiftMonomialDeterminantStatementHolds
+module
+
+public import ReciprocityTheory.DualLattices.LiftMonomialDeterminantStatementHolds
+
+@[expose] public section
 
 noncomputable section
 

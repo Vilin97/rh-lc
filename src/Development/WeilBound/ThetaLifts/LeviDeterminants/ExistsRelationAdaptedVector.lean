@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.LeviDeterminants.CartanPos
-import Development.WeilBound.ThetaLifts.LeviDeterminants.ExistsGaussBox
+module
+
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.CartanPos
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.ExistsGaussBox
+
+@[expose] public section
 
 noncomputable section
 

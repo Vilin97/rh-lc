@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLb
-import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLd
-import Formalism.SharpRestriction.AdmissibleParameterJoins.LenAtT
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.SevenLogLeLOfPowerBound
+module
+
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLb
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLd
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.LenAtT
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.SevenLogLeLOfPowerBound
+
+@[expose] public section
 
 noncomputable section
 

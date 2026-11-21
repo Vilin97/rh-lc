@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PlaceSzNonneg
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteCoefficientBound
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PlaceSzNonneg
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FiniteCoefficientBound
+
+@[expose] public section
 
 noncomputable section
 

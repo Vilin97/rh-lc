@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IsogenyEtaleTranslation.EtCancel
-import Development.AbelianVarietyTheory.Definitions.Divisors.NontrivialOfArtinQE
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IsogenyEtaleTranslation.EtCancel
+public import Development.AbelianVarietyTheory.Definitions.Divisors.NontrivialOfArtinQE
+
+@[expose] public section
 
 set_option autoImplicit false
 

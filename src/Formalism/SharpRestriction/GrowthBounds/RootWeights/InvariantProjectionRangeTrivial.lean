@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.HomLatticeDividedPowerStable
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.HomLatticeDividedPowerStable
+
+@[expose] public section
 
 noncomputable section
 

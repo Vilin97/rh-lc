@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HarderNarasimhan.Statement
-import Formalism.HermitianLattices.StatementMaj
+module
+
+public import Mathlib
+public import Formalism.HarderNarasimhan.Statement
+public import Formalism.HermitianLattices.StatementMaj
+
+@[expose] public section
 
 open Module NumberField
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataLevelD
-import Formalism.LocalToGlobal.HermitianColumns.InLocalDiscriminantKernel
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataLevelD
+public import Formalism.LocalToGlobal.HermitianColumns.InLocalDiscriminantKernel
+
+@[expose] public section
 
 noncomputable section
 

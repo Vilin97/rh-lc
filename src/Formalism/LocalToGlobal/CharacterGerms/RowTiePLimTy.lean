@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePPTAvg
-import Formalism.LocalToGlobal.CharacterGerms.CoeffSubstEqSum
-import Formalism.LocalToGlobal.CharacterGerms.RowTieCartFB
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePPTAvg
+public import Formalism.LocalToGlobal.CharacterGerms.CoeffSubstEqSum
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieCartFB
+
+@[expose] public section
 
 noncomputable section
 

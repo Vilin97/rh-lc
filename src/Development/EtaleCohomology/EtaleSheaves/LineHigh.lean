@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.EtaleChapterETwo
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.EtaleChapterETwo
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC

@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.WeilGroups.QuasiCharacter
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.WeilGroups.QuasiCharacter
+
+@[expose] public section
 
 open NumberField
 

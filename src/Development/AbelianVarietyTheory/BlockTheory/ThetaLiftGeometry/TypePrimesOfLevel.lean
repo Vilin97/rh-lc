@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataKerI
-import Formalism.SharpRestriction.ElevenLe
-import Formalism.LocalToGlobal.Columns.DecorationStabilizerTrivialUnipotent
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataKerI
+public import Formalism.SharpRestriction.ElevenLe
+public import Formalism.LocalToGlobal.Columns.DecorationStabilizerTrivialUnipotent
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.SemilocalAlgebras.ContinuousCompletionMap
-import GroundTheory.GlobalFields.SemilocalAlgebras.Approximation
-import GroundTheory.GlobalFields.SemilocalAlgebras.LocalDegree
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SemilocalAlgebras.ContinuousCompletionMap
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Approximation
+public import GroundTheory.GlobalFields.SemilocalAlgebras.LocalDegree
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

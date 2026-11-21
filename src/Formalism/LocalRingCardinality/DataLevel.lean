@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalRingCardinality.Params
-import Formalism.LocalRingCardinality.DataSpaces
-import Formalism.LocalRingCardinality.DataKernels
-import Formalism.SatakeDualWeyl.StatementC
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.Params
+public import Formalism.LocalRingCardinality.DataSpaces
+public import Formalism.LocalRingCardinality.DataKernels
+public import Formalism.SatakeDualWeyl.StatementC
+
+@[expose] public section
 
 noncomputable section
 

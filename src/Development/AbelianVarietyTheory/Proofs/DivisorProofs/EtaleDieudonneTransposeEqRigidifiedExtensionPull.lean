@@ -1,4 +1,8 @@
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRedDual
+module
+
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRedDual
+
+@[expose] public section
 
 set_option autoImplicit false
 

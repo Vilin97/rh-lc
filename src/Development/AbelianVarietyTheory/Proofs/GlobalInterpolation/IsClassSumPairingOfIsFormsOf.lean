@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.IsFormsOfToH
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.CoefActionReprMemSubfield
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CardStabilizerForgetFr
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SpanMapNabKDelK
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.TensorMapDescent
-import Formalism.LocalToGlobal.Columns.PolyFnLemmas
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.IsFormsOfToH
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.CoefActionReprMemSubfield
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CardStabilizerForgetFr
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SpanMapNabKDelK
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.TensorMapDescent
+public import Formalism.LocalToGlobal.Columns.PolyFnLemmas
+
+@[expose] public section
 
 noncomputable section
 

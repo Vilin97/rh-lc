@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.WindowSmall
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.WindowSmall
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSELeib
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.WaveOperatorLeL2Subspace
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSEOuterLeib
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSEPairAtDeriv
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSELeib
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WaveOperatorLeL2Subspace
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSEOuterLeib
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSEPairAtDeriv
+
+@[expose] public section
 
 open MeasureTheory Filter Topology
 open scoped ComplexConjugate

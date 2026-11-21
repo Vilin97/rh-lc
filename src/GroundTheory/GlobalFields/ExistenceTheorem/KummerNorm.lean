@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.GlobalFields.KummerTheory.Degree
-import GroundTheory.GlobalFields.KummerTheory.Unramified
-import GroundTheory.GlobalFields.NormResidueSymbol.RestrictNormalInfiniteLocalSymbol
-import GroundTheory.GlobalFields.GlobalReciprocity.General
-import GroundTheory.GlobalFields.PowerSubgroupIndex.Existence
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.KummerTheory.Degree
+public import GroundTheory.GlobalFields.KummerTheory.Unramified
+public import GroundTheory.GlobalFields.NormResidueSymbol.RestrictNormalInfiniteLocalSymbol
+public import GroundTheory.GlobalFields.GlobalReciprocity.General
+public import GroundTheory.GlobalFields.PowerSubgroupIndex.Existence
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

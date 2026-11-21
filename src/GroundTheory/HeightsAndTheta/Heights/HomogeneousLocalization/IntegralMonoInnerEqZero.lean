@@ -1,11 +1,16 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HermitianLattice
-import GroundTheory.HeightsAndTheta.Heights.ComplexPoints
-import GroundTheory.HeightsAndTheta.Heights.FinrankFibreAtOfIsInvertibleSheaf
-import GroundTheory.HeightsAndTheta.Heights.FubiniStudy
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.PSpaceFinite
-import GroundTheory.HeightsAndTheta.Heights.FubiniStudyMetric
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.TwistingSheafAlt
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HermitianLattice
+public import GroundTheory.HeightsAndTheta.Heights.ComplexPoints
+public import GroundTheory.HeightsAndTheta.Heights.FinrankFibreAtOfIsInvertibleSheaf
+public import GroundTheory.HeightsAndTheta.Heights.FubiniStudy
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.PSpaceFinite
+public import GroundTheory.HeightsAndTheta.Heights.FubiniStudyMetric
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.TwistingSheafAlt
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

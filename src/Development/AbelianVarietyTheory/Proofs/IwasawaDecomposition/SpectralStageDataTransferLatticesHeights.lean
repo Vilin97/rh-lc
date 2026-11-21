@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.UpLReStage
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsSameFOfDiv
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ReadsUnique
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SpectralComparisonTransportedDivisionLatticeChanStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.UpLReStage
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsSameFOfDiv
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ReadsUnique
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SpectralComparisonTransportedDivisionLatticeChanStatement
+
+@[expose] public section
 
 noncomputable section
 

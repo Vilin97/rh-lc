@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataKerI
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataKerI
+
+@[expose] public section
 
 open Formalism.BasicNotions
 

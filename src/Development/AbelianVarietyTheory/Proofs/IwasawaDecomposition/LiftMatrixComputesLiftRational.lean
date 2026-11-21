@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsMtTieCoord
-import Formalism.LocalToGlobal.Divisibility.RowSideTie
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsMtTieCoord
+public import Formalism.LocalToGlobal.Divisibility.RowSideTie
+
+@[expose] public section
 
 noncomputable section
 

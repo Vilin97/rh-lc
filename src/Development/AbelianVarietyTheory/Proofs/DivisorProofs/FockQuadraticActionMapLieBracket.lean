@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataTheta
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PderivPderivCommFock
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataTheta
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PderivPderivCommFock
+
+@[expose] public section
 
 open Formalism.BasicNotions.TH
 

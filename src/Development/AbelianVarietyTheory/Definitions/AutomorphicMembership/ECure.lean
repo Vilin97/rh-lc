@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.EHHre
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ColDictLReTr
-import Lean
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.EHHre
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ColDictLReTr
+public import Lean
+
+@[expose] public section
 
 noncomputable section
 

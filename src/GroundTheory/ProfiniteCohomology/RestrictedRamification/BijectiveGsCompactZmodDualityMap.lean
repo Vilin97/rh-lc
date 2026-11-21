@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseInv
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseLocalDual
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseSwap
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseInv
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseLocalDual
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseSwap
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

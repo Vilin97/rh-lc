@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.IsThPKernelSigBase
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.IsThPKernelSigBase
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+
+@[expose] public section
 
 noncomputable section
 

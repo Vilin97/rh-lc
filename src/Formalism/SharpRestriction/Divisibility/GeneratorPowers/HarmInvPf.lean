@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndVerb
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpAct
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpTieAlg
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.HarmInvB
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.HarmInvC
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndVerb
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpAct
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpTieAlg
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.HarmInvB
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.HarmInvC
+
+@[expose] public section
 
 set_option autoImplicit false
 

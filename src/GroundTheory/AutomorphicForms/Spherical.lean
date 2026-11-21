@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.SphericalIntegral
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.SphericalIntegral
+
+@[expose] public section
 
 noncomputable section
 

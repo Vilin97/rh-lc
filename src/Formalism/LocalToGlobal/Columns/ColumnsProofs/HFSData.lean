@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.RowForms
-import Formalism.LocalToGlobal.Divisibility.TuplesLemmas
-import Formalism.LocalToGlobal.Divisibility.DivisibilityProofs.TuplesP
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.RowForms
+public import Formalism.LocalToGlobal.Divisibility.TuplesLemmas
+public import Formalism.LocalToGlobal.Divisibility.DivisibilityProofs.TuplesP
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

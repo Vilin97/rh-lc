@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.GenFrPfS
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.BCRing
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.GenFrPfS
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.BCRing
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 400000
 

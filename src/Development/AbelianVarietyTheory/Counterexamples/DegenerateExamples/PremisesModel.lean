@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.JacquetSubsetSums.JacquetSubsetSum
+module
+
+public import Mathlib
+public import Formalism.JacquetSubsetSums.JacquetSubsetSum
+
+@[expose] public section
 
 open Finset Matrix
 

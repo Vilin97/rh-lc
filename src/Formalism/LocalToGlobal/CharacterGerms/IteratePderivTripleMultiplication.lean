@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.PderivTripleMultiplicationMaximal
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.PderivTripleMultiplicationMaximal
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.DataRows
-import Formalism.LocalRingCardinality.DataArith
+module
+
+public import Formalism.LocalRingCardinality.DataRows
+public import Formalism.LocalRingCardinality.DataArith
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

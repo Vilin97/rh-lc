@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.MultiplicityOne.FinitePart
-import GroundTheory.AutomorphicForms.WhittakerCriterion
-import GroundTheory.AutomorphicForms.MultiplicityOne.NormOne
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.MultiplicityOne.FinitePart
+public import GroundTheory.AutomorphicForms.WhittakerCriterion
+public import GroundTheory.AutomorphicForms.MultiplicityOne.NormOne
+
+@[expose] public section
 
 open MeasureTheory Set Filter Topology Function
 open NumberField IsDedekindDomain

@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.TieTwRecOf
-import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.JoinSISel
-import Formalism.LocalToGlobal.HilbertRowConditions.AllJoinP
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.AdmissibleLabelWeightsOfGreenCuspidalParametrisa
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.TieTwRecOf
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.JoinSISel
+public import Formalism.LocalToGlobal.HilbertRowConditions.AllJoinP
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.AdmissibleLabelWeightsOfGreenCuspidalParametrisa
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.MollifiedIntegrability.DensDefs
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsBisMore
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.MollifiedIntegrability.DensDefs
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsBisMore
+
+@[expose] public section
 
 noncomputable section
 

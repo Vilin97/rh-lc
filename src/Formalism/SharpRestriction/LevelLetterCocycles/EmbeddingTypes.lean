@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.LargeLevelLemmas
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.LargeLevelLemmas
+
+@[expose] public section
 
 noncomputable section
 

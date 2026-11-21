@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndAll
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndFrFixAsm
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.FrRatio
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpGauge
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndAll
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndFrFixAsm
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.FrRatio
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpGauge
+
+@[expose] public section
 
 set_option autoImplicit false
 

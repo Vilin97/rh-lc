@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.KerIso
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.DeterminantKernelFiniteness.ExistsNatMulMemFracFam
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.DeterminantKernelFiniteness.ValuationLeOneOfDenom
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.KerIso
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.DeterminantKernelFiniteness.ExistsNatMulMemFracFam
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.DeterminantKernelFiniteness.ValuationLeOneOfDenom
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

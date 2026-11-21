@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.DiagramChase
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.DiagramChase
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC LateralTheory.E.t_E2Cut LateralTheory.E.ContPf LateralTheory.E.StepSPf

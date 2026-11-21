@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJGlobalDefs
-import GroundTheory.AutomorphicForms.GL2.GJGlobalUnfoldCount
-import GroundTheory.AutomorphicForms.GL2.GJGlobalUnfoldRank
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.ExistsLintegralConstantTermL2SqLe
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJGlobalDefs
+public import GroundTheory.AutomorphicForms.GL2.GJGlobalUnfoldCount
+public import GroundTheory.AutomorphicForms.GL2.GJGlobalUnfoldRank
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.ExistsLintegralConstantTermL2SqLe
+
+@[expose] public section
 
 open MeasureTheory Set Function NumberField
 open scoped ENNReal NNReal NumberField.AdeleRing

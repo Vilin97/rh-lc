@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.SpanPowerMembership.RankRecordRowDimensionZero
-import Formalism.LocalRingCardinality.DataKap
+module
+
+public import Formalism.LocalRingCardinality.SpanPowerMembership.RankRecordRowDimensionZero
+public import Formalism.LocalRingCardinality.DataKap
+
+@[expose] public section
 
 noncomputable section
 

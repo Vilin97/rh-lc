@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LowKAllPos
-import Formalism.HermitianCurvature.CapelliDeterminantAndBranching
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LowKAllPos
+public import Formalism.HermitianCurvature.CapelliDeterminantAndBranching
+
+@[expose] public section
 
 open Finset
 

@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.HarmInvA
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ConstantCoeffPolyAdd
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PsiCover
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.KillAddFin
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.HarmInvA
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ConstantCoeffPolyAdd
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PsiCover
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.KillAddFin
+
+@[expose] public section
 
 set_option autoImplicit false
 

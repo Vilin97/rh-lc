@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.NormalizedHeckeData
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.NormalizedHeckeData
+
+@[expose] public section
 
 noncomputable section
 

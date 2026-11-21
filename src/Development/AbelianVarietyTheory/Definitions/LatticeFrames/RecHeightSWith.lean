@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.RecHeightWith
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.ColHeightSharpWith
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.RecHeightWith
+public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.ColHeightSharpWith
+
+@[expose] public section
 
 noncomputable section
 

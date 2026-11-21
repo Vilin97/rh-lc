@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.SemistableReduction.TorsionNonvanishStatement
-import Development.AbelianVarietyTheory.Proofs.HermitianTraceForms.Imports
+module
+
+public import Mathlib
+public import ReciprocityTheory.SemistableReduction.TorsionNonvanishStatement
+public import Development.AbelianVarietyTheory.Proofs.HermitianTraceForms.Imports
+
+@[expose] public section
 
 noncomputable section
 

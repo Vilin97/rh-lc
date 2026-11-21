@@ -1,23 +1,27 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.ToHLat
-import Formalism.LocalToGlobal.Columns.ToHLatLemmas
-import Formalism.LocalToGlobal.Columns.AlgebraMapMemMaximalIdealPowIff
-import Formalism.LocalToGlobal.Columns.LocWLemmas
-import Formalism.LocalToGlobal.Columns.AtTRank
-import Formalism.LocalToGlobal.Columns.DiamondPreservesRamified
-import Formalism.LocalToGlobal.Columns.FiniteSumNonzeroLargeDepth
-import Formalism.LocalToGlobal.Columns.CmUnramifiedOfFieldConditions
-import Formalism.LocalToGlobal.Columns.RowFormsRat
-import Formalism.LocalToGlobal.Columns.RowFormsSym
-import Formalism.LocalToGlobal.Columns.SliceIntegralDeltaNeBot
-import Formalism.LocalToGlobal.Columns.SummandSlopeAtDecoratedLattice
-import Formalism.LocalToGlobal.Columns.BrzoPairAtZeroRight
-import Formalism.SizeWindowBrackets.Chain2aCoreNoAnalytic
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.SecondStepGluing
-import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
-import Formalism.FormalDegreeBessel.StatementDS
-import Formalism.FormalDegreeBessel.FinalDS
-import Mathlib.LinearAlgebra.Vandermonde
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.ToHLat
+public import Formalism.LocalToGlobal.Columns.ToHLatLemmas
+public import Formalism.LocalToGlobal.Columns.AlgebraMapMemMaximalIdealPowIff
+public import Formalism.LocalToGlobal.Columns.LocWLemmas
+public import Formalism.LocalToGlobal.Columns.AtTRank
+public import Formalism.LocalToGlobal.Columns.DiamondPreservesRamified
+public import Formalism.LocalToGlobal.Columns.FiniteSumNonzeroLargeDepth
+public import Formalism.LocalToGlobal.Columns.CmUnramifiedOfFieldConditions
+public import Formalism.LocalToGlobal.Columns.RowFormsRat
+public import Formalism.LocalToGlobal.Columns.RowFormsSym
+public import Formalism.LocalToGlobal.Columns.SliceIntegralDeltaNeBot
+public import Formalism.LocalToGlobal.Columns.SummandSlopeAtDecoratedLattice
+public import Formalism.LocalToGlobal.Columns.BrzoPairAtZeroRight
+public import Formalism.SizeWindowBrackets.Chain2aCoreNoAnalytic
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.SecondStepGluing
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
+public import Formalism.FormalDegreeBessel.StatementDS
+public import Formalism.FormalDegreeBessel.FinalDS
+public import Mathlib.LinearAlgebra.Vandermonde
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 open scoped Matrix ComplexOrder

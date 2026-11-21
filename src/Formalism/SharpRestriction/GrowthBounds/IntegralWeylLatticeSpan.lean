@@ -1,9 +1,13 @@
-import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan.WeylLatticeDescentHolds
-import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan.ColSpanMulUnit
-import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan.SelfDualCongr
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieFin
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.BlockRationalityField
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.BlockRatReal
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan.WeylLatticeDescentHolds
+public import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan.ColSpanMulUnit
+public import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan.SelfDualCongr
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieFin
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.BlockRationalityField
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.BlockRatReal
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.TensSmooth
-import GroundTheory.AutomorphicForms.L2LocalComponents.ArchBump
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.TensSmooth
+public import GroundTheory.AutomorphicForms.L2LocalComponents.ArchBump
+
+@[expose] public section
 
 noncomputable section
 

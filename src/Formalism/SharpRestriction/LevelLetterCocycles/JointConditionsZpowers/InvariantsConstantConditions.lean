@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.BaseLen
-import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.CrysOnCond
-import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.KsMono
-import Formalism.SharpRestriction.LevelLetterCocycles.EmbeddingTypes
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.BaseLen
+public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.CrysOnCond
+public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.KsMono
+public import Formalism.SharpRestriction.LevelLetterCocycles.EmbeddingTypes
+
+@[expose] public section
 
 noncomputable section
 

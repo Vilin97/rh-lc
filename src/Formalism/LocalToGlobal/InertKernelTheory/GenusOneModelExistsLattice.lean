@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.InertKernelTheory.StatementBe
-import Formalism.LocalToGlobal.InertKernelTheory.DefsSigma
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.StatementBe
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsSigma
+
+@[expose] public section
 
 noncomputable section
 

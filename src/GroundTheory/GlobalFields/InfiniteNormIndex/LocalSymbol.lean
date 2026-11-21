@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.HerbrandQuotients.Cyclic
-import GroundTheory.ProfiniteCohomology.GaloisModules.CoeGalRootsOfUnityHomApply
-import GroundTheory.GlobalFields.SemilocalAlgebras.Infinite
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.HerbrandQuotients.Cyclic
+public import GroundTheory.ProfiniteCohomology.GaloisModules.CoeGalRootsOfUnityHomApply
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Infinite
+
+@[expose] public section
 
 noncomputable section
 

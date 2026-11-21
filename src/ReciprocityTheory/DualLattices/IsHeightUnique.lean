@@ -1,5 +1,9 @@
-import ReciprocityTheory.DualLattices.HtLinStatement
-import ReciprocityTheory.DualLattices.HeightFunctionalStatementOfPairingProperties
+module
+
+public import ReciprocityTheory.DualLattices.HtLinStatement
+public import ReciprocityTheory.DualLattices.HeightFunctionalStatementOfPairingProperties
+
+@[expose] public section
 
 noncomputable section
 

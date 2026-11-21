@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePIndAr
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePAddCvSelf
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePIndAr
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePAddCvSelf
+
+@[expose] public section
 
 noncomputable section
 

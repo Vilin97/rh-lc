@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.SemilocalAlgebras.Finite
-import GroundTheory.GlobalFields.SemilocalAlgebras.Galois
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Finite
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Galois
+
+@[expose] public section
 
 noncomputable section
 

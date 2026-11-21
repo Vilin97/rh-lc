@@ -1,8 +1,12 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDefs
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkSandwich
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkFaith
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkSpan
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDualExp
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDefs
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkSandwich
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkFaith
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkSpan
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDualExp
+
+@[expose] public section
 
 open MvPolynomial Equiv UpperTheory.V.AlgebraTools.Hk
 

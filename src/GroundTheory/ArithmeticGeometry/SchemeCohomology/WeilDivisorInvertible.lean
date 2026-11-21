@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.WeilDivisorSheaf
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.InvertibleSheaf
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.WeilDivisorSheaf
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.InvertibleSheaf
+
+@[expose] public section
 
 namespace GroundTheory.Arith.SchemeCoh
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CountingFormula.EichESymmApply
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LocalTheoryWindows
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CountingFormula.EichESymmApply
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LocalTheoryWindows
+
+@[expose] public section
 
 noncomputable section
 

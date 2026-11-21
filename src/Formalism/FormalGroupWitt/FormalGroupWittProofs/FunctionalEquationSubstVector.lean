@@ -1,9 +1,13 @@
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.IntegralSubstVector
-import Formalism.TorsionNormIteration.InverseIntegralClasses.SigmaNormLeOne
-import Formalism.TorsionNormIteration.InverseIntegralClasses.MemSpanOfNormLe
-import Formalism.TorsionNormIteration.InverseIntegralClasses.NormSigmaLeOne
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.CoeffV
-import Lemmata.MultivariateIntegrals.IntegralMv
+module
+
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.IntegralSubstVector
+public import Formalism.TorsionNormIteration.InverseIntegralClasses.SigmaNormLeOne
+public import Formalism.TorsionNormIteration.InverseIntegralClasses.MemSpanOfNormLe
+public import Formalism.TorsionNormIteration.InverseIntegralClasses.NormSigmaLeOne
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.CoeffV
+public import Lemmata.MultivariateIntegrals.IntegralMv
+
+@[expose] public section
 
 noncomputable section
 

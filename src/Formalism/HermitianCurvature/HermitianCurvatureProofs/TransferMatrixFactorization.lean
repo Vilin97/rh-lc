@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.StatementWd
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.KroneckerEmbedMulApply
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.QEFirstMulSecondEqSwap
+module
+
+public import Formalism.HermitianCurvature.StatementWd
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.KroneckerEmbedMulApply
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.QEFirstMulSecondEqSwap
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.Wd5
 

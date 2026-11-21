@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.WhittakerOrbit
-import Development.AutomorphicArithmetic.Foundations.Convolution.TwistedLocalOrbits.HoweSpace
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.WhittakerOrbit
+public import Development.AutomorphicArithmetic.Foundations.Convolution.TwistedLocalOrbits.HoweSpace
+
+@[expose] public section
 
 noncomputable section
 

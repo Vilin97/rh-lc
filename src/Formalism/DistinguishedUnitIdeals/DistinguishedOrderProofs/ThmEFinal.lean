@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.DistinguishedUnitIdeals.FinalArcProps
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.ThmEPrim
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.Partners
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.PolynomialEvaluationValuation
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.Graded
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.Rounding
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.Bridge
+module
+
+public import Mathlib
+public import Formalism.DistinguishedUnitIdeals.FinalArcProps
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.ThmEPrim
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.Partners
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.PolynomialEvaluationValuation
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.Graded
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.Rounding
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.Bridge
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.BigCellVanishingOfCommute
+module
+
+public import Formalism.HermitianCurvature.BigCellVanishingOfCommute
+
+@[expose] public section
 
 open Formalism.FourierDecayAlt Formalism.QuantumDeterminants MvPolynomial
 

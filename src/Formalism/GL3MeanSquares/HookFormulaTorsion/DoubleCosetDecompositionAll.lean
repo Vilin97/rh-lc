@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.GL3MeanSquares.AffineFibreCountComparison
-import Formalism.LogVandermondeBounds.FinrankFiberSumZero
+module
+
+public import Mathlib
+public import Formalism.GL3MeanSquares.AffineFibreCountComparison
+public import Formalism.LogVandermondeBounds.FinrankFiberSumZero
+
+@[expose] public section
 
 namespace Formalism.HermitianLattices.OneDimInversion
 

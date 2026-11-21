@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleTrace.LadicH0LocallyConstant
-import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
+module
+
+public import Development.EtaleCohomology.EtaleTrace.LadicH0LocallyConstant
+public import Mathlib.AlgebraicGeometry.Morphisms.FlatRank
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC

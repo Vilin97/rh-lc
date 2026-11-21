@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.SplittingFromInequality.Galois
-import GroundTheory.GlobalFields.SemilocalAlgebras.Galois
-import GroundTheory.GlobalFields.CompletionAtPlace.Inertia
-import GroundTheory.LocalFields.UnramifiedGalois
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SplittingFromInequality.Galois
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Galois
+public import GroundTheory.GlobalFields.CompletionAtPlace.Inertia
+public import GroundTheory.LocalFields.UnramifiedGalois
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

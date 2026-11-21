@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.GrowthSums.StatementA
-import Formalism.GaussJetBounds.StatementI
-import Formalism.GaussJetBounds.StatementH
+module
+
+public import Mathlib
+public import Formalism.GrowthSums.StatementA
+public import Formalism.GaussJetBounds.StatementI
+public import Formalism.GaussJetBounds.StatementH
+
+@[expose] public section
 
 noncomputable section
 

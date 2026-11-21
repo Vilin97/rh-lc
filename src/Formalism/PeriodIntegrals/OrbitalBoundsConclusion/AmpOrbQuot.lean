@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.AmpOrbQ
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.OrbitQuotientTopology.ContinuousAtInvOfDet
+module
+
+public import Formalism.PeriodIntegrals.AmpOrbQ
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.OrbitQuotientTopology.ContinuousAtInvOfDet
+
+@[expose] public section
 
 open Matrix MeasureTheory Measure
 open scoped ENNReal

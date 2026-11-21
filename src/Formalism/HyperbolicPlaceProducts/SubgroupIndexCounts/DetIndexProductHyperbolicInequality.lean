@@ -1,4 +1,8 @@
-import Formalism.HyperbolicPlaceProducts.DetIndexProductHyperbolicInequality
+module
+
+public import Formalism.HyperbolicPlaceProducts.DetIndexProductHyperbolicInequality
+
+@[expose] public section
 
 open Module
 

@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.MemLam
-import Development.WeilBound.ThetaLifts.LatticeBasics.BadStmt
-import Development.WeilBound.ThetaLifts.LatticeBasics.LocMeas
-import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.PfDict
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactOpenAddSubgroup
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.MemLam
+public import Development.WeilBound.ThetaLifts.LatticeBasics.BadStmt
+public import Development.WeilBound.ThetaLifts.LatticeBasics.LocMeas
+public import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.PfDict
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactOpenAddSubgroup
+
+@[expose] public section
 
 noncomputable section
 

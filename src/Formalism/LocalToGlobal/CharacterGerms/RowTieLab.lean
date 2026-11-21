@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.HostTraceIdentity
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePEmbIntSt
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.HostTraceIdentity
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePEmbIntSt
+
+@[expose] public section
 
 set_option autoImplicit false
 

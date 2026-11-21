@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.ThetaLogCoordinates.JacobiPathWeights.DetLetters
+module
+
+public import Mathlib
+public import Formalism.ThetaLogCoordinates.JacobiPathWeights.DetLetters
+
+@[expose] public section
 
 noncomputable section
 

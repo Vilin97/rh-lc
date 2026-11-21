@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL6.BwAValIntegralNonneg
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.BwAValIntegralNonneg
+
+@[expose] public section
 
 noncomputable section
 

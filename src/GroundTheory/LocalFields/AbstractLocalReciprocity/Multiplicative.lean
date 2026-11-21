@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.AbstractLocalReciprocity.KeyLemma
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.KeyLemma
+
+@[expose] public section
 
 namespace GroundTheory.LocalField.Abstract
 

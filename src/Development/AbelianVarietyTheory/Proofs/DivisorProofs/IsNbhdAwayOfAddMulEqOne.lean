@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AwayHomCompAlgebraMap
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AwayHomCompAlgebraMap
+
+@[expose] public section
+
 open GlobalTheory.AffineCurveNbhd
 
 namespace GlobalTheory.AffineCurveNbhd

@@ -1,8 +1,12 @@
-import Formalism.PieriBlockIdeals.StatementDown
-import Formalism.PieriBlockIdeals.PieriColumnMinors.WeightBounds
-import Formalism.PieriBlockIdeals.PieriColumnMinors.ColumnsPieriSkeleton
-import Formalism.PieriBlockIdeals.PieriColumnMinors.RealOfSkeleton
-import Formalism.PieriBlockIdeals.PieriColumnMinors.IrreducibleGeneration
+module
+
+public import Formalism.PieriBlockIdeals.StatementDown
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.WeightBounds
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.ColumnsPieriSkeleton
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.RealOfSkeleton
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.IrreducibleGeneration
+
+@[expose] public section
 
 namespace Formalism.CohomologicalDescent.Down
 

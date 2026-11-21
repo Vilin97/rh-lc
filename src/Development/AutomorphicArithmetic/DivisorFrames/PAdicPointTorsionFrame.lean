@@ -1,13 +1,18 @@
-import Development.AutomorphicArithmetic.LocalEmbeddings.RootFrame
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.HodgeTateKernel
-import Development.AutomorphicArithmetic.DivisorFrames.AlgebraicPAdicPointLifts
-import Development.AutomorphicArithmetic.DivisorFrames.LevelReductionTorsionCharacter
-import Development.AutomorphicArithmetic.DivisorFrames.TateModulePairingCongruence
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapPairDetCovec
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.GrNormPosOfBasis
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.WeilIsGrpPullbackOfCommute
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsPushEquiv
+module
+
+public import Development.AutomorphicArithmetic.LocalEmbeddings.RootFrame
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.HodgeTateKernel
+public import Development.AutomorphicArithmetic.DivisorFrames.AlgebraicPAdicPointLifts
+public import Development.AutomorphicArithmetic.DivisorFrames.LevelReductionTorsionCharacter
+public import Development.AutomorphicArithmetic.DivisorFrames.TateModulePairingCongruence
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapPairDetCovec
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.GrNormPosOfBasis
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.WeilIsGrpPullbackOfCommute
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsPushEquiv
+
+@[expose] public section
+
 open CategoryTheory AlgebraicGeometry NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
 open Formalism.BasicNotions Formalism.L2.Pj GlobalTheory GlobalTheory.Cartier GlobalTheory.ProjVar GlobalTheory.TrueGeo GlobalTheory.Mean4O GlobalTheory.ShFam GlobalTheory.ShFam.Pad GlobalTheory.TrivFlag GlobalTheory.LineNorm
 open Formalism.MainNotions.DIV.Cons (intO)

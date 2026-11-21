@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.TripleSumComm
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.BiadditiveSecondVariable
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.FrobeniusCongruenceWitt
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.SxMuAltInt
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.TripleSumComm
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.BiadditiveSecondVariable
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.FrobeniusCongruenceWitt
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.SxMuAltInt
+
+@[expose] public section
 
 noncomputable section
 

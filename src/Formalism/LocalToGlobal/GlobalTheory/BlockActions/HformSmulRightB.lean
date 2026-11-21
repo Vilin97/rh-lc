@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.RestrictionSymmetric
-import Formalism.LocalToGlobal.GlobalTheory.GL4.CTEqConjTranspose
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.RestrictionSymmetric
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.CTEqConjTranspose
+
+@[expose] public section
 
 noncomputable section
 

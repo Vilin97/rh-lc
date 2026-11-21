@@ -1,14 +1,18 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.BiextensionHypothesesOfLevelOne
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.ThetaInZIsThetaLog
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.StatementC
-import Formalism.GaussJetBounds.StatementS
-import Formalism.GaussJetBounds.OneLetterGauss
-import Formalism.GaussJetBounds.GenLogInverse
-import Formalism.GradedWeylDivisibility.FinalD
-import Formalism.GaussJetBounds.GaussJetProofs.OrbMul
-import Formalism.GaussJetBounds.ThmAGauss
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.ThetaLogIsSubst
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FinalS
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.BiextensionHypothesesOfLevelOne
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.ThetaInZIsThetaLog
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.StatementC
+public import Formalism.GaussJetBounds.StatementS
+public import Formalism.GaussJetBounds.OneLetterGauss
+public import Formalism.GaussJetBounds.GenLogInverse
+public import Formalism.GradedWeylDivisibility.FinalD
+public import Formalism.GaussJetBounds.GaussJetProofs.OrbMul
+public import Formalism.GaussJetBounds.ThmAGauss
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.ThetaLogIsSubst
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FinalS
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

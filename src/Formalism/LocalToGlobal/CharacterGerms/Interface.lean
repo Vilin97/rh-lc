@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.ScaledSecondIntegral
-import Formalism.LocalToGlobal.CharacterGerms.BiadditiveInSingleVariables
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.ScaledSecondIntegral
+public import Formalism.LocalToGlobal.CharacterGerms.BiadditiveInSingleVariables
+
+@[expose] public section
 
 noncomputable section
 

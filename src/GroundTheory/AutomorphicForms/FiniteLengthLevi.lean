@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.FiniteLengthLeviBlock
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.FiniteLengthLeviBlock
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

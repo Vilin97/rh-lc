@@ -1,5 +1,9 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.ExistsPowIdem
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.ExistsPowIdem
+
+@[expose] public section
 
 noncomputable section
 

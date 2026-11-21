@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.FiniteClassSetOfLe
-import Formalism.LocalRingCardinality.DataGatTies
-import Formalism.LocalRingCardinality.DataLevelD
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.FiniteClassSetOfLe
+public import Formalism.LocalRingCardinality.DataGatTies
+public import Formalism.LocalRingCardinality.DataLevelD
+
+@[expose] public section
 
 noncomputable section
 

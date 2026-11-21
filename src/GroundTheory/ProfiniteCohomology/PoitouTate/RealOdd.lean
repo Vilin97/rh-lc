@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.PoitouTate.RealLocal
-import GroundTheory.ProfiniteCohomology.PoitouTate.RealCup
-import GroundTheory.ProfiniteCohomology.PoitouTate.PoitouTateNineTermGs
-import GroundTheory.ProfiniteCohomology.Colimit
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.PoitouTate.RealLocal
+public import GroundTheory.ProfiniteCohomology.PoitouTate.RealCup
+public import GroundTheory.ProfiniteCohomology.PoitouTate.PoitouTateNineTermGs
+public import GroundTheory.ProfiniteCohomology.Colimit
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.TPullTMap
+module
+
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.TPullTMap
+
+@[expose] public section
 
 set_option backward.isDefEq.respectTransparency false
 

@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.CharacterBoxes.EveryCharacter
-import Formalism.GammaFactorNonvanishing.RhOfRight
+module
+
+public import Development.AutomorphicArithmetic.CharacterBoxes.EveryCharacter
+public import Formalism.GammaFactorNonvanishing.RhOfRight
+
+@[expose] public section
 
 open Complex DirichletCharacter
 

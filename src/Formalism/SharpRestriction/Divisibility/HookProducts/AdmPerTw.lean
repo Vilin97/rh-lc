@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.WeightDegreeSizes
-import Formalism.SharpRestriction.Divisibility.OrbitPlaces
-import Formalism.SharpRestriction.Divisibility.StatementFT.PeriodPointConditions
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.WeightDegreeSizes
+public import Formalism.SharpRestriction.Divisibility.OrbitPlaces
+public import Formalism.SharpRestriction.Divisibility.StatementFT.PeriodPointConditions
+
+@[expose] public section
 
 noncomputable section
 

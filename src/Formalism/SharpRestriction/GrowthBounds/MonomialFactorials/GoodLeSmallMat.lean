@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.OrthCountOf
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.GoodCountMem
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.OrthCountOf
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.GoodCountMem
+
+@[expose] public section
 
 noncomputable section
 

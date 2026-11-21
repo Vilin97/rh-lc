@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.CuspidalProjection.Global
-import GroundTheory.AutomorphicForms.TraceClass
-import GroundTheory.AutomorphicForms.TraceFormulaConvolution
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.CuspidalProjection.Global
+public import GroundTheory.AutomorphicForms.TraceClass
+public import GroundTheory.AutomorphicForms.TraceFormulaConvolution
+
+@[expose] public section
 
 open MeasureTheory Set Filter Topology Function
 open NumberField IsDedekindDomain

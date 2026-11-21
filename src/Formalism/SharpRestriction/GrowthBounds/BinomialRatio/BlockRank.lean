@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.CountDefs
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.SegLow
-import Formalism.SharpRestriction.GrowthBounds.CountingStatementReduction
-import Formalism.SharpRestriction.GrowthBounds.ProjectionOfIsotypicDecomposition
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.CountDefs
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.SegLow
+public import Formalism.SharpRestriction.GrowthBounds.CountingStatementReduction
+public import Formalism.SharpRestriction.GrowthBounds.ProjectionOfIsotypicDecomposition
+
+@[expose] public section
 
 noncomputable section
 

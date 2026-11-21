@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.ResBound
-import Formalism.LocalRingCardinality.AdicCompletionLocal.LocTied
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CoboundaryMemBlochKatoCocycles
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.NatCastPowNeZero
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FinrankSplit
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsIsComplOfSaturated
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.ResBound
+public import Formalism.LocalRingCardinality.AdicCompletionLocal.LocTied
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CoboundaryMemBlochKatoCocycles
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.NatCastPowNeZero
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FinrankSplit
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsIsComplOfSaturated
+
+@[expose] public section
 
 noncomputable section
 

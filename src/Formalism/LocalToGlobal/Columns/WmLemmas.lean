@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.UnipotentRightActionFunctionsW
-import Formalism.LocalToGlobal.Columns.HeckeSpCount
-import Formalism.LocalToGlobal.Columns.HeckeSp
-import Formalism.LocalToGlobal.Columns.GSetLemmas
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.UnipotentRightActionFunctionsW
+public import Formalism.LocalToGlobal.Columns.HeckeSpCount
+public import Formalism.LocalToGlobal.Columns.HeckeSp
+public import Formalism.LocalToGlobal.Columns.GSetLemmas
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Polynomial
 

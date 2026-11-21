@@ -1,13 +1,17 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.LineOppositeParabolicUnitaryLeviSectionEq
-import Formalism.SatakeDualWeyl.StatementE
-import Formalism.DoubleCosetMeasures.LowerUnipotentOrbits.RelIndexMulMeasure
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemGUIffAdjJ
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RelIndexEqOfSurj
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RelIndexUpLatEqSq
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RelIndexUpLatEqProd
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnipLatIsOpenIsCompact
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ImportsTerTail
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.LineOppositeParabolicUnitaryLeviSectionEq
+public import Formalism.SatakeDualWeyl.StatementE
+public import Formalism.DoubleCosetMeasures.LowerUnipotentOrbits.RelIndexMulMeasure
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemGUIffAdjJ
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RelIndexEqOfSurj
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RelIndexUpLatEqSq
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RelIndexUpLatEqProd
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnipLatIsOpenIsCompact
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ImportsTerTail
+
+@[expose] public section
 
 open MeasureTheory GlobalTheory.PRep GlobalTheory.LGrp Formalism.UG
 open scoped NNReal

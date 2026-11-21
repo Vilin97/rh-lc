@@ -1,9 +1,13 @@
-import Development.WeilBound.CoreStatements.FlagImmersions.Transport
-import Development.WeilBound.CoreStatements.VolumeEquality.BaseUnif
-import Development.WeilBound.CoreStatements.VolumeEquality.BaseUnifRiem
-import Development.WeilBound.CoreStatements.VolumeEquality.BaseUnifVecA
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.InteriorPointLatticeData
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.FibreLatticeLinearEquiv
+module
+
+public import Development.WeilBound.CoreStatements.FlagImmersions.Transport
+public import Development.WeilBound.CoreStatements.VolumeEquality.BaseUnif
+public import Development.WeilBound.CoreStatements.VolumeEquality.BaseUnifRiem
+public import Development.WeilBound.CoreStatements.VolumeEquality.BaseUnifVecA
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.InteriorPointLatticeData
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.FibreLatticeLinearEquiv
+
+@[expose] public section
 
 noncomputable section
 

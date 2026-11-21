@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.PAdicHodge.FieldOfNormsTower
-import GroundTheory.LocalFields.DifferentGalois
-import GroundTheory.LocalFields.RamificationStructure
-import GroundTheory.PAdicHodge.FieldOfNormsUpper
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.FieldOfNormsTower
+public import GroundTheory.LocalFields.DifferentGalois
+public import GroundTheory.LocalFields.RamificationStructure
+public import GroundTheory.PAdicHodge.FieldOfNormsUpper
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

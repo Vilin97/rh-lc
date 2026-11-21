@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.MemSpanVariable.mem_span_X :
     ∀ {O σ : Type} [inst : CommRing O] [Fintype σ]

@@ -1,5 +1,9 @@
-import ReciprocityTheory.AnalyticForms.PotentialTheory.StokesC
-import ReciprocityTheory.AnalyticForms.PotentialTheory.ContDiffAtOfIsPotential
+module
+
+public import ReciprocityTheory.AnalyticForms.PotentialTheory.StokesC
+public import ReciprocityTheory.AnalyticForms.PotentialTheory.ContDiffAtOfIsPotential
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.M
 

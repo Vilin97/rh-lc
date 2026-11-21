@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.SphericalSatake
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.SphericalSatake
+
+@[expose] public section
 
 noncomputable section
 

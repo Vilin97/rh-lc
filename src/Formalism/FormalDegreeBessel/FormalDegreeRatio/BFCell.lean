@@ -1,6 +1,10 @@
-import Formalism.FormalDegreeBessel.StatementBF
-import Formalism.FormalDegreeBessel.FormalDegreeRatio.GBasic
-import Formalism.FormalDegreeBessel.FormalDegreeRatio.GroupFactorizationHolds
+module
+
+public import Formalism.FormalDegreeBessel.StatementBF
+public import Formalism.FormalDegreeBessel.FormalDegreeRatio.GBasic
+public import Formalism.FormalDegreeBessel.FormalDegreeRatio.GroupFactorizationHolds
+
+@[expose] public section
 
 open Matrix
 

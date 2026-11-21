@@ -1,8 +1,12 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.SchwartzMoments.MulLPowApply
-import Development.WeilBound.ThetaLifts.SchwartzMoments.JetApply
-import Development.WeilBound.ThetaLifts.SchwartzMoments.DenseC
-import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.DictIrr
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.SchwartzMoments.MulLPowApply
+public import Development.WeilBound.ThetaLifts.SchwartzMoments.JetApply
+public import Development.WeilBound.ThetaLifts.SchwartzMoments.DenseC
+public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.DictIrr
+
+@[expose] public section
 
 noncomputable section
 

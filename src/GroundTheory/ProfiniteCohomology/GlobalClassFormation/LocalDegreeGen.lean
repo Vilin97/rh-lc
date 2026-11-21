@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.GlobalFields.SplittingFromInequality.Decomposition
-import GroundTheory.GlobalFields.FirstInequality
-import GroundTheory.GlobalFields.SemilocalAlgebras.Finite
-import GroundTheory.GlobalFields.IdeleClassGroup.InvariantsGalois
-import GroundTheory.GlobalFields.Adele.BaseChange.FiniteMap
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SplittingFromInequality.Decomposition
+public import GroundTheory.GlobalFields.FirstInequality
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Finite
+public import GroundTheory.GlobalFields.IdeleClassGroup.InvariantsGalois
+public import GroundTheory.GlobalFields.Adele.BaseChange.FiniteMap
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

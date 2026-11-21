@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.OtherEFree
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.OtherEFree
+
+@[expose] public section
 
 noncomputable section
 

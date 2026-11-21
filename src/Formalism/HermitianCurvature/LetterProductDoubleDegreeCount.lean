@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.HermitianCurvature.StatementLE
-import Formalism.HermitianCurvature.StatementG
-import Formalism.HermitianCurvature.StatementI
-import Formalism.HermitianCurvature.StatementQ
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.StatementLE
+public import Formalism.HermitianCurvature.StatementG
+public import Formalism.HermitianCurvature.StatementI
+public import Formalism.HermitianCurvature.StatementQ
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.C7
 

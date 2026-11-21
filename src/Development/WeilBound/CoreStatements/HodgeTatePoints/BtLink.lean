@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.HodgeTatePoints.Twexists
+module
+
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.Twexists
+
+@[expose] public section
 
 noncomputable section
 

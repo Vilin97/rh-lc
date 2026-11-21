@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.UnramifiedTrace.NatTr0Sum
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.UnramifiedTrace.NatTr0Sum
+
+@[expose] public section
 
 noncomputable section
 

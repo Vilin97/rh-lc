@@ -1,9 +1,13 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.GradedModulesLength.ToDegInjective
-import Mathlib.RingTheory.Jacobson.Ring
-import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.RingTheory.TensorProduct.Finite
-import Mathlib.RingTheory.FiniteStability
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.GradedModulesLength.ToDegInjective
+public import Mathlib.RingTheory.Jacobson.Ring
+public import Mathlib.RingTheory.LocalRing.ResidueField.Ideal
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.RingTheory.TensorProduct.Finite
+public import Mathlib.RingTheory.FiniteStability
+
+@[expose] public section
 
 open IsLocalRing Filter Formalism.MainNotions.V.Pf.V2.Calc UpperTheory.V.Alg UpperTheory.V.Alg.M
 open scoped TensorProduct

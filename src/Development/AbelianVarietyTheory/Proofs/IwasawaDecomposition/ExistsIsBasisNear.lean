@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LinearIndependentVecC
-import Formalism.LocalToGlobal.ProjectiveLattices.FrCovA
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LinearIndependentVecC
+public import Formalism.LocalToGlobal.ProjectiveLattices.FrCovA
+
+@[expose] public section
 
 set_option autoImplicit false
 

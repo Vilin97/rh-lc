@@ -1,6 +1,10 @@
-import Development.WeilBound.CoreStatements.HodgeTatePoints.IsFractionRingOfIntegers
-import Development.WeilBound.CoreStatements.HodgeTatePoints.FinrankWAddConj
-import Development.WeilBound.CoreStatements.HodgeTatePoints.GeneratesDiffMap
+module
+
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.IsFractionRingOfIntegers
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.FinrankWAddConj
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.GeneratesDiffMap
+
+@[expose] public section
 
 noncomputable section
 

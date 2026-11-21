@@ -1,11 +1,15 @@
-import Formalism.LocalToGlobal.GlobalTheory.SuppSat
-import Formalism.SharpRestriction.InertJacobiLevels.TiesView
-import Formalism.SharpRestriction.Divisibility.LocalQuadraticParts
-import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSk
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.GenericFramesLetters
-import Formalism.SharpRestriction.GrowthBounds.SmallOrderPrimes
-import Formalism.LocalRingCardinality.HostCls
-import Development.AutomorphicArithmetic.OrbitLabellings.EvenAddOrderOfHPOfPowLe
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.SuppSat
+public import Formalism.SharpRestriction.InertJacobiLevels.TiesView
+public import Formalism.SharpRestriction.Divisibility.LocalQuadraticParts
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSk
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.GenericFramesLetters
+public import Formalism.SharpRestriction.GrowthBounds.SmallOrderPrimes
+public import Formalism.LocalRingCardinality.HostCls
+public import Development.AutomorphicArithmetic.OrbitLabellings.EvenAddOrderOfHPOfPowLe
+
+@[expose] public section
 
 noncomputable section
 

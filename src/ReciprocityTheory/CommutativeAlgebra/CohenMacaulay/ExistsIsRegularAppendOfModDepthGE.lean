@@ -1,5 +1,9 @@
-import ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.ModDepthGE
-import Lemmata.GeneralBFactSide.Imports
+module
+
+public import ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.ModDepthGE
+public import Lemmata.GeneralBFactSide.Imports
+
+@[expose] public section
 
 namespace ReciprocityTheory.CA
 

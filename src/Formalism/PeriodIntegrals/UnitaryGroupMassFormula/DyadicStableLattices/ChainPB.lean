@@ -1,6 +1,10 @@
-import Formalism.PeriodIntegrals.GoodTwo
-import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.MulStableIntegral
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.DyadicStableLattices.ChainPA
+module
+
+public import Formalism.PeriodIntegrals.GoodTwo
+public import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.MulStableIntegral
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.DyadicStableLattices.ChainPA
+
+@[expose] public section
 
 noncomputable section
 open scoped ComplexConjugate

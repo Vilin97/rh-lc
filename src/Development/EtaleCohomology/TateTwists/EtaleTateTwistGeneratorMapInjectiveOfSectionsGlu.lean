@@ -1,8 +1,12 @@
-import Development.EtaleCohomology.TateTwists.EtaleTateTwistGeneratorMapIsIsoOfInjSurj
-import Development.EtaleCohomology.TateTwists.EtaleTateTwistSectionsLocallyGenerated
-import Development.EtaleCohomology.TateTwists.EtaleLocalPropertyBasicClosure
-import Development.EtaleCohomology.TateTwists.EtaleSheafSectionsSeparatedAndGlue
-import Development.AutomorphicArithmetic.CyclotomicBounds.ClassNumberBounds.SelmerDuality.ZModInj
+module
+
+public import Development.EtaleCohomology.TateTwists.EtaleTateTwistGeneratorMapIsIsoOfInjSurj
+public import Development.EtaleCohomology.TateTwists.EtaleTateTwistSectionsLocallyGenerated
+public import Development.EtaleCohomology.TateTwists.EtaleLocalPropertyBasicClosure
+public import Development.EtaleCohomology.TateTwists.EtaleSheafSectionsSeparatedAndGlue
+public import Development.AutomorphicArithmetic.CyclotomicBounds.ClassNumberBounds.SelmerDuality.ZModInj
+
+@[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
 open scoped TensorProduct DirectSum

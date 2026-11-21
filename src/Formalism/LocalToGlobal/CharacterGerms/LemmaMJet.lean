@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.LemmaMLin
-import Formalism.IncomingBounds.FlowDegreeBounds.ThmPJet
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.LemmaMLin
+public import Formalism.IncomingBounds.FlowDegreeBounds.ThmPJet
+
+@[expose] public section
 
 noncomputable section
 

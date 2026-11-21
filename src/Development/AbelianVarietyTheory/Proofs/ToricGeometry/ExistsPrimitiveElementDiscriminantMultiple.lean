@@ -1,9 +1,13 @@
-import Mathlib
-import ReciprocityTheory.ThetaQuasiPeriods.ThetaQuasiPeriodStatement
-import ReciprocityTheory.ThetaQuasiPeriods.Transl
-import ReciprocityTheory.ThetaQuasiPeriods.Change
-import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.Integral
-import Development.AbelianVarietyTheory.Proofs.ToricGeometry.Imports
+module
+
+public import Mathlib
+public import ReciprocityTheory.ThetaQuasiPeriods.ThetaQuasiPeriodStatement
+public import ReciprocityTheory.ThetaQuasiPeriods.Transl
+public import ReciprocityTheory.ThetaQuasiPeriods.Change
+public import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.Integral
+public import Development.AbelianVarietyTheory.Proofs.ToricGeometry.Imports
+
+@[expose] public section
 
 namespace GlobalTheory.NoetherPrimitive
 

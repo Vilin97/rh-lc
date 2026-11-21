@@ -1,10 +1,14 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.IsPairLevel
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsBallSubset
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsSat2InvTConj
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsNormalisedOfDualIsConj
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BlockIntegralIff
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BlockInverseIntegralIff
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.IsPairLevel
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsBallSubset
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsSat2InvTConj
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsNormalisedOfDualIsConj
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BlockIntegralIff
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BlockInverseIntegralIff
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapMulVecOfMemTD
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapMulVecOfMemTD
+
+@[expose] public section
+
 open NumberField IsDedekindDomain GlobalTheory.HaarLin
 
 namespace GlobalTheory.HaarLin.Gauss

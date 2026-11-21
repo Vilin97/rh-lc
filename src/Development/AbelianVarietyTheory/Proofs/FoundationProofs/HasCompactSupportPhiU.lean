@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.DoubleCosetMeasures.LatticeCoset
-import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.LocalIntegralGL
+module
+
+public import Mathlib
+public import Formalism.DoubleCosetMeasures.LatticeCoset
+public import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.LocalIntegralGL
+
+@[expose] public section
 
 noncomputable section
 

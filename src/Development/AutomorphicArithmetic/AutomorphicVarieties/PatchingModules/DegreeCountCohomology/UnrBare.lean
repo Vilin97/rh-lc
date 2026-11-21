@@ -1,8 +1,12 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.DegreeCountCohomology.IsDualPair
-import Mathlib
-import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisCochains.DecZhat
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CoboundaryCriterion
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.RootEquality
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.DegreeCountCohomology.IsDualPair
+public import Mathlib
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisCochains.DecZhat
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CoboundaryCriterion
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.RootEquality
+
+@[expose] public section
 
 noncomputable section
 

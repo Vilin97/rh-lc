@@ -1,4 +1,8 @@
-import Development.WeilBound.RepresentationTheoryGL.PeriodRingBases.AinfPlusInjectivity.ABInjective
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.PeriodRingBases.AinfPlusInjectivity.ABInjective
+
+@[expose] public section
 
 set_option backward.isDefEq.respectTransparency false
 

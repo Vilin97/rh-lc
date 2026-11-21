@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.FnDefB
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.FnDefB
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.LengthEqAddEigen
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LengthEqAddEigen
+
+@[expose] public section
 
 noncomputable section
 

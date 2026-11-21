@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.GlobalReciprocity.RangeDiagonalLeKerIdeleSymbol
-import GroundTheory.GlobalFields.NormResidueSymbol.Functorial
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.GlobalReciprocity.RangeDiagonalLeKerIdeleSymbol
+public import GroundTheory.GlobalFields.NormResidueSymbol.Functorial
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

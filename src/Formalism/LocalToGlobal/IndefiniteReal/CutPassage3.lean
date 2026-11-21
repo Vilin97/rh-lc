@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.CutPassage3SOfSteps
-import Formalism.LocalToGlobal.IndefiniteReal.RhoSpec
-import Formalism.LocalToGlobal.IndefiniteReal.MajorantAtBaseEqInnerOfPackage
-import Formalism.LocalToGlobal.IndefiniteReal.RowGSurj
-import Formalism.LocalToGlobal.IndefiniteReal.PGoodOfRho
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.CutPassage3SOfSteps
+public import Formalism.LocalToGlobal.IndefiniteReal.RhoSpec
+public import Formalism.LocalToGlobal.IndefiniteReal.MajorantAtBaseEqInnerOfPackage
+public import Formalism.LocalToGlobal.IndefiniteReal.RowGSurj
+public import Formalism.LocalToGlobal.IndefiniteReal.PGoodOfRho
+
+@[expose] public section
 
 namespace Formalism.IndefR.CxPass
 

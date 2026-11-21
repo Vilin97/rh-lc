@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerVolume.LocDensHI
-import ReciprocityTheory.Automorphisms.InstMainA
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerVolume.LocDensHI
+public import ReciprocityTheory.Automorphisms.InstMainA
+
+@[expose] public section
 
 noncomputable section
 

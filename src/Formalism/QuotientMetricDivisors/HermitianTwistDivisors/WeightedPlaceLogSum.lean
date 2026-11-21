@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.ScalarLiftLowerBoundRows
-import Formalism.LogFactorialBounds.LogFactorialProofs.PrimeSum
-import Formalism.LogFactorialIndices.SignedSubspaceIndex.LogProductFormula
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.ScalarLiftLowerBoundRows
+public import Formalism.LogFactorialBounds.LogFactorialProofs.PrimeSum
+public import Formalism.LogFactorialIndices.SignedSubspaceIndex.LogProductFormula
+
+@[expose] public section
 
 open Finset NumberField IsDedekindDomain
 

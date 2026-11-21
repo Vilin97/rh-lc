@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.CMDeterminantIdeals.CoeffMemOfLoc
-import Formalism.LocalToGlobal.CMDeterminantIdeals.StatementA
-import Formalism.LocalToGlobal.CMDeterminantIdeals.CMIdealValuations.OneLeAbsNormOfLeOne
+module
+
+public import Formalism.LocalToGlobal.CMDeterminantIdeals.CoeffMemOfLoc
+public import Formalism.LocalToGlobal.CMDeterminantIdeals.StatementA
+public import Formalism.LocalToGlobal.CMDeterminantIdeals.CMIdealValuations.OneLeAbsNormOfLeOne
+
+@[expose] public section
 
 noncomputable section
 

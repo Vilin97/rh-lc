@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJGlobalBound
-import GroundTheory.AutomorphicForms.GL2.GJGlobalEntire
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJGlobalBound
+public import GroundTheory.AutomorphicForms.GL2.GJGlobalEntire
+
+@[expose] public section
 
 open MeasureTheory Set Filter NumberField ComplexConjugate Asymptotics
 open scoped NumberField.AdeleRing

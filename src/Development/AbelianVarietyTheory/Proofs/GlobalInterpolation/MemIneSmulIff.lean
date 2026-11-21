@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.SharpRestriction.ParConsts
-import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.InstLocalRingSymplecticCoefficients
-import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.UnitaryThreeIrreduciblePoints
-import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.GradedCompletionLemmas
-import ReciprocityTheory.GaloisValuations.ArithOfA
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.SharpRestriction.ParConsts
+public import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.InstLocalRingSymplecticCoefficients
+public import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.UnitaryThreeIrreduciblePoints
+public import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.GradedCompletionLemmas
+public import ReciprocityTheory.GaloisValuations.ArithOfA
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Pointwise
 

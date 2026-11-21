@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qh20.hfs_aeval_restrict :
     ∀ {L W : Type} [inst : Field L] [inst_1 : AddCommGroup W]

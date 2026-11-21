@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.Divisibility.ChainOperators.PerCol
-import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSx
-import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSy
+module
+
+public import Formalism.SharpRestriction.Divisibility.ChainOperators.PerCol
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSx
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSy
+
+@[expose] public section
 
 noncomputable section
 

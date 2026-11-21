@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.OuterInt
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CompactCoefficientAppend
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CptCoefContSupp
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OuterInt
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CompactCoefficientAppend
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CptCoefContSupp
+
+@[expose] public section
 
 open Matrix MeasureTheory Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt Formalism.FourierDecayAlt.U
 

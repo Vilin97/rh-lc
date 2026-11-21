@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RedivisionStructureEq
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.GoodPartEq
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.See
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RedivisionStructureEq
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.GoodPartEq
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.See
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.GaloisSideTwistedSelmerAuxiliaryPrimes
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.GaloisSideTwistedSelmerAuxiliaryPrimes
+
+@[expose] public section
 
 noncomputable section
 

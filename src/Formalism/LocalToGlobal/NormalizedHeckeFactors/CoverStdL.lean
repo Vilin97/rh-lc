@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverFP
-import CompanionTheory.AutomorphicTheory.HeckeStandardModules.HeckeStdStatement
+module
+
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverFP
+public import CompanionTheory.AutomorphicTheory.HeckeStandardModules.HeckeStdStatement
+
+@[expose] public section
 
 noncomputable section
 

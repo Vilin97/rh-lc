@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.ReductionIsogeny
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.ReductionIsogeny
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

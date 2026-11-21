@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ContinuousZetaL
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ContinuousZetaL
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 open scoped ComplexConjugate ContDiff ENNReal

@@ -1,20 +1,24 @@
-import Mathlib
-import Formalism.LocalToGlobal.GlobalTheory.GL4.PColFin
-import Formalism.SharpRestriction.GlobalSchurBounds.FlipTwoThree
-import Formalism.LocalToGlobal.HermitianColumns.ColsHerm
-import Formalism.LocalToGlobal.HermitianForms.FormsTied
-import Formalism.GradedWeylDivisibility.StatementE
-import Formalism.SuccessiveMinima.StatementMink
-import Formalism.SharpRestriction.GlobalSchurBounds.IntegrableOfContinuousCircleMeasure
-import Formalism.BranchSandwichDivisors.BranchIsometryProofs.Numeric
-import Formalism.BranchSandwichDivisors.BranchIsometryProofs.Interlace
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LFockbLemmas
-import Formalism.BranchSandwichDivisors.StatementW
-import Formalism.BranchSandwichDivisors.BranchIsometryProofs.XiNorm
-import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
-import Formalism.BranchSandwichDivisors.BranchIsometryProofs.BranchMap
-import Formalism.BranchSandwichDivisors.BranchIsometryProofs.BranchScale
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LFocksLemmas
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.PColFin
+public import Formalism.SharpRestriction.GlobalSchurBounds.FlipTwoThree
+public import Formalism.LocalToGlobal.HermitianColumns.ColsHerm
+public import Formalism.LocalToGlobal.HermitianForms.FormsTied
+public import Formalism.GradedWeylDivisibility.StatementE
+public import Formalism.SuccessiveMinima.StatementMink
+public import Formalism.SharpRestriction.GlobalSchurBounds.IntegrableOfContinuousCircleMeasure
+public import Formalism.BranchSandwichDivisors.BranchIsometryProofs.Numeric
+public import Formalism.BranchSandwichDivisors.BranchIsometryProofs.Interlace
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LFockbLemmas
+public import Formalism.BranchSandwichDivisors.StatementW
+public import Formalism.BranchSandwichDivisors.BranchIsometryProofs.XiNorm
+public import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
+public import Formalism.BranchSandwichDivisors.BranchIsometryProofs.BranchMap
+public import Formalism.BranchSandwichDivisors.BranchIsometryProofs.BranchScale
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LFocksLemmas
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain MvPolynomial
 open scoped Matrix

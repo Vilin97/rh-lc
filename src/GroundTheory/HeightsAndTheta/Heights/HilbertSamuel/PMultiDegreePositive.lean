@@ -1,11 +1,16 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsMultiDegreePositive
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSegrePrime
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSegreHilb
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSegreDimGe
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PDegreePositive
-import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsMultiDegreePositive
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSegrePrime
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSegreHilb
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSegreDimGe
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PDegreePositive
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.Assembly
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

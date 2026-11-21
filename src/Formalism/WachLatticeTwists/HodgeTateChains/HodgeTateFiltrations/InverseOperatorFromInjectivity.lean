@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.HodgeTateChains.HodgeTateFiltrations.MinimalExponentAttained
-import ReciprocityTheory.GaloisValuations.ContinuousConstSMulQuotient
+module
+
+public import Formalism.WachLatticeTwists.HodgeTateChains.HodgeTateFiltrations.MinimalExponentAttained
+public import ReciprocityTheory.GaloisValuations.ContinuousConstSMulQuotient
+
+@[expose] public section
 
 noncomputable section
 

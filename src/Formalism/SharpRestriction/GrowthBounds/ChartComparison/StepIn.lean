@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.CmpGlMemMIff
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.NrmAMemAdForms
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePtOne
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.BlockRationalityField
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.RecAct
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.CmpGlMemMIff
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.NrmAMemAdForms
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePtOne
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.BlockRationalityField
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.RecAct
+
+@[expose] public section
 
 noncomputable section
 

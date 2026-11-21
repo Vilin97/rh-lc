@@ -1,11 +1,16 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDivisor
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartIntegral
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDivisorComponents
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDivisorLength
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartIntegralPoints
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDivisor
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartIntegral
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDivisorComponents
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDivisorLength
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartIntegralPoints
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

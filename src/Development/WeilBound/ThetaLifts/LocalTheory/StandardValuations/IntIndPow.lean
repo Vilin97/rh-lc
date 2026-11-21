@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.StandardValuations.ContinuousCut
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.StandardValuations.ContinuousCut
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

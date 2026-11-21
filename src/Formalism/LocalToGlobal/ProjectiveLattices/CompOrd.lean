@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.CompData
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.CompData
+
+@[expose] public section
 
 noncomputable section
 

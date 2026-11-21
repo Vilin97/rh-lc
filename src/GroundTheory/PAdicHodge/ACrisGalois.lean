@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.FactorizationFactorialLe
-import GroundTheory.PAdicHodge.AInfGalois
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.FactorizationFactorialLe
+public import GroundTheory.PAdicHodge.AInfGalois
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

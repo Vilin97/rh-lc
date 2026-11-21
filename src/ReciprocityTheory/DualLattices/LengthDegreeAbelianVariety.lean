@@ -1,11 +1,15 @@
-import ReciprocityTheory.DualLattices.ColengthSqMulLeProd
-import Mathlib
-import ReciprocityTheory.DualLattices.CotangentSurjective
-import ReciprocityTheory.DualLattices.LengthDegreeOfFrobenius
-import ReciprocityTheory.DualLattices.KilledGen
-import ReciprocityTheory.DualLattices.IdemGen
-import ReciprocityTheory.DualLattices.LenEx
-import ReciprocityTheory.DualLattices.CokernelLengthComparisonOf
+module
+
+public import ReciprocityTheory.DualLattices.ColengthSqMulLeProd
+public import Mathlib
+public import ReciprocityTheory.DualLattices.CotangentSurjective
+public import ReciprocityTheory.DualLattices.LengthDegreeOfFrobenius
+public import ReciprocityTheory.DualLattices.KilledGen
+public import ReciprocityTheory.DualLattices.IdemGen
+public import ReciprocityTheory.DualLattices.LenEx
+public import ReciprocityTheory.DualLattices.CokernelLengthComparisonOf
+
+@[expose] public section
 
 noncomputable section
 

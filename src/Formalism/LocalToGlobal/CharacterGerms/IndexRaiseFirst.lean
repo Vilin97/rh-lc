@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.ConstantZeroRestrictPoints
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.ConstantZeroRestrictPoints
+
+@[expose] public section
 
 set_option autoImplicit false
 

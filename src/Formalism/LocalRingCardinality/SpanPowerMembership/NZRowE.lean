@@ -1,14 +1,18 @@
-import Formalism.LocalRingCardinality.SpanPowerMembership.CodeRecordDiscriminantLevel
-import Formalism.LocalRingCardinality.SpanPowerMembership.NZColC
-import Formalism.LocalRingCardinality.DataIdx
-import Formalism.LocalRingCardinality.SpanPowerMembership.DivXExample
-import Formalism.LocalRingCardinality.DataAmbForm
-import Formalism.LocalRingCardinality.DataKap
-import Formalism.LocalRingCardinality.DataDIVDefs
-import Formalism.LocalRingCardinality.DataRows
-import Formalism.LocalRingCardinality.DataForms
-import Formalism.LocalRingCardinality.SpanPowerMembership.NZRowC
-import Formalism.LocalRingCardinality.SpanPowerMembership.NZTypeH
+module
+
+public import Formalism.LocalRingCardinality.SpanPowerMembership.CodeRecordDiscriminantLevel
+public import Formalism.LocalRingCardinality.SpanPowerMembership.NZColC
+public import Formalism.LocalRingCardinality.DataIdx
+public import Formalism.LocalRingCardinality.SpanPowerMembership.DivXExample
+public import Formalism.LocalRingCardinality.DataAmbForm
+public import Formalism.LocalRingCardinality.DataKap
+public import Formalism.LocalRingCardinality.DataDIVDefs
+public import Formalism.LocalRingCardinality.DataRows
+public import Formalism.LocalRingCardinality.DataForms
+public import Formalism.LocalRingCardinality.SpanPowerMembership.NZRowC
+public import Formalism.LocalRingCardinality.SpanPowerMembership.NZTypeH
+
+@[expose] public section
 
 noncomputable section
 

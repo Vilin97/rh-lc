@@ -1,4 +1,8 @@
-import Formalism.LocalRingCardinality.HeightBoundGeFourthPowerRank
+module
+
+public import Formalism.LocalRingCardinality.HeightBoundGeFourthPowerRank
+
+@[expose] public section
 
 namespace Formalism.BasicNotions
 

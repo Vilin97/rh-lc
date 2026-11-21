@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GodementSection
-import GroundTheory.GlobalFields.TateThesis.TateMain
-import GroundTheory.GlobalFields.TateThesis.TateThetaDecay
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GodementSection
+public import GroundTheory.GlobalFields.TateThesis.TateMain
+public import GroundTheory.GlobalFields.TateThesis.TateThetaDecay
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open NumberField NumberField.mixedEmbedding IsDedekindDomain IsDedekindDomain.HeightOneSpectrum

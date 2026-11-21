@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.KerJoinS
-import Formalism.LocalToGlobal.IndefiniteReal.IsometricPeriodsOfHypotheses
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.KerJoinS
+public import Formalism.LocalToGlobal.IndefiniteReal.IsometricPeriodsOfHypotheses
+
+@[expose] public section
 
 noncomputable section
 

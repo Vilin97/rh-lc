@@ -1,14 +1,19 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GaloisCohomology.Kummer
-import GroundTheory.ProfiniteCohomology.GaloisCohomology.Brauer
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.DimensionSylow
-import GroundTheory.ProfiniteCohomology.LocalClassFormationAlt
-import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing.KummerOpen
-import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing.Vanishing
-import GroundTheory.ProfiniteCohomology.LocalClassFormation.OrderScalars
-import GroundTheory.ProfiniteCohomology.LocalEulerCharacteristic.Scalars
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.COneH2UnitsSubsingleton
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TsenAlgebraicExtensionRatFunc
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GaloisCohomology.Kummer
+public import GroundTheory.ProfiniteCohomology.GaloisCohomology.Brauer
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.DimensionSylow
+public import GroundTheory.ProfiniteCohomology.LocalClassFormationAlt
+public import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing.KummerOpen
+public import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing.Vanishing
+public import GroundTheory.ProfiniteCohomology.LocalClassFormation.OrderScalars
+public import GroundTheory.ProfiniteCohomology.LocalEulerCharacteristic.Scalars
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.COneH2UnitsSubsingleton
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TsenAlgebraicExtensionRatFunc
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open CategoryTheory IntermediateField GroundTheory.ProfCoh

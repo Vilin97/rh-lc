@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.KummerTheory.SHInsepPf
+module
+
+public import Development.EtaleCohomology.KummerTheory.SHInsepPf
+
+@[expose] public section
 
 noncomputable section
 open scoped TensorProduct

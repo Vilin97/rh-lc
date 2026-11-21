@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL4.LowerSlopeInequalityFamily
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.LowerSlopeInequalityFamily
+
+@[expose] public section
 
 open Module NumberField
 

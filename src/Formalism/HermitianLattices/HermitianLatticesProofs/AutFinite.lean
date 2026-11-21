@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HermitianLattices.GenusCovolBound
-import Formalism.HermitianLattices.HermitianLatticesProofs.ThetaSummable
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.GenusCovolBound
+public import Formalism.HermitianLattices.HermitianLatticesProofs.ThetaSummable
+
+@[expose] public section
 
 open Module Matrix
 

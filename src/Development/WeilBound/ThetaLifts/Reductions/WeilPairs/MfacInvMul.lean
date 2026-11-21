@@ -1,12 +1,17 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReindexDblIncM
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LagrInt
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.Mfac
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.DCdE
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.DiagonalLagrangianIntegralSiegelParabolicTransfoAlt
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.UnitCoef
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.IntegralMul
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.PrSingle
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReindexDblIncM
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LagrInt
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.Mfac
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.DCdE
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.DiagonalLagrangianIntegralSiegelParabolicTransfoAlt
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.UnitCoef
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.IntegralMul
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.PrSingle
+
+@[expose] public section
+
 open scoped TensorProduct Matrix
 open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes MeasureTheory
 open GlobalTheory.WeilM GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels

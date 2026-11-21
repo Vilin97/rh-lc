@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.ProofRowTieValsE
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ProofRowTieValsE
+
+@[expose] public section
 
 noncomputable section
 

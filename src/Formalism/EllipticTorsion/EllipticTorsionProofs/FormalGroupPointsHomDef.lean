@@ -1,9 +1,13 @@
-import Formalism.EllipticTorsion.FormalGroupPointsParametrisation
-import Formalism.EllipticTorsion.EllipticTorsionProofs.ExistsUnitFactor
-import Formalism.EllipticTorsion.EllipticTorsionProofs.WPoint
-import Formalism.EllipticTorsion.EllipticTorsionProofs.WSubst
-import Formalism.EllipticTorsion.EllipticTorsionProofs.WChord
-import Formalism.EllipticTorsion.EllipticTorsionProofs.NDeriv
+module
+
+public import Formalism.EllipticTorsion.FormalGroupPointsParametrisation
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.ExistsUnitFactor
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.WPoint
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.WSubst
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.WChord
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.NDeriv
+
+@[expose] public section
 
 open PowerSeries
 

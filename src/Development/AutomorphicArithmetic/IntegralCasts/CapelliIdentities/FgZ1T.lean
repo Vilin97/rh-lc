@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.WeaklyAdmissibleFiltrations.Statement
-import Formalism.WeaklyAdmissibleFiltrations.StatementTor
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CompactQuotientSubmodule
+module
+
+public import Mathlib
+public import Formalism.WeaklyAdmissibleFiltrations.Statement
+public import Formalism.WeaklyAdmissibleFiltrations.StatementTor
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CompactQuotientSubmodule
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Gub2.fg_Z1T :
     ∀ {G : Type} [inst : Group G] [inst_1 : TopologicalSpace G] {LL O V : Type} [inst_2 : Field LL] [inst_3 : CommRing O]

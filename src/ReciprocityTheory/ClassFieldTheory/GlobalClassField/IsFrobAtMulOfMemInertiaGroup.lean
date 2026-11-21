@@ -1,5 +1,9 @@
-import ReciprocityTheory.NeutralLocalFields.Reciprocity
-import Mathlib
+module
+
+public import ReciprocityTheory.NeutralLocalFields.Reciprocity
+public import Mathlib
+
+@[expose] public section
 
 noncomputable section
 

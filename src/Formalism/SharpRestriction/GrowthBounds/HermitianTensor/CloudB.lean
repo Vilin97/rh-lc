@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.ProdMemHten
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.LastNeZero
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.ProdMemHten
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.LastNeZero
+
+@[expose] public section
 
 noncomputable section
 

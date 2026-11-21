@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.ThLinKConst
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.ThLinKConst
+
+@[expose] public section
 
 noncomputable section
 

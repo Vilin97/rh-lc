@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.SameDegreeZeroFormsSelf
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ECure
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ColDictIsomReTr
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FinXSpectralRedivisionFullChoices
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.SameDegreeZeroFormsSelf
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ECure
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ColDictIsomReTr
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FinXSpectralRedivisionFullChoices
+
+@[expose] public section
 
 noncomputable section
 

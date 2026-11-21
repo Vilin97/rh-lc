@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.UnitaryRepresentations.IsInvariantIffCommuteStarProjection
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.UnitaryRepresentations.IsInvariantIffCommuteStarProjection
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

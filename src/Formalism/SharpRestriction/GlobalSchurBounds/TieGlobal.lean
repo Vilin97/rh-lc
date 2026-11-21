@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.ParConsts
-import Formalism.SharpRestriction.GlobalSchurBounds.Chosen
-import Formalism.SizeWindowBrackets.SChain
-import Formalism.SizeWindowBrackets.GaloisToProductIsIso
+module
+
+public import Formalism.SharpRestriction.ParConsts
+public import Formalism.SharpRestriction.GlobalSchurBounds.Chosen
+public import Formalism.SizeWindowBrackets.SChain
+public import Formalism.SizeWindowBrackets.GaloisToProductIsIso
+
+@[expose] public section
 
 noncomputable section
 

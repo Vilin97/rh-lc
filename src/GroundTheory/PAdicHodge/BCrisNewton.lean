@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.BCrisNewtonFrac
-import GroundTheory.PAdicHodge.BCrisRegular
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.BCrisNewtonFrac
+public import GroundTheory.PAdicHodge.BCrisRegular
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

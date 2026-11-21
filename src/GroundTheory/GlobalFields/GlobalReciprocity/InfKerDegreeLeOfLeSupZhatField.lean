@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleClassGroup.Theory
-import GroundTheory.GlobalFields.NormResidueSymbol.Cyclotomic
-import GroundTheory.LocalFields.AbstractLocalReciprocity.Isomorphism
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleClassGroup.Theory
+public import GroundTheory.GlobalFields.NormResidueSymbol.Cyclotomic
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.Isomorphism
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

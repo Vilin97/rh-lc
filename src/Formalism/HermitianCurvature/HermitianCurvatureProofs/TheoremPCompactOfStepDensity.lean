@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DerivCombCongr
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DerivCombCongr
+
+@[expose] public section
 
 open MeasureTheory Filter Topology
 open scoped Matrix

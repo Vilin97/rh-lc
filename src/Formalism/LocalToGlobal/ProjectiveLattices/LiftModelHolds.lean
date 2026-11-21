@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.LiftModelPf
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.LiftModelPf
+
+@[expose] public section
 
 noncomputable section
 

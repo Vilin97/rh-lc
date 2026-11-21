@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.LatticeGeometry.GeoTiedP
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.LatticeGeometry.GeoTiedP
+
+@[expose] public section
 
 noncomputable section
 

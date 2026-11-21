@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.NonvanishingPrimes
-import GroundTheory.GlobalFields.TateThesis.NonvanishingDivisorSum
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.NonvanishingPrimes
+public import GroundTheory.GlobalFields.TateThesis.NonvanishingDivisorSum
+
+@[expose] public section
 
 open NumberField InfinitePlace IsDedekindDomain IsDedekindDomain.HeightOneSpectrum Complex Topology
   Filter Ideal

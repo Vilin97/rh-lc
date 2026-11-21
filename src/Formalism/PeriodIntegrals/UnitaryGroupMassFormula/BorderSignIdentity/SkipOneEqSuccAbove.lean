@@ -1,7 +1,11 @@
-import Formalism.PeriodIntegrals.QmBorderES
-import Formalism.PeriodIntegrals.QmColExp
-import Formalism.PeriodIntegrals.QmRowExp
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.QuantumDetHighestWeightHolds
+module
+
+public import Formalism.PeriodIntegrals.QmBorderES
+public import Formalism.PeriodIntegrals.QmColExp
+public import Formalism.PeriodIntegrals.QmRowExp
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.QuantumDetHighestWeightHolds
+
+@[expose] public section
 
 open Finset Formalism.REAL
 

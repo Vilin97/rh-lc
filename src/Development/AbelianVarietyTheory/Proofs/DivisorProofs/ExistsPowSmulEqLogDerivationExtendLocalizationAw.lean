@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExtLAlgebraMap
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExtLAlgebraMap
+
+@[expose] public section
+
 open GlobalTheory.LogDerProj
 
 set_option autoImplicit false

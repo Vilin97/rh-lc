@@ -1,7 +1,11 @@
-import Mathlib.Data.Real.Basic
-import Mathlib.Algebra.Order.BigOperators.Ring.Finset
-import Mathlib.Algebra.Order.Field.Basic
-import Mathlib.Data.Finset.Lattice.Fold
+module
+
+public import Mathlib.Data.Real.Basic
+public import Mathlib.Algebra.Order.BigOperators.Ring.Finset
+public import Mathlib.Algebra.Order.Field.Basic
+public import Mathlib.Data.Finset.Lattice.Fold
+
+@[expose] public section
 
 namespace Formalism.LFunctionChainParameters.WeightedMeanLemmas
 

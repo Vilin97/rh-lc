@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataParams
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientHomNonvanishingBound
-import Formalism.SharpRestriction.ParamsHeightRankConstant
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataParams
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientHomNonvanishingBound
+public import Formalism.SharpRestriction.ParamsHeightRankConstant
+
+@[expose] public section
 
 noncomputable section
 

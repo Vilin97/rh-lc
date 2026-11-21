@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.ScalarOnPartsFull
-import Formalism.LocalToGlobal.HeckeThetaElements.DefsWt
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.ScalarOnPartsFull
+public import Formalism.LocalToGlobal.HeckeThetaElements.DefsWt
+
+@[expose] public section
 
 noncomputable section
 

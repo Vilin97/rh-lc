@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.PAdicHodge.BCrisNewton
-import GroundTheory.PAdicHodge.GalSmulAlgebraMapPadicPlus
-import GroundTheory.PAdicHodge.BCrisEigenChar
-import GroundTheory.PAdicHodge.BCrisEigenMaps
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.BCrisNewton
+public import GroundTheory.PAdicHodge.GalSmulAlgebraMapPadicPlus
+public import GroundTheory.PAdicHodge.BCrisEigenChar
+public import GroundTheory.PAdicHodge.BCrisEigenMaps
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

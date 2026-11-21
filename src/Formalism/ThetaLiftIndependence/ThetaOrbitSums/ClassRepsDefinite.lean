@@ -1,6 +1,10 @@
-import Formalism.ThetaLiftIndependence.Statement
-import Formalism.HermitianLattices.FinalNeighbourConstruct
-import Formalism.ThetaLiftIndependence.ThetaOrbitSums.LatLiftIndep
+module
+
+public import Formalism.ThetaLiftIndependence.Statement
+public import Formalism.HermitianLattices.FinalNeighbourConstruct
+public import Formalism.ThetaLiftIndependence.ThetaOrbitSums.LatLiftIndep
+
+@[expose] public section
 
 noncomputable section
 

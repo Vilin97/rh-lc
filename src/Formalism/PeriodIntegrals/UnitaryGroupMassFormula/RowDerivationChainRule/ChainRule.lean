@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.RowLetter
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.RowDerivationChainRule.Development
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.RowLetter
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.RowDerivationChainRule.Development
+
+@[expose] public section
 
 open MvPolynomial
 

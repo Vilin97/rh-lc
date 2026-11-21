@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.StatementB
+module
+
+public import Formalism.HermitianCurvature.StatementB
+
+@[expose] public section
 
 open Matrix MeasureTheory
 open scoped ComplexConjugate ENNReal

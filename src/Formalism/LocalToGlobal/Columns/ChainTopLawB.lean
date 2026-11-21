@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.ChainTopLaw
-import Formalism.LocalToGlobal.Columns.ReferenceKernelEquivOfLastComponent
+module
+
+public import Formalism.LocalToGlobal.Columns.ChainTopLaw
+public import Formalism.LocalToGlobal.Columns.ReferenceKernelEquivOfLastComponent
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 

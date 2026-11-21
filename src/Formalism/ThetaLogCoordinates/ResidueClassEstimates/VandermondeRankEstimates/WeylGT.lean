@@ -1,5 +1,9 @@
-import Formalism.ThetaLogCoordinates.ResidueClassEstimates.StatementW
-import Formalism.ThetaLogCoordinates.JacobiPathWeights.JacobiMinorProofs.AntitoneOfMemGtBox
+module
+
+public import Formalism.ThetaLogCoordinates.ResidueClassEstimates.StatementW
+public import Formalism.ThetaLogCoordinates.JacobiPathWeights.JacobiMinorProofs.AntitoneOfMemGtBox
+
+@[expose] public section
 
 noncomputable section
 

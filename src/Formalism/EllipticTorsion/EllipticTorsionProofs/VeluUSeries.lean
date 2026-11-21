@@ -1,6 +1,10 @@
-import Formalism.EllipticTorsion.VeluIntegralModel
-import Formalism.EllipticTorsion.EllipticTorsionProofs.WPoint
-import Formalism.EllipticTorsion.EllipticTorsionProofs.FormalGroupPointsParamDef
+module
+
+public import Formalism.EllipticTorsion.VeluIntegralModel
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.WPoint
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.FormalGroupPointsParamDef
+
+@[expose] public section
 
 open PowerSeries
 

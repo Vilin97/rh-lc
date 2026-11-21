@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FieldValuesMemFixedField
-import Formalism.LocalToGlobal.Divisibility.ColumnFamilyPlaceCharacterComap
-import Formalism.LocalToGlobal.Divisibility.TiedLemmas
-import Formalism.LocalToGlobal.IndefiniteReal.LiftGoodPartComplexEqRangeFamily
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.OrZeroOf
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.FieldValuesMemFixedField
+public import Formalism.LocalToGlobal.Divisibility.ColumnFamilyPlaceCharacterComap
+public import Formalism.LocalToGlobal.Divisibility.TiedLemmas
+public import Formalism.LocalToGlobal.IndefiniteReal.LiftGoodPartComplexEqRangeFamily
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.OrZeroOf
+
+@[expose] public section
 
 noncomputable section
 

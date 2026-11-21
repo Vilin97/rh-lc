@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.LevelCharts.FiniteCompG
-import Formalism.LocalToGlobal.GroupLattices.LevelCharts.AtGLev
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.LevelCharts.FiniteCompG
+public import Formalism.LocalToGlobal.GroupLattices.LevelCharts.AtGLev
+
+@[expose] public section
 
 noncomputable section
 

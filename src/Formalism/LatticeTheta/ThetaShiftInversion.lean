@@ -1,11 +1,15 @@
-import Formalism.LatticeTheta.LatticeThetaProofs.Assembly
-import Formalism.LatticeTheta.LatticeThetaProofs.LatticeSummableDecay
-import Formalism.LatticeTheta.LatticeThetaProofs.Periodization
-import Formalism.LatticeTheta.LatticeThetaProofs.UnfoldCoeff
-import Formalism.LatticeTheta.LatticeThetaProofs.LatticeFourierSeries
-import Formalism.LatticeTheta.LatticeThetaProofs.GaussSchwartz
-import Formalism.LatticeTheta.LatticeThetaProofs.DualLattice
-import Formalism.LatticeTheta.LatticeThetaProofs.CovolumeDual
+module
+
+public import Formalism.LatticeTheta.LatticeThetaProofs.Assembly
+public import Formalism.LatticeTheta.LatticeThetaProofs.LatticeSummableDecay
+public import Formalism.LatticeTheta.LatticeThetaProofs.Periodization
+public import Formalism.LatticeTheta.LatticeThetaProofs.UnfoldCoeff
+public import Formalism.LatticeTheta.LatticeThetaProofs.LatticeFourierSeries
+public import Formalism.LatticeTheta.LatticeThetaProofs.GaussSchwartz
+public import Formalism.LatticeTheta.LatticeThetaProofs.DualLattice
+public import Formalism.LatticeTheta.LatticeThetaProofs.CovolumeDual
+
+@[expose] public section
 
 namespace Formalism.H
 

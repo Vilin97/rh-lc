@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GeometricLemma
-import GroundTheory.AutomorphicForms.LeviStagesInduction
-import GroundTheory.AutomorphicForms.LeviStagesExact
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GeometricLemma
+public import GroundTheory.AutomorphicForms.LeviStagesInduction
+public import GroundTheory.AutomorphicForms.LeviStagesExact
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

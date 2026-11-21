@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.TateTwists.EtaleChainsMayerVietorisShortExactOfFree
+module
+
+public import Development.EtaleCohomology.TateTwists.EtaleChainsMayerVietorisShortExactOfFree
+
+@[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
 

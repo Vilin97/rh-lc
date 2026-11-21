@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsBisFurther
-import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsMoreMore
-import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.FullFlag
-import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PTwinPlainPolyPairNum
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSymmRelabel
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsBisFurther
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsMoreMore
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.FullFlag
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.PTwinPlainPolyPairNum
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSymmRelabel
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

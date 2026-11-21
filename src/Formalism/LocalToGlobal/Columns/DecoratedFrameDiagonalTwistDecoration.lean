@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.RecChainYUnfPol
+module
+
+public import Formalism.LocalToGlobal.Columns.RecChainYUnfPol
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

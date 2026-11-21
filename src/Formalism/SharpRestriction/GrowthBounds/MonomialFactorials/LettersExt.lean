@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BoxOfFibres
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BoxOfFibres
+
+@[expose] public section
 
 noncomputable section
 

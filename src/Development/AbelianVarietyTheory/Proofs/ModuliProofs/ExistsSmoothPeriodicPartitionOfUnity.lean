@@ -1,4 +1,9 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
+
 open Complex Matrix
 open scoped ContDiff BigOperators Real Topology
 

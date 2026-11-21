@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.Reduction
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.Reduction
+
+@[expose] public section
+
 open NumberField MeasureTheory Matrix
 open scoped NumberField.AdeleRing Pointwise
 open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Global GroundTheory.Global.IdeleGroup

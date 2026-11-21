@@ -1,13 +1,17 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.GlueApplyOfNotInFibre
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IsGenericFlag
-import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.LatNormGrLatNeZeroOfSpan
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
-import Development.WeilBound.CoreStatements.HodgeTatePoints.GenfibMap
-import Development.WeilBound.CoreStatements.HodgeTatePoints.MbLFlatten
-import Development.WeilBound.CoreStatements.HodgeTatePoints.MbLJoinMany
-import Development.WeilBound.CoreStatements.HodgeTatePoints.MbLNormExists
-import Development.WeilBound.CoreStatements.HodgeTatePoints.MbLPullEq
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.GlueApplyOfNotInFibre
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IsGenericFlag
+public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.LatNormGrLatNeZeroOfSpan
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.IsCompletedStrictHens
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.GenfibMap
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.MbLFlatten
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.MbLJoinMany
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.MbLNormExists
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.MbLPullEq
+
+@[expose] public section
 
 open AlgebraicGeometry CategoryTheory GlobalTheory.CompanionTheory.Ar NumberField
 

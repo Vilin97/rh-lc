@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.HermitianCurvature.StatementK
-import Formalism.HermitianCurvature.StatementTA
-import Formalism.HermitianCurvature.StatementTB
-import Formalism.HermitianCurvature.MemParahoricTimesPrincipalCongruenceIff
-import Formalism.HermitianCurvature.StatementJ
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.StatementK
+public import Formalism.HermitianCurvature.StatementTA
+public import Formalism.HermitianCurvature.StatementTB
+public import Formalism.HermitianCurvature.MemParahoricTimesPrincipalCongruenceIff
+public import Formalism.HermitianCurvature.StatementJ
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.TC
 

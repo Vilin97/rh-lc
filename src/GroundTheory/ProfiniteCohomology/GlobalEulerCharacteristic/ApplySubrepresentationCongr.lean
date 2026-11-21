@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.LocalEulerCharacteristic.MainCoind
-import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.PowDefs
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.LocalEulerCharacteristic.MainCoind
+public import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.PowDefs
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

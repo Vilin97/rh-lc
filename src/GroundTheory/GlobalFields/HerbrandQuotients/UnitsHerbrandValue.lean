@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.HerbrandQuotients.UnitsHerbrand
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.HerbrandQuotients.UnitsHerbrand
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

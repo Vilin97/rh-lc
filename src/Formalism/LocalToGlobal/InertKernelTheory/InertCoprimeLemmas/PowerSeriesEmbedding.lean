@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.InertKernelTheory.StatementIota
-import ReciprocityTheory.ReductiveGroups.LatticeEmbeddings.IotaPlaceB
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.StatementIota
+public import ReciprocityTheory.ReductiveGroups.LatticeEmbeddings.IotaPlaceB
+
+@[expose] public section
 
 noncomputable section
 

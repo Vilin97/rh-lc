@@ -1,6 +1,10 @@
-import Mathlib
-import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.EntryMulSubOne
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FactorizationBis
+module
+
+public import Mathlib
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.EntryMulSubOne
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FactorizationBis
+
+@[expose] public section
 
 noncomputable section
 

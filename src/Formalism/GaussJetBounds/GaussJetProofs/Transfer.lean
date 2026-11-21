@@ -1,4 +1,8 @@
-import Formalism.GaussJetBounds.FrameJetEval
+module
+
+public import Formalism.GaussJetBounds.FrameJetEval
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

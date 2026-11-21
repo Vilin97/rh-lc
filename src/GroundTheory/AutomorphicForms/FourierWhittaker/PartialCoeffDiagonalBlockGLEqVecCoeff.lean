@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.FourierWhittaker.AdelicCharPairTorusPtSingle
-import GroundTheory.AutomorphicForms.FourierWhittaker.UMatColXEqFromBlocks
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.FourierWhittaker.AdelicCharPairTorusPtSingle
+public import GroundTheory.AutomorphicForms.FourierWhittaker.UMatColXEqFromBlocks
+
+@[expose] public section
 
 open NumberField MeasureTheory Topology Set Filter IsDedekindDomain Matrix
 open scoped NumberField.AdeleRing

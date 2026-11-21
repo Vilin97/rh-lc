@@ -1,7 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.IsOrthCo
-import Formalism.LocalToGlobal.Columns.RecLevel
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.AlgebraMapApply
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.IsOrthCo
+public import Formalism.LocalToGlobal.Columns.RecLevel
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.AlgebraMapApply
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.UG Formalism.UG.P Formalism.L2.PairingIndexBounds.F
 open scoped TensorProduct Matrix
 

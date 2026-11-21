@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.ScaledValuations.ValuationApplyLtOneIff
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.ValuationFrobeniusEpsilon.ScaledValuations.ValuationApplyLtOneIff
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

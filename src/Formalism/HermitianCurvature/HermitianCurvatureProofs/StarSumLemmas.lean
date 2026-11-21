@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.CapelliDeterminantAndBranching
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.QuantumMinorExpansion
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.QuantumMinorCommutation
+module
+
+public import Formalism.HermitianCurvature.CapelliDeterminantAndBranching
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.QuantumMinorExpansion
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.QuantumMinorCommutation
+
+@[expose] public section
 
 open Finset Polynomial
 

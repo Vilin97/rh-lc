@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimes
-import GroundTheory.GlobalFields.ComplexMultiplication.DegreeOneAutomorphismPoints
-import GroundTheory.GlobalFields.ComplexMultiplication.DegreeOneAutomorphismLift
-import GroundTheory.GlobalFields.ComplexMultiplication.MainTheoremPointHom
-import GroundTheory.GlobalFields.ComplexMultiplication.MainTheoremReduction
-import GroundTheory.GlobalFields.ComplexMultiplication.TorsionReduction
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimes
+public import GroundTheory.GlobalFields.ComplexMultiplication.DegreeOneAutomorphismPoints
+public import GroundTheory.GlobalFields.ComplexMultiplication.DegreeOneAutomorphismLift
+public import GroundTheory.GlobalFields.ComplexMultiplication.MainTheoremPointHom
+public import GroundTheory.GlobalFields.ComplexMultiplication.MainTheoremReduction
+public import GroundTheory.GlobalFields.ComplexMultiplication.TorsionReduction
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global

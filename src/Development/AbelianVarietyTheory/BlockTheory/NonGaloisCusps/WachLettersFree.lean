@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
-import Formalism.WeaklyAdmissibleFiltrations.Statement
-import Formalism.CoboundaryTransfers.Statement
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+public import Formalism.WeaklyAdmissibleFiltrations.Statement
+public import Formalism.CoboundaryTransfers.Statement
+
+@[expose] public section
 
 noncomputable section
 

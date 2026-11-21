@@ -1,7 +1,11 @@
-import Formalism.HarderNarasimhan.StatementPl
-import Formalism.HarderNarasimhan.HarderNarasimhanProofs.SatBasic
-import Formalism.LatticeSlopes.ExistsSaturatedSlopeEqMuMax
-import Formalism.LatticeSlopes.LatticeSlopesProofs.DiscreteTopologyOfLe
+module
+
+public import Formalism.HarderNarasimhan.StatementPl
+public import Formalism.HarderNarasimhan.HarderNarasimhanProofs.SatBasic
+public import Formalism.LatticeSlopes.ExistsSaturatedSlopeEqMuMax
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.DiscreteTopologyOfLe
+
+@[expose] public section
 
 open Module NumberField
 

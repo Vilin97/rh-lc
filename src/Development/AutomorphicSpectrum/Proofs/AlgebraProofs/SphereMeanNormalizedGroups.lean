@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.IsScaleStable
-import Development.WeilBound.CoreStatements.CommonZeroEvaluation.GaussianSphereMeanIntegral
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.IsScaleStable
+public import Development.WeilBound.CoreStatements.CommonZeroEvaluation.GaussianSphereMeanIntegral
+
+@[expose] public section
 
 set_option maxSynthPendingDepth 1
 open GroundTheory.Heights₂.Heights MeasureTheory MvPolynomial Matrix GlobalTheory.CompanionTheory.Ar.Short.Crofton

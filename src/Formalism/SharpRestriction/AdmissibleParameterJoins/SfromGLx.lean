@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLu
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker
+module
+
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLu
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PairingRankOneMemInverseDifferent
-import Formalism.LocalToGlobal.ProjectiveLattices.HostInt
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PairingRankOneMemInverseDifferent
+public import Formalism.LocalToGlobal.ProjectiveLattices.HostInt
+
+@[expose] public section
 
 noncomputable section
 

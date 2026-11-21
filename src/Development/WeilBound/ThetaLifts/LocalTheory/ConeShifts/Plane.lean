@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.PureCancel
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.PureCancel
+
+@[expose] public section
 
 noncomputable section
 

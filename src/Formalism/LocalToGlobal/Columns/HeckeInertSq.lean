@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.HeckeInertLemmas
-import Formalism.LocalToGlobal.Columns.MemOfSmulMemOfAddEqOne
+module
+
+public import Formalism.LocalToGlobal.Columns.HeckeInertLemmas
+public import Formalism.LocalToGlobal.Columns.MemOfSmulMemOfAddEqOne
+
+@[expose] public section
 
 noncomputable section
 

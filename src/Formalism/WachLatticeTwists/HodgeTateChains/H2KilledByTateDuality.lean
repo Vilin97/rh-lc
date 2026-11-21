@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.HodgeTateChains.InvariantsCohomologyData
-import Formalism.CharacterColumnKernels.Statement
+module
+
+public import Formalism.WachLatticeTwists.HodgeTateChains.InvariantsCohomologyData
+public import Formalism.CharacterColumnKernels.Statement
+
+@[expose] public section
 
 noncomputable section
 

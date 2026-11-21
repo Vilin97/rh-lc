@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.FiniteLengthLattice
-import GroundTheory.AutomorphicForms.JacquetAdmissible
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.FiniteLengthLattice
+public import GroundTheory.AutomorphicForms.JacquetAdmissible
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

@@ -1,4 +1,8 @@
-import CompanionTheory.ThickeningEstimates.LieGroupReduction.IsoOfIntegral
+module
+
+public import CompanionTheory.ThickeningEstimates.LieGroupReduction.IsoOfIntegral
+
+@[expose] public section
 
 noncomputable section
 

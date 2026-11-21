@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.DistinctEigenvalueCornerPerturbationOfBlocks
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.DistinctEigenvalueCornerPerturbationOfBlocks
+
+@[expose] public section
 
 noncomputable section
 

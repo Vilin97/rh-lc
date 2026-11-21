@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.RegOfBound
-import Development.AbelianVarietyTheory.Definitions.Foundations.EventuallyEqOfIsPreconnected
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.RegOfBound
+public import Development.AbelianVarietyTheory.Definitions.Foundations.EventuallyEqOfIsPreconnected
+
+@[expose] public section
 
 noncomputable section
 

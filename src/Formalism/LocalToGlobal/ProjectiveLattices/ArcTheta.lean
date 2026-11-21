@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
-import Formalism.LocalToGlobal.ProjectiveLattices.ThetaFramePf
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
+public import Formalism.LocalToGlobal.ProjectiveLattices.ThetaFramePf
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 400000
 

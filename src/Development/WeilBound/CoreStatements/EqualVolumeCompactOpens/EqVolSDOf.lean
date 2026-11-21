@@ -1,5 +1,9 @@
-import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.FiniteResidueFieldAdicCompletionIntegers
-import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.SameUpToScalars
+module
+
+public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.FiniteResidueFieldAdicCompletionIntegers
+public import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.SameUpToScalars
+
+@[expose] public section
 
 noncomputable section
 

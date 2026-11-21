@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.KummerThetaLogarithms.BiextensionPointsOfExpSpec
-import Formalism.GaussJetBounds.GaussJetProofs.Transfer
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.KummerThetaLogarithms.BiextensionPointsOfExpSpec
+public import Formalism.GaussJetBounds.GaussJetProofs.Transfer
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

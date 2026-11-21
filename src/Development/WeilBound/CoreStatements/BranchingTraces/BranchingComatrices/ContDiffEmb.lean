@@ -1,6 +1,10 @@
-import Development.WeilBound.CoreStatements.BranchingTraces.HeBranching
-import CompanionTheory.HarishChandraModules.BesselParameterIntegrals.SmoothCyclicVectors.PhMeas
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ExpFromBlocks
+module
+
+public import Development.WeilBound.CoreStatements.BranchingTraces.HeBranching
+public import CompanionTheory.HarishChandraModules.BesselParameterIntegrals.SmoothCyclicVectors.PhMeas
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ExpFromBlocks
+
+@[expose] public section
 
 noncomputable section
 

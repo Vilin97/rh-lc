@@ -1,4 +1,8 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TraceGap.TsubValInjective
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TraceGap.TsubValInjective
+
+@[expose] public section
 
 noncomputable section
 

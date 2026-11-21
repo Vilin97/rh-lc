@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.ManyEdges
-import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.DvdOfAdd
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.ManyEdges
+public import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.DvdOfAdd
+
+@[expose] public section
 
 noncomputable section
 

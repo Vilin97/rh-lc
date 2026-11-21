@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AtPtsImp
-import Formalism.PieriBlockIdeals.PieriColumnMinors.LargeParameterEstimates
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AtPtsImp
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.LargeParameterEstimates
+
+@[expose] public section
 
 set_option autoImplicit false
 

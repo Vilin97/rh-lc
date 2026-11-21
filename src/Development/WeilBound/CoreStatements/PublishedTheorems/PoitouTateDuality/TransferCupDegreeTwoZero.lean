@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.PublishedTheorems.PoitouTateDuality.PtfsDefs
-import GroundTheory.ProfiniteCohomology.PoitouTate.PoitouTateNineTermGs
-import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohCmp
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.PublishedTheorems.PoitouTateDuality.PtfsDefs
+public import GroundTheory.ProfiniteCohomology.PoitouTate.PoitouTateNineTermGs
+public import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohCmp
+
+@[expose] public section
 
 noncomputable section
 

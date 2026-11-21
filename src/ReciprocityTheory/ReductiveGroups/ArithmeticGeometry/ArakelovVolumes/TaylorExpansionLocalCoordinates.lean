@@ -1,5 +1,9 @@
-import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.IteratedFDerivEqZeroOfIsBigO
-import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.ZeroDimA
+module
+
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.IteratedFDerivEqZeroOfIsBigO
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.ZeroDimA
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.AR
 

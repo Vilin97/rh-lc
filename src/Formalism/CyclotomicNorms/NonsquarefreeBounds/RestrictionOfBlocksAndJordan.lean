@@ -1,5 +1,9 @@
-import Formalism.CyclotomicNorms.StatementI
-import Formalism.GaloisIrreducibility.GaloisIrreducibilityProofs.PowerPCycle
+module
+
+public import Formalism.CyclotomicNorms.StatementI
+public import Formalism.GaloisIrreducibility.GaloisIrreducibilityProofs.PowerPCycle
+
+@[expose] public section
 
 open Finset Module
 

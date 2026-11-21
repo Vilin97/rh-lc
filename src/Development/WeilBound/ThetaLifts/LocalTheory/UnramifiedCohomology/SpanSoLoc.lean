@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.KAtCompact
-import Development.WeilBound.ThetaLifts.LocalTheory.AdmissiblePureTensorSchwartz
-import Development.WeilBound.ThetaLifts.SmallCones.MatCancel
-import Development.WeilBound.ThetaLifts.SmallCones.SoDefs
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.FullOfSoLoc
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.KAtCompact
+public import Development.WeilBound.ThetaLifts.LocalTheory.AdmissiblePureTensorSchwartz
+public import Development.WeilBound.ThetaLifts.SmallCones.MatCancel
+public import Development.WeilBound.ThetaLifts.SmallCones.SoDefs
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.FullOfSoLoc
+
+@[expose] public section
 
 noncomputable section
 

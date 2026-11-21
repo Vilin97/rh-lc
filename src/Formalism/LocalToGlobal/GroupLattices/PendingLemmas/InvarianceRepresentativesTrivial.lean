@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.DelEquiv
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WittFractionAlgebraCp
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.DelEquiv
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WittFractionAlgebraCp
+
+@[expose] public section
 
 noncomputable section
 

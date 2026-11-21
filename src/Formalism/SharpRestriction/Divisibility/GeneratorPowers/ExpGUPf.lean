@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.UnitIdSt
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.FBIdAd
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.UnitIdSt
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.FBIdAd
+
+@[expose] public section
 
 noncomputable section
 

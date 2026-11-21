@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemSum
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemSum
+
+@[expose] public section
 
 noncomputable section
 

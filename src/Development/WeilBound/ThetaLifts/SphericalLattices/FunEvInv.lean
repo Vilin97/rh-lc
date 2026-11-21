@@ -1,7 +1,11 @@
-import Development.WeilBound.ThetaLifts.SphericalLattices.FunDefs
-import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.HypothesesAtTriple
-import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.LinearAct
-import Development.WeilBound.CoreStatements.LocalThetaKernels.Locpair
+module
+
+public import Development.WeilBound.ThetaLifts.SphericalLattices.FunDefs
+public import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.HypothesesAtTriple
+public import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.LinearAct
+public import Development.WeilBound.CoreStatements.LocalThetaKernels.Locpair
+
+@[expose] public section
 
 noncomputable section
 

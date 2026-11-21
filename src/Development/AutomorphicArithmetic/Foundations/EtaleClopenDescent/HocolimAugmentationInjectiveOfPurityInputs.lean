@@ -1,5 +1,9 @@
-import Mathlib
-import Development.EtaleCohomology.CohomologicalPurity.LeafAugInjPf
+module
+
+public import Mathlib
+public import Development.EtaleCohomology.CohomologicalPurity.LeafAugInjPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC LateralTheory.CohomologicalPurity.TubeCut

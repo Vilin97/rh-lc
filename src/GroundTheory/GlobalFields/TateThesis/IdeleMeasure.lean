@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.NormOneCompact
-import GroundTheory.GlobalFields.IdeleGroups.StandardOpenEquiv
-import GroundTheory.GlobalFields.Adele.Topology
-import GroundTheory.GlobalFields.TateThesis.AdeleMeasurable
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.NormOneCompact
+public import GroundTheory.GlobalFields.IdeleGroups.StandardOpenEquiv
+public import GroundTheory.GlobalFields.Adele.Topology
+public import GroundTheory.GlobalFields.TateThesis.AdeleMeasurable
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter MeasureTheory TopologicalSpace
 open scoped NumberField.AdeleRing RestrictedProduct ENNReal NNReal

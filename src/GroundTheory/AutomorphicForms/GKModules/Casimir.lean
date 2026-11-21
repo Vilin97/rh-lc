@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GKModules.ZKFinite
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GKModules.ZKFinite
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

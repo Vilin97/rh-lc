@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.IsCombAt
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.TowerOrigin
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.OverLaUnique
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.IsCombAt
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.TowerOrigin
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.OverLaUnique
+
+@[expose] public section
 
 noncomputable section
 

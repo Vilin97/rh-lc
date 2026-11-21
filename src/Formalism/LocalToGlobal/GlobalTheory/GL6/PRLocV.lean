@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL6.RndLinkAdmTOf
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PSplitT
-import Formalism.LocalToGlobal.GlobalTheory.GL4.PFrLoc
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.RndLinkAdmTOf
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PSplitT
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.PFrLoc
+
+@[expose] public section
 
 noncomputable section
 

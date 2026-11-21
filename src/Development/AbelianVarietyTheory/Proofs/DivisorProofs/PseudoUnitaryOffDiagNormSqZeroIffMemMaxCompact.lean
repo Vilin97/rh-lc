@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.RealPlaceAnalysis.SmoothOnGVIff
+module
+
+public import Mathlib
+public import Formalism.RealPlaceAnalysis.SmoothOnGVIff
+
+@[expose] public section
+
 open MeasureTheory Matrix
 open Formalism.REAL (UJ KG toM toMK muK expG inG Jm Kset)
 

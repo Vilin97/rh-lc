@@ -1,5 +1,9 @@
-import CompanionTheory.RealGroups.GeneralUnitaryRepresentations.ArchimedeanJacquetSegments.Complementary
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.HermApply
+module
+
+public import CompanionTheory.RealGroups.GeneralUnitaryRepresentations.ArchimedeanJacquetSegments.Complementary
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.HermApply
+
+@[expose] public section
 
 noncomputable section
 

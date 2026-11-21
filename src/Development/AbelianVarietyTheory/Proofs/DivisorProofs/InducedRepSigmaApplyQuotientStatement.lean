@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InducedRepSigmaApplyQuotient
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemRelParabColEq
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InducedRepSigmaApplyQuotient
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemRelParabColEq
+
+@[expose] public section
+
 open GlobalTheory.PRep GlobalTheory.SmGL Matrix GlobalTheory.CellDetFirst
 open scoped TensorProduct
 set_option maxHeartbeats 1000000 in

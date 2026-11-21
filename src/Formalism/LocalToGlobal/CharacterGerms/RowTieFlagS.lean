@@ -1,17 +1,21 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTieMemCHarm
-import Formalism.LocalToGlobal.CharacterGerms.ValuationEqSelfOfUnitGerm
-import Formalism.LocalToGlobal.CharacterGerms.RowTieSelfCuts
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePHStabSelf
-import Formalism.LocalToGlobal.CharacterGerms.UncurryLogConstantCoeff
-import Formalism.SharpRestriction.GrowthBounds.ExponentialPartialDerivatives
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePAxesSelfSt
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePAddCvSelf
-import Formalism.LocalToGlobal.CharacterGerms.RowTieMain
-import Formalism.LocalToGlobal.CharacterGerms.CoefficientIdentitySelfConjugate
-import Formalism.SharpRestriction.GrowthBounds.ProofRowTieVals
-import Formalism.LocalToGlobal.CharacterGerms.RowTieCharS
-import Formalism.LocalToGlobal.CharacterGerms.SelfConjugateRowData
-import Formalism.SharpRestriction.GrowthBounds.CoeffIdentitySelfConjHolds
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieMemCHarm
+public import Formalism.LocalToGlobal.CharacterGerms.ValuationEqSelfOfUnitGerm
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieSelfCuts
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePHStabSelf
+public import Formalism.LocalToGlobal.CharacterGerms.UncurryLogConstantCoeff
+public import Formalism.SharpRestriction.GrowthBounds.ExponentialPartialDerivatives
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePAxesSelfSt
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePAddCvSelf
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieMain
+public import Formalism.LocalToGlobal.CharacterGerms.CoefficientIdentitySelfConjugate
+public import Formalism.SharpRestriction.GrowthBounds.ProofRowTieVals
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieCharS
+public import Formalism.LocalToGlobal.CharacterGerms.SelfConjugateRowData
+public import Formalism.SharpRestriction.GrowthBounds.CoeffIdentitySelfConjHolds
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.FourierWhittaker.Series
-import GroundTheory.GlobalFields.TateThesis.LatticePoisson
-import GroundTheory.GlobalFields.TateThesis.AdeleScaling
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.FourierWhittaker.Series
+public import GroundTheory.GlobalFields.TateThesis.LatticePoisson
+public import GroundTheory.GlobalFields.TateThesis.AdeleScaling
+
+@[expose] public section
 
 open NumberField NumberField.mixedEmbedding MeasureTheory Topology Set Filter IsDedekindDomain
   Module

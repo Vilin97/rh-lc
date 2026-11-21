@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.CyclotomicCharacters.Degree
-import GroundTheory.GlobalFields.NormResidueSymbol.CyclotomicCompositum
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.CyclotomicCharacters.Degree
+public import GroundTheory.GlobalFields.NormResidueSymbol.CyclotomicCompositum
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

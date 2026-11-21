@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.SumT0MulRatioEqOne
-import Formalism.LocalToGlobal.ProjectiveLattices.TotalDegreePderivLt
-import Formalism.LocalToGlobal.ProjectiveLattices.TieInst
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.SumT0MulRatioEqOne
+public import Formalism.LocalToGlobal.ProjectiveLattices.TotalDegreePderivLt
+public import Formalism.LocalToGlobal.ProjectiveLattices.TieInst
+
+@[expose] public section
 
 set_option autoImplicit false
 

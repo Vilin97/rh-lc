@@ -1,9 +1,13 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.PadicHodgeTheory.IsInertiaInfiniteCyclotomic
-import Development.AutomorphicArithmetic.AutomorphicVarieties.PadicHodgeTheory.AdmSub
-import Development.AutomorphicArithmetic.AutomorphicVarieties.PadicHodgeTheory.AdmProd
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ConjugationByInvolution
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AntidiagonalConjugation
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SignActionTheta
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PadicHodgeTheory.IsInertiaInfiniteCyclotomic
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PadicHodgeTheory.AdmSub
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PadicHodgeTheory.AdmProd
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ConjugationByInvolution
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AntidiagonalConjugation
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SignActionTheta
+
+@[expose] public section
 
 open Formalism.BasicNotions Formalism.BasicNotions.Loc ReciprocityTheory.Gal Module UpperTheory.V.Loc UpperTheory.V.U3 UpperTheory.V.Alg IsLocalRing Topology
 

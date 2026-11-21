@@ -1,20 +1,24 @@
-import Formalism.LocalToGlobal.IndefiniteReal.ConcretePkgSpec
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.CxToPkgFamIn
-import Formalism.LocalToGlobal.IndefiniteReal.MemRangeAdjointOfKerStable
-import Formalism.LocalToGlobal.IndefiniteReal.EqZeroOfMemRangeAdjoint
-import Formalism.LocalToGlobal.IndefiniteReal.EqZeroOfRangeAdjoint
-import Formalism.LocalToGlobal.IndefiniteReal.FinrankISupLeSum
-import Formalism.LocalToGlobal.IndefiniteReal.CutPassage
-import Formalism.LocalToGlobal.IndefiniteReal.CxCutEP
-import Formalism.LocalToGlobal.IndefiniteReal.CxCutPO
-import Formalism.LocalToGlobal.IndefiniteReal.LiftCoordinatesInGoodPartOfDefinite
-import Formalism.LocalToGlobal.IndefiniteReal.EigSumLeComapSemi
-import Formalism.LocalToGlobal.IndefiniteReal.LiftGoodPartComplexEqRange
-import Formalism.LocalToGlobal.IndefiniteReal.BridgeLemmas
-import Formalism.LocalToGlobal.IndefiniteReal.GramCEqTranspose
-import Formalism.LocalToGlobal.LatticeGeometry.FormsK
-import Formalism.LocalRingCardinality.HeightBoundGeFourthPowerRank
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.ConcretePkgSpec
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.CxToPkgFamIn
+public import Formalism.LocalToGlobal.IndefiniteReal.MemRangeAdjointOfKerStable
+public import Formalism.LocalToGlobal.IndefiniteReal.EqZeroOfMemRangeAdjoint
+public import Formalism.LocalToGlobal.IndefiniteReal.EqZeroOfRangeAdjoint
+public import Formalism.LocalToGlobal.IndefiniteReal.FinrankISupLeSum
+public import Formalism.LocalToGlobal.IndefiniteReal.CutPassage
+public import Formalism.LocalToGlobal.IndefiniteReal.CxCutEP
+public import Formalism.LocalToGlobal.IndefiniteReal.CxCutPO
+public import Formalism.LocalToGlobal.IndefiniteReal.LiftCoordinatesInGoodPartOfDefinite
+public import Formalism.LocalToGlobal.IndefiniteReal.EigSumLeComapSemi
+public import Formalism.LocalToGlobal.IndefiniteReal.LiftGoodPartComplexEqRange
+public import Formalism.LocalToGlobal.IndefiniteReal.BridgeLemmas
+public import Formalism.LocalToGlobal.IndefiniteReal.GramCEqTranspose
+public import Formalism.LocalToGlobal.LatticeGeometry.FormsK
+public import Formalism.LocalRingCardinality.HeightBoundGeFourthPowerRank
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.DividedPowerMonomialExpansion
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.DividedPowerMonomialExpansion
+
+@[expose] public section
 
 noncomputable section
 

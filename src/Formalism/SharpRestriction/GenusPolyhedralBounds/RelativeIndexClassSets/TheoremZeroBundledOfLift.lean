@@ -1,6 +1,10 @@
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.LengthBaseT0
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.LengthPoleInLift
-import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.TheoremZeroBundledOfLengths
+module
+
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.LengthBaseT0
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.LengthPoleInLift
+public import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.TheoremZeroBundledOfLengths
+
+@[expose] public section
 
 open Formalism.MainNotions.WeightAlgebra Formalism.BasicNotions
 

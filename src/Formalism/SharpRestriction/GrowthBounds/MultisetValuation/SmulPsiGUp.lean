@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.SmulMemLatOf
-import Formalism.SubspaceCounting.SubspaceCountingProofs.TypeIIDown
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.SmulMemLatOf
+public import Formalism.SubspaceCounting.SubspaceCountingProofs.TypeIIDown
+
+@[expose] public section
 
 noncomputable section
 

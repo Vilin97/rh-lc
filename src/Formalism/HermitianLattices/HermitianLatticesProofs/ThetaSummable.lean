@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.HermitianLattices.StatementTheta
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.StatementTheta
+
+@[expose] public section
 
 open scoped BigOperators
 open Matrix

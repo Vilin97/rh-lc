@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.TensorProductTheorem.Restricted
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.Restricted
+
+@[expose] public section
 
 open GroundTheory.Automorphic.RestrictedTensor
 open scoped TensorProduct

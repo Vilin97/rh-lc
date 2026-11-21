@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.CharacterGerms.LatticeInclusionFormsInjective
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.CharacterGerms.LatticeInclusionFormsInjective
+
+@[expose] public section
+
 open Formalism.L2.FormalSeriesBounds
 
 noncomputable section

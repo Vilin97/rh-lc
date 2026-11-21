@@ -1,5 +1,9 @@
-import CompanionTheory.HarishChandraModules.KFiniteAnalyticVectors.AnalyticIntertwiners.Clause1
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Upqcpt
+module
+
+public import CompanionTheory.HarishChandraModules.KFiniteAnalyticVectors.AnalyticIntertwiners.Clause1
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Upqcpt
+
+@[expose] public section
 
 open Matrix
 open scoped InnerProductSpace ComplexConjugate

@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DualLatticeDenominator
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DualLatticeDenominator
+
+@[expose] public section
 
 open Polynomial Matrix IsLocalRing TensorProduct
 

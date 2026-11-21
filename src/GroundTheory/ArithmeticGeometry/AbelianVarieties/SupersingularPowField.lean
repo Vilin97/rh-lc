@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.Supersingular
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.Supersingular
+
+@[expose] public section
 
 namespace GroundTheory.Arith.Abelian
 

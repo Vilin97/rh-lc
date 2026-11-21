@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.Reductions.IsoOfIntegral
+module
+
+public import Development.WeilBound.ThetaLifts.Reductions.IsoOfIntegral
+
+@[expose] public section
 
 noncomputable section
 

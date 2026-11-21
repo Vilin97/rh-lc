@@ -1,5 +1,9 @@
-import Development.DiscreteGroups.GlobalIrreducibility.LConvCut
-import GroundTheory.LocalFields.Uniqueness
+module
+
+public import Development.DiscreteGroups.GlobalIrreducibility.LConvCut
+public import GroundTheory.LocalFields.Uniqueness
+
+@[expose] public section
 
 noncomputable section
 

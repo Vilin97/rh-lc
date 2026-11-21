@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.OneLeDetOneAdd
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.OneLeDetOneAdd
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder MatrixOrder

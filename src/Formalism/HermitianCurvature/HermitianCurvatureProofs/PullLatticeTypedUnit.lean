@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.StatementJ
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.OutsideSystemsBound
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.AxiomsFromFamilies
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ChebyshevToThreshold
+module
+
+public import Formalism.HermitianCurvature.StatementJ
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OutsideSystemsBound
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.AxiomsFromFamilies
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ChebyshevToThreshold
+
+@[expose] public section
 
 open Finset NumberField Formalism.FourierDecayAlt Formalism.FourierDecayAlt.J
 

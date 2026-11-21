@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.KernelLattices.FirstKernelLawReading
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.ColInst
-import Formalism.LocalToGlobal.KernelLattices.MatrixKernelDiamondCommutation
-import Formalism.LocalToGlobal.Columns.ChainInstY
-import Formalism.LocalToGlobal.Columns.ChainTwFrA
+module
+
+public import Formalism.LocalToGlobal.KernelLattices.FirstKernelLawReading
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.ColInst
+public import Formalism.LocalToGlobal.KernelLattices.MatrixKernelDiamondCommutation
+public import Formalism.LocalToGlobal.Columns.ChainInstY
+public import Formalism.LocalToGlobal.Columns.ChainTwFrA
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

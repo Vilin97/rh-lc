@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.SecondInequality.Cyclic
-import GroundTheory.GlobalFields.IdeleGroups.LocalNormsEverywhere
-import GroundTheory.GlobalFields.IdeleGroups.GaloisOnAdeles.Action
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SecondInequality.Cyclic
+public import GroundTheory.GlobalFields.IdeleGroups.LocalNormsEverywhere
+public import GroundTheory.GlobalFields.IdeleGroups.GaloisOnAdeles.Action
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

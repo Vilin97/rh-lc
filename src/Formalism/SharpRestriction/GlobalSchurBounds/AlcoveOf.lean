@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.ProductFirstZerothParts
-import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLb
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.ProductFirstZerothParts
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLb
+
+@[expose] public section
 
 noncomputable section
 

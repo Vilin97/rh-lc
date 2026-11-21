@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.GeometricFlagBases.FinModel
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CardPow
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.GeometricFlagBases.FinModel
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CardPow
+
+@[expose] public section
 
 set_option autoImplicit false
 

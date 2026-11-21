@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ClassS
-import Formalism.LocalToGlobal.UnitaryNorms.DefsDatum
+module
+
+public import Formalism.LocalToGlobal.ClassS
+public import Formalism.LocalToGlobal.UnitaryNorms.DefsDatum
+
+@[expose] public section
 
 noncomputable section
 

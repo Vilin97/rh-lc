@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.PublishedTheorems.PoitouTateDuality.FinalGenDefs
-import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohCmpA
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.PublishedTheorems.PoitouTateDuality.FinalGenDefs
+public import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohCmpA
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HighestWeightConjugacy.DensStepOf
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.UnitaryDense
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HighestWeightConjugacy.DensStepOf
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.UnitaryDense
+
+@[expose] public section
 
 noncomputable section
 

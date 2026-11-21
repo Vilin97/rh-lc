@@ -1,10 +1,14 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.IsUnitOrIsUnitOfAddOne
-import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.CharPerm
-import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.CliffPrime
-import Mathlib.RingTheory.Ideal.GoingUp
-import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
-import Mathlib.LinearAlgebra.Charpoly.ToMatrix
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExtIntegral
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.IsUnitOrIsUnitOfAddOne
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.CharPerm
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.CliffPrime
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import Mathlib.FieldTheory.IsAlgClosed.AlgebraicClosure
+public import Mathlib.LinearAlgebra.Charpoly.ToMatrix
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExtIntegral
+
+@[expose] public section
 
 open Matrix Polynomial UpperTheory.V.U3 UpperTheory.V.Alg
 

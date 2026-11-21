@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.PhNormLimit
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.PhNormLimit
+
+@[expose] public section
 
 private theorem coeff_pow_eq_zero_of_lt_of_constantCoeff_eq_zero {K : Type*} [CommRing K] (a : MvPowerSeries Unit K)
     (ha : MvPowerSeries.constantCoeff a = 0) :

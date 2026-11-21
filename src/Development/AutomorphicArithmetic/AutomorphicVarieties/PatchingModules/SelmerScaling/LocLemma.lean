@@ -1,9 +1,14 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SelmerScaling.EpC
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.LagTriangular
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.LagMap
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.OrdExt
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.TriProdZero
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.TriDiag
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PatchingModules.SelmerScaling.EpC
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.LagTriangular
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.LagMap
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.OrdExt
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.TriProdZero
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.TriDiag
+
+@[expose] public section
+
 open IsLocalRing Matrix UpperTheory.V.Alg UpperTheory.V.W UpperTheory.V.AlgebraTools UpperTheory.V.Pa
 
 private theorem tri_diag {R : Type} [CommRing R] {n : ℕ} (A B : Matrix (Fin n) (Fin n) R)

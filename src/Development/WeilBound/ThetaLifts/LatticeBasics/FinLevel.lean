@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.ThetaBox
-import Development.WeilBound.ThetaLifts.LatticeBasics.SecondFromFirstStatement
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.ThetaBox
+public import Development.WeilBound.ThetaLifts.LatticeBasics.SecondFromFirstStatement
+
+@[expose] public section
 
 noncomputable section
 

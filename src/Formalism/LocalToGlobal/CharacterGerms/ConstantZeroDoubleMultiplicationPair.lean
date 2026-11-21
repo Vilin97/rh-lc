@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.RankMaximalOfNondegenerateOfUnitSeriesIntegral
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePGerm
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RankMaximalOfNondegenerateOfUnitSeriesIntegral
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePGerm
+
+@[expose] public section
 
 set_option autoImplicit false
 

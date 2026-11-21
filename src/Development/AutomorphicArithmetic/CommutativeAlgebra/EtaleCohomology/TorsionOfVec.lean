@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.VecZero
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ZASmul
+module
+
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.VecZero
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ZASmul
+
+@[expose] public section
 
 set_option backward.isDefEq.respectTransparency false
 

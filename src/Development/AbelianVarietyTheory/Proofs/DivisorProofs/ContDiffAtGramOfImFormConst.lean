@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.LeTwoMulOfForallScale
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.LeTwoMulOfForallScale
+
+@[expose] public section
 
 open GlobalTheory
 open scoped ContDiff

@@ -1,6 +1,10 @@
-import Formalism.LocalRingCardinality.DataParams
-import Formalism.LocalRingCardinality.DataGatTies
-import Formalism.SharpRestriction.GrowthBounds.ObjPol
+module
+
+public import Formalism.LocalRingCardinality.DataParams
+public import Formalism.LocalRingCardinality.DataGatTies
+public import Formalism.SharpRestriction.GrowthBounds.ObjPol
+
+@[expose] public section
 
 open Formalism.MainNotions.G Formalism.FrobeniusOrbits
 

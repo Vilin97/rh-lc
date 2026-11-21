@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.ThClassPinsRec
-import Formalism.LocalToGlobal.ProjectiveLattices.IsLevMove
-import Formalism.LocalToGlobal.ProjectiveLattices.FamilyUniformisationBasePointOrthogonalBis
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.ThClassPinsRec
+public import Formalism.LocalToGlobal.ProjectiveLattices.IsLevMove
+public import Formalism.LocalToGlobal.ProjectiveLattices.FamilyUniformisationBasePointOrthogonalBis
+
+@[expose] public section
 
 set_option autoImplicit false
 

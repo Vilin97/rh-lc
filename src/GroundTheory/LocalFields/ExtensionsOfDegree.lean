@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.LocalFields.FiniteExtension
-import GroundTheory.LocalFields.Eisenstein
-import GroundTheory.LocalFields.SeparableClosure
-import GroundTheory.LocalFields.UnramifiedExistence
-import GroundTheory.LocalFields.MaximalUnramified
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.FiniteExtension
+public import GroundTheory.LocalFields.Eisenstein
+public import GroundTheory.LocalFields.SeparableClosure
+public import GroundTheory.LocalFields.UnramifiedExistence
+public import GroundTheory.LocalFields.MaximalUnramified
+
+@[expose] public section
+
 set_option maxHeartbeats 4000000
 set_option synthInstance.maxHeartbeats 400000
 

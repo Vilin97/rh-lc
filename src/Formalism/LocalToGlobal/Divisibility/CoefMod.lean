@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.GradedWeylDivisibility.FinalD
-import Formalism.LocalRingCardinality.DataCoeff
-import Formalism.HermitianLattices.StatementLat
+module
+
+public import Mathlib
+public import Formalism.GradedWeylDivisibility.FinalD
+public import Formalism.LocalRingCardinality.DataCoeff
+public import Formalism.HermitianLattices.StatementLat
+
+@[expose] public section
 
 open MvPolynomial NumberField IsDedekindDomain
 open scoped Matrix

@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralBlock
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSlotsGlobal
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMulVecEqPow
-import Formalism.PieriBlockIdeals.PieriColumnMinors.HeckeLFunctionIdealEulerProduct
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUnitRootCyclotomicExpExpansionsStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StableLatticeChainWithLinesMatrixFormStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralBlock
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSlotsGlobal
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMulVecEqPow
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.HeckeLFunctionIdealEulerProduct
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUnitRootCyclotomicExpExpansionsStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StableLatticeChainWithLinesMatrixFormStatement
+
+@[expose] public section
 
 set_option autoImplicit false
 

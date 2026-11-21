@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.NoMonMultideg
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.NoMonMultideg
+
+@[expose] public section
 
 noncomputable section
 

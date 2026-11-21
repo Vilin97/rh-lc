@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJABddSSnChain
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJABddSSnChain
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutMP.JA.SSn.ChainPf
 

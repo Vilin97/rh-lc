@@ -1,4 +1,8 @@
-import Formalism.IncomingBounds.DefsThmP
+module
+
+public import Formalism.IncomingBounds.DefsThmP
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

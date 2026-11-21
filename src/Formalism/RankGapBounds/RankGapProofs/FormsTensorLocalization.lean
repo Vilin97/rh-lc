@@ -1,4 +1,8 @@
-import Formalism.RankGapBounds.TheoremALocOfLemmaA
+module
+
+public import Formalism.RankGapBounds.TheoremALocOfLemmaA
+
+@[expose] public section
 
 noncomputable section
 

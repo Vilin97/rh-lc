@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.PartialDerivativeMinors.PMinorAff
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MsMul
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.PartialDerivativeMinors.PMinorAff
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MsMul
+
+@[expose] public section
 
 noncomputable section
 

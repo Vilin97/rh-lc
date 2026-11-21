@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.ClassGroupActionLattice
-import GroundTheory.GlobalFields.ComplexMultiplication.JInvariantHomothety
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.ClassGroupActionLattice
+public import GroundTheory.GlobalFields.ComplexMultiplication.JInvariantHomothety
+
+@[expose] public section
 
 private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
   carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}

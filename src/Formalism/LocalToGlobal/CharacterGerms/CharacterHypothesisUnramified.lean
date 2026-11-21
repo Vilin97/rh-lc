@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTieUpFBrS
-import Formalism.LocalToGlobal.CharacterGerms.RowTieUpFBrRP
-import Formalism.LocalToGlobal.CharacterGerms.RowTieUpFBrEF
-import Formalism.LocalToGlobal.CharacterGerms.RowTieUpFBrPlB
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePEmbIntSt
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieUpFBrS
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieUpFBrRP
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieUpFBrEF
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieUpFBrPlB
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePEmbIntSt
+
+@[expose] public section
 
 set_option autoImplicit false
 

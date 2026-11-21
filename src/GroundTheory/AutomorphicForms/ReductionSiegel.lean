@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.ReductionCore
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.ReductionCore
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter Set Matrix
 open scoped NumberField.AdeleRing RestrictedProduct

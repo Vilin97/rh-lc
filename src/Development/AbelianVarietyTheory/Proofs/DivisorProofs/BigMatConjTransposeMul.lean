@@ -1,8 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProdMinorsMemInv
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ColumnInclusionRenaming
-import ReciprocityTheory.DualLattices.FischerSelfNeZero
-import ReciprocityTheory.DualLattices.ConstantCoeffRowSubst
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ProdMinorsMemInv
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ColumnInclusionRenaming
+public import ReciprocityTheory.DualLattices.FischerSelfNeZero
+public import ReciprocityTheory.DualLattices.ConstantCoeffRowSubst
+
+@[expose] public section
+
 open Classical
 
 noncomputable section

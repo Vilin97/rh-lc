@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.CylinderCountFamily
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.CylinderCountFamily
+
+@[expose] public section
 
 noncomputable section
 

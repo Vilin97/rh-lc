@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.SmallCones.UnfParH
-import Development.WeilBound.ThetaLifts.SmallCones.MatCancel
-import Development.WeilBound.ThetaLifts.CartanFactorisation.Unimod
+module
+
+public import Development.WeilBound.ThetaLifts.SmallCones.UnfParH
+public import Development.WeilBound.ThetaLifts.SmallCones.MatCancel
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.Unimod
+
+@[expose] public section
 
 noncomputable section
 

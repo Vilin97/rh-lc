@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.Columns.TwQDefs
-import Formalism.LocalToGlobal.Columns.MtHeckeKv
-import Formalism.LocalToGlobal.Columns.RecLevelCls
+module
+
+public import Formalism.LocalToGlobal.Columns.TwQDefs
+public import Formalism.LocalToGlobal.Columns.MtHeckeKv
+public import Formalism.LocalToGlobal.Columns.RecLevelCls
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix
 open scoped TensorProduct

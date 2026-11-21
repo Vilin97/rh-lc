@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieSurj
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.CmpHyp0P
-import Formalism.LocalToGlobal.GroupLattices.FockModels.Sandwich
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.StabilizerCount
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieSurj
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.CmpHyp0P
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.Sandwich
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.StabilizerCount
+
+@[expose] public section
 
 noncomputable section
 

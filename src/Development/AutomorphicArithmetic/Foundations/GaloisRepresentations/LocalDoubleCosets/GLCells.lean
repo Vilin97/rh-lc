@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalDoubleCosets.TracePow
-import GroundTheory.AutomorphicForms.GeometricLemmaFiltration
-import GroundTheory.AutomorphicForms.WhittakerCells
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LocalDoubleCosets.TracePow
+public import GroundTheory.AutomorphicForms.GeometricLemmaFiltration
+public import GroundTheory.AutomorphicForms.WhittakerCells
+
+@[expose] public section
 
 noncomputable section
 

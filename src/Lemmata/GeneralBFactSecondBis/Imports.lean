@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.CyclotomicNorms.StatementT
-import Formalism.GaloisIrreducibility.NoSolvableTransitive
+module
+
+public import Mathlib
+public import Formalism.CyclotomicNorms.StatementT
+public import Formalism.GaloisIrreducibility.NoSolvableTransitive
+
+@[expose] public section
 
 namespace Bl.general_b_fact_second_bis
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.FWExist
-import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.GeometricConstantEquiv
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IpMSelfEqZero
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.FWExist
+public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.GeometricConstantEquiv
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.IpMSelfEqZero
+
+@[expose] public section
 
 noncomputable section
 

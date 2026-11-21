@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsUnfoldingTorus
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsTorusIntegral
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PArchLatticeDiscrete
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PVecAtNeZero
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsUnfoldingTorus
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsTorusIntegral
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PArchLatticeDiscrete
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PVecAtNeZero
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights.FiniteCovolume
 

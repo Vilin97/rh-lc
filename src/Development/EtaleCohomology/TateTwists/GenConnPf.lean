@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.TateTwists.OfRingsLocalSectionsHolds
+module
+
+public import Development.EtaleCohomology.TateTwists.OfRingsLocalSectionsHolds
+
+@[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
 

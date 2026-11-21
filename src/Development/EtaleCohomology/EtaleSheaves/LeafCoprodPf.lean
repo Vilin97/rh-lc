@@ -1,7 +1,11 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafCompPf
-import Development.EtaleCohomology.EtaleSheaves.LSchClsPfYon
-import Development.EtaleCohomology.WeilConjectures.GlueOfSig
-import Development.EtaleCohomology.TateTwists.EtaleChainCochainEvalDifferentialFormulaHolds
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafCompPf
+public import Development.EtaleCohomology.EtaleSheaves.LSchClsPfYon
+public import Development.EtaleCohomology.WeilConjectures.GlueOfSig
+public import Development.EtaleCohomology.TateTwists.EtaleChainCochainEvalDifferentialFormulaHolds
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC

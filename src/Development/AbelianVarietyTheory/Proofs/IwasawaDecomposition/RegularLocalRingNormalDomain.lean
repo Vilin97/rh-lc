@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.CommutativeAlgebra.MaximalIdealSquares.RingKrullDimQuotientSpanSingletonAddOne
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsSaturated
+module
+
+public import Mathlib
+public import ReciprocityTheory.CommutativeAlgebra.MaximalIdealSquares.RingKrullDimQuotientSpanSingletonAddOne
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsSaturated
+
+@[expose] public section
 
 open IsLocalRing
 

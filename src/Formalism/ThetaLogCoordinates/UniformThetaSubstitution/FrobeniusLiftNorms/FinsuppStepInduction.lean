@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementAB
-import Formalism.GaussJetBounds.GaussJetProofs.ConstantCoeffAevalLinP
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.BiHomSum
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DegLESum
+module
+
+public import Mathlib
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementAB
+public import Formalism.GaussJetBounds.GaussJetProofs.ConstantCoeffAevalLinP
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.BiHomSum
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DegLESum
+
+@[expose] public section
 
 noncomputable section
 

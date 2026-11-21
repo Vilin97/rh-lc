@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.EaDegreeMapDomain
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.EaDegreeMapDomain
+
+@[expose] public section
 
 noncomputable section
 

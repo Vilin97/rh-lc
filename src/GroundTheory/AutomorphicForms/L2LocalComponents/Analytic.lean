@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HarishChandraRegularity
-import GroundTheory.AutomorphicForms.ArchimedeanWhittaker.Density
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HarishChandraRegularity
+public import GroundTheory.AutomorphicForms.ArchimedeanWhittaker.Density
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

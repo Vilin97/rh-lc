@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.CBaseYPDef
-import Formalism.LocalToGlobal.ProjectiveLattices.AxHSupA
-import Formalism.LocalToGlobal.ProjectiveLattices.ReadProofs
-import Formalism.LocalToGlobal.ProjectiveLattices.AllTest
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.CBaseYPDef
+public import Formalism.LocalToGlobal.ProjectiveLattices.AxHSupA
+public import Formalism.LocalToGlobal.ProjectiveLattices.ReadProofs
+public import Formalism.LocalToGlobal.ProjectiveLattices.AllTest
+
+@[expose] public section
 
 noncomputable section
 

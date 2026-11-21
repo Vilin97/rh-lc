@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.ReductionMahler
-import GroundTheory.PowerSubgroups.CountableNeighbourhoods.GLnPowerSubgroups
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.ReductionMahler
+public import GroundTheory.PowerSubgroups.CountableNeighbourhoods.GLnPowerSubgroups
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter Set Matrix MeasureTheory
 open scoped NumberField.AdeleRing RestrictedProduct ENNReal

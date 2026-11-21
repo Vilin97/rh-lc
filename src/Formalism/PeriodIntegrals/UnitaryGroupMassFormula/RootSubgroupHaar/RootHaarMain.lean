@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.AmpRootH
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.RootSubgroupHaar.ContinuousGS
+module
+
+public import Formalism.PeriodIntegrals.AmpRootH
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.RootSubgroupHaar.ContinuousGS
+
+@[expose] public section
 
 open MeasureTheory Matrix
 open scoped ENNReal

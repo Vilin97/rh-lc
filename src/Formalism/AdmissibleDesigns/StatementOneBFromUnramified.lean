@@ -1,15 +1,19 @@
-import Formalism.AdmissibleDesigns.StatementOneBChangedOfOpen
-import Formalism.AdmissibleDesigns.HRhoFull
-import Formalism.AdmissibleDesigns.FirstCharacterIndexNeZero
-import Formalism.AdmissibleDesigns.PhiWRhoT
-import Formalism.AdmissibleDesigns.RowTieInOf
-import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.BaseLin
-import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.BlochKatoAnnihilatorAboveL
-import Development.AutomorphicArithmetic.ResidueCharacters.LenLeTorsion
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WachHypothesisCrystallineLattices
-import Formalism.AdmissibleDesigns.AdmG5OfAdm51AdmG5
-import Formalism.SharpRestriction.LevelLetterCocycles.QpowOfTw
-import Formalism.SharpRestriction.LevelLetterCocycles.WildPro
+module
+
+public import Formalism.AdmissibleDesigns.StatementOneBChangedOfOpen
+public import Formalism.AdmissibleDesigns.HRhoFull
+public import Formalism.AdmissibleDesigns.FirstCharacterIndexNeZero
+public import Formalism.AdmissibleDesigns.PhiWRhoT
+public import Formalism.AdmissibleDesigns.RowTieInOf
+public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.BaseLin
+public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.BlochKatoAnnihilatorAboveL
+public import Development.AutomorphicArithmetic.ResidueCharacters.LenLeTorsion
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WachHypothesisCrystallineLattices
+public import Formalism.AdmissibleDesigns.AdmG5OfAdm51AdmG5
+public import Formalism.SharpRestriction.LevelLetterCocycles.QpowOfTw
+public import Formalism.SharpRestriction.LevelLetterCocycles.WildPro
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core] [hH0Fin : Fact Formalism.MainNotions.N.K.H0.FinCore]
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.LiftCurveSt
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.RCurveAlg
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.LiftCurveSt
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.RCurveAlg
+
+@[expose] public section
 
 noncomputable section
 

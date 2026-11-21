@@ -1,9 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HbApply
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.GlueIsLatticeUnimodular
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemGenusOfIsUnimodular
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.PartsOfLat
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsGzLmap
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HbApply
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.GlueIsLatticeUnimodular
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemGenusOfIsUnimodular
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.PartsOfLat
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsGzLmap
+
+@[expose] public section
+
 open scoped Classical ENNReal Pointwise
 open MeasureTheory Matrix NumberField Formalism.BasicNotions Formalism.MainNotions.S Formalism.MainNotions.S.Lat Formalism.L2.SG.HidaSetting Formalism.L2.SG.TermOp Formalism.L2.SG.Full
   Formalism.L2.SG.LocWSOf Formalism.MainNotions.S.Cnt Formalism.L2.SG.KappaOffDiagonal Formalism.MainNotions.LatticeGluingRadicals

@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.LocalFields.PadicLogSeries
-import GroundTheory.LocalFields.Uniqueness
-import GroundTheory.LocalFields.SeparableClosureValuation
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.PadicLogSeries
+public import GroundTheory.LocalFields.Uniqueness
+public import GroundTheory.LocalFields.SeparableClosureValuation
+
+@[expose] public section
 
 noncomputable section
 

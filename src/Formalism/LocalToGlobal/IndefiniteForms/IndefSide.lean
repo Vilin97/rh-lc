@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.RatHermLcvTwist
-import Formalism.QuotientMetricDivisors.LatticeGlueUnique
-import Formalism.QuotientMetricDivisors.HeightBoundExactNorms
-import Formalism.MirabolicMackeyTheory.StatementT
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.RatHermLcvTwist
+public import Formalism.QuotientMetricDivisors.LatticeGlueUnique
+public import Formalism.QuotientMetricDivisors.HeightBoundExactNorms
+public import Formalism.MirabolicMackeyTheory.StatementT
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder InnerProductSpace

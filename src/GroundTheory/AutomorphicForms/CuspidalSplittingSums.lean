@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.SupercuspidalCoefficients
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.SupercuspidalCoefficients
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

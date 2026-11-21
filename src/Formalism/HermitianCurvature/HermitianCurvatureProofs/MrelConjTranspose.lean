@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LiftVectorZeroBlock
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LiftVectorZeroBlock
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 open scoped ComplexConjugate ContDiff

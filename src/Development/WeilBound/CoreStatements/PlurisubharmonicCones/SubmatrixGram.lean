@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PGramDetSandwich
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.LoewnerDetBound
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.FrameDefinitions.IsFrameOverLine
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PGramDetSandwich
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.LoewnerDetBound
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.FrameDefinitions.IsFrameOverLine
+
+@[expose] public section
 
 open Matrix Filter Topology Asymptotics
 open GroundTheory.Heights₂.Heights.LowerBoundFree GroundTheory.Heights₂.Heights.NineStatements

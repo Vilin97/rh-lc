@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.Imports
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.IoBlockSupported
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.Imports
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.IoBlockSupported
+
+@[expose] public section
 
 noncomputable section
 

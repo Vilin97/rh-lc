@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.FormalDegreeUpperC
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.PolarisationOperatorApplyVariable
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.JointHarmonicOfHookNorm
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HookProductPosLogEq
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.HookREqHookProd
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.FormalDegreeUpperC
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.PolarisationOperatorApplyVariable
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.JointHarmonicOfHookNorm
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HookProductPosLogEq
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.HookREqHookProd
+
+@[expose] public section
 
 noncomputable section
 

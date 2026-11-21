@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.IsotypicComponentLeLowerWeights
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.CrAevalStable
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.IsotypicComponentLeLowerWeights
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.CrAevalStable
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.CompletionAtPlace.Integers
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.CompletionAtPlace.Integers
+
+@[expose] public section
 
 noncomputable section
 

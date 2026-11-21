@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.Divisibility.HookProducts.AbsPhFSubLeOfLe
-import Formalism.SharpRestriction.ParConsts
-import Formalism.SharpRestriction.ElevenLe
+module
+
+public import Formalism.SharpRestriction.Divisibility.HookProducts.AbsPhFSubLeOfLe
+public import Formalism.SharpRestriction.ParConsts
+public import Formalism.SharpRestriction.ElevenLe
+
+@[expose] public section
 
 noncomputable section
 

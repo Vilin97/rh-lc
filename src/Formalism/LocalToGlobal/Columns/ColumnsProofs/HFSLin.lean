@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.HeckeInert
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.HfsAevalRestrict
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.HeckeInert
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.HfsAevalRestrict
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain Polynomial
 

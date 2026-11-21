@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.HeadCorrespondenceOfParts
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.HeadCorrespondenceOfParts
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBI
 

@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.Columns.TiedCls
-import Formalism.LocalToGlobal.Columns.TiedCH
-import Formalism.LocalToGlobal.HermitianForms.BothLemmas
+module
+
+public import Formalism.LocalToGlobal.Columns.TiedCls
+public import Formalism.LocalToGlobal.Columns.TiedCH
+public import Formalism.LocalToGlobal.HermitianForms.BothLemmas
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 open scoped TensorProduct

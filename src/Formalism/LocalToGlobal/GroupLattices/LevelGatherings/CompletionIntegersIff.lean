@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.CastGLApply
-import Formalism.LocalToGlobal.HermitianColumns.CompletionIntegersIff
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.CastGLApply
+public import Formalism.LocalToGlobal.HermitianColumns.CompletionIntegersIff
+
+@[expose] public section
 
 noncomputable section
 

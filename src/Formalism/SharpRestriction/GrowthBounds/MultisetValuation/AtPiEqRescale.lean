@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.InParamMap
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.InParamMap
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.InertKernelTheory.ProjRSurj
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.ProjRSurj
+
+@[expose] public section
 
 noncomputable section
 

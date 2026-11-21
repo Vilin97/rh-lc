@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.DerivationFinsetSumApply
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.DerivationFinsetSumApply
+
+@[expose] public section
 
 noncomputable section
 

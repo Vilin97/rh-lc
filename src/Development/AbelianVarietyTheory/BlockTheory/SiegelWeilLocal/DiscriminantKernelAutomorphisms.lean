@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.SharpRestriction.CuspSpanNormBounds.CntPartners
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.CuspSpanNormBounds.CntPartners
+
+@[expose] public section
 
 noncomputable section
 

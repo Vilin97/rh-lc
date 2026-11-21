@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.TateTwists.EtaleKInjectiveExtensionAlongQuasiIsoFromSingle
+module
+
+public import Development.EtaleCohomology.TateTwists.EtaleKInjectiveExtensionAlongQuasiIsoFromSingle
+
+@[expose] public section
 
 namespace LateralTheory.EtaleFoundations.QFFlat
 

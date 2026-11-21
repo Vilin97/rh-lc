@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.HwFixedLine
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HighestWeightFixedVectors.MonomialMemGe
+module
+
+public import Formalism.PeriodIntegrals.HwFixedLine
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HighestWeightFixedVectors.MonomialMemGe
+
+@[expose] public section
 
 noncomputable section
 

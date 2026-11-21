@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.MemberChainFormsLevelPrimeEqMember
-import Formalism.LocalToGlobal.UnitaryNorms.CharRat
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypTwA
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypChi
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.MemberChainFormsLevelPrimeEqMember
+public import Formalism.LocalToGlobal.UnitaryNorms.CharRat
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypTwA
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypChi
+
+@[expose] public section
 
 noncomputable section
 

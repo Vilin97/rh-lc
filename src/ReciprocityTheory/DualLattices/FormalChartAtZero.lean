@@ -1,7 +1,11 @@
-import ReciprocityTheory.DualLattices.CotangentSurjective
-import ReciprocityTheory.DualLattices.HtLinStatement
-import ReciprocityTheory.DualLattices.NsetExpInjectiveSurjective
-import ReciprocityTheory.DualLattices.SmallLevelClassSet
+module
+
+public import ReciprocityTheory.DualLattices.CotangentSurjective
+public import ReciprocityTheory.DualLattices.HtLinStatement
+public import ReciprocityTheory.DualLattices.NsetExpInjectiveSurjective
+public import ReciprocityTheory.DualLattices.SmallLevelClassSet
+
+@[expose] public section
 
 noncomputable section
 

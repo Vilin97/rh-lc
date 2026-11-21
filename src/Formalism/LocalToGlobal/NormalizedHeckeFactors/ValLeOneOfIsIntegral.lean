@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.RhoDefs
-import Formalism.SharpRestriction.LevelLetterCocycles.ExistsInertiaCharpolyFactorOfTameType
+module
+
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.RhoDefs
+public import Formalism.SharpRestriction.LevelLetterCocycles.ExistsInertiaCharpolyFactorOfTameType
+
+@[expose] public section
 
 noncomputable section
 

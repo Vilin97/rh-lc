@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.BesselHermitianTheta.MinfDensity
-import Formalism.LocalRingCardinality.DataDIV
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Tjcosets
-import Formalism.LocalToGlobal.BesselHermitianTheta.TiedWeilUnr
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.BesselHermitianTheta.MinfDensity
+public import Formalism.LocalRingCardinality.DataDIV
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Tjcosets
+public import Formalism.LocalToGlobal.BesselHermitianTheta.TiedWeilUnr
+
+@[expose] public section
 
 noncomputable section
 

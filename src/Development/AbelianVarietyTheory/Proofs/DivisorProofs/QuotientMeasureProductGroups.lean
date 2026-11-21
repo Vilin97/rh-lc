@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.MeasurePreservingConj
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.MeasurePreservingConj
+
+@[expose] public section
 
 open MeasureTheory
 

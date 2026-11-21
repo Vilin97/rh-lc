@@ -1,5 +1,9 @@
-import Formalism.FormalDegreeBessel.StatementG
-import Formalism.FormalDegreeBessel.FormalDegreeRatio.GBasic
+module
+
+public import Formalism.FormalDegreeBessel.StatementG
+public import Formalism.FormalDegreeBessel.FormalDegreeRatio.GBasic
+
+@[expose] public section
 
 open Matrix
 

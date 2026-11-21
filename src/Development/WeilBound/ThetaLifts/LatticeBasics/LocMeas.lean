@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.EulerProd
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.EulerProd
+
+@[expose] public section
 
 noncomputable section
 

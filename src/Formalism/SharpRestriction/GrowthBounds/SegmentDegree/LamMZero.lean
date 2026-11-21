@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.LamImgApply
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.FrameZeroStrictMono
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.CoarseLabelFactorisation
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.LamImgApply
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.FrameZeroStrictMono
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.CoarseLabelFactorisation
+
+@[expose] public section
 
 noncomputable section
 

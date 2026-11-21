@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.HerbrandFunction
-import GroundTheory.LocalFields.LowerIndexQuotient
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.HerbrandFunction
+public import GroundTheory.LocalFields.LowerIndexQuotient
+
+@[expose] public section
 
 noncomputable section
 

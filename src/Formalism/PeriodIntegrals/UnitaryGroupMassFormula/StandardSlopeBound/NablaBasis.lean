@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.HookBound
-import Formalism.LocalToGlobal.Columns.CoefficientsModP.WeTransposeWordTransposeWord
+module
+
+public import Formalism.PeriodIntegrals.HookBound
+public import Formalism.LocalToGlobal.Columns.CoefficientsModP.WeTransposeWordTransposeWord
+
+@[expose] public section
 
 noncomputable section
 

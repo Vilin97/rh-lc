@@ -1,6 +1,10 @@
-import Formalism.HarderNarasimhan.StatementFrameF
-import Formalism.HarderNarasimhan.HarderNarasimhanProofs.FrameHermSharpB
-import Formalism.HarderNarasimhan.HarderNarasimhanProofs.FrameLinearAlgebraFirst
+module
+
+public import Formalism.HarderNarasimhan.StatementFrameF
+public import Formalism.HarderNarasimhan.HarderNarasimhanProofs.FrameHermSharpB
+public import Formalism.HarderNarasimhan.HarderNarasimhanProofs.FrameLinearAlgebraFirst
+
+@[expose] public section
 
 open Module NumberField Finset Formalism.CorankShareLayerCake.FR
 

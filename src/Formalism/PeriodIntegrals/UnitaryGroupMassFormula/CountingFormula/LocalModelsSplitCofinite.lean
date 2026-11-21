@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CountingFormula.DensMultOf
-import Formalism.LocalToGlobal.SiegelLatticeTheory.SiegelMassRatios.DensExact
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CountingFormula.DensMultOf
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.SiegelMassRatios.DensExact
+
+@[expose] public section
 
 noncomputable section
 

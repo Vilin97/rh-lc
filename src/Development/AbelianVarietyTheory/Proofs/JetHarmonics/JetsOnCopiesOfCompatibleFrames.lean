@@ -1,14 +1,18 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Jets.JetsOnCopiesCompatibleFrames
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.UnifUniqSt
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.TwistBCPf
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.RoundingSum
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.StarRingExtOfStar
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FrameNStHolds
-import Development.AbelianVarietyTheory.Proofs.RingsOfIntegers.ValFinProdGen
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsPowFrame
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.UniversalStatementStatement
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.UniversalJetsPowerProductStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Jets.JetsOnCopiesCompatibleFrames
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ExtensionDescent.UnifUniqSt
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.DiscreteValuationRings.TwistBCPf
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.RoundingSum
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.StarRingExtOfStar
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FrameNStHolds
+public import Development.AbelianVarietyTheory.Proofs.RingsOfIntegers.ValFinProdGen
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsPowFrame
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.UniversalStatementStatement
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.UniversalJetsPowerProductStatement
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

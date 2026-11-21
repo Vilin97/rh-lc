@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsBicharPairing
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.IsBicharPairing
+
+@[expose] public section
 
 noncomputable section
 open ValuativeRel Matrix GlobalTheory.SplitWeil GlobalTheory.PlaceModel Filter

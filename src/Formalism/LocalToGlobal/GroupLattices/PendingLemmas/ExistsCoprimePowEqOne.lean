@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.CoeffOneLNe
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.CoeffOneLNe
+
+@[expose] public section
 
 open Filter Topology
 

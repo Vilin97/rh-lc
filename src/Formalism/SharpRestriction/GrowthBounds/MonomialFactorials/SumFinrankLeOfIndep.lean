@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.RestSumSpan
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.RestDimBCProved
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BlockValuationOverZpHolds
-import Formalism.MahlerMeasure.MahlerMeasureProofs.SSDirect
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.RestSumSpan
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.RestDimBCProved
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BlockValuationOverZpHolds
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.SSDirect
+
+@[expose] public section
 
 noncomputable section
 

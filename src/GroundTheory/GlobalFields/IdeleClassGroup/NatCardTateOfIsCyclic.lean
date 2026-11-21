@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleClassGroup.InvariantsGalois
-import GroundTheory.GlobalFields.SecondInequality.Cyclic
-import GroundTheory.LocalFields.HerbrandCyclic
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleClassGroup.InvariantsGalois
+public import GroundTheory.GlobalFields.SecondInequality.Cyclic
+public import GroundTheory.LocalFields.HerbrandCyclic
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

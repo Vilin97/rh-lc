@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.DivisorSupportCondition
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsStrictlySemistableAlt
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsUniqueIsTransfer
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.RedCompatOfFiniteEtale
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FreeHomExtOfCovering
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SplitByBaseChange
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.DivisorSupportCondition
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsStrictlySemistableAlt
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsUniqueIsTransfer
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.RedCompatOfFiniteEtale
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FreeHomExtOfCovering
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SplitByBaseChange
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC

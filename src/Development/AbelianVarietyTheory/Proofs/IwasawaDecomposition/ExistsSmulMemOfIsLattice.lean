@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.Columns.HeckeInertComm
-import Formalism.LocalToGlobal.Divisibility.CoefModLemmas
-import Formalism.LocalToGlobal.Columns.LocWLemmas
+module
+
+public import Formalism.LocalToGlobal.Columns.HeckeInertComm
+public import Formalism.LocalToGlobal.Divisibility.CoefModLemmas
+public import Formalism.LocalToGlobal.Columns.LocWLemmas
+
+@[expose] public section
 
 namespace GlobalTheory.SmulMemOfIsLattice
 

@@ -1,8 +1,12 @@
-import ReciprocityTheory.DualLattices.ColengthCotangentBoundStatementOfClaim
-import ReciprocityTheory.DualLattices.PrimeHopfOrderOfAddEquiv
-import ReciprocityTheory.DualLattices.MemDualLat
-import ReciprocityTheory.DualLattices.ImportsBis
-import ReciprocityTheory.DualLattices.SqIdeal
+module
+
+public import ReciprocityTheory.DualLattices.ColengthCotangentBoundStatementOfClaim
+public import ReciprocityTheory.DualLattices.PrimeHopfOrderOfAddEquiv
+public import ReciprocityTheory.DualLattices.MemDualLat
+public import ReciprocityTheory.DualLattices.ImportsBis
+public import ReciprocityTheory.DualLattices.SqIdeal
+
+@[expose] public section
 
 noncomputable section
 

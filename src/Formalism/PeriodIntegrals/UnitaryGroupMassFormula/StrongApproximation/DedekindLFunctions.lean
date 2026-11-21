@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.CuspSpanNormBounds.PsiEDef
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StrongApproximation.LocSmall
-import Lemmata.Cancellation.EnnrealVolumeRatioStepCancel
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.CuspSpanNormBounds.PsiEDef
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StrongApproximation.LocSmall
+public import Lemmata.Cancellation.EnnrealVolumeRatioStepCancel
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.LocalNormSurjectivity.FinNormSurj
-import Formalism.SatakeDualWeyl.StatementF
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.LocalNormSurjectivity.FinNormSurj
+public import Formalism.SatakeDualWeyl.StatementF
+
+@[expose] public section
 
 noncomputable section
 

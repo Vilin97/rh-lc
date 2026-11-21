@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BlockTwist
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BlockTwist
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexConjugate

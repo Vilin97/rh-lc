@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.Automorphisms.InstMainA
+module
+
+public import Mathlib
+public import ReciprocityTheory.Automorphisms.InstMainA
+
+@[expose] public section
 
 noncomputable section
 

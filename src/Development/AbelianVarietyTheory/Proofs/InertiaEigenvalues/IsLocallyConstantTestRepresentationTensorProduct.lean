@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TensorRepApply
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TensorRepApply
+
+@[expose] public section
 
 open GlobalTheory.JR GlobalTheory.JR.WeilProd Filter Topology
 

@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.PoincareDuality.Devissage
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.PoincareDuality.Devissage
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

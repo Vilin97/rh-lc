@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HarishChandraRegularity.CartanBasis
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HarishChandraRegularity.CartanBasis
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

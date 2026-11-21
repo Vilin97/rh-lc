@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.SplitRules
+module
+
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.SplitRules
+
+@[expose] public section
 
 noncomputable section
 

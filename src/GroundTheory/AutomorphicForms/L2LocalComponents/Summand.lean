@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.L2LocalComponents.Analytic
-import GroundTheory.AutomorphicForms.L2LocalComponents.ArchPolar
-import GroundTheory.AutomorphicForms.L2LocalComponents.CuspSmooth
-import GroundTheory.AutomorphicForms.TensorProductTheorem.CuspidalRep
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.L2LocalComponents.Analytic
+public import GroundTheory.AutomorphicForms.L2LocalComponents.ArchPolar
+public import GroundTheory.AutomorphicForms.L2LocalComponents.CuspSmooth
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.CuspidalRep
+
+@[expose] public section
 
 open MeasureTheory Filter Topology Polynomial
 open scoped InnerProductSpace

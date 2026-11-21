@@ -1,6 +1,10 @@
-import Development.WeilBound.RepresentationTheoryGL.EisensteinSeries.SiegelEisensteinContinuation.IsEpCont
-import GroundTheory.GlobalFields.TateThesis.EulerFactors
-import GroundTheory.GlobalFields.TateThesis.FiniteOrderParams
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.EisensteinSeries.SiegelEisensteinContinuation.IsEpCont
+public import GroundTheory.GlobalFields.TateThesis.EulerFactors
+public import GroundTheory.GlobalFields.TateThesis.FiniteOrderParams
+
+@[expose] public section
 
 noncomputable section
 

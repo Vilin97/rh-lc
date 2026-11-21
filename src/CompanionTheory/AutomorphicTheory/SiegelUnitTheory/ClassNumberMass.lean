@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.GlobalTheory.GL5.PacketStatementOfIndependence
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.AdelicQuotientVolumeEqOfSignatureRankIndep
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.VolumeRatio
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.UnitaryVolumeEqRankMassAllSignatures
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GlobalTheory.GL5.PacketStatementOfIndependence
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.AdelicQuotientVolumeEqOfSignatureRankIndep
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.VolumeRatio
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.UnitaryVolumeEqRankMassAllSignatures
+
+@[expose] public section
 
 namespace CompanionTheory.HU
 

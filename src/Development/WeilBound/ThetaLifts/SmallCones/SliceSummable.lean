@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.SmallCones.ExpAlg
-import Development.WeilBound.ThetaLifts.SmallCones.ExpSum
+module
+
+public import Development.WeilBound.ThetaLifts.SmallCones.ExpAlg
+public import Development.WeilBound.ThetaLifts.SmallCones.ExpSum
+
+@[expose] public section
 
 noncomputable section
 

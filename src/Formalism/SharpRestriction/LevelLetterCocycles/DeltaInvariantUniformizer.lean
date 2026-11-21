@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.SplitROfSteps
-import Formalism.SharpRestriction.LevelLetterCocycles.FontExAll
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.SplitROfSteps
+public import Formalism.SharpRestriction.LevelLetterCocycles.FontExAll
+
+@[expose] public section
 
 noncomputable section
 

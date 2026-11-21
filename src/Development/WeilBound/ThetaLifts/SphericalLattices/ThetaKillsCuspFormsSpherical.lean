@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.CartanFactorisation.Kills0Of
-import Development.WeilBound.ThetaLifts.CartanFactorisation.KillInf
-import Development.WeilBound.ThetaLifts.Reductions.JoinDef
-import Development.WeilBound.ThetaLifts.SphericalLattices.ThetaSubSup
-import Development.WeilBound.ThetaLifts.SphericalLattices.HoweInert
+module
+
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.Kills0Of
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.KillInf
+public import Development.WeilBound.ThetaLifts.Reductions.JoinDef
+public import Development.WeilBound.ThetaLifts.SphericalLattices.ThetaSubSup
+public import Development.WeilBound.ThetaLifts.SphericalLattices.HoweInert
+
+@[expose] public section
 
 noncomputable section
 

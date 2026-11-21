@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
-import Formalism.LocalToGlobal.ProjectiveLattices.UnitIndepOfCharts
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
+public import Formalism.LocalToGlobal.ProjectiveLattices.UnitIndepOfCharts
+
+@[expose] public section
 
 set_option autoImplicit false
 

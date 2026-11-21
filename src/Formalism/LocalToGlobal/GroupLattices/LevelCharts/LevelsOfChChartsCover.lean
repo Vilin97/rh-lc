@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.LevelCharts.LevelsOfCh
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.LevelCharts.LevelsOfCh
+
+@[expose] public section
 
 noncomputable section
 

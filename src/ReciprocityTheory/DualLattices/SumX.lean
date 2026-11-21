@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.ThetaQSurj
+module
+
+public import ReciprocityTheory.DualLattices.ThetaQSurj
+
+@[expose] public section
 
 noncomputable section
 

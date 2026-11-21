@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.PAdicHodge.FieldOfNormsRam
-import GroundTheory.PAdicHodge.FieldOfNormsTower
-import GroundTheory.LocalFields.Examples
-import GroundTheory.LocalFields.ExamplesCharZero
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.FieldOfNormsRam
+public import GroundTheory.PAdicHodge.FieldOfNormsTower
+public import GroundTheory.LocalFields.Examples
+public import GroundTheory.LocalFields.ExamplesCharZero
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

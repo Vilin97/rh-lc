@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTieUpFBrPl
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieUpFBrPl
+
+@[expose] public section
 
 set_option autoImplicit false
 

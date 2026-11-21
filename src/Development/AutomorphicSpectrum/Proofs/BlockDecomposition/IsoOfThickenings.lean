@@ -1,7 +1,12 @@
-import Mathlib
-import PositivityTheory.PublishedTheorems.TowerLemmas.FormalTowerLemmas.Imports
-import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.FormalAlgebraisation
-import PositivityTheory.PublishedTheorems.UnitKilling.UnitAnnihilation.UnitAnnihilators.ExistsUnitKillsOfIdempotent
+module
+
+public import Mathlib
+public import PositivityTheory.PublishedTheorems.TowerLemmas.FormalTowerLemmas.Imports
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.FormalAlgebraisation
+public import PositivityTheory.PublishedTheorems.UnitKilling.UnitAnnihilation.UnitAnnihilators.ExistsUnitKillsOfIdempotent
+
+@[expose] public section
+
 set_option autoImplicit false
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry ReciprocityTheory.ChartRestriction.G.Out PositivityTheory.FormalThickening

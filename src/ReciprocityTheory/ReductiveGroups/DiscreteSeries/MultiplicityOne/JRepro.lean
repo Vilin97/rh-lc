@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.JReproB
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.StSInt
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.JReproB
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.StSInt
+
+@[expose] public section
 
 noncomputable section
 

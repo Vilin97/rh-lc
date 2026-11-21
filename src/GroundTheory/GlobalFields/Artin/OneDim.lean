@@ -1,10 +1,14 @@
-import Mathlib
-import GroundTheory.GlobalFields.GlobalReciprocity.General
-import GroundTheory.GlobalFields.GlobalReciprocity.Frobenius
-import GroundTheory.GlobalFields.ClassFieldConsequences.RayClassFieldLocal
-import GroundTheory.GlobalFields.ClassFieldConsequences.ConductorLocal
-import GroundTheory.GlobalFields.TateThesis.HeckeChar
-import GroundTheory.GlobalFields.Artin.InflationTower
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.GlobalReciprocity.General
+public import GroundTheory.GlobalFields.GlobalReciprocity.Frobenius
+public import GroundTheory.GlobalFields.ClassFieldConsequences.RayClassFieldLocal
+public import GroundTheory.GlobalFields.ClassFieldConsequences.ConductorLocal
+public import GroundTheory.GlobalFields.TateThesis.HeckeChar
+public import GroundTheory.GlobalFields.Artin.InflationTower
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

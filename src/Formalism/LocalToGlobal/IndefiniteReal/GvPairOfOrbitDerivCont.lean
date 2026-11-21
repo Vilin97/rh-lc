@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.DKerHasCompactSupport
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.DKerHasCompactSupport
+
+@[expose] public section
 
 noncomputable section
 

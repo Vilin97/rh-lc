@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePSplitDef
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePSplitDef
+
+@[expose] public section
 
 namespace Formalism.L2.FormalSeriesBounds
 

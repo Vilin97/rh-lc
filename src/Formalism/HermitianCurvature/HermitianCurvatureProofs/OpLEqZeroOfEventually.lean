@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.StepFormCptAllOfStepFormAll
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.HerAnalyticFOfCls
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TransferWordEntriesMem
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.StepFormCptAllOfStepFormAll
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.HerAnalyticFOfCls
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TransferWordEntriesMem
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 

@@ -1,5 +1,9 @@
-import Formalism.JumpKernelCokernel.Statement
-import Formalism.JumpKernelCokernel.JumpShiftProofs.DetLen
+module
+
+public import Formalism.JumpKernelCokernel.Statement
+public import Formalism.JumpKernelCokernel.JumpShiftProofs.DetLen
+
+@[expose] public section
 
 open Polynomial Module
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.EdgeIndep
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.EdgeIndep
+
+@[expose] public section
 
 noncomputable section
 

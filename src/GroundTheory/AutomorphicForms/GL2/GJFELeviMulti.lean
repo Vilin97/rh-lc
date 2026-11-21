@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJFELeviPeel
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJFELeviPeel
+
+@[expose] public section
 
 noncomputable section
 

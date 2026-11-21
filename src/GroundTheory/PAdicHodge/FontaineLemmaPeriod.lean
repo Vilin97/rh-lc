@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.PAdicHodge.ACrisLog
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.ACrisLog
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.PAdicHodge

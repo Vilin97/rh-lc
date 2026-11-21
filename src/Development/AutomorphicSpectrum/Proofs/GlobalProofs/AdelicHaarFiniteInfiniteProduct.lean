@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.GlobalProofs.ExistsUnitOfComm
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.ExistsUnitOfComm
+
+@[expose] public section
 
 namespace GlobalTheory.CompanionTheory.LeviGen
 open GlobalTheory.CompanionTheory.Hypotheses₂.LeviPart

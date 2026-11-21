@@ -1,10 +1,14 @@
-import Development.WeilBound.ThetaLifts.LeviDeterminants.CharacterAdmissibility.DoublingGramFromBlocks
-import Development.WeilBound.ThetaLifts.LeviDeterminants.CharacterAdmissibility.AdelicCoordinatesEvalZeroFormMemAdmissible
-import Development.WeilBound.ThetaLifts.LeviDeterminants.CharacterAdmissibility.SchrodingerApplyZeroOfFst
-import Development.WeilBound.ThetaLifts.LeviDeterminants.EvFrame
-import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.PlaneC
-import Development.WeilBound.ThetaLifts.LeviDeterminants.MCSpan
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenIntertwinerTransitive
+module
+
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.CharacterAdmissibility.DoublingGramFromBlocks
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.CharacterAdmissibility.AdelicCoordinatesEvalZeroFormMemAdmissible
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.CharacterAdmissibility.SchrodingerApplyZeroOfFst
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.EvFrame
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.PlaneC
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.MCSpan
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenIntertwinerTransitive
+
+@[expose] public section
 
 noncomputable section
 

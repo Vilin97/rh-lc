@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.TripleSubstSecondCoordinate
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.TripleSubstSecondCoordinate
+
+@[expose] public section
 
 noncomputable section
 

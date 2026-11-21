@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.PeriodIntegrals.BesselPeriodGGP
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ConjugationContinuousOnInvertible
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CompactGroupHaarExists
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.OppositeWeylSubgroupClosed
-import Formalism.FormalDegreeBessel.FinalG
-import Development.AbelianVarietyTheory.BlockTheory.JetGauges.FormalDegreeHaarQuotient
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.BesselPeriodGGP
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ConjugationContinuousOnInvertible
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CompactGroupHaarExists
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OppositeWeylSubgroupClosed
+public import Formalism.FormalDegreeBessel.FinalG
+public import Development.AbelianVarietyTheory.BlockTheory.JetGauges.FormalDegreeHaarQuotient
+
+@[expose] public section
 
 open MeasureTheory Matrix
 open scoped InnerProductSpace ENNReal

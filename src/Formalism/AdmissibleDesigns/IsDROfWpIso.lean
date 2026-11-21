@@ -1,6 +1,10 @@
-import Formalism.AdmissibleDesigns.MultVZeroOfSubsingleton
-import Formalism.AdmissibleDesigns.LocCont
-import Formalism.AdmissibleDesigns.MsContW
+module
+
+public import Formalism.AdmissibleDesigns.MultVZeroOfSubsingleton
+public import Formalism.AdmissibleDesigns.LocCont
+public import Formalism.AdmissibleDesigns.MsContW
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

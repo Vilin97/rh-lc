@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.SumRepresentations
-import Formalism.PadicSubsetSums.StableGradedCounts.CardLtAddCardGtAddCardEq
-import Formalism.PadicSubsetSums.StableGradedCounts.ContinuousCoeffCharpolyRev
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.SumRepresentations
+public import Formalism.PadicSubsetSums.StableGradedCounts.CardLtAddCardGtAddCardEq
+public import Formalism.PadicSubsetSums.StableGradedCounts.ContinuousCoeffCharpolyRev
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
-import Formalism.SharpRestriction.LevelLetterCocycles.ClassMapInjectiveBijectiveNorms
-import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.WachRestrictionOfLiftingPackage
-import Formalism.SharpRestriction.LevelLetterCocycles.LiftingTheory
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
+public import Formalism.SharpRestriction.LevelLetterCocycles.ClassMapInjectiveBijectiveNorms
+public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.WachRestrictionOfLiftingPackage
+public import Formalism.SharpRestriction.LevelLetterCocycles.LiftingTheory
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafTripleFPPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafTripleFPPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite LateralTheory.E.E4 LateralTheory.E.LeafDescendVCut LateralTheory.E.LeafDescendChainPf

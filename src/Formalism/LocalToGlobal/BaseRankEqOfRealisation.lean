@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.RealRec
-import Formalism.LocalRingCardinality.Lemmas
-import Formalism.LocalToGlobal.Divisibility.TupUsed
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.RealRec
+public import Formalism.LocalRingCardinality.Lemmas
+public import Formalism.LocalToGlobal.Divisibility.TupUsed
+
+@[expose] public section
 
 noncomputable section
 

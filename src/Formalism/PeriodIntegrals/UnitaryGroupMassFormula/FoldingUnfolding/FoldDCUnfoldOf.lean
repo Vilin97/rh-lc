@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.FoldDCUnfold
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FoldUnfold
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FoldingUnfolding.TransExists
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.FoldDCUnfold
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FoldUnfold
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FoldingUnfolding.TransExists
+
+@[expose] public section
 
 open MeasureTheory
 open scoped ENNReal NNReal

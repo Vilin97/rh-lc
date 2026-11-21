@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsIsLieBase
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CarriesFlagsIffAdaptedFrameAtImage
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.UpperTriangularMul
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsIsLieBase
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CarriesFlagsIffAdaptedFrameAtImage
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.UpperTriangularMul
+
+@[expose] public section
 
 set_option autoImplicit false
 

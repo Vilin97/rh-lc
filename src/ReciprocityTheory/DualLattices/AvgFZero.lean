@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.ExistsReductionOfCoordinateCombination
+module
+
+public import ReciprocityTheory.DualLattices.ExistsReductionOfCoordinateCombination
+
+@[expose] public section
 
 noncomputable section
 

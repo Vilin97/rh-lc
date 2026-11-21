@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.JetsPhW
+module
+
+public import Formalism.PeriodIntegrals.JetsPhW
+
+@[expose] public section
 
 noncomputable section
 

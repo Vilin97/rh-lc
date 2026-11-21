@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.SubConstMemOrig
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.SubConstMemOrig
+
+@[expose] public section
 
 set_option autoImplicit false
 

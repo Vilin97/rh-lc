@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.ThetaLogCoordinates.JacobiPathWeights.GenSpaceFacts
-import Formalism.ThetaLogCoordinates.JacobiPathWeights.JacobiMinorProofs.ExistsSuppOfEvalNe
+module
+
+public import Mathlib
+public import Formalism.ThetaLogCoordinates.JacobiPathWeights.GenSpaceFacts
+public import Formalism.ThetaLogCoordinates.JacobiPathWeights.JacobiMinorProofs.ExistsSuppOfEvalNe
+
+@[expose] public section
 
 noncomputable section
 

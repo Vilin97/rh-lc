@@ -1,8 +1,12 @@
-import Formalism.LocalRingCardinality.SpanPowerMembership.NZLevB
-import Formalism.LocalToGlobal.GroupLattices.FockModels.Cartan
-import Formalism.LocalToGlobal.GroupLattices.FockModels.WeylDim
-import Formalism.LocalToGlobal.GroupLattices.FockModels.SpanTopOf
-import Formalism.SharpRestriction.GrowthBounds.DataG
+module
+
+public import Formalism.LocalRingCardinality.SpanPowerMembership.NZLevB
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.Cartan
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.WeylDim
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.SpanTopOf
+public import Formalism.SharpRestriction.GrowthBounds.DataG
+
+@[expose] public section
 
 open MvPolynomial
 

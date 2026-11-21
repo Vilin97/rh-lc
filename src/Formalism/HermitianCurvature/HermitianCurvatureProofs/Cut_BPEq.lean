@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormSqLeShifted
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.cut_PtwCut
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormSqLeShifted
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.cut_PtwCut
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBPEq
 

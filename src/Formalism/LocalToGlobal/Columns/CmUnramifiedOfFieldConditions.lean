@@ -1,14 +1,18 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.ColFormsLemmas
-import Formalism.LocalToGlobal.Columns.LevGCount
-import Formalism.LocalToGlobal.Columns.AlgebraMapMemMaximalIdealPowIff
-import Formalism.LocalToGlobal.Columns.Inputs
-import Formalism.GL3MeanSquares.HookFormulaTorsion.DimensionMassJointBound
-import Formalism.GL3MeanSquares.HookFormulaTorsion.OneAddInvPowLeExpOne
-import Formalism.GL3MeanSquares.RankMulPowThreeHalvesLeFourthPower
-import Formalism.GL3MeanSquares.HookFormulaTorsion.SumWeightsOverPrimeLeHalfDegree
-import Formalism.HermitianLattices.FinalNeighbourConstruct
-import Formalism.HermitianLattices.FinalMass
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.ColFormsLemmas
+public import Formalism.LocalToGlobal.Columns.LevGCount
+public import Formalism.LocalToGlobal.Columns.AlgebraMapMemMaximalIdealPowIff
+public import Formalism.LocalToGlobal.Columns.Inputs
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.DimensionMassJointBound
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.OneAddInvPowLeExpOne
+public import Formalism.GL3MeanSquares.RankMulPowThreeHalvesLeFourthPower
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.SumWeightsOverPrimeLeHalfDegree
+public import Formalism.HermitianLattices.FinalNeighbourConstruct
+public import Formalism.HermitianLattices.FinalMass
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

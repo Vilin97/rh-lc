@@ -1,9 +1,13 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.LatticeBasics.PairsStable
-import Development.WeilBound.ThetaLifts.LatticeBasics.HgtFin
-import Development.WeilBound.ThetaLifts.LatticeBasics.HgtArch
-import Development.WeilBound.CoreStatements.LocalThetaKernels.IwasAd
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsSiegelHProjArchEq
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.LatticeBasics.PairsStable
+public import Development.WeilBound.ThetaLifts.LatticeBasics.HgtFin
+public import Development.WeilBound.ThetaLifts.LatticeBasics.HgtArch
+public import Development.WeilBound.CoreStatements.LocalThetaKernels.IwasAd
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsSiegelHProjArchEq
+
+@[expose] public section
 
 noncomputable section
 

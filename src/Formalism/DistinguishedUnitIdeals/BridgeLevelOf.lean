@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.DistinguishedUnitIdeals.GammaCongruentArcFromStart
+module
+
+public import Mathlib
+public import Formalism.DistinguishedUnitIdeals.GammaCongruentArcFromStart
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FubiniHeadLastPart
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.StabilizerBlockPoint
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ContinuousInvUpper
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FubiniHeadLastPart
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.StabilizerBlockPoint
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ContinuousInvUpper
+
+@[expose] public section
 
 open Matrix MeasureTheory Formalism.FourierDecayAlt
 

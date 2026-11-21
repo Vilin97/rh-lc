@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.Columns.TiedXpV
-import Formalism.LocalToGlobal.Columns.TiedAtT
-import Formalism.LocalToGlobal.Columns.RowFormsGood
+module
+
+public import Formalism.LocalToGlobal.Columns.TiedXpV
+public import Formalism.LocalToGlobal.Columns.TiedAtT
+public import Formalism.LocalToGlobal.Columns.RowFormsGood
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 open scoped TensorProduct

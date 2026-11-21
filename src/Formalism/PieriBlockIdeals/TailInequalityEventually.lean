@@ -1,5 +1,9 @@
-import Formalism.PieriBlockIdeals.MertensReciprocalElementary
-import Formalism.PieriBlockIdeals.HidaLatticeInclusionAtCoarseWeightBound
+module
+
+public import Formalism.PieriBlockIdeals.MertensReciprocalElementary
+public import Formalism.PieriBlockIdeals.HidaLatticeInclusionAtCoarseWeightBound
+
+@[expose] public section
 
 noncomputable section
 

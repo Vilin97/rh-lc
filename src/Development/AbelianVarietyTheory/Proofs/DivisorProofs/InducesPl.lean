@@ -1,11 +1,15 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.SemiposAtOfPositive
-import Development.AbelianVarietyTheory.Definitions.Divisors.ToKnownTheoremsOf
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemConeOfMem
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormsOfInduces
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapPairDetCovec
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CoordAtConstMulIff
-import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.PermutesRefl
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SemiposAtOfPositive
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ToKnownTheoremsOf
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemConeOfMem
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormsOfInduces
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MapPairDetCovec
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CoordAtConstMulIff
+public import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.PermutesRefl
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.CoprimeLiftBounds.SelmerInjColumnPlace
-import Formalism.WachLatticeTwists.CoprimeLiftBounds.CoprimeLiftProofs.Imports
+module
+
+public import Formalism.WachLatticeTwists.CoprimeLiftBounds.SelmerInjColumnPlace
+public import Formalism.WachLatticeTwists.CoprimeLiftBounds.CoprimeLiftProofs.Imports
+
+@[expose] public section
 
 open Finset
 

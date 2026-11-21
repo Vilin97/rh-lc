@@ -1,7 +1,12 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSheet
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsPosDensMeasurable
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PtsPosDensMeasurable
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSheet
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsPosDensMeasurable
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PtsPosDensMeasurable
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

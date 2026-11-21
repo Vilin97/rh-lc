@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.SplitLem
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceFinal
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.SplitLem
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceFinal
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 100000
 set_option maxHeartbeats 1600000

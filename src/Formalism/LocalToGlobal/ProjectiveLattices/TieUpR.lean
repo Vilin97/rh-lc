@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.TieUpA
-import Formalism.LocalToGlobal.ProjectiveLattices.CompHt
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.Bridge
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.TieUpA
+public import Formalism.LocalToGlobal.ProjectiveLattices.CompHt
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.Bridge
+
+@[expose] public section
 
 noncomputable section
 

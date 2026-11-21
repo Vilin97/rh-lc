@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.ReductionMahler
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.ReductionMahler
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open NumberField IsDedekindDomain Topology Set Matrix

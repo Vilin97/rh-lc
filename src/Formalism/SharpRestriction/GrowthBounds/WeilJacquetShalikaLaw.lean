@@ -1,13 +1,17 @@
-import Formalism.LocalRingCardinality.DataExtra
-import Formalism.LocalRingCardinality.HostCls
-import Formalism.LocalRingCardinality.DataDIVDefs
-import Formalism.SharpRestriction.ParConsts
-import Formalism.SharpRestriction.ParamsHeightRankConstant
-import Formalism.SharpRestriction.GrowthBounds.SmallOrderPrimes
-import Formalism.SharpRestriction.GrowthBounds.FormalGroupSystem
-import Formalism.SharpRestriction.Divisibility.LocalQuadraticParts
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.DvdCondNIffCls
-import Development.AutomorphicArithmetic.OrbitLabellings.NotIsCsOfGIdx
+module
+
+public import Formalism.LocalRingCardinality.DataExtra
+public import Formalism.LocalRingCardinality.HostCls
+public import Formalism.LocalRingCardinality.DataDIVDefs
+public import Formalism.SharpRestriction.ParConsts
+public import Formalism.SharpRestriction.ParamsHeightRankConstant
+public import Formalism.SharpRestriction.GrowthBounds.SmallOrderPrimes
+public import Formalism.SharpRestriction.GrowthBounds.FormalGroupSystem
+public import Formalism.SharpRestriction.Divisibility.LocalQuadraticParts
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.DvdCondNIffCls
+public import Development.AutomorphicArithmetic.OrbitLabellings.NotIsCsOfGIdx
+
+@[expose] public section
 
 noncomputable section
 

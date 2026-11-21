@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FiniteIndexOfGammaLe
-import ReciprocityTheory.DualLattices.HasSumNormalizedDeriv
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FiniteIndexOfGammaLe
+public import ReciprocityTheory.DualLattices.HasSumNormalizedDeriv
+
+@[expose] public section
 
 open UpperHalfPlane hiding I
 open Complex ModularForm ModularFormClass MatrixGroups Function Filter EisensteinSeries

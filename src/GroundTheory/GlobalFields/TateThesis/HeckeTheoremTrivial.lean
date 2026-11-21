@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.HeckeTheoremConj
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.HeckeTheoremConj
+
+@[expose] public section
 
 open NumberField InfinitePlace IsDedekindDomain MeasureTheory Complex
 open scoped NumberField.AdeleRing

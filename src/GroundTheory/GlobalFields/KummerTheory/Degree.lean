@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.KummerBasic
-import GroundTheory.ProfiniteCohomology.KummerFinite
-import GroundTheory.ProfiniteCohomology.KummerCorrespondence
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.KummerBasic
+public import GroundTheory.ProfiniteCohomology.KummerFinite
+public import GroundTheory.ProfiniteCohomology.KummerCorrespondence
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

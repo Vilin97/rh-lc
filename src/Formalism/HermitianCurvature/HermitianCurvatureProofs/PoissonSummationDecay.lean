@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.LevelRecursionCondNeeded
-import Formalism.LatticeTheta.ThetaShiftInversion
+module
+
+public import Formalism.HermitianCurvature.LevelRecursionCondNeeded
+public import Formalism.LatticeTheta.ThetaShiftInversion
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PoissonSummationDecay
 

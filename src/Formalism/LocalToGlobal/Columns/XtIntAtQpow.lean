@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.XtLamGvSCongr
+module
+
+public import Formalism.LocalToGlobal.Columns.XtLamGvSCongr
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 

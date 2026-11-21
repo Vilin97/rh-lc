@@ -1,4 +1,8 @@
-import Formalism.DoubleCosetMeasures.StatementZ
+module
+
+public import Formalism.DoubleCosetMeasures.StatementZ
+
+@[expose] public section
 
 noncomputable section
 

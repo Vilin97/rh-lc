@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LagrangeIdealLifts.Statement
-import Formalism.WindowSums.Statement
+module
+
+public import Mathlib
+public import Formalism.LagrangeIdealLifts.Statement
+public import Formalism.WindowSums.Statement
+
+@[expose] public section
 
 noncomputable section
 

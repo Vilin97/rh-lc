@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.SlopeMaxOpenOfHookTwoLeV
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.StdSlopeLow
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.HookBound
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.SlopeMaxOpenOfHookTwoLeV
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.StdSlopeLow
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.HookBound
+
+@[expose] public section
 
 namespace Formalism.MainNotions.flipTwoThree
 

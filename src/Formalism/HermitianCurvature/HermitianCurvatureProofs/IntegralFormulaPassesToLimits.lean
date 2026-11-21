@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.GramLocTendsto
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TendstoLevelNormOfRegularization
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GramLocTendsto
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TendstoLevelNormOfRegularization
+
+@[expose] public section
 
 open Formalism.FourierDecayAlt
 

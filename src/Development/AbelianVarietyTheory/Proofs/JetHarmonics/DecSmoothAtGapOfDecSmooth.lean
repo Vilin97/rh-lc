@@ -1,12 +1,16 @@
-import Mathlib
-import Formalism.HermitianCurvature.BesselNonvanishingReduction
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LowerSmoothStability.ExistsFinStableOfMemSSup
-import Development.AbelianVarietyTheory.BlockTheory.JetGauges.SideNormalisedGap
-import Formalism.PeriodIntegrals.UpqRep
-import Formalism.FormalDegreeBessel.StatementG
-import Formalism.FormalDegreeBessel.FinalG
-import Development.AbelianVarietyTheory.Counterexamples.JetSurvey.KFinDecayOfDecInf
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.SigmaFiniteOfPosLintegralNeTop
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.BesselNonvanishingReduction
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LowerSmoothStability.ExistsFinStableOfMemSSup
+public import Development.AbelianVarietyTheory.BlockTheory.JetGauges.SideNormalisedGap
+public import Formalism.PeriodIntegrals.UpqRep
+public import Formalism.FormalDegreeBessel.StatementG
+public import Formalism.FormalDegreeBessel.FinalG
+public import Development.AbelianVarietyTheory.Counterexamples.JetSurvey.KFinDecayOfDecInf
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.SigmaFiniteOfPosLintegralNeTop
+
+@[expose] public section
 
 noncomputable section
 

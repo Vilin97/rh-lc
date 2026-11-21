@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.LocalArtinMap
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LocalArtinMap
+
+@[expose] public section
 
 noncomputable section
 

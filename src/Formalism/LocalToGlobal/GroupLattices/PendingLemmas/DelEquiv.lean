@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.SubstZOfXCoordZA
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.DetYtMatNeZero
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.DetOfColSpanEq
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WeightUpdateAtPlace
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.SubstZOfXCoordZA
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.DetYtMatNeZero
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.DetOfColSpanEq
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WeightUpdateAtPlace
+
+@[expose] public section
 
 noncomputable section
 

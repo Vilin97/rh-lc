@@ -1,5 +1,9 @@
-import Formalism.AdmissibleDesigns.SelmerInequalityOpen
-import Formalism.AdmissibleDesigns.CharacterTrivialWhereLattice
+module
+
+public import Formalism.AdmissibleDesigns.SelmerInequalityOpen
+public import Formalism.AdmissibleDesigns.CharacterTrivialWhereLattice
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core] [hH0Fin : Fact Formalism.MainNotions.N.K.H0.FinCore]
 

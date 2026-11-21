@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BijectiveGsCompactZmodDualityMap
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseTransportGS
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.FiniteOpen
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BijectiveGsCompactZmodDualityMap
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseTransportGS
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.FiniteOpen
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

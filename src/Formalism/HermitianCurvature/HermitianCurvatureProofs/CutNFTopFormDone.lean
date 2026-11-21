@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopFormTDMAll
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.cut_TypeNormMeas_Proof
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DominatedL2TruncationBoundHolds
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopForm
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopFormTDMAll
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.cut_TypeNormMeas_Proof
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DominatedL2TruncationBoundHolds
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopForm
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP
 

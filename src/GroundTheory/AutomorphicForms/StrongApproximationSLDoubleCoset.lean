@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.StrongApproximationSLDense
-import GroundTheory.GlobalFields.ClassFieldConsequences.RayClass
-import GroundTheory.GlobalFields.IdeleGroups.ClassGroup
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.StrongApproximationSLDense
+public import GroundTheory.GlobalFields.ClassFieldConsequences.RayClass
+public import GroundTheory.GlobalFields.IdeleGroups.ClassGroup
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter Set Matrix
 open scoped RestrictedProduct

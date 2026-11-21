@@ -1,12 +1,16 @@
-import ReciprocityTheory.DualLattices.InvolutionPermApplyZero
-import ReciprocityTheory.DualLattices.WdetDegreeOfSmithRestrict
-import ReciprocityTheory.DualLattices.RestrictHopfOrderLength
-import ReciprocityTheory.DualLattices.BasechangeProjectorIdempotentAction
-import ReciprocityTheory.DualLattices.SmithNormalFormStatement
-import ReciprocityTheory.DualLattices.KilledGen
-import ReciprocityTheory.DualLattices.IdemGen
-import ReciprocityTheory.DualLattices.LenEx
-import ReciprocityTheory.DualLattices.CokernelLengthComparisonOf
+module
+
+public import ReciprocityTheory.DualLattices.InvolutionPermApplyZero
+public import ReciprocityTheory.DualLattices.WdetDegreeOfSmithRestrict
+public import ReciprocityTheory.DualLattices.RestrictHopfOrderLength
+public import ReciprocityTheory.DualLattices.BasechangeProjectorIdempotentAction
+public import ReciprocityTheory.DualLattices.SmithNormalFormStatement
+public import ReciprocityTheory.DualLattices.KilledGen
+public import ReciprocityTheory.DualLattices.IdemGen
+public import ReciprocityTheory.DualLattices.LenEx
+public import ReciprocityTheory.DualLattices.CokernelLengthComparisonOf
+
+@[expose] public section
 
 namespace ReciprocityTheory.PGsh.Up
 

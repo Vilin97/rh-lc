@@ -1,7 +1,11 @@
-import Mathlib
-import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.DiscreteSeriesCharacters.CapelliDeterminantBlockProduct
-import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
-import CompanionTheory.HarishChandraModules.KFiniteAnalyticVectors.EqSmulOfWeight
+module
+
+public import Mathlib
+public import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.DiscreteSeriesCharacters.CapelliDeterminantBlockProduct
+public import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
+public import CompanionTheory.HarishChandraModules.KFiniteAnalyticVectors.EqSmulOfWeight
+
+@[expose] public section
 
 open scoped InnerProductSpace
 open Formalism.REAL (KHighest IsWeight)

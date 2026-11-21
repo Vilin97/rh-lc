@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.JacChart
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.AnChartA
+module
+
+public import Mathlib
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.JacChart
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.AnChartA
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.R
 

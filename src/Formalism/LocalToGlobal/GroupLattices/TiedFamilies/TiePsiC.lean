@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePsi
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.FullTiedCBase
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePsi
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.FullTiedCBase
+
+@[expose] public section
 
 noncomputable section
 

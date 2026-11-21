@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.CuspFormsSiegel
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.CuspCompact
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.CuspFormsSiegel
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.CuspCompact
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter Set MeasureTheory
 open scoped NumberField.AdeleRing ENNReal

@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsRapidInf
-import GroundTheory.AutomorphicForms.MultiplicityOne.Equivariance
-import GroundTheory.GlobalFields.TateThesis.AdelicCharLocal
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsRapidInf
+public import GroundTheory.AutomorphicForms.MultiplicityOne.Equivariance
+public import GroundTheory.GlobalFields.TateThesis.AdelicCharLocal
+
+@[expose] public section
 
 noncomputable section
 

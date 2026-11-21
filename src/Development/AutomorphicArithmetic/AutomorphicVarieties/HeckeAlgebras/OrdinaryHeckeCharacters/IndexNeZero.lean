@@ -1,6 +1,11 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.HeckeAlgebras.TcAnti
-import Development.AbelianVarietyTheory.Definitions.Divisors.T2SpaceGeneralLinearGroup
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LduDecompositionExists
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HeckeAlgebras.TcAnti
+public import Development.AbelianVarietyTheory.Definitions.Divisors.T2SpaceGeneralLinearGroup
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LduDecompositionExists
+
+@[expose] public section
+
 open Matrix ValuativeRel GlobalTheory.SmGL GlobalTheory.SplitWeil UpperTheory.V.Hi
 
 namespace UpperTheory.V.Hi.GlAx

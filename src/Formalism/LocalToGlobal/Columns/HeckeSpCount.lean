@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.HeckeSp
-import Formalism.LocalToGlobal.Columns.AlgebraMapMemMaximalIdealPowIff
+module
+
+public import Formalism.LocalToGlobal.Columns.HeckeSp
+public import Formalism.LocalToGlobal.Columns.AlgebraMapMemMaximalIdealPowIff
+
+@[expose] public section
 
 noncomputable section
 

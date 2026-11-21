@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces
+
+@[expose] public section
 
 open NumberField MeasureTheory Topology Set Filter IsDedekindDomain
 open scoped NumberField.AdeleRing

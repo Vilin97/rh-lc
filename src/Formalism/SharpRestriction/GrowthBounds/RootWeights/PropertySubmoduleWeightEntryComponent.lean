@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.LaurentCoefficientsMemProperty
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.LaurentCoefficientsMemProperty
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import CompanionTheory.ThickeningEstimates.LieGroupReduction.NormExpSubLe
+module
+
+public import CompanionTheory.ThickeningEstimates.LieGroupReduction.NormExpSubLe
+
+@[expose] public section
 
 noncomputable section
 

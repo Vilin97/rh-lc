@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.HermitianCurvature.PositionExpansionTopCoefficients
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.PositionExpansionTopCoefficients
+
+@[expose] public section
 
 namespace Bl.HermitianSesquilinear
 

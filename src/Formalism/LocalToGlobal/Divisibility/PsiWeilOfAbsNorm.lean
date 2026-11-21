@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.DivisionCompatibleToSub2Indef2
-import Formalism.LocalToGlobal.Columns.StdLatUnimodular
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.DivisionCompatibleToSub2Indef2
+public import Formalism.LocalToGlobal.Columns.StdLatUnimodular
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

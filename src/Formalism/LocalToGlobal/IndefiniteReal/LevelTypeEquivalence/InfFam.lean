@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.BaseSt
-import Formalism.LocalToGlobal.UnitaryNorms.RealPl
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.InfEmbUnique
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.BaseSt
+public import Formalism.LocalToGlobal.UnitaryNorms.RealPl
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.InfEmbUnique
+
+@[expose] public section
 
 noncomputable section
 

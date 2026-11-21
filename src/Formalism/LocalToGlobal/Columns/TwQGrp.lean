@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.TwQCmp
-import Formalism.LocalToGlobal.Columns.TwQThetaOpen
+module
+
+public import Formalism.LocalToGlobal.Columns.TwQCmp
+public import Formalism.LocalToGlobal.Columns.TwQThetaOpen
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

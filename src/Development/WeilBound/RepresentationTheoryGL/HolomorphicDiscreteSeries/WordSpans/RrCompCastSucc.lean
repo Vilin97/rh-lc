@@ -1,6 +1,10 @@
-import Development.WeilBound.RepresentationTheoryGL.HolomorphicDiscreteSeries.WordSpans.WordSpan
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmRowExp
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmColExp
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.HolomorphicDiscreteSeries.WordSpans.WordSpan
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmRowExp
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmColExp
+
+@[expose] public section
 
 noncomputable section
 

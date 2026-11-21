@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.HermitianForms.DefsGH
-import Formalism.LocalToGlobal.Columns.RecLevelLocT
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ImportsExtra
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsSplittingOfCharacter
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsAddEquivField
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.HermitianForms.DefsGH
+public import Formalism.LocalToGlobal.Columns.RecLevelLocT
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ImportsExtra
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsSplittingOfCharacter
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsAddEquivField
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.Col Formalism.UG Formalism.L2.Forms Matrix
 open scoped TensorProduct

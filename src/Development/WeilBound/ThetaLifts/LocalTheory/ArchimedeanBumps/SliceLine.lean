@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.TracePiReal
-import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.SliceAn
-import Development.WeilBound.ThetaLifts.SmallCones.ExpAlg
-import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.PlaneAd
-import Development.WeilBound.ThetaLifts.CartanFactorisation.TensOfEval
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.TracePiReal
+public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.SliceAn
+public import Development.WeilBound.ThetaLifts.SmallCones.ExpAlg
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.PlaneAd
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.TensOfEval
+
+@[expose] public section
 
 noncomputable section
 

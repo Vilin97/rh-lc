@@ -1,10 +1,14 @@
-import Formalism.AdmissibleDesigns.NormalizedRingData
-import Formalism.AdmissibleDesigns.DisplayForms
-import Formalism.AdmissibleDesigns.RankReductionIdempotentOne
-import Formalism.AdmissibleDesigns.FgTopContinuousLinearMap
-import Formalism.AdmissibleDesigns.HigherColumnInvariantsBound
-import Formalism.AdmissibleDesigns.InertiaActsTrivially
-import Formalism.AdmissibleDesigns.KernelLengthHigherColumns
+module
+
+public import Formalism.AdmissibleDesigns.NormalizedRingData
+public import Formalism.AdmissibleDesigns.DisplayForms
+public import Formalism.AdmissibleDesigns.RankReductionIdempotentOne
+public import Formalism.AdmissibleDesigns.FgTopContinuousLinearMap
+public import Formalism.AdmissibleDesigns.HigherColumnInvariantsBound
+public import Formalism.AdmissibleDesigns.InertiaActsTrivially
+public import Formalism.AdmissibleDesigns.KernelLengthHigherColumns
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core] [hH0Fin : Fact Formalism.MainNotions.N.K.H0.FinCore]
 

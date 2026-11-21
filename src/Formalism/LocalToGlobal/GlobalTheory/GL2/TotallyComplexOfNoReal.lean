@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL2.Statement
-import Formalism.SharpRestriction.GlobalSchurBounds.FirstClaimLemmaTwoFourOfLemmaTwoThree
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
-import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.Principal
-import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.SplitK
-import Formalism.UnipotentAdelicQuotients.ClassNumberQuad
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL2.Statement
+public import Formalism.SharpRestriction.GlobalSchurBounds.FirstClaimLemmaTwoFourOfLemmaTwoThree
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.Principal
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.SplitK
+public import Formalism.UnipotentAdelicQuotients.ClassNumberQuad
+
+@[expose] public section
 
 noncomputable section
 

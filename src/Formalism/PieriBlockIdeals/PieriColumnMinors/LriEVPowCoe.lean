@@ -1,4 +1,8 @@
-import Formalism.PieriBlockIdeals.PieriColumnMinors.XiOfDepth2
+module
+
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.XiOfDepth2
+
+@[expose] public section
 
 open MvPolynomial
 

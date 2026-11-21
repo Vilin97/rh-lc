@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.HermitianLattices.StatementLat
-import Formalism.HermitianLattices.DualOrthSum
-import Formalism.HermitianLattices.NeighbourConstruct
-import Formalism.SatakeDualWeyl.StatementB
-import Formalism.LocalToGlobal.Columns.AbelianHostFieldConditions
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.StatementLat
+public import Formalism.HermitianLattices.DualOrthSum
+public import Formalism.HermitianLattices.NeighbourConstruct
+public import Formalism.SatakeDualWeyl.StatementB
+public import Formalism.LocalToGlobal.Columns.AbelianHostFieldConditions
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

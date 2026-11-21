@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJAGroupAdjCut
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutEnBetaFrame
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJAGroupAdjCut
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutEnBetaFrame
+
+@[expose] public section
 
 open Formalism.FourierDecayAlt MeasureTheory
 open Formalism.REAL Formalism.QuantumDeterminants

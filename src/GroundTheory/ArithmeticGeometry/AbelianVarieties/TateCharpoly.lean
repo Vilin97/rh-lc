@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualQuadratic
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilPairing
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilGaloisFunctionField
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.TateModule
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualQuadratic
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilPairing
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilGaloisFunctionField
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.TateModule
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.Abelian

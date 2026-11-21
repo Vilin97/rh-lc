@@ -1,10 +1,14 @@
-import Formalism.SizeWindowBrackets.SChain
-import Formalism.SizeWindowBrackets.ClaimGaFree
-import Formalism.SizeWindowBrackets.QuotientSlopeBoundsWith
-import Formalism.SizeWindowBrackets.FrameTraceRatioFinEquiv
-import Formalism.SizeWindowBrackets.SlopesHypothesisFinitePlaces
-import Formalism.SizeWindowBrackets.GaloisToProductIsIso
-import Formalism.SizeWindowBrackets.WindowSettingSatisfiable
+module
+
+public import Formalism.SizeWindowBrackets.SChain
+public import Formalism.SizeWindowBrackets.ClaimGaFree
+public import Formalism.SizeWindowBrackets.QuotientSlopeBoundsWith
+public import Formalism.SizeWindowBrackets.FrameTraceRatioFinEquiv
+public import Formalism.SizeWindowBrackets.SlopesHypothesisFinitePlaces
+public import Formalism.SizeWindowBrackets.GaloisToProductIsIso
+public import Formalism.SizeWindowBrackets.WindowSettingSatisfiable
+
+@[expose] public section
 
 open Module NumberField Matrix
 open Formalism.HN

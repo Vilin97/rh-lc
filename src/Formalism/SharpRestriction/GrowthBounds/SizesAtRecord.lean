@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.Joints
-import Formalism.SharpRestriction.GrowthBounds.LogarithmicSums.MeanNum
-import Development.AutomorphicArithmetic.CyclotomicBounds.NotInert
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.Joints
+public import Formalism.SharpRestriction.GrowthBounds.LogarithmicSums.MeanNum
+public import Development.AutomorphicArithmetic.CyclotomicBounds.NotInert
+
+@[expose] public section
 
 noncomputable section
 

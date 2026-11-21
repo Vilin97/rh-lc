@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.EqSingleOfDegreeEqOne
+module
+
+public import Mathlib
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.EqSingleOfDegreeEqOne
+
+@[expose] public section
 
 noncomputable section
 

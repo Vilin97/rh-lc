@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.DiagonalEntryIdentity
-import Formalism.SharpRestriction.CuspSpanNormBounds.LocalDataRealPlace
-import Formalism.SharpRestriction.CuspSpanNormBounds.FamilyBlockLiftEstimate
-import Formalism.SharpRestriction.CuspSpanNormBounds.PSDKOnOfPSDK
-import Formalism.SharpRestriction.ParConsts
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.DiagonalEntryIdentity
+public import Formalism.SharpRestriction.CuspSpanNormBounds.LocalDataRealPlace
+public import Formalism.SharpRestriction.CuspSpanNormBounds.FamilyBlockLiftEstimate
+public import Formalism.SharpRestriction.CuspSpanNormBounds.PSDKOnOfPSDK
+public import Formalism.SharpRestriction.ParConsts
+
+@[expose] public section
 
 open Matrix MeasureTheory NumberField Filter Topology Polynomial
 open scoped ContDiff

@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CptCoefContSupp
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CptCoefContSupp
+
+@[expose] public section
 
 noncomputable section
 

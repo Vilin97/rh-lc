@@ -1,4 +1,8 @@
-import Formalism.LocalRingCardinality.DataForms
+module
+
+public import Formalism.LocalRingCardinality.DataForms
+
+@[expose] public section
 
 noncomputable section
 

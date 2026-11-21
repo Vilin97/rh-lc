@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.DataN
-import Formalism.SharpRestriction.LevelLetterCocycles.IntegralHeckeForms
-import Formalism.LocalToGlobal.IndefiniteReal.GramCEqTranspose
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataN
+public import Formalism.SharpRestriction.LevelLetterCocycles.IntegralHeckeForms
+public import Formalism.LocalToGlobal.IndefiniteReal.GramCEqTranspose
+
+@[expose] public section
 
 noncomputable section
 

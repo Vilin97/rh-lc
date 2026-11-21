@@ -1,6 +1,10 @@
-import Formalism.LocalRingCardinality.DataGatTies
-import Formalism.LocalRingCardinality.DataLatDefs
-import Formalism.SharpRestriction.GrowthBounds.DataGChain
+module
+
+public import Formalism.LocalRingCardinality.DataGatTies
+public import Formalism.LocalRingCardinality.DataLatDefs
+public import Formalism.SharpRestriction.GrowthBounds.DataGChain
+
+@[expose] public section
 
 open Formalism.MainNotions.G NumberField
 

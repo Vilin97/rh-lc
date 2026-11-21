@@ -1,12 +1,16 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.TensorProductTheorem.CentralCuspSplit
-import GroundTheory.AutomorphicForms.UnitaryAdmissible
-import GroundTheory.AutomorphicForms.GL2Classical.EigenformTranslates
-import GroundTheory.AutomorphicForms.GL2Classical.Smooth
-import GroundTheory.AutomorphicForms.HarishChandraCentre
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.SmoothKZ
-import GroundTheory.AutomorphicForms.GL2Classical.KFinite
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.GKStable
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.CentralCuspSplit
+public import GroundTheory.AutomorphicForms.UnitaryAdmissible
+public import GroundTheory.AutomorphicForms.GL2Classical.EigenformTranslates
+public import GroundTheory.AutomorphicForms.GL2Classical.Smooth
+public import GroundTheory.AutomorphicForms.HarishChandraCentre
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.SmoothKZ
+public import GroundTheory.AutomorphicForms.GL2Classical.KFinite
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.GKStable
+
+@[expose] public section
 
 noncomputable section
 

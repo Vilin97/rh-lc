@@ -1,7 +1,11 @@
-import Formalism.ThetaLogCoordinates.TraceIsometryWeights.FinalP
-import Formalism.ThetaLogCoordinates.TraceIsometryWeights.SchurTraceProofs.WeylInt
-import Formalism.ThetaLogCoordinates.TraceIsometryWeights.SchurTraceProofs.ZpClosedToAddSubgroup
-import Formalism.ThetaLogCoordinates.TraceIsometryWeights.SchurTraceProofs.CompEqZeroOfNotDle
+module
+
+public import Formalism.ThetaLogCoordinates.TraceIsometryWeights.FinalP
+public import Formalism.ThetaLogCoordinates.TraceIsometryWeights.SchurTraceProofs.WeylInt
+public import Formalism.ThetaLogCoordinates.TraceIsometryWeights.SchurTraceProofs.ZpClosedToAddSubgroup
+public import Formalism.ThetaLogCoordinates.TraceIsometryWeights.SchurTraceProofs.CompEqZeroOfNotDle
+
+@[expose] public section
 
 namespace Formalism.InvariantFactorPaths.PW.Top
 

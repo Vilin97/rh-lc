@@ -1,4 +1,8 @@
-import ReciprocityTheory.SemistableReduction.RestBlockSubstIsMultiHomogeneous
+module
+
+public import ReciprocityTheory.SemistableReduction.RestBlockSubstIsMultiHomogeneous
+
+@[expose] public section
 
 noncomputable section
 

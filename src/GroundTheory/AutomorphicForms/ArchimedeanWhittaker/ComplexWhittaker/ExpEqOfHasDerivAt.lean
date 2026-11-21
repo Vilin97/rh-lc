@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.ArchimedeanWhittaker.Density
-import GroundTheory.AutomorphicForms.RealGroupsIwasawa
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.ArchimedeanWhittaker.Density
+public import GroundTheory.AutomorphicForms.RealGroupsIwasawa
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.ArchWhittakerC
 

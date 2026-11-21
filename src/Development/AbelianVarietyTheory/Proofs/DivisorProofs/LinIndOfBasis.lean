@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LamGApply
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinIndMapRangeField
-import Formalism.LocalToGlobal.IndefiniteReal.BridgeLemmas
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LamGApply
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinIndMapRangeField
+public import Formalism.LocalToGlobal.IndefiniteReal.BridgeLemmas
+
+@[expose] public section
 
 set_option autoImplicit false
 

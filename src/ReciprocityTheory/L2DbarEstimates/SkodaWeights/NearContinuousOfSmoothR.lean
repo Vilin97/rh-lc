@@ -1,5 +1,9 @@
-import ReciprocityTheory.L2DbarEstimates.SkodaWeights.SmoothRLog
-import ReciprocityTheory.L2DbarEstimates.SkodaWeights.WeightedIntegralEqLintegral
+module
+
+public import ReciprocityTheory.L2DbarEstimates.SkodaWeights.SmoothRLog
+public import ReciprocityTheory.L2DbarEstimates.SkodaWeights.WeightedIntegralEqLintegral
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.H
 

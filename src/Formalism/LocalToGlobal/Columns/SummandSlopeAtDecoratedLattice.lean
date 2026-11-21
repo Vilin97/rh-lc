@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.ToHLat
-import Formalism.GL3MeanSquares.HookFormulaTorsion.SquareMomentFromBound
-import Formalism.GL3MeanSquares.ConcavityEquidistribution
-import Formalism.LogVandermondeBounds.MultinomialPowerBound
-import Formalism.GL3MeanSquares.HookFormulaTorsion.SquareMomentArithmeticBound
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.ToHLat
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.SquareMomentFromBound
+public import Formalism.GL3MeanSquares.ConcavityEquidistribution
+public import Formalism.LogVandermondeBounds.MultinomialPowerBound
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.SquareMomentArithmeticBound
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 open scoped Matrix ComplexOrder

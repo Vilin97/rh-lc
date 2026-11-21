@@ -1,4 +1,8 @@
-import ReciprocityTheory.L2DbarEstimates.LeviForms.FixedA
+module
+
+public import ReciprocityTheory.L2DbarEstimates.LeviForms.FixedA
+
+@[expose] public section
 
 universe u
 

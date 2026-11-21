@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.ThetaCorrespondence.CrystallineComparison.CFDefs
-import Development.WeilBound.CoreStatements.PeriodRingComparison.RationalRingEquivalences.IsLogCore
+module
+
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.CrystallineComparison.CFDefs
+public import Development.WeilBound.CoreStatements.PeriodRingComparison.RationalRingEquivalences.IsLogCore
+
+@[expose] public section
 
 noncomputable section
 

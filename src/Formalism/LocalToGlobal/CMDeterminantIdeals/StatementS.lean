@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CMDeterminantIdeals.HadamardLoc0
-import Formalism.LocalToGlobal.CMDeterminantIdeals.StatementG
+module
+
+public import Formalism.LocalToGlobal.CMDeterminantIdeals.HadamardLoc0
+public import Formalism.LocalToGlobal.CMDeterminantIdeals.StatementG
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.NormalRepresentationLattice
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LatticeBounds
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsValuationEqZpow
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.MulMemOfHatCosetIndNeZero
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FlatNeZeroOfMemR
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.TwistSupportPeriodicLevels
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.NormalRepresentationLattice
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LatticeBounds
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ExistsValuationEqZpow
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.MulMemOfHatCosetIndNeZero
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FlatNeZeroOfMemR
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.TwistSupportPeriodicLevels
+
+@[expose] public section
 
 open MeasureTheory ValuativeRel Matrix GlobalTheory.SplitWeil GlobalTheory.RootEx GlobalTheory.StepData GlobalTheory.IndefiniteRowSideFullHecke.NormalRepresentationLattice
 

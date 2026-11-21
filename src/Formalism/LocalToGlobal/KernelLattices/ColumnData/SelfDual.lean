@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.ColumnData
-import Formalism.LocalToGlobal.KernelLattices.ColumnData.HfTrace
-import Formalism.FrobeniusOrbits.HostCorollaries
-import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.DiscrB
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExportFamilies
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.ColumnData
+public import Formalism.LocalToGlobal.KernelLattices.ColumnData.HfTrace
+public import Formalism.FrobeniusOrbits.HostCorollaries
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.DiscrB
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExportFamilies
+
+@[expose] public section
 
 noncomputable section
 

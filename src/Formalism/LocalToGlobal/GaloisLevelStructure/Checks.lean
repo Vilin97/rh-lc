@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GaloisLevelStructure.TiedHecke
+module
+
+public import Formalism.LocalToGlobal.GaloisLevelStructure.TiedHecke
+
+@[expose] public section
 
 open Formalism.BasicNotions ReciprocityTheory.Aut Formalism.AUTREP
 

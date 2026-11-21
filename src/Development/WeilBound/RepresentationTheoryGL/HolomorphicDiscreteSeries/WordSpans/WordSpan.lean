@@ -1,5 +1,9 @@
-import Development.WeilBound.RepresentationTheoryGL.HolomorphicDiscreteSeries.WeightOccurrence.OccSome
-import Development.WeilBound.CoreStatements.BranchingTraces.BranchingComatrices.OneLeDiff
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.HolomorphicDiscreteSeries.WeightOccurrence.OccSome
+public import Development.WeilBound.CoreStatements.BranchingTraces.BranchingComatrices.OneLeDiff
+
+@[expose] public section
 
 noncomputable section
 

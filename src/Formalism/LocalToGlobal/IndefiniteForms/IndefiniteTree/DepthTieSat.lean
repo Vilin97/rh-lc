@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.DepthTie
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.SaturationChartsHolds
+module
+
+public import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.DepthTie
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.SaturationChartsHolds
+
+@[expose] public section
 
 set_option autoImplicit false
 

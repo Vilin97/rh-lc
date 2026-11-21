@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.DataHost
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+module
+
+public import Formalism.LocalRingCardinality.DataHost
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+
+@[expose] public section
 
 namespace Formalism.BasicNotions
 

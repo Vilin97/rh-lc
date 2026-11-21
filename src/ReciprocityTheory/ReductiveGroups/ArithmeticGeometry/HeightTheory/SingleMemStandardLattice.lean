@@ -1,6 +1,10 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.OrthogonalProjectorMulVecConjugate
-import ReciprocityTheory.SemistableReduction.DegAddHolds
-import ReciprocityTheory.SemistableReduction.SemiDegB
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.OrthogonalProjectorMulVecConjugate
+public import ReciprocityTheory.SemistableReduction.DegAddHolds
+public import ReciprocityTheory.SemistableReduction.SemiDegB
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.T0
 

@@ -1,17 +1,22 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.RenameProdMapMul
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.SphereMean
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LogGaussNormSupportFinite
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ContinuousHermNormGroup
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.MahlerMul
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.HeightMul
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.Statements
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LowerBoundConditional
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeLogBound
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ConeBall
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.Characterised
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PRecursion
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PCharacterised
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.RenameProdMapMul
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.SphereMean
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LogGaussNormSupportFinite
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ContinuousHermNormGroup
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.MahlerMul
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.HeightMul
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.Statements
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LowerBoundConditional
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeLogBound
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ConeBall
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.Characterised
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PRecursion
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PCharacterised
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

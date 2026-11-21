@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.SurjectiveCharts
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.SurjectiveCharts
+
+@[expose] public section
 
 noncomputable section
 

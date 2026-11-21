@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.WhittakerLSpace
-import GroundTheory.AutomorphicForms.WhittakerCriterion
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.WhittakerLSpace
+public import GroundTheory.AutomorphicForms.WhittakerCriterion
+
+@[expose] public section
 
 noncomputable section
 

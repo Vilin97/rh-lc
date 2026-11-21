@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.CurveComp
-import Formalism.LocalToGlobal.ProjectiveLattices.CurveCountA
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.CurveComp
+public import Formalism.LocalToGlobal.ProjectiveLattices.CurveCountA
+
+@[expose] public section
 
 noncomputable section
 

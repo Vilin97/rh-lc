@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.SmallCones.SoKill
-import Development.WeilBound.ThetaLifts.SmallCones.ExpAlg
+module
+
+public import Development.WeilBound.ThetaLifts.SmallCones.SoKill
+public import Development.WeilBound.ThetaLifts.SmallCones.ExpAlg
+
+@[expose] public section
 
 noncomputable section
 

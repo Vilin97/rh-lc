@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.QuotIntegrableIffCutoff
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.MemCentIffTwConj
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.QuotIntegrableIffCutoff
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.MemCentIffTwConj
+
+@[expose] public section
 
 open Matrix MeasureTheory Topology
 open scoped Kronecker ContDiff

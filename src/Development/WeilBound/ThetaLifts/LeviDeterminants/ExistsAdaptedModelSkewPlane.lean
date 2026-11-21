@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.LeviDeterminants.ExistsRelationAdaptedVector
-import Development.WeilBound.ThetaLifts.LeviDeterminants.ExistsModel0
+module
+
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.ExistsRelationAdaptedVector
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.ExistsModel0
+
+@[expose] public section
 
 noncomputable section
 

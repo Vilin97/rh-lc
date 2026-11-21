@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ThetaChr
-import Formalism.LocalToGlobal.JointCharacters.LocEMulLocE
+module
+
+public import Formalism.LocalToGlobal.ThetaChr
+public import Formalism.LocalToGlobal.JointCharacters.LocEMulLocE
+
+@[expose] public section
 
 noncomputable section
 

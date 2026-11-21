@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.ExampleSatisfiesConditionsAtFive
-import Formalism.SharpRestriction.Divisibility.WeightAlgebra
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeIndexDeterminant.NegLogValuation
-import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.ThreeForms
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsBasisOfPid
+module
+
+public import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.ExampleSatisfiesConditionsAtFive
+public import Formalism.SharpRestriction.Divisibility.WeightAlgebra
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeIndexDeterminant.NegLogValuation
+public import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.ThreeForms
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsBasisOfPid
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 

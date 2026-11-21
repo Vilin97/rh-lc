@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.ACrisLog
-import GroundTheory.PAdicHodge.LogPowSeries
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.ACrisLog
+public import GroundTheory.PAdicHodge.LogPowSeries
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

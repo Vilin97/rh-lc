@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.ExistsPosConstLagrangeCondition
-import Formalism.SharpRestriction.LevelLetterCocycles.LocalTheoryWindows
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.ExistsPosConstLagrangeCondition
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocalTheoryWindows
+
+@[expose] public section
 
 noncomputable section
 

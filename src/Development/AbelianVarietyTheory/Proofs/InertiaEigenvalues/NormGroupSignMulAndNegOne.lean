@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsStableGauss
-import GroundTheory.LocalFields.FiniteExtension
-import GroundTheory.AutomorphicForms.HermitianClassification
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NegOneMemNormOfValuationEqStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsStableGauss
+public import GroundTheory.LocalFields.FiniteExtension
+public import GroundTheory.AutomorphicForms.HermitianClassification
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NegOneMemNormOfValuationEqStatement
+
+@[expose] public section
 
 open scoped TensorProduct
 

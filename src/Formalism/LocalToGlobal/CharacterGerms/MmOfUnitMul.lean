@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.CharacterGerms.FirstVanishingAt
-import Formalism.LocalToGlobal.CharacterGerms.MaximalOfValuationGeOne
-import Formalism.LocalToGlobal.CharacterGerms.ConstantZeroDoubleMultiplicationPair
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePStartSelf
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.FirstVanishingAt
+public import Formalism.LocalToGlobal.CharacterGerms.MaximalOfValuationGeOne
+public import Formalism.LocalToGlobal.CharacterGerms.ConstantZeroDoubleMultiplicationPair
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePStartSelf
+
+@[expose] public section
 
 set_option autoImplicit false
 

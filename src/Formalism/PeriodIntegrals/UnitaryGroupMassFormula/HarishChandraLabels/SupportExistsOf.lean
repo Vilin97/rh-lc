@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PadicSubsetSums.CentralIdempotents.IsConstituent
-import Formalism.PadicSubsetSums.CentralIdempotents.GaloisConjCentralIdempotent
+module
+
+public import Mathlib
+public import Formalism.PadicSubsetSums.CentralIdempotents.IsConstituent
+public import Formalism.PadicSubsetSums.CentralIdempotents.GaloisConjCentralIdempotent
+
+@[expose] public section
 
 open Formalism.IrreducibleCountingLemmas.TYPES CategoryTheory Polynomial
 open scoped TensorProduct

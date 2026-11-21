@@ -1,8 +1,12 @@
-import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohCmp
-import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohField
-import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohMu
-import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohTate
-import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohTateA
+module
+
+public import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohCmp
+public import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohField
+public import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohMu
+public import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohTate
+public import Development.WeilBound.CoreStatements.EulerCharacteristicCounts.GcohTateA
+
+@[expose] public section
 
 open CategoryTheory GroundTheory.ProfCoh ReciprocityTheory.Gal ValuativeRel
 

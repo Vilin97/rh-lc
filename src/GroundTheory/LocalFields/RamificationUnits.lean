@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.Ramification
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.Ramification
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AevalLogDefect
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AevalLogDefect
+
+@[expose] public section
 
 open GlobalTheory.LogU MvPolynomial Finset
 

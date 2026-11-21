@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.KloostermanDensity
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.KloostermanDensity
+
+@[expose] public section
 
 open Matrix Formalism.FourierDecayAlt
 

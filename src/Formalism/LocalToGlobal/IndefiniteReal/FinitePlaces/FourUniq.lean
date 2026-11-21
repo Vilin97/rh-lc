@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.SmulFinsum
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.SmulFinsum
+
+@[expose] public section
 
 set_option linter.style.haveILetI false
 

@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.UJClassFin
-import Formalism.HermitianLattices.StatementMass
+module
+
+public import Formalism.PeriodIntegrals.UJClassFin
+public import Formalism.HermitianLattices.StatementMass
+
+@[expose] public section
 
 noncomputable section
 

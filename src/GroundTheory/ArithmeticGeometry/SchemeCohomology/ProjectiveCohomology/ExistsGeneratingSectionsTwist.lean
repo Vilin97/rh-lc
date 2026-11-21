@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.SerreP
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.Immersion
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.SerreP
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveCohomology.Immersion
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh

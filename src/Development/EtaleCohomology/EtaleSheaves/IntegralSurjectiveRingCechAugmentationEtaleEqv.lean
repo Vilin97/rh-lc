@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.CechSqPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.CechSqPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC LateralTheory.E.t_E3Cut LateralTheory.E.StalkCut LateralTheory.E.DescIntPf LateralTheory.E.CechSqPf

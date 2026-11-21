@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.BasesAtSpec
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.BasesAtSpec
+
+@[expose] public section
 
 noncomputable section
 

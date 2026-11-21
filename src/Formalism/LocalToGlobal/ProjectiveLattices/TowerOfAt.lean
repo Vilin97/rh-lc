@@ -1,7 +1,11 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.FlagBasis
-import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.IsOpenPart
-import Formalism.LocalToGlobal.ProjectiveLattices.EmbKCoe
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.FlagBasis
+public import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.IsOpenPart
+public import Formalism.LocalToGlobal.ProjectiveLattices.EmbKCoe
+
+@[expose] public section
 
 noncomputable section
 

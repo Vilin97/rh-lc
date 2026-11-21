@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.HermitianLattices.FinalNeighbourConstruct
-import Formalism.HermitianLattices.FinalMass
-import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.ShortVectorEveryPlace
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.FinalNeighbourConstruct
+public import Formalism.HermitianLattices.FinalMass
+public import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.ShortVectorEveryPlace
+
+@[expose] public section
 
 noncomputable section
 

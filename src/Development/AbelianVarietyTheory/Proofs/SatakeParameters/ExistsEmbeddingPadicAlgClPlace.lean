@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.NormSumLt
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.NormSumLt
+
+@[expose] public section
+
 open NumberField IsDedekindDomain
 
 namespace GlobalTheory

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.OldestFar
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.OldestFar
+
+@[expose] public section
 
 noncomputable section
 

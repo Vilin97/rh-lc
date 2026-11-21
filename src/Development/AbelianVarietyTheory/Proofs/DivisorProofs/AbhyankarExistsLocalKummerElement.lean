@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocHomAlgebraMap
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LocHomAlgebraMap
+
+@[expose] public section
+
 open IsLocalRing
 
 namespace GlobalTheory.AbhyankarLocal

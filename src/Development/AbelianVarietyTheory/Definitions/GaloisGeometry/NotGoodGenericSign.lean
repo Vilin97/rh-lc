@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.GoodGeneric
-import Formalism.LocalToGlobal.Divisibility.HeckeCSDICommTrRep
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InTypeIsoSortedPos
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDvdAllAway
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.GoodGeneric
+public import Formalism.LocalToGlobal.Divisibility.HeckeCSDICommTrRep
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InTypeIsoSortedPos
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDvdAllAway
+
+@[expose] public section
 
 noncomputable section
 

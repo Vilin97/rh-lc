@@ -1,4 +1,8 @@
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.LogIntSt
+module
+
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.LogIntSt
+
+@[expose] public section
 
 open MeasureTheory Set
 

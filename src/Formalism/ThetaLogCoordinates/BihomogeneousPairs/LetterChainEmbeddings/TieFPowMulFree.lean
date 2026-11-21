@@ -1,6 +1,10 @@
-import Formalism.MahlerMeasure.MahlerMeasureProofs.RemoveS
-import Formalism.MahlerMeasure.MahlerMeasureProofs.LevelDecomp
-import Mathlib
+module
+
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.RemoveS
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.LevelDecomp
+public import Mathlib
+
+@[expose] public section
 
 namespace Formalism.InvariantFactorPaths.KP.LL
 

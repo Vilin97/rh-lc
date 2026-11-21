@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalRingCardinality.HostCls
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsPrimeOfDifferentLe
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.HostCls
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsPrimeOfDifferentLe
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Finset
 

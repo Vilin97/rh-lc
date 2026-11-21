@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ZeroNotMemTsupportPsiL
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ZeroNotMemTsupportPsiL
+
+@[expose] public section
 
 open MeasureTheory Filter Topology
 open scoped ComplexConjugate ContDiff

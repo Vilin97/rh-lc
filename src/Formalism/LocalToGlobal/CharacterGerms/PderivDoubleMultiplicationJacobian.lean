@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.GermEvalOneStandardPointSelf
-import Formalism.LocalToGlobal.CharacterGerms.MaximalOfValuationGeOne
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.GermEvalOneStandardPointSelf
+public import Formalism.LocalToGlobal.CharacterGerms.MaximalOfValuationGeOne
+
+@[expose] public section
 
 set_option autoImplicit false
 

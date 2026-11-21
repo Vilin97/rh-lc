@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.SobolevIteration.ContOnPIterAvgTerm
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.SobolevIteration.ContOnPIterAvgTerm
+
+@[expose] public section
 
 noncomputable section
 

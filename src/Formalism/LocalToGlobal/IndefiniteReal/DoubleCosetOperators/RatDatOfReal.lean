@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.Objects
-import Formalism.LocalToGlobal.IndefiniteReal.ZeroPartEigenvalueConvention
-import Formalism.LocalRingCardinality.DataIdx
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.Objects
+public import Formalism.LocalToGlobal.IndefiniteReal.ZeroPartEigenvalueConvention
+public import Formalism.LocalRingCardinality.DataIdx
+
+@[expose] public section
 
 noncomputable section
 

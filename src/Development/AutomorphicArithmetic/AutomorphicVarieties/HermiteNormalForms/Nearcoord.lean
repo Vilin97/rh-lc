@@ -1,8 +1,12 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.SmulNeZeroLat
-import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.DetPull
-import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Cramer
-import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Scinv
-import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Rypos
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.SmulNeZeroLat
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.DetPull
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Cramer
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Scinv
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Rypos
+
+@[expose] public section
 
 open NumberField Matrix UpperTheory.V UpperTheory.V.KT
 open scoped ComplexOrder

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.RedTheta
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.FuncSt
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.RedTheta
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.FuncSt
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsLocalOrbitChart
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PLevelSetLocalInj
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.ExistsAnalyticLogResolution
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsLocalOrbitChart
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PLevelSetLocalInj
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.ExistsAnalyticLogResolution
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.Automorphisms.Unitary
-import ReciprocityTheory.Automorphisms.PlaceA
+module
+
+public import Mathlib
+public import ReciprocityTheory.Automorphisms.Unitary
+public import ReciprocityTheory.Automorphisms.PlaceA
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Polynomial
 

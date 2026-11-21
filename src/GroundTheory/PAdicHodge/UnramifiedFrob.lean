@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.PAdicHodge.BCrisNewton
-import GroundTheory.PAdicHodge.BCrisNewtonFrac
-import GroundTheory.PAdicHodge.CyclotomicTower
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.BCrisNewton
+public import GroundTheory.PAdicHodge.BCrisNewtonFrac
+public import GroundTheory.PAdicHodge.CyclotomicTower
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

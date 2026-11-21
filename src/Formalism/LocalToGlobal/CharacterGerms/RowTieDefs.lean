@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.IntSubst
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.IntSubst
+
+@[expose] public section
 
 noncomputable section
 

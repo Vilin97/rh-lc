@@ -1,5 +1,9 @@
-import Formalism.GrowthSums.StatementC
-import Formalism.GrowthSums.FactorialBaseGrowth.Harmonic
+module
+
+public import Formalism.GrowthSums.StatementC
+public import Formalism.GrowthSums.FactorialBaseGrowth.Harmonic
+
+@[expose] public section
 
 noncomputable section
 

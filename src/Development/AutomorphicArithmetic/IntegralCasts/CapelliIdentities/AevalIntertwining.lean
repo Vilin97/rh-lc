@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.AevalIntertwining.aeval_intertwine :
     ∀ {K : Type} [inst : Field K] {M N : Type} [inst_1 : AddCommGroup M]

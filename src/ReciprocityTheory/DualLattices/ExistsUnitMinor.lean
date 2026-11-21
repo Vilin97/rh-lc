@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.ColengthSqBlockVandermonde
+module
+
+public import ReciprocityTheory.DualLattices.ColengthSqBlockVandermonde
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.ParConsts
-import Formalism.SharpRestriction.CuspSpanNormBounds.LeSCSCl
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.ParConsts
+public import Formalism.SharpRestriction.CuspSpanNormBounds.LeSCSCl
+
+@[expose] public section
 
 noncomputable section
 

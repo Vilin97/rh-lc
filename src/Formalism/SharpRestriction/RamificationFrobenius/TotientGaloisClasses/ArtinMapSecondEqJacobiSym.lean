@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.ConjEMemHostFIff
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.FrameCyclicGenerator
-import Formalism.FrobeniusOrbits.HostCorollaries
+module
+
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.ConjEMemHostFIff
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.FrameCyclicGenerator
+public import Formalism.FrobeniusOrbits.HostCorollaries
+
+@[expose] public section
 
 open NumberField IntermediateField Ideal
 

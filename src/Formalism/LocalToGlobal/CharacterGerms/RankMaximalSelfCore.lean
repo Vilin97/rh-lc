@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.CharacterGerms.UncurryLinearCombination
-import Formalism.LocalToGlobal.CharacterGerms.ConstantZeroFirstThenZero
-import Formalism.LocalToGlobal.CharacterGerms.ConstantZeroDoubleMultiplicationPair
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePAddCvSelf
-import Formalism.LocalToGlobal.CharacterGerms.RowTieSelfCuts
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.UncurryLinearCombination
+public import Formalism.LocalToGlobal.CharacterGerms.ConstantZeroFirstThenZero
+public import Formalism.LocalToGlobal.CharacterGerms.ConstantZeroDoubleMultiplicationPair
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePAddCvSelf
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieSelfCuts
+
+@[expose] public section
 
 set_option autoImplicit false
 

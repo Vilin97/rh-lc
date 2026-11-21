@@ -1,7 +1,11 @@
-import Formalism.CharacterColumnKernels.StatementColKer
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthKerSmulLe
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthKerOfDetEqZero
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthEqKerAddRange
+module
+
+public import Formalism.CharacterColumnKernels.StatementColKer
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthKerSmulLe
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthKerOfDetEqZero
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthEqKerAddRange
+
+@[expose] public section
 
 open Finset
 

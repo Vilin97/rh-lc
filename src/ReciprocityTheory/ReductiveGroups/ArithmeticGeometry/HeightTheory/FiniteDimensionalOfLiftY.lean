@@ -1,4 +1,8 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.BasisExtend
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.BasisExtend
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.T0.FractionFieldVariableLift
 

@@ -1,7 +1,11 @@
-import Development.WeilBound.ThetaLifts.CartanFactorisation.FockSecondActionMatrixUnitEq
-import Development.WeilBound.ThetaLifts.Reductions.LocalPoly
-import Development.WeilBound.ThetaLifts.Reductions.TensJoin
-import Development.WeilBound.ThetaLifts.Reductions.JoinDef
+module
+
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.FockSecondActionMatrixUnitEq
+public import Development.WeilBound.ThetaLifts.Reductions.LocalPoly
+public import Development.WeilBound.ThetaLifts.Reductions.TensJoin
+public import Development.WeilBound.ThetaLifts.Reductions.JoinDef
+
+@[expose] public section
 
 noncomputable section
 

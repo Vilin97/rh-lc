@@ -1,11 +1,15 @@
-import Formalism.GaussValuationBounds.Statement
-import Formalism.WindowSums.PowerSeriesRelationList
-import Formalism.FrobeniusContraction.Statement
-import Formalism.FrobeniusContraction.FrobeniusContractionProofs.ContractBij
-import Formalism.FrobeniusContraction.FrobeniusContractionProofs.LenBound
-import Formalism.FrobeniusContraction.StatementTop
-import Mathlib
-import Formalism.FrobeniusContraction.HighestWeightResidueAvoids
+module
+
+public import Formalism.GaussValuationBounds.Statement
+public import Formalism.WindowSums.PowerSeriesRelationList
+public import Formalism.FrobeniusContraction.Statement
+public import Formalism.FrobeniusContraction.FrobeniusContractionProofs.ContractBij
+public import Formalism.FrobeniusContraction.FrobeniusContractionProofs.LenBound
+public import Formalism.FrobeniusContraction.StatementTop
+public import Mathlib
+public import Formalism.FrobeniusContraction.HighestWeightResidueAvoids
+
+@[expose] public section
 
 noncomputable section
 

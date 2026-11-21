@@ -1,7 +1,11 @@
-import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.ExtCut
-import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.HoloWeak
-import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.MollifyEqConvolution
-import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.ExtWeakA
+module
+
+public import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.ExtCut
+public import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.HoloWeak
+public import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.MollifyEqConvolution
+public import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.ExtWeakA
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.C
 

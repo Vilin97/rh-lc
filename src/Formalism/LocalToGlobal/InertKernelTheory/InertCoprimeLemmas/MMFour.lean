@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.InertKernelTheory.DefsMM
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.IntTens
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsMM
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.IntTens
+
+@[expose] public section
 
 noncomputable section
 

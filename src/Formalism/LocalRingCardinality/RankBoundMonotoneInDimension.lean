@@ -1,14 +1,18 @@
-import Formalism.LocalRingCardinality.DataParams₂
-import Formalism.ThetaLiftIndependence.FinalThetaLiftAMFKIndep
-import Formalism.FrobeniusOrbits.HostCorollaries
-import Formalism.LocalRingCardinality.HostCls
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.FrameCyclicGenerator
-import Formalism.HarderNarasimhan.ShiftInvariance
-import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
-import Formalism.GradedWeylDivisibility.FinalB
-import Formalism.GradedWeylDivisibility.FinalD
-import Formalism.GradedWeylDivisibility.StatementE
-import Formalism.SatakeDualWeyl.KpqSubgroupCompact
+module
+
+public import Formalism.LocalRingCardinality.DataParams₂
+public import Formalism.ThetaLiftIndependence.FinalThetaLiftAMFKIndep
+public import Formalism.FrobeniusOrbits.HostCorollaries
+public import Formalism.LocalRingCardinality.HostCls
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.FrameCyclicGenerator
+public import Formalism.HarderNarasimhan.ShiftInvariance
+public import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
+public import Formalism.GradedWeylDivisibility.FinalB
+public import Formalism.GradedWeylDivisibility.FinalD
+public import Formalism.GradedWeylDivisibility.StatementE
+public import Formalism.SatakeDualWeyl.KpqSubgroupCompact
+
+@[expose] public section
 
 noncomputable section
 

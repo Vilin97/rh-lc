@@ -1,4 +1,8 @@
-import Formalism.SizeWindowBrackets.ErrorFormsWeakWindowsFalse
+module
+
+public import Formalism.SizeWindowBrackets.ErrorFormsWeakWindowsFalse
+
+@[expose] public section
 
 open Real
 

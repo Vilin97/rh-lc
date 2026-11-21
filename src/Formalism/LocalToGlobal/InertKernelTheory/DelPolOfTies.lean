@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.InertKernelTheory.KernelDifferenceOfFrame
-import Formalism.LocalToGlobal.InertKernelTheory.TieSerPin
-import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.FdOfCharts
-import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.LtCNeZero
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.KernelDifferenceOfFrame
+public import Formalism.LocalToGlobal.InertKernelTheory.TieSerPin
+public import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.FdOfCharts
+public import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.LtCNeZero
+
+@[expose] public section
 
 noncomputable section
 

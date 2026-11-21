@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.LocalTateDuality.InjectiveCohomologyMapKummerSeqOpenFTwo
-import GroundTheory.ProfiniteCohomology.LocalTateDuality.Bockstein
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.LocalTateDuality.InjectiveCohomologyMapKummerSeqOpenFTwo
+public import GroundTheory.ProfiniteCohomology.LocalTateDuality.Bockstein
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

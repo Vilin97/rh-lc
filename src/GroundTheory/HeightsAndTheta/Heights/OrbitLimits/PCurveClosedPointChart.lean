@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.SegreChart
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PClosedPointChart
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PClosedPointUnitSection
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.SegreChart
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PClosedPointChart
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PClosedPointUnitSection
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Targets

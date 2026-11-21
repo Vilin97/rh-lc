@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.ReadAlg
-import Formalism.LocalToGlobal.ProjectiveLattices.CuspFDOf
-import Formalism.LocalToGlobal.ProjectiveLattices.NormLaws
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.ReadAlg
+public import Formalism.LocalToGlobal.ProjectiveLattices.CuspFDOf
+public import Formalism.LocalToGlobal.ProjectiveLattices.NormLaws
+
+@[expose] public section
 
 noncomputable section
 

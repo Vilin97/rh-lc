@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.LocalDataRealPlace
-import Formalism.SharpRestriction.CuspSpanNormBounds.IsGramNorm
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.LocalDataRealPlace
+public import Formalism.SharpRestriction.CuspSpanNormBounds.IsGramNorm
+
+@[expose] public section
 
 open Matrix MeasureTheory NumberField Filter Topology
 

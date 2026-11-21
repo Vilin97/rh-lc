@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.DefiniteClassNumber.HermTraceSelfOfHermValue
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.DefiniteClassNumber.HermTraceSelfOfHermValue
+
+@[expose] public section
 
 noncomputable section
 

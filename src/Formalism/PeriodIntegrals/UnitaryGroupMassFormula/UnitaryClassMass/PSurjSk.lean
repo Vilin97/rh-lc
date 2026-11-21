@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnitaryClassMass.CardStepOf
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.LatLocGlob
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnitaryClassMass.CardStepOf
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.LatLocGlob
+
+@[expose] public section
 
 open NumberField PI.UJClassFin PI.UJClassMass Formalism.HermitianLatticesTheory
 

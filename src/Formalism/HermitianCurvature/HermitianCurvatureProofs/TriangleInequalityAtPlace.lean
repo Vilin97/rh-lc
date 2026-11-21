@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.StatementTBB
-import Formalism.FormalDegreeBessel.FinalG
+module
+
+public import Formalism.HermitianCurvature.StatementTBB
+public import Formalism.FormalDegreeBessel.FinalG
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.TBBx2
 

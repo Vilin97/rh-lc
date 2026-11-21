@@ -1,7 +1,11 @@
-import Formalism.PeriodIntegrals.NablaSpans.ExpansionCoeffValuationGe
-import Formalism.PeriodIntegrals.NablaSpans.MinorProdSpanHasCompl
-import Formalism.SharpRestriction.Divisibility.OrbitPlaces
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.MinorSpanCompl
+module
+
+public import Formalism.PeriodIntegrals.NablaSpans.ExpansionCoeffValuationGe
+public import Formalism.PeriodIntegrals.NablaSpans.MinorProdSpanHasCompl
+public import Formalism.SharpRestriction.Divisibility.OrbitPlaces
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.MinorSpanCompl
+
+@[expose] public section
 
 open Formalism.BasicNotions
 

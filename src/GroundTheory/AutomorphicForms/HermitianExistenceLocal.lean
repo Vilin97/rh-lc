@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HermitianValues
-import GroundTheory.AutomorphicForms.HermitianClassification
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HermitianValues
+public import GroundTheory.AutomorphicForms.HermitianClassification
+
+@[expose] public section
 
 noncomputable section
 

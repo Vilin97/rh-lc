@@ -1,5 +1,9 @@
-import GroundTheory.FunctionField.PlaceBridge
-import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PNoetherIntegralClosure
+module
+
+public import GroundTheory.FunctionField.PlaceBridge
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PNoetherIntegralClosure
+
+@[expose] public section
 
 namespace PositivityTheory.HtPt.Plen
 

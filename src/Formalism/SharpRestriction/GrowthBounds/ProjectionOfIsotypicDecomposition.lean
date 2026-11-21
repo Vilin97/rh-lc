@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.Lemma5aAt
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.Lemma5aAt
+
+@[expose] public section
 
 noncomputable section
 

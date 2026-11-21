@@ -1,9 +1,13 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutHL2
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGHeadV
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DerivativeKeepsCharacter
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.AdjointCornerScaledSingleComm
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RdVOfEq
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentCoordinatesMeasurePreserving
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutHL2
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGHeadV
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DerivativeKeepsCharacter
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.AdjointCornerScaledSingleComm
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RdVOfEq
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentCoordinatesMeasurePreserving
+
+@[expose] public section
 
 open Matrix Filter Topology
 open scoped ComplexConjugate

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.AdelicFourier2TensorCosetIndicatorAlgebraMap
-import GroundTheory.GlobalFields.TateThesis.GlobalZeta
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.AdelicFourier2TensorCosetIndicatorAlgebraMap
+public import GroundTheory.GlobalFields.TateThesis.GlobalZeta
+
+@[expose] public section
 
 open NumberField IsDedekindDomain MeasureTheory Matrix Filter Topology
 open scoped NumberField.AdeleRing

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.ConstantCoeffTripleSubstitution
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.ConstantCoeffTripleSubstitution
+
+@[expose] public section
 
 noncomputable section
 

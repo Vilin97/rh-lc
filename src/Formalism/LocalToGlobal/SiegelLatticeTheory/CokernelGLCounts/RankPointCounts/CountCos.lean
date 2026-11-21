@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.LocOrbCut
-import Formalism.SharpRestriction.CuspSpanNormBounds.LocalOrbitGerms
+module
+
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.LocOrbCut
+public import Formalism.SharpRestriction.CuspSpanNormBounds.LocalOrbitGerms
+
+@[expose] public section
 
 noncomputable section
 

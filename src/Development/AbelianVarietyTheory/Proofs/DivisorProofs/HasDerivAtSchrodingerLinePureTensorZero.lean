@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TwoMulInvOf
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsArchimedeanExponentsAdeleCharacter
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ContinuousBdGen
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TwoMulInvOf
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsArchimedeanExponentsAdeleCharacter
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ContinuousBdGen
+
+@[expose] public section
 
 namespace SchrodingerLinePhase
 section

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.RealSeparation.Continuous
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.RealSeparation.Continuous
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.FrobeniusPaths.DividedPowerZeroOfGlActionZero
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.DerivativeValuationBounds
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.FrobeniusPaths.DividedPowerZeroOfGlActionZero
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.DerivativeValuationBounds
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.PadicSubsetSums.CentralIdempotents.SchurOrthogonalityCompact
+module
+
+public import Formalism.PadicSubsetSums.CentralIdempotents.SchurOrthogonalityCompact
+
+@[expose] public section
 
 open Polynomial
 open scoped TensorProduct

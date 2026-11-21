@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.HermitianLattices.StatementLat
-import Formalism.HermitianLattices.DefsCS
-import Formalism.GelfandTransference.EnergyIdentity
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.StatementLat
+public import Formalism.HermitianLattices.DefsCS
+public import Formalism.GelfandTransference.EnergyIdentity
+
+@[expose] public section
 
 open NumberField
 

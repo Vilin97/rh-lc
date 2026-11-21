@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.InterlaceDifferenceShiftInvariant
-import Formalism.LocalToGlobal.LatticeGeometry.GeometryDefinitions.ClsSum
-import Formalism.GradedWeylDivisibility.FinalD
-import Formalism.RealPlaceAnalysis.FockPairGl
-import Formalism.LocalRingCardinality.DataCoeff
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.ProdFactorialSupportSubSingle
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.InterlaceDifferenceShiftInvariant
+public import Formalism.LocalToGlobal.LatticeGeometry.GeometryDefinitions.ClsSum
+public import Formalism.GradedWeylDivisibility.FinalD
+public import Formalism.RealPlaceAnalysis.FockPairGl
+public import Formalism.LocalRingCardinality.DataCoeff
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.ProdFactorialSupportSubSingle
+
+@[expose] public section
 
 open MvPolynomial
 

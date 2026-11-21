@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.AbstractLocalReciprocity.NormFormula
-import GroundTheory.LocalFields.AbstractLocalReciprocity.Reciprocity
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.NormFormula
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.Reciprocity
+
+@[expose] public section
 
 namespace GroundTheory.LocalField.Abstract
 

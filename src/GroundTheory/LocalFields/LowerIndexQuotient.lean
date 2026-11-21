@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.LocalFields.LowerIndex
-import GroundTheory.LocalFields.IntermediateField
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.RamificationLowerIndex
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CapelliComplements.GeneralBFactAlt
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LowerIndex
+public import GroundTheory.LocalFields.IntermediateField
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.RamificationLowerIndex
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CapelliComplements.GeneralBFactAlt
+
+@[expose] public section
 
 noncomputable section
 

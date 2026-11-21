@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.FrameInt
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemFin
-import Formalism.LocalToGlobal.IndefiniteReal.FockTheta.ConjPurelyImaginaryGenerator
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.FrameInt
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemFin
+public import Formalism.LocalToGlobal.IndefiniteReal.FockTheta.ConjPurelyImaginaryGenerator
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 100000
 

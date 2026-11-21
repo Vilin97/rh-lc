@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DetRowsZero
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CvRhoOfParts
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DetRowsZero
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CvRhoOfParts
+
+@[expose] public section
 
 open Matrix Finset
 open scoped ContDiff

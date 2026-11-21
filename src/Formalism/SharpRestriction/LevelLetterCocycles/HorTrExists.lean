@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.HorTrUnique
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.HorTrUnique
+
+@[expose] public section
 
 noncomputable section
 

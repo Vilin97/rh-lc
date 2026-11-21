@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalDegrees.Layers
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalDegrees.Decomposition
-import GroundTheory.GlobalFields.SemilocalAlgebras.Finite
-import GroundTheory.GlobalFields.CompletionAtPlace.Galois
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalDegrees.Layers
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalDegrees.Decomposition
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Finite
+public import GroundTheory.GlobalFields.CompletionAtPlace.Galois
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

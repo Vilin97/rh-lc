@@ -1,4 +1,8 @@
-import Development.DiscreteGroups.GlobalIrreducibility.KUSStable
+module
+
+public import Development.DiscreteGroups.GlobalIrreducibility.KUSStable
+
+@[expose] public section
 
 noncomputable section
 

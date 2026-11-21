@@ -1,7 +1,11 @@
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.Height
-import GroundTheory.AutomorphicForms.ReductionMahler
-import Formalism.LocalToGlobal.UnitaryNorms.CharTransport
-import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.AdBasic
+module
+
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.Height
+public import GroundTheory.AutomorphicForms.ReductionMahler
+public import Formalism.LocalToGlobal.UnitaryNorms.CharTransport
+public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.AdBasic
+
+@[expose] public section
 
 open NumberField IsDedekindDomain GroundTheory.Automorphic GroundTheory.Automorphic.Reduction Formalism.L2.Host
 open scoped NumberField.AdeleRing

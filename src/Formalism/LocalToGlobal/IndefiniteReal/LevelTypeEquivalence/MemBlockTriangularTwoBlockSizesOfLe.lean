@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.LinksChar
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.PeterssonNormOfUpLift
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.GEqAct
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.LinksChar
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.PeterssonNormOfUpLift
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.GEqAct
+
+@[expose] public section
 
 noncomputable section
 

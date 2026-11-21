@@ -1,7 +1,11 @@
-import Formalism.LocalRingCardinality.DataSpaces
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleRanksRankComplement
-import Formalism.FockGram.SymGramPosSemidef
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Stdform
+module
+
+public import Formalism.LocalRingCardinality.DataSpaces
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleRanksRankComplement
+public import Formalism.FockGram.SymGramPosSemidef
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Stdform
+
+@[expose] public section
 
 noncomputable section
 

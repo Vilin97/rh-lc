@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.DirichletDensity.Statement
+module
+
+public import Mathlib
+public import Formalism.DirichletDensity.Statement
+
+@[expose] public section
 
 open Filter Topology ArithmeticFunction ArithmeticFunction.vonMangoldt Complex LSeries
 

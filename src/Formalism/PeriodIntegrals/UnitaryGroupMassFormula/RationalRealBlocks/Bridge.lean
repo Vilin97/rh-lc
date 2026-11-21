@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.PeriodIntegrals.BlockRatReal
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.WeylLeDual
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.SumIcoTsubTelescope
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.RowDivStable
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.DualWeylMap
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.DualWeylRowStable
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.BlockRatReal
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.WeylLeDual
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.SumIcoTsubTelescope
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.RowDivStable
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.DualWeylMap
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.DualWeylRowStable
+
+@[expose] public section
 
 open MvPolynomial Matrix
 

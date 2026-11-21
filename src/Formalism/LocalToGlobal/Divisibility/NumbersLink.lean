@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.DivisionHeightBoundStatement
-import Formalism.LocalToGlobal.Divisibility.NumbersLemmas
-import Formalism.QuotientMetricDivisors.FinalW
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.DivisionHeightBoundStatement
+public import Formalism.LocalToGlobal.Divisibility.NumbersLemmas
+public import Formalism.QuotientMetricDivisors.FinalW
+
+@[expose] public section
 
 noncomputable section
 

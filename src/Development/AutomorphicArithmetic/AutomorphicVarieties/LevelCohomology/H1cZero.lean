@@ -1,6 +1,11 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcDefs
-import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcUnrOf
-import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcGalIdx
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcDefs
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcUnrOf
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LevelCohomology.HcGalIdx
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Module UpperTheory.V UpperTheory.V.X
 
 theorem UpperTheory.V.X.h1cZero :

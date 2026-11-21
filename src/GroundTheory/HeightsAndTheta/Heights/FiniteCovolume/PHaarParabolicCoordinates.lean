@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HaarSK
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsHaarParabolicCoordinates
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsLineStabHaar
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsArchUnimodular
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsMajorantStabCompact
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HaarSK
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsHaarParabolicCoordinates
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsLineStabHaar
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsArchUnimodular
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsMajorantStabCompact
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights.FiniteCovolume
 

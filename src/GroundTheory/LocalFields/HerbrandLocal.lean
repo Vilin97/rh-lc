@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.HerbrandLocalBase
-import GroundTheory.LocalFields.CompleteTrivialLocal
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.HerbrandLocalBase
+public import GroundTheory.LocalFields.CompleteTrivialLocal
+
+@[expose] public section
 
 namespace GroundTheory.LocalField
 

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsSplitIdem
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ExistsSplitIdem
+
+@[expose] public section
 
 noncomputable section
 

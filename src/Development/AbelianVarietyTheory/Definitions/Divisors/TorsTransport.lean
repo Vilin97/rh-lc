@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.VpBounds
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.DefiningCoordinates
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TwistedTransport
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.VpBounds
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.DefiningCoordinates
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TwistedTransport
+
+@[expose] public section
 
 noncomputable section
 

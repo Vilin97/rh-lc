@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 open IsLocalRing in
 private lemma finite_of_isFiniteLength {S : Type} [CommRing S] [IsLocalRing S]

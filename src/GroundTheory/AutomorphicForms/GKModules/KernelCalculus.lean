@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GKModules.Garding
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.GKStableConv
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GKModules.Garding
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.GKStableConv
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

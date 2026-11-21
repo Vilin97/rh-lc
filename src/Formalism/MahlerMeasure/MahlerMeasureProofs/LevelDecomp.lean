@@ -1,5 +1,9 @@
-import Formalism.MahlerMeasure.IsIntegral
-import Formalism.MahlerMeasure.MahlerMeasureProofs.LevelAct
+module
+
+public import Formalism.MahlerMeasure.IsIntegral
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.LevelAct
+
+@[expose] public section
 
 namespace Formalism.GM
 

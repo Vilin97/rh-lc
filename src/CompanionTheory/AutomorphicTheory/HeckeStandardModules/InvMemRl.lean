@@ -1,4 +1,8 @@
-import CompanionTheory.AutomorphicTheory.HeckeStandardModules.IntegralOfModule
+module
+
+public import CompanionTheory.AutomorphicTheory.HeckeStandardModules.IntegralOfModule
+
+@[expose] public section
 
 open NumberField IsDedekindDomain ReciprocityTheory.Aut Formalism.UG Formalism.L2 CompanionTheory.Split CompanionTheory.HeckeA
 

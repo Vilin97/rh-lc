@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJGlobalHaar
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJGlobalHaar
+
+@[expose] public section
 
 open MeasureTheory NumberField Set ComplexConjugate
 open scoped NumberField.AdeleRing ENNReal NNReal

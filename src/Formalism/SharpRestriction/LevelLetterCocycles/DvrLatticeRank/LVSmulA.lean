@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.OthDisj
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.Imports
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.OthDisj
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.Imports
+
+@[expose] public section
 
 noncomputable section
 

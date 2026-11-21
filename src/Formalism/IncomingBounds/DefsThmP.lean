@@ -1,6 +1,10 @@
-import Formalism.IncomingBounds.StatementThmP
-import Formalism.IncomingBounds.LevelTail
-import Formalism.IncomingBounds.LemmaMNumerics
+module
+
+public import Formalism.IncomingBounds.StatementThmP
+public import Formalism.IncomingBounds.LevelTail
+public import Formalism.IncomingBounds.LemmaMNumerics
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

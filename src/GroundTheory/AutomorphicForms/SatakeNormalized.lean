@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.SphericalIntegral
-import GroundTheory.AutomorphicForms.SatakeSymmetric
-import GroundTheory.LocalFields.LocalFourierHaar
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.SphericalIntegral
+public import GroundTheory.AutomorphicForms.SatakeSymmetric
+public import GroundTheory.LocalFields.LocalFourierHaar
+
+@[expose] public section
 
 noncomputable section
 

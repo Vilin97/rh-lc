@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.PairingIndexBounds.SplitPairEquations.Reduction
-import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.QuadraticSemicharacterIdentityReformulated2
-import Formalism.LocalToGlobal.GlobalTheory.GL3.DeterminantNormOneOfUnitDisc
-import Formalism.LocalRingCardinality.SpanPowerMembership.RelDet
-import Formalism.SharpRestriction.GlobalSchurBounds.StandardIntegralLatticeExists
+module
+
+public import Formalism.LocalToGlobal.PairingIndexBounds.SplitPairEquations.Reduction
+public import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.QuadraticSemicharacterIdentityReformulated2
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.DeterminantNormOneOfUnitDisc
+public import Formalism.LocalRingCardinality.SpanPowerMembership.RelDet
+public import Formalism.SharpRestriction.GlobalSchurBounds.StandardIntegralLatticeExists
+
+@[expose] public section
 
 noncomputable section
 open NumberField Formalism.BasicNotions Classical

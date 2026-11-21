@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTieUpFBrPl
-import Lemmata.MiscLemmasH.Imports
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieUpFBrPl
+public import Lemmata.MiscLemmasH.Imports
+
+@[expose] public section
 
 set_option autoImplicit false
 

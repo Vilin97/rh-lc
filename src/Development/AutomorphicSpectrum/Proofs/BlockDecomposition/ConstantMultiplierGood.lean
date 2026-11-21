@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.EisensteinSeries.SiegelEisensteinContinuation.DictInf
-import Development.AutomorphicArithmetic.LocalEmbeddings.OppLagr
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.EisensteinSeries.SiegelEisensteinContinuation.DictInf
+public import Development.AutomorphicArithmetic.LocalEmbeddings.OppLagr
+
+@[expose] public section
 
 noncomputable section
 

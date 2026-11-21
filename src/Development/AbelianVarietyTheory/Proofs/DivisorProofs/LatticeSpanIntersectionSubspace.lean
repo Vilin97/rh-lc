@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ImportsMoreMore
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ImportsMoreMore
+
+@[expose] public section
+
 open NumberField
 
 namespace GlobalTheory

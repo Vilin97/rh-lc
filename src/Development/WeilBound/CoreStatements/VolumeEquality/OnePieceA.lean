@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.VolumeEquality.HolNull
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.GagaLineGeneratorEmbedding
+module
+
+public import Development.WeilBound.CoreStatements.VolumeEquality.HolNull
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.GagaLineGeneratorEmbedding
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.CyclotomicNorms.StatementT
-import Formalism.GaloisIrreducibility.NoSolvableTransitive
-import Lemmata.GeneralBFactSecondBis.Imports
+module
+
+public import Formalism.CyclotomicNorms.StatementT
+public import Formalism.GaloisIrreducibility.NoSolvableTransitive
+public import Lemmata.GeneralBFactSecondBis.Imports
+
+@[expose] public section
 
 open Polynomial
 

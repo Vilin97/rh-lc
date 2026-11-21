@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.StepFacEq
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.StepFacEq
+
+@[expose] public section
 
 noncomputable section
 

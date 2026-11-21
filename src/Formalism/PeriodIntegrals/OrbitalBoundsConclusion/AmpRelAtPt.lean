@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.AmpRoot
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.RootSubgroupBasics.NegOnePowMulSelf
+module
+
+public import Formalism.PeriodIntegrals.AmpRoot
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.RootSubgroupBasics.NegOnePowMulSelf
+
+@[expose] public section
 
 open Matrix
 

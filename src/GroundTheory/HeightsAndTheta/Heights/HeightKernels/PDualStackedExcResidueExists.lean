@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualStackedExcResidue
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualLatticeModPrime
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStackedExcGeoFirst
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualLatticeIndex
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualStackedExcResidue
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualLatticeModPrime
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStackedExcGeoFirst
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualLatticeIndex
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

@@ -1,7 +1,11 @@
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.PlaneRemovalConfiguration
-import Development.WeilBound.ThetaLifts.SmallCones.ThetaKernelGeneralIdentity
-import Development.WeilBound.ThetaLifts.FrameEstimates.HodgeTateFromSandwich
-import Development.WeilBound.ThetaLifts.LocalTheory.UnramifiedDeterminedBySpherical
+module
+
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.PlaneRemovalConfiguration
+public import Development.WeilBound.ThetaLifts.SmallCones.ThetaKernelGeneralIdentity
+public import Development.WeilBound.ThetaLifts.FrameEstimates.HodgeTateFromSandwich
+public import Development.WeilBound.ThetaLifts.LocalTheory.UnramifiedDeterminedBySpherical
+
+@[expose] public section
 
 noncomputable section
 

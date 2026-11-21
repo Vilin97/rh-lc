@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.FiniteTypeHarishChandra.LabelMapNonempty
-import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.GreenCuspidalIff
+module
+
+public import Development.WeilBound.CoreStatements.FiniteTypeHarishChandra.LabelMapNonempty
+public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.GreenCuspidalIff
+
+@[expose] public section
 
 open Polynomial CategoryTheory
 open Formalism.IrreducibleCountingLemmas.TYPES hiding zIdem IsCuspidal rootsBar

@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ContinuousAevalMvPolynomial
-import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.PowCardLeNormProd
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ContinuousAevalMvPolynomial
+public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.PowCardLeNormProd
+
+@[expose] public section
 
 namespace GlobalTheory.AffinePoints
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HasLabelOfIsCuspOf
-import Development.DiscreteGroups.GlobalIrreducibility.IneEqOfHasGreenLe
-import Development.DiscreteGroups.GlobalIrreducibility.LocTypeOfSerParamLe
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.HasLabelOfIsCuspOf
+public import Development.DiscreteGroups.GlobalIrreducibility.IneEqOfHasGreenLe
+public import Development.DiscreteGroups.GlobalIrreducibility.LocTypeOfSerParamLe
+
+@[expose] public section
 
 noncomputable section
 

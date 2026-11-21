@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
-import Formalism.LocalToGlobal.GlobalTheory.GL3.PIopNorm
-import Formalism.LocalToGlobal.PairingIndexBounds.ModelLatticeMoves.GenModelXi
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.PIopNorm
+public import Formalism.LocalToGlobal.PairingIndexBounds.ModelLatticeMoves.GenModelXi
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

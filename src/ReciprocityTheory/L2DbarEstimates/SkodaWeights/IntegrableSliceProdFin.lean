@@ -1,4 +1,8 @@
-import ReciprocityTheory.L2DbarEstimates.SkodaWeights.WeightedIntegralEqLintegral
+module
+
+public import ReciprocityTheory.L2DbarEstimates.SkodaWeights.WeightedIntegralEqLintegral
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.H.SkodaOperators
 

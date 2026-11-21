@@ -1,5 +1,9 @@
-import ReciprocityTheory.GroupCohomology.CupConnRightStatement
-import ReciprocityTheory.GroupCohomology.SectionA
+module
+
+public import ReciprocityTheory.GroupCohomology.CupConnRightStatement
+public import ReciprocityTheory.GroupCohomology.SectionA
+
+@[expose] public section
 
 namespace ReciprocityTheory.Coh
 

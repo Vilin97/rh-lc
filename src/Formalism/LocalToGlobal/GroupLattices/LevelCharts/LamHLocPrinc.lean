@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.LevelCharts.PsiZeroNontrivialCharacter
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.LevelCharts.PsiZeroNontrivialCharacter
+
+@[expose] public section
 
 noncomputable section
 

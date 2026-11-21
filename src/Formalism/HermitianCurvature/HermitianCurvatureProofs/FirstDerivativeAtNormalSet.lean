@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SmoothLevOfLoc
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DegLiftOf
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SmoothLevOfLoc
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DegLiftOf
+
+@[expose] public section
 
 open Matrix Finset MeasureTheory
 open scoped ComplexConjugate

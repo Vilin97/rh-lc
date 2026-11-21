@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.AffineSplittingSpan.Transfer
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DcCons
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.AffineSplittingSpan.Transfer
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DcCons
+
+@[expose] public section
 
 noncomputable section
 

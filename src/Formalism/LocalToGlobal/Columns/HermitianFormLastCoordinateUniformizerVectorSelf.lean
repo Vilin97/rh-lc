@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.HxMemMap
+module
+
+public import Formalism.LocalToGlobal.Columns.HxMemMap
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 open scoped TensorProduct

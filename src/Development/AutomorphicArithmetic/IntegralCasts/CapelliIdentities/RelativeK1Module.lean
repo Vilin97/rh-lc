@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.IsIsoTermComparisonRestrictScalars
-import Development.AbelianVarietyTheory.Definitions.Divisors.CupPair
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.IsIsoTermComparisonRestrictScalars
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CupPair
+
+@[expose] public section
 
 noncomputable def UpperTheory.Reformulated.B.KoszulComplexHomotopy.Stab :
     {S E : Type} →

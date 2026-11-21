@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.CharacterGerms.HostTraceIdentity
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.CharacterGerms.HostTraceIdentity
+
+@[expose] public section
 
 set_option autoImplicit false
 

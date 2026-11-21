@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DetSNeZero
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DetSNeZero
+
+@[expose] public section
 
 open MvPolynomial Formalism.BasicNotions.TH GlobalTheory.CharPair
 

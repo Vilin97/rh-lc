@@ -1,9 +1,14 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.PluriharmonicCharts.MCoordIdealLeOfHomog
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.FlagCoverTransferIdealEq
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.PullbackPullback
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PFnFieldTrdeg
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PDiagFormDiv
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.PluriharmonicCharts.MCoordIdealLeOfHomog
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.FlagCoverTransferIdealEq
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.PullbackPullback
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PFnFieldTrdeg
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PDiagFormDiv
+
+@[expose] public section
+
 open MvPolynomial Matrix ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I4 GlobalTheory.CompanionTheory.Ar.PB GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.LowerBoundFree
 open scoped Classical
 

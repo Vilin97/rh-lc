@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.MlabNotMemYset
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.SubstitutedExponentApplyLabel
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.MlabNotMemYset
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.SubstitutedExponentApplyLabel
+
+@[expose] public section
 
 noncomputable section
 

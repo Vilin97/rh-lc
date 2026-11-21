@@ -1,6 +1,10 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JetIntegrality.TwoUnit
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JetIntegrality.ExpLog
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JetIntegrality.CoeffPowEqZeroOfDegreeLt
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JetIntegrality.TwoUnit
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JetIntegrality.ExpLog
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.JetIntegrality.CoeffPowEqZeroOfDegreeLt
+
+@[expose] public section
 
 noncomputable section
 

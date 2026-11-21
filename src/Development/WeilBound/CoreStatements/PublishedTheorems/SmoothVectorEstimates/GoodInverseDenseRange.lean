@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.PublishedTheorems.SmoothVectorEstimates.WhittakerVanishingImpliesZero
-import GroundTheory.GlobalFields.Adele.WeakApprox
+module
+
+public import Development.WeilBound.CoreStatements.PublishedTheorems.SmoothVectorEstimates.WhittakerVanishingImpliesZero
+public import GroundTheory.GlobalFields.Adele.WeakApprox
+
+@[expose] public section
 
 noncomputable section
 

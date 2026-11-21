@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.ColPins
-import Formalism.LocalToGlobal.NumberFieldFamilies.EvRowSurjective
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsAbsIrrCharCompIff
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EvaluationDatumOkBaseTuple
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.ColPins
+public import Formalism.LocalToGlobal.NumberFieldFamilies.EvRowSurjective
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsAbsIrrCharCompIff
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EvaluationDatumOkBaseTuple
+
+@[expose] public section
 
 noncomputable section
 

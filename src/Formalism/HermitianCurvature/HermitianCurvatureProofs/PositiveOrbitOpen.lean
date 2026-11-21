@@ -1,9 +1,13 @@
-import Formalism.HermitianCurvature.StatementJF
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DilationUnipotentWeylMeasure
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RegularisedPairingViaPhase
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.WordIntegralScaling
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.WordKeyIdentity
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BigCellZetaMinors
+module
+
+public import Formalism.HermitianCurvature.StatementJF
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DilationUnipotentWeylMeasure
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RegularisedPairingViaPhase
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WordIntegralScaling
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WordKeyIdentity
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BigCellZetaMinors
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 open scoped ContDiff

@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.CompPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.CompPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits MvPolynomial

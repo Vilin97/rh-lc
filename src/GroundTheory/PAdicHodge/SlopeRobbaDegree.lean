@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.PAdicHodge.RobbaSeries
-import GroundTheory.PAdicHodge.HighIndexSingleZeroOne
-import GroundTheory.PAdicHodge.PerfectoidField
-import GroundTheory.PAdicHodge.SlopeCauchyBinet
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.RobbaSeries
+public import GroundTheory.PAdicHodge.HighIndexSingleZeroOne
+public import GroundTheory.PAdicHodge.PerfectoidField
+public import GroundTheory.PAdicHodge.SlopeCauchyBinet
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

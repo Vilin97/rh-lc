@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.GL3MeanSquares.InvNormSqConjRatioPowIdentities
-import Formalism.GL3MeanSquares.HookFormulaTorsion.PrimesInProgressionCountLowerBound
-import Formalism.GL3MeanSquares.ConcavityEquidistribution
-import Formalism.GL3MeanSquares.HookFormulaTorsion.SumWeightsOverPrimeLeHalfDegree
-import Formalism.GL3MeanSquares.FourierTransformKernelSurjective
-import Formalism.GL3MeanSquares.HookFormulaTorsion.LengthQuotientBoundGeneral
+module
+
+public import Mathlib
+public import Formalism.GL3MeanSquares.InvNormSqConjRatioPowIdentities
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.PrimesInProgressionCountLowerBound
+public import Formalism.GL3MeanSquares.ConcavityEquidistribution
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.SumWeightsOverPrimeLeHalfDegree
+public import Formalism.GL3MeanSquares.FourierTransformKernelSurjective
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.LengthQuotientBoundGeneral
+
+@[expose] public section
 
 open Finset Filter Topology ArithmeticFunction
 

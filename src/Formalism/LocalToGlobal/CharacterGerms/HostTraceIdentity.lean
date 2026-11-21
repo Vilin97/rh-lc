@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTieVal
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieVal
+
+@[expose] public section
 
 set_option autoImplicit false
 

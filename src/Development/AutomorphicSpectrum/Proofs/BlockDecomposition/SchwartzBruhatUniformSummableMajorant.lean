@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GodementSection
-import GroundTheory.GlobalFields.TateThesis.TateMain
-import GroundTheory.GlobalFields.TateThesis.AdelePoissonUniform
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GodementSection
+public import GroundTheory.GlobalFields.TateThesis.TateMain
+public import GroundTheory.GlobalFields.TateThesis.AdelePoissonUniform
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GlobalTheory.CompanionTheory.EisRk1Bound

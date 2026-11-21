@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.GroupLattices.CloudFilling.WLeWjOne
-import Formalism.LocalToGlobal.GroupLattices.CloudFilling.ExistsPowOrbRep
-import Formalism.SharpRestriction.GrowthBounds.DefsInst
-import Formalism.LocalToGlobal.GroupLattices.CloudFilling.GatRecStepFrob
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.CloudFilling.WLeWjOne
+public import Formalism.LocalToGlobal.GroupLattices.CloudFilling.ExistsPowOrbRep
+public import Formalism.SharpRestriction.GrowthBounds.DefsInst
+public import Formalism.LocalToGlobal.GroupLattices.CloudFilling.GatRecStepFrob
+
+@[expose] public section
 
 noncomputable section
 

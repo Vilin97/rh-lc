@@ -1,6 +1,10 @@
-import Formalism.SatakeDualWeyl.StatementC
-import Formalism.SatakeDualWeyl.StatementE
-import Formalism.SatakeDualWeyl.StatementF
+module
+
+public import Formalism.SatakeDualWeyl.StatementC
+public import Formalism.SatakeDualWeyl.StatementE
+public import Formalism.SatakeDualWeyl.StatementF
+
+@[expose] public section
 
 noncomputable section
 

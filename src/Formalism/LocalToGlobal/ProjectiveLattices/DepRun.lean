@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.DepLaws
-import Formalism.LocalToGlobal.ProjectiveLattices.DepthTie
-import Formalism.LocalToGlobal.ProjectiveLattices.ConjNeSelfOfCM
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.DepLaws
+public import Formalism.LocalToGlobal.ProjectiveLattices.DepthTie
+public import Formalism.LocalToGlobal.ProjectiveLattices.ConjNeSelfOfCM
+
+@[expose] public section
 
 noncomputable section
 

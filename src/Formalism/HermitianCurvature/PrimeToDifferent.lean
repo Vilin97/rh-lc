@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.Statement
-import Formalism.HermitianCurvature.StatementI
-import Formalism.HermitianCurvature.StatementL
-import Formalism.HermitianCurvature.StatementW
+module
+
+public import Formalism.HermitianCurvature.Statement
+public import Formalism.HermitianCurvature.StatementI
+public import Formalism.HermitianCurvature.StatementL
+public import Formalism.HermitianCurvature.StatementW
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.S6
 

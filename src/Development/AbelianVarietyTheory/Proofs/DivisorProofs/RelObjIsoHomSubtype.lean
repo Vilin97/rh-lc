@@ -1,4 +1,9 @@
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFinSubRange
+module
+
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFinSubRange
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory Limits
 open AlgebraicGeometry.Scheme AlgebraicGeometry.Scheme.AffineZariskiSite
 

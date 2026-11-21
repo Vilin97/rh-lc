@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.RealPlaceAnalysis.InstMeasurableSpaceUJ
-import Formalism.FormalDegreeBessel.StatementDS
-import Formalism.FormalDegreeBessel.StatementRP
-import Formalism.SharpRestriction.CuspSpanNormBounds.DataS
-import Formalism.SharpRestriction.CuspSpanNormBounds.Point
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.RealPlaceAnalysis.InstMeasurableSpaceUJ
+public import Formalism.FormalDegreeBessel.StatementDS
+public import Formalism.FormalDegreeBessel.StatementRP
+public import Formalism.SharpRestriction.CuspSpanNormBounds.DataS
+public import Formalism.SharpRestriction.CuspSpanNormBounds.Point
+
+@[expose] public section
 
 open MeasureTheory Matrix Finset
 open scoped InnerProductSpace ContDiff

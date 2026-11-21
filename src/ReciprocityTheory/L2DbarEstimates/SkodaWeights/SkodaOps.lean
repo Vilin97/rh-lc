@@ -1,4 +1,8 @@
-import ReciprocityTheory.L2DbarEstimates.SkodaWeights.IntegrableSliceProdFin
+module
+
+public import ReciprocityTheory.L2DbarEstimates.SkodaWeights.IntegrableSliceProdFin
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.H
 

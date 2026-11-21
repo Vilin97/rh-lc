@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.MainTheoremLattice
-import GroundTheory.GlobalFields.ComplexMultiplication.MainTheoremFrobenius
-import GroundTheory.GlobalFields.ComplexMultiplication.MainTheoremIdeles
-import GroundTheory.GlobalFields.ComplexMultiplication.AnalyticUniformizationClassification
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.MainTheoremLattice
+public import GroundTheory.GlobalFields.ComplexMultiplication.MainTheoremFrobenius
+public import GroundTheory.GlobalFields.ComplexMultiplication.MainTheoremIdeles
+public import GroundTheory.GlobalFields.ComplexMultiplication.AnalyticUniformizationClassification
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global

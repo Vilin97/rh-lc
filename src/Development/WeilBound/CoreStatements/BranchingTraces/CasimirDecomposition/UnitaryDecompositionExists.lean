@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.BranchingTraces.CasimirDecomposition.ExtensionFixesSmoothVectors
+module
+
+public import Development.WeilBound.CoreStatements.BranchingTraces.CasimirDecomposition.ExtensionFixesSmoothVectors
+
+@[expose] public section
 
 open Matrix Finset
 open scoped InnerProductSpace Classical

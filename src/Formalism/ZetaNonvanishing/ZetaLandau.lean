@@ -1,8 +1,12 @@
-import Formalism.StatementU
-import Formalism.DefsOC
-import Formalism.ZetaNonvanishing.Assembly
-import Formalism.ZetaRealNonvanish
-import Formalism.ZetaNonvanishing.MellinSgen
+module
+
+public import Formalism.StatementU
+public import Formalism.DefsOC
+public import Formalism.ZetaNonvanishing.Assembly
+public import Formalism.ZetaRealNonvanish
+public import Formalism.ZetaNonvanishing.MellinSgen
+
+@[expose] public section
 
 open Complex MeasureTheory Set Filter Topology
 

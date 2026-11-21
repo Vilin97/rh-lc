@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.HookProducts.AdmPerTw
-import Formalism.SharpRestriction.Divisibility.HookProducts.AdmPtTw
-import Formalism.LocalToGlobal.GroupLattices.AdmissibleAtGeneratorPlaces
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.HookProducts.AdmPerTw
+public import Formalism.SharpRestriction.Divisibility.HookProducts.AdmPtTw
+public import Formalism.LocalToGlobal.GroupLattices.AdmissibleAtGeneratorPlaces
+
+@[expose] public section
 
 noncomputable section
 

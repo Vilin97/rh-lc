@@ -1,5 +1,9 @@
-import ReciprocityTheory.SemistableReduction.SphereLogIntegrableStatement
-import ReciprocityTheory.SemistableReduction.TorusMeanA
+module
+
+public import ReciprocityTheory.SemistableReduction.SphereLogIntegrableStatement
+public import ReciprocityTheory.SemistableReduction.TorusMeanA
+
+@[expose] public section
 
 noncomputable section
 

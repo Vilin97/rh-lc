@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.PExtra
-import Formalism.FormalDegreeBessel.FinalG
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.PExtra
+public import Formalism.FormalDegreeBessel.FinalG
+
+@[expose] public section
 
 noncomputable section
 

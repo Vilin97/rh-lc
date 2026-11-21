@@ -1,8 +1,13 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.DataN
-import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.UniNilp
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsSSRepOfTraceNondegenerate
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TraceFormNondegenerate
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataN
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.UniNilp
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsSSRepOfTraceNondegenerate
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.TraceFormNondegenerate
+
+@[expose] public section
+
 open Formalism.MainNotions.N
 
 namespace GlobalTheory.TraceSemisimple

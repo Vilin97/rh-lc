@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.SatakeDualWeyl.Statement
-import Formalism.RankGapBounds.TheoremALocOfLemmaA
-import Formalism.PieriBlockIdeals.Statement
-import Formalism.PieriBlockIdeals.FactorialValuationSum
-import Formalism.PieriBlockIdeals.StatementLA
-import Formalism.RankGapBounds.LargePrimeFactor
-import Formalism.PieriBlockIdeals.LemmaWAssembled
+module
+
+public import Mathlib
+public import Formalism.SatakeDualWeyl.Statement
+public import Formalism.RankGapBounds.TheoremALocOfLemmaA
+public import Formalism.PieriBlockIdeals.Statement
+public import Formalism.PieriBlockIdeals.FactorialValuationSum
+public import Formalism.PieriBlockIdeals.StatementLA
+public import Formalism.RankGapBounds.LargePrimeFactor
+public import Formalism.PieriBlockIdeals.LemmaWAssembled
+
+@[expose] public section
 
 noncomputable section
 

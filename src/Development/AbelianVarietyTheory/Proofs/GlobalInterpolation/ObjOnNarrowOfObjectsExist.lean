@@ -1,12 +1,16 @@
-import Mathlib
-import Formalism.SharpRestriction.InertJacobiLevels.AsmIface
-import Formalism.LocalToGlobal.GlobalTheory.IsResidueClassZero
-import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.ThinScalesIffHostBound
-import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.FewBadPrimes
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NcardPrimesOverOfStabilizer
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.KitExOfHostWeightObj
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SamePointOfSameScale
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsRefill
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.InertJacobiLevels.AsmIface
+public import Formalism.LocalToGlobal.GlobalTheory.IsResidueClassZero
+public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.ThinScalesIffHostBound
+public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.FewBadPrimes
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NcardPrimesOverOfStabilizer
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.KitExOfHostWeightObj
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SamePointOfSameScale
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsRefill
+
+@[expose] public section
 
 noncomputable section
 

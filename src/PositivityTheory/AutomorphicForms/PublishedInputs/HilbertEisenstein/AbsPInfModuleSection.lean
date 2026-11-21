@@ -1,5 +1,9 @@
-import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.IdeleModuleInfIdDetLe
-import GroundTheory.GlobalFields.Adele.IntegersLattice
+module
+
+public import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.IdeleModuleInfIdDetLe
+public import GroundTheory.GlobalFields.Adele.IntegersLattice
+
+@[expose] public section
 
 noncomputable section
 

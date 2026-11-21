@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ShellSumElementaryInequalities
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ShellSumElementaryInequalities
+
+@[expose] public section
 
 open Finset
 

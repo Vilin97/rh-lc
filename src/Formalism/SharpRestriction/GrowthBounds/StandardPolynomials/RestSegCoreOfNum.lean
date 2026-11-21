@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.BlockYZeroLeOfBound
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.YcondCongr
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.TCNumDef
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.BlockYZeroLeOfBound
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.YcondCongr
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.TCNumDef
+
+@[expose] public section
 
 noncomputable section
 

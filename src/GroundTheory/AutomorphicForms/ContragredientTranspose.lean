@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.ContragredientTranspose.GelfandKazhdan
-import GroundTheory.AutomorphicForms.ContragredientTranspose.Character
-import GroundTheory.AutomorphicForms.WhittakerLocal
-import GroundTheory.PowerSubgroups.CountableNeighbourhoods.MapThetaTInvariant
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.ContragredientTranspose.GelfandKazhdan
+public import GroundTheory.AutomorphicForms.ContragredientTranspose.Character
+public import GroundTheory.AutomorphicForms.WhittakerLocal
+public import GroundTheory.PowerSubgroups.CountableNeighbourhoods.MapThetaTInvariant
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.ContragredientTranspose
 

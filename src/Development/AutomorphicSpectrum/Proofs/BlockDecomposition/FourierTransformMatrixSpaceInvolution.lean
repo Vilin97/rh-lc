@@ -1,4 +1,9 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
+
 open MeasureTheory Complex
 open scoped FourierTransform RealInnerProductSpace SchwartzMap Matrix
 

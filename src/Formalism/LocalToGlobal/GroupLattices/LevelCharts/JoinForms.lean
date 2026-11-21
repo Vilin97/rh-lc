@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.LevelCharts.AtGLev
-import Formalism.LocalToGlobal.HermitianForms.PsiZeroNontrivialCharacter
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.LevelCharts.AtGLev
+public import Formalism.LocalToGlobal.HermitianForms.PsiZeroNontrivialCharacter
+
+@[expose] public section
 
 noncomputable section
 

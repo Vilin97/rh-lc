@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.StrictMonoSnoc
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.StrictMonoSnoc
+
+@[expose] public section
 
 open Matrix Finset
 

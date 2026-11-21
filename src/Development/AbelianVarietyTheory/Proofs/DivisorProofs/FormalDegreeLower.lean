@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.InnerProductFormulaField
-import Formalism.LocalToGlobal.IndefiniteReal.SubgroupCharExtensionOneApply
-import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GapAtLeast
-import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.BottomMinor
-import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.HeckeCharacterParameters
-import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.EulerProductSatake
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.InnerProductFormulaField
+public import Formalism.LocalToGlobal.IndefiniteReal.SubgroupCharExtensionOneApply
+public import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GapAtLeast
+public import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.BottomMinor
+public import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.HeckeCharacterParameters
+public import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.EulerProductSatake
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,10 +1,14 @@
-import Formalism.SharpRestriction.Divisibility.HookProducts.GaugeFormBoundOfUniformSize
-import Formalism.SharpRestriction.Divisibility.SlopeExcess.HeightBoundOfComponentBounds
-import Formalism.LocalToGlobal.GlobalTheory.PlacesP
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalLinkOfBranchIdentitiesAndMultiplicity
-import Formalism.SharpRestriction.GlobalSchurBounds.LogXLowerFamilyOfTheorems
-import Formalism.LocalToGlobal.GlobalTheory.UnramifiedTrace.HeckeRamifiedZeroAll
-import Formalism.LocalToGlobal.ClassOfRecordOfChoice
+module
+
+public import Formalism.SharpRestriction.Divisibility.HookProducts.GaugeFormBoundOfUniformSize
+public import Formalism.SharpRestriction.Divisibility.SlopeExcess.HeightBoundOfComponentBounds
+public import Formalism.LocalToGlobal.GlobalTheory.PlacesP
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalLinkOfBranchIdentitiesAndMultiplicity
+public import Formalism.SharpRestriction.GlobalSchurBounds.LogXLowerFamilyOfTheorems
+public import Formalism.LocalToGlobal.GlobalTheory.UnramifiedTrace.HeckeRamifiedZeroAll
+public import Formalism.LocalToGlobal.ClassOfRecordOfChoice
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.CTExtUnitary
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.CTExtUnitary
+
+@[expose] public section
 
 noncomputable section
 

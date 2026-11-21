@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.IdealB
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.IdealStmt
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.IdealB
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.IdealStmt
+
+@[expose] public section
 
 noncomputable section
 

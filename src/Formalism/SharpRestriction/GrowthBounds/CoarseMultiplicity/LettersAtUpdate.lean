@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.BlockWithThresholds
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.BlockWithThresholds
+
+@[expose] public section
 
 noncomputable section
 

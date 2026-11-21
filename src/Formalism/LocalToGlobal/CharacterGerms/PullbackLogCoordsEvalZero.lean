@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.LogCoordOfDpull
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.LogCoordOfDpull
+
+@[expose] public section
 
 noncomputable section
 

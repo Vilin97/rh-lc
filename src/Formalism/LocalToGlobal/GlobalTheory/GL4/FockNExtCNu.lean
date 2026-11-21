@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.MultiFactorialEqTripleProd
-import Formalism.SharpRestriction.GlobalSchurBounds.SlopeMaxOpenOfHookTwoLeV
+module
+
+public import Formalism.LocalToGlobal.Columns.MultiFactorialEqTripleProd
+public import Formalism.SharpRestriction.GlobalSchurBounds.SlopeMaxOpenOfHookTwoLeV
+
+@[expose] public section
 
 open MvPolynomial
 

@@ -1,11 +1,15 @@
-import Development.AbelianVarietyTheory.Definitions.Divisors.OfCore
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReadingsExistRow
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCoefAtOfPosDef
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsBaseChange
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjFormsRescale
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaPureTensorO
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsThetaPForms
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HolShapeOfOverK
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Divisors.OfCore
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReadingsExistRow
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCoefAtOfPosDef
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsBaseChange
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjFormsRescale
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaPureTensorO
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsThetaPForms
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HolShapeOfOverK
+
+@[expose] public section
 
 noncomputable section
 

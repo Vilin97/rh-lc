@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.TransferStatement
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.TransferStatement
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 

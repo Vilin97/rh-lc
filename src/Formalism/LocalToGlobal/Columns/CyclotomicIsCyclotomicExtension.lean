@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.BaseHost
-import Formalism.LocalToGlobal.Columns.NonDeg
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.BaseHost
+public import Formalism.LocalToGlobal.Columns.NonDeg
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module IntermediateField
 

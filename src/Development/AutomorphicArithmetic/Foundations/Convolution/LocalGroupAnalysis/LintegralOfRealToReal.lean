@@ -1,5 +1,10 @@
-import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.SelmerRankBounds.EllipticityFromProductFormula
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LintegralSwapNorm
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.SelmerRankBounds.EllipticityFromProductFormula
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LintegralSwapNorm
+
+@[expose] public section
+
 open PositivityTheory.Rg.Tf.Geo
 open MeasureTheory
 open scoped ENNReal

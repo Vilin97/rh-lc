@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.IsPrimeSpanXb
-import GroundTheory.HeightsAndTheta.Heights.Intersections.IsHorizontalSpanXb
-import GroundTheory.HeightsAndTheta.Heights.Intersections.NotIsHorizontalSpanTwo
-import GroundTheory.HeightsAndTheta.Heights.Intersections.IdDeg
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.IsPrimeSpanXb
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.IsHorizontalSpanXb
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.NotIsHorizontalSpanTwo
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.IdDeg
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

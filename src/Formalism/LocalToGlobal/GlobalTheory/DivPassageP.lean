@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.GlobalTheory.DivPassage
-import Formalism.LocalToGlobal.GlobalTheory.HLatOpsP
-import Formalism.BranchSandwichDivisors.BranchIsometryProofs.Transfer
-import Formalism.BranchSandwichDivisors.BranchIsometryProofs.MapScale
-import Lemmata.GeneralBFactThirdAlt.Imports
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.DivPassage
+public import Formalism.LocalToGlobal.GlobalTheory.HLatOpsP
+public import Formalism.BranchSandwichDivisors.BranchIsometryProofs.Transfer
+public import Formalism.BranchSandwichDivisors.BranchIsometryProofs.MapScale
+public import Lemmata.GeneralBFactThirdAlt.Imports
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

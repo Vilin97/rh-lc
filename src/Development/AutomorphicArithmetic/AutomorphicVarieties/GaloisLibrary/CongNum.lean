@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.AutCFixed
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CharpolyScaledInverse
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.AutCFixed
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CharpolyScaledInverse
+
+@[expose] public section
 
 open Polynomial
 

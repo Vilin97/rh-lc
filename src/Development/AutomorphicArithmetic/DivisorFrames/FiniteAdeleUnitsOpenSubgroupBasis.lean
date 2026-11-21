@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.IdeleMeasure
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.IdeleMeasure
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Filter Topology
 open scoped RestrictedProduct
 

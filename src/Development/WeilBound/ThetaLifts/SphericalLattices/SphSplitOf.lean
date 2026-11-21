@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.SphericalLattices.SplitLoc
+module
+
+public import Development.WeilBound.ThetaLifts.SphericalLattices.SplitLoc
+
+@[expose] public section
 
 noncomputable section
 

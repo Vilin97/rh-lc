@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.CyclicStrongAtCusp
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HasString
-import Formalism.SharpRestriction.LevelLetterCocycles.SumRepresentations
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.CyclicStrongAtCusp
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HasString
+public import Formalism.SharpRestriction.LevelLetterCocycles.SumRepresentations
+
+@[expose] public section
 
 noncomputable section
 

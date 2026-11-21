@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.RestPlOf
-import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.TensZeroRight
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.MemSupportSumMonomial
-import Formalism.SharpRestriction.GrowthBounds.ValuationLowestDegreeMapFractionField
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.RestPlOf
+public import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.TensZeroRight
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.MemSupportSumMonomial
+public import Formalism.SharpRestriction.GrowthBounds.ValuationLowestDegreeMapFractionField
+
+@[expose] public section
 
 noncomputable section
 

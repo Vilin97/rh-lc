@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.LatticeLemmas.IsProbabilityMeasureSphereLaw
-import GroundTheory.HeightsAndTheta.Heights.LatticeLemmas.PDiagonalChange
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.MahlerMul
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.SphereMean
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ContinuousHermNormGroup
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.LatticeLemmas.IsProbabilityMeasureSphereLaw
+public import GroundTheory.HeightsAndTheta.Heights.LatticeLemmas.PDiagonalChange
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.MahlerMul
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.SphereMean
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ContinuousHermNormGroup
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

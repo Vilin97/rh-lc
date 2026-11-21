@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.RestrictionLocal
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.RestrictionPowers
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.RestrictionLocal
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.RestrictionPowers
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman

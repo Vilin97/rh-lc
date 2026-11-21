@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.GaloisOnAdeles.Action
-import GroundTheory.GlobalFields.SemilocalAlgebras.Galois
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.GaloisOnAdeles.Action
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Galois
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

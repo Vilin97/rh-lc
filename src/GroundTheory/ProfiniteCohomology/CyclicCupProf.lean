@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.CyclicCupGaloisDefs
-import GroundTheory.ProfiniteCohomology.CyclicCupInflation
-import GroundTheory.ProfiniteCohomology.CupProducts.ExistsCocycleMapFEqD
-import GroundTheory.ProfiniteCohomology.CupProducts.GroupCohomology
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.CyclicCupGaloisDefs
+public import GroundTheory.ProfiniteCohomology.CyclicCupInflation
+public import GroundTheory.ProfiniteCohomology.CupProducts.ExistsCocycleMapFEqD
+public import GroundTheory.ProfiniteCohomology.CupProducts.GroupCohomology
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

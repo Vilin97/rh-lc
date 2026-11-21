@@ -1,6 +1,10 @@
-import Formalism.LocalRingCardinality.DataDIV
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleClassGroupCardPos
-import Formalism.LocalRingCardinality.SpanPowerMembership.PlOver
+module
+
+public import Formalism.LocalRingCardinality.DataDIV
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleClassGroupCardPos
+public import Formalism.LocalRingCardinality.SpanPowerMembership.PlOver
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.AbstractLocalReciprocity.Isomorphism
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.Isomorphism
+
+@[expose] public section
 
 namespace GroundTheory.LocalField.Abstract
 

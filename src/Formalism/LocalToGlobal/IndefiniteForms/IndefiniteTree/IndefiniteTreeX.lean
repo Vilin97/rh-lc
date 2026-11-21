@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LatticeSlopes.Statement
-import Formalism.HarderNarasimhan.Statement
-import Formalism.LatticeSlopes.LatticeSlopesProofs.DegQuot
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.RegularLocalRegularSequence.ExistsIsRegularOfListEqMaximalIdeal
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.TransferenceMinima
+module
+
+public import Mathlib
+public import Formalism.LatticeSlopes.Statement
+public import Formalism.HarderNarasimhan.Statement
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.DegQuot
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.RegularLocalRegularSequence.ExistsIsRegularOfListEqMaximalIdeal
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.TransferenceMinima
+
+@[expose] public section
 
 noncomputable section
 

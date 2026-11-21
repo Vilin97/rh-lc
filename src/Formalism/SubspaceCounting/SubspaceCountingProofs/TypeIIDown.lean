@@ -1,6 +1,10 @@
-import Formalism.SubspaceCounting.StatementB
-import Formalism.SubspaceCounting.SubspaceCountingProofs.QVandermonde
-import Formalism.SubspaceCounting.SubspaceCountingProofs.SubspaceCount
+module
+
+public import Formalism.SubspaceCounting.StatementB
+public import Formalism.SubspaceCounting.SubspaceCountingProofs.QVandermonde
+public import Formalism.SubspaceCounting.SubspaceCountingProofs.SubspaceCount
+
+@[expose] public section
 
 namespace Formalism.G0
 

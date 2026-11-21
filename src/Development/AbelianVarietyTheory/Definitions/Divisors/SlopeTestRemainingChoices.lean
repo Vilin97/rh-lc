@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataParams₂
-import Formalism.SharpRestriction.Divisibility.WeightThresholdDefs
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsLimDeg
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataParams₂
+public import Formalism.SharpRestriction.Divisibility.WeightThresholdDefs
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsLimDeg
+
+@[expose] public section
 
 open MvPolynomial Formalism.DegreeFormula Formalism.BasicNotions Formalism.BasicNotions.DV Formalism.MainNotions Formalism.MainNotions.WeightThresholdDefs Filter Topology Classical
 

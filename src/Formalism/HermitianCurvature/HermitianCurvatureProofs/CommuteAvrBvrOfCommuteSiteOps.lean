@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FnComm
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RuleGD
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FnComm
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RuleGD
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.TL
 

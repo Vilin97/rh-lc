@@ -1,5 +1,9 @@
-import Formalism.GaussJetBounds.GenLogInverse
-import Formalism.FormalGroupWitt.WeightInvariance
+module
+
+public import Formalism.GaussJetBounds.GenLogInverse
+public import Formalism.FormalGroupWitt.WeightInvariance
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

@@ -1,4 +1,8 @@
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LCpleadLemmas
+module
+
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LCpleadLemmas
+
+@[expose] public section
 
 open MvPolynomial
 open scoped MonomialOrder

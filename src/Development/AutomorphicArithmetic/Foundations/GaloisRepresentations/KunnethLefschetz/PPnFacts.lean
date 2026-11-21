@@ -1,9 +1,13 @@
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.BasisOne
-import Development.EtaleCohomology.EtaleTrace.LProperPf
-import Development.EtaleCohomology.EtaleTrace.PNIntegralPf
-import Development.EtaleCohomology.EtaleTrace.LSmoothPf
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveSpaceChart
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjSpace
+module
+
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.BasisOne
+public import Development.EtaleCohomology.EtaleTrace.LProperPf
+public import Development.EtaleCohomology.EtaleTrace.PNIntegralPf
+public import Development.EtaleCohomology.EtaleTrace.LSmoothPf
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveSpaceChart
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjSpace
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC LateralTheory.EtaleTrace UpperTheory.Gal.KunnethLefschetz

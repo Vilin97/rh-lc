@@ -1,5 +1,9 @@
-import Formalism.LogFactorialIndices.StatementIdx
-import Lemmata.GeneralBFactSecondFurther.Imports
+module
+
+public import Formalism.LogFactorialIndices.StatementIdx
+public import Lemmata.GeneralBFactSecondFurther.Imports
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.SizeWindowBrackets.QuotientSlopeBoundsWith
-import Formalism.RankGapBounds.RankGapProofs.WeightedMeanData
-import Formalism.RankGapBounds.MeanBoundSecondForm
+module
+
+public import Formalism.SizeWindowBrackets.QuotientSlopeBoundsWith
+public import Formalism.RankGapBounds.RankGapProofs.WeightedMeanData
+public import Formalism.RankGapBounds.MeanBoundSecondForm
+
+@[expose] public section
 
 open Real
 

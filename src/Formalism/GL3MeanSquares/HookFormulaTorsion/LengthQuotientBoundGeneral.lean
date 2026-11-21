@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.GL3MeanSquares.RationalMatrixPrimeOrderBound
-import Formalism.GL3MeanSquares.HookFormulaTorsion.FourierCommutesHeckeScalar
-import Formalism.LogVandermondeBounds.LogVandermondeProofs.LengthQuotientLeOfLatticeSandwich
+module
+
+public import Mathlib
+public import Formalism.GL3MeanSquares.RationalMatrixPrimeOrderBound
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.FourierCommutesHeckeScalar
+public import Formalism.LogVandermondeBounds.LogVandermondeProofs.LengthQuotientLeOfLatticeSandwich
+
+@[expose] public section
 
 namespace Formalism.HermitianLattices.RamifiedHeckeModels
 

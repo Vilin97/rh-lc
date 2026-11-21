@@ -1,5 +1,10 @@
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.GeometricFlagBases.PrimeLevelLocalization.InIdBasic
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsClopenKGLInvEntries
+module
+
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.GeometricFlagBases.PrimeLevelLocalization.InIdBasic
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsClopenKGLInvEntries
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Matrix
 open GlobalTheory.LFun (KGL)
 open UpperTheory.Gal.CertificateRingHomMap (Plc GLw)

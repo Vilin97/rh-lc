@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.ArchimedeanWhittaker.MultOne
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.ArchimedeanWhittaker.MultOne
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

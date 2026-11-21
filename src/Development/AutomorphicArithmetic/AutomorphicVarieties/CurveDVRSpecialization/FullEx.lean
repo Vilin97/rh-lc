@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.IsUnitOrIsUnitOfAddOne
-import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.ExpSums
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IrreducibleCoverForms
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.IsUnitOrIsUnitOfAddOne
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CurveDVRSpecialization.ExpSums
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IrreducibleCoverForms
+
+@[expose] public section
 
 namespace UpperTheory.V.Pr
 

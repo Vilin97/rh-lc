@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ChowForms.StatementsChartFirstGroupDvd
-import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChartIncDomain
-import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChowFormSection
-import GroundTheory.HeightsAndTheta.Heights.ChowForms.PIncidenceGeneric
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ChowForms.StatementsChartFirstGroupDvd
+public import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChartIncDomain
+public import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChowFormSection
+public import GroundTheory.HeightsAndTheta.Heights.ChowForms.PIncidenceGeneric
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

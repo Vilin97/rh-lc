@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL3.IntegralityIffAwayAtD
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.IntegralityIffAwayAtD
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.DigOKAddInl
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.DigOKAddInl
+
+@[expose] public section
 
 noncomputable section
 

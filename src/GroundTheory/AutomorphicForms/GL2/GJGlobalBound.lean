@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJGlobalTheta
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJGlobalTheta
+
+@[expose] public section
 
 open MeasureTheory Set Filter NumberField ComplexConjugate
 open scoped NumberField.AdeleRing

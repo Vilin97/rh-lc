@@ -1,9 +1,13 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.KerLabelsMu
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.CmpJMemSpan
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.IntAtJIffN
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.HtupWLeHtupJ
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.StepIn
-import Formalism.LocalToGlobal.HermitianColumns.HermCols
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.KerLabelsMu
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.CmpJMemSpan
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.IntAtJIffN
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.HtupWLeHtupJ
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.StepIn
+public import Formalism.LocalToGlobal.HermitianColumns.HermCols
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,9 +1,13 @@
-import Formalism.DirichletDensity.DirichletDensityProofs.QuadDiscr
-import Formalism.DirichletDensity.DirichletDensityProofs.MQDiscr
-import Formalism.DirichletDensity.DirichletDensityProofs.APLogDensity
-import Mathlib
-import Formalism.DirichletDensity.Statement
-import Formalism.CMTypeGalois.HalfTypesFromGeneral
+module
+
+public import Formalism.DirichletDensity.DirichletDensityProofs.QuadDiscr
+public import Formalism.DirichletDensity.DirichletDensityProofs.MQDiscr
+public import Formalism.DirichletDensity.DirichletDensityProofs.APLogDensity
+public import Mathlib
+public import Formalism.DirichletDensity.Statement
+public import Formalism.CMTypeGalois.HalfTypesFromGeneral
+
+@[expose] public section
 
 namespace Formalism.HF.Final
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.ValLamOfSubset
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.ValLamOfSubset
+
+@[expose] public section
 
 noncomputable section
 

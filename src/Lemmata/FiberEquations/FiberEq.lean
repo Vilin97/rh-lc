@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 open Finset NumberField Module
 open scoped ComplexConjugate nonZeroDivisors

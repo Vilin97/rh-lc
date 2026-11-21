@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.OldestLetterInSegment
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.OldestLetterInSegment
+
+@[expose] public section
 
 noncomputable section
 

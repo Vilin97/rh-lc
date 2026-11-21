@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PadicSubsetSums.CentralIdempotents.EigenbasisOfDistinctRoots
+module
+
+public import Mathlib
+public import Formalism.PadicSubsetSums.CentralIdempotents.EigenbasisOfDistinctRoots
+
+@[expose] public section
 
 open Finset
 

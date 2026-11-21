@@ -1,15 +1,19 @@
-import Mathlib
-import GroundTheory.LocalFields.ExtensionsOfDegree
-import GroundTheory.LocalFields.Eisenstein
-import GroundTheory.LocalFields.UnitsPowers
-import GroundTheory.LocalFields.RamificationStructure
-import GroundTheory.LocalFields.UnramifiedDefs
-import GroundTheory.LocalFields.IntermediateField
-import GroundTheory.LocalFields.UnramifiedHensel
-import GroundTheory.LocalFields.MaximalUnramified
-import GroundTheory.LocalFields.SeparableClosure
-import GroundTheory.LocalFields.UnramifiedExistence
-import GroundTheory.LocalFields.Unramified
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.ExtensionsOfDegree
+public import GroundTheory.LocalFields.Eisenstein
+public import GroundTheory.LocalFields.UnitsPowers
+public import GroundTheory.LocalFields.RamificationStructure
+public import GroundTheory.LocalFields.UnramifiedDefs
+public import GroundTheory.LocalFields.IntermediateField
+public import GroundTheory.LocalFields.UnramifiedHensel
+public import GroundTheory.LocalFields.MaximalUnramified
+public import GroundTheory.LocalFields.SeparableClosure
+public import GroundTheory.LocalFields.UnramifiedExistence
+public import GroundTheory.LocalFields.Unramified
+
+@[expose] public section
 
 noncomputable section
 

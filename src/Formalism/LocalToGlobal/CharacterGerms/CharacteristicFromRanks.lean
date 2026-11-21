@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.Interface
-import Formalism.LocalToGlobal.CharacterGerms.ExistsStrictMonoMinor
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.Interface
+public import Formalism.LocalToGlobal.CharacterGerms.ExistsStrictMonoMinor
+
+@[expose] public section
 
 noncomputable section
 

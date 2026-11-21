@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ColInst
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ColRecCEvBijective
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.NuRowSuccEqWt
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ThetaDistributionUnfolded
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.OrdSubDetSubStdL
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.H90USurjective
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ColInst
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ColRecCEvBijective
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.NuRowSuccEqWt
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ThetaDistributionUnfolded
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.OrdSubDetSubStdL
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.H90USurjective
+
+@[expose] public section
 
 noncomputable section
 

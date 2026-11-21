@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CosetRefinement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDeterminingLattice
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LogClassNumberAtLe
-import Formalism.LocalToGlobal.Columns.RowFormsLemmas
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CosetRefinement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDeterminingLattice
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LogClassNumberAtLe
+public import Formalism.LocalToGlobal.Columns.RowFormsLemmas
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.LogarithmicSums.PartnerCountOfCentral
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.LogarithmicSums.PartnerCountOfCentral
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.HermitianForms.TiedSym
-import Formalism.LocalToGlobal.HermitianForms.RankEqFirstLevel
-import Formalism.LocalToGlobal.HermitianColumns.SymAll
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.TiedSym
+public import Formalism.LocalToGlobal.HermitianForms.RankEqFirstLevel
+public import Formalism.LocalToGlobal.HermitianColumns.SymAll
+
+@[expose] public section
 
 noncomputable section
 

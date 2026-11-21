@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.CMDeterminantIdeals.StatementS
-import Formalism.LocalToGlobal.CMDeterminantIdeals.CMIdealValuations.ExistsEvalNeZeroOfTotalDegreeLt
-import Formalism.LocalToGlobal.CMDeterminantIdeals.CMIdealValuations.ExistsMonicIrreducibleCardGt
+module
+
+public import Formalism.LocalToGlobal.CMDeterminantIdeals.StatementS
+public import Formalism.LocalToGlobal.CMDeterminantIdeals.CMIdealValuations.ExistsEvalNeZeroOfTotalDegreeLt
+public import Formalism.LocalToGlobal.CMDeterminantIdeals.CMIdealValuations.ExistsMonicIrreducibleCardGt
+
+@[expose] public section
 
 noncomputable section
 

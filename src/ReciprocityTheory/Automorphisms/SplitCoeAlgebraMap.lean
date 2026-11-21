@@ -1,5 +1,9 @@
-import ReciprocityTheory.Automorphisms.Unitary
-import ReciprocityTheory.Automorphisms.PlaceA
+module
+
+public import ReciprocityTheory.Automorphisms.Unitary
+public import ReciprocityTheory.Automorphisms.PlaceA
+
+@[expose] public section
 
 noncomputable section
 

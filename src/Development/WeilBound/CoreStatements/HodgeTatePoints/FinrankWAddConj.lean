@@ -1,8 +1,12 @@
-import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.OmStable
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.TwoMulFinrank
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ExistsTotallyRealEvenNegPlacesLocalNorm
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ExistsDiffGenerator
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.EigSubEqDifferentSmulEigQuot
+module
+
+public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.OmStable
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.TwoMulFinrank
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ExistsTotallyRealEvenNegPlacesLocalNorm
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ExistsDiffGenerator
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.EigSubEqDifferentSmulEigQuot
+
+@[expose] public section
 
 noncomputable section
 

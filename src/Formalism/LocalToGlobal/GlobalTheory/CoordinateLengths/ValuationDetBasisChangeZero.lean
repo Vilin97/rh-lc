@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL6.ValuationDetBasisChange
-import Formalism.LocalToGlobal.GlobalTheory.GL6.DiagonalSlopes.PowSmulLatticeLeWeightLatticeTop
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.ValuationDetBasisChange
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.DiagonalSlopes.PowSmulLatticeLeWeightLatticeTop
+
+@[expose] public section
 
 noncomputable section
 

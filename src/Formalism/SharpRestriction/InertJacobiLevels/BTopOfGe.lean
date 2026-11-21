@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.InertJacobiLevels.AsmIface
+module
+
+public import Formalism.SharpRestriction.InertJacobiLevels.AsmIface
+
+@[expose] public section
 
 noncomputable section
 

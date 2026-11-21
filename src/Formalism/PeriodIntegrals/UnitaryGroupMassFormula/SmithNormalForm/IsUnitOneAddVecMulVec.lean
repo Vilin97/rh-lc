@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.SmithMat
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.SmithMat
+
+@[expose] public section
 
 namespace PI.SmithWork
 

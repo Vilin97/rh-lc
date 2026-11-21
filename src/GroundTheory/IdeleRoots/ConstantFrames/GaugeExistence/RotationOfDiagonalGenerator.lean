@@ -1,8 +1,13 @@
-import Mathlib
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.cut_GCore_GTConnCut
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.cut_GCore_GenTransferKapCut
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TheSection
-import Formalism.HermitianCurvature.FrameExists2
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.cut_GCore_GTConnCut
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.cut_GCore_GenTransferKapCut
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TheSection
+public import Formalism.HermitianCurvature.FrameExists2
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open Matrix Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt Formalism.FourierDecayAlt.P.CutMP.Gauge Formalism.FourierDecayAlt.P.CutMP.Gauge.GC

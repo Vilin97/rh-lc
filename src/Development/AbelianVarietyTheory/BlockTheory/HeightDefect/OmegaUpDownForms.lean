@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.WeilIdempotents
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.WeilIdempotents
+
+@[expose] public section
 
 noncomputable section
 

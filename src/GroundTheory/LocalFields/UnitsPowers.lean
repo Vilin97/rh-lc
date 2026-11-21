@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.UnitsBasic
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsRootOfAdicComplete
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.UnitsBasic
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsRootOfAdicComplete
+
+@[expose] public section
 
 namespace GroundTheory.LocalField
 

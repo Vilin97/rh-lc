@@ -1,5 +1,9 @@
-import ReciprocityTheory.DualLattices.EigPowEqOne
-import ReciprocityTheory.DualLattices.IsAdicCompleteOfBasis
+module
+
+public import ReciprocityTheory.DualLattices.EigPowEqOne
+public import ReciprocityTheory.DualLattices.IsAdicCompleteOfBasis
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.BesselHermitianTheta.TiedKfin
-import Formalism.LocalToGlobal.BesselHermitianTheta.TiedWeilUnr
+module
+
+public import Formalism.LocalToGlobal.BesselHermitianTheta.TiedKfin
+public import Formalism.LocalToGlobal.BesselHermitianTheta.TiedWeilUnr
+
+@[expose] public section
 
 noncomputable section
 

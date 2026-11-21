@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.RankDefs
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.OtherStart
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.CoarseDegreeAlternative
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.RankDefs
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.OtherStart
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.CoarseDegreeAlternative
+
+@[expose] public section
 
 noncomputable section
 

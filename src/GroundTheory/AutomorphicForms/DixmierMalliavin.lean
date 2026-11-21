@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.DixmierMalliavinSeries
-import GroundTheory.AutomorphicForms.DixmierMalliavinProducts
-import GroundTheory.AutomorphicForms.DixmierMalliavinLine
-import GroundTheory.AutomorphicForms.DixmierMalliavinHaarDensity
-import GroundTheory.AutomorphicForms.HeckeAlgebra
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.DixmierMalliavinSeries
+public import GroundTheory.AutomorphicForms.DixmierMalliavinProducts
+public import GroundTheory.AutomorphicForms.DixmierMalliavinLine
+public import GroundTheory.AutomorphicForms.DixmierMalliavinHaarDensity
+public import GroundTheory.AutomorphicForms.HeckeAlgebra
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

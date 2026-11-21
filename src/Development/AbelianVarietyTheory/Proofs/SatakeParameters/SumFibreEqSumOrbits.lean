@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.TrueWtAddSSNonneg
-import Formalism.LocalToGlobal.Columns.GSetLemmas
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.TrueWtAddSSNonneg
+public import Formalism.LocalToGlobal.Columns.GSetLemmas
+
+@[expose] public section
 
 noncomputable section
 

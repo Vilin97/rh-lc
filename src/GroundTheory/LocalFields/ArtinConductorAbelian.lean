@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.LocalFields.DifferentGalois
-import GroundTheory.LocalFields.ConductorTransport
-import GroundTheory.LocalFields.ConductorMatch
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.DifferentGalois
+public import GroundTheory.LocalFields.ConductorTransport
+public import GroundTheory.LocalFields.ConductorMatch
+
+@[expose] public section
 
 noncomputable section
 

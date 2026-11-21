@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntIndMemSB
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzBruhatLintegralSqNeTopStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SubInvMulOutMemIff
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntIndMemSB
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzBruhatLintegralSqNeTopStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SubInvMulOutMemIff
+
+@[expose] public section
 
 open MeasureTheory Matrix ValuativeRel
 

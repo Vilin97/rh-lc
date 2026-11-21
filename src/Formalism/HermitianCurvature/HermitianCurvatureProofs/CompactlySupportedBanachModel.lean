@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DilationUnipotentWeylMeasure
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BetaSesquilinearity
-import Formalism.HermitianCurvature.StatementU
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CayleyForm
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DilationUnipotentWeylMeasure
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BetaSesquilinearity
+public import Formalism.HermitianCurvature.StatementU
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CayleyForm
+
+@[expose] public section
 
 open Matrix Filter Topology
 

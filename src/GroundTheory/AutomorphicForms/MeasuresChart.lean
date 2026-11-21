@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.MeasuresModulus
-import GroundTheory.AutomorphicForms.LocallyProfinite
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.MeasuresModulus
+public import GroundTheory.AutomorphicForms.LocallyProfinite
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

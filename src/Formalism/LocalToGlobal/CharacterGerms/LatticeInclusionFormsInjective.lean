@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.Interface
-import Formalism.FrobeniusBaseCase.Statement
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.Interface
+public import Formalism.FrobeniusBaseCase.Statement
+
+@[expose] public section
 
 noncomputable section
 

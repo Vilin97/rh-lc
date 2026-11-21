@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.SharpRestriction.GlobalSchurBounds.TuSizeOfRealPlaceSecondLayer
-import Formalism.SharpRestriction.GlobalSchurBounds.LogXLowerFamilyOfTheorems
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HermRepUnram
-import Formalism.LocalToGlobal.TieTwRecOf
-import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.JoinSISel
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.GlobalSchurBounds.TuSizeOfRealPlaceSecondLayer
+public import Formalism.SharpRestriction.GlobalSchurBounds.LogXLowerFamilyOfTheorems
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.HermRepUnram
+public import Formalism.LocalToGlobal.TieTwRecOf
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.JoinSISel
+
+@[expose] public section
 
 noncomputable section
 

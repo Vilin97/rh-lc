@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.SmulCommClassGalIntegers
-import Formalism.LandauZeroFreeBounds.Statement
-import Formalism.FrobeniusOrbits.Statement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.SmulCommClassGalIntegers
+public import Formalism.LandauZeroFreeBounds.Statement
+public import Formalism.FrobeniusOrbits.Statement
+
+@[expose] public section
 
 noncomputable section
 

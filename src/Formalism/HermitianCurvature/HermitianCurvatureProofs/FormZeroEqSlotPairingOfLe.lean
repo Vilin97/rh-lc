@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.InsertUnitMatrixZeroApply
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PictureMemLevelZeroClass
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.InsertUnitMatrixZeroApply
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PictureMemLevelZeroClass
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBF
 

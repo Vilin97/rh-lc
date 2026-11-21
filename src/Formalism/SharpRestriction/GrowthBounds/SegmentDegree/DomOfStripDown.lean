@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.TailTGlueT
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.TailTGlueT
+
+@[expose] public section
 
 noncomputable section
 

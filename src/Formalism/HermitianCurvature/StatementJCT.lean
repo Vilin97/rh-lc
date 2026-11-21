@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.HermitianCurvature.StatementJC
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.StatementJC
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.JCT
 

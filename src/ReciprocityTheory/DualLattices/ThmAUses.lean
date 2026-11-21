@@ -1,6 +1,10 @@
-import ReciprocityTheory.DualLattices.NsetExpInjectiveSurjective
-import ReciprocityTheory.DualLattices.SmallLevelClassSet
-import ReciprocityTheory.DualLattices.VDetEqOneOfIntegral
+module
+
+public import ReciprocityTheory.DualLattices.NsetExpInjectiveSurjective
+public import ReciprocityTheory.DualLattices.SmallLevelClassSet
+public import ReciprocityTheory.DualLattices.VDetEqOneOfIntegral
+
+@[expose] public section
 
 noncomputable section
 

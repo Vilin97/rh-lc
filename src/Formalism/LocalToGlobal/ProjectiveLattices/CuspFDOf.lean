@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.MulCMemSec
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.MulCMemSec
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 400000
 

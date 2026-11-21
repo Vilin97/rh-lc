@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.MemWeightSpaceIffDiagonalRep
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.HwvLoweringSpanLower
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IsotypicStableOperator
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.MemWeightSpaceIffDiagonalRep
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.HwvLoweringSpanLower
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IsotypicStableOperator
+
+@[expose] public section
 
 noncomputable section
 

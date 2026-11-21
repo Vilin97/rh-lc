@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.HermitianForms.PrkSmul
-import Formalism.LocalToGlobal.HermitianForms.Transport
-import Formalism.LocalToGlobal.HermitianForms.FramesLemmas
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.PrkSmul
+public import Formalism.LocalToGlobal.HermitianForms.Transport
+public import Formalism.LocalToGlobal.HermitianForms.FramesLemmas
+
+@[expose] public section
 
 namespace Formalism.L2.Forms
 

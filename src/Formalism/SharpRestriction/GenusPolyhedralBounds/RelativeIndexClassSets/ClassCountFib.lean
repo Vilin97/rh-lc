@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.LevGapFacts
-import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GapAtLeast
-import Formalism.SatakeDualWeyl.DefsCS
-import Formalism.ThetaLiftIndependence.Statement
-import Formalism.HermitianLattices.StatementMass
+module
+
+public import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.LevGapFacts
+public import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GapAtLeast
+public import Formalism.SatakeDualWeyl.DefsCS
+public import Formalism.ThetaLiftIndependence.Statement
+public import Formalism.HermitianLattices.StatementMass
+
+@[expose] public section
 
 noncomputable section
 

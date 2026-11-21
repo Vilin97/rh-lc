@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.MacdonaldFormula
-import GroundTheory.AutomorphicForms.SatakeNormalized
-import GroundTheory.AutomorphicForms.IwahoriFactorization
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.MacdonaldFormula
+public import GroundTheory.AutomorphicForms.SatakeNormalized
+public import GroundTheory.AutomorphicForms.IwahoriFactorization
+
+@[expose] public section
 
 noncomputable section
 

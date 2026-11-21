@@ -1,6 +1,10 @@
-import Formalism.SizeWindowBrackets.QuotientSlopeBoundsWith
-import Formalism.SizeWindowBrackets.GrowthBoundGivesRiemannHypothesis
-import Formalism.SizeWindowBrackets.ErrorFormsWeakWindowsFalse
+module
+
+public import Formalism.SizeWindowBrackets.QuotientSlopeBoundsWith
+public import Formalism.SizeWindowBrackets.GrowthBoundGivesRiemannHypothesis
+public import Formalism.SizeWindowBrackets.ErrorFormsWeakWindowsFalse
+
+@[expose] public section
 
 open Finset
 

@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 open MeasureTheory Filter Asymptotics Complex
 open scoped FourierTransform RealInnerProductSpace SchwartzMap

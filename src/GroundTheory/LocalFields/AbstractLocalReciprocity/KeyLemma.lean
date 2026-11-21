@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.AbstractLocalReciprocity.CoeNormEqProdSmulNorm
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.CoeNormEqProdSmulNorm
+
+@[expose] public section
 
 namespace GroundTheory.LocalField.Abstract
 

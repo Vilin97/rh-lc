@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.DatumOfRecordSignature
-import Formalism.LocalToGlobal.ProjectiveLattices.SumEmbeddingsEq
-import Formalism.LocalToGlobal.ProjectiveLattices.DatMat
-import Formalism.LocalToGlobal.ProjectiveLattices.DatTheta
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.FactPrincipalDatum
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.DatumOfRecordSignature
+public import Formalism.LocalToGlobal.ProjectiveLattices.SumEmbeddingsEq
+public import Formalism.LocalToGlobal.ProjectiveLattices.DatMat
+public import Formalism.LocalToGlobal.ProjectiveLattices.DatTheta
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.FactPrincipalDatum
+
+@[expose] public section
 
 noncomputable section
 

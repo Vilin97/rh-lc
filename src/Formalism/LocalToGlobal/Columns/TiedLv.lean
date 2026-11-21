@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.TiedAtT
-import Formalism.LocalToGlobal.Columns.BtExistsSmulLeOfFg
+module
+
+public import Formalism.LocalToGlobal.Columns.TiedAtT
+public import Formalism.LocalToGlobal.Columns.BtExistsSmulLeOfFg
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 open scoped TensorProduct

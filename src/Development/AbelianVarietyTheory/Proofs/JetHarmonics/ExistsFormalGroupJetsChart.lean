@@ -1,11 +1,15 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Jets.TwoPlaces
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.ConnectionKillsSeries
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsUniversalJetCoordinatesPullbackStatement
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.UniversalStatement
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IntegralChartFormalBiext
-import Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.JetTruncNotInjective
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.FBMapPf
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Jets.TwoPlaces
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.ConnectionKillsSeries
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsUniversalJetCoordinatesPullbackStatement
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.UniversalStatement
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IntegralChartFormalBiext
+public import Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.JetTruncNotInjective
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.FBMapPf
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.GlOperatorPreservesMultidegree
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.GlOperatorPreservesMultidegree
+
+@[expose] public section
 
 noncomputable section
 

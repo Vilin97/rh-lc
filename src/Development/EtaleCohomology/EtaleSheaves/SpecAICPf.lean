@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.FibreEqvPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.FibreEqvPf
+
+@[expose] public section
 
 noncomputable section
 open Polynomial GlobalTheory.EtC

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.GenericUnipotentCharacter
-import Formalism.LocalToGlobal.HermitianForms.PsiZeroNontrivialCharacter
+module
+
+public import Formalism.LocalToGlobal.Columns.GenericUnipotentCharacter
+public import Formalism.LocalToGlobal.HermitianForms.PsiZeroNontrivialCharacter
+
+@[expose] public section
 
 open Matrix
 

@@ -1,4 +1,8 @@
-import Formalism.AdmissibleDesigns.ContOfInjY
+module
+
+public import Formalism.AdmissibleDesigns.ContOfInjY
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

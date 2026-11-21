@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.IntegralHeckeForms
-import Formalism.PadicSubsetSums.StableGradedCounts.TWCutOperator
-import Formalism.PadicSubsetSums.StableGradedCounts.TWCentralIdempotentIntegral
-import Formalism.PadicSubsetSums.CentralIdempotents.CentralIdempotentIntegral
-import Formalism.SharpRestriction.LevelLetterCocycles.GaloisEquivariantKeyFunction
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.IntegralHeckeForms
+public import Formalism.PadicSubsetSums.StableGradedCounts.TWCutOperator
+public import Formalism.PadicSubsetSums.StableGradedCounts.TWCentralIdempotentIntegral
+public import Formalism.PadicSubsetSums.CentralIdempotents.CentralIdempotentIntegral
+public import Formalism.SharpRestriction.LevelLetterCocycles.GaloisEquivariantKeyFunction
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.Divisibility.DefGroupLemmas
-import Formalism.LocalToGlobal.Columns.StdLatUnimodular
-import Formalism.LocalToGlobal.Columns.RhoEqOfSmulEq
+module
+
+public import Formalism.LocalToGlobal.Divisibility.DefGroupLemmas
+public import Formalism.LocalToGlobal.Columns.StdLatUnimodular
+public import Formalism.LocalToGlobal.Columns.RhoEqOfSmulEq
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix
 open scoped TensorProduct

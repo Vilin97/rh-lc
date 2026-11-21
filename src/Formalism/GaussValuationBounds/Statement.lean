@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.WindowSums.Statement
-import Formalism.FrobeniusContraction.Statement
+module
+
+public import Mathlib
+public import Formalism.WindowSums.Statement
+public import Formalism.FrobeniusContraction.Statement
+
+@[expose] public section
 
 noncomputable section
 

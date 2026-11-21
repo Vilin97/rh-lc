@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LevelStructures.LocLevi
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LevelStructures.LatAdapted
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LevelStructures.CMInst
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LevelStructures.LocLevi
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LevelStructures.LatAdapted
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LevelStructures.CMInst
+
+@[expose] public section
 
 noncomputable section
 

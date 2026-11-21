@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.CohomologicalPurity.LeafFreeCokPfSurj
+module
+
+public import Development.EtaleCohomology.CohomologicalPurity.LeafFreeCokPfSurj
+
+@[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC
 namespace LateralTheory.CohomologicalPurity

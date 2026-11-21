@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.SmallCones.ThetaUniq
-import Development.WeilBound.ThetaLifts.SmallCones.ConeLaw
-import Development.WeilBound.ThetaLifts.SmallCones.IdeleTop
+module
+
+public import Development.WeilBound.ThetaLifts.SmallCones.ThetaUniq
+public import Development.WeilBound.ThetaLifts.SmallCones.ConeLaw
+public import Development.WeilBound.ThetaLifts.SmallCones.IdeleTop
+
+@[expose] public section
 
 noncomputable section
 

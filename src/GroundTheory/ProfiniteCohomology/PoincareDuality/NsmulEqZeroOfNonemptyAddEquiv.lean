@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.CupProducts.Pairing
-import GroundTheory.ProfiniteCohomology.CartierDual
-import GroundTheory.ProfiniteCohomology.ClassFormations.CorestrictionDefs
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.CupProducts.Pairing
+public import GroundTheory.ProfiniteCohomology.CartierDual
+public import GroundTheory.ProfiniteCohomology.ClassFormations.CorestrictionDefs
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

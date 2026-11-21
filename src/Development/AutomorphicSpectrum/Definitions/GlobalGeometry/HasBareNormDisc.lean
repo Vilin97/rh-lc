@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IsFlatAnIffIsConstMul
-import Formalism.LocalToGlobal.ProjectiveLattices.IsCombAt
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.GeometricComponentEmbedding
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IsFlatAnIffIsConstMul
+public import Formalism.LocalToGlobal.ProjectiveLattices.IsCombAt
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.GeometricComponentEmbedding
+
+@[expose] public section
 
 noncomputable section
 

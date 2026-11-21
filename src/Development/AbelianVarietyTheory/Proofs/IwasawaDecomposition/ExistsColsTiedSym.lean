@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RedivisionStructureEq
-import Formalism.LocalToGlobal.GroupLattices.Joint0
-import Lean
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FormsRe
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HermRe
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RedivisionStructureEq
+public import Formalism.LocalToGlobal.GroupLattices.Joint0
+public import Lean
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FormsRe
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HermRe
+
+@[expose] public section
 
 noncomputable section
 

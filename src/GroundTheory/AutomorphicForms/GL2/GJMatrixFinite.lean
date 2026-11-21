@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.SchwartzBruhatFinite
-import GroundTheory.AutomorphicForms.ReductionMeasure
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.SchwartzBruhatFinite
+public import GroundTheory.AutomorphicForms.ReductionMeasure
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.GJMatrix
 

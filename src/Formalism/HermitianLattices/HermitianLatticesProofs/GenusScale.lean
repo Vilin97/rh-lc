@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HermitianLattices.DefsCS
-import Formalism.HermitianLattices.HermitianLatticesProofs.GenusBasic
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.DefsCS
+public import Formalism.HermitianLattices.HermitianLatticesProofs.GenusBasic
+
+@[expose] public section
 
 open NumberField
 

@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.PairedCharacterCondition
-import Formalism.SharpRestriction.LevelLetterCocycles.SumRepresentations
-import Formalism.SharpRestriction.LevelLetterCocycles.DecompositionData
-import Formalism.LocalRingCardinality.DataParams₂
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.PairedCharacterCondition
+public import Formalism.SharpRestriction.LevelLetterCocycles.SumRepresentations
+public import Formalism.SharpRestriction.LevelLetterCocycles.DecompositionData
+public import Formalism.LocalRingCardinality.DataParams₂
+
+@[expose] public section
 
 noncomputable section
 

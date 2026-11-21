@@ -1,4 +1,8 @@
-import Development.AbelianVarietyTheory.Definitions.Foundations.ContinuousOfMemCcSmooth
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Foundations.ContinuousOfMemCcSmooth
+
+@[expose] public section
 
 open MeasureTheory Set GlobalTheory.AutomorphicL2Unitary GlobalTheory.Orb Matrix
 open scoped ContDiff ComplexConjugate

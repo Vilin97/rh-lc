@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.Plane
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.Plane
+
+@[expose] public section
 
 noncomputable section
 

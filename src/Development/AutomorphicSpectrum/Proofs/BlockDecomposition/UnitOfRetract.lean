@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.HermitianCellMeasures.CellDefs
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EvFinSSOneNot
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EqZeroOfComps
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.HermitianCellMeasures.CellDefs
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EvFinSSOneNot
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EqZeroOfComps
+
+@[expose] public section
 
 noncomputable section
 

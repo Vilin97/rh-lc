@@ -1,14 +1,19 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NVNeZero
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.MemIdSZpowIff
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CardKilledByInType
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DecoRawMulIdem
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.InvMulIntAway
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.RealizationFamilyNormalOperators
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsSphericalDoubleCosetLabelIffDecreasing
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsUnitaryElementaryDivisorsInertPrime
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.CorrectionOfTransport
-import Formalism.LocalToGlobal.Columns.InputsGenus
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.NVNeZero
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.MemIdSZpowIff
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CardKilledByInType
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DecoRawMulIdem
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.InvMulIntAway
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.RealizationFamilyNormalOperators
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsSphericalDoubleCosetLabelIffDecreasing
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsUnitaryElementaryDivisorsInertPrime
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.CorrectionOfTransport
+public import Formalism.LocalToGlobal.Columns.InputsGenus
+
+@[expose] public section
+
 open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.MainNotions.S MeasureTheory IsDedekindDomain NumberField Matrix Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism.IndefR.Cx
 open scoped TensorProduct InnerProductSpace
 attribute [local instance] Formalism.BasicNotions.Host.cmStar

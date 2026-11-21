@@ -1,7 +1,11 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.SummandFactor
-import Development.WeilBound.CuspidalAdmissibility.OccPair
-import Development.WeilBound.CuspidalAdmissibility.OccTrace
-import Development.WeilBound.CuspidalAdmissibility.CuspProjectionOrthogonality
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.SummandFactor
+public import Development.WeilBound.CuspidalAdmissibility.OccPair
+public import Development.WeilBound.CuspidalAdmissibility.OccTrace
+public import Development.WeilBound.CuspidalAdmissibility.CuspProjectionOrthogonality
+
+@[expose] public section
 
 noncomputable section
 

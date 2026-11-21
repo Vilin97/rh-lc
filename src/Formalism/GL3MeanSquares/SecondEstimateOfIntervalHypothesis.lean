@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LandauZeroFreeBounds.SiegelWalfiszAP
+module
+
+public import Mathlib
+public import Formalism.LandauZeroFreeBounds.SiegelWalfiszAP
+
+@[expose] public section
 
 open Finset ArithmeticFunction Classical
 

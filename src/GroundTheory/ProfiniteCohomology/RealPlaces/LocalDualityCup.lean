@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RealPlaces.OrderTwoTate
-import GroundTheory.ProfiniteCohomology.PoincareDuality.Torsion
-import GroundTheory.ProfiniteCohomology.GaloisCohomology.Kummer
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RealPlaces.OrderTwoTate
+public import GroundTheory.ProfiniteCohomology.PoincareDuality.Torsion
+public import GroundTheory.ProfiniteCohomology.GaloisCohomology.Kummer
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

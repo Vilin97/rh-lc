@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GlobalTheory.UnramifiedDiagonal.TrpDia
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CrossDiagonalMatching.UpMatch
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CrossDiagonalMatching.DnDiaMatch0FHolds
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.UnramifiedDiagonal.TrpDia
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CrossDiagonalMatching.UpMatch
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CrossDiagonalMatching.DnDiaMatch0FHolds
+
+@[expose] public section
 
 noncomputable section
 

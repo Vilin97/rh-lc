@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.HodgeTatePoints.MapFirstPower
+module
+
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.MapFirstPower
+
+@[expose] public section
 
 noncomputable section
 

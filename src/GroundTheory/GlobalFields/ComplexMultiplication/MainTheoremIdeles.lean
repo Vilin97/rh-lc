@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.GlobalFields.ClassFieldConsequences.RayClassField
-import GroundTheory.GlobalFields.ComplexMultiplication.IdeleActionQuotient
-import GroundTheory.GlobalFields.ComplexMultiplication.HilbertClassFieldArtin
-import GroundTheory.GlobalFields.WeilGroups.SignSymbol
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ClassFieldConsequences.RayClassField
+public import GroundTheory.GlobalFields.ComplexMultiplication.IdeleActionQuotient
+public import GroundTheory.GlobalFields.ComplexMultiplication.HilbertClassFieldArtin
+public import GroundTheory.GlobalFields.WeilGroups.SignSymbol
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global

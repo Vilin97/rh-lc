@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BlockKWave
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BlockKWave
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBL
 

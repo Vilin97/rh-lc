@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.DixmierMalliavinLineBounds
-import GroundTheory.AutomorphicForms.DixmierMalliavinLineLimit
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.DixmierMalliavinLineBounds
+public import GroundTheory.AutomorphicForms.DixmierMalliavinLineLimit
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

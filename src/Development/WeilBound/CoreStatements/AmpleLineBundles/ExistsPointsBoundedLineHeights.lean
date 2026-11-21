@@ -1,5 +1,9 @@
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ArchBetween
-import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.PCurveIsOrbit
+module
+
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ArchBetween
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.PCurveIsOrbit
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.HarderNarasimhan.ShiftInvariance
+module
+
+public import Mathlib
+public import Formalism.HarderNarasimhan.ShiftInvariance
+
+@[expose] public section
 
 open Module
 

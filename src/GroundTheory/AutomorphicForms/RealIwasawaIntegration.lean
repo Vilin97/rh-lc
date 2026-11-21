@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.RealIwasawaUnipotentHaar
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.RealIwasawaUnipotentHaar
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.NormResidueSymbol.RationalDiagonal
-import GroundTheory.GlobalFields.NormResidueSymbol.RationalCyclotomic
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.NormResidueSymbol.RationalDiagonal
+public import GroundTheory.GlobalFields.NormResidueSymbol.RationalCyclotomic
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

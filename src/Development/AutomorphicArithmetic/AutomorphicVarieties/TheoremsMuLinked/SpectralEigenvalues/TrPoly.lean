@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.TraceIntegralSubringExtension
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.TraceIntegralSubringExtension
+
+@[expose] public section
 
 open IsLocalRing Polynomial
 

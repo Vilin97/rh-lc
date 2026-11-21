@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.CoeffIdentitySelfConjOfTwo
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CoeffIdentitySelfConjOfTwo
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.ThresholdStandardLarge
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.TopDegreeLeTwoB
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.SegmentStatementHolds
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.ThresholdStandardLarge
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.TopDegreeLeTwoB
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.SegmentStatementHolds
+
+@[expose] public section
 
 noncomputable section
 

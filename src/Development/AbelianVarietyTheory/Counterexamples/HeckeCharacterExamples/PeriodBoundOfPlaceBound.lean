@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataErr
-import Formalism.LocalRingCardinality.DataParams₂
-import Formalism.SharpRestriction.Divisibility.LiftErrorLocal
-import Formalism.SharpRestriction.GrowthBounds.WeilJacquetShalikaLaw
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataErr
+public import Formalism.LocalRingCardinality.DataParams₂
+public import Formalism.SharpRestriction.Divisibility.LiftErrorLocal
+public import Formalism.SharpRestriction.GrowthBounds.WeilJacquetShalikaLaw
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsRetr
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsRetr
+
+@[expose] public section
 
 namespace GlobalTheory.CompanionTheory.FinPresDescent
 

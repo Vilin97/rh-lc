@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ContinuousCoB
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalEndomorphisms.HenselRoot
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ContinuousCoB
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalEndomorphisms.HenselRoot
+
+@[expose] public section
 
 noncomputable section
 

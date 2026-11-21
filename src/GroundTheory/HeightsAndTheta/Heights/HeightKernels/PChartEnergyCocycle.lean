@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergyCocycle
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergySymm
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PChartEnergyIntegrable
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PHermFormCompare
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PChartHessCompare
-import GroundTheory.HeightsAndTheta.Heights.Intersections.NotLtLtOfMemMinimalPrimes
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergyCocycle
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergySymm
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PChartEnergyIntegrable
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PHermFormCompare
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PChartHessCompare
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.NotLtLtOfMemMinimalPrimes
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

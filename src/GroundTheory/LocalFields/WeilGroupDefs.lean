@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.MaximalUnramified
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.MaximalUnramified
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

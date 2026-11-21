@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.SepChars
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsExtraBis
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.SepChars
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsExtraBis
+
+@[expose] public section
 
 open Polynomial Matrix IsLocalRing TensorProduct
 

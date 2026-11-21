@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.NoOpStep
-import Formalism.SharpRestriction.GrowthBounds.TwistedSubstitution.TwistedMonomialFiltration.TwistSubXMemSupported
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.NoOpStep
+public import Formalism.SharpRestriction.GrowthBounds.TwistedSubstitution.TwistedMonomialFiltration.TwistSubXMemSupported
+
+@[expose] public section
 
 noncomputable section
 

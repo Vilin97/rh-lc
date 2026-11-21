@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.ConcretePkgSpec
-import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.ONLeaves
-import Formalism.LocalToGlobal.Divisibility.LiftLatLemmas
-import Formalism.LocalRingCardinality.DataParams
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.ConcretePkgSpec
+public import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.ONLeaves
+public import Formalism.LocalToGlobal.Divisibility.LiftLatLemmas
+public import Formalism.LocalRingCardinality.DataParams
+
+@[expose] public section
 
 set_option autoImplicit false
 

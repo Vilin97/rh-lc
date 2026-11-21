@@ -1,4 +1,8 @@
-import Formalism.LogFactorialIndices.StatementSize
+module
+
+public import Formalism.LogFactorialIndices.StatementSize
+
+@[expose] public section
 
 noncomputable section
 

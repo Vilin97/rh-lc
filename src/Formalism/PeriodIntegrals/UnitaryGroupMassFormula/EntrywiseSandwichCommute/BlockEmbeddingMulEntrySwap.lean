@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.RTTIndependence
-import Formalism.YangianSpanCharacter.YangianRTTProofs.RttRelation
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FirstEmbeddingOne
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.RTTIndependence
+public import Formalism.YangianSpanCharacter.YangianRTTProofs.RttRelation
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FirstEmbeddingOne
+
+@[expose] public section
 
 namespace PI.QmSandwichWork
 

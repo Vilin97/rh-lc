@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.SysFMPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.SysFMPf
+
+@[expose] public section
 
 namespace LateralTheory.E.SysFMPfAlg
 

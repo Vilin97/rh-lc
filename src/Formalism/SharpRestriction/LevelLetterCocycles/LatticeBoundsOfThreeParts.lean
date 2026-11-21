@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.LatticeFiniteCohomologyGeneratorBound
-import Formalism.SharpRestriction.LevelLetterCocycles.CrystallineLiftingInputs
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.LatticeFiniteCohomologyGeneratorBound
+public import Formalism.SharpRestriction.LevelLetterCocycles.CrystallineLiftingInputs
+
+@[expose] public section
 
 noncomputable section
 

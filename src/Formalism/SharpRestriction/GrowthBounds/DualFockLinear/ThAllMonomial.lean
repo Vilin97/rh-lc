@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.DgFalseDiag
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.DgFalseDiag
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.WachLatticeTwists.RamifiedBlockRings.DistinctEigenvalueCornerPerturbation
+module
+
+public import Formalism.WachLatticeTwists.RamifiedBlockRings.DistinctEigenvalueCornerPerturbation
+
+@[expose] public section
 
 open Finset Classical
 

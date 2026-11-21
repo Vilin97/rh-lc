@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.PairingIndexBounds.ModelLatticeMoves.IsBichar
+module
+
+public import Formalism.LocalToGlobal.PairingIndexBounds.ModelLatticeMoves.IsBichar
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

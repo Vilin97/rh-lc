@@ -1,4 +1,8 @@
-import CompanionTheory.AutomorphicTheory.ZuckermanCommutation.CapelliEigenvalues.Transport
+module
+
+public import CompanionTheory.AutomorphicTheory.ZuckermanCommutation.CapelliEigenvalues.Transport
+
+@[expose] public section
 
 open Matrix Formalism.REAL Formalism.QuantumDeterminants PI.DSInfCharCap
 

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ClsChartedLabAt
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.CompInjLocJ
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ClsChartedLabAt
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.CompInjLocJ
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.ProdFormula
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SelectionLemmas
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.ProdFormula
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SelectionLemmas
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain Matrix
 open scoped Matrix

@@ -1,15 +1,19 @@
-import Mathlib
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.GlintPrincRelIndexNeZero
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.SplitUnitaryGroupIso
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Transport
-import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.ProGTransfer
-import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.OneAddPowOfSq
-import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.GramTotallyDefinite
-import Formalism.SharpRestriction.GlobalSchurBounds.StandardLattice
-import Formalism.SharpRestriction.GlobalSchurBounds.FlipTwoThree
-import Formalism.SharpRestriction.GlobalSchurBounds.ProductFirstZerothParts
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.GramDetIsUnit
-import Formalism.LocalToGlobal.GlobalTheory.GL5.Statement
+module
+
+public import Mathlib
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.GlintPrincRelIndexNeZero
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.SplitUnitaryGroupIso
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Transport
+public import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.ProGTransfer
+public import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.OneAddPowOfSq
+public import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.GramTotallyDefinite
+public import Formalism.SharpRestriction.GlobalSchurBounds.StandardLattice
+public import Formalism.SharpRestriction.GlobalSchurBounds.FlipTwoThree
+public import Formalism.SharpRestriction.GlobalSchurBounds.ProductFirstZerothParts
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.GramDetIsUnit
+public import Formalism.LocalToGlobal.GlobalTheory.GL5.Statement
+
+@[expose] public section
 
 noncomputable section
 

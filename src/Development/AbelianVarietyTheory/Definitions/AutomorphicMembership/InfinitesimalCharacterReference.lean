@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CenLocOfCenReal
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.DirectSumCancelRight
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ContinuousNormFin
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CenLocOfCenReal
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.DirectSumCancelRight
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ContinuousNormFin
+
+@[expose] public section
 
 noncomputable section
 

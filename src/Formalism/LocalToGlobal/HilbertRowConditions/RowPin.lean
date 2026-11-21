@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ClassSK
-import Formalism.LocalRingCardinality.DataBu
-import Formalism.LocalToGlobal.HermitianForms.TiedBr
+module
+
+public import Formalism.LocalToGlobal.ClassSK
+public import Formalism.LocalRingCardinality.DataBu
+public import Formalism.LocalToGlobal.HermitianForms.TiedBr
+
+@[expose] public section
 
 noncomputable section
 

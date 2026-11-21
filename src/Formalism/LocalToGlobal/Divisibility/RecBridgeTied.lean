@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.LinkDIVL2R3Col
-import Formalism.LocalToGlobal.Divisibility.RecBridge
-import Formalism.LocalToGlobal.HilbertRowConditions.ColumnsFunctionAtSubspaces
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.LinkDIVL2R3Col
+public import Formalism.LocalToGlobal.Divisibility.RecBridge
+public import Formalism.LocalToGlobal.HilbertRowConditions.ColumnsFunctionAtSubspaces
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

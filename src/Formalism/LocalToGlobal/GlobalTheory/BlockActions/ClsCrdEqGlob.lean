@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.SelfDualPHolds
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.ClassMapPropertiesOfSymmetricForms
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ColSpanMap
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.SelfDualPHolds
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.ClassMapPropertiesOfSymmetricForms
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ColSpanMap
+
+@[expose] public section
 
 noncomputable section
 

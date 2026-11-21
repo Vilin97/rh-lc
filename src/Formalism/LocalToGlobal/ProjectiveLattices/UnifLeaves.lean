@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.FamilyUniformisationBasePointOrthogonal
-import Formalism.LocalToGlobal.ProjectiveLattices.UnifGen
-import Formalism.LocalToGlobal.ProjectiveLattices.UnifDom
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.FamilyUniformisationBasePointOrthogonal
+public import Formalism.LocalToGlobal.ProjectiveLattices.UnifGen
+public import Formalism.LocalToGlobal.ProjectiveLattices.UnifDom
+
+@[expose] public section
 
 noncomputable section
 

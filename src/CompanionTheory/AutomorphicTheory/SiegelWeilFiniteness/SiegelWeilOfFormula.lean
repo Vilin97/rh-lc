@@ -1,5 +1,9 @@
-import CompanionTheory.AutomorphicTheory.SiegelWeilFiniteness.AdelicCovolumeFinite
-import CompanionTheory.AutomorphicTheory.SiegelWeilFiniteness.Bridge
+module
+
+public import CompanionTheory.AutomorphicTheory.SiegelWeilFiniteness.AdelicCovolumeFinite
+public import CompanionTheory.AutomorphicTheory.SiegelWeilFiniteness.Bridge
+
+@[expose] public section
 
 namespace CompanionTheory.SWFin
 

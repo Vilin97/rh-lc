@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.SumMemLaSet
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.SumMemLaSet
+
+@[expose] public section
 
 noncomputable section
 

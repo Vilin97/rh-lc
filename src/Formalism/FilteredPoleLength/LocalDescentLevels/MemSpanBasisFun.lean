@@ -1,5 +1,9 @@
-import Formalism.FilteredPoleLength.ReducedBasisBounds.ReductionQuotient
-import Formalism.LogFactorialIndices.SignedSubspaceIndex.IdxDet
+module
+
+public import Formalism.FilteredPoleLength.ReducedBasisBounds.ReductionQuotient
+public import Formalism.LogFactorialIndices.SignedSubspaceIndex.IdxDet
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.HyperbolicPlaceProducts.Statement
+module
+
+public import Mathlib
+public import Formalism.HyperbolicPlaceProducts.Statement
+
+@[expose] public section
 
 noncomputable section
 

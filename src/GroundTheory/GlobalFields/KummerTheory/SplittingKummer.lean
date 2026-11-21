@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.KummerTheory.Degree
-import GroundTheory.GlobalFields.KummerTheory.Splitting
-import GroundTheory.GlobalFields.KummerTheory.SplittingInfinite
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.KummerTheory.Degree
+public import GroundTheory.GlobalFields.KummerTheory.Splitting
+public import GroundTheory.GlobalFields.KummerTheory.SplittingInfinite
+
+@[expose] public section
 
 noncomputable section
 

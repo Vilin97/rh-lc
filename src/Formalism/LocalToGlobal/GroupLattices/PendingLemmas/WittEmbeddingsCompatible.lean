@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.FormalGroupSystem
-import Formalism.LocalToGlobal.GroupLattices.PerfectRings.ICIntCp
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.FormalGroupSystem
+public import Formalism.LocalToGlobal.GroupLattices.PerfectRings.ICIntCp
+
+@[expose] public section
 
 noncomputable section
 

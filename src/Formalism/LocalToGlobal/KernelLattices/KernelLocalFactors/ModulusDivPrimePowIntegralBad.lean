@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.ColInst
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ColInst
-import Formalism.LocalToGlobal.Columns.ChainInstY
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.KerEquivFr
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.KerEquivGen
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.ColInst
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ColInst
+public import Formalism.LocalToGlobal.Columns.ChainInstY
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.KerEquivFr
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.KerEquivGen
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

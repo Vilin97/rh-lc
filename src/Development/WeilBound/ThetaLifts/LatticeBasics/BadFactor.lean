@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.CommuteTheta
-import Development.WeilBound.ThetaLifts.LatticeBasics.BadStmt
-import Development.WeilBound.ThetaLifts.LatticeBasics.SchrUnit
-import Development.WeilBound.ThetaLifts.LeviDeterminants.CharacterAdmissibility.AdelInt
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenIntertwinerTransitive
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.CommuteTheta
+public import Development.WeilBound.ThetaLifts.LatticeBasics.BadStmt
+public import Development.WeilBound.ThetaLifts.LatticeBasics.SchrUnit
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.CharacterAdmissibility.AdelInt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenIntertwinerTransitive
+
+@[expose] public section
 
 noncomputable section
 

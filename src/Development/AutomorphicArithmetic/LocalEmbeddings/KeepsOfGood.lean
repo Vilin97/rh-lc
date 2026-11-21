@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.RootInCore
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankIInfKerSemilinear
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KeepsCuspLatticeNorm
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.LocalEmbeddings.RootInCore
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankIInfKerSemilinear
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KeepsCuspLatticeNorm
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 400000
 

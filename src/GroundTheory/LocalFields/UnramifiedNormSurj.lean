@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.LocalFields.UnramifiedDefs
-import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
-import GroundTheory.LocalFields.FilteredSurj
-import GroundTheory.GlobalFields.KummerTheory.LocalIndex
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.UnramifiedDefs
+public import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
+public import GroundTheory.LocalFields.FilteredSurj
+public import GroundTheory.GlobalFields.KummerTheory.LocalIndex
+
+@[expose] public section
 
 noncomputable section
 

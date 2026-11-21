@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TendstoSmulCocompact
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TendstoSmulCocompact
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBK
 

@@ -1,7 +1,11 @@
-import Formalism.CoboundaryTransfers.StatementAPI
-import Formalism.WachModuleLifts.StatementW
-import Formalism.LagrangeIdealLifts.Statement
-import Formalism.FrobeniusContraction.Statement
+module
+
+public import Formalism.CoboundaryTransfers.StatementAPI
+public import Formalism.WachModuleLifts.StatementW
+public import Formalism.LagrangeIdealLifts.Statement
+public import Formalism.FrobeniusContraction.Statement
+
+@[expose] public section
 
 noncomputable section
 

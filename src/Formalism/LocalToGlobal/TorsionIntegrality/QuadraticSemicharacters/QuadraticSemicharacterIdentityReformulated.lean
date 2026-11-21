@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.FinalKappa
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.UnimodLocStd
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.FinalKappa
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.UnimodLocStd
+
+@[expose] public section
 
 namespace Formalism.L2.Th1.H
 

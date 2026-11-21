@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.PoitouTate.RealTrace
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.PoitouTate.RealTrace
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

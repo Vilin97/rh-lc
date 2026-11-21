@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.FrobeniusOrbits.RealSubfieldLeCompositum
-import Formalism.FrobeniusOrbits.HostDiffSupport
+module
+
+public import Mathlib
+public import Formalism.FrobeniusOrbits.RealSubfieldLeCompositum
+public import Formalism.FrobeniusOrbits.HostDiffSupport
+
+@[expose] public section
 
 noncomputable section
 

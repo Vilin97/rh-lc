@@ -1,4 +1,8 @@
-import Formalism.PolynomialDimension.DigitSumValuationBound
+module
+
+public import Formalism.PolynomialDimension.DigitSumValuationBound
+
+@[expose] public section
 
 noncomputable section
 

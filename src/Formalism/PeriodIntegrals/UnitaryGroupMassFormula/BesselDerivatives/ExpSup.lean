@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.BesselDeriv
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.BesselDeriv
+
+@[expose] public section
 
 open scoped ContDiff Topology
 open Matrix

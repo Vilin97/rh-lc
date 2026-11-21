@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.HermitianForms.FormsTied
-import Formalism.LocalToGlobal.HermitianForms.TiedTwLv
-import Formalism.LocalToGlobal.HermitianForms.DefsGH
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.FormsTied
+public import Formalism.LocalToGlobal.HermitianForms.TiedTwLv
+public import Formalism.LocalToGlobal.HermitianForms.DefsGH
+
+@[expose] public section
 
 noncomputable section
 

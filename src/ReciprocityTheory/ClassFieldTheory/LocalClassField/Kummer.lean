@@ -1,5 +1,9 @@
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.KummerA
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.RestrictedMultiplicativeH1Subsingleton
+module
+
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.KummerA
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.RestrictedMultiplicativeH1Subsingleton
+
+@[expose] public section
 
 namespace ReciprocityTheory.DiscreteGroups.LocalClassField
 

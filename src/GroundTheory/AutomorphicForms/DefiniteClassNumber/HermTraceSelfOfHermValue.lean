@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.AdelicUnitaryGroups.Anisotropic
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.AdelicUnitaryGroups.Anisotropic
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,8 +1,12 @@
-import Mathlib
-import Development.DiscreteGroups.GlobalIrreducibility.DzTypeCut
-import Development.DiscreteGroups.GlobalIrreducibility.LConvCut
-import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.BernsteinUnitaryProductIrreducible
-import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.ChevalleyUnits
+module
+
+public import Mathlib
+public import Development.DiscreteGroups.GlobalIrreducibility.DzTypeCut
+public import Development.DiscreteGroups.GlobalIrreducibility.LConvCut
+public import Development.AbelianVarietyTheory.PublishedTheorems.TwistedTraceFormula.BernsteinUnitaryProductIrreducible
+public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.ChevalleyUnits
+
+@[expose] public section
 
 noncomputable section
 

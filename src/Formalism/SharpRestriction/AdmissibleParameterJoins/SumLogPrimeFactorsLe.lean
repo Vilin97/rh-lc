@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GlobalTheoremInputs
-import Formalism.HarderNarasimhan.HarderNarasimhanProofs.DualPl
+module
+
+public import Formalism.SharpRestriction.GlobalTheoremInputs
+public import Formalism.HarderNarasimhan.HarderNarasimhanProofs.DualPl
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain Pointwise
 

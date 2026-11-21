@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.PartsConj
-import Development.AutomorphicArithmetic.CharacterBoxes.ExistsPageN
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PartsConj
+public import Development.AutomorphicArithmetic.CharacterBoxes.ExistsPageN
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.BStep
-import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.SetLIntegralBiUnionLe
+module
+
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.BStep
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.SetLIntegralBiUnionLe
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.Y
 

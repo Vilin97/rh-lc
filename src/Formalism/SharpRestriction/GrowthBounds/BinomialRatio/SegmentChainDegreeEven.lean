@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.KLettersDegEven
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.KLettersDegEven
+
+@[expose] public section
 
 noncomputable section
 

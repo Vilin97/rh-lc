@@ -1,5 +1,9 @@
-import Formalism.StatementU
-import Formalism.StatementCM
+module
+
+public import Formalism.StatementU
+public import Formalism.StatementCM
+
+@[expose] public section
 
 open Finset ArithmeticFunction
 

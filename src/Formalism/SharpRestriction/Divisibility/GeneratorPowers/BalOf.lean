@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.FormalGroupLinearSecond
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.FormalGroupLinearSecond
+
+@[expose] public section
 
 set_option autoImplicit false
 

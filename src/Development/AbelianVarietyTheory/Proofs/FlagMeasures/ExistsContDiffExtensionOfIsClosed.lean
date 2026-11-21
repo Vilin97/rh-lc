@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.RealPlaceAnalysis.FinalF
+module
+
+public import Mathlib
+public import Formalism.RealPlaceAnalysis.FinalF
+
+@[expose] public section
 
 open Formalism.REAL
 open scoped ContDiff Manifold Topology

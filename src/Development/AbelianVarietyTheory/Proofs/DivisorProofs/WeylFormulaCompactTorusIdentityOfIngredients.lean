@@ -1,8 +1,12 @@
-import Development.AbelianVarietyTheory.Definitions.Divisors.DatumEquiv
-import Development.AbelianVarietyTheory.Definitions.Divisors.VdmSplit
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.VandermondeSplitsCompactNoncompact
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjointDetOnCompactTorus
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NumShiftHolds
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Divisors.DatumEquiv
+public import Development.AbelianVarietyTheory.Definitions.Divisors.VdmSplit
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.VandermondeSplitsCompactNoncompact
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjointDetOnCompactTorus
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NumShiftHolds
+
+@[expose] public section
 
 section
 open GlobalTheory.PsCo.PcEG

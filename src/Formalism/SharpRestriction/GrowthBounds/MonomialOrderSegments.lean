@@ -1,9 +1,13 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.PlaneGramTheoremOfLemmas
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.BrData
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.SecondValuationOfAdmitted
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.BrRenExpandMonomial
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.UnitLevelOne
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.BrSpan
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.PlaneGramTheoremOfLemmas
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.BrData
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.SecondValuationOfAdmitted
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.BrRenExpandMonomial
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.UnitLevelOne
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.BrSpan
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CountingFormula.DensGF
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.DensInert
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CountingFormula.DensGF
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.DensInert
+
+@[expose] public section
 
 noncomputable section
 

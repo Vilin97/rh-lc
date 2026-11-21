@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.CupProducts.Functoriality
-import GroundTheory.ProfiniteCohomology.ColimitDefs
-import GroundTheory.TateCohomology.CupProduct
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.CupProducts.Functoriality
+public import GroundTheory.ProfiniteCohomology.ColimitDefs
+public import GroundTheory.TateCohomology.CupProduct
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

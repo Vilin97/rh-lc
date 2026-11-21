@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.CharTableIsUnit
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.CharTableIsUnit
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSuppA
-import Lemmata.GeneralBFactTerForm.Imports
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSuppA
+public import Lemmata.GeneralBFactTerForm.Imports
+
+@[expose] public section
 
 noncomputable section
 

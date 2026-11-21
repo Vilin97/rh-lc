@@ -1,5 +1,9 @@
-import Formalism.FormalGroupLog.Statement
-import Formalism.FormalGroupLog.FormalGroupLogProofs.ChainRule
+module
+
+public import Formalism.FormalGroupLog.Statement
+public import Formalism.FormalGroupLog.FormalGroupLogProofs.ChainRule
+
+@[expose] public section
 
 noncomputable section
 

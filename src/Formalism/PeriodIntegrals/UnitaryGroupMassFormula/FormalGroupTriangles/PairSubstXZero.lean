@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.FglTriFactor
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FormalGroupTriangles.CoeffSubstUpdZero
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.FglTriFactor
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FormalGroupTriangles.CoeffSubstUpdZero
+
+@[expose] public section
 
 noncomputable section
 

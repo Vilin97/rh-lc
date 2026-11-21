@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.LowerIndex
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LowerIndex
+
+@[expose] public section
 
 noncomputable section
 

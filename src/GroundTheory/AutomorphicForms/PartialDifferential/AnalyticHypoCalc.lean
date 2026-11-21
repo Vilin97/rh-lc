@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.PartialDifferential.AnalyticHypoBasic
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.PartialDifferential.AnalyticHypoBasic
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.Sobolev
 

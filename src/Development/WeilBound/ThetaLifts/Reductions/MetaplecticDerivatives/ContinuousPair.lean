@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.Reductions.LocalLift
+module
+
+public import Development.WeilBound.ThetaLifts.Reductions.LocalLift
+
+@[expose] public section
 
 noncomputable section
 

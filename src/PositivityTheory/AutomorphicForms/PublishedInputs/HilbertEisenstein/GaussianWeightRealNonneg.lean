@@ -1,4 +1,8 @@
-import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.P5meas
+module
+
+public import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.P5meas
+
+@[expose] public section
 
 noncomputable section
 

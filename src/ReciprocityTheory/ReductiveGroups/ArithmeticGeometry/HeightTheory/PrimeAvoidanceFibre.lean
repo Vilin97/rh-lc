@@ -1,4 +1,8 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.SpanTopOfComplete
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.SpanTopOfComplete
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.T0.PrimeAvoidanceFibre
 

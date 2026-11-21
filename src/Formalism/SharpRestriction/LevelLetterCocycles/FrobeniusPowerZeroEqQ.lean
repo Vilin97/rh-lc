@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.VanishOfXU
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.VanishOfXU
+
+@[expose] public section
 
 noncomputable section
 

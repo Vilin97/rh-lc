@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.MtAdWt
+module
+
+public import Formalism.LocalToGlobal.Columns.MtAdWt
+
+@[expose] public section
 
 open NumberField IsDedekindDomain ReciprocityTheory.Aut Formalism.AUTREP MvPolynomial
 

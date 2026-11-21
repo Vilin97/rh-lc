@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HilbertSchmidt
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HilbertSchmidt
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

@@ -1,7 +1,11 @@
-import Development.WeilBound.ThetaLifts.FrameEstimates.SqAllC
-import Development.WeilBound.ThetaLifts.FrameEstimates.ThickFrames
-import Development.WeilBound.ThetaLifts.FrameEstimates.ContinuousMixedSymm
-import Development.WeilBound.ThetaLifts.FrameEstimates.RankIffRight
+module
+
+public import Development.WeilBound.ThetaLifts.FrameEstimates.SqAllC
+public import Development.WeilBound.ThetaLifts.FrameEstimates.ThickFrames
+public import Development.WeilBound.ThetaLifts.FrameEstimates.ContinuousMixedSymm
+public import Development.WeilBound.ThetaLifts.FrameEstimates.RankIffRight
+
+@[expose] public section
 
 noncomputable section
 

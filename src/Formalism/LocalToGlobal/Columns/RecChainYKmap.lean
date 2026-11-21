@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.Columns.RecChainYUnfPol
-import Formalism.LocalToGlobal.Columns.Record
-import Mathlib
-import Formalism.LocalToGlobal.Columns.GFamEv
-import Formalism.LocalToGlobal.Columns.FiniteDimensionalForms
-import Formalism.LocalToGlobal.Columns.RhoEqOfSmulEq
+module
+
+public import Formalism.LocalToGlobal.Columns.RecChainYUnfPol
+public import Formalism.LocalToGlobal.Columns.Record
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.GFamEv
+public import Formalism.LocalToGlobal.Columns.FiniteDimensionalForms
+public import Formalism.LocalToGlobal.Columns.RhoEqOfSmulEq
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix MvPolynomial
 

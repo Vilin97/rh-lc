@@ -1,7 +1,11 @@
-import Development.WeilBound.CoreStatements.LocalThetaKernels.LocpairAlg
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfDictAd
-import CompanionTheory.SpectralGeometry.LocalGlobalProofs.AdelicAnalysis.GlobalUnitScalingHaarProductFormula
-import Development.AutomorphicSpectrum.Proofs.MembershipProofs.BoxFunMemSB
+module
+
+public import Development.WeilBound.CoreStatements.LocalThetaKernels.LocpairAlg
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfDictAd
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.AdelicAnalysis.GlobalUnitScalingHaarProductFormula
+public import Development.AutomorphicSpectrum.Proofs.MembershipProofs.BoxFunMemSB
+
+@[expose] public section
 
 noncomputable section
 

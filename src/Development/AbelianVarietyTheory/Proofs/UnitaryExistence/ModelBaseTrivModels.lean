@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.CuspFree
-import Formalism.LocalToGlobal.ProjectiveLattices.IntegrableOnIntegrand
-import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.ModelFamilies
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.CuspFree
+public import Formalism.LocalToGlobal.ProjectiveLattices.IntegrableOnIntegrand
+public import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.ModelFamilies
+
+@[expose] public section
 
 noncomputable section
 

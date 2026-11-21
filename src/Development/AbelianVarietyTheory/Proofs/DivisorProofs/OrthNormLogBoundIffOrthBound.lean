@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.OrthogonalNormSquareSum
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.ScaledCoisometryNorms
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.OrthogonalNormSquareSum
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.ScaledCoisometryNorms
+
+@[expose] public section
 
 open scoped ComplexOrder Matrix
 open Formalism.BasicNotions Formalism.L2.DIV Formalism.L2.Col

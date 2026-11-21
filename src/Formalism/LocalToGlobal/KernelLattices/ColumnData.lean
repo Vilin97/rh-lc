@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.ThDistC
-import Formalism.LocalToGlobal.KernelLattices.BaseEx
-import Formalism.LocalToGlobal.Columns.WordFin
-import Formalism.LocalToGlobal.GlobalTheory.JetPositivity.DeltaPowTwelveEqDiscr
-import Formalism.LocalToGlobal.GlobalTheory.GL3.Statement
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.ThDistC
+public import Formalism.LocalToGlobal.KernelLattices.BaseEx
+public import Formalism.LocalToGlobal.Columns.WordFin
+public import Formalism.LocalToGlobal.GlobalTheory.JetPositivity.DeltaPowTwelveEqDiscr
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.Statement
+
+@[expose] public section
 
 noncomputable section
 

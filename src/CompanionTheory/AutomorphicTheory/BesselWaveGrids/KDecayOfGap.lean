@@ -1,11 +1,15 @@
-import CompanionTheory.AutomorphicTheory.BesselWaveGrids.AsmDiff
-import CompanionTheory.AutomorphicTheory.BesselWaveGrids.GridsText
-import CompanionTheory.AutomorphicTheory.SchurLimitBounds.ZuckermanDuality.Assemble
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.Cut_BPEq
-import CompanionTheory.AutomorphicTheory.BesselWaveGrids.LettersPoly
-import CompanionTheory.AutomorphicTheory.BesselWaveGrids.CoefFacts
-import CompanionTheory.AutomorphicTheory.KFiniteVectors.KDecay
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BaseCutoffIsTruncation
+module
+
+public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.AsmDiff
+public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.GridsText
+public import CompanionTheory.AutomorphicTheory.SchurLimitBounds.ZuckermanDuality.Assemble
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.Cut_BPEq
+public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.LettersPoly
+public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.CoefFacts
+public import CompanionTheory.AutomorphicTheory.KFiniteVectors.KDecay
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BaseCutoffIsTruncation
+
+@[expose] public section
 
 namespace CompanionTheory.WaveGrid
 

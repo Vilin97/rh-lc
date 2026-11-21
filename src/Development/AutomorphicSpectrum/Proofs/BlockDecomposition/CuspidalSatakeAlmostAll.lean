@@ -1,10 +1,14 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.AbelianHeightsDuality.GelfandKazhdanDuality.IsCuspFormDualMap
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.HasSatakeGLOfIsSatVecGL
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EventuallyMemFixed
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AlgebraMapIntertwiningMapBijectiveOfIsSmooth
-import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCT
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsRestTail
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.AbelianHeightsDuality.GelfandKazhdanDuality.IsCuspFormDualMap
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.HasSatakeGLOfIsSatVecGL
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.EventuallyMemFixed
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AlgebraMapIntertwiningMapBijectiveOfIsSmooth
+public import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCT
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsRestTail
+
+@[expose] public section
 
 noncomputable section
 

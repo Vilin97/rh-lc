@@ -1,4 +1,9 @@
-import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.LengthCommensurableMapIffOfInjective
+module
+
+public import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.LengthCommensurableMapIffOfInjective
+
+@[expose] public section
+
 universe u_1 u_2 u_3 u_4
 
 namespace GlobalTheory.SignedLengthTower

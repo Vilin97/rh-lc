@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.Interface
-import Formalism.LocalToGlobal.CharacterGerms.ValuationChoiceHypothesis
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.Interface
+public import Formalism.LocalToGlobal.CharacterGerms.ValuationChoiceHypothesis
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

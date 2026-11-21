@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnipMinSubsetMinParOne
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CvecSurjective
-import GroundTheory.AutomorphicForms.AnisotropicUnitaryHeight
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnipMinSubsetMinParOne
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CvecSurjective
+public import GroundTheory.AutomorphicForms.AnisotropicUnitaryHeight
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 set_option maxSynthPendingDepth 1

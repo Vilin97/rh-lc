@@ -1,6 +1,10 @@
-import Development.WeilBound.CoreStatements.VolumeEquality.RootBranches
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenPtSpecializesOfSpecializes
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.RegAtFractionNoetherianClosed
+module
+
+public import Development.WeilBound.CoreStatements.VolumeEquality.RootBranches
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenPtSpecializesOfSpecializes
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.RegAtFractionNoetherianClosed
+
+@[expose] public section
 
 noncomputable section
 

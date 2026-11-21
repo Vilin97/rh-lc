@@ -1,4 +1,8 @@
-import Formalism.SizeWindowBrackets.ClaimGaFree
+module
+
+public import Formalism.SizeWindowBrackets.ClaimGaFree
+
+@[expose] public section
 
 namespace Formalism.LFunctionChainParameters.UnitWeightPartition
 

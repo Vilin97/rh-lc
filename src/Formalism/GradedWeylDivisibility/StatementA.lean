@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.RealPlaceAnalysis.FockPairGl
+module
+
+public import Mathlib
+public import Formalism.RealPlaceAnalysis.FockPairGl
+
+@[expose] public section
 
 open MvPolynomial
 

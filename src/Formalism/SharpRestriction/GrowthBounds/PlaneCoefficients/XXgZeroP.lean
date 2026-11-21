@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.TouchCOfMem
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.TouchCOfMem
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PFibreLocal
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
-import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.StDiagFibreFubini
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PFibreLocal
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
+public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.StDiagFibreFubini
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter

@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.CurveComplexPoint
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.CurveComplexPoint
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

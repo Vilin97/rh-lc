@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.RationalLowerBounds
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.RationalLowerBounds
+
+@[expose] public section
 
 noncomputable section
 

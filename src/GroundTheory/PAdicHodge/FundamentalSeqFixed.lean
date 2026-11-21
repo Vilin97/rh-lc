@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.PAdicHodge.FundamentalSeqSurj
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.FundamentalSeqSurj
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

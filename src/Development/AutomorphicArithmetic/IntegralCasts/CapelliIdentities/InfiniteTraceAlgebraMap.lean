@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qh34.aux1.{u_1} :
     ∀ (K : Type u_1) [inst : Field K] [inst_1 : NumberField K],

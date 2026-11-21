@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsVecFixGroup
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsComplementForm
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsVecFixGroup
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsComplementForm
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights.FiniteCovolume
 

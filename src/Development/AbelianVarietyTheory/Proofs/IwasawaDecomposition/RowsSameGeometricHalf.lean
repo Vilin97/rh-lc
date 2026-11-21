@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ChoiceSide
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CongrFunHeq
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ClassSumEq
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ChoiceSide
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.CongrFunHeq
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ClassSumEq
+
+@[expose] public section
 
 noncomputable section
 section

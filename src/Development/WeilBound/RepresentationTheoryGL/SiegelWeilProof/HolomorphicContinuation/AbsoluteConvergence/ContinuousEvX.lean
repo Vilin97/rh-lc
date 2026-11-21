@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.AbsoluteConvergence.GaussPart
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsRestExtra
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.AbsoluteConvergence.GaussPart
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsRestExtra
+
+@[expose] public section
 
 noncomputable section
 

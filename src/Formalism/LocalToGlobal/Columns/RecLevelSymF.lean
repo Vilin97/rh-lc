@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.Columns.RecLevelSym
-import Formalism.LocalToGlobal.Columns.TiedGlMat
-import Formalism.LocalToGlobal.HermitianForms.DefsSym
+module
+
+public import Formalism.LocalToGlobal.Columns.RecLevelSym
+public import Formalism.LocalToGlobal.Columns.TiedGlMat
+public import Formalism.LocalToGlobal.HermitianForms.DefsSym
+
+@[expose] public section
 
 open NumberField Matrix
 

@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.RepAlg
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.UnopSMul
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.WeilGroupCharacters.RepAlg
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.UnopSMul
+
+@[expose] public section
 
 noncomputable section
 

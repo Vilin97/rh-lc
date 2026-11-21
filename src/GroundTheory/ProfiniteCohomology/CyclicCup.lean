@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.CyclicCupDefs
-import GroundTheory.TateCohomology.TateLow
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.CyclicCupDefs
+public import GroundTheory.TateCohomology.TateLow
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

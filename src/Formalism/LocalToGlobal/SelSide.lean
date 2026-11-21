@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ClassRec
-import Formalism.LocalToGlobal.GaloisLevelStructure.DefsAut
-import Formalism.LocalToGlobal.UnitaryNorms.CharTransport
+module
+
+public import Formalism.LocalToGlobal.ClassRec
+public import Formalism.LocalToGlobal.GaloisLevelStructure.DefsAut
+public import Formalism.LocalToGlobal.UnitaryNorms.CharTransport
+
+@[expose] public section
 
 noncomputable section
 

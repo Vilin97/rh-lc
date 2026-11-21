@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.EllipticTorsion.CompExpWeight
+module
+
+public import Mathlib
+public import Formalism.EllipticTorsion.CompExpWeight
+
+@[expose] public section
 
 open PowerSeries IsUltrametricDist
 

@@ -1,9 +1,13 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFCoreN
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFHatProdKBStmt
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopForm
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopDom
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLimENF
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutDec
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFCoreN
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFHatProdKBStmt
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopForm
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopDom
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLimENF
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutDec
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP
 

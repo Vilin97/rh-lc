@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.ValCount
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.LocalEmbeddings.ValCount
+
+@[expose] public section
+
 open IsLocalRing NumberField IsDedekindDomain GlobalTheory.ValCount
 open scoped Classical
 

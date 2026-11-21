@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.ExistsMapEqOfPowMul
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.PhiGalCris
-import GroundTheory.PAdicHodge.GalSmulAlgebraMapPadicPlus
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.ExistsMapEqOfPowMul
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.PhiGalCris
+public import GroundTheory.PAdicHodge.GalSmulAlgebraMapPadicPlus
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.FormalDegreeBessel.StatementIO
-import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
-import Formalism.RealPlaceAnalysis.QuotientSettingHolds
+module
+
+public import Mathlib
+public import Formalism.FormalDegreeBessel.StatementIO
+public import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
+public import Formalism.RealPlaceAnalysis.QuotientSettingHolds
+
+@[expose] public section
 
 open Matrix
 open scoped ContDiff

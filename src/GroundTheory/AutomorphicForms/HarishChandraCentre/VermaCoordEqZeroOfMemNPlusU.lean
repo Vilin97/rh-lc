@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HarishChandraCentre.Projection
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HarishChandraCentre.Projection
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.HarishChandra
 

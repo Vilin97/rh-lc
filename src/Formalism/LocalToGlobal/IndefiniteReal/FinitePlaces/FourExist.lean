@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.FourModel
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.FourModel
+
+@[expose] public section
 
 set_option linter.style.haveILetI false
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SatakeDualWeyl.Statement
-import Formalism.LocalRingCardinality.DataLevel
+module
+
+public import Mathlib
+public import Formalism.SatakeDualWeyl.Statement
+public import Formalism.LocalRingCardinality.DataLevel
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InertPlaceActionOnTensorCoords
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InclRMulPtAt
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InertPlaceActionOnTensorCoords
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InclRMulPtAt
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.KFinLoc GlobalTheory.InertCoord
 open scoped TensorProduct Matrix
 set_option maxHeartbeats 1000000 in

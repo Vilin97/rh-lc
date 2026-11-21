@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qi6.det_ne_zero :
     ∀ {F : Type} [inst : NormedField F] [IsUltrametricDist F] {m : ℕ}

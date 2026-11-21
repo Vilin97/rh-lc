@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.SegDistsLtG
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.SegDistsLtG
+
+@[expose] public section
 
 noncomputable section
 

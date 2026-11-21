@@ -1,11 +1,15 @@
-import Mathlib
-import ReciprocityTheory.NeutralLocalFields.Duality
-import ReciprocityTheory.GroupCohomology.InfRes
-import ReciprocityTheory.GroupCohomology.CardLenStatement
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.KbarRepContAction
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.Herbrand
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnrDefs
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.QZDefs
+module
+
+public import Mathlib
+public import ReciprocityTheory.NeutralLocalFields.Duality
+public import ReciprocityTheory.GroupCohomology.InfRes
+public import ReciprocityTheory.GroupCohomology.CardLenStatement
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.KbarRepContAction
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.Herbrand
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnrDefs
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.QZDefs
+
+@[expose] public section
 
 namespace ReciprocityTheory.DiscreteGroups.LocalClassField
 

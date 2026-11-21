@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.TateTwists.TensorVanishing.TensZero
+module
+
+public import Development.EtaleCohomology.TateTwists.TensorVanishing.TensZero
+
+@[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex GlobalTheory.EtC
 open scoped TensorProduct DirectSum

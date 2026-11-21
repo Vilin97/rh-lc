@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.JointLevelFrameZero
-import Formalism.LocalToGlobal.Columns.RecLevelLocF
+module
+
+public import Formalism.LocalToGlobal.Columns.JointLevelFrameZero
+public import Formalism.LocalToGlobal.Columns.RecLevelLocF
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 open scoped TensorProduct

@@ -1,5 +1,9 @@
-import Mathlib.Analysis.InnerProductSpace.Projection.Basic
-import Mathlib.LinearAlgebra.Trace
+module
+
+public import Mathlib.Analysis.InnerProductSpace.Projection.Basic
+public import Mathlib.LinearAlgebra.Trace
+
+@[expose] public section
 
 noncomputable section
 

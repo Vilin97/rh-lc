@@ -1,4 +1,8 @@
-import ReciprocityTheory.SemistableReduction.TorusLexB
+module
+
+public import ReciprocityTheory.SemistableReduction.TorusLexB
+
+@[expose] public section
 
 namespace ReciprocityTheory.MultiplicativeHeights.TorusLexOrder
 

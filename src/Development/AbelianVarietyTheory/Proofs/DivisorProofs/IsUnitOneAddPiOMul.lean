@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SatakeDualWeyl.StatementF
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.AevalRootEqZeroIff
-import GroundTheory.LocalFields.FilteredSurj
+module
+
+public import Mathlib
+public import Formalism.SatakeDualWeyl.StatementF
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.AevalRootEqZeroIff
+public import GroundTheory.LocalFields.FilteredSurj
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.ThetaLogCoordinates.ResidueClassEstimates.Letters
+module
+
+public import Formalism.ThetaLogCoordinates.ResidueClassEstimates.Letters
+
+@[expose] public section
 
 noncomputable section
 

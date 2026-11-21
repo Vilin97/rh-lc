@@ -1,8 +1,12 @@
-import CompanionTheory.AutomorphicTheory.BesselWaveGrids.TiedNum
-import CompanionTheory.AutomorphicTheory.BesselWaveGrids.NormalizedMeasureScaling
-import CompanionTheory.AutomorphicTheory.BesselWaveGrids.PowFourLeRpowNineHalves
-import Formalism.SharpRestriction.CuspSpanNormBounds.TheoremBConstants
-import Formalism.SharpRestriction.CuspSpanNormBounds.RatioInvLeFrameFactor
+module
+
+public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.TiedNum
+public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.NormalizedMeasureScaling
+public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.PowFourLeRpowNineHalves
+public import Formalism.SharpRestriction.CuspSpanNormBounds.TheoremBConstants
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RatioInvLeFrameFactor
+
+@[expose] public section
 
 noncomputable section
 

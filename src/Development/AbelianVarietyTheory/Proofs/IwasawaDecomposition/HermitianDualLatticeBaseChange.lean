@@ -1,7 +1,12 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.Statement
-import Formalism.HermitianLattices.StatementLat
-import Formalism.HermitianLattices.HermitianLatticesProofs.DualLattice
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.Statement
+public import Formalism.HermitianLattices.StatementLat
+public import Formalism.HermitianLattices.HermitianLatticesProofs.DualLattice
+
+@[expose] public section
+
 open NumberField IsDedekindDomain
 
 noncomputable section

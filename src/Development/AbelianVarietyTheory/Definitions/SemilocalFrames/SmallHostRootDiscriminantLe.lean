@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalRingCardinality.SpanPowerMembership
-import Formalism.LocalRingCardinality.SpanPowerMembership.RankRecordRowDimensionZero
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.SecondLabelsNonempty
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.SpanPowerMembership
+public import Formalism.LocalRingCardinality.SpanPowerMembership.RankRecordRowDimensionZero
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.SecondLabelsNonempty
+
+@[expose] public section
 
 noncomputable section
 

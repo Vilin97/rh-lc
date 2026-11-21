@@ -1,8 +1,12 @@
-import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.SemistableModelSemistable
-import Mathlib
-import Formalism.LocalRingCardinality.AdicCompletionLocal.LocTied
-import Development.AutomorphicArithmetic.ThetaCorrespondence.FockModels.TiltedDrinfeld.Bridge
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.AinfMapSurjective
+module
+
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.SemistableModelSemistable
+public import Mathlib
+public import Formalism.LocalRingCardinality.AdicCompletionLocal.LocTied
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.FockModels.TiltedDrinfeld.Bridge
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.AinfMapSurjective
+
+@[expose] public section
 
 set_option backward.isDefEq.respectTransparency false
 

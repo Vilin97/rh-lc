@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.GradedWeylDivisibility.StatementE
+module
+
+public import Mathlib
+public import Formalism.GradedWeylDivisibility.StatementE
+
+@[expose] public section
+
 open MvPolynomial
 
 namespace GlobalTheory.WeylInt

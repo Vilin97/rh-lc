@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.NonemptyDvrSettingOfStandard
-import Lemmata.ComplementLifts.ComplLift
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.NonemptyDvrSettingOfStandard
+public import Lemmata.ComplementLifts.ComplLift
+
+@[expose] public section
 
 noncomputable section
 

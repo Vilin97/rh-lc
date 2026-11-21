@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.MembAlgF
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.MembLabF
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.Proposition5OfThreeParts
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.MembAlgF
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.MembLabF
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.Proposition5OfThreeParts
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.ConjSymm
+module
+
+public import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.ConjSymm
+
+@[expose] public section
 
 namespace ReciprocityTheory.GeometryOfNumbersTheory
 

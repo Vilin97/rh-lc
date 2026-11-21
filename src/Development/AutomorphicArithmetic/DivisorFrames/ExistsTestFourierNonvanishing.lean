@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.ConeBDefs
-import Development.AutomorphicArithmetic.DivisorFrames.GaussianFourierConjPower
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.LocalEmbeddings.ConeBDefs
+public import Development.AutomorphicArithmetic.DivisorFrames.GaussianFourierConjPower
+
+@[expose] public section
+
 open MeasureTheory FreeSingleHomotopyEquivDiscreteChains.UpperTheory.Dv.ConeB
 
 private lemma rad_int (p : ℝ) (hp : -2 < p) :

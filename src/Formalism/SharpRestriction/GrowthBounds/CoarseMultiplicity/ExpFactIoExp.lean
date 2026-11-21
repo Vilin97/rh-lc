@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.FactAbs
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.IoBlockMonomial
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.Kummer
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.FactAbs
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.IoBlockMonomial
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.Kummer
+
+@[expose] public section
 
 noncomputable section
 

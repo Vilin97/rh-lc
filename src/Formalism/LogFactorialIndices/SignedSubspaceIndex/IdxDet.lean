@@ -1,6 +1,10 @@
-import Formalism.LogFactorialIndices.StatementIdx
-import Lemmata.DiscreteValuationQuotients.LenQuotSpan
-import Lemmata.GeneralBFactSecondExtra.Key
+module
+
+public import Formalism.LogFactorialIndices.StatementIdx
+public import Lemmata.DiscreteValuationQuotients.LenQuotSpan
+public import Lemmata.GeneralBFactSecondExtra.Key
+
+@[expose] public section
 
 open Module Submodule
 

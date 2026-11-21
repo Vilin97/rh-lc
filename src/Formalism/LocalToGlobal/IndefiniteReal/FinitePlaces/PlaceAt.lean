@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceSum
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.FourUniq
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.HeisSt
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.IpTheta
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceSum
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.FourUniq
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.HeisSt
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.IpTheta
+
+@[expose] public section
 
 noncomputable section
 

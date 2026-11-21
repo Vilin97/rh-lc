@@ -1,4 +1,8 @@
-import Formalism.FormalDegreeBessel.StatementWR
+module
+
+public import Formalism.FormalDegreeBessel.StatementWR
+
+@[expose] public section
 
 open scoped ContDiff Topology
 open Filter

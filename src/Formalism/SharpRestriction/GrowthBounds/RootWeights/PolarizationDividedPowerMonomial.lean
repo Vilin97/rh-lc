@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.DividedPowersPreserveZero
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.DividedPowersPreserveZero
+
+@[expose] public section
 
 noncomputable section
 

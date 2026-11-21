@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.ThetaCorrespondence.CuspidalSupport.GaloisStatementWeakOfFull
+module
+
+public import Development.AutomorphicArithmetic.ThetaCorrespondence.CuspidalSupport.GaloisStatementWeakOfFull
+
+@[expose] public section
 
 noncomputable section
 

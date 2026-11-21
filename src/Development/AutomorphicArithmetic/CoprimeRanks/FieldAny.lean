@@ -1,7 +1,11 @@
-import Development.AutomorphicArithmetic.CoprimeRanks.SecondSetNoRelation
-import Development.AutomorphicArithmetic.CoprimeRanks.OfPInjective
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.InertiaGaloisSymmetry.AnyLevel
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.InertiaGaloisSymmetry.OfRawToHostRaw
+module
+
+public import Development.AutomorphicArithmetic.CoprimeRanks.SecondSetNoRelation
+public import Development.AutomorphicArithmetic.CoprimeRanks.OfPInjective
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.InertiaGaloisSymmetry.AnyLevel
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.InertiaGaloisSymmetry.OfRawToHostRaw
+
+@[expose] public section
 
 open NumberField Formalism.FrobeniusOrbits Formalism.HC
 

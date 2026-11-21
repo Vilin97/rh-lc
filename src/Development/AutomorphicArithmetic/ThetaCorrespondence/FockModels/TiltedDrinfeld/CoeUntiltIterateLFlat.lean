@@ -1,6 +1,10 @@
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LocalPrimeGaloisActionPeriodT
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.MaximalIdealEqSpanT
-import GroundTheory.PAdicHodge.WAKummerEps
+module
+
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LocalPrimeGaloisActionPeriodT
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.MaximalIdealEqSpanT
+public import GroundTheory.PAdicHodge.WAKummerEps
+
+@[expose] public section
 
 noncomputable section
 

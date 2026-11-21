@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.IdeleRoots.ConstantFrames.GaugeExistence.QdetSub
+module
+
+public import Mathlib
+public import GroundTheory.IdeleRoots.ConstantFrames.GaugeExistence.QdetSub
+
+@[expose] public section
 
 open Polynomial GroundTheory.BlockD.FourierDecayAlt.GaugeExists
 

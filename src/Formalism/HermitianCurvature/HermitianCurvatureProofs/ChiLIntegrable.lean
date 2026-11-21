@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PsiCStarMul
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SliceContOn
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PsiCStarMul
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SliceContOn
+
+@[expose] public section
 
 open Matrix MeasureTheory Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt Formalism.FourierDecayAlt.U
 

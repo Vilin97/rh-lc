@@ -1,6 +1,10 @@
-import Formalism.ThetaLogCoordinates.ProductIdealMonotone.ElementarySymmetricExpBound
-import Formalism.SubspaceCounting.SubspaceCountingProofs.ManyOrbits
-import Mathlib
+module
+
+public import Formalism.ThetaLogCoordinates.ProductIdealMonotone.ElementarySymmetricExpBound
+public import Formalism.SubspaceCounting.SubspaceCountingProofs.ManyOrbits
+public import Mathlib
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.TateCohomology.InducedNorm
-import GroundTheory.TateCohomology.TateAddEquivAbelianizationTateClass
-import GroundTheory.TateCohomology.PGroupFixed
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.InducedNorm
+public import GroundTheory.TateCohomology.TateAddEquivAbelianizationTateClass
+public import GroundTheory.TateCohomology.PGroupFixed
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.GroupCoh

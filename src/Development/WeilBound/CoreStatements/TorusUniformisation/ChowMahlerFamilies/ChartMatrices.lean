@@ -1,8 +1,13 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.IsDerAt0
-import Development.WeilBound.CoreStatements.HodgeTatePoints.IsFractionRingOfIntegers
-import Development.WeilBound.CoreStatements.HodgeTatePoints.FreeOfFg
-import Development.WeilBound.CoreStatements.HodgeTatePoints.GdChart
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.TorusUniformisation.ChowMahlerFamilies.IsDerAt0
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.IsFractionRingOfIntegers
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.FreeOfFg
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.GdChart
+
+@[expose] public section
+
 open Module NumberField GlobalTheory.CompanionTheory.Ar.HT TensorProduct
 open scoped Matrix
 

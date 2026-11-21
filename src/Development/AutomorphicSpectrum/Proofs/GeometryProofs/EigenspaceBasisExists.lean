@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.LeftEqIffLieVecSmul
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.SumEmbeddingDualInt
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.LeftEqIffLieVecSmul
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.SumEmbeddingDualInt
+
+@[expose] public section
+
 open NumberField
 
 noncomputable section

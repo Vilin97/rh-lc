@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.SliceLine
-import Development.WeilBound.ThetaLifts.FrameEstimates.GrpTop
-import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsMaximalCompactInfinite
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.SliceLine
+public import Development.WeilBound.ThetaLifts.FrameEstimates.GrpTop
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsMaximalCompactInfinite
+
+@[expose] public section
 
 noncomputable section
 

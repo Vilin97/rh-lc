@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Divisibility.DivisibilityRemainder.RationalColumns.ColFacts
-import Formalism.LocalToGlobal.Divisibility.TupUsed
+module
+
+public import Formalism.LocalToGlobal.Divisibility.DivisibilityRemainder.RationalColumns.ColFacts
+public import Formalism.LocalToGlobal.Divisibility.TupUsed
+
+@[expose] public section
 
 noncomputable section
 

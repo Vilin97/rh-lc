@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.RestHLTransport
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.RestHLTransport
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.MahlerMeasure.StatementTM
+module
+
+public import Formalism.MahlerMeasure.StatementTM
+
+@[expose] public section
 
 namespace Formalism.GM.TM
 

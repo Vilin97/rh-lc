@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.ThetaSupremumBounds.StatementE
+module
+
+public import Mathlib
+public import Formalism.ThetaSupremumBounds.StatementE
+
+@[expose] public section
 
 open Finset
 open scoped ComplexConjugate Real

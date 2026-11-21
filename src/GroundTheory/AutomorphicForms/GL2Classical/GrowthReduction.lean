@@ -1,10 +1,14 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.Reduction
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.Height
-import GroundTheory.AutomorphicForms.GL2Classical.ConstantTerm
-import GroundTheory.AutomorphicForms.GL2Classical.Growth
-import GroundTheory.GlobalFields.TateThesis.AdelePoissonUniform
-import GroundTheory.AutomorphicForms.GL2Classical.KFinite
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.Reduction
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.Height
+public import GroundTheory.AutomorphicForms.GL2Classical.ConstantTerm
+public import GroundTheory.AutomorphicForms.GL2Classical.Growth
+public import GroundTheory.GlobalFields.TateThesis.AdelePoissonUniform
+public import GroundTheory.AutomorphicForms.GL2Classical.KFinite
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix Set Filter Topology CongruenceSubgroup
 open UpperHalfPlane hiding I I_re I_im

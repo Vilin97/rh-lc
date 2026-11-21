@@ -1,4 +1,8 @@
-import Formalism.DoubleCosetMeasures.StatementV
+module
+
+public import Formalism.DoubleCosetMeasures.StatementV
+
+@[expose] public section
 
 open MeasureTheory Matrix Set Pointwise
 

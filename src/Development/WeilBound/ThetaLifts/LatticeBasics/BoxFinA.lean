@@ -1,5 +1,9 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.LatticeBasics.RealInv
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.LatticeBasics.RealInv
+
+@[expose] public section
 
 noncomputable section
 

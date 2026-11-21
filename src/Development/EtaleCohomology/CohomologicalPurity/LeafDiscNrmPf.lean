@@ -1,6 +1,10 @@
-import Development.EtaleCohomology.CohomologicalPurity.LeafDiscPf
-import Development.EtaleCohomology.TateTwists.EtaleChainCochainExistsOfEvalData
-import Development.EtaleCohomology.KummerTheory.CupAWCutEv
+module
+
+public import Development.EtaleCohomology.CohomologicalPurity.LeafDiscPf
+public import Development.EtaleCohomology.TateTwists.EtaleChainCochainExistsOfEvalData
+public import Development.EtaleCohomology.KummerTheory.CupAWCutEv
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC

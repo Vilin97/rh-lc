@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.LevelCharts.ToFSSymmStab
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ClsMain
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.LevelCharts.ToFSSymmStab
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ClsMain
+
+@[expose] public section
 
 noncomputable section
 

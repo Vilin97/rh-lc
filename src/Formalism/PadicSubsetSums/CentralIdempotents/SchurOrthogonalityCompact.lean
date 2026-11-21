@@ -1,4 +1,8 @@
-import Formalism.PadicSubsetSums.CentralIdempotents.FactorOverLocalSubalgebraMonic
+module
+
+public import Formalism.PadicSubsetSums.CentralIdempotents.FactorOverLocalSubalgebraMonic
+
+@[expose] public section
 
 noncomputable section
 

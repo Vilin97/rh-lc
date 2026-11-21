@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.Differential
-import GroundTheory.GlobalFields.ComplexMultiplication.DifferentialSeparable
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.Differential
+public import GroundTheory.GlobalFields.ComplexMultiplication.DifferentialSeparable
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

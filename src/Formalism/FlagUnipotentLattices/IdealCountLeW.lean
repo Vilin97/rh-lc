@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HyperbolicPlaceProducts.Statement
-import Formalism.FlagUnipotentLattices.MemOfOrthogonalAnisotropic
+module
+
+public import Mathlib
+public import Formalism.HyperbolicPlaceProducts.Statement
+public import Formalism.FlagUnipotentLattices.MemOfOrthogonalAnisotropic
+
+@[expose] public section
 
 noncomputable section
 

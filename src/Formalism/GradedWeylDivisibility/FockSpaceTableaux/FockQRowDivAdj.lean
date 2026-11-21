@@ -1,8 +1,12 @@
-import Formalism.GradedWeylDivisibility.StatementB
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LFockqLemmas
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.ProdFactorialSupportSubSingle
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LFocksLemmas
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.FockRowAdj
+module
+
+public import Formalism.GradedWeylDivisibility.StatementB
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LFockqLemmas
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.ProdFactorialSupportSubSingle
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LFocksLemmas
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.FockRowAdj
+
+@[expose] public section
 
 open MvPolynomial Formalism.REAL
 

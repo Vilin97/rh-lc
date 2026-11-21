@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ArithDegreeIdeal
-import GroundTheory.HeightsAndTheta.Heights.HermitianDual
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ArithDegreeIdeal
+public import GroundTheory.HeightsAndTheta.Heights.HermitianDual
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

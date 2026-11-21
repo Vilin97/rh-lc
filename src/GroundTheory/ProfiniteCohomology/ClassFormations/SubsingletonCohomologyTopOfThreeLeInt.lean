@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.ClassFormations.HighFinite
-import GroundTheory.ProfiniteCohomology.ClassFormations.Corestriction
-import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing.FormationThree
-import GroundTheory.ProfiniteCohomology.LocalClassFormation.CupSymbolDefs
-import GroundTheory.ProfiniteCohomology.CupProducts.GroupCohomology
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.ClassFormations.HighFinite
+public import GroundTheory.ProfiniteCohomology.ClassFormations.Corestriction
+public import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing.FormationThree
+public import GroundTheory.ProfiniteCohomology.LocalClassFormation.CupSymbolDefs
+public import GroundTheory.ProfiniteCohomology.CupProducts.GroupCohomology
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

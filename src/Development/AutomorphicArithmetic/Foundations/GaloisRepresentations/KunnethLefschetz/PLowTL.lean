@@ -1,16 +1,20 @@
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.BasisOne
-import Development.EtaleCohomology.EtaleTrace.TorsionH0PointOfTwistCoverCocycle
-import Development.EtaleCohomology.EtaleTrace.PtCoverPf
-import Development.EtaleCohomology.EtaleTrace.TwZeroPfSplit
-import Development.EtaleCohomology.EtaleTrace.PrimSplitPf
-import Development.EtaleCohomology.EtaleTrace.CocEqPf
-import Development.EtaleCohomology.EtaleTrace.EtaleTateTwistSectionConstantOnPointsOfConnected
-import Development.EtaleCohomology.EtaleTrace.PtCovPf
-import Development.EtaleCohomology.EtaleTrace.TateTwistSectionConstantOnPointsOfTwLocPtCov
-import Development.EtaleCohomology.TateTwists.TwLocPfR
-import Development.EtaleCohomology.TateTwists.TwSecLocPfZarR
-import Development.EtaleCohomology.TateTwists.AlgPowPfR
-import Development.EtaleCohomology.TateTwists.TwTorsPfR
+module
+
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.BasisOne
+public import Development.EtaleCohomology.EtaleTrace.TorsionH0PointOfTwistCoverCocycle
+public import Development.EtaleCohomology.EtaleTrace.PtCoverPf
+public import Development.EtaleCohomology.EtaleTrace.TwZeroPfSplit
+public import Development.EtaleCohomology.EtaleTrace.PrimSplitPf
+public import Development.EtaleCohomology.EtaleTrace.CocEqPf
+public import Development.EtaleCohomology.EtaleTrace.EtaleTateTwistSectionConstantOnPointsOfConnected
+public import Development.EtaleCohomology.EtaleTrace.PtCovPf
+public import Development.EtaleCohomology.EtaleTrace.TateTwistSectionConstantOnPointsOfTwLocPtCov
+public import Development.EtaleCohomology.TateTwists.TwLocPfR
+public import Development.EtaleCohomology.TateTwists.TwSecLocPfZarR
+public import Development.EtaleCohomology.TateTwists.AlgPowPfR
+public import Development.EtaleCohomology.TateTwists.TwTorsPfR
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC LateralTheory.EtaleTrace CochainComplex.HomComplex

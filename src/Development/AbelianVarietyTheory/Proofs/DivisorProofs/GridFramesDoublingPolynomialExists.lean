@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.RegConst
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FstIsFinFFrames
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFinFSndFrames
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FockPolynomialVectorMaximalCompactMovedBases
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.RegConst
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FstIsFinFFrames
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFinFSndFrames
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.FockPolynomialVectorMaximalCompactMovedBases
+
+@[expose] public section
 
 noncomputable section
 

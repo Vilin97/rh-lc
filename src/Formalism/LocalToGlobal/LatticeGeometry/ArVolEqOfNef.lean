@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.LatticeGeometry.DegFlLApply
+module
+
+public import Formalism.LocalToGlobal.LatticeGeometry.DegFlLApply
+
+@[expose] public section
 
 noncomputable section
 

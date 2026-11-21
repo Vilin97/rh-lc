@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.GlobalTheory.GL3.PHfTrace
-import Formalism.FrobeniusOrbits.HostCorollaries
-import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.DiscrB
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CanonicalTranslateJets
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.PHfTrace
+public import Formalism.FrobeniusOrbits.HostCorollaries
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.DiscrB
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CanonicalTranslateJets
+
+@[expose] public section
 
 noncomputable section
 

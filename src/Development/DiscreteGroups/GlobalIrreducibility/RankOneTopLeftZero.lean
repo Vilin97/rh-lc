@@ -1,4 +1,8 @@
-import Development.DiscreteGroups.GlobalIrreducibility.EntriesOfMemUnipRad
+module
+
+public import Development.DiscreteGroups.GlobalIrreducibility.EntriesOfMemUnipRad
+
+@[expose] public section
 
 noncomputable section
 

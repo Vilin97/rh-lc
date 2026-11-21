@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.HasSubstActPS
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.HasSubstActPS
+
+@[expose] public section
 
 set_option autoImplicit false
 

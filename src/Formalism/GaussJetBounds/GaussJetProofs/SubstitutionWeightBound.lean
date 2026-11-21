@@ -1,5 +1,9 @@
-import Formalism.GaussJetBounds.GenLogInverse
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.WtGeProd
+module
+
+public import Formalism.GaussJetBounds.GenLogInverse
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.WtGeProd
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

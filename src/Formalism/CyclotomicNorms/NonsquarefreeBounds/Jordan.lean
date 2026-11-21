@@ -1,5 +1,9 @@
-import Formalism.CyclotomicNorms.StatementI
-import Formalism.GaloisIrreducibility.NoSolvableTransitive
+module
+
+public import Formalism.CyclotomicNorms.StatementI
+public import Formalism.GaloisIrreducibility.NoSolvableTransitive
+
+@[expose] public section
 
 open Finset
 

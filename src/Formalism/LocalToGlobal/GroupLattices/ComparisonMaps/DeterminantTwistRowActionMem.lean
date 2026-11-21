@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.FockModels.OperatorsPreserveLattices
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.OperatorsPreserveLattices
+
+@[expose] public section
 
 open MvPolynomial
 

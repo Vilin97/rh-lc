@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HarishChandraCentre.MemCenterOfCommuteE
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HarishChandraCentre.MemCenterOfCommuteE
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.HarishChandra
 

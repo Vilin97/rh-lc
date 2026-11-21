@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePLSmallMain
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePSplitDef
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePLSmallMain
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePSplitDef
+
+@[expose] public section
 
 noncomputable section
 

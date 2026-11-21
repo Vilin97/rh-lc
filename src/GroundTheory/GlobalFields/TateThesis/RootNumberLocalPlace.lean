@@ -1,10 +1,14 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.EulerFactorsFourierFinite
-import GroundTheory.GlobalFields.TateThesis.AdelicCharLocal
-import GroundTheory.GlobalFields.KummerTheory.LocalIndexAtPlace
-import GroundTheory.GlobalFields.Artin.ConductorOneDim
-import GroundTheory.AutomorphicForms.GL2.FiniteAdeleDecomp
-import GroundTheory.LocalFields.LocalZeta
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.EulerFactorsFourierFinite
+public import GroundTheory.GlobalFields.TateThesis.AdelicCharLocal
+public import GroundTheory.GlobalFields.KummerTheory.LocalIndexAtPlace
+public import GroundTheory.GlobalFields.Artin.ConductorOneDim
+public import GroundTheory.AutomorphicForms.GL2.FiniteAdeleDecomp
+public import GroundTheory.LocalFields.LocalZeta
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

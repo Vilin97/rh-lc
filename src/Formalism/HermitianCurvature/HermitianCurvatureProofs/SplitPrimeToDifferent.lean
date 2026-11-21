@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.PrimeToDifferent
+module
+
+public import Formalism.HermitianCurvature.PrimeToDifferent
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.S6x4
 

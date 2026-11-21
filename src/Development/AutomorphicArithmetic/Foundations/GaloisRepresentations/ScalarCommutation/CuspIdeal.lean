@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ScalarCommutation.TypeSlice
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsCuspSpaceBot
-import GroundTheory.AutomorphicForms.MeasuresModulus
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ScalarCommutation.TypeSlice
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsCuspSpaceBot
+public import GroundTheory.AutomorphicForms.MeasuresModulus
+
+@[expose] public section
 
 set_option autoImplicit false
 

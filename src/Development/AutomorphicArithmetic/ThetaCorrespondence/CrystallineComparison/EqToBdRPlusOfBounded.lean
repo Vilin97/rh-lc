@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.IntegralCasts.CrystallinePeriods.Comparison
+module
+
+public import Development.AutomorphicArithmetic.IntegralCasts.CrystallinePeriods.Comparison
+
+@[expose] public section
 
 noncomputable section
 

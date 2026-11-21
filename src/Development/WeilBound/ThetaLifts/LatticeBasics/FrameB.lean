@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.LatticeBasics.FrameA
-import Development.WeilBound.ThetaLifts.LatticeBasics.HgtFin
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardAddCharSymplecticLocalLatticeEqOne
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.LatticeBasics.FrameA
+public import Development.WeilBound.ThetaLifts.LatticeBasics.HgtFin
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StandardAddCharSymplecticLocalLatticeEqOne
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,10 +1,14 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.AdelicCharLocal
-import GroundTheory.GlobalFields.TateThesis.TracePairing
-import GroundTheory.GlobalFields.TateThesis.ArchChars
-import GroundTheory.GlobalFields.TateThesis.NoSmallSubgroups
-import GroundTheory.GlobalFields.Adele.IdeleBasis
-import GroundTheory.GlobalFields.Adele.Compact
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.AdelicCharLocal
+public import GroundTheory.GlobalFields.TateThesis.TracePairing
+public import GroundTheory.GlobalFields.TateThesis.ArchChars
+public import GroundTheory.GlobalFields.TateThesis.NoSmallSubgroups
+public import GroundTheory.GlobalFields.Adele.IdeleBasis
+public import GroundTheory.GlobalFields.Adele.Compact
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

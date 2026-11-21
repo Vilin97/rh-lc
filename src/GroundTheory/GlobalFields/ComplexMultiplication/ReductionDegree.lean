@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.ReductionIsogenyMap
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.ReductionIsogenyMap
+
+@[expose] public section
+
 set_option maxHeartbeats 4000000
 set_option synthInstance.maxHeartbeats 400000
 

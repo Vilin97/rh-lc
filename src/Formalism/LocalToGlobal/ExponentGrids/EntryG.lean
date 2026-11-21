@@ -1,25 +1,29 @@
-import Formalism.LocalToGlobal.Divisibility.NumbersLink
-import Formalism.LocalToGlobal.AlgebraicTheory.StatementKer
-import Formalism.LocalToGlobal.AlgebraicTheory.StatementStep
-import Formalism.LocalToGlobal.Divisibility.JetBounds.Statement
-import Formalism.LocalToGlobal.Divisibility.JetBounds.MinorProductsLattice
-import Formalism.GaussJetBounds.FinalB
-import Formalism.LocalToGlobal.Divisibility.JetBounds.JetBoundsProofs.NormEqOneOfNotMem
-import Mathlib
-import Formalism.LocalToGlobal.ExponentGrids.IntegerShiftClosedExponent
-import Formalism.QuotientMetricDivisors.Complement2Normaliser
-import Formalism.TranslateCocycles.StatementHC
-import Formalism.SizeWindowBrackets.SlopesFromSizeAndCount
-import Formalism.LocalRingCardinality.DataErr
-import Formalism.LocalToGlobal.GlobalTheory.IsResidueClassZero
-import Formalism.LocalToGlobal.ExponentGrids.ExponentGridsProofs.NormaliserValuationBound
-import Formalism.SizeWindowBrackets.SBrDiv
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.LevelOfCongruence
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.StronglyIrreducible
-import Formalism.HarderNarasimhan.HarderNarasimhanProofs.DualPl
-import Formalism.HarderNarasimhan.HarderNarasimhanProofs.SizeMu
-import Formalism.HarderNarasimhan.HarderNarasimhanProofs.Rerealize
-import Formalism.LocalToGlobal.Divisibility.NumbersLemmas
+module
+
+public import Formalism.LocalToGlobal.Divisibility.NumbersLink
+public import Formalism.LocalToGlobal.AlgebraicTheory.StatementKer
+public import Formalism.LocalToGlobal.AlgebraicTheory.StatementStep
+public import Formalism.LocalToGlobal.Divisibility.JetBounds.Statement
+public import Formalism.LocalToGlobal.Divisibility.JetBounds.MinorProductsLattice
+public import Formalism.GaussJetBounds.FinalB
+public import Formalism.LocalToGlobal.Divisibility.JetBounds.JetBoundsProofs.NormEqOneOfNotMem
+public import Mathlib
+public import Formalism.LocalToGlobal.ExponentGrids.IntegerShiftClosedExponent
+public import Formalism.QuotientMetricDivisors.Complement2Normaliser
+public import Formalism.TranslateCocycles.StatementHC
+public import Formalism.SizeWindowBrackets.SlopesFromSizeAndCount
+public import Formalism.LocalRingCardinality.DataErr
+public import Formalism.LocalToGlobal.GlobalTheory.IsResidueClassZero
+public import Formalism.LocalToGlobal.ExponentGrids.ExponentGridsProofs.NormaliserValuationBound
+public import Formalism.SizeWindowBrackets.SBrDiv
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.LevelOfCongruence
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.StronglyIrreducible
+public import Formalism.HarderNarasimhan.HarderNarasimhanProofs.DualPl
+public import Formalism.HarderNarasimhan.HarderNarasimhanProofs.SizeMu
+public import Formalism.HarderNarasimhan.HarderNarasimhanProofs.Rerealize
+public import Formalism.LocalToGlobal.Divisibility.NumbersLemmas
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators ComplexConjugate

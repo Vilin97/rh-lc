@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.DegreeOneAutomorphism
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.SupersingularPowField
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.DegreeOneAutomorphism
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.SupersingularPowField
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global

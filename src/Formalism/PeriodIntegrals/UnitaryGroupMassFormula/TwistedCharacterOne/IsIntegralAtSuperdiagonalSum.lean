@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.TwChrOne
+module
+
+public import Formalism.PeriodIntegrals.TwChrOne
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

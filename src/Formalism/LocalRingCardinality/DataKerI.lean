@@ -1,6 +1,10 @@
-import Formalism.LocalRingCardinality.DataKerP
-import Formalism.LocalRingCardinality.DataDIVDefs
-import Formalism.LocalRingCardinality.DataForced
+module
+
+public import Formalism.LocalRingCardinality.DataKerP
+public import Formalism.LocalRingCardinality.DataDIVDefs
+public import Formalism.LocalRingCardinality.DataForced
+
+@[expose] public section
 
 open Formalism.MainNotions.G NumberField
 

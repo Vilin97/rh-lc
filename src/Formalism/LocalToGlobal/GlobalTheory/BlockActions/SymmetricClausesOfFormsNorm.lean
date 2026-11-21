@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.ClsCrdEqGlob
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.ClassInjectiveOfSelfDual
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.ClsCrdEqGlob
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.ClassInjectiveOfSelfDual
+
+@[expose] public section
 
 noncomputable section
 

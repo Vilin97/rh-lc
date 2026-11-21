@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.CompactSupportCohomology.CupLeibniz
-import GroundTheory.ProfiniteCohomology.CompactSupportCohomology.ConeSymmetry
-import GroundTheory.ProfiniteCohomology.CompactSupportCohomology
-import GroundTheory.ProfiniteCohomology.PoincareDuality.DeltaPairing
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.CompactSupportCohomology.CupLeibniz
+public import GroundTheory.ProfiniteCohomology.CompactSupportCohomology.ConeSymmetry
+public import GroundTheory.ProfiniteCohomology.CompactSupportCohomology
+public import GroundTheory.ProfiniteCohomology.PoincareDuality.DeltaPairing
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

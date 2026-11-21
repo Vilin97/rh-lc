@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.DualLat
-import Formalism.LocalToGlobal.GroupLattices.FockModels.TestSidePos
-import Formalism.LocalToGlobal.GroupLattices.FockModels.TransposeWords.TransposeWordsProofs.WeylFormNondegenerateGlobal
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.DualLat
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.TestSidePos
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.TransposeWords.TransposeWordsProofs.WeylFormNondegenerateGlobal
+
+@[expose] public section
 
 noncomputable section
 

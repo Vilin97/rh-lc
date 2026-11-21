@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.LocallyProfinite
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.LocallyProfinite
+
+@[expose] public section
 
 open Topology Filter Set
 

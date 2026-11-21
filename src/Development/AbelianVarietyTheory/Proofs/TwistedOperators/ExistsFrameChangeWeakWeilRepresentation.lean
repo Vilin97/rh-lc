@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.RevPosRevPos
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsVolumeTransportOfLatticeIsometry
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.TraceInverseGramConjSmulEq
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.RevPosRevPos
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsVolumeTransportOfLatticeIsometry
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.TraceInverseGramConjSmulEq
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.SizeWindowBrackets.LcvBaseChange
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.ExistsNsmulMem
-import Formalism.HermitianLattices.HermitianLatticesProofs.IndexBasic
+module
+
+public import Formalism.SizeWindowBrackets.LcvBaseChange
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.ExistsNsmulMem
+public import Formalism.HermitianLattices.HermitianLatticesProofs.IndexBasic
+
+@[expose] public section
 
 open Module NumberField
 

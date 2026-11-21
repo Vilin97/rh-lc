@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.LogarithmicSums.Conclusion1OfGainBoundAll
-import Mathlib.NumberTheory.Harmonic.Bounds
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.LogarithmicSums.Conclusion1OfGainBoundAll
+public import Mathlib.NumberTheory.Harmonic.Bounds
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.BiaddOfCube
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.BiaddOfCube
+
+@[expose] public section
 
 noncomputable section
 

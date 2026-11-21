@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleSheaves.ChernClassSpecialization
-import Development.EtaleCohomology.TateTwists.EtaleLocallyExistsQthRootOfUnitWhenQInvertible
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.ChernClassSpecialization
+public import Development.EtaleCohomology.TateTwists.EtaleLocallyExistsQthRootOfUnitWhenQInvertible
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC

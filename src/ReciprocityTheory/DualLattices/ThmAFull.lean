@@ -1,7 +1,11 @@
-import ReciprocityTheory.DualLattices.OneAddPowOfSq
-import ReciprocityTheory.DualLattices.NsetExpInjectiveSurjective
-import ReciprocityTheory.DualLattices.SmallLevelClassSet
-import ReciprocityTheory.DualLattices.MapSmulOneMulVec
+module
+
+public import ReciprocityTheory.DualLattices.OneAddPowOfSq
+public import ReciprocityTheory.DualLattices.NsetExpInjectiveSurjective
+public import ReciprocityTheory.DualLattices.SmallLevelClassSet
+public import ReciprocityTheory.DualLattices.MapSmulOneMulVec
+
+@[expose] public section
 
 noncomputable section
 

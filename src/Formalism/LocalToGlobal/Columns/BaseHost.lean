@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.Columns.AbelianHostFieldConditions
-import Formalism.LocalToGlobal.Divisibility.CoeffLemmas
-import Formalism.LocalToGlobal.UnitaryNorms.RealPl
-import Formalism.LocalToGlobal.UnitaryNorms.ExistsCycAct
-import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.Inertia
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
+module
+
+public import Formalism.LocalToGlobal.Columns.AbelianHostFieldConditions
+public import Formalism.LocalToGlobal.Divisibility.CoeffLemmas
+public import Formalism.LocalToGlobal.UnitaryNorms.RealPl
+public import Formalism.LocalToGlobal.UnitaryNorms.ExistsCycAct
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.Inertia
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
+
+@[expose] public section
 
 open NumberField IsDedekindDomain IntermediateField
 

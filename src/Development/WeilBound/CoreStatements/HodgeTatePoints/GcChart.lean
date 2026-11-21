@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.LeadMinor
-import Development.WeilBound.CoreStatements.HodgeTatePoints.GcIncl
-import Development.WeilBound.CoreStatements.HodgeTatePoints.GcDescend
-import Development.WeilBound.CoreStatements.HodgeTatePoints.GcBase
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.LeadMinor
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.GcIncl
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.GcDescend
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.GcBase
+
+@[expose] public section
 
 open Module NumberField GlobalTheory.CompanionTheory.Ar.HT TensorProduct
 

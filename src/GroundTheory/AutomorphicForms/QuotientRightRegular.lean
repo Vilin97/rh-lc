@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.QuotientMeasure
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.QuotientMeasure
+
+@[expose] public section
 
 open MeasureTheory Topology Filter Set
 open scoped ENNReal

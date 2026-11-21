@@ -1,5 +1,9 @@
-import ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.Bridge
-import ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.Unmixed
+module
+
+public import ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.Bridge
+public import ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.Unmixed
+
+@[expose] public section
 
 namespace ReciprocityTheory.CA
 

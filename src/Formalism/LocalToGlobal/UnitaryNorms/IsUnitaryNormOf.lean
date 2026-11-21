@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.NeutralLocalFields.LocalFieldComparison.HCFFromRecipB
+module
+
+public import Mathlib
+public import ReciprocityTheory.NeutralLocalFields.LocalFieldComparison.HCFFromRecipB
+
+@[expose] public section
 
 noncomputable section
 

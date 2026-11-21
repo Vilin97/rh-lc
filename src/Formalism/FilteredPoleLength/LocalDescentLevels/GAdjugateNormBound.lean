@@ -1,4 +1,8 @@
-import Formalism.FilteredPoleLength.ReducedBasisBounds.GFiniteOrderUnipotent
+module
+
+public import Formalism.FilteredPoleLength.ReducedBasisBounds.GFiniteOrderUnipotent
+
+@[expose] public section
 
 open scoped BigOperators
 open Finset

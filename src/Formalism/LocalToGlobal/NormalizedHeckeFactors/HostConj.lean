@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverMain
+module
+
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverMain
+
+@[expose] public section
 
 open Formalism.BasicNotions Formalism.FrobeniusOrbits NumberField
 

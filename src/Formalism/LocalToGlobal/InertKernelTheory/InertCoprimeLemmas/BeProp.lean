@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.InertKernelTheory.StatementBe
-import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSv
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.StmtEndIntWHolds
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.StatementBe
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSv
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.StmtEndIntWHolds
+
+@[expose] public section
 
 noncomputable section
 

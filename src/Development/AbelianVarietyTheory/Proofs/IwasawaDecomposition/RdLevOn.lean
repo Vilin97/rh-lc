@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsCopy
-import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.JoinEquivEqAtReference
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsCopy
+public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.JoinEquivEqAtReference
+
+@[expose] public section
 
 noncomputable section
 

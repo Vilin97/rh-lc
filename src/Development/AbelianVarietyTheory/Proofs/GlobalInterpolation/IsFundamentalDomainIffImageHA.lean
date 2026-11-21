@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.GlobalSchurBounds.StandardLattice
-import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.SignatureLatticeIndependence
-import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.IsometryTransportFrames
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.GlobalSchurBounds.StandardLattice
+public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.SignatureLatticeIndependence
+public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.IsometryTransportFrames
+
+@[expose] public section
 
 noncomputable section
 

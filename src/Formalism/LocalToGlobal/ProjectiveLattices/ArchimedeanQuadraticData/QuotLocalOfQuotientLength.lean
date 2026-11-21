@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.QuotSt
-import Formalism.FilteredPoleLength.LocalDescentLevels.MemSpanBasisFun
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.QuotSt
+public import Formalism.FilteredPoleLength.LocalDescentLevels.MemSpanBasisFun
+
+@[expose] public section
 
 namespace Formalism.L2.Pj.QAt
 

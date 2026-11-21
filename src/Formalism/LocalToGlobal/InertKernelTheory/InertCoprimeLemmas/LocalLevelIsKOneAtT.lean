@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.InertKernelTheory.StatementLoc
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.StatementLoc
+
+@[expose] public section
 
 noncomputable section
 

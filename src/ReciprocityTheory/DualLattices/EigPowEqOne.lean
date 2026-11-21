@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.IsUnitOfNotMem
+module
+
+public import ReciprocityTheory.DualLattices.IsUnitOfNotMem
+
+@[expose] public section
 
 noncomputable section
 

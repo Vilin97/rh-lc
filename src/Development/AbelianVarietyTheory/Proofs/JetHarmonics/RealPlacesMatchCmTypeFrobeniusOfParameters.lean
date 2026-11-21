@@ -1,11 +1,15 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Jets.DepthNumbersThresholdEq
-import Development.AbelianVarietyTheory.Definitions.Jets.CmQuadraticFormEqAlternatingForm
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ConjCmHostRootNeSelf
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.RealPlaceLabelBijectiveCardEqF
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.NotDvdDiscrHost
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ComapLiesOver
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Jets.DepthNumbersThresholdEq
+public import Development.AbelianVarietyTheory.Definitions.Jets.CmQuadraticFormEqAlternatingForm
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ConjCmHostRootNeSelf
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.RealPlaceLabelBijectiveCardEqF
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.NotDvdDiscrHost
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ComapLiesOver
+
+@[expose] public section
 
 set_option autoImplicit false
 

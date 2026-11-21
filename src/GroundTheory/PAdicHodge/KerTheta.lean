@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.PerfectoidField
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LeSpanSingletonOfForallMemEq
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.PerfectoidField
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LeSpanSingletonOfForallMemEq
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

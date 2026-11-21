@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.LocalTheoremOfGoodExtensions
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocalTheoremOfGoodExtensions
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.InvarianceIffAdditiveMapsExist
-import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.KerTh
-import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.PtStep0
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.InvarianceIffAdditiveMapsExist
+public import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.KerTh
+public import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.PtStep0
+
+@[expose] public section
 
 noncomputable section
 

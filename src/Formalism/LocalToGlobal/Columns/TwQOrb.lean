@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.QdfFrameRatio
-import Formalism.LocalToGlobal.Columns.CoefColLemmas
+module
+
+public import Formalism.LocalToGlobal.Columns.QdfFrameRatio
+public import Formalism.LocalToGlobal.Columns.CoefColLemmas
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix
 open scoped TensorProduct

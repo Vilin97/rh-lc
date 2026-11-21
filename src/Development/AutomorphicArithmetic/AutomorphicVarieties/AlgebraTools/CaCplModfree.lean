@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.IsCplAtSelf
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplFin
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplMap
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplQuot
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplFlat
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FlatnessPrecompleteProducts
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.IsCplAtSelf
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplFin
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplMap
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplQuot
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaCplFlat
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FlatnessPrecompleteProducts
+
+@[expose] public section
 
 open IsLocalRing UpperTheory.V.AlgebraTools
 

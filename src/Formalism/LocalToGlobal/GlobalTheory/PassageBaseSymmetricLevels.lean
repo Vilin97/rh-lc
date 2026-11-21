@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.GlobalTheory.DivPassage
-import Formalism.LocalToGlobal.GlobalTheory.DivPassageP
-import Formalism.BranchSandwichDivisors.DivFromPassageAndNorm
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GlobalTheory.DivPassage
+public import Formalism.LocalToGlobal.GlobalTheory.DivPassageP
+public import Formalism.BranchSandwichDivisors.DivFromPassageAndNorm
+
+@[expose] public section
 
 set_option linter.style.haveILetI false
 

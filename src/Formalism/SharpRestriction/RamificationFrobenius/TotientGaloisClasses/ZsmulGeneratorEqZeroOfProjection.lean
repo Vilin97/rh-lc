@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.FrobeniusOrbits.Statement
+module
+
+public import Mathlib
+public import Formalism.FrobeniusOrbits.Statement
+
+@[expose] public section
 
 noncomputable section
 

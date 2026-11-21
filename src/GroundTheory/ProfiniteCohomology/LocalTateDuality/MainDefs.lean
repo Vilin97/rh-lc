@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.LocalClassFormationAlt
-import GroundTheory.ProfiniteCohomology.LocalTateDuality.EqZeroOfForallCupPairingZmodMulEqZeroLeft
-import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing
-import GroundTheory.ProfiniteCohomology.CartierDual
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.LocalClassFormationAlt
+public import GroundTheory.ProfiniteCohomology.LocalTateDuality.EqZeroOfForallCupPairingZmodMulEqZeroLeft
+public import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing
+public import GroundTheory.ProfiniteCohomology.CartierDual
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

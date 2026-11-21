@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.HeckeFr
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.HeckeFr
+
+@[expose] public section
 
 noncomputable section
 

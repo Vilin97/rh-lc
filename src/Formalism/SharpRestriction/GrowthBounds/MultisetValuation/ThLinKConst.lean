@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.ThPosSubPosAdd
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.ThPosSubPosAdd
+
+@[expose] public section
 
 noncomputable section
 

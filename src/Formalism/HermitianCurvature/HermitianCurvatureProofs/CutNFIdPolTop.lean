@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFId
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFId
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP.PolTop
 

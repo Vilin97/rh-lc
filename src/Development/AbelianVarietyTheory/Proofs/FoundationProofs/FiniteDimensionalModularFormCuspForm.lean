@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Foundations.EtaSixProductDifferentiable
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.EtaSixProductDifferentiable
+
+@[expose] public section
+
 open GlobalTheory.HeckeFamilyMatrices UpperHalfPlane ModularForm
 open scoped MatrixGroups ModularForm Manifold
 

@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qi36.aux :
     ∀ {R Q M : Type} [inst : CommRing R] [inst_1 : Group Q]

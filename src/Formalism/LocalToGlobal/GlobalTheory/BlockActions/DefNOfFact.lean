@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.MulLatMulLat
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.HformSmulRightB
-import Formalism.LocalToGlobal.GlobalTheory.ExistsUnitaryOneDetEq
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.MulLatMulLat
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.HformSmulRightB
+public import Formalism.LocalToGlobal.GlobalTheory.ExistsUnitaryOneDetEq
+
+@[expose] public section
 
 noncomputable section
 

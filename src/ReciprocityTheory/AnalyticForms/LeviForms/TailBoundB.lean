@@ -1,4 +1,8 @@
-import ReciprocityTheory.AnalyticForms.LeviForms.TailBoundA
+module
+
+public import ReciprocityTheory.AnalyticForms.LeviForms.TailBoundA
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.P
 

@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.GenIdeal
-import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.MemMinimalPrimesIff
+module
+
+public import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.GenIdeal
+public import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.MemMinimalPrimesIff
+
+@[expose] public section
 
 set_option autoImplicit false
 

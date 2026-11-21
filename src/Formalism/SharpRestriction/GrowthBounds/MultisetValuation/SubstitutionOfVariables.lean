@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.IntegralExpRename
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.IntegralExpRename
+
+@[expose] public section
 
 noncomputable section
 

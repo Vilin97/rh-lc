@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.LocalFields.MaximalUnramified
-import GroundTheory.LocalFields.SeparableClosureValuation
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.MaximalUnramified
+public import GroundTheory.LocalFields.SeparableClosureValuation
+
+@[expose] public section
+
 set_option maxHeartbeats 4000000
 set_option synthInstance.maxHeartbeats 400000
 

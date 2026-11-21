@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.UnipotentAdelicQuotients.HaarProductClosedCompact
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HaarProductClosedCompactHolds
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SmulNn
+module
+
+public import Mathlib
+public import Formalism.UnipotentAdelicQuotients.HaarProductClosedCompact
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HaarProductClosedCompactHolds
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SmulNn
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

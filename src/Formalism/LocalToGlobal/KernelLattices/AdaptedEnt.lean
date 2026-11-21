@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.ColumnData.KerEntHyp
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.ColumnData.KerEntHyp
+
+@[expose] public section
 
 open NumberField Formalism.BasicNotions Classical
 

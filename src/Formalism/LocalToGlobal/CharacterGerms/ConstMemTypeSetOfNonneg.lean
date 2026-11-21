@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTieAxes
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieAxes
+
+@[expose] public section
 
 noncomputable section
 

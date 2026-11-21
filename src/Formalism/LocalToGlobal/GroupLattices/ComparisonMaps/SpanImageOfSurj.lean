@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.LatticeComparisonCompatible
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.MRatSpanOf
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.LatticeComparisonCompatible
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.MRatSpanOf
+
+@[expose] public section
 
 noncomputable section
 

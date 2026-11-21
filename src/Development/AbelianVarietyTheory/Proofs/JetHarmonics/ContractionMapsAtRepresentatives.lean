@@ -1,14 +1,18 @@
-import Mathlib
-import Formalism.HermitianCurvature.StatementD
-import Formalism.HermitianCurvature.StatementQ
-import Formalism.HermitianCurvature.BigCellVanishingOfCommute
-import Formalism.HermitianCurvature.StatementU
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ComponentFamilySettingOfSetting
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentCoordinatesMeasurePreserving
-import Development.AbelianVarietyTheory.Definitions.Jets.WigMap
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegrableUnipotentNormRpowNeg
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FormSubRight
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IsPolyDegStar
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.StatementD
+public import Formalism.HermitianCurvature.StatementQ
+public import Formalism.HermitianCurvature.BigCellVanishingOfCommute
+public import Formalism.HermitianCurvature.StatementU
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ComponentFamilySettingOfSetting
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentCoordinatesMeasurePreserving
+public import Development.AbelianVarietyTheory.Definitions.Jets.WigMap
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegrableUnipotentNormRpowNeg
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FormSubRight
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IsPolyDegStar
+
+@[expose] public section
 
 open Matrix Formalism.QuantumDeterminants Formalism.FourierDecayAlt.Q
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.BesselHermitianTheta.TiedWeilUnr
-import Formalism.LocalToGlobal.BesselHermitianTheta.LemmasWeil
-import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.ShiftMapsUpDown
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.BesselHermitianTheta.TiedWeilUnr
+public import Formalism.LocalToGlobal.BesselHermitianTheta.LemmasWeil
+public import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.ShiftMapsUpDown
+
+@[expose] public section
 
 noncomputable section
 

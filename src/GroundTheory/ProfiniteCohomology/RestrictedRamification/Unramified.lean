@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GaloisModules.FixedField
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.MaxUnramifiedOutside
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.Ramification
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GaloisModules.FixedField
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.MaxUnramifiedOutside
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.Ramification
+
+@[expose] public section
 
 namespace GroundTheory.ProfCoh
 

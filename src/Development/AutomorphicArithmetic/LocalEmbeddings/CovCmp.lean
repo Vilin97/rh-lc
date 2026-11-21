@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.VertCmp
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormsOfInduces
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemConeOfMem
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.JGenSpecializes
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.LocalEmbeddings.VertCmp
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormsOfInduces
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemConeOfMem
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.JGenSpecializes
+
+@[expose] public section
 
 set_option autoImplicit false
 

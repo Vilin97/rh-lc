@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.PoitouTate.RealEvenHyp
-import GroundTheory.ProfiniteCohomology.PoitouTate.RealOdd
-import GroundTheory.ProfiniteCohomology.RealPlaces.Vanishing
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.PoitouTate.RealEvenHyp
+public import GroundTheory.ProfiniteCohomology.PoitouTate.RealOdd
+public import GroundTheory.ProfiniteCohomology.RealPlaces.Vanishing
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

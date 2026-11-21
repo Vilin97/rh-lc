@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.CoboundaryTransfers.Statement
-import Formalism.WeaklyAdmissibleFiltrations.Statement
-import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
-import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.PointRingCommRing
-import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.LocalRingStructure
+module
+
+public import Mathlib
+public import Formalism.CoboundaryTransfers.Statement
+public import Formalism.WeaklyAdmissibleFiltrations.Statement
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+public import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.PointRingCommRing
+public import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.LocalRingStructure
+
+@[expose] public section
 
 noncomputable section
 

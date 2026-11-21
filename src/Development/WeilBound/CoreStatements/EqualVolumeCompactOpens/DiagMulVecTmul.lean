@@ -1,8 +1,12 @@
-import GroundTheory.GlobalFields.Adele.Compact
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.MultilinearSubMem
-import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.InclAdInjective
-import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.CongCompactOpen
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsBisBis
+module
+
+public import GroundTheory.GlobalFields.Adele.Compact
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.MultilinearSubMem
+public import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.InclAdInjective
+public import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.CongCompactOpen
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsBisBis
+
+@[expose] public section
 
 noncomputable section
 

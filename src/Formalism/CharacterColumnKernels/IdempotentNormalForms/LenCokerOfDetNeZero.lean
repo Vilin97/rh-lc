@@ -1,6 +1,10 @@
-import Formalism.CharacterColumnKernels.StatementX
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.SingleEqSmul
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthKerOfDetEqZero
+module
+
+public import Formalism.CharacterColumnKernels.StatementX
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.SingleEqSmul
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthKerOfDetEqZero
+
+@[expose] public section
 
 open Finset Module IsDiscreteValuationRing Matrix
 

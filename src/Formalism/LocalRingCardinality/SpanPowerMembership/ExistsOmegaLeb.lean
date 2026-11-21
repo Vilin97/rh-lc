@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.DataCD
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Upqcpt
+module
+
+public import Formalism.LocalRingCardinality.DataCD
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Upqcpt
+
+@[expose] public section
 
 noncomputable section
 

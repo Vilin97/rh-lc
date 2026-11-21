@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.ConeBDefs
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.LocalEmbeddings.ConeBDefs
+
+@[expose] public section
+
 open MeasureTheory FreeSingleHomotopyEquivDiscreteChains.UpperTheory.Dv.ConeB
 
 private theorem norm_pr_le {ι : Type} [Fintype ι] {n : ℕ} (v η : Fin n × ι → ℂ) :

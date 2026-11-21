@@ -1,6 +1,10 @@
-import Development.WeilBound.CoreStatements.LocalThetaKernels.EvlLoc
-import Development.WeilBound.CoreStatements.LocalThetaKernels.EvlDual
-import Development.WeilBound.CoreStatements.LocalThetaKernels.EvlBridge
+module
+
+public import Development.WeilBound.CoreStatements.LocalThetaKernels.EvlLoc
+public import Development.WeilBound.CoreStatements.LocalThetaKernels.EvlDual
+public import Development.WeilBound.CoreStatements.LocalThetaKernels.EvlBridge
+
+@[expose] public section
 
 noncomputable section
 

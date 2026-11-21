@@ -1,7 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TprodMemTensSpan
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorPlaceActionInjective
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MinFirst
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TprodMemTensSpan
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorPlaceActionInjective
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MinFirst
+
+@[expose] public section
+
 open scoped TensorProduct
 
 noncomputable section

@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.MirSet
-import GroundTheory.AutomorphicForms.FourierWhittaker
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.MirSet
+public import GroundTheory.AutomorphicForms.FourierWhittaker
+
+@[expose] public section
 
 noncomputable section
 

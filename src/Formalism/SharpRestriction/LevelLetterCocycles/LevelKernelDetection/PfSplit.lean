@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.ExistsInvariantLiftAverage
-import Formalism.SharpRestriction.LevelLetterCocycles.RealExtOfExact
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.ExistsInvariantLiftAverage
+public import Formalism.SharpRestriction.LevelLetterCocycles.RealExtOfExact
+
+@[expose] public section
 
 noncomputable section
 

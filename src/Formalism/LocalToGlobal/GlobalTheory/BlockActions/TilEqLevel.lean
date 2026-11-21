@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.MulLatMulLat
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.MulLatMulLat
+
+@[expose] public section
 
 noncomputable section
 

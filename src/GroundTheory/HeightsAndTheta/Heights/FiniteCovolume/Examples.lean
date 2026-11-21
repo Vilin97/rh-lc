@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HermitianDisc
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.Objects
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HermitianDisc
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.Objects
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights.FiniteCovolume.GaussianPlane
 

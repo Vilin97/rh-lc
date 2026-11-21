@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.ArtSch
-import GroundTheory.PAdicHodge.PerfectoidField
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.ArtSch
+public import GroundTheory.PAdicHodge.PerfectoidField
+
+@[expose] public section
 
 namespace PI.ASDivW
 

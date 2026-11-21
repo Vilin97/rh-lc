@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.WeightVectorSmallSharesSeven
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.WeightVectorSmallSharesSeven
+
+@[expose] public section
 
 noncomputable section
 

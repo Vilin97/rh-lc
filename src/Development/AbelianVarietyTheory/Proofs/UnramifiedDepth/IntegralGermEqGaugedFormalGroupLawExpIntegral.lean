@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.CharacterGerms.NegMem
-import Development.AbelianVarietyTheory.Definitions.TeichmullerDepth.HasTeich
-import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.CoeffSubstInvMemOfTwoLeOrder
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.CharacterGerms.NegMem
+public import Development.AbelianVarietyTheory.Definitions.TeichmullerDepth.HasTeich
+public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.CoeffSubstInvMemOfTwoLeOrder
+
+@[expose] public section
 
 noncomputable section
 

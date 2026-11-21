@@ -1,8 +1,12 @@
-import CompanionTheory.AutomorphicTheory.RankOneTori.RpowNegLe
-import Formalism.SharpRestriction.CuspSpanNormBounds.BigCellDensity
-import Formalism.SharpRestriction.CuspSpanNormBounds.SpanMemOfImage
-import Formalism.FormalDegreeBessel.FinalG
-import Formalism.SharpRestriction.CuspSpanNormBounds.FrobeniusCoefficientMemLp.SigmaFiniteAmplitudes.RStabInv
+module
+
+public import CompanionTheory.AutomorphicTheory.RankOneTori.RpowNegLe
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BigCellDensity
+public import Formalism.SharpRestriction.CuspSpanNormBounds.SpanMemOfImage
+public import Formalism.FormalDegreeBessel.FinalG
+public import Formalism.SharpRestriction.CuspSpanNormBounds.FrobeniusCoefficientMemLp.SigmaFiniteAmplitudes.RStabInv
+
+@[expose] public section
 
 open MeasureTheory Matrix Formalism.QuantumDeterminants Formalism.MainNotions.S Formalism.MainNotions.S.Pv.AmpDDPf Formalism.MainNotions.S.Pv.AmpDDPf.CC Formalism.FourierDecayAlt
 open scoped ENNReal

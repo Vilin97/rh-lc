@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.GroupLattices.PerfectRings.IsLocalRingOfComplete
-import Lemmata.FirstBlockLemmaF.Imports
-import Lemmata.GeneralBFactThird.Imports
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GroupLattices.PerfectRings.IsLocalRingOfComplete
+public import Lemmata.FirstBlockLemmaF.Imports
+public import Lemmata.GeneralBFactThird.Imports
+
+@[expose] public section
 
 open Polynomial IsLocalRing Filter Topology
 

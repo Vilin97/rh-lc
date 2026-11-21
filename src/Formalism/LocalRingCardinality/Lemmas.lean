@@ -1,11 +1,15 @@
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.LocalRingCardinality.DataDIVDefs
-import Formalism.LocalRingCardinality.DataLatDefs
-import Formalism.LocalRingCardinality.DataKap
-import Formalism.LocalRingCardinality.DataExtra
-import Formalism.LocalRingCardinality.DataParams
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.HarderNarasimhan.HarderNarasimhanProofs.Rerealize
+module
+
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.LocalRingCardinality.DataDIVDefs
+public import Formalism.LocalRingCardinality.DataLatDefs
+public import Formalism.LocalRingCardinality.DataKap
+public import Formalism.LocalRingCardinality.DataExtra
+public import Formalism.LocalRingCardinality.DataParams
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.HarderNarasimhan.HarderNarasimhanProofs.Rerealize
+
+@[expose] public section
 
 open Module NumberField
 

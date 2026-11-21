@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.RankPolData
-import Development.WeilBound.ThetaLifts.LatticeBasics.ExistsIsGauss
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.RankPolData
+public import Development.WeilBound.ThetaLifts.LatticeBasics.ExistsIsGauss
+
+@[expose] public section
 
 noncomputable section
 

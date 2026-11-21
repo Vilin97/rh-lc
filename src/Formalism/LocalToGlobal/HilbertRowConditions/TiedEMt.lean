@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.HermitianForms.TiedTwSymAll
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.TiedTwSymAll
+
+@[expose] public section
 
 noncomputable section
 

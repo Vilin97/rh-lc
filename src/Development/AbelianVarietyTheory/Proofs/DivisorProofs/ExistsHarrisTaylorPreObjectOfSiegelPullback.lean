@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RosatiFor
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.SabComp
-import Development.AbelianVarietyTheory.Definitions.Divisors.EtaLin
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PushSecOfLeft
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.PolPull
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PlaceDivisors.SiegelPullbackTransfer.ExistsGenTransfer
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RosatiFor
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.SabComp
+public import Development.AbelianVarietyTheory.Definitions.Divisors.EtaLin
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PushSecOfLeft
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.PolPull
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PlaceDivisors.SiegelPullbackTransfer.ExistsGenTransfer
+
+@[expose] public section
 
 noncomputable section
 

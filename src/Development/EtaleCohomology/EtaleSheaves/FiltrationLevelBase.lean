@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleSheaves.ArchimedeanCokernel
-import Development.EtaleCohomology.EtaleSheaves.ArchimedeanRelations
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.ArchimedeanCokernel
+public import Development.EtaleCohomology.EtaleSheaves.ArchimedeanRelations
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite Simplicial CochainComplex CochainComplex.HomComplex GlobalTheory.EtC

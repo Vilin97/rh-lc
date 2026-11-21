@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.LocalFields.ExistenceDictionary
-import GroundTheory.LocalFields.LubinTateReciprocity
-import GroundTheory.LocalFields.LubinTateLimit
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.ExistenceDictionary
+public import GroundTheory.LocalFields.LubinTateReciprocity
+public import GroundTheory.LocalFields.LubinTateLimit
+
+@[expose] public section
 
 noncomputable section
 

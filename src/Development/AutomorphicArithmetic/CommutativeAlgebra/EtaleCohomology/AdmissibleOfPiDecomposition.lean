@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.NilToPhiAlt
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.AdmissibleSequenceExact
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsModelOfMem
+module
+
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.NilToPhiAlt
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.AdmissibleSequenceExact
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsModelOfMem
+
+@[expose] public section
 
 noncomputable section
 

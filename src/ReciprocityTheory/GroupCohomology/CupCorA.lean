@@ -1,5 +1,9 @@
-import ReciprocityTheory.GroupCohomology.ContinuousContractNth
-import ReciprocityTheory.GroupCohomology.HomogExistsStatement
+module
+
+public import ReciprocityTheory.GroupCohomology.ContinuousContractNth
+public import ReciprocityTheory.GroupCohomology.HomogExistsStatement
+
+@[expose] public section
 
 namespace ReciprocityTheory.Coh.CCA
 

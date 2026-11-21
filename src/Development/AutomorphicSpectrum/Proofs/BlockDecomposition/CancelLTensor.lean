@@ -1,8 +1,12 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.WittExactSequences.IsCompl
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PfFacts
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GoodBaseChange
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PerfectTensorProductStatement
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.WittExactSequences.IsCompl
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PfFacts
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.GoodBaseChange
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.PerfectTensorProductStatement
+
+@[expose] public section
 
 open TensorProduct CrystallineSemistableComparison.D
 open scoped LaurentPolynomial

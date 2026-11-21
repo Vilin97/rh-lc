@@ -1,10 +1,14 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.PlurisubharmonicCones.ExistsUnitOfSum
-import Development.WeilBound.CoreStatements.PlurisubharmonicCones.ComponentDataHeightIdentity
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ComponentDataHodgeSecond
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IntersectionSystemHodgeDegree
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SumLatticeWedgeComapStatement
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.TensorWedgeDetChangeStatement
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.ExistsUnitOfSum
+public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.ComponentDataHeightIdentity
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ComponentDataHodgeSecond
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IntersectionSystemHodgeDegree
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SumLatticeWedgeComapStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.TensorWedgeDetChangeStatement
+
+@[expose] public section
 
 open AlgebraicGeometry CategoryTheory NumberField Matrix
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Semi

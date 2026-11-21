@@ -1,5 +1,9 @@
-import Development.DiscreteGroups.GlobalIrreducibility.ExistsAvgNotMem
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LongElementConjUnipotentRadical
+module
+
+public import Development.DiscreteGroups.GlobalIrreducibility.ExistsAvgNotMem
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LongElementConjUnipotentRadical
+
+@[expose] public section
 
 noncomputable section
 

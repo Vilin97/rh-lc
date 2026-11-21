@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.RegQFree
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.RegQFree
+
+@[expose] public section
 
 noncomputable section
 

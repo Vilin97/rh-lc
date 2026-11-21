@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.DivisorsTranslate
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.DivisorsPic
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DivisorsTranslate
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DivisorsPic
+
+@[expose] public section
 
 namespace GroundTheory.Arith.Abelian
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.TieDefs
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.TieDefs
+
+@[expose] public section
 
 noncomputable section
 

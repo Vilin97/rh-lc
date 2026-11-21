@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.Statement
-import Formalism.HarderNarasimhan.QuotRealize
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.Statement
+public import Formalism.HarderNarasimhan.QuotRealize
+
+@[expose] public section
 
 open Module NumberField
 

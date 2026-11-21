@@ -1,12 +1,16 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.AtPlace
-import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.SplitS
-import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.LocalL
-import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.InertR
-import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.SplitSph
-import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.UnramB
-import Development.WeilBound.RepresentationTheoryGL.ResidualSpectrum.SliceTensors.TwistedSlicesSquareIntegrable
-import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.BaseChangeIsobaric
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.AtPlace
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.SplitS
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.LocalL
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.InertR
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.SplitSph
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.UnramB
+public import Development.WeilBound.RepresentationTheoryGL.ResidualSpectrum.SliceTensors.TwistedSlicesSquareIntegrable
+public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.BaseChangeIsobaric
+
+@[expose] public section
 
 noncomputable section
 

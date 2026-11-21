@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.ToricSymbols
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.LatticeNormTransport
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.ToricSymbols
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.LatticeNormTransport
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.SchwartzBruhatDual
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.SchwartzBruhatDual
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.InertKernelTheory.IntegralInertOfWeakApprox
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.GlobalOrthonormalBasisFour
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.MMIsom
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.MMConj
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.BlockFourfoldHOneEqHOne
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.ConjugationFixedClosure
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.IntegralInertOfWeakApprox
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.GlobalOrthonormalBasisFour
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.MMIsom
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.MMConj
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.BlockFourfoldHOneEqHOne
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.ConjugationFixedClosure
+
+@[expose] public section
 
 namespace Formalism.L2.KerInert
 

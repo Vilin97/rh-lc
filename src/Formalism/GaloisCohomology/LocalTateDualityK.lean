@@ -1,5 +1,9 @@
-import Formalism.GaloisCohomology.Statement
-import Formalism.GaloisCohomology.StatementLoc
+module
+
+public import Formalism.GaloisCohomology.Statement
+public import Formalism.GaloisCohomology.StatementLoc
+
+@[expose] public section
 
 noncomputable section
 

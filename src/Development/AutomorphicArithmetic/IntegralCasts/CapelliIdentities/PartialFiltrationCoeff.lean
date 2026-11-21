@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.PartialFiltrationCoeff.part_filt_coeff :
     ∀ {O σ : Type} [inst : CommRing O]

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.SharpRestriction.GrowthBounds.DataG
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.GrowthBounds.DataG
+
+@[expose] public section
 
 open Formalism.MainNotions.G MvPolynomial
 

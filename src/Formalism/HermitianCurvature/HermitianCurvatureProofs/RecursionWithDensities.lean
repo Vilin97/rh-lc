@@ -1,8 +1,12 @@
-import Formalism.HermitianCurvature.StatementTC
-import Formalism.HermitianCurvature.StatementTA
-import Mathlib
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.AntidiagMulDiagonal
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.OneLevelInequalitySplitBySize
+module
+
+public import Formalism.HermitianCurvature.StatementTC
+public import Formalism.HermitianCurvature.StatementTA
+public import Mathlib
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.AntidiagMulDiagonal
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OneLevelInequalitySplitBySize
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.RecursionWithDensities.A1
 

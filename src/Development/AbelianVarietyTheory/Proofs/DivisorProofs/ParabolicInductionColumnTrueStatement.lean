@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ParabolicInductionColumnTrue
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSmoothColRep
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ParabolicInductionColumnTrue
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSmoothColRep
+
+@[expose] public section
+
 open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SmGL.RowOneCell Matrix
 open scoped TensorProduct
 set_option maxHeartbeats 1000000 in

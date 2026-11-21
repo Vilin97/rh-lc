@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.RealGroups
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.StrictlyUpperRank
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.RealGroups
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.StrictlyUpperRank
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

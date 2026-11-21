@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.CoordHomMapTrace
-import Formalism.SharpRestriction.LevelLetterCocycles.LiftFOf
-import Formalism.SharpRestriction.LevelLetterCocycles.ExponentWindowSubsetShort
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.ThmEFinal
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.CoordHomMapTrace
+public import Formalism.SharpRestriction.LevelLetterCocycles.LiftFOf
+public import Formalism.SharpRestriction.LevelLetterCocycles.ExponentWindowSubsetShort
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.ThmEFinal
+
+@[expose] public section
 
 noncomputable section
 

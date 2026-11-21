@@ -1,6 +1,10 @@
-import ReciprocityTheory.L2DbarEstimates.JacobianInterpolationStatement
-import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.Imports
-import ReciprocityTheory.L2DbarEstimates.LeviForms.OfRealNormSqSumMul
+module
+
+public import ReciprocityTheory.L2DbarEstimates.JacobianInterpolationStatement
+public import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.Imports
+public import ReciprocityTheory.L2DbarEstimates.LeviForms.OfRealNormSqSumMul
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates
 

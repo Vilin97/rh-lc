@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleClassGroup.IdeleClassEquivIdeleClassMapOfComm
-import GroundTheory.GlobalFields.IdeleClassGroup.ConjugateNorm
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleClassGroup.IdeleClassEquivIdeleClassMapOfComm
+public import GroundTheory.GlobalFields.IdeleClassGroup.ConjugateNorm
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

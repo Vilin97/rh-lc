@@ -1,4 +1,8 @@
-import Development.DiscreteGroups.GlobalIrreducibility.ColUSingleOfGe
+module
+
+public import Development.DiscreteGroups.GlobalIrreducibility.ColUSingleOfGe
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.CovolXOfCovol
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CnormMapConjMulVec
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CovolXOfCovol
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CnormMapConjMulVec
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 400000
 

@@ -1,5 +1,10 @@
-import Development.WeilBound.CoreStatements.SesquilinearFractions.ExistsUnitValueSkewHermitian
-import Development.WeilBound.CoreStatements.SesquilinearFractions.NIdeal
+module
+
+public import Development.WeilBound.CoreStatements.SesquilinearFractions.ExistsUnitValueSkewHermitian
+public import Development.WeilBound.CoreStatements.SesquilinearFractions.NIdeal
+
+@[expose] public section
+
 open NumberField Matrix GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Fl
 open scoped ComplexOrder
 

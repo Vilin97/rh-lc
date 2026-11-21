@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.LocalizingCech
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechToDerived
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.LocalizingCech
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechToDerived
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh

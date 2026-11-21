@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.KummerTheory.OneExPf
+module
+
+public import Development.EtaleCohomology.KummerTheory.OneExPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC Polynomial

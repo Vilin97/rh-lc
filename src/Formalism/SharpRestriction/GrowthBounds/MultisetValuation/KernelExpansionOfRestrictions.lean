@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.NatCastInvMemRp
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.NatCastInvMemRp
+
+@[expose] public section
 
 noncomputable section
 

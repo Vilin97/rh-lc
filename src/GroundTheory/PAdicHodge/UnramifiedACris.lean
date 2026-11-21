@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.PAdicHodge.LocalBridge
-import GroundTheory.PAdicHodge.ACrisGalois
-import GroundTheory.LocalFields.Unramified
-import GroundTheory.LocalFields.PrincipalUnitsRank
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.LocalBridge
+public import GroundTheory.PAdicHodge.ACrisGalois
+public import GroundTheory.LocalFields.Unramified
+public import GroundTheory.LocalFields.PrincipalUnitsRank
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.L2Cusps.AbsCompactAlt
-import GroundTheory.AutomorphicForms.TensorProductTheorem.KProjApplyEqSelfIff
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.L2Cusps.AbsCompactAlt
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.KProjApplyEqSelfIff
+
+@[expose] public section
 
 open GroundTheory.Automorphic
 

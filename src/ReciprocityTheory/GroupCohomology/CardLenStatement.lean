@@ -1,4 +1,8 @@
-import ReciprocityTheory.GroupCohomology.TransgressionStatement
+module
+
+public import ReciprocityTheory.GroupCohomology.TransgressionStatement
+
+@[expose] public section
 
 namespace ReciprocityTheory.Coh
 

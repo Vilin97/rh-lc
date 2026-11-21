@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.Divisibility.WeightAlgebra
-import Formalism.LocalToGlobal.ProjectiveLattices.EmbKCoe
+module
+
+public import Formalism.SharpRestriction.Divisibility.WeightAlgebra
+public import Formalism.LocalToGlobal.ProjectiveLattices.EmbKCoe
+
+@[expose] public section
 
 noncomputable section
 

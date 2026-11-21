@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.Imports
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.RightSingleRule.PatEntryZero
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LeadingTermVectorIdentity
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.Imports
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.RightSingleRule.PatEntryZero
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LeadingTermVectorIdentity
+
+@[expose] public section
 
 open Matrix MeasureTheory
 

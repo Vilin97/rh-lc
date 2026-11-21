@@ -1,11 +1,15 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafKillCut
-import Development.EtaleCohomology.EtaleSheaves.KummerSequence.LeafKumMuMapPf
-import Development.EtaleCohomology.EtaleSheaves.KummerSequence.LeafKumMuInjPfGlue
-import Development.EtaleCohomology.EtaleSheaves.KummerSequence.TwLocGenPf
-import Development.EtaleCohomology.EtaleSheaves.KummerSequence.GmSepPf
-import Development.EtaleCohomology.EtaleSheaves.KummerSequence.LeafKumMuSurjPowPf
-import Development.EtaleCohomology.EtaleSheaves.KummerSequence.LeafKumMuSurjPrimPf
-import Development.EtaleCohomology.EtaleSheaves.KummerSequence.LeafUnitRootPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafKillCut
+public import Development.EtaleCohomology.EtaleSheaves.KummerSequence.LeafKumMuMapPf
+public import Development.EtaleCohomology.EtaleSheaves.KummerSequence.LeafKumMuInjPfGlue
+public import Development.EtaleCohomology.EtaleSheaves.KummerSequence.TwLocGenPf
+public import Development.EtaleCohomology.EtaleSheaves.KummerSequence.GmSepPf
+public import Development.EtaleCohomology.EtaleSheaves.KummerSequence.LeafKumMuSurjPowPf
+public import Development.EtaleCohomology.EtaleSheaves.KummerSequence.LeafKumMuSurjPrimPf
+public import Development.EtaleCohomology.EtaleSheaves.KummerSequence.LeafUnitRootPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC CochainComplex CochainComplex.HomComplex

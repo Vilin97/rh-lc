@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.DropLevelBounds.Statement
+module
+
+public import Mathlib
+public import Formalism.DropLevelBounds.Statement
+
+@[expose] public section
+
 open Formalism.UnitaryBoundIntegral Formalism.IncomingBounds
 
 namespace GlobalTheory.FlowScaling

@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockSectionsRank
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockImageArith
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockImageGenDeg
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSectionsRank
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsGenericFibre
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsHilbert
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockSectionsRank
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockImageArith
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockImageGenDeg
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSectionsRank
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsGenericFibre
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsHilbert
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

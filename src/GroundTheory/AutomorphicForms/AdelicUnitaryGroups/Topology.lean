@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.UnitaryGroupEquations
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.UnitaryGroupEquations
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

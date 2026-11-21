@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.MultihomogeneousSquares.SingSt
-import Development.WeilBound.CoreStatements.PluriharmonicCharts.MinorIJConjTranspose
+module
+
+public import Development.WeilBound.CoreStatements.MultihomogeneousSquares.SingSt
+public import Development.WeilBound.CoreStatements.PluriharmonicCharts.MinorIJConjTranspose
+
+@[expose] public section
 
 noncomputable section
 

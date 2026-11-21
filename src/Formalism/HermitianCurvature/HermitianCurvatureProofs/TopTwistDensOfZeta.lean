@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.TopEntryWaveEquation
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TopTwistDensOfWaveQQ
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.HasFDerivAtFsvSelf
+module
+
+public import Formalism.HermitianCurvature.TopEntryWaveEquation
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TopTwistDensOfWaveQQ
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.HasFDerivAtFsvSelf
+
+@[expose] public section
 
 open Matrix MeasureTheory
 open scoped ComplexConjugate

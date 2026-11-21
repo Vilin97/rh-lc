@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.NormResidueSymbol.CyclotomicBase
-import GroundTheory.GlobalFields.IdeleClassGroup.InvariantsGalois
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.NormResidueSymbol.CyclotomicBase
+public import GroundTheory.GlobalFields.IdeleClassGroup.InvariantsGalois
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

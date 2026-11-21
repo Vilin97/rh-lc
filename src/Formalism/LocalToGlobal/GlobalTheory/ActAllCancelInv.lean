@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.CoefficientMapSurjective
-import Formalism.LocalToGlobal.GlobalTheory.GL4.PColFin
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.CoefficientMapSurjective
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.PColFin
+
+@[expose] public section
 
 noncomputable section
 

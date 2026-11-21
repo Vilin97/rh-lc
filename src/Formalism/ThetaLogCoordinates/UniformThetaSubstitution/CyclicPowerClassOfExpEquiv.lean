@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.OddLogRelation
+module
+
+public import Mathlib
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.OddLogRelation
+
+@[expose] public section
 
 noncomputable section
 

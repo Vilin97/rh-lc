@@ -1,16 +1,20 @@
-import Formalism.LocalToGlobal.ThetaChr
-import Formalism.LocalToGlobal.HermitianForms.BothSym
-import Formalism.LocalToGlobal.HermitianForms.ExtraSym
-import Formalism.LocalToGlobal.HermitianForms.TiedTwSymAll
-import Formalism.LocalToGlobal.HilbertRowConditions.TiedEMt
-import Formalism.LocalToGlobal.HilbertRowConditions.CenterIdempotentAction
-import Formalism.LocalToGlobal.GroupLattices.StdSubAtOfRing
-import Formalism.LocalToGlobal.GroupLattices.Joint0
-import Formalism.LocalToGlobal.LatticeGeometry.Inhabited
-import Formalism.LocalToGlobal.LatticeGeometry.GeoTiedP
-import Formalism.SharpRestriction.PageFix
-import Formalism.SharpRestriction.Divisibility.SmallFirstModulusBelowScale
-import Formalism.SharpRestriction.LevelLetterCocycles.AlignN
+module
+
+public import Formalism.LocalToGlobal.ThetaChr
+public import Formalism.LocalToGlobal.HermitianForms.BothSym
+public import Formalism.LocalToGlobal.HermitianForms.ExtraSym
+public import Formalism.LocalToGlobal.HermitianForms.TiedTwSymAll
+public import Formalism.LocalToGlobal.HilbertRowConditions.TiedEMt
+public import Formalism.LocalToGlobal.HilbertRowConditions.CenterIdempotentAction
+public import Formalism.LocalToGlobal.GroupLattices.StdSubAtOfRing
+public import Formalism.LocalToGlobal.GroupLattices.Joint0
+public import Formalism.LocalToGlobal.LatticeGeometry.Inhabited
+public import Formalism.LocalToGlobal.LatticeGeometry.GeoTiedP
+public import Formalism.SharpRestriction.PageFix
+public import Formalism.SharpRestriction.Divisibility.SmallFirstModulusBelowScale
+public import Formalism.SharpRestriction.LevelLetterCocycles.AlignN
+
+@[expose] public section
 
 noncomputable section
 

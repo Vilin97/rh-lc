@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.LocalFields.LocalArtinUniqueness
-import GroundTheory.LocalFields.LocalArtinCompletion
-import GroundTheory.LocalFields.LocalArtinFunctoriality
-import GroundTheory.LocalFields.LocalArtinTransport
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LocalArtinUniqueness
+public import GroundTheory.LocalFields.LocalArtinCompletion
+public import GroundTheory.LocalFields.LocalArtinFunctoriality
+public import GroundTheory.LocalFields.LocalArtinTransport
+
+@[expose] public section
 
 noncomputable section
 

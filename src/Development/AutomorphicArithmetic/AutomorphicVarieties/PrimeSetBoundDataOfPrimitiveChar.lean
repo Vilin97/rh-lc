@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.LengthEqAddEigen
-import Development.AutomorphicArithmetic.AutomorphicVarieties.StmtFields
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LengthEqAddEigen
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.StmtFields
+
+@[expose] public section
 
 noncomputable section
 

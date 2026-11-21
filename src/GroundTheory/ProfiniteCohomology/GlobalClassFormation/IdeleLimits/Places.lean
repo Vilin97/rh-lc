@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleLimits.Components
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleLimits.Assembly
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleLimits.Components
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleLimits.Assembly
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

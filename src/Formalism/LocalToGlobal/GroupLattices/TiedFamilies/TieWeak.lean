@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.WeakApproxPI
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieLat
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.WeakApproxPI
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieLat
+
+@[expose] public section
 
 noncomputable section
 

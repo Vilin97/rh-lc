@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.ArithmeticCylinders
-import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.FactorSeriesSupport
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.ArithmeticCylinders
+public import Development.AbelianVarietyTheory.BlockTheory.TorsionBlocks.FactorSeriesSupport
+
+@[expose] public section
 
 noncomputable section
 

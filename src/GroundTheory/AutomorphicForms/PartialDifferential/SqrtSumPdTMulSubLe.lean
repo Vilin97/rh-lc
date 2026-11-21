@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.PartialDifferential.AnalyticHypoCalc
-import GroundTheory.AutomorphicForms.PartialDifferential.AnalyticHypoCutoff
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.PartialDifferential.AnalyticHypoCalc
+public import GroundTheory.AutomorphicForms.PartialDifferential.AnalyticHypoCutoff
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.Sobolev
 

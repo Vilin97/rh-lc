@@ -1,4 +1,8 @@
-import Formalism.RealPlaceAnalysis.SmoothOnGVIff
+module
+
+public import Formalism.RealPlaceAnalysis.SmoothOnGVIff
+
+@[expose] public section
 
 open MeasureTheory
 open scoped InnerProductSpace ENNReal

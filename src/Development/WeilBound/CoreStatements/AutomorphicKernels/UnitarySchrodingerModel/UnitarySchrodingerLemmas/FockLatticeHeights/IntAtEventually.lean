@@ -1,7 +1,11 @@
-import Development.WeilBound.CoreStatements.AutomorphicKernels.UnitarySchrodingerModel.UnitarySchrodingerLemmas.SchrodingerMatching.PsiPlaces
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MultiplicityLevelFormula
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ResidueRingStructure
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnramifiedFiniteIntegralStatement
+module
+
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.UnitarySchrodingerModel.UnitarySchrodingerLemmas.SchrodingerMatching.PsiPlaces
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MultiplicityLevelFormula
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ResidueRingStructure
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.UnramifiedFiniteIntegralStatement
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.CoarseMultiplicityAtIdentity
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SymmetricFamilySpan
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.CoarseMultiplicityAtIdentity
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SymmetricFamilySpan
+
+@[expose] public section
 
 noncomputable section
 

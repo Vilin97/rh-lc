@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.OrbSplitPt
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OrbSplitPt
+
+@[expose] public section
 
 open Matrix MeasureTheory
 

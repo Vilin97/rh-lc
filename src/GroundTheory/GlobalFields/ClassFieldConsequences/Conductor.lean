@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.ClassFieldConsequences.ConductorLocal
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ClassFieldConsequences.ConductorLocal
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global

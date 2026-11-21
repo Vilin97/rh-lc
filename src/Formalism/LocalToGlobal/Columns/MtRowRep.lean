@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GaloisLevelStructure.DefsFinTyp
-import Formalism.LocalToGlobal.GaloisLevelStructure.Checks
+module
+
+public import Formalism.LocalToGlobal.GaloisLevelStructure.DefsFinTyp
+public import Formalism.LocalToGlobal.GaloisLevelStructure.Checks
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.Reductions.SiegelPar
-import Development.WeilBound.ThetaLifts.Reductions.SiegelHaar
+module
+
+public import Development.WeilBound.ThetaLifts.Reductions.SiegelPar
+public import Development.WeilBound.ThetaLifts.Reductions.SiegelHaar
+
+@[expose] public section
 
 noncomputable section
 

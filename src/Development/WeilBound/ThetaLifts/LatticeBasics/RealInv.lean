@@ -1,9 +1,13 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.LatticeBasics.HodgeTateFromSandwich
-import Development.WeilBound.ThetaLifts.LatticeBasics.RealInvL
-import Development.WeilBound.ThetaLifts.CartanFactorisation.CartanConj
-import Development.AutomorphicSpectrum.Proofs.TwistedProofs.SchwartzLogDerivLinearGaussian
-import Development.AutomorphicSpectrum.Proofs.TwistedProofs.EqZeroOfForallNhds
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.LatticeBasics.HodgeTateFromSandwich
+public import Development.WeilBound.ThetaLifts.LatticeBasics.RealInvL
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.CartanConj
+public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.SchwartzLogDerivLinearGaussian
+public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.EqZeroOfForallNhds
+
+@[expose] public section
 
 noncomputable section
 

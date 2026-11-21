@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DegreeSuccSpanMultiplication
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TprodMemDegLE
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DegreeSuccSpanMultiplication
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TprodMemDegLE
+
+@[expose] public section
+
 open scoped TensorProduct
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.degree_succ_span_multiplication : ∀ {ι : Type} [Fintype ι] [DecidableEq ι] {P Q R S : ℕ} (k : ℕ),

@@ -1,6 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.RecLevelLocK
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PlaceProjectionZeroIntegralIffComponentsAbove
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.RecLevelLocK
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PlaceProjectionZeroIntegralIffComponentsAbove
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.UG Formalism.L2.Col Formalism.L2.DIV GlobalTheory.Mem.Col2 Matrix
 open scoped TensorProduct
 

@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasurableEmbeddingLevM
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasurableEmbeddingLevM
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 open scoped ComplexConjugate ContDiff ENNReal

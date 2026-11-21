@@ -1,4 +1,8 @@
-import ReciprocityTheory.GeometryOfNumbers.PluriharmonicAnalysis.BergmanDefs
+module
+
+public import ReciprocityTheory.GeometryOfNumbers.PluriharmonicAnalysis.BergmanDefs
+
+@[expose] public section
 
 namespace ReciprocityTheory.GeometryOfNumbersTheory
 

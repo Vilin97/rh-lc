@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HarderNarasimhan.StatementPl
-import Formalism.SizeWindowBrackets.RealSlopeBoundsSplit
+module
+
+public import Mathlib
+public import Formalism.HarderNarasimhan.StatementPl
+public import Formalism.SizeWindowBrackets.RealSlopeBoundsSplit
+
+@[expose] public section
 
 open Module NumberField
 

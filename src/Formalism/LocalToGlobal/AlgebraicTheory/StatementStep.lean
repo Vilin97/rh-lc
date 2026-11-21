@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.Divisibility.JetBounds.Statement
-import Formalism.LocalToGlobal.Divisibility.JetBounds.MinorProductsLattice
-import Formalism.GaussJetBounds.FinalB
-import Formalism.LocalToGlobal.ExponentGrids.IntegerShiftClosedExponent
+module
+
+public import Formalism.LocalToGlobal.Divisibility.JetBounds.Statement
+public import Formalism.LocalToGlobal.Divisibility.JetBounds.MinorProductsLattice
+public import Formalism.GaussJetBounds.FinalB
+public import Formalism.LocalToGlobal.ExponentGrids.IntegerShiftClosedExponent
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped BigOperators

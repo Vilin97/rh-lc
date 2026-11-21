@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.CrudeOrd
-import Formalism.LocalToGlobal.ProjectiveLattices.CrudeDiv
-import Formalism.LocalToGlobal.ProjectiveLattices.CrudeMin
-import Formalism.LocalToGlobal.ProjectiveLattices.CrudeVal
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.CrudeOrd
+public import Formalism.LocalToGlobal.ProjectiveLattices.CrudeDiv
+public import Formalism.LocalToGlobal.ProjectiveLattices.CrudeMin
+public import Formalism.LocalToGlobal.ProjectiveLattices.CrudeVal
+
+@[expose] public section
 
 set_option autoImplicit false
 

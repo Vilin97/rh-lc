@@ -1,11 +1,16 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsFurtherSide
-import GroundTheory.HeightsAndTheta.Heights.Intersections.IsMultiProjPrimeImageZ
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StRankAdjoinFrac
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StFnDegAdjoin
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StChartScalingIndep
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StAdjoinIndepRelfinrank
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StFinrankAdjoinRange
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsFurtherSide
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.IsMultiProjPrimeImageZ
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StRankAdjoinFrac
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StFnDegAdjoin
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StChartScalingIndep
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StAdjoinIndepRelfinrank
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StFinrankAdjoinRange
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

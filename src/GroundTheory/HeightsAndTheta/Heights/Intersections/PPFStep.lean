@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFSecRed
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFVert
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFIntZero
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFHoriz
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFFibreSum
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFSecRed
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFVert
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFIntZero
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFHoriz
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFFibreSum
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter

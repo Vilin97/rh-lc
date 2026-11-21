@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FirstExpansionIdentity
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FirstExpansionIdentity
+
+@[expose] public section
 
 open Matrix Finset
 

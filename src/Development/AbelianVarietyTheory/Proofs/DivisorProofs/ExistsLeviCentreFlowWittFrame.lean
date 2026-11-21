@@ -1,11 +1,15 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.ScalesBy
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRealIdeleFlow
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsContinuousSplitTorusSection
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SplitTorusElementUnique
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SplitTorusElementMul
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SplitTorusInLeviParabolic
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdelicFrameTorusElementMatrixEqStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ScalesBy
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsRealIdeleFlow
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsContinuousSplitTorusSection
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SplitTorusElementUnique
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SplitTorusElementMul
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SplitTorusInLeviParabolic
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdelicFrameTorusElementMatrixEqStatement
+
+@[expose] public section
 
 open scoped TensorProduct NNReal ENNReal Matrix
 open NumberField MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.AdelicU GlobalTheory.SiegelSet GlobalTheory.ResLine GlobalTheory.ResidueEisenstein

@@ -1,6 +1,10 @@
-import Formalism.AdmissibleDesigns.LengthSemilinear
-import Formalism.AdmissibleDesigns.FiniteClassesContinuousLattice
-import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.JointCondH0W
+module
+
+public import Formalism.AdmissibleDesigns.LengthSemilinear
+public import Formalism.AdmissibleDesigns.FiniteClassesContinuousLattice
+public import Formalism.SharpRestriction.LevelLetterCocycles.JointConditionsZpowers.JointCondH0W
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

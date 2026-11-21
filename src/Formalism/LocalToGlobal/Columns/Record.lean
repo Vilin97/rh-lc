@@ -1,18 +1,22 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataForms
-import Formalism.LocalToGlobal.Columns.ToHLat
-import Formalism.LocalToGlobal.Columns.ToHLatLemmas
-import Formalism.LocalToGlobal.Columns.PolyFn
-import Formalism.LocalToGlobal.Columns.PolyFnLemmas
-import Formalism.LocalToGlobal.Columns.AtTOwedC
-import Formalism.LocalToGlobal.Columns.AtTOwedS
-import Formalism.LocalToGlobal.Columns.AdjointFrobeniusPreservesRamified
-import Formalism.LocalToGlobal.Columns.FiniteSumNonzeroLargeDepth
-import Formalism.LocalToGlobal.Columns.RecLevel
-import Formalism.LocalToGlobal.Columns.InputsLemmas
-import Formalism.LocalToGlobal.Columns.CmUnramifiedOfFieldConditions
-import Formalism.LocalToGlobal.Columns.DGamAut
-import Formalism.LocalRingCardinality.MinkMEqMinkowskiNumber
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataForms
+public import Formalism.LocalToGlobal.Columns.ToHLat
+public import Formalism.LocalToGlobal.Columns.ToHLatLemmas
+public import Formalism.LocalToGlobal.Columns.PolyFn
+public import Formalism.LocalToGlobal.Columns.PolyFnLemmas
+public import Formalism.LocalToGlobal.Columns.AtTOwedC
+public import Formalism.LocalToGlobal.Columns.AtTOwedS
+public import Formalism.LocalToGlobal.Columns.AdjointFrobeniusPreservesRamified
+public import Formalism.LocalToGlobal.Columns.FiniteSumNonzeroLargeDepth
+public import Formalism.LocalToGlobal.Columns.RecLevel
+public import Formalism.LocalToGlobal.Columns.InputsLemmas
+public import Formalism.LocalToGlobal.Columns.CmUnramifiedOfFieldConditions
+public import Formalism.LocalToGlobal.Columns.DGamAut
+public import Formalism.LocalRingCardinality.MinkMEqMinkowskiNumber
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 open scoped TensorProduct

@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.HasFDerivAtInt
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.HasFDerivAtInt
+
+@[expose] public section
 
 open MeasureTheory Filter Topology
 open scoped ContDiff ComplexConjugate

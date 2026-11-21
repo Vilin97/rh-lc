@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.IsChart
-import Development.AutomorphicArithmetic.CommutativeAlgebra.SpecializationTensorRingHomProperties
-import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsSpecializationOfEvalNeZero
-import Development.AutomorphicArithmetic.CommutativeAlgebra.TensorDedekindLocalUniformizer
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.IsChart
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.SpecializationTensorRingHomProperties
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.ExistsSpecializationOfEvalNeZero
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.TensorDedekindLocalUniformizer
+
+@[expose] public section
 
 open GroundTheory.FunctionField UpperTheory.Et.Sel
 open scoped TensorProduct

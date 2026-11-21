@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafSmoothOfNormalPf
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.SpanFinrankMaximalIdealLeNcardOfLeSupSq
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafSmoothOfNormalPf
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.SpanFinrankMaximalIdealLeNcardOfLeSupSq
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite LateralTheory.E.E4 Order

@@ -1,4 +1,8 @@
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.JacChart
+module
+
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.JacChart
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.R
 

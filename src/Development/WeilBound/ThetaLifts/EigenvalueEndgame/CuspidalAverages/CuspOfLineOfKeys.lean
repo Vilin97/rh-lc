@@ -1,9 +1,13 @@
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.CuspidalAverages.AvLine
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.CuspidalAverages.KillCoef
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.SignatureSplitting.AeFacts
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.TowerCodimensionTwo
-import Development.WeilBound.ThetaLifts.ConeHypotheses.PureEqPureA
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfDictSec
+module
+
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.CuspidalAverages.AvLine
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.CuspidalAverages.KillCoef
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.SignatureSplitting.AeFacts
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.TowerCodimensionTwo
+public import Development.WeilBound.ThetaLifts.ConeHypotheses.PureEqPureA
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfDictSec
+
+@[expose] public section
 
 noncomputable section
 

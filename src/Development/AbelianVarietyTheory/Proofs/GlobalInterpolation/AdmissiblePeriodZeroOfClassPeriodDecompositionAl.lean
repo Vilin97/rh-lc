@@ -1,13 +1,17 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.StatementFT.PeriodPointConditions
-import Formalism.LocalToGlobal.HilbertRowConditions.RowPin
-import Formalism.LocalToGlobal.HermitianForms.TiedBrRep
-import Formalism.LocalRingCardinality.PosOfIsomEmb
-import Formalism.LocalRingCardinality.CoeNeZeroOfNotMem
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.SharpRestriction.LevelLetterCocycles.TwGuard
-import Formalism.SharpRestriction.Divisibility.ThetaNormsAndLinks
-import Formalism.SharpRestriction.Divisibility.WeightDegreeSizes
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.StatementFT.PeriodPointConditions
+public import Formalism.LocalToGlobal.HilbertRowConditions.RowPin
+public import Formalism.LocalToGlobal.HermitianForms.TiedBrRep
+public import Formalism.LocalRingCardinality.PosOfIsomEmb
+public import Formalism.LocalRingCardinality.CoeNeZeroOfNotMem
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.SharpRestriction.LevelLetterCocycles.TwGuard
+public import Formalism.SharpRestriction.Divisibility.ThetaNormsAndLinks
+public import Formalism.SharpRestriction.Divisibility.WeightDegreeSizes
+
+@[expose] public section
 
 noncomputable section
 

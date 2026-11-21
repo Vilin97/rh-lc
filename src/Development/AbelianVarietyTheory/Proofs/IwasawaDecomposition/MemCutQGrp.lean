@@ -1,12 +1,16 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteChart
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsMemberStepCharts
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LevOkTwists
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LevQFiniteIndexAndRoot
-import Formalism.LocalToGlobal.Columns.TwQBOpen
-import Formalism.LocalToGlobal.Columns.TwQExact
-import Formalism.LocalToGlobal.Columns.TwQLat
-import Formalism.LocalToGlobal.Columns.TwQLev
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteChart
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsMemberStepCharts
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LevOkTwists
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LevQFiniteIndexAndRoot
+public import Formalism.LocalToGlobal.Columns.TwQBOpen
+public import Formalism.LocalToGlobal.Columns.TwQExact
+public import Formalism.LocalToGlobal.Columns.TwQLat
+public import Formalism.LocalToGlobal.Columns.TwQLev
+
+@[expose] public section
 
 noncomputable section
 

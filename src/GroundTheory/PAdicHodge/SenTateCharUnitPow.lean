@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.LocalFields.PadicExp
-import GroundTheory.LocalFields.UnitsPowers
-import GroundTheory.LocalFields.PrincipalUnitsModule
-import GroundTheory.PAdicHodge.FieldOfNormsRam
-import GroundTheory.LocalFields.Examples
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.PadicExp
+public import GroundTheory.LocalFields.UnitsPowers
+public import GroundTheory.LocalFields.PrincipalUnitsModule
+public import GroundTheory.PAdicHodge.FieldOfNormsRam
+public import GroundTheory.LocalFields.Examples
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

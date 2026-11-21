@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.RecChainUnfOne
-import Formalism.LocalToGlobal.Columns.ColumnsProofs.ChainCounts
-import Formalism.LocalToGlobal.Columns.HeckeExHost
-import Formalism.LocalToGlobal.Columns.ChainInstY
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.PenultimateKernelDiamondInvariant
-import Formalism.LocalToGlobal.Divisibility.TuplesLemmas
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.RecChainUnfOne
+public import Formalism.LocalToGlobal.Columns.ColumnsProofs.ChainCounts
+public import Formalism.LocalToGlobal.Columns.HeckeExHost
+public import Formalism.LocalToGlobal.Columns.ChainInstY
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.PenultimateKernelDiamondInvariant
+public import Formalism.LocalToGlobal.Divisibility.TuplesLemmas
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 open scoped TensorProduct

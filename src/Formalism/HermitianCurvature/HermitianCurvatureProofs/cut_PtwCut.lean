@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLimET
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLemB
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutEnCVLocal
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutERCV
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLimET
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLemB
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutEnCVLocal
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutERCV
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP
 

@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.HermLatFin
+module
+
+public import Formalism.PeriodIntegrals.HermLatFin
+
+@[expose] public section
 
 open NumberField Matrix
 open scoped ComplexOrder

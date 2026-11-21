@@ -1,7 +1,11 @@
-import Formalism.LocalRingCardinality.DataKerI
-import Formalism.LocalRingCardinality.DataParamsT
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.LocalToGlobal.Columns.LocWLemmas
+module
+
+public import Formalism.LocalRingCardinality.DataKerI
+public import Formalism.LocalRingCardinality.DataParamsT
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.LocalToGlobal.Columns.LocWLemmas
+
+@[expose] public section
 
 noncomputable section
 

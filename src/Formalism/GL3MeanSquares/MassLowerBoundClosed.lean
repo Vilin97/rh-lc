@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.HermitianLattices.StatementMass
-import Formalism.LogVandermondeBounds.LogRatioLowerBound
-import Formalism.LogVandermondeBounds.LogRatioUpperBound
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.StatementMass
+public import Formalism.LogVandermondeBounds.LogRatioLowerBound
+public import Formalism.LogVandermondeBounds.LogRatioUpperBound
+
+@[expose] public section
 
 open NumberField Finset
 

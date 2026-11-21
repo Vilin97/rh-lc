@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.DataN
-import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.UniNilp
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsSSRepOfTraceNondegenerate
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataN
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.UniNilp
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsSSRepOfTraceNondegenerate
+
+@[expose] public section
 
 open Formalism.MainNotions.N GlobalTheory.TraceSemisimple
 

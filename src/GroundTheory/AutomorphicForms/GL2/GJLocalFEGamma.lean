@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJLocalFECoeff
-import GroundTheory.AutomorphicForms.WhittakerCriterion
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJLocalFECoeff
+public import GroundTheory.AutomorphicForms.WhittakerCriterion
+
+@[expose] public section
 
 noncomputable section
 

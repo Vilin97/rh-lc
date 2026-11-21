@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.CmpCMemFunMod
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.RecThm
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.SpanImageOfSurj
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.CmpCMemFunMod
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.RecThm
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.SpanImageOfSurj
+
+@[expose] public section
 
 noncomputable section
 

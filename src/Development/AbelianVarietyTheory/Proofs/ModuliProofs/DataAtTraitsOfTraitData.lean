@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Degenerations.AdmissiblePadicIntMaximalIdeal
-import Development.AbelianVarietyTheory.BlockTheory.CMModuli.LocalFramePowerSections
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ValuationExtension
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsSabCancel
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Degenerations.AdmissiblePadicIntMaximalIdeal
+public import Development.AbelianVarietyTheory.BlockTheory.CMModuli.LocalFramePowerSections
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ValuationExtension
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsSabCancel
+
+@[expose] public section
 
 open CategoryTheory CategoryTheory.Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry NumberField
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor

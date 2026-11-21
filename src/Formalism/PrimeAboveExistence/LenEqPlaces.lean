@@ -1,4 +1,8 @@
-import Formalism.ConjugateSelfDual.Statement
+module
+
+public import Formalism.ConjugateSelfDual.Statement
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.Pullback1MemHodgeFiltration
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.Pullback1MemHodgeFiltration
+
+@[expose] public section
 
 set_option autoImplicit false
 

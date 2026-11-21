@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.PoincarePairs.Natural
-import GroundTheory.ProfiniteCohomology.CupProducts.Graded
-import GroundTheory.ProfiniteCohomology.PoincareDuality.Induced
-import GroundTheory.ProfiniteCohomology.PoincareDuality.Torsion
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.PoincarePairs.Natural
+public import GroundTheory.ProfiniteCohomology.CupProducts.Graded
+public import GroundTheory.ProfiniteCohomology.PoincareDuality.Induced
+public import GroundTheory.ProfiniteCohomology.PoincareDuality.Torsion
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.AltSum
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.AltSum
+
+@[expose] public section
 
 open MeasureTheory Set Filter Topology Function
 open NumberField IsDedekindDomain

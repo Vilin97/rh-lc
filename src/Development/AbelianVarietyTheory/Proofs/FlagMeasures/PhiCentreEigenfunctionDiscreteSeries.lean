@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Statements.CuspFrameWeights.DiscreteSpectrumKFiniteDecomposition
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ProdPartialZpow
-import Development.AbelianVarietyTheory.Proofs.HeightProofs.CommuteGelfandInvariantMatrixUnitsOfGlRel
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.HWDiag
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.TrPowSumFilterZero
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Statements.CuspFrameWeights.DiscreteSpectrumKFiniteDecomposition
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ProdPartialZpow
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.CommuteGelfandInvariantMatrixUnitsOfGlRel
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.HWDiag
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.TrPowSumFilterZero
+
+@[expose] public section
 
 open Matrix Finset Filter Topology Formalism.MainNotions.S Formalism.REAL Formalism.QuantumDeterminants GlobalTheory.Dec
 

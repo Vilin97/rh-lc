@@ -1,12 +1,16 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RatInEig
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.OverIx
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.See
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.DsigEq
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.MovedReadingSameMapsBaseReadingAgrees
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.HasPartAnd
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.ColNorm
-import Formalism.LocalToGlobal.ClassRec
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RatInEig
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.OverIx
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.See
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.DsigEq
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.MovedReadingSameMapsBaseReadingAgrees
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.HasPartAnd
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.ColNorm
+public import Formalism.LocalToGlobal.ClassRec
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.HasConductorMulShift
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.HasConductorMulShift
+
+@[expose] public section
 
 open ValuativeRel Matrix IsLocalRing
 open GlobalTheory.LatPair GlobalTheory.SplitWeil

@@ -1,4 +1,8 @@
-import Formalism.FilteredPoleLength.LocalDescentLevels.FourTermSumBoundOfParameters
+module
+
+public import Formalism.FilteredPoleLength.LocalDescentLevels.FourTermSumBoundOfParameters
+
+@[expose] public section
 
 noncomputable section
 

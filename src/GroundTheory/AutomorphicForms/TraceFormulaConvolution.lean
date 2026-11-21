@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.QuotientKernel
-import GroundTheory.AutomorphicForms.TraceStrongLimit
-import GroundTheory.AutomorphicForms.HilbertSchmidtKernel
-import GroundTheory.AutomorphicForms.LocallyConstantCompact
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.QuotientKernel
+public import GroundTheory.AutomorphicForms.TraceStrongLimit
+public import GroundTheory.AutomorphicForms.HilbertSchmidtKernel
+public import GroundTheory.AutomorphicForms.LocallyConstantCompact
+
+@[expose] public section
 
 open MeasureTheory Topology Filter Set Function
 open scoped ENNReal Pointwise

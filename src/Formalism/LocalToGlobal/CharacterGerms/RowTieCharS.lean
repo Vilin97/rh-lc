@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.CharacterGerms.ChartHypothesisOfCharacters
-import Formalism.LocalToGlobal.CharacterGerms.UncurryLogConstantCoeff
-import Formalism.LocalToGlobal.CharacterGerms.SelfConjugateRowData
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.ChartHypothesisOfCharacters
+public import Formalism.LocalToGlobal.CharacterGerms.UncurryLogConstantCoeff
+public import Formalism.LocalToGlobal.CharacterGerms.SelfConjugateRowData
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.UnitaryAdmissible.CuspCentral
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SummandsMeasure
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.GKStableConv
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.GKStableLaplacian
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.UnitaryAdmissible.CuspCentral
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SummandsMeasure
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.GKStableConv
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.GKStableLaplacian
+
+@[expose] public section
 
 noncomputable section
 

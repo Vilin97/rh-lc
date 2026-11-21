@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.SecInTransport
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.SecInTransport
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,9 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ConjugateRepresentations.PartitionSolutions.SplitFacts
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ConjugateRepresentations.PartitionSolutions.SplitFacts
+
+@[expose] public section
+
 open UpperTheory.V.Cj.A
 open Matrix NumberField GlobalTheory.CuspRep UpperTheory.V.Lit.Dr
 

@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsBoundOrthonormalFrame
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsDataLattice
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsLeGramEqSgn
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsIntegralConj
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteCovolumeRealPoints
-import Development.AbelianVarietyTheory.Definitions.Foundations.CdScaleTieIff
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsBoundOrthonormalFrame
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsDataLattice
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsLeGramEqSgn
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsIntegralConj
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteCovolumeRealPoints
+public import Development.AbelianVarietyTheory.Definitions.Foundations.CdScaleTieIff
+
+@[expose] public section
 
 namespace GlobalTheory.MixedSignature
 

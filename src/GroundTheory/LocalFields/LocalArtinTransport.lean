@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.LocalArtinUniqueness
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LocalArtinUniqueness
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.MainTheorem
-import GroundTheory.GlobalFields.ComplexMultiplication.WeberFunctionAutomorphisms
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.MainTheorem
+public import GroundTheory.GlobalFields.ComplexMultiplication.WeberFunctionAutomorphisms
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global

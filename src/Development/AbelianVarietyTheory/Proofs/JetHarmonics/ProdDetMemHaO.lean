@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.CrudeMin
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.CrudeMin
+
+@[expose] public section
 
 set_option autoImplicit false
 

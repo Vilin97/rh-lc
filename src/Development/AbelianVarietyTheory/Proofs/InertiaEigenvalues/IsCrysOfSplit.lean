@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.WeaklyAdmissibleFiltrations.Statement
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.BlockCharactersCrystallineOfRules
+module
+
+public import Mathlib
+public import Formalism.WeaklyAdmissibleFiltrations.Statement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.BlockCharactersCrystallineOfRules
+
+@[expose] public section
 
 noncomputable section
 

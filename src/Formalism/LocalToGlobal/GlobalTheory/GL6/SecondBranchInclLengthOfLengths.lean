@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PowSmulLatticeLeWeightLatticeTop
-import Formalism.LocalToGlobal.GlobalTheory.GL6.CongruenceNoKernelOfHeckeRamified
-import Formalism.LocalToGlobal.GlobalTheory.GL6.SlopeFormulaOfCharacterFinite
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PowSmulLatticeLeWeightLatticeTop
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.CongruenceNoKernelOfHeckeRamified
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.SlopeFormulaOfCharacterFinite
+
+@[expose] public section
 
 noncomputable section
 

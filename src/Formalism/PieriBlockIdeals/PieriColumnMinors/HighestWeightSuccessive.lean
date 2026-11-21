@@ -1,5 +1,9 @@
-import Formalism.PieriBlockIdeals.StatementLP
-import Formalism.PieriBlockIdeals.PieriColumnMinors.Symmetrization
+module
+
+public import Formalism.PieriBlockIdeals.StatementLP
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.Symmetrization
+
+@[expose] public section
 
 namespace Formalism.CohomologicalDescent.LP
 

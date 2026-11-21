@@ -1,10 +1,14 @@
-import Development.WeilBound.CoreStatements.FlagImmersions.FibSandwich
-import Development.WeilBound.CoreStatements.VolumeEquality.PrimeIdealOfFromSpec
-import Development.WeilBound.CoreStatements.VolumeEquality.ChartMeetsPoint
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsFormNotInCoordIdeal
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.DvrModelOfNumberFieldPlace
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsUniqueValuationRingLift
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ValAtCompLocalHom
+module
+
+public import Development.WeilBound.CoreStatements.FlagImmersions.FibSandwich
+public import Development.WeilBound.CoreStatements.VolumeEquality.PrimeIdealOfFromSpec
+public import Development.WeilBound.CoreStatements.VolumeEquality.ChartMeetsPoint
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsFormNotInCoordIdeal
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.DvrModelOfNumberFieldPlace
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsUniqueValuationRingLift
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ValAtCompLocalHom
+
+@[expose] public section
 
 noncomputable section
 

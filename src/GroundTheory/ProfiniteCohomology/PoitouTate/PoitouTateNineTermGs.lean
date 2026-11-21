@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.PoitouTate.Deduction
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseMain
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.PoitouTate.Deduction
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseMain
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

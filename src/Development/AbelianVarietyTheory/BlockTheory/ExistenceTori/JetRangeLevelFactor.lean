@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.IsThRule
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.IsThRule
+
+@[expose] public section
 
 set_option autoImplicit false
 

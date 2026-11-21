@@ -1,4 +1,8 @@
-import Formalism.EllipticTorsion.IsoExpand
+module
+
+public import Formalism.EllipticTorsion.IsoExpand
+
+@[expose] public section
 
 open Finset
 

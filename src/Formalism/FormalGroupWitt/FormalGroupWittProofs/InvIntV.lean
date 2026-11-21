@@ -1,5 +1,9 @@
-import Formalism.FormalGroupWitt.SubstInjectiveV
-import Formalism.FormalGroupLog.FormalGroupLogProofs.ChainRule
+module
+
+public import Formalism.FormalGroupWitt.SubstInjectiveV
+public import Formalism.FormalGroupLog.FormalGroupLogProofs.ChainRule
+
+@[expose] public section
 
 noncomputable section
 

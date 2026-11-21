@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.LocalFields.UnramifiedNormSurj
-import GroundTheory.LocalFields.UnramifiedGalois
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.UnramifiedNormSurj
+public import GroundTheory.LocalFields.UnramifiedGalois
+
+@[expose] public section
+
 open ValuativeRel
 
 namespace GlobalTheory

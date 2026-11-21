@@ -1,4 +1,9 @@
-import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.LGenflagLU
+module
+
+public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.LGenflagLU
+
+@[expose] public section
+
 open GlobalTheory.CompanionTheory.Ar Matrix
 
 namespace PositivityTheory.UnitarySelfGeneration.GF

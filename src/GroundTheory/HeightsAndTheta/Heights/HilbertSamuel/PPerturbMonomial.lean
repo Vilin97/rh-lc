@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsPerturbMonomial
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsGenDegAmple
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSmallGenTwist
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PPerturbSemipos
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsPerturbMonomial
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsGenDegAmple
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSmallGenTwist
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PPerturbSemipos
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsAntisym
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

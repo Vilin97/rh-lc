@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.RealPins
-import Formalism.LocalToGlobal.IndefiniteReal.CutPassage
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.RealPins
+public import Formalism.LocalToGlobal.IndefiniteReal.CutPassage
+
+@[expose] public section
 
 noncomputable section
 

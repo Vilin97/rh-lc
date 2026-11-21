@@ -1,8 +1,12 @@
-import ReciprocityTheory.DualLattices.MatEquivApply
-import ReciprocityTheory.DualLattices.BlockOneMulMulBlockOne
-import ReciprocityTheory.DualLattices.ProdDvdOfIso
-import ReciprocityTheory.DualLattices.HasLenCokerDet
-import Formalism.LocalToGlobal.CharacterGerms.ExistsStrictMonoMinor
+module
+
+public import ReciprocityTheory.DualLattices.MatEquivApply
+public import ReciprocityTheory.DualLattices.BlockOneMulMulBlockOne
+public import ReciprocityTheory.DualLattices.ProdDvdOfIso
+public import ReciprocityTheory.DualLattices.HasLenCokerDet
+public import Formalism.LocalToGlobal.CharacterGerms.ExistsStrictMonoMinor
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.UnipotentAdelicQuotients.EllRegStep
+module
+
+public import Formalism.UnipotentAdelicQuotients.EllRegStep
+
+@[expose] public section
 
 namespace ZetaZeros.D.EllReg
 

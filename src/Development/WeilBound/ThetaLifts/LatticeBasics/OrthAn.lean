@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.CuspLift
-import Development.WeilBound.ThetaLifts.LatticeBasics.ConvOfCpt
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.OrthogonalDecomposition.SigThConst
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.CuspLift
+public import Development.WeilBound.ThetaLifts.LatticeBasics.ConvOfCpt
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.OrthogonalDecomposition.SigThConst
+
+@[expose] public section
 
 noncomputable section
 

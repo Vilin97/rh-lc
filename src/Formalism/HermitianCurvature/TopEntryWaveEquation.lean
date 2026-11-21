@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.TopDensNonnegOfKappa
-import Formalism.HermitianCurvature.ActualZetaSmooth
+module
+
+public import Formalism.HermitianCurvature.TopDensNonnegOfKappa
+public import Formalism.HermitianCurvature.ActualZetaSmooth
+
+@[expose] public section
 
 open MeasureTheory
 

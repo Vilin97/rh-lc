@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.MeasuresModulus
-import GroundTheory.AutomorphicForms.MeasuresChart
-import GroundTheory.AutomorphicForms.MeasuresGL
-import GroundTheory.AutomorphicForms.MeasuresParabolic
-import GroundTheory.AutomorphicForms.Iwasawa
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.MeasuresModulus
+public import GroundTheory.AutomorphicForms.MeasuresChart
+public import GroundTheory.AutomorphicForms.MeasuresGL
+public import GroundTheory.AutomorphicForms.MeasuresParabolic
+public import GroundTheory.AutomorphicForms.Iwasawa
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Automorphic

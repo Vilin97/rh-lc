@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieTrH
-import Formalism.LocalToGlobal.HermitianForms.RankEqFirstLevel
-import Formalism.LocalToGlobal.GroupLattices.DownNaturalLevelZero
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieTrH
+public import Formalism.LocalToGlobal.HermitianForms.RankEqFirstLevel
+public import Formalism.LocalToGlobal.GroupLattices.DownNaturalLevelZero
+
+@[expose] public section
 
 noncomputable section
 

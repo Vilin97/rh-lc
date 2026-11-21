@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.CharacterGerms.CoeffOneSubstCurve
-import Formalism.LocalToGlobal.CharacterGerms.ConstantZeroCompCoordinate
-import Formalism.LocalToGlobal.CharacterGerms.PderivDoubleMultiplicationJacobian
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePOActSelf
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.CoeffOneSubstCurve
+public import Formalism.LocalToGlobal.CharacterGerms.ConstantZeroCompCoordinate
+public import Formalism.LocalToGlobal.CharacterGerms.PderivDoubleMultiplicationJacobian
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePOActSelf
+
+@[expose] public section
 
 set_option autoImplicit false
 

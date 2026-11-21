@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.SemilocalAlgebras.InfiniteAdele
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SemilocalAlgebras.InfiniteAdele
+
+@[expose] public section
 
 noncomputable section
 

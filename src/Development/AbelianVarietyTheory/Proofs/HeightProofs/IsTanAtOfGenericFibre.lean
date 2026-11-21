@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.IntFrames
-import Formalism.LocalToGlobal.ProjectiveLattices.GenFrPf
-import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.EigenLatticeFrames
-import Development.AbelianVarietyTheory.Proofs.GenericRegularity.IsTriangularReframeExistsAndUnique
-import Development.AbelianVarietyTheory.Proofs.GenericRegularity.FrameBorelGroupoidProperties
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.IntFrames
+public import Formalism.LocalToGlobal.ProjectiveLattices.GenFrPf
+public import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.EigenLatticeFrames
+public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.IsTriangularReframeExistsAndUnique
+public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.FrameBorelGroupoidProperties
+
+@[expose] public section
 
 set_option autoImplicit false
 

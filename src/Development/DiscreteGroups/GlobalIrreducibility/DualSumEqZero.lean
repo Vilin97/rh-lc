@@ -1,4 +1,8 @@
-import Development.DiscreteGroups.GlobalIrreducibility.ExistsBallMem
+module
+
+public import Development.DiscreteGroups.GlobalIrreducibility.ExistsBallMem
+
+@[expose] public section
 
 noncomputable section
 

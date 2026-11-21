@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.Columns.ChainLawXiQ
-import Formalism.LocalToGlobal.Columns.XiFirstLawAllLevels
-import Formalism.LocalToGlobal.Columns.ChainTwOk
-import Formalism.LocalToGlobal.Columns.ChainTwAn
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.KerHypAll
+module
+
+public import Formalism.LocalToGlobal.Columns.ChainLawXiQ
+public import Formalism.LocalToGlobal.Columns.XiFirstLawAllLevels
+public import Formalism.LocalToGlobal.Columns.ChainTwOk
+public import Formalism.LocalToGlobal.Columns.ChainTwAn
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.KerHypAll
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

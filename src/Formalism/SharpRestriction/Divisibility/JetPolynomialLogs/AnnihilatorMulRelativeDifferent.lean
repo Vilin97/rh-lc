@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.Divisibility.PlaceRankTwoOne
-import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.SplitK
-import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.DiscrB
-import Formalism.DirichletDensity.HostDensityArith
+module
+
+public import Formalism.SharpRestriction.Divisibility.PlaceRankTwoOne
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.SplitK
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.DiscrB
+public import Formalism.DirichletDensity.HostDensityArith
+
+@[expose] public section
 
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.placeRankTwoOne NumberField Formalism.FrobeniusOrbits
 open scoped Pointwise

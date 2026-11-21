@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualIsogeny
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.ReductionTorsion
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualIsogeny
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.ReductionTorsion
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

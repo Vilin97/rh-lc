@@ -1,5 +1,9 @@
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.ValUnitsC
-import ReciprocityTheory.NeutralLocalFields.LocalFieldComparison.LocalFieldAutomorphisms.ModelF
+module
+
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.ValUnitsC
+public import ReciprocityTheory.NeutralLocalFields.LocalFieldComparison.LocalFieldAutomorphisms.ModelF
+
+@[expose] public section
 
 namespace ReciprocityTheory.DiscreteGroups.LocalClassField
 

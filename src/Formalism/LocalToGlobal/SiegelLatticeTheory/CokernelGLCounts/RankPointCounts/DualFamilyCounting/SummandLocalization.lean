@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.RieszHermitianHolds
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SummandLocalization
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.RieszHermitianHolds
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SummandLocalization
+
+@[expose] public section
 
 open NumberField Module
 

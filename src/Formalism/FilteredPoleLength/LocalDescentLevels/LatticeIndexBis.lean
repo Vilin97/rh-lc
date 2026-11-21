@@ -1,6 +1,10 @@
-import Formalism.FilteredPoleLength.ReducedBasisBounds.BetaSesquilinearity
-import Formalism.LogFactorialIndices.LogProductFormula
-import Formalism.LogFactorialIndices.SignedSubspaceIndex.SubspaceLatticeIndexSigned
+module
+
+public import Formalism.FilteredPoleLength.ReducedBasisBounds.BetaSesquilinearity
+public import Formalism.LogFactorialIndices.LogProductFormula
+public import Formalism.LogFactorialIndices.SignedSubspaceIndex.SubspaceLatticeIndexSigned
+
+@[expose] public section
 
 noncomputable section
 

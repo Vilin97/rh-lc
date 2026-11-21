@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
-import Formalism.SharpRestriction.LevelLetterCocycles.LocCoh
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.NonemptyThetaLOfTied
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.FilQuot
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.InvRestrictScalarsMem
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocCoh
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.NonemptyThetaLOfTied
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.FilQuot
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.InvRestrictScalarsMem
+
+@[expose] public section
 
 noncomputable section
 

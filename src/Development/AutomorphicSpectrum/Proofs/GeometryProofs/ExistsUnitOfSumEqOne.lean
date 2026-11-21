@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ProdUpdateDiv
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DetMulExpand
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ProdUpdateDiv
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DetMulExpand
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.GoodCongr
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GoodCongr
+
+@[expose] public section
 
 open MeasureTheory Filter Topology
 open scoped ContDiff ComplexConjugate

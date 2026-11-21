@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.FockGramWindow.BinMatNatDegreeLe
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.FockGramWindow.BinMatNatDegreeLe
+
+@[expose] public section
 
 noncomputable section
 

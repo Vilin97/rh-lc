@@ -1,4 +1,8 @@
-import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.PiClosU
+module
+
+public import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.PiClosU
+
+@[expose] public section
 
 set_option linter.all false
 

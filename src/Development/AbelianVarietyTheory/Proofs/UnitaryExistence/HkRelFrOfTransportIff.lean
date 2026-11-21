@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.HeckeFr
-import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.FibrePushforward
-import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.IsReducedAlgebraOfSmoothOfIsNoetherianRing
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.HeckeFr
+public import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.FibrePushforward
+public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.IsReducedAlgebraOfSmoothOfIsNoetherianRing
+
+@[expose] public section
 
 noncomputable section
 

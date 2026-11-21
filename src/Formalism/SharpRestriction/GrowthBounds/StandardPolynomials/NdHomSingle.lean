@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.StdPolyEq
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.TopOddNeEndAny
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.MonomialSumEqProdTensor
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.StdPolyEq
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.TopOddNeEndAny
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.MonomialSumEqProdTensor
+
+@[expose] public section
 
 noncomputable section
 

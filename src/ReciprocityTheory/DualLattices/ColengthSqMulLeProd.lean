@@ -1,6 +1,10 @@
-import ReciprocityTheory.DualLattices.ColengthSqBlockVandermonde
-import ReciprocityTheory.DualLattices.ValuationPairwiseDifferenceProductPowLeColengthS
-import ReciprocityTheory.DualLattices.ColengthSqMulLe
+module
+
+public import ReciprocityTheory.DualLattices.ColengthSqBlockVandermonde
+public import ReciprocityTheory.DualLattices.ValuationPairwiseDifferenceProductPowLeColengthS
+public import ReciprocityTheory.DualLattices.ColengthSqMulLe
+
+@[expose] public section
 
 noncomputable section
 

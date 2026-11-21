@@ -1,6 +1,10 @@
-import Formalism.ConjugateSelfDual.Statement
-import ReciprocityTheory.GaloisValuations.GlobalA
-import ReciprocityTheory.GaloisValuations.GlobalB
+module
+
+public import Formalism.ConjugateSelfDual.Statement
+public import ReciprocityTheory.GaloisValuations.GlobalA
+public import ReciprocityTheory.GaloisValuations.GlobalB
+
+@[expose] public section
 
 noncomputable section
 

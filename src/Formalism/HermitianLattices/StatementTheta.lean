@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LatticeTheta.Statement
-import Formalism.HermitianLattices.StatementLat
+module
+
+public import Mathlib
+public import Formalism.LatticeTheta.Statement
+public import Formalism.HermitianLattices.StatementLat
+
+@[expose] public section
 
 open Formalism.K
 

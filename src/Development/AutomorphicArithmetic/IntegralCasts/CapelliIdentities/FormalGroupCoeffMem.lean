@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 private theorem coeff_mul_mem_of_lt {R : Type} [CommRing R] (S : Subring R) (n : ℕ)
     (f g : PowerSeries R) (hf : ∀ k < n, PowerSeries.coeff k f ∈ S)

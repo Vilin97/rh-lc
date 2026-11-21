@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.BaseChangeIdentities.RealTraceClifford.ClifMod
-import Development.AutomorphicSpectrum.Proofs.SemilocalMultiplicity.DsInfCharCap
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.BaseChangeIdentities.RealTraceClifford.ClifMod
+public import Development.AutomorphicSpectrum.Proofs.SemilocalMultiplicity.DsInfCharCap
+
+@[expose] public section
 
 noncomputable section
 

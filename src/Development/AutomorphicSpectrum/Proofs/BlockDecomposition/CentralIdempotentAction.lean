@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.FiniteTypeHarishChandra.SupportExistsAll
-import Formalism.PadicSubsetSums.StableGradedCounts.IRRCentralIdempotent
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.FiniteTypeHarishChandra.SupportExistsAll
+public import Formalism.PadicSubsetSums.StableGradedCounts.IRRCentralIdempotent
+
+@[expose] public section
 
 open ReciprocityTheory.Ty.Fin
 

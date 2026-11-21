@@ -1,6 +1,11 @@
-import Mathlib
-import ReciprocityTheory.ThetaQuasiPeriods.PeriodLattice
-import Development.AbelianVarietyTheory.Definitions.SpanningFamilies.IMemSiegel
+module
+
+public import Mathlib
+public import ReciprocityTheory.ThetaQuasiPeriods.PeriodLattice
+public import Development.AbelianVarietyTheory.Definitions.SpanningFamilies.IMemSiegel
+
+@[expose] public section
+
 open Matrix Complex
 namespace GlobalTheory.SW
 

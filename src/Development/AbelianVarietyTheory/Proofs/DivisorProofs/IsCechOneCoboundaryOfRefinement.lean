@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.ModuliSpaces.IsInvDer
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.PreimageTranslate
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.ModuliSpaces.IsInvDer
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.PreimageTranslate
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory GlobalTheory.KS
 
 namespace GlobalTheory.KS.Refine

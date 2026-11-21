@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.Columns.ChainInst
-import Formalism.LocalToGlobal.Columns.ReducedMatrixExtensionEntry
-import Formalism.LocalToGlobal.Columns.ColumnsProofs.ChainCounts
+module
+
+public import Formalism.LocalToGlobal.Columns.ChainInst
+public import Formalism.LocalToGlobal.Columns.ReducedMatrixExtensionEntry
+public import Formalism.LocalToGlobal.Columns.ColumnsProofs.ChainCounts
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

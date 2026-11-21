@@ -1,12 +1,16 @@
-import Mathlib
-import Formalism.LogFactorialIndices.StatementIdx
-import Formalism.FilteredPoleLength.ReducedBasisBounds.LengthBaseChangeLocal
-import Formalism.FilteredPoleLength.ReducedBasisBounds.FilteredPoleLength
-import Formalism.FilteredPoleLength.LocalDescentLevels.LevelsChainOfAddOneLe
-import Formalism.FilteredPoleLength.ReducedBasisBounds.ReductionQuotient
-import Formalism.LogFactorialIndices.LogProductFormula
-import Formalism.FilteredPoleLength.LocalDescentLevels.LevelsChain
-import Formalism.FilteredPoleLength.LocalDescentLevels.LocalStepDescent
+module
+
+public import Mathlib
+public import Formalism.LogFactorialIndices.StatementIdx
+public import Formalism.FilteredPoleLength.ReducedBasisBounds.LengthBaseChangeLocal
+public import Formalism.FilteredPoleLength.ReducedBasisBounds.FilteredPoleLength
+public import Formalism.FilteredPoleLength.LocalDescentLevels.LevelsChainOfAddOneLe
+public import Formalism.FilteredPoleLength.ReducedBasisBounds.ReductionQuotient
+public import Formalism.LogFactorialIndices.LogProductFormula
+public import Formalism.FilteredPoleLength.LocalDescentLevels.LevelsChain
+public import Formalism.FilteredPoleLength.LocalDescentLevels.LocalStepDescent
+
+@[expose] public section
 
 noncomputable section
 

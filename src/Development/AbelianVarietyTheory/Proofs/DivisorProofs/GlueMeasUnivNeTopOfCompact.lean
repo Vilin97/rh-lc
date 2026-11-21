@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.ChartMeasApplyOfSubset
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ChartMeasApplyOfSubset
+
+@[expose] public section
+
 open Set MeasureTheory
 open ReciprocityTheory.L2DbarEstimates (V)
 open scoped ENNReal

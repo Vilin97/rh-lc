@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HermitianLattices.DualOrthSum
-import Formalism.HermitianLattices.HermitianLatticesProofs.DualBasic
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.DualOrthSum
+public import Formalism.HermitianLattices.HermitianLatticesProofs.DualBasic
+
+@[expose] public section
 
 noncomputable section
 

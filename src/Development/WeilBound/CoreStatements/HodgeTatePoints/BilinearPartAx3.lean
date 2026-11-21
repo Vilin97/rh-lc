@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.HodgeTatePoints.Comp1IdentityLeft
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.CanonA
+module
+
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.Comp1IdentityLeft
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.CanonA
+
+@[expose] public section
 
 noncomputable section
 

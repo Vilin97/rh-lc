@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SubspaceCounting.Statement
-import Formalism.PolynomialDimension.WeylDim
+module
+
+public import Mathlib
+public import Formalism.SubspaceCounting.Statement
+public import Formalism.PolynomialDimension.WeylDim
+
+@[expose] public section
 
 noncomputable section
 

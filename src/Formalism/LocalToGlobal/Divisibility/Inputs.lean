@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.RowLat
-import Formalism.QuotientMetricDivisors.DivIntoDualShift
-import Formalism.QuotientMetricDivisors.ScalarLiftLowerBoundFull
-import Formalism.ThetaSupremumBounds.DivIneqExplicit6
-import Formalism.ThetaSupremumBounds.StatementCB
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.RowLat
+public import Formalism.QuotientMetricDivisors.DivIntoDualShift
+public import Formalism.QuotientMetricDivisors.ScalarLiftLowerBoundFull
+public import Formalism.ThetaSupremumBounds.DivIneqExplicit6
+public import Formalism.ThetaSupremumBounds.StatementCB
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

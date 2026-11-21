@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.FirstInequalityStatement
-import GroundTheory.GlobalFields.IdeleGroups.LocalNormsEverywhere
-import GroundTheory.GlobalFields.Adele.WeakApproxUnits
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.FirstInequalityStatement
+public import GroundTheory.GlobalFields.IdeleGroups.LocalNormsEverywhere
+public import GroundTheory.GlobalFields.Adele.WeakApproxUnits
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

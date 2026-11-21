@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GaloisCohomology.Kummer
-import GroundTheory.ProfiniteCohomology.GaloisCohomology.Brauer
-import GroundTheory.TateCohomology.Herbrand
-import GroundTheory.TateCohomology.TateLow
-import GroundTheory.LocalFields.HerbrandLocal
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GaloisCohomology.Kummer
+public import GroundTheory.ProfiniteCohomology.GaloisCohomology.Brauer
+public import GroundTheory.TateCohomology.Herbrand
+public import GroundTheory.TateCohomology.TateLow
+public import GroundTheory.LocalFields.HerbrandLocal
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

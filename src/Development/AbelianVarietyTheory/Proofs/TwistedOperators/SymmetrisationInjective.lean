@@ -1,12 +1,16 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.SchurIrreducible
-import Formalism.LocalToGlobal.BesselHermitianTheta.DefsReal
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.SymbolCongr
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.DegreeSingleAdd
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ProdXEqMonomial
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.UgMemSpanListProd
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ProdPLinIsHomogeneous
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.SymmetrisationEquivariant
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.SchurIrreducible
+public import Formalism.LocalToGlobal.BesselHermitianTheta.DefsReal
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.SymbolCongr
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.DegreeSingleAdd
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ProdXEqMonomial
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.UgMemSpanListProd
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ProdPLinIsHomogeneous
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.SymmetrisationEquivariant
+
+@[expose] public section
 
 open Formalism.BasicNotions.TH Formalism.MainNotions.SchurIrreducible MvPolynomial TensorProduct
 

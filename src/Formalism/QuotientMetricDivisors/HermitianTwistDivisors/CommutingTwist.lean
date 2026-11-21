@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.EigenRatHermLcv
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ConjugateWeightLatticeOfGeneral
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.EigenRatHermLcv
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ConjugateWeightLatticeOfGeneral
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

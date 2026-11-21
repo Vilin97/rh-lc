@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.CarrierInputExistsBuilt
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBJoint
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TopPSD
-import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.TheoremSClosedP
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.CarrierInputExistsBuilt
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBJoint
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TopPSD
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.TheoremSClosedP
+
+@[expose] public section
 
 noncomputable section
 

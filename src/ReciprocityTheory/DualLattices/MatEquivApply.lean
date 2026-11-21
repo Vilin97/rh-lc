@@ -1,5 +1,9 @@
-import ReciprocityTheory.DualLattices.DualLenStatement
-import ReciprocityTheory.DualLattices.BlockOneMulMulBlockOne
+module
+
+public import ReciprocityTheory.DualLattices.DualLenStatement
+public import ReciprocityTheory.DualLattices.BlockOneMulMulBlockOne
+
+@[expose] public section
 
 noncomputable section
 

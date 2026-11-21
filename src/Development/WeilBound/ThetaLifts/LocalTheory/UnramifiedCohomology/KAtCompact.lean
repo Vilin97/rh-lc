@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.UnramifiedCohomology.Lint
-import Development.WeilBound.ThetaLifts.SmallCones.FcCols
-import Development.WeilBound.ThetaLifts.SmallCones.ThetaUniq
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.EvFinIdemSelf
-import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.Kcompact
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.UnramifiedCohomology.Lint
+public import Development.WeilBound.ThetaLifts.SmallCones.FcCols
+public import Development.WeilBound.ThetaLifts.SmallCones.ThetaUniq
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.EvFinIdemSelf
+public import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.Kcompact
+
+@[expose] public section
 
 noncomputable section
 

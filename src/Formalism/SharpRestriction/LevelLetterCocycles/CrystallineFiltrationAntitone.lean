@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.ArcCoordinatesOfLevelZeroParts
-import Formalism.SharpRestriction.LevelLetterCocycles.LevLetEMul
-import Formalism.SharpRestriction.LevelLetterCocycles.StageStep
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.ArcCoordinatesOfLevelZeroParts
+public import Formalism.SharpRestriction.LevelLetterCocycles.LevLetEMul
+public import Formalism.SharpRestriction.LevelLetterCocycles.StageStep
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.DivByPartialYAtZeroSubstAtXAtY
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgHonD
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.DivByPartialYAtZeroSubstAtXAtY
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgHonD
+
+@[expose] public section
 
 noncomputable section
 

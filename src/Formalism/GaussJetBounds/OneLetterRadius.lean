@@ -1,14 +1,18 @@
-import Formalism.GaussJetBounds.GaussJetProofs.SubstitutionWeightBound
-import Formalism.GaussJetBounds.GaussJetProofs.LogarithmWeightComparison
-import Formalism.GaussJetBounds.GaussJetProofs.NormNatCastEqPowPadicValNat
-import Formalism.GaussJetBounds.GaussJetProofs.OneLetterRadiusIdentity
-import Formalism.GaussJetBounds.GaussJetProofs.PureCrossTermWeight
-import Formalism.GaussJetBounds.GaussJetProofs.LogStep
-import Formalism.GaussJetBounds.GaussJetProofs.SwappedParitySeriesBinomialForm
-import Formalism.GaussJetBounds.GaussJetProofs.ExistsNeZeroOfFinsumNeZero
-import Formalism.GaussJetBounds.GaussJetProofs.ConstantCoeffEvenDerivativeEqZero
-import Formalism.GaussJetBounds.GaussJetProofs.AsmRDotAddRight
-import Formalism.GaussJetBounds.GaussJetProofs.AsmOne
+module
+
+public import Formalism.GaussJetBounds.GaussJetProofs.SubstitutionWeightBound
+public import Formalism.GaussJetBounds.GaussJetProofs.LogarithmWeightComparison
+public import Formalism.GaussJetBounds.GaussJetProofs.NormNatCastEqPowPadicValNat
+public import Formalism.GaussJetBounds.GaussJetProofs.OneLetterRadiusIdentity
+public import Formalism.GaussJetBounds.GaussJetProofs.PureCrossTermWeight
+public import Formalism.GaussJetBounds.GaussJetProofs.LogStep
+public import Formalism.GaussJetBounds.GaussJetProofs.SwappedParitySeriesBinomialForm
+public import Formalism.GaussJetBounds.GaussJetProofs.ExistsNeZeroOfFinsumNeZero
+public import Formalism.GaussJetBounds.GaussJetProofs.ConstantCoeffEvenDerivativeEqZero
+public import Formalism.GaussJetBounds.GaussJetProofs.AsmRDotAddRight
+public import Formalism.GaussJetBounds.GaussJetProofs.AsmOne
+
+@[expose] public section
 
 universe u v
 

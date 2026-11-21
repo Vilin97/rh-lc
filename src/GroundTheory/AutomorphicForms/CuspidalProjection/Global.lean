@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness
-import GroundTheory.AutomorphicForms.SupercuspidalCoefficients
-import GroundTheory.GlobalFields.TateThesis.AdelicCharLocal
-import GroundTheory.GlobalFields.LocalFieldAtPlace
-import GroundTheory.AutomorphicForms.RealIwasawaIntegration
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness
+public import GroundTheory.AutomorphicForms.SupercuspidalCoefficients
+public import GroundTheory.GlobalFields.TateThesis.AdelicCharLocal
+public import GroundTheory.GlobalFields.LocalFieldAtPlace
+public import GroundTheory.AutomorphicForms.RealIwasawaIntegration
+
+@[expose] public section
 
 open MeasureTheory Set Filter Topology Function
 open NumberField IsDedekindDomain

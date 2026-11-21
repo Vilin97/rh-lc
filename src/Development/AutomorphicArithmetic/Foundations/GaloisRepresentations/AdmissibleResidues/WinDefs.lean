@@ -1,7 +1,11 @@
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AdmissibleResidues.SumThree
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.Classifies
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.CountSys
-import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.CrystallineBaseChange.CqStmt
+module
+
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AdmissibleResidues.SumThree
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.Classifies
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.CountSys
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.CrystallineBaseChange.CqStmt
+
+@[expose] public section
 
 noncomputable section
 

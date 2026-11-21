@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.InertKernelTheory.FrameInt
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.FrameInt
+
+@[expose] public section
 
 noncomputable section
 

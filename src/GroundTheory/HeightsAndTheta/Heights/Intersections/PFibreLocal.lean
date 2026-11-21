@@ -1,8 +1,13 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.KappaA
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.KappaB
-import GroundTheory.HeightsAndTheta.Heights.FlagBundles.Assembly
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsFibreLocal
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.KappaA
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.KappaB
+public import GroundTheory.HeightsAndTheta.Heights.FlagBundles.Assembly
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsFibreLocal
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter

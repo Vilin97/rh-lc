@@ -1,12 +1,17 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReindexDblIncM
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LagrInt
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InfPartFPlaceIdem
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.Periodic
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.InvHerm
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.LeviGLInvVal
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.OneAddPow
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.MfacInvMul
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReindexDblIncM
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LagrInt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InfPartFPlaceIdem
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.Periodic
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.InvHerm
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.LeviGLInvVal
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.OneAddPow
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.MfacInvMul
+
+@[expose] public section
+
 open scoped TensorProduct Matrix
 open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes MeasureTheory
 open GlobalTheory.WeilM GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels

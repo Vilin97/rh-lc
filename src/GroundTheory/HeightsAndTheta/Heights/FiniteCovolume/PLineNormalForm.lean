@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StLineNormalForm
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PIdealClassesFinite
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLineCoeffsFG
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLinePairOrbitsFinite
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsCommonMultiple
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StLineNormalForm
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PIdealClassesFinite
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLineCoeffsFG
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLinePairOrbitsFinite
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsCommonMultiple
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights.FiniteCovolume
 

@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.BaseLiftsPackageOfPrimitiveLinks
-import Formalism.LocalToGlobal.IndefiniteReal.NearConstantMultiplicities
-import Formalism.LocalToGlobal.IndefiniteReal.PrimitiveStatementsBaseLevel
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.BaseLiftsPackageOfPrimitiveLinks
+public import Formalism.LocalToGlobal.IndefiniteReal.NearConstantMultiplicities
+public import Formalism.LocalToGlobal.IndefiniteReal.PrimitiveStatementsBaseLevel
+
+@[expose] public section
 
 noncomputable section
 

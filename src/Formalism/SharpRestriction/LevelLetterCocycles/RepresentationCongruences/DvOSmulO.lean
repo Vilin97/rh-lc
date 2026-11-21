@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.ProdTwoLevelsEqConst
-import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.MemPairXIff
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.ProdTwoLevelsEqConst
+public import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.MemPairXIff
+
+@[expose] public section
 
 open scoped TensorProduct
 

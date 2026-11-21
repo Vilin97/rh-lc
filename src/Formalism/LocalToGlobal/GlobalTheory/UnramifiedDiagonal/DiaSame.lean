@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.LemmaBSecondBranchOfLength
-import Formalism.LocalToGlobal.GlobalTheory.GL6.DiagonalSlopes.NaturalTranslateAdelicFunction
-import Formalism.LocalToGlobal.GroupLattices.Joint0
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.LemmaBSecondBranchOfLength
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.DiagonalSlopes.NaturalTranslateAdelicFunction
+public import Formalism.LocalToGlobal.GroupLattices.Joint0
+
+@[expose] public section
 
 noncomputable section
 

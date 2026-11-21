@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.HookBound
-import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
+module
+
+public import Formalism.PeriodIntegrals.HookBound
+public import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
+
+@[expose] public section
 
 open MvPolynomial Formalism.GradedWeylDivisibility
 

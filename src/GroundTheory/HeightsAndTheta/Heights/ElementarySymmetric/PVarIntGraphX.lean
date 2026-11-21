@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.StVarIntGraphCompact
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PVarIntGraph
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PLelongPolyLimit
-import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PIntegralIndep
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.AssemblyBase
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.StVarIntGraphCompact
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PVarIntGraph
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PLelongPolyLimit
+public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PIntegralIndep
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.AssemblyBase
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

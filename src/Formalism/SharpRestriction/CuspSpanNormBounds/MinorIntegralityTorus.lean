@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.KTwoMinorIntegrality
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.KTwoMinorIntegrality
+
+@[expose] public section
 
 noncomputable section
 

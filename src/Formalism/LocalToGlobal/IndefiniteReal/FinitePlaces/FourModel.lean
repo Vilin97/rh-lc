@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.SmulSubMulLe
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.SmulSubMulLe
+
+@[expose] public section
 
 set_option linter.style.haveILetI false
 

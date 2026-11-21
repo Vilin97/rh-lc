@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.LubinTateReciprocity.Descent
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LubinTateReciprocity.Descent
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataHost
-import Formalism.FrobeniusOrbits.HostCorollaries
-import Formalism.DirichletDensity.HostDensityArith
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataHost
+public import Formalism.FrobeniusOrbits.HostCorollaries
+public import Formalism.DirichletDensity.HostDensityArith
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.InertKernelTheory.DefsBeW
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsBeW
+
+@[expose] public section
 
 namespace Formalism.L2.KerInert
 

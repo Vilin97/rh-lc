@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.WeightedUniformRotatedOfExpansion
-import Formalism.SharpRestriction.CuspSpanNormBounds.TheoremBConstants
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.WeightedUniformRotatedOfExpansion
+public import Formalism.SharpRestriction.CuspSpanNormBounds.TheoremBConstants
+
+@[expose] public section
 
 noncomputable section
 

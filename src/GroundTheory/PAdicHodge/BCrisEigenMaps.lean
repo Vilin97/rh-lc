@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.BCrisNewton
-import GroundTheory.PAdicHodge.GalSmulAlgebraMapPadicPlus
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.BCrisNewton
+public import GroundTheory.PAdicHodge.GalSmulAlgebraMapPadicPlus
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

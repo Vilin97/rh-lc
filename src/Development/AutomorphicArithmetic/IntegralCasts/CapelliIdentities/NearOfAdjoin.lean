@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qg2.near_of_adjoin :
     ∀ {P L : Type} [inst : CommRing P] [inst_1 : CommRing L]

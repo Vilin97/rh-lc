@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.SIdeleHerbrand
-import GroundTheory.GlobalFields.HerbrandQuotients.SUnits
-import GroundTheory.GlobalFields.IdeleGroups.LocalNormsEverywhere
-import GroundTheory.GlobalFields.IdeleGroups.GaloisOnAdeles.Action
-import GroundTheory.GlobalFields.CompletionAtPlace.Degree
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.SIdeleHerbrand
+public import GroundTheory.GlobalFields.HerbrandQuotients.SUnits
+public import GroundTheory.GlobalFields.IdeleGroups.LocalNormsEverywhere
+public import GroundTheory.GlobalFields.IdeleGroups.GaloisOnAdeles.Action
+public import GroundTheory.GlobalFields.CompletionAtPlace.Degree
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

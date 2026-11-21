@@ -1,10 +1,14 @@
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjDehom
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.LogResStC
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.FinTypeQE
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjHypA
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjHypStalk
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjHypB
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjHypC
+module
+
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjDehom
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.LogResStC
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.FinTypeQE
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjHypA
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjHypStalk
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjHypB
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjHypC
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.R
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.WeightThresholdDefs
-import Development.AbelianVarietyTheory.Definitions.Foundations.CurveCl
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.WeightThresholdDefs
+public import Development.AbelianVarietyTheory.Definitions.Foundations.CurveCl
+
+@[expose] public section
 
 open MvPolynomial Formalism.DegreeFormula Formalism.BasicNotions Formalism.BasicNotions.DV Filter Topology
 

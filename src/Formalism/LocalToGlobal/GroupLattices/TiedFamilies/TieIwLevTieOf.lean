@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.FullTiedCBase
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.PosBridge
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.RecThm
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.FullTiedCBase
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.PosBridge
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.RecThm
+
+@[expose] public section
 
 noncomputable section
 

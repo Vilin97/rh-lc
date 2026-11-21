@@ -1,9 +1,13 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.PadicHodgeComparison.HodgeSurjectivity.FormLaws
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsBaseChangeEquiv
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExteriorPowerSplit
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KaehlerPushoutSplit
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TensorEquivBaseChangeTensor
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.HodgeSurjectivity.FormLaws
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsBaseChangeEquiv
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExteriorPowerSplit
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.KaehlerPushoutSplit
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.TensorEquivBaseChangeTensor
+
+@[expose] public section
 
 open TensorProduct CrystallineSemistableComparison.Onto
 

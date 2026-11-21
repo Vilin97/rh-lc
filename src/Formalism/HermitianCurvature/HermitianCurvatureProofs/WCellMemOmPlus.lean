@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SmoothLevOfCk
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SmoothLevOfCk
+
+@[expose] public section
 
 open Matrix Filter Topology
 open scoped ContDiff

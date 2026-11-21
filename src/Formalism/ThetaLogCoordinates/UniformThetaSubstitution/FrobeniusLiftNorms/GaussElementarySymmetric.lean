@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementC
-import Formalism.SubspaceCounting.SubspaceCountingProofs.QVandermonde
-import Formalism.ArtinHasse.ArtinHasseProofs.SymmSeries
+module
+
+public import Mathlib
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementC
+public import Formalism.SubspaceCounting.SubspaceCountingProofs.QVandermonde
+public import Formalism.ArtinHasse.ArtinHasseProofs.SymmSeries
+
+@[expose] public section
 
 noncomputable section
 

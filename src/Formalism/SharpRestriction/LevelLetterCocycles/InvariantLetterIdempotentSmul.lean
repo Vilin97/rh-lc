@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.Step1KillXList
-import Formalism.SharpRestriction.LevelLetterCocycles.PadicValNatFactorialSucc
-import Formalism.SharpRestriction.LevelLetterCocycles.MultVNonneg
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.Step1KillXList
+public import Formalism.SharpRestriction.LevelLetterCocycles.PadicValNatFactorialSucc
+public import Formalism.SharpRestriction.LevelLetterCocycles.MultVNonneg
+
+@[expose] public section
 
 noncomputable section
 

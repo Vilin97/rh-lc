@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.InertKernelTheory.IntegralInertOfWeakApproxTheta
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.AlgKleinPf
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.IntegralInertOfWeakApproxTheta
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.AlgKleinPf
+
+@[expose] public section
 
 namespace Formalism.L2.KerInert
 

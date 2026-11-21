@@ -1,4 +1,8 @@
-import ReciprocityTheory.L2DbarEstimates.HormanderEstimate.ClosedSt
+module
+
+public import ReciprocityTheory.L2DbarEstimates.HormanderEstimate.ClosedSt
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.F
 

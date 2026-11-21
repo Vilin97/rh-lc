@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.SiegelLatticeTheory.TraceIntegralEstimates.ChartC
+module
+
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.TraceIntegralEstimates.ChartC
+
+@[expose] public section
 
 noncomputable section
 

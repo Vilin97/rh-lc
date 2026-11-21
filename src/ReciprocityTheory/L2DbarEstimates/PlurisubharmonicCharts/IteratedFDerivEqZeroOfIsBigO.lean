@@ -1,6 +1,10 @@
-import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.GROWCountStatement
-import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.HoloSmooth
-import Lemmata.CharacterDirections.Cdir
+module
+
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.GROWCountStatement
+public import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.HoloSmooth
+public import Lemmata.CharacterDirections.Cdir
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.Y
 

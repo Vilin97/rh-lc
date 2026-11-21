@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.QuotientMeasure
-import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.IntegralUnitBaseChange.InvTransposeGLInvTransposeGL
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.QuotientMeasure
+public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.IntegralUnitBaseChange.InvTransposeGLInvTransposeGL
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,9 @@
-import Development.ResolutionOfSingularities.Foundations.Blowup.AffineBlowup
+module
+
+public import Development.ResolutionOfSingularities.Foundations.Blowup.AffineBlowup
+
+@[expose] public section
+
 open FunctorialResolution.Blowup
 
 namespace UpperTheory.ChartGen

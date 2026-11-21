@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.IsotropicNormalFormFullStatement
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.IsotropicNormalFormFullStatement
+
+@[expose] public section
 
 theorem Formalism.FourierDecayAlt.P.sign_permutation_identity : Formalism.FourierDecayAlt.C3.SignE :=
   Formalism.FourierDecayAlt.P.SignAntidiagonal.sign_permutation_identity

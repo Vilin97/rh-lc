@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.NumberFieldFamilies.IsLocalizedOfSpan
+module
+
+public import Formalism.LocalToGlobal.NumberFieldFamilies.IsLocalizedOfSpan
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RepresentsOfComputes
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DetMemSpanAdjugate
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.EqOneOfMemProKer
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CokEquivOfExact
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CoeffMemOfPowMul
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CoeffMemOfToLamMem
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RepresentsOfComputes
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DetMemSpanAdjugate
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.EqOneOfMemProKer
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CokEquivOfExact
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CoeffMemOfPowMul
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CoeffMemOfToLamMem
+
+@[expose] public section
 
 noncomputable section
 

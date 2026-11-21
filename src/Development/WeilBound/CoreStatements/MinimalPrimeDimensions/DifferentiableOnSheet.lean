@@ -1,7 +1,11 @@
-import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.IntegralBallPow
-import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.EvaluationGenEqZero
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ConeBall
-import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.AApproxE
+module
+
+public import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.IntegralBallPow
+public import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.EvaluationGenEqZero
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ConeBall
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.AApproxE
+
+@[expose] public section
 
 set_option autoImplicit false
 

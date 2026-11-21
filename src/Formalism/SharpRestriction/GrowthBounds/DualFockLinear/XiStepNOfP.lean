@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.WspanLeOpCl
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.WspanLeOpCl
+
+@[expose] public section
 
 noncomputable section
 

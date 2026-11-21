@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.StandardValuations.IntIndPow
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.StandardValuations.IntIndPow
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

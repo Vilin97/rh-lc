@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.ContragredientTranspose.GelfandKazhdan
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.ContragredientTranspose.GelfandKazhdan
+
+@[expose] public section
 
 namespace GroundTheory.Variant₂.N1
 

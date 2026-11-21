@@ -1,6 +1,10 @@
-import Development.EtaleCohomology.CohomologicalPurity.LeafFlqPf
-import Development.EtaleCohomology.KummerTheory.GluePf
-import Development.EtaleCohomology.KummerTheory.FlasquePf
+module
+
+public import Development.EtaleCohomology.CohomologicalPurity.LeafFlqPf
+public import Development.EtaleCohomology.KummerTheory.GluePf
+public import Development.EtaleCohomology.KummerTheory.FlasquePf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC CochainComplex.HomComplex

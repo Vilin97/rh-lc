@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataDIV
-import Formalism.LocalRingCardinality.DataParams₂
-import Formalism.SharpRestriction.GrowthBounds.IsResidueClassZero
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataDIV
+public import Formalism.LocalRingCardinality.DataParams₂
+public import Formalism.SharpRestriction.GrowthBounds.IsResidueClassZero
+
+@[expose] public section
 
 noncomputable section
 

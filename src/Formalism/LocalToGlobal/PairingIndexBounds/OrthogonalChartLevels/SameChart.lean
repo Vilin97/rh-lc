@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.PtRec
-import Formalism.LocalToGlobal.HermitianColumns.ZeroPointScaledByCharacter
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.PosCompatOfBase
-import Formalism.LocalToGlobal.InertKernelTheory.DefsRepRec
+module
+
+public import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.PtRec
+public import Formalism.LocalToGlobal.HermitianColumns.ZeroPointScaledByCharacter
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.PosCompatOfBase
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsRepRec
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.StdCharExists
-import Formalism.LocalToGlobal.IndefiniteReal.PublishedAut
-import Formalism.LocalToGlobal.IndefiniteReal.ExistsGADet
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemSum
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.StdCharExists
+public import Formalism.LocalToGlobal.IndefiniteReal.PublishedAut
+public import Formalism.LocalToGlobal.IndefiniteReal.ExistsGADet
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemSum
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.AdmissibleDesigns.TwistedTargetOfInputs
-import Formalism.AdmissibleDesigns.FiniteClassesLocalEq
+module
+
+public import Formalism.AdmissibleDesigns.TwistedTargetOfInputs
+public import Formalism.AdmissibleDesigns.FiniteClassesLocalEq
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

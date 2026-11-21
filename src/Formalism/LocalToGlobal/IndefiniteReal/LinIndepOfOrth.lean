@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.IsotInLeOfIntw
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.IsotInLeOfIntw
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.SpMapAlgHomId
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.SpMapAlgHomId
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.FiltLenF
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FiltrationLength.LengthQuotLeOfKerLe
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.FiltLenF
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FiltrationLength.LengthQuotLeOfKerLe
+
+@[expose] public section
 
 namespace PI.FiltrationLength
 

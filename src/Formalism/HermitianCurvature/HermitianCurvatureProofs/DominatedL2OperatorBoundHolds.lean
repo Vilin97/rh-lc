@@ -1,8 +1,12 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopDom
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutDomCutInt
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLemB
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutFpmDecay
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJDCCLower
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopDom
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutDomCutInt
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLemB
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutFpmDecay
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJDCCLower
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.VanishTranslates
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.ApproxId
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.VanishTranslates
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.ApproxId
+
+@[expose] public section
 
 noncomputable section
 

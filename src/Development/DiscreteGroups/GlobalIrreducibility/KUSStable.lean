@@ -1,4 +1,8 @@
-import Development.DiscreteGroups.GlobalIrreducibility.TopLeftElemInv
+module
+
+public import Development.DiscreteGroups.GlobalIrreducibility.TopLeftElemInv
+
+@[expose] public section
 
 noncomputable section
 

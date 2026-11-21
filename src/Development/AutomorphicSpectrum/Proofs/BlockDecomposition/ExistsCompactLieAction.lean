@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsCliff
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.OneParameterDifferentiable
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.GroupGeneratedByExp
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsCliff
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OneParameterDifferentiable
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GroupGeneratedByExp
+
+@[expose] public section
 
 noncomputable section
 

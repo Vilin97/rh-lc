@@ -1,9 +1,13 @@
-import Mathlib
-import Development.DiscreteGroups.GlobalIrreducibility.LConvCut
-import Development.DiscreteGroups.GlobalIrreducibility.LConvUnifA
-import GroundTheory.AutomorphicForms.JacquetAdmissible
-import GroundTheory.AutomorphicForms.Cartan
-import GroundTheory.AutomorphicForms.IwahoriFactorization
+module
+
+public import Mathlib
+public import Development.DiscreteGroups.GlobalIrreducibility.LConvCut
+public import Development.DiscreteGroups.GlobalIrreducibility.LConvUnifA
+public import GroundTheory.AutomorphicForms.JacquetAdmissible
+public import GroundTheory.AutomorphicForms.Cartan
+public import GroundTheory.AutomorphicForms.IwahoriFactorization
+
+@[expose] public section
 
 noncomputable section
 

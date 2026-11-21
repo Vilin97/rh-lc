@@ -1,6 +1,10 @@
-import Development.EtaleCohomology.EtaleTrace.LadicH0LocallyConstant
-import Development.EtaleCohomology.KummerTheory.InjSlice
-import Development.EtaleCohomology.EtaleSheaves.LeafTwistPf
+module
+
+public import Development.EtaleCohomology.EtaleTrace.LadicH0LocallyConstant
+public import Development.EtaleCohomology.KummerTheory.InjSlice
+public import Development.EtaleCohomology.EtaleSheaves.LeafTwistPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC

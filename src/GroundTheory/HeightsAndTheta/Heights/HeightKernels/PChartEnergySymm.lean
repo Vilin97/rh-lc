@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergySymm
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartIbpSymm
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PChartEnergySwap
-import GroundTheory.HeightsAndTheta.Heights.Intersections.NotLtLtOfMemMinimalPrimes
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.MdiscSt
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergySymm
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartIbpSymm
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PChartEnergySwap
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.NotLtLtOfMemMinimalPrimes
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.MdiscSt
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

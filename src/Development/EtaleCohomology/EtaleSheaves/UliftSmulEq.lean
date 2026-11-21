@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.TwTrivPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.TwTrivPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC

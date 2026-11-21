@@ -1,33 +1,37 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.TranscendentalPeriodUnits.CrystallineSemistableComparison
-import GroundTheory.PAdicHodge.BCrisNewtonLift
-import GroundTheory.PAdicHodge.AInfGalois
-import GroundTheory.PAdicHodge.AInfXi
-import GroundTheory.PAdicHodge.TiltAlgClosed
-import GroundTheory.PAdicHodge.TiltAlgebra
-import GroundTheory.PAdicHodge.TateCpTwist
-import GroundTheory.PAdicHodge.ExtRobbaBounded
-import GroundTheory.PAdicHodge.RobbaSeries
-import GroundTheory.PAdicHodge.HighIndexSingleZeroOne
-import GroundTheory.PAdicHodge.PerfectoidField
-import GroundTheory.PAdicHodge.SemilinearResidue
-import GroundTheory.PAdicHodge.SlopeRobbaDegree
-import GroundTheory.PAdicHodge.BCrisEigenWitt
-import GroundTheory.PAdicHodge.BStPeriod
-import GroundTheory.PAdicHodge.ACrisBdR
-import GroundTheory.PAdicHodge.BdRGalois
-import GroundTheory.PAdicHodge.ACrisBdRGalois
-import GroundTheory.PAdicHodge.InstMulSemiringActionGalPlus
-import GroundTheory.PAdicHodge.BCrisNewtonApprox
-import GroundTheory.PAdicHodge.UnramifiedFrob
-import GroundTheory.PAdicHodge.BdRTGalois
-import GroundTheory.PAdicHodge.BCrisPlusInvariants
-import GroundTheory.PAdicHodge.BCrisRegularFinal
-import GroundTheory.PAdicHodge.ACrisGalois
-import GroundTheory.PAdicHodge.FundamentalSeqSurj
-import GroundTheory.PAdicHodge.FontaineLemmaInvariants
-import GroundTheory.PAdicHodge.ExistsNormLeOfNormLtOneFinite
-import GroundTheory.PAdicHodge.BCrisNewton
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.TranscendentalPeriodUnits.CrystallineSemistableComparison
+public import GroundTheory.PAdicHodge.BCrisNewtonLift
+public import GroundTheory.PAdicHodge.AInfGalois
+public import GroundTheory.PAdicHodge.AInfXi
+public import GroundTheory.PAdicHodge.TiltAlgClosed
+public import GroundTheory.PAdicHodge.TiltAlgebra
+public import GroundTheory.PAdicHodge.TateCpTwist
+public import GroundTheory.PAdicHodge.ExtRobbaBounded
+public import GroundTheory.PAdicHodge.RobbaSeries
+public import GroundTheory.PAdicHodge.HighIndexSingleZeroOne
+public import GroundTheory.PAdicHodge.PerfectoidField
+public import GroundTheory.PAdicHodge.SemilinearResidue
+public import GroundTheory.PAdicHodge.SlopeRobbaDegree
+public import GroundTheory.PAdicHodge.BCrisEigenWitt
+public import GroundTheory.PAdicHodge.BStPeriod
+public import GroundTheory.PAdicHodge.ACrisBdR
+public import GroundTheory.PAdicHodge.BdRGalois
+public import GroundTheory.PAdicHodge.ACrisBdRGalois
+public import GroundTheory.PAdicHodge.InstMulSemiringActionGalPlus
+public import GroundTheory.PAdicHodge.BCrisNewtonApprox
+public import GroundTheory.PAdicHodge.UnramifiedFrob
+public import GroundTheory.PAdicHodge.BdRTGalois
+public import GroundTheory.PAdicHodge.BCrisPlusInvariants
+public import GroundTheory.PAdicHodge.BCrisRegularFinal
+public import GroundTheory.PAdicHodge.ACrisGalois
+public import GroundTheory.PAdicHodge.FundamentalSeqSurj
+public import GroundTheory.PAdicHodge.FontaineLemmaInvariants
+public import GroundTheory.PAdicHodge.ExistsNormLeOfNormLtOneFinite
+public import GroundTheory.PAdicHodge.BCrisNewton
+
+@[expose] public section
 
 set_option backward.isDefEq.respectTransparency false
 

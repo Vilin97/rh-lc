@@ -1,14 +1,18 @@
-import Formalism.PieriBlockIdeals.BlockIdealBound5Derived
-import Formalism.PieriBlockIdeals.PieriColumnMinors.ProdInitialMinorsMemDetSpan
-import Formalism.PieriBlockIdeals.PieriColumnMinors.UnitNormBounds
-import Mathlib
-import Formalism.PieriBlockIdeals.Statement
-import Formalism.RankGapBounds.LargePrimeFactor
-import Formalism.PieriBlockIdeals.PieriColumnMinors.LabelSumNeedsLeFalse
-import Formalism.GradedWeylDivisibility.FinalC
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDbasisLemmas
-import Formalism.RankGapBounds.RankGapProofs.FormsTensorLocalization
-import Formalism.PieriBlockIdeals.PieriColumnMinors.RegularCuspidalTrace
+module
+
+public import Formalism.PieriBlockIdeals.BlockIdealBound5Derived
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.ProdInitialMinorsMemDetSpan
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.UnitNormBounds
+public import Mathlib
+public import Formalism.PieriBlockIdeals.Statement
+public import Formalism.RankGapBounds.LargePrimeFactor
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.LabelSumNeedsLeFalse
+public import Formalism.GradedWeylDivisibility.FinalC
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDbasisLemmas
+public import Formalism.RankGapBounds.RankGapProofs.FormsTensorLocalization
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.RegularCuspidalTrace
+
+@[expose] public section
 
 noncomputable section
 

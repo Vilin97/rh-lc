@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.DiagRank
+module
+
+public import Formalism.PeriodIntegrals.DiagRank
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.TargetChF
-import Formalism.LocalToGlobal.Columns.DGamAut
+module
+
+public import Formalism.LocalToGlobal.Columns.TargetChF
+public import Formalism.LocalToGlobal.Columns.DGamAut
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 

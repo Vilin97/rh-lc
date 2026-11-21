@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalDualGenerator.FpDualUnram
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalDualGenerator.IsClosedO
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MemOfClosed
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalDualGenerator.FpDualUnram
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalDualGenerator.IsClosedO
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MemOfClosed
+
+@[expose] public section
 
 noncomputable section
 

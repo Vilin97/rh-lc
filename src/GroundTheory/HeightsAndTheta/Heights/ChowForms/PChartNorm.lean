@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ChowForms.StatementsChartFirstGroupDvd
-import GroundTheory.HeightsAndTheta.Heights.ChowForms.StatementsNormOfDividedForm
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ChowForms.StatementsChartFirstGroupDvd
+public import GroundTheory.HeightsAndTheta.Heights.ChowForms.StatementsNormOfDividedForm
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJZetaDefs
-import GroundTheory.AutomorphicForms.GL2.ExistsEqPowMulOfValuationLe
-import GroundTheory.AutomorphicForms.GL2.GJLeviSupport
-import GroundTheory.AutomorphicForms.LeviStagesProduct
-import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJZetaDefs
+public import GroundTheory.AutomorphicForms.GL2.ExistsEqPowMulOfValuationLe
+public import GroundTheory.AutomorphicForms.GL2.GJLeviSupport
+public import GroundTheory.AutomorphicForms.LeviStagesProduct
+public import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

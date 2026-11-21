@@ -1,6 +1,10 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalMassType.IdxGrp
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalMassType.IdxAbs
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalMassOrder.IsTopRingTens
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalMassType.IdxGrp
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalMassType.IdxAbs
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalMassOrder.IsTopRingTens
+
+@[expose] public section
 
 noncomputable section
 

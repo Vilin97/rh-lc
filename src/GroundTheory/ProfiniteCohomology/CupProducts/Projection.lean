@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.CupProducts.Functoriality
-import GroundTheory.ProfiniteCohomology.Shapiro
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.CupProducts.Functoriality
+public import GroundTheory.ProfiniteCohomology.Shapiro
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

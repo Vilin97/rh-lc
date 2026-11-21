@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.ReductionLocalVolumeGL
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.ReductionLocalVolumeGL
+
+@[expose] public section
 
 open MeasureTheory Measure Set Matrix
 open scoped NNReal ENNReal

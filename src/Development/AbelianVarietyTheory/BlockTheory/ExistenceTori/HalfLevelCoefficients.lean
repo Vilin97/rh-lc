@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.ExistsParameterConditions
-import Formalism.LocalToGlobal.ProjectiveLattices.DatumOfRecordSignature
-import Formalism.LocalToGlobal.ProjectiveLattices.DatProofs
-import Formalism.LocalToGlobal.ProjectiveLattices.CuspidalL2Subspace
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.ExistsParameterConditions
+public import Formalism.LocalToGlobal.ProjectiveLattices.DatumOfRecordSignature
+public import Formalism.LocalToGlobal.ProjectiveLattices.DatProofs
+public import Formalism.LocalToGlobal.ProjectiveLattices.CuspidalL2Subspace
+
+@[expose] public section
 
 noncomputable section
 

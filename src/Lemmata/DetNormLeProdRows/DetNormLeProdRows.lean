@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.GelfandTransference.Statement
+module
+
+public import Mathlib
+public import Formalism.GelfandTransference.Statement
+
+@[expose] public section
 
 namespace Bl.DetNormLeProdRows
 

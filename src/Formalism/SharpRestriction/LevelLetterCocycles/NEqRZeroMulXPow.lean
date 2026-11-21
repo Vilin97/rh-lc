@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.MemPrimesOverOfMem
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.MemPrimesOverOfMem
+
+@[expose] public section
 
 noncomputable section
 

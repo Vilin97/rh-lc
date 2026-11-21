@@ -1,13 +1,17 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.CrystallineLiftingInputs
-import Formalism.WeaklyAdmissibleFiltrations.Statement
-import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
-import Formalism.SharpRestriction.LevelLetterCocycles.BaseChangePreservesUnitaryOf
-import Formalism.SharpRestriction.LevelLetterCocycles.ArcLiftingSetup
-import Formalism.SharpRestriction.LevelLetterCocycles.LiftingTheory
-import Formalism.SharpRestriction.LevelLetterCocycles.DeltaInvariantLattices
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FiltrationExponentBound
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DivisibilityFiltration
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.CrystallineLiftingInputs
+public import Formalism.WeaklyAdmissibleFiltrations.Statement
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+public import Formalism.SharpRestriction.LevelLetterCocycles.BaseChangePreservesUnitaryOf
+public import Formalism.SharpRestriction.LevelLetterCocycles.ArcLiftingSetup
+public import Formalism.SharpRestriction.LevelLetterCocycles.LiftingTheory
+public import Formalism.SharpRestriction.LevelLetterCocycles.DeltaInvariantLattices
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FiltrationExponentBound
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DivisibilityFiltration
+
+@[expose] public section
 
 noncomputable def UpperTheory.Reformulated.B.IntegerSpanGenerators.Zspan :
     {G : Type} →

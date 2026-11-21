@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HyperbolicPlaceProducts.Statement
-import Formalism.GelfandTransference.HadamardGelfand.Hadamard
+module
+
+public import Mathlib
+public import Formalism.HyperbolicPlaceProducts.Statement
+public import Formalism.GelfandTransference.HadamardGelfand.Hadamard
+
+@[expose] public section
 
 open Matrix Finset ComplexConjugate
 

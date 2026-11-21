@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.DistinguishedUnitIdeals.BridgeLevelOf
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.Graded
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.Partners
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.UnivPart
+module
+
+public import Mathlib
+public import Formalism.DistinguishedUnitIdeals.BridgeLevelOf
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.Graded
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.Partners
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.UnivPart
+
+@[expose] public section
 
 noncomputable section
 

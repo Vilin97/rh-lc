@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.Reductions.NormExpSubLe
+module
+
+public import Development.WeilBound.ThetaLifts.Reductions.NormExpSubLe
+
+@[expose] public section
 
 noncomputable section
 

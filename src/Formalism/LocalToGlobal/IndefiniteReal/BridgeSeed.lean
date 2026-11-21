@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FrameExistence.InitialDataUntwistedOfModelChoice
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FrameExistence.InitialDataUntwistedOfModelChoice
+
+@[expose] public section
 
 noncomputable section
 

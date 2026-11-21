@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.Brauer.SkolemNoether
-import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsRootSelectionUnitaryRankOne
+module
+
+public import Mathlib
+public import GroundTheory.Brauer.SkolemNoether
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsRootSelectionUnitaryRankOne
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.DedekindLFunctions.SplitInertia
+module
+
+public import Development.AutomorphicArithmetic.DedekindLFunctions.SplitInertia
+
+@[expose] public section
 
 open Finset
 

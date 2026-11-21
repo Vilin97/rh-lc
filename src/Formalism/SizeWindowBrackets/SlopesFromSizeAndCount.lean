@@ -1,20 +1,24 @@
-import Formalism.SizeWindowBrackets.Chain2aCoreNoAnalytic
-import Formalism.LandauZeroFreeBounds.SiegelWalfiszAP
-import Formalism.ZeroFreeRegion.Statement
-import Formalism.LandauZeroFreeBounds.LogDerivRegionChiOf
-import Formalism.SizeWindowBrackets.SBrDiv
-import Formalism.SizeWindowBrackets.ClaimGaFree
-import Formalism.SizeWindowBrackets.QuotientSlopeBoundsWith
-import Formalism.SizeWindowBrackets.FrameTraceRatioFinEquiv
-import Formalism.SizeWindowBrackets.SlopesHypothesisFinitePlaces
-import Formalism.SizeWindowBrackets.ErrorFormsWeakWindowsFalse
-import Formalism.LogVandermondeBounds.LogRatioUpperBound
-import Formalism.SizeWindowBrackets.TraceSquareAndDiagBounds
-import Formalism.SizeWindowBrackets.GaloisToProductIsIso
-import Formalism.SizeWindowBrackets.GrowthBoundGivesRiemannHypothesis
-import Formalism.SizeWindowBrackets.SecondKindBucket
-import Formalism.SizeWindowBrackets.SlopeExcessBoundExponentZero
-import Mathlib
+module
+
+public import Formalism.SizeWindowBrackets.Chain2aCoreNoAnalytic
+public import Formalism.LandauZeroFreeBounds.SiegelWalfiszAP
+public import Formalism.ZeroFreeRegion.Statement
+public import Formalism.LandauZeroFreeBounds.LogDerivRegionChiOf
+public import Formalism.SizeWindowBrackets.SBrDiv
+public import Formalism.SizeWindowBrackets.ClaimGaFree
+public import Formalism.SizeWindowBrackets.QuotientSlopeBoundsWith
+public import Formalism.SizeWindowBrackets.FrameTraceRatioFinEquiv
+public import Formalism.SizeWindowBrackets.SlopesHypothesisFinitePlaces
+public import Formalism.SizeWindowBrackets.ErrorFormsWeakWindowsFalse
+public import Formalism.LogVandermondeBounds.LogRatioUpperBound
+public import Formalism.SizeWindowBrackets.TraceSquareAndDiagBounds
+public import Formalism.SizeWindowBrackets.GaloisToProductIsIso
+public import Formalism.SizeWindowBrackets.GrowthBoundGivesRiemannHypothesis
+public import Formalism.SizeWindowBrackets.SecondKindBucket
+public import Formalism.SizeWindowBrackets.SlopeExcessBoundExponentZero
+public import Mathlib
+
+@[expose] public section
 
 open Module NumberField Matrix IsDedekindDomain
 open Formalism.HN

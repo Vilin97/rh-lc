@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ArithDegree
-import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.Slopes
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ArithDegree
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.Slopes
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights
 

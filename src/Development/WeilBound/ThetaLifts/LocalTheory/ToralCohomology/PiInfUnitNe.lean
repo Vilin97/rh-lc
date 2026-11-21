@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ToralCohomology.ParZero
-import Development.WeilBound.CoreStatements.GaussianSeminormBounds.RealSeminormFiltration.CoreLM
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ToralCohomology.ParZero
+public import Development.WeilBound.CoreStatements.GaussianSeminormBounds.RealSeminormFiltration.CoreLM
+
+@[expose] public section
 
 noncomputable section
 

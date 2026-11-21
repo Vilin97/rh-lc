@@ -1,5 +1,9 @@
-import ReciprocityTheory.SemistableReduction.LatSemiSt
-import Lemmata.GeneralBFactBisAlt.Imports
+module
+
+public import ReciprocityTheory.SemistableReduction.LatSemiSt
+public import Lemmata.GeneralBFactBisAlt.Imports
+
+@[expose] public section
 
 noncomputable section
 

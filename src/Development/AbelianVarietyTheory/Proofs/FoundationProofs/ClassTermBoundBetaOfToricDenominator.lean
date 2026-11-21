@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AutomorphicArithmetic.WeightCongruences.ProdCMTypeEmbeddingsRootOfUnityEqOne
-import Formalism.FrobeniusOrbits.HostCorollaries
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.BoundedDenominatorsOfBeta
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.VpBounds
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.WeightCongruences.ProdCMTypeEmbeddingsRootOfUnityEqOne
+public import Formalism.FrobeniusOrbits.HostCorollaries
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.BoundedDenominatorsOfBeta
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.VpBounds
+
+@[expose] public section
 
 noncomputable section
 

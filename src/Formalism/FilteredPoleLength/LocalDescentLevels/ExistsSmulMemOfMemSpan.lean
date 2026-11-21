@@ -1,6 +1,10 @@
-import Formalism.FilteredPoleLength.ReducedBasisBounds.BetaSesquilinearity
-import Formalism.LogFactorialIndices.LogProductFormula
-import Lemmata.MiscLemmasO.Imports
+module
+
+public import Formalism.FilteredPoleLength.ReducedBasisBounds.BetaSesquilinearity
+public import Formalism.LogFactorialIndices.LogProductFormula
+public import Lemmata.MiscLemmasO.Imports
+
+@[expose] public section
 
 noncomputable section
 

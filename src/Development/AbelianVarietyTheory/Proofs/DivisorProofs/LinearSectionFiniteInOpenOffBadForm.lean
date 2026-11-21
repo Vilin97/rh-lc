@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.HermSysHypOneLeLambdaZero
-import Development.AbelianVarietyTheory.Definitions.Divisors.AevalEqZeroOfMemConeIdeal
-import ReciprocityTheory.SemistableReduction.TorusL2CauchyInequality
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ChowFormZeroSetExtensionFieldIffCommonConeZeroStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SubsetOfForallPtMem
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEqIsoSpecComp
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.HermSysHypOneLeLambdaZero
+public import Development.AbelianVarietyTheory.Definitions.Divisors.AevalEqZeroOfMemConeIdeal
+public import ReciprocityTheory.SemistableReduction.TorusL2CauchyInequality
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ChowFormZeroSetExtensionFieldIffCommonConeZeroStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SubsetOfForallPtMem
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEqIsoSpecComp
+
+@[expose] public section
 
 set_option autoImplicit false
 

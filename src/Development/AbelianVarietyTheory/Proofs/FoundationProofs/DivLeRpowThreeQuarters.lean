@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.CyclotomicNorms.StatementI
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExceptionalPrimesFiniteCardLe
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CardPowEqOneLeOfIsCyclicUnits
+module
+
+public import Mathlib
+public import Formalism.CyclotomicNorms.StatementI
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExceptionalPrimesFiniteCardLe
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CardPowEqOneLeOfIsCyclicUnits
+
+@[expose] public section
 
 open Finset
 

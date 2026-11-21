@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.WhittakerCovolume.WhitKOfSteps
-import Development.WeilBound.ThetaLifts.LatticeBasics.IsCompactIntV
+module
+
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.WhittakerCovolume.WhitKOfSteps
+public import Development.WeilBound.ThetaLifts.LatticeBasics.IsCompactIntV
+
+@[expose] public section
 
 noncomputable section
 

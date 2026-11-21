@@ -1,12 +1,16 @@
-import Mathlib
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.SharpRestriction.LevelLetterCocycles.ExistsIdealDenominator
-import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
-import Formalism.SharpRestriction.LevelLetterCocycles.LocsCoverTw
-import Formalism.LocalRingCardinality.DataForced
-import Formalism.SharpRestriction.Divisibility.CartierLocalBounds
-import Formalism.SharpRestriction.Divisibility.LiftErrorLocal
-import Formalism.LocalRingCardinality.DataParamsT
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.SharpRestriction.LevelLetterCocycles.ExistsIdealDenominator
+public import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocsCoverTw
+public import Formalism.LocalRingCardinality.DataForced
+public import Formalism.SharpRestriction.Divisibility.CartierLocalBounds
+public import Formalism.SharpRestriction.Divisibility.LiftErrorLocal
+public import Formalism.LocalRingCardinality.DataParamsT
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import ReciprocityTheory.GroupCohomology.CupConnRightStatement
-import ReciprocityTheory.GroupCohomology.DEqZeroOfMemB
-import ReciprocityTheory.GroupCohomology.LowHolds
-import ReciprocityTheory.GroupCohomology.InnerHolds
+module
+
+public import ReciprocityTheory.GroupCohomology.CupConnRightStatement
+public import ReciprocityTheory.GroupCohomology.DEqZeroOfMemB
+public import ReciprocityTheory.GroupCohomology.LowHolds
+public import ReciprocityTheory.GroupCohomology.InnerHolds
+
+@[expose] public section
 
 namespace ReciprocityTheory.Coh.InflationRestrictionInvariants
 

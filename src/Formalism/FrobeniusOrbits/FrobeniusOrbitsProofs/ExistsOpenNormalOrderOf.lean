@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.FrobeniusOrbits.HostThickExists
-import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.Orbits
+module
+
+public import Mathlib
+public import Formalism.FrobeniusOrbits.HostThickExists
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.Orbits
+
+@[expose] public section
 
 noncomputable section
 

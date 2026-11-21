@@ -1,8 +1,12 @@
-import Formalism.QuotientMetricDivisors.ProdFormula
-import Mathlib
-import Formalism.QuotientMetricDivisors.StatementJ
-import Formalism.QuotientMetricDivisors.ReductionLemmaZero
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.BoundsSum
+module
+
+public import Formalism.QuotientMetricDivisors.ProdFormula
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.StatementJ
+public import Formalism.QuotientMetricDivisors.ReductionLemmaZero
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.BoundsSum
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 

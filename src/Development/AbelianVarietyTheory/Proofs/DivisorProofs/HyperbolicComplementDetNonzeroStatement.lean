@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HyperbolicComplementDetNonzero
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DiffsZeroOfLev
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HyperbolicComplementDetNonzero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DiffsZeroOfLev
+
+@[expose] public section
+
 open scoped Matrix
 open GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
 set_option maxHeartbeats 1000000 in

@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.LatticeEmbeddings.IotaPlaceB
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.LatticeEmbeddings.IotaPlaceB
+
+@[expose] public section
 
 noncomputable section
 open NumberField IsDedekindDomain

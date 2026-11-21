@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.ModelKStep
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfLoc
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfPt
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.ModelKStep
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfLoc
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfPt
+
+@[expose] public section
 
 noncomputable section
 

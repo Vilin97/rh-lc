@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UpqRep
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UpqRep
+
+@[expose] public section
 
 noncomputable section
 

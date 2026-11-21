@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.ColValOfTiedSOfFin
-import Formalism.LocalToGlobal.GlobalTheory.ColMemOfIsLocBasis
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.ColValOfTiedSOfFin
+public import Formalism.LocalToGlobal.GlobalTheory.ColMemOfIsLocBasis
+
+@[expose] public section
 
 noncomputable section
 

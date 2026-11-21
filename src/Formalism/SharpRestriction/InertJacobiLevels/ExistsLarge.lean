@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.InertJacobiLevels.BTopOfGe
+module
+
+public import Formalism.SharpRestriction.InertJacobiLevels.BTopOfGe
+
+@[expose] public section
 
 noncomputable section
 

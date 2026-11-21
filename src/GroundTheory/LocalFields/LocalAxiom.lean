@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.LocalFields.LocalAxiomDictionary
-import GroundTheory.LocalFields.HerbrandLocal
-import GroundTheory.LocalFields.MaximalUnramified
-import GroundTheory.LocalFields.SeparableClosure
-import GroundTheory.LocalFields.SeparableClosureValuation
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LocalAxiomDictionary
+public import GroundTheory.LocalFields.HerbrandLocal
+public import GroundTheory.LocalFields.MaximalUnramified
+public import GroundTheory.LocalFields.SeparableClosure
+public import GroundTheory.LocalFields.SeparableClosureValuation
+
+@[expose] public section
 
 namespace GroundTheory.LocalField
 

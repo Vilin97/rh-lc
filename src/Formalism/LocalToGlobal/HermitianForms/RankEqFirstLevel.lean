@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.HermitianColumns.StarConj
-import Formalism.LocalToGlobal.HermitianForms.FormsTied
-import Formalism.LocalToGlobal.HermitianForms.DefsChi
+module
+
+public import Formalism.LocalToGlobal.HermitianColumns.StarConj
+public import Formalism.LocalToGlobal.HermitianForms.FormsTied
+public import Formalism.LocalToGlobal.HermitianForms.DefsChi
+
+@[expose] public section
 
 noncomputable section
 

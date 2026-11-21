@@ -1,6 +1,11 @@
-import Mathlib
-import Formalism.DropLevelBounds.Statement
-import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.LeWeightOfCoeffPow
+module
+
+public import Mathlib
+public import Formalism.DropLevelBounds.Statement
+public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.LeWeightOfCoeffPow
+
+@[expose] public section
+
 open Formalism.UnitaryBoundIntegral Formalism.IncomingBounds
 open scoped BigOperators
 

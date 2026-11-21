@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.KummerSha
-import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.KummerSeq
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseTransportGS
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.FiniteOpen
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.KummerSha
+public import GroundTheory.ProfiniteCohomology.GlobalEulerCharacteristic.KummerSeq
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseTransportGS
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.FiniteOpen
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

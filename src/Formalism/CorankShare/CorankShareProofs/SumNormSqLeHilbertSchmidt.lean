@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.CorankShare.StatementFR
+module
+
+public import Mathlib
+public import Formalism.CorankShare.StatementFR
+
+@[expose] public section
 
 noncomputable section
 

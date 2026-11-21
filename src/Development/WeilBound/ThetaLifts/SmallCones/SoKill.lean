@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.SmallCones.SoDefs
-import Development.WeilBound.ThetaLifts.SmallCones.SoStab
+module
+
+public import Development.WeilBound.ThetaLifts.SmallCones.SoDefs
+public import Development.WeilBound.ThetaLifts.SmallCones.SoStab
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.HermitianLattices.StatementMaj
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CommonMajorizingLattice
-import Lemmata.GeneralBFactSecondRest.Imports
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.StatementMaj
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.CommonMajorizingLattice
+public import Lemmata.GeneralBFactSecondRest.Imports
+
+@[expose] public section
 
 open NumberField NumberField.InfinitePlace NumberField.mixedEmbedding Module
 open scoped Matrix

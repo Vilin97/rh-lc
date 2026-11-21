@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.BranchingTraces.FormTSingle
+module
+
+public import Development.WeilBound.CoreStatements.BranchingTraces.FormTSingle
+
+@[expose] public section
 
 noncomputable section
 

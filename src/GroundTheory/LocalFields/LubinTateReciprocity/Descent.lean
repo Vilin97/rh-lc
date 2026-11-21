@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.LocalFields.LubinTateReciprocity.TwistedPoint
-import GroundTheory.LocalFields.CompletedUnramified
-import GroundTheory.LocalFields.LubinTateTower
-import GroundTheory.LocalFields.UnramifiedExistence
-import GroundTheory.PowerSubgroups.CountableNeighbourhoods.DescentPowerSubgroups
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LubinTateReciprocity.TwistedPoint
+public import GroundTheory.LocalFields.CompletedUnramified
+public import GroundTheory.LocalFields.LubinTateTower
+public import GroundTheory.LocalFields.UnramifiedExistence
+public import GroundTheory.PowerSubgroups.CountableNeighbourhoods.DescentPowerSubgroups
+
+@[expose] public section
 
 noncomputable section
 

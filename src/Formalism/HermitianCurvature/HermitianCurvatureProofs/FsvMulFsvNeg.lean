@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.CompositeFormulaLevelZero
+module
+
+public import Formalism.HermitianCurvature.CompositeFormulaLevelZero
+
+@[expose] public section
 
 open scoped ComplexConjugate ContDiff
 open Filter Topology

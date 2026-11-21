@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qg3.exists_sum.{u_1} :
     ∀ {G : Type u_1} [inst : Group G]

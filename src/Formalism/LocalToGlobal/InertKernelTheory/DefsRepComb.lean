@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.InertKernelTheory.DefsRep
-import Formalism.LocalToGlobal.InertKernelTheory.DefsInt
-import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.KerTh
-import Formalism.LocalToGlobal.KernelLattices.FirstKernelLawReading
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsRep
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsInt
+public import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.KerTh
+public import Formalism.LocalToGlobal.KernelLattices.FirstKernelLawReading
+
+@[expose] public section
 
 noncomputable section
 

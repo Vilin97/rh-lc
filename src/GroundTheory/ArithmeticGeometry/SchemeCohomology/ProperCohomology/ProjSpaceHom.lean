@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.ProjHom
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveSpaceChart
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.ProjHom
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjectiveSpaceChart
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open AlgebraicGeometry CategoryTheory Limits Opposite HomogeneousLocalization

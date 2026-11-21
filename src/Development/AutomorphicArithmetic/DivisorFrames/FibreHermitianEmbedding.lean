@@ -1,11 +1,16 @@
-import Mathlib
-import Development.AutomorphicArithmetic.DivisorFrames.LieLatticeGenerator
-import Development.AutomorphicArithmetic.DivisorFrames.ExistsExponentialUniformization
-import Development.AutomorphicArithmetic.DivisorFrames.HodgeGramEqPiMulHermFormOfExponential
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StepIdeal
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HodgeMetricFrameEqRiemannFormAtInteriorPoint
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IoOfLeOneIff
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SemiFibrationLieLatticeFullStatement
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.DivisorFrames.LieLatticeGenerator
+public import Development.AutomorphicArithmetic.DivisorFrames.ExistsExponentialUniformization
+public import Development.AutomorphicArithmetic.DivisorFrames.HodgeGramEqPiMulHermFormOfExponential
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StepIdeal
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HodgeMetricFrameEqRiemannFormAtInteriorPoint
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IoOfLeOneIff
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SemiFibrationLieLatticeFullStatement
+
+@[expose] public section
+
 open CategoryTheory AlgebraicGeometry NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj ReciprocityTheory.GeometryOfNumbersTheory GlobalTheory.Toroidal GlobalTheory.Cartier GlobalTheory.ProjVar GlobalTheory.TrueGeo GlobalTheory.CxPts GlobalTheory.Mean4O GlobalTheory.LieHt GlobalTheory.ShFam GlobalTheory.ShFam.Pad GlobalTheory.LieRead
 
 private theorem below_map {K K' : Type} [Field K] [Field K'] (ι : K →+* K') {X : Scheme.{0}} (q : Sp K ⟶ X) :

@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BlockSub
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUniqueDualWeylWeightProjector
-import Formalism.PieriBlockIdeals.PieriColumnMinors.RealLocalDeltaNabla
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BlockSub
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUniqueDualWeylWeightProjector
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.RealLocalDeltaNabla
+
+@[expose] public section
 
 set_option autoImplicit false
 

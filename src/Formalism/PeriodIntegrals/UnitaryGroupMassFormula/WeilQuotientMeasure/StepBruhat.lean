@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.WeilQuotMeas
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.WeilQuotMeas
+
+@[expose] public section
 
 noncomputable section
 

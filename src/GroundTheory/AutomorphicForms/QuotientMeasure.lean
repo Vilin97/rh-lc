@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.RightCosetSpaceCompact
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.RightCosetSpaceCompact
+
+@[expose] public section
 
 open MeasureTheory Topology Filter Set TopologicalSpace
 open scoped ENNReal Pointwise Uniformity

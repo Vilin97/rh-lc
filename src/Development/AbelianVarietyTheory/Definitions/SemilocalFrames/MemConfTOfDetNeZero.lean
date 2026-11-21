@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.SharpRestriction.GlobalSchurBounds.StandardLattice
-import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.Partners
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.FrameLats
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.GlobalSchurBounds.StandardLattice
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.Partners
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.FrameLats
+
+@[expose] public section
 
 noncomputable section
 

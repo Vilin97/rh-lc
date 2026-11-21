@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.CommutativeAlgebra.ChainConnInDim
-import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.IsSaturatedChain
+module
+
+public import Mathlib
+public import ReciprocityTheory.CommutativeAlgebra.ChainConnInDim
+public import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.IsSaturatedChain
+
+@[expose] public section
 
 open IsLocalRing
 

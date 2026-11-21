@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 noncomputable def UpperTheory.Reformulated.B.Qi39.EB.{u_1, u_2} :
     {m : Type u_1} → {n : Type u_2} → Matrix m n ℂ → ℝ → Prop :=

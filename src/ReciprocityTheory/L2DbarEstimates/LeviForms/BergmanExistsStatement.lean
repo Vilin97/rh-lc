@@ -1,6 +1,10 @@
-import ReciprocityTheory.L2DbarEstimates.JacobianInterpolationStatement
-import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.HoloWeakStatement
-import ReciprocityTheory.L2DbarEstimates.MinimalSolutions.MinimalSolutionStatement
+module
+
+public import ReciprocityTheory.L2DbarEstimates.JacobianInterpolationStatement
+public import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.HoloWeakStatement
+public import ReciprocityTheory.L2DbarEstimates.MinimalSolutions.MinimalSolutionStatement
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.I
 

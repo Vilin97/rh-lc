@@ -1,10 +1,14 @@
-import Mathlib
-import ReciprocityTheory.AnalyticForms.LeviForms.TailBound
-import ReciprocityTheory.AnalyticForms.LeviForms.MixedIntegralInclusionExclusion
-import ReciprocityTheory.AnalyticForms.PotentialTheory.MaMeasure
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.TailBoundStatementHoldsStatement
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.IsCompactRWSublevel
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.IsomorphicLinesPotentialDifference
+module
+
+public import Mathlib
+public import ReciprocityTheory.AnalyticForms.LeviForms.TailBound
+public import ReciprocityTheory.AnalyticForms.LeviForms.MixedIntegralInclusionExclusion
+public import ReciprocityTheory.AnalyticForms.PotentialTheory.MaMeasure
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.TailBoundStatementHoldsStatement
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.IsCompactRWSublevel
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.IsomorphicLinesPotentialDifference
+
+@[expose] public section
 
 open MeasureTheory Filter Topology ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P GlobalTheory.CompanionTheory.Ar.PB
 open scoped ContDiff

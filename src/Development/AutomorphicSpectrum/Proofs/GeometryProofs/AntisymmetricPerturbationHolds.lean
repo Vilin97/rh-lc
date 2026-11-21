@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PAntisymPerturbation
-import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PAntisymStability
-import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PAntisymDivisible
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PAntisymPerturbation
+public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PAntisymStability
+public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PAntisymDivisible
+
+@[expose] public section
 
 namespace GlobalTheory.CompanionTheory.Ar.Link
 

@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.LocalRingCardinality.DataParams
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientHomNonvanishingBound
-import Formalism.WeaklyAdmissibleFiltrations.Statement
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.Alternates
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.LocalRingCardinality.DataParams
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientHomNonvanishingBound
+public import Formalism.WeaklyAdmissibleFiltrations.Statement
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.Alternates
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjugateGramSymm
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdjugateGramSymm
+
+@[expose] public section
+
 open GlobalTheory.CasimirOrder
 
 namespace GlobalTheory.CasimirOrder

@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.AdmissiblePureTensorSchwartz
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.AdmissiblePureTensorSchwartz
+
+@[expose] public section
 
 noncomputable section
 

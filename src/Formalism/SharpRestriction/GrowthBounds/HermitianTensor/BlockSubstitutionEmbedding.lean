@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.SubYGenCoefHom
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.SubYGenCoefHom
+
+@[expose] public section
 
 noncomputable section
 

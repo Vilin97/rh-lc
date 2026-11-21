@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.ColPins
-import Formalism.LocalToGlobal.Divisibility.HeckeCSDICommTrRep
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.ColPins
+public import Formalism.LocalToGlobal.Divisibility.HeckeCSDICommTrRep
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

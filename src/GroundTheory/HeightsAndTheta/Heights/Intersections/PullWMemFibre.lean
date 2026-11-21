@@ -1,9 +1,14 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterBridge
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterRedE
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PtsIntegralLogNormRat
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsFurtherFurther
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsFurtherExtra
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterBridge
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterRedE
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PtsIntegralLogNormRat
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsFurtherFurther
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsFurtherExtra
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

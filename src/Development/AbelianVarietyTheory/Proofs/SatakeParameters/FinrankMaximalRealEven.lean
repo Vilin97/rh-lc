@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.Imports
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.Imports
+
+@[expose] public section
+
 open NumberField
 
 namespace GlobalTheory.RealGal

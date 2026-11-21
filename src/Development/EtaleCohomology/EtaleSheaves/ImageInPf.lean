@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.IsClosedImmersionOfCover
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.IsClosedImmersionOfCover
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry TopologicalSpace

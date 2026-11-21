@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GroupLattices.StdSubAtOfRing
-import Formalism.LocalToGlobal.GroupLattices.AdmissibleFamilyNoKernel
-import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.GramTotallyDefinite
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.StdSubAtOfRing
+public import Formalism.LocalToGlobal.GroupLattices.AdmissibleFamilyNoKernel
+public import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.GramTotallyDefinite
+
+@[expose] public section
 
 noncomputable section
 

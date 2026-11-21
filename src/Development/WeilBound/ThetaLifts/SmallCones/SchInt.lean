@@ -1,5 +1,9 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.SmallCones.ThetaUniq
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.SmallCones.ThetaUniq
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.UnfoldC
-import Development.WeilBound.ThetaLifts.LatticeBasics.ContinuousFlat
-import Development.WeilBound.ThetaLifts.LatticeBasics.PolZero
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.UnfoldC
+public import Development.WeilBound.ThetaLifts.LatticeBasics.ContinuousFlat
+public import Development.WeilBound.ThetaLifts.LatticeBasics.PolZero
+
+@[expose] public section
 
 noncomputable section
 

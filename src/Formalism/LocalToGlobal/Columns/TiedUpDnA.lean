@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.TiedUpDnLoc
+module
+
+public import Formalism.LocalToGlobal.Columns.TiedUpDnLoc
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 open scoped TensorProduct

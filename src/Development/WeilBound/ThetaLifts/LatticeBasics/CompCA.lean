@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.SkewTwo
-import Development.WeilBound.ThetaLifts.LatticeBasics.HgtFin
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.MemIntLocOfIdem
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.SkewTwo
+public import Development.WeilBound.ThetaLifts.LatticeBasics.HgtFin
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.MemIntLocOfIdem
+
+@[expose] public section
 
 noncomputable section
 

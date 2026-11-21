@@ -1,4 +1,8 @@
-import Formalism.ZetaRealNonvanish
+module
+
+public import Formalism.ZetaRealNonvanish
+
+@[expose] public section
 
 open Complex MeasureTheory Set Filter Topology
 

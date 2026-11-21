@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.LatticeBoundsOfThreeParts
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.LatticeBoundsOfThreeParts
+
+@[expose] public section
 
 set_option linter.unusedVariables false
 

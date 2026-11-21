@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RuleOfEq
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SigmaFiniteOfHaar
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RuleOfEq
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SigmaFiniteOfHaar
+
+@[expose] public section
 
 open Matrix
 

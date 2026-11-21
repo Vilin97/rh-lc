@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.ThPinsR
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.ThPinsR
+
+@[expose] public section
 
 noncomputable section
 

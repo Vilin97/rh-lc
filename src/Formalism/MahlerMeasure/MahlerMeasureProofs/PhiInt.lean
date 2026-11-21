@@ -1,4 +1,8 @@
-import Formalism.MahlerMeasure.IsIntegral
+module
+
+public import Formalism.MahlerMeasure.IsIntegral
+
+@[expose] public section
 
 namespace Formalism.GM.M.PhiIntegrality
 

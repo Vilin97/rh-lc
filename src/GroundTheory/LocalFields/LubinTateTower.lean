@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.LocalFields.LubinTatePoints
-import GroundTheory.LocalFields.LubinTateTorsion
-import GroundTheory.LocalFields.Eisenstein
-import GroundTheory.LocalFields.UnitsBasic
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LubinTatePoints
+public import GroundTheory.LocalFields.LubinTateTorsion
+public import GroundTheory.LocalFields.Eisenstein
+public import GroundTheory.LocalFields.UnitsBasic
+
+@[expose] public section
 
 noncomputable section
 

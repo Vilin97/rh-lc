@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.NuOfLoZero
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.QaWeightRowInd
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDbasisLemmas
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.NuOfLoZero
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.QaWeightRowInd
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDbasisLemmas
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.TowerModels.PlaneHerm
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.PlaneRemovalConfiguration
-import Development.WeilBound.ThetaLifts.ConeHypotheses.PolDense
-import Development.WeilBound.ThetaLifts.TowerModels.LeviAd
-import Development.WeilBound.ThetaLifts.TowerModels.ExistsRefl
+module
+
+public import Development.WeilBound.ThetaLifts.TowerModels.PlaneHerm
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.PlaneRemovalConfiguration
+public import Development.WeilBound.ThetaLifts.ConeHypotheses.PolDense
+public import Development.WeilBound.ThetaLifts.TowerModels.LeviAd
+public import Development.WeilBound.ThetaLifts.TowerModels.ExistsRefl
+
+@[expose] public section
 
 noncomputable section
 

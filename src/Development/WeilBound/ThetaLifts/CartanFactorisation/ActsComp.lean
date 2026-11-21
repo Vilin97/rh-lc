@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsBeta
+module
+
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsBeta
+
+@[expose] public section
 
 noncomputable section
 

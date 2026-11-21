@@ -1,5 +1,9 @@
-import Formalism.ThetaLogCoordinates.ResidueClassEstimates.StatementT
-import Formalism.ThetaLogCoordinates.JacobiPathWeights.StatementP
+module
+
+public import Formalism.ThetaLogCoordinates.ResidueClassEstimates.StatementT
+public import Formalism.ThetaLogCoordinates.JacobiPathWeights.StatementP
+
+@[expose] public section
 
 noncomputable section
 

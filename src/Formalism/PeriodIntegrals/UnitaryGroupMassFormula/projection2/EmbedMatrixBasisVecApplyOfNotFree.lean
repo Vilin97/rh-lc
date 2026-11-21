@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.projection2.GaStep
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.projection2.GaStep
+
+@[expose] public section
 
 noncomputable section
 

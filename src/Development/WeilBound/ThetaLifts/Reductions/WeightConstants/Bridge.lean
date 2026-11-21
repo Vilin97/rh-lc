@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsFinSetSplitPlacesCoprimeConductor
-import GroundTheory.GlobalFields.TateThesis.Nonvanishing
-import GroundTheory.GlobalFields.TateThesis.HeckeTheorem
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsFinSetSplitPlacesCoprimeConductor
+public import GroundTheory.GlobalFields.TateThesis.Nonvanishing
+public import GroundTheory.GlobalFields.TateThesis.HeckeTheorem
+
+@[expose] public section
 
 noncomputable section
 

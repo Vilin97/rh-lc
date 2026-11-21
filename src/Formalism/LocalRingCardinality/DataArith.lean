@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalRingCardinality.Params
-import Formalism.HarderNarasimhan.StatementPl
-import Formalism.HarderNarasimhan.QuotRealize
-import Formalism.CorankShare.StatementFR
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.Params
+public import Formalism.HarderNarasimhan.StatementPl
+public import Formalism.HarderNarasimhan.QuotRealize
+public import Formalism.CorankShare.StatementFR
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 

@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSo
-import Formalism.SharpRestriction.GrowthBounds.FormalGroupSystem
-import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.IsDiscriminantTwelfthRootOfIdealLattice
-import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
-import Formalism.LocalRingCardinality.DataKerP
+module
+
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSo
+public import Formalism.SharpRestriction.GrowthBounds.FormalGroupSystem
+public import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.IsDiscriminantTwelfthRootOfIdealLattice
+public import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
+public import Formalism.LocalRingCardinality.DataKerP
+
+@[expose] public section
 
 noncomputable section
 

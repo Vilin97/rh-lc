@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.GaloisValuations.ArithOfA
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeIndices.ValNatCastOf
+module
+
+public import Mathlib
+public import ReciprocityTheory.GaloisValuations.ArithOfA
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeIndices.ValNatCastOf
+
+@[expose] public section
 
 noncomputable section
 

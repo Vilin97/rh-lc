@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AzumayaBaseChange
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsOneTmulEq
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AzumayaBaseChange
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsOneTmulEq
+
+@[expose] public section
+
 open IsLocalRing
 open scoped TensorProduct
 

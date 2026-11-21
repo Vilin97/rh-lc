@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.ChiMemSubfield
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePtOneRec
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePtC
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieEvR
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.ChiMemSubfield
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePtOneRec
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePtC
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieEvR
+
+@[expose] public section
 
 noncomputable section
 

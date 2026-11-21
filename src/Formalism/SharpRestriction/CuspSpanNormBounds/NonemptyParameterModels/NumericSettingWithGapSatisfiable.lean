@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
-import Formalism.FormalDegreeBessel.FormalDegreeRatio.GBasic
-import Formalism.SharpRestriction.CuspSpanNormBounds.CayleySignature
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
+public import Formalism.FormalDegreeBessel.FormalDegreeRatio.GBasic
+public import Formalism.SharpRestriction.CuspSpanNormBounds.CayleySignature
+
+@[expose] public section
 
 noncomputable section
 

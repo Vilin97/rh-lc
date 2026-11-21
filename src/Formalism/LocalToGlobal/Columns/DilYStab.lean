@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.DecoratedFrameDiagonalTwistDecoration
+module
+
+public import Formalism.LocalToGlobal.Columns.DecoratedFrameDiagonalTwistDecoration
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

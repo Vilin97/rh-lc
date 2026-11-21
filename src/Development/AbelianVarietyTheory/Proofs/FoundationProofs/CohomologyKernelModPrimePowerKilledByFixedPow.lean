@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.PowMulMemAdd
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsQuotientMapToGSProd
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.PowMulMemAdd
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsQuotientMapToGSProd
+
+@[expose] public section
 
 noncomputable section
 

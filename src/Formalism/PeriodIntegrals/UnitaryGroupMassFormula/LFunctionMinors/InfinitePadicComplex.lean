@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.WwMain
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LFunctionMinors.FintypeColChoice
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.WwMain
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LFunctionMinors.FintypeColChoice
+
+@[expose] public section
 
 open MvPolynomial Finset
 

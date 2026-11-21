@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.OnePointBasisFundamentalDomainVolume
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OnePointBasisFundamentalDomainVolume
+
+@[expose] public section
 
 namespace GlobalTheory.GridsFromLayout
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.FirstKernelEqLastComponentKernel
-import Formalism.LocalToGlobal.Columns.RecChainUnfOne
+module
+
+public import Formalism.LocalToGlobal.Columns.FirstKernelEqLastComponentKernel
+public import Formalism.LocalToGlobal.Columns.RecChainUnfOne
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 

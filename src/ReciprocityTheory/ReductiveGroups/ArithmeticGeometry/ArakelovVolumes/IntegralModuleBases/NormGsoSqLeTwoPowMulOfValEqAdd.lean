@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReducedBases.LatticeReduction
-import ReciprocityTheory.ReducedBases.TBInjective
+module
+
+public import ReciprocityTheory.ReducedBases.LatticeReduction
+public import ReciprocityTheory.ReducedBases.TBInjective
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,12 +1,16 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.Inputs
-import Formalism.MirabolicMackeyTheory.MirabolicIsMackey
-import Formalism.GaussJetBounds.StatementS
-import Formalism.GaussJetBounds.OneLetterGauss
-import Formalism.GaussJetBounds.GenLogInverse
-import Formalism.GradedWeylDivisibility.FinalD
-import Formalism.GaussJetBounds.GaussJetProofs.OrbMul
-import Formalism.GaussJetBounds.OneLetterGaussJets.GainDominatesOddLevelSum
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.Inputs
+public import Formalism.MirabolicMackeyTheory.MirabolicIsMackey
+public import Formalism.GaussJetBounds.StatementS
+public import Formalism.GaussJetBounds.OneLetterGauss
+public import Formalism.GaussJetBounds.GenLogInverse
+public import Formalism.GradedWeylDivisibility.FinalD
+public import Formalism.GaussJetBounds.GaussJetProofs.OrbMul
+public import Formalism.GaussJetBounds.OneLetterGaussJets.GainDominatesOddLevelSum
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped BigOperators

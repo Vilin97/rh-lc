@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ThetaCellCovers.ThetaBasic
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsTailExtra
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ThetaCellCovers.ThetaBasic
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsTailExtra
+
+@[expose] public section
 
 noncomputable section
 

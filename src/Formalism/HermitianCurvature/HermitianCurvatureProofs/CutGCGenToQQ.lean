@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGCoreCut
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.QNFAsm
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IntertwinerStructure
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGCoreCut
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.QNFAsm
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IntertwinerStructure
+
+@[expose] public section
 
 noncomputable section
 

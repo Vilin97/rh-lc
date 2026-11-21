@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.GenIdeal
-import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.ValFUnitNeZero
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.GenIdeal
+public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.ValFUnitNeZero
+
+@[expose] public section
 
 set_option autoImplicit false
 

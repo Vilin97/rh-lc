@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.StatementG
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.GaussianHessianIntegral
-import Lemmata.GeneralBFactSecondBisForm.Goal1
+module
+
+public import Formalism.HermitianCurvature.StatementG
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GaussianHessianIntegral
+public import Lemmata.GeneralBFactSecondBisForm.Goal1
+
+@[expose] public section
 
 section PartD0
 

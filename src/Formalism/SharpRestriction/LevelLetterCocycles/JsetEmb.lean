@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
-import Lemmata.GeneralBFactUpperForm.Imports
-import Lemmata.GeneralBFactUpperVariant.Imports
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
+public import Lemmata.GeneralBFactUpperForm.Imports
+public import Lemmata.GeneralBFactUpperVariant.Imports
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.Brauer.TensorSimple
+module
+
+public import Mathlib
+public import GroundTheory.Brauer.TensorSimple
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Brauer

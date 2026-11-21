@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.LocalRingCardinality.DataDIV
-import Formalism.SharpRestriction.ParConsts
-import Formalism.GelfandTransference.EnergyIdentity
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.LocalRingCardinality.DataDIV
+public import Formalism.SharpRestriction.ParConsts
+public import Formalism.GelfandTransference.EnergyIdentity
+
+@[expose] public section
 
 noncomputable section
 

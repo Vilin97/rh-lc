@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GroupLattices.FockModels.SpanTopOf
-import Formalism.SharpRestriction.GrowthBounds.Joints
-import Formalism.SharpRestriction.GrowthBounds.TensorLatticeBounds.ExistsHypothesesNonempty
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.SpanTopOf
+public import Formalism.SharpRestriction.GrowthBounds.Joints
+public import Formalism.SharpRestriction.GrowthBounds.TensorLatticeBounds.ExistsHypothesesNonempty
+
+@[expose] public section
 
 open MvPolynomial
 

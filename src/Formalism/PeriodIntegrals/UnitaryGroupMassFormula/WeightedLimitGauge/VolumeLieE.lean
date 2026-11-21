@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.RhsWLim
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.RhsWLim
+
+@[expose] public section
 
 noncomputable section
 

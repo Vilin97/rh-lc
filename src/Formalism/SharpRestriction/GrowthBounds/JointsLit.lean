@@ -1,11 +1,15 @@
-import Formalism.SharpRestriction.GrowthBounds.ValuationLowestDegreeRename
-import Formalism.SharpRestriction.GrowthBounds.BinomialPolynomialIdentities.IndexOffRange
-import Formalism.ThetaLogCoordinates.JacobiPathWeights.FinalP
-import Formalism.LocalToGlobal.GroupLattices.FockModels.WeylDim
-import Formalism.SharpRestriction.GrowthBounds.LatticeSystems
-import Formalism.LocalRingCardinality.Lemmas
-import Formalism.SharpRestriction.GrowthBounds.CornerGLContinuity
-import Formalism.SharpRestriction.GrowthBounds.AdmissibleIntegers.FirstTermSizeBound
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ValuationLowestDegreeRename
+public import Formalism.SharpRestriction.GrowthBounds.BinomialPolynomialIdentities.IndexOffRange
+public import Formalism.ThetaLogCoordinates.JacobiPathWeights.FinalP
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.WeylDim
+public import Formalism.SharpRestriction.GrowthBounds.LatticeSystems
+public import Formalism.LocalRingCardinality.Lemmas
+public import Formalism.SharpRestriction.GrowthBounds.CornerGLContinuity
+public import Formalism.SharpRestriction.GrowthBounds.AdmissibleIntegers.FirstTermSizeBound
+
+@[expose] public section
 
 noncomputable section
 open Finset Formalism.MainNotions.G

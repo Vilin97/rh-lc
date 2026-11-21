@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.ResidueCharacters.TwistedPlaces
-import Formalism.SharpRestriction.GlobalTheoremInputs
+module
+
+public import Development.AutomorphicArithmetic.ResidueCharacters.TwistedPlaces
+public import Formalism.SharpRestriction.GlobalTheoremInputs
+
+@[expose] public section
 
 noncomputable section
 

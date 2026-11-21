@@ -1,8 +1,12 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.CoefIntVG
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.CoefIntCpt
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.CoefDec
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarMirror
-import Formalism.SharpRestriction.CuspSpanNormBounds.GlobAut
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.CoefIntVG
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.CoefIntCpt
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.CoefDec
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarMirror
+public import Formalism.SharpRestriction.CuspSpanNormBounds.GlobAut
+
+@[expose] public section
 
 noncomputable section
 

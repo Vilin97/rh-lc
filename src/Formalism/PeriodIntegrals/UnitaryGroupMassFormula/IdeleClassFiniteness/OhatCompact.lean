@@ -1,4 +1,8 @@
-import Formalism.UnipotentAdelicQuotients.ClassNumberFinite
+module
+
+public import Formalism.UnipotentAdelicQuotients.ClassNumberFinite
+
+@[expose] public section
 
 noncomputable section
 

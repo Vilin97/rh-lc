@@ -1,5 +1,9 @@
-import Formalism.FrobeniusContraction.Statement
-import Formalism.FrobeniusContraction.StatementTop
+module
+
+public import Formalism.FrobeniusContraction.Statement
+public import Formalism.FrobeniusContraction.StatementTop
+
+@[expose] public section
 
 noncomputable section
 

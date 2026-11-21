@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.AllPartsTransferHolds
-import Formalism.LocalToGlobal.GlobalTheory.DivPassage
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.AllPartsTransferHolds
+public import Formalism.LocalToGlobal.GlobalTheory.DivPassage
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 

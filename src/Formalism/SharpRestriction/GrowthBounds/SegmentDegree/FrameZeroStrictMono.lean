@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.SumPosOfPer
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.SumPosOfPer
+
+@[expose] public section
 
 noncomputable section
 

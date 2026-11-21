@@ -1,14 +1,19 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSt
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterFib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PPtsAddFirst
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PDeLeSemiPos
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PRFormula
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegrePartition
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.LogRegLineTensor
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.LelongSectionLimit
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.LelongChartLimit
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterSt
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterFib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PPtsAddFirst
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PDeLeSemiPos
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PRFormula
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegrePartition
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.LogRegLineTensor
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.LelongSectionLimit
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.LelongChartLimit
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

@@ -1,4 +1,8 @@
-import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.IntegralUnitBaseChange.InvTransposeGLInvTransposeGL
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.IntegralUnitBaseChange.InvTransposeGLInvTransposeGL
+
+@[expose] public section
 
 open MeasureTheory Polynomial
 open scoped ENNReal TensorProduct

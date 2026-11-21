@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.Divisibility.LiftErrorLocal
-import Formalism.LocalRingCardinality.Lemmas
+module
+
+public import Formalism.SharpRestriction.Divisibility.LiftErrorLocal
+public import Formalism.LocalRingCardinality.Lemmas
+
+@[expose] public section
 
 noncomputable section
 

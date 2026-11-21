@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.BaseSizes
-import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.SelmerSumLargePrime
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.BaseSizes
+public import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.SelmerSumLargePrime
+
+@[expose] public section
 
 noncomputable section
 

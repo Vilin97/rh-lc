@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.GlobalFields.GlobalReciprocity.Layers
-import GroundTheory.GlobalFields.GlobalReciprocity.NormSquare
-import GroundTheory.GlobalFields.GlobalReciprocity.LocalSurjective
-import GroundTheory.GlobalFields.GlobalReciprocity.DegreeLift
-import GroundTheory.PowerSubgroups.CountableNeighbourhoods.PowInvariant
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.GlobalReciprocity.Layers
+public import GroundTheory.GlobalFields.GlobalReciprocity.NormSquare
+public import GroundTheory.GlobalFields.GlobalReciprocity.LocalSurjective
+public import GroundTheory.GlobalFields.GlobalReciprocity.DegreeLift
+public import GroundTheory.PowerSubgroups.CountableNeighbourhoods.PowInvariant
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

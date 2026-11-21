@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.RationalHeckeScalars
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMemNotMem
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.RationalHeckeScalars
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMemNotMem
+
+@[expose] public section
 
 set_option autoImplicit false
 

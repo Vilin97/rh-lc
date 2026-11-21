@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.PathWeight.PhProdShift
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.PathWeight.PhProdShift
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCP
-import Formalism.LocalToGlobal.BesselHermitianTheta.TiedWeilEq
-import Formalism.LocalToGlobal.BesselHermitianTheta.AllTied
-import Formalism.LocalToGlobal.BesselHermitianTheta.BesselUnipotentSubgroup
+module
+
+public import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCP
+public import Formalism.LocalToGlobal.BesselHermitianTheta.TiedWeilEq
+public import Formalism.LocalToGlobal.BesselHermitianTheta.AllTied
+public import Formalism.LocalToGlobal.BesselHermitianTheta.BesselUnipotentSubgroup
+
+@[expose] public section
 
 noncomputable section
 

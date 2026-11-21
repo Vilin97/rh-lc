@@ -1,10 +1,14 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.GCauchyStatement
-import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsTranslateJetNeZero
-import Development.AbelianVarietyTheory.Proofs.TorusSplitting.CoeffEqZeroOfOrthonormal
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsImEqLattice
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.DifferentiableFderivApply
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ImFormApply
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.GCauchyStatement
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsTranslateJetNeZero
+public import Development.AbelianVarietyTheory.Proofs.TorusSplitting.CoeffEqZeroOfOrthonormal
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsImEqLattice
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.DifferentiableFderivApply
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ImFormApply
+
+@[expose] public section
 
 open Matrix ReciprocityTheory.ChartRestriction.G.I2
 open scoped ComplexOrder

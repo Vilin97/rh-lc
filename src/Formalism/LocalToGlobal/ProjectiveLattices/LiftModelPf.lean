@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.LiftSec
-import Formalism.LocalToGlobal.ProjectiveLattices.LiftLoc
-import Formalism.LocalToGlobal.ProjectiveLattices.LiftRG
-import Formalism.LocalToGlobal.ProjectiveLattices.LiftUnit
-import Formalism.LocalToGlobal.ProjectiveLattices.LiftInSt
-import Formalism.LocalToGlobal.ProjectiveLattices.LiftModelSt
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.LiftSec
+public import Formalism.LocalToGlobal.ProjectiveLattices.LiftLoc
+public import Formalism.LocalToGlobal.ProjectiveLattices.LiftRG
+public import Formalism.LocalToGlobal.ProjectiveLattices.LiftUnit
+public import Formalism.LocalToGlobal.ProjectiveLattices.LiftInSt
+public import Formalism.LocalToGlobal.ProjectiveLattices.LiftModelSt
+
+@[expose] public section
 
 noncomputable section
 

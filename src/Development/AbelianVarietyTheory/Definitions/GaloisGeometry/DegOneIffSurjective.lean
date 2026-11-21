@@ -1,7 +1,11 @@
-import Mathlib
-import ReciprocityTheory.NeutralLocalFields.Reciprocity
-import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
-import Formalism.UnipotentAdelicQuotients.FinOrdValGen
+module
+
+public import Mathlib
+public import ReciprocityTheory.NeutralLocalFields.Reciprocity
+public import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
+public import Formalism.UnipotentAdelicQuotients.FinOrdValGen
+
+@[expose] public section
 
 noncomputable section
 

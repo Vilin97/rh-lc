@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PieriBlockIdeals.IntegralQuotient
+module
+
+public import Mathlib
+public import Formalism.PieriBlockIdeals.IntegralQuotient
+
+@[expose] public section
 
 open Polynomial
 

@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StTransverseSliceGeneral
-import GroundTheory.HeightsAndTheta.Heights.Intersections.JacMinorC
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsExpansion
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StTransverseSliceGeneral
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.JacMinorC
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsExpansion
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

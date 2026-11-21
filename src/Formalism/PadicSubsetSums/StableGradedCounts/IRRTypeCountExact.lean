@@ -1,4 +1,8 @@
-import Formalism.PadicSubsetSums.StableGradedCounts.IRRIrredCountUpper
+module
+
+public import Formalism.PadicSubsetSums.StableGradedCounts.IRRIrredCountUpper
+
+@[expose] public section
 
 open Polynomial UniqueFactorizationMonoid
 

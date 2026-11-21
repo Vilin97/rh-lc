@@ -1,4 +1,8 @@
-import CompanionTheory.AutomorphicTheory.SchurLimitBounds.SchurOrthogonality.URepSchur
+module
+
+public import CompanionTheory.AutomorphicTheory.SchurLimitBounds.SchurOrthogonality.URepSchur
+
+@[expose] public section
 
 noncomputable section
 

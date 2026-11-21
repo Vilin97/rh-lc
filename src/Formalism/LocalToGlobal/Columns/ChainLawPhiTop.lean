@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.ChainLawPhiPf
-import Formalism.LocalToGlobal.Columns.ChainTopLawB
+module
+
+public import Formalism.LocalToGlobal.Columns.ChainLawPhiPf
+public import Formalism.LocalToGlobal.Columns.ChainTopLawB
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

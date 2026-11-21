@@ -1,17 +1,21 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.ColumnData
-import Formalism.LocalToGlobal.KernelLattices.ColumnData.IsAdmissibleFlagPairOfUnitriangularLeftAutomorph
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.SplitK
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.KerPerPair
-import Formalism.PeriodIntegrals.KerLat
-import Formalism.PeriodIntegrals.KerIso
-import Formalism.PeriodIntegrals.SelfDualOfDiff
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.KerSplit
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.KerDetOrd
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.KerDetFin
-import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.ProductThetaMem
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.ColumnData
+public import Formalism.LocalToGlobal.KernelLattices.ColumnData.IsAdmissibleFlagPairOfUnitriangularLeftAutomorph
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.SplitK
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.KerPerPair
+public import Formalism.PeriodIntegrals.KerLat
+public import Formalism.PeriodIntegrals.KerIso
+public import Formalism.PeriodIntegrals.SelfDualOfDiff
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.KerSplit
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.KerDetOrd
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.KerDetFin
+public import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.ProductThetaMem
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators ComplexConjugate Pointwise

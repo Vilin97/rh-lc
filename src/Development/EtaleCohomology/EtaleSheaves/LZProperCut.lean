@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.LineZeroCut
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LineZeroCut
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry LateralTheory.E.t_E2Cut LateralTheory.E.LineZeroCut

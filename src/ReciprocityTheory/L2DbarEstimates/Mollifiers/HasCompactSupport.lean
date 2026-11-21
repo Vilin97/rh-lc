@@ -1,4 +1,8 @@
-import ReciprocityTheory.L2DbarEstimates.Mollifiers.MollifierL2LocTendsto
+module
+
+public import ReciprocityTheory.L2DbarEstimates.Mollifiers.MollifierL2LocTendsto
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.B
 

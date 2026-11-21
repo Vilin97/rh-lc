@@ -1,6 +1,10 @@
-import Mathlib
-import CompanionTheory.AutomorphicTheory.SiegelUnitTheory.UnitsAinf
-import CompanionTheory.AutomorphicTheory.SiegelUnitTheory.ClassNumberMass
+module
+
+public import Mathlib
+public import CompanionTheory.AutomorphicTheory.SiegelUnitTheory.UnitsAinf
+public import CompanionTheory.AutomorphicTheory.SiegelUnitTheory.ClassNumberMass
+
+@[expose] public section
 
 namespace CompanionTheory.HU
 

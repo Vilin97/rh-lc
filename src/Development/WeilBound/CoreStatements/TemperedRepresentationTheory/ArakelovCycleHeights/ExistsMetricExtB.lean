@@ -1,9 +1,13 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.ArakelovCycleHeights.QpSndStr
-import Development.WeilBound.CoreStatements.AbelianHeightsDuality.ArakelovSingularities.Bridge
-import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.ArFormExistsOfInt
-import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.ArMixOfBaseInt
-import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.HeightProjectionOfInt
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.ArakelovCycleHeights.QpSndStr
+public import Development.WeilBound.CoreStatements.AbelianHeightsDuality.ArakelovSingularities.Bridge
+public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.ArFormExistsOfInt
+public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.ArMixOfBaseInt
+public import Development.AutomorphicSpectrum.Proofs.DivisibilityProofs.HeightProjectionOfInt
+
+@[expose] public section
 
 set_option autoImplicit false
 

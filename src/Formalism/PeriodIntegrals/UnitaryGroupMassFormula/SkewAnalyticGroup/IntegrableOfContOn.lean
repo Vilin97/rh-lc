@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SkewAnalyticGroup.HasDerivAtShift
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SkewAnalyticGroup.HasDerivAtShift
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology Set
 open scoped ContDiff ENNReal

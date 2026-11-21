@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.LocLatSat
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalLatticeSaturation.BcGSmulR
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.LocLatSat
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalLatticeSaturation.BcGSmulR
+
+@[expose] public section
 
 noncomputable section
 

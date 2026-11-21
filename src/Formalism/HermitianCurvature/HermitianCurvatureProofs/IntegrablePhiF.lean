@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PsiMajNonneg
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PsiMajNonneg
+
+@[expose] public section
 
 noncomputable section
 

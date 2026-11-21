@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.DistinguishedUnitIdeals.ArcLiftOfLocalizationData
-import Formalism.DistinguishedUnitIdeals.FrobeniusDiffBijective
-import Formalism.DistinguishedUnitIdeals.ExistsConstOfInvariantMod
-import Formalism.DistinguishedUnitIdeals.LemmaCFull
-import Formalism.DistinguishedUnitIdeals.FrobeniusCoboundedArc
+module
+
+public import Mathlib
+public import Formalism.DistinguishedUnitIdeals.ArcLiftOfLocalizationData
+public import Formalism.DistinguishedUnitIdeals.FrobeniusDiffBijective
+public import Formalism.DistinguishedUnitIdeals.ExistsConstOfInvariantMod
+public import Formalism.DistinguishedUnitIdeals.LemmaCFull
+public import Formalism.DistinguishedUnitIdeals.FrobeniusCoboundedArc
+
+@[expose] public section
 
 noncomputable section
 

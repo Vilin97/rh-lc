@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.GermLocTail
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GermLocTail
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.GermRealisation
 

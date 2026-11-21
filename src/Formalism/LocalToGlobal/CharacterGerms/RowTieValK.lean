@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.LinearCoeffExponentialEqIte
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.LinearCoeffExponentialEqIte
+
+@[expose] public section
 
 noncomputable section
 

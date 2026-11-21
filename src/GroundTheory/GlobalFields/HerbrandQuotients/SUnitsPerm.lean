@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.HerbrandQuotients.Permutation
-import GroundTheory.GlobalFields.HerbrandQuotients.LatticeBridge
-import GroundTheory.GlobalFields.SemilocalAlgebras.Galois
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.HerbrandQuotients.Permutation
+public import GroundTheory.GlobalFields.HerbrandQuotients.LatticeBridge
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Galois
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

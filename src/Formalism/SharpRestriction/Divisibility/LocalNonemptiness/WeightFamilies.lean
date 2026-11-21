@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.Divisibility.WeightFamilies
+module
+
+public import Formalism.SharpRestriction.Divisibility.WeightFamilies
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsModelLogIntegrable
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsModelPtsIntegrable
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LogIntPoly
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsModelLogIntegrable
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsModelPtsIntegrable
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.LogIntPoly
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

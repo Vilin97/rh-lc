@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.Rational
-import GroundTheory.GlobalFields.CyclotomicCharacters.ProfinitePadic
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.Rational
+public import GroundTheory.GlobalFields.CyclotomicCharacters.ProfinitePadic
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

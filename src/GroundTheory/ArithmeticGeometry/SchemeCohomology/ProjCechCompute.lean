@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjCechModel
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechOrdered
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProjCechModel
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechOrdered
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh

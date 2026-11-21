@@ -1,7 +1,11 @@
-import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.ArakelovDegreeEqDegreeOfFamily
-import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.CountZSt
-import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.EllipsoidSt
-import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.CountStC
+module
+
+public import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.ArakelovDegreeEqDegreeOfFamily
+public import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.CountZSt
+public import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.EllipsoidSt
+public import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.CountStC
+
+@[expose] public section
 
 namespace ReciprocityTheory.GeometryOfNumbersTheory
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.CovolXOfCovol
-import Formalism.LocalToGlobal.IndefiniteReal.PrimitivePackageFullHecke
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CovolXOfCovol
+public import Formalism.LocalToGlobal.IndefiniteReal.PrimitivePackageFullHecke
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 400000
 open NumberField Formalism.BasicNotions Formalism.MainNotions Formalism.L2 Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Pj Formalism.IndefR.Links Formalism.IndefR.FWT

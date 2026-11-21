@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.FockGramWindow.LvlDef
-import Formalism.SharpRestriction.GrowthBounds.FockGramWindow.GramWindow2Proved
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.FinPosEqCast
-import Formalism.MahlerMeasure.FinalM
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.FockGramWindow.LvlDef
+public import Formalism.SharpRestriction.GrowthBounds.FockGramWindow.GramWindow2Proved
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.FinPosEqCast
+public import Formalism.MahlerMeasure.FinalM
+
+@[expose] public section
 
 noncomputable section
 

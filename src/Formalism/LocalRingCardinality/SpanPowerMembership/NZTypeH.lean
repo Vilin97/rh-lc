@@ -1,8 +1,12 @@
-import Formalism.LocalRingCardinality.SpanPowerMembership.NZTypeE
-import Mathlib
-import Formalism.CyclotomicNorms.StatementT
-import Formalism.CyclotomicNorms.NonsquarefreeBounds.IrreducibilityOfRestriction
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleNewtypesIdempotentZero
+module
+
+public import Formalism.LocalRingCardinality.SpanPowerMembership.NZTypeE
+public import Mathlib
+public import Formalism.CyclotomicNorms.StatementT
+public import Formalism.CyclotomicNorms.NonsquarefreeBounds.IrreducibilityOfRestriction
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleNewtypesIdempotentZero
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Divisibility.JetBounds.IsExpansion
+module
+
+public import Formalism.LocalToGlobal.Divisibility.JetBounds.IsExpansion
+
+@[expose] public section
 
 open scoped BigOperators
 

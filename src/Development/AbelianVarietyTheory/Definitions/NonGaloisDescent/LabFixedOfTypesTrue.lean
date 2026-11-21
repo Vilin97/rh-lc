@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.OExt
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.OExt
+
+@[expose] public section
 
 noncomputable section
 namespace GlobalTheory.CoefDuty.OPinModel

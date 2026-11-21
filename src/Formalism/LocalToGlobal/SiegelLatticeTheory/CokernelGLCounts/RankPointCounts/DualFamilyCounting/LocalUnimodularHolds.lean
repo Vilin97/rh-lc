@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.LocSplitType
-import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.ExistsIsomLocFOfVdZero
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.ExistsIsomScale
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.LocSplitType
+public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.ExistsIsomLocFOfVdZero
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.ExistsIsomScale
+
+@[expose] public section
 
 noncomputable section
 

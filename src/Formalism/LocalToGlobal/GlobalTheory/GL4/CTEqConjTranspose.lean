@@ -1,12 +1,16 @@
-import Mathlib
-import Formalism.SharpRestriction.GlobalSchurBounds.FlipTwoThree
-import Formalism.LocalToGlobal.HermitianColumns.ColsHerm
-import Formalism.LocalToGlobal.HermitianForms.FormsTied
-import Formalism.GradedWeylDivisibility.StatementE
-import Formalism.SuccessiveMinima.StatementMink
-import Formalism.SharpRestriction.GlobalSchurBounds.IntegrableOfContinuousCircleMeasure
-import Formalism.GL3MeanSquares.ConcavityEquidistribution
-import Formalism.LogVandermondeBounds.MultinomialPowerBound
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.GlobalSchurBounds.FlipTwoThree
+public import Formalism.LocalToGlobal.HermitianColumns.ColsHerm
+public import Formalism.LocalToGlobal.HermitianForms.FormsTied
+public import Formalism.GradedWeylDivisibility.StatementE
+public import Formalism.SuccessiveMinima.StatementMink
+public import Formalism.SharpRestriction.GlobalSchurBounds.IntegrableOfContinuousCircleMeasure
+public import Formalism.GL3MeanSquares.ConcavityEquidistribution
+public import Formalism.LogVandermondeBounds.MultinomialPowerBound
+
+@[expose] public section
 
 noncomputable section
 

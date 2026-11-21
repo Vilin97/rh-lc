@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.MetricPeriods.IsFundSet
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.Statements
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.IsFundSet
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.Statements
+
+@[expose] public section
 
 noncomputable section
 

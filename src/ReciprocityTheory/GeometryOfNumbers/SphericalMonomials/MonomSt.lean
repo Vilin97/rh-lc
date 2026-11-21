@@ -1,4 +1,8 @@
-import ReciprocityTheory.GeometryOfNumbers.SphericalMonomials.MonomStA
+module
+
+public import ReciprocityTheory.GeometryOfNumbers.SphericalMonomials.MonomStA
+
+@[expose] public section
 
 namespace ReciprocityTheory.GeometryOfNumbersTheory
 

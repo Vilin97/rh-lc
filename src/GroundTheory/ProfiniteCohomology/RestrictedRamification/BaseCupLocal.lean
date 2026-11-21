@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseKummerDefs
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.ClassFieldGSLocal
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BrauerLocalVal
-import GroundTheory.ProfiniteCohomology.LocalTateDuality.Bockstein
-import GroundTheory.ProfiniteCohomology.CyclicCupProf
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseKummerDefs
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.ClassFieldGSLocal
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BrauerLocalVal
+public import GroundTheory.ProfiniteCohomology.LocalTateDuality.Bockstein
+public import GroundTheory.ProfiniteCohomology.CyclicCupProf
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

@@ -1,5 +1,9 @@
-import Formalism.ThickAverageLoss.PartnersToFactorsAt
-import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality
+module
+
+public import Formalism.ThickAverageLoss.PartnersToFactorsAt
+public import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality
+
+@[expose] public section
 
 open Finset ArithmeticFunction
 

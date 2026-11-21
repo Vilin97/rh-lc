@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.FunctionField.PlaceDefs
-import GroundTheory.FunctionField.PlaceBasic
-import GroundTheory.FunctionField.ValuationAevalSubCoeffZeroLe
-import GroundTheory.FunctionField.Divisor
+module
+
+public import Mathlib
+public import GroundTheory.FunctionField.PlaceDefs
+public import GroundTheory.FunctionField.PlaceBasic
+public import GroundTheory.FunctionField.ValuationAevalSubCoeffZeroLe
+public import GroundTheory.FunctionField.Divisor
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.FunctionField

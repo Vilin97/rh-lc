@@ -1,6 +1,10 @@
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshLap
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshMean
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.IsPshLocallyIntegrableStatement
+module
+
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshLap
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshMean
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.IsPshLocallyIntegrableStatement
+
+@[expose] public section
 
 open MeasureTheory Metric Set Filter Topology Real
 

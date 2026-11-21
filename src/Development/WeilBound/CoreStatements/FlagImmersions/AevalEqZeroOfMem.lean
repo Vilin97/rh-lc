@@ -1,11 +1,15 @@
-import Development.WeilBound.CoreStatements.VolumeEquality.DegPushDim
-import Development.WeilBound.CoreStatements.VolumeEquality.DegPushUnit
-import Development.WeilBound.CoreStatements.VolumeEquality.DegPushNumEq
-import Development.WeilBound.CoreStatements.VolumeEquality.DegPushMap
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsArithVarOfBlockAlgebraic
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.BlockJoinInclusionsCompat
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsC2AtOfIsPotential
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.DegreeGenericOfDegree
+module
+
+public import Development.WeilBound.CoreStatements.VolumeEquality.DegPushDim
+public import Development.WeilBound.CoreStatements.VolumeEquality.DegPushUnit
+public import Development.WeilBound.CoreStatements.VolumeEquality.DegPushNumEq
+public import Development.WeilBound.CoreStatements.VolumeEquality.DegPushMap
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsArithVarOfBlockAlgebraic
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.BlockJoinInclusionsCompat
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsC2AtOfIsPotential
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.DegreeGenericOfDegree
+
+@[expose] public section
 
 noncomputable section
 

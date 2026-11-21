@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 open Module Matrix
 open scoped InnerProductSpace ComplexOrder

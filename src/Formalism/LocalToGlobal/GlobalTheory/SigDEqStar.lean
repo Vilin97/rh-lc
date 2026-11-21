@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.StandardIntegralLatticeExists
-import Formalism.LocalToGlobal.GlobalTheory.NfAllSmulSelfRe
-import Formalism.LocalToGlobal.HermitianForms.FormsTied
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.StandardIntegralLatticeExists
+public import Formalism.LocalToGlobal.GlobalTheory.NfAllSmulSelfRe
+public import Formalism.LocalToGlobal.HermitianForms.FormsTied
+
+@[expose] public section
 
 noncomputable section
 

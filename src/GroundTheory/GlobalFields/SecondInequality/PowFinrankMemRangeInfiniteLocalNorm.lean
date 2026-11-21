@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.SecondInequality.Statement
-import GroundTheory.GlobalFields.KummerTheory.KummerIndexLemma
-import GroundTheory.GlobalFields.IdeleGroups.LocalNormsEverywhere
-import GroundTheory.GlobalFields.ExistenceTheorem.LocalPowers
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SecondInequality.Statement
+public import GroundTheory.GlobalFields.KummerTheory.KummerIndexLemma
+public import GroundTheory.GlobalFields.IdeleGroups.LocalNormsEverywhere
+public import GroundTheory.GlobalFields.ExistenceTheorem.LocalPowers
+
+@[expose] public section
 
 noncomputable section
 

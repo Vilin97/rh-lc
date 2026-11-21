@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.BetaLUniq
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.BetaLUniq
+
+@[expose] public section
 
 noncomputable section
 

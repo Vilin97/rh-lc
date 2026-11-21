@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.HerbrandQuotients.SUnitsExact
-import GroundTheory.GlobalFields.HerbrandQuotients.SUnitsPerm
-import GroundTheory.GlobalFields.HerbrandQuotients.SUnitsRep
-import GroundTheory.GlobalFields.HerbrandQuotients.LatticeBridge
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.HerbrandQuotients.SUnitsExact
+public import GroundTheory.GlobalFields.HerbrandQuotients.SUnitsPerm
+public import GroundTheory.GlobalFields.HerbrandQuotients.SUnitsRep
+public import GroundTheory.GlobalFields.HerbrandQuotients.LatticeBridge
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

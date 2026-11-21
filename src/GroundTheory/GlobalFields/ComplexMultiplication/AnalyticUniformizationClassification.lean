@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.AnalyticUniformization
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.AnalyticUniformization
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open Complex Filter Topology Set WeierstrassCurve GroundTheory.Arith.Abelian

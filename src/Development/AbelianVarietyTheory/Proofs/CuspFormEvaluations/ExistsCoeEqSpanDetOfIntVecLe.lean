@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.ThetaValues.FlatMemLatIffStdLat
-import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.NsmulApplyMemOfMemTensorLat
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsSmulMemOfMemSpanFraction
-import ReciprocityTheory.SemistableReduction.ExistsIntSmulMemSpan
-import ReciprocityTheory.SemistableReduction.SemiDegCE
-import ReciprocityTheory.DualLattices.SmallLevelClassSet
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.ThetaValues.FlatMemLatIffStdLat
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.NsmulApplyMemOfMemTensorLat
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsSmulMemOfMemSpanFraction
+public import ReciprocityTheory.SemistableReduction.ExistsIntSmulMemSpan
+public import ReciprocityTheory.SemistableReduction.SemiDegCE
+public import ReciprocityTheory.DualLattices.SmallLevelClassSet
+
+@[expose] public section
 
 namespace GlobalTheory.TensorLat
 

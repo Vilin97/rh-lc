@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.HostFacts
-import Development.AutomorphicArithmetic.FrobeniusLocalisation.inertQ
-import Development.AutomorphicArithmetic.FrobeniusLocalisation.InertD
+module
+
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.HostFacts
+public import Development.AutomorphicArithmetic.FrobeniusLocalisation.inertQ
+public import Development.AutomorphicArithmetic.FrobeniusLocalisation.InertD
+
+@[expose] public section
 
 open UpperTheory.HF
 open Formalism.HC

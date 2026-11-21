@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PairingDivisors.StatementA
-import Formalism.PairingDivisors.StatementN
-import Formalism.PairingDivisors.PairingDivisorProofs.Height
+module
+
+public import Mathlib
+public import Formalism.PairingDivisors.StatementA
+public import Formalism.PairingDivisors.StatementN
+public import Formalism.PairingDivisors.PairingDivisorProofs.Height
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain Finset
 open Formalism.DivisionValues (vw lw conjPl)

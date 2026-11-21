@@ -1,13 +1,17 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.ProductFirstZerothParts
-import Formalism.LogVandermondeBounds.HookGammaAmgmMultinomialBounds
-import Mathlib
-import Formalism.GL3MeanSquares.FourierTransformKernelSurjective
-import Formalism.GL3MeanSquares.HookFormulaTorsion.FourierCommutesHeckeScalar
-import Formalism.GL3MeanSquares.HookFormulaTorsion.LengthQuotientBoundGeneral
-import Formalism.GL3MeanSquares.HookFormulaTorsion.LemmaCTwistRamified
-import Formalism.BranchSandwichDivisors.BranchIsometryProofs.OrthSum
-import Formalism.LocalRingCardinality.Lemmas
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.Pc
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.ProductFirstZerothParts
+public import Formalism.LogVandermondeBounds.HookGammaAmgmMultinomialBounds
+public import Mathlib
+public import Formalism.GL3MeanSquares.FourierTransformKernelSurjective
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.FourierCommutesHeckeScalar
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.LengthQuotientBoundGeneral
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.LemmaCTwistRamified
+public import Formalism.BranchSandwichDivisors.BranchIsometryProofs.OrthSum
+public import Formalism.LocalRingCardinality.Lemmas
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.Pc
+
+@[expose] public section
 
 noncomputable section
 

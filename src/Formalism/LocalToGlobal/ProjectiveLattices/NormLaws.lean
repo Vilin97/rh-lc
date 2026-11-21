@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.L2DefiniteCuspForms
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.L2DefiniteCuspForms
+
+@[expose] public section
 
 noncomputable section
 

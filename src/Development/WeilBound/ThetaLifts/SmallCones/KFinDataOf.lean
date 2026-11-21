@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.SmallCones.KFinArch
+module
+
+public import Development.WeilBound.ThetaLifts.SmallCones.KFinArch
+
+@[expose] public section
 
 noncomputable section
 

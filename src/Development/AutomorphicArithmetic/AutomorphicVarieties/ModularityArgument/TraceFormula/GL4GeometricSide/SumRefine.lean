@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4GeometricSide.InnerEq
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LieOperatorVectorEq
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsAverage
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GL4GeometricSide.InnerEq
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LieOperatorVectorEq
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsAverage
+
+@[expose] public section
 
 noncomputable section
 

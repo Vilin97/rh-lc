@@ -1,15 +1,19 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
-import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IndLineInf
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KStab
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PolEqISupFockDeg
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KEqOnId
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FixPartEqBotOfLt
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockDegreeOddMapLe
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StabilizerUpperFixedPart
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MatchedLinePolynomialKFixedStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockDegreeKFixedReductionStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IndLineInf
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KStab
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PolEqISupFockDeg
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KEqOnId
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FixPartEqBotOfLt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockDegreeOddMapLe
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StabilizerUpperFixedPart
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MatchedLinePolynomialKFixedStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockDegreeKFixedReductionStatement
+
+@[expose] public section
 
 open scoped TensorProduct NNReal Matrix
 open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes

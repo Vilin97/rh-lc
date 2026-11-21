@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataArith
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataArith
+
+@[expose] public section
 
 open Module NumberField ComplexOrder
 

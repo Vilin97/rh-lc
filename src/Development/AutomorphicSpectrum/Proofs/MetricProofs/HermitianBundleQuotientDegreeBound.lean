@@ -1,11 +1,16 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.MetricPeriods.IsOrthFull
-import GroundTheory.HeightsAndTheta.Heights.LatticeLemmas.PExactSequence
-import GroundTheory.HeightsAndTheta.Heights.ArithDegreeExact
-import GroundTheory.HeightsAndTheta.Heights.Slopes
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.SlopeBoundComparableMetricStatement
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.NormalizedDegreeFullRankSublatticeStatement
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.NormalizedDegreeBoundedMapStatement
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.IsOrthFull
+public import GroundTheory.HeightsAndTheta.Heights.LatticeLemmas.PExactSequence
+public import GroundTheory.HeightsAndTheta.Heights.ArithDegreeExact
+public import GroundTheory.HeightsAndTheta.Heights.Slopes
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.SlopeBoundComparableMetricStatement
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.NormalizedDegreeFullRankSublatticeStatement
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.NormalizedDegreeBoundedMapStatement
+
+@[expose] public section
+
 open GroundTheory.Heights₂.Heights NumberField TensorProduct ComplexAt GlobalTheory.CompanionTheory.Ar Matrix
 open scoped BigOperators ComplexOrder
 

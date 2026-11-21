@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.Chosen
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.Chosen
+
+@[expose] public section
 
 noncomputable section
 

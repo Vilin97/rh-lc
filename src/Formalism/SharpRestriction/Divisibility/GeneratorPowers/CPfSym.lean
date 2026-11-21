@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.LegendreSumSt
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.LegendreSumSt
+
+@[expose] public section
 
 set_option autoImplicit false
 

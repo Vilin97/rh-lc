@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HermitianSpaces
-import GroundTheory.HeightsAndTheta.Heights.HermitianLattice
-import GroundTheory.AutomorphicForms.HermitianDisc
-import GroundTheory.HeightsAndTheta.Theta.CMDatum
-import GroundTheory.AutomorphicForms.AdelicUnitaryGroups
-import GroundTheory.HeightsAndTheta.Theta.GaussianExample
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HermitianSpaces
+public import GroundTheory.HeightsAndTheta.Heights.HermitianLattice
+public import GroundTheory.AutomorphicForms.HermitianDisc
+public import GroundTheory.HeightsAndTheta.Theta.CMDatum
+public import GroundTheory.AutomorphicForms.AdelicUnitaryGroups
+public import GroundTheory.HeightsAndTheta.Theta.GaussianExample
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Theta

@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsLiftModel
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PGenOnFibres
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsLiftModel
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PGenOnFibres
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

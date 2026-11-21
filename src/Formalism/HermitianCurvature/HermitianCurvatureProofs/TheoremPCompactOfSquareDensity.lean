@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TheoremPCompactOfStepDensity
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TheoremPCompactOfStepDensity
+
+@[expose] public section
 
 open MeasureTheory Filter Topology
 open scoped Matrix

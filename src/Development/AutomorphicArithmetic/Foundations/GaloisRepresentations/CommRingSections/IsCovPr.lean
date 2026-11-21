@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechSeparated
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechSeparated
+
+@[expose] public section
 
 noncomputable section
 

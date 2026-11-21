@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.GaloisCohomology.Statement
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AutCongrContinuousCycInertia
+module
+
+public import Mathlib
+public import Formalism.GaloisCohomology.Statement
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.AutCongrContinuousCycInertia
+
+@[expose] public section
 
 open NumberField IsDedekindDomain ReciprocityTheory.Gal Formalism.ConjugateSelfDual Formalism.GaloisCohomology
 

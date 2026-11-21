@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfAlpha
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfPhi
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfAlpha
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfPhi
+
+@[expose] public section
 
 noncomputable section
 

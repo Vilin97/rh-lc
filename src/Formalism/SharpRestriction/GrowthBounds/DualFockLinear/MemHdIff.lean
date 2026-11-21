@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.OnePosDef
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.OnePosDef
+
+@[expose] public section
 
 open MvPolynomial
 

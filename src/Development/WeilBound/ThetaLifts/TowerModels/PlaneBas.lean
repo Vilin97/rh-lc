@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.TowerModels.PlaneForm
+module
+
+public import Development.WeilBound.ThetaLifts.TowerModels.PlaneForm
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.SIdeleHerbrand.Places
-import GroundTheory.GlobalFields.SemilocalAlgebras.Finite
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.SIdeleHerbrand.Places
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Finite
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

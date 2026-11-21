@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsArith
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsLocalRep
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsConstantShift
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PThmAExpand
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.EqSumMultihomogeneousComponents
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsArith
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsLocalRep
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsConstantShift
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PThmAExpand
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.EqSumMultihomogeneousComponents
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

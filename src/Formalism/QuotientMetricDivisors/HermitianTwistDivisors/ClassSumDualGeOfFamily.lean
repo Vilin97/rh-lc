@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.ClassSumDualGeF
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.AuxStatement14
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.ClassSumDualGeF
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.AuxStatement14
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

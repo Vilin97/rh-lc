@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.NilSurjOfSqZero
+module
+
+public import ReciprocityTheory.DualLattices.NilSurjOfSqZero
+
+@[expose] public section
 
 noncomputable section
 

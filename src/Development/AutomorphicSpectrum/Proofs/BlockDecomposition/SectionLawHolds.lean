@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.EisensteinSeries.SiegelEisensteinContinuation.StripEntire
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.Iwa
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.EisensteinSeries.SiegelEisensteinContinuation.StripEntire
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.Iwa
+
+@[expose] public section
 
 noncomputable section
 

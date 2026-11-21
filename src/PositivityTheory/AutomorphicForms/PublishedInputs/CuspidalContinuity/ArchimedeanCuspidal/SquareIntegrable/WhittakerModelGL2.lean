@@ -1,5 +1,9 @@
-import PositivityTheory.AutomorphicForms.PublishedInputs.CuspidalContinuity.ArchimedeanCuspidal.AdFormOf
-import GroundTheory.AutomorphicForms.GL2.GodementSectionLocal
+module
+
+public import PositivityTheory.AutomorphicForms.PublishedInputs.CuspidalContinuity.ArchimedeanCuspidal.AdFormOf
+public import GroundTheory.AutomorphicForms.GL2.GodementSectionLocal
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,8 +1,12 @@
-import Development.WeilBound.CoreStatements.HodgeTatePoints.ReProd
-import Development.WeilBound.CoreStatements.HodgeTatePoints.CntCoord
-import Development.WeilBound.CoreStatements.HodgeTatePoints.HasLenOfEquiv
-import Development.AutomorphicSpectrum.Statements.AlgebraStatements.PolarisedAFStatement
-import Development.AutomorphicSpectrum.Statements.AlgebraStatements.PolarisedFlagStatement
+module
+
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.ReProd
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.CntCoord
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.HasLenOfEquiv
+public import Development.AutomorphicSpectrum.Statements.AlgebraStatements.PolarisedAFStatement
+public import Development.AutomorphicSpectrum.Statements.AlgebraStatements.PolarisedFlagStatement
+
+@[expose] public section
 
 noncomputable section
 

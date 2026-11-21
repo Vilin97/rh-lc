@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.StatementK
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RecText
+module
+
+public import Formalism.HermitianCurvature.StatementK
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RecText
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.K
 

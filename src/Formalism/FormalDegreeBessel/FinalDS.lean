@@ -1,6 +1,10 @@
-import Formalism.FormalDegreeBessel.FormalDegreeRatio.DSLowK
-import Formalism.FormalDegreeBessel.FormalDegreeRatio.DSFdeg
-import Formalism.FormalDegreeBessel.FormalDegreeRatio.DSRatio
+module
+
+public import Formalism.FormalDegreeBessel.FormalDegreeRatio.DSLowK
+public import Formalism.FormalDegreeBessel.FormalDegreeRatio.DSFdeg
+public import Formalism.FormalDegreeBessel.FormalDegreeRatio.DSRatio
+
+@[expose] public section
 
 namespace Formalism.QuantumDeterminants
 

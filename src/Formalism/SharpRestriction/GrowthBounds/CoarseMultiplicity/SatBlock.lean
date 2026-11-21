@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.BFDefs
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.BlockInj
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.SymInt
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.BFDefs
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.BlockInj
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.SymInt
+
+@[expose] public section
 
 noncomputable section
 

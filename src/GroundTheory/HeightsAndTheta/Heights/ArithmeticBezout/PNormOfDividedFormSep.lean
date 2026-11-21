@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsChartNormSep
-import GroundTheory.HeightsAndTheta.Heights.ChowForms.StatementsNormForm
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsChartNormSep
+public import GroundTheory.HeightsAndTheta.Heights.ChowForms.StatementsNormForm
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

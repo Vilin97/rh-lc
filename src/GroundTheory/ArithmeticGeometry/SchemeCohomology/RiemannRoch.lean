@@ -1,13 +1,17 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.CurveBase
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.SheafH
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechNaturality.CechFunctor
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.CurveDivisors
-import GroundTheory.FunctionField.ExistsBoundDegSubFinrankL
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.CurveCanonical
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.CurveFunctionField
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.CurveProper
-import GroundTheory.FunctionField.WeilDifferential
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.CurveBase
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.SheafH
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechNaturality.CechFunctor
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.CurveDivisors
+public import GroundTheory.FunctionField.ExistsBoundDegSubFinrankL
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.CurveCanonical
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.CurveFunctionField
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.CurveProper
+public import GroundTheory.FunctionField.WeilDifferential
+
+@[expose] public section
 
 open CategoryTheory AlgebraicGeometry TopologicalSpace Topology Module MonoidalCategory
 

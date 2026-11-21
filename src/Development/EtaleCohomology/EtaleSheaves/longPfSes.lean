@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.longPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.longPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits GlobalTheory.EtC

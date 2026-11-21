@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.SphericalTriangular
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.SphericalTriangular
+
+@[expose] public section
 
 noncomputable section
 

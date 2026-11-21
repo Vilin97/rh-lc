@@ -1,5 +1,9 @@
-import Formalism.EllipticTorsion.FormalGroupPointsParametrisation
-import Formalism.EllipticTorsion.EllipticTorsionProofs.WSeries
+module
+
+public import Formalism.EllipticTorsion.FormalGroupPointsParametrisation
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.WSeries
+
+@[expose] public section
 
 open PowerSeries
 

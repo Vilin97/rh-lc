@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.BesselShellMomentBounds
-import Formalism.SharpRestriction.CuspSpanNormBounds.BigCellDensity
-import Formalism.SharpRestriction.CuspSpanNormBounds.IsPtRepTrDat
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BesselShellMomentBounds
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BigCellDensity
+public import Formalism.SharpRestriction.CuspSpanNormBounds.IsPtRepTrDat
+
+@[expose] public section
 
 noncomputable section
 

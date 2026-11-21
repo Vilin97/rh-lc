@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.MeasuresChart
-import GroundTheory.AutomorphicForms.RealGroupsHaar
-import GroundTheory.AutomorphicForms.Cartan
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.MeasuresChart
+public import GroundTheory.AutomorphicForms.RealGroupsHaar
+public import GroundTheory.AutomorphicForms.Cartan
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.LocallyProfinite
-import GroundTheory.AutomorphicForms.LocallyConstantCompact
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.LocallyProfinite
+public import GroundTheory.AutomorphicForms.LocallyConstantCompact
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.PureIte
-import Development.WeilBound.ThetaLifts.ConeHypotheses.PureEqPureA
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.EigenKilling.ConeIntegralFactorisation
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.PureIte
+public import Development.WeilBound.ThetaLifts.ConeHypotheses.PureEqPureA
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.EigenKilling.ConeIntegralFactorisation
+
+@[expose] public section
 
 noncomputable section
 

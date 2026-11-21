@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverAct
-import ReciprocityTheory.Automorphisms.SplitCoeAlgebraMap
-import ReciprocityTheory.Automorphisms.PlaceA
-import ReciprocityTheory.Automorphisms.InstMainA
-import Formalism.LocalRingCardinality.SpanPowerMembership.Adelic
-import Formalism.FrobeniusOrbits.RealSubfieldLeCompositum
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverAct
+public import ReciprocityTheory.Automorphisms.SplitCoeAlgebraMap
+public import ReciprocityTheory.Automorphisms.PlaceA
+public import ReciprocityTheory.Automorphisms.InstMainA
+public import Formalism.LocalRingCardinality.SpanPowerMembership.Adelic
+public import Formalism.FrobeniusOrbits.RealSubfieldLeCompositum
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.SummableNormIffAndTsumEqCoset2
-import GroundTheory.AutomorphicForms.GL2.ExistsForallAddEqOfMemFiniteSchwartzBruhat2
-import GroundTheory.AutomorphicForms.GL2.IdeleModuleDetOfMemMaxCompact
-import GroundTheory.AutomorphicForms.ReductionMeasure
-import GroundTheory.GlobalFields.TateThesis.AdelePoisson
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.SummableNormIffAndTsumEqCoset2
+public import GroundTheory.AutomorphicForms.GL2.ExistsForallAddEqOfMemFiniteSchwartzBruhat2
+public import GroundTheory.AutomorphicForms.GL2.IdeleModuleDetOfMemMaxCompact
+public import GroundTheory.AutomorphicForms.ReductionMeasure
+public import GroundTheory.GlobalFields.TateThesis.AdelePoisson
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.Adele2
 

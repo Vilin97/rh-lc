@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsTwoBlockStepBound
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PChangeOfLatticeNested
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsHilbert
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PGenericFibre
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSectionsRank
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsTwoBlockStepBound
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PChangeOfLatticeNested
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsHilbert
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PGenericFibre
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSectionsRank
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

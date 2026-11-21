@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.FrobeniusOrbits.Statement
-import Formalism.TameInertiaTowers.CentralOrderTwo.OddEqOneOfSubOneMem
-import Formalism.TameInertiaTowers.CentralOrderTwo.DecompositionSubgroupIndex
+module
+
+public import Mathlib
+public import Formalism.FrobeniusOrbits.Statement
+public import Formalism.TameInertiaTowers.CentralOrderTwo.OddEqOneOfSubOneMem
+public import Formalism.TameInertiaTowers.CentralOrderTwo.DecompositionSubgroupIndex
+
+@[expose] public section
 
 open NumberField IntermediateField Ideal
 open scoped Pointwise

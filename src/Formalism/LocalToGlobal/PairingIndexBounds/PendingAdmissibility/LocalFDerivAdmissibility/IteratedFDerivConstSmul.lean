@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.KerTh
-import Formalism.SharpRestriction.GrowthBounds.FormalGroupSystem
+module
+
+public import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.KerTh
+public import Formalism.SharpRestriction.GrowthBounds.FormalGroupSystem
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.RestPlOf
-import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.ProdRangeZmod
-import Formalism.SharpRestriction.GrowthBounds.AevalValuation.ValGen
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.RestPlOf
+public import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.ProdRangeZmod
+public import Formalism.SharpRestriction.GrowthBounds.AevalValuation.ValGen
+
+@[expose] public section
 
 noncomputable section
 

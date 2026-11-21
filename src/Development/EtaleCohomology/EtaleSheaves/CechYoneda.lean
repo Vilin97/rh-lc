@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.CechSigmaOf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.CechSigmaOf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC

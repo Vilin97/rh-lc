@@ -1,5 +1,9 @@
-import Formalism.IncomingBounds.StatementThmP
-import Formalism.IncomingBounds.LevelTail
+module
+
+public import Formalism.IncomingBounds.StatementThmP
+public import Formalism.IncomingBounds.LevelTail
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

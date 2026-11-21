@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.HeckeStdTwOfStd
-import Formalism.SharpRestriction.LevelLetterCocycles.LocsCoverTw
+module
+
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.HeckeStdTwOfStd
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocsCoverTw
+
+@[expose] public section
 
 noncomputable section
 

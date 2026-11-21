@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Theta.Cartan
-import GroundTheory.AutomorphicForms.HermitianSpaces
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Theta.Cartan
+public import GroundTheory.AutomorphicForms.HermitianSpaces
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Theta
 

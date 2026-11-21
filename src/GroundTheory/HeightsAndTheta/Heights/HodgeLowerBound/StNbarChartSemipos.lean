@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsStokesGeo
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.RegWeightLevi
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsStokesGeo
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.RegWeightLevi
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

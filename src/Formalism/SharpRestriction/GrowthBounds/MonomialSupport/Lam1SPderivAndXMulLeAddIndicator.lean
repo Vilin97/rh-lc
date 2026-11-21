@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialSupport.SupportSubNuSet
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialSupport.SupportSubNuSet
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatLie
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LieModelExistsUniqueSemilinearStatement
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatLie
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LieModelExistsUniqueSemilinearStatement
+
+@[expose] public section
 
 noncomputable section
 

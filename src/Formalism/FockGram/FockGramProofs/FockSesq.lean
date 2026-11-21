@@ -1,4 +1,8 @@
-import Formalism.FockGram.StatementFock
+module
+
+public import Formalism.FockGram.StatementFock
+
+@[expose] public section
 
 open Finset MvPolynomial
 

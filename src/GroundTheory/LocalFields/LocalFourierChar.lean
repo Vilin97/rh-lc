@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.LocalFourierHaar
-import GroundTheory.GlobalFields.TateThesis.NoSmallSubgroups
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LocalFourierHaar
+public import GroundTheory.GlobalFields.TateThesis.NoSmallSubgroups
+
+@[expose] public section
 
 noncomputable section
 

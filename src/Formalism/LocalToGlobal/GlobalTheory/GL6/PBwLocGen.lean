@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.HermitianForms.IsLocBasis
-import Formalism.LocalToGlobal.Columns.CoefficientsModP.LatticeBasisExistsHolds
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.StandardLattice
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.IsLocBasis
+public import Formalism.LocalToGlobal.Columns.CoefficientsModP.LatticeBasisExistsHolds
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.StandardLattice
+
+@[expose] public section
 
 noncomputable section
 

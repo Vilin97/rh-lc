@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.ReductionHeight
-import GroundTheory.AutomorphicForms.Iwasawa
-import GroundTheory.AutomorphicForms.RealGroupsIwasawa
-import GroundTheory.GlobalFields.IdeleGroups.UnitBound
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.ReductionHeight
+public import GroundTheory.AutomorphicForms.Iwasawa
+public import GroundTheory.AutomorphicForms.RealGroupsIwasawa
+public import GroundTheory.GlobalFields.IdeleGroups.UnitBound
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter Set Matrix
 open scoped NumberField.AdeleRing RestrictedProduct

@@ -1,13 +1,17 @@
-import Formalism.GaussJetBounds.GenLogInverse
-import Formalism.GaussJetBounds.StatementE
-import Formalism.GaussJetBounds.GaussJetProofs.SubstitutionWeightBound
-import Formalism.GaussJetBounds.GaussJetProofs.PureCrossTermWeight
-import Formalism.GaussJetBounds.GaussJetProofs.AsmRDotAddRight
-import Formalism.GaussJetBounds.GaussJetProofs.OneLetterRadiusIdentity
-import Formalism.IncomingBounds.WeightIdentities
-import Formalism.GaussJetBounds.OneLetterRadius
-import Formalism.GaussJetBounds.GaussJetProofs.FrameCoeffMulLin
-import Formalism.GaussJetBounds.GaussJetProofs.CapacityLeReachCapacity
+module
+
+public import Formalism.GaussJetBounds.GenLogInverse
+public import Formalism.GaussJetBounds.StatementE
+public import Formalism.GaussJetBounds.GaussJetProofs.SubstitutionWeightBound
+public import Formalism.GaussJetBounds.GaussJetProofs.PureCrossTermWeight
+public import Formalism.GaussJetBounds.GaussJetProofs.AsmRDotAddRight
+public import Formalism.GaussJetBounds.GaussJetProofs.OneLetterRadiusIdentity
+public import Formalism.IncomingBounds.WeightIdentities
+public import Formalism.GaussJetBounds.OneLetterRadius
+public import Formalism.GaussJetBounds.GaussJetProofs.FrameCoeffMulLin
+public import Formalism.GaussJetBounds.GaussJetProofs.CapacityLeReachCapacity
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

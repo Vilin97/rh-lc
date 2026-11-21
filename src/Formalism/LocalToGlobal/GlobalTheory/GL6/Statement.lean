@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.ProductFirstZerothParts
-import Formalism.LocalToGlobal.HermitianForms.FormsTied
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.ProductFirstZerothParts
+public import Formalism.LocalToGlobal.HermitianForms.FormsTied
+
+@[expose] public section
 
 noncomputable section
 

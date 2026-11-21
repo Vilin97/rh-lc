@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.StandardValuations.SplitProd
-import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.ExistsUpperProjectionInverseTranspose
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.StandardValuations.SplitProd
+public import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.ExistsUpperProjectionInverseTranspose
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

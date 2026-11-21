@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.IsMultMapUnivZero
-import Formalism.LocalToGlobal.IndefiniteReal.LinksStage
-import Formalism.LocalToGlobal.IndefiniteReal.BridgeSeed
-import Formalism.LocalToGlobal.IndefiniteReal.LinksExistW
-import Development.AbelianVarietyTheory.Counterexamples.RotationExamples.OneLeAPlLast
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.IsMultMapUnivZero
+public import Formalism.LocalToGlobal.IndefiniteReal.LinksStage
+public import Formalism.LocalToGlobal.IndefiniteReal.BridgeSeed
+public import Formalism.LocalToGlobal.IndefiniteReal.LinksExistW
+public import Development.AbelianVarietyTheory.Counterexamples.RotationExamples.OneLeAPlLast
+
+@[expose] public section
 
 noncomputable section
 

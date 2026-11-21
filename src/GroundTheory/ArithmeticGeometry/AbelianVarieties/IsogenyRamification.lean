@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.IsogenyValuation
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualIsogenyExists
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilPairing
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.IsogenyValuation
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualIsogenyExists
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilPairing
+
+@[expose] public section
 
 namespace GroundTheory.Arith.Abelian
 

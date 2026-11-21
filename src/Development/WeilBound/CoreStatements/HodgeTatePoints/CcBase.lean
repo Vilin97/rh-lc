@@ -1,5 +1,9 @@
-import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.GermComp1ZeroPointLeft
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.AddCharMemValuationSubring
+module
+
+public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.GermComp1ZeroPointLeft
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.AddCharMemValuationSubring
+
+@[expose] public section
 
 noncomputable section
 

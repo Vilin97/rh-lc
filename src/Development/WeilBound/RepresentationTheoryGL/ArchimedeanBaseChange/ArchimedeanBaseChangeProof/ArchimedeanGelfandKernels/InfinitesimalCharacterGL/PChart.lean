@@ -1,8 +1,12 @@
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.InfinitesimalCharacterGL.NatDegreeDefectGelf
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CasimirSignatureMemCenter
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.MapSingleAtEmb
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeckeCharacterThetaInvariantExponent
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.InfinitesimalCharacterGL.NatDegreeDefectGelf
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CasimirSignatureMemCenter
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.MapSingleAtEmb
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeckeCharacterThetaInvariantExponent
+
+@[expose] public section
 
 noncomputable section
 

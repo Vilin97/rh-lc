@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.FnTrdegOf
-import Formalism.LocalToGlobal.ProjectiveLattices.KapTrdegPfB
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.FnTrdegOf
+public import Formalism.LocalToGlobal.ProjectiveLattices.KapTrdegPfB
+
+@[expose] public section
 
 noncomputable section
 

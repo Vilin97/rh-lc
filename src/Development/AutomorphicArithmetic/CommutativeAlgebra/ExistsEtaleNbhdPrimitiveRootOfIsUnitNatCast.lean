@@ -1,6 +1,11 @@
-import Mathlib
-import Development.EtaleCohomology.EtaleSheaves.DerivUnit
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsEquivalenceFiniteEtaleBaseChangeResidueField
+module
+
+public import Mathlib
+public import Development.EtaleCohomology.EtaleSheaves.DerivUnit
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsEquivalenceFiniteEtaleBaseChangeResidueField
+
+@[expose] public section
+
 open CategoryTheory AlgebraicGeometry GlobalTheory.EtC
 
 private theorem evalRoot {A : Type} [CommRing A] (q : ℕ) :

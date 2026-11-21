@@ -1,7 +1,12 @@
-import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.CovCmp
-import Development.AutomorphicArithmetic.DivisorFrames.ArithmeticFunctionInducedBound
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormsPullbackAlongCover
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.LocalEmbeddings.CovCmp
+public import Development.AutomorphicArithmetic.DivisorFrames.ArithmeticFunctionInducedBound
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormsPullbackAlongCover
+
+@[expose] public section
+
 open CategoryTheory Limits AlgebraicGeometry IsLocalRing NumberField IsDedekindDomain
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj
 open GlobalTheory GlobalTheory.Cartier GlobalTheory.CechPic GlobalTheory.ProjVar GlobalTheory.TrueGeo GlobalTheory.Vert GlobalTheory.ShFam GlobalTheory.ShFam.Pad GlobalTheory.LocM GlobalTheory.Toroidal

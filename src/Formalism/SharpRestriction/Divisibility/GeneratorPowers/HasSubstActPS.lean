@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.JetSubstPSEqJetMap
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.UnitIdSt
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.JetSubstPSEqJetMap
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.UnitIdSt
+
+@[expose] public section
 
 set_option autoImplicit false
 

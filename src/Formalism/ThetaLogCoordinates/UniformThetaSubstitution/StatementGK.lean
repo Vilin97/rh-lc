@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementJ
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.ThmSUniform
+module
+
+public import Mathlib
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementJ
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.ThmSUniform
+
+@[expose] public section
 
 noncomputable section
 

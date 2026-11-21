@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.IdeleMeasureCosets
-import GroundTheory.GlobalFields.TateThesis.HeckeLFunction
-import GroundTheory.GlobalFields.TateThesis.SchwartzBruhatFinite
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.IdeleMeasureCosets
+public import GroundTheory.GlobalFields.TateThesis.HeckeLFunction
+public import GroundTheory.GlobalFields.TateThesis.SchwartzBruhatFinite
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter MeasureTheory
 open scoped NumberField.AdeleRing ENNReal NNReal nonZeroDivisors

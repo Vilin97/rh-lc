@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.EllipticTorsion.EllipticTorsionWeights
-import Formalism.EllipticTorsion.EllipticTorsionProofs.CompExp
-import Formalism.FormalGroupLog.LogDeterminesLaw
+module
+
+public import Mathlib
+public import Formalism.EllipticTorsion.EllipticTorsionWeights
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.CompExp
+public import Formalism.FormalGroupLog.LogDeterminesLaw
+
+@[expose] public section
 
 open PowerSeries
 

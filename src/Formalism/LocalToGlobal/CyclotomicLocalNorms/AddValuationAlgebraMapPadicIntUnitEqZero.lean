@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.CyclotomicLocalNorms.NormSubToZModPowVal
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.ExistsDvdQKPowSubOne
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.CyclotomicLocalNorms.NormSubToZModPowVal
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.ExistsDvdQKPowSubOne
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GeometricLemmaCells
-import GroundTheory.AutomorphicForms.InductionParabolic
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GeometricLemmaCells
+public import GroundTheory.AutomorphicForms.InductionParabolic
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

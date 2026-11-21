@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.NMeasInv
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MeasureInverseContraction.AmatInvMul
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.NMeasInv
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MeasureInverseContraction.AmatInvMul
+
+@[expose] public section
 
 noncomputable section
 

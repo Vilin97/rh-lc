@@ -1,4 +1,8 @@
-import Formalism.QuotientMetricDivisors.ProdFormula
+module
+
+public import Formalism.QuotientMetricDivisors.ProdFormula
+
+@[expose] public section
 
 open Matrix
 open scoped Matrix ComplexOrder MatrixOrder Matrix.Norms.L2Operator

@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.ClassFormations
-import GroundTheory.ProfiniteCohomology.Colimit
-import GroundTheory.ProfiniteCohomology.ShapiroDefs
-import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing.TateThree
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.ClassFormations
+public import GroundTheory.ProfiniteCohomology.Colimit
+public import GroundTheory.ProfiniteCohomology.ShapiroDefs
+public import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing.TateThree
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

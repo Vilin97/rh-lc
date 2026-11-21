@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL4.PFrCore
-import Formalism.LocalToGlobal.HermitianColumns.InLocalDiscriminantKernel
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.PFrCore
+public import Formalism.LocalToGlobal.HermitianColumns.InLocalDiscriminantKernel
+
+@[expose] public section
 
 noncomputable section
 

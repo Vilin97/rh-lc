@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SemiFibLieLatticeFull
-import Development.AbelianVarietyTheory.Definitions.Divisors.TorusExt
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SemiFibLieLatticeFull
+public import Development.AbelianVarietyTheory.Definitions.Divisors.TorusExt
+
+@[expose] public section
+
 open NumberField ReciprocityTheory.GeometryOfNumbersTheory ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.LieHt
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.semiFib_lie_lattice_full : ∀ (K : Type) [Field K] [NumberField K] (F : SemiFib K), Full F.lieLat := by

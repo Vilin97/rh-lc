@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.HeckeChar
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SummableAbsNormRpowInv
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.HeckeChar
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SummableAbsNormRpowInv
+
+@[expose] public section
 
 open Topology Filter NumberField IsDedekindDomain WithZero FractionalIdeal Function Ideal
 open scoped NumberField.AdeleRing nonZeroDivisors

@@ -1,7 +1,11 @@
-import CompanionTheory.HarishChandraModules.KFiniteAnalyticVectors.FundamentalDomainCusps.HeightBoundSetup
-import Mathlib
-import Formalism.PeriodIntegrals.TransferenceCoverRad
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CoveringRadius.CoverRad
+module
+
+public import CompanionTheory.HarishChandraModules.KFiniteAnalyticVectors.FundamentalDomainCusps.HeightBoundSetup
+public import Mathlib
+public import Formalism.PeriodIntegrals.TransferenceCoverRad
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CoveringRadius.CoverRad
+
+@[expose] public section
 
 open Matrix NumberField Topology
 open scoped ComplexConjugate InnerProductSpace

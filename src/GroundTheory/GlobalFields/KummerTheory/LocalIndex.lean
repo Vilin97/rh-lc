@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.UnitsBasic
-import GroundTheory.LocalFields.FilteredSurj
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.UnitsBasic
+public import GroundTheory.LocalFields.FilteredSurj
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

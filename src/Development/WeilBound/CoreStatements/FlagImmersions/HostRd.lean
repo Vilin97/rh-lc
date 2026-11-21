@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.FlagImmersions.FibSandwich
+module
+
+public import Development.WeilBound.CoreStatements.FlagImmersions.FibSandwich
+
+@[expose] public section
 
 noncomputable section
 

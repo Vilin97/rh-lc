@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.StatementT
-import Formalism.LocalToGlobal.TorsionIntegrality.WeierstrassTwoTorsion.TwoTorsionU
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SeriesSubgroup
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.StatementT
+public import Formalism.LocalToGlobal.TorsionIntegrality.WeierstrassTwoTorsion.TwoTorsionU
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SeriesSubgroup
+
+@[expose] public section
 
 open PowerSeries
 

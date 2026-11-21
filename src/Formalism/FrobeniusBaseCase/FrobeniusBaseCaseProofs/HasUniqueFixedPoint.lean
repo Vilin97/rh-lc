@@ -1,4 +1,8 @@
-import Formalism.FrobeniusBaseCase.Statement
+module
+
+public import Formalism.FrobeniusBaseCase.Statement
+
+@[expose] public section
 
 open MvPowerSeries
 

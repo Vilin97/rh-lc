@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.GlobalTheory.GL4.PColStd
-import Formalism.LocalToGlobal.GlobalTheory.GL4.KronDetScalar
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StandardSlopeBound.Inhabit
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StandardSlopeBound.GramMatrixDuality
-import Formalism.LocalToGlobal.Columns.CoefficientsModP
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.PColStd
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.KronDetScalar
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StandardSlopeBound.Inhabit
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StandardSlopeBound.GramMatrixDuality
+public import Formalism.LocalToGlobal.Columns.CoefficientsModP
+
+@[expose] public section
 
 open Module MvPolynomial
 open scoped Matrix TensorProduct

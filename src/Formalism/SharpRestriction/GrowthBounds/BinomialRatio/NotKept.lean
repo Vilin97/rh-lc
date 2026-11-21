@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.ThresholdStandardLarge
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.ThresholdStandardLarge
+
+@[expose] public section
 
 noncomputable section
 

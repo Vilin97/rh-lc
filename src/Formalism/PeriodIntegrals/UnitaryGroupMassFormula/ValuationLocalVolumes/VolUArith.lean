@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.GaloisValuations.ArithOfA
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ValuationLocalVolumes.VolTSt
+module
+
+public import Mathlib
+public import ReciprocityTheory.GaloisValuations.ArithOfA
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ValuationLocalVolumes.VolTSt
+
+@[expose] public section
 
 noncomputable section
 

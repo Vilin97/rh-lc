@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TprodMemTensSpan
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorIrreducibleModules
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TprodMemTensSpan
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorIrreducibleModules
+
+@[expose] public section
+
 open scoped TensorProduct
 
 noncomputable section

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.HeckeThetaElements.IsHeckeElt
+module
+
+public import Formalism.LocalToGlobal.HeckeThetaElements.IsHeckeElt
+
+@[expose] public section
 
 noncomputable section
 

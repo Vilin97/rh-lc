@@ -1,4 +1,8 @@
-import Formalism.MahlerMeasure.LevelLattice
+module
+
+public import Formalism.MahlerMeasure.LevelLattice
+
+@[expose] public section
 
 namespace Formalism.GM.M.SSD
 

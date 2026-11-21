@@ -1,6 +1,10 @@
-import Development.EtaleCohomology.TateTwists.EtaleCochainCupAssocOfCupSpecAndAlexanderWhitney
-import Development.EtaleCohomology.TateTwists.EtaleCochainEvaluationLinear
-import Development.EtaleCohomology.TateTwists.EtaleSimplexSubfaceComposition
+module
+
+public import Development.EtaleCohomology.TateTwists.EtaleCochainCupAssocOfCupSpecAndAlexanderWhitney
+public import Development.EtaleCohomology.TateTwists.EtaleCochainEvaluationLinear
+public import Development.EtaleCohomology.TateTwists.EtaleSimplexSubfaceComposition
+
+@[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
 

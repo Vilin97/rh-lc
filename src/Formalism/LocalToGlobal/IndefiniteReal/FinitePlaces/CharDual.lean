@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.CharStd
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IntegrableOnOfPeriodic
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.CharStd
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IntegrableOnOfPeriodic
+
+@[expose] public section
 
 noncomputable section
 

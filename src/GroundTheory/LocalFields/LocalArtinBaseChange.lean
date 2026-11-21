@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.LocalArtinUniqueness
-import GroundTheory.LocalFields.LocalReciprocityLimitAbstract
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LocalArtinUniqueness
+public import GroundTheory.LocalFields.LocalReciprocityLimitAbstract
+
+@[expose] public section
 
 noncomputable section
 

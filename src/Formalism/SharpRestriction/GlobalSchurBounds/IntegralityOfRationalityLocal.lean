@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.LinkMin
-import Formalism.LocalToGlobal.GlobalTheory.GL6.DiamondCommDistinctPlaces
-import Formalism.LocalToGlobal.HermitianForms.TiedSym
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.LinkMin
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.DiamondCommDistinctPlaces
+public import Formalism.LocalToGlobal.HermitianForms.TiedSym
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.Params
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.FrameCyclicGenerator
+module
+
+public import Formalism.LocalRingCardinality.Params
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.FrameCyclicGenerator
+
+@[expose] public section
 
 namespace Formalism.BasicNotions.Examples₂
 

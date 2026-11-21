@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.Adele.BaseChange.FiniteTensor
-import GroundTheory.GlobalFields.SemilocalAlgebras.InfiniteAdeleTopology
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.Adele.BaseChange.FiniteTensor
+public import GroundTheory.GlobalFields.SemilocalAlgebras.InfiniteAdeleTopology
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

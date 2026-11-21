@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.LocalClassFormation.OrderCyclic
-import GroundTheory.TateCohomology.InfRes
-import GroundTheory.LocalFields.RamificationStructure
-import GroundTheory.LocalFields.IntermediateField
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.LocalClassFormation.OrderCyclic
+public import GroundTheory.TateCohomology.InfRes
+public import GroundTheory.LocalFields.RamificationStructure
+public import GroundTheory.LocalFields.IntermediateField
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

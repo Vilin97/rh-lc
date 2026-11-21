@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.LocalAtPlace
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.LocalAtPlace
+
+@[expose] public section
 
 open IsDedekindDomain IsDedekindDomain.HeightOneSpectrum NumberField WithZero
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.HRatInvOfTriv
-import Formalism.LocalRingCardinality.Lemmas
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.HRatInvOfTriv
+public import Formalism.LocalRingCardinality.Lemmas
+
+@[expose] public section
 
 open MvPolynomial
 

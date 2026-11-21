@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.RestCountOf
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.RestCountOf
+
+@[expose] public section
 
 noncomputable section
 

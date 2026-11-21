@@ -1,7 +1,11 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.CoefficientSpans
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.FinStmt
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.IdealStmt
-import Development.WeilBound.ThetaLifts.LeviDeterminants.ActsEx
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.CoefficientSpans
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.FinStmt
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.IdealStmt
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.ActsEx
+
+@[expose] public section
 
 noncomputable section
 

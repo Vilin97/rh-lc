@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.FlagMinor
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ExistsUniformDenominator
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.FlagMinor
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ExistsUniformDenominator
+
+@[expose] public section
 
 namespace GlobalTheory.CompanionTheory.Ar.Num.DualLattice
 

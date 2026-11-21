@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.VectorIsomorphismLevels
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBFCstmt
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LiftClosedUnderOperations
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.VectorIsomorphismLevels
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBFCstmt
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LiftClosedUnderOperations
+
+@[expose] public section
 
 noncomputable section
 

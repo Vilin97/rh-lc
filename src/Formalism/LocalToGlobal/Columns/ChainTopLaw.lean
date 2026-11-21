@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.Columns.LastRowColLevSym
-import Formalism.LocalToGlobal.Columns.ReductionExistsInLatticeStabilizerHolds
-import Formalism.LocalToGlobal.Columns.StdBasisFlagSubmoduleOfBlockTriangular
-import Formalism.LocalToGlobal.Columns.ColumnsProofs.SymLevEnt
-import Formalism.LocalToGlobal.Columns.RecLevelSymF
-import Formalism.LocalToGlobal.Columns.TiedGlMat
+module
+
+public import Formalism.LocalToGlobal.Columns.LastRowColLevSym
+public import Formalism.LocalToGlobal.Columns.ReductionExistsInLatticeStabilizerHolds
+public import Formalism.LocalToGlobal.Columns.StdBasisFlagSubmoduleOfBlockTriangular
+public import Formalism.LocalToGlobal.Columns.ColumnsProofs.SymLevEnt
+public import Formalism.LocalToGlobal.Columns.RecLevelSymF
+public import Formalism.LocalToGlobal.Columns.TiedGlMat
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 

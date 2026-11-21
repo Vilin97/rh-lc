@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.AutomorphicKernels.UnitaryDualGL.TemperedEigenvalueNorms.AddOneLeOfPrecedes
-import Development.WeilBound.CoreStatements.PublishedTheorems.LanglandsClassification.Bridge
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.UnitaryDualGL.TemperedEigenvalueNorms.AddOneLeOfPrecedes
+public import Development.WeilBound.CoreStatements.PublishedTheorems.LanglandsClassification.Bridge
+
+@[expose] public section
 
 noncomputable section
 

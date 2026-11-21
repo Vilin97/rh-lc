@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafTensQIsoPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafTensQIsoPf
+
+@[expose] public section
 
 open TensorProduct
 

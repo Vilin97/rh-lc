@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CommuteAvrBvrOfCommuteSiteOps
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LagrangeExtraction
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CommuteAvrBvrOfCommuteSiteOps
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LagrangeExtraction
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.TL
 

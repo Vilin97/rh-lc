@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HeckeIrreducible
-import GroundTheory.AutomorphicForms.WhittakerCriterion
-import GroundTheory.AutomorphicForms.SmoothRepContragredient
-import GroundTheory.AutomorphicForms.SmoothRepSchur
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HeckeIrreducible
+public import GroundTheory.AutomorphicForms.WhittakerCriterion
+public import GroundTheory.AutomorphicForms.SmoothRepContragredient
+public import GroundTheory.AutomorphicForms.SmoothRepSchur
+
+@[expose] public section
 
 noncomputable section
 

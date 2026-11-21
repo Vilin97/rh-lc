@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GLnLattice
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MulLeftCancelOfDetNeZero
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GLnLattice
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MulLeftCancelOfDetNeZero
+
+@[expose] public section
 
 noncomputable section
 

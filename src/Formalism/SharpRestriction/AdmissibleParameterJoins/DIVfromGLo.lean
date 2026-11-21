@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLm
-import Formalism.SharpRestriction.GlobalSchurBounds.AlcoveOf
+module
+
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLm
+public import Formalism.SharpRestriction.GlobalSchurBounds.AlcoveOf
+
+@[expose] public section
 
 noncomputable section
 

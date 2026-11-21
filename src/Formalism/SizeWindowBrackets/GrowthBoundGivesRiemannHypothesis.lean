@@ -1,7 +1,11 @@
-import Formalism.SizeWindowBrackets.FirstPrimeNeSecondPrime
-import Formalism.SizeWindowBrackets.QuotientSlopeBoundsWith
-import Formalism.StatementOC
-import Mathlib.NumberTheory.LSeries.RiemannZeta
+module
+
+public import Formalism.SizeWindowBrackets.FirstPrimeNeSecondPrime
+public import Formalism.SizeWindowBrackets.QuotientSlopeBoundsWith
+public import Formalism.StatementOC
+public import Mathlib.NumberTheory.LSeries.RiemannZeta
+
+@[expose] public section
 
 open Finset ArithmeticFunction
 

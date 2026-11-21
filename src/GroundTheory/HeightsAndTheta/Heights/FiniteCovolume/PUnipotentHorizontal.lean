@@ -1,11 +1,15 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StUnipotentHorizontal
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StRationalUnipotent
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StUnipRadicalOfRational
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StComplementArchCocompact
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PStabilizerLeviPlaces
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PMahlerCompactness
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PArchInvariant
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StUnipotentHorizontal
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StRationalUnipotent
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StUnipRadicalOfRational
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StComplementArchCocompact
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PStabilizerLeviPlaces
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PMahlerCompactness
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PArchInvariant
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights.FiniteCovolume
 

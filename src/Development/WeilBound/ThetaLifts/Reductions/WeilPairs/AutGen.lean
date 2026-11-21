@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.AutDef
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.AutGenA
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.InfiniteNormOne
+module
+
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.AutDef
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.AutGenA
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.InfiniteNormOne
+
+@[expose] public section
 
 noncomputable section
 

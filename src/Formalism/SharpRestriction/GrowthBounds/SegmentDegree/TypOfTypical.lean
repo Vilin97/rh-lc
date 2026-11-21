@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.ProdIccOneEqProdRange
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.ProdIccOneEqProdRange
+
+@[expose] public section
 
 noncomputable section
 

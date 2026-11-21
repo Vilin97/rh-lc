@@ -1,4 +1,8 @@
-import Formalism.LocalRingCardinality.DataLevel
+module
+
+public import Formalism.LocalRingCardinality.DataLevel
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.PriceBoundLargePrimes
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.PriceBoundLargePrimes
+
+@[expose] public section
 
 noncomputable section
 

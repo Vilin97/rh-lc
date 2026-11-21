@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.GlobalTheory.BaseLatticeSelfDual
-import Formalism.SharpRestriction.GlobalSchurBounds.JointsL
-import Formalism.LocalRingCardinality.DataErr
-import Formalism.LocalToGlobal.HermitianColumns.ClsNonempty
-import Formalism.LocalToGlobal.HermitianColumns.ColsHerm
-import Formalism.SharpRestriction.GlobalSchurBounds.ThickPlacesCorollaryOfAnyTranslate
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BaseLatticeSelfDual
+public import Formalism.SharpRestriction.GlobalSchurBounds.JointsL
+public import Formalism.LocalRingCardinality.DataErr
+public import Formalism.LocalToGlobal.HermitianColumns.ClsNonempty
+public import Formalism.LocalToGlobal.HermitianColumns.ColsHerm
+public import Formalism.SharpRestriction.GlobalSchurBounds.ThickPlacesCorollaryOfAnyTranslate
+
+@[expose] public section
 
 noncomputable section
 

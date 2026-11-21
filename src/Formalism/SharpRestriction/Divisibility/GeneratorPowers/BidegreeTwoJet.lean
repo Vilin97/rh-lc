@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpBijectiveUniformisation
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpBijectiveUniformisation
+
+@[expose] public section
 
 set_option autoImplicit false
 

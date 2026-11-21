@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.CechDoubleSt
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCechDSq
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCechDoubleStair
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.CechDoubleSt
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCechDSq
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCechDoubleStair
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman

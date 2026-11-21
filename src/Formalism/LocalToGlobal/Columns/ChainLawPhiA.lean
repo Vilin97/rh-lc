@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.ChainLawPhi
-import Formalism.LocalToGlobal.Columns.StdBasisFlagSubmoduleOfBlockTriangular
+module
+
+public import Formalism.LocalToGlobal.Columns.ChainLawPhi
+public import Formalism.LocalToGlobal.Columns.StdBasisFlagSubmoduleOfBlockTriangular
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

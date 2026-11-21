@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.PassageScaleFree
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.DualMu
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.TheoremDivIneq
-import Formalism.HarderNarasimhan.ShiftInvariance
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.PassageScaleFree
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.DualMu
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.TheoremDivIneq
+public import Formalism.HarderNarasimhan.ShiftInvariance
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix

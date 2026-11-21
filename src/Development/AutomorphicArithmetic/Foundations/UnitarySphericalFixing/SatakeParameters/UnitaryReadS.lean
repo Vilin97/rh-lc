@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.Foundations.BaseChangeIdentities.NarrowCondition
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.BaseChangeDefiniteGeneralOfOld
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.InertFrames.InertB
+module
+
+public import Development.AutomorphicArithmetic.Foundations.BaseChangeIdentities.NarrowCondition
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.BaseChangeDefiniteGeneralOfOld
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.InertFrames.InertB
+
+@[expose] public section
 
 noncomputable section
 

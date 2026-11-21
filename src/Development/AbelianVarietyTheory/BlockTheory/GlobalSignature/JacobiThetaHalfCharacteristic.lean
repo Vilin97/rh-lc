@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Foundations.LatticeIntegralCoordinates
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.LatticeIntegralCoordinates
+
+@[expose] public section
 
 noncomputable section
 

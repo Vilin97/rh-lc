@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ConstantCoeffAddSecondThird
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.MulGenScaleRight
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.JetSubstPSTrunc
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ConstantCoeffAddSecondThird
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.MulGenScaleRight
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.JetSubstPSTrunc
+
+@[expose] public section
 
 set_option autoImplicit false
 

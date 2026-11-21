@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.InertKernelTheory.DefsInt
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.UnimodGenus
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsInt
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.UnimodGenus
+
+@[expose] public section
 
 noncomputable section
 

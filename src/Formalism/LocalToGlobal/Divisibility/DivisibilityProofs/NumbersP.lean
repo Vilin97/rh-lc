@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Divisibility.NumbersLemmas
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.PlaceSumSquares
+module
+
+public import Formalism.LocalToGlobal.Divisibility.NumbersLemmas
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.PlaceSumSquares
+
+@[expose] public section
 
 noncomputable section
 

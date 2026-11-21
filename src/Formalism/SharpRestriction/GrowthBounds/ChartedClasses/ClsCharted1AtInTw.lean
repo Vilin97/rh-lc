@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ValIntN
-import Formalism.SharpRestriction.GrowthBounds.TwistedLevelAgreement.StepInTwK
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ValIntN
+public import Formalism.SharpRestriction.GrowthBounds.TwistedLevelAgreement.StepInTwK
+
+@[expose] public section
 
 noncomputable section
 

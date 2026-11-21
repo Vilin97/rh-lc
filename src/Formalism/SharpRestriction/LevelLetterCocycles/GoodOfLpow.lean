@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.ExistsSmulPowEqSumOfInFNc
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.ExistsSmulPowEqSumOfInFNc
+
+@[expose] public section
 
 noncomputable section
 

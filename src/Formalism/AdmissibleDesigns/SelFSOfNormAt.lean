@@ -1,6 +1,10 @@
-import Formalism.AdmissibleDesigns.FirstBlockColumnCondition
-import Formalism.AdmissibleDesigns.MemIntegralSpanIffImage
-import Formalism.AdmissibleDesigns.ToH1Cocycles
+module
+
+public import Formalism.AdmissibleDesigns.FirstBlockColumnCondition
+public import Formalism.AdmissibleDesigns.MemIntegralSpanIffImage
+public import Formalism.AdmissibleDesigns.ToH1Cocycles
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core] [hH0Fin : Fact Formalism.MainNotions.N.K.H0.FinCore]
 

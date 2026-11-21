@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.WhittakerLSpace
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.WhittakerLSpace
+
+@[expose] public section
 
 noncomputable section
 

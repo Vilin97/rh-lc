@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.Procyclic
-import GroundTheory.ProfiniteCohomology.Characters
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.Procyclic
+public import GroundTheory.ProfiniteCohomology.Characters
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

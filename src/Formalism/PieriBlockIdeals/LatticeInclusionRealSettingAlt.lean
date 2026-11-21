@@ -1,8 +1,12 @@
-import Formalism.PieriBlockIdeals.LocalFaithfullyFlat
-import Formalism.PieriBlockIdeals.BlockIdealBound5Derived
-import Formalism.PieriBlockIdeals.MertensReciprocalElementary
-import Formalism.PieriBlockIdeals.LastGradedOfGradedAlone
-import Formalism.PieriBlockIdeals.MultiplicityZeroThickEmbedding
+module
+
+public import Formalism.PieriBlockIdeals.LocalFaithfullyFlat
+public import Formalism.PieriBlockIdeals.BlockIdealBound5Derived
+public import Formalism.PieriBlockIdeals.MertensReciprocalElementary
+public import Formalism.PieriBlockIdeals.LastGradedOfGradedAlone
+public import Formalism.PieriBlockIdeals.MultiplicityZeroThickEmbedding
+
+@[expose] public section
 
 noncomputable section
 

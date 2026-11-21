@@ -1,6 +1,10 @@
-import Formalism.WachLatticeTwists.HodgeTateChains.H2KilledByTateDuality
-import Formalism.WachLatticeTwists.CoprimeLiftBounds.StatBridgeChiOne
-import Formalism.WachLatticeTwists.LatticeDualFibres.Statement
+module
+
+public import Formalism.WachLatticeTwists.HodgeTateChains.H2KilledByTateDuality
+public import Formalism.WachLatticeTwists.CoprimeLiftBounds.StatBridgeChiOne
+public import Formalism.WachLatticeTwists.LatticeDualFibres.Statement
+
+@[expose] public section
 
 open Finset Classical
 

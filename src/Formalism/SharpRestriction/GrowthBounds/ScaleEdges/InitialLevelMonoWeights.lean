@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.EdgeFamOf
-import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.EdgePlane
-import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.RankMulConductorDivLeOne
-import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.ScaleZpowMono
-import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.NumericProductInequality
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.EdgeFamOf
+public import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.EdgePlane
+public import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.RankMulConductorDivLeOne
+public import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.ScaleZpowMono
+public import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.NumericProductInequality
+
+@[expose] public section
 
 noncomputable section
 

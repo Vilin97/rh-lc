@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.PairingIndexBounds.ModelLatticeMoves.GenModelXi
-import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.QuadraticSemicharacterIdentityReformulated2
+module
+
+public import Formalism.LocalToGlobal.PairingIndexBounds.ModelLatticeMoves.GenModelXi
+public import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.QuadraticSemicharacterIdentityReformulated2
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

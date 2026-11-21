@@ -1,7 +1,12 @@
-import Mathlib
-import Formalism.RealPlaceAnalysis.StatementC
-import Formalism.FormalDegreeBessel.StatementDS
-import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
+module
+
+public import Mathlib
+public import Formalism.RealPlaceAnalysis.StatementC
+public import Formalism.FormalDegreeBessel.StatementDS
+public import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
+
+@[expose] public section
+
 open Finset TensorProduct Formalism.HermitianLatticeCounting.S8
 
 noncomputable section

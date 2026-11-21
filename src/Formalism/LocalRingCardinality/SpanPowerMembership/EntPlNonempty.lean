@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.DataKerI
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExistsHomOfBasis
+module
+
+public import Formalism.LocalRingCardinality.DataKerI
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExistsHomOfBasis
+
+@[expose] public section
 
 open Formalism.MainNotions.G Formalism.BasicNotions NumberField
 

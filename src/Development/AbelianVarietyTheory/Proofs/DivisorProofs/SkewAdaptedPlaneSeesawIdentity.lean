@@ -1,8 +1,12 @@
-import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
-import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewAdaptedPairExtensionEigenStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewAdaptedPairThetaIntegralStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewAdaptedPairLocalFactorStatement
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewAdaptedPairExtensionEigenStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewAdaptedPairThetaIntegralStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SkewAdaptedPairLocalFactorStatement
+
+@[expose] public section
 
 open scoped TensorProduct NNReal Matrix
 open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes

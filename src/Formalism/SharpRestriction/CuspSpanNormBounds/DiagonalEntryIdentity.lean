@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.WeightedMirrorLevelOperator
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.WeightedMirrorLevelOperator
+
+@[expose] public section
 
 noncomputable section
 

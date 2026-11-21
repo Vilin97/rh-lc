@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.TateCohomology.InducedNorm
-import GroundTheory.TateCohomology.DimensionShift
-import GroundTheory.TateCohomology.TateConnecting
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.InducedNorm
+public import GroundTheory.TateCohomology.DimensionShift
+public import GroundTheory.TateCohomology.TateConnecting
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open CategoryTheory MonoidalCategory

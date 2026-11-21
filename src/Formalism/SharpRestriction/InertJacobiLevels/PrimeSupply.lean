@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.InertJacobiLevels.HostFam
-import Formalism.SharpRestriction.FamCore
-import Formalism.LocalRingCardinality.SpanPowerMembership.PlacesOverNcardOfSplitInj
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleNewtypesIdempotentZero
+module
+
+public import Formalism.SharpRestriction.InertJacobiLevels.HostFam
+public import Formalism.SharpRestriction.FamCore
+public import Formalism.LocalRingCardinality.SpanPowerMembership.PlacesOverNcardOfSplitInj
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleNewtypesIdempotentZero
+
+@[expose] public section
 
 noncomputable section
 

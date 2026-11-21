@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HermitianWitt
-import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HermitianWitt
+public import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
+
+@[expose] public section
 
 noncomputable section
 

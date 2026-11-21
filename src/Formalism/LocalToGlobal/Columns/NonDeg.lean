@@ -1,24 +1,28 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.AtTRank
-import Formalism.LocalToGlobal.Columns.ToHLatLemmas
-import Formalism.LocalToGlobal.Columns.CoefficientsModP
-import Formalism.LocalToGlobal.Columns.ColFormsLemmas
-import Formalism.LocalToGlobal.Columns.BaseInst
-import Formalism.LocalToGlobal.Columns.AtTOwedS
-import Formalism.LocalToGlobal.Columns.AtTLemmas
-import Formalism.LocalRingCardinality.DataArith
-import Formalism.GL3MeanSquares.RationalMatrixPrimeOrderBound
-import Formalism.LocalToGlobal.Columns.BtExistsSmulLeOfFg
-import Formalism.LocalToGlobal.Columns.AtTOwedV
-import Formalism.LocalToGlobal.Columns.AtTOwedC
-import Formalism.LocalToGlobal.Columns.LocWLemmas
-import Formalism.LocalToGlobal.Columns.Inputs
-import Formalism.GL3MeanSquares.FourierTransformKernelSurjective
-import Formalism.GL3MeanSquares.HookFormulaTorsion.FourierCommutesHeckeScalar
-import Formalism.GL3MeanSquares.HookFormulaTorsion.LengthQuotientBoundGeneral
-import Formalism.GL3MeanSquares.HookFormulaTorsion.LemmaCTwistRamified
-import Formalism.LocalRingCardinality.CoeNeZeroOfNotMem
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.AtTRank
+public import Formalism.LocalToGlobal.Columns.ToHLatLemmas
+public import Formalism.LocalToGlobal.Columns.CoefficientsModP
+public import Formalism.LocalToGlobal.Columns.ColFormsLemmas
+public import Formalism.LocalToGlobal.Columns.BaseInst
+public import Formalism.LocalToGlobal.Columns.AtTOwedS
+public import Formalism.LocalToGlobal.Columns.AtTLemmas
+public import Formalism.LocalRingCardinality.DataArith
+public import Formalism.GL3MeanSquares.RationalMatrixPrimeOrderBound
+public import Formalism.LocalToGlobal.Columns.BtExistsSmulLeOfFg
+public import Formalism.LocalToGlobal.Columns.AtTOwedV
+public import Formalism.LocalToGlobal.Columns.AtTOwedC
+public import Formalism.LocalToGlobal.Columns.LocWLemmas
+public import Formalism.LocalToGlobal.Columns.Inputs
+public import Formalism.GL3MeanSquares.FourierTransformKernelSurjective
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.FourierCommutesHeckeScalar
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.LengthQuotientBoundGeneral
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.LemmaCTwistRamified
+public import Formalism.LocalRingCardinality.CoeNeZeroOfNotMem
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module IntermediateField
 

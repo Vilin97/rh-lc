@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.SphConj
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsWeight
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.SphConj
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsWeight
+
+@[expose] public section
 
 noncomputable section
 

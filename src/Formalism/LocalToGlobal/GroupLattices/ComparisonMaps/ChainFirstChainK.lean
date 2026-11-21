@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.DataKerP
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.IsComplRatCompl
+module
+
+public import Formalism.LocalRingCardinality.DataKerP
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.IsComplRatCompl
+
+@[expose] public section
 
 open Formalism.MainNotions.G Formalism.BasicNotions NumberField
 

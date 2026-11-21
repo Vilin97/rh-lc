@@ -1,17 +1,22 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Jets.SupWOfSup
-import Development.AbelianVarietyTheory.Statements.DiscreteSeriesShifts.ThmBpDS
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.Admissible
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.ThresholdProductsBounded
-import Formalism.SharpRestriction.CuspSpanNormBounds.OnePlaceEstimates
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CapelliEigenGapCoef
-import Development.AbelianVarietyTheory.Definitions.Jets.SumIoPr
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormSqUnitNormalizationLe
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsLocalSectionBounds
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.StandardBesselScaleBound
-import Formalism.SharpRestriction.CuspSpanNormBounds.LeadMinorK
-import Formalism.HermitianCurvature.StatementTBB
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.UpqRepVocabularyAgree
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Jets.SupWOfSup
+public import Development.AbelianVarietyTheory.Statements.DiscreteSeriesShifts.ThmBpDS
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.Admissible
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.ThresholdProductsBounded
+public import Formalism.SharpRestriction.CuspSpanNormBounds.OnePlaceEstimates
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CapelliEigenGapCoef
+public import Development.AbelianVarietyTheory.Definitions.Jets.SumIoPr
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormSqUnitNormalizationLe
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsLocalSectionBounds
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.StandardBesselScaleBound
+public import Formalism.SharpRestriction.CuspSpanNormBounds.LeadMinorK
+public import Formalism.HermitianCurvature.StatementTBB
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.UpqRepVocabularyAgree
+
+@[expose] public section
+
 open BpJoin Formalism.FourierDecayAlt Formalism.MainNotions.S Formalism.MainNotions.S.ThB Formalism.BasicNotions Formalism.QuantumDeterminants GlobalTheory.ThA
 
 namespace GlobalTheory

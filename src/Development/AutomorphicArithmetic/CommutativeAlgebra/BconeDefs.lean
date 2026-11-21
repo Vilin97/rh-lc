@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.CupPullbacks.ConstCompSingle
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleMemIffPointsStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RestrPreservesHomology
+module
+
+public import Development.AutomorphicArithmetic.CupPullbacks.ConstCompSingle
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EtaleMemIffPointsStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RestrPreservesHomology
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC

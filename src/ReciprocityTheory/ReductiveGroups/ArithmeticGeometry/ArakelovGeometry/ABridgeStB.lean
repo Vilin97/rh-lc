@@ -1,7 +1,11 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.IsBergDensity
-import Mathlib.RingTheory.Nullstellensatz
-import Mathlib.RingTheory.Unramified.Field
-import Mathlib.RingTheory.Jacobson.Ring
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.IsBergDensity
+public import Mathlib.RingTheory.Nullstellensatz
+public import Mathlib.RingTheory.Unramified.Field
+public import Mathlib.RingTheory.Jacobson.Ring
+
+@[expose] public section
 
 noncomputable section
 

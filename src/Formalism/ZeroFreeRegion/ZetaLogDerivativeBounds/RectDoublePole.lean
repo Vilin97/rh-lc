@@ -1,5 +1,9 @@
-import Formalism.ZeroFreeRegion.SmallHeightLogDeriv
-import Formalism.LFunctionBounds.LFunctionBoundsProofs.RectResidue
+module
+
+public import Formalism.ZeroFreeRegion.SmallHeightLogDeriv
+public import Formalism.LFunctionBounds.LFunctionBoundsProofs.RectResidue
+
+@[expose] public section
 
 open Complex
 

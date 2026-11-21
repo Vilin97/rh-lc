@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.LubinTateLimitGalois
-import GroundTheory.LocalFields.MaximalUnramified
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LubinTateLimitGalois
+public import GroundTheory.LocalFields.MaximalUnramified
+
+@[expose] public section
 
 noncomputable section
 

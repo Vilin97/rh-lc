@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.UnipotentAdelicQuotients.BruhatFunctionExistsVariant
+module
+
+public import Mathlib
+public import Formalism.UnipotentAdelicQuotients.BruhatFunctionExistsVariant
+
+@[expose] public section
 
 universe u
 

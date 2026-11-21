@@ -1,9 +1,13 @@
-import Formalism.HermitianCurvature.StatementLE
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ShiftBound
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DegreeOfProdLinearLe
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.WeightedL2BoundedMul
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.Cauchy
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.Markov
+module
+
+public import Formalism.HermitianCurvature.StatementLE
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ShiftBound
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DegreeOfProdLinearLe
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WeightedL2BoundedMul
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.Cauchy
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.Markov
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.LEx2
 open Formalism.FourierDecayAlt.LE

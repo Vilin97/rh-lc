@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.PerFrLact
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.PerFrLact
+
+@[expose] public section
 
 noncomputable section
 

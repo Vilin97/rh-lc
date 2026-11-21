@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.ABHNPrep
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleInvariants.LocalInf
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.RealPlaces
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.ABHNPrep
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleInvariants.LocalInf
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.RealPlaces
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

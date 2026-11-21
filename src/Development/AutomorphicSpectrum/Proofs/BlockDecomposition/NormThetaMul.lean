@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.BinaryMassMeans.MeanVal
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.GaloisBoundSecond
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.BinaryMassMeans.MeanVal
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.GaloisBoundSecond
+
+@[expose] public section
 
 noncomputable section
 

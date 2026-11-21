@@ -1,5 +1,9 @@
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjHyp
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.LocTransfer
+module
+
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjHyp
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.LocTransfer
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.R
 

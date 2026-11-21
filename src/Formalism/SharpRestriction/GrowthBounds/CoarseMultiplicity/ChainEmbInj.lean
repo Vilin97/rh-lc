@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.LettersAtUpdate
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.LettersAtUpdate
+
+@[expose] public section
 
 noncomputable section
 

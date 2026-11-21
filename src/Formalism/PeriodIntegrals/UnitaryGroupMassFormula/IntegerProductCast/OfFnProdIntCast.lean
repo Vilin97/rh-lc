@@ -1,7 +1,11 @@
-import Formalism.PeriodIntegrals.QmStar
-import Formalism.PeriodIntegrals.QmRowForm
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.QuantumDetHighestWeightHolds
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.ShiftedGeneratorEqIteSmulAdd
+module
+
+public import Formalism.PeriodIntegrals.QmStar
+public import Formalism.PeriodIntegrals.QmRowForm
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.QuantumDetHighestWeightHolds
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.ShiftedGeneratorEqIteSmulAdd
+
+@[expose] public section
 
 open Formalism.REAL
 

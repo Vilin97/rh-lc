@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.QuadraticSemicharactersFactTer
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.UnitDetRoot
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.QuadraticSemicharacters.QuadraticSemicharactersFactTer
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.UnitDetRoot
+
+@[expose] public section
 
 namespace Formalism.L2.Th1.H
 

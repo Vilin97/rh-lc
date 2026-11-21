@@ -1,12 +1,17 @@
-import Mathlib
-import ReciprocityTheory.AnalyticForms.PotentialTheory.PshShiftA
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshRegMax
-import GroundTheory.HeightsAndTheta.Heights.Regularisation.PChartLeviThGe
-import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.StLemmaEWeight
-import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.PLemmaETailLog
-import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.PKaehlerBound
-import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.PLogNormHolo
-import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.EnergyStep
+module
+
+public import Mathlib
+public import ReciprocityTheory.AnalyticForms.PotentialTheory.PshShiftA
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshRegMax
+public import GroundTheory.HeightsAndTheta.Heights.Regularisation.PChartLeviThGe
+public import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.StLemmaEWeight
+public import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.PLemmaETailLog
+public import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.PKaehlerBound
+public import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.PLogNormHolo
+public import GroundTheory.HeightsAndTheta.Heights.AnalyticLimit.EnergyStep
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.AnalyticLimit

@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.RealIwasawaSubgroups
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.RealIwasawaSubgroups
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

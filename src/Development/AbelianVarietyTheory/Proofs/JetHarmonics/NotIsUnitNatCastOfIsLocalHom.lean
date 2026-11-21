@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PlaceDivisors.StChartFH
-import Development.AbelianVarietyTheory.BlockTheory.JetGauges.OriginChartMultiplication
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PlaceDivisors.StChartFH
+public import Development.AbelianVarietyTheory.BlockTheory.JetGauges.OriginChartMultiplication
+
+@[expose] public section
 
 set_option autoImplicit false
 

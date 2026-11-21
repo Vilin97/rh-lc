@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafTwPairHtpyPf
-import Development.EtaleCohomology.TateTwists.EtaleTensorHomDescendsAlongTensorPairing
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafTwPairHtpyPf
+public import Development.EtaleCohomology.TateTwists.EtaleTensorHomDescendsAlongTensorPairing
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC

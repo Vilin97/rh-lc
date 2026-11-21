@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.FlagImmersions.IpZeroRight
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.HolomorphicCoefficientsInFrameStatement
+module
+
+public import Development.WeilBound.CoreStatements.FlagImmersions.IpZeroRight
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.HolomorphicCoefficientsInFrameStatement
+
+@[expose] public section
 
 open NumberField Matrix GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Cusp GlobalTheory.CompanionTheory.Ar.PB
 

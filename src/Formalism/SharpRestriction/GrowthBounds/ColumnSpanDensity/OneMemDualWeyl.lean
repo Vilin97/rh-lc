@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.ResidueClassCountOfTensorBasisInclusion
-import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.FinrankLetter
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.ResidueClassCountOfTensorBasisInclusion
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.FinrankLetter
+
+@[expose] public section
 
 noncomputable section
 

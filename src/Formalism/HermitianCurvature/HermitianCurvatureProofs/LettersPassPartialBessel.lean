@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.VanishKr
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutoffExists
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.IsOpenDminNe
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.VanishKr
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutoffExists
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.IsOpenDminNe
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 

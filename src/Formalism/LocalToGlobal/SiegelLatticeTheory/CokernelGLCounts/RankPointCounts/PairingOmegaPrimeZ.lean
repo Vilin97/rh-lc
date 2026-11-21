@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.SharpRestriction.CuspSpanNormBounds.BlockEnds
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BlockEnds
+
+@[expose] public section
 
 noncomputable section
 

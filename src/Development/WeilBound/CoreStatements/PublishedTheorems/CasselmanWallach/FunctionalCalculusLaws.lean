@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWallach.EigBasis
+module
+
+public import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWallach.EigBasis
+
+@[expose] public section
 
 noncomputable section
 

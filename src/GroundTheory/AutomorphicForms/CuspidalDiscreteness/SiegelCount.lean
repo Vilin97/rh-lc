@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.Counting
-import GroundTheory.AutomorphicForms.Reduction
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.Counting
+public import GroundTheory.AutomorphicForms.Reduction
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Set Matrix
 open scoped NumberField.AdeleRing Pointwise

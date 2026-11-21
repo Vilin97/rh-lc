@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SliceOmBlock
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.GermPartsCompactSupport
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ToStdAppend
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SliceOmBlock
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GermPartsCompactSupport
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ToStdAppend
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.FormNormSumIdentities
 

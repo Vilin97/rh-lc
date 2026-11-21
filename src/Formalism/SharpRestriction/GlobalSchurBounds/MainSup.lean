@@ -1,9 +1,13 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.MainIn
-import Formalism.SharpRestriction.GlobalTheoremInputs
-import Formalism.SharpRestriction.GlobalSchurBounds.FirstClaimLemmaTwoFourOfLemmaTwoThree
-import Formalism.SharpRestriction.GlobalSchurBounds.ThickPlacesCorollaryOfAnyTranslate
-import Formalism.SharpRestriction.GlobalSchurBounds.TopDensityNGeSixteen
-import Formalism.SharpRestriction.GlobalSchurBounds.JointsL
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.MainIn
+public import Formalism.SharpRestriction.GlobalTheoremInputs
+public import Formalism.SharpRestriction.GlobalSchurBounds.FirstClaimLemmaTwoFourOfLemmaTwoThree
+public import Formalism.SharpRestriction.GlobalSchurBounds.ThickPlacesCorollaryOfAnyTranslate
+public import Formalism.SharpRestriction.GlobalSchurBounds.TopDensityNGeSixteen
+public import Formalism.SharpRestriction.GlobalSchurBounds.JointsL
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.StatementSz
+module
+
+public import Formalism.HermitianCurvature.StatementSz
+
+@[expose] public section
 
 open Formalism.FourierDecayAlt.Sz Finset
 

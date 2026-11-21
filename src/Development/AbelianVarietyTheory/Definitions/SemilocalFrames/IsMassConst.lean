@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.FractionFieldToGenericStalkAlgebraMapEq
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.FrameLats
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.Partners
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.FractionFieldToGenericStalkAlgebraMapEq
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.FrameLats
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.Partners
+
+@[expose] public section
 
 noncomputable section
 open ValuativeRel IsDedekindDomain NumberField ComplexConjugate Formalism.MainNotions.S.Loc Matrix MeasureTheory

@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.AbstractLocalReciprocity.FunctorialityNorm
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.FunctorialityNorm
+
+@[expose] public section
 
 namespace GroundTheory.LocalField.Abstract
 

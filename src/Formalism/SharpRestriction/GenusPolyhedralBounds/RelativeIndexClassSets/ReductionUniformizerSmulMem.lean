@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.ZeroGeneratorsLeThetaSpan
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.HasseOrdBd
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.HassePresH
-import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.FinitePtsOfCurve
+module
+
+public import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.ZeroGeneratorsLeThetaSpan
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.HasseOrdBd
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.HassePresH
+public import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.FinitePtsOfCurve
+
+@[expose] public section
 
 noncomputable section
 

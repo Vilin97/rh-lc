@@ -1,7 +1,11 @@
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.GoodLat
-import GroundTheory.GlobalFields.Adele.Compact
-import GroundTheory.GlobalFields.Adele.Approximation
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceDualB
+module
+
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.GoodLat
+public import GroundTheory.GlobalFields.Adele.Compact
+public import GroundTheory.GlobalFields.Adele.Approximation
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceDualB
+
+@[expose] public section
 
 noncomputable section
 

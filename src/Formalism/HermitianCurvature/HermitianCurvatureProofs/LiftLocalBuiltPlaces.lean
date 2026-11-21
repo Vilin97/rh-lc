@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ProdOfFnMap
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ProdOfFnMap
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.LiftDegreeLemmas
 

@@ -1,5 +1,9 @@
-import ReciprocityTheory.GeometryOfNumbers.PluriharmonicAnalysis.BergmanSt
-import ReciprocityTheory.GeometryOfNumbers.PluriharmonicAnalysis.LogDetSt
+module
+
+public import ReciprocityTheory.GeometryOfNumbers.PluriharmonicAnalysis.BergmanSt
+public import ReciprocityTheory.GeometryOfNumbers.PluriharmonicAnalysis.LogDetSt
+
+@[expose] public section
 
 namespace ReciprocityTheory.GeometryOfNumbersTheory
 

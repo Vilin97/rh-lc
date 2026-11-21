@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Divisibility.RowSideTie
-import Formalism.LocalRingCardinality.DataExtra
+module
+
+public import Formalism.LocalToGlobal.Divisibility.RowSideTie
+public import Formalism.LocalRingCardinality.DataExtra
+
+@[expose] public section
 
 noncomputable section
 

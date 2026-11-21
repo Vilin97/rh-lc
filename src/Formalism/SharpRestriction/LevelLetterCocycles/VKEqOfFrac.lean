@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.CommutingEndomorphismPreservesInvariants
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.CommutingEndomorphismPreservesInvariants
+
+@[expose] public section
 
 noncomputable section
 

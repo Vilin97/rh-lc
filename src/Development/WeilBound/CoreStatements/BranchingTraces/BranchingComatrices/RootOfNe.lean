@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CapelliAbstractCharacter
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CapelliAbstractCharacter
+
+@[expose] public section
 
 open Finset Polynomial
 

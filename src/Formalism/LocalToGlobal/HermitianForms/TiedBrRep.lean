@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.HermitianForms.TiedBrUnit
-import Formalism.LocalToGlobal.GlobalTheory.GL4.BranchingNormalisedOfAdjoint
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.TiedBrUnit
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.BranchingNormalisedOfAdjoint
+
+@[expose] public section
 
 noncomputable section
 

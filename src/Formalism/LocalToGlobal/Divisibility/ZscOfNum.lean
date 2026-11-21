@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.LinkDef
-import Formalism.LocalToGlobal.Divisibility.NumbersLink
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.LinkDef
+public import Formalism.LocalToGlobal.Divisibility.NumbersLink
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

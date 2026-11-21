@@ -1,5 +1,9 @@
-import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.ExtWeak
-import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.RegBall
+module
+
+public import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.ExtWeak
+public import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.RegBall
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.C
 

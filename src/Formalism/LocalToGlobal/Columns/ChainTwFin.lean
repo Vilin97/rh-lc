@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.Columns.ChainFrmOk
-import Formalism.LocalToGlobal.Columns.ThetaOpenTwLevQ
-import Formalism.LocalToGlobal.Columns.ChainTwMain
-import Formalism.LocalToGlobal.Columns.WithTopLevGTop
+module
+
+public import Formalism.LocalToGlobal.Columns.ChainFrmOk
+public import Formalism.LocalToGlobal.Columns.ThetaOpenTwLevQ
+public import Formalism.LocalToGlobal.Columns.ChainTwMain
+public import Formalism.LocalToGlobal.Columns.WithTopLevGTop
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 

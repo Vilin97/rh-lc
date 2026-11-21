@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.CuspSpanNormBounds.Point
-import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.UpUMul
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.CuspSpanNormBounds.Point
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.UpUMul
+
+@[expose] public section
 
 namespace Formalism.L2.SG.PtCell
 

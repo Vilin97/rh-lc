@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasurePreservingProdPermThree
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BlkUUMapMuPRn
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasurePreservingProdPermThree
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BlkUUMapMuPRn
+
+@[expose] public section
 
 open Matrix MeasureTheory Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt Formalism.FourierDecayAlt.U
 open scoped ComplexConjugate

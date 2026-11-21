@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.DistinguishedUnitIdeals.FrobeniusCoboundedArc
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.GoodOf
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.ThmEFull
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.LemmaCFull
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.LemmaC
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.Descent
+module
+
+public import Mathlib
+public import Formalism.DistinguishedUnitIdeals.FrobeniusCoboundedArc
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.GoodOf
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.ThmEFull
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.LemmaCFull
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.LemmaC
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.Descent
+
+@[expose] public section
 
 namespace Formalism.ExponentWindows.E.Prim
 

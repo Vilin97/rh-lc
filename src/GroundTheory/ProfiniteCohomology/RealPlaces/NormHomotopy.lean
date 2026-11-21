@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RealPlaces.ConeDefs
-import GroundTheory.ProfiniteCohomology.CompactSupportCohomology.CupLeibniz
-import GroundTheory.ProfiniteCohomology.CoinducedModules.Acyclic
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RealPlaces.ConeDefs
+public import GroundTheory.ProfiniteCohomology.CompactSupportCohomology.CupLeibniz
+public import GroundTheory.ProfiniteCohomology.CoinducedModules.Acyclic
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

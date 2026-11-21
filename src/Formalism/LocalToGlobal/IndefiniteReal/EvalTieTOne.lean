@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.AutomorphicEvaluation
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.AutomorphicEvaluation
+
+@[expose] public section
 
 noncomputable section
 

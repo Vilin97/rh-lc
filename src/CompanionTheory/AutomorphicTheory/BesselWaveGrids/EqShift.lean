@@ -1,9 +1,13 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PlaceSwapExists
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFHatProdKBStmt
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJDJDJComm
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RadJFExists
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ThresholdOfLargeConstant
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LUFactorOrbitBounds
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PlaceSwapExists
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFHatProdKBStmt
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJDJDJComm
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RadJFExists
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ThresholdOfLargeConstant
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LUFactorOrbitBounds
+
+@[expose] public section
 
 namespace CompanionTheory.WaveGrid.EqShift
 

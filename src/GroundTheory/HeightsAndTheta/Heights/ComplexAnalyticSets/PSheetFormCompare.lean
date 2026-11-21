@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StatementsCurrent
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeLogBound
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PFsLogSmul
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PTubeFormCompare
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PlaneIdealTwoOne
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.BergmanProjective
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StatementsCurrent
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeLogBound
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PFsLogSmul
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PTubeFormCompare
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PlaneIdealTwoOne
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.BergmanProjective
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.AdmissibleFiniteLength
-import GroundTheory.LocalFields.LocalFourierHaar
-import GroundTheory.LocalFields.LocalFourierChar
-import GroundTheory.LocalFields.LocalZetaEpsilon
-import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.AdmissibleFiniteLength
+public import GroundTheory.LocalFields.LocalFourierHaar
+public import GroundTheory.LocalFields.LocalFourierChar
+public import GroundTheory.LocalFields.LocalZetaEpsilon
+public import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
+
+@[expose] public section
 
 noncomputable section
 

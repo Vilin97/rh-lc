@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.LocalToGlobal.BesselHermitianTheta.AllTied
-import Development.AbelianVarietyTheory.Proofs.HeightProofs.HaarUpqEqOfOmegaDensity
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsPosFiniteDensityOfAlmostTranslationInvaria
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.TranslateChartBallDistortion
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ReImMapSurjective
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CompactSpaceUpqTZeroRight
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExpBallUMemNhds
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.BesselHermitianTheta.AllTied
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.HaarUpqEqOfOmegaDensity
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsPosFiniteDensityOfAlmostTranslationInvaria
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.TranslateChartBallDistortion
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ReImMapSurjective
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.CompactSpaceUpqTZeroRight
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExpBallUMemNhds
+
+@[expose] public section
 
 open Formalism.BasicNotions MeasureTheory Filter Topology Metric Set
 open scoped ENNReal NNReal

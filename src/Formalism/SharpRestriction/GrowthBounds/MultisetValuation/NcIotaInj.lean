@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.NcTsumOdd
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.NcTsumOdd
+
+@[expose] public section
 
 noncomputable section
 

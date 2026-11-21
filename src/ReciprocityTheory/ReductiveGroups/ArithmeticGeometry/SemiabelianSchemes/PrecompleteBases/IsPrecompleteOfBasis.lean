@@ -1,14 +1,18 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.GenericFiberGluing.SemistableCompleteSplit
-import Mathlib.RingTheory.AdjoinRoot
-import Mathlib.RingTheory.DiscreteValuationRing.TFAE
-import Mathlib.RingTheory.AdicCompletion.Noetherian
-import Mathlib.RingTheory.Ideal.GoingUp
-import Mathlib.FieldTheory.Minpoly.Field
-import Mathlib.FieldTheory.Tower
-import Mathlib.Algebra.Polynomial.Eval.Irreducible
-import Mathlib.RingTheory.Polynomial.UniqueFactorization
-import Mathlib.Algebra.Polynomial.Lifts
-import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.GenericFiberGluing.SemistableCompleteSplit
+public import Mathlib.RingTheory.AdjoinRoot
+public import Mathlib.RingTheory.DiscreteValuationRing.TFAE
+public import Mathlib.RingTheory.AdicCompletion.Noetherian
+public import Mathlib.RingTheory.Ideal.GoingUp
+public import Mathlib.FieldTheory.Minpoly.Field
+public import Mathlib.FieldTheory.Tower
+public import Mathlib.Algebra.Polynomial.Eval.Irreducible
+public import Mathlib.RingTheory.Polynomial.UniqueFactorization
+public import Mathlib.Algebra.Polynomial.Lifts
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
+
+@[expose] public section
 
 set_option autoImplicit false
 

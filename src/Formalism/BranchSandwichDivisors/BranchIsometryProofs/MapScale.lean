@@ -1,5 +1,9 @@
-import Formalism.BranchSandwichDivisors.StatementL
-import Formalism.HarderNarasimhan.ShiftInvariance
+module
+
+public import Formalism.BranchSandwichDivisors.StatementL
+public import Formalism.HarderNarasimhan.ShiftInvariance
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.DeltaIntegralEnvelopingStable
-import Lemmata.ClearingDenominators.UmonLeUzmon
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.DeltaIntegralEnvelopingStable
+public import Lemmata.ClearingDenominators.UmonLeUzmon
+
+@[expose] public section
 
 noncomputable section
 

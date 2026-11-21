@@ -1,4 +1,8 @@
-import Formalism.ThetaLiftIndependence.Statement
+module
+
+public import Formalism.ThetaLiftIndependence.Statement
+
+@[expose] public section
 
 open scoped BigOperators
 

@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.GammaSubCocycleComponent
-import Formalism.SharpRestriction.LevelLetterCocycles.CocyclesToWachVectorsBoundOfExtTool
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.RkMultVNonneg
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.GammaSubCocycleComponent
+public import Formalism.SharpRestriction.LevelLetterCocycles.CocyclesToWachVectorsBoundOfExtTool
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.RkMultVNonneg
+
+@[expose] public section
 
 noncomputable section
 

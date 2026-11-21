@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.TracePowerSumModEq
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.TracePowerSumModEq
+
+@[expose] public section
 
 open Polynomial Module
 

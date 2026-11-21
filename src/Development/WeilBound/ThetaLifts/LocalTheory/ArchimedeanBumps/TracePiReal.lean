@@ -1,7 +1,11 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.ArchSlice
-import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.DictHaar
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsIsLatticeFrameIsMajorantFrame
-import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsAuxiliaryPlaceNotMemFinset
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.ArchSlice
+public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.DictHaar
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsIsLatticeFrameIsMajorantFrame
+public import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsAuxiliaryPlaceNotMemFinset
+
+@[expose] public section
 
 noncomputable section
 

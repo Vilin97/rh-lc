@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.Reductions.HasDerivAtSchwartzToL2
+module
+
+public import Development.WeilBound.ThetaLifts.Reductions.HasDerivAtSchwartzToL2
+
+@[expose] public section
 
 noncomputable section
 

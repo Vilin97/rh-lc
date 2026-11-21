@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ClsOrb
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ClsOrb
+
+@[expose] public section
 
 noncomputable section
 

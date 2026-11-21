@@ -1,5 +1,9 @@
-import ReciprocityTheory.SemistableReduction.LatSemiSt
-import ReciprocityTheory.SemistableReduction.SemiContractA
+module
+
+public import ReciprocityTheory.SemistableReduction.LatSemiSt
+public import ReciprocityTheory.SemistableReduction.SemiContractA
+
+@[expose] public section
 
 namespace ReciprocityTheory.MultiplicativeHeights
 

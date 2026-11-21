@@ -1,14 +1,18 @@
-import Development.AbelianVarietyTheory.Definitions.Divisors.TieTest
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.SlopeTestRemainingChoicesAlt
-import Development.AbelianVarietyTheory.Statements.HeckeThetaIntegrals.FormulaAt
-import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeriesHermitianUnique
-import Development.AbelianVarietyTheory.Definitions.Divisors.MulVecEqOfBasis
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ComplexMatrixDescendsOfRationalOnTuple
-import Formalism.LocalToGlobal.IndefiniteReal.CxLemmas
-import Formalism.LocalToGlobal.IndefiniteReal.CxPassRep
-import Formalism.LocalToGlobal.Divisibility.RowLatLemmas
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaEV0EqICPqRows
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Divisors.TieTest
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SlopeTestRemainingChoicesAlt
+public import Development.AbelianVarietyTheory.Statements.HeckeThetaIntegrals.FormulaAt
+public import Development.AbelianVarietyTheory.Definitions.Divisors.DiscreteSeriesHermitianUnique
+public import Development.AbelianVarietyTheory.Definitions.Divisors.MulVecEqOfBasis
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ComplexMatrixDescendsOfRationalOnTuple
+public import Formalism.LocalToGlobal.IndefiniteReal.CxLemmas
+public import Formalism.LocalToGlobal.IndefiniteReal.CxPassRep
+public import Formalism.LocalToGlobal.Divisibility.RowLatLemmas
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ThetaEV0EqICPqRows
+
+@[expose] public section
 
 noncomputable section
 

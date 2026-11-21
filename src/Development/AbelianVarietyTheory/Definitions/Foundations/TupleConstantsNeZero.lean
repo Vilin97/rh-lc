@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PairingDivisors.StatementH
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ValBasic
+module
+
+public import Mathlib
+public import Formalism.PairingDivisors.StatementH
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ValBasic
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Finset
 open Formalism.DivisionValues (vw conjPl)

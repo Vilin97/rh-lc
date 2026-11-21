@@ -1,10 +1,14 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJStandardLTensor
-import GroundTheory.AutomorphicForms.RestrictedAddHaarProduct
-import GroundTheory.AutomorphicForms.GL2.GJMatrixLocal
-import GroundTheory.GlobalFields.TateThesis.RootNumberLocalPlace
-import GroundTheory.GlobalFields.TateThesis.HeckeLFunction
-import GroundTheory.LocalFields.LocalZetaEpsilon
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJStandardLTensor
+public import GroundTheory.AutomorphicForms.RestrictedAddHaarProduct
+public import GroundTheory.AutomorphicForms.GL2.GJMatrixLocal
+public import GroundTheory.GlobalFields.TateThesis.RootNumberLocalPlace
+public import GroundTheory.GlobalFields.TateThesis.HeckeLFunction
+public import GroundTheory.LocalFields.LocalZetaEpsilon
+
+@[expose] public section
 
 open MeasureTheory Filter Set Topology IsDedekindDomain NumberField NumberField.mixedEmbedding Matrix
 open scoped NumberField.AdeleRing RestrictedProduct SchwartzMap Classical ENNReal NNReal ValuativeRel nonZeroDivisors

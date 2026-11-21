@@ -1,4 +1,8 @@
-import Formalism.AdmissibleDesigns.ExistsWildInertiaCyclotomicGenerator
+module
+
+public import Formalism.AdmissibleDesigns.ExistsWildInertiaCyclotomicGenerator
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

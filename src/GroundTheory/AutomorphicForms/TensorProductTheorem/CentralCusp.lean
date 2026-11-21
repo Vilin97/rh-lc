@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.TensorProductTheorem.NonemptyAdelicDecomposition
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.CuspFormsDecay
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SummandsMeasure
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.NonemptyAdelicDecomposition
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.CuspFormsDecay
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SummandsMeasure
+
+@[expose] public section
 
 noncomputable section
 

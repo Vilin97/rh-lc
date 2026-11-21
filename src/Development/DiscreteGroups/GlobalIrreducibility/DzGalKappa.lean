@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.LocalLanglandsGL
-import ReciprocityTheory.GaloisValuations.GlobalB
-import Development.DiscreteGroups.GlobalIrreducibility.DzApprox
-import Development.DiscreteGroups.GlobalIrreducibility.ExistsOfMemKOne
-import Development.DiscreteGroups.GlobalIrreducibility.ExistsUniformizerValuation
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.LocalLanglandsGL
+public import ReciprocityTheory.GaloisValuations.GlobalB
+public import Development.DiscreteGroups.GlobalIrreducibility.DzApprox
+public import Development.DiscreteGroups.GlobalIrreducibility.ExistsOfMemKOne
+public import Development.DiscreteGroups.GlobalIrreducibility.ExistsUniformizerValuation
+
+@[expose] public section
 
 noncomputable section
 

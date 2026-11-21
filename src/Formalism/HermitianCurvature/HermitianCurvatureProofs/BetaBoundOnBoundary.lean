@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.StatementSz
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CriticalThresholdLowerBound
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BetaFactorisation
+module
+
+public import Formalism.HermitianCurvature.StatementSz
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CriticalThresholdLowerBound
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BetaFactorisation
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.Sz7
 

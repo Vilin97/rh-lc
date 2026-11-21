@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.StandardValuations.SplitProd
-import Development.WeilBound.ThetaLifts.LocalTheory.IsArchimedeanLocalEquivariantMap
-import Development.WeilBound.ThetaLifts.CartanFactorisation.TensOfEval
-import Development.WeilBound.ThetaLifts.LocalTheory.StandardValuations.ValIffNorm
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsStdCharNegOneOfStandardTraceAdelicAddChar
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.StandardValuations.SplitProd
+public import Development.WeilBound.ThetaLifts.LocalTheory.IsArchimedeanLocalEquivariantMap
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.TensOfEval
+public import Development.WeilBound.ThetaLifts.LocalTheory.StandardValuations.ValIffNorm
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsStdCharNegOneOfStandardTraceAdelicAddChar
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

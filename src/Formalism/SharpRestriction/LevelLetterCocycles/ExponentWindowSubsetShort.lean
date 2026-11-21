@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.WachCoordinates
-import Formalism.DistinguishedUnitIdeals.FinalArcProps
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.WachCoordinates
+public import Formalism.DistinguishedUnitIdeals.FinalArcProps
+
+@[expose] public section
 
 noncomputable section
 

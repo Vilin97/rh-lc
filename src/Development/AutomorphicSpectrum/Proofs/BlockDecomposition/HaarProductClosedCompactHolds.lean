@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.UnipotentAdelicQuotients.HaarProductClosedCompact
+module
+
+public import Mathlib
+public import Formalism.UnipotentAdelicQuotients.HaarProductClosedCompact
+
+@[expose] public section
 
 noncomputable section
 

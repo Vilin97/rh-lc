@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.HermitianCurvature.FiniteOrderIntersectionInSmooth
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.FiniteOrderIntersectionInSmooth
+
+@[expose] public section
 
 open Matrix
 

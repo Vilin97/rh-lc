@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.XiTopTilRefHolds
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.MemGoodPrimesOfNoExceptional
+module
+
+public import Formalism.LocalToGlobal.Columns.XiTopTilRefHolds
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.MemGoodPrimesOfNoExceptional
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 

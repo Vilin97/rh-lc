@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.KatoQuadraticCharacters.FrobeniusHodgeTateLaws.RhoFrob
-import Development.AbelianVarietyTheory.Definitions.Foundations.CoPtMu
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.KatoQuadraticCharacters.FrobeniusHodgeTateLaws.RhoFrob
+public import Development.AbelianVarietyTheory.Definitions.Foundations.CoPtMu
+
+@[expose] public section
 
 noncomputable section
 

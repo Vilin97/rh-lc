@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.GradedClassDecomposition
-import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.DetectPt
-import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.HfracOf
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.GradedClassDecomposition
+public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.DetectPt
+public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.HfracOf
+
+@[expose] public section
 
 noncomputable section
 

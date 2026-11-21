@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.MulLaurentSup
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.MulLaurentSup
+
+@[expose] public section
 
 noncomputable section
 

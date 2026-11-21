@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.TateTwists.EtalePrismAlexanderWhitneyHomotopyOfRelations
+module
+
+public import Development.EtaleCohomology.TateTwists.EtalePrismAlexanderWhitneyHomotopyOfRelations
+
+@[expose] public section
 
 open CategoryTheory GlobalTheory.EtC
 

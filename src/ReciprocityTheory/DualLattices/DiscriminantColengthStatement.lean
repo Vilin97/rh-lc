@@ -1,5 +1,9 @@
-import ReciprocityTheory.DualLattices.CotangentSurjective
-import ReciprocityTheory.DualLattices.VDetEqOneOfIntegral
+module
+
+public import ReciprocityTheory.DualLattices.CotangentSurjective
+public import ReciprocityTheory.DualLattices.VDetEqOneOfIntegral
+
+@[expose] public section
 
 noncomputable section
 

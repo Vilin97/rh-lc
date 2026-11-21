@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HermitianLattices.HermitianLatticesProofs.DualLattice
-import Lemmata.GeneralBFactThirdTail.Imports
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.HermitianLatticesProofs.DualLattice
+public import Lemmata.GeneralBFactThirdTail.Imports
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.PadicSubsetSums.CentralIdempotents.CentralIdempotentIntegral
+module
+
+public import Formalism.PadicSubsetSums.CentralIdempotents.CentralIdempotentIntegral
+
+@[expose] public section
 
 open Polynomial
 

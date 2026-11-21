@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverEta
+module
+
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverEta
+
+@[expose] public section
 
 noncomputable section
 

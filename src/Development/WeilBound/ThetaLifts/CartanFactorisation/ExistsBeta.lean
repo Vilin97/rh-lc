@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.CartanFactorisation.RadOfZero
-import Development.WeilBound.ThetaLifts.CartanFactorisation.CartanConj
-import Development.WeilBound.ThetaLifts.CartanFactorisation.IntegrableOnRight
-import Development.WeilBound.ThetaLifts.CartanFactorisation.Unimod
-import Development.WeilBound.ThetaLifts.ConeHypotheses.PureEqPureA
+module
+
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.RadOfZero
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.CartanConj
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.IntegrableOnRight
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.Unimod
+public import Development.WeilBound.ThetaLifts.ConeHypotheses.PureEqPureA
+
+@[expose] public section
 
 noncomputable section
 

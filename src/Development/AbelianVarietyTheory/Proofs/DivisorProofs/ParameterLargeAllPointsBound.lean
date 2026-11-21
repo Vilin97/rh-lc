@@ -1,7 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AtPtsImp
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ParameterLargeAllPoints
-import Formalism.PieriBlockIdeals.PieriColumnMinors.LargeParameterEstimates
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AtPtsImp
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ParameterLargeAllPoints
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.LargeParameterEstimates
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.DIV Formalism.L2.Pj Formalism.IndefR Formalism.IndefR.Links GlobalTheory.BigTop GlobalTheory.BigOn GlobalTheory.ExpTie
 
 namespace GlobalTheory.ExpTie

@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.RadialGaugeOfGaugeIdentitySlices
-import Formalism.SharpRestriction.CuspSpanNormBounds.BlockEstimateTheorem
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PoissonSummationDecay
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PsdFormConjRewrite
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DualCovolumeChangeOfVariables
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RadialGaugeOfGaugeIdentitySlices
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BlockEstimateTheorem
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PoissonSummationDecay
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PsdFormConjRewrite
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DualCovolumeChangeOfVariables
+
+@[expose] public section
 
 section PartDefs
 

@@ -1,5 +1,9 @@
-import Formalism.FormalGroupLog.FormalGroupLogProofs.HomPsSubstMvSubst
-import Formalism.FormalGroupLog.FormalGroupLogProofs.ConstantCoeffSubstOfZero
+module
+
+public import Formalism.FormalGroupLog.FormalGroupLogProofs.HomPsSubstMvSubst
+public import Formalism.FormalGroupLog.FormalGroupLogProofs.ConstantCoeffSubstOfZero
+
+@[expose] public section
 
 namespace Formalism.G
 

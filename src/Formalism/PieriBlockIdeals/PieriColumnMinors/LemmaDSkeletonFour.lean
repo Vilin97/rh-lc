@@ -1,8 +1,12 @@
-import Formalism.PieriBlockIdeals.StatementLC
-import Formalism.PieriBlockIdeals.PieriColumnMinors.PathEqOfContentSequence
-import Formalism.PieriBlockIdeals.PieriColumnMinors.AntitoneShapes
-import Formalism.PieriBlockIdeals.PieriColumnMinors.PermutationWeightInvariant
-import Formalism.PieriBlockIdeals.PieriColumnMinors.MeasureSwapInvariant
+module
+
+public import Formalism.PieriBlockIdeals.StatementLC
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.PathEqOfContentSequence
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.AntitoneShapes
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.PermutationWeightInvariant
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.MeasureSwapInvariant
+
+@[expose] public section
 
 namespace Formalism.CohomologicalDescent.LC
 

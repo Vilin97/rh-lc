@@ -1,5 +1,9 @@
-import Formalism.SizeWindowBrackets.WindowSettingSatisfiable
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.AdmissibleSchurLemma
+module
+
+public import Formalism.SizeWindowBrackets.WindowSettingSatisfiable
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.AdmissibleSchurLemma
+
+@[expose] public section
 
 namespace Formalism.LFunctionChainParameters.PrimeWindowSizeBounds
 

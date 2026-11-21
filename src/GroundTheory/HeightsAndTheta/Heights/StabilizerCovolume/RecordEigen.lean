@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.StabilizerCovolume.RecordEigenInputs
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.StabilizerCovolume.RecordEigenInputs
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

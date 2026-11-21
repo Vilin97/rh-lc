@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.RankMaximalOfNondegenerate
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RankMaximalOfNondegenerate
+
+@[expose] public section
 
 set_option autoImplicit false
 

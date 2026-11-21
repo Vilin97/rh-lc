@@ -1,5 +1,9 @@
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.LeviOneEqLaplacianThm
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.LogInt
+module
+
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.LeviOneEqLaplacianThm
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.LogInt
+
+@[expose] public section
 
 open MeasureTheory
 open scoped Laplacian Pointwise

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.SubstDtop
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.SubstDtop
+
+@[expose] public section
 
 noncomputable section
 

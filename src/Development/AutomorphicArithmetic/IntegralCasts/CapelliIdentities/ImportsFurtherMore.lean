@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qk8.exists_place :
     ∀ {F : Type} [inst : Field F] [NumberField F] (p : ℕ),

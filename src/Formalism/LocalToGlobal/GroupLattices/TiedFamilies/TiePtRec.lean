@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.EqOneOfPh
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.RecAct
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ClsOrb
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.GramDetIsUnit
-import Formalism.LocalToGlobal.HermitianForms.RankEqFirstLevel
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.EqOneOfPh
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.RecAct
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ClsOrb
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.GramDetIsUnit
+public import Formalism.LocalToGlobal.HermitianForms.RankEqFirstLevel
+
+@[expose] public section
 
 noncomputable section
 

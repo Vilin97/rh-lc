@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.ColumnData
-import Formalism.LocalToGlobal.KernelLattices.ColumnData.HermitianPairingIntegral
-import Formalism.LocalToGlobal.KernelLattices.ColumnData.SelfDual
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.ColumnData
+public import Formalism.LocalToGlobal.KernelLattices.ColumnData.HermitianPairingIntegral
+public import Formalism.LocalToGlobal.KernelLattices.ColumnData.SelfDual
+
+@[expose] public section
 
 noncomputable section
 

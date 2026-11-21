@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GKModules.LieAlgebra
-import GroundTheory.AutomorphicForms.UnitaryRepresentations.IsInvariantIffCommuteStarProjection
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GKModules.LieAlgebra
+public import GroundTheory.AutomorphicForms.UnitaryRepresentations.IsInvariantIffCommuteStarProjection
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsBasOpens
-import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsIsOb1NeZero
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsBasOpens
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsIsOb1NeZero
+
+@[expose] public section
 
 set_option autoImplicit false
 

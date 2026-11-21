@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.IndefiniteRealisationChoice
-import Formalism.LocalToGlobal.PtKOfReal
-import Formalism.LocalToGlobal.Divisibility.ArithClauseRec
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.DivisibilityConstruction.RBDGam
-import Formalism.LocalToGlobal.HilbertRowConditions.ColumnsFunctionAtSubspaces
+module
+
+public import Formalism.LocalToGlobal.IndefiniteRealisationChoice
+public import Formalism.LocalToGlobal.PtKOfReal
+public import Formalism.LocalToGlobal.Divisibility.ArithClauseRec
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.DivisibilityConstruction.RBDGam
+public import Formalism.LocalToGlobal.HilbertRowConditions.ColumnsFunctionAtSubspaces
+
+@[expose] public section
 
 noncomputable section
 

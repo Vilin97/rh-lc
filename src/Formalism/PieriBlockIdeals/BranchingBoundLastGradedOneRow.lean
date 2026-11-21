@@ -1,4 +1,8 @@
-import Formalism.PieriBlockIdeals.StatementLD
+module
+
+public import Formalism.PieriBlockIdeals.StatementLD
+
+@[expose] public section
 
 open MvPolynomial
 

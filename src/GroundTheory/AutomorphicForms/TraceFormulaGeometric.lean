@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.TraceStrongLimit
-import GroundTheory.AutomorphicForms.HilbertSchmidtKernel
-import GroundTheory.AutomorphicForms.TraceFormulaConvolution
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.TraceStrongLimit
+public import GroundTheory.AutomorphicForms.HilbertSchmidtKernel
+public import GroundTheory.AutomorphicForms.TraceFormulaConvolution
+
+@[expose] public section
 
 open MeasureTheory Topology Filter Set Function
 open scoped ENNReal Pointwise

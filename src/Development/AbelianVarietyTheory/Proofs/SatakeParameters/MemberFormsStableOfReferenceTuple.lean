@@ -1,6 +1,11 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataKerP
-import Formalism.LocalRingCardinality.DataAmbForm
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataKerP
+public import Formalism.LocalRingCardinality.DataAmbForm
+
+@[expose] public section
+
 open Formalism.BasicNotions Classical
 
 namespace GlobalTheory.KFiMu0

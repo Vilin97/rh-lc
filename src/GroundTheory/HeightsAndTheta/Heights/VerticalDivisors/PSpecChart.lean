@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.StatementsChart
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PSpecChartQuot
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PSpecChartBack
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.StatementsChart
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PSpecChartQuot
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PSpecChartBack
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Vertical

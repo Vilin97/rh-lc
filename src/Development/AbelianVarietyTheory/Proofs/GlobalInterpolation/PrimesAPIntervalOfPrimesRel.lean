@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.GL3MeanSquares.PrimeCountAsymptoticInProgressions
-import Formalism.GL3MeanSquares.HookFormulaTorsion.GlobalBoundRefinements
-import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.ZerosDisc
+module
+
+public import Mathlib
+public import Formalism.GL3MeanSquares.PrimeCountAsymptoticInProgressions
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.GlobalBoundRefinements
+public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.ZerosDisc
+
+@[expose] public section
 
 open Finset Formalism.HermitianLattices.GL2PrimeSums
 

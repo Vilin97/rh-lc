@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.NablaSpans.MinorProdSpanHasCompl
+module
+
+public import Formalism.PeriodIntegrals.NablaSpans.MinorProdSpanHasCompl
+
+@[expose] public section
 
 noncomputable section
 

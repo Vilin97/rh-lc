@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.HermitianLattices.StatementJac
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.StatementJac
+
+@[expose] public section
 
 noncomputable section
 

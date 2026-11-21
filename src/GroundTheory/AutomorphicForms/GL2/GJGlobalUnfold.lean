@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJGlobalUnfoldSetup
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJGlobalUnfoldSetup
+
+@[expose] public section
 
 open MeasureTheory Set Function NumberField Filter Topology
 open scoped ENNReal NNReal NumberField.AdeleRing

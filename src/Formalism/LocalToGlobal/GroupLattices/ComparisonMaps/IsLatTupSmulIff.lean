@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ValUniqOf
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ValUniqOf
+
+@[expose] public section
 
 noncomputable section
 

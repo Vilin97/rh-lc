@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.GrowthBounds.Lemma5aAt
-import Formalism.SharpRestriction.GrowthBounds.ProjectionOfIsotypicDecomposition
-import Formalism.SharpRestriction.GrowthBounds.Joints
-import Formalism.SharpRestriction.GrowthBounds.ValuationLowestDegreeMapFractionField
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CardFilterValLt
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.Lemma5aAt
+public import Formalism.SharpRestriction.GrowthBounds.ProjectionOfIsotypicDecomposition
+public import Formalism.SharpRestriction.GrowthBounds.Joints
+public import Formalism.SharpRestriction.GrowthBounds.ValuationLowestDegreeMapFractionField
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.CardFilterValLt
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.OrbitalCosetFiniteness.CvGelfandAlt
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.CvHecke
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.HeckeGelfandPair
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.OrbitalCosetFiniteness.CvGelfandAlt
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.TraceFormula.GlobalTraceComparison.TraceAsymptotics.CvHecke
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.HeckeGelfandPair
+
+@[expose] public section
 
 open GlobalTheory.BCT UpperTheory.V.Z.Tf.GlobalTraceComparison.Asm
 

@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.CrystallineBaseChange.RnStmt
-import Mathlib.Analysis.Complex.Conformal
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.CrystallineBaseChange.RnStmt
+public import Mathlib.Analysis.Complex.Conformal
+
+@[expose] public section
 
 noncomputable section
 

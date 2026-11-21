@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RealPlaces.ConeMap
-import GroundTheory.ProfiniteCohomology.RealPlaces.NormHomotopy
-import GroundTheory.ProfiniteCohomology.RealPlaces.ConeHomotopy
-import GroundTheory.ProfiniteCohomology.CompactSupportCohomology.CompactCupEqCompactCupRight
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RealPlaces.ConeMap
+public import GroundTheory.ProfiniteCohomology.RealPlaces.NormHomotopy
+public import GroundTheory.ProfiniteCohomology.RealPlaces.ConeHomotopy
+public import GroundTheory.ProfiniteCohomology.CompactSupportCohomology.CompactCupEqCompactCupRight
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

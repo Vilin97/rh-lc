@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsGrassHeightE
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.Assembly
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PRootHeightNE
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsGrassHeightE
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.Assembly
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PRootHeightNE
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.LowerBoundFree

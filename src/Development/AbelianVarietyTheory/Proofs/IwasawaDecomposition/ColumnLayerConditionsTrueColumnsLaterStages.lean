@@ -1,11 +1,15 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.MemRangeOfPowG
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ColsReLev0
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsStandardColumnComparisonsTrueColumnsStatement
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieTrF
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HermEqExtraTied
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.TiedColumnData
-import Formalism.SharpRestriction.GlobalSchurBounds.ThickPlacesCorollaryOfAnyTranslate
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.MemRangeOfPowG
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ColsReLev0
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsStandardColumnComparisonsTrueColumnsStatement
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieTrF
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.HermEqExtraTied
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.TiedColumnData
+public import Formalism.SharpRestriction.GlobalSchurBounds.ThickPlacesCorollaryOfAnyTranslate
+
+@[expose] public section
 
 noncomputable section
 

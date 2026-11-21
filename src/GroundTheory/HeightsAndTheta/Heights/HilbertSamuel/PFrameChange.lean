@@ -1,9 +1,14 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.ExistsNatMulMemConeRingIntFin
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsFrameChange
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsRatNoetherFrame
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsHSMTransport
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsResChiIndex
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovGeometry.ExistsNatMulMemConeRingIntFin
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsFrameChange
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsRatNoetherFrame
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsHSMTransport
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsResChiIndex
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.IndefiniteReal.RecTie
-import Formalism.LocalToGlobal.IndefiniteReal.ConcretePkgSpec
-import Formalism.LocalToGlobal.IndefiniteReal.LinksW
-import Formalism.LocalRingCardinality.DataRRMetric
-import Formalism.LocalToGlobal.IndefiniteReal.ConjSubConjSub
-import Formalism.LocalToGlobal.Divisibility.DefGroupLemmas
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.RecTie
+public import Formalism.LocalToGlobal.IndefiniteReal.ConcretePkgSpec
+public import Formalism.LocalToGlobal.IndefiniteReal.LinksW
+public import Formalism.LocalRingCardinality.DataRRMetric
+public import Formalism.LocalToGlobal.IndefiniteReal.ConjSubConjSub
+public import Formalism.LocalToGlobal.Divisibility.DefGroupLemmas
+
+@[expose] public section
 
 set_option genSizeOfSpec false
 set_option genInjectivity false

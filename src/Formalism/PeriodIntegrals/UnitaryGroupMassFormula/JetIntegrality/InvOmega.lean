@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.JetsPhW
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.InverseOmegaHolds
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.JetsPhW
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.InverseOmegaHolds
+
+@[expose] public section
 
 noncomputable section
 

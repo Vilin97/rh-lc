@@ -1,5 +1,9 @@
-import Formalism.RealPlaceAnalysis.StatementKT
-import Formalism.RealPlaceAnalysis.StatementC
+module
+
+public import Formalism.RealPlaceAnalysis.StatementKT
+public import Formalism.RealPlaceAnalysis.StatementC
+
+@[expose] public section
 
 open scoped InnerProductSpace
 open Finset

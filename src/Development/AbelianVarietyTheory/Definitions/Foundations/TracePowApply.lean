@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Foundations.GelfA
-import Formalism.RealPlaceAnalysis.StatementB
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.GelfA
+public import Formalism.RealPlaceAnalysis.StatementB
+
+@[expose] public section
 
 noncomputable section
 

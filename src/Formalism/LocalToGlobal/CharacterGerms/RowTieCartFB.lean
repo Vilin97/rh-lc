@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.CoeffAlongCvCongr
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.CoeffAlongCvCongr
+
+@[expose] public section
 
 noncomputable section
 

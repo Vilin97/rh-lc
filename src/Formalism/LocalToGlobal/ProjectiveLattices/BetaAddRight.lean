@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.DataAtPointN3
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.DataAtPointN3
+
+@[expose] public section
 
 noncomputable section
 

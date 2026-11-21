@@ -1,15 +1,20 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.AssemblyBase
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PGraphClosed
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PVeryAmplePow
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.StatementsStepTwo
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.TwistAlg
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PTwistAlg
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSectionExists
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.LeadingCoeffPosCut
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PVeryAmpleNefPlusAmple
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PNefProductNonneg
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PNefPlusAmple
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.AssemblyBase
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PGraphClosed
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PVeryAmplePow
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.StatementsStepTwo
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.TwistAlg
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PTwistAlg
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSectionExists
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.LeadingCoeffPosCut
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PVeryAmpleNefPlusAmple
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PNefProductNonneg
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PNefPlusAmple
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman

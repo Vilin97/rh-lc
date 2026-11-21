@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.OfCore
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReadingsExistRow
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentralShiftExists
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CompatiblePhaseExists
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenvalueBarCompatibility
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.OfCore
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ReadingsExistRow
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentralShiftExists
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CompatiblePhaseExists
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EigenvalueBarCompatibility
+
+@[expose] public section
 
 noncomputable section
 

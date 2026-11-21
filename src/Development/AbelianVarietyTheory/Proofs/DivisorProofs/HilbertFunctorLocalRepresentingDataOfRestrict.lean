@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsHilbRep
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ComapEqKerIff
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsHilbRep
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ComapEqKerIff
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.FiltrationAdjointStable
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.FiltrationAdjointStable
+
+@[expose] public section
 
 noncomputable section
 

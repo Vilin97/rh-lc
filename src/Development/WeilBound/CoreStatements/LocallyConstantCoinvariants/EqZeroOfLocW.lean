@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.KdExistsInv
+module
+
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.KdExistsInv
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

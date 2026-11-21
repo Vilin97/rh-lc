@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.ClassSplit
-import GroundTheory.ProfiniteCohomology.ClassFormationDefs
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.ClassSplit
+public import GroundTheory.ProfiniteCohomology.ClassFormationDefs
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

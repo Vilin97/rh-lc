@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.LatticeGeometry.LevPrPrime
-import Mathlib
+module
+
+public import Formalism.LocalToGlobal.LatticeGeometry.LevPrPrime
+public import Mathlib
+
+@[expose] public section
 
 noncomputable section
 

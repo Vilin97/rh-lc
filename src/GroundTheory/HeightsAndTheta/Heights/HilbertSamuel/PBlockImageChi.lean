@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockImageChi
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockImageTop
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PResChiIndex
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsBlockImageChi
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockImageTop
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PResChiIndex
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

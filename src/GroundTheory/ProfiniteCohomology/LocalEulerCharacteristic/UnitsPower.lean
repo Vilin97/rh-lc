@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.LocalFields.UnitsPowers
-import GroundTheory.LocalFields.NormalLattice
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.UnitsPowers
+public import GroundTheory.LocalFields.NormalLattice
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

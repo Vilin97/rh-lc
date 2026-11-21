@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.FlagImmersions.Transport
+module
+
+public import Development.WeilBound.CoreStatements.FlagImmersions.Transport
+
+@[expose] public section
 
 noncomputable section
 

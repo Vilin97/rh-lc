@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.OrthogonalDecomposition.QhtUnbdd
-import Development.WeilBound.ThetaLifts.CartanFactorisation.IntegrableOnRight
+module
+
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.OrthogonalDecomposition.QhtUnbdd
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.IntegrableOnRight
+
+@[expose] public section
 
 noncomputable section
 

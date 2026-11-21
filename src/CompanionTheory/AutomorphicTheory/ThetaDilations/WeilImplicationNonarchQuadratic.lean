@@ -1,4 +1,8 @@
-import CompanionTheory.AutomorphicTheory.ThetaDilations.SqPosOfNe
+module
+
+public import CompanionTheory.AutomorphicTheory.ThetaDilations.SqPosOfNe
+
+@[expose] public section
 
 open NumberField IsDedekindDomain MeasureTheory Matrix Topology GlobalTheory.CompanionTheory.SW.Core
 open scoped ENNReal NNReal MatrixGroups

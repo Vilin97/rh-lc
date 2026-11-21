@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CornerMatrixFirstLineZero
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CornerMatrixFirstLineZero
+
+@[expose] public section
 
 open Matrix Finset
 open scoped ComplexConjugate

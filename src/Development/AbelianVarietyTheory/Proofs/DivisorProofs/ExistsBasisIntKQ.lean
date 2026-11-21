@@ -1,7 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.HasDivPlace
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.ValUnitsD
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnrExtC
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.HasDivPlace
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.ValUnitsD
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnrExtC
+
+@[expose] public section
+
 open Matrix GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.BCFL
 open scoped TensorProduct Classical
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.FockGram.StatementHerm
+module
+
+public import Mathlib
+public import Formalism.FockGram.StatementHerm
+
+@[expose] public section
 
 open Module
 

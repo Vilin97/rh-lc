@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.AxHLAM
-import Formalism.LocalToGlobal.ProjectiveLattices.SupNDataOfNonneg
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.AxHLAM
+public import Formalism.LocalToGlobal.ProjectiveLattices.SupNDataOfNonneg
+
+@[expose] public section
 
 noncomputable section
 

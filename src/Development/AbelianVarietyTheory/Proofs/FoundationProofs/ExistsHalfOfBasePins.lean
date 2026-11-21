@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.OneMapT
-import Formalism.LocalToGlobal.ProjectiveLattices.LevelPb
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.GSplit
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.OneMapT
+public import Formalism.LocalToGlobal.ProjectiveLattices.LevelPb
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.GSplit
+
+@[expose] public section
 
 noncomputable section
 

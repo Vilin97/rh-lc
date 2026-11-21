@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EabIsKCInr
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EabIsKCInr
+
+@[expose] public section
 
 open MvPolynomial Formalism.BasicNotions.TH
 

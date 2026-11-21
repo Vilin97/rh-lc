@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataKerI
-import Development.AbelianVarietyTheory.BlockTheory.ThetaLiftGeometry.LatticeFramesPrimeToLevel
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.InfDiagMulFinPartI
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataKerI
+public import Development.AbelianVarietyTheory.BlockTheory.ThetaLiftGeometry.LatticeFramesPrimeToLevel
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.InfDiagMulFinPartI
+
+@[expose] public section
 
 noncomputable section
 

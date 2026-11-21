@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.GrowthBounds.DataGChain
-import Formalism.LocalRingCardinality.SpanPowerMembership.GatSetting
-import Formalism.SharpRestriction.GrowthBounds.DefsInst
-import Formalism.SharpRestriction.GrowthBounds.LatticeSystems
-import Formalism.SharpRestriction.GrowthBounds.WeilJacquetShalikaLaw
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DataGChain
+public import Formalism.LocalRingCardinality.SpanPowerMembership.GatSetting
+public import Formalism.SharpRestriction.GrowthBounds.DefsInst
+public import Formalism.SharpRestriction.GrowthBounds.LatticeSystems
+public import Formalism.SharpRestriction.GrowthBounds.WeilJacquetShalikaLaw
+
+@[expose] public section
 
 noncomputable section
 

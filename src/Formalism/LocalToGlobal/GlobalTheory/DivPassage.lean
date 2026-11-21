@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteForms.IndefSide
-import Formalism.LocalToGlobal.Divisibility.RowLat
-import Formalism.LocalToGlobal.Divisibility.DefGroup
-import Formalism.BranchSandwichDivisors.StatementL
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteForms.IndefSide
+public import Formalism.LocalToGlobal.Divisibility.RowLat
+public import Formalism.LocalToGlobal.Divisibility.DefGroup
+public import Formalism.BranchSandwichDivisors.StatementL
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

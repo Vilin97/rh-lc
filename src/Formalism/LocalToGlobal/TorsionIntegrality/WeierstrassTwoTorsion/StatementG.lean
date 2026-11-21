@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.WeierstrassTwoTorsion.StatementZ
-import Formalism.FormalGroupLog.LogDeterminesLaw
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.WeierstrassTwoTorsion.StatementZ
+public import Formalism.FormalGroupLog.LogDeterminesLaw
+
+@[expose] public section
 
 open PowerSeries
 

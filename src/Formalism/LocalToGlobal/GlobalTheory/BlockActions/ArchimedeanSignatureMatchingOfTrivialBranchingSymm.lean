@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.HermitianForms.TiedBrProof
-import Formalism.LocalToGlobal.HermitianForms.TiedSym
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.TiedBrProof
+public import Formalism.LocalToGlobal.HermitianForms.TiedSym
+
+@[expose] public section
 
 noncomputable section
 

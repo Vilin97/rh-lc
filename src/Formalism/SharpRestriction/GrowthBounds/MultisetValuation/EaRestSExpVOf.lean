@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.EaRestSExpV
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.DworkExponentialRestrictions
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.EaRestSExpV
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.DworkExponentialRestrictions
+
+@[expose] public section
 
 noncomputable section
 

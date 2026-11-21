@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.GlobalTheory.GL3.PFourSq
-import Formalism.LocalToGlobal.GlobalTheory.GL3.ProvisionExtensionLink
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.PFourSq
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.ProvisionExtensionLink
+
+@[expose] public section
 
 noncomputable section
 

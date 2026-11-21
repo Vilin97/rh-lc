@@ -1,4 +1,8 @@
-import Formalism.PolynomialDimension.StatementHar
+module
+
+public import Formalism.PolynomialDimension.StatementHar
+
+@[expose] public section
 
 noncomputable section
 

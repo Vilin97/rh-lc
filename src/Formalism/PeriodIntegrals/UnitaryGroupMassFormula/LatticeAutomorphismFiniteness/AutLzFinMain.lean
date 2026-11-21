@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.AutLzFinite
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeAutomorphismFiniteness.IndSetFinite
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.AutLzFinite
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeAutomorphismFiniteness.IndSetFinite
+
+@[expose] public section
 
 noncomputable section
 

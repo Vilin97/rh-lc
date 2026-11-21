@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.AbstractLocalReciprocity.ProfiniteInteger
-import GroundTheory.GlobalFields.CyclotomicCharacters.Frobenius
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.ProfiniteInteger
+public import GroundTheory.GlobalFields.CyclotomicCharacters.Frobenius
+
+@[expose] public section
 
 open NumberField IntermediateField
 open scoped Pointwise

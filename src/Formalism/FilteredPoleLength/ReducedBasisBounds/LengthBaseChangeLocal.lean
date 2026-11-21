@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.FilteredPoleLength.ReducedBasisBounds.ReductionQuotient
-import Formalism.IncomingBounds.IndexLastStep
+module
+
+public import Mathlib
+public import Formalism.FilteredPoleLength.ReducedBasisBounds.ReductionQuotient
+public import Formalism.IncomingBounds.IndexLastStep
+
+@[expose] public section
 
 noncomputable section
 

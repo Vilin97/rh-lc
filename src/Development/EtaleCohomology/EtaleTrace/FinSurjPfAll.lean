@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleTrace.FinSurjPfDense
+module
+
+public import Development.EtaleCohomology.EtaleTrace.FinSurjPfDense
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry MvPolynomial

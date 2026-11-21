@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PairEvaluation
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PairEvaluation
+
+@[expose] public section
 
 set_option autoImplicit false
 

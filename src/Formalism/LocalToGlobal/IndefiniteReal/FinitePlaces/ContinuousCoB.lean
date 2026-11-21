@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.LinIndepOneDelta
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.LinIndepOneDelta
+
+@[expose] public section
 
 noncomputable section
 

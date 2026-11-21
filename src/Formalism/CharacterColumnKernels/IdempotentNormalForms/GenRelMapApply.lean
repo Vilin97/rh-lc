@@ -1,4 +1,8 @@
-import Formalism.CharacterColumnKernels.StatementG
+module
+
+public import Formalism.CharacterColumnKernels.StatementG
+
+@[expose] public section
 
 open Finset
 

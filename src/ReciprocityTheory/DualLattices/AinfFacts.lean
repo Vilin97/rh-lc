@@ -1,5 +1,9 @@
-import ReciprocityTheory.DualLattices.Imports
-import ReciprocityTheory.DualLattices.ATowerInh
+module
+
+public import ReciprocityTheory.DualLattices.Imports
+public import ReciprocityTheory.DualLattices.ATowerInh
+
+@[expose] public section
 
 noncomputable section
 

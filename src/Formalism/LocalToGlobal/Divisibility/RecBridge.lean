@@ -1,18 +1,22 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.ConstantGeTwentyEight
-import Formalism.LocalToGlobal.Divisibility.RowSideTie
-import Formalism.LocalToGlobal.Divisibility.NumbersLink
-import Formalism.SharpRestriction.GlobalTheoremInputs
-import Formalism.SharpRestriction.AdmissibleParameterJoins
-import Formalism.SharpRestriction.Divisibility.LocalQuadraticParts
-import Formalism.SharpRestriction.Divisibility.WeightDegreeSizes
-import Formalism.SharpRestriction.Divisibility.ClosedSizeLink.DivisionAdmissibleFamilyOfData
-import Formalism.LocalToGlobal.GroupLattices.JointServices.ValIntNonneg
-import Formalism.LocalToGlobal.GroupLattices.JointServices.ShiftIdealSgFl
-import Formalism.LocalToGlobal.GroupLattices.ServJointF
-import Formalism.LocalToGlobal.Divisibility.LinkDIVL2R3Col
-import Formalism.SharpRestriction.Divisibility.HookProducts.RBTieOp
-import Formalism.SharpRestriction.Divisibility.HookProducts.RBTieMu
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.ConstantGeTwentyEight
+public import Formalism.LocalToGlobal.Divisibility.RowSideTie
+public import Formalism.LocalToGlobal.Divisibility.NumbersLink
+public import Formalism.SharpRestriction.GlobalTheoremInputs
+public import Formalism.SharpRestriction.AdmissibleParameterJoins
+public import Formalism.SharpRestriction.Divisibility.LocalQuadraticParts
+public import Formalism.SharpRestriction.Divisibility.WeightDegreeSizes
+public import Formalism.SharpRestriction.Divisibility.ClosedSizeLink.DivisionAdmissibleFamilyOfData
+public import Formalism.LocalToGlobal.GroupLattices.JointServices.ValIntNonneg
+public import Formalism.LocalToGlobal.GroupLattices.JointServices.ShiftIdealSgFl
+public import Formalism.LocalToGlobal.GroupLattices.ServJointF
+public import Formalism.LocalToGlobal.Divisibility.LinkDIVL2R3Col
+public import Formalism.SharpRestriction.Divisibility.HookProducts.RBTieOp
+public import Formalism.SharpRestriction.Divisibility.HookProducts.RBTieMu
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 

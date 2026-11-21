@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitsLocalizationStrictHenselianEqConstMulUnitStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUnitPowEq
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.UnitsLocalizationStrictHenselianEqConstMulUnitStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsUnitPowEq
+
+@[expose] public section
+
 open IsLocalRing
 
 namespace GlobalTheory.LocAcycUnits

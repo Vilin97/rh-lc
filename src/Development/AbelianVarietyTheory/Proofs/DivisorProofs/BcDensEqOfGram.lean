@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsFlagModelHermSum
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AppInjectiveOfFrames
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsFlagModelHermSum
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AppInjectiveOfFrames
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.UnramifiedDeterminedBySpherical
-import Development.WeilBound.ThetaLifts.LocalTheory.DixmierCommutants.AtSingle
-import Development.WeilBound.ThetaLifts.LocalTheory.DixmierCommutants.LocalMultiplicityOneIrreducibleGL
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.UnramifiedDeterminedBySpherical
+public import Development.WeilBound.ThetaLifts.LocalTheory.DixmierCommutants.AtSingle
+public import Development.WeilBound.ThetaLifts.LocalTheory.DixmierCommutants.LocalMultiplicityOneIrreducibleGL
+
+@[expose] public section
 
 noncomputable section
 

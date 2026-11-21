@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.RowSideTie
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.RowSideTie
+
+@[expose] public section
 
 open Formalism.BasicNotions Formalism.MainNotions NumberField IsDedekindDomain Formalism.L2.DIV Formalism.L2.Indef
 open scoped ComplexOrder

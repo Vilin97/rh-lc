@@ -1,4 +1,9 @@
-import Development.AbelianVarietyTheory.Definitions.Divisors.GhostFrobenius
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Divisors.GhostFrobenius
+
+@[expose] public section
+
 open CategoryTheory Opposite Matrix GlobalTheory GlobalTheory.PDivGroup GlobalTheory.Sandwich GlobalTheory.IndefiniteRowSideFullHecke.EpsilonPairingZeta GlobalTheory.PDivLat
 
 namespace GlobalTheory.FiniteAlgIdem

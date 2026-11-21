@@ -1,6 +1,10 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.ModelLat
-import Mathlib
-import Formalism.FrobeniusOrbits.HostCorollaries
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.ModelLat
+public import Mathlib
+public import Formalism.FrobeniusOrbits.HostCorollaries
+
+@[expose] public section
 
 noncomputable section
 

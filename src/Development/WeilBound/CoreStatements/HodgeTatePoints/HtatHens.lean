@@ -1,5 +1,9 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatHensA
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatHensA
+
+@[expose] public section
 
 namespace PositivityTheory.HtPt.Htat.Hens
 

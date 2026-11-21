@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.ValuationEqPairOfLogUnitGerm
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.ValuationEqPairOfLogUnitGerm
+
+@[expose] public section
 
 noncomputable section
 

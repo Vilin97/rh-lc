@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.FirstInequality.HerbrandClass
-import GroundTheory.GlobalFields.FirstInequalityStatement
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.FirstInequality.HerbrandClass
+public import GroundTheory.GlobalFields.FirstInequalityStatement
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

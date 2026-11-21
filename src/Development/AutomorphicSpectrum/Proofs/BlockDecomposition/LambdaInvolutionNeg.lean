@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MulEqOfRangeLe
-import GroundTheory.AutomorphicForms.AnisotropicHeight
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DegreePairingIdentity
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConjugatePlacesFacts
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MulEqOfRangeLe
+public import GroundTheory.AutomorphicForms.AnisotropicHeight
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DegreePairingIdentity
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConjugatePlacesFacts
+
+@[expose] public section
 
 noncomputable section
 

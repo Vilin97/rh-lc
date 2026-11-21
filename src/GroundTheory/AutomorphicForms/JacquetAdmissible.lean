@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.CuspidalAdmissible
-import GroundTheory.AutomorphicForms.AdmissibleInduction
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.CuspidalAdmissible
+public import GroundTheory.AutomorphicForms.AdmissibleInduction
+
+@[expose] public section
 
 noncomputable section
 

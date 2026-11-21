@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.StatementHeads
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RadialTransportPlus
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegrableOfDecay4
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SumPairAtStarMul
+module
+
+public import Formalism.HermitianCurvature.StatementHeads
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RadialTransportPlus
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegrableOfDecay4
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SumPairAtStarMul
+
+@[expose] public section
 
 open Matrix MeasureTheory
 open scoped ComplexConjugate

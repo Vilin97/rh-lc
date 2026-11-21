@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.CentralIntegrated
-import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.LactSpec
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.CentralIntegrated
+public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.LactSpec
+
+@[expose] public section
 
 open MeasureTheory NumberField IsDedekindDomain
 open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace

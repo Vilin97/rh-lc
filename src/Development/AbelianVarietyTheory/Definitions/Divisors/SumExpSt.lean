@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.LinksChar
-import Formalism.LocalToGlobal.Divisibility.LiftLat
-import Formalism.PieriBlockIdeals.StatementE
-import Formalism.PieriBlockIdeals.TailInequalityEventually
-import Formalism.SharpRestriction.Divisibility.JumpSets
-import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.SingleIndexPlacesAreTwisted
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.LinksChar
+public import Formalism.LocalToGlobal.Divisibility.LiftLat
+public import Formalism.PieriBlockIdeals.StatementE
+public import Formalism.PieriBlockIdeals.TailInequalityEventually
+public import Formalism.SharpRestriction.Divisibility.JumpSets
+public import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.SingleIndexPlacesAreTwisted
+
+@[expose] public section
 
 set_option autoImplicit false
 

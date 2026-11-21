@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.RealDescent.RealLeviDescent.DiracOfDiracZeroModule
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CliffordHighestWeightVector
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DiracKHolds
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.RealDescent.RealLeviDescent.DiracOfDiracZeroModule
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CliffordHighestWeightVector
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DiracKHolds
+
+@[expose] public section
 
 noncomputable section
 

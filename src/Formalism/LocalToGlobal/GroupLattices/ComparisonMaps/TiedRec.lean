@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ValRat
-import Formalism.LocalToGlobal.HermitianForms.RankEqFirstLevel
-import Formalism.LocalToGlobal.GroupLattices.DownNaturalLevelZero
-import Formalism.LocalToGlobal.HermitianColumns.BaseModelLevelEq
-import Formalism.LocalRingCardinality.DataLatDefs
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ValRat
+public import Formalism.LocalToGlobal.HermitianForms.RankEqFirstLevel
+public import Formalism.LocalToGlobal.GroupLattices.DownNaturalLevelZero
+public import Formalism.LocalToGlobal.HermitianColumns.BaseModelLevelEq
+public import Formalism.LocalRingCardinality.DataLatDefs
+
+@[expose] public section
 
 noncomputable section
 

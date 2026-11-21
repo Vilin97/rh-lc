@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.LocalFields.Monogenic
-import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
-import GroundTheory.LocalFields.Unramified
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.Monogenic
+public import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
+public import GroundTheory.LocalFields.Unramified
+
+@[expose] public section
 
 noncomputable section
 

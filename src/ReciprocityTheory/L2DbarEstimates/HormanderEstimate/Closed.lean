@@ -1,5 +1,9 @@
-import ReciprocityTheory.L2DbarEstimates.HormanderEstimate.ClosedCoreOfRegM
-import ReciprocityTheory.L2DbarEstimates.HormanderEstimate.ClosedEval
+module
+
+public import ReciprocityTheory.L2DbarEstimates.HormanderEstimate.ClosedCoreOfRegM
+public import ReciprocityTheory.L2DbarEstimates.HormanderEstimate.ClosedEval
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.F
 

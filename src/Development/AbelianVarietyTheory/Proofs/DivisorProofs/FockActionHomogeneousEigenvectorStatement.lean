@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockActionHomogeneousEigenvector
-import Formalism.LocalRingCardinality.DataTheta
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockActionHomogeneousEigenvector
+public import Formalism.LocalRingCardinality.DataTheta
+
+@[expose] public section
+
 open Formalism.BasicNotions.TH
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.fock_action_homogeneous_eigenvector : ∀ (P Q R S : ℕ) (x : ℚ) (e e₀ : ℕ) (f g : Formalism.BasicNotions.TH.Pol P Q R S),

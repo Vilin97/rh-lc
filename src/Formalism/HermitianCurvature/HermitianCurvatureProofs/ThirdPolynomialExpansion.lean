@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SignPermutationIdentity
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SignPermutationIdentity
+
+@[expose] public section
 
 open Matrix Finset
 

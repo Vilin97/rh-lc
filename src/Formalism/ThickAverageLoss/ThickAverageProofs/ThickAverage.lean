@@ -1,6 +1,10 @@
-import Formalism.JacobiWeightFamilies.Statement
-import Formalism.StatementU
-import Formalism.ThickAverageLoss.PartnersToFactorsAt
+module
+
+public import Formalism.JacobiWeightFamilies.Statement
+public import Formalism.StatementU
+public import Formalism.ThickAverageLoss.PartnersToFactorsAt
+
+@[expose] public section
 
 open Finset
 

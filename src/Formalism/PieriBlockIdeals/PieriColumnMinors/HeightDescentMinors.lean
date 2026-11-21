@@ -1,4 +1,8 @@
-import Formalism.PieriBlockIdeals.CapelliCentralEnveloping
+module
+
+public import Formalism.PieriBlockIdeals.CapelliCentralEnveloping
+
+@[expose] public section
 
 noncomputable section
 

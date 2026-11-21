@@ -1,8 +1,13 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.ConjInv
-import GroundTheory.GlobalFields.IdeleGroups.GaloisOnAdeles.Places
-import GroundTheory.GlobalFields.IdeleGroups.SIdeleGroups.Galois
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DenseRangeUnits
-import Development.WeilBound.CoreStatements.PublishedTheorems.SmoothVectorEstimates.SameSatTwist
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.ConjInv
+public import GroundTheory.GlobalFields.IdeleGroups.GaloisOnAdeles.Places
+public import GroundTheory.GlobalFields.IdeleGroups.SIdeleGroups.Galois
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DenseRangeUnits
+public import Development.WeilBound.CoreStatements.PublishedTheorems.SmoothVectorEstimates.SameSatTwist
+
+@[expose] public section
+
 open NumberField IsDedekindDomain GroundTheory.Global Formalism.L2.Host GlobalTheory.CuspRep Neutral.B1
 open UpperTheory.ConvolutionTheory.RankTwoDescent
 

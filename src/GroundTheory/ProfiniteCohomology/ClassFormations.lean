@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.ClassFormationDefs
-import GroundTheory.ProfiniteCohomology.ClassFormations.IsIsoCohomologyMapAlongResSubgroupOfHom
-import GroundTheory.ProfiniteCohomology.ClassFormations.Quotient
-import GroundTheory.ProfiniteCohomology.ClassFormations.Finite
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.ClassFormationDefs
+public import GroundTheory.ProfiniteCohomology.ClassFormations.IsIsoCohomologyMapAlongResSubgroupOfHom
+public import GroundTheory.ProfiniteCohomology.ClassFormations.Quotient
+public import GroundTheory.ProfiniteCohomology.ClassFormations.Finite
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

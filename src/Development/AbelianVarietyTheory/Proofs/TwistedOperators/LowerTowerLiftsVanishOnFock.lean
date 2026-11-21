@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.CartFrSgn
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NoInvariantPairingSmallerFockDiscreteSeriesStatement
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.SignBlockDeterminantOne
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.CartFrSgn
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.NoInvariantPairingSmallerFockDiscreteSeriesStatement
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.SignBlockDeterminantOne
+
+@[expose] public section
 
 noncomputable section
 

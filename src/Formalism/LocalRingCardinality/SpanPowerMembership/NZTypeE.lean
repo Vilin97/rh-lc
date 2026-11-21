@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.DataN
-import Formalism.CyclotomicNorms.NonsquarefreeBounds.NonsquarefreeMonicBoundHolds
-import Formalism.LocalRingCardinality.SpanPowerMembership.NZTypeD
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataN
+public import Formalism.CyclotomicNorms.NonsquarefreeBounds.NonsquarefreeMonicBoundHolds
+public import Formalism.LocalRingCardinality.SpanPowerMembership.NZTypeD
+
+@[expose] public section
 
 noncomputable section
 

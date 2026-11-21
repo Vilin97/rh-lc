@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.LocalShareBounds
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocalShareBounds
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafNormalModelPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafNormalModelPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite LateralTheory.E.E4

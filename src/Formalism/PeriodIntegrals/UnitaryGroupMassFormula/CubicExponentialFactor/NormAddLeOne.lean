@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.CubicExponentialFactor
+module
+
+public import Formalism.PeriodIntegrals.CubicExponentialFactor
+
+@[expose] public section
 
 noncomputable section
 

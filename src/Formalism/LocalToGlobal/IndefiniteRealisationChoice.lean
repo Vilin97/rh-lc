@@ -1,18 +1,22 @@
-import Formalism.LocalToGlobal.ClassOfRecordOfChoice
-import Formalism.LocalToGlobal.IndefiniteReal.TrISepWith
-import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.NMjT
-import Formalism.LocalToGlobal.SelSide
-import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.TwistedCharacterValue
-import Formalism.LocalToGlobal.KernelLattices.AdaptedEnt
-import Formalism.LocalToGlobal.ClassRec
-import Formalism.LocalToGlobal.KernelLattices.KerChTie
-import Formalism.LocalToGlobal.KernelLattices.TopPin
-import Formalism.LocalToGlobal.KernelLattices.KerMemPin
-import Formalism.LocalToGlobal.KernelLattices.KerMtPin
-import Formalism.LocalToGlobal.KernelLattices.InterlaceAll
-import Formalism.LocalToGlobal.GroupLattices.JointServices.Cut
-import Formalism.LocalToGlobal.Divisibility.RecBridgeSel
-import Formalism.SharpRestriction.Divisibility.HookProducts.Compl3Record
+module
+
+public import Formalism.LocalToGlobal.ClassOfRecordOfChoice
+public import Formalism.LocalToGlobal.IndefiniteReal.TrISepWith
+public import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.NMjT
+public import Formalism.LocalToGlobal.SelSide
+public import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.TwistedCharacterValue
+public import Formalism.LocalToGlobal.KernelLattices.AdaptedEnt
+public import Formalism.LocalToGlobal.ClassRec
+public import Formalism.LocalToGlobal.KernelLattices.KerChTie
+public import Formalism.LocalToGlobal.KernelLattices.TopPin
+public import Formalism.LocalToGlobal.KernelLattices.KerMemPin
+public import Formalism.LocalToGlobal.KernelLattices.KerMtPin
+public import Formalism.LocalToGlobal.KernelLattices.InterlaceAll
+public import Formalism.LocalToGlobal.GroupLattices.JointServices.Cut
+public import Formalism.LocalToGlobal.Divisibility.RecBridgeSel
+public import Formalism.SharpRestriction.Divisibility.HookProducts.Compl3Record
+
+@[expose] public section
 
 noncomputable section
 

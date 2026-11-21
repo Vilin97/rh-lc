@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.StatementTL
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RuleGD
-import CompanionTheory.AutomorphicTheory.JacobiDiagonalBounds.TieAlg
+module
+
+public import Formalism.HermitianCurvature.StatementTL
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RuleGD
+public import CompanionTheory.AutomorphicTheory.JacobiDiagonalBounds.TieAlg
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.NormalFormRelations
 

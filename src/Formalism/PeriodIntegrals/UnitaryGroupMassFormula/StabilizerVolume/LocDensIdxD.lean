@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerVolume.LocDensIdxC
-import ReciprocityTheory.ResidueCardinality.ArtinOntoB
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.StabilizerVolume.LocDensIdxC
+public import ReciprocityTheory.ResidueCardinality.ArtinOntoB
+
+@[expose] public section
 
 noncomputable section
 

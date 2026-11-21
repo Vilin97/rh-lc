@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.DefiniteClassNumber.AdelicLattice
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.DefiniteClassNumber.AdelicLattice
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

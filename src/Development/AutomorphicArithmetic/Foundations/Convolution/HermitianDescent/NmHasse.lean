@@ -1,7 +1,11 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.HermitianDescent.NormAlmostAll
-import Development.AutomorphicArithmetic.Foundations.Convolution.HermitianDescent.RootMapRoot
-import Development.AutomorphicArithmetic.Foundations.Convolution.HermitianDescent.HasseEt
-import Development.AutomorphicArithmetic.Foundations.Convolution.HermitianDescent.GalField
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.HermitianDescent.NormAlmostAll
+public import Development.AutomorphicArithmetic.Foundations.Convolution.HermitianDescent.RootMapRoot
+public import Development.AutomorphicArithmetic.Foundations.Convolution.HermitianDescent.HasseEt
+public import Development.AutomorphicArithmetic.Foundations.Convolution.HermitianDescent.GalField
+
+@[expose] public section
 
 open Matrix Polynomial NumberField IsDedekindDomain
 open scoped TensorProduct

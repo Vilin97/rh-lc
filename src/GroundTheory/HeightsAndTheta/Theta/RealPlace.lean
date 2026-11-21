@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Theta.RealSignature
-import GroundTheory.AutomorphicForms.AdelicUnitaryGroups
-import GroundTheory.AutomorphicForms.HermitianLocalForms
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Theta.RealSignature
+public import GroundTheory.AutomorphicForms.AdelicUnitaryGroups
+public import GroundTheory.AutomorphicForms.HermitianLocalForms
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Theta
 

@@ -1,5 +1,9 @@
-import Development.AutomorphicSpectrum.Statements.AlgebraStatements.IsPolarisationOfRelAmple
-import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.IsFinFlatSub
+module
+
+public import Development.AutomorphicSpectrum.Statements.AlgebraStatements.IsPolarisationOfRelAmple
+public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.IsFinFlatSub
+
+@[expose] public section
 
 set_option autoImplicit false
 

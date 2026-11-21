@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.LagrangeExtensionCocycles.ExtensionCocycleProofs.MemSpanOfFrobeniusMemSpan
-import Formalism.ResultantValuation.ResultantAdjugateProofs.Window
+module
+
+public import Formalism.WachLatticeTwists.LagrangeExtensionCocycles.ExtensionCocycleProofs.MemSpanOfFrobeniusMemSpan
+public import Formalism.ResultantValuation.ResultantAdjugateProofs.Window
+
+@[expose] public section
 
 noncomputable section
 

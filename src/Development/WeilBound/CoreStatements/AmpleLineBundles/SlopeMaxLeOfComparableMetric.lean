@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.AmpleLineBundles.NormDegreeLeOfMetricBoundedMap
-import Development.WeilBound.CoreStatements.AmpleLineBundles.StandardHermitianBundleSemistable
+module
+
+public import Development.WeilBound.CoreStatements.AmpleLineBundles.NormDegreeLeOfMetricBoundedMap
+public import Development.WeilBound.CoreStatements.AmpleLineBundles.StandardHermitianBundleSemistable
+
+@[expose] public section
 
 open GroundTheory.Heights₂.Heights NumberField TensorProduct ComplexAt GlobalTheory.CompanionTheory.Ar Matrix
 open scoped BigOperators ComplexOrder

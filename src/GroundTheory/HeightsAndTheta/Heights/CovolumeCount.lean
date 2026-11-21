@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Covolume
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Covolume
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights
 

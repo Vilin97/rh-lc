@@ -1,9 +1,13 @@
-import Formalism.SharpRestriction.GrowthBounds.PathWeight.Lemma4OfRemainingStatements
-import Formalism.SharpRestriction.GrowthBounds.PathWeight.MdWeightMapDomain
-import Formalism.SharpRestriction.GrowthBounds.PathWeight.LeadingDepthOneMemClosure
-import Formalism.SharpRestriction.GrowthBounds.PathWeight.CoeUntopDLeAlt
-import Formalism.SharpRestriction.GrowthBounds.PathWeight.LetterWeightPos
-import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.SymbolRealisableBound
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.PathWeight.Lemma4OfRemainingStatements
+public import Formalism.SharpRestriction.GrowthBounds.PathWeight.MdWeightMapDomain
+public import Formalism.SharpRestriction.GrowthBounds.PathWeight.LeadingDepthOneMemClosure
+public import Formalism.SharpRestriction.GrowthBounds.PathWeight.CoeUntopDLeAlt
+public import Formalism.SharpRestriction.GrowthBounds.PathWeight.LetterWeightPos
+public import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.SymbolRealisableBound
+
+@[expose] public section
 
 noncomputable section
 

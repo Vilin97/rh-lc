@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.MacdonaldRecursion
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.MacdonaldRecursion
+
+@[expose] public section
 
 noncomputable section
 

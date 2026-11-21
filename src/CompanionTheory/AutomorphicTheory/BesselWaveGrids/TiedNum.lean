@@ -1,10 +1,14 @@
-import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.TBBTie
-import CompanionTheory.AutomorphicTheory.BesselWaveGrids.GapSizes
-import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeLemma3
-import CompanionTheory.AutomorphicTheory.BesselWaveGrids.KDecayOfGap
-import CompanionTheory.AutomorphicTheory.BesselWaveGrids.FamilyThroughDiscreteSeries
-import CompanionTheory.AutomorphicTheory.BesselWaveGrids.TypeHC
-import CompanionTheory.AutomorphicTheory.BesselWaveGrids.NqOfLamData
+module
+
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.TBBTie
+public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.GapSizes
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeLemma3
+public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.KDecayOfGap
+public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.FamilyThroughDiscreteSeries
+public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.TypeHC
+public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.NqOfLamData
+
+@[expose] public section
 
 noncomputable section
 

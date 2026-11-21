@@ -1,14 +1,18 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UpqRep
-import Formalism.PeriodIntegrals.IsLowUnitH
-import Formalism.PeriodIntegrals.LowCyc
-import Formalism.PeriodIntegrals.KFinSmooth
-import Formalism.PeriodIntegrals.BesselPeriodGGP
-import Formalism.PeriodIntegrals.BesselMapUniq
-import Formalism.FormalDegreeBessel.StatementG
-import Formalism.FormalDegreeBessel.StatementDS
-import Formalism.HermitianCurvature.StatementB
-import Formalism.HermitianCurvature.StatementJF
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UpqRep
+public import Formalism.PeriodIntegrals.IsLowUnitH
+public import Formalism.PeriodIntegrals.LowCyc
+public import Formalism.PeriodIntegrals.KFinSmooth
+public import Formalism.PeriodIntegrals.BesselPeriodGGP
+public import Formalism.PeriodIntegrals.BesselMapUniq
+public import Formalism.FormalDegreeBessel.StatementG
+public import Formalism.FormalDegreeBessel.StatementDS
+public import Formalism.HermitianCurvature.StatementB
+public import Formalism.HermitianCurvature.StatementJF
+
+@[expose] public section
 
 open MeasureTheory Matrix Finset
 open scoped InnerProductSpace ENNReal

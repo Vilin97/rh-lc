@@ -1,11 +1,15 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Jets.SumIoPrAlt
-import Development.AbelianVarietyTheory.BlockTheory.JetGauges.SmoothDecompositionForms
-import Formalism.PeriodIntegrals.UpqRep
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ContDiffSetIntegralNat
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CasimirEigenvalueCoefficients
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ContinuousMulMt
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CapelliEigenvalues.HeckeMultiplication
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Jets.SumIoPrAlt
+public import Development.AbelianVarietyTheory.BlockTheory.JetGauges.SmoothDecompositionForms
+public import Formalism.PeriodIntegrals.UpqRep
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ContDiffSetIntegralNat
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CasimirEigenvalueCoefficients
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ContinuousMulMt
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CapelliEigenvalues.HeckeMultiplication
+
+@[expose] public section
 
 open Matrix Finset PI.UpqRep
 open scoped InnerProductSpace ContDiff

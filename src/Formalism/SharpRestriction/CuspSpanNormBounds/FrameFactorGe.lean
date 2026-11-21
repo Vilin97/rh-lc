@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.BcWeightEqZeroOf
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BcWeightEqZeroOf
+
+@[expose] public section
 
 open MeasureTheory Matrix Finset
 

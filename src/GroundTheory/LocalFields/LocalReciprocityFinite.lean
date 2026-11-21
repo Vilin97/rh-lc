@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.LocalAxiom
-import GroundTheory.LocalFields.LocalReciprocityLimitAbstract
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LocalAxiom
+public import GroundTheory.LocalFields.LocalReciprocityLimitAbstract
+
+@[expose] public section
 
 namespace GroundTheory.LocalField
 

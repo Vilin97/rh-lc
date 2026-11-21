@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MassComputations.IsCompactOhat
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MassComputations.IsCompactOhat
+
+@[expose] public section
 
 noncomputable section
 

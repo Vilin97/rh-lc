@@ -1,13 +1,17 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
-import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IndLineInf
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KStab
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PolEqISupFockDeg
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KEqOnId
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LowPartCompactStableStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LowPartEndomorphismScalarStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConfigBRealPlaceH1BranchStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IndLineInf
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KStab
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PolEqISupFockDeg
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KEqOnId
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LowPartCompactStableStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LowPartEndomorphismScalarStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConfigBRealPlaceH1BranchStatement
+
+@[expose] public section
 
 open scoped TensorProduct NNReal Matrix
 open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes

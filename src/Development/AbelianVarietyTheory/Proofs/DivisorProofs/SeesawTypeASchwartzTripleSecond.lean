@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
-import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DecayNonneg
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HTensEqZero
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SymplecticFormBlockVanishing
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DecayNonneg
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HTensEqZero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SymplecticFormBlockVanishing
+
+@[expose] public section
 
 open scoped TensorProduct NNReal Matrix
 open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes

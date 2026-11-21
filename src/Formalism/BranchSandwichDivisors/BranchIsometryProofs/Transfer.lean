@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.BranchSandwichDivisors.StatementL
-import Formalism.BranchSandwichDivisors.BranchIsometryProofs.TransferMean
-import Formalism.MeanHeightDescent.AverageDegreeBounds.GoodBadCut
-import Formalism.HarderNarasimhan.ShiftInvariance
+module
+
+public import Mathlib
+public import Formalism.BranchSandwichDivisors.StatementL
+public import Formalism.BranchSandwichDivisors.BranchIsometryProofs.TransferMean
+public import Formalism.MeanHeightDescent.AverageDegreeBounds.GoodBadCut
+public import Formalism.HarderNarasimhan.ShiftInvariance
+
+@[expose] public section
 
 open Module NumberField
 open scoped Matrix

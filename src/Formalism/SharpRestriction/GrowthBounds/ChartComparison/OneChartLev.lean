@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.StepIn
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ExistsPrimeToLe
-import Formalism.LocalToGlobal.HermitianForms.TiedSym
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsIdealDenominator
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.StepIn
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ExistsPrimeToLe
+public import Formalism.LocalToGlobal.HermitianForms.TiedSym
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsIdealDenominator
+
+@[expose] public section
 
 noncomputable section
 

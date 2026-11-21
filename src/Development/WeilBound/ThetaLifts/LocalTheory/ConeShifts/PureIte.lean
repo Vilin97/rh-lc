@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.ActsRhoFin
-import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsPureML
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.ActsRhoFin
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsPureML
+
+@[expose] public section
 
 noncomputable section
 

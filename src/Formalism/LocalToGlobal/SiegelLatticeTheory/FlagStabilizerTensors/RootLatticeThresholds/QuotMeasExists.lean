@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CasimirReductionTheory.OneParameterDerivatives.WeilIndicatorMeasures.MeasurableUnitMulIndicator
-import Formalism.PeriodIntegrals.QuotInv
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QuotSetU
-import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CasimirReductionTheory.OneParameterDerivatives.WeilIndicatorMeasures.MeasurableUnitMulIndicator
+public import Formalism.PeriodIntegrals.QuotInv
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QuotSetU
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
+
+@[expose] public section
 
 open MeasureTheory Topology
 open scoped ENNReal

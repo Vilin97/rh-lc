@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.EndInt
-import Formalism.LocalToGlobal.InertKernelTheory.DefsBeW
-import Formalism.LocalToGlobal.TorsionIntegrality.FrobeniusFibreCurves.FinalC
-import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.HasCMByStable
-import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.SecondCoeffConsistency
-import Formalism.LocalToGlobal.TorsionIntegrality.UniformGaussModels.OneLetterGaussSharpTranslateHolds
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.EndInt
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsBeW
+public import Formalism.LocalToGlobal.TorsionIntegrality.FrobeniusFibreCurves.FinalC
+public import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.HasCMByStable
+public import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.SecondCoeffConsistency
+public import Formalism.LocalToGlobal.TorsionIntegrality.UniformGaussModels.OneLetterGaussSharpTranslateHolds
+
+@[expose] public section
 
 open PowerSeries
 

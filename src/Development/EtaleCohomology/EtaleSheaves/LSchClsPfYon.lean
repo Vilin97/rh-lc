@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafKumSpecPfEv
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafKumSpecPfEv
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC

@@ -1,12 +1,16 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGermLow
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.GermRateLowerBound
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormSumLeOfForm
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGInt
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGCongr
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGSlice
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutEX_UwTop
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLimE
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGermLowGermW
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGermLow
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GermRateLowerBound
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormSumLeOfForm
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGInt
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGCongr
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGSlice
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutEX_UwTop
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLimE
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGermLowGermW
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP
 

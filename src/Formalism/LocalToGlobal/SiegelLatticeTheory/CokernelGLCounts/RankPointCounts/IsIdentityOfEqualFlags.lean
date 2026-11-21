@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.RelevantSetZeroGNotIdentity
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.UnitriangularFrameLift
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdScal
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdUnit
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdRoot
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdLift
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.RelevantSetZeroGNotIdentity
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.UnitriangularFrameLift
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdScal
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdUnit
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdRoot
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.IdLift
+
+@[expose] public section
 
 noncomputable section
 

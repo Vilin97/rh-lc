@@ -1,8 +1,12 @@
-import Mathlib
-import Development.DiscreteGroups.GlobalIrreducibility.DzLcFin
-import Development.DiscreteGroups.GlobalIrreducibility.DzLcPerm
-import Development.DiscreteGroups.GlobalIrreducibility.DzLcIso
-import Development.DiscreteGroups.GlobalIrreducibility.DzTypeCut
+module
+
+public import Mathlib
+public import Development.DiscreteGroups.GlobalIrreducibility.DzLcFin
+public import Development.DiscreteGroups.GlobalIrreducibility.DzLcPerm
+public import Development.DiscreteGroups.GlobalIrreducibility.DzLcIso
+public import Development.DiscreteGroups.GlobalIrreducibility.DzTypeCut
+
+@[expose] public section
 
 noncomputable section
 

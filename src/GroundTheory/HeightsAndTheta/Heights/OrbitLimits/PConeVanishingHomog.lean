@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StConeVanishingHomog
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PGoodChartZeroSet
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StConeVanishingHomog
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PGoodChartZeroSet
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

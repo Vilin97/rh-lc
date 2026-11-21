@@ -1,14 +1,19 @@
-import Mathlib
-import GroundTheory.Brauer.SkolemNoether
-import GroundTheory.Brauer.IsBrauerEquivalentIffNonemptyAlgEquiv
-import GroundTheory.Brauer.TensorSimple
-import GroundTheory.Brauer.BaseChangeCSA
-import GroundTheory.Brauer.DoubleCentralizer
-import GroundTheory.Brauer.Degree
-import GroundTheory.ProfiniteCohomology.Colimit
-import GroundTheory.ProfiniteCohomology.GaloisCohomology.UnitsInflationCochainsFHomApply
-import GroundTheory.ProfiniteCohomology.GaloisCohomology.IsZeroGroupCohomologyQuotientToInvariantsGalAdd
-import GroundTheory.ProfiniteCohomology.CohomologyFunctoriality
+module
+
+public import Mathlib
+public import GroundTheory.Brauer.SkolemNoether
+public import GroundTheory.Brauer.IsBrauerEquivalentIffNonemptyAlgEquiv
+public import GroundTheory.Brauer.TensorSimple
+public import GroundTheory.Brauer.BaseChangeCSA
+public import GroundTheory.Brauer.DoubleCentralizer
+public import GroundTheory.Brauer.Degree
+public import GroundTheory.ProfiniteCohomology.Colimit
+public import GroundTheory.ProfiniteCohomology.GaloisCohomology.UnitsInflationCochainsFHomApply
+public import GroundTheory.ProfiniteCohomology.GaloisCohomology.IsZeroGroupCohomologyQuotientToInvariantsGalAdd
+public import GroundTheory.ProfiniteCohomology.CohomologyFunctoriality
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

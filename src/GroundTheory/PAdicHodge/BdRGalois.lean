@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.ThetaPlus
-import GroundTheory.PAdicHodge.AInfGalois
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.ThetaPlus
+public import GroundTheory.PAdicHodge.AInfGalois
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

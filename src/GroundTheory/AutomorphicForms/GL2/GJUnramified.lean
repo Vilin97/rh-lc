@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJUnramifiedCosets
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJUnramifiedCosets
+
+@[expose] public section
 
 noncomputable section
 

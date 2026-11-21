@@ -1,4 +1,8 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.LseConvexOn
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.LseConvexOn
+
+@[expose] public section
 
 noncomputable section
 

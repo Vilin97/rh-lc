@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.PHeisFCA
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.PHeisFCA
+
+@[expose] public section
 
 noncomputable section
 

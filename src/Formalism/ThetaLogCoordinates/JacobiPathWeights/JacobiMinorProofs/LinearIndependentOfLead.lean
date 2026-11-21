@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.ThetaLogCoordinates.JacobiPathWeights.StatementA
-import Lemmata.GeneralBFactRightFurther.Imports
+module
+
+public import Mathlib
+public import Formalism.ThetaLogCoordinates.JacobiPathWeights.StatementA
+public import Lemmata.GeneralBFactRightFurther.Imports
+
+@[expose] public section
 
 noncomputable section
 

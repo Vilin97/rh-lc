@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.HeightBoundExactNorms
-import Formalism.QuotientMetricDivisors.ProdFormula
-import Formalism.QuotientMetricDivisors.StatementACE
-import Formalism.HarderNarasimhan.HarderNarasimhanProofs.SlopeIneqMean
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.HeightBoundExactNorms
+public import Formalism.QuotientMetricDivisors.ProdFormula
+public import Formalism.QuotientMetricDivisors.StatementACE
+public import Formalism.HarderNarasimhan.HarderNarasimhanProofs.SlopeIneqMean
+
+@[expose] public section
 
 open Module NumberField
 open scoped Matrix ComplexOrder InnerProductSpace

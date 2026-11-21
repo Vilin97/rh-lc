@@ -1,13 +1,17 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.LinearIndependentEigProj
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.WedgeEqSpanOfIsFrameAt
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LatticeEigenVectorBundle
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsUnitWedge
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExtFrameOfQuotientKernel
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.MatrixEqOfLinearIndependent
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.AdaptedSpan
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.EigProjMemOfFree
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsFrameInter
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.LinearIndependentEigProj
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.WedgeEqSpanOfIsFrameAt
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.LatticeEigenVectorBundle
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsUnitWedge
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExtFrameOfQuotientKernel
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.MatrixEqOfLinearIndependent
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.AdaptedSpan
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.EigProjMemOfFree
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsFrameInter
+
+@[expose] public section
 
 open AlgebraicGeometry CategoryTheory Limits NumberField GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Flat
 

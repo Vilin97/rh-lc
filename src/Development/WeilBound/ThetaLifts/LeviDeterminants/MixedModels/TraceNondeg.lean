@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.PureSt
+module
+
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.PureSt
+
+@[expose] public section
 
 noncomputable section
 

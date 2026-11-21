@@ -1,12 +1,16 @@
-import Mathlib
-import Formalism.LogFactorialIndices.StatementSize
-import Formalism.ThetaSupremumBounds.GaussianShiftBounds.HeightsoundOf
-import Formalism.ThetaSupremumBounds.GaussianShiftBounds.BlockIntegralOf
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.TheoremDivIneq
-import Formalism.QuotientMetricDivisors.StatementK
-import Formalism.ThetaSupremumBounds.GaussianShiftBounds.FockJet
-import Formalism.ThetaSupremumBounds.GaussianShiftBounds.GaussCoord
-import Formalism.ThetaSupremumBounds.StatementE
+module
+
+public import Mathlib
+public import Formalism.LogFactorialIndices.StatementSize
+public import Formalism.ThetaSupremumBounds.GaussianShiftBounds.HeightsoundOf
+public import Formalism.ThetaSupremumBounds.GaussianShiftBounds.BlockIntegralOf
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.TheoremDivIneq
+public import Formalism.QuotientMetricDivisors.StatementK
+public import Formalism.ThetaSupremumBounds.GaussianShiftBounds.FockJet
+public import Formalism.ThetaSupremumBounds.GaussianShiftBounds.GaussCoord
+public import Formalism.ThetaSupremumBounds.StatementE
+
+@[expose] public section
 
 namespace Formalism.DimensionVariation
 

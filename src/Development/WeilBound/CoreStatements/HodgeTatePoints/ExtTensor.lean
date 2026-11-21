@@ -1,7 +1,12 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.TranslateMemIndOrder
-import Development.WeilBound.CoreStatements.HodgeTatePoints.TwhopfInd
-import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatDesc
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.TranslateMemIndOrder
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.TwhopfInd
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatDesc
+
+@[expose] public section
+
 open GlobalTheory.CompanionTheory.Ar.BT TensorProduct
 
 namespace PositivityTheory.HtPt.Mh

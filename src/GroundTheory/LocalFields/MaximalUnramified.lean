@@ -1,16 +1,20 @@
-import Mathlib
-import GroundTheory.LocalFields.Interface
-import GroundTheory.LocalFields.FiniteExtension
-import GroundTheory.LocalFields.Uniqueness
-import GroundTheory.LocalFields.Integers
-import GroundTheory.LocalFields.UnitsPowers
-import GroundTheory.LocalFields.UnramifiedRootsOfUnity
-import GroundTheory.LocalFields.UnramifiedGalois
-import GroundTheory.LocalFields.UnramifiedExistence
-import GroundTheory.LocalFields.AbstractLocalReciprocity.ProfiniteInteger
-import GroundTheory.LocalFields.AbstractLocalReciprocity.ExistsEqNsmulOfProjEqZero
-import GroundTheory.LocalFields.AbstractLocalReciprocity.Frobenius
-import GroundTheory.LocalFields.AbstractLocalReciprocity.Valuation
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.Interface
+public import GroundTheory.LocalFields.FiniteExtension
+public import GroundTheory.LocalFields.Uniqueness
+public import GroundTheory.LocalFields.Integers
+public import GroundTheory.LocalFields.UnitsPowers
+public import GroundTheory.LocalFields.UnramifiedRootsOfUnity
+public import GroundTheory.LocalFields.UnramifiedGalois
+public import GroundTheory.LocalFields.UnramifiedExistence
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.ProfiniteInteger
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.ExistsEqNsmulOfProjEqZero
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.Frobenius
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.Valuation
+
+@[expose] public section
 
 noncomputable section
 

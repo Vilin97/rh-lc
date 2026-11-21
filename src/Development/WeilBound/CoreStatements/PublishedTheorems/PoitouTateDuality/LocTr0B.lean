@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.PublishedTheorems.PoitouTateDuality.FinalPtfsData
-import Development.WeilBound.CoreStatements.PublishedTheorems.PoitouTateDuality.FinalInv
-import Development.WeilBound.CoreStatements.PublishedTheorems.PoitouTateDuality.TransferCupDegreeZeroTwo
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.PublishedTheorems.PoitouTateDuality.FinalPtfsData
+public import Development.WeilBound.CoreStatements.PublishedTheorems.PoitouTateDuality.FinalInv
+public import Development.WeilBound.CoreStatements.PublishedTheorems.PoitouTateDuality.TransferCupDegreeZeroTwo
+
+@[expose] public section
 
 noncomputable section
 

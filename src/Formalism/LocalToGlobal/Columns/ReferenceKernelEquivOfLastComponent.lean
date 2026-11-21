@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.RefXi1Above
-import Formalism.LocalToGlobal.Columns.ChainOne
+module
+
+public import Formalism.LocalToGlobal.Columns.RefXi1Above
+public import Formalism.LocalToGlobal.Columns.ChainOne
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.RingStepsOf
-import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.ExpRescaleCoeff
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.RingStepsOf
+public import Formalism.SharpRestriction.LevelLetterCocycles.CyclotomicPowerSeries.ExpRescaleCoeff
+
+@[expose] public section
 
 noncomputable section
 

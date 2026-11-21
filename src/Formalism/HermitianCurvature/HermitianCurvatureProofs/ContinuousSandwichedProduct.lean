@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.GNSandwich
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ConjugationInvarianceEverySetting
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GNSandwich
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ConjugationInvarianceEverySetting
+
+@[expose] public section
 
 noncomputable section
 

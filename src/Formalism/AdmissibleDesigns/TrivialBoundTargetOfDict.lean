@@ -1,4 +1,8 @@
-import Formalism.AdmissibleDesigns.RowTrivialBoundOfAdmitted
+module
+
+public import Formalism.AdmissibleDesigns.RowTrivialBoundOfAdmitted
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

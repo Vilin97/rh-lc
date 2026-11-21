@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Divisibility.JetBounds.JetCounting.CurveAt
+module
+
+public import Formalism.LocalToGlobal.Divisibility.JetBounds.JetCounting.CurveAt
+
+@[expose] public section
 
 open scoped BigOperators
 

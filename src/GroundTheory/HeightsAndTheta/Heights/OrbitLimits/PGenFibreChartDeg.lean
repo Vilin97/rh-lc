@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.GenFibreChartDeg
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StChartScalingIndep
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StAdjoinIndepRelfinrank
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PFinrankAdjoinRange
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterGoodB
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.GenFibreChartDeg
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StChartScalingIndep
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StAdjoinIndepRelfinrank
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PFinrankAdjoinRange
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterGoodB
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.InstSecondCountableSub
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.InstSecondCountableSub
+
+@[expose] public section
+
 open MeasureTheory Matrix GlobalTheory.Dec GlobalTheory.IwaInt
 open scoped ComplexOrder
 

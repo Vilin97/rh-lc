@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.ExponentialPartialDerivatives.UnshiftEvalEqSubstRawUnit
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ExponentialPartialDerivatives.UnshiftEvalEqSubstRawUnit
+
+@[expose] public section
 
 noncomputable section
 

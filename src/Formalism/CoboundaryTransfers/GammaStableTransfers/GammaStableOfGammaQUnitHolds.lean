@@ -1,6 +1,10 @@
-import Formalism.CoboundaryTransfers.StatementAPI
-import Formalism.CoboundaryTransfers.GammaStableTransfers.MemCoboundariesOfIsOneCoboundary
-import Formalism.FrobeniusContraction.FrobeniusContractionProofs.LenBound
+module
+
+public import Formalism.CoboundaryTransfers.StatementAPI
+public import Formalism.CoboundaryTransfers.GammaStableTransfers.MemCoboundariesOfIsOneCoboundary
+public import Formalism.FrobeniusContraction.FrobeniusContractionProofs.LenBound
+
+@[expose] public section
 
 noncomputable section
 

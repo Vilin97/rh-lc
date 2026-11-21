@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.Divisibility.BoundaryLocalData
+module
+
+public import Formalism.SharpRestriction.Divisibility.BoundaryLocalData
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.PinHostLoc
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.PinHostLoc
+
+@[expose] public section
 
 noncomputable section
 

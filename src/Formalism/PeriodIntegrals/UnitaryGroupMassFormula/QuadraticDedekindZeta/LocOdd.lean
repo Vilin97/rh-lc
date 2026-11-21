@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.ClassNumImQ
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ClassNumImQInt
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.QuadraticInvariants.QuadPolyIrreducible
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.ClassNumImQ
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ClassNumImQInt
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.QuadraticInvariants.QuadPolyIrreducible
+
+@[expose] public section
 
 open NumberField
 

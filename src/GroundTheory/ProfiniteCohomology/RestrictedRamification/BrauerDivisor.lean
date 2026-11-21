@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BrauerOrd
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.DivisorModule
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BrauerDivisorKummer
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BrauerDivisorPlaces
-import GroundTheory.GlobalFields.SUnits
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BrauerOrd
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.DivisorModule
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BrauerDivisorKummer
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BrauerDivisorPlaces
+public import GroundTheory.GlobalFields.SUnits
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

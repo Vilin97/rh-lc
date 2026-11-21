@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TopRatio
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutIntervalLong
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.Interlace
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BetaFactorisation
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TopRatio
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutIntervalLong
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.Interlace
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BetaFactorisation
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBL
 

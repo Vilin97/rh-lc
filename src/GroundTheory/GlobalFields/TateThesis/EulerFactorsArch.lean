@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.HeckeChar
-import GroundTheory.GlobalFields.TateThesis.IdeleMeasure
-import GroundTheory.GlobalFields.TateThesis.ArchCharsUnitary
-import GroundTheory.GlobalFields.TateThesis.Gaussian
-import GroundTheory.GlobalFields.TateThesis.GaussianComplex
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.HeckeChar
+public import GroundTheory.GlobalFields.TateThesis.IdeleMeasure
+public import GroundTheory.GlobalFields.TateThesis.ArchCharsUnitary
+public import GroundTheory.GlobalFields.TateThesis.Gaussian
+public import GroundTheory.GlobalFields.TateThesis.GaussianComplex
+
+@[expose] public section
 
 open NumberField InfinitePlace InfinitePlace.Completion MeasureTheory Complex ComplexConjugate
 open scoped Real

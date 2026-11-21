@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.EmbTraceSum
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.EmbTraceSum
+
+@[expose] public section
 
 theorem sumEqTrace_holds : PI.EmbTraceSum := by
   intro E _ _ K φ₀ S _ emb hinj hext hcard y

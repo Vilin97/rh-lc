@@ -1,4 +1,8 @@
-import Formalism.PadicSubsetSums.CentralIdempotents.IsConstituent
+module
+
+public import Formalism.PadicSubsetSums.CentralIdempotents.IsConstituent
+
+@[expose] public section
 
 open Polynomial CategoryTheory
 noncomputable section

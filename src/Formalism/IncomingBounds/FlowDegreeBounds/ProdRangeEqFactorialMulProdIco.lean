@@ -1,4 +1,8 @@
-import Formalism.IncomingBounds.LemmaMNumerics
+module
+
+public import Formalism.IncomingBounds.LemmaMNumerics
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

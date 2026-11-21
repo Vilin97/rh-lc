@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LogSumExpBounds.StatementD
-import Formalism.GelfandTransference.EnergyIdentity
-import Formalism.HarderNarasimhan.StatementPl
-import Formalism.HarderNarasimhan.Statement
+module
+
+public import Mathlib
+public import Formalism.LogSumExpBounds.StatementD
+public import Formalism.GelfandTransference.EnergyIdentity
+public import Formalism.HarderNarasimhan.StatementPl
+public import Formalism.HarderNarasimhan.Statement
+
+@[expose] public section
 
 open Finset MeasureTheory NumberField
 open scoped ComplexOrder

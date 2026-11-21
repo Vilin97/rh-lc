@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.RealSeparation.NotRootUnity
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.RealSeparation.NotRootUnity
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleTrace.EtaleTateTwistSectionsDeterminedByPointsOfProper
-import Development.EtaleCohomology.TateTwists.StrictHenselianAcyclic
+module
+
+public import Development.EtaleCohomology.EtaleTrace.EtaleTateTwistSectionsDeterminedByPointsOfProper
+public import Development.EtaleCohomology.TateTwists.StrictHenselianAcyclic
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC CochainComplex.HomComplex

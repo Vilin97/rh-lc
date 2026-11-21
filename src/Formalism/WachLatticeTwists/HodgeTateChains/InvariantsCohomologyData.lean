@@ -1,4 +1,8 @@
-import Formalism.WachLatticeTwists.HodgeTateChains.Statement
+module
+
+public import Formalism.WachLatticeTwists.HodgeTateChains.Statement
+
+@[expose] public section
 
 noncomputable section
 

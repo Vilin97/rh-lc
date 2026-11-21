@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.AnnihilatorLevelsOfGrading
-import Formalism.SharpRestriction.LevelLetterCocycles.LevelClauseOfOpenTool
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.AnnihilatorLevelsOfGrading
+public import Formalism.SharpRestriction.LevelLetterCocycles.LevelClauseOfOpenTool
+
+@[expose] public section
 
 noncomputable section
 

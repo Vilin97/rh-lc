@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.LinkDIVL2R3Col
-import Formalism.LocalToGlobal.Divisibility.RecBridge
-import Formalism.LocalToGlobal.HilbertRowConditions.ColumnsFunctionAtSubspaces
-import Formalism.LocalToGlobal.Divisibility.RecBridgeMkF
-import Formalism.LocalToGlobal.Columns.RowFormsSym
-import Formalism.LocalToGlobal.Divisibility.HeckeCSDICommTrRep
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.LinkDIVL2R3Col
+public import Formalism.LocalToGlobal.Divisibility.RecBridge
+public import Formalism.LocalToGlobal.HilbertRowConditions.ColumnsFunctionAtSubspaces
+public import Formalism.LocalToGlobal.Divisibility.RecBridgeMkF
+public import Formalism.LocalToGlobal.Columns.RowFormsSym
+public import Formalism.LocalToGlobal.Divisibility.HeckeCSDICommTrRep
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

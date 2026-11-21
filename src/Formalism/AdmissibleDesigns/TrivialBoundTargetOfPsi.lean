@@ -1,6 +1,10 @@
-import Formalism.AdmissibleDesigns.URepApply
-import Formalism.AdmissibleDesigns.TrivialBoundGeneral
-import Formalism.AdmissibleDesigns.CycMatchRec
+module
+
+public import Formalism.AdmissibleDesigns.URepApply
+public import Formalism.AdmissibleDesigns.TrivialBoundGeneral
+public import Formalism.AdmissibleDesigns.CycMatchRec
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

@@ -1,4 +1,8 @@
-import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.ChartSymmEventuallyEq
+module
+
+public import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.ChartSymmEventuallyEq
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates
 

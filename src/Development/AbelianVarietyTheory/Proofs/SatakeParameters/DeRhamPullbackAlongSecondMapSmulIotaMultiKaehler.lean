@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.Edge1
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.TcoMem
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.Edge1
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.TcoMem
+
+@[expose] public section
 
 set_option autoImplicit false
 

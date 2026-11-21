@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsPtsBddConv
-import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PMuLineNormEq
-import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PMuFrameExists
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsPtsBddConv
+public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PMuLineNormEq
+public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PMuFrameExists
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

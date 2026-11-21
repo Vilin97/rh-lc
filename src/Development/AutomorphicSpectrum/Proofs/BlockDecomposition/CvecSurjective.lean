@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RatVInjective
-import GroundTheory.AutomorphicForms.AnisotropicUnitaryCompact
-import CompanionTheory.AutomorphicTheory.SiegelWeilFiniteness.Bridge
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.RatVInjective
+public import GroundTheory.AutomorphicForms.AnisotropicUnitaryCompact
+public import CompanionTheory.AutomorphicTheory.SiegelWeilFiniteness.Bridge
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 set_option maxSynthPendingDepth 1

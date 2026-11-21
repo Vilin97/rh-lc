@@ -1,10 +1,14 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.ValuedUnif
-import Formalism.LocalToGlobal.ProjectiveLattices.RealPtGeo
-import Formalism.LocalToGlobal.ProjectiveLattices.PtOfSInst
-import Formalism.LocalToGlobal.ProjectiveLattices.ComplPf
-import Formalism.LocalToGlobal.ProjectiveLattices.CoreProofs
-import Formalism.LocalToGlobal.ProjectiveLattices.ValSetAlgSubset
-import Formalism.LocalToGlobal.ProjectiveLattices.CompHt
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.ValuedUnif
+public import Formalism.LocalToGlobal.ProjectiveLattices.RealPtGeo
+public import Formalism.LocalToGlobal.ProjectiveLattices.PtOfSInst
+public import Formalism.LocalToGlobal.ProjectiveLattices.ComplPf
+public import Formalism.LocalToGlobal.ProjectiveLattices.CoreProofs
+public import Formalism.LocalToGlobal.ProjectiveLattices.ValSetAlgSubset
+public import Formalism.LocalToGlobal.ProjectiveLattices.CompHt
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 400000
 

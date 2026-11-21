@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.ScalPairs
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.ScalPairs
+
+@[expose] public section
 
 noncomputable section
 

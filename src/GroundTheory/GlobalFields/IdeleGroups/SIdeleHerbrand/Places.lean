@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.SIdeleHerbrand.Product
-import GroundTheory.GlobalFields.IdeleGroups.SIdeleGroups.Decomposition
-import GroundTheory.GlobalFields.IdeleGroups.LocalHerbrandInfinite
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.SIdeleHerbrand.Product
+public import GroundTheory.GlobalFields.IdeleGroups.SIdeleGroups.Decomposition
+public import GroundTheory.GlobalFields.IdeleGroups.LocalHerbrandInfinite
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

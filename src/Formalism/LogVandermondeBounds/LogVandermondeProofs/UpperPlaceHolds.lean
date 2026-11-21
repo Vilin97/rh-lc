@@ -1,4 +1,8 @@
-import Formalism.LogVandermondeBounds.UpperPlace
+module
+
+public import Formalism.LogVandermondeBounds.UpperPlace
+
+@[expose] public section
 
 namespace Formalism.LogVandermondeBounds.StandardLattice
 

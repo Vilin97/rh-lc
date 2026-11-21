@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.LinksChar
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.PeterssonNormOfUpLift
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ThetaFinsetSum
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.LinksChar
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.PeterssonNormOfUpLift
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.ThetaFinsetSum
+
+@[expose] public section
 
 noncomputable section
 

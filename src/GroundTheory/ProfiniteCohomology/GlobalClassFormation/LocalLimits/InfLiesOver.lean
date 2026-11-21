@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalLimits.InfDefs
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalLimits.LiesOver
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalLimits.InfDefs
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalLimits.LiesOver
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDefs
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDdSpec
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeEqDet
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDefs
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDdSpec
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeEqDet
+
+@[expose] public section
 
 open MvPolynomial Equiv UpperTheory.V.AlgebraTools.Hk
 

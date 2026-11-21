@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.LocalAtPlace
-import GroundTheory.GlobalFields.Adele.Approximation
-import GroundTheory.GlobalFields.Adele.Discrete
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.LocalAtPlace
+public import GroundTheory.GlobalFields.Adele.Approximation
+public import GroundTheory.GlobalFields.Adele.Discrete
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

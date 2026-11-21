@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.NeutralLocalFields.Reciprocity
+module
+
+public import Mathlib
+public import ReciprocityTheory.NeutralLocalFields.Reciprocity
+
+@[expose] public section
 
 namespace ReciprocityTheory.DiscreteGroups.GlobalClassField
 

@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.ScaledExample
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualTopSubLattice
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualLatticeBasisExists
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualEmbBijective
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.ScaledExample
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualTopSubLattice
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualLatticeBasisExists
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualEmbBijective
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

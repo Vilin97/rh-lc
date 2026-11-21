@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MeasurableSetSetOfLe
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MeasurableSetSetOfLe
+
+@[expose] public section
 
 open MeasureTheory ValuativeRel Matrix
 

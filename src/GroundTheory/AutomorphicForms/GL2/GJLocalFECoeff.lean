@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJFEDefs
-import GroundTheory.AutomorphicForms.MeasuresGL
-import GroundTheory.AutomorphicForms.MeasuresParabolic
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJFEDefs
+public import GroundTheory.AutomorphicForms.MeasuresGL
+public import GroundTheory.AutomorphicForms.MeasuresParabolic
+
+@[expose] public section
 
 noncomputable section
 

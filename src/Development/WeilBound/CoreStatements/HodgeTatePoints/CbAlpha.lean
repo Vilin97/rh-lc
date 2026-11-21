@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.HodgeTatePoints.CbFrob
+module
+
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.CbFrob
+
+@[expose] public section
 
 noncomputable section
 

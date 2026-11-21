@@ -1,7 +1,11 @@
-import ReciprocityTheory.L2DbarEstimates.LeviForms.DetUpdateColEq
-import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.CmpaCHessComp
-import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.DerivDerivNonposOfIsLocalMax
-import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.CommFderivApply
+module
+
+public import ReciprocityTheory.L2DbarEstimates.LeviForms.DetUpdateColEq
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.CmpaCHessComp
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.DerivDerivNonposOfIsLocalMax
+public import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.CommFderivApply
+
+@[expose] public section
 
 open MeasureTheory Filter Topology Complex ComplexConjugate
 open scoped ContDiff ENNReal ComplexOrder

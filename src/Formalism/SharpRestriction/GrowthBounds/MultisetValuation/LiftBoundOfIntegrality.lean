@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.YEPEComm
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.YEPEComm
+
+@[expose] public section
 
 noncomputable section
 

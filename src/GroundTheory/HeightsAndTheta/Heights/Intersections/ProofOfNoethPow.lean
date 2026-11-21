@@ -1,12 +1,17 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsTerTail
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsBisBis
-import GroundTheory.HeightsAndTheta.Heights.Intersections.NotIsUnitOfNumMem
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PLocRingFrac
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PLocRingLocal
-import GroundTheory.HeightsAndTheta.Heights.Intersections.SpanSingletonEqRangeLsmul
-import GroundTheory.HeightsAndTheta.Heights.Intersections.CardLength
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.KrullDimQuotientEqOneIffEqBot
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsTerTail
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsBisBis
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.NotIsUnitOfNumMem
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PLocRingFrac
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PLocRingLocal
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.SpanSingletonEqRangeLsmul
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.CardLength
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.KrullDimQuotientEqOneIffEqBot
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter

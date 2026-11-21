@@ -1,4 +1,8 @@
-import GroundTheory.AutomorphicForms.GL2.GJStandardL
+module
+
+public import GroundTheory.AutomorphicForms.GL2.GJStandardL
+
+@[expose] public section
 
 noncomputable section
 

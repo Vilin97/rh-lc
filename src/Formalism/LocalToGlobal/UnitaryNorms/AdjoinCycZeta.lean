@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.UnitaryNorms.PowValCast
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.HostFacts
-import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.EqZeroOfNegEq
+module
+
+public import Formalism.LocalToGlobal.UnitaryNorms.PowValCast
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.HostFacts
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.EqZeroOfNegEq
+
+@[expose] public section
 
 noncomputable section
 

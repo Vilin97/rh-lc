@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.LocalFields.UnramifiedNormSurj
-import GroundTheory.LocalFields.UnitsGalois
-import GroundTheory.LocalFields.CompleteTrivial
-import GroundTheory.LocalFields.HilbertCyclic
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.UnramifiedNormSurj
+public import GroundTheory.LocalFields.UnitsGalois
+public import GroundTheory.LocalFields.CompleteTrivial
+public import GroundTheory.LocalFields.HilbertCyclic
+
+@[expose] public section
 
 noncomputable section
 

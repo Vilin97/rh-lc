@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.InfiniteProjInfiniteEmbeddingOfNe
-import GroundTheory.GlobalFields.Adele.IdeleBasis
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.InfiniteProjInfiniteEmbeddingOfNe
+public import GroundTheory.GlobalFields.Adele.IdeleBasis
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

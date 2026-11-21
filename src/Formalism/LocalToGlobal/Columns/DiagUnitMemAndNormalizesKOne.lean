@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.Columns.ChainTwTopQ
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.TopLawQ
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.LocalProductMeasures.HilbertNinetyNormOne
-import Formalism.LocalToGlobal.Columns.ChainTwFrA
+module
+
+public import Formalism.LocalToGlobal.Columns.ChainTwTopQ
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.TopLawQ
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.LocalProductMeasures.HilbertNinetyNormOne
+public import Formalism.LocalToGlobal.Columns.ChainTwFrA
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

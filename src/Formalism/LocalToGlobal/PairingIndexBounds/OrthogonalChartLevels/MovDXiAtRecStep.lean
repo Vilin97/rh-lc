@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.FrecAt
-import Formalism.LocalToGlobal.InertKernelTheory.DefsRepRec
+module
+
+public import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.FrecAt
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsRepRec
+
+@[expose] public section
 
 noncomputable section
 

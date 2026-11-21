@@ -1,9 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DvrComplete
-import Formalism.LocalRingCardinality.SpanPowerMembership.NDLocE
-import Formalism.PieriBlockIdeals.LemmaWFromLattice
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.OneAddXMulDerivativeBinomial
-import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.BoundedOnFramesIffIntegralOnFrames
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.DvrComplete
+public import Formalism.LocalRingCardinality.SpanPowerMembership.NDLocE
+public import Formalism.PieriBlockIdeals.LemmaWFromLattice
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.OneAddXMulDerivativeBinomial
+public import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.BoundedOnFramesIffIntegralOnFrames
+
+@[expose] public section
+
 open Formalism.BasicNotions Formalism.BasicNotions.Loc IsLocalRing
 
 namespace GlobalTheory.WachExp

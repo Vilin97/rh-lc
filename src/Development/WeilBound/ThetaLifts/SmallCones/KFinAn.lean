@@ -1,5 +1,9 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.SchwartzMoments.PolynomialFunctionalEvalContinuous
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.SchwartzMoments.PolynomialFunctionalEvalContinuous
+
+@[expose] public section
 
 noncomputable section
 

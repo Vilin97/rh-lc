@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutHB2
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PbWords
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RdVZeroOfVanish
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutHBSupp
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutHB2
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PbWords
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RdVZeroOfVanish
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutHBSupp
+
+@[expose] public section
 
 open Matrix MeasureTheory
 

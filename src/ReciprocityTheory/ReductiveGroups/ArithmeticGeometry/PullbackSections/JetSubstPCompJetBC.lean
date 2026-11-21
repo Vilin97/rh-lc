@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndBC
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndBC
+
+@[expose] public section
 
 set_option autoImplicit false
 

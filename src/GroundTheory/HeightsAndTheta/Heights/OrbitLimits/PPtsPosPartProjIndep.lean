@@ -1,9 +1,14 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterFib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsSheetOnlyNull
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsPosPartLocal
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsPosDensMeasurable
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterFib
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsSheetOnlyNull
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsPosPartLocal
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsPosDensMeasurable
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

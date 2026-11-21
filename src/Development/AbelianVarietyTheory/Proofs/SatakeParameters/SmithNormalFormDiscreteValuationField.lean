@@ -1,7 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SelfDualOne
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.LatticeModelVacuumTranslateClassesIndependent
-import ReciprocityTheory.DualLattices.BlockOneMulMulBlockOne
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SelfDualOne
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.LatticeModelVacuumTranslateClassesIndependent
+public import ReciprocityTheory.DualLattices.BlockOneMulMulBlockOne
+
+@[expose] public section
+
 open Matrix
 
 namespace GlobalTheory.SmithValued

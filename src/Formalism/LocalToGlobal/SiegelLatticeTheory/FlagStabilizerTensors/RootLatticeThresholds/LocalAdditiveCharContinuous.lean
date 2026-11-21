@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.TermLoc
-import Formalism.LocalToGlobal.SiegelLatticeTheory.EFSymmCont
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsMoreMore
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.TermLoc
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.EFSymmCont
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsMoreMore
+
+@[expose] public section
 
 noncomputable section
 

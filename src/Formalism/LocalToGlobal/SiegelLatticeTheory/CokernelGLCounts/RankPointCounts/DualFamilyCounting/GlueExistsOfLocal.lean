@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.GlueExistsOfOf
-import Formalism.HermitianLattices.HermitianLatticesProofs.TraceReal
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DualFamilyCounting.GlueExistsOfOf
+public import Formalism.HermitianLattices.HermitianLatticesProofs.TraceReal
+
+@[expose] public section
 
 open NumberField Module
 

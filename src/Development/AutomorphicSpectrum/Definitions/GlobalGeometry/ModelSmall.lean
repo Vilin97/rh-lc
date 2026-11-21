@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.CInfGood
-import Development.AutomorphicSpectrum.Definitions.MetricPeriods.HasMultiplier
-import Development.AbelianVarietyTheory.Definitions.Divisors.SemiposAtOfPositive
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.CInfGood
+public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.HasMultiplier
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SemiposAtOfPositive
+
+@[expose] public section
 
 noncomputable section
 

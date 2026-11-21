@@ -1,4 +1,8 @@
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PartsIbp
+module
+
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PartsIbp
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.A
 

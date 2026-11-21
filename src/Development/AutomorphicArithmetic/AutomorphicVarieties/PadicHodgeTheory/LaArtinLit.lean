@@ -1,4 +1,9 @@
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.Brauer
+module
+
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.Brauer
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.WeilDeligne GlobalTheory.LocLanglands GlobalTheory.Published
 
 theorem UpperTheory.V.Loc.localArtinReciprocity (H : GlobalTheory.Mem.LiteralAutomorphy.LitN) {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Algebra F Ω]

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.WeylDimShift
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.WeylDimShift
+
+@[expose] public section
 
 noncomputable section
 

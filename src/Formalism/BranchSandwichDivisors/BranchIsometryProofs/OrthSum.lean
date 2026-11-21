@@ -1,6 +1,10 @@
-import Formalism.BranchSandwichDivisors.StatementL
-import Formalism.HarderNarasimhan.ShiftInvariance
-import Formalism.BranchSandwichDivisors.BranchIsometryProofs.MapScale
+module
+
+public import Formalism.BranchSandwichDivisors.StatementL
+public import Formalism.HarderNarasimhan.ShiftInvariance
+public import Formalism.BranchSandwichDivisors.BranchIsometryProofs.MapScale
+
+@[expose] public section
 
 open Module NumberField
 open scoped Matrix

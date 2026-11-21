@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.LowerBlockNormalisedBoundFromComponents
+module
+
+public import Formalism.HermitianCurvature.LowerBlockNormalisedBoundFromComponents
+
+@[expose] public section
 
 open Finset
 open scoped ComplexOrder

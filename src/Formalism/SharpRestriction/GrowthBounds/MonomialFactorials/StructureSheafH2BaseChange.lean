@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.StructureSheafH1BaseChange
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.StructureSheafH1BaseChange
+
+@[expose] public section
 
 noncomputable section
 

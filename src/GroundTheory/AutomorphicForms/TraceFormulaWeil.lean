@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.TraceFormulaGeometric
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.TraceFormulaGeometric
+
+@[expose] public section
 
 open MeasureTheory Topology Filter Set Function
 open scoped ENNReal NNReal Pointwise

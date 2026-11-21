@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsGenericCount
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StGoodChartModel
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StComponentsGenericCount
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSheetLift
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PDiscriminantSheetCover
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsGenericCount
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StGoodChartModel
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StComponentsGenericCount
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSheetLift
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PDiscriminantSheetCover
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

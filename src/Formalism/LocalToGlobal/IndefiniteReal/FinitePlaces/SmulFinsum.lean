@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.FourExist
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.FourExist
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.SphericalCommutative
-import GroundTheory.AutomorphicForms.InductionParabolic
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.SphericalCommutative
+public import GroundTheory.AutomorphicForms.InductionParabolic
+
+@[expose] public section
 
 noncomputable section
 

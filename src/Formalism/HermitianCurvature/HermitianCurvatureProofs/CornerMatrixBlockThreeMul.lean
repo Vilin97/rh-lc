@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.NegMulCCancel
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CornerBZero
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegrableCsmul
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NegMulCCancel
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CornerBZero
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegrableCsmul
+
+@[expose] public section
 
 open Matrix MeasureTheory
 

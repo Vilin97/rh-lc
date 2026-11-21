@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.KurDefs
-import Formalism.TorsionNormIteration.LubinTateExample
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.KurDefs
+public import Formalism.TorsionNormIteration.LubinTateExample
+
+@[expose] public section
 
 noncomputable section
 

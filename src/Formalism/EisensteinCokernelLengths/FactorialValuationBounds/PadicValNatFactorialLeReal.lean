@@ -1,6 +1,10 @@
-import Formalism.EisensteinCokernelLengths.ExponentChainBound
-import Formalism.LagrangeIdealLifts.LiftLagrangeIdealInt
-import Formalism.WindowSums.PowerSeriesRelationList
+module
+
+public import Formalism.EisensteinCokernelLengths.ExponentChainBound
+public import Formalism.LagrangeIdealLifts.LiftLagrangeIdealInt
+public import Formalism.WindowSums.PowerSeriesRelationList
+
+@[expose] public section
 
 noncomputable section
 

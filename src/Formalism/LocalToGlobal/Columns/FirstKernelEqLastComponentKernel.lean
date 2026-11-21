@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.Columns.GFamEv
-import Formalism.LocalToGlobal.Columns.StabMapRLInjective
-import Formalism.LocalToGlobal.Columns.RecChainCUnfPol
-import Formalism.LocalToGlobal.Columns.RefXi1Above
-import Formalism.LocalToGlobal.Columns.RecChainYUnfPol
-import Mathlib
+module
+
+public import Formalism.LocalToGlobal.Columns.GFamEv
+public import Formalism.LocalToGlobal.Columns.StabMapRLInjective
+public import Formalism.LocalToGlobal.Columns.RecChainCUnfPol
+public import Formalism.LocalToGlobal.Columns.RefXi1Above
+public import Formalism.LocalToGlobal.Columns.RecChainYUnfPol
+public import Mathlib
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.CompHt
-import Mathlib
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.CompHt
+public import Mathlib
+
+@[expose] public section
 
 noncomputable section
 

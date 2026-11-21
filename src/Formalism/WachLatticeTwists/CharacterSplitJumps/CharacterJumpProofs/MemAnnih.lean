@@ -1,4 +1,8 @@
-import Formalism.WachLatticeTwists.CharacterSplitJumps.Statement
+module
+
+public import Formalism.WachLatticeTwists.CharacterSplitJumps.Statement
+
+@[expose] public section
 
 noncomputable section
 

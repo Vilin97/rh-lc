@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FormalDegreeGap.HCFdegRGap
-import Mathlib.Analysis.Complex.ExponentialBounds
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FormalDegreeGap.HCFdegRGap
+public import Mathlib.Analysis.Complex.ExponentialBounds
+
+@[expose] public section
 
 noncomputable section
 

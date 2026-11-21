@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.TwistedSubstitution.SymGSupport
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.PosTLSurj
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.MembDd
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.TwistedSubstitution.SymGSupport
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.PosTLSurj
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.MembDd
+
+@[expose] public section
 
 noncomputable section
 

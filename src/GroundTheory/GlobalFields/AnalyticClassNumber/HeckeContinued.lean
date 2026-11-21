@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.HeckeTheorem
-import GroundTheory.GlobalFields.TateThesis.Nonvanishing
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.HeckeTheorem
+public import GroundTheory.GlobalFields.TateThesis.Nonvanishing
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open NumberField InfinitePlace IsDedekindDomain MeasureTheory Complex Topology Filter Set

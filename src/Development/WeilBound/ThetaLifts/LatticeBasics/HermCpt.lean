@@ -1,7 +1,11 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.HermRank
-import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsMaximalCompactInfinite
-import Development.WeilBound.ThetaLifts.FrameEstimates.LatArch
-import CompanionTheory.SpectralGeometry.LocalGlobalProofs.AdelicAnalysis.FiniteAdeleTopology
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.HermRank
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsMaximalCompactInfinite
+public import Development.WeilBound.ThetaLifts.FrameEstimates.LatArch
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.AdelicAnalysis.FiniteAdeleTopology
+
+@[expose] public section
 
 noncomputable section
 

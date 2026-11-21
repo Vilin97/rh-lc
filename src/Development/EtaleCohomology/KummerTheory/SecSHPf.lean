@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.KummerTheory.TwSecPf
+module
+
+public import Development.EtaleCohomology.KummerTheory.TwSecPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC

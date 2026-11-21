@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataParams₂
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientHomNonvanishingBound
-import Formalism.WeaklyAdmissibleFiltrations.StatementTor
-import Formalism.GaloisCohomology.Statement
-import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
-import Formalism.SharpRestriction.LevelLetterCocycles.DecompositionData
-import Formalism.SharpRestriction.LevelLetterCocycles.ElementDenominator
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataParams₂
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientHomNonvanishingBound
+public import Formalism.WeaklyAdmissibleFiltrations.StatementTor
+public import Formalism.GaloisCohomology.Statement
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
+public import Formalism.SharpRestriction.LevelLetterCocycles.DecompositionData
+public import Formalism.SharpRestriction.LevelLetterCocycles.ElementDenominator
+
+@[expose] public section
 
 noncomputable section
 

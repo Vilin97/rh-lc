@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.TiedRec
-import Formalism.LocalToGlobal.HermitianForms.FormsTied
+module
+
+public import Formalism.LocalToGlobal.Columns.TiedRec
+public import Formalism.LocalToGlobal.HermitianForms.FormsTied
+
+@[expose] public section
 
 noncomputable section
 

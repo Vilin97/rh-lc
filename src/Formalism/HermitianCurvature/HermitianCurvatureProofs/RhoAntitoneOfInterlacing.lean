@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.LetterProductDoubleDegreeCount
+module
+
+public import Formalism.HermitianCurvature.LetterProductDoubleDegreeCount
+
+@[expose] public section
 
 open Formalism.FourierDecayAlt Finset
 

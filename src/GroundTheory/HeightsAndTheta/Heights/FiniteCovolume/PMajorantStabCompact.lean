@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsMajorantStabCompact
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PBoundedInverseCompact
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsMajorantStabCompact
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PBoundedInverseCompact
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights.FiniteCovolume
 

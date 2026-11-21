@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.IsLocalOfIntegers
+module
+
+public import ReciprocityTheory.DualLattices.IsLocalOfIntegers
+
+@[expose] public section
 
 noncomputable section
 

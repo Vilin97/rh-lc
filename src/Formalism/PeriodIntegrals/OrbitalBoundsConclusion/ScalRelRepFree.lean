@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.ScalRelRepFree
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ScalarRelationReflexive.IsScalarRefl
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.ScalRelRepFree
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ScalarRelationReflexive.IsScalarRefl
+
+@[expose] public section
 
 noncomputable section
 

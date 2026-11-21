@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.MirabolicDerivatives.LeibnizDerivatives.GenericProdIff
-import GroundTheory.AutomorphicForms.GeometricLemmaCells
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.MirabolicDerivatives.LeibnizDerivatives.GenericProdIff
+public import GroundTheory.AutomorphicForms.GeometricLemmaCells
+
+@[expose] public section
 
 noncomputable section
 

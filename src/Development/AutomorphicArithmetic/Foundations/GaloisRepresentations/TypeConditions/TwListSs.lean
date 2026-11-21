@@ -1,7 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.HeckeCharEqOfLAdicRealisation
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.TypeConditions.TrivialLocalCondition
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ConclusionG6OfAllParts
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.HeckeCharEqOfLAdicRealisation
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.TypeConditions.TrivialLocalCondition
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ConclusionG6OfAllParts
+
+@[expose] public section
+
 noncomputable section
 
 namespace GlobalTheory.EigenPoint

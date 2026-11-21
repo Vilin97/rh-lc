@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.TensorProductTheorem.CoeToRepresentationApply
-import GroundTheory.AutomorphicForms.TensorProductTheorem.KProjApplyEqSelfIff
-import GroundTheory.AutomorphicForms.TensorProductTheorem.TwoFactorUnique
-import GroundTheory.AutomorphicForms.TensorProductTheorem.Window
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.CoeToRepresentationApply
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.KProjApplyEqSelfIff
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.TwoFactorUnique
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.Window
+
+@[expose] public section
 
 noncomputable section
 

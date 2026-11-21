@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.Brauer.BaseChangeCSA
+module
+
+public import Mathlib
+public import GroundTheory.Brauer.BaseChangeCSA
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

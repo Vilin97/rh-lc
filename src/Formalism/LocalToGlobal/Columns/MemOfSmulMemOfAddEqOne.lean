@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.CardFilterNeighboursEqPaths
+module
+
+public import Formalism.LocalToGlobal.Columns.CardFilterNeighboursEqPaths
+
+@[expose] public section
 
 noncomputable section
 

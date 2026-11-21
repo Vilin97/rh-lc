@@ -1,7 +1,11 @@
-import Development.EtaleCohomology.EtaleTrace.LadicH0LocallyConstant
-import Development.EtaleCohomology.CohomologicalPurity.LeafIndExc
-import Development.EtaleCohomology.KummerTheory.InjSlice
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.TranscendenceTraces.WtDegConst
+module
+
+public import Development.EtaleCohomology.EtaleTrace.LadicH0LocallyConstant
+public import Development.EtaleCohomology.CohomologicalPurity.LeafIndExc
+public import Development.EtaleCohomology.KummerTheory.InjSlice
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.TranscendenceTraces.WtDegConst
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC LateralTheory.EtaleTrace

@@ -1,4 +1,8 @@
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PartsPiola
+module
+
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PartsPiola
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.A
 

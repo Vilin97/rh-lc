@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.RecLevelLoc
+module
+
+public import Formalism.LocalToGlobal.Columns.RecLevelLoc
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix
 open scoped TensorProduct

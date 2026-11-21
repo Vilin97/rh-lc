@@ -1,8 +1,12 @@
-import Formalism.PieriBlockIdeals.MertensReciprocalElementary
-import Formalism.PieriBlockIdeals.PieriColumnMinors.SharperSizeNeedsMleKFalse
-import Formalism.PieriBlockIdeals.PieriColumnMinors.LocalComponentGL
-import Formalism.PieriBlockIdeals.PieriColumnMinors.LogarithmEquivalence
-import Formalism.RankGapBounds.RankGapProofs.CardLargePrimeFactorsLeOneHolds
+module
+
+public import Formalism.PieriBlockIdeals.MertensReciprocalElementary
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.SharperSizeNeedsMleKFalse
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.LocalComponentGL
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.LogarithmEquivalence
+public import Formalism.RankGapBounds.RankGapProofs.CardLargePrimeFactorsLeOneHolds
+
+@[expose] public section
 
 noncomputable section
 

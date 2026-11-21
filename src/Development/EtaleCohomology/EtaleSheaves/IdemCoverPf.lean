@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.DomCoverPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.DomCoverPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory

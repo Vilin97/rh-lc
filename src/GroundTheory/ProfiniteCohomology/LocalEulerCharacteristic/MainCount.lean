@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.LocalFields.Integers
-import GroundTheory.LocalFields.LubinTateTorsion
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.Integers
+public import GroundTheory.LocalFields.LubinTateTorsion
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

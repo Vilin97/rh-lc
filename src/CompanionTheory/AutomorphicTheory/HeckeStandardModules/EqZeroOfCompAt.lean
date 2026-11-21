@@ -1,7 +1,11 @@
-import ReciprocityTheory.Automorphisms.SplitCoeAlgebraMap
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Levelaf
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsIntegerUnitSplitPlaceConjugatePrime
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.CmFieldAdeleSplitPlaceSupportIntegral
+module
+
+public import ReciprocityTheory.Automorphisms.SplitCoeAlgebraMap
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Levelaf
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsIntegerUnitSplitPlaceConjugatePrime
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.CmFieldAdeleSplitPlaceSupportIntegral
+
+@[expose] public section
 
 open NumberField IsDedekindDomain ReciprocityTheory.Aut TensorProduct
 

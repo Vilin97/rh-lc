@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.TrueWtAddSSNonneg
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.CardStabDvdAutU
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.NormMapOfFinOrder
-import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.IntegralGLSuccEmbeddingMemParahoricTimesPrincipa
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.PredMemGamRanks
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.TrueWtAddSSNonneg
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.CardStabDvdAutU
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.NormMapOfFinOrder
+public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.IntegralGLSuccEmbeddingMemParahoricTimesPrincipa
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.PredMemGamRanks
+
+@[expose] public section
 
 noncomputable section
 

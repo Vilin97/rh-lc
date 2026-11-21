@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.TateCohomology.TateCup
-import GroundTheory.TateCohomology.CupTateShift
-import GroundTheory.TateCohomology.CupTateNatural
-import GroundTheory.TateCohomology.CupFunctorial
-import GroundTheory.TateCohomology.Annihilation
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.TateCup
+public import GroundTheory.TateCohomology.CupTateShift
+public import GroundTheory.TateCohomology.CupTateNatural
+public import GroundTheory.TateCohomology.CupFunctorial
+public import GroundTheory.TateCohomology.Annihilation
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

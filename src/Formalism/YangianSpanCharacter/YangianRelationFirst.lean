@@ -1,12 +1,16 @@
-import Formalism.YangianSpanCharacter.YangianRTTProofs.TransposeSymplecticShift
-import Formalism.YangianSpanCharacter.YangianRTTProofs.RttRelation
-import Formalism.YangianSpanCharacter.StatementY
-import Formalism.YangianSpanCharacter.YangianRTTProofs.DiagonalEntryEqOfModularRelation
-import Mathlib
-import Formalism.YangianSpanCharacter.YangianRTTProofs.MinusFrameIdentity
-import Formalism.YangianSpanCharacter.StatementT
-import Formalism.FormalDegreeBessel.FinalWR
-import Formalism.YangianSpanCharacter.ExchangeGen
+module
+
+public import Formalism.YangianSpanCharacter.YangianRTTProofs.TransposeSymplecticShift
+public import Formalism.YangianSpanCharacter.YangianRTTProofs.RttRelation
+public import Formalism.YangianSpanCharacter.StatementY
+public import Formalism.YangianSpanCharacter.YangianRTTProofs.DiagonalEntryEqOfModularRelation
+public import Mathlib
+public import Formalism.YangianSpanCharacter.YangianRTTProofs.MinusFrameIdentity
+public import Formalism.YangianSpanCharacter.StatementT
+public import Formalism.FormalDegreeBessel.FinalWR
+public import Formalism.YangianSpanCharacter.ExchangeGen
+
+@[expose] public section
 
 namespace Formalism.YangianSpanCharacter.Final
 

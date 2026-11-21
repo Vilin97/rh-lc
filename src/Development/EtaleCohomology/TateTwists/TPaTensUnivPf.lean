@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.TateTwists.TPairAssocPf
+module
+
+public import Development.EtaleCohomology.TateTwists.TPairAssocPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC

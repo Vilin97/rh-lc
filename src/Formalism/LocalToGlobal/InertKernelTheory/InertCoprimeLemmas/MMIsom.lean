@@ -1,10 +1,14 @@
-import Formalism.LocalToGlobal.InertKernelTheory.DefsMMIsom
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.ReBase
-import Formalism.LocalToGlobal.TorsionIntegrality.UniformGaussModels.FinalFree
-import Formalism.LocalToGlobal.InertKernelTheory.DefsFrONB
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.UnitSubstOfLoc
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.TestVectorMemSchwartzBruhat
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.AlgTrans
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsMMIsom
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.ReBase
+public import Formalism.LocalToGlobal.TorsionIntegrality.UniformGaussModels.FinalFree
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsFrONB
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.UnitSubstOfLoc
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.TestVectorMemSchwartzBruhat
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.AlgTrans
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators Matrix

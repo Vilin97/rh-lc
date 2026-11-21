@@ -1,6 +1,10 @@
-import Development.EtaleCohomology.WeilConjectures.FermatCount
-import Development.EtaleCohomology.EtaleSheaves.EtaleBaseChangeFractionFieldIndEtaleOverPolynomi
-import Development.EtaleCohomology.KummerTheory.InjSlice
+module
+
+public import Development.EtaleCohomology.WeilConjectures.FermatCount
+public import Development.EtaleCohomology.EtaleSheaves.EtaleBaseChangeFractionFieldIndEtaleOverPolynomi
+public import Development.EtaleCohomology.KummerTheory.InjSlice
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC

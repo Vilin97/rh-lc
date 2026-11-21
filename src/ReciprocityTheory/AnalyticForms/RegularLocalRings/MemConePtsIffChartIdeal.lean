@@ -1,4 +1,8 @@
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.IsOpenAlt
+module
+
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.IsOpenAlt
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.R
 

@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.SmallCones.KerPol
-import Development.WeilBound.ThetaLifts.SmallCones.ThetaKernelGeneralIdentity
-import Development.WeilBound.ThetaLifts.SmallCones.ConeBasic
+module
+
+public import Development.WeilBound.ThetaLifts.SmallCones.KerPol
+public import Development.WeilBound.ThetaLifts.SmallCones.ThetaKernelGeneralIdentity
+public import Development.WeilBound.ThetaLifts.SmallCones.ConeBasic
+
+@[expose] public section
 
 noncomputable section
 

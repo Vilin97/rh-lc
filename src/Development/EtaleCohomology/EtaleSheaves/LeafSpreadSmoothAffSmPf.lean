@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafSpreadSmoothPf
-import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafSpreadSmoothPf
+public import Mathlib.AlgebraicGeometry.Morphisms.FinitePresentation
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite LateralTheory.E.E4 LateralTheory.E.LeafDescendVCut LateralTheory.E.LeafDescendChainPf

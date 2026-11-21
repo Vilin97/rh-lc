@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.EquivariantL2Space
-import Formalism.HermitianCurvature.StatementB
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.LaplaceOperators.EquivariantL2Space
+public import Formalism.HermitianCurvature.StatementB
+
+@[expose] public section
 
 noncomputable section
 

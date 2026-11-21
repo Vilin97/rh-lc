@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.LocalClassFormation.IntegerUnitsToUnitsHomApply
-import GroundTheory.LocalFields.UnramifiedNorms
-import GroundTheory.LocalFields.UnramifiedGalois
-import GroundTheory.TateCohomology.Herbrand
-import GroundTheory.TateCohomology.TateLow
-import GroundTheory.ProfiniteCohomology.ClassFormations.IsIsoCohomologyMapAlongResSubgroupOfHom
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.LocalClassFormation.IntegerUnitsToUnitsHomApply
+public import GroundTheory.LocalFields.UnramifiedNorms
+public import GroundTheory.LocalFields.UnramifiedGalois
+public import GroundTheory.TateCohomology.Herbrand
+public import GroundTheory.TateCohomology.TateLow
+public import GroundTheory.ProfiniteCohomology.ClassFormations.IsIsoCohomologyMapAlongResSubgroupOfHom
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

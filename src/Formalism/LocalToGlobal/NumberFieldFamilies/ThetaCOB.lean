@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCF
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.SignatureConjugationInvariant
+module
+
+public import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCF
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.SignatureConjugationInvariant
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.LinksExist
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemOrth
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.LinksExist
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemOrth
+
+@[expose] public section
 
 noncomputable section
 

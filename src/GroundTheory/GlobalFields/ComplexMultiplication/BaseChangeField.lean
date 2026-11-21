@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.BaseChangeGalois
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.BaseChangeGalois
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

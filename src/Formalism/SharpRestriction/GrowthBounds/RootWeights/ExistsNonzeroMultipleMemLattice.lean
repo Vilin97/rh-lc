@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.IsotypicProjectorFixedMem
-import Lemmata.GeneralBFactLeftVersion.Imports
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.IsotypicProjectorFixedMem
+public import Lemmata.GeneralBFactLeftVersion.Imports
+
+@[expose] public section
 
 noncomputable section
 

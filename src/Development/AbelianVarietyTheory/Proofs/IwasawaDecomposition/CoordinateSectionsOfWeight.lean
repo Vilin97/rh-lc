@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CoordAtConstMulIff
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsBaseChange
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CoordAtConstMulIff
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsBaseChange
+
+@[expose] public section
 
 set_option autoImplicit false
 

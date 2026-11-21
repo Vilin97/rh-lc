@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.PrismaticDieudonneAt
-import ReciprocityTheory.DualLattices.ExistsPrimitiveRoot
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.PrismaticDieudonneAt
+public import ReciprocityTheory.DualLattices.ExistsPrimitiveRoot
+
+@[expose] public section
 
 noncomputable section
 

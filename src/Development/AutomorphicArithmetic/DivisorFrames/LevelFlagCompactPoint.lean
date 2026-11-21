@@ -1,11 +1,16 @@
-import Mathlib
-import Development.AutomorphicArithmetic.DivisorFrames.FlagCarriesEigenframe
-import Development.AutomorphicArithmetic.LocalEmbeddings.ConsAgree
-import Development.AutomorphicArithmetic.LocalEmbeddings.ConsMatch
-import Development.AbelianVarietyTheory.PublishedTheorems.SemiabelianTori.GeometricallyConnectedSplitTorusAff
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsFrameBaseChangeRingHom
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TangentCombinationPreservedByBaseChange
-import Development.AbelianVarietyTheory.Counterexamples.ModuliSurvey.DominatesLiftUnique
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.DivisorFrames.FlagCarriesEigenframe
+public import Development.AutomorphicArithmetic.LocalEmbeddings.ConsAgree
+public import Development.AutomorphicArithmetic.LocalEmbeddings.ConsMatch
+public import Development.AbelianVarietyTheory.PublishedTheorems.SemiabelianTori.GeometricallyConnectedSplitTorusAff
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsFrameBaseChangeRingHom
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TangentCombinationPreservedByBaseChange
+public import Development.AbelianVarietyTheory.Counterexamples.ModuliSurvey.DominatesLiftUnique
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory Limits NumberField IsLocalRing
 open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj GlobalTheory.LocM GlobalTheory.Toroidal GlobalTheory.ShFam GlobalTheory.ShFam.Pad
 open GlobalTheory GlobalTheory.CechPic GlobalTheory.Cartier GlobalTheory.ConsGeo

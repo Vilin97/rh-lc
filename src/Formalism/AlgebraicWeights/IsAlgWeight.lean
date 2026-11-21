@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.ConjugateSelfDual.Imports
-import Formalism.SatakeDualWeyl.Statement
-import ReciprocityTheory.Automorphisms.Unitary
-import ReciprocityTheory.Automorphisms.SplitCoeAlgebraMap
+module
+
+public import Mathlib
+public import Formalism.ConjugateSelfDual.Imports
+public import Formalism.SatakeDualWeyl.Statement
+public import ReciprocityTheory.Automorphisms.Unitary
+public import ReciprocityTheory.Automorphisms.SplitCoeAlgebraMap
+
+@[expose] public section
 
 noncomputable section
 

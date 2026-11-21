@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGermParts
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PairingTriangular
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.AverageOne
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeanBoundsLimits
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGermParts
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PairingTriangular
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.AverageOne
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeanBoundsLimits
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP
 

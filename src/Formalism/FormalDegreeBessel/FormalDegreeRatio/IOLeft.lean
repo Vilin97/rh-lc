@@ -1,4 +1,8 @@
-import Formalism.FormalDegreeBessel.StatementIO
+module
+
+public import Formalism.FormalDegreeBessel.StatementIO
+
+@[expose] public section
 
 open Matrix Formalism.REAL
 

@@ -1,11 +1,15 @@
-import Formalism.AdmissibleDesigns.TheoremFromNormalizedOpenThree
-import Formalism.AdmissibleDesigns.TrivialBoundTargetOfPsi
-import Formalism.AdmissibleDesigns.YtTargetOf
-import Formalism.AdmissibleDesigns.TwistedTargetOfInputs
-import Formalism.AdmissibleDesigns.MsContW
-import Formalism.AdmissibleDesigns.TrivialBoundAtRowsOfAdmTB
-import Formalism.AdmissibleDesigns.CoefChangeRec
-import Formalism.AdmissibleDesigns.MsWApply
+module
+
+public import Formalism.AdmissibleDesigns.TheoremFromNormalizedOpenThree
+public import Formalism.AdmissibleDesigns.TrivialBoundTargetOfPsi
+public import Formalism.AdmissibleDesigns.YtTargetOf
+public import Formalism.AdmissibleDesigns.TwistedTargetOfInputs
+public import Formalism.AdmissibleDesigns.MsContW
+public import Formalism.AdmissibleDesigns.TrivialBoundAtRowsOfAdmTB
+public import Formalism.AdmissibleDesigns.CoefChangeRec
+public import Formalism.AdmissibleDesigns.MsWApply
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core] [hH0Fin : Fact Formalism.MainNotions.N.K.H0.FinCore]
 

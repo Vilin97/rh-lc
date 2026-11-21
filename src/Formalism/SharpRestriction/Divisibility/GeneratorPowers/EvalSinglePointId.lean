@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndFrFix
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpTiePf
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.JetSubstPSTrunc
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CIndFrFix
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpTiePf
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.JetSubstPSTrunc
+
+@[expose] public section
 
 set_option autoImplicit false
 

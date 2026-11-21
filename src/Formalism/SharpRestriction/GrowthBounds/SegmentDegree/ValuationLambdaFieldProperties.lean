@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.ColumnWordReductionOfFour
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.ColumnWordReductionOfFour
+
+@[expose] public section
 
 noncomputable section
 

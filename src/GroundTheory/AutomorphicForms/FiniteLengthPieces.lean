@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GeometricLemma
-import GroundTheory.AutomorphicForms.LeviStagesProduct
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GeometricLemma
+public import GroundTheory.AutomorphicForms.LeviStagesProduct
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

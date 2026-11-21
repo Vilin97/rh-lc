@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.FinrankEqSpanGen
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.FinrankEqSpanGen
+
+@[expose] public section
 
 noncomputable section
 

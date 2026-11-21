@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.WeylCellAction
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LagrangeExtraction
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WeylCellAction
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LagrangeExtraction
+
+@[expose] public section
 
 open MeasureTheory Matrix
 

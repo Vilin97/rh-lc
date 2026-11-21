@@ -1,4 +1,8 @@
-import Formalism.FockGram.StatementHerm
+module
+
+public import Formalism.FockGram.StatementHerm
+
+@[expose] public section
 
 open Matrix LinearMap Module
 

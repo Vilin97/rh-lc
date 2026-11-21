@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.CyclotomicCharacters.PadicUnitsLog
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.CyclotomicCharacters.PadicUnitsLog
+
+@[expose] public section
 
 open NumberField IntermediateField
 open scoped GroundTheory.LocalField.Abstract ComplexConjugate

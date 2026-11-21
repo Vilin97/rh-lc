@@ -1,11 +1,15 @@
-import Mathlib
-import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsUniqueHcharOfFiniteOrder
-import GroundTheory.GlobalFields.GlobalArtinMap.Kernel
-import GroundTheory.GlobalFields.ClassFieldConsequences.RayClassFieldLocal
-import GroundTheory.GlobalFields.GlobalReciprocity.Frobenius
-import GroundTheory.GlobalFields.GlobalReciprocity.LocalSurjective
-import CompanionTheory.AutomorphicTheory.PlaceSeparation.ArtinA
-import CompanionTheory.AutomorphicTheory.PlaceSeparation.ArtinKer
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.PublishedTheorems.AutomorphicForms₂.ExistsUniqueHcharOfFiniteOrder
+public import GroundTheory.GlobalFields.GlobalArtinMap.Kernel
+public import GroundTheory.GlobalFields.ClassFieldConsequences.RayClassFieldLocal
+public import GroundTheory.GlobalFields.GlobalReciprocity.Frobenius
+public import GroundTheory.GlobalFields.GlobalReciprocity.LocalSurjective
+public import CompanionTheory.AutomorphicTheory.PlaceSeparation.ArtinA
+public import CompanionTheory.AutomorphicTheory.PlaceSeparation.ArtinKer
+
+@[expose] public section
 
 noncomputable section
 

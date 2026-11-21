@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnitDeterminantRoot.GlobalLUnit
-import Lemmata.GeneralBFactLeftTer.Imports
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnitDeterminantRoot.GlobalLUnit
+public import Lemmata.GeneralBFactLeftTer.Imports
+
+@[expose] public section
 
 noncomputable section
 open scoped ComplexConjugate

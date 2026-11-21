@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsChowDegreeSection
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PIntChowFormExists
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ChowDegree
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PChowFormHomog
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsChowDegreeSection
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PIntChowFormExists
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.ChowDegree
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PChowFormHomog
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

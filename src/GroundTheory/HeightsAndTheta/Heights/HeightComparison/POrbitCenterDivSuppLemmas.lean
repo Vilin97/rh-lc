@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitCenter
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.PHeightRecR
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitCenterMemIff
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightSubringPrimeMaximal
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitCenter
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.PHeightRecR
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitCenterMemIff
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightSubringPrimeMaximal
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

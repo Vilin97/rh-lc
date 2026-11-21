@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleTrace.GenOutChartPf
+module
+
+public import Development.EtaleCohomology.EtaleTrace.GenOutChartPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry MvPolynomial

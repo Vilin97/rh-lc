@@ -1,6 +1,11 @@
-import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.SelmerRankBounds.EllipticityFromProductFormula
-import GroundTheory.AutomorphicForms.StableConjCyclic
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ProjectiveLineOf
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.SelmerRankBounds.EllipticityFromProductFormula
+public import GroundTheory.AutomorphicForms.StableConjCyclic
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ProjectiveLineOf
+
+@[expose] public section
+
 open PositivityTheory.Rg.Tf.Geo
 
 private theorem exists_krylov_det_ne_zero {k : Type*} [Field k] [Infinite k] {n : ℕ}

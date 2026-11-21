@@ -1,4 +1,8 @@
-import ReciprocityTheory.L2DbarEstimates.IsLocalHomeomorph
+module
+
+public import ReciprocityTheory.L2DbarEstimates.IsLocalHomeomorph
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates
 

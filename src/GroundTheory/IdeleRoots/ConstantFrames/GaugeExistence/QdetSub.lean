@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.IdeleRoots.ConstantFrames.GaugeExistence.RotationOfDiagonalGenerator
+module
+
+public import Mathlib
+public import GroundTheory.IdeleRoots.ConstantFrames.GaugeExistence.RotationOfDiagonalGenerator
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open Polynomial Formalism.REAL

@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.PlurisubharmonicCones.DeterminantLatticeGradedTensor
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SpecializesOfUnits
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.PlurisubharmonicCones.DeterminantLatticeGradedTensor
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.SpecializesOfUnits
+
+@[expose] public section
 
 open AlgebraicGeometry CategoryTheory Matrix MvPolynomial
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo

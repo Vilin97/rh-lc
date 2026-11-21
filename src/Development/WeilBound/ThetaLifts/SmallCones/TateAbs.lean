@@ -1,8 +1,12 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.SmallCones.ThetaUniq
-import Development.WeilBound.ThetaLifts.SmallCones.IdeleTop
-import GroundTheory.GlobalFields.TateThesis.GlobalZeta
-import CompanionTheory.AutomorphicTheory.UnitriangularMeasure.AdeleCoordinateMeasure.EllipticTorusNorm
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.SmallCones.ThetaUniq
+public import Development.WeilBound.ThetaLifts.SmallCones.IdeleTop
+public import GroundTheory.GlobalFields.TateThesis.GlobalZeta
+public import CompanionTheory.AutomorphicTheory.UnitriangularMeasure.AdeleCoordinateMeasure.EllipticTorusNorm
+
+@[expose] public section
 
 noncomputable section
 

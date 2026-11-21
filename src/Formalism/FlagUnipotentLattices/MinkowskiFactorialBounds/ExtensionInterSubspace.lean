@@ -1,11 +1,15 @@
-import Formalism.FlagUnipotentLattices.HalfDifferenceL1Bound
-import Formalism.LatticeRigidity.HeightMinimum.PowFinrankEqZeroOfTracePow
-import Mathlib
-import Formalism.LogSumExpBounds.StatementD
-import Formalism.GelfandTransference.EnergyIdentity
-import Formalism.NormUnitaryBounds.DetPolynomialWeights.ShortIndependentVectorsOfDualMinimum
-import Formalism.LatticeTheta.ThetaShiftInversion
-import Formalism.HarderNarasimhan.ShiftInvariance
+module
+
+public import Formalism.FlagUnipotentLattices.HalfDifferenceL1Bound
+public import Formalism.LatticeRigidity.HeightMinimum.PowFinrankEqZeroOfTracePow
+public import Mathlib
+public import Formalism.LogSumExpBounds.StatementD
+public import Formalism.GelfandTransference.EnergyIdentity
+public import Formalism.NormUnitaryBounds.DetPolynomialWeights.ShortIndependentVectorsOfDualMinimum
+public import Formalism.LatticeTheta.ThetaShiftInversion
+public import Formalism.HarderNarasimhan.ShiftInvariance
+
+@[expose] public section
 
 open Formalism.HermitianLatticeCounting.S7 Finset MeasureTheory
 open scoped ComplexOrder

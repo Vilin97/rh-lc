@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsClosedPointUnitSection
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PCurveCharts
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsClosedPointUnitSection
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PCurveCharts
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

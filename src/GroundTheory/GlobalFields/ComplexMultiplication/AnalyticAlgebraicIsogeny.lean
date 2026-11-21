@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.AnalyticAlgebraicIndependent
-import GroundTheory.GlobalFields.ComplexMultiplication.AnalyticAlgebraicUnivAdd
-import GroundTheory.GlobalFields.ComplexMultiplication.DifferentialConstant
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualWeil
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.AnalyticAlgebraicIndependent
+public import GroundTheory.GlobalFields.ComplexMultiplication.AnalyticAlgebraicUnivAdd
+public import GroundTheory.GlobalFields.ComplexMultiplication.DifferentialConstant
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualWeil
+
+@[expose] public section
 
 open Filter Topology Set Polynomial WeierstrassCurve.Affine GroundTheory.Arith.Abelian KaehlerDifferential
 open scoped PeriodPair

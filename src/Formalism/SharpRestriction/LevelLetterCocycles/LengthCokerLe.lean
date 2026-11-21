@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.UniformizerMemDeltaInvariants
-import Formalism.JumpKernelCokernel.LengthTheoremsWithEarlier
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.UniformizerMemDeltaInvariants
+public import Formalism.JumpKernelCokernel.LengthTheoremsWithEarlier
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.CrystallineTowers.LocTower
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.CrystallineTowers.AdmCrys
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsModelOfMem
+module
+
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.CrystallineTowers.LocTower
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.CrystallineTowers.AdmCrys
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsModelOfMem
+
+@[expose] public section
 
 noncomputable section
 

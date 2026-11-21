@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StChartPrimElt
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StLocAwaySpec
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StChartSpecCount
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StChartPrimElt
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StLocAwaySpec
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StChartSpecCount
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

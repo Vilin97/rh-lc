@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.MultiplicityOne.Functional
-import GroundTheory.AutomorphicForms.UnitaryRepresentations.IsInvariantIffCommuteStarProjection
-import GroundTheory.AutomorphicForms.MultiplicityOne.FiniteLevelGroups
-import GroundTheory.AutomorphicForms.MultiplicityOne.OpenSubgroupRep
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.MultiplicityOne.Functional
+public import GroundTheory.AutomorphicForms.UnitaryRepresentations.IsInvariantIffCommuteStarProjection
+public import GroundTheory.AutomorphicForms.MultiplicityOne.FiniteLevelGroups
+public import GroundTheory.AutomorphicForms.MultiplicityOne.OpenSubgroupRep
+
+@[expose] public section
 
 open MeasureTheory Set Filter Topology Function
 open NumberField IsDedekindDomain

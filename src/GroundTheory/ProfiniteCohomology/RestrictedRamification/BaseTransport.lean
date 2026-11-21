@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChangeModules
-import GroundTheory.ProfiniteCohomology.PoincarePairs.ConeProduct
-import GroundTheory.ProfiniteCohomology.PoincarePairs.MackeyCup
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseChangeModules
+public import GroundTheory.ProfiniteCohomology.PoincarePairs.ConeProduct
+public import GroundTheory.ProfiniteCohomology.PoincarePairs.MackeyCup
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

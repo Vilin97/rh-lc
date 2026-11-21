@@ -1,4 +1,8 @@
-import Formalism.Statement
+module
+
+public import Formalism.Statement
+
+@[expose] public section
 
 open Complex MeasureTheory Set Filter Topology
 

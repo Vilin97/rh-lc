@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FormsOfSemilinear
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BlockBaseChangeAt
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FormsOfSemilinear
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BlockBaseChangeAt
+
+@[expose] public section
 
 open Module NumberField Formalism.L2.DIV Formalism.DivisionValues
 open scoped Matrix

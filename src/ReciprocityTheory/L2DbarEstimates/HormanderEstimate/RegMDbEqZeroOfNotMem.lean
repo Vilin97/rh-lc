@@ -1,7 +1,11 @@
-import ReciprocityTheory.L2DbarEstimates.Localization.UnweightBackStatement
-import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.Imports
-import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.HoloWeakStatement
-import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.RegGlue
+module
+
+public import ReciprocityTheory.L2DbarEstimates.Localization.UnweightBackStatement
+public import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.Imports
+public import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.HoloWeakStatement
+public import ReciprocityTheory.L2DbarEstimates.WeakHolomorphy.RegGlue
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.F
 

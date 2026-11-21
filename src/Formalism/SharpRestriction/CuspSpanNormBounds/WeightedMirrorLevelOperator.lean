@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.AuxiliarySlotStates
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.AuxiliarySlotStates
+
+@[expose] public section
 
 noncomputable section
 

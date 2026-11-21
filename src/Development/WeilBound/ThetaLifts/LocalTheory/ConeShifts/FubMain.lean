@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.FubLoc
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.FubLoc
+
+@[expose] public section
 
 noncomputable section
 

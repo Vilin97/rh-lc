@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.KroneckerWeber
-import GroundTheory.LocalFields.LocalReciprocityUniversal
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.KroneckerWeber
+public import GroundTheory.LocalFields.LocalReciprocityUniversal
+
+@[expose] public section
 
 noncomputable section
 

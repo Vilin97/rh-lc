@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WeightUpdateAtPlace
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.TminusLinApply
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.NatCastInvMemRp
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WeightUpdateAtPlace
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.TminusLinApply
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.NatCastInvMemRp
+
+@[expose] public section
 
 noncomputable section
 

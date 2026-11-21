@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.NumberFieldFamilies.NPartCBase
+module
+
+public import Formalism.LocalToGlobal.NumberFieldFamilies.NPartCBase
+
+@[expose] public section
 
 noncomputable section
 

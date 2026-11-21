@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ExponentGrids.EntryG
-import Formalism.LocalToGlobal.KernelLattices.ColInst
+module
+
+public import Formalism.LocalToGlobal.ExponentGrids.EntryG
+public import Formalism.LocalToGlobal.KernelLattices.ColInst
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators ComplexConjugate

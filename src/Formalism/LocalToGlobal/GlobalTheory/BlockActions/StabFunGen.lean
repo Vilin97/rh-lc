@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.FormsOfLatticeExtension
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.InJSymRestrict
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.FormsOfLatticeExtension
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.InJSymRestrict
+
+@[expose] public section
 
 noncomputable section
 

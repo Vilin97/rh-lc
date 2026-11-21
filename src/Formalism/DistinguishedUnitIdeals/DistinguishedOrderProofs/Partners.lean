@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.DistinguishedUnitIdeals.GammaCongruentArcFromStart
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.GoodOf
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.Graded
+module
+
+public import Mathlib
+public import Formalism.DistinguishedUnitIdeals.GammaCongruentArcFromStart
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.GoodOf
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.Graded
+
+@[expose] public section
 
 noncomputable section
 

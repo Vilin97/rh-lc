@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.InertKernelTheory.StatementAdmAt
-import Formalism.LocalToGlobal.InertKernelTheory.TranslatesOfInertKernelAtPlace
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.StatementAdmAt
+public import Formalism.LocalToGlobal.InertKernelTheory.TranslatesOfInertKernelAtPlace
+
+@[expose] public section
 
 noncomputable section
 

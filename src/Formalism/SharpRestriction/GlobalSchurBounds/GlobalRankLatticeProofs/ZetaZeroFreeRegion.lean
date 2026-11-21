@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.GlobalSchurBounds.ZetaZeroFreeRegion
-import Formalism.ZetaNonvanishing.ZetaLandau
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.GlobalSchurBounds.ZetaZeroFreeRegion
+public import Formalism.ZetaNonvanishing.ZetaLandau
+
+@[expose] public section
 
 noncomputable section
 

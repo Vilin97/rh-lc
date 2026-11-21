@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.NormCharacterPowers.OrderAsym
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.NormCharacterPowers.OrderAsym
+
+@[expose] public section
 
 open PositivityTheory.RgJS
 open scoped ComplexConjugate

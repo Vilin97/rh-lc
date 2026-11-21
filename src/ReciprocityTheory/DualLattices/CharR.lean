@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.ExistsLimTensor
+module
+
+public import ReciprocityTheory.DualLattices.ExistsLimTensor
+
+@[expose] public section
 
 noncomputable section
 

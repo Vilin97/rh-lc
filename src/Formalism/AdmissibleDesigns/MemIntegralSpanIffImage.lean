@@ -1,7 +1,11 @@
-import Formalism.AdmissibleDesigns.MemImageOfTensorSum
-import Formalism.AdmissibleDesigns.CohomZeroEquivContinuous
-import Formalism.SharpRestriction.LevelLetterCocycles.IsobaricMultiplicityOne
-import Formalism.AdmissibleDesigns.EKSymmCont
+module
+
+public import Formalism.AdmissibleDesigns.MemImageOfTensorSum
+public import Formalism.AdmissibleDesigns.CohomZeroEquivContinuous
+public import Formalism.SharpRestriction.LevelLetterCocycles.IsobaricMultiplicityOne
+public import Formalism.AdmissibleDesigns.EKSymmCont
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

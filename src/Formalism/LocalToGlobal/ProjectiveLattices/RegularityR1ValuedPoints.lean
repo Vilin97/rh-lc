@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.CompTie
-import Formalism.LocalToGlobal.ProjectiveLattices.CompTieA
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.CompTie
+public import Formalism.LocalToGlobal.ProjectiveLattices.CompTieA
+
+@[expose] public section
 
 noncomputable section
 

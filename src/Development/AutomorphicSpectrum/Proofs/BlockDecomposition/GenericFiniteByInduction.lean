@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.AffineGLForms.GenSpace
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.ConstantTerm
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.AffineGLForms.GenSpace
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.ConstantTerm
+
+@[expose] public section
 
 noncomputable section
 

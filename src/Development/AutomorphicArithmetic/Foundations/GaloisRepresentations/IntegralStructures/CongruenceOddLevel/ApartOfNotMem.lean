@@ -1,4 +1,8 @@
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.LimWPhi
+module
+
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.LimWPhi
+
+@[expose] public section
 
 noncomputable section
 

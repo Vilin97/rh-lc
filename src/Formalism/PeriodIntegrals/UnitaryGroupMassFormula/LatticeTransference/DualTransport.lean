@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.Transference
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeTransference.TransferenceKey
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.Transference
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeTransference.TransferenceKey
+
+@[expose] public section
 
 open Module
 open scoped Real

@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SummandsAreCuspForms
-import GroundTheory.AutomorphicForms.TensorProductTheorem.CentralCuspSplit
-import GroundTheory.AutomorphicForms.UnitaryAdmissible.CuspFinite
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SummandsAreCuspForms
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.CentralCuspSplit
+public import GroundTheory.AutomorphicForms.UnitaryAdmissible.CuspFinite
+
+@[expose] public section
 
 open MeasureTheory Filter Topology
 

@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.SobolevIteration.ArvOSobPfK
-import Formalism.LocalToGlobal.IndefiniteReal.SobolevIteration.ArvOSobPfA
-import Formalism.LocalToGlobal.IndefiniteReal.SobolevIteration.ArvOSobPfAs
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.SobolevIteration.ArvOSobPfK
+public import Formalism.LocalToGlobal.IndefiniteReal.SobolevIteration.ArvOSobPfA
+public import Formalism.LocalToGlobal.IndefiniteReal.SobolevIteration.ArvOSobPfAs
+
+@[expose] public section
 
 noncomputable section
 

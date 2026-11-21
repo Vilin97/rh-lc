@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.EigenFrames.EigenSt
+module
+
+public import Mathlib
+public import ReciprocityTheory.EigenFrames.EigenSt
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

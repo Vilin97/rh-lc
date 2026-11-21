@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Statements.CuspFrameWeights.DiscreteSpectrumKFiniteDecomposition
-import Formalism.HermitianCurvature.BesselNonvanishingReduction
-import Development.AbelianVarietyTheory.Counterexamples.JetSurvey.KFinDecayOfDecInf
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.DecayInputsOfDecAll
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.PtBoundAndFarBoundAndDecGap
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CayleyExistsAndAny
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Statements.CuspFrameWeights.DiscreteSpectrumKFiniteDecomposition
+public import Formalism.HermitianCurvature.BesselNonvanishingReduction
+public import Development.AbelianVarietyTheory.Counterexamples.JetSurvey.KFinDecayOfDecInf
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.DecayInputsOfDecAll
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.PtBoundAndFarBoundAndDecGap
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CayleyExistsAndAny
+
+@[expose] public section
 
 namespace GlobalTheory.DecTransport
 

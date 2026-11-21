@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSectionOfChg
-import Formalism.LocalToGlobal.ProjectiveLattices.SatLeaves
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSectionOfChg
+public import Formalism.LocalToGlobal.ProjectiveLattices.SatLeaves
+
+@[expose] public section
 
 set_option autoImplicit false
 

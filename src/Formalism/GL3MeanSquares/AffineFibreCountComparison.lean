@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.GL3MeanSquares.RationalMatrixPrimeOrderBound
+module
+
+public import Mathlib
+public import Formalism.GL3MeanSquares.RationalMatrixPrimeOrderBound
+
+@[expose] public section
 
 namespace Formalism.HermitianLattices.RamifiedLatticeOperators
 

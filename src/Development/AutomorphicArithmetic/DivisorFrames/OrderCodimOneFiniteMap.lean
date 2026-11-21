@@ -1,10 +1,15 @@
-import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.ValCount
-import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsValuationSubringDominatingSubring
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.JGenSpecializes
-import Development.AutomorphicArithmetic.DivisorFrames.ValuationRingOfFiniteDominating
-import Development.AutomorphicArithmetic.DivisorFrames.OrderEqValuationCodimOne
-import Development.AutomorphicArithmetic.DivisorFrames.ResidueDegreeEqValuationDegree
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.LocalEmbeddings.ValCount
+public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsValuationSubringDominatingSubring
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.JGenSpecializes
+public import Development.AutomorphicArithmetic.DivisorFrames.ValuationRingOfFiniteDominating
+public import Development.AutomorphicArithmetic.DivisorFrames.OrderEqValuationCodimOne
+public import Development.AutomorphicArithmetic.DivisorFrames.ResidueDegreeEqValuationDegree
+
+@[expose] public section
+
 open CategoryTheory AlgebraicGeometry IsLocalRing GlobalTheory GlobalTheory.ValCount GlobalTheory.TrueGeo
 open scoped Classical
 

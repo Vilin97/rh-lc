@@ -1,6 +1,10 @@
-import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.LThBddB
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SubstMemAndComm
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeftInvSubtypeSum
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.RegularisedSiegelWeil.SingularNullSets.LThBddB
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SubstMemAndComm
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeftInvSubtypeSum
+
+@[expose] public section
 
 noncomputable section
 

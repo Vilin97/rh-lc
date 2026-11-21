@@ -1,6 +1,10 @@
-import Formalism.PadicSubsetSums.StableGradedCounts.LocalEstimateIVOfTypeSetWeight
-import Formalism.PadicSubsetSums.StableGradedCounts.ProdPowFactorizationLe
-import Formalism.PadicSubsetSums.StableGradedCounts.FourMulSumLeProduct
+module
+
+public import Formalism.PadicSubsetSums.StableGradedCounts.LocalEstimateIVOfTypeSetWeight
+public import Formalism.PadicSubsetSums.StableGradedCounts.ProdPowFactorizationLe
+public import Formalism.PadicSubsetSums.StableGradedCounts.FourMulSumLeProduct
+
+@[expose] public section
 
 open Polynomial
 

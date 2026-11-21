@@ -1,4 +1,8 @@
-import Formalism.FlagUnipotentLattices.MemOfOrthogonalAnisotropic
+module
+
+public import Formalism.FlagUnipotentLattices.MemOfOrthogonalAnisotropic
+
+@[expose] public section
 
 open Formalism.HermitianLatticeCounting.S6
 open scoped BigOperators

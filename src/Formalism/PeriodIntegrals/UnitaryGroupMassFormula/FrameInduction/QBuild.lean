@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FrameInduction.Counts
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FrameInduction.NegativeBound
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FrameInduction.Counts
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FrameInduction.NegativeBound
+
+@[expose] public section
 
 open Matrix Formalism.QuantumDeterminants Formalism.FourierDecayAlt Formalism.FourierDecayAlt.C2
 

@@ -1,10 +1,14 @@
-import Formalism.LocalToGlobal.Columns.Inputs
-import Formalism.LocalToGlobal.Columns.GSetLemmas
-import Formalism.LocalToGlobal.Columns.ColFormsLemmas
-import Formalism.LocalToGlobal.Columns.CoefColLemmas
-import Formalism.LocalToGlobal.Columns.CoefModAt
-import Formalism.LocalToGlobal.Columns.BtExistsSmulLeOfFg
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.Minkowski
+module
+
+public import Formalism.LocalToGlobal.Columns.Inputs
+public import Formalism.LocalToGlobal.Columns.GSetLemmas
+public import Formalism.LocalToGlobal.Columns.ColFormsLemmas
+public import Formalism.LocalToGlobal.Columns.CoefColLemmas
+public import Formalism.LocalToGlobal.Columns.CoefModAt
+public import Formalism.LocalToGlobal.Columns.BtExistsSmulLeOfFg
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.Minkowski
+
+@[expose] public section
 
 noncomputable section
 

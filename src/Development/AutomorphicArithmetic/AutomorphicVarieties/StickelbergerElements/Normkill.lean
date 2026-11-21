@@ -1,7 +1,11 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.StickelbergerElements.SamePrimesMulPow
-import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.StickelbergerTheorem.StickelbergerAt
-import Development.AutomorphicArithmetic.AutomorphicVarieties.StmtFields
-import Mathlib.RingTheory.Ideal.Norm.RelNorm
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.StickelbergerElements.SamePrimesMulPow
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.StickelbergerTheorem.StickelbergerAt
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.StmtFields
+public import Mathlib.RingTheory.Ideal.Norm.RelNorm
+
+@[expose] public section
 
 open NumberField UpperTheory.V UpperTheory.V.Kum UpperTheory.V.Stick UpperTheory.V.Stk
 

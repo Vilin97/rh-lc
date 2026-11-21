@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.UdlApply
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IwahoriFactorisation
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.UdlApply
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IwahoriFactorisation
+
+@[expose] public section
 
 open Polynomial
 

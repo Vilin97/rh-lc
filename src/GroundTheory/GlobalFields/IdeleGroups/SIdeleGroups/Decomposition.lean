@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.SIdeleGroups.InfinitePlaces
-import GroundTheory.GlobalFields.IdeleGroups.SIdeleGroups.IntegerUnits
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.SIdeleGroups.InfinitePlaces
+public import GroundTheory.GlobalFields.IdeleGroups.SIdeleGroups.IntegerUnits
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

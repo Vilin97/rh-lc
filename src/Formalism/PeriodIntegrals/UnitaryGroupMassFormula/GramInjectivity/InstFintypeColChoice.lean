@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.WwInjective
-import Formalism.PeriodIntegrals.WwCauchyBinet
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GramInjectivity.GramVanish
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.WwInjective
+public import Formalism.PeriodIntegrals.WwCauchyBinet
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GramInjectivity.GramVanish
+
+@[expose] public section
 
 noncomputable section
 

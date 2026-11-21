@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.MetaplecticLowRank.LowC
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsCentralContract
+module
+
+public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.MetaplecticLowRank.LowC
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsCentralContract
+
+@[expose] public section
 
 noncomputable section
 

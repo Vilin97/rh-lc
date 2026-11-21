@@ -1,6 +1,10 @@
-import Formalism.CharacterColumnKernels.Statement
-import Lemmata.SecondBlockLemmaA.Imports
-import Lemmata.AddValuationProducts.AddValProd
+module
+
+public import Formalism.CharacterColumnKernels.Statement
+public import Lemmata.SecondBlockLemmaA.Imports
+public import Lemmata.AddValuationProducts.AddValProd
+
+@[expose] public section
 
 open Module IsDiscreteValuationRing Matrix
 

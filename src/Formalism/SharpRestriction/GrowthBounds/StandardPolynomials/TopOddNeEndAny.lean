@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.MultMk
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.MultMk
+
+@[expose] public section
 
 noncomputable section
 

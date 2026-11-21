@@ -1,12 +1,16 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.CurveDivisors
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.CurveProper
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.WeilDivisorSheaf
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.InvertibleSheaf
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.WeilDivisorInvertible
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.InvertibleDual
-import GroundTheory.FunctionField.DivisorDegree
-import GroundTheory.FunctionField.WeilDifferential
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.CurveDivisors
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.CurveProper
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.WeilDivisorSheaf
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.InvertibleSheaf
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.WeilDivisorInvertible
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.InvertibleDual
+public import GroundTheory.FunctionField.DivisorDegree
+public import GroundTheory.FunctionField.WeilDifferential
+
+@[expose] public section
 
 open CategoryTheory AlgebraicGeometry Order Topology Module MonoidalCategory
 

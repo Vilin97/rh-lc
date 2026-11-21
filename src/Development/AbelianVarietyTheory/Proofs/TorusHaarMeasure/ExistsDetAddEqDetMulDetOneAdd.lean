@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.GramSt
+module
+
+public import Mathlib
+public import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.GramSt
+
+@[expose] public section
 
 open MeasureTheory Topology Matrix
 open scoped ComplexOrder ENNReal Pointwise

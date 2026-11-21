@@ -1,10 +1,14 @@
-import Development.EtaleCohomology.EtaleSheaves.KernelLocalization.RangeOfBd
-import Development.EtaleCohomology.EtaleSheaves.TruncKerPf
-import Development.EtaleCohomology.EtaleSheaves.DescIntPf
-import Development.EtaleCohomology.EtaleSheaves.FiltGenPf
-import Development.EtaleCohomology.EtaleSheaves.DiscLvlPf
-import Development.EtaleCohomology.EtaleSheaves.ShiftLvlPf
-import Development.EtaleCohomology.EtaleSheaves.LeafConeExactPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.KernelLocalization.RangeOfBd
+public import Development.EtaleCohomology.EtaleSheaves.TruncKerPf
+public import Development.EtaleCohomology.EtaleSheaves.DescIntPf
+public import Development.EtaleCohomology.EtaleSheaves.FiltGenPf
+public import Development.EtaleCohomology.EtaleSheaves.DiscLvlPf
+public import Development.EtaleCohomology.EtaleSheaves.ShiftLvlPf
+public import Development.EtaleCohomology.EtaleSheaves.LeafConeExactPf
+
+@[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC LateralTheory.E.LeafGhostCut LateralTheory.E.DescIntPf LateralTheory.E.KernelLocalization
 namespace LateralTheory.E.RelativeTruncationSingleDegree

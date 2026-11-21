@@ -1,5 +1,9 @@
-import Formalism.AdmissibleDesigns.NonemptyPl
-import Formalism.WeaklyAdmissibleFiltrations.CrystallineStableLifts.Galois
+module
+
+public import Formalism.AdmissibleDesigns.NonemptyPl
+public import Formalism.WeaklyAdmissibleFiltrations.CrystallineStableLifts.Galois
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

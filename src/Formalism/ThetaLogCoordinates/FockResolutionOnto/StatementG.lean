@@ -1,6 +1,10 @@
-import Formalism.ThetaLogCoordinates.FockResolutionOnto.StatementD
-import Formalism.ThetaLogCoordinates.TraceIsometryWeights.StatementD
-import Formalism.ThetaLogCoordinates.TraceIsometryWeights.StatementF
+module
+
+public import Formalism.ThetaLogCoordinates.FockResolutionOnto.StatementD
+public import Formalism.ThetaLogCoordinates.TraceIsometryWeights.StatementD
+public import Formalism.ThetaLogCoordinates.TraceIsometryWeights.StatementF
+
+@[expose] public section
 
 namespace Formalism.InvariantFactorPaths.L4
 

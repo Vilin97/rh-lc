@@ -1,12 +1,16 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.FunctionalLowerBoundOfConditionsNumeric
-import Formalism.LocalToGlobal.IndefiniteForms.IndefExample
-import Formalism.LocalToGlobal.IndefiniteReal.ConcretePkgSpec
-import Formalism.LocalToGlobal.IndefiniteForms.IndefUse
-import Formalism.HarderNarasimhan.ShiftInvariance
-import Formalism.QuotientMetricDivisors.PassageScaleFree
-import Formalism.QuotientMetricDivisors.FinalW
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualMatrixMetricMeans
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.FunctionalLowerBoundOfConditionsNumeric
+public import Formalism.LocalToGlobal.IndefiniteForms.IndefExample
+public import Formalism.LocalToGlobal.IndefiniteReal.ConcretePkgSpec
+public import Formalism.LocalToGlobal.IndefiniteForms.IndefUse
+public import Formalism.HarderNarasimhan.ShiftInvariance
+public import Formalism.QuotientMetricDivisors.PassageScaleFree
+public import Formalism.QuotientMetricDivisors.FinalW
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DualMatrixMetricMeans
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open Formalism.L2.Indef Formalism.L2.Indef.Tree Formalism.DivisionValues Formalism.PairingDivisionLocalBalance Formalism.HN

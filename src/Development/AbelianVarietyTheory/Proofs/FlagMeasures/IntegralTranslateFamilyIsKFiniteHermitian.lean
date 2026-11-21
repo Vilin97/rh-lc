@@ -1,4 +1,9 @@
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.IsCompactKH
+module
+
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.IsCompactKH
+
+@[expose] public section
+
 open MeasureTheory Matrix Filter Topology
 
 noncomputable section

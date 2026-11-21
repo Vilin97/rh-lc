@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SendsToAlgMulAlg
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SendsToAlgMulAlg
+
+@[expose] public section
 
 open MeasureTheory
 open scoped Matrix

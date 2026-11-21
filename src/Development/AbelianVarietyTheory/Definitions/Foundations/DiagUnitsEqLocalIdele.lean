@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Foundations.ValuedAlgebraMapEqOne
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.ValuedAlgebraMapEqOne
+
+@[expose] public section
 
 noncomputable section
 open NumberField IsDedekindDomain

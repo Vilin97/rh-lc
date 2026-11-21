@@ -1,8 +1,12 @@
-import Development.EtaleCohomology.TateTwists.CcCupFlipPf
-import Development.EtaleCohomology.TateTwists.CupflipHomotopyPf
-import Development.EtaleCohomology.TateTwists.EtaleFreeModuleCohomologyHomOfComponents
-import Development.EtaleCohomology.TateTwists.EtaleCochainComplexBasicPropertiesOfComponents
-import Development.EtaleCohomology.TateTwists.EtaleEvaluationMapConstructionOfComponents
+module
+
+public import Development.EtaleCohomology.TateTwists.CcCupFlipPf
+public import Development.EtaleCohomology.TateTwists.CupflipHomotopyPf
+public import Development.EtaleCohomology.TateTwists.EtaleFreeModuleCohomologyHomOfComponents
+public import Development.EtaleCohomology.TateTwists.EtaleCochainComplexBasicPropertiesOfComponents
+public import Development.EtaleCohomology.TateTwists.EtaleEvaluationMapConstructionOfComponents
+
+@[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
 

@@ -1,4 +1,8 @@
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PVerticalTwistGenDeg
+module
+
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.PVerticalTwistGenDeg
+
+@[expose] public section
 
 namespace SheetDecomposition
 

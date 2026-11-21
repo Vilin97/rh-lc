@@ -1,5 +1,9 @@
-import Formalism.SatakeDualWeyl.Statement
-import Formalism.GradedWeylDivisibility.StatementA
+module
+
+public import Formalism.SatakeDualWeyl.Statement
+public import Formalism.GradedWeylDivisibility.StatementA
+
+@[expose] public section
 
 noncomputable section
 

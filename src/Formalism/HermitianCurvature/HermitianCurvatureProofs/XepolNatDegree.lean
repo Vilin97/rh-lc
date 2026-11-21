@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RadDZKapLeft
-import Mathlib.LinearAlgebra.Lagrange
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RadDZKapLeft
+public import Mathlib.LinearAlgebra.Lagrange
+
+@[expose] public section
 
 open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt Polynomial
 

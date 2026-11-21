@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmRowForm
+module
+
+public import Mathlib
+public import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmRowForm
+
+@[expose] public section
 
 open Formalism.REAL Finset
 

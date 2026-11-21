@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.ChainOneB
-import Formalism.LocalToGlobal.Columns.ColumnsProofs.ChainCounts
+module
+
+public import Formalism.LocalToGlobal.Columns.ChainOneB
+public import Formalism.LocalToGlobal.Columns.ColumnsProofs.ChainCounts
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

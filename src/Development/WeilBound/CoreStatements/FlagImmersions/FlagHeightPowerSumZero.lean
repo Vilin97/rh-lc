@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.FlagImmersions.ExistsWord
+module
+
+public import Development.WeilBound.CoreStatements.FlagImmersions.ExistsWord
+
+@[expose] public section
 
 open MvPolynomial ReciprocityTheory.ChartRestriction.G.Geo Filter Topology GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Top
 

@@ -1,9 +1,13 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.LocalDataRealPlace
-import Formalism.SharpRestriction.CuspSpanNormBounds.AuxiliarySlotStates
-import Formalism.SharpRestriction.CuspSpanNormBounds.DiagonalEntryIdentity
-import Formalism.SharpRestriction.CuspSpanNormBounds.RootMeasBig
-import Formalism.SharpRestriction.CuspSpanNormBounds.IsGramNorm
-import Formalism.SharpRestriction.ParConsts
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.LocalDataRealPlace
+public import Formalism.SharpRestriction.CuspSpanNormBounds.AuxiliarySlotStates
+public import Formalism.SharpRestriction.CuspSpanNormBounds.DiagonalEntryIdentity
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RootMeasBig
+public import Formalism.SharpRestriction.CuspSpanNormBounds.IsGramNorm
+public import Formalism.SharpRestriction.ParConsts
+
+@[expose] public section
 
 open MeasureTheory Matrix Filter Topology NumberField
 open scoped ContDiff ComplexOrder nonZeroDivisors

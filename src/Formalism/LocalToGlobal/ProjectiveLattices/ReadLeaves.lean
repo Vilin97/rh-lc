@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.FamilyUniformisationBasePointOrthogonal
-import Formalism.LocalToGlobal.ProjectiveLattices.ChiProofs
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.FamilyUniformisationBasePointOrthogonal
+public import Formalism.LocalToGlobal.ProjectiveLattices.ChiProofs
+
+@[expose] public section
 
 noncomputable section
 

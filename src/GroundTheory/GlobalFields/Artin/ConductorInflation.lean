@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.Artin.Conductor
-import GroundTheory.GlobalFields.Artin.InflationTower
-import GroundTheory.LocalFields.LowerIndexQuotient
-import GroundTheory.LocalFields.IntermediateField
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.Artin.Conductor
+public import GroundTheory.GlobalFields.Artin.InflationTower
+public import GroundTheory.LocalFields.LowerIndexQuotient
+public import GroundTheory.LocalFields.IntermediateField
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import CompanionTheory.AutomorphicTheory.ProductFormulaTheory.CuspidalExhaustion.CuspEmbP
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsOrderedFormSnoc
+module
+
+public import CompanionTheory.AutomorphicTheory.ProductFormulaTheory.CuspidalExhaustion.CuspEmbP
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsOrderedFormSnoc
+
+@[expose] public section
 
 noncomputable section
 

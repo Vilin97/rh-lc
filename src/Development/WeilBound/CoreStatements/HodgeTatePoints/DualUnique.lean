@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.LeadMinor
-import Development.WeilBound.CoreStatements.HodgeTatePoints.GaGram
-import Development.WeilBound.CoreStatements.HodgeTatePoints.GaSurj
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.LeadMinor
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.GaGram
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.GaSurj
+
+@[expose] public section
 
 noncomputable section
 

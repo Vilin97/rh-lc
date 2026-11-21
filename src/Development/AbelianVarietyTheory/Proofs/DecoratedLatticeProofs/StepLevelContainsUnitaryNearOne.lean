@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsK1PointCongruent
-import Formalism.LocalToGlobal.Columns.RecLevelTop
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsK1PointCongruent
+public import Formalism.LocalToGlobal.Columns.RecLevelTop
+
+@[expose] public section
+
 open NumberField IsDedekindDomain
 open scoped TensorProduct
 open scoped Topology

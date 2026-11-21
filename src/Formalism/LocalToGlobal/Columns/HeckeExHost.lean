@@ -1,14 +1,18 @@
-import Mathlib
-import Formalism.LocalToGlobal.UnitaryNorms.CharExCol
-import Formalism.LocalToGlobal.UnitaryNorms.CharExHost
-import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
-import Formalism.LocalToGlobal.UnitaryNorms.CharExGen
-import Formalism.PeriodIntegrals.EtaHostFacts
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HostPrimeSplitting.FinrankOE
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.FrameFacts
-import Formalism.LocalToGlobal.UnitaryNorms.CharTied
-import Formalism.LocalToGlobal.UnitaryNorms.RealPl
-import Formalism.LocalToGlobal.Columns.CyclotomicIsCyclotomicExtension
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.UnitaryNorms.CharExCol
+public import Formalism.LocalToGlobal.UnitaryNorms.CharExHost
+public import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
+public import Formalism.LocalToGlobal.UnitaryNorms.CharExGen
+public import Formalism.PeriodIntegrals.EtaHostFacts
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HostPrimeSplitting.FinrankOE
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.FrameFacts
+public import Formalism.LocalToGlobal.UnitaryNorms.CharTied
+public import Formalism.LocalToGlobal.UnitaryNorms.RealPl
+public import Formalism.LocalToGlobal.Columns.CyclotomicIsCyclotomicExtension
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

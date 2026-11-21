@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.LocalZetaShell
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LocalZetaShell
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,11 +1,16 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.MoveStep
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsMulEqOfUnif
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.PTermOfStd
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SubAddLeSpread
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.RatTermOfRatStep
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.RatStepOfChThOk
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.KmapOfOkOfVecP
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.MoveStep
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.ExistsMulEqOfUnif
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.PTermOfStd
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.SubAddLeSpread
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.RatTermOfRatStep
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.RatStepOfChThOk
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.KmapOfOkOfVecP
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.L2.DIV Formalism.L2.Ker GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.LvT GlobalTheory.LvT.Built GlobalTheory.LvT.Built.TrueLaws
 
 noncomputable section

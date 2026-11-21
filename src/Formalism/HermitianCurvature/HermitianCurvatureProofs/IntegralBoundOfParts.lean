@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BuiltBoundsCompactOfParts
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.GramLocSetCApp
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.GramLocTendsto
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SizeAtMinusW
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BuiltBoundsCompactOfParts
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GramLocSetCApp
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GramLocTendsto
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SizeAtMinusW
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBASM
 

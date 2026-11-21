@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HarderNarasimhan.StatementPl
-import Formalism.CorankShare.StatementFR
+module
+
+public import Mathlib
+public import Formalism.HarderNarasimhan.StatementPl
+public import Formalism.CorankShare.StatementFR
+
+@[expose] public section
 
 open Module NumberField Formalism.CorankShareLayerCake.FR
 

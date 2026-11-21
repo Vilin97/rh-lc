@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.DminusLeBeS
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.DiscriminantNonzeroModUniformiser
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.FourHundredSixteenLeA
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.DminusLeBeS
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.DiscriminantNonzeroModUniformiser
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.FourHundredSixteenLeA
+
+@[expose] public section
 
 noncomputable section
 

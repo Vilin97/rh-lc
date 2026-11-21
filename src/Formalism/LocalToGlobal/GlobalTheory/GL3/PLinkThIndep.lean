@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.GlobalTheory.GL3.Statement
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.Statement
+
+@[expose] public section
 
 noncomputable section
 

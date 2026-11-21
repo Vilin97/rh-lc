@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.StatementE
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.StatementE
+
+@[expose] public section
 
 open Finset
 

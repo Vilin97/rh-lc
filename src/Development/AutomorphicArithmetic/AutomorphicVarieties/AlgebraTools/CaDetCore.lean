@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CotInd
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DetLocus
-import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.Integral
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaDetLocus
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CotInd
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DetLocus
+public import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.Integral
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.CaDetLocus
+
+@[expose] public section
 
 open IsLocalRing UpperTheory.V.AlgebraTools
 

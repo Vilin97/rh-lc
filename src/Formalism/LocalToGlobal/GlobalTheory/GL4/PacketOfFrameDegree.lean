@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL4.NfAllSelfEq
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.NfAllSelfEq
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain MvPolynomial
 open scoped Matrix

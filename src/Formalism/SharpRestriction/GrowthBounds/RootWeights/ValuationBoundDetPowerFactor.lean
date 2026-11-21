@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.IdentityEvaluationGenericMatrix
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.IdentityEvaluationGenericMatrix
+
+@[expose] public section
 
 noncomputable section
 

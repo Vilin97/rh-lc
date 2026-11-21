@@ -1,4 +1,8 @@
-import GroundTheory.AutomorphicForms.TraceClass
+module
+
+public import GroundTheory.AutomorphicForms.TraceClass
+
+@[expose] public section
 
 open MeasureTheory GroundTheory.Automorphic
 open scoped InnerProductSpace

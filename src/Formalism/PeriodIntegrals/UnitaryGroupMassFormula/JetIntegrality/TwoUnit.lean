@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.JetsPhW
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.JetsPhW
+
+@[expose] public section
 
 noncomputable section
 

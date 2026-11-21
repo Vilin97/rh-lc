@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HarishChandraCentre.ConstantCoeffRhoOneCanonMonomial
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HarishChandraCentre.ConstantCoeffRhoOneCanonMonomial
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.HarishChandra
 

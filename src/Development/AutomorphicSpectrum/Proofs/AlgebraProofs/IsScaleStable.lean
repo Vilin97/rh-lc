@@ -1,12 +1,16 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.Assembly
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.Assembly
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeAreaFormula
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeTangentAverage
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeFibreAverage
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsMahler
-import GroundTheory.HeightsAndTheta.Heights.LocalFiniteness.ObjectsChowIntChowFormExists
-import GroundTheory.HeightsAndTheta.Heights.LocalFiniteness.TargetsProjRegularDens
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.Assembly
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.Assembly
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeAreaFormula
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeTangentAverage
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeFibreAverage
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsMahler
+public import GroundTheory.HeightsAndTheta.Heights.LocalFiniteness.ObjectsChowIntChowFormExists
+public import GroundTheory.HeightsAndTheta.Heights.LocalFiniteness.TargetsProjRegularDens
+
+@[expose] public section
 
 set_option maxSynthPendingDepth 1
 

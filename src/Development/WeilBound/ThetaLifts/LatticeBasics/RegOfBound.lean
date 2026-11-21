@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.SWFull
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.SWFull
+
+@[expose] public section
 
 noncomputable section
 

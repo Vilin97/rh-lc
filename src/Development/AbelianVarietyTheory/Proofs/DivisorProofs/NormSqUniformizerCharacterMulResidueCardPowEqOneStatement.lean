@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormSqUniformizerCharacterMulResidueCardPowEqOne
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntIndMemSB
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormSqUniformizerCharacterMulResidueCardPowEqOne
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntIndMemSB
+
+@[expose] public section
 
 open MeasureTheory Matrix ValuativeRel
 

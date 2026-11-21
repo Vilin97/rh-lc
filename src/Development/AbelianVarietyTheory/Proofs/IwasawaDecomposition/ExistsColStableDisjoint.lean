@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ColLieApply
-import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.EventuallyExistsMulIsLowerTriangular
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AevalTotalDegreeLe
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ColLieApply
+public import Development.AbelianVarietyTheory.Proofs.CovolumeBounds.EventuallyExistsMulIsLowerTriangular
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AevalTotalDegreeLe
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.TieTwRecOf
-import Formalism.SharpRestriction.Divisibility.HookProducts.GaugeFormBoundOfUniformSize
-import Formalism.SharpRestriction.Divisibility.SlopeExcess.HeightBoundOfComponentBounds
-import Formalism.LocalToGlobal.GlobalTheory.PlacesP
-import Formalism.LocalToGlobal.Divisibility.DivisibilityRemainder.SharpFunctions.MidExp
-import Formalism.LocalToGlobal.Divisibility.DivisibilityRemainder.SharpFunctions.PointB
+module
+
+public import Formalism.LocalToGlobal.TieTwRecOf
+public import Formalism.SharpRestriction.Divisibility.HookProducts.GaugeFormBoundOfUniformSize
+public import Formalism.SharpRestriction.Divisibility.SlopeExcess.HeightBoundOfComponentBounds
+public import Formalism.LocalToGlobal.GlobalTheory.PlacesP
+public import Formalism.LocalToGlobal.Divisibility.DivisibilityRemainder.SharpFunctions.MidExp
+public import Formalism.LocalToGlobal.Divisibility.DivisibilityRemainder.SharpFunctions.PointB
+
+@[expose] public section
 
 noncomputable section
 

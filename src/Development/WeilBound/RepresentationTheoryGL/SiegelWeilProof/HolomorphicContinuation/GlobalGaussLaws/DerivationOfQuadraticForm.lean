@@ -1,5 +1,9 @@
-import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.GlobalGaussLaws.MatLApply
-import GroundTheory.GlobalFields.CompletionAtPlace
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.GlobalGaussLaws.MatLApply
+public import GroundTheory.GlobalFields.CompletionAtPlace
+
+@[expose] public section
 
 noncomputable section
 

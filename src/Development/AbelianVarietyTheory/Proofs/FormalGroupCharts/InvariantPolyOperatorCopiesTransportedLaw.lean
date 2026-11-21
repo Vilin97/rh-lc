@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.TwoChartAtlas.AdditionLawSecondIdentity
-import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.AxisPderivComp
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.SumSupportRename
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.TwoChartAtlas.AdditionLawSecondIdentity
+public import Development.AbelianVarietyTheory.Proofs.FormalGroupCharts.AxisPderivComp
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.SumSupportRename
+
+@[expose] public section
 
 set_option autoImplicit false
 

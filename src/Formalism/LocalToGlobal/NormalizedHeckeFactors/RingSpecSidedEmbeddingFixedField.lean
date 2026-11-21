@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.ChiDefs
+module
+
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.ChiDefs
+
+@[expose] public section
 
 noncomputable section
 

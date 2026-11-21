@@ -1,17 +1,22 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SnapperSectionSt
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SnapperQuotAddSt
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SnapperQuotDevissageSt
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.MulQuotEqSt
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SectionNonvanishSt
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SectionMulInjSt
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SnapperSectionObj
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.TwistAlg
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSnapper
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PIdealTwistFamily
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCutZeroNotLe
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PStepThreeAway
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.AssemblyBase
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SnapperSectionSt
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SnapperQuotAddSt
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SnapperQuotDevissageSt
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.MulQuotEqSt
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SectionNonvanishSt
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SectionMulInjSt
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SnapperSectionObj
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.TwistAlg
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSnapper
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PIdealTwistFamily
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCutZeroNotLe
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PStepThreeAway
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.AssemblyBase
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman

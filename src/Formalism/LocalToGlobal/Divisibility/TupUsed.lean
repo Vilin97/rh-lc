@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.HilbertRowConditions.ColumnsFunctionAtSubspaces
-import Formalism.LocalToGlobal.Divisibility.MemberDIV
-import Formalism.LocalToGlobal.IndefiniteReal.RecTie
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.HilbertRowConditions.ColumnsFunctionAtSubspaces
+public import Formalism.LocalToGlobal.Divisibility.MemberDIV
+public import Formalism.LocalToGlobal.IndefiniteReal.RecTie
+
+@[expose] public section
 
 noncomputable section
 

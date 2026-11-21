@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.TateCohomology.SplittingModule
-import GroundTheory.TateCohomology.CohTrivial
-import GroundTheory.TateCohomology.ResCores
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.SplittingModule
+public import GroundTheory.TateCohomology.CohTrivial
+public import GroundTheory.TateCohomology.ResCores
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open CategoryTheory Limits groupCohomology Rep

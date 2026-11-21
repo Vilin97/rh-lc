@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.UnipotentAdelicQuotients.ThmBInHecke
+module
+
+public import Mathlib
+public import Formalism.UnipotentAdelicQuotients.ThmBInHecke
+
+@[expose] public section
 
 noncomputable section
 open scoped TensorProduct

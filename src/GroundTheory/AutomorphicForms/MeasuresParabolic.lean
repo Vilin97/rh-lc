@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.MeasuresGL
-import GroundTheory.AutomorphicForms.Iwasawa
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.MeasuresGL
+public import GroundTheory.AutomorphicForms.Iwasawa
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

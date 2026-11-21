@@ -1,4 +1,8 @@
-import ReciprocityTheory.GeometryOfNumbers.SphericalMonomials.GaussSt
+module
+
+public import ReciprocityTheory.GeometryOfNumbers.SphericalMonomials.GaussSt
+
+@[expose] public section
 
 noncomputable section
 

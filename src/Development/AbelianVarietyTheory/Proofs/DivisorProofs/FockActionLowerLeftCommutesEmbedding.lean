@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DetSNeZero
-import ReciprocityTheory.SemistableReduction.AlgebraicIndependentOfDerivations
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DetSNeZero
+public import ReciprocityTheory.SemistableReduction.AlgebraicIndependentOfDerivations
+
+@[expose] public section
 
 open MvPolynomial Formalism.BasicNotions.TH GlobalTheory.CharPair
 

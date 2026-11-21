@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FisSelfReNonneg
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.TranslateMemCoefLatFn
-import ReciprocityTheory.DualLattices.FischerSelfNeZero
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FisSelfReNonneg
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.TranslateMemCoefLatFn
+public import ReciprocityTheory.DualLattices.FischerSelfNeZero
+
+@[expose] public section
 
 noncomputable section
 

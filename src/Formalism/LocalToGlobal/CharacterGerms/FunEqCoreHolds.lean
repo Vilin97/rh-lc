@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.IteratePderivTripleMultiplication
-import Formalism.LocalToGlobal.CharacterGerms.CoeffLMulCvFrob
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.IteratePderivTripleMultiplication
+public import Formalism.LocalToGlobal.CharacterGerms.CoeffLMulCvFrob
+
+@[expose] public section
 
 set_option autoImplicit false
 

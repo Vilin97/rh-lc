@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ProdNonnegReal
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BlockMatrixApplyInrInr
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsFinsetIntOff
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ProdNonnegReal
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BlockMatrixApplyInrInr
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsFinsetIntOff
+
+@[expose] public section
 
 noncomputable section
 

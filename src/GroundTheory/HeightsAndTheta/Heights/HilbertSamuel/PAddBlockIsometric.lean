@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsAddBlockIsometric
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSectionPointValue
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsSemilocRing
-import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.LiftOldChartMonomialMemPrimeCompl
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.ImageCoord
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsAddBlockIsometric
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSectionPointValue
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsSemilocRing
+public import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.LiftOldChartMonomialMemPrimeCompl
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.ImageCoord
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

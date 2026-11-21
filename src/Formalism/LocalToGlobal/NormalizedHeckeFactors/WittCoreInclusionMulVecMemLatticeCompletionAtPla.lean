@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.TwDefs
-import Formalism.LocalRingCardinality.DataNChoice
-import Formalism.LocalRingCardinality.DataIdx
-import Formalism.LocalToGlobal.GaloisLevelStructure.TiedGal
-import Formalism.LocalToGlobal.UnitaryNorms.LeastSplitAuxiliaryPrimeThetaChainSpec
+module
+
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.TwDefs
+public import Formalism.LocalRingCardinality.DataNChoice
+public import Formalism.LocalRingCardinality.DataIdx
+public import Formalism.LocalToGlobal.GaloisLevelStructure.TiedGal
+public import Formalism.LocalToGlobal.UnitaryNorms.LeastSplitAuxiliaryPrimeThetaChainSpec
+
+@[expose] public section
 
 noncomputable section
 

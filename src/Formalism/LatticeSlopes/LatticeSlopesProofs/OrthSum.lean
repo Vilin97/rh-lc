@@ -1,13 +1,17 @@
-import Formalism.LatticeSlopes.Statement
-import Formalism.LatticeSlopes.CovolAntiSameRank
-import Formalism.LatticeSlopes.LatticeSlopesProofs.DiscreteTopologyOfLe
-import Formalism.LatticeSlopes.LatticeSlopesProofs.CovolEqGram
-import Formalism.LatticeSlopes.LatticeSlopesProofs.CovolPos
-import Formalism.LatticeSlopes.LatticeSlopesProofs.DegQuot
-import Formalism.LatticeSlopes.LatticeSlopesProofs.GramDetLe
-import Formalism.LatticeSlopes.LatticeSlopesProofs.SlopesBdd
-import Formalism.LatticeSlopes.LatticeSlopesProofs.SlopeLeMuMaxOf
-import Formalism.LatticeSlopes.LatticeSlopesProofs.SlopeInequality
+module
+
+public import Formalism.LatticeSlopes.Statement
+public import Formalism.LatticeSlopes.CovolAntiSameRank
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.DiscreteTopologyOfLe
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.CovolEqGram
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.CovolPos
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.DegQuot
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.GramDetLe
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.SlopesBdd
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.SlopeLeMuMaxOf
+public import Formalism.LatticeSlopes.LatticeSlopesProofs.SlopeInequality
+
+@[expose] public section
 
 open Module Submodule
 

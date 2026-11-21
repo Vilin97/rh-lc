@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.Induction
-import GroundTheory.AutomorphicForms.InductionJacquet
-import GroundTheory.AutomorphicForms.InductionParabolicLocal
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.Induction
+public import GroundTheory.AutomorphicForms.InductionJacquet
+public import GroundTheory.AutomorphicForms.InductionParabolicLocal
+
+@[expose] public section
 
 noncomputable section
 

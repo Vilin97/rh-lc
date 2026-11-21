@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.PderivSubGOff
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.PderivSubGOff
+
+@[expose] public section
 
 noncomputable section
 

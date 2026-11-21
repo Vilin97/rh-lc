@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSERDIdentSpec
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSERDResRad
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJASASecFinal
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ChainRecursionFromSingleDescent
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSERDIdentSpec
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSERDResRad
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJASASecFinal
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ChainRecursionFromSingleDescent
+
+@[expose] public section
 
 open MeasureTheory
 open scoped ContDiff

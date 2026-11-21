@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
+module
+
+public import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 open scoped ComplexConjugate ENNReal NNReal

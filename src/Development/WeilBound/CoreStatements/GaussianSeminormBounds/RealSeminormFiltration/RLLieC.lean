@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.GroupGeneratedByExp
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GroupGeneratedByExp
+
+@[expose] public section
 
 noncomputable section
 

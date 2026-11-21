@@ -1,4 +1,8 @@
-import Formalism.MahlerMeasure.MahlerMeasureProofs.WeightSpaceDimensionMonotone
+module
+
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.WeightSpaceDimensionMonotone
+
+@[expose] public section
 
 namespace Formalism.CountingSumsFrames
 

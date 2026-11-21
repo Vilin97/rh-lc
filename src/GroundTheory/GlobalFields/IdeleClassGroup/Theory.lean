@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleClassGroup.NatCardTateOfIsCyclic
-import GroundTheory.GlobalFields.NormResidueSymbol.Cyclotomic
-import GroundTheory.LocalFields.AbstractLocalReciprocity.Valuation
-import GroundTheory.LocalFields.AbstractLocalReciprocity.ExistsEqNsmulOfProjEqZero
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleClassGroup.NatCardTateOfIsCyclic
+public import GroundTheory.GlobalFields.NormResidueSymbol.Cyclotomic
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.Valuation
+public import GroundTheory.LocalFields.AbstractLocalReciprocity.ExistsEqNsmulOfProjEqZero
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

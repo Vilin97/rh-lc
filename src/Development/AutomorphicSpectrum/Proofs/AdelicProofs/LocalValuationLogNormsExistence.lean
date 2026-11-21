@@ -1,8 +1,13 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.AdelicLattices.FactPrimes
-import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsFlatSecRankZero
-import Development.AutomorphicSpectrum.Proofs.AdelicProofs.SumLogEmbeddingsEqNorm
-import Development.WeilBound.CoreStatements.SesquilinearFractions.NPlaces
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.AdelicLattices.FactPrimes
+public import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsFlatSecRankZero
+public import Development.AutomorphicSpectrum.Proofs.AdelicProofs.SumLogEmbeddingsEqNorm
+public import Development.WeilBound.CoreStatements.SesquilinearFractions.NPlaces
+
+@[expose] public section
+
 open NumberField IsDedekindDomain GlobalTheory.CompanionTheory.Ar.Fl
 
 noncomputable section

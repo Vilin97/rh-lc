@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RealMoveOfParts
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DofOTw
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RingSpecNormalisedCharacterEq
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ChoiceOfLocalAdmissible
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsGeoExtN
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RealMoveOfLink
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RealMoveOfParts
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DofOTw
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RingSpecNormalisedCharacterEq
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ChoiceOfLocalAdmissible
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsGeoExtN
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RealMoveOfLink
+
+@[expose] public section
 
 noncomputable section
 

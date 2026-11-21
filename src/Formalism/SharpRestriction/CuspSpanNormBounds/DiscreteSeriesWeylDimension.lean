@@ -1,9 +1,13 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.StandingHypothesesHoldFamily
-import Formalism.SharpRestriction.CuspSpanNormBounds.NonemptyParameterModels.NumericSettingWithGapSatisfiable
-import Formalism.SharpRestriction.CuspSpanNormBounds.AutLzFiniteOfLoop
-import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLx
-import Mathlib
-import Formalism.FormalDegreeBessel.FinalDS
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.StandingHypothesesHoldFamily
+public import Formalism.SharpRestriction.CuspSpanNormBounds.NonemptyParameterModels.NumericSettingWithGapSatisfiable
+public import Formalism.SharpRestriction.CuspSpanNormBounds.AutLzFiniteOfLoop
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLx
+public import Mathlib
+public import Formalism.FormalDegreeBessel.FinalDS
+
+@[expose] public section
 
 open MeasureTheory Finset
 open scoped Matrix

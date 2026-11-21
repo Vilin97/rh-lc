@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
-import Formalism.SharpRestriction.GlobalSchurBounds.StandardLattice
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.Partners
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.FrameLats
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
+public import Formalism.SharpRestriction.GlobalSchurBounds.StandardLattice
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.Partners
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.FrameLats
+
+@[expose] public section
 
 noncomputable section
 

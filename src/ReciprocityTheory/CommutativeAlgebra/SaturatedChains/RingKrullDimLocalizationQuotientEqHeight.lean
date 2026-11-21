@@ -1,5 +1,9 @@
-import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.IsSaturatedChain
-import ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.LocDim
+module
+
+public import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.IsSaturatedChain
+public import ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.LocDim
+
+@[expose] public section
 
 namespace ReciprocityTheory.CA
 

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.SIdeleGroups.Galois
-import GroundTheory.GlobalFields.IdeleGroups.StandardOpenEquiv
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.SIdeleGroups.Galois
+public import GroundTheory.GlobalFields.IdeleGroups.StandardOpenEquiv
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

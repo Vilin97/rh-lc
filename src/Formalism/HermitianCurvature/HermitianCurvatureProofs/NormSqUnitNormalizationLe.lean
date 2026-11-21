@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BigCellExpansionOfSubadditive
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BigCellExpansionOfSubadditive
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP
 

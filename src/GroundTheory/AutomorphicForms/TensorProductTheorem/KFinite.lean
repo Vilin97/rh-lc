@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.TensorProductTheorem.CompactRep
-import GroundTheory.AutomorphicForms.TensorProductTheorem.MatrixCoeff
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.CompactRep
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.MatrixCoeff
+
+@[expose] public section
 
 noncomputable section
 

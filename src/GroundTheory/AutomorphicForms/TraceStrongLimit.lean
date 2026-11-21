@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.TraceNormComp
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.TraceNormComp
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

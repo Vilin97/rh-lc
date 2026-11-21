@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.SpanSteps
-import Formalism.LocalToGlobal.ProjectiveLattices.FullExists
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.SpanSteps
+public import Formalism.LocalToGlobal.ProjectiveLattices.FullExists
+
+@[expose] public section
 
 noncomputable section
 

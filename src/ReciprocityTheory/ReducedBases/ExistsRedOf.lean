@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReducedBases.SizeReduce
-import ReciprocityTheory.ReducedBases.NormGsoCompSwapRightSqMul
+module
+
+public import ReciprocityTheory.ReducedBases.SizeReduce
+public import ReciprocityTheory.ReducedBases.NormGsoCompSwapRightSqMul
+
+@[expose] public section
 
 noncomputable section
 

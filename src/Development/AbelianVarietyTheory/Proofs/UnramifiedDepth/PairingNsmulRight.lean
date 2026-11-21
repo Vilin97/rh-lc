@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.EvenTwoEvaluationSign
-import ReciprocityTheory.DualLattices.IsPairingValueAddRight
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.EvenTwoEvaluationSign
+public import ReciprocityTheory.DualLattices.IsPairingValueAddRight
+
+@[expose] public section
 
 open TensorProduct IsLocalRing Matrix ReciprocityTheory.PGsh ReciprocityTheory.PGsh.Up ReciprocityTheory.PGsh.L2 ReciprocityTheory.PGsh.Be2
 

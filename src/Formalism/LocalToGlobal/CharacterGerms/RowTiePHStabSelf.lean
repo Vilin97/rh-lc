@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePHStab
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePCartSelfSt
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePHStab
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePCartSelfSt
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.IsLowUnitH
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.IsLowUnitH
+
+@[expose] public section
 
 namespace CompanionTheory.D.Upq
 

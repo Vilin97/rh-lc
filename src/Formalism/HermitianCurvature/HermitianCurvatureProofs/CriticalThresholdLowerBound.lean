@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.StatementSz
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MassRatioFormula
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CorollaryAOfPropositionA
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SumInvSqLeSub
+module
+
+public import Formalism.HermitianCurvature.StatementSz
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MassRatioFormula
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CorollaryAOfPropositionA
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SumInvSqLeSub
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.Sz5
 open Finset Formalism.FourierDecayAlt.Sz

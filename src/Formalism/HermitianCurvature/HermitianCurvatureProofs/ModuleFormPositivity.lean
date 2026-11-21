@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PrStarFst
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TransferWordEntriesMem
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DualKernelLemmas
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PrStarFst
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TransferWordEntriesMem
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DualKernelLemmas
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBF
 

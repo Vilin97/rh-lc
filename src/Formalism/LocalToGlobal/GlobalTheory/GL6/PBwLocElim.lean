@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL6.LatticeInclusionOfDecompGlob
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.LatticeInclusionOfDecompGlob
+
+@[expose] public section
 
 noncomputable section
 

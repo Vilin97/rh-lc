@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicSpectrum.PublishedTheorems.Geometry₂.NefRR
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSectionsDimZero
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.PublishedTheorems.Geometry₂.NefRR
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSectionsDimZero
+
+@[expose] public section
 
 namespace GlobalTheory.CompanionTheory.Ar.Pub.NefRRModel
 

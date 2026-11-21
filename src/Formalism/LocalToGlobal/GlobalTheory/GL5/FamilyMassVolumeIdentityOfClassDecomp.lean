@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL5.TheoremThreeAllUnitary
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL5.TheoremThreeAllUnitary
+
+@[expose] public section
 
 noncomputable section
 

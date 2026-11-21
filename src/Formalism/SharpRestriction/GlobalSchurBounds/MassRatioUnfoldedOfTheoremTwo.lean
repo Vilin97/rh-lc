@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.LinkMin
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.PartFiveExplicitOfPropositions
-import Formalism.LocalToGlobal.GlobalTheory.GL5.FamilyMassVolumeIdentityOfClassDecomp
-import Formalism.LocalToGlobal.BesselHermitianTheta.Lemmas
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.LinkMin
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.PartFiveExplicitOfPropositions
+public import Formalism.LocalToGlobal.GlobalTheory.GL5.FamilyMassVolumeIdentityOfClassDecomp
+public import Formalism.LocalToGlobal.BesselHermitianTheta.Lemmas
+
+@[expose] public section
 
 noncomputable section
 

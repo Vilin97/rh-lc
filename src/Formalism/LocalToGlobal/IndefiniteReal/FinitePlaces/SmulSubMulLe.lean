@@ -1,5 +1,9 @@
-import Mathlib
-import Lemmata.MiscLemmasC.Imports
+module
+
+public import Mathlib
+public import Lemmata.MiscLemmasC.Imports
+
+@[expose] public section
 
 set_option linter.style.haveILetI false
 

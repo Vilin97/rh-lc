@@ -1,7 +1,11 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.AdBasic
-import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.AdNormOne
-import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.AutOrder
-import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.GalTwistEx
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.AdBasic
+public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.AdNormOne
+public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.AutOrder
+public import Development.AutomorphicArithmetic.Foundations.Convolution.ConvolutionKernels.GalTwistEx
+
+@[expose] public section
 
 open MeasureTheory NumberField GroundTheory.Automorphic GroundTheory.Automorphic.CuspidalSpectrum GroundTheory.Automorphic.RightCosetSpace
 open GroundTheory.Automorphic.CuspidalProjection PositivityTheory.Rg.Tf.Core UpperTheory.ConvolutionTheory.K

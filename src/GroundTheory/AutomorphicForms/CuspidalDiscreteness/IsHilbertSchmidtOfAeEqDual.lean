@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.QuotientKernel
-import GroundTheory.AutomorphicForms.TraceFormulaConvolution
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.QuotientKernel
+public import GroundTheory.AutomorphicForms.TraceFormulaConvolution
+
+@[expose] public section
 
 open MeasureTheory Set Filter Topology Function
 open scoped ENNReal Pointwise InnerProductSpace ComplexConjugate

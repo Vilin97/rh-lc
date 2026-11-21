@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.DimClosureAddOneLe
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ChartResidueDegreeAlgClosedClosed
+module
+
+public import Development.WeilBound.CoreStatements.MinimalPrimeDimensions.DimClosureAddOneLe
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ChartResidueDegreeAlgClosedClosed
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option linter.style.haveILetI false

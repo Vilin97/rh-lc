@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.GL3MeanSquares.FourierTransformKernelSurjective
+module
+
+public import Mathlib
+public import Formalism.GL3MeanSquares.FourierTransformKernelSurjective
+
+@[expose] public section
 
 namespace Formalism.HermitianLattices.LocalLatticeBases
 

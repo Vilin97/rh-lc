@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.ExtendedStatementOfParts
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.FactorsOfPerturb
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.KeptFin
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.TotalDegreeEplus
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.ExponentFactorialAddSingleOne
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.ExtendedStatementOfParts
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.FactorsOfPerturb
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.KeptFin
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.TotalDegreeEplus
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.ExponentFactorialAddSingleOne
+
+@[expose] public section
 
 noncomputable section
 

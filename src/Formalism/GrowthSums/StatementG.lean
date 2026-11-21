@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.GrowthSums.StatementA
+module
+
+public import Mathlib
+public import Formalism.GrowthSums.StatementA
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.DinvExact
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AevalInterAlt
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.DinvExact
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AevalInterAlt
+
+@[expose] public section
+
 open TensorProduct Module
 open UpperTheory.Gal.crystallineComparison
 

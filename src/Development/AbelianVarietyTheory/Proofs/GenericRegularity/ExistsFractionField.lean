@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.GenericRegularity.RankOfQuasiIdem
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.RankOfQuasiIdem
+
+@[expose] public section
 
 open NumberField
 

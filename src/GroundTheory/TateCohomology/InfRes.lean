@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.TateCohomology.DeltaMap
-import GroundTheory.TateCohomology.CoindOne
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.DeltaMap
+public import GroundTheory.TateCohomology.CoindOne
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.GroupCoh

@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.StatementQ
-import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
+module
+
+public import Formalism.HermitianCurvature.StatementQ
+public import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
+
+@[expose] public section
 
 open Matrix Finset MeasureTheory
 open scoped ContDiff InnerProductSpace

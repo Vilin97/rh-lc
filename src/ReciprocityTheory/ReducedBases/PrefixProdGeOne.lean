@@ -1,4 +1,8 @@
-import ReciprocityTheory.ReducedBases.TBInjective
+module
+
+public import ReciprocityTheory.ReducedBases.TBInjective
+
+@[expose] public section
 
 noncomputable section
 

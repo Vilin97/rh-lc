@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormExpMulISubOne
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormLetterScal
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.WaveDiffForm
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormExpMulISubOne
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormLetterScal
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WaveDiffForm
+
+@[expose] public section
 
 noncomputable section
 

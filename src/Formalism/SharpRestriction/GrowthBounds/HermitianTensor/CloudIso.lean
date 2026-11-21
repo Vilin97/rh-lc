@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.CloudIsoDef
-import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.LatRetract
-import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.TensorKP
-import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.OneMemDualWeyl
-import Lemmata.DualWeylPullback.DualWeylPull
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.CloudIsoDef
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.LatRetract
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.TensorKP
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.OneMemDualWeyl
+public import Lemmata.DualWeylPullback.DualWeylPull
+
+@[expose] public section
 
 noncomputable section
 

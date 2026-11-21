@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HarishChandraCentre.ConstantCoeffRhoOneCanonMonomial
-import Formalism.PeriodIntegrals.IsLowUnitH
-import Formalism.PeriodIntegrals.DSInfCharCap
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HarishChandraCentre.ConstantCoeffRhoOneCanonMonomial
+public import Formalism.PeriodIntegrals.IsLowUnitH
+public import Formalism.PeriodIntegrals.DSInfCharCap
+
+@[expose] public section
 
 open GroundTheory.Automorphic.HarishChandra Finset
 

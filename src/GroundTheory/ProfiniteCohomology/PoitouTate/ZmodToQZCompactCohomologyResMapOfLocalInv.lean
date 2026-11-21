@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.PoitouTate.General
-import GroundTheory.ProfiniteCohomology.PoitouTate.Primary
-import GroundTheory.ProfiniteCohomology.PoitouTate.BrauerInvZOfIsSepClosureCohomologyULiftIntAddEqu
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseDefs
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.Dimension
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.FiniteCompact
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.PoitouTate.General
+public import GroundTheory.ProfiniteCohomology.PoitouTate.Primary
+public import GroundTheory.ProfiniteCohomology.PoitouTate.BrauerInvZOfIsSepClosureCohomologyULiftIntAddEqu
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseDefs
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.Dimension
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.FiniteCompact
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

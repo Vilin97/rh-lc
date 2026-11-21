@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.EBeta
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.EBeta
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.AeNeZeroComplex
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LiftDegreeLemmas
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBFVnice
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.AeNeZeroComplex
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LiftDegreeLemmas
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBFVnice
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBL
 

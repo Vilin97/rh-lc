@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.EtaleCharts.FinCover
-import Development.ResolutionOfSingularities.Foundations.Blowup.BlowupProper
-import Development.ResolutionOfSingularities.Foundations.Blowup.BlowupIsoOffCenter
+module
+
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.EtaleCharts.FinCover
+public import Development.ResolutionOfSingularities.Foundations.Blowup.BlowupProper
+public import Development.ResolutionOfSingularities.Foundations.Blowup.BlowupIsoOffCenter
+
+@[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry
 

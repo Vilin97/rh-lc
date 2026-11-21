@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.IsRelCochain
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.IsRelCochain
+
+@[expose] public section
 
 noncomputable section
 

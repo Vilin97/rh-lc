@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.FrameEstimates.TowerRallisLemma
-import Development.WeilBound.ThetaLifts.FrameEstimates.LevelA
-import Development.WeilBound.ThetaLifts.FrameEstimates.Parity
-import Development.WeilBound.CoreStatements.LocalThetaKernels.LinearIndependentOfNotMem
-import Development.AutomorphicSpectrum.Proofs.TwistedProofs.EqZeroOfPiInf
+module
+
+public import Development.WeilBound.ThetaLifts.FrameEstimates.TowerRallisLemma
+public import Development.WeilBound.ThetaLifts.FrameEstimates.LevelA
+public import Development.WeilBound.ThetaLifts.FrameEstimates.Parity
+public import Development.WeilBound.CoreStatements.LocalThetaKernels.LinearIndependentOfNotMem
+public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.EqZeroOfPiInf
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.CTKernel
-import Development.WeilBound.ThetaLifts.FrameEstimates.SquareIntegrableWeilRange
-import Development.WeilBound.ThetaLifts.TowerModels.PlaneHerm
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.CTKernel
+public import Development.WeilBound.ThetaLifts.FrameEstimates.SquareIntegrableWeilRange
+public import Development.WeilBound.ThetaLifts.TowerModels.PlaneHerm
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.NormResidueSymbol.RangeFiniteLocalNormLeKerLocalSymbol
-import GroundTheory.LocalFields.LocalArtinAbstractField
-import GroundTheory.LocalFields.MainTheorem
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.NormResidueSymbol.RangeFiniteLocalNormLeKerLocalSymbol
+public import GroundTheory.LocalFields.LocalArtinAbstractField
+public import GroundTheory.LocalFields.MainTheorem
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

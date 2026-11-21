@@ -1,4 +1,9 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
+
 open scoped BigOperators
 
 theorem UpperTheory.linearForm_eq_mul_trace_of_twisted_invariant :

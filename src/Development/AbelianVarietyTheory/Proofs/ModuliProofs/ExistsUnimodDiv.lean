@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.ModuliProofs.DvdMulOfIdem
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.DvdMulOfIdem
+
+@[expose] public section
 
 open scoped nonZeroDivisors
 

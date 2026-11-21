@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentreCompat
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsScalarTowerCenAlgebra
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CycleListPermInvariant
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentreCompat
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsScalarTowerCenAlgebra
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CycleListPermInvariant
+
+@[expose] public section
 
 noncomputable section
 open scoped TensorProduct

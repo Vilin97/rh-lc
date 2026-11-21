@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Theta.LieCoordinates.SecondKindStatements
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Theta.LieCoordinates.SecondKindStatements
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Theta

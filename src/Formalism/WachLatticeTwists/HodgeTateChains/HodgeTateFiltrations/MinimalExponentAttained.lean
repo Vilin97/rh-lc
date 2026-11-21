@@ -1,6 +1,10 @@
-import Formalism.WachLatticeTwists.HodgeTateChains.Statement
-import Formalism.WindowSums.AnnihilatorPolynomials.ValProd
-import Formalism.WindowSums.AnnihilatorPolynomials.ZpowVal
+module
+
+public import Formalism.WachLatticeTwists.HodgeTateChains.Statement
+public import Formalism.WindowSums.AnnihilatorPolynomials.ValProd
+public import Formalism.WindowSums.AnnihilatorPolynomials.ZpowVal
+
+@[expose] public section
 
 noncomputable section
 

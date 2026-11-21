@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.PairingIndexBounds.HalvesRecursion.Statement
-import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.EllipticOnePole
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
-import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.Principal
-import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.SplitK
+module
+
+public import Formalism.LocalToGlobal.PairingIndexBounds.HalvesRecursion.Statement
+public import Formalism.LocalToGlobal.TorsionIntegrality.EisensteinTranslationProducts.EllipticOnePole
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.Principal
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.SplitK
+
+@[expose] public section
 
 noncomputable section
 

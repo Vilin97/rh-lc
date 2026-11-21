@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.RamifiedBlockRings.LocalToDisplayFree
-import Formalism.CharacterColumnKernels.StatementBC
+module
+
+public import Formalism.WachLatticeTwists.RamifiedBlockRings.LocalToDisplayFree
+public import Formalism.CharacterColumnKernels.StatementBC
+
+@[expose] public section
 
 open Finset Classical
 

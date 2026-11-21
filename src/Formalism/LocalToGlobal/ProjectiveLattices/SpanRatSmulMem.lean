@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.IntegrableOnIntegrand
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LocalSituation
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.IntegrableOnIntegrand
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LocalSituation
+
+@[expose] public section
 
 set_option autoImplicit false
 

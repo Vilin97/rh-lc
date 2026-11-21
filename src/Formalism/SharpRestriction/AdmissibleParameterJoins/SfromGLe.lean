@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLb
-import Formalism.SharpRestriction.CuspSpanNormBounds.LocalBesselAndTopKernel
-import Formalism.SharpRestriction.CuspSpanNormBounds.PlaceDegreeData
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLb
+public import Formalism.SharpRestriction.CuspSpanNormBounds.LocalBesselAndTopKernel
+public import Formalism.SharpRestriction.CuspSpanNormBounds.PlaceDegreeData
+
+@[expose] public section
 
 noncomputable section
 

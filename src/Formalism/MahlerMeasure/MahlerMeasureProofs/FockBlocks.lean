@@ -1,6 +1,10 @@
-import Formalism.MahlerMeasure.LevelLattice
-import Formalism.MahlerMeasure.MahlerMeasureProofs.RemoveS
-import Formalism.MahlerMeasure.MahlerMeasureProofs.LevelDecomp
+module
+
+public import Formalism.MahlerMeasure.LevelLattice
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.RemoveS
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.LevelDecomp
+
+@[expose] public section
 
 namespace Formalism.GM.FockB
 

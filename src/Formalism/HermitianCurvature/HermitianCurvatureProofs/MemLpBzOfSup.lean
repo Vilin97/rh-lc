@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ZeroNotMemPreimagePow
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ZeroNotMemPreimagePow
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBK
 

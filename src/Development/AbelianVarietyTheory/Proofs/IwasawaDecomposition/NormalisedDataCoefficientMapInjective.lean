@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsCastMap
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ModelSame
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsCastMap
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ModelSame
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option synthInstance.maxHeartbeats 200000

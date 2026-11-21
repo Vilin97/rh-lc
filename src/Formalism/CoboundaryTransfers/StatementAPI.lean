@@ -1,4 +1,8 @@
-import Formalism.CoboundaryTransfers.Statement
+module
+
+public import Formalism.CoboundaryTransfers.Statement
+
+@[expose] public section
 
 noncomputable section
 

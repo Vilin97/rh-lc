@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.FockModels.NablaLTwEqMap
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.NablaLTwEqMap
+
+@[expose] public section
 
 open MvPolynomial
 

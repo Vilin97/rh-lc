@@ -1,6 +1,10 @@
-import ReciprocityTheory.AnalyticForms.LeviForms.IsRegFamilyInhabitStatement
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshMoll
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshExt
+module
+
+public import ReciprocityTheory.AnalyticForms.LeviForms.IsRegFamilyInhabitStatement
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshMoll
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshExt
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.P.RegularChartScaling
 

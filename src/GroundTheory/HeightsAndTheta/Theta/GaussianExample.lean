@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HermitianSpaces
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HermitianSpaces
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Theta

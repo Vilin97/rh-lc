@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.IsUnitALMap
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.IsUnitALMap
+
+@[expose] public section
 
 noncomputable section
 

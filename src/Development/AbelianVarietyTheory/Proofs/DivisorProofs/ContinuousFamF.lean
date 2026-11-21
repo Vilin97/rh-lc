@@ -1,13 +1,17 @@
-import Development.AbelianVarietyTheory.Definitions.Divisors.RangeShape
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PBConjTranspose
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StR
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousDen
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjDiagReNonneg
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StExpDeriv
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjTransposeSignFormDiagEqSignedSumCol
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IteratedDerivScale
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StConstHolds
-import Mathlib
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Divisors.RangeShape
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PBConjTranspose
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StR
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ContinuousDen
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjDiagReNonneg
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StExpDeriv
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjTransposeSignFormDiagEqSignedSumCol
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IteratedDerivScale
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StConstHolds
+public import Mathlib
+
+@[expose] public section
 
 section
 

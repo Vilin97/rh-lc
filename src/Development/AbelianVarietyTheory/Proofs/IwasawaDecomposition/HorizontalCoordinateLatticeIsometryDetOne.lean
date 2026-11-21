@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PerValNeZero
-import Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.RelabBijective
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PerValNeZero
+public import Development.AbelianVarietyTheory.Counterexamples.LevelGroupExamples.RelabBijective
+
+@[expose] public section
 
 set_option autoImplicit false
 

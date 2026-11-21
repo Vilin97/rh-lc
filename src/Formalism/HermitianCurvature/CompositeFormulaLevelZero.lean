@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.StatementQ
-import Formalism.HermitianCurvature.StatementFr
-import Formalism.HermitianCurvature.StatementTB
-import Formalism.HermitianCurvature.StatementLE
+module
+
+public import Formalism.HermitianCurvature.StatementQ
+public import Formalism.HermitianCurvature.StatementFr
+public import Formalism.HermitianCurvature.StatementTB
+public import Formalism.HermitianCurvature.StatementLE
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 open scoped InnerProductSpace ComplexConjugate ComplexOrder

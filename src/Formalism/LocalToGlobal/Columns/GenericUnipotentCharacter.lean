@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.Tuples
-import Formalism.GL3MeanSquares.RankMulPowThreeHalvesLeFourthPower
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.Tuples
+public import Formalism.GL3MeanSquares.RankMulPowThreeHalvesLeFourthPower
+
+@[expose] public section
 
 noncomputable section
 

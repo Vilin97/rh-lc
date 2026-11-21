@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.StabiliserCardinality
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.StabiliserCardinality
+
+@[expose] public section
 
 namespace GlobalTheory.Proof.DoubleCosetCountGlobalInterpolation
 

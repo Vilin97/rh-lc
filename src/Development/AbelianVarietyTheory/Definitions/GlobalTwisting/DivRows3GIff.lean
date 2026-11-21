@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.CountsIrreducibilityConstants
-import Formalism.LocalToGlobal.Divisibility.RecBridgeSel
-import Formalism.LocalToGlobal.Divisibility.TupUsed
-import Formalism.LocalToGlobal.GroupLattices.ServiceOfTiedSelection
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.CountsIrreducibilityConstants
+public import Formalism.LocalToGlobal.Divisibility.RecBridgeSel
+public import Formalism.LocalToGlobal.Divisibility.TupUsed
+public import Formalism.LocalToGlobal.GroupLattices.ServiceOfTiedSelection
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 

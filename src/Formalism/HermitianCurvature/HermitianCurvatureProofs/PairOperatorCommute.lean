@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TransferWordEntriesMem
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ScalarCommuteTransposedRMatrixEntry
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelCoordinatesCommute
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TransferWordEntriesMem
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ScalarCommuteTransposedRMatrixEntry
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelCoordinatesCommute
+
+@[expose] public section
 
 open Matrix MeasureTheory
 open scoped ComplexConjugate

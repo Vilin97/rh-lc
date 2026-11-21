@@ -1,6 +1,10 @@
-import Formalism.FormalDegreeBessel.StatementIO
-import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
-import Formalism.RealPlaceAnalysis.FinalF
+module
+
+public import Formalism.FormalDegreeBessel.StatementIO
+public import Formalism.RealPlaceAnalysis.ThirdArithmeticHolds
+public import Formalism.RealPlaceAnalysis.FinalF
+
+@[expose] public section
 
 open Matrix
 open scoped ContDiff

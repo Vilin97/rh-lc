@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GeometricLemmaCellGroups
-import GroundTheory.AutomorphicForms.GeometricLemmaCount
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GeometricLemmaCellGroups
+public import GroundTheory.AutomorphicForms.GeometricLemmaCount
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

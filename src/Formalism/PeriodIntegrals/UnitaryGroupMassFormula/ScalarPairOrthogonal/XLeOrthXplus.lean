@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.ScalarPairDr
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.PairCorankPositivity.EqZeroOfMulVec
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.ScalarPairDr
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.PairCorankPositivity.EqZeroOfMulVec
+
+@[expose] public section
 
 noncomputable section
 

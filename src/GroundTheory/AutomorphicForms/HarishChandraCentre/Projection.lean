@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HarishChandraCentre.Triangular
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HarishChandraCentre.Triangular
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.HarishChandra
 

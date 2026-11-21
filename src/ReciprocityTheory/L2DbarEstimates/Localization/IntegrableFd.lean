@@ -1,5 +1,9 @@
-import ReciprocityTheory.L2DbarEstimates.Localization.UnweightBackStatement
-import ReciprocityTheory.L2DbarEstimates.Mollifiers.MollifierL2LocTendsto
+module
+
+public import ReciprocityTheory.L2DbarEstimates.Localization.UnweightBackStatement
+public import ReciprocityTheory.L2DbarEstimates.Mollifiers.MollifierL2LocTendsto
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.F
 

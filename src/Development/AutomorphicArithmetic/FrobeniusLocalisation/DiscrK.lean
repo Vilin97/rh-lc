@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.FrobeniusLocalisation.DiffDefs
-import Formalism.DirichletDensity.DirichletDensityProofs.QuadDiscr
+module
+
+public import Development.AutomorphicArithmetic.FrobeniusLocalisation.DiffDefs
+public import Formalism.DirichletDensity.DirichletDensityProofs.QuadDiscr
+
+@[expose] public section
 
 open NumberField Ideal Formalism.HC Formalism.FrobeniusOrbits
 open scoped Pointwise

@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GlobalTheory.PlacesP
-import Formalism.LocalToGlobal.GlobalTheory.PowFourLtCeilThresholdPrime
-import Formalism.SharpRestriction.GlobalSchurBounds.WeightVectorSmallSharesSeven
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.PlacesP
+public import Formalism.LocalToGlobal.GlobalTheory.PowFourLtCeilThresholdPrime
+public import Formalism.SharpRestriction.GlobalSchurBounds.WeightVectorSmallSharesSeven
+
+@[expose] public section
 
 noncomputable section
 

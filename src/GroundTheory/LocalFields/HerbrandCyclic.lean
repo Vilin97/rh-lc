@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.TateCohomology.HerbrandAbstract
-import GroundTheory.GlobalFields.HerbrandQuotients.CycTate
-import GroundTheory.LocalFields.CompleteTrivial
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.HerbrandAbstract
+public import GroundTheory.GlobalFields.HerbrandQuotients.CycTate
+public import GroundTheory.LocalFields.CompleteTrivial
+
+@[expose] public section
 
 namespace GroundTheory.LocalField
 

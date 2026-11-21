@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.UnitaryNorms.CharDiv
-import Formalism.LocalToGlobal.UnitaryNorms.UnrAEPf
+module
+
+public import Formalism.LocalToGlobal.UnitaryNorms.CharDiv
+public import Formalism.LocalToGlobal.UnitaryNorms.UnrAEPf
+
+@[expose] public section
 
 noncomputable section
 

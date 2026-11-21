@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TaylorCoefficientForms
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TensorCoordinateForms
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.HasSumTaylorCoordinateSpaceEntire
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TaylorCoefficientForms
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TensorCoordinateForms
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.HasSumTaylorCoordinateSpaceEntire
+
+@[expose] public section
 
 open Finset
 open scoped ComplexConjugate Real

@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.RealSt
+module
+
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.MixedModels.RealSt
+
+@[expose] public section
 
 noncomputable section
 

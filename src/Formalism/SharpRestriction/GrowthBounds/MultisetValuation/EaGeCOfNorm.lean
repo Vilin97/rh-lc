@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.EaRestSExpVOf
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.EaNuTwoLeOne
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.EGaussK
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.EaRestSExpVOf
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.EaNuTwoLeOne
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.EGaussK
+
+@[expose] public section
 
 noncomputable section
 

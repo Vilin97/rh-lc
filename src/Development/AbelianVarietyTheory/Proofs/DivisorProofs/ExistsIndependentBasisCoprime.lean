@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemLocDIffSpan
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.MemLocDIffSpan
+
+@[expose] public section
+
 open NumberField
 
 namespace GlobalTheory.CoprimeBasis

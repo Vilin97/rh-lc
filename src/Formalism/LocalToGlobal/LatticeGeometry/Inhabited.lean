@@ -1,16 +1,20 @@
-import Formalism.LocalToGlobal.LatticeGeometry.ShimuraSheafOfIndefiniteSubspace
-import Formalism.LocalToGlobal.LatticeGeometry.InhabLoc
-import Formalism.LocalToGlobal.LatticeGeometry.LevPrPrime
-import Mathlib
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.LocalRingCardinality.DataDIV
-import Formalism.SharpRestriction.ParConsts
-import Formalism.SharpRestriction.ParamsHeightRankConstant
-import Formalism.SharpRestriction.Divisibility.ModuliIntegralCharts
-import Formalism.SharpRestriction.Divisibility.BoundaryLocalData
-import Formalism.SharpRestriction.Divisibility.WeightThresholdDefs
-import Formalism.LocalRingCardinality.SpanPowerMembership.UnitsPowSurjective
-import Formalism.LocalRingCardinality.SpanPowerMembership.PlLBridge
+module
+
+public import Formalism.LocalToGlobal.LatticeGeometry.ShimuraSheafOfIndefiniteSubspace
+public import Formalism.LocalToGlobal.LatticeGeometry.InhabLoc
+public import Formalism.LocalToGlobal.LatticeGeometry.LevPrPrime
+public import Mathlib
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.LocalRingCardinality.DataDIV
+public import Formalism.SharpRestriction.ParConsts
+public import Formalism.SharpRestriction.ParamsHeightRankConstant
+public import Formalism.SharpRestriction.Divisibility.ModuliIntegralCharts
+public import Formalism.SharpRestriction.Divisibility.BoundaryLocalData
+public import Formalism.SharpRestriction.Divisibility.WeightThresholdDefs
+public import Formalism.LocalRingCardinality.SpanPowerMembership.UnitsPowSurjective
+public import Formalism.LocalRingCardinality.SpanPowerMembership.PlLBridge
+
+@[expose] public section
 
 noncomputable section
 

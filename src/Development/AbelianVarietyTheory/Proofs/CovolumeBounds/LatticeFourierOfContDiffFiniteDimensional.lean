@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 open MeasureTheory Module Set
 open scoped RealInnerProductSpace Real Pointwise ContDiff

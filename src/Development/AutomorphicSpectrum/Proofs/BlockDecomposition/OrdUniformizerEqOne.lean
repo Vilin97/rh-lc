@@ -1,9 +1,13 @@
-import Mathlib
-import PositivityTheory.AutomorphicForms.PublishedInputs.CuspidalContinuity.ArchimedeanCuspidal.AdFormOf
-import GroundTheory.GlobalFields.AnalyticClassNumber.DirichletHeckeCorrespondence
-import GroundTheory.GlobalFields.TateThesis.RootNumberLocalPlace
-import GroundTheory.GlobalFields.TateThesis.NonvanishingPrimes
-import GroundTheory.GlobalFields.KummerTheory.LocalIndexAtPlace
+module
+
+public import Mathlib
+public import PositivityTheory.AutomorphicForms.PublishedInputs.CuspidalContinuity.ArchimedeanCuspidal.AdFormOf
+public import GroundTheory.GlobalFields.AnalyticClassNumber.DirichletHeckeCorrespondence
+public import GroundTheory.GlobalFields.TateThesis.RootNumberLocalPlace
+public import GroundTheory.GlobalFields.TateThesis.NonvanishingPrimes
+public import GroundTheory.GlobalFields.KummerTheory.LocalIndexAtPlace
+
+@[expose] public section
 
 open Ad3 Ad3.S
 open NumberField IsDedekindDomain GroundTheory.Global GroundTheory.LocalField

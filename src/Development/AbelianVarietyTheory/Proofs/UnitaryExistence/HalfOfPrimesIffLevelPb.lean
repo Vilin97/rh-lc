@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.CoreAt
-import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.HalfLevelCoefficients
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.CoreAt
+public import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.HalfLevelCoefficients
+
+@[expose] public section
 
 noncomputable section
 

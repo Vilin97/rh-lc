@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeLitG
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.DiscreteSeriesUniqueLargeGap
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeLitG
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.DiscreteSeriesExistence.DiscreteSeriesUniqueLargeGap
+
+@[expose] public section
 
 namespace Formalism.MainNotions.BesselDiscreteSeries
 

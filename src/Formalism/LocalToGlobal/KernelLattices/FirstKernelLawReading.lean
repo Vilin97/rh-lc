@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.ThDistC
-import Formalism.SharpRestriction.GlobalSchurBounds.GL3Columns
-import Formalism.SharpRestriction.Divisibility.OrbitPlaces
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.ThDistC
+public import Formalism.SharpRestriction.GlobalSchurBounds.GL3Columns
+public import Formalism.SharpRestriction.Divisibility.OrbitPlaces
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

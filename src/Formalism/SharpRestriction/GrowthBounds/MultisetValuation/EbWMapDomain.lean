@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.EaGeCOfNorm
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.EaGeCOfNorm
+
+@[expose] public section
 
 noncomputable section
 

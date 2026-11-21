@@ -1,5 +1,9 @@
-import Formalism.LagrangeIdealLifts.Statement
-import Formalism.WindowSums.AnnihilatorPolynomials.ZpowVal
+module
+
+public import Formalism.LagrangeIdealLifts.Statement
+public import Formalism.WindowSums.AnnihilatorPolynomials.ZpowVal
+
+@[expose] public section
 
 noncomputable section
 

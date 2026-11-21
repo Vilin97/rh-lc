@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.BaseMatrixAlgebra
-import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.FormCoreSKXOf
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.BaseMatrixAlgebra
+public import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.FormCoreSKXOf
+
+@[expose] public section
 
 open MvPolynomial
 

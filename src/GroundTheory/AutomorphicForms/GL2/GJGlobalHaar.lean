@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJGlobalDefs
-import GroundTheory.GlobalFields.TateThesis.IdeleMeasureNormOne
-import GroundTheory.AutomorphicForms.RealIwasawaIntegration
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJGlobalDefs
+public import GroundTheory.GlobalFields.TateThesis.IdeleMeasureNormOne
+public import GroundTheory.AutomorphicForms.RealIwasawaIntegration
+
+@[expose] public section
 
 open MeasureTheory NumberField Set
 open scoped NumberField.AdeleRing ENNReal NNReal

@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.HolomorphicDiscreteSeries.EmbeddedFrames.PfD
-import Formalism.RealPlaceAnalysis.Complexify
-import Development.WeilBound.CoreStatements.BranchingTraces.HeBranching
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.HolomorphicDiscreteSeries.EmbeddedFrames.PfD
+public import Formalism.RealPlaceAnalysis.Complexify
+public import Development.WeilBound.CoreStatements.BranchingTraces.HeBranching
+
+@[expose] public section
 
 open Finset Matrix PositivityTheory.RgHe.Frame
 

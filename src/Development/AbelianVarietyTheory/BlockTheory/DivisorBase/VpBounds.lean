@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PairingDivisors.StatementN
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsFinSetSplitPlacesCoprimeConductor
+module
+
+public import Mathlib
+public import Formalism.PairingDivisors.StatementN
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsFinSetSplitPlacesCoprimeConductor
+
+@[expose] public section
 
 noncomputable section
 

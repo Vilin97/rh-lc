@@ -1,8 +1,12 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.LocTied6
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.AinfMapSurjective
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.PhiGalCris
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.InstCommRingBcris
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.LocTied6
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.AinfMapSurjective
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.PhiGalCris
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.InstCommRingBcris
+
+@[expose] public section
 
 noncomputable section
 

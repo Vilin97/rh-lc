@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.RamifiedBlockRings.Statement
-import Formalism.WachLatticeTwists.CoprimeLiftBounds.WachTwistTheoremDeltaClause
+module
+
+public import Formalism.WachLatticeTwists.RamifiedBlockRings.Statement
+public import Formalism.WachLatticeTwists.CoprimeLiftBounds.WachTwistTheoremDeltaClause
+
+@[expose] public section
 
 open Finset Classical
 

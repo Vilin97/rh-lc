@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.SmallCones.KerGeo
-import Development.WeilBound.ThetaLifts.LeviDeterminants.MCSpan
+module
+
+public import Development.WeilBound.ThetaLifts.SmallCones.KerGeo
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.MCSpan
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

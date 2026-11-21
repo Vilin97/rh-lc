@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.SobolevGaussianKernels.StatementEI
+module
+
+public import Mathlib
+public import Formalism.SobolevGaussianKernels.StatementEI
+
+@[expose] public section
 
 namespace Formalism.HermitianLatticeCounting.S4
 

@@ -1,6 +1,10 @@
-import Formalism.AdmissibleDesigns.IdempotentPartRepresentationAt
-import Formalism.AdmissibleDesigns.IdempotentPartFiniteAndFree
-import Formalism.AdmissibleDesigns.PiEquiv2
+module
+
+public import Formalism.AdmissibleDesigns.IdempotentPartRepresentationAt
+public import Formalism.AdmissibleDesigns.IdempotentPartFiniteAndFree
+public import Formalism.AdmissibleDesigns.PiEquiv2
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core] [hH0Fin : Fact Formalism.MainNotions.N.K.H0.FinCore]
 

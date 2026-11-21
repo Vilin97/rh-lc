@@ -1,7 +1,11 @@
-import Formalism.PieriBlockIdeals.FactorialValuationSum
-import Formalism.PieriBlockIdeals.PieriColumnMinors.LabelSumNeedsLeFalse
-import Formalism.PieriBlockIdeals.PieriColumnMinors.DividedPowerZeroZeroVector
-import Formalism.PieriBlockIdeals.PieriColumnMinors.LastGradedImpliesOneBlock
+module
+
+public import Formalism.PieriBlockIdeals.FactorialValuationSum
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.LabelSumNeedsLeFalse
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.DividedPowerZeroZeroVector
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.LastGradedImpliesOneBlock
+
+@[expose] public section
 
 noncomputable section
 

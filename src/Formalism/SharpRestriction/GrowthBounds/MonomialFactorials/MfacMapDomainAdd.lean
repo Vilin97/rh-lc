@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.PhisBRenameMul
-import Formalism.MahlerMeasure.MahlerMeasureProofs.RemoveS
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.PhisBRenameMul
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.RemoveS
+
+@[expose] public section
 
 noncomputable section
 

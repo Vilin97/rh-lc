@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.StringRepresentations.AllCuspidalOpenBound
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SegmentEigenvalueSumFormula
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.WeightRegularOfExt
+module
+
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.StringRepresentations.AllCuspidalOpenBound
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SegmentEigenvalueSumFormula
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.WeightRegularOfExt
+
+@[expose] public section
 
 noncomputable section
 

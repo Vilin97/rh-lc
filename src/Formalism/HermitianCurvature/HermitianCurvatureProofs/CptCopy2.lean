@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutMainCpt
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFMainS
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutBPEqNF
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ThmBpAtEqOfShiftR
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutMainCpt
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFMainS
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutBPEqNF
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ThmBpAtEqOfShiftR
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBPEq
 open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.TBB Formalism.QuantumDeterminants Formalism.FourierDecayAlt.P.CutBP Formalism.FourierDecayAlt.P.CutBP2 MeasureTheory

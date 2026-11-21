@@ -1,7 +1,11 @@
-import Formalism.CharacterColumnKernels.StatementPsi
-import Formalism.CharacterColumnKernels.StatBlockRhoCount
-import Formalism.CharacterColumnKernels.StatementGC
-import Formalism.CharacterColumnKernels.StatementNG
+module
+
+public import Formalism.CharacterColumnKernels.StatementPsi
+public import Formalism.CharacterColumnKernels.StatBlockRhoCount
+public import Formalism.CharacterColumnKernels.StatementGC
+public import Formalism.CharacterColumnKernels.StatementNG
+
+@[expose] public section
 
 open Finset Classical
 

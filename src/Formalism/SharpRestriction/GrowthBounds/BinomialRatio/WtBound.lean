@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.NotKept
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.WdimUp
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.NotKept
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.WdimUp
+
+@[expose] public section
 
 noncomputable section
 

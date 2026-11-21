@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.ACrisBdRGalois
-import GroundTheory.PAdicHodge.UnramifiedClosure
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.ACrisBdRGalois
+public import GroundTheory.PAdicHodge.UnramifiedClosure
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

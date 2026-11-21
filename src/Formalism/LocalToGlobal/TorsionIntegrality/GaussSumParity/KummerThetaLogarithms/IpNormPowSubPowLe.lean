@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.LetterShift
-import Formalism.FormalGroupWitt.WeightInvariance
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.TopsChoicePartA
-import Lemmata.GeneralBFactUpper.Imports
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.LetterShift
+public import Formalism.FormalGroupWitt.WeightInvariance
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.TopsChoicePartA
+public import Lemmata.GeneralBFactUpper.Imports
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

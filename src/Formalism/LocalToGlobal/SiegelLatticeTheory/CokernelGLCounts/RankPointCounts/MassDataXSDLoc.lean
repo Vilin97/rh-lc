@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.LocVol
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.SelfDualLoc
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.InclR
+module
+
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.LocVol
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.SelfDualLoc
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.InclR
+
+@[expose] public section
 
 noncomputable section
 

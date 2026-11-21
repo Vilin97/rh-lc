@@ -1,8 +1,12 @@
-import Mathlib
-import PositivityTheory.AutomorphicForms.PublishedInputs.CuspidalContinuity.ArchimedeanCuspidal.VerticalStrips.UnramifiedEulerProductIntegral
-import GroundTheory.GlobalFields.TateThesis.EulerFactorsInfinite
-import GroundTheory.AutomorphicForms.GL2Classical.KFinite
-import GroundTheory.GlobalFields.TateThesis.FiniteOrderParams
+module
+
+public import Mathlib
+public import PositivityTheory.AutomorphicForms.PublishedInputs.CuspidalContinuity.ArchimedeanCuspidal.VerticalStrips.UnramifiedEulerProductIntegral
+public import GroundTheory.GlobalFields.TateThesis.EulerFactorsInfinite
+public import GroundTheory.AutomorphicForms.GL2Classical.KFinite
+public import GroundTheory.GlobalFields.TateThesis.FiniteOrderParams
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,9 +1,13 @@
-import CompanionTheory.AutomorphicTheory.JacobiDiagonalBounds.NFModel
-import CompanionTheory.AutomorphicTheory.NumberFieldModels.ModelPt
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MatrixUnitZeroZeroEqInsert
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJDHatBdd
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopDomCore
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelsOfBuiltSetting
+module
+
+public import CompanionTheory.AutomorphicTheory.JacobiDiagonalBounds.NFModel
+public import CompanionTheory.AutomorphicTheory.NumberFieldModels.ModelPt
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MatrixUnitZeroZeroEqInsert
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJDHatBdd
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopDomCore
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelsOfBuiltSetting
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.NormalFormRelations
 

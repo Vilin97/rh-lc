@@ -1,6 +1,10 @@
-import Formalism.LocalRingCardinality.SpanPowerMembership.ClassRecordRowDimensionZero
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleWeightMiddleEntries
-import Formalism.LocalRingCardinality.SpanPowerMembership.FmZeroHLatEmpty
+module
+
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ClassRecordRowDimensionZero
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleWeightMiddleEntries
+public import Formalism.LocalRingCardinality.SpanPowerMembership.FmZeroHLatEmpty
+
+@[expose] public section
 
 noncomputable section
 

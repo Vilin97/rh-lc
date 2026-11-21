@@ -1,5 +1,9 @@
-import Development.WeilBound.RepresentationTheoryGL.GenericUnitaryGL.ComplementarySeries.Complementary
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SesquilinearFlipConj
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.GenericUnitaryGL.ComplementarySeries.Complementary
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SesquilinearFlipConj
+
+@[expose] public section
 
 noncomputable section
 

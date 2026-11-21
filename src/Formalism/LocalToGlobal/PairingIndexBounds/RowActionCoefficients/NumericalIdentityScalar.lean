@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.PairingIndexBounds.RowActionCoefficients.XFacts
+module
+
+public import Formalism.LocalToGlobal.PairingIndexBounds.RowActionCoefficients.XFacts
+
+@[expose] public section
 
 open MvPolynomial
 

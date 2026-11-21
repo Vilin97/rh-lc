@@ -1,5 +1,9 @@
-import Formalism.ThetaLogCoordinates.DualWeylCoordinates.DualWeylProofs.QhDetZpowMem
-import Formalism.GradedWeylDivisibility.FinalC
+module
+
+public import Formalism.ThetaLogCoordinates.DualWeylCoordinates.DualWeylProofs.QhDetZpowMem
+public import Formalism.GradedWeylDivisibility.FinalC
+
+@[expose] public section
 
 noncomputable section
 

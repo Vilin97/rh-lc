@@ -1,5 +1,9 @@
-import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.HasFDerivAtEvX
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SquareNormBound
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.PolynomialDerivatives.HasFDerivAtEvX
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SquareNormBound
+
+@[expose] public section
 
 noncomputable section
 

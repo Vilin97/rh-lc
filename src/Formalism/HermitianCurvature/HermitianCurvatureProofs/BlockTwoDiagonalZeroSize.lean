@@ -1,8 +1,12 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.KloostDensOfParts
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SymmetricScalarBlockMatrixMul
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DirectionsInParabolic
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TopCellsOfParts
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnitaryInvariantGaussian
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.KloostDensOfParts
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SymmetricScalarBlockMatrixMul
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DirectionsInParabolic
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TopCellsOfParts
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnitaryInvariantGaussian
+
+@[expose] public section
 
 noncomputable section
 

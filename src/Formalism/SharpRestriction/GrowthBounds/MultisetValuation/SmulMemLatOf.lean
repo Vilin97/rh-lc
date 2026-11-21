@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.IsLatticeBetween
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.IsLatticeBetween
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.OneAddPowLeExp
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LenEqLenI
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OneAddPowLeExp
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LenEqLenI
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBL
 

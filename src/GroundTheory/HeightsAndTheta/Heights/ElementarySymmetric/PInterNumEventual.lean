@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.StInterNumEventual
-import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PRestrLenEuler
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSnapper
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSnapperSection
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSnapperDiffPoly
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.StInterNumEventual
+public import GroundTheory.HeightsAndTheta.Heights.ElementarySymmetric.PRestrLenEuler
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSnapper
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSnapperSection
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSnapperDiffPoly
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman

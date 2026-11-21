@@ -1,5 +1,10 @@
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.RecTExists
-import CompanionTheory.EightfoldTheory.ZeroLevelTheory.LocalLanglands.Imports
+module
+
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.RecTExists
+public import CompanionTheory.EightfoldTheory.ZeroLevelTheory.LocalLanglands.Imports
+
+@[expose] public section
+
 open NumberField IsDedekindDomain ValuativeRel Formalism.ConjugateSelfDual ReciprocityTheory.Gal GlobalTheory.LocGL GlobalTheory.WeilDeligne GlobalTheory.LocLanglands
 attribute [local instance] GlobalTheory.LocalData.complRel GlobalTheory.LocalData.isLocalField
 

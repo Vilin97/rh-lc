@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TendstoSmulCocompact
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LastBlockDecay
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TendstoSmulCocompact
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LastBlockDecay
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBK
 

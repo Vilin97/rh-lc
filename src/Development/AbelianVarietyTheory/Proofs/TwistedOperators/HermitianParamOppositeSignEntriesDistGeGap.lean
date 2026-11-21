@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataParams
-import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.IsStepWeil
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ChainParIffStepGap
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataParams
+public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.IsStepWeil
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ChainParIffStepGap
+
+@[expose] public section
 
 noncomputable section
 

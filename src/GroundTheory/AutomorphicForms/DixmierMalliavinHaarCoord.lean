@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.DixmierMalliavinBasic
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.DixmierMalliavinBasic
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

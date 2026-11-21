@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.FiniteLengthJacquet
-import GroundTheory.AutomorphicForms.FiniteLengthPieces
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.FiniteLengthJacquet
+public import GroundTheory.AutomorphicForms.FiniteLengthPieces
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

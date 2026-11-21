@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.CuspidalL2Subspace
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.CuspidalL2Subspace
+
+@[expose] public section
 
 noncomputable section
 

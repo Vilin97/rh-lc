@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.IsUnitBZMap
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.IsUnitBZMap
+
+@[expose] public section
 
 noncomputable section
 

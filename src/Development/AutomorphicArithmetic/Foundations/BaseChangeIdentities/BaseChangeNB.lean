@@ -1,7 +1,11 @@
-import Development.AutomorphicArithmetic.Foundations.BaseChangeIdentities.FillPre
-import Development.AutomorphicArithmetic.Foundations.BaseChangeIdentities.NarrowSwap
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.FinalAllB
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameReading.PJEigB
+module
+
+public import Development.AutomorphicArithmetic.Foundations.BaseChangeIdentities.FillPre
+public import Development.AutomorphicArithmetic.Foundations.BaseChangeIdentities.NarrowSwap
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.FinalAllB
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameReading.PJEigB
+
+@[expose] public section
 
 open PositivityTheory.Rg.BcB PositivityTheory.Rg.BcB.F in
 theorem UpperTheory.BaseChangeIdentities.baseChangeNB : PositivityTheory.Rg.BcN.BaseChangeIsobaricN :=

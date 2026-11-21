@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.SmallCones.KerPol
+module
+
+public import Development.WeilBound.ThetaLifts.SmallCones.KerPol
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL6.AdmissibleStabilisersOfCompatibleForms
-import Formalism.LocalToGlobal.GlobalTheory.GL6.RndLinkAdmTOf
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PSplitT
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.AdmissibleStabilisersOfCompatibleForms
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.RndLinkAdmTOf
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PSplitT
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.LocalCongruenceBound
-import Formalism.SharpRestriction.LevelLetterCocycles.EndomorphismIndexBound
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocalCongruenceBound
+public import Formalism.SharpRestriction.LevelLetterCocycles.EndomorphismIndexBound
+
+@[expose] public section
 
 open Module
 

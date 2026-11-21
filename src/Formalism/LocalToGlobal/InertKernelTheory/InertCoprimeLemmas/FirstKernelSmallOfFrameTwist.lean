@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.InertKernelTheory.TranslatesOfInertKernelAtPlace
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.FirstKernelLawGlobal
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.K1RepresentativesLTOfDictionary
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.TranslatesOfInertKernelAtPlace
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.FirstKernelLawGlobal
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.K1RepresentativesLTOfDictionary
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DiagPairs
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MeasureCballZpow
-import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.GindikinKarpelevich
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DiagPairs
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MeasureCballZpow
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.GindikinKarpelevich
+
+@[expose] public section
 
 noncomputable section
 

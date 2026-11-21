@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMulMemOfForall
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMulMemOfForall
+
+@[expose] public section
+
 open IsLocalRing TensorProduct
 
 namespace GlobalTheory

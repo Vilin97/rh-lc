@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.MacdonaldAlternant
-import GroundTheory.AutomorphicForms.SatakeNormalized
-import GroundTheory.AutomorphicForms.WhittakerGroups
-import GroundTheory.AutomorphicForms.AffineBruhat
-import GroundTheory.AutomorphicForms.MeasuresGL
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.MacdonaldAlternant
+public import GroundTheory.AutomorphicForms.SatakeNormalized
+public import GroundTheory.AutomorphicForms.WhittakerGroups
+public import GroundTheory.AutomorphicForms.AffineBruhat
+public import GroundTheory.AutomorphicForms.MeasuresGL
+
+@[expose] public section
 
 noncomputable section
 

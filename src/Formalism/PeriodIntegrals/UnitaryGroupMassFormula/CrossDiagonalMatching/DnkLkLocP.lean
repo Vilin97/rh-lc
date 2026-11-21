@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CrossDiagonalMatching.Common
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PKerAtP
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CrossDiagonalMatching.Common
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PKerAtP
+
+@[expose] public section
 
 noncomputable section
 

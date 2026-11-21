@@ -1,5 +1,9 @@
-import Formalism.PieriBlockIdeals.CapelliCentralEnveloping
-import Formalism.PieriBlockIdeals.LemmaWAssembled
+module
+
+public import Formalism.PieriBlockIdeals.CapelliCentralEnveloping
+public import Formalism.PieriBlockIdeals.LemmaWAssembled
+
+@[expose] public section
 
 noncomputable section
 

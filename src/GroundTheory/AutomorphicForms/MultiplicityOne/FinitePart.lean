@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.MultiplicityOne.FiniteFactor
-import GroundTheory.AutomorphicForms.SmoothRep
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.MultiplicityOne.FiniteFactor
+public import GroundTheory.AutomorphicForms.SmoothRep
+
+@[expose] public section
 
 open MeasureTheory Set Filter Topology Function
 open NumberField IsDedekindDomain

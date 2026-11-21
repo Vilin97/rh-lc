@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpUniqLoc
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpUniqLoc
+
+@[expose] public section
 
 set_option autoImplicit false
 

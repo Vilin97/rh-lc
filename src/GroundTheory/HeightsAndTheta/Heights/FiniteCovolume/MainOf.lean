@@ -1,13 +1,17 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.OfUnfolding
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PArchUnimodular
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PMajorantStabCompact
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLineStabHaar
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PSemidirectCovering
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PStabilizerLevi
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnipotentModulus
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnipotentCocompact
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PCongruenceLift
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.OfUnfolding
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PArchUnimodular
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PMajorantStabCompact
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PLineStabHaar
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PSemidirectCovering
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PStabilizerLevi
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnipotentModulus
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnipotentCocompact
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PCongruenceLift
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights.FiniteCovolume
 

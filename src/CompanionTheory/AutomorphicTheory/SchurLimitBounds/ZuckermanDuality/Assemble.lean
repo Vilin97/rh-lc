@@ -1,6 +1,10 @@
-import CompanionTheory.AutomorphicTheory.SchurLimitBounds.ZuckermanDuality.ZuckDualTOfZuckDual
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLimBdPf
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLimBdPfKFin
+module
+
+public import CompanionTheory.AutomorphicTheory.SchurLimitBounds.ZuckermanDuality.ZuckDualTOfZuckDual
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLimBdPf
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutLimBdPfKFin
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.Columns.HeckeInert
-import Formalism.LocalToGlobal.Columns.GSetLemmas
-import Formalism.LocalToGlobal.Columns.UnipotentRightActionFunctionsW
+module
+
+public import Formalism.LocalToGlobal.Columns.HeckeInert
+public import Formalism.LocalToGlobal.Columns.GSetLemmas
+public import Formalism.LocalToGlobal.Columns.UnipotentRightActionFunctionsW
+
+@[expose] public section
 
 noncomputable section
 

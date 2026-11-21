@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.AnalyticAlgebraicGerm
-import GroundTheory.GlobalFields.ComplexMultiplication.UniformizationGroup
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualIsogeny
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.AnalyticAlgebraicGerm
+public import GroundTheory.GlobalFields.ComplexMultiplication.UniformizationGroup
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualIsogeny
+
+@[expose] public section
 
 open Filter Topology Set Polynomial WeierstrassCurve.Affine GroundTheory.Arith.Abelian
 open scoped PeriodPair

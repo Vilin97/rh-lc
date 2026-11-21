@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.DeterminantProjection
-import Development.WeilBound.ThetaLifts.LatticeBasics.PairsStable
-import Development.WeilBound.ThetaLifts.LatticeBasics.ConstIdele
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.DeterminantProjection
+public import Development.WeilBound.ThetaLifts.LatticeBasics.PairsStable
+public import Development.WeilBound.ThetaLifts.LatticeBasics.ConstIdele
+
+@[expose] public section
 
 noncomputable section
 

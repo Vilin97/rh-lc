@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.CartanFactorisation.TensMax
+module
+
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.TensMax
+
+@[expose] public section
 
 noncomputable section
 

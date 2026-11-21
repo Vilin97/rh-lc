@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.Divisibility.ChainOperators.WeightFramesOfSubgroupFrames
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.GenFrameSB
+module
+
+public import Formalism.SharpRestriction.Divisibility.ChainOperators.WeightFramesOfSubgroupFrames
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.GenFrameSB
+
+@[expose] public section
 
 open Formalism.BasicNotions
 

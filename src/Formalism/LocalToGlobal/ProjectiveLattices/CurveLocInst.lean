@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.CurveAsm
-import Formalism.LocalToGlobal.ProjectiveLattices.CurveLoc
-import Formalism.LocalToGlobal.ProjectiveLattices.CurveCountB
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.CurveAsm
+public import Formalism.LocalToGlobal.ProjectiveLattices.CurveLoc
+public import Formalism.LocalToGlobal.ProjectiveLattices.CurveCountB
+
+@[expose] public section
 
 noncomputable section
 

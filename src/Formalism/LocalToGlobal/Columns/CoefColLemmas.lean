@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.CoefCol
-import Formalism.LocalToGlobal.Divisibility.CoefModLemmas
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Bridge
-import Formalism.LocalToGlobal.Columns.BaseLemmas
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.CoefCol
+public import Formalism.LocalToGlobal.Divisibility.CoefModLemmas
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Bridge
+public import Formalism.LocalToGlobal.Columns.BaseLemmas
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 open scoped Matrix

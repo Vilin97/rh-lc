@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.IncomingBounds.StatementThmP
-import Formalism.IncomingBounds.FlowDegreeBounds.ThmPExp
-import Formalism.IncomingBounds.FlowDegreeBounds.Cayley
+module
+
+public import Mathlib
+public import Formalism.IncomingBounds.StatementThmP
+public import Formalism.IncomingBounds.FlowDegreeBounds.ThmPExp
+public import Formalism.IncomingBounds.FlowDegreeBounds.Cayley
+
+@[expose] public section
 
 noncomputable section
 

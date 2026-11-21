@@ -1,6 +1,10 @@
-import ReciprocityTheory.ReductiveGroups.SymplecticTraces.WeylCharacters.Statement
-import Formalism.GradedWeylDivisibility.FinalD
-import ReciprocityTheory.ReductiveGroups.SymplecticTraces.WeylCharacters.SqCharA
+module
+
+public import ReciprocityTheory.ReductiveGroups.SymplecticTraces.WeylCharacters.Statement
+public import Formalism.GradedWeylDivisibility.FinalD
+public import ReciprocityTheory.ReductiveGroups.SymplecticTraces.WeylCharacters.SqCharA
+
+@[expose] public section
 
 noncomputable section
 

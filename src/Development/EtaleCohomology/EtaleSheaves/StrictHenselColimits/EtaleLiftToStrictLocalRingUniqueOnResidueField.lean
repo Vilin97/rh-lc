@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.StrictHenselColimits
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.StrictHenselColimits
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC LateralTheory.E.t_E3Cut TensorProduct

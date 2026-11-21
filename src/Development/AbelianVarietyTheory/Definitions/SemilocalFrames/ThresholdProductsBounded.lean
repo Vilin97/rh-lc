@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HermitianCurvature.RealInputsClosedAdmissibleSettings
-import Formalism.HermitianCurvature.HerGenC
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.RealInputsClosedAdmissibleSettings
+public import Formalism.HermitianCurvature.HerGenC
+
+@[expose] public section
 
 namespace GlobalTheory.ThA
 

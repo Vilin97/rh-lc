@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.AnalyticAlgebraicIsogeny
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.IsogenySeparable
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.AnalyticAlgebraicIsogeny
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.IsogenySeparable
+
+@[expose] public section
 
 open Filter Topology Set Polynomial WeierstrassCurve.Affine GroundTheory.Arith.Abelian KaehlerDifferential
 open scoped PeriodPair

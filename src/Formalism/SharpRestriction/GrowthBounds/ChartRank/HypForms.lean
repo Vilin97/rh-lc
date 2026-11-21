@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypInvLe
-import Formalism.LocalToGlobal.GlobalTheory.GL6.ValuationClassTranslateMem
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypInvLe
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.ValuationClassTranslateMem
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.HaarDefs
-import Formalism.FormalDegreeBessel.FinalG
+module
+
+public import Formalism.PeriodIntegrals.HaarDefs
+public import Formalism.FormalDegreeBessel.FinalG
+
+@[expose] public section
 
 open MeasureTheory Matrix Finset
 open scoped InnerProductSpace ContDiff

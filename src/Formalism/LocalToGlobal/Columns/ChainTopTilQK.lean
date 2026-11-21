@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.Columns.ChainTopTilQ
-import Formalism.LocalToGlobal.Columns.ChainLawXi
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.TopLawQ
-import Formalism.LocalToGlobal.Columns.BaseLemmas
+module
+
+public import Formalism.LocalToGlobal.Columns.ChainTopTilQ
+public import Formalism.LocalToGlobal.Columns.ChainLawXi
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.TopLawQ
+public import Formalism.LocalToGlobal.Columns.BaseLemmas
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 

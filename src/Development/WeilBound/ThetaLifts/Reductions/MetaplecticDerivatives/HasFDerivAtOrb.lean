@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.Reductions.MetaplecticDerivatives.MpFOne
+module
+
+public import Development.WeilBound.ThetaLifts.Reductions.MetaplecticDerivatives.MpFOne
+
+@[expose] public section
 
 noncomputable section
 

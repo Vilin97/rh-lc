@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.FormYx
-import Development.WeilBound.ThetaLifts.ConeHypotheses.PureEqPureA
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.FormYx
+public import Development.WeilBound.ThetaLifts.ConeHypotheses.PureEqPureA
+
+@[expose] public section
 
 noncomputable section
 

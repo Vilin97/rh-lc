@@ -1,7 +1,11 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.PartitionUnitySmooth.Smoothing
-import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.RealVec
-import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Realsurj
-import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Grampd
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.PartitionUnitySmooth.Smoothing
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.RealVec
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Realsurj
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Grampd
+
+@[expose] public section
 
 noncomputable section
 

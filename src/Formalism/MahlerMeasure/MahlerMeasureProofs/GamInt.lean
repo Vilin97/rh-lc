@@ -1,5 +1,9 @@
-import Formalism.MahlerMeasure.HasOrder
-import Mathlib
+module
+
+public import Formalism.MahlerMeasure.HasOrder
+public import Mathlib
+
+@[expose] public section
 
 namespace Formalism.GM.gammaIntegralityLemmas
 

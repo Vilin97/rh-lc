@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Divisibility.RecBridge
+module
+
+public import Formalism.LocalToGlobal.Divisibility.RecBridge
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open Formalism.BasicNotions Formalism.BasicNotions.DV Formalism.L2.DIV Formalism.L2.Indef Formalism.HermitianLatticesTheory

@@ -1,12 +1,16 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
-import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IndLineInf
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KStab
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConfigBThetaIntegrabilityStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeckeLineLeviEigenvalueStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConfigBThetaUnfoldingStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConfigBThetaNonvanishingStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IndLineInf
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KStab
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConfigBThetaIntegrabilityStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HeckeLineLeviEigenvalueStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConfigBThetaUnfoldingStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConfigBThetaNonvanishingStatement
+
+@[expose] public section
 
 open scoped TensorProduct NNReal Matrix
 open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes

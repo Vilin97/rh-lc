@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.AutEtaA
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SquareOfApproximation
+module
+
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.AutEtaA
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SquareOfApproximation
+
+@[expose] public section
 
 noncomputable section
 

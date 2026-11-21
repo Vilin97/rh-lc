@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SumPairLevStarMul
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.InvMemOfKappa
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PairOperatorCommute
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SumPairLevStarMul
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.InvMemOfKappa
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PairOperatorCommute
+
+@[expose] public section
 
 open Matrix MeasureTheory
 open scoped ComplexConjugate

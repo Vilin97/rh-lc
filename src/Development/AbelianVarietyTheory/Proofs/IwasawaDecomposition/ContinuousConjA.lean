@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.SymplecticTensorMeasures
-import Formalism.LocalToGlobal.BesselHermitianTheta.TiedLocW
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.SymplecticTensorMeasures
+public import Formalism.LocalToGlobal.BesselHermitianTheta.TiedLocW
+
+@[expose] public section
 
 noncomputable section
 

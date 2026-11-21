@@ -1,4 +1,8 @@
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+module
+
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+
+@[expose] public section
 
 namespace GlobalTheory.StandardLatticeSpan
 

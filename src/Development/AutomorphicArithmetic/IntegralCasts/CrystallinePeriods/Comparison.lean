@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AutomorphicArithmetic.IntegralCasts.CrystallinePeriods.DeRham
-import Development.AutomorphicArithmetic.IntegralCasts.CrystallinePeriods.DeRhamLog
-import Development.AutomorphicArithmetic.IntegralCasts.CrystallinePeriods.CrisTheta
-import Development.AutomorphicArithmetic.IntegralCasts.CrystallinePeriods.Action
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.IntegralCasts.CrystallinePeriods.DeRham
+public import Development.AutomorphicArithmetic.IntegralCasts.CrystallinePeriods.DeRhamLog
+public import Development.AutomorphicArithmetic.IntegralCasts.CrystallinePeriods.CrisTheta
+public import Development.AutomorphicArithmetic.IntegralCasts.CrystallinePeriods.Action
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.MemOfExp
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.PchainDN
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.NDlCoords
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.MemOfExp
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.PchainDN
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.NDlCoords
+
+@[expose] public section
 
 noncomputable section
 open Classical

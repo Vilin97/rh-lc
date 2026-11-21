@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ConvexNerveComplexes.AcycSimp
-import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Imports
-import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Faceexact
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ConvexNerveComplexes.AcycSimp
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Imports
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Faceexact
+
+@[expose] public section
 
 open NumberField UpperTheory.V
 

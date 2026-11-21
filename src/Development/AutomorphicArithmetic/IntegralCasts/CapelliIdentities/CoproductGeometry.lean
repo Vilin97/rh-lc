@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.CoproductGeometry.cop_geom :
     ∀ {R κ : Type} [inst : CommRing R] [IsNoetherianRing R]

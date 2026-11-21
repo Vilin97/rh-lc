@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.RealSeparation.FramesOKg2
-import Formalism.LocalToGlobal.IndefiniteReal.FrameExistence.FramesExistGOfFramesExist
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.RealSeparation.FramesOKg2
+public import Formalism.LocalToGlobal.IndefiniteReal.FrameExistence.FramesExistGOfFramesExist
+
+@[expose] public section
 
 noncomputable section
 

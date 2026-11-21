@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.ArchimedeanWhittaker.Weights
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.ArchimedeanWhittaker.Weights
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.ArchWhittaker
 

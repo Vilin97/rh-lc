@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.GlobalReciprocity.Layers
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.GlobalReciprocity.Layers
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

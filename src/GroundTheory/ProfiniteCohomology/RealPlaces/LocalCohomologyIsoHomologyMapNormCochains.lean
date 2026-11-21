@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RealPlaces.ConeDefs
-import GroundTheory.ProfiniteCohomology.CompactSupportCohomology.Pairing
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RealPlaces.ConeDefs
+public import GroundTheory.ProfiniteCohomology.CompactSupportCohomology.Pairing
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

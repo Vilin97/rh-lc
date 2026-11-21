@@ -1,4 +1,8 @@
-import Formalism.StatementFL
+module
+
+public import Formalism.StatementFL
+
+@[expose] public section
 
 open Complex
 

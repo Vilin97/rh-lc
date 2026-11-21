@@ -1,7 +1,11 @@
-import Formalism.WachLatticeTwists.RamifiedBlockRings.LemmaFiveThreeAnyResidueField
-import Formalism.WachLatticeTwists.RamifiedBlockRings.RamifiedBlockProofs.AbsIrrOfSpan
-import Formalism.WachLatticeTwists.RamifiedBlockRings.RamifiedBlockProofs.SpanSingle
-import Formalism.WachLatticeTwists.RamifiedBlockRings.RamifiedBlockProofs.BigRes
+module
+
+public import Formalism.WachLatticeTwists.RamifiedBlockRings.LemmaFiveThreeAnyResidueField
+public import Formalism.WachLatticeTwists.RamifiedBlockRings.RamifiedBlockProofs.AbsIrrOfSpan
+public import Formalism.WachLatticeTwists.RamifiedBlockRings.RamifiedBlockProofs.SpanSingle
+public import Formalism.WachLatticeTwists.RamifiedBlockRings.RamifiedBlockProofs.BigRes
+
+@[expose] public section
 
 open Finset Classical
 

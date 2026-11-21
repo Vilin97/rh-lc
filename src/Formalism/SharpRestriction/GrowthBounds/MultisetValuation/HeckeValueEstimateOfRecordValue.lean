@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.TminusLinApply
-import Mathlib
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementC
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.GaussElementarySymmetric
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.TminusLinApply
+public import Mathlib
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementC
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.GaussElementarySymmetric
+
+@[expose] public section
 
 noncomputable section
 

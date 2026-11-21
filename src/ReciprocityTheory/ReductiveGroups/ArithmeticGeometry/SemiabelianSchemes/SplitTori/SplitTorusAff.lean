@@ -1,12 +1,16 @@
-import Mathlib.AlgebraicGeometry.Group.Abelian
-import Mathlib.AlgebraicGeometry.Group.Affine
-import Mathlib.AlgebraicGeometry.AffineSpace
-import Mathlib.AlgebraicGeometry.Morphisms.Smooth
-import Mathlib.AlgebraicGeometry.Morphisms.Separated
-import Mathlib.AlgebraicGeometry.Morphisms.Flat
-import Mathlib.AlgebraicGeometry.Geometrically.Connected
-import Mathlib.RingTheory.HopfAlgebra.MonoidAlgebra
-import Mathlib.CategoryTheory.Monoidal.Cartesian.Grp
+module
+
+public import Mathlib.AlgebraicGeometry.Group.Abelian
+public import Mathlib.AlgebraicGeometry.Group.Affine
+public import Mathlib.AlgebraicGeometry.AffineSpace
+public import Mathlib.AlgebraicGeometry.Morphisms.Smooth
+public import Mathlib.AlgebraicGeometry.Morphisms.Separated
+public import Mathlib.AlgebraicGeometry.Morphisms.Flat
+public import Mathlib.AlgebraicGeometry.Geometrically.Connected
+public import Mathlib.RingTheory.HopfAlgebra.MonoidAlgebra
+public import Mathlib.CategoryTheory.Monoidal.Cartesian.Grp
+
+@[expose] public section
 
 universe u
 

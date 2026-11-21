@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CsliceContinuous
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CsliceContinuous
+
+@[expose] public section
 
 open Matrix MeasureTheory
 open scoped ComplexConjugate InnerProductSpace ContDiff

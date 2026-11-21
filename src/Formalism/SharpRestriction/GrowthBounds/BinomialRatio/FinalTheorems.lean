@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.PairLift
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.SegmentStatementHolds
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.PairLift
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.SegmentStatementHolds
+
+@[expose] public section
 
 noncomputable section
 

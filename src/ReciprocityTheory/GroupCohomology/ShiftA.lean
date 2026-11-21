@@ -1,7 +1,11 @@
-import ReciprocityTheory.GroupCohomology.DEqZeroOfMemB
-import ReciprocityTheory.GroupCohomology.ConnNatHolds
-import ReciprocityTheory.GroupCohomology.PairHomFCoeOfId
-import ReciprocityTheory.GroupCohomology.Shapiro
+module
+
+public import ReciprocityTheory.GroupCohomology.DEqZeroOfMemB
+public import ReciprocityTheory.GroupCohomology.ConnNatHolds
+public import ReciprocityTheory.GroupCohomology.PairHomFCoeOfId
+public import ReciprocityTheory.GroupCohomology.Shapiro
+
+@[expose] public section
 
 namespace ReciprocityTheory.Coh
 

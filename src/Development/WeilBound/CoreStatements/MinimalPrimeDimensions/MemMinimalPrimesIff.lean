@@ -1,4 +1,8 @@
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PFundCycleBaseChange
+module
+
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PFundCycleBaseChange
+
+@[expose] public section
 
 set_option autoImplicit false
 

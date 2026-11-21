@@ -1,8 +1,12 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.AdjointCornerScaledSingleComm
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.HpkMulSingleEsI
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DerivativeKeepsCharacter
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutHL2
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LocOfSmoothOnH
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.AdjointCornerScaledSingleComm
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.HpkMulSingleEsI
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DerivativeKeepsCharacter
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutHL2
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LocOfSmoothOnH
+
+@[expose] public section
 
 open Matrix Filter Topology
 open scoped ComplexConjugate

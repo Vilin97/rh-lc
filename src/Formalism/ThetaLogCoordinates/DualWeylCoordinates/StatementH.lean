@@ -1,4 +1,8 @@
-import Formalism.ThetaLogCoordinates.DualWeylCoordinates.DefsMod
+module
+
+public import Formalism.ThetaLogCoordinates.DualWeylCoordinates.DefsMod
+
+@[expose] public section
 
 noncomputable section
 

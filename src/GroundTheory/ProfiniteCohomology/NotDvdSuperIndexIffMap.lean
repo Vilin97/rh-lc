@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.OpenNormal
-import GroundTheory.ProfiniteCohomology.Supernatural
-import GroundTheory.ProfiniteCohomology.OfNatRelIndexSupAntitone
-import GroundTheory.ProfiniteCohomology.IsProPGroupSubgroupIffIsPGroupMap
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.OpenNormal
+public import GroundTheory.ProfiniteCohomology.Supernatural
+public import GroundTheory.ProfiniteCohomology.OfNatRelIndexSupAntitone
+public import GroundTheory.ProfiniteCohomology.IsProPGroupSubgroupIffIsPGroupMap
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

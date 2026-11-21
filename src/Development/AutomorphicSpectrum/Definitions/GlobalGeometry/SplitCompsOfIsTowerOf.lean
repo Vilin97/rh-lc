@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.SplitComps
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenPtSpecializes
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.SplitComps
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.GenPtSpecializes
+
+@[expose] public section
 
 noncomputable section
 

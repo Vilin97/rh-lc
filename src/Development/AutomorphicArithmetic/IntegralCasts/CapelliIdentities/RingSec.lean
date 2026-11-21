@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qh66.ring_sec :
     ∀ (Ω C : Type) [inst : Field Ω] [IsAlgClosed Ω]

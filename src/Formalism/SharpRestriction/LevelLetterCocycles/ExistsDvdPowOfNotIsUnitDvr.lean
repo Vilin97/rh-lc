@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.IsUnitOfMk
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.IsUnitOfMk
+
+@[expose] public section
 
 noncomputable section
 

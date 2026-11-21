@@ -1,10 +1,14 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.ComplexMatrixCalculus.SwapLaws
-import Formalism.GelfandTransference.Statement
-import Formalism.GelfandTransference.GelfandCentral
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.WeightEqOfFinitePartNeBot
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EventuallyLineUnit
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContinuousCoeffRowAct
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ArchimedeanGelfandKernels.LeftEquivariantFunctions.ComplexMatrixCalculus.SwapLaws
+public import Formalism.GelfandTransference.Statement
+public import Formalism.GelfandTransference.GelfandCentral
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.WeightEqOfFinitePartNeBot
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EventuallyLineUnit
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContinuousCoeffRowAct
+
+@[expose] public section
 
 noncomputable section
 

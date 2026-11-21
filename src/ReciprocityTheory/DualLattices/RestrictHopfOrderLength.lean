@@ -1,6 +1,10 @@
-import ReciprocityTheory.DualLattices.RestrictedHopfOrderApproximationStatement
-import ReciprocityTheory.DualLattices.MemAugIdeal
-import ReciprocityTheory.DualLattices.ExistsMatOfEquiv
+module
+
+public import ReciprocityTheory.DualLattices.RestrictedHopfOrderApproximationStatement
+public import ReciprocityTheory.DualLattices.MemAugIdeal
+public import ReciprocityTheory.DualLattices.ExistsMatOfEquiv
+
+@[expose] public section
 
 noncomputable section
 

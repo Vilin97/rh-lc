@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.WaveDiffForm
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGSlice
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WaveDiffForm
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGSlice
+
+@[expose] public section
 
 open Matrix
 

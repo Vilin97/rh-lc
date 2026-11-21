@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverStd
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverAct
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverPoly
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverVal
+module
+
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverStd
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverAct
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverPoly
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverVal
+
+@[expose] public section
 
 noncomputable section
 

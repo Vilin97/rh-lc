@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.GqPtOfNeZeroIff
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.SymmetricFlagBasisVectorsApplyCentre
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.DetFromBlocksSingle
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.GqPtOfNeZeroIff
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.SymmetricFlagBasisVectorsApplyCentre
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.DetFromBlocksSingle
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PtsPosDensMeasurable
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsSemiPosMassFinite
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PPtsAbsIntegrable
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PTorusInvLevi
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PtsPosDensMeasurable
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsSemiPosMassFinite
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PPtsAbsIntegrable
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PTorusInvLevi
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

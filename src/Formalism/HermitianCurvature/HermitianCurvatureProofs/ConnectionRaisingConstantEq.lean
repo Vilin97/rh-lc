@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.StatementNF
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.QuasiDeterminantFromEntries
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.InterlaceSignTwo
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IsPFSum
+module
+
+public import Formalism.HermitianCurvature.StatementNF
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.QuasiDeterminantFromEntries
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.InterlaceSignTwo
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IsPFSum
+
+@[expose] public section
 
 open Matrix Finset Polynomial
 

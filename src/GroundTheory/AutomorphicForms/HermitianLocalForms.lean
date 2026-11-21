@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HermitianBinaryValues
-import GroundTheory.AutomorphicForms.UnitaryGroupScheme
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HermitianBinaryValues
+public import GroundTheory.AutomorphicForms.UnitaryGroupScheme
+
+@[expose] public section
 
 noncomputable section
 

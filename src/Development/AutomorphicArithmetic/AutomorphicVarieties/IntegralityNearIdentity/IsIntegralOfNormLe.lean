@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ProdMulMem
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IsIntegralOfNormLe
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.NormLtOne
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ProdMulMem
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IsIntegralOfNormLe
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.NormLtOne
+
+@[expose] public section
 
 namespace UpperTheory.V.Lib.Small
 

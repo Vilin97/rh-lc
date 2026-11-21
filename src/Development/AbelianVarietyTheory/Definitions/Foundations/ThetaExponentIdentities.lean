@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.SlopeBoundOfConditionsWithErrorForFrames
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.DescentConstants
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsHomogeneousCompIdeal
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.WeightExponentsEmbeddingsDegree
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AMiEqAMinusQ
-import Formalism.LocalToGlobal.ProjectiveLattices.ExistsParameterConditions
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.SlopeBoundOfConditionsWithErrorForFrames
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.DescentConstants
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsHomogeneousCompIdeal
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.WeightExponentsEmbeddingsDegree
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.AMiEqAMinusQ
+public import Formalism.LocalToGlobal.ProjectiveLattices.ExistsParameterConditions
+
+@[expose] public section
 
 set_option autoImplicit false
 

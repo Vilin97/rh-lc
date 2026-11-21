@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.FrobeniusMemPullbackOfInvariant
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.FrobeniusMemPullbackOfInvariant
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfSurj
+module
+
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfSurj
+
+@[expose] public section
 
 noncomputable section
 

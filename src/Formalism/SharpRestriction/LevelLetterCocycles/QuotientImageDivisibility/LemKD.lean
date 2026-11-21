@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.SmulSZeroSplit
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.PtTransRec
-import Formalism.SharpRestriction.LevelLetterCocycles.WachFrobeniusLatticeUnramifiedFunctor
-import Formalism.SharpRestriction.LevelLetterCocycles.IsFracOL
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.SmulSZeroSplit
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.PtTransRec
+public import Formalism.SharpRestriction.LevelLetterCocycles.WachFrobeniusLatticeUnramifiedFunctor
+public import Formalism.SharpRestriction.LevelLetterCocycles.IsFracOL
+
+@[expose] public section
 
 noncomputable section
 open Classical

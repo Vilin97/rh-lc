@@ -1,4 +1,9 @@
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StabEqStabilizer
+module
+
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StabEqStabilizer
+
+@[expose] public section
+
 open GlobalTheory.LKCount
 
 namespace GlobalTheory.LKCount

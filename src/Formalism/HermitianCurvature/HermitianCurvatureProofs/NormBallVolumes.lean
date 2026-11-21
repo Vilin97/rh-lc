@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BetaSesquilinearity
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.FrobeniusBoundOfMulNearOne
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LiftingTheory
+module
+
+public import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BetaSesquilinearity
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.FrobeniusBoundOfMulNearOne
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.LiftingTheory
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology Metric
 open scoped ComplexConjugate ENNReal NNReal

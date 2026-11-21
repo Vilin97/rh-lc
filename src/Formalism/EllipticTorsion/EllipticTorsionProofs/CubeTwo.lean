@@ -1,11 +1,15 @@
-import Formalism.EllipticTorsion.CoeffRing
-import Formalism.EllipticTorsion.EllipticTorsionProofs.WChord
-import Formalism.EllipticTorsion.EllipticTorsionProofs.ExistsUnitFactor
-import Formalism.EllipticTorsion.EllipticTorsionProofs.WSubst
-import Formalism.EllipticTorsion.EllipticTorsionProofs.WSeries
-import Formalism.EllipticTorsion.EllipticTorsionProofs.WPoint
-import Formalism.EllipticTorsion.EllipticTorsionProofs.FormalGroupPointsHomDef
-import Formalism.EllipticTorsion.EllipticTorsionProofs.JetsTwo
+module
+
+public import Formalism.EllipticTorsion.CoeffRing
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.WChord
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.ExistsUnitFactor
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.WSubst
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.WSeries
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.WPoint
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.FormalGroupPointsHomDef
+public import Formalism.EllipticTorsion.EllipticTorsionProofs.JetsTwo
+
+@[expose] public section
 
 open PowerSeries
 

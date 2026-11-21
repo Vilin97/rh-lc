@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MassComputations.TensLiftSelf
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.MassComputations.TensLiftSelf
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.GreenOfPoincareLelongHyperplane
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.LogInt
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.GreenCoord
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.HasCompactSupportCompHypInclAt
+module
+
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.GreenOfPoincareLelongHyperplane
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.LogInt
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.GreenCoord
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.HasCompactSupportCompHypInclAt
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.A
 

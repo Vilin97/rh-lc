@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.GlobalTheory.GL3.PIopIso
-import Formalism.LocalToGlobal.GlobalTheory.GL3.DeterminantNormOneOfUnitDisc
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.EpEqOneIff
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.PIopIso
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.DeterminantNormOneOfUnitDisc
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.EpEqOneIff
+
+@[expose] public section
 
 noncomputable section
 

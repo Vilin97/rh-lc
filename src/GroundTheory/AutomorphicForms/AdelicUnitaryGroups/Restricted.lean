@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.AdelicUnitaryGroups.Lattice
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.AdelicUnitaryGroups.Lattice
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

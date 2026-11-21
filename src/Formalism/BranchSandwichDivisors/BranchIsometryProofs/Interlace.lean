@@ -1,5 +1,9 @@
-import Formalism.BranchSandwichDivisors.StatementR
-import Formalism.BranchSandwichDivisors.BranchIsometryProofs.MemBranchRangeOfDefectEq
+module
+
+public import Formalism.BranchSandwichDivisors.StatementR
+public import Formalism.BranchSandwichDivisors.BranchIsometryProofs.MemBranchRangeOfDefectEq
+
+@[expose] public section
 
 open Finset
 

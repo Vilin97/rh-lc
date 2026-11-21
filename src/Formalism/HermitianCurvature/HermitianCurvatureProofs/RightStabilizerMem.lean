@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentCharacterOneOfProduct
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.UnipotentCharacterOneOfProduct
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.StabilizerDisintegration.OD
 

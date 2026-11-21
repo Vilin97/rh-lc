@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoeffZeroNeOfMonicIrr
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IrreducibleCharacterSeries.ConjugateCharacterFormula
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RootsReverseProd
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoeffZeroNeOfMonicIrr
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.IrreducibleCharacterSeries.ConjugateCharacterFormula
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.RootsReverseProd
+
+@[expose] public section
 
 noncomputable section
 

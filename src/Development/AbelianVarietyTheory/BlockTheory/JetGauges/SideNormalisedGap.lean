@@ -1,12 +1,16 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UpqRep
-import Formalism.PeriodIntegrals.IsLowUnitH
-import Formalism.FormalDegreeBessel.StatementG
-import Formalism.FormalDegreeBessel.StatementDS
-import Formalism.PeriodIntegrals.BesselPeriodGGP
-import Formalism.PeriodIntegrals.BesselMapUniq
-import Formalism.PeriodIntegrals.KFinSmooth
-import Formalism.HermitianCurvature.StatementB
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UpqRep
+public import Formalism.PeriodIntegrals.IsLowUnitH
+public import Formalism.FormalDegreeBessel.StatementG
+public import Formalism.FormalDegreeBessel.StatementDS
+public import Formalism.PeriodIntegrals.BesselPeriodGGP
+public import Formalism.PeriodIntegrals.BesselMapUniq
+public import Formalism.PeriodIntegrals.KFinSmooth
+public import Formalism.HermitianCurvature.StatementB
+
+@[expose] public section
 
 noncomputable section
 

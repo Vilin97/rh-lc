@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FramePinSmul
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsGeometricHalfRealisationGeometricAction
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GeometricHalfCoreFormsUniformisationIntegral
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GeoHalfUpd
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PbEqOfPins
-import Formalism.LocalToGlobal.IndefiniteReal.WeakCharacterisationWithError
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.FramePinSmul
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsGeometricHalfRealisationGeometricAction
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GeometricHalfCoreFormsUniformisationIntegral
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GeoHalfUpd
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PbEqOfPins
+public import Formalism.LocalToGlobal.IndefiniteReal.WeakCharacterisationWithError
+
+@[expose] public section
 
 set_option autoImplicit false
 

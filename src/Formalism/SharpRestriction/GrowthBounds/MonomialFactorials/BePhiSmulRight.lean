@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.MfacMapDomainAdd
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BlockValuationZpOfLatticeInclusion
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.MfacMapDomainAdd
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.BlockValuationZpOfLatticeInclusion
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.PrimeHopfOrderStatement
+module
+
+public import ReciprocityTheory.DualLattices.PrimeHopfOrderStatement
+
+@[expose] public section
 
 noncomputable section
 

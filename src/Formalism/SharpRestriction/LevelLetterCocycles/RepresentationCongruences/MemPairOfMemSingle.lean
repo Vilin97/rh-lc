@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.QuotientDistinguishedTorsionFree
-import Mathlib.RingTheory.DiscreteValuationRing.TFAE
-import Mathlib.RingTheory.PowerSeries.Ideal
-import Mathlib.RingTheory.Filtration
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.QuotientDistinguishedTorsionFree
+public import Mathlib.RingTheory.DiscreteValuationRing.TFAE
+public import Mathlib.RingTheory.PowerSeries.Ideal
+public import Mathlib.RingTheory.Filtration
+
+@[expose] public section
 
 namespace Formalism.MainNotions.N.FrobeniusPowerSeries
 

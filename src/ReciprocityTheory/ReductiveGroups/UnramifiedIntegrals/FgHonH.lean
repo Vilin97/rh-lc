@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgHonF
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgHonG
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgHonF
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgHonG
+
+@[expose] public section
 
 noncomputable section
 

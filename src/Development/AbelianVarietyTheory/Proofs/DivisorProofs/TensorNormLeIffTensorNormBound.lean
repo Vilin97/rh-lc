@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TensorPlaceNorm
-import Formalism.LocalToGlobal.Divisibility.CoefMod
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TensorPlaceNorm
+public import Formalism.LocalToGlobal.Divisibility.CoefMod
+
+@[expose] public section
 
 open MvPolynomial
 

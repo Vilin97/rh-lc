@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.AdelicFourier2TensorCosetIndicatorAlgebraMap
-import GroundTheory.AutomorphicForms.GL2.GJMatrixFinite
-import GroundTheory.AutomorphicForms.GL2.GJMatrixInfinite
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.AdelicFourier2TensorCosetIndicatorAlgebraMap
+public import GroundTheory.AutomorphicForms.GL2.GJMatrixFinite
+public import GroundTheory.AutomorphicForms.GL2.GJMatrixInfinite
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.GJMatrix
 

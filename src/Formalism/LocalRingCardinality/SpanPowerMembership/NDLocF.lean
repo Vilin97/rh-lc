@@ -1,4 +1,8 @@
-import Formalism.LocalRingCardinality.SpanPowerMembership.NDLocE
+module
+
+public import Formalism.LocalRingCardinality.SpanPowerMembership.NDLocE
+
+@[expose] public section
 
 noncomputable section
 

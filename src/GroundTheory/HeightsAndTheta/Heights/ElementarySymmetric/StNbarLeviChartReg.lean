@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.FlagIndices
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.FrameDefinitions.EqZeroOfIsIsoSub
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsStokesGeo
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StNbarChartSemipos
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StNbarLeviChart
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.FlagIndices
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.FrameDefinitions.EqZeroOfIsIsoSub
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StatementsStokesGeo
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StNbarChartSemipos
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.StNbarLeviChart
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

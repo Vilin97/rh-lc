@@ -1,4 +1,8 @@
-import Formalism.ZeroFreeRegion.ZetaLogDerivativeBounds.LandauLocalOf
+module
+
+public import Formalism.ZeroFreeRegion.ZetaLogDerivativeBounds.LandauLocalOf
+
+@[expose] public section
 
 open Complex Filter Topology
 

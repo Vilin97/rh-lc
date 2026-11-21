@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.CongNormal
-import Formalism.LocalToGlobal.IndefiniteReal.PeterssonHilbertSpace
-import Formalism.LocalToGlobal.Columns.MtRowRep
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.CongNormal
+public import Formalism.LocalToGlobal.IndefiniteReal.PeterssonHilbertSpace
+public import Formalism.LocalToGlobal.Columns.MtRowRep
+
+@[expose] public section
 
 noncomputable section
 

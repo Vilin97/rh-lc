@@ -1,5 +1,9 @@
-import Formalism.LogFactorialIndices.StatementIdx
-import Mathlib
+module
+
+public import Formalism.LogFactorialIndices.StatementIdx
+public import Mathlib
+
+@[expose] public section
 
 open scoped Pointwise
 

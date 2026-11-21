@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.KernelLattices.KerChTie
+module
+
+public import Formalism.LocalToGlobal.KernelLattices.KerChTie
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

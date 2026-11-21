@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.InertKernelTheory.DelPolOfTies
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.DelPolOfTies
+
+@[expose] public section
 
 noncomputable section
 

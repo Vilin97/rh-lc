@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CenUsedOfCenReal
-import Formalism.SharpRestriction.LevelLetterCocycles.SphericalInertData
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CenUsedOfCenReal
+public import Formalism.SharpRestriction.LevelLetterCocycles.SphericalInertData
+
+@[expose] public section
 
 noncomputable section
 

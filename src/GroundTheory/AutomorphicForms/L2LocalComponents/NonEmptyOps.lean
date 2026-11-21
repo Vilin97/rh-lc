@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.L2LocalComponents.Summand
-import GroundTheory.AutomorphicForms.L2LocalComponents.CenterCommute
-import GroundTheory.AutomorphicForms.L2LocalComponents.ArchBump
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.L2LocalComponents.Summand
+public import GroundTheory.AutomorphicForms.L2LocalComponents.CenterCommute
+public import GroundTheory.AutomorphicForms.L2LocalComponents.ArchBump
+
+@[expose] public section
 
 open MeasureTheory Filter Topology
 open scoped InnerProductSpace

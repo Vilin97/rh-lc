@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.TowerModels.PlaneLat
+module
+
+public import Development.WeilBound.ThetaLifts.TowerModels.PlaneLat
+
+@[expose] public section
 
 noncomputable section
 

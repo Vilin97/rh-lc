@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.Artin.ConductorInflation
-import GroundTheory.GlobalFields.Artin.OneDim
-import GroundTheory.LocalFields.ArtinConductorAbelian
-import GroundTheory.LocalFields.SeparableClosure
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.Artin.ConductorInflation
+public import GroundTheory.GlobalFields.Artin.OneDim
+public import GroundTheory.LocalFields.ArtinConductorAbelian
+public import GroundTheory.LocalFields.SeparableClosure
+
+@[expose] public section
 
 noncomputable section
 

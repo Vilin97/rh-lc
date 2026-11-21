@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.UnifGam
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.UnifGam
+
+@[expose] public section
 
 noncomputable section
 

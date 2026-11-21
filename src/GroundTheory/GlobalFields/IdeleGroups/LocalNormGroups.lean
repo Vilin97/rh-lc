@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.LocalNorms
-import GroundTheory.GlobalFields.KummerTheory.Splitting
-import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
-import GroundTheory.LocalFields.UnramifiedNorms
-import GroundTheory.GlobalFields.CompletionAtPlace.Integers
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.LocalNorms
+public import GroundTheory.GlobalFields.KummerTheory.Splitting
+public import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
+public import GroundTheory.LocalFields.UnramifiedNorms
+public import GroundTheory.GlobalFields.CompletionAtPlace.Integers
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

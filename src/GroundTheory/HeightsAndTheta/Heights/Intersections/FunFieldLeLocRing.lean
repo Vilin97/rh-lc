@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsTerFurther
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PLocRingFrac
-import GroundTheory.HeightsAndTheta.Heights.Intersections.NotMemOfNonZeroDivisor
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PHorizNotMem
-import GroundTheory.HeightsAndTheta.Heights.Intersections.NotIsUnitOfNumMem
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsTerFurther
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PLocRingFrac
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.NotMemOfNonZeroDivisor
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PHorizNotMem
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.NotIsUnitOfNumMem
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter

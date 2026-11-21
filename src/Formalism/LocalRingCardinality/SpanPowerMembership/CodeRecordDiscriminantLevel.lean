@@ -1,4 +1,8 @@
-import Formalism.LocalRingCardinality.SpanPowerMembership.ClassRecordRowDimensionZero
+module
+
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ClassRecordRowDimensionZero
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.PartnersFactorsOfKernelSmith
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.SmithPairing
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.PartnersFactorsOfKernelSmith
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.SmithPairing
+
+@[expose] public section
 
 noncomputable section
 

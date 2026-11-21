@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.Divisibility.SchurIrreducible
+module
+
+public import Formalism.SharpRestriction.Divisibility.SchurIrreducible
+
+@[expose] public section
 
 noncomputable section
 

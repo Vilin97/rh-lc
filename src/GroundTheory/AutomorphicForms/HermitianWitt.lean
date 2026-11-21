@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HermitianOrthogonal
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HermitianOrthogonal
+
+@[expose] public section
 
 noncomputable section
 

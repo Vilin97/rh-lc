@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.AdjointFrobeniusPreservesRamified
-import Formalism.LocalToGlobal.Columns.CoefficientsModP
-import Formalism.LocalToGlobal.Columns.AtTOwedS
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.AdjointFrobeniusPreservesRamified
+public import Formalism.LocalToGlobal.Columns.CoefficientsModP
+public import Formalism.LocalToGlobal.Columns.AtTOwedS
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

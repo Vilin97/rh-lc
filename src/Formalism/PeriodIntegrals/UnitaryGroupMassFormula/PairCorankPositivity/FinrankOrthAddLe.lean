@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.PairCorankPos
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.PairCorankPositivity.EqZeroOfMulVec
-import Lemmata.GeneralBFactLeftAlt.Imports
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.PairCorankPos
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.PairCorankPositivity.EqZeroOfMulVec
+public import Lemmata.GeneralBFactLeftAlt.Imports
+
+@[expose] public section
 
 noncomputable section
 

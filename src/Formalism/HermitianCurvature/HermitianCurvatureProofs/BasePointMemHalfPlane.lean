@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FderivDecomp
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FderivDecomp
+
+@[expose] public section
 
 open Set Filter Topology Complex
 

@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntertwinerOfCoef
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LowestDegreeComponentNonzero
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorIrreducibleModules
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockFirstActionMatrixUnitEq
-import Formalism.SharpRestriction.Divisibility.LocalNonemptiness.THProvA
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ExpFromBlocks
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntertwinerOfCoef
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LowestDegreeComponentNonzero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TensorIrreducibleModules
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FockFirstActionMatrixUnitEq
+public import Formalism.SharpRestriction.Divisibility.LocalNonemptiness.THProvA
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ExpFromBlocks
+
+@[expose] public section
 
 noncomputable section
 

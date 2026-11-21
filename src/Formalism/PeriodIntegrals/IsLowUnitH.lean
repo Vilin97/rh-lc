@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.UpqRep
+module
+
+public import Formalism.PeriodIntegrals.UpqRep
+
+@[expose] public section
 
 open MeasureTheory Matrix Finset Topology
 open scoped InnerProductSpace ContDiff ComplexOrder

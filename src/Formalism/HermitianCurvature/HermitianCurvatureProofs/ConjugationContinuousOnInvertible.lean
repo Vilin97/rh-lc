@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.BlochKatoDuality
+module
+
+public import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.BlochKatoDuality
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 open scoped ENNReal NNReal

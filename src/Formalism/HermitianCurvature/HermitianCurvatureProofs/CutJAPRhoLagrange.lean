@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJAPRhoEigOrth
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJAPRhoEigOrth
+
+@[expose] public section
 
 open Matrix Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt Formalism.FourierDecayAlt.Q
 

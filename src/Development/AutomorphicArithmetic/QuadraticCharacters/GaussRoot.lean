@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.QuadraticCharacters.MemRealCyclotomicSubgroup
-import Development.AutomorphicArithmetic.QuadraticCharacters.PreHostA
+module
+
+public import Development.AutomorphicArithmetic.QuadraticCharacters.MemRealCyclotomicSubgroup
+public import Development.AutomorphicArithmetic.QuadraticCharacters.PreHostA
+
+@[expose] public section
 
 open NumberField IntermediateField
 

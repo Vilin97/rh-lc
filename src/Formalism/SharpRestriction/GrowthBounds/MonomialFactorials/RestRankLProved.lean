@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.RestPlusOf
-import Formalism.PolynomialDimension.MultinomialDepth.PartnerM
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.RestPlusOf
+public import Formalism.PolynomialDimension.MultinomialDepth.PartnerM
+
+@[expose] public section
 
 noncomputable section
 

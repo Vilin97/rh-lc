@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.QmDefs
-import Formalism.PeriodIntegrals.QmColExp
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ExponentialFirstColumn.FirstColumnSplitBijective
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.QmDefs
+public import Formalism.PeriodIntegrals.QmColExp
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ExponentialFirstColumn.FirstColumnSplitBijective
+
+@[expose] public section
 
 private theorem bijective_cycleRange_symm_mul_decomposeFin_symm (t : ℕ) :
     Function.Bijective (fun p : Fin (t + 1) × Equiv.Perm (Fin t) =>

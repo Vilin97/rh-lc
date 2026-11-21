@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.Statement
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.Statement
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder InnerProductSpace

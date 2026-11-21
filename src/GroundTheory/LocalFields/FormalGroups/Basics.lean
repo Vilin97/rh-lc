@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.FormalGroups.Inverse
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.FormalGroups.Inverse
+
+@[expose] public section
 
 namespace GroundTheory.LocalField.FormalGroup
 

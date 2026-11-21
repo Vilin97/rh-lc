@@ -1,6 +1,10 @@
-import Formalism.AdmissibleDesigns.RowTopOf
-import Formalism.AdmissibleDesigns.FiniteClassesLocalEq
-import Formalism.AdmissibleDesigns.EKSymmCont
+module
+
+public import Formalism.AdmissibleDesigns.RowTopOf
+public import Formalism.AdmissibleDesigns.FiniteClassesLocalEq
+public import Formalism.AdmissibleDesigns.EKSymmCont
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

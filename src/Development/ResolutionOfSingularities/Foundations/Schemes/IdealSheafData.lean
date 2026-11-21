@@ -1,5 +1,9 @@
-import Mathlib
-import Development.ResolutionOfSingularities.Foundations.Schemes.AffineOpens
+module
+
+public import Mathlib
+public import Development.ResolutionOfSingularities.Foundations.Schemes.AffineOpens
+
+@[expose] public section
 
 universe u
 

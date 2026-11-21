@@ -1,9 +1,13 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.UniversalGeneralOfRestriction
-import Formalism.SharpRestriction.LevelLetterCocycles.EvaluationAtUniformizerPower
-import Formalism.SharpRestriction.LevelLetterCocycles.DualLemmaOfDeterminant
-import Formalism.SharpRestriction.LevelLetterCocycles.DvOZeroHigh
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.RkMultVNonneg
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.FilDimOf
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.UniversalGeneralOfRestriction
+public import Formalism.SharpRestriction.LevelLetterCocycles.EvaluationAtUniformizerPower
+public import Formalism.SharpRestriction.LevelLetterCocycles.DualLemmaOfDeterminant
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvOZeroHigh
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.RkMultVNonneg
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.FilDimOf
+
+@[expose] public section
 
 noncomputable section
 

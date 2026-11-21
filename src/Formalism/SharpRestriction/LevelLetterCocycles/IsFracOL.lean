@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.MatOfEquiv
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.MatOfEquiv
+
+@[expose] public section
 
 noncomputable section
 

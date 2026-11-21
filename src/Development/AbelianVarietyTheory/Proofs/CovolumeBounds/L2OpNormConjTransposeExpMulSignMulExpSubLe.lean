@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 open Matrix
 open scoped Matrix.Norms.L2Operator ComplexOrder

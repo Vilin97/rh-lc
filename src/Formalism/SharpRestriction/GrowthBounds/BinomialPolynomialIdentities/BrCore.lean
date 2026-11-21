@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.GrowthBounds.StatementOfDegreeAndBound
-import Formalism.ThetaLogCoordinates.DualWeylCoordinates.DefsMod
-import Formalism.ThetaLogCoordinates.DualWeylCoordinates.DualWeylProofs.ABridge
-import Formalism.ThetaLogCoordinates.DualWeylCoordinates.DualWeylProofs.InducedSectionsSpanStatement
-import Formalism.ThetaLogCoordinates.DualWeylCoordinates.DualWeylProofs.RationalBitableauLatticeStatement
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.StatementOfDegreeAndBound
+public import Formalism.ThetaLogCoordinates.DualWeylCoordinates.DefsMod
+public import Formalism.ThetaLogCoordinates.DualWeylCoordinates.DualWeylProofs.ABridge
+public import Formalism.ThetaLogCoordinates.DualWeylCoordinates.DualWeylProofs.InducedSectionsSpanStatement
+public import Formalism.ThetaLogCoordinates.DualWeylCoordinates.DualWeylProofs.RationalBitableauLatticeStatement
+
+@[expose] public section
 
 noncomputable section
 

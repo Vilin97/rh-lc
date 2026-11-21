@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.WindowSums.Statement
-import Formalism.GaussValuationBounds.Statement
+module
+
+public import Mathlib
+public import Formalism.WindowSums.Statement
+public import Formalism.GaussValuationBounds.Statement
+
+@[expose] public section
 
 noncomputable section
 

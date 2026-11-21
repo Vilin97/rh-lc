@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.LocSplitType
-import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.GluingMassOfLiftNumberGenus
-import Formalism.HermitianLattices.HermitianLatticesProofs.LocDual
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.LocSplitType
+public import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.GluingMassOfLiftNumberGenus
+public import Formalism.HermitianLattices.HermitianLatticesProofs.LocDual
+
+@[expose] public section
 
 noncomputable section
 

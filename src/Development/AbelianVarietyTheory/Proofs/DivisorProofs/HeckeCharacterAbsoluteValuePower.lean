@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
-import GroundTheory.GlobalFields.WeilGroups.QuasiCharacterDecomposition
-import GroundTheory.GlobalFields.TateThesis.NonvanishingPrimes
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
+public import GroundTheory.GlobalFields.WeilGroups.QuasiCharacterDecomposition
+public import GroundTheory.GlobalFields.TateThesis.NonvanishingPrimes
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Formalism.L2.Host
 

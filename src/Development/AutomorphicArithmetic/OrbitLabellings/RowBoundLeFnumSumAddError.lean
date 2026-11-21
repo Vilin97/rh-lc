@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AutomorphicArithmetic.OrbitLabellings.RowDefs
-import Formalism.DropLevelBounds.ThBounds
-import Formalism.IncomingBounds.IncomingBound
-import Development.AutomorphicArithmetic.OrbitLabellings.AttainsBlockListOfWeightsAlongOrbits
-import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.DropLevelsBasic
-import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.MulFlowValLe
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.OrbitLabellings.RowDefs
+public import Formalism.DropLevelBounds.ThBounds
+public import Formalism.IncomingBounds.IncomingBound
+public import Development.AutomorphicArithmetic.OrbitLabellings.AttainsBlockListOfWeightsAlongOrbits
+public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.DropLevelsBasic
+public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.MulFlowValLe
+
+@[expose] public section
 
 open scoped BigOperators
 open Classical

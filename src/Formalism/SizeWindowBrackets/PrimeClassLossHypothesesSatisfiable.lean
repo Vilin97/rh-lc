@@ -1,4 +1,8 @@
-import Formalism.SizeWindowBrackets.WindowSettingSatisfiable
+module
+
+public import Formalism.SizeWindowBrackets.WindowSettingSatisfiable
+
+@[expose] public section
 
 namespace Formalism.LFunctionChainParameters.SmallOrderPrimeLosses
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.HermitianColumns.CoordinateLatticeSelfDual
-import Formalism.LocalToGlobal.HermitianColumns.CocycleZeroMemInvariants
+module
+
+public import Formalism.LocalToGlobal.HermitianColumns.CoordinateLatticeSelfDual
+public import Formalism.LocalToGlobal.HermitianColumns.CocycleZeroMemInvariants
+
+@[expose] public section
 
 noncomputable section
 

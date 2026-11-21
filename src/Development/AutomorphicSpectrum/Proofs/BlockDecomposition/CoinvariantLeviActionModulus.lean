@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AvgVanish
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DerivativeTwistedIso
-import GroundTheory.PAdicHodge.FactorizationFactorialLe
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AvgVanish
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DerivativeTwistedIso
+public import GroundTheory.PAdicHodge.FactorizationFactorialLe
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.GramFormPhiStatement
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinima
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FirstCohomology.ReducedBasis
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.GramFormPhiStatement
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinima
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FirstCohomology.ReducedBasis
+
+@[expose] public section
 
 set_option autoImplicit false
 

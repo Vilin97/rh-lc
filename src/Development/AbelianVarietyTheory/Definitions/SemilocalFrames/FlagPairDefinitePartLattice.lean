@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.FlagUnipotentLattices.MemOfOrthogonalAnisotropic
-import Formalism.HermitianLattices.StatementMass
-import Formalism.HermitianLattices.HermitianLatticesProofs.MassBasic
-import Formalism.HermitianLattices.HermitianLatticesProofs.AutFinite
+module
+
+public import Mathlib
+public import Formalism.FlagUnipotentLattices.MemOfOrthogonalAnisotropic
+public import Formalism.HermitianLattices.StatementMass
+public import Formalism.HermitianLattices.HermitianLatticesProofs.MassBasic
+public import Formalism.HermitianLattices.HermitianLatticesProofs.AutFinite
+
+@[expose] public section
 
 noncomputable section
 

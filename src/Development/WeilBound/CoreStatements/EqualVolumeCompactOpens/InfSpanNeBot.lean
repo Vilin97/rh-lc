@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
-import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.LevelIdeal
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
+public import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.LevelIdeal
+
+@[expose] public section
 
 noncomputable section
 

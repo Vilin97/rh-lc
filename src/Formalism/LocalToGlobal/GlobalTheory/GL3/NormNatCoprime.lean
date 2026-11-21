@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.GlobalTheory.GL3.IntegralityIffAwayAtD
-import Formalism.LocalToGlobal.GlobalTheory.GL3.DeterminantNormOneOfUnitDisc
-import Formalism.SharpRestriction.GlobalSchurBounds.StandardIntegralLatticeExists
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.IntegralityIffAwayAtD
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.DeterminantNormOneOfUnitDisc
+public import Formalism.SharpRestriction.GlobalSchurBounds.StandardIntegralLatticeExists
+
+@[expose] public section
 
 noncomputable section
 

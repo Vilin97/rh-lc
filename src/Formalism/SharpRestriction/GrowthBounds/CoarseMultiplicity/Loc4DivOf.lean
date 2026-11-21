@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.LiftSubstStart
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.LiftSubstStart
+
+@[expose] public section
 
 noncomputable section
 

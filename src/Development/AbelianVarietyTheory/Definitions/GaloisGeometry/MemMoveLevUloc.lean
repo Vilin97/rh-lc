@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.HermitianForms.TiedTwGen
-import Formalism.LocalToGlobal.Columns.RecLevelTop
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ToLEInvApply
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.MemStabGLAdeleIff
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.HermitianForms.TiedTwGen
+public import Formalism.LocalToGlobal.Columns.RecLevelTop
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ToLEInvApply
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.MemStabGLAdeleIff
+
+@[expose] public section
 
 noncomputable section
 

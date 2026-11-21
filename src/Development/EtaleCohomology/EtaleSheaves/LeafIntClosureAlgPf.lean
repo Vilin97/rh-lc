@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafNormalModelPf
-import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.Integral
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafNormalModelPf
+public import ReciprocityTheory.CommutativeAlgebra.SaturatedChains.Integral
+
+@[expose] public section
 
 noncomputable section
 open Polynomial

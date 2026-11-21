@@ -1,8 +1,13 @@
-import Development.AutomorphicArithmetic.Foundations.LocalLanglands.RecTTransport
-import Development.AutomorphicArithmetic.Foundations.LocalLanglands.LocalCentralUnits.IsSemisimpleInducedParam
-import Development.AutomorphicArithmetic.Foundations.LocalLanglands.LocalCentralUnits.WDBasic
-import Development.DiscreteGroups.GlobalIrreducibility.DzTame
-import Development.AutomorphicArithmetic.WhittakerHecke.ExistsAddCharInvariantIffFiniteFieldAutEqOne
+module
+
+public import Development.AutomorphicArithmetic.Foundations.LocalLanglands.RecTTransport
+public import Development.AutomorphicArithmetic.Foundations.LocalLanglands.LocalCentralUnits.IsSemisimpleInducedParam
+public import Development.AutomorphicArithmetic.Foundations.LocalLanglands.LocalCentralUnits.WDBasic
+public import Development.DiscreteGroups.GlobalIrreducibility.DzTame
+public import Development.AutomorphicArithmetic.WhittakerHecke.ExistsAddCharInvariantIffFiniteFieldAutEqOne
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Polynomial GlobalTheory.WeilDeligne GlobalTheory.LocGL GlobalTheory.LocLanglands GlobalTheory.GLq
 
 namespace UpperTheory.IrreducibleNonTameWeilDeligne

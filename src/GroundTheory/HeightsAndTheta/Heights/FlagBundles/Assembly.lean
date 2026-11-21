@@ -1,16 +1,21 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.FlagBundles.Statements
-import GroundTheory.PAdicHodge.SlopeCauchyBinet
-import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PGKernelIdentity
-import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PZonalKernel
-import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PSphereLongitudeCoordinates
-import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PZonalHeightReduction
-import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PZonalKernelPairing
-import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PZonalBilinearFormula
-import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PGHatIdentity
-import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PFibreConstantClosedForm
-import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PFibreIntegralInvariant
-import GroundTheory.HeightsAndTheta.Heights.FubiniStudyIntegral
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.FlagBundles.Statements
+public import GroundTheory.PAdicHodge.SlopeCauchyBinet
+public import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PGKernelIdentity
+public import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PZonalKernel
+public import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PSphereLongitudeCoordinates
+public import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PZonalHeightReduction
+public import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PZonalKernelPairing
+public import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PZonalBilinearFormula
+public import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PGHatIdentity
+public import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PFibreConstantClosedForm
+public import GroundTheory.HeightsAndTheta.Heights.FlagBundles.PFibreIntegralInvariant
+public import GroundTheory.HeightsAndTheta.Heights.FubiniStudyIntegral
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.FlagBundles

@@ -1,6 +1,10 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.AbelianSchemeQuotients.QSurjective
-import Mathlib.Algebra.DualNumber
-import Mathlib.RingTheory.Valuation.Integers
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SemiabelianSchemes.AbelianSchemeQuotients.QSurjective
+public import Mathlib.Algebra.DualNumber
+public import Mathlib.RingTheory.Valuation.Integers
+
+@[expose] public section
 
 noncomputable section
 

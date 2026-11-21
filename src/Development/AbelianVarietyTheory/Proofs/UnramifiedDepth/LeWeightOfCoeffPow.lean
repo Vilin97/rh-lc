@@ -1,6 +1,11 @@
-import Mathlib
-import Formalism.DropLevelBounds.Statement
-import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.WtAddSingle
+module
+
+public import Mathlib
+public import Formalism.DropLevelBounds.Statement
+public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.WtAddSingle
+
+@[expose] public section
+
 open Formalism.UnitaryBoundIntegral Formalism.IncomingBounds ReciprocityTheory.PGsh
 open scoped BigOperators
 

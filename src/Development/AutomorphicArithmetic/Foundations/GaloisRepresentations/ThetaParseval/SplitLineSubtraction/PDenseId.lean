@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.SplitLineSubtraction.SubtractOf
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.DeRhamWeightDirectSum
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.SplitLineSubtraction.SubtractOf
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.DeRhamWeightDirectSum
+
+@[expose] public section
 
 noncomputable section
 

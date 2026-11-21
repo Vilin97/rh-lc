@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.StatementACE
-import Formalism.LogFactorialIndices.StatementSize
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.StatementACE
+public import Formalism.LogFactorialIndices.StatementSize
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

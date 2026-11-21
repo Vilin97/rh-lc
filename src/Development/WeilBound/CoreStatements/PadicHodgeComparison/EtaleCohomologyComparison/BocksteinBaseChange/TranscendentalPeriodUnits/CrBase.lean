@@ -1,10 +1,14 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.BcrisRegularPeriodRing
-import Development.WeilBound.RepresentationTheoryGL.PeriodRingBases.FixedBaseSurjectivity.Imports
-import GroundTheory.PAdicHodge.BCrisNewton
-import GroundTheory.PAdicHodge.BCrisRegularFinal
-import GroundTheory.PAdicHodge.BCrisEigenMaps
-import GroundTheory.PAdicHodge.FontaineLemmaInvariants
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.BocksteinBaseChange.BcrisRegularPeriodRing
+public import Development.WeilBound.RepresentationTheoryGL.PeriodRingBases.FixedBaseSurjectivity.Imports
+public import GroundTheory.PAdicHodge.BCrisNewton
+public import GroundTheory.PAdicHodge.BCrisRegularFinal
+public import GroundTheory.PAdicHodge.BCrisEigenMaps
+public import GroundTheory.PAdicHodge.FontaineLemmaInvariants
+
+@[expose] public section
 
 set_option backward.isDefEq.respectTransparency false
 

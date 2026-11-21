@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SliceIntCut
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.OpApplySub
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SliceIntCut
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OpApplySub
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 open scoped ContDiff

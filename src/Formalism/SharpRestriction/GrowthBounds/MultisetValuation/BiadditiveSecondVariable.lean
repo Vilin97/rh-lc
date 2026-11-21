@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.BiadditiveFirstVariable
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.BiadditiveFirstVariable
+
+@[expose] public section
 
 noncomputable section
 

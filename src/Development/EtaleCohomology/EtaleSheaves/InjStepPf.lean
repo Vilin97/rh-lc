@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.ZarIndPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.ZarIndPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC LateralTheory.E.t_E2Cut LateralTheory.E.ZLGPf LateralTheory.E.ZarIndPf

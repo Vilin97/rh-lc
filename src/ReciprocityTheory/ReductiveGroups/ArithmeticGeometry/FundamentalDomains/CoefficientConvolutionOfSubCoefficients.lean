@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.FlowMeanContinuity
-import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.FourMul
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.FlowMeanContinuity
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.FourMul
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.FD.PeriodLatticeMembership
 

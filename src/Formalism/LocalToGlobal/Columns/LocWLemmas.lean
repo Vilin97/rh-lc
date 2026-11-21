@@ -1,17 +1,21 @@
-import Formalism.LocalToGlobal.Columns.AlgebraMapMemMaximalIdealPowIff
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.ExistsNsmulMem
-import Formalism.SizeWindowBrackets.SBrDiv
-import Formalism.LocalRingCardinality.DataDIVDefs
-import Formalism.LocalRingCardinality.DataForms
-import Formalism.LocalRingCardinality.SpanPowerMembership.Places
-import Formalism.HermitianLattices.HermitianLatticesProofs.IndexBasic
-import Formalism.GL3MeanSquares.HookFormulaTorsion.InvariantKernelTraceVanishes
-import Formalism.LocalRingCardinality.DataIdx
-import Formalism.LocalRingCardinality.Lemmas
-import Mathlib
-import Formalism.SizeWindowBrackets.SlopesHypothesisFinitePlaces
-import Formalism.SizeWindowBrackets.Chain2aCoreNoAnalytic
-import Formalism.LocalToGlobal.GlobalTheory.IsResidueClassZero
+module
+
+public import Formalism.LocalToGlobal.Columns.AlgebraMapMemMaximalIdealPowIff
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.ExistsNsmulMem
+public import Formalism.SizeWindowBrackets.SBrDiv
+public import Formalism.LocalRingCardinality.DataDIVDefs
+public import Formalism.LocalRingCardinality.DataForms
+public import Formalism.LocalRingCardinality.SpanPowerMembership.Places
+public import Formalism.HermitianLattices.HermitianLatticesProofs.IndexBasic
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.InvariantKernelTraceVanishes
+public import Formalism.LocalRingCardinality.DataIdx
+public import Formalism.LocalRingCardinality.Lemmas
+public import Mathlib
+public import Formalism.SizeWindowBrackets.SlopesHypothesisFinitePlaces
+public import Formalism.SizeWindowBrackets.Chain2aCoreNoAnalytic
+public import Formalism.LocalToGlobal.GlobalTheory.IsResidueClassZero
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

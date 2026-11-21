@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.BlockKernelPropertiesOfSteps
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ColumnOperationTripleForm
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CharacterOrthogonalityDual
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.KernelQuotientFinite
+module
+
+public import Formalism.HermitianCurvature.BlockKernelPropertiesOfSteps
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ColumnOperationTripleForm
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CharacterOrthogonalityDual
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.KernelQuotientFinite
+
+@[expose] public section
 
 section
 

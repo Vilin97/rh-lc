@@ -1,8 +1,12 @@
-import Formalism.SatakeDualWeyl.KpqSubgroupCompact
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.HeckeActMem
-import Formalism.SharpRestriction.LevelLetterCocycles.LatticeVariant
-import Formalism.LocalToGlobal.BesselHermitianTheta.IsAutFunDef
-import Formalism.LocalToGlobal.IndefiniteReal.SubgroupCharExtensionOneApply
+module
+
+public import Formalism.SatakeDualWeyl.KpqSubgroupCompact
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.HeckeActMem
+public import Formalism.SharpRestriction.LevelLetterCocycles.LatticeVariant
+public import Formalism.LocalToGlobal.BesselHermitianTheta.IsAutFunDef
+public import Formalism.LocalToGlobal.IndefiniteReal.SubgroupCharExtensionOneApply
+
+@[expose] public section
 
 noncomputable section
 

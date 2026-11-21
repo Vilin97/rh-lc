@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.IdemMulCompl
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.LevelGatherings
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.IdemMulCompl
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.LevelGatherings
+
+@[expose] public section
 
 noncomputable section
 

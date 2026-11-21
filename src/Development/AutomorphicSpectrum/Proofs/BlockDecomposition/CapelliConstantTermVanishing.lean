@@ -1,4 +1,8 @@
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CapS
+module
+
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CapS
+
+@[expose] public section
 
 noncomputable section
 

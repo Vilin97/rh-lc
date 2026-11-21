@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.ExistenceTheorem.ExistsIsAbelianGaloisRangeIdeleClassNormEqOfFini
-import GroundTheory.GlobalFields.NormResidueSymbol.RestrictNormalInfiniteLocalSymbol
-import GroundTheory.GlobalFields.NormResidueSymbol.FunctorialLocal
-import GroundTheory.LocalFields.MaximalAbelianExtension
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ExistenceTheorem.ExistsIsAbelianGaloisRangeIdeleClassNormEqOfFini
+public import GroundTheory.GlobalFields.NormResidueSymbol.RestrictNormalInfiniteLocalSymbol
+public import GroundTheory.GlobalFields.NormResidueSymbol.FunctorialLocal
+public import GroundTheory.LocalFields.MaximalAbelianExtension
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

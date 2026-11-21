@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.NormFormOneUnitary.UnitaryP
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.NormFormOneUnitary.UnitaryP
+
+@[expose] public section
 
 open Matrix Finset Formalism.QuantumDeterminants Formalism.FourierDecayAlt.C3
 

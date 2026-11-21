@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.CompactSupportCohomology.ConePairing
-import GroundTheory.ProfiniteCohomology.MackeyFormula.ConeHomotopy
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.CompactSupportCohomology.ConePairing
+public import GroundTheory.ProfiniteCohomology.MackeyFormula.ConeHomotopy
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

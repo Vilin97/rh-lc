@@ -1,5 +1,9 @@
-import Mathlib.RingTheory.PowerSeries.WeierstrassPreparation
-import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.EqZeroOfForallMemCoeffFiltration
+module
+
+public import Mathlib.RingTheory.PowerSeries.WeierstrassPreparation
+public import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.EqZeroOfForallMemCoeffFiltration
+
+@[expose] public section
 
 namespace Formalism.MainNotions.N.FrobeniusPowerSeries.WeierD
 

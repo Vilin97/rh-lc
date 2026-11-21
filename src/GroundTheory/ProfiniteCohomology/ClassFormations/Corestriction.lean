@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.ClassFormations.CorestrictionDefs
-import GroundTheory.ProfiniteCohomology.ClassFormations
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.ClassFormations.CorestrictionDefs
+public import GroundTheory.ProfiniteCohomology.ClassFormations
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

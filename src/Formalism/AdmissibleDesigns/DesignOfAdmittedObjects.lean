@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.RingDataOfIdempotents
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.RingDataOfIdempotents
+
+@[expose] public section
 
 noncomputable section
 

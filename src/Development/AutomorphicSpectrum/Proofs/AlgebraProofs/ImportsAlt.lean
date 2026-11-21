@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTerRest
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ChartBundleBaseExtension
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ChartBundleBaseExtensionUnique
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.DiscreteValuationNumbers.ImportsTerRest
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ChartBundleBaseExtension
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.ChartBundleBaseExtensionUnique
+
+@[expose] public section
 
 namespace GlobalTheory.CompanionTheory.CommAlg.JoinPullbackAlt
 

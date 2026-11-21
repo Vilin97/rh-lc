@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafGlueProperPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafGlueProperPf
+
+@[expose] public section
 
 noncomputable section
 open AlgebraicGeometry.StructureSheaf CategoryTheory Limits AlgebraicGeometry Opposite LateralTheory.E.E4 LateralTheory.E.LeafGlueProperPf

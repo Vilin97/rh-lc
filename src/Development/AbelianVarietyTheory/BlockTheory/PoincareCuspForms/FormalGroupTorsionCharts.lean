@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.HtLinStatement
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.HtLinStatement
+
+@[expose] public section
 
 noncomputable section
 

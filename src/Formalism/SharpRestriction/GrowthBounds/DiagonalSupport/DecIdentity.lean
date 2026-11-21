@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.SumMulSumProd
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.SumMulSumProd
+
+@[expose] public section
 
 noncomputable section
 

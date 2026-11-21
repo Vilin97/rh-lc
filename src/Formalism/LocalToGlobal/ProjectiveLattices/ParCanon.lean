@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.XcLat
-import Formalism.LocalToGlobal.ProjectiveLattices.DatumOfRecordSignature
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.XcLat
+public import Formalism.LocalToGlobal.ProjectiveLattices.DatumOfRecordSignature
+
+@[expose] public section
 
 noncomputable section
 

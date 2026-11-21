@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.BesselHermitianTheta.TiedKfin
-import Formalism.SharpRestriction.Divisibility.KudlaSiegelWeil
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.BesselHermitianTheta.TiedKfin
+public import Formalism.SharpRestriction.Divisibility.KudlaSiegelWeil
+
+@[expose] public section
 
 noncomputable section
 

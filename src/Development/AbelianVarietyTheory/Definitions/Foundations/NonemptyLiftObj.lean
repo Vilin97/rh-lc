@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Foundations.LatticeIntegralCoordinates
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsPeriodPairIdealCurveLattice
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsFixedOfContract
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DatumCurveIntegralUnitDiscModel
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.LatticeIntegralCoordinates
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsPeriodPairIdealCurveLattice
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsFixedOfContract
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DatumCurveIntegralUnitDiscModel
+
+@[expose] public section
 
 noncomputable section
 namespace GlobalTheory.Glob.IntegralWittCoefficients.Model

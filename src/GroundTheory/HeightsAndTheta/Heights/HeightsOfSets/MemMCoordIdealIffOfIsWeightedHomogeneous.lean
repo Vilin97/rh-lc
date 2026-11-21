@@ -1,12 +1,17 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.Statements
-import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.IsSaturatedFirstCoordinateLine
-import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.Comparison
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitCurve
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitDegree
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightRecR
-import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.CurveIsOrbit
-import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.Reading
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.Statements
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.IsSaturatedFirstCoordinateLine
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.Comparison
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitCurve
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitDegree
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightRecR
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.CurveIsOrbit
+public import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.Reading
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

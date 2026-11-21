@@ -1,7 +1,11 @@
-import Mathlib
-import ReciprocityTheory.GroupCohomology.InfRes
-import ReciprocityTheory.GroupCohomology.ComapZeroCoboundariesEqBot
-import ReciprocityTheory.GroupCohomology.PartialProdCoe
+module
+
+public import Mathlib
+public import ReciprocityTheory.GroupCohomology.InfRes
+public import ReciprocityTheory.GroupCohomology.ComapZeroCoboundariesEqBot
+public import ReciprocityTheory.GroupCohomology.PartialProdCoe
+
+@[expose] public section
 
 namespace ReciprocityTheory.DiscreteGroups.LocalClassField.Deg2
 

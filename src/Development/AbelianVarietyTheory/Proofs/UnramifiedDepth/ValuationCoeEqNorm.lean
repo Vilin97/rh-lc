@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.SubMemOfCompat
-import ReciprocityTheory.DualLattices.ExistsPrimitiveRoot
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.SubMemOfCompat
+public import ReciprocityTheory.DualLattices.ExistsPrimitiveRoot
+
+@[expose] public section
 
 open Ideal
 

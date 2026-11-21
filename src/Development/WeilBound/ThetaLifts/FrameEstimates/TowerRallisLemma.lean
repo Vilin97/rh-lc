@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.FrameEstimates.HodgeTateFromSandwich
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.PlaneRemovalConfiguration
+module
+
+public import Development.WeilBound.ThetaLifts.FrameEstimates.HodgeTateFromSandwich
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.PlaneRemovalConfiguration
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.LogarithmicSums.PrimeSums
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.LogarithmicSums.PrimeSums
+
+@[expose] public section
 
 noncomputable section
 

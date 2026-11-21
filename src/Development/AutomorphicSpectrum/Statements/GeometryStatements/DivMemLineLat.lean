@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Statements.GeometryStatements.CompactConjugacyDomainLocal
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Statements.GeometryStatements.CompactConjugacyDomainLocal
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import ReciprocityTheory.L2DbarEstimates.Mollifiers.MollEnormSqLe
+module
+
+public import ReciprocityTheory.L2DbarEstimates.Mollifiers.MollEnormSqLe
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.B
 

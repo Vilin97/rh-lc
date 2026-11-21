@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Statements.GeometryStatements.HodgeTateCokerSharp
-import Development.WeilBound.CoreStatements.HodgeTatePoints.FarsharpA
-import Development.WeilBound.CoreStatements.HodgeTatePoints.FarsharpB
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Statements.GeometryStatements.HodgeTateCokerSharp
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.FarsharpA
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.FarsharpB
+
+@[expose] public section
 
 noncomputable section
 

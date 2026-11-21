@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.AugBijPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.AugBijPf
+
+@[expose] public section
 
 noncomputable section
 open Polynomial IsLocalRing

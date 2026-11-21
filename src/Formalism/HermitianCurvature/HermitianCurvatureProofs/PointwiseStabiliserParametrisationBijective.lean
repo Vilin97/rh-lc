@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.MemParahoricTimesPrincipalCongruenceIff
+module
+
+public import Formalism.HermitianCurvature.MemParahoricTimesPrincipalCongruenceIff
+
+@[expose] public section
 
 set_option linter.unusedSimpArgs false
 set_option linter.unusedVariables false

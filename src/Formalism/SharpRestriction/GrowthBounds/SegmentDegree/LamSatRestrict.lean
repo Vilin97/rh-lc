@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.RestLamOfRests
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.SelIsComplRestrictSupport
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.RestLamOfRests
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.SelIsComplRestrictSupport
+
+@[expose] public section
 
 noncomputable section
 

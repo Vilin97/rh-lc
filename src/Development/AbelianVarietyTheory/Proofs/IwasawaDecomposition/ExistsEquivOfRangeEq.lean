@@ -1,15 +1,19 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.ConcretePkgSpec
-import Formalism.LocalRingCardinality.DataRRMetric
-import Formalism.LocalRingCardinality.Lemmas
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.PlaceCharacterEqReferenceIff
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ClassPresExtMemExtBijIsom
-import Formalism.LocalToGlobal.IndefiniteForms.IndefUse
-import Formalism.LocalToGlobal.IndefiniteForms.IndefExample
-import Formalism.LocalToGlobal.Divisibility.FramesLemmas
-import Formalism.QuotientMetricDivisors.FinalW
-import Formalism.HarderNarasimhan.StatementPl
-import Formalism.HarderNarasimhan.ShiftInvariance
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.ConcretePkgSpec
+public import Formalism.LocalRingCardinality.DataRRMetric
+public import Formalism.LocalRingCardinality.Lemmas
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.PlaceCharacterEqReferenceIff
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ClassPresExtMemExtBijIsom
+public import Formalism.LocalToGlobal.IndefiniteForms.IndefUse
+public import Formalism.LocalToGlobal.IndefiniteForms.IndefExample
+public import Formalism.LocalToGlobal.Divisibility.FramesLemmas
+public import Formalism.QuotientMetricDivisors.FinalW
+public import Formalism.HarderNarasimhan.StatementPl
+public import Formalism.HarderNarasimhan.ShiftInvariance
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.CoefficientsModP.FkMapInitMinor
-import Formalism.LocalToGlobal.Columns.PolyFnLemmas
+module
+
+public import Formalism.LocalToGlobal.Columns.CoefficientsModP.FkMapInitMinor
+public import Formalism.LocalToGlobal.Columns.PolyFnLemmas
+
+@[expose] public section
 
 open MvPolynomial
 open scoped Matrix ComplexOrder

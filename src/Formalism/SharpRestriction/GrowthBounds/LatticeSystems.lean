@@ -1,6 +1,10 @@
-import Formalism.SubspaceCounting.ChoiceOfTopsRefined
-import Formalism.GradedWeylDivisibility.FinalD
-import Formalism.SharpRestriction.GrowthBounds.SelectionLemmas
+module
+
+public import Formalism.SubspaceCounting.ChoiceOfTopsRefined
+public import Formalism.GradedWeylDivisibility.FinalD
+public import Formalism.SharpRestriction.GrowthBounds.SelectionLemmas
+
+@[expose] public section
 
 noncomputable section
 

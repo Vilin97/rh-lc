@@ -1,5 +1,9 @@
-import GroundTheory.GlobalFields.Adele.Compact
-import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.DiagMulVecTmul
+module
+
+public import GroundTheory.GlobalFields.Adele.Compact
+public import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.DiagMulVecTmul
+
+@[expose] public section
 
 noncomputable section
 

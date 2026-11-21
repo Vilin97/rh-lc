@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartMass
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PartsSt
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartMass
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PartsSt
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

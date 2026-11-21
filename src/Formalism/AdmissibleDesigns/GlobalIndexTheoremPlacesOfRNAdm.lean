@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.RingDataOfIdempotents
-import Formalism.AdmissibleDesigns.InvariantsEqBotIff
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.RingDataOfIdempotents
+public import Formalism.AdmissibleDesigns.InvariantsEqBotIff
+
+@[expose] public section
 
 noncomputable section
 

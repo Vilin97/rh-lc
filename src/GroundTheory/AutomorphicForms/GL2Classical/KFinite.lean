@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2Classical.ConstantTerm
-import GroundTheory.AutomorphicForms.GL2Classical.Growth
-import GroundTheory.GlobalFields.TateThesis.AdelePoissonUniform
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.HasModerateGrowthZero
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2Classical.ConstantTerm
+public import GroundTheory.AutomorphicForms.GL2Classical.Growth
+public import GroundTheory.GlobalFields.TateThesis.AdelePoissonUniform
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.HasModerateGrowthZero
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix Set Filter Topology
 open UpperHalfPlane hiding I I_re I_im

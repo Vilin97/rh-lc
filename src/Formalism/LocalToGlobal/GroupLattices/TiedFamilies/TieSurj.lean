@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieDim
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieWeak
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieDim
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieWeak
+
+@[expose] public section
 
 noncomputable section
 

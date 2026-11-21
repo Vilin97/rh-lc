@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.KernelsMatrix
-import GroundTheory.GlobalFields.TateThesis.LatticePoissonBasic
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.KernelsMatrix
+public import GroundTheory.GlobalFields.TateThesis.LatticePoissonBasic
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

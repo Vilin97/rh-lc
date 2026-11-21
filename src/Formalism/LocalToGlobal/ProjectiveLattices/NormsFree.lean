@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.CuspFree
-import Formalism.LocalToGlobal.ProjectiveLattices.RulInst
-import Formalism.LocalToGlobal.ProjectiveLattices.PtFree
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.CuspFree
+public import Formalism.LocalToGlobal.ProjectiveLattices.RulInst
+public import Formalism.LocalToGlobal.ProjectiveLattices.PtFree
+
+@[expose] public section
 
 noncomputable section
 

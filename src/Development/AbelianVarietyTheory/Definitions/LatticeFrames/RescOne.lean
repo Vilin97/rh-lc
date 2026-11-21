@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.XiEqXiOffMul
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.XiEqXiOffMul
+
+@[expose] public section
 
 noncomputable section
 open Formalism.BasicNotions GlobalTheory.SeeSaw GlobalTheory.QPl

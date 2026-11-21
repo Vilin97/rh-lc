@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.HermitianCurvature.StatementSz
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.StatementSz
+
+@[expose] public section
 
 noncomputable section
 

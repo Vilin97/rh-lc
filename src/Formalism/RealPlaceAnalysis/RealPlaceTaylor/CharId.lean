@@ -1,5 +1,9 @@
-import Formalism.RealPlaceAnalysis.StatementC
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.GeneratorPowUpperVanishHolds
+module
+
+public import Formalism.RealPlaceAnalysis.StatementC
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.GeneratorPowUpperVanishHolds
+
+@[expose] public section
 
 open Finset Polynomial
 

@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.QxChain
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJDHatJDRStepABorder
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.QxChain
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJDHatJDRStepABorder
+
+@[expose] public section
 
 open Matrix Finset Filter Topology
 

@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.PAdicHodge.TiltField
-import GroundTheory.PAdicHodge.ExtRobbaBounded
-import GroundTheory.PAdicHodge.KerFontaineThetaCompFrobeniusEquivSymmPow
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.TiltField
+public import GroundTheory.PAdicHodge.ExtRobbaBounded
+public import GroundTheory.PAdicHodge.KerFontaineThetaCompFrobeniusEquivSymmPow
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

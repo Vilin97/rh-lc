@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.LatticeHerglotzBound
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MajorantIntegrals
+module
+
+public import Formalism.HermitianCurvature.LatticeHerglotzBound
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MajorantIntegrals
+
+@[expose] public section
 
 open MeasureTheory Set Finset Function
 

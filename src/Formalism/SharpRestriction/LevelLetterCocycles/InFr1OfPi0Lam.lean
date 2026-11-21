@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.LatticeMembershipAevalUniformizer
-import Formalism.SharpRestriction.LevelLetterCocycles.FinLev
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.LatticeMembershipAevalUniformizer
+public import Formalism.SharpRestriction.LevelLetterCocycles.FinLev
+
+@[expose] public section
 
 noncomputable section
 

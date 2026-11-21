@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.SplittingFromInequality.Decomposition
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SplittingFromInequality.Decomposition
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

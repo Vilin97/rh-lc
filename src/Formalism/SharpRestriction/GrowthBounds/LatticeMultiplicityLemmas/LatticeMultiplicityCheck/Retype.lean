@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.SmoothDesignExistence.SumOverPrimesHypotheses
+module
+
+public import Formalism.SharpRestriction.SmoothDesignExistence.SumOverPrimesHypotheses
+
+@[expose] public section
 
 noncomputable section
 

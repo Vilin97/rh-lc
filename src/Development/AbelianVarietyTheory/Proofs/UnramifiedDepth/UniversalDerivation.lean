@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.FstHomCompSqzOfLeibniz
-import ReciprocityTheory.DualLattices.EvCotStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.FstHomCompSqzOfLeibniz
+public import ReciprocityTheory.DualLattices.EvCotStatement
+
+@[expose] public section
 
 noncomputable section
 

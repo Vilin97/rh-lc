@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.NatCastMulTmul
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.NatCastMulTmul
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.EulerFactorsArch
-import GroundTheory.GlobalFields.TateThesis.EulerFactorsFinite
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.EulerFactorsArch
+public import GroundTheory.GlobalFields.TateThesis.EulerFactorsFinite
+
+@[expose] public section
 
 open NumberField InfinitePlace InfinitePlace.Completion Complex
 open scoped Real

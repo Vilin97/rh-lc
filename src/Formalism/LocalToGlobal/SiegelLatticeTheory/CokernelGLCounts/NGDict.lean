@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.CuspSpanNormBounds.KappaEndpoints
-import Formalism.FlagUnipotentLattices.PairingOrthogonalComplement
-import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.SuperdiagonalAdditionInvariance
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.CuspSpanNormBounds.KappaEndpoints
+public import Formalism.FlagUnipotentLattices.PairingOrthogonalComplement
+public import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.SuperdiagonalAdditionInvariance
+
+@[expose] public section
 
 noncomputable section
 

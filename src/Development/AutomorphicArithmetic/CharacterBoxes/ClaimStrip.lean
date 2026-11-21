@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.CharacterBoxes.HalfPlane
+module
+
+public import Development.AutomorphicArithmetic.CharacterBoxes.HalfPlane
+
+@[expose] public section
 
 open Complex
 

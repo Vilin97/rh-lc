@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.InductionParabolic
-import GroundTheory.AutomorphicForms.AffineBruhat
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.InductionParabolic
+public import GroundTheory.AutomorphicForms.AffineBruhat
+
+@[expose] public section
 
 noncomputable section
 

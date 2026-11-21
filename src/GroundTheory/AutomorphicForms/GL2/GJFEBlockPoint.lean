@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJFEHeightsilinear
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJFEHeightsilinear
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.StatementSz
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MassRatioFormula
+module
+
+public import Formalism.HermitianCurvature.StatementSz
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MassRatioFormula
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.Sz2
 

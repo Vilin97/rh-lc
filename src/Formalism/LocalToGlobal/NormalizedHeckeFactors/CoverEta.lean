@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverThm
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverLen
+module
+
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverThm
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverLen
+
+@[expose] public section
 
 noncomputable section
 

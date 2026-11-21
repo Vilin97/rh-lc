@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.IdeleGroups.LocalNormGroups
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.IdeleGroups.LocalNormGroups
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

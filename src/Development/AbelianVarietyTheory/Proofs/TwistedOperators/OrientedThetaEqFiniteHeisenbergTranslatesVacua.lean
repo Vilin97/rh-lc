@@ -1,12 +1,17 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.JointSmooth
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.SubMemOfMkEq
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.HeisAvgInvariant
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.SymplOInvSmulNsmul
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.SymplOSmulAddSmulAdd
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.PlaceIdemEqSingle
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.LatLevel
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.LatSelf
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.JointSmooth
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.SubMemOfMkEq
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.HeisAvgInvariant
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.SymplOInvSmulNsmul
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.SymplOSmulAddSmulAdd
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.PlaceIdemEqSingle
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.LatLevel
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.LatSelf
+
+@[expose] public section
+
 open Formalism.BasicNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.L2.Theta Formalism.IndefR Formalism.IndefR.Datum NumberField
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 

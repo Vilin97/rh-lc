@@ -1,8 +1,12 @@
-import Formalism.GradedWeylDivisibility.StatementA
-import Formalism.RankGapBounds.CloudMinFalse
-import Formalism.RankGapBounds.TheoremALocOfLemmaA
-import Formalism.PieriBlockIdeals.Statement
-import Formalism.RankGapBounds.LargePrimeFactor
+module
+
+public import Formalism.GradedWeylDivisibility.StatementA
+public import Formalism.RankGapBounds.CloudMinFalse
+public import Formalism.RankGapBounds.TheoremALocOfLemmaA
+public import Formalism.PieriBlockIdeals.Statement
+public import Formalism.RankGapBounds.LargePrimeFactor
+
+@[expose] public section
 
 open MvPolynomial
 

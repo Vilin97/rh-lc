@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.JfExhaustOfAvgCutoff
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.JfExhaustOfAvgCutoff
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 open scoped ContDiff

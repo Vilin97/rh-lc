@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.FischerSmulRight
+module
+
+public import ReciprocityTheory.DualLattices.FischerSmulRight
+
+@[expose] public section
 
 noncomputable section
 

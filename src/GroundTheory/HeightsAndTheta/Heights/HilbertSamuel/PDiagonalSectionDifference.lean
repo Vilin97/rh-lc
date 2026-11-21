@@ -1,12 +1,17 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsDiagonalSectionDifference
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSectionsDimZero
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSerreGraded
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PMultigradedHilbertPolynomial
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PEventualPolynomial
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PShiftDegreePolynomial
-import GroundTheory.HeightsAndTheta.Heights.Intersections.AvoidRing
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.GradedSpanProducts
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsDiagonalSectionDifference
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSectionsDimZero
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSerreGraded
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PMultigradedHilbertPolynomial
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PEventualPolynomial
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PShiftDegreePolynomial
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.AvoidRing
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.GradedSpanProducts
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

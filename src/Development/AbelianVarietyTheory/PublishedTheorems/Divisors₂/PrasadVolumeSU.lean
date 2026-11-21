@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.DefiniteBound
-import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsCompactDualHaar
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.DefiniteBound
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.IsCompactDualHaar
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,14 +1,18 @@
-import Mathlib
-import Formalism.MeanHeightDescent.MuMaxMinkowski
-import Formalism.MeanHeightDescent.BadRowsNumeric
-import Formalism.MeanHeightDescent.CombinedAverageDegreeBound
-import Formalism.QuotientMetricDivisors.StatementK
-import Formalism.MeanHeightDescent.AverageDegreeBounds.CovolumeAssemblyHolds
-import Formalism.MeanHeightDescent.AverageDegreeBounds.CovolumeFullAssemblyHolds
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.TheoremDivIneq
-import Formalism.MeanHeightDescent.AverageDegreeBounds.SpanMuMin
-import Formalism.MeanHeightDescent.AverageDegreeBounds.TwistLower
-import Formalism.MeanHeightDescent.AverageDegreeBounds.MuMaxMinkowski
+module
+
+public import Mathlib
+public import Formalism.MeanHeightDescent.MuMaxMinkowski
+public import Formalism.MeanHeightDescent.BadRowsNumeric
+public import Formalism.MeanHeightDescent.CombinedAverageDegreeBound
+public import Formalism.QuotientMetricDivisors.StatementK
+public import Formalism.MeanHeightDescent.AverageDegreeBounds.CovolumeAssemblyHolds
+public import Formalism.MeanHeightDescent.AverageDegreeBounds.CovolumeFullAssemblyHolds
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.TheoremDivIneq
+public import Formalism.MeanHeightDescent.AverageDegreeBounds.SpanMuMin
+public import Formalism.MeanHeightDescent.AverageDegreeBounds.TwistLower
+public import Formalism.MeanHeightDescent.AverageDegreeBounds.MuMaxMinkowski
+
+@[expose] public section
 
 namespace Formalism.ExtensionFiltration
 

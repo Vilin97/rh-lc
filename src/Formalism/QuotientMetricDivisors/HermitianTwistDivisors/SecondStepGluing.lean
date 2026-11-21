@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.LatticeGlueUnique
-import Formalism.HermitianLattices.HermitianLatticesProofs.LocBasic
-import Formalism.HermitianLattices.HermitianLatticesProofs.IndexBasic
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ReductionSecondStep
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.LatticeGlueUnique
+public import Formalism.HermitianLattices.HermitianLatticesProofs.LocBasic
+public import Formalism.HermitianLattices.HermitianLatticesProofs.IndexBasic
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ReductionSecondStep
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix

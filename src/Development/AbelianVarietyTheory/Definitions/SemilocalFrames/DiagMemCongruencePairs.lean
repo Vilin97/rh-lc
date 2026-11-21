@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.FrameLats
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsDifferentPair
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.FrameLats
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsDifferentPair
+
+@[expose] public section
 
 noncomputable section
 

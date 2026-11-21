@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJMatrixFinite
-import GroundTheory.AutomorphicForms.GL2.GJMatrixCoord
-import GroundTheory.LocalFields.LocalFourier
-import GroundTheory.AutomorphicForms.GL2.GJZetaDefs
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJMatrixFinite
+public import GroundTheory.AutomorphicForms.GL2.GJMatrixCoord
+public import GroundTheory.LocalFields.LocalFourier
+public import GroundTheory.AutomorphicForms.GL2.GJZetaDefs
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.GJMatrix
 

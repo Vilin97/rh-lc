@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.FrobeniusOrbits.RealSubfieldLeCompositum
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ValuationLocalVolumes.VolUTyp
+module
+
+public import Mathlib
+public import Formalism.FrobeniusOrbits.RealSubfieldLeCompositum
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.ValuationLocalVolumes.VolUTyp
+
+@[expose] public section
 
 noncomputable section
 

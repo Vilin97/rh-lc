@@ -1,7 +1,11 @@
-import Formalism.PeriodIntegrals.HookBound
-import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
-import Formalism.GradedWeylDivisibility.FinalB
-import Formalism.PieriBlockIdeals.PieriColumnMinors.HeightDescentMinors
+module
+
+public import Formalism.PeriodIntegrals.HookBound
+public import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
+public import Formalism.GradedWeylDivisibility.FinalB
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.HeightDescentMinors
+
+@[expose] public section
 
 noncomputable section
 

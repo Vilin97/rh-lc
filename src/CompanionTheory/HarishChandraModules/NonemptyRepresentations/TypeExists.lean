@@ -1,6 +1,10 @@
-import CompanionTheory.HarishChandraModules.NonemptyRepresentations.HWRepD
-import CompanionTheory.HarishChandraModules.NonemptyRepresentations.TypeHW
-import CompanionTheory.HarishChandraModules.NonemptyRepresentations.ExpEntry
+module
+
+public import CompanionTheory.HarishChandraModules.NonemptyRepresentations.HWRepD
+public import CompanionTheory.HarishChandraModules.NonemptyRepresentations.TypeHW
+public import CompanionTheory.HarishChandraModules.NonemptyRepresentations.ExpEntry
+
+@[expose] public section
 
 open Matrix
 

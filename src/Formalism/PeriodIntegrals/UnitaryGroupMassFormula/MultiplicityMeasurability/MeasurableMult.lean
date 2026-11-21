@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.FoldMult
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.FoldMult
+
+@[expose] public section
 
 open MeasureTheory
 open scoped ENNReal NNReal

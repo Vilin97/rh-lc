@@ -1,6 +1,10 @@
-import Formalism.MahlerMeasure.StatementTM
-import Formalism.MahlerMeasure.HasOrder
-import Formalism.MahlerMeasure.LegendreDigits
+module
+
+public import Formalism.MahlerMeasure.StatementTM
+public import Formalism.MahlerMeasure.HasOrder
+public import Formalism.MahlerMeasure.LegendreDigits
+
+@[expose] public section
 
 namespace Formalism.GM.MeanGammaLemmas
 open Polynomial Finset

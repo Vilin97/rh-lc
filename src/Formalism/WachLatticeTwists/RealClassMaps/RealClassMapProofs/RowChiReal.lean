@@ -1,6 +1,10 @@
-import Formalism.WachLatticeTwists.RealClassMaps.Statement
-import Formalism.WachLatticeTwists.ShapeRowIsomorphisms.Imports
-import Formalism.WachLatticeTwists.CupProductVanishing.Imports
+module
+
+public import Formalism.WachLatticeTwists.RealClassMaps.Statement
+public import Formalism.WachLatticeTwists.ShapeRowIsomorphisms.Imports
+public import Formalism.WachLatticeTwists.CupProductVanishing.Imports
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

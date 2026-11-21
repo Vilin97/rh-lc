@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.PairValDefs
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.PairValDefs
+
+@[expose] public section
 
 noncomputable section
 

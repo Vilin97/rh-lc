@@ -1,10 +1,14 @@
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieAll
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.GTiedFOfIsRecCEv
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.CompanionOfBaseTied
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieTrF
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.FullTiedCBase
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.SelfDualAtColLevel
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePsiC
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieAll
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.GTiedFOfIsRecCEv
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.CompanionOfBaseTied
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieTrF
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.FullTiedCBase
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.SelfDualAtColLevel
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePsiC
+
+@[expose] public section
 
 noncomputable section
 

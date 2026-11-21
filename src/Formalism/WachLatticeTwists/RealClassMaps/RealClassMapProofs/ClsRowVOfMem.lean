@@ -1,4 +1,8 @@
-import Formalism.WachLatticeTwists.RealClassMaps.StatClassMapReal
+module
+
+public import Formalism.WachLatticeTwists.RealClassMaps.StatClassMapReal
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

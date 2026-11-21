@@ -1,9 +1,13 @@
-import Formalism.GaussJetBounds.StatementN
-import Formalism.GaussJetBounds.GaussJetProofs.ConstantCoeffAevalLinP
-import Formalism.GaussJetBounds.GaussJetProofs.ThmAOp
-import Formalism.GaussJetBounds.MonoShapeTop
-import Formalism.GaussJetBounds.GaussJetProofs.NormDetLeOneOfEntries
-import Formalism.GaussJetBounds.GaussJetProofs.SubstitutionWeightBound
+module
+
+public import Formalism.GaussJetBounds.StatementN
+public import Formalism.GaussJetBounds.GaussJetProofs.ConstantCoeffAevalLinP
+public import Formalism.GaussJetBounds.GaussJetProofs.ThmAOp
+public import Formalism.GaussJetBounds.MonoShapeTop
+public import Formalism.GaussJetBounds.GaussJetProofs.NormDetLeOneOfEntries
+public import Formalism.GaussJetBounds.GaussJetProofs.SubstitutionWeightBound
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

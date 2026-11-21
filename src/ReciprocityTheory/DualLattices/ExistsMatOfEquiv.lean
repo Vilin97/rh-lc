@@ -1,5 +1,9 @@
-import ReciprocityTheory.DualLattices.MemDualLat
-import ReciprocityTheory.DualLattices.MapTensorSpan
+module
+
+public import ReciprocityTheory.DualLattices.MemDualLat
+public import ReciprocityTheory.DualLattices.MapTensorSpan
+
+@[expose] public section
 
 noncomputable section
 

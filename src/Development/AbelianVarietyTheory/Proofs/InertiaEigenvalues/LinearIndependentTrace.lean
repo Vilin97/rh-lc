@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.EndoApplyEq
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.EndoApplyEq
+
+@[expose] public section
+
 open Polynomial
 
 namespace GlobalTheory.SimpleCharIndep

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.SubstitutionOfVariables
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.SubstitutionOfVariables
+
+@[expose] public section
 
 noncomputable section
 

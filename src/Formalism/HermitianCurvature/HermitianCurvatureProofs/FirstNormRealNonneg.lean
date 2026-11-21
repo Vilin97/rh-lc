@@ -1,8 +1,12 @@
-import Formalism.HermitianCurvature.StatementC
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelZeroEstimateProduct
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PeriodLatticeFactsSplitOfGeneral
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LocalisationScaledIdealMemIff
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TwistedIsRealOrderLattice
+module
+
+public import Formalism.HermitianCurvature.StatementC
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LevelZeroEstimateProduct
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PeriodLatticeFactsSplitOfGeneral
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LocalisationScaledIdealMemIff
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TwistedIsRealOrderLattice
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P
 

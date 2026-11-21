@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.ReductionPoints
-import GroundTheory.GlobalFields.ComplexMultiplication.ReductionGauss
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.ReductionTorsion
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.ReductionPoints
+public import GroundTheory.GlobalFields.ComplexMultiplication.ReductionGauss
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.ReductionTorsion
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

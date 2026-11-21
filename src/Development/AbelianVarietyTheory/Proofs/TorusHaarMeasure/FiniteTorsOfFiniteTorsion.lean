@@ -1,7 +1,11 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.FormalChartAtZero
-import Development.AbelianVarietyTheory.BlockTheory.PoincareCuspForms.FormalGroupTorsionCharts
-import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.EvBasicNEvalSubCoeffMem
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.FormalChartAtZero
+public import Development.AbelianVarietyTheory.BlockTheory.PoincareCuspForms.FormalGroupTorsionCharts
+public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.EvBasicNEvalSubCoeffMem
+
+@[expose] public section
 
 noncomputable section
 

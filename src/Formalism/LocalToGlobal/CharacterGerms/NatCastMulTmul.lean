@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.CompleteOfBasis
-import Formalism.LocalToGlobal.CharacterGerms.DetNeZeroOfChars
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.CompleteOfBasis
+public import Formalism.LocalToGlobal.CharacterGerms.DetNeZeroOfChars
+
+@[expose] public section
 
 set_option autoImplicit false
 

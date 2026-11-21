@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CapRWordsOfParts
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CapRWordsOfParts
+
+@[expose] public section
 
 open MvPolynomial Finset
 

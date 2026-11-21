@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsLocRingIntClosure
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StLocRingChartLoc
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StIntClosureLocFinite
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsLocRingIntClosure
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StLocRingChartLoc
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StIntClosureLocFinite
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

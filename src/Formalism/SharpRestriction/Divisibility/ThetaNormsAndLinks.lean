@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.LiftErrorLocal
-import Formalism.SharpRestriction.Divisibility.FamilyThetaDenominatorValues
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.LiftErrorLocal
+public import Formalism.SharpRestriction.Divisibility.FamilyThetaDenominatorValues
+
+@[expose] public section
 
 noncomputable section
 

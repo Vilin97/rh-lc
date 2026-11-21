@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.BesselHermitianTheta.AllTied
-import Formalism.LocalToGlobal.HeckeThetaElements.IsHeckeElt
-import Formalism.LocalToGlobal.HeckeThetaElements.DefsWt
+module
+
+public import Formalism.LocalToGlobal.BesselHermitianTheta.AllTied
+public import Formalism.LocalToGlobal.HeckeThetaElements.IsHeckeElt
+public import Formalism.LocalToGlobal.HeckeThetaElements.DefsWt
+
+@[expose] public section
 
 noncomputable section
 

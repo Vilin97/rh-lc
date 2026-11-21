@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.RankGapBounds.CloudMinFalse
+module
+
+public import Mathlib
+public import Formalism.RankGapBounds.CloudMinFalse
+
+@[expose] public section
 
 noncomputable section
 

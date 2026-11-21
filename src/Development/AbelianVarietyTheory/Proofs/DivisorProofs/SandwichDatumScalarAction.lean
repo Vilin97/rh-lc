@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.IotaScalarOne
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FontaineAinfLocalDomainXiAdicOrderStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MuCoeffZeroNeZero
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobeniusOfPadic
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IotaScalarOne
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FontaineAinfLocalDomainXiAdicOrderStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MuCoeffZeroNeZero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrobeniusOfPadic
+
+@[expose] public section
 
 noncomputable section
 

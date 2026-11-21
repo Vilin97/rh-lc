@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.AevalValuation.RestSpec
-import Formalism.SharpRestriction.GrowthBounds.PolynomialLevels.LowestWeightNonposOffSet
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.AevalValuation.RestSpec
+public import Formalism.SharpRestriction.GrowthBounds.PolynomialLevels.LowestWeightNonposOffSet
+
+@[expose] public section
 
 noncomputable section
 

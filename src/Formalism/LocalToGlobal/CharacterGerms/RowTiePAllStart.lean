@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePAllSet
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePOActLog
-import Formalism.LocalToGlobal.CharacterGerms.RowTieFB
-import Formalism.LocalToGlobal.CharacterGerms.CoeffSubstEqSum
-import Formalism.LocalToGlobal.CharacterGerms.RowTieCartFB
-import Formalism.LocalToGlobal.CharacterGerms.RowTieCartAdd
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePAllSet
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePOActLog
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieFB
+public import Formalism.LocalToGlobal.CharacterGerms.CoeffSubstEqSum
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieCartFB
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieCartAdd
+
+@[expose] public section
 
 noncomputable section
 

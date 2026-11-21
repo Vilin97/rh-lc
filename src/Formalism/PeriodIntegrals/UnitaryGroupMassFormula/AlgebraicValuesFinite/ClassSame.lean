@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.AlgValsFin
+module
+
+public import Formalism.PeriodIntegrals.AlgValsFin
+
+@[expose] public section
 
 noncomputable section
 

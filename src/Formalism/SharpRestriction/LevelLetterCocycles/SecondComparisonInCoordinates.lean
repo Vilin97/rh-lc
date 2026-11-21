@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.CoordHomMapTrace
-import Formalism.SharpRestriction.LevelLetterCocycles.ExponentWindowSubsetShort
-import Formalism.SharpRestriction.LevelLetterCocycles.DeltaInvariantLattices
-import Lemmata.FirstBlockLemmaI.Imports
-import Lemmata.GeneralBFactRightForm.Imports
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.CoordHomMapTrace
+public import Formalism.SharpRestriction.LevelLetterCocycles.ExponentWindowSubsetShort
+public import Formalism.SharpRestriction.LevelLetterCocycles.DeltaInvariantLattices
+public import Lemmata.FirstBlockLemmaI.Imports
+public import Lemmata.GeneralBFactRightForm.Imports
+
+@[expose] public section
 
 noncomputable section
 

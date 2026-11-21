@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.RootMeasBig
-import Formalism.SharpRestriction.CuspSpanNormBounds.WeightedMirrorLevelOperator
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RootMeasBig
+public import Formalism.SharpRestriction.CuspSpanNormBounds.WeightedMirrorLevelOperator
+
+@[expose] public section
 
 open MeasureTheory Matrix
 

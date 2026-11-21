@@ -1,17 +1,21 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.CompHt
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HtMain
-import Formalism.LocalToGlobal.ProjectiveLattices.RegularityR1ValuedPoints
-import Formalism.LocalToGlobal.ProjectiveLattices.HeightF1OfData
-import Formalism.LocalToGlobal.ProjectiveLattices.AxHLAM
-import Formalism.LocalToGlobal.ProjectiveLattices.AxHSup
-import Formalism.LocalToGlobal.ProjectiveLattices.FnTrdegOf
-import Formalism.LocalToGlobal.ProjectiveLattices.DivFinOfLawA3
-import Formalism.LocalToGlobal.ProjectiveLattices.LawA13OfContinuous
-import Formalism.LocalToGlobal.ProjectiveLattices.NrmContPf
-import Formalism.LocalToGlobal.ProjectiveLattices.KapTrdegPf
-import Formalism.LocalToGlobal.ProjectiveLattices.RosatiLatticeNorms.CmFrameOfEq
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.SiegelSpaceAlgebraHolds
-import ReciprocityTheory.SemistableReduction.LatAll
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.CompHt
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HtMain
+public import Formalism.LocalToGlobal.ProjectiveLattices.RegularityR1ValuedPoints
+public import Formalism.LocalToGlobal.ProjectiveLattices.HeightF1OfData
+public import Formalism.LocalToGlobal.ProjectiveLattices.AxHLAM
+public import Formalism.LocalToGlobal.ProjectiveLattices.AxHSup
+public import Formalism.LocalToGlobal.ProjectiveLattices.FnTrdegOf
+public import Formalism.LocalToGlobal.ProjectiveLattices.DivFinOfLawA3
+public import Formalism.LocalToGlobal.ProjectiveLattices.LawA13OfContinuous
+public import Formalism.LocalToGlobal.ProjectiveLattices.NrmContPf
+public import Formalism.LocalToGlobal.ProjectiveLattices.KapTrdegPf
+public import Formalism.LocalToGlobal.ProjectiveLattices.RosatiLatticeNorms.CmFrameOfEq
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.SiegelSpaceAlgebraHolds
+public import ReciprocityTheory.SemistableReduction.LatAll
+
+@[expose] public section
 
 noncomputable section
 

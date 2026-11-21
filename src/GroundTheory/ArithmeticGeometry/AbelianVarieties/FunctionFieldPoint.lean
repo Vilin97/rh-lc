@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.KernelCard
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.KernelCard
+
+@[expose] public section
 
 namespace GroundTheory.Arith.Abelian
 

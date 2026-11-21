@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoDefs
-import Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoHostA
-import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.IsCoprimeTwoSubRtTwoAddRt
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoDefs
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.KftwoHostA
+public import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.IsCoprimeTwoSubRtTwoAddRt
+
+@[expose] public section
 
 noncomputable section
 

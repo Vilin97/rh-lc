@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.PerfectoidPullbacks.LocalSystemQuotients.FlatL
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MapHCompEqSmul
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MkOfMemB
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.PerfectoidPullbacks.LocalSystemQuotients.FlatL
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MapHCompEqSmul
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MkOfMemB
+
+@[expose] public section
 
 set_option autoImplicit false
 set_option backward.isDefEq.respectTransparency false

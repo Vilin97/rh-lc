@@ -1,4 +1,8 @@
-import Formalism.DegreeFormula.FlagDegFormula
+module
+
+public import Formalism.DegreeFormula.FlagDegFormula
+
+@[expose] public section
 
 open MvPolynomial
 

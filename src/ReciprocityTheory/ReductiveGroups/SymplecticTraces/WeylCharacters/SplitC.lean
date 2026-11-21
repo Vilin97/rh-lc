@@ -1,6 +1,10 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.Weight
-import Mathlib.Analysis.InnerProductSpace.TensorProduct
-import Mathlib.LinearAlgebra.TensorProduct.Basis
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.Weight
+public import Mathlib.Analysis.InnerProductSpace.TensorProduct
+public import Mathlib.LinearAlgebra.TensorProduct.Basis
+
+@[expose] public section
 
 noncomputable section
 

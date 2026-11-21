@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.HermitianCurvature.BesselNonvanishingReduction
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.BesselNonvanishingReduction
+
+@[expose] public section
 
 open Formalism.FourierDecayAlt.ThreeDimData
 

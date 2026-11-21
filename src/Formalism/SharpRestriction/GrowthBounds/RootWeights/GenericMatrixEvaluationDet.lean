@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.EBeta
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.ValuationBoundDetPowerFactor
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.EBeta
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.ValuationBoundDetPowerFactor
+
+@[expose] public section
 
 noncomputable section
 

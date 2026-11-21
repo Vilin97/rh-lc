@@ -1,12 +1,17 @@
-import Mathlib
-import GroundTheory.PAdicHodge.WAKummerEps
-import GroundTheory.PAdicHodge.FundamentalSeqLog
-import GroundTheory.PAdicHodge.FundamentalSeqBCris
-import GroundTheory.PAdicHodge.ACrisFrobFixed
-import GroundTheory.PAdicHodge.BCrisRegularFinal
-import GroundTheory.PAdicHodge.BdRInvariants
-import GroundTheory.PAdicHodge.AxLemma
-import GroundTheory.PAdicHodge.FundamentalSeqSurj
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.WAKummerEps
+public import GroundTheory.PAdicHodge.FundamentalSeqLog
+public import GroundTheory.PAdicHodge.FundamentalSeqBCris
+public import GroundTheory.PAdicHodge.ACrisFrobFixed
+public import GroundTheory.PAdicHodge.BCrisRegularFinal
+public import GroundTheory.PAdicHodge.BdRInvariants
+public import GroundTheory.PAdicHodge.AxLemma
+public import GroundTheory.PAdicHodge.FundamentalSeqSurj
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

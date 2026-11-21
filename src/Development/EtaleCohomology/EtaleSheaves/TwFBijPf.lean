@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.SHEqvPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.SHEqvPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC Polynomial IsLocalRing

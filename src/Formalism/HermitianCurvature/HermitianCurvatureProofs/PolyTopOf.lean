@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SmoothOnHOfLoc
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SmoothOnHOfLoc
+
+@[expose] public section
 
 open Matrix MeasureTheory
 

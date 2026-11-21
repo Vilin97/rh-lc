@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.CuspidalSplittingSums
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.CuspidalSplittingSums
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

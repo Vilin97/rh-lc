@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.FormalGroups.Basics
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.FormalGroups.Basics
+
+@[expose] public section
 
 namespace GroundTheory.Arith.Abelian
 

@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.CohomologicalPurity.LeafHensCut
+module
+
+public import Development.EtaleCohomology.CohomologicalPurity.LeafHensCut
+
+@[expose] public section
 
 noncomputable section
 

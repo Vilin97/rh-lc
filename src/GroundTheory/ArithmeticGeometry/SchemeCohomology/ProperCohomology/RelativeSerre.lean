@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.RelSerreSections
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.AcyclicLeray
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.QcqsPushforward
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.ChowProduct
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.RelSerreSections
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.AcyclicLeray
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.QcqsPushforward
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.ChowProduct
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh

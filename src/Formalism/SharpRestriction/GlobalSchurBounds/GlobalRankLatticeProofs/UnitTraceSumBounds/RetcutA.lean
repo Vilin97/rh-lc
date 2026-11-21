@@ -1,10 +1,14 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.PhNormOfUnits
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.CubeOfTwoIdentities
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CubeFormalIdentities.CoeffPowMulPowEqZero
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.PhNormUnits
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.PhNormLimit
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.PhNormOfUnits
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.CubeOfTwoIdentities
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CubeFormalIdentities.CoeffPowMulPowEqZero
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.PhNormUnits
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.PhNormLimit
+
+@[expose] public section
 
 namespace Formalism.MainNotions.Ext.CutA
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceDualBSt
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsFurtherLast
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceDualBSt
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsFurtherLast
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.CloudDefs
-import Formalism.GradedWeylDivisibility.FinalD
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.CloudDefs
+public import Formalism.GradedWeylDivisibility.FinalD
+
+@[expose] public section
 
 noncomputable section
 

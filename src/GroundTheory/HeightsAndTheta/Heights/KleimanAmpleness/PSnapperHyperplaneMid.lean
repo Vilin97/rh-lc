@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSnapperHyperplane
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSnapperDevissage
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSnapperHyperplane
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSnapperDevissage
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman

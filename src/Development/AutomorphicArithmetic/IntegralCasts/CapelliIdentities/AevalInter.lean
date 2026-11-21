@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qe22.aeval_inter :
     ∀ {M N : Type} [inst : AddCommGroup M] [inst_1 : _root_.Module ℂ M]

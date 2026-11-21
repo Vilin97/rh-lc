@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qe16.ext_integral :
     ∀ {B S K : Type} [inst : CommRing B] [inst_1 : CommRing S]

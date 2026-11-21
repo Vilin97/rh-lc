@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.RealisedOfCoordArc
-import Formalism.SharpRestriction.LevelLetterCocycles.CrystallineMapLemmas
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.RealisedOfCoordArc
+public import Formalism.SharpRestriction.LevelLetterCocycles.CrystallineMapLemmas
+
+@[expose] public section
 
 noncomputable section
 

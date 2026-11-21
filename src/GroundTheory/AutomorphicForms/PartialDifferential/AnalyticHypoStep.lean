@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.PartialDifferential.SqrtSumPdTMulSubLe
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.PartialDifferential.SqrtSumPdTMulSubLe
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.Sobolev
 

@@ -1,8 +1,12 @@
-import Formalism.AdmissibleDesigns.TheoremFromNormalizedOpenThree
-import Formalism.AdmissibleDesigns.MemImageOfTensorSum
-import Formalism.AdmissibleDesigns.EKSymmCont
-import Formalism.AdmissibleDesigns.CharacterTrivialWhereLattice
-import Formalism.AdmissibleDesigns.HigherColumnInvariantsBound
+module
+
+public import Formalism.AdmissibleDesigns.TheoremFromNormalizedOpenThree
+public import Formalism.AdmissibleDesigns.MemImageOfTensorSum
+public import Formalism.AdmissibleDesigns.EKSymmCont
+public import Formalism.AdmissibleDesigns.CharacterTrivialWhereLattice
+public import Formalism.AdmissibleDesigns.HigherColumnInvariantsBound
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core] [hH0Fin : Fact Formalism.MainNotions.N.K.H0.FinCore]
 

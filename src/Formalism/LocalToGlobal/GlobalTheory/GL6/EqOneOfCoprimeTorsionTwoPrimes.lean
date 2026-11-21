@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL6.Statement
-import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.OneAddPowOfSq
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.Statement
+public import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.OneAddPowOfSq
+
+@[expose] public section
 
 noncomputable section
 

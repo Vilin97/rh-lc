@@ -1,6 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.AlternatingFormStandardHermitian
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ThCLeftStab
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.AlternatingFormStandardHermitian
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ThCLeftStab
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.L2.Ker
 
 noncomputable section

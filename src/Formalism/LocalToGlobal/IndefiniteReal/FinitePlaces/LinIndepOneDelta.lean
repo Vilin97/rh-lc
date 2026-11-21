@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.InjectiveDecompositionAction
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.InjectiveDecompositionAction
+
+@[expose] public section
 
 noncomputable section
 

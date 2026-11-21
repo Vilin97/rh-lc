@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.SatakeDualWeyl.StatementC
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LevelProductIndex.ZeroMemLatSet
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LevelProductIndex.Development
-import Formalism.LocalToGlobal.GroupLattices.LevelCharts.FiniteClassSetOfFiniteIndex
+module
+
+public import Mathlib
+public import Formalism.SatakeDualWeyl.StatementC
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LevelProductIndex.ZeroMemLatSet
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LevelProductIndex.Development
+public import Formalism.LocalToGlobal.GroupLattices.LevelCharts.FiniteClassSetOfFiniteIndex
+
+@[expose] public section
 
 noncomputable section
 

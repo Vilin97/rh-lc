@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.SatakeDualWeyl.Statement
-import Formalism.LocalRingCardinality.DataTheta
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.SatakeDualWeyl.Statement
+public import Formalism.LocalRingCardinality.DataTheta
+
+@[expose] public section
 
 noncomputable section
 

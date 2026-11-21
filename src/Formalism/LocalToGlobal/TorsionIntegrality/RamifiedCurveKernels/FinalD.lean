@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.RamifiedCurveKernels.FinalC
-import Formalism.LocalToGlobal.TorsionIntegrality.RamifiedCurveKernels.PairedSquareJets.CurveJetsUnramifiedHolds
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.RamifiedCurveKernels.FinalC
+public import Formalism.LocalToGlobal.TorsionIntegrality.RamifiedCurveKernels.PairedSquareJets.CurveJetsUnramifiedHolds
+
+@[expose] public section
 
 namespace Formalism.L2.Th1.G
 

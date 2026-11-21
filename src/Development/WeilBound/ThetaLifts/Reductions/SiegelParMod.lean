@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.Reductions.SiegelCore
-import Development.WeilBound.ThetaLifts.Reductions.SiegelAbs
-import Development.WeilBound.ThetaLifts.Reductions.SiegelMod
-import Development.WeilBound.ThetaLifts.FrameEstimates.LeHeightOfIsTorusElt
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.AddHaarLeftRightMulAdelicMatricesModule
+module
+
+public import Development.WeilBound.ThetaLifts.Reductions.SiegelCore
+public import Development.WeilBound.ThetaLifts.Reductions.SiegelAbs
+public import Development.WeilBound.ThetaLifts.Reductions.SiegelMod
+public import Development.WeilBound.ThetaLifts.FrameEstimates.LeHeightOfIsTorusElt
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.AddHaarLeftRightMulAdelicMatricesModule
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

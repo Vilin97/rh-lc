@@ -1,4 +1,8 @@
-import CompanionTheory.RealGroups.FormalDegrees.ArchimedeanFormalDegrees.MomB
+module
+
+public import CompanionTheory.RealGroups.FormalDegrees.ArchimedeanFormalDegrees.MomB
+
+@[expose] public section
 
 open MeasureTheory Set
 

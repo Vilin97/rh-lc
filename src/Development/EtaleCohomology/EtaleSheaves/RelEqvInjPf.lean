@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.RelDescPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.RelDescPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits CochainComplex CochainComplex.HomComplex GlobalTheory.EtC

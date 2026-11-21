@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 open scoped PowerSeries LaurentSeries Topology ENNReal NNReal ContDiff
 open Filter Metric

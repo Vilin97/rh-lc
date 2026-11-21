@@ -1,10 +1,14 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.RealGroupsLie
-import GroundTheory.AutomorphicForms.RealGroupsPolar
-import GroundTheory.AutomorphicForms.RealGroupsKAK
-import GroundTheory.AutomorphicForms.RealGroupsIwasawa
-import GroundTheory.AutomorphicForms.RealGroupsHaar
-import GroundTheory.AutomorphicForms.RealGroupsIwasawaHaar
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.RealGroupsLie
+public import GroundTheory.AutomorphicForms.RealGroupsPolar
+public import GroundTheory.AutomorphicForms.RealGroupsKAK
+public import GroundTheory.AutomorphicForms.RealGroupsIwasawa
+public import GroundTheory.AutomorphicForms.RealGroupsHaar
+public import GroundTheory.AutomorphicForms.RealGroupsIwasawaHaar
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

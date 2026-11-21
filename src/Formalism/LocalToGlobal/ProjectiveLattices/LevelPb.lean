@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.ExistsParameterConditions
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.ExistsParameterConditions
+
+@[expose] public section
 
 noncomputable section
 

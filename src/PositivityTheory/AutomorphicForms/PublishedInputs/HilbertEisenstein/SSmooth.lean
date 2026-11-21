@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.PublishedTheorems.Hilbert
-import GroundTheory.GlobalFields.TateThesis.GlobalZetaSplit
-import GroundTheory.GlobalFields.TateThesis.SchwartzBruhatDual
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.PublishedTheorems.Hilbert
+public import GroundTheory.GlobalFields.TateThesis.GlobalZetaSplit
+public import GroundTheory.GlobalFields.TateThesis.SchwartzBruhatDual
+
+@[expose] public section
 
 noncomputable section
 

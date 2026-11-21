@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.PAdicHodge.PerfectoidField
-import GroundTheory.PAdicHodge.TiltValuation
-import GroundTheory.PAdicHodge.TiltField
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.PerfectoidField
+public import GroundTheory.PAdicHodge.TiltValuation
+public import GroundTheory.PAdicHodge.TiltField
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

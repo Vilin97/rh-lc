@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DataGChain
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DataGChain
+
+@[expose] public section
 
 noncomputable section
 

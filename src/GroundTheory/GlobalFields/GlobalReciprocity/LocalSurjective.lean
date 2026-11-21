@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.NormResidueSymbol.FunctorialFinite
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.NormResidueSymbol.FunctorialFinite
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

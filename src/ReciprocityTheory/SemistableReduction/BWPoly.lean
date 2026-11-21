@@ -1,7 +1,11 @@
-import ReciprocityTheory.SemistableReduction.TorsionNonvanishStatement
-import ReciprocityTheory.L2DbarEstimates.JacobianInterpolationStatement
-import ReciprocityTheory.SemistableReduction.BWPolyB
-import ReciprocityTheory.SemistableReduction.BWPolyC
+module
+
+public import ReciprocityTheory.SemistableReduction.TorsionNonvanishStatement
+public import ReciprocityTheory.L2DbarEstimates.JacobianInterpolationStatement
+public import ReciprocityTheory.SemistableReduction.BWPolyB
+public import ReciprocityTheory.SemistableReduction.BWPolyC
+
+@[expose] public section
 
 noncomputable section
 

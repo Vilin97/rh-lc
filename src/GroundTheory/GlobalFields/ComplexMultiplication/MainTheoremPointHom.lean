@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.ReductionAtPoint
-import GroundTheory.GlobalFields.ComplexMultiplication.InseparableFrobenius
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.ReductionAtPoint
+public import GroundTheory.GlobalFields.ComplexMultiplication.InseparableFrobenius
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.CoefficientsModP
+module
+
+public import Formalism.LocalToGlobal.Columns.CoefficientsModP
+
+@[expose] public section
 
 open MvPolynomial NumberField IsDedekindDomain
 open scoped Matrix

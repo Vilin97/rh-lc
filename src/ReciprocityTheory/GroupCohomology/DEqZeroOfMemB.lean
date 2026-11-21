@@ -1,4 +1,8 @@
-import ReciprocityTheory.GroupCohomology.CupConnRightStatement
+module
+
+public import ReciprocityTheory.GroupCohomology.CupConnRightStatement
+
+@[expose] public section
 
 namespace ReciprocityTheory.Coh
 

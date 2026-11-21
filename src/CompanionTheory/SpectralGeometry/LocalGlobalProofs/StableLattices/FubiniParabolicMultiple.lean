@@ -1,9 +1,13 @@
-import Mathlib
-import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.DiscreteSeriesExhaustion.MatrixCoefficientDecay.LineFormulas.Fub2
-import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.ParabolicSubgroupEquality
-import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.FlagFacts
-import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.HaarExistence
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ParabolicMeasureModulus
+module
+
+public import Mathlib
+public import CompanionTheory.RealGroups.DiscreteSeries.DiscreteSeriesClassification.DiscreteSeriesExhaustion.MatrixCoefficientDecay.LineFormulas.Fub2
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.ParabolicSubgroupEquality
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.FlagFacts
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.HaarExistence
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ParabolicMeasureModulus
+
+@[expose] public section
 
 noncomputable section
 

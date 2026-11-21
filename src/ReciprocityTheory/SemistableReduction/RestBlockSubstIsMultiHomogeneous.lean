@@ -1,4 +1,8 @@
-import ReciprocityTheory.SemistableReduction.AevalIsWeightedHomogeneous
+module
+
+public import ReciprocityTheory.SemistableReduction.AevalIsWeightedHomogeneous
+
+@[expose] public section
 
 noncomputable section
 

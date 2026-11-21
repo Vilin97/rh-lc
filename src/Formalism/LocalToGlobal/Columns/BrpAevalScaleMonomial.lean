@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.BrpStarLatLattice
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.BrpStarLatLattice
+
+@[expose] public section
 
 open MvPolynomial NumberField
 open scoped Matrix

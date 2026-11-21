@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StGenericNoetherNormalisation
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.NoetherNormalizationChart
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.PseudoDivision
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.StGenericNoetherNormalisation
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.NoetherNormalizationChart
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.PseudoDivision
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.GenericNoetherNormalisationCapelliIdentities.proof.{u} :
     GroundTheory.Heights₂.Heights.GenericNoetherNormalisation.Statement.{u} := by

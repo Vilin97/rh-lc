@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafTwSecPf
-import Development.EtaleCohomology.TateTwists.EtaleLocallyExistsPrimitiveRootOfUnityOfInvertib
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafTwSecPf
+public import Development.EtaleCohomology.TateTwists.EtaleLocallyExistsPrimitiveRootOfUnityOfInvertib
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC LateralTheory.E.E4 LateralTheory.E.LeafTwSecPf

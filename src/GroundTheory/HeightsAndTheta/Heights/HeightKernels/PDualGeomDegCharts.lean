@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualGeomDegCharts
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartDensityIntegrable
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualPtsOfPlane
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualPtsOnPlane
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStdMassAt
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualGeomDegCharts
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartDensityIntegrable
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualPtsOfPlane
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualPtsOnPlane
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStdMassAt
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

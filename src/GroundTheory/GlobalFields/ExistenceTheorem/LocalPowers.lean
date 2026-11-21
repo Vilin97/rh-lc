@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.SplittingFromInequality
-import GroundTheory.GlobalFields.IdeleGroups.SIdeleGroups
-import GroundTheory.GlobalFields.KummerTheory.SplittingKummer
-import GroundTheory.GlobalFields.KummerTheory.Unramified
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SplittingFromInequality
+public import GroundTheory.GlobalFields.IdeleGroups.SIdeleGroups
+public import GroundTheory.GlobalFields.KummerTheory.SplittingKummer
+public import GroundTheory.GlobalFields.KummerTheory.Unramified
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.AmpleLineBundles.HeightRecRFull
+module
+
+public import Development.WeilBound.CoreStatements.AmpleLineBundles.HeightRecRFull
+
+@[expose] public section
 
 noncomputable section
 

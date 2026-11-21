@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.PtFree
-import Formalism.LocalToGlobal.ProjectiveLattices.CuspFree
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.RegLaw
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.PtFree
+public import Formalism.LocalToGlobal.ProjectiveLattices.CuspFree
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.RegLaw
+
+@[expose] public section
 
 noncomputable section
 

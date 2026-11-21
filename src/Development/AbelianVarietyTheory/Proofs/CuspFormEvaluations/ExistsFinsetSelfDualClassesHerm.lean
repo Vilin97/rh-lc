@@ -1,10 +1,14 @@
-import Mathlib
-import ReciprocityTheory.SemistableReduction.SemiAll
-import ReciprocityTheory.SemistableReduction.SemiDegZ
-import ReciprocityTheory.SemistableReduction.LatTest
-import Development.AbelianVarietyTheory.Proofs.CubicalLineBundles.CmApproximationTransference
-import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsThickPointHyperbolic
-import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsFinsetTypesOfBoundedBases
+module
+
+public import Mathlib
+public import ReciprocityTheory.SemistableReduction.SemiAll
+public import ReciprocityTheory.SemistableReduction.SemiDegZ
+public import ReciprocityTheory.SemistableReduction.LatTest
+public import Development.AbelianVarietyTheory.Proofs.CubicalLineBundles.CmApproximationTransference
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsThickPointHyperbolic
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsFinsetTypesOfBoundedBases
+
+@[expose] public section
 
 open NumberField Matrix Module Submodule ReciprocityTheory.MultiplicativeHeights ComplexConjugate
 open ReciprocityTheory.ChartRestriction.G.FD (herm cc fdeg dE)

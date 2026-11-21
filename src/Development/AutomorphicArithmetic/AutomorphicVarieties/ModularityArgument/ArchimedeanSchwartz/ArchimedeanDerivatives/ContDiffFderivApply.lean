@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ArchimedeanSchwartz.ShiftOf
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.SumPermOfNotInjective
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.TowerBaseChange
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ArchimedeanSchwartz.ShiftOf
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.SumPermOfNotInjective
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.TowerBaseChange
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.SeparableClosure
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.SeparableClosure
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

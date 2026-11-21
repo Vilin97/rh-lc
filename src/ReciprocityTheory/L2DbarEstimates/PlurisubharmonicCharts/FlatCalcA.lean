@@ -1,4 +1,8 @@
-import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.DifferentiableAtChart
+module
+
+public import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.DifferentiableAtChart
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.Y
 

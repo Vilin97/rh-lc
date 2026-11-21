@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.StringRepresentations.AdmissibleTemperedUnramified
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.HeckeSplitOne
+module
+
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.StringRepresentations.AdmissibleTemperedUnramified
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.HeckeSplitOne
+
+@[expose] public section
 
 noncomputable section
 

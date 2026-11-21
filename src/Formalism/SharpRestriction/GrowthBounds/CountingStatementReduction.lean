@@ -1,16 +1,20 @@
-import Formalism.SharpRestriction.GrowthBounds.FlipOneThree
-import Formalism.MahlerMeasure.CoarseLevelSlackInequalities
-import Formalism.MahlerMeasure.FinalT
-import Formalism.MahlerMeasure.MahlerMeasureProofs.WeightSpaceDimensionMonotone
-import Formalism.MahlerMeasure.MahlerMeasureProofs.SmithZp
-import Formalism.MahlerMeasure.MahlerMeasureProofs.TheoremM
-import Formalism.PolynomialDimension.MultinomialDepth.MonoCount
-import Formalism.PolynomialDimension.MultinomialDepth.PartnerM
-import Formalism.PolynomialDimension.MultinomialDepth.TieOps
-import Formalism.ThetaLogCoordinates.TraceIsometryWeights.DischargeHeightBound
-import Formalism.ThetaLogCoordinates.PartnerMeanCoordinates.LatticeTheoremEps28Valid
-import Formalism.SharpRestriction.GrowthBounds.GLWeightTheory
-import Lemmata.GeneralBFactLeftBisForm.Imports
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.FlipOneThree
+public import Formalism.MahlerMeasure.CoarseLevelSlackInequalities
+public import Formalism.MahlerMeasure.FinalT
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.WeightSpaceDimensionMonotone
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.SmithZp
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.TheoremM
+public import Formalism.PolynomialDimension.MultinomialDepth.MonoCount
+public import Formalism.PolynomialDimension.MultinomialDepth.PartnerM
+public import Formalism.PolynomialDimension.MultinomialDepth.TieOps
+public import Formalism.ThetaLogCoordinates.TraceIsometryWeights.DischargeHeightBound
+public import Formalism.ThetaLogCoordinates.PartnerMeanCoordinates.LatticeTheoremEps28Valid
+public import Formalism.SharpRestriction.GrowthBounds.GLWeightTheory
+public import Lemmata.GeneralBFactLeftBisForm.Imports
+
+@[expose] public section
 
 noncomputable section
 

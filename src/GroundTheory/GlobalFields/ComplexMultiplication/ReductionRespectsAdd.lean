@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.ReductionEval
-import GroundTheory.GlobalFields.ComplexMultiplication.RespectsAddUniversal
-import GroundTheory.GlobalFields.ComplexMultiplication.BaseChange
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.ReductionEval
+public import GroundTheory.GlobalFields.ComplexMultiplication.RespectsAddUniversal
+public import GroundTheory.GlobalFields.ComplexMultiplication.BaseChange
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

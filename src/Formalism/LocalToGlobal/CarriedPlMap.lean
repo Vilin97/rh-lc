@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.SelSide
-import Formalism.LocalToGlobal.IndefiniteReal.TrISepWith
-import Formalism.LocalToGlobal.IndefiniteReal.RealRec
-import Formalism.LocalToGlobal.UnitaryNorms.DatumS
+module
+
+public import Formalism.LocalToGlobal.SelSide
+public import Formalism.LocalToGlobal.IndefiniteReal.TrISepWith
+public import Formalism.LocalToGlobal.IndefiniteReal.RealRec
+public import Formalism.LocalToGlobal.UnitaryNorms.DatumS
+
+@[expose] public section
 
 noncomputable section
 

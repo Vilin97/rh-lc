@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.IndexExponentDegree
-import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.MovementLaw
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.IndexExponentDegree
+public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.MovementLaw
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

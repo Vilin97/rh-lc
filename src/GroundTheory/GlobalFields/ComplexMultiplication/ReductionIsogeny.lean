@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.ReductionRespectsAdd
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.ReductionRespectsAdd
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

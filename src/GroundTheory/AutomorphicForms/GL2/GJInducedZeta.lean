@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJParabolicFubini
-import GroundTheory.AutomorphicForms.GL2.GJLeviZeta
-import GroundTheory.AutomorphicForms.HaarCosets
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJParabolicFubini
+public import GroundTheory.AutomorphicForms.GL2.GJLeviZeta
+public import GroundTheory.AutomorphicForms.HaarCosets
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

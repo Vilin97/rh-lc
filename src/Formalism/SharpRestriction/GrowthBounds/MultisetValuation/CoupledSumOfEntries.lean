@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.IntegralSpanCoordinates
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.LowestInvariantLeDelta
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.IntegralSpanCoordinates
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.LowestInvariantLeDelta
+
+@[expose] public section
 
 noncomputable section
 

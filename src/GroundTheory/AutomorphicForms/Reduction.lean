@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.NormDetDiagUnitsPosRealToUnits
-import GroundTheory.AutomorphicForms.ReductionSplitting
-import GroundTheory.AutomorphicForms.ReductionMeasure
-import GroundTheory.AutomorphicForms.ReductionLocalVolume
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.NormDetDiagUnitsPosRealToUnits
+public import GroundTheory.AutomorphicForms.ReductionSplitting
+public import GroundTheory.AutomorphicForms.ReductionMeasure
+public import GroundTheory.AutomorphicForms.ReductionLocalVolume
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter Set Matrix
 open scoped NumberField.AdeleRing RestrictedProduct

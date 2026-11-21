@@ -1,4 +1,8 @@
-import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.TsumEnormEq
+module
+
+public import Development.DiscreteGroups.PiInvariants.CompactSupportTwists.TsumEnormEq
+
+@[expose] public section
 
 noncomputable section
 

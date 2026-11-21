@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.WeilConjectures.GluePf
+module
+
+public import Development.EtaleCohomology.WeilConjectures.GluePf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite

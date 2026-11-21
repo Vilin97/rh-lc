@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.HcoSmulRight
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.HcoSmulRight
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBI.Sm
 

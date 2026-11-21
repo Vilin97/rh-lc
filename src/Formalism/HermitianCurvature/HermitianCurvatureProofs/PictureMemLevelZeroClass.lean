@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SesquilinearLevelZeroPairing
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SesquilinearLevelZeroPairing
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBF
 

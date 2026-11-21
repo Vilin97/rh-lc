@@ -1,8 +1,12 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.Smooth
-import GroundTheory.AutomorphicForms.ReductionCore
-import GroundTheory.AutomorphicForms.ReductionMeasure
-import GroundTheory.AutomorphicForms.HaarSK
-import GroundTheory.HeightsAndTheta.Theta.FundDomain
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.RealGroupAnalysis.Smooth
+public import GroundTheory.AutomorphicForms.ReductionCore
+public import GroundTheory.AutomorphicForms.ReductionMeasure
+public import GroundTheory.AutomorphicForms.HaarSK
+public import GroundTheory.HeightsAndTheta.Theta.FundDomain
+
+@[expose] public section
 
 noncomputable section
 

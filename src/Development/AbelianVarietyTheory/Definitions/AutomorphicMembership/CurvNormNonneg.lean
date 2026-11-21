@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.LatticeGeometry.DegFlLApply
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.HPInvEqForm
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.LatticeGeometry.DegFlLApply
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.HPInvEqForm
+
+@[expose] public section
 
 noncomputable section
 

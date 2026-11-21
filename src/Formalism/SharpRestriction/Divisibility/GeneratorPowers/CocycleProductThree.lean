@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.JetSubstPSTrunc
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.JetSubstPSTrunc
+
+@[expose] public section
 
 set_option autoImplicit false
 

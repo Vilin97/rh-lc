@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsUnifAt
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.WtTieOf
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsUnifAt
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.WtTieOf
+
+@[expose] public section
 
 noncomputable section
 

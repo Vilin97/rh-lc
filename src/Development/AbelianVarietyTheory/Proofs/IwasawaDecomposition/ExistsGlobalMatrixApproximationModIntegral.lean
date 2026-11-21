@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.GrowthBounds.UnramifiedQuadraticSetting
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsGlobalLatticeLocalGiven
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.GrowthBounds.UnramifiedQuadraticSetting
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsGlobalLatticeLocalGiven
+
+@[expose] public section
 
 noncomputable section
 

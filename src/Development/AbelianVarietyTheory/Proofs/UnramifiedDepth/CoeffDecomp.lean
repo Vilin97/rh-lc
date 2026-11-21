@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.WFrobStatement
-import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.ZmodPrimeSqLocal
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.WFrobStatement
+public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.ZmodPrimeSqLocal
+
+@[expose] public section
 
 noncomputable section
 

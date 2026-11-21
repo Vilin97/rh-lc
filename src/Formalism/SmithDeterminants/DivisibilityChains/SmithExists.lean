@@ -1,4 +1,8 @@
-import Formalism.SmithDeterminants.StatementDVR
+module
+
+public import Formalism.SmithDeterminants.StatementDVR
+
+@[expose] public section
 
 namespace Formalism.A
 

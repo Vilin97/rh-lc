@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.BrExistsOfRestS
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.BrExistsOfRestS
+
+@[expose] public section
 
 noncomputable section
 

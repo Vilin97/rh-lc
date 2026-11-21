@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.GaussianSeminormBounds.RealSeminormFiltration.RLLieG
-import Development.WeilBound.ThetaLifts.Reductions.RealSmulL2Coe
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.GaussianSeminormBounds.RealSeminormFiltration.RLLieG
+public import Development.WeilBound.ThetaLifts.Reductions.RealSmulL2Coe
+
+@[expose] public section
 
 noncomputable section
 

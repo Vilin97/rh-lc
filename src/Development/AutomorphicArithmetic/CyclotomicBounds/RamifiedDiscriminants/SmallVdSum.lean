@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.PrimeDiscriminants.SlopeTestRemainingChoices
-import Development.AutomorphicArithmetic.CMTraceForms.CmDatumDiscriminantDepthBounds
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.PrimeDiscriminants.SlopeTestRemainingChoices
+public import Development.AutomorphicArithmetic.CMTraceForms.CmDatumDiscriminantDepthBounds
+
+@[expose] public section
 
 open NumberField Formalism.HC
 

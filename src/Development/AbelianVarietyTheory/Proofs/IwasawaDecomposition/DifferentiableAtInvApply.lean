@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DifferentiableAtDet
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.DifferentiableAtDet
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder

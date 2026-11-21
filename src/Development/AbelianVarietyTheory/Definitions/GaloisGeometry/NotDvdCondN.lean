@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientHomNonvanishingBound
-import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
-import Formalism.LocalRingCardinality.DataParams
-import Formalism.LocalRingCardinality.DataDIV
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.Alternates
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientHomNonvanishingBound
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocalSituation
+public import Formalism.LocalRingCardinality.DataParams
+public import Formalism.LocalRingCardinality.DataDIV
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.Alternates
+
+@[expose] public section
 
 noncomputable section
 

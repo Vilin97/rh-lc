@@ -1,10 +1,14 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ExistsIsCGBases
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.InTwSt
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.KerLabelsMu
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.BadQNotOver
-import Formalism.LocalToGlobal.GroupLattices.ClassLocalOfEq
-import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ExistsIsCGBases
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.InTwSt
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.KerLabelsMu
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.BadQNotOver
+public import Formalism.LocalToGlobal.GroupLattices.ClassLocalOfEq
+public import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan
+
+@[expose] public section
 
 noncomputable section
 

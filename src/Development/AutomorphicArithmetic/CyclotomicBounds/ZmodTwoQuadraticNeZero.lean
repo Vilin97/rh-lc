@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AutomorphicArithmetic.CyclotomicBounds.SmallFacts
-import Development.AutomorphicArithmetic.PrimeDiscriminants.CycImage
-import Development.AutomorphicArithmetic.PrimeDiscriminants.SmallRam
-import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.CyclotomicBounds.SmallFacts
+public import Development.AutomorphicArithmetic.PrimeDiscriminants.CycImage
+public import Development.AutomorphicArithmetic.PrimeDiscriminants.SmallRam
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+
+@[expose] public section
 
 namespace UpperTheory.Small
 

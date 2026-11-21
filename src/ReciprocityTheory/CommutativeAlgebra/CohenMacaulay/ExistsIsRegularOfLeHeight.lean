@@ -1,4 +1,8 @@
-import ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.RingKrullDimQuotientOfMemAssociatedPrimes
+module
+
+public import ReciprocityTheory.CommutativeAlgebra.CohenMacaulay.RingKrullDimQuotientOfMemAssociatedPrimes
+
+@[expose] public section
 
 namespace ReciprocityTheory.CA
 

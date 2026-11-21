@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.EndomorphismSlices.CommStar
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.EndomorphismSlices.CommStar
+
+@[expose] public section
 
 noncomputable section
 

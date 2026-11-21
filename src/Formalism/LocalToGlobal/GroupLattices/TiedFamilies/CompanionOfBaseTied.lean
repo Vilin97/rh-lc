@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieStd
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.IntSplitOf
-import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.LocIdFr
-import Formalism.LocalToGlobal.HermitianForms.BothLemmas
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TieStd
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.IntSplitOf
+public import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.LocIdFr
+public import Formalism.LocalToGlobal.HermitianForms.BothLemmas
+
+@[expose] public section
 
 noncomputable section
 

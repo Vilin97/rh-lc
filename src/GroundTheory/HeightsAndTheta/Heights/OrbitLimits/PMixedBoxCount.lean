@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StatementsMixedBoxCount
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StatementsLatticeCountVolume
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StatementsMixedBoxCount
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StatementsLatticeCountVolume
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Targets

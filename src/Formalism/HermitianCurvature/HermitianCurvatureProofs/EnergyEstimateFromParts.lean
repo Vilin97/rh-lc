@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.WeightedL2ConstMul
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.Cauchy
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.Markov
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WeightedL2ConstMul
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.Cauchy
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.Markov
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P
 

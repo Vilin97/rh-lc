@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.CuspEmbP
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsOrderedFormSnoc
+module
+
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.LanglandsExhaustion.CuspEmbP
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsOrderedFormSnoc
+
+@[expose] public section
 
 noncomputable section
 

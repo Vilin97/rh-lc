@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.Assembly
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PGenSecSeparable
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PFibreClosedComponent
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PGenSecKer
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PFiniteOrd
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.Assembly
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PGenSecSeparable
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PFibreClosedComponent
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PGenSecKer
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PFiniteOrd
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Vertical

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.InvariantsIsoOfGenerators
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.InvariantsIsoOfGenerators
+
+@[expose] public section
 
 noncomputable section
 

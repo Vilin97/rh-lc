@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TensorRepresentations.ConsumerA
-import Formalism.PeriodIntegrals.ZuckTensor
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TensorRepresentations.ConsumerA
+public import Formalism.PeriodIntegrals.ZuckTensor
+
+@[expose] public section
 
 noncomputable section
 

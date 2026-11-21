@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.IntegrableOfContinuousCircleMeasure
-import Formalism.GradedWeylDivisibility.StatementB
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.IntegrableOfContinuousCircleMeasure
+public import Formalism.GradedWeylDivisibility.StatementB
+
+@[expose] public section
 
 noncomputable section
 

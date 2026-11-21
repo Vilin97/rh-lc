@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.IntegralHeckeForms
-import Formalism.LocalToGlobal.IndefiniteReal.Bridge
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.IntegralHeckeForms
+public import Formalism.LocalToGlobal.IndefiniteReal.Bridge
+
+@[expose] public section
 
 noncomputable section
 

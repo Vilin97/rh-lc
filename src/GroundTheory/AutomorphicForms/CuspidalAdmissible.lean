@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.LeviCartan
-import GroundTheory.AutomorphicForms.SmoothRepSchur
-import GroundTheory.AutomorphicForms.MeasuresModulus
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.LeviCartan
+public import GroundTheory.AutomorphicForms.SmoothRepSchur
+public import GroundTheory.AutomorphicForms.MeasuresModulus
+
+@[expose] public section
 
 noncomputable section
 

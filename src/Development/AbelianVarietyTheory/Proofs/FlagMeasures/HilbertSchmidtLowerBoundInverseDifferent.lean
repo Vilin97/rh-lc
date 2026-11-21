@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.HarderNarasimhan.ShiftInvariance
-import Formalism.RealPlaceAnalysis.Complexify
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.ExistsNsmulMem
+module
+
+public import Mathlib
+public import Formalism.HarderNarasimhan.ShiftInvariance
+public import Formalism.RealPlaceAnalysis.Complexify
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.ExistsNsmulMem
+
+@[expose] public section
 
 open Formalism.HN Formalism.HermitianLatticesTheory Matrix NumberField Finset
 

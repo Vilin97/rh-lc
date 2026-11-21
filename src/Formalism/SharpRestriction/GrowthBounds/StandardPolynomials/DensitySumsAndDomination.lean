@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.RestSegCore
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.RecursionWithDensities
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.LatticeLeSpanPsiImage
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.DivDerZero
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.RestSegCore
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.RecursionWithDensities
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.LatticeLeSpanPsiImage
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.DivDerZero
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.ColInst
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.ComplSmulMapE
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.ColInst
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.ComplSmulMapE
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 open scoped TensorProduct

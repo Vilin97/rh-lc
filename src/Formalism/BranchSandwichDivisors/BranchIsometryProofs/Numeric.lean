@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.BranchSandwichDivisors.StatementR
-import Formalism.BranchSandwichDivisors.BranchIsometryProofs.Interlace
+module
+
+public import Mathlib
+public import Formalism.BranchSandwichDivisors.StatementR
+public import Formalism.BranchSandwichDivisors.BranchIsometryProofs.Interlace
+
+@[expose] public section
 
 open Finset
 

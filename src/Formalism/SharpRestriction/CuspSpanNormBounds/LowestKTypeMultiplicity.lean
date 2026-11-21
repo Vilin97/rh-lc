@@ -1,11 +1,15 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.BesselShellMomentBounds
-import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeCSchur
-import Formalism.SharpRestriction.CuspSpanNormBounds.PlaceDegreeData
-import Formalism.FormalDegreeBessel.FinalBF
-import Formalism.FormalDegreeBessel.FinalDS
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.CompactHaarRightInvariantInst
-import Formalism.RealPlaceAnalysis.FinalF
-import Formalism.FlagUnipotentLattices.AlgebraicIdentityHigherDegree
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BesselShellMomentBounds
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeCSchur
+public import Formalism.SharpRestriction.CuspSpanNormBounds.PlaceDegreeData
+public import Formalism.FormalDegreeBessel.FinalBF
+public import Formalism.FormalDegreeBessel.FinalDS
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.CompactHaarRightInvariantInst
+public import Formalism.RealPlaceAnalysis.FinalF
+public import Formalism.FlagUnipotentLattices.AlgebraicIdentityHigherDegree
+
+@[expose] public section
 
 section PieceA0
 

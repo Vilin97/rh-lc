@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.MirabolicDerivatives.CuspGenericWhittaker.CuspGeneric
-import GroundTheory.AutomorphicForms.WhittakerCriterion
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.MirabolicDerivatives.CuspGenericWhittaker.CuspGeneric
+public import GroundTheory.AutomorphicForms.WhittakerCriterion
+
+@[expose] public section
 
 noncomputable section
 

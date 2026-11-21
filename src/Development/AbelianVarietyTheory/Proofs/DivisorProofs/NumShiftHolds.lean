@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.VdmSplit
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.VdmSplit
+
+@[expose] public section
 
 open GlobalTheory.PsCo.PcEG
 

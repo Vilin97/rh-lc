@@ -1,14 +1,18 @@
-import Mathlib
-import Formalism.TameInertiaTowers.CentralOrderTwo.OrderOfThreeUnitsTwoPow
-import Formalism.TameInertiaTowers.CentralOrderTwo.TwoAdic
-import Formalism.TameInertiaTowers.CentralOrderTwo.MemDecompositionSubgroupIff
-import Formalism.TameInertiaTowers.CentralOrderTwo.NegOneNeOneUnitsZmodFour
-import Formalism.TameInertiaTowers.CentralOrderTwo.Groups
-import Formalism.TameInertiaTowers.CentralOrderTwo.NormalOrderTwoCentral
-import Formalism.CyclotomicNorms.NonsquarefreeBounds.Jordan
-import Formalism.CyclotomicNorms.NonsquarefreeBounds.RestrictionOfBlocksAndJordan
-import Formalism.CyclotomicNorms.NonsquarefreeBounds.NonsquarefreeMonicBoundHolds
-import Formalism.CyclotomicNorms.NonsquarefreeBounds.IrreducibilityOfRestriction
+module
+
+public import Mathlib
+public import Formalism.TameInertiaTowers.CentralOrderTwo.OrderOfThreeUnitsTwoPow
+public import Formalism.TameInertiaTowers.CentralOrderTwo.TwoAdic
+public import Formalism.TameInertiaTowers.CentralOrderTwo.MemDecompositionSubgroupIff
+public import Formalism.TameInertiaTowers.CentralOrderTwo.NegOneNeOneUnitsZmodFour
+public import Formalism.TameInertiaTowers.CentralOrderTwo.Groups
+public import Formalism.TameInertiaTowers.CentralOrderTwo.NormalOrderTwoCentral
+public import Formalism.CyclotomicNorms.NonsquarefreeBounds.Jordan
+public import Formalism.CyclotomicNorms.NonsquarefreeBounds.RestrictionOfBlocksAndJordan
+public import Formalism.CyclotomicNorms.NonsquarefreeBounds.NonsquarefreeMonicBoundHolds
+public import Formalism.CyclotomicNorms.NonsquarefreeBounds.IrreducibilityOfRestriction
+
+@[expose] public section
 
 namespace Formalism.CyclotomicNorms
 

@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.ReductionFinite
-import GroundTheory.AutomorphicForms.ReductionIwasawa
-import GroundTheory.AutomorphicForms.ReductionBlock
-import GroundTheory.AutomorphicForms.ReductionDirichlet
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.ReductionFinite
+public import GroundTheory.AutomorphicForms.ReductionIwasawa
+public import GroundTheory.AutomorphicForms.ReductionBlock
+public import GroundTheory.AutomorphicForms.ReductionDirichlet
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter Set Matrix
 open scoped NumberField.AdeleRing RestrictedProduct

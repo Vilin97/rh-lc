@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.HeckeInertSq
-import Formalism.LocalToGlobal.Columns.PathCountSymmetricHolds
+module
+
+public import Formalism.LocalToGlobal.Columns.HeckeInertSq
+public import Formalism.LocalToGlobal.Columns.PathCountSymmetricHolds
+
+@[expose] public section
 
 noncomputable section
 

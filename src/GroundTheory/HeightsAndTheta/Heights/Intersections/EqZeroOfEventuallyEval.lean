@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ExMapAlt
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StRatioAlgDep
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ExMapAlt
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StRatioAlgDep
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

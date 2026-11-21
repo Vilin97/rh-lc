@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.LagrangeExtensionCocycles.StatementTop
-import Formalism.FrobeniusContraction.FrobeniusContractionProofs.ContractBij
+module
+
+public import Formalism.WachLatticeTwists.LagrangeExtensionCocycles.StatementTop
+public import Formalism.FrobeniusContraction.FrobeniusContractionProofs.ContractBij
+
+@[expose] public section
 
 noncomputable section
 

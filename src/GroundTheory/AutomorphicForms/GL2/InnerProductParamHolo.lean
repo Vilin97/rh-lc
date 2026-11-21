@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.Residue
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.Residue
+
+@[expose] public section
 
 open MeasureTheory Set Filter Topology Metric
 

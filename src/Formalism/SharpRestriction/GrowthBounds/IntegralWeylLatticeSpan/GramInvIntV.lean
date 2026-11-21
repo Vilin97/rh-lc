@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan.LatSOfLocBasis
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePtOne
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan.LatSOfLocBasis
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePtOne
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.PAdicHodge.BCrisEigenFrob
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.BCrisEigenFrob
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

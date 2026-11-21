@@ -1,12 +1,16 @@
-import Mathlib
-import Formalism.LocalRingCardinality.Params
-import Formalism.LocalRingCardinality.DataCoeff
-import Formalism.LocalRingCardinality.SpanPowerMembership.FmZeroHLatEmpty
-import Formalism.LocalToGlobal.UnitaryNorms.RealCyclotomicTwoPower
-import Formalism.LocalToGlobal.UnitaryNorms.AdjoinCycZeta
-import Formalism.LocalToGlobal.Divisibility.ConjugationAtDistinguishedPlace
-import Formalism.LocalToGlobal.Divisibility.Tuples
-import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.Params
+public import Formalism.LocalRingCardinality.DataCoeff
+public import Formalism.LocalRingCardinality.SpanPowerMembership.FmZeroHLatEmpty
+public import Formalism.LocalToGlobal.UnitaryNorms.RealCyclotomicTwoPower
+public import Formalism.LocalToGlobal.UnitaryNorms.AdjoinCycZeta
+public import Formalism.LocalToGlobal.Divisibility.ConjugationAtDistinguishedPlace
+public import Formalism.LocalToGlobal.Divisibility.Tuples
+public import Formalism.LocalToGlobal.UnitaryNorms.IsUnitaryNormOf
+
+@[expose] public section
 
 open NumberField IsDedekindDomain IntermediateField
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.NormalizedValuationMul
-import Formalism.LocalToGlobal.ProjectiveLattices.SecPtOrd
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.NormalizedValuationMul
+public import Formalism.LocalToGlobal.ProjectiveLattices.SecPtOrd
+
+@[expose] public section
 
 noncomputable section
 

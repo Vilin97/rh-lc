@@ -1,6 +1,10 @@
-import Formalism.WachLatticeTwists.Statement
-import Formalism.CharacterColumnKernels.Statement
-import Formalism.CharacterColumnKernels.StatementRho
+module
+
+public import Formalism.WachLatticeTwists.Statement
+public import Formalism.CharacterColumnKernels.Statement
+public import Formalism.CharacterColumnKernels.StatementRho
+
+@[expose] public section
 
 universe u
 

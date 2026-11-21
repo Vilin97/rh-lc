@@ -1,8 +1,12 @@
-import Mathlib
-import ReciprocityTheory.NeutralLocalFields.Duality
-import ReciprocityTheory.GroupCohomology.InfRes
-import ReciprocityTheory.GroupCohomology.FiveTerm
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.KbarRepContAction
+module
+
+public import Mathlib
+public import ReciprocityTheory.NeutralLocalFields.Duality
+public import ReciprocityTheory.GroupCohomology.InfRes
+public import ReciprocityTheory.GroupCohomology.FiveTerm
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.KbarRepContAction
+
+@[expose] public section
 
 namespace ReciprocityTheory.DiscreteGroups.LocalClassField
 

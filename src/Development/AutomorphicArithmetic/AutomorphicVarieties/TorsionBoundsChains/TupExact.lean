@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.TorsionBoundsChains.FaceDSingle
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ConvexNerveComplexes.AltDoubleSum
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ConvexNerveComplexes.BdMem
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.TorsionBoundsChains.FaceDSingle
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ConvexNerveComplexes.AltDoubleSum
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ConvexNerveComplexes.BdMem
+
+@[expose] public section
 
 open CategoryTheory UpperTheory.V.KH
 

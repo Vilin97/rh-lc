@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.PAdicHodge.UntiltFrobeniusEquivSymmEpsilonNeOne
-import GroundTheory.PAdicHodge.BdRTGalois
-import GroundTheory.PAdicHodge.BdRField
-import GroundTheory.PAdicHodge.BdRAlgCl
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.UntiltFrobeniusEquivSymmEpsilonNeOne
+public import GroundTheory.PAdicHodge.BdRTGalois
+public import GroundTheory.PAdicHodge.BdRField
+public import GroundTheory.PAdicHodge.BdRAlgCl
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

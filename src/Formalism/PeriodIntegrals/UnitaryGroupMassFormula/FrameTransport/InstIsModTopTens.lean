@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FrameTransport.MemHFinInIff
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FrameTransport.MemHFinInIff
+
+@[expose] public section
 
 noncomputable section
 

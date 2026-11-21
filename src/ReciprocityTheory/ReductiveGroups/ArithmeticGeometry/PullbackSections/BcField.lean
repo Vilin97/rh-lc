@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
-import Formalism.LocalToGlobal.ProjectiveLattices.ReadProofs
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
+public import Formalism.LocalToGlobal.ProjectiveLattices.ReadProofs
+
+@[expose] public section
 
 noncomputable section
 

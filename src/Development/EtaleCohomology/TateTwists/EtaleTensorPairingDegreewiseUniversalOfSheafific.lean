@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.TateTwists.EtaleTensorUniversalPropertyOfDegreewise
+module
+
+public import Development.EtaleCohomology.TateTwists.EtaleTensorUniversalPropertyOfDegreewise
+
+@[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex GlobalTheory.EtC
 open scoped DirectSum TensorProduct

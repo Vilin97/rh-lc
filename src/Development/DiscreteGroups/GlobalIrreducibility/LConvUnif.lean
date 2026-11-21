@@ -1,5 +1,9 @@
-import Mathlib
-import Development.DiscreteGroups.GlobalIrreducibility.LConvUnifB
+module
+
+public import Mathlib
+public import Development.DiscreteGroups.GlobalIrreducibility.LConvUnifB
+
+@[expose] public section
 
 noncomputable section
 

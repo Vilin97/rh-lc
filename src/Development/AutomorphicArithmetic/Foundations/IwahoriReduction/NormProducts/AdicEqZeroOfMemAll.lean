@@ -1,5 +1,10 @@
-import Development.AbelianVarietyTheory.Definitions.Foundations.ShCocOn
-import Development.AbelianVarietyTheory.Definitions.Foundations.Letter
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Foundations.ShCocOn
+public import Development.AbelianVarietyTheory.Definitions.Foundations.Letter
+
+@[expose] public section
+
 open GlobalTheory.KZ
 open scoped Topology
 

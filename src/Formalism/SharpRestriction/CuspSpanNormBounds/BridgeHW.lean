@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.DiscreteSeriesWeylDimension
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.DiscreteSeriesWeylDimension
+
+@[expose] public section
 
 noncomputable section
 

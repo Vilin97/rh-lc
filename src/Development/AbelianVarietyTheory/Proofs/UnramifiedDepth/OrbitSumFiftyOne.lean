@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.CharacterGerms.ValuationChoiceHypothesis
-import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.DropLevelsBasic
-import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.MulFlowValLe
-import Formalism.DropLevelBounds.Statement
-import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.LevelsUsedBalancedValueOrbitSumsStatement
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.CharacterGerms.ValuationChoiceHypothesis
+public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.DropLevelsBasic
+public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.MulFlowValLe
+public import Formalism.DropLevelBounds.Statement
+public import Development.AbelianVarietyTheory.Proofs.UnramifiedDepth.LevelsUsedBalancedValueOrbitSumsStatement
+
+@[expose] public section
 
 open scoped BigOperators
 open Formalism.IncomingBounds Formalism.UnitaryBoundIntegral Formalism.L2.FormalSeriesBounds

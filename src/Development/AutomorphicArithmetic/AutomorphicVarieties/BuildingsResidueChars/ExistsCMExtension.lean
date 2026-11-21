@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TupleActions.InstMulActionTup
-import Mathlib.Algebra.QuadraticAlgebra.Basic
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.TupleActions.InstMulActionTup
+public import Mathlib.Algebra.QuadraticAlgebra.Basic
+
+@[expose] public section
 
 open NumberField QuadraticAlgebra
 

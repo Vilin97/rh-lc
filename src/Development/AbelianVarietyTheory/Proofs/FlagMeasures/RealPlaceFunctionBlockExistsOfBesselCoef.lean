@@ -1,11 +1,16 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.LevelMatchIff
-import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.UnitaryHaarProducts.WFromLoc
-import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.UnitaryHaarProducts.WFLStepsLocHNProps
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QuotProdK
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.NUnimodLoc
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.GapBigOfComparison
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.WlocExistsReal
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.LevelMatchIff
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.UnitaryHaarProducts.WFromLoc
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.UnitaryHaarProducts.WFLStepsLocHNProps
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QuotProdK
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.NUnimodLoc
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.GapBigOfComparison
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.WlocExistsReal
+
+@[expose] public section
+
 open MeasureTheory NumberField Formalism.BasicNotions Formalism.MainNotions.S Formalism.L2.SG.HidaSetting Formalism.L2.SG.SplitPrimeNormLemmas
 
 namespace GlobalTheory.WBlockExists

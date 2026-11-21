@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.BranchSandwichDivisors.StatementW
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.ProdFactorialSupportSubSingle
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LFocksLemmas
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LFockbLemmas
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LBidetMinor
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LBidetLemmas
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.DualWeylNonDom
+module
+
+public import Mathlib
+public import Formalism.BranchSandwichDivisors.StatementW
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.ProdFactorialSupportSubSingle
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LFocksLemmas
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LFockbLemmas
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LBidetMinor
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LBidetLemmas
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.DualWeylNonDom
+
+@[expose] public section
 
 open MvPolynomial Formalism.GradedWeylDivisibility Formalism.REAL
 

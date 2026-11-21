@@ -1,7 +1,11 @@
-import Development.AutomorphicArithmetic.FrobeniusLocalisation.DiffDefs
-import Development.AutomorphicArithmetic.FrobeniusLocalisation.GrpBridge
-import Development.AutomorphicArithmetic.FrobeniusLocalisation.VdTameWild
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDifferentExponentDenominator
+module
+
+public import Development.AutomorphicArithmetic.FrobeniusLocalisation.DiffDefs
+public import Development.AutomorphicArithmetic.FrobeniusLocalisation.GrpBridge
+public import Development.AutomorphicArithmetic.FrobeniusLocalisation.VdTameWild
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsDifferentExponentDenominator
+
+@[expose] public section
 
 open UpperTheory.HF
 

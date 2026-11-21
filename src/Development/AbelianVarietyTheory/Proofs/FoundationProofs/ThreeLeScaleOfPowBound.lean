@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AutomorphicArithmetic.CMTraceForms.CmDatumSmallPrimesLogBoundsOfParams
-import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.ONPage
-import Development.AbelianVarietyTheory.Definitions.Jets.NotRunTiesZeroSteps
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.DegreeWeightKappaLePageBound
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.RunWeightsSum
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.CMTraceForms.CmDatumSmallPrimesLogBoundsOfParams
+public import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.ONPage
+public import Development.AbelianVarietyTheory.Definitions.Jets.NotRunTiesZeroSteps
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.DegreeWeightKappaLePageBound
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.RunWeightsSum
+
+@[expose] public section
 
 set_option autoImplicit false
 

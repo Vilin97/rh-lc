@@ -1,5 +1,9 @@
-import ReciprocityTheory.L2DbarEstimates.SkodaWeights.HlinVsqPos
-import ReciprocityTheory.L2DbarEstimates.SkodaWeights.LeviVA
+module
+
+public import ReciprocityTheory.L2DbarEstimates.SkodaWeights.HlinVsqPos
+public import ReciprocityTheory.L2DbarEstimates.SkodaWeights.LeviVA
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.H
 

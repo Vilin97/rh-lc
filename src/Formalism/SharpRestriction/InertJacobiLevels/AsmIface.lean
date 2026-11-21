@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.ParamsHeightRankConstant
-import Formalism.SharpRestriction.GlobalSchurBounds.MainIn
+module
+
+public import Formalism.SharpRestriction.ParamsHeightRankConstant
+public import Formalism.SharpRestriction.GlobalSchurBounds.MainIn
+
+@[expose] public section
 
 noncomputable section
 

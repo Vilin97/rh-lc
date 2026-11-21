@@ -1,6 +1,10 @@
-import Development.EtaleCohomology.CohomologicalPurity.LeafRootPf
-import Mathlib.RingTheory.Etale.StandardEtale
-import Mathlib.RingTheory.RingHom.Etale
+module
+
+public import Development.EtaleCohomology.CohomologicalPurity.LeafRootPf
+public import Mathlib.RingTheory.Etale.StandardEtale
+public import Mathlib.RingTheory.RingHom.Etale
+
+@[expose] public section
 
 noncomputable section
 open Polynomial

@@ -1,4 +1,8 @@
-import ReciprocityTheory.AnalyticForms.AnalyticCharts.OsgoodA
+module
+
+public import ReciprocityTheory.AnalyticForms.AnalyticCharts.OsgoodA
+
+@[expose] public section
 
 noncomputable section
 

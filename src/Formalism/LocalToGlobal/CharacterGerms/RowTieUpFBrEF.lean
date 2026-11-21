@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTieUpFBrS
-import Mathlib
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieUpFBrS
+public import Mathlib
+
+@[expose] public section
 
 set_option autoImplicit false
 

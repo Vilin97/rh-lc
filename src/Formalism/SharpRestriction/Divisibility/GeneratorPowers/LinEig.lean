@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpTie
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.SolveV
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.ChartChg
-import Formalism.LocalToGlobal.ProjectiveLattices.SatLeaves
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DegreeOneStatement
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpTie
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.SolveV
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.ChartChg
+public import Formalism.LocalToGlobal.ProjectiveLattices.SatLeaves
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DegreeOneStatement
+
+@[expose] public section
 
 set_option autoImplicit false
 

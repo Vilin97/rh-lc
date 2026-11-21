@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.Different
-import GroundTheory.LocalFields.LocalFourierExistence
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.Different
+public import GroundTheory.LocalFields.LocalFourierExistence
+
+@[expose] public section
 
 noncomputable section
 

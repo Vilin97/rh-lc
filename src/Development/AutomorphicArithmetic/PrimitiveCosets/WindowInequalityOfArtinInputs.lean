@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.PrimitiveCosets.CoreGm
-import Development.AutomorphicArithmetic.PrimitiveCosets.Imports
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.TopWin
+module
+
+public import Development.AutomorphicArithmetic.PrimitiveCosets.CoreGm
+public import Development.AutomorphicArithmetic.PrimitiveCosets.Imports
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.TopWin
+
+@[expose] public section
 
 noncomputable section
 

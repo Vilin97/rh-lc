@@ -1,8 +1,12 @@
-import Formalism.FilteredPoleLength.ReducedBasisBounds.LengthBaseChangeLocal
-import Formalism.FilteredPoleLength.LocalDescentLevels.MemSpanBasisFun
-import Formalism.IncomingBounds.FlowDegreeBounds.IndexLastReductionHolds
-import Formalism.FilteredPoleLength.LocalDescentLevels.FilIntegerStep
-import Formalism.FilteredPoleLength.LocalDescentLevels.BCount
+module
+
+public import Formalism.FilteredPoleLength.ReducedBasisBounds.LengthBaseChangeLocal
+public import Formalism.FilteredPoleLength.LocalDescentLevels.MemSpanBasisFun
+public import Formalism.IncomingBounds.FlowDegreeBounds.IndexLastReductionHolds
+public import Formalism.FilteredPoleLength.LocalDescentLevels.FilIntegerStep
+public import Formalism.FilteredPoleLength.LocalDescentLevels.BCount
+
+@[expose] public section
 
 namespace Formalism.LatticeBaseChangeAlt
 

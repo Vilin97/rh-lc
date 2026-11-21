@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.PlaceBelow
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PartialDerivativeExponent
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.PlaceBelow
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PartialDerivativeExponent
+
+@[expose] public section
 
 set_option autoImplicit false
 

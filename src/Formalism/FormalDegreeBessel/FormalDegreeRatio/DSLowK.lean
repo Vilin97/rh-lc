@@ -1,5 +1,9 @@
-import Formalism.FormalDegreeBessel.StatementDS
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.HalfSumRootsStandard
+module
+
+public import Formalism.FormalDegreeBessel.StatementDS
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.HalfSumRootsStandard
+
+@[expose] public section
 
 open Finset
 

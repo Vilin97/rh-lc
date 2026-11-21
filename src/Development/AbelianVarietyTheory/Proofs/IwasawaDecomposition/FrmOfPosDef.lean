@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.FramesLemmas
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.FramesLemmas
+
+@[expose] public section
 
 open NumberField
 open scoped Matrix ComplexOrder

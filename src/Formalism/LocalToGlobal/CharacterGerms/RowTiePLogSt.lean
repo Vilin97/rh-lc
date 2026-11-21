@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePLogExSt
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePGerm
-import Mathlib
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePLogExSt
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePGerm
+public import Mathlib
+
+@[expose] public section
 
 set_option autoImplicit false
 

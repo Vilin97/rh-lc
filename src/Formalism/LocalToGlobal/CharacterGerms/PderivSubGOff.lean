@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.CharacterGerms.BlockMembershipSelfConjCharts
-import Formalism.LocalToGlobal.CharacterGerms.RowTieMemCDeg
-import Formalism.LocalToGlobal.CharacterGerms.FinTwoNeOneSub
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.BlockMembershipSelfConjCharts
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieMemCDeg
+public import Formalism.LocalToGlobal.CharacterGerms.FinTwoNeOneSub
+
+@[expose] public section
 
 noncomputable section
 

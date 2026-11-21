@@ -1,5 +1,9 @@
-import Formalism.LandauZeroFreeBounds.LogDerivRegionChiOf
-import Formalism.LandauZeroFreeBounds.ExceptionalZeroBounds.LGrowth
+module
+
+public import Formalism.LandauZeroFreeBounds.LogDerivRegionChiOf
+public import Formalism.LandauZeroFreeBounds.ExceptionalZeroBounds.LGrowth
+
+@[expose] public section
 
 open Complex Finset
 

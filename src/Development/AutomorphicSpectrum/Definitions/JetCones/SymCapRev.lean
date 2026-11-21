@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.PeriodIntegrals.DSInfCharCap
-import Formalism.PeriodIntegrals.IsLowUnitH
-import Formalism.RealPlaceAnalysis.StatementA
-import Formalism.RealPlaceAnalysis.StatementB
-import Formalism.RealPlaceAnalysis.StatementE
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.DSInfCharCap
+public import Formalism.PeriodIntegrals.IsLowUnitH
+public import Formalism.RealPlaceAnalysis.StatementA
+public import Formalism.RealPlaceAnalysis.StatementB
+public import Formalism.RealPlaceAnalysis.StatementE
+
+@[expose] public section
 
 open scoped InnerProductSpace
 open Finset

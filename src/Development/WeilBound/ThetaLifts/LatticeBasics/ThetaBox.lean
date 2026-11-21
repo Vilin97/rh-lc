@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.SliceSeminorm
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilRepresentationPreservesSchwartz
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsStdCharNegOneOfStandardTraceAdelicAddChar
-import Development.AutomorphicSpectrum.Proofs.NonGaloisProofs.ExistsEqAdelicCharMul
-import Development.AutomorphicSpectrum.Proofs.MembershipProofs.ThetaSumStarAndSchAStar
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.SliceSeminorm
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.WeilRepresentationPreservesSchwartz
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsStdCharNegOneOfStandardTraceAdelicAddChar
+public import Development.AutomorphicSpectrum.Proofs.NonGaloisProofs.ExistsEqAdelicCharMul
+public import Development.AutomorphicSpectrum.Proofs.MembershipProofs.ThetaSumStarAndSchAStar
+
+@[expose] public section
 
 noncomputable section
 

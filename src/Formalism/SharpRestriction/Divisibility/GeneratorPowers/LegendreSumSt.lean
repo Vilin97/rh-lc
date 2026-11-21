@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.RowDeg
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleRightZeroThd
-import Mathlib
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.RowDeg
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleRightZeroThd
+public import Mathlib
+
+@[expose] public section
 
 set_option autoImplicit false
 

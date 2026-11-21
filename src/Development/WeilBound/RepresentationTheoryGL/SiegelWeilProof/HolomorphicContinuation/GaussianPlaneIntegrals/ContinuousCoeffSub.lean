@@ -1,6 +1,10 @@
-import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.GaussianPlaneIntegrals.AssemblyAlt
-import Formalism.RealPlaceAnalysis.InstMeasurableSpaceUJ
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.TotalDegreeLinear
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.HolomorphicContinuation.GaussianPlaneIntegrals.AssemblyAlt
+public import Formalism.RealPlaceAnalysis.InstMeasurableSpaceUJ
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.TotalDegreeLinear
+
+@[expose] public section
 
 noncomputable section
 

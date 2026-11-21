@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ExponentWordRecursion
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ExponentWordRecursion
+
+@[expose] public section
 
 open Matrix Filter Topology
 open scoped ComplexConjugate

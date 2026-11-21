@@ -1,7 +1,11 @@
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.FiniteMinimalPrimes
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.ChPrime
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.JacChart
-import Mathlib
+module
+
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.FiniteMinimalPrimes
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.ChPrime
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.JacChart
+public import Mathlib
+
+@[expose] public section
 
 noncomputable section
 

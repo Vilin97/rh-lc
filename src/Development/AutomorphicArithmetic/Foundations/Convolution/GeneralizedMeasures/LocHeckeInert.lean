@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.ASmooth
-import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.SelmerRankBounds.IsNormAlong
-import GroundTheory.AutomorphicForms.SatakeNormalized
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.ASmooth
+public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.SelmerRankBounds.IsNormAlong
+public import GroundTheory.AutomorphicForms.SatakeNormalized
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Formalism.JacobiWeightFamilies.Statement
-import Formalism.StatementU
-import Formalism.CorankShare.StatementFR
-import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality
+module
+
+public import Formalism.JacobiWeightFamilies.Statement
+public import Formalism.StatementU
+public import Formalism.CorankShare.StatementFR
+public import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality
+
+@[expose] public section
 
 open Finset ArithmeticFunction
 

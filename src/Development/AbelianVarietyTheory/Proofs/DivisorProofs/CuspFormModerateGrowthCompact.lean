@@ -1,8 +1,12 @@
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KerInfMemLocSpan
-import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.StrongMultiplicityOne
-import GroundTheory.AutomorphicForms.MultiplicityOne.Injective
-import Development.AbelianVarietyTheory.Definitions.Divisors.KerInfIntegrableOfMemRspan
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CompactUniformBound
+module
+
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.KerInfMemLocSpan
+public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.StrongMultiplicityOne
+public import GroundTheory.AutomorphicForms.MultiplicityOne.Injective
+public import Development.AbelianVarietyTheory.Definitions.Divisors.KerInfIntegrableOfMemRspan
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CompactUniformBound
+
+@[expose] public section
 
 noncomputable section
 

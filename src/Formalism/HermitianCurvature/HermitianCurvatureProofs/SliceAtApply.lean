@@ -1,10 +1,14 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PtSizePtG
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegrableBlockIntegrand
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SliceIntCut
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.YGSlice
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.OpApplySub
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FormLevLimit
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BetaCongrRight
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PtSizePtG
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegrableBlockIntegrand
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SliceIntCut
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.YGSlice
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OpApplySub
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FormLevLimit
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BetaCongrRight
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.FormNormSumIdentities
 

@@ -1,4 +1,8 @@
-import Development.AutomorphicSpectrum.Definitions.MetricPeriods.HeBranching
+module
+
+public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.HeBranching
+
+@[expose] public section
 
 noncomputable section
 

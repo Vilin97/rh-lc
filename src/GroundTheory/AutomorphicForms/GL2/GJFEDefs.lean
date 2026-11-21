@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJFERat
-import GroundTheory.AutomorphicForms.GL2.GJMatrixLocal
-import GroundTheory.AutomorphicForms.GL2.GJInducedZeta
-import GroundTheory.AutomorphicForms.LeviStagesProduct
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJFERat
+public import GroundTheory.AutomorphicForms.GL2.GJMatrixLocal
+public import GroundTheory.AutomorphicForms.GL2.GJInducedZeta
+public import GroundTheory.AutomorphicForms.LeviStagesProduct
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.TateTwists.CupflipHomotopyPf
-import Development.EtaleCohomology.TateTwists.EtaleAlexanderWhitneyCupLeibnizOfPairing
+module
+
+public import Development.EtaleCohomology.TateTwists.CupflipHomotopyPf
+public import Development.EtaleCohomology.TateTwists.EtaleAlexanderWhitneyCupLeibnizOfPairing
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC

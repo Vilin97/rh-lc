@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.PositionExpansionTopCoefficients
-import Lemmata.HermitianSesquilinear.ConjEqOfNonnegReal
+module
+
+public import Formalism.HermitianCurvature.PositionExpansionTopCoefficients
+public import Lemmata.HermitianSesquilinear.ConjEqOfNonnegReal
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.GramProductIdentities
 

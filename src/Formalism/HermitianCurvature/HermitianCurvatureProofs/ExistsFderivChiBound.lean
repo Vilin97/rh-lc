@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TendstoIntUv
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TendstoIntUv
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 open scoped ComplexConjugate InnerProductSpace ContDiff

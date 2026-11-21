@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.BlockRank
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.BlockRank
+
+@[expose] public section
 
 noncomputable section
 

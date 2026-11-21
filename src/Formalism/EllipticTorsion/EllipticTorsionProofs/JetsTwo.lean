@@ -1,5 +1,9 @@
-import Formalism.EllipticTorsion.JetsCube
-import Formalism.FormalGroupLog.FormalGroupLogProofs.ConstantCoeffSubstOfZero
+module
+
+public import Formalism.EllipticTorsion.JetsCube
+public import Formalism.FormalGroupLog.FormalGroupLogProofs.ConstantCoeffSubstOfZero
+
+@[expose] public section
 
 universe u
 

@@ -1,11 +1,15 @@
-import Mathlib
-import GroundTheory.PAdicHodge.ExistsNormLeOfNormLtOneFinite
-import GroundTheory.PAdicHodge.FundamentalSeqBCris
-import GroundTheory.PAdicHodge.SenTateCharClosure
-import GroundTheory.PAdicHodge.BCrisEigenFrob
-import GroundTheory.PAdicHodge.BCrisRegularSenTate
-import GroundTheory.PAdicHodge.BCrisGalois
-import GroundTheory.PAdicHodge.WAKummerEps
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.ExistsNormLeOfNormLtOneFinite
+public import GroundTheory.PAdicHodge.FundamentalSeqBCris
+public import GroundTheory.PAdicHodge.SenTateCharClosure
+public import GroundTheory.PAdicHodge.BCrisEigenFrob
+public import GroundTheory.PAdicHodge.BCrisRegularSenTate
+public import GroundTheory.PAdicHodge.BCrisGalois
+public import GroundTheory.PAdicHodge.WAKummerEps
+
+@[expose] public section
 
 noncomputable section
 

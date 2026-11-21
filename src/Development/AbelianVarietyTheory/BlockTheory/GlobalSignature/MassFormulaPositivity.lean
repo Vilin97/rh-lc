@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GapAtLeast
-import Formalism.LocalRingCardinality.SpanPowerMembership.Spaces
-import Formalism.HermitianLattices.HermitianLatticesProofs.MassBasic
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GapAtLeast
+public import Formalism.LocalRingCardinality.SpanPowerMembership.Spaces
+public import Formalism.HermitianLattices.HermitianLatticesProofs.MassBasic
+
+@[expose] public section
 
 noncomputable section
 

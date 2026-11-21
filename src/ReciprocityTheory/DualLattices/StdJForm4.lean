@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.InvolutionPermApplyZero
+module
+
+public import ReciprocityTheory.DualLattices.InvolutionPermApplyZero
+
+@[expose] public section
 
 noncomputable section
 

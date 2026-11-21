@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.HermitianCurvature.LatticeHerglotzBound
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.LatticeHerglotzBound
+
+@[expose] public section
 
 open Filter Topology Finset
 

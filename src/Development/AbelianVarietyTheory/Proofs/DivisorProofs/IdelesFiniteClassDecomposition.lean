@@ -1,6 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.Tuples
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsPowNormOneIdeleEqPrincipalMulIntegralUnit
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.Tuples
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsPowNormOneIdeleEqPrincipalMulIntegralUnit
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.L2.DIV Formalism.UG
 
 noncomputable section

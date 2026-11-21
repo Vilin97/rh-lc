@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.TiedCF
+module
+
+public import Formalism.LocalToGlobal.Columns.TiedCF
+
+@[expose] public section
 
 noncomputable section
 

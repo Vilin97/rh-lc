@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.IdeleAction
-import GroundTheory.GlobalFields.Adele.Approximation
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.IdeleAction
+public import GroundTheory.GlobalFields.Adele.Approximation
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global

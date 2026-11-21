@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.LastRowColLevSym
-import Formalism.LocalToGlobal.Columns.OcbLevIsSym
+module
+
+public import Formalism.LocalToGlobal.Columns.LastRowColLevSym
+public import Formalism.LocalToGlobal.Columns.OcbLevIsSym
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 

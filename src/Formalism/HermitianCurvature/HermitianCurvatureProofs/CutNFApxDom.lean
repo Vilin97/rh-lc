@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopForm
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopDom
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CccoefMono
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopForm
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFTopDom
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CccoefMono
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP
 

@@ -1,4 +1,8 @@
-import Formalism.AdmissibleDesigns.TrivialBoundTargetOfDict
+module
+
+public import Formalism.AdmissibleDesigns.TrivialBoundTargetOfDict
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

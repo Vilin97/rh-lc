@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ChowForms.StatementsDehomogOrd
-import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChartLocalOrder
-import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChartLocDomain
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ChowForms.StatementsDehomogOrd
+public import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChartLocalOrder
+public import GroundTheory.HeightsAndTheta.Heights.ChowForms.PChartLocDomain
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

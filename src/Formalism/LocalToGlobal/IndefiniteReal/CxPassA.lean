@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.CxPassSk
-import Formalism.LocalToGlobal.IndefiniteReal.TraceOfDiag
-import Formalism.LocalToGlobal.GlobalTheory.DivPassageP
-import Formalism.LocalToGlobal.GlobalTheory.PassageBaseSymmetricLevels
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.CxPassSk
+public import Formalism.LocalToGlobal.IndefiniteReal.TraceOfDiag
+public import Formalism.LocalToGlobal.GlobalTheory.DivPassageP
+public import Formalism.LocalToGlobal.GlobalTheory.PassageBaseSymmetricLevels
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder InnerProductSpace

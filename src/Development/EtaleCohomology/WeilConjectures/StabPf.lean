@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.WeilConjectures.ContinCut
+module
+
+public import Development.EtaleCohomology.WeilConjectures.ContinCut
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry GlobalTheory.EtC GlobalTheory.Et

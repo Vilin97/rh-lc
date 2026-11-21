@@ -1,9 +1,13 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.LatticeBasics.SchToPol
-import Development.WeilBound.ThetaLifts.LatticeBasics.DenseG
-import Development.WeilBound.ThetaLifts.LatticeBasics.DenseM
-import Development.WeilBound.ThetaLifts.ConeHypotheses.PureEqPureA
-import Development.WeilBound.ThetaLifts.LatticeBasics.ExistsRealStructure
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.LatticeBasics.SchToPol
+public import Development.WeilBound.ThetaLifts.LatticeBasics.DenseG
+public import Development.WeilBound.ThetaLifts.LatticeBasics.DenseM
+public import Development.WeilBound.ThetaLifts.ConeHypotheses.PureEqPureA
+public import Development.WeilBound.ThetaLifts.LatticeBasics.ExistsRealStructure
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MajorantEstimate
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MajorantEstimate
+
+@[expose] public section
 
 open Matrix Formalism.FourierDecayAlt Formalism.QuantumDeterminants MeasureTheory
 open scoped ComplexConjugate ENNReal

@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzContinuousAtOfPointwiseOfBounded
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PolyMulGaussianBounded
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzContinuousAtOfPointwiseOfBounded
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PolyMulGaussianBounded
+
+@[expose] public section
 
 open Filter Topology
 open scoped Nat

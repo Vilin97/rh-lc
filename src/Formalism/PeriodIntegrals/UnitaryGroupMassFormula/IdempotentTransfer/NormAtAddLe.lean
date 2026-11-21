@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataArith
-import Formalism.HarderNarasimhan.ShiftInvariance
-import Formalism.HarderNarasimhan.HarderNarasimhanProofs.PolygonSlopeSum
-import Formalism.HarderNarasimhan.Statement
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataArith
+public import Formalism.HarderNarasimhan.ShiftInvariance
+public import Formalism.HarderNarasimhan.HarderNarasimhanProofs.PolygonSlopeSum
+public import Formalism.HarderNarasimhan.Statement
+
+@[expose] public section
 
 noncomputable section
 

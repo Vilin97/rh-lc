@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.DefiniteSideNonzeroIndexPlacesAnyColumnsScale
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GeoHalfUpd
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.DefiniteSideNonzeroIndexPlacesAnyColumnsScale
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GeoHalfUpd
+
+@[expose] public section
 
 noncomputable section
 

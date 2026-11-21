@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.RealInputsClosedAdmissibleSettings
-import Formalism.HermitianCurvature.FrameExists2
+module
+
+public import Formalism.HermitianCurvature.RealInputsClosedAdmissibleSettings
+public import Formalism.HermitianCurvature.FrameExists2
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.TL
 

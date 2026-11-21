@@ -1,13 +1,17 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Statements.AlgebraStatements.HodgeTateNormComparison
-import Development.AutomorphicSpectrum.Statements.GeometryStatements.IsPolLatticePlane
-import Development.WeilBound.CoreStatements.HodgeTatePoints.GdChartFin
-import Development.WeilBound.CoreStatements.HodgeTatePoints.GcChart
-import Development.WeilBound.CoreStatements.HodgeTatePoints.RedOmHTBc
-import Development.WeilBound.CoreStatements.HodgeTatePoints.DualUnique
-import Development.WeilBound.CoreStatements.HodgeTatePoints.GaSurj
-import Development.WeilBound.CoreStatements.HodgeTatePoints.GdSplit
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankDualAndRangeDualMapBaseChange
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Statements.AlgebraStatements.HodgeTateNormComparison
+public import Development.AutomorphicSpectrum.Statements.GeometryStatements.IsPolLatticePlane
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.GdChartFin
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.GcChart
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.RedOmHTBc
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.DualUnique
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.GaSurj
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.GdSplit
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankDualAndRangeDualMapBaseChange
+
+@[expose] public section
 
 open Module NumberField GlobalTheory.CompanionTheory.Ar.HT TensorProduct
 

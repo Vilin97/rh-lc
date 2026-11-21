@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.UnipotentAdelicQuotients.JetMomFound
-import Development.AbelianVarietyTheory.Definitions.Jets.PowerSeriesHasSumAt
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FormalGroupNatMulSeriesProperties
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsIsoMultiplicative
+module
+
+public import Mathlib
+public import Formalism.UnipotentAdelicQuotients.JetMomFound
+public import Development.AbelianVarietyTheory.Definitions.Jets.PowerSeriesHasSumAt
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FormalGroupNatMulSeriesProperties
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsIsoMultiplicative
+
+@[expose] public section
 
 open GlobalTheory.ConvSer
 

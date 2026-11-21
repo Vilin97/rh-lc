@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.RowDeg
-import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.InvariantOperatorValueTriangularChange
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.RowDeg
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.InvariantOperatorValueTriangularChange
+
+@[expose] public section
 
 set_option autoImplicit false
 

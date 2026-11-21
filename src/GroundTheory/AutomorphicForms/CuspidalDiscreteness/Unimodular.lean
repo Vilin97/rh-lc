@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.Reduction
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.Reduction
+
+@[expose] public section
 
 open MeasureTheory Set
 

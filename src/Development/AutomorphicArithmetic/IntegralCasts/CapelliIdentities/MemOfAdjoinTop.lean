@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qj1.mem_of_adjoin_top.{u_2} :
     ∀ {l : ℕ}

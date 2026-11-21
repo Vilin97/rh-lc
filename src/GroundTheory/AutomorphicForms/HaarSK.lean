@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 open MeasureTheory Measure Topology Set Function TopologicalSpace
 open scoped ENNReal NNReal

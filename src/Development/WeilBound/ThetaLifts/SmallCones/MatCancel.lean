@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.SmallCones.ColsOfMul
-import Development.WeilBound.ThetaLifts.TowerModels.LeviAd
+module
+
+public import Development.WeilBound.ThetaLifts.SmallCones.ColsOfMul
+public import Development.WeilBound.ThetaLifts.TowerModels.LeviAd
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

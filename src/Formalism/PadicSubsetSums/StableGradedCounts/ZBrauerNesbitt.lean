@@ -1,5 +1,9 @@
-import Formalism.PadicSubsetSums.StableGradedCounts.ZBrauerNesbittAlg
-import Lemmata.ScalarExtension.Scal
+module
+
+public import Formalism.PadicSubsetSums.StableGradedCounts.ZBrauerNesbittAlg
+public import Lemmata.ScalarExtension.Scal
+
+@[expose] public section
 
 noncomputable section
 open Polynomial

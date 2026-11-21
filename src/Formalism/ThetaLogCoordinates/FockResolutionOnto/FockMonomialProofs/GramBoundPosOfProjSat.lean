@@ -1,6 +1,10 @@
-import Formalism.ThetaLogCoordinates.FockResolutionOnto.StatementH
-import Formalism.ThetaLogCoordinates.FockResolutionOnto.FockMonomialProofs.GramBoundUnconditionalOfSat
-import Formalism.ThetaLogCoordinates.FockResolutionOnto.FockMonomialProofs.Vanish
+module
+
+public import Formalism.ThetaLogCoordinates.FockResolutionOnto.StatementH
+public import Formalism.ThetaLogCoordinates.FockResolutionOnto.FockMonomialProofs.GramBoundUnconditionalOfSat
+public import Formalism.ThetaLogCoordinates.FockResolutionOnto.FockMonomialProofs.Vanish
+
+@[expose] public section
 
 namespace Formalism.InvariantFactorPaths.L4
 

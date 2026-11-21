@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.LocJacTyp
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.LocJacTyp
+
+@[expose] public section
 
 noncomputable section
 

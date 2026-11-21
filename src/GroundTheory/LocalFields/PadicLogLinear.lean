@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.PrincipalUnitsModule
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.PrincipalUnitsModule
+
+@[expose] public section
 
 namespace GroundTheory.LocalField
 

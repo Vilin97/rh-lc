@@ -1,4 +1,8 @@
-import Formalism.PieriBlockIdeals.BranchingBoundLastGradedOneRow
+module
+
+public import Formalism.PieriBlockIdeals.BranchingBoundLastGradedOneRow
+
+@[expose] public section
 
 open MvPolynomial
 

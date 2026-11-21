@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.GammaSemisimpleLocalOfConsequences
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.GammaSemisimpleLocalOfConsequences
+
+@[expose] public section
 
 noncomputable section
 

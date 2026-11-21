@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.DegreeFormula.FlagDegFormula
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsHeightIffOfDegreeEq
-import Development.AbelianVarietyTheory.Definitions.Divisors.IrreducibleOfIrreducibleMap
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinSubstLinSubst
+module
+
+public import Mathlib
+public import Formalism.DegreeFormula.FlagDegFormula
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsHeightIffOfDegreeEq
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IrreducibleOfIrreducibleMap
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinSubstLinSubst
+
+@[expose] public section
 
 set_option autoImplicit false
 

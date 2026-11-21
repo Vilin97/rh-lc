@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWallach.FunctionalCalculusLaws
-import GroundTheory.GlobalFields.Artin.LogCharpoly
+module
+
+public import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWallach.FunctionalCalculusLaws
+public import GroundTheory.GlobalFields.Artin.LogCharpoly
+
+@[expose] public section
 
 noncomputable section
 

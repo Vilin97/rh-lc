@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverStdB
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverF
+module
+
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverStdB
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverF
+
+@[expose] public section
 
 open Formalism.BasicNotions
 

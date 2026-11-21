@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.CharacterGerms.Interface
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.CharacterGerms.Interface
+
+@[expose] public section
 
 open scoped BigOperators
 open Formalism.L2.FormalSeriesBounds

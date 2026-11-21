@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.MemPolKIff
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MapCastMono
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.MemPolKIff
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MapCastMono
+
+@[expose] public section
 
 noncomputable section
 

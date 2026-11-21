@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.IsChartIff
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.SabPull
-import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.JetChartLaws
-import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.GlobalBasisAlgebra
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsUniqueCoord
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.IsChartIff
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.SabPull
+public import Development.AbelianVarietyTheory.BlockTheory.ExistenceTori.JetChartLaws
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.GlobalBasisAlgebra
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsUniqueCoord
+
+@[expose] public section
 
 set_option autoImplicit false
 

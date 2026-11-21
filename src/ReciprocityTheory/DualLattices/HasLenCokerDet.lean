@@ -1,5 +1,9 @@
-import ReciprocityTheory.DualLattices.LenIdBStatement
-import ReciprocityTheory.DualLattices.UpSmith
+module
+
+public import ReciprocityTheory.DualLattices.LenIdBStatement
+public import ReciprocityTheory.DualLattices.UpSmith
+
+@[expose] public section
 
 noncomputable section
 

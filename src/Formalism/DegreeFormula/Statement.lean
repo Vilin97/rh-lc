@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.MoebiusJetDuality.StatementU
-import Formalism.SatakeDualWeyl.Statement
+module
+
+public import Mathlib
+public import Formalism.MoebiusJetDuality.StatementU
+public import Formalism.SatakeDualWeyl.Statement
+
+@[expose] public section
 
 noncomputable section
 

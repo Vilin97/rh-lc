@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.UnitaryNorms.ArtGCut
-import Formalism.LocalToGlobal.UnitaryNorms.JointCut
-import Formalism.SharpRestriction.Divisibility.AbsolutelyIrreducibleSpan
-import Formalism.LocalRingCardinality.SpanPowerMembership.PlacesOverNcardOfSplitInj
-import Formalism.SharpRestriction.GlobalTheoremInputs
-import Formalism.LocalRingCardinality.HostCls
+module
+
+public import Formalism.LocalToGlobal.UnitaryNorms.ArtGCut
+public import Formalism.LocalToGlobal.UnitaryNorms.JointCut
+public import Formalism.SharpRestriction.Divisibility.AbsolutelyIrreducibleSpan
+public import Formalism.LocalRingCardinality.SpanPowerMembership.PlacesOverNcardOfSplitInj
+public import Formalism.SharpRestriction.GlobalTheoremInputs
+public import Formalism.LocalRingCardinality.HostCls
+
+@[expose] public section
 
 noncomputable section
 

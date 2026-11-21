@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.ArchimedeanWhittaker.MultOne
-import GroundTheory.AutomorphicForms.MultiplicityOne.OpenSubgroupRep
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.ArchimedeanWhittaker.MultOne
+public import GroundTheory.AutomorphicForms.MultiplicityOne.OpenSubgroupRep
+
+@[expose] public section
 
 open scoped InnerProductSpace ComplexConjugate ComplexStarModule
 open Set Function

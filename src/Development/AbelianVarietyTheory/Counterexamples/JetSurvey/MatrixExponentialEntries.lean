@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.CapelliEig
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.CapelliEig
+
+@[expose] public section
+
 open Matrix MeasureTheory
 noncomputable section
 namespace GlobalTheory.Survey.MatrixExponentialEntries

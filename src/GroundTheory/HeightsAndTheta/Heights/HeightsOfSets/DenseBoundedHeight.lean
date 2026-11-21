@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.DenseChart
-import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.DenseHeight
-import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.DenseLift
-import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.DenseIntegral
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.DenseChart
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.DenseHeight
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.DenseLift
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.DenseIntegral
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

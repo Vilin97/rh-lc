@@ -1,4 +1,8 @@
-import Formalism.PolynomialDimension.EdgeSumGoodRank
+module
+
+public import Formalism.PolynomialDimension.EdgeSumGoodRank
+
+@[expose] public section
 
 noncomputable section
 

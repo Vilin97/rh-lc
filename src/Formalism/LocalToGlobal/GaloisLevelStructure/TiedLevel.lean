@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GaloisLevelStructure.TiedHecke
-import Formalism.LocalToGlobal.GaloisLevelStructure.DefsLevel
+module
+
+public import Formalism.LocalToGlobal.GaloisLevelStructure.TiedHecke
+public import Formalism.LocalToGlobal.GaloisLevelStructure.DefsLevel
+
+@[expose] public section
 
 noncomputable section
 

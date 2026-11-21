@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.OnePlaceEstimates
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.OnePlaceEstimates
+
+@[expose] public section
 
 open MeasureTheory Matrix Finset
 open scoped InnerProductSpace

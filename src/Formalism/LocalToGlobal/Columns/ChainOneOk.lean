@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.ChainOneOkL
-import Formalism.LocalToGlobal.Columns.RecLevelSym
+module
+
+public import Formalism.LocalToGlobal.Columns.ChainOneOkL
+public import Formalism.LocalToGlobal.Columns.RecLevelSym
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

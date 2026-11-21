@@ -1,8 +1,12 @@
-import Development.WeilBound.CoreStatements.AutomorphicKernels.DeRhamPotentiallySemistable.DeRhamTwists.ContinuousCyclotomicCharacter
-import Mathlib
-import GroundTheory.PAdicHodge.ExistsNormLeOfNormLtOneFinite
-import GroundTheory.PAdicHodge.FundamentalSeqBCris
-import GroundTheory.PAdicHodge.SenTateCharClosure
+module
+
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.DeRhamPotentiallySemistable.DeRhamTwists.ContinuousCyclotomicCharacter
+public import Mathlib
+public import GroundTheory.PAdicHodge.ExistsNormLeOfNormLtOneFinite
+public import GroundTheory.PAdicHodge.FundamentalSeqBCris
+public import GroundTheory.PAdicHodge.SenTateCharClosure
+
+@[expose] public section
 
 noncomputable section
 

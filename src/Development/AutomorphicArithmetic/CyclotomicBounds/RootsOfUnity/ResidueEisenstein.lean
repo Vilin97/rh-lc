@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.CyclotomicBounds.RootsOfUnity.TorsionReduceInjective
+module
+
+public import Development.AutomorphicArithmetic.CyclotomicBounds.RootsOfUnity.TorsionReduceInjective
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

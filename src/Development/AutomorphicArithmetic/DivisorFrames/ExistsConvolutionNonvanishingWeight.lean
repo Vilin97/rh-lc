@@ -1,9 +1,14 @@
-import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.ConeBDefs
-import Development.AutomorphicArithmetic.DivisorFrames.ExistsTestFourierNonvanishing
-import Development.AutomorphicArithmetic.DivisorFrames.FourierNonvanishingUnitPoint
-import Development.AutomorphicArithmetic.DivisorFrames.FourierContinuousNonvanishing
-import Development.AutomorphicArithmetic.DivisorFrames.ConvolutionDecayIntegrableFourier
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.LocalEmbeddings.ConeBDefs
+public import Development.AutomorphicArithmetic.DivisorFrames.ExistsTestFourierNonvanishing
+public import Development.AutomorphicArithmetic.DivisorFrames.FourierNonvanishingUnitPoint
+public import Development.AutomorphicArithmetic.DivisorFrames.FourierContinuousNonvanishing
+public import Development.AutomorphicArithmetic.DivisorFrames.ConvolutionDecayIntegrableFourier
+
+@[expose] public section
+
 open MeasureTheory FreeSingleHomotopyEquivDiscreteChains.UpperTheory.Dv.ConeB
 
 private theorem bound_int {ι : Type} [Fintype ι] (C : ℝ) :

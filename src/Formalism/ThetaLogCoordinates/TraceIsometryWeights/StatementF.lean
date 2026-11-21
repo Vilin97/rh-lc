@@ -1,5 +1,9 @@
-import Formalism.ThetaLogCoordinates.TraceIsometryWeights.StatementC
-import Formalism.MahlerMeasure.StatementTM
+module
+
+public import Formalism.ThetaLogCoordinates.TraceIsometryWeights.StatementC
+public import Formalism.MahlerMeasure.StatementTM
+
+@[expose] public section
 
 namespace Formalism.InvariantFactorPaths.PW
 

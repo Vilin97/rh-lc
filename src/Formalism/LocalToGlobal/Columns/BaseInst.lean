@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.Columns.BaseLemmas
-import Formalism.LocalToGlobal.Divisibility.CoeffLemmas
-import Formalism.LocalToGlobal.UnitaryNorms.Lemmas
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleWeightMiddleEntries
+module
+
+public import Formalism.LocalToGlobal.Columns.BaseLemmas
+public import Formalism.LocalToGlobal.Divisibility.CoeffLemmas
+public import Formalism.LocalToGlobal.UnitaryNorms.Lemmas
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleWeightMiddleEntries
+
+@[expose] public section
 
 open NumberField IsDedekindDomain IntermediateField
 

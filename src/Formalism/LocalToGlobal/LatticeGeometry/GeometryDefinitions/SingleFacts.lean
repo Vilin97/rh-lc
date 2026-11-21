@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.LatticeGeometry.GeometryDefinitions.ClsSum
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.HarderNarasimhan.ShiftInvariance
-import Formalism.MeanHeightDescent.AverageDegreeBounds.TwistLower
+module
+
+public import Formalism.LocalToGlobal.LatticeGeometry.GeometryDefinitions.ClsSum
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.HarderNarasimhan.ShiftInvariance
+public import Formalism.MeanHeightDescent.AverageDegreeBounds.TwistLower
+
+@[expose] public section
 
 noncomputable section
 

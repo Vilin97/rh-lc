@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.RecBridgeTied
-import Formalism.LocalToGlobal.Divisibility.RecBridgeMkF
-import Formalism.LocalToGlobal.Columns.RowFormsSym
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.RecBridgeTied
+public import Formalism.LocalToGlobal.Divisibility.RecBridgeMkF
+public import Formalism.LocalToGlobal.Columns.RowFormsSym
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

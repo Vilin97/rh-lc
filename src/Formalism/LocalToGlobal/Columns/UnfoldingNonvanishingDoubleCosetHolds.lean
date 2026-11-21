@@ -1,6 +1,10 @@
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.TwistedEisensteinNonvanishing
-import Formalism.LocalToGlobal.Columns.ChainTwFinal
-import Formalism.LocalToGlobal.Columns.ChainTw
+module
+
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.TwistedEisensteinNonvanishing
+public import Formalism.LocalToGlobal.Columns.ChainTwFinal
+public import Formalism.LocalToGlobal.Columns.ChainTw
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

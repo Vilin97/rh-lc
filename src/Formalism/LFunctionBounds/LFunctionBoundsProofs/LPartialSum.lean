@@ -1,5 +1,9 @@
-import Formalism.LFunctionBounds.PositivityBound
-import Formalism.LFunctionBounds.LFunctionBoundsProofs.LFunctionEqGOfOneLt
+module
+
+public import Formalism.LFunctionBounds.PositivityBound
+public import Formalism.LFunctionBounds.LFunctionBoundsProofs.LFunctionEqGOfOneLt
+
+@[expose] public section
 
 open Complex Filter Topology
 

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.CoeffSumMonomialLinear
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LSatLemmas
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.CoeffSumMonomialLinear
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LSatLemmas
+
+@[expose] public section
 
 noncomputable section
 

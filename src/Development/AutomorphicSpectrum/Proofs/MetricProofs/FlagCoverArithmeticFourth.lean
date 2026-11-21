@@ -1,25 +1,30 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.MetricPeriods.Pull1
-import Development.AutomorphicSpectrum.Definitions.MetricPeriods.IsPeriodOn
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.IsImg
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PtsOverPt
-import GroundTheory.HeightsAndTheta.Heights.Intersections.IsMultiHomogProdInt
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ExistsNormalise
-import GroundTheory.HeightsAndTheta.Heights.Intersections.AevalNeZeroOfNotMem
-import GroundTheory.HeightsAndTheta.Heights.Intersections.POrbitCompNonvanish
-import GroundTheory.HeightsAndTheta.Heights.Intersections.Imports
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PChartNormPts
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PChartSpecCount
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PChartPrimElt
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PLocAwaySpec
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PChartScalingIndep
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PAdjoinIndepRelfinrank
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PGenFibreChartDeg
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PCoordRatioDeg
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.ChangeOfModel
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PCoordArithOfFnField
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsArithVarOfBlockAlgebraic
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.MCoordIdealCompLeImageZ
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.Pull1
+public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.IsPeriodOn
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.IsImg
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PtsOverPt
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.IsMultiHomogProdInt
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ExistsNormalise
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.AevalNeZeroOfNotMem
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.POrbitCompNonvanish
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.Imports
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PChartNormPts
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PChartSpecCount
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PChartPrimElt
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PLocAwaySpec
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PChartScalingIndep
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PAdjoinIndepRelfinrank
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PGenFibreChartDeg
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PCoordRatioDeg
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.ChangeOfModel
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PCoordArithOfFnField
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsArithVarOfBlockAlgebraic
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.MCoordIdealCompLeImageZ
+
+@[expose] public section
+
 open MvPolynomial MeasureTheory Filter Topology Matrix ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I2 ReciprocityTheory.ChartRestriction.G.AI.I4 GlobalTheory.CompanionTheory.Ar.PB GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.LowerBoundFree
 open scoped ComplexOrder Classical
 

@@ -1,5 +1,9 @@
-import Formalism.PadicSubsetSums.CentralIdempotents.EigenbasisOfDistinctRoots
-import Formalism.PadicSubsetSums.StableGradedCounts.IRRCentralIdempotent
+module
+
+public import Formalism.PadicSubsetSums.CentralIdempotents.EigenbasisOfDistinctRoots
+public import Formalism.PadicSubsetSums.StableGradedCounts.IRRCentralIdempotent
+
+@[expose] public section
 
 open Finset
 

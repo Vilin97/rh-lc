@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTieSelf
-import Formalism.LocalToGlobal.CharacterGerms.BlockAdmissibleChart
-import Formalism.LocalToGlobal.CharacterGerms.RowTieAdm
-import Formalism.LocalToGlobal.CharacterGerms.RowTieJet
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieSelf
+public import Formalism.LocalToGlobal.CharacterGerms.BlockAdmissibleChart
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieAdm
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieJet
+
+@[expose] public section
 
 noncomputable section
 

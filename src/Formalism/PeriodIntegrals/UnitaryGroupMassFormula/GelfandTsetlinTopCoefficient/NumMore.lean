@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.GTDefs
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GelfandTsetlinTopCoefficient.CardEraseIccMin
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GelfandTsetlinTopCoefficient.InterlacingDefectEqCard
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.GTDefs
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GelfandTsetlinTopCoefficient.CardEraseIccMin
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GelfandTsetlinTopCoefficient.InterlacingDefectEqCard
+
+@[expose] public section
 
 noncomputable section
 

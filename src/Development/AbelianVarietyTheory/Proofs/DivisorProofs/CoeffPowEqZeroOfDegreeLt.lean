@@ -1,5 +1,10 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.VEqZeroOfPowEqOne
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.VEqZeroOfPowEqOne
+
+@[expose] public section
+
 open MvPowerSeries ReciprocityTheory.PGsh
 
 namespace GlobalTheory.LgSubst

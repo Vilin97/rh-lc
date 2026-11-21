@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.CoordinateChangeComp1IntertwinesAction
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.CoordinateChangeComp1IntertwinesAction
+
+@[expose] public section
 
 noncomputable section
 

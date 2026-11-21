@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.FlagBundleSt
-import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.StatementsIntDim
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.FlagBundleSt
+public import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.StatementsIntDim
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

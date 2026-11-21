@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.LawA13OfContinuous
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.LawA13OfContinuous
+
+@[expose] public section
 
 noncomputable section
 

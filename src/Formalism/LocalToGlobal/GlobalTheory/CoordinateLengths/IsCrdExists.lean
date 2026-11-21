@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.CoordinateLengths.LenLen2OfCoord
-import Formalism.LocalToGlobal.GroupLattices.DownNaturalLevelZero
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.CoordinateLengths.LenLen2OfCoord
+public import Formalism.LocalToGlobal.GroupLattices.DownNaturalLevelZero
+
+@[expose] public section
 
 noncomputable section
 

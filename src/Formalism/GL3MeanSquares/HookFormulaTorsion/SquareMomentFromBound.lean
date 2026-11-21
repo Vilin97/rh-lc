@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.GL3MeanSquares.ConcavityEquidistribution
+module
+
+public import Mathlib
+public import Formalism.GL3MeanSquares.ConcavityEquidistribution
+
+@[expose] public section
 
 namespace Formalism.HermitianLattices.TraceIntegrality
 

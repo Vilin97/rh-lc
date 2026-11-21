@@ -1,5 +1,9 @@
-import Formalism.PieriBlockIdeals.StatementLD
-import Formalism.GradedWeylDivisibility.FinalD
+module
+
+public import Formalism.PieriBlockIdeals.StatementLD
+public import Formalism.GradedWeylDivisibility.FinalD
+
+@[expose] public section
 
 open MvPolynomial
 

@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarVolumes.TriDens
-import Lemmata.CurryModusPonens.CurryMp
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.HaarVolumes.TriDens
+public import Lemmata.CurryModusPonens.CurryMp
+
+@[expose] public section
 
 noncomputable section
 

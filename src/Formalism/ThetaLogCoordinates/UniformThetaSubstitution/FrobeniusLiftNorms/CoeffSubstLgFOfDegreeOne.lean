@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FirstDeriv
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.TopsChoicePartA
-import Formalism.FormalGroupLog.FormalGroupLogProofs.HomPsSubstMvSubst
-import Formalism.TorsionNormIteration.LubinTateExample
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.FrobSqV
+module
+
+public import Mathlib
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FirstDeriv
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.FrobeniusLiftNorms.TopsChoicePartA
+public import Formalism.FormalGroupLog.FormalGroupLogProofs.HomPsSubstMvSubst
+public import Formalism.TorsionNormIteration.LubinTateExample
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.FrobSqV
+
+@[expose] public section
 
 noncomputable section
 

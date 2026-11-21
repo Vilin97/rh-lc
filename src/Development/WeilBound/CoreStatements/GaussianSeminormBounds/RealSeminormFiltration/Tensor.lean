@@ -1,11 +1,15 @@
-import Development.WeilBound.CoreStatements.GaussianSeminormBounds.RealSeminormFiltration.TensorIrr
-import Mathlib.LinearAlgebra.PiTensorProduct.Basis
-import Mathlib.RingTheory.SimpleModule.Basic
-import Mathlib.RingTheory.Algebraic.LinearIndependent
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Analysis.Complex.Cardinality
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SpectrumNonemptyOfCountableRank
+module
+
+public import Development.WeilBound.CoreStatements.GaussianSeminormBounds.RealSeminormFiltration.TensorIrr
+public import Mathlib.LinearAlgebra.PiTensorProduct.Basis
+public import Mathlib.RingTheory.SimpleModule.Basic
+public import Mathlib.RingTheory.Algebraic.LinearIndependent
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Analysis.Complex.Cardinality
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SpectrumNonemptyOfCountableRank
+
+@[expose] public section
 
 noncomputable section
 

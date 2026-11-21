@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.HermitianForms.RankEqFirstLevel
-import Formalism.LocalToGlobal.HermitianColumns.TiedQC
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.RankEqFirstLevel
+public import Formalism.LocalToGlobal.HermitianColumns.TiedQC
+
+@[expose] public section
 
 noncomputable section
 

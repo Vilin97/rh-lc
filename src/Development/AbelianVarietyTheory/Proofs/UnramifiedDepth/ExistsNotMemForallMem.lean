@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.CharacterGerms.RowTieFB
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.LinEig
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieFB
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.LinEig
+
+@[expose] public section
 
 noncomputable section
 

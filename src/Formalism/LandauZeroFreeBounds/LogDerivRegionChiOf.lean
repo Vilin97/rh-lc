@@ -1,6 +1,10 @@
-import Formalism.LandauZeroFreeBounds.SiegelWalfiszAP
-import Formalism.LandauZeroFreeBounds.NoZeroComplexOf
-import Formalism.ZeroFreeRegion.SmallHeightLogDeriv
+module
+
+public import Formalism.LandauZeroFreeBounds.SiegelWalfiszAP
+public import Formalism.LandauZeroFreeBounds.NoZeroComplexOf
+public import Formalism.ZeroFreeRegion.SmallHeightLogDeriv
+
+@[expose] public section
 
 open Complex Finset ArithmeticFunction
 

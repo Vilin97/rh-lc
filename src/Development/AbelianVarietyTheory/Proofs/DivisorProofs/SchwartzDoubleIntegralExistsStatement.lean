@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzDoubleIntegralExists
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzDoubleIntegralExists
+
+@[expose] public section
+
 open MeasureTheory
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.schwartz_double_integral_exists : ∀ {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] {α β : Type} [MeasurableSpace α] [MeasurableSpace β] (μα : Measure α) (μβ : Measure β) (Fm : α → β → SchwartzMap V ℂ),

@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ContinuousUnipotentVectorScalar
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FormLevLimit
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ContinuousUnipotentVectorScalar
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FormLevLimit
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 open scoped ContDiff

@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.HermitianColumns.StepLevelQ
-import Formalism.LocalToGlobal.HermitianColumns.CoordinateLatticeSelfDual
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+module
+
+public import Formalism.LocalToGlobal.HermitianColumns.StepLevelQ
+public import Formalism.LocalToGlobal.HermitianColumns.CoordinateLatticeSelfDual
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+
+@[expose] public section
 
 noncomputable section
 

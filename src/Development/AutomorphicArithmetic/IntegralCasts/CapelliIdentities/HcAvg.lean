@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qe18.hc_avg :
     ∀ {k D M : Type} [inst : Field k] [inst_1 : Group D]

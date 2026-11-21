@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.HermitianColumns.ClsNonempty
-import Formalism.LocalToGlobal.HermitianColumns.Lev0Tied
+module
+
+public import Formalism.LocalToGlobal.HermitianColumns.ClsNonempty
+public import Formalism.LocalToGlobal.HermitianColumns.Lev0Tied
+
+@[expose] public section
 
 noncomputable section
 

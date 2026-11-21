@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTie
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleRightZeroThd
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTie
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.CocycleRightZeroThd
+
+@[expose] public section
 
 noncomputable section
 

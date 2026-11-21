@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.IsArithVarBotDualBlocksUnit
-import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.PCoordCurveDegree
-import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.PCurveComplexPoint
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PCoordConeArithVar
-import GroundTheory.HeightsAndTheta.Heights.Intersections.FlagBundleSt
-import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.POneBlockPoints
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.IsArithVarBotDualBlocksUnit
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.PCoordCurveDegree
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.PCurveComplexPoint
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PCoordConeArithVar
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.FlagBundleSt
+public import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.POneBlockPoints
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

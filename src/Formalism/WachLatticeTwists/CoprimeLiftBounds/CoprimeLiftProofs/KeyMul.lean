@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.CoprimeLiftBounds.CoprimeLiftProofs.LengthMapQuotLe
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.CupKillAdm
+module
+
+public import Formalism.WachLatticeTwists.CoprimeLiftBounds.CoprimeLiftProofs.LengthMapQuotLe
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.CupKillAdm
+
+@[expose] public section
 
 open Finset
 

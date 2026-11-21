@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.DixmierMalliavinHaarCoord
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.DixmierMalliavinHaarCoord
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

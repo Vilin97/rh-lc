@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.RatKDeg
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.JetsRationalOfKernelRationality
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ColInst
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.RatKDeg
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.JetsRationalOfKernelRationality
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ColInst
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.LocalRingCardinality.DataParams₂
-import Formalism.LocalRingCardinality.DataJet
-import Formalism.LocalRingCardinality.DataForced
-import Formalism.LocalRingCardinality.DataDIVDefs
-import Formalism.SharpRestriction.GrowthBounds.IsResidueClassZero
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.LocalRingCardinality.DataParams₂
+public import Formalism.LocalRingCardinality.DataJet
+public import Formalism.LocalRingCardinality.DataForced
+public import Formalism.LocalRingCardinality.DataDIVDefs
+public import Formalism.SharpRestriction.GrowthBounds.IsResidueClassZero
+
+@[expose] public section
 
 noncomputable section
 

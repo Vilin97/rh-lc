@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AutomorphicArithmetic.CMTraceForms.Places
-import Development.AutomorphicArithmetic.CMTraceForms.ExistsPrimitiveOrthogonalIdempotentsSumEqOfNoeth
-import Development.AutomorphicArithmetic.CMTraceForms.ExistsSplitIdempotentOfSplitAt
-import Development.AutomorphicArithmetic.CMTraceForms.TraceFormDecompositionCMDatum
-import Development.AutomorphicArithmetic.CMTraceForms.DiscrCMDatumEqProdPlaces
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.CMTraceForms.Places
+public import Development.AutomorphicArithmetic.CMTraceForms.ExistsPrimitiveOrthogonalIdempotentsSumEqOfNoeth
+public import Development.AutomorphicArithmetic.CMTraceForms.ExistsSplitIdempotentOfSplitAt
+public import Development.AutomorphicArithmetic.CMTraceForms.TraceFormDecompositionCMDatum
+public import Development.AutomorphicArithmetic.CMTraceForms.DiscrCMDatumEqProdPlaces
+
+@[expose] public section
 
 open NumberField TensorProduct
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Pdiv.AvDefs Formalism.L2.Pj UpperTheory.Depth

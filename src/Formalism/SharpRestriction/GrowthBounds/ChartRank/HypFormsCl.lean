@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypInvLe
-import Formalism.LocalToGlobal.GroupLattices.FockModels.SwRowGenMonomial
-import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypInvLe
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.SwRowGenMonomial
+public import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,8 +1,12 @@
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.LocalRingCardinality.DataParams₂
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleClassGroupCardPos
-import Formalism.LocalRingCardinality.SpanPowerMembership.SizeData₂
-import Formalism.LocalRingCardinality.SpanPowerMembership.DivXExample
+module
+
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.LocalRingCardinality.DataParams₂
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleClassGroupCardPos
+public import Formalism.LocalRingCardinality.SpanPowerMembership.SizeData₂
+public import Formalism.LocalRingCardinality.SpanPowerMembership.DivXExample
+
+@[expose] public section
 
 noncomputable section
 

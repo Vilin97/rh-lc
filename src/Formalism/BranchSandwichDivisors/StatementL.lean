@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.HarderNarasimhan.QuotRealize
-import Formalism.HarderNarasimhan.StatementMod
-import Formalism.QuotientMetricDivisors.Statement
+module
+
+public import Mathlib
+public import Formalism.HarderNarasimhan.QuotRealize
+public import Formalism.HarderNarasimhan.StatementMod
+public import Formalism.QuotientMetricDivisors.Statement
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

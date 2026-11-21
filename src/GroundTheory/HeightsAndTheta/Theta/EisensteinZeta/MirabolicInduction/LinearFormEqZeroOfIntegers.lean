@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.UnitaryGroupScheme
-import GroundTheory.HeightsAndTheta.Theta.CMDatum
-import GroundTheory.HeightsAndTheta.Theta.EisensteinZeta.MirabolicInduction.MemRangeIffIsIntegral
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.UnitaryGroupScheme
+public import GroundTheory.HeightsAndTheta.Theta.CMDatum
+public import GroundTheory.HeightsAndTheta.Theta.EisensteinZeta.MirabolicInduction.MemRangeIffIsIntegral
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

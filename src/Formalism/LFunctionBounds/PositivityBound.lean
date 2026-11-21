@@ -1,4 +1,8 @@
-import Formalism.LFunctionBounds.Statement
+module
+
+public import Formalism.LFunctionBounds.Statement
+
+@[expose] public section
 
 open Complex
 

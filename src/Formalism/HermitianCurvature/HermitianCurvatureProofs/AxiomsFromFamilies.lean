@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.StatementJ
+module
+
+public import Formalism.HermitianCurvature.StatementJ
+
+@[expose] public section
 
 open Finset NumberField Formalism.FourierDecayAlt Formalism.FourierDecayAlt.J
 open scoped ComplexConjugate ComplexOrder

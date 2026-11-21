@@ -1,4 +1,8 @@
-import ReciprocityTheory.L2DbarEstimates.Mollifiers.HasCompactSupport
+module
+
+public import ReciprocityTheory.L2DbarEstimates.Mollifiers.HasCompactSupport
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.B
 

@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.TermOp
-import Formalism.HermitianCurvature.MemParahoricTimesPrincipalCongruenceIff
-import Formalism.LocalToGlobal.SiegelLatticeTheory.PtEquivApply
-import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.PairVal
-import Formalism.HermitianCurvature.StatementC
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.DataInst
-import Formalism.HermitianCurvature.StatementD
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.TermOp
+public import Formalism.HermitianCurvature.MemParahoricTimesPrincipalCongruenceIff
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.PtEquivApply
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.PairVal
+public import Formalism.HermitianCurvature.StatementC
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.DataInst
+public import Formalism.HermitianCurvature.StatementD
+
+@[expose] public section
 
 noncomputable section
 

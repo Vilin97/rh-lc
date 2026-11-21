@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.DedekindLFunctions.LandauZeroFreeCriterion
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.PChain
+module
+
+public import Development.AutomorphicArithmetic.DedekindLFunctions.LandauZeroFreeCriterion
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.PChain
+
+@[expose] public section
 
 open Finset
 

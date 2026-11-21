@@ -1,5 +1,9 @@
-import Formalism.GaussJetBounds.StatementC
-import Formalism.GaussJetBounds.GaussJetProofs.AsmRDotAddRight
+module
+
+public import Formalism.GaussJetBounds.StatementC
+public import Formalism.GaussJetBounds.GaussJetProofs.AsmRDotAddRight
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.InvLevAtOf
-import Formalism.SharpRestriction.LevelLetterCocycles.LevLetEMul
-import Formalism.SharpRestriction.LevelLetterCocycles.CrtFamDet
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.InvLevAtOf
+public import Formalism.SharpRestriction.LevelLetterCocycles.LevLetEMul
+public import Formalism.SharpRestriction.LevelLetterCocycles.CrtFamDet
+
+@[expose] public section
 
 noncomputable section
 

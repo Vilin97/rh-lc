@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.GTDefs
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GelfandTsetlinTopCoefficient.CardEraseIccMin
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.GTDefs
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GelfandTsetlinTopCoefficient.CardEraseIccMin
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.AdmBoundsBOfAdm
-import Formalism.TruncatedSeriesCounting.TruncatedSeriesProofs.ColTwoStep
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.AdmBoundsBOfAdm
+public import Formalism.TruncatedSeriesCounting.TruncatedSeriesProofs.ColTwoStep
+
+@[expose] public section
 
 noncomputable section
 

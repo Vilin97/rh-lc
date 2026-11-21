@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.MirabolicDerivatives.TwistedKernels.ExPhiPlusOnto
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IsSmoothTwAct
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.TemperedRepresentationTheory.MirabolicDerivatives.TwistedKernels.ExPhiPlusOnto
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IsSmoothTwAct
+
+@[expose] public section
 
 noncomputable section
 

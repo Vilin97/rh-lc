@@ -1,18 +1,23 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
-import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinRel
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TrPApply
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DarbouxLiftMulEqZero
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TraceEvIDarboux
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SympVecMulVecXEqZero
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SumThreeComm
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HTensEqTrace
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormSwapOfSkew
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.Decompose
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MixedSpaceTraceFormNondegenerate
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TrAEMixedNondeg
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqZeroOfTraceOrth
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinRel
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TrPApply
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DarbouxLiftMulEqZero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TraceEvIDarboux
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SympVecMulVecXEqZero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SumThreeComm
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HTensEqTrace
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormSwapOfSkew
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.Decompose
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MixedSpaceTraceFormNondegenerate
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TrAEMixedNondeg
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqZeroOfTraceOrth
+
+@[expose] public section
+
 open scoped TensorProduct Matrix
 open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
 open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.ArchSch

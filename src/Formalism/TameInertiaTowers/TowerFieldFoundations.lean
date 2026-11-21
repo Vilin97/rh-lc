@@ -1,13 +1,17 @@
-import Formalism.TameInertiaTowers.CentralOrderTwo.OrderOfThreeUnitsTwoPow
-import Formalism.TameInertiaTowers.CentralOrderTwo.TwoAdic
-import Formalism.TameInertiaTowers.CentralOrderTwo.MemDecompositionSubgroupIff
-import Formalism.TameInertiaTowers.CentralOrderTwo.NegOneNeOneUnitsZmodFour
-import Formalism.TameInertiaTowers.CentralOrderTwo.Groups
-import Formalism.TameInertiaTowers.CentralOrderTwo.NormalOrderTwoCentral
-import Formalism.TameInertiaTowers.CentralOrderTwo.Galois
-import Formalism.TameInertiaTowers.CentralOrderTwo.ConjEqInvOfPowEqOne
-import Formalism.TameInertiaTowers.CentralOrderTwo.DecompositionSubgroupIndex
-import Formalism.TameInertiaTowers.CentralOrderTwo.OddEqOneOfSubOneMem
+module
+
+public import Formalism.TameInertiaTowers.CentralOrderTwo.OrderOfThreeUnitsTwoPow
+public import Formalism.TameInertiaTowers.CentralOrderTwo.TwoAdic
+public import Formalism.TameInertiaTowers.CentralOrderTwo.MemDecompositionSubgroupIff
+public import Formalism.TameInertiaTowers.CentralOrderTwo.NegOneNeOneUnitsZmodFour
+public import Formalism.TameInertiaTowers.CentralOrderTwo.Groups
+public import Formalism.TameInertiaTowers.CentralOrderTwo.NormalOrderTwoCentral
+public import Formalism.TameInertiaTowers.CentralOrderTwo.Galois
+public import Formalism.TameInertiaTowers.CentralOrderTwo.ConjEqInvOfPowEqOne
+public import Formalism.TameInertiaTowers.CentralOrderTwo.DecompositionSubgroupIndex
+public import Formalism.TameInertiaTowers.CentralOrderTwo.OddEqOneOfSubOneMem
+
+@[expose] public section
 
 namespace Formalism.TwoAdicCyclotomicDecomposition
 

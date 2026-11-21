@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.GoodPartLeTypeSubspace
-import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.Objects
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.GoodPartLeTypeSubspace
+public import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.Objects
+
+@[expose] public section
 
 noncomputable section
 

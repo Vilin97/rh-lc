@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.ZariskiLocalCech
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.ZariskiLocalCech
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC

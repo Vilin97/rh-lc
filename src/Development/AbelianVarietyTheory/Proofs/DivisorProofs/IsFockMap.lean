@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
-import Development.AbelianVarietyTheory.Definitions.Foundations.IsFockIPOfFockData
-import Formalism.SharpRestriction.Divisibility.SchurIrreducible
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
+public import Development.AbelianVarietyTheory.Definitions.Foundations.IsFockIPOfFockData
+public import Formalism.SharpRestriction.Divisibility.SchurIrreducible
+
+@[expose] public section
 
 noncomputable section
 

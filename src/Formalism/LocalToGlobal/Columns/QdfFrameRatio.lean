@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.TwQSurj
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Afsplit
+module
+
+public import Formalism.LocalToGlobal.Columns.TwQSurj
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Afsplit
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix
 open scoped TensorProduct

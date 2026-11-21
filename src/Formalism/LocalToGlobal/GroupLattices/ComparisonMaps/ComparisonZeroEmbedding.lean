@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ChainFirstChainK
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ChainFirstChainK
+
+@[expose] public section
 
 open Formalism.MainNotions.G Formalism.BasicNotions NumberField
 

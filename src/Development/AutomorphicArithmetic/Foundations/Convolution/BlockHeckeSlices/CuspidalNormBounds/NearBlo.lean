@@ -1,8 +1,12 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.BlockHeckeSlices.CuspidalNormBounds.HkApply
-import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.NearFinite
-import GroundTheory.AutomorphicForms.LocallyProfinite
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IndependenceEigenvectors
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.NonSplitSequence
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.BlockHeckeSlices.CuspidalNormBounds.HkApply
+public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.NearFinite
+public import GroundTheory.AutomorphicForms.LocallyProfinite
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.IndependenceEigenvectors
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.NonSplitSequence
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology GlobalTheory.CuspRep GroundTheory.Automorphic GroundTheory.Automorphic.AutomorphicForm UpperTheory.V.Cm
 open scoped TensorProduct

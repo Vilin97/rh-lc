@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.NormalDegreeZeroMul
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.NormalDegreeZeroMul
+
+@[expose] public section
 
 noncomputable section
 

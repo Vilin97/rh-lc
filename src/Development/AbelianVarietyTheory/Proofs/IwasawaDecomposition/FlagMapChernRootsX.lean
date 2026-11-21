@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SchubGamApply
-import Formalism.DegreeFormula.PointDegree.PowSum
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SchubGamApply
+public import Formalism.DegreeFormula.PointDegree.PowSum
+
+@[expose] public section
 
 noncomputable section
 

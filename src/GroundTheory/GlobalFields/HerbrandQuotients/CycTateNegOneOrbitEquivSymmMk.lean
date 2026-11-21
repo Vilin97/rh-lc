@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.TateCohomology.HerbrandAbstract
-import GroundTheory.GlobalFields.HerbrandQuotients.CycTate
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.HerbrandAbstract
+public import GroundTheory.GlobalFields.HerbrandQuotients.CycTate
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

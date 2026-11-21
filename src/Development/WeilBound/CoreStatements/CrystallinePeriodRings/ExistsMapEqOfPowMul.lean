@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.InstCommRingBcris
-import GroundTheory.PAdicHodge.BCrisPlusInvariants
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.InstCommRingBcris
+public import GroundTheory.PAdicHodge.BCrisPlusInvariants
+
+@[expose] public section
 
 noncomputable section
 

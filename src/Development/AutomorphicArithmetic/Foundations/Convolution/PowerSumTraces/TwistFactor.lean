@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.TermEDefs
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.PowerSumTraces.TermEDefs
+
+@[expose] public section
 
 noncomputable section
 

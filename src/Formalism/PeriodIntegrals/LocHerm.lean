@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.LinQRawRange
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.LinQRawRange
+
+@[expose] public section
 
 noncomputable section
 

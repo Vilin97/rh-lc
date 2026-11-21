@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCB
-import Formalism.SharpRestriction.InertJacobiLevels.ExtraTheta
-import Formalism.LocalRingCardinality.SpanPowerMembership.BaseFormAnisotropicOrthogonalSingle
+module
+
+public import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCB
+public import Formalism.SharpRestriction.InertJacobiLevels.ExtraTheta
+public import Formalism.LocalRingCardinality.SpanPowerMembership.BaseFormAnisotropicOrthogonalSingle
+
+@[expose] public section
 
 noncomputable section
 

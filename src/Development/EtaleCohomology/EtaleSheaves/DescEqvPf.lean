@@ -1,6 +1,10 @@
-import Development.EtaleCohomology.EtaleSheaves.ClsBiprodEqZero
-import Development.EtaleCohomology.EtaleSheaves.LeafCover2Of
-import Development.EtaleCohomology.EtaleSheaves.LeafKunEmptyPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.ClsBiprodEqZero
+public import Development.EtaleCohomology.EtaleSheaves.LeafCover2Of
+public import Development.EtaleCohomology.EtaleSheaves.LeafKunEmptyPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC CochainComplex.HomComplex

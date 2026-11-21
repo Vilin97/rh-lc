@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.LocalRingCardinality.DataDIV
-import Formalism.DegreeFormula.FlagDegFormula
-import Formalism.SharpRestriction.ParConsts
-import Formalism.SharpRestriction.Divisibility.PrinLevClass
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.LocalRingCardinality.DataDIV
+public import Formalism.DegreeFormula.FlagDegFormula
+public import Formalism.SharpRestriction.ParConsts
+public import Formalism.SharpRestriction.Divisibility.PrinLevClass
+
+@[expose] public section
 
 noncomputable section
 

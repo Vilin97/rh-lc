@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.DetFactsPAlt
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.DetFactsPAlt
+
+@[expose] public section
 
 noncomputable section
 

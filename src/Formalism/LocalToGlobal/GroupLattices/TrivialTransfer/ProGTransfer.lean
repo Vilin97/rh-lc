@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataLevel
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataLevel
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.PairLift
-import Formalism.LocalToGlobal.GroupLattices.FockModels.TestSideEdge
-import Formalism.LocalToGlobal.GroupLattices.FockModels.TestSideFinal
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.PairLift
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.TestSideEdge
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.TestSideFinal
+
+@[expose] public section
 
 open MvPolynomial
 

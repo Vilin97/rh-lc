@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.WellChosen
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.WellChosen
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.PadicLogLinear
-import GroundTheory.LocalFields.Integers
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.PadicLogLinear
+public import GroundTheory.LocalFields.Integers
+
+@[expose] public section
 
 namespace GroundTheory.LocalField
 

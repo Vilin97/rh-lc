@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnipotentModulusHomeo
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnipotentModulusHaar
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnipotentModulusHomeo
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PUnipotentModulusHaar
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights.FiniteCovolume
 

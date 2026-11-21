@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.CechDeRhamCoefMapOneFormsRestrictAlongFunctor
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsNilDPOfCube
-import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.StructureHomApply
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CechDeRhamCoefMapOneFormsRestrictAlongFunctor
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsNilDPOfCube
+public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.StructureHomApply
+
+@[expose] public section
 
 set_option autoImplicit false
 

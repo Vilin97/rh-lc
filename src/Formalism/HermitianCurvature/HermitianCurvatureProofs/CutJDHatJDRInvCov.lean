@@ -1,8 +1,12 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJDHatJDRInvDefs
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FiniteSumLocalExpansion
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegrableCsmul
-import Formalism.FormalDegreeBessel.FormalDegreeRatio.CapelliHighestWeightConjugated
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJDHatJDCapAInv
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJDHatJDRInvDefs
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FiniteSumLocalExpansion
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.IntegrableCsmul
+public import Formalism.FormalDegreeBessel.FormalDegreeRatio.CapelliHighestWeightConjugated
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJDHatJDCapAInv
+
+@[expose] public section
 
 open Matrix
 open scoped ContDiff

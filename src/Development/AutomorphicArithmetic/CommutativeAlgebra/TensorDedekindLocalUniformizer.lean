@@ -1,7 +1,12 @@
-import Mathlib
-import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.IsChart
-import Development.AutomorphicArithmetic.CommutativeAlgebra.SpecializationTensorRingHomProperties
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsPsi
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.IsChart
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.SpecializationTensorRingHomProperties
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsPsi
+
+@[expose] public section
+
 open GroundTheory.FunctionField UpperTheory.Et.Sel
 open scoped TensorProduct
 

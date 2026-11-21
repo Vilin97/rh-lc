@@ -1,4 +1,8 @@
-import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.FourSum
+module
+
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.FourSum
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.Y
 

@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleSheaves.LZProperCut
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FiniteMaximalSpectrumOfFiniteOfIsLocalRing
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LZProperCut
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FiniteMaximalSpectrumOfFiniteOfIsLocalRing
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory AlgebraicGeometry

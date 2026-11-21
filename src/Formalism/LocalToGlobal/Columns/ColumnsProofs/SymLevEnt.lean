@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.OcbLevIsSym
-import Formalism.LocalToGlobal.Columns.RecLevelSymF
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.OcbLevIsSym
+public import Formalism.LocalToGlobal.Columns.RecLevelSymF
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 

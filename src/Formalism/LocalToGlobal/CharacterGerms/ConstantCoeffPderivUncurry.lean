@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTieChar
-import Formalism.LocalToGlobal.CharacterGerms.ValuationEqPairOfUnitGerm
-import Formalism.LocalToGlobal.CharacterGerms.MfactMulCoeffMvExpLinF
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieChar
+public import Formalism.LocalToGlobal.CharacterGerms.ValuationEqPairOfUnitGerm
+public import Formalism.LocalToGlobal.CharacterGerms.MfactMulCoeffMvExpLinF
+
+@[expose] public section
 
 set_option autoImplicit false
 

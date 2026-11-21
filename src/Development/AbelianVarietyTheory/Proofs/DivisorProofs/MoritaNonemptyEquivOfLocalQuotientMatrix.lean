@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SpanEqTopIffDense
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SpanEqTopIffDense
+
+@[expose] public section
 
 namespace GlobalTheory.MoritaLocal
 

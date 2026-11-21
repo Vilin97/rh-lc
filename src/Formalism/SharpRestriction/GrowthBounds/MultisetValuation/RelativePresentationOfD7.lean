@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.PlaceB
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.PlaceB
+
+@[expose] public section
 
 noncomputable section
 

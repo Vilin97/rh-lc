@@ -1,9 +1,13 @@
-import Formalism.SharpRestriction.Divisibility.SlopeExcess.ConstRankBaseLePolyFourth
-import Formalism.SharpRestriction.GrowthBounds.TopChoiceBounds
-import Formalism.SharpRestriction.GrowthBounds.JointsLit
-import Formalism.SharpRestriction.GrowthBounds.LogarithmicSums.NotSingularOfCentral
-import Formalism.SharpRestriction.GrowthBounds.AdmissibleIntegers.FirstTermSizeBound
-import Formalism.SharpRestriction.Divisibility.WeightDegreeSizes
+module
+
+public import Formalism.SharpRestriction.Divisibility.SlopeExcess.ConstRankBaseLePolyFourth
+public import Formalism.SharpRestriction.GrowthBounds.TopChoiceBounds
+public import Formalism.SharpRestriction.GrowthBounds.JointsLit
+public import Formalism.SharpRestriction.GrowthBounds.LogarithmicSums.NotSingularOfCentral
+public import Formalism.SharpRestriction.GrowthBounds.AdmissibleIntegers.FirstTermSizeBound
+public import Formalism.SharpRestriction.Divisibility.WeightDegreeSizes
+
+@[expose] public section
 
 noncomputable section
 

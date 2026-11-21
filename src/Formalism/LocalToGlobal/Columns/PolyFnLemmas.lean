@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.Columns.PolyFn
-import Formalism.GradedWeylDivisibility.FinalD
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDlatLemmas
+module
+
+public import Formalism.LocalToGlobal.Columns.PolyFn
+public import Formalism.GradedWeylDivisibility.FinalD
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDlatLemmas
+
+@[expose] public section
 
 noncomputable section
 

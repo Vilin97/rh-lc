@@ -1,12 +1,16 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.MetricPeriods.Pull1
-import Development.AutomorphicSpectrum.Statements.MetricStatements.AgreementIffGuarded
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.RealisationHeightIndependenceStatement
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.GapEqWeightSubNextStatement
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.AgreementPositiveStatement
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.FormPolyIsHomogeneousAndEval
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.AbsCoeffProdXLeOne
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.KillNoneFormPoly
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.Pull1
+public import Development.AutomorphicSpectrum.Statements.MetricStatements.AgreementIffGuarded
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.RealisationHeightIndependenceStatement
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.GapEqWeightSubNextStatement
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.AgreementPositiveStatement
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.FormPolyIsHomogeneousAndEval
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.AbsCoeffProdXLeOne
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.KillNoneFormPoly
+
+@[expose] public section
 
 open MvPolynomial MeasureTheory Filter Topology ReciprocityTheory.AnForm ReciprocityTheory.AnForm.M ReciprocityTheory.AnForm.P ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI ReciprocityTheory.ChartRestriction.G.AI.I1 ReciprocityTheory.ChartRestriction.G.AI.I2 ReciprocityTheory.ChartRestriction.G.AI.I4 GlobalTheory.CompanionTheory.Ar.PB GroundTheory.Heights₂.Heights GroundTheory.Heights₂.Heights.LowerBoundFree
 

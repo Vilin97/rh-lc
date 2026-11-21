@@ -1,8 +1,12 @@
-import Formalism.HermitianCurvature.StatementSz
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CorollaryAOfPropositionA
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.VandermondeRatioHarmonic
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BetaBoundOnBoundary
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CmRingIdempotentUnitRatioIdentity
+module
+
+public import Formalism.HermitianCurvature.StatementSz
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CorollaryAOfPropositionA
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.VandermondeRatioHarmonic
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BetaBoundOnBoundary
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CmRingIdempotentUnitRatioIdentity
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.Sz9
 

@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.StatementNF
+module
+
+public import Formalism.HermitianCurvature.StatementNF
+
+@[expose] public section
 
 open Complex MeasureTheory
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.GL3MeanSquares.SignsFromTrianglesSquares
+module
+
+public import Mathlib
+public import Formalism.GL3MeanSquares.SignsFromTrianglesSquares
+
+@[expose] public section
 
 open Finset
 

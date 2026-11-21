@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.SemilocalAlgebras.NormTrace
-import GroundTheory.GlobalFields.CompletionAtPlace.Integers
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SemilocalAlgebras.NormTrace
+public import GroundTheory.GlobalFields.CompletionAtPlace.Integers
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

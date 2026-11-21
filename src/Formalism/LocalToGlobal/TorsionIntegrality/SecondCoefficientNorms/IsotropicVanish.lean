@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.HasSecondLogDeriv
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.SecondCoefficientNorms.HasSecondLogDeriv
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

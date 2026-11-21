@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.CompFinLiftE
+module
+
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.CompFinLiftE
+
+@[expose] public section
 
 noncomputable section
 

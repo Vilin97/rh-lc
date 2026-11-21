@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.PdAevalScale
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.DetFactsP
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.DPsiMonomialIwh
-import Mathlib.LinearAlgebra.Matrix.Transvection
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.DetYNeZero
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.PdAevalScale
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.DetFactsP
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.DPsiMonomialIwh
+public import Mathlib.LinearAlgebra.Matrix.Transvection
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.DetYNeZero
+
+@[expose] public section
 
 noncomputable section
 

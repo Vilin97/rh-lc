@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.SchurStep
-import Mathlib.RingTheory.SimpleModule.Isotypic
+module
+
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.ThetaParseval.SchurStep
+public import Mathlib.RingTheory.SimpleModule.Isotypic
+
+@[expose] public section
 
 namespace UpperTheory.TP
 

@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.ActLPos
-import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.HeightContinuity.MatrixTupleDistortionBoundOne
-import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Detlow
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.ActLPos
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.LiteratureResults.KTheoryStability.ReductionBoundsTorsion.HeightContinuity.MatrixTupleDistortionBoundOne
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Detlow
+
+@[expose] public section
 
 open NumberField Matrix UpperTheory.V.KT Filter Topology
 open scoped ComplexOrder

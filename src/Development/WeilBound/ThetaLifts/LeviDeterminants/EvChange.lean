@@ -1,7 +1,11 @@
-import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-import Development.WeilBound.ThetaLifts.LeviDeterminants.EvLine
-import Development.WeilBound.ThetaLifts.LeviDeterminants.DqStmt
-import Development.WeilBound.ThetaLifts.LeviDeterminants.MCSpan
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.EvLine
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.DqStmt
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.MCSpan
+
+@[expose] public section
 
 noncomputable section
 

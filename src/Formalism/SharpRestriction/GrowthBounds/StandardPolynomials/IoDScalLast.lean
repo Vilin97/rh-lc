@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.IoBlockNeZero
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.IoBlockNeZero
+
+@[expose] public section
 
 noncomputable section
 

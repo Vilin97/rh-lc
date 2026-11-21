@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.StatementCM
+module
+
+public import Mathlib
+public import Formalism.StatementCM
+
+@[expose] public section
 
 open NumberField Ideal Finset
 open scoped Pointwise

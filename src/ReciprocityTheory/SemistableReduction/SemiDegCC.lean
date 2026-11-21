@@ -1,6 +1,10 @@
-import ReciprocityTheory.SemistableReduction.TorsionNonvanishStatement
-import ReciprocityTheory.SemistableReduction.SemiDegCB
-import Lemmata.MiscLemmasR.Imports
+module
+
+public import ReciprocityTheory.SemistableReduction.TorsionNonvanishStatement
+public import ReciprocityTheory.SemistableReduction.SemiDegCB
+public import Lemmata.MiscLemmasR.Imports
+
+@[expose] public section
 
 noncomputable section
 

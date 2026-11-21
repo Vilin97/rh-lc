@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.AnisotropicOrbit
-import GroundTheory.AutomorphicForms.AdelicUnitaryGroups
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.AnisotropicOrbit
+public import GroundTheory.AutomorphicForms.AdelicUnitaryGroups
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open NumberField IsDedekindDomain Topology Set Matrix Filter

@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.SemilocalAlgebras.ContinuousCompletionMap
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SemilocalAlgebras.ContinuousCompletionMap
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

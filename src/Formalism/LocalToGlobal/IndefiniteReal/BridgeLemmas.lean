@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.Bridge
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.Bridge
+
+@[expose] public section
 
 open NumberField
 

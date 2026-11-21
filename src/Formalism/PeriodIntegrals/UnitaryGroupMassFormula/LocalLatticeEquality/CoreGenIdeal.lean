@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.LocLatEq
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalLatticeEquality.Development
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.LocLatEq
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalLatticeEquality.Development
+
+@[expose] public section
 
 noncomputable section
 

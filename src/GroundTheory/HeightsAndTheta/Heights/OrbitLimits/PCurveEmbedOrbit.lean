@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StatementsCurveEmbedOrbit
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.CurveOrbitEmbedding
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StatementsCurveEmbedOrbit
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.CurveOrbitEmbedding
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Targets

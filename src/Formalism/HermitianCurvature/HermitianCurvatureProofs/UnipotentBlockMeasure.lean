@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.StatementPN
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LocalVolumePositivity
+module
+
+public import Formalism.HermitianCurvature.StatementPN
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LocalVolumePositivity
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.HermitianFormNormLemmas.A
 

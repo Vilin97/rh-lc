@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.CyclotomicBounds.ClassNumberBounds.IdealValuations.LocDefY
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsRootCongruence
+module
+
+public import Development.AutomorphicArithmetic.CyclotomicBounds.ClassNumberBounds.IdealValuations.LocDefY
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ExistsRootCongruence
+
+@[expose] public section
 
 open KStar.TotallyRealRoots
 

@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.CohomologicalPurity.LeafRootPf
+module
+
+public import Development.EtaleCohomology.CohomologicalPurity.LeafRootPf
+
+@[expose] public section
 
 noncomputable section
 open Polynomial

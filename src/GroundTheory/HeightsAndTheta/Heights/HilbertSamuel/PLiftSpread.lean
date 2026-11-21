@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsLiftSpread
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PLiftSpreadRead
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PChartDenominator
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsLiftSpread
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PLiftSpreadRead
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PChartDenominator
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

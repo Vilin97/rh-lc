@@ -1,7 +1,11 @@
-import CompanionTheory.AutomorphicTheory.CompactTopologicalForms.FinalS
-import CompanionTheory.AutomorphicTheory.DiscreteGroupWaves.NFDomC
-import CompanionTheory.AutomorphicTheory.LocalBesselUniqueness.NFJCutFF
-import CompanionTheory.AutomorphicTheory.LocalBesselUniqueness.NFHatProdKBS
+module
+
+public import CompanionTheory.AutomorphicTheory.CompactTopologicalForms.FinalS
+public import CompanionTheory.AutomorphicTheory.DiscreteGroupWaves.NFDomC
+public import CompanionTheory.AutomorphicTheory.LocalBesselUniqueness.NFJCutFF
+public import CompanionTheory.AutomorphicTheory.LocalBesselUniqueness.NFHatProdKBS
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP.CompactFormNormalFormDomination
 

@@ -1,6 +1,10 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.KerCoreSt
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.DescPf
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.FunKerPf
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.KerCoreSt
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.DescPf
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.Rationality.FunKerPf
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.FreeQuotientRank
 

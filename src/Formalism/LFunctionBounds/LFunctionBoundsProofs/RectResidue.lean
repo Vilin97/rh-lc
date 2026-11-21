@@ -1,4 +1,8 @@
-import Formalism.LFunctionBounds.ExpSumLowerBound
+module
+
+public import Formalism.LFunctionBounds.ExpSumLowerBound
+
+@[expose] public section
 
 open Complex
 

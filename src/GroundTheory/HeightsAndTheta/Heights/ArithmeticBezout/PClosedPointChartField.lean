@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsClosedPointChartField
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PChartZeroTrdeg
-import GroundTheory.HeightsAndTheta.Heights.ChowForms.PAffineChartTrdeg
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.StatementsClosedPointChartField
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PChartZeroTrdeg
+public import GroundTheory.HeightsAndTheta.Heights.ChowForms.PAffineChartTrdeg
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

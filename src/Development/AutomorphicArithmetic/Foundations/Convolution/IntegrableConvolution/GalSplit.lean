@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.ClosedProperAlt
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DeterminantNonzero
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.ClosedProperAlt
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.DeterminantNonzero
+
+@[expose] public section
 
 open scoped TensorProduct
 open PositivityTheory.Rg.Tf.Loc PositivityTheory.Rg.Tf.Geo

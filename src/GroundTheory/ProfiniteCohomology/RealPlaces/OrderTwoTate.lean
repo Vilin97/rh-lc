@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RealPlaces.OrderTwo
-import GroundTheory.ProfiniteCohomology.RealPlaces.InvolutionDuality
-import GroundTheory.ProfiniteCohomology.RealPlaces.LocalDualityDefs
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RealPlaces.OrderTwo
+public import GroundTheory.ProfiniteCohomology.RealPlaces.InvolutionDuality
+public import GroundTheory.ProfiniteCohomology.RealPlaces.LocalDualityDefs
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

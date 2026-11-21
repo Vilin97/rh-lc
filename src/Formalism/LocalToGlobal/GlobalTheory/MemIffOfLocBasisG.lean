@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.ActAllMemIntSpanAtG
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.ActAllMemIntSpanAtG
+
+@[expose] public section
 
 open MvPolynomial
 

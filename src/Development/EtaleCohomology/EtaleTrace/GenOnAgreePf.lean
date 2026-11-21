@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleTrace.GenOutGluePf
+module
+
+public import Development.EtaleCohomology.EtaleTrace.GenOutGluePf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry MvPolynomial

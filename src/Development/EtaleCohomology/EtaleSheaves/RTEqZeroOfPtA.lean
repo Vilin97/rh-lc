@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafDegCut
-import Development.EtaleCohomology.EtaleSheaves.SecondDegreeKilling.LeafKill2Of
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafDegCut
+public import Development.EtaleCohomology.EtaleSheaves.SecondDegreeKilling.LeafKill2Of
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC

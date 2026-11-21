@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.CuspSpanNormBounds.PsiEDef
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SimpLemmas
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.CuspSpanNormBounds.PsiEDef
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SimpLemmas
+
+@[expose] public section
 
 noncomputable section
 

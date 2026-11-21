@@ -1,9 +1,13 @@
-import Mathlib
-import ReciprocityTheory.GaloisValuations.GlobalA
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.ExistsIntEKMulVbar
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.GalBasic
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnrExtD
-import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnrExtE
+module
+
+public import Mathlib
+public import ReciprocityTheory.GaloisValuations.GlobalA
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.ExistsIntEKMulVbar
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.GalBasic
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnrExtD
+public import ReciprocityTheory.ClassFieldTheory.LocalClassField.UnrExtE
+
+@[expose] public section
 
 namespace ReciprocityTheory.DiscreteGroups.LocalClassField
 

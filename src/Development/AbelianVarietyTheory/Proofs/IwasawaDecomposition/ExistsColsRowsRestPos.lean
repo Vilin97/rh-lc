@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RowsRestWordColumnUnitBaseTuple
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsPotential
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RowsRestWordColumnUnitBaseTuple
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsPotential
+
+@[expose] public section
 
 noncomputable section
 

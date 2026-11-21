@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.ExampleSatisfiesConditionsAtFive
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.CharIdem
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.IndexUBound
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.MirabIndex
-import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.IsMackeyPiUpperUnipotentProdCharacter
-import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.RamBasic
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.UnipVal
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteForms.IndefiniteTree.ExampleSatisfiesConditionsAtFive
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.CharIdem
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.IndexUBound
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.MirabIndex
+public import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.IsMackeyPiUpperUnipotentProdCharacter
+public import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.RamBasic
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.UnipVal
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain CategoryTheory
 

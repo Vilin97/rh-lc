@@ -1,7 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ImportsBis
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.Target
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.PowLeSpanPowSup
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ImportsBis
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.Target
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.PowLeSpanPowSup
+
+@[expose] public section
+
 open Polynomial
 
 namespace GlobalTheory.CurveCompletion

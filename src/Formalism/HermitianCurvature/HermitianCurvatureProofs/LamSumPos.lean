@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RhypNodes
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RhypNodes
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBL
 

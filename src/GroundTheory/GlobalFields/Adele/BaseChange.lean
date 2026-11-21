@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.Adele.BaseChange.AdeleEquiv
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.Adele.BaseChange.AdeleEquiv
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

@@ -1,7 +1,11 @@
-import Formalism.RealPlaceAnalysis.StatementE
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Algebra.Polynomial.Degree.Defs
-import Mathlib.GroupTheory.Perm.Support
+module
+
+public import Formalism.RealPlaceAnalysis.StatementE
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Algebra.Polynomial.Degree.Defs
+public import Mathlib.GroupTheory.Perm.Support
+
+@[expose] public section
 
 open Polynomial Finset
 

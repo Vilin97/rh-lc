@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.FunctionField.PlaceDefs
-import GroundTheory.FunctionField.PlaceBasic
-import GroundTheory.FunctionField.Divisor
-import GroundTheory.FunctionField.DivisorDegree
-import GroundTheory.FunctionField.Repartition
+module
+
+public import Mathlib
+public import GroundTheory.FunctionField.PlaceDefs
+public import GroundTheory.FunctionField.PlaceBasic
+public import GroundTheory.FunctionField.Divisor
+public import GroundTheory.FunctionField.DivisorDegree
+public import GroundTheory.FunctionField.Repartition
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.FunctionField

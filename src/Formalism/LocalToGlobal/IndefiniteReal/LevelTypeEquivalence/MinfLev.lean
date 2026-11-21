@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.BaseSt
-import Mathlib
-import Formalism.LocalRingCardinality.DataCD
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.BaseSt
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataCD
+
+@[expose] public section
 
 noncomputable section
 

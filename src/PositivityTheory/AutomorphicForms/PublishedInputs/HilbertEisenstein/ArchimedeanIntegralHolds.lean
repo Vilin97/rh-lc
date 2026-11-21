@@ -1,6 +1,10 @@
-import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.ArchInt
-import GroundTheory.GlobalFields.TateThesis.EulerFactorsArch
-import GroundTheory.GlobalFields.TateThesis.HeckeCharRayClass
+module
+
+public import PositivityTheory.AutomorphicForms.PublishedInputs.HilbertEisenstein.ArchInt
+public import GroundTheory.GlobalFields.TateThesis.EulerFactorsArch
+public import GroundTheory.GlobalFields.TateThesis.HeckeCharRayClass
+
+@[expose] public section
 
 noncomputable section
 

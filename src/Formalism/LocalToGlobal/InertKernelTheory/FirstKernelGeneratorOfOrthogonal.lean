@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.FormalGroupSystem
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WittFractionAlgebraCp
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WittEmbeddingsCompatible
-import Formalism.LocalToGlobal.TorsionIntegrality.UniformGaussModels.UniformGaussModelCondition
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.FormalGroupSystem
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WittFractionAlgebraCp
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WittEmbeddingsCompatible
+public import Formalism.LocalToGlobal.TorsionIntegrality.UniformGaussModels.UniformGaussModelCondition
+
+@[expose] public section
 
 noncomputable section
 

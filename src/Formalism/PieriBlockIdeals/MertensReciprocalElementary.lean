@@ -1,5 +1,9 @@
-import Formalism.PieriBlockIdeals.Statement
-import Formalism.PieriBlockIdeals.ContentDistanceBounds
+module
+
+public import Formalism.PieriBlockIdeals.Statement
+public import Formalism.PieriBlockIdeals.ContentDistanceBounds
+
+@[expose] public section
 
 noncomputable section
 

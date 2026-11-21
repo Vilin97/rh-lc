@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePCEqEx
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePAddCvSelf
-import Formalism.SharpRestriction.GrowthBounds.ExponentialPartialDerivatives.SumAtOf
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePCEqEx
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePAddCvSelf
+public import Formalism.SharpRestriction.GrowthBounds.ExponentialPartialDerivatives.SumAtOf
+
+@[expose] public section
 
 noncomputable section
 

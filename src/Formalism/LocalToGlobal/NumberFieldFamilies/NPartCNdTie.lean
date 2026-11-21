@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.NumberFieldFamilies.GamCSpec
+module
+
+public import Formalism.LocalToGlobal.NumberFieldFamilies.GamCSpec
+
+@[expose] public section
 
 noncomputable section
 

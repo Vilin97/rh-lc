@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.AbelianHostFieldConditions
+module
+
+public import Formalism.LocalToGlobal.Columns.AbelianHostFieldConditions
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

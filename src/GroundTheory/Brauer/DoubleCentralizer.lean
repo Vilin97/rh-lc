@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.Brauer.TensorSimple
-import GroundTheory.Brauer.SkolemNoether
+module
+
+public import Mathlib
+public import GroundTheory.Brauer.TensorSimple
+public import GroundTheory.Brauer.SkolemNoether
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Brauer

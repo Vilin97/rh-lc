@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.AevalEqZeroOfMemConeIdeal
-import ReciprocityTheory.SemistableReduction.TorusL2CauchyInequality
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinSubstLinSubst
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GaussAbsProdLeOne
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LogGaussAbsSupportFinite
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsMultiHomogeneousProd
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.AevalEqZeroOfMemConeIdeal
+public import ReciprocityTheory.SemistableReduction.TorusL2CauchyInequality
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinSubstLinSubst
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GaussAbsProdLeOne
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LogGaussAbsSupportFinite
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsMultiHomogeneousProd
+
+@[expose] public section
 
 set_option autoImplicit false
 

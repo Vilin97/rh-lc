@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.MonomialMemPolKSg
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.MonomialMemPolKSg
+
+@[expose] public section
 
 noncomputable section
 

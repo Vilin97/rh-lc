@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SpecialLinearMap
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.SpecialLinearMap
+
+@[expose] public section
 
 noncomputable def UpperTheory.Reformulated.B.SpecialLinearTensor.sl :
     {I : Type} →

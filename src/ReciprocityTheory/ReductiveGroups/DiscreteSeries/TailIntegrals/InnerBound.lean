@@ -1,4 +1,8 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TailIntegrals.MpUnitary
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TailIntegrals.MpUnitary
+
+@[expose] public section
 
 noncomputable section
 open Matrix MeasureTheory

@@ -1,8 +1,13 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Statements.GeometryStatements.PropFTop
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IntersectionFamilyMultilinearStatement
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ArMonoAddSingle
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.MonoLinesLineSmooth
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Statements.GeometryStatements.PropFTop
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IntersectionFamilyMultilinearStatement
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ArMonoAddSingle
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.MonoLinesLineSmooth
+
+@[expose] public section
+
 open MvPolynomial NumberField Filter Topology ReciprocityTheory.ChartRestriction.G.Geo ReciprocityTheory.ChartRestriction.G.AI.I2 GlobalTheory.CompanionTheory.Ar.Top GlobalTheory.CompanionTheory.Ar.Flat
 
 namespace GlobalTheory.CompanionTheory.Ar.Flat.RootSum

@@ -1,4 +1,8 @@
-import ReciprocityTheory.L2DbarEstimates.Localization.ChartA
+module
+
+public import ReciprocityTheory.L2DbarEstimates.Localization.ChartA
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.F
 

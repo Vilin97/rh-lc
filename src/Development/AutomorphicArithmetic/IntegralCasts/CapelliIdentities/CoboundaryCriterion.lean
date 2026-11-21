@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.CoboundaryCriterion.isCoboundary_of_coprime :
     ∀ {R G M : Type} [inst : CommRing R]

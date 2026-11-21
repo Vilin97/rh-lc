@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.HermitianForms.PrkSmul
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.PrkSmul
+
+@[expose] public section
 
 noncomputable section
 

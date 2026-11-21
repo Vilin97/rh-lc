@@ -1,6 +1,10 @@
-import Formalism.CharacterColumnKernels.StatementPsi
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.ColKer
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.CupKillAdm
+module
+
+public import Formalism.CharacterColumnKernels.StatementPsi
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.ColKer
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.CupKillAdm
+
+@[expose] public section
 
 open Finset Classical
 

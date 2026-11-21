@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.OneLtAbsNormReal
-import Development.AbelianVarietyTheory.Definitions.CommutativeAlgebra.CompletionDVR
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.OneLtAbsNormReal
+public import Development.AbelianVarietyTheory.Definitions.CommutativeAlgebra.CompletionDVR
+
+@[expose] public section
 
 noncomputable section
 

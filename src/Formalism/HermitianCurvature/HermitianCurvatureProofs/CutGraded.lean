@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutRegFFName
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutRegFFName
+
+@[expose] public section
 
 open Formalism.FourierDecayAlt MeasureTheory NumberField
 

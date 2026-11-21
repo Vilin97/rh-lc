@@ -1,12 +1,17 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.JointCmpEmbeddingY
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.ModelsOK
-import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.ValidForConstructedPointClassesEventuallyWorking
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.GidxFacts
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsCEmbCLam
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsFinsetRepsOfCls
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FinStabSite
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsAdelicDatumWithLawsAtJointStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.JointCmpEmbeddingY
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.ModelsOK
+public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.ValidForConstructedPointClassesEventuallyWorking
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.GidxFacts
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsCEmbCLam
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsFinsetRepsOfCls
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FinStabSite
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsAdelicDatumWithLawsAtJointStatement
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.G Formalism.MainNotions.FormalGroupSystem Formalism.MainNotions.G.KAat Formalism.MainNotions.G.CmpJ Formalism.L2.Ker Formalism.L2.G.Pend Formalism.L2.KerInert GlobalTheory.TwV
 
 namespace GlobalTheory.TwV

@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.WachLatticeTwists.LagrangeExtensionCocycles.DualWByLettersExtended
-import Formalism.SharpRestriction.LevelLetterCocycles.FrobeniusPowUniformizerFactorisation
-import Formalism.SharpRestriction.LevelLetterCocycles.CrystallineLiftingBounds
+module
+
+public import Mathlib
+public import Formalism.WachLatticeTwists.LagrangeExtensionCocycles.DualWByLettersExtended
+public import Formalism.SharpRestriction.LevelLetterCocycles.FrobeniusPowUniformizerFactorisation
+public import Formalism.SharpRestriction.LevelLetterCocycles.CrystallineLiftingBounds
+
+@[expose] public section
 
 noncomputable section
 

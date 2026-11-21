@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.TransferenceA
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.TransferenceB
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.TransferenceA
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.TransferenceB
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.T0
 

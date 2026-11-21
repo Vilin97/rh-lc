@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.BesselMapUniq
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IsWtOnIffOfTorus
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.BesselMapUniq
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.IsWtOnIffOfTorus
+
+@[expose] public section
 
 open Matrix
 

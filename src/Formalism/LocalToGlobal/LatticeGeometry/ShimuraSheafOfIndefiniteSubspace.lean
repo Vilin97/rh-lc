@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.LatticeGeometry.CompNe
-import Formalism.DegreeFormula.PointDegree.PowSum
-import Formalism.LocalToGlobal.LatticeGeometry.CmTypeMeetsConjugatePair
-import Formalism.SharpRestriction.Divisibility.PlaceRankTwoOne
+module
+
+public import Formalism.LocalToGlobal.LatticeGeometry.CompNe
+public import Formalism.DegreeFormula.PointDegree.PowSum
+public import Formalism.LocalToGlobal.LatticeGeometry.CmTypeMeetsConjugatePair
+public import Formalism.SharpRestriction.Divisibility.PlaceRankTwoOne
+
+@[expose] public section
 
 noncomputable section
 

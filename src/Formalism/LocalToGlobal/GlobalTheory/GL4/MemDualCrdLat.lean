@@ -1,12 +1,16 @@
-import Mathlib
-import Formalism.LocalToGlobal.LatticeGeometry.GeometryDefinitions.ClsSum
-import Formalism.SharpRestriction.Divisibility.PlaceRankTwoOne
-import Formalism.QuotientMetricDivisors.Statement
-import Formalism.LocalToGlobal.LatticeGeometry.GeometryDefinitions.ExistsFrameOfSig
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ReductionSecondStep
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.TruncatedLatticeHolds
-import Formalism.SharpRestriction.GlobalSchurBounds.FlipTwoThree
-import Formalism.LocalToGlobal.GlobalTheory.GL4.PMuFrames
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.LatticeGeometry.GeometryDefinitions.ClsSum
+public import Formalism.SharpRestriction.Divisibility.PlaceRankTwoOne
+public import Formalism.QuotientMetricDivisors.Statement
+public import Formalism.LocalToGlobal.LatticeGeometry.GeometryDefinitions.ExistsFrameOfSig
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ReductionSecondStep
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.TruncatedLatticeHolds
+public import Formalism.SharpRestriction.GlobalSchurBounds.FlipTwoThree
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.PMuFrames
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix

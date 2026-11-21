@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.CoprimeFrobeniusUniformizerPowers
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.CoprimeFrobeniusUniformizerPowers
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartSheetCompare
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreSheetFormCompare
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreSheetFormCompare
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartSheetCompare
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreSheetFormCompare
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreSheetFormCompare
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.CoordinateLengths.PairingEqLimitPairing
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.CoordinateLengths.PairingEqLimitPairing
+
+@[expose] public section
 
 noncomputable section
 

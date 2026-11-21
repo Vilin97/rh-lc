@@ -1,13 +1,17 @@
-import Formalism.PieriBlockIdeals.StatementLA
-import Formalism.GradedWeylDivisibility.FinalC
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDlatLemmas
-import Mathlib
-import Formalism.PieriBlockIdeals.Statement
-import Formalism.RankGapBounds.LargePrimeFactor
-import Formalism.RankGapBounds.CloudMinFalse
-import Formalism.RankGapBounds.RankGapProofs.CardLargePrimeFactorsLeOneHolds
-import Formalism.PieriBlockIdeals.PieriColumnMinors.MaxValEqZeroOfLt
-import Formalism.PieriBlockIdeals.PieriColumnMinors.LocalComponentGL
+module
+
+public import Formalism.PieriBlockIdeals.StatementLA
+public import Formalism.GradedWeylDivisibility.FinalC
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LDlatLemmas
+public import Mathlib
+public import Formalism.PieriBlockIdeals.Statement
+public import Formalism.RankGapBounds.LargePrimeFactor
+public import Formalism.RankGapBounds.CloudMinFalse
+public import Formalism.RankGapBounds.RankGapProofs.CardLargePrimeFactorsLeOneHolds
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.MaxValEqZeroOfLt
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.LocalComponentGL
+
+@[expose] public section
 
 open MvPolynomial
 

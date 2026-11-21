@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.FormalDegreeBessel.StatementBF
+module
+
+public import Mathlib
+public import Formalism.FormalDegreeBessel.StatementBF
+
+@[expose] public section
 
 open Matrix MeasureTheory Formalism.QuantumDeterminants
 

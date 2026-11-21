@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.WeilJacquetShalikaLaw
-import Formalism.SharpRestriction.Divisibility.ProductZerothFirstParts
-import Formalism.LocalRingCardinality.DataKerI
-import Development.AutomorphicArithmetic.OrbitLabellings.ColDefs
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.WeilJacquetShalikaLaw
+public import Formalism.SharpRestriction.Divisibility.ProductZerothFirstParts
+public import Formalism.LocalRingCardinality.DataKerI
+public import Development.AutomorphicArithmetic.OrbitLabellings.ColDefs
+
+@[expose] public section
 
 noncomputable section
 

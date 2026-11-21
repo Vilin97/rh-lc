@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.CohomologicalPurity.LeafPurPf
+module
+
+public import Development.EtaleCohomology.CohomologicalPurity.LeafPurPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC CochainComplex.HomComplex

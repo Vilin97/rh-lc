@@ -1,5 +1,9 @@
-import Formalism.PieriBlockIdeals.ExZTranslate
-import Formalism.PieriBlockIdeals.PieriColumnMinors.ProdInitialMinorsMemDetSpan
+module
+
+public import Formalism.PieriBlockIdeals.ExZTranslate
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.ProdInitialMinorsMemDetSpan
+
+@[expose] public section
 
 open MvPolynomial
 

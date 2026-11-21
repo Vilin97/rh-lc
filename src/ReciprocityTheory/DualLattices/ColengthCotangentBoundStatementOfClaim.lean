@@ -1,6 +1,10 @@
-import ReciprocityTheory.DualLattices.ColengthCotangentBoundStatement
-import ReciprocityTheory.DualLattices.PrimeHopfOrderStatement
-import ReciprocityTheory.DualLattices.IsLocalOfIntegers
+module
+
+public import ReciprocityTheory.DualLattices.ColengthCotangentBoundStatement
+public import ReciprocityTheory.DualLattices.PrimeHopfOrderStatement
+public import ReciprocityTheory.DualLattices.IsLocalOfIntegers
+
+@[expose] public section
 
 noncomputable section
 

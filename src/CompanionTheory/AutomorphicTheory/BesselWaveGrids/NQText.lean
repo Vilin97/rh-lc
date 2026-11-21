@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.Interlace
-import CompanionTheory.AutomorphicTheory.BesselWaveGrids.QwBound
-import CompanionTheory.AutomorphicTheory.BesselWaveGrids.InterlacingGrids.PstMul
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.Interlace
+public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.QwBound
+public import CompanionTheory.AutomorphicTheory.BesselWaveGrids.InterlacingGrids.PstMul
+
+@[expose] public section
 
 namespace CompanionTheory.WaveGrid
 

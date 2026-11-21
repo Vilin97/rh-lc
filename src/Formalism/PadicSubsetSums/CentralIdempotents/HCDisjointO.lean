@@ -1,4 +1,8 @@
-import Formalism.PadicSubsetSums.CentralIdempotents.GaloisConjCentralIdempotent
+module
+
+public import Formalism.PadicSubsetSums.CentralIdempotents.GaloisConjCentralIdempotent
+
+@[expose] public section
 
 open Polynomial CategoryTheory
 noncomputable section

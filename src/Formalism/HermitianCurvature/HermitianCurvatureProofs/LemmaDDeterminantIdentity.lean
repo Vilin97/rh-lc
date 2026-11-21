@@ -1,27 +1,31 @@
-import Formalism.HermitianCurvature.StatementQ
-import Formalism.PeriodIntegrals.ContractionsCovariantIff
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmColExp
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmRowExp
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmRowForm
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmSkip
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmStar
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmIndep
-import Mathlib
-import Formalism.PeriodIntegrals.RTTIndependence
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnCovLin
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnCovDet
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnCovHat
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.CovariantHatSqOfLin
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnAdapted
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnEabGl
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnEabPres
-import Formalism.FormalDegreeBessel.FinalG
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnMinorLeft
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnRdSkew
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnRuleRight
-import Formalism.FormalDegreeBessel.FinalWR
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WeylLevelElementProperties
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnYLeibniz
+module
+
+public import Formalism.HermitianCurvature.StatementQ
+public import Formalism.PeriodIntegrals.ContractionsCovariantIff
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmColExp
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmRowExp
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmRowForm
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmSkip
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmStar
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QmIndep
+public import Mathlib
+public import Formalism.PeriodIntegrals.RTTIndependence
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnCovLin
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnCovDet
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnCovHat
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.CovariantHatSqOfLin
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnAdapted
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnEabGl
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnEabPres
+public import Formalism.FormalDegreeBessel.FinalG
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnMinorLeft
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnRdSkew
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnRuleRight
+public import Formalism.FormalDegreeBessel.FinalWR
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WeylLevelElementProperties
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.QnYLeibniz
+
+@[expose] public section
 
 theorem Formalism.FourierDecayAlt.P.expansion_first_column : Formalism.FourierDecayAlt.Q.ExpFirstCol := PI.QmColExpWork.expFirstCol
 

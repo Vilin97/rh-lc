@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.LiftingTheoremOfExplicit
-import Formalism.PadicSubsetSums.StableGradedCounts.LiftingTheExponent
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.LiftingTheoremOfExplicit
+public import Formalism.PadicSubsetSums.StableGradedCounts.LiftingTheExponent
+
+@[expose] public section
 
 noncomputable section
 

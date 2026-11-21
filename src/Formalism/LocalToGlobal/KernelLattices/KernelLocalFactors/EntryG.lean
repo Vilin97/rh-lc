@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.KernelLattices.EntryG
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ColInst
+module
+
+public import Formalism.LocalToGlobal.KernelLattices.EntryG
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ColInst
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators ComplexConjugate

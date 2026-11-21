@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.LevBMemFil
-import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.KerEqOfSpan
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.LevBMemFil
+public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.KerEqOfSpan
+
+@[expose] public section
 
 noncomputable section
 

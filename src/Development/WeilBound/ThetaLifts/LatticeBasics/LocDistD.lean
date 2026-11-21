@@ -1,5 +1,9 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.LatticeBasics.LocDistC
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.LatticeBasics.LocDistC
+
+@[expose] public section
 
 open Filter Topology GlobalTheory.WeilM Matrix
 

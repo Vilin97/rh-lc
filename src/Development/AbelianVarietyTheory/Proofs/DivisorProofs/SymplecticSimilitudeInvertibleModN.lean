@@ -1,4 +1,9 @@
-import Development.AbelianVarietyTheory.Definitions.Divisors.SRelOneOneIff
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SRelOneOneIff
+
+@[expose] public section
+
 open ReciprocityTheory.ChartRestriction.G.Geo.Tor
 
 namespace GlobalTheory.SympModN

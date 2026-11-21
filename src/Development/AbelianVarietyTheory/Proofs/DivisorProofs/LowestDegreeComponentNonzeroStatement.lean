@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LowestDegreeComponentNonzero
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TprodMemTensSpan
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LowestDegreeComponentNonzero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TprodMemTensSpan
+
+@[expose] public section
+
 open scoped TensorProduct
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.lowest_degree_component_nonzero : ∀ (P Q R S : ℕ) (x : ℚ) (k k' : ℕ), P ≤ R → Q ≤ S → 0 < k → 0 < k' → x - Formalism.BasicNotions.TH.cPair R S = k → x + Formalism.BasicNotions.TH.cPair R S = k' → GlobalTheory.KFixIrr.lowOne P Q R S x (P * k + Q * k') ≠ ⊥ := by

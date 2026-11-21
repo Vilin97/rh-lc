@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StatementsInvertibleIndexMulSteps
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PInvertibleIdealIndex
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.POrderIdealIndexExtension
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StatementsInvertibleIndexMulSteps
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PInvertibleIdealIndex
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.POrderIdealIndexExtension
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Targets

@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergyInvariant
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergySwap
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.ChartMassAffine
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PChartMassInvariant
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergyInvariant
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergySwap
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.ChartMassAffine
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PChartMassInvariant
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

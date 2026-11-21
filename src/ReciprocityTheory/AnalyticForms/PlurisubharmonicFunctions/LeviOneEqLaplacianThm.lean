@@ -1,4 +1,8 @@
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.GreenPolar
+module
+
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.GreenPolar
+
+@[expose] public section
 
 open MeasureTheory Set Filter Topology InnerProductSpace
 open scoped Laplacian

@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.JetGauges.UnitaryDetClass
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.JetGauges.UnitaryDetClass
+
+@[expose] public section
 
 set_option autoImplicit false
 

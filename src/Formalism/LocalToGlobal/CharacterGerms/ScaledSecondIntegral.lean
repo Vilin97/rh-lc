@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.GeNatCast
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.GeNatCast
+
+@[expose] public section
 
 namespace Formalism.L2.FormalSeriesBounds
 

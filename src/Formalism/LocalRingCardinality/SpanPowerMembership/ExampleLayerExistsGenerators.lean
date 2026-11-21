@@ -1,11 +1,15 @@
-import Formalism.LocalRingCardinality.DataHost
-import Formalism.LocalRingCardinality.SpanPowerMembership.Primes
-import Formalism.LocalRingCardinality.DataSpaces
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleRanksRankComplement
-import Formalism.FrobeniusOrbits.HostCorollaries
-import Formalism.TameInertiaTowers.TowerFieldFoundations
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.FrameFacts
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.NonemptyFieldAxiomsCyclicPow
+module
+
+public import Formalism.LocalRingCardinality.DataHost
+public import Formalism.LocalRingCardinality.SpanPowerMembership.Primes
+public import Formalism.LocalRingCardinality.DataSpaces
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleRanksRankComplement
+public import Formalism.FrobeniusOrbits.HostCorollaries
+public import Formalism.TameInertiaTowers.TowerFieldFoundations
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.FrameFacts
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.NonemptyFieldAxiomsCyclicPow
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Formalism.ConjugateSelfDual.StatementRest
-import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientHomNonvanishingBound
-import ReciprocityTheory.GaloisValuations.SeparatedDvrSecondCohomologyMem
+module
+
+public import Formalism.ConjugateSelfDual.StatementRest
+public import Formalism.LocalRingCardinality.RhoDetPrimeEqMuTildeMulChiPow
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientHomNonvanishingBound
+public import ReciprocityTheory.GaloisValuations.SeparatedDvrSecondCohomologyMem
+
+@[expose] public section
 
 noncomputable section
 

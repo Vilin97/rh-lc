@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.ReducedBases.LatDefs
-import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.ExistsEventuallyNormRiemannThetaTermLe
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReducedBases.LatDefs
+public import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.ExistsEventuallyNormRiemannThetaTermLe
+
+@[expose] public section
 
 noncomputable section
 

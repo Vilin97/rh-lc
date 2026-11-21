@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.ClassSumDualLe
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.ClassSumDualLe
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

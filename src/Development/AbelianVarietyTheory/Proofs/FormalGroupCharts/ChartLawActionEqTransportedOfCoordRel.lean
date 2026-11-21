@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.TwoChartAtlas.AdditionLawSecondIdentity
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpChartJet
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.TwoChartAtlas.AdditionLawSecondIdentity
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpChartJet
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

@@ -1,6 +1,11 @@
-import Development.AutomorphicArithmetic.Foundations.IwahoriReduction.LangPolynomials.FixedIntegersIsUnitOfNotMemPrimeSpan
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.OneAddXPowSubOneMem
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.PowSubOneMem
+module
+
+public import Development.AutomorphicArithmetic.Foundations.IwahoriReduction.LangPolynomials.FixedIntegersIsUnitOfNotMemPrimeSpan
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.OneAddXPowSubOneMem
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.PowSubOneMem
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Formalism.MainNotions.N GlobalTheory.GalOfCusp UpperTheory.V UpperTheory.V.Af UpperTheory.V.HV GlobalTheory.Ord2 GlobalTheory.KZ GlobalTheory.Col UpperTheory.Kd.C7
 
 private theorem pow_sub_one_mem {S : Type} [CommRing S] (J : Ideal S) (p : ℕ) (hp : p.Prime) (hpJ : (p : S) ∈ J)

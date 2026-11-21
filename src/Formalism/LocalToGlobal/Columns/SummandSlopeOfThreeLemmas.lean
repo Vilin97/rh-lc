@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.BrzColLatOneLattice
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.BrzColLatOneLattice
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 open scoped Matrix ComplexOrder

@@ -1,7 +1,11 @@
-import ReciprocityTheory.SemistableReduction.TorusL2CauchyInequality
-import ReciprocityTheory.SemistableReduction.LagrangeIdealLiftsFact
-import ReciprocityTheory.SemistableReduction.RestBlockSubstIsMultiHomogeneous
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HNormPts
+module
+
+public import ReciprocityTheory.SemistableReduction.TorusL2CauchyInequality
+public import ReciprocityTheory.SemistableReduction.LagrangeIdealLiftsFact
+public import ReciprocityTheory.SemistableReduction.RestBlockSubstIsMultiHomogeneous
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.HNormPts
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.T0.HeightMultiplicativity
 

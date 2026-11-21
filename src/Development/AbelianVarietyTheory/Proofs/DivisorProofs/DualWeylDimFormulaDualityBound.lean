@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsAdelicOne
-import Formalism.LocalToGlobal.CMDeterminantIdeals.StatementG
-import Formalism.PolynomialDimension.WeylDim
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.PbSmithLam
-import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.WeylDimShift
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsAdelicOne
+public import Formalism.LocalToGlobal.CMDeterminantIdeals.StatementG
+public import Formalism.PolynomialDimension.WeylDim
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.PbSmithLam
+public import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.WeylDimShift
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Formalism.BasicNotions Formalism.L2.Pj GlobalTheory.DualWeyl GlobalTheory.AllWt GlobalTheory.FlatLine GlobalTheory.DefPt MvPolynomial
 open scoped Matrix

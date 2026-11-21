@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.IntegrableConjPowGaussian
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.IntegrableConjPowGaussian
+
+@[expose] public section
 
 noncomputable section
 

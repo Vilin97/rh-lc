@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.OperatorsCommuteTranslations
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.AAInvTrans
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.NormFormOneUnitary.HermitianOrthogonalProjectionVector
+module
+
+public import Formalism.HermitianCurvature.OperatorsCommuteTranslations
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.AAInvTrans
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.NormFormOneUnitary.HermitianOrthogonalProjectionVector
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P
 

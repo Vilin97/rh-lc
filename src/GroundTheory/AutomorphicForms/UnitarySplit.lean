@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.UnitaryGroupScheme
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.UnitaryGroupScheme
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.Reductions.SiegelPar
-import GroundTheory.AutomorphicForms.ReductionHeight
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.Reductions.SiegelPar
+public import GroundTheory.AutomorphicForms.ReductionHeight
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

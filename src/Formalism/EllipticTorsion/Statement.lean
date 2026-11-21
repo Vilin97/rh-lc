@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.FormalGroupLog.Statement
+module
+
+public import Mathlib
+public import Formalism.FormalGroupLog.Statement
+
+@[expose] public section
 
 open PowerSeries
 

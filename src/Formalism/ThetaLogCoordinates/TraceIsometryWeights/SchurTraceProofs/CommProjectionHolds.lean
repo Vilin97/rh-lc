@@ -1,5 +1,9 @@
-import Formalism.ThetaLogCoordinates.TraceIsometryWeights.SchurTraceProofs.WeightCompApply
-import Formalism.ThetaLogCoordinates.TraceIsometryWeights.StatementC
+module
+
+public import Formalism.ThetaLogCoordinates.TraceIsometryWeights.SchurTraceProofs.WeightCompApply
+public import Formalism.ThetaLogCoordinates.TraceIsometryWeights.StatementC
+
+@[expose] public section
 
 namespace Formalism.InvariantFactorPaths.PW
 

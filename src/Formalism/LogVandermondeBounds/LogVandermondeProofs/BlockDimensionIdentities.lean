@@ -1,4 +1,8 @@
-import Formalism.LogVandermondeBounds.LogVandermondeVariationUnbounded
+module
+
+public import Formalism.LogVandermondeBounds.LogVandermondeVariationUnbounded
+
+@[expose] public section
 
 namespace Formalism.LogVandermondeBounds.StandardLattice
 

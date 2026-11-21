@@ -1,7 +1,11 @@
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.CuspidalAverages.ExistsCond
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.TowerCodimensionTwo
-import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsBeta
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfDict
+module
+
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.CuspidalAverages.ExistsCond
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.TowerCodimensionTwo
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsBeta
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.PfDict
+
+@[expose] public section
 
 noncomputable section
 

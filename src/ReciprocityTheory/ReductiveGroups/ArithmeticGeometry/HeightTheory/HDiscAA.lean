@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.SemistableReduction.AlgAll
+module
+
+public import Mathlib
+public import ReciprocityTheory.SemistableReduction.AlgAll
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.T0
 

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.GenericUnipotentCharacter
+module
+
+public import Formalism.LocalToGlobal.Columns.GenericUnipotentCharacter
+
+@[expose] public section
 
 noncomputable section
 

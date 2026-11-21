@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.DefsObj
-import GroundTheory.AutomorphicForms.GKModules.KernelCalculus
-import GroundTheory.AutomorphicForms.L2LocalComponents.CenterCommute
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.DefsObj
+public import GroundTheory.AutomorphicForms.GKModules.KernelCalculus
+public import GroundTheory.AutomorphicForms.L2LocalComponents.CenterCommute
+
+@[expose] public section
 
 open MeasureTheory NumberField
 open GroundTheory.Automorphic GroundTheory.Automorphic.AutomorphicForm

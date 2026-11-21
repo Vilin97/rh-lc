@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.AbsorbPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.AbsorbPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits LateralTheory.E.t_E3Cut

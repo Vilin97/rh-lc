@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentralizerAlgO
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HarrisTaylorOrderFaithfulLattice
-import GroundTheory.Brauer.DoubleCentralizer
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentralizerAlgO
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.HarrisTaylorOrderFaithfulLattice
+public import GroundTheory.Brauer.DoubleCentralizer
+
+@[expose] public section
 
 open scoped TensorProduct
 namespace GlobalTheory.UPel.HT

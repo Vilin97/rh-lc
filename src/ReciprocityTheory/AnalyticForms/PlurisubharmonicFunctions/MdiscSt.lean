@@ -1,5 +1,9 @@
-import ReciprocityTheory.AnalyticForms.MaIntEmpty
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.MdiscPos
+module
+
+public import ReciprocityTheory.AnalyticForms.MaIntEmpty
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.MdiscPos
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.A
 

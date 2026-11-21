@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.Reductions.MetaDef
+module
+
+public import Development.WeilBound.ThetaLifts.Reductions.MetaDef
+
+@[expose] public section
 
 noncomputable section
 

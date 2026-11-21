@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.CentralCharts.TraceMulReNonneg
-import Development.WeilBound.CoreStatements.CentralCharts.ContDiffAtLogNorm
+module
+
+public import Development.WeilBound.CoreStatements.CentralCharts.TraceMulReNonneg
+public import Development.WeilBound.CoreStatements.CentralCharts.ContDiffAtLogNorm
+
+@[expose] public section
 
 noncomputable section
 

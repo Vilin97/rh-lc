@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BijectiveGsLocalInvRootsOfPlaces
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseCores
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BasePairing
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BijectiveGsLocalInvRootsOfPlaces
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BaseCores
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BasePairing
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

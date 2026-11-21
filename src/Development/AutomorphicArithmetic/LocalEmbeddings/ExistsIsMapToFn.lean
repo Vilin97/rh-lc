@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.FrameCo
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsFlagFrame
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TriIff
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.LocalEmbeddings.FrameCo
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsFlagFrame
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.TriIff
+
+@[expose] public section
 
 set_option autoImplicit false
 

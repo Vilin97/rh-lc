@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.KernelStabilizer
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.KernelStabilizer
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison
+
+@[expose] public section
 
 noncomputable section
 

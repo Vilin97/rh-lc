@@ -1,4 +1,8 @@
-import GroundTheory.AutomorphicForms.DixmierMalliavin
+module
+
+public import GroundTheory.AutomorphicForms.DixmierMalliavin
+
+@[expose] public section
 
 namespace CompanionTheory.DM
 

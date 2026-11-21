@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LefschetzSigmaSums.HeckeTraceSemi
-import Development.AbelianVarietyTheory.Definitions.Divisors.IwahoriRegularSeparable
-import Development.AbelianVarietyTheory.Definitions.Divisors.GenOf
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.LefschetzSigmaSums.HeckeTraceSemi
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IwahoriRegularSeparable
+public import Development.AbelianVarietyTheory.Definitions.Divisors.GenOf
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.TowerOfAt
-import Formalism.LocalToGlobal.ProjectiveLattices.BetaAtSymm
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.UniformisationConclusion
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.TowerOfAt
+public import Formalism.LocalToGlobal.ProjectiveLattices.BetaAtSymm
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.UniformisationConclusion
+
+@[expose] public section
 
 noncomputable section
 

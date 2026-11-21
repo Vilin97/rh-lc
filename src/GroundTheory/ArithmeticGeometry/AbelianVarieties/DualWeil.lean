@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.IsogenyRamification
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilPairing
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.IsogenyRamification
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilPairing
+
+@[expose] public section
 
 namespace GroundTheory.Arith.Abelian
 

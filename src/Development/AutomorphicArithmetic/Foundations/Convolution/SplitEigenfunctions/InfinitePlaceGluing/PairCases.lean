@@ -1,7 +1,11 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.Entire
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InvOneSubBound
-import GroundTheory.GlobalFields.AnalyticClassNumber.DirichletHecke
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.PairCases
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SplitEigenfunctions.Entire
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InvOneSubBound
+public import GroundTheory.GlobalFields.AnalyticClassNumber.DirichletHecke
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.PairCases
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 open Formalism.L2.Host Formalism.ConjugateSelfDual GlobalTheory.CuspRep UpperTheory.ConvolutionTheory.R2

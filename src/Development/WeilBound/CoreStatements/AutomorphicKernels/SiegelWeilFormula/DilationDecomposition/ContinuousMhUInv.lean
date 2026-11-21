@@ -1,12 +1,16 @@
-import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.DilationDecomposition.LocDerBig
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsSummableMajorantLatticeSumStatement
-import Development.WeilBound.ThetaLifts.LatticeBasics.SliceSeminorm
-import Development.WeilBound.ThetaLifts.LatticeBasics.FdEqZero
-import Development.WeilBound.ThetaLifts.FrameEstimates.SiegelAll
-import Development.WeilBound.ThetaLifts.FrameEstimates.GrpTop
-import Development.WeilBound.ThetaLifts.FrameEstimates.BlockForm
-import Development.WeilBound.ThetaLifts.FrameEstimates.FundamentalDomainFiniteVolume
-import Development.WeilBound.ThetaLifts.CartanFactorisation.Unimod
+module
+
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.DilationDecomposition.LocDerBig
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsSummableMajorantLatticeSumStatement
+public import Development.WeilBound.ThetaLifts.LatticeBasics.SliceSeminorm
+public import Development.WeilBound.ThetaLifts.LatticeBasics.FdEqZero
+public import Development.WeilBound.ThetaLifts.FrameEstimates.SiegelAll
+public import Development.WeilBound.ThetaLifts.FrameEstimates.GrpTop
+public import Development.WeilBound.ThetaLifts.FrameEstimates.BlockForm
+public import Development.WeilBound.ThetaLifts.FrameEstimates.FundamentalDomainFiniteVolume
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.Unimod
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,8 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OneMapOfExt
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMeasY
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ModelsWith
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.NormalFam
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OneMapOfExt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMeasY
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ModelsWith
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.NormalFam
+
+@[expose] public section
+
 open Formalism.BasicNotions Formalism.MainNotions Formalism.BasicNotions.TH Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes Formalism.MainNotions.StandardLattice Formalism.MainNotions.S MeasureTheory IsDedekindDomain NumberField Matrix Formalism.L2.Theta Formalism.L2.DIV Formalism.L2.Indef Formalism.IndefR Formalism.IndefR.Links Formalism.IndefR.Mult Formalism.IndefR.Datum Formalism.IndefR.FWT Formalism.L2.Pj
 open scoped TensorProduct InnerProductSpace
 attribute [local instance] Formalism.BasicNotions.Host.cmStar

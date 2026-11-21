@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.DistinguishedUnitIdeals.FrobeniusDiffBijective
-import Formalism.DistinguishedUnitIdeals.WordConsts
-import Formalism.DistinguishedUnitIdeals.LemmaCFull
+module
+
+public import Mathlib
+public import Formalism.DistinguishedUnitIdeals.FrobeniusDiffBijective
+public import Formalism.DistinguishedUnitIdeals.WordConsts
+public import Formalism.DistinguishedUnitIdeals.LemmaCFull
+
+@[expose] public section
 
 noncomputable section
 

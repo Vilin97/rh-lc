@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.EigenKilling.ConeIntegralFactorisation
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.EigenKilling.FockActionFirstEq
-import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsCharNe
+module
+
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.EigenKilling.ConeIntegralFactorisation
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.EigenKilling.FockActionFirstEq
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsCharNe
+
+@[expose] public section
 
 noncomputable section
 

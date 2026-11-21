@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.LamSatRestrict
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.LamSatRestrict
+
+@[expose] public section
 
 noncomputable section
 

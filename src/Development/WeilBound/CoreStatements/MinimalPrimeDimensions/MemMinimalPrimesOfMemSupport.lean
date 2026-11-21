@@ -1,5 +1,9 @@
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.Assembly
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeMeetNull
+module
+
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.Assembly
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PConeMeetNull
+
+@[expose] public section
 
 set_option autoImplicit false
 

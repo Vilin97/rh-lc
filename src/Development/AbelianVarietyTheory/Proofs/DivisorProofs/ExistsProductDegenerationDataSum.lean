@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSumPolAV
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsProductPrincipallyPolarisedAbelianSchemeStatement
-import Development.AbelianVarietyTheory.Proofs.RingsOfIntegers.PsiInOfComponent
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSumPolAV
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsProductPrincipallyPolarisedAbelianSchemeStatement
+public import Development.AbelianVarietyTheory.Proofs.RingsOfIntegers.PsiInOfComponent
+
+@[expose] public section
 
 set_option autoImplicit false
 

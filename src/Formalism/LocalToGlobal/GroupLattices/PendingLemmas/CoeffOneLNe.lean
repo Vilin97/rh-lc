@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSq
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WittFractionToCpAlgebraMap
+module
+
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSq
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WittFractionToCpAlgebraMap
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.KTwoCosetCount
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.KTwoCosetCount
+
+@[expose] public section
 
 noncomputable section
 

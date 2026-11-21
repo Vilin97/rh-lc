@@ -1,4 +1,8 @@
-import Formalism.ThickAverageLoss.PartnersToFactorsAt
+module
+
+public import Formalism.ThickAverageLoss.PartnersToFactorsAt
+
+@[expose] public section
 
 open Finset ArithmeticFunction
 

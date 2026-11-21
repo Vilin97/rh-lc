@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.WeightProjectionPreservesLattice
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.WeightProjectionPreservesLattice
+
+@[expose] public section
 
 noncomputable section
 

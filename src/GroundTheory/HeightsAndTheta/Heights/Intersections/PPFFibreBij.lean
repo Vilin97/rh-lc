@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFFibreBij
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PPFFibreSum
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsPFFibreBij
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PPFFibreSum
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Inter

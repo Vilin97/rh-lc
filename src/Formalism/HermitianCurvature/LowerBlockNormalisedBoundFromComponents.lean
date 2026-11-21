@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.LevelRecursionCondNeeded
+module
+
+public import Formalism.HermitianCurvature.LevelRecursionCondNeeded
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.PairingProductCorollary
 

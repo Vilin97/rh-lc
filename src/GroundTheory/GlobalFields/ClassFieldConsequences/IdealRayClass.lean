@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.ClassFieldConsequences.RayClass
-import GroundTheory.GlobalFields.Adele.WeakApproxUnits
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ClassFieldConsequences.RayClass
+public import GroundTheory.GlobalFields.Adele.WeakApproxUnits
+
+@[expose] public section
 
 open Topology Filter NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum WithZero
   FractionalIdeal Function

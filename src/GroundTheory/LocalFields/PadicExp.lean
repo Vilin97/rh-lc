@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.PadicLogHom
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.PadicLogHom
+
+@[expose] public section
 
 namespace GroundTheory.LocalField
 

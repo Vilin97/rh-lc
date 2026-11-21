@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGWave
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LagrangeExtraction
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PBGWave
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LagrangeExtraction
+
+@[expose] public section
 
 open Matrix Finset
 open scoped ComplexConjugate

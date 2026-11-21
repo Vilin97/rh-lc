@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.DualLStable
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.LatSOfMem
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.DualLStable
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.LatSOfMem
+
+@[expose] public section
 
 noncomputable section
 

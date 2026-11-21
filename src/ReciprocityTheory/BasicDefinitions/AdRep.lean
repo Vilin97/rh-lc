@@ -1,4 +1,8 @@
-import ReciprocityTheory.BasicDefinitions.ExistsUnique
+module
+
+public import ReciprocityTheory.BasicDefinitions.ExistsUnique
+
+@[expose] public section
 
 namespace ReciprocityTheory.Def
 

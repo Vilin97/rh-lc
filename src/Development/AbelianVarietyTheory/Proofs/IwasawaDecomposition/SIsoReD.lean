@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ECure
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SpectralRedivisionTermEquivKeepsTermDataStatement
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.KeepPuVolAR
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsoPairToTermSymm
-import Lean
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ECure
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.SpectralRedivisionTermEquivKeepsTermDataStatement
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.KeepPuVolAR
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.IsoPairToTermSymm
+public import Lean
+
+@[expose] public section
 
 noncomputable section
 

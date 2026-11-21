@@ -1,7 +1,11 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.SmulNeZeroLat
-import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Scinv
-import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Nearcoord
-import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Cntconj
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.SmulNeZeroLat
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Scinv
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Nearcoord
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.HermiteNormalForms.Cntconj
+
+@[expose] public section
 
 open NumberField Matrix UpperTheory.V UpperTheory.V.KT
 open scoped ComplexOrder

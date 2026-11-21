@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.EmbeddingPermutesLetters
-import Mathlib
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.EmbTraceSum
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.EmbeddingPermutesLetters
+public import Mathlib
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.EmbTraceSum
+
+@[expose] public section
 
 namespace Formalism.MainNotions.Ext
 

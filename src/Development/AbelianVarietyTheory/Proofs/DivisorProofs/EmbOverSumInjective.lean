@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.Brauer.TensorSimple
+module
+
+public import Mathlib
+public import GroundTheory.Brauer.TensorSimple
+
+@[expose] public section
 
 open NumberField Matrix GlobalTheory.UPel.HT
 open scoped TensorProduct ComplexConjugate

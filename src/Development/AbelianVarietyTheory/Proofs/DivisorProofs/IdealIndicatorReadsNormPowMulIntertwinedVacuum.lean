@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSelfDualCOfSd
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSelfDualCOfSd
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 open scoped Classical Pointwise

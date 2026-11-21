@@ -1,8 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NonemptyTransferEquiv
-import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.GaussianBinomialFormula
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.GaussBinomMulProd
-import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.CycOfPrime
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.NonemptyTransferEquiv
+public import Development.AbelianVarietyTheory.BlockTheory.TwistedDiscreteSeries.GaussianBinomialFormula
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.GaussBinomMulProd
+public import Development.AbelianVarietyTheory.Proofs.SiegelThetaTransformation.CycOfPrime
+
+@[expose] public section
+
 open NumberField
 
 namespace GlobalTheory.LatCountGauss

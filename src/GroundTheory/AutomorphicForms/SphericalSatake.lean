@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.SphericalPrincipal
-import GroundTheory.AutomorphicForms.SphericalLaurent
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.SphericalPrincipal
+public import GroundTheory.AutomorphicForms.SphericalLaurent
+
+@[expose] public section
 
 noncomputable section
 

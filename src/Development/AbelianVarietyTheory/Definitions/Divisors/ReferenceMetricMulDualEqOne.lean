@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsIsHodgeFrameIff
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.MemSupportBDIff
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NotIsBettiZero
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ExistsIsHodgeFrameIff
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.MemSupportBDIff
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NotIsBettiZero
+
+@[expose] public section
 
 set_option autoImplicit false
 

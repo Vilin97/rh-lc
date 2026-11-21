@@ -1,7 +1,11 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.IsFieldIntersection
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSuppAC
-import Lemmata.GeneralBFactBis.Imports
-import Lemmata.FirstBlockLemmaB.Imports
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MultihomogeneousIdeals.IsFieldIntersection
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSuppAC
+public import Lemmata.GeneralBFactBis.Imports
+public import Lemmata.FirstBlockLemmaB.Imports
+
+@[expose] public section
 
 noncomputable section
 

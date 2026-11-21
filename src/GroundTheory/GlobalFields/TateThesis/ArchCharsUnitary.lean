@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.ArchChars
-import GroundTheory.GlobalFields.TateThesis.ArchCharsUnits
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.ArchChars
+public import GroundTheory.GlobalFields.TateThesis.ArchCharsUnits
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

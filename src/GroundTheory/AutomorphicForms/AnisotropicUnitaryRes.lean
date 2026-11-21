@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.AnisotropicRestrict
-import GroundTheory.AutomorphicForms.AdelicUnitaryGroups
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.AnisotropicRestrict
+public import GroundTheory.AutomorphicForms.AdelicUnitaryGroups
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open Module Matrix TensorProduct

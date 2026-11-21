@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PBwLocInd
-import Formalism.LocalToGlobal.GlobalTheory.GL6.PBwLocGen
-import Formalism.LocalToGlobal.GlobalTheory.CoefficientMapSurjective
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PBwLocInd
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.PBwLocGen
+public import Formalism.LocalToGlobal.GlobalTheory.CoefficientMapSurjective
+
+@[expose] public section
 
 noncomputable section
 

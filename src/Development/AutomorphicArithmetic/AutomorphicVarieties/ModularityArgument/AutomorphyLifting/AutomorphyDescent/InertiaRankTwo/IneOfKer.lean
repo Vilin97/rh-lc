@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.AutomorphyLifting.AutomorphyDescent.DownCsdK
-import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.FinChar
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.AutomorphyLifting.AutomorphyDescent.DownCsdK
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.FinChar
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Formalism.ConjugateSelfDual ReciprocityTheory.Gal Polynomial UpperTheory.V.Z.Win
 open UpperTheory.V.Z.Win.Dn

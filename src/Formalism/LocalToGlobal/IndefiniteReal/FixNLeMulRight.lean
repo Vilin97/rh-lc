@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.CongNormal
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.CongNormal
+
+@[expose] public section
 
 noncomputable section
 

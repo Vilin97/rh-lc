@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsTerRest
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsRestFurther
-import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PCutRegular
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsTerRest
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsRestFurther
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.PCutRegular
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization

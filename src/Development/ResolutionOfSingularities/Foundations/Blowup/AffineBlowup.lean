@@ -1,5 +1,10 @@
-import Mathlib
-import Development.ResolutionOfSingularities.Foundations.Blowup.ReesGrading
+module
+
+public import Mathlib
+public import Development.ResolutionOfSingularities.Foundations.Blowup.ReesGrading
+
+@[expose] public section
+
 open CategoryTheory AlgebraicGeometry
 
 namespace FunctorialResolution.Blowup

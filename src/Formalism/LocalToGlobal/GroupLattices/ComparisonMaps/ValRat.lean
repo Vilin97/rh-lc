@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.MapNatActR
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.CastGLApply
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.MapNatActR
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.CastGLApply
+
+@[expose] public section
 
 noncomputable section
 

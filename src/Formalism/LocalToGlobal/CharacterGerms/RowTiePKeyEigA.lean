@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePKeyDef
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePGmExLem
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePKeyDef
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePGmExLem
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.JumpsLetOfWin
-import Formalism.SharpRestriction.LevelLetterCocycles.WachFrobeniusLatticeUnramifiedFunctor
-import Formalism.SharpRestriction.LevelLetterCocycles.FiltrationSaturationKiller
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.JumpsLetOfWin
+public import Formalism.SharpRestriction.LevelLetterCocycles.WachFrobeniusLatticeUnramifiedFunctor
+public import Formalism.SharpRestriction.LevelLetterCocycles.FiltrationSaturationKiller
+
+@[expose] public section
 
 noncomputable section
 

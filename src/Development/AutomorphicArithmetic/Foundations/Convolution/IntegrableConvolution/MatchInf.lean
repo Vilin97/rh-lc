@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.ClosedProperAlt
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.MatchSplit
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.RegOkPi
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.PushTens
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.GlueBasic
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.ClosedProperAlt
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.MatchSplit
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.RegOkPi
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.PushTens
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.GlueBasic
+
+@[expose] public section
 
 open MeasureTheory NumberField
 

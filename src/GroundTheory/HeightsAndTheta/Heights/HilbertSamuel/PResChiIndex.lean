@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsResChiIndex
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.ResSymGram
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.ResChiIndexLattice
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsResChiIndex
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.ResSymGram
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.ResChiIndexLattice
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

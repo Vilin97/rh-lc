@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.IsResidueClassZero
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.LocalRingCardinality.DataForced
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.IsResidueClassZero
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.LocalRingCardinality.DataForced
+
+@[expose] public section
 
 noncomputable section
 

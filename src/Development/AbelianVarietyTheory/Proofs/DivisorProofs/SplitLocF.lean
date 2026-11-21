@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.DatumF
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.DatumF
+
+@[expose] public section
 
 noncomputable section
 

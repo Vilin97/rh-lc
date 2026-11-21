@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCX
-import Formalism.SharpRestriction.Divisibility.LocalNonemptiness.THProvA
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+module
+
+public import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCX
+public import Formalism.SharpRestriction.Divisibility.LocalNonemptiness.THProvA
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+
+@[expose] public section
 
 noncomputable section
 

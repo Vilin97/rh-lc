@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.HeightF1OfData
-import Formalism.LocalToGlobal.ProjectiveLattices.CompHt
-import Formalism.LocalToGlobal.ProjectiveLattices.RegularityR2Quotient
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsIdempotentSectionFamily
-import Development.AbelianVarietyTheory.Proofs.GenericRegularity.FnFGFnTrdeg
-import Development.AbelianVarietyTheory.Proofs.HeightProofs.FiniteSupportAdmissible
-import ReciprocityTheory.SemistableReduction.AlgAll
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.HeightF1OfData
+public import Formalism.LocalToGlobal.ProjectiveLattices.CompHt
+public import Formalism.LocalToGlobal.ProjectiveLattices.RegularityR2Quotient
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsIdempotentSectionFamily
+public import Development.AbelianVarietyTheory.Proofs.GenericRegularity.FnFGFnTrdeg
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.FiniteSupportAdmissible
+public import ReciprocityTheory.SemistableReduction.AlgAll
+
+@[expose] public section
 
 noncomputable section
 

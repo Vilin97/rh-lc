@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.CuspSpanNormBounds.PsiEDef
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.CuspSpanNormBounds.PsiEDef
+
+@[expose] public section
+
 open Formalism.MainNotions.S.Loc NumberField IsDedekindDomain ValuativeRel
 
 namespace GlobalTheory.LocSplit

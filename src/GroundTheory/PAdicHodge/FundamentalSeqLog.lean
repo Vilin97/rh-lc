@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.PAdicHodge.ACrisPhi
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.ACrisPhi
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

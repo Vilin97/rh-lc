@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.L2LocalComponents.Summand
-import GroundTheory.AutomorphicForms.SupercuspidalCoefficients
-import GroundTheory.AutomorphicForms.L2LocalComponents.NonEmpty
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.L2LocalComponents.Summand
+public import GroundTheory.AutomorphicForms.SupercuspidalCoefficients
+public import GroundTheory.AutomorphicForms.L2LocalComponents.NonEmpty
+
+@[expose] public section
 
 open MeasureTheory
 

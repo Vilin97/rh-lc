@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StVarIntGraphInt
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PVarIntAdd
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PCutOffDominated
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PLinearNoetherNormalization
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.CovLog
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StVarIntGraphInt
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PVarIntAdd
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PCutOffDominated
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PLinearNoetherNormalization
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.CovLog
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

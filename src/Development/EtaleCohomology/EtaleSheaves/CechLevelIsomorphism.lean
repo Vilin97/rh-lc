@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleSheaves.CechLevelsGeneration.CechLevelIso
-import Development.EtaleCohomology.EtaleSheaves.CechLevelIsomorphism.BaseChangeLimit
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.CechLevelsGeneration.CechLevelIso
+public import Development.EtaleCohomology.EtaleSheaves.CechLevelIsomorphism.BaseChangeLimit
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry LateralTheory.E.TruncCokPf LateralTheory.E.LevelsPf.Tp Opposite LateralTheory.E.CechLevelIsoPf.Gen

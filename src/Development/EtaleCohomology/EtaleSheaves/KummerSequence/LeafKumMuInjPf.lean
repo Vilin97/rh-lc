@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleSheaves.KummerSequence.LeafKumMuUnitsPf
-import Development.AbelianVarietyTheory.Definitions.Divisors.SecClass
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.KummerSequence.LeafKumMuUnitsPf
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SecClass
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC LateralTheory.E.E4

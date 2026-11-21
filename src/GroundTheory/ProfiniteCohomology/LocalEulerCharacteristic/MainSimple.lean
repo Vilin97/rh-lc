@@ -1,12 +1,17 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.LocalEulerCharacteristic.MainGalois
-import GroundTheory.ProfiniteCohomology.LocalEulerCharacteristic.MainCount
-import GroundTheory.ProfiniteCohomology.LocalEulerCharacteristic.MainCoind
-import GroundTheory.ProfiniteCohomology.LocalEulerCharacteristic.Coprime
-import GroundTheory.ProfiniteCohomology.LocalEulerCharacteristic.Vanishing
-import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing
-import GroundTheory.ProfiniteCohomology.LocalClassFormationAlt
-import GroundTheory.ProfiniteCohomology.PoincareDuality
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.LocalEulerCharacteristic.MainGalois
+public import GroundTheory.ProfiniteCohomology.LocalEulerCharacteristic.MainCount
+public import GroundTheory.ProfiniteCohomology.LocalEulerCharacteristic.MainCoind
+public import GroundTheory.ProfiniteCohomology.LocalEulerCharacteristic.Coprime
+public import GroundTheory.ProfiniteCohomology.LocalEulerCharacteristic.Vanishing
+public import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing
+public import GroundTheory.ProfiniteCohomology.LocalClassFormationAlt
+public import GroundTheory.ProfiniteCohomology.PoincareDuality
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

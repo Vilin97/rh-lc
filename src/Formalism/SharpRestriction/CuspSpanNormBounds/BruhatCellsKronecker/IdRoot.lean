@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.UnitriangularFrameLift
-import Lemmata.GeneralBFactUpperVersion.Imports
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.UnitriangularFrameLift
+public import Lemmata.GeneralBFactUpperVersion.Imports
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.TwistTensorRestriction
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.TwistTensorRestriction
+
+@[expose] public section
 
 noncomputable section
 

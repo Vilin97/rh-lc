@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.EqGlobOfHat
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.EqGlobOfHat
+
+@[expose] public section
 
 noncomputable section
 

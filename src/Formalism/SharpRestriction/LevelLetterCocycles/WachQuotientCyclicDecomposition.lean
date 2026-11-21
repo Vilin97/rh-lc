@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.UniformizerMemDeltaInvariants
-import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.RkDcrisLSumZero
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.UniformizerMemDeltaInvariants
+public import Formalism.SharpRestriction.LevelLetterCocycles.QuotientImageDivisibility.RkDcrisLSumZero
+
+@[expose] public section
 
 noncomputable section
 

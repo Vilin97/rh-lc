@@ -1,5 +1,9 @@
-import ReciprocityTheory.GaloisValuations.ContinuousConstSMulQuotient
-import ReciprocityTheory.GroupCohomology.IsTowerLim
+module
+
+public import ReciprocityTheory.GaloisValuations.ContinuousConstSMulQuotient
+public import ReciprocityTheory.GroupCohomology.IsTowerLim
+
+@[expose] public section
 
 namespace ReciprocityTheory.Coh
 

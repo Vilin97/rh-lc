@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.AdelicGLn
-import GroundTheory.AutomorphicForms.Iwasawa
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.OneMemGoodCT
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.AdelicGLn
+public import GroundTheory.AutomorphicForms.Iwasawa
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.OneMemGoodCT
+
+@[expose] public section
 
 set_option maxSynthPendingDepth 1
 

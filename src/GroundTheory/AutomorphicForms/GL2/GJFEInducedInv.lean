@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJFEDefs
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJFEDefs
+
+@[expose] public section
 
 noncomputable section
 

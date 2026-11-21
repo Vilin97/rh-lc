@@ -1,8 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.ConcreteSettingExists
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.NotInhAbsOfGamLe
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.ChainParSucc
-import Formalism.LocalRingCardinality.HeightBoundGeFourthPowerRank
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.ConcreteSettingExists
+public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.NotInhAbsOfGamLe
+public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.ChainParSucc
+public import Formalism.LocalRingCardinality.HeightBoundGeFourthPowerRank
+
+@[expose] public section
+
 open Formalism.BasicNotions Formalism.MainNotions.S GlobalTheory.Core.Rk
 
 namespace GlobalTheory.Core.Rk.HdGap

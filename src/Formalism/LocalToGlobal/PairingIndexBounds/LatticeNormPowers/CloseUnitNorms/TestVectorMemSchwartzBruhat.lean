@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.PairingIndexBounds.LatticeNormPowers.NegOneZpowEqOfParity
-import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
-import Formalism.LocalToGlobal.GlobalTheory.GL3.PIopNorm
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
+module
+
+public import Formalism.LocalToGlobal.PairingIndexBounds.LatticeNormPowers.NegOneZpowEqOfParity
+public import Formalism.SharpRestriction.GlobalSchurBounds.GL3Theta
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.PIopNorm
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

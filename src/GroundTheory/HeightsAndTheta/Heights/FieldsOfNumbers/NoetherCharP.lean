@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.NoetherReduction
-import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.NoetherCharPLemmas
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.NoetherReduction
+public import GroundTheory.HeightsAndTheta.Heights.FieldsOfNumbers.NoetherCharPLemmas
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open Polynomial

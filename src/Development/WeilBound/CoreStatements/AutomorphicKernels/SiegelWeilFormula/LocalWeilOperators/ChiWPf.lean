@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.LocalWeilOperators.Imports
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicIntertwine
+module
+
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.LocalWeilOperators.Imports
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicIntertwine
+
+@[expose] public section
 
 noncomputable section
 

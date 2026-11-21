@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.TateThetaDecay
-import GroundTheory.GlobalFields.TateThesis.ArchCharsUnitary
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.TateThetaDecay
+public import GroundTheory.GlobalFields.TateThesis.ArchCharsUnitary
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter MeasureTheory Complex
 open scoped NumberField.AdeleRing

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.Statement
-import Formalism.LogFactorialIndices.StatementSize
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.Statement
+public import Formalism.LogFactorialIndices.StatementSize
+
+@[expose] public section
 
 open Finset NumberField IsDedekindDomain
 

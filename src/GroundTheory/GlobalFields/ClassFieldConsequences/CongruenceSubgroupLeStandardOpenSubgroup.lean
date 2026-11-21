@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.HeckeCharRayClass
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.HeckeCharRayClass
+
+@[expose] public section
 
 open Topology Filter NumberField IsDedekindDomain WithZero Function
 open scoped NumberField.AdeleRing

@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.RealDescent.RealLeviDescent.InjectiveDecompositionAction
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EvaluationGenerator
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsAdFamL
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.RealDescent.RealLeviDescent.InjectiveDecompositionAction
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.EvaluationGenerator
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsAdFamL
+
+@[expose] public section
 
 noncomputable section
 

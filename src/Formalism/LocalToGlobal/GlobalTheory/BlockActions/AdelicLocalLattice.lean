@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.InclEMemTensInt
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.InclEMemTensInt
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import CompanionTheory.AutomorphicTheory.HeckeStandardModules.ExistsDenFin
-import CompanionTheory.AutomorphicTheory.HeckeStandardModules.HeckeA
-import CompanionTheory.AutomorphicTheory.HeckeStandardModules.HeckeStdStatement
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.CsGlob
+module
+
+public import CompanionTheory.AutomorphicTheory.HeckeStandardModules.ExistsDenFin
+public import CompanionTheory.AutomorphicTheory.HeckeStandardModules.HeckeA
+public import CompanionTheory.AutomorphicTheory.HeckeStandardModules.HeckeStdStatement
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.CsGlob
+
+@[expose] public section
 
 open NumberField IsDedekindDomain ReciprocityTheory.Aut Formalism.UG Formalism.L2 CompanionTheory.Split CompanionTheory.HeckeA
 

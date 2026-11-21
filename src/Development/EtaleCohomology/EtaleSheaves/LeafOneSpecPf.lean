@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleSheaves.CupProductRingLaws
-import Development.EtaleCohomology.TateTwists.EtaleCochainEvaluationNaturalInRestriction
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.CupProductRingLaws
+public import Development.EtaleCohomology.TateTwists.EtaleCochainEvaluationNaturalInRestriction
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC

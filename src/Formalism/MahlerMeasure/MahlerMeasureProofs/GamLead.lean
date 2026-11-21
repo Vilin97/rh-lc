@@ -1,5 +1,9 @@
-import Formalism.MahlerMeasure.HasOrder
-import Formalism.MahlerMeasure.FinalM
+module
+
+public import Formalism.MahlerMeasure.HasOrder
+public import Formalism.MahlerMeasure.FinalM
+
+@[expose] public section
 
 namespace Formalism.GM.leadingTermLemmas
 

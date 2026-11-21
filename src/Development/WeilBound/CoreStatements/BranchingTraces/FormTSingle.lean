@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.BranchingTraces.ContinuousEmb
-import Formalism.SharpRestriction.CuspSpanNormBounds.LowestKTypeMultiplicity
+module
+
+public import Development.WeilBound.CoreStatements.BranchingTraces.ContinuousEmb
+public import Formalism.SharpRestriction.CuspSpanNormBounds.LowestKTypeMultiplicity
+
+@[expose] public section
 
 noncomputable section
 

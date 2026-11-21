@@ -1,16 +1,20 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.PowValIntCast
-import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatLat
-import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatPol
-import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatLev
-import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatReg
-import Development.WeilBound.CoreStatements.HodgeTatePoints.Hcptgen
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IntegralClosureHeightEqOneOfLiesOver
-import Development.AutomorphicSpectrum.Statements.GeometryStatements.IsPolLatticePlane
-import Development.AutomorphicSpectrum.Statements.AlgebraStatements.HodgeTateNormComparison
-import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.Birational
-import Development.WeilBound.CoreStatements.HodgeTatePoints.TwhopfSec
-import Development.WeilBound.CoreStatements.HodgeTatePoints.BtLink
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.PowValIntCast
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatLat
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatPol
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatLev
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatReg
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.Hcptgen
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.IntegralClosureHeightEqOneOfLiesOver
+public import Development.AutomorphicSpectrum.Statements.GeometryStatements.IsPolLatticePlane
+public import Development.AutomorphicSpectrum.Statements.AlgebraStatements.HodgeTateNormComparison
+public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.Birational
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.TwhopfSec
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.BtLink
+
+@[expose] public section
 
 noncomputable section
 

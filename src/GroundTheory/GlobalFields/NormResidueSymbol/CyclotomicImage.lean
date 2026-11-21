@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.NormResidueSymbol.CyclotomicCompositum
-import GroundTheory.GlobalFields.IdeleGroups.NormOneCompact
-import GroundTheory.GlobalFields.CyclotomicCharacters.Degree
-import GroundTheory.GlobalFields.NormResidueSymbol.RationalContinuous
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.NormResidueSymbol.CyclotomicCompositum
+public import GroundTheory.GlobalFields.IdeleGroups.NormOneCompact
+public import GroundTheory.GlobalFields.CyclotomicCharacters.Degree
+public import GroundTheory.GlobalFields.NormResidueSymbol.RationalContinuous
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

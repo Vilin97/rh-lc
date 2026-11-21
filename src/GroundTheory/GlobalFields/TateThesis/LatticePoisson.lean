@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.LatticePoissonBasic
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.LatticePoissonBasic
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

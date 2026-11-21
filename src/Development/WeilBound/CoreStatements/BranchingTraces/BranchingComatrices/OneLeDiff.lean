@@ -1,6 +1,10 @@
-import Development.WeilBound.CoreStatements.BranchingTraces.BranchingComatrices.RootOfNe
-import Development.WeilBound.CoreStatements.BranchingTraces.BranchingComatrices.ContDiffEmb
-import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.DiscreteSeriesCharacters.DiscreteSeriesInfinitesimalCharacter
+module
+
+public import Development.WeilBound.CoreStatements.BranchingTraces.BranchingComatrices.RootOfNe
+public import Development.WeilBound.CoreStatements.BranchingTraces.BranchingComatrices.ContDiffEmb
+public import CompanionTheory.HarishChandraModules.LowKTypeMultiplicity.DiscreteSeriesCharacters.DiscreteSeriesInfinitesimalCharacter
+
+@[expose] public section
 
 noncomputable section
 

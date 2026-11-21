@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.GermDJet
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.GermDJet
+
+@[expose] public section
 
 set_option autoImplicit false
 

@@ -1,8 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.TraceDefinitePairsEqAutomorphicTrace
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CommutantOfMaximalDegreeElement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentraliserInvolution
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjugatePairRelated
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.TraceDefinitePairsEqAutomorphicTrace
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CommutantOfMaximalDegreeElement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.CentraliserInvolution
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConjugatePairRelated
+
+@[expose] public section
+
 open Matrix NumberField GlobalTheory.LKTrip GlobalTheory.LKRes GlobalTheory.LKMid GlobalTheory.LKCount
 open scoped TensorProduct Classical
 

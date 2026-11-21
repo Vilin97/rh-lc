@@ -1,7 +1,11 @@
-import Formalism.GaussJetBounds.GenLogInverse
-import Formalism.GaussJetBounds.StatementW
-import Formalism.GaussJetBounds.ThmAGauss
-import Formalism.GaussJetBounds.GaussJetProofs.OneGauss
+module
+
+public import Formalism.GaussJetBounds.GenLogInverse
+public import Formalism.GaussJetBounds.StatementW
+public import Formalism.GaussJetBounds.ThmAGauss
+public import Formalism.GaussJetBounds.GaussJetProofs.OneGauss
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

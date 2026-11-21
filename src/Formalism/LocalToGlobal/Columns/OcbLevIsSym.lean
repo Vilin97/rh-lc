@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.Columns.ReferenceKernelEquivOfLastComponent
-import Formalism.LocalToGlobal.Columns.ChainOneB
-import Formalism.LocalToGlobal.Columns.RecLevelSym
+module
+
+public import Formalism.LocalToGlobal.Columns.ReferenceKernelEquivOfLastComponent
+public import Formalism.LocalToGlobal.Columns.ChainOneB
+public import Formalism.LocalToGlobal.Columns.RecLevelSym
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 

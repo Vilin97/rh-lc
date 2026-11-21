@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL6.Statement
-import Formalism.LogVandermondeBounds.LogVandermondeProofs.MulSingleMulApplySelf
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.Statement
+public import Formalism.LogVandermondeBounds.LogVandermondeProofs.MulSingleMulApplySelf
+
+@[expose] public section
 
 noncomputable section
 

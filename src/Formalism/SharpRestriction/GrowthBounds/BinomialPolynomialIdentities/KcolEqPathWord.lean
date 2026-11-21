@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialPolynomialIdentities.RestPathFrom
-import Formalism.SharpRestriction.GrowthBounds.FrobeniusPaths.DividedPowerZeroOfGlActionZero
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialPolynomialIdentities.RestPathFrom
+public import Formalism.SharpRestriction.GrowthBounds.FrobeniusPaths.DividedPowerZeroOfGlActionZero
+
+@[expose] public section
 
 noncomputable section
 

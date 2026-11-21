@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.LocalFields.Interface
-import GroundTheory.LocalFields.Integers
-import GroundTheory.LocalFields.IntermediateField
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.Interface
+public import GroundTheory.LocalFields.Integers
+public import GroundTheory.LocalFields.IntermediateField
+
+@[expose] public section
 
 noncomputable section
 

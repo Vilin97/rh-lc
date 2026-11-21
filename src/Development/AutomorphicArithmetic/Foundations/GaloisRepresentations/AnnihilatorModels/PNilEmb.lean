@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.DinvExact
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AevalComm
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.AnnihilatorModels.DinvExact
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AevalComm
+
+@[expose] public section
 
 noncomputable section
 

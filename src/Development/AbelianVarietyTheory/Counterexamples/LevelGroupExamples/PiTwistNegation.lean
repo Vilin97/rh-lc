@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.DepthTie
-import Formalism.LocalToGlobal.ProjectiveLattices.ExistsParameterConditions
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.DepthTie
+public import Formalism.LocalToGlobal.ProjectiveLattices.ExistsParameterConditions
+
+@[expose] public section
 
 noncomputable section
 namespace GlobalTheory.Survey.PiTwistNegation

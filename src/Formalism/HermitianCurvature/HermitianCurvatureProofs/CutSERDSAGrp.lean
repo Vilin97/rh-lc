@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSERDSOpA
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSERDOpFF
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BigCellValues
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSERDSOpA
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSERDOpFF
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BigCellValues
+
+@[expose] public section
 
 open Matrix
 

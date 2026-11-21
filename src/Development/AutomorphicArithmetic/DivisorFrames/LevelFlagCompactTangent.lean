@@ -1,10 +1,15 @@
-import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.VertCmp
-import Development.AutomorphicArithmetic.LocalEmbeddings.ConsMatch
-import Development.AutomorphicArithmetic.LocalEmbeddings.ConsAgree
-import Development.AutomorphicArithmetic.DivisorFrames.FlagCarriesEigenframe
-import Development.AbelianVarietyTheory.PublishedTheorems.SemiabelianTori.GeometricallyConnectedSplitTorusAff
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LocalSystemModelMap
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.LocalEmbeddings.VertCmp
+public import Development.AutomorphicArithmetic.LocalEmbeddings.ConsMatch
+public import Development.AutomorphicArithmetic.LocalEmbeddings.ConsAgree
+public import Development.AutomorphicArithmetic.DivisorFrames.FlagCarriesEigenframe
+public import Development.AbelianVarietyTheory.PublishedTheorems.SemiabelianTori.GeometricallyConnectedSplitTorusAff
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LocalSystemModelMap
+
+@[expose] public section
+
 open CategoryTheory Limits AlgebraicGeometry IsLocalRing NumberField IsDedekindDomain
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj
 open GlobalTheory GlobalTheory.ShFam GlobalTheory.ShFam.Pad GlobalTheory.LocM GlobalTheory.Toroidal

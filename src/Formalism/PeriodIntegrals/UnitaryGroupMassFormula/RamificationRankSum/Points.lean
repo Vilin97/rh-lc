@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.EfRankSum
+module
+
+public import Formalism.PeriodIntegrals.EfRankSum
+
+@[expose] public section
 
 namespace PI.UnitaryGroupMassFormula.EfRankSum
 

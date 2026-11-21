@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTieMemC
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieMemC
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LandauZeroFreeBounds.ExceptionalZeroBounds.PerronHorizontalSegmentBound
+module
+
+public import Mathlib
+public import Formalism.LandauZeroFreeBounds.ExceptionalZeroBounds.PerronHorizontalSegmentBound
+
+@[expose] public section
 
 open Complex MeasureTheory
 

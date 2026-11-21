@@ -1,4 +1,8 @@
-import ReciprocityTheory.SemistableReduction.BWPolyA
+module
+
+public import ReciprocityTheory.SemistableReduction.BWPolyA
+
+@[expose] public section
 
 namespace ReciprocityTheory.MultiplicativeHeights
 

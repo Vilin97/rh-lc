@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ChartJetTrA
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ChartJetTrA
+
+@[expose] public section
 
 set_option autoImplicit false
 

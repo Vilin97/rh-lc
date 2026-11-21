@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ClassRec
+module
+
+public import Formalism.LocalToGlobal.ClassRec
+
+@[expose] public section
 
 noncomputable section
 

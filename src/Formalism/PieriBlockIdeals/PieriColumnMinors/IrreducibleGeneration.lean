@@ -1,6 +1,10 @@
-import Formalism.PieriBlockIdeals.StatementLPR
-import Formalism.PieriBlockIdeals.PieriColumnMinors.PieriGenerated
-import Formalism.PieriBlockIdeals.PieriColumnMinors.HighestWeightMemWZero
+module
+
+public import Formalism.PieriBlockIdeals.StatementLPR
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.PieriGenerated
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.HighestWeightMemWZero
+
+@[expose] public section
 
 open MvPolynomial
 

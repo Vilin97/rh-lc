@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.IsometricPeriodsOfHypotheses
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.IsometricPeriodsOfHypotheses
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder InnerProductSpace

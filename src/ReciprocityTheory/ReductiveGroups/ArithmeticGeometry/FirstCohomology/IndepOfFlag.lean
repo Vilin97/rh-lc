@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FirstCohomology.ReducedBasisStatement
-import ReciprocityTheory.ReducedBases.LatticeReduction
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FirstCohomology.ReducedBasisStatement
+public import ReciprocityTheory.ReducedBases.LatticeReduction
+
+@[expose] public section
 
 noncomputable section
 

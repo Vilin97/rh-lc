@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.FlipTwoThree
-import Formalism.SharpRestriction.ParamsHeightRankConstant
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.FlipTwoThree
+public import Formalism.SharpRestriction.ParamsHeightRankConstant
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.GlobalTheory.GL4.PDetAll
-import Formalism.LocalToGlobal.GlobalTheory.GL4.PMuFrames
-import Formalism.LocalToGlobal.GlobalTheory.HLatOpsP
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.PDetAll
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.PMuFrames
+public import Formalism.LocalToGlobal.GlobalTheory.HLatOpsP
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix

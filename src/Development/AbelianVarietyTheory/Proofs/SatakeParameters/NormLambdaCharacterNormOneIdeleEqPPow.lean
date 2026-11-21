@@ -1,12 +1,17 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsUnifAt
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsPowNormOneIdeleEqPrincipalMulIntegralUnit
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.PhiAMemRange
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.NormLamCTypeNormOne
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SumAltSignRange
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.MtFiniteOrder
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.StepCharacterLawsNormOneIdelesOfKernelChain
-import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.ChartPosEqOfIw
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsUnifAt
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsPowNormOneIdeleEqPrincipalMulIntegralUnit
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.PhiAMemRange
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.NormLamCTypeNormOne
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.SumAltSignRange
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.MtFiniteOrder
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.StepCharacterLawsNormOneIdelesOfKernelChain
+public import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.ChartPosEqOfIw
+
+@[expose] public section
+
 open Formalism.BasicNotions NumberField IsDedekindDomain Formalism.MainNotions Formalism.MainNotions.G Formalism.MainNotions.FormalGroupSystem Formalism.MainNotions.G.KAat Formalism.MainNotions.G.CmpJ Formalism.L2.G Formalism.L2.G.Cmp Formalism.L2.Forms Formalism.L2.DIV Formalism.UG Formalism.L2.Ker Formalism.L2.G.Pend Formalism.L2.PairingIndexBounds.F Formalism.L2.KerInert GlobalTheory.TwV GlobalTheory.TwV.Xc TensorProduct
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 

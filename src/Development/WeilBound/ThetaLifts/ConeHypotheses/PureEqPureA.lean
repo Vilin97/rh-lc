@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.ConeHypotheses.PolDense
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsNatMulIntegralOfIsCompact
-import Development.WeilBound.ThetaLifts.ConeHypotheses.IsLocallyConstantFinprodEvalV
+module
+
+public import Development.WeilBound.ThetaLifts.ConeHypotheses.PolDense
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsNatMulIntegralOfIsCompact
+public import Development.WeilBound.ThetaLifts.ConeHypotheses.IsLocallyConstantFinprodEvalV
+
+@[expose] public section
 
 noncomputable section
 

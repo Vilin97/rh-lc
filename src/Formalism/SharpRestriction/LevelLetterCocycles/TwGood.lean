@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.ParConsts
-import Formalism.LocalRingCardinality.DataNChTie
-import Formalism.SharpRestriction.LevelLetterCocycles.IntegralHeckeForms
+module
+
+public import Formalism.SharpRestriction.ParConsts
+public import Formalism.LocalRingCardinality.DataNChTie
+public import Formalism.SharpRestriction.LevelLetterCocycles.IntegralHeckeForms
+
+@[expose] public section
 
 noncomputable section
 

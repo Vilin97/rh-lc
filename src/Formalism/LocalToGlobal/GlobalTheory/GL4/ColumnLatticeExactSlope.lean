@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.GlobalTheory.GL4.MemDualCrdLat
-import Formalism.LocalToGlobal.Columns.BrpStarLatLattice
-import Formalism.SharpRestriction.GlobalSchurBounds.TotallyPositiveTraceGeOfNormDiscr
-import Formalism.LocalToGlobal.GlobalTheory.GL4.PZBasis
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.MemDualCrdLat
+public import Formalism.LocalToGlobal.Columns.BrpStarLatLattice
+public import Formalism.SharpRestriction.GlobalSchurBounds.TotallyPositiveTraceGeOfNormDiscr
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.PZBasis
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix

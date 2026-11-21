@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.GlobalTheory.Places
-import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLo
-import Formalism.SharpRestriction.GrowthBounds.TopChoiceBounds
-import Formalism.LogFactorialBounds.LogFactorialProofs.PrimeSum
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.ExistsNsmulMem
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.WeightedSlopeExcessDecomposition
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.Places
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLo
+public import Formalism.SharpRestriction.GrowthBounds.TopChoiceBounds
+public import Formalism.LogFactorialBounds.LogFactorialProofs.PrimeSum
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.ExistsNsmulMem
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.WeightedSlopeExcessDecomposition
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 

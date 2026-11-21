@@ -1,6 +1,10 @@
-import Mathlib
-import ReciprocityTheory.SemistableReduction.ComapInclusionIsLocalHom
-import ReciprocityTheory.SemistableReduction.AlgebraicIndependentOfDerivations
+module
+
+public import Mathlib
+public import ReciprocityTheory.SemistableReduction.ComapInclusionIsLocalHom
+public import ReciprocityTheory.SemistableReduction.AlgebraicIndependentOfDerivations
+
+@[expose] public section
 
 namespace ReciprocityTheory.MultiplicativeHeights
 

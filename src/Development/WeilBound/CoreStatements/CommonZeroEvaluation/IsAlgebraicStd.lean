@@ -1,5 +1,9 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.CommonZeroEvaluation.EventuallyRoot
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.CommonZeroEvaluation.EventuallyRoot
+
+@[expose] public section
 
 open Polynomial Filter Topology
 

@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GodementSection
-import GroundTheory.GlobalFields.TateThesis.TateMain
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GodementSection
+public import GroundTheory.GlobalFields.TateThesis.TateMain
+
+@[expose] public section
+
 open NumberField Matrix MeasureTheory Filter Topology
 open scoped NumberField.AdeleRing
 open PositivityTheory.EisRk1 GroundTheory.Global GroundTheory.Automorphic GroundTheory.Automorphic.Adele2 GroundTheory.Automorphic.GodementSection IdeleGroup

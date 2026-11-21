@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.KummerTheory.InjSlicePf
+module
+
+public import Development.EtaleCohomology.KummerTheory.InjSlicePf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC

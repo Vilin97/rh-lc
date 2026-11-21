@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.BStPeriod
-import GroundTheory.PAdicHodge.ACrisPhi
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.OfNatTrans
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.BStPeriod
+public import GroundTheory.PAdicHodge.ACrisPhi
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.OfNatTrans
+
+@[expose] public section
 
 noncomputable section
 

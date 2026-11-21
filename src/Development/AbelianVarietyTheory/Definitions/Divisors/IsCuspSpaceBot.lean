@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.Langlands
-import Development.DiscreteGroups.GlobalIrreducibility.LConvCut
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.Langlands
+public import Development.DiscreteGroups.GlobalIrreducibility.LConvCut
+
+@[expose] public section
 
 noncomputable section
 

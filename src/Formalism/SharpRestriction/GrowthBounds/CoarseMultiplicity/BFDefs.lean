@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.RestBlockForm
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.BlockFG
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.MapFloorMono
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.DegSplit
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.RestBlockForm
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.BlockFG
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.MapFloorMono
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.DegSplit
+
+@[expose] public section
 
 noncomputable section
 

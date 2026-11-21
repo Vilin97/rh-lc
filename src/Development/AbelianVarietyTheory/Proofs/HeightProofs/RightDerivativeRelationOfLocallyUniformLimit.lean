@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.HeightProofs.NotMemOfMulExp
-import Formalism.RealPlaceAnalysis.FinalF
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.NotMemOfMulExp
+public import Formalism.RealPlaceAnalysis.FinalF
+
+@[expose] public section
 
 open MeasureTheory Matrix Formalism.REAL Formalism.MainNotions.S Formalism.L2.Theta GlobalTheory.SmoothGlob GlobalTheory.LowTypeDetermined GlobalTheory.TypeSum
 open scoped Topology ContDiff

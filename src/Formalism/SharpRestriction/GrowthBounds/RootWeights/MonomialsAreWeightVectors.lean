@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.PolynomialOperatorsGlRelations
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.PolynomialOperatorsGlRelations
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeSizeContinuity.LatSizeContOfSteps
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.HermDefON
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LatticeSizeContinuity.LatSizeContOfSteps
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.HermDefON
+
+@[expose] public section
 
 noncomputable section
 

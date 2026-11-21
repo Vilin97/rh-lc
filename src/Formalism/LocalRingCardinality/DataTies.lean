@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.DataParamsS
-import Formalism.LocalRingCardinality.DataBu
+module
+
+public import Formalism.LocalRingCardinality.DataParamsS
+public import Formalism.LocalRingCardinality.DataBu
+
+@[expose] public section
 
 open MeasureTheory Matrix Formalism.MainNotions.S
 

@@ -1,4 +1,8 @@
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.WChartsA
+module
+
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.WChartsA
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.R
 

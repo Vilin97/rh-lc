@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.SDecomposition
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.Decompose
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.Ramified
-import GroundTheory.GlobalFields.KummerTheory.Splitting
-import GroundTheory.GlobalFields.KummerTheory.SplittingInfinite
-import GroundTheory.ProfiniteCohomology.ContinuousCochains.LongExactSequence
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.SDecomposition
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.Decompose
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleCohomology.Ramified
+public import GroundTheory.GlobalFields.KummerTheory.Splitting
+public import GroundTheory.GlobalFields.KummerTheory.SplittingInfinite
+public import GroundTheory.ProfiniteCohomology.ContinuousCochains.LongExactSequence
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

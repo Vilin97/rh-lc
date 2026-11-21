@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfAsm
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfLocC
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfHH
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfMat
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfAlpha
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfAsm
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfLocC
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfHH
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfMat
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.FramePfAlpha
+
+@[expose] public section
 
 noncomputable section
 

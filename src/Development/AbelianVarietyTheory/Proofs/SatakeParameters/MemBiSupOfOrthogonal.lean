@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.HeckeSplitOne
-import Formalism.SharpRestriction.LevelLetterCocycles.DataN
-import Formalism.LocalRingCardinality.DataRows
-import Development.AbelianVarietyTheory.BlockTheory.ThetaLiftGeometry.ThetaLiftOfEachRow
-import Formalism.LocalRingCardinality.Params
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsoLocAppendSingleton
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.HeckeSplitOne
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataN
+public import Formalism.LocalRingCardinality.DataRows
+public import Development.AbelianVarietyTheory.BlockTheory.ThetaLiftGeometry.ThetaLiftOfEachRow
+public import Formalism.LocalRingCardinality.Params
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IsoLocAppendSingleton
+
+@[expose] public section
 
 noncomputable section
 

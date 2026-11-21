@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CptCopy2
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSETopFinal
-import CompanionTheory.AutomorphicTheory.CompactTopologicalForms.JacobiFieldSquareIntegrable
-import CompanionTheory.AutomorphicTheory.DiscreteGroupWaves.NFTopFormCpt
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CptCopy2
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutSETopFinal
+public import CompanionTheory.AutomorphicTheory.CompactTopologicalForms.JacobiFieldSquareIntegrable
+public import CompanionTheory.AutomorphicTheory.DiscreteGroupWaves.NFTopFormCpt
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP.CompactFormNormalFormDomination
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.LemmasUnramifiedOfRingCondition
-import Formalism.SharpRestriction.LevelLetterCocycles.SecondComparisonInCoordinates
-import Formalism.SharpRestriction.LevelLetterCocycles.KillerLevCoreOf
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.LemmasUnramifiedOfRingCondition
+public import Formalism.SharpRestriction.LevelLetterCocycles.SecondComparisonInCoordinates
+public import Formalism.SharpRestriction.LevelLetterCocycles.KillerLevCoreOf
+
+@[expose] public section
 
 noncomputable section
 

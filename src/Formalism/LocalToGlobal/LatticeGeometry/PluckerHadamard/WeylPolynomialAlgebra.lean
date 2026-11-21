@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.LatticeGeometry.PluckerHadamard.BlockVandermondeForms
-import Formalism.DegreeFormula.PointDegree.FlagDeg
+module
+
+public import Formalism.LocalToGlobal.LatticeGeometry.PluckerHadamard.BlockVandermondeForms
+public import Formalism.DegreeFormula.PointDegree.FlagDeg
+
+@[expose] public section
 
 noncomputable section
 

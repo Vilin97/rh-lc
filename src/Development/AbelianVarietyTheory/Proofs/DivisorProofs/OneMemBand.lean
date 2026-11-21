@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.CentralNilGL
-import GroundTheory.AutomorphicForms.ReductionCore
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CentralNilGL
+public import GroundTheory.AutomorphicForms.ReductionCore
+
+@[expose] public section
 
 noncomputable section
 

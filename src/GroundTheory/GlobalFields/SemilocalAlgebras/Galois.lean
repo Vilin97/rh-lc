@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.SemilocalAlgebras.Finite
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Finite
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

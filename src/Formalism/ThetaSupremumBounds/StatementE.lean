@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.ThetaSupremumBounds.StatementA
-import Formalism.LogFactorialIndices.StatementSize
+module
+
+public import Mathlib
+public import Formalism.ThetaSupremumBounds.StatementA
+public import Formalism.LogFactorialIndices.StatementSize
+
+@[expose] public section
 
 open Finset MeasureTheory
 open scoped ComplexConjugate Real

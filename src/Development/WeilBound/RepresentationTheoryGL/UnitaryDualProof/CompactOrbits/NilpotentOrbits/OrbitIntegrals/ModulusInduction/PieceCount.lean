@@ -1,5 +1,9 @@
-import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.CompactOrbits.NilpotentOrbits.OrbitIntegrals.ModulusInduction.MemOrbitIff
-import GroundTheory.AutomorphicForms.WhittakerOrbit
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.CompactOrbits.NilpotentOrbits.OrbitIntegrals.ModulusInduction.MemOrbitIff
+public import GroundTheory.AutomorphicForms.WhittakerOrbit
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.PolynomialDimension.StatementNum
-import Formalism.PolynomialDimension.WeylDim
-import Formalism.PolynomialDimension.FrameSum
-import Formalism.SubspaceCounting.Statement
+module
+
+public import Mathlib
+public import Formalism.PolynomialDimension.StatementNum
+public import Formalism.PolynomialDimension.WeylDim
+public import Formalism.PolynomialDimension.FrameSum
+public import Formalism.SubspaceCounting.Statement
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.SecPtRed
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.SecPtRed
+
+@[expose] public section
 
 noncomputable section
 

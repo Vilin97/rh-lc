@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.StatementG
-import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.StatementP
-import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.StatementV
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.StatementG
+public import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.StatementP
+public import Formalism.LocalToGlobal.TorsionIntegrality.TorsionTranslationPowers.StatementV
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

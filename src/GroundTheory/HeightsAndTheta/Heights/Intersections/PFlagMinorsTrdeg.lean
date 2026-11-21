@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ProjLineRankTwoPushforwardHypotheses
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StFlagPivotIdentity
-import GroundTheory.HeightsAndTheta.Heights.Intersections.FlagPivot
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ProjLineRankTwoPushforwardHypotheses
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StFlagPivotIdentity
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.FlagPivot
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

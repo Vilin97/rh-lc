@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.EllipticFunctions
-import GroundTheory.GlobalFields.ComplexMultiplication.EllipticRational
-import GroundTheory.GlobalFields.ComplexMultiplication.EllipticDegree
-import GroundTheory.GlobalFields.ComplexMultiplication.Uniformization
-import GroundTheory.GlobalFields.ComplexMultiplication.UniformizationAddition
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.EllipticFunctions
+public import GroundTheory.GlobalFields.ComplexMultiplication.EllipticRational
+public import GroundTheory.GlobalFields.ComplexMultiplication.EllipticDegree
+public import GroundTheory.GlobalFields.ComplexMultiplication.Uniformization
+public import GroundTheory.GlobalFields.ComplexMultiplication.UniformizationAddition
+
+@[expose] public section
 
 open Complex Filter Topology Set
 open scoped PeriodPair

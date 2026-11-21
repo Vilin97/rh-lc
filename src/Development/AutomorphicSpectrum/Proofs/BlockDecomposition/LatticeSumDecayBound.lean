@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MultiDimensional
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.MultiDimensional
+
+@[expose] public section
+
 open scoped ENNReal
 
 namespace GlobalTheory.CompanionTheory.Count

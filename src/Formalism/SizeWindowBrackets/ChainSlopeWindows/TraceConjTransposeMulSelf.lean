@@ -1,4 +1,8 @@
-import Formalism.SizeWindowBrackets.TraceSquareAndDiagBounds
+module
+
+public import Formalism.SizeWindowBrackets.TraceSquareAndDiagBounds
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexOrder

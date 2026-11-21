@@ -1,4 +1,8 @@
-import CompanionTheory.AutomorphicTheory.ZuckermanCommutation.ZuckermanFunctors.MultOne
+module
+
+public import CompanionTheory.AutomorphicTheory.ZuckermanCommutation.ZuckermanFunctors.MultOne
+
+@[expose] public section
 
 open Matrix Finset
 open scoped Kronecker

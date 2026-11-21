@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.GlobalProofs.IoInjective
-import Development.AutomorphicSpectrum.Proofs.GlobalProofs.SkewOfCommute
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.IoInjective
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.SkewOfCommute
+
+@[expose] public section
 
 noncomputable section
 

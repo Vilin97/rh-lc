@@ -1,5 +1,9 @@
-import Formalism.FlagUnipotentLattices.CardSubgroupsOfIndexLe
-import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.RowsRpowPow
+module
+
+public import Formalism.FlagUnipotentLattices.CardSubgroupsOfIndexLe
+public import Formalism.SharpRestriction.CuspSpanNormBounds.CayleyDegreeNondegeneracy.RowsRpowPow
+
+@[expose] public section
 
 namespace Formalism.MainNotions.BridgeLemma₂
 

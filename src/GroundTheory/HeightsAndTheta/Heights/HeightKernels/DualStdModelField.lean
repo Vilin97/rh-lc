@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.ImportsFurther
-import GroundTheory.HeightsAndTheta.Heights.Intersections.IsPrimeSpanXb
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.ImportsFurther
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.IsPrimeSpanXb
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

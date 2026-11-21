@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.WachLatticeTwists.LatticeDualFibres.StatDualFibreLattice
+module
+
+public import Mathlib
+public import Formalism.WachLatticeTwists.LatticeDualFibres.StatDualFibreLattice
+
+@[expose] public section
+
 open Formalism.RepresentationBoundsCohomology.LOC
 
 namespace GlobalTheory

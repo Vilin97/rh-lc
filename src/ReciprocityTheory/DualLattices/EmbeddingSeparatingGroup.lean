@@ -1,6 +1,10 @@
-import ReciprocityTheory.DualLattices.EmbeddingSeparatingGroupStatement
-import ReciprocityTheory.DualLattices.EigPowEqOne
-import ReciprocityTheory.DualLattices.SgAlgebraMap
+module
+
+public import ReciprocityTheory.DualLattices.EmbeddingSeparatingGroupStatement
+public import ReciprocityTheory.DualLattices.EigPowEqOne
+public import ReciprocityTheory.DualLattices.SgAlgebraMap
+
+@[expose] public section
 
 noncomputable section
 

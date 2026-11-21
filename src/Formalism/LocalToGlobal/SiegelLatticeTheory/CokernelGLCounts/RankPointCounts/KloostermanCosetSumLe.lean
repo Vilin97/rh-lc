@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DimFormC
-import Formalism.SharpRestriction.CuspSpanNormBounds.MinorCosetSumOfLatticeIndexHypOfTieOK
-import Formalism.SharpRestriction.CuspSpanNormBounds.MinorIntegralityTorus
-import Formalism.SharpRestriction.CuspSpanNormBounds.LatticeSumBound
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.DimFormC
+public import Formalism.SharpRestriction.CuspSpanNormBounds.MinorCosetSumOfLatticeIndexHypOfTieOK
+public import Formalism.SharpRestriction.CuspSpanNormBounds.MinorIntegralityTorus
+public import Formalism.SharpRestriction.CuspSpanNormBounds.LatticeSumBound
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.AdmissibleDesigns.InertiaActsTrivially
+module
+
+public import Formalism.AdmissibleDesigns.InertiaActsTrivially
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

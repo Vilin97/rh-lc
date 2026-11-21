@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.LocLatSat
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.LocLatSat
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Development.EtaleCohomology.EtaleSheaves.HasLimPf
+module
+
+public import Mathlib
+public import Development.EtaleCohomology.EtaleSheaves.HasLimPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry

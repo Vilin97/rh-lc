@@ -1,5 +1,9 @@
-import Formalism.LandauZeroFreeBounds.SameCharacterLFunctionOne
-import Formalism.LandauZeroFreeBounds.SiegelWalfiszAP
+module
+
+public import Formalism.LandauZeroFreeBounds.SameCharacterLFunctionOne
+public import Formalism.LandauZeroFreeBounds.SiegelWalfiszAP
+
+@[expose] public section
 
 open Complex
 

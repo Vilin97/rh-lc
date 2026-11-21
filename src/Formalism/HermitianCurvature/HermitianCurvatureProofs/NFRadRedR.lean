@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.NFRadRedS
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DifferentialOperatorBracket
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NFRadRedS
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DifferentialOperatorBracket
+
+@[expose] public section
 
 open Matrix Filter Topology
 open scoped ContDiff

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSectionRing
-import GroundTheory.PowerSubgroups.CountableNeighbourhoods.PSectionBoundedCountable
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSectionRing
+public import GroundTheory.PowerSubgroups.CountableNeighbourhoods.PSectionBoundedCountable
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel
 

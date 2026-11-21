@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.PAdicHodge.AInfGalois
-import GroundTheory.PAdicHodge.TiltAlgClosed
-import GroundTheory.PAdicHodge.TiltField
-import GroundTheory.PAdicHodge.BdRAlg
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.AInfGalois
+public import GroundTheory.PAdicHodge.TiltAlgClosed
+public import GroundTheory.PAdicHodge.TiltField
+public import GroundTheory.PAdicHodge.BdRAlg
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

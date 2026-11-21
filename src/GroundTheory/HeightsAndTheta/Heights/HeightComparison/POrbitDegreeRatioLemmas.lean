@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitDegreeRatio
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitDegree
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitCurve
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitDegreeRatio
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitDegree
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitCurve
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

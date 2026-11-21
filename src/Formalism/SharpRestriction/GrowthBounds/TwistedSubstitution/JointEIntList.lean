@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.TwistedSubstitution.CommPresIsoSub
-import Formalism.SharpRestriction.GrowthBounds.ProjectionOfIsotypicDecomposition
-import Formalism.SharpRestriction.GrowthBounds.GLWeightTheory
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.BrBase
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.TwistedSubstitution.CommPresIsoSub
+public import Formalism.SharpRestriction.GrowthBounds.ProjectionOfIsotypicDecomposition
+public import Formalism.SharpRestriction.GrowthBounds.GLWeightTheory
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.BrBase
+
+@[expose] public section
 
 noncomputable section
 

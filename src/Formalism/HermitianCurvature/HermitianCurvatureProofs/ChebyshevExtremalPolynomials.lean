@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.LevelRecursionCondNeeded
-import Formalism.LatticeRigidity.StatementC
-import Mathlib
+module
+
+public import Formalism.HermitianCurvature.LevelRecursionCondNeeded
+public import Formalism.LatticeRigidity.StatementC
+public import Mathlib
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.ChebyshevExtremalPolynomials
 

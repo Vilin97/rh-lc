@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.FormalGroups.FrobeniusTwist
-import GroundTheory.LocalFields.FormalGroups.TwistedLift
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.FormalGroups.FrobeniusTwist
+public import GroundTheory.LocalFields.FormalGroups.TwistedLift
+
+@[expose] public section
 
 namespace GroundTheory.LocalField.FormalGroup
 

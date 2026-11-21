@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.Counterexample.Objects
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.PPtsIntegralPoints
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitDegree
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ConservationDegreeFormOfExistence
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.Counterexample.Objects
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.PPtsIntegralPoints
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitDegree
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ConservationDegreeFormOfExistence
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

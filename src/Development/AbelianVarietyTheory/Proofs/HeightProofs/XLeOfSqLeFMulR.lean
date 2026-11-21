@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.WeightAlgebra
-import Formalism.LocalRingCardinality.CoeNeZeroOfNotMem
-import Formalism.SharpRestriction.Divisibility.WeightFamilies
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.WeightAlgebra
+public import Formalism.LocalRingCardinality.CoeNeZeroOfNotMem
+public import Formalism.SharpRestriction.Divisibility.WeightFamilies
+
+@[expose] public section
 
 noncomputable section
 

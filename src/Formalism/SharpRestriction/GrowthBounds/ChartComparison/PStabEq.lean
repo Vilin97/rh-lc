@@ -1,9 +1,13 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.KerLabelsMu
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.StepIn
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.LocCore
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ColSpanMap
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.NatActRVtupR
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ClsOrb
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.KerLabelsMu
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.StepIn
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.LocCore
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ColSpanMap
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.NatActRVtupR
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ClsOrb
+
+@[expose] public section
 
 noncomputable section
 

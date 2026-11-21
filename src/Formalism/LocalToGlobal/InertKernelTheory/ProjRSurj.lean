@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.InertKernelTheory.SecondKernelEntrywiseLastLevel
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.SecondKernelEntrywiseLastLevel
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison
+
+@[expose] public section
 
 noncomputable section
 

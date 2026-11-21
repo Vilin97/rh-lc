@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.KdMulRight
-import Development.AutomorphicSpectrum.Proofs.MembershipProofs.ExistsEqMulApplyZero
+module
+
+public import Development.WeilBound.CoreStatements.LocallyConstantCoinvariants.KdMulRight
+public import Development.AutomorphicSpectrum.Proofs.MembershipProofs.ExistsEqMulApplyZero
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

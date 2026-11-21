@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.LubinTatePrimitive
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LubinTatePrimitive
+
+@[expose] public section
 
 noncomputable section
 

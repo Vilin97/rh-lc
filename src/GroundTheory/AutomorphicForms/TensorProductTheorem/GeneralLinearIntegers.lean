@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.AdelicGLn
-import GroundTheory.AutomorphicForms.Satake
-import GroundTheory.AutomorphicForms.TensorProductTheorem.Existence
-import GroundTheory.AutomorphicForms.TensorProductTheorem.Places
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.AdelicGLn
+public import GroundTheory.AutomorphicForms.Satake
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.Existence
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.Places
+
+@[expose] public section
 
 noncomputable section
 

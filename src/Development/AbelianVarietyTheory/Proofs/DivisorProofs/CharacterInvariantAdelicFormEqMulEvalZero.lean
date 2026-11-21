@@ -1,10 +1,15 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormIteratedFDerivRemCompLe
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzVanishingDecomposition
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TraceFormMapSurjective
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEqMulApplyZero
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactOpenSeparating
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormIteratedFDerivRemCompLe
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzVanishingDecomposition
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TraceFormMapSurjective
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsEqMulApplyZero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCompactOpenSeparating
+
+@[expose] public section
+
 open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
 open scoped Matrix TensorProduct
 

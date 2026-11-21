@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PairingDivisors.StatementH
+module
+
+public import Mathlib
+public import Formalism.PairingDivisors.StatementH
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain Finset
 open Formalism.DivisionValues (vw lw conjPl)

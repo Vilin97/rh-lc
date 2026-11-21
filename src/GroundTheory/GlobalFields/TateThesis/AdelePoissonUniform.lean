@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.AdelePoisson
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.AdelePoisson
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

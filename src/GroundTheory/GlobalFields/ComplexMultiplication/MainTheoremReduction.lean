@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.ReductionEval
-import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimes
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.KodairaNeron
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.ReductionEval
+public import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimes
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.KodairaNeron
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global

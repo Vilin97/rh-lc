@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.SplitClassesAll.Statement
-import Formalism.WachLatticeTwists.RealClassMaps.Statement
+module
+
+public import Formalism.WachLatticeTwists.SplitClassesAll.Statement
+public import Formalism.WachLatticeTwists.RealClassMaps.Statement
+
+@[expose] public section
 
 open Finset Classical
 

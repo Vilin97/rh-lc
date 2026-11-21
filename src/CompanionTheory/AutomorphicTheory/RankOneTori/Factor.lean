@@ -1,4 +1,8 @@
-import CompanionTheory.AutomorphicTheory.RankOneTori.MatGroupOf
+module
+
+public import CompanionTheory.AutomorphicTheory.RankOneTori.MatGroupOf
+
+@[expose] public section
 
 open MeasureTheory Matrix Formalism.QuantumDeterminants Formalism.MainNotions.S Formalism.MainNotions.S.Pv.AmpDDPf Formalism.FourierDecayAlt
 open scoped ENNReal InnerProductSpace

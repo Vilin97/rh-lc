@@ -1,5 +1,9 @@
-import ReciprocityTheory.GeometryOfNumbers.SphericalMonomials.MonomSt
-import ReciprocityTheory.GeometryOfNumbers.PluriharmonicAnalysis.BergmanDefs
+module
+
+public import ReciprocityTheory.GeometryOfNumbers.SphericalMonomials.MonomSt
+public import ReciprocityTheory.GeometryOfNumbers.PluriharmonicAnalysis.BergmanDefs
+
+@[expose] public section
 
 namespace ReciprocityTheory.GeometryOfNumbersTheory
 

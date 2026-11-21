@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.LocalUnitReduction.FinRedStatement
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.LocalUnitReduction.FinRedStatement
+
+@[expose] public section
 
 namespace Formalism.L2.Pj.LocalUnitReduction
 

@@ -1,7 +1,11 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.EvBtStatement
-import ReciprocityTheory.DualLattices.WFrobStatement
-import ReciprocityTheory.DualLattices.PSerFrobStatement
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.EvBtStatement
+public import ReciprocityTheory.DualLattices.WFrobStatement
+public import ReciprocityTheory.DualLattices.PSerFrobStatement
+
+@[expose] public section
 
 noncomputable section
 

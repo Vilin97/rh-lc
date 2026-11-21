@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.FourierWhittaker
-import GroundTheory.AutomorphicForms.MacdonaldWhittakerHecke
-import GroundTheory.LocalFields.LocalZeta
-import GroundTheory.GlobalFields.TateThesis.RootNumberLocalFinite
-import Formalism.RealPlaceAnalysis.StatementE
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.FourierWhittaker
+public import GroundTheory.AutomorphicForms.MacdonaldWhittakerHecke
+public import GroundTheory.LocalFields.LocalZeta
+public import GroundTheory.GlobalFields.TateThesis.RootNumberLocalFinite
+public import Formalism.RealPlaceAnalysis.StatementE
+
+@[expose] public section
 
 noncomputable section
 

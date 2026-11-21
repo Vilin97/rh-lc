@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.RayClassDensity
-import GroundTheory.GlobalFields.GlobalReciprocity.General
-import GroundTheory.GlobalFields.GlobalReciprocity.Frobenius
-import GroundTheory.GlobalFields.NormResidueSymbol.Surjective
-import GroundTheory.GlobalFields.KummerTheory.Splitting
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.RayClassDensity
+public import GroundTheory.GlobalFields.GlobalReciprocity.General
+public import GroundTheory.GlobalFields.GlobalReciprocity.Frobenius
+public import GroundTheory.GlobalFields.NormResidueSymbol.Surjective
+public import GroundTheory.GlobalFields.KummerTheory.Splitting
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Topology Filter Set GroundTheory.LocalField
 

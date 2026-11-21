@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataNChTie
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataNChTie
+
+@[expose] public section
 
 noncomputable section
 

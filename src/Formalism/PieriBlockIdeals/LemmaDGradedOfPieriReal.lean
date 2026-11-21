@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PieriBlockIdeals.StatementLC
-import Formalism.PieriBlockIdeals.StatementLP
-import Formalism.PieriBlockIdeals.StatementLR
+module
+
+public import Mathlib
+public import Formalism.PieriBlockIdeals.StatementLC
+public import Formalism.PieriBlockIdeals.StatementLP
+public import Formalism.PieriBlockIdeals.StatementLR
+
+@[expose] public section
 
 namespace Formalism.CohomologicalDescent.ColumnMinorsFromPieri
 

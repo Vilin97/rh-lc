@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.LeviCentreFiniteUnitary
-import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsNotIsConstTerm
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DiffsZeroOfLev
-import Development.AbelianVarietyTheory.Definitions.Foundations.ConstTermOnMulLeftOfNormalizer
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsLevi
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.PublishedTheorems.Divisors₂.LeviCentreFiniteUnitary
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsNotIsConstTerm
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DiffsZeroOfLev
+public import Development.AbelianVarietyTheory.Definitions.Foundations.ConstTermOnMulLeftOfNormalizer
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsIsLevi
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.projection2.MemFlagUnipotent
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.projection2.MemFlagUnipotent
+
+@[expose] public section
 
 noncomputable section
 

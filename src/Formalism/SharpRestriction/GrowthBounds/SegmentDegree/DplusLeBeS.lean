@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.PsiCutSupported
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.PsiCutSupported
+
+@[expose] public section
 
 noncomputable section
 

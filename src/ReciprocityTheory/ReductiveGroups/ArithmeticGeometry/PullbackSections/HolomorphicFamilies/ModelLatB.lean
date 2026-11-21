@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.HolomorphicFamilies.ModelLatA
-import Formalism.LocalToGlobal.ProjectiveLattices.HasDataCondition
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.HolomorphicFamilies.ModelLatA
+public import Formalism.LocalToGlobal.ProjectiveLattices.HasDataCondition
+
+@[expose] public section
 
 noncomputable section
 

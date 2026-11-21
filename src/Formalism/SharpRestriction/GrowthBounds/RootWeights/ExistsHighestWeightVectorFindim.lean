@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.WeightComponentsMemInvariant
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.HighestWeightDominantHolds
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.WeightComponentsMemInvariant
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.HighestWeightDominantHolds
+
+@[expose] public section
 
 noncomputable section
 

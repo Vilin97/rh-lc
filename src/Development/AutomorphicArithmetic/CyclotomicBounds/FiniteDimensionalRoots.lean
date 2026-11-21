@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
-import Development.AutomorphicArithmetic.PrimeDiscriminants.CycImage
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+public import Development.AutomorphicArithmetic.PrimeDiscriminants.CycImage
+
+@[expose] public section
 
 noncomputable section
 

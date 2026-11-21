@@ -1,5 +1,9 @@
-import Formalism.CharacterColumnKernels.Statement
-import Formalism.CharacterColumnKernels.StatementX
+module
+
+public import Formalism.CharacterColumnKernels.Statement
+public import Formalism.CharacterColumnKernels.StatementX
+
+@[expose] public section
 
 open Finset
 

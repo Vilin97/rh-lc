@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.Cartan
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechToDerived
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.SheafH
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.Cartan
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.CechToDerived
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.SheafH
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh

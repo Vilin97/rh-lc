@@ -1,4 +1,8 @@
-import Formalism.CoboundaryTransfers.StatementBridge
+module
+
+public import Formalism.CoboundaryTransfers.StatementBridge
+
+@[expose] public section
 
 noncomputable section
 

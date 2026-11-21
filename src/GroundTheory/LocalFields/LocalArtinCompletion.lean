@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.NormCorrespondence
-import GroundTheory.LocalFields.OpenCompletion
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.NormCorrespondence
+public import GroundTheory.LocalFields.OpenCompletion
+
+@[expose] public section
 
 noncomputable section
 

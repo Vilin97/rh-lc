@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ToralCohomology.EmbeddingTransposeVectorZero
-import Development.WeilBound.ThetaLifts.LocalTheory.ToralCohomology.ExistsTorus
-import Development.WeilBound.ThetaLifts.LocalTheory.UnramifiedDeterminedBySpherical
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ToralCohomology.EmbeddingTransposeVectorZero
+public import Development.WeilBound.ThetaLifts.LocalTheory.ToralCohomology.ExistsTorus
+public import Development.WeilBound.ThetaLifts.LocalTheory.UnramifiedDeterminedBySpherical
+
+@[expose] public section
 
 noncomputable section
 

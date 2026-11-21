@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafSHNbSys
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafSHNbSys
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC

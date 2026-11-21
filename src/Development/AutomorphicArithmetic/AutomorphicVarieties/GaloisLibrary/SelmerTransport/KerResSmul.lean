@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.RestrictionMemInvariantH1
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsMoreSide
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.GaloisLibrary.SelmerTransport.RestrictionMemInvariantH1
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsMoreSide
+
+@[expose] public section
 
 open ReciprocityTheory.Gal UpperTheory.V.Base
 

@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HermitianTensor
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HermitianTensor
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 universe u

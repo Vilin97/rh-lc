@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.FrobeniusOrbits.HostThickExists
-import Formalism.FrobeniusOrbits.HostOrbitsPlaces
-import Formalism.SatakeDualWeyl.StatementC
+module
+
+public import Mathlib
+public import Formalism.FrobeniusOrbits.HostThickExists
+public import Formalism.FrobeniusOrbits.HostOrbitsPlaces
+public import Formalism.SatakeDualWeyl.StatementC
+
+@[expose] public section
 
 open NumberField IntermediateField Ideal IsDedekindDomain
 open scoped Pointwise TensorProduct

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.RecChainUnfOne
-import Formalism.LocalToGlobal.Columns.XiRef
+module
+
+public import Formalism.LocalToGlobal.Columns.RecChainUnfOne
+public import Formalism.LocalToGlobal.Columns.XiRef
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.QuadraticCharacters.LogDerivAtOne
+module
+
+public import Development.AutomorphicArithmetic.QuadraticCharacters.LogDerivAtOne
+
+@[expose] public section
 
 open ArithmeticFunction
 

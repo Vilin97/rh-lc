@@ -1,5 +1,9 @@
-import ReciprocityTheory.GaloisValuations.Global
-import ReciprocityTheory.Hypotheses.Descent
+module
+
+public import ReciprocityTheory.GaloisValuations.Global
+public import ReciprocityTheory.Hypotheses.Descent
+
+@[expose] public section
 
 noncomputable section
 

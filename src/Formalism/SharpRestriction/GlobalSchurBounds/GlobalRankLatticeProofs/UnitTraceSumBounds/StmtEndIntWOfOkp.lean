@@ -1,10 +1,14 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.EndIntWOf
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WfSubst
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WfRing
-import Mathlib
-import Formalism.PeriodIntegrals.AddIntG
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WittLogarithm
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WittFrobeniusEnd
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.UnitTraceSumBounds.EndIntWOf
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WfSubst
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WfRing
+public import Mathlib
+public import Formalism.PeriodIntegrals.AddIntG
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WittLogarithm
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.WittFrobeniusEnd
+
+@[expose] public section
 
 namespace Formalism.MainNotions.Ext
 

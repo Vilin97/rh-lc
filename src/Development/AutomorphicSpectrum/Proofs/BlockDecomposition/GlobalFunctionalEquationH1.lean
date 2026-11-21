@@ -1,8 +1,12 @@
-import Mathlib
-import PositivityTheory.AutomorphicForms.PublishedInputs.CuspidalContinuity.ArchimedeanCuspidal.VerticalStrips.UnramifiedEulerProductIntegral
-import GroundTheory.GlobalFields.TateThesis.HeckeTheorem
-import GroundTheory.GlobalFields.TateThesis.Nonvanishing
-import GroundTheory.GlobalFields.TateThesis.FiniteOrderParams
+module
+
+public import Mathlib
+public import PositivityTheory.AutomorphicForms.PublishedInputs.CuspidalContinuity.ArchimedeanCuspidal.VerticalStrips.UnramifiedEulerProductIntegral
+public import GroundTheory.GlobalFields.TateThesis.HeckeTheorem
+public import GroundTheory.GlobalFields.TateThesis.Nonvanishing
+public import GroundTheory.GlobalFields.TateThesis.FiniteOrderParams
+
+@[expose] public section
 
 set_option maxSynthPendingDepth 1
 

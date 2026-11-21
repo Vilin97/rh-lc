@@ -1,11 +1,15 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpTie
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CocChart
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.SubstCoeRename
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhTwoValHolds
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpGJAd
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpGUPf
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpGOPf
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpActOf
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpTie
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.CocChart
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.SubstCoeRename
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhTwoValHolds
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpGJAd
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpGUPf
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpGOPf
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpActOf
+
+@[expose] public section
 
 set_option autoImplicit false
 

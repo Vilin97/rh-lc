@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSectionProduct
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSectionBoundedMul
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSectionProduct
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PSectionBoundedMul
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

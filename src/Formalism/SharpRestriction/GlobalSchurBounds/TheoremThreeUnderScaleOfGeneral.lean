@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.LinkMin
-import Formalism.LocalToGlobal.GlobalTheory.GL5.TheoremThreeAllUnitary
-import Formalism.SharpRestriction.GlobalSchurBounds.StandardLattice
-import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeCSchur
-import Formalism.SharpRestriction.CuspSpanNormBounds.NonemptyParameterModels.NumericSettingWithGapSatisfiable
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.LinkMin
+public import Formalism.LocalToGlobal.GlobalTheory.GL5.TheoremThreeAllUnitary
+public import Formalism.SharpRestriction.GlobalSchurBounds.StandardLattice
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeCSchur
+public import Formalism.SharpRestriction.CuspSpanNormBounds.NonemptyParameterModels.NumericSettingWithGapSatisfiable
+
+@[expose] public section
 
 noncomputable section
 

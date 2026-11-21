@@ -1,6 +1,10 @@
-import Formalism.AdmissibleDesigns.TensSubsingleton
-import Formalism.AdmissibleDesigns.InvariantsEqBotIff
-import Formalism.AdmissibleDesigns.CohomZeroEquivContinuous
+module
+
+public import Formalism.AdmissibleDesigns.TensSubsingleton
+public import Formalism.AdmissibleDesigns.InvariantsEqBotIff
+public import Formalism.AdmissibleDesigns.CohomZeroEquivContinuous
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

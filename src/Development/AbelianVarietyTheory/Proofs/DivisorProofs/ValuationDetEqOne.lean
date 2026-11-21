@@ -1,11 +1,15 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.LocPoly
-import GroundTheory.AutomorphicForms.MacdonaldWhittakerHecke
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.SmoothRepresentationsGL.SphDict
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.SmoothRepresentationsGL.MemIffLocal
-import GroundTheory.AutomorphicForms.SphericalIntegral
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.HermiteReductionUnipotent
-import Formalism.ArtinHasse.ArtinHasseProofs.SymmSeries
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.LocPoly
+public import GroundTheory.AutomorphicForms.MacdonaldWhittakerHecke
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.SmoothRepresentationsGL.SphDict
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AutomorphicForms.SmoothRepresentationsGL.MemIffLocal
+public import GroundTheory.AutomorphicForms.SphericalIntegral
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.HermiteReductionUnipotent
+public import Formalism.ArtinHasse.ArtinHasseProofs.SymmSeries
+
+@[expose] public section
 
 noncomputable section
 

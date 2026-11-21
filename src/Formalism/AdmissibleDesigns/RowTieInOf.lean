@@ -1,5 +1,9 @@
-import Formalism.AdmissibleDesigns.RowLatticeFiniteFree
-import Formalism.AdmissibleDesigns.UnramifiedInputOfAdmitted
+module
+
+public import Formalism.AdmissibleDesigns.RowLatticeFiniteFree
+public import Formalism.AdmissibleDesigns.UnramifiedInputOfAdmitted
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core] [hH0Fin : Fact Formalism.MainNotions.N.K.H0.FinCore]
 

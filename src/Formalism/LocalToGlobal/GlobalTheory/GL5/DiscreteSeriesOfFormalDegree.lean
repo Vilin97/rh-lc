@@ -1,12 +1,16 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.MassRatioUnfoldedOfTheoremTwo
-import Formalism.SharpRestriction.GlobalSchurBounds.TheoremThreeUnderScaleOfGeneral
-import Formalism.LocalToGlobal.GlobalTheory.GL5.PClassDecomp
-import Formalism.GL3MeanSquares.HookFormulaTorsion.MassUpperBoundClosed
-import Formalism.SharpRestriction.GlobalSchurBounds.StandardLattice
-import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeCSchur
-import Formalism.SharpRestriction.CuspSpanNormBounds.DiscreteSeriesWeylDimension
-import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLe
-import Formalism.PeriodIntegrals.ExplicitFormulaCounts.WeylForK
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.MassRatioUnfoldedOfTheoremTwo
+public import Formalism.SharpRestriction.GlobalSchurBounds.TheoremThreeUnderScaleOfGeneral
+public import Formalism.LocalToGlobal.GlobalTheory.GL5.PClassDecomp
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.MassUpperBoundClosed
+public import Formalism.SharpRestriction.GlobalSchurBounds.StandardLattice
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeCSchur
+public import Formalism.SharpRestriction.CuspSpanNormBounds.DiscreteSeriesWeylDimension
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLe
+public import Formalism.PeriodIntegrals.ExplicitFormulaCounts.WeylForK
+
+@[expose] public section
 
 noncomputable section
 

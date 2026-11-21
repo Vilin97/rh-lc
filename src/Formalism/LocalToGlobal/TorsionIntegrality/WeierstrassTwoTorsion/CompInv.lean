@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.EllipticTorsion.FormalGroupPointsNoTorsion
+module
+
+public import Mathlib
+public import Formalism.EllipticTorsion.FormalGroupPointsNoTorsion
+
+@[expose] public section
 
 open PowerSeries
 

@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
+
+@[expose] public section
+
 open Matrix MeasureTheory Formalism.QuantumDeterminants Formalism.FourierDecayAlt.B Formalism.FourierDecayAlt.B2 GlobalTheory.HCXi
 open scoped ENNReal ComplexOrder
 

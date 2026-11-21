@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ParabolicInductionColumnEquiv
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GlCastRfl
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ParabolicInductionColumnEquiv
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GlCastRfl
+
+@[expose] public section
+
 open GlobalTheory.SmGL GlobalTheory.PRep GlobalTheory.IndLineGL
 open scoped TensorProduct
 set_option maxHeartbeats 1000000 in

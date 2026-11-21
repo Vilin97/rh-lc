@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.AdjointOfIso
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.AdjointOfIso
+
+@[expose] public section
 
 noncomputable section
 

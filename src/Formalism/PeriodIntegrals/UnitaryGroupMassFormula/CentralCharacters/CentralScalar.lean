@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.DSInfCharCap
+module
+
+public import Formalism.PeriodIntegrals.DSInfCharCap
+
+@[expose] public section
 
 noncomputable section
 

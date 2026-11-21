@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReducedBases.GsInnerBOfLt
-import ReciprocityTheory.ReducedBases.LatDefs
+module
+
+public import ReciprocityTheory.ReducedBases.GsInnerBOfLt
+public import ReciprocityTheory.ReducedBases.LatDefs
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.HformSmulRightB
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.HformSmulRightB
+
+@[expose] public section
 
 noncomputable section
 

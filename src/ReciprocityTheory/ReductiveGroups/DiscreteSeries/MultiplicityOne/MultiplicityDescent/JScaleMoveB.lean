@@ -1,7 +1,11 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.StDiagExists
-import Formalism.SharpRestriction.CuspSpanNormBounds.CayleySignature
-import Mathlib.Analysis.InnerProductSpace.TensorProduct
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.JSmoothA
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.StDiagExists
+public import Formalism.SharpRestriction.CuspSpanNormBounds.CayleySignature
+public import Mathlib.Analysis.InnerProductSpace.TensorProduct
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.MultiplicityOne.JSmoothA
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.GaussJetBounds.OneLetterRadius
-import Formalism.GaussJetBounds.StatementG
+module
+
+public import Formalism.GaussJetBounds.OneLetterRadius
+public import Formalism.GaussJetBounds.StatementG
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

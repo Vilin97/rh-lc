@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.UnitaryNorms.CharExHost
-import Formalism.LocalToGlobal.Columns.AbelianHostFieldConditions
-import Mathlib
-import Formalism.LocalToGlobal.UnitaryNorms.CharExGen
+module
+
+public import Formalism.LocalToGlobal.UnitaryNorms.CharExHost
+public import Formalism.LocalToGlobal.Columns.AbelianHostFieldConditions
+public import Mathlib
+public import Formalism.LocalToGlobal.UnitaryNorms.CharExGen
+
+@[expose] public section
 
 noncomputable section
 

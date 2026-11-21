@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.LocalLanglands.LocalCentralUnits.PinChar
-import Development.AutomorphicArithmetic.Foundations.LocalLanglands.LocalCentralUnits.PinNum
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.LocalLanglands.LocalCentralUnits.PinChar
+public import Development.AutomorphicArithmetic.Foundations.LocalLanglands.LocalCentralUnits.PinNum
+
+@[expose] public section
 
 open Finset
 

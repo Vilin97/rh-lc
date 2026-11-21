@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.PAdicHodge.NormalizedTrace
-import GroundTheory.PAdicHodge.CyclotomicField
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.NormNatCastPrime
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.NormalizedTrace
+public import GroundTheory.PAdicHodge.CyclotomicField
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.NormNatCastPrime
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.PAdicHodge

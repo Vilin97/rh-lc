@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PieriBlockIdeals.MultiplicityZeroThickEmbedding
-import Formalism.PieriBlockIdeals.PieriColumnMinors.HeckeLFunctionIdealEulerProduct
-import Formalism.PieriBlockIdeals.PieriColumnMinors.ParameterBounds
+module
+
+public import Mathlib
+public import Formalism.PieriBlockIdeals.MultiplicityZeroThickEmbedding
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.HeckeLFunctionIdealEulerProduct
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.ParameterBounds
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.LiftErrorLocal
-import Formalism.SharpRestriction.Divisibility.LocalNonemptiness.LiftErrorLocal
-import Formalism.LocalRingCardinality.Lemmas
-import Formalism.LocalRingCardinality.DataParamsT
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.LiftErrorLocal
+public import Formalism.SharpRestriction.Divisibility.LocalNonemptiness.LiftErrorLocal
+public import Formalism.LocalRingCardinality.Lemmas
+public import Formalism.LocalRingCardinality.DataParamsT
+
+@[expose] public section
 
 noncomputable section
 

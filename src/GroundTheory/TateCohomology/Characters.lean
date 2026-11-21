@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.TateCohomology.UniquelyDivisible
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.UniquelyDivisible
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.GroupCoh

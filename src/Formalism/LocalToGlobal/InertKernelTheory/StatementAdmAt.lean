@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.InertKernelTheory.ScalG
-import Formalism.LocalToGlobal.InertKernelTheory.SecondKernelCoupledLastLift
-import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.FrecAt
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.InvarianceRepresentativesLaw
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.ScalG
+public import Formalism.LocalToGlobal.InertKernelTheory.SecondKernelCoupledLastLift
+public import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.FrecAt
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.InvarianceRepresentativesLaw
+
+@[expose] public section
 
 noncomputable section
 

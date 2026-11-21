@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ExponentGrids.ExplicitSizeInequalityIndexed
-import Formalism.LocalToGlobal.ExponentGrids.ExponentGridsProofs.FrameHeightOfDualSlope
-import Formalism.TowerValuationBounds.TowerValuationProofs.ValuationRatioIndex
+module
+
+public import Formalism.LocalToGlobal.ExponentGrids.ExplicitSizeInequalityIndexed
+public import Formalism.LocalToGlobal.ExponentGrids.ExponentGridsProofs.FrameHeightOfDualSlope
+public import Formalism.TowerValuationBounds.TowerValuationProofs.ValuationRatioIndex
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain Finset
 open Formalism.DivisionValues (vw lw PlOver meanLog)

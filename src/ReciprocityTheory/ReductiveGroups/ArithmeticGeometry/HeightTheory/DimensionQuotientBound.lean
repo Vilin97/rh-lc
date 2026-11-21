@@ -1,4 +1,8 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.AvPrimeDimOne
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.AvPrimeDimOne
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.T0.DimensionQuotientBound
 

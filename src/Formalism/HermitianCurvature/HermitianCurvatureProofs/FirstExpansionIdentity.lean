@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.AAvCongr
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.AAvCongr
+
+@[expose] public section
 
 open Matrix Finset
 

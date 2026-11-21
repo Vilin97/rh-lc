@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.GL3MeanSquares.LegendreCoefficient
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.IntegralSubstVector
+module
+
+public import Mathlib
+public import Formalism.GL3MeanSquares.LegendreCoefficient
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.IntegralSubstVector
+
+@[expose] public section
 
 noncomputable section
 

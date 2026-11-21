@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FockTheta.UnitBracket
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FockTheta.UnitBracket
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.TorsionNormIteration.InvIntegralOfClass
-import Formalism.FormalGroupLog.LogDeterminesLaw
+module
+
+public import Formalism.TorsionNormIteration.InvIntegralOfClass
+public import Formalism.FormalGroupLog.LogDeterminesLaw
+
+@[expose] public section
 
 noncomputable section
 

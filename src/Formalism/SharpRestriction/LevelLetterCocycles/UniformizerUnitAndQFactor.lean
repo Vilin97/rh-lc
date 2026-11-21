@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.DualLemmaOfDeterminant
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.DualLemmaOfDeterminant
+
+@[expose] public section
 
 noncomputable section
 

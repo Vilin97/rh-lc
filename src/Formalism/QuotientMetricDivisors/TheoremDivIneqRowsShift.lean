@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.TheoremDivIneqRows
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.TheoremDivIneqRows
+
+@[expose] public section
 
 open Finset
 

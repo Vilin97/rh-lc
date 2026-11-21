@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.ReductionDegree
-import GroundTheory.GlobalFields.ComplexMultiplication.DifferentialConstantField
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.ReductionDegree
+public import GroundTheory.GlobalFields.ComplexMultiplication.DifferentialConstantField
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

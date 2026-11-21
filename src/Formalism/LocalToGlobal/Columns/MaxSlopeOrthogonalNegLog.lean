@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.BrzoPairAtZeroRight
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.TruncatedLatticeHolds
-import Formalism.MeanHeightDescent.AverageDegreeBounds.SpanMuMin
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.BrzoPairAtZeroRight
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.TruncatedLatticeHolds
+public import Formalism.MeanHeightDescent.AverageDegreeBounds.SpanMuMin
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 open scoped Matrix ComplexOrder

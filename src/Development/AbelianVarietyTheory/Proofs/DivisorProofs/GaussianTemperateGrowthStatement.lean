@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GaussianTemperateGrowth
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TrPApply
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.GaussianTemperateGrowth
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TrPApply
+
+@[expose] public section
+
 open GlobalTheory.ArchSch
 set_option maxHeartbeats 1000000 in
 theorem _root_.GlobalTheory.T.gaussian_temperate_growth : ∀ {V : Type} [NormedAddCommGroup V] [NormedSpace ℝ V] [FiniteDimensional ℝ V] (Q : LinearMap.BilinForm ℝ V)

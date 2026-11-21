@@ -1,8 +1,12 @@
-import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.LagrangianDecomposition.LdExOfLeaves
-import Development.WeilBound.ThetaLifts.LatticeBasics.StdExOf
-import Development.WeilBound.ThetaLifts.LatticeBasics.FrameConj
-import Development.WeilBound.ThetaLifts.LatticeBasics.HgtInt
-import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.LocalUnitExistence.UnitHermitianSpace
+module
+
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.LagrangianDecomposition.LdExOfLeaves
+public import Development.WeilBound.ThetaLifts.LatticeBasics.StdExOf
+public import Development.WeilBound.ThetaLifts.LatticeBasics.FrameConj
+public import Development.WeilBound.ThetaLifts.LatticeBasics.HgtInt
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.SiegelWeilFormula.LocalUnitExistence.UnitHermitianSpace
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.NkExponent
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.CoarseDegreesLargeBeyond
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.NkExponent
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.CoarseDegreesLargeBeyond
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,8 +1,12 @@
-import Formalism.LocalRingCardinality.DataHost
-import Formalism.FrobeniusOrbits.HostCorollaries
-import Formalism.TameInertiaTowers.TowerFieldFoundations
-import Formalism.CyclotomicNorms.StatementI
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.NonemptyFieldAxiomsCyclicPow
+module
+
+public import Formalism.LocalRingCardinality.DataHost
+public import Formalism.FrobeniusOrbits.HostCorollaries
+public import Formalism.TameInertiaTowers.TowerFieldFoundations
+public import Formalism.CyclotomicNorms.StatementI
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.NonemptyFieldAxiomsCyclicPow
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,10 +1,14 @@
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.SysC
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WittFractionToCoefficients
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.ExistsCoprimePowEqOne
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.OrbitSumStabilizer
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.InvarianceRepresentativesTrivial
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.CardFilterValLt
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.SuccMulSuccSubOneDivSucc
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.SysC
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.WittFractionToCoefficients
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.ExistsCoprimePowEqOne
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.OrbitSumStabilizer
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.InvarianceRepresentativesTrivial
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.CardFilterValLt
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.SuccMulSuccSubOneDivSucc
+
+@[expose] public section
 
 noncomputable section
 

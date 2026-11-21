@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.CompHt
-import Formalism.LocalToGlobal.ProjectiveLattices.EtArch
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.CompHt
+public import Formalism.LocalToGlobal.ProjectiveLattices.EtArch
+
+@[expose] public section
 
 noncomputable section
 

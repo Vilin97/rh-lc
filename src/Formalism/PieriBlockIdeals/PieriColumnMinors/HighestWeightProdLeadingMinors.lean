@@ -1,7 +1,11 @@
-import Formalism.PieriBlockIdeals.LastGradedOfGradedAlone
-import Formalism.PieriBlockIdeals.PieriColumnMinors.LastGradedImpliesOneBlock
-import Formalism.PieriBlockIdeals.PieriColumnMinors.HighestWeightShiftEqDetMul
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LEhwLemmas
+module
+
+public import Formalism.PieriBlockIdeals.LastGradedOfGradedAlone
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.LastGradedImpliesOneBlock
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.HighestWeightShiftEqDetMul
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LEhwLemmas
+
+@[expose] public section
 
 open MvPolynomial
 

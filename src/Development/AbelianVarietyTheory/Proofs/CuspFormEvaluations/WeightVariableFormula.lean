@@ -1,4 +1,8 @@
-import Development.AbelianVarietyTheory.Definitions.ThetaValues.LetAct
+module
+
+public import Development.AbelianVarietyTheory.Definitions.ThetaValues.LetAct
+
+@[expose] public section
 
 set_option autoImplicit false
 

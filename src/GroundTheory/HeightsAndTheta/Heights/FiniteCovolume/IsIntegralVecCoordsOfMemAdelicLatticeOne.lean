@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.CoreLatticeEqOfMemCoreStabilizer
-import GroundTheory.AutomorphicForms.DefiniteClassNumber.Finiteness
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.CoreLatticeEqOfMemCoreStabilizer
+public import GroundTheory.AutomorphicForms.DefiniteClassNumber.Finiteness
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

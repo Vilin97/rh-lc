@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.LamProdMonomial
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.RestCountOf
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.FiniteRestrictSupport
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.LamProdMonomial
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.RestCountOf
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.FiniteRestrictSupport
+
+@[expose] public section
 
 noncomputable section
 

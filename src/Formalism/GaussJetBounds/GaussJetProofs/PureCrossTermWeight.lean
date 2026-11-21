@@ -1,5 +1,9 @@
-import Formalism.GaussJetBounds.GenLogInverse
-import Formalism.GaussJetBounds.GaussJetProofs.SubstitutionWeightBound
+module
+
+public import Formalism.GaussJetBounds.GenLogInverse
+public import Formalism.GaussJetBounds.GaussJetProofs.SubstitutionWeightBound
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

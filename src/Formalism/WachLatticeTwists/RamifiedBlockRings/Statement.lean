@@ -1,5 +1,9 @@
-import Formalism.CharacterColumnKernels.StatOntoLattice
-import Formalism.TruncatedSeriesCounting.LemmaDetPoly
+module
+
+public import Formalism.CharacterColumnKernels.StatOntoLattice
+public import Formalism.TruncatedSeriesCounting.LemmaDetPoly
+
+@[expose] public section
 
 open Finset Classical
 

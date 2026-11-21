@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrameCoord
-import Formalism.LocalRingCardinality.CoeNeZeroOfNotMem
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.LcvBasis
-import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.IdxRules
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrameCoord
+public import Formalism.LocalRingCardinality.CoeNeZeroOfNotMem
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.LcvBasis
+public import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.IdxRules
+
+@[expose] public section
 
 noncomputable section
 

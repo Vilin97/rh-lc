@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.LocalFourier
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LocalFourier
+
+@[expose] public section
 
 noncomputable section
 

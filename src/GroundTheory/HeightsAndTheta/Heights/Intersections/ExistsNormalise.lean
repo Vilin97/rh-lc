@@ -1,10 +1,15 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterBridgeB
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PtsOverChart
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsMoreRest
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsMoreSide
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsOrbitCompNonvanish
-import GroundTheory.HeightsAndTheta.Heights.Intersections.NormSegreSameOrbit
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterBridgeB
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PtsOverChart
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsMoreRest
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsMoreSide
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsOrbitCompNonvanish
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.NormSegreSameOrbit
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

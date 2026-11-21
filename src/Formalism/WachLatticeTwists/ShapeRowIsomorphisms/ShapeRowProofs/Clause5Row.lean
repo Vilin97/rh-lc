@@ -1,6 +1,10 @@
-import Formalism.WachLatticeTwists.ShapeRowIsomorphisms.StatClause5Row
-import ReciprocityTheory.ReductiveGroups.TraceFormulas.ImportsAlt
-import ReciprocityTheory.ReductiveGroups.TraceFormulas.LatReal
+module
+
+public import Formalism.WachLatticeTwists.ShapeRowIsomorphisms.StatClause5Row
+public import ReciprocityTheory.ReductiveGroups.TraceFormulas.ImportsAlt
+public import ReciprocityTheory.ReductiveGroups.TraceFormulas.LatReal
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

@@ -1,4 +1,8 @@
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.VecMulVecComm
+module
+
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.VecMulVecComm
+
+@[expose] public section
 
 noncomputable section
 

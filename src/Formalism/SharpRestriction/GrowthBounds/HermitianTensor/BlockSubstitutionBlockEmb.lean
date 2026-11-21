@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.QaWeightRowInd
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.QaWeightRowInd
+
+@[expose] public section
 
 noncomputable section
 

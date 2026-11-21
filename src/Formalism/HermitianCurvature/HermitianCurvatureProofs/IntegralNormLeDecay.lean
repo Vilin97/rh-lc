@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.XiBound
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormLeIntegralFsv
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.XiBound
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormLeIntegralFsv
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 open scoped ComplexConjugate

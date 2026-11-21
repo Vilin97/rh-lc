@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.HasseNorm
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.HasseNorm
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

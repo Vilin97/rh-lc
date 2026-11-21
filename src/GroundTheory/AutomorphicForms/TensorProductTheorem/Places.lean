@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.TensorProductTheorem.MatrixCoeff
-import GroundTheory.AutomorphicForms.TensorProductTheorem.Irreducible
-import GroundTheory.AutomorphicForms.TensorProductTheorem.LocalComponent
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.MatrixCoeff
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.Irreducible
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.LocalComponent
+
+@[expose] public section
 
 noncomputable section
 

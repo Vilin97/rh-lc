@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.HermitianCurvature.StatementPB
-import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
-import Formalism.LocalRingCardinality.DataParamsS
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.StatementPB
+public import Formalism.SharpRestriction.CuspSpanNormBounds.RelevantZeroGramTerms
+public import Formalism.LocalRingCardinality.DataParamsS
+
+@[expose] public section
 
 noncomputable section
 

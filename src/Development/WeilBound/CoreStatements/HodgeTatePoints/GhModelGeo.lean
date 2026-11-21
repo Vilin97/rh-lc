@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsExcisionNbhdAway
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsLieModel
-import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatLie
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsExcisionNbhdAway
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.ExistsLieModel
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.HtatLie
+
+@[expose] public section
 
 set_option backward.isDefEq.respectTransparency false
 

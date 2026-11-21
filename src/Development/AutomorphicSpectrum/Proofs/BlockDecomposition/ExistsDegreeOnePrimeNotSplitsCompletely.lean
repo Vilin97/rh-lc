@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.DegreeOneDensity
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.DegreeOneDensity
+
+@[expose] public section
+
 open NumberField IsDedekindDomain GroundTheory.Global
 
 namespace GlobalTheory.CompanionTheory.Density

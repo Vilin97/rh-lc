@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.PowerSubgroups.CountableNeighbourhoods.SingleMemInitialCoordSubspace
+module
+
+public import Mathlib
+public import GroundTheory.PowerSubgroups.CountableNeighbourhoods.SingleMemInitialCoordSubspace
+
+@[expose] public section
 
 open Function Module
 

@@ -1,13 +1,17 @@
-import Mathlib
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.TypesDefs
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoeffZeroNeOfMonicIrr
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.TwDefs
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.RingSpecSidedEmbeddingFixedField
-import Formalism.LocalToGlobal.UnitaryNorms.CharGal
-import Formalism.LocalRingCardinality.DataIdx
-import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.BlocksUnique
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.TwistBaseCoefficientRingResidueFieldFinite
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.TypesDefs
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoeffZeroNeOfMonicIrr
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.TwDefs
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.RingSpecSidedEmbeddingFixedField
+public import Formalism.LocalToGlobal.UnitaryNorms.CharGal
+public import Formalism.LocalRingCardinality.DataIdx
+public import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.BlocksUnique
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.TwistBaseCoefficientRingResidueFieldFinite
+
+@[expose] public section
 
 noncomputable section
 

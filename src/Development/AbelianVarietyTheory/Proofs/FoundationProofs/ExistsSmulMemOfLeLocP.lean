@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsUnitaryMulTriangular
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.ExistsUnitaryMulTriangular
+
+@[expose] public section
 
 open GlobalTheory.DualWeyl MvPolynomial NumberField IsDedekindDomain
 open Formalism.L2.DIV (colLat IsBasisAt dualFr)

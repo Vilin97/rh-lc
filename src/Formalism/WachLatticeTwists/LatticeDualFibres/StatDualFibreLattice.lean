@@ -1,4 +1,8 @@
-import Formalism.WachLatticeTwists.LatticeDualFibres.Statement
+module
+
+public import Formalism.WachLatticeTwists.LatticeDualFibres.Statement
+
+@[expose] public section
 
 universe u
 

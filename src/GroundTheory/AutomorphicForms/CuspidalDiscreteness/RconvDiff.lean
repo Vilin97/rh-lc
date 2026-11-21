@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.DiffBound
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.TorusReduction
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.DiffBound
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.TorusReduction
+
+@[expose] public section
 
 open MeasureTheory Set Filter Topology Function
 open NumberField IsDedekindDomain

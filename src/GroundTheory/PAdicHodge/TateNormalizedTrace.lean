@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.PAdicHodge.NormalizedTraceTower
-import GroundTheory.PAdicHodge.NormalizedTraceClosure
-import GroundTheory.PAdicHodge.CyclotomicTower
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.NormalizedTraceTower
+public import GroundTheory.PAdicHodge.NormalizedTraceClosure
+public import GroundTheory.PAdicHodge.CyclotomicTower
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.PAdicHodge

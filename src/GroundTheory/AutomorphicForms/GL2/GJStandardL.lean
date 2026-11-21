@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJStandardLEngine
-import GroundTheory.AutomorphicForms.GL2.GJStandardLDual
-import GroundTheory.AutomorphicForms.GL2.GJStandardLFourier
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJStandardLEngine
+public import GroundTheory.AutomorphicForms.GL2.GJStandardLDual
+public import GroundTheory.AutomorphicForms.GL2.GJStandardLFourier
+
+@[expose] public section
 
 open MeasureTheory Filter Set Topology IsDedekindDomain NumberField NumberField.mixedEmbedding
 open scoped NumberField.AdeleRing RestrictedProduct SchwartzMap Classical ENNReal NNReal

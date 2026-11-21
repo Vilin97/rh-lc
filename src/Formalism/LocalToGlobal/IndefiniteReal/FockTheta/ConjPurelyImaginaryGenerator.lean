@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FockTheta.UnitBracket
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.CharLem
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.InfFam
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FockTheta.UnitBracket
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.CharLem
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.InfFam
+
+@[expose] public section
 
 noncomputable section
 

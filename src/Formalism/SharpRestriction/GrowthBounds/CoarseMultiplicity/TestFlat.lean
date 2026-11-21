@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.MulMatQOne
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.MulMatQOne
+
+@[expose] public section
 
 noncomputable section
 

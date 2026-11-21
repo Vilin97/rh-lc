@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FsvMulFsvNeg
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FsvMulFsvNeg
+
+@[expose] public section
 
 open scoped ComplexConjugate ContDiff
 open Filter Topology

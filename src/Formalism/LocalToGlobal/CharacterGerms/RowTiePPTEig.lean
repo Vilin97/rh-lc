@@ -1,10 +1,14 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePPTClose
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePStartSelf
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePProjLieSelf
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePKeyGlue
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePKeyDelta
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePSplitLA
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePKeyRes2
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePPTClose
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePStartSelf
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePProjLieSelf
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePKeyGlue
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePKeyDelta
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePSplitLA
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePKeyRes2
+
+@[expose] public section
 
 namespace Formalism.L2.FormalSeriesBounds
 

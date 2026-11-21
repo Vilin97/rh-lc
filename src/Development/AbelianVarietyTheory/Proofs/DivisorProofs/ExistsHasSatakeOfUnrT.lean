@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsRecTLocRecT
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsSphericalIffUnrOfLawsT
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RecTExistsIff
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsRecTLocRecT
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsSphericalIffUnrOfLawsT
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.RecTExistsIff
+
+@[expose] public section
 
 noncomputable section
 

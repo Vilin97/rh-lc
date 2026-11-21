@@ -1,8 +1,12 @@
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.CrystallineTowers.LocTower
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.OfShortExact
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCommonModel
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsModelOfMem
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteDimensionalFilDR
+module
+
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.CrystallineTowers.LocTower
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.OfShortExact
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsCommonModel
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsModelOfMem
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.FiniteDimensionalFilDR
+
+@[expose] public section
 
 noncomputable section
 

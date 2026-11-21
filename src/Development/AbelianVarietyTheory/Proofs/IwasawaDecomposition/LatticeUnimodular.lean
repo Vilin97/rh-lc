@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CoordinatesFlagVector
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.GqPtOfNeZeroIff
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsColReduced
-import Formalism.SharpRestriction.CuspSpanNormBounds.LocalGroupInFamilyNontrivial
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.SubMemDifferentIdeal
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsNormSubEqOne
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.CoordinatesFlagVector
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.GqPtOfNeZeroIff
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsColReduced
+public import Formalism.SharpRestriction.CuspSpanNormBounds.LocalGroupInFamilyNontrivial
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.SubMemDifferentIdeal
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsNormSubEqOne
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GaloisLevelStructure.TiedHecke
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverAlg
+module
+
+public import Formalism.LocalToGlobal.GaloisLevelStructure.TiedHecke
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.CoverAlg
+
+@[expose] public section
 
 noncomputable section
 

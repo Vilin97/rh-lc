@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.GenericMultiplicityOne
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.CuspidalInducedCharacter
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.GenericMultiplicityOne
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.CuspidalInducedCharacter
+
+@[expose] public section
 
 noncomputable section
 

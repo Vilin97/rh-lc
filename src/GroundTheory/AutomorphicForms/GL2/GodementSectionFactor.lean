@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GodementSectionSplit
-import GroundTheory.GlobalFields.TateThesis.EulerFactorsFinite
-import GroundTheory.AutomorphicForms.GL2.GodementSectionLocal
-import GroundTheory.GlobalFields.KummerTheory.LocalIndexAtPlace
-import GroundTheory.AutomorphicForms.GL2.FiniteIdeleDecomp
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GodementSectionSplit
+public import GroundTheory.GlobalFields.TateThesis.EulerFactorsFinite
+public import GroundTheory.AutomorphicForms.GL2.GodementSectionLocal
+public import GroundTheory.GlobalFields.KummerTheory.LocalIndexAtPlace
+public import GroundTheory.AutomorphicForms.GL2.FiniteIdeleDecomp
+
+@[expose] public section
 
 open NumberField IsDedekindDomain IsDedekindDomain.HeightOneSpectrum MeasureTheory Matrix Filter
   Topology

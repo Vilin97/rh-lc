@@ -1,4 +1,8 @@
-import Formalism.GaussIdealIdentity.StatementLA
+module
+
+public import Formalism.GaussIdealIdentity.StatementLA
+
+@[expose] public section
 
 open MvPolynomial IsLocalRing
 

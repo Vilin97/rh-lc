@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.GammaLaurentFactors.LaurentBlockInduction.LdDefs
-import GroundTheory.AutomorphicForms.GL2.GJFEBlockPoint
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.GammaLaurentFactors.LaurentBlockInduction.LdDefs
+public import GroundTheory.AutomorphicForms.GL2.GJFEBlockPoint
+
+@[expose] public section
 
 noncomputable section
 

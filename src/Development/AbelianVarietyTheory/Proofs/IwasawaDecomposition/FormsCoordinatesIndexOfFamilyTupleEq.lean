@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ReadPk
-import Formalism.LocalToGlobal.IndefiniteReal.LinksStage
-import Lean
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.ReadPk
+public import Formalism.LocalToGlobal.IndefiniteReal.LinksStage
+public import Lean
+
+@[expose] public section
 
 noncomputable section
 

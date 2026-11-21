@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.ReductionLocalVolumeGL
-import GroundTheory.AutomorphicForms.ReductionSiegel
-import GroundTheory.AutomorphicForms.RestrictedProductMatrix
-import GroundTheory.GlobalFields.TateThesis.IdeleMeasureNormOne
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.ReductionLocalVolumeGL
+public import GroundTheory.AutomorphicForms.ReductionSiegel
+public import GroundTheory.AutomorphicForms.RestrictedProductMatrix
+public import GroundTheory.GlobalFields.TateThesis.IdeleMeasureNormOne
+
+@[expose] public section
 
 open MeasureTheory Measure Set Matrix NumberField
 open scoped NNReal ENNReal

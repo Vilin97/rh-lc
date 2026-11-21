@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.OmFibreUniq
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.OmFibreUniq
+
+@[expose] public section
 
 noncomputable section
 

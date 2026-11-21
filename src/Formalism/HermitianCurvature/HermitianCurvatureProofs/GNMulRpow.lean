@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MapInvMEq
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MapInvMEq
+
+@[expose] public section
 
 noncomputable section
 

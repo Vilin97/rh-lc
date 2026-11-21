@@ -1,4 +1,8 @@
-import Formalism.DropLevelBounds.Statement
+module
+
+public import Formalism.DropLevelBounds.Statement
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

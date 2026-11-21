@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.MacdonaldSpherical
-import GroundTheory.AutomorphicForms.MacdonaldNormalization
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.MacdonaldSpherical
+public import GroundTheory.AutomorphicForms.MacdonaldNormalization
+
+@[expose] public section
 
 noncomputable section
 

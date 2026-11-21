@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InjectiveWedgeHighestCoefficient
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AnnEqZeroOfDegreeZero
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CoverByAcyclicPair
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InjectiveWedgeHighestCoefficient
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.AnnEqZeroOfDegreeZero
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CoverByAcyclicPair
+
+@[expose] public section
 
 noncomputable section
 

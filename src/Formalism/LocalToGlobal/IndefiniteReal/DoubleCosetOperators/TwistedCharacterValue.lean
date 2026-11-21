@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.ImaginaryGeneratorMulDenominator
-import Mathlib
-import Formalism.LocalToGlobal.Columns.GenericUnipotentCharacter
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.DoubleCosetOperators.ImaginaryGeneratorMulDenominator
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.GenericUnipotentCharacter
+
+@[expose] public section
 
 noncomputable section
 

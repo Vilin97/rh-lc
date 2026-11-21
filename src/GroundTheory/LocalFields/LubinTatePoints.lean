@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.LocalFields.Interface
-import GroundTheory.LocalFields.ExamplesLaurent
-import GroundTheory.LocalFields.SeparableClosure
-import GroundTheory.LocalFields.FormalGroups.LubinTateGroup
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.Interface
+public import GroundTheory.LocalFields.ExamplesLaurent
+public import GroundTheory.LocalFields.SeparableClosure
+public import GroundTheory.LocalFields.FormalGroups.LubinTateGroup
+
+@[expose] public section
 
 noncomputable section
 

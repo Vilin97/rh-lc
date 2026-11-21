@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MemLpBzOfSup
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TendstoIntegralInnerGermMoving
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MemLpBzOfSup
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TendstoIntegralInnerGermMoving
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBK
 

@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.Columns.HeckeInertLemmas
-import Formalism.LocalToGlobal.Columns.WmLemmas
-import Formalism.LocalToGlobal.Divisibility.LiftLatInst
+module
+
+public import Formalism.LocalToGlobal.Columns.HeckeInertLemmas
+public import Formalism.LocalToGlobal.Columns.WmLemmas
+public import Formalism.LocalToGlobal.Divisibility.LiftLatInst
+
+@[expose] public section
 
 noncomputable section
 

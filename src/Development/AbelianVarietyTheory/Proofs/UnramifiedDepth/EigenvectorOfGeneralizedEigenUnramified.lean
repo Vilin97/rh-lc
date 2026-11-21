@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.CharacterGerms.GeNatCast
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.CharacterGerms.GeNatCast
+
+@[expose] public section
 
 open scoped BigOperators TensorProduct
 open Formalism.L2.FormalSeriesBounds

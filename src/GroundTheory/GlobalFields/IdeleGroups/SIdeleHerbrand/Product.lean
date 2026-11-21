@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.HerbrandQuotients.CycTateNegOneOrbitEquivSymmMk
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.HerbrandQuotients.CycTateNegOneOrbitEquivSymmMk
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

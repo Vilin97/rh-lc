@@ -1,7 +1,11 @@
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ToFirst
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.UniformisationConclusion
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.FBIdAd
-import Development.WeilBound.CoreStatements.HodgeTatePoints.Comp1IdentityLeft
+module
+
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.ToFirst
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.ToroidalCompactification.UniformisationConclusion
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.FBIdAd
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.Comp1IdentityLeft
+
+@[expose] public section
 
 noncomputable section
 

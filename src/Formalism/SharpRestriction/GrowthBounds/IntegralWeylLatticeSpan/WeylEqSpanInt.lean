@@ -1,6 +1,10 @@
-import Formalism.GradedWeylDivisibility.FinalD
-import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LClosedeqLemmas
-import Lemmata.GeneralBFactLeftSide.Imports
+module
+
+public import Formalism.GradedWeylDivisibility.FinalD
+public import Formalism.GradedWeylDivisibility.FockSpaceTableaux.LClosedeqLemmas
+public import Lemmata.GeneralBFactLeftSide.Imports
+
+@[expose] public section
 
 open MvPolynomial Matrix Formalism.GradedWeylDivisibility
 

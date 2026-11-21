@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.ActualZetaSmooth
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ActualAdjointnessFromHermitian
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ModelLevelMultiplier
+module
+
+public import Formalism.HermitianCurvature.ActualZetaSmooth
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ActualAdjointnessFromHermitian
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ModelLevelMultiplier
+
+@[expose] public section
 
 section
 noncomputable section

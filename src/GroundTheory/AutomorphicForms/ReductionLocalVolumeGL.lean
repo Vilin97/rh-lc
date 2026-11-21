@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.ReductionLocalVolumeTorus
-import GroundTheory.AutomorphicForms.RealIwasawaIntegration
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.ReductionLocalVolumeTorus
+public import GroundTheory.AutomorphicForms.RealIwasawaIntegration
+
+@[expose] public section
 
 open MeasureTheory Measure Set Matrix
 open scoped NNReal ENNReal

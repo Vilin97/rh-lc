@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.SubClosed
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.SubClosed
+
+@[expose] public section
+
 open GlobalTheory.SeqCx Matrix
 
 namespace GlobalTheory.SeqCx.BdBd

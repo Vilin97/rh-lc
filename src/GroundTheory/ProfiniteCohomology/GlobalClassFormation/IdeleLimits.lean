@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleLimits.Places
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleLimits.Sequence
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalLimits.Colimit
-import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalLimits.InfColimit
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleLimits.Places
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.IdeleLimits.Sequence
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalLimits.Colimit
+public import GroundTheory.ProfiniteCohomology.GlobalClassFormation.LocalLimits.InfColimit
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

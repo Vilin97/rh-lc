@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.TermDef
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.CntLocal
-import Formalism.LocalRingCardinality.DataTies
-import Formalism.SharpRestriction.CuspSpanNormBounds.CntPartners
-import Formalism.HermitianCurvature.StatementPB
-import Formalism.SharpRestriction.CuspSpanNormBounds.NonemptyParameterModels.TermTiesEmptyOfLargeIndex
-import Formalism.SharpRestriction.CuspSpanNormBounds.FrameFixingOrbitRelation
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.ClosedLocalOrbits.TermDef
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.CntLocal
+public import Formalism.LocalRingCardinality.DataTies
+public import Formalism.SharpRestriction.CuspSpanNormBounds.CntPartners
+public import Formalism.HermitianCurvature.StatementPB
+public import Formalism.SharpRestriction.CuspSpanNormBounds.NonemptyParameterModels.TermTiesEmptyOfLargeIndex
+public import Formalism.SharpRestriction.CuspSpanNormBounds.FrameFixingOrbitRelation
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,16 +1,20 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.OwnEvIntro
-import Formalism.SharpRestriction.CuspSpanNormBounds.PlaceDegreeData
-import Formalism.FlagUnipotentLattices.HalfDifferenceL1Bound
-import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.ExtensionInterSubspace
-import Formalism.LogSumExpBounds.StatementD
-import Formalism.LatticeRigidity.HeightMinimum.PackingCountGeometricMean
-import Mathlib
-import Formalism.LatticeRigidity.HeightMinimum.PowFinrankEqZeroOfTracePow
-import Formalism.GelfandTransference.EnergyIdentity
-import Formalism.NormUnitaryBounds.DetPolynomialWeights.ShortIndependentVectorsOfDualMinimum
-import Formalism.LatticeTheta.ThetaShiftInversion
-import Formalism.LatticeRigidity.StatementC
-import Formalism.LatticeRigidity.HeightMinimum.SqrtAbsNormLeProd
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BruhatCellsKronecker.OwnEvIntro
+public import Formalism.SharpRestriction.CuspSpanNormBounds.PlaceDegreeData
+public import Formalism.FlagUnipotentLattices.HalfDifferenceL1Bound
+public import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.ExtensionInterSubspace
+public import Formalism.LogSumExpBounds.StatementD
+public import Formalism.LatticeRigidity.HeightMinimum.PackingCountGeometricMean
+public import Mathlib
+public import Formalism.LatticeRigidity.HeightMinimum.PowFinrankEqZeroOfTracePow
+public import Formalism.GelfandTransference.EnergyIdentity
+public import Formalism.NormUnitaryBounds.DetPolynomialWeights.ShortIndependentVectorsOfDualMinimum
+public import Formalism.LatticeTheta.ThetaShiftInversion
+public import Formalism.LatticeRigidity.StatementC
+public import Formalism.LatticeRigidity.HeightMinimum.SqrtAbsNormLeProd
+
+@[expose] public section
 
 noncomputable section
 

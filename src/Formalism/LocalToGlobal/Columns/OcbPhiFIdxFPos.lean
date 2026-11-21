@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.OcbBEntEntB
+module
+
+public import Formalism.LocalToGlobal.Columns.OcbBEntEntB
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

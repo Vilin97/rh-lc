@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.PairCorankPos
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.PairCorankPos
+
+@[expose] public section
 
 noncomputable section
 

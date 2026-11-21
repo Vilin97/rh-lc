@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.BarCompSubsetClosure
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.BarCompSubsetClosure
+
+@[expose] public section
 
 set_option autoImplicit false
 

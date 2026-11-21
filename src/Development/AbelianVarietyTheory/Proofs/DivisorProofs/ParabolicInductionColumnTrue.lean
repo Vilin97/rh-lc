@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSmoothColRep
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LowerEquivUpperSwap
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsSmoothColRep
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LowerEquivUpperSwap
+
+@[expose] public section
+
 open GlobalTheory.PRep GlobalTheory.SmGL GlobalTheory.SmGL.RowOneCell Matrix
 open scoped TensorProduct
 

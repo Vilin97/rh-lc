@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWallach.CwOf
-import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWallach.EtaleCohomologyNegativeVanishingDegreeZero
+module
+
+public import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWallach.CwOf
+public import Development.WeilBound.CoreStatements.PublishedTheorems.CasselmanWallach.EtaleCohomologyNegativeVanishingDegreeZero
+
+@[expose] public section
 
 namespace PositivityTheory.CWB
 

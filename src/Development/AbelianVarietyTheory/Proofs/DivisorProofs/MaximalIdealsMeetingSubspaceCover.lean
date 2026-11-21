@@ -1,11 +1,15 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.SumExpSt
-import Development.AbelianVarietyTheory.Definitions.Divisors.HasBlockOfOccurs
-import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.BhattScholzeCrystallineLattices
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinIndMapRangeField
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TotalDegreeLeOfColW
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ValuesMemOfLocal
-import Formalism.LocalToGlobal.Divisibility.ProjLemmas
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SumExpSt
+public import Development.AbelianVarietyTheory.Definitions.Divisors.HasBlockOfOccurs
+public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.BhattScholzeCrystallineLattices
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LinIndMapRangeField
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TotalDegreeLeOfColW
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ValuesMemOfLocal
+public import Formalism.LocalToGlobal.Divisibility.ProjLemmas
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

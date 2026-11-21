@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.HeckeStdTwOfStd
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.TwoPowS0EqTwoPartModulus
-import Formalism.GaloisCohomology.GaloisCohomologyProofs.LdataNonempty
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExistsTameGen
-import Formalism.LocalRingCardinality.SpanPowerMembership.Places
+module
+
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.HeckeStdTwOfStd
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.TwoPowS0EqTwoPartModulus
+public import Formalism.GaloisCohomology.GaloisCohomologyProofs.LdataNonempty
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExistsTameGen
+public import Formalism.LocalRingCardinality.SpanPowerMembership.Places
+
+@[expose] public section
 
 noncomputable section
 

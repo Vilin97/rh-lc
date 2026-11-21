@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.ClosedProperAlt
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.ChangeVar
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.PushTest
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.QuotAny
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.QuotFin
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.ClosedProper
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.ClosedProperAlt
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.ChangeVar
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.PushTest
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.QuotAny
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.QuotFin
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.ClosedProper
+
+@[expose] public section
 
 open MeasureTheory PositivityTheory.Rg.Tf.Geo
 open scoped ENNReal Pointwise

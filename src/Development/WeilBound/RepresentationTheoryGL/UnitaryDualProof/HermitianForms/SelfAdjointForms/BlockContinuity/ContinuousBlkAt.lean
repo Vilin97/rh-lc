@@ -1,5 +1,9 @@
-import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.HermitianForms.SelfAdjointForms.FixK
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.BlockHomomorphism
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.UnitaryDualProof.HermitianForms.SelfAdjointForms.FixK
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.BlockHomomorphism
+
+@[expose] public section
 
 noncomputable section
 

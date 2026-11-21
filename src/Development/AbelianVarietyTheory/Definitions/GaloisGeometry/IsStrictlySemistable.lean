@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsSSFun
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsStrictlySemistableModel
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsSSFun
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.IsStrictlySemistableModel
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

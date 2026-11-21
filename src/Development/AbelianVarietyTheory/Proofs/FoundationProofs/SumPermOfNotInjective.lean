@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HookLengthBound.CapelliMain
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.HookLengthBound.CapelliMain
+
+@[expose] public section
+
 open Polynomial MeasureTheory
 
 namespace GlobalTheory.CapelliWeyl

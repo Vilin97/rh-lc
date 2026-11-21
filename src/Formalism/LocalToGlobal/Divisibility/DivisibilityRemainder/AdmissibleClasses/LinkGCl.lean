@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ClassOfRecordOfChoice
+module
+
+public import Formalism.LocalToGlobal.ClassOfRecordOfChoice
+
+@[expose] public section
 
 noncomputable section
 

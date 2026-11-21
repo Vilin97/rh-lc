@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.TwistedSubstitution.MemAtDZeroIff
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.TwistedSubstitution.MemAtDZeroIff
+
+@[expose] public section
 
 noncomputable section
 

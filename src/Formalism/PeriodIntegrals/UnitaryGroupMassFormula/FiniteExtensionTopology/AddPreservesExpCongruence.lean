@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.FinExtTop
+module
+
+public import Formalism.PeriodIntegrals.FinExtTop
+
+@[expose] public section
 
 noncomputable section
 

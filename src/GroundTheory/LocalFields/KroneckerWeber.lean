@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.LocalFields.Existence
-import GroundTheory.LocalFields.LubinTateLimit
-import GroundTheory.LocalFields.PrincipalUnitsRank
-import GroundTheory.LocalFields.MaximalAbelianExtension
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.Existence
+public import GroundTheory.LocalFields.LubinTateLimit
+public import GroundTheory.LocalFields.PrincipalUnitsRank
+public import GroundTheory.LocalFields.MaximalAbelianExtension
+
+@[expose] public section
 
 noncomputable section
 

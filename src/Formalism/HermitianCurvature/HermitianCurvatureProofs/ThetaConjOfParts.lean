@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RadialAdjointOfParts
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.WordIntegralScaling
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SmoothWordsAll
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SandwichRhoAction
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RadialAdjointOfParts
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.WordIntegralScaling
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SmoothWordsAll
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SandwichRhoAction
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 open scoped ContDiff

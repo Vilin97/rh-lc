@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.HostInt
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.Signature
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.HostInt
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.Signature
+
+@[expose] public section
 
 noncomputable section
 

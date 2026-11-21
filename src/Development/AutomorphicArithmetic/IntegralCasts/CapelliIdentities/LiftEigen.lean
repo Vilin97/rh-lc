@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.R4.lift_eigen :
     ∀ {T V : Type} [inst : CommGroup T]

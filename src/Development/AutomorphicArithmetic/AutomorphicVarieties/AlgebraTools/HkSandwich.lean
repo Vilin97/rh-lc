@@ -1,12 +1,16 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDefs
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.SwapOne
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDedekind
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkBern
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.SwapOneAlt
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDdSpec
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeEqDet
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.EqOneOfStrictMono
-import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkInd
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDefs
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.SwapOne
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDedekind
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkBern
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.SwapOneAlt
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkDdSpec
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.DeEqDet
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.EqOneOfStrictMono
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.AlgebraTools.HkInd
+
+@[expose] public section
 
 open MvPolynomial Equiv UpperTheory.V.AlgebraTools.Hk
 

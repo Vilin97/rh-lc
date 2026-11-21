@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.InertKernelTheory.IntegralInertOfApproxBasis
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.IntWAPlaces
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.FrLocB
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.IntegralInertOfApproxBasis
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.IntWAPlaces
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.FrLocB
+
+@[expose] public section
 
 namespace Formalism.L2.KerInert
 

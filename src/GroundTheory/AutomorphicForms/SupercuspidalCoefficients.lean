@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.JacquetAdmissible
-import GroundTheory.AutomorphicForms.IwahoriFactorization
-import GroundTheory.AutomorphicForms.SmoothRepContragredient
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.JacquetAdmissible
+public import GroundTheory.AutomorphicForms.IwahoriFactorization
+public import GroundTheory.AutomorphicForms.SmoothRepContragredient
+
+@[expose] public section
 
 noncomputable section
 

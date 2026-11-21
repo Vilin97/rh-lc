@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.LocalFields.ConductorTransport
-import GroundTheory.LocalFields.SeparableClosure
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.ConductorTransport
+public import GroundTheory.LocalFields.SeparableClosure
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

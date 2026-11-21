@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.DerivativeRepresentation
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.HermitianTensor.DerivativeRepresentation
+
+@[expose] public section
 
 noncomputable section
 

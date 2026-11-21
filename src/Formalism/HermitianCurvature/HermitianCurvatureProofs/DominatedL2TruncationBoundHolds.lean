@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFApxDom
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFApxDomThQ
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DominatedL2OperatorBoundHolds
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFApxDom
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutNFApxDomThQ
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DominatedL2OperatorBoundHolds
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP
 

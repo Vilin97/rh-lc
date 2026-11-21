@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.Adele.Discrete
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.Adele.Discrete
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Set
 

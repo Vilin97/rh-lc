@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.OpenNormal
-import GroundTheory.ProfiniteCohomology.OfNatRelIndexSupAntitone
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.OpenNormal
+public import GroundTheory.ProfiniteCohomology.OfNatRelIndexSupAntitone
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

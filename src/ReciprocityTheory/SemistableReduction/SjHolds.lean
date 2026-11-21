@@ -1,5 +1,9 @@
-import ReciprocityTheory.SemistableReduction.MeasurePreservingSphereMap
-import ReciprocityTheory.SemistableReduction.LogNormEvalZeroLeCircleAverage
+module
+
+public import ReciprocityTheory.SemistableReduction.MeasurePreservingSphereMap
+public import ReciprocityTheory.SemistableReduction.LogNormEvalZeroLeCircleAverage
+
+@[expose] public section
 
 noncomputable section
 

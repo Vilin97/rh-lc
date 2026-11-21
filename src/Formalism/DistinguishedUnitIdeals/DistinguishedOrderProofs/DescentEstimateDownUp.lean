@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.DistinguishedUnitIdeals.CoprimeProd
-import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.GroundTheory
-import Formalism.GaussValuationBounds.GaussValueContraction.PhiIterXProof
+module
+
+public import Mathlib
+public import Formalism.DistinguishedUnitIdeals.CoprimeProd
+public import Formalism.DistinguishedUnitIdeals.DistinguishedOrderProofs.GroundTheory
+public import Formalism.GaussValuationBounds.GaussValueContraction.PhiIterXProof
+
+@[expose] public section
 
 noncomputable section
 

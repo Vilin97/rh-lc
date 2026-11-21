@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.FirstPartialLawAtPoints
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.FirstPartialLawAtPoints
+
+@[expose] public section
 
 noncomputable section
 

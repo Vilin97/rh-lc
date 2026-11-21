@@ -1,8 +1,12 @@
-import Development.WeilBound.CoreStatements.BranchingTraces.FormTSingle
-import Development.WeilBound.CoreStatements.BranchingTraces.BranchingComatrices.ComatrixWordBound
-import Development.WeilBound.CoreStatements.BranchingTraces.CasimirDecomposition.UnitaryDecompositionExists
-import Development.WeilBound.CoreStatements.OrbitDecayEstimates.CurveDerivativeDecay.KFiniteWordBoundIndefUnitary
-import Development.WeilBound.RepresentationTheoryGL.HolomorphicDiscreteSeries.SchurEigenProjections.BigProjP
+module
+
+public import Development.WeilBound.CoreStatements.BranchingTraces.FormTSingle
+public import Development.WeilBound.CoreStatements.BranchingTraces.BranchingComatrices.ComatrixWordBound
+public import Development.WeilBound.CoreStatements.BranchingTraces.CasimirDecomposition.UnitaryDecompositionExists
+public import Development.WeilBound.CoreStatements.OrbitDecayEstimates.CurveDerivativeDecay.KFiniteWordBoundIndefUnitary
+public import Development.WeilBound.RepresentationTheoryGL.HolomorphicDiscreteSeries.SchurEigenProjections.BigProjP
+
+@[expose] public section
 
 noncomputable section
 

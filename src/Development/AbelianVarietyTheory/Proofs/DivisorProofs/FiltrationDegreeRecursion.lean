@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StepIdeal
-import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.ConjSymm
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LetterConjugation
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StepIdeal
+public import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.ConjSymm
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LetterConjugation
+
+@[expose] public section
 
 set_option autoImplicit false
 

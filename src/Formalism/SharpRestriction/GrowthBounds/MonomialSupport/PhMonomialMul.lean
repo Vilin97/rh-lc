@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.AevalValuation.PlDefs
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.AevalValuation.PlDefs
+
+@[expose] public section
 
 noncomputable section
 

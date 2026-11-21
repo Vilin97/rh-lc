@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.ThFEquivOf
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.IoUniq
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.VanishKfLow
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.ThFEquivOf
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.IoUniq
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.VanishKfLow
+
+@[expose] public section
 
 noncomputable section
 

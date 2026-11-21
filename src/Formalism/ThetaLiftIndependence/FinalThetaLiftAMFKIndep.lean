@@ -1,8 +1,12 @@
-import Formalism.ThetaLiftIndependence.Statement
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Ipindep
-import Formalism.ThetaLiftIndependence.ThetaOrbitSums.LatLiftIndep
-import Formalism.ThetaLiftIndependence.ThetaOrbitSums.GaussOp
-import Formalism.ThetaLiftIndependence.ThetaOrbitSums.ClassRepsDefinite
+module
+
+public import Formalism.ThetaLiftIndependence.Statement
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Ipindep
+public import Formalism.ThetaLiftIndependence.ThetaOrbitSums.LatLiftIndep
+public import Formalism.ThetaLiftIndependence.ThetaOrbitSums.GaussOp
+public import Formalism.ThetaLiftIndependence.ThetaOrbitSums.ClassRepsDefinite
+
+@[expose] public section
 
 namespace Formalism.ThetaLiftIndependence
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsCharNe
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsCharNe
+
+@[expose] public section
 
 noncomputable section
 

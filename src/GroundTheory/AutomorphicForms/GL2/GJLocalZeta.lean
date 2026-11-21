@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJLaurentIdeal
-import GroundTheory.AutomorphicForms.GL2.GJZetaCore
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJLaurentIdeal
+public import GroundTheory.AutomorphicForms.GL2.GJZetaCore
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

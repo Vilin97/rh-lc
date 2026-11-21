@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.SqPair
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SquarePairLocal.SqPairLocalOfSteps
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.UnimodGenus
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.SqPair
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SquarePairLocal.SqPairLocalOfSteps
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.UnimodGenus
+
+@[expose] public section
 
 noncomputable section
 open NumberField Matrix

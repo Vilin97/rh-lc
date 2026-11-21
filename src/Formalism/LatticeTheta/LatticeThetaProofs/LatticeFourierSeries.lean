@@ -1,4 +1,8 @@
-import Formalism.LatticeTheta.LatticeThetaProofs.TorusProjIsOpenQuotientMap
+module
+
+public import Formalism.LatticeTheta.LatticeThetaProofs.TorusProjIsOpenQuotientMap
+
+@[expose] public section
 
 open MeasureTheory Set Complex
 open scoped RealInnerProductSpace

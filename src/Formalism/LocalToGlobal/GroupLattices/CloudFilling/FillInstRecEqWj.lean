@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.GroupLattices.CloudFilling.TauTopPlacesIff
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.PosCompatOfBase
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.RepTie
-import Formalism.LocalRingCardinality.DataExtra
-import Formalism.SharpRestriction.GrowthBounds.FormalGroupSystem
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.CloudFilling.TauTopPlacesIff
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.PosCompatOfBase
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.RepTie
+public import Formalism.LocalRingCardinality.DataExtra
+public import Formalism.SharpRestriction.GrowthBounds.FormalGroupSystem
+
+@[expose] public section
 
 noncomputable section
 

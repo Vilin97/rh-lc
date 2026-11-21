@@ -1,11 +1,15 @@
-import Mathlib
-import GroundTheory.LocalFields.Interface
-import GroundTheory.LocalFields.FiniteExtension
-import GroundTheory.LocalFields.Uniqueness
-import GroundTheory.LocalFields.Integers
-import GroundTheory.LocalFields.UnitsBasic
-import GroundTheory.LocalFields.IntermediateField
-import GroundTheory.LocalFields.SeparableClosure
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.Interface
+public import GroundTheory.LocalFields.FiniteExtension
+public import GroundTheory.LocalFields.Uniqueness
+public import GroundTheory.LocalFields.Integers
+public import GroundTheory.LocalFields.UnitsBasic
+public import GroundTheory.LocalFields.IntermediateField
+public import GroundTheory.LocalFields.SeparableClosure
+
+@[expose] public section
 
 noncomputable section
 

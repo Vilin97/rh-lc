@@ -1,5 +1,9 @@
-import Formalism.AdmissibleDesigns.TheoremFromNormalizedOpen
-import Formalism.AdmissibleDesigns.FiniteClassesLocalEq
+module
+
+public import Formalism.AdmissibleDesigns.TheoremFromNormalizedOpen
+public import Formalism.AdmissibleDesigns.FiniteClassesLocalEq
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core] [hH0Fin : Fact Formalism.MainNotions.N.K.H0.FinCore]
 

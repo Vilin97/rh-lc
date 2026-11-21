@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GLnLocal
-import GroundTheory.AutomorphicForms.GLnLattice
-import GroundTheory.AutomorphicForms.FiniteBruhat
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GLnLocal
+public import GroundTheory.AutomorphicForms.GLnLattice
+public import GroundTheory.AutomorphicForms.FiniteBruhat
+
+@[expose] public section
 
 noncomputable section
 

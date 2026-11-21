@@ -1,14 +1,19 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.StatementsStepThreeOnWGen
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.StatementsRestrictGenerated
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.RestrLenRestrictSt
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PNefRestrict
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PTwistAlg
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PStepDataJProper
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSubvarDrop
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PPrimeFiltrationRestrict
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PGenerated
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PExtension
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.StatementsStepThreeOnWGen
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.StatementsRestrictGenerated
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.RestrLenRestrictSt
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PNefRestrict
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PTwistAlg
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PStepDataJProper
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSubvarDrop
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PPrimeFiltrationRestrict
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PGenerated
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PExtension
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman

@@ -1,9 +1,13 @@
-import Mathlib
-import Development.EtaleCohomology.CohomologicalPurity.LeafOffContPf
-import Development.EtaleCohomology.CohomologicalPurity.LeafHsContPfFive
-import Development.EtaleCohomology.CohomologicalPurity.LeafHtpyMVPf
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMayerVietorisConnectingExact
-import Development.AutomorphicArithmetic.CommutativeAlgebra.EtalePurityFreeCover
+module
+
+public import Mathlib
+public import Development.EtaleCohomology.CohomologicalPurity.LeafOffContPf
+public import Development.EtaleCohomology.CohomologicalPurity.LeafHsContPfFive
+public import Development.EtaleCohomology.CohomologicalPurity.LeafHtpyMVPf
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsMayerVietorisConnectingExact
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtalePurityFreeCover
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC LateralTheory.CohomologicalPurity

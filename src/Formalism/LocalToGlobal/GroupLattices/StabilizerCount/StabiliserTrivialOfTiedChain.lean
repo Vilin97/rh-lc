@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.Divisibility.OrbitPlaces
-import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.GramTotallyDefinite
-import Formalism.LocalToGlobal.HermitianColumns.TiedQC
+module
+
+public import Formalism.SharpRestriction.Divisibility.OrbitPlaces
+public import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.GramTotallyDefinite
+public import Formalism.LocalToGlobal.HermitianColumns.TiedQC
+
+@[expose] public section
 
 noncomputable section
 

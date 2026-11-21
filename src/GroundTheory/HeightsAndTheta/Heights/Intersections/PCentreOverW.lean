@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StCentreOverW
-import GroundTheory.HeightsAndTheta.Heights.Intersections.IsMultiHomogOfPullWeight
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StCentreOverW
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.IsMultiHomogOfPullWeight
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

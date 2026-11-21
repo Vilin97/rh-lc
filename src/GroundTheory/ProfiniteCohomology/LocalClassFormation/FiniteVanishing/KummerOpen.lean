@@ -1,14 +1,19 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.LocalClassFormationAlt
-import GroundTheory.ProfiniteCohomology.GaloisCohomology.Kummer
-import GroundTheory.ProfiniteCohomology.CohomologicalDimension.SubsingletonCohomologyOfPrimaryOfFinite
-import GroundTheory.ProfiniteCohomology.CohomologyFunctoriality.QuotientToInvariantsFunctorPreservesZeroMorphism
-import GroundTheory.ProfiniteCohomology.ClassFormations.Corestriction
-import GroundTheory.LocalFields.UnitsPowers
-import GroundTheory.LocalFields.SeparableClosure
-import GroundTheory.LocalFields.IntermediateField
-import GroundTheory.ProfiniteCohomology.TorsionDualFinite
-import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing.Devissage
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.LocalClassFormationAlt
+public import GroundTheory.ProfiniteCohomology.GaloisCohomology.Kummer
+public import GroundTheory.ProfiniteCohomology.CohomologicalDimension.SubsingletonCohomologyOfPrimaryOfFinite
+public import GroundTheory.ProfiniteCohomology.CohomologyFunctoriality.QuotientToInvariantsFunctorPreservesZeroMorphism
+public import GroundTheory.ProfiniteCohomology.ClassFormations.Corestriction
+public import GroundTheory.LocalFields.UnitsPowers
+public import GroundTheory.LocalFields.SeparableClosure
+public import GroundTheory.LocalFields.IntermediateField
+public import GroundTheory.ProfiniteCohomology.TorsionDualFinite
+public import GroundTheory.ProfiniteCohomology.LocalClassFormation.FiniteVanishing.Devissage
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

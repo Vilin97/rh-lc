@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.SingleIndexPlacesAreTwisted
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.SingleIndexPlacesAreTwisted
+
+@[expose] public section
+
 open GlobalTheory.BigTop GlobalTheory.BigOn
 
 set_option autoImplicit false

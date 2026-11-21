@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TopPlaceLogTheta
-import Formalism.LocalToGlobal.Columns.ToHLat
-import Formalism.HarderNarasimhan.QuotRealize
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.HtPsiLeIffExists
-import Formalism.LocalRingCardinality.DataArith
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TopPlaceLogTheta
+public import Formalism.LocalToGlobal.Columns.ToHLat
+public import Formalism.HarderNarasimhan.QuotRealize
+public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.HtPsiLeIffExists
+public import Formalism.LocalRingCardinality.DataArith
+
+@[expose] public section
 
 noncomputable section
 

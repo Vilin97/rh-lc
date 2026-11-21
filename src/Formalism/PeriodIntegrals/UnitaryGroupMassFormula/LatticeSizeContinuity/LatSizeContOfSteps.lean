@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.LatSizeCont
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.LatSizeCont
+
+@[expose] public section
 
 noncomputable section
 

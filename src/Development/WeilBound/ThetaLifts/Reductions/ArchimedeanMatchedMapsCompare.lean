@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.CartanFactorisation.RealTrans
-import Development.WeilBound.ThetaLifts.Reductions.JoinDef
+module
+
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.RealTrans
+public import Development.WeilBound.ThetaLifts.Reductions.JoinDef
+
+@[expose] public section
 
 noncomputable section
 

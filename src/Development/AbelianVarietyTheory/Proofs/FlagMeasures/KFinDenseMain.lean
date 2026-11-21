@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.CarrierXPinsP
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.KFinDense
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.RootLatticeThresholds.CarrierXPinsP
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.KFinDense
+
+@[expose] public section
 
 namespace GlobalTheory.KFinDenseCarrier
 

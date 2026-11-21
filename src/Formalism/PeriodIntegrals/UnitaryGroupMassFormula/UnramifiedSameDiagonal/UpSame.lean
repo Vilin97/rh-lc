@@ -1,6 +1,10 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnramifiedSameDiagonal.UpFSame
-import Formalism.LocalToGlobal.GlobalTheory.UnramifiedDiagonal.DiaConj
-import Formalism.LocalToGlobal.GlobalTheory.UnramifiedDiagonal.HeckeRamifiedZeroOfMatchingsAndDu
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnramifiedSameDiagonal.UpFSame
+public import Formalism.LocalToGlobal.GlobalTheory.UnramifiedDiagonal.DiaConj
+public import Formalism.LocalToGlobal.GlobalTheory.UnramifiedDiagonal.HeckeRamifiedZeroOfMatchingsAndDu
+
+@[expose] public section
 
 noncomputable section
 

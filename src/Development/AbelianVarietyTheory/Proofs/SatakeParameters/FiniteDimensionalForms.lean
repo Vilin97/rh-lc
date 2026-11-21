@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.GaloisLevelStructure.TiedHecke
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicClassFiniteness.DictRing
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GaloisLevelStructure.TiedHecke
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicClassFiniteness.DictRing
+
+@[expose] public section
 
 open Formalism.BasicNotions Formalism.L2 Formalism.L2.NG Formalism.AUTREP
 open NumberField IsDedekindDomain

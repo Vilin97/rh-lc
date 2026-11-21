@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJGlobalUnfold
-import GroundTheory.AutomorphicForms.GL2.GJGlobalMean
-import GroundTheory.AutomorphicForms.GL2.GJGlobalRank
-import GroundTheory.AutomorphicForms.GL2.GJGlobalMellin
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJGlobalUnfold
+public import GroundTheory.AutomorphicForms.GL2.GJGlobalMean
+public import GroundTheory.AutomorphicForms.GL2.GJGlobalRank
+public import GroundTheory.AutomorphicForms.GL2.GJGlobalMellin
+
+@[expose] public section
 
 open MeasureTheory Set Filter NumberField ComplexConjugate
 open scoped NumberField.AdeleRing

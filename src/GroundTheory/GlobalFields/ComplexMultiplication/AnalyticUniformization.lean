@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.ClassGroupActionIso
-import GroundTheory.GlobalFields.ComplexMultiplication.JInvariantHomothety
-import GroundTheory.GlobalFields.ComplexMultiplication.EllipticConstant
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.ClassGroupActionIso
+public import GroundTheory.GlobalFields.ComplexMultiplication.JInvariantHomothety
+public import GroundTheory.GlobalFields.ComplexMultiplication.EllipticConstant
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open Complex Filter Topology Set WeierstrassCurve GroundTheory.Arith.Abelian

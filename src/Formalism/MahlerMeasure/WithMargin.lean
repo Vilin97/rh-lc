@@ -1,5 +1,9 @@
-import Formalism.MahlerMeasure.StatementTM
-import Formalism.MahlerMeasure.TieVars
+module
+
+public import Formalism.MahlerMeasure.StatementTM
+public import Formalism.MahlerMeasure.TieVars
+
+@[expose] public section
 
 namespace Formalism.GM.M
 

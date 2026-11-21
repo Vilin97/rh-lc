@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.LatticeGeometry.CompNe
-import Formalism.LocalToGlobal.LatticeGeometry.InstAddCommSemigroupWt
+module
+
+public import Formalism.LocalToGlobal.LatticeGeometry.CompNe
+public import Formalism.LocalToGlobal.LatticeGeometry.InstAddCommSemigroupWt
+
+@[expose] public section
 
 noncomputable section
 

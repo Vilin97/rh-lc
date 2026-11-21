@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HermitianSpaces
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HermitianSpaces
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

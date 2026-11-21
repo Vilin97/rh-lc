@@ -1,8 +1,13 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterBridgeA
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.AnResBridgeSheet
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.AnResBridgeIntegrable
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.AnResBridgeNull
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterBridgeA
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.AnResBridgeSheet
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.AnResBridgeIntegrable
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.AnResBridgeNull
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

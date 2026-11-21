@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.QALetterNe
-import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.Imports
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.QALetterNe
+public import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.Imports
+
+@[expose] public section
 
 noncomputable section
 

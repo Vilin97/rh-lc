@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.ConstMemTypeSetOfNonneg
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.ConstMemTypeSetOfNonneg
+
+@[expose] public section
 
 noncomputable section
 

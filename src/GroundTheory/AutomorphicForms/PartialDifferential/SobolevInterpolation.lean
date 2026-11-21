@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.PartialDifferential.SobolevMollifier
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.PartialDifferential.SobolevMollifier
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.Sobolev
 

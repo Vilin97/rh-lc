@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2Classical.IsWeightLevelAdelicLift
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.ConstantTerm
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2Classical.IsWeightLevelAdelicLift
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.ConstantTerm
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix MeasureTheory Set Filter Topology
 open scoped NumberField.AdeleRing

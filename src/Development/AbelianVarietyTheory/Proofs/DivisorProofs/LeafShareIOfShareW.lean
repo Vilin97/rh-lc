@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsArchOne
-import Development.AbelianVarietyTheory.PublishedTheorems.PublishedFoundations.GreenSeriesSt
-import Formalism.LocalToGlobal.GlobalTheory.IrreducibleOfCountSizes
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsArchOne
+public import Development.AbelianVarietyTheory.PublishedTheorems.PublishedFoundations.GreenSeriesSt
+public import Formalism.LocalToGlobal.GlobalTheory.IrreducibleOfCountSizes
+
+@[expose] public section
 
 set_option autoImplicit false
 

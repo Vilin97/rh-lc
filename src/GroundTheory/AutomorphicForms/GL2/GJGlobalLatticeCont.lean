@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJGlobalLatticeBounds
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJGlobalLatticeBounds
+
+@[expose] public section
 
 open MeasureTheory NumberField Topology Filter Set
 open scoped NumberField.AdeleRing Classical nonZeroDivisors

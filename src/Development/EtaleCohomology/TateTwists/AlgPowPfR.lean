@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.TateTwists.TwSecLocPfZarR
+module
+
+public import Development.EtaleCohomology.TateTwists.TwSecLocPfZarR
+
+@[expose] public section
 
 noncomputable section
 open Polynomial GlobalTheory.EtC

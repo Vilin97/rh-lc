@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.FormalGroupSystem
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.FormalGroupSystem
+
+@[expose] public section
 
 open Formalism.MainNotions.G Formalism.MainNotions.FormalGroupSystem Finset
 open scoped Kronecker Matrix

@@ -1,16 +1,20 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.CMGoodModels.CM4
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.IsIntegralOfRoot
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.TorStatus
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgStatus
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.RedStatus
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.ModJInt
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.ModGDefs
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.Interface
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.ModGBasic
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.ModFixJ
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.ModInertKur
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgClose
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.CMGoodModels.CM4
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.IsIntegralOfRoot
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.TorStatus
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgStatus
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.RedStatus
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.ModJInt
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.ModGDefs
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.Interface
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.ModGBasic
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.ModFixJ
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.ModInertKur
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgClose
+
+@[expose] public section
 
 namespace Formalism.L2.Th1.CM
 

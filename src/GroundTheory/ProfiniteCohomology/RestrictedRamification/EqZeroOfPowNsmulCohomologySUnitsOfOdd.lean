@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.HighSUnits
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.HighDivisor
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.HighDecompLadic
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.HighSUnits
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.HighDivisor
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.HighDecompLadic
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.EquivariantFiniteGroup
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.EquivariantFiniteGroup
+
+@[expose] public section
 
 noncomputable section
 

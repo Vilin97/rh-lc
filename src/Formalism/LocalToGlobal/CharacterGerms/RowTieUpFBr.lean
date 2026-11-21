@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.CharacterGerms.ChartHypothesisOfCharacters
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePFBMapSt
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PlaceDivisors.StChartF
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.ChartHypothesisOfCharacters
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePFBMapSt
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PlaceDivisors.StChartF
+
+@[expose] public section
 
 set_option autoImplicit false
 

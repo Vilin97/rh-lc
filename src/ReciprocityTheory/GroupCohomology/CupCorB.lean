@@ -1,4 +1,8 @@
-import ReciprocityTheory.GroupCohomology.CupCorA
+module
+
+public import ReciprocityTheory.GroupCohomology.CupCorA
+
+@[expose] public section
 
 namespace ReciprocityTheory.Coh.CCA
 

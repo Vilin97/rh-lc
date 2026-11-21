@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.SphericalInertData
-import Formalism.SharpRestriction.LevelLetterCocycles.ArithmeticCylinders
-import Formalism.SharpRestriction.LevelLetterCocycles.SumRepresentations
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.SphericalInertData
+public import Formalism.SharpRestriction.LevelLetterCocycles.ArithmeticCylinders
+public import Formalism.SharpRestriction.LevelLetterCocycles.SumRepresentations
+
+@[expose] public section
 
 noncomputable section
 

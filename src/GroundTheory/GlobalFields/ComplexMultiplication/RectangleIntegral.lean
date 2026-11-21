@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 open Complex Set Real MeasureTheory Filter Topology intervalIntegral
 open scoped Interval

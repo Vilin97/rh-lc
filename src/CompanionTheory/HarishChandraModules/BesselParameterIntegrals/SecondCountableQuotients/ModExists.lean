@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnitaryQuotientCompactness.SsetGroup
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnitaryQuotientCompactness.SsetGroup
+
+@[expose] public section
 
 open MeasureTheory MeasureTheory.Measure Matrix TopologicalSpace
 open scoped ENNReal NNReal Pointwise

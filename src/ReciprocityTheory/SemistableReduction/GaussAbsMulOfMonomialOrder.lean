@@ -1,5 +1,9 @@
-import ReciprocityTheory.SemistableReduction.SphereLogIntegrableStatement
-import Lemmata.GeneralBFactLeftExtra.Imports
+module
+
+public import ReciprocityTheory.SemistableReduction.SphereLogIntegrableStatement
+public import Lemmata.GeneralBFactLeftExtra.Imports
+
+@[expose] public section
 
 namespace ReciprocityTheory.MultiplicativeHeights
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.PfMapFl
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.LevelKernelDetection.PfMapFl
+
+@[expose] public section
 
 noncomputable section
 

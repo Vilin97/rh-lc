@@ -1,10 +1,14 @@
-import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsGreatestProperInvariantSubmoduleOfSide
-import Development.WeilBound.ThetaLifts.CartanFactorisation.TensMax
-import Development.WeilBound.ThetaLifts.CartanFactorisation.UnitDef
-import Development.WeilBound.ThetaLifts.CartanFactorisation.PolCount
-import Development.WeilBound.ThetaLifts.ConeHypotheses.PureEqPureA
-import Development.WeilBound.CoreStatements.GaussianSeminormBounds.RealSeminormFiltration.RLLines
-import Development.WeilBound.CoreStatements.GaussianSeminormBounds.RealSeminormFiltration.RLParity
+module
+
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsGreatestProperInvariantSubmoduleOfSide
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.TensMax
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.UnitDef
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.PolCount
+public import Development.WeilBound.ThetaLifts.ConeHypotheses.PureEqPureA
+public import Development.WeilBound.CoreStatements.GaussianSeminormBounds.RealSeminormFiltration.RLLines
+public import Development.WeilBound.CoreStatements.GaussianSeminormBounds.RealSeminormFiltration.RLParity
+
+@[expose] public section
 
 noncomputable section
 

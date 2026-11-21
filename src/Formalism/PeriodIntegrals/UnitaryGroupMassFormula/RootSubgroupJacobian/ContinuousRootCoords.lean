@@ -1,6 +1,10 @@
-import Formalism.PeriodIntegrals.AmpRoot
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.RootSubgroupJacobian.SUpPowEqZero
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.RootSubgroupJacobian.BlkLt
+module
+
+public import Formalism.PeriodIntegrals.AmpRoot
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.RootSubgroupJacobian.SUpPowEqZero
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.RootSubgroupJacobian.BlkLt
+
+@[expose] public section
 
 open MeasureTheory Matrix
 open scoped ENNReal

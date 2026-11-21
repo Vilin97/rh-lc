@@ -1,16 +1,20 @@
-import Formalism.LocalToGlobal.SiegelLatticeTheory.SiegelMassRatios.ColsDim
-import Formalism.LocalToGlobal.SiegelLatticeTheory.SiegelMassRatios.DensExact
-import Formalism.LocalToGlobal.SiegelLatticeTheory.SiegelMassRatios.LemmaN
-import Mathlib
-import Formalism.SharpRestriction.CuspSpanNormBounds.BlockEnds
-import Formalism.LocalToGlobal.SiegelLatticeTheory.SiegelMassRatios.GramJoint
-import Formalism.SatakeDualWeyl.Statement
-import Formalism.LocalToGlobal.Columns.NonDeg
-import Formalism.HermitianLattices.StatementMass
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.DensInert
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SplitDensity.FiberCardHolds
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FlagGramNonneg
-import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.SiegelMassRatioOfLI
+module
+
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.SiegelMassRatios.ColsDim
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.SiegelMassRatios.DensExact
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.SiegelMassRatios.LemmaN
+public import Mathlib
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BlockEnds
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.SiegelMassRatios.GramJoint
+public import Formalism.SatakeDualWeyl.Statement
+public import Formalism.LocalToGlobal.Columns.NonDeg
+public import Formalism.HermitianLattices.StatementMass
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.DensInert
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SplitDensity.FiberCardHolds
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.FlagGramNonneg
+public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.SiegelMassRatioOfLI
+
+@[expose] public section
 
 open Formalism.BasicNotions Formalism.MainNotions.S
 

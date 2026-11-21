@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilTranslate
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilFixedField
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilTranslate
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilFixedField
+
+@[expose] public section
 
 namespace GroundTheory.Arith.Abelian
 

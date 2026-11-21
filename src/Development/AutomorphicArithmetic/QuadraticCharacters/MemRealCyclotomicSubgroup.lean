@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.QuadraticCharacters.PreHostA
+module
+
+public import Development.AutomorphicArithmetic.QuadraticCharacters.PreHostA
+
+@[expose] public section
 
 namespace HostParam
 

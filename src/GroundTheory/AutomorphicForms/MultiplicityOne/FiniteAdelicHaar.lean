@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJGlobalHaar
-import GroundTheory.AutomorphicForms.MultiplicityOne.FiniteAdelicDistribution
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJGlobalHaar
+public import GroundTheory.AutomorphicForms.MultiplicityOne.FiniteAdelicDistribution
+
+@[expose] public section
 
 open MeasureTheory Measure Topology Filter Set IsDedekindDomain NumberField
 

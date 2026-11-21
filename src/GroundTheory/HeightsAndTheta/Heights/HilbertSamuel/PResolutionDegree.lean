@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsResolutionDegree
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsPullFSExtension
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.ResolutionPotentials
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.AnResBridge
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsProjFSMass
-import ReciprocityTheory.AnalyticForms.PotentialTheory.Stokes
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsResolutionDegree
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsPullFSExtension
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.ResolutionPotentials
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.AnResBridge
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsProjFSMass
+public import ReciprocityTheory.AnalyticForms.PotentialTheory.Stokes
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

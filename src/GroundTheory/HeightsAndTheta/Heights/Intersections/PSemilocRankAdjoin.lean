@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StSemilocRankFrac
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StChartScalingIndep
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PAdjoinIndepRelfinrank
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PFinrankAdjoinRange
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StSemilocRankFrac
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StChartScalingIndep
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PAdjoinIndepRelfinrank
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PFinrankAdjoinRange
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

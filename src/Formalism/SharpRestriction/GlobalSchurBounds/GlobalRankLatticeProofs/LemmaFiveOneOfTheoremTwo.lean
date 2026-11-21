@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.PartFiveExplicitOfPropositions
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.PartFiveExplicitOfPropositions
+
+@[expose] public section
 
 noncomputable section
 namespace Formalism.MainNotions.StandardLattice

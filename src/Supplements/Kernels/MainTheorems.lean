@@ -1,6 +1,10 @@
-import Formalism.GammaFactorNonvanishing.CritLine
-import Development.AutomorphicArithmetic.CharacterBoxes.ClaimStrip
-import Development.AutomorphicArithmetic.CharacterBoxes.MainConclusion
+module
+
+public import Formalism.GammaFactorNonvanishing.CritLine
+public import Development.AutomorphicArithmetic.CharacterBoxes.ClaimStrip
+public import Development.AutomorphicArithmetic.CharacterBoxes.MainConclusion
+
+@[expose] public section
 
 open Complex DirichletCharacter
 

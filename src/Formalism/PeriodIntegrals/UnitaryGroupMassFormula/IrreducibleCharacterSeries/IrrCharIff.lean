@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.NormalizedHeckeFactors.TypesDefs
-import Formalism.PadicSubsetSums.CentralIdempotents.HCDisjointO
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.NormalizedHeckeFactors.TypesDefs
+public import Formalism.PadicSubsetSums.CentralIdempotents.HCDisjointO
+
+@[expose] public section
 
 noncomputable section
 open Polynomial CategoryTheory Formalism.IrreducibleCountingLemmas.TYPES Formalism.L2.NT

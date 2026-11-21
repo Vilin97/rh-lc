@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.PoitouTate.PtCompactDualMapEqZeroOfPtCompactToGlobalEqZero
-import GroundTheory.ProfiniteCohomology.RealPlaces.DevissageNatural
-import GroundTheory.ProfiniteCohomology.RealPlaces.LocalDualityDefs
-import GroundTheory.ProfiniteCohomology.RealPlaces.NormHomotopy
-import GroundTheory.ProfiniteCohomology.InflationRestriction.DegreeOne
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.PoitouTate.PtCompactDualMapEqZeroOfPtCompactToGlobalEqZero
+public import GroundTheory.ProfiniteCohomology.RealPlaces.DevissageNatural
+public import GroundTheory.ProfiniteCohomology.RealPlaces.LocalDualityDefs
+public import GroundTheory.ProfiniteCohomology.RealPlaces.NormHomotopy
+public import GroundTheory.ProfiniteCohomology.InflationRestriction.DegreeOne
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

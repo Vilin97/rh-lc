@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.SummandSlopeOfThreeLemmas
-import Formalism.LocalToGlobal.Columns.BrzColLatOneLattice
-import Formalism.LocalToGlobal.Columns.SliceIntegralDeltaNeBot
-import Formalism.LocalToGlobal.Columns.CoefficientsModP
-import Formalism.LocalToGlobal.Columns.DecoFin
-import Formalism.MonomialMeanResidues.ZerosPerVariable
-import Formalism.LocalToGlobal.GlobalTheory.HLatOpsP
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.SummandSlopeOfThreeLemmas
+public import Formalism.LocalToGlobal.Columns.BrzColLatOneLattice
+public import Formalism.LocalToGlobal.Columns.SliceIntegralDeltaNeBot
+public import Formalism.LocalToGlobal.Columns.CoefficientsModP
+public import Formalism.LocalToGlobal.Columns.DecoFin
+public import Formalism.MonomialMeanResidues.ZerosPerVariable
+public import Formalism.LocalToGlobal.GlobalTheory.HLatOpsP
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 open scoped Matrix ComplexOrder

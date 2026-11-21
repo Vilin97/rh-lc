@@ -1,9 +1,13 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.HolomorphicDiscreteSeries.SchurEigenProjections.EigA
-import Development.WeilBound.CoreStatements.BranchingTraces.ContinuousEmb
-import Development.WeilBound.CoreStatements.BranchingTraces.HilbertSchmidtTraces.UnitaryMatrixCoefficientDecay
-import GroundTheory.AutomorphicForms.HilbertSchmidtCompact
-import GroundTheory.AutomorphicForms.CompactSelfAdjoint
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.HolomorphicDiscreteSeries.SchurEigenProjections.EigA
+public import Development.WeilBound.CoreStatements.BranchingTraces.ContinuousEmb
+public import Development.WeilBound.CoreStatements.BranchingTraces.HilbertSchmidtTraces.UnitaryMatrixCoefficientDecay
+public import GroundTheory.AutomorphicForms.HilbertSchmidtCompact
+public import GroundTheory.AutomorphicForms.CompactSelfAdjoint
+
+@[expose] public section
 
 noncomputable section
 

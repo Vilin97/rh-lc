@@ -1,4 +1,8 @@
-import Formalism.PieriBlockIdeals.StatementLA
+module
+
+public import Formalism.PieriBlockIdeals.StatementLA
+
+@[expose] public section
 
 noncomputable section
 

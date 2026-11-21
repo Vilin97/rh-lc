@@ -1,12 +1,16 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.BlochKatoDuality
-import Formalism.WachLatticeTwists.LatticeDualFibres.LatticeDualProofs.LocDualOrth
-import Formalism.WachLatticeTwists.LatticeDualFibres.LatticeDualProofs.QuotLen
-import Formalism.WachLatticeTwists.LatticeDualFibres.Statement
-import ReciprocityTheory.GaloisValuations.ContinuousConstSMulQuotient
-import Formalism.WachLatticeTwists.LatticeDualFibres.FibreDualStable
-import Formalism.WachLatticeTwists.LatticeDualFibres.LatticeDualProofs.ExistsPowSmulIntegral
-import Formalism.WachLatticeTwists.LatticeDualFibres.StatDualFibreLattice
-import Formalism.WeaklyAdmissibleFiltrations.PhtGalois
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.BlochKatoDuality
+public import Formalism.WachLatticeTwists.LatticeDualFibres.LatticeDualProofs.LocDualOrth
+public import Formalism.WachLatticeTwists.LatticeDualFibres.LatticeDualProofs.QuotLen
+public import Formalism.WachLatticeTwists.LatticeDualFibres.Statement
+public import ReciprocityTheory.GaloisValuations.ContinuousConstSMulQuotient
+public import Formalism.WachLatticeTwists.LatticeDualFibres.FibreDualStable
+public import Formalism.WachLatticeTwists.LatticeDualFibres.LatticeDualProofs.ExistsPowSmulIntegral
+public import Formalism.WachLatticeTwists.LatticeDualFibres.StatDualFibreLattice
+public import Formalism.WeaklyAdmissibleFiltrations.PhtGalois
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import GroundTheory.AutomorphicForms.TraceClass
-import Formalism.SharpRestriction.CuspSpanNormBounds.UnimodularSchurMeasures.RrdStronglyMeasurable
+module
+
+public import GroundTheory.AutomorphicForms.TraceClass
+public import Formalism.SharpRestriction.CuspSpanNormBounds.UnimodularSchurMeasures.RrdStronglyMeasurable
+
+@[expose] public section
 
 open MeasureTheory GroundTheory.Automorphic
 open scoped InnerProductSpace

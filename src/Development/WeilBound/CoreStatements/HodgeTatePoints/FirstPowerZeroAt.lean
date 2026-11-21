@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.HodgeTatePoints.CcBase
+module
+
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.CcBase
+
+@[expose] public section
 
 noncomputable section
 

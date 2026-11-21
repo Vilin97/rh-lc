@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.LocalFields.FormalGroups.Truncation
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.FormalGroups.Truncation
+
+@[expose] public section
 
 namespace GroundTheory.LocalField.FormalGroup
 

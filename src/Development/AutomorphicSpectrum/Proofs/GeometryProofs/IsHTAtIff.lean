@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.StalkLoc
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.HodgeTateWeilUnique
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.StalkLoc
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.HodgeTateWeilUnique
+
+@[expose] public section
 
 noncomputable section
 

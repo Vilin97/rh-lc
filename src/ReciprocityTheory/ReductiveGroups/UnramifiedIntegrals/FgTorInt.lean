@@ -1,8 +1,12 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgIsoU
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgGauss
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgMulN
-import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.NormNatCastClOfNotDvd
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgIsoU
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgGauss
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.FgMulN
+public import ReciprocityTheory.ReductiveGroups.UnramifiedIntegrals.NormNatCastClOfNotDvd
+
+@[expose] public section
 
 noncomputable section
 

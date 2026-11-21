@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.LinkTiesOm
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.LinkTiesOm
+
+@[expose] public section
 
 noncomputable section
 

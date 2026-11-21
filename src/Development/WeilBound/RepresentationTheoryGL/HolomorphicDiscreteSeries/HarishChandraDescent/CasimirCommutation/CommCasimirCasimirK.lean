@@ -1,5 +1,9 @@
-import Development.WeilBound.RepresentationTheoryGL.HolomorphicDiscreteSeries.HarishChandraDescent.Descent
-import Mathlib.Analysis.InnerProductSpace.JointEigenspace
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.HolomorphicDiscreteSeries.HarishChandraDescent.Descent
+public import Mathlib.Analysis.InnerProductSpace.JointEigenspace
+
+@[expose] public section
 
 noncomputable section
 

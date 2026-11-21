@@ -1,6 +1,10 @@
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Actions
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.LinSubstIsHomogeneous
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.InclusionInjective
+module
+
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Actions
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.LinSubstIsHomogeneous
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.InclusionInjective
+
+@[expose] public section
 
 noncomputable section
 

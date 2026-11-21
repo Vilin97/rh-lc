@@ -1,4 +1,8 @@
-import ReciprocityTheory.GaloisValuations.ContinuousConstSMulQuotient
+module
+
+public import ReciprocityTheory.GaloisValuations.ContinuousConstSMulQuotient
+
+@[expose] public section
 
 noncomputable section
 

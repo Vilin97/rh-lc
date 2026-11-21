@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.Divisors
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.Divisors
+
+@[expose] public section
 
 namespace GroundTheory.Arith.Abelian
 

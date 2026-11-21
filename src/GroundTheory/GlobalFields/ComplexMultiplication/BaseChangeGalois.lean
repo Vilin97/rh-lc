@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.BaseChangeDescent
-import GroundTheory.GlobalFields.ComplexMultiplication.AutCFixed
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilGaloisFunctionField
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.BaseChangeDescent
+public import GroundTheory.GlobalFields.ComplexMultiplication.AutCFixed
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilGaloisFunctionField
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

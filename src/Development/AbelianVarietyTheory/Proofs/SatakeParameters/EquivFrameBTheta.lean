@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.SuccMulSuccSubOneDivSucc
-import Formalism.LocalToGlobal.InertKernelTheory.SubBSplit
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.SuccMulSuccSubOneDivSucc
+public import Formalism.LocalToGlobal.InertKernelTheory.SubBSplit
+
+@[expose] public section
 
 open Formalism.MainNotions.G Formalism.MainNotions.FormalGroupSystem Formalism.L2.G.Pend Finset
 

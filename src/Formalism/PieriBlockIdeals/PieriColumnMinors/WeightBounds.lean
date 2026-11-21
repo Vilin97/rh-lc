@@ -1,10 +1,14 @@
-import Formalism.PieriBlockIdeals.LatticeInclusionRealSettingAlt
-import Formalism.PieriBlockIdeals.PieriColumnMinors.SL2BinomialLattices
-import Formalism.PieriBlockIdeals.PieriColumnMinors.RealLocalDeltaNabla
-import Formalism.PieriBlockIdeals.PieriColumnMinors.DepthNonnegative
-import Formalism.PieriBlockIdeals.PieriColumnMinors.ParameterBounds
-import Formalism.PieriBlockIdeals.PieriColumnMinors.HighestWeightProdLeadingMinors
-import Formalism.PieriBlockIdeals.PieriColumnMinors.WorkedExample
+module
+
+public import Formalism.PieriBlockIdeals.LatticeInclusionRealSettingAlt
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.SL2BinomialLattices
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.RealLocalDeltaNabla
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.DepthNonnegative
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.ParameterBounds
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.HighestWeightProdLeadingMinors
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.WorkedExample
+
+@[expose] public section
 
 noncomputable section
 

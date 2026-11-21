@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.TateCohomology.AugmentationSES
-import GroundTheory.TateCohomology.CohTrivialBasic
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.AugmentationSES
+public import GroundTheory.TateCohomology.CohTrivialBasic
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open CategoryTheory groupCohomology Rep

@@ -1,8 +1,12 @@
-import Development.EtaleCohomology.KummerTheory.InjSlice
-import Development.EtaleCohomology.KummerTheory.CupAWCutEv
-import Development.EtaleCohomology.TateTwists.CupflipWdPf
-import Development.EtaleCohomology.TateTwists.CupflipAwExistsPfCochain
-import Development.EtaleCohomology.TateTwists.EtaleChainCochainExistsOfEvalData
+module
+
+public import Development.EtaleCohomology.KummerTheory.InjSlice
+public import Development.EtaleCohomology.KummerTheory.CupAWCutEv
+public import Development.EtaleCohomology.TateTwists.CupflipWdPf
+public import Development.EtaleCohomology.TateTwists.CupflipAwExistsPfCochain
+public import Development.EtaleCohomology.TateTwists.EtaleChainCochainExistsOfEvalData
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.BlockMembershipNormOne
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.BlockMembershipNormOne
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.CMFieldLemmas
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.CMFieldLemmas
+
+@[expose] public section
 
 open NumberField IsDedekindDomain TensorProduct Formalism.MainNotions.UnusedSlot33 Matrix ComplexOrder
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ReducedFibresAlmostAllStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ReducedFibresAlmostAllStatement
+
+@[expose] public section
 
 open Polynomial
 

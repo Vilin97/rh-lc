@@ -1,6 +1,10 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.LiftFactorization
-import ReciprocityTheory.L2DbarEstimates.LeviForms.DetMonoDetOneAdd
-import Lemmata.PosDefOfRealQuadratic.QuadFormRealSmul
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArakelovVolumes.UpperBounds.LiftFactorization
+public import ReciprocityTheory.L2DbarEstimates.LeviForms.DetMonoDetOneAdd
+public import Lemmata.PosDefOfRealQuadratic.QuadFormRealSmul
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.AR.Up.ExhA
 

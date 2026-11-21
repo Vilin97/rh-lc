@@ -1,4 +1,8 @@
-import Formalism.RankGapBounds.LargePrimeFactor
+module
+
+public import Formalism.RankGapBounds.LargePrimeFactor
+
+@[expose] public section
 
 open Real Finset
 

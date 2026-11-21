@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.TwistStep
-import GroundTheory.LocalFields.UpperNumbering
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.TwistStep
+public import GroundTheory.LocalFields.UpperNumbering
+
+@[expose] public section
 
 noncomputable section
 

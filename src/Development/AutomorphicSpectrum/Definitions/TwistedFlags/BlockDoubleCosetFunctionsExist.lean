@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.TwistedFlags.OneMemOffK
-import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.InstBorelGL
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.TwistedFlags.OneMemOffK
+public import Development.AutomorphicSpectrum.Definitions.GlobalGeometry.InstBorelGL
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.MackeyFormula.ConjHomotopy
-import GroundTheory.TateCohomology.CupCochains
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.MackeyFormula.ConjHomotopy
+public import GroundTheory.TateCohomology.CupCochains
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

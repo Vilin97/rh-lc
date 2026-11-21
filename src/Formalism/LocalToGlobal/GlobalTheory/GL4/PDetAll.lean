@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.BrpAevalScaleMonomial
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.BrpAevalScaleMonomial
+
+@[expose] public section
 
 open MvPolynomial
 open scoped Matrix

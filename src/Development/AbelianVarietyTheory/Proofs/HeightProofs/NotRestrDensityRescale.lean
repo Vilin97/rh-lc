@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.AxHLAM
-import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.FrameNormRestrictedDensity
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ConjCmHostRootNeSelf
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.AxHLAM
+public import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.FrameNormRestrictedDensity
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ConjCmHostRootNeSelf
+
+@[expose] public section
 
 set_option autoImplicit false
 

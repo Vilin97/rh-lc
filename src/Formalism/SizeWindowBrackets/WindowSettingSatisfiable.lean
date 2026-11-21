@@ -1,5 +1,9 @@
-import Formalism.SizeWindowBrackets.SecondKindBucket
-import Formalism.SizeWindowBrackets.ErrorFormsWeakWindowsFalse
+module
+
+public import Formalism.SizeWindowBrackets.SecondKindBucket
+public import Formalism.SizeWindowBrackets.ErrorFormsWeakWindowsFalse
+
+@[expose] public section
 
 namespace Formalism.LFunctionChainParameters.PrimeWindowSizeBounds
 

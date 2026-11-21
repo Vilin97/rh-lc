@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.MulCMemSec
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.ModerateCoefficientPositivity
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.HolSubMul
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.MulCMemSec
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.ModerateCoefficientPositivity
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.HolSubMul
+
+@[expose] public section
 
 noncomputable section
 

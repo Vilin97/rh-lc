@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ConvexNerveComplexes.NerveFaceClosed
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ConvexNerveComplexes.AltDoubleSum
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ConvexNerveComplexes.BdMem
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ConvexNerveComplexes.NerveFaceClosed
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ConvexNerveComplexes.AltDoubleSum
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ConvexNerveComplexes.BdMem
+
+@[expose] public section
 
 open Set UpperTheory.V.ConeExtensionAcyclic
 

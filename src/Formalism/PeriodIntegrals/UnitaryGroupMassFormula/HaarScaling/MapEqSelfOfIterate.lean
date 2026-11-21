@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.CdHaarScale
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.CdHaarScale
+
+@[expose] public section
 
 noncomputable section
 

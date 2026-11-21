@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.ExistsMapEqOfPowMul
-import Development.WeilBound.CoreStatements.CrystallinePeriodRings.FrobAinfMapFrobenius
-import GroundTheory.PAdicHodge.FundamentalSeqFixed
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.ExistsMapEqOfPowMul
+public import Development.WeilBound.CoreStatements.CrystallinePeriodRings.FrobAinfMapFrobenius
+public import GroundTheory.PAdicHodge.FundamentalSeqFixed
+
+@[expose] public section
 
 noncomputable section
 

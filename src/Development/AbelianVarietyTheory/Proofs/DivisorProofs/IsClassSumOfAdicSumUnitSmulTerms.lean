@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsChartMemberP
-import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsIsUnitTermZero
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsChartMemberP
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ExistsIsUnitTermZero
+
+@[expose] public section
 
 open IsLocalRing GlobalTheory.Poinc GlobalTheory.UT
 

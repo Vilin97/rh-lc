@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LogFactorialIndices.StatementIdx
+module
+
+public import Mathlib
+public import Formalism.LogFactorialIndices.StatementIdx
+
+@[expose] public section
 
 noncomputable section
 

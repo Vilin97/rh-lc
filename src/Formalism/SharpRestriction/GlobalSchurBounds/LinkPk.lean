@@ -1,10 +1,14 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.TopDensityNGeSixteen
-import Formalism.LocalRingCardinality.Lemmas
-import Formalism.SharpRestriction.GlobalSchurBounds.FrameCodeOfAdditive
-import Formalism.SharpRestriction.GlobalSchurBounds.JointsL
-import Formalism.SharpRestriction.GlobalSchurBounds.JointsF
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.SlopesMFOfCountFam
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.CMFieldLemmas
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.TopDensityNGeSixteen
+public import Formalism.LocalRingCardinality.Lemmas
+public import Formalism.SharpRestriction.GlobalSchurBounds.FrameCodeOfAdditive
+public import Formalism.SharpRestriction.GlobalSchurBounds.JointsL
+public import Formalism.SharpRestriction.GlobalSchurBounds.JointsF
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.SlopesMFOfCountFam
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.CMFieldLemmas
+
+@[expose] public section
 
 section Commens
 

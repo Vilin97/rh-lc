@@ -1,7 +1,12 @@
-import Mathlib
-import Formalism.SharpRestriction.CuspSpanNormBounds.PExtra
-import Formalism.SharpRestriction.GlobalSchurBounds.ThickPlacesCorollaryOfAnyTranslate
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExactRanksOfRecord
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.CuspSpanNormBounds.PExtra
+public import Formalism.SharpRestriction.GlobalSchurBounds.ThickPlacesCorollaryOfAnyTranslate
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExactRanksOfRecord
+
+@[expose] public section
+
 open Formalism.BasicNotions Formalism.MainNotions
 
 namespace GlobalTheory

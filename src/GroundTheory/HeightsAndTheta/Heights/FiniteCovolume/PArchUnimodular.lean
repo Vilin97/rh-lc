@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsArchUnimodular
-import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PGramAtData
-import GroundTheory.HeightsAndTheta.Theta.RealSignature
-import GroundTheory.HeightsAndTheta.Theta.Unimodular.IndefiniteUnitary
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.StatementsArchUnimodular
+public import GroundTheory.HeightsAndTheta.Heights.FiniteCovolume.PGramAtData
+public import GroundTheory.HeightsAndTheta.Theta.RealSignature
+public import GroundTheory.HeightsAndTheta.Theta.Unimodular.IndefiniteUnitary
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights.FiniteCovolume
 

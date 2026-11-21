@@ -1,6 +1,10 @@
-import ReciprocityTheory.DualLattices.MatEquivApply
-import ReciprocityTheory.DualLattices.CokernelLengthComparisonOf
-import ReciprocityTheory.DualLattices.StdJForm
+module
+
+public import ReciprocityTheory.DualLattices.MatEquivApply
+public import ReciprocityTheory.DualLattices.CokernelLengthComparisonOf
+public import ReciprocityTheory.DualLattices.StdJForm
+
+@[expose] public section
 
 noncomputable section
 

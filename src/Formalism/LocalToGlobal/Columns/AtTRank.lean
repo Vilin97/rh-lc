@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.AtTLemmas
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.AtTLemmas
+
+@[expose] public section
 
 open Module
 

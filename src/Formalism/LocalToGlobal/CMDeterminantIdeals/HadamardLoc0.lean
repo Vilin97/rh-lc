@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CMDeterminantIdeals.StatementB
-import Formalism.LocalToGlobal.CMDeterminantIdeals.CoeffMemOfLoc
+module
+
+public import Formalism.LocalToGlobal.CMDeterminantIdeals.StatementB
+public import Formalism.LocalToGlobal.CMDeterminantIdeals.CoeffMemOfLoc
+
+@[expose] public section
 
 noncomputable section
 

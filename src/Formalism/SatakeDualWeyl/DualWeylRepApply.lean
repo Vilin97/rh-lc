@@ -1,5 +1,9 @@
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.DualWeylModuleStable
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Wlocal
+module
+
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.DualWeylModuleStable
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Wlocal
+
+@[expose] public section
 
 noncomputable section
 

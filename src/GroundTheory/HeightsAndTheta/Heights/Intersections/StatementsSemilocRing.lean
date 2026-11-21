@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.IdDeg
-import GroundTheory.HeightsAndTheta.Heights.Intersections.LocRing
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.IdDeg
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.LocRing
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

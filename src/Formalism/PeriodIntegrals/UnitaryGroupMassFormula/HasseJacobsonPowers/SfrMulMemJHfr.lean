@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.HasseJidPow
-import Formalism.PeriodIntegrals.HassePresH
+module
+
+public import Formalism.PeriodIntegrals.HasseJidPow
+public import Formalism.PeriodIntegrals.HassePresH
+
+@[expose] public section
 
 noncomputable section
 

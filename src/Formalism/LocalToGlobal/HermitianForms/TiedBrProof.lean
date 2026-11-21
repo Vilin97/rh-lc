@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.HermitianForms.TiedBrCl
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.LowerTieChain
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.TiedBrCl
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.LowerTieChain
+
+@[expose] public section
 
 noncomputable section
 

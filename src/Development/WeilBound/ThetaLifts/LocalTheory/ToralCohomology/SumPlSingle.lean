@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ToralCohomology.ShiftLow
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFockMap
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ToralCohomology.ShiftLow
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFockMap
+
+@[expose] public section
 
 noncomputable section
 

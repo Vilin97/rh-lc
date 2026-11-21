@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.ZetaProductPairs
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.ZetaProductPairs
+
+@[expose] public section
 
 noncomputable section
 

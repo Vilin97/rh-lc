@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.CrystallineInputs.OfInputs
-import Development.AbelianVarietyTheory.Statements.EllipticCurveLevels.IsQg
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.IntegralStructures.CrystallineInputs.OfInputs
+public import Development.AbelianVarietyTheory.Statements.EllipticCurveLevels.IsQg
+
+@[expose] public section
 
 noncomputable section
 

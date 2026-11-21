@@ -1,10 +1,14 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.AlgebraMapAEEqZero
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.TameAtOne
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.InfPartOfSplitIdem
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.SplitOrInertP
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceFinal
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.LatSelf
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.SplitLinF
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.AlgebraMapAEEqZero
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.TameAtOne
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.InfPartOfSplitIdem
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.SplitOrInertP
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.PlaceFinal
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.LatSelf
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.SplitLinF
+
+@[expose] public section
 
 noncomputable section
 

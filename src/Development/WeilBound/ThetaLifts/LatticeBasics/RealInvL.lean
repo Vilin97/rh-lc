@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.LatticeBasics.ExistsRealStructure
-import Development.WeilBound.ThetaLifts.SchwartzMoments.SchwartzDqTendsto
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.LatticeBasics.ExistsRealStructure
+public import Development.WeilBound.ThetaLifts.SchwartzMoments.SchwartzDqTendsto
+
+@[expose] public section
 
 noncomputable section
 

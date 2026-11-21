@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.LocalFields.UpperNumbering
-import GroundTheory.LocalFields.LubinTateTowerMaps
-import GroundTheory.LocalFields.SeparableClosure
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.UpperNumbering
+public import GroundTheory.LocalFields.LubinTateTowerMaps
+public import GroundTheory.LocalFields.SeparableClosure
+
+@[expose] public section
 
 noncomputable section
 

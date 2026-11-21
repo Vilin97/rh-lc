@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.IsogenyDegreeOne
-import GroundTheory.GlobalFields.ComplexMultiplication.WeberFunctionAutomorphisms
-import GroundTheory.GlobalFields.ComplexMultiplication.ClassGroupActionIso
-import GroundTheory.GlobalFields.ComplexMultiplication.BaseChangeDescent
-import GroundTheory.GlobalFields.ComplexMultiplication.DifferentialConstantField
-import GroundTheory.GlobalFields.ComplexMultiplication.DualDescentBase
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.IsogenyDegreeOne
+public import GroundTheory.GlobalFields.ComplexMultiplication.WeberFunctionAutomorphisms
+public import GroundTheory.GlobalFields.ComplexMultiplication.ClassGroupActionIso
+public import GroundTheory.GlobalFields.ComplexMultiplication.BaseChangeDescent
+public import GroundTheory.GlobalFields.ComplexMultiplication.DifferentialConstantField
+public import GroundTheory.GlobalFields.ComplexMultiplication.DualDescentBase
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global

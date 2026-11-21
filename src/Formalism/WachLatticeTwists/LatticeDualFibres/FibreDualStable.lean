@@ -1,6 +1,10 @@
-import Formalism.WachLatticeTwists.LatticeDualFibres.StatDualFibreLattice
-import Formalism.WachLatticeTwists.LatticeDualFibres.Statement
-import ReciprocityTheory.GaloisValuations.ContinuousConstSMulQuotient
+module
+
+public import Formalism.WachLatticeTwists.LatticeDualFibres.StatDualFibreLattice
+public import Formalism.WachLatticeTwists.LatticeDualFibres.Statement
+public import ReciprocityTheory.GaloisValuations.ContinuousConstSMulQuotient
+
+@[expose] public section
 
 universe u
 

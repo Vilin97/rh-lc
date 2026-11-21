@@ -1,9 +1,13 @@
-import Development.WeilBound.RepresentationTheoryGL.ResidualSpectrum.ExponentialNegativity.L2DecayOfCountEscape
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SiegelCount
-import GroundTheory.AutomorphicForms.ReductionSplitting
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsNcardEntrywiseBoxLe
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ProdEntrywiseLe
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExponentMemFinset
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.ResidualSpectrum.ExponentialNegativity.L2DecayOfCountEscape
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.SiegelCount
+public import GroundTheory.AutomorphicForms.ReductionSplitting
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExistsNcardEntrywiseBoxLe
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ProdEntrywiseLe
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ExponentMemFinset
+
+@[expose] public section
 
 noncomputable section
 

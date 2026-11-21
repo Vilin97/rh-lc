@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.ValBlocksCChart
-import Formalism.LocalToGlobal.CharacterGerms.NormOneIntegral
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.ValBlocksCChart
+public import Formalism.LocalToGlobal.CharacterGerms.NormOneIntegral
+
+@[expose] public section
 
 noncomputable section
 

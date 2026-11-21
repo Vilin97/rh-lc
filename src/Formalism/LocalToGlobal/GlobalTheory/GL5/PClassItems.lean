@@ -1,10 +1,14 @@
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.UJClassFin
-import Formalism.PeriodIntegrals.UJClassMassAlt
-import Mathlib
-import Formalism.HermitianLattices.StatementMass
-import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.FiniteDimensionalOfOrtho
-import Formalism.LocalToGlobal.GlobalTheory.GL5.DiscreteSeriesOfFormalDegree
-import Formalism.LocalToGlobal.GlobalTheory.GL5.PClassSteps
+module
+
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.UJClassFin
+public import Formalism.PeriodIntegrals.UJClassMassAlt
+public import Mathlib
+public import Formalism.HermitianLattices.StatementMass
+public import Formalism.GL3MeanSquares.GenusMeanAsymptotics.UnimodularClassRepresentatives.FiniteDimensionalOfOrtho
+public import Formalism.LocalToGlobal.GlobalTheory.GL5.DiscreteSeriesOfFormalDegree
+public import Formalism.LocalToGlobal.GlobalTheory.GL5.PClassSteps
+
+@[expose] public section
 
 noncomputable section
 

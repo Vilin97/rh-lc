@@ -1,4 +1,8 @@
-import Development.AutomorphicSpectrum.Definitions.AdelicLattices.IsSelfDualLat
+module
+
+public import Development.AutomorphicSpectrum.Definitions.AdelicLattices.IsSelfDualLat
+
+@[expose] public section
 
 noncomputable section
 

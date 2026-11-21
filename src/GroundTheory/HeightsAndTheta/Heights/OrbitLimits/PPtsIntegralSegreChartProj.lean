@@ -1,13 +1,18 @@
-import Mathlib
-import ReciprocityTheory.AnalyticForms.PotentialTheory.Pullback
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.Assembly
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreChartDim
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PtsIntegrable
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsIntegralSegreChartProj
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartProjFinite
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartZeroSet
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartAbsIntegrable
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsSegreChartFibreSum
+module
+
+public import Mathlib
+public import ReciprocityTheory.AnalyticForms.PotentialTheory.Pullback
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.Assembly
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreChartDim
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PtsIntegrable
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsIntegralSegreChartProj
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartProjFinite
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartZeroSet
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartAbsIntegrable
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsSegreChartFibreSum
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

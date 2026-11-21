@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.NormResidueSymbol.CyclotomicImage
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.NormResidueSymbol.CyclotomicImage
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

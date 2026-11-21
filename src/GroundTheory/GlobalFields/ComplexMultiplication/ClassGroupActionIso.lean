@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.AnalyticAlgebraic
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.KodairaNeron
-import GroundTheory.GlobalFields.ComplexMultiplication.JInvariantSurjective
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.AnalyticAlgebraic
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.KodairaNeron
+public import GroundTheory.GlobalFields.ComplexMultiplication.JInvariantSurjective
+
+@[expose] public section
 
 private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
   carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}

@@ -1,9 +1,13 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafOrdInfLocalPf
-import Mathlib.RingTheory.DedekindDomain.IntegralClosure
-import Mathlib.RingTheory.DedekindDomain.AdicValuation
-import Mathlib.RingTheory.DedekindDomain.Dvr
-import Mathlib.FieldTheory.PurelyInseparable.Basic
-import Mathlib.RingTheory.Norm.Defs
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafOrdInfLocalPf
+public import Mathlib.RingTheory.DedekindDomain.IntegralClosure
+public import Mathlib.RingTheory.DedekindDomain.AdicValuation
+public import Mathlib.RingTheory.DedekindDomain.Dvr
+public import Mathlib.FieldTheory.PurelyInseparable.Basic
+public import Mathlib.RingTheory.Norm.Defs
+
+@[expose] public section
 
 namespace LateralTheory.E.E4
 

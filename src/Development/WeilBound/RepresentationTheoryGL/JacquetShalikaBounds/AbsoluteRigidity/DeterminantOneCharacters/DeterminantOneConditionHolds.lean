@@ -1,5 +1,9 @@
-import Development.WeilBound.RepresentationTheoryGL.JacquetShalikaBounds.AbsoluteRigidity.CauchyLoc
-import Development.AutomorphicSpectrum.Proofs.TwistedProofs.SphericalVectorMemFixedRight
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.JacquetShalikaBounds.AbsoluteRigidity.CauchyLoc
+public import Development.AutomorphicSpectrum.Proofs.TwistedProofs.SphericalVectorMemFixedRight
+
+@[expose] public section
 
 noncomputable section
 

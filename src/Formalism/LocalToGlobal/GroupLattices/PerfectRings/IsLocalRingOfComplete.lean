@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.PerfectRings.ExistsSqEqIntCast
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.PerfectRings.ExistsSqEqIntCast
+
+@[expose] public section
 
 open Polynomial
 

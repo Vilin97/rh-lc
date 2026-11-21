@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.StatementLE
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasIterDeriv
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ThetaLimit
+module
+
+public import Formalism.HermitianCurvature.StatementLE
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasIterDeriv
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ThetaLimit
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.LEx2
 open Formalism.FourierDecayAlt.LE

@@ -1,17 +1,21 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.InterlaceAll
-import Formalism.BranchSandwichDivisors.BranchIsometryProofs.BranchMap
-import Formalism.BranchSandwichDivisors.BranchIsometryProofs.Numeric
-import Formalism.LocalToGlobal.Columns.CoefficientsModP.StdDual
-import Formalism.LocalToGlobal.Columns.PolyFnLemmas
-import Formalism.SharpRestriction.GlobalSchurBounds.StandardIntegralLatticeExists
-import Formalism.LocalRingCardinality.FactDelDualNabla
-import Formalism.BranchSandwichDivisors.BranchIsometryProofs.BranchScale
-import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
-import Formalism.BranchSandwichDivisors.DivFromPassageAndNorm
-import Formalism.LocalToGlobal.GroupLattices.FockModels.WeylDim
-import Formalism.SharpRestriction.GlobalSchurBounds.FiniteModelOfAdmissibleTransports
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Wlocal
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.InterlaceAll
+public import Formalism.BranchSandwichDivisors.BranchIsometryProofs.BranchMap
+public import Formalism.BranchSandwichDivisors.BranchIsometryProofs.Numeric
+public import Formalism.LocalToGlobal.Columns.CoefficientsModP.StdDual
+public import Formalism.LocalToGlobal.Columns.PolyFnLemmas
+public import Formalism.SharpRestriction.GlobalSchurBounds.StandardIntegralLatticeExists
+public import Formalism.LocalRingCardinality.FactDelDualNabla
+public import Formalism.BranchSandwichDivisors.BranchIsometryProofs.BranchScale
+public import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
+public import Formalism.BranchSandwichDivisors.DivFromPassageAndNorm
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.WeylDim
+public import Formalism.SharpRestriction.GlobalSchurBounds.FiniteModelOfAdmissibleTransports
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Wlocal
+
+@[expose] public section
 
 open MvPolynomial NumberField IsDedekindDomain
 

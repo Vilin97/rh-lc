@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.SiegelLatticeTheory.WeightedGaugeFactors.FactsDS
-import CompanionTheory.AutomorphicTheory.LocalBesselUniqueness.BesselModels.LocalUniquenessReduction
-import CompanionTheory.AutomorphicTheory.LocalBesselUniqueness.BesselModels.LocScalar
+module
+
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.WeightedGaugeFactors.FactsDS
+public import CompanionTheory.AutomorphicTheory.LocalBesselUniqueness.BesselModels.LocalUniquenessReduction
+public import CompanionTheory.AutomorphicTheory.LocalBesselUniqueness.BesselModels.LocScalar
+
+@[expose] public section
 
 namespace Formalism.L2.SG.Pf
 

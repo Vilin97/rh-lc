@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergySwap
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.ChartHessHolo
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PChartDensityIntegrable
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsChartEnergySwap
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.ChartHessHolo
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PChartDensityIntegrable
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

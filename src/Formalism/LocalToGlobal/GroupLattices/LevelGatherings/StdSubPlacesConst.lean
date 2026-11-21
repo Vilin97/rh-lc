@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.HostPlacesWeight
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.HostPlacesWeight
+
+@[expose] public section
 
 noncomputable section
 

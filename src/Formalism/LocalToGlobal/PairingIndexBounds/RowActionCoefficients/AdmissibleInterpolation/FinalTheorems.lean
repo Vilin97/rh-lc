@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.PairingIndexBounds.RowActionCoefficients.AdmissibleInterpolation.FockRSmulLeft
-import Formalism.LocalToGlobal.PairingIndexBounds.RowActionCoefficients.CoefProd
+module
+
+public import Formalism.LocalToGlobal.PairingIndexBounds.RowActionCoefficients.AdmissibleInterpolation.FockRSmulLeft
+public import Formalism.LocalToGlobal.PairingIndexBounds.RowActionCoefficients.CoefProd
+
+@[expose] public section
 
 open MvPolynomial
 

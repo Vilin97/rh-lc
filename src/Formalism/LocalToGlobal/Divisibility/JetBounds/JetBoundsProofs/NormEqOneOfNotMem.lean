@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.Divisibility.JetBounds.IsExpansion
-import Formalism.LocalToGlobal.Divisibility.JetBounds.Statement
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ValBasic
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.VwEqZeroOfNotMem
+module
+
+public import Formalism.LocalToGlobal.Divisibility.JetBounds.IsExpansion
+public import Formalism.LocalToGlobal.Divisibility.JetBounds.Statement
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ValBasic
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.VwEqZeroOfNotMem
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped BigOperators

@@ -1,14 +1,19 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.Statements
-import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PInteriorDichotomy
-import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PMinkowskiCovolumeBound
-import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PCuspWeightBound
-import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PShortVectorsOrthogonal
-import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PPackingCount
-import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PMeanCountBound
-import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PTailBound
-import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PMeanLogPlus
-import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PMeanCuspWeight
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.Statements
+public import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PInteriorDichotomy
+public import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PMinkowskiCovolumeBound
+public import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PCuspWeightBound
+public import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PShortVectorsOrthogonal
+public import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PPackingCount
+public import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PMeanCountBound
+public import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PTailBound
+public import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PMeanLogPlus
+public import GroundTheory.HeightsAndTheta.Heights.CountingLowerBound.PMeanCuspWeight
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.LowerBound

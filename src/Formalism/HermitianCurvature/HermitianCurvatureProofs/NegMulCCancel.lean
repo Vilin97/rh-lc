@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CornerBlockActionInvariant
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SigmaFiniteOfHaar
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.HermitianFormRankZeroApply
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.StrictUpperNeg
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CornerBlockActionInvariant
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SigmaFiniteOfHaar
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.HermitianFormRankZeroApply
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.StrictUpperNeg
+
+@[expose] public section
 
 open Matrix MeasureTheory
 

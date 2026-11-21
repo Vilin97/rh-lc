@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.QuotInv
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.QuotInv
+
+@[expose] public section
 
 open MeasureTheory Matrix
 open scoped ENNReal

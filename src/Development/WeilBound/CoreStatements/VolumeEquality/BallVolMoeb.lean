@@ -1,7 +1,11 @@
-import Development.WeilBound.CoreStatements.VolumeEquality.BallVolDefs
-import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.Master
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.BallMobiusHolomorphicPotentialChangeStatement
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.BallMobiusMulStatement
+module
+
+public import Development.WeilBound.CoreStatements.VolumeEquality.BallVolDefs
+public import Development.WeilBound.CoreStatements.EqualVolumeCompactOpens.Master
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.BallMobiusHolomorphicPotentialChangeStatement
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.BallMobiusMulStatement
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.OpEqExp
-import Formalism.RealPlaceAnalysis.StatementKT
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.OpEqExp
+public import Formalism.RealPlaceAnalysis.StatementKT
+
+@[expose] public section
 
 noncomputable section
 

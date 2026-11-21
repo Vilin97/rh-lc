@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.InvariantsGenerators
-import Formalism.SharpRestriction.LevelLetterCocycles.InvariantsIsoOfGenerators
-import Formalism.SharpRestriction.LevelLetterCocycles.ZlWCbInjective
-import Formalism.SharpRestriction.LevelLetterCocycles.NormLtOneIffToZMod
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.InvariantsGenerators
+public import Formalism.SharpRestriction.LevelLetterCocycles.InvariantsIsoOfGenerators
+public import Formalism.SharpRestriction.LevelLetterCocycles.ZlWCbInjective
+public import Formalism.SharpRestriction.LevelLetterCocycles.NormLtOneIffToZMod
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.ActAllCancelInv
-import Formalism.LocalToGlobal.GlobalTheory.GramNDetNe
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.ActAllCancelInv
+public import Formalism.LocalToGlobal.GlobalTheory.GramNDetNe
+
+@[expose] public section
 
 noncomputable section
 

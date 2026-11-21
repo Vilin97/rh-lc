@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsPureML
-import Development.WeilBound.ThetaLifts.ConeHypotheses.PureEqPureA
-import Development.WeilBound.ThetaLifts.LocalTheory.SplitInv
+module
+
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.ExistsPureML
+public import Development.WeilBound.ThetaLifts.ConeHypotheses.PureEqPureA
+public import Development.WeilBound.ThetaLifts.LocalTheory.SplitInv
+
+@[expose] public section
 
 noncomputable section
 

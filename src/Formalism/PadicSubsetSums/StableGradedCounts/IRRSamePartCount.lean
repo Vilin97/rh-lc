@@ -1,4 +1,8 @@
-import Formalism.PadicSubsetSums.StableGradedCounts.IRRPrimeToPartEqIff
+module
+
+public import Formalism.PadicSubsetSums.StableGradedCounts.IRRPrimeToPartEqIff
+
+@[expose] public section
 
 open Finset
 

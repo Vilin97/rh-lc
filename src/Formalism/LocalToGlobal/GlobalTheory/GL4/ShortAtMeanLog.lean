@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL4.LowerSlopeInequalityFamily
-import Mathlib
-import Formalism.GL3MeanSquares.ConcavityEquidistribution
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.LowerSlopeInequalityFamily
+public import Mathlib
+public import Formalism.GL3MeanSquares.ConcavityEquidistribution
+
+@[expose] public section
 
 open NumberField
 

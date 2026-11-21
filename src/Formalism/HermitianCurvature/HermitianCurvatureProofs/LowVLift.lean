@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.AeMemOfHaar
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.AeMemOfHaar
+
+@[expose] public section
 
 open Matrix MeasureTheory
 open scoped ComplexConjugate

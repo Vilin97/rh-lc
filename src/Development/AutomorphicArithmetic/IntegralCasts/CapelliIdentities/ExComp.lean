@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qh44.ex_comp :
     ∀ {F M Ω : Type} [inst : Field F] [NumberField F] [inst_2 : Field M]

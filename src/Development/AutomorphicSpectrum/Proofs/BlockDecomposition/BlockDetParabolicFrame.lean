@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContinuousFrameEquivSymm
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BlockDeterminantLaw
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeviDecompOfBlockDet
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ContinuousFrameEquivSymm
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.BlockDeterminantLaw
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.LeviDecompOfBlockDet
+
+@[expose] public section
 
 open scoped TensorProduct NNReal Matrix
 open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes

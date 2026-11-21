@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGerm
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.TendstoRatioPow
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGerm
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.TendstoRatioPow
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.CutBP
 

@@ -1,4 +1,8 @@
-import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.InPow
+module
+
+public import PositivityTheory.AutomorphicForms.PublishedInputs.NonzeroTypes.InPow
+
+@[expose] public section
 
 noncomputable section
 

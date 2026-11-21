@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.InFr1OfPi0Lam
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.InFr1OfPi0Lam
+
+@[expose] public section
 
 noncomputable section
 

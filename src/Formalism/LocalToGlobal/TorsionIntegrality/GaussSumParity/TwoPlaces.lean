@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.StatementB
-import Formalism.GaussJetBounds.StatementW
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.StatementB
+public import Formalism.GaussJetBounds.StatementW
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

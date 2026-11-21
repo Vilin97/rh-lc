@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.NormSmall
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.ZetaValueIdeals
-import Development.AutomorphicArithmetic.CyclotomicBounds.RamifiedDiscriminants.FunDen
-import Development.AbelianVarietyTheory.Definitions.Divisors.IsValCharTwist
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ClassC0PrimeNotExceptional
-import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLu
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Statements.PlaceShiftStatements.NormSmall
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.ZetaValueIdeals
+public import Development.AutomorphicArithmetic.CyclotomicBounds.RamifiedDiscriminants.FunDen
+public import Development.AbelianVarietyTheory.Definitions.Divisors.IsValCharTwist
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ClassC0PrimeNotExceptional
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLu
+
+@[expose] public section
 
 noncomputable section
 

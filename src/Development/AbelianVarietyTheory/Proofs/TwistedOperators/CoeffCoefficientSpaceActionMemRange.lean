@@ -1,6 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.CoefMod
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ReprMemOfCoeff
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.CoefMod
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.ReprMemOfCoeff
+
+@[expose] public section
+
 open Formalism.L2.DIV MvPolynomial
 
 namespace GlobalTheory.RowRho

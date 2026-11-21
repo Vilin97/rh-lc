@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.InertKernelTheory.ScalG
-import Formalism.LocalToGlobal.InertKernelTheory.FrameInt
-import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.FrecAt
-import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.SameChart
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.ScalG
+public import Formalism.LocalToGlobal.InertKernelTheory.FrameInt
+public import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.FrecAt
+public import Formalism.LocalToGlobal.PairingIndexBounds.OrthogonalChartLevels.SameChart
+
+@[expose] public section
 
 noncomputable section
 

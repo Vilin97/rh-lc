@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.HermitianForms.PsiZeroNontrivialCharacter
-import Formalism.LocalToGlobal.HermitianForms.DetShiftShW
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.PsiZeroNontrivialCharacter
+public import Formalism.LocalToGlobal.HermitianForms.DetShiftShW
+
+@[expose] public section
 
 noncomputable section
 

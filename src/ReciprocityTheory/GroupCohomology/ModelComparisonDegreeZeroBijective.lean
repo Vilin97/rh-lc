@@ -1,5 +1,9 @@
-import ReciprocityTheory.GroupCohomology.MemZpowersQuot
-import ReciprocityTheory.GroupCohomology.FiniteLevel
+module
+
+public import ReciprocityTheory.GroupCohomology.MemZpowersQuot
+public import ReciprocityTheory.GroupCohomology.FiniteLevel
+
+@[expose] public section
 
 namespace ReciprocityTheory.Coh
 

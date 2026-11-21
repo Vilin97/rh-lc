@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasurePreservingProdRearrange
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasMUpper
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.OrbJConvCpt
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasurePreservingProdRearrange
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasMUpper
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.OrbJConvCpt
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.StabilizerDisintegration.OG
 

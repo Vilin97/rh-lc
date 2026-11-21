@@ -1,8 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.ImageStableDegreeBounds
-import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.RepresentationBounds
-import Formalism.PadicSubsetSums.StableGradedCounts.ARCReuse
-import Formalism.PadicSubsetSums.StableGradedCounts.LagrangeBound
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.ImageStableDegreeBounds
+public import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.RepresentationBounds
+public import Formalism.PadicSubsetSums.StableGradedCounts.ARCReuse
+public import Formalism.PadicSubsetSums.StableGradedCounts.LagrangeBound
+
+@[expose] public section
+
 open PowerSeries GlobalTheory.BK
 
 namespace GlobalTheory

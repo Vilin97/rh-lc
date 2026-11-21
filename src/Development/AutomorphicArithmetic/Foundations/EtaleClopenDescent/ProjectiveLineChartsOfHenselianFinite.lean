@@ -1,5 +1,9 @@
-import Mathlib
-import Development.EtaleCohomology.EtaleSheaves.ProjectiveLineTwoAffineChartsPolynomialGenerated
+module
+
+public import Mathlib
+public import Development.EtaleCohomology.EtaleSheaves.ProjectiveLineTwoAffineChartsPolynomialGenerated
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry HomogeneousLocalization

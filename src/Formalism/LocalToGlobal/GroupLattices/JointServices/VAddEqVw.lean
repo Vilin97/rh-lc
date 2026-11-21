@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.DataArith
-import Formalism.LocalToGlobal.ExponentGrids.ExponentGridsProofs.NormaliserValuationBound
+module
+
+public import Formalism.LocalRingCardinality.DataArith
+public import Formalism.LocalToGlobal.ExponentGrids.ExponentGridsProofs.NormaliserValuationBound
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open Formalism.BasicNotions (vAdd)

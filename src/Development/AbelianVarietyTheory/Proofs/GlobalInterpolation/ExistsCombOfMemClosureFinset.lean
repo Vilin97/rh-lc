@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataRows
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataRows
+
+@[expose] public section
+
 open Formalism.BasicNotions NumberField
 
 namespace GlobalTheory

@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.SmulMemTrpSet
-import Formalism.LocalToGlobal.Columns.LocWLemmas
-import Formalism.LocalToGlobal.Columns.AtTLemmas
-import Formalism.LocalToGlobal.Columns.DiamondPreservesRamified
-import Formalism.LocalToGlobal.Columns.AtTRank
-import Formalism.LogVandermondeBounds.FinrankFiberSumZero
-import Formalism.LogVandermondeBounds.GaussOperatorProductFormula
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.SmulMemTrpSet
+public import Formalism.LocalToGlobal.Columns.LocWLemmas
+public import Formalism.LocalToGlobal.Columns.AtTLemmas
+public import Formalism.LocalToGlobal.Columns.DiamondPreservesRamified
+public import Formalism.LocalToGlobal.Columns.AtTRank
+public import Formalism.LogVandermondeBounds.FinrankFiberSumZero
+public import Formalism.LogVandermondeBounds.GaussOperatorProductFormula
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

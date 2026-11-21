@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.InertJacobiLevels.AsmRec
+module
+
+public import Formalism.SharpRestriction.InertJacobiLevels.AsmRec
+
+@[expose] public section
 
 noncomputable section
 

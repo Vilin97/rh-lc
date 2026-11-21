@@ -1,7 +1,11 @@
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.LatRepA
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.SumFourEqTrace
-import Development.WeilBound.ThetaLifts.TowerModels.PlaneCodiff
-import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.FinTensMemLatO
+module
+
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.LatRepA
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.SumFourEqTrace
+public import Development.WeilBound.ThetaLifts.TowerModels.PlaneCodiff
+public import Development.AbelianVarietyTheory.Proofs.AdelicLatticeProofs.FinTensMemLatO
+
+@[expose] public section
 
 noncomputable section
 

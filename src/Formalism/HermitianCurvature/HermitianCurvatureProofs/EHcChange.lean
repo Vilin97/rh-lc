@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.Hpart2EqZeroOfInLie
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.Hpart2EqZeroOfInLie
+
+@[expose] public section
 
 open Matrix Finset
 open scoped ContDiff

@@ -1,7 +1,11 @@
-import Mathlib
-import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.EntryMulSubOne
-import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.CartanExists
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.BallSubgroup
+module
+
+public import Mathlib
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.EntryMulSubOne
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.StableLattices.CartanExists
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.BallSubgroup
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.PAdicHodge.TateCpTwist
-import GroundTheory.PAdicHodge.AxLemma
-import GroundTheory.PAdicHodge.TateNormalizedTrace
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.TateCpTwist
+public import GroundTheory.PAdicHodge.AxLemma
+public import GroundTheory.PAdicHodge.TateNormalizedTrace
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.PAdicHodge

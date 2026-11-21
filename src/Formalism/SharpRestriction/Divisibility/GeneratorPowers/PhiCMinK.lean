@@ -1,9 +1,13 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinR
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinI
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinC
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinE
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinF
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCTie
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinR
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinI
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinC
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinE
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCMinF
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.PhiCTie
+
+@[expose] public section
 
 set_option autoImplicit false
 

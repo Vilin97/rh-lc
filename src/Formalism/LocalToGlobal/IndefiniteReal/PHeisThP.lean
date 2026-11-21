@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.PHeisFC
-import Formalism.LocalToGlobal.IndefiniteReal.InjectiveDecompositionAction
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.PHeisFC
+public import Formalism.LocalToGlobal.IndefiniteReal.InjectiveDecompositionAction
+
+@[expose] public section
 
 noncomputable section
 

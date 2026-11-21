@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StepLatZero
-import Development.AbelianVarietyTheory.Counterexamples.JetSurvey.WitnessIsFormalParam
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.StepLatZero
+public import Development.AbelianVarietyTheory.Counterexamples.JetSurvey.WitnessIsFormalParam
+
+@[expose] public section
 
 set_option autoImplicit false
 

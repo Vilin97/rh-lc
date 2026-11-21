@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.ResolutionCharZero.PrincipalisationCharZeroBotOfEff
-import Development.WeilBound.CoreStatements.ResolutionCharZero.FromResIso
-import Development.WeilBound.CoreStatements.ResolutionCharZero.FromResSnc
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.ResolutionCharZero.PrincipalisationCharZeroBotOfEff
+public import Development.WeilBound.CoreStatements.ResolutionCharZero.FromResIso
+public import Development.WeilBound.CoreStatements.ResolutionCharZero.FromResSnc
+
+@[expose] public section
 
 noncomputable section
 

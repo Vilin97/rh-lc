@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightRecR
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitDivVertical
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitFiniteSum
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitArchSum
-import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.Comparison
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightRecR
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitDivVertical
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitFiniteSum
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitArchSum
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.Comparison
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

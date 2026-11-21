@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.IsScalarOneOfComm
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.LatRep
+module
+
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.IsScalarOneOfComm
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.LatRep
+
+@[expose] public section
 
 noncomputable section
 

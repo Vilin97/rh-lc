@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCW
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+module
+
+public import Formalism.LocalToGlobal.NumberFieldFamilies.ThetaCW
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+
+@[expose] public section
 
 noncomputable section
 

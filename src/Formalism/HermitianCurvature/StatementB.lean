@@ -1,4 +1,8 @@
-import Formalism.FormalDegreeBessel.StatementRP
+module
+
+public import Formalism.FormalDegreeBessel.StatementRP
+
+@[expose] public section
 
 open Matrix MeasureTheory Filter Topology
 open scoped ComplexConjugate ENNReal

@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.WtGtRowSubstXSub
+module
+
+public import ReciprocityTheory.DualLattices.WtGtRowSubstXSub
+
+@[expose] public section
 
 noncomputable section
 

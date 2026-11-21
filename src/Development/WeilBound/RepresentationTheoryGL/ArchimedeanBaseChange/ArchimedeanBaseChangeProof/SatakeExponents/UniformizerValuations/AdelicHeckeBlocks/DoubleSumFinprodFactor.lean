@@ -1,5 +1,9 @@
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.AdelRep
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyMemKGL
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.AdelRep
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EventuallyMemKGL
+
+@[expose] public section
 
 noncomputable section
 

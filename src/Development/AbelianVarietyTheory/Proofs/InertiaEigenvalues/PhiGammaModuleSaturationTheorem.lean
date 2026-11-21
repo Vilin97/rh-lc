@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.PowerSeriesOneAddConstMulXMulInv
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsLatComap
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsIndepSpan
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.PowerSeriesOneAddConstMulXMulInv
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.IsLatComap
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsIndepSpan
+
+@[expose] public section
 
 noncomputable section
 open GlobalTheory.PhiGam

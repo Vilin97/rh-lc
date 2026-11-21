@@ -1,6 +1,10 @@
-import Formalism.FormalDegreeBessel.StatementBF
-import Formalism.FormalDegreeBessel.StatementIO
-import Formalism.FormalDegreeBessel.StatementWR
+module
+
+public import Formalism.FormalDegreeBessel.StatementBF
+public import Formalism.FormalDegreeBessel.StatementIO
+public import Formalism.FormalDegreeBessel.StatementWR
+
+@[expose] public section
 
 open scoped ContDiff
 open MeasureTheory Matrix

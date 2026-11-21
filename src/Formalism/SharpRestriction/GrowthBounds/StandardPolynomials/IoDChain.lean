@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.HomGMonomial
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.HomGMonomial
+
+@[expose] public section
 
 noncomputable section
 

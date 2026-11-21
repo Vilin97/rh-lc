@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ArchimedeanSchwartz.ShiftOf
-import GroundTheory.AutomorphicForms.GL2.InnerProductParamHolo
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ArchimedeanSchwartz.ShiftOf
+public import GroundTheory.AutomorphicForms.GL2.InnerProductParamHolo
+
+@[expose] public section
 
 open MeasureTheory Set Filter Topology Metric
 open scoped ContDiff

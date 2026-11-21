@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.HilbertClassFieldArtin
-import GroundTheory.GlobalFields.ComplexMultiplication.AutCFixed
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.Supersingular
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.HilbertClassFieldArtin
+public import GroundTheory.GlobalFields.ComplexMultiplication.AutCFixed
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.Supersingular
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global

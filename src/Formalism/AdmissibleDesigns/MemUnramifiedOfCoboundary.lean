@@ -1,4 +1,8 @@
-import Formalism.AdmissibleDesigns.TrCMemZ1D
+module
+
+public import Formalism.AdmissibleDesigns.TrCMemZ1D
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.LatticeInclusionFormsInjective
-import Formalism.LocalToGlobal.CharacterGerms.ScaledSecondIntegral
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.LatticeInclusionFormsInjective
+public import Formalism.LocalToGlobal.CharacterGerms.ScaledSecondIntegral
+
+@[expose] public section
 
 noncomputable section
 

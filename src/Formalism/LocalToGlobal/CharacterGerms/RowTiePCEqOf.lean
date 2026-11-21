@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePGerm
-import Formalism.LocalToGlobal.CharacterGerms.RowTieCartTop
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePGerm
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieCartTop
+
+@[expose] public section
 
 noncomputable section
 

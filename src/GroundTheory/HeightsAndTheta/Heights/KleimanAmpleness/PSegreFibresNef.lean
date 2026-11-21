@@ -1,12 +1,17 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SegreJoin
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.NefGenericDVRSt
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsSideLast
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsTailBis
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsTailTer
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsTailAlt
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsSideSide
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SegreJoin
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.NefGenericDVRSt
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsSideLast
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsTailBis
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsTailTer
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsTailAlt
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsSideSide
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman.SectionsOverLocalization

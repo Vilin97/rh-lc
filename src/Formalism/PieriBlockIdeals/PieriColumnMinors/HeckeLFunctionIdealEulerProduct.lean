@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PieriBlockIdeals.LemmaWFromLattice
-import Formalism.PieriBlockIdeals.PieriColumnMinors.HeightDescentMinors
-import Formalism.PieriBlockIdeals.PieriColumnMinors.RegularCuspidalTrace
+module
+
+public import Mathlib
+public import Formalism.PieriBlockIdeals.LemmaWFromLattice
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.HeightDescentMinors
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.RegularCuspidalTrace
+
+@[expose] public section
 
 noncomputable section
 

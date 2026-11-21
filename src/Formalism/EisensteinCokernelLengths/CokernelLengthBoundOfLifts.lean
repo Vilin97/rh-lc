@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.FrobeniusContraction.Statement
-import Formalism.FrobeniusContraction.HighestWeightResidueAvoids
+module
+
+public import Mathlib
+public import Formalism.FrobeniusContraction.Statement
+public import Formalism.FrobeniusContraction.HighestWeightResidueAvoids
+
+@[expose] public section
 
 noncomputable section
 

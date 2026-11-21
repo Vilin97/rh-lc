@@ -1,8 +1,12 @@
-import Formalism.MahlerMeasure.StatementTM
-import Formalism.MahlerMeasure.MahlerMeasureProofs.FreezeY
-import Formalism.MahlerMeasure.MahlerMeasureProofs.FreezeBij
-import Formalism.MahlerMeasure.MahlerMeasureProofs.FreezeInto
-import Mathlib
+module
+
+public import Formalism.MahlerMeasure.StatementTM
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.FreezeY
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.FreezeBij
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.FreezeInto
+public import Mathlib
+
+@[expose] public section
 
 namespace Formalism.GM.DimensionMonotonicity
 

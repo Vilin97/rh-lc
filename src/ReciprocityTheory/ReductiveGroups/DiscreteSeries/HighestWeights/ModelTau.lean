@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.ModelInner
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.ModelGen
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.ModelInner
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.HighestWeights.ModelGen
+
+@[expose] public section
 
 noncomputable section
 

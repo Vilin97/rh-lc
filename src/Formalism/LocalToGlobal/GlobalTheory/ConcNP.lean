@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.IrreducibleOfCountSizes
-import Formalism.PadicSubsetSums.StableGradedCounts.DominantNumbersEighthOfSharp
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.IrreducibleOfCountSizes
+public import Formalism.PadicSubsetSums.StableGradedCounts.DominantNumbersEighthOfSharp
+
+@[expose] public section
 
 open NumberField
 

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.TensorProductTheorem.TwoFactorUnique
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsIrreducibleIff
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.TwoFactorUnique
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.IsIrreducibleIff
+
+@[expose] public section
 
 noncomputable section
 

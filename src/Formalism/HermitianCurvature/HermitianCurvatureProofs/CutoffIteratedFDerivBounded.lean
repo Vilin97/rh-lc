@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.DminStarPd
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.DminStarPd
+
+@[expose] public section
 
 open Matrix Set
 open scoped ComplexConjugate ContDiff Topology

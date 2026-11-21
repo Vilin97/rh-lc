@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.DirichletDensity.Statement
-import Formalism.CMTypeGalois.HalfTypesFromGeneral
+module
+
+public import Mathlib
+public import Formalism.DirichletDensity.Statement
+public import Formalism.CMTypeGalois.HalfTypesFromGeneral
+
+@[expose] public section
 
 open NumberField IntermediateField NumberField.InfinitePlace Formalism.Q3
 

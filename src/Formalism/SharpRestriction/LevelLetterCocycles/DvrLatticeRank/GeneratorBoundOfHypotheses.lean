@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.LocalFormOfThreeInputs
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocalFormOfThreeInputs
+
+@[expose] public section
 
 noncomputable section
 

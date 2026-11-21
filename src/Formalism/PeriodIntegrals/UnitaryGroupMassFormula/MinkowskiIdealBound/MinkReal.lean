@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.UnipotentAdelicQuotients.SiegelSetsSL2Adelic
+module
+
+public import Mathlib
+public import Formalism.UnipotentAdelicQuotients.SiegelSetsSL2Adelic
+
+@[expose] public section
 
 open NumberField NumberField.InfinitePlace NumberField.mixedEmbedding MeasureTheory Module
 open scoped Pointwise

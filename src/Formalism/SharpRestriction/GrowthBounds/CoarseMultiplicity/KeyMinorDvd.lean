@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.KeyOne
-import Formalism.SharpRestriction.GrowthBounds.FrobeniusPaths.SelfDualLatticesOneOrbit
-import Formalism.SharpRestriction.GrowthBounds.FrobeniusPaths.LatticeCountingFormula
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.KeyOne
+public import Formalism.SharpRestriction.GrowthBounds.FrobeniusPaths.SelfDualLatticesOneOrbit
+public import Formalism.SharpRestriction.GrowthBounds.FrobeniusPaths.LatticeCountingFormula
+
+@[expose] public section
 
 noncomputable section
 

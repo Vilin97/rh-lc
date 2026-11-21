@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.EtaleCharts.PBData
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CompOfCechPt
+module
+
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.KunnethLefschetz.EtaleCharts.PBData
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CompOfCechPt
+
+@[expose] public section
 
 set_option backward.isDefEq.respectTransparency false
 

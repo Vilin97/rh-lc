@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.LocalFields.ConductorMatch
-import GroundTheory.PAdicHodge.FieldOfNormsCyclBase
-import GroundTheory.PAdicHodge.FieldOfNormsRam
-import GroundTheory.PAdicHodge.SenTateCharUnits
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.ConductorMatch
+public import GroundTheory.PAdicHodge.FieldOfNormsCyclBase
+public import GroundTheory.PAdicHodge.FieldOfNormsRam
+public import GroundTheory.PAdicHodge.SenTateCharUnits
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

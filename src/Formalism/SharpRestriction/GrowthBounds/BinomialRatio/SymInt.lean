@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.MapFloorMono
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.MapFloorMono
+
+@[expose] public section
 
 noncomputable section
 

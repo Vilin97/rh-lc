@@ -1,7 +1,11 @@
-import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.PullbackDecomposition
-import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.CrystallineAlgebraAlgebraMap
-import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.TheoryEx
-import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.SumSecEqZero
+module
+
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.PullbackDecomposition
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.CrystallineAlgebraAlgebraMap
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.TheoryEx
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.SumSecEqZero
+
+@[expose] public section
 
 set_option backward.isDefEq.respectTransparency false
 

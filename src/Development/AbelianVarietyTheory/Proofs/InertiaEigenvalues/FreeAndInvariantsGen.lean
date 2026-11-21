@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WachDeltaInvariantCoboundaries
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsUniqueSum
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.DataNLoc
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.WachDeltaInvariantCoboundaries
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.ExistsUniqueSum
+
+@[expose] public section
 
 noncomputable section
 

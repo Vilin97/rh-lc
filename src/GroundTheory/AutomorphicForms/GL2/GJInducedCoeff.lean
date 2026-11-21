@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJZetaDefs
-import GroundTheory.AutomorphicForms.HaarCosets
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJZetaDefs
+public import GroundTheory.AutomorphicForms.HaarCosets
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

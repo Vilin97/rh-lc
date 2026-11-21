@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.InvariantLetterIdempotentOfFixed
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.InvariantLetterIdempotentOfFixed
+
+@[expose] public section
 
 noncomputable section
 

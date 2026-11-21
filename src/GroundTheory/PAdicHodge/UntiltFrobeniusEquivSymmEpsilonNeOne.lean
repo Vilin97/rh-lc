@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.PAdicHodge.BdRAlg
-import GroundTheory.PAdicHodge.BdRSeries
-import GroundTheory.PAdicHodge.BdRLattice
-import GroundTheory.PAdicHodge.BdRGalois
-import GroundTheory.PAdicHodge.AInfXi
-import GroundTheory.PAdicHodge.TateCpTwist
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.BdRAlg
+public import GroundTheory.PAdicHodge.BdRSeries
+public import GroundTheory.PAdicHodge.BdRLattice
+public import GroundTheory.PAdicHodge.BdRGalois
+public import GroundTheory.PAdicHodge.AInfXi
+public import GroundTheory.PAdicHodge.TateCpTwist
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

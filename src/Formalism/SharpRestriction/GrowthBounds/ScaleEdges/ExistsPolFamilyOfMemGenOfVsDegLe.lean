@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.LeviInductionForms
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ScaleEdges.LeviInductionForms
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.KummerSequence.LeafKumSecSurjPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.KummerSequence.LeafKumSecSurjPf
+
+@[expose] public section
 
 open Polynomial
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC LateralTheory.E.E4 LateralTheory.E.H2CurveOrder.LeafKumSeqPf LateralTheory.E.H2CurveOrder.KummerH0Surjection

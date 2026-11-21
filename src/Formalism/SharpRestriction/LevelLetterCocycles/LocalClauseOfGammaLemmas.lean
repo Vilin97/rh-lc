@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.DerivativeProdSubEval
-import Formalism.SharpRestriction.LevelLetterCocycles.FrobeniusPowUniformizerFactorisation
-import Formalism.SharpRestriction.LevelLetterCocycles.CancelUnitMulUniformizerPow
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.DerivativeProdSubEval
+public import Formalism.SharpRestriction.LevelLetterCocycles.FrobeniusPowUniformizerFactorisation
+public import Formalism.SharpRestriction.LevelLetterCocycles.CancelUnitMulUniformizerPow
+
+@[expose] public section
 
 noncomputable section
 

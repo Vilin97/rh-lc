@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.CoreExists
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.CramerMemAdelicCompletionOfElementSet
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.CoreExists
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.CramerMemAdelicCompletionOfElementSet
+
+@[expose] public section
 
 noncomputable section
 

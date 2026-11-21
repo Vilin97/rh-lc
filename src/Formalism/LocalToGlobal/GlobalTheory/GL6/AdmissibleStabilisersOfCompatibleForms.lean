@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.HermitianForms.FormsTied
-import Formalism.SharpRestriction.GlobalSchurBounds.ProductFirstZerothParts
-import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.GramTotallyDefinite
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.FormsTied
+public import Formalism.SharpRestriction.GlobalSchurBounds.ProductFirstZerothParts
+public import Formalism.LocalToGlobal.GroupLattices.TrivialTransfer.GramTotallyDefinite
+
+@[expose] public section
 
 noncomputable section
 

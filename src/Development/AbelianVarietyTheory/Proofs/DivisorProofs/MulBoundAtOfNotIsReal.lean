@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.HasBoundedPolesGlobalData
-import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.CountUpSt
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.HasBoundedPolesGlobalData
+public import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.CountUpSt
+
+@[expose] public section
 
 set_option autoImplicit false
 

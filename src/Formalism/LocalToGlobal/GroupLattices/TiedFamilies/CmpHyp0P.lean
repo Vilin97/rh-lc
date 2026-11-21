@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.RecThm
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.RecThm
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.Divisibility.CoefModLemmas
-import Formalism.LocalToGlobal.Columns.LocWLemmas
-import Lemmata.GeneralBFactSecondBisAlt.Imports
+module
+
+public import Formalism.LocalToGlobal.Divisibility.CoefModLemmas
+public import Formalism.LocalToGlobal.Columns.LocWLemmas
+public import Lemmata.GeneralBFactSecondBisAlt.Imports
+
+@[expose] public section
 
 open MvPolynomial NumberField IsDedekindDomain
 open scoped Matrix

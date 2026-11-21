@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.FglPhSplit
+module
+
+public import Formalism.PeriodIntegrals.FglPhSplit
+
+@[expose] public section
 
 noncomputable section
 

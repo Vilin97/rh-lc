@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.RootPushforwardDensity
-import Mathlib.MeasureTheory.Function.L2Space
-import Mathlib.MeasureTheory.Function.ContinuousMapDense
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.RootPushforwardDensity
+public import Mathlib.MeasureTheory.Function.L2Space
+public import Mathlib.MeasureTheory.Function.ContinuousMapDense
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.PBK
 

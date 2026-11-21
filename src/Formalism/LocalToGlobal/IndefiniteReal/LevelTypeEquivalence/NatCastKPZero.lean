@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.LevelA
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.BaseSt
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.LevelA
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.BaseSt
+
+@[expose] public section
 
 noncomputable section
 

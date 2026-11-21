@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.Eisenstein4CoeffBound
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.Eisenstein4CoeffBound
+
+@[expose] public section
 
 namespace ReciprocityTheory.PGsh
 

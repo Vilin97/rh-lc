@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.Brauer.BaseChangeCSA
-import GroundTheory.Brauer.IsBrauerEquivalentIffNonemptyAlgEquiv
+module
+
+public import Mathlib
+public import GroundTheory.Brauer.BaseChangeCSA
+public import GroundTheory.Brauer.IsBrauerEquivalentIffNonemptyAlgEquiv
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Brauer

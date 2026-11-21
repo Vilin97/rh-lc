@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.BesselHermitianTheta.AllTied
-import Formalism.SharpRestriction.Divisibility.InnerProductFormulaField
+module
+
+public import Formalism.LocalToGlobal.BesselHermitianTheta.AllTied
+public import Formalism.SharpRestriction.Divisibility.InnerProductFormulaField
+
+@[expose] public section
 
 noncomputable section
 

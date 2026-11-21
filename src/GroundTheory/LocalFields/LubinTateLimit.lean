@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.LocalFields.LubinTatePrimitive
-import GroundTheory.LocalFields.LubinTateTowerMaps
-import GroundTheory.LocalFields.LubinTateLimitGalois
-import GroundTheory.LocalFields.LubinTateUnramified
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LubinTatePrimitive
+public import GroundTheory.LocalFields.LubinTateTowerMaps
+public import GroundTheory.LocalFields.LubinTateLimitGalois
+public import GroundTheory.LocalFields.LubinTateUnramified
+
+@[expose] public section
 
 noncomputable section
 

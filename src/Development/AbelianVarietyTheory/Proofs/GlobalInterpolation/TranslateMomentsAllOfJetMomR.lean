@@ -1,13 +1,17 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.DeterminantCokernelCount.JetMomEquiv
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.VacuumEntireAndNormalizedJetsAlgebraic
-import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.TranslateMomentsAll
-import Formalism.LocalToGlobal.KernelLattices.DeterminantCokernelCount.JetMomTA
-import Formalism.LocalToGlobal.GlobalTheory.GL3.PThIndep
-import Formalism.LocalToGlobal.KernelLattices.LateralTheory
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsTraceNorm
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ThetaOddPrimePhaseConjInvariant
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.CoefInTranslate
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.DeterminantCokernelCount.JetMomEquiv
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.VacuumEntireAndNormalizedJetsAlgebraic
+public import Development.AbelianVarietyTheory.Proofs.GlobalInterpolation.TranslateMomentsAll
+public import Formalism.LocalToGlobal.KernelLattices.DeterminantCokernelCount.JetMomTA
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.PThIndep
+public import Formalism.LocalToGlobal.KernelLattices.LateralTheory
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsTraceNorm
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ThetaOddPrimePhaseConjInvariant
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.CoefInTranslate
+
+@[expose] public section
 
 noncomputable section
 

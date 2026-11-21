@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.ObjBridge
-import Formalism.LocalToGlobal.GroupLattices.PerfectRings.JOInjective
-import Formalism.LocalToGlobal.GroupLattices.PerfectRings.IsLocalRingOfComplete
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.StdSubPlacesConst
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ObjBridge
+public import Formalism.LocalToGlobal.GroupLattices.PerfectRings.JOInjective
+public import Formalism.LocalToGlobal.GroupLattices.PerfectRings.IsLocalRingOfComplete
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.StdSubPlacesConst
+
+@[expose] public section
 
 noncomputable section
 

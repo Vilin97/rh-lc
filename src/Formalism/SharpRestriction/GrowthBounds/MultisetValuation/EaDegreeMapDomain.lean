@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.GainOfCapacityLoss
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.GainOfCapacityLoss
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.LatticeComparisonCompatible
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.CmpCMemFunMod
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.LatticeComparisonCompatible
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.CmpCMemFunMod
+
+@[expose] public section
 
 noncomputable section
 

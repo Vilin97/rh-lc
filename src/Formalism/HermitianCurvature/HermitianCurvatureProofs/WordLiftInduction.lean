@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.LevelRecursionCondNeeded
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ChebyshevExtremalPolynomials
+module
+
+public import Formalism.HermitianCurvature.LevelRecursionCondNeeded
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ChebyshevExtremalPolynomials
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.WordLiftInduction
 

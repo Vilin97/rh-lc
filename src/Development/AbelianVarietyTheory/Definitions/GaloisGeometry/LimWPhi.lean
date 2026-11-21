@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.HasLevelOffOf
-import Development.AbelianVarietyTheory.Definitions.Divisors.GenOf
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.HasLevelOffOf
+public import Development.AbelianVarietyTheory.Definitions.Divisors.GenOf
+
+@[expose] public section
 
 noncomputable section
 

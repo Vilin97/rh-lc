@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.CGTrueT
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NotNonemptyZero
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LawsT
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AutomorphicFormsFiniteGL
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.GoodToralTwistStable
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.CGTrueT
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.NotNonemptyZero
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LawsT
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AutomorphicFormsFiniteGL
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.GoodToralTwistStable
+
+@[expose] public section
 
 noncomputable section
 namespace GlobalTheory.HeightCounting

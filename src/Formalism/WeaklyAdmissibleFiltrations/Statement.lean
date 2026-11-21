@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.CoboundaryTransfers.Statement
+module
+
+public import Mathlib
+public import Formalism.CoboundaryTransfers.Statement
+
+@[expose] public section
 
 noncomputable section
 

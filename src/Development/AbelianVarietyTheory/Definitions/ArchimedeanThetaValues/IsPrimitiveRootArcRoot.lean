@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.ToMatrixTrFormBaseChange
-import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.TrFormBaseChangeNondegenerate
-import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.SqrtNegDiscMemCoeffField
-import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.ZeroFLeftExt
-import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.PullTopZFConstUnit
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.ToMatrixTrFormBaseChange
+public import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.TrFormBaseChangeNondegenerate
+public import Development.AbelianVarietyTheory.Definitions.ArchimedeanThetaValues.SqrtNegDiscMemCoeffField
+public import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.ZeroFLeftExt
+public import Development.AbelianVarietyTheory.Proofs.ThetaShiftProofs.PullTopZFConstUnit
+
+@[expose] public section
 
 noncomputable section
 

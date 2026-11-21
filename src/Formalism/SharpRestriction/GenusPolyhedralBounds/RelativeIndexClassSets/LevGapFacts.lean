@@ -1,6 +1,10 @@
-import Formalism.LocalRingCardinality.DataLevel
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
-import Formalism.SatakeDualWeyl.DefsCS
+module
+
+public import Formalism.LocalRingCardinality.DataLevel
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleLayerExistsGenerators
+public import Formalism.SatakeDualWeyl.DefsCS
+
+@[expose] public section
 
 noncomputable section
 

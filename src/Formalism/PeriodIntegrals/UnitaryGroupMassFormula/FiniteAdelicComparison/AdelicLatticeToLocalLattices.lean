@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.AdBridgeSteps
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FiniteAdelicComparison.MemLocFrom
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.AdBridgeSteps
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FiniteAdelicComparison.MemLocFrom
+
+@[expose] public section
 
 noncomputable section
 

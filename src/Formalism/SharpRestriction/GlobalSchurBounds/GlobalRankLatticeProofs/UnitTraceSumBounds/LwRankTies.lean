@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.MainSup
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.CountHypothesesIffText
-import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLu
-import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLz
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.MainSup
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalRankLatticeProofs.CountHypothesesIffText
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.SfromGLu
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLz
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.RankGapBounds.MeanBoundSecondForm
+module
+
+public import Formalism.RankGapBounds.MeanBoundSecondForm
+
+@[expose] public section
 
 open Real
 

@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.IsResidueClassZero
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.LocalRingCardinality.SpanPowerMembership.GatTies
-import Formalism.SharpRestriction.InertJacobiLevels.ExtraGat
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.IsResidueClassZero
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.LocalRingCardinality.SpanPowerMembership.GatTies
+public import Formalism.SharpRestriction.InertJacobiLevels.ExtraGat
+
+@[expose] public section
 
 noncomputable section
 

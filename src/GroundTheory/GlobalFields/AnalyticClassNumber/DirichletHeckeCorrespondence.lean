@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.AnalyticClassNumber.DirichletHecke
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.AnalyticClassNumber.DirichletHecke
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Global

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.SqPair
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.SqPair
+
+@[expose] public section
 
 noncomputable section
 open NumberField Matrix

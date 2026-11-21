@@ -1,6 +1,10 @@
-import Formalism.LocalRingCardinality.DataBu
-import Formalism.LocalRingCardinality.DataRows
-import Formalism.LocalRingCardinality.DataForms
+module
+
+public import Formalism.LocalRingCardinality.DataBu
+public import Formalism.LocalRingCardinality.DataRows
+public import Formalism.LocalRingCardinality.DataForms
+
+@[expose] public section
 
 noncomputable section
 

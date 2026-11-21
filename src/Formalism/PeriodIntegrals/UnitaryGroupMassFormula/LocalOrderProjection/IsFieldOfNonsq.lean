@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.LocHerm
-import Formalism.PeriodIntegrals.AlgebraMapMemO
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalOrderProjection.LocOProjOf
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.LocHerm
+public import Formalism.PeriodIntegrals.AlgebraMapMemO
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalOrderProjection.LocOProjOf
+
+@[expose] public section
 
 noncomputable section
 

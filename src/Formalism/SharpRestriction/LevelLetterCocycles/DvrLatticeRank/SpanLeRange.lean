@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.LVSmulA
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.LVSmulA
+
+@[expose] public section
 
 noncomputable section
 

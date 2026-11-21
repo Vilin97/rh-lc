@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.TateThesis.TraceLatticeEuclidean
-import GroundTheory.GlobalFields.TateThesis.LatticePoisson
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.TateThesis.TraceLatticeEuclidean
+public import GroundTheory.GlobalFields.TateThesis.LatticePoisson
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

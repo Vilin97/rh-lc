@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.CharZeroOfW
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.SymVarInlFst
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.MemIntPolOfCoeff
-import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.SymbolVariableLowerLetter
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.FactorsOfPerturb
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.CharZeroOfW
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.SymVarInlFst
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.MemIntPolOfCoeff
+public import Formalism.SharpRestriction.GrowthBounds.CoarseMultiplicity.SymbolVariableLowerLetter
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.FactorsOfPerturb
+
+@[expose] public section
 
 noncomputable section
 

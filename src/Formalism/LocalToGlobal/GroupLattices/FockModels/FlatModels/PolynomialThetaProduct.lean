@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.FockModels.FlatModels.LetterB
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.FlatModels.LetterB
+
+@[expose] public section
 
 open MvPolynomial
 

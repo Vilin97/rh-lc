@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HermitianLattices.StatementMaj
-import Formalism.HermitianLattices.HermitianLatticesProofs.MajLattice
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.StatementMaj
+public import Formalism.HermitianLattices.HermitianLatticesProofs.MajLattice
+
+@[expose] public section
 
 open NumberField
 open scoped nonZeroDivisors

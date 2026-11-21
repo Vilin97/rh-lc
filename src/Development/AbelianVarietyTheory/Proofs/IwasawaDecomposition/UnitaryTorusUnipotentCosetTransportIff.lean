@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GEquivIntL
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.FSatakeC
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.GEquivIntL
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.FSatakeC
+
+@[expose] public section
 
 noncomputable section
 

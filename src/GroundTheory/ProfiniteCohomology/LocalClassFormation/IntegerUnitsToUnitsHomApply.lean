@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.GaloisModules.CoeGalRootsOfUnityHomApply
-import GroundTheory.LocalFields.HerbrandLocalBase
-import GroundTheory.LocalFields.UnitsGalois
-import GroundTheory.TateCohomology.Characters
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.GaloisModules.CoeGalRootsOfUnityHomApply
+public import GroundTheory.LocalFields.HerbrandLocalBase
+public import GroundTheory.LocalFields.UnitsGalois
+public import GroundTheory.TateCohomology.Characters
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

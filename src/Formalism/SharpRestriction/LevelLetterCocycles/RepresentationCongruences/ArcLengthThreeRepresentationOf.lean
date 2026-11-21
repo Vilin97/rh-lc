@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.AlgebraMapMemInvariants
-import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.PpLeHLD
-import Formalism.SharpRestriction.LevelLetterCocycles.RelayGeneralCaseOfAdmissible
-import Formalism.SharpRestriction.LevelLetterCocycles.JumpsLetOfWin
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.AlgebraMapMemInvariants
+public import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.PpLeHLD
+public import Formalism.SharpRestriction.LevelLetterCocycles.RelayGeneralCaseOfAdmissible
+public import Formalism.SharpRestriction.LevelLetterCocycles.JumpsLetOfWin
+
+@[expose] public section
 
 noncomputable section
 

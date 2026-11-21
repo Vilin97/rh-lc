@@ -1,13 +1,17 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2Classical.Adelic
-import GroundTheory.AutomorphicForms.GL2Classical.ConstantTerm
-import GroundTheory.AutomorphicForms.GL2Classical.Smooth
-import GroundTheory.AutomorphicForms.HarishChandraCentre
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.SmoothKZ
-import GroundTheory.AutomorphicForms.GL2Classical.CuspConverse
-import GroundTheory.AutomorphicForms.GL2Classical.GrowthReduction
-import GroundTheory.AutomorphicForms.GL2Classical.KFinite
-import GroundTheory.AutomorphicForms.HeckeAlgebraLevel
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2Classical.Adelic
+public import GroundTheory.AutomorphicForms.GL2Classical.ConstantTerm
+public import GroundTheory.AutomorphicForms.GL2Classical.Smooth
+public import GroundTheory.AutomorphicForms.HarishChandraCentre
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.SmoothKZ
+public import GroundTheory.AutomorphicForms.GL2Classical.CuspConverse
+public import GroundTheory.AutomorphicForms.GL2Classical.GrowthReduction
+public import GroundTheory.AutomorphicForms.GL2Classical.KFinite
+public import GroundTheory.AutomorphicForms.HeckeAlgebraLevel
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix CongruenceSubgroup
 open UpperHalfPlane hiding I I_re I_im

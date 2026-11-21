@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTieValL
-import Formalism.LocalToGlobal.CharacterGerms.UncurryLogConstantCoeff
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieValL
+public import Formalism.LocalToGlobal.CharacterGerms.UncurryLogConstantCoeff
+
+@[expose] public section
 
 noncomputable section
 

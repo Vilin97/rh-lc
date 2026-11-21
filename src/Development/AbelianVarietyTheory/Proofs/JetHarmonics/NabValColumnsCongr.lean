@@ -1,11 +1,15 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.ChartChg
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.NabTrans
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.InvariantDerivAlongEndo
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CanonGaugeDmonOfHLIntegral
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsGroupedOfSublist
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ConstantCoeffDmonOfSubMem
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.NabValPullbackMonomial
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.ChartChg
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.TaylorDiscriminants.WickVanishing.NabTrans
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.InvariantDerivAlongEndo
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.CanonGaugeDmonOfHLIntegral
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ExistsGroupedOfSublist
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.ConstantCoeffDmonOfSubMem
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.NabValPullbackMonomial
+
+@[expose] public section
 
 set_option autoImplicit false
 

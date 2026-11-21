@@ -1,4 +1,8 @@
-import Formalism.RealPlaceAnalysis.QuotientSettingHolds
+module
+
+public import Formalism.RealPlaceAnalysis.QuotientSettingHolds
+
+@[expose] public section
 
 noncomputable section
 

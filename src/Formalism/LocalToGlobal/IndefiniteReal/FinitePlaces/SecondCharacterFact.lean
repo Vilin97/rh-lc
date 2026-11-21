@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.NormNatCastLtOne
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.NormNatCastLtOne
+
+@[expose] public section
 
 noncomputable section
 

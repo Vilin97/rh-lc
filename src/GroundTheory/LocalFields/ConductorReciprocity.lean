@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.LocalFields.ConductorLubinTate
-import GroundTheory.LocalFields.ConductorTransport
-import GroundTheory.LocalFields.LocalArtinMap
-import GroundTheory.LocalFields.KroneckerWeber
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.ConductorLubinTate
+public import GroundTheory.LocalFields.ConductorTransport
+public import GroundTheory.LocalFields.LocalArtinMap
+public import GroundTheory.LocalFields.KroneckerWeber
+
+@[expose] public section
 
 noncomputable section
 

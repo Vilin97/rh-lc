@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RealPlaces.LocalDualityCup
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RealPlaces.LocalDualityCup
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

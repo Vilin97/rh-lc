@@ -1,6 +1,10 @@
-import Formalism.PieriBlockIdeals.Statement
-import Formalism.PieriBlockIdeals.StatementLD
-import Formalism.PieriBlockIdeals.BranchingBoundLastGradedOneRow
+module
+
+public import Formalism.PieriBlockIdeals.Statement
+public import Formalism.PieriBlockIdeals.StatementLD
+public import Formalism.PieriBlockIdeals.BranchingBoundLastGradedOneRow
+
+@[expose] public section
 
 noncomputable section
 

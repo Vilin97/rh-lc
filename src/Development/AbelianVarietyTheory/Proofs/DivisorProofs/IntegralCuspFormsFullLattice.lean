@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSmulNonnegOfPow
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsCentralIdempotentOfGoodSeriesIdempotent
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.CuspLatticeAnyLevel
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.SupremumLattice
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LMLatOfLIntegral
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSmulNonnegOfPow
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsCentralIdempotentOfGoodSeriesIdempotent
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.CuspLatticeAnyLevel
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.SupremumLattice
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LMLatOfLIntegral
+
+@[expose] public section
 
 noncomputable section
 

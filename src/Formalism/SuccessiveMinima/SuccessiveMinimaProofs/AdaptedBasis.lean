@@ -1,4 +1,8 @@
-import Formalism.SuccessiveMinima.DefsMink
+module
+
+public import Formalism.SuccessiveMinima.DefsMink
+
+@[expose] public section
 
 open Module Submodule
 

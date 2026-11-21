@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.CrystallineFiltrationAntitone
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.CrystallineFiltrationAntitone
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,9 @@
-import Development.AbelianVarietyTheory.Definitions.Foundations.T2SpaceAdeleRing
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Foundations.T2SpaceAdeleRing
+
+@[expose] public section
+
 open scoped TensorProduct
 
 namespace GlobalTheory.LocalLatticeIntegral

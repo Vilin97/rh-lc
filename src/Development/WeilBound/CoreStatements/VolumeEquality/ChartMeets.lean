@@ -1,7 +1,11 @@
-import Development.WeilBound.CoreStatements.VolumeEquality.RootBranches
-import Development.WeilBound.CoreStatements.VolumeEquality.ChartMeetsAlg
-import Development.WeilBound.CoreStatements.VolumeEquality.ChartMeetsPoint
-import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.PIntDomainDim
+module
+
+public import Development.WeilBound.CoreStatements.VolumeEquality.RootBranches
+public import Development.WeilBound.CoreStatements.VolumeEquality.ChartMeetsAlg
+public import Development.WeilBound.CoreStatements.VolumeEquality.ChartMeetsPoint
+public import GroundTheory.HeightsAndTheta.Heights.WeightedHomogeneous.PIntDomainDim
+
+@[expose] public section
 
 noncomputable section
 

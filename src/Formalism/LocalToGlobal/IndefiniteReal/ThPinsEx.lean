@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.IndefiniteReal.ThPinsR
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.CsGlob
-import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemSumOfNoConj
-import Formalism.LocalToGlobal.ProjectiveLattices.ThClassPinsRec
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.ThPinsR
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.CsGlob
+public import Formalism.LocalToGlobal.IndefiniteReal.FinitePlaces.IdemSumOfNoConj
+public import Formalism.LocalToGlobal.ProjectiveLattices.ThClassPinsRec
+
+@[expose] public section
 
 noncomputable section
 

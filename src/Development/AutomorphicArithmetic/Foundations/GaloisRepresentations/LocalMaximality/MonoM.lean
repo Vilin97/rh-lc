@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.Edge1
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.GermCompatId
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.Edge1
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.GermCompatId
+
+@[expose] public section
 
 set_option autoImplicit false
 

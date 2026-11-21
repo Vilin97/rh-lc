@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePTyp
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePAllOps
-import Formalism.LocalToGlobal.CharacterGerms.RowTieGermI
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePIndAr
-import Formalism.LocalToGlobal.CharacterGerms.RowTiePLimTy
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePTyp
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePAllOps
+public import Formalism.LocalToGlobal.CharacterGerms.RowTieGermI
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePIndAr
+public import Formalism.LocalToGlobal.CharacterGerms.RowTiePLimTy
+
+@[expose] public section
 
 noncomputable section
 

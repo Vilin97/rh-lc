@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.StandardValuations.LocalSplittingLinearSkew
-import Development.WeilBound.ThetaLifts.LocalTheory.UatClosure
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.StandardValuations.LocalSplittingLinearSkew
+public import Development.WeilBound.ThetaLifts.LocalTheory.UatClosure
+
+@[expose] public section
 
 set_option linter.unusedSectionVars false
 

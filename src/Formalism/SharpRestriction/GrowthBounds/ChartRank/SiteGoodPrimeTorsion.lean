@@ -1,15 +1,19 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypVinRec
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypInvLe
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypForms
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypEvChain
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypLat
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypChi
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.IntWOfPow
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypFin
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ValIntN
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ClsChartedLabAt
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.LocTiesOf
-import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypVinRec
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypInvLe
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypForms
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypEvChain
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypLat
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypChi
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.IntWOfPow
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypFin
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ValIntN
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ClsChartedLabAt
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.LocTiesOf
+public import Formalism.SharpRestriction.GrowthBounds.IntegralWeylLatticeSpan
+
+@[expose] public section
 
 noncomputable section
 

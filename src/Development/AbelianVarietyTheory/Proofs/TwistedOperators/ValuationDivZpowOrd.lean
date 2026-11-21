@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LeviEmbMulSingle
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Cartan
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.TwistedOperators.LeviEmbMulSingle
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Cartan
+
+@[expose] public section
 
 noncomputable section
 

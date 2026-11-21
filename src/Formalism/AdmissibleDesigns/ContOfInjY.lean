@@ -1,5 +1,9 @@
-import Formalism.AdmissibleDesigns.YtTarget
-import Formalism.AdmissibleDesigns.TensSubsingleton
+module
+
+public import Formalism.AdmissibleDesigns.YtTarget
+public import Formalism.AdmissibleDesigns.TensSubsingleton
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

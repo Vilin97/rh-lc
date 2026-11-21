@@ -1,10 +1,14 @@
-import Formalism.LocalToGlobal.InertKernelTheory.DefsRepLt
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.RepFrame
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.RepTwLat
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.RepAsm
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.RepScal
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.RepDataRec
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.RepTrace
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsRepLt
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.RepFrame
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.RepTwLat
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.RepAsm
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.RepScal
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.RepDataRec
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.RepTrace
+
+@[expose] public section
 
 noncomputable section
 

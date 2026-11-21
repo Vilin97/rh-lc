@@ -1,4 +1,8 @@
-import ReciprocityTheory.DualLattices.MemSupOfRestrictToSubgroupMemSq
+module
+
+public import ReciprocityTheory.DualLattices.MemSupOfRestrictToSubgroupMemSq
+
+@[expose] public section
 
 noncomputable section
 

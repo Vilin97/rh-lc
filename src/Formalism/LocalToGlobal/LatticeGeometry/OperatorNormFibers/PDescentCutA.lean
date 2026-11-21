@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.MeanHeightDescent.DivisionInequalityWithCovolume
-import Formalism.BranchSandwichDivisors.DivFromPassageAndNorm
+module
+
+public import Mathlib
+public import Formalism.MeanHeightDescent.DivisionInequalityWithCovolume
+public import Formalism.BranchSandwichDivisors.DivFromPassageAndNorm
+
+@[expose] public section
 
 set_option linter.deprecated false
 

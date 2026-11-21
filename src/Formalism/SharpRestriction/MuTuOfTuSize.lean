@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.GlobalTheoremInputs
-import Formalism.SharpRestriction.AdmissibleParameterJoins
-import Formalism.SharpRestriction.AdmissibleParameterJoins.SumLogPrimeFactorsLe
-import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.PChain
+module
+
+public import Formalism.SharpRestriction.GlobalTheoremInputs
+public import Formalism.SharpRestriction.AdmissibleParameterJoins
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.SumLogPrimeFactorsLe
+public import Formalism.SharpRestriction.LevelLetterCocycles.TwGood
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.PChain
+
+@[expose] public section
 
 noncomputable section
 

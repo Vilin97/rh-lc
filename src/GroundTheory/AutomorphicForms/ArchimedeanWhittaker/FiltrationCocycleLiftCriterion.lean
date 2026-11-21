@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.ArchimedeanWhittaker.ContinuousMultilinearOfFiniteDimensional
-import GroundTheory.AutomorphicForms.HarishChandraRegularity
-import GroundTheory.AutomorphicForms.RealGroupsKAK
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.ArchimedeanWhittaker.ContinuousMultilinearOfFiniteDimensional
+public import GroundTheory.AutomorphicForms.HarishChandraRegularity
+public import GroundTheory.AutomorphicForms.RealGroupsKAK
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.ArchWhittaker
 

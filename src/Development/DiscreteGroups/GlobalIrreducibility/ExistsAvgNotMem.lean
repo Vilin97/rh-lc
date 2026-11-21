@@ -1,4 +1,8 @@
-import Development.DiscreteGroups.GlobalIrreducibility.DualSumEqZero
+module
+
+public import Development.DiscreteGroups.GlobalIrreducibility.DualSumEqZero
+
+@[expose] public section
 
 noncomputable section
 

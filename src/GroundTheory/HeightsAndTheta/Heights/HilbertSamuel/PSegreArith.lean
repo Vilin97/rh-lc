@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSegreArith
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockImageArith
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsSegreArith
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockImageArith
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

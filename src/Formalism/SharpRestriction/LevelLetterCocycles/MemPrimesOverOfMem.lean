@@ -1,8 +1,12 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.StatementFamilies.ExportFamilies
-import Formalism.FrobeniusOrbits.RealSubfieldLeCompositum
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.FrameFacts
-import Development.AutomorphicArithmetic.ResidueCharacters.SumLogDivSqModPmOneLe
-import Development.AutomorphicArithmetic.CyclotomicBounds.CyclotomicOrders.NuHost
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.StatementFamilies.ExportFamilies
+public import Formalism.FrobeniusOrbits.RealSubfieldLeCompositum
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.FrameFacts
+public import Development.AutomorphicArithmetic.ResidueCharacters.SumLogDivSqModPmOneLe
+public import Development.AutomorphicArithmetic.CyclotomicBounds.CyclotomicOrders.NuHost
+
+@[expose] public section
 
 noncomputable section
 

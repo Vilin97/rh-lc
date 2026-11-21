@@ -1,10 +1,14 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.FiniteBruhat
-import GroundTheory.AutomorphicForms.Iwasawa
-import GroundTheory.AutomorphicForms.GLnLocal
-import GroundTheory.AutomorphicForms.LocallyProfinite
-import GroundTheory.AutomorphicForms.MeasuresModulus
-import GroundTheory.PowerSubgroups.CountableNeighbourhoods.NormZpow
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.FiniteBruhat
+public import GroundTheory.AutomorphicForms.Iwasawa
+public import GroundTheory.AutomorphicForms.GLnLocal
+public import GroundTheory.AutomorphicForms.LocallyProfinite
+public import GroundTheory.AutomorphicForms.MeasuresModulus
+public import GroundTheory.PowerSubgroups.CountableNeighbourhoods.NormZpow
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

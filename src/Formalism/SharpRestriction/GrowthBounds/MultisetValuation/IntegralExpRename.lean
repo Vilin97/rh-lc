@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.AtPiEqRescale
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.AtPiEqRescale
+
+@[expose] public section
 
 noncomputable section
 

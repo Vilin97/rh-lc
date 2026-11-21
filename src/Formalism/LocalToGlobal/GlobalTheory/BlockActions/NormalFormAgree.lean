@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.MapMemCSpanOfRat
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.MapMemCSpanOfRat
+
+@[expose] public section
 
 noncomputable section
 

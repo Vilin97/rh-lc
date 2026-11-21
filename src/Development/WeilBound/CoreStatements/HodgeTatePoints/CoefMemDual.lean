@@ -1,8 +1,13 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.LeadMinor
-import Development.WeilBound.CoreStatements.HodgeTatePoints.GeFrame
-import Development.WeilBound.CoreStatements.HodgeTatePoints.GaGram
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FinitelyGeneratedHomology
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.CommutativeAlgebra.LeadMinor
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.GeFrame
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.GaGram
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FinitelyGeneratedHomology
+
+@[expose] public section
+
 open Module NumberField GlobalTheory.CompanionTheory.Ar.HT TensorProduct Filter
 
 namespace PositivityTheory.HtPt.Ge

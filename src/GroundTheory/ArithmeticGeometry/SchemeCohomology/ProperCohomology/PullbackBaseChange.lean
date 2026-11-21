@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.EtaleCompletion.PullbackAffine
-import GroundTheory.ArithmeticGeometry.EtaleCompletion.QcohZariski
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.EtaleCompletion.PullbackAffine
+public import GroundTheory.ArithmeticGeometry.EtaleCompletion.QcohZariski
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh

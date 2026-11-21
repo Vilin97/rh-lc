@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.TateTwists.EtaleCochainEvaluationCoboundaryFormula
+module
+
+public import Development.EtaleCohomology.TateTwists.EtaleCochainEvaluationCoboundaryFormula
+
+@[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC
 

@@ -1,4 +1,8 @@
-import Development.WeilBound.RepresentationTheoryGL.PeriodRingBases.AinfPlusInjectivity.CoeffLMul
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.PeriodRingBases.AinfPlusInjectivity.CoeffLMul
+
+@[expose] public section
 
 noncomputable section
 

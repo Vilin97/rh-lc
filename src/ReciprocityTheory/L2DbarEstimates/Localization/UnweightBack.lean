@@ -1,4 +1,8 @@
-import ReciprocityTheory.L2DbarEstimates.Localization.UnweightBackA
+module
+
+public import ReciprocityTheory.L2DbarEstimates.Localization.UnweightBackA
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.F
 

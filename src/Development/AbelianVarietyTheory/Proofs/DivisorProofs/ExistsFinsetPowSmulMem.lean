@@ -1,4 +1,9 @@
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFinSubRange
+module
+
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsFinSubRange
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory
 open ReciprocityTheory.ChartRestriction.G.Geo.Tor
 open GlobalTheory.Mum

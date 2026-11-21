@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.HeightBoundExactNorms
-import Formalism.ThetaSupremumBounds.DivIneqExplicit6
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.HeightBoundExactNorms
+public import Formalism.ThetaSupremumBounds.DivIneqExplicit6
+
+@[expose] public section
 
 open Finset NumberField
 open scoped Real

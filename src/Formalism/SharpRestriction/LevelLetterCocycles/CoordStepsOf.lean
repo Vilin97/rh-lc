@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.RealisedOfCoordArc
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.RealisedOfCoordArc
+
+@[expose] public section
 
 noncomputable section
 

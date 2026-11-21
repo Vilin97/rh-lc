@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.CharacterGerms.HostTraceIdentity
-import Formalism.LocalToGlobal.CharacterGerms.PlugUP
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.HostTraceIdentity
+public import Formalism.LocalToGlobal.CharacterGerms.PlugUP
+
+@[expose] public section
 
 set_option autoImplicit false
 

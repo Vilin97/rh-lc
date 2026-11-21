@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.IndexRaiseFirst
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.IndexRaiseFirst
+
+@[expose] public section
 
 set_option autoImplicit false
 

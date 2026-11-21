@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.HarderNarasimhan.StatementMod
+module
+
+public import Mathlib
+public import Formalism.HarderNarasimhan.StatementMod
+
+@[expose] public section
 
 open Module NumberField
 

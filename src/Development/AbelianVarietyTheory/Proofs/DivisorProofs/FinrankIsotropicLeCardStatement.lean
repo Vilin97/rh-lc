@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankIsotropicLeCard
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinrankIsotropicLeCard
+
+@[expose] public section
 
 open Matrix
 set_option maxHeartbeats 1000000 in

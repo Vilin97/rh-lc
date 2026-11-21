@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.HostFacts
-import Development.AbelianVarietyTheory.BlockTheory.ThetaLiftGeometry.TypePrimesOfLevel
-import Formalism.LocalRingCardinality.DataKerI
-import Formalism.LocalRingCardinality.DataErr
-import Formalism.SharpRestriction.ElevenLe
-import Formalism.SharpRestriction.GlobalSchurBounds.StandardLattice
-import Formalism.LocalToGlobal.Columns.DecorationStabilizerTrivialUnipotent
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.HostFacts
+public import Development.AbelianVarietyTheory.BlockTheory.ThetaLiftGeometry.TypePrimesOfLevel
+public import Formalism.LocalRingCardinality.DataKerI
+public import Formalism.LocalRingCardinality.DataErr
+public import Formalism.SharpRestriction.ElevenLe
+public import Formalism.SharpRestriction.GlobalSchurBounds.StandardLattice
+public import Formalism.LocalToGlobal.Columns.DecorationStabilizerTrivialUnipotent
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.PolynomialDimension.StatementHar
-import Formalism.PolynomialDimension.MultinomialDepth.HarmonicDecompositionHolds
-import Formalism.PolynomialDimension.MultinomialDepth.DiagLaplacianDivPowMemSqrtFockLattice
+module
+
+public import Formalism.PolynomialDimension.StatementHar
+public import Formalism.PolynomialDimension.MultinomialDepth.HarmonicDecompositionHolds
+public import Formalism.PolynomialDimension.MultinomialDepth.DiagLaplacianDivPowMemSqrtFockLattice
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

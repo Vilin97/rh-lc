@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.BcField
-import Formalism.LocalToGlobal.ProjectiveLattices.FrameProofs
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.UnFree
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.PullbackSections.BcField
+public import Formalism.LocalToGlobal.ProjectiveLattices.FrameProofs
+
+@[expose] public section
 
 noncomputable section
 

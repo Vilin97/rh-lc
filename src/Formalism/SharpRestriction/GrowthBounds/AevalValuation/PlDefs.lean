@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.AevalValuation.RestSpec
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.MemSupportSumMonomial
-import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.DigOKAddInl
-import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.TensZeroRight
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.AevalValuation.RestSpec
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.MemSupportSumMonomial
+public import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.DigOKAddInl
+public import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.TensZeroRight
+
+@[expose] public section
 
 noncomputable section
 

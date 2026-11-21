@@ -1,5 +1,9 @@
-import Formalism.RealPlaceAnalysis.QuotientSettingHolds
-import Formalism.RealPlaceAnalysis.StatementE
+module
+
+public import Formalism.RealPlaceAnalysis.QuotientSettingHolds
+public import Formalism.RealPlaceAnalysis.StatementE
+
+@[expose] public section
 
 open Matrix
 open scoped ContDiff

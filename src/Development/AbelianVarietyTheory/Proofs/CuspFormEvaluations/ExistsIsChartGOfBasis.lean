@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.IntChartCut
-import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsPtJ
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.IntChartCut
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsPtJ
+
+@[expose] public section
 
 noncomputable section
 

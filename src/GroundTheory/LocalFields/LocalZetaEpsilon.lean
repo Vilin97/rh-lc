@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.LocalZetaTate
-import GroundTheory.LocalFields.PadicLogHom
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LocalZetaTate
+public import GroundTheory.LocalFields.PadicLogHom
+
+@[expose] public section
 
 noncomputable section
 

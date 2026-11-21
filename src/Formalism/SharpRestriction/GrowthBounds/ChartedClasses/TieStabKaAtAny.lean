@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ClsChartedLabAt
-import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.SecondKernelStabilizers
-import Formalism.LocalToGlobal.InertKernelTheory.SecondKernelCoupledLastLift
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ClsChartedLabAt
+public import Formalism.LocalToGlobal.InertKernelTheory.InertCoprimeLemmas.SecondKernelStabilizers
+public import Formalism.LocalToGlobal.InertKernelTheory.SecondKernelCoupledLastLift
+
+@[expose] public section
 
 noncomputable section
 

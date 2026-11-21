@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.ToHLatLemmas
-import Formalism.LocalToGlobal.Columns.AtTRank
-import Formalism.LocalToGlobal.Columns.DiamondPreservesRamified
-import Formalism.LocalToGlobal.GlobalTheory.HLatOpsP
-import Formalism.GL3MeanSquares.HookFormulaTorsion.LengthQuotientBoundGeneral
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.ToHLatLemmas
+public import Formalism.LocalToGlobal.Columns.AtTRank
+public import Formalism.LocalToGlobal.Columns.DiamondPreservesRamified
+public import Formalism.LocalToGlobal.GlobalTheory.HLatOpsP
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.LengthQuotientBoundGeneral
+
+@[expose] public section
 
 open Module NumberField ComplexOrder IsDedekindDomain
 open scoped Matrix Kronecker

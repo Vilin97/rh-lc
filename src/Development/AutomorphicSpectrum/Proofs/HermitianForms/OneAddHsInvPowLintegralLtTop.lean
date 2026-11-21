@@ -1,6 +1,11 @@
-import Mathlib
-import Formalism.PeriodIntegrals.IsLowUnitH
-import Formalism.RealPlaceAnalysis.FinalF
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.IsLowUnitH
+public import Formalism.RealPlaceAnalysis.FinalF
+
+@[expose] public section
+
 open MeasureTheory Matrix Finset PI.UpqRep
 open scoped InnerProductSpace ENNReal ComplexOrder
 

@@ -1,6 +1,10 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.InfinitesimalDecay.FormBSelfLe
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TensorRepresentations.FormCc
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TensorRepresentations.ConsumerB
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.InfinitesimalDecay.FormBSelfLe
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TensorRepresentations.FormCc
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.TensorRepresentations.ConsumerB
+
+@[expose] public section
 
 set_option autoImplicit false
 

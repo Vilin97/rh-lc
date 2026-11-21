@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.ThmSUniform
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.WittTeichmullerRoot
+module
+
+public import Mathlib
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.ThmSUniform
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.WittTeichmullerRoot
+
+@[expose] public section
 
 noncomputable section
 

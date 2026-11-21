@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GlobalTheory.MemIffOfLocBasisG
-import Formalism.LocalToGlobal.GlobalTheory.GL4.PColInf
-import Formalism.LocalToGlobal.HermitianForms.FormsTied
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.MemIffOfLocBasisG
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.PColInf
+public import Formalism.LocalToGlobal.HermitianForms.FormsTied
+
+@[expose] public section
 
 noncomputable section
 

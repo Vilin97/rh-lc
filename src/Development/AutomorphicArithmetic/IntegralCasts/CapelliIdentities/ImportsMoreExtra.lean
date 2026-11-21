@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.WeaklyAdmissibleFiltrations.Statement
+module
+
+public import Mathlib
+public import Formalism.WeaklyAdmissibleFiltrations.Statement
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qh15.aux1 :
     ∀ {A : Type} [inst : CommRing A],

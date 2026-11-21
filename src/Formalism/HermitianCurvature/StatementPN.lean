@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.HermitianCurvature.StatementPB
-import Formalism.FlagUnipotentLattices.PairingOrthogonalComplement
-import Formalism.FlagUnipotentLattices.UnipotentStabiliserCharacterisation
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.StatementPB
+public import Formalism.FlagUnipotentLattices.PairingOrthogonalComplement
+public import Formalism.FlagUnipotentLattices.UnipotentStabiliserCharacterisation
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.PN
 

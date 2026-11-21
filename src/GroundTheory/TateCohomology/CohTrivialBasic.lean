@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.TateCohomology.DimensionShift
-import GroundTheory.TateCohomology.InducedNorm
-import GroundTheory.TateCohomology.CoindOne
-import GroundTheory.TateCohomology.UniquelyDivisible
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.DimensionShift
+public import GroundTheory.TateCohomology.InducedNorm
+public import GroundTheory.TateCohomology.CoindOne
+public import GroundTheory.TateCohomology.UniquelyDivisible
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.GroupCoh

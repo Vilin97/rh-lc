@@ -1,6 +1,10 @@
-import Mathlib
-import PositivityTheory.AutomorphicForms.PublishedInputs.JacquetLanglands.TorusKernels.ComplexMinusRealLineMeasureCoordinates
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsMoreBis
+module
+
+public import Mathlib
+public import PositivityTheory.AutomorphicForms.PublishedInputs.JacquetLanglands.TorusKernels.ComplexMinusRealLineMeasureCoordinates
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsMoreBis
+
+@[expose] public section
 
 noncomputable section
 

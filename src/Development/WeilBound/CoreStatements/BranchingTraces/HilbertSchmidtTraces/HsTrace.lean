@@ -1,5 +1,9 @@
-import Development.AutomorphicSpectrum.Definitions.MetricPeriods.IsNormEmbId
-import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeCSchur
+module
+
+public import Development.AutomorphicSpectrum.Definitions.MetricPeriods.IsNormEmbId
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeCSchur
+
+@[expose] public section
 
 noncomputable section
 

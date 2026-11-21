@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.RespectsAddUniversal
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.RespectsAddUniversal
+
+@[expose] public section
 
 open Polynomial WeierstrassCurve.Affine GroundTheory.Arith.Abelian
 

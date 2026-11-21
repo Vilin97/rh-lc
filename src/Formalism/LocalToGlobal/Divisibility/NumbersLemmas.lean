@@ -1,11 +1,15 @@
-import Formalism.LocalToGlobal.Divisibility.Numbers
-import Formalism.LocalRingCardinality.DataForced
-import Formalism.LocalRingCardinality.DataKap
-import Formalism.LocalRingCardinality.DataErr
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleWeightMiddleEntries
-import Formalism.LocalRingCardinality.HostCls
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.NonemptyFieldAxiomsCyclicPow
+module
+
+public import Formalism.LocalToGlobal.Divisibility.Numbers
+public import Formalism.LocalRingCardinality.DataForced
+public import Formalism.LocalRingCardinality.DataKap
+public import Formalism.LocalRingCardinality.DataErr
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExampleWeightMiddleEntries
+public import Formalism.LocalRingCardinality.HostCls
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.NonemptyFieldAxiomsCyclicPow
+
+@[expose] public section
 
 noncomputable section
 

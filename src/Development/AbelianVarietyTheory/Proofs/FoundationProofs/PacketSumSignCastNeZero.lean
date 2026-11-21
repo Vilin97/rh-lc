@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.JacquetSubsetSums.JacquetSubsetSum
-import Formalism.QuotientMetricDivisors.Statement
+module
+
+public import Mathlib
+public import Formalism.JacquetSubsetSums.JacquetSubsetSum
+public import Formalism.QuotientMetricDivisors.Statement
+
+@[expose] public section
 
 open Finset
 

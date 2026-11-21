@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LocalToGlobal.ProjectiveLattices.SectionOfLineBundleOne
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.ProjectiveLattices.SectionOfLineBundleOne
+
+@[expose] public section
 
 noncomputable section
 

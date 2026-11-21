@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.Interface
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.Interface
+
+@[expose] public section
 
 noncomputable section
 

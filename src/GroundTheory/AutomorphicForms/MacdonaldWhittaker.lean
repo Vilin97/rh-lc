@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.MacdonaldFormula
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.MacdonaldFormula
+
+@[expose] public section
 
 noncomputable section
 

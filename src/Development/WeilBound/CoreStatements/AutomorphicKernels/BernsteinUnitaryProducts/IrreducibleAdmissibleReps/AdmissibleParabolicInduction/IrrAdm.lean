@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.JacquetAdmissible
-import Development.WeilBound.CoreStatements.AutomorphicKernels.BernsteinUnitaryProducts.IrreducibleAdmissibleReps.Assembly
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.JacquetAdmissible
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.BernsteinUnitaryProducts.IrreducibleAdmissibleReps.Assembly
+
+@[expose] public section
 
 namespace PositivityTheory.PfBern.Props1
 

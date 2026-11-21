@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.GlobalTheory.UnramifiedTrace.DUPt0FOfVals
-import Formalism.LocalToGlobal.GlobalTheory.UnramifiedTrace.NatSmulInv
-import Formalism.LocalToGlobal.GlobalTheory.UnramifiedDiagonal.DiaFun
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CrossDiagonalMatching.DualSigmaApply
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.UnramifiedTrace.DUPt0FOfVals
+public import Formalism.LocalToGlobal.GlobalTheory.UnramifiedTrace.NatSmulInv
+public import Formalism.LocalToGlobal.GlobalTheory.UnramifiedDiagonal.DiaFun
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.CrossDiagonalMatching.DualSigmaApply
+
+@[expose] public section
 
 noncomputable section
 

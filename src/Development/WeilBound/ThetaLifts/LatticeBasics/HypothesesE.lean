@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.HypothesesX
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.HypothesesX
+
+@[expose] public section
 
 noncomputable section
 

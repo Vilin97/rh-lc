@@ -1,7 +1,12 @@
-import Development.AbelianVarietyTheory.Definitions.Divisors.KerSizes
-import Formalism.LocalToGlobal.Divisibility.NumbersLink
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ColumnsMemberRowsOfLogLevelLeStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OfNumReads
+module
+
+public import Development.AbelianVarietyTheory.Definitions.Divisors.KerSizes
+public import Formalism.LocalToGlobal.Divisibility.NumbersLink
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ColumnsMemberRowsOfLogLevelLeStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OfNumReads
+
+@[expose] public section
+
 open Module NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Col Formalism.L2.Ker GlobalTheory.IndefiniteRowSideFullHecke.PlaceLogThetaBounds GlobalTheory.ColRows
 open scoped ComplexOrder
 

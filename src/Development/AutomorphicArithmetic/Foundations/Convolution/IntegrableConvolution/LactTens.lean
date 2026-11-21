@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.TensSmooth
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.JUnique
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.LactGen
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.LactLaws
-import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.TensSmoothAlt
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.TensSmooth
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.JUnique
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.LactGen
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.LactLaws
+public import Development.AutomorphicArithmetic.Foundations.Convolution.IntegrableConvolution.TensSmoothAlt
+
+@[expose] public section
 
 open MeasureTheory NumberField IsDedekindDomain
 open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.HermitianForms.LastCoordinateUniformizerVectorSpansOrthogonalLi
-import Formalism.LocalToGlobal.HermitianForms.TransportT
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.LastCoordinateUniformizerVectorSpansOrthogonalLi
+public import Formalism.LocalToGlobal.HermitianForms.TransportT
+
+@[expose] public section
 
 noncomputable section
 

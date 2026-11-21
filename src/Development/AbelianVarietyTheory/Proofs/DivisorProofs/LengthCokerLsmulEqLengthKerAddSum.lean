@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LengthEqKerAddRange
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LengthEqKerAddRange
+
+@[expose] public section
 
 namespace GlobalTheory.HerbrandLength
 

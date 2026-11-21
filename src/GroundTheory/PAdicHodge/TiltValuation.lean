@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.PAdicHodge.PerfectoidField
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.PerfectoidField
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

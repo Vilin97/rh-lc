@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnipotentComposition.StepOne
-import Lemmata.PartialDerivativeDegree.PderivTdSuccLe
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnipotentComposition.StepOne
+public import Lemmata.PartialDerivativeDegree.PderivTdSuccLe
+
+@[expose] public section
 
 open Matrix MvPolynomial
 

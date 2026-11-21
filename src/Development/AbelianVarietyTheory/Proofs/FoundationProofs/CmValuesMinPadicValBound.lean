@@ -1,4 +1,8 @@
-import Formalism.PairingDivisors.StatementN
+module
+
+public import Formalism.PairingDivisors.StatementN
+
+@[expose] public section
 
 namespace GlobalTheory
 

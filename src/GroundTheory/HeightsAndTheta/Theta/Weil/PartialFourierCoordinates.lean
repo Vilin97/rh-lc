@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Theta.AdelicFourier
-import GroundTheory.GlobalFields.TateThesis.AdelicChar
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Theta.AdelicFourier
+public import GroundTheory.GlobalFields.TateThesis.AdelicChar
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Theta
 

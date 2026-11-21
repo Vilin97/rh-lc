@@ -1,4 +1,8 @@
-import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.CountStB
+module
+
+public import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.CountStB
+
+@[expose] public section
 
 namespace ReciprocityTheory.GeometryOfNumbersTheory
 

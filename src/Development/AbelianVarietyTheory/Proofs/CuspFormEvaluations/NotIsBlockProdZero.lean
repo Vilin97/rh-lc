@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.ThetaValues.IsBlockProd
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.ThetaValues.IsBlockProd
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

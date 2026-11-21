@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.IndefiniteReal.ScalarOnPartsFull
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.SmExpSmulContDiff
-import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeCSchur
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.ScalarOnPartsFull
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.SmExpSmulContDiff
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BridgeCSchur
+
+@[expose] public section
 
 noncomputable section
 

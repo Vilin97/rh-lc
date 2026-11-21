@@ -1,9 +1,13 @@
-import Formalism.LocalToGlobal.Divisibility.Numbers
-import Formalism.LocalRingCardinality.DataErr
-import Formalism.LocalRingCardinality.DataMink
-import Formalism.SharpRestriction.GrowthBounds.DefsInst
-import Formalism.SizeWindowBrackets.GaloisToProductIsIso
-import Formalism.SizeWindowBrackets.Chain2aCoreNoAnalytic
+module
+
+public import Formalism.LocalToGlobal.Divisibility.Numbers
+public import Formalism.LocalRingCardinality.DataErr
+public import Formalism.LocalRingCardinality.DataMink
+public import Formalism.SharpRestriction.GrowthBounds.DefsInst
+public import Formalism.SizeWindowBrackets.GaloisToProductIsIso
+public import Formalism.SizeWindowBrackets.Chain2aCoreNoAnalytic
+
+@[expose] public section
 
 noncomputable section
 

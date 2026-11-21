@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.IsFieldIntersectionNoBlockFam
-import GroundTheory.HeightsAndTheta.Heights.Intersections.FlagBundleSt
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.IsFieldIntersectionNoBlockFam
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.FlagBundleSt
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.InertJacobiLevels.PrimeSupply
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.CyclotomicNorms.IrreducibilityOfGoodTuple
+module
+
+public import Formalism.SharpRestriction.InertJacobiLevels.PrimeSupply
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.CyclotomicNorms.IrreducibilityOfGoodTuple
+
+@[expose] public section
 
 noncomputable section
 

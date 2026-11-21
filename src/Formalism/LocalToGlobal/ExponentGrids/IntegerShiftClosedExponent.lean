@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.Inputs
-import Formalism.QuotientMetricDivisors.Complement2Normaliser
-import Formalism.TranslateCocycles.StatementHC
-import Formalism.SizeWindowBrackets.SlopesFromSizeAndCount
-import Formalism.LocalRingCardinality.DataErr
-import Formalism.LocalToGlobal.GlobalTheory.IsResidueClassZero
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.Inputs
+public import Formalism.QuotientMetricDivisors.Complement2Normaliser
+public import Formalism.TranslateCocycles.StatementHC
+public import Formalism.SizeWindowBrackets.SlopesFromSizeAndCount
+public import Formalism.LocalRingCardinality.DataErr
+public import Formalism.LocalToGlobal.GlobalTheory.IsResidueClassZero
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain Finset
 open Formalism.DivisionValues (vw conjPl PlOver)

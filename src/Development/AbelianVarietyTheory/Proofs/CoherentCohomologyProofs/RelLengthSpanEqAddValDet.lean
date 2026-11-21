@@ -1,4 +1,8 @@
-import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.LengthCommensurableMapIffOfInjective
+module
+
+public import Development.AbelianVarietyTheory.Definitions.QuasicoherentCohomology.LengthCommensurableMapIffOfInjective
+
+@[expose] public section
 
 namespace GlobalTheory.RelativeLengthSpanDet
 

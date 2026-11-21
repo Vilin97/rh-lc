@@ -1,11 +1,16 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsSemiPosMassFinite
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsSegreChartFibreSum
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartAbsIntegrable
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreChartProjFinite
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreCoordGoodProj
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PSheetHessPSD
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsSemiPosMassFinite
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StPtsSegreChartFibreSum
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StSegreChartAbsIntegrable
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreChartProjFinite
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PSegreCoordGoodProj
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PSheetHessPSD
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdjointInverseTranslate.OpModel
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdjointInverseTranslate.Imports
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdjointInverseTranslate.OpModel
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdjointInverseTranslate.Imports
+
+@[expose] public section
 
 open Matrix Finset
 

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.RealSeparation.IsRealPtO
-import Formalism.LocalToGlobal.IndefiniteReal.FockTheta.ConjPurelyImaginaryGenerator
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.RealSeparation.IsRealPtO
+public import Formalism.LocalToGlobal.IndefiniteReal.FockTheta.ConjPurelyImaginaryGenerator
+
+@[expose] public section
 
 noncomputable section
 

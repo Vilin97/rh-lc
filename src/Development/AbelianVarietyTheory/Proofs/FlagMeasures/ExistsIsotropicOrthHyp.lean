@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.GroupLattices.DownNaturalLevelZero
-import Formalism.SharpRestriction.CuspSpanNormBounds.BlockEnds
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GroupLattices.DownNaturalLevelZero
+public import Formalism.SharpRestriction.CuspSpanNormBounds.BlockEnds
+
+@[expose] public section
 
 open Formalism.BasicNotions Formalism.MainNotions.S
 attribute [local instance] Formalism.BasicNotions.Host.cmStar

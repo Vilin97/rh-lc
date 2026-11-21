@@ -1,5 +1,9 @@
-import Formalism.PieriBlockIdeals.StatementLR
-import Formalism.PieriBlockIdeals.PieriColumnMinors.DividedPowerZeroZeroVector
+module
+
+public import Formalism.PieriBlockIdeals.StatementLR
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.DividedPowerZeroZeroVector
+
+@[expose] public section
 
 open MvPolynomial
 

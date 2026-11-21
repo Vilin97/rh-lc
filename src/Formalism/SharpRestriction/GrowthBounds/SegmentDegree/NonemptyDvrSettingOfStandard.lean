@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.ValuationLowestDegreeRename
-import Formalism.SharpRestriction.GrowthBounds.ValuationLowestDegreeMapFractionField
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ValuationLowestDegreeRename
+public import Formalism.SharpRestriction.GrowthBounds.ValuationLowestDegreeMapFractionField
+
+@[expose] public section
 
 noncomputable section
 

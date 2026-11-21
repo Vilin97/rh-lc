@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.FiniteFlatLocallyFreeAffine
-import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsSecOfFinite
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.FiniteFlatLocallyFreeAffine
+public import Development.AbelianVarietyTheory.Proofs.UniformizationProofs.ExistsSecOfFinite
+
+@[expose] public section
 
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory AlgebraicGeometry
 attribute [local instance] Over.cartesianMonoidalCategory

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL6.LatticeInclusionFamilyOf
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.LatticeInclusionFamilyOf
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,8 +1,13 @@
-import Mathlib
-import Development.AutomorphicArithmetic.LocalEmbeddings.CovCmp
-import Development.AutomorphicArithmetic.DivisorFrames.OrderCodimOneFiniteMap
-import Development.AutomorphicArithmetic.DivisorFrames.ValuationNormSumExtensions
-import Development.AutomorphicArithmetic.DivisorFrames.OrderEqValuationCodimOne
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.LocalEmbeddings.CovCmp
+public import Development.AutomorphicArithmetic.DivisorFrames.OrderCodimOneFiniteMap
+public import Development.AutomorphicArithmetic.DivisorFrames.ValuationNormSumExtensions
+public import Development.AutomorphicArithmetic.DivisorFrames.OrderEqValuationCodimOne
+
+@[expose] public section
+
 open CategoryTheory Limits AlgebraicGeometry IsLocalRing NumberField IsDedekindDomain
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj
 open GlobalTheory GlobalTheory.Cartier GlobalTheory.CechPic GlobalTheory.ProjVar GlobalTheory.TrueGeo GlobalTheory.Vert GlobalTheory.ShFam GlobalTheory.ShFam.Pad GlobalTheory.LocM GlobalTheory.Toroidal

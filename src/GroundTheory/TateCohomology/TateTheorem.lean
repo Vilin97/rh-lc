@@ -1,11 +1,16 @@
-import Mathlib
-import GroundTheory.TateCohomology.SplittingCohTrivial
-import GroundTheory.TateCohomology.TateDeltaZero
-import GroundTheory.TateCohomology.CohTrivialBasic
-import GroundTheory.TateCohomology.DimensionShift
-import GroundTheory.TateCohomology.TateGroupIso
-import GroundTheory.TateCohomology.TateLow
-import GroundTheory.TateCohomology.CoresRes
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.SplittingCohTrivial
+public import GroundTheory.TateCohomology.TateDeltaZero
+public import GroundTheory.TateCohomology.CohTrivialBasic
+public import GroundTheory.TateCohomology.DimensionShift
+public import GroundTheory.TateCohomology.TateGroupIso
+public import GroundTheory.TateCohomology.TateLow
+public import GroundTheory.TateCohomology.CoresRes
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open CategoryTheory Limits Rep

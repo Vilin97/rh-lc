@@ -1,16 +1,20 @@
-import Mathlib
-import Formalism.SharpRestriction.GrowthBounds.BaseLevels.LevelsGEmpty
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.OneChartLev
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.BadQNotOver
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ClsChartedLabAt
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.CompInjLocJ
-import Formalism.SharpRestriction.GrowthBounds.TwistedLevelAgreement.StepInTwK
-import Formalism.LocalToGlobal.HermitianForms.BothLemmas
-import Formalism.LocalToGlobal.HermitianForms.BothSym
-import Formalism.LocalToGlobal.HermitianForms.ExtraSym
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.LocTiesOf
-import Formalism.LocalToGlobal.InertKernelTheory.ProjRSurj
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.ExistsMidLevIff
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.GrowthBounds.BaseLevels.LevelsGEmpty
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.OneChartLev
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.BadQNotOver
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.ClsChartedLabAt
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.CompInjLocJ
+public import Formalism.SharpRestriction.GrowthBounds.TwistedLevelAgreement.StepInTwK
+public import Formalism.LocalToGlobal.HermitianForms.BothLemmas
+public import Formalism.LocalToGlobal.HermitianForms.BothSym
+public import Formalism.LocalToGlobal.HermitianForms.ExtraSym
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.LocTiesOf
+public import Formalism.LocalToGlobal.InertKernelTheory.ProjRSurj
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.ExistsMidLevIff
+
+@[expose] public section
 
 noncomputable section
 

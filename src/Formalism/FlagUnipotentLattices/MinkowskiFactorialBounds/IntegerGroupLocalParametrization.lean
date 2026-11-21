@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.FlagUnipotentLattices.LatticeDeterminantIndexSq
-import Formalism.FlagUnipotentLattices.SignaturePreservingEntryNorms
+module
+
+public import Mathlib
+public import Formalism.FlagUnipotentLattices.LatticeDeterminantIndexSq
+public import Formalism.FlagUnipotentLattices.SignaturePreservingEntryNorms
+
+@[expose] public section
 
 open Module NumberField nonZeroDivisors Finset
 

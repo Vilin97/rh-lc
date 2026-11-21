@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.SpectralTiesReal
-import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.UnitaryHaarProducts.InstExists
-import Formalism.LocalToGlobal.GroupLattices.DownNaturalLevelZero
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RefilledStagesRecord
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.LevelMatchIff
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.FlagStabilizerTensors.SpectralTiesReal
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.UnitaryHaarProducts.InstExists
+public import Formalism.LocalToGlobal.GroupLattices.DownNaturalLevelZero
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RefilledStagesRecord
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.LevelMatchIff
+
+@[expose] public section
 
 noncomputable section
 

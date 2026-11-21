@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.SelfConjugateRowData
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.SelfConjugateRowData
+
+@[expose] public section
 
 set_option autoImplicit false
 

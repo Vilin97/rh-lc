@@ -1,8 +1,12 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.EvHtStatement
-import ReciprocityTheory.DualLattices.CharR
-import ReciprocityTheory.DualLattices.ThmAAll
-import ReciprocityTheory.DualLattices.DualPairInh
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.EvHtStatement
+public import ReciprocityTheory.DualLattices.CharR
+public import ReciprocityTheory.DualLattices.ThmAAll
+public import ReciprocityTheory.DualLattices.DualPairInh
+
+@[expose] public section
 
 noncomputable section
 

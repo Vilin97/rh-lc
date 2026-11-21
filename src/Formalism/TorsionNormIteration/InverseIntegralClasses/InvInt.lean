@@ -1,5 +1,9 @@
-import Formalism.TorsionNormIteration.InvIntegralOfClass
-import Formalism.FormalGroupLog.FormalGroupLogProofs.ChainRule
+module
+
+public import Formalism.TorsionNormIteration.InvIntegralOfClass
+public import Formalism.FormalGroupLog.FormalGroupLogProofs.ChainRule
+
+@[expose] public section
 
 noncomputable section
 

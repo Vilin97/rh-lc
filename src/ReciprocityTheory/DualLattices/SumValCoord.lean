@@ -1,5 +1,9 @@
-import ReciprocityTheory.DualLattices.MonomialDeterminantStatement
-import ReciprocityTheory.DualLattices.ProdEraseUpdate
+module
+
+public import ReciprocityTheory.DualLattices.MonomialDeterminantStatement
+public import ReciprocityTheory.DualLattices.ProdEraseUpdate
+
+@[expose] public section
 
 noncomputable section
 

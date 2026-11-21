@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutEX2
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.Side0PosOf
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.SliceTopZero
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutEX2
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.Side0PosOf
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.SliceTopZero
+
+@[expose] public section
 
 open Matrix MeasureTheory
 

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.FockModels.TransposeWords.FockR
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.FockModels.TransposeWords.FockR
+
+@[expose] public section
 
 open MvPolynomial
 open scoped Classical

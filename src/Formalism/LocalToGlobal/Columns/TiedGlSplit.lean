@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.TiedGlPl
-import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.LevGapLoc
+module
+
+public import Formalism.LocalToGlobal.Columns.TiedGlPl
+public import Formalism.SharpRestriction.GenusPolyhedralBounds.RelativeIndexClassSets.LevGapLoc
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix
 open scoped TensorProduct

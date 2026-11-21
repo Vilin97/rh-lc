@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.DepthZeroCuspidalLL
-import Formalism.SharpRestriction.LevelLetterCocycles.WildPro
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.DepthZeroCuspidalLL
+public import Formalism.SharpRestriction.LevelLetterCocycles.WildPro
+
+@[expose] public section
 
 noncomputable section
 

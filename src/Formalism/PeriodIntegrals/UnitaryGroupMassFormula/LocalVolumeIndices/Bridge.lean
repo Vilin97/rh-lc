@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.MassDataInst
-import Formalism.PeriodIntegrals.AdBridgeSteps
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.BridgeFinK
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.MassDataInst
+public import Formalism.PeriodIntegrals.AdBridgeSteps
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.BridgeFinK
+
+@[expose] public section
 
 noncomputable section
 

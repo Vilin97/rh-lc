@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.CompEqOneIffPush
-import Development.AbelianVarietyTheory.Definitions.Divisors.Subsingleton
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CompEqOneIffPush
+public import Development.AbelianVarietyTheory.Definitions.Divisors.Subsingleton
+
+@[expose] public section
 
 set_option autoImplicit false
 

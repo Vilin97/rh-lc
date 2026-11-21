@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LabConj
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.BlocksUnique
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BaseChangeNonempty
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LpUnrNegOneSpec
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.LabConj
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.BlocksUnique
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.BaseChangeNonempty
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.LpUnrNegOneSpec
+
+@[expose] public section
 
 noncomputable section
 

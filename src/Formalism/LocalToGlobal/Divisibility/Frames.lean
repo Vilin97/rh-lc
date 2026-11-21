@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.Statement
-import Formalism.QuotientMetricDivisors.RatHermLcvTwist
-import Formalism.QuotientMetricDivisors.ClassSumDualLe
-import Formalism.LocalRingCardinality.DataArith
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.Statement
+public import Formalism.QuotientMetricDivisors.RatHermLcvTwist
+public import Formalism.QuotientMetricDivisors.ClassSumDualLe
+public import Formalism.LocalRingCardinality.DataArith
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder MatrixOrder

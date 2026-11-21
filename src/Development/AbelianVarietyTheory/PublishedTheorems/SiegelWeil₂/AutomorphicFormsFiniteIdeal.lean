@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.BesselHermitianTheta.TiedSmooth
-import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.WordDerivatives
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.BesselHermitianTheta.TiedSmooth
+public import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.WordDerivatives
+
+@[expose] public section
 
 noncomputable section
 

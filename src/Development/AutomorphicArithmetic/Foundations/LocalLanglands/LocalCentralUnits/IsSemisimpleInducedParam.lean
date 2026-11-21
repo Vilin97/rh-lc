@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.Foundations.LocalLanglands.RecTTransport
+module
+
+public import Development.AutomorphicArithmetic.Foundations.LocalLanglands.RecTTransport
+
+@[expose] public section
 
 noncomputable section
 

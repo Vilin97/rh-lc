@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.MaximalUnramifiedIntegers
-import GroundTheory.PowerSubgroups.CountableNeighbourhoods.UnitMulPowAdic
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.MaximalUnramifiedIntegers
+public import GroundTheory.PowerSubgroups.CountableNeighbourhoods.UnitMulPowAdic
+
+@[expose] public section
 
 noncomputable section
 

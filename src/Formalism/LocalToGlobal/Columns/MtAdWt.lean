@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.LocalToGlobal.GaloisLevelStructure.DefsAut
-import Formalism.LocalToGlobal.Divisibility.CoefMod
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.WeightDualExistence.IncludeInjective
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GelfandTsetlinBranching.ExtremalFactsProofA
-import Formalism.LocalToGlobal.Columns.CoefModB
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.AlgWtDualUniq
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.AlgWtHwUnq
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GaloisLevelStructure.DefsAut
+public import Formalism.LocalToGlobal.Divisibility.CoefMod
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.WeightDualExistence.IncludeInjective
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.GelfandTsetlinBranching.ExtremalFactsProofA
+public import Formalism.LocalToGlobal.Columns.CoefModB
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.AlgWtDualUniq
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.AlgWtHwUnq
+
+@[expose] public section
 
 open NumberField IsDedekindDomain ReciprocityTheory.Aut Formalism.AUTREP MvPolynomial
 

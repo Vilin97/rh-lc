@@ -1,4 +1,8 @@
-import Formalism.LocalRingCardinality.SpanPowerMembership.PlOver
+module
+
+public import Formalism.LocalRingCardinality.SpanPowerMembership.PlOver
+
+@[expose] public section
 
 noncomputable section
 

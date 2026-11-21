@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualIsogenyExists
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.DualIsogenyExists
+
+@[expose] public section
 
 namespace GroundTheory.Arith.Abelian
 

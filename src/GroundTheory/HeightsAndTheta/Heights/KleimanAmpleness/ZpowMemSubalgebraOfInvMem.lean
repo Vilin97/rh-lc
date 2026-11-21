@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsTailSide
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSegreBase
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ImportsTailSide
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PSegreBase
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

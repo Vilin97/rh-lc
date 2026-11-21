@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.CrudeBase
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.CrudeBase
+
+@[expose] public section
 
 set_option autoImplicit false
 

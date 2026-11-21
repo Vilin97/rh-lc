@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.DataParamsT
-import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.FrameFacts
+module
+
+public import Formalism.LocalRingCardinality.DataParamsT
+public import Formalism.SharpRestriction.RamificationFrobenius.TotientGaloisClasses.FrameFacts
+
+@[expose] public section
 
 namespace Formalism.BasicNotions
 

@@ -1,10 +1,14 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.LeviMatchingWords.MatchLM
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MatchingUnitOf
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HintConstMul
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsCompactMaximalPairPlace
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConstantTermMultiplicative
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MatchingSplitOf
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.LeviMatchingWords.MatchLM
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MatchingUnitOf
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.HintConstMul
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsCompactMaximalPairPlace
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ConstantTermMultiplicative
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.MatchingSplitOf
+
+@[expose] public section
 
 noncomputable section
 

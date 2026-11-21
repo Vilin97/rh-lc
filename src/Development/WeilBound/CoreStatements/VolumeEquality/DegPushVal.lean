@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.VolumeEquality.DegPushDefs
+module
+
+public import Development.WeilBound.CoreStatements.VolumeEquality.DegPushDefs
+
+@[expose] public section
 
 noncomputable section
 

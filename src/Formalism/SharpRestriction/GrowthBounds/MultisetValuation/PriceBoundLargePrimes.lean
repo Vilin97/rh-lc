@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.PriceBoundSmallPrimes
-import Formalism.LocalRingCardinality.ColumnWeightSpreadOffTop
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.PriceBoundSmallPrimes
+public import Formalism.LocalRingCardinality.ColumnWeightSpreadOffTop
+
+@[expose] public section
 
 noncomputable section
 

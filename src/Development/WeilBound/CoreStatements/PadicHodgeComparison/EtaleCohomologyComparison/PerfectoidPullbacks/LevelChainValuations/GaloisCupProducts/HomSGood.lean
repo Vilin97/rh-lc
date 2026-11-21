@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.PerfectoidPullbacks.LevelChainValuations.GaloisCupProducts.HomLevGood
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InclRedM
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DPullCEqZero
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.PadicHodgeComparison.EtaleCohomologyComparison.PerfectoidPullbacks.LevelChainValuations.GaloisCupProducts.HomLevGood
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.InclRedM
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DPullCEqZero
+
+@[expose] public section
 
 set_option backward.isDefEq.respectTransparency false
 set_option autoImplicit false

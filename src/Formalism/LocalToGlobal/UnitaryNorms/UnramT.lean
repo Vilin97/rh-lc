@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.UnitaryNorms.RamificationIdxEqOneOfNotDvd
-import Formalism.LocalToGlobal.UnitaryNorms.MemFIffReal
-import Formalism.LocalToGlobal.GlobalTheory.GL6.ValuationDetBasisChange
+module
+
+public import Formalism.LocalToGlobal.UnitaryNorms.RamificationIdxEqOneOfNotDvd
+public import Formalism.LocalToGlobal.UnitaryNorms.MemFIffReal
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.ValuationDetBasisChange
+
+@[expose] public section
 
 noncomputable section
 

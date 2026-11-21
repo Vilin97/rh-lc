@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.U2ringPfSSplit
-import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.GradNPfC
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.U2ringPfSSplit
+public import Formalism.SharpRestriction.LevelLetterCocycles.DvrLatticeRank.GradNPfC
+
+@[expose] public section
 
 noncomputable section
 

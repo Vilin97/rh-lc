@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.LeOfOneLeMul
-import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.PickDefs
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.LeOfOneLeMul
+public import Formalism.SharpRestriction.GrowthBounds.DiagonalSupport.PickDefs
+
+@[expose] public section
 
 noncomputable section
 

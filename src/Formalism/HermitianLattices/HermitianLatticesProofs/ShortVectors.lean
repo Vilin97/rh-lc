@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.HermitianLattices.DefsCS
-import Formalism.SuccessiveMinima.MinkowskiIIUpper
+module
+
+public import Mathlib
+public import Formalism.HermitianLattices.DefsCS
+public import Formalism.SuccessiveMinima.MinkowskiIIUpper
+
+@[expose] public section
 
 open MeasureTheory Module Metric Set
 open scoped Pointwise

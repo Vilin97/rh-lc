@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.MinorDeterminants.aux1 :
     ∀ {N : ℕ} (J : Finset (Fin N)), J.card = J.card := by

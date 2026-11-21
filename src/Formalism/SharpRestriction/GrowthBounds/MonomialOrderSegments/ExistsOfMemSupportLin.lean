@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.TestBoundOfRhoAndNormSets
-import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.SegDefs
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.TestBoundOfRhoAndNormSets
+public import Formalism.SharpRestriction.GrowthBounds.MonomialOrderSegments.SegDefs
+
+@[expose] public section
 
 noncomputable section
 

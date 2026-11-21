@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2Classical.ExistsIntOfMemIntegralFiniteAdeles
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.Archimedean
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2Classical.ExistsIntOfMemIntegralFiniteAdeles
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.Archimedean
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Matrix CongruenceSubgroup
 open GroundTheory.Global

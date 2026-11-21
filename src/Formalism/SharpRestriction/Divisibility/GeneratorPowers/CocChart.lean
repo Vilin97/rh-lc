@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpSActPS
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.BqOriginSt
+module
+
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ExpSActPS
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.BqOriginSt
+
+@[expose] public section
 
 set_option autoImplicit false
 

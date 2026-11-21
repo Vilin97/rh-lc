@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.SumMulLe
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.StandardPolynomials.SumMulLe
+
+@[expose] public section
 
 noncomputable section
 

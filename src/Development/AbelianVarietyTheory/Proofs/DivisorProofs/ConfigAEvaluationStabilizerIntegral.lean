@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
-import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DecayNonneg
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdeleDecayIntegrableStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzFiniteDecompositionStableStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConfigASchwartzLocalEvalStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DecayNonneg
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IdeleDecayIntegrableStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SchwartzFiniteDecompositionStableStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConfigASchwartzLocalEvalStatement
+
+@[expose] public section
 
 open scoped TensorProduct NNReal Matrix
 open NumberField IsDedekindDomain MeasureTheory Filter Topology Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes

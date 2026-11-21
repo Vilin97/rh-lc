@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.InertKernelTheory.K2OfAgreements
-import Formalism.SharpRestriction.GrowthBounds.LatticeMultiplicityLemmas.LatticeMultiplicityCheck.Retype
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.K2OfAgreements
+public import Formalism.SharpRestriction.GrowthBounds.LatticeMultiplicityLemmas.LatticeMultiplicityCheck.Retype
+
+@[expose] public section
 
 noncomputable section
 

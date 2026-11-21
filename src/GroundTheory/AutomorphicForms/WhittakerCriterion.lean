@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HeckeAlgebra
-import GroundTheory.AutomorphicForms.SmoothRepContragredient
-import GroundTheory.AutomorphicForms.SmoothRepSchur
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HeckeAlgebra
+public import GroundTheory.AutomorphicForms.SmoothRepContragredient
+public import GroundTheory.AutomorphicForms.SmoothRepSchur
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.RestDecompProved
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.StructureSheafH2BaseChange
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.RestDecompProved
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.StructureSheafH2BaseChange
+
+@[expose] public section
 
 noncomputable section
 

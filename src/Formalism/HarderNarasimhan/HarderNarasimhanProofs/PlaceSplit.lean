@@ -1,4 +1,8 @@
-import Formalism.HarderNarasimhan.DefsPl
+module
+
+public import Formalism.HarderNarasimhan.DefsPl
+
+@[expose] public section
 
 open Module NumberField Matrix
 

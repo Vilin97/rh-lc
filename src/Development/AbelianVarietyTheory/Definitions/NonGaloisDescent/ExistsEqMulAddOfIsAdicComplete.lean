@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.TameDescentExtendedActionExtraVector
-import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MemSpanLPowSIff
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.NonGaloisDescent.TameDescentExtendedActionExtraVector
+public import Development.AbelianVarietyTheory.Proofs.InertiaEigenvalues.MemSpanLPowSIff
+
+@[expose] public section
 
 noncomputable section
 

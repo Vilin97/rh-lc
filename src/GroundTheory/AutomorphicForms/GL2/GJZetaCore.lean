@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJInducedCoeff
-import GroundTheory.AutomorphicForms.GL2.ExistsEqPowMulOfValuationLe
-import GroundTheory.AutomorphicForms.GL2.GJInducedZeta
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJInducedCoeff
+public import GroundTheory.AutomorphicForms.GL2.ExistsEqPowMulOfValuationLe
+public import GroundTheory.AutomorphicForms.GL2.GJInducedZeta
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

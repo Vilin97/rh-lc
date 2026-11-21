@@ -1,13 +1,17 @@
-import Formalism.IncomingBounds.FlowDegreeBounds.MaxFlowValueAttained
-import Formalism.IncomingBounds.FlowDegreeBounds.LemmaF
-import Formalism.IncomingBounds.FlowDegreeBounds.LemmaFd
-import Formalism.IncomingBounds.FlowDegreeBounds.BaseTermLeTopTerm
-import Formalism.IncomingBounds.FlowDegreeBounds.PadicValFactorialRatioProd
-import Mathlib
-import Formalism.IncomingBounds.LevelTail
-import Formalism.IncomingBounds.FlowDegreeBounds.IndexLastReductionHolds
-import Formalism.IncomingBounds.FlowDegreeBounds.Cayley
-import Formalism.IncomingBounds.FlowDegreeBounds.ProdRangeEqFactorialMulProdIco
+module
+
+public import Formalism.IncomingBounds.FlowDegreeBounds.MaxFlowValueAttained
+public import Formalism.IncomingBounds.FlowDegreeBounds.LemmaF
+public import Formalism.IncomingBounds.FlowDegreeBounds.LemmaFd
+public import Formalism.IncomingBounds.FlowDegreeBounds.BaseTermLeTopTerm
+public import Formalism.IncomingBounds.FlowDegreeBounds.PadicValFactorialRatioProd
+public import Mathlib
+public import Formalism.IncomingBounds.LevelTail
+public import Formalism.IncomingBounds.FlowDegreeBounds.IndexLastReductionHolds
+public import Formalism.IncomingBounds.FlowDegreeBounds.Cayley
+public import Formalism.IncomingBounds.FlowDegreeBounds.ProdRangeEqFactorialMulProdIco
+
+@[expose] public section
 
 namespace Formalism.IncomingBounds
 

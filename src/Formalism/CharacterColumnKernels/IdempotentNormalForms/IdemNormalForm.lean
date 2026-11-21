@@ -1,4 +1,8 @@
-import Formalism.CharacterColumnKernels.StatOntoLattice
+module
+
+public import Formalism.CharacterColumnKernels.StatOntoLattice
+
+@[expose] public section
 
 open Module
 

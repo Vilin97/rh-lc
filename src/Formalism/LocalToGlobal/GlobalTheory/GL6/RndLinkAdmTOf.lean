@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL6.FrameTranslate
-import Formalism.LocalToGlobal.GlobalTheory.GL6.AdmissibleOfSplitAndRoundTrips
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.FrameTranslate
+public import Formalism.LocalToGlobal.GlobalTheory.GL6.AdmissibleOfSplitAndRoundTrips
+
+@[expose] public section
 
 noncomputable section
 

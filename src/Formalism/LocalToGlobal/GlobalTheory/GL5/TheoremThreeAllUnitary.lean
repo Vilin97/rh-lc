@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.GlobalTheory.GL5.Statement
-import Formalism.LocalToGlobal.BesselHermitianTheta.Lemmas
-import Formalism.SharpRestriction.GlobalSchurBounds.ThickPlacesCorollaryOfAnyTranslate
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.GL5.Statement
+public import Formalism.LocalToGlobal.BesselHermitianTheta.Lemmas
+public import Formalism.SharpRestriction.GlobalSchurBounds.ThickPlacesCorollaryOfAnyTranslate
+
+@[expose] public section
 
 noncomputable section
 

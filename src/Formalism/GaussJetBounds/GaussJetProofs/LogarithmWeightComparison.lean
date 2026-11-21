@@ -1,7 +1,11 @@
-import Formalism.GaussJetBounds.GaussJetProofs.SubstitutionWeightBound
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.SolveV
-import Formalism.FormalGroupWitt.FormalGroupWittProofs.EqSingleOfDegreeEqOne
-import Formalism.IncomingBounds.FlowDegreeBounds.PadicValFactorialRatioProd
+module
+
+public import Formalism.GaussJetBounds.GaussJetProofs.SubstitutionWeightBound
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.SolveV
+public import Formalism.FormalGroupWitt.FormalGroupWittProofs.EqSingleOfDegreeEqOne
+public import Formalism.IncomingBounds.FlowDegreeBounds.PadicValFactorialRatioProd
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.FiniteLengthSubquotient
-import GroundTheory.AutomorphicForms.GeometricLemma
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.FiniteLengthSubquotient
+public import GroundTheory.AutomorphicForms.GeometricLemma
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

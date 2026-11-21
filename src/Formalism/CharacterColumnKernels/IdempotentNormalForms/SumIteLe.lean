@@ -1,6 +1,10 @@
-import Formalism.CharacterColumnKernels.StatementNG
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.GlobalConcreteOf
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthQuotSmulRangeFree
+module
+
+public import Formalism.CharacterColumnKernels.StatementNG
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.GlobalConcreteOf
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthQuotSmulRangeFree
+
+@[expose] public section
 
 open Finset
 

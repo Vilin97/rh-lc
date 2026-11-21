@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutEXMTB
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutEXMTB
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.MultiplicityOne.Injective
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.MultiplicityOne.Injective
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness
+
+@[expose] public section
 
 open MeasureTheory Set Filter Topology Function
 open NumberField IsDedekindDomain

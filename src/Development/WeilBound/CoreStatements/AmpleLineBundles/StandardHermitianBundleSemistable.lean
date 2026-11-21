@@ -1,4 +1,8 @@
-import Development.WeilBound.CoreStatements.AmpleLineBundles.SpanLeOfMem
+module
+
+public import Development.WeilBound.CoreStatements.AmpleLineBundles.SpanLeOfMem
+
+@[expose] public section
 
 open GroundTheory.Heights₂.Heights NumberField TensorProduct ComplexAt GlobalTheory.CompanionTheory.Ar Matrix
 open scoped BigOperators ComplexOrder

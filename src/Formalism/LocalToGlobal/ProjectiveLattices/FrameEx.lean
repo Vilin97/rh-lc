@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.FibreUniformisationLevelTwo
-import Formalism.LocalToGlobal.ProjectiveLattices.UnifGen
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.FibreUniformisationLevelTwo
+public import Formalism.LocalToGlobal.ProjectiveLattices.UnifGen
+
+@[expose] public section
 
 noncomputable section
 

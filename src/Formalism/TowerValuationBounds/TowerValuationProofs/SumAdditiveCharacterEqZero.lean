@@ -1,4 +1,8 @@
-import Formalism.TowerValuationBounds.HermitianSumValuationBound
+module
+
+public import Formalism.TowerValuationBounds.HermitianSumValuationBound
+
+@[expose] public section
 
 noncomputable section
 namespace Formalism.ValuationGridEstimates

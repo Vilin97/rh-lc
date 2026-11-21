@@ -1,10 +1,14 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.AtPlace
-import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.SplitS
-import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.LocalL
-import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.InertR
-import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.SplitSph
-import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.UnramB
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.AtPlace
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.SplitS
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.LocalL
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.InertR
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.SplitSph
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.IsobaricBaseChange.UnramB
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.PhMeasCore
+module
+
+public import Formalism.PeriodIntegrals.PhMeasCore
+
+@[expose] public section
 
 open MeasureTheory Matrix Filter Topology
 open scoped InnerProductSpace ContDiff

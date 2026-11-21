@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.CoprimeLiftBounds.Statement
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.ColKerChiOne
+module
+
+public import Formalism.WachLatticeTwists.CoprimeLiftBounds.Statement
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.ColKerChiOne
+
+@[expose] public section
 
 open Finset
 

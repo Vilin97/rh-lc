@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilTranslate
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.AbelianVarieties.WeilTranslate
+
+@[expose] public section
 
 namespace GroundTheory.Arith.Abelian
 

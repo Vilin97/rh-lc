@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.SelfDualUnimodular.LocalLatticeDictionary.ExistsUnitNorm
+module
+
+public import Mathlib
+public import Formalism.SelfDualUnimodular.LocalLatticeDictionary.ExistsUnitNorm
+
+@[expose] public section
 
 noncomputable section
 

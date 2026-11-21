@@ -1,7 +1,11 @@
-import Formalism.HarderNarasimhan.StatementFrameF
-import Formalism.SizeWindowBrackets.TraceSquareAndDiagBounds
-import Formalism.SizeWindowBrackets.SlopeExcessBoundExponentZero
-import Formalism.SizeWindowBrackets.SlopesHypothesisFinitePlaces
+module
+
+public import Formalism.HarderNarasimhan.StatementFrameF
+public import Formalism.SizeWindowBrackets.TraceSquareAndDiagBounds
+public import Formalism.SizeWindowBrackets.SlopeExcessBoundExponentZero
+public import Formalism.SizeWindowBrackets.SlopesHypothesisFinitePlaces
+
+@[expose] public section
 
 open Module NumberField Matrix
 open Formalism.CorankShareLayerCake.FR Formalism.HN

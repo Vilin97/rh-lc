@@ -1,4 +1,8 @@
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces
+module
+
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces
+
+@[expose] public section
 
 noncomputable section
 

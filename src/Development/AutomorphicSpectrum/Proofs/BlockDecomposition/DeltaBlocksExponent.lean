@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameReading.ExpToSat
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CardResidueEqQV
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.SatakeExponents.UniformizerValuations.FrameReading.ExpToSat
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CardResidueEqQV
+
+@[expose] public section
 
 noncomputable section
 

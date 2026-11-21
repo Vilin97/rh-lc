@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.InflationRestriction.Higher
-import GroundTheory.ProfiniteCohomology.InflationRestriction.FiveTerm
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.InflationRestriction.Higher
+public import GroundTheory.ProfiniteCohomology.InflationRestriction.FiveTerm
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.LatticeDualFibres.Statement
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthEqKerAddRange
+module
+
+public import Formalism.WachLatticeTwists.LatticeDualFibres.Statement
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthEqKerAddRange
+
+@[expose] public section
 
 universe u
 

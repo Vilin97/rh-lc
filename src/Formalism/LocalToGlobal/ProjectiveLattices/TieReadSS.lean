@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.TieUpA
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.SiegelSpaceAlgebraHolds
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.TieUpA
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.FundamentalDomains.SiegelSpaceAlgebraHolds
+
+@[expose] public section
 
 noncomputable section
 

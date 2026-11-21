@@ -1,14 +1,19 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.BrauerLocalVal
-import GroundTheory.ProfiniteCohomology.Characters
-import GroundTheory.ProfiniteCohomology.CupProducts.ExistsCocycleMapFEqD
-import GroundTheory.LocalFields.MaximalUnramified
-import GroundTheory.LocalFields.TameExtension
-import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
-import GroundTheory.LocalFields.LocalArtinTransport
-import GroundTheory.LocalFields.Uniqueness
-import GroundTheory.LocalFields.SeparableClosure
-import GroundTheory.GlobalFields.CompletionAtPlace.Integers
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.BrauerLocalVal
+public import GroundTheory.ProfiniteCohomology.Characters
+public import GroundTheory.ProfiniteCohomology.CupProducts.ExistsCocycleMapFEqD
+public import GroundTheory.LocalFields.MaximalUnramified
+public import GroundTheory.LocalFields.TameExtension
+public import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeRangeNormUnits
+public import GroundTheory.LocalFields.LocalArtinTransport
+public import GroundTheory.LocalFields.Uniqueness
+public import GroundTheory.LocalFields.SeparableClosure
+public import GroundTheory.GlobalFields.CompletionAtPlace.Integers
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

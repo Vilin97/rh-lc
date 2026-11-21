@@ -1,4 +1,8 @@
-import ReciprocityTheory.ThetaSummability.TailSumEstimates.ConeDefs
+module
+
+public import ReciprocityTheory.ThetaSummability.TailSumEstimates.ConeDefs
+
+@[expose] public section
 
 namespace ReciprocityTheory.ThetaSummability.Est
 

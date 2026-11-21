@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DwCons
-import GroundTheory.AutomorphicForms.RealGroupsHaar
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DwCons
+public import GroundTheory.AutomorphicForms.RealGroupsHaar
+
+@[expose] public section
+
 open MeasureTheory Matrix Finset
 open scoped ContDiff
 open PositivityTheory.RgTw (Mat G)

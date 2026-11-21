@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.ProfiniteCohomology.CartierDualDefs
+module
+
+public import Mathlib
+public import GroundTheory.ProfiniteCohomology.CartierDualDefs
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

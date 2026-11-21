@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HarishChandraCentre.Projection
-import GroundTheory.AutomorphicForms.HarishChandraCentre.Capelli
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HarishChandraCentre.Projection
+public import GroundTheory.AutomorphicForms.HarishChandraCentre.Capelli
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.HarishChandra
 

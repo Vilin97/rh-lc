@@ -1,6 +1,10 @@
-import Formalism.YangianSpanCharacter.StatementF
-import Formalism.YangianSpanCharacter.StatementY
-import Formalism.YangianSpanCharacter.YangianRTTProofs.DiagonalEntryEqOfModularRelation
+module
+
+public import Formalism.YangianSpanCharacter.StatementF
+public import Formalism.YangianSpanCharacter.StatementY
+public import Formalism.YangianSpanCharacter.YangianRTTProofs.DiagonalEntryEqOfModularRelation
+
+@[expose] public section
 
 namespace Formalism.YangianSpanCharacter.P
 

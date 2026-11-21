@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.TwQSpP
+module
+
+public import Formalism.LocalToGlobal.Columns.TwQSpP
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

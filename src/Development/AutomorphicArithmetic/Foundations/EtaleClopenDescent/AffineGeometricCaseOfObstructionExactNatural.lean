@@ -1,7 +1,11 @@
-import Mathlib
-import Development.EtaleCohomology.EtaleSheaves.GeoProof
-import Development.EtaleCohomology.KummerTheory.FinSHen
-import Development.EtaleCohomology.KummerTheory.FinCont
+module
+
+public import Mathlib
+public import Development.EtaleCohomology.EtaleSheaves.GeoProof
+public import Development.EtaleCohomology.KummerTheory.FinSHen
+public import Development.EtaleCohomology.KummerTheory.FinCont
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC

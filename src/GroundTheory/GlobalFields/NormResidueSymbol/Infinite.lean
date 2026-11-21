@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.InfiniteNormIndex.LocalSymbol
-import GroundTheory.GlobalFields.IdeleGroups.LocalNormGroups
-import GroundTheory.GlobalFields.NormResidueSymbol.RangeFiniteLocalNormLeKerLocalSymbol
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.InfiniteNormIndex.LocalSymbol
+public import GroundTheory.GlobalFields.IdeleGroups.LocalNormGroups
+public import GroundTheory.GlobalFields.NormResidueSymbol.RangeFiniteLocalNormLeKerLocalSymbol
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

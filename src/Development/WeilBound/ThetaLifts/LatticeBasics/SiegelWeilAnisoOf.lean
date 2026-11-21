@@ -1,7 +1,11 @@
-import Development.WeilBound.ThetaLifts.LatticeBasics.BoxSec
-import Development.WeilBound.ThetaLifts.LatticeBasics.HypothesesS
-import Development.WeilBound.ThetaLifts.LatticeBasics.RatEquiv
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicSchwartzDeterminedBySchrodingerThetaValues
+module
+
+public import Development.WeilBound.ThetaLifts.LatticeBasics.BoxSec
+public import Development.WeilBound.ThetaLifts.LatticeBasics.HypothesesS
+public import Development.WeilBound.ThetaLifts.LatticeBasics.RatEquiv
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdelicSchwartzDeterminedBySchrodingerThetaValues
+
+@[expose] public section
 
 noncomputable section
 

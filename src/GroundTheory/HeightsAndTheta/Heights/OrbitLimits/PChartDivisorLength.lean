@@ -1,11 +1,16 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDivisorLength
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDivisorComponents
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartSectionLength
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PSectionLengthSum
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PLocalSectionLengthSum
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PPiQuotCokerFiniteLength
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDivisorLength
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDivisorComponents
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartSectionLength
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PSectionLengthSum
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PLocalSectionLengthSum
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PPiQuotCokerFiniteLength
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Targets

@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.StatementA
-import Formalism.GaussJetBounds.StatementS
-import Formalism.GaussJetBounds.StatementU
-import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementGK
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.StatementA
+public import Formalism.GaussJetBounds.StatementS
+public import Formalism.GaussJetBounds.StatementU
+public import Formalism.ThetaLogCoordinates.UniformThetaSubstitution.StatementGK
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.InertKernelTheory.StatementLoc
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.RestEntOf
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.StatementLoc
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.RestEntOf
+
+@[expose] public section
 
 noncomputable section
 

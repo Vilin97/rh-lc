@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.StabFunGen
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.StabFunGen
+
+@[expose] public section
 
 noncomputable section
 

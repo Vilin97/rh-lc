@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.GTDefs
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Wlocal
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.GTDefs
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Wlocal
+
+@[expose] public section
 
 noncomputable section
 

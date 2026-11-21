@@ -1,9 +1,14 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StSemilocResidueFibreDim
-import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsFibreDivSupp
-import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsMoreTail
-import GroundTheory.HeightsAndTheta.Heights.Intersections.IsMultiProjPrimeImageZ
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MixedFieldContraction.ContractMixedFieldStatement
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StSemilocResidueFibreDim
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.StatementsFibreDivSupp
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.ImportsMoreTail
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.IsMultiProjPrimeImageZ
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.ArithmeticIntersection.MixedFieldContraction.ContractMixedFieldStatement
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

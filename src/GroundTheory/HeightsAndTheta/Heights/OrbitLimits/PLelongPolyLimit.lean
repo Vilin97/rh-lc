@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StLelongPolyLimit
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.GraphIdeal
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StLocalMultComap
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StLelongWeightLimit
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StLelongPolyLimit
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.GraphIdeal
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StLocalMultComap
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StLelongWeightLimit
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

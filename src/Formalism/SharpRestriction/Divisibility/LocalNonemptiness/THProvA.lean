@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataTheta
-import Lemmata.ProductIdentities.ProdInvZpowMulOfProdZpowEqOne
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataTheta
+public import Lemmata.ProductIdentities.ProdInvZpowMulOfProdZpowEqOne
+
+@[expose] public section
 
 open Matrix MeasureTheory Formalism.BasicNotions.TH
 

@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.TwoChartAtlas.AdditionLawSecondIdentity
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ThetaSwapFirstTwo
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.GaugeUniqA
-import Formalism.SharpRestriction.Divisibility.GeneratorPowers.GaugeUniqB
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.TwoChartAtlas.AdditionLawSecondIdentity
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.ThetaSwapFirstTwo
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.GaugeUniqA
+public import Formalism.SharpRestriction.Divisibility.GeneratorPowers.GaugeUniqB
+
+@[expose] public section
 
 set_option autoImplicit false
 noncomputable section

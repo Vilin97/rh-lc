@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJMatrixSchwartz
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJMatrixSchwartz
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness
+
+@[expose] public section
 
 open MeasureTheory NumberField ComplexConjugate
 open scoped NumberField.AdeleRing

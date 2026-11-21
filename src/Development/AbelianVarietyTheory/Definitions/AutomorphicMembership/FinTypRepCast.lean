@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.GoodPartEq
-import Formalism.LocalToGlobal.IndefiniteReal.IsMultMapUnivZero
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.GoodPartEq
+public import Formalism.LocalToGlobal.IndefiniteReal.IsMultMapUnivZero
+
+@[expose] public section
 
 noncomputable section
 

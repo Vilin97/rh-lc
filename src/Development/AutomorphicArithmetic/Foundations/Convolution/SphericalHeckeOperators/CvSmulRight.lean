@@ -1,9 +1,13 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.SymSum
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.SandId
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.SatAvg
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.ThPMul
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.GapDom
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.VandSum
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.SymSum
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.SandId
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.SatAvg
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.ThPMul
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.GapDom
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalHeckeOperators.VandSum
+
+@[expose] public section
 
 open MeasureTheory GroundTheory.Automorphic GroundTheory.Automorphic.Spherical GroundTheory.Automorphic.GLnLocal GroundTheory.Automorphic.Iwasawa UpperTheory.ConvolutionTheory.H
 

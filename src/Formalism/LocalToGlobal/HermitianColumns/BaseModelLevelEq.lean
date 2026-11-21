@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.HermitianColumns.ColsHerm
+module
+
+public import Formalism.LocalToGlobal.HermitianColumns.ColsHerm
+
+@[expose] public section
 
 noncomputable section
 

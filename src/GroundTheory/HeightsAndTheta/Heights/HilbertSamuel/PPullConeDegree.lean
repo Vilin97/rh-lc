@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsPullConeDegree
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockImageHilb
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.StatementsPullConeDegree
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PBlockImageHilb
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.HilbertSamuel

@@ -1,12 +1,17 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.EqZeroOfForallPowDvd
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConstantCoeffNmul
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormalGroupLawCoboundaryOneSubstOfEndomorphism
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConstantCoeffUpNmul
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsHausdorffOfProjective
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EvAtNmulPowSelf
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsAdicCompleteRingOfModule
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DvdSubOfDUnitEq
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.EqZeroOfForallPowDvd
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConstantCoeffNmul
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FormalGroupLawCoboundaryOneSubstOfEndomorphism
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ConstantCoeffUpNmul
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsHausdorffOfProjective
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EvAtNmulPowSelf
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsAdicCompleteRingOfModule
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DvdSubOfDUnitEq
+
+@[expose] public section
+
 open MvPowerSeries GlobalTheory GlobalTheory.Katz GlobalTheory.QLog GlobalTheory.PDivGroup GlobalTheory.Sandwich GlobalTheory.IndefiniteRowSideFullHecke.EpsilonPairingZeta GlobalTheory.PDivLat
 open TensorProduct
 

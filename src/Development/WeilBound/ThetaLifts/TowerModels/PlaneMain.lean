@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.TowerModels.PlanePair
-import Development.WeilBound.ThetaLifts.TowerModels.PlaneIso
-import Development.WeilBound.ThetaLifts.TowerModels.PlaneBas
-import Development.WeilBound.ThetaLifts.TowerModels.PlaneComp
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsIntegerAddConjEqOneOfFormallyUnramified
+module
+
+public import Development.WeilBound.ThetaLifts.TowerModels.PlanePair
+public import Development.WeilBound.ThetaLifts.TowerModels.PlaneIso
+public import Development.WeilBound.ThetaLifts.TowerModels.PlaneBas
+public import Development.WeilBound.ThetaLifts.TowerModels.PlaneComp
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.ExistsIntegerAddConjEqOneOfFormallyUnramified
+
+@[expose] public section
 
 noncomputable section
 

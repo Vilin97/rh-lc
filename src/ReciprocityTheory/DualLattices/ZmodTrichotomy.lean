@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.MulIterateRootEqZero
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.MulIterateRootEqZero
+
+@[expose] public section
 
 noncomputable section
 

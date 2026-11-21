@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
-import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinRelAlt
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DoubleAdaptedLagrangianDim
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FinRelAlt
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DoubleAdaptedLagrangianDim
+
+@[expose] public section
 
 noncomputable section
 open scoped TensorProduct NNReal Matrix

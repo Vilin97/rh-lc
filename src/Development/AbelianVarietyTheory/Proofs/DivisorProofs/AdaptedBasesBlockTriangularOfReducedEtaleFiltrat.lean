@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.PieriBlockIdeals.LemmaWFromLattice
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralBlock
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdaptedIntegralBasisStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LaurentSeriesAdaptedBasisCoordsVanishBeyondFinraStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DiagonalEntryOfSemilinearModSubspaceStatement
+module
+
+public import Mathlib
+public import Formalism.PieriBlockIdeals.LemmaWFromLattice
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntegralBlock
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.AdaptedIntegralBasisStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.LaurentSeriesAdaptedBasisCoordsVanishBeyondFinraStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DiagonalEntryOfSemilinearModSubspaceStatement
+
+@[expose] public section
 
 set_option autoImplicit false
 

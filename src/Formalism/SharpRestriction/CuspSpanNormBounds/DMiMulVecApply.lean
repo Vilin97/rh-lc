@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.CuspSpanNormBounds.ContinuousCjIT
+module
+
+public import Formalism.SharpRestriction.CuspSpanNormBounds.ContinuousCjIT
+
+@[expose] public section
 
 open MeasureTheory Matrix Finset
 

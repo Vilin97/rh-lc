@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.CoboundaryTransfers.Statement
-import Formalism.WeaklyAdmissibleFiltrations.Statement
-import Formalism.WeaklyAdmissibleFiltrations.StatementPC
+module
+
+public import Mathlib
+public import Formalism.CoboundaryTransfers.Statement
+public import Formalism.WeaklyAdmissibleFiltrations.Statement
+public import Formalism.WeaklyAdmissibleFiltrations.StatementPC
+
+@[expose] public section
 
 noncomputable section
 

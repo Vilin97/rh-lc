@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.UnipotentGroups.IsFrPlane
-import Development.WeilBound.ThetaLifts.EigenvalueEndgame.SignatureSplitting.StageSub
+module
+
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.UnipotentGroups.IsFrPlane
+public import Development.WeilBound.ThetaLifts.EigenvalueEndgame.SignatureSplitting.StageSub
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeAndRangePowLe
-import GroundTheory.LocalFields.ExamplesCharZero
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeAndRangePowLe
+public import GroundTheory.LocalFields.ExamplesCharZero
+
+@[expose] public section
 
 namespace GroundTheory.LocalField
 

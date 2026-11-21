@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataDIV
-import Formalism.DegreeFormula.FlagDegFormula
-import Formalism.DegreeFormula.Statement
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataDIV
+public import Formalism.DegreeFormula.FlagDegFormula
+public import Formalism.DegreeFormula.Statement
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+
+@[expose] public section
 
 noncomputable section
 

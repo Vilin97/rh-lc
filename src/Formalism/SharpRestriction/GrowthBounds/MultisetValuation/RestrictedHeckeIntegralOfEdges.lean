@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.HeckeValueEstimateOfRecordValue
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.SmulUpdate
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.RamifiedLatticeOfChainEstimates
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.GShiftRowGenMonomial
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.HeckeValueEstimateOfRecordValue
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.SmulUpdate
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.RamifiedLatticeOfChainEstimates
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.GShiftRowGenMonomial
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,12 +1,16 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataArith
-import Formalism.FilteredPoleLength.LocalDescentLevels.InvFromBlocksApplyZero
-import Formalism.PeriodIntegrals.Transference
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.TransferenceMinima
-import Formalism.SharpRestriction.Divisibility.WeightAlgebra
-import Formalism.LogFactorialIndices.SignedSubspaceIndex.IdxBase
-import Formalism.LogFactorialIndices.SignedSubspaceIndex.IdxDet
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.PairedCharacterCondition
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataArith
+public import Formalism.FilteredPoleLength.LocalDescentLevels.InvFromBlocksApplyZero
+public import Formalism.PeriodIntegrals.Transference
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.TransferenceMinima
+public import Formalism.SharpRestriction.Divisibility.WeightAlgebra
+public import Formalism.LogFactorialIndices.SignedSubspaceIndex.IdxBase
+public import Formalism.LogFactorialIndices.SignedSubspaceIndex.IdxDet
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.PairedCharacterCondition
+
+@[expose] public section
 
 noncomputable section
 

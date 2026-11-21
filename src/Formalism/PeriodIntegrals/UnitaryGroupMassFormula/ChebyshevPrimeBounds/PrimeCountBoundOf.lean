@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.PrimeCount
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.PrimeCount
+
+@[expose] public section
 
 noncomputable section
 

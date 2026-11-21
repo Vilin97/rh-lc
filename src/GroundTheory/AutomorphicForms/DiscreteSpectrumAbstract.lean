@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.UnitaryRepresentations
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.UnitaryRepresentations
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

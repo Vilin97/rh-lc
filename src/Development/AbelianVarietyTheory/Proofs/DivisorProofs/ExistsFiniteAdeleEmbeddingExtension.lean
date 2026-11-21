@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ClassesAt
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsContinuousExtensionAdicCompletion
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExistsHomOfBasis
-import ReciprocityTheory.ReductiveGroups.LatticeEmbeddings.IotaPlace
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ClassesAt
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.ExistsContinuousExtensionAdicCompletion
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExistsHomOfBasis
+public import ReciprocityTheory.ReductiveGroups.LatticeEmbeddings.IotaPlace
+
+@[expose] public section
 
 set_option autoImplicit false
 

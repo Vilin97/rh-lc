@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.WeylElementCommutesLevelOne
+
+@[expose] public section
 
 namespace GlobalTheory.HCXi
 

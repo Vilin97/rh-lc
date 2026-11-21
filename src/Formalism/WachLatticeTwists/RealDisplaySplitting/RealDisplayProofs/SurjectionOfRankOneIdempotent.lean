@@ -1,5 +1,9 @@
-import Formalism.WachLatticeTwists.RealDisplaySplitting.SurjectionRankOneIdempotent
-import Formalism.WachLatticeTwists.RamifiedBlockRings.RamifiedBlockProofs.Normal
+module
+
+public import Formalism.WachLatticeTwists.RealDisplaySplitting.SurjectionRankOneIdempotent
+public import Formalism.WachLatticeTwists.RamifiedBlockRings.RamifiedBlockProofs.Normal
+
+@[expose] public section
 
 open Finset Classical
 

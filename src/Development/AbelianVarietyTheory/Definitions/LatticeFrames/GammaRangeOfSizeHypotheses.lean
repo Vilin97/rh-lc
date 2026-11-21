@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.DiagAtScale
-import Development.AbelianVarietyTheory.Definitions.LatticeFrames.RowsPtAt
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.DiagAtScale
+public import Development.AbelianVarietyTheory.Definitions.LatticeFrames.RowsPtAt
+
+@[expose] public section
 
 noncomputable section
 open scoped Classical

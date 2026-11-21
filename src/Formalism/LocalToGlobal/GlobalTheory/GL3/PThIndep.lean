@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.GlobalTheory.GL3.PHfInt
-import Formalism.LocalToGlobal.GlobalTheory.GL3.PSelfDual
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.PHfInt
+public import Formalism.LocalToGlobal.GlobalTheory.GL3.PSelfDual
+
+@[expose] public section
 
 noncomputable section
 

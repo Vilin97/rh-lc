@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SpanRangeMulVecLe
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SpanRangeMulVecLe
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits Opposite AlgebraicTopology

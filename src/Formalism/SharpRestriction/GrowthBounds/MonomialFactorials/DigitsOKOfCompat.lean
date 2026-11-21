@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.CoarseCLower
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.CoarseCLower
+
+@[expose] public section
 
 noncomputable section
 

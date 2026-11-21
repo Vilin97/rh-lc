@@ -1,5 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.TwistSeries
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.NonGaloisCusps.TwistSeries
+
+@[expose] public section
+
 open NumberField IsDedekindDomain
 
 namespace GlobalTheory.InertiaEigenvalues.UnramPlace

@@ -1,5 +1,9 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.DetPbA
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.DetPbB
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.DetPbA
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.FormalDegree.DetPbB
+
+@[expose] public section
 
 noncomputable section
 

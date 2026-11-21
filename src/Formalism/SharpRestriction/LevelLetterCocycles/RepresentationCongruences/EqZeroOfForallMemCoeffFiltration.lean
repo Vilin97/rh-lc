@@ -1,4 +1,8 @@
-import Mathlib.RingTheory.PowerSeries.WeierstrassPreparation
+module
+
+public import Mathlib.RingTheory.PowerSeries.WeierstrassPreparation
+
+@[expose] public section
 
 namespace Formalism.MainNotions.N.FrobeniusPowerSeries.WeierS
 

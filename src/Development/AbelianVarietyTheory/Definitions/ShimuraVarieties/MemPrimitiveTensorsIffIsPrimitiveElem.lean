@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.RidConvolutionDerivation
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.RidConvolutionDerivation
+
+@[expose] public section
 
 noncomputable section
 

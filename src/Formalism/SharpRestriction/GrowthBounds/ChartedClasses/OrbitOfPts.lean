@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.PStabEq
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.PStabEq
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.GoodCongruenceDataOf
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.GoodCongruenceDataOf
+
+@[expose] public section
 
 noncomputable section
 

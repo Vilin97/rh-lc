@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GeometricLemmaCompact
-import GroundTheory.AutomorphicForms.GeometricLemmaAverage
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GeometricLemmaCompact
+public import GroundTheory.AutomorphicForms.GeometricLemmaAverage
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

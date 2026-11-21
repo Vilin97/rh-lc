@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.FormOffSpecializationRing
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.RootOriginGenericFrameBound
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.FormOffSpecializationRing
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.RootOriginGenericFrameBound
+
+@[expose] public section
+
 open NumberField IsDedekindDomain
 open Formalism.L2.Pj ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Geo
 open GlobalTheory.CompanionTheory.Ar GlobalTheory.CompanionTheory.Ar.Rec

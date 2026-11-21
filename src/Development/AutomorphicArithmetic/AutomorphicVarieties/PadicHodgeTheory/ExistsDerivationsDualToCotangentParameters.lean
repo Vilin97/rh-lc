@@ -1,4 +1,9 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.CommutativeAlgebra.ResMapBijective
+
+@[expose] public section
+
 open IsLocalRing UpperTheory.V.Alg
 
 theorem UpperTheory.exists_derivations_dual_to_cotangent_parameters :

@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.TopLawQ
-import Formalism.LocalToGlobal.Columns.KOneCharacterTrivialNearOne
-import Formalism.LocalToGlobal.Columns.BlockTriangularMulVecMemPartialFlag
+module
+
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.TopLawQ
+public import Formalism.LocalToGlobal.Columns.KOneCharacterTrivialNearOne
+public import Formalism.LocalToGlobal.Columns.BlockTriangularMulVecMemPartialFlag
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module Matrix
 

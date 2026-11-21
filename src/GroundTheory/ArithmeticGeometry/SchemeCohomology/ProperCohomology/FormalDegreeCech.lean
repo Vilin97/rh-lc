@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.FormalDegree
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.ReesCech
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.FormalDegree
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.ReesCech
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh

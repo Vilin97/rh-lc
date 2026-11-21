@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.LemmaEprimeFromSteps
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.LemmaEprimeFromSteps
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.LEx1
 open Formalism.FourierDecayAlt.LE

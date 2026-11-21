@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.AdelicScalarSectionLift
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TwistedLevelValues
-import Development.AbelianVarietyTheory.Counterexamples.RotationExamples.LevelVectorSizeBounds
-import Formalism.LocalToGlobal.IndefiniteReal.FWExist
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.AdelicScalarSectionLift
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.TwistedLevelValues
+public import Development.AbelianVarietyTheory.Counterexamples.RotationExamples.LevelVectorSizeBounds
+public import Formalism.LocalToGlobal.IndefiniteReal.FWExist
+
+@[expose] public section
 
 noncomputable section
 

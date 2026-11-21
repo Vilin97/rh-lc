@@ -1,7 +1,11 @@
-import Formalism.MirabolicMackeyTheory.StatementLoc
-import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.GlobalBoundRefinements
-import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.IdxRules
-import Formalism.HermitianLattices.HermitianLatticesProofs.LocBasic
+module
+
+public import Formalism.MirabolicMackeyTheory.StatementLoc
+public import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.GlobalBoundRefinements
+public import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.IdxRules
+public import Formalism.HermitianLattices.HermitianLatticesProofs.LocBasic
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 

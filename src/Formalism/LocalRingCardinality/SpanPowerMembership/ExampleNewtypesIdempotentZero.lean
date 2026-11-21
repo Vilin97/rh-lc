@@ -1,8 +1,12 @@
-import Formalism.LocalRingCardinality.DataJet
-import Formalism.LocalRingCardinality.SpanPowerMembership.PlacesOverNcardOfSplitInj
-import Formalism.CyclotomicNorms.NonsquarefreeBounds.NonsquarefreeMonicBoundHolds
-import Formalism.LocalRingCardinality.SpanPowerMembership.UnitsPowSurjective
-import Formalism.LocalRingCardinality.SpanPowerMembership.ExistsTameGen
+module
+
+public import Formalism.LocalRingCardinality.DataJet
+public import Formalism.LocalRingCardinality.SpanPowerMembership.PlacesOverNcardOfSplitInj
+public import Formalism.CyclotomicNorms.NonsquarefreeBounds.NonsquarefreeMonicBoundHolds
+public import Formalism.LocalRingCardinality.SpanPowerMembership.UnitsPowSurjective
+public import Formalism.LocalRingCardinality.SpanPowerMembership.ExistsTameGen
+
+@[expose] public section
 
 noncomputable section
 

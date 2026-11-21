@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SizeCount.Development
-import Formalism.PeriodIntegrals.SzCt
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SizeCount.Development
+public import Formalism.PeriodIntegrals.SzCt
+
+@[expose] public section
 
 noncomputable section
 

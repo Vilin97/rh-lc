@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.PieAltApply
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.PieAltApply
+
+@[expose] public section
 
 noncomputable section
 

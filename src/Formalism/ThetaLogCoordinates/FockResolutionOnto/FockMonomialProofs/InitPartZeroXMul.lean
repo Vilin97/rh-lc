@@ -1,6 +1,10 @@
-import Formalism.ThetaLogCoordinates.FockResolutionOnto.ShiftLastLetterThresholds
-import Formalism.PolynomialDimension.MultinomialDepth.PartnerM
-import Formalism.MahlerMeasure.MahlerMeasureProofs.MeanGam
+module
+
+public import Formalism.ThetaLogCoordinates.FockResolutionOnto.ShiftLastLetterThresholds
+public import Formalism.PolynomialDimension.MultinomialDepth.PartnerM
+public import Formalism.MahlerMeasure.MahlerMeasureProofs.MeanGam
+
+@[expose] public section
 
 namespace Formalism.InvariantFactorPaths.L4
 

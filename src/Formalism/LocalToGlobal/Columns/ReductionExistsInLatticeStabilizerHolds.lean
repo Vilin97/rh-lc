@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Columns.OcbPhiFIdxFPos
-import Formalism.LocalToGlobal.Columns.OcbTIntOfStab
+module
+
+public import Formalism.LocalToGlobal.Columns.OcbPhiFIdxFPos
+public import Formalism.LocalToGlobal.Columns.OcbTIntOfStab
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

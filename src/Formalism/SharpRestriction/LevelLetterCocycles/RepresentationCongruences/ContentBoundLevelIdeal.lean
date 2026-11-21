@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.ConstantCoeffResidueUXPow
-import Mathlib.Analysis.SpecialFunctions.Log.Base
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.ConstantCoeffResidueUXPow
+public import Mathlib.Analysis.SpecialFunctions.Log.Base
+
+@[expose] public section
 
 noncomputable section
 

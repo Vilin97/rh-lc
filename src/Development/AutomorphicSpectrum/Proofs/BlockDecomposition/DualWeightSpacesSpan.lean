@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsCliff
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CPoly
-import GroundTheory.GlobalFields.TateThesis.ArchCharsUnitary
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.IsCliff
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.CPoly
+public import GroundTheory.GlobalFields.TateThesis.ArchCharsUnitary
+
+@[expose] public section
 
 noncomputable section
 

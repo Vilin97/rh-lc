@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Statements.GeometryStatements.ReadsRootsFinZero
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Statements.GeometryStatements.ReadsRootsFinZero
+
+@[expose] public section
 
 noncomputable section
 

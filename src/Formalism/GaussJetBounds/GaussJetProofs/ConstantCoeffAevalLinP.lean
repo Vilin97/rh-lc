@@ -1,5 +1,9 @@
-import Formalism.GaussJetBounds.StatementJ
-import Formalism.GaussJetBounds.GaussJetProofs.ThmAOp
+module
+
+public import Formalism.GaussJetBounds.StatementJ
+public import Formalism.GaussJetBounds.GaussJetProofs.ThmAOp
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

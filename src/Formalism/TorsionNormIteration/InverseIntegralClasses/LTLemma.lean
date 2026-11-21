@@ -1,7 +1,11 @@
-import Formalism.FormalGroupLog.Statement
-import Formalism.TorsionNormIteration.InvIntegralOfClass
-import Formalism.TorsionNormIteration.InverseIntegralClasses.InvInt
-import Formalism.TorsionNormIteration.InverseIntegralClasses.MemSpanOfNormLe
+module
+
+public import Formalism.FormalGroupLog.Statement
+public import Formalism.TorsionNormIteration.InvIntegralOfClass
+public import Formalism.TorsionNormIteration.InverseIntegralClasses.InvInt
+public import Formalism.TorsionNormIteration.InverseIntegralClasses.MemSpanOfNormLe
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.ResidueCharacters.InvariantsKilledOverCyclotomicAlt
-import Development.AutomorphicArithmetic.ResidueCharacters.FiniteRoots
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.ResidueCharacters.InvariantsKilledOverCyclotomicAlt
+public import Development.AutomorphicArithmetic.ResidueCharacters.FiniteRoots
+
+@[expose] public section
 
 open Formalism Formalism.MainNotions
 

@@ -1,8 +1,12 @@
-import Formalism.LocalRingCardinality.DataMink
-import Formalism.LocalRingCardinality.DataErr
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.FlagUnipotentLattices.CardSubmodulesAndLinearEquivBounds
-import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.MinkowskiNumberDvdFactorial
+module
+
+public import Formalism.LocalRingCardinality.DataMink
+public import Formalism.LocalRingCardinality.DataErr
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.FlagUnipotentLattices.CardSubmodulesAndLinearEquivBounds
+public import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.MinkowskiNumberDvdFactorial
+
+@[expose] public section
 
 namespace Formalism.BasicNotions
 

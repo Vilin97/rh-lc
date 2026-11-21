@@ -1,5 +1,9 @@
-import Formalism.GaloisCohomology.Statement
-import Development.AutomorphicArithmetic.CyclotomicBounds.ClassNumberBounds.TotallyRealRoots.GalDefs
+module
+
+public import Formalism.GaloisCohomology.Statement
+public import Development.AutomorphicArithmetic.CyclotomicBounds.ClassNumberBounds.TotallyRealRoots.GalDefs
+
+@[expose] public section
 
 noncomputable section
 

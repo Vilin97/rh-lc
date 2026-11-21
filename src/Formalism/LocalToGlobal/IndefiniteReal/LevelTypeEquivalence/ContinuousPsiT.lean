@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.TransportedFrame
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.IpTheta
-import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.ContinuousSplitInv
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.TransportedFrame
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.IpTheta
+public import Formalism.LocalToGlobal.IndefiniteReal.LevelTypeEquivalence.ContinuousSplitInv
+
+@[expose] public section
 
 noncomputable section
 

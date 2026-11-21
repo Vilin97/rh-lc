@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.SpanPowerMembership.HaarDensityNeZero
-import Formalism.RealPlaceAnalysis.RealPlaceTaylor.FrobeniusBoundOfMulNearOne
+module
+
+public import Formalism.LocalRingCardinality.SpanPowerMembership.HaarDensityNeZero
+public import Formalism.RealPlaceAnalysis.RealPlaceTaylor.FrobeniusBoundOfMulNearOne
+
+@[expose] public section
 
 noncomputable section
 

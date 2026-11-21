@@ -1,7 +1,11 @@
-import Formalism.SatakeDualWeyl.StatementG
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Transport
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Stabstd
-import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Levelvsplit
+module
+
+public import Formalism.SatakeDualWeyl.StatementG
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Transport
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Stabstd
+public import Formalism.SatakeDualWeyl.AdelicIwasawaHecke.Levelvsplit
+
+@[expose] public section
 
 noncomputable section
 

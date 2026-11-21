@@ -1,9 +1,13 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.AutDef
-import Formalism.LocalToGlobal.IndefiniteReal.DatumF
-import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AbsoluteValueAltAlt
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.Reductions.WeilPairs.AutDef
+public import Formalism.LocalToGlobal.IndefiniteReal.DatumF
+public import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AbsoluteValueAltAlt
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.InfiniteNormOne.infinite_norm_one :
     ∀ {F E : Type} [inst : Field F] [inst_1 : NumberField F] [inst_2 : Field E] [inst_3 : NumberField E]

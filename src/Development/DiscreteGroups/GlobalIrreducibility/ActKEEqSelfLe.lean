@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.NeZeroOfMemRoots
-import Development.DiscreteGroups.GlobalIrreducibility.LocTypeOfSerParamLe
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.NeZeroOfMemRoots
+public import Development.DiscreteGroups.GlobalIrreducibility.LocTypeOfSerParamLe
+
+@[expose] public section
+
 open Polynomial GlobalTheory.GLq GlobalTheory.GLp GlobalTheory.SerSys
 
 noncomputable section

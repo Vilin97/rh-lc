@@ -1,5 +1,9 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicUnimodularity.SmulEqAlgebraMapMul
-import Lemmata.GeneralBFactThirdMore.Key
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.AdelicUnimodularity.SmulEqAlgebraMapMul
+public import Lemmata.GeneralBFactThirdMore.Key
+
+@[expose] public section
 
 noncomputable section
 

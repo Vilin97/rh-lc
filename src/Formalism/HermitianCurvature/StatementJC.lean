@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.HermitianCurvature.StatementC
-import Formalism.HermitianCurvature.StatementD
-import Formalism.HermitianCurvature.StatementMA
-import Formalism.HermitianCurvature.LowerBlockNormalisedBoundFromComponents
-import Formalism.HermitianCurvature.LatticeHerglotzBound
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.StatementC
+public import Formalism.HermitianCurvature.StatementD
+public import Formalism.HermitianCurvature.StatementMA
+public import Formalism.HermitianCurvature.LowerBlockNormalisedBoundFromComponents
+public import Formalism.HermitianCurvature.LatticeHerglotzBound
+
+@[expose] public section
 
 section Positivity
 

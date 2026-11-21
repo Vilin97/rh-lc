@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.IdeleRoots.TorusPowers.HeckeTensor
+module
+
+public import Mathlib
+public import GroundTheory.IdeleRoots.TorusPowers.HeckeTensor
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

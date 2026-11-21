@@ -1,8 +1,12 @@
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.Qdist
-import ReciprocityTheory.SemistableReduction.TorusL2CauchyInequality
-import ReciprocityTheory.SemistableReduction.GaussAbsMulOfMonomialOrder
-import ReciprocityTheory.SemistableReduction.SemiDegCA
-import Mathlib.NumberTheory.Height.NumberField
+module
+
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.HeightTheory.Qdist
+public import ReciprocityTheory.SemistableReduction.TorusL2CauchyInequality
+public import ReciprocityTheory.SemistableReduction.GaussAbsMulOfMonomialOrder
+public import ReciprocityTheory.SemistableReduction.SemiDegCA
+public import Mathlib.NumberTheory.Height.NumberField
+
+@[expose] public section
 
 namespace ReciprocityTheory.ChartRestriction.G.T0.SatakeVectors
 

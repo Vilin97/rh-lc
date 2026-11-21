@@ -1,9 +1,13 @@
-import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.CuspDecayHeights.HeightLe
-import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.IntegralUnitBaseChange.InvTransposeGLInvTransposeGL
-import GroundTheory.GlobalFields.Adele.BaseChange
-import GroundTheory.GlobalFields.SemilocalAlgebras.Galois
-import GroundTheory.AutomorphicForms.AffineBruhat
-import GroundTheory.AutomorphicForms.Cartan
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.CuspDecayHeights.HeightLe
+public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.IntegralUnitBaseChange.InvTransposeGLInvTransposeGL
+public import GroundTheory.GlobalFields.Adele.BaseChange
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Galois
+public import GroundTheory.AutomorphicForms.AffineBruhat
+public import GroundTheory.AutomorphicForms.Cartan
+
+@[expose] public section
 
 noncomputable section
 

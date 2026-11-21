@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.RingAFacts
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.RingAFacts
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

@@ -1,6 +1,10 @@
-import ReciprocityTheory.DualLattices.FrobeniusOfGroupDivisorsRank
-import ReciprocityTheory.DualLattices.KilledGen
-import ReciprocityTheory.DualLattices.IdemGen
+module
+
+public import ReciprocityTheory.DualLattices.FrobeniusOfGroupDivisorsRank
+public import ReciprocityTheory.DualLattices.KilledGen
+public import ReciprocityTheory.DualLattices.IdemGen
+
+@[expose] public section
 
 noncomputable section
 

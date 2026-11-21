@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.InseparableFrobenius
-import GroundTheory.GlobalFields.ComplexMultiplication.DualDescent
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.InseparableFrobenius
+public import GroundTheory.GlobalFields.ComplexMultiplication.DualDescent
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

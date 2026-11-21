@@ -1,12 +1,16 @@
-import Formalism.GaussJetBounds.StatementU
-import Formalism.GaussJetBounds.OneLetterRadius
-import Formalism.GaussJetBounds.MonoShapeTop
-import Formalism.GaussJetBounds.GaussJetProofs.GField
-import Formalism.GaussJetBounds.GaussJetProofs.Transfer
-import Formalism.GaussJetBounds.GaussJetProofs.FJEval
-import Formalism.GaussJetBounds.GaussJetProofs.ConstantCoeffAevalLinP
-import Formalism.GaussJetBounds.GaussJetProofs.Labels
-import Formalism.GaussJetBounds.GaussJetProofs.ThmAOp
+module
+
+public import Formalism.GaussJetBounds.StatementU
+public import Formalism.GaussJetBounds.OneLetterRadius
+public import Formalism.GaussJetBounds.MonoShapeTop
+public import Formalism.GaussJetBounds.GaussJetProofs.GField
+public import Formalism.GaussJetBounds.GaussJetProofs.Transfer
+public import Formalism.GaussJetBounds.GaussJetProofs.FJEval
+public import Formalism.GaussJetBounds.GaussJetProofs.ConstantCoeffAevalLinP
+public import Formalism.GaussJetBounds.GaussJetProofs.Labels
+public import Formalism.GaussJetBounds.GaussJetProofs.ThmAOp
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

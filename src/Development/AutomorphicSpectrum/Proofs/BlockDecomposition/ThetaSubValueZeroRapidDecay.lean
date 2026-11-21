@@ -1,8 +1,13 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.AutomorphicKernels.EisensteinSeriesG2.HeisenbergTheta.HeisenbergThetaConstant.ThetaC
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.NormLeNormInfCModuleSectionMul
-import GroundTheory.GlobalFields.TateThesis.TateThetaDecay
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsTailFurther
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.AutomorphicKernels.EisensteinSeriesG2.HeisenbergTheta.HeisenbergThetaConstant.ThetaC
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.NormLeNormInfCModuleSectionMul
+public import GroundTheory.GlobalFields.TateThesis.TateThetaDecay
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.ImportsTailFurther
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open NumberField NumberField.mixedEmbedding IsDedekindDomain IsDedekindDomain.HeightOneSpectrum

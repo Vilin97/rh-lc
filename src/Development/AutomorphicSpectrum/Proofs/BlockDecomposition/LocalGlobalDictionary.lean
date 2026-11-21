@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.EisensteinSeries.SiegelEisensteinContinuation.DictInf
-import Development.WeilBound.ThetaLifts.SmallCones.TateAbs
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.EisensteinSeries.SiegelEisensteinContinuation.DictInf
+public import Development.WeilBound.ThetaLifts.SmallCones.TateAbs
+
+@[expose] public section
 
 noncomputable section
 

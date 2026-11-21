@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.PublishedTheorems.PoitouTateDuality.FinalPtfsFoundSideE
-import Development.WeilBound.CoreStatements.PublishedTheorems.PoitouTateDuality.FinalTlPush
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.PublishedTheorems.PoitouTateDuality.FinalPtfsFoundSideE
+public import Development.WeilBound.CoreStatements.PublishedTheorems.PoitouTateDuality.FinalTlPush
+
+@[expose] public section
 
 noncomputable section
 

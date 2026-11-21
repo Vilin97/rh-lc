@@ -1,6 +1,10 @@
-import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.ColumnConjugationMeasure
-import GroundTheory.AutomorphicForms.ReductionMahler
-import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.SepSum
+module
+
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.ColumnConjugationMeasure
+public import GroundTheory.AutomorphicForms.ReductionMahler
+public import Development.WeilBound.CoreStatements.PublishedTheorems.JacquetShalikaRigidity.SepSum
+
+@[expose] public section
 
 noncomputable section
 

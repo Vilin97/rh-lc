@@ -1,7 +1,11 @@
-import Mathlib
-import Development.WeilBound.ThetaLifts.LatticeBasics.BoxFinV
-import Development.WeilBound.ThetaLifts.LatticeBasics.SecondFromFirstStatement
-import Development.WeilBound.ThetaLifts.LatticeBasics.ThetaBox
+module
+
+public import Mathlib
+public import Development.WeilBound.ThetaLifts.LatticeBasics.BoxFinV
+public import Development.WeilBound.ThetaLifts.LatticeBasics.SecondFromFirstStatement
+public import Development.WeilBound.ThetaLifts.LatticeBasics.ThetaBox
+
+@[expose] public section
 
 noncomputable section
 

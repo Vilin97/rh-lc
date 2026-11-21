@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.TensorProductTheorem.TwoFactor
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.TensorProductTheorem.TwoFactor
+
+@[expose] public section
 
 noncomputable section
 

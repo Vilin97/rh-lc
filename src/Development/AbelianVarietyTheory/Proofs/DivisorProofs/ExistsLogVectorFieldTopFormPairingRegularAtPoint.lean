@@ -1,10 +1,15 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ChartRestrEqGerm
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrameEqUnitSmulDForm
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.Monomial
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsComponentStalkDerivationOfFunctionFieldExtStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SpanLogDerGermsStatement
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BoundaryComponentStalkRegularBoundaryIdealProdPaStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ChartRestrEqGerm
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.FrameEqUnitSmulDForm
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.Monomial
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsComponentStalkDerivationOfFunctionFieldExtStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.SpanLogDerGermsStatement
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.BoundaryComponentStalkRegularBoundaryIdealProdPaStatement
+
+@[expose] public section
+
 open CategoryTheory AlgebraicGeometry TopologicalSpace Limits NumberField
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor Formalism.L2.Pj Formalism.BasicNotions
 open ReciprocityTheory.ChartRestriction.G.Out (nonzeroLocus)

@@ -1,10 +1,14 @@
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.RecBridgeSel
-import Formalism.LocalToGlobal.KernelLattices.JetFieldLeKR
-import Formalism.LocalToGlobal.Columns.GoodXgE
-import Formalism.LocalToGlobal.Columns.ExistsUnitOfPowEqOne
-import Formalism.SharpRestriction.LevelLetterCocycles.PlaceLabelTeichmuller
-import Formalism.LocalToGlobal.Columns.RecPerFF
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.RecBridgeSel
+public import Formalism.LocalToGlobal.KernelLattices.JetFieldLeKR
+public import Formalism.LocalToGlobal.Columns.GoodXgE
+public import Formalism.LocalToGlobal.Columns.ExistsUnitOfPowEqOne
+public import Formalism.SharpRestriction.LevelLetterCocycles.PlaceLabelTeichmuller
+public import Formalism.LocalToGlobal.Columns.RecPerFF
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 open scoped Matrix ComplexOrder

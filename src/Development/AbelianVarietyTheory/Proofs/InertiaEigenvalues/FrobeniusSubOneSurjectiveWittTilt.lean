@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AbelianVarietyTheory.CrystallinePeriods.RingBasics
-import Formalism.SharpRestriction.LevelLetterCocycles.ElementDenominator
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ASWitt
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ASRoot
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ASSmall
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ASGlue
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.CrystallinePeriods.RingBasics
+public import Formalism.SharpRestriction.LevelLetterCocycles.ElementDenominator
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ASWitt
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ASRoot
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ASSmall
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.ASGlue
+
+@[expose] public section
 
 namespace GlobalTheory.ArtinSchreierTilt
 

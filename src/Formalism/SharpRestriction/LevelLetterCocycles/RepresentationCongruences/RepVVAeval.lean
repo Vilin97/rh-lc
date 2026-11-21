@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.InFPOfMul
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.RepresentationCongruences.InFPOfMul
+
+@[expose] public section
 
 noncomputable section
 

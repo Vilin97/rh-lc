@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PadicSubsetSums.StableGradedCounts.FixedByAutomorphismInField
-import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsRingEquivAddOne
+module
+
+public import Mathlib
+public import Formalism.PadicSubsetSums.StableGradedCounts.FixedByAutomorphismInField
+public import Development.AbelianVarietyTheory.Proofs.DecoratedLatticeProofs.ExistsRingEquivAddOne
+
+@[expose] public section
 
 open Polynomial
 

@@ -1,7 +1,12 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.CompactGapsGE
-import Development.WeilBound.CoreStatements.FlagImmersions.FlagDegreeLinearFunctionals
-import Development.WeilBound.CoreStatements.FlagImmersions.DegFlPowerSumMul
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Definitions.DivisibilityTowers.CompactGapsGE
+public import Development.WeilBound.CoreStatements.FlagImmersions.FlagDegreeLinearFunctionals
+public import Development.WeilBound.CoreStatements.FlagImmersions.DegFlPowerSumMul
+
+@[expose] public section
+
 open MvPolynomial Filter Topology GlobalTheory.CompanionTheory.Ar.Top
 
 namespace RootFieldNumerics

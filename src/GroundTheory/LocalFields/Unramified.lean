@@ -1,10 +1,14 @@
-import Mathlib
-import GroundTheory.LocalFields.Interface
-import GroundTheory.LocalFields.Integers
-import GroundTheory.LocalFields.Uniqueness
-import GroundTheory.LocalFields.IntermediateField
-import GroundTheory.LocalFields.UnramifiedDefs
-import GroundTheory.LocalFields.UnramifiedHensel
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.Interface
+public import GroundTheory.LocalFields.Integers
+public import GroundTheory.LocalFields.Uniqueness
+public import GroundTheory.LocalFields.IntermediateField
+public import GroundTheory.LocalFields.UnramifiedDefs
+public import GroundTheory.LocalFields.UnramifiedHensel
+
+@[expose] public section
 
 noncomputable section
 

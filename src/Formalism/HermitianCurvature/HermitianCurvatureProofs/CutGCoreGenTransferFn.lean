@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGCoreGenTransferCut
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGaugeVLem
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.NFRadRedA
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGCoreGenTransferCut
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutGaugeVLem
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NFRadRedA
+
+@[expose] public section
 
 open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt
 

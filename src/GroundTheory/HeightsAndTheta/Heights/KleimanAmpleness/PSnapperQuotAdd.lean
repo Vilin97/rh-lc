@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SnapperQuotAddSt
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SnapperSubquotFiniteSt
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCechExact
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCechDSq
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SnapperQuotAddSt
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.SnapperSubquotFiniteSt
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCechExact
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.PCechDSq
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman

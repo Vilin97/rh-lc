@@ -1,8 +1,12 @@
-import Formalism.YangianSpanCharacter.StatementF
-import Formalism.YangianSpanCharacter.StatementY
-import Formalism.HermitianCurvature.StatementR
-import Formalism.HermitianCurvature.StatementI
-import Formalism.HermitianCurvature.StatementWd
+module
+
+public import Formalism.YangianSpanCharacter.StatementF
+public import Formalism.YangianSpanCharacter.StatementY
+public import Formalism.HermitianCurvature.StatementR
+public import Formalism.HermitianCurvature.StatementI
+public import Formalism.HermitianCurvature.StatementWd
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.Fr
 

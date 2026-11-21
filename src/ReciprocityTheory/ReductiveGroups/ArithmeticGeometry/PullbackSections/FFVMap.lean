@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.PlaceBelow
-import Mathlib.Algebra.MvPolynomial.Funext
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.PlaceBelow
+public import Mathlib.Algebra.MvPolynomial.Funext
+
+@[expose] public section
 
 set_option autoImplicit false
 

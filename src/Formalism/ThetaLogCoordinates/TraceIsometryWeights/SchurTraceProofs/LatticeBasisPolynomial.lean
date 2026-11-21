@@ -1,4 +1,8 @@
-import Formalism.ThetaLogCoordinates.TraceIsometryWeights.StatementD
+module
+
+public import Formalism.ThetaLogCoordinates.TraceIsometryWeights.StatementD
+
+@[expose] public section
 
 namespace Formalism.InvariantFactorPaths.PW
 

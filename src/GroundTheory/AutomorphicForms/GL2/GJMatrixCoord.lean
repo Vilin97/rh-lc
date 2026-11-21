@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2.GJMatrixInfinite
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2.GJMatrixInfinite
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.GJMatrix
 

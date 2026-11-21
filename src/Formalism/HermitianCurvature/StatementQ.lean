@@ -1,6 +1,10 @@
-import Formalism.FormalDegreeBessel.StatementRP
-import Formalism.HermitianCurvature.StatementB
-import Formalism.HermitianCurvature.StatementM
+module
+
+public import Formalism.FormalDegreeBessel.StatementRP
+public import Formalism.HermitianCurvature.StatementB
+public import Formalism.HermitianCurvature.StatementM
+
+@[expose] public section
 
 open Matrix Finset MeasureTheory
 open scoped ContDiff InnerProductSpace

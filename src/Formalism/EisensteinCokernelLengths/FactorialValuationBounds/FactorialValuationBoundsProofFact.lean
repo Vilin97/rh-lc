@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.FrobeniusContraction.HighestWeightResidueAvoids
-import Formalism.WindowSums.PowerSeriesRelationList
-import Formalism.FrobeniusContraction.FrobeniusContractionProofs.ContractBij
-import Formalism.FrobeniusContraction.Statement
-import Formalism.FrobeniusContraction.StatementTop
+module
+
+public import Mathlib
+public import Formalism.FrobeniusContraction.HighestWeightResidueAvoids
+public import Formalism.WindowSums.PowerSeriesRelationList
+public import Formalism.FrobeniusContraction.FrobeniusContractionProofs.ContractBij
+public import Formalism.FrobeniusContraction.Statement
+public import Formalism.FrobeniusContraction.StatementTop
+
+@[expose] public section
 
 namespace Formalism.ZetaNonvanishing.ARCV
 

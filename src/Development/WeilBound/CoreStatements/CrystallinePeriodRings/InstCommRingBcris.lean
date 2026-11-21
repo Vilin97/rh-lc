@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.ACrisBdRGalois
-import GroundTheory.PAdicHodge.BdRTGalois
-import GroundTheory.PAdicHodge.BdRField
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.ACrisBdRGalois
+public import GroundTheory.PAdicHodge.BdRTGalois
+public import GroundTheory.PAdicHodge.BdRField
+
+@[expose] public section
 
 noncomputable section
 

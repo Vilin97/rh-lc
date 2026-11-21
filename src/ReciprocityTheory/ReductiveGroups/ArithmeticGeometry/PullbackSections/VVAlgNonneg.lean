@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.IntAllProof
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.IntAllProof
+
+@[expose] public section
 
 noncomputable section
 

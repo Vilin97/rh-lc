@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.ResidueCharacters.RowDef
+module
+
+public import Development.AutomorphicArithmetic.ResidueCharacters.RowDef
+
+@[expose] public section
 
 noncomputable section
 

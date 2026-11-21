@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.CoreProofs
-import Formalism.LocalToGlobal.ProjectiveLattices.IntAllFree
-import Formalism.LocalToGlobal.ProjectiveLattices.ExistsOfValILeOne
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.CoreProofs
+public import Formalism.LocalToGlobal.ProjectiveLattices.IntAllFree
+public import Formalism.LocalToGlobal.ProjectiveLattices.ExistsOfValILeOne
+
+@[expose] public section
 
 noncomputable section
 

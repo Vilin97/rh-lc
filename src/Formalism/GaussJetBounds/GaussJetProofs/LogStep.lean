@@ -1,5 +1,9 @@
-import Formalism.GaussJetBounds.GaussJetProofs.LogarithmWeightComparison
-import Formalism.TorsionNormIteration.InverseIntegralClasses.NormNatCastOfNotDvd
+module
+
+public import Formalism.GaussJetBounds.GaussJetProofs.LogarithmWeightComparison
+public import Formalism.TorsionNormIteration.InverseIntegralClasses.NormNatCastOfNotDvd
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

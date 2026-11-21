@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.TheoremOfAlternateForm
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MultisetValuation.TheoremOfAlternateForm
+
+@[expose] public section
 
 noncomputable section
 

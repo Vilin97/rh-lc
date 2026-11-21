@@ -1,6 +1,10 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.BochnerInequality.NcVOneDecomp
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.BochnerInequality.PhiPerm
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirAlgebra.KhwLowKSubRootEqZero
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.BochnerInequality.NcVOneDecomp
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.BochnerInequality.PhiPerm
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirAlgebra.KhwLowKSubRootEqZero
+
+@[expose] public section
 
 noncomputable section
 

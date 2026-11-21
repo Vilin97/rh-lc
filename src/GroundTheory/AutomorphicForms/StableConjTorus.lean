@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HermitianOrthogonal
-import GroundTheory.AutomorphicForms.StableConjCyclic
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HermitianOrthogonal
+public import GroundTheory.AutomorphicForms.StableConjCyclic
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

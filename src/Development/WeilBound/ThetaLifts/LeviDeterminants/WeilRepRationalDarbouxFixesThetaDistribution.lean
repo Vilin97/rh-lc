@@ -1,6 +1,10 @@
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
-import Development.AutomorphicSpectrum.Proofs.MembershipProofs.ThetaSumTensorProductStatement
-import Development.WeilBound.ThetaLifts.LeviDeterminants.EqZeroOfTheta
+module
+
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.WeilTensorModels
+public import Development.AutomorphicSpectrum.Proofs.MembershipProofs.ThetaSumTensorProductStatement
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.EqZeroOfTheta
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels
 open scoped Matrix TensorProduct

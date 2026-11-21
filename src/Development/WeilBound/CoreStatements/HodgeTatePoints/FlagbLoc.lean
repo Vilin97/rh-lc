@@ -1,5 +1,9 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.HodgeTatePoints.FlagbAlg
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.FlagbAlg
+
+@[expose] public section
 
 noncomputable section
 

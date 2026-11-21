@@ -1,11 +1,15 @@
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.TwChrOne
-import Formalism.LocalToGlobal.Columns.ThetaOpenTwLevQ
-import Formalism.LocalToGlobal.Columns.ChainTwFin
-import Formalism.LocalToGlobal.Columns.UnfoldingNonvanishingDoubleCosetHolds
-import Formalism.LocalToGlobal.Columns.RecLevelSym
-import Formalism.LocalToGlobal.Columns.Record
-import Formalism.LocalToGlobal.Columns.StabMapRLInjective
-import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ThDistC
+module
+
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.TwChrOne
+public import Formalism.LocalToGlobal.Columns.ThetaOpenTwLevQ
+public import Formalism.LocalToGlobal.Columns.ChainTwFin
+public import Formalism.LocalToGlobal.Columns.UnfoldingNonvanishingDoubleCosetHolds
+public import Formalism.LocalToGlobal.Columns.RecLevelSym
+public import Formalism.LocalToGlobal.Columns.Record
+public import Formalism.LocalToGlobal.Columns.StabMapRLInjective
+public import Formalism.LocalToGlobal.KernelLattices.KernelLocalFactors.ThDistC
+
+@[expose] public section
 
 open NumberField IsDedekindDomain Module
 

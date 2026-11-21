@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.QuadraticConj
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.QuadraticConj
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Theta

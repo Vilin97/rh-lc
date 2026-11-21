@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.PolynomialLevels.TlNonempty
-import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.TensZeroRight
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.PolynomialLevels.TlNonempty
+public import Formalism.SharpRestriction.GrowthBounds.PlaneCoefficients.TensZeroRight
+
+@[expose] public section
 
 noncomputable section
 

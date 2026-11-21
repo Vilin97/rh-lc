@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.GlobalFields.CompletionAtPlace.Galois
-import GroundTheory.LocalFields.Ramification
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.CompletionAtPlace.Galois
+public import GroundTheory.LocalFields.Ramification
+
+@[expose] public section
 
 noncomputable section
 

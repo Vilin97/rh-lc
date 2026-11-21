@@ -1,19 +1,24 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.GenericPointSectionHypotheses
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.StatementsDegreePos
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.StatementsTwistSections
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PHilbertPrime
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PHilbertDimZero
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PHilbertIncrement
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PIntersectionRecursion
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PMixedNumberPolynomial
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PMultigradedHilbertPolynomial
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PEventualPolynomial
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PModulesFromPrimes
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PMultigradedFiltration
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PFiltrationHilbSum
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PDegLTGrowth
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PRankOfSections
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.GenericPointSectionHypotheses
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.StatementsDegreePos
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.StatementsTwistSections
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PHilbertPrime
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PHilbertDimZero
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PHilbertIncrement
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PIntersectionRecursion
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PMixedNumberPolynomial
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PMultigradedHilbertPolynomial
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PEventualPolynomial
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PModulesFromPrimes
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PMultigradedFiltration
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PFiltrationHilbSum
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PDegLTGrowth
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PRankOfSections
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Kleiman

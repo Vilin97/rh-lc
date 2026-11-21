@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.UnitaryNorms.RealCyclotomicTwoPower
-import Formalism.CyclotomicNorms.StatementT
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.UnitaryNorms.RealCyclotomicTwoPower
+public import Formalism.CyclotomicNorms.StatementT
+
+@[expose] public section
 
 noncomputable section
 

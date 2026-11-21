@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLi
-import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLk
-import Formalism.SharpRestriction.Divisibility.WeightDegreeSizes
+module
+
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLi
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLk
+public import Formalism.SharpRestriction.Divisibility.WeightDegreeSizes
+
+@[expose] public section
 
 noncomputable section
 

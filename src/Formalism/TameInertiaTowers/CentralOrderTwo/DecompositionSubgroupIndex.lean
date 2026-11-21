@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.TameInertiaTowers.StatementField
-import Lemmata.FirstBlockLemmaE.Imports
-import Lemmata.GeneralBFactRightTerForm.Imports
+module
+
+public import Mathlib
+public import Formalism.TameInertiaTowers.StatementField
+public import Lemmata.FirstBlockLemmaE.Imports
+public import Lemmata.GeneralBFactRightTerForm.Imports
+
+@[expose] public section
 
 open NumberField Ideal
 open scoped Pointwise

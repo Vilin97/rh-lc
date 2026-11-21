@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 noncomputable def UpperTheory.Reformulated.B.ProjectiveCharts.HomogIdeal :
     {B : Type} → [inst : CommRing B] → {n : ℕ} → Ideal (MvPolynomial (Fin n) B) → Prop :=

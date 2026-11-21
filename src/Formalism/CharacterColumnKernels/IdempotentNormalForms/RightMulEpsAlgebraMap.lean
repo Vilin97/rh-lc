@@ -1,5 +1,9 @@
-import Formalism.CharacterColumnKernels.StatementMF
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthKerOfDetEqZero
+module
+
+public import Formalism.CharacterColumnKernels.StatementMF
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.LengthKerOfDetEqZero
+
+@[expose] public section
 
 open Module IsDiscreteValuationRing
 

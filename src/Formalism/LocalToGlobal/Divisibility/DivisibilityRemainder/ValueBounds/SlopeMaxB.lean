@@ -1,12 +1,16 @@
-import Formalism.SharpRestriction.Divisibility.SlopeExcess.ConstRankBaseLePolyFourth
-import Formalism.SharpRestriction.Divisibility.SlopeExcess.UniformSizeBoundOfOpenFamily
-import Formalism.SharpRestriction.Divisibility.SlopeExcess.HeightBoundOfComponentBounds
-import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLm
-import Formalism.SharpRestriction.GlobalSchurBounds.GlobalLinkOfBranchIdentitiesAndMultiplicity
-import Formalism.LocalToGlobal.GlobalTheory.GL4.PStmtFree
-import Formalism.LocalToGlobal.GlobalTheory.GL4.LowerSlopeInequalityFamily
-import Formalism.LocalToGlobal.ThresholdSelection
-import Formalism.LocalToGlobal.ClassOfRecordOfChoice
+module
+
+public import Formalism.SharpRestriction.Divisibility.SlopeExcess.ConstRankBaseLePolyFourth
+public import Formalism.SharpRestriction.Divisibility.SlopeExcess.UniformSizeBoundOfOpenFamily
+public import Formalism.SharpRestriction.Divisibility.SlopeExcess.HeightBoundOfComponentBounds
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.DIVfromGLm
+public import Formalism.SharpRestriction.GlobalSchurBounds.GlobalLinkOfBranchIdentitiesAndMultiplicity
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.PStmtFree
+public import Formalism.LocalToGlobal.GlobalTheory.GL4.LowerSlopeInequalityFamily
+public import Formalism.LocalToGlobal.ThresholdSelection
+public import Formalism.LocalToGlobal.ClassOfRecordOfChoice
+
+@[expose] public section
 
 noncomputable section
 

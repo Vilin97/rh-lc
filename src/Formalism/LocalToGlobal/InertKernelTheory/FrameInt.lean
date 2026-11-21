@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.InertKernelTheory.DefsRepFrame
+module
+
+public import Formalism.LocalToGlobal.InertKernelTheory.DefsRepFrame
+
+@[expose] public section
 
 noncomputable section
 

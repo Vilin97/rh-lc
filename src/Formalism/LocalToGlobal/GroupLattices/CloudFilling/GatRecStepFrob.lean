@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.GroupLattices.CloudFilling.ExistsPowOrbRep
-import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.LevelGatherings
-import Formalism.SharpRestriction.GrowthBounds.IsResidueClassZero
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.LocalRingCardinality.SpanPowerMembership.GatTies
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.CloudFilling.ExistsPowOrbRep
+public import Formalism.LocalToGlobal.GroupLattices.LevelGatherings.LevelGatherings
+public import Formalism.SharpRestriction.GrowthBounds.IsResidueClassZero
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.LocalRingCardinality.SpanPowerMembership.GatTies
+
+@[expose] public section
 
 noncomputable section
 

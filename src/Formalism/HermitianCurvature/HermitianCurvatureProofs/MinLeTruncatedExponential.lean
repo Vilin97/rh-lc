@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.StatementTBB
-import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.IntegrableOnIoiTruncatedPowerMoment
-import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.BlockMinorSumCounterexample
+module
+
+public import Formalism.HermitianCurvature.StatementTBB
+public import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.IntegrableOnIoiTruncatedPowerMoment
+public import Formalism.FlagUnipotentLattices.MinkowskiFactorialBounds.BlockMinorSumCounterexample
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.TBBx1
 

@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.IndefiniteReal.DatumFock
-import Formalism.LocalToGlobal.IndefiniteReal.DatumVec
-import Formalism.LocalToGlobal.BesselHermitianTheta.TiedSmooth
-import Formalism.RealPlaceAnalysis.FockPairGl
-import Formalism.LocalToGlobal.BesselHermitianTheta.LemmasSign
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.DatumFock
+public import Formalism.LocalToGlobal.IndefiniteReal.DatumVec
+public import Formalism.LocalToGlobal.BesselHermitianTheta.TiedSmooth
+public import Formalism.RealPlaceAnalysis.FockPairGl
+public import Formalism.LocalToGlobal.BesselHermitianTheta.LemmasSign
+
+@[expose] public section
 
 noncomputable section
 

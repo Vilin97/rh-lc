@@ -1,5 +1,9 @@
-import Development.WeilBound.CoreStatements.LocalThetaKernels.EvlLoc
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsLocallyConstantAddChar
+module
+
+public import Development.WeilBound.CoreStatements.LocalThetaKernels.EvlLoc
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IsLocallyConstantAddChar
+
+@[expose] public section
 
 noncomputable section
 

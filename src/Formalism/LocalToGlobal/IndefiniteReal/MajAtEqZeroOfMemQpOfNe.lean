@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.IndefiniteReal.EquivFunOM
-import Formalism.LocalToGlobal.IndefiniteReal.PrimitiveStatementsWithPassage
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.IndefiniteReal.EquivFunOM
+public import Formalism.LocalToGlobal.IndefiniteReal.PrimitiveStatementsWithPassage
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain Polynomial
 open scoped Matrix ComplexOrder InnerProductSpace

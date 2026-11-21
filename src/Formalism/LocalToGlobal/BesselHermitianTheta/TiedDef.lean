@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.BesselHermitianTheta.TiedType
+module
+
+public import Formalism.LocalToGlobal.BesselHermitianTheta.TiedType
+
+@[expose] public section
 
 noncomputable section
 

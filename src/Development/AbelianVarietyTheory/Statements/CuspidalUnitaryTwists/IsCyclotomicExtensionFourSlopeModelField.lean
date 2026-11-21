@@ -1,7 +1,11 @@
-import Development.AbelianVarietyTheory.Statements.CuspidalUnitaryTwists.SlopeE
-import Formalism.LocalToGlobal.Columns.CoefficientsModP.PairingNondegenerateHolds
-import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
-import Formalism.HarderNarasimhan.ShiftInvariance
+module
+
+public import Development.AbelianVarietyTheory.Statements.CuspidalUnitaryTwists.SlopeE
+public import Formalism.LocalToGlobal.Columns.CoefficientsModP.PairingNondegenerateHolds
+public import Formalism.GradedWeylDivisibility.DualWeylDominanceOf
+public import Formalism.HarderNarasimhan.ShiftInvariance
+
+@[expose] public section
 
 open NumberField
 open Formalism.BasicNotions Formalism.L2.DIV Formalism.L2.Indef.Tree.ArchimedeanLeafBounds.Cuts

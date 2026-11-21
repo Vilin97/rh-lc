@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.PartialDifferential.EllipticOperators
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.PartialDifferential.EllipticOperators
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic.Sobolev
 

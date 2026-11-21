@@ -1,4 +1,8 @@
-import Formalism.PeriodIntegrals.UnfoldEquiv
+module
+
+public import Formalism.PeriodIntegrals.UnfoldEquiv
+
+@[expose] public section
 
 open PI.UnfoldEquiv PI.UnfoldEquiv.Loc
 

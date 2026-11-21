@@ -1,7 +1,11 @@
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjHyp
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.MemConePtsIffChartIdeal
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.ConeChartA
-import ReciprocityTheory.AnalyticForms.RegularLocalRings.ConeChartB
+module
+
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.ProjHyp
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.MemConePtsIffChartIdeal
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.ConeChartA
+public import ReciprocityTheory.AnalyticForms.RegularLocalRings.ConeChartB
+
+@[expose] public section
 
 namespace ReciprocityTheory.AnForm.R
 

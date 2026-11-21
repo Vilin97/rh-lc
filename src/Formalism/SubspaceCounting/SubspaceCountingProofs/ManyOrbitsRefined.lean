@@ -1,5 +1,9 @@
-import Formalism.SubspaceCounting.GoodOrbitIntervalTileCondition
-import Formalism.SubspaceCounting.SubspaceCountingProofs.ManyOrbits
+module
+
+public import Formalism.SubspaceCounting.GoodOrbitIntervalTileCondition
+public import Formalism.SubspaceCounting.SubspaceCountingProofs.ManyOrbits
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Formalism.SharpRestriction.AdmissibleParameterJoins.NandDIVa
-import Formalism.SharpRestriction.GlobalTheoremInputs
-import Formalism.SharpRestriction.LevelLetterCocycles.SumRepresentations
-import Development.AutomorphicArithmetic.ResidueCharacters.TwistedPlaces
+module
+
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.NandDIVa
+public import Formalism.SharpRestriction.GlobalTheoremInputs
+public import Formalism.SharpRestriction.LevelLetterCocycles.SumRepresentations
+public import Development.AutomorphicArithmetic.ResidueCharacters.TwistedPlaces
+
+@[expose] public section
 
 noncomputable section
 

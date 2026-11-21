@@ -1,9 +1,13 @@
-import Mathlib
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.GCauchyStatement
-import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsTranslateJetNeZero
-import Development.AbelianVarietyTheory.Proofs.TorusSplitting.CoeffEqZeroOfOrthonormal
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsImEqLattice
-import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.DifferentiableFderivApply
+module
+
+public import Mathlib
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.SquareIntegrability.GCauchyStatement
+public import Development.AbelianVarietyTheory.Proofs.CuspFormEvaluations.ExistsTranslateJetNeZero
+public import Development.AbelianVarietyTheory.Proofs.TorusSplitting.CoeffEqZeroOfOrthonormal
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.ExistsImEqLattice
+public import Development.AbelianVarietyTheory.Proofs.UnitaryExistence.DifferentiableFderivApply
+
+@[expose] public section
 
 namespace GlobalTheory.UpperHalfImaginaryForm
 

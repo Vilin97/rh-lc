@@ -1,5 +1,10 @@
-import Mathlib
-import Formalism.PadicSubsetSums.StableGradedCounts.ExistsNeZeroAevalEqZero
+module
+
+public import Mathlib
+public import Formalism.PadicSubsetSums.StableGradedCounts.ExistsNeZeroAevalEqZero
+
+@[expose] public section
+
 open Polynomial Matrix
 
 namespace GlobalTheory.ConjLocal

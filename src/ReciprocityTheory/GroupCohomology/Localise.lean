@@ -1,4 +1,8 @@
-import ReciprocityTheory.GroupCohomology.LocaliseA
+module
+
+public import ReciprocityTheory.GroupCohomology.LocaliseA
+
+@[expose] public section
 
 namespace ReciprocityTheory.Coh
 

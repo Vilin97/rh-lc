@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.RealGroupsIwasawa
-import GroundTheory.AutomorphicForms.RealGroupsHaar
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.RealGroupsIwasawa
+public import GroundTheory.AutomorphicForms.RealGroupsHaar
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

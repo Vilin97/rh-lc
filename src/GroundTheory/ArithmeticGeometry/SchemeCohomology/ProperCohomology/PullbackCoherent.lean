@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.Annihilator
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.PullbackUnit
+module
+
+public import Mathlib
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.Annihilator
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.ProperCohomology.PullbackUnit
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Arith.SchemeCoh

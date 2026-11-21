@@ -1,5 +1,9 @@
-import Formalism.WeaklyAdmissibleFiltrations.StatementPC
-import Formalism.CoboundaryTransfers.StatementAPI
+module
+
+public import Formalism.WeaklyAdmissibleFiltrations.StatementPC
+public import Formalism.CoboundaryTransfers.StatementAPI
+
+@[expose] public section
 
 noncomputable section
 

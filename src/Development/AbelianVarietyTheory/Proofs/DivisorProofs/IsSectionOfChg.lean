@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.HermitianCompactForm
-import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.FramedFlatCoordinates
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FlatSectionAndDegree
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DeterminantSectionRule
-import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PerValNeZero
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.HermitianCompactForm
+public import Development.AbelianVarietyTheory.BlockTheory.DivisorBase.FramedFlatCoordinates
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.FlatSectionAndDegree
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.DeterminantSectionRule
+public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.PerValNeZero
+
+@[expose] public section
 
 set_option autoImplicit false
 

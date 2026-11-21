@@ -1,4 +1,8 @@
-import Formalism.WachLatticeTwists.LagrangeExtensionCocycles.StatementTop
+module
+
+public import Formalism.WachLatticeTwists.LagrangeExtensionCocycles.StatementTop
+
+@[expose] public section
 
 namespace Formalism.RepresentationBoundsCohomology.N2.Size
 

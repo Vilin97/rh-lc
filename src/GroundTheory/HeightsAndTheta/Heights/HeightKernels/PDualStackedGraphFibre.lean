@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualStackedExc
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStackedDegree
-import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualLatticeIndex
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.StatementsDualStackedExc
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualStackedDegree
+public import GroundTheory.HeightsAndTheta.Heights.HeightKernels.PDualLatticeIndex
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.QuotientMetricDivisors.StatementE
-import Formalism.QuotientMetricDivisors.StatementJ
-import Formalism.QuotientMetricDivisors.StatementK
-import Formalism.LogFactorialIndices.StatementSize
+module
+
+public import Mathlib
+public import Formalism.QuotientMetricDivisors.StatementE
+public import Formalism.QuotientMetricDivisors.StatementJ
+public import Formalism.QuotientMetricDivisors.StatementK
+public import Formalism.LogFactorialIndices.StatementSize
+
+@[expose] public section
 
 open Finset
 

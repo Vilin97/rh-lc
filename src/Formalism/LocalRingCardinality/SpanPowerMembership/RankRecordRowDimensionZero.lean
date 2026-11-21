@@ -1,5 +1,9 @@
-import Formalism.LocalRingCardinality.SpanPowerMembership.GenericMemberLevelNearLower
-import Formalism.LocalRingCardinality.SpanPowerMembership.BaseFormAnisotropicOrthogonalSingle
+module
+
+public import Formalism.LocalRingCardinality.SpanPowerMembership.GenericMemberLevelNearLower
+public import Formalism.LocalRingCardinality.SpanPowerMembership.BaseFormAnisotropicOrthogonalSingle
+
+@[expose] public section
 
 noncomputable section
 

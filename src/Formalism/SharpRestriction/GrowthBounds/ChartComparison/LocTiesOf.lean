@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.LocCore
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.LocMore
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.WtTieOf
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.LocCore
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.LocMore
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.WtTieOf
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.IdeleGenerators.ConstSmall
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.IdeleGenerators.ConstSmall
+
+@[expose] public section
 
 open CongruenceSubgroup UpperHalfPlane UpperTheory.V.Af Filter Asymptotics Function
 open scoped MatrixGroups ModularForm Topology

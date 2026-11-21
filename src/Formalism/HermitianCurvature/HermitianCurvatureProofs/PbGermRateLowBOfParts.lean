@@ -1,7 +1,11 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PtSizePtG
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.PtSizeToStd
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormSumLeOfForm
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.GermRateSplit
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PtSizePtG
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.PtSizeToStd
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.NormSumLeOfForm
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.GermRateSplit
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.P.FormNormSumIdentities
 

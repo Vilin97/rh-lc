@@ -1,12 +1,17 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartConeLength
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StConeRingLaurent
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDehomIdeal
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PLocalMultComap
-import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PFundCycleBaseChange
-import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PPrimeComplexRadical
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
-import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartConeLength
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StConeRingLaurent
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.StChartDehomIdeal
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PLocalMultComap
+public import GroundTheory.HeightsAndTheta.Heights.ArithmeticBezout.PFundCycleBaseChange
+public import GroundTheory.HeightsAndTheta.Heights.HilbertSamuel.PPrimeComplexRadical
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.InterDivSupp
+public import ReciprocityTheory.ReductiveGroups.ArithmeticGeometry.BirationalGeometry.IsIntersectionFamily
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

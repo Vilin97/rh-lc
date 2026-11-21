@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.RootWeights.HighestWeightModuleBounds
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.RootWeights.HighestWeightModuleBounds
+
+@[expose] public section
 
 noncomputable section
 

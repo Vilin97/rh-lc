@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.PieriBlockIdeals.LatticeInclusionRealSettingAlt
-import Formalism.LocalToGlobal.Divisibility.RowLat
-import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.GaloisRepOfPolarizedCuspidal
-import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.HeckeLAdicCharacterAboveIff
+module
+
+public import Mathlib
+public import Formalism.PieriBlockIdeals.LatticeInclusionRealSettingAlt
+public import Formalism.LocalToGlobal.Divisibility.RowLat
+public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.GaloisRepOfPolarizedCuspidal
+public import Development.AbelianVarietyTheory.PublishedTheorems.GaloisCohomology₂.HeckeLAdicCharacterAboveIff
+
+@[expose] public section
 
 set_option autoImplicit false
 

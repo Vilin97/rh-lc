@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.PeriodIntegrals.WwMain
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.WwMain
+
+@[expose] public section
 
 open MvPolynomial Finset
 

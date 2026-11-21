@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.MirabolicMackeyTheory.StatementL
-import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.OrthogonalityOfMackey
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ValBasic
-import Formalism.HermitianLattices.HermitianLatticesProofs.IndexBasic
-import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.IdxRules
+module
+
+public import Mathlib
+public import Formalism.MirabolicMackeyTheory.StatementL
+public import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.OrthogonalityOfMackey
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.ValBasic
+public import Formalism.HermitianLattices.HermitianLatticesProofs.IndexBasic
+public import Formalism.MirabolicMackeyTheory.MirabolicMackeyProofs.IdxRules
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 

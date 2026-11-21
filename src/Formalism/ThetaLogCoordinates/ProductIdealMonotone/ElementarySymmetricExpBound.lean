@@ -1,5 +1,9 @@
-import Formalism.SubspaceCounting.GoodOrbitIntervalTileCondition
-import Mathlib
+module
+
+public import Formalism.SubspaceCounting.GoodOrbitIntervalTileCondition
+public import Mathlib
+
+@[expose] public section
 
 noncomputable section
 

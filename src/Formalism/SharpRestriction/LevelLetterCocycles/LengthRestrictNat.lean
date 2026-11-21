@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.LevelLetterCocycles.BaseChangeMapMemLattice
+module
+
+public import Formalism.SharpRestriction.LevelLetterCocycles.BaseChangeMapMemLattice
+
+@[expose] public section
 
 noncomputable section
 

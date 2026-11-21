@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.IsOpenPart
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.Divisibility.AbelianOpenPart.IsOpenPart
+
+@[expose] public section
 
 open Formalism.MainNotions.DIV.Cons (intO)
 open Polynomial

@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleSheaves.ClosedPointLifts.ClosedLift
-import Development.EtaleCohomology.EtaleSheaves.LeafConeZeroPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.ClosedPointLifts.ClosedLift
+public import Development.EtaleCohomology.EtaleSheaves.LeafConeZeroPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite GlobalTheory.EtC

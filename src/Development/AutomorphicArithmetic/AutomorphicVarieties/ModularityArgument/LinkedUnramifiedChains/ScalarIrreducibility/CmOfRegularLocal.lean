@@ -1,8 +1,12 @@
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.RedDefs
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDiscreteValuationRingIntegralClosure
-import GroundTheory.ArithmeticGeometry.SchemeCohomology.RegularUFDLocalization
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PCMParameterQuotient
-import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PCMRegularElement
+module
+
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.LinkedUnramifiedChains.RedDefs
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.IsDiscreteValuationRingIntegralClosure
+public import GroundTheory.ArithmeticGeometry.SchemeCohomology.RegularUFDLocalization
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PCMParameterQuotient
+public import GroundTheory.HeightsAndTheta.Heights.ComplexAnalyticSets.PCMRegularElement
+
+@[expose] public section
 
 set_option linter.overlappingInstances false
 

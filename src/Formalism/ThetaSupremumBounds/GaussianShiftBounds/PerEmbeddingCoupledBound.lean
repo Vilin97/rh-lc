@@ -1,9 +1,13 @@
-import Mathlib
-import Formalism.ThetaSupremumBounds.StatementCB
-import Formalism.ThetaSupremumBounds.LiftOperatorBoundOfFockJet
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.TheoremDivIneq
-import Formalism.ThetaSupremumBounds.DivIneqExplicit6
-import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.DescendedNorm
+module
+
+public import Mathlib
+public import Formalism.ThetaSupremumBounds.StatementCB
+public import Formalism.ThetaSupremumBounds.LiftOperatorBoundOfFockJet
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.TheoremDivIneq
+public import Formalism.ThetaSupremumBounds.DivIneqExplicit6
+public import Formalism.QuotientMetricDivisors.HermitianTwistDivisors.DescendedNorm
+
+@[expose] public section
 
 open Finset NumberField
 open scoped Real

@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.ThetaQuasiPeriods.PeriodLattice
+module
+
+public import Mathlib
+public import ReciprocityTheory.ThetaQuasiPeriods.PeriodLattice
+
+@[expose] public section
 
 noncomputable section
 

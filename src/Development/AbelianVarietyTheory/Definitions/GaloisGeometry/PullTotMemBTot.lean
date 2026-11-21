@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.OfNatTrans
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FaceFaceApply
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.CoeEqAlgebraMapZeroEquiv
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.OfNatTrans
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.FaceFaceApply
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.CoeEqAlgebraMapZeroEquiv
+
+@[expose] public section
 
 set_option autoImplicit false
 

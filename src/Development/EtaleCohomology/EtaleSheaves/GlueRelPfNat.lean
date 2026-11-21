@@ -1,4 +1,8 @@
-import Development.EtaleCohomology.EtaleSheaves.GlueRelPfCone
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.GlueRelPfCone
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits GlobalTheory.EtC CochainComplex.HomComplex CochainComplex AlgebraicGeometry LateralTheory.E.E4

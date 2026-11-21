@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HaarCosets
-import GroundTheory.AutomorphicForms.SmoothRep
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HaarCosets
+public import GroundTheory.AutomorphicForms.SmoothRep
+
+@[expose] public section
 
 noncomputable section
 

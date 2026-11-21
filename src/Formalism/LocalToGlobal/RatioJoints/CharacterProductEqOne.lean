@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.ClassS
-import Formalism.LocalToGlobal.RatioJoints.IsRatioAt
-import Formalism.LocalToGlobal.UnitaryNorms.CharDiv
-import Formalism.LocalToGlobal.JointCharacters.SameChr
+module
+
+public import Formalism.LocalToGlobal.ClassS
+public import Formalism.LocalToGlobal.RatioJoints.IsRatioAt
+public import Formalism.LocalToGlobal.UnitaryNorms.CharDiv
+public import Formalism.LocalToGlobal.JointCharacters.SameChr
+
+@[expose] public section
 
 noncomputable section
 

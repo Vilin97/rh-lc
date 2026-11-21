@@ -1,4 +1,8 @@
-import Formalism.AdmissibleDesigns.RealDisplayAllKOf
+module
+
+public import Formalism.AdmissibleDesigns.RealDisplayAllKOf
+
+@[expose] public section
 
 variable [hT2Core : Fact ReciprocityTheory.ChartRestriction.T2.Core]
 

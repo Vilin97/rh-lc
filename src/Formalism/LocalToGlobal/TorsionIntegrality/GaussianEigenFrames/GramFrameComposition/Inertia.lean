@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.StatementE
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.KurComplete
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.StatementE
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussSumParity.KurComplete
+
+@[expose] public section
 
 noncomputable section
 open NumberField

@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.PresOfHat
-import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.Kcompact
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OneMemKAt
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ConeShifts.PresOfHat
+public import Development.WeilBound.CoreStatements.CompactAveragingSplitting.EigenvectorLifting.Kcompact
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.OneMemKAt
+
+@[expose] public section
 
 noncomputable section
 

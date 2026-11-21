@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.UnitaryNorms.CharExGen
-import Formalism.LocalToGlobal.UnitaryNorms.CharUniq
+module
+
+public import Formalism.LocalToGlobal.UnitaryNorms.CharExGen
+public import Formalism.LocalToGlobal.UnitaryNorms.CharUniq
+
+@[expose] public section
 
 noncomputable section
 

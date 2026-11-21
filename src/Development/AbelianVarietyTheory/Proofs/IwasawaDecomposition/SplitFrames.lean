@@ -1,11 +1,15 @@
-import Mathlib
-import Formalism.LocalToGlobal.BesselHermitianTheta.AllTied
-import Formalism.LocalToGlobal.IndefiniteReal.DatumVec
-import Formalism.LocalToGlobal.JointCharacters.LocEMulLocE
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.AdelicDataRowMeasureScaleTrivialTuple
-import Formalism.LocalToGlobal.BesselHermitianTheta.TiedLocW
-import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.SymplecticTensorMeasures
-import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.WeilIdempotents
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.BesselHermitianTheta.AllTied
+public import Formalism.LocalToGlobal.IndefiniteReal.DatumVec
+public import Formalism.LocalToGlobal.JointCharacters.LocEMulLocE
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.AdelicDataRowMeasureScaleTrivialTuple
+public import Formalism.LocalToGlobal.BesselHermitianTheta.TiedLocW
+public import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.SymplecticTensorMeasures
+public import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.WeilIdempotents
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ClsGat
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.ComparisonMaps.ClsGat
+
+@[expose] public section
 
 noncomputable section
 

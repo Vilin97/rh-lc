@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.ColumnData.DiagramFitsSourceRank
-import Formalism.LocalToGlobal.KernelLattices.AdaptedEnt
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.ColumnData.DiagramFitsSourceRank
+public import Formalism.LocalToGlobal.KernelLattices.AdaptedEnt
+
+@[expose] public section
 
 noncomputable section
 

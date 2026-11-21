@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.InitialLevelFormula
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.InitialLevelFormula
+
+@[expose] public section
 
 noncomputable section
 

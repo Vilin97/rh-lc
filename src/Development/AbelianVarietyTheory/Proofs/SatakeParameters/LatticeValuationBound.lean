@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.SharpRestriction.GrowthBounds.WeilJacquetShalikaLaw
-import Formalism.LocalRingCardinality.Lemmas
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.GrowthBounds.WeilJacquetShalikaLaw
+public import Formalism.LocalRingCardinality.Lemmas
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.FiniteBruhat
-import GroundTheory.AutomorphicForms.Iwasawa
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.FiniteBruhat
+public import GroundTheory.AutomorphicForms.Iwasawa
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

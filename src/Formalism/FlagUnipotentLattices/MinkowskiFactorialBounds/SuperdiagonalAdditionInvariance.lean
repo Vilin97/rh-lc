@@ -1,7 +1,11 @@
-import Formalism.FlagUnipotentLattices.PairingOrthogonalComplement
-import Mathlib
-import Formalism.SobolevGaussianKernels.StatementEI
-import Formalism.CorankShare.StatementFR
+module
+
+public import Formalism.FlagUnipotentLattices.PairingOrthogonalComplement
+public import Mathlib
+public import Formalism.SobolevGaussianKernels.StatementEI
+public import Formalism.CorankShare.StatementFR
+
+@[expose] public section
 
 namespace Formalism.HermitianLatticeCounting.P.S4aux
 

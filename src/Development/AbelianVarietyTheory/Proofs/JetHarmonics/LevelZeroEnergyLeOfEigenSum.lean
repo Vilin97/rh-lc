@@ -1,13 +1,18 @@
-import Mathlib
-import Formalism.HermitianCurvature.StatementU
-import Formalism.HermitianCurvature.StatementQ
-import Formalism.HermitianCurvature.LetterProductDoubleDegreeCount
-import Development.AbelianVarietyTheory.PublishedTheorems.BesselIntegrals.BesselXiIntegrable
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.BetaFinsetSumSmulOfXiExists
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.BetaSelfReNonneg
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.BetaCapelliSymmOfXiExists
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FoldrCapelliSumEigen
-import Development.AbelianVarietyTheory.Proofs.JetHarmonics.GramBlockDiagonalEnergyBound
+module
+
+public import Mathlib
+public import Formalism.HermitianCurvature.StatementU
+public import Formalism.HermitianCurvature.StatementQ
+public import Formalism.HermitianCurvature.LetterProductDoubleDegreeCount
+public import Development.AbelianVarietyTheory.PublishedTheorems.BesselIntegrals.BesselXiIntegrable
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.BetaFinsetSumSmulOfXiExists
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.BetaSelfReNonneg
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.BetaCapelliSymmOfXiExists
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.FoldrCapelliSumEigen
+public import Development.AbelianVarietyTheory.Proofs.JetHarmonics.GramBlockDiagonalEnergyBound
+
+@[expose] public section
+
 open Formalism.FourierDecayAlt Formalism.REAL Formalism.QuantumDeterminants Finset
 
 namespace GlobalTheory

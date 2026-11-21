@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.QuotInv
-import CompanionTheory.HarishChandraModules.BesselParameterIntegrals.SmoothCyclicVectors.IntegralMemOfIsClosed
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.QuotInv
+public import CompanionTheory.HarishChandraModules.BesselParameterIntegrals.SmoothCyclicVectors.IntegralMemOfIsClosed
+
+@[expose] public section
 
 open Matrix Filter Topology Set
 open scoped ContDiff InnerProductSpace

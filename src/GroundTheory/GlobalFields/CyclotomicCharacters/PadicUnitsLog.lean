@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.GlobalFields.CyclotomicCharacters.ProfinitePadic
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.CyclotomicCharacters.ProfinitePadic
+
+@[expose] public section
 
 open scoped GroundTheory.LocalField.Abstract
 

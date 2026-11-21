@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.ThetaLiftIndependence.Statement
-import Formalism.HermitianLattices.StatementLat
+module
+
+public import Mathlib
+public import Formalism.ThetaLiftIndependence.Statement
+public import Formalism.HermitianLattices.StatementLat
+
+@[expose] public section
 
 open NumberField
 

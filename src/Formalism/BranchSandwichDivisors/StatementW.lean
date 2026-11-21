@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.GradedWeylDivisibility.StatementA
-import Formalism.BranchSandwichDivisors.StatementR
+module
+
+public import Mathlib
+public import Formalism.GradedWeylDivisibility.StatementA
+public import Formalism.BranchSandwichDivisors.StatementR
+
+@[expose] public section
 
 open MvPolynomial Formalism.GradedWeylDivisibility
 open Formalism.REAL (fockF)

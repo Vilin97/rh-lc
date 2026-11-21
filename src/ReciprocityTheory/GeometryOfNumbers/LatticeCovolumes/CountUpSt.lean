@@ -1,5 +1,9 @@
-import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.CountSt
-import Mathlib
+module
+
+public import ReciprocityTheory.GeometryOfNumbers.LatticeCovolumes.CountSt
+public import Mathlib
+
+@[expose] public section
 
 noncomputable section
 

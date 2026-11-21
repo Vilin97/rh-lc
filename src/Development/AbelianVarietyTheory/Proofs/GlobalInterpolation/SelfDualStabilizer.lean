@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.StabilizerCompletions
-import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.StabilizerLattices
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.StabilizerCompletions
+public import Development.AbelianVarietyTheory.BlockTheory.GlobalSignature.StabilizerLattices
+
+@[expose] public section
 
 noncomputable section
 

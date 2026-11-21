@@ -1,8 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.HeckeCharEqOfLAdicRealisation
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IrrTransferAbsIrrStatement
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ImportsSide
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsCompEq
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.GaloisGeometry.HeckeCharEqOfLAdicRealisation
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.IrrTransferAbsIrrStatement
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ImportsSide
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.ExistsCompEq
+
+@[expose] public section
+
 open Formalism.BasicNotions Formalism.ConjugateSelfDual Formalism.MainNotions Formalism.MainNotions.N Polynomial NumberField IsDedekindDomain ReciprocityTheory.Gal GlobalTheory.StringRepresentationDecomposition
 
 noncomputable section

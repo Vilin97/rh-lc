@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.Satake
-import GroundTheory.AutomorphicForms.GL2.GJUnramifiedDegree
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.Satake
+public import GroundTheory.AutomorphicForms.GL2.GJUnramifiedDegree
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

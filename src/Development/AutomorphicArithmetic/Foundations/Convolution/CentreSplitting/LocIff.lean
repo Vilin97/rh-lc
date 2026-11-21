@@ -1,8 +1,12 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.LocalRepresentationL2
-import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.LocEmb
-import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.LocFlath
-import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.FixedDense
-import Development.WeilBound.RepresentationTheoryGL.ResidualSpectrum.IwasawaCompletion.AwayPartMulIotaWPart
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.LocalRepresentationL2
+public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.LocEmb
+public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.LocFlath
+public import Development.AutomorphicArithmetic.Foundations.Convolution.CentreSplitting.FixedDense
+public import Development.WeilBound.RepresentationTheoryGL.ResidualSpectrum.IwasawaCompletion.AwayPartMulIotaWPart
+
+@[expose] public section
 
 open MeasureTheory NumberField IsDedekindDomain
 open GroundTheory.Automorphic GroundTheory.Automorphic.Reduction GroundTheory.Automorphic.RightCosetSpace

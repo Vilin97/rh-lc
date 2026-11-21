@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.FglChordFactor
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.AddIntG
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.FglChordFactor
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.AddIntG
+
+@[expose] public section
 
 noncomputable section
 

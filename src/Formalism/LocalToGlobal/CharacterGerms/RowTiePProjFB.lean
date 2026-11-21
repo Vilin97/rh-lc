@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.CharacterGerms.EndomorphismLimitIntegral
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.EndomorphismLimitIntegral
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,8 +1,13 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.FrameDefinitions.LineMu
-import GroundTheory.HeightsAndTheta.Heights.Regularisation.Statements
-import GroundTheory.HeightsAndTheta.Heights.FubiniStudyCharts
-import GroundTheory.HeightsAndTheta.Heights.Regularisation.PBoundedGlue
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HodgeLowerBound.FrameDefinitions.LineMu
+public import GroundTheory.HeightsAndTheta.Heights.Regularisation.Statements
+public import GroundTheory.HeightsAndTheta.Heights.FubiniStudyCharts
+public import GroundTheory.HeightsAndTheta.Heights.Regularisation.PBoundedGlue
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

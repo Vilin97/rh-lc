@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalUnitaryOrbits.MemUniformizerHermitianIdeal
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FirstStatementA
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.LocalUnitaryOrbits.MemUniformizerHermitianIdeal
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.FirstStatementA
+
+@[expose] public section
 
 noncomputable section
 

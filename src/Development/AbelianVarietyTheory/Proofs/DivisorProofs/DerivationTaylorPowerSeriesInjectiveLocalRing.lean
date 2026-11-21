@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntDerApply
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TaylorIsRingHomStatement
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.IntDerApply
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.TaylorIsRingHomStatement
+
+@[expose] public section
+
 open IsLocalRing GlobalTheory.FormalOrigin MvPowerSeries
 
 noncomputable section

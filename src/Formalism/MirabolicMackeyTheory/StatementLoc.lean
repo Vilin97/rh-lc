@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.MirabolicMackeyTheory.StatementL
-import Formalism.MirabolicMackeyTheory.LocalConditionsWeighted
+module
+
+public import Mathlib
+public import Formalism.MirabolicMackeyTheory.StatementL
+public import Formalism.MirabolicMackeyTheory.LocalConditionsWeighted
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain
 

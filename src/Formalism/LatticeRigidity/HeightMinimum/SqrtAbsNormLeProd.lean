@@ -1,4 +1,8 @@
-import Formalism.LatticeRigidity.StatementC
+module
+
+public import Formalism.LatticeRigidity.StatementC
+
+@[expose] public section
 
 namespace Formalism.SA.P
 

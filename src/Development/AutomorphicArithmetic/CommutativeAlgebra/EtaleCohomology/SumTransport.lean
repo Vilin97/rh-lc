@@ -1,5 +1,9 @@
-import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.AddIff
-import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.EvalExact
+module
+
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.AddIff
+public import Development.AutomorphicArithmetic.CommutativeAlgebra.EtaleCohomology.EvalExact
+
+@[expose] public section
 
 noncomputable section
 

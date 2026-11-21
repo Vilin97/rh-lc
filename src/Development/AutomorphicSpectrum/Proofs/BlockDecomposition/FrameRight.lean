@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ThetaCellCovers.ThetaBasic
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DegreeUnderTranslation
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.ArchimedeanBaseChange.ArchimedeanBaseChangeProof.ThetaCellCovers.ThetaBasic
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.DegreeUnderTranslation
+
+@[expose] public section
 
 noncomputable section
 

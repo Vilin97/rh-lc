@@ -1,8 +1,12 @@
-import Mathlib
-import Formalism.LocalToGlobal.KernelLattices.ColumnData
-import Formalism.LocalToGlobal.KernelLattices.ColumnData.HfArith
-import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.OrdUnimod
-import Lemmata.GeneralBFactThirdBis.Imports
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.KernelLattices.ColumnData
+public import Formalism.LocalToGlobal.KernelLattices.ColumnData.HfArith
+public import Formalism.FrobeniusOrbits.FrobeniusOrbitsProofs.OrdUnimod
+public import Lemmata.GeneralBFactThirdBis.Imports
+
+@[expose] public section
 
 noncomputable section
 

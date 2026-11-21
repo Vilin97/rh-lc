@@ -1,8 +1,12 @@
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.StatementA
-import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.StatementB
-import Formalism.GaussJetBounds.StatementN
-import Formalism.GaussJetBounds.StatementP
-import Formalism.GaussJetBounds.StatementQ
+module
+
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.StatementA
+public import Formalism.LocalToGlobal.TorsionIntegrality.GaussianEigenFrames.StatementB
+public import Formalism.GaussJetBounds.StatementN
+public import Formalism.GaussJetBounds.StatementP
+public import Formalism.GaussJetBounds.StatementQ
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

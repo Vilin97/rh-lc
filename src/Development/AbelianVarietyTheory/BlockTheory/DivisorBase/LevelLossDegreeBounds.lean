@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataErr
-import Formalism.LocalRingCardinality.DataForced
-import Formalism.SharpRestriction.ParamsHeightRankConstant
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataErr
+public import Formalism.LocalRingCardinality.DataForced
+public import Formalism.SharpRestriction.ParamsHeightRankConstant
+
+@[expose] public section
 
 noncomputable section
 

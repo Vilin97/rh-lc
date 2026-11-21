@@ -1,5 +1,10 @@
-import Development.AutomorphicArithmetic.Foundations.Convolution.HermitianDescent.IsHerm
-import Development.AutomorphicArithmetic.UnitaryInvolutions.ExistsMulInvolutionEqFixedUnitOfComplete
+module
+
+public import Development.AutomorphicArithmetic.Foundations.Convolution.HermitianDescent.IsHerm
+public import Development.AutomorphicArithmetic.UnitaryInvolutions.ExistsMulInvolutionEqFixedUnitOfComplete
+
+@[expose] public section
+
 open Matrix Polynomial
 open scoped TensorProduct
 

@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.MultiplicityOne.GL2BumpFunctions.ParametrixLie
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.MultiplicityOne.GL2BumpFunctions.ParametrixLie
+
+@[expose] public section
 
 open MeasureTheory Filter Topology
 open scoped ContDiff

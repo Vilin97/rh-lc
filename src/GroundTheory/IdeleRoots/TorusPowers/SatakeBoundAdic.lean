@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.IdeleRoots.TorusPowers.SatakeBoundReps
-import GroundTheory.GlobalFields.LocalFieldAtPlace
-import GroundTheory.GlobalFields.KummerTheory.LocalIndexAtPlace
+module
+
+public import Mathlib
+public import GroundTheory.IdeleRoots.TorusPowers.SatakeBoundReps
+public import GroundTheory.GlobalFields.LocalFieldAtPlace
+public import GroundTheory.GlobalFields.KummerTheory.LocalIndexAtPlace
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

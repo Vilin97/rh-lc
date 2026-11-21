@@ -1,5 +1,9 @@
-import Mathlib
-import ReciprocityTheory.DualLattices.FormalChartAtZero
+module
+
+public import Mathlib
+public import ReciprocityTheory.DualLattices.FormalChartAtZero
+
+@[expose] public section
 
 noncomputable section
 

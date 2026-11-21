@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimesIsogeny
-import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimesLocal
-import GroundTheory.GlobalFields.ComplexMultiplication.BadPrimesFinite
-import GroundTheory.GlobalFields.ComplexMultiplication.AlgebraicityDescent
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimesIsogeny
+public import GroundTheory.GlobalFields.ComplexMultiplication.FrobeniusAtPrimesLocal
+public import GroundTheory.GlobalFields.ComplexMultiplication.BadPrimesFinite
+public import GroundTheory.GlobalFields.ComplexMultiplication.AlgebraicityDescent
+
+@[expose] public section
 
 private abbrev periodLatticeEnd (L : PeriodPair) : Subring ℂ where
   carrier := {a | ∀ z ∈ L.lattice, a * z ∈ L.lattice}

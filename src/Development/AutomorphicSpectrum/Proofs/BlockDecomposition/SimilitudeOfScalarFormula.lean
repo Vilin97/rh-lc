@@ -1,11 +1,15 @@
-import Mathlib
-import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.BaseOneSide.PsiSide
-import CompanionTheory.SpectralGeometry.LocalGlobalProofs.AdelicAnalysis.SiegelWeilMeasureOfCongruentForm
-import Development.WeilBound.CoreStatements.ThetaDilations.EulerMove
-import Development.WeilBound.CoreStatements.ThetaDilations.SdTransport
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SimilitudeInvariance
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ThetaMeasureIndependentChoices
-import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ThetaMeasureSimilitude
+module
+
+public import Mathlib
+public import Development.WeilBound.RepresentationTheoryGL.SiegelWeilProof.BaseOneSide.PsiSide
+public import CompanionTheory.SpectralGeometry.LocalGlobalProofs.AdelicAnalysis.SiegelWeilMeasureOfCongruentForm
+public import Development.WeilBound.CoreStatements.ThetaDilations.EulerMove
+public import Development.WeilBound.CoreStatements.ThetaDilations.SdTransport
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.SimilitudeInvariance
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ThetaMeasureIndependentChoices
+public import Development.AutomorphicSpectrum.Proofs.BlockDecomposition.ThetaMeasureSimilitude
+
+@[expose] public section
 
 open HeckeCharacterZeroLocus.SiegelWeilU GlobalTheory.CompanionTheory.SW NumberField IsDedekindDomain MeasureTheory Topology
 open scoped TensorProduct ENNReal NNReal Matrix

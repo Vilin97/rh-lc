@@ -1,7 +1,11 @@
-import Formalism.LocalToGlobal.CharacterGerms.BiadditiveInSingleVariables
-import Formalism.DropLevelBounds.ThBounds
-import Mathlib
-import Formalism.LocalToGlobal.Divisibility.Numbers
+module
+
+public import Formalism.LocalToGlobal.CharacterGerms.BiadditiveInSingleVariables
+public import Formalism.DropLevelBounds.ThBounds
+public import Mathlib
+public import Formalism.LocalToGlobal.Divisibility.Numbers
+
+@[expose] public section
 
 noncomputable section
 open scoped BigOperators

@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.LocalToGlobal.Columns.ColumnsProofs.HFSCoef
-import Formalism.LocalToGlobal.Columns.PathCountSymmetricHolds
-import Formalism.LocalToGlobal.Divisibility.LiftLatInst
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.Columns.ColumnsProofs.HFSCoef
+public import Formalism.LocalToGlobal.Columns.PathCountSymmetricHolds
+public import Formalism.LocalToGlobal.Divisibility.LiftLatInst
+
+@[expose] public section
 
 open Module NumberField IsDedekindDomain Polynomial
 

@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsSmoothHermTrivLine
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PtsOverPt
-import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PGenFibreChartDeg
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PChartScalingIndep
-import GroundTheory.HeightsAndTheta.Heights.Intersections.PAdjoinIndepRelfinrank
-import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ExistsPowOfMemCellSec
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.GeometryProofs.IsSmoothHermTrivLine
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PtsOverPt
+public import GroundTheory.HeightsAndTheta.Heights.OrbitLimits.PGenFibreChartDeg
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PChartScalingIndep
+public import GroundTheory.HeightsAndTheta.Heights.Intersections.PAdjoinIndepRelfinrank
+public import GroundTheory.HeightsAndTheta.Heights.KleimanAmpleness.ExistsPowOfMemCellSec
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.LettersExt
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.MonomialFactorials.LettersExt
+
+@[expose] public section
 
 noncomputable section
 

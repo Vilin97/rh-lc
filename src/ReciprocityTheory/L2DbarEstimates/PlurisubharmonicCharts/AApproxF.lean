@@ -1,4 +1,8 @@
-import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.AApproxE
+module
+
+public import ReciprocityTheory.L2DbarEstimates.PlurisubharmonicCharts.AApproxE
+
+@[expose] public section
 
 namespace ReciprocityTheory.L2DbarEstimates.Y
 

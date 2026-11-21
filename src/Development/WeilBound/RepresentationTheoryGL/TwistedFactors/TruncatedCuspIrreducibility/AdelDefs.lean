@@ -1,5 +1,9 @@
-import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.CuspDecayHeights.HeightLe
-import GroundTheory.AutomorphicForms.CuspidalDiscreteness.DecayUniform
+module
+
+public import Development.WeilBound.RepresentationTheoryGL.TwistedFactors.CuspDecayHeights.HeightLe
+public import GroundTheory.AutomorphicForms.CuspidalDiscreteness.DecayUniform
+
+@[expose] public section
 
 noncomputable section
 

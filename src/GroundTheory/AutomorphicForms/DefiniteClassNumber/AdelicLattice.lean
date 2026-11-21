@@ -1,8 +1,12 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.DefiniteClassNumber.Places
-import GroundTheory.AutomorphicForms.AdelicUnitaryGroups.LatticeCompact
-import GroundTheory.AutomorphicForms.StrongApproximationSLDense
-import GroundTheory.GlobalFields.Adele.Topology
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.DefiniteClassNumber.Places
+public import GroundTheory.AutomorphicForms.AdelicUnitaryGroups.LatticeCompact
+public import GroundTheory.AutomorphicForms.StrongApproximationSLDense
+public import GroundTheory.GlobalFields.Adele.Topology
+
+@[expose] public section
 
 noncomputable section
 

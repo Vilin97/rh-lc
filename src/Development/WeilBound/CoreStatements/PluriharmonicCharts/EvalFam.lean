@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.MetricProofs.SncModelEmbeddedLogResolution
-import Development.WeilBound.CoreStatements.PluriharmonicCharts.BlkDegLeTotalDegree
-import Development.WeilBound.CoreStatements.PluriharmonicCharts.HoloOnLocMono
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.MetricProofs.SncModelEmbeddedLogResolution
+public import Development.WeilBound.CoreStatements.PluriharmonicCharts.BlkDegLeTotalDegree
+public import Development.WeilBound.CoreStatements.PluriharmonicCharts.HoloOnLocMono
+
+@[expose] public section
 
 namespace PositivityTheory.Xgp.c_bm_exists_boundary
 

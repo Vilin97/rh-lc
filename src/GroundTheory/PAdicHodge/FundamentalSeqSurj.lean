@@ -1,6 +1,11 @@
-import Mathlib
-import GroundTheory.PAdicHodge.FundamentalSeqLog
-import GroundTheory.PAdicHodge.GalSmulAlgebraMapPadicPlus
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.FundamentalSeqLog
+public import GroundTheory.PAdicHodge.GalSmulAlgebraMapPadicPlus
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

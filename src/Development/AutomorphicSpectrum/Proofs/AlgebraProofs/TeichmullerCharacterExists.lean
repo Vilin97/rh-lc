@@ -1,5 +1,9 @@
-import Mathlib
-import Development.WeilBound.CoreStatements.HodgeTatePoints.RbFund
+module
+
+public import Mathlib
+public import Development.WeilBound.CoreStatements.HodgeTatePoints.RbFund
+
+@[expose] public section
 
 open scoped Matrix TensorProduct
 open Matrix

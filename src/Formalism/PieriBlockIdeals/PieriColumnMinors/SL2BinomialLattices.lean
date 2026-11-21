@@ -1,8 +1,12 @@
-import Formalism.PieriBlockIdeals.ExponentBoundCounterexample
-import Formalism.PieriBlockIdeals.PieriColumnMinors.ProdInitialMinorsMemDetSpan
-import Mathlib
-import Formalism.PieriBlockIdeals.PieriColumnMinors.MaxValEqZeroOfLt
-import Formalism.RankGapBounds.RankGapProofs.FormsTensorLocalization
+module
+
+public import Formalism.PieriBlockIdeals.ExponentBoundCounterexample
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.ProdInitialMinorsMemDetSpan
+public import Mathlib
+public import Formalism.PieriBlockIdeals.PieriColumnMinors.MaxValEqZeroOfLt
+public import Formalism.RankGapBounds.RankGapProofs.FormsTensorLocalization
+
+@[expose] public section
 
 open MvPolynomial CategoryTheory TensorProduct
 

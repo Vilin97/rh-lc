@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.HermitianForms.TiedTwGen
-import Formalism.LocalToGlobal.HermitianColumns.TiedQCJoint
-import Formalism.LocalRingCardinality.DataKerP
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.TiedTwGen
+public import Formalism.LocalToGlobal.HermitianColumns.TiedQCJoint
+public import Formalism.LocalRingCardinality.DataKerP
+
+@[expose] public section
 
 noncomputable section
 

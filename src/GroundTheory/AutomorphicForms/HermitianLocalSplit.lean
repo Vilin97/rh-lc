@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.HermitianClassification
-import GroundTheory.AutomorphicForms.HermitianNormLocal
-import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeAndRangePowLe
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.HermitianClassification
+public import GroundTheory.AutomorphicForms.HermitianNormLocal
+public import GroundTheory.LocalFields.ExistsUnitFiltrationUnitsLeAndRangePowLe
+
+@[expose] public section
 
 noncomputable section
 

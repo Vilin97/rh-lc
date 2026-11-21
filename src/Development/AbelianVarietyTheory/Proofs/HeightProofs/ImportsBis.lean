@@ -1,4 +1,8 @@
-import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.AdelicUnitaryGroups
+module
+
+public import Development.AbelianVarietyTheory.BlockTheory.HeightDefect.AdelicUnitaryGroups
+
+@[expose] public section
 
 namespace GlobalTheory.MiscellaneousLemmas
 

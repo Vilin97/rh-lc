@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PrimeMapPrimeMap
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFiniteFixedUnitsModFixedSquares
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.PrimeMapPrimeMap
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsFiniteFixedUnitsModFixedSquares
+
+@[expose] public section
+
 open NumberField IsDedekindDomain GlobalTheory.FixNormCls GlobalTheory.LocalDivisor
 open scoped TensorProduct Classical
 

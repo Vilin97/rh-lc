@@ -1,6 +1,10 @@
-import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.PsiExistsOfFormula
-import Formalism.FormalDegreeBessel.StatementIO
-import Formalism.FormalDegreeBessel.StatementDS
+module
+
+public import ReciprocityTheory.ReductiveGroups.DiscreteSeries.CasimirCoefficients.PsiExistsOfFormula
+public import Formalism.FormalDegreeBessel.StatementIO
+public import Formalism.FormalDegreeBessel.StatementDS
+
+@[expose] public section
 
 noncomputable section
 

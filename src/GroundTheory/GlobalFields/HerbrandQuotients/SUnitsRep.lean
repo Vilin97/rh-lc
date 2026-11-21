@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.GlobalFields.SUnits
-import GroundTheory.GlobalFields.SemilocalAlgebras.Galois
-import GroundTheory.GlobalFields.HerbrandQuotients.SUnitsPerm
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.SUnits
+public import GroundTheory.GlobalFields.SemilocalAlgebras.Galois
+public import GroundTheory.GlobalFields.HerbrandQuotients.SUnitsPerm
+
+@[expose] public section
 
 namespace GroundTheory.Global
 

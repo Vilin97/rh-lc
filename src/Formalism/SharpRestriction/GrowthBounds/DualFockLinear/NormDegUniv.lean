@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.Lemma4ElementZero
-import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.FockRLinDual
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.Lemma4ElementZero
+public import Formalism.SharpRestriction.GrowthBounds.DualFockLinear.FockRLinDual
+
+@[expose] public section
 
 noncomputable section
 

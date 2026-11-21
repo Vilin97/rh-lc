@@ -1,15 +1,19 @@
-import Formalism.SizeWindowBrackets.FrameTraceRatioFinEquiv
-import Formalism.HarderNarasimhan.ShiftInvariance
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.TraceConjTransposeMulSelf
-import Formalism.SizeWindowBrackets.SlopeExcessBoundExponentZero
-import Formalism.SizeWindowBrackets.RealSlopeBoundsSplit
-import Mathlib.Tactic.Linarith
-import Mathlib.Tactic.FieldSimp
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring
-import Mathlib.Data.Fintype.BigOperators
-import Formalism.RankGapBounds.RankGapProofs.WeightedMeanData
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.ExistsNsmulMem
+module
+
+public import Formalism.SizeWindowBrackets.FrameTraceRatioFinEquiv
+public import Formalism.HarderNarasimhan.ShiftInvariance
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.TraceConjTransposeMulSelf
+public import Formalism.SizeWindowBrackets.SlopeExcessBoundExponentZero
+public import Formalism.SizeWindowBrackets.RealSlopeBoundsSplit
+public import Mathlib.Tactic.Linarith
+public import Mathlib.Tactic.FieldSimp
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring
+public import Mathlib.Data.Fintype.BigOperators
+public import Formalism.RankGapBounds.RankGapProofs.WeightedMeanData
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.ExistsNsmulMem
+
+@[expose] public section
 
 open Module NumberField Matrix
 open Formalism.CorankShareLayerCake.FR Formalism.HN

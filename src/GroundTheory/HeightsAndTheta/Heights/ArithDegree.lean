@@ -1,5 +1,9 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HermitianTensor
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HermitianTensor
+
+@[expose] public section
 
 namespace GroundTheory.Heights₂.Heights
 

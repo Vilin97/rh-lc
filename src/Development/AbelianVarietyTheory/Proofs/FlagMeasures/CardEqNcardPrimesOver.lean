@@ -1,9 +1,13 @@
-import Mathlib
-import Development.AbelianVarietyTheory.BlockTheory.SiegelWeilLocal.HermitianPerpSubgroup
-import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
-import Formalism.LocalToGlobal.Columns.GenericUnipotentCharacter
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.FrameLats
-import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsIrreducible
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.BlockTheory.SiegelWeilLocal.HermitianPerpSubgroup
+public import Formalism.SharpRestriction.GlobalSchurBounds.GeneralLinearActions.GenusMassVolumes
+public import Formalism.LocalToGlobal.Columns.GenericUnipotentCharacter
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.FrameLats
+public import Development.AbelianVarietyTheory.Proofs.FoundationProofs.ExistsIrreducible
+
+@[expose] public section
 
 open NumberField IsDedekindDomain MeasureTheory Matrix
 open scoped TensorProduct ENNReal Pointwise

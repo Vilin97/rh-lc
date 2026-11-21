@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.GaussValuationBounds.Statement
+module
+
+public import Mathlib
+public import Formalism.GaussValuationBounds.Statement
+
+@[expose] public section
 
 noncomputable section
 

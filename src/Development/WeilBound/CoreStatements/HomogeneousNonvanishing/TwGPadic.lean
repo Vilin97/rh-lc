@@ -1,10 +1,14 @@
-import Mathlib
-import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.RealOfFixedByConjugations
-import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGFree
-import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGLam
-import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGTheta
-import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGStd
-import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGSemi
+module
+
+public import Mathlib
+public import Development.AutomorphicSpectrum.Proofs.AlgebraProofs.RealOfFixedByConjugations
+public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGFree
+public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGLam
+public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGTheta
+public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGStd
+public import Development.WeilBound.CoreStatements.HomogeneousNonvanishing.TwGSemi
+
+@[expose] public section
 
 open NumberField TensorProduct
 

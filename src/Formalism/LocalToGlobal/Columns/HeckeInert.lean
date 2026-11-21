@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.HeckeSp
+module
+
+public import Formalism.LocalToGlobal.Columns.HeckeSp
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.RingIndep
-import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.MemColSpanIff
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.RingIndep
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.MemColSpanIff
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.GaussValuationBounds.Statement
-import Formalism.GaussValuationBounds.GaussUnit
-import Formalism.FrobeniusContraction.Statement
+module
+
+public import Mathlib
+public import Formalism.GaussValuationBounds.Statement
+public import Formalism.GaussValuationBounds.GaussUnit
+public import Formalism.FrobeniusContraction.Statement
+
+@[expose] public section
 
 noncomputable section
 

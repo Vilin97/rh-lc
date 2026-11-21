@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ArchimedeanSchwartz.ExpIndep
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InvOneSubBound
+module
+
+public import Mathlib
+public import Development.AutomorphicArithmetic.AutomorphicVarieties.ModularityArgument.ArchimedeanSchwartz.ExpIndep
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.InvOneSubBound
+
+@[expose] public section
 
 noncomputable section
 

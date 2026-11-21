@@ -1,4 +1,8 @@
-import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshExtB
+module
+
+public import ReciprocityTheory.AnalyticForms.PlurisubharmonicFunctions.PshExtB
+
+@[expose] public section
 
 open Metric Real Filter Topology MeasureTheory
 

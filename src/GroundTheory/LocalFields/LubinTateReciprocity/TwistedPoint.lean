@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.LocalFields.LubinTateReciprocity.RootEval
-import GroundTheory.LocalFields.FormalGroups.OverUnramified
-import GroundTheory.LocalFields.LubinTateTorsion
+module
+
+public import Mathlib
+public import GroundTheory.LocalFields.LubinTateReciprocity.RootEval
+public import GroundTheory.LocalFields.FormalGroups.OverUnramified
+public import GroundTheory.LocalFields.LubinTateTorsion
+
+@[expose] public section
 
 noncomputable section
 

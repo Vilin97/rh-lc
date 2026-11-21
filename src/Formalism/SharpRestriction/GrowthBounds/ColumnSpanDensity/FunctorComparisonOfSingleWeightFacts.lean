@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.FunctorComparisonOfSingleWeight
-import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.TensorKP
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.FunctorComparisonOfSingleWeight
+public import Formalism.SharpRestriction.GrowthBounds.ColumnSpanDensity.TensorKP
+
+@[expose] public section
 
 namespace Formalism.MainNotions.flipOneThree.Pf
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.MarkSpec
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.ExistenceOfLattices.MarkSpec
+
+@[expose] public section
 
 noncomputable section
 namespace GlobalTheory.RecDictModel

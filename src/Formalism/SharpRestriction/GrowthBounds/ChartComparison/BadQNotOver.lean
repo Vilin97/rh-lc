@@ -1,6 +1,10 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartComparison.StepIn
-import Formalism.LocalToGlobal.HermitianForms.TiedTwSym
-import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePtOneRec
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartComparison.StepIn
+public import Formalism.LocalToGlobal.HermitianForms.TiedTwSym
+public import Formalism.LocalToGlobal.GroupLattices.TiedFamilies.TiePtOneRec
+
+@[expose] public section
 
 noncomputable section
 

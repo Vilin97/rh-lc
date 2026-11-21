@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.BridgeQminor
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.BridgeQminor
+
+@[expose] public section
 
 open Matrix Finset
 open scoped ContDiff

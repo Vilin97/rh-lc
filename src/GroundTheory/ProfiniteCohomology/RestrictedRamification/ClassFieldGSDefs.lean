@@ -1,7 +1,12 @@
-import Mathlib
-import GroundTheory.GlobalFields.ClassFieldConsequences.CongruenceSubgroupLeStandardOpenSubgroup
-import GroundTheory.GlobalFields.IdeleGroups.ClassGroup
-import GroundTheory.ProfiniteCohomology.RestrictedRamification.SPicDefs
+module
+
+public import Mathlib
+public import GroundTheory.GlobalFields.ClassFieldConsequences.CongruenceSubgroupLeStandardOpenSubgroup
+public import GroundTheory.GlobalFields.IdeleGroups.ClassGroup
+public import GroundTheory.ProfiniteCohomology.RestrictedRamification.SPicDefs
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.ProfCoh

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.FrameZeroStrictMono
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SegmentDegree.FrameZeroStrictMono
+
+@[expose] public section
 
 noncomputable section
 

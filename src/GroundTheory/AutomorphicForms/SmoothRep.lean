@@ -1,6 +1,10 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.LocallyProfinite
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.StabilizerOf
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.LocallyProfinite
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.StabilizerOf
+
+@[expose] public section
 
 noncomputable section
 

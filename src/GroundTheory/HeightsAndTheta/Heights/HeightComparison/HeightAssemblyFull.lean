@@ -1,15 +1,20 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.Comparison
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitCurve
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitDegree
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightRecR
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitCurve
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitDegree
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.PHeightRecR
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitDivVertical
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitFiniteSum
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitArchSum
-import GroundTheory.HeightsAndTheta.Heights.HeightComparison.PPtsIntegralPoints
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.HeightsOfSets.Comparison
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitCurve
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightOrbitDegree
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.HeightRecR
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitCurve
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitDegree
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.PHeightRecR
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitDivVertical
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitFiniteSum
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.POrbitArchSum
+public import GroundTheory.HeightsAndTheta.Heights.HeightComparison.PPtsIntegralPoints
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights

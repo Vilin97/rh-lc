@@ -1,5 +1,9 @@
-import Formalism.SatakeDualWeyl.Statement
-import Formalism.HermitianLattices.StatementLat
+module
+
+public import Formalism.SatakeDualWeyl.Statement
+public import Formalism.HermitianLattices.StatementLat
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,6 +1,10 @@
-import Formalism.WachLatticeTwists.RamifiedBlockRings.RamifiedBlockProofs.CharpolyRevMap
-import Formalism.CharacterColumnKernels.IdempotentNormalForms.IdemNormalForm
-import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AbsolutelyIrreducibleSpan
+module
+
+public import Formalism.WachLatticeTwists.RamifiedBlockRings.RamifiedBlockProofs.CharpolyRevMap
+public import Formalism.CharacterColumnKernels.IdempotentNormalForms.IdemNormalForm
+public import Development.AutomorphicArithmetic.IntegralCasts.CapelliIdentities.AbsolutelyIrreducibleSpan
+
+@[expose] public section
 
 open Finset Classical
 

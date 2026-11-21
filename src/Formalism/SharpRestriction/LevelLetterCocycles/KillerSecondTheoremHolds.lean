@@ -1,7 +1,11 @@
-import Mathlib
-import Formalism.SharpRestriction.LevelLetterCocycles.FiltrationSaturationKiller
-import Formalism.SharpRestriction.LevelLetterCocycles.DivisibilityInvariantMulLinear
-import Formalism.SharpRestriction.LevelLetterCocycles.BoundedNumeratorPowerSummability
+module
+
+public import Mathlib
+public import Formalism.SharpRestriction.LevelLetterCocycles.FiltrationSaturationKiller
+public import Formalism.SharpRestriction.LevelLetterCocycles.DivisibilityInvariantMulLinear
+public import Formalism.SharpRestriction.LevelLetterCocycles.BoundedNumeratorPowerSummability
+
+@[expose] public section
 
 noncomputable section
 

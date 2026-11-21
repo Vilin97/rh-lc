@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.Columns.QthCloseScl
+module
+
+public import Formalism.LocalToGlobal.Columns.QthCloseScl
+
+@[expose] public section
 
 open NumberField IsDedekindDomain
 

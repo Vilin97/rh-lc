@@ -1,5 +1,9 @@
-import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypCard
-import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.CompInjLocJ
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.ChartRank.HypCard
+public import Formalism.SharpRestriction.GrowthBounds.ChartedClasses.CompInjLocJ
+
+@[expose] public section
 
 noncomputable section
 

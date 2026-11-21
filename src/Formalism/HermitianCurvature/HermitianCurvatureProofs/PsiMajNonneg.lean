@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasSgsPow
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.MeasSgsPow
+
+@[expose] public section
 
 noncomputable section
 

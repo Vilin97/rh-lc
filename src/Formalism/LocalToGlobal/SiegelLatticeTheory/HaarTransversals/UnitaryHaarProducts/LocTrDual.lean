@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.UnitaryHaarProducts.CondStd
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.DiffGenLoc
+module
+
+public import Mathlib
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.HaarTransversals.UnitaryHaarProducts.CondStd
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.DiffGenLoc
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,5 +1,9 @@
-import Mathlib
-import Formalism.LogFactorialIndices.StatementSize
+module
+
+public import Mathlib
+public import Formalism.LogFactorialIndices.StatementSize
+
+@[expose] public section
 
 open Finset MeasureTheory
 open scoped ComplexConjugate Real Nat

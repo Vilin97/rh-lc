@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.IndefiniteReal.ScalarOnPartsFull
-import Formalism.LocalToGlobal.GaloisLevelStructure.DefsFinTyp
+module
+
+public import Formalism.LocalToGlobal.IndefiniteReal.ScalarOnPartsFull
+public import Formalism.LocalToGlobal.GaloisLevelStructure.DefsFinTyp
+
+@[expose] public section
 
 noncomputable section
 

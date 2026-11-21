@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemSupportComp
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqvCorMulCol
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemSupportComp
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.EqvCorMulCol
+
+@[expose] public section
 
 open Matrix Topology GlobalTheory.SmGL GlobalTheory.Whittaker
 

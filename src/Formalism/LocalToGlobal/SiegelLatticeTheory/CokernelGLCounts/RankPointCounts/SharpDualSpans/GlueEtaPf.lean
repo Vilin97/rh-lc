@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.LsDatumAGlueCut
-import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.LocGlue
+module
+
+public import Formalism.LocalToGlobal.SiegelLatticeTheory.CokernelGLCounts.RankPointCounts.LsDatumAGlueCut
+public import Formalism.PeriodIntegrals.OrbitalBoundsConclusion.LocGlue
+
+@[expose] public section
 
 noncomputable section
 

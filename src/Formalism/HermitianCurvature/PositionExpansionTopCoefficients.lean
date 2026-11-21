@@ -1,5 +1,9 @@
-import Formalism.HermitianCurvature.StatementWd
-import Formalism.HermitianCurvature.LevelRecursionCondNeeded
+module
+
+public import Formalism.HermitianCurvature.StatementWd
+public import Formalism.HermitianCurvature.LevelRecursionCondNeeded
+
+@[expose] public section
 
 namespace Formalism.FourierDecayAlt.FormPairingAction
 

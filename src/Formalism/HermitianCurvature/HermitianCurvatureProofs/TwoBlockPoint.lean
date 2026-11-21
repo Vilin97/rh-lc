@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.ThetaExistenceInductiveFromPieces
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.FirstKernelExplicitFormula
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.ModulusLocallyConstant
+module
+
+public import Formalism.HermitianCurvature.ThetaExistenceInductiveFromPieces
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.FirstKernelExplicitFormula
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.ModulusLocallyConstant
+
+@[expose] public section
 
 open Matrix Formalism.DoubleCosetMeasures Formalism.FourierDecayAlt.A5 Formalism.FourierDecayAlt.A6
 open scoped ComplexConjugate

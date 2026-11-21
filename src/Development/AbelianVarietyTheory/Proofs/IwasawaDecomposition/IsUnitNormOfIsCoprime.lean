@@ -1,6 +1,11 @@
-import Mathlib
-import Formalism.LocalRingCardinality.DataHost
-import Formalism.FrobeniusOrbits.HostCorollaries
+module
+
+public import Mathlib
+public import Formalism.LocalRingCardinality.DataHost
+public import Formalism.FrobeniusOrbits.HostCorollaries
+
+@[expose] public section
+
 open NumberField IsDedekindDomain
 
 namespace GlobalTheory.NormSquareRamified

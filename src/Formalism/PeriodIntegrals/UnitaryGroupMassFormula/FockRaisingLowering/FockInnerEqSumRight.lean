@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.JointBlockShapes.MinusPart
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FockRaisingLowering.SameSign
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.JointBlockShapes.MinusPart
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.FockRaisingLowering.SameSign
+
+@[expose] public section
 
 noncomputable section
 

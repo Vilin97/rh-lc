@@ -1,6 +1,10 @@
-import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.TracePiReal
-import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.DictIrr
-import Development.WeilBound.ThetaLifts.CartanFactorisation.TensOfEval
+module
+
+public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.TracePiReal
+public import Development.WeilBound.ThetaLifts.LocalTheory.ArchimedeanBumps.DictIrr
+public import Development.WeilBound.ThetaLifts.CartanFactorisation.TensOfEval
+
+@[expose] public section
 
 noncomputable section
 

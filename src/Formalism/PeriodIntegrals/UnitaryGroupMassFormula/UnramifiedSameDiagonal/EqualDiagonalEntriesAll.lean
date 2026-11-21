@@ -1,7 +1,11 @@
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnramifiedSameDiagonal.MatchGen
-import Formalism.LocalToGlobal.GlobalTheory.UnramifiedDiagonal.DiaFun
-import Formalism.LocalToGlobal.GlobalTheory.UnramifiedDiagonal.DiaConj
-import Formalism.LocalToGlobal.GlobalTheory.UnramifiedDiagonal.HeckeRamifiedZeroOfMatchingsAndDu
+module
+
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.UnramifiedSameDiagonal.MatchGen
+public import Formalism.LocalToGlobal.GlobalTheory.UnramifiedDiagonal.DiaFun
+public import Formalism.LocalToGlobal.GlobalTheory.UnramifiedDiagonal.DiaConj
+public import Formalism.LocalToGlobal.GlobalTheory.UnramifiedDiagonal.HeckeRamifiedZeroOfMatchingsAndDu
+
+@[expose] public section
 
 noncomputable section
 

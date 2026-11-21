@@ -1,6 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.IsAdmOnOfFiniteDimensional
-import Development.AutomorphicSpectrum.Proofs.GlobalProofs.IsClosedMatrixGroupImage
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.TwistedInnerProducts.IsAdmOnOfFiniteDimensional
+public import Development.AutomorphicSpectrum.Proofs.GlobalProofs.IsClosedMatrixGroupImage
+
+@[expose] public section
+
 open Matrix Topology Filter
 
 noncomputable section

@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.LeviDeterminants.GrowLine
-import Development.WeilBound.ThetaLifts.LeviDeterminants.GrowSplit
+module
+
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.GrowLine
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.GrowSplit
+
+@[expose] public section
 
 noncomputable section
 

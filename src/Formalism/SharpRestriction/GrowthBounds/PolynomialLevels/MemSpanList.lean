@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.TwistedSubstitution.CommPresIsoSub
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.TwistedSubstitution.CommPresIsoSub
+
+@[expose] public section
 
 noncomputable section
 

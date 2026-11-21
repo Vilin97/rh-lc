@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.DelEquiv
+module
+
+public import Formalism.LocalToGlobal.GroupLattices.PendingLemmas.DelEquiv
+
+@[expose] public section
 
 noncomputable section
 

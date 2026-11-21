@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.TateCohomology.CupTateShift
+module
+
+public import Mathlib
+public import GroundTheory.TateCohomology.CupTateShift
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 open CategoryTheory MonoidalCategory groupCohomology

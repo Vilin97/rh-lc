@@ -1,5 +1,9 @@
-import Development.EtaleCohomology.EtaleSheaves.LeafUnitPairGPf
-import Development.EtaleCohomology.EtaleSheaves.LeafTwPairExistsPf
+module
+
+public import Development.EtaleCohomology.EtaleSheaves.LeafUnitPairGPf
+public import Development.EtaleCohomology.EtaleSheaves.LeafTwPairExistsPf
+
+@[expose] public section
 
 noncomputable section
 open CategoryTheory Limits AlgebraicGeometry Opposite CochainComplex CochainComplex.HomComplex GlobalTheory.EtC

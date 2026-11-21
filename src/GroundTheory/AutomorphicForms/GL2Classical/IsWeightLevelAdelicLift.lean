@@ -1,7 +1,11 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.GL2Classical.Adelic
-import GroundTheory.AutomorphicForms.GL2Classical.Iwasawa
-import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.HasModerateGrowthZero
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.GL2Classical.Adelic
+public import GroundTheory.AutomorphicForms.GL2Classical.Iwasawa
+public import GroundTheory.AutomorphicForms.AutomorphicFormSpaces.HasModerateGrowthZero
+
+@[expose] public section
 
 open NumberField Matrix CongruenceSubgroup UpperHalfPlane ModularForm
 open scoped MatrixGroups ModularForm

@@ -1,4 +1,8 @@
-import Formalism.CharacterColumnKernels.StatGlobalModule
+module
+
+public import Formalism.CharacterColumnKernels.StatGlobalModule
+
+@[expose] public section
 
 namespace Formalism.NG
 open Module

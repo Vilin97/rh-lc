@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.Divisibility.RecBridge
-import Formalism.LocalRingCardinality.CoeNeZeroOfNotMem
+module
+
+public import Formalism.LocalToGlobal.Divisibility.RecBridge
+public import Formalism.LocalRingCardinality.CoeNeZeroOfNotMem
+
+@[expose] public section
 
 noncomputable section
 

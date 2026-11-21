@@ -1,5 +1,9 @@
-import Formalism.TowerValuationBounds.TowerValuationBoundIndexed
-import Formalism.TowerValuationBounds.TowerValuationProofs.SumAdditiveCharacterEqZero
+module
+
+public import Formalism.TowerValuationBounds.TowerValuationBoundIndexed
+public import Formalism.TowerValuationBounds.TowerValuationProofs.SumAdditiveCharacterEqZero
+
+@[expose] public section
 
 noncomputable section
 namespace Formalism.ValuationGridEstimates

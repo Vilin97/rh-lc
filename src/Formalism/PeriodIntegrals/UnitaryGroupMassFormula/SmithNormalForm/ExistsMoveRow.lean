@@ -1,6 +1,10 @@
-import Mathlib
-import Formalism.PeriodIntegrals.SmithMat
-import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SmithNormalForm.IsUnitOneAddVecMulVec
+module
+
+public import Mathlib
+public import Formalism.PeriodIntegrals.SmithMat
+public import Formalism.PeriodIntegrals.UnitaryGroupMassFormula.SmithNormalForm.IsUnitOneAddVecMulVec
+
+@[expose] public section
 
 namespace PI.SmithWork
 

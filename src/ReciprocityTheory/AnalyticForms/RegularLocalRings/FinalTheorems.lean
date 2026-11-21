@@ -1,4 +1,9 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
+
 open AlgebraicGeometry CategoryTheory TensorProduct
 universe u
 namespace ReciprocityTheory.AnForm.R.FinalTheorems

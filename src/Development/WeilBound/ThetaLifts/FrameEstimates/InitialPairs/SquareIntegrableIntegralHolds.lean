@@ -1,5 +1,9 @@
-import Development.WeilBound.ThetaLifts.FrameEstimates.SquareIntegrableWeilRange
-import ReciprocityTheory.ThetaSummability.TailSumEstimates.ConeExp
+module
+
+public import Development.WeilBound.ThetaLifts.FrameEstimates.SquareIntegrableWeilRange
+public import ReciprocityTheory.ThetaSummability.TailSumEstimates.ConeExp
+
+@[expose] public section
 
 noncomputable section
 

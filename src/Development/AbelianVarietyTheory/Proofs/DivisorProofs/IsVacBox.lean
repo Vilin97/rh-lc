@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
-import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormLeIncInf
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSchwartzNe
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.SiegelWeilAnisotropicHermitian
+public import Development.AbelianVarietyTheory.Definitions.Divisors.CTSmallCone
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.NormLeIncInf
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ExistsSchwartzNe
+
+@[expose] public section
 
 noncomputable section
 

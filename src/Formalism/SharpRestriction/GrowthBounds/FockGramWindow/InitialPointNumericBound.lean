@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.FockGramWindow.FirstCoefficientLeDiv
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.FockGramWindow.FirstCoefficientLeDiv
+
+@[expose] public section
 
 noncomputable section
 

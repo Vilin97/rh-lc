@@ -1,6 +1,10 @@
-import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.MixedUnlinkedExponents.ValsExtOf
-import Development.AbelianVarietyTheory.Proofs.SatakeParameters.BijectiveOfSplit
-import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.WeakStable
+module
+
+public import Development.AutomorphicArithmetic.Foundations.GaloisRepresentations.MixedUnlinkedExponents.ValsExtOf
+public import Development.AbelianVarietyTheory.Proofs.SatakeParameters.BijectiveOfSplit
+public import Development.AutomorphicArithmetic.Foundations.Convolution.SphericalIdeles.WeakStable
+
+@[expose] public section
 
 noncomputable section
 

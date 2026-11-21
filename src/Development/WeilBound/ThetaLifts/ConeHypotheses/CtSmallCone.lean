@@ -1,4 +1,8 @@
-import Development.WeilBound.ThetaLifts.ConeHypotheses.KeyAOf
+module
+
+public import Development.WeilBound.ThetaLifts.ConeHypotheses.KeyAOf
+
+@[expose] public section
 
 noncomputable section
 

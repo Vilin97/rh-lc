@@ -1,10 +1,15 @@
-import Mathlib
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.OfChartPointSecPointSpecChart
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PChartPointTrdeg
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PSecPointSeparable
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PSpecChart
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PGenericFormsKer
-import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PDerivSpanTrdeg
+module
+
+public import Mathlib
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.OfChartPointSecPointSpecChart
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PChartPointTrdeg
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PSecPointSeparable
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PSpecChart
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PGenericFormsKer
+public import GroundTheory.HeightsAndTheta.Heights.VerticalDivisors.PDerivSpanTrdeg
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 namespace GroundTheory.Heights₂.Heights.Vertical

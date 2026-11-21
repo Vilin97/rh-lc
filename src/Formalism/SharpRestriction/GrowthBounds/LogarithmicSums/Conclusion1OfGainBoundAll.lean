@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.SmallOrderPrimes
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.SmallOrderPrimes
+
+@[expose] public section
 
 noncomputable section
 

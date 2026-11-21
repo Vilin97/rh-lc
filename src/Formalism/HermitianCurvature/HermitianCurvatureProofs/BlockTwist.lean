@@ -1,4 +1,8 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CommuteMatrixTwoEntries
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CommuteMatrixTwoEntries
+
+@[expose] public section
 
 open Matrix
 open scoped ComplexConjugate

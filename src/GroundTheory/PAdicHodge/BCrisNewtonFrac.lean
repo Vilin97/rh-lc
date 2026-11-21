@@ -1,5 +1,10 @@
-import Mathlib
-import GroundTheory.PAdicHodge.BCrisNewtonKey
+module
+
+public import Mathlib
+public import GroundTheory.PAdicHodge.BCrisNewtonKey
+
+@[expose] public section
+
 set_option maxSynthPendingDepth 1
 
 noncomputable section

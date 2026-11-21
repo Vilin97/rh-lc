@@ -1,6 +1,10 @@
-import Formalism.LocalToGlobal.HermitianForms.TiedTwSame
-import Formalism.LocalToGlobal.HermitianForms.TiedTwJ
-import Formalism.LocalToGlobal.HermitianColumns.TiedQCHost
+module
+
+public import Formalism.LocalToGlobal.HermitianForms.TiedTwSame
+public import Formalism.LocalToGlobal.HermitianForms.TiedTwJ
+public import Formalism.LocalToGlobal.HermitianColumns.TiedQCHost
+
+@[expose] public section
 
 noncomputable section
 

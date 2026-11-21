@@ -1,6 +1,10 @@
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJATCDatumTransitPt
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJATCDtrSGen
-import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJATCDtrSIo
+module
+
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJATCDatumTransitPt
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJATCDtrSGen
+public import Formalism.HermitianCurvature.HermitianCurvatureProofs.CutJATCDtrSIo
+
+@[expose] public section
 
 open Formalism.REAL Formalism.QuantumDeterminants Formalism.FourierDecayAlt NumberField
 open scoped ComplexConjugate Matrix

@@ -1,8 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RationalRootsDef
-import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.FamilyClassSevenDutiesAndStableLattices
-import Formalism.SharpRestriction.SmoothDesignExistence.DGamSmooth
-import Development.AutomorphicArithmetic.PrimeDiscriminants.Scales
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.AutomorphicMembership.RationalRootsDef
+public import Development.AbelianVarietyTheory.Definitions.GlobalTwisting.FamilyClassSevenDutiesAndStableLattices
+public import Formalism.SharpRestriction.SmoothDesignExistence.DGamSmooth
+public import Development.AutomorphicArithmetic.PrimeDiscriminants.Scales
+
+@[expose] public section
 
 noncomputable section
 

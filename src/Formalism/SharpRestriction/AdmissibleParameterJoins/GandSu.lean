@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSt
+module
+
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.GandSt
+
+@[expose] public section
 
 noncomputable section
 

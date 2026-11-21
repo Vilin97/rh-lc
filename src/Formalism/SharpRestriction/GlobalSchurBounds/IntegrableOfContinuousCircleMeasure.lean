@@ -1,11 +1,15 @@
-import Formalism.SharpRestriction.GlobalSchurBounds.FlipTwoThree
-import Formalism.LocalRingCardinality.Lemmas
-import Formalism.LogVandermondeBounds.HookGammaAmgmMultinomialBounds
-import Formalism.GL3MeanSquares.HookFormulaTorsion.SquareMomentFromBound
-import Mathlib
-import Formalism.GL3MeanSquares.ConcavityEquidistribution
-import Formalism.LogVandermondeBounds.MultinomialPowerBound
-import Formalism.GL3MeanSquares.HookFormulaTorsion.SquareMomentArithmeticBound
+module
+
+public import Formalism.SharpRestriction.GlobalSchurBounds.FlipTwoThree
+public import Formalism.LocalRingCardinality.Lemmas
+public import Formalism.LogVandermondeBounds.HookGammaAmgmMultinomialBounds
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.SquareMomentFromBound
+public import Mathlib
+public import Formalism.GL3MeanSquares.ConcavityEquidistribution
+public import Formalism.LogVandermondeBounds.MultinomialPowerBound
+public import Formalism.GL3MeanSquares.HookFormulaTorsion.SquareMomentArithmeticBound
+
+@[expose] public section
 
 noncomputable section
 

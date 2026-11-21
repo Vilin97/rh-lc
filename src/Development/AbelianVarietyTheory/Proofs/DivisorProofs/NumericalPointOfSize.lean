@@ -1,6 +1,10 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Divisors.ESmall
-import Development.AbelianVarietyTheory.Definitions.Foundations.ThetaExponentIdentities
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Divisors.ESmall
+public import Development.AbelianVarietyTheory.Definitions.Foundations.ThetaExponentIdentities
+
+@[expose] public section
 
 set_option synthInstance.maxHeartbeats 400000
 

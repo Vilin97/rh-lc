@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.PerRowC
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.FrEqvEquivalence
-import Development.AbelianVarietyTheory.Proofs.FlagMeasures.InvVolPos
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.SemilocalFrames.PerRowC
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.FrEqvEquivalence
+public import Development.AbelianVarietyTheory.Proofs.FlagMeasures.InvVolPos
+
+@[expose] public section
 
 noncomputable section
 open scoped Classical ENNReal Pointwise

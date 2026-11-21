@@ -1,4 +1,8 @@
-import Formalism.LocalToGlobal.ProjectiveLattices.BaseEmbeddingInclusion
+module
+
+public import Formalism.LocalToGlobal.ProjectiveLattices.BaseEmbeddingInclusion
+
+@[expose] public section
 
 set_option autoImplicit false
 

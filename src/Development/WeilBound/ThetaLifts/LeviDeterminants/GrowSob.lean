@@ -1,8 +1,12 @@
-import Development.WeilBound.ThetaLifts.LeviDeterminants.GrowDef
-import Development.WeilBound.ThetaLifts.LeviDeterminants.GrowSobA
-import Development.WeilBound.ThetaLifts.LeviDeterminants.GrowSobB
-import Development.WeilBound.ThetaLifts.LeviDeterminants.GrowSplit
-import Development.AbelianVarietyTheory.Proofs.HeightProofs.ExistsCompactAdeleRingModNumberField
+module
+
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.GrowDef
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.GrowSobA
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.GrowSobB
+public import Development.WeilBound.ThetaLifts.LeviDeterminants.GrowSplit
+public import Development.AbelianVarietyTheory.Proofs.HeightProofs.ExistsCompactAdeleRingModNumberField
+
+@[expose] public section
 
 noncomputable section
 

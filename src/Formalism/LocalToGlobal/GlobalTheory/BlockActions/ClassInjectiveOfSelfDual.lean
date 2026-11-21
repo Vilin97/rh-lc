@@ -1,5 +1,9 @@
-import Formalism.LocalToGlobal.GlobalTheory.BlockActions.ClassInjectiveOfDegree
-import Formalism.FrobeniusOrbits.RealSubfieldLeCompositum
+module
+
+public import Formalism.LocalToGlobal.GlobalTheory.BlockActions.ClassInjectiveOfDegree
+public import Formalism.FrobeniusOrbits.RealSubfieldLeCompositum
+
+@[expose] public section
 
 noncomputable section
 

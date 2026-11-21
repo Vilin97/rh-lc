@@ -1,7 +1,12 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemberRowsOfKernelDatumSizes
-import Development.AbelianVarietyTheory.Definitions.Divisors.KerSizes
-import Formalism.LocalToGlobal.Divisibility.NumbersLink
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.MemberRowsOfKernelDatumSizes
+public import Development.AbelianVarietyTheory.Definitions.Divisors.KerSizes
+public import Formalism.LocalToGlobal.Divisibility.NumbersLink
+
+@[expose] public section
+
 open Module NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.DIV Formalism.L2.Indef Formalism.L2.Col Formalism.L2.Ker GlobalTheory.IndefiniteRowSideFullHecke.PlaceLogThetaBounds GlobalTheory.ColRows
 open scoped ComplexOrder
 set_option maxHeartbeats 1000000 in

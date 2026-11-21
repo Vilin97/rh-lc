@@ -1,6 +1,10 @@
-import Mathlib
-import Development.WeilBound.LevelCriteria.IsLevOneIff
-import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DividedPowerFiltration
+module
+
+public import Mathlib
+public import Development.WeilBound.LevelCriteria.IsLevOneIff
+public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.DividedPowerFiltration
+
+@[expose] public section
 
 set_option autoImplicit false
 

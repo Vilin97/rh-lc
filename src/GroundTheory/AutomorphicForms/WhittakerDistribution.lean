@@ -1,9 +1,13 @@
-import Mathlib
-import GroundTheory.AutomorphicForms.WhittakerLSpace
-import GroundTheory.AutomorphicForms.WhittakerOrbit
-import GroundTheory.AutomorphicForms.WhittakerGroups
-import GroundTheory.AutomorphicForms.WhittakerCells
-import GroundTheory.AutomorphicForms.WhittakerRelevance
+module
+
+public import Mathlib
+public import GroundTheory.AutomorphicForms.WhittakerLSpace
+public import GroundTheory.AutomorphicForms.WhittakerOrbit
+public import GroundTheory.AutomorphicForms.WhittakerGroups
+public import GroundTheory.AutomorphicForms.WhittakerCells
+public import GroundTheory.AutomorphicForms.WhittakerRelevance
+
+@[expose] public section
 
 namespace GroundTheory.Automorphic
 

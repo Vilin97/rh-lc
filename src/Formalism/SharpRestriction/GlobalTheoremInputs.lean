@@ -1,9 +1,13 @@
-import Formalism.SharpRestriction.ParConsts
-import Formalism.LocalRingCardinality.DataParamsS
-import Formalism.SharpRestriction.GlobalSchurBounds.Chosen
-import Formalism.SharpRestriction.GlobalSchurBounds.TieGlobal
-import Formalism.SharpRestriction.ParamsHeightRankConstant
-import Formalism.SharpRestriction.LevelLetterCocycles.LocsCoverTw
+module
+
+public import Formalism.SharpRestriction.ParConsts
+public import Formalism.LocalRingCardinality.DataParamsS
+public import Formalism.SharpRestriction.GlobalSchurBounds.Chosen
+public import Formalism.SharpRestriction.GlobalSchurBounds.TieGlobal
+public import Formalism.SharpRestriction.ParamsHeightRankConstant
+public import Formalism.SharpRestriction.LevelLetterCocycles.LocsCoverTw
+
+@[expose] public section
 
 noncomputable section
 

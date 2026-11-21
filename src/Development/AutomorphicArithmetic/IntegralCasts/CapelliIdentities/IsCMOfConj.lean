@@ -1,4 +1,8 @@
-import Mathlib
+module
+
+public import Mathlib
+
+@[expose] public section
 
 theorem UpperTheory.Reformulated.B.Qh8.isCM_of_conj :
     ∀ (K : Type) [inst : Field K] [inst_1 : NumberField K]

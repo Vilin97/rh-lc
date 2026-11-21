@@ -1,9 +1,13 @@
-import Formalism.SharpRestriction.GlobalTheoremInputs
-import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.GaloisMapComplexConjugation
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.JointDModelAppliesUnitLattice
-import Formalism.SizeWindowBrackets.ChainSlopeWindows.SubThreeMulLogTwoLe
-import Formalism.SharpRestriction.AdmissibleParameterJoins.SumLogPrimeFactorsLe
+module
+
+public import Formalism.SharpRestriction.GlobalTheoremInputs
+public import Formalism.LocalRingCardinality.RankBoundMonotoneInDimension
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.GaloisMapComplexConjugation
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.JointDModelAppliesUnitLattice
+public import Formalism.SizeWindowBrackets.ChainSlopeWindows.SubThreeMulLogTwoLe
+public import Formalism.SharpRestriction.AdmissibleParameterJoins.SumLogPrimeFactorsLe
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,4 +1,8 @@
-import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.CountLow
+module
+
+public import Formalism.SharpRestriction.GrowthBounds.BinomialRatio.CountLow
+
+@[expose] public section
 
 noncomputable section
 

@@ -1,7 +1,11 @@
-import Mathlib
-import Development.AbelianVarietyTheory.Definitions.Foundations.MemUnitaryGroupIffIsIsometry
-import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.IsAddFundamentalDomainLatticeDomain
-import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.EqExpFderiv
+module
+
+public import Mathlib
+public import Development.AbelianVarietyTheory.Definitions.Foundations.MemUnitaryGroupIffIsIsometry
+public import Development.AbelianVarietyTheory.Definitions.ThetaMetrics.IsAddFundamentalDomainLatticeDomain
+public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.EqExpFderiv
+
+@[expose] public section
 
 open Filter Topology Asymptotics Complex
 open scoped Real ComplexConjugate
