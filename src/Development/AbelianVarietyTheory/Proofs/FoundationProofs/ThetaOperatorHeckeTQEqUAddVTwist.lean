@@ -501,12 +501,12 @@ theorem isThB_heckeT : ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlgClosed 
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [coset_decomp X N l w d q hqP hqNl hd b hb, Pi.add_apply, Finset.sum_apply, map_add (f := _), map_sum, cls_mul, cls_prod,
       eval_act X N l w n b hb _ _ q rfl (by simp) f' hf'c]
-    congr 1
-    · refine Finset.sum_congr rfl fun k _ => ?_
-      rw [eval_act X N l w n b hb _ _ 1 rfl (by simp) f₀ hf₀c, one_pow, pow_one]
-    · have e : f' = su X τ f₀ ^ a ^ w * u ^ l ^ n := Units.ext (by rw [hu]; simp)
-      rw [e, map_mul, map_pow, map_pow, mul_pow, ← pow_mul, ← pow_mul, hs, pow_add, pow_one, cls_mul, cls_mul,
-        cls_lpow, cls_lpow, add_zero, add_zero]
+      congr 1
+      · refine Finset.sum_congr rfl fun k _ => ?_
+        rw [eval_act X N l w n b hb _ _ 1 rfl (by simp) f₀ hf₀c, one_pow, pow_one]
+      · have e : f' = su X τ f₀ ^ a ^ w * u ^ l ^ n := Units.ext (by rw [hu]; simp)
+        rw [e, map_mul, map_pow, map_pow, mul_pow, ← pow_mul, ← pow_mul, hs, pow_add, pow_one, cls_mul, cls_mul,
+          cls_lpow, cls_lpow, add_zero, add_zero]
   · rw [hF]; exact dlt_hn X hNl hqP hτM hf₀I hf₀δ
   · rw [hF, hn_eq X hq0, ← hy]
     have h1 := isDl_hq X A l n hq0 hqA hf₀D

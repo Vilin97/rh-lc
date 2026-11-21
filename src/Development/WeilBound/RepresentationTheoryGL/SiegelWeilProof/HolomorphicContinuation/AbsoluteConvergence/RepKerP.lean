@@ -94,7 +94,7 @@ theorem gram_det (hc : ∀ i, Continuous (φ i)) (hli : LinearIndependent ℂ φ
   intro hdet
   obtain ⟨v, hv, hGv⟩ := Matrix.exists_mulVec_eq_zero_iff.mpr hdet
   have hψc : Continuous (fun x => ∑ l, v l * φ l x) :=
-    continuous_finset_sum _ fun l _ => continuous_const.mul (hc l)
+    continuous_finsetSum _ fun l _ => continuous_const.mul (hc l)
   have hip : ip μ (fun x => ∑ l, v l * φ l x) (fun x => ∑ l, v l * φ l x) = 0 := by
     rw [ip_sum_left μ Finset.univ hψc v φ hc]
     refine Finset.sum_eq_zero fun i _ => ?_
@@ -132,7 +132,7 @@ theorem proj_comb (hc : ∀ i, Continuous (φ i)) (hli : LinearIndependent ℂ �
 theorem ip_resid (hc : ∀ i, Continuous (φ i)) (hli : LinearIndependent ℂ φ) {g : H → ℂ} (hg : Continuous g) (k : Fin N) :
     ip μ (φ k) (fun x => g x - proj μ φ g x) = 0 := by
   have hG : IsUnit (gram μ φ).det := isUnit_iff_ne_zero.mpr (gram_det μ φ hc hli)
-  have hpc : Continuous (proj μ φ g) := continuous_finset_sum _ fun i _ => continuous_const.mul (hc i)
+  have hpc : Continuous (proj μ φ g) := continuous_finsetSum _ fun i _ => continuous_const.mul (hc i)
   have key : gram μ φ *ᵥ coef μ φ g = fun j => ip μ (φ j) g := by
     unfold coef
     rw [Matrix.mulVec_mulVec, Matrix.mul_nonsing_inv _ hG, Matrix.one_mulVec]
@@ -164,7 +164,7 @@ theorem proj_left (hc : ∀ i, Continuous (φ i)) (hli : LinearIndependent ℂ �
     (hst : ∀ (i : Fin N) (a : H), ∃ d : Fin N → ℂ, (fun x => φ i (a * x)) = fun x => ∑ l, d l * φ l x)
     {g : H → ℂ} (hg : Continuous g) (a : H) :
     proj μ φ (fun x => g (a * x)) = fun x => proj μ φ g (a * x) := by
-  have hpc : Continuous (proj μ φ g) := continuous_finset_sum _ fun i _ => continuous_const.mul (hc i)
+  have hpc : Continuous (proj μ φ g) := continuous_finsetSum _ fun i _ => continuous_const.mul (hc i)
   have hcomb : ∃ e : Fin N → ℂ, (fun x => proj μ φ g (a * x)) = fun x => ∑ l, e l * φ l x := by
     choose d hd using fun i => hst i a
     refine ⟨fun l => ∑ i, coef μ φ g i * d i l, ?_⟩
@@ -250,7 +250,7 @@ theorem repKer : RepKer := by
     refine Finset.sum_congr rfl fun i _ => Finset.sum_congr rfl fun j _ => ?_
     ring
   refine ⟨fun v => star (∑ j, star (∑ i, φ i 1 * (gram μ φ)⁻¹ i j) * φ j v), ?_, ?_, ?_⟩
-  · exact continuous_star.comp (continuous_finset_sum _ fun j _ => continuous_const.mul (hc j))
+  · exact continuous_star.comp (continuous_finsetSum _ fun j _ => continuous_const.mul (hc j))
   · intro f hf
     have hfun : (fun x => ∫ v, star (∑ j, star (∑ i, φ i 1 * (gram μ φ)⁻¹ i j) * φ j v) * f (x * v) ∂μ) =
         proj μ φ f := funext (key f hf)

@@ -153,6 +153,8 @@ theorem levelRat (hH : HatRat) : LevelRat := by
       rw [diagGL_val, e] at this
       refine (hH F E N _ hΛ' _).1 ?_
       convert this using 1
+      ext i
+      exact map_sub (inclAd F E) _ _
   · rintro ⟨h1, h2, h3⟩
     refine ⟨(diagGL_mem_su c J γ).2 ⟨h1, ?_⟩, fun y => ⟨map_mulVec_hat (fun x => (h2 x).1) y, fun hy => ?_⟩,
       fun y hy => ?_⟩

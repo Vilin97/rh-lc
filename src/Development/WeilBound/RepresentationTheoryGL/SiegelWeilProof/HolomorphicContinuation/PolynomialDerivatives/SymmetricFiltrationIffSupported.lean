@@ -146,7 +146,7 @@ theorem etaLe_add_lt {u v : Sym m n} {d : ℕ} (hu : EtaLe u d) (hv : EtaLt v d)
 
 theorem etaLt_zero_eq {r : Sym m n} (h : EtaLt r 0) : r = 0 := by
   ext t
-  rw [coeff_zero]
+  simp only [AddMonoidAlgebra.coeff_zero]
   by_contra hc
   exact Nat.not_lt_zero _ (h t (mem_support_iff.2 hc))
 
@@ -164,7 +164,7 @@ theorem etaGt_sum {ι : Type*} (T : Finset ι) (u : ι → Sym m n) {N : ℕ} (h
 
 theorem eq_zero_of_le_gt {r : Sym m n} {N : ℕ} (h₁ : EtaLe r N) (h₂ : EtaGt r N) : r = 0 := by
   ext t
-  rw [coeff_zero]
+  simp only [AddMonoidAlgebra.coeff_zero]
   by_contra hc
   have ht := mem_support_iff.2 hc
   have a : ed t ≤ N := h₁ t ht
@@ -339,7 +339,7 @@ theorem op_inj {s : Sym m n} (h : ∀ f, op s f = 0) : s = 0 := by
   unfold op at h1
   simp only [opMono_monomial] at h1
   have h2 := congrArg (AddMonoidAlgebra.coeff · (t0.comapDomain Sum.inl Sum.inl_injective.injOn)) h1
-  rw [coeff_sum, coeff_zero] at h2
+  simp only [coeff_sum, AddMonoidAlgebra.coeff_zero] at h2
   simp only [coeff_smul, coeff_monomial, smul_eq_mul] at h2
   rw [Finset.sum_eq_single t0] at h2
   · rw [if_pos] at h2

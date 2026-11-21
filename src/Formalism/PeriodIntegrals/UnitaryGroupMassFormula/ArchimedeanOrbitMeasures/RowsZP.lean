@@ -30,7 +30,8 @@ theorem rowsZ_holds : RowsZ := by
     show Dmᴴ * Formalism.REAL.Jm (X.B.I.ε v) * Dm = Formalism.REAL.Jm (X.B.I.ε v)
     simp only [Dm, Formalism.REAL.Jm, Matrix.diagonal_conjTranspose, Matrix.diagonal_mul_diagonal]
     congr 1
-    split_ifs <;> simp
+    funext j
+    by_cases h : j = i0 <;> simp [d, h] <;> split_ifs <;> simp
   let g : X.B.I.Ginf := Pi.mulSingle v ⟨Du, hDmem⟩
   have hstd : ∀ w, InStd (S w) (g w) := by
     intro w i hi j

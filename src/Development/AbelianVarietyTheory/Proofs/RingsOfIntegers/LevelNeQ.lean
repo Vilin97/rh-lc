@@ -11,7 +11,7 @@ noncomputable section
 
 namespace GlobalTheory.ShortOwnCompare
 
-open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj GlobalTheory.IndefiniteRowSideFullHecke.ShortPlaceDegreesAtLevelPrime ReciprocityTheory.ChartRestriction.G.PullbackSections
+open NumberField IsDedekindDomain Formalism.BasicNotions Formalism.MainNotions Formalism.L2.Pj
 
 variable {D : D7}
 

@@ -36,7 +36,7 @@ theorem EntryLe.sub (h : EntryLe M x) (h' : EntryLe N y) : EntryLe (M - N) (x + 
 theorem EntryLe.mul (hx : 0 ≤ x) (h : EntryLe M x) (h' : EntryLe N y) :
     EntryLe (M * N) (Fintype.card K * x * y) := by
   intro i j
-  rw [mul_apply]
+  rw [Matrix.mul_apply]
   calc ‖∑ l, M i l * N l j‖ ≤ ∑ l, ‖M i l * N l j‖ := norm_sum_le _ _
     _ ≤ ∑ _l : K, x * y := Finset.sum_le_sum fun l _ => by
         rw [norm_mul]; exact mul_le_mul (h i l) (h' l j) (norm_nonneg _) hx

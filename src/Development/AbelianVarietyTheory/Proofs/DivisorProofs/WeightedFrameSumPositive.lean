@@ -132,7 +132,7 @@ theorem GlobalTheory.supPet_principal : GlobalTheory.UCls.MassBound → GlobalTh
 
   have hpet : (∫⁻ q, Φ (dict σ q.out).1 (dict σ q.out).2 ∂(muQ1 (D.sp.W j))) =
       petE (D.sp.W j) (dict σ) (muQ1 (D.sp.W j)) la P ^ 2 := by
-    rw [petE, eLpNorm_eq_lintegral_rpow_enorm (by norm_num) (by norm_num), ← ENNReal.rpow_natCast,
+    rw [petE, eLpNorm'_eq_lintegral_eNorm, ← ENNReal.rpow_natCast,
       ← ENNReal.rpow_mul]
     norm_num
     refine lintegral_congr fun q => ?_

@@ -78,9 +78,8 @@ public import Development.AbelianVarietyTheory.Proofs.ModuliProofs.ExistsThetaOf
 
 open CategoryTheory Limits MonoidalCategory CartesianMonoidalCategory MonObj AlgebraicGeometry NumberField
 open scoped CategoryTheory.Obj BigOperators
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.LocM GlobalTheory.LocM.FJ GlobalTheory.Toroidal GlobalTheory.Ex
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.LocM GlobalTheory.Toroidal GlobalTheory.Ex
 attribute [local instance] Over.cartesianMonoidalCategory
-open GlobalTheory.LocM.MultiPt
 set_option maxHeartbeats 1000000
 
 noncomputable section

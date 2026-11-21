@@ -15,6 +15,8 @@ namespace GroundTheory.ProfCoh
 open CategoryTheory NumberField IsDedekindDomain IntermediateField GroundTheory.Global FiniteSubfield
   GroundTheory.Global.SemiLocal
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 noncomputable section
 
 variable {K : FiniteSubfield}

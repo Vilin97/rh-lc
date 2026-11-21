@@ -32,7 +32,8 @@ theorem evI_sum {ι : Type} (s : Finset ι) (g : ι → AF F) : evI F (∑ i ∈
   | insert i s hi ih => rw [Finset.sum_insert hi, Finset.sum_insert hi, evI_add, ih]
 
 theorem evI_realAd (t : ℝ) : evI F (realAd F t) = algebraMap ℝ (mixedEmbedding.mixedSpace F) t := by
-  simp [evI, realAd]
+  change (InfiniteAdeleRing.ringEquiv_mixedSpace F) ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm _) = _
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
 
 def linForm (B : κ → mixedEmbedding.mixedSpace F) : (κ → mixedEmbedding.mixedSpace F) →L[ℝ] ℝ :=
   LinearMap.toContinuousLinearMap
@@ -136,12 +137,14 @@ def pt (x : κ → mixedEmbedding.mixedSpace F) (y : κ → FiniteAdeleRing (�
 theorem evI_pt (x : κ → mixedEmbedding.mixedSpace F) (y : κ → FiniteAdeleRing (𝓞 F) F) :
     (fun i => evI F (pt x y i)) = x := by
   funext i
-  simp [evI, pt]
+  change (InfiniteAdeleRing.ringEquiv_mixedSpace F) ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (x i)) = x i
+  exact (InfiniteAdeleRing.ringEquiv_mixedSpace F).apply_symm_apply _
 
 theorem pureA_pt (f : (κ → mixedEmbedding.mixedSpace F) → ℂ) (g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ)
     (x : κ → mixedEmbedding.mixedSpace F) (y : κ → FiniteAdeleRing (𝓞 F) F) :
     pureA F f g (pt x y) = f x * g y := by
-  simp [pureA, pt]
+  change f (fun i => evI F (pt x y i)) * g y = f x * g y
+  rw [evI_pt]
 
 def rOf (g : (κ → FiniteAdeleRing (𝓞 F) F) → ℂ) : (κ → AF F) → ℂ := fun x => g fun i => (x i).2
 

@@ -254,6 +254,7 @@ theorem gen_core (LT : LocTheory) (hgen : H1fGeneratorBoundAll LT) (hfon : Fonta
     rw [Finset.sum_const, Finset.card_univ, card_emb K LL hg, nsmul_eq_mul]))
   have hV : (finrank ↥LL.1 T.V : ℤ) = r := by exact_mod_cast hr
   rw [hV] at hcard
+  set_option synthInstance.maxHeartbeats 200000 in
   have h0' : finrank ↥LL.1 ↥(H0V T.ρ) ≤ r := hr ▸ Submodule.finrank_le _
   exact arith ht hcard h0' hS
 

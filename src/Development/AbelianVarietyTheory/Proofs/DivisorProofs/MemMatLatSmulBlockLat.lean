@@ -30,17 +30,17 @@ theorem pairCols_add [Fintype A] (P : Finset D) (Y Z : Matrix A D k) (T : Matrix
 
 omit [DecidableEq D] in
 theorem mem_matLat_diagLat {c : D → kˣ} {X : Matrix A D k} :
-    X ∈ matLat (diagLat c) ↔ ∀ i j, valuation k (X i j) ≤ valuation k (c j : k) := Iff.rfl
+    X ∈ matLat A (diagLat c) ↔ ∀ i j, valuation k (X i j) ≤ valuation k (c j : k) := Iff.rfl
 
 
 omit [DecidableEq D] in
 theorem mem_matLat_smul_stdLat {c : kˣ} {X : Matrix A D k} :
-    X ∈ matLat (c • stdLat) ↔ ∀ i j, valuation k (X i j) ≤ valuation k (c : k) := by
+    X ∈ matLat A (c • stdLat k D) ↔ ∀ i j, valuation k (X i j) ≤ valuation k (c : k) := by
   rw [stdLat, smul_diagLat, mem_matLat_diagLat]
   simp
 
 theorem mem_matLat_blockLat {ϖ : kˣ} {e : ℕ} {P : Finset D} {X : Matrix A D k} :
-    X ∈ matLat (blockLat ϖ e P) ↔
+    X ∈ matLat A (blockLat ϖ e P) ↔
       (∀ i, ∀ j ∈ P, ((ϖ ^ e : kˣ) : k) * X i j ∈ 𝒪[k]) ∧ ∀ i, ∀ j ∉ P, X i j ∈ 𝒪[k] := by
   have h0 : 0 < valuation k ((ϖ ^ e : kˣ) : k) := zero_lt_iff.2 (by simp)
   have h1 : ∀ x : k, ((ϖ ^ e : kˣ) : k) * x ∈ 𝒪[k] ↔
@@ -58,7 +58,7 @@ theorem mem_matLat_blockLat {ϖ : kˣ} {e : ℕ} {P : Finset D} {X : Matrix A D 
     · simpa [blockUnits, hj, Valuation.mem_integer_iff] using h' i j hj
 
 theorem mem_matLat_smul_blockLat {ϖ : kˣ} {e : ℕ} {P : Finset D} {X : Matrix A D k} :
-    X ∈ matLat (ϖ ^ e • blockLat ϖ e P) ↔
+    X ∈ matLat A (ϖ ^ e • blockLat ϖ e P) ↔
       (∀ i, ∀ j ∈ P, X i j ∈ 𝒪[k]) ∧ ∀ i, ∀ j ∉ P, valuation k (X i j) ≤ valuation k ((ϖ ^ e : kˣ) : k) := by
   rw [blockLat, smul_diagLat, mem_matLat_diagLat]
   constructor

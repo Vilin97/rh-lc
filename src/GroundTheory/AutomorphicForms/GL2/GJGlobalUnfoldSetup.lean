@@ -278,21 +278,22 @@ theorem unipOne_mem_parabolicOne {k : ℕ} {ξ : UPos n k → 𝔸[K]} (hξ : ξ
 
 theorem hyp (k : ℕ) :
     Unfold.Hyp (unipMeasure K n k) (unipOne k) (unipLattice K n k) (unipFundamentalDomain K n k)
-      (parabolicOne K n k) (fundamentalDomain (parabolicOne K n k)) (conjUnip k) where
-  map_add := fun X Y => Subtype.ext (unipGL_add X Y)
-  injective := unipOne_injective k
-  measurable := by
-    have h : Continuous (unipOne (K := K) (n := n) k) :=
-      continuous_induced_rng.2 continuous_unipGL
-    exact h.measurable
-  isAddFundamentalDomain := isAddFundamentalDomain_unipFundamentalDomain
-  measurableSet_D := measurableSet_unipFundamentalDomain
-  measurableSet_E := measurableSet_fundamentalDomain _
-  existsUnique := existsUnique_smul_mem_fundamentalDomain _
-  mem := fun _ hξ => unipOne_mem_parabolicOne hξ
-  conj := fun _ hq Z => conj_unipOne hq Z
-  mapsTo := fun _ hq _ hξ => conjUnip_mem_unipLattice hq hξ
-  measurePreserving := fun _ hq => measurePreserving_conjUnip hq
+      (parabolicOne K n k) (fundamentalDomain (parabolicOne K n k)) (conjUnip k) := by
+  refine
+    { map_add := fun X Y => Subtype.ext (unipGL_add X Y)
+      injective := unipOne_injective k
+      measurable := ?_
+      isAddFundamentalDomain := isAddFundamentalDomain_unipFundamentalDomain
+      measurableSet_D := measurableSet_unipFundamentalDomain
+      measurableSet_E := measurableSet_fundamentalDomain _
+      existsUnique := existsUnique_smul_mem_fundamentalDomain _
+      mem := fun _ hξ => unipOne_mem_parabolicOne hξ
+      conj := fun _ hq Z => conj_unipOne hq Z
+      mapsTo := fun _ hq _ hξ => conjUnip_mem_unipLattice hq hξ
+      measurePreserving := fun _ hq => measurePreserving_conjUnip hq }
+  have h : Continuous (unipOne (K := K) (n := n) k) :=
+    continuous_induced_rng.2 continuous_unipGL
+  exact h.measurable
 
 end UnfoldGL
 

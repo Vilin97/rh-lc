@@ -219,7 +219,7 @@ theorem idx_eq (hI : I.Ok) (hj : j + 1 = B.R.m) (b b' : Idx I.sel (I.tup a) (I.i
 abbrev levQ (I : TC B X) (a : I.ι) (j : ℕ) (b : Idx I.sel (I.tup a) (I.idx a) j) :=
   levQAt I.sel (I.tup a) (I.idx a) (I.Tp a) j b
 
-theorem good_act (hI : I.Ok) (ht : I.IsTw) (hj : j + 1 = B.R.m) (b : (I.stp u a j).β) (g : (I.stp u a j).G b) (p : (I.stp u a j).D b)
+theorem good_act (hI : I.Ok) (ht : TC.IsTw I) (hj : j + 1 = B.R.m) (b : (I.stp u a j).β) (g : (I.stp u a j).G b) (p : (I.stp u a j).D b)
     (hp : Good p) : Good ((I.stp u a j).act b g p) := by
   have hΛ : levGAt I.sel (I.tup a) (I.idx a) (I.Tp a) j b = colLevSym I.Ch j := by
     have e : ∀ al, (I.idx a).levG j al = colLevSym I.Ch j := by
@@ -238,7 +238,7 @@ theorem mem_act (b : (I.stp u a j).β) (g : (I.stp u a j).G b) (p : (I.stp u a j
     (g.2.2.1 ⟨P.1, hQ⟩).1 z ∈ cosetIn ((I.stp u a j).act b g p) P ↔ z ∈ cosetIn p P :=
   mem_cosetIn_smul (levGAt I.sel (I.tup a) (I.idx a) (I.Tp a) j b) (levQ I a j b) g p _ rfl rfl P hP hQ z
 
-theorem rep_congr (hI : I.Ok) (ht : I.IsTw) (hj : j + 1 = B.R.m) (b : (I.stp u a j).β) (d d' : (I.stp u a j).D b) (hd : Good d)
+theorem rep_congr (hI : I.Ok) (ht : TC.IsTw I) (hj : j + 1 = B.R.m) (b : (I.stp u a j).β) (d d' : (I.stp u a j).D b) (hd : Good d)
     (hd' : Good d') (h : cosetIn d = cosetIn d') :
     cosetIn ((I.stp u a j).rep ((I.stp u a j).cl b d')) = cosetIn ((I.stp u a j).rep ((I.stp u a j).cl b d)) := by
   refine @normal_rep ((I.stp0 u a j).G b) ((I.stp0 u a j).D b) _ _ ((I.stp0 u a j).actD b) (fun q => cosetIn q) (I.pref u a j b)
@@ -252,7 +252,7 @@ theorem rep_congr (hI : I.Ok) (ht : I.IsTw) (hj : j + 1 = B.R.m) (b : (I.stp u a
 
 variable {l : I.Laws} {Z : TC.Later B (I.cols l)} {Ch : ℕ → Type} {A : TwDat I l Z u a Ch}
 
-theorem chart_ext (hI : I.Ok) (ht : I.IsTw) (hA : A.Is) (hj : j + 1 = B.R.m) (b : Idx I.sel (I.tup a) (I.idx a) j) (β β' : Ch j)
+theorem chart_ext (hI : I.Ok) (ht : TC.IsTw I) (hA : A.Is) (hj : j + 1 = B.R.m) (b : Idx I.sel (I.tup a) (I.idx a) j) (β β' : Ch j)
     (hβ : Good (A.p0 j β)) (hβ' : Good (A.p0 j β'))
     (h : ∀ (P : rowSG (B.primes X) I.sel (I.tup a)) (hQ : P.1 ∈ I.Q a), ∃ κ ∈ (levQ I a j b ⟨P.1, hQ⟩).H,
       ∃ z ∈ cosetIn (A.p0 j β) P, κ.1 z ∈ cosetIn (A.p0 j β') P) : β = β' := by
@@ -280,7 +280,7 @@ theorem chart_ext (hI : I.Ok) (ht : I.IsTw) (hA : A.Is) (hj : j + 1 = B.R.m) (b 
   rw [e1, e2] at e
   exact ((hA.reads j hi).key _ _).2 ⟨rfl, e.symm⟩
 
-theorem exists_chart (hI : I.Ok) (ht : I.IsTw) (hA : A.Is) (hj : j + 1 = B.R.m) (b : Idx I.sel (I.tup a) (I.idx a) j)
+theorem exists_chart (hI : I.Ok) (ht : TC.IsTw I) (hA : A.Is) (hj : j + 1 = B.R.m) (b : Idx I.sel (I.tup a) (I.idx a) j)
     (z : rowSG (B.primes X) I.sel (I.tup a) → Sp B.fields.E (B.R.N j))
     (hz : ∀ P, P.1 ∉ (B.primes X).vGs → (qOf P.1 : B.fields.E) ^ (I.cst a).M • z P ∈ stdAt B.fields.E (B.R.N j) P.1) :
     ∃ β : Ch j, Good (A.p0 j β) ∧ ∀ (P : rowSG (B.primes X) I.sel (I.tup a)) (hQ : P.1 ∈ I.Q a),
@@ -300,7 +300,7 @@ theorem exists_chart (hI : I.Ok) (ht : I.IsTw) (hA : A.Is) (hj : j + 1 = B.R.m) 
     rw [← h1]
     exact ⟨g.2.2.1 ⟨P.1, hQ⟩, g.2.2.2 _ (Set.mem_univ _), (mem_act b g p P hP hQ _).2 (hp' P hP)⟩
 
-theorem good_of_xi (hI : I.Ok) (ht : I.IsTw) {i : ℕ} (hi : i + 1 + 1 = B.R.m) (h : i + 1 ≤ B.R.m) (α : Ch i) (γ : Ch (i + 1)) (z)
+theorem good_of_xi (hI : I.Ok) (ht : TC.IsTw I) {i : ℕ} (hi : i + 1 + 1 = B.R.m) (h : i + 1 ≤ B.R.m) (α : Ch i) (γ : Ch (i + 1)) (z)
     (hz : A.xi i h α γ z ≠ 0) : Good (A.p0 (i + 1) γ) := by
   have hh : ∀ (al : (I.idx a).β i) P, P.1 ∈ (B.primes X).vGs → (I.idx a).h i al P = 1 := by
     rw [(ht a).2]

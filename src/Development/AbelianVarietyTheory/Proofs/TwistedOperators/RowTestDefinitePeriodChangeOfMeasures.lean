@@ -215,8 +215,11 @@ theorem jPer_scale (W : G.Weil) {M M' : Vol G} {s : Node → NNReal} (hM : IsHaa
     (hF : ∀ γ ∈ GQ (G.V (.grid D.R.m D.R.m)), ∀ x, F (γ * x) = F x) :
     ∀ σ j (hj : j + 2 * σ + 2 = D.R.m), Even j → ∀ φ : Fn G (.top j), (∀ γ ∈ GQ (G.V (.top j)), ∀ x, φ (γ * x) = φ x) →
       jPer W M t C F σ j hj φ = ((∏ k ∈ Finset.Ico j D.R.m, ((s (.top k) : ℝ) : ℂ)) * ((s (.grid D.R.m D.R.m) : ℝ) : ℂ)) *
-        jPer W M' t C F σ j hj φ
-  | 0, j, hj, hev, φ, hφ => by
+        jPer W M' t C F σ j hj φ := by
+  intro σ
+  induction σ with
+  | zero =>
+    intro j hj hev φ hφ
     have hC' := hC j hev (by omega)
     show ∫ h' in M.fd (.grid D.R.m D.R.m), F h' * biL W M t j φ (C j) (GlobalTheory.RowChain.topEmb G _ h') ∂M.ν (.grid D.R.m D.R.m) =
       _ * ∫ h' in M'.fd (.grid D.R.m D.R.m), F h' * biL W M' t j φ (C j) (GlobalTheory.RowChain.topEmb G _ h') ∂M'.ν (.grid D.R.m D.R.m)
@@ -230,11 +233,12 @@ theorem jPer_scale (W : G.Weil) {M M' : Vol G} {s : Node → NNReal} (hM : IsHaa
     · intro γ hγ x
       obtain ⟨γ', hγ', e⟩ := topEmb_rat (G := G) (show D.R.m = j + 1 + 1 by omega) γ hγ x
       rw [e, hF γ hγ x, biL_inv W M' t j (by omega) φ _ hC' γ' hγ']
-  | σ + 1, j, hj, hev, φ, hφ => by
+  | succ σ ih =>
+    intro j hj hev φ hφ
     have hC' := hC j hev (by omega)
     show jPer W M t C F σ (j + 1 + 1) _ (biL W M t j φ (C j)) = _ * jPer W M' t C F σ (j + 1 + 1) _ (biL W M' t j φ (C j))
     rw [biL_scale W hM hM' hs t j (by omega) φ hφ _ hC', jPer_smul_φ,
-      jPer_scale W hM hM' hs t C hC F hF σ (j + 1 + 1) _ (by rw [add_assoc]; exact hev.add even_two) _
+      ih (j + 1 + 1) _ (by rw [add_assoc]; exact hev.add even_two) _
         (biL_inv W M' t j (by omega) φ _ hC'),
       Finset.prod_eq_prod_Ico_succ_bot (by omega : j < D.R.m), Finset.prod_eq_prod_Ico_succ_bot (by omega : j + 1 < D.R.m)]
     ring

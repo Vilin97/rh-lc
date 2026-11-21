@@ -112,7 +112,8 @@ theorem tildeSys_H_subsingleton (k : ℕ) (h : Subsingleton (cohom M.coneGradedE
   unfold cohom Cech.Hdeg at h
   rw [Submodule.Quotient.subsingleton_iff, Submodule.eq_top_iff'] at h
   unfold SubSystem.H Cech.H
-  refine Submodule.Quotient.subsingleton_iff.mpr (Submodule.eq_top_iff'.mpr ?_)
+  set_option synthInstance.maxHeartbeats 200000 in
+    refine Submodule.Quotient.subsingleton_iff.mpr (Submodule.eq_top_iff'.mpr ?_)
   rintro ⟨t, ht⟩
   rw [Submodule.mem_comap]
   change t ∈ LinearMap.range (Cech.d _ (M.tildeSys c).res k)

@@ -44,7 +44,8 @@ theorem van_on {O R : Type} [CommRing O] [CommRing R] {I : Ideal R} (γ : Divide
     rintro T ⟨-, W, rfl, h⟩
     exact h
   have hD : St (γ := γ) (p := p) (q := q) (κ := κ) ⊤ {V} c'.D := ⟨trivial, V, rfl, c'.inV⟩
-  obtain ⟨hpow, -⟩ := GlobalTheory.CompanionTheory.ChartFil.chart_grConst c' hgood _ hQ hD
+  have hpow : ∀ r, c'.D.pdPow r = (pdP γ r).map c'.D.i := fun r =>
+    GlobalTheory.CompanionTheory.ChartFil.dividedPowerFiltration_eq_map γ c'.D.δ c'.D.i c'.D.compat c'.J_eq r
   obtain ⟨PQ, hPQ⟩ := CrystallineSemistableComparison.Pb.Site.poly_all' γ p hp q κ ⊤ (Or.inl rfl) {V}
   refine CrystallineSemistableComparison.Pb.vanishing_of_ladder e PQ (a := sFil _) (b := fun _ => IdF.bot _) (c'.frame hgood _ hQ hD) ((d : ℤ) + 1)
     ⟨fun r' T x hx => ?_, fun r' _ => (hPQ r').1, fun r' _ => (hPQ r').2.1⟩ (fun r' h1 _ x hx => ?_) j

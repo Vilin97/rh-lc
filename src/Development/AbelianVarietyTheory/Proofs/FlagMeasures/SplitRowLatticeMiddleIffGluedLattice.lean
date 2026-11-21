@@ -230,13 +230,7 @@ theorem IsHypFrame.unimodular_iff (H : IsHypFrame h e f) (hL : ∀ w ∈ L, Mid 
 theorem IsHypFrame.isLattice (H : IsHypFrame h e f) (hA : ∀ a, A a ≠ 0) (hB : ∀ a, B a ≠ 0) (hfg : L.FG)
     (hsp : ∀ w, Mid h e f w → w ∈ Submodule.span K (L : Set V)) :
     Submodule.IsLattice K (sumS A e ⊔ L ⊔ sumS B f) := by
-  refine ⟨((sumS_fg A e).sup hfg).sup (sumS_fg B f), eq_top_iff.2 fun v _ => ?_⟩
-  rw [decomp h e f v]
-  refine Submodule.add_mem _ (Submodule.add_mem _ (Submodule.sum_mem _ fun a _ => Submodule.smul_mem _ _ ?_) ?_)
-    (Submodule.sum_mem _ fun a _ => Submodule.smul_mem _ _ ?_)
-  · exact Submodule.span_mono (le_sup_of_le_left le_sup_left : sumS A e ≤ _) (mem_span_sumS hA e a)
-  · exact Submodule.span_mono (le_sup_of_le_left le_sup_right : L ≤ _) (hsp _ (H.mid_mid v))
-  · exact Submodule.span_mono (le_sup_right : sumS B f ≤ _) (mem_span_sumS hB f a)
+  exact Submodule.IsLattice.of_fg K (((sumS_fg A e).sup hfg).sup (sumS_fg B f))
 
 end Space
 

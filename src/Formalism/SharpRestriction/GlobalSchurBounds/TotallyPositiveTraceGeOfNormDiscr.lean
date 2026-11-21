@@ -488,10 +488,11 @@ theorem trace_form_lower_bound_dual (S : HSpace E)
   have h3 := star_mem_inverseDifferent _ (hD _ hx2)
   rwa [map_smul, smul_eq_mul, star_mul, star_star, hreal, mul_comm] at h3
 
-theorem dualSub_toIntSubmodule_fg_of_isLattice (S : HSpace E) (L : Submodule (𝓞 E) S.V) (hL : Submodule.IsLattice E L) :
+theorem dualSub_toIntSubmodule_fg_of_isLattice (S : HSpace E) (L : Submodule (𝓞 E) S.V)
+    (hL : Submodule.IsFullLattice E L) :
     (AddSubgroup.toIntSubmodule (dualSub S L)).FG := by
   classical
-  obtain ⟨s, hs⟩ := hL.fg
+  obtain ⟨s, hs⟩ := hL.toIsLattice.fg
   have hsE : Submodule.span E (s : Set S.V) = ⊤ := by
     rw [← Submodule.span_span_of_tower (𝓞 E) E, hs]
     exact hL.span_eq_top
@@ -551,7 +552,7 @@ theorem trace_pos_of_totally_positive (β : E) (hpos : ∀ τ : E →+* ℂ, ∃
 theorem exists_short_basis_of_dual_lower (hT : PI.TransferenceMinima) (S : HSpace E)
     (hpos : ∀ (τ : E →+* ℂ) (x : S.V), x ≠ 0 → ∃ c : ℝ, 0 < c ∧ τ (S.hT x x) = (c : ℂ))
     (Y0 : AddSubgroup S.V) (hfg : (AddSubgroup.toIntSubmodule Y0).FG)
-    (L : Submodule (𝓞 E) S.V) (hL : Submodule.IsLattice E L) (hint : ∀ x ∈ L, x ∈ Y0)
+    (L : Submodule (𝓞 E) S.V) (hL : Submodule.IsFullLattice E L) (hint : ∀ x ∈ L, x ∈ Y0)
     (hrk : 0 < S.rank) (κ2 : ℝ) (hκ : 0 < κ2)
     (hlow : ∀ x : S.V, x ≠ 0 → (∀ y ∈ Y0, ∃ z : ℤ, Algebra.trace ℚ E (S.hT x y) = z) →
       κ2 ≤ ((Algebra.trace ℚ E (S.hT x x) : ℚ) : ℝ)) :
@@ -596,13 +597,21 @@ theorem exists_short_basis_of_dual_lower (hT : PI.TransferenceMinima) (S : HSpac
       · intro q a _ ha
         rw [smul_comm]
         exact Submodule.smul_mem _ _ ha
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
-  have hYlat : Submodule.IsLattice ℚ Y :=
-    ⟨hfg, top_le_iff.mp (hspanL ▸ Submodule.span_mono (fun l hl => hint l hl))⟩
+    apply top_le_iff.mp
+    intro v _
+    have hv : v ∈ Submodule.span E (L : Set S.V) := by simp [hL.span_eq_top]
+    exact Submodule.span_induction (p := fun v _ => v ∈ Submodule.span ℚ (L : Set S.V))
+      (fun _ hl => Submodule.subset_span hl) (zero_mem _) (fun _ _ _ _ => add_mem)
+      (fun e v _ => hcl e v) hv
+  have hYlat : Submodule.IsFullLattice ℚ Y := {
+    toIsLattice := Submodule.IsLattice.of_fg ℚ hfg
+    span_eq_top := top_le_iff.mp (hspanL ▸ Submodule.span_mono hint)
+  }
+  have : Module.Finite ℤ Y := Submodule.IsLattice.finite ℚ Y
+  have : Module.Free ℤ Y := Submodule.IsLattice.free ℚ Y
   let b0 : Basis (Fin (finrank ℤ Y)) ℤ Y := Module.finBasis ℤ Y
-  let b : Basis (Fin (finrank ℤ Y)) ℚ S.V := b0.extendOfIsLattice ℚ
-  have hb : ∀ i, b i = (b0 i).val := fun i => Basis.extendOfIsLattice_apply ℚ b0 i
+  let b : Basis (Fin (finrank ℤ Y)) ℚ S.V := b0.extendOfIsFullLattice ℚ
+  have hb : ∀ i, b i = (b0 i).val := fun i => Basis.extendOfIsFullLattice_apply ℚ b0 i
   have hdV : finrank ℚ S.V = finrank ℤ Y := by
     rw [finrank_eq_card_basis b]
     simp
@@ -634,9 +643,8 @@ theorem exists_short_basis_of_dual_lower (hT : PI.TransferenceMinima) (S : HSpac
   have : Nonempty (Fin (finrank ℤ Y)) := ⟨⟨0, hd0⟩⟩
   have hspanQ : Submodule.span ℚ (Set.range y) = ⊤ :=
     hyli.span_eq_top_of_card_eq_finrank (by rw [hdV]; simp)
-  have hspanE : Submodule.span E (Set.range y) = ⊤ := by
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  have hspanE : Submodule.span E (Set.range y) = ⊤ :=
+    Submodule.span_eq_top_of_span_eq_top ℚ E _ hspanQ
   obtain ⟨t, htsub, htspan, htli⟩ := exists_linearIndependent E (Set.range y)
   let bt : Basis t E S.V := Basis.mk htli (by rw [Subtype.range_coe, htspan, hspanE])
   have hcard : Nat.card t = S.rank := by rw [← finrank_eq_nat_card_basis bt, S.rank_eq]
@@ -656,7 +664,7 @@ theorem exists_short_basis_of_dual_lower (hT : PI.TransferenceMinima) (S : HSpac
 
 theorem exists_short_basis_dual (hT : PI.TransferenceMinima) (S : HSpace E)
     (hpos : ∀ (τ : E →+* ℂ) (x : S.V), x ≠ 0 → ∃ c : ℝ, 0 < c ∧ τ (S.hT x x) = (c : ℂ))
-    (L : Submodule (𝓞 E) S.V) (hL : Submodule.IsLattice E L) (hint : ∀ x ∈ L, x ∈ dualSub S L)
+    (L : Submodule (𝓞 E) S.V) (hL : Submodule.IsFullLattice E L) (hint : ∀ x ∈ L, x ∈ dualSub S L)
     (hrk : 0 < S.rank) :
     ∃ y : Fin S.rank → S.V, (∀ a, y a ∈ dualSub S L) ∧ LinearIndependent E y ∧
       ∀ a, ((Algebra.trace ℚ E (S.hT (y a) (y a)) : ℚ) : ℝ) ≤
@@ -699,11 +707,53 @@ theorem finrank_cmField_eq_two_mul (D : D7) : Module.finrank ℚ D.host.E = 2 * 
   rw [D.host.finrank_cmField, Ranks.f, Ranks.n]
   ring
 
+open scoped nonZeroDivisors in
 theorem shortDual_holds (D : D7) : ShortDual D := by
+  classical
   intro u c hLat
+  let E := D.host.E
+  let S := D.sp.X 0
+  let L := D.clsLat u 0 c
+  -- Clearing denominators and multiplying by the index puts a nonzero multiple of each vector in L.
+  have hL : Submodule.IsFullLattice E L := by
+    have hLatBase : Submodule.IsLattice E L := D.clsLat_lat u 0 c
+    refine { toIsLattice := hLatBase, span_eq_top := top_le_iff.mp ?_ }
+    intro x _
+    obtain ⟨s, hs⟩ := hLatBase.fg
+    obtain ⟨d, hd⟩ := IsLocalization.exist_integer_multiples (𝓞 E)⁰ s (S.hT x)
+    let a : E := star (algebraMap (𝓞 E) E d)
+    have ha : a ≠ 0 := by
+      exact star_ne_zero.mpr
+        ((map_ne_zero_iff _ RingOfIntegers.coe_injective).mpr (nonZeroDivisors.coe_ne_zero d))
+    have hx : a • x ∈ dualSub S L := by
+      intro y hy
+      rw [← S.herm.eq]
+      apply star_mem_ring_of_integers
+      rw [← hs] at hy
+      refine Submodule.span_induction (p := fun y _ => S.hT (a • x) y ∈ (algebraMap (𝓞 E) E).range)
+        ?_ ?_ ?_ ?_ hy
+      · intro y hy
+        rw [LinearMap.map_smulₛₗ, LinearMap.smul_apply, starRingEnd_apply,
+          show star a = algebraMap (𝓞 E) E d from star_star _, smul_eq_mul]
+        obtain ⟨b, hb⟩ := hd y hy
+        exact ⟨b, hb.trans (Algebra.smul_def _ _)⟩
+      · rw [map_zero]
+        exact zero_mem _
+      · intro y z _ _ hy hz
+        rw [map_add]
+        exact add_mem hy hz
+      · intro o y _ hy
+        rw [← algebraMap_smul E o y, map_smul, smul_eq_mul]
+        exact mul_mem ⟨o, rfl⟩ hy
+    have hmem := L.toAddSubgroup.nsmul_relIndex_mem hx
+    rw [hLat.2, ← Nat.cast_smul_eq_nsmul E] at hmem
+    have hq : ((Tu D u ^ (2 * D.R.f) : ℕ) : E) ≠ 0 := by
+      exact Nat.cast_ne_zero.mpr (pow_ne_zero _ (Nat.ne_of_gt (by exact_mod_cast b_Tu_pos D u)))
+    exact ((Submodule.span E (L : Set S.V)).smul_mem_iff ha).mp
+      (((Submodule.span E (L : Set S.V)).smul_mem_iff hq).mp (Submodule.subset_span hmem))
   have hr : (D.sp.X 0).rank = D.R.N 0 := D.sp.X_rank 0 (Nat.zero_le _)
   obtain ⟨y, hy1, hy2, hy3⟩ := exists_short_basis_dual transference_successive_minima (D.sp.X 0)
-    (fun τ x hx => D.X_form_pos 0 (Nat.zero_le _) τ x hx) (D.clsLat u 0 c) (D.clsLat_lat u 0 c) hLat.1
+    (fun τ x hx => D.X_form_pos 0 (Nat.zero_le _) τ x hx) (D.clsLat u 0 c) hL hLat.1
     (by rw [hr]; exact rank_zero_pos D)
   refine ⟨y ∘ Fin.cast hr.symm, fun a => hy1 _, hy2.comp _ (Fin.cast_injective _), fun a => ?_⟩
   have h1 := hy3 (Fin.cast hr.symm a)
@@ -779,17 +829,19 @@ open Module NumberField Formalism.BasicNotions IsDedekindDomain
 attribute [local instance] Formalism.BasicNotions.Host.cmStar
 
 theorem columnHypotheses (D : D7) (u : D.what₂.Word) :
-    ColHyp D.what₂.places (D.sp.X 0) D.R.f (D.R.N 0) (Tu D u) (D.clsLat u 0) where
-  tc := inferInstance
-  tcE := D.sp.cm.cmUnram.1
-  pl := ⟨D.plEq, D.val_eq⟩
-  deg := finrank_cmField_eq_two_mul D
-  rank := D.sp.X_rank 0 (Nat.zero_le _)
-  npos := rank_zero_pos D
-  Tpos := by exact_mod_cast b_Tu_pos D u
-  conj := D.sp.cm.cmUnram.2.1
-  pos := fun τ x hx => D.X_form_pos 0 (Nat.zero_le _) τ x hx
-  lat := D.clsLat_lat u 0
+    ColHyp D.what₂.places (D.sp.X 0) D.R.f (D.R.N 0) (Tu D u) (D.clsLat u 0) := by
+  exact {
+    tc := inferInstance
+    tcE := D.sp.cm.cmUnram.1
+    pl := ⟨D.plEq, D.val_eq⟩
+    deg := finrank_cmField_eq_two_mul D
+    rank := D.sp.X_rank 0 (Nat.zero_le _)
+    npos := rank_zero_pos D
+    Tpos := by exact_mod_cast b_Tu_pos D u
+    conj := D.sp.cm.cmUnram.2.1
+    pos := fun τ x hx => D.X_form_pos 0 (Nat.zero_le _) τ x hx
+    lat := D.clsLat_lat u 0
+  }
 
 end ColRec
 

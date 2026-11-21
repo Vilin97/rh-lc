@@ -150,7 +150,7 @@ theorem pu_prod (hL : LocAlg) (h1 : SphOne) (hC : CompUnit) (hS : SphStarU) (hE 
   induction l with
   | nil =>
     have h : ∏ᶠ w ∈ S \ ↑B, twTr (F.σ i w).ρ (KL n w) (KL n w) (UGen.sph ([] : List (UGen E n)) w) LinearMap.id = 1 :=
-      (finprod_mem_congr (g := fun _ => (1 : ℂ)) rfl fun w hw =>
+      (finprod_mem_congr (g := fun _ => (1 : ℂ)) rfl fun w (hw : w ∈ S \ (↑B : Set (Pl E))) =>
         (pu_tw h1 hC hS hE hB i w hw.1 hw.2 0 0 (pu_hz _) (pu_hz _)).2).trans (finprod_mem_one _)
     rw [h, mul_one]
     rfl

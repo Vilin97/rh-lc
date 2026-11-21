@@ -142,8 +142,8 @@ theorem nfExC (hHost : HostC) : NFExC := by
   have geo := cell_geom D.host.F D.host.E (hS D) D.R.rS _ _ (lf D (X.Fu u)).fl (frq X t.rep).fl (tie_trace D.sp.cm)
     (tie_aniso D _ hTu (lf D (X.Fu u))) (tie_aniso D _ hTu (frq X t.rep)) hrel
   have hDG : Formalism.MainNotions.S.Dl (lf D (X.Fu u)).fl (frq X t.rep).fl j ≠ 0 := by
-    rw [nf_Dl _ _ (fixedFlag_level_ne_zero D u) (nf_T_ne D u) j hj']
-    exact star_ne_zero.2 hN.2.2.1
+    exact (nf_Dl (lf D (X.Fu u)).fl (frq X t.rep).fl
+      (fixedFlag_level_ne_zero D u) (nf_T_ne D u) j hj').trans_ne (star_ne_zero.2 hN.2.2.1)
   obtain ⟨p, hp⟩ := cell_of_matRel cell_inv cell_sign cell_bruhat cell_mono cell_point hj'
     ((Formalism.MainNotions.S.Zhat (lf D (X.Fu u)).fl (frq X t.rep).fl).submatrix (Fin.castLE hj') (Fin.castLE hj'))
     (by rw [← tie_Dl_eq']; exact hDG) (geo j hj' (Or.inl ⟨hj, hDG⟩))

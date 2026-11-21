@@ -130,7 +130,9 @@ variable {F : Type} [Field F] [NumberField F]
 theorem card_residue (v : HeightOneSpectrum (𝓞 F)) :
     Nat.card (v.adicCompletionIntegers F ⧸ IsLocalRing.maximalIdeal (v.adicCompletionIntegers F)) =
       Nat.card (𝓞 F ⧸ v.asIdeal) :=
-  (Formalism.UG.P.tjcosets_card_residue v).trans rfl
+  by
+    apply (Formalism.UG.P.tjcosets_card_residue v).trans
+    simp [qV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
 
 theorem finite_over {p : ℕ} (hp : p.Prime) :
     {v : HeightOneSpectrum (𝓞 F) | (p : 𝓞 F) ∈ v.asIdeal}.Finite := by

@@ -282,8 +282,8 @@ theorem SemilocResidueFrac.proof (hFin : SemilocFinite.Statement) (hMax : Semilo
   have hinvB : ∀ b, ρB b ≠ 0 → ∃ c, ρB c * ρB b = 1 := fun b hb => by
     obtain ⟨c, i, hi, e⟩ := h𝔪.exists_inv fun h => hb ((hkerB b).2 h)
     refine ⟨c, ?_⟩
-    have h := congrArg ρB e
-    rwa [map_add, map_mul, (hkerB i).2 hi, add_zero, map_one] at h
+    have h := congrArg (fun x => ρB x) e
+    rwa [ρB.map_add, ρB.map_mul, (hkerB i).2 hi, add_zero, ρB.map_one] at h
   have hinvA : ∀ a : locRing (imageZ v P') W, ρB (algebraMap _ (semiLocRing P' (fibreOver v P' W)) a) ≠ 0 →
       ∃ c, ρB (algebraMap _ (semiLocRing P' (fibreOver v P' W)) c) * ρB (algebraMap _ _ a) = 1 :=
     fun a ha => by

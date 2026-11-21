@@ -44,7 +44,9 @@ theorem isAdicComplete_dualNumber {O : Type} [CommRing O] (p : ℕ)
       (h.toIsHausdorff.haus' x.snd fun n => ?_)
     · rw [SModEq.zero, mem_pow_iff]; exact (hx n).1
     · rw [SModEq.zero, mem_pow_iff]; exact (hx n).2
-  prec' f hf := by
+  toIsPrecomplete := by
+    constructor
+    intro f hf
     simp only [SModEq.sub_mem, mem_pow_iff, dual_dvd_iff] at hf ⊢
     obtain ⟨a, ha⟩ := h.toIsPrecomplete.prec' (fun n => (f n).fst) fun {m n} hmn => by
       rw [SModEq.sub_mem, mem_pow_iff]; exact (hf hmn).1

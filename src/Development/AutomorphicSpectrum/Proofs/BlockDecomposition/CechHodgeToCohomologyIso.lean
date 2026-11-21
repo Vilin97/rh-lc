@@ -47,7 +47,7 @@ theorem restr_bij (F : C ⥤ ModuleCat.{0} R) (n : ℕ) :
     Function.Bijective ((CH.Mor.restrict F (CategoryOfElements.π ((Functor.const C).obj PUnit.{1}))).hom.mapH n) := by
   let E : C ⥤ Type := (Functor.const C).obj PUnit.{1}
   let G : C ⥤ E.Elements :=
-    { obj := fun T => ⟨T, PUnit.unit⟩
+    { obj := fun T => Functor.elementsMk E T PUnit.unit
       map := fun φ => ⟨φ, rfl⟩ }
   refine P.mapH_bij _ (fun k => ⟨fun x y h => ?_, fun y => ?_⟩) n
   · funext c

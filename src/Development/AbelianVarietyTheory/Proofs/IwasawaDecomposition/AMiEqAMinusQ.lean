@@ -59,13 +59,15 @@ theorem wtOf_kapTop : ∀ D : D7, DV.KapDef D → ∀ i : Fin D.R.m,
   refine ⟨rfl, Formalism.L2.Geo.wtOf_eq_kapW _ (fun τ a => ?_) (fun τ c => ?_) rfl⟩
   · have h := (hK _ (inR i).1 (inR i).2 τ).1 a
     have h' := aPl_eq_aPlusQ D i τ a (hp ▸ a.2)
-    rw [(kapIs_kapTop D i τ).1 a, hs τ]
+    have he := (kapIs_kapTop D i τ).1 a
+    rw [he, hs τ]
     rw [← h, ← hp] at h'
     exact_mod_cast h'
   · have h := (hK _ (inR i).1 (inR i).2 τ).2 (Fin.rev c)
     have hc := c.2
     have h' := aMi_eq_aMinusQ D i τ _ c (Fin.rev c) hq (by rw [Fin.val_rev]; omega)
-    rw [(kapIs_kapTop D i τ).2.1 c, hs τ]
+    have he := (kapIs_kapTop D i τ).2.1 c
+    rw [he, hs τ]
     rw [← hp, ← neg_neg (DV.aMinusQ _ _ _ _), ← h] at h'
     exact_mod_cast h'
 

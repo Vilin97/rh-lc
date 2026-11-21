@@ -375,7 +375,7 @@ theorem ratio_bounds {η : ℝ} (hη : 0 < η) :
   set E := (hU k).toMeasurableEquiv with hE
   set μK : Measure ↥(ReciprocityTheory.ChartRestriction.DS.UNgrp k) := μ.map E with hμK
   have : μK.IsHaarMeasure := MulEquiv.isHaarMeasure_map μ (eU k) (cont_eU k) (cont_eU_symm k)
-  have : IsProbabilityMeasure μK := Measure.isProbabilityMeasure_map E.measurable.aemeasurable
+  have : IsProbabilityMeasure μK := by rw [hμK]; infer_instance
   obtain ⟨δ, hδ, hd⟩ := volU_density μK η hη
   refine ⟨δ, hδ, fun ρ hρ hρδ => ?_⟩
   have hBm : MeasurableSet (Bρ k ρ) := (isOpen_Bρ ρ).measurableSet

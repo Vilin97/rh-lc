@@ -25,6 +25,8 @@ open AutomorphicForm RightCosetSpace Reduction
 
 variable {K : Type*} [Field K] [NumberField K] {n : ℕ}
 
+local notation "Γ₁" => Reduction.rationalGLOne (K := K) (n := n)
+
 variable (μ : Measure (normOneGL (K := K) (n := n))) [μ.IsHaarMeasure]
 
 theorem rconv_mul_of_left_inv {f : normOneGL (K := K) (n := n) → ℂ} {u : normOneGL (K := K) (n := n)}

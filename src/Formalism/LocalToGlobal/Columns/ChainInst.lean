@@ -371,33 +371,33 @@ theorem ciSq_sq (hPr : Pr.Ok) (hCh : Ch.Ok) {P : HeightOneSpectrum (𝓞 X.E)} (
   convert h.trans key using 3
 
 theorem ciCst_ok (hPr : Pr.Ok) (hCh : Ch.Ok) {SB : Finset (HeightOneSpectrum (𝓞 X.E))} (hSB : ∀ P ∈ SB, P ∈ Pr.vGs)
-    (h4 : ∀ P ∈ SB, qOf P % 4 = 1) {mq : ℕ → SB → X.K} : (ciCst Ch SB mq).Ok where
-  psi_add P x y hx hy := by
-    show ciPsi Ch P (x + y) = ciPsi Ch P x * ciPsi Ch P y
-    simp only [ciCst, pow_one] at hx hy
-    unfold ciPsi
-    rw [if_pos hx, if_pos hy, mul_add, if_pos (hx.add hy), reduction_add hx hy, AddChar.map_add_eq_mul]
-  psi_int P x hx := by
-    show ciPsi Ch P x = 1
-    unfold ciPsi
-    rw [if_pos ((ciIntAt_q (q := qOf P.1)).mul hx), reduction_mul (ciIntAt_q (q := qOf P.1)) hx, redP_natCast_eq_zero (ciQ_mem P.1), zero_mul,
-      AddChar.map_zero_eq_one]
-  psi_ne P := by
-    show ciPsi Ch P _ ≠ 1
-    have hq0 : (qOf P.1 : X.E) ≠ 0 := by exact_mod_cast (ciQOf_prime hPr (hSB P.1 P.2)).ne_zero
-    unfold ciPsi
-    rw [mul_inv_cancel₀ hq0, if_pos ciIntAt_one, redP_one]
-    unfold psi0P
-    rw [dite_eq_left (hSB P.1 P.2)]
-    have hqp := ciQOf_prime hPr (hSB P.1 P.2)
-    have := ciFinite (w := P.1) hqp.ne_zero
-    exact ciAddChar_one_ne hqp (ciCard P.1) _ (hCh.psi_zero_nontrivial_character _)
-  D_pos _ := le_refl 1
-  sq_sq P := ciSq_sq hPr hCh (hSB P.1 P.2) (h4 P.1 P.2)
-  M_pos := le_refl 1
-  M_le_A := le_refl 1
-  M_le_B := le_refl 1
-  B_pos := le_refl 1
+    (h4 : ∀ P ∈ SB, qOf P % 4 = 1) {mq : ℕ → SB → X.K} : (ciCst Ch SB mq).Ok :=
+  { psi_add := fun P x y hx hy => by
+      show ciPsi Ch P (x + y) = ciPsi Ch P x * ciPsi Ch P y
+      simp only [ciCst, pow_one] at hx hy
+      unfold ciPsi
+      rw [if_pos hx, if_pos hy, mul_add, if_pos (hx.add hy), reduction_add hx hy, AddChar.map_add_eq_mul]
+    psi_int := fun P x hx => by
+      show ciPsi Ch P x = 1
+      unfold ciPsi
+      rw [if_pos ((ciIntAt_q (q := qOf P.1)).mul hx), reduction_mul (ciIntAt_q (q := qOf P.1)) hx, redP_natCast_eq_zero (ciQ_mem P.1), zero_mul,
+        AddChar.map_zero_eq_one]
+    psi_ne := fun P => by
+      show ciPsi Ch P _ ≠ 1
+      have hq0 : (qOf P.1 : X.E) ≠ 0 := by exact_mod_cast (ciQOf_prime hPr (hSB P.1 P.2)).ne_zero
+      unfold ciPsi
+      rw [mul_inv_cancel₀ hq0, if_pos ciIntAt_one, redP_one]
+      unfold psi0P
+      rw [dite_eq_left (hSB P.1 P.2)]
+      have hqp := ciQOf_prime hPr (hSB P.1 P.2)
+      have := ciFinite (w := P.1) hqp.ne_zero
+      exact ciAddChar_one_ne hqp (ciCard P.1) _ (hCh.psi_zero_nontrivial_character _)
+    D_pos := fun _ => le_refl 1
+    sq_sq := fun P => ciSq_sq hPr hCh (hSB P.1 P.2) (h4 P.1 P.2)
+    M_pos := le_refl 1
+    M_le_A := le_refl 1
+    M_le_B := le_refl 1
+    B_pos := le_refl 1 }
 
 end Cst
 
@@ -448,7 +448,7 @@ variable {E : Type} [Field E] [NumberField E] [StarRing E] {P : HeightOneSpectru
 
 
 open Classical in
-def ciLift (c : 𝓞 E ⧸ P.asIdeal) : 𝓞 E :=
+def ciLift (P : HeightOneSpectrum (𝓞 E)) (c : 𝓞 E ⧸ P.asIdeal) : 𝓞 E :=
   if c = 0 then 0 else if c = 1 then 1 else (Ideal.Quotient.mk_surjective c).choose
 
 theorem ciLift_mk (c : 𝓞 E ⧸ P.asIdeal) : Ideal.Quotient.mk P.asIdeal (ciLift P c) = c := by

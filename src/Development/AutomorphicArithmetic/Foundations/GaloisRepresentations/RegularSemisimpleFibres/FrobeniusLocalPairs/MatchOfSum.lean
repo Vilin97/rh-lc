@@ -39,7 +39,7 @@ private theorem kSide (k : Type) [Field k] [CharZero k] [ValuativeRel k] [Topolo
   haveI := hSC
   haveI := hT2
   obtain ⟨hKo, hKc, -⟩ := unitSB_holds k n
-  haveI : ValuativeExtension k k := ⟨fun _ _ => Iff.rfl⟩
+  haveI : ValuativeExtension k k := ⟨by simp⟩
   obtain ⟨hgen, hσ1, hTw, -⟩ := untwist_holds k n μk γ
   have hT : Subgroup.centralizer {γ} = GlobalTheory.BCT.twCent (MonoidHom.id (GL (Fin n) k)) γ := by
     ext g

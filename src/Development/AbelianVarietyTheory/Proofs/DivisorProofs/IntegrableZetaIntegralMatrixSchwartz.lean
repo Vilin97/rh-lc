@@ -24,7 +24,8 @@ theorem exists_unit_bound {m : ℕ} {K : Set (Matrix (Fin m) (Fin m) k)} (hK : I
     (fun y => by
       simp only [Set.setOf_forall]
       exact isOpen_iInter_of_finite fun i => isOpen_iInter_of_finite fun j =>
-        (isOpen_cball y).preimage ((continuous_apply j).comp (continuous_apply i)))
+        (isOpen_cball y).preimage (show Continuous (fun X : Matrix (Fin m) (Fin m) k => X i j) from
+          (continuous_apply j).comp (continuous_apply i)))
     (fun X _ => by
       let f : Option (Fin m × Fin m) → k := fun p => match p with
         | none => 1

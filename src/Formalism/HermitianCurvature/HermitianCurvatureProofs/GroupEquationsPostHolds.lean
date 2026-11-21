@@ -133,13 +133,18 @@ theorem gp_foldr (ℓ : E →L[ℂ] ℂ) (EopE : Fin m → Fin m → (B.Mat k r 
       ContDiff ℝ ((j + qs.length : ℕ) : WithTop ℕ∞) f →
       ContDiff ℝ (j : WithTop ℕ∞) ((qs.map (gpLtr EopE)).foldr (fun T h => T h) f) ∧
       (fun g => ℓ ((qs.map (gpLtr EopE)).foldr (fun T h => T h) f g)) =
-        (qs.map (gpLtr EopC)).foldr (fun T h => T h) (fun g => ℓ (f g))
-  | [], j, f, hf => ⟨by simpa using hf, rfl⟩
-  | q :: qs, j, f, hf => by
+        (qs.map (gpLtr EopC)).foldr (fun T h => T h) (fun g => ℓ (f g)) := by
+  intro qs
+  induction qs with
+  | nil =>
+    intro j f hf
+    exact ⟨by simpa using hf, rfl⟩
+  | cons q qs ih =>
+    intro j f hf
     have hf' : ContDiff ℝ ((j + 1 + qs.length : ℕ) : WithTop ℕ∞) f := by
       have e : j + 1 + qs.length = j + (q :: qs).length := by simp only [List.length_cons]; omega
       rw [e]; exact hf
-    obtain ⟨h1, h2⟩ := gp_foldr ℓ EopE EopC h qs (j + 1) f hf'
+    obtain ⟨h1, h2⟩ := ih (j + 1) f hf'
     simp only [List.map_cons, List.foldr_cons]
     set F := (qs.map (gpLtr EopE)).foldr (fun T h => T h) f
     obtain ⟨h3, h4⟩ := h q.2.1 q.2.2 j F h1
@@ -160,9 +165,14 @@ theorem gp_foldl (ℓ : E →L[ℂ] ℂ) (EopE : Fin m → Fin m → (B.Mat k r 
       ContDiff ℝ ((j + qs.length : ℕ) : WithTop ℕ∞) f →
       ContDiff ℝ (j : WithTop ℕ∞) ((qs.map (gpLtr EopE)).foldl (fun h T => T h) f) ∧
       (fun g => ℓ ((qs.map (gpLtr EopE)).foldl (fun h T => T h) f g)) =
-        (qs.map (gpLtr EopC)).foldl (fun h T => T h) (fun g => ℓ (f g))
-  | [], j, f, hf => ⟨by simpa using hf, rfl⟩
-  | q :: qs, j, f, hf => by
+        (qs.map (gpLtr EopC)).foldl (fun h T => T h) (fun g => ℓ (f g)) := by
+  intro qs
+  induction qs with
+  | nil =>
+    intro j f hf
+    exact ⟨by simpa using hf, rfl⟩
+  | cons q qs ih =>
+    intro j f hf
     have hf' : ContDiff ℝ ((j + qs.length + 1 : ℕ) : WithTop ℕ∞) f := by
       have e : j + qs.length + 1 = j + (q :: qs).length := by simp only [List.length_cons]; omega
       rw [e]; exact hf
@@ -174,7 +184,7 @@ theorem gp_foldl (ℓ : E →L[ℂ] ℂ) (EopE : Fin m → Fin m → (B.Mat k r 
       have h5 : ℓ (EopE q.2.1 q.2.2 f g) = EopC q.2.1 q.2.2 (fun g => ℓ (f g)) g := congrFun h4 g
       simp only [gpLtr, Pi.add_apply, Pi.smul_apply, map_add (f := _), map_smul]
       rw [h5]
-    obtain ⟨h6, h7⟩ := gp_foldl ℓ EopE EopC h qs j _ h1
+    obtain ⟨h6, h7⟩ := ih j _ h1
     simp only [List.map_cons, List.foldl_cons]
     refine ⟨h6, ?_⟩
     rw [h7, hq]

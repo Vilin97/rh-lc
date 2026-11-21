@@ -21,7 +21,7 @@ theorem chartJac : ChartJac := by
       ((ContinuousLinearMap.toContinuousLinearEquivOfDetNeZero (fderiv ℝ Φ 0) hdet : E ≃L[ℝ] E) :
         E →L[ℝ] E) 0 := by
     rw [ContinuousLinearMap.coe_toContinuousLinearEquivOfDetNeZero]
-    exact hΦ.hasStrictFDerivAt (by norm_num)
+    exact hΦ.hasStrictFDerivAt_fderiv (by norm_num)
   have hsrc : (hstrict.toOpenPartialHomeomorph Φ).source ∈ 𝓝 (0 : E) :=
     (hstrict.toOpenPartialHomeomorph Φ).open_source.mem_nhds hstrict.mem_toOpenPartialHomeomorph_source
   have hev : ∀ᶠ y in 𝓝 (0 : E), ContDiffAt ℝ 1 Φ y := hΦ.eventually (by simp)

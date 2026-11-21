@@ -8,7 +8,7 @@ public import ReciprocityTheory.L2DbarEstimates.ChartDerivatives.HoloSmooth
 
 open Set Matrix Filter Topology
 open ReciprocityTheory.L2DbarEstimates (V)
-open GlobalTheory.HermFrame GlobalTheory.CxForm GlobalTheory.SecForm
+open GlobalTheory.HermFrame GlobalTheory.CxForm
 open GlobalTheory.GoodMetric (coordVec)
 open scoped ContDiff ComplexOrder
 
@@ -18,7 +18,7 @@ namespace GlobalTheory.SecForm
 
 theorem coordVec_expand {n : ℕ} (w : V n) : w = ∑ a, w a • coordVec a := by
   ext i
-  simp [coordVec, EuclideanSpace.single_apply, Pi.single_apply]
+  simp [coordVec, Pi.single_apply]
 
 theorem sesq_sum_left {n : ℕ} {α : V n → V n → ℂ} (hα : IsSesq α) {ι : Type} (s : Finset ι) (c : ι → ℂ)
     (x : ι → V n) (y : V n) : α (∑ i ∈ s, c i • x i) y = ∑ i ∈ s, c i * α (x i) y := by
@@ -43,9 +43,9 @@ theorem sesq_expand {n : ℕ} {α : V n → V n → ℂ} (hα : IsSesq α) (x y 
   calc α x y = α (∑ a, x a • coordVec a) (∑ b, y b • coordVec b) := by
         rw [← coordVec_expand x, ← coordVec_expand y]
     _ = _ := by
-        rw [sesq_sum_left hα]
+        rw [sesq_sum_left (α := α) hα]
         refine Finset.sum_congr rfl fun a _ => ?_
-        rw [sesq_sum_right hα, Finset.mul_sum]
+        rw [sesq_sum_right (α := α) hα, Finset.mul_sum]
         refine Finset.sum_congr rfl fun b _ => ?_
         ring
 

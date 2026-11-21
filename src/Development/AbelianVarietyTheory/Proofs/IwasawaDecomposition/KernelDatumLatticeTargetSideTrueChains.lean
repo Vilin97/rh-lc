@@ -29,9 +29,9 @@ theorem kerEnt_latT : ∀ {B : Base} {X : PreX B.toPre} (I : TC B X), I.Ok → T
     refine ⟨?_, fun c' => ?_⟩
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [← (((I.tw l l0 Z).fm u μ).emb_basis (i + 1)).2, ← ((((I.tw l l0 Z).fm u μ).lat (i + 1)).b.sum_repr y), map_sum]
-      exact Submodule.sum_mem _ fun a _ => by
-        rw [LinearMap.map_smulₛₗ]
-        exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
+        exact Submodule.sum_mem _ fun a _ => by
+          rw [LinearMap.map_smulₛₗ]
+          exact Submodule.smul_mem _ _ (Submodule.subset_span ⟨a, rfl⟩)
     · obtain ⟨v', hv'⟩ := GlobalTheory.T.coefficientField_form_value_mem_polynomialModel I hok hpins l Z l0 Y O Pl Bs hQp hStd hBas hEnt hUnf hJets u μ i hi y c'
       exact ⟨v', hv', (GlobalTheory.T.mem_localisedWeylLattice_iff_targetPairing_integral I hok hpins l Z l0 Y O Pl Bs hQp hStd hBas hEnt hUnf hJets u μ w hw i hi c' (y.1 c') v' hv').1
         ((hL1 y).1 hy c')⟩

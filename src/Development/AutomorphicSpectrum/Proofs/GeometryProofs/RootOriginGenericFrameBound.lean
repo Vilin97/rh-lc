@@ -140,7 +140,11 @@ variable (L : IntermediateField ℚ_[p] (PadicAlgCl p))
 
 theorem unitBall : GlobalTheory.BK.IsUnitBall 𝒪[L] L where
   inj := Subtype.val_injective
-  mem_range_iff x := ⟨fun ⟨y, h⟩ => h ▸ Valued.integer.mem_iff.1 y.2, fun h => ⟨⟨x, Valued.integer.mem_iff.2 h⟩, rfl⟩⟩
+  mem_range_iff := by
+    intro x
+    change x ∈ Set.range ((↑) : 𝒪[L] → L) ↔ ‖x‖ ≤ 1
+    rw [Subtype.range_coe_subtype]
+    exact Valued.integer.mem_iff
 
 attribute [local instance] unitBall
 

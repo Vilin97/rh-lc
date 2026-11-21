@@ -41,7 +41,8 @@ theorem isAdicComplete_of_pow_le {A : Type} [CommRing A] {I J : Ideal A} {N : �
     have := hx n
     simp only [SModEq.zero, smul_eq_mul, Ideal.mul_top] at this ⊢
     exact Ideal.pow_right_mono hJ n this
-  prec' f hf := by
+  toIsPrecomplete := by
+    refine ⟨fun f hf => ?_⟩
     simp only [SModEq.sub_mem, smul_eq_mul, Ideal.mul_top] at hf ⊢
     obtain ⟨L, hL⟩ := IsPrecomplete.prec' (I := I) f fun {m n} hmn => by
       simp only [SModEq.sub_mem, smul_eq_mul, Ideal.mul_top]

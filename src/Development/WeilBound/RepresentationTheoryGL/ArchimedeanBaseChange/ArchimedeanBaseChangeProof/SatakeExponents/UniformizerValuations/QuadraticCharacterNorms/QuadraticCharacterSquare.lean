@@ -32,7 +32,9 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E]
 
 theorem infSign_ideleMap_finPartI (b : Neutral.B1.Ideles (maximalRealSubfield E)) :
     infSign E (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.ideleMap (maximalRealSubfield E) E (GlobalTheory.Mem.Chr.finPartI _ b)) = 1 := by
-  rw [infSign, MonoidHom.finset_prod_apply]
+  letI : IsOneApply (Neutral.B1.Ideles E →* ℂˣ) := ⟨fun _ => rfl⟩
+  letI : IsMulApply (Neutral.B1.Ideles E →* ℂˣ) := ⟨fun _ _ _ => rfl⟩
+  rw [infSign, prod_apply]
   refine Finset.prod_eq_one fun w _ => ?_
   have : Units.map (GlobalTheory.IdeleNormChar.infEval w)
       (GlobalTheory.IndefiniteRowSideFullHecke.UnitaryHeckeCharacterIdele.ideleMap (maximalRealSubfield E) E (GlobalTheory.Mem.Chr.finPartI _ b)) = 1 := by

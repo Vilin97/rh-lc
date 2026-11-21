@@ -84,8 +84,8 @@ variable {S : Scheme.{0}}
 
 theorem cls_lbPow' {X : Scheme.{0}} {L : LB X} (hL : L.IsLB) (m : ℕ) (h : (GlobalTheory.UPel.HT.Hecke.lbPow L m).IsLB) :
     GlobalTheory.CechPic.cls (GlobalTheory.UPel.HT.Hecke.lbPow L m) h = m • GlobalTheory.CechPic.cls L hL := by
-  refine (GlobalTheory.CechPic.cls_linComb hL _ _ h).trans ?_
-  simp [GlobalTheory.CechPic.pull_id]
+  exact (GlobalTheory.CechPic.cls_linComb hL _ _ h).trans (by
+    simp [GlobalTheory.CechPic.pull_id])
 
 theorem grpSchemeSquareProductMap_comp {A B C : Over S} [GrpObj A] [IsCommMonObj A] [GrpObj B] [IsCommMonObj B] [GrpObj C]
     [IsCommMonObj C] (f : A ⟶ B) (g : B ⟶ C) :

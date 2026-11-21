@@ -298,9 +298,9 @@ theorem eigen_decomp : ∀ (E : Type) [Field E] [NumberField E] [IsCMField E] (n
         exact U.zero_mem
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [← map_sum, ← Finset.smul_sum, hcs]
-      funext g
-      rw [RU_apply, hf c0 v g]
-      rfl
+        funext g
+        rw [RU_apply, hf c0 v g]
+        rfl
   have hmemA : ∀ U ∈ t, Fl U ∈ algForms W := fun U hU =>
     (⟨fun v => (htA U hU).aut _ (hcm v U), fun x v => by rw [hFl, hFl, hinf x v]⟩ :
       (∀ v, Fl U v ∈ autU E n) ∧ ∀ (x : infU E n) v, Fl U (W.rep x v) = RU E n x (Fl U v))

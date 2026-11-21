@@ -62,7 +62,10 @@ theorem decLow (k r : ℕ) (hk : 1 ≤ k) (ε : Fin (2 * r + k + 1) → Bool) (l
     push_cast at ha ⊢
     linarith
   obtain ⟨T⟩ := HW.kType_exists ε lam hlam
-  have hΨ := (S7.isPsiFor_psiM ε lam h T μ hlam hμ hgapAt hq1 h8).1
+  have hΨ : IsPsiFor ε lam T (S7.PsiM T μ) := by
+    refine ⟨fun k₁ k₂ g hg => S7.psiM_equiv T μ k₁ k₂ hg, S7.psiM_one T μ,
+      S7.psiM_smooth T μ hμ, fun g hg => S7.psiM_casimir T μ hμ hg, fun ν hν => ?_⟩
+    exact (S7.psiM_integrable T μ hμ hlam hgapAt hq1 ν).2.1 h8
   obtain ⟨j, -, -, hran, hF⟩ := anyF hds hgap hΨ
   obtain ⟨C, hC⟩ := S0.DecDeriv.psiM_frob_dec ε lam h T μ hlam hgapAt h0 hq1 hμ
   rw [← hran] at h₁ h₂

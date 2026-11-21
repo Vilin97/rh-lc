@@ -21,6 +21,8 @@ private theorem conj_entry (t : Fin n → kˣ) (u : GL (Fin n) k) (i j : Fin n) 
       Matrix.diagonal fun i => ((t i : k))⁻¹ := by
     rw [← map_inv, val_diagT]
     congr 1
+    funext i
+    simp
   rw [Units.val_mul, Units.val_mul, hinv, val_diagT, Matrix.mul_diagonal, Matrix.diagonal_mul]
 
 private theorem conj_close {u : GL (Fin n) k} (hu : u ∈ unipB k (Fin n))

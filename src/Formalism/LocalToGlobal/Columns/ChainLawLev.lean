@@ -22,15 +22,16 @@ variable {X : Fields} {Pr : Primes X} {R : Ranks} {Ch : Chars X Pr R.m}
 
 theorem clL_base (hok : ChIdx.Ok Ch sel mu cst L G m2) (hX : X.Ok) (hPr : Pr.Ok) (hCh : Ch.Ok)
     (hs : cst.sharp = true) :
-    OcbBase Ch sel mu cst m2 where
-  hX := hX
-  hPr := hPr
-  hCh := hCh
-  hm := hok.hm
-  cst_ok := hok.cst_ok
-  sharp := hs
-  psi0 := hok.psi0
-  depthG := hok.depthG
+    OcbBase Ch sel mu cst m2 := by
+  exact
+    { hX := hX
+      hPr := hPr
+      hCh := hCh
+      hm := hok.hm
+      cst_ok := hok.cst_ok
+      sharp := hs
+      psi0 := hok.psi0
+      depthG := hok.depthG }
 
 end Bridge
 

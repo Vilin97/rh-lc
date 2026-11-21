@@ -91,7 +91,11 @@ theorem representing_operator_mem_first_family (ε : Fin m → Bool) (c : ℝ) (
   exact Submodule.sum_mem _ fun s _ => by rw [map_smul, Bop_mono]; exact Submodule.smul_mem _ _ (representing_monomial_mem_first_family ε c Λ s)
 
 theorem mapDomain_pE_pE (u : Fin m × Fin n × Bool →₀ ℕ) : (u.mapDomain pE).mapDomain pE = u := by
-  ext k; simp [Finsupp.mapDomain_equiv_apply, pE_symm]
+  rw [← Finsupp.mapDomain_comp]
+  have h : (pE : Fin m × Fin n × Bool → Fin m × Fin n × Bool) ∘ pE = id := by
+    funext k
+    exact pE_pE k
+  rw [h, Finsupp.mapDomain_id]
 
 theorem partner_support_first_family (ε : Fin m → Bool) {u : Fin m × Fin n × Bool →₀ ℕ} (hu : ∀ k ∈ u.support, ¬ inF1 ε k) :
     ∀ k ∈ (u.mapDomain pE).support, inF1 ε k := by

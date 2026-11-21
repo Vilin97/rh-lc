@@ -50,7 +50,7 @@ theorem inf_eq_one {L : Type} [Field L] [NumberField L] [_root_.NumberField.IsTo
     exact hx _
   show χ.1 (Formalism.L2.Host.infDiag k) = 1
   unfold Formalism.L2.Host.infDiag
-  rw [MonoidHom.finset_prod_apply, map_prod]
+  rw [MonoidHom.finsetProd_apply, map_prod]
   exact Finset.prod_eq_one fun w _ => hw w _
 
 theorem smul_eq_of_isConjPl {D : D7} {w w' : HeightOneSpectrum (𝓞 D.host.E)} (hc : Formalism.IndefR.Lev.IsConjPl w w') :

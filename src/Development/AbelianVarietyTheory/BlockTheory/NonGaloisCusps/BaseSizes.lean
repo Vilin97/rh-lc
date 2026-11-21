@@ -123,7 +123,10 @@ theorem lStar_pos {D : D7} (L : SizeData₂ D) : 0 < LevelStarExponents.lStar L 
   have hm : (0 : ℝ) < D.R.m := by have := D.R.two_le_m; exact_mod_cast (by omega : 0 < D.R.m)
   have hk : (0 : ℝ) < D.R.k := by
     have := D.R.m_add_three_le_k; exact_mod_cast (by omega : 0 < D.R.k)
-  have hn : (0 : ℝ) < D.R.n := by unfold Ranks.n; positivity
+  have hn : (0 : ℝ) < D.R.n := by
+    have := D.R.two_le_m
+    have := D.R.m_le_f
+    exact_mod_cast (by unfold Ranks.n; omega : 0 < D.R.n)
   have hx : 0 < L.sc.x := by have := L.sc.one_lt_alt; linarith
   have hL : 0 < L.sc.L := by unfold Scale.L; positivity
   have hb : 0 < L.sc.b := Real.exp_pos _

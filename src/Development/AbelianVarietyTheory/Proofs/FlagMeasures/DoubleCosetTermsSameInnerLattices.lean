@@ -41,6 +41,7 @@ theorem GFrames.datOf_N_fst (G : GFrames A r k) {g : G.GLV} (hg : g ∈ G.N) (Γ
     unfold Places.lat
     rw [Submodule.smul_span, Submodule.map_coe, ← Set.image_smul, Set.image_image, Set.image_image]
     congr 1
+    apply congrArg (fun f => f '' (Γ : Set G.V))
     funext x
     simp [hext]
   unfold GFrames.datOf
@@ -58,6 +59,7 @@ theorem GFrames.datOf_N'_snd (G : GFrames A r k) {g : G.GLV} (hg : g ∈ G.N') (
     unfold Places.lat
     rw [Submodule.smul_span, Submodule.map_coe, ← Set.image_smul, Set.image_image, Set.image_image]
     congr 1
+    apply congrArg (fun f => f '' (Γ : Set G.V))
     funext x
     simp [hext]
   unfold GFrames.datOf

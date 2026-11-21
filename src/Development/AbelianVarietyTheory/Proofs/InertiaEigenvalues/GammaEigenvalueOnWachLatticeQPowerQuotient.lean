@@ -65,7 +65,7 @@ theorem algebraMap_units_ne_zero {O LL : Type} [CommRing O] [Field LL] [Algebra 
 
 
 set_option synthInstance.maxHeartbeats 400000 in
-set_option maxHeartbeats 1000000 in
+set_option maxHeartbeats 20000000 in
 theorem ex_smul_O (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (Cm : CmpOf D.loc D.locA HW F)
     (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL) (T : Lt K LL)
     (hT : IsCrys ((D.loc l).PD K) T.ρ) (i : Let K) (ζ : ↥LL.1) (hprim : IsPrimitiveRoot ζ (l ^ s))
@@ -73,7 +73,8 @@ theorem ex_smul_O (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D
     ex (Cm l) h T i ζ (c' • x) = algebraMap ↥(OL LL) ↥LL.1 c' • ex (Cm l) h T i ζ x := by
   have hfull := GlobalTheory.NL.FullLevel.full_lat D HW F Cm l K s LL h T hT i ζ hprim
   have hlin := (GlobalTheory.NL.LevInj.expansion_basis D HW F Cm l K s LL h T hT i ζ ⟨s, hprim⟩ hfull).1
-  have hx : c' • x = (c' • (1 : AA K LL)) • x := by rw [smul_assoc, one_smul]
+  have hx : c' • x = (c' • (1 : AA K LL)) • x := by
+    exact (smul_one_smul (AA K LL) c' x).symm
   rw [hx, hlin]
   have key : ∀ q : ℕ, PowerSeries.coeff q (((HW l).W K s LL h).lev i ζ (c' • (1 : AA K LL))) =
       if q = 0 then algebraMap ↥(OL LL) ↥LL.1 c' else 0 := by

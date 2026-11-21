@@ -100,6 +100,8 @@ theorem kapG_fin (j : ℕ) (a : Fin j) : (fun g => iL ((kapG ρL iL Zf j a : Γ 
   · have e : kapG ρL iL Zf j = fun _ => 0 := dif_neg h
     rw [e]
     convert Zf.zero_mem using 1
+    ext g
+    simp
 
 theorem kapG_eq {j : ℕ} (h : LatBasisG ρL iL Zf j) : kapG ρL iL Zf j = h.choose := dif_pos h
 

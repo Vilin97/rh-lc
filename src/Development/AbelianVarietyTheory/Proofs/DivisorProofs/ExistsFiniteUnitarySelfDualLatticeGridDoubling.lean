@@ -243,8 +243,8 @@ theorem rows_ext {A B : HSp D} {n : ℕ} {x y : Mx D (A.rank + B.rank) n} (h : t
   · exact congrFun h' i
 
 theorem mem_latO_sum {S A B : HSp D} {LS : Set (Fin S.rank → D.host.E)} {LA : Submodule (𝓞 D.host.E) (Fin A.rank → D.host.E)}
-    {LB : Submodule (𝓞 D.host.E) (Fin B.rank → D.host.E)} {P : HeightOneSpectrum (𝓞 D.host.F) → Prop} {x : WO S (hsum A B)} :
-    x ∈ latO S (hsum A B) LS (GlobalTheory.Doubling.sumLat finSumFinEquiv LA LB) P ↔
+    {LB : Submodule (𝓞 D.host.E) (Fin B.rank → D.host.E)} {P : HeightOneSpectrum (𝓞 D.host.F) → Prop} {x : WO S (GlobalTheory.Doubling.hsum A B)} :
+    x ∈ latO S (GlobalTheory.Doubling.hsum A B) LS (GlobalTheory.Doubling.sumLat finSumFinEquiv LA LB) P ↔
       topR (A := A) (B := B) x ∈ latO S A LS LA P ∧ botR (A := A) (B := B) x ∈ latO S B LS LB P := by
   constructor
   · intro hx
@@ -257,8 +257,8 @@ theorem mem_latO_sum {S A B : HSp D} {LS : Set (Fin S.rank → D.host.E)} {LA : 
     | add y z _ _ hy hz => exact ⟨add_mem hy.1 hz.1, add_mem hy.2 hz.2⟩
     | neg y _ hy => exact ⟨neg_mem hy.1, neg_mem hy.2⟩
   · rintro ⟨h1, h2⟩
-    have k1 : ∀ y ∈ latO S A LS LA P, (stack (B := B) y 0 : WO S (hsum A B)) ∈
-        latO S (hsum A B) LS (GlobalTheory.Doubling.sumLat finSumFinEquiv LA LB) P := fun y hy => by
+    have k1 : ∀ y ∈ latO S A LS LA P, (stack (B := B) y 0 : WO S (GlobalTheory.Doubling.hsum A B)) ∈
+        latO S (GlobalTheory.Doubling.hsum A B) LS (GlobalTheory.Doubling.sumLat finSumFinEquiv LA LB) P := fun y hy => by
       induction hy using AddSubgroup.closure_induction with
       | mem w hw =>
         obtain ⟨α, hα, hP, a, ha, s, hs, t, ht, rfl⟩ := hw
@@ -283,8 +283,8 @@ theorem mem_latO_sum {S A B : HSp D} {LS : Set (Fin S.rank → D.host.E)} {LA : 
           ((topR_stack _ _).trans (congrArg (- ·) (topR_stack _ _)).symm)
           ((botR_stack _ _).trans ((congrArg (- ·) (botR_stack _ _)).trans neg_zero).symm)]
         exact neg_mem hy
-    have k2 : ∀ y ∈ latO S B LS LB P, (stack (A := A) 0 y : WO S (hsum A B)) ∈
-        latO S (hsum A B) LS (GlobalTheory.Doubling.sumLat finSumFinEquiv LA LB) P := fun y hy => by
+    have k2 : ∀ y ∈ latO S B LS LB P, (stack (A := A) 0 y : WO S (GlobalTheory.Doubling.hsum A B)) ∈
+        latO S (GlobalTheory.Doubling.hsum A B) LS (GlobalTheory.Doubling.sumLat finSumFinEquiv LA LB) P := fun y hy => by
       induction hy using AddSubgroup.closure_induction with
       | mem w hw =>
         obtain ⟨α, hα, hP, a, ha, s, hs, t, ht, rfl⟩ := hw
@@ -327,10 +327,10 @@ def scal (V : HSp D) (U : AE D) (hU : U * cA D U = 1) : GA D V :=
       · rw [if_neg h1, if_neg (Ne.symm h1)]; simp
     rw [hm, Matrix.smul_mul, Matrix.one_mul, Matrix.mul_smul, Matrix.mul_one, smul_smul, hU, one_smul]⟩
 
-theorem act_blk {S A B : HSp D} {U : AE D} (hU : U * cA D U = 1) (x : WO S (hsum A B)) :
-    actO S (hsum A B) 1 (blk A B (1, scal B U hU)) x =
+theorem act_blk {S A B : HSp D} {U : AE D} (hU : U * cA D U = 1) (x : WO S (GlobalTheory.Doubling.hsum A B)) :
+    actO S (GlobalTheory.Doubling.hsum A B) 1 (GlobalTheory.SquareComm.blk A B (1, scal B U hU)) x =
       stack (topR (A := A) (B := B) x) (U • botR (A := A) (B := B) x) := by
-  have e : actO S (hsum A B) 1 (blk A B (1, scal B U hU)) x =
+  have e : actO S (GlobalTheory.Doubling.hsum A B) 1 (GlobalTheory.SquareComm.blk A B (1, scal B U hU)) x =
       blkMat finSumFinEquiv (1 : Matrix (Fin A.rank) (Fin A.rank) (AE D))
         (U • (1 : Matrix (Fin B.rank) (Fin B.rank) (AE D))) * x := by
     unfold actO
@@ -348,7 +348,7 @@ theorem act_blk {S A B : HSp D} {U : AE D} (hU : U * cA D U = 1) (x : WO S (hsum
   · rw [pairVec_inr]; exact (congrFun (pairVec_inr finSumFinEquiv (topR (A := A) (B := B) x) (U • botR (A := A) (B := B) x) i) j).symm
 
 theorem blk_mem_GfC {A B : HSp D} {U : AE D} (hU : U * cA D U = 1) (h : infPart D U = 1) :
-    blk A B (1, scal B U hU) ∈ GfC (hsum A B) := by
+    GlobalTheory.SquareComm.blk A B (1, scal B U hU) ∈ GfC (GlobalTheory.Doubling.hsum A B) := by
   refine Units.ext ?_
   change (blkMat finSumFinEquiv (1 : Matrix (Fin A.rank) (Fin A.rank) (AE D))
     (U • (1 : Matrix (Fin B.rank) (Fin B.rank) (AE D)))).map (infPart D) = 1
@@ -415,7 +415,7 @@ theorem GlobalTheory.TopFlip.exists_twistElt : ∀ {D : D7} {T : Type} {L : LevC
   have hb : (D.host.AAbar * D.host.AA⁻¹) ^ (0 + 1) = D.host.AAbar * D.host.AA⁻¹ := pow_one _
   have hbi : ((D.host.AAbar * D.host.AA⁻¹) ^ (0 + 1))⁻¹ = D.host.AA * D.host.AAbar⁻¹ := by
     rw [hb, mul_inv, inv_inv, mul_comm]
-  refine ⟨blk _ _ (1, scal _ U hU), blk_mem_GfC hU hinf, GlobalTheory.Doubling.sumLat finSumFinEquiv (G.Λ (.grid i (j + 1)))
+  refine ⟨GlobalTheory.SquareComm.blk _ _ (1, scal _ U hU), blk_mem_GfC hU hinf, GlobalTheory.Doubling.sumLat finSumFinEquiv (G.Λ (.grid i (j + 1)))
     (GlobalTheory.CoreOnto.scaleLat ((D.host.AAbar * D.host.AA⁻¹) ^ (0 + 1)) (G.Λ (.grid (i + 1) j))),
     GlobalTheory.Twist.OrthSum.selfDual_hsum hV (GlobalTheory.ScaleSelfDual.scaleLat_twist_selfDual D _ _ hV₁ _).1,
     fun t ht ε hε S x hx => ?_, fun S ΛS _ u => ?_, ?_, ?_⟩

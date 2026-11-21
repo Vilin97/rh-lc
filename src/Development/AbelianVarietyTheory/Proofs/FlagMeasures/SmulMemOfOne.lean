@@ -274,7 +274,7 @@ theorem exists_dual [FiniteDimensional K V] (G : FlagD H r) {Λ : Submodule (�
     simp [hc]
   obtain ⟨g, hg⟩ := LinearMap.exists_leftInverse_of_injective L hinj
   have hg' : ∀ p, g (L p) = p := fun p => LinearMap.congr_fun hg p
-  obtain ⟨P, hP1, hP2, hP3⟩ := exists_proj Λ hL.fg hL.span_eq_top (LinearMap.range L)
+  obtain ⟨P, hP1, hP2, hP3⟩ := exists_proj Λ hL.1 hL.2 (LinearMap.range L)
   choose y hy using fun b : Fin r => exists_rep H (LinearMap.proj b ∘ₗ LinearMap.fst K _ K ∘ₗ g ∘ₗ P)
   have hy' : ∀ b p, H.B (L p) (y b) = p.1 b := fun b p => by
     rw [hy]; simp [hP2 _ ⟨p, rfl⟩, hg']
@@ -332,8 +332,8 @@ theorem exists_hyp [FiniteDimensional K V] (hK : Formalism.HermitianLatticesTheo
     linear_combination (-H.B (y a) (y b)) * hw2
   · simp [G.iso, hy1]
   · simp [hy2, hz]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sub, map_sum]
+  · set_option synthInstance.maxHeartbeats 100000 in
+    rw [map_sub, map_sum]
     refine Submodule.sub_mem _ (hy3 x hx a) (Submodule.sum_mem _ fun b _ => ?_)
     have e1 := hy3 _ (smul_dual_mem hU (fun x' hx' => h2 b _ (hy3 x' hx' b)) hx) a
     have e2 := (aa a).smul_mem (1 - w) e1

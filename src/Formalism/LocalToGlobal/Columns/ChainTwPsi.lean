@@ -39,6 +39,7 @@ theorem twDvd_of_intAt (hq : (qOf P).Prime) : ∀ (D : ℕ) (b : ℤ), IntAt P (
         have e : (b' : X.E) = (qOf P : X.E) * ((b' : X.E) / (qOf P : X.E)) := by field_simp
         rw [e, reduction_mul (ciIntAt_q (P := P) (q := qOf P)) h2, redP_natCast_eq_zero (ciQ_mem P), zero_mul]
       rw [redP_intCast] at h3
+      have hfin : Finite (𝓞 X.E ⧸ P.asIdeal) := ciFinite (w := P) hq.ne_zero
       have h4 := (owedC_intCast_eq_iff (A := 𝓞 X.E ⧸ P.asIdeal) hq (ciCard P) b' 0).1 (by rw [h3, Int.cast_zero])
       rw [sub_zero] at h4
       obtain ⟨c, rfl⟩ := h4
@@ -49,6 +50,7 @@ theorem twRes_exists (hq : (qOf P).Prime) (hu : ((qOf P : ℕ) : 𝓞 X.E) ∉ P
   | 0, y, hy => ⟨0, by simpa using hy⟩
   | D + 1, y, hy => by
       have hq0 : (qOf P : X.E) ≠ 0 := by exact_mod_cast hq.ne_zero
+      have hfin : Finite (𝓞 X.E ⧸ P.asIdeal) := ciFinite (w := P) hq.ne_zero
       have hex : ∃ b0 : ℤ, redP P y = (b0 : 𝓞 X.E ⧸ P.asIdeal) :=
         owedC_exists_int hq (ciCard P) (redP P y)
       obtain ⟨b0, hb0⟩ := hex

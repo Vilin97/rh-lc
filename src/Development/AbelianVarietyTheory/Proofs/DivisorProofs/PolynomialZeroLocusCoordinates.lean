@@ -442,10 +442,10 @@ theorem continuous_coordA {R : Type} [CommRing R] [Algebra ℚ R] [TopologicalSp
   have : coordA D R = fun X => ∑ i, (∑ j, X (finSumFinEquiv (Sum.inl i)) (finSumFinEquiv (Sum.inl j)) *
       (basR D R).repr 1 j) • basR D R i := funext coordA_eq_sum
   rw [this]
-  refine continuous_finset_sum _ fun i _ => ?_
+  refine continuous_finsetSum _ fun i _ => ?_
   refine Continuous.smul (f := fun X : Matrix (Fin (Module.finrank ℚ D + 1)) (Fin (Module.finrank ℚ D + 1)) R =>
       ∑ j, X (finSumFinEquiv (Sum.inl i)) (finSumFinEquiv (Sum.inl j)) * (basR D R).repr 1 j)
-    (g := fun _ => basR D R i) (continuous_finset_sum _ fun j _ => ?_) continuous_const
+    (g := fun _ => basR D R i) (continuous_finsetSum _ fun j _ => ?_) continuous_const
   exact (continuous_apply_apply _ _).mul continuous_const
 
 theorem continuous_coordC {R : Type} [CommRing R] [Algebra ℚ R] [TopologicalSpace R] :

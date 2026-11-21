@@ -232,7 +232,44 @@ theorem exists_dual_frame (hE : Formalism.HermitianLatticesTheory.IsCMUnram E) {
     (hprim : ∀ (c : E), ∀ x ∈ Submodule.span E (Set.range e), x + c • z ∈ Λ → ∃ o : 𝓞 E, (o : E) = c) :
     ∃ f' : Fin r → S.V, IsHyp e f' ∧ (∀ a, S.hT (f' a) z = 0) ∧ ∀ a, ∀ β ∈ B a, β • f' a ∈ Λ := by
   obtain ⟨t, ht⟩ := GlobalTheory.exists_integer_add_star_eq_one_of_isCMUnram E hE
-  obtain ⟨P, hPU, hPid, hPL⟩ := exists_proj Λ hl.fg hl.span_eq_top
+  let W := Submodule.span E (Λ : Set S.V)
+  let N := (orth S W).restrictScalars (𝓞 E)
+  have hNL : N ≤ Λ := by
+    intro x hx
+    apply (mem_unimod hu x).2
+    intro y hy
+    have hzero := (mem_orth.1 hx) y (Submodule.subset_span hy)
+    rw [hzero]
+    exact isIntegral_zero
+  have hN : N = ⊥ := by
+    by_contra hn
+    have hfg : N.FG := hl.fg.of_le hNL
+    have hi : IsIntegral (𝓞 E) ((2 : E)⁻¹) :=
+      isIntegral_of_smul_mem_submodule N hn hfg _ (fun x hx => (orth S W).smul_mem _ hx)
+    have hi' : IsIntegral ℤ ((2 : E)⁻¹) := isIntegral_trans (R := ℤ) _ hi
+    have hiq : IsIntegral ℤ ((2 : ℚ)⁻¹) := by
+      apply (isIntegral_ratCast_iff (R := ℤ) (K := E) (q := (2 : ℚ)⁻¹)).1
+      simpa using hi'
+    obtain ⟨n, hn⟩ := hiq.mem_range_ratCast_iff.mp ⟨(2 : ℚ)⁻¹, rfl⟩
+    have : (n : ℚ) = 1 / 2 := by simpa using hn
+    have : (2 : ℤ) * n = 1 := by exact_mod_cast (show (2 : ℚ) * n = 1 by linarith)
+    omega
+  have hsp : W = ⊤ := by
+    apply Submodule.dualAnnihilator_eq_bot_iff.mp
+    apply eq_bot_iff.mpr
+    intro φ hφ
+    obtain ⟨y, hy⟩ := exists_rep (S := S) φ
+    have hyN : y ∈ N := by
+      apply mem_orth.2
+      intro x hx
+      rw [← hsym, hy]
+      have := ((Submodule.mem_dualAnnihilator φ).1 hφ) x hx
+      rw [this, star_zero]
+    have hy0 : y = 0 := by simpa [hN] using hyN
+    ext x
+    rw [← hy, hy0]
+    simp
+  obtain ⟨P, hPU, hPid, hPL⟩ := exists_proj Λ hl.fg hsp
     (Submodule.span E (Set.range e) ⊔ Submodule.span E {z})
   choose g hg using fun a => exists_rep (S := S) (S.hT (f a) ∘ₗ P)
   have hge : ∀ a b, S.hT (g a) (e b) = if a = b then 1 else 0 := by
@@ -268,7 +305,7 @@ theorem exists_dual_frame (hE : Formalism.HermitianLatticesTheory.IsCMUnram E) {
     · simp only [map_sub, map_sum, LinearMap.sub_apply, LinearMap.sum_apply, hsmul, map_smul, h.1, hge, heg,
       smul_eq_mul, mul_zero, Finset.sum_const_zero, sub_zero, mul_ite, mul_one, Finset.sum_ite_eq,
       Finset.sum_ite_eq', Finset.mem_univ, if_true, star_mul, hsym]
-    linear_combination (-(S.hT (g a) (g b))) * ht
+      linear_combination (-(S.hT (g a) (g b))) * ht
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [map_sub, map_sum, map_smul, h.1, heg, smul_eq_mul, mul_zero, Finset.sum_const_zero, sub_zero]
   set_option synthInstance.maxHeartbeats 100000 in

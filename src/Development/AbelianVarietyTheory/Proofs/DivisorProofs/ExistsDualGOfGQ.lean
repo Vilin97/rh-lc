@@ -92,9 +92,8 @@ theorem formLat_isLattice {G : Matrix (Fin n) (Fin n) E} (hG : IsUnit G.det) {Λ
         change star ((c : E) • x) ᵥ* G ∈ _
         rw [star_smul, Matrix.smul_vecMul]
         exact this
-  span_eq_top := by
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  linearIndepOn _ _ := (LinearIndependent.iff_fractionRing (𝓞 E) E).mp
+
 theorem form_dual {G : Matrix (Fin n) (Fin n) E} (hG : IsUnit G.det) (hh : Gᴴ = G) (x y : Fin n → E) :
     ∑ i, ∑ j, star ((star x ᵥ* G) i) * G⁻¹ᵀ i j * (star y ᵥ* G) j = star (∑ i, ∑ j, star (x i) * G i j * y j) := by
   have h1 : ∀ (M : Matrix (Fin n) (Fin n) E) (a b : Fin n → E), ∑ i, ∑ j, star (a i) * M i j * b j = star a ⬝ᵥ (M *ᵥ b) := by

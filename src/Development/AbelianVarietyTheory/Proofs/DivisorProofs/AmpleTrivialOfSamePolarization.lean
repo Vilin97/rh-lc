@@ -19,7 +19,7 @@ public import Development.AbelianVarietyTheory.Proofs.ThetaLawProofs.ExistsRigid
 @[expose] public section
 
 open CategoryTheory AlgebraicGeometry Set Matrix ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory GlobalTheory.CxPts GlobalTheory.ArInt GlobalTheory.TorsionForm GlobalTheory.ThetaRR
+open GlobalTheory GlobalTheory.CxPts GlobalTheory.ArInt GlobalTheory.TorsionForm
 open GlobalTheory.LB (toMod)
 open GlobalTheory.LieVB (omega)
 open GlobalTheory.IndefiniteRowSideFullHecke.SiegelReframe (Fl Pt stdLat symMat tauU siegel symPart ChernIsFlat IsMetric InducesPolarisation cov)
@@ -47,7 +47,7 @@ theorem relAmple_kTriv_of_lam_eq : ∀ (K : Type) [Field K] [IsAlgClosed K] (B :
     rw [CechPic.cls_linComb h₀, Fin.sum_univ_two]
     have e1 : cls N hN = cls O hO + cls L₀ h₀ := by rw [eO]; abel
     rw [e1, hx, GlobalTheory.PrimitiveOverField.lam_const, Over.id_left, CechPic.pull_id]
-    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons, one_smul, neg_smul]
+    simp only [Matrix.cons_val_zero, Matrix.cons_val_one, one_smul, neg_smul]
     rw [GlobalTheory.PrimitiveOverField.pull_const, GlobalTheory.PolTranslate.transl, _root_.mul_comm (𝟙 B)]
     abel
   have hiso := (CechPic.cls_eq_iff hR hN).1 hcls

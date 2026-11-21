@@ -6,6 +6,9 @@ public import Formalism.LocalToGlobal.ProjectiveLattices.CuspidalL2Subspace
 
 noncomputable section
 
+-- Prefer the same-scalar submodule instance for the cuspidal spaces.
+attribute [local instance 2000] Submodule.module
+
 namespace Formalism.L2.Pj
 
 open NumberField IsDedekindDomain ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.FD Formalism.BasicNotions Formalism.MainNotions
@@ -58,12 +61,51 @@ include h
 theorem fd (j : ℕ) (hj : InR D j) (w : WeightFamilies.Wt D j) : FiniteDimensional T.Q.c.F (T.C j w) := by
   exact h.cuspFD j hj (wtA w) w.n (dom_wtA w)
 
-theorem hNs (j : ℕ) (hj : InR D j) (w : WeightFamilies.Wt D j) (σ : T.Q.c.F →+* ℂ) : IsNormOn (T.C j w) σ (T.Ns j w σ) :=
-  (isNormOn_supC _ (h.supDef j hj) (dom_wtA w) (goodEmb_goodOf _ σ)).of_goodOf
+theorem hNs (j : ℕ) (hj : InR D j) (w : WeightFamilies.Wt D j) (σ : T.Q.c.F →+* ℂ) : IsNormOn (T.C j w) σ (T.Ns j w σ) := by
+  apply IsNormOn.of_goodOf
+  unfold Core.Ns
+  have hσ := goodEmb_goodOf T.Q.c σ
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro f _
+    exact mul_nonneg (lieFac_pos _ _ _).le (supN_nonneg _ _ _)
+  · intro f hf h0
+    exact h.supDef j hj _ _ (dom_wtA w) _ hσ f hf
+      ((mul_eq_zero.mp h0).resolve_left (lieFac_pos _ _ _).ne')
+  · intro a f _
+    unfold supC supN
+    rw [map_smulₛₗ, supE_smul, ENNReal.toReal_mul, ENNReal.toReal_ofReal (norm_nonneg _)]
+    ring
+  · intro f hf g hg
+    unfold supC supN
+    rw [← mul_add, map_add (f := _), ← ENNReal.toReal_add (supE_cusp_ne_top hσ hf) (supE_cusp_ne_top hσ hg)]
+    refine mul_le_mul_of_nonneg_left (ENNReal.toReal_mono ?_ (supE_add_le _ _ _ _)) (lieFac_pos _ _ _).le
+    exact ENNReal.add_ne_top.mpr ⟨supE_cusp_ne_top hσ hf, supE_cusp_ne_top hσ hg⟩
 
 theorem hNl (j : ℕ) (hj : InR D j) (w : WeightFamilies.Wt D j) (σ : T.Q.c.F →+* ℂ) : IsNormOn (T.C j w) σ (h.Nl j w σ) := by
   rw [Nl, dite_eq_left hj]
-  exact (isNormOn_l2C _ (h.l2Def j hj _ (goodEmb_goodOf _ σ)) (dom_wtA w)).of_goodOf
+  apply IsNormOn.of_goodOf
+  let σ' := goodOf T.Q.c σ
+  let rd := rdC (T.U j) σ' (wtA w) w.n
+  have hσ : GoodEmb T.Q.c σ' := goodEmb_goodOf T.Q.c σ
+  have hmem := h.cuspidalL2Subspace j hj σ' hσ (wtA w) w.n (dom_wtA w)
+  have hdef := h.l2Def j hj σ' hσ (wtA w) w.n (dom_wtA w)
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro f hf
+    rw [l2C, dite_eq_left hf]
+    exact mul_nonneg (lieFac_pos _ _ _).le
+      (l2Norm_nonneg_bis (T.V j σ') σ' rd (T.dict j σ') (T.mu j σ') hmem ⟨f, hf⟩)
+  · intro f hf h0
+    rw [l2C, dite_eq_left hf] at h0
+    exact congrArg Subtype.val (hdef ⟨f, hf⟩ ((mul_eq_zero.mp h0).resolve_left (lieFac_pos _ _ _).ne'))
+  · intro a f hf
+    rw [l2C, l2C, dite_eq_left hf, dite_eq_left (Submodule.smul_mem _ a hf)]
+    have hsmul := l2Norm_smul_alt (T.V j σ') σ' rd (T.dict j σ') (T.mu j σ') hmem a ⟨f, hf⟩
+    exact (congrArg (lieFac (T.Q.Dw j) (xiR D) (wtA w) * ·) hsmul).trans (by ac_rfl)
+  · intro f hf g hg
+    rw [l2C, l2C, l2C, dite_eq_left hf, dite_eq_left hg, dite_eq_left (Submodule.add_mem _ hf hg), ← mul_add]
+    exact mul_le_mul_of_nonneg_left
+      (L2Norm_add_le (T.V j σ') σ' rd (T.dict j σ') (T.mu j σ') hmem ⟨f, hf⟩ ⟨g, hg⟩)
+      (lieFac_pos _ _ _).le
 
 theorem hle (j : ℕ) (hj : InR D j) (w : WeightFamilies.Wt D j) (σ : T.Q.c.F →+* ℂ) :
     ∀ f ∈ T.C j w, h.Nl j w σ f ≤ T.Ns j w σ f := by

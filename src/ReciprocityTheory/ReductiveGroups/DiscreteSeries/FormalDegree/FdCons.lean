@@ -43,7 +43,20 @@ theorem fdc_cd {ε : Fin n → Bool} (hp : 1 ≤ pOf ε) (hq : 1 ≤ qOf ε) {la
     obtain ⟨j, hiso, hk, -, hform⟩ := anyF hDS hstd hP
     have hΨ : ∀ z : PCoord ε → ℂ, PsiM T m (NormedSpace.exp (pmat z)) = fF ε (lamT lam t) T (pmat z) := by
       intro z
-      rw [psiM_exp_pmat, psM_exp_pmat hm T z]
+      have hex : ∃ (k' : KG ε) (X' : Matrix (Fin n) (Fin n) ℂ), inP ε X' ∧
+          toMK (1 : KG ε) * NormedSpace.exp (pmat z) = toMK k' * NormedSpace.exp X' :=
+        ⟨1, pmat z, pmat_inP z, rfl⟩
+      have heq : PsiM T m (toMK (1 : KG ε) * NormedSpace.exp (pmat z)) =
+          T.op 1 * psM T m (NormedSpace.exp (pmat z)) := by
+        unfold PsiM
+        rw [dite_eq_left hex]
+        obtain ⟨hP, hEq⟩ := hex.choose_spec.choose_spec
+        obtain ⟨h1, h2⟩ := polar_unique (pmat_inP z) hP hEq
+        rw [← h2, ← h1]
+      have e : toMK (1 : KG ε) = 1 := rfl
+      have o : T.op (1 : KG ε) = 1 := by simp [KType.op, map_one]
+      rw [e, Matrix.one_mul, o, one_mul] at heq
+      rw [heq, psM_exp_pmat hm T z]
     obtain ⟨H', i1', i2', σ', w', hsm, hlink⟩ := Lap.Base.link n ε _ T (PsiM T m) hstd hP
     refine ⟨H, i1, i2, inferInstance, σ, T, j, ⟨hDS.2.2.1, hiso, hk, fun z => ?_⟩,
       ⟨H', i1', i2', σ', w', hsm, fun z => ?_⟩, ?_⟩

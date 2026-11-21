@@ -81,6 +81,8 @@ theorem single_mem_schwartzBruhat {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ sch
       exact mem_finiteSchwartzBruhat.2
         ⟨hlc.comp_continuous hcl.continuous, hcs.comp_isClosedEmbedding hcl⟩
     convert schwartzBruhatTensor_mem φ' hg' using 1
+    funext t
+    simp only [schwartzBruhatTensorPi, schwartzBruhatTensor, hφ']
     congr 2
     · funext i
       by_cases h : i = i₀
@@ -187,8 +189,12 @@ theorem summable_norm_col {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBru
 
 theorem summable_line {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι)) (h : GL ι 𝔸[k]) :
     Summable fun p : kˣ × Projectivization k (ι → k) ↦
-      ‖F ((h : Matrix ι ι 𝔸[k]) *ᵥ ratV (lineEquiv p).1)‖ :=
-  (lineEquiv (k := k) (ι := ι)).summable_iff.2 ((summable_norm_col hF h).subtype {ξ | ξ ≠ 0})
+      ‖F ((h : Matrix ι ι 𝔸[k]) *ᵥ ratV (lineEquiv p).1)‖ := by
+  let f : {ξ : ι → k // ξ ≠ 0} → ℝ := fun ξ ↦ ‖F ((h : Matrix ι ι 𝔸[k]) *ᵥ ratV ξ.1)‖
+  change Summable (f ∘ lineEquiv)
+  apply (lineEquiv (k := k) (ι := ι)).summable_iff.mpr
+  simpa only [f, Function.comp_def] using
+    ((summable_norm_col hF h).subtype (fun ξ : ι → k ↦ ξ ≠ 0))
 
 theorem tsum_finset_le {F : (ι → 𝔸[k]) → ℂ} (hF : F ∈ schwartzBruhatPi (K := k) (ι := ι))
     (h : GL ι 𝔸[k]) (S : Finset (Projectivization k (ι → k))) :
@@ -396,7 +402,7 @@ theorem sum_integral_norm_le (w : InfinitePlace k) {F : (ι → 𝔸[k]) → ℂ
   refine ⟨∫ t, V • ρ t ∂posRealMeasure, fun S ↦ ?_⟩
   set ψ : IdeleGroup k → ℝ := fun x ↦ ∑ l ∈ S, ‖Gc F ω z l x‖ with hψdef
   have hψ : Integrable ψ (ideleMeasure k) :=
-    integrable_finset_sum _ fun c _ ↦ (integrable_Gc hF ω hz1 c).norm
+    integrable_finsetSum _ fun c _ ↦ (integrable_Gc hF ω hz1 c).norm
   have h1 : ∑ l ∈ S, ∫ x, ‖Gc F ω z l x‖ ∂ideleMeasure k = ∫ x, ψ x ∂ideleMeasure k :=
     (integral_finsetSum _ fun c _ ↦ (integrable_Gc hF ω hz1 c).norm).symm
   have hnn : ∀ x, 0 ≤ ψ x := fun x ↦ Finset.sum_nonneg fun c _ ↦ norm_nonneg _

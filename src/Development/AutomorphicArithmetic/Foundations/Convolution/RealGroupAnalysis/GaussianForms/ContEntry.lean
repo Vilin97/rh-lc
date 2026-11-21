@@ -29,7 +29,6 @@ private theorem cont_entry (i j : Fin 2) : Continuous (fun h : G1 F => h i j) :=
 
 private theorem d_one : ((1 : G1 F) 1 1).1 = 1 := by
   simp
-  rfl
 
 private theorem cont_d (v : InfinitePlace F) : Continuous (fun h : G1 F => (h 1 1).1 v) :=
   (continuous_apply (A := fun v : InfinitePlace F => v.Completion) v).comp (cont_fst.comp (cont_entry 1 1))

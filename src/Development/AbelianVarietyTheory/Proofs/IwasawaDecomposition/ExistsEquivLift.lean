@@ -27,17 +27,17 @@ open GlobalTheory.RealGeo GlobalTheory.OneMapAll GlobalTheory.AdTh
 namespace GlobalTheory.Mem.R3.Rw.GeoTies
 
 theorem eq_of_span {H ι X : Type} [AddCommGroup H] [Module ℂ H] {M : ι → Type} [∀ t, AddCommGroup (M t)] [∀ t, Module ℂ (M t)]
-    (θ : H →ₗ[ℂ] MultilinearMap ℂ M (X → ℂ)) (v : ∀ t, M t) (a b : X) (c : ℂ) {S : Set H} (hS : Submodule.span ℂ S = ⊤)
+    (θ : H →ₗ[ℂ] ((∀ t, M t) →ₘₗ[ℂ] (X → ℂ))) (v : ∀ t, M t) (a b : X) (c : ℂ) {S : Set H} (hS : Submodule.span ℂ S = ⊤)
     (h : ∀ y ∈ S, θ y v a = c * θ y v b) (y : H) : θ y v a = c * θ y v b := by
   have hy : y ∈ Submodule.span ℂ S := hS ▸ Submodule.mem_top
   induction hy using Submodule.span_induction with
   | mem y hy => exact h y hy
   | zero => simp
   | add y y' _ _ h h' =>
-    simp only [map_add (f := _), MultilinearMap.add_apply, Pi.add_apply]
+    simp only [map_add (f := _), add_apply, Pi.add_apply]
     linear_combination h + h'
   | smul a y _ h =>
-    simp only [map_smul, MultilinearMap.smul_apply, Pi.smul_apply, smul_eq_mul]
+    simp only [map_smul, smul_apply, Pi.smul_apply, smul_eq_mul]
     linear_combination a * h
 
 theorem span_image {H H' : Type} [AddCommGroup H] [Module ℂ H] [AddCommGroup H'] [Module ℂ H'] (e : H ≃ₗ[ℂ] H') {S : Set H}
@@ -93,7 +93,8 @@ def LiftIsSum (O : OMDat T.toCore R i Unit (fun _ => A.μ0)) (κ : WeightFamilie
 
 
 set_option maxHeartbeats 2000000 in
-theorem oneMapOf_of_span (hR : PreChar R) (hchi : R.grp_chiW) (hT : TieIn T R κ v₀) (O : OMDat T.toCore R i Unit (fun _ => A.μ0))
+theorem oneMapOf_of_span (hR : PreChar R) (hchi : R.grp_chiW) (hT : Formalism.IndefR.FWT.TieIn T R κ v₀)
+    (O : OMDat T.toCore R i Unit (fun _ => A.μ0))
     (hF : O.c'.F = D.what₂.embLL.toRatAlgHom.fieldRange)
     (hP : O.Pins (κ i) (v₀ i (sg0 D A)) (iotaW T i) (T.x₀ ((i : ℕ) + 1) O.s0)) {cE : (T.U ((i : ℕ) + 1) O.s0).Comp → ℂ}
     (hU : ∀ k, ‖cE k‖ = 1) (hE : O.EquivAt (κ i) cE) {z : G} (hz : z ∈ Subgroup.center G) {ζ : ℂ}
@@ -101,7 +102,8 @@ theorem oneMapOf_of_span (hR : PreChar R) (hchi : R.grp_chiW) (hT : TieIn T R κ
     (hS : Submodule.span ℂ {y | LiftIsSum O (κ i) (v₀ i (sg0 D A)) cE z ζ y} = ⊤) :
     O.OneMapOf (κ i) (v₀ i (sg0 D A)) cE 1 := by
   have hio : IoExt R := GlobalTheory.IoExtremal.ioExt D G Pl0 T0 A T.Q.c.F R hR.lev hR.fam hR.models hR.thP
-  have hn := PhaseOne.wt_n hT i
+  have hn : (κ i).n = (Vc D i).rank :=
+    (hT.kap i (D.eTau.symm 1)).2.2.trans (D.sp.V_rank _ (Nat.le_add_left _ _) i.2).symm
   obtain ⟨cc₀, -, u, -, -, hser, -⟩ := exists_ccIs_equivAt_serOf_tie D G Pl0 T0 A T R κ v₀ hR hT hio i _ _ O hP
   generalize u • cc₀ = cc at hser
   have hex := GlobalTheory.ClassSumRule.exists_cusp_isThClsD_ofPre GlobalTheory.ChartFree.chartIndep D G Pl0 T0 A T R κ v₀ hR hT i _ _ O hP ()

@@ -54,7 +54,21 @@ theorem lintegral_hsNormSq_amp_gap : GlobalTheory.GapIn.Hyp → GlobalTheory.Gap
   have hW := ((HaarNotions.isHaarOn_iff_groups k r L.μW).2.2 L.z L.hz.1 L.hz.2 hk1).1 L.hμW.1
   have hW' := ((HaarNotions.isHaarOn_iff_groups k r L.μW').2.2 L.z' L.hz'.1 L.hz'.2 hk1).1 L.hμW'.1
   have hδ : 0 < ‖α‖ ^ B.kap k r := by positivity
-  have hN₁ := haar_smul hNB hδ
+  have hN₁ : B.IsHaarOn (Nset k r) (ENNReal.ofReal (‖α‖ ^ B.kap k r) • L.μN) := by
+    refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    · rw [Measure.smul_apply, hNB.conc, smul_zero]
+    · intro a ha; rw [Measure.map_smul, hNB.left a ha]
+      exact (show Continuous (lmulM a) from by unfold lmulM; exact continuous_const.matrix_mul continuous_id).measurable.aemeasurable
+    · intro a ha; rw [Measure.map_smul, hNB.right a ha]
+      exact (show Continuous (B.rmulF a) from by unfold B.rmulF; exact continuous_id.matrix_mul continuous_const).measurable.aemeasurable
+    · intro K hK
+      rw [Measure.smul_apply, smul_eq_mul]
+      exact ENNReal.mul_lt_top ENNReal.ofReal_lt_top (hNB.finite_compact K hK)
+    · intro h0
+      apply hNB.ne_zero
+      have h1 := Measure.measure_univ_eq_zero.2 h0
+      rw [Measure.smul_apply, smul_eq_mul] at h1
+      exact Measure.measure_univ_eq_zero.1 ((mul_eq_zero.1 h1).resolve_left (ENNReal.ofReal_pos.2 hδ).ne')
   set μ₁ := ENNReal.ofReal (‖α‖ ^ B.kap k r) • L.μN with hμ₁
   have hmap : μ₁.map (conjM (ThA.aT k r α)) = L.μN := by
     rw [ThA.TorusJac.haar_map_conj _ hN₁ α hα, hμ₁, smul_smul, ← ENNReal.ofReal_mul (by positivity),

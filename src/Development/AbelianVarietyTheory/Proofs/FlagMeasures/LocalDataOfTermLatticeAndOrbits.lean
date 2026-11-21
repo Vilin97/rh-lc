@@ -98,8 +98,27 @@ theorem isLattice_gmap (g : GV D) (A : LV D) (hA : Submodule.IsLattice D.host.E 
     Submodule.IsLattice D.host.E (Formalism.HermitianLatticesTheory.gmap g A) := by
   refine ⟨hA.fg.map _, ?_⟩
   have : (Formalism.HermitianLatticesTheory.gmap g A : Set (VS D).V) = (g : (VS D).V →ₗ[D.host.E] (VS D).V) '' (A : Set (VS D).V) := rfl
-  rw [this, ← Submodule.map_span, hA.span_eq_top, Submodule.map_top]
-  exact LinearEquiv.range g
+  rw [this]
+  intro s hs hli
+  let t := g.symm '' s
+  have ht : t ⊆ (A : Set (VS D).V) := by
+    rintro x ⟨y, hy, rfl⟩
+    obtain ⟨z, hz, hzy⟩ := hs hy
+    simpa [← hzy] using hz
+  have heq : (g : (VS D).V →ₗ[D.host.E] (VS D).V) '' t = s := by
+    ext x
+    simp [t]
+  change (g : (VS D).V → (VS D).V) '' t = s at heq
+  have hli' : LinearIndepOn (𝓞 D.host.E) id t := by
+    apply (linearIndepOn_id_imageₛ_iff (f := g.toLinearMap.restrictScalars (𝓞 D.host.E))
+      g.injective.injOn).1
+    change LinearIndepOn (𝓞 D.host.E) id ((g : (VS D).V → (VS D).V) '' t)
+    rw [heq]
+    exact hli
+  have hE := hA.linearIndepOn t ht hli'
+  have := (linearIndepOn_id_imageₛ_iff (f := g.toLinearMap) g.injective.injOn).2 hE
+  change LinearIndepOn D.host.E id ((g : (VS D).V → (VS D).V) '' t) at this
+  rwa [heq] at this
 
 theorem finrank_Vp_eq (p : PlF D) : Module.finrank (D.s.atP p).Ep (Vp D p) = D.R.k + 2 * D.R.rS + 1 := by
   rw [finrank_Vp]

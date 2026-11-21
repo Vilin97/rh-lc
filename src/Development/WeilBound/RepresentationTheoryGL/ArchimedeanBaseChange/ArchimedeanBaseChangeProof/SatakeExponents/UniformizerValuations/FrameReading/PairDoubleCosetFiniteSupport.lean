@@ -98,11 +98,11 @@ theorem iter_push {X : Type} [AddCommGroup X] [Module ℂ X]
       exact S.sum_mem fun q _ => S.smul_mem _ (hS _ _ h1)
     · intro k hk
       rw [map_smul, hfix k hk]
-    set_option synthInstance.maxHeartbeats 100000 in
-      · rw [map_smul, hsum_eq R I f hfin.coe_toFinset.ge, hsum_eq ρ I f hfin.coe_toFinset.ge, map_sum]
-      congr 1
-      refine Finset.sum_congr rfl fun q _ => ?_
-      rw [map_smul, hL _ _ h1 hsm]
+    · set_option synthInstance.maxHeartbeats 100000 in
+        rw [map_smul, hsum_eq R I f hfin.coe_toFinset.ge, hsum_eq ρ I f hfin.coe_toFinset.ge, map_sum]
+        congr 1
+        refine Finset.sum_congr rfl fun q _ => ?_
+        rw [map_smul, hL _ _ h1 hsm]
 
 end Gen
 

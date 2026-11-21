@@ -124,9 +124,11 @@ theorem GlobalTheory.GlueDat.glued_data : ∀ (D : D7) (Z : LocDat D) (FP : ∀ 
       · rw [(hB.1 p).1]
         show g' (frFac Z.δ p b • baseChange₂ D p (frame F b)) = _
         rw [map_smul, hext', hh.2.1 b]
+        rfl
       · rw [(hB.1 p).2.1]
         show g' (frFac Z.δ p b • baseChange₂ D p (frame F' b)) = _
         rw [map_smul, hext', hh.2.2 b]
+        rfl
     choose g hgU hgm hgimg using hloc
     have hset := fun p => (GlobalTheory.T.unitaryComplement_moves_hermitianTerms (Z.M p) (hOK p) (locH Z p) D.R.rS D.R.k (FP p) (finrank_loc p) (hR p)
       (scaled Z p (frame G)) (scaled Z p (frame G')) (hO p).1 (hO p).2 (g p) (hgU p) (y p) (y' p) (hgm p)).2

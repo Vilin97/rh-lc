@@ -134,14 +134,17 @@ theorem supE_cusp_ne_top {a n} {σ : c.F →+* ℂ} (hσ : GoodEmb c σ) {f : Ru
   exact supE_ne_top (U σ).X (laU (U σ) a n) (Submodule.mem_comap.mp h3)
 
 theorem isNormOn_supC (x : ℝ) (h : SupDef Xo c U) {a n} (hd : Dom a n) {σ : c.F →+* ℂ} (hσ : GoodEmb c σ) :
-    IsNormOn (cusp Xo c U a n) σ (supC Xo c U x σ a n) where
-  nonneg f _ := mul_nonneg (lieFac_pos _ _ _).le (supN_nonneg _ _ _)
-  defin f hf h0 := h a n hd σ hσ f hf ((mul_eq_zero.mp h0).resolve_left (lieFac_pos _ _ _).ne')
-  smul y f _ := by
+    IsNormOn (cusp Xo c U a n) σ (supC Xo c U x σ a n) := by
+  constructor
+  · intro f _
+    exact mul_nonneg (lieFac_pos _ _ _).le (supN_nonneg _ _ _)
+  · intro f hf h0
+    exact h a n hd σ hσ f hf ((mul_eq_zero.mp h0).resolve_left (lieFac_pos _ _ _).ne')
+  · intro y f _
     unfold supC supN
     rw [map_smulₛₗ, supE_smul, ENNReal.toReal_mul, ENNReal.toReal_ofReal (norm_nonneg _)]
     ring
-  add f hf g hg := by
+  · intro f hf g hg
     unfold supC supN
     rw [← mul_add, map_add (f := _), ← ENNReal.toReal_add (supE_cusp_ne_top hσ hf) (supE_cusp_ne_top hσ hg)]
     refine mul_le_mul_of_nonneg_left (ENNReal.toReal_mono ?_ (supE_add_le _ _ _ _)) (lieFac_pos _ _ _).le
@@ -171,17 +174,18 @@ def L2DefiniteCuspForms (h : CuspL2 U σ V dict mu) : Prop :=
 variable {U σ V dict mu}
 
 theorem isNormOn_l2C (x₀ : ℝ) {h : CuspL2 U σ V dict mu} (h1 : L2DefiniteCuspForms U σ V dict mu h) {a n} (hd : Dom a n) :
-    IsNormOn (cusp Xo c U a n) σ (l2C U σ V dict mu x₀ a n (h a n hd)) where
-  nonneg f hf := by
+    IsNormOn (cusp Xo c U a n) σ (l2C U σ V dict mu x₀ a n (h a n hd)) := by
+  constructor
+  · intro f hf
     rw [l2C, dite_eq_left hf]; exact mul_nonneg (lieFac_pos _ _ _).le (l2Norm_nonneg_bis _ _ _ _ _ _ _)
-  defin f hf h0 := by
+  · intro f hf h0
     rw [l2C, dite_eq_left hf] at h0
     exact congrArg Subtype.val (h1 a n hd ⟨f, hf⟩ ((mul_eq_zero.mp h0).resolve_left (lieFac_pos _ _ _).ne'))
-  smul x f hf := by
+  · intro x f hf
     rw [l2C, l2C, dite_eq_left hf, dite_eq_left (Submodule.smul_mem _ x hf)]
     have := l2Norm_smul_alt V σ (rdC U σ a n) dict mu (h a n hd) x ⟨f, hf⟩
     exact (congrArg (lieFac Dw x₀ a * ·) this).trans (by ring)
-  add f hf g hg := by
+  · intro f hf g hg
     rw [l2C, l2C, l2C, dite_eq_left hf, dite_eq_left hg, dite_eq_left (Submodule.add_mem _ hf hg), ← mul_add]
     exact mul_le_mul_of_nonneg_left (L2Norm_add_le V σ (rdC U σ a n) dict mu (h a n hd) ⟨f, hf⟩ ⟨g, hg⟩)
       (lieFac_pos _ _ _).le

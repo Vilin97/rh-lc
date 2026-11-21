@@ -15,7 +15,6 @@ open NumberField MvPolynomial Filter Topology Formalism.BasicNotions Formalism.M
 open CategoryTheory AlgebraicGeometry ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory GlobalTheory.ArInt
 open Formalism.BasicNotions.DV Formalism.MainNotions.WeightThresholdDefs GlobalTheory.FlagAr GlobalTheory.ShFam.Pad GlobalTheory.VB GlobalTheory.ShFam GlobalTheory.TrueGeo Formalism.L2.Pj GlobalTheory.Toroidal GlobalTheory.ArLieBase
 open GlobalTheory.Cartier GlobalTheory.CxPts GlobalTheory.ProjVar
-open GlobalTheory.FlagCls
 
 namespace GlobalTheory.FlagCls
 

@@ -38,7 +38,7 @@ theorem contDiff_of_poly {N κ : ℕ} {φ : Matrix (Fin N) (Fin N) ℂ → ℂ} 
     simp only [map_mul, MvPolynomial.eval_X]
     refine hp.mul ?_
     have he : ∀ a b : Fin N, ContDiff ℝ ∞ (fun g : Matrix (Fin N) (Fin N) ℂ => g a b) := fun a b =>
-      (contDiff_apply_apply ℝ ℂ a b)
+      (contDiff_apply_apply ℝ a b)
     rcases i with i | i
     · exact he _ _
     · exact Complex.conjCLE.contDiff.comp (he i.1 i.2)
@@ -393,7 +393,27 @@ theorem rad_cap (hD : P5.IsData P Bs.z Bs.z' Bs.π Bs.π' X μ L st l0) (Y : ℂ
   have hJ := bessel_function_finite_class P.k P.r Wp Wq Bs F ε hε hN
   have hh := TLB.wCell_om Bs hy
   have h1 := JCx2.rma_QQi X L hL st s hst Y 0 0 Φ hy
-  have h2 := (JCx2.rma_sandw X L hL Y P.r le_rfl _ _ (JCx2.rma_base X Y) (JCx2.rma_QL_loc Y)).2 0 0
+  have hloc : ∀ n, n ≤ P.r → ∀ N : Q.OM (Q.Fn P.k P.r (Wq →L[ℂ] Wp)),
+      JCx2.rma_Loc P.k P.r Bs.z Bs.z' N →
+      JCx2.rma_Loc P.k P.r Bs.z Bs.z' (Q.sandw P.k P.r Y n N) := by
+    intro n
+    induction n with
+    | zero =>
+      intro _ N hN
+      simpa only [Q.sandw] using hN
+    | succ n ih =>
+      intro hn N hN
+      have h : n < P.r := by omega
+      simp only [Q.sandw, dif_pos h]
+      apply ih (by omega)
+      intro a b f₁ f₂ he y' hy'
+      simp only [Q.oMul, Finset.sum_apply]
+      refine Finset.sum_congr rfl fun c _ => ?_
+      refine JCx2.rma_TLs_loc ⟨n, h⟩ Y a c _ _ (fun y'' hy'' => ?_) y' hy'
+      simp only [Finset.sum_apply]
+      refine Finset.sum_congr rfl fun d _ => ?_
+      exact hN c d _ _ (JCx2.rma_TL_loc ⟨n, h⟩ Y d b f₁ f₂ he) y'' hy''
+  have h2 := hloc P.r le_rfl _ (JCx2.rma_QL_loc Y) 0 0
     (Φ : Q.Fn P.k P.r (Wq →L[ℂ] Wp)) (Q.resG P.k P.r (Fin.last P.r) (B.JF Bs F)) (fun y' hy' => hΦ y' hy') y hy
   have h3 := chain_recursion_all_levels Wp Wq P.k P.r Bs.z Bs.z' Bs.π Bs.π' (Fin.last P.r) _ Y 0 0 hz hz'
     (JCx2.rma_isDom_omPlus hz hz') _ hJ y.1 hy.1 y.2 hy.2.1 hh.2

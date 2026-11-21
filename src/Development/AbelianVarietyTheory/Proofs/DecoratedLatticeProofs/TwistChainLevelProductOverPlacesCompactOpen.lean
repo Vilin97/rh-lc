@@ -30,10 +30,10 @@ theorem map_ofFn_prod_eq {G M : Type*} [Group G] [Monoid M] (φ : G →* M) :
     by_cases hi : i = 0
     · subst hi
       have h1 : φ (List.ofFn fun j : Fin r => a j.succ).prod = 1 := by
-        rw [map_list_prod]
-        refine List.prod_eq_one fun x hx => ?_
-        rw [List.map_ofFn, List.mem_ofFn] at hx
-        obtain ⟨j, rfl⟩ := hx
+        rw [map_list_prod, List.map_ofFn]
+        apply List.prod_eq_one
+        intro x hx
+        obtain ⟨j, rfl⟩ := List.mem_ofFn.mp hx
         exact h _ (Fin.succ_ne_zero j)
       rw [h1, mul_one]
     · obtain ⟨i', rfl⟩ := Fin.exists_succ_eq.2 hi

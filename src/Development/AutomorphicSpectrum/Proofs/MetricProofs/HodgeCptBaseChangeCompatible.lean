@@ -498,15 +498,23 @@ theorem hodgeCpt_pull_smooth : ∀ (E : Type) [Field E] [NumberField E] [IsCMFie
   obtain ⟨Li', acg', mod', ⟨M'⟩⟩ := GlobalTheory.CompanionTheory.Ar.lieModel_exists Z t'.G Ω' ξ'
   obtain ⟨ρ', hρ', -⟩ := GlobalTheory.CompanionTheory.Ar.lieModel_exists_unique_act Z t'.G Ω' ξ' Li' M' (𝓞 E) t'.act.act t'.act.hom t'.act.one
     t'.act.mul t'.act.add
-  obtain ⟨j, hj⟩ := GlobalTheory.T.lie_model_pullback_map A.X Z Ω Ω' A.ξ ξ' h i A.t.G t'.G mh.φ A.Li Li' A.M M' hdom mh.cart
+  obtain ⟨j, hj⟩ := GlobalTheory.CompanionTheory.Ar.LieJ.exists_map A.X Z Ω Ω' A.ξ ξ' h i A.t.G t'.G mh.φ A.Li Li' A.M M' hdom mh.cart
   have hsm : Smooth A.t.G.hom := A.t.semi.smooth
-  obtain ⟨hext, hspan, hlat⟩ := GlobalTheory.T.lie_lattice_dominant_compat A.X Z Ω Ω' A.ξ ξ' h i A.t.G t'.G mh.φ A.Li Li' A.M M' j hgen hgen' hdom
+  obtain ⟨hext, hspan, hlat⟩ := GlobalTheory.CompanionTheory.Ar.LiePull.main A.X Z Ω Ω' A.ξ ξ' h i A.t.G t'.G mh.φ A.Li Li' A.M M' j hgen hgen' hdom
     mh.cart hsm hj
-  have hρj := GlobalTheory.T.lie_model_pullback_action A.X Z Ω Ω' A.ξ ξ' h i A.t.G t'.G mh.φ A.Li Li' A.M M' j (𝓞 E) A.t.act.act t'.act.act A.ρ ρ'
-    hdom mh.cart hj A.act hρ' (fun a => mh.act a)
-  obtain ⟨jd, hjd⟩ := GlobalTheory.T.dual_map_of_field_extension Ω Ω' i A.Li Li' j hext hspan
+  have hρj : ∀ a e, ρ' a (j e) = j (A.ρ a e) := by
+    intro a e
+    apply M'.inj
+    rw [hρ' a (j e)]
+    apply Over.OverMorphism.ext
+    apply mh.cart.1.hom_ext
+    · simp only [Over.comp_left, Category.assoc, mh.act a]
+      rw [← Category.assoc, hj e, hj (A.ρ a e), A.act a e, Over.comp_left]
+      simp only [Category.assoc]
+    · rw [Over.w, Over.w]
+  obtain ⟨jd, hjd⟩ := GlobalTheory.CompanionTheory.Ar.DualExt.dual_ext Ω Ω' i A.Li Li' j hext hspan
   have hW : ∀ s, eigSp ρ' ((i.comp A.cst).comp (labelEmb c s)) = Submodule.span Ω' (j '' (A.Vgen s : Set A.Li)) := fun s =>
-    GlobalTheory.T.eigenspace_field_extension E Ω Ω' i A.Li Li' j A.ρ ρ' (A.emb s) hext hspan hρj
+    GlobalTheory.CompanionTheory.Ar.EigExt.eigSp_ext E Ω Ω' i A.Li Li' j A.ρ ρ' (A.emb s) hext hspan hρj
   have hdm := GlobalTheory.CompanionTheory.Ar.RegAtDom.regAt_dominates A.X Ω A.ξ Z Ω' ξ' h i hdom
   have hsp : ∀ p' : Cpt ξ', genPt A.ξ ⤳ h p'.1 := fun p' => (hdm p').choose
   have hreg : ∀ (p' : Cpt ξ'), ∀ a ∈ regAt A.ξ ⟨h p'.1, hsp p'⟩, i a ∈ regAt ξ' p' := fun p' => (hdm p').choose_spec.1

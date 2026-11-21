@@ -136,7 +136,7 @@ private theorem sum_step (χ : Ideal (𝓞 F) → ℂ) (hχ : ∀ I J, I ≠ ⊥
     · rintro (⟨n, hn, rfl⟩ | ⟨h, -⟩)
       · exact mul_dvd_mul_left _ hn
       · exact h.mul_left _
-  rw [hs, finsum_mem_union _ ((dvd_fin hm).image _) ((dvd_fin hm).subset fun r h => h.1),
+  rw [hs, finsum_mem_union _ ((dvd_fin hm).image _) ((dvd_fin hm).subset fun r (h : r ∈ {r : Ideal (𝓞 F) | r ∣ m ∧ ¬ w.asIdeal ∣ r}) => h.1),
     finsum_mem_image (fun x _ y _ h => mul_left_cancel₀ w.ne_bot h)]
   · congr 1
     rw [finsum_mem_eq_finite_toFinset_sum _ (dvd_fin hm), finsum_mem_eq_finite_toFinset_sum _ (dvd_fin hm), Finset.mul_sum]

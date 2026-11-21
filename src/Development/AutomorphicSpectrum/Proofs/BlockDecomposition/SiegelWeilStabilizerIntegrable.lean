@@ -53,7 +53,7 @@ theorem continuous_trace_pair [FiniteDimensional F E] (σ : E →ₐ[F] E) {n : 
     set_option synthInstance.maxHeartbeats 100000 in
       simp [Matrix.trace, Matrix.mul_apply, map_sum]
   rw [h]
-  exact continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun c _ =>
+  exact continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun c _ =>
     (continuous_linear _).comp (continuous_entry σ c a)
 
 end Cont

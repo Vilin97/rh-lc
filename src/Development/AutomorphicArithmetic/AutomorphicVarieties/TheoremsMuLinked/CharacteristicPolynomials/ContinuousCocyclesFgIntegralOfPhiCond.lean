@@ -74,7 +74,7 @@ private theorem cocycles_finitely_generated (l : ℕ) [Fact l.Prime] {R G M : Ty
     have hle : Ideal.span {t} ≤ (⊥ : Ideal R).jacobson := by
       rw [IsLocalRing.jacobson_eq_maximalIdeal ⊥ bot_ne_top]
       exact IsLocalRing.le_maximalIdeal hIne
-    have h := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := M) _ hle
+    have h := Ideal.iInf_pow_smul_eq_bot_of_le_jacobson (M := M) _ (by simpa only [Ideal.jacobson_bot] using hle)
     have hx' : x ∈ ⨅ i, Ideal.span {t} ^ i • (⊤ : Submodule R M) :=
       (Submodule.mem_iInf _).mpr fun n => (mem_pow_smul t n x).mpr (hx n)
     rw [h] at hx'

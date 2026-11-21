@@ -134,14 +134,15 @@ theorem lb_good {f : E d → ℂ} (hf : ContDiff ℝ ∞ f) {K : Set (E d)} (hK 
   | [] => by intro p hp; simp [lb] at hp
   | k :: w => by
     have ih : Good w.length K (lb w f) := lb_good hf hK hfK w
-    unfold Good at ih
     intro p hp
     simp only [lb, List.mem_cons, List.mem_append, List.mem_map] at hp
     rcases hp with rfl | ⟨q, hq, rfl⟩ | ⟨q, hq, rfl⟩
     · exact ⟨by simp, contDiff_Dk hf k, Dk_zero_off hK hfK k⟩
-    · obtain ⟨h1, h2, h3⟩ := ih q hq
+    · obtain ⟨h1, h2, h3⟩ : q.1.length < w.length ∧ ContDiff ℝ ∞ q.2 ∧
+          ∀ y ∉ K, q.2 y = 0 := ih q hq
       exact ⟨by simp; omega, contDiff_Dk h2 k, Dk_zero_off hK h3 k⟩
-    · obtain ⟨h1, h2, h3⟩ := ih q hq
+    · obtain ⟨h1, h2, h3⟩ : q.1.length < w.length ∧ ContDiff ℝ ∞ q.2 ∧
+          ∀ y ∉ K, q.2 y = 0 := ih q hq
       exact ⟨by simp; omega, h2, h3⟩
 
 theorem leib {f : E d → ℂ} (hf : ContDiff ℝ ∞ f) : ∀ (w : List (Fin d)) (g : E d → ℂ), ContDiff ℝ ∞ g →
@@ -175,12 +176,12 @@ theorem sb_good {a : E d → ℂ} (ha : ContDiff ℝ ∞ a) {k : ℕ} {K : Set (
     have hp : p.1.length < k ∧ ContDiff ℝ ∞ p.2 ∧ ∀ y ∉ K, p.2 y = 0 := hL p (by simp)
     have ih : Good k K (sb a L) := sb_good ha L (fun q hq => hL q (by simp [hq]))
     have hlb : Good p.1.length Set.univ (lb p.1 a) := lb_good ha isClosed_univ (by simp) p.1
-    unfold Good at hlb
     intro q hq
     simp only [sb, sc, List.mem_cons, List.mem_append, List.mem_map] at hq
     rcases hq with rfl | ⟨r, hr, rfl⟩ | hq
     · exact ⟨hp.1, hp.2.1.mul ha, fun y hy => by simp [hp.2.2 y hy]⟩
-    · obtain ⟨h1, h2, -⟩ := hlb r hr
+    · obtain ⟨h1, h2, -⟩ : r.1.length < p.1.length ∧ ContDiff ℝ ∞ r.2 ∧
+          ∀ y ∉ (Set.univ : Set (E d)), r.2 y = 0 := hlb r hr
       exact ⟨lt_trans h1 hp.1, hp.2.1.mul h2, fun y hy => by simp [hp.2.2 y hy]⟩
     · exact ih q hq
 

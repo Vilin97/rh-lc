@@ -8,8 +8,8 @@ noncomputable section
 
 namespace period_ring_base
 
-open Formalism.Per6 hiding σB aB
-open GroundTheory.PAdicHodge DeRhamPotentiallySemistable.DRPst PfDRPst Matrix
+open Formalism.Per6
+open GroundTheory.PAdicHodge DeRhamPotentiallySemistable.DRPst Matrix
 
 open Topology Filter
 

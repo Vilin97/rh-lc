@@ -42,6 +42,8 @@ omit [StarRing E] in
 theorem stdLat_eq : Examples₂.stdLat (E := E) n = stdLat E n := by
   unfold Examples₂.stdLat stdLat
   congr 2
+  funext i
+  exact Pi.basisFun_apply E (Fin n) i
 
 omit [StarRing E] in
 theorem mem_one_iff (a : E) : a ∈ (1 : Submodule (𝓞 E) E) ↔ IsIntegral ℤ a := by
@@ -78,7 +80,30 @@ theorem mass_stdLat_le :
       (3 * ((Module.finrank ℚ E : ℝ) ^ 2 * (n : ℝ) ^ 4 *
         (|(discr E : ℝ)| ^ ((1 : ℝ) / (Module.finrank ℚ E : ℝ))) ^ 2)) ^ (3 * Module.finrank ℚ E * n ^ 2) := by
   intro E _ _ _ _ hs n
-  obtain ⟨R, hR, H⟩ := GlobalTheory.exists_finset_selfDual_classes_rootDiscr E n
+  have hexists : ∃ R : Finset (Submodule (𝓞 E) (Fin n → E)),
+      (R.card : ℝ) ≤ (3 * ((Module.finrank ℚ E : ℝ) ^ 2 * (n : ℝ) ^ 4 *
+        (|(discr E : ℝ)| ^ ((1 : ℝ) / (Module.finrank ℚ E : ℝ))) ^ 2)) ^
+          (3 * Module.finrank ℚ E * n ^ 2) ∧
+      ∀ L : Submodule (𝓞 E) (Fin n → E), L.FG →
+        (∀ y, y ∈ L ↔ ∀ x ∈ L, IsIntegral ℤ (∑ i, IsCMField.complexConj E (x i) * y i)) →
+        ∃ L₀ ∈ R, ∃ γ : Matrix (Fin n) (Fin n) E,
+          γ * (γ.map (IsCMField.complexConj E)).transpose = 1 ∧
+          ∀ x, x ∈ L₀ ↔ γ.mulVec x ∈ L := by
+    open RootClassCount ReciprocityTheory.ChartRestriction.G.FD in
+    obtain ⟨R, -, h2, h3⟩ := ClassCount.exists_finset_classes (K := E) (r := n) (G := 1)
+      {L | L.FG ∧ ∀ y, y ∈ L ↔ ∀ x ∈ L, IsIntegral ℤ (herm 1 y x)}
+      (B := 4 * (fdeg E : ℝ) ^ 3 * n ^ 4 * rdE E ^ 2) (by positivity) fun L hL =>
+        ⟨by simp, fun x hx => (hL.2 x).1 hx,
+          exists_bounded_basis L hL.1 (fun x hx => (hL.2 x).1 hx) fun x hx => (hL.2 x).2 hx⟩
+    refine ⟨R, h3.trans ?_, fun L hfg hsd => ?_⟩
+    · have h := bound_le (fdeg E) n ClassCount.fdeg_pos (one_le_rootDiscr (E := E))
+      rw [← ShortVectors.finrank_eq] at h
+      rw [rdE_eq, ← ShortVectors.finrank_eq]
+      exact h
+    · obtain ⟨L₀, hL₀, γ, hγ, hm⟩ := h2 L ⟨hfg, fun y => by
+        simp only [isIntegral_herm_iff]; exact hsd y⟩
+      exact ⟨L₀, hL₀, γ, mul_conjTranspose_eq_one _ hγ, hm⟩
+  obtain ⟨R, hR, H⟩ := hexists
   refine le_trans ?_ hR
   unfold Formalism.HermitianLatticesTheory.mass
   split_ifs with hex
@@ -88,7 +113,7 @@ theorem mass_stdLat_le :
   generalize hex.choose = s at h1 h2
   have key : ∀ M ∈ s, ∃ L₀ ∈ R, ∃ g ∈ isom (stdForm E n), gmap g L₀ = M := by
     intro M hM
-    obtain ⟨L₀, hL₀, γ, hγ, hm⟩ := H M (h1 M hM).1.fg (h1 M hM).1.span_eq_top (fun y => by
+    obtain ⟨L₀, hL₀, γ, hγ, hm⟩ := H M (h1 M hM).1.fg (fun y => by
       simpa only [hs] using selfDual_of_mem_genus (h1 M hM) y)
     have hγ' : γ * γ.conjTranspose = 1 := by
       rw [← hγ]

@@ -28,6 +28,8 @@ theorem exists_completion_hom_of_real {K : Type} [Field K] (σ : K →+* ℝ) :
   refine ⟨_, InfinitePlace.Completion.extensionEmbeddingOfIsReal hw, fun x => ?_⟩
   have he := InfinitePlace.Completion.extensionEmbeddingOfIsReal_coe hw
     ((WithAbs.equiv _).symm x)
+  rw [AbsoluteValue.Completion.algebraMap_def, WithAbs.algebraMap_right_apply,
+    Algebra.algebraMap_self_apply]
   refine Eq.trans he ?_
   apply Complex.ofReal_injective
   rw [InfinitePlace.embedding_of_isReal_apply, InfinitePlace.embedding_mk_eq_of_isReal hφ]

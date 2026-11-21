@@ -53,6 +53,7 @@ theorem deRham_filtered_Ql (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAi
   have hDd : (DdR (P.PD K) ρ').restrictScalars ℚ_[l] = DdR (P.PD K) ρ := by
     ext x
     rw [Submodule.restrictScalars_mem, hD]
+  set_option synthInstance.maxHeartbeats 200000 in
   have hDr : finrank ↥LL.1 ↥(DdR (P.PD K) ρ') = finrank ℚ_[l] ↥(DdR (P.PD K) ρ) := by
     rw [← hDd, LinearEquiv.finrank_eq
       ((Submodule.restrictScalarsEquiv ℚ_[l] ↥LL.1 _ (DdR (P.PD K) ρ')).restrictScalars ℚ_[l]),
@@ -128,8 +129,8 @@ theorem filtered_coords : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : Lo
   · have hg : actVdR (P.PD K) (qRep ρ) g (dd r) = dd r :=
       (GlobalTheory.DRFil.mem_DdR (P.PD K) (qRep ρ) _).1 (h r).1 g
     rw [← hact, hg]
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [← hfx, e, map_sum]
-    exact Finset.sum_congr rfl fun r _ => hfmul _ _
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [← hfx, e, map_sum]
+      exact Finset.sum_congr rfl fun r _ => hfmul _ _
 
 end GlobalTheory.DRFilCoord

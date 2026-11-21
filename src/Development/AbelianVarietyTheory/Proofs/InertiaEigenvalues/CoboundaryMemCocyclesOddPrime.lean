@@ -18,8 +18,13 @@ open scoped Formalism.Per
 noncomputable section
 namespace GlobalTheory.CobCont
 
+set_option synthInstance.maxHeartbeats 400000
+
 theorem inj1 : ∀ (l : ℕ) [Fact l.Prime] (LL : FinExt l) (T : QLat LL),
-    Function.Injective (fun x : ↥T.L.T => (1 : OB l ↥(OL LL)) ⊗ₜ[↥(OL LL)] x) := GlobalTheory.T.one_tmul_bcris_galoisLattice_injective
+    Function.Injective (fun x : ↥T.L.T => (1 : OB l ↥(OL LL)) ⊗ₜ[↥(OL LL)] x) := by
+  intro l _ LL T
+  have : Module.Free (↥(OL LL)) ↥T.L.T := T.L.free
+  exact GlobalTheory.TContInj.one_tmul_injective l ↥(OL LL) ↥T.L.T
 
 theorem nbhd : ∀ (l : ℕ) [Fact l.Prime] (LL : FinExt l) (T : QLat LL) (U : Set T.V), U ∈ nhds (0 : T.V) →
     ∃ m : ℕ, ∀ x ∈ T.L.T, ((l : ↥LL.1) ^ m) • x ∈ U := GlobalTheory.T.galoisLattice_prime_pow_smul_tendsto_zero
@@ -101,7 +106,6 @@ theorem pow_le_mem (T : QLat LL) {k n : ℕ} (hk : k ≤ n) (v : T.V) (hv : (l :
 
 
 set_option maxHeartbeats 2000000 in
-set_option synthInstance.maxHeartbeats 400000 in
 theorem cocycle (T : QLat LL) (b : TW (OB l ↥(OL LL)) T) (c : Gl l → T.V) (hc : IsCobOf (sQ l) T b c)
     (g h : Gl l) : c (g * h) = c g + T.ρ g (c h) := by
   obtain ⟨n1, h1⟩ := exists_pow_smul_mem T (c g)

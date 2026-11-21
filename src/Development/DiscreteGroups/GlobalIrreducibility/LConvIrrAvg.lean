@@ -45,16 +45,16 @@ theorem avg_exists [TopologicalSpace G] [IsTopologicalGroup G] (hsm : IsSmooth �
   refine ⟨(O.card : ℂ)⁻¹ • ∑ m ∈ O, m, Z.smul_mem _ (Z.sum_mem fun m hm => ?_), fun κ hκ => ?_, ?_⟩
   · obtain ⟨k, _, rfl⟩ := (hmem m).1 hm
     exact hZ k z hz
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_smul, map_sum]
-    congr 1
-    refine Finset.sum_nbij' (fun m => ρ κ m) (fun m => ρ κ⁻¹ m) (fun m hm => ?_) (fun m hm => ?_)
-      (fun m _ => rho_inv ρ κ m) (fun m _ => ?_) (fun _ _ => rfl)
-    · obtain ⟨k, hk, rfl⟩ := (hmem m).1 hm
-      exact (hmem _).2 ⟨κ * k, K.mul_mem hκ hk, rho_mul ρ κ k z⟩
-    · obtain ⟨k, hk, rfl⟩ := (hmem m).1 hm
-      exact (hmem _).2 ⟨κ⁻¹ * k, K.mul_mem (K.inv_mem hκ) hk, rho_mul ρ κ⁻¹ k z⟩
-    · simp
+  · set_option synthInstance.maxHeartbeats 100000 in
+      rw [map_smul, map_sum]
+      apply congrArg (fun v : M => (O.card : ℂ)⁻¹ • v)
+      refine Finset.sum_nbij' (fun m => ρ κ m) (fun m => ρ κ⁻¹ m) (fun m hm => ?_) (fun m hm => ?_)
+        (fun m _ => rho_inv ρ κ m) (fun m _ => ?_) (fun _ _ => rfl)
+      · obtain ⟨k, hk, rfl⟩ := (hmem m).1 hm
+        exact (hmem _).2 ⟨κ * k, K.mul_mem hκ hk, rho_mul ρ κ k z⟩
+      · obtain ⟨k, hk, rfl⟩ := (hmem m).1 hm
+        exact (hmem _).2 ⟨κ⁻¹ * k, K.mul_mem (K.inv_mem hκ) hk, rho_mul ρ κ⁻¹ k z⟩
+      · simp
   · have hdist : ∀ m ∈ O, ‖iota B hB x - iota B hB m‖ = ‖iota B hB x - iota B hB z‖ := by
       intro m hm
       obtain ⟨k, hk, rfl⟩ := (hmem m).1 hm

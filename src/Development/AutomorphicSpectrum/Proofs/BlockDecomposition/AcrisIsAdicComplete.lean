@@ -13,6 +13,6 @@ namespace GlobalTheory.CompanionTheory.ACrisAdic
 theorem acris_isAdicComplete :
     ∀ {l : ℕ} [Fact l.Prime], IsAdicComplete (Ideal.span {(l : Acris l)}) (Acris l) := by
   intro l _
-  exact ACris.isAdicComplete ℂ_[l] l
+  exact ACris.isAdicComplete
 
 end GlobalTheory.CompanionTheory.ACrisAdic

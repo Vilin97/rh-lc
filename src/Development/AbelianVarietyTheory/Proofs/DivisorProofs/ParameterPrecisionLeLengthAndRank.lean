@@ -169,7 +169,7 @@ theorem size_window (D : D7) (L : SizeData₂ D) (hS : Formalism.MainNotions.Siz
     have : 1 ≤ D.R.k := by have := D.R.m_add_three_le_k; omega
     exact_mod_cast this
   have hf1 : (1 : ℝ) ≤ D.R.f := by
-    have : 1 ≤ D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity); omega
+    have : 1 ≤ D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord from D.R.ord_pos); omega
     exact_mod_cast this
   have hη : 4 * L.etaSz ≤ L.sc.b := by
     have e1 := hEta.2.1
@@ -293,7 +293,7 @@ theorem parameterPrecision_le_length_and_rank (D : D7) (L : SizeData₂ D) (P : 
   have hmk : (D.R.m : ℝ) ≤ D.R.k := by
     have : D.R.m ≤ D.R.k := by have := D.R.m_add_three_le_k; omega
     exact_mod_cast this
-  have hf0 : 0 < D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity); omega
+  have hf0 : 0 < D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord from D.R.ord_pos); omega
   have hf1 : (1 : ℝ) ≤ D.R.f := by exact_mod_cast hf0
   have hr2 : 2 ≤ D.R.r := by unfold Ranks.r; have := D.R.m_add_three_le_k; have := D.R.two_le_m; omega
   have hD1 : (1 : ℝ) ≤ (T.Dp : ℝ) := by
@@ -331,7 +331,7 @@ theorem parameterPrecision_le_length_and_rank (D : D7) (L : SizeData₂ D) (P : 
 
 theorem one_le_nWn (D : D7) (L : SizeData₂ D) (P : ParameterChoice' D L) (T : ParamsT D L P) : 1 ≤ T.nWn := by
   refine le_trans ?_ T.nW_lo.1
-  have hf : 0 < D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity); omega
+  have hf : 0 < D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord from D.R.ord_pos); omega
   have hr : 0 < D.R.r := by unfold Ranks.r; have := D.R.two_le_m; omega
   exact Nat.mul_pos (Nat.mul_pos hf hr) (Nat.succ_pos _)
 
@@ -458,7 +458,7 @@ theorem len_le (D : D7) (L : SizeData₂ D) (P : ParameterChoice' D L) (T : Para
     have : 1 ≤ D.R.m := by have := D.R.two_le_m; omega
     exact_mod_cast this
   have hf1 : (1 : ℝ) ≤ D.R.f := by
-    have : 1 ≤ D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity); omega
+    have : 1 ≤ D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord from D.R.ord_pos); omega
     exact_mod_cast this
   have hr2 : 2 ≤ D.R.r := by unfold Ranks.r; have := D.R.m_add_three_le_k; have := D.R.two_le_m; omega
   have hr1 : (1 : ℝ) ≤ D.R.r := by exact_mod_cast (by omega : 1 ≤ D.R.r)
@@ -466,7 +466,7 @@ theorem len_le (D : D7) (L : SizeData₂ D) (P : ParameterChoice' D L) (T : Para
     have : 1 ≤ T.Dp := by
       rw [T.Dp_eq]
       have h1 : 0 < D.R.r.choose 2 := Nat.choose_pos hr2
-      have h2 : 0 < D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity); omega
+      have h2 : 0 < D.R.f := by unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord from D.R.ord_pos); omega
       exact Nat.mul_pos h2 h1
     exact_mod_cast this
   have hZ1 : (1 : ℝ) ≤ zBase L := by

@@ -35,7 +35,7 @@ theorem vF_eq_vT {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {t : ℕ} (ht 
   have hne : 𝔭 ≠ ⊥ := Formalism.HermitianLattices.Ext.L3.idealPowerSpanBounds.ne_bot h𝔭
   have hp : Prime 𝔭 := Ideal.prime_of_isPrime hne h𝔭.isPrime
   rw [Formalism.L2.SG.Pf.G1.vF_eq_multiplicity h𝔭 ht0, vT,
-    UniqueFactorizationMonoid.multiplicity_eq_count_normalizedFactors hp.irreducible hI, normalize_eq]
+    UniqueFactorizationMonoid.multiplicity_eq_count_normalizedFactors hp.irreducible, normalize_eq]
 
 theorem nondeg {h1 : V1 →ₗ⋆[K] V1 →ₗ[K] K} {z : V1} {t : ℕ} (hH : GlueHyp K F h1 z t) :
     Formalism.L2.SG.Pf.Cnt.Nondeg h1 := by

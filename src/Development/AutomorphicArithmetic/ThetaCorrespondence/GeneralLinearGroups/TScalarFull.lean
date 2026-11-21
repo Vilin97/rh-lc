@@ -80,6 +80,7 @@ private theorem piTensor_scalar {α : Type} [Fintype α] {Γ X : α → Type} [�
     rw [LinearMap.map_smul, piTensor_tprod]
     simp only [hc]
     rw [MultilinearMap.map_smul_univ, smul_comm]
+    simp only [RingHom.id_apply]
   | add x y hx hy =>
     rw [map_add (f := _), hx, hy, smul_add]
 

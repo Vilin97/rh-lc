@@ -51,14 +51,16 @@ theorem exists_zsmul (h : IsLatticeEmb φ) (v : Fin r → K) :
   exists_zsmul_mem_of_isLattice h.2 v
 
 theorem isLocalizedModule_int (h : IsLatticeEmb φ) :
-    IsLocalizedModule ℤ⁰ (φ.restrictScalars ℤ) where
-  map_units s := by
+    IsLocalizedModule ℤ⁰ (φ.restrictScalars ℤ) := by
+  refine ⟨?_, ?_, ?_⟩
+  · intro s
     rw [← (Algebra.lsmul ℤ (A := ℚ) ℤ (Fin r → K)).commutes]
     exact (IsLocalization.map_units ℚ s).map _
-  surj v := by
+  · intro v
     obtain ⟨n, hn, x, hx⟩ := h.exists_zsmul v
     exact ⟨(x, ⟨n, mem_nonZeroDivisors_of_ne_zero hn⟩), hx.symm⟩
-  exists_of_eq hxy := ⟨1, by rw [h.1 hxy]⟩
+  · intro x y hxy
+    exact ⟨1, by rw [h.1 hxy]⟩
 
 theorem isBaseChange_rat (h : IsLatticeEmb φ) : IsBaseChange ℚ (φ.restrictScalars ℤ) :=
   (isLocalizedModule_iff_isBaseChange ℤ⁰ ℚ _).mp h.isLocalizedModule_int

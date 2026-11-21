@@ -40,7 +40,14 @@ theorem inf_eq_one_of_order [_root_.NumberField.IsTotallyComplex L] {χ : HChar 
       | simpa using h'
       | exact h'
   show (χ : Ideles L →* ℂˣ) (infDiag k) = 1
-  simp only [infDiag, MonoidHom.finset_prod_apply, map_prod, MonoidHom.comp_apply]
+  have hp (s : Finset (InfinitePlace L)) :
+      (∏ w ∈ s, (infIdele L w).comp (atInf w)) k =
+        ∏ w ∈ s, (infIdele L w) (atInf w k) := by
+    classical
+    induction s using Finset.induction_on with
+    | empty => simp
+    | insert a s ha ih => simp [ha, ih, MonoidHom.mul_apply]
+  rw [infDiag, hp, map_prod]
   apply Finset.prod_eq_one
   intro w _
   obtain ⟨y, hy⟩ := hpow w (atInf w k)

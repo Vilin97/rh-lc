@@ -36,6 +36,8 @@ theorem ιMulti_comb {m : ℕ} (b : Fin m → V) (c : Matrix (Fin m) (Fin m) K) 
         ext i j; simp [Matrix.one_apply, Pi.single_apply, eq_comm], Matrix.det_one]
     rw [AlternatingMap.smulRight_apply, e1, one_smul, AlternatingMap.compLinearMap_apply]
     congr 1
+    funext i
+    simp [Pi.basisFun_apply, Fintype.linearCombination_apply_single]
   exact AlternatingMap.congr_fun h c
 
 

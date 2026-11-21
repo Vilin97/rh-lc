@@ -76,7 +76,8 @@ theorem exists_locUnit {B : Base F E} (hB : B.IsGood σ) {ξ : E} (hξ : ξ ≠ 
     ∃ u : (Fv F v ⊗[F] E)ˣ, (u : Fv F v ⊗[F] E) ∈ intLoc F E v ∧
       ((u⁻¹ : (Fv F v ⊗[F] E)ˣ) : Fv F v ⊗[F] E) ∈ intLoc F E v ∧ sigR (Fv F v) σ u = -(u : Fv F v ⊗[F] E) := by
   have hc := hB.cm
-  rcases GlobalTheory.KFinLoc.split_or_inert F E σ B hB v with ⟨⟨τ⟩⟩ | ⟨w, hw⟩
+  rcases (GlobalTheory.KFinLoc.split_or_inert F E σ B hB v :
+    Nonempty (E →ₐ[F] Fv F v) ∨ ∃ w : HeightOneSpectrum (𝓞 E), Formalism.UG.IsInertAt F E v w) with ⟨⟨τ⟩⟩ | ⟨w, hw⟩
   · set e := splitAlgEquiv hc τ
     have hu : e.symm (1, -1) * e.symm (1, -1) = 1 := by
       rw [← map_mul, Prod.mk_mul_mk, one_mul, neg_mul_neg, mul_one]

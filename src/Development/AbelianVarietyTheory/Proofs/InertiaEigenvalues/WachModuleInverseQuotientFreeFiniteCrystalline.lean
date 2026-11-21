@@ -202,14 +202,14 @@ theorem finite_quo (T : LocLat G Qp LL O) (q : LetA O n)
 end Generic
 
 
-set_option maxHeartbeats 1600000 in
-set_option synthInstance.maxHeartbeats 400000 in
+set_option maxHeartbeats 16000000 in
+set_option synthInstance.maxHeartbeats 4000000 in
 theorem quo_free_finite : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) (F : FonOf D.loc D.locA HW) (l : ℕ) [Fact l.Prime] (K : FinExt l) (s : ℕ) (LL : FinExt l) (h : Good K s LL), let W := (HW l).W K s LL h; ∀ T : Lt K LL, IsCrys ((D.loc l).PD K) T.ρ → ∀ y : ℕ, Module.Free ↥(OL LL) (quo W T (invN W T (W.Q ^ y)) (W.N T)) ∧ Module.Finite ↥(OL LL) (quo W T (invN W T (W.Q ^ y)) (W.N T)) := by
   intro D HW F l _ K s LL h W T hT y
   obtain ⟨hdvr, hcomp, hl⟩ := GlobalTheory.FinExtIntegers.dvr_complete LL
-  haveI := hdvr
-  haveI := ((D.loc l).PD K).finK₀
-  haveI : NeZero (Module.finrank ℚ_[l] ↥(K0 K)) := ⟨Module.finrank_pos.ne'⟩
+  have := hdvr
+  have := ((D.loc l).PD K).finK₀
+  have : NeZero (Module.finrank ℚ_[l] ↥(K0 K)) := ⟨Module.finrank_pos.ne'⟩
   have hQ : ∀ i, W.Q i = GlobalTheory.Cyc.QQ l ↥(OL LL) s := by
     obtain ⟨_, _, _, _, _, hQ, _⟩ := GlobalTheory.NL.CycRing.rings_cyclotomic D HW l K s LL h
     exact hQ
@@ -225,12 +225,12 @@ theorem quo_free_finite : ∀ (D : Formalism.BasicNotions.D7) (HW : HWOf D.loc) 
     rw [(D.loc l).PD_p K]
     exact hl
   have hsat := (GlobalTheory.NL.Isog.saturated_and_isogeny_invariant D HW F l K s LL h).1 T hT
-  haveI := hcomp
+  have := hcomp
   obtain ⟨Fs, hFs⟩ := div_letters (Module.finrank ℚ_[l] ↥(K0 K)) (GlobalTheory.Cyc.QQ l ↥(OL LL) s ^ y)
     (QQ_pow_map_ne hl s h.1 y)
-  haveI hfin : Module.Finite ↥(OL LL) (quo W T (invN W T (W.Q ^ y)) (W.N T)) :=
+  have hfin : Module.Finite ↥(OL LL) (quo W T (invN W T (W.Q ^ y)) (W.N T)) :=
     finite_quo W T (W.Q ^ y) hunit Fs (by rw [hQy]; exact hFs)
-  haveI := torsionFree_quo W hp T hsat (invN W T (W.Q ^ y))
+  have := torsionFree_quo W hp T hsat (invN W T (W.Q ^ y))
   exact ⟨Module.free_of_finite_type_torsion_free', hfin⟩
 
 end GlobalTheory.NL.QuoFree

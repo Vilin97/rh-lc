@@ -59,7 +59,8 @@ theorem eichlerShimuraCocycle_eq_zero_of_closure (Γ : Subgroup SL(2, ℤ)) (w :
 
 theorem eichlerShimuraCocycles_finiteDimensional_of_fg (Γ : Subgroup SL(2, ℤ)) [Group.FG Γ] (w : ℕ) :
     FiniteDimensional ℂ (GlobalTheory.HeckeFamilyMatrices.Z1 Γ w) := by
-  obtain ⟨S, hS⟩ := (Group.fg_def).1 (inferInstance : Group.FG Γ)
+  obtain ⟨S, hS, hSfinite⟩ := (Group.fg_iff).1 (inferInstance : Group.FG Γ)
+  letI := hSfinite.fintype
   haveI : Module.Finite ℂ (Polynomial.degreeLT ℂ (w + 1)) :=
     Module.Finite.equiv (Polynomial.degreeLTEquiv ℂ (w + 1)).symm
   let g : GlobalTheory.HeckeFamilyMatrices.Z1 Γ w →ₗ[ℂ] (S → Polynomial.degreeLT ℂ (w + 1)) :=

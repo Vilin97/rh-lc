@@ -102,7 +102,8 @@ theorem continuous_lift (A B : Over S) :
 
 theorem isTopologicalGroup (G : Over S) [GrpObj G] : IsTopologicalGroup (Over.mk t ⟶ G) where
   continuous_mul := (continuous_comp_over t (μ[G])).comp (continuous_lift t G G)
-  continuous_inv := continuous_comp_over t (GrpObj.inv (X := G))
+  continuous_inv := by
+    simpa only [Hom.inv_def] using continuous_comp_over t (GrpObj.inv (X := G))
 
 end Group
 

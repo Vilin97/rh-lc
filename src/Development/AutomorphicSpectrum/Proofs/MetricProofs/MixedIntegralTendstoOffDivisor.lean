@@ -144,7 +144,7 @@ theorem expand_on {e : ℕ} {X : Type} [TopologicalSpace X] (A : FinHolAtlas e X
     refine Finset.sum_congr rfl fun T _ => ?_
     ring
   have hint := fun T (_ : T ∈ (Finset.univ : Finset (Finset (Fin e)))) => (hI T).const_mul ((-1 : ℝ) ^ (e - T.card))
-  refine ⟨(integrable_finset_sum _ hint).congr hae.symm, ?_⟩
+  refine ⟨(integrable_finsetSum _ hint).congr hae.symm, ?_⟩
   rw [integral_congr_ae hae, integral_finsetSum _ hint]
   simp_rw [integral_const_mul]
 
@@ -300,7 +300,7 @@ theorem mixed_integral_tendsto_of_C2_off_divisor : ∀ (e : ℕ) (X : Type) [Top
       (fun k y hy _ => locDens_nonneg_of_psh A _ hpot (hevt T).2.1 k hy) (hevt T).2.2 hg.1 hg.2
       j K hK hKc
   · have hne : Nonempty (ChartPartition A) := existsPartition A
-    simp_rw [mInt_eq_integralWith A _ hne]
+    simp_rw [mInt, dif_pos hne]
     unfold integralWith
     refine tendsto_finsetSum _ fun j _ => ?_
     letI : MeasurableSpace X := borel X

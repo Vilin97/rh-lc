@@ -64,10 +64,14 @@ theorem not_mem_bad (D : D7) (cf : CharFrame D) (C : NChoice D) (tp : TupTied D 
     by_cases hl : D.what₂.places.resChar w0 = D.host.pde
     · have hd : cf.del'.UnrAt w' := cf.isDel'.unr w' fun hp => hns (hsp w' (Or.inr hp))
       intro x hx
-      simp [Host.CharFrame.delAt, hl, hd x hx, hpsi x hx]
+      simp only [Host.CharFrame.delAt, hl, ↓reduceIte]
+      change cf.del'.loc w' x * (tp.psi w0).loc w' x = 1
+      rw [hd x hx, hpsi x hx, one_mul]
     · have hd : cf.del.UnrAt w' := cf.isDel.unr w' fun hp => hns (hsp w' (Or.inl hp))
       intro x hx
-      simp [Host.CharFrame.delAt, hl, hd x hx, hpsi x hx]
+      simp only [Host.CharFrame.delAt, hl, ↓reduceIte]
+      change cf.del.loc w' x * (tp.psi w0).loc w' x = 1
+      rw [hd x hx, hpsi x hx, one_mul]
 
 end GlobalTheory.SphNonSplit
 

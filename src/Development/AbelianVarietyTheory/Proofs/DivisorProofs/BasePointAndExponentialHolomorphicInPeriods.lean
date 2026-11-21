@@ -115,7 +115,7 @@ theorem isHolTo_point_and_exp : ∀ (O : Type) [Ring O] (bar : O → O) (g : ℕ
       exact uniq (hU b (hsub₃ hb).1.1) (hU₁ _ (hβC b (hsub₃ hb)).1) (k b) (hk b (hsub₃ hb))
     · have hφ : DifferentiableOn ℂ (fun bz : (Fin m → ℂ) × (Fin g → ℂ) => (G (Z (P bz.1)), k bz.1 bz.2))
           (B₃ ×ˢ Set.univ) :=
-        (hβ.comp differentiableOn_fst fun bz hbz => hsub₃ hbz.1).prodMk hkd
+        (hβ.comp (differentiableOn_fst (s := B₃ ×ˢ Set.univ)) fun bz (hbz : bz ∈ B₃ ×ˢ Set.univ) => hsub₃ hbz.1).prodMk hkd
       refine isHolTo_congr (isHolTo_comp he₁ (hB₃.prod isOpen_univ) hφ
         fun bz hbz => ⟨(hβC _ (hsub₃ hbz.1)).1, trivial⟩) fun bz hbz => ?_
       exact expo (hU _ (hsub₃ hbz.1).1.1) (hU₁ _ (hβC _ (hsub₃ hbz.1)).1) (k bz.1)

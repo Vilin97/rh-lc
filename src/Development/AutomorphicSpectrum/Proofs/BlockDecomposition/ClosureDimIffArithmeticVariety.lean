@@ -40,7 +40,7 @@ private theorem exists_open_nhd_topologicalKrullDim_MP_le {m : ℕ} {n : Fin (m 
     AlgebraicGeometry.exists_isAffineOpen_mem_and_subset (U := (⊤ : (MP ℤ m n).Opens)) (x := y) (by simp)
   refine ⟨U, hyU, ?_⟩
   have hZ := AlgebraicGeometry.isAffineOpen_top (Spec (CommRingCat.of ℤ))
-  have hft := AlgebraicGeometry.LocallyOfFiniteType.finiteType_of_affine_subset (mpStr ℤ m n) hZ hU
+  have hft := AlgebraicGeometry.Scheme.Hom.finiteType_appLE (mpStr ℤ m n) hZ hU
     (by simp)
   haveI : IsNoetherianRing ((Spec (CommRingCat.of ℤ)).presheaf.obj (Opposite.op ⊤)) :=
     isNoetherianRing_of_ringEquiv ℤ (Scheme.ΓSpecIso (CommRingCat.of ℤ)).symm.commRingCatIsoToRingEquiv

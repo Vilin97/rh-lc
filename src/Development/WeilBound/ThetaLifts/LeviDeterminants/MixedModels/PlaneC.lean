@@ -40,15 +40,15 @@ def what₂ {R : Type} (z : Matrix (Fin n₁) (Fin d) R) (a b : Fin d → R) : M
 
 omit [NumberField E] in
 theorem frame_alt (z : Fin d → AE F E) : incM F (frame H) * what₂ (0 : Matrix (Fin n₁) (Fin d) (AE F E)) z 0 = Matrix.vecMulVec (incV F H.x) z := by
-  rw [dec]; ext i l; simp [Matrix.vecMulVec_apply]
+  rw [dec]; ext i l; simp [what₂, Matrix.of_apply, Matrix.vecMulVec_apply, Matrix.mul_apply, Sum.elim]
 
 omit [NumberField E] in
 theorem frame_y (z : Fin d → AE F E) : incM F (frame H) * what₂ (0 : Matrix (Fin n₁) (Fin d) (AE F E)) 0 z = Matrix.vecMulVec (incV F H.y) z := by
-  rw [dec]; ext i l; simp [Matrix.vecMulVec_apply]
+  rw [dec]; ext i l; simp [what₂, Matrix.of_apply, Matrix.vecMulVec_apply, Matrix.mul_apply, Sum.elim]
 
 omit [NumberField E] in
 theorem frame_iota (z : Matrix (Fin n₁) (Fin d) (AE F E)) : incM F (frame H) * what₂ z 0 0 = incM F H.ι * z := by
-  rw [dec]; ext i l; simp [Matrix.vecMulVec_apply]
+  rw [dec]; ext i l; simp [what₂, Matrix.of_apply, Matrix.vecMulVec_apply, Matrix.mul_apply, Sum.elim]
 
 variable {A : Matrix (Fin n₁ ⊕ Fin 2) (Fin n) (AE F E)}
 

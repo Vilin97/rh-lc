@@ -73,8 +73,7 @@ theorem rhoM_eq_sum (Ψ : Type) [Fintype Ψ] [DecidableEq Ψ] (N : ℕ) :
     (∑ τ : Ψ, ∑ a : Fin N, ∑ _b ∈ Finset.Ioi a, Finsupp.single (τ, a) 1 : (Ψ × Fin N) →₀ ℕ)
       = rhoM Ψ N := by
   ext ⟨τ, a⟩
-  simp only [Finsupp.coe_finset_sum, Finset.sum_apply, Finset.sum_const, smul_eq_mul,
-    Finsupp.coe_smul, Pi.smul_apply, Finsupp.single_apply, Prod.mk.injEq]
+  simp only [Finset.sum_apply', Finsupp.single_apply, Prod.mk.injEq]
   rw [Finset.sum_eq_single τ, Finset.sum_eq_single a]
   · simp [rhoM, Fin.card_Ioi]
   · intro b _ hb; simp [hb]

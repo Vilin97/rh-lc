@@ -149,9 +149,9 @@ theorem harnack (X : Data E r) {x0 : Frame X.Ψ r} (h0 : IsOrth X x0) :
   set b : X.Ψ → ℝ := fun τ =>
     ‖dmin X.Gm (cpt X x1 z) τ i0‖ / ‖lminor ((mat x τ)⁻¹ * mat (cpt X x1 z) τ) i0‖ ^ 2 with hb
   have hapos : ∀ τ, 0 < a τ := fun τ => by
-    have := norm_pos_iff.2 (det_block_ne_zero X.p0_le (isometry_of_orth X hx hx1 τ))
+    have hL := norm_pos_iff.2 (det_block_ne_zero X.p0_le (isometry_of_orth X hx hx1 τ))
     simp only [ha, IC.norm_dmin_orth X hx1]
-    positivity
+    exact div_pos zero_lt_one (pow_pos hL 2)
   have hab : ∀ τ, 1 / 8 * a τ ≤ b τ := fun τ => by
     have hiso := isometry_of_orth X hx hx1 τ
     have hL : 0 < ‖lminor ((mat x τ)⁻¹ * mat x1 τ) i0‖ :=

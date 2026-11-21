@@ -44,8 +44,9 @@ private lemma sl_eq_of_map (X : Tower Ω ε) {M : ℕ} {w : X.K} (hw : w ∈ top
 private lemma map_T_pow (M : ℕ) :
     Matrix.SpecialLinearGroup.map (Int.castRingHom (ZMod M)) (ModularGroup.T ^ M) = 1 := by
   have h : (ModularGroup.T ^ M : SL(2, ℤ)) = ModularGroup.T ^ (M : ℤ) := by rw [zpow_natCast]
+  rw [h]
   ext i j
-  rw [h, Matrix.SpecialLinearGroup.map_apply_coe, RingHom.mapMatrix_apply, Matrix.map_apply, ModularGroup.coe_T_zpow]
+  rw [Matrix.SpecialLinearGroup.map_apply_coe, Matrix.map_apply, ModularGroup.coe_T_zpow]
   fin_cases i <;> fin_cases j <;> simp
 
 private lemma sl_mem_KT (X : Tower Ω ε) {M : ℕ} {w : X.K} (hw : w ∈ topL X M) (g : SL(2, ℤ)) :

@@ -110,7 +110,7 @@ theorem UpperTheory.V.Z.Tf.SR.absShare :
       rw [sub_part I _ (hsum x x σ h1)]
       simp_rw [sub_part I _ (hsum x _ σ h1)]
       have hsj : ∀ j, Summable fun p : {p : W × ℕ // ¬ p.1 ∈ I} => lterm q (A x) (A (y j)) σ p.1 :=
-        fun j => (hsum x (y j) σ h1).subtype {p : W × ℕ | ¬ p.1 ∈ I}
+        fun j => (hsum x (y j) σ h1).subtype (fun p : W × ℕ => ¬ p.1 ∈ I)
       rw [← Summable.tsum_finsetSum (fun j _ => hsj j)]
       refine tsum_congr fun p => ?_
       have hp : (starRingEnd ℂ) (∑ a, A x p.1.1 a ^ (p.1.2 + 1)) =

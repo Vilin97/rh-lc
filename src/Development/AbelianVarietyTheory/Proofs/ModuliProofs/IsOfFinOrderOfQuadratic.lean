@@ -25,7 +25,7 @@ open scoped CategoryTheory.Obj
 
 namespace GlobalTheory.CMSpreadCompare
 
-open GlobalTheory.PureType GlobalTheory.IndefiniteRowSideFullHecke.CMUniformizationSpread
+open GlobalTheory.PureType
 
 variable {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Host E}
 

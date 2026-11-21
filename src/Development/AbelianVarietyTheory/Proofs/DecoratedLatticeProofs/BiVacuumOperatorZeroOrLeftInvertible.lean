@@ -123,12 +123,12 @@ theorem app_eq (op : BiOp A S A') (C : WO A S → WO S A' → ℂ) :
   have ha : ∀ p a b, t p (a + b) = t p a + t p b := fun p a b => add_smul a b _
   change _ = (kOp A S A' op).sum t
   unfold kOp
-  rw [← Finsupp.sum_finset_sum_index hz ha]
+  rw [← Finsupp.sum_finsetSum_index hz ha]
   unfold BiOp.app
   refine Finset.sum_congr rfl fun i _ => ?_
-  rw [biComb_eq, ← Finsupp.sum_finset_sum_index hz ha]
+  rw [biComb_eq, ← Finsupp.sum_finsetSum_index hz ha]
   refine Finset.sum_congr rfl fun x _ => ?_
-  rw [← Finsupp.sum_finset_sum_index hz ha]
+  rw [← Finsupp.sum_finsetSum_index hz ha]
   refine Finset.sum_congr rfl fun y _ => ?_
   rw [Finsupp.sum_single_index (hz _)]
 
@@ -136,9 +136,9 @@ theorem kOp_good (P : Pl D → Prop) (op : BiOp A S A') (hop : OpAt P op) :
     ∀ p ∈ (kOp A S A' op).support, p ∈ goodG A S A' P := by
   classical
   intro p hp
-  obtain ⟨i, -, hp⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hp)
-  obtain ⟨x, hx, hp⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hp)
-  obtain ⟨y, hy, hp⟩ := Finset.mem_biUnion.1 (Finsupp.support_finset_sum hp)
+  obtain ⟨i, -, hp⟩ := Finset.mem_biUnion.1 (Finsupp.support_finsetSum hp)
+  obtain ⟨x, hx, hp⟩ := Finset.mem_biUnion.1 (Finsupp.support_finsetSum hp)
+  obtain ⟨y, hy, hp⟩ := Finset.mem_biUnion.1 (Finsupp.support_finsetSum hp)
   rw [Finset.mem_singleton.1 (Finsupp.support_single_subset hp)]
   exact ⟨(hop i).1 x hx, (hop i).2 y hy⟩
 

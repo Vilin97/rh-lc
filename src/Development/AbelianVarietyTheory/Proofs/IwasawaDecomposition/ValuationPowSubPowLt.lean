@@ -263,7 +263,8 @@ section Galois
 
 variable {F E Ω : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [Field Ω] [Algebra E Ω]
 
-theorem normV_eq (v : HeightOneSpectrum (𝓞 E)) : normV v = Ideal.absNorm v.asIdeal := rfl
+theorem normV_eq (v : HeightOneSpectrum (𝓞 E)) : normV v = Ideal.absNorm v.asIdeal := by
+  rw [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
 
 theorem normV_inert (h2 : Module.finrank F E = 2)
     (hr : ∀ (P : HeightOneSpectrum (𝓞 E)) (k : Fˣ), ordF P (upF F k) = ordF (P.under (𝓞 F)) k)
@@ -277,6 +278,7 @@ theorem normV_inert (h2 : Module.finrank F E = 2)
     obtain ⟨π, hπ⟩ := v.valuation_exists_uniformizer F
     have h := HeightOneSpectrum.valuation_liesOver E v P π
     rw [valuation_up hr, ← hv, hπ, ← WithZero.exp_nsmul, WithZero.exp_inj] at h
+    rw [Ideal.ramificationIdx'_eq_ramificationIdx v.asIdeal P.asIdeal v.ne_bot]
     simpa using h
   have hs := Ideal.sum_ramification_inertia (𝓞 E) F E v.ne_bot
   have hset : IsDedekindDomain.primesOverFinset v.asIdeal (𝓞 E) = {P.asIdeal} := by
@@ -307,7 +309,7 @@ theorem not_forall_pow_sub_mem {P : HeightOneSpectrum (𝓞 E)} {q : ℕ} (hq : 
   have h3 := Polynomial.card_le_degree_of_subset_roots
     (p := (Polynomial.X ^ q - Polynomial.X : Polynomial (𝓞 E ⧸ P.asIdeal))) (Z := Finset.univ) (fun z _ => by
       obtain ⟨x, rfl⟩ := Ideal.Quotient.mk_surjective z
-      rw [Polynomial.mem_roots (FiniteField.X_pow_card_sub_X_ne_zero _ h1)]
+      rw [Polynomial.mem_roots (FiniteField.X_pow_card_sub_X_ne_zero h1)]
       simpa using Ideal.Quotient.eq_zero_iff_mem.2 (h x))
   rw [Polynomial.natDegree_X_pow_sub_X h1, Finset.card_univ, hc] at h3
   nlinarith

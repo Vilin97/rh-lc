@@ -100,11 +100,12 @@ theorem span_colLat_one : Submodule.span K (colLat (1 : GL (Fin n) K) : Set (Fin
   funext a
   simp [Matrix.one_apply, Pi.single_apply]
 
-theorem exists_isBasisAt_one (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsLattice K (M τ)) :
+theorem exists_isBasisAt_one (M : ι → Submodule (𝓞 K) (Fin n → K))
+    (hM : ∀ τ, Submodule.IsFullLattice K (M τ)) :
     ∃ t : 𝓞 K, t ≠ 0 ∧ ∀ w : HeightOneSpectrum (𝓞 K), t ∉ w.asIdeal → ∀ τ, IsBasisAt w (M τ) 1 := by
   classical
   have h1 : ∀ τ, ∃ s : 𝓞 K, s ≠ 0 ∧ ∀ x ∈ M τ, s • x ∈ colLat (1 : GL (Fin n) K) := fun τ =>
-    exists_smul_mem_of_fg _ _ (hM τ).fg fun x _ => by rw [span_colLat_one]; trivial
+    exists_smul_mem_of_fg _ _ (hM τ).toIsLattice.fg fun x _ => by rw [span_colLat_one]; trivial
   have h2 : ∀ τ, ∃ s : 𝓞 K, s ≠ 0 ∧ ∀ x ∈ colLat (1 : GL (Fin n) K), s • x ∈ M τ := fun τ =>
     exists_smul_mem_of_fg _ _ colLat_one_fg fun x _ => by rw [(hM τ).span_eq_top]; trivial
   choose s hs hsM using h1
@@ -122,7 +123,26 @@ theorem transLat_fg (hB : BasisAtEx) (lam : ι → DomWeight n) (T : Submodule (
     (M : ι → Submodule (𝓞 K) (Fin n → K)) (hM : ∀ τ, Submodule.IsLattice K (M τ)) :
     (transLat lam T M).FG := by
   classical
-  obtain ⟨t, ht, htw⟩ := exists_isBasisAt_one M hM
+  obtain ⟨m, hm⟩ := Ideal.exists_maximal (𝓞 K)
+  let w₀ : HeightOneSpectrum (𝓞 K) :=
+    ⟨m, hm.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hm (RingOfIntegers.not_isField K)⟩
+  have hMfull : ∀ τ, Submodule.IsFullLattice K (M τ) := by
+    intro τ
+    obtain ⟨B, hBw⟩ := hB K n (M τ) (hM τ) w₀
+    have hcol : Submodule.span K (colLat B : Set (Fin n → K)) = ⊤ := by
+      rw [colLat, Submodule.span_span_of_tower]
+      change Submodule.span K (Set.range (B : Matrix (Fin n) (Fin n) K).col) = ⊤
+      rw [← Matrix.range_mulVecLin]
+      exact LinearMap.range_eq_top.mpr (Matrix.mulVec_surjective_iff_isUnit.mpr B.isUnit)
+    refine { toIsLattice := hM τ, span_eq_top := ?_ }
+    rw [eq_top_iff, ← hcol, Submodule.span_le]
+    intro x hx
+    apply Submodule.span_le_restrictScalars (GlobalTheory.LatBasisAt.locRing w₀) K _
+    unfold IsBasisAt at hBw
+    rw [← GlobalTheory.LatBasisAt.mem_localization_iff_mem_span, hBw,
+      GlobalTheory.LatBasisAt.mem_localization_iff_mem_span]
+    exact Submodule.subset_span hx
+  obtain ⟨t, ht, htw⟩ := exists_isBasisAt_one M hMfull
   have hmem : ∀ F ∈ transLat lam T M, ∀ (w : HeightOneSpectrum (𝓞 K)) (B : ι → GL (Fin n) K),
       (∀ τ, IsBasisAt w (M τ) (B τ)) → actP lam B⁻¹ F ∈ Formalism.HermitianLatticesTheory.localization₂ w.asIdeal T := by
     intro F hF w B hB
@@ -179,13 +199,7 @@ theorem transLat_isLattice (hB : BasisAtEx) (lam : ι → DomWeight n) (T : Subm
   fg := by
     refine Submodule.fg_of_fg_map_injective ((VV K lam).subtype.restrictScalars (𝓞 K)) Subtype.val_injective ?_
     exact (transLat_fg hB lam T hT hsp M hM).of_le (Submodule.map_comap_le _ _)
-  span_eq_top := by
-    obtain ⟨m, hm⟩ := Ideal.exists_maximal (𝓞 K)
-    let w : HeightOneSpectrum (𝓞 K) :=
-      ⟨m, hm.isPrime, Ring.ne_bot_of_isMaximal_of_not_isField hm (RingOfIntegers.not_isField K)⟩
-    choose B hBw using fun τ => hB K n (M τ) (hM τ) w
-    intro s hs hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+  linearIndepOn _ _ := (LinearIndependent.iff_fractionRing (𝓞 K) K).mp
 theorem nabDelLattice : NabDelLattice := by
   intro K _ _ ι _ n lam M hM
   obtain ⟨h1, h2, h3, h4⟩ := GlobalTheory.T.stdWeylLattices_fg_and_span_coeffSpace K ι n lam

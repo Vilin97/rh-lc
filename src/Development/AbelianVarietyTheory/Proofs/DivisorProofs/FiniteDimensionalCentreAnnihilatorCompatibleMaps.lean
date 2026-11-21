@@ -50,11 +50,11 @@ def postZ (z : Module.End ℂ (Sm E a)) (hz : z ∈ Zalg E a) : Module.End ℂ (
 
 def postZAlg : Zalg E a →ₐ[ℂ] Module.End ℂ (mapsJ φ L) where
   toFun z := postZ φ L z.1 z.2
-  map_one' := by ext; simp
-  map_mul' z z' := by ext; simp
-  map_zero' := by ext; simp
-  map_add' z z' := by ext; simp
-  commutes' c := by ext; simp
+  map_one' := LinearMap.ext fun _ => Subtype.ext (LinearMap.ext fun _ => rfl)
+  map_mul' _ _ := LinearMap.ext fun _ => Subtype.ext (LinearMap.ext fun _ => rfl)
+  map_zero' := LinearMap.ext fun _ => Subtype.ext (LinearMap.ext fun _ => rfl)
+  map_add' _ _ := LinearMap.ext fun _ => Subtype.ext (LinearMap.ext fun _ => rfl)
+  commutes' _ := LinearMap.ext fun _ => Subtype.ext (LinearMap.ext fun _ => rfl)
 
 end GlobalTheory.AutGrowth.KilledFin
 

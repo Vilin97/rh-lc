@@ -496,7 +496,8 @@ theorem insert_two_mem_base (a : S) (x y z w : SlopeTestRemainingChoices S (A P 
 
 theorem frame_mem_base (l : ℕ) {L : LevelData (A P (DQ P)) P.r} (hL : IsModelLevel P (DQ P) L) :
     ∀ w : List (Letter ℂ S), (∀ Y, (ofWord L (startM P (DQ P) l) w).ee Y ∈ BlockMatrixAlgebra P S) ∧
-      (∀ Y, (ofWord L (startM P (DQ P) l) w).x Y ∈ BlockMatrixAlgebra P S) ∧ (∀ Y, (ofWord L (startM P (DQ P) l) w).xi Y ∈ BlockMatrixAlgebra P S)
+      (∀ Y, (ofWord L (startM P (DQ P) l) w).x Y ∈ BlockMatrixAlgebra P S) ∧ (∀ Y, (ofWord L (startM P (DQ P) l) w).xi Y ∈ BlockMatrixAlgebra P S) := fun w =>
+  match w with
   | [] => by
     refine ⟨fun Y => scalar_embed_mem_base P ?_, fun Y => scalar_embed_mem_base P (kappa_mem_base P _), fun Y => scalar_embed_mem_base P (kappa_mem_base P _)⟩
     show eeA P (DQ P) Y ∈ BaseMatrixAlgebra P
@@ -1031,9 +1032,10 @@ theorem polyIn_affine_mul {f : ℂ → R} {d : ℕ} (u v : R) (hf : PolyIn f d) 
   simp only [add_mul, smul_mul_assoc]
 
 theorem polyIn_list_prod : ∀ (l : List (ℂ → R)), (∀ g ∈ l, ∃ u v : R, ∀ s, g s = s • u + v) →
-    PolyIn (fun s => (l.map fun g => g s).prod) l.length
-  | [], _ => by simpa using polyIn_const (1 : R)
-  | g :: l, h => by
+    PolyIn (fun s => (l.map fun g => g s).prod) l.length := fun l =>
+  match l with
+  | [] => fun _ => by simpa using polyIn_const (1 : R)
+  | g :: l => fun h => by
     obtain ⟨u, v, huv⟩ := h g List.mem_cons_self
     have ih := polyIn_list_prod l fun g' hg' => h g' (List.mem_cons_of_mem _ hg')
     have := polyIn_affine_mul u v ih
@@ -1251,7 +1253,8 @@ theorem wordS_position_lt : ∀ (v : List (Bool × ℝ)), ∀ a ∈ (wordS v), (
       simp only [Fin.coe_castSucc, List.length_cons]
       omega
 
-theorem wordS_nodup : ∀ v : List (Bool × ℝ), ((wordS v).map Letter.intersection_update_fsHerm_neg_one).Nodup
+theorem wordS_nodup : ∀ v : List (Bool × ℝ), ((wordS v).map Letter.intersection_update_fsHerm_neg_one).Nodup := fun v =>
+  match v with
   | [] => by simp [wordS]
   | x :: v => by
     simp only [wordS, List.map_cons, List.map_map, List.nodup_cons]
@@ -1605,7 +1608,7 @@ theorem rel_DD {f : FrameData (Fin N) A} {f' : FrameData (Fin (N + 1)) A} (h : R
 theorem embM_scal1 (z : ℂ) : embM (z • (1 : SlopeTestRemainingChoices (Fin N) A)) = z • 1 := by rw [embM_smul, embM_one]
 
 theorem rel_plus {f : FrameData (Fin N) A} {f' : FrameData (Fin (N + 1)) A} (h : Rel f f') (a : Fin N) (Ya : ℂ) :
-    Rel (f.plus L a Ya) (f'.plus L a.castSucc Ya) where
+    Rel (f.plus L a Ya) (f'.plus L a.castSucc Ya) := {
   F := by
     show ins a.castSucc _ * f'.F = embM (ins a _ * f.F)
     rw [embM_mul, embM_ins, embM_mat_mul, matrix_two_map, matrix_two_map, h.F, rel_l L h]
@@ -1640,9 +1643,9 @@ theorem rel_plus {f : FrameData (Fin N) A} {f' : FrameData (Fin (N + 1)) A} (h :
     rw [h.q]
   N := by show f'.N + 1 = f.N + 1; rw [h.N]
   inv := by show f'.inv ∩ _ = f.inv ∩ _; rw [h.inv]
-  reg := by show f'.reg ∩ _ = f.reg ∩ _; rw [h.reg]
+  reg := by show f'.reg ∩ _ = f.reg ∩ _; rw [h.reg] }
 
-theorem rel_start (st : Start A) : Rel (st.frame : FrameData (Fin N) A) (st.frame : FrameData (Fin (N + 1)) A) where
+theorem rel_start (st : Start A) : Rel (st.frame : FrameData (Fin N) A) (st.frame : FrameData (Fin (N + 1)) A) := {
   F := embM_one.symm
   Fi := embM_one.symm
   x Y := (embM_io _).symm
@@ -1653,7 +1656,7 @@ theorem rel_start (st : Start A) : Rel (st.frame : FrameData (Fin N) A) (st.fram
   q := rfl
   N := rfl
   inv := rfl
-  reg := rfl
+  reg := rfl }
 
 theorem rel_ofWord (st : Start A) :
     ∀ w : List (Letter ℂ (Fin N)), (∀ l ∈ w, l.plus = true) → Rel (ofWord L st w) (ofWord L st (w.map liftL))
@@ -1892,7 +1895,7 @@ theorem l_memCA {f : FrameData S (A P D)} (h : FOK (L := L) f) (Y : ℂ) : f.l L
   exact add_mem (io_memCA (lowering_mem_centralizer P D L Y))
     (mul_mem (io_memCA (mul_mem (mul_mem (zb_mem P D L) (zi_mem P D L)) (ggi_mem P D L))) (h.ee Y))
 
-theorem fok_plus {f : FrameData S (A P D)} (h : FOK (L := L) f) (a : S) (Ya : ℂ) : FOK (L := L) (f.plus L a Ya) where
+theorem fok_plus {f : FrameData S (A P D)} (h : FOK (L := L) f) (a : S) (Ya : ℂ) : FOK (L := L) (f.plus L a Ya) := {
   F := mul_mem (ins_memCA a _ (mat_mul_memCA
     (matrix_two_mem_closure (io_memCA (zi_mem P D L)) (zero_mem _) (zero_mem _) (io_memCA (zbi_mem P D L)))
     (matrix_two_mem_closure (one_mem _) (zero_mem _) (mul_mem (io_memCA (gg_mem P D L)) (l_memCA h Ya)) (io_memCA (gg_mem P D L)))))
@@ -1909,17 +1912,17 @@ theorem fok_plus {f : FrameData S (A P D)} (h : FOK (L := L) f) (a : S) (Ya : �
       (mul_mem (mul_mem (h.xi _) (h.ee Y)) (h.x _)))
     unfold FrameData.DD tz
     exact add_mem (sub_mem (h.ee Y) (smul_memCA _ (sub_mem (h.ee Y) (h.ee Ya))))
-      (io_memCA (Subalgebra.smul_mem _ (zbi_mem P D L) _))
+      (io_memCA (Subalgebra.smul_mem _ (zbi_mem P D L) _)) }
 
 theorem fok_start (hL : IsModelLevel P D L) (l : ℕ) :
-    FOK (L := L) ((startM P D l).frame : FrameData S (A P D)) where
+    FOK (L := L) ((startM P D l).frame : FrameData S (A P D)) := {
   F := one_mem _
   Fi := one_mem _
   x Y := io_memCA (kap_mem hL _)
   xi Y := io_memCA (kap_mem hL _)
   c := one_mem _
   ci := one_mem _
-  ee Y := io_memCA (eeA_mem hL Y)
+  ee Y := io_memCA (eeA_mem hL Y) }
 
 theorem fok_ofWord (hL : IsModelLevel P D L) (l : ℕ) :
     ∀ w : List (Letter ℂ S), (∀ a ∈ w, a.plus = true) → FOK (L := L) (ofWord L (startM P D l) w)
@@ -3828,9 +3831,10 @@ theorem tl_length (w : List ℝ) : (tl w).length = w.length := by
 theorem tl_real (w : List ℝ) : ∀ a ∈ tl w, a.plus = true ∧ a.pt.im = 0 := fun a ha =>
   ⟨tl_plus w a ha, by obtain ⟨p, _, e⟩ := tl_mem w ha; rw [e]; simp⟩
 
-theorem onBoxes_mem (S : LE.Sys) : ∀ w : List ℝ, S.OnBoxes w → ∀ p ∈ w, ∃ a < w.length, p ∈ S.box a
-  | [], _, p, hp => absurd hp List.not_mem_nil
-  | Y :: w, h, p, hp => by
+theorem onBoxes_mem (S : LE.Sys) : ∀ w : List ℝ, S.OnBoxes w → ∀ p ∈ w, ∃ a < w.length, p ∈ S.box a := fun w =>
+  match w with
+  | [] => fun _ p hp => absurd hp List.not_mem_nil
+  | Y :: w => fun h p hp => by
     obtain ⟨h1, h2⟩ := h
     rcases List.mem_cons.1 hp with rfl | hp
     · exact ⟨w.length, by simp, h1⟩
@@ -4952,9 +4956,10 @@ theorem csR_type (x0s x0t q0R : ℝ → ℝ) (μ : Letter ℂ S → ℝ) : ∀ (
     v.Pairwise (fun b c => 2 < |b.pt.re - c.pt.re|) →
     (∀ b ∈ v, (e b.intersection_update_fsHerm_neg_one = 0 → x0t (b.pt.re + 1) = x0s (b.pt.re + 1) * μ b ∧ x0s (b.pt.re + 1) ≠ 0) ∧
       (e b.intersection_update_fsHerm_neg_one ≠ 0 → x0t b.pt.re * μ b = x0s b.pt.re) ∧ μ b ≠ 0) →
-    csR x0t q0R v e * (v.map μ).prod = csR x0s q0R v e
-  | [], e, _, _ => by simp [csR]
-  | b :: v, e, hp, h => by
+    csR x0t q0R v e * (v.map μ).prod = csR x0s q0R v e := fun v =>
+  match v with
+  | [] => fun e _ _ => by simp [csR]
+  | b :: v => fun e hp h => by
     rw [List.pairwise_cons] at hp
     have hv : ∀ c ∈ v, (e c.intersection_update_fsHerm_neg_one = 0 → x0t (c.pt.re + 1) = x0s (c.pt.re + 1) * μ c ∧ x0s (c.pt.re + 1) ≠ 0) ∧
         (e c.intersection_update_fsHerm_neg_one ≠ 0 → x0t c.pt.re * μ c = x0s c.pt.re) ∧ μ c ≠ 0 := fun c hc => h c (List.mem_cons_of_mem _ hc)
@@ -4997,9 +5002,10 @@ variable {S : Type} [Fintype S] [DecidableEq S]
 
 theorem csR_pos (x0R q0R : ℝ → ℝ) (L : ℝ) (hL : 2 ≤ L) : ∀ (v : List (Letter ℂ S)) (e : Ix S),
     v.Pairwise (fun b c => L ≤ b.pt.re - c.pt.re) →
-    (∀ b ∈ v, 0 < x0R b.pt.re ∧ 0 < x0R (b.pt.re + 1) ∧ 0 < q0R b.pt.re) → 0 < csR x0R q0R v e
-  | [], e, _, _ => by simp [csR]
-  | b :: v, e, hp, h => by
+    (∀ b ∈ v, 0 < x0R b.pt.re ∧ 0 < x0R (b.pt.re + 1) ∧ 0 < q0R b.pt.re) → 0 < csR x0R q0R v e := fun v =>
+  match v with
+  | [] => fun e _ _ => by simp [csR]
+  | b :: v => fun e hp h => by
     rw [List.pairwise_cons] at hp
     have ih := csR_pos x0R q0R L hL v e hp.2 (fun c hc => h c (List.mem_cons_of_mem _ hc))
     obtain ⟨h1, h2, h3⟩ := h b List.mem_cons_self
@@ -5060,9 +5066,10 @@ theorem csR_flip (x0R q0R : ℝ → ℝ) (L : ℝ) (hL : 2 ≤ L) (la : Letter �
     v.Pairwise (fun b c => L ≤ b.pt.re - c.pt.re) →
     (∀ b ∈ v, 0 < x0R b.pt.re ∧ 0 < x0R (b.pt.re + 1) ∧ 0 < q0R b.pt.re) →
     csR x0R q0R v e ≤ csR x0R q0R v e' * (q0R la.pt.re / (x0R la.pt.re * x0R (la.pt.re + 1))) *
-      ((1 + 2 / L) * (1 + 1 / L)) ^ v.length
-  | [], _, h, _, _ => absurd h List.not_mem_nil
-  | b :: v, hnd, h, hp, hpos => by
+      ((1 + 2 / L) * (1 + 1 / L)) ^ v.length := fun v =>
+  match v with
+  | [] => fun _ h _ _ => absurd h List.not_mem_nil
+  | b :: v => fun hnd h hp hpos => by
     have hnd' := hnd
     rw [List.map_cons, List.nodup_cons] at hnd'
     have hp' := hp
@@ -5322,7 +5329,8 @@ open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.MA Formalism.FourierDec
 
 noncomputable section
 
-theorem wordS_nodup : ∀ v : List (Bool × ℝ), ((wordS v).map Letter.intersection_update_fsHerm_neg_one).Nodup
+theorem wordS_nodup : ∀ v : List (Bool × ℝ), ((wordS v).map Letter.intersection_update_fsHerm_neg_one).Nodup := fun v =>
+  match v with
   | [] => List.nodup_nil
   | x :: v => by
     simp only [wordS, List.map_cons, List.map_map, List.nodup_cons]
@@ -5684,9 +5692,10 @@ open Formalism.FourierDecayAlt Formalism.FourierDecayAlt.MA Formalism.FourierDec
 noncomputable section
 
 theorem onBoxes_pairwise (S : LE.Sys) (hBF : ∀ a b, a < b → ∀ x ∈ S.box a, ∀ y ∈ S.box b, S.L ≤ y - x) :
-    ∀ w : List ℝ, S.OnBoxes w → w.Pairwise fun p p' => S.L ≤ p - p'
-  | [], _ => List.Pairwise.nil
-  | Y :: w, h => by
+    ∀ w : List ℝ, S.OnBoxes w → w.Pairwise fun p p' => S.L ≤ p - p' := fun w =>
+  match w with
+  | [] => fun _ => List.Pairwise.nil
+  | Y :: w => fun h => by
     obtain ⟨h1, h2⟩ := h
     refine List.Pairwise.cons (fun p hp => ?_) (onBoxes_pairwise S hBF w h2)
     obtain ⟨a, ha, hpa⟩ := onBoxes_mem S w h2 p hp
@@ -5735,9 +5744,10 @@ def multR (v : List (Letter ℂ S)) (ρm : ℝ) (e : Ix S) : ℝ := (v.map fun b
 
 theorem multR_bounds (ρm Iw : ℝ) (hI : 6 ≤ Iw) : ∀ (v : List (Letter ℂ S)) (e : Ix S),
     (∀ b ∈ v, Iw / 3 ≤ |b.pt.re + ρm + 1|) → (v.length : ℝ) ≤ Iw →
-    0 < multR v ρm e ∧ multR v ρm e ≤ Real.exp 3
-  | [], e, _, _ => by simp [multR]
-  | b :: v, e, h, hlen => by
+    0 < multR v ρm e ∧ multR v ρm e ≤ Real.exp 3 := fun v =>
+  match v with
+  | [] => fun e _ _ => by simp [multR]
+  | b :: v => fun e h hlen => by
     have hb := h b List.mem_cons_self
     have hlen' : (v.length : ℝ) ≤ Iw := by simp at hlen; linarith
     have hI0 : 0 < Iw := by linarith
@@ -6094,12 +6104,13 @@ theorem lsS_sum {S : Type} [Fintype S] [DecidableEq S] : ∀ (w v : List (Letter
     · refine sum_congr rfl fun n _ => ?_
       simp [List.append_assoc]
 
-theorem ixOf_inj (P : M.Par) : ∀ (N : ℕ) (i i' : Iota P N), ixOf P N i = ixOf P N i' → i = i'
-  | 0, i, i', h => by
+theorem ixOf_inj (P : M.Par) : ∀ (N : ℕ) (i i' : Iota P N), ixOf P N i = ixOf P N i' → i = i' := fun N i i' =>
+  match N, i, i' with
+  | 0, i, i' => fun h => by
     have := congrArg Prod.snd h
     simp only [ixOf] at this
     exact this
-  | N + 1, (b, i), (b', i'), h => by
+  | N + 1, (b, i), (b', i') => fun h => by
     simp only [ixOf, Prod.mk.injEq] at h
     obtain ⟨h1, h2⟩ := h
     have hl := congrFun h1 (Fin.last N)
@@ -6720,9 +6731,10 @@ noncomputable section
 
 theorem multS_bound {S : Type} [Fintype S] [DecidableEq S] (L : ℝ) (hL : 0 < L) (p : ℂ) (hp : p.im = 0)
     (e : Ix S) : ∀ (u : List (Letter ℂ S)), (∀ b ∈ u, b.pt.im = 0 ∧ L ≤ b.pt.re - p.re) →
-    ‖multS u p e‖ ≤ (1 + 1 / L) ^ u.length
-  | [], _ => by simp [multS]
-  | b :: u, h => by
+    ‖multS u p e‖ ≤ (1 + 1 / L) ^ u.length := fun u =>
+  match u with
+  | [] => fun _ => by simp [multS]
+  | b :: u => fun h => by
     have ih := multS_bound L hL p hp e u fun c hc => h c (List.mem_cons_of_mem _ hc)
     obtain ⟨hb1, hb2⟩ := h b List.mem_cons_self
     unfold multS at ih ⊢
@@ -7676,7 +7688,8 @@ theorem eeA_memB (Y : ℂ) : eeA P (DQ P) Y ∈ BB P L := by
 
 theorem frame_memB :
     ∀ w : List (Letter ℂ S), (∀ Y, (ofWord L (startM P (DQ P) l) w).ee Y ∈ UB P L S) ∧
-      (∀ Y, (ofWord L (startM P (DQ P) l) w).x Y ∈ UB P L S) ∧ (∀ Y, (ofWord L (startM P (DQ P) l) w).xi Y ∈ UB P L S)
+      (∀ Y, (ofWord L (startM P (DQ P) l) w).x Y ∈ UB P L S) ∧ (∀ Y, (ofWord L (startM P (DQ P) l) w).xi Y ∈ UB P L S) := fun w =>
+  match w with
   | [] => by
     refine ⟨fun Y => io_memB P L (eeA_memB hL Y), fun Y => io_memB P L (kap_memB P L _),
       fun Y => io_memB P L (kap_memB P L _)⟩
@@ -7872,9 +7885,10 @@ theorem Xw_pt (u : Qp P.r P.TT → M.Ty P → ℂ) (hu : ∀ π, (fun q => u q �
 theorem monL_conj (u : Qp P.r P.TT → M.Ty P → ℂ) (hu : ∀ π, (fun q => u q π) ∈ smSub P.r P.TT) (s : ℝ) :
     ∀ (w : List ℝ) (t : ℝ) (q : Qp P.r P.TT) (k : Iota P w.length),
       monL P L (fun q π => ((Gq P q ^ s : ℝ) : ℂ) * u q π) t w q k =
-        ((Gq P q ^ s : ℝ) : ℂ) * monL P L u (t + s) w q k
-  | [], t, q, k => rfl
-  | y :: w, t, q, bi => by
+        ((Gq P q ^ s : ℝ) : ℂ) * monL P L u (t + s) w q k := fun w =>
+  match w with
+  | [] => fun t q k => rfl
+  | y :: w => fun t q bi => by
     have ih : monL P L (fun q π => ((Gq P q ^ s : ℝ) : ℂ) * u q π) t w =
         wordModuleApply P (io (G.Gs P s)) (monL P L u (t + s) w) := by
       funext q' k'
@@ -8264,7 +8278,8 @@ theorem monPoly (u : Qp P.r P.TT → M.Ty P → ℂ) (hu : ∀ π, (fun q => u q
       (∀ κ i, (fun q => c κ q i) ∈ smSub P.r P.TT) ∧
       ∀ (y : Fin N → ℝ) (q : Qp P.r P.TT) (i : Iota P N),
         monL P L u 0 (List.ofFn y) q (cast (iota_len P N y) i) =
-          ∑ κ : Fin N → Fin (P.r + 1 + 1), ((∏ a, (y a) ^ (κ a : ℕ) : ℝ) : ℂ) * c κ q i
+          ∑ κ : Fin N → Fin (P.r + 1 + 1), ((∏ a, (y a) ^ (κ a : ℕ) : ℝ) : ℂ) * c κ q i := fun N =>
+  match N with
   | 0 => by
     refine ⟨fun _ => u, fun _ i => hu i, fun y q i => ?_⟩
     have e : List.ofFn y = [] := List.ofFn_zero
@@ -9497,7 +9512,8 @@ theorem insert_matrix_mem_base {S : Type} [Fintype S] [DecidableEq S] (a : S) (x
 
 theorem frame_memB (l : ℕ) {S : Type} [Fintype S] [DecidableEq S] :
     ∀ w : List (Letter ℂ S), (∀ Y, (ofWord L (startM P (DQ P) l) w).ee Y ∈ UB L S) ∧
-      (∀ Y, (ofWord L (startM P (DQ P) l) w).x Y ∈ UB L S) ∧ (∀ Y, (ofWord L (startM P (DQ P) l) w).xi Y ∈ UB L S)
+      (∀ Y, (ofWord L (startM P (DQ P) l) w).x Y ∈ UB L S) ∧ (∀ Y, (ofWord L (startM P (DQ P) l) w).xi Y ∈ UB L S) := fun w =>
+  match w with
   | [] => ⟨fun Y => io_B hL hLaw (eeA_BA hL hLaw Y), fun Y => io_B hL hLaw (kap_BA hL hLaw _),
       fun Y => io_B hL hLaw (kap_BA hL hLaw _)⟩
   | lt :: w => by
@@ -9601,7 +9617,8 @@ theorem letter_vec_NF {N : ℕ} (y₁ y₂ : ℂ) (E : SlopeTestRemainingChoices
 
 theorem Xw_rep (l : ℕ) (j : M.Ty P → SmQ P.r P.TT) : ∀ w : List ℝ, ∃ 𝒳 : Ix (Fin w.length) → A P (DQ P),
     (∀ e, 𝒳 e ∈ NormalFormTwo L (SB L) w.length w.length) ∧
-    ∀ q i, Xw P l L (ju P j) w q i = evQ P (actA P (𝒳 (ixOf P w.length i).1) j (ixOf P w.length i).2) q
+    ∀ q i, Xw P l L (ju P j) w q i = evQ P (actA P (𝒳 (ixOf P w.length i).1) j (ixOf P w.length i).2) q := fun w =>
+  match w with
   | [] => ⟨fun _ => 1, fun _ => one_mem_normal_form_two (hyp_model hL hLaw), fun q i => by
       show (j i : Qp P.r P.TT → ℂ) q = evQ P (actA P 1 j i) q
       rw [MAx3.one_act]; rfl⟩
@@ -10487,9 +10504,10 @@ variable (hL : IsModelLevel P (DQ P) L) (hLaw : (DQ P).Laws P.TT)
 include hL hLaw
 
 theorem ee_rep (l : ℕ) : ∀ v : List (Letter ℂ S), (∀ a ∈ v, a.plus = true) →
-    Rep L (Gw P v) (fun Y => (ofWord L (startM P (DQ P) l) v).ee Y)
-  | [], _ => rep_mono (fun Y (hY : Y ∈ Gw P ([] : List (Letter ℂ S))) => hY.1) (eeA_rep hL hLaw)
-  | a :: v, h => by
+    Rep L (Gw P v) (fun Y => (ofWord L (startM P (DQ P) l) v).ee Y) := fun v =>
+  match v with
+  | [] => fun _ => rep_mono (fun Y (hY : Y ∈ Gw P ([] : List (Letter ℂ S))) => hY.1) (eeA_rep hL hLaw)
+  | a :: v => fun h => by
     have ih := rep_mono (fun Y (hY : Y ∈ Gw P (a :: v)) => (⟨hY.1, fun b hb => hY.2 b (List.mem_cons_of_mem _ hb)⟩ :
       Y ∈ Gw P v)) (ee_rep l v fun b hb => h b (List.mem_cons_of_mem _ hb))
     obtain ⟨he, hx, hxi⟩ := frame_memB hL hLaw l v
@@ -10928,9 +10946,10 @@ theorem listsum_ptMat {N : ℕ} (hTTp : 0 < P.TT) (hL : IsModelLevel P (DQ P) L)
     (K : Set ℝ) (hK : IsCompact K) (G : Set ℂ) (hKG : ∀ Y ∈ K, ((Y : ℝ) : ℂ) ∈ G) :
     ∀ ts : List ((ℂ → ℂ) × SlopeTestRemainingChoices (Fin N) (A P (DQ P))), (∀ t ∈ ts, t.2 ∈ UB L (Fin N) ∧ ∀ Y ∈ G, ContinuousAt t.1 Y) →
       ∃ E, ∀ q i i', (∀ Y ∈ K, ‖(ts.map fun t => t.1 (Y : ℂ) * ptMat P t.2 q i i').sum‖ ≤ E) ∧
-        ContinuousOn (fun Y : ℝ => (ts.map fun t => t.1 (Y : ℂ) * ptMat P t.2 q i i').sum) K
-  | [], _ => ⟨0, fun q i i' => ⟨fun Y _ => by simp, by simpa using continuousOn_const⟩⟩
-  | t :: ts, h => by
+        ContinuousOn (fun Y : ℝ => (ts.map fun t => t.1 (Y : ℂ) * ptMat P t.2 q i i').sum) K := fun ts =>
+  match ts with
+  | [] => fun _ => ⟨0, fun q i i' => ⟨fun Y _ => by simp, by simpa using continuousOn_const⟩⟩
+  | t :: ts => fun h => by
     obtain ⟨E, hE⟩ := listsum_ptMat hTTp hL hLaw K hK G hKG ts fun t' ht' => h t' (List.mem_cons_of_mem _ ht')
     obtain ⟨hUB, hc⟩ := h t List.mem_cons_self
     obtain ⟨C, hC⟩ := ptMat_bound hTTp hL hLaw hUB
@@ -11533,10 +11552,11 @@ theorem Gs_comm_SB (s : ℝ) {b : A P (DQ P)} (hb : b ∈ I4.SB L) : Gs P s * b 
 
 theorem conj_word : ∀ H : List (A P (DQ P)), (∀ h ∈ H, h ∈ plusHats L) →
     ∃ Hf : ℂ → List (A P (DQ P)), (∀ t, (Hf t).length = H.length) ∧ (∀ t, ∀ h ∈ Hf t, h ∈ plusHats L) ∧
-      (∀ s : ℝ, Gs P (-s) * H.prod * Gs P s = (Hf s).prod) ∧ PolyIn (fun t => (Hf t).prod) (H.length * (P.r + 1))
-  | [], _ => ⟨fun _ => [], fun _ => rfl, fun _ h hh => absurd hh List.not_mem_nil,
+      (∀ s : ℝ, Gs P (-s) * H.prod * Gs P s = (Hf s).prod) ∧ PolyIn (fun t => (Hf t).prod) (H.length * (P.r + 1)) := fun H =>
+  match H with
+  | [] => fun _ => ⟨fun _ => [], fun _ => rfl, fun _ h hh => absurd hh List.not_mem_nil,
       fun s => by simp [Gs_neg_mul], by simpa using polyIn_const (1 : A P (DQ P))⟩
-  | h :: H, hH => by
+  | h :: H => fun hH => by
     obtain ⟨Hf, h1, h2, h3, h4⟩ := conj_word H (fun x hx => hH x (List.mem_cons_of_mem _ hx))
     have hh : h ∈ plusHats L := hH h List.mem_cons_self
     have key : ∃ hf : ℂ → A P (DQ P), (∀ t, hf t ∈ plusHats L) ∧ (∀ s : ℝ, Gs P (-s) * h * Gs P s = hf s) ∧
@@ -15015,11 +15035,12 @@ theorem int_Z {m : ℕ} (hD : JDecay P L j m) {k : ℕ} (hk : k ≤ m) {z : A P 
 
 theorem adjPure {m : ℕ} (hD : JDecay P L j m) (hA : JAdj P L j m) :
     ∀ (W : List (A P (DQ P))), (∀ a ∈ W, a ∈ hatSet P L) → ∀ (k : ℕ), k + W.length ≤ m →
-      ∀ z ∈ Z P L k, ipA P (actA P z j) (actA P W.prod j) = ipA P (actA P (star W.prod * z) j) j
-  | [], _, k, _, z, _ => by
+      ∀ z ∈ Z P L k, ipA P (actA P z j) (actA P W.prod j) = ipA P (actA P (star W.prod * z) j) j := fun W =>
+  match W with
+  | [] => fun _ k _ z _ => by
     simp only [List.prod_nil, star_one, one_mul]
     rw [MAx2.R2.act_one]
-  | X :: W', hW, k, hk, z, hz => by
+  | X :: W' => fun hW k hk z hz => by
     have hX : X ∈ hatSet P L := hW X (by simp)
     have hW' : ∀ a ∈ W', a ∈ hatSet P L := fun a ha => hW a (by simp [ha])
     have hk' : k + 1 + W'.length ≤ m := by simp at hk; omega

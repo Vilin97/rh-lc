@@ -16,7 +16,7 @@ noncomputable section
 
 open CategoryTheory AlgebraicGeometry NumberField
 open ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory GlobalTheory.Cartier GlobalTheory.ProjVar GlobalTheory.TrueGeo GlobalTheory.CxPts GlobalTheory.ShFam GlobalTheory.AmpleKaehler
+open GlobalTheory GlobalTheory.Cartier GlobalTheory.ProjVar GlobalTheory.TrueGeo GlobalTheory.CxPts GlobalTheory.ShFam
 open GlobalTheory.CechPic GlobalTheory.ProjSpace GlobalTheory.Points
 
 namespace GlobalTheory.AmpleModelPos
@@ -36,9 +36,5 @@ section Pull
 variable {k : Type} [CommRing k] {Y : Scheme.{0}} {p : Y ⟶ Sp k} {σ : k →+* ℂ} {D N : ℕ}
 
 end Pull
-
-variable {F : Type} [Field F] [NumberField F] {Y : Var F}
-
-
 
 end GlobalTheory.AmpleModelPos

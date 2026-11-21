@@ -37,7 +37,6 @@ theorem isClosed_setOf_apply [Algebra.IsAlgebraic ℚ Ω] (x : Ω) (P : Ω → P
   have h := isOpen_setOf_apply x (fun y => ¬ P y)
   rw [← isOpen_compl_iff]
   convert h using 1
-  ext σ; simp
 
 theorem mem_dec_of_forall {A : ValuationSubring Ω} {σ : G ℚ Ω} (h : ∀ x, σ x ∈ A ↔ x ∈ A) :
     σ ∈ A.decompositionSubgroup ℚ := by

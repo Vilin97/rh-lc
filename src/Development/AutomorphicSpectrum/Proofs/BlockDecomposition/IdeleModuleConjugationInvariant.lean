@@ -26,7 +26,7 @@ theorem map_involution_eq {G : Type} [AddCommGroup G] [TopologicalSpace G] [IsTo
     ⟨_, Measure.isAddLeftInvariant_eq_smul (ν.map e) ν⟩
   have he : Measurable e := e.continuous.measurable
   have h2 : ν.map (e ∘ e) = (b * b) • ν := by
-    rw [← Measure.map_map he he, hb, Measure.map_smul, hb, smul_smul]
+    rw [← Measure.map_map he he, hb, Measure.map_smul _ he.aemeasurable, hb, smul_smul]
   have hid : (e ∘ e : G → G) = id := funext he2
   rw [hid, Measure.map_id] at h2
   obtain ⟨K, hK, hK0⟩ := exists_compact_mem_nhds (0 : G)
@@ -108,7 +108,7 @@ theorem ideleModule_conj : ∀ (F E : Type) [Field F] [NumberField F] [Field E] 
   have h1 : ν.map (fun y : 𝔸[E] => a' • y) =
       ENNReal.ofReal ((IdeleGroup.ideleModule E a : ℝ))⁻¹ • ν := by
     rw [hfun, ← Measure.map_map hmeas (hm.comp hmeas), ← Measure.map_map hm hmeas, hνe, hν,
-      map_smul_adeleMeasure, Measure.map_smul, ← hν, hνe]
+      map_smul_adeleMeasure, Measure.map_smul _ hmeas.aemeasurable, ← hν, hνe]
   have h2 := map_smul_adeleMeasure (K := E) a'
   rw [← hν, h1] at h2
   obtain ⟨K, hK, hK0⟩ := exists_compact_mem_nhds (0 : 𝔸[E])

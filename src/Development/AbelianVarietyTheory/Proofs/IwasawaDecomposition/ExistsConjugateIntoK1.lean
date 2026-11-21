@@ -55,7 +55,9 @@ theorem cpt_swap {E : Type} [Field E] [NumberField E] [IsCMField E] (F1 : Subfie
     Φ ((swapCast hF).symm y) s.w = c (s.proj y) := by
   subst hF
   induction y using TensorProduct.induction_on with
-  | zero => simp
+  | zero =>
+    simp
+    rfl
   | add y z hy hz =>
     rw [map_add (f := _), map_add (f := _), map_add (f := _), map_add (f := _), ← hy, ← hz]
     rfl

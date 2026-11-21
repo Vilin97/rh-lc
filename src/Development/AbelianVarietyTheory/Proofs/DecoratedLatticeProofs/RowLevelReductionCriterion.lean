@@ -128,9 +128,12 @@ theorem redFn_eq_one_of_le (V : HSp D) (β β₀ : GL (Fin V.rank) (Lev.EAf D))
     (hle : ∀ κ ∈ GfC V, finE V κ ∈ Formalism.L2.DIV.St β₀ → finE V κ ∈ Formalism.L2.DIV.St β)
     (P : Formalism.L2.DIV.Pl D.host.E) (hP : ¬ Formalism.IndefR.Lev.IsConjPl P P) (x : GL (Fin V.rank) (Lev.EAf D))
     (hx : x ∈ Formalism.L2.DIV.St β) (hx₀ : x ∈ Formalism.L2.DIV.St β₀) (h1 : redFn β P x = 1) : redFn β₀ P x = 1 := by
-  obtain ⟨β₁, h₁⟩ := GlobalTheory.StdFrames.exists_base V
-  obtain ⟨c, hc⟩ := GlobalTheory.StdFrames.isSD_one h₁
-  have hB : IsBaseFrame V β₀ (Formalism.L2.Herm.crdLat V V.L0) (1 ^ c) := ⟨h₀, hc.2⟩
+  have hB : IsBaseFrame V β₀ (Formalism.L2.Herm.crdLat V V.L0) (1 ^ 0) := by
+    refine ⟨h₀, GlobalTheory.LevelChoices.dualL_crdLat V, one_pos, fun x hx => ?_, fun x hx => ?_⟩
+    · rw [pow_zero, Nat.cast_one, one_smul]
+      rwa [← GlobalTheory.LevelChoices.coe_crdLat] at hx
+    · rw [pow_zero, Nat.cast_one, one_smul, ← GlobalTheory.LevelChoices.coe_crdLat]
+      exact hx
   obtain ⟨e, he⟩ := GlobalTheory.ParahoricLift.exists_isIdemAt hP
   obtain ⟨p, hp, hpp, hres⟩ := GlobalTheory.ParahoricLift.exists_idem_int he
   have hoff : ∀ i j, i ≠ j → ∀ a b, (p : Lev.EAf D) * (((β₀⁻¹ * β)⁻¹).1 a i * (β₀⁻¹ * β).1 j b) ∈

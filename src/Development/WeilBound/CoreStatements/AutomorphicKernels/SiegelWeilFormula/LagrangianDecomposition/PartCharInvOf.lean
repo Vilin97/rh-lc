@@ -57,8 +57,8 @@ theorem partCharInv_of (hfin : FinPart) : PartCharInv := by
         rw [← hT, ← hT, ← hinv (fun i => pairA F ((InfiniteAdeleRing.ringEquiv_mixedSpace F).symm (Y i)) 0)
           (pureA F f₂ g) (GlobalTheory.CharInvForm.mem_schA f₂ hg)]
         congr 1
-        simp only [Function.comp_apply]
-        ring) (f - f₁) (fun v hv => by
+        funext x
+        simp only [pureA, h23, GlobalTheory.CharInvForm.psi_dot_inf hψ, hY, Function.comp_def, mul_assoc]) (f - f₁) (fun v hv => by
           have hv' : v = Sum.elim (v ∘ Sum.inl) 0 := by
             funext j; rcases j with j | j
             · rfl
@@ -72,18 +72,20 @@ theorem partCharInv_of (hfin : FinPart) : PartCharInv := by
         map_add' := fun h h' => by
           rw [← map_add (f := _)]
           congr 1
-          ring
+          funext x
+          simp [pureA, add_mul, mul_assoc, mul_comm, mul_left_comm]
         map_smul' := fun s h => by
           rw [RingHom.id_apply, ← map_smul]
           congr 1
-          ring }
+          funext x
+          simp [pureA, add_mul, mul_assoc, mul_comm, mul_left_comm] }
     have hB : a g = a g₁ := by
       have h := hfin F ψ hψ κ' κ'' a (fun y h hh => by
         show l (pureA F f₁ _) = l (pureA F f₁ h)
         rw [← hinv (fun i => pairA F 0 (y i)) (pureA F f₁ h) (GlobalTheory.CharInvForm.mem_schA f₁ hh)]
         congr 1
-        simp only [Function.comp_def]
-        ring) (g - g₁) (sub_mem hg hg₁) (fun z' => by
+        funext x
+        simp [pureA, GlobalTheory.CharInvForm.dot_pairA_fin, Function.comp_def, mul_left_comm]) (g - g₁) (sub_mem hg hg₁) (fun z' => by
           simp only [Pi.sub_apply, hg₁def, Sum.elim_comp_inl, Sum.elim_comp_inr, hθf0, mul_one, sub_self])
       rw [map_sub, sub_eq_zero] at h
       exact h

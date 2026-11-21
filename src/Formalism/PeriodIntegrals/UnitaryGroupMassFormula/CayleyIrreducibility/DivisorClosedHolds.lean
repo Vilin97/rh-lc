@@ -166,7 +166,7 @@ theorem divisor_closed_holds : DivClosedOf := by
     exact hall _ (isUnit_one_add_elem a b m)
   have hcoeff : r.coeff k = φ (bigDiv τ a b k P) := by
     rw [hr, Polynomial.sum_def, Polynomial.finsetSum_coeff]
-    simp only [Polynomial.coeff_monomial]
+    simp only [Polynomial.coeff_monomial, Finsupp.single_apply]
     rw [Finset.sum_eq_single k (fun j _ hj => if_neg hj) (fun hk => by
       rw [if_pos rfl, Polynomial.notMem_support_iff.mp hk, map_zero])]
     rw [if_pos rfl]

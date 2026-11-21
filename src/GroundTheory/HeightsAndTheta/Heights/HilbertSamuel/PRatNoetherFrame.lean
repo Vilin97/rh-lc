@@ -46,8 +46,8 @@ theorem algebraicIndependent_of_minimal [Infinite k] (hinj : Function.Injective 
   | r + 1, L, hL, hmin => by
     by_contra hnot
     rw [algebraicIndependent_iff] at hnot
-    push Not at hnot
-    obtain ⟨F, hF, hF0⟩ := hnot
+    obtain ⟨F, hF⟩ := Classical.not_forall.mp hnot
+    obtain ⟨hF, hF0⟩ := Classical.not_imp.mp hF
     obtain ⟨lam, h0⟩ := exists_isIntegralElem_linear (forms v L) F hF0 hF
     refine hmin r (Nat.lt_succ_self r) (fun i s => L i.succ s - lam i * L 0 s) fun t => ?_
     have hf : forms v (fun i s => L i.succ s - lam i * L 0 s) =
@@ -234,7 +234,7 @@ theorem exists_completion [Fintype J] {n : ℕ} (L : Fin n → J → ℚ) (hL : 
     rw [Module.Basis.coe_extend] at h1
     exact h1
   have hdet : IsUnit B.det :=
-    (Matrix.isUnit_iff_isUnit_det B).mp (Matrix.linearIndependent_rows_iff_isUnit.mp hBrow)
+    (Matrix.isUnit_iff_isUnit_det B).mp (Matrix.linearIndependent_row_iff_isUnit.mp hBrow)
   refine ⟨B, fun k => σ ⟨L k, hsub k⟩,
     fun a c hac => hL.injective (congrArg Subtype.val (σ.injective hac)),
     ⟨B⁻¹, fun v => ⟨?_, ?_⟩⟩, fun k => ?_⟩

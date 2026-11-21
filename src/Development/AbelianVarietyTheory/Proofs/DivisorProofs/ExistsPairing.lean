@@ -131,7 +131,7 @@ theorem exists_quot {s : S ⟶ Sp R} (o : Obj b N s) (c : ℕ) (hc : ∃ e : ℕ
         rw [o.eta_lin, Category.assoc, hcomp, Category.assoc]
       eta_ker := fun x => by rw [o.eta_ker, one_comp]
       geom := GlobalTheory.T.exists_tateSimilitude_quotient_by_pGroup_sections p D R b N S s o c hc H A' ψ hA' hψ hgal hpow act' hcomp P' hP' r1 r2 w }
-  have hmk : IsMonHom (𝟙 o.A ^ c) := ReciprocityTheory.ChartRestriction.G.Geo.Tor.isMonHom_mulA c
+  have hmk : IsMonHom (𝟙 o.A ^ c) := GlobalTheory.AbLaw.MulN.isMonHom_mulA o.A c
   obtain ⟨ψ', hψ'h, hψ'⟩ := GlobalTheory.T.exists_descent_hom_quotient_galois_group_scheme S o.A A' o.A H ψ hψ hgal (𝟙 o.A ^ c) hmk
     (fun h hh => by rw [MonObj.comp_pow, Category.comp_id, hpow h hh])
   refine ⟨o', ψ, ⟨hc, hψ, hcomp, fun x => rfl, ⟨w⟩, ψ', hψ'h, hψ', ?_⟩, fun κ _ _ x t => ⟨fun ht => ?_, ?_⟩⟩

@@ -41,13 +41,11 @@ theorem cohomologyRes_π (y : cocycles A 1) :
 
 theorem isTgLift_cocycleOneApplyG (y : cocycles A 1) :
     IsTgLift A N (cocycleOneApply A N ((cocyclesMapAlong N.subtype (continuous_subgroup_subtype N)
-      (𝟙 _) 1).hom y)) (cocycleOneApplyG A y) where
-  map_one := cocycle_one_apply_one A (iCycles_d_apply _ 1 2 y)
-  mul_right := by
-    intro g n
+      (𝟙 _) 1).hom y)) (cocycleOneApplyG A y) := by
+  refine ⟨cocycle_one_apply_one A (iCycles_d_apply _ 1 2 y), ?_, ?_⟩
+  · intro g n
     rw [cocycleOneApply_cocyclesMapAlong, cocycleOneApplyG_mul]
-  conj := by
-    intro h n
+  · intro h n
     rw [cocycleOneApply_cocyclesMapAlong, cocycleOneApply_cocyclesMapAlong]
     have e : h * (GroundTheory.GroupCoh.conjHom N h n : G) = n * h := by
       simp only [GroundTheory.GroupCoh.coe_conjHom_apply]; group

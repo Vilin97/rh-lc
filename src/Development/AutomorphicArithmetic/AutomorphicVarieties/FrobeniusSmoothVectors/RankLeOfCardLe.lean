@@ -112,8 +112,11 @@ private theorem lev_rk {Ω : Type} [Field Ω] [CharZero Ω] [IsAlgClosure ℚ Ω
       [Finite V] : Two.CardLe (V →ₗ[ZMod l] ZMod l) (Nat.card V) := by
     refine ⟨Finite.of_injective (fun f : V →ₗ[ZMod l] ZMod l => (f : V → ZMod l)) DFunLike.coe_injective, ?_⟩
     show Nat.card (Module.Dual (ZMod l) V) ≤ _
-    set_option synthInstance.maxHeartbeats 200000 in
-      rw [Nat.card_congr (LinearEquiv.ofFinrankEq _ _ Subspace.dual_finrank_eq).toEquiv]
+    haveI : Module.Free (ZMod l) V := Module.Free.of_divisionRing (ZMod l) V
+    haveI : Module.Free (ZMod l) (Module.Dual (ZMod l) V) :=
+      Module.Free.of_divisionRing (ZMod l) (Module.Dual (ZMod l) V)
+    rw [Nat.card_congr (LinearEquiv.ofFinrankEq (R := ZMod l)
+      (Module.Dual (ZMod l) V) V Subspace.dual_finrank_eq).toEquiv]
 
   have cardLe_hom (A : Type) [CommGroup A] [Finite A] (l : ℕ) [Fact l.Prime] (P : Type) (θ : P → A → ZMod l)
       (hθ : Function.Injective θ) (hm : ∀ p a b, θ p (a * b) = θ p a + θ p b) :

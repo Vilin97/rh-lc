@@ -108,6 +108,8 @@ theorem UpperTheory.Gal.G1.pBlockMat :
           e.symm e.symm := by
       rw [submatrix_diagonal_equiv]
       congr 1
+      funext i
+      simp
     show ((reindex e e M).map σ)ᵀ *
         diagonal (fun i : Fin (2 * m + 1) => if (i : ℕ) = 0 then (1 : R) else c) * reindex e e M = 1
     rw [hDD, reindex_apply, ← submatrix_map, transpose_submatrix, submatrix_mul_equiv,

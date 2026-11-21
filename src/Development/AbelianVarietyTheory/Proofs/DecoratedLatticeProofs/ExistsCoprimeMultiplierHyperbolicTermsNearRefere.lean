@@ -73,7 +73,7 @@ theorem ef_near_ref : ∀ (D : D7) (X : HidaSetting D), ∃ M : ℕ, Nat.Coprime
   choose c3 hc3 h3 using fun a => GlobalTheory.St.G.FrameClose.den_of_inAt (X.vectorsInLattice.1 a).1 (X.basisApprox a).1
   choose c4 hc4 h4 using fun a => GlobalTheory.St.G.FrameClose.den_of_inAt (X.vectorsInLattice.1 a).2 (X.basisApprox a).2
   refine ⟨∏ a, c1 a * c2 a * c3 a * c4 a,
-    Nat.Coprime.prod_left fun a _ => (((hc1 a).mul (hc2 a)).mul (hc3 a)).mul (hc4 a), ?_⟩
+    Nat.Coprime.prod_left fun a _ => Nat.Coprime.mul_left (Nat.Coprime.mul_left (Nat.Coprime.mul_left (hc1 a) (hc2 a)) (hc3 a)) (hc4 a), ?_⟩
   intro y hy a
   have hdvd : c1 a * c2 a * c3 a * c4 a ∣ ∏ b, c1 b * c2 b * c3 b * c4 b :=
     Finset.dvd_prod_of_mem (fun b => c1 b * c2 b * c3 b * c4 b) (Finset.mem_univ a)

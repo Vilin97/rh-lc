@@ -258,7 +258,7 @@ def jacU {R : Type} [CommRing R] (e : (Σ a, m a) ≃ n) (π : Representation �
     Representation ℂ (Levi R m) (Jacquet π (unipRad R e)) := by
   refine jacquet π (unipRad R e) (leviEmb R e) fun g => ?_
   have hg : leviEmb R e g ∈ parab R e := (mem_parab_iff (R := R)).2 fun a b i j h => by
-    simp [leviEmb, blockDiagonal'_apply_ne _ _ _ h.ne']
+    simp [leviEmb, blockDiagonal'_apply, h.ne']
   exact parab_le_normalizer R e hg
 
 def jac (e : (Σ a, m a) ≃ n) (π : Representation ℂ (GL n k) V) :
@@ -293,7 +293,7 @@ def jacLower (e : (Σ a, m a) ≃ n) (π : Representation ℂ (GL n k) V) :
     Representation ℂ (Levi k m) (Jacquet π (unipRadLower k e)) := by
   refine twist (jacquet π (unipRadLower k e) (leviEmb k e) fun g => ?_) (deltaHalf k m)
   have hg : leviEmb k e g ∈ parabLower k e := (mem_parabLower_iff (R := k)).2 fun a b i j h => by
-    simp [leviEmb, blockDiagonal'_apply_ne _ _ _ h.ne]
+    simp [leviEmb, blockDiagonal'_apply, h.ne]
   exact parab_le_normalizer k (opp e) hg
 
 def multiProd (e : (Σ a, m a) ≃ n) {X : α → Type} [∀ a, AddCommGroup (X a)] [∀ a, Module ℂ (X a)]
@@ -404,8 +404,6 @@ theorem jacBU_mk (π : Representation ℂ (GL n k) V) (t : n → kˣ) (v : V) :
   rw [jacU, jacquet_mk]
   apply congrArg (fun g : GL n k => Submodule.Quotient.mk (π g v))
   simp only [diagT, MonoidHom.comp_apply, MulEquiv.coe_toMonoidHom]
-  congr
-  exact Subsingleton.elim _ _
 
 theorem isSmooth_jacBU {π : Representation ℂ (GL n k) V} (hπ : IsSmooth π) : IsSmooth (jacBU π) :=
   isSmooth_comp (isSmooth_jacU _ hπ) _ (continuous_leviTorus k n)
@@ -508,7 +506,7 @@ theorem detLevi_apply (e : (Σ a, m a) ≃ n) (χ : kˣ →* ℂˣ) (g : Levi k 
     detLevi e χ g = ∏ a, (χ * absPow k (-(modExp m a : ℂ) / 2)) (GeneralLinearGroup.det (g a)) := by
   have hdet : GeneralLinearGroup.det (leviEmb k e g) = ∏ a, GeneralLinearGroup.det (g a) := by
     let p : parab k e := ⟨leviEmb k e g, mem_parab_iff.2 fun a b i j h => by
-      simp [leviEmb, blockDiagonal'_apply_ne _ _ _ h.ne']⟩
+      simp [leviEmb, blockDiagonal'_apply, h.ne']⟩
     have hproj : leviProj k e p = g := by
       funext a
       ext i j
@@ -531,7 +529,7 @@ theorem isSubquotient_detRep_parInd (e : (Σ a, m a) ≃ n) {χ : kˣ →* ℂˣ
           have : GeneralLinearGroup.det (leviEmb k e (leviProj k e p)) =
               GeneralLinearGroup.det (p : GL n k) := by
             let q : parab k e := ⟨leviEmb k e (leviProj k e p), mem_parab_iff.2 fun a b i j h => by
-              simp [leviEmb, blockDiagonal'_apply_ne _ _ _ h.ne']⟩
+              simp [leviEmb, blockDiagonal'_apply, h.ne']⟩
             have hproj : leviProj k e q = leviProj k e p := by
               funext a
               ext i j

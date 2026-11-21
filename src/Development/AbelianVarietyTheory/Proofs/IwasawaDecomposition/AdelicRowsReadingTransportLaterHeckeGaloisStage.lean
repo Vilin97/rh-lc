@@ -13,13 +13,15 @@ public import Development.AbelianVarietyTheory.Proofs.IwasawaDecomposition.RepOf
 @[expose] public section
 
 open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.N Formalism.L2 Formalism.L2.Host Formalism.L2.NT Formalism.IndefR.NX NumberField IsDedekindDomain GlobalTheory.Mem GlobalTheory.Mem.Col2 GlobalTheory.Mem.Top GlobalTheory.Mem.Top.GroupRetwisting GlobalTheory.Mem.Top.Bl GlobalTheory.Mem.R3 GlobalTheory.Mem.R3.Rw GlobalTheory.HeightCounting GlobalTheory.HeightCounting.Up
-attribute [local instance] Formalism.BasicNotions.Host.cmStar
+attribute [local instance] Formalism.BasicNotions.Host.cmStar Formalism.IndefR.principalLevelFrame.instCMHostI
 
 namespace GlobalTheory.Mem.R3.Rw.CopyRead
 
 private theorem pin_of {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z₀ : w.Lt} {hX : B.fields.Ok}
-    {Wt : Set B.places.Pl} {z₀ : Dat (w.st Z₀) w.I hX T Wt} {q : RowPk w z₀} {o : q.Over} {m : Moved o} {s : Side0 o}
-    (r : ReadPk m s) (Y : Read m.z.R.toRealDat m.z.F.lv2 s.p0) (e : r.Y = Y)
+    {Wt : Set B.places.Pl} {z₀ : GlobalTheory.Mem.R3.Dat (w.st Z₀) w.I hX T Wt}
+    {q : GlobalTheory.Mem.R3.Rw.RowPk w z₀} {o : q.Over}
+    {m : GlobalTheory.Mem.R3.Rw.Moved o} {s : GlobalTheory.Mem.R3.Rw.Side0 o}
+    (r : GlobalTheory.Mem.R3.Rw.ReadPk m s) (Y : Read m.z.R.toRealDat m.z.F.lv2 s.p0) (e : r.Y = Y)
     (h8 : ∀ π, (Formalism.IndefR.principalLevelFrame.rowRepR m.z.R.θ (Y.eFT π)).Iso (m.t.rep π))
     (h9 : ∀ x, HEq (Y.Ish.jE x).1 ((m.t.ch true).jE x)) (h10 : ∀ x, HEq (Y.Iz.jE x).1 ((m.t.ch false).jE x))
     (h11 : ∀ i x, HEq (Y.mj.eW i x) (m.t.lf.eW i x)) (h12 : ∀ μ h i x, HEq (Y.IL.jMt μ h i x).1 (m.t.lf.jMt μ i x)) : r.Pin := by
@@ -27,8 +29,10 @@ private theorem pin_of {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T
   exact ⟨h8, h9, h10, h11, h12⟩
 
 private theorem read_pinned {B : Base} {f : Fr B.toPre} {T : TwDat B} {w : ColW B f T} {Z₀ : w.Lt} {hX : B.fields.Ok}
-    {Wt : Set B.places.Pl} {z₀ : Dat (w.st Z₀) w.I hX T Wt} {q : RowPk w z₀} {o : q.Over} (hF : o.Fits) (m : Moved o) (s : Side0 o)
-    (hs : GoodSideLattices.Good m s) : ∃ r : ReadPk m s, r.Pin := by
+    {Wt : Set B.places.Pl} {z₀ : GlobalTheory.Mem.R3.Dat (w.st Z₀) w.I hX T Wt}
+    {q : GlobalTheory.Mem.R3.Rw.RowPk w z₀} {o : q.Over} (hF : o.Fits)
+    (m : GlobalTheory.Mem.R3.Rw.Moved o) (s : GlobalTheory.Mem.R3.Rw.Side0 o)
+    (hs : GlobalTheory.Mem.R3.Rw.GoodSideLattices.Good m s) : ∃ r : GlobalTheory.Mem.R3.Rw.ReadPk m s, r.Pin := by
   have k := read_of_fits B f T w Z₀ hX Wt z₀ q o hF m s
   obtain ⟨Y, h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12⟩ := k
   have k2 := GoodSideLattices.read_of_good hF m s hs Y h9 h10

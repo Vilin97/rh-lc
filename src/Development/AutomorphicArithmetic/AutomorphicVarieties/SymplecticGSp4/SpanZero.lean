@@ -93,7 +93,7 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.signs :
     exact this
   refine ⟨?_, ?_, ?_, ?_, ?_⟩
   · intro hneg n hn f hf
-    rw [AlgHom.comp_apply]
+    change ξ (M.toSS f) = 0
     apply zero_of n f hf
     intro L hsum
     obtain ⟨a, ha, hlt⟩ := list_neg (fun a => wt a.2.1 a.2.2) L (by rw [hsum]; exact hn)
@@ -101,7 +101,7 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.signs :
     by_contra hne
     exact hneg _ _ hlt ⟨a.1, hne⟩
   · intro hpos n hn f hf
-    rw [AlgHom.comp_apply]
+    change ξ (M.toSS f) = 0
     apply zero_of n f hf
     intro L hsum
     obtain ⟨a, ha, hlt⟩ := list_pos (fun a => wt a.2.1 a.2.2) L (by rw [hsum]; exact hn)
@@ -112,13 +112,15 @@ theorem UpperTheory.V.GradeZeroInterpolatingElement.signs :
     obtain ⟨f, hf, hfx⟩ := from_part 1 g 0 2 (by decide)
     apply hg
     have := hpos 1 one_pos f hf
-    rw [AlgHom.comp_apply, hfx] at this
+    change ξ (M.toSS f) = 0 at this
+    rw [hfx] at this
     exact this
   · rintro hneg ⟨g, hg⟩
     obtain ⟨f, hf, hfx⟩ := from_part (-1) g 2 0 (by decide)
     apply hg
     have := hneg (-1) (by norm_num) f hf
-    rw [AlgHom.comp_apply, hfx] at this
+    change ξ (M.toSS f) = 0 at this
+    rw [hfx] at this
     exact this
   · intro ξ' hs
     have key : ∀ x : M.SS, (x : M.S) ∈ M.sPart ((0 : ℤ), 0) → ξ x = ξ' x := by

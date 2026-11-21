@@ -283,7 +283,7 @@ theorem continuous_pair (y : HermR (Fv F v) σ n) (bs : Module.Basis (Fin d) F E
   haveI : Module.Finite (Fv F v) (Fv F v ⊗[F] E) := Module.Finite.of_basis (Algebra.TensorProduct.basis (Fv F v) bs)
   unfold pairHerm
   refine continuous_const.mul ((IsModuleTopology.continuous_of_linearMap (Algebra.trace (Fv F v) (Fv F v ⊗[F] E))).comp ?_)
-  refine continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun b _ => ?_
+  refine continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun b _ => ?_
   exact (IsModuleTopology.continuous_of_linearMap (LinearMap.mulRight (Fv F v)
     ((y : Matrix (Fin n) (Fin n) (Fv F v ⊗[F] E)) b a))).comp
       ((continuous_apply_apply a b).comp continuous_subtype_val)

@@ -53,7 +53,7 @@ theorem coordInf : PositivityTheory.PfSWUS.SchInf.CoordInf := by
   have hVs : ∀ y, eV.symm y = eH.symm y := fun _ => rfl
   have hc : Continuous fun p : (Fin n → Fin M → Ainf F ⊗[F] E) × Matrix (Fin n) (Fin n) (Ainf F ⊗[F] E) =>
       rmul (Ainf F) p.1 p.2 := by
-    refine continuous_pi fun a => continuous_pi fun i => continuous_finset_sum _ fun c _ => ?_
+    refine continuous_pi fun a => continuous_pi fun i => continuous_finsetSum _ fun c _ => ?_
     have h1 : Continuous fun p : (Fin n → Fin M → Ainf F ⊗[F] E) ×
         Matrix (Fin n) (Fin n) (Ainf F ⊗[F] E) => p.1 c i :=
       (continuous_apply i).comp ((continuous_apply c).comp continuous_fst)

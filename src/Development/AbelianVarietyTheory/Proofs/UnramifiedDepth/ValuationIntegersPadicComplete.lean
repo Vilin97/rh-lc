@@ -112,7 +112,9 @@ theorem isAdicComplete (V : VF C)
     have := (mem_pow_iff V n x).1 (SModEq.zero.1 (hx n))
     rw [VF.Ge, ← ht] at this
     exact hn.not_ge (by exact_mod_cast this)
-  prec' f hf := by
+  toIsPrecomplete := by
+    constructor
+    intro f hf
     obtain ⟨x, hx⟩ := hc (fun n => (f n : C)) fun n => by
       have := (mem_pow_iff V n _).1 (SModEq.sub_mem.1 (hf (Nat.le_succ n)).symm)
       simpa using this

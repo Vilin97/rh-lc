@@ -23,9 +23,13 @@ section Level
 
 variable {F : FiniteSubfield} [Fact (K ≤ F)] [F.1.fixingSubgroup.Normal]
 
+set_option synthInstance.maxHeartbeats 400000 in
 theorem classSmul_of_restrictHom (g : K.1.fixingSubgroup) (c : IdeleClassGroup F.1) :
-    (g : ℚ̄ ≃ₐ[ℚ] ℚ̄) • IdeleClassLimit.of F c = IdeleClassLimit.of F (restrictHom (E := F) g • c) :=
-  IdeleClassLimit.smul_of_of_normal g c
+    (g : ℚ̄ ≃ₐ[ℚ] ℚ̄) • IdeleClassLimit.of F c = IdeleClassLimit.of F (restrictHom (E := F) g • c) := by
+  obtain ⟨x, rfl⟩ := IdeleClassGroup.mk_surjective F.1 c
+  have hx := congrArg IdeleLimit.toClassLimit (smul_of_restrictHom g x)
+  rw [IdeleLimit.toClassLimit_smul, IdeleLimit.toClassLimit_of, IdeleLimit.toClassLimit_of] at hx
+  exact hx
 
 
 variable (K F) in
@@ -93,6 +97,11 @@ theorem exists_classLevelCochains_eq (m : ℕ) (x : (cochainsComplex (classLimit
   have hfin : (Set.range f).Finite := hx.range_finite
   choose idx x' hx' using fun a : classLimitRep K => IdeleClassLimit.exists_of (Additive.toMul a)
   choose lev hlev using fun E : FiniteSubfield => GLevel.exists_le (K := K) E
+  have : Nonempty (GLevel K) := ⟨lev K⟩
+  have : IsDirectedOrder (GLevel K) := ⟨fun p q => by
+    let E : FiniteSubfield := ⟨p.1.1 ⊔ q.1.1, inferInstance⟩
+    exact ⟨lev E, (show p.1.1 ≤ p.1.1 ⊔ q.1.1 from le_sup_left).trans (hlev E),
+      (show q.1.1 ≤ p.1.1 ⊔ q.1.1 from le_sup_right).trans (hlev E)⟩⟩
   obtain ⟨p, hp⟩ := Finset.exists_le ((hfin.toFinset.image fun a => lev (idx a)) ∪
     {lev ⟨E₀, hE₀fin⟩})
   have hpE₀ : E₀ ≤ p.1.1 := (hlev ⟨E₀, hE₀fin⟩).trans

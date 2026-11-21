@@ -79,6 +79,7 @@ theorem exists_conductor [CharZero Ω] (y : (Σ k, ι k) → Ω) (hbir : Biratio
   suffices key : ∀ x ∈ Submodule.span A (S : Set (integralClosure A Ω)), ((b : A) : Ω) * (x : Ω) ∈ A from
     key _ htop
   intro x hx
+  set_option synthInstance.maxHeartbeats 200000 in
   induction hx using Submodule.span_induction with
   | mem x hx =>
     obtain ⟨r, hr⟩ := hb (x : Ω) (Finset.mem_image_of_mem _ hx)
@@ -89,7 +90,7 @@ theorem exists_conductor [CharZero Ω] (y : (Σ k, ι k) → Ω) (hbir : Biratio
     simp only [Subalgebra.coe_add, mul_add]
     exact add_mem hx hz
   | smul r x _ hx =>
-    have : ((b : A) : Ω) * ((r • x : integralClosure A Ω) : Ω) = (r : Ω) * (((b : A) : Ω) * (x : Ω)) := by
+    have : ((b : A) : Ω) * (((r : A) • x : integralClosure A Ω) : Ω) = (r : Ω) * (((b : A) : Ω) * (x : Ω)) := by
       rw [Subalgebra.coe_smul, Algebra.smul_def]
       show _ * ((r : Ω) * _) = _
       ring

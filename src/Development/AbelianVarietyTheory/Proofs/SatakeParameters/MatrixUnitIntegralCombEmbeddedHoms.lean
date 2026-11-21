@@ -85,8 +85,10 @@ theorem entry_comb : ∀ (D : D7) (N N' : ℕ) (L : Submodule (𝓞 D.host.E) (F
   obtain ⟨ρ, hρ⟩ := GlobalTheory.JetTieCompare.exists_tauHom D lm τ
   obtain ⟨P, hP⟩ := GlobalTheory.JetTieCompare.exists_locBasis D ρ L hA.2.2.1.1 hA.2.2.1.2.1
   obtain ⟨P', hP'⟩ := GlobalTheory.JetTieCompare.exists_locBasis D ρ L' hA.2.2.2.1 hA.2.2.2.2.1
-  choose s hs hsA using fun q : Fin N' × Fin N =>
+  have hex : ∀ q : Fin N' × Fin N, ∃ s : D.host.E, ‖ρ s‖ = 1 ∧
+      (Matrix.of fun i j => s * (P' i q.1 * P⁻¹ q.2 j)) ∈ homL D L L' := fun q =>
     GlobalTheory.Proof.DirectionalDerivative.exists_smul_mem_homL D ρ hA.2.2.1.1 hP hP' q.2 q.1
+  choose s hs hsA using hex
   have hs0 : ∀ q, ρ (s q) ≠ 0 := fun q h => by rw [← norm_eq_zero, hs q] at h; exact one_ne_zero h
   let e := Fintype.equivFin (Fin N' × Fin N)
   have hdet := det_map_isUnit D ρ hP.1

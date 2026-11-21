@@ -61,7 +61,9 @@ theorem trivial_on_ext_of_frob_eq_normChar : ∀ (Ω : Type) [Field Ω] (K : Typ
       have h1 := Nat.Prime.eq_one_of_pow (h ▸ hp)
       rw [h1, pow_one] at h
       exact h
-    have hnv : normV w = normV (u w) := hn.symm
+    have hnv : normV w = normV (u w) := by
+      simp only [Ideal.absNorm_apply, Submodule.cardQuot_apply] at hn
+      exact hn.symm
     have hBv : IsPlaceOver B (u w) := fun x => by
       have e : algebraMap K Ω (x : K) = algebraMap M Ω ((algebraMap (𝓞 K) (𝓞 M) x : 𝓞 M) : M) := by
         rw [IsScalarTower.algebraMap_apply K M Ω]; rfl

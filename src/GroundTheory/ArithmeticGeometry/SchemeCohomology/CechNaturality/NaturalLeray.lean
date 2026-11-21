@@ -281,7 +281,7 @@ def cechHLinearEquivH (F : X.Modules) [F.IsQuasicoherent] (n : ℕ) :
 theorem cechHLinearEquivH_naturality {F G : X.Modules} [F.IsQuasicoherent] [G.IsQuasicoherent]
     (φ : F ⟶ G) (n : ℕ) (x : cechH (modulesAb F).obj U n) :
     cechHLinearEquivH U hU hUaff A G n (cechH.linearMap U A φ n x) =
-      H.linearMapV436 A φ n (cechHLinearEquivH U hU hUaff A F n x) :=
+      H.linearMap A φ n (cechHLinearEquivH U hU hUaff A F n x) :=
   cechHAddEquivH_naturality U hU hUaff φ n x
 
 end Scheme

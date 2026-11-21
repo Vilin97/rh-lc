@@ -164,7 +164,7 @@ theorem upd_none {T : Finset (Pl F)} [DecidableEq (Option T)] {Q : Pl F → Type
 def formOf {T : Finset (Pl F)} {P : Type} [AddCommGroup P] [Module ℂ P] (p : SInf F κ →ₗ[ℂ] P) {Q : Pl F → Type}
     [∀ v, AddCommGroup (Q v)] [∀ v, Module ℂ (Q v)] (q : ∀ v, ((κ → Fv F v) → ℂ) →ₗ[ℂ] Q v)
     (ℓ : Module.Dual ℂ (P ⊗[ℂ] PiTensorProduct ℂ fun v : T => Q v)) :
-    MultilinearMap ℂ (fun l => Vf F κ T l) ℂ where
+    (∀ l, Vf F κ T l) →ₘₗ[ℂ] ℂ where
   toFun w := ℓ (p (back T (w none)) ⊗ₜ[ℂ] PiTensorProduct.tprod ℂ fun v : T => q v (w (some v) : Xf F κ T (some v) → ℂ))
   map_update_add' := by
     intro _ w l a b
@@ -178,11 +178,11 @@ def formOf {T : Finset (Pl F)} {P : Type} [AddCommGroup P] [Module ℂ P] (p : S
     intro _ w l a b
     cases l with
     | none =>
-      simp only [upd_none, Function.update_self, map_smul]
+      simp only [RingHom.id_apply, upd_none, Function.update_self, map_smul]
       rw [← TensorProduct.smul_tmul', map_smul, smul_eq_mul]
     | some v₀ =>
       simp only [upd_some, Function.update_of_ne (Option.some_ne_none v₀).symm, q_smul,
-        MultilinearMap.map_update_smul, TensorProduct.tmul_smul, map_smul, smul_eq_mul]
+        MultilinearMap.map_update_smul, RingHom.id_apply, TensorProduct.tmul_smul, map_smul, smul_eq_mul]
 
 theorem formOf_famOf {T : Finset (Pl F)} {P : Type} [AddCommGroup P] [Module ℂ P] (p : SInf F κ →ₗ[ℂ] P)
     {Q : Pl F → Type} [∀ v, AddCommGroup (Q v)] [∀ v, Module ℂ (Q v)] (q : ∀ v, ((κ → Fv F v) → ℂ) →ₗ[ℂ] Q v)

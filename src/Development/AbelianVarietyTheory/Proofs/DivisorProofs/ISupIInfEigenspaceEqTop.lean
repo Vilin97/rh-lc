@@ -139,6 +139,4 @@ variable {θ V S M J χ Sb e}
 
 end Local
 
-open GlobalTheory.IndefiniteRowSideFullHecke.GoodReductionModelReading
-
 end GlobalTheory.HeckeOrthSum

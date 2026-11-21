@@ -257,15 +257,33 @@ theorem locHypC_locAt (hB : FrRat X u w hg B) (hTc : HypTC (X.g u w hg)) : LocHy
 set_option maxHeartbeats 4000000 in
 include hU in
 theorem oneHyp_locAt (hB : FrRat X u w hg B) (hT : HypT (X.g u w hg)) (hTc : HypTC (X.g u w hg)) :
-    OneHyp ((T u).cls0).toChart.lev (locAt X u w hg B) ((T u).cls0).toChart.y where
-  y_bij := ((T u).cls0).y_bij
-  good := locGood_locAt X u w hg B
-  int := locInt_locAt X u w hg B
-  hypP := locHyp_locAt X T u hU w hg B hB hT
-  hypC := locHypC_locAt X T u hU w hg B hB hTc
-  bad_p := bad_notOver u w hg
-  actB := locAt_actB u w hg B hB
-  comp := fun x => by
+    OneHyp ((T u).cls0).toChart.lev (locAt X u w hg B) ((T u).cls0).toChart.y := by
+  have hGood : LocGood (sigD D) (gramN D 0 (Nat.zero_le _)) (locAt X u w hg B) := by
+    refine {
+      herm := isHerm_re (rank_eq_first_level D.R) _ D.sp.gram0 _ (gramN_zero D) D.sp.baseGram_isHermitian
+      det := det_re (rank_eq_first_level D.R) D.sp.gram0 _ (gramN_zero D) (isUnit_det_gram0 D.sp)
+      sig := fun v x => (X.g u w hg).spl_sig _ ((X.g u w hg).pl v).2 x
+      yG_mem := fun i => reGL_mem_UPts (rank_eq_first_level D.R) D.sp.cm.sig D.sp.gram0 _ (gramN_zero D) _ _ ((X.g u w hg).yG i).2
+      yG_p := ?_ }
+    intro i v
+    have h := bc_reGL (rank_eq_first_level D.R) (prV (E := D.host.E) ((X.g u w hg).pl v).1) ((X.g u w hg).yG i).1
+    rw [(X.g u w hg).yG_p i _ ((X.g u w hg).pl v).2, map_one] at h
+    exact h
+  refine {
+    y_bij := ((T u).cls0).y_bij
+    good := hGood
+    int := locInt_locAt X u w hg B
+    hypP := locHyp_locAt X T u hU w hg B hB hT
+    hypC := locHypC_locAt X T u hU w hg B hB hTc
+    bad_p := bad_notOver u w hg
+    actB := locAt_actB u w hg B hB
+    comp := ?_
+    gam := ?_
+    gamU := locAt_UJ u w hg B
+    inj := gamI_inj_locAt X u w hg B
+    onto := gamOnto_locAt X T u hU w hg B
+    cinj := compInj_locAt X T u hU w hg B }
+  · intro x
     obtain ⟨i, γ, k, hγ, hk, hkU, e⟩ := comp_re (rank_eq_first_level D.R) D.sp.cm.sig D.sp.gram0 _ (gramN_zero D) (X.g u w hg).yG
       (Formalism.L2.Herm.awayFrom₂ (X.lev0 u) (D.what₂.places.resChar w)) (X.g u w hg).yG_bij.2 x
     refine ⟨i, γ, reGL (rank_eq_first_level D.R) _ k, hγ, reGL_mem_UPts (rank_eq_first_level D.R) D.sp.cm.sig D.sp.gram0 _ (gramN_zero D) _ _ hkU, e,
@@ -274,7 +292,7 @@ theorem oneHyp_locAt (hB : FrRat X u w hg B) (hT : HypT (X.g u w hg)) (hTc : Hyp
     show _ ∈ ((T u).cls0).lev.Uloc w'
     rw [hU w']
     exact Subgroup.mem_map.2 ⟨_, ((mem_awayP_iff _ _ k).1 hk).2 w' hw', rfl⟩
-  gam := fun i γ => by
+  · intro i γ
     have h1 : (((X.g u w hg).yG i).1)⁻¹ * bc (inclE (F := D.host.F) (FiniteAdeleRing (𝓞 D.host.F) D.host.F))
         ((X.g u w hg).gamI i γ).1 * ((X.g u w hg).yG i).1 ∈ Formalism.L2.Herm.awayFrom₂ (X.lev0 u) (D.what₂.places.resChar w) :=
       (mem_map_conj _ _ _).1 (((X.g u w hg).gamI_range i _).1 ⟨γ, rfl⟩)
@@ -290,10 +308,6 @@ theorem oneHyp_locAt (hB : FrRat X u w hg B) (hT : HypT (X.g u w hg)) (hTc : Hyp
     show _ ∈ ((T u).cls0).lev.Uloc w'
     rw [hU w']
     exact Subgroup.mem_map.2 ⟨_, h3 w' hw', rfl⟩
-  gamU := locAt_UJ u w hg B
-  inj := gamI_inj_locAt X u w hg B
-  onto := gamOnto_locAt X T u hU w hg B
-  cinj := compInj_locAt X T u hU w hg B
 
 end GlobalTheory.Port
 end

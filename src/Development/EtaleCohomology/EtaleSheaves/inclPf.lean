@@ -27,7 +27,6 @@ lemma trd (i j : ℕ) :
       (K.stupidTruncXIso (E M) (i := i) rfl).hom ≫ K.d ((E M).f i) ((E M).f j) := by
   simp [HomologicalComplex.stupidTrunc, HomologicalComplex.stupidTruncXIso,
     HomologicalComplex.extend_d_eq _ _ rfl rfl, HomologicalComplex.restriction]
-  erw [eqToIso_refl, eqToIso_refl]; simp
 
 
 open Classical in

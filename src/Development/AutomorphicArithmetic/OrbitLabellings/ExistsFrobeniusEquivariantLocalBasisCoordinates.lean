@@ -335,18 +335,18 @@ private theorem frob_moves_coords : ∀ (D : D7) (p : ℕ) [Fact p.Prime] (lam :
   refine ⟨fun z a b₀ i => ?_, fun w a b₀ i => ?_⟩
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [gK, hK, hfun, map_sum, map_mul]
-    refine Finset.sum_congr rfl fun b₁ _ => Finset.sum_congr rfl fun a₁ _ => ?_
-    rw [hs, hs, conj_conj, hinv, K1 P hPc z]
-    have e2 := congrFun (congrFun (K2 P' hP'c z) b₁) b₀
-    simp only [Matrix.map_apply, Matrix.transpose_apply] at e2 ⊢
-    rw [e2]; ring
+      refine Finset.sum_congr rfl fun b₁ _ => Finset.sum_congr rfl fun a₁ _ => ?_
+      rw [hs, hs, conj_conj, hinv, K1 P hPc z]
+      have e2 := congrFun (congrFun (K2 P' hP'c z) b₁) b₀
+      simp only [Matrix.map_apply, Matrix.transpose_apply] at e2 ⊢
+      rw [e2]; ring
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [gK, hK, hfun, map_sum, map_mul]
-    refine Finset.sum_congr rfl fun b₁ _ => Finset.sum_congr rfl fun a₁ _ => ?_
-    rw [hs, hs, hinv, K1 P' hP'c w]
-    have e2 := congrFun (congrFun (K2 P hPc w) a₁) a
-    simp only [Matrix.map_apply, Matrix.transpose_apply] at e2 ⊢
-    rw [e2]; ring
+      refine Finset.sum_congr rfl fun b₁ _ => Finset.sum_congr rfl fun a₁ _ => ?_
+      rw [hs, hs, hinv, K1 P' hP'c w]
+      have e2 := congrFun (congrFun (K2 P hPc w) a₁) a
+      simp only [Matrix.map_apply, Matrix.transpose_apply] at e2 ⊢
+      rw [e2]; ring
 
 private theorem sum_bilin {R : Type*} [CommRing R] {ι κ μ : Type*} [Fintype ι] [Fintype κ] [Fintype μ]
     (F : κ → R) (G : μ → R) (X : ι → κ → R) (Y : ι → μ → R) :

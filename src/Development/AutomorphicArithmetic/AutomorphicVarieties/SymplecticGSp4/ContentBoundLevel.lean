@@ -126,7 +126,7 @@ private theorem pat_aeval (as : ∀ a b, a ≠ b → R a b → ¬ R b a) {X : M4
     Polynomial.aeval X p ∈ pat K R rf tr ∧ ∀ i, (Polynomial.aeval X p) i i = p.eval (X i i) := by
   induction p using Polynomial.induction_on with
   | C a => exact ⟨by rw [Polynomial.aeval_C]; exact Subalgebra.algebraMap_mem _ _, fun i => by simp [Matrix.algebraMap_matrix_apply]⟩
-  | add p q hp hq => exact ⟨by rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem hp.1 hq.1, fun i => by simp [hp.2, hq.2]⟩
+  | add p q hp hq => exact ⟨by rw [map_add]; exact add_mem hp.1 hq.1, fun i => by simp [hp.2, hq.2]⟩
   | monomial n a h =>
     rw [pow_succ, ← mul_assoc, map_mul, Polynomial.aeval_X]
     exact ⟨mul_mem h.1 hX, fun i => by rw [pat_diag as h.1 hX, h.2, Polynomial.eval_mul_X]⟩

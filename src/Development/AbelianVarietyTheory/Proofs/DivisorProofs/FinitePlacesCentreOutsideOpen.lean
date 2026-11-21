@@ -82,8 +82,7 @@ theorem finite_centre_not_mem (k K E : Type) [Field k] [IsAlgClosed k] [CharZero
   have hE : IsFF k E := (GlobalTheory.T.functionFieldOneVariable_transcendental_finite_and_ext k K (GlobalTheory.T.isFunctionFieldOfOneVariable_of_genericPointOfCurve k K C x hx)).2 E
   refine ((s.finite_toSet.biUnion fun a _ => (?_ : {p : Place k E | ¬ p.1 (f a) ≤ 1}.Finite))).subset ?_
   · by_cases h0 : f a = 0
-    · convert Set.finite_empty
-      ext p; simp [h0]
+    · simpa [h0] using (Set.finite_empty : (∅ : Set (Place k E)).Finite)
     · exact (GlobalTheory.T.functionField_finite_support_sum_order_eq_zero k E hE (f a) h0).1.subset fun p hp h1 => hp h1.le
   · rintro p ⟨b, hb1, hb2⟩
     simp only [Set.mem_iUnion, Set.mem_setOf_eq]

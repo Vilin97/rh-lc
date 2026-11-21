@@ -27,5 +27,6 @@ theorem sumPl_heisOp_vacuum_dep {ι : Type} [Fintype ι] [DecidableEq ι] {P Q R
   refine Finset.sum_congr rfl fun w _ => ?_
   rw [GlobalTheory.FockVac.atPl_tprod, GlobalTheory.FockVac.atPl_tprod, GlobalTheory.FockVac.heisOp_one,
     MultilinearMap.map_update_smul]
+  rfl
 
 end GlobalTheory.FockVacD

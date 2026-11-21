@@ -400,7 +400,7 @@ theorem exists_subspace (R : RiemLat E g Λ) {Ψ : Type} [Fintype Ψ] [Nonempty 
     have hw : LinearIndependent ℂ w := LinearIndependent.of_comp (eigSp R.B (σ τ₀)).subtype hC
     have := hw.fintype_card_le_finrank
     rw [(hs τ₀).1] at this
-    simpa using this
+    simpa only [Fintype.card_fin] using this
   let b := Module.Free.chooseBasis ℤ (𝓞 E)
   let fam : Module.Free.ChooseBasisIndex ℤ (𝓞 E) × Fin r → Tan R := fun q => per R (b q.1 • v q.2)
   let W : Submodule ℝ (Tan R) := Submodule.span ℝ (Set.range fam)

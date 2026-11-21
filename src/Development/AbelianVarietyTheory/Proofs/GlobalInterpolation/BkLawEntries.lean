@@ -71,29 +71,22 @@ variable {D : D7} {L : SizeData₂ D} {hT : GatTies D} {Gi : Formalism.MainNotio
 set_option maxHeartbeats 2000000 in
 theorem divisionRows_pairing_vanishes_of_rational_pairing_law
     (hC : GlobalTheory.Published.DiscreteSeriesCover ∧ GlobalTheory.Published.HarishChandraModules ∧ GlobalTheory.Published.CasselmanWallach ∧ GlobalTheory.Published.HarishChandraFinite ∧
-      GlobalTheory.Published.CuspRapidDecay) (x : TwIn ex) (hH : Holds x.R x.F) (hB : Rw.BkLaw D)
-    (hV : CxData.BtVanish (fc := x.F.fc) (x.R.toCx3 x.F)) : GlobalTheory.Cp.DivRows3G (divisionPairOfAdelicFormsFaceColumnsData x) :=
-  (GlobalTheory.Cp.divRows3G_iff _).2 ((rowConditions_at_companion_from_readings _ _ _ _ _ _ _ _ _ x).2.2.2
-    ((GlobalTheory.T.divisionCompatible_at_readIdentifications hC D x.G x.Pl0 x.I0 x.T x.A3 _ x.R x.F x.cG ex.p0 x.Y x.Z x.C x.sEE Yd x.JM x.pins hH fun _ _ => x.div.grp).2
-      x.mjH ex.idx (hB (GlobalTheory.T.divisionPairing_rational_on_rationalPoints' hC D x.G x.Pl0 x.I0 x.T x.A3 _ x.R x.F x.cG ex.p0 x.Y x.Z x.C x.pins hH)) hV))
+      GlobalTheory.Published.CuspRapidDecay) (x : GlobalTheory.Mem.R3.TwIn ex) (hH : Holds x.R x.F) (hB : Rw.BkLaw D)
+    (hV : CxData.BtVanish (fc := x.F.fc) (x.R.toCx3 x.F)) : GlobalTheory.Cp.DivRows3G (GlobalTheory.Mem.R3.divisionPairOfAdelicFormsFaceColumnsData x) := by
+  have hRational := GlobalTheory.T.divisionPairing_rational_on_rationalPoints'
+    hC D x.G x.Pl0 x.I0 x.T x.A3 _ x.R x.F x.cG ex.p0 x.Y x.Z x.C x.pins hH
+  have hRows := (GlobalTheory.T.divisionCompatible_at_readIdentifications
+    hC D x.G x.Pl0 x.I0 x.T x.A3 _ x.R x.F x.cG ex.p0 x.Y x.Z x.C x.sEE Yd x.JM x.pins hH
+    (fun _ _ => x.div.grp)).2 x.mjH ex.idx (hB hRational) hV
+  exact {
+    sharpRR := hRows.sharpRR
+    baseRR := hRows.baseRR
+    divisionRows_rationalLift := fun i t _ => hRows.divisionRows_rationalLift i t
+    thTheta := fun i t _ v => hRows.thTheta i t v
+    num := ⟨fun i t _ w => hRows.num.Ij i t w, fun i t _ w => hRows.num.jw i t w, hRows.num.etaJ⟩
+    colsBk := hRows.colsBk }
 
 end Read
-
-open Formalism.BasicNotions Formalism.MainNotions Formalism.MainNotions.RT GlobalTheory.EX GlobalTheory.EX.OB GlobalTheory.Mem GlobalTheory.Mem.Top GlobalTheory.Mem.Top.Bl GlobalTheory.Fc
-
-attribute [local instance] Formalism.BasicNotions.Host.cmStar
-
-variable {hL : GlobalTheory.Published.LocalLanglandsGL} {p : Prm hL}
-
-section Wit
-
-variable (hC : GlobalTheory.Published.DiscreteSeriesCover ∧ GlobalTheory.Published.HarishChandraModules ∧ GlobalTheory.Published.CasselmanWallach ∧
-  GlobalTheory.Published.HarishChandraFinite ∧ GlobalTheory.Published.CuspRapidDecay)
-  {K : Ctx} {q : WPt p.s K} {c : ℝ} {b : Bundle (q.w.D q.Z) q.O c}
-
-include hC
-
-end Wit
 
 end GlobalTheory.Fc.DivLinked
 

@@ -318,7 +318,8 @@ theorem bd_rho : ∀ (n : ℕ) (i : Fin (n + 2) → ι),
       refine Finsupp.supported_mono ?_ (bd_mem_rangeIn (n := 0) (single_mem_rangeIn i 1))
       intro j hj
       refine mem_ordFrom.2 ⟨strictMono_of_fin_one j, ?_⟩
-      obtain ⟨a, ha⟩ := (mem_rangeIn.1 hj) (Set.mem_range_self 0)
+      have hj0 : j 0 ∈ Set.range j := ⟨0, rfl⟩
+      obtain ⟨a, ha⟩ := (mem_rangeIn.1 hj) hj0
       rw [← ha]
       exact minIdx_le i a
     change bd 0 (ocone (minIdx i) (lin (rho 0) (bd 0 (Finsupp.single i 1)))) = _

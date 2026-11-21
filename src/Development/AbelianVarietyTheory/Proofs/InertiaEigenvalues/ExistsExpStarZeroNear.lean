@@ -49,7 +49,7 @@ theorem exponent_le (s e : ℕ) :
   rcases e with _ | e
   · have : (0 : ℝ) ≤ q := Nat.cast_nonneg _
     have : (0 : ℝ) ≤ s := Nat.cast_nonneg _
-    simp [betaE]
+    simp [betaE, Nat.padicValNat_def]
     linarith
   · have h3 : padicValNat l (e + 1).factorial = padicValNat l (e + 1) + padicValNat l e.factorial := by
       rw [Nat.factorial_succ, (show ∀ {p a b : ℕ} [_root_.Fact (_root_.Nat.Prime p)], a ≠ 0 → b ≠ 0 → _root_.padicValNat p (a * b) = _root_.padicValNat p a + _root_.padicValNat p b from by simpa only [← _root_.Nat.padicValNat_def] using @_root_.Nat.multiplicity_mul) (by omega) (Nat.factorial_ne_zero _)]

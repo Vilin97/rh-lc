@@ -142,7 +142,7 @@ theorem ColimHens_of : LateralTheory.E.HensCut.ColimHens := by
     (Ideal.quotientMap (I.map (phi β c)) (phi β c) Ideal.le_comap_map) ⟨?_, ?_⟩⟩⟩
   ·
     intro k hk
-    rw [Ideal.mem_jacobson_bot]
+    rw [Ring.mem_jacobson_iff]
     intro y
     obtain ⟨j, x, hx, hxe⟩ := Krep β hc I (Ideal.mul_mem_right y _ hk)
     obtain ⟨j', f, hu⟩ := hb j x hx

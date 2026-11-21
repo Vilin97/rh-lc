@@ -58,7 +58,7 @@ theorem zhat_inv_mono {z z' : Fin (2 * r + k + 1) → ℂ} (p : Point ℂ (r + 1
     show _ = if i = permOf p a then _ else 0
     by_cases h : a = permOf p i
     · subst h
-      rw [if_pos rfl, if_pos (hi i).symm, hi]
+      simp [hi]
     · rw [if_neg h, if_neg (fun e => h (by rw [e, hi])), mul_zero, star_zero]
 
 theorem gf_inv (z z' : Fin (2 * r + k + 1) → ℂ) {g : Mat k r} (hg : g ∈ GG k r) :
@@ -140,6 +140,10 @@ theorem exists_rMeas : ∀ (D : D7) (W : LocW D.R.k D.R.rS) (γ : MatKR D.R.k D.
   obtain ⟨ν, hν⟩ := GlobalTheory.SgQuot.exists_isQuotMeas _ _ _ W.μG _ (StabMeas.isClosedSub_Rset hγ) hG e1 e2
   refine ⟨ν, p, _, ⟨n, hn, n', hn', g, rfl, hZ, _, d1.2.2.1, ?_, rfl⟩, ?_⟩
   · rw [Measure.map_smul, h3]
+    apply Continuous.aemeasurable
+    refine continuous_pi fun q => ?_
+    unfold rootCoords flagMat
+    split_ifs <;> first | exact continuous_const | fun_prop
   · have e : (fun x : Mt D.R.k D.R.rS => fun i j => (n'⁻¹ * Matrix.of x * n') i j) = conjM n'⁻¹ := by
       funext x
       unfold conjM

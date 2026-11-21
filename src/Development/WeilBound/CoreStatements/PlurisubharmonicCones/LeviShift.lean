@@ -61,7 +61,7 @@ theorem term_zero (A : FinHolAtlas e X) (Θ : Fin e → LocPot X) (L : LocPot X)
   set δ : ℝ := ε / (2 * (M + 1)) with hδ
   have hδ0 : 0 < δ := by positivity
   have hK := GlobalTheory.CompanionTheory.Ar.Giv.isCompact_rW_sublevel A L s hL hs R
-  have hun := Metric.tendstoUniformlyOn_iff.1 (hg0 _ (fun y hy => hy.1) hK) δ hδ0
+  have hun := Metric.tendstoUniformlyOn_iff.1 (hg0 _ (fun y (hy : y ∈ (bdry s)ᶜ ∩ {y | rW L s y ≤ R}) => hy.1) hK) δ hδ0
   filter_upwards [hu, hg, hun] with t ⟨hu1, hu2, hu3⟩ ⟨hg1, hg2⟩ hun
   have hpot : ∀ i, IsPotential A (Θ i + LocPot.ofFun (u t i)) := fun i =>
     isPotentialAdd A _ _ (hΘ i) (isPotential_ofFun A _ (hu1 i))

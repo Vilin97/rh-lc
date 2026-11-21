@@ -60,7 +60,8 @@ theorem UpperTheory.V.Br.uOfSat :
     rw [Uop, iwahori_level_zero_eq, ← hecke_Tj w ρ 1 _ (by ext i j; fin_cases i <;> fin_cases j <;> simp [aff, diagJ]), h1]
     congr 1
     rw [Complex.ofReal_cpow (by positivity)]
-    have : qV F w = normV w := rfl
+    have : qV F w = normV w := by
+      simp [normV, qV, Ideal.absNorm_apply, Submodule.cardQuot_apply]
     simp [satEig, Multiset.esymm, Multiset.powersetCard_one, this]
     norm_num [add_comm]
   · have h2 := h (atFin w (unif w) : w.adicCompletion F) (unif_spec w) 2 (by norm_num)

@@ -55,7 +55,7 @@ theorem exists_frob_pow_inv_mul_mem : ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω
       group
     rw [e]
     refine K'.mul_mem (hI'K' ?_) (K'.zpow_mem hmK' _)
-    exact Subgroup.Normal.conj_mem inferInstance i hi _
+    exact Subgroup.Normal.conj_mem i hi _
   intro s
   have hs : s ∈ (((Ine (F := ℚ) B).subgroupOf (Dec (F := ℚ) B) ⊔ Subgroup.zpowers φ).topologicalClosure :
       Set (Dec (F := ℚ) B)) := by rw [hcl]; trivial

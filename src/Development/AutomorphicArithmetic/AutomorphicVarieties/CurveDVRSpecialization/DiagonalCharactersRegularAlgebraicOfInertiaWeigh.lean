@@ -20,7 +20,7 @@ private theorem cyc_ine {F Ω : Type} [Field F] [NumberField F] [Field Ω] [Alge
   haveI : IsAlgClosure ℚ Ω := ⟨IsAlgClosure.isAlgClosed F, Algebra.IsAlgebraic.trans ℚ F Ω⟩
   have hval : A.valuation (l : Ω) < 1 := by
     have h1 := (hA (l : 𝓞 F)).2 hl
-    simpa using h1
+    simpa only [map_natCast] using h1
   obtain ⟨u, hu⟩ := GlobalTheory.CycDec.exists_unit_infinite_order l
   obtain ⟨σ, hσI, hσu⟩ := GlobalTheory.CycInertia.cycZ_Ine_surjective Ω l A hval u
   let f : ℕ → (F →ₐ[ℚ] Ω) := fun k =>

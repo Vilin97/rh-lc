@@ -42,7 +42,8 @@ theorem BoundaryPtsNull.proof : BoundaryPtsNull.Statement := by
     have hγB : (D.chart a).γ t ∈ D.Bd := by
       have := D.bd_torus _ hzB (fun k => (c k)⁻¹) (fun k => inv_ne_zero (hc k))
       convert this using 1
-      rw [inv_mul_cancel_left₀ (hc _)]
+      funext x
+      simp [torusSmul, hc]
     have ht1 : ‖t‖ < 1 := by linarith
     obtain ⟨i, -, hi⟩ := ((D.chart a).boundary t (mem_ball_zero_iff.2 ht1)).1 hγB
     rw [segre_torusSmul, map_smul] at hΨ

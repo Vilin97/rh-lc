@@ -127,13 +127,14 @@ theorem mem_iff_split {h : V →ₗ⋆[K] V →ₗ[K] K} {M : AddSubgroup V} (hM
 theorem selfDual_restr {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : ∀ u v, star (h u v) = h v u) {M : AddSubgroup V}
     (hM : IsSelfDualMod S h M) {X : V} (hXM : X ∈ M) (hXu : IsUnitIn S (h X X)) :
     IsSelfDualMod S (restr h (LinearMap.ker (h X)))
-      (M.comap ((LinearMap.ker (h X)).subtype : LinearMap.ker (h X) →ₗ[K] V).toAddMonoidHom) where
-  smul_mem := fun a ha m hm => by
+      (M.comap ((LinearMap.ker (h X)).subtype : LinearMap.ker (h X) →ₗ[K] V).toAddMonoidHom) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro a ha m hm
     change ((a • m : LinearMap.ker (h X)) : V) ∈ M
     rw [Submodule.coe_smul]
     exact hM.smul_mem a ha _ hm
-  int := fun x hx y hy => hM.int _ hx _ hy
-  dual := fun x hx => by
+  · exact fun x hx y hy => hM.int _ hx _ hy
+  · intro x hx
     change (x : V) ∈ M
     apply hM.dual
     intro m hm
@@ -144,7 +145,7 @@ theorem selfDual_restr {h : V →ₗ⋆[K] V →ₗ[K] K} (hs : ∀ u v, star (h
         smul_zero, zero_add]
     rw [e]
     exact hx (proj h X hXu.1 m) hpm
-  span := fun x => by
+  · intro x
     obtain ⟨t, ht, htx⟩ := hM.span (x : V)
     exact ⟨t, ht, by change ((t • x : LinearMap.ker (h X)) : V) ∈ M; rw [Submodule.coe_smul]; exact htx⟩
 
@@ -163,22 +164,23 @@ theorem symm_restr {h : V →ₗ⋆[K] V →ₗ[K] K} (hsy : h.IsSymm) (W : Subm
 
 theorem selfDual_map {h : V →ₗ⋆[K] V →ₗ[K] K} {M : AddSubgroup V} (hM : IsSelfDualMod S h M)
     (g : V ≃ₗ[K] V) (hg : ∀ x y, h (g x) (g y) = h x y) :
-    IsSelfDualMod S h (M.comap (g.symm : V →ₗ[K] V).toAddMonoidHom) where
-  smul_mem := fun a ha m hm => by
+    IsSelfDualMod S h (M.comap (g.symm : V →ₗ[K] V).toAddMonoidHom) := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro a ha m hm
     change g.symm (a • m) ∈ M
     rw [map_smul]; exact hM.smul_mem a ha _ hm
-  int := fun x hx y hy => by
+  · intro x hx y hy
     have := hM.int _ hx _ hy
     change h (g.symm x) (g.symm y) ∈ S at this
     rwa [← hg, LinearEquiv.apply_symm_apply, LinearEquiv.apply_symm_apply] at this
-  dual := fun x hx => by
+  · intro x hx
     change g.symm x ∈ M
     apply hM.dual
     intro m hm
     have := hx (g m) (by change g.symm (g m) ∈ M; rwa [LinearEquiv.symm_apply_apply])
     rw [← hg m (g.symm x), LinearEquiv.apply_symm_apply]
     exact this
-  span := fun x => by
+  · intro x
     obtain ⟨t, ht, htx⟩ := hM.span (g.symm x)
     exact ⟨t, ht, by change g.symm (t • x) ∈ M; rwa [map_smul]⟩
 

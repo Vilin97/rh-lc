@@ -451,6 +451,7 @@ private theorem lx_col_eq (x' : X') (l : K.Col i dc) :
   unfold Lx fZ
   rw [dite_eq_left (col_over i dc l)]
 
+set_option synthInstance.maxHeartbeats 80000 in
 private theorem jK_colIdx_eq_finrank_cohomology (l : K.Col i dc) :
     jK i dc ρ π (K.colIdx i dc l) = Module.finrank (Br.LL D.nbr i _ (col_over i dc l))
       (FiniteCohomology (Br.PD D.loc D.nbr i _ (col_over i dc l))

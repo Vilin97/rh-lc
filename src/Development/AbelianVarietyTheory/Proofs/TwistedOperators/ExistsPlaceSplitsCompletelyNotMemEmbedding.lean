@@ -59,7 +59,7 @@ theorem infinite_setOf_splitsCompletely (E : Type) [Field E] [NumberField E] :
       {u : HeightOneSpectrum (𝓞 ℚ) | SplitsCompletely E u} := fun u hu => splitsCompletely_of_tower (M := M) hu
   intro hfin
   have h0 := GroundTheory.Global.hasDirichletDensity_zero_of_finite (hfin.subset hsub)
-  have e := tendsto_nhds_unique hd h0
+  have e := hd.dirichletDensity_eq.symm.trans h0.dirichletDensity_eq
   have hpos : (0 : ℝ) < 1 / (Module.finrank ℚ M : ℝ) := by
     have := Module.finrank_pos (R := ℚ) (M := M)
     positivity

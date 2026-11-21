@@ -146,11 +146,12 @@ theorem main_law : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberF
       | (simp [mtF, matHomF]; rfl)
   obtain ⟨hmem, heq⟩ := htr p 1 1 h hh hg Φ hΦ
   refine ⟨hmem, ?_⟩
-  rw [heq]
   have hth := GlobalTheory.TransportHeisF.isThetaFunOF_thetaTr F E σ B hB nS (nT + nT) JS
     (GlobalTheory.WeilSchrodinger.DblTargetF.dblG JT) hS (GlobalTheory.WeilSchrodinger.DblTargetF.isHermND_dblG hT) ξ₀ hξ₀ hσ hωd.std _ JB ξ
     rfl hξ κ co hco Φ hΦ
-  exact lagr_law F E σ B hB nS nT JS JT hS hT ξ₀ hξ₀ hσ ν 𝓕 hν h𝓕 χS ωd hωd h t (by rw [hh]; exact hpt) _ hth
+  exact (congrArg (GlobalTheory.LagrTheta.lagrInt ν 𝓕
+    ((diagCols (Fin nT)).submatrix finSumFinEquiv.symm id)) heq).trans
+    (lagr_law F E σ B hB nS nT JS JT hS hT ξ₀ hξ₀ hσ ν 𝓕 hν h𝓕 χS ωd hωd h t (by rw [hh]; exact hpt) _ hth)
 
 end GlobalTheory.SiegelLawDblTargetF
 

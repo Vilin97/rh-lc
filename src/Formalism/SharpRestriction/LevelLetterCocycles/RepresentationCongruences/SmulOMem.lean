@@ -257,9 +257,9 @@ theorem build [IsDomain O] (W : LocWach PD LL O v n) (hcase : Formalism.MainNoti
   · exact sum_mem' W _ _ fun k _ => smulO_mem W _ (hxk k)
   set_option synthInstance.maxHeartbeats 100000 in
     · rw [hXeq, map_sum, ← Finset.sum_sub_distrib, Finset.smul_sum]
-    refine Finset.sum_congr rfl fun k _ => ?_
-    rw [map_smul, ← smul_sub, hxke k]
-    exact smul_comm _ _ _
+      refine Finset.sum_congr rfl fun k _ => ?_
+      rw [map_smul, ← smul_sub, hxke k]
+      exact smul_comm _ _ _
   · refine ⟨_, AddSubgroup.sum_mem _ fun m _ => AddSubgroup.subset_closure
       ⟨Y m, hY m, b₁ m, hb₁.1.1 m, by rw [pow_one]⟩, by rw [one_smul]⟩
   · refine ⟨_, AddSubgroup.sum_mem _ fun m _ => AddSubgroup.subset_closure

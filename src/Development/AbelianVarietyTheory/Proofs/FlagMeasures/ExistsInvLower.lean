@@ -186,9 +186,13 @@ theorem exists_ist [FiniteDimensional K V] [CharZero K] (G G' : FlagD H r) {j : 
   refine ⟨fun b => y b - s b, fun a b => ?_, fun b u hu => ?_, fun b => ?_, fun a b ha hb => ?_⟩
   · rw [map_sub, hy1, e_X G _ (hsX b), sub_zero]
   set_option synthInstance.maxHeartbeats 100000 in
-    · rw [map_sub, hy2 b u hu, hsd, map_sum, Finset.sum_eq_zero, sub_zero]
-    intro a ha
-    rw [map_smulₛₗ, hp a.castSucc (Finset.mem_filter.mp ha).2 u hu, smul_zero]
+    · rw [map_sub, hy2 b u hu, hsd, map_sum]
+      have hz : (∑ a ∈ Finset.univ.filter (fun a : Fin r => j ≤ a.val),
+          H.B u ((H.B (y b) (y a) / 2) • G.e a.castSucc)) = 0 := by
+        apply Finset.sum_eq_zero
+        intro a ha
+        rw [map_smulₛₗ, hp a.castSucc (Finset.mem_filter.mp ha).2 u hu, smul_zero]
+      rw [hz, sub_zero]
   · rw [map_sub, hy3, z_X G (hsX b), sub_zero]
   · have h2 : H.B (y a) (s b) = H.B (y a) (y b) / 2 := by
       rw [← H.herm (s b), hsy b a ha, star_div₀, H.herm]; simp

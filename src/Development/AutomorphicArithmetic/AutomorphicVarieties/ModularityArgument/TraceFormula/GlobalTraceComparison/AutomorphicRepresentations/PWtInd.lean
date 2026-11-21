@@ -105,14 +105,15 @@ private theorem slab_rt (D : Dom E n 0) {a : GA E n → ℂ} (ha : Slab D a) {g 
   · have hm := ha.2.2.2 u hu hs
     have hcm : Continuous fun x : H E n 0 => a (x.1 * g) * u (ldet x) :=
       (hc.comp continuous_fst).mul (hu.comp continuous_ldet)
-    refine ⟨hcm.aestronglyMeasurable, ?_⟩
     have hsh := lintegral_shift D (fun x : H E n 0 => ‖a x.1 * u (ldet x)‖ₑ ^ (2 : ENNReal).toReal) (fun γ x => by
       show ‖a ((γ : H E n 0).1 * x.1) * u (ldet ((γ : H E n 0) * x))‖ₑ ^ _ = _
       rw [slab_rat ha, ldet_rat]) ((g, 1) : H E n 0)
     simp only [ldet_shift hg] at hsh
-    rw [eLpNorm_eq_lintegral_rpow_enorm two_ne_zero ENNReal.ofNat_ne_top]
-    have h2 := hm.2
-    rw [eLpNorm_eq_lintegral_rpow_enorm two_ne_zero ENNReal.ofNat_ne_top, ← hsh] at h2
+    change eLpNorm (fun x : H E n 0 => a (x.1 * g) * u (ldet x)) 2 D.ν < ⊤
+    rw [eLpNorm_eq_lintegral_rpow_eNorm_toReal two_ne_zero ENNReal.ofNat_ne_top hcm.aestronglyMeasurable]
+    have h2 := hm
+    change eLpNorm (fun x : H E n 0 => a x.1 * u (ldet x)) 2 D.ν < ⊤ at h2
+    rw [eLpNorm_eq_lintegral_rpow_eNorm_toReal two_ne_zero ENNReal.ofNat_ne_top hm.aestronglyMeasurable, ← hsh] at h2
     exact h2
 
 private theorem pair_rt (D : Dom E n 0) {a b : GA E n → ℂ} (ha : Slab D a) (hb : Slab D b) (u : ℝ → ℂ) {g : GA E n}

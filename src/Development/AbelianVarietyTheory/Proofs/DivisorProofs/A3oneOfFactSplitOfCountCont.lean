@@ -15,7 +15,7 @@ noncomputable section
 
 open CategoryTheory AlgebraicGeometry TopologicalSpace Filter Topology
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor
-open GlobalTheory GlobalTheory.Points GlobalTheory.CechPic GlobalTheory.CxPts GlobalTheory.Vanishing GlobalTheory.CuspDim
+open GlobalTheory GlobalTheory.Points GlobalTheory.CechPic GlobalTheory.CxPts GlobalTheory.Vanishing
 open GlobalTheory.ShFam.BdArc (IsHolPts)
 
 namespace GlobalTheory.CuspDim.IsoPow

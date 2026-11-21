@@ -36,7 +36,7 @@ variable {D : D7}
 
 theorem dim_pos (D : D7) (j : ℕ) : (1 : ℝ) ≤ WeightFamilies.dimY D j := by
   have hf : 0 < D.R.f := by
-    unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) (show 0 < D.R.ord by positivity); omega
+    unfold Ranks.f Ranks.n; have := And.intro (Nat.one_le_two_pow (n := D.R.e)) D.R.ord_pos; omega
   have h1 := D.R.two_le_m
   have h2 := D.R.m_add_three_le_k
   have hp : 2 ≤ (D.R.sigW j).1 := by unfold Ranks.sigW; simp only; omega

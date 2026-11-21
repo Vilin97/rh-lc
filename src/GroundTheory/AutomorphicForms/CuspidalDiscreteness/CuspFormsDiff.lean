@@ -266,8 +266,9 @@ theorem norm_diffSum_le {c : ℝ} (hc0 : 0 ≤ c)
         _ ≤ ∑ _j : Fin d, c * ‖Y 0‖ * A :=
             Finset.sum_le_sum fun j _ => mul_le_mul_of_nonneg_right (hc (Y 0) j) hA0
         _ = d * c * ‖Y 0‖ * A := by
-            rw [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]; ring
-    have hmv := norm_image_sub_le_of_norm_deriv_le_segment' hderiv hbound 1 ⟨zero_le_one, le_rfl⟩
+            simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
+              mul_assoc]
+    have hmv := norm_image_sub_le_of_norm_deriv_le_segment_01' hderiv hbound
     have hG1 : G 1 = diffSum (ψ : AdelicGLn.AdelicGL K n → ℂ) (x * archExp (Y 0)) (Fin.tail Y) := by
       simp only [hG, one_smul]
     have hG0 : G 0 = diffSum (ψ : AdelicGLn.AdelicGL K n → ℂ) x (Fin.tail Y) := by
@@ -344,7 +345,10 @@ theorem hasGrowth_uAction {N : ℕ} (u : UEnv K n) :
   | hmul a b ha hb =>
     intro φ hφ hN
     rw [coe_uAction_mul]
-    exact ha (hφ.uAction b) (hb hφ hN)
+    have hφb : IsSmoothKZ (uAction b ⟨φ, hφ.isSmooth.1⟩ : AdelicGLn.AdelicGL K n → ℂ) :=
+      ⟨IsLeftInvariant.uAction hφ.isLeftInvariant b, hφ.isSmooth_uAction b,
+        hφ.isKFinite_uAction b, hφ.isZFinite.uAction b⟩
+    exact ha hφb (hb hφ hN)
   | hadd a b ha hb =>
     intro φ hφ hN
     rw [map_add (f := _), LinearMap.add_apply, Submodule.coe_add]

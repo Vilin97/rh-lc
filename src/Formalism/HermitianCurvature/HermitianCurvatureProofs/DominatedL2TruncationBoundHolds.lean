@@ -28,6 +28,8 @@ theorem jf_sub_thr (D : B.RealPlaceData k r Wp Wq) {A : ℝ} (hT : JF.Transporte
   obtain ⟨hGi, -⟩ := Formalism.FourierDecayAlt.P.bessel_integral_converges k r Wp Wq D A G hT hG
   rw [hJ, hJ, hJ, ← integral_sub (hFi h hh) (hGi h hh)]
   congr 1
+  funext q
+  simp [JF.integrand, B.rho, smul_sub]
 
 theorem hsVec_sub'' (A C : Wq →L[ℂ] Wp) : B.hsVec (A - C) = B.hsVec A - B.hsVec C := by
   unfold B.hsVec

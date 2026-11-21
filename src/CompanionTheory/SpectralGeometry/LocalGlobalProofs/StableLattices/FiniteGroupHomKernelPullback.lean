@@ -9,7 +9,7 @@ public import Development.AbelianVarietyTheory.Proofs.HomogeneousIdeals.ExistsTo
 
 open CategoryTheory CategoryTheory.Limits AlgebraicGeometry MonoidalCategory CartesianMonoidalCategory MonObj
 open scoped CategoryTheory.Obj
-open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.AbLaw GlobalTheory.CechPic GlobalTheory.AbDual CompanionTheory.ObstructionTrivialLocus GlobalTheory.CompanionTheory.KerPull
+open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Semi ReciprocityTheory.ChartRestriction.G.Geo.Tor GlobalTheory.AbLaw GlobalTheory.CechPic GlobalTheory.AbDual CompanionTheory.ObstructionTrivialLocus
 attribute [local instance] Over.cartesianMonoidalCategory
 
 set_option autoImplicit false
@@ -49,24 +49,24 @@ def grpObjOfIsKernel (hp : IsPullback i (toUnit H) q η[A']) : GrpObj H :=
       exact h)
     one_mul := by
       rw [← cancel_mono i]
-      simp [MonObj.comp_mul]
+      simp [kerLift_comp, MonObj.comp_mul]
       rw [toUnit_unique (fst (𝟙_ C) H) (toUnit _), ← Hom.one_def, _root_.one_mul, leftUnitor_hom]
     mul_one := by
       rw [← cancel_mono i]
-      simp [MonObj.comp_mul]
+      simp [kerLift_comp, MonObj.comp_mul]
       rw [toUnit_unique (snd H (𝟙_ C)) (toUnit _), ← Hom.one_def, _root_.mul_one, rightUnitor_hom]
     mul_assoc := by
       rw [← cancel_mono i]
-      simp [MonObj.comp_mul]
+      simp [kerLift_comp, MonObj.comp_mul]
       exact _root_.mul_assoc _ _ _
     left_inv := by
       rw [← cancel_mono i]
-      simp [MonObj.comp_mul]
+      simp [kerLift_comp, MonObj.comp_mul]
       rw [← Hom.one_def]
       exact inv_mul_cancel i
     right_inv := by
       rw [← cancel_mono i]
-      simp [MonObj.comp_mul]
+      simp [kerLift_comp, MonObj.comp_mul]
       rw [← Hom.one_def]
       exact mul_inv_cancel i }
 

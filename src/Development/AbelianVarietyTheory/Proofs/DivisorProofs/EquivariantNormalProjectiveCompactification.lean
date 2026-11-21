@@ -75,7 +75,7 @@ theorem exists_projective_quotient {F : Type} [Field F] {X : Scheme.{0}} (s : X 
     (isQProjOver_of_isProjOver' hs)
   exact ⟨W, q, hq.desc s hρ, hq, hqs, hL.isProjOver _, hq.isFinite (hq.desc s hρ), hq.surjective⟩
 
-theorem exists_equivariant_model : ∀ (F : Type) [Field F] [NumberField F] (X V : Scheme.{0}) [IsIntegral X] (sX : X ⟶ Sp F) (j : V ⟶ X) [IsOpenImmersion j] (Γ : Type) [Group Γ] [Finite Γ] (ρ : Γ →* Aut V), IsProjOver sX → Nonempty V → GlobalTheory.IsNormalScheme V → (∀ γ, (ρ γ).asIso.hom ≫ j ≫ sX = j ≫ sX) → ∃ (X' W : Scheme.{0}) (φ : X' ⟶ X) (ℓ : V ⟶ X') (ρ' : Γ →* Aut X') (q : X' ⟶ W) (sW : W ⟶ Sp F) (_ : IsIntegral X'), GlobalTheory.IsNormalScheme X' ∧ IsProjOver (φ ≫ sX) ∧ IsOpenImmersion ℓ ∧ ℓ ≫ φ = j ∧ (∀ γ, (ρ γ).asIso.hom ≫ ℓ = ℓ ≫ (ρ' γ).hom) ∧ IsAffineQuotient ρ' q ∧ q ≫ sW = φ ≫ sX ∧ IsProjOver sW ∧ IsIntegral W ∧ IsFinite q ∧ Surjective q := by
+theorem exists_equivariant_model : ∀ (F : Type) [Field F] [NumberField F] (X V : Scheme.{0}) [IsIntegral X] (sX : X ⟶ Sp F) (j : V ⟶ X) [IsOpenImmersion j] (Γ : Type) [Group Γ] [Finite Γ] (ρ : Γ →* Aut V), IsProjOver sX → Nonempty V → GlobalTheory.IsNormalScheme V → (∀ γ, (ρ γ).asIso.hom ≫ j ≫ sX = j ≫ sX) → ∃ (X' W : Scheme.{0}) (φ : X' ⟶ X) (ℓ : V ⟶ X') (ρ' : Γ →* Aut X') (q : X' ⟶ W) (sW : W ⟶ Sp F) (_ : IsIntegral X'), GlobalTheory.IsNormalScheme X' ∧ IsProjOver (φ ≫ sX) ∧ IsOpenImmersion ℓ ∧ ℓ ≫ φ = j ∧ (∀ γ, (ρ γ).asIso.hom ≫ ℓ = ℓ ≫ (ρ' γ).asIso.hom) ∧ IsAffineQuotient ρ' q ∧ q ≫ sW = φ ≫ sX ∧ IsProjOver sW ∧ IsIntegral W ∧ IsFinite q ∧ Surjective q := by
   intro F _ _ X V _ sX j _ Γ _ _ ρ hX hne hN hρ
   classical
   let A : Over (Sp F) := Over.mk sX
@@ -83,11 +83,11 @@ theorem exists_equivariant_model : ∀ (F : Type) [Field F] [NumberField F] (X V
   let B : Over (Sp F) := Over.mk (j ≫ sX)
   let c : B ⟶ P := Pi.lift fun γ => Over.homMk ((ρ γ).asIso.hom ≫ j) (by simpa [A, B] using hρ γ)
   have hcπ (γ : Γ) : c.left ≫ (Pi.π (fun _ : Γ => A) γ).left = (ρ γ).asIso.hom ≫ j := by
-    rw [← Over.comp_left, Pi.lift_π]; rfl
+    rw [← Over.comp_left, Pi.lift_comp_π]; rfl
 
   let σ₀ (g : Γ) : P ⟶ P := Pi.lift fun γ => Pi.π (fun _ : Γ => A) (γ * g)
   have hσπ (g γ : Γ) : σ₀ g ≫ Pi.π (fun _ : Γ => A) γ = Pi.π (fun _ : Γ => A) (γ * g) :=
-    Pi.lift_π _ _
+    Pi.lift_comp_π _ _
   have hσ (g h : Γ) : σ₀ g ≫ σ₀ h = σ₀ (h * g) :=
     Pi.hom_ext _ _ fun γ => by rw [Category.assoc, hσπ, hσπ, hσπ, mul_assoc]
   have hσ1 : σ₀ 1 = 𝟙 P := Pi.hom_ext _ _ fun γ => by rw [hσπ, mul_one, Category.id_comp]
@@ -95,12 +95,14 @@ theorem exists_equivariant_model : ∀ (F : Type) [Field F] [NumberField F] (X V
     { hom := (σ₀ g).left, inv := (σ₀ g⁻¹).left,
       hom_inv_id := by rw [← Over.comp_left, hσ, inv_mul_cancel, hσ1]; rfl,
       inv_hom_id := by rw [← Over.comp_left, hσ, mul_inv_cancel, hσ1]; rfl }
-  let σ : Γ →* Aut P.left := MonoidHom.mk' σI fun g h => Iso.ext (by
+  let σ : Γ →* Aut P.left := MonoidHom.mk' (fun g => Aut.of (σI g)) fun g h => by
+    apply Aut.ext
+    apply Iso.ext
     change (σ₀ (g * h)).left = (σ₀ h).left ≫ (σ₀ g).left
-    rw [← Over.comp_left, hσ])
-  have hσP (g : Γ) : (σ g).hom ≫ P.hom = P.hom := Over.w (σ₀ g)
+    rw [← Over.comp_left, hσ]
+  have hσP (g : Γ) : (σ g).asIso.hom ≫ P.hom = P.hom := Over.w (σ₀ g)
   have hρmul (g γ : Γ) : (ρ (γ * g)).asIso.hom = (ρ g).asIso.hom ≫ (ρ γ).asIso.hom := by rw [map_mul]; rfl
-  have H (g : Γ) : (ρ g).asIso.hom ≫ c.left = c.left ≫ (σ g).hom := by
+  have H (g : Γ) : (ρ g).asIso.hom ≫ c.left = c.left ≫ (σ g).asIso.hom := by
     have e : (Over.homMk (ρ g).asIso.hom (by simpa [B] using hρ g) : B ⟶ B) ≫ c = c ≫ σ₀ g :=
       Pi.hom_ext _ _ fun γ => by
         rw [Category.assoc, Category.assoc, hσπ]
@@ -149,7 +151,7 @@ theorem exists_equivariant_model : ∀ (F : Type) [Field F] [NumberField F] (X V
   have hnorm : GlobalTheory.IsNormalScheme c.left.normalization :=
     IsNormalScheme.normalization_of_isIntegral c.left
   let ρ' := normalizationAction c.left ρ σ H
-  have hρ' (g : Γ) : (ρ' g).hom ≫ φ ≫ sX = φ ≫ sX := by
+  have hρ' (g : Γ) : (ρ' g).asIso.hom ≫ φ ≫ sX = φ ≫ sX := by
     rw [hφ, normalizationAction_fromNormalization_assoc, hσP]
   obtain ⟨W, q, sW, hq, hqs, hW, hqf, hqs'⟩ := exists_projective_quotient (φ ≫ sX) ρ' hproj hρ'
   refine ⟨c.left.normalization, W, φ, c.left.toNormalization, ρ', q, sW, inferInstance, hnorm, hproj,

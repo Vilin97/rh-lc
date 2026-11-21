@@ -37,12 +37,12 @@ theorem rename_muSmall (j : ℕ) : (rename (e.prodCongr (Equiv.refl (Fin N))) (m
   split_ifs
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [map_sum, rename_X, Equiv.prodCongr_apply, Prod.map_apply, Equiv.refl_apply]
-    exact Fintype.sum_equiv e _ _ (fun _ => rfl)
+      exact Fintype.sum_equiv e _ _ (fun _ => rfl)
   set_option synthInstance.maxHeartbeats 100000 in
     · simp only [pkLow, map_neg, map_sum, map_pow, rename_X, Equiv.prodCongr_apply, Prod.map_apply,
       Equiv.refl_apply]
-    congr 1
-    exact Fintype.sum_equiv e _ _ (fun _ => rfl)
+      congr 1
+      exact Fintype.sum_equiv e _ _ (fun _ => rfl)
 
 theorem rename_fibClass (j : ℕ) : (rename (e.prodCongr (Equiv.refl (Fin N))) (fibClass j : RP Ψ N) : RP Ψ' N) = fibClass j := by
   unfold fibClass

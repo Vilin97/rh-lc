@@ -51,7 +51,6 @@ theorem cycSplit (N p : ℕ) (K : Type) [Field K] [NumberField K] [Algebra K (Cy
     have : NeZero ((N : ℕ) : ℚ) := ⟨by exact_mod_cast hN.ne'⟩
     convert CyclotomicField.isCyclotomicExtension N ℚ
     · rfl
-    · exact Subsingleton.elim _ _
   have hL : ∀ (Q : Ideal (𝓞 (CyclotomicField N ℚ))) [Q.IsPrime] [Q.LiesOver (span {(p : ℤ)})],
       Q.ramificationIdx ℤ = 1 ∧ Q.inertiaDeg ℤ = 1 := by
     intro Q _ _

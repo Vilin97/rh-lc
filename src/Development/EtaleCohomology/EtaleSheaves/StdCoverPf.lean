@@ -65,7 +65,7 @@ theorem key (R : Type) [CommRing R] (S : Type) [CommRing S] (f g : S) (hfg : Ide
   apply ModuleCat.free_hom_ext
   intro x0
   have hT := Scheme.etaleTopology.pullback_stable x0.down (cover_mem f g hfg)
-  have e := G.cond.hom_ext ⟨_, hT⟩
+  have e := G.property.hom_ext ⟨_, hT⟩
     (ModuleCat.ofHom (LinearMap.toSpanSingleton (ULift.{1} R) _ (u'.app X (ModuleCat.freeMk x0))))
     (ModuleCat.ofHom (LinearMap.toSpanSingleton (ULift.{1} R) _ (v'.app X (ModuleCat.freeMk x0)))) ?_
   · have := congrArg (fun e => e.hom 1) e

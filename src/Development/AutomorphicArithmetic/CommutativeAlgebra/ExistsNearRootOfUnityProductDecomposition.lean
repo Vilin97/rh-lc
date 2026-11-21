@@ -77,7 +77,7 @@ private lemma unity_ratio {A D : Type} [CommRing A] [CommRing D] [IsDomain D] [A
     obtain ⟨η, hη⟩ := root_mem ((algebraMap D (FractionRing D)).comp C.val.toRingHom) hC
       (algebraMap D (FractionRing D) a / algebraMap D (FractionRing D) b) q
       (Polynomial.X ^ q - Polynomial.C 1) (Polynomial.monic_X_pow_sub_C 1 hq.ne')
-      (Polynomial.natDegree_X_pow_sub_C)
+      (Polynomial.natDegree_X_pow_sub_C 1)
       (by simp [div_pow, ← map_pow, h, div_self hbq])
     have hη' : algebraMap D (FractionRing D) (η : D) = algebraMap D (FractionRing D) a / algebraMap D (FractionRing D) b := hη
     refine ⟨η, η.2, ?_, ?_⟩

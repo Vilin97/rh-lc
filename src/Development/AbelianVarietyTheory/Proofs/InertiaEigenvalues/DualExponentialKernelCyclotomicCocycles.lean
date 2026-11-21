@@ -56,6 +56,7 @@ theorem cocycles_dependent (hT : Formalism.GaloisCohomology.LocalTateDualityK) (
     exact (hχ.continuous.comp (continuous_subtype_val.comp hΦ1)).zpow₀ _
       fun g => Or.inl (Units.ne_zero _)
   obtain ⟨g₀, hg₀, hg₁⟩ := (gen_dense l _ χ (GlobalTheory.InertiaEigenvalues.isActC_galActC l) hχ K s hs).1
+  change g₀ ∈ L.fixingSubgroup at hg₀
   have hg : ‖(χZ (Φ ⟨g₀, hg₀⟩) : ℤ_[l]) * (ψ (Φ ⟨g₀, hg₀⟩)⁻¹ : ℤ_[l]) - 1‖ =
       (l : ℝ) ^ (-(N : ℤ)) := by
     have h1 := LiftExp.norm_zpow_sub_one l s hs _ hg₁ ((e + 1 : ℕ) : ℤ) (by omega)
@@ -64,6 +65,8 @@ theorem cocycles_dependent (hT : Formalism.GaloisCohomology.LocalTateDualityK) (
     push_cast
     rw [hχZ, hψ, hN]
     push_cast at h1 ⊢
+    have hcast : (e : ℚ) + 1 = ((e + 1 : ℕ) : ℚ) := by push_cast; rfl
+    rw [hcast, padicValRat.of_nat, ← Nat.padicValNat_def] at h1
     rw [← h1]
     congr 2
     simp only [map_inv, MulEquiv.symm_apply_apply, Subgroup.coe_inv, Units.val_inv_eq_inv_val,

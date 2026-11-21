@@ -22,8 +22,7 @@ theorem externalProductHyps (D : Formalism.BasicNotions.D7) : ExternalProductHyp
   e5b := polynomialProjectors_commute_disjoint
   lowPl := restLowPl_of D (polynomialTypeSums_by_evaluation D) externalProduct_basis
   lowTan := restLowTan_of D (polynomialTypeSums_by_evaluation D) externalProduct_basis
-  sum := restJointSum
-}
+  sum := restJointSum }
 
 theorem admissible_externalProduct (D : Formalism.BasicNotions.D7) : Formalism.MainNotions.CovariantDegrees.PairedPathIndependence D := admissible_externalProduct_of_hyps D (externalProductHyps D)
 

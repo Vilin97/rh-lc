@@ -243,7 +243,10 @@ theorem columnStabilisersTrivial : ColumnStabilisersTrivial := by
   intro D Lv u hbig hs y hy
   let _ := D.host.cmStar
   obtain ⟨i, hi⟩ := hbig
-  have hf : D.R.f ≠ 0 := by unfold Ranks.f Ranks.n; positivity
+  have hf : D.R.f ≠ 0 := by
+    unfold Ranks.f Ranks.n
+    have := D.R.ord_pos
+    omega
   obtain ⟨v, hv⟩ := (Nat.card_ne_zero.1 ((hs i).1.trans_ne hf)).1
   rw [eq_bot_iff]
   intro γ hγ

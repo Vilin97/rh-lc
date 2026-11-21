@@ -78,7 +78,24 @@ theorem realise_commuting_family (hE2 : E2) (hTM : TensMul) (hBO : BlockOperator
       unfold phiG
       rw [dite_eq_left h]
       exact h.choose_spec
-  letI : CommRing (ChAlg g X) := chComm g X hc hXc hXs
+  have hcomm : ∀ x y : ChAlg g X, x * y = y * x := by
+    apply isMulCommutative_iff.mp
+    apply StarAlgebra.isMulCommutative_adjoin ℂ
+    · rintro u (⟨x, rfl⟩ | rfl)
+      · exact ⟨(hc x x).2.symm.eq⟩
+      · exact ⟨by rw [hXs.star_eq]; rfl⟩
+    · rintro u (⟨x, rfl⟩ | rfl) v (⟨y, rfl⟩ | rfl) _
+      · exact (hc x y).1
+      · exact ((hXc x).1).symm
+      · exact (hXc y).1
+      · rfl
+    · rintro u (⟨x, rfl⟩ | rfl) v (⟨y, rfl⟩ | rfl) _
+      · exact (hc x y).2
+      · rw [hXs.star_eq]; exact ((hXc x).1).symm
+      · exact (hXc y).2
+      · rw [hXs.star_eq]; rfl
+  letI : CommRing (ChAlg g X) :=
+    { (inferInstance : Ring (ChAlg g X)) with mul_comm := hcomm }
   have hCc : ({1} ∪ Set.range (genE g X) ∪ {XE g X} : Set (ChAlg g X)).Countable :=
     ((Set.countable_singleton _).union (Set.countable_range _)).union (Set.countable_singleton _)
   obtain ⟨M, s, f, hlim, hk⟩ := hE2 E B.a B.b B.D B.I B.Hb (ContinuousLinearMap.id ℂ B.Hb) (fun v => rfl) (ChAlg g X)

@@ -102,7 +102,7 @@ theorem classNumber_dvd_finrank : ∀ (K L : Type) [Field K] [NumberField K] [Fi
     obtain ⟨σ, hσ⟩ := exists_symbol hR I (nonZeroDivisors.coe_ne_zero I) hI
     exact ⟨⟨(σ, c), I, hI, hc, hσ⟩, rfl⟩
   rw [← IsGalois.card_aut_eq_finrank, ← Nat.card_eq_of_bijective _ h1, classNumber, ← Nat.card_eq_fintype_card]
-  exact Subgroup.card_dvd_of_surjective _ h2
+  exact Subgroup.card_dvd_of_surjective h2
 
 end GlobalTheory.Mem.ClassDvd
 

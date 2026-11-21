@@ -74,22 +74,22 @@ theorem tendsto_zero_of_intLoc (x : Pl F → AE F E)
       refine ⟨a, ha, fun _ => GlobalTheory.Doubling.adele_ext (fun w => ?_) fun w => ?_⟩
       set_option synthInstance.maxHeartbeats 100000 in
         · rw [h1, map_sum]
-        exact (Finset.sum_eq_zero fun i _ => by
-          rw [compInf_smul, show evInf F w (GlobalTheory.LatVac.liftV v (a i)) = 0 from rfl, zero_smul]).symm
+          exact (Finset.sum_eq_zero fun i _ => by
+            rw [compInf_smul, show evInf F w (GlobalTheory.LatVac.liftV v (a i)) = 0 from rfl, zero_smul]).symm
       set_option synthInstance.maxHeartbeats 100000 in
         · rw [map_sum]
-        by_cases hw : w = v
-        · subst hw
-          rw [e]
-          refine Finset.sum_congr rfl fun i _ => ?_
-          rw [compFin_smul, GlobalTheory.LatVac.evFin_liftV]
-          change _ = a i • (evFin F w 1 ⊗ₜ[F] _)
-          rw [map_one, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
-          rfl
-        · rw [h2 w hw]
-          exact (Finset.sum_eq_zero fun i _ => by
-            rw [compFin_smul, show evFin F w (GlobalTheory.LatVac.liftV v (a i)) = 0 from evalV_singleFin_ne hw _,
-              zero_smul]).symm
+          by_cases hw : w = v
+          · subst hw
+            rw [e]
+            refine Finset.sum_congr rfl fun i _ => ?_
+            rw [compFin_smul, GlobalTheory.LatVac.evFin_liftV]
+            change _ = a i • (evFin F w 1 ⊗ₜ[F] _)
+            rw [map_one, TensorProduct.smul_tmul', smul_eq_mul, mul_one]
+            rfl
+          · rw [h2 w hw]
+            exact (Finset.sum_eq_zero fun i _ => by
+              rw [compFin_smul, show evFin F w (GlobalTheory.LatVac.liftV v (a i)) = 0 from evalV_singleFin_ne hw _,
+                zero_smul]).symm
     · exact ⟨0, fun _ => zero_mem _, fun h => absurd h hv⟩
   choose a ha e using key
   have ht : Tendsto (fun v => ∑ i, GlobalTheory.LatVac.liftV v (a v i) •

@@ -63,6 +63,7 @@ theorem closure_genPt' (Z : Comp Xo c) : closure {genPt Z} = (Z : Set (Xo.XF c))
   (IsIrreducible.genericPoint_closure_eq (Z.2.1 : IsIrreducible (Z : Set (Xo.XF c)))).trans
     (isClosed_of_mem_irreducibleComponents _ Z.2).closure_eq
 
+attribute [local instance 1100] Subalgebra.algebra in
 theorem chart_mem {h : GenFrEx Xo c} (C : FChart h) (p : Sp C.R) : (liftF C.y) p ∈ (C.Z : Set (Xo.XF c)) := by
   have hcl : IsClosed ((liftF C.y) ⁻¹' (C.Z : Set (Xo.XF c))) :=
     (isClosed_of_mem_irreducibleComponents _ C.Z.2).preimage (liftF C.y).continuous

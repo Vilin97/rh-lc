@@ -27,7 +27,6 @@ theorem finsum_coset_pair_ne_zero : ∀ (G Γ : Type) [Group G] [Finite G] [Grou
     obtain ⟨hmul, -, -, -, hlin⟩ := GlobalTheory.BI.virt_mul_comap_conj_ind_linear (G ⋊[φ] Γ)
     have := hmul Y hY _ (hlin (η ^ a))
     convert this using 1
-    funext x; simp
   have hm : ∀ a : ℕ, ∃ m : ℤ, ∑ᶠ x, X x * star (Y x * (η x : ℂ) ^ a) = m * (Nat.card (G ⋊[φ] Γ) : ℂ) :=
     fun a => GlobalTheory.BI.finsum_mul_star_virt_int _ X _ hX (hvirt a)
   choose m hm using hm

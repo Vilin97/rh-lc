@@ -30,12 +30,12 @@ private theorem pow_mem_of_PL (l : ℕ) {Γ : Type} [Group Γ] [TopologicalSpace
     simp only [PL, SetLike.mem_coe, Subgroup.mem_iInf]
     exact fun U hU => this ⟨U, hU⟩
   obtain ⟨U, hU⟩ := hV.isClosed_compl.isCompact.elim_directed_family_closed (fun U : ι => (U.1 : Set Γ))
-    (fun U => U.1.toOpenSubgroup.isClosed) hs hd
+    (fun U => U.1.toOpenSubgroup.isClosed) (Set.disjoint_iff_inter_eq_empty.mpr hs) hd
   intro h hh
   obtain ⟨e, he⟩ := U.2 h hh
   refine ⟨e, ?_⟩
   by_contra hn
-  exact Set.eq_empty_iff_forall_notMem.1 hU _ ⟨hn, he⟩
+  exact Set.disjoint_left.1 hU hn he
 
 private theorem affine_ker {R Γ M : Type} [CommRing R] [Group Γ] [TopologicalSpace Γ] [IsTopologicalGroup Γ]
     [AddCommGroup M] [Module R M] [Finite M] (ρ : Representation R Γ M) (hρ : LC ρ) (y : Γ → M) (hy : y ∈ Zl ρ) :

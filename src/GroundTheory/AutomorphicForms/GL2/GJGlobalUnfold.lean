@@ -161,7 +161,7 @@ theorem ratMat_mul_unipMatrix {k : ℕ} {Z : Matrix (Fin n) (Fin n) K}
 
 theorem thetaR_unipOne {k : ℕ} (Φ : Matrix (Fin n) (Fin n) 𝔸[K] → ℂ) (y : AdelicGLn.AdelicGL K n)
     (X : UPos n k → 𝔸[K]) (g : normOneGL (K := K) (n := n)) :
-    thetaR k Φ y (unipOne K n k X * g) = thetaR k Φ y g := by
+    thetaR k Φ y (unipOne k X * g) = thetaR k Φ y g := by
   refine tsum_congr fun Z => ?_
   congr 1
   rw [Subgroup.coe_mul, Units.val_mul, coe_unipOne, coe_unipGL, ← Matrix.mul_assoc,
@@ -281,6 +281,9 @@ theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL (K := K) (n :
       _ ≤ ENNReal.ofReal C := ENNReal.ofReal_le_ofReal (hC (g : AdelicGLn.AdelicGL K n) g.2)
 
   have hFΓfd : IsFundamentalDomain (rationalGLOne (K := K) (n := n)) FΓ μ := isFundamentalDomain_fundamentalDomain _ μ
+  have : SMulInvariantMeasure (rationalGLOne (K := K) (n := n))
+      (normOneGL (K := K) (n := n)) μ :=
+    ⟨fun γ s _ => measure_preimage_mul μ (γ : normOneGL (K := K) (n := n)) s⟩
   have hFΓfin : μ FΓ < ∞ := by
     have := Reduction.isFiniteMeasure_quotientMeasure (K := K) (n := n) μ
     rw [← quotientMeasure_univ μ hFΓfd]
@@ -310,7 +313,21 @@ theorem setIntegral_mul_tsum_rank_eq_zero (μ : Measure (normOneGL (K := K) (n :
     rw [this]
     exact hlint
   have hzero : ∫ g in E, ψ' g * F g ∂μ = 0 := by
-    refine (hyp (K := K) (n := n) k).setIntegral_mul_eq_zero (μ := μ) hψm hFm ?_ ?_ hint ?_
+    have : SFinite μ := instSFiniteOfSigmaFinite (μ := μ)
+    have hUnfold : Unfold.Hyp (unipMeasure K n k) (unipOne k) (unipLattice K n k)
+        (unipFundamentalDomain K n k) (parabolicOne K n k) E (conjUnip k) :=
+      { map_add := unipOne_add k
+        injective := unipOne_injective k
+        measurable := (continuous_unipOne k).measurable
+        isAddFundamentalDomain := isAddFundamentalDomain_unipFundamentalDomain
+        measurableSet_D := measurableSet_unipFundamentalDomain
+        measurableSet_E := measurableSet_fundamentalDomain _
+        existsUnique := existsUnique_smul_mem_fundamentalDomain _
+        mem := fun _ hξ => unipOne_mem_parabolicOne hξ
+        conj := fun _ hq Z => conj_unipOne hq Z
+        mapsTo := fun _ hq _ hξ => conjUnip_mem_unipLattice hq hξ
+        measurePreserving := fun _ hq => measurePreserving_conjUnip hq }
+    refine hUnfold.setIntegral_mul_eq_zero (μ := μ) hψm hFm ?_ ?_ hint ?_
       (unipMeasure_unipFundamentalDomain_ne_zero k) (unipMeasure_unipFundamentalDomain_ne_top k)
     · intro p hp g
       obtain ⟨p', hp', rfl⟩ := mem_parabolicOne_iff.1 hp

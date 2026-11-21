@@ -81,8 +81,9 @@ theorem rowRank_holds : RowRank := by
   have h2 : Module.Finite ℤ A := Module.Finite.trans (𝓞 D.host.E) _
   have h3 : Module.Finite ℤ Az :=
     Module.Finite.equiv ((Submodule.restrictScalarsEquiv ℤ (𝓞 D.host.E) _ A).restrictScalars ℤ).symm
-  have hlat : Submodule.IsLattice ℚ Az := by
-    refine ⟨Module.Finite.iff_fg.1 h3, ?_⟩
+  have hlat : Submodule.IsFullLattice ℚ Az := by
+    letI : Submodule.IsLattice ℚ Az := Submodule.IsLattice.of_fg ℚ (Module.Finite.iff_fg.1 h3)
+    refine ⟨?_⟩
     rw [eq_top_iff]
     intro x _
     have hx : x ∈ Submodule.span D.host.E (A : Set (Fin (D.R.k + 1) → D.host.E)) := by rw [hAspan]; trivial
@@ -94,7 +95,7 @@ theorem rowRank_holds : RowRank := by
     exact Submodule.smul_mem _ _ (Submodule.subset_span hnx)
   have hr : finrank ℤ Az = finrank ℚ (Fin (D.R.k + 1) → D.host.E) :=
     Module.finrank_eq_of_rank_eq
-      ((Submodule.IsLattice.rank' ℚ Az).trans (Module.finrank_eq_rank ℚ (Fin (D.R.k + 1) → D.host.E)).symm)
+      ((Submodule.IsFullLattice.rank_eq ℚ Az).trans (Module.finrank_eq_rank ℚ (Fin (D.R.k + 1) → D.host.E)).symm)
   let bZ : Basis (Fin (finrank ℚ (Fin (D.R.k + 1) → D.host.E))) ℤ Az := Module.finBasisOfFinrankEq ℤ Az hr
   have hdim : finrank ℚ (Fin (D.R.k + 1) → D.host.E) = finrank ℚ D.host.E * (D.R.k + 1) := by
     rw [Module.finrank_pi_fintype, Finset.sum_const, Finset.card_univ, Fintype.card_fin, smul_eq_mul, mul_comm]

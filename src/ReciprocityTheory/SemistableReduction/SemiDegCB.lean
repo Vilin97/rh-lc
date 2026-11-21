@@ -40,19 +40,18 @@ theorem single_mem_intVec (K : Type) [Field K] [NumberField K] {k : ℕ} (i : Fi
   by_cases h : j = i
   · subst h
     simpa using ha
-  · simp [Pi.single_apply, h, Submodule.zero_mem]
+  · simp [h]
 
 theorem consZero_mem_intVec (K : Type) [Field K] [NumberField K] {k : ℕ} {y : Fin k → K} :
     consZero K k y ∈ intVec K (k + 1) ↔ y ∈ intVec K k := by
-  simp only [intVec, Submodule.mem_pi, Set.mem_univ, forall_const, consZero,
-    Fin.cons_zero, Fin.cons_succ]
+  simp only [mem_intVec]
   constructor
   · intro h i
-    simpa using h i.succ
+    simpa [consZero] using h i.succ
   · intro h i
     refine Fin.cases ?_ (fun j => ?_) i
-    · simp [Submodule.zero_mem]
-    · simpa using h j
+    · simp [consZero]
+    · simpa [consZero] using h j
 
 theorem lattice_split (K : Type) [Field K] [NumberField K] : ∀ (k : ℕ)
     (X : Submodule (𝓞 K) (Fin k → K)), X.FG → intVec K k ≤ X →
@@ -84,12 +83,12 @@ theorem lattice_split (K : Type) [Field K] [NumberField K] : ∀ (k : ℕ)
       exact Submodule.mem_map.2 ⟨Pi.single 0 a, hstd (single_mem_intVec K 0 ha), by simp [p0]⟩
     obtain ⟨v, hv1, hv⟩ : ∃ v : Fin (k + 1) → K, p0 v = 1 ∧ ∀ t ∈ C0, t • v ∈ X :=
       exists_section_of_image X p0 hC0fg hC01
-    let cz := (consZero K k).restrictScalars (𝓞 K)
+    let cz : (Fin k → K) →ₗ[𝓞 K] (Fin (k + 1) → K) :=
+      (consZero K k).restrictScalars (𝓞 K)
     let X' : Submodule (𝓞 K) (Fin k → K) := X.comap cz
     have hX'fg : X'.FG := by
       apply Submodule.fg_of_fg_map_injective cz (consZero_injective K k)
-      have : IsNoetherian (𝓞 K) X := isNoetherian_of_fg_of_noetherian X hfg
-      exact Submodule.FG.of_le_of_isNoetherian (Submodule.map_comap_le _ _)
+      exact hfg.of_le (Submodule.map_comap_le _ _)
     have hstd' : intVec K k ≤ X' := fun y hy =>
       hstd ((consZero_mem_intVec K).2 hy)
     obtain ⟨C', z', hfg', h1', htri', hdiag', hin', hdec', hidx'⟩ :=

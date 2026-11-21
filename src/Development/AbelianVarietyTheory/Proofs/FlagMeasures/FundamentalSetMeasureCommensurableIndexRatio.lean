@@ -52,7 +52,6 @@ theorem measure_eq_tsum_inter {G α : Type} [Group G] [MulAction G α] [Measurab
     have : ∀ᵐ x ∂μ, x ∈ R := hR
     filter_upwards [this] with x hx
     obtain ⟨s, hs, -⟩ := h x hx
-    apply propext
     constructor
     · intro hxS
       exact Set.mem_iUnion.2 ⟨⟨s, hs.1⟩, hs.2, hxS⟩

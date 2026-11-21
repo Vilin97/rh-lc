@@ -47,7 +47,7 @@ private noncomputable def orbOf (T K : Subgroup G) (d : DoubleCoset.Quotient (T 
 
 private theorem orbOf_mk (T K : Subgroup G) (x : G) :
     orbOf T K (DoubleCoset.mk T K x) = Quotient.mk'' (x : G ⧸ K) := by
-  obtain ⟨t, k, ht, hk, h⟩ := DoubleCoset.mk_out_eq_mul T K x
+  obtain ⟨t, ht, k, hk, h⟩ := DoubleCoset.mk_out_eq_mul T K x
   unfold orbOf
   rw [h, orb_iff]
   refine ⟨⟨t, ht⟩, ?_⟩
@@ -275,7 +275,7 @@ theorem twSwap : OrbFub → TwSwap := by
     rintro o ⟨y, hy⟩
     have h1 : f ((Quotient.out o : G ⧸ K).out⁻¹ * y.out) ≠ 0 := left_ne_zero_of_mul hy
     have h2 : g (y.out⁻¹ * δ * θ (Quotient.out o : G ⧸ K).out) ≠ 0 := right_ne_zero_of_mul hy
-    obtain ⟨t, k, ht, hk, hd⟩ := DoubleCoset.mk_out_eq_mul T K (Quotient.out o : G ⧸ K).out
+    obtain ⟨t, ht, k, hk, hd⟩ := DoubleCoset.mk_out_eq_mul T K (Quotient.out o : G ⧸ K).out
     refine ⟨DoubleCoset.mk T K (Quotient.out o : G ⧸ K).out, ?_, ?_⟩
     · rw [Set.mem_setOf_eq, hd]
       generalize (Quotient.out o : G ⧸ K).out = x at h1 h2

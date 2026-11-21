@@ -19,13 +19,10 @@ namespace LocalLimit
 variable {R : Type} [CommRing R] [IsLocalRing R]
 
 theorem directedSystem_trans :
-    DirectedSystem (fun i : EtNbhd R => i.B) (fun i j h => ⇑(EtNbhd.trans h : i.B →+* j.B)) where
-  map_self := by
-    intro i x
-    exact (GlobalTheory.T.pointedEtaleNbhd_transitionMap_directedSystem R).1 i x
-  map_map := by
-    intro k j i hij hjk x
-    exact (GlobalTheory.T.pointedEtaleNbhd_transitionMap_directedSystem R).2 i j k hij hjk x
+    DirectedSystem (fun i : EtNbhd R => i.B) (fun i j h => ⇑(EtNbhd.trans h : i.B →+* j.B)) :=
+  ⟨fun {i} x => (GlobalTheory.T.pointedEtaleNbhd_transitionMap_directedSystem R).1 i x,
+    fun {k j i} hij hjk x =>
+      (GlobalTheory.T.pointedEtaleNbhd_transitionMap_directedSystem R).2 i j k hij hjk x⟩
 
 theorem directed : IsDirected (EtNbhd R) (· ≤ ·) := GlobalTheory.T.pointedEtaleNeighbourhoodLocalRing_isDirected R
 

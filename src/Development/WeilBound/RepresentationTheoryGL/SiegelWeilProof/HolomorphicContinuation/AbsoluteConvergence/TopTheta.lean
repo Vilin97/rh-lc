@@ -61,6 +61,8 @@ theorem top_theta [MeasurableSpace (KR n)] [BorelSpace (KR n)] [CompactSpace (KR
           funext x
           rw [← integral_mul_const]
           congr 1
+          funext k
+          simp only [mul_assoc]
   have h1 := hswap (fun y => I1 (g * ι y)) (hIc.comp (continuous_const.mul hιc))
   have h2 := hswap (F0 p q e) (continuous_weight_factor hD p q e)
   have hc := hceig 0 1

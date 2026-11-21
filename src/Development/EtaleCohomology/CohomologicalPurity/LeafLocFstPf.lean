@@ -13,6 +13,7 @@ instance schPresPb : PreservesLimitsOfShape WalkingCospan sch :=
   inferInstanceAs (PreservesLimitsOfShape WalkingCospan (yoneda ⋙ disc))
 
 theorem LeafLocFst_of (hZ : LeafZ) : LeafLocFst := by
+  set_option synthInstance.maxHeartbeats 200000 in
   intro hE H d P V q hq i
   have := P.cl
   obtain ⟨⟨z, hpb⟩, -⟩ := hZ P.X P.Z P.ι V (H.obj Γ(P.X, V.1) (P.ι.ker.ideal V)) (eta H P V)

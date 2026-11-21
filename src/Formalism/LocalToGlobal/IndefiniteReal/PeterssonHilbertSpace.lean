@@ -26,12 +26,16 @@ section Gen
 variable {N : Type} [AddCommGroup N] [Module ℂ N] {C : Submodule ℂ N} {ip : N → N → ℂ}
 
 theorem isHermPos_scale (h : IsHermPos C ip) {s : ℝ} (hs : 0 < s) :
-    IsHermPos C (fun x y => (s : ℂ) * ip x y) where
-  fd := h.fd
-  add x x' y := by simp only [h.add x x' y, mul_add]
-  smul a x y := by simp only [h.smul a x y]; ring
-  herm x y := by simp only [map_mul, Complex.conj_ofReal, h.herm x y]
-  pos x hx := by
+    IsHermPos C (fun x y => (s : ℂ) * ip x y) := by
+  refine ⟨h.fd, ?_, ?_, ?_, ?_⟩
+  · intro x x' y
+    simp only [h.add x x' y, mul_add]
+  · intro a x y
+    simp only [h.smul a x y]
+    ring
+  · intro x y
+    simp only [map_mul, Complex.conj_ofReal, h.herm x y]
+  · intro x hx
     simp only [Complex.re_ofReal_mul]
     exact mul_pos hs (h.pos x hx)
 

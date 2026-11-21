@@ -34,10 +34,10 @@ def unitInf (a : (AF F)ˣ) : (Ainf F)ˣ where
   val := (a : AF F).1
   inv := ((a⁻¹ : (AF F)ˣ) : AF F).1
   val_inv := by
-    have h : ((a : AF F) * ((a⁻¹ : (AF F)ˣ) : AF F)).1 = 1 := by simp; rfl
+    have h : ((a : AF F) * ((a⁻¹ : (AF F)ˣ) : AF F)).1 = 1 := by simp
     exact h
   inv_val := by
-    have h : (((a⁻¹ : (AF F)ˣ) : AF F) * (a : AF F)).1 = 1 := by simp; rfl
+    have h : (((a⁻¹ : (AF F)ˣ) : AF F) * (a : AF F)).1 = 1 := by simp
     exact h
 
 theorem sigmaFinite_inf (li : Measure (Ainf F)) (h : li.IsAddHaarMeasure) : SigmaFinite li := by

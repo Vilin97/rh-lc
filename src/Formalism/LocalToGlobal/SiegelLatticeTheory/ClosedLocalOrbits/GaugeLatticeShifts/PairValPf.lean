@@ -287,7 +287,9 @@ theorem pts_inj : ∀ (bs bs' : List (K × ℕ)), (∀ b ∈ bs, b.1 ≠ 0 ∧ 1
     have hzero : 0 < (((t, s) :: b1).map Prod.snd).sum := by
       simp only [List.map_cons, List.sum_cons]
       omega
-    obtain ⟨e1, e2⟩ := h 0 hzero
+    obtain ⟨e1, e2⟩ :
+        pσ ((t, s) :: b1) 0 = pσ ((t', s') :: b1') 0 ∧
+          pv ((t, s) :: b1) 0 = pv ((t', s') :: b1') 0 := h 0 hzero
     simp only [pσ, pv, if_pos (show 0 < s by omega), if_pos (show 0 < s' by omega)] at e1 e2
     have ess : s = s' := by omega
     subst ess e2

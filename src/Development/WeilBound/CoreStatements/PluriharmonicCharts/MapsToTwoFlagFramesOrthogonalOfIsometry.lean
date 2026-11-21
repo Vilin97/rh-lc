@@ -70,7 +70,7 @@ theorem exists_homog_eval_eq_zero_of_relW (Cv : FlagCover M' M) (S : Sw M τ a b
     (hy : IsArithVar (mCoordIdeal y) (d + 2)) (hy' : IsArithVar (mCoordIdeal y') (d + 2))
     (J : Ideal (MRing fun o : Option K' => ι' (o.getD k₀'))) (hJ : IsMultiHomogIdeal J)
     (hn : ¬ J ≤ mCoordIdeal (M'.wCo (τ, a) k₀' ca cb RatFunc.X)) :
-    ∃ (g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K => ι (o.getD k₀)) (dg : Option K → ℕ), IsMultiHomog g dg ∧
+    ∃ (g : MRing fun o : Option K => ι (o.getD k₀)) (dg : Option K → ℕ), IsMultiHomog g dg ∧
       g ∉ mCoordIdeal (M.wCo (τ, a) k₀ ca cb RatFunc.X) ∧
       ∀ z ∈ mcPts (mCoordIdeal (M'.wCo (τ, a) k₀' ca cb RatFunc.X)), z ∈ mcPts J →
         ∀ w ∈ mcPts (mCoordIdeal (M.wCo (τ, a) k₀ ca cb RatFunc.X)), RelW Cv k₀ k₀' z w →
@@ -102,7 +102,7 @@ theorem sameOrbit_of_relW_relW (Cv : FlagCover M' M) (S' : Sw M' τ a b k₀' ca
 
 theorem pull_form (S : Sw M τ a b k₀ ca cb) (hy : IsArithVar (mCoordIdeal y) (d + 2)) {G : MRing ι} {dG : K → ℕ}
     (hG : IsMultiHomog G dG) (hn : G ∉ mCoordIdeal y) :
-    ∃ (g : ReciprocityTheory.ChartRestriction.G.Geo.MRingOver o fun : Option K => ι (o.getD k₀)) (dg : Option K → ℕ), IsMultiHomog g dg ∧
+    ∃ (g : MRing fun o : Option K => ι (o.getD k₀)) (dg : Option K → ℕ), IsMultiHomog g dg ∧
       g ∉ mCoordIdeal (M.wCo (τ, a) k₀ ca cb RatFunc.X) ∧
       ∀ w, eval w (map (Int.castRingHom ℂ) g) = eval (fstPt k₀ w) (map (Int.castRingHom ℂ) G) :=
   ⟨rename (v₀ k₀) G, _, CPts.isMultiHomog_rename_block (Pts.isBlockMap_v₀ k₀) hG,

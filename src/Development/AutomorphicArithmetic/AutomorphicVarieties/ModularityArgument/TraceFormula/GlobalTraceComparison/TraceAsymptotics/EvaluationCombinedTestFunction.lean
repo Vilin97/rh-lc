@@ -22,11 +22,41 @@ variable {G G' : Type} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
 
 private theorem twOrb_conj' (θ : G →* G) (K : Subgroup G) (δ g : G) (f : G → ℂ) :
     twOrb θ K (g⁻¹ * δ * θ g) f = twOrb θ K δ f := by
+  let dcEquiv :
+    DoubleCoset.Quotient (GlobalTheory.BCT.twCent θ (g⁻¹ * δ * θ g) : Set G) (K : Set G) ≃
+      DoubleCoset.Quotient (GlobalTheory.BCT.twCent θ δ : Set G) (K : Set G) := {
+  toFun q := DoubleCoset.mk (GlobalTheory.BCT.twCent θ δ) K (g * Quotient.out q)
+  invFun q := DoubleCoset.mk (GlobalTheory.BCT.twCent θ (g⁻¹ * δ * θ g)) K (g⁻¹ * Quotient.out q)
+  left_inv q := by
+    obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1
+      (DoubleCoset.out_eq' (DoubleCoset.mk (twCent θ δ) K (g * Quotient.out q))).symm
+    show DoubleCoset.mk _ K (g⁻¹ * Quotient.out (DoubleCoset.mk (GlobalTheory.BCT.twCent θ δ) K (g * Quotient.out q))) = q
+    rw [he]
+    conv_rhs => rw [← DoubleCoset.out_eq' q]
+    rw [DoubleCoset.eq]
+    refine ⟨g⁻¹ * t⁻¹ * g, ?_, k⁻¹, K.inv_mem hk, by group⟩
+    rw [GlobalTheory.TwOrbConj.twCent_conj]
+    exact ⟨t⁻¹, (GlobalTheory.BCT.twCent θ δ).inv_mem ht, by simp [MulAut.conj_apply]⟩
+  right_inv q := by
+    obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1
+      (DoubleCoset.out_eq' (DoubleCoset.mk (twCent θ (g⁻¹ * δ * θ g)) K (g⁻¹ * Quotient.out q))).symm
+    show DoubleCoset.mk _ K (g * Quotient.out (DoubleCoset.mk (GlobalTheory.BCT.twCent θ (g⁻¹ * δ * θ g)) K
+      (g⁻¹ * Quotient.out q))) = q
+    rw [he]
+    conv_rhs => rw [← DoubleCoset.out_eq' q]
+    rw [DoubleCoset.eq]
+    rw [GlobalTheory.TwOrbConj.twCent_conj] at ht
+    obtain ⟨s, hs, rfl⟩ := ht
+    refine ⟨s⁻¹, (GlobalTheory.BCT.twCent θ δ).inv_mem hs, k⁻¹, K.inv_mem hk, ?_⟩
+    simp only [MulEquiv.coe_toMonoidHom, MulAut.conj_apply]
+    group
+
+  }
   rw [GlobalTheory.TwOrbConj.twOrb_eq, GlobalTheory.TwOrbConj.twOrb_eq]
   refine (finsum_congr fun q => ?_).trans
     (finsum_comp_equiv (f := fun q : DoubleCoset.Quotient (twCent θ δ : Set G) (K : Set G) =>
-      GlobalTheory.TwOrbConj.summand θ K δ f (Quotient.out q)) (GlobalTheory.TwOrbConj.dcEquiv θ K δ g))
-  obtain ⟨t, k, ht, hk, he⟩ := DoubleCoset.mk_out_eq_mul (twCent θ δ) K (g * Quotient.out q)
+      GlobalTheory.TwOrbConj.summand θ K δ f (Quotient.out q)) dcEquiv)
+  obtain ⟨t, ht, k, hk, he⟩ := DoubleCoset.mk_out_eq_mul (twCent θ δ) K (g * Quotient.out q)
   rw [GlobalTheory.TwOrbConj.summand_twist]
   show _ = GlobalTheory.TwOrbConj.summand θ K δ f (Quotient.out (DoubleCoset.mk (twCent θ δ) K (g * Quotient.out q)))
   rw [he, GlobalTheory.TwOrbConj.summand_rep θ K δ f _ ht hk]
@@ -103,20 +133,20 @@ private theorem dc_equiv (e : G ≃* G') {T K : Subgroup G} {T' K' : Subgroup G'
     constructor
     · intro q₁ q₂ h
       obtain ⟨t, ht, k, hk, he⟩ := (@DoubleCoset.eq _ _ _ _ _ _).1 h
-      rw [← DoubleCoset.out_eq' T K q₁, ← DoubleCoset.out_eq' T K q₂, DoubleCoset.eq]
+      rw [← DoubleCoset.out_eq' q₁, ← DoubleCoset.out_eq' q₂, DoubleCoset.eq]
       refine ⟨e.symm t, mT' t ht, e.symm k, mK' k hk, e.injective ?_⟩
       simp [he]
     · intro p
       refine ⟨DoubleCoset.mk T K (e.symm (Quotient.out p)), ?_⟩
-      obtain ⟨a, b, ha, hb, he⟩ := DoubleCoset.mk_out_eq_mul T K (e.symm (Quotient.out p))
+      obtain ⟨a, ha, b, hb, he⟩ := DoubleCoset.mk_out_eq_mul T K (e.symm (Quotient.out p))
       show DoubleCoset.mk T' K' (e (Quotient.out (DoubleCoset.mk T K (e.symm (Quotient.out p))))) = p
       rw [he]
-      conv_rhs => rw [← DoubleCoset.out_eq' T' K' p]
+      conv_rhs => rw [← DoubleCoset.out_eq' p]
       rw [DoubleCoset.eq]
       refine ⟨(e a)⁻¹, T'.inv_mem (mT a ha), (e b)⁻¹, K'.inv_mem (mK b hb), ?_⟩
       simp [mul_assoc]
   refine ⟨Equiv.ofBijective F hF, fun q => ?_⟩
-  obtain ⟨a, b, ha, hb, he⟩ := DoubleCoset.mk_out_eq_mul T' K' (e (Quotient.out q))
+  obtain ⟨a, ha, b, hb, he⟩ := DoubleCoset.mk_out_eq_mul T' K' (e (Quotient.out q))
   exact ⟨a, ha, b, hb, he⟩
 
 private theorem twOrb_map (e : G ≃* G') (hc : Continuous e) (hc' : Continuous e.symm) (θ : G →* G) (θ' : G' →* G')
@@ -222,6 +252,8 @@ private theorem infOfWeight_inj {n : ℕ} {l l' : DomWeight n} (h : infOfWeight 
     unfold infOfWeight
     rw [Multiset.map_map, Fin.univ_val_map]
     congr 2
+    funext k
+    simp
   have anti : ∀ l : DomWeight n, (List.ofFn fun k : Fin n => (l.w k : ℝ) + (((n : ℝ) - 1) / 2 - (k : ℕ))).Pairwise (· > ·) := by
     intro l
     rw [List.pairwise_ofFn]
@@ -262,6 +294,11 @@ private theorem hint_subsingleton {H : Type} [Group H] [Subsingleton H] (K : Sub
   have h1 : rStab u ⊓ K = ⊤ := Subsingleton.elim _ _
   have h2 : (rStab u ⊓ K).relIndex K = 1 := by rw [h1]; simp
   rw [h2]
+  haveI : Subsingleton (H ⧸ (rStab u ⊓ K)) := ⟨by
+    intro a b
+    induction a using Quotient.inductionOn with | _ a =>
+    induction b using Quotient.inductionOn with | _ b =>
+    rw [Subsingleton.elim a b]⟩
   haveI : Unique (H ⧸ (rStab u ⊓ K)) := Unique.mk' _
   rw [finsum_unique]
   simp only [Nat.cast_one, inv_one, one_mul]

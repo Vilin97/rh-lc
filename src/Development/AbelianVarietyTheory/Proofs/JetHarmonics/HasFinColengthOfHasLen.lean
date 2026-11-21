@@ -23,7 +23,7 @@ noncomputable section
 open AlgebraicGeometry CategoryTheory MonoidalCategory CartesianMonoidalCategory MonObj
 open ReciprocityTheory.ChartRestriction.G ReciprocityTheory.ChartRestriction.G.Out ReciprocityTheory.ChartRestriction.G.Geo.Tor ReciprocityTheory.ChartRestriction.G.Geo.Tor.Germ
 open ReciprocityTheory.ChartRestriction.G.Pdiv ReciprocityTheory.ChartRestriction.G.Pdiv.ChartF ReciprocityTheory.PGsh.Up
-open GlobalTheory.IndefiniteRowSideFullHecke.LieMatrixCoordinates GlobalTheory.TorsionCompare NumberField
+open GlobalTheory.TorsionCompare NumberField
 open scoped TensorProduct
 
 attribute [local instance] Over.cartesianMonoidalCategory

@@ -74,7 +74,7 @@ theorem map_eq_of_fundamentalDomain (L : AddSubgroup G) [Countable L] (ν : Meas
         left_inv := fun γ => Subtype.ext (T.apply_symm_apply _)
         right_inv := fun γ => Subtype.ext (T.symm_apply_apply _) }
     refine hF.image_of_equiv T.toEquiv ?_ g fun γ x => ?_
-    · refine ⟨(T.symm.continuous.measurable : Measurable (T.symm : G → G)), ?_⟩
+    · refine ⟨(T.symm.continuous.measurable : Measurable (T.symm : G → G)).aemeasurable, ?_⟩
       have : (ν.map T).map T.symm = ν := by
         have hs : Measurable (T.symm : G → G) := T.symm.continuous.measurable
         have ht : Measurable (T : G → G) := T.continuous.measurable

@@ -46,12 +46,14 @@ theorem l_shift (h : IsDbl (σ := σ) (A := A) (Y := Y) (κ := κ) ψ dd χ om S
 theorem l_rho_om (h : IsDbl (σ := σ) (A := A) (Y := Y) (κ := κ) ψ dd χ om S l) (x : G2 σ Y)
     (u : Matrix (Fin m) (Fin n ⊕ Fin n) (AE F E)) {Φ : (κ → AF F) → ℂ} (hΦ : Φ ∈ schA F κ) :
     l (dd.rho ψ u (om x Φ)) = l (om x (dd.rho ψ (u * (mat2 x⁻¹)ᵀ) Φ)) := by
-  rw [h.weil.2.1.impl x _ Φ hΦ]
-  congr 3
+  apply congrArg l
+  convert (h.weil.2.1.impl x (u * (mat2 x⁻¹)ᵀ) Φ hΦ).symm using 1
+  congr 2
   simp only [actB]
   rw [Matrix.mul_assoc, ← Matrix.transpose_mul]
   change u = u * (mat2 x * mat2 x⁻¹)ᵀ
   rw [show mat2 x * mat2 x⁻¹ = 1 from Units.mul_inv x.1, Matrix.transpose_one, Matrix.mul_one]
+  all_goals rfl
 
 theorem l_om_par (h : IsDbl (σ := σ) (A := A) (Y := Y) (κ := κ) ψ dd χ om S l) {x : G2 σ Y}
     {t : GL (Fin n) (AE F E)} (hx : IsPar x t) {φ : (κ → AF F) → ℂ} (hφ : φ ∈ schA F κ) :
@@ -76,6 +78,7 @@ theorem psi_rat (h : IsDbl (σ := σ) (A := A) (Y := Y) (κ := κ) ψ dd χ om S
     rw [← map_ofNat (algebraMap F (AF F)) 2, ← map_mul, mul_one_div_cancel two_ne_zero, map_one])
   have hd : ∀ u v : κ → F, (fun i => algebraMap F (AF F) (u i)) ⬝ᵥ (fun i => algebraMap F (AF F) (v i)) =
       algebraMap F (AF F) (u ⬝ᵥ v) := fun u v => by simp [dotProduct]
+  unfold incM at hyz hyz'
   rw [dd.form, hyz, hyz']
   simp only [hd, h2, ← map_sub, ← map_mul, ← map_neg]
   exact hψ.2.1 _

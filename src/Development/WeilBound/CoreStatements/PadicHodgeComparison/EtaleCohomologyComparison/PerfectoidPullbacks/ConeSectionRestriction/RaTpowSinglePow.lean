@@ -164,10 +164,12 @@ theorem torusS_frac [IsDomain R] (t : Fin (n + 1) → Rˣ) (S : Finset (Fin (n +
 theorem torusS_succ_span (t : Fin (n + 1) → Rˣ) (k : Fin (n + 1)) :
     ∀ x ∈ torusS K t (Finset.univ.erase k.succ), x ∈ Submodule.span K (tpow t '' {m | m ≠ fun _ => -1}) := by
   intro x hx
-  refine Submodule.span_mono (Set.image_mono fun m hm h => ?_) (ra_torusS_le_span t _ x hx)
-  have := hm.1 k (by simp)
-  rw [h] at this
-  norm_num at this
+  have hsub : expS (Finset.univ.erase k.succ) ⊆ {m | m ≠ fun _ => -1} := by
+    intro m hm h
+    have := hm.1 k (by simp)
+    rw [h] at this
+    norm_num at this
+  exact Submodule.span_mono (Set.image_mono hsub) (ra_torusS_le_span t _ x hx)
 
 theorem torus_scale [IsDomain R] (t : Fin (n + 1) → Rˣ) (i : Fin (n + 2)) :
     ∃ w ∈ torusS K t (Finset.univ.erase i), w ≠ 0 ∧

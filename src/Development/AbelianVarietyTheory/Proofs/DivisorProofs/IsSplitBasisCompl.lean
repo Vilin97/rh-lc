@@ -128,7 +128,22 @@ theorem isLattice_compl (hX : X.IsHerm σ B r s) (hH : H.IsAdapted σ B X X₁ i
     rw [hH.low u]
     rfl
   rw [hL]
-  exact isLattice_comap_mulVecLin_of_leftInverse E n n₁ X.L H.ι P hP hX.lat
+  set f := (Matrix.mulVecLin H.ι).restrictScalars (𝓞 E)
+  set g := (Matrix.mulVecLin P).restrictScalars (𝓞 E)
+  have hgf : ∀ u, g (f u) = u := by
+    intro u
+    simp [f, g, Matrix.mulVec_mulVec, hP]
+  apply Submodule.IsLattice.of_fg E
+  have hN : IsNoetherian (𝓞 E) X.L := isNoetherian_of_fg_of_noetherian X.L hX.lat.fg
+  have h1 : ((X.L.comap f).map f).FG :=
+    isNoetherian_submodule.1 hN _ (Submodule.map_comap_le f X.L)
+  have h2 : ((X.L.comap f).map f).map g = X.L.comap f := by
+    rw [← Submodule.map_comp]
+    ext u
+    simp only [Submodule.mem_map, LinearMap.coe_comp, Function.comp_apply, hgf]
+    exact ⟨fun ⟨v, hv, he⟩ => he ▸ hv, fun hu => ⟨u, hu, rfl⟩⟩
+  rw [← h2]
+  exact h1.map g
 
 theorem dual_compl (hX : X.IsHerm σ B r s) (hH : H.IsAdapted σ B X X₁ i₀ i₁) :
     ∀ y, y ∈ X₁.L ↔ ∀ x ∈ X₁.L, IsIntegral ℤ (form σ X₁.J y x) := by

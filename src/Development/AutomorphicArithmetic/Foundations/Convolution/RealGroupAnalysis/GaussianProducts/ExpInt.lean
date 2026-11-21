@@ -85,7 +85,7 @@ private theorem continuous_sz : Continuous fun g : G1 F => sz (row g) := by
     (InfinitePlace.Completion.isometryEquivRealOfIsReal (IsTotallyReal.isReal w)).continuous.comp
       (continuous_apply w)
   have hp : Continuous (TR.pInf F) := h.comp continuous_fst
-  refine continuous_finset_sum _ fun i _ => continuous_finset_sum _ fun w _ => ?_
+  refine continuous_finsetSum _ fun i _ => continuous_finsetSum _ fun w _ => ?_
   exact ((continuous_apply w).comp (hp.comp (UpperTheory.ConvolutionTheory.R2.continuous_entry 1 i))).abs
 
 end UpperTheory.ConvolutionTheory.R2.G.expIntegrability
@@ -114,7 +114,7 @@ theorem UpperTheory.ConvolutionTheory.R2.G.expInt :
   have hT : ∀ i, Integrable (T i) (ideleMeasure F) := fun i => term_int (L i) (hN (L i))
   let G : IdeleGroup F × G1 F → ℝ := fun p => ∑ i, Bf * |Bc| * Bg i * T i p.1
   have hG : Integrable G M.ν := by
-    refine integrable_finset_sum _ fun i _ => ?_
+    refine integrable_finsetSum _ fun i _ => ?_
     exact ((hT i).comp_fst M.κ).const_mul (Bf * |Bc| * Bg i)
   have hexp : Continuous fun p : IdeleGroup F × G1 F => ((Real.exp (R * sz (row (mD p.1 * p.2))) : ℝ) : ℂ) := by
     refine Complex.continuous_ofReal.comp (Real.continuous_exp.comp (continuous_const.mul ?_))

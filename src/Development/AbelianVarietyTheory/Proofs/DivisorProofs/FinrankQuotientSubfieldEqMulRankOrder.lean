@@ -62,7 +62,7 @@ theorem finrank_ratF_eq_mul_rank (k K : Type) [CommRing k] [IsDomain k] [Module.
       ext m
       have hm := congrArg (AddMonoidAlgebra.coeff · m) hP0
       simp only [MvPolynomial.coeff_sum, MvPolynomial.coeff_C_mul, MvPolynomial.coeff_map,
-        MvPolynomial.coeff_zero, eq_intCast] at hm
+        MvPolynomial.coeff_zero, Finsupp.zero_apply, eq_intCast] at hm
       have hm' : ∑ j, AddMonoidAlgebra.coeff (P j) m • b j = 0 := by
         rw [← hm]; refine Finset.sum_congr rfl fun j _ => ?_
         rw [zsmul_eq_mul, mul_comm]

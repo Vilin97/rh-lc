@@ -24,7 +24,7 @@ public import Development.AbelianVarietyTheory.Proofs.CoherentCohomologyProofs.R
 @[expose] public section
 
 open CategoryTheory Limits AlgebraicGeometry IsLocalRing TensorProduct
-open GlobalTheory GlobalTheory.QCoh GlobalTheory.Vert GlobalTheory.MixedLocalChains GlobalTheory.PerfdLat GlobalTheory.Published GlobalTheory.GroupBplus GlobalTheory.BplusDescent
+open GlobalTheory GlobalTheory.QCoh GlobalTheory.Vert GlobalTheory.PerfdLat GlobalTheory.Published
 
 set_option autoImplicit false
 

@@ -46,7 +46,7 @@ private theorem int_one {K : Type} [Field K] [NumberField K] (v : P K) : IsInt (
 private theorem int_zero {K : Type} [Field K] [NumberField K] (v : P K) : IsInt (0 : Kv v) := by
   unfold IsInt
   rw [map_zero]
-  exact zero_le'
+  exact zero_le
 private theorem int_neg_one {K : Type} [Field K] [NumberField K] (v : P K) : IsInt (-1 : Kv v) := by
   unfold IsInt
   rw [Valuation.map_neg, map_one]
@@ -123,7 +123,7 @@ theorem UpperTheory.ConvolutionTheory.R2.H.eigenvalue_sum_mul_thetaConstantTerm_
     (map_mul Matrix.SpecialLinearGroup.toGL g (j x)).trans (congrArg (fun t => gl g * t) (hj x))
   have hOm : ∀ (g : G1 F) x, (∀ i k, IsInt (x i k)) → W.Om (g * j x) (W.L h φ) = W.Om g (W.L h φ) := by
     intro g x hx
-    rw [map_mul, Module.End.mul_apply, hL _ (hAt x) (hInt x hx)]
+    rw [map_mul, mul_apply_eq_comp, hL _ (hAt x) (hInt x hx)]
   have hrow : ∀ γ (φ' : S4 F), ThRow 0 0 (W.Om (ratS F γ) φ').1 = ThRow 0 0 φ'.1 := by
     intro γ φ'
     simpa using (hatSt F E D W).row γ 0 φ'
@@ -137,7 +137,7 @@ theorem UpperTheory.ConvolutionTheory.R2.H.eigenvalue_sum_mul_thetaConstantTerm_
     intro γ g
     show f.1 (gl (ratS F γ * g) * lc v (dL ϖ 1) * dM (nu F h)) * ThRow 0 0 (W.Om (ratS F γ * g) (W.L h φ)).1 =
       f.1 (gl g * lc v (dL ϖ 1) * dM (nu F h)) * ThRow 0 0 (W.Om g (W.L h φ)).1
-    rw [hl1, map_mul, Module.End.mul_apply, hrow]
+    rw [hl1, map_mul, mul_apply_eq_comp, hrow]
   have hlaw := (lcLaws F v).2.2.2.2.2.2 (dM (nu F h)) (dL ϖ 1)
   have hUi : IntegrableOn U M.D M.μ := by
     have hc := (conv F E D W M π _ (π.stable (.fin (locGL F 2 v ((Matrix.GeneralLinearGroup.map (cp v) (dM (nu F h)))⁻¹ * dL ϖ 1 * Matrix.GeneralLinearGroup.map (cp v) (dM (nu F h))))) f hf) φ hφ h).2.1
@@ -192,6 +192,6 @@ theorem UpperTheory.ConvolutionTheory.R2.H.eigenvalue_sum_mul_thetaConstantTerm_
     unfold T0
     rw [← integral_const_mul]
     simp only [hpt]
-    rw [integral_add (integrable_finset_sum _ fun b _ => hki _) (hki _), integral_finsetSum _ fun b _ => hki _]
+    rw [integral_add (integrable_finsetSum _ fun b _ => hki _) (hki _), integral_finsetSum _ fun b _ => hki _]
     simp [hk]
   exact (mul_eq_zero.1 key).resolve_left hq

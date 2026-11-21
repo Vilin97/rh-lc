@@ -92,16 +92,17 @@ variable {D : D7} (X : Formalism.L2.Herm.Herm0 D)
 
 set_option maxHeartbeats 4000000 in
 theorem locGood_locAt (u : D.what₂.Word) (w : D.what₂.places.Pl) (hg : GIdx D.host (D.mem u).A.T (D.what₂.places.resChar w))
-    (B : GL (Fin D.R.k) D.host.E) : LocGood (sigD D) (gramN D 0 (Nat.zero_le _)) (locAt X u w hg B) where
-  herm := isHerm_re (rank_eq_first_level D.R) _ D.sp.gram0 _ (gramN_zero D) D.sp.baseGram_isHermitian
-  det := det_re (rank_eq_first_level D.R) D.sp.gram0 _ (gramN_zero D) (isUnit_det_gram0 D.sp)
-  sig := fun v x => (X.g u w hg).spl_sig _ ((X.g u w hg).pl v).2 x
-  yG_mem := fun i => reGL_mem_UPts (rank_eq_first_level D.R) D.sp.cm.sig D.sp.gram0 _ (gramN_zero D) _ _ ((X.g u w hg).yG i).2
-  yG_p := fun i v => by
-    have h1 := (X.g u w hg).yG_p i _ ((X.g u w hg).pl v).2
-    have h2 := bc_reGL (rank_eq_first_level D.R) (prV (E := D.host.E) ((X.g u w hg).pl v).1) ((X.g u w hg).yG i).1
-    rw [h1, map_one] at h2
-    exact h2
+    (B : GL (Fin D.R.k) D.host.E) : LocGood (sigD D) (gramN D 0 (Nat.zero_le _)) (locAt X u w hg B) := by
+  refine { herm := isHerm_re (rank_eq_first_level D.R) _ D.sp.gram0 _ (gramN_zero D) D.sp.baseGram_isHermitian
+           det := det_re (rank_eq_first_level D.R) D.sp.gram0 _ (gramN_zero D) (isUnit_det_gram0 D.sp)
+           sig := fun v x => (X.g u w hg).spl_sig _ ((X.g u w hg).pl v).2 x
+           yG_mem := fun i => reGL_mem_UPts (rank_eq_first_level D.R) D.sp.cm.sig D.sp.gram0 _ (gramN_zero D) _ _ ((X.g u w hg).yG i).2
+           yG_p := ?_ }
+  intro i v
+  have h1 := (X.g u w hg).yG_p i _ ((X.g u w hg).pl v).2
+  have h2 := bc_reGL (rank_eq_first_level D.R) (prV (E := D.host.E) ((X.g u w hg).pl v).1) ((X.g u w hg).yG i).1
+  rw [h1, map_one] at h2
+  exact h2
 
 
 set_option maxHeartbeats 4000000 in

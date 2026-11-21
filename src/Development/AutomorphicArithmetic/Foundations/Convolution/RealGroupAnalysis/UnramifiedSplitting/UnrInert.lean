@@ -35,7 +35,7 @@ private theorem below_ev {F E : Type} [Field F] [NumberField F] [Field E] [Numbe
   have : (⋃ v ∈ {v | ¬ p v}, {w : P E | Below v w}).Finite := hS.biUnion fun v _ => hfin v
   filter_upwards [this.eventually_cofinite_notMem] with w hw v hv
   by_contra hc
-  exact hw (Set.mem_biUnion hc hv)
+  exact hw (Set.mem_iUnion.mpr ⟨v, Set.mem_iUnion.mpr ⟨hc, hv⟩⟩)
 
 private def LRel {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] [IsTotallyReal F] [_root_.NumberField.IsTotallyComplex E]
     {D : Dat F E} (W : Weil D) (π : TR.CuspSub F 2) (h₀ : GL (Fin 2) (A E)) (Φ : GL (Fin 2) (A E) → ℂ) (v : P F) : Prop :=
@@ -132,7 +132,24 @@ theorem UpperTheory.ConvolutionTheory.R2.H.unrInert :
   obtain ⟨r1, r2⟩ := hrel v hv hu hval α β hB (Units.mk0 p hp0) (idl w ϖ') hp hz hnz
   have hfix' : ∀ g, ∀ k ∈ GlobalTheory.LFun.KGL w (n := 2), y.1 (g * finGL E 2 (locGL E 2 w k)) = y.1 g := fun g k hk =>
     congrFun (congrArg (fun x : Q.V => x.1.1) (GlobalTheory.LGrp.mem_fixed.1 hfix k hk)) g
-  have hEig : EigAt w {α', β'} y.1 := UpperTheory.V.Af.StrongMultiplicityOne.eigOfSat E 2 Q w _ hB' y hy hfix'
+  have hEig : EigAt w {α', β'} y.1 := by
+    intro g
+    refine ⟨hB'.card, fun x k hk => ?_, fun ϖ hϖ j hj x => ?_⟩
+    · rw [map_mul, map_mul, ← mul_assoc, hfix' _ k hk]
+    · by_cases h0 : y = 0
+      · subst y
+        simp
+      have he := (hB'.2 (⟨y, hy⟩ : Q.V)
+        (GlobalTheory.LGrp.mem_fixed.2 fun k hk => Subtype.ext (Subtype.ext (funext fun x => hfix' x k hk))) fun h => h0 (congrArg Subtype.val h)).2.2.2 ϖ hϖ j hj
+      let ev : Q.V →+ ℂ :=
+        { toFun := fun ψ => ψ.1.1 (g * finGL E 2 (locGL E 2 w x))
+          map_zero' := rfl
+          map_add' := fun _ _ => rfl }
+      have hs := ev.map_finsum (GlobalTheory.LFun.finite_heckeVec (Formalism.UG.Final.GLintComm E w 2)
+        (GlobalTheory.LFun.Tj_mem_hecke hϖ j) (Q.locRep w) ⟨y, hy⟩)
+      refine Eq.trans (finsum_congr fun c => ?_) (hs.symm.trans (congrArg ev he))
+      rw [map_mul, map_mul, ← mul_assoc]
+      rfl
   have hEw := (weEig F E D y.1 hcont).2.1 w _ hEig
   have hE1 : Eig w {α', β'} fun x => WE D y.1 (lc w x * h₀) := by
     have := (fixTr E w _ h₀ hk).2 _ hEw 1

@@ -289,7 +289,7 @@ theorem weighted_homogeneous_cancel {σ : Type} {n : ℕ} (w : σ → Fin n → 
       · simp
   have hz : D * weightedHomogeneousComponent w (Finsupp.weight w d) g = 0 := by
     ext e
-    rw [key, coeff_zero]
+    simp only [key, AddMonoidAlgebra.coeff_zero, Pi.zero_apply]
     split_ifs with he
     · by_contra hc
       apply hne
@@ -301,7 +301,8 @@ theorem weighted_homogeneous_cancel {σ : Type} {n : ℕ} (w : σ → Fin n → 
   · exact hD0 h0
   · apply hd
     have h4 := congrArg (AddMonoidAlgebra.coeff · d) h0
-    rw [coeff_weightedHomogeneousComponent, if_pos rfl, coeff_zero] at h4
+    simp only [coeff_weightedHomogeneousComponent, if_pos rfl, AddMonoidAlgebra.coeff_zero,
+      Pi.zero_apply] at h4
     exact h4
 
 theorem det_mul_mem_dual_weyl_shift {r : ℕ} (ν : Fin r → ℕ) {g : MvPolynomial (Fin r × Fin r) ℤ}
@@ -315,7 +316,8 @@ theorem det_mul_mem_dual_weyl_shift {r : ℕ} (ν : Fin r → ℕ) {g : MvPolyno
   · rw [mem_weightedHomogeneousSubmodule] at hg1 hd1 ⊢
     have h := hd1.mul hg1
     convert h using 1
-    omega
+    funext a
+    simp [Nat.add_comm]
   · simp only [Submodule.mem_iInf, LinearMap.mem_ker, LinearMap.sub_apply,
       AlgHom.toLinearMap_apply, sub_eq_zero] at hg2 hd2 ⊢
     intro l j hlj

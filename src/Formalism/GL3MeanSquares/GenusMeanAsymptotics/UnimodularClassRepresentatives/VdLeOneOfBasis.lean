@@ -16,13 +16,13 @@ open LocalSpans idealPowerSpanBounds localizedQuotients integralBasisSpans WCA
 variable {K F : Type} [Field K] [NumberField K] [StarRing K] [Field F] [NumberField F] [Algebra F K]
 variable {V : Type} [AddCommGroup V] [Module K V] [Module (𝓞 K) V] [IsScalarTower (𝓞 K) K V]
 
+local notation "ι" => algebraMap (𝓞 F) (𝓞 K)
+local notation "κ" => algebraMap (𝓞 K) K
+
 variable {𝔭 : Ideal (𝓞 F)}
 
-theorem isLattice_spanO {N : ℕ} (e : Basis (Fin N) K V) : Submodule.IsLattice K (spanO e) where
-  fg := Submodule.fg_span (Set.finite_range e)
-  span_eq_top := by
-    rw [eq_top_iff, ← e.span_eq]
-    exact Submodule.span_mono Submodule.subset_span
+theorem isLattice_spanO {N : ℕ} (e : Basis (Fin N) K V) : Submodule.IsLattice K (spanO e) :=
+  Submodule.IsLattice.of_fg K (Submodule.fg_span (Set.finite_range e))
 
 theorem integral_spanO {h : V →ₗ⋆[K] V →ₗ[K] K} {N : ℕ} (e : Basis (Fin N) K V) (A' : Fin N → 𝓞 F)
     (ho : ∀ i j, i ≠ j → h (e i) (e j) = 0) (hn : ∀ i, h (e i) (e i) = κ (ι (A' i))) :
@@ -45,7 +45,10 @@ theorem vd_le_one_of_basis {h : V →ₗ⋆[K] V →ₗ[K] K} {N : ℕ} (hN : fi
   refine csSup_le' fun E hE => ?_
   by_contra hlt
   apply hprod
-  rw [← mem_pow_iff (K := K)]
+  have mem_pow_iff (a : 𝓞 F) : ι a ∈ extP K 𝔭 ^ 2 ↔ a ∈ 𝔭 ^ 2 := by
+    change ι a ∈ (Ideal.map ι 𝔭) ^ 2 ↔ a ∈ 𝔭 ^ 2
+    rw [← Ideal.map_pow, ← Ideal.mem_comap, Ideal.comap_map_eq_self_of_faithfullyFlat]
+  rw [← mem_pow_iff]
   apply Ideal.pow_le_pow_right (by omega : 2 ≤ E)
   apply hE
   refine Ideal.subset_span ⟨e, fun i => Submodule.subset_span ⟨i, rfl⟩, ?_⟩
@@ -66,10 +69,15 @@ theorem exists_lattice (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF 
   have hp := h𝔭.isPrime
   have hp0 := ne_bot h𝔭
   have han := LocF.aniso_of_totPosDef hd
+  have κι_ne_zero {t : 𝓞 F} (ht : t ≠ 0) : κ (ι t) ≠ 0 := by
+    intro h0
+    apply ht
+    have hι := (FaithfulSMul.algebraMap_injective (𝓞 K) K) (h0.trans (map_zero κ).symm)
+    exact (FaithfulSMul.algebraMap_injective (𝓞 F) (𝓞 K)) (hι.trans (map_zero ι).symm)
   have hx0 : x₀ ≠ 0 := by
     rintro rfl
     rw [map_zero] at hx
-    exact κι_ne_zero (K := K) (ne_zero_of_notMem hn) hx.symm
+    exact κι_ne_zero (ne_zero_of_notMem hn) hx.symm
   have hm : 0 < finrank K V := Module.finrank_pos_iff_exists_ne_zero.2 ⟨x₀, hx0⟩
   obtain ⟨r, hr⟩ : ∃ r, finrank K V = r + 1 := ⟨finrank K V - 1, by omega⟩
   obtain ⟨y, a, z, c, ho, hzy, hny, hnz, hprod, hc2, hx₀⟩ :=

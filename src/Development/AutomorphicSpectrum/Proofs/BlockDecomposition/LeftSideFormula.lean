@@ -470,6 +470,7 @@ theorem dom_box : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberFi
         algebraMap F (Fv F v) ((N : F) * b.repr (X p.1 p.2.1) p.2.2) ∈ v.adicCompletionIntegers F) ∧
       ∀ (p : Fin 1 × Fin 2 × Fin d) (w : InfinitePlace F),
         ‖(θ ε * algebraMap F (Ainf F) ((N : F) * b.repr (X p.1 p.2.1) p.2.2)) w‖ ≤ r := by
+  open scoped Pointwise in
   intro F E _ _ _ _ _ σ hcm J hJ d b θ S φ A hT C hC
   obtain ⟨hφc, hφs, hφ0, -, hAS, hAoff⟩ := hT
   obtain ⟨⟨_, _, _⟩, -⟩ := GlobalTheory.T.adeles_locally_compact_second_countable F
@@ -709,6 +710,7 @@ theorem term_eq {F E : Type} [Field F] [NumberField F] [Field E] [Algebra F E] {
   simp only [Phi, term, Set.indicator, Set.mem_setOf_eq, (hp h _).1, (hp h _).2, e1, e2]
 
 theorem lside : Equi → CoCpt → LSide := by
+  open scoped Pointwise in
   intro hEq hCo F E _ _ _ _ _ σ J d b li lam μ 𝓕 mi m hcm hJ hAn hli hlam hμ h𝓕 hmi hm θ hθ S φ A hT
   obtain ⟨⟨C, hC, hcov⟩, hμ0, hμt⟩ := hCo F E σ J d b li lam μ 𝓕 mi m hcm hJ hAn hli hlam hμ h𝓕 hmi hm
   obtain ⟨⟨_, _, _⟩, -⟩ := GlobalTheory.T.adeles_locally_compact_second_countable F

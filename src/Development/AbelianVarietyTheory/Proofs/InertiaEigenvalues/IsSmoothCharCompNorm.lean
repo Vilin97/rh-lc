@@ -66,7 +66,8 @@ theorem lt_one_iff (hc : Continuous (algebraMap k k')) (z : k) :
     simp [hS, map_pow, ← heq]
 
 theorem valuativeExtension (hc : Continuous (algebraMap k k')) : ValuativeExtension k k' :=
-  ⟨GroundTheory.LocalField.vle_map_iff_of_valuation_lt_one_iff (algebraMap k k') (lt_one_iff hc)⟩
+  ⟨fun {a b} => GroundTheory.LocalField.vle_map_iff_of_valuation_lt_one_iff
+    (algebraMap k k') (lt_one_iff hc) a b⟩
 
 theorem continuous_algNorm [FiniteDimensional k k'] (hc : Continuous (algebraMap k k')) :
     Continuous (Algebra.norm k : k' → k) := by

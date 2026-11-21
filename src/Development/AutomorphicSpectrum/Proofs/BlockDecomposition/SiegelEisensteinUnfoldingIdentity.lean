@@ -80,7 +80,7 @@ theorem mem_latH_iff (σ : E →ₐ[F] E) {d : ℕ} (b : Module.Basis (Fin d) F 
         ∀ i j, i < j → ∀ k, cf v b ((y : Matrix (Fin n) (Fin n) (AF F ⊗[F] E)) i j) k ∈
           v.adicCompletionIntegers F := by
   unfold latH
-  simp only [Set.mem_setOf_eq, hermV_apply, trace_map _ b, repr_map]
+  simp only [Set.mem_ofPred_eq, hermV_apply, trace_map _ b, repr_map]
   rfl
 
 theorem ev_rat (a : F) :
@@ -140,13 +140,13 @@ theorem measurableSet_latH (σ : E →ₐ[F] E) {d : ℕ} (b : Module.Basis (Fin
         (fun y : HermR (AF F) σ n => cf v b ((y : Matrix (Fin n) (Fin n) (AF F ⊗[F] E)) i j) k) ⁻¹'
           (v.adicCompletionIntegers F : Set (Fv F v)) := by
     ext y
-    simp only [Set.mem_setOf_eq, mem_latH_iff, Set.mem_inter_iff, Set.mem_iInter, Set.mem_preimage, SetLike.mem_coe]
+    simp only [Set.mem_ofPred_eq, mem_latH_iff, Set.mem_inter_iff, Set.mem_iInter, Set.mem_preimage, SetLike.mem_coe]
   rw [hset]
   refine MeasurableSet.inter (MeasurableSet.iInter fun i => ?_) (MeasurableSet.iInter fun i =>
     MeasurableSet.iInter fun j => MeasurableSet.iInter fun _ => MeasurableSet.iInter fun k =>
       (hO.preimage (hc i j k)).measurableSet)
   refine (hO.preimage ?_).measurableSet
-  exact continuous_const.mul (continuous_finset_sum _ fun k _ => (hc i i k).mul continuous_const)
+  exact continuous_const.mul (continuous_finsetSum _ fun k _ => (hc i i k).mul continuous_const)
 
 theorem measurableSet_intH (σ : E →ₐ[F] E) {d : ℕ} (b : Module.Basis (Fin d) F E) {n : ℕ}
     (S : Finset (HeightOneSpectrum (𝓞 F))) :
@@ -177,7 +177,7 @@ theorem continuous_chiT (σ : E →ₐ[F] E) {n : ℕ} (ψ : AddChar (AF F) ℂ)
   have ht : Continuous fun y : HermR (AF F) σ n => Algebra.trace (AF F) (AF F ⊗[F] E)
       (Matrix.trace (T.map (inclR (AF F)) * (y : Matrix (Fin n) (Fin n) (AF F ⊗[F] E)))) := by
     rw [hs]
-    exact continuous_finset_sum _ fun a _ => continuous_finset_sum _ fun c _ =>
+    exact continuous_finsetSum _ fun a _ => continuous_finsetSum _ fun c _ =>
       (hl _).comp (continuous_entry σ c a)
   exact hψ.comp (continuous_const.mul ht).neg
 

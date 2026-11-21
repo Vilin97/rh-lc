@@ -31,10 +31,10 @@ end Two
 
 omit [IsIntegral X] in
 theorem isNef_of_small {D : ℕ} (hX : IsArithVar p D) (L : HermLB p) (hs : L.SemiPos D) (hf : ArInt.NefFib L)
-    (hg : ∀ x : X, ∃ u ∈ L.smallSec, x ∈ nonzeroLocus u) : L.IsNef D where
-  semiPos := hs
-  vertical := hf
-  horizontal Z i _ _ _ hc hd := by
+    (hg : ∀ x : X, ∃ u ∈ L.smallSec, x ∈ nonzeroLocus u) : L.IsNef D := by
+  refine ⟨hs, ?_, ?_⟩
+  · exact hf
+  · intro Z i _ _ _ hc hd
     have hZ : IsArithVar (i ≫ p) 0 := hX.of_isClosedImmersion i hc hd
     obtain ⟨u, hu, ha⟩ := hg (i (genericPoint Z))
     have hgen : genericPoint Z ∈ nonzeroLocus (GlobalTheory.secPull u i) := by

@@ -23,8 +23,7 @@ public import Development.AbelianVarietyTheory.Proofs.DivisorProofs.ModulusOfNor
 open scoped TensorProduct NNReal ENNReal Matrix
 open NumberField IsDedekindDomain MeasureTheory Formalism.MainNotions.GlobalTheoryTheory.GenusMassVolumes
 open GlobalTheory.WeilM GlobalTheory.AdelicU GlobalTheory.LFun GlobalTheory.IndefiniteRowSideFullHecke.WeilTensorModels GlobalTheory.ThK GlobalTheory.Doubling
-open GlobalTheory.SWLit GlobalTheory.TowU GlobalTheory.SiegelCoefTheta
-open GlobalTheory.WeilEx
+open GlobalTheory.SWLit GlobalTheory.TowU
 attribute [-instance] CStarMatrix.instHMulOfFintypeOfMulOfAddCommMonoid
 
 noncomputable section
@@ -37,8 +36,9 @@ variable {R : Type} [CommRing R] {A : Type} [CommRing A] [Algebra R A] {α β ν
   [AddCommGroup X] [Module R X] {e : ν ⊕ ν ≃ α}
 
 
-variable [Invertible (2 : R)] {D : Matrix α β A ≃ₗ[R] X × X} (hΔ : ∀ w, LinAct.Del e w → (D w).1 = 0)
-  (hN : ∀ w, LinAct.Nab e w → (D w).2 = 0)
+variable [Invertible (2 : R)] {D : Matrix α β A ≃ₗ[R] X × X}
+  (hΔ : ∀ w, GlobalTheory.SWLit.LinAct.Del e w → (D w).1 = 0)
+  (hN : ∀ w, GlobalTheory.SWLit.LinAct.Nab e w → (D w).2 = 0)
 include hΔ hN
 
 end Alg
@@ -65,7 +65,7 @@ theorem absE_det_unitary {k : ℕ} {J : Matrix (Fin k) (Fin k) E} (hJ : J.det �
     exact hJu.mul_left_cancel (by linear_combination h)
   have hc : Units.map (cA σ : AE F E →* AE F E) d = conjUnit σ d := by
     ext
-    simp only [Units.coe_map, MonoidHom.coe_coe]
+    simp only [Units.coe_map, MonoidHom.coe_ofClass]
     rfl
   have h3 : d * Units.map (cA σ : AE F E →* AE F E) d = 1 := Units.ext (by simpa using h2)
   have h4 : absE F E d * absE F E d = 1 := by

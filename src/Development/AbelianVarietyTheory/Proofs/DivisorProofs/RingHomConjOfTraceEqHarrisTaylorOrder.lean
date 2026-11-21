@@ -32,7 +32,12 @@ theorem rep_conj_of_trace_eq : ∀ (p : ℕ) [Fact p.Prime] (D : Datum p) (g : �
     intro s f
     have : (fun τ => Matrix.scalar (Fin D.m) (f τ)) = ∑ τ, f τ • (Pi.single τ 1 : (D.F →+* ℂ) → Matrix (Fin D.m) (Fin D.m) ℂ) := by
       ext τ i j
-      simp [Finset.sum_apply, Pi.single_apply, Matrix.scalar_apply, Matrix.diagonal_apply, Matrix.one_apply]
+      simp only [Finset.sum_apply]
+      rw [Finset.sum_eq_single τ]
+      · simp [Pi.single_apply, Matrix.scalar_apply, Matrix.diagonal_apply, Matrix.one_apply]
+      · intro b _ hb
+        simp [Pi.single_apply, Ne.symm hb]
+      · simp
     set_option synthInstance.maxHeartbeats 100000 in
       rw [this, map_sum, Matrix.trace_sum]
     simp [map_smul, Matrix.trace_smul]

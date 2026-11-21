@@ -219,23 +219,27 @@ lemma extOne_ne {J : Finset (Fin n)} (h : (extOne J : P) ≠ 0) : J = ∅ := by
 
 lemma KG_card_pos (hc : 1 ≤ c) (x : ℕ → Fin n → P) (h0 : hs 0 = 0)
     (hst : ∀ j, hs (j + 1) ≤ hs j + 1 ∧ hs j ≤ hs (j + 1) + 1) :
-    ∀ (j : ℕ) (J : Finset (Fin n)), KG c hs x j J ≠ 0 → J.card = hs j
-  | 0, J, h => by rw [extOne_ne h, h0]; rfl
-  | j + 1, J, h => by
-    have ih := KG_card_pos hc x h0 hst j
-    have hj := hst j
+    ∀ (j : ℕ) (J : Finset (Fin n)), KG c hs x j J ≠ 0 → J.card = hs j := by
+  intro j
+  induction j with
+  | zero =>
+    intro J h
+    rw [extOne_ne h, h0]
+    rfl
+  | succ j ih =>
+    intro J h
+    obtain ⟨hrise, hfall⟩ := hst j
     rcases lt_trichotomy (hs j) (hs (j + 1)) with h1 | h1 | h1
-    · rw [KG_rise_pos hc h1] at h
+    · rw [KG_rise_pos (x := x) hc h1] at h
       obtain ⟨m, hm, hK⟩ : ∃ m ∈ J, KG c hs x j (J.erase m) ≠ 0 := wedgeR_ne h
-      have h2 := ih _ hK
-      rw [Finset.card_erase_of_mem hm] at h2
-      have h3 := Finset.card_pos.mpr ⟨m, hm⟩
+      have h2 := ih (J.erase m) hK
+      have h3 := Finset.card_erase_add_one hm
       omega
-    · rw [KG_eq h1] at h
-      rw [ih _ h, h1]
-    · rw [KG_fall_pos hc h1] at h
+    · rw [KG_eq (c := c) (x := x) h1] at h
+      exact (ih J h).trans h1
+    · rw [KG_fall_pos (x := x) hc h1] at h
       obtain ⟨m, hm, hK⟩ : ∃ m, m ∉ J ∧ KG c hs x j (insert m J) ≠ 0 := contrR_ne h
-      have h2 := ih _ hK
+      have h2 := ih (insert m J) hK
       rw [Finset.card_insert_of_notMem hm] at h2
       omega
 

@@ -25,8 +25,9 @@ variable {g : ℕ} {A₀ : Over (Sp ℂ)} [GrpObj A₀] {L₀ : LB A₀.left} {u
 theorem ksRel_add {D D' : R → ℂ} {Θ Θ' : Matrix (Fin g) (Fin g) ℂ}
     {s s' : (Fin g → ℂ) → ∀ W : X.Opens, Γ(X, W) → ℂ}
     (h : KSRel u p m D Θ s) (h' : KSRel u p m D' Θ' s') :
-    KSRel u p m (fun r => D r + D' r) (Θ + Θ') (fun z W f => s z W f + s' z W f) where
-  der z := by
+    KSRel u p m (fun r => D r + D' r) (Θ + Θ') (fun z W f => s z W f + s' z W f) := by
+  refine { der := ?_, base := ?_, hol := ?_, per := ?_ }
+  · intro z
     refine { add := ?_, mul := ?_, res := ?_ }
     · intro W hW f f'
       simp only [(h.der z).add W hW, (h'.der z).add W hW]
@@ -36,16 +37,19 @@ theorem ksRel_add {D D' : R → ℂ} {Θ Θ' : Matrix (Fin g) (Fin g) ℂ}
       ring
     · intro W W' hle hW' f
       simp only [(h.der z).res W W' hle hW', (h'.der z).res W W' hle hW']
-  base z r := by simp only [h.base, h'.base]
-  hol W f := (h.hol W f).add (h'.hol W f)
-  per l W f z hz := by
+  · intro z r
+    simp only [h.base, h'.base]
+  · intro W f
+    exact (h.hol W f).add (h'.hol W f)
+  · intro l W f z hz
     simp only [h.per l W f z hz, h'.per l W f z hz, Matrix.add_mulVec, map_add (f := _)]
     ring
 
 theorem ksRel_smul (c : ℂ) {D : R → ℂ} {Θ : Matrix (Fin g) (Fin g) ℂ}
     {s : (Fin g → ℂ) → ∀ W : X.Opens, Γ(X, W) → ℂ} (h : KSRel u p m D Θ s) :
-    KSRel u p m (fun r => c * D r) (c • Θ) (fun z W f => c * s z W f) where
-  der z := by
+    KSRel u p m (fun r => c * D r) (c • Θ) (fun z W f => c * s z W f) := by
+  refine { der := ?_, base := ?_, hol := ?_, per := ?_ }
+  · intro z
     refine { add := ?_, mul := ?_, res := ?_ }
     · intro W hW f f'
       simp only [(h.der z).add W hW]
@@ -55,9 +59,11 @@ theorem ksRel_smul (c : ℂ) {D : R → ℂ} {Θ : Matrix (Fin g) (Fin g) ℂ}
       ring
     · intro W W' hle hW' f
       simp only [(h.der z).res W W' hle hW']
-  base z r := by simp only [h.base]
-  hol W f := (h.hol W f).const_mul c
-  per l W f z hz := by
+  · intro z r
+    simp only [h.base]
+  · intro W f
+    exact (h.hol W f).const_mul c
+  · intro l W f z hz
     simp only [h.per l W f z hz, Matrix.smul_mulVec, map_smul, smul_eq_mul]
     ring
 end

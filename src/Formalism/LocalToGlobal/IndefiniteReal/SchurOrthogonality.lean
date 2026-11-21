@@ -262,12 +262,8 @@ theorem conj_prod_exp {n : ℕ} (g : Matrix (Fin n) (Fin n) ℂ) (hg : IsUnit g)
       rw [← Matrix.exp_conj' g _ hg, Matrix.mul_smul, Matrix.smul_mul]
     simp only [List.ofFn_succ, List.prod_cons]
     rw [he, ← ih]
-    calc g⁻¹ * (NormedSpace.exp (t 0 • Xs 0) *
-          (List.ofFn fun i : Fin k => NormedSpace.exp (t i.succ • Xs i.succ)).prod) * g
-        = g⁻¹ * NormedSpace.exp (t 0 • Xs 0) * 1 *
-          (List.ofFn fun i : Fin k => NormedSpace.exp (t i.succ • Xs i.succ)).prod * g := by
-          simp only [Matrix.mul_one, Matrix.mul_assoc]
-      _ = _ := by rw [← hgi]; simp only [Matrix.mul_assoc]
+    simp only [Matrix.mul_assoc]
+    rw [← Matrix.mul_assoc g g⁻¹, hgi, Matrix.one_mul]
 
 theorem smoothVec_rep (M : DSModel V S) (τ : D.what₂.Tau) (g : Gt V τ) {w : M.H τ}
     (hw : SmoothVec (lieAt V τ) (M.rep τ) w) : SmoothVec (lieAt V τ) (M.rep τ) (M.rep τ (gm g) w) := by

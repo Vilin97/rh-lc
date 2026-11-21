@@ -25,6 +25,7 @@ theorem ev_stab (hT : TStab) {n N q : ℕ} (h : n ≤ N) (ω : Form (HS L N) q) 
   unfold intP
   rw [← intS_pull]
   congr 1
+  funext j
   exact hT L n N h _
 
 theorem ev_blk (hT : TBlk) {d n q : ℕ} (ω : Form (HS L (d * n)) q) (z : Chn (Gm L n) q) :
@@ -38,7 +39,8 @@ theorem ev_blk (hT : TBlk) {d n q : ℕ} (ω : Form (HS L (d * n)) q) (z : Chn (
   unfold intP
   rw [← intS_pull]
   congr 1
-  exact hT L d n _
+  funext j
+  simpa only [add_zero, MonoidHom.comp_apply] using hT L d n _
 
 theorem padL_one (n N : ℕ) : padL n N (one L n).1 + eL n N = (one L N).1 := by
   unfold padL eL one

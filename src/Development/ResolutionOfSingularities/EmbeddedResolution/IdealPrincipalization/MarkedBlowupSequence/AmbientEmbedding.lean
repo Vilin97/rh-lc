@@ -107,7 +107,8 @@ private theorem exists_closedImmersion_blowup_imageIdealSheaf_of_lt_length (hres
   have : AlgebraicGeometry.IsLocallyNoetherian A := inferInstance
   exact exists_closedImmersion_blowup_of_isBlowupAlongIdealSheaf hres σ (s.center n) (s.map n) (s.isBlowup n hn) hc
 
-private def embeddingIntoAmbientBlowup (hres : FunctorialResolution.Blowup.StrictTransformIsBlowupOfClosedSubscheme.{u})
+@[no_expose]
+def embeddingIntoAmbientBlowup (hres : FunctorialResolution.Blowup.StrictTransformIsBlowupOfClosedSubscheme.{u})
     (hno : BlowupPreservesNoetherian.{u}) {S : Scheme.{u}} (s : BlowupSequenceData S)
     (n : ℕ) (hn : n < s.length) (A : Scheme.{u}) (σ : s.obj n ⟶ A)
     (hσ : AlgebraicGeometry.IsClosedImmersion σ) (hA : AlgebraicGeometry.IsNoetherian A)
@@ -146,15 +147,15 @@ private theorem ker_embeddingIntoBlowupImageIdealSheaf (hres : FunctorialResolut
         (imageIdealSheaf σ (s.center n)) σ.ker :=
   (exists_closedImmersion_blowup_imageIdealSheaf_of_lt_length hres hno s n hn A σ hσ hA hc).choose_spec.2.2
 
-private def ambientEmbeddingZero {S X : Scheme.{u}} (ι : S ⟶ X)
+def ambientEmbeddingZero {S X : Scheme.{u}} (ι : S ⟶ X)
     [AlgebraicGeometry.IsClosedImmersion ι] [AlgebraicGeometry.IsNoetherian X]
     (s : BlowupSequenceData S) : AmbientEmbedding s 0 where
   ambient := X
   emb := s.isoZero.hom ≫ ι
-  emb_isClosedImmersion := isClosedImmersion_isoObjZero_hom_comp ι s
+  emb_isClosedImmersion := by exact isClosedImmersion_isoObjZero_hom_comp ι s
   isNoetherian_ambient_of_le_length := fun _ => inferInstance
 
-private def ambientEmbeddingSucc (hres : FunctorialResolution.Blowup.StrictTransformIsBlowupOfClosedSubscheme.{u})
+def ambientEmbeddingSucc (hres : FunctorialResolution.Blowup.StrictTransformIsBlowupOfClosedSubscheme.{u})
     (hno : BlowupPreservesNoetherian.{u}) {S : Scheme.{u}} (s : BlowupSequenceData S)
     (hcen : ∀ i, i < s.length → ∀ T ∈ irreducibleComponents ↥(s.obj i),
         ¬ T ⊆ ((s.center i).support : Set ↥(s.obj i)))
@@ -164,10 +165,12 @@ private def ambientEmbeddingSucc (hres : FunctorialResolution.Blowup.StrictTrans
     ⟨{ ambient := Blowup.blowup (imageIdealSheaf st.emb (s.center n))
        emb := embeddingIntoAmbientBlowup hres hno s n h st.ambient st.emb st.emb_isClosedImmersion
          (st.isNoetherian_ambient_of_le_length (Nat.le_of_lt h)) (hcen n h)
-       emb_isClosedImmersion := isClosedImmersion_embeddingIntoBlowupImageIdealSheaf hres hno s n h st.ambient st.emb
-         st.emb_isClosedImmersion (st.isNoetherian_ambient_of_le_length (Nat.le_of_lt h)) (hcen n h)
-       isNoetherian_ambient_of_le_length := fun _ =>
-         isNoetherian_blowup_of_isNoetherian hno (st.isNoetherian_ambient_of_le_length (Nat.le_of_lt h))
+       emb_isClosedImmersion := by
+         exact isClosedImmersion_embeddingIntoBlowupImageIdealSheaf hres hno s n h st.ambient st.emb
+           st.emb_isClosedImmersion (st.isNoetherian_ambient_of_le_length (Nat.le_of_lt h)) (hcen n h)
+       isNoetherian_ambient_of_le_length := by
+         intro _
+         exact isNoetherian_blowup_of_isNoetherian hno (st.isNoetherian_ambient_of_le_length (Nat.le_of_lt h))
            (imageIdealSheaf st.emb (s.center n)) },
      Blowup.blowup.proj (imageIdealSheaf st.emb (s.center n))⟩
   else

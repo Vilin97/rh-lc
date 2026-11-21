@@ -618,19 +618,18 @@ variable {H : Type w} [Group H] {ρ : G →* Aut X} {φ : H →* G} {π : X ⟶ 
 
 theorem IsAffineQuotient.comp (h : IsAffineQuotient (ρ.comp φ) π) {τ : G →* Aut Y}
     (hτ : ∀ g, π ≫ (τ g).asIso.hom = (ρ g).asIso.hom ≫ π) {π' : Y ⟶ Z} (h' : IsAffineQuotient τ π') :
-    IsAffineQuotient ρ (π ≫ π') where
-  comp_eq g := by
+    IsAffineQuotient ρ (π ≫ π') := by
+  refine ⟨?_, ?_, ?_, ?_⟩
+  · intro g
     rw [← Category.assoc, ← hτ g, Category.assoc, h'.comp_eq g]
-  isAffineHom := by
-    have := h.isAffineHom
+  · have := h.isAffineHom
     have := h'.isAffineHom
     infer_instance
-  app_injective W := by
-    intro a b e
+  · intro W a b e
     apply h'.app_injective W
     apply h.app_injective (π' ⁻¹ᵁ W)
     exact e
-  mem_range_app W s hs := by
+  · intro W s hs
     obtain ⟨s₁, rfl⟩ := h.mem_range_app (π' ⁻¹ᵁ W) s fun k ↦ hs (φ k)
     have hs₁ : IsInvariantSection τ (π' ⁻¹ᵁ W) s₁ := by
       intro g

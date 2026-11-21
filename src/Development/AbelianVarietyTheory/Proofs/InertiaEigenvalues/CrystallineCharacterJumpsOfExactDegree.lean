@@ -125,6 +125,7 @@ theorem jumps_of_exact_degree : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (A
     exact ((GlobalTheory.Per.FontaineTied.fontCore_all_of_tied l P AI T K) ↥LL.1 ↥(OL LL)
       (GlobalTheory.LocalIntegers.good_integers l LL).1 A).2.2 hcrys
   obtain ⟨-, -, hdim⟩ := (GlobalTheory.Per.Components.components_finrank l P AI T K LL ↥LL.1 (charRep μ)).1 τ
+  set_option synthInstance.maxHeartbeats 200000 in
   have h1 : finrank ↥LL.1 ↥(DdRE (P.PD K) (charRep μ) τ) = 1 := by
     rw [hdim hdr, Module.finrank_self]
   have hs : Function.Surjective (algebraMap ↥(K0 K) ↥K.1) :=

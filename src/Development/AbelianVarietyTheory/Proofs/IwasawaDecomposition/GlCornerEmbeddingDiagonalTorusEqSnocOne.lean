@@ -15,7 +15,8 @@ namespace GlobalTheory.LocLanglands
 theorem corner_diagT (R : Type) [CommRing R] (m : ℕ) (t : Fin m → Rˣ) :
     corner (diagT R (Fin m) t) = diagT R (Fin (m + 1)) (Fin.snoc t 1) := by
   apply Units.ext
-  simp only [corner, val_emb₂, val_diagT]
+  change (emb₂ R (stdSum (rfl : m + 1 = m + 1)) (diagT R (Fin m) t, 1) : Matrix (Fin (m + 1)) (Fin (m + 1)) R) = (diagT R (Fin (m + 1)) (Fin.snoc t 1) : Matrix (Fin (m + 1)) (Fin (m + 1)) R)
+  rw [val_emb₂, val_diagT, val_diagT]
   ext i j
   obtain ⟨i, rfl⟩ := (stdSum (rfl : m + 1 = m + 1)).surjective i
   obtain ⟨j, rfl⟩ := (stdSum (rfl : m + 1 = m + 1)).surjective j

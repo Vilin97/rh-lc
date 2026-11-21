@@ -51,7 +51,7 @@ theorem sumList_ofFn_diag : ∀ (n : ℕ) (c : Fin n → ℂˣ),
     sumList (List.ofFn fun i => WD.mk (WDRep.diag h fun _ : Fin 1 => c i)) = WD.mk (WDRep.diag h c)
   | 0, c => by
       rw [List.ofFn_zero]
-      show WD.lpZero h = _
+      show WD.lpZero (h := h) = _
       unfold WD.lpZero
       congr 2
       funext i

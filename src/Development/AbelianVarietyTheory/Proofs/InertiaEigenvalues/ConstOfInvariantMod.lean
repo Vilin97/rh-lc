@@ -49,7 +49,7 @@ theorem const_of_invariant_mod : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (
   have key : ∀ m, a ≤ m → m ≤ b → ∃ c : ↥K.1, algebraMap ↥K.1 P.R.BdR c ∈ (P.PD K).Fil a ∧
       x - algebraMap ↥K.1 P.R.BdR c ∈ (P.PD K).Fil m := by
     intro m hm
-    induction m, hm using Int.le_induction with
+    induction m, hm using Int.leInduction with
     | base => exact fun _ => h0 a le_rfl
     | succ m hm ih =>
       intro hmb

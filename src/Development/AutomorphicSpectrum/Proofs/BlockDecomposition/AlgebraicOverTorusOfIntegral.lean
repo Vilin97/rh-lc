@@ -68,6 +68,7 @@ theorem isAlgebraic_of_integral_torusS : ∀ {K R : Type} [Field K] [CommRing R]
     refine ⟨p.map φ, hm.map φ, ?_⟩
     rw [Polynomial.eval₂_map]
     exact hp
-  exact hS.isAlgebraic.restrictScalars A
+  set_option synthInstance.maxHeartbeats 200000 in
+    exact hS.isAlgebraic.restrictScalars A
 
 end GlobalTheory.CompanionTheory.GeoTorus

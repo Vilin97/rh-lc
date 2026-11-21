@@ -96,6 +96,8 @@ theorem coordInv_ev (z : (Fin 1 → LL) ⊗[Qp] BdR) :
     nth_rw 2 [← hy]
     rw [← coordInv_add]
     congr 1
+    funext σ
+    exact map_add (ev σ) x y
   | tmul v b =>
     have hM : embMat Qp Om LL * (embMat Qp Om LL)⁻¹ = 1 := Matrix.mul_nonsing_inv _ isUnit_det_embMat
     set a := (embBasis Qp Om LL).repr (v 0) with ha

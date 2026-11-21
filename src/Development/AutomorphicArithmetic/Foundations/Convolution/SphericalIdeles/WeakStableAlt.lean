@@ -25,8 +25,10 @@ private theorem weak_same {F E : Type} [Field F] [NumberField F] [Field E] [Numb
     ∀ᶠ w : Pl E in cofinite, ∃ B, sat w B ∧ sat' w B := by
   have hN := (places F E hp).2.2.2.2.1
   filter_upwards [H, H'] with w a b
-  obtain ⟨B, hB, hB'⟩ := a _ (hN w)
-  obtain ⟨C, hC, hC'⟩ := b _ (hN w)
+  have hw : normV w = normV (w.under (𝓞 F)) ^ resDeg F w := by
+    simpa [normV, Ideal.absNorm_apply, Submodule.cardQuot_apply] using hN w
+  obtain ⟨B, hB, hB'⟩ := a _ hw
+  obtain ⟨C, hC, hC'⟩ := b _ hw
   obtain rfl := hB.unique hC
   exact ⟨_, hB', hC'⟩
 

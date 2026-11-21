@@ -78,12 +78,7 @@ theorem orthonormal_bas (B : Base D cc δ) (n n' : ℕ) : TaylorLogMetric.Orthon
   unfold bas
   rw [hYY_putB]
   by_cases hk : (ixE D n n' i).1 = (ixE D n n' j).1
-  set_option synthInstance.maxHeartbeats 100000 in
-    · rw [if_pos hk, map_sum]
-    have := trace_xv B (ixE D n n' i).2 (ixE D n n' j).2
-    set_option synthInstance.maxHeartbeats 100000 in
-      rw [map_sum] at this
-    rw [this]
+  · rw [if_pos hk, trace_xv]
     congr 1
     apply propext
     constructor

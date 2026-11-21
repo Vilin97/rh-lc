@@ -227,9 +227,6 @@ theorem UpperTheory.V.Alg.M.zm_holds :
       rw [← (hpow (n + 1)).2, mem_oz]
       have := SetLike.pow_mem_graded 2 hg
       convert this using 2
-      rw [nsmul_eq_mul]
-      push_cast
-      ring
     have hle : oz 𝒜 2 ^ (n + 1) ≤ (zmJ ι p).restrictScalars (𝒜 0) := by
       rw [pow_succ, Submodule.mul_le]
       intro a _ b hb

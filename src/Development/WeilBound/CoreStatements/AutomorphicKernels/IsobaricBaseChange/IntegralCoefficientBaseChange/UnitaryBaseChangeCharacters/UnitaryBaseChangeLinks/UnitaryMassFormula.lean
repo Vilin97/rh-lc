@@ -149,7 +149,7 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 theorem conjFin_conjFin (x : Af E) : conjFin (cc E) (conjFin (cc E) x) = x := by
   obtain ⟨y, rfl⟩ := (GlobalTheory.LFun.finAdEquiv (Fr E) E).surjective x
-  change conjFin (cc E) (conjFin (cc E) (AEq y)) = AEq y
+  change conjFin (cc E) (conjFin (cc E) (AEq (E := E) y)) = AEq (E := E) y
   rw [← AEq_sig, ← AEq_sig]
   congr 1
   induction y using TensorProduct.induction_on with

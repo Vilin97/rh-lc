@@ -30,6 +30,9 @@ private theorem F_coc (u : K → K → A) (v : K → A) (hu : ∀ a b c, u b c -
         u (g 0) (g 1) * F u v n (Fin.contractNth j (· * ·) fun i => g i.succ.succ) := fun j => by
       rw [F]
       congr 2
+      funext i
+      simp only [Fin.contractNth, Fin.val_succ, Nat.add_lt_add_iff_right,
+        Nat.add_right_cancel_iff]
       rfl
     have h0 : F u v (n + 2) (Fin.contractNth 0 (· * ·) g) = u (g 0 * g 1) (g 2) * F u v n fun i => g i.succ.succ.succ := by
       rw [F]; rfl
@@ -53,12 +56,13 @@ private theorem F_ins (u : K → K → A) (v : K → A) (hs : ∀ a b, u a b = u
       F u v (2 * E) g * v x
   | 0, g => by simp [F]
   | E + 1, g => by
-    obtain ⟨a, g, rfl⟩ : ∃ (a : K) (g' : Fin (2 * E + 1) → K), g = (Fin.cons a g' : Fin (2 * E + 1 + 1) → K) := ⟨_, _, (Fin.cons_self_tail (n := 2 * E + 1) g).symm⟩
-    obtain ⟨b, g, rfl⟩ : ∃ (b : K) (g' : Fin (2 * E) → K), g = (Fin.cons b g' : Fin (2 * E + 1) → K) := ⟨_, _, (Fin.cons_self_tail g).symm⟩
+    obtain ⟨a, tail, hg⟩ := Fin.exists_cons (n := 2 * E + 1) g
+    obtain ⟨b, rest, htail⟩ := Fin.exists_cons (n := 2 * E) tail
+    rw [hg, htail]
     change ∑ i : Fin (2 * E + 1 + 1 + 1), (-1 : A) ^ (i : ℕ) * F u v (2 * E + 1 + 2)
-      (Fin.insertNth (α := fun _ => K) i x (Fin.cons a (Fin.cons b g : Fin (2 * E + 1) → K) : Fin (2 * E + 1 + 1) → K)) =
-      (u a b * F u v (2 * E) g) * v x
-    rw [Fin.sum_univ_succ, Fin.sum_univ_succ, mul_assoc (u a b), ← F_ins u v hs x E g, Finset.mul_sum]
+      (Fin.insertNth (α := fun _ => K) i x (Fin.cons a (Fin.cons b rest : Fin (2 * E + 1) → K) : Fin (2 * E + 1 + 1) → K)) =
+      (u a b * F u v (2 * E) rest) * v x
+    rw [Fin.sum_univ_succ, Fin.sum_univ_succ, mul_assoc (u a b), ← F_ins u v hs x E rest, Finset.mul_sum]
     simp only [Fin.insertNth_succ_cons, Fin.insertNth_zero', F, Fin.cons_zero, Fin.cons_one, Fin.cons_succ, Fin.val_zero,
       Fin.val_succ, hs x a]
     rw [← add_assoc]

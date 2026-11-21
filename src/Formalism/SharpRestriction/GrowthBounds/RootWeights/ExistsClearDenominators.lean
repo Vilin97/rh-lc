@@ -27,15 +27,12 @@ def latticeInter (M : Submodule O W) (L : Submodule (KK O) W) : Submodule O L :=
 
 theorem latticeInter_isLattice (M : Submodule O W) (hfg : M.FG) (hMQ : MQ (K := KK O) M = ⊤) (L : Submodule (KK O) W) :
     Submodule.IsFullLattice (KK O) (latticeInter M L) where
-  fg := by
+  toIsLattice := Submodule.IsLattice.of_fg (KK O) (by
     have hN : IsNoetherian O M := isNoetherian_of_fg_of_noetherian M hfg
     refine Submodule.fg_of_fg_map_injective (L.subtype.restrictScalars O) (fun x y h => Subtype.ext h) ?_
     refine (isNoetherian_submodule.1 hN) _ ?_
     rintro _ ⟨x, hx, rfl⟩
-    exact hx
-  linearIndepOn := by
-    intro s _ hli
-    exact (LinearIndependent.iff_fractionRing _ _).mp hli
+    exact hx)
   span_eq_top := by
     apply top_unique
     intro x _

@@ -200,7 +200,7 @@ theorem exists_cc_tup (v : HeightOneSpectrum (𝓞 F)) {a : ℕ} {O : Set (Fin a
   have : LocallyCompactSpace (Fv F v) := PI.VolStabS.locallyCompact_Fv F v
   let h := PI.VolStabS.DeterminantAdmissible.crdH (a := a) (M := n) b (Fv F v)
   obtain ⟨V, hV, hpV, hVO⟩ :=
-    (loc_compact_Haus_tot_disc_of_zero_dim (H := Fin a × Fin n × Fin (Module.finrank F E) → Fv F v)).exists_subset_of_mem_open
+    (loc_compact_Haus_tot_disc_of_zero_dim (X := Fin a × Fin n × Fin (Module.finrank F E) → Fv F v)).exists_subset_of_mem_open
       (Set.mem_image_of_mem h hy) (h.isOpenMap O hO)
   let K : Set (Fin a × Fin n × Fin (Module.finrank F E) → Fv F v) :=
     Set.pi Set.univ fun c => (Homeomorph.subRight (h y c)) ⁻¹' (v.adicCompletionIntegers F : Set (Fv F v))

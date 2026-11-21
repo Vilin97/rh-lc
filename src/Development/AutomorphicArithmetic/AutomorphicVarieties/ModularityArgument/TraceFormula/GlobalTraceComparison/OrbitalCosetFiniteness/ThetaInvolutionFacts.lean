@@ -20,7 +20,7 @@ private lemma out_orbit {G : Type} [Group G] (θ : G →* G) (K : Subgroup G) (h
       (Quotient.out (DoubleCoset.mk (twCent θ δ) K x))⁻¹ * δ * θ (Quotient.out (DoubleCoset.mk (twCent θ δ) K x)) =
         k * (x⁻¹ * δ * θ x) * k' := by
   obtain ⟨h, hh, k, hk, e⟩ := (@DoubleCoset.eq _ _ (twCent θ δ) K _ _).1
-    (DoubleCoset.out_eq' (twCent θ δ) K (DoubleCoset.mk (twCent θ δ) K x))
+    (DoubleCoset.out_eq' (DoubleCoset.mk (twCent θ δ) K x))
   generalize Quotient.out (DoubleCoset.mk (twCent θ δ) K x) = o at e
   have hc : h * δ = δ * θ h := hh
   refine ⟨k, hk, (θ k)⁻¹, K.inv_mem (hθ k hk), ?_⟩

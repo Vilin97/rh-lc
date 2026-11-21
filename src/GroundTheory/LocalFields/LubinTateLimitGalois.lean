@@ -312,7 +312,7 @@ theorem lubinTateChar_lubinTateLimitGalEquiv (hf : IsLubinTateSeries π f) (u : 
 
 theorem lubinTateLimitGalEquiv_apply (hf : IsLubinTateSeries π f) (u : 𝒪[K]ˣ) {n : ℕ}
     {x : IdealPoint Ω (lubinTateFormalGroup hπ hf)} (hx : x ∈ lubinTateTorsion Ω hf n) :
-    ((lubinTateLimitGalEquiv hπ hf u
+    ((lubinTateLimitGalEquiv (Ω := Ω) hπ hf u
       ⟨x.val, lubinTateField_le_lubinTateLimit hπ hf n (val_mem_lubinTateField hπ hf hx)⟩ :
         lubinTateLimit Ω hπ) : Ω) = ((u : 𝒪[K]) • x).val :=
   lubinTateChar_spec hπ hf _ _ hx (u : 𝒪[K]) (by

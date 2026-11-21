@@ -22,7 +22,7 @@ theorem det_eq_one_of_blockTri {ι β : Type} [Fintype ι] [DecidableEq ι] [Lin
   have h1 : M.toSquareBlock b c = 1 := by
     ext ⟨i, hi⟩ ⟨j, hj⟩
     change M i j = (1 : Matrix {a' // b a' = c} {a' // b a' = c} k) ⟨i, hi⟩ ⟨j, hj⟩
-    rw [one_apply, hD i j (hi.trans hj.symm)]
+    rw [Matrix.one_apply, hD i j (hi.trans hj.symm)]
     simp [Subtype.ext_iff]
   rw [h1, det_one]
 
@@ -63,7 +63,7 @@ theorem diag_of_unipRad {n : ℕ} (G : Grp k n) (g : GL (Fin n) k) (hg : g ∈ u
   obtain ⟨⟨b, j'⟩, rfl⟩ := G.e.surjective j
   have hab : a = b := by simpa [Grp.bl] using h
   subst hab
-  rw [hD a i' j', one_apply]
+  rw [hD a i' j', Matrix.one_apply]
   by_cases hij : i' = j'
   · subst hij; simp
   · rw [if_neg hij, if_neg]

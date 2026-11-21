@@ -49,7 +49,7 @@ theorem relIndex_eq_of_map {G M : Type*} [Group G] [AddCommGroup M] (H G' : Subg
     exact Subtype.ext hφ
 
 theorem relIndex_nSub_eq {A₀ B₀ : Submodule (𝓞 K) V}
-    (hA₀ : Submodule.IsLattice K A₀) (hB₀ : Submodule.IsLattice K B₀) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) :
+    (hA₀ : Submodule.IsFullLattice K A₀) (hB₀ : Submodule.IsFullLattice K B₀) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) :
     ∃ c₀ : ℕ, ∀ c ≥ c₀, ∃ k₀ : ℕ, ∀ k ≥ k₀, nSub (locF 𝔭 B₀) 𝔭 (k + c) ≤ nSub (locF 𝔭 A₀) 𝔭 k ∧
       endL (locF 𝔭 B₀) (extP K 𝔭 ^ (k + c) • locF 𝔭 B₀) ≤ endL (locF 𝔭 A₀) (extP K 𝔭 ^ k • locF 𝔭 A₀) ∧
       (nSub (locF 𝔭 B₀) 𝔭 (k + c)).relIndex (nSub (locF 𝔭 A₀) 𝔭 k) =
@@ -74,7 +74,7 @@ theorem relIndex_nSub_eq {A₀ B₀ : Submodule (𝓞 K) V}
       intro x hx
       have := smul_anti 𝔭 (locF 𝔭 A₀) hk1 (hD x hx)
       rwa [pow_one] at this
-    obtain ⟨X, hX, hXg⟩ := exists_equiv_of_mem_endL hA₀ h𝔭 hD1
+    obtain ⟨X, hX, hXg⟩ := exists_equiv_of_mem_endL hA₀.toIsLattice h𝔭 hD1
     refine ⟨X, mem_nSub.2 ⟨hXg, fun x hx => ?_⟩, ?_⟩
     · rw [hX, add_sub_cancel_left]
       exact hD x hx
@@ -128,14 +128,14 @@ theorem relIndex_nSub_eq {A₀ B₀ : Submodule (𝓞 K) V}
       exact h'
 
 theorem relIndex_endL (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) {A₀ B₀ : Submodule (𝓞 K) V}
-    (hA₀ : Submodule.IsLattice K A₀) (hB₀ : Submodule.IsLattice K B₀) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {k c : ℕ}
+    (hA₀ : Submodule.IsFullLattice K A₀) (hB₀ : Submodule.IsFullLattice K B₀) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) {k c : ℕ}
     (hle : endL (locF 𝔭 B₀) (extP K 𝔭 ^ (k + c) • locF 𝔭 B₀) ≤
       endL (locF 𝔭 A₀) (extP K 𝔭 ^ k • locF 𝔭 A₀)) :
     (endL (locF 𝔭 B₀) (extP K 𝔭 ^ (k + c) • locF 𝔭 B₀)).relIndex
         (endL (locF 𝔭 A₀) (extP K 𝔭 ^ k • locF 𝔭 A₀)) =
       Ideal.absNorm 𝔭 ^ (2 * finrank K V ^ 2 * c) := by
   classical
-  obtain ⟨a, b, e, c0, hc0, he, hA, hB, hbe⟩ := exists_smith hA₀ hB₀ h𝔭
+  obtain ⟨a, b, e, c0, hc0, he, hA, hB, hbe⟩ := exists_smith hA₀.toIsLattice hB₀.toIsLattice h𝔭
   have hinj := IsFractionRing.injective (𝓞 K) K
   set eK : Fin (finrank K V) → K := fun i => algebraMap (𝓞 K) K (e i) with heKdef
   set c0K : K := algebraMap (𝓞 K) K c0 with hc0Kdef
@@ -209,7 +209,7 @@ theorem relIndex_endL (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF :
   simpa [Fintype.card_fin] using Nat.eq_of_mul_eq_mul_right (Nat.pos_of_ne_zero hP) hmat
 
 theorem relIndex_nSub (hK : Formalism.HermitianLatticesTheory.IsCMUnram K) (hF : IsFixF K F) {A₀ B₀ : Submodule (𝓞 K) V}
-    (hA₀ : Submodule.IsLattice K A₀) (hB₀ : Submodule.IsLattice K B₀) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) :
+    (hA₀ : Submodule.IsFullLattice K A₀) (hB₀ : Submodule.IsFullLattice K B₀) {𝔭 : Ideal (𝓞 F)} (h𝔭 : 𝔭.IsMaximal) :
     ∃ c₀ : ℕ, ∀ c ≥ c₀, ∃ k₀ : ℕ, ∀ k ≥ k₀, nSub (locF 𝔭 B₀) 𝔭 (k + c) ≤ nSub (locF 𝔭 A₀) 𝔭 k ∧
       (nSub (locF 𝔭 B₀) 𝔭 (k + c)).relIndex (nSub (locF 𝔭 A₀) 𝔭 k) =
         Ideal.absNorm 𝔭 ^ (2 * finrank K V ^ 2 * c) := by

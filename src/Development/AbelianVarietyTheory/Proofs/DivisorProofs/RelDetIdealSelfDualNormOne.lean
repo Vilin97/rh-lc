@@ -23,7 +23,7 @@ theorem star_eq_conj (D : D7) (x : D.host.E) :
 theorem isSdLat_of_isSDLat {E : Type} [Field E] [NumberField E] [StarRing E] {n : ℕ}
     (L : Submodule (𝓞 E) (Fin n → E)) (hL : IsSDLat E n L) : Formalism.L2.Col.IsSdLat (E := E) L := by
   obtain ⟨hfg, hsp, hd⟩ := hL
-  refine ⟨⟨hfg, hsp⟩, ?_⟩
+  refine ⟨Submodule.IsLattice.of_fg E hfg, ?_⟩
   ext y
   rw [hd y]
   simp only [Formalism.HermitianLatticesTheory.dual, Formalism.E.hdual, Submodule.mem_iInf, Submodule.mem_comap,

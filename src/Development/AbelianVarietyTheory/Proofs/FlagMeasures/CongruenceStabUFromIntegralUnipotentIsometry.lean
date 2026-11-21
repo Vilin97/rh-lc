@@ -191,6 +191,8 @@ theorem exists_isom (v : ι → S.V) (Γ A : Matrix ι ι E) (hΓ : ∀ p q, Γ 
     intro s t
     rw [hT_comb_left]
     congr 1
+    funext p
+    simp only [Matrix.mulVec, dotProduct, map_sum, map_smul, smul_eq_mul]
     exact Finset.sum_congr rfl fun q _ => by rw [hΓ, mul_comm]
   have hiso : ∀ x y, S.hT (f x) (f y) = S.hT x y := by
     intro x y

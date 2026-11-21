@@ -250,7 +250,7 @@ theorem coboundary_of_locTriv : GlobalTheory.Mem.LiteralAutomorphy.LitCoh → �
 
   have htriv : ∀ g (φ : TDual (ZMod (l ^ n)) (Red c n)), twDual μ (rho c n μ) g φ = φ := by
     intro g φ
-    ext m
+    refine DFunLike.ext _ _ fun m => ?_
     have hφ : ∀ (a : ZMod (l ^ n)) (m : Red c n), φ (a • m) = a * φ m := fun a m =>
       LinearMap.map_smul (φ : Module.Dual (ZMod (l ^ n)) (Red c n)) a m
     rw [twDual_apply]

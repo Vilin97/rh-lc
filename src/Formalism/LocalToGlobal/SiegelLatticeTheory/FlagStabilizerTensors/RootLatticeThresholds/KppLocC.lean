@@ -143,11 +143,11 @@ theorem sum_eq (ob : Bool) {N N' : Matrix (Fin D.R.r) (Fin D.R.r) (ZMod p)}
     · have q1 : N (xI hr a) (xI hr ⟨a.1 + 1, h⟩) = entN N a.1 (a.1 + 1) := entN_eq N _ _ rfl rfl
       have q2 : N' (yI hr (rv ⟨a.1 + 1, h⟩)) (yI hr (rv a)) =
           entN N' (D.R.rS + D.R.k + 1 + (D.R.rS - 2 - a.1)) (D.R.rS + D.R.k + 1 + (D.R.rS - 1 - a.1)) :=
-        entN_eq N' _ _ (by simp; omega) (by simp)
+        entN_eq N' _ _ (by dsimp [yI, wI, rv]; omega) (by rfl)
       rw [q1, q2]
     · have q1 : N (xI hr a) (zI hr) = entN N a.1 (D.R.rS + D.R.k) := entN_eq N _ _ rfl rfl
       have q2 : N' (zI hr) (yI hr (rv a)) = entN N' (D.R.rS + D.R.k) (D.R.rS + D.R.k + 1) :=
-        entN_eq N' _ _ rfl (by simp; omega)
+        entN_eq N' _ _ rfl (by dsimp [yI, wI, rv]; omega)
       rw [q1, q2]; ring
   have e2 : ∑ i : Fin D.R.k, ((if h : i.1 + 1 < D.R.k then (if ob then N (wI hr i) (wI hr ⟨i.1 + 1, h⟩) else 0) else 0) +
         (if h : i.1 + 1 < D.R.k then (if ob then 0 else N' (wI hr (rv ⟨i.1 + 1, h⟩)) (wI hr (rv i))) else 0)) =
@@ -157,11 +157,11 @@ theorem sum_eq (ob : Bool) {N N' : Matrix (Fin D.R.r) (Fin D.R.r) (ZMod p)}
     refine Finset.sum_congr rfl fun i _ => ?_
     split_ifs with h hob
     · have q1 : N (wI hr i) (wI hr ⟨i.1 + 1, h⟩) = entN N (D.R.rS + i.1) (D.R.rS + i.1 + 1) :=
-        entN_eq N _ _ rfl (by simp; omega)
+        entN_eq N _ _ rfl (by dsimp [yI, wI, rv]; omega)
       rw [q1, add_zero]
     · have q1 : N' (wI hr (rv ⟨i.1 + 1, h⟩)) (wI hr (rv i)) =
           entN N' (D.R.rS + (D.R.k - 2 - i.1)) (D.R.rS + (D.R.k - 1 - i.1)) :=
-        entN_eq N' _ _ (by simp; omega) (by simp)
+        entN_eq N' _ _ (by dsimp [yI, wI, rv]; omega) (by rfl)
       rw [q1, zero_add]
     · simp
   rw [← e1, ← e2, Finset.sum_add_distrib, Finset.sum_add_distrib]

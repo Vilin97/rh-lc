@@ -21,6 +21,8 @@ noncomputable section
 
 namespace CyclotomicLayer
 
+local notation "ℚ̄" => AlgebraicClosure ℚ
+
 section TotallyReal
 
 end TotallyReal

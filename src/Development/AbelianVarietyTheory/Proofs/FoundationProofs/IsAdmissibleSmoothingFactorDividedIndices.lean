@@ -58,6 +58,8 @@ theorem siegel_distribution : ∀ (Ω : Type) [Field Ω] [Algebra ℚ Ω] [IsAlg
   rw [Finset.prod_congr rfl h1, ← map_prod]
   show ((∏ a ∈ Finset.range m, ∏ b ∈ Finset.range m, sgC c ![(x 0 + a) / m, (x 1 + b) / m] : ℂ → ℂ) : Mero) = _
   congr 1
-  exact GlobalTheory.SiegDist.sg_distribution c m x _ hA hm hcm
+  funext z
+  simpa only [Finset.prod_apply, sgC] using
+    GlobalTheory.SiegDist.sg_distribution c m x (UpperHalfPlane.ofComplex z) hA hm hcm
 
 end GlobalTheory.KZDist

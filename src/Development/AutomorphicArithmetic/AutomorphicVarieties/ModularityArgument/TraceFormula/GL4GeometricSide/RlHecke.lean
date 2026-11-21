@@ -175,13 +175,45 @@ variable {E : Type} [Field E] [NumberField E] [IsCMField E] {n : ℕ}
 
 private theorem thetaF_eq (g : GL (Fin n) (Af E)) : thetaF E n g = thetaR (GlobalTheory.ThetaPull.cFin E) n g := by
   unfold thetaF finOf
-  rw [PositivityTheory.Rg.BcB.thetaA, GlobalTheory.CompanionTheory.TwY.ThInv.map_thetaR _ _ _ GlobalTheory.ThetaPull.pFin_conjAd, pFin_finGL]
+  change GeneralLinearGroup.map (pFin E) (thetaR (conjAd E) n (finGL E n g)) = _
+  have hm : ∀ (x : GL (Fin n) (Ad E)),
+      GeneralLinearGroup.map (pFin E) (thetaR (conjAd E) n x) =
+        thetaR (GlobalTheory.ThetaPull.cFin E) n (GeneralLinearGroup.map (pFin E) x) := by
+    intro x
+    apply Units.ext
+    apply Matrix.ext
+    intro i j
+    change pFin E (conjAd E ((x⁻¹ : GL (Fin n) (Ad E)).val j i)) =
+      GlobalTheory.ThetaPull.cFin E (((GeneralLinearGroup.map (pFin E) x)⁻¹ : GL (Fin n) (Af E)).val j i)
+    rw [← map_inv]
+    exact GlobalTheory.ThetaPull.pFin_conjAd _
+  rw [hm, pFin_finGL]
 
 private theorem thetaF_thetaF (g : GL (Fin n) (Af E)) : thetaF E n (thetaF E n g) = g := by
-  have h := GlobalTheory.CompanionTheory.OnlyStab.thetaA_invol (finGL E n g)
-  rw [GlobalTheory.CompanionTheory.TwY.ThInv.thetaA_finGL, GlobalTheory.CompanionTheory.TwY.ThInv.thetaA_finGL] at h
+  have hfin (k : GL (Fin n) (Af E)) : thetaA E n (finGL E n k) = finGL E n (thetaF E n k) := by
+    apply ga_ext
+    · change GeneralLinearGroup.map (pInf E) (thetaR (conjAd E) n (finGL E n k)) = _
+      rw [pInf_finGL]
+      apply Units.ext
+      apply Matrix.ext
+      intro i j
+      change pInf E (conjAd E (((finGL E n k)⁻¹ : GL (Fin n) (Ad E)).val j i)) = _
+      rw [GlobalTheory.ThetaPull.pInf_conjAd]
+      change (starRingEnd (Cinf E)) (((GeneralLinearGroup.map (pInf E) (finGL E n k⁻¹)).val j i)) = _
+      rw [pInf_finGL]
+      classical
+      simp [Matrix.one_apply, eq_comm]
+    · rw [pFin_finGL]
+      rfl
+  have h : finGL E n (thetaF E n (thetaF E n g)) = finGL E n g := by
+    calc
+      finGL E n (thetaF E n (thetaF E n g)) = thetaA E n (finGL E n (thetaF E n g)) :=
+        (hfin _).symm
+      _ = thetaA E n (thetaA E n (finGL E n g)) :=
+        congrArg (thetaA E n) (hfin g).symm
+      _ = finGL E n g := GlobalTheory.CompanionTheory.OnlyStab.thetaA_invol _
   have h2 := congrArg (GeneralLinearGroup.map (pFin E)) h
-  rwa [pFin_finGL, pFin_finGL] at h2
+  simpa only [pFin_finGL] using h2
 
 private theorem continuous_thetaF : Continuous (thetaF E n) := by
   rw [funext (thetaF_eq (E := E) (n := n))]
@@ -268,7 +300,22 @@ theorem rlHecke :
       (tsupport h.1) h.2.1]
     · refine integral_congr_ae (Filter.Eventually.of_forall fun g => ?_)
       simp only []
-      rw [D.hΘ, map_mul, GlobalTheory.CompanionTheory.TwY.ThInv.thetaA_finGL]
+      have hfin : thetaA E n (finGL E n g) = finGL E n (thetaF E n g) := by
+        apply ga_ext
+        · change GeneralLinearGroup.map (pInf E) (thetaR (conjAd E) n (finGL E n g)) = _
+          rw [pInf_finGL]
+          apply Units.ext
+          apply Matrix.ext
+          intro i j
+          change pInf E (conjAd E (((finGL E n g)⁻¹ : GL (Fin n) (Ad E)).val j i)) = _
+          rw [GlobalTheory.ThetaPull.pInf_conjAd]
+          change (starRingEnd (Cinf E)) (((GeneralLinearGroup.map (pInf E) (finGL E n g⁻¹)).val j i)) = _
+          rw [pInf_finGL]
+          classical
+          simp [Matrix.one_apply, eq_comm]
+        · rw [pFin_finGL]
+          rfl
+      rw [D.hΘ, map_mul, hfin]
       rfl
     · intro g hg
       simp [image_eq_zero_of_notMem_tsupport hg]

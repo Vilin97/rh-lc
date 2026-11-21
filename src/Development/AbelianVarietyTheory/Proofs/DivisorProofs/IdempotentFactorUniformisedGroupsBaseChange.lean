@@ -31,7 +31,7 @@ def ringActPull {S S' : Scheme.{0}} (f : S' ⟶ S) {G : Over S} [GrpObj G] [IsCo
   map_one := by rw [o.map_one, CategoryTheory.Functor.map_id]
   map_mul a b := by rw [o.map_mul, CategoryTheory.Functor.map_comp]
   map_add a b := by
-    rw [o.map_add (f := _)]
+    rw [o.map_add a b]
     exact CategoryTheory.Functor.map_mul (Over.pullback f) (o.act a) (o.act b)
 
 
@@ -60,7 +60,7 @@ theorem polAct_pull : ∀ (S S' : Scheme.{0}) (f : S' ⟶ S) (P : Out.PolAV S) (
   · rw [← Category.id_comp (act 1), pa, o.map_one, Category.comp_id]
   · rw [← Category.id_comp (act (a * b)), pa, pa, ← Category.id_comp (act b), pa, o.map_mul, Category.assoc]
   · refine Eq.trans ?_ (pm (act a) (act b)).symm
-    rw [← Category.id_comp (act (a + b)), ← Category.id_comp (act a), ← Category.id_comp (act b), pa, pa, pa, o.map_add (f := _)]
+    rw [← Category.id_comp (act (a + b)), ← Category.id_comp (act a), ← Category.id_comp (act b), pa, pa, pa, o.map_add a b]
     exact MonObj.comp_mul _ _ _
   · obtain ⟨U, hU, t, ht⟩ := o.rosati a (f s)
     let V : (P'.A ⊗ P'.A).left.Opens := (P'.A ⊗ P'.A).hom ⁻¹ᵁ (f ⁻¹ᵁ U)
@@ -92,9 +92,7 @@ theorem degAct_pull : GlobalFnsSt → ∀ (R R' : Type) [CommRing R] [IsDomain R
     hD.xe.apply_symm_apply _
   have he : ∀ a, o'.act a ≫ hD.e.hom = hD.e.hom ≫ (Over.pullback (specOf φ)).map (ιD.onB.act a) := fun a => by
     refine Over.OverMorphism.ext (pullback.hom_ext ?_ ?_)
-    · have := ho' a
-      simp only [Over.comp_left, Category.assoc, Over.pullback_map_left] at this ⊢
-      exact this
+    · simpa only [Over.comp_left, Category.assoc, GlobalTheory.PullLinear.map_left_fst] using ho' a
     · exact (Over.w (o'.act a ≫ hD.e.hom)).trans
         (Over.w (hD.e.hom ≫ (Over.pullback (specOf φ)).map (ιD.onB.act a))).symm
   refine ⟨inst, ⟨o', fun a y => ?_, fun a => ?_⟩, hs, he⟩

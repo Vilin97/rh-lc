@@ -20,8 +20,10 @@ open CategoryTheory GlobalTheory.EtC
 
 namespace CrystallineSemistableComparison.E
 
-theorem inGen : InGen := fun q _ i =>
-  let t := GlobalTheory.EtC.twist_sections q i; ⟨t.2.1, t.2.2.1, t.2.2.2.2.1⟩
+theorem inGen : InGen := by
+  intro q _ i
+  let t := GlobalTheory.EtC.twist_sections q i
+  exact ⟨t.2.1, t.2.2.1, t.2.2.2.2.1⟩
 
 theorem inSch : InSch := GlobalTheory.EtC.sch_cls_cocycle_sec
 

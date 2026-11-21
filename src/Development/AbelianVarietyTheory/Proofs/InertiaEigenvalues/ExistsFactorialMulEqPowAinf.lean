@@ -20,7 +20,8 @@ theorem exists_factorial_mul_eq_pow (l : ℕ) [Fact l.Prime] (n : ℕ) :
   have hk : k ≤ n := by
     have h1 : k ≤ padicValNat l n.factorial :=
       ((by simpa only [_root_.Nat.padicValNat_def] using @_root_.multiplicity_dvd_iff_le : ∀ {p : _root_.Nat} [hp : _root_.Fact (_root_.Nat.Prime p)] {a n : _root_.Nat} (ha : a ≠ 0), p ^ n ∣ a ↔ n ≤ _root_.padicValNat p a) (Nat.factorial_ne_zero n)).1 ⟨m, h⟩
-    have h2 := sub_one_mul_padicValNat_factorial (p := l) n
+    have h2 : (l - 1) * padicValNat l n.factorial = n - (l.digits n).sum := by
+      simpa only [Nat.padicValNat_def] using hp.sub_one_mul_multiplicity_factorial (n := n)
     have h3 : 1 ≤ l - 1 := by have := hp.two_le; omega
     have h4 : padicValNat l n.factorial ≤ (l - 1) * padicValNat l n.factorial :=
       Nat.le_mul_of_pos_left _ h3

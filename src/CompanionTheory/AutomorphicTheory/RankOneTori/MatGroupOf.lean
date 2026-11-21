@@ -148,7 +148,8 @@ theorem root_haar (hk : 1 ≤ k) (L : LocBessel k r) (hc : L.c ≠ 0) {γ : Poin
     refine ⟨by rw [Measure.smul_apply, hroot.1, smul_zero], ?_⟩
     show (t • μR).map (rootCoords (k0 + 1) r L.z γ) =
       ENNReal.ofReal ((‖cStd‖ / (2 * Real.pi)) ^ (rootPat γ).card) • volume
-    rw [Measure.map_smul, hroot.2, smul_smul, ht, ← ENNReal.ofReal_mul (by positivity), ← mul_pow,
+    rw [Measure.map_smul _ (Formalism.MainNotions.BigCellDensity.meas_rootCoords L.z γ).aemeasurable,
+      hroot.2, smul_smul, ht, ← ENNReal.ofReal_mul (by positivity), ← mul_pow,
       Formalism.MainNotions.BigCellDensity.ucStd]
     congr 3
     field_simp

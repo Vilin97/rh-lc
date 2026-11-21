@@ -16,60 +16,57 @@ section SlopeTestRemainingChoices
 
 variable {E : Type} [Field E] [NumberField E] {n : ℕ}
 
-private theorem wl_nice_zero : Nice (0 : GA E n → ℂ) := {
-  cont := continuous_zero,
-  bdd := ⟨0, fun g => by simp⟩,
-  left := fun _ _ => rfl,
-  cusp := fun _ _ _ g => constantTerm_zero g,
+private theorem wl_nice_zero : Nice (0 : GA E n → ℂ) where
+  cont := continuous_zero
+  bdd := ⟨0, fun g => by simp⟩
+  left := fun _ _ => rfl
+  cusp := fun _ _ _ g => constantTerm_zero g
   level := ⟨⊤, fun _ _ _ => rfl⟩
-}
 
-private theorem wl_nice_add {f f' : GA E n → ℂ} (h : Nice f) (h' : Nice f') : Nice (f + f') := {
-  cont := h.cont.add h'.cont,
+private theorem wl_nice_add {f f' : GA E n → ℂ} (h : Nice f) (h' : Nice f') : Nice (f + f') where
+  cont := h.cont.add h'.cont
   bdd := by
     obtain ⟨C, hC⟩ := h.bdd
     obtain ⟨C', hC'⟩ := h'.bdd
-    exact ⟨C + C', fun g => (norm_add_le _ _).trans (add_le_add (hC g) (hC' g))⟩,
-  left := IsLeftInvariant.add h.left h'.left,
+    exact ⟨C + C', fun g => (norm_add_le _ _).trans (add_le_add (hC g) (hC' g))⟩
+  left := IsLeftInvariant.add h.left h'.left
   cusp := fun r a b g => by
     have e := constantTerm_add (r := r) h.cont h'.cont g
     rw [h.cusp r a b g, h'.cusp r a b g, add_zero] at e
-    exact e,
+    exact e
   level := by
     obtain ⟨V, hV⟩ := h.level
     obtain ⟨V', hV'⟩ := h'.level
     refine ⟨V ⊓ V', fun g v hv => ?_⟩
     rw [OpenSubgroup.mem_inf] at hv
     rw [Pi.add_apply, Pi.add_apply, hV g v hv.1, hV' g v hv.2]
-}
 
-private theorem wl_nice_smul {f : GA E n → ℂ} (h : Nice f) (z : ℂ) : Nice (z • f) := {
-  cont := h.cont.const_smul z,
+private theorem wl_nice_smul {f : GA E n → ℂ} (h : Nice f) (z : ℂ) : Nice (z • f) where
+  cont := h.cont.const_smul z
   bdd := by
     obtain ⟨C, hC⟩ := h.bdd
     refine ⟨‖z‖ * C, fun g => ?_⟩
     rw [Pi.smul_apply, norm_smul]
-    exact mul_le_mul_of_nonneg_left (hC g) (norm_nonneg _),
-  left := IsLeftInvariant.smul z h.left,
+    exact mul_le_mul_of_nonneg_left (hC g) (norm_nonneg _)
+  left := IsLeftInvariant.smul z h.left
   cusp := fun r a b g => by
     have e := constantTerm_smul (r := r) z f g
     rw [h.cusp r a b g, smul_zero] at e
-    exact e,
+    exact e
   level := by
     obtain ⟨V, hV⟩ := h.level
     exact ⟨V, fun g v hv => by rw [Pi.smul_apply, Pi.smul_apply, hV g v hv]⟩
-}
 
 private theorem wl_nice_tr {f : GA E n → ℂ} (h : Nice f) (x : GL (Fin n) (Af E)) :
-    Nice (fun g => f (g * finGL E n x)) := {
-  cont := h.cont.comp (continuous_id.mul continuous_const),
-  bdd := h.bdd.imp fun _ hC _ => hC _,
+    Nice (fun g => f (g * finGL E n x)) where
+  cont := h.cont.comp (continuous_id.mul continuous_const)
+  bdd := h.bdd.imp fun _ hC _ => hC _
   left := fun γ g => by
     have e := h.left γ (g * finGL E n x)
     rw [← mul_assoc] at e
-    exact e,
+    exact e
   cusp := fun r a b g =>
-    (constantTerm_rightTranslate (r := r) f (finGL E n x) g).trans (h.cusp r a b _),
+    (constantTerm_rightTranslate (r := r) f (finGL E n x) g).trans (h.cusp r a b _)
   level := by
     obtain ⟨V, hV⟩ := h.level
     refine ⟨V.comap (MulAut.conj x⁻¹).toMonoidHom ?_, fun g v hv => ?_⟩
@@ -80,7 +77,6 @@ private theorem wl_nice_tr {f : GA E n → ℂ} (h : Nice f) (x : GL (Fin n) (Af
       rw [inv_inv, mul_assoc g, ← map_mul, ← mul_assoc, ← mul_assoc, mul_inv_cancel, one_mul, map_mul,
         ← mul_assoc] at e
       exact e
-}
 
 private theorem wl_add {f f' : GA E n → ℂ} (h : Continuous f) (h' : Continuous f') :
     whittaker (f + f') = whittaker f + whittaker f' := by

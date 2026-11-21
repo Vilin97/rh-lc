@@ -103,7 +103,7 @@ theorem exists_lift {k : ℕ} (M : ↥Gw →* Matrix (Fin k) (Fin k) O) (hM : �
     refine ⟨⟨?_, fun g h => ?_⟩, m ⊗ₜ 1, fun g => ?_⟩
     · refine continuous_pi fun a => ?_
       change Continuous fun g => (∑ j, ((B.eO (M (B.e.symm g) a j) : Br.Ow B) : Br.LLw B) * m j) - m a
-      refine Continuous.sub (continuous_finset_sum _ fun j _ => Continuous.mul ?_ continuous_const)
+      refine Continuous.sub (continuous_finsetSum _ fun j _ => Continuous.mul ?_ continuous_const)
         continuous_const
       exact continuous_subtype_val.comp (B.eO_cont.comp ((hM a j).comp B.e_symm_cont))
     · simp [cob]

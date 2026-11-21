@@ -56,12 +56,16 @@ theorem cA_mul_mem_latV_smul : ∀ (D : D7) (k : Type) [Field k] [ValuativeRel k
       rw [Algebra.TensorProduct.tmul_mul_tmul, one_mul, one_mul, one_mul, Pi.smul_apply, Algebra.smul_def]
     | zero =>
       convert zero_mem (latV S (𝔪 • L) (· = p.v)) using 1
+      funext i
+      simp
     | add y y' _ _ h h' =>
       convert add_mem h h' using 1
       funext i
       simp [mul_add]
     | neg y _ h =>
       convert neg_mem h using 1
+      funext i
+      simp
   have key : (fun i => cA D p.e * z i) =
       fun i => cA D p.e * incA D ((m : D.host.E)⁻¹) * (incA D (m : D.host.E) * z i) := by
     funext i

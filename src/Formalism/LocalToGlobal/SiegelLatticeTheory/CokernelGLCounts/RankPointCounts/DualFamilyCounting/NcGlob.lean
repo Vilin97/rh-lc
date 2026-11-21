@@ -119,6 +119,8 @@ theorem normalizing_arithmetic_holds : NcArith := by
     have hi2 : 2 ≤ i := by simp only [Finset.mem_Icc] at hi; omega
     have h1 := hasProd_inv₀' (hEul i hi2) (hLpos i hi2).ne'
     convert h1 using 1
+    funext v
+    simp [fac]
 
   set PT : ℝ := ∏' 𝔭 : {𝔭 : Ideal (𝓞 D.host.F) // 𝔭.IsMaximal},
       (if (((D.mem u).A.T : ℕ) : 𝓞 D.host.F) ∈ 𝔭.1 then
@@ -126,7 +128,9 @@ theorem normalizing_arithmetic_holds : NcArith := by
     with hPT
   have hTHP : HasProd (tf X D.R.k (Tw u)) PT := by
     convert hTfac using 1
-    by_cases hv : (((D.mem u).A.T : ℕ) : 𝓞 X.B.I.F) ∈ v.asIdeal <;> simp [hv]
+    funext v
+    by_cases hv : (((D.mem u).A.T : ℕ) : 𝓞 X.B.I.F) ∈ v.asIdeal <;>
+      simp [tf, fac, Tw, hv]
   have hT0 : (Tw u) ≠ 0 := (D.mem u).A.T_prime.ne_zero
   have hT0' : (Tw u') ≠ 0 := (D.mem u').A.T_prime.ne_zero
   have hSf := finite_dvd X (Tw u) hT0

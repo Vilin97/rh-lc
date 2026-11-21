@@ -20,7 +20,8 @@ noncomputable section
 set_option synthInstance.maxHeartbeats 200000
 set_option maxHeartbeats 1000000
 
-open Formalism.MainNotions.StandardLattice
+
+open Formalism.MainNotions.StandardLattice (intAf)
 
 namespace GlobalTheory.Core.Mi.LineSD
 

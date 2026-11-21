@@ -172,23 +172,17 @@ theorem archSmooth_mk_smul (c : ℂ) (hφ : IsArchSmooth φ) :
   Subtype.ext rfl
 
 theorem IsAutomorphicForm.add (hφ : IsAutomorphicForm φ) (hψ : IsAutomorphicForm ψ) :
-    IsAutomorphicForm (φ + ψ) where
-  isLeftInvariant := hφ.isLeftInvariant.add hψ.isLeftInvariant
-  isSmooth := hφ.isSmooth.add hψ.isSmooth
-  isKFinite := hφ.isKFinite.add hψ.isKFinite
-  isZFinite := by
-    have := hφ.isZFinite.add hψ.isZFinite
-    rwa [← archSmooth_mk_add] at this
-  hasModerateGrowth := hφ.hasModerateGrowth.add hψ.hasModerateGrowth
+    IsAutomorphicForm (φ + ψ) := by
+  refine ⟨hφ.isLeftInvariant.add hψ.isLeftInvariant, hφ.isSmooth.add hψ.isSmooth,
+    hφ.isKFinite.add hψ.isKFinite, ?_, hφ.hasModerateGrowth.add hψ.hasModerateGrowth⟩
+  have h := hφ.isZFinite.add hψ.isZFinite
+  rwa [← archSmooth_mk_add hφ.isSmooth.1 hψ.isSmooth.1] at h
 
-theorem IsAutomorphicForm.smul (c : ℂ) (hφ : IsAutomorphicForm φ) : IsAutomorphicForm (c • φ) where
-  isLeftInvariant := hφ.isLeftInvariant.smul c
-  isSmooth := hφ.isSmooth.smul c
-  isKFinite := hφ.isKFinite.smul c
-  isZFinite := by
-    have := hφ.isZFinite.smul c
-    rwa [← archSmooth_mk_smul] at this
-  hasModerateGrowth := hφ.hasModerateGrowth.smul c
+theorem IsAutomorphicForm.smul (c : ℂ) (hφ : IsAutomorphicForm φ) : IsAutomorphicForm (c • φ) := by
+  refine ⟨hφ.isLeftInvariant.smul c, hφ.isSmooth.smul c, hφ.isKFinite.smul c, ?_,
+    hφ.hasModerateGrowth.smul c⟩
+  have h := hφ.isZFinite.smul c
+  rwa [← archSmooth_mk_smul c hφ.isSmooth.1] at h
 
 theorem isAutomorphicForm_zero : IsAutomorphicForm (0 : AdelicGLn.AdelicGL K n → ℂ) :=
   ⟨isLeftInvariant_zero, isSmooth_zero, isKFinite_zero, isZFinite_zero, hasModerateGrowth_zero⟩

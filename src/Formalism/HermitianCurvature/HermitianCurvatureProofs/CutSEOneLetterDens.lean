@@ -242,7 +242,7 @@ theorem ivlet_plus_1 (X : ActualOps k r z z' π π') (L : R.LevelData (Pr (RadSp
     act (ivlet (site L l) le) u (Function.update y le.intersection_update_fsHerm_neg_one 1) =
       X.op l 4 (u y) + (le.pt + 1) • u (Function.update y le.intersection_update_fsHerm_neg_one 1) - X.op l 3 (u (Function.update y le.intersection_update_fsHerm_neg_one 1)) := by
   simp [ivlet, hp, action_inserted_letter_apply, upd_upd, upd_self y le.intersection_update_fsHerm_neg_one hy, Fin.sum_univ_two, site, hAL.1 l, hAL.2.2.1 l,
-    pfst_neg, pfst_zero, pfst_star_mkP, pfst_add, pfst_alg, sub_eq_add_neg, add_smul]
+    pfst_neg, pfst_zero, pfst_star_mkP, pfst_add, pfst_alg, pfst_one_apply, sub_eq_add_neg, add_smul]
   abel
 
 theorem vlet_plus_0 (X : ActualOps k r z z' π π') (L : R.LevelData (Pr (RadSp k r z z' π π')) r)
@@ -370,7 +370,7 @@ theorem hsSum_int (μ : Measure (Mt k r)) (hμ : B.IsHaarOn (Glev k r (Fin.last 
     (hx : ∀ b, x b ∈ lcSub k r z z' π π') (hy : ∀ b, y b ∈ lcSub k r z z' π π') (p : Fin r → ℂ) :
     Integrable (hsSum x y p) μ := by
   unfold hsSum
-  exact integrable_finset_sum _ fun b _ => int_lc μ hμ (hx b) (hy b) p
+  exact integrable_finsetSum _ fun b _ => int_lc μ hμ (hx b) (hy b) p
 
 theorem pairSum_eq (μ : Measure (Mt k r)) (hμ : B.IsHaarOn (Glev k r (Fin.last r)) μ) (x y : Ix S → RadSp k r z z' π π')
     (hx : ∀ b, x b ∈ lcSub k r z z' π π') (hy : ∀ b, y b ∈ lcSub k r z z' π π') (p : Fin r → ℂ) :

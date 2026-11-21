@@ -160,5 +160,7 @@ theorem haar_tuple_invariant : ∀ (F E : Type) [Field F] [NumberField F] [Field
       fun X i => lin (Fv F v) σ J g (X i) := rfl
   rw [isAddLeftInvariant_eq_smul μ (Measure.pi fun _ : Fin a => ν), Measure.map_smul, e1,
     hpi.map_eq]
+  rw [e1]
+  exact hpi.measurable.aemeasurable
 
 end GlobalTheory.LocalUnitaryHaar

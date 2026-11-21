@@ -115,6 +115,7 @@ theorem LeafRelLev_of : LeafRelLev := by
     rw [inj_nat]
   · intro σ
     exact ⟨(pbMapIso disc g (α.app (σ.obj 0)) (c' (σ.obj 0)) (c (σ.obj 0)) (hj _)).symm⟩
-  · exact ⟨disc.mapArrow.mapIso (pbMapIso ((evaluation _ _).obj n) (disc.map g) ((hocF J).map α) (aug c' hc') (aug c hc) h').symm⟩
+  · have e := (pbMapIso ((evaluation _ _).obj n) (disc.map g) ((hocF J).map α) (aug c' hc') (aug c hc) h').symm
+    exact ⟨disc.mapArrow.mapIso e⟩
 
 end LateralTheory.CohomologicalPurity.TubeCut

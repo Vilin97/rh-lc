@@ -96,10 +96,9 @@ private theorem isIntegral_mul_of_mem_adjoin_singleton {k : Type} [Field k] [Val
     {n : ℕ} (A x y : Matrix (Fin n) (Fin n) k)
     (hx : x ∈ Algebra.adjoin k {A}) (hy : y ∈ Algebra.adjoin k {A})
     (hxi : IsIntegral 𝒪[k] x) (hyi : IsIntegral 𝒪[k] y) : IsIntegral 𝒪[k] (x * y) := by
-  letI : CommRing (Algebra.adjoin k {A}) := Algebra.adjoinCommRingOfComm k (by
-    intro a ha b hb
-    rw [Set.mem_singleton_iff] at ha hb
-    rw [ha, hb])
+  letI : CommRing (Algebra.adjoin k {A}) := by
+    open scoped IsMulCommutative in
+      exact inferInstance
   let f : Algebra.adjoin k {A} →ₐ[𝒪[k]] Matrix (Fin n) (Fin n) k :=
     (Algebra.adjoin k {A}).val.restrictScalars 𝒪[k]
   have hinj : Function.Injective f := Subtype.val_injective

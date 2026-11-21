@@ -27,7 +27,7 @@ theorem nonempty_residue_equiv (p : Nat.Primes) [Fact (p : ℕ).Prime] :
     Ideal.IsPrime.isMaximal inferInstance
       (by rw [Ne, Ideal.span_singleton_eq_bot]; exact_mod_cast p.2.ne_zero)
   exact ⟨(Int.quotientSpanNatEquivZMod (p : ℕ)).symm.trans
-    (IsLocalization.AtPrime.equivQuotMaximalIdeal (Ideal.span {((p : ℕ) : ℤ)}) (ZP p))⟩
+    (IsLocalization.AtPrime.equivQuotMaximalIdeal (Ideal.span {((p : ℕ) : ℤ)}) (ZP p)).toRingEquiv⟩
 
 theorem map_extTo {R S : Type} [CommRing R] [CommRing S] (g : R →+* S) (Q : Ideal (MRing ι ℤ)) :
     (extTo R Q).map (MvPolynomial.map g) = extTo S Q := by
@@ -91,7 +91,7 @@ theorem extTo_comap (p : Nat.Primes) (W' : Ideal (MRing ι (ZP p))) :
     extTo (ZP p) (W'.comap (MvPolynomial.map (Int.castRingHom (ZP p)))) = W' := by
   haveI := ZpModel.isLocalization_consts ι p
   rw [ZpModel.extTo_eq, ← ZpModel.algebraMap_eq]
-  exact IsLocalization.map_comap (ZpModel.consts ι p) (MRing ι (ZP p)) W'
+  exact IsLocalization.map_under (ZpModel.consts ι p) (MRing ι (ZP p)) W'
 
 theorem bijOn_comap [Fintype K] [DecidableEq K] [∀ k, Fintype (ι k)] (p : Nat.Primes)
     (P : Ideal (MRing ι ℤ)) (f : MRing ι ℤ) :

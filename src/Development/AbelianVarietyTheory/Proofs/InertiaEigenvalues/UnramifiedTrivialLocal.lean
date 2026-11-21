@@ -120,7 +120,7 @@ theorem unrTriv : ∀ (l : ℕ) [Fact l.Prime] (P : LocPrime l) (AI : LocAinf l 
     obtain ⟨z, rfl⟩ := hx
     exact GlobalTheory.CrysExt.incl_mem_FilV (P.PD K) le_rfl z
   have e1 : finrank ↥LL.1 ↥(H0V A.ρ) = 1 := by rw [hH0, finrank_top]; exact Module.finrank_self _
-  have e2 : finrank ↥LL.1 ↥(DdR (P.PD K) A.ρ ⊓ FilV (P.PD K) (LL := ↥LL.1) (V := A.V) 0) = finrank ↥LL.1 ↥(DdR (P.PD K) A.ρ) := by rw [hFil]
+  rw [hFil] at hdim
   have h1' : finrank ↥LL.1 (FiniteCohomology (P.PD K) A.ρ) = 1 := by omega
   have h1 : finrank ↥LL.1 (FiniteCohomology (P.PD K) (1 : Representation ↥LL.1 ↥(GK K) ↥LL.1)) = 1 := h1'
   exact unrTriv_of_finrank AI T K LL h1

@@ -16,7 +16,7 @@ namespace GlobalTheory.CompanionTheory.BasePsi
 theorem exists_bound_inf {F : Type} [Field F] [NumberField F] (C : Set (Ainf F)) (hC : IsCompact C) :
     ∃ B : ℝ, 0 ≤ B ∧ ∀ y ∈ C, ∏ w : InfinitePlace F, ‖y w‖ ^ w.mult ≤ B := by
   have hc : Continuous fun y : Ainf F => ∏ w : InfinitePlace F, ‖y w‖ ^ w.mult :=
-    continuous_finset_prod _ fun w _ => ((continuous_apply w).norm).pow _
+    continuous_finsetProd _ fun w _ => ((continuous_apply w).norm).pow _
   obtain ⟨B, hB⟩ := (hC.image hc).bddAbove
   exact ⟨max B 0, le_max_right _ _, fun y hy => (hB ⟨y, hy, rfl⟩).trans (le_max_left _ _)⟩
 
@@ -69,7 +69,7 @@ theorem th_pure_vanish : ∀ (F : Type) [Field F] [NumberField F] (S : Finset (H
   by_contra hne
   obtain ⟨t, ht⟩ : ∃ t : Fˣ, PositivityTheory.Rg.Base1.pure S G g (fun v => rv v 0) (pr t * a) ≠ 0 := by
     by_contra hall
-    push_neg at hall
+    push Not at hall
     exact hne (by simp [th, hall])
   rw [pure_rv_zero_apply] at ht
   split_ifs at ht with hint

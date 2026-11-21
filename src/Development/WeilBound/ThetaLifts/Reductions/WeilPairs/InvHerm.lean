@@ -83,6 +83,8 @@ theorem exists_coord {B : Base F E} (hB : B.IsGood σ) {nS nT : ℕ} {JS : Matri
   congr 2
   funext x
   congr 1
+  ext i
+  simp
 
 end
 
@@ -115,7 +117,9 @@ theorem cont : ∀ (F E : Type) [Field F] [NumberField F] [Field E] [NumberField
     rw [inv_one]
     exact Matrix.transpose_one.symm) Φ hΦ
   show l (om (a h, 1) Φ) = _
-  rw [hl' _ h1, h2]
+  have hh := hl' _ h1
+  rw [h2] at hh
+  exact hh
 
 end PositivityTheory.ThKW.PhaseFourierInjectivity
 

@@ -59,14 +59,18 @@ theorem zl_wcb_injective : Function.Injective (algebraMap ℤ_[l] (WCb l)) := by
   · exact WittVector.p_nonzero l (Cb l) (eq_zero_of_pow_eq_zero h)
 
 theorem ol_rw_injective (LL : FinExt l) : Function.Injective (algebraMap ↥(OL LL) (RW LL)) :=
-  haveI := GlobalTheory.Cyc.FontW.free_OL LL
-  Algebra.TensorProduct.includeLeft_injective (S := ↥(OL LL)) zl_wcb_injective
+  by
+    haveI := GlobalTheory.Cyc.FontW.free_OL LL
+    set_option synthInstance.maxHeartbeats 200000 in
+      exact Algebra.TensorProduct.includeLeft_injective (S := ↥(OL LL)) zl_wcb_injective
 
 theorem fixed_RW (LL : FinExt l) (b : RW LL) (hb : φRW LL b = b) :
     ∃ x : ↥(OL LL), b = algebraMap ↥(OL LL) (RW LL) x :=
-  haveI := GlobalTheory.Cyc.FontW.free_OL LL
-  (GlobalTheory.Cyc.FontW.as_one (O := ↥(OL LL)) (frobW l) (GlobalTheory.ArtinSchreierWitt.main l).1
-    (GlobalTheory.ArtinSchreierWitt.main l).2.1).2 b hb
+  by
+    haveI := GlobalTheory.Cyc.FontW.free_OL LL
+    set_option synthInstance.maxHeartbeats 200000 in
+      exact (GlobalTheory.Cyc.FontW.as_one (O := ↥(OL LL)) (frobW l) (GlobalTheory.ArtinSchreierWitt.main l).1
+        (GlobalTheory.ArtinSchreierWitt.main l).2.1).2 b hb
 
 section Gen
 

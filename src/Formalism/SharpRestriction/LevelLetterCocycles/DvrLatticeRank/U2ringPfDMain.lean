@@ -213,9 +213,11 @@ theorem u2ringPfD_main [IsDomain O] [IsDiscreteValuationRing O] [CharZero O]
     ring
 
   let ρ : ℕ → PowerSeries O := fun k => nh * ∏ i ∈ Finset.range k, θY i
+  let mkI := fun x : O => Ideal.Quotient.mk (DualFramesAlt.eigenRingInvariants.Ia x)
   let cc : ℕ → O := fun k => Classical.choose (DualFramesAlt.eigenRingInvariants.ev_exists (hrootm k) (ρ k))
-  have hcc : ∀ k, (mkI (root k)) (ρ k) = (mkI (root k)) (PowerSeries.C (cc k)) := fun k =>
-    Classical.choose_spec (DualFramesAlt.eigenRingInvariants.ev_exists (hrootm k) (ρ k))
+  have hcc : ∀ k, (mkI (root k)) (ρ k) = (mkI (root k)) (PowerSeries.C (cc k)) := by
+    intro k
+    exact Classical.choose_spec (DualFramesAlt.eigenRingInvariants.ev_exists (hrootm k) (ρ k))
   have hmkΓ : ∀ k F, (mkI (root k)) (Γ F) = (mkI (root k)) F := by
     intro k F
     obtain ⟨c₀, hc₀⟩ := DualFramesAlt.eigenRingInvariants.ev_exists (hrootm k) F
@@ -328,7 +330,7 @@ theorem u2ringPfD_main [IsDomain O] [IsDiscreteValuationRing O] [CharZero O]
         have h3 := Ideal.sub_mem _ h1 h2
         rw [add_sub_cancel_right] at h3
         exact (IsLocalRing.maximalIdeal.isMaximal O).ne_top ((Ideal.eq_top_iff_one _).2 h3)
-      · simp only [θ, map_add (f := _), map_one, map_mul, map_prod, map_sub, DualFramesAlt.eigenRingInvariants.mk_X, hwj]
+      · simp only [mkI, θ, map_add (f := _), map_one, map_mul, map_prod, map_sub, DualFramesAlt.eigenRingInvariants.mk_X, hwj]
     have hcount : (Finset.range (NR + 1)).filter (fun k => cc k = 1) ⊆
         ((Finset.range e).image fun j => m * j + h') ∪ {NR} := by
       intro k hk

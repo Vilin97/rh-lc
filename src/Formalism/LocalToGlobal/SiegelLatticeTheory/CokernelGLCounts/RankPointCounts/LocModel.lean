@@ -559,7 +559,18 @@ theorem residueDegree_almost_all : FpDegCof := by
       simp only [Set.mem_ofPred_eq, Set.mem_iUnion, Finset.mem_range, exists_prop]
       exact ⟨fun h => ⟨_, by omega, rfl⟩, fun ⟨ℓ, h1, h2⟩ => by omega⟩
     rw [this]
-    exact Set.Finite.biUnion (Finset.finite_toSet _) fun ℓ _ => PI.UnitaryGroupMassFormula.CntFormula.resChar_finite D ℓ
+    refine Set.Finite.biUnion (Finset.finite_toSet _) fun ℓ _ => ?_
+    by_cases hℓ : ℓ = 0
+    · refine Set.finite_empty.subset fun p hp => ?_
+      exact ((D.s.atP p).ellPrime.out.ne_zero ((show Loc.resChar p = ℓ from hp).trans hℓ)).elim
+    · have hspan : Ideal.span {(ℓ : 𝓞 D.host.F)} ≠ ⊥ := by
+        rw [ne_eq, Ideal.span_singleton_eq_bot]
+        exact_mod_cast hℓ
+      refine (Ideal.finite_factors (by simpa only [Ideal.zero_eq_bot] using hspan)).subset fun p hp => ?_
+      change Loc.resChar p = ℓ at hp
+      change p.asIdeal ∣ Ideal.span {(ℓ : 𝓞 D.host.F)}
+      rw [Ideal.dvd_span_singleton, ← hp, ← Ideal.Quotient.eq_zero_iff_mem, map_natCast]
+      exact ringChar.Nat.cast_ringChar
   rw [Filter.eventually_cofinite]
   refine hfin.subset fun p hp => ?_
   simp only [Set.mem_ofPred_eq] at hp ⊢
@@ -852,7 +863,7 @@ theorem modBlocks_some {A B : Type} [CommRing B] (O : Subring B) (f : ℕ → �
   | [], _, _, _ => ⟨[], rfl, rfl, by simp⟩
   | (t, s) :: rest, a, hs, hu => by
     have h0 : 0 < s := hs (t, s) List.mem_cons_self
-    obtain ⟨hx, y, hy, hxy⟩ := hu a (t, s) List.mem_cons_self
+    obtain ⟨hx, y, hy, hxy⟩ : UnitIn O (f a s t) := hu a (t, s) List.mem_cons_self
     have hU : IsUnit (f a s t) := IsUnit.of_mul_eq_one _ hxy
     obtain ⟨l, hl, hls, hlu⟩ := modBlocks_some O f rest (a + s) (fun b hb => hs b (List.mem_cons_of_mem _ hb))
       (fun a' b hb => hu a' b (List.mem_cons_of_mem _ hb))
@@ -1074,7 +1085,31 @@ theorem good_cofinite (δ : ∀ p : PlF D, (D.s.atP p).Fp)
     by_cases h0 : t + ((k : ℕ) : D.host.E) = 0
     · exact Filter.Eventually.of_forall fun _ h => absurd h0 h
     · exact ((LM.iotaIntegral_almost_all D _).and (LM.iotaIntegral_almost_all D _)).mono fun _ hp _ => hp
-  filter_upwards [PI.UnitaryGroupMassFormula.CntFormula.local_models_split_cofinite D δ M hA, LM.differentUnit_almost_all D δ M hA, hU, hN]
+  have hsplit : ∀ᶠ p in Filter.cofinite, (M p).split = none := by
+    have hfin (i : Fin 2) : {p : PlF D | Loc.resChar p = D.host.g i}.Finite := by
+      have hspan : Ideal.span {(D.host.g i : 𝓞 D.host.F)} ≠ ⊥ := by
+        rw [ne_eq, Ideal.span_singleton_eq_bot]
+        exact_mod_cast (D.host.g_prime i).ne_zero
+      refine (Ideal.finite_factors (by simpa only [Ideal.zero_eq_bot] using hspan)).subset fun p hp => ?_
+      change Loc.resChar p = D.host.g i at hp
+      change p.asIdeal ∣ Ideal.span {(D.host.g i : 𝓞 D.host.F)}
+      rw [Ideal.dvd_span_singleton, ← hp, ← Ideal.Quotient.eq_zero_iff_mem, map_natCast]
+      exact ringChar.Nat.cast_ringChar
+    rw [Filter.eventually_cofinite]
+    refine ((hfin 0).union (hfin 1)).subset fun p hp => ?_
+    change (M p).split ≠ none at hp
+    have hAp := (hA p).2.2.2.2.2
+    have hsome : (D.s.atP p).split.isSome := by
+      cases hM : (M p).split with
+      | none => exact (hp hM).elim
+      | some g =>
+        cases hS : (D.s.atP p).split with
+        | none =>
+          rw [hM, hS] at hAp
+          exact hAp.elim
+        | some sg => rfl
+    simpa using (D.s_split p).1 hsome
+  filter_upwards [hsplit, LM.differentUnit_almost_all D δ M hA, hU, hN]
     with p h1 h2 h3 h4
   exact ⟨h1, h2, h3 _ (unitAt_mem₂ p), h4⟩
 
@@ -1259,7 +1294,7 @@ theorem bbsq_all {δ : ∀ p : PlF D, (D.s.atP p).Fp}
     {M : ∀ p : PlF D, Loc.Model (D.s.atP p).Fp (D.s.atP p).Ep} (hA : ∀ p, Agree δ M p) (T T' : ℕ)
     (w : Point D.host.E (D.R.rS + 1)) (p : PlF D) : BBsq M δ T T' p w := by
   unfold BBsq
-  apply summable_of_finite_support
+  apply summable_of_hasFiniteSupport
   rcases hm : modPt δ T T' p w with _ | a
   · refine Set.finite_empty.subset fun o ho => ho ?_
     simp [BBtop, hm]
@@ -1383,12 +1418,12 @@ theorem prod_bounds {x : ℝ} (hx0 : 0 ≤ x) (hx : x ≤ 1 / 2) {η : ℝ} (hη
           | (rw [← Real.exp_sum]; congr 1; simp [Finset.mul_sum])
           | simp [← Real.exp_sum, Finset.mul_sum]
       _ ≤ ∏ i ∈ Finset.Icc a b, (1 - η ^ i * x ^ i) := by
-          apply Finset.prod_le_prod
+          apply Finset.prod_le_prod₀
           · intro i _; exact (Real.exp_pos _).le
           · intro i hi
             exact (exp_neg_two_le (pow_nonneg hx0 i) (hxi i hi)).trans (hfac i).1
   · calc ∏ i ∈ Finset.Icc a b, (1 - η ^ i * x ^ i) ≤ ∏ i ∈ Finset.Icc a b, Real.exp (x ^ i) := by
-          apply Finset.prod_le_prod
+          apply Finset.prod_le_prod₀
           · intro i hi; linarith [(hfac i).1, hxi i hi]
           · intro i _
             exact (hfac i).2.trans (by linarith [Real.add_one_le_exp (x ^ i)])

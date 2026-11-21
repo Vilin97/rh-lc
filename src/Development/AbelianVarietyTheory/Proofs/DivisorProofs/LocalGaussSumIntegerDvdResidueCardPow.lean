@@ -119,7 +119,7 @@ theorem exists_int_gS {K : Type} [Field K] [NumberField K] (σ : K →+* ℂ) {�
         simp
       map_mul' := fun u w => by
         rw [nu_congr hϖ hc1 hc (b := uRep hϖ hc1 u * uRep hϖ hc1 w)
-          (by simp [val_rep_unit hϖ hc1]) (hmul u w)]
+          (by simp [map_mul, uRep, val_rep_unit hϖ hc1]) (hmul u w)]
         simp }
   have hΨ : ∀ d : Res k c, (∀ x, Ψ (d * x) = 1) → d = 0 := fun d hd => by
     have h3 := hcond (rep d / (ϖ : k) ^ c) fun a ha => by

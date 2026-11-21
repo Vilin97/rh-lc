@@ -39,7 +39,12 @@ theorem isGKSub_iSup_eigen : ∀ {D : D7} (θ : D.what₂.Tau → (Ainf D.host.F
     ∀ C : Finset (D.what₂.Tau × ℕ → ℂ), GlobalTheory.CuspGK.IsGKSub θ M (⨆ c ∈ C, Submodule.span ℂ
       {h | h ∈ GlobalTheory.CuspGK.gkGen θ M ψ ∧ ∀ i : D.what₂.Tau × ℕ, gelf θ V i.1 i.2 h = c i • h}) := by
   intro D θ V S M hθ ψ hψ C
-  have hG := GlobalTheory.CuspGK.isGKSub_gkGen θ M ψ
+  have hG : GlobalTheory.CuspGK.IsGKSub θ M (GlobalTheory.CuspGK.gkGen θ M ψ) := by
+    constructor
+    · intro τ g hg f hf
+      exact Submodule.mem_sInf.2 fun A hA => hA.2.k τ g hg f (Submodule.mem_sInf.1 hf A hA)
+    · intro τ X hX f hf
+      exact Submodule.mem_sInf.2 fun A hA => hA.2.lie τ X hX f (Submodule.mem_sInf.1 hf A hA)
   have hsm : ∀ f ∈ GlobalTheory.CuspGK.gkGen θ M ψ, f ∈ GlobalTheory.Mem.AutSpace.SmFun θ V := fun f hf =>
     (GlobalTheory.KTypeAdm.isAutFunSm_of_mem_gkGen θ M hθ hψ f hf).smooth
   set T : Set (GA D V → ℂ) := ⋃ c ∈ C,

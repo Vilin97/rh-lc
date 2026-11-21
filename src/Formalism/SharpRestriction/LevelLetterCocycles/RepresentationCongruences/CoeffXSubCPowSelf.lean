@@ -101,9 +101,11 @@ theorem EL_of_mem {u : LetA O n} (hu : u ∈ W.AΔ) :
   refine ⟨F, ?_⟩
   simp only [EL]
   congr 1
+  funext i
+  simp only [Pi.mul_apply]
   by_cases hi : i = a
   · subst hi
-    rw [hF]
+    simp only [hF, PhiBridge.cst]
   · unfold letE
     rw [Pi.single_eq_of_ne hi, zero_mul, zero_mul]
 

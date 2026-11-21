@@ -143,7 +143,7 @@ theorem exists_small_adele (F : Type) [Field F] [NumberField F] (S₁ : Finset (
   refine ⟨g, hg, hsub ⟨?_, ?_⟩⟩
   · apply hδN
     intro w
-    have e : ((1 - ε) * algebraMap F (AF F) g).1 w = (1 - fstA F ε w) * (g : w.Completion) := by
+    have e : ((1 - ε) * algebraMap F (AF F) g).1 w = (1 - fstA F ε w) * (algebraMap F (Ainf F) g) w := by
       change (fstA F ((1 - ε) * algebraMap F (AF F) g)) w = _
       rw [map_mul, map_sub, map_one, AlgHom.commutes]
       rfl
@@ -152,7 +152,7 @@ theorem exists_small_adele (F : Type) [Field F] [NumberField F] (S₁ : Finset (
     · rw [hε.1 w hw, sub_self, zero_mul, norm_zero]; exact hδ
     · rw [hε.2.1 w hw, sub_zero, one_mul]
       have := GroundTheory.Global.norm_algebraMap_apply (K := F) g w
-      exact (this.trans_lt (h1 w hw))
+      exact this.trans_lt (h1 w hw)
   · apply hmN
     intro v
     have e : evalV F v ((1 - ε) * algebraMap F (AF F) g).2 =

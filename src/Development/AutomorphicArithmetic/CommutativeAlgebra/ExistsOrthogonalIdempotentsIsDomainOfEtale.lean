@@ -86,8 +86,8 @@ private theorem core (T C : Type) [CommRing T] [IsDomain T] [IsIntegrallyClosed 
       · simp [Pi.single_eq_of_ne h]
     set_option synthInstance.maxHeartbeats 100000 in
       · rw [map_sum, map_one]
-      simp only [hc]
-      exact Finset.univ_sum_single 1
+        simp only [hc]
+        exact Finset.univ_sum_single 1
   refine ⟨c, hcoi, fun j => ?_⟩
   have hidem : IsIdempotentElem (c j) := hcoi.idem j
   let φ : C →+* FractionRing T := (Pi.evalRingHom _ j).comp G

@@ -85,7 +85,7 @@ open Formalism.UG GlobalTheory.LatticeStabLocal Formalism.L2.Herm
 variable {F E : Type} [Field F] [NumberField F] [Field E] [NumberField E] [Algebra F E] {n : ℕ}
   (Λ : Submodule (𝓞 E) (Fin n → E))
 
-theorem mem_hatL_iff [Module.Finite (𝓞 E) Λ] (z : Fin n → E ⊗[F] 𝔸) :
+theorem mem_hatL_iff [Module.Finite (𝓞 E) Λ] (z : Fin n → E ⊗[F] FiniteAdeleRing (𝓞 F) F) :
     z ∈ hatL (F := F) Λ ↔ ∀ v : HeightOneSpectrum (𝓞 F), (fun i => prV (E := E) v (z i)) ∈ locL v Λ :=
   mem_latS_adele_iff Λ z
 

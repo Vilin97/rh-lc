@@ -44,7 +44,7 @@ theorem UpperTheory.V.Z.Tf.GlobalTraceComparison.Pi.dropP_pf :
     rw [integral_congr_ae (g := fun _ => (0 : ℂ)) (hj.mono fun z hz => by rw [hz]; simp)]
     simp
   set f : H E n 0 → ℂ := fun z => ∑ i, inner ℂ (s.k₁ x i) (Q (s.k₂ (th z) i)) with hf
-  have hfc : Continuous f := continuous_finset_sum _ fun i _ =>
+  have hfc : Continuous f := continuous_finsetSum _ fun i _ =>
     continuous_const.inner (Q.continuous.comp ((s.vecs.cont i).2.comp hthc))
   have hfi : Inv f := fun γ z => by
     have h := (hK E n ι s).2 ⟨th (γ : H E n 0), (hrat γ).2⟩ (th z)

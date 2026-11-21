@@ -37,7 +37,8 @@ variable {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {ι : Type
 
 theorem pair_inv (emb : ι → L →+* ℂ) (lam : ι → DomWeight n) (γ : ReciprocityTheory.Aut.GQ L n) (x y : VV ℂ lam) :
     pairBK lam (mtRep emb lam γ x) (tenRep emb lam γ y) = pairBK lam x y :=
-  (pairBK_apply lam _ _).trans ((pairingBInvariantK_holds ℂ ι n lam (mtwEmb emb (mtwRat γ)) (x : VV ℂ lam).1
+  (pairBK_apply lam _ _).trans ((pairingBInvariantK_holds ℂ ι n lam
+    (mtwEmb emb (mtwRat (L := L) (n := n) γ)) (x : VV ℂ lam).1
     (y : VV ℂ lam).1).trans (pairBK_apply lam x y).symm)
 
 theorem tenIrr_conj (emb : ι → L →+* ℂ) (lam : ι → DomWeight n) (h : TenIrr emb lam) :
@@ -92,11 +93,15 @@ variable {W : Type} [AddCommGroup W] [Module K W] (T : W ≃ₗ[K] VV K lam)
 def omegaV : Module.Dual K W →ₛₗ[e] Module.Dual ℂ (VV ℂ lam) where
   toFun f := (bC e lam).constr ℂ fun i => e (f (T.symm (bVV K lam i)))
   map_add' f g := by
-    rw [← map_add (f := _)]
+    rw [← ((bC e lam).constr ℂ).map_add]
     congr 1
+    funext i
+    simp only [Pi.add_apply, LinearMap.add_apply, map_add]
   map_smul' c f := by
-    rw [← map_smul]
+    rw [← ((bC e lam).constr ℂ).map_smul]
     congr 1
+    funext i
+    simp only [Pi.smul_apply, LinearMap.smul_apply, smul_eq_mul, map_mul]
 
 theorem omegaV_bC (f : Module.Dual K W) (i : VVIdx lam) :
     omegaV e lam T f (bC e lam i) = e (f (T.symm (bVV K lam i))) := by
@@ -178,11 +183,11 @@ open GlobalTheory.CoefModel Formalism.L2.Col
 theorem omegaV_comm {L : Type} [Field L] [NumberField L] [IsCMField L] {n : ℕ} {ι : Type} [Fintype ι] {K : Type}
     [Field K] (e : K →+* ℂ) (emb : ι → L →+* K) (lam : ι → DomWeight n) {W : Type} [AddCommGroup W] [Module K W]
     (ρ : Representation K (ReciprocityTheory.Aut.GQ L n) W) (T : W ≃ₗ[K] VV K lam)
-    (hT : ∀ γ x, T (ρ γ x) = rhoVr emb lam (mtwRat γ) (T x)) (γ : ReciprocityTheory.Aut.GQ L n) (f : Module.Dual K W) :
+    (hT : ∀ γ x, T (ρ γ x) = rhoVr emb lam (mtwRat (L := L) (n := n) γ) (T x)) (γ : ReciprocityTheory.Aut.GQ L n) (f : Module.Dual K W) :
     omegaV e lam T (ρ.dual γ f) = (mtRep (fun t => e.comp (emb t)) lam).dual γ (omegaV e lam T f) := by
   refine (bC e lam).ext fun j => ?_
   have h1 : (mtRep (fun t => e.comp (emb t)) lam).dual γ (omegaV e lam T f) (bC e lam j) =
-      omegaV e lam T f (mapVV e lam (rhoVr emb lam (mtwRat γ⁻¹) (bVV K lam j))) := by
+      omegaV e lam T f (mapVV e lam (rhoVr emb lam (mtwRat (L := L) (n := n) γ⁻¹) (bVV K lam j))) := by
     rw [GlobalTheory.ConjTwist.mapVV_rhoVr, bC_apply]
     rfl
   rw [h1, bC_apply, omegaV_mapVV, omegaV_mapVV]
@@ -195,7 +200,7 @@ end GlobalTheory.MtContraHw
 
 
 open GlobalTheory.CoefModel Formalism.L2.Col in
-theorem GlobalTheory.mtRatDual_hw : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) (ι : Type) [Fintype ι] (K : Type) [Field K] (e : K →+* ℂ) (emb : ι → L →+* K), Function.Injective (fun t => e.comp (emb t)) → (∀ t t', e.comp (emb t) ≠ ComplexEmbedding.conjugate (e.comp (emb t'))) → ∀ (c : L →+* L), (∀ x, c x = IsCMField.complexConj L x) → ∀ (lam : ι → DomWeight n), Formalism.L2.Col.TenIrr (fun t => e.comp (emb t)) lam → ∀ (W : Type) [AddCommGroup W] [Module K W] [FiniteDimensional K W] (ρ : Representation K (ReciprocityTheory.Aut.GQ L n) W) (T : W ≃ₗ[K] VV K lam), (∀ γ x, T (ρ γ x) = rhoVr emb lam (Formalism.L2.Col.mtwRat γ) (T x)) → ∀ (t : ι) (lam0 : Fin n → ℤ), NX.HWAtF c ρ.dual (emb t) lam0 → lam0 = (lam t).w := by
+theorem GlobalTheory.mtRatDual_hw : ∀ (L : Type) [Field L] [NumberField L] [IsCMField L] (n : ℕ) (ι : Type) [Fintype ι] (K : Type) [Field K] (e : K →+* ℂ) (emb : ι → L →+* K), Function.Injective (fun t => e.comp (emb t)) → (∀ t t', e.comp (emb t) ≠ ComplexEmbedding.conjugate (e.comp (emb t'))) → ∀ (c : L →+* L), (∀ x, c x = IsCMField.complexConj L x) → ∀ (lam : ι → DomWeight n), Formalism.L2.Col.TenIrr (fun t => e.comp (emb t)) lam → ∀ (W : Type) [AddCommGroup W] [Module K W] [FiniteDimensional K W] (ρ : Representation K (ReciprocityTheory.Aut.GQ L n) W) (T : W ≃ₗ[K] VV K lam), (∀ γ x, T (ρ γ x) = rhoVr emb lam (Formalism.L2.Col.mtwRat (L := L) (n := n) γ) (T x)) → ∀ (t : ι) (lam0 : Fin n → ℤ), NX.HWAtF c ρ.dual (emb t) lam0 → lam0 = (lam t).w := by
   intro L _ _ _ n ι _ K _ e emb hinj hcm c hc lam hten W _ _ _ ρ T hT t lam0 hw
   have h' := GlobalTheory.MtContraHw.tenIrr_conj (fun t => e.comp (emb t)) lam hten
   have hwa := GlobalTheory.hwAt_of_hwAtF L n K e c hc (Module.Dual K W) ρ.dual

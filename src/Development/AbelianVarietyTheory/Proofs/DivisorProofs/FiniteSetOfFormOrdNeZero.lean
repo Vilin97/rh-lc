@@ -86,6 +86,7 @@ theorem finite_setOf_formOrd_ne_zero : ∀ (k : Type) [Field k] [CharZero k] (X 
     E.ord_eq_zero (u := hE.equiv a) (ha.map hE.equiv) e
   have h1 := E.formOrd_smul hn h0 (Units.mk0 c hc0)
   rw [Units.val_mk0, hc, hord, DivOver.formOrd_formOf_eq_zero hzU hE hω] at h1
+  change E.formOrd η = 0
   simpa using h1
 
 end GlobalTheory.FormOrdFinite

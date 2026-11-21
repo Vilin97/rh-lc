@@ -80,9 +80,20 @@ theorem isLattice_of_LRel {A : Places F E sig} {r k : ℕ} (G : GFrames A r k) {
   obtain ⟨g, -, rfl⟩ := h
   refine ⟨hΓ.fg.map _, ?_⟩
   rw [Submodule.map_coe]
-  have : (((g : G.V →ₗ[E] G.V).restrictScalars (𝓞 E)) : G.V → G.V) = ((g : G.V →ₗ[E] G.V) : G.V → G.V) := rfl
-  rw [this, Submodule.span_image, hΓ.span_eq_top, Submodule.map_top, LinearMap.range_eq_top]
-  exact g.surjective
+  intro s hs hlin
+  let f : G.V →ₗ[E] G.V := g
+  let t : Set G.V := f ⁻¹' s
+  have ht : t ⊆ Γ := by
+    intro x hx
+    obtain ⟨y, hy, heq⟩ := hs hx
+    exact (g.injective heq) ▸ hy
+  have himage : f '' t = s := Set.image_preimage_eq _ g.surjective
+  have hR : LinearIndepOn (𝓞 E) id t := by
+    apply (linearIndepOn_id_imageₛ_iff (f := f.restrictScalars (𝓞 E)) g.injective.injOn).mp
+    simpa [himage] using hlin
+  have hE := hΓ.linearIndepOn t ht hR
+  have := (linearIndepOn_id_imageₛ_iff (f := f) g.injective.injOn).mpr hE
+  simpa [himage] using this
 
 theorem term_of_LRel {A : Places F E sig} {r k : ℕ} (G : GFrames A r k) (hk : 4 * r + 7 ≤ k) {d : G.Dat}
     (hex : ∃ Λ₀, G.IsTerm d Λ₀) {Γ Γ' : G.Lt} (hΓ : G.IsTerm d Γ) (h : G.LRel Γ Γ') : G.IsTerm d Γ' := by

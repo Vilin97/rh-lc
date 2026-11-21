@@ -53,9 +53,9 @@ theorem frm_root (hroot : ∀ c : ↥Θ.grp, ∃ m : ℕ, 0 < m ∧ ((Θ.chr c :
 open Classical in
 theorem frmGSD_ok_of_finIdx (hX : X.Ok) (C : CoefPk X n (DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))) (hC : C.Eqv)
     (hfi : ∀ P : Q, Finite (↥(GLint X.E n P.1) ⧸ (Θ P).H))
-    (hroot : ∀ c : ↥Θ.grp, ∃ m : ℕ, 0 < m ∧ ((Θ.chr c : X.Kˣ) : X.K) ^ m = 1) : (frmGSD (C.pull DecoF.deco) Λ Θ).Ok where
-  fin_orb := by
-    obtain ⟨s, hs, hrep⟩ := DecoSet.finite_reps (ST := ST) (SG := SG) (n := n) (posStar_of_conj hX.conjE)
+    (hroot : ∀ c : ↥Θ.grp, ∃ m : ℕ, 0 < m ∧ ((Θ.chr c : X.Kˣ) : X.K) ^ m = 1) : (frmGSD (C.pull DecoF.deco) Λ Θ).Ok := by
+  refine { fin_orb := ?_, fin_stab := ?_, nab_smul := ?_, del_smul := ?_, inv := ?_ }
+  · obtain ⟨s, hs, hrep⟩ := DecoSet.finite_reps (ST := ST) (SG := SG) (n := n) (posStar_of_conj hX.conjE)
     have : Finite s := hs
 
     let pt : s → (∀ P : Q, ↥(GLint X.E n P.1) ⧸ (Θ P).H) → Option (DecoF X.E n ST SG Q) := fun d cb =>
@@ -105,8 +105,7 @@ theorem frmGSD_ok_of_finIdx (hX : X.Ok) (C : CoefPk X n (DecoSet (E := X.E) (n :
         group
       rw [e, mul_smul, ← hc]
       exact smul_inv_smul _ p
-  fin_stab := by
-    intro p
+  · intro p
     have := DecoSet.finite_stabilizer (posStar_of_conj hX.conjE) (DecoF.deco p : DecoSet (E := X.E) (n := n) (ST := ST) (SG := SG))
     refine Finite.of_injective
       (fun a : MulAction.stabilizer (frmGSD (C.pull DecoF.deco) Λ Θ).G p =>
@@ -116,16 +115,13 @@ theorem frmGSD_ok_of_finIdx (hX : X.Ok) (C : CoefPk X n (DecoSet (E := X.E) (n :
     have h0 : ((a.1.1, (a.1.2.1 : GLG (E := X.E) (n := n) (SG := SG))) : UF X.E n × GLG (E := X.E) (n := n) (SG := SG)) = (b.1.1, (b.1.2.1 : GLG (E := X.E) (n := n) (SG := SG))) :=
       congrArg Subtype.val hab
     exact Subtype.ext (dga_frm_stab_inj Λ Θ p a.2 b.2 (Prod.mk.inj h0).1)
-  nab_smul := by
-    intro g d
+  · intro g d
     obtain ⟨m, hm, hc⟩ := frm_root Λ Θ hroot g
     exact (hC.nab_smul (g.1, (g.2.1 : GLG (E := X.E) (n := n) (SG := SG))) (DecoF.deco d)).trans (map_root_smul _ _ hm hc).symm
-  del_smul := by
-    intro g d
+  · intro g d
     obtain ⟨m, hm, hc⟩ := frm_root Λ Θ hroot g
     exact (hC.del_smul (g.1, (g.2.1 : GLG (E := X.E) (n := n) (SG := SG))) (DecoF.deco d)).trans (map_root_smul _ _ hm hc).symm
-  inv := by
-    intro g (x : C.V) (y : C.V)
+  · intro g (x : C.V) (y : C.V)
     obtain ⟨m, hm, hc⟩ := frm_root Λ Θ hroot g
     show C.pair ((((Λ.chr g.2.1 * Θ.chr g.2.2 : X.Kˣ)) : X.K) • C.rho g.1 x)
       ((((Λ.chr g.2.1 * Θ.chr g.2.2 : X.Kˣ)) : X.K) • C.rho g.1 y) = C.pair x y

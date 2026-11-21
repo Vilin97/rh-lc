@@ -249,8 +249,7 @@ theorem proof (hG : PullFormsGeneric.Statement) (hS : PullSectionIntegral.Statem
     exact field_ratio _ (hy1 p.1) (hyk p.1) hla
   let z : (Σ k, ι k) → ℂ := fun p => ψ' (xc p)
   have hιF : ∀ f : MRing ι, ι' (aeval xc f) = aeval (fun p => y p * (y ⟨p.1, cc p.1⟩)⁻¹) f := fun f => by
-    rw [ringHom_aeval]
-    simp only [hιxc]
+    simpa only [hιxc] using (ringHom_aeval ι' xc f)
   have hψF : ∀ f : MRing ι, ψ' (aeval xc f) = eval z (map (Int.castRingHom ℂ) f) := fun f =>
     ringHom_aeval_eq_eval ψ' xc f
   have hz : z ∈ mcPts (mCoordIdeal y) := by

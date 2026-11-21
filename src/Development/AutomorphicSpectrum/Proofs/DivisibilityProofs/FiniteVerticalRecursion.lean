@@ -157,7 +157,7 @@ theorem recR_split : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type
   · have h1 : (∑ᶠ W ∈ ReciprocityTheory.ChartRestriction.G.Geo.divSupp P s,
           ((ReciprocityTheory.ChartRestriction.G.Geo.multAt (P ⊔ Ideal.span {s}) W : ℕ) : ℝ) *
             (if IsHorizontal W then I W D L else (geoNum D W b : ℝ) * Real.log (charOf W))) =
-        ∑ W ∈ T, (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) : ℝ) *
+        ∑ W ∈ T, (divCycle P s W : ℝ) *
             (if IsHorizontal W then I W D L else (geoNum D W b : ℝ) * Real.log (charOf W)) := by
       rw [finsum_mem_eq_finite_toFinset_sum _ (ReciprocityTheory.ChartRestriction.G.Geo.divSupp_finite P s)]
       refine Finset.sum_congr rfl fun W hW => ?_
@@ -169,7 +169,7 @@ theorem recR_split : ∀ (K : Type) [Fintype K] [DecidableEq K] (ι : K → Type
       have := left_ne_zero_of_mul hW
       exact fun h0 => this (by simp [h0])
     have h3 : (∑ᶠ p : Nat.Primes, Real.log (p : ℕ) * (vertAt p P s (List.ofFn b) : ℝ)) =
-        ∑ W ∈ T, (((ReciprocityTheory.ChartRestriction.G.Geo.divCycle P s) W : ℤ) : ℝ) *
+        ∑ W ∈ T, (divCycle P s W : ℝ) *
           (if IsHorizontal W then 0 else (geoNum D W b : ℝ) * Real.log (charOf W)) := by
       have e : ∀ p : Nat.Primes, Real.log (p : ℕ) * (vertAt p P s (List.ofFn b) : ℝ) =
           ∑ W ∈ T, Real.log (p : ℕ) * ((divCycle P s W * vertTerm p W (List.ofFn b) : ℤ) : ℝ) := by

@@ -25,8 +25,8 @@ theorem goodAt_of_mul {E : Type} [Field E] [NumberField E] [IsCMField E] {H : Re
 theorem levLaws (D : D7) (T : CoreJ D) (j : ℕ) (Y : Deep T.toCore j) (e : ℕ) (o : ℝ) (hT : LawsJ T) (hj : InR D j)
     (hG : Y.Good e o) : GlobalTheory.LevGeo.Laws D j Y.d.Xo₂ Y.d.c₂ Y.U Y.dict where
   inR := hj
-  host := (GlobalTheory.LevGeo.laws_core D T j hT hj).host
-  dat := (GlobalTheory.LevGeo.laws_core D T j hT hj).dat
+  host := hT.toLawsM.pins.1
+  dat := hT.toLawsM.pins.2.2.2 j hj
   levA := hG.lev.2
   unf := hG.unf
   chiTriv := hG.chiTriv

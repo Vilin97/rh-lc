@@ -130,14 +130,14 @@ theorem GlobalTheory.Ord2.LocCharPerfect.perfect : LocalFiniteness → LocalTate
   have hbsc : Continuous bs := by
     refine ((continuous_of_discreteTopology (f := fun y : Lev ((l : c.O) ^ n) =>
       TDual.mk (φ₀ ∘ₗ smulZ c n (sec y)))).comp (hmk.comp hb)).congr fun s => ?_
-    refine TDual.ext fun m => ?_
+    refine DFunLike.ext _ _ fun m => ?_
     show φ₀ (sec (Lev.mk ((l : c.O) ^ n) (b s)) • m) = φ₀ (b s • m)
     have hd : (l : c.O) ^ n ∣ sec (Lev.mk ((l : c.O) ^ n) (b s)) - b s := by
       rw [← Lev.mk_eq_zero, map_sub, hsec, sub_self]
     rw [smul_congr c n hd m]
   have hz : bs ∈ Z1 ((twDual χ rho).comp (MonoidHom.id _)) := by
     refine ⟨hbsc, fun s t => ?_⟩
-    refine TDual.ext fun m => ?_
+    refine DFunLike.ext _ _ fun m => ?_
     show φ₀ (b (s * t) • m) = φ₀ (b s • m) + ((χ s : (ZMod (l ^ n))ˣ) : ZMod (l ^ n)) * φ₀ (b t • rho s⁻¹ m)
     rw [key, ← map_add (f := _), ← add_smul, smul_congr c n (hbc s t) m]
   obtain ⟨-, -, hbij, -, -⟩ := hT ℚ Ω l n (Lev ((l : c.O) ^ n)) A rho v (by omega) hv hc

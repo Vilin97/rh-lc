@@ -375,13 +375,14 @@ theorem isLocCompGL_of_equiv {E : Type} [Field E] [NumberField E] [IsCMField E] 
     { toFun := fun v => (e ⟨f v, h1 v⟩).1
       map_add' := fun a b => by
         have : (⟨f (a + b), h1 (a + b)⟩ : toR V hV) = ⟨f a, h1 a⟩ + ⟨f b, h1 b⟩ := Subtype.ext (map_add f a b)
-        rw [this, map_add (f := _)]
+        rw [this, e.map_add]
         rfl
       map_smul' := fun c a => by
         exact equiv_val_smul e (algebraMap ℂ (OpAlg E N) c) ⟨f a, h1 a⟩ ⟨f (c • a), h1 _⟩ (map_smul f c a) }
   refine ⟨F, fun hF => h0 (LinearMap.ext fun v => ?_), fun v => (e ⟨f v, h1 v⟩).2, fun g v => ?_⟩
   · have h2 : e ⟨f v, h1 v⟩ = 0 := Subtype.ext (LinearMap.congr_fun hF v)
-    exact congrArg Subtype.val ((map_eq_zero_iff e e.injective).1 h2)
+    have h3 : (⟨f v, h1 v⟩ : toR V hV) = 0 := e.injective (h2.trans e.map_zero.symm)
+    exact congrArg (fun x : toR V hV => (x : Sm E N)) h3
   · exact equiv_val_smul e (opOf (.fin (locGL E N w g))) ⟨f v, h1 v⟩ ⟨f (σ.ρ g v), h1 _⟩ (hf g v)
 
 theorem finDiscN : PositivityTheory.Rg.BcB.F.F5.FinDiscN := by

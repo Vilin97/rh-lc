@@ -64,6 +64,7 @@ private theorem exists_root_pow_eq_pow_padicVal {g : ℕ} [Fact g.Prime] (l : �
   have hcop : (l ^ B).Coprime m := by
     have := Nat.coprime_ordCompl hl hn.ne'
     rw [Nat.factorization_def n hl] at this
+    rw [← Nat.padicValNat_def] at this
     exact Nat.Coprime.pow_left _ this
   haveI : NeZero m := ⟨hm0⟩
   obtain ⟨t, ht⟩ : ∃ t, l ^ B * t ≡ 1 [MOD m] := by
@@ -90,6 +91,7 @@ private theorem pow_pow_gcd_sub_one_eq_one_of_same_prime_power {g : ℕ} [Fact g
   have hcop : (l ^ (max a B)).Coprime m := by
     have := Nat.coprime_ordCompl hl he.ne'
     rw [Nat.factorization_def _ hl] at this
+    rw [← Nat.padicValNat_def] at this
     exact Nat.Coprime.pow_left _ this
   have hK : z ^ l ^ max a B = x ^ l ^ max a B := by
     have h1 : z ^ l ^ max a B = y ^ l ^ max a B := by

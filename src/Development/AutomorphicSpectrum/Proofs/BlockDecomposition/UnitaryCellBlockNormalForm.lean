@@ -68,7 +68,7 @@ theorem exists_rowReduce_firstCols (hn : ρ + p = n) (C : Matrix (Fin n) (Fin n)
         (LinearEquiv.ofInjective f hf).symm_apply_apply u
       simp only [φ, LinearEquiv.trans_apply, this]
       rfl
-    simp only [A, LinearEquiv.trans_apply, h0, LinearEquiv.prodCongr_apply, h1, map_zero]
+    simp only [A, LinearEquiv.trans_apply, h0, LinearEquiv.prodCongr_apply, h1, ψ.map_zero]
     simp
   refine ⟨LinearMap.toMatrix' A.toLinearMap, ?_, ?_⟩
   · refine Matrix.isUnit_det_of_left_inverse (B := LinearMap.toMatrix' A.symm.toLinearMap) ?_

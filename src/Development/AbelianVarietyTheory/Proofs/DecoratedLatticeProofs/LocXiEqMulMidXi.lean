@@ -117,7 +117,8 @@ theorem crd_inl {s κ : ℕ} (S : SymData k s κ) {n n' : Type} [Fintype n] [Dec
 
 omit [BorelSpace k] in
 theorem entry_mul_KOne {s κ : ℕ} (S : SymData k s κ) (t : Type) [Fintype t] [DecidableEq t] (ν : Measure k) (j c : ℕ) (H : j + 1 + c = s)
-    {a : GL (XIx (Fin κ) t (j + 1)) k} (ha : a ∈ KOne k _) {b : GL (XIx (Fin κ) t j) k} (hb : b ∈ KOne k _) (x) :
+    {a : GL (XIx (Fin κ) t (j + 1)) k} (ha : a ∈ KOne k _) {b : GL (XIx (Fin κ) t j) k} (hb : b ∈ KOne k _)
+    (x : Matrix (XIx (Fin κ) t (j + 1)) (XIx (Fin κ) t j) k) :
     (S.T t).entry S.ψ ν j c H 1 1 (a.val * x * b.val) = (S.T t).entry S.ψ ν j c H 1 1 x := by
   refine UnifChange.apply_mul_KOne (fun x hx => ?_) (fun x y hy => ?_) ha hb x
   · by_contra hn
@@ -169,7 +170,8 @@ theorem psi_tie (q : GlobalTheory.FinPl.SplitPt D k) {PP : Formalism.L2.DIV.Pl D
   have hx1 : ι D.host.xi0 ∈ 𝒪[k] := (hi _).2 hxi
   haveI : Finite (𝓞 D.host.E ⧸ PP.asIdeal) := Ideal.finiteQuotientOfFreeOfNeBot _ PP.ne_bot
   letI := Fintype.ofFinite (𝓞 D.host.E ⧸ PP.asIdeal)
-  let e := ZMod.ringEquivOfPrime (𝓞 D.host.E ⧸ PP.asIdeal) hp (by rw [← Nat.card_eq_fintype_card]; rfl)
+  let e := ZMod.ringEquivOfPrime (𝓞 D.host.E ⧸ PP.asIdeal) hp (by
+    rw [← Nat.card_eq_fintype_card, qOf, Ideal.absNorm_apply, Submodule.cardQuot_apply])
   obtain ⟨b, hb⟩ := ZMod.intCast_surjective (e.symm (redP PP D.host.xi0 * redP PP a))
   have hb' : redP PP D.host.xi0 * redP PP a = b := by rw [← e.apply_symm_apply (_ * _), ← hb, map_intCast]
   have ha1 : ι a ∈ 𝒪[k] := (hi _).2 ha
@@ -265,9 +267,7 @@ theorem xiAt_tw_eq {X : Fields} {Pr : Primes X} {R : Ranks} (Ch : Chars X Pr R.m
 end Tuple
 
 section World
-variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)}
-  {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts}
-  {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} {W : RealPack ex} {u : B.Word}
+variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {u : B.Word}
 
 
 theorem frame_cong (hI : I.Ok) {b : I.ι} {j : ℕ} (p : Formalism.L2.Col.ChPt (Pr := B.primes X) (R := B.R) I.sel (I.tup b) u j)
@@ -301,13 +301,5 @@ theorem frame_cong (hI : I.Ok) {b : I.ι} {j : ℕ} (p : Formalism.L2.Col.ChPt (
   split_ifs <;> simp
 
 end World
-
-section Main
-variable {B : GlobalTheory.Mem.Base} {X : PreX B.toPre} {I : TC B X} {l : I.Laws} {Z : TC.Later B (I.cols l)} {L : SizeData₂ (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)}
-  {hT : GatTies (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Gi : Formalism.MainNotions.G.Inst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L} {Gl : Formalism.MainNotions.G.LatInst (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {Kc : Formalism.MainNotions.G.Consts}
-  {Yd : DivX (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G)} {cX : ExtraC} {ex : Extra (_root_.GlobalTheory.Mem.assemble _ _ Z.W Z.V Z.S Z.N Z.G) L hT Gi Gl Kc Yd cX} {W : RealPack ex} {u : B.Word}
-
-
-end Main
 
 end GlobalTheory.Fam.MidLoc

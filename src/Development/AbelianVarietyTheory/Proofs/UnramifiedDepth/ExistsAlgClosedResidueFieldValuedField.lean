@@ -52,16 +52,8 @@ theorem mm_isMaximal : (mm V).IsMaximal := by
     rw [← hyx]
     exact J.mul_mem_left y hxJ
 
-theorem integers : (AddValuation.toValuation V.v).Integers V.RR where
-  hom_inj := Subtype.val_injective
-  map_le_one := fun r => by
-    show 0 ≤ V.v (r : C)
-    exact nonneg V r
-  exists_of_le_one := fun {r} h => by
-    have h' : 0 ≤ V.v r := h
-    refine ⟨⟨r, ?_⟩, rfl⟩
-    show ((0 : ℝ) : WithTop ℝ) ≤ V.v r
-    simpa using h'
+theorem integers : (AddValuation.toValuation V.v).Integers V.RR :=
+  Valuation.integer.integers (AddValuation.toValuation V.v)
 
 theorem isAlgClosed_of_surjective [IsAlgClosed C] {Ω : Type} [Field Ω] (ρ : V.RR →+* Ω)
     (hρ : Function.Surjective ρ) : IsAlgClosed Ω := by

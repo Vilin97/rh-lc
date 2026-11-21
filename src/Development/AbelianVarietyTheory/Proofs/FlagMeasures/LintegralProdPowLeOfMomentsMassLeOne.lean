@@ -40,7 +40,7 @@ theorem lintegral_prod_pow_le_of_moments : ∀ (Ω : Type) [MeasurableSpace Ω] 
             = ∏ a : Fin r, (if a ∈ s then ρ a x ^ (2 * q) else 1) := by
           rw [Finset.prod_ite_mem, Finset.univ_inter, Finset.prod_pow]
         rw [this]
-        apply Finset.prod_le_prod
+        apply Finset.prod_le_prod₀
         · intro a _
           by_cases ha : a ∈ s
           · simp [ha, pow_nonneg (hx a)]
@@ -98,7 +98,7 @@ theorem lintegral_prod_pow_le_of_moments : ∀ (Ω : Type) [MeasurableSpace Ω] 
         ≤ ∫⁻ x, ∑ a : Fin r, ENNReal.ofReal ((r:ℝ)⁻¹) * ENNReal.ofReal (u a x ^ N * Ph x) ∂ν :=
           lintegral_mono_ae hpt
       _ = ∑ a : Fin r, ENNReal.ofReal ((r:ℝ)⁻¹) * ∫⁻ x, ENNReal.ofReal (u a x ^ N * Ph x) ∂ν := by
-          rw [lintegral_finset_sum']
+          rw [lintegral_finsetSum']
           · congr 1; ext a
             rw [lintegral_const_mul' _ _ ENNReal.ofReal_ne_top]
           · intro a _

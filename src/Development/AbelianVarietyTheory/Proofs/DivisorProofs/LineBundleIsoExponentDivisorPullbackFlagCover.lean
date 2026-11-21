@@ -228,3 +228,4 @@ theorem GlobalTheory.VarFlag.lbIso_LL_pull : ∀ {E : Type} [Field E] [NumberFie
     rw [hval]
     exact h1
   exact (GlobalTheory.Cartier.presents_toLB _).lbIso ⟨hL, hr, heq⟩
+

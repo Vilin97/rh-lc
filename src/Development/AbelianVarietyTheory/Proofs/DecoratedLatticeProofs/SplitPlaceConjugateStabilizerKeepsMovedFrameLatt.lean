@@ -24,7 +24,8 @@ theorem int_mul {m n p : Type} [Fintype n] {A : Matrix m n k} {B : Matrix n p k}
 
 theorem int_one_sub {m a b : Type} [DecidableEq m] (f : a → m) (g' : b → m) :
     ∀ i j, ((1 : Matrix m m k).submatrix f g') i j ∈ 𝒪[k] := fun i j => by
-  rw [submatrix_apply, one_apply]
+  change (1 : Matrix m m k) (f i) (g' j) ∈ 𝒪[k]
+  rw [Matrix.one_apply]
   split_ifs
   exacts [Subring.one_mem _, Subring.zero_mem _]
 

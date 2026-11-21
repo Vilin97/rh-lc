@@ -77,7 +77,7 @@ theorem length_le {l : ℕ} (hl : l.Prime) (hu : ∀ p : ℕ, p.Prime → p ≠ 
   refine add_le_add hC' (hr'.trans ?_)
   by_cases hpl : p = l
   · subst hpl
-    rwa [padicValNat_self, Nat.cast_one, mul_one]
+    rwa [Nat.padicValNat_def, Nat.Prime.multiplicity_self, Nat.cast_one, mul_one]
   · have : Submodule.torsionBy O M (p : O) = ⊥ := (Submodule.eq_bot_iff _).2 fun m hm =>
       ((hu p hp hpl).smul_eq_zero).1 ((Submodule.mem_torsionBy_iff _ _).1 hm)
     rw [this]

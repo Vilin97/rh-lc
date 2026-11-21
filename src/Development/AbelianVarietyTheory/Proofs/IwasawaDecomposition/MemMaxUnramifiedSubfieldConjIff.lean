@@ -27,7 +27,7 @@ theorem rightCongr_map (s : B ≃ₗ[Qp] B) (f : V →ₗ[LL] V) (u u' : B →�
     rightCongr LL V s (AlgebraTensorModule.map f u x) = AlgebraTensorModule.map f u' (rightCongr LL V s x) := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | tmul v b => simp [h]
+  | tmul v b => simp [rightCongr, h]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem rightCongr_mem_range (s : B ≃ₗ[Qp] B) (F F' : Submodule Qp B) (h : ∀ b ∈ F, s b ∈ F') {x : V ⊗[Qp] B}
@@ -37,13 +37,13 @@ theorem rightCongr_mem_range (s : B ≃ₗ[Qp] B) (F F' : Submodule Qp B) (h : �
   induction z using TensorProduct.induction_on with
   | zero => simp
   | tmul v b => exact ⟨v ⊗ₜ[Qp] ⟨s b.1, h _ b.2⟩, rfl⟩
-  | add x y hx hy => rw [RingHom.map_add (Ideal.Quotient.mk I), RingHom.map_add (algebraMap (Ω ⊗[R] A ⧸ I) (Localization.Away (Ideal.Quotient.mk I (1 ⊗ₜ[R] h)))) ]; exact Submodule.add_mem _ hx hy
+  | add x y hx hy => simp only [map_add]; exact Submodule.add_mem _ hx hy
 
 theorem rightCongr_symm_apply (s : B ≃ₗ[Qp] B) (x : V ⊗[Qp] B) :
     rightCongr LL V s.symm (rightCongr LL V s x) = x := by
   induction x using TensorProduct.induction_on with
   | zero => simp
-  | tmul v b => simp
+  | tmul v b => simp [rightCongr]
   | add x y hx hy => simp only [map_add (f := _), hx, hy]
 
 theorem finrank_eq_of_mem_iff {M : Type} [AddCommGroup M] [Module LL M] (T : M ≃ₗ[LL] M) (S S' : Submodule LL M)
@@ -64,7 +64,7 @@ theorem apply_mem_Kur (g : GQ l) {x : Om l} (hx : x ∈ MaximalUnramifiedExtensi
     obtain ⟨m, h0, hm, hy⟩ := hy
     exact IntermediateField.subset_adjoin _ _ ⟨m, h0, hm, by rw [← map_pow, hy, map_one]⟩
   | algebraMap y => rw [g.commutes]; exact IntermediateField.algebraMap_mem _ y
-  | add a b _ _ ha hb => rw [RingHom.map_add (Ideal.Quotient.mk (towerIdeal p n))]; exact add_mem ha hb
+  | add a b _ _ ha hb => rw [map_add]; exact add_mem ha hb
   | inv a _ ha => rw [map_inv₀]; exact inv_mem ha
   | mul a b _ _ ha hb => rw [map_mul]; exact mul_mem ha hb
 

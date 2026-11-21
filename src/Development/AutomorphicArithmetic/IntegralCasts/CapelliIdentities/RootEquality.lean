@@ -1850,7 +1850,9 @@ private theorem dec_closed [Algebra.IsAlgebraic F Ω] :
     ext σ
     simp [mem_dec]
   rw [this]
-  exact isClosed_iInter fun x ↦ ⟨lc_apply x _ᶜ⟩
+  exact isClosed_iInter fun x ↦ ⟨by
+    simpa only [Set.preimage_compl] using
+      (lc_apply x {y | y ∈ A ↔ x ∈ A}ᶜ)⟩
 
 private theorem root_eq {N : ℕ} (hN : A.valuation (N : Ω) = 1) {x y : Ω} (hx : x ^ N = 1)
     (hy : y ^ N = 1) (h : A.valuation (x - y) < 1) : x = y := by

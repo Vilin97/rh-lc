@@ -16,12 +16,12 @@ theorem dvr_of_reflects {O A : Type} [CommRing O] [IsDomain O] [CommRing A] [IsD
     IsDiscreteValuationRing O := by
   haveI : ValuationRing O := ValuationRing.iff_dvd_total.2
     ⟨fun x y => (ValuationRing.dvd_total (g x) (g y)).imp (hd x y) (hd y x)⟩
-  haveI : WfDvdMonoid O := ⟨by
+  haveI : WfDvdMonoid O := by
     refine Subrelation.wf (r := InvImage DvdNotUnit g) ?_ (InvImage.wf g wellFounded_dvdNotUnit)
     rintro x y ⟨hx, c, hc, rfl⟩
     refine ⟨fun h => hx (hg (by simpa using h)), g c, fun h => hc ?_, by simp⟩
-    exact isUnit_of_dvd_one (hd c 1 (by simpa using h.dvd))⟩
-  haveI : IsPrincipalIdealRing O := ((IsBezout.TFAE (R := O)).out 3 1).1 ‹WfDvdMonoid O›
+    exact isUnit_of_dvd_one (hd c 1 (by simpa using h.dvd))
+  haveI : IsPrincipalIdealRing O := ((IsBezout.tfae (R := O)).out 4 2).1 ‹WfDvdMonoid O›
   refine { not_a_field' := fun h => ht0 ?_ }
   have : t ∈ IsLocalRing.maximalIdeal O := ht
   rw [h] at this

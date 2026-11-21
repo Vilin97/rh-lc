@@ -43,6 +43,19 @@ theorem sub_count {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Modul
     (M : Submodule (𝓞 K) V) (hM : Submodule.IsLattice K M) (X : ℕ) :
     {N : Submodule (𝓞 K) V | N ≤ M ∧ idxN M N ≠ 0 ∧ idxN M N ≤ X}.encard ≤
       {I : Ideal (𝓞 K) | I ≠ ⊥ ∧ (Ideal.absNorm I : ℝ) ≤ X}.encard := by
+  by_cases hbot : M = ⊥
+  · subst M
+    by_cases hX : X = 0
+    · subst X
+      simp
+    · have htop : (⊤ : Ideal (𝓞 K)) ∈ {I : Ideal (𝓞 K) | I ≠ ⊥ ∧ (Ideal.absNorm I : ℝ) ≤ X} := by
+        simp [Nat.one_le_iff_ne_zero.mpr hX]
+      calc
+        _ ≤ 1 := by
+          apply Set.encard_le_one_iff.mpr
+          intro a b ha hb
+          exact (le_bot_iff.mp ha.1).trans (le_bot_iff.mp hb.1).symm
+        _ ≤ _ := Set.one_le_encard_iff_nonempty.mpr ⟨⊤, htop⟩
   obtain ⟨e⟩ : Nonempty (V ≃ₗ[K] K) :=
     FiniteDimensional.nonempty_linearEquiv_of_finrank_eq (by simp [h1])
   let e' : V →ₗ[𝓞 K] K := (e : V →ₗ[K] K).restrictScalars (𝓞 K)
@@ -76,7 +89,8 @@ theorem sub_count {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Modul
         (Submodule.map ι (J N)).toAddSubgroup.relIndex (Submodule.map ι (J M)).toAddSubgroup
       rw [hJ N hN, hJ M le_rfl]
     rw [e1]
-    exact AddSubgroup.relIndex_mul_index (hle N hN)
+    simpa only [Ideal.absNorm_eq_index] using
+      AddSubgroup.relIndex_mul_index (Submodule.toAddSubgroup_mono (hle N hN))
   have hJM : J M ≠ ⊥ := by
     intro h0
     have h2 := hJ M le_rfl
@@ -86,10 +100,7 @@ theorem sub_count {K V : Type} [Field K] [NumberField K] [AddCommGroup V] [Modul
       intro x hx
       have : ψ x ∈ (⊥ : Submodule (𝓞 K) K) := h2 ▸ ⟨x, hx, rfl⟩
       exact (injective_iff_map_eq_zero ψ).1 hψ x this
-    have h4 := hM.span_eq_top
-    rw [h3] at h4
-    have : Nontrivial V := Module.nontrivial_of_finrank_pos (R := K) (by omega)
-    simp at h4
+    exact hbot h3
   have hq : ∀ N : Submodule (𝓞 K) V, ∃ I : Ideal (𝓞 K), N ≤ M → J N = J M * I := by
     intro N
     by_cases hN : N ≤ M
